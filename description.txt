@@ -1,0 +1,54 @@
+Subscribe to my youtube channel 'Vortex Of Rainbows'
+(https://www.youtube.com/channel/UCCROKE6vzjko3ZdtuMsq0pQ)
+
+Update 0.17
+-More void stuff
+-Armor reworks
+-updated to tmodloader version v0.11...
+-Balancing Changes
+-Bux fixes
+-Creepers removed, New Treasure Slime Types!
+-Putrid Pinky reworked
+-Item reworks
+
+Update 0.16.1 "Challenge" Update
+-Bug fixing and balance changes
+	-Legedaries reworked
+-Fixed bug with boss checklist
+-2 new worldgen
+-Challenges added, capable of enhancing gameplay at the start of the game
+
+Update 0.15.5 "Vanilla" Update
+-Modified most of the planetariums, also added more of them, the biome itself was also changed, it is now bigger and the code that spawns it has been optimized
+-Removed some old items and replaced them with new items
+-Balance changes and more general fixes
+-Removed Battering - Replaced with Void
+-(User Suggestion) Added support for boss checklist
+
+Update 0.15.4 "Chocolate" Update
+-Nerfs and Buffs to items and enemies
+-Balance changes, new sprites, reworked ShArD KiNG
+-New damage type, still in developement
+
+Update 0.15.3 "Polishing" Update
+-Minor bug fixes and Quality improvents
+-Some new chest items and new crates!
+-Improved world generation of the obsidian biome
+-Removed Vacuum Chest
+-New fishables and potions
+-Major bug fixes and changes to the Item Infector and Transmutation Reactor, they should now work in multiplayer
+
+Update 0.15.2 "Holy" Update
+-New Items; New Holy Relics; Items to be found in naturally spawned chests
+-Synergies between new and existing items
+-Item Balancing Changes
+-Bug Fixes
+
+Update 0.15 "Bosses Revamped" Update
+-Bug fixes, nerfs, buffs, and such
+-new items, 5 new planetariums (now 26),
+-Reworked several bosses and added more boss drops
+-New armor sets and special item synergies
+-Items to be found in chests when the world is generated
+
+

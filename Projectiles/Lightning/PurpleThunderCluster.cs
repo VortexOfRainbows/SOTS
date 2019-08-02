@@ -1,0 +1,98 @@
+using System;
+using System.IO;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+using Terraria;
+using Terraria.ModLoader;
+using Terraria.ID;
+
+namespace SOTS.Projectiles.Lightning
+{    
+    public class PurpleThunderCluster : ModProjectile 
+    {	float distance = 30f;  
+		int rotation = 0;
+		
+		public override void SetStaticDefaults()
+		{
+			DisplayName.SetDefault("Thunder Cluster");
+			
+		}
+		
+        public override void SetDefaults()
+        {
+			projectile.CloneDefaults(263);
+            aiType = 263; 
+			projectile.height = 43;
+			projectile.width = 43;
+			projectile.penetrate = 24;
+			projectile.friendly = true;
+			projectile.timeLeft = 120;
+			projectile.tileCollide = false;
+			projectile.hostile = false;
+		}
+		public override void AI()
+		{
+			Vector2 circularLocation = new Vector2(projectile.velocity.X -distance, projectile.velocity.Y).RotatedBy(MathHelper.ToRadians(rotation));
+			rotation += 15;
+			distance -= 0.25f;
+			projectile.scale *= 0.99f;
+			projectile.alpha++;
+			
+			Player player  = Main.player[projectile.owner];
+			
+			
+				int num1 = Dust.NewDust(new Vector2(projectile.Center.X + circularLocation.X - 4, projectile.Center.Y + circularLocation.Y - 4), 4, 4, 173);
+				Main.dust[num1].noGravity = true;
+				Main.dust[num1].velocity *= 0.1f;
+			
+		}
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+            target.immune[projectile.owner] = 15;
+        }
+		public override void Kill(int timeLeft)
+		{
+		
+		Player player = Main.player[projectile.owner];
+        SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
+		
+		Vector2 cursorArea;
+					
+						if (player.gravDir == 1f)
+					{
+					cursorArea.Y = (float)Main.mouseY + Main.screenPosition.Y;
+					}
+					else
+					{
+					cursorArea.Y = Main.screenPosition.Y + (float)Main.screenHeight - (float)Main.mouseY;
+					}
+						cursorArea.X = (float)Main.mouseX + Main.screenPosition.X;
+		
+		
+				   float shootToX = cursorArea.X - projectile.Center.X;
+				   float shootToY = cursorArea.Y - projectile.Center.Y;
+				   float distance = (float)System.Math.Sqrt((double)(shootToX * shootToX + shootToY * shootToY));
+
+				   distance = 6.25f / distance;
+	   
+				   shootToX *= distance * 5;
+				   shootToY *= distance * 5;
+	   
+					Main.PlaySound(SoundID.Item94, (int)(projectile.Center.X), (int)(projectile.Center.Y));
+			if(projectile.owner == Main.myPlayer)
+			{
+				Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, shootToX, shootToY, mod.ProjectileType("PurpleLightning"), projectile.damage, projectile.knockBack, Main.myPlayer, 0f, 0f);
+				Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, shootToX, shootToY, mod.ProjectileType("PurpleLightning"), projectile.damage, projectile.knockBack, Main.myPlayer, 0f, 0f);
+				Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, shootToX, shootToY, mod.ProjectileType("PurpleLightning"), projectile.damage, projectile.knockBack, Main.myPlayer, 0f, 0f);
+				Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, shootToX, shootToY, mod.ProjectileType("PurpleLightning"), projectile.damage, projectile.knockBack, Main.myPlayer, 0f, 0f); //Spawning a projectile
+			}
+		
+		
+				
+		}
+	}
+}
+		
