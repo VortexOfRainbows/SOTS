@@ -1350,10 +1350,6 @@ namespace SOTS
 			}
 			public override void PostWorldGen()
 			{
-				
-		
-			
-			
 				int xPosition2 = Main.maxTilesX/2;
 				int yPosition2 = Main.maxTilesY - 55;
                     int radius = 6;    	
@@ -1504,14 +1500,8 @@ namespace SOTS
 												chest.item[slot].SetDefaults(mod.ItemType("Discharge"));
 												slot++;
 											}
-										
-										
 								}
-							
-							
-	
 			}
-	
 		}	
 		public override void PreUpdate() 
 		{
