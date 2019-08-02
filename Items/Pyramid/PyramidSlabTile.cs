@@ -15,7 +15,7 @@ namespace SOTS.Items.Pyramid
 			Main.tileLighted[Type] = true;
 			drop = mod.ItemType("PyramidSlab");
 			AddMapEntry(new Color(120, 90, 0));
-			mineResist = 5f;
+			mineResist = 3f;
 			minPick = 100;
             soundType = 21;
             soundStyle = 2;
