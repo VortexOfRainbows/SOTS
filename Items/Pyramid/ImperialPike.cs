@@ -6,11 +6,11 @@ using Terraria.ModLoader;
 
 namespace SOTS.Items.Pyramid
 {
-	public class ImperialGuardsmansPike : ModItem
+	public class ImperialPike : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Imperial Guardsman's Pike");
+			DisplayName.SetDefault("Imperial Pike");
 			Tooltip.SetDefault("");
 		}
 		public override void SetDefaults()
@@ -38,7 +38,7 @@ namespace SOTS.Items.Pyramid
               int numberProjectiles = 1;
 			  for (int i = 0; i < numberProjectiles; i++)
               {
-                  Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(1)); // This defines the projectiles random spread . 30 degree spread.
+                  Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(0)); // This defines the projectiles random spread . 30 degree spread.
                   Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI);
               }
               return true; 

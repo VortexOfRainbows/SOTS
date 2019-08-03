@@ -36,12 +36,12 @@ namespace SOTS.Items.Pyramid
 			timer += 1;
 		
 		
-					if(timer == 60)
+					if(timer == 70)
 					{
-					Projectile.NewProjectile(player.Center.X, player.position.Y, -10, -10, mod.ProjectileType("SandyCloud"), 50, 0, player.whoAmI);
-					Projectile.NewProjectile(player.Center.X, player.position.Y, 10, 10, mod.ProjectileType("SandyCloud"), 50, 0, player.whoAmI);
-					Projectile.NewProjectile(player.Center.X, player.position.Y, 10, -10, mod.ProjectileType("SandyCloud"), 50, 0, player.whoAmI);
-					Projectile.NewProjectile(player.Center.X, player.position.Y, -10, 10, mod.ProjectileType("SandyCloud"), 50, 0, player.whoAmI);
+					Projectile.NewProjectile(player.Center.X, player.position.Y, -5, -5, mod.ProjectileType("SandyCloud"), 14, 0, player.whoAmI);
+					Projectile.NewProjectile(player.Center.X, player.position.Y, 5, 5, mod.ProjectileType("SandyCloud"), 14, 0, player.whoAmI);
+					Projectile.NewProjectile(player.Center.X, player.position.Y, 5, -5, mod.ProjectileType("SandyCloud"), 14, 0, player.whoAmI);
+					Projectile.NewProjectile(player.Center.X, player.position.Y, -5, 5, mod.ProjectileType("SandyCloud"), 14, 0, player.whoAmI);
 					timer = 0;
 					}
 				
