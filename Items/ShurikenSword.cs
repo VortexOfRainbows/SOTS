@@ -14,7 +14,7 @@ namespace SOTS.Items
 		public override void SetDefaults()
 		{
 
-			item.damage = 13;
+			item.damage = 10;
 			item.melee = true;
 			item.width = 32;
 			item.height = 32;
@@ -27,7 +27,7 @@ namespace SOTS.Items
 			item.UseSound = SoundID.Item1;
 			item.autoReuse = false;            
 			item.shoot = 3; 
-            item.shootSpeed = 24;
+            item.shootSpeed = 14;
 
 		}
 
