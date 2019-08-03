@@ -10,21 +10,21 @@ namespace SOTS.Items.Pyramid
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Ancient Longbow");
-			Tooltip.SetDefault("");
+			DisplayName.SetDefault("Pitati Longbow");
+			Tooltip.SetDefault("Fires an additional slower arrow with each shot");
 		}
 		public override void SetDefaults()
 		{
 
 			item.damage = 18;
 			item.ranged = true;
-			item.width = 16;
-			item.height = 40;
+			item.width = 24;
+			item.height = 63;
 			item.useTime = 24;
 			item.useAnimation = 24;
 			item.useStyle = 5;
 			item.knockBack = 2.5f;
-			item.value = Item.sellPrice(0, 0, 50, 0);;
+			item.value = Item.sellPrice(0, 1, 50, 0);;
 			item.rare = 1;
 			item.UseSound = SoundID.Item5;
 			item.autoReuse = false;            

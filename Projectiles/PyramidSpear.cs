@@ -26,7 +26,7 @@ namespace SOTS.Projectiles
             projectile.ignoreWater = true; 
 			projectile.CloneDefaults(47);
             projectile.hide = true;
-            aiType = 47; //18 is the demon scythe style
+            aiType = 47;
 			projectile.alpha = 0;
             projectile.width = 88;
             projectile.height = 90; 
