@@ -206,6 +206,15 @@ namespace SOTS
 				
                 } 
             }
+			/*
+			if (Main.myPlayer != -1 && !Main.gameMenu)
+            {
+                if(Main.player[Main.myPlayer].active && Main.player[Main.myPlayer].GetModPlayer<SOTSPlayer>(this).ZeplineBiome) //this makes the music play only in Custom Biome
+                {
+					
+                } 
+            }
+			*/
         }
 		public override void PostSetupContent()
         {

@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 
 namespace SOTS.Items.Pyramid
 {
-	public class PyramidSlabTile : ModTile
+	public class ZeplineLureTile : ModTile
 	{
 		public override void SetDefaults()
 		{
@@ -13,17 +13,17 @@ namespace SOTS.Items.Pyramid
 			Main.tileMergeDirt[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
-			drop = mod.ItemType("PyramidSlab");
-			AddMapEntry(new Color(170, 150, 85));
-			mineResist = 3.5f;
-			minPick = 100;
+			drop = mod.ItemType("ZeplineLure");
+			AddMapEntry(new Color(120, 90, 90));
+			mineResist = 15.5f;
+			minPick = 250;
             soundType = 21;
             soundStyle = 2;
 			dustType = 32;
 		}
 		public override bool CanExplode(int i, int j)
 		{
-			if (Main.tile[i, j].type == mod.TileType("PyramidSlab"))
+			if (Main.tile[i, j].type == mod.TileType("ZeplineLureTile"))
 			{
 				return false;
 			}

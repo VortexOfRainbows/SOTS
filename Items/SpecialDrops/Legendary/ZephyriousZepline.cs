@@ -12,7 +12,7 @@ namespace SOTS.Items.SpecialDrops.Legendary
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Zephyrious Zeppelin");
+			DisplayName.SetDefault("Zephyrious Zepline");
 			Tooltip.SetDefault("Levels up as you progress\nLegendary Fish");
 		}
  

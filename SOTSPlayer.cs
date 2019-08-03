@@ -53,6 +53,7 @@ namespace SOTS
 		public bool LavaStar = false;
 		public int sunSoulActivate = 0;
 		public bool PlanetariumBiome = false;
+		public bool ZeplineBiome = false;
 		public bool GeodeBiome = false;
 		public bool HeartSwapDelay = false;
 		public bool needle = false;
@@ -277,9 +278,6 @@ namespace SOTS
 				return;
 			}
 			{ //Fish Set 1
-            if (player.ZoneBeach && liquidType == 0 && Main.rand.Next(10000) == 1) 
-            {
-			caughtType = mod.ItemType("ZephyriousZepline"); }
             if (player.ZoneOverworldHeight && liquidType == 0 && Main.rand.Next(500) == 1)  {
 			caughtType = mod.ItemType("PinkySpread");}
             if (player.ZoneBeach && liquidType == 0 && Main.rand.Next(200) == 1) {
@@ -329,9 +327,10 @@ namespace SOTS
 			caughtType = mod.ItemType("AngelCarp"); }
             if (Main.rand.Next(275) == 1 && PlanetariumBiome && bait.type == mod.ItemType("TinyPlanetFish")) {
 			caughtType = mod.ItemType("AngelCarp"); }
-            if (Main.rand.Next(330) == 1 && liquidType == 2 && poolSize >= 500)   {
-			caughtType = mod.ItemType("ScaledFish");
-			}
+            if (Main.rand.Next(1000) == 1 && ZeplineBiome) {
+			caughtType = mod.ItemType("ZephyriousZepline"); }
+            //if (Main.rand.Next(330) == 1 && liquidType == 2 && poolSize >= 500)   {
+			//caughtType = mod.ItemType("ScaledFish");}
 			}
 			{ //Fish Set 2
            
@@ -388,8 +387,7 @@ namespace SOTS
         {
             PlanetariumBiome = (SOTSWorld.planetarium > 0);
             GeodeBiome = (SOTSWorld.geodeBiome > 300);
-			
-		
+            ZeplineBiome = (SOTSWorld.zeplineBiome > 0);
 		}
 		public override void OnHitByNPC(NPC npc, int damage, bool crit)
 		{

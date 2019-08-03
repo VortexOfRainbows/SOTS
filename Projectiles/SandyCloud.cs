@@ -27,7 +27,9 @@ namespace SOTS.Projectiles
             aiType = 512; //18 is the demon scythe style
 			projectile.height = 40;
 			projectile.width = 38;
+			projectile.penetrate = 3;
 			projectile.thrown = true;
+			projectile.melee = true;
 			projectile.magic = false;
 		}
 		public override void AI()
