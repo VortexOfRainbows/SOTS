@@ -27,7 +27,7 @@ namespace SOTS.Items.GelGear
             item.useAnimation = 40;
             item.useTime = 40;
             item.knockBack = 4.5f;
-            item.damage = 33;
+            item.damage = 28;
             item.noUseGraphic = true; 
             item.shoot = mod.ProjectileType("WormWoodSpike");
             item.shootSpeed = 14.5f;

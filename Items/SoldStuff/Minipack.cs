@@ -92,9 +92,8 @@ namespace SOTS.Items.SoldStuff
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(null, "BackAttachment", 1);
 			recipe.AddIngredient(ItemID.Minishark, 1);
-			recipe.AddIngredient(ItemID.IllegalGunParts, 1);
-			recipe.AddIngredient(ItemID.MusketBall, 3996);
-			recipe.AddTile(TileID.Anvils);
+			recipe.AddIngredient(ItemID.Jetpack, 1);
+			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.SetResult(this);
 			recipe.AddRecipe();
 		}
