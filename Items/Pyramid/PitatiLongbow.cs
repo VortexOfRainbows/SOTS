@@ -46,6 +46,6 @@ namespace SOTS.Items.Pyramid
               }
               return false; 
 			  
-	}
+	    }
 	}
 }
