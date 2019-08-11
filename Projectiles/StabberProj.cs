@@ -17,14 +17,8 @@ namespace SOTS.Projectiles
 		
         public override void SetDefaults()
         {
-            
-            projectile.penetrate = -1; 
-            projectile.friendly = false; 
-            projectile.hostile = false; 
-            projectile.tileCollide = true;;
-            projectile.ignoreWater = true; 
-			projectile.CloneDefaults(47);
-            aiType = 47; //18 is the demon scythe style
+            projectile.CloneDefaults(66);
+            aiType = 66;
 			projectile.alpha = 0;
             projectile.width = 50;
             projectile.height = 50; 
@@ -38,8 +32,6 @@ namespace SOTS.Projectiles
 			owner.HealEffect(1);
             
 		}
-		
-
 	}
 }
 		

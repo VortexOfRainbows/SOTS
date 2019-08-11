@@ -31,21 +31,17 @@ namespace SOTS.Projectiles
 		}
 		public override void Kill(int timeLeft)
 		{	
-			int numberProjectiles = 1;
-              for (int i = 0; i < numberProjectiles; i++)
-              {
-			
-			Projectile.NewProjectile(projectile.position.X, projectile.position.Y, 10, 10,  521, (int)(projectile.damage * .1), projectile.knockBack, Main.myPlayer);
-			Projectile.NewProjectile(projectile.position.X, projectile.position.Y, -10, -10,  521, (int)(projectile.damage * .1), projectile.knockBack, Main.myPlayer);
-			Projectile.NewProjectile(projectile.position.X, projectile.position.Y, 10, -10,  521, (int)(projectile.damage * .1), projectile.knockBack, Main.myPlayer);
-			Projectile.NewProjectile(projectile.position.X, projectile.position.Y, -10, 10,  521, (int)(projectile.damage * .1), projectile.knockBack, Main.myPlayer);
-			Projectile.NewProjectile(projectile.position.X, projectile.position.Y, 0, 10,  521, (int)(projectile.damage * .1), projectile.knockBack, Main.myPlayer);
-			Projectile.NewProjectile(projectile.position.X, projectile.position.Y, 0, -10,  521, (int)(projectile.damage * .1), projectile.knockBack, Main.myPlayer);
-			Projectile.NewProjectile(projectile.position.X, projectile.position.Y, 10, 0,  521, (int)(projectile.damage * .1), projectile.knockBack, Main.myPlayer);
-			Projectile.NewProjectile(projectile.position.X, projectile.position.Y, -10, 0,  521, (int)(projectile.damage * .1), projectile.knockBack, Main.myPlayer);
-			  
-			  }
-			
+				if(projectile.owner == Main.myPlayer)
+				{
+					Projectile.NewProjectile(projectile.position.X, projectile.position.Y, 10, 10,  521, (int)(projectile.damage * .1), projectile.knockBack, Main.myPlayer);
+					Projectile.NewProjectile(projectile.position.X, projectile.position.Y, -10, -10,  521, (int)(projectile.damage * .1), projectile.knockBack, Main.myPlayer);
+					Projectile.NewProjectile(projectile.position.X, projectile.position.Y, 10, -10,  521, (int)(projectile.damage * .1), projectile.knockBack, Main.myPlayer);
+					Projectile.NewProjectile(projectile.position.X, projectile.position.Y, -10, 10,  521, (int)(projectile.damage * .1), projectile.knockBack, Main.myPlayer);
+					Projectile.NewProjectile(projectile.position.X, projectile.position.Y, 0, 10,  521, (int)(projectile.damage * .1), projectile.knockBack, Main.myPlayer);
+					Projectile.NewProjectile(projectile.position.X, projectile.position.Y, 0, -10,  521, (int)(projectile.damage * .1), projectile.knockBack, Main.myPlayer);
+					Projectile.NewProjectile(projectile.position.X, projectile.position.Y, 10, 0,  521, (int)(projectile.damage * .1), projectile.knockBack, Main.myPlayer);
+					Projectile.NewProjectile(projectile.position.X, projectile.position.Y, -10, 0,  521, (int)(projectile.damage * .1), projectile.knockBack, Main.myPlayer);
+				}
 		}
 		
 	}

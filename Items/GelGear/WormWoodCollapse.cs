@@ -66,5 +66,17 @@ namespace SOTS.Items.GelGear
 		{
 				voidMana = 4;
 		}
+		public override void AddRecipes()
+		{
+			ModRecipe recipe = new ModRecipe(mod);
+			recipe.AddIngredient(null, "WormWoodCore", 1);
+			recipe.AddIngredient(null, "SlimeyFeather", 12);
+			recipe.AddIngredient(null, "GelBar", 12);
+			recipe.AddIngredient(ItemID.Wood, 12);
+			recipe.AddIngredient(ItemID.PinkGel, 20);
+			recipe.AddTile(TileID.Anvils);
+			recipe.SetResult(this);
+			recipe.AddRecipe();
+		}
 	}
 }

@@ -38,7 +38,7 @@ namespace SOTS.NPCs.Boss
             npc.boss = false;
             npc.lavaImmune = false;
             npc.noGravity = true;
-            npc.noTileCollide = false;
+            npc.noTileCollide = true;
             npc.netAlways = false;
 		}
 		public override void AI()
@@ -330,6 +330,7 @@ namespace SOTS.NPCs.Boss
 						AICounter = 0;
 					}
 			}
+            npc.noTileCollide = true;
 		}
 		public override void NPCLoot()
 		{

@@ -36,11 +36,13 @@ namespace SOTS.Projectiles
 				oldDamage = projectile.damage;
 				wait++;
 			}
-				Projectile.NewProjectile((projectile.Center.X), projectile.Center.Y, Main.rand.Next(-8, 9), Main.rand.Next(-8, 9), 520, (int)(oldDamage * 0.75) + 1, 0, 0);
-				Projectile.NewProjectile((projectile.Center.X), projectile.Center.Y, Main.rand.Next(-8, 9), Main.rand.Next(-8, 9), 520, (int)(oldDamage * 0.75) + 1, 0, 0);
-				Projectile.NewProjectile((projectile.Center.X), projectile.Center.Y, Main.rand.Next(-8, 9), Main.rand.Next(-8, 9), 520, (int)(oldDamage * 0.75) + 1, 0, 0);
-				Projectile.NewProjectile((projectile.Center.X), projectile.Center.Y, Main.rand.Next(-8, 9), Main.rand.Next(-8, 9), 520, (int)(oldDamage * 0.75) + 1, 0, 0);
-			
+				if(projectile.owner == Main.myPlayer)
+				{
+					Projectile.NewProjectile((projectile.Center.X), projectile.Center.Y, Main.rand.Next(-8, 9), Main.rand.Next(-8, 9), 520, (int)(oldDamage * 0.75) + 1, 0, 0);
+					Projectile.NewProjectile((projectile.Center.X), projectile.Center.Y, Main.rand.Next(-8, 9), Main.rand.Next(-8, 9), 520, (int)(oldDamage * 0.75) + 1, 0, 0);
+					Projectile.NewProjectile((projectile.Center.X), projectile.Center.Y, Main.rand.Next(-8, 9), Main.rand.Next(-8, 9), 520, (int)(oldDamage * 0.75) + 1, 0, 0);
+					Projectile.NewProjectile((projectile.Center.X), projectile.Center.Y, Main.rand.Next(-8, 9), Main.rand.Next(-8, 9), 520, (int)(oldDamage * 0.75) + 1, 0, 0);
+				}
 
 		}
 	}

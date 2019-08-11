@@ -50,120 +50,118 @@ namespace SOTS.Projectiles
 					target.timeLeft--;
 					target.life = 0;
 					
-			}
-}
+					}
+		}
 		public override void Kill(int timeLeft)
 		{
-			int numberProjectiles = 1;
-              for (int i = 0; i < numberProjectiles; i++)
-              {
-			
-			Projectile.NewProjectile(projectile.Center.X + 48, projectile.Center.Y + 0, 4, 0,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			
-			Projectile.NewProjectile(projectile.Center.X + 40, projectile.Center.Y + 8, 4, 0,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			
-			Projectile.NewProjectile(projectile.Center.X + 32, projectile.Center.Y + 16, 4, 0,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			Projectile.NewProjectile(projectile.Center.X + 24, projectile.Center.Y + 24, 4, 0,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			Projectile.NewProjectile(projectile.Center.X + 16, projectile.Center.Y + 32, 4, 0,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			
-			Projectile.NewProjectile(projectile.Center.X + 40, projectile.Center.Y - 8, 4, 0,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			
-			Projectile.NewProjectile(projectile.Center.X + 32, projectile.Center.Y - 16, 4, 0,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			Projectile.NewProjectile(projectile.Center.X + 24, projectile.Center.Y - 24, 4, 0,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			Projectile.NewProjectile(projectile.Center.X + 16, projectile.Center.Y - 32, 4, 0,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			
-			
-			Projectile.NewProjectile(projectile.Center.X - 48, projectile.Center.Y + 0, -4, 0,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			
-			Projectile.NewProjectile(projectile.Center.X - 40, projectile.Center.Y + 8, -4, 0,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			
-			Projectile.NewProjectile(projectile.Center.X - 32, projectile.Center.Y + 16, -4, 0,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			Projectile.NewProjectile(projectile.Center.X - 24, projectile.Center.Y + 24, -4, 0,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			Projectile.NewProjectile(projectile.Center.X - 16, projectile.Center.Y + 32, -4, 0,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			
-			Projectile.NewProjectile(projectile.Center.X - 40, projectile.Center.Y - 8, -4, 0,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			
-			Projectile.NewProjectile(projectile.Center.X - 32, projectile.Center.Y - 16, -4, 0,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			Projectile.NewProjectile(projectile.Center.X - 24, projectile.Center.Y - 24, -4, 0,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			Projectile.NewProjectile(projectile.Center.X - 16, projectile.Center.Y - 32, -4, 0,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			
-			//up		
-			
-			
-			Projectile.NewProjectile(projectile.Center.X + 0, projectile.Center.Y + 48, 0, 4,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			
-			Projectile.NewProjectile(projectile.Center.X + 8, projectile.Center.Y + 40, 0, 4,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			
-			Projectile.NewProjectile(projectile.Center.X + 16, projectile.Center.Y + 32, 0, 4,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			Projectile.NewProjectile(projectile.Center.X + 24, projectile.Center.Y + 24, 0, 4,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			Projectile.NewProjectile(projectile.Center.X + 32, projectile.Center.Y + 16, 0, 4,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			
-			Projectile.NewProjectile(projectile.Center.X - 8, projectile.Center.Y + 40, 0, 4,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			
-			Projectile.NewProjectile(projectile.Center.X - 16, projectile.Center.Y + 32, 0, 4,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			Projectile.NewProjectile(projectile.Center.X - 24, projectile.Center.Y + 24, 0, 4,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			Projectile.NewProjectile(projectile.Center.X - 32, projectile.Center.Y + 16, 0, 4,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			
-			
-			Projectile.NewProjectile(projectile.Center.X + 0, projectile.Center.Y - 48, 0, -4,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			
-			Projectile.NewProjectile(projectile.Center.X + 8, projectile.Center.Y - 40, 0, -4,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			
-			Projectile.NewProjectile(projectile.Center.X + 16, projectile.Center.Y - 32, 0, -4,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			Projectile.NewProjectile(projectile.Center.X + 24, projectile.Center.Y - 24, 0,-4,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			Projectile.NewProjectile(projectile.Center.X + 32, projectile.Center.Y - 16, 0, -4,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			
-			Projectile.NewProjectile(projectile.Center.X - 8, projectile.Center.Y - 40, 0, -4,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			
-			Projectile.NewProjectile(projectile.Center.X - 16, projectile.Center.Y - 32, 0, -4,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			Projectile.NewProjectile(projectile.Center.X - 24, projectile.Center.Y - 24, 0, -4,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			Projectile.NewProjectile(projectile.Center.X - 32, projectile.Center.Y - 16, 0, -4,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			
-			
-			
-			
-			
-			Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 4, 4,   mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, -4, -4,   mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 4, -4,   mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, -4, 4,   mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 4,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, -4,   mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 4, 0,   mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, -4, 0,   mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			
-			
-			Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, -2, 4,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, -2, -4,   mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 4, -2,   mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, -4, -2,   mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 2, 4,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 2, -4,   mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 4, 2,   mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, -4, 2,   mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			
-			
-			Projectile.NewProjectile(projectile.Center.X + 48, projectile.Center.Y + 48, 4, 4,   mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			Projectile.NewProjectile(projectile.Center.X - 48, projectile.Center.Y - 48, -4, -4,   mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			Projectile.NewProjectile(projectile.Center.X + 48, projectile.Center.Y - 48, 4, -4,   mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			Projectile.NewProjectile(projectile.Center.X - 48, projectile.Center.Y + 48, -4, 4,   mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y + 48, 0, 4,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y - 48, 0, -4,   mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			Projectile.NewProjectile(projectile.Center.X + 48, projectile.Center.Y, 4, 0,   mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			Projectile.NewProjectile(projectile.Center.X - 48, projectile.Center.Y, -4, 0,   mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			
-			
-			Projectile.NewProjectile(projectile.Center.X + 24, projectile.Center.Y - 48, -2, 4,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			Projectile.NewProjectile(projectile.Center.X + 24, projectile.Center.Y + 48, -2, -4,   mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			Projectile.NewProjectile(projectile.Center.X - 48, projectile.Center.Y + 24, 4, -2,   mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			Projectile.NewProjectile(projectile.Center.X + 48, projectile.Center.Y + 24, -4, -2,   mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			Projectile.NewProjectile(projectile.Center.X - 24, projectile.Center.Y - 48, 2, 4,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			Projectile.NewProjectile(projectile.Center.X - 24, projectile.Center.Y + 48, 2, -4,   mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			Projectile.NewProjectile(projectile.Center.X - 48, projectile.Center.Y - 24, 4, 2,   mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
-			Projectile.NewProjectile(projectile.Center.X + 48, projectile.Center.Y - 24, -4, 2,   mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+				if(projectile.owner == Main.myPlayer)
+				{
+					Projectile.NewProjectile(projectile.Center.X + 48, projectile.Center.Y + 0, 4, 0,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					
+					Projectile.NewProjectile(projectile.Center.X + 40, projectile.Center.Y + 8, 4, 0,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					
+					Projectile.NewProjectile(projectile.Center.X + 32, projectile.Center.Y + 16, 4, 0,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					Projectile.NewProjectile(projectile.Center.X + 24, projectile.Center.Y + 24, 4, 0,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					Projectile.NewProjectile(projectile.Center.X + 16, projectile.Center.Y + 32, 4, 0,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					
+					Projectile.NewProjectile(projectile.Center.X + 40, projectile.Center.Y - 8, 4, 0,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					
+					Projectile.NewProjectile(projectile.Center.X + 32, projectile.Center.Y - 16, 4, 0,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					Projectile.NewProjectile(projectile.Center.X + 24, projectile.Center.Y - 24, 4, 0,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					Projectile.NewProjectile(projectile.Center.X + 16, projectile.Center.Y - 32, 4, 0,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					
+					
+					Projectile.NewProjectile(projectile.Center.X - 48, projectile.Center.Y + 0, -4, 0,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					
+					Projectile.NewProjectile(projectile.Center.X - 40, projectile.Center.Y + 8, -4, 0,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					
+					Projectile.NewProjectile(projectile.Center.X - 32, projectile.Center.Y + 16, -4, 0,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					Projectile.NewProjectile(projectile.Center.X - 24, projectile.Center.Y + 24, -4, 0,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					Projectile.NewProjectile(projectile.Center.X - 16, projectile.Center.Y + 32, -4, 0,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					
+					Projectile.NewProjectile(projectile.Center.X - 40, projectile.Center.Y - 8, -4, 0,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					
+					Projectile.NewProjectile(projectile.Center.X - 32, projectile.Center.Y - 16, -4, 0,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					Projectile.NewProjectile(projectile.Center.X - 24, projectile.Center.Y - 24, -4, 0,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					Projectile.NewProjectile(projectile.Center.X - 16, projectile.Center.Y - 32, -4, 0,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					
+					//up		
+					
+					
+					Projectile.NewProjectile(projectile.Center.X + 0, projectile.Center.Y + 48, 0, 4,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					
+					Projectile.NewProjectile(projectile.Center.X + 8, projectile.Center.Y + 40, 0, 4,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					
+					Projectile.NewProjectile(projectile.Center.X + 16, projectile.Center.Y + 32, 0, 4,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					Projectile.NewProjectile(projectile.Center.X + 24, projectile.Center.Y + 24, 0, 4,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					Projectile.NewProjectile(projectile.Center.X + 32, projectile.Center.Y + 16, 0, 4,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					
+					Projectile.NewProjectile(projectile.Center.X - 8, projectile.Center.Y + 40, 0, 4,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					
+					Projectile.NewProjectile(projectile.Center.X - 16, projectile.Center.Y + 32, 0, 4,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					Projectile.NewProjectile(projectile.Center.X - 24, projectile.Center.Y + 24, 0, 4,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					Projectile.NewProjectile(projectile.Center.X - 32, projectile.Center.Y + 16, 0, 4,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					
+					
+					Projectile.NewProjectile(projectile.Center.X + 0, projectile.Center.Y - 48, 0, -4,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					
+					Projectile.NewProjectile(projectile.Center.X + 8, projectile.Center.Y - 40, 0, -4,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					
+					Projectile.NewProjectile(projectile.Center.X + 16, projectile.Center.Y - 32, 0, -4,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					Projectile.NewProjectile(projectile.Center.X + 24, projectile.Center.Y - 24, 0,-4,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					Projectile.NewProjectile(projectile.Center.X + 32, projectile.Center.Y - 16, 0, -4,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					
+					Projectile.NewProjectile(projectile.Center.X - 8, projectile.Center.Y - 40, 0, -4,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					
+					Projectile.NewProjectile(projectile.Center.X - 16, projectile.Center.Y - 32, 0, -4,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					Projectile.NewProjectile(projectile.Center.X - 24, projectile.Center.Y - 24, 0, -4,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					Projectile.NewProjectile(projectile.Center.X - 32, projectile.Center.Y - 16, 0, -4,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					
+					
+					
+					
+					
+					Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 4, 4,   mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, -4, -4,   mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 4, -4,   mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, -4, 4,   mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 4,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, -4,   mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 4, 0,   mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, -4, 0,   mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					
+					
+					Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, -2, 4,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, -2, -4,   mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 4, -2,   mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, -4, -2,   mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 2, 4,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 2, -4,   mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 4, 2,   mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, -4, 2,   mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					
+					
+					Projectile.NewProjectile(projectile.Center.X + 48, projectile.Center.Y + 48, 4, 4,   mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					Projectile.NewProjectile(projectile.Center.X - 48, projectile.Center.Y - 48, -4, -4,   mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					Projectile.NewProjectile(projectile.Center.X + 48, projectile.Center.Y - 48, 4, -4,   mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					Projectile.NewProjectile(projectile.Center.X - 48, projectile.Center.Y + 48, -4, 4,   mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y + 48, 0, 4,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y - 48, 0, -4,   mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					Projectile.NewProjectile(projectile.Center.X + 48, projectile.Center.Y, 4, 0,   mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					Projectile.NewProjectile(projectile.Center.X - 48, projectile.Center.Y, -4, 0,   mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					
+					
+					Projectile.NewProjectile(projectile.Center.X + 24, projectile.Center.Y - 48, -2, 4,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					Projectile.NewProjectile(projectile.Center.X + 24, projectile.Center.Y + 48, -2, -4,   mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					Projectile.NewProjectile(projectile.Center.X - 48, projectile.Center.Y + 24, 4, -2,   mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					Projectile.NewProjectile(projectile.Center.X + 48, projectile.Center.Y + 24, -4, -2,   mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					Projectile.NewProjectile(projectile.Center.X - 24, projectile.Center.Y - 48, 2, 4,  mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					Projectile.NewProjectile(projectile.Center.X - 24, projectile.Center.Y + 48, 2, -4,   mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					Projectile.NewProjectile(projectile.Center.X - 48, projectile.Center.Y - 24, 4, 2,   mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
+					Projectile.NewProjectile(projectile.Center.X + 48, projectile.Center.Y - 24, -4, 2,   mod.ProjectileType("EctoSpark"), (int)(projectile.damage * .3), projectile.knockBack, Main.myPlayer);
 
-	}
+			}
 		}
-}
+	}	
 }
 			

@@ -71,7 +71,9 @@ namespace SOTS.Projectiles
 						   shootToY *= distance * 5;
 			   
 						   //Shoot projectile and set ai back to 0
-						   Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, shootToX, shootToY, mod.ProjectileType("PlanetaryFlame"), projectile.damage, 0, Main.myPlayer, 0f, 0f); //Spawning a projectile
+						   
+							if(projectile.owner == Main.myPlayer)
+							Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, shootToX, shootToY, mod.ProjectileType("PlanetaryFlame"), projectile.damage, 0, Main.myPlayer, 0f, 0f); //Spawning a projectile
 					   }
 				   }
 				}

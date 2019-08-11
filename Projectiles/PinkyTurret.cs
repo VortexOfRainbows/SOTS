@@ -95,11 +95,15 @@ namespace SOTS.Projectiles        //We need this to basically indicate the folde
 						{
 						shootY2 = -5;
 						}
-						Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, shootX, shootY, 22, projectile.damage, 0, Main.myPlayer, 0f, 0f);
-						Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, -shootX, -shootY, 22, projectile.damage, 0, Main.myPlayer, 0f, 0f);
-						Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, shootX2, shootY2, 22, projectile.damage, 0, Main.myPlayer, 0f, 0f);
-						Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, -shootX2, -shootY2, 22, projectile.damage, 0, Main.myPlayer, 0f, 0f);
-                        Main.PlaySound(2, (int)projectile.position.X, (int)projectile.position.Y, 24); //24 is the sound, so when this projectile is shot will make that sound
+						
+						if(projectile.owner == Main.myPlayer)
+						{
+								Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, shootX, shootY, 22, projectile.damage, 0, Main.myPlayer, 0f, 0f);
+								Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, -shootX, -shootY, 22, projectile.damage, 0, Main.myPlayer, 0f, 0f);
+								Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, shootX2, shootY2, 22, projectile.damage, 0, Main.myPlayer, 0f, 0f);
+								Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, -shootX2, -shootY2, 22, projectile.damage, 0, Main.myPlayer, 0f, 0f);
+								Main.PlaySound(2, (int)projectile.position.X, (int)projectile.position.Y, 24); //24 is the sound, so when this projectile is shot will make that sound
+						}
                         projectile.ai[0] = 0f;
                     }
                 }

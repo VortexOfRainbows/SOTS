@@ -36,12 +36,14 @@ namespace SOTS.Projectiles
 			wait += 1;
 			if(wait == 30)
 			{
+				if(projectile.owner == Main.myPlayer)
 				Projectile.NewProjectile(projectile.position.X, projectile.position.Y, 0, 0, 22, (int)(projectile.damage * 1), projectile.knockBack, Main.myPlayer);
 
 			}
 			
 			
 			if(wait == 60){
+				if(projectile.owner == Main.myPlayer)
 				Projectile.NewProjectile(projectile.position.X, projectile.position.Y, 0, 0, 22, (int)(projectile.damage * 1), projectile.knockBack, Main.myPlayer);
 
 			}
@@ -49,12 +51,14 @@ namespace SOTS.Projectiles
 			
 			if(wait == 90)
 			{
+				if(projectile.owner == Main.myPlayer)
 				Projectile.NewProjectile(projectile.position.X, projectile.position.Y, 0, 0, 22, (int)(projectile.damage * 1), projectile.knockBack, Main.myPlayer);
 
 			}
 			
 			if(wait >= 200)
 			{
+				if(projectile.owner == Main.myPlayer)
 				Projectile.NewProjectile(projectile.position.X, projectile.position.Y, 0, 3, 22, (int)(projectile.damage * 1.2), projectile.knockBack, Main.myPlayer);
 
 			}

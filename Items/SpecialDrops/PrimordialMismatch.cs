@@ -20,8 +20,8 @@ namespace SOTS.Items.SpecialDrops
 			item.melee = true;
 			item.width = 68;
 			item.height = 68;
-			item.useTime = 36;
-			item.useAnimation = 36;
+			item.useTime = 40;
+			item.useAnimation = 40;
 			item.useStyle = 1;
 			item.knockBack = 6;
 			item.value = 50000;
@@ -39,10 +39,11 @@ namespace SOTS.Items.SpecialDrops
               int numberProjectiles = 3;
               for (int i = 0; i < numberProjectiles; i++)
               {
-                  Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(18)); // This defines the projectiles random spread . 30 degree spread.
-                  Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI);
-				  Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, 307, damage, knockBack, player.whoAmI);
+                  Vector2 perturbedSpeed1 = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(18)); 
+                  Projectile.NewProjectile(position.X, position.Y, perturbedSpeed1.X, perturbedSpeed1.Y, type, damage, knockBack, player.whoAmI);
               }
+                  Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(3)); 
+				  Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, 307, damage, knockBack, player.whoAmI);
               return false; 
 			  
 	}

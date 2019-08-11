@@ -36,9 +36,12 @@ namespace SOTS.Projectiles
 		{
 			for(int i = 0; i < 4; i++)
 			{
-			Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, Main.rand.Next(-6,7), Main.rand.Next(-6,7), mod.ProjectileType("PinkyMusketBall"), (int)(projectile.damage * 1f), projectile.knockBack, Main.myPlayer);
-			
-			Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, Main.rand.Next(-6,7), Main.rand.Next(-6,7), 22, (int)(projectile.damage * 1f), projectile.knockBack, Main.myPlayer);
+				if(projectile.owner == Main.myPlayer)
+				{
+					Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, Main.rand.Next(-6,7), Main.rand.Next(-6,7), mod.ProjectileType("PinkyMusketBall"), (int)(projectile.damage * 1f), projectile.knockBack, Main.myPlayer);
+					
+					Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, Main.rand.Next(-6,7), Main.rand.Next(-6,7), 22, (int)(projectile.damage * 1f), projectile.knockBack, Main.myPlayer);
+				}
 			}
 		}
 		

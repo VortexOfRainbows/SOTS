@@ -147,7 +147,7 @@ namespace SOTS.NPCs
 				}
 				if (npc.type == NPCID.WyvernHead)  
 				{
-					if (Main.rand.Next(4) == 0) 
+					if (Main.rand.Next(20) == 0) 
 					{
 							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("WyvernSword"), 1); 
 					}
@@ -155,7 +155,7 @@ namespace SOTS.NPCs
 					{
 							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemID.GiantHarpyFeather, 1); 
 					}
-					if (Main.rand.Next(12) == 0) 
+					if (Main.rand.Next(36) == 0) 
 					{
 							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("StormSerpantStaff"), 1); 
 					}
@@ -310,13 +310,13 @@ namespace SOTS.NPCs
 				}
 				if (npc.type == NPCID.UndeadViking)  
 				{
-					if (Main.rand.Next(25) == 0) 
+					if (Main.rand.Next(45) == 0) 
 					{
 					   
 							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("BarbaricEssence"), 1); 
 						
 					}
-					if (Main.rand.Next(15) == 0) 
+					if (Main.rand.Next(35) == 0) 
 					{
 					   
 							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FrostburnBow"), 1); 
