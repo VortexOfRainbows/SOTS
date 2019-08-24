@@ -33,7 +33,7 @@ namespace SOTS.Items.GelGear
 		{
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.Bottle, 1);
-			recipe.AddIngredient(null,"Peanut", 50);
+			recipe.AddIngredient(null,"Peanut", 5);
 			recipe.AddIngredient(ItemID.BeeWax, 1);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this);

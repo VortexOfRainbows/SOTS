@@ -11,7 +11,7 @@ namespace SOTS.Items.OreItems
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Ruby Trident");
-			Tooltip.SetDefault("Enhances the power to thrust using the unparrelled power of the ruby\nAllows for life steal");
+			Tooltip.SetDefault("Allows for life steal");
 		}
 		public override void SetDefaults()
 		{

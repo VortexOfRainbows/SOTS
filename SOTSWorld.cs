@@ -1518,6 +1518,7 @@ namespace SOTS
 						}
 						int counterL = 0;
 						int counterR = 0;
+						int counterSpike = 0;
 						for(int findTileX = 100; findTileX < Main.maxTilesX - 100; findTileX++)
 						{
 							for(int findTileY = Main.maxTilesY - 100; findTileY > pyramidY + 30; findTileY--)
@@ -1551,13 +1552,55 @@ namespace SOTS
 										}
 									}
 								}
-								if(findTileY <= pyramidY + (size - 70))
+								if(findTileY <= pyramidY + (size - 70) && findTileY >= pyramidY + 10)
 								{
 									Tile tile = Framing.GetTileSafely(findTileX, findTileY);
 									Tile tileLeft = Framing.GetTileSafely(findTileX - 1, findTileY);
 									Tile tileRight = Framing.GetTileSafely(findTileX + 1, findTileY);
 									Tile tileUp = Framing.GetTileSafely(findTileX, findTileY - 1);
 									Tile tileDown = Framing.GetTileSafely(findTileX, findTileY + 1);
+									if(tile.type == (ushort)mod.TileType("PyramidSlabTile") && tile.active() && tileLeft.type == (ushort)mod.TileType("PyramidSlabTile") && tileLeft.active() && tileRight.type == (ushort)mod.TileType("PyramidSlabTile") && tileRight.active())
+									{
+										counterSpike++;
+										if(counterSpike >= 100)
+										{
+											counterSpike = 0;
+											for(int sizeSpike = 0; sizeSpike < Main.rand.Next(4,20); sizeSpike++)
+											{
+													Tile tileSpikeR = Framing.GetTileSafely(findTileX + sizeSpike, findTileY);
+													Tile tileSpikeRU = Framing.GetTileSafely(findTileX + sizeSpike, findTileY - 1);
+													Tile tileSpikeRD = Framing.GetTileSafely(findTileX + sizeSpike, findTileY + 1);
+													Tile tileSpikeL = Framing.GetTileSafely(findTileX - sizeSpike, findTileY);
+													Tile tileSpikeLU = Framing.GetTileSafely(findTileX - sizeSpike, findTileY - 1);
+													Tile tileSpikeLD = Framing.GetTileSafely(findTileX - sizeSpike, findTileY + 1);
+													
+												if(tileSpikeR.active() && tileSpikeR.type == (ushort)mod.TileType("PyramidSlabTile") && tileSpikeL.active() && tileSpikeL.type == (ushort)mod.TileType("PyramidSlabTile"))
+												{
+													if(tileSpikeLU.active() == false && tileSpikeLD.active() == true)
+													{
+														tileSpikeL.type = 232; //wooden spike
+													}
+													if(tileSpikeRU.active() == false && tileSpikeRD.active() == true)
+													{
+														tileSpikeR.type = 232; //wooden spike
+													}
+													if(tileSpikeLU.active() == true && tileSpikeLD.active() == false)
+													{
+														tileSpikeL.type = 232; //wooden spike
+													}
+													if(tileSpikeRU.active() == true && tileSpikeRD.active() == false)
+													{
+														tileSpikeR.type = 232; //wooden spike
+													}
+												}
+												else
+												{
+													break;
+												}
+											}
+										}
+										
+									}
 									if(tile.type == (ushort)mod.TileType("PyramidSlabTile"))
 									{
 										if(tileLeft.active() && tile.active() && !tileRight.active() && tileRight.wall == (ushort)mod.WallType("PyramidWallTile"))
@@ -1881,6 +1924,39 @@ namespace SOTS
 								}
 							}		
 						}
+						for(int findTileX = 100; findTileX < Main.maxTilesX - 100; findTileX++)
+						{
+							for(int findTileY = Main.maxTilesY - 100; findTileY > pyramidY + 30; findTileY--)
+							{
+								Tile tileCheck = Framing.GetTileSafely(findTileX, findTileY);
+								if(tileCheck.type == (ushort)mod.TileType("LeftIndicatorTile"))
+								{
+									GeneratePyramidRoom(findTileX, findTileY, 0);
+								}
+								if(tileCheck.type == (ushort)mod.TileType("RightIndicatorTile"))
+								{
+									GeneratePyramidRoom(findTileX, findTileY, 1);
+								}
+							}
+						}
+						for(int findTileX = 100; findTileX < Main.maxTilesX - 100; findTileX++)
+						{
+							for(int findTileY = Main.maxTilesY - 100; findTileY > pyramidY + 30; findTileY--)
+							{
+								Tile tileCheck = Framing.GetTileSafely(findTileX, findTileY);
+								if(tileCheck.type == (ushort)mod.TileType("UpIndicatorTile"))
+								{
+									GeneratePyramidRoom(findTileX, findTileY, 2);
+								}
+								if(tileCheck.type == (ushort)mod.TileType("DownIndicatorTile"))
+								{
+									GeneratePyramidRoom(findTileX, findTileY, 3);
+								}
+							}
+						}
+						
+						
+						
 						
 						/*
 						int radius7 = 20;
@@ -2159,6 +2235,10 @@ namespace SOTS
 									}
 								}
 							}
+							
+							
+							
+							
 			}));
 		
 		}
@@ -2379,6 +2459,3641 @@ namespace SOTS
 			legendLevel++;
 		//25 max
 			
+		}
+		int variation = 0;
+		public void GeneratePyramidRoom(int x, int y, int direction)
+		{
+			//direction 0 = left, 1 = right, 2 = up, 3 = down
+			if(direction == 0 || direction == 1 || direction == 2 || direction == 3)
+			{
+				Tile initialTile = Framing.GetTileSafely(x, y);
+				variation = Main.rand.Next(10);
+				if(direction == 0)
+				{
+					//tile.type = 200;
+					for(int checkLeft = 0; checkLeft < 300; checkLeft++)
+					{
+						int check5 = 0;
+						for(int h = 2; h >= -2; h--)
+						{
+							Tile checkTile = Framing.GetTileSafely(x - checkLeft, y + h);
+							if(checkTile.active() == false || checkTile.wall != (ushort)mod.WallType("PyramidWallTile"))
+							{
+								check5++;
+							}
+							checkTile.active(false);
+						}
+						if(check5 >= 5)
+						{
+							break;
+						}
+					}
+					if(variation == 0)
+					{
+						int[,] _pyramidRoom = {
+							{1,1,1,1,1,1,7,7,3,3,3,3,3,3,3,3,3},
+							{1,7,7,7,7,7,7,7,0,0,4,8,8,3,3,3,3},
+							{1,7,7,7,7,7,0,0,0,0,3,3,3,3,3,3,3},
+							{1,7,7,0,0,0,0,0,0,0,0,0,4,8,8,3,3},
+							{1,1,7,7,0,0,0,0,0,0,0,0,3,3,3,3,3},
+							{2,2,2,2,2,2,2,2,2,0,0,0,2,2,2,2,2},
+							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,3,3},
+							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,3},
+							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,3},
+							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,3,3},
+							{0,0,0,0,0,0,0,0,0,0,0,0,0,3,3,3,3},
+							{2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3},
+							{1,1,1,1,1,1,8,8,8,8,8,8,8,3,3,3,3},
+							{1,8,8,8,8,8,8,8,8,8,8,8,8,8,3,3,3},
+							{1,8,8,8,8,8,8,8,8,8,8,8,8,8,8,3,3},
+							{1,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,3},
+							{1,1,8,5,8,8,8,8,6,8,8,8,8,8,8,8,8}
+						};	
+						
+						int PosX = x;
+						int PosY = y;
+						PosX -= (int)(.5f * _pyramidRoom.GetLength(1));
+						PosY -= (int)(.5f * _pyramidRoom.GetLength(0));
+						//i = vertical, j = horizontal
+						for(int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)
+						{
+							for (int i = 0; i < _pyramidRoom.GetLength(0); i++) {
+								for (int j = 0; j < _pyramidRoom.GetLength(1); j++) {
+									int k = PosX + j;
+									int l = PosY + i;
+									if (WorldGen.InWorld(k, l, 30)) {
+										Tile tile = Framing.GetTileSafely(k, l);
+										switch (_pyramidRoom[i, j]) {
+											case 0:
+												tile.active(false);
+												break;
+											case 1:
+												tile.type = 274; //sandstoneslab
+												tile.active(true);
+												break;
+											case 2:
+												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.active(true);
+												break;
+											case 3:
+												tile.type = 151; //sandstone brick
+												tile.active(true);
+												break;
+											case 4:
+												tile.type = 151; //sandstone brick
+												tile.halfBrick(true);
+												tile.active(true);
+												break;
+											case 5:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, TileID.Statues, true, true, -1, Main.rand.Next(71)); //random statue
+												break;
+											case 6:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
+												break;
+											case 7:
+												tile.type = 51; //cobweb
+												tile.active(true);
+												break;
+											case 8:
+												tile.liquidType(0);
+												tile.liquid = 255;
+												
+												if(confirmPlatforms == 0)
+												tile.active(false);
+											
+												WorldGen.SquareTileFrame(k, l, false);
+												break;
+											case 9:
+												break;
+												break;
+											
+										}
+									}
+								}
+							}
+						}
+					}
+					if(variation == 1)
+					{
+						int[,] _pyramidRoom = {
+							{1,1,1,1,1,7,0,0,0,0,0,7,1,1,1,1,1},
+							{1,2,1,7,7,0,0,0,0,0,0,0,7,7,1,2,1},
+							{1,1,7,0,0,0,0,0,0,0,0,0,0,0,7,1,1},
+							{1,7,0,0,0,0,0,0,0,0,0,0,0,0,0,7,1},
+							{1,7,0,0,0,0,0,7,0,7,0,0,0,0,0,7,1},
+							{7,0,0,0,0,0,0,7,2,7,0,0,0,0,0,0,7},
+							{0,0,0,0,0,0,2,7,7,7,2,0,0,0,0,0,0},
+							{0,0,0,0,7,7,7,1,1,1,7,7,7,0,0,9,9},
+							{0,0,0,0,0,2,7,1,0,1,7,2,0,0,0,6,9},
+							{0,0,0,0,7,7,7,1,1,1,7,7,7,0,0,3,3},
+							{0,0,0,0,0,0,2,7,7,7,2,0,0,0,0,0,3},
+							{7,0,0,0,0,0,0,7,2,7,0,0,0,0,0,0,7},
+							{1,7,0,0,0,0,0,7,0,7,0,0,0,0,0,7,1},
+							{1,7,0,0,0,0,0,0,0,0,0,0,0,0,0,7,1},
+							{1,1,7,0,0,0,0,0,0,0,0,0,0,0,7,1,1},
+							{1,2,1,7,7,0,0,0,0,0,0,0,7,7,1,2,1},
+							{1,1,1,1,1,7,0,0,0,0,0,7,1,1,1,1,1}
+						};	
+						
+						int PosX = x;
+						int PosY = y;
+						PosX -= (int)(.5f * _pyramidRoom.GetLength(1));
+						PosY -= (int)(.5f * _pyramidRoom.GetLength(0));
+						//i = vertical, j = horizontal
+						for(int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)
+						{
+							for (int i = 0; i < _pyramidRoom.GetLength(0); i++) {
+								for (int j = 0; j < _pyramidRoom.GetLength(1); j++) {
+									int k = PosX + j;
+									int l = PosY + i;
+									if (WorldGen.InWorld(k, l, 30)) {
+										Tile tile = Framing.GetTileSafely(k, l);
+										switch (_pyramidRoom[i, j]) {
+											case 0:
+												tile.active(false);
+												break;
+											case 1:
+												tile.type = 274; //sandstoneslab
+												tile.active(true);
+												break;
+											case 2:
+												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.active(true);
+												break;
+											case 3:
+												tile.type = 151; //sandstone brick
+												tile.active(true);
+												break;
+											case 4:
+												tile.type = 151; //sandstone brick
+												tile.halfBrick(true);
+												tile.active(true);
+												break;
+											case 5:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, TileID.Statues, true, true, -1, Main.rand.Next(71)); //random statue
+												break;
+											case 6:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
+												break;
+											case 7:
+												tile.type = 232; //woodenspike
+												tile.active(true);
+												break;
+											case 8:
+												tile.liquidType(0);
+												tile.liquid = 255;
+												
+												if(confirmPlatforms == 0)
+												tile.active(false);
+											
+												WorldGen.SquareTileFrame(k, l, false);
+												break;
+											case 9:
+												if(confirmPlatforms == 0)
+												tile.active(false);
+												break;
+												break;
+											
+										}
+									}
+								}
+							}
+						}
+					}
+					if(variation == 2)
+					{
+						int[,] _pyramidRoom = {
+							{1,1,1,1,1,1,3,1,1,1,1,1,1,3,1,1,1},
+							{1,0,0,0,0,0,3,0,0,0,0,3,3,3,3,3,0},
+							{1,0,0,0,3,3,3,3,3,0,0,3,1,1,1,3,0},
+							{1,0,0,0,3,1,1,1,3,0,0,0,1,1,1,0,0},
+							{1,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0},
+							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,0},
+							{0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1},
+							{0,0,0,0,0,0,5,0,0,0,0,3,3,3,3,3,0},
+							{0,0,0,1,1,1,1,1,1,0,0,0,3,0,0,0,0},
+							{3,0,0,0,3,3,3,3,0,0,0,0,3,0,3,0,0},
+							{3,0,0,0,0,0,3,0,0,3,8,8,8,8,3,0,0},
+							{3,8,8,8,3,0,3,0,0,3,8,8,8,8,3,8,3},
+							{3,8,8,8,3,8,8,8,8,3,8,8,8,8,3,8,3},
+							{3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3}
+						};	
+						
+						int PosX = x;
+						int PosY = y;
+						PosX -= (int)(.5f * _pyramidRoom.GetLength(1));
+						PosY -= (int)(.5f * _pyramidRoom.GetLength(0));
+						//i = vertical, j = horizontal
+						for(int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)
+						{
+							for (int i = 0; i < _pyramidRoom.GetLength(0); i++) {
+								for (int j = 0; j < _pyramidRoom.GetLength(1); j++) {
+									int k = PosX + j;
+									int l = PosY + i;
+									if (WorldGen.InWorld(k, l, 30)) {
+										Tile tile = Framing.GetTileSafely(k, l);
+										switch (_pyramidRoom[i, j]) {
+											case 0:
+												if(confirmPlatforms == 0)
+												tile.active(false);
+												break;
+											case 1:
+												tile.type = 274; //sandstoneslab
+												tile.active(true);
+												break;
+											case 2:
+												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.active(true);
+												break;
+											case 3:
+												tile.type = 151; //sandstone brick
+												tile.active(true);
+												break;
+											case 4:
+												tile.type = 151; //sandstone brick
+												tile.halfBrick(true);
+												tile.active(true);
+												break;
+											case 5:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, 16); //anvil
+												break;
+											case 6:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, 302); //glass kiln
+												break;
+											case 7:
+												tile.type = 232; //woodenspike
+												tile.active(true);
+												break;
+											case 8:
+												tile.liquidType(1);
+												tile.liquid = 255;
+												
+												if(confirmPlatforms == 0)
+												tile.active(false);
+											
+												WorldGen.SquareTileFrame(k, l, false);
+												break;
+											case 9:
+												tile.active(true);
+												break;
+												break;
+											
+										}
+									}
+								}
+							}
+						}
+					}
+					if(variation == 3)
+					{
+						int[,] _pyramidRoom = {
+							{0,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,0},
+							{0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0},
+							{0,0,0,3,3,3,3,3,3,3,3,3,3,3,0,0,0},
+							{0,0,0,0,2,2,2,2,2,2,2,2,2,0,0,0,0},
+							{0,0,0,0,0,3,3,3,3,3,3,3,0,0,0,0,0},
+							{0,0,0,0,0,0,2,2,2,2,2,0,0,0,0,0,0},
+							{0,0,0,0,0,0,0,3,3,3,0,0,0,0,0,0,0},
+							{0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0},
+							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+							{0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,7,0},
+							{0,0,0,0,0,0,0,3,3,3,0,0,0,3,3,3,3},
+							{0,0,0,0,0,0,2,2,2,2,2,0,0,0,2,2,3},
+							{0,0,0,0,0,3,3,3,3,3,3,3,0,0,0,0,3},
+							{0,0,0,0,2,2,2,2,2,2,2,2,2,0,0,0,0},
+							{0,0,0,3,3,3,3,3,3,3,3,3,3,3,0,0,0},
+							{0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0},
+							{0,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,0}
+						};	
+						
+						int PosX = x;
+						int PosY = y;
+						PosX -= (int)(.5f * _pyramidRoom.GetLength(1));
+						PosY -= (int)(.5f * _pyramidRoom.GetLength(0));
+						//i = vertical, j = horizontal
+						for(int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)
+						{
+							for (int i = 0; i < _pyramidRoom.GetLength(0); i++) {
+								for (int j = 0; j < _pyramidRoom.GetLength(1); j++) {
+									int k = PosX + j;
+									int l = PosY + i;
+									if (WorldGen.InWorld(k, l, 30)) {
+										Tile tile = Framing.GetTileSafely(k, l);
+										switch (_pyramidRoom[i, j]) {
+											case 0:
+												if(confirmPlatforms == 0)
+												tile.active(false);
+												break;
+											case 1:
+												tile.type = 274; //sandstoneslab
+												tile.active(true);
+												break;
+											case 2:
+												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.active(true);
+												break;
+											case 3:
+												tile.type = 151; //sandstone brick
+												tile.active(true);
+												break;
+											case 4:
+												tile.type = 151; //sandstone brick
+												tile.halfBrick(true);
+												tile.active(true);
+												break;
+											case 5:
+												tile.active(true);
+												break;
+											case 6:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, 16); //anvil
+												break;
+											case 7:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("CrystalStatue")); //heart crystal
+												break;
+											case 8:
+												tile.liquidType(1);
+												tile.liquid = 255;
+												
+												if(confirmPlatforms == 0)
+												tile.active(false);
+											
+												WorldGen.SquareTileFrame(k, l, false);
+												break;
+											case 9:
+												tile.active(true);
+												break;
+												break;
+											
+										}
+									}
+								}
+							}
+						}
+					}
+					if(variation == 4)
+					{
+						int[,] _pyramidRoom = {
+							{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+							{1,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3},
+							{1,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+							{1,3,5,0,5,0,0,0,0,0,0,0,0,0,0,0,0},
+							{1,9,9,9,9,9,9,0,0,0,0,0,0,0,0,4,0},
+							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,4,4},
+							{0,0,0,0,0,0,0,0,0,0,0,0,4,4,4,4,4},
+							{0,0,0,0,0,0,0,0,0,2,2,2,2,2,2,2,2},
+							{0,0,0,0,0,0,0,0,0,0,3,3,3,3,3,3,3},
+							{0,0,0,0,0,0,0,0,4,0,3,3,3,3,3,3,3},
+							{0,0,0,0,0,0,0,0,4,4,3,3,3,3,3,3,3},
+							{0,0,0,0,0,0,0,2,2,2,2,2,2,2,2,2,2},
+							{0,0,0,0,0,4,4,0,3,3,3,3,3,3,3,3,3},
+							{0,0,0,0,4,4,4,4,3,3,3,3,3,3,3,3,3},
+							{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
+							{3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3},
+							{3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3}
+						};	
+						
+						int PosX = x;
+						int PosY = y;
+						PosX -= (int)(.5f * _pyramidRoom.GetLength(1));
+						PosY -= (int)(.5f * _pyramidRoom.GetLength(0));
+						//i = vertical, j = horizontal
+						for(int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)
+						{
+							for (int i = 0; i < _pyramidRoom.GetLength(0); i++) {
+								for (int j = 0; j < _pyramidRoom.GetLength(1); j++) {
+									int k = PosX + j;
+									int l = PosY + i;
+									if (WorldGen.InWorld(k, l, 30)) {
+										Tile tile = Framing.GetTileSafely(k, l);
+										switch (_pyramidRoom[i, j]) {
+											case 0:
+												if(confirmPlatforms == 0)
+												tile.active(false);
+												break;
+											case 1:
+												tile.type = 274; //sandstoneslab
+												tile.active(true);
+												break;
+											case 2:
+												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.active(true);
+												break;
+											case 3:
+												tile.type = 151; //sandstone brick
+												tile.active(true);
+												break;
+											case 4:
+												tile.type = 332; //gold coin
+												tile.active(true);
+												break;
+											case 5:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, 376, true, true, -1, Main.rand.Next(3)); //crates
+												break;
+											case 6:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, 16); //anvil
+												break;
+											case 7:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("CrystalStatue")); //heart crystal
+												break;
+											case 8:
+												tile.liquidType(1);
+												tile.liquid = 255;
+												
+												if(confirmPlatforms == 0)
+												tile.active(false);
+											
+												WorldGen.SquareTileFrame(k, l, false);
+												break;
+											case 9:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform //platform
+												break;
+												break;
+											
+										}
+									}
+								}
+							}
+						}
+					}
+					if(variation == 5)
+					{
+						int[,] _pyramidRoom = {
+							{3,3,3,3,3,2,3,3,3,3,3,2,3,3,3,3,3},
+							{3,6,6,6,6,2,1,1,1,1,1,2,6,6,6,6,3},
+							{3,0,6,0,6,6,6,6,6,6,6,6,6,0,6,0,3},
+							{3,0,0,0,6,0,0,0,6,0,0,0,6,0,0,0,3},
+							{3,0,0,0,0,0,0,0,6,0,0,0,0,0,0,0,3},
+							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+							{0,0,0,0,0,0,0,0,7,0,0,0,0,0,0,0,0},
+							{3,0,0,0,0,0,0,0,2,2,0,0,0,0,0,0,3},
+							{3,0,0,0,6,0,0,0,2,0,0,0,6,0,0,0,3},
+							{3,0,6,0,6,6,6,6,2,6,6,6,6,0,6,0,3},
+							{3,6,6,6,6,2,1,1,1,1,1,2,6,6,6,6,3},
+							{3,3,3,3,3,2,3,3,3,3,3,2,3,3,3,3,3}
+						};	
+						
+						int PosX = x;
+						int PosY = y;
+						PosX -= (int)(.5f * _pyramidRoom.GetLength(1));
+						PosY -= (int)(.5f * _pyramidRoom.GetLength(0));
+						//i = vertical, j = horizontal
+						for(int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)
+						{
+							for (int i = 0; i < _pyramidRoom.GetLength(0); i++) {
+								for (int j = 0; j < _pyramidRoom.GetLength(1); j++) {
+									int k = PosX + j;
+									int l = PosY + i;
+									if (WorldGen.InWorld(k, l, 30)) {
+										Tile tile = Framing.GetTileSafely(k, l);
+										switch (_pyramidRoom[i, j]) {
+											case 0:
+												if(confirmPlatforms == 0)
+												tile.active(false);
+												break;
+											case 1:
+												tile.type = 274; //sandstoneslab
+												tile.active(true);
+												break;
+											case 2:
+												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.active(true);
+												break;
+											case 3:
+												tile.type = 151; //sandstone brick
+												tile.active(true);
+												break;
+											case 4:
+												tile.type = 332; //gold coin
+												tile.active(true);
+												break;
+											case 5:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, 376, true, true, -1, Main.rand.Next(3)); //crates
+												break;
+											case 6:
+												tile.type = 232; //wooden spike
+												tile.active(true);
+												break;
+											case 7:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
+												break;
+											case 8:
+												tile.liquidType(1);
+												tile.liquid = 255;
+												
+												if(confirmPlatforms == 0)
+												tile.active(false);
+											
+												WorldGen.SquareTileFrame(k, l, false);
+												break;
+											case 9:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform //platform
+												break;
+												break;
+											
+										}
+									}
+								}
+							}
+						}
+					}
+					if(variation == 6)
+					{
+						int[,] _pyramidRoom = {
+							{3,3,3,3,3,0,0,0,0,0,0,0,3,3,3,3,3},
+							{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+							{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+							{3,0,0,3,3,3,2,2,2,2,2,3,3,3,0,0,3},
+							{3,0,0,3,0,0,0,0,0,0,0,0,0,3,0,0,3},
+							{0,0,0,3,0,0,0,0,0,0,0,0,0,3,0,0,0},
+							{0,0,0,2,0,0,3,3,3,3,3,0,0,2,0,0,0},
+							{0,0,0,2,0,0,2,0,0,0,2,0,0,2,0,0,0},
+							{0,0,0,2,0,0,2,0,0,0,2,0,0,2,0,0,0},
+							{0,0,0,2,0,0,2,0,4,0,2,0,0,2,0,0,0},
+							{0,0,0,2,0,0,3,3,3,3,3,0,0,2,0,0,0},
+							{0,0,0,3,7,7,7,7,0,7,7,7,7,3,0,0,0},
+							{3,0,0,3,7,7,7,7,7,7,7,7,7,3,0,0,3},
+							{3,0,0,3,3,3,2,2,2,2,2,3,3,3,0,0,3},
+							{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+							{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+							{3,3,3,3,3,0,0,0,0,0,0,0,3,3,3,3,3}
+						};	
+						
+						int PosX = x;
+						int PosY = y;
+						PosX -= (int)(.5f * _pyramidRoom.GetLength(1));
+						PosY -= (int)(.5f * _pyramidRoom.GetLength(0));
+						//i = vertical, j = horizontal
+						for(int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)
+						{
+							for (int i = 0; i < _pyramidRoom.GetLength(0); i++) {
+								for (int j = 0; j < _pyramidRoom.GetLength(1); j++) {
+									int k = PosX + j;
+									int l = PosY + i;
+									if (WorldGen.InWorld(k, l, 30)) {
+										Tile tile = Framing.GetTileSafely(k, l);
+										switch (_pyramidRoom[i, j]) {
+											case 0:
+												if(confirmPlatforms == 0)
+												tile.active(false);
+												break;
+											case 1:
+												tile.type = 274; //sandstoneslab
+												tile.active(true);
+												break;
+											case 2:
+												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.active(true);
+												break;
+											case 3:
+												tile.type = 151; //sandstone brick
+												tile.active(true);
+												break;
+											case 4:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, 219); //extractinator
+												break;
+											case 5:
+												tile.type = 232; //spike
+												tile.active(true);
+												break;
+											case 6:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, 376, true, true, -1, Main.rand.Next(3)); //crates
+												break;
+											case 7:
+												tile.type = 332; //gold coin
+												tile.active(true);
+												break;
+											case 8:
+												tile.liquidType(1);
+												tile.liquid = 255;
+												
+												if(confirmPlatforms == 0)
+												tile.active(false);
+											
+												WorldGen.SquareTileFrame(k, l, false);
+												break;
+											case 9:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform //platform
+												break;
+												break;
+											
+										}
+									}
+								}
+							}
+						}
+					}
+					if(variation == 7)
+					{
+						int[,] _pyramidRoom = {
+							{1,1,1,1,5,5,0,0,0,0,0,5,5,1,1,1,1},
+							{1,1,5,5,5,0,0,0,0,0,0,0,5,5,5,1,1},
+							{1,5,5,5,0,0,0,0,0,0,0,0,0,5,5,5,1},
+							{5,5,0,0,0,0,0,0,0,0,0,0,0,0,0,5,5},
+							{5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5},
+							{0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0},
+							{0,0,0,0,0,0,0,3,3,3,0,0,0,0,0,0,0},
+							{0,0,0,0,0,0,3,3,3,3,3,0,0,0,0,0,0},
+							{0,0,0,0,0,3,3,3,3,3,3,3,8,8,8,8,8},
+							{0,0,0,0,3,3,3,3,3,3,3,3,3,8,8,8,8},
+							{0,0,0,3,3,3,3,3,3,3,3,3,3,3,8,8,8},
+							{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
+							{3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3},
+							{3,3,2,3,2,0,3,2,2,2,3,0,2,3,2,3,3},
+							{3,3,2,3,0,0,3,2,0,2,3,0,0,3,2,3,3},
+							{3,3,2,3,6,0,3,2,2,2,3,6,0,3,2,3,3},
+							{3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3}
+						};	
+						
+						int PosX = x;
+						int PosY = y;
+						PosX -= (int)(.5f * _pyramidRoom.GetLength(1));
+						PosY -= (int)(.5f * _pyramidRoom.GetLength(0));
+						//i = vertical, j = horizontal
+						for(int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)
+						{
+							for (int i = 0; i < _pyramidRoom.GetLength(0); i++) {
+								for (int j = 0; j < _pyramidRoom.GetLength(1); j++) {
+									int k = PosX + j;
+									int l = PosY + i;
+									if (WorldGen.InWorld(k, l, 30)) {
+										Tile tile = Framing.GetTileSafely(k, l);
+										switch (_pyramidRoom[i, j]) {
+											case 0:
+												if(confirmPlatforms == 0)
+												tile.active(false);
+												break;
+											case 1:
+												tile.type = 274; //sandstoneslab
+												tile.active(true);
+												break;
+											case 2:
+												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.active(true);
+												break;
+											case 3:
+												tile.type = 151; //sandstone brick
+												tile.active(true);
+												break;
+											case 4:
+												tile.type = 51; //cobweb
+												tile.active(true);
+												break;
+											case 5:
+												tile.type = 51; //cobweb
+												tile.active(true);
+												break;
+											case 6:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("CrystalStatue")); //heart crystal
+												break;
+											case 7:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
+												break;
+											case 8:
+												tile.liquidType(1);
+												tile.liquid = 255;
+												
+												if(confirmPlatforms == 0)
+												tile.active(false);
+											
+												WorldGen.SquareTileFrame(k, l, false);
+												break;
+											case 9:
+												tile.active(true);
+												break;
+												break;
+											
+										}
+									}
+								}
+							}
+						}
+					}
+					if(variation == 8)
+					{
+						int[,] _pyramidRoom = {
+							{5,5,5,2,1,3,0,0,0,0,0,3,1,2,5,5,5},
+							{5,0,5,2,1,3,0,0,0,0,0,3,1,2,5,0,5},
+							{5,5,5,2,2,3,0,0,0,0,0,3,2,2,5,5,5},
+							{2,2,2,1,1,3,0,0,0,0,0,3,1,1,2,2,2},
+							{1,1,2,1,3,0,0,0,0,0,0,0,3,1,2,1,1},
+							{3,3,3,3,0,0,0,0,0,0,0,0,0,3,3,3,3},
+							{0,0,0,0,0,0,0,5,5,5,0,0,0,0,0,0,0},
+							{0,0,0,0,0,0,5,1,1,1,5,0,0,0,0,0,0},
+							{0,0,0,0,0,0,5,1,3,1,5,0,0,0,0,0,0},
+							{0,0,0,0,0,0,5,1,1,1,5,0,0,0,0,0,0},
+							{0,0,0,0,0,0,0,5,5,5,0,0,0,0,7,0,0},
+							{3,3,3,3,0,0,0,0,0,0,0,0,0,3,3,3,3},
+							{1,1,2,1,3,0,0,0,0,0,0,0,3,1,2,0,0},
+							{2,2,2,1,1,3,0,0,0,0,0,3,1,1,2,2,2},
+							{5,5,5,2,2,3,0,0,0,0,0,3,2,2,5,5,5},
+							{5,0,5,2,1,3,0,0,0,0,0,3,0,2,5,0,5},
+							{5,5,5,2,1,3,0,0,0,0,0,3,0,2,5,5,5}
+						};	
+						
+						int PosX = x;
+						int PosY = y;
+						PosX -= (int)(.5f * _pyramidRoom.GetLength(1));
+						PosY -= (int)(.5f * _pyramidRoom.GetLength(0));
+						//i = vertical, j = horizontal
+						for(int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)
+						{
+							for (int i = 0; i < _pyramidRoom.GetLength(0); i++) {
+								for (int j = 0; j < _pyramidRoom.GetLength(1); j++) {
+									int k = PosX + j;
+									int l = PosY + i;
+									if (WorldGen.InWorld(k, l, 30)) {
+										Tile tile = Framing.GetTileSafely(k, l);
+										switch (_pyramidRoom[i, j]) {
+											case 0:
+												if(confirmPlatforms == 0)
+												tile.active(false);
+												break;
+											case 1:
+												tile.type = 274; //sandstoneslab
+												tile.active(true);
+												break;
+											case 2:
+												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.active(true);
+												break;
+											case 3:
+												tile.type = 151; //sandstone brick
+												tile.active(true);
+												break;
+											case 4:
+												tile.type = 51; //cobweb
+												tile.active(true);
+												break;
+											case 5:
+												tile.type = 232; //wooden spike
+												tile.active(true);
+												break;
+											case 6:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("CrystalStatue")); //heart crystal
+												break;
+											case 7:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
+												break;
+											case 8:
+												tile.liquidType(1);
+												tile.liquid = 255;
+												
+												if(confirmPlatforms == 0)
+												tile.active(false);
+											
+												WorldGen.SquareTileFrame(k, l, false);
+												break;
+											case 9:
+												tile.active(true);
+												break;
+												break;
+											
+										}
+									}
+								}
+							}
+						}
+					}
+					if(variation == 9)
+					{
+						int[,] _pyramidRoom = {
+							{3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3},
+							{3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3},
+							{3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3},
+							{3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3},
+							{0,5,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3},
+							{0,0,5,4,4,4,4,4,4,4,4,4,4,4,4,4,3},
+							{0,0,0,5,4,4,4,4,4,4,4,4,4,4,4,4,3},
+							{0,0,0,0,5,4,4,4,4,4,4,4,4,4,4,4,3},
+							{0,0,0,0,0,4,4,4,4,4,4,4,4,4,4,4,3},
+							{0,0,0,0,0,5,4,4,4,4,4,4,4,4,4,4,3},
+							{0,0,0,0,0,0,4,4,4,4,4,4,4,4,4,4,3},
+							{0,0,0,0,0,0,5,4,2,2,2,2,2,2,2,2,2},
+							{3,0,0,0,0,0,0,4,2,3,3,3,3,3,3,3,3},
+							{2,2,0,0,0,0,0,4,2,0,0,0,0,0,0,0,0},
+							{3,3,3,0,0,0,0,5,3,0,0,0,0,0,0,0,0},
+							{2,2,2,2,0,0,0,0,3,0,0,0,0,0,0,0,0},
+							{3,3,3,3,3,0,0,0,3,0,0,0,5,6,0,7,0}
+						};	
+						
+						int PosX = x;
+						int PosY = y;
+						PosX -= (int)(.5f * _pyramidRoom.GetLength(1));
+						PosY -= (int)(.5f * _pyramidRoom.GetLength(0));
+						//i = vertical, j = horizontal
+						for(int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)
+						{
+							for (int i = 0; i < _pyramidRoom.GetLength(0); i++) {
+								for (int j = 0; j < _pyramidRoom.GetLength(1); j++) {
+									int k = PosX + j;
+									int l = PosY + i;
+									if (WorldGen.InWorld(k, l, 30)) {
+										Tile tile = Framing.GetTileSafely(k, l);
+										switch (_pyramidRoom[i, j]) {
+											case 0:
+												if(confirmPlatforms == 0)
+												tile.active(false);
+												break;
+											case 1:
+												tile.type = 274; //sandstoneslab
+												tile.active(true);
+												break;
+											case 2:
+												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.active(true);
+												break;
+											case 3:
+												tile.type = 151; //sandstone brick
+												tile.active(true);
+												break;
+											case 4:
+												tile.type = 53; //sand
+												tile.active(true);
+												break;
+											case 5:
+												tile.type = 53; //sand
+												tile.active(true);
+												break;
+											case 6:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("CrystalStatue")); //heart crystal
+												break;
+											case 7:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
+												break;
+											case 8:
+												tile.liquidType(1);
+												tile.liquid = 255;
+												
+												if(confirmPlatforms == 0)
+												tile.active(false);
+											
+												WorldGen.SquareTileFrame(k, l, false);
+												break;
+											case 9:
+												tile.active(true);
+												break;
+												break;
+											
+										}
+									}
+								}
+							}
+						}
+					}
+					
+				}
+				if(direction == 1)
+				{
+					//tile.type = 100;
+					for(int checkRight = 0; checkRight < 300; checkRight++)
+					{
+						int check5 = 0;
+						for(int h = 2; h >= -2; h--)
+						{
+							Tile checkTile = Framing.GetTileSafely(x + checkRight, y + h);
+							if(checkTile.active() == false || checkTile.wall != (ushort)mod.WallType("PyramidWallTile"))
+							{
+								check5++;
+							}
+							checkTile.active(false);
+						}
+						if(check5 >= 5)
+						{
+							break;
+						}
+					}
+					if(variation == 0)
+					{
+						int[,] _pyramidRoom = {
+							{3,1,1,1,1,1,1,1,1,2,3,3,3,3,3,3,3},
+							{3,0,0,0,0,0,0,2,1,2,3,0,0,0,0,0,3},
+							{3,0,0,0,0,0,0,2,1,2,3,0,9,9,0,0,3},
+							{3,0,0,0,0,0,0,2,1,2,3,0,6,9,0,0,3},
+							{3,0,0,0,0,0,0,0,1,2,2,2,2,2,2,2,2},
+							{3,0,0,2,1,0,0,0,1,1,1,1,1,1,1,1,1},
+							{3,0,0,2,1,0,0,0,0,0,0,0,3,0,0,0,0},
+							{3,0,0,2,1,0,0,9,9,0,0,0,3,0,0,0,0},
+							{3,0,0,2,1,4,0,9,9,0,0,0,3,0,0,0,0},
+							{3,0,0,2,1,7,4,5,9,0,0,0,3,0,0,0,0},
+							{3,0,0,2,1,2,2,2,2,2,0,0,3,0,0,0,0},
+							{3,0,0,2,1,1,1,1,1,2,0,0,3,0,0,2,3},
+							{2,0,0,2,2,2,2,2,1,2,0,0,3,0,0,2,3},
+							{0,0,0,0,0,0,0,2,1,2,0,0,3,0,0,2,3},
+							{0,4,4,4,4,0,0,2,1,2,0,0,0,0,0,2,3},
+							{7,7,4,4,4,4,0,2,1,2,0,0,0,0,0,2,3},
+							{7,7,7,7,7,7,7,2,1,2,0,0,0,0,0,2,3}
+						};	
+						
+						int PosX = x;
+						int PosY = y;
+						PosX -= (int)(.5f * _pyramidRoom.GetLength(1));
+						PosY -= (int)(.5f * _pyramidRoom.GetLength(0));
+						//i = vertical, j = horizontal
+						for(int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)
+						{
+							for (int i = 0; i < _pyramidRoom.GetLength(0); i++) {
+								for (int j = 0; j < _pyramidRoom.GetLength(1); j++) {
+									int k = PosX + j;
+									int l = PosY + i;
+									if (WorldGen.InWorld(k, l, 30)) {
+										Tile tile = Framing.GetTileSafely(k, l);
+										switch (_pyramidRoom[i, j]) {
+											case 0:
+												tile.active(false);
+												break;
+											case 1:
+												tile.type = 274; //sandstoneslab
+												tile.active(true);
+												break;
+											case 2:
+												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.active(true);
+												break;
+											case 3:
+												tile.type = 151; //sandstone brick
+												tile.active(true);
+												break;
+											case 4:
+												tile.type = 331; //silver coin
+												tile.active(true);
+												break;
+											case 5:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, TileID.Statues, true, true, -1, Main.rand.Next(71)); //random statue
+												break;
+											case 6:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
+												break;
+											case 7:
+												tile.type = 332; //gold coin
+												tile.active(true);
+												break;
+											case 8:
+												tile.liquidType(0);
+												tile.liquid = 255;
+												
+												if(confirmPlatforms == 0)
+												tile.active(false);
+											
+												WorldGen.SquareTileFrame(k, l, false);
+												break;
+											case 9:
+												if(confirmPlatforms == 0)
+												tile.active(false);
+												break;
+												break;
+											
+										}
+									}
+								}
+							}
+						}
+					}
+					if(variation == 1)
+					{
+						int[,] _pyramidRoom = {
+							{3,1,1,1,1,2,1,4,4,4,4,4,1,1,1,1,1},
+							{3,3,4,4,4,2,1,1,1,1,1,4,4,1,1,1,1},
+							{3,3,3,4,4,2,2,2,2,2,1,4,4,4,1,1,1},
+							{3,3,3,3,4,4,4,4,0,0,1,0,4,0,0,1,1},
+							{3,3,3,3,3,4,0,0,0,0,0,0,0,0,0,0,1},
+							{3,3,3,3,3,3,0,0,0,0,0,0,0,0,0,0,0},
+							{3,3,3,3,3,3,3,0,0,0,0,0,0,0,0,0,0},
+							{3,3,3,3,3,3,3,3,0,0,0,0,0,0,0,0,0},
+							{3,3,3,3,3,3,3,3,3,0,0,0,0,0,0,0,0},
+							{3,3,3,3,3,3,3,3,3,3,0,0,0,0,0,0,0},
+							{3,3,3,3,3,3,3,3,3,3,3,0,0,0,0,0,0},
+							{3,3,3,3,3,3,3,3,3,3,3,3,0,0,0,0,0},
+							{3,3,3,3,3,3,3,3,3,3,3,3,2,2,2,2,2},
+							{3,0,0,0,3,3,3,3,3,3,3,3,2,1,1,1,1},
+							{3,9,9,0,3,3,3,3,3,3,3,3,2,1,0,0,1},
+							{3,6,9,0,3,3,3,3,3,3,3,3,2,1,0,0,1},
+							{3,3,3,3,3,3,3,3,3,3,3,3,2,1,1,1,1}
+						};	
+						
+						int PosX = x;
+						int PosY = y;
+						PosX -= (int)(.5f * _pyramidRoom.GetLength(1));
+						PosY -= (int)(.5f * _pyramidRoom.GetLength(0));
+						//i = vertical, j = horizontal
+						for(int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)
+						{
+							for (int i = 0; i < _pyramidRoom.GetLength(0); i++) {
+								for (int j = 0; j < _pyramidRoom.GetLength(1); j++) {
+									int k = PosX + j;
+									int l = PosY + i;
+									if (WorldGen.InWorld(k, l, 30)) {
+										Tile tile = Framing.GetTileSafely(k, l);
+										switch (_pyramidRoom[i, j]) {
+											case 0:
+												tile.active(false);
+												break;
+											case 1:
+												tile.type = 274; //sandstoneslab
+												tile.active(true);
+												break;
+											case 2:
+												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.active(true);
+												break;
+											case 3:
+												tile.type = 151; //sandstone brick
+												tile.active(true);
+												break;
+											case 4:
+												tile.type = 51; //cobweb
+												tile.active(true);
+												break;
+											case 5:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, TileID.Statues, true, true, -1, Main.rand.Next(71)); //random statue
+												break;
+											case 6:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
+												break;
+											case 7:
+												tile.type = 332; //gold coin
+												tile.active(true);
+												break;
+											case 8:
+												tile.liquidType(0);
+												tile.liquid = 255;
+												
+												if(confirmPlatforms == 0)
+												tile.active(false);
+											
+												WorldGen.SquareTileFrame(k, l, false);
+												break;
+											case 9:
+												if(confirmPlatforms == 0)
+												tile.active(false);
+												break;
+												break;
+											
+										}
+									}
+								}
+							}
+						}
+					}
+					if(variation == 2)
+					{
+						int[,] _pyramidRoom = {
+							{2,1,1,1,2,2,2,2,2,2,2,2,2,2,2,1,1},
+							{1,1,1,1,1,2,2,2,2,4,4,4,1,1,2,2,1},
+							{1,0,0,0,1,1,2,2,2,4,4,4,4,1,2,2,2},
+							{0,7,7,7,0,1,1,1,1,4,4,4,4,1,1,1,2},
+							{7,7,7,7,7,1,1,1,1,4,4,0,0,0,0,1,1},
+							{7,7,7,7,7,1,1,1,1,4,0,0,0,0,0,0,0},
+							{2,2,2,2,2,2,2,2,2,0,0,0,0,0,0,0,0},
+							{2,2,2,2,2,2,2,2,0,0,0,0,0,0,0,0,0},
+							{2,2,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0},
+							{2,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+							{4,0,9,9,0,0,0,0,0,0,0,0,0,0,0,0,0},
+							{0,0,6,9,0,0,0,0,0,0,0,0,0,0,0,0,1},
+							{0,2,2,2,2,0,0,0,0,0,0,0,0,0,0,1,1},
+							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1},
+							{8,8,8,8,8,8,8,8,8,8,8,8,8,1,1,1,1},
+							{8,8,8,8,8,8,8,8,8,8,8,8,1,1,1,1,2},
+							{8,8,8,8,8,8,8,8,8,8,8,1,1,1,1,2,2}
+						};	
+						
+						int PosX = x;
+						int PosY = y;
+						PosX -= (int)(.5f * _pyramidRoom.GetLength(1));
+						PosY -= (int)(.5f * _pyramidRoom.GetLength(0));
+						//i = vertical, j = horizontal
+						for(int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)
+						{
+							for (int i = 0; i < _pyramidRoom.GetLength(0); i++) {
+								for (int j = 0; j < _pyramidRoom.GetLength(1); j++) {
+									int k = PosX + j;
+									int l = PosY + i;
+									if (WorldGen.InWorld(k, l, 30)) {
+										Tile tile = Framing.GetTileSafely(k, l);
+										switch (_pyramidRoom[i, j]) {
+											case 0:
+												tile.active(false);
+												break;
+											case 1:
+												tile.type = 274; //sandstoneslab
+												tile.active(true);
+												break;
+											case 2:
+												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.active(true);
+												break;
+											case 3:
+												tile.type = 151; //sandstone brick
+												tile.active(true);
+												break;
+											case 4:
+												tile.type = 51; //cobweb
+												tile.active(true);
+												break;
+											case 5:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, TileID.Statues, true, true, -1, Main.rand.Next(71)); //random statue
+												break;
+											case 6:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
+												break;
+											case 7:
+												tile.type = 332; //gold coin
+												tile.active(true);
+												break;
+											case 8:
+												tile.liquidType(1);
+												tile.liquid = 255;
+												
+												if(confirmPlatforms == 0)
+												tile.active(false);
+											
+												WorldGen.SquareTileFrame(k, l, false);
+												break;
+											case 9:
+												if(confirmPlatforms == 0)
+												tile.active(false);
+												break;
+												break;
+											
+										}
+									}
+								}
+							}
+						}
+					}
+					if(variation == 3)
+					{
+						int[,] _pyramidRoom = {
+							{1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+							{1,2,2,2,0,0,0,0,0,0,0,0,0,5,0,5,0},
+							{1,1,1,1,1,0,0,0,0,0,0,2,1,1,1,1,1},
+							{0,0,0,0,0,0,0,0,0,0,0,2,2,2,2,2,1},
+							{5,0,5,0,0,0,0,0,0,0,0,0,0,0,0,2,1},
+							{1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,2,2},
+							{1,2,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0},
+							{1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+							{1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+							{2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+							{0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,2,2},
+							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,3},
+							{0,0,9,0,0,0,0,2,2,2,2,2,0,0,0,2,3},
+							{2,2,2,2,2,2,8,8,8,2,8,8,8,8,8,2,3},
+							{3,3,3,3,3,3,3,3,3,2,3,3,3,3,3,2,3}
+						};	
+						
+						int PosX = x;
+						int PosY = y;
+						PosX -= (int)(.5f * _pyramidRoom.GetLength(1));
+						PosY -= (int)(.5f * _pyramidRoom.GetLength(0));
+						//i = vertical, j = horizontal
+						for(int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)
+						{
+							for (int i = 0; i < _pyramidRoom.GetLength(0); i++) {
+								for (int j = 0; j < _pyramidRoom.GetLength(1); j++) {
+									int k = PosX + j;
+									int l = PosY + i;
+									if (WorldGen.InWorld(k, l, 30)) {
+										Tile tile = Framing.GetTileSafely(k, l);
+										switch (_pyramidRoom[i, j]) {
+											case 0:
+												if(confirmPlatforms == 0)
+												tile.active(false);
+												break;
+											case 1:
+												tile.type = 274; //sandstoneslab
+												tile.active(true);
+												break;
+											case 2:
+												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.active(true);
+												break;
+											case 3:
+												tile.type = 151; //sandstone brick
+												tile.active(true);
+												break;
+											case 4:
+												tile.type = 51; //cobweb
+												tile.active(true);
+												break;
+											case 5:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, 376, true, true, -1, Main.rand.Next(3)); //crates
+												break;
+											case 6:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
+												break;
+											case 7:
+												tile.type = 93; //tikitorch
+												tile.active(true);
+												break;
+											case 8:
+												tile.liquidType(1);
+												tile.liquid = 255;
+												
+												if(confirmPlatforms == 0)
+												tile.active(false);
+											
+												WorldGen.SquareTileFrame(k, l, false);
+												break;
+											case 9:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, 102, true, true, -1); //throne
+												break;
+												break;
+											
+										}
+									}
+								}
+							}
+						}
+					}
+					if(variation == 4)
+					{
+						int[,] _pyramidRoom = {
+							{3,3,3,2,3,0,0,0,0,0,0,0,0,0,0,0,3},
+							{0,0,3,2,3,0,0,0,0,0,0,0,0,0,0,0,3},
+							{0,0,3,2,3,0,0,0,0,0,3,3,3,3,3,3,3},
+							{0,0,3,2,3,0,0,0,0,0,3,2,2,2,2,2,2},
+							{0,0,3,2,3,6,0,0,0,0,0,2,0,0,0,0,0},
+							{0,0,0,2,3,3,3,3,0,0,0,0,0,4,8,4,0},
+							{0,0,0,2,2,2,2,0,0,0,0,0,0,3,3,3,0},
+							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+							{0,0,0,3,3,0,0,0,0,0,0,0,0,0,0,0,0},
+							{0,0,2,2,3,0,0,0,0,0,0,0,0,0,0,0,0},
+							{0,0,0,2,3,0,7,0,0,0,0,0,0,0,0,0,0},
+							{0,0,0,2,3,3,3,3,3,0,0,0,0,0,0,0,0},
+							{0,0,0,2,3,2,2,2,0,0,0,0,0,0,0,0,0},
+							{0,0,0,2,3,2,0,0,0,0,0,0,0,0,0,0,0},
+							{0,0,0,0,3,2,0,0,0,0,0,0,0,0,0,0,0},
+							{8,8,8,8,3,2,8,8,8,8,8,8,8,8,8,8,8}
+						};	
+						
+						int PosX = x;
+						int PosY = y;
+						PosX -= (int)(.5f * _pyramidRoom.GetLength(1));
+						PosY -= (int)(.5f * _pyramidRoom.GetLength(0));
+						//i = vertical, j = horizontal
+						for(int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)
+						{
+							for (int i = 0; i < _pyramidRoom.GetLength(0); i++) {
+								for (int j = 0; j < _pyramidRoom.GetLength(1); j++) {
+									int k = PosX + j;
+									int l = PosY + i;
+									if (WorldGen.InWorld(k, l, 30)) {
+										Tile tile = Framing.GetTileSafely(k, l);
+										switch (_pyramidRoom[i, j]) {
+											case 0:
+												if(confirmPlatforms == 0)
+												tile.active(false);
+												break;
+											case 1:
+												tile.type = 274; //sandstoneslab
+												tile.active(true);
+												break;
+											case 2:
+												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.active(true);
+												break;
+											case 3:
+												tile.type = 151; //sandstone brick
+												tile.active(true);
+												break;
+											case 4:
+												tile.type = 151; //sandstone brick
+												tile.halfBrick(true);
+												tile.active(true);
+												break;
+											case 5:
+												tile.active(true);
+												break;
+											case 6:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, TileID.Statues, true, true, -1, Main.rand.Next(71)); //random statue
+												break;
+											case 7:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("CrystalStatue")); //heart crystal
+												break;
+											case 8:
+												tile.liquidType(1);
+												tile.liquid = 255;
+												
+												if(confirmPlatforms == 0)
+												tile.active(false);
+											
+												WorldGen.SquareTileFrame(k, l, false);
+												break;
+											case 9:
+												tile.active(true);
+												break;
+												break;
+											
+										}
+									}
+								}
+							}
+						}
+					}
+					if(variation == 5)
+					{
+						int[,] _pyramidRoom = {
+							{3,3,3,3,3,2,3,3,3,3,3,2,3,3,3,3,3},
+							{3,6,6,6,6,2,1,1,1,1,1,2,6,6,6,6,3},
+							{3,0,6,0,6,6,6,6,6,6,6,6,6,0,6,0,3},
+							{3,0,0,0,6,0,0,0,6,0,0,0,6,0,0,0,3},
+							{3,0,0,0,0,0,0,0,6,0,0,0,0,0,0,0,3},
+							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+							{0,0,0,0,0,0,0,7,0,0,0,0,0,0,0,0,0},
+							{3,0,0,0,0,0,0,2,2,0,0,0,0,0,0,0,3},
+							{3,0,0,0,6,0,0,0,2,0,0,0,6,0,0,0,3},
+							{3,0,6,0,6,6,6,6,2,6,6,6,6,0,6,0,3},
+							{3,6,6,6,6,2,1,1,1,1,1,2,6,6,6,6,3},
+							{3,3,3,3,3,2,3,3,3,3,3,2,3,3,3,3,3}
+						};	
+						
+						int PosX = x;
+						int PosY = y;
+						PosX -= (int)(.5f * _pyramidRoom.GetLength(1));
+						PosY -= (int)(.5f * _pyramidRoom.GetLength(0));
+						//i = vertical, j = horizontal
+						for(int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)
+						{
+							for (int i = 0; i < _pyramidRoom.GetLength(0); i++) {
+								for (int j = 0; j < _pyramidRoom.GetLength(1); j++) {
+									int k = PosX + j;
+									int l = PosY + i;
+									if (WorldGen.InWorld(k, l, 30)) {
+										Tile tile = Framing.GetTileSafely(k, l);
+										switch (_pyramidRoom[i, j]) {
+											case 0:
+												if(confirmPlatforms == 0)
+												tile.active(false);
+												break;
+											case 1:
+												tile.type = 274; //sandstoneslab
+												tile.active(true);
+												break;
+											case 2:
+												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.active(true);
+												break;
+											case 3:
+												tile.type = 151; //sandstone brick
+												tile.active(true);
+												break;
+											case 4:
+												tile.type = 332; //gold coin
+												tile.active(true);
+												break;
+											case 5:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, 376, true, true, -1, Main.rand.Next(3)); //crates
+												break;
+											case 6:
+												tile.type = 232; //wooden spike
+												tile.active(true);
+												break;
+											case 7:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
+												break;
+											case 8:
+												tile.liquidType(1);
+												tile.liquid = 255;
+												
+												if(confirmPlatforms == 0)
+												tile.active(false);
+											
+												WorldGen.SquareTileFrame(k, l, false);
+												break;
+											case 9:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform //platform
+												break;
+												break;
+											
+										}
+									}
+								}
+							}
+						}
+					}
+					if(variation == 6)
+					{
+						int[,] _pyramidRoom = {
+							{3,3,3,3,3,0,0,0,0,0,0,0,3,3,3,3,3},
+							{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+							{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+							{3,0,0,3,3,3,2,2,2,2,2,3,3,3,0,0,3},
+							{3,0,0,3,0,0,0,0,0,0,0,0,0,3,0,0,3},
+							{0,0,0,3,0,0,0,0,0,0,0,0,0,3,0,0,0},
+							{0,0,0,2,0,0,3,3,3,3,3,0,0,2,0,0,0},
+							{0,0,0,2,0,0,2,0,0,0,2,0,0,2,0,0,0},
+							{0,0,0,2,0,0,2,0,0,0,2,0,0,2,0,0,0},
+							{0,0,0,2,0,0,2,0,4,0,2,0,0,2,0,0,0},
+							{0,0,0,2,0,0,3,3,3,3,3,0,0,2,0,0,0},
+							{0,0,0,3,7,7,7,7,0,7,7,7,7,3,0,0,0},
+							{3,0,0,3,7,7,7,7,7,7,7,7,7,3,0,0,3},
+							{3,0,0,3,3,3,2,2,2,2,2,3,3,3,0,0,3},
+							{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+							{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+							{3,3,3,3,3,0,0,0,0,0,0,0,3,3,3,3,3}
+						};	
+						
+						int PosX = x;
+						int PosY = y;
+						PosX -= (int)(.5f * _pyramidRoom.GetLength(1));
+						PosY -= (int)(.5f * _pyramidRoom.GetLength(0));
+						//i = vertical, j = horizontal
+						for(int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)
+						{
+							for (int i = 0; i < _pyramidRoom.GetLength(0); i++) {
+								for (int j = 0; j < _pyramidRoom.GetLength(1); j++) {
+									int k = PosX + j;
+									int l = PosY + i;
+									if (WorldGen.InWorld(k, l, 30)) {
+										Tile tile = Framing.GetTileSafely(k, l);
+										switch (_pyramidRoom[i, j]) {
+											case 0:
+												if(confirmPlatforms == 0)
+												tile.active(false);
+												break;
+											case 1:
+												tile.type = 274; //sandstoneslab
+												tile.active(true);
+												break;
+											case 2:
+												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.active(true);
+												break;
+											case 3:
+												tile.type = 151; //sandstone brick
+												tile.active(true);
+												break;
+											case 4:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, 219); //extractinator
+												break;
+											case 5:
+												tile.type = 232; //spike
+												tile.active(true);
+												break;
+											case 6:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, 376, true, true, -1, Main.rand.Next(3)); //crates
+												break;
+											case 7:
+												tile.type = 332; //gold coin
+												tile.active(true);
+												break;
+											case 8:
+												tile.liquidType(1);
+												tile.liquid = 255;
+												
+												if(confirmPlatforms == 0)
+												tile.active(false);
+											
+												WorldGen.SquareTileFrame(k, l, false);
+												break;
+											case 9:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform //platform
+												break;
+												break;
+											
+										}
+									}
+								}
+							}
+						}
+					}
+					if(variation == 7)
+					{
+						int[,] _pyramidRoom = {
+							{3,3,3,3,3,3,3,3,2,3,3,3,3,3,7,3,3},
+							{4,4,4,4,2,2,2,2,2,2,2,2,2,7,7,7,2},
+							{4,4,4,0,0,3,3,3,2,3,3,3,7,3,3,3,3},
+							{4,4,0,0,0,0,2,2,2,2,2,7,7,7,2,2,2},
+							{4,0,0,0,0,0,0,3,2,3,7,3,3,3,3,3,3},
+							{4,0,0,0,0,0,0,0,2,7,7,7,2,2,2,2,2},
+							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+							{0,9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+							{0,0,0,6,0,0,0,0,0,0,0,0,0,0,0,0,0},
+							{2,2,2,2,2,7,7,7,2,0,0,0,0,0,0,0,0},
+							{3,3,3,3,3,3,7,3,2,3,0,0,0,0,0,0,0},
+							{2,2,2,7,7,7,2,2,2,2,2,8,8,8,8,8,8},
+							{3,3,3,3,7,3,3,3,2,3,3,3,8,8,8,8,8},
+							{2,7,7,7,2,2,2,2,2,2,2,2,2,8,8,8,8},
+							{3,3,7,3,3,3,3,3,2,3,3,3,3,3,3,3,3}
+						};	
+						
+						int PosX = x;
+						int PosY = y;
+						PosX -= (int)(.5f * _pyramidRoom.GetLength(1));
+						PosY -= (int)(.5f * _pyramidRoom.GetLength(0));
+						//i = vertical, j = horizontal
+						for(int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)
+						{
+							for (int i = 0; i < _pyramidRoom.GetLength(0); i++) {
+								for (int j = 0; j < _pyramidRoom.GetLength(1); j++) {
+									int k = PosX + j;
+									int l = PosY + i;
+									if (WorldGen.InWorld(k, l, 30)) {
+										Tile tile = Framing.GetTileSafely(k, l);
+										switch (_pyramidRoom[i, j]) {
+											case 0:
+												if(confirmPlatforms == 0)
+												tile.active(false);
+												break;
+											case 1:
+												tile.type = 274; //sandstoneslab
+												tile.active(true);
+												break;
+											case 2:
+												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.active(true);
+												break;
+											case 3:
+												tile.type = 151; //sandstone brick
+												tile.active(true);
+												break;
+											case 4:
+												tile.type = 51; //cobweb
+												tile.active(true);
+												break;
+											case 5:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, TileID.Statues, true, true, -1, Main.rand.Next(71)); //random statue
+												break;
+											case 6:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
+												break;
+											case 7:
+												tile.type = 232; //spike
+												tile.active(true);
+												break;
+											case 8:
+												tile.liquidType(0);
+												tile.liquid = 255;
+												
+												if(confirmPlatforms == 0)
+												tile.active(false);
+											
+												WorldGen.SquareTileFrame(k, l, false);
+												break;
+											case 9:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, 240, true, true, -1, Main.rand.Next(16, 18)); //hanging skeleton
+												break;
+												break;
+											
+										}
+									}
+								}
+							}
+						}
+					}
+					if(variation == 8)
+					{
+						int[,] _pyramidRoom = {
+							{4,4,4,4,4,0,0,0,4,4,7,7,7,7,7,7,7},
+							{4,4,0,0,0,0,0,0,0,4,7,3,3,3,3,3,3},
+							{4,0,0,9,0,0,0,0,0,0,0,0,7,7,7,7,7},
+							{0,0,0,0,0,0,0,0,0,0,0,0,7,3,3,3,3},
+							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,7,7},
+							{6,0,0,0,0,0,0,0,0,0,0,0,0,0,7,0,0},
+							{1,1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+							{2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+							{3,3,3,3,7,0,0,0,0,0,0,0,0,0,0,0,0},
+							{7,7,7,7,7,0,0,0,0,0,0,0,0,0,0,0,0},
+							{3,3,3,3,3,3,7,0,0,0,0,0,0,0,0,0,0},
+							{7,7,7,7,7,7,7,0,0,0,0,0,0,0,0,0,0},
+							{3,3,3,3,3,3,3,3,7,0,0,0,0,0,0,0,0},
+							{7,7,7,7,7,7,7,7,7,0,0,0,0,0,0,0,4},
+							{3,3,3,3,3,3,3,3,3,3,7,2,2,7,0,4,4},
+							{7,7,7,7,7,7,7,7,7,7,7,2,2,7,7,7,7},
+							{3,3,3,3,3,3,3,3,3,3,3,2,2,3,3,3,3}
+						};	
+						
+						int PosX = x;
+						int PosY = y;
+						PosX -= (int)(.5f * _pyramidRoom.GetLength(1));
+						PosY -= (int)(.5f * _pyramidRoom.GetLength(0));
+						//i = vertical, j = horizontal
+						for(int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)
+						{
+							for (int i = 0; i < _pyramidRoom.GetLength(0); i++) {
+								for (int j = 0; j < _pyramidRoom.GetLength(1); j++) {
+									int k = PosX + j;
+									int l = PosY + i;
+									if (WorldGen.InWorld(k, l, 30)) {
+										Tile tile = Framing.GetTileSafely(k, l);
+										switch (_pyramidRoom[i, j]) {
+											case 0:
+												if(confirmPlatforms == 0)
+												tile.active(false);
+												break;
+											case 1:
+												tile.type = 274; //sandstoneslab
+												tile.active(true);
+												break;
+											case 2:
+												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.active(true);
+												break;
+											case 3:
+												tile.type = 151; //sandstone brick
+												tile.active(true);
+												break;
+											case 4:
+												tile.type = 51; //cobweb
+												tile.active(true);
+												break;
+											case 5:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, 376, true, true, -1, Main.rand.Next(3)); //crates
+												break;
+											case 6:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
+												break;
+											case 7:
+												tile.type = 232; //wooden spike
+												tile.active(true);
+												break;
+											case 8:
+												tile.liquidType(1);
+												tile.liquid = 255;
+												
+												if(confirmPlatforms == 0)
+												tile.active(false);
+											
+												WorldGen.SquareTileFrame(k, l, false);
+												break;
+											case 9:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, 240, true, true, -1, Main.rand.Next(16, 18)); //hanging skeleton
+												break;
+												break;
+											
+										}
+									}
+								}
+							}
+						}
+					}
+					if(variation == 9)
+					{
+						int[,] _pyramidRoom = {
+							{3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3},
+							{3,1,1,2,2,2,2,2,3,3,1,1,1,1,1,1,3},							
+							{3,1,2,2,2,2,2,3,3,1,1,0,0,0,9,9,3},							
+							{3,3,3,3,3,3,3,3,1,1,0,0,0,0,0,0,3},							
+							{3,1,1,1,1,1,1,1,1,0,0,0,4,4,7,0,3},							
+							{3,9,9,0,0,0,0,0,0,0,0,0,4,1,1,1,3},							
+							{3,9,0,0,0,5,0,0,0,0,0,4,1,1,0,0,0},							
+							{3,0,0,0,0,0,0,0,4,4,4,1,1,0,0,0,0},							
+							{3,0,0,0,4,4,4,4,4,4,1,1,0,0,0,0,0},							
+							{3,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0,0},							
+							{3,0,0,0,0,0,0,0,9,9,0,0,0,0,0,0,0},							
+							{3,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,3},							
+							{3,9,0,0,0,0,0,0,0,0,0,0,0,1,1,2,3},							
+							{3,9,9,0,0,0,0,0,0,0,0,0,1,1,2,2,3},							
+							{3,9,9,0,0,0,0,0,0,0,0,1,1,2,2,2,3},							
+							{3,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,3},							
+							{3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3}
+						};	
+						
+						int PosX = x;
+						int PosY = y;
+						PosX -= (int)(.5f * _pyramidRoom.GetLength(1));
+						PosY -= (int)(.5f * _pyramidRoom.GetLength(0));
+						//i = vertical, j = horizontal
+						for(int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)
+						{
+							for (int i = 0; i < _pyramidRoom.GetLength(0); i++) {
+								for (int j = 0; j < _pyramidRoom.GetLength(1); j++) {
+									int k = PosX + j;
+									int l = PosY + i;
+									if (WorldGen.InWorld(k, l, 30)) {
+										Tile tile = Framing.GetTileSafely(k, l);
+										switch (_pyramidRoom[i, j]) {
+											case 0:
+												if(confirmPlatforms == 0)
+												tile.active(false);
+												break;
+											case 1:
+												tile.type = 274; //sandstoneslab
+												tile.active(true);
+												break;
+											case 2:
+												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.active(true);
+												break;
+											case 3:
+												tile.type = 151; //sandstone brick
+												tile.active(true);
+												break;
+											case 4:
+												tile.type = 332; //coins
+												tile.active(true);
+												break;
+											case 5:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, 240, true, true, -1, Main.rand.Next(16, 18)); //hanging skeleton
+												break;
+											case 6:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("CrystalStatue")); //heart crystal
+												break;
+											case 7:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
+												break;
+											case 8:
+												tile.liquidType(1);
+												tile.liquid = 255;
+												
+												if(confirmPlatforms == 0)
+												tile.active(false);
+											
+												WorldGen.SquareTileFrame(k, l, false);
+												break;
+											case 9:
+												tile.type = 51; //cobweb
+												tile.active(true);
+												break;
+												break;
+											
+										}
+									}
+								}
+							}
+						}
+					}
+					
+				}
+				if(direction == 2)
+				{
+					//tile.type = 150;
+					for(int checkUp = 0; checkUp < 300; checkUp++)
+					{
+						int check5 = 0;
+						for(int h = 2; h >= -2; h--)
+						{
+							Tile checkTile = Framing.GetTileSafely(x + h, y - checkUp);
+							if(checkTile.active() == false || checkTile.wall != (ushort)mod.WallType("PyramidWallTile"))
+							{
+								check5++;
+							}
+							checkTile.active(false);
+						}
+						if(check5 >= 5)
+						{
+							break;
+						}
+					}
+					if(variation == 0)
+					{
+						int[,] _pyramidRoom = {
+							{3,3,3,4,4,4,0,0,0,0,0,0,2,3,3,3,3},
+							{2,2,2,2,4,0,0,0,0,0,0,0,2,4,4,4,3},
+							{3,4,4,4,0,0,0,0,0,0,0,0,2,4,4,4,3},
+							{3,4,4,4,0,0,2,2,2,2,2,2,2,0,4,4,3},
+							{3,4,4,0,0,0,0,0,4,4,4,4,0,0,0,4,3},
+							{3,4,4,0,0,0,0,0,0,0,0,0,0,0,0,4,3},
+							{3,4,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2},
+							{2,2,2,2,2,2,2,2,2,2,2,2,0,0,0,2,3},
+							{4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,2,3},
+							{4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,2,3},
+							{3,3,3,3,3,2,0,0,0,0,0,0,0,0,0,2,3},
+							{3,0,0,7,0,2,0,0,0,0,0,0,0,0,2,2,3},
+							{3,7,7,7,0,2,0,0,0,0,0,0,0,0,0,0,3},
+							{3,7,7,7,7,2,0,0,0,0,0,0,0,0,0,0,3},
+							{3,7,7,7,7,2,0,0,0,0,0,0,0,9,9,0,3},
+							{3,7,7,7,7,2,2,2,2,2,2,2,0,6,9,0,3},
+							{3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3}
+						};	
+						
+						int PosX = x;
+						int PosY = y;
+						PosX -= (int)(.5f * _pyramidRoom.GetLength(1));
+						PosY -= (int)(.5f * _pyramidRoom.GetLength(0));
+						//i = vertical, j = horizontal
+						for(int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)
+						{
+							for (int i = 0; i < _pyramidRoom.GetLength(0); i++) {
+								for (int j = 0; j < _pyramidRoom.GetLength(1); j++) {
+									int k = PosX + j;
+									int l = PosY + i;
+									if (WorldGen.InWorld(k, l, 30)) {
+										Tile tile = Framing.GetTileSafely(k, l);
+										switch (_pyramidRoom[i, j]) {
+											case 0:
+												tile.active(false);
+												break;
+											case 1:
+												tile.type = 274; //sandstoneslab
+												tile.active(true);
+												break;
+											case 2:
+												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.active(true);
+												break;
+											case 3:
+												tile.type = 151; //sandstone brick
+												tile.active(true);
+												break;
+											case 4:
+												tile.type = 51; //cobweb
+												tile.active(true);
+												break;
+											case 5:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, TileID.Statues, true, true, -1, Main.rand.Next(71)); //random statue
+												break;
+											case 6:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
+												break;
+											case 7:
+												tile.type = 332; //gold coin
+												tile.active(true);
+												break;
+											case 8:
+												tile.liquidType(0);
+												tile.liquid = 255;
+												
+												if(confirmPlatforms == 0)
+												tile.active(false);
+											
+												WorldGen.SquareTileFrame(k, l, false);
+												break;
+											case 9:
+												if(confirmPlatforms == 0)
+												tile.active(false);
+												break;
+												break;
+											
+										}
+									}
+								}
+							}
+						}
+					}
+					if(variation == 1)
+					{
+						int[,] _pyramidRoom = {
+							{2,2,2,2,2,2,0,0,0,0,0,0,0,0,0,1,1},
+							{2,1,1,0,0,1,0,0,0,0,0,0,0,0,0,0,1},
+							{2,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0},
+							{2,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0},
+							{2,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0},
+							{2,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0},
+							{2,0,0,0,0,2,2,2,2,2,2,2,1,1,1,1,2},
+							{2,0,0,0,0,0,2,2,2,2,2,2,0,0,0,0,2},
+							{2,0,0,0,0,0,4,4,7,7,2,2,0,0,0,0,2},
+							{2,0,0,0,0,0,0,0,4,7,2,2,0,0,0,0,2},
+							{2,0,0,0,0,0,0,0,4,7,2,2,0,0,0,0,2},
+							{2,0,0,0,0,0,0,0,0,7,2,2,0,0,0,4,2},
+							{2,4,0,0,0,6,0,0,0,7,2,2,0,0,0,4,2},
+							{2,4,4,0,0,9,9,0,0,7,2,2,0,0,4,7,2},
+							{2,7,4,0,0,0,0,0,0,7,2,2,7,4,4,7,2},
+							{2,7,7,7,7,7,7,7,7,7,2,2,7,7,7,7,2},
+							{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2}
+						};	
+						
+						int PosX = x;
+						int PosY = y;
+						PosX -= (int)(.5f * _pyramidRoom.GetLength(1));
+						PosY -= (int)(.5f * _pyramidRoom.GetLength(0));
+						//i = vertical, j = horizontal
+						for(int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)
+						{
+							for (int i = 0; i < _pyramidRoom.GetLength(0); i++) {
+								for (int j = 0; j < _pyramidRoom.GetLength(1); j++) {
+									int k = PosX + j;
+									int l = PosY + i;
+									if (WorldGen.InWorld(k, l, 30)) {
+										Tile tile = Framing.GetTileSafely(k, l);
+										switch (_pyramidRoom[i, j]) {
+											case 0:
+												if(confirmPlatforms == 0)
+												tile.active(false);
+												break;
+											case 1:
+												tile.type = 274; //sandstoneslab
+												tile.active(true);
+												break;
+											case 2:
+												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.active(true);
+												break;
+											case 3:
+												tile.type = 151; //sandstone brick
+												tile.active(true);
+												break;
+											case 4:
+												tile.type = 51; //cobweb
+												tile.active(true);
+												break;
+											case 5:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, TileID.Statues, true, true, -1, Main.rand.Next(71)); //random statue
+												break;
+											case 6:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
+												break;
+											case 7:
+												tile.type = 232; //wooden spike
+												tile.active(true);
+												break;
+											case 8:
+												tile.liquidType(0);
+												tile.liquid = 255;
+												
+												if(confirmPlatforms == 0)
+												tile.active(false);
+											
+												WorldGen.SquareTileFrame(k, l, false);
+												break;
+											case 9:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform
+												break;
+											
+										}
+									}
+								}
+							}
+						}
+					}
+					if(variation == 2)
+					{
+						int[,] _pyramidRoom = {
+							{3,3,3,3,2,4,0,0,0,0,0,4,2,3,3,3,3},
+							{3,4,2,3,2,4,0,0,0,0,0,4,2,3,2,4,3},
+							{4,4,2,3,2,4,0,0,0,0,0,4,2,3,2,4,4},
+							{4,0,2,3,4,0,0,0,0,0,0,0,4,3,2,0,4},
+							{4,0,2,3,4,0,0,0,0,0,0,0,4,3,2,0,4},
+							{0,0,0,3,0,0,0,0,0,0,0,0,0,3,0,0,0},
+							{0,0,0,3,0,0,0,0,0,0,0,0,0,3,0,0,0},
+							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+							{0,9,0,0,0,0,0,0,0,0,0,0,0,0,9,0,0},
+							{3,3,3,2,0,0,0,0,0,0,0,0,0,2,3,3,3},
+							{3,2,0,0,0,0,0,0,0,0,0,0,0,0,0,2,3},
+							{2,0,0,0,0,0,0,0,7,0,0,0,0,0,0,0,2},
+							{7,0,0,7,0,0,7,3,7,3,7,0,0,7,0,0,7},
+							{7,0,7,7,7,0,7,3,2,3,7,0,7,7,7,0,7},
+							{7,7,2,7,2,7,7,3,2,3,7,7,2,7,2,7,7}
+						};	
+						
+						int PosX = x;
+						int PosY = y;
+						PosX -= (int)(.5f * _pyramidRoom.GetLength(1));
+						PosY -= (int)(.5f * _pyramidRoom.GetLength(0));
+						//i = vertical, j = horizontal
+						for(int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)
+						{
+							for (int i = 0; i < _pyramidRoom.GetLength(0); i++) {
+								for (int j = 0; j < _pyramidRoom.GetLength(1); j++) {
+									int k = PosX + j;
+									int l = PosY + i;
+									if (WorldGen.InWorld(k, l, 30)) {
+										Tile tile = Framing.GetTileSafely(k, l);
+										switch (_pyramidRoom[i, j]) {
+											case 0:
+												if(confirmPlatforms == 0)
+												tile.active(false);
+												break;
+											case 1:
+												tile.type = 274; //sandstoneslab
+												tile.active(true);
+												break;
+											case 2:
+												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.active(true);
+												break;
+											case 3:
+												tile.type = 151; //sandstone brick
+												tile.active(true);
+												break;
+											case 4:
+												tile.type = 51; //cobweb
+												tile.active(true);
+												break;
+											case 5:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, TileID.Statues, true, true, -1, Main.rand.Next(71)); //random statue
+												break;
+											case 6:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
+												break;
+											case 7:
+												tile.type = 232; //wooden spike
+												tile.active(true);
+												break;
+											case 8:
+												tile.liquidType(0);
+												tile.liquid = 255;
+												
+												if(confirmPlatforms == 0)
+												tile.active(false);
+											
+												WorldGen.SquareTileFrame(k, l, false);
+												break;
+											case 9:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("CrystalStatue")); //heart crystal
+												break;
+											
+										}
+									}
+								}
+							}
+						}
+					}
+					if(variation == 3)
+					{
+						int[,] _pyramidRoom = {
+							{1,1,1,1,1,2,0,0,0,0,0,2,1,1,1,1,1},
+							{1,1,1,4,4,2,0,0,0,0,0,2,0,4,1,1,1},
+							{1,4,4,0,4,2,1,1,1,1,1,2,0,4,4,4,1},
+							{1,4,0,0,4,4,4,0,0,0,0,0,4,4,4,4,1},
+							{4,4,0,0,0,4,0,0,0,0,0,4,4,4,4,4,4},
+							{4,0,0,0,0,4,0,0,0,0,0,4,4,4,4,4,4},
+							{4,0,0,0,0,0,0,0,0,0,0,4,4,4,4,4,4},
+							{0,0,0,0,0,0,0,0,0,0,0,0,4,4,4,4,4},
+							{0,0,0,0,0,0,0,0,0,0,0,0,0,4,4,4,4},
+							{4,0,2,0,0,0,0,0,0,0,0,0,0,4,2,4,4},
+							{4,4,2,0,0,0,0,0,0,0,0,0,0,0,2,4,4},
+							{4,4,2,0,0,0,0,0,0,0,0,0,0,0,2,4,4},
+							{0,4,2,0,0,0,0,0,0,0,0,0,0,0,2,4,0},
+							{0,0,2,8,8,8,8,8,8,8,8,8,8,8,2,0,7},
+							{7,0,2,8,8,8,8,8,8,8,8,8,8,8,2,7,7},
+							{7,7,2,8,8,8,2,8,8,8,2,8,8,8,2,7,7},
+							{1,1,2,2,2,2,2,8,8,8,2,2,2,2,2,1,1}
+						};	
+						
+						int PosX = x;
+						int PosY = y;
+						PosX -= (int)(.5f * _pyramidRoom.GetLength(1));
+						PosY -= (int)(.5f * _pyramidRoom.GetLength(0));
+						//i = vertical, j = horizontal
+						for(int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)
+						{
+							for (int i = 0; i < _pyramidRoom.GetLength(0); i++) {
+								for (int j = 0; j < _pyramidRoom.GetLength(1); j++) {
+									int k = PosX + j;
+									int l = PosY + i;
+									if (WorldGen.InWorld(k, l, 30)) {
+										Tile tile = Framing.GetTileSafely(k, l);
+										switch (_pyramidRoom[i, j]) {
+											case 0:
+												if(confirmPlatforms == 0)
+												tile.active(false);
+												break;
+											case 1:
+												tile.type = 274; //sandstoneslab
+												tile.active(true);
+												break;
+											case 2:
+												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.active(true);
+												break;
+											case 3:
+												tile.type = 151; //sandstone brick
+												tile.active(true);
+												break;
+											case 4:
+												tile.type = 51; //cobweb
+												tile.active(true);
+												break;
+											case 5:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, 377); //sharpening station
+												break;
+											case 6:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
+												break;
+											case 7:
+												tile.type = 332; //gold coin
+												tile.active(true);
+												break;
+											case 8:
+												tile.liquidType(1);
+												tile.liquid = 255;
+												
+												if(confirmPlatforms == 0)
+												tile.active(false);
+											
+												WorldGen.SquareTileFrame(k, l, false);
+												break;
+											case 9:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform //platform
+												break;
+												break;
+											
+										}
+									}
+								}
+							}
+						}
+					}
+					if(variation == 4)
+					{
+						int[,] _pyramidRoom = {
+							{4,4,4,4,0,0,0,0,0,0,0,0,0,4,4,4,4},
+							{2,2,2,2,2,0,0,0,0,0,0,0,2,2,2,2,2},
+							{4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,4,4},
+							{2,2,2,2,0,0,0,0,0,0,0,0,0,2,2,2,2},
+							{4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4},
+							{2,2,2,0,0,0,0,0,0,0,0,0,0,0,2,2,2},
+							{8,5,0,0,0,0,0,0,0,0,0,0,0,0,0,5,8},
+							{2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2},
+							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+							{2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2},
+							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+							{2,2,0,0,0,0,0,0,6,0,0,0,0,0,0,2,2},
+							{0,0,0,0,0,0,2,2,2,2,2,0,0,0,0,0,0},
+							{2,2,2,0,0,0,2,3,2,3,2,0,0,0,2,2,2},
+							{0,0,0,0,0,0,0,3,2,3,0,0,0,0,0,0,0},
+							{2,2,2,2,0,0,0,3,2,3,0,0,0,2,2,2,2},
+							{8,8,8,8,8,8,3,3,2,3,3,8,8,8,8,8,8}
+						};	
+						
+						int PosX = x;
+						int PosY = y;
+						PosX -= (int)(.5f * _pyramidRoom.GetLength(1));
+						PosY -= (int)(.5f * _pyramidRoom.GetLength(0));
+						//i = vertical, j = horizontal
+						for(int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)
+						{
+							for (int i = 0; i < _pyramidRoom.GetLength(0); i++) {
+								for (int j = 0; j < _pyramidRoom.GetLength(1); j++) {
+									int k = PosX + j;
+									int l = PosY + i;
+									if (WorldGen.InWorld(k, l, 30)) {
+										Tile tile = Framing.GetTileSafely(k, l);
+										switch (_pyramidRoom[i, j]) {
+											case 0:
+												if(confirmPlatforms == 0)
+												tile.active(false);
+												break;
+											case 1:
+												tile.type = 274; //sandstoneslab
+												tile.active(true);
+												break;
+											case 2:
+												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.active(true);
+												break;
+											case 3:
+												tile.type = 151; //sandstone brick
+												tile.active(true);
+												break;
+											case 4:
+												tile.type = 51; //cobweb
+												tile.active(true);
+												break;
+											case 5:
+												tile.type = 151; //sandstone brick
+												tile.halfBrick(true);
+												tile.active(true);
+												break;
+											case 6:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, 77); //hellforge
+												break;
+											case 7:
+												tile.type = 332; //gold coin
+												tile.active(true);
+												break;
+											case 8:
+												tile.liquidType(1);
+												tile.liquid = 255;
+												
+												if(confirmPlatforms == 0)
+												tile.active(false);
+											
+												WorldGen.SquareTileFrame(k, l, false);
+												break;
+											case 9:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform //platform
+												break;
+												break;
+											
+										}
+									}
+								}
+							}
+						}
+					}
+					if(variation == 5)
+					{
+						int[,] _pyramidRoom = {
+							{3,3,3,3,0,0,0,0,0,0,0,0,0,3,3,3,3},
+							{2,2,2,0,0,0,0,0,0,0,0,0,0,0,2,2,2},
+							{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+							{2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2},
+							{5,5,5,0,0,0,0,0,0,0,0,0,0,0,5,5,5},
+							{2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2},
+							{5,5,0,0,0,0,0,0,0,0,0,0,0,0,0,5,5},
+							{2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2},
+							{5,6,0,0,0,0,0,0,0,0,0,0,0,0,6,0,5},
+							{2,9,9,9,0,0,0,0,0,0,0,0,0,9,9,9,2},
+							{5,5,0,0,0,0,0,0,0,0,0,0,0,0,0,5,5},
+							{2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2},
+							{5,5,5,0,0,0,0,0,0,0,0,0,0,0,5,5,5},
+							{2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2},
+							{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+							{2,2,2,0,0,0,0,0,0,0,0,0,0,0,2,2,2},
+							{3,3,3,3,0,0,0,0,0,0,0,0,0,3,3,3,3}
+						};	
+						
+						int PosX = x;
+						int PosY = y;
+						PosX -= (int)(.5f * _pyramidRoom.GetLength(1));
+						PosY -= (int)(.5f * _pyramidRoom.GetLength(0));
+						//i = vertical, j = horizontal
+						for(int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)
+						{
+							for (int i = 0; i < _pyramidRoom.GetLength(0); i++) {
+								for (int j = 0; j < _pyramidRoom.GetLength(1); j++) {
+									int k = PosX + j;
+									int l = PosY + i;
+									if (WorldGen.InWorld(k, l, 30)) {
+										Tile tile = Framing.GetTileSafely(k, l);
+										switch (_pyramidRoom[i, j]) {
+											case 0:
+												if(confirmPlatforms == 0)
+												tile.active(false);
+												break;
+											case 1:
+												tile.type = 274; //sandstoneslab
+												tile.active(true);
+												break;
+											case 2:
+												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.active(true);
+												break;
+											case 3:
+												tile.type = 151; //sandstone brick
+												tile.active(true);
+												break;
+											case 4:
+												tile.type = 51; //cobweb
+												tile.active(true);
+												break;
+											case 5:
+												tile.type = 232; //spike
+												tile.active(true);
+												break;
+											case 6:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, 376, true, true, -1, Main.rand.Next(3)); //crates
+												break;
+											case 7:
+												tile.type = 332; //gold coin
+												tile.active(true);
+												break;
+											case 8:
+												tile.liquidType(1);
+												tile.liquid = 255;
+												
+												if(confirmPlatforms == 0)
+												tile.active(false);
+											
+												WorldGen.SquareTileFrame(k, l, false);
+												break;
+											case 9:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform //platform
+												break;
+												break;
+											
+										}
+									}
+								}
+							}
+						}
+					}
+					if(variation == 6)
+					{
+						int[,] _pyramidRoom = {
+							{3,3,3,3,3,0,0,0,0,0,0,0,3,3,3,3,3},
+							{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+							{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+							{3,0,0,3,3,3,2,2,2,2,2,3,3,3,0,0,3},
+							{3,0,0,3,0,0,0,0,0,0,0,0,0,3,0,0,3},
+							{0,0,0,3,0,0,0,0,0,0,0,0,0,3,0,0,0},
+							{0,0,0,2,0,0,3,3,3,3,3,0,0,2,0,0,0},
+							{0,0,0,2,0,0,2,0,0,0,2,0,0,2,0,0,0},
+							{0,0,0,2,0,0,2,0,0,0,2,0,0,2,0,0,0},
+							{0,0,0,2,0,0,2,0,4,0,2,0,0,2,0,0,0},
+							{0,0,0,2,0,0,3,3,3,3,3,0,0,2,0,0,0},
+							{0,0,0,3,7,7,7,7,0,7,7,7,7,3,0,0,0},
+							{3,0,0,3,7,7,7,7,7,7,7,7,7,3,0,0,3},
+							{3,0,0,3,3,3,2,2,2,2,2,3,3,3,0,0,3},
+							{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+							{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+							{3,3,3,3,3,0,0,0,0,0,0,0,3,3,3,3,3}
+						};	
+						
+						int PosX = x;
+						int PosY = y;
+						PosX -= (int)(.5f * _pyramidRoom.GetLength(1));
+						PosY -= (int)(.5f * _pyramidRoom.GetLength(0));
+						//i = vertical, j = horizontal
+						for(int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)
+						{
+							for (int i = 0; i < _pyramidRoom.GetLength(0); i++) {
+								for (int j = 0; j < _pyramidRoom.GetLength(1); j++) {
+									int k = PosX + j;
+									int l = PosY + i;
+									if (WorldGen.InWorld(k, l, 30)) {
+										Tile tile = Framing.GetTileSafely(k, l);
+										switch (_pyramidRoom[i, j]) {
+											case 0:
+												if(confirmPlatforms == 0)
+												tile.active(false);
+												break;
+											case 1:
+												tile.type = 274; //sandstoneslab
+												tile.active(true);
+												break;
+											case 2:
+												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.active(true);
+												break;
+											case 3:
+												tile.type = 151; //sandstone brick
+												tile.active(true);
+												break;
+											case 4:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, 219); //extractinator
+												break;
+											case 5:
+												tile.type = 232; //spike
+												tile.active(true);
+												break;
+											case 6:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, 376, true, true, -1, Main.rand.Next(3)); //crates
+												break;
+											case 7:
+												tile.type = 332; //gold coin
+												tile.active(true);
+												break;
+											case 8:
+												tile.liquidType(1);
+												tile.liquid = 255;
+												
+												if(confirmPlatforms == 0)
+												tile.active(false);
+											
+												WorldGen.SquareTileFrame(k, l, false);
+												break;
+											case 9:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform //platform
+												break;
+												break;
+											
+										}
+									}
+								}
+							}
+						}
+					}
+					if(variation == 7)
+					{
+						int[,] _pyramidRoom = {
+							{3,3,3,3,3,3,0,0,0,0,0,3,3,3,3,3,3},
+							{3,0,0,0,0,0,0,0,0,0,0,2,2,2,2,2,3},
+							{3,0,0,0,0,0,0,0,0,0,0,2,3,3,3,2,3},
+							{3,0,0,0,0,0,0,0,0,0,0,2,3,2,3,2,3},
+							{3,0,0,0,0,0,0,0,4,0,0,2,3,2,3,2,3},
+							{3,0,0,0,0,0,0,0,0,0,0,2,3,2,3,2,3},
+							{3,6,0,0,5,0,0,0,0,0,0,2,3,2,3,2,3},
+							{3,2,1,3,3,3,3,3,3,3,2,2,3,2,3,2,3},
+							{3,2,1,3,2,2,2,3,2,3,2,3,3,2,3,2,3},
+							{3,2,1,3,3,3,2,3,2,3,2,3,2,2,3,2,3},
+							{3,2,1,1,1,3,2,3,2,3,2,3,2,3,3,2,3},
+							{3,2,3,3,1,3,2,3,2,3,2,3,2,3,3,2,3},
+							{3,2,2,2,1,3,2,3,2,3,2,3,2,3,3,2,3},
+							{3,3,3,2,1,3,2,3,2,3,2,3,2,3,3,2,3},
+							{3,3,3,2,1,3,3,3,2,3,2,3,2,3,3,2,3},
+							{3,3,3,2,1,0,0,3,2,3,2,3,2,3,3,2,3},
+							{3,3,3,2,1,7,0,3,2,3,2,3,2,2,2,2,3}
+						};	
+						
+						int PosX = x;
+						int PosY = y;
+						PosX -= (int)(.5f * _pyramidRoom.GetLength(1));
+						PosY -= (int)(.5f * _pyramidRoom.GetLength(0));
+						//i = vertical, j = horizontal
+						for(int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)
+						{
+							for (int i = 0; i < _pyramidRoom.GetLength(0); i++) {
+								for (int j = 0; j < _pyramidRoom.GetLength(1); j++) {
+									int k = PosX + j;
+									int l = PosY + i;
+									if (WorldGen.InWorld(k, l, 30)) {
+										Tile tile = Framing.GetTileSafely(k, l);
+										switch (_pyramidRoom[i, j]) {
+											case 0:
+												if(confirmPlatforms == 0)
+												tile.active(false);
+												break;
+											case 1:
+												tile.type = 274; //sandstoneslab
+												tile.active(true);
+												break;
+											case 2:
+												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.active(true);
+												break;
+											case 3:
+												tile.type = 151; //sandstone brick
+												tile.active(true);
+												break;
+											case 4:
+												if(confirmPlatforms == 1)
+												WorldGen.PlaceTile(k, l, 240, true, true, -1, Main.rand.Next(16, 18)); //hanging skeleton
+												break;
+											case 5:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, 215); //campfire
+												break;
+											case 6:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, 376, true, true, -1, Main.rand.Next(3)); //crates
+												break;
+											case 7:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //crates
+												break;
+											case 8:
+												tile.liquidType(1);
+												tile.liquid = 255;
+												
+												if(confirmPlatforms == 0)
+												tile.active(false);
+											
+												WorldGen.SquareTileFrame(k, l, false);
+												break;
+											case 9:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform //platform
+												break;
+												break;
+											
+										}
+									}
+								}
+							}
+						}
+					}
+					if(variation == 8)
+					{
+						int[,] _pyramidRoom = {
+							{7,7,7,7,7,2,0,0,0,0,0,2,7,7,7,7,7},
+							{7,0,0,0,7,2,0,0,0,0,9,2,7,0,0,0,7},
+							{0,0,0,0,7,2,0,0,0,0,0,2,7,0,0,0,0},
+							{0,0,0,0,7,2,0,0,0,0,0,2,0,0,5,0,0},
+							{0,0,0,0,7,2,9,0,0,0,0,2,0,0,0,0,0},
+							{0,0,5,0,0,2,0,0,0,0,0,0,0,0,0,0,0},
+							{0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0},
+							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7},
+							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7},
+							{0,0,2,0,0,0,0,0,0,0,0,0,0,0,3,3,3},
+							{0,0,2,0,0,0,0,0,7,0,0,0,0,0,0,0,3},
+							{0,0,2,0,0,0,0,0,7,0,0,0,0,0,0,0,7},
+							{0,0,2,0,0,0,0,0,7,0,0,0,0,0,0,0,7},
+							{6,0,2,0,0,0,0,0,7,7,0,0,0,0,0,0,7},
+							{9,9,2,0,0,0,0,7,3,7,0,0,0,0,0,7,7},
+							{7,7,2,7,7,7,7,3,3,3,3,7,7,7,7,7,3}
+						};	
+						
+						int PosX = x;
+						int PosY = y;
+						PosX -= (int)(.5f * _pyramidRoom.GetLength(1));
+						PosY -= (int)(.5f * _pyramidRoom.GetLength(0));
+						//i = vertical, j = horizontal
+						for(int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)
+						{
+							for (int i = 0; i < _pyramidRoom.GetLength(0); i++) {
+								for (int j = 0; j < _pyramidRoom.GetLength(1); j++) {
+									int k = PosX + j;
+									int l = PosY + i;
+									if (WorldGen.InWorld(k, l, 30)) {
+										Tile tile = Framing.GetTileSafely(k, l);
+										switch (_pyramidRoom[i, j]) {
+											case 0:
+												if(confirmPlatforms == 0)
+												tile.active(false);
+												break;
+											case 1:
+												tile.type = 274; //sandstoneslab
+												tile.active(true);
+												break;
+											case 2:
+												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.active(true);
+												break;
+											case 3:
+												tile.type = 151; //sandstone brick
+												tile.active(true);
+												break;
+											case 4:
+												tile.type = 51; //cobweb
+												tile.active(true);
+												break;
+											case 5:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, 240, true, true, -1, Main.rand.Next(16, 18)); //hanging skeleton
+												break;
+											case 6:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
+												break;
+											case 7:
+												tile.type = 232; //wooden spike
+												tile.active(true);
+												break;
+											case 8:
+												tile.liquidType(0);
+												tile.liquid = 255;
+												
+												if(confirmPlatforms == 0)
+												tile.active(false);
+											
+												WorldGen.SquareTileFrame(k, l, false);
+												break;
+											case 9:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform //platform
+												break;
+												break;
+											
+										}
+									}
+								}
+							}
+						}
+					}
+					if(variation == 9)
+					{
+						int[,] _pyramidRoom = {
+							{3,3,3,3,3,2,0,0,0,0,0,2,3,3,3,3,3},
+							{3,7,7,7,3,2,0,0,0,0,0,2,3,2,2,2,2},
+							{3,7,0,7,3,2,0,0,0,0,0,2,3,2,0,0,0},
+							{3,7,0,7,3,2,0,0,0,0,0,2,3,2,0,0,0},
+							{0,0,0,0,0,0,0,0,0,0,0,2,3,2,0,0,0},
+							{0,0,0,0,0,0,0,0,0,0,0,2,3,2,0,0,0},
+							{0,0,0,0,0,0,0,0,0,0,0,2,3,2,0,0,0},
+							{0,0,2,2,2,2,2,2,2,2,2,2,3,2,0,0,0},
+							{0,0,0,2,3,2,3,3,3,3,3,2,3,2,0,0,0},
+							{0,0,0,2,3,2,3,7,7,7,3,2,3,0,0,0,0},
+							{0,0,0,0,3,2,3,7,0,7,3,2,3,0,0,6,0},
+							{3,0,0,0,0,2,3,7,0,7,3,2,0,0,0,9,3},
+							{3,0,0,0,0,2,0,0,0,0,0,2,0,0,0,0,3},
+							{2,7,0,0,0,0,0,0,0,0,0,0,0,0,0,7,2},
+							{3,3,7,0,0,0,0,0,0,0,0,0,0,0,7,3,3},
+							{3,0,3,7,0,0,0,0,0,0,0,0,0,7,3,2,3},
+							{3,3,3,2,3,2,0,0,0,0,0,2,3,2,3,3,3}
+						};	
+						
+						int PosX = x;
+						int PosY = y;
+						PosX -= (int)(.5f * _pyramidRoom.GetLength(1));
+						PosY -= (int)(.5f * _pyramidRoom.GetLength(0));
+						//i = vertical, j = horizontal
+						for(int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)
+						{
+							for (int i = 0; i < _pyramidRoom.GetLength(0); i++) {
+								for (int j = 0; j < _pyramidRoom.GetLength(1); j++) {
+									int k = PosX + j;
+									int l = PosY + i;
+									if (WorldGen.InWorld(k, l, 30)) {
+										Tile tile = Framing.GetTileSafely(k, l);
+										switch (_pyramidRoom[i, j]) {
+											case 0:
+												if(confirmPlatforms == 0)
+												tile.active(false);
+												break;
+											case 1:
+												tile.type = 274; //sandstoneslab
+												tile.active(true);
+												break;
+											case 2:
+												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.active(true);
+												break;
+											case 3:
+												tile.type = 151; //sandstone brick
+												tile.active(true);
+												break;
+											case 4:
+												tile.type = 51; //cobweb
+												tile.active(true);
+												break;
+											case 5:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, 240, true, true, -1, Main.rand.Next(16, 18)); //hanging skeleton
+												break;
+											case 6:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
+												break;
+											case 7:
+												tile.type = 232; //wooden spike
+												tile.active(true);
+												break;
+											case 8:
+												tile.liquidType(0);
+												tile.liquid = 255;
+												
+												if(confirmPlatforms == 0)
+												tile.active(false);
+											
+												WorldGen.SquareTileFrame(k, l, false);
+												break;
+											case 9:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform //platform
+												break;
+												break;
+											
+										}
+									}
+								}
+							}
+						}
+					}
+					
+				}
+				if(direction == 3)
+				{
+					//tile.type = 50;
+					for(int checkDown = 0; checkDown < 300; checkDown++)
+					{
+						int check5 = 0;
+						for(int h = 2; h >= -2; h--)
+						{
+							Tile checkTile = Framing.GetTileSafely(x + h, y + checkDown);
+							if(checkTile.active() == false || checkTile.wall != (ushort)mod.WallType("PyramidWallTile"))
+							{
+								check5++;
+							}
+							checkTile.active(false);
+						}
+						if(check5 >= 5)
+						{
+							break;
+						}
+					}
+					if(variation == 0)
+					{
+						int[,] _pyramidRoom = {
+							{7,7,7,7,7,4,4,4,4,2,3,3,3,3,3,3,3},
+							{3,3,3,3,7,4,4,4,4,2,3,2,2,2,2,2,3},
+							{2,2,2,3,7,4,4,4,0,2,3,3,3,3,3,2,3},
+							{4,2,3,3,2,7,4,4,0,2,2,2,2,2,2,2,3},
+							{4,2,2,2,2,3,7,0,0,0,0,0,3,3,3,3,3},
+							{4,4,3,3,3,3,7,0,0,0,9,9,3,4,4,4,4},
+							{4,4,4,7,3,7,0,0,0,0,6,9,3,0,4,4,4},
+							{4,4,7,2,3,7,0,0,3,3,3,3,3,0,7,7,7},
+							{4,4,7,2,3,2,0,0,0,0,0,0,0,0,7,2,2},
+							{4,7,3,3,3,3,3,0,0,0,0,0,0,0,7,2,3},
+							{4,0,7,2,3,2,0,0,0,0,0,7,7,7,7,2,3},
+							{0,0,7,2,3,0,0,0,0,0,0,7,2,2,2,2,3},
+							{0,0,0,7,3,0,0,0,0,0,0,7,2,3,3,3,3},
+							{7,0,0,0,0,0,0,0,0,0,0,7,2,3,3,3,3},
+							{3,7,0,0,9,9,0,0,0,0,0,7,2,3,3,3,3},
+							{3,2,7,0,9,9,0,0,0,0,0,7,2,3,3,3,3},
+							{3,2,3,7,5,9,0,0,0,0,0,7,2,3,3,3,3}
+						};	
+						
+						int PosX = x;
+						int PosY = y;
+						PosX -= (int)(.5f * _pyramidRoom.GetLength(1));
+						PosY -= (int)(.5f * _pyramidRoom.GetLength(0));
+						//i = vertical, j = horizontal
+						for(int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)
+						{
+							for (int i = 0; i < _pyramidRoom.GetLength(0); i++) {
+								for (int j = 0; j < _pyramidRoom.GetLength(1); j++) {
+									int k = PosX + j;
+									int l = PosY + i;
+									if (WorldGen.InWorld(k, l, 30)) {
+										Tile tile = Framing.GetTileSafely(k, l);
+										switch (_pyramidRoom[i, j]) {
+											case 0:
+												tile.active(false);
+												break;
+											case 1:
+												tile.type = 274; //sandstoneslab
+												tile.active(true);
+												break;
+											case 2:
+												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.active(true);
+												break;
+											case 3:
+												tile.type = 151; //sandstone brick
+												tile.active(true);
+												break;
+											case 4:
+												tile.type = 51; //cobweb
+												tile.active(true);
+												break;
+											case 5:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, TileID.Statues, true, true, -1, Main.rand.Next(71)); //random statue
+												break;
+											case 6:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
+												break;
+											case 7:
+												tile.type = 232; //wooden spike
+												tile.active(true);
+												break;
+											case 8:
+												tile.liquidType(0);
+												tile.liquid = 255;
+												
+												if(confirmPlatforms == 0)
+												tile.active(false);
+											
+												WorldGen.SquareTileFrame(k, l, false);
+												break;
+											case 9:
+												if(confirmPlatforms == 0)
+												tile.active(false);
+												break;
+												break;
+											
+										}
+									}
+								}
+							}
+						}
+					}
+					if(variation == 1)
+					{
+						int[,] _pyramidRoom = {
+							{2,1,1,2,2,1,1,1,1,1,1,1,2,2,1,1,2},
+							{1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,1,1},
+							{1,2,2,2,0,0,0,0,0,0,4,4,4,2,2,2,1},
+							{2,2,2,0,0,0,0,0,0,0,0,4,4,4,2,2,2},
+							{2,2,0,0,0,0,0,0,0,0,0,0,0,4,4,2,2},
+							{3,4,0,0,0,0,0,0,0,0,0,0,0,0,4,4,3},
+							{3,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+							{4,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0},
+							{4,0,0,0,0,1,1,1,1,2,1,1,1,0,0,0,0},
+							{0,0,0,0,0,0,0,7,1,1,1,1,1,1,0,0,8},
+							{0,0,0,0,0,6,0,7,1,1,1,1,1,1,1,8,8},
+							{9,9,9,9,9,1,1,1,1,1,1,1,1,1,1,1,8},
+							{1,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1},
+							{1,1,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1},
+							{1,1,1,0,0,0,0,0,0,0,0,0,1,1,1,1,1},
+							{1,0,1,1,0,0,0,0,0,0,0,0,1,1,1,1,1},
+							{1,1,1,1,1,0,0,0,0,0,0,1,1,1,1,1,1}
+						};	
+						
+						int PosX = x;
+						int PosY = y;
+						PosX -= (int)(.5f * _pyramidRoom.GetLength(1));
+						PosY -= (int)(.5f * _pyramidRoom.GetLength(0));
+						//i = vertical, j = horizontal
+						for(int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)
+						{
+							for (int i = 0; i < _pyramidRoom.GetLength(0); i++) {
+								for (int j = 0; j < _pyramidRoom.GetLength(1); j++) {
+									int k = PosX + j;
+									int l = PosY + i;
+									if (WorldGen.InWorld(k, l, 30)) {
+										Tile tile = Framing.GetTileSafely(k, l);
+										switch (_pyramidRoom[i, j]) {
+											case 0:
+												if(confirmPlatforms == 0)
+												tile.active(false);
+												break;
+											case 1:
+												tile.type = 274; //sandstoneslab
+												tile.active(true);
+												break;
+											case 2:
+												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.active(true);
+												break;
+											case 3:
+												tile.type = 151; //sandstone brick
+												tile.active(true);
+												break;
+											case 4:
+												tile.type = 51; //cobweb
+												tile.active(true);
+												break;
+											case 5:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, TileID.Statues, true, true, -1, Main.rand.Next(71)); //random statue
+												break;
+											case 6:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
+												break;
+											case 7:
+												tile.type = 232; //wooden spike
+												tile.active(true);
+												break;
+											case 8:
+												tile.type = 332; //gold coin
+												tile.active(true);
+												break;
+											case 9:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform
+												break;
+												break;
+											
+										}
+									}
+								}
+							}
+						}
+					}
+					if(variation == 2)
+					{
+						int[,] _pyramidRoom = {
+							{3,4,4,4,4,4,4,0,3,3,3,3,3,3,3,3,3},
+							{3,4,4,4,4,0,0,0,0,2,2,3,2,2,2,2,2},
+							{3,4,0,0,0,0,0,0,0,0,2,3,2,4,4,4,4},
+							{3,0,0,0,0,0,0,0,0,0,2,3,2,0,4,4,4},
+							{3,0,0,0,0,0,0,0,0,0,2,3,2,0,0,0,4},
+							{3,0,0,0,0,0,0,0,0,0,0,3,2,0,0,0,0},
+							{3,0,5,0,0,0,0,0,0,0,0,3,2,0,0,0,0},
+							{3,3,3,3,3,3,9,9,9,9,9,3,0,0,0,0,0},
+							{3,2,2,2,2,0,0,0,0,0,0,3,0,0,0,0,0},
+							{3,7,7,7,0,0,0,0,0,0,0,0,0,0,0,0,0},
+							{3,7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+							{3,7,0,0,0,0,0,0,0,0,0,0,0,0,8,0,0},
+							{3,7,0,0,0,0,0,0,0,0,0,0,3,3,3,3,3},
+							{2,2,0,0,0,0,0,0,0,0,0,0,0,2,2,2,3},
+							{3,3,3,0,0,0,0,0,0,0,0,0,0,0,0,2,3},
+							{2,2,2,2,0,0,0,0,0,0,0,2,2,2,2,2,2},
+							{3,3,3,3,3,0,0,0,0,0,0,0,3,3,3,3,3}
+						};	
+						
+						int PosX = x;
+						int PosY = y;
+						PosX -= (int)(.5f * _pyramidRoom.GetLength(1));
+						PosY -= (int)(.5f * _pyramidRoom.GetLength(0));
+						//i = vertical, j = horizontal
+						for(int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)
+						{
+							for (int i = 0; i < _pyramidRoom.GetLength(0); i++) {
+								for (int j = 0; j < _pyramidRoom.GetLength(1); j++) {
+									int k = PosX + j;
+									int l = PosY + i;
+									if (WorldGen.InWorld(k, l, 30)) {
+										Tile tile = Framing.GetTileSafely(k, l);
+										switch (_pyramidRoom[i, j]) {
+											case 0:
+												if(confirmPlatforms == 0)
+												tile.active(false);
+												break;
+											case 1:
+												tile.type = 274; //sandstoneslab
+												tile.active(true);
+												break;
+											case 2:
+												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.active(true);
+												break;
+											case 3:
+												tile.type = 151; //sandstone brick
+												tile.active(true);
+												break;
+											case 4:
+												tile.type = 51; //cobweb
+												tile.active(true);
+												break;
+											case 5:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, 377); //sharpening station
+												break;
+											case 6:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
+												break;
+											case 7:
+												tile.type = 232; //wooden spike
+												tile.active(true);
+												break;
+											case 8:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("CrystalStatue")); //heart crystal
+												break;
+											case 9:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform
+												break;
+												break;
+											
+										}
+									}
+								}
+							}
+						}
+					}
+					if(variation == 3)
+					{
+						int[,] _pyramidRoom = {
+							{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+							{1,4,4,0,0,0,0,0,0,0,0,0,0,4,4,4,4},
+							{1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,4,4},
+							{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4},
+							{1,0,0,0,2,2,2,2,2,2,2,2,0,0,2,0,0},
+							{1,0,0,0,0,0,0,0,4,4,2,2,0,0,2,0,0},
+							{1,0,0,0,0,0,0,0,0,4,2,2,0,0,2,0,0},
+							{1,0,0,0,0,0,0,0,0,0,2,2,0,0,2,0,0},
+							{2,2,2,2,2,2,2,0,0,0,2,2,0,0,2,0,0},
+							{1,4,4,0,0,0,0,0,0,0,2,2,4,4,2,6,0},
+							{1,4,0,0,0,0,0,0,0,0,2,2,0,0,2,9,9},
+							{1,0,0,0,0,0,0,0,0,0,2,2,0,0,2,0,0},
+							{1,0,0,0,2,2,2,2,2,2,2,2,0,0,2,0,0},
+							{1,0,0,0,0,0,0,0,0,0,0,2,8,8,2,0,0},
+							{1,0,0,0,0,0,0,0,0,0,0,2,8,8,2,0,0},
+							{1,0,0,0,0,0,0,0,0,0,0,2,8,8,2,0,0},
+							{1,1,1,1,1,1,0,0,0,0,0,2,2,2,2,2,2}
+						};	
+						
+						int PosX = x;
+						int PosY = y;
+						PosX -= (int)(.5f * _pyramidRoom.GetLength(1));
+						PosY -= (int)(.5f * _pyramidRoom.GetLength(0));
+						//i = vertical, j = horizontal
+						for(int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)
+						{
+							for (int i = 0; i < _pyramidRoom.GetLength(0); i++) {
+								for (int j = 0; j < _pyramidRoom.GetLength(1); j++) {
+									int k = PosX + j;
+									int l = PosY + i;
+									if (WorldGen.InWorld(k, l, 30)) {
+										Tile tile = Framing.GetTileSafely(k, l);
+										switch (_pyramidRoom[i, j]) {
+											case 0:
+												if(confirmPlatforms == 0)
+												tile.active(false);
+												break;
+											case 1:
+												tile.type = 274; //sandstoneslab
+												tile.active(true);
+												break;
+											case 2:
+												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.active(true);
+												break;
+											case 3:
+												tile.type = 151; //sandstone brick
+												tile.active(true);
+												break;
+											case 4:
+												tile.type = 51; //cobweb
+												tile.active(true);
+												break;
+											case 5:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, 377); //sharpening station
+												break;
+											case 6:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
+												break;
+											case 7:
+												tile.type = 332; //gold coin
+												tile.active(true);
+												break;
+											case 8:
+												tile.liquidType(1);
+												tile.liquid = 255;
+												
+												if(confirmPlatforms == 0)
+												tile.active(false);
+											
+												WorldGen.SquareTileFrame(k, l, false);
+												break;
+											case 9:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform //platform
+												break;
+												break;
+											
+										}
+									}
+								}
+							}
+						}
+					}
+					if(variation == 4)
+					{
+						int[,] _pyramidRoom = {
+							{0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1},
+							{0,0,0,0,0,0,0,0,0,1,1,0,1,1,1,0,1},
+							{0,6,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1},
+							{3,3,3,3,3,0,0,0,0,0,0,1,0,1,1,1,1},
+							{3,2,2,2,2,2,0,0,0,0,1,0,0,0,1,1,1},
+							{3,3,2,1,1,1,1,0,0,0,0,1,0,1,0,0,0},
+							{2,2,2,1,0,0,0,0,0,0,1,0,1,0,0,1,0},
+							{0,1,2,1,0,0,0,0,0,0,0,0,0,0,0,1,0},
+							{0,1,2,1,0,0,0,0,0,0,0,0,0,0,0,0,0},
+							{0,1,2,1,0,0,0,0,0,0,0,0,0,0,3,3,3},
+							{0,1,1,1,0,0,0,0,0,0,0,0,0,2,2,2,2},
+							{0,0,0,0,0,0,0,0,0,0,0,0,3,3,3,3,3},
+							{0,0,0,0,0,0,0,0,0,0,0,0,3,2,2,2,2},
+							{0,0,0,0,0,0,0,0,0,0,0,0,3,2,0,0,0},
+							{0,0,9,0,0,0,0,0,0,0,0,0,3,2,0,0,0},
+							{2,2,2,2,2,0,0,0,0,0,0,0,3,2,0,0,0},
+							{3,3,3,3,0,0,0,0,0,0,0,0,3,2,0,6,0}
+						};	
+						
+						int PosX = x;
+						int PosY = y;
+						PosX -= (int)(.5f * _pyramidRoom.GetLength(1));
+						PosY -= (int)(.5f * _pyramidRoom.GetLength(0));
+						//i = vertical, j = horizontal
+						for(int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)
+						{
+							for (int i = 0; i < _pyramidRoom.GetLength(0); i++) {
+								for (int j = 0; j < _pyramidRoom.GetLength(1); j++) {
+									int k = PosX + j;
+									int l = PosY + i;
+									if (WorldGen.InWorld(k, l, 30)) {
+										Tile tile = Framing.GetTileSafely(k, l);
+										switch (_pyramidRoom[i, j]) {
+											case 0:
+												if(confirmPlatforms == 0)
+												tile.active(false);
+												break;
+											case 1:
+												tile.type = 274; //sandstoneslab
+												tile.active(true);
+												break;
+											case 2:
+												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.active(true);
+												break;
+											case 3:
+												tile.type = 151; //sandstone brick
+												tile.active(true);
+												break;
+											case 4:
+												tile.type = 51; //cobweb
+												tile.active(true);
+												break;
+											case 5:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, 377); //sharpening station
+												break;
+											case 6:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
+												break;
+											case 7:
+												tile.type = 332; //gold coin
+												tile.active(true);
+												break;
+											case 8:
+												tile.liquidType(1);
+												tile.liquid = 255;
+												
+												if(confirmPlatforms == 0)
+												tile.active(false);
+											
+												WorldGen.SquareTileFrame(k, l, false);
+												break;
+											case 9:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, 354); //bewitching table
+												break;
+												break;
+											
+										}
+									}
+								}
+							}
+						}
+					}
+					if(variation == 5)
+					{
+						int[,] _pyramidRoom = {
+							{3,3,3,3,0,0,0,0,0,0,0,0,0,3,3,3,3},
+							{2,2,2,0,0,0,0,0,0,0,0,0,0,0,2,2,2},
+							{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+							{2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2},
+							{5,5,5,0,0,0,0,0,0,0,0,0,0,0,5,5,5},
+							{2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2},
+							{5,5,0,0,0,0,0,0,0,0,0,0,0,0,0,5,5},
+							{2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2},
+							{5,6,0,0,0,0,0,0,0,0,0,0,0,0,6,0,5},
+							{2,9,9,9,0,0,0,0,0,0,0,0,0,9,9,9,2},
+							{5,5,0,0,0,0,0,0,0,0,0,0,0,0,0,5,5},
+							{2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2},
+							{5,5,5,0,0,0,0,0,0,0,0,0,0,0,5,5,5},
+							{2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2},
+							{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+							{2,2,2,0,0,0,0,0,0,0,0,0,0,0,2,2,2},
+							{3,3,3,3,0,0,0,0,0,0,0,0,0,3,3,3,3}
+						};	
+						
+						int PosX = x;
+						int PosY = y;
+						PosX -= (int)(.5f * _pyramidRoom.GetLength(1));
+						PosY -= (int)(.5f * _pyramidRoom.GetLength(0));
+						//i = vertical, j = horizontal
+						for(int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)
+						{
+							for (int i = 0; i < _pyramidRoom.GetLength(0); i++) {
+								for (int j = 0; j < _pyramidRoom.GetLength(1); j++) {
+									int k = PosX + j;
+									int l = PosY + i;
+									if (WorldGen.InWorld(k, l, 30)) {
+										Tile tile = Framing.GetTileSafely(k, l);
+										switch (_pyramidRoom[i, j]) {
+											case 0:
+												if(confirmPlatforms == 0)
+												tile.active(false);
+												break;
+											case 1:
+												tile.type = 274; //sandstoneslab
+												tile.active(true);
+												break;
+											case 2:
+												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.active(true);
+												break;
+											case 3:
+												tile.type = 151; //sandstone brick
+												tile.active(true);
+												break;
+											case 4:
+												tile.type = 51; //cobweb
+												tile.active(true);
+												break;
+											case 5:
+												tile.type = 232; //spike
+												tile.active(true);
+												break;
+											case 6:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, 376, true, true, -1, Main.rand.Next(3)); //crates
+												break;
+											case 7:
+												tile.type = 332; //gold coin
+												tile.active(true);
+												break;
+											case 8:
+												tile.liquidType(1);
+												tile.liquid = 255;
+												
+												if(confirmPlatforms == 0)
+												tile.active(false);
+											
+												WorldGen.SquareTileFrame(k, l, false);
+												break;
+											case 9:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform //platform
+												break;
+												break;
+											
+										}
+									}
+								}
+							}
+						}
+					}
+					if(variation == 6)
+					{
+						int[,] _pyramidRoom = {
+							{3,3,3,3,3,0,0,0,0,0,0,0,3,3,3,3,3},
+							{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+							{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+							{3,0,0,3,3,3,2,2,2,2,2,3,3,3,0,0,3},
+							{3,0,0,3,0,0,0,0,0,0,0,0,0,3,0,0,3},
+							{0,0,0,3,0,0,0,0,0,0,0,0,0,3,0,0,0},
+							{0,0,0,2,0,0,3,3,3,3,3,0,0,2,0,0,0},
+							{0,0,0,2,0,0,2,0,0,0,2,0,0,2,0,0,0},
+							{0,0,0,2,0,0,2,0,0,0,2,0,0,2,0,0,0},
+							{0,0,0,2,0,0,2,0,4,0,2,0,0,2,0,0,0},
+							{0,0,0,2,0,0,3,3,3,3,3,0,0,2,0,0,0},
+							{0,0,0,3,7,7,7,7,0,7,7,7,7,3,0,0,0},
+							{3,0,0,3,7,7,7,7,7,7,7,7,7,3,0,0,3},
+							{3,0,0,3,3,3,2,2,2,2,2,3,3,3,0,0,3},
+							{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+							{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+							{3,3,3,3,3,0,0,0,0,0,0,0,3,3,3,3,3}
+						};	
+						
+						int PosX = x;
+						int PosY = y;
+						PosX -= (int)(.5f * _pyramidRoom.GetLength(1));
+						PosY -= (int)(.5f * _pyramidRoom.GetLength(0));
+						//i = vertical, j = horizontal
+						for(int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)
+						{
+							for (int i = 0; i < _pyramidRoom.GetLength(0); i++) {
+								for (int j = 0; j < _pyramidRoom.GetLength(1); j++) {
+									int k = PosX + j;
+									int l = PosY + i;
+									if (WorldGen.InWorld(k, l, 30)) {
+										Tile tile = Framing.GetTileSafely(k, l);
+										switch (_pyramidRoom[i, j]) {
+											case 0:
+												if(confirmPlatforms == 0)
+												tile.active(false);
+												break;
+											case 1:
+												tile.type = 274; //sandstoneslab
+												tile.active(true);
+												break;
+											case 2:
+												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.active(true);
+												break;
+											case 3:
+												tile.type = 151; //sandstone brick
+												tile.active(true);
+												break;
+											case 4:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, 219); //extractinator
+												break;
+											case 5:
+												tile.type = 232; //spike
+												tile.active(true);
+												break;
+											case 6:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, 376, true, true, -1, Main.rand.Next(3)); //crates
+												break;
+											case 7:
+												tile.type = 332; //gold coin
+												tile.active(true);
+												break;
+											case 8:
+												tile.liquidType(1);
+												tile.liquid = 255;
+												
+												if(confirmPlatforms == 0)
+												tile.active(false);
+											
+												WorldGen.SquareTileFrame(k, l, false);
+												break;
+											case 9:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform //platform
+												break;
+												break;
+											
+										}
+									}
+								}
+							}
+						}
+					}
+					if(variation == 7)
+					{
+						int[,] _pyramidRoom = {
+							{4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0},
+							{2,2,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0},
+							{4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,6,0},
+							{2,2,2,0,0,0,0,0,0,0,0,0,4,4,2,2,2},
+							{4,4,0,0,0,0,0,0,0,0,0,0,0,4,4,4,4},
+							{2,2,2,2,0,0,0,0,0,0,0,0,0,0,4,2,2},
+							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,4},
+							{2,2,2,2,2,0,0,0,0,0,0,0,0,0,2,2,2},
+							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4},
+							{2,2,2,2,2,2,0,0,0,0,0,0,0,2,2,2,2},
+							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4},
+							{2,2,2,2,2,2,2,0,0,0,0,0,2,2,2,2,2},
+							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+							{0,0,0,0,0,0,0,0,0,0,0,2,2,2,2,2,2},
+							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+							{0,0,0,0,0,0,0,0,0,0,2,2,2,2,2,2,2},
+							{0,5,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0}
+						};	
+						
+						int PosX = x;
+						int PosY = y;
+						PosX -= (int)(.5f * _pyramidRoom.GetLength(1));
+						PosY -= (int)(.5f * _pyramidRoom.GetLength(0));
+						//i = vertical, j = horizontal
+						for(int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)
+						{
+							for (int i = 0; i < _pyramidRoom.GetLength(0); i++) {
+								for (int j = 0; j < _pyramidRoom.GetLength(1); j++) {
+									int k = PosX + j;
+									int l = PosY + i;
+									if (WorldGen.InWorld(k, l, 30)) {
+										Tile tile = Framing.GetTileSafely(k, l);
+										switch (_pyramidRoom[i, j]) {
+											case 0:
+												if(confirmPlatforms == 0)
+												tile.active(false);
+												break;
+											case 1:
+												tile.type = 274; //sandstoneslab
+												tile.active(true);
+												break;
+											case 2:
+												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.active(true);
+												break;
+											case 3:
+												tile.type = 151; //sandstone brick
+												tile.active(true);
+												break;
+											case 4:
+												tile.type = 51; //cobweb
+												tile.active(true);
+												break;
+											case 5:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, 355); //alchemy table
+												break;
+											case 6:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
+												break;
+											case 7:
+												tile.type = 332; //gold coin
+												tile.active(true);
+												break;
+											case 8:
+												tile.liquidType(1);
+												tile.liquid = 255;
+												
+												if(confirmPlatforms == 0)
+												tile.active(false);
+											
+												WorldGen.SquareTileFrame(k, l, false);
+												break;
+											case 9:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform //platform
+												break;
+												break;
+											
+										}
+									}
+								}
+							}
+						}
+					}
+					if(variation == 8)
+					{
+						int[,] _pyramidRoom = {
+							{4,3,3,3,0,0,0,0,3,0,0,0,0,3,3,3,4},
+							{4,4,3,3,5,0,5,0,3,5,0,5,0,3,3,4,4},
+							{4,4,4,3,3,3,3,3,3,3,3,3,3,3,4,4,4},
+							{4,4,4,4,3,3,3,3,3,3,3,3,3,4,4,4,4},
+							{4,4,4,0,0,3,3,3,3,3,3,3,0,0,4,4,4},
+							{4,4,4,1,0,0,3,3,3,3,3,0,0,1,4,4,4},
+							{4,4,0,1,1,0,0,3,3,3,0,0,1,1,0,4,4},
+							{4,0,0,0,1,1,0,0,3,0,0,1,1,0,0,0,4},
+							{4,0,1,0,0,1,1,0,0,0,1,1,0,0,1,0,4},
+							{0,1,0,0,1,0,0,0,0,0,0,0,1,0,0,1,0},
+							{0,0,0,0,1,0,1,0,1,0,1,0,1,0,0,0,0},
+							{0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0},
+							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+							{4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4},
+							{3,3,3,0,0,0,0,0,0,0,0,0,0,0,3,3,3},
+							{2,2,2,2,0,0,0,0,0,0,0,0,0,2,2,2,2},
+							{3,3,3,3,3,0,0,0,0,0,0,0,3,3,3,3,3},
+						};	
+						
+						int PosX = x;
+						int PosY = y;
+						PosX -= (int)(.5f * _pyramidRoom.GetLength(1));
+						PosY -= (int)(.5f * _pyramidRoom.GetLength(0));
+						//i = vertical, j = horizontal
+						for(int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)
+						{
+							for (int i = 0; i < _pyramidRoom.GetLength(0); i++) {
+								for (int j = 0; j < _pyramidRoom.GetLength(1); j++) {
+									int k = PosX + j;
+									int l = PosY + i;
+									if (WorldGen.InWorld(k, l, 30)) {
+										Tile tile = Framing.GetTileSafely(k, l);
+										switch (_pyramidRoom[i, j]) {
+											case 0:
+												if(confirmPlatforms == 0)
+												tile.active(false);
+												break;
+											case 1:
+												tile.type = 274; //sandstoneslab
+												tile.active(true);
+												break;
+											case 2:
+												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.active(true);
+												break;
+											case 3:
+												tile.type = 151; //sandstone brick
+												tile.active(true);
+												break;
+											case 4:
+												tile.type = 51; //cobweb
+												tile.active(true);
+												break;
+											case 5:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, 376, true, true, -1, Main.rand.Next(3)); //crates
+												break;
+											case 6:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
+												break;
+											case 7:
+												tile.type = 332; //gold coin
+												tile.active(true);
+												break;
+											case 8:
+												tile.liquidType(1);
+												tile.liquid = 255;
+												
+												if(confirmPlatforms == 0)
+												tile.active(false);
+											
+												WorldGen.SquareTileFrame(k, l, false);
+												break;
+											case 9:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform //platform
+												break;
+												break;
+											
+										}
+									}
+								}
+							}
+						}
+					}
+					if(variation == 9)
+					{
+						int[,] _pyramidRoom = {
+							{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+							{1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1},
+							{1,2,2,3,2,1,1,1,2,2,2,2,2,2,2,2,1},
+							{1,2,3,3,2,0,0,0,0,0,0,0,0,4,4,2,1},
+							{1,2,2,3,2,0,0,0,0,0,0,0,0,0,4,2,1},
+							{1,2,2,2,2,5,0,0,0,0,0,0,0,0,0,2,1},
+							{1,2,3,2,2,1,1,1,1,1,1,1,1,0,0,2,1},
+							{1,2,3,3,2,2,2,2,2,2,2,2,0,0,0,2,1},
+							{1,2,3,2,2,1,1,1,1,2,2,0,0,0,0,2,1},
+							{1,2,2,2,2,2,2,2,2,2,0,0,0,0,0,2,1},
+							{1,2,2,4,4,4,0,0,0,0,0,0,0,0,2,2,1},
+							{1,2,2,4,0,0,0,0,0,0,0,0,0,0,2,2,1},
+							{1,2,2,0,0,0,0,0,0,0,0,0,0,0,2,2,1},
+							{1,2,2,1,6,0,0,0,0,0,0,6,0,1,2,2,1},
+							{1,2,2,1,1,1,0,0,0,0,0,1,1,1,2,2,1},
+							{1,2,2,2,2,2,0,0,0,0,0,2,2,2,2,2,1},
+							{1,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,1}
+						};	
+						
+						int PosX = x;
+						int PosY = y;
+						PosX -= (int)(.5f * _pyramidRoom.GetLength(1));
+						PosY -= (int)(.5f * _pyramidRoom.GetLength(0));
+						//i = vertical, j = horizontal
+						for(int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)
+						{
+							for (int i = 0; i < _pyramidRoom.GetLength(0); i++) {
+								for (int j = 0; j < _pyramidRoom.GetLength(1); j++) {
+									int k = PosX + j;
+									int l = PosY + i;
+									if (WorldGen.InWorld(k, l, 30)) {
+										Tile tile = Framing.GetTileSafely(k, l);
+										switch (_pyramidRoom[i, j]) {
+											case 0:
+												if(confirmPlatforms == 0)
+												tile.active(false);
+												break;
+											case 1:
+												tile.type = 274; //sandstoneslab
+												tile.active(true);
+												break;
+											case 2:
+												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.active(true);
+												break;
+											case 3:
+												tile.type = 151; //sandstone brick
+												tile.active(true);
+												break;
+											case 4:
+												tile.type = 51; //cobweb
+												tile.active(true);
+												break;
+											case 5:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
+												break;
+											case 6:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("CrystalStatue")); //chest
+												break;
+											case 7:
+												tile.type = 332; //gold coin
+												tile.active(true);
+												break;
+											case 8:
+												tile.liquidType(1);
+												tile.liquid = 255;
+												
+												if(confirmPlatforms == 0)
+												tile.active(false);
+											
+												WorldGen.SquareTileFrame(k, l, false);
+												break;
+											case 9:
+												tile.active(false);
+												WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform //platform
+												break;
+												break;
+											
+										}
+									}
+								}
+							}
+						}
+					}
+					
+				}
+			}
 		}
 	}
 }

@@ -36,7 +36,7 @@ namespace SOTS.Items.Pyramid
 			TileObjectData.addTile(Type);
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Pyramid Chest");
-			AddMapEntry(new Color(200, 200, 200), name, MapChestName);
+			AddMapEntry(new Color(194,138,138), name, MapChestName);
 			dustType = 7;
 			disableSmartCursor = true;
 			adjTiles = new int[] { TileID.Containers };

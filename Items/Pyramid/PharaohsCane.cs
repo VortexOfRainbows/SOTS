@@ -16,7 +16,7 @@ namespace SOTS.Items.Pyramid
 
 			item.damage = 6;
 			item.melee = true;
-			item.width = 34;
+			item.width = 36;
 			item.height = 26;
 			item.useTime = 25;
 			item.useAnimation = 25;
@@ -28,7 +28,5 @@ namespace SOTS.Items.Pyramid
 			item.autoReuse = true;            
 
 		}
-
-		
 	}
 }
