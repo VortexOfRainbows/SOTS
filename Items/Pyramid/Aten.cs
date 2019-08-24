@@ -27,7 +27,7 @@ namespace SOTS.Items.Pyramid
             item.useAnimation = 40;
             item.useTime = 40;
             item.knockBack = 4.5f;
-            item.damage = 21;
+            item.damage = 25;
             item.noUseGraphic = true; 
             item.shoot = mod.ProjectileType("AtenProj");
             item.shootSpeed = 14.5f;

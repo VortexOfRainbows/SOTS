@@ -4,34 +4,43 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace SOTS.Items.Pyramid
+namespace SOTS.Items.SpiderWeapons
 {
-	public class ImperialPike : ModItem
+	public class SpiderBite : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Imperial Pike");
-			Tooltip.SetDefault("");
+			DisplayName.SetDefault("Spider Bite");
+			Tooltip.SetDefault("Inflicts the venom debuff on enemies");
 		}
 		public override void SetDefaults()
 		{
 
-			item.damage = 23;
+			item.damage = 35;
 			item.melee = true;
-			item.width = 44;
-			item.height = 46;
-			item.useTime = 20;
-			item.useAnimation = 20;
+			item.width = 40;
+			item.height = 40;
+			item.useTime = 56;
+			item.useAnimation = 28;
 			item.useStyle = 5;
-			item.knockBack = 5;
-			item.value = Item.sellPrice(0, 1, 50, 0);
-			item.rare = 4;
+			item.knockBack = 8;
+			item.value = Item.sellPrice(0, 2, 0, 0);
+			item.rare = 6;
 			item.UseSound = SoundID.Item1;
 			item.autoReuse = false;            
-			item.shoot = mod.ProjectileType("PyramidSpear"); 
+			item.shoot = mod.ProjectileType("SpiderSpear"); 
             item.shootSpeed = 5;
 			item.noUseGraphic = true;
 			item.noMelee = true;
+
+		}
+		public override void AddRecipes()
+		{
+			ModRecipe recipe = new ModRecipe(mod);
+			recipe.AddIngredient(ItemID.SpiderFang, 15);
+			recipe.AddTile(TileID.MythrilAnvil);
+			recipe.SetResult(this);
+			recipe.AddRecipe();
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
@@ -42,6 +51,6 @@ namespace SOTS.Items.Pyramid
                   Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI);
               }
               return true; 
-	}
+	    }
 	}
 }

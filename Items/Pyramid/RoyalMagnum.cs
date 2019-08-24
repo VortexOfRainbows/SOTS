@@ -12,11 +12,11 @@ namespace SOTS.Items.Pyramid
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Royal Magnum");
-      Tooltip.SetDefault("The King's Personal Gun");
+      Tooltip.SetDefault("Upon hitting an enemy, the temple's wrath is incurred, summoning a phantom javelin\nThe King's personal handgun");
 		}
 		public override void SetDefaults()
 		{
-            item.damage = 8;  //gun damage
+            item.damage = 13;  //gun damage
             item.ranged = true;   //its a gun so set this to true
             item.width = 42;     //gun image width
             item.height = 36;   //gun image  height
@@ -27,7 +27,7 @@ namespace SOTS.Items.Pyramid
             item.knockBack = 4;
             item.value = Item.sellPrice(0, 1, 50, 0);
             item.rare = 3;
-            item.UseSound = SoundID.Item36;
+            item.UseSound = SoundID.Item11;
             item.autoReuse = false;
             item.shoot = 14; 
             item.shootSpeed = 26;
@@ -42,7 +42,7 @@ namespace SOTS.Items.Pyramid
               for (int i = 0; i < numberProjectiles; i++)
               {
                   Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(1)); // This defines the projectiles random spread. 4 degree spread.
-                  Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI);
+                  Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, mod.ProjectileType("SandBullet"), damage, knockBack, player.whoAmI);
               }
               return false; 
 		}

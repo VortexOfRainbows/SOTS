@@ -17,12 +17,10 @@ namespace SOTS.Projectiles
 		
         public override void SetDefaults()
         {
-            projectile.CloneDefaults(66);
-            aiType = 66;
+            projectile.CloneDefaults(64);
+            aiType = 64;
             projectile.melee = true;
-			projectile.alpha = 0;
-            projectile.width = 88;
-            projectile.height = 90; 
+			projectile.alpha = 0; 
 		}
 	}
 }

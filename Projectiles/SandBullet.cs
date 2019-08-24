@@ -22,12 +22,12 @@ namespace SOTS.Projectiles
 		
         public override void SetDefaults()
         {
-			projectile.CloneDefaults(616);
-            aiType = 616; //18 is the demon scythe style
-			projectile.alpha = 255;
+			projectile.CloneDefaults(14);
+            aiType = 14;
+			projectile.alpha = 0;
 			projectile.timeLeft = 220;
-			projectile.width = 1;
-			projectile.height = 1;
+			projectile.width = 16;
+			projectile.height = 16;
 
 
 		}
@@ -35,30 +35,27 @@ namespace SOTS.Projectiles
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
 			Player owner = Main.player[projectile.owner];
-			
-			int healdata = (int)(((damage - target.defense)/20) + 1);
-			//if(healdata >= 1)
-			//{
-			//owner.statLife += healdata;
-		//owner.HealEffect(healdata);
-			//}
-			//else
-			
-			owner.statLife += 1;
-			owner.HealEffect(1);
-			
-            
+			if(projectile.owner == Main.myPlayer)
+			{
+				int Proj = Projectile.NewProjectile(target.Center.X + (projectile.velocity.X * 4), target.Center.Y + (projectile.velocity.Y * 4), projectile.velocity.X * -1f, projectile.velocity.Y * -1f, 507, projectile.damage, projectile.knockBack * 0.7f, owner.whoAmI);
+				Main.projectile[Proj].timeLeft = 15;
+				Main.projectile[Proj].alpha = 125;
+				Main.projectile[Proj].tileCollide = false;
+			}
+				
+    
 		}
 		public override void AI()
-		{projectile.alpha = 255;
+		{projectile.alpha = 0;
 			wait += 1;
 			if(wait >= 4)
 			{
-			int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 1, 1, 235);
-
-			
-			Main.dust[num1].noGravity = true;
-			Main.dust[num1].velocity *= 0.1f;
+				for(int i = 0; i < 5; i++)
+				{
+					int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 16, 16, 32);
+					Main.dust[num1].noGravity = true;
+					Main.dust[num1].velocity *= 0.1f;
+				}
 			}
 			
 			

@@ -29,8 +29,9 @@ namespace SOTS.Items.OreItems
 			item.UseSound = SoundID.Item1;
 			item.autoReuse = true;            
 			item.shoot = mod.ProjectileType("StabberProj"); 
-            item.shootSpeed = 5;
+            item.shootSpeed = 7;
 			item.noUseGraphic = true;
+			item.noMelee = true;
 
 		}
 

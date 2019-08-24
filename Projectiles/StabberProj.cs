@@ -17,12 +17,10 @@ namespace SOTS.Projectiles
 		
         public override void SetDefaults()
         {
-            projectile.CloneDefaults(66);
-            aiType = 66;
+            projectile.CloneDefaults(49);
+            aiType = 49;
 			projectile.alpha = 0;
-            projectile.width = 50;
-            projectile.height = 50; 
-            projectile.timeLeft = 7;
+            projectile.timeLeft = 9;
 		}
 		public override void OnHitNPC(NPC n, int damage, float knockback, bool crit)
 		{
