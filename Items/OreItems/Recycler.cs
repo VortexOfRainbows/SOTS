@@ -11,7 +11,7 @@ namespace SOTS.Items.OreItems
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Recycler");
-			Tooltip.SetDefault("Increases damage when damage is done\nCaps at 60% damage up\nDamage returns to normal overtime");
+			Tooltip.SetDefault("Increases damage when damage is done\nCaps at 60%");
 		}
 		public override void SetDefaults()
 		{
@@ -21,7 +21,7 @@ namespace SOTS.Items.OreItems
             item.rare = 5;
 			item.value = 750000;
 			item.accessory = true;
-			item.defense = 6;
+			item.defense = 1;
 			item.expert = true;
 
 		}

@@ -13,7 +13,7 @@ namespace SOTS.Items.Blood
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Life Devourer");
-			Tooltip.SetDefault("Drains your life to generate blood which can be used for crafting\nIncreases max void by 20, void damage by 8%, and boosts void regen speed");
+			Tooltip.SetDefault("Drains your life to generate blood which can be used for crafting\nIncreases max void by 20, void damage by 8%, and boosts void regen speed\nWhen at extremely low life, it will remove soul fragments instead");
 			Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(7, 4));
 		}
 		public override void SetDefaults()

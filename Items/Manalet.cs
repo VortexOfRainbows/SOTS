@@ -11,7 +11,7 @@ namespace SOTS.Items
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Mana Brace");
-			Tooltip.SetDefault("Reduces mana usage by 20% and magic damage by 8%");
+			Tooltip.SetDefault("Reduces mana usage by 30%\nReduces magic damage by 5%");
 		}
 		public override void SetDefaults()
 		{
@@ -39,8 +39,8 @@ namespace SOTS.Items
 		{
 			
 
-			player.magicDamage -= 0.8f ;
-			player.manaCost -= 0.20f;
+			player.magicDamage -= 0.05f ;
+			player.manaCost -= 0.30f;
 		}
 	}
 }
