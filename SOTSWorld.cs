@@ -23,6 +23,7 @@ namespace SOTS
 		
 		public static bool downedPinky = false;
 		public static bool downedCarver = false;
+		public static bool downedCurse = false;
 		public static bool downedEntity = false;
 		
 		public static bool downedAntilion = false;
@@ -42,6 +43,7 @@ namespace SOTS
 		{
 		downedPinky = false;
 		downedCarver = false;
+		downedCurse = false;
 		downedEntity = false;
 		
 		downedAntilion = false;
@@ -63,6 +65,9 @@ namespace SOTS
 			}
 			if (downedCarver) {
 				downed.Add("carver");
+			}
+			if (downedCurse) {
+				downed.Add("curse");
 			}
 			if (downedEntity) {
 				downed.Add("entity");
@@ -106,6 +111,7 @@ namespace SOTS
 			var downed = tag.GetList<string>("downed");
 			downedPinky = downed.Contains("pinky");
 			downedCarver = downed.Contains("carver");
+			downedCurse = downed.Contains("curse");
 			downedEntity = downed.Contains("entity");
 			downedAntilion = downed.Contains("antilion");
 			downedAmalgamation = downed.Contains("amalgamation");
@@ -131,6 +137,7 @@ namespace SOTS
 				downedAntilion = flags[3];
 				downedAmalgamation = flags[4];
 				downedChess = flags[5];
+				downedCurse = flags[6];
 				
 				BitsByte flags2 = reader.ReadByte();
 				challengeDecay = flags2[0];
@@ -150,6 +157,7 @@ namespace SOTS
 			flags[3] = downedAntilion;
 			flags[4] = downedAmalgamation;
 			flags[5] = downedChess;
+			flags[6] = downedCurse;
 			writer.Write(flags);
 			
 			BitsByte flags2 = new BitsByte();
@@ -169,6 +177,7 @@ namespace SOTS
 			downedAntilion = flags[3];
 			downedAmalgamation = flags[4];
 			downedChess = flags[5];
+			downedCurse = flags[6];
 			
 			BitsByte flags2 = reader.ReadByte();
 			challengeDecay = flags2[0];
@@ -183,7 +192,7 @@ namespace SOTS
         {
             int genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Shinies"));
             int genIndexGems = tasks.FindIndex(genpass => genpass.Name.Equals("Random Gems"));
-            int genIndexEnd = tasks.FindIndex(genpass => genpass.Name.Equals("Micro Biomes"));
+            int genIndexEnd = tasks.FindIndex(genpass => genpass.Name.Equals("Final Cleanup"));
             if (genIndex == -1)
             {
                 return;
@@ -662,7 +671,7 @@ namespace SOTS
 			}
 			
 			{ //Planetarium Temple
-				int radius = 21;     //this is the explosion radius, the highter is the value the bigger is the explosion
+				int radius = 21;    
 		 
 					for (int x = -radius; x <= radius; x++)
 					{
@@ -671,9 +680,9 @@ namespace SOTS
 							int xPosition2 = (int)(x + xPosition);
 							int yPosition2 = (int)(y + yPosition);
 		 
-							if (Math.Sqrt(x * x + y * y) <= radius + 0.5)   //this make so the explosion radius is a circle
+							if (Math.Sqrt(x * x + y * y) <= radius + 0.5) 
 							{
-								WorldGen.KillTile(xPosition2, yPosition2, false, false, false);  //this make the explosion destroy tiles  
+								WorldGen.KillTile(xPosition2, yPosition2, false, false, false); 
 								Tile tile = Framing.GetTileSafely(xPosition2, yPosition2);
 								tile.wall = (ushort)WallID.Cloud;
 							}
@@ -1343,31 +1352,83 @@ namespace SOTS
 					
 						 
 				})); 
-			tasks.Insert(genIndexGems, new PassLegacy("genIndexModPyramid", delegate (GenerationProgress progress)
+			tasks.Insert(genIndexEnd + 3, new PassLegacy("genIndexModPyramid", delegate (GenerationProgress progress)
 			{
 					progress.Message = "Generating A Pyramid";
 					
-						int pyramidY = -1;
-						int pyramidX = -1;
-						for(int xCheck = Main.rand.Next(500, Main.maxTilesX -500); xCheck != -1; xCheck = Main.rand.Next(500, Main.maxTilesX -500))
+					///Finding the dungeon
+						int dungeonX2 = -1;
+						for(int dungeonX = 0; dungeonX < Main.maxTilesX; dungeonX++)
 						{
-							for(int ydown = 0; ydown != -1; ydown++)
+							for(int dungeonY = 0; dungeonY < Main.maxTilesY; dungeonY++)
 							{
-								Tile tile = Framing.GetTileSafely(xCheck, ydown);
-								if(tile.active() && tile.type == TileID.Sand)
+								Tile tile = Framing.GetTileSafely(dungeonX, dungeonY);
+								if(tile.type == TileID.BlueDungeonBrick || tile.type == TileID.GreenDungeonBrick || tile.type == TileID.PinkDungeonBrick)
 								{
-									pyramidY = ydown;
-									break;
-								}
-								else if(tile.active())
-								{
+									dungeonX2 = dungeonX;
 									break;
 								}
 							}
-							if(pyramidY != -1)
+							if(dungeonX2 != -1)
 							{
-								pyramidX = xCheck;
 								break;
+							}
+						}
+						int dungeonSide = -1;
+						if(dungeonX2 > (int)(Main.maxTilesX / 2))
+						{
+							dungeonSide = 1;
+						}
+						// -1 = dungeon on left, 1 = dungeon on right
+						
+						int pyramidY = -1;
+						int pyramidX = -1;
+						if(dungeonSide == -1)
+						{
+							for(int xCheck = Main.rand.Next((int)(Main.maxTilesX / 2), Main.maxTilesX -500); xCheck != -1; xCheck = Main.rand.Next((int)(Main.maxTilesX / 2), Main.maxTilesX -500))
+							{
+								for(int ydown = 0; ydown != -1; ydown++)
+								{
+									Tile tile = Framing.GetTileSafely(xCheck, ydown);
+									if(tile.active() && tile.type == TileID.Sand)
+									{
+										pyramidY = ydown;
+										break;
+									}
+									else if(tile.active())
+									{
+										break;
+									}
+								}
+								if(pyramidY != -1)
+								{
+									pyramidX = xCheck;
+									break;
+								}
+							}
+						 }
+						if(dungeonSide == 1)
+						{
+							for(int xCheck = Main.rand.Next(500, (int)(Main.maxTilesX / 2)); xCheck != -1; xCheck = Main.rand.Next(500, (int)(Main.maxTilesX / 2)))
+							{
+								for(int ydown = 0; ydown != -1; ydown++)
+								{
+									Tile tile = Framing.GetTileSafely(xCheck, ydown);
+									if(tile.active() && tile.type == TileID.Sand)
+									{
+										pyramidY = ydown;
+										break;
+									}
+									else if(tile.active())
+									{
+										break;
+									}
+								}
+								if(pyramidY != -1)
+								{
+									pyramidX = xCheck;
+									break;
+								}
 							}
 						 }
 						 pyramidY -= 15;
@@ -1659,8 +1720,103 @@ namespace SOTS
 						}
 						
 						
-						
-						
+						int[,] _bossRoom = {
+							
+							{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+							{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+							{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+							{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+							{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+							{1,1,1,1,1,1,1,1,1,1,1,1,1,1,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+							{1,1,1,1,1,1,1,1,1,1,1,1,1,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,2,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,1,1,1,1,1,1,1,1,1,1,1,1,1},
+							{1,1,1,1,1,1,1,1,1,1,1,1,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,1,1,1,1,1,1,1,1,1,1,1,1},
+							{1,1,1,1,1,1,1,1,1,1,1,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,1,1,1,1,1,1,1,1,1,1,1},
+							{1,1,1,1,1,1,1,1,1,1,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,2,2,2,2,2,2,0,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,1,1,1,1,1,1,1,1,1,1},
+							{1,1,1,1,1,1,1,1,1,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,2,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,1,1,1,1,1,1,1,1,1},
+							{1,1,1,1,1,1,1,1,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,2,0,2,2,2,2,2,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,1,1,1,1,1,1,1,1},
+							{1,1,1,1,1,1,1,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,2,2,2,2,2,2,0,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,1,1,1,1,1,1,1},
+							{1,1,1,1,1,1,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,2,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,1,1,1,1,1,1},
+							{1,1,1,1,1,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,0,2,2,2,2,2,2,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,1,1,1,1,1},
+							{1,1,1,1,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,1,1,1,1},
+							{1,1,1,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,1,1,1},
+							{1,1,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,2,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,1,1},
+							{1,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,1},
+							{8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9},
+							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,0,0,0,0,0,0,0,0,0,0,0,0,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,0,0,0,0,0,0,0,0,0,0,0,0,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,0,0,0,0,0,0,0,0,0,0,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4,4,0,0,0,0,0,0,0,0,4,4,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4,4,4,4,0,0,0,3,0,0,4,4,4,4,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+						};	
+							int bossPosX = pyramidX + ((size - 120)* direction);
+							int bossPosY = pyramidY + (size - 50);
+							bossPosY -= (int)(.5f * _bossRoom.GetLength(0));
+							bossPosX -= (int)(.5f * _bossRoom.GetLength(1));
+							
+							for(int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)
+							{
+								for (int y = 0; y < _bossRoom.GetLength(0); y++) {
+									for (int x = 0; x < _bossRoom.GetLength(1); x++) {
+										int k = bossPosX + x;
+										int l = bossPosY + y;
+										if (WorldGen.InWorld(k, l, 30)) {
+											Tile tile = Framing.GetTileSafely(k, l);
+											switch (_bossRoom[y, x]) {
+												case 0:
+														if(confirmPlatforms == 0)
+														tile.active(false);
+													break;
+												case 1:
+														tile.type = (ushort)mod.TileType("PyramidSlabTile");
+														tile.active(true);
+														tile.slope(0);
+														tile.halfBrick(false);
+													break;
+												case 2:
+														tile.active(false);
+														tile.wall = 10; //gold brick wall
+													break;
+												case 3:
+														if(confirmPlatforms == 1)
+														WorldGen.PlaceTile(k, l, (ushort)mod.TileType("SarcophagusTile")); //sarcophagus
+													break;
+												case 4:
+														tile.type = 332; //gold coin
+														tile.active(true);
+													break;
+												case 5:
+														tile.active(false);
+														tile.type = 332; //gold coin
+														if(Main.rand.Next(3) == 0)
+														{
+														tile.active(true);
+														}
+														
+													break;
+												case 6:
+													break;
+												case 7:
+													tile.type = (ushort)mod.TileType("ZeplineLureTile");
+													tile.slope(0);
+													tile.halfBrick(false);
+													tile.active(true);
+													break;
+												case 8:
+														tile.type = (ushort)mod.TileType("PyramidSlabTile");
+														tile.active(true);
+														tile.slope(3);
+													break;
+												case 9:
+														tile.type = (ushort)mod.TileType("PyramidSlabTile");
+														tile.active(true);
+														tile.slope(4);
+													break;
+												break;
+											}
+										}
+									}
+								}
+							}
 						
 						
 						
@@ -1958,25 +2114,6 @@ namespace SOTS
 						
 						
 						
-						/*
-						int radius7 = 20;
-						for (int x = -radius7; x <= radius7; x++)
-						{
-							for (int y = -radius7; y <= radius7; y++)
-							{
-								int xPosition6 = endingTileX + x;
-								int yPosition6 = endingTileY + Math.Abs(y); 
-			 
-								if (Math.Sqrt(x * x + y * y) <= radius7 + 0.5)   
-								{
-									Tile tile = Framing.GetTileSafely(xPosition6, yPosition6);
-									tile.type = TileID.Gold;
-									tile.active(true);
-								}
-							}
-						}
-						*/
-						//direction *= -1;
 						
 						int[,] _zepline = {
 							{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
@@ -2071,7 +2208,7 @@ namespace SOTS
 						
 							int pyramidPosX = pyramidX;
 							int pyramidPosY = pyramidY += (size - 40);
-							pyramidPosY -= (int)(.5f * _zepline.GetLength(1));
+							pyramidPosY -= (int)(.5f * _zepline.GetLength(1)); //incorrect grab length?!?! still works lol
 							
 							for(int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)
 							{
@@ -2235,10 +2372,62 @@ namespace SOTS
 									}
 								}
 							}
-							
-							
-							
-							
+							for(int findTileX = 100; findTileX < Main.maxTilesX - 100; findTileX++)
+							{
+								for(int findTileY = Main.maxTilesY - 100; findTileY > 100; findTileY--)
+								{
+									Tile tile = Framing.GetTileSafely(findTileX, findTileY);
+									Tile tileU = Framing.GetTileSafely(findTileX, findTileY -1);
+									Tile tileLU = Framing.GetTileSafely(findTileX - 1, findTileY-1);
+									Tile tileU2 = Framing.GetTileSafely(findTileX, findTileY -2);
+									Tile tileLU2 = Framing.GetTileSafely(findTileX - 1, findTileY-2);
+									Tile tileU3 = Framing.GetTileSafely(findTileX, findTileY -3);
+									Tile tileLU3 = Framing.GetTileSafely(findTileX - 1, findTileY-3);
+									
+										if(tile.type == (ushort)mod.TileType("PyramidSlabTile") && !tileLU.active() && !tileLU2.active() && !tileU.active() && !tileU2.active() && Main.rand.Next(4) == 0)
+										{
+											WorldGen.PlaceTile(findTileX, findTileY - 1, 28, true, true, -1, 3); //pots
+										}
+										if(tile.type == (ushort)mod.TileType("PyramidSlabTile") && !tileLU.active() && !tileLU2.active() && !tileU.active() && !tileU2.active() && Main.rand.Next(size / 2) == 0)
+										{
+											WorldGen.PlaceTile(findTileX, findTileY - 1, (ushort)mod.TileType("CrystalStatue")); //life crystal
+										}
+										if(tile.type == (ushort)mod.TileType("PyramidSlabTile") && !tileLU.active() && !tileLU2.active() && !tileU.active() && !tileU2.active() && Main.rand.Next(size / 2) == 0)
+										{
+											WorldGen.PlaceTile(findTileX, findTileY - 1, (ushort)mod.TileType("ManaStatue")); //mana crystal
+										}
+										if(tile.type == (ushort)mod.TileType("PyramidSlabTile") && !tileLU.active() && !tileLU2.active() && !tileU.active() && !tileU2.active() && Main.rand.Next(size / 2) == 0)
+										{
+											WorldGen.PlaceTile(findTileX, findTileY - 1, (ushort)mod.TileType("PyramidChestTile")); //Chests
+										}
+										if(tile.type == (ushort)mod.TileType("PyramidSlabTile") && !tileLU.active() && !tileLU2.active() && !tileU.active() && !tileU2.active() && !tileU3.active() && !tileLU3.active() && Main.rand.Next(size / 2) == 0)
+										{
+											WorldGen.PlaceTile(findTileX, findTileY - 1, TileID.Statues, true, true, -1, Main.rand.Next(71)); //random statue
+										}
+										if(tile.wall == (ushort)mod.WallType("PyramidWallTile") && Main.rand.Next(500) == 0)
+										{
+											int radius7 = 3;
+											for (int x = -radius7; x <= radius7; x++)
+											{
+												for (int y = -radius7; y <= radius7; y++)
+												{
+													int xPosition6 = findTileX + x;
+													int yPosition6 = findTileY + y; 
+								 
+													if (Math.Sqrt(x * x + y * y) <= radius7 + 0.5)   
+													{
+														Tile tileRad = Framing.GetTileSafely(xPosition6, yPosition6);
+														if(!tileRad.active())
+														{
+															tileRad.type = 51; //cobweb
+															tileRad.active(true);
+														}
+													}
+												}
+											}
+										}
+								}
+							}
 			}));
 		
 		}
@@ -2457,6 +2646,11 @@ namespace SOTS
 			legendLevel++;
 			if(Main.hardMode)
 			legendLevel++;
+		
+			if(legendLevel >= 25)
+			{
+				legendLevel = 25;
+			}
 		//25 max
 			
 		}

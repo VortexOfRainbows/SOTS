@@ -5,11 +5,11 @@ using Terraria.Localization;
 
 namespace SOTS.Items.Pyramid
 {
-	public class PyramidChest : ModItem
+	public class Sarcophagus : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
-			Tooltip.SetDefault("Pyramid Chest");
+			Tooltip.SetDefault("Sarcophagus");
 			Tooltip.SetDefault("");
 		}
 
@@ -23,9 +23,18 @@ namespace SOTS.Items.Pyramid
 			item.useAnimation = 15;
 			item.useTime = 15;
 			item.useStyle = 1;
-			item.rare = 1;
+			item.rare = 4;
 			item.consumable = true;
-			item.createTile = mod.TileType("PyramidChestTile");
+			item.createTile = mod.TileType("SarcophagusTile");
+		}
+		public override void AddRecipes()
+		{
+			ModRecipe recipe = new ModRecipe(mod);
+			recipe.AddIngredient(null, "PyramidSlab", 250);
+			recipe.AddIngredient(ItemID.GoldCoin, 20);
+			recipe.AddTile(TileID.Anvils);
+			recipe.SetResult(this, 1);
+			recipe.AddRecipe();
 		}
 	}
 }

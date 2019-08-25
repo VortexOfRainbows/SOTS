@@ -31,6 +31,9 @@ namespace SOTS.Items.Pyramid
 		}
 		public override bool Slope(int i, int j)
 		{
+			if(SOTSWorld.downedCurse)
+			return true;
+		
 			return false;
 		}
 	}

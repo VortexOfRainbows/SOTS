@@ -75,9 +75,5 @@ namespace SOTS.NPCs.Chess
 				spawn = 0;
 			}
 		}
-		
-			
-			
-			
-}
 	}
+}

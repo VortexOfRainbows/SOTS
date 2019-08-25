@@ -184,6 +184,33 @@ namespace SOTS
 			recipe.AddRecipe();
 			recipe.needLava = true;
 			
+			//just in case temple gets cucked
+			recipe = new ModRecipe(this);
+			recipe.AddIngredient(ItemID.TempleKey, 3);
+			recipe.AddIngredient(1293, 1); //power cell
+			recipe.AddTile(TileID.MythrilAnvil);
+			recipe.SetResult(1292, 1); //altar
+			recipe.AddRecipe();
+			
+			recipe = new ModRecipe(this);
+			recipe.AddIngredient(ItemID.TempleKey, 1);
+			recipe.AddTile(TileID.MythrilAnvil);
+			recipe.SetResult(1293, 1); //power cell
+			recipe.AddRecipe();
+			
+			recipe = new ModRecipe(this);
+			recipe.AddIngredient(1101, 40); //lizahrd brick
+			recipe.AddIngredient(ItemID.FallenStar, 5); //lizahrd brick
+			recipe.AddTile(TileID.MythrilAnvil);
+			recipe.SetResult(1293, 1);
+			recipe.AddRecipe();
+			
+			recipe = new ModRecipe(this);
+			recipe.AddIngredient(ItemID.TempleKey, 1);
+			recipe.AddTile(TileID.MythrilAnvil);
+			recipe.SetResult(1101, 50);
+			recipe.AddRecipe();
+			
 			
 		}
 		public override void UpdateMusic(ref int music, ref MusicPriority priority)
@@ -226,6 +253,7 @@ namespace SOTS
                 // To include a description:
                 //bossChecklist.Call("AddBoss", "Putrid Pinky", 4.2f, (Func<bool>)(() => SOTSWorld.downedPinky));
                 bossChecklist.Call("AddBossWithInfo", "Putrid Pinky", 4.2f, (Func<bool>)(() => SOTSWorld.downedPinky), "Use [i:" + ItemType("JarOfPeanuts") + "]");
+                bossChecklist.Call("AddBossWithInfo", "Pharaoh's Curse", 4.3f, (Func<bool>)(() => SOTSWorld.downedCurse), "Find the [i:" + ItemType("Sarcophagus") + "] in the pyramid");
                 bossChecklist.Call("AddBossWithInfo", "Cryptic Carver", 5.2f, (Func<bool>)(() => SOTSWorld.downedCarver), "Use [i:" + ItemType("MargritArk") + "]");
                 bossChecklist.Call("AddBossWithInfo", "Ethereal Entity", 6.5f, (Func<bool>)(() => SOTSWorld.downedEntity), "Use [i:" + ItemType("PlanetariumDiamond") + "] in a planetarium biome");
 				
