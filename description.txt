@@ -1,6 +1,6 @@
 A mod which has nothing to do with secrets or shadows... yet
 
-Update 0.18 SOTS Remastered" Update
+Update 0.18 "SOTS Remastered" Update
 -Reworked and Removed old items
 -Added new pyramid biome
 -Fixed bugs and crafting recipe issues

@@ -62,7 +62,7 @@ namespace SOTS.NPCs.Spectre
 			}
 			if( Main.rand.Next(9) == 0)
 			{
-			float Speed = 120f;  //projectile speed
+				float Speed = 120f;  //projectile speed
                 Vector2 vector8 = new Vector2(npc.position.X + (npc.width / 2), npc.position.Y + (npc.height / 2));
                 int damage = 54;  //projectile damage
                 int type = 435;  //put your projectile

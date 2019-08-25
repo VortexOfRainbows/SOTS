@@ -78,12 +78,12 @@ namespace SOTS.Items.IceStuff
 		}
 		public override bool CanKillTile(int i, int j, ref bool blockDamaged)
 		{
-			return false;
+			return true;
 			
 		}
 		public override void RightClick(int i, int j)
         {
-			int xlocation = i * 16 + 8;
+			int xlocation = i * 16 - 8;
 			int ylocation = j * 16 + 8;
             Player player = Main.LocalPlayer;
 			for(int k = 0; k < 50; k++)
