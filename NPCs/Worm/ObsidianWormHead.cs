@@ -323,16 +323,5 @@ namespace SOTS.NPCs.Worm
 			}
 			Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), 38, 48, 6);
 		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
     }
 }

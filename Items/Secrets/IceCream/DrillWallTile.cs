@@ -22,8 +22,7 @@ namespace SOTS.Items.Secrets.IceCream
 			drop = mod.ItemType("DrillWall");
 			AddMapEntry(new Color(100, 67, 188));
 		}
-		public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
-		{
+		public override	bool PreDraw(int i, int j, SpriteBatch spriteBatch) {
 			bool canKillTile = true;
 					if (Main.tileDungeon[(int)Main.tile[i, j].type] || Main.tile[i, j].type == 88 || Main.tile[i, j].type == 21 || Main.tile[i, j].type == 26 || Main.tile[i, j].type == 107 || Main.tile[i, j].type == 108 || Main.tile[i, j].type == 111 || Main.tile[i, j].type == 226 || Main.tile[i, j].type == 237 || Main.tile[i, j].type == 221 || Main.tile[i, j].type == 222 || Main.tile[i, j].type == 223 || Main.tile[i, j].type == 211 || Main.tile[i, j].type == 404)
 					{
@@ -41,6 +40,7 @@ namespace SOTS.Items.Secrets.IceCream
 			{
            	Projectile.NewProjectile(i * 16 + 8, j * 16 + 8, 0, 0, mod.ProjectileType("AlphaBlockBreak"), 0, 0, 1);
 			}
+			return true;
 		}
 	}
 }

@@ -10,7 +10,7 @@ namespace SOTS.Items.Secrets.IceCream
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Drill Wall");
-			Tooltip.SetDefault("Destroys tiles infront of it");
+			Tooltip.SetDefault("Destroys tiles infront of it\nOnly works if visible");
 		}
 
 		public override void SetDefaults()
