@@ -12,7 +12,7 @@ namespace SOTS.Items.TerraLine
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Sharanga");
-			Tooltip.SetDefault("Running hell");
+			Tooltip.SetDefault("Fires a hellfire arrow with the chance for an additional bat");
 		}
 		public override void SetDefaults()
 		{
@@ -53,6 +53,7 @@ namespace SOTS.Items.TerraLine
               {
                   Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(5)); // This defines the projectiles random spread . 30 degree spread.
                   Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI);
+				  if(Main.rand.Next(3) == 0)
 				  Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, 316, damage, knockBack, player.whoAmI);
               }
               return false; 

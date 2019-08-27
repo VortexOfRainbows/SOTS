@@ -9,12 +9,12 @@ using Terraria.ModLoader;
 
 namespace SOTS.NPCs
 {
-	public class GoldenTreasureSlimeTest : ModNPC
+	public class GoldenTreasureSlime : ModNPC
 	{	int initiateSize = 1;
 		public override void SetStaticDefaults()
 		{
 			
-			DisplayName.SetDefault("Golden Treasure Slime Test");
+			DisplayName.SetDefault("Golden Treasure Slime");
 		}
 		public override void SetDefaults()
 		{
@@ -52,7 +52,15 @@ namespace SOTS.NPCs
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			return spawnInfo.spawnTileType == (ushort)mod.TileType("PyramidSlabTile") ? 10f : 0f;
+			if(NPC.downedBoss1){
+				if(spawnInfo.spawnTileY <= Main.rockLayer){
+					return SpawnCondition.Underground.Chance * 0.03f;
+				}
+				else if(spawnInfo.spawnTileY <= Main.maxTilesY - 200){
+					return SpawnCondition.Cavern.Chance * 0.05f;
+				}
+			}
+			return 0f;
 		}
 		public override void NPCLoot()
 		{

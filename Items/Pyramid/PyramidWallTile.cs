@@ -20,5 +20,12 @@ namespace SOTS.Items.Pyramid
 		public override bool CanExplode(int i, int j) {
 			return false;
 		}
+		public override void KillWall(int i, int j, ref bool fail) 
+		{
+			if(SOTSWorld.downedCurse)
+			fail = false;
+		
+			fail = true;
+		}
 	}
 }

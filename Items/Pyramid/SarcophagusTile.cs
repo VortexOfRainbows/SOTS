@@ -45,7 +45,10 @@ namespace SOTS.Items.Pyramid
 		}
 		public override bool CanKillTile(int i, int j, ref bool blockDamaged)
 		{
+			if(SOTSWorld.downedCurse)
 			return true;
+		
+			return false;
 		}
 		public override void RightClick(int i, int j)
         {

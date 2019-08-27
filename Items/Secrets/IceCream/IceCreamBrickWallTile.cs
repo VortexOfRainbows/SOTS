@@ -15,7 +15,7 @@ namespace SOTS.Items.Secrets.IceCream
 			Main.wallHouse[Type] = true;
 			dustType = 72;
 			drop = mod.ItemType("IceCreamBrickWall");
-			AddMapEntry(new Color(219, 112, 147));
+			AddMapEntry(new Color(200, 100, 130));
 		}
 	}
 }

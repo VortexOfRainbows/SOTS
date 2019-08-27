@@ -13,7 +13,7 @@ namespace SOTS.Items.Pyramid
 
 			item.width = 30;
 			item.height = 28;
-
+			item.vanity = true;
 			item.value = Item.sellPrice(0, 2, 0, 0);
 			item.rare = 5;
 			
@@ -22,7 +22,6 @@ namespace SOTS.Items.Pyramid
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Anubis Hat");
-			Tooltip.SetDefault("Vanity Item");
 		}
 	}
 }

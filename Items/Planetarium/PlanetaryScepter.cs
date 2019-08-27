@@ -32,6 +32,10 @@ namespace SOTS.Items.Planetarium
             item.value = 150000;
             item.rare = 9;
             item.UseSound = SoundID.Item8;
+		}	
+		public override void GetVoid(Player player)
+		{
+				voidMana = 4;
 		}
 		public override void AddRecipes()
 		{

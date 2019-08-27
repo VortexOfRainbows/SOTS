@@ -226,22 +226,21 @@ namespace SOTS
             }
 			if (Main.myPlayer != -1 && !Main.gameMenu)
             {
-                if(Main.player[Main.myPlayer].active && Main.player[Main.myPlayer].GetModPlayer<SOTSPlayer>(this).GeodeBiome) //this makes the music play only in Custom Biome
+                if(Main.player[Main.myPlayer].active && Main.player[Main.myPlayer].GetModPlayer<SOTSPlayer>(this).GeodeBiome) 
                 {
                     music = this.GetSoundSlot(SoundType.Music, "Sounds/Music/GeodeMusic");  //add where is the custom music is located
 					priority = MusicPriority.BossLow;
 				
                 } 
             }
-			/*
 			if (Main.myPlayer != -1 && !Main.gameMenu)
             {
-                if(Main.player[Main.myPlayer].active && Main.player[Main.myPlayer].GetModPlayer<SOTSPlayer>(this).ZeplineBiome) //this makes the music play only in Custom Biome
+                if(Main.player[Main.myPlayer].active && Main.player[Main.myPlayer].GetModPlayer<SOTSPlayer>(this).PyramidBiome)
                 {
-					
+                    music = MusicID.Desert;
+					priority = MusicPriority.BossLow;
                 } 
             }
-			*/
         }
 		public override void PostSetupContent()
         {

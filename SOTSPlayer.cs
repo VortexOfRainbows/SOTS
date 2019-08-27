@@ -55,6 +55,7 @@ namespace SOTS
 		public bool PlanetariumBiome = false;
 		public bool ZeplineBiome = false;
 		public bool GeodeBiome = false;
+		public bool PyramidBiome = false;
 		public bool HeartSwapDelay = false;
 		public bool needle = false;
 		public int BloodTapping = 0;
@@ -388,6 +389,41 @@ namespace SOTS
             PlanetariumBiome = (SOTSWorld.planetarium > 0);
             GeodeBiome = (SOTSWorld.geodeBiome > 300);
             ZeplineBiome = (SOTSWorld.zeplineBiome > 0);
+			
+			//checking for background walls
+			int tileBehindX = (int)(player.Center.X / 16);
+			int tileBehindY = (int)(player.Center.Y / 16);
+			Tile tile = Framing.GetTileSafely(tileBehindX, tileBehindY);
+			if(tile.wall == (ushort)mod.WallType("PyramidWallTile"))
+			{
+            PyramidBiome = true;
+			}
+			else
+			{
+            PyramidBiome = false;
+			}
+		}
+		public override bool CustomBiomesMatch(Player other) 
+		{
+			var modOther = other.GetModPlayer<SOTSPlayer>();
+			return PyramidBiome == modOther.PyramidBiome;
+		}
+		public override void CopyCustomBiomesTo(Player other) 
+		{
+			var modOther = other.GetModPlayer<SOTSPlayer>();
+			modOther.PyramidBiome = PyramidBiome;
+		}
+		public override void SendCustomBiomes(BinaryWriter writer)
+		{
+			BitsByte flags = new BitsByte();
+			flags[0] = PyramidBiome;
+			writer.Write(flags);
+		}
+
+		public override void ReceiveCustomBiomes(BinaryReader reader) 
+		{
+			BitsByte flags = reader.ReadByte();
+			PyramidBiome = flags[0];
 		}
 		public override void OnHitByNPC(NPC npc, int damage, bool crit)
 		{
