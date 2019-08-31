@@ -33,6 +33,7 @@ namespace SOTS.NPCs.Boss
             npc.HitSound = SoundID.NPCHit3;
             npc.DeathSound = SoundID.NPCDeath6;
             npc.netAlways = true;
+            npc.buffImmune[44] = true;
 			
 		}
 		public override void AI()

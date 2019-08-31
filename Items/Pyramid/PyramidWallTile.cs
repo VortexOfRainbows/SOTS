@@ -14,7 +14,7 @@ namespace SOTS.Items.Pyramid
 			Main.wallLargeFrames[Type] = (byte) 1;
 			Main.wallHouse[Type] = false;
 			dustType = 32;
-			drop = ItemID.SandstoneBrickWall;
+			drop = mod.ItemType("PyramidWall");
 			AddMapEntry(new Color(100, 85, 52));
 		}
 		public override bool CanExplode(int i, int j) {
@@ -22,10 +22,11 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void KillWall(int i, int j, ref bool fail) 
 		{
+			fail = true;
+			
 			if(SOTSWorld.downedCurse)
 			fail = false;
 		
-			fail = true;
 		}
 	}
 }

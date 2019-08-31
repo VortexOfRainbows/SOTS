@@ -41,7 +41,7 @@ namespace SOTS.NPCs.Boss
             npc.DeathSound = SoundID.NPCDeath6;
             music = MusicID.FrostMoon;
             npc.netAlways = true;
-			
+            npc.buffImmune[44] = true;
 			bossBag = mod.ItemType("ShardKingBossBag");
 		}
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)

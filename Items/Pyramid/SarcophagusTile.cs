@@ -52,21 +52,21 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void RightClick(int i, int j)
         {
-			int xlocation = i * 16 - 32;
+			int xlocation = i * 16 - 8;
 			int ylocation = j * 16 + 8;
             Player player = Main.LocalPlayer;
 			
-				if(!NPC.AnyNPCs(mod.NPCType("ShardKing")))
+				if(!NPC.AnyNPCs(mod.NPCType("PharaohsCurse")))
 				{
-					NPC.SpawnOnPlayer(player.whoAmI, mod.NPCType("ShardKing"));
+					NPC.SpawnOnPlayer(player.whoAmI, mod.NPCType("PharaohsCurse"));
 					
 					for(int king = 0; king < 200; king++)
 					{
 						NPC npc = Main.npc[king];
-						if(npc.type == mod.NPCType("ShardKing"))
+						if(npc.type == mod.NPCType("PharaohsCurse"))
 						{
 						npc.position.X = xlocation;
-						npc.position.Y = ylocation - 1200;
+						npc.position.Y = ylocation - 200;
 						}
 					}
 				}

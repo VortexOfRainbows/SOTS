@@ -34,8 +34,8 @@ namespace SOTS.Projectiles
 			//projectile.rotation += 1f;
 			Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 32, 32, 6);
 			
-			int i = (int)(projectile.position.X / 16);
-			int j =	(int)(projectile.position.Y / 16);
+			int i = (int)(projectile.Center.X / 16);
+			int j =	(int)(projectile.Center.Y / 16);
 			if(!Main.tile[i, j].active())
 			{
 				wait++;

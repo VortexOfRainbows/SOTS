@@ -16,14 +16,14 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void SetDefaults()
 		{
-            item.damage = 13;  //gun damage
-            item.ranged = true;   //its a gun so set this to true
-            item.width = 42;     //gun image width
-            item.height = 36;   //gun image  height
-            item.useTime = 15;  //how fast 
+            item.damage = 13;  
+            item.ranged = true;   
+            item.width = 42;   
+            item.height = 36; 
+            item.useTime = 15;
             item.useAnimation = 15;
             item.useStyle = 5;    
-            item.noMelee = false; //so the item's animation doesn't do damage
+            item.noMelee = true; 
             item.knockBack = 4;
             item.value = Item.sellPrice(0, 1, 50, 0);
             item.rare = 3;
