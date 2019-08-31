@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 using System;
 using Microsoft.Xna.Framework;
 
-namespace SOTS.Items.GoblinsteelStuff
+namespace SOTS.Items
 {
 	public class GoblinsteelLongbow : ModItem
 	{
