@@ -110,8 +110,8 @@ namespace SOTS.NPCs
 			{
 				//npc.CloneDefaults(NPCID.BlackSlime);
 				npc.aiStyle = 0;
-				npc.lifeMax = 35;  
-				npc.damage = 20; 
+				npc.lifeMax = 40;  
+				npc.damage = 35; 
 				npc.defense = 4;  
 				npc.knockBackResist = 0.4f;
 				npc.width = 36;

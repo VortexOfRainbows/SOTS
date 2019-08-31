@@ -68,10 +68,11 @@ namespace SOTS.Projectiles
 				   float shootToX = target.position.X + (float)target.width * 0.5f - projectile.Center.X;
 				   float shootToY = target.position.Y + (float)target.height * 0.5f  - projectile.Center.Y - 60;
 				   float distance = (float)System.Math.Sqrt((double)(shootToX * shootToX + shootToY * shootToY));
-							distance = 3.25f / distance;
+					
+					distance = 3.25f / distance;
 						  
-						   shootToX *= distance * 5;
-						   shootToY *= distance * 5;
+					shootToX *= distance * 5;
+					shootToY *= distance * 5;
 				   
 				   projectile.velocity.X = shootToX;
 				   projectile.velocity.Y = shootToY;

@@ -39,6 +39,7 @@ namespace SOTS.NPCs.Boss
             npc.npcSlots = 0;
             npc.netAlways = true;
             music = MusicID.FrostMoon;
+            npc.buffImmune[44] = true;
 			npc.aiStyle = 6;
         }
  

@@ -42,7 +42,7 @@ namespace SOTS.NPCs.Boss
             npc.noTileCollide = true;
             npc.HitSound = SoundID.NPCHit1;
             npc.DeathSound = SoundID.NPCDeath5;
-            npc.buffImmune[24] = true;
+            npc.buffImmune[20] = true;
             music = MusicID.Boss3;
             npc.netAlways = true;
 			bossBag = mod.ItemType("PinkyBag");

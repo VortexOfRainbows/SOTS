@@ -32,6 +32,7 @@ namespace SOTS.NPCs.Boss
             npc.HitSound = SoundID.NPCHit1;
             npc.DeathSound = SoundID.NPCDeath32;
 			music = MusicID.Boss2;
+            npc.buffImmune[44] = true;
            
         }
  

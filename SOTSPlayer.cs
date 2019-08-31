@@ -37,6 +37,8 @@ namespace SOTS
 		
 		 //Some Important variables 1
 		 
+		public bool weakerCurse = false;
+		
 		public bool bloodDecay = true;
 		
 		public bool Eclipse = false;
@@ -112,6 +114,7 @@ namespace SOTS
 		public override void ResetEffects()
         { 
 			//soul stats
+				
 			player.statLifeMax2 += soulAmount;
 			player.meleeDamage += (soulAmount) * .005f;
 			player.rangedDamage += (soulAmount) * .005f;
@@ -251,6 +254,11 @@ namespace SOTS
 			ItemDivision = false;
 			Eclipse = false;
 			//projectileSize = 1;
+			
+			
+			
+				if(PyramidBiome)
+				player.AddBuff(mod.BuffType("PharaohsCurse"), 16, false);
         } 
 		public override void CatchFish(Item fishingRod, Item bait, int power, int liquidType, int poolSize, int worldLayer, int questFish, ref int caughtType, ref bool junk)
         {
