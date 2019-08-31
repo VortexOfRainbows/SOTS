@@ -21,7 +21,7 @@ namespace SOTS.Items.Pyramid
 		{
 
 			item.width = 36;
-			item.height = 32;
+			item.height = 34;
 			item.value = 0;
 			item.rare = 6;
 			item.expert = true;
