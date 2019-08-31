@@ -2,14 +2,14 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace SOTS.Items
+namespace SOTS.Items.GoblinsteelStuff
 {
 	public class GoblinRockBar : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Goblin Rock");
-			Tooltip.SetDefault("Why are rocks so important?");
+			DisplayName.SetDefault("Goblinsteel Bar");
+			Tooltip.SetDefault("Forged with a special Goblin Forge");
 		}
 		public override void SetDefaults()
 		{
