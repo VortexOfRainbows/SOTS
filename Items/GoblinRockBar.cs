@@ -8,8 +8,8 @@ namespace SOTS.Items
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Goblin Rock");
-			Tooltip.SetDefault("Why are rocks so important?");
+			DisplayName.SetDefault("Goblinsteel Bar");
+			Tooltip.SetDefault("Forged with a special Goblin Forge");
 		}
 		public override void SetDefaults()
 		{

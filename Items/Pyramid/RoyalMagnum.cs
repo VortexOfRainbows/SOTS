@@ -16,14 +16,15 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void SetDefaults()
 		{
-            item.damage = 13;  
-            item.ranged = true;   
-            item.width = 42;   
-            item.height = 36; 
+
+            item.damage = 11;
+            item.ranged = true;
+            item.width = 46; 
+            item.height = 26;
             item.useTime = 15;
             item.useAnimation = 15;
             item.useStyle = 5;    
-            item.noMelee = true; 
+            item.noMelee = true;
             item.knockBack = 4;
             item.value = Item.sellPrice(0, 1, 50, 0);
             item.rare = 3;
