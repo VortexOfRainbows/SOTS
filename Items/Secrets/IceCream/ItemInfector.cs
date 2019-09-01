@@ -10,7 +10,7 @@ namespace SOTS.Items.Secrets.IceCream
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Infector Chest");
-			Tooltip.SetDefault("Transforms any item put inside into a portion of its Alpha Virus value");
+			Tooltip.SetDefault("Transforms any item put inside into a portion of its Alpha Virus value\nWARNING: This item is overpowered, use at the risk of spoiling your gameplay");
 		}
 
 		public override void SetDefaults()

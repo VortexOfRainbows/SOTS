@@ -139,14 +139,18 @@ namespace SOTS.Void
 		}
 		public sealed override bool CanUseItem(Player player) 
 		{
+			bool canUse = BeforeUseItem(player);
+			if(!canUse)
+			{
+				return false;
+			}
 			item.mana = 0;
 			DrainMana(player);
-			BeforeUseItem(player);
 			return true;
 		}
-		public virtual void BeforeUseItem(Player player) 
+		public virtual bool BeforeUseItem(Player player) 
 		{
-			
+			return true;
 		}
 		public void DrainMana(Player player)
 		{

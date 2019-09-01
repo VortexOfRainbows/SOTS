@@ -14,7 +14,7 @@ namespace SOTS.Items.Planetarium
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Void Rift");
-			Tooltip.SetDefault("Grants a better access to the void\nIncreases void damage by 30%, max void by 40, void regeneration, and decreases void usage by 15%");
+			Tooltip.SetDefault("Grants a better access to the void\nIncreases void damage by 30%, max void by 40, void regeneration by 2, and decreases void usage by 15%");
 		}
 		public override void SetDefaults()
 		{
@@ -34,7 +34,7 @@ namespace SOTS.Items.Planetarium
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			voidPlayer.voidMeterMax2 += 40;
 			voidPlayer.voidDamage += 0.30f;
-			voidPlayer.voidRegen += 0.0055f;
+			voidPlayer.voidRegen += 0.2f;
 			voidPlayer.voidCost -= 0.15f;
 		}
 	}

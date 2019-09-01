@@ -19,13 +19,14 @@ namespace SOTS.Items.Pyramid
 			item.damage = 18;
 			item.ranged = true;
 			item.width = 24;
-			item.height = 63;
+			item.height = 62;
 			item.useTime = 24;
 			item.useAnimation = 24;
 			item.useStyle = 5;
 			item.knockBack = 2.5f;
 			item.value = Item.sellPrice(0, 1, 50, 0);
 			item.rare = 4;
+			item.noMelee = true;
 			item.UseSound = SoundID.Item5;
 			item.autoReuse = false;            
 			item.shoot = 1; 

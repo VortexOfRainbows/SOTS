@@ -70,7 +70,7 @@ namespace SOTS.NPCs.Boss
 			} 
 			else 
 			{
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemID.PinkGel, Main.rand.Next(20,50)); 
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("CursedMatter"),Main.rand.Next(12, 25)); 
 			}
 		}
 		public override void FindFrame(int frameHeight) 

@@ -10,7 +10,7 @@ namespace SOTS.Items.Secrets.IceCream
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Transmutation Chest");
-			Tooltip.SetDefault("Allows for duplicating items using Alpha Virus\nThe item you want to duplicate goes into the last slot of the chest\nWith sufficient Alpha Virus in YOUR inventory, the item will form in the first slot of the reactor");
+			Tooltip.SetDefault("Allows for duplicating items using Alpha Virus\nThe item you want to duplicate goes into the last slot of the chest\nWith sufficient Alpha Virus in YOUR inventory, the item will form in the first slot of the reactor\nWARNING: This item is overpowered, use at the risk of spoiling your gameplay");
 		}
 
 		public override void SetDefaults()

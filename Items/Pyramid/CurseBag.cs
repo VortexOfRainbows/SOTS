@@ -37,9 +37,8 @@ namespace SOTS.Items.Pyramid
 		public override void OpenBossBag(Player player)
 		{
 
-			player.QuickSpawnItem(mod.ItemType("PinkyCore"));
-			player.QuickSpawnItem(mod.ItemType("WormWoodCore"));
-			player.QuickSpawnItem(ItemID.PinkGel,Main.rand.Next(40, 100));
+			player.QuickSpawnItem(mod.ItemType("SpiritTracer"));
+			player.QuickSpawnItem(mod.ItemType("CursedMatter"),Main.rand.Next(14, 25));
 			
 		}
 	}
