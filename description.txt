@@ -3,13 +3,13 @@ Lead Developer & Artist - VortexOfRainbows
 Quality Insurance & Developer - FlameFreezer
 
 
-Update 0.18 "SOTS Remastered" Update
+Update 0.18 SOTS REMASTERED
 -Reworked and Removed A TON old items, some will be rebalanced and added back later
 -Added new pyramid biome
 -Fixed bugs and crafting recipe issues
--Void STUFF
--Secrets
--Balancing
+-Void rebalanced, it should now be more usable and less extremely overpowered or underpowered
+-Most secret or nigh unobtainable items have been changed or removed
+-Overpowered items have been nerfed, while void items recieve general consistency changes
 -More to come in future updates!
 
 Update 0.17
