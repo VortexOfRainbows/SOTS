@@ -41,7 +41,7 @@ namespace SOTS.Items.SpecialDrops.Legendary
         {
             return true;
         } 
-		public override void BeforeUseItem(Player player)
+		public override bool BeforeUseItem(Player player)
         {
 				if(player.altFunctionUse == 2)
 				{
@@ -55,6 +55,7 @@ namespace SOTS.Items.SpecialDrops.Legendary
 					item.useAnimation = 6;
 					item.noUseGraphic = true; 
 				}
+			return true;
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {

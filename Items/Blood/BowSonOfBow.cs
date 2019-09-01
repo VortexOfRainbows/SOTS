@@ -17,14 +17,14 @@ namespace SOTS.Items.Blood
 		}
 		public override void SafeSetDefaults()
 		{
-            item.damage = 20;  //gun damage
-            item.ranged = true;   //its a gun so set this to true
-            item.width = 28;     //gun image width
-            item.height = 58;   //gun image  height
-            item.useTime = 18;  //how fast 
+            item.damage = 20;  
+            item.ranged = true; 
+            item.width = 28; 
+            item.height = 58;
+            item.useTime = 18;
             item.useAnimation = 18;
             item.useStyle = 5;    
-            item.noMelee = true; //so the item's animation doesn't do damage
+            item.noMelee = true;
             item.knockBack = .5f;
             item.value = 50000;
             item.rare = 10;
@@ -74,6 +74,6 @@ namespace SOTS.Items.Blood
 					Projectile.NewProjectile(position.X - (speedY * 3f), position.Y + (speedX * 3f), speedX, speedY, type, damage, .5f, player.whoAmI);
 				}
               return false; 
-	}
+		}
 	}
 }

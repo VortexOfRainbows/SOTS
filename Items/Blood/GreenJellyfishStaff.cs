@@ -16,7 +16,7 @@ namespace SOTS.Items.Blood
 		}
 		public override void SafeSetDefaults()
 		{
-            item.damage = 45;
+            item.damage = 60;
 			item.magic = true;
             item.width = 32;    
             item.height = 32; 

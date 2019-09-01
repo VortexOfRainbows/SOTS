@@ -32,9 +32,9 @@ namespace SOTS.Items.SpecialDrops
 
         public override void UpdateArmorSet(Player player)
         {	
-			player.setBonus = "Increases void regen";
+			player.setBonus = "Increases void regen by 5";
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-			voidPlayer.voidRegen += 0.004f;
+			voidPlayer.voidRegen += 0.5f;
 
 			
 		}

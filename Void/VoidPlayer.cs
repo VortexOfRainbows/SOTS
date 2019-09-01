@@ -60,11 +60,11 @@ namespace SOTS.Void
 			voidDamage = 1f;
 			
 			//percent damage grows as health lowers
-			voidDamage += 1f - (float)((float)player.statLife / (float)player.statLifeMax2);
+			//voidDamage += 1f - (float)((float)player.statLife / (float)player.statLifeMax2);
 			
 			voidSpeed = 1f; 
 			voidCost = 1f; 
-			voidMeter += voidRegen;
+			voidMeter += (float)(voidRegen / 60);
 			
 			if(voidMeter > voidMeterMax2)
 			{
@@ -76,7 +76,7 @@ namespace SOTS.Void
 			
 			voidKnockback = 0f;
 			voidCrit = 0;
-			voidRegen = 0.0035f; 
+			voidRegen = 0.125f; 
 			
 			if(voidMeter != 0)
 			{

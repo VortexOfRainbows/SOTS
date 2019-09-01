@@ -13,7 +13,7 @@ namespace SOTS.Items.Blood
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Blood Essence");
-			Tooltip.SetDefault("Decays while in the inventory\nAutomatically consumed to refill void when low");
+			Tooltip.SetDefault("Decays while in the inventory\nAutomatically consumed to refill void when low\nRefills 3 void");
 			Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(7, 4));
 		}
 		public override void SetDefaults()
@@ -56,7 +56,7 @@ namespace SOTS.Items.Blood
 			while(voidPlayer.voidMeter < 0)
 			{
 			item.stack--;
-			voidPlayer.voidMeter += 33;
+			voidPlayer.voidMeter += 3;
 			}
 			
 		}

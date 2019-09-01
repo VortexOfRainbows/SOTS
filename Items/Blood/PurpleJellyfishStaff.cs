@@ -16,7 +16,7 @@ namespace SOTS.Items.Blood
 		}
 		public override void SafeSetDefaults()
 		{
-            item.damage = 30;
+            item.damage = 40;
 			item.magic = true;
             item.width = 32;    
             item.height = 32; 
@@ -63,6 +63,7 @@ namespace SOTS.Items.Blood
 			recipe.AddIngredient(ItemID.JellyfishNecklace, 1);
 			recipe.AddIngredient(null, "RedPowerChamber", 1);
 			recipe.AddIngredient(null, "BluePowerChamber", 1);
+			recipe.AddIngredient(null, "CursedMatter", 5);
 			recipe.AddIngredient(null, "BloodEssence", 5);
 			recipe.AddIngredient(ItemID.SoulofNight, 15);
 			recipe.AddTile(TileID.DemonAltar);
