@@ -91,7 +91,7 @@ namespace SOTS.Void
 				string voidManaText = voidmeter.ToString();
 				string voidManaMaxText = VoidPlayer.ModPlayer(player).voidMeterMax2.ToString();
 				
-				text.SetText(voidManaText  + " | " + voidManaMaxText + " Void"); 
+				text.SetText(voidManaText  + "/" + voidManaMaxText + " Void"); 
 				float quotient = 1f;
 				//Calculate quotient
 				switch (stat)

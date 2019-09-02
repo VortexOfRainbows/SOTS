@@ -9,7 +9,7 @@ namespace SOTS.Items
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Goblinsteel Bar");
-			Tooltip.SetDefault("Forged with a special Goblin Forge");
+			Tooltip.SetDefault("");
 		}
 		public override void SetDefaults()
 		{

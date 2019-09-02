@@ -10,6 +10,7 @@ namespace SOTS.Items.Pyramid
 	public class SpiritTracer : VoidItem
 	{
 		int currentIndex = -1;
+		bool inInventory = false;
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Spirit Tracer");
@@ -27,7 +28,7 @@ namespace SOTS.Items.Pyramid
 			item.useStyle = 5;
 			item.knockBack = 1.5f;
 			item.value = Item.sellPrice(0, 7, 25, 0);
-			item.rare = 4;
+			item.rare = 5;
 			item.UseSound = SoundID.Item5;
 			item.autoReuse = true;            
 			item.shoot = 1; 
@@ -46,7 +47,7 @@ namespace SOTS.Items.Pyramid
 		}
         public override bool BeforeUseItem(Player player)
 		{
-			//if(currentIndex == -1)
+			if(inInventory)
 				return true;
 			return false;
 		}
@@ -102,8 +103,8 @@ namespace SOTS.Items.Pyramid
 					{
 						NPC npc = Main.npc[npcIndex];
 						int randRot = Main.rand.Next(360);
-						Vector2 rotatePos = new Vector2(-npc.width - 48, 0).RotatedBy(MathHelper.ToRadians(randRot));
-						Vector2 attackPos = new Vector2(15, 0).RotatedBy(MathHelper.ToRadians(randRot));
+						Vector2 rotatePos = new Vector2(-npc.width - 124, 0).RotatedBy(MathHelper.ToRadians(randRot));
+						Vector2 attackPos = new Vector2(18, 0).RotatedBy(MathHelper.ToRadians(randRot));
 						
 						float spawnPosX = npc.Center.X + rotatePos.X - proj.width/2;
 						float spawnPosY = npc.Center.Y + rotatePos.Y - proj.height/2;
@@ -121,8 +122,8 @@ namespace SOTS.Items.Pyramid
 					{
 						NPC npc = Main.npc[npcIndex1];
 						int randRot = Main.rand.Next(360);
-						Vector2 rotatePos = new Vector2(-npc.width - 48, 0).RotatedBy(MathHelper.ToRadians(randRot));
-						Vector2 attackPos = new Vector2(15, 0).RotatedBy(MathHelper.ToRadians(randRot));
+						Vector2 rotatePos = new Vector2(-npc.width - 124, 0).RotatedBy(MathHelper.ToRadians(randRot));
+						Vector2 attackPos = new Vector2(18, 0).RotatedBy(MathHelper.ToRadians(randRot));
 						
 						float spawnPosX = npc.Center.X + rotatePos.X - proj.width/2;
 						float spawnPosY = npc.Center.Y + rotatePos.Y - proj.height/2;
@@ -140,8 +141,8 @@ namespace SOTS.Items.Pyramid
 					{
 						NPC npc = Main.npc[npcIndex2];
 						int randRot = Main.rand.Next(360);
-						Vector2 rotatePos = new Vector2(-npc.width - 48, 0).RotatedBy(MathHelper.ToRadians(randRot));
-						Vector2 attackPos = new Vector2(15, 0).RotatedBy(MathHelper.ToRadians(randRot));
+						Vector2 rotatePos = new Vector2(-npc.width - 124, 0).RotatedBy(MathHelper.ToRadians(randRot));
+						Vector2 attackPos = new Vector2(18, 0).RotatedBy(MathHelper.ToRadians(randRot));
 						
 						float spawnPosX = npc.Center.X + rotatePos.X - proj.width/2;
 						float spawnPosY = npc.Center.Y + rotatePos.Y - proj.height/2;
@@ -160,11 +161,12 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void UpdateInventory(Player player)
 		{
+			inInventory = true;
 			RegisterPhantoms(player);
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			  
+			inInventory = false;
 			int numberProjectiles = 1;
 			for (int i = 0; i < numberProjectiles; i++)
 			{
@@ -178,7 +180,6 @@ namespace SOTS.Items.Pyramid
 				Main.projectile[currentIndex].tileCollide = false;
 			}
 			return false; 
-				  
 		}
 	}
 }

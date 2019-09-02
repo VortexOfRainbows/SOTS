@@ -12,15 +12,15 @@ namespace SOTS.Items.Pyramid
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Royal Magnum");
-      Tooltip.SetDefault("Upon hitting an enemy, the temple's wrath is incurred, summoning a phantom javelin\nThe King's personal handgun");
+      Tooltip.SetDefault("Upon hitting an enemy, the pyramid's wrath is incurred, summoning a phantom javelin");
 		}
 		public override void SetDefaults()
 		{
 
             item.damage = 11;
             item.ranged = true;
-            item.width = 46; 
-            item.height = 24;
+            item.width = 42; 
+            item.height = 22;
             item.useTime = 15;
             item.useAnimation = 15;
             item.useStyle = 5;    

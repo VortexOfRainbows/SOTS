@@ -19,7 +19,7 @@ namespace SOTS.Items
 			item.damage = 16;
 			item.ranged = true;
 			item.width = 20;
-			item.height = 60;
+			item.height = 58;
 			item.useTime = 24;
 			item.useAnimation = 24;
 			item.useStyle = 5;
@@ -30,9 +30,18 @@ namespace SOTS.Items
 			item.autoReuse = true;            
 			item.shoot = mod.ProjectileType("GoblinBlade"); 
             item.shootSpeed = 20;
+			item.noMelee = true;
 			item.useAmmo = AmmoID.Arrow;
 		}
-		
+		public override void AddRecipes()
+		{
+			ModRecipe recipe = new ModRecipe(mod);
+			recipe.AddIngredient(null, "GoblinRockBar", 8);
+			recipe.AddIngredient(ItemID.Wood, 12);
+			recipe.AddTile(TileID.Anvils);
+			recipe.SetResult(this);
+			recipe.AddRecipe();
+		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
           {
 			  
@@ -45,6 +54,6 @@ namespace SOTS.Items
               }
               return false; 
 			  
-	}
+		}
 	}
 }
