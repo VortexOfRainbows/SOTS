@@ -13,7 +13,7 @@ namespace SOTS.Items.Blood
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Foul Concoction");
-			Tooltip.SetDefault("Automatically consumed to refill void when low\nRefills 1 void");
+			Tooltip.SetDefault("Automatically consumed to refill void when low\nRefills 2 void");
 		}
 		public override void SetDefaults()
 		{
@@ -65,7 +65,7 @@ namespace SOTS.Items.Blood
 			while(voidPlayer.voidMeter < 0)
 			{
 			item.stack--;
-			voidPlayer.voidMeter += 3;
+			voidPlayer.voidMeter += 2;
 			}
 			
 		}

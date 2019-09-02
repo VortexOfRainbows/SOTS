@@ -46,6 +46,5 @@ namespace SOTS.Items.GelGear
 			player.lifeRegen -= 1;
 			
 		}
-		
 	}
 }

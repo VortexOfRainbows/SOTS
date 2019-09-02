@@ -28,6 +28,7 @@ namespace SOTS.Projectiles.Pyramid
 			projectile.timeLeft = 7200;
 			projectile.hostile = true;
 			projectile.alpha = 255;
+			projectile.penetrate = 7;
 		}
 		public override void AI()
 		{
@@ -36,11 +37,18 @@ namespace SOTS.Projectiles.Pyramid
 			if(projectile.timeLeft <= 200)
 			{
 				projectile.alpha += 2;
+				if(projectile.alpha >= 200)
+				{
+					projectile.Kill();
+				}
 			}
-			int num1 = Dust.NewDust(new Vector2(projectile.Center.X - 4, projectile.Center.Y - 4), 8, 8, mod.DustType("CurseDust"));
+			int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 18, 18, mod.DustType("CurseDust"));
 			Main.dust[num1].noGravity = true;
 			Main.dust[num1].alpha = projectile.alpha;
-			
+			if(projectile.velocity.X == 0 && projectile.velocity.Y == 0)
+			{
+				//projectile.Kill();
+			}
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{	

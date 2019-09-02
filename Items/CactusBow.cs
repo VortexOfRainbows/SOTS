@@ -15,14 +15,14 @@ namespace SOTS.Items
 		}
 		public override void SetDefaults()
 		{
-            item.damage = 6;  //gun damage
-            item.ranged = true;   //its a gun so set this to true
-            item.width = 24;     //gun image width
-            item.height = 48;   //gun image  height
-            item.useTime = 29;  //how fast 
+            item.damage = 6;  
+            item.ranged = true;  
+            item.width = 24;   
+            item.height = 48;
+            item.useTime = 29;
             item.useAnimation = 29;
             item.useStyle = 5;    
-            item.noMelee = true; //so the item's animation doesn't do damage
+            item.noMelee = true;
             item.knockBack = 0.2f;
             item.value = 250;
             item.rare = 1;

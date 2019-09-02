@@ -12,22 +12,22 @@ using SOTS.Void;
 
 namespace SOTS.Items.Pyramid
 {
-	public class EmeraldBracelet : ModItem
+	public class VoidenBracelet : ModItem
 	{	int timer = 1;
 		float boost = 0;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Emerald Bracelet");
-			Tooltip.SetDefault("Increases void regen by 0.75");
+			DisplayName.SetDefault("Voiden Bracelet");
+			Tooltip.SetDefault("Increases void damage and magic damage by 5%\nDecreases void cost by 10%");
 		}
 		public override void SetDefaults()
 		{
       
 			item.maxStack = 1;
-            item.width = 34;     
-            item.height = 28;   
+            item.width = 28;     
+            item.height = 22;   
             item.value = Item.sellPrice(0, 1, 50, 0);
-            item.rare = 4;
+            item.rare = 5;
 			item.accessory = true;
 
 		}
@@ -35,7 +35,18 @@ namespace SOTS.Items.Pyramid
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-			voidPlayer.voidRegen += 0.075f;
+			voidPlayer.voidDamage += 0.05f;
+			voidPlayer.voidCost -= 0.10f;
+			player.magicDamage += 0.05f;
+		}
+		public override void AddRecipes()
+		{
+			ModRecipe recipe = new ModRecipe(mod);
+			recipe.AddIngredient(null, "CursedMatter", 4);
+			recipe.AddIngredient(ItemID.Ruby, 1);
+			recipe.AddTile(TileID.Anvils);
+			recipe.SetResult(this);
+			recipe.AddRecipe();
 		}
 	}
 }

@@ -20,14 +20,13 @@ namespace SOTS.Projectiles
 		
         public override void SetDefaults()
         {
-			projectile.CloneDefaults(1);
-            aiType = 1;
 			projectile.aiStyle = 3;
 			projectile.alpha = 0;
 			projectile.timeLeft = 220;
 			projectile.width = 22;
 			projectile.height = 16;
 			projectile.penetrate = 7;
+			projectile.friendly = true;
 		}
 	}
 }

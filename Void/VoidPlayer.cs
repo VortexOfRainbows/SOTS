@@ -17,19 +17,20 @@ namespace SOTS.Void
 	public class VoidPlayer : ModPlayer
 	{
 		public int voidMeterMax = 100;
-		private const int voidCrystalMax = 10;
+		public int voidAnkh = 0;
 		public override TagCompound Save() {
 				
 			return new TagCompound {
 				
 				{"voidMeterMax", voidMeterMax},
+				{"voidAnkh", voidAnkh},
 				};
 		}
 
 		public override void Load(TagCompound tag) 
 		{
 			voidMeterMax = tag.GetInt("voidMeterMax");
-		
+			voidAnkh = tag.GetInt("voidAnkh");
 		}
 		
 		public float voidMeter = 0; 
@@ -76,7 +77,15 @@ namespace SOTS.Void
 			
 			voidKnockback = 0f;
 			voidCrit = 0;
+			
+			
+			
+			
 			voidRegen = 0.125f; 
+			
+			voidRegen += 0.05f * (float)voidAnkh;
+			
+			
 			
 			if(voidMeter != 0)
 			{
@@ -88,8 +97,10 @@ namespace SOTS.Void
 			if(voidMeter < 0)
 			{
 				
-			player.lifeRegen += (int)(voidMeter * 1f);
-			voidMeter += -player.lifeRegen * 0.001f;
+			player.lifeRegen += (int)(voidMeter * 0.5f);
+			voidMeter += -(float)(player.lifeRegen/90f);
+			if(voidMeter <= -250)
+			voidMeter += 0.0167f;
 			
 			}
 		}
