@@ -1,7 +1,11 @@
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
- 
+using Microsoft.Xna.Framework.Graphics;
+using System;
+using System.Collections.Generic;
+
 namespace SOTS.NPCs
 {
     public class SOTSNPCs : GlobalNPC
@@ -385,17 +389,6 @@ namespace SOTS.NPCs
 						
 					}
 				}
-				
-			if (npc.type == NPCID.Pixie)
-				{
-				   
-					if (Main.rand.Next(120) == 0) 
-					{
-					   
-							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("CrystalFin"), 1); 
-						
-					}
-				}
 			if (npc.type == NPCID.SandElemental)
 				{
 					if (Main.rand.Next(4) == 0) 
@@ -463,6 +456,38 @@ namespace SOTS.NPCs
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("DemonBlood"), Main.rand.Next(19) + 1); 
 				}
 			}
+		}
+	
+		public override void EditSpawnRate(Player player, ref int spawnRate, ref int maxSpawns) 
+		{
+			if(player.GetModPlayer<SOTSPlayer>().PyramidBiome)
+			{
+				//if(npc.type == mod.NPCType("Snake") || npc.type == mod.NPCType("SnakePot") || npc.type == mod.NPCType("LostSoul"))
+				
+					maxSpawns = (int)(maxSpawns * 2.5f);
+					spawnRate = 40;
+			}
+		}
+		public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo) 
+		{
+			if(spawnInfo.player.GetModPlayer<SOTSPlayer>().PyramidBiome && spawnInfo.spawnTileType == (ushort)mod.TileType("PyramidSlabTile"))
+			{
+				/*
+				pool.Add(mod.NPCType("SnakePot"),0.5f);
+				
+				pool.Add(mod.NPCType("Snake"),1f);
+				
+				pool.Add(mod.NPCType("LostSoul"),0.7f);
+				
+				pool.Add(mod.NPCType("PyramidTreasureSlime"),0.4f);
+				*/
+				if(Main.hardMode)
+				{
+					pool.Add(NPCID.Mummy,0.5f);
+				
+				}
+			}
+			
 		}
 	}
 }

@@ -200,13 +200,14 @@ namespace SOTS.NPCs
 			{
 				if(spawnInfo.player.GetModPlayer<SOTSPlayer>().PyramidBiome && spawnInfo.spawnTileType == (ushort)mod.TileType("PyramidSlabTile"))
 				{
-					return 0.5f;
+					return 1f;
 				}
 				return 0;
 			}
 			public override void NPCLoot()
 			{
-			
+				if(Main.rand.Next(5) == 0)
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("Snakeskin"), Main.rand.Next(2) + 1);	
 			}	
 		}
 	

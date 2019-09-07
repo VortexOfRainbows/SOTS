@@ -1295,21 +1295,21 @@ namespace SOTS
 						 pyramidY -= 15;
 						 int direction = Main.rand.Next(2);
 						 int nextAmount = Main.rand.Next(6,16);
-						 int size = 200;
+						 int size = 300;
 						 int endingTileX = -1;
 						 int endingTileY = -1;
 						 int initialPath = 1;
 						 
 						 if(Main.maxTilesX > 4000)
-						 size = 300;
+						 size = 250;
 						 
 						 
 						 if(Main.maxTilesX > 6000)
-						 size = 400;
+						 size = 300;
 						 
 						 
 						 if(Main.maxTilesX > 8000)
-						 size = 500;
+						 size = 350;
 						 
 						 
 							if(direction == 0)
@@ -1697,32 +1697,32 @@ namespace SOTS
 									
 									if(Main.maxTilesX > 8000)
 									{
-										counterRoom++;
-										counterLeft++;
-										counterRight++;
-										counterUp++;
-										counterDown++;
-									}
-									else if(Main.maxTilesX > 6000)
-									{
-										counterRoom += 1.5f;
-										counterLeft += 1.5f;
-										counterRight += 1.5f;
-										counterUp += 1.5f;
-										counterDown += 1.5f;
-									}
-									else if(Main.maxTilesX > 4000)
-									{
 										counterRoom += 2;
 										counterLeft += 2;
 										counterRight += 2;
 										counterUp += 2;
 										counterDown += 2;
 									}
+									else if(Main.maxTilesX > 6000)
+									{
+										counterRoom += 3f;
+										counterLeft += 3f;
+										counterRight += 3f;
+										counterUp += 3f;
+										counterDown += 3f;
+									}
+									else if(Main.maxTilesX > 4000)
+									{
+										counterRoom += 4;
+										counterLeft += 4;
+										counterRight += 4;
+										counterUp += 4;
+										counterDown += 4;
+									}
 									
 									
 									 
-									if(counterRoom >= 600)
+									if(counterRoom >= 200)
 									{
 										counterRoom = 0;
 										bool canBeLeft = false;
@@ -1734,7 +1734,7 @@ namespace SOTS
 										int tilesUp = 0;
 										int tilesDown = 0;
 										int squareCount = 0;
-										for(int checkLeft = 0; checkLeft < 100; checkLeft++)
+										for(int checkLeft = 0; checkLeft < 150; checkLeft++)
 										{
 											Tile tileCheck = Framing.GetTileSafely(findTileX - checkLeft, findTileY);
 											if(tileCheck.active() == false && tileCheck.wall == (ushort)mod.WallType("PyramidWallTile"))
@@ -1748,7 +1748,7 @@ namespace SOTS
 												break;
 											}
 										}
-										for(int checkRight = 0; checkRight < 100; checkRight++)
+										for(int checkRight = 0; checkRight < 150; checkRight++)
 										{
 											Tile tileCheck = Framing.GetTileSafely(findTileX + checkRight, findTileY);
 											if(tileCheck.active() == false && tileCheck.wall == (ushort)mod.WallType("PyramidWallTile"))
@@ -1762,7 +1762,7 @@ namespace SOTS
 												break;
 											}
 										}
-										for(int checkUp = 0; checkUp < 100; checkUp++)
+										for(int checkUp = 0; checkUp < 150; checkUp++)
 										{
 											Tile tileCheck = Framing.GetTileSafely(findTileX, findTileY - checkUp);
 											if(tileCheck.active() == false && tileCheck.wall == (ushort)mod.WallType("PyramidWallTile"))
@@ -1776,7 +1776,7 @@ namespace SOTS
 												break;
 											}
 										}
-										for(int checkDown = 0; checkDown < 100; checkDown++)
+										for(int checkDown = 0; checkDown < 150; checkDown++)
 										{
 											Tile tileCheck = Framing.GetTileSafely(findTileX, findTileY + checkDown);
 											if(tileCheck.active() == false && tileCheck.wall == (ushort)mod.WallType("PyramidWallTile"))
@@ -2434,21 +2434,10 @@ namespace SOTS
 												chest.item[slot].SetDefaults(mod.ItemType("LavaPelter"));
 												slot++;
 											}
-											else if(WorldGen.genRand.NextBool(300))
-											{
-												chest.item[slot].SetDefaults(mod.ItemType("LavaPelter"));
-												slot++;
-											}
 											if(WorldGen.genRand.NextBool(75))
 											{
 												
 												chest.item[slot].SetDefaults(mod.ItemType("Grenadier"));
-												slot++;
-											}
-											if(WorldGen.genRand.NextBool(55))
-											{
-												
-												chest.item[slot].SetDefaults(mod.ItemType("Discharge"));
 												slot++;
 											}
 								}
@@ -2526,21 +2515,24 @@ namespace SOTS
 				if(direction == 0)
 				{
 					//tile.type = 200;
-					for(int checkLeft = 0; checkLeft < 300; checkLeft++)
+					if(Main.rand.Next(2) != 0)
 					{
-						int check5 = 0;
-						for(int h = 2; h >= -2; h--)
+						for(int checkLeft = 0; checkLeft < 300; checkLeft++)
 						{
-							Tile checkTile = Framing.GetTileSafely(x - checkLeft, y + h);
-							if(checkTile.active() == false || checkTile.wall != (ushort)mod.WallType("PyramidWallTile"))
+							int check5 = 0;
+							for(int h = 2; h >= -2; h--)
 							{
-								check5++;
+								Tile checkTile = Framing.GetTileSafely(x - checkLeft, y + h);
+								if(checkTile.active() == false || checkTile.wall != (ushort)mod.WallType("PyramidWallTile"))
+								{
+									check5++;
+								}
+								checkTile.active(false);
 							}
-							checkTile.active(false);
-						}
-						if(check5 >= 5)
-						{
-							break;
+							if(check5 >= 5)
+							{
+								break;
+							}
 						}
 					}
 					if(variation == 0)
@@ -3432,21 +3424,24 @@ namespace SOTS
 				if(direction == 1)
 				{
 					//tile.type = 100;
-					for(int checkRight = 0; checkRight < 300; checkRight++)
+					if(Main.rand.Next(2) != 0)
 					{
-						int check5 = 0;
-						for(int h = 2; h >= -2; h--)
+						for(int checkRight = 0; checkRight < 300; checkRight++)
 						{
-							Tile checkTile = Framing.GetTileSafely(x + checkRight, y + h);
-							if(checkTile.active() == false || checkTile.wall != (ushort)mod.WallType("PyramidWallTile"))
+							int check5 = 0;
+							for(int h = 2; h >= -2; h--)
 							{
-								check5++;
+								Tile checkTile = Framing.GetTileSafely(x + checkRight, y + h);
+								if(checkTile.active() == false || checkTile.wall != (ushort)mod.WallType("PyramidWallTile"))
+								{
+									check5++;
+								}
+								checkTile.active(false);
 							}
-							checkTile.active(false);
-						}
-						if(check5 >= 5)
-						{
-							break;
+							if(check5 >= 5)
+							{
+								break;
+							}
 						}
 					}
 					if(variation == 0)
@@ -4340,21 +4335,25 @@ namespace SOTS
 				if(direction == 2)
 				{
 					//tile.type = 150;
-					for(int checkUp = 0; checkUp < 300; checkUp++)
+					if(Main.rand.Next(2) != 0)
 					{
-						int check5 = 0;
-						for(int h = 2; h >= -2; h--)
+							
+						for(int checkUp = 0; checkUp < 300; checkUp++)
 						{
-							Tile checkTile = Framing.GetTileSafely(x + h, y - checkUp);
-							if(checkTile.active() == false || checkTile.wall != (ushort)mod.WallType("PyramidWallTile"))
+							int check5 = 0;
+							for(int h = 2; h >= -2; h--)
 							{
-								check5++;
+								Tile checkTile = Framing.GetTileSafely(x + h, y - checkUp);
+								if(checkTile.active() == false || checkTile.wall != (ushort)mod.WallType("PyramidWallTile"))
+								{
+									check5++;
+								}
+								checkTile.active(false);
 							}
-							checkTile.active(false);
-						}
-						if(check5 >= 5)
-						{
-							break;
+							if(check5 >= 5)
+							{
+								break;
+							}
 						}
 					}
 					if(variation == 0)
@@ -5250,21 +5249,24 @@ namespace SOTS
 				if(direction == 3)
 				{
 					//tile.type = 50;
-					for(int checkDown = 0; checkDown < 300; checkDown++)
+					if(Main.rand.Next(2) != 0)
 					{
-						int check5 = 0;
-						for(int h = 2; h >= -2; h--)
+						for(int checkDown = 0; checkDown < 300; checkDown++)
 						{
-							Tile checkTile = Framing.GetTileSafely(x + h, y + checkDown);
-							if(checkTile.active() == false || checkTile.wall != (ushort)mod.WallType("PyramidWallTile"))
+							int check5 = 0;
+							for(int h = 2; h >= -2; h--)
 							{
-								check5++;
+								Tile checkTile = Framing.GetTileSafely(x + h, y + checkDown);
+								if(checkTile.active() == false || checkTile.wall != (ushort)mod.WallType("PyramidWallTile"))
+								{
+									check5++;
+								}
+								checkTile.active(false);
 							}
-							checkTile.active(false);
-						}
-						if(check5 >= 5)
-						{
-							break;
+							if(check5 >= 5)
+							{
+								break;
+							}
 						}
 					}
 					if(variation == 0)

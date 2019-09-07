@@ -11,7 +11,7 @@ namespace SOTS.Items.Pyramid
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Unsafe Pyramid Wall");
-			Tooltip.SetDefault("Changes the biome to pyramid when in front of");
+			Tooltip.SetDefault("Changes the biome to pyramid when in front of\nAlso envokes the Pharaoh's Curse");
 		}
 
 		public override void SetDefaults()

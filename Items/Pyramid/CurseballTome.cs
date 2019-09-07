@@ -52,30 +52,42 @@ namespace SOTS.Items.Pyramid
 			if(index1 != -1)
 			{
 				Projectile proj = Main.projectile[index1];
-				Vector2 rotatePos = new Vector2(64, 0).RotatedBy(MathHelper.ToRadians(rot));
-				proj.position.X = rotatePos.X + player.Center.X - proj.width/2;
-				proj.position.Y = rotatePos.Y + player.Center.Y - proj.height/2;
+				if(proj.type == item.shoot)
+				{
+					Vector2 rotatePos = new Vector2(64, 0).RotatedBy(MathHelper.ToRadians(rot));
+					proj.position.X = rotatePos.X + player.Center.X - proj.width/2;
+					proj.position.Y = rotatePos.Y + player.Center.Y - proj.height/2;
+				}
 			}
 			if(index2 != -1)
 			{
 				Projectile proj = Main.projectile[index2];
-				Vector2 rotatePos = new Vector2(64, 0).RotatedBy(MathHelper.ToRadians(rot + 90));
-				proj.position.X = rotatePos.X + player.Center.X - proj.width/2;
-				proj.position.Y = rotatePos.Y + player.Center.Y - proj.height/2;
+				if(proj.type == item.shoot)
+				{
+					Vector2 rotatePos = new Vector2(64, 0).RotatedBy(MathHelper.ToRadians(rot + 90));
+					proj.position.X = rotatePos.X + player.Center.X - proj.width/2;
+					proj.position.Y = rotatePos.Y + player.Center.Y - proj.height/2;
+				}
 			}
 			if(index3 != -1)
 			{
 				Projectile proj = Main.projectile[index3];
-				Vector2 rotatePos = new Vector2(64, 0).RotatedBy(MathHelper.ToRadians(rot + 180));
-				proj.position.X = rotatePos.X + player.Center.X - proj.width/2;
-				proj.position.Y = rotatePos.Y + player.Center.Y - proj.height/2;
+				if(proj.type == item.shoot)
+				{
+					Vector2 rotatePos = new Vector2(64, 0).RotatedBy(MathHelper.ToRadians(rot + 180));
+					proj.position.X = rotatePos.X + player.Center.X - proj.width/2;
+					proj.position.Y = rotatePos.Y + player.Center.Y - proj.height/2;
+				}
 			}
 			if(index4 != -1)
 			{
 				Projectile proj = Main.projectile[index4];
-				Vector2 rotatePos = new Vector2(64, 0).RotatedBy(MathHelper.ToRadians(rot + 270));
-				proj.position.X = rotatePos.X + player.Center.X - proj.width/2;
-				proj.position.Y = rotatePos.Y + player.Center.Y - proj.height/2;
+				if(proj.type == item.shoot)
+				{
+					Vector2 rotatePos = new Vector2(64, 0).RotatedBy(MathHelper.ToRadians(rot + 270));
+					proj.position.X = rotatePos.X + player.Center.X - proj.width/2;
+					proj.position.Y = rotatePos.Y + player.Center.Y - proj.height/2;
+				}
 			}
 		}
 		public override void AddRecipes()

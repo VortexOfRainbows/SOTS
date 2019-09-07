@@ -36,16 +36,10 @@ namespace SOTS.Items
 				player.QuickSpawnItem(mod.ItemType("IceCreamOre"),10);
 				player.QuickSpawnItem(ItemID.FamiliarWig, 1);
 			}
-			if(player.name == "Rem")
-			{
-				player.QuickSpawnItem(mod.ItemType("MourningStar"),1);
-				player.QuickSpawnItem(ItemID.FamiliarWig, 1);
-			}
 			if(player.name == "Crimson" || player.name == "Corruption")
 			{
 				player.QuickSpawnItem(mod.ItemType("CrimCruptPotion"),10);
 				player.QuickSpawnItem(ItemID.FamiliarWig, 1);
-				player.QuickSpawnItem(ItemID.DemonWings, 1);
 				player.QuickSpawnItem(ItemID.BugNet, 1);
 				if(Main.rand.Next(2) == 0)
 				{
@@ -62,14 +56,10 @@ namespace SOTS.Items
 			}
 			if(player.name == "EnergyPlayz07" || player.name == "EnergyBoy07")
 			{
-				player.QuickSpawnItem(mod.ItemType("PlanetariumOrb"),2);
-				player.QuickSpawnItem(ItemID.AngelWings, 1);
 				player.QuickSpawnItem(ItemID.PlatinumHelmet, 1);
 				player.QuickSpawnItem(ItemID.PlatinumChainmail, 1);
 				player.QuickSpawnItem(ItemID.PlatinumGreaves, 1);
 				player.QuickSpawnItem(ItemID.UnluckyYarn, 1);
-				
-				
 			}
 			if(player.name == "Minez" || player.name == "TheMinez")
 			{
@@ -97,65 +87,6 @@ namespace SOTS.Items
 				player.QuickSpawnItem(mod.ItemType("DeoxysABall"),1);
 				player.QuickSpawnItem(ItemID.FamiliarWig, 1);
 			}
-			if(player.name == "X" || player.name == "Xypher"|| player.name == "Heavens")
-			{
-				player.QuickSpawnItem(mod.ItemType("Heart"),1);
-				player.QuickSpawnItem(ItemID.JungleRose, 1);
-				player.QuickSpawnItem(ItemID.JungleShirt, 1);
-				player.QuickSpawnItem(ItemID.JunglePants, 1);
-				player.QuickSpawnItem(mod.ItemType("XyphersGift"),1);
-				player.QuickSpawnItem(ItemID.EmeraldStaff,1);
-			}
-			if(player.name == "O" || player.name == "Omega")
-			{
-				player.QuickSpawnItem(mod.ItemType("Nova"),1);
-				player.QuickSpawnItem(ItemID.FamiliarWig, 1);
-				player.QuickSpawnItem(ItemID.ShadowHelmet, 1);
-				player.QuickSpawnItem(ItemID.ShadowScalemail, 1);
-				player.QuickSpawnItem(ItemID.ShadowGreaves, 1);
-				player.QuickSpawnItem(mod.ItemType("OmegasWish"),1);
-			}
-			if(player.name == "Black_Hole")
-			{
-				player.QuickSpawnItem(mod.ItemType("Vacuum"),1);
-				player.QuickSpawnItem(ItemID.FamiliarWig, 1);
-			}
-			if(player.name == "Straffex")
-			{
-				player.QuickSpawnItem(mod.ItemType("Discharge"),1);
-				player.QuickSpawnItem(ItemID.FamiliarWig, 1);
-			}
-			if(player.name == "S" || player.name == "Saturn")
-			{
-				player.QuickSpawnItem(mod.ItemType("Saturnus"),1);
-				player.QuickSpawnItem(mod.ItemType("SaturnHelmet"),1);
-				player.QuickSpawnItem(mod.ItemType("SaturnChestplate"),1);
-				player.QuickSpawnItem(mod.ItemType("SaturnLeggings"),1);
-				player.QuickSpawnItem(mod.ItemType("SaturnWings"),1);
-				player.QuickSpawnItem(ItemID.Shuriken, 250);
-			}
-			if(player.name == "L" || player.name == "Libra")
-			{
-				player.QuickSpawnItem(mod.ItemType("Patience"),1);
-				player.QuickSpawnItem(ItemID.AngelHalo, 1);
-				player.QuickSpawnItem(ItemID.AngelWings, 1);
-				player.QuickSpawnItem(mod.ItemType("LibrasBackupBow"),1);
-				player.QuickSpawnItem(ItemID.PlatinumBow, 1);
-				player.QuickSpawnItem(ItemID.WoodenArrow, 250);
-			}
-			if(player.name == "E" || player.name == "Endre" || player.name == "Lilith")
-			{
-				player.QuickSpawnItem(mod.ItemType("Enigma"),1);
-				player.QuickSpawnItem(ItemID.CrimsonHelmet, 1);
-				player.QuickSpawnItem(ItemID.CrimsonScalemail, 1);
-				player.QuickSpawnItem(ItemID.CrimsonGreaves, 1);
-				player.QuickSpawnItem(mod.ItemType("LostSoul"),1);
-				player.QuickSpawnItem(ItemID.SlimeStaff, 1);
-				if(player.name == "Lilith")
-				{
-				player.QuickSpawnItem(mod.ItemType("MourningStar"),1);
-				}
-			}
 			if(player.name == "FlameFreezer")
 			{
 				player.QuickSpawnItem(ItemID.PearlwoodSword,1);
@@ -169,7 +100,7 @@ namespace SOTS.Items
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Wooden Crate");
+			DisplayName.SetDefault("Starter Crate");
 			Tooltip.SetDefault("");
 		}
 	}

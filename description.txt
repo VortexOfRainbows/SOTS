@@ -3,7 +3,7 @@ Lead Developer & Artist - VortexOfRainbows
 Quality Insurance & Director - FlameFreezer
 
 
-Update 0.18 SOTS REMASTERED
+Update 0.18 SOTS RELOADED
 -Reworked and Removed A TON old items, some will be rebalanced and added back later
 -Added new pyramid biome
 -Fixed bugs and crafting recipe issues

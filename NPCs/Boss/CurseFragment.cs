@@ -42,5 +42,10 @@ namespace SOTS.NPCs.Boss
 			Dust.NewDust(new Vector2(npc.Center.X - 8, npc.Center.Y - 8), 16, 16, mod.DustType("CurseDust"));
 		
 		}
+		public override void NPCLoot()
+		{
+			for(int i = 0; i < 9; i ++)
+			Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), 28, 32, mod.DustType("CurseDust"));
+		}	
 	}
 }

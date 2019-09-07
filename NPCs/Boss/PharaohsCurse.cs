@@ -42,7 +42,7 @@ namespace SOTS.NPCs.Boss
             npc.width = 70;
             npc.height = 76; 
             Main.npcFrameCount[npc.type] = 48;  
-            npc.npcSlots = 1f;
+            npc.npcSlots = 30f;
             npc.boss = true;
             npc.lavaImmune = true;
             npc.noGravity = true;

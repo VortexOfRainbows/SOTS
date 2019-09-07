@@ -20,7 +20,7 @@ namespace SOTS.NPCs.Boss
 		public override void SetDefaults()
 		{
 			npc.aiStyle = 86;
-            npc.lifeMax = 100; 
+            npc.lifeMax = 50; 
             npc.damage = 45; 
             npc.defense = 0;   
             npc.knockBackResist = 0f;
@@ -60,8 +60,11 @@ namespace SOTS.NPCs.Boss
 					
 					
 		}
-		public override void FindFrame(int frameHeight) 
+		
+		public override void NPCLoot()
 		{
-		}
+			for(int i = 0; i < 9; i ++)
+			Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), 32, 28, mod.DustType("CurseDust"));
+		}	
 	}
 }

@@ -137,7 +137,7 @@ namespace SOTS.Projectiles.Minions
 						projectile.velocity.X *= 0.5f;
 						projectile.velocity.Y *= 0.5f;
 					}
-					if(projectile.ai[0] >= 175 && projectile.ai[0] < 180)
+					if(projectile.ai[0] >= 155 && projectile.ai[0] < 160)
 					{
 						projectile.velocity.X *= 0.94f;
 						projectile.velocity.Y *= 0.94f;
@@ -150,7 +150,7 @@ namespace SOTS.Projectiles.Minions
 							Main.PlaySound(SoundID.Item1, (int)(projectile.Center.X), (int)(projectile.Center.Y));
 						}
 					}
-					if(projectile.ai[0] >= 180 && projectile.ai[0] < 185)
+					if(projectile.ai[0] >= 160 && projectile.ai[0] < 165)
 					{
 						projectile.velocity.X *= 1.3f;
 						projectile.velocity.Y *= 1.3f;
@@ -162,7 +162,7 @@ namespace SOTS.Projectiles.Minions
 							Main.PlaySound(SoundID.Item1, (int)(projectile.Center.X), (int)(projectile.Center.Y));
 						}
 					}
-					if(projectile.ai[0] >= 185 && projectile.ai[0] < 190)
+					if(projectile.ai[0] >= 165 && projectile.ai[0] < 170)
 					{
 						projectile.velocity.X *= 0.94f;
 						projectile.velocity.Y *= 0.94f;
@@ -175,7 +175,7 @@ namespace SOTS.Projectiles.Minions
 						}
 						
 					}
-					if(projectile.ai[0] >= 190 && projectile.ai[0] < 195)
+					if(projectile.ai[0] >= 170 && projectile.ai[0] < 175)
 					{
 						projectile.velocity.X *= 1.3f;
 						projectile.velocity.Y *= 1.3f;

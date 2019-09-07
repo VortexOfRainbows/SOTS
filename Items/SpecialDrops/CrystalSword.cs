@@ -15,11 +15,11 @@ namespace SOTS.Items.SpecialDrops
 		}
 		public override void SetDefaults()
 		{
-            item.damage = 60;  //gun damage
-            item.melee = true;   //its a gun so set this to true
-            item.width = 58;     //gun image width
-            item.height = 58;   //gun image  height
-            item.useTime = 24;  //how fast 
+            item.damage = 60;  
+            item.melee = true;   
+            item.width = 58;   
+            item.height = 58;  
+            item.useTime = 24; 
             item.useAnimation = 24;
             item.useStyle = 1;    
             item.knockBack = 6.5f;

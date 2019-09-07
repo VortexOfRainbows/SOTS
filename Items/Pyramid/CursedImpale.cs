@@ -11,7 +11,7 @@ namespace SOTS.Items.Pyramid
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Cursed Impale");
-			Tooltip.SetDefault("Fires shadowflames when hitting enemies");
+			Tooltip.SetDefault("Fires shadowflame upon hitting an enemy");
 		}
 		public override void SetDefaults()
 		{
@@ -33,12 +33,21 @@ namespace SOTS.Items.Pyramid
 			item.noUseGraphic = true;
 			item.noMelee = true;
 		}
+		public override void AddRecipes()
+		{
+			ModRecipe recipe = new ModRecipe(mod);
+			recipe.AddIngredient(null, "CursedMatter", 7);
+			recipe.AddIngredient(ItemID.Ruby, 1);
+			recipe.AddTile(TileID.Anvils);
+			recipe.SetResult(this);
+			recipe.AddRecipe();
+		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
               int numberProjectiles = 1;
 			  for (int i = 0; i < numberProjectiles; i++)
               {
-                  Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(0)); // This defines the projectiles random spread . 30 degree spread.
+                  Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(0));
                   Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI);
               }
               return true; 

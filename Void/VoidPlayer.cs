@@ -97,11 +97,15 @@ namespace SOTS.Void
 			if(voidMeter < 0)
 			{
 				
-			player.lifeRegen += (int)(voidMeter * 0.5f);
-			voidMeter += -(float)(player.lifeRegen/90f);
-			if(voidMeter <= -250)
-			voidMeter += 0.0167f;
+			player.lifeRegen += (int)(voidMeter * 0.75f);
+				voidMeter += -(float)(player.lifeRegen/360f);
 			
+			if(voidMeter <= -45)
+				voidMeter += -(float)(player.lifeRegen/90f);
+			
+			if(voidMeter <= -250)
+				voidMeter += 0.0167f;
+				
 			}
 		}
 	}
