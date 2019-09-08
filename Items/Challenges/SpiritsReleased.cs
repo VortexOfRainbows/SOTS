@@ -21,7 +21,7 @@ namespace SOTS.Items.Challenges
             item.width = 32;     
             item.height = 30;   
             item.useTime = 1;  
-            item.useAnimation = 15;
+            item.useAnimation = 30;
             item.useStyle = 5;    
             item.noMelee = true;
             item.knockBack = 0;
@@ -53,7 +53,14 @@ namespace SOTS.Items.Challenges
 			}
 			if(activeState == 9)
 			{
-			Projectile.NewProjectile((int)player.Center.X, (int)player.Center.Y, 0, 0, mod.ProjectileType("VulcanDetonate"), 100, 0, Main.myPlayer);
+			int index = Projectile.NewProjectile((int)player.Center.X, (Main.maxTilesY - 150) * 16, 0, 0, 14, 100000, 0, Main.myPlayer);
+			Main.projectile[index].width = 1000;
+			Main.projectile[index].height = 1000;
+			Main.projectile[index].timeLeft = 4;
+			Main.projectile[index].penetrate = 100;
+			Main.projectile[index].tileCollide = false;
+			
+			
 			}
 			if(activeState >= 12)
 			{

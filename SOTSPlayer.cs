@@ -289,8 +289,7 @@ namespace SOTS
 			{ //Fish Set 1
             if (player.ZoneOverworldHeight && liquidType == 0 && Main.rand.Next(500) == 1)  {
 			caughtType = mod.ItemType("PinkySpread");}
-            if (player.ZoneBeach && liquidType == 0 && Main.rand.Next(200) == 1) {
-			caughtType = mod.ItemType("TheBarrel"); }
+			
             if (liquidType == 2 && Main.rand.Next(60) == 1)   {
 			caughtType = mod.ItemType("HoneyBlade"); }
             if (Main.rand.Next(400) == 1) {

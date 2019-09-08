@@ -39,7 +39,8 @@ namespace SOTS.NPCs.Boss
             npc.lavaImmune = false;
             npc.noGravity = true;
             npc.noTileCollide = true;
-            npc.netAlways = false;
+           // npc.netAlways = true;
+            //npc.netUpdate = true;
 		}
 		public override void AI()
 		{	
@@ -348,6 +349,20 @@ namespace SOTS.NPCs.Boss
 			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, (ItemID.Feather), Main.rand.Next(9) + 1);	
 			}
 		}	
+		public override void SendExtraAI(BinaryWriter writer) 
+		{
+			writer.Write(OriginNum);
+			writer.Write(Num);
+			writer.Write(Num2);
+			writer.Write(AICounter);
+		}
+		public override void ReceiveExtraAI(BinaryReader reader)
+		{	
+			OriginNum = reader.ReadInt32();
+			Num = reader.ReadInt32();
+			Num2 = reader.ReadInt32();
+			AICounter = reader.ReadInt32();
+		}
 	
 	}
 }

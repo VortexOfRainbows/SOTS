@@ -14,6 +14,22 @@ namespace SOTS.NPCs.Boss
 		int thrusterDistance = -500;
 				float thrusterBoost = 0;
 				double dist = 128;
+		public override void SendExtraAI(BinaryWriter writer) 
+		{
+			writer.Write(finishedRotating);
+			writer.Write(thruster);
+			writer.Write(thrusterDistance);
+			writer.Write(thrusterBoost);
+			writer.Write(dist);
+		}
+		public override void ReceiveExtraAI(BinaryReader reader)
+		{	
+			finishedRotating = reader.ReadBoolean();
+			thruster = reader.ReadInt32();
+			thrusterDistance = reader.ReadInt32();
+			thrusterBoost = reader.ReadSingle();
+			dist = reader.ReadDouble();
+		}
 		public override void SetStaticDefaults()
 		{
 			

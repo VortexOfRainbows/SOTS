@@ -32,7 +32,7 @@ namespace SOTS.NPCs
             npc.lavaImmune = false;
             npc.noGravity = true;
             npc.noTileCollide = true;
-            npc.netAlways = false;
+            npc.netAlways = true;
             npc.HitSound = SoundID.NPCHit54;
             npc.DeathSound = SoundID.NPCDeath6;
             npc.DeathSound = null;

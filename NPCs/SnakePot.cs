@@ -30,7 +30,8 @@ namespace SOTS.NPCs
             npc.boss = false;
             npc.lavaImmune = false;
             npc.noGravity = false;
-            npc.netAlways = false;
+            npc.netAlways = true;
+            npc.netUpdate = true;
             npc.HitSound = SoundID.NPCHit4;
             npc.DeathSound = null;
 		}
@@ -123,7 +124,8 @@ namespace SOTS.NPCs
 				npc.lavaImmune = false;
 				npc.noGravity = false;
 				npc.noTileCollide = false;
-				npc.netAlways = false;
+				npc.netAlways = true;
+				npc.netUpdate = true;
 				npc.HitSound = SoundID.NPCHit1;
 				npc.DeathSound = SoundID.NPCDeath16;
 			}
@@ -154,10 +156,10 @@ namespace SOTS.NPCs
 				ai1++;
 				if(initiateSize == 1)
 				{
-					initiateSize = -1;
-					npc.scale = (float)(Main.rand.Next(80,121) * 0.01f);
-					npc.width = (int)(npc.width * npc.scale);
-					npc.height = (int)(npc.height * npc.scale);
+				//	initiateSize = -1;
+				//	npc.scale = (float)(Main.rand.Next(80,121) * 0.01f);
+				//	npc.width = (int)(npc.width * npc.scale);
+				//	npc.height = (int)(npc.height * npc.scale);
 				}
 				
 				return true;

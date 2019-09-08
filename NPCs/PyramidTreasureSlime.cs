@@ -47,7 +47,7 @@ namespace SOTS.NPCs
 		{
 			if(spawnInfo.player.GetModPlayer<SOTSPlayer>().PyramidBiome && spawnInfo.spawnTileType == (ushort)mod.TileType("PyramidSlabTile"))
 			{
-				return 0.4f;
+				return 0.1f;
 			}
 			return 0f;
 		}

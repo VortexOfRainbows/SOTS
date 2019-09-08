@@ -14,6 +14,20 @@ namespace SOTS.NPCs.Boss
 			int AICycle = 0;
 			int AICycle2 = 0;
 			float AICycle3 = 0;
+		public override void SendExtraAI(BinaryWriter writer) 
+		{
+			writer.Write(transition);
+			writer.Write(AICycle);
+			writer.Write(AICycle2);
+			writer.Write(AICycle3);
+		}
+		public override void ReceiveExtraAI(BinaryReader reader)
+		{	
+			transition = reader.ReadInt32();
+			AICycle = reader.ReadInt32();
+			AICycle2 = reader.ReadInt32();
+			AICycle3 = reader.ReadSingle();
+		}
 		public override void SetStaticDefaults()
 		{
 			
@@ -41,6 +55,7 @@ namespace SOTS.NPCs.Boss
             npc.DeathSound = SoundID.NPCDeath6;
             music = MusicID.FrostMoon;
             npc.netAlways = true;
+            //npc.netUpdate = true;
             npc.buffImmune[44] = true;
 			bossBag = mod.ItemType("ShardKingBossBag");
 		}

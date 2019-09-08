@@ -271,15 +271,6 @@ namespace SOTS.NPCs
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("MistBow"), 1);
 					}
 				}
-				if (npc.type == NPCID.MartianSaucer)  
-				{
-					if (Main.rand.Next(49) == 0) 
-					{
-						{
-							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("MartianCore"), 1); 
-						}
-					}
-				}
 				if (npc.type == NPCID.TheDestroyer)  
 				{
 					if (Main.rand.Next(24) == 0) 
@@ -294,14 +285,6 @@ namespace SOTS.NPCs
 					if (Main.rand.Next(24) == 0) 
 					{
 							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("ChlorophyteCrossFive"), 1); 
-					}
-					
-				}
-				if (npc.type == NPCID.Golem)  
-				{
-					if (Main.rand.Next(11) == 0) 
-					{
-							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("LihzahrdWrench"), 1); 
 					}
 					
 				}

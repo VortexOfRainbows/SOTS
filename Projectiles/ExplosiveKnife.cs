@@ -32,9 +32,9 @@ namespace SOTS.Projectiles
         {
 			if(projectile.owner == Main.myPlayer)
 			{
-				Projectile.NewProjectile((projectile.Center.X), projectile.Center.Y, Main.rand.Next(-5, 6), Main.rand.Next(-5, 6), 249, projectile.damage, 0, 0);
-				Projectile.NewProjectile((projectile.Center.X), projectile.Center.Y, Main.rand.Next(-5, 6), Main.rand.Next(-5, 6), 249, projectile.damage, 0, 0);
-				Projectile.NewProjectile((projectile.Center.X), projectile.Center.Y, Main.rand.Next(-5, 6), Main.rand.Next(-5, 6), 249, projectile.damage, 0, 0);
+				Projectile.NewProjectile((projectile.Center.X), projectile.Center.Y, Main.rand.Next(-5, 6), Main.rand.Next(-5, 6), 249, projectile.damage, 0, projectile.owner);
+				Projectile.NewProjectile((projectile.Center.X), projectile.Center.Y, Main.rand.Next(-5, 6), Main.rand.Next(-5, 6), 249, projectile.damage, 0, projectile.owner);
+				Projectile.NewProjectile((projectile.Center.X), projectile.Center.Y, Main.rand.Next(-5, 6), Main.rand.Next(-5, 6), 249, projectile.damage, 0, projectile.owner);
 			}
 		}
 	}

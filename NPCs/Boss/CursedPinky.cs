@@ -12,6 +12,18 @@ namespace SOTS.NPCs.Boss
 	{	bool initiate = true;
 		float initialVelocityX = 0;
 		float initialVelocityY = 0;
+		public override void SendExtraAI(BinaryWriter writer) 
+		{
+			writer.Write(initiate);
+			writer.Write(initialVelocityX);
+			writer.Write(initialVelocityY);
+		}
+		public override void ReceiveExtraAI(BinaryReader reader)
+		{	
+			initiate = reader.ReadBoolean();
+			initialVelocityX = reader.ReadSingle();
+			initialVelocityY = reader.ReadSingle();
+		}
 		public override void SetStaticDefaults()
 		{
 			
@@ -35,6 +47,7 @@ namespace SOTS.NPCs.Boss
             npc.noTileCollide = true;
             //npc.DeathSound = SoundID.NPCHit3;
             npc.netAlways = true;
+			npc.netUpdate = true;
 		}
 		public override void AI()
 		{	

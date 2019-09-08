@@ -53,6 +53,18 @@ namespace SOTS.NPCs.Boss
 		}
 		public override void AI()
 		{	
+			if(npc.life < 250)
+			{
+			
+				for(int i = 0; i < 6; i++)
+				{
+					NPC.NewNPC((int)npc.Center.X + Main.rand.Next(-40,41), (int)npc.Center.Y + Main.rand.Next(-40,41), NPCID.Pinky);
+				}				
+					NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, mod.NPCType("PutridPinkyPhase2"));	
+					Projectile.NewProjectile((int)npc.Center.X, (int)npc.Center.Y, 0, 0, mod.ProjectileType("PinkExplosion"), 30, 0, 0);
+					NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, mod.NPCType("PutridPinkyEye"));	
+					npc.active = false;
+			}
 			npc.timeLeft = 600;
 			if(Main.player[npc.target].dead)
 			{

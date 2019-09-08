@@ -7,25 +7,58 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace SOTS.NPCs.Boss
-{
+{[AutoloadBossHead]
 	public class PharaohsCurse : ModNPC
 	{
 		float ai1 = 0;
 		float ai2 = 0;
 		float ai3 = 0;
-		int despawn = 0;
 		int animationType = 0;
 		int frame = 1;
 		int currentFrame;
 		int initiate = -1;
-		float startingLocationX;
-		float startingLocationY;
+		int despawn = 0;
 		int finishTeleport = -1;
 		int direction2 = -1;
 		int teleportAttackType = 0;
 		bool inBlock = false;
 		int expertScale = 1;
-		Vector2 teleport;
+		float teleportX;
+		float teleportY;
+		public override void SendExtraAI(BinaryWriter writer) 
+		{
+			writer.Write(ai1);
+			writer.Write(ai2);
+			writer.Write(ai3);
+			writer.Write(animationType);
+			writer.Write(frame);
+			writer.Write(currentFrame);
+			writer.Write(initiate);
+			writer.Write(finishTeleport);
+			writer.Write(direction2);
+			writer.Write(teleportAttackType);
+			writer.Write(inBlock);
+			writer.Write(expertScale);
+			writer.Write(teleportX);
+			writer.Write(teleportY);
+		}
+		public override void ReceiveExtraAI(BinaryReader reader)
+		{	
+			ai1 = reader.ReadSingle();
+			ai2 = reader.ReadSingle();
+			ai3 = reader.ReadSingle();
+			animationType = reader.ReadInt32();
+			frame = reader.ReadInt32();
+			currentFrame = reader.ReadInt32();
+			initiate = reader.ReadInt32();
+			finishTeleport = reader.ReadInt32();
+			direction2 = reader.ReadInt32();
+			teleportAttackType = reader.ReadInt32();
+			inBlock = reader.ReadBoolean();
+			expertScale = reader.ReadInt32();
+			teleportX = reader.ReadSingle();
+			teleportY = reader.ReadSingle();
+		}
 		public override void SetStaticDefaults()
 		{
 			
@@ -58,6 +91,8 @@ namespace SOTS.NPCs.Boss
             npc.buffImmune[70] = true;
             npc.buffImmune[153] = true;
 			bossBag = mod.ItemType("CurseBag");
+           // npc.netUpdate = true;
+            npc.netAlways = true;
 		}
 		public override void BossLoot(ref string name, ref int potionType)
 		{ 
@@ -110,7 +145,7 @@ namespace SOTS.NPCs.Boss
 						if(npc.frame.Y >= 47 * frame)
 						{
 							npc.frame.Y = 47 * frame;
-							teleportFinish(teleport.X, teleport.Y);
+							teleportFinish(teleportX, teleportY);
 						}
 					}
 					else if(animationType == 1)
@@ -140,7 +175,8 @@ namespace SOTS.NPCs.Boss
 				npc.velocity.X *= 0;
 				npc.velocity.Y *= 0;
 				animationType = 1;
-				teleport = new Vector2(x, y);
+				teleportX = x;
+				teleportY = y;
 			}
 		}
 		public void teleportFinish(float x, float y)
@@ -175,8 +211,7 @@ namespace SOTS.NPCs.Boss
 			}
 			if(initiate == -1)
 			{
-				startingLocationX = npc.Center.X;
-				startingLocationY = npc.Center.Y;
+				
 				npc.aiStyle = 0; 
 				npc.scale = .28f;
 				npc.width = (int)(70 * npc.scale);
@@ -387,7 +422,7 @@ namespace SOTS.NPCs.Boss
 			
 			if(ai3 == 600)
 			{
-				teleportTo(startingLocationX + direction * (Main.rand.Next(700)), startingLocationY + Main.rand.Next(-20,21));
+				teleportTo(player.Center.X + direction * (Main.rand.Next(200)), player.Center.Y - 100);
 			}
 			
 		

@@ -54,21 +54,13 @@ namespace SOTS.Items.Pyramid
         {
 			int xlocation = i * 16 - 8;
 			int ylocation = j * 16 + 8;
+			Main.mouseRightRelease = true;
             Player player = Main.LocalPlayer;
 			
 				if(!NPC.AnyNPCs(mod.NPCType("PharaohsCurse")))
 				{
-					NPC.SpawnOnPlayer(player.whoAmI, mod.NPCType("PharaohsCurse"));
-					
-					for(int king = 0; king < 200; king++)
-					{
-						NPC npc = Main.npc[king];
-						if(npc.type == mod.NPCType("PharaohsCurse"))
-						{
-						npc.position.X = xlocation;
-						npc.position.Y = ylocation - 200;
-						}
-					}
+					Main.NewText("Debug", 145, 145, 255); //storing spawn info as buffs to make it easy to spawn in multiplayer
+					player.AddBuff(mod.BuffType("SpawnBossCurse"), ylocation, false);
 				}
 		}  
 		public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height)

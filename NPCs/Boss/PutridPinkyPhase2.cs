@@ -10,14 +10,37 @@ namespace SOTS.NPCs.Boss
 {	[AutoloadBossHead]
 	public class PutridPinkyPhase2 : ModNPC
 	{
+		int resetVars = 0;
 		int initiateMovement = 0;
 		int despawn = 0;
 		int initiateHooks = -1;
 		int eyeID = -1;
 		int phase = 1;
+		float ai1 = 0;
 		int newRotation = 0;
 		int initiatePinky = -1;
 		int expertModifier = 1;
+		
+		public override void SendExtraAI(BinaryWriter writer) 
+		{
+			writer.Write(resetVars);
+			//writer.Write(initiateHooks);
+			//writer.Write(eyeID);
+		//	writer.Write(phase);
+			//writer.Write(newRotation);
+			//writer.Write(initiatePinky);
+			writer.Write(ai1);
+		}
+		public override void ReceiveExtraAI(BinaryReader reader)
+		{	
+			resetVars = reader.ReadInt32();
+			//initiateHooks = reader.ReadInt32();
+		//	eyeID = reader.ReadInt32();
+		//	phase = reader.ReadInt32();
+		//	newRotation = reader.ReadInt32();
+			//initiatePinky = reader.ReadInt32();
+			ai1 = reader.ReadSingle();
+		}
 		public override void SetStaticDefaults()
 		{
 			
@@ -35,17 +58,18 @@ namespace SOTS.NPCs.Boss
             npc.height = 116;
             Main.npcFrameCount[npc.type] = 1;   
             npc.value = 150000;
-            npc.npcSlots = 1f;
+            npc.npcSlots = 10f;
             npc.boss = true;
             npc.lavaImmune = true;
             npc.noGravity = true;
-            npc.noTileCollide = true;
+            npc.noTileCollide = false;
             npc.HitSound = SoundID.NPCHit1;
             npc.DeathSound = SoundID.NPCDeath5;
             npc.buffImmune[20] = true;
             music = MusicID.Boss3;
             npc.netAlways = true;
 			bossBag = mod.ItemType("PinkyBag");
+            npc.netUpdate = true;
 			
 			//bossBag = mod.ItemType("BossBagBloodLord");
 		}
@@ -98,6 +122,18 @@ namespace SOTS.NPCs.Boss
 		
 		public override bool PreAI()
 		{
+			if(resetVars <= 5)
+			{
+					initiateMovement = 0;
+					despawn = 0;
+					eyeID = -1;
+					phase = 1;
+					ai1 = 0;
+					newRotation = 0;
+					initiatePinky = -1;
+					expertModifier = 1;
+					resetVars++;
+			}
 			if(Main.expertMode)
 			{
 				expertModifier = 2;
@@ -110,25 +146,13 @@ namespace SOTS.NPCs.Boss
 			
 			Player player  = Main.player[npc.target];
 			
-			if(initiateHooks == -1)
-			{
-				initiateHooks = 0;
-				int Max = 0;
-					for(int i = Main.rand.Next(-30,31); i < 720; i += Main.rand.Next(30,61))
-					{
-						Max++;
-						if(Max > 12)
-						{
-							break;
-						}
-						Vector2 circularVelocity = new Vector2(-6, 0).RotatedBy(MathHelper.ToRadians(i));
-						Projectile.NewProjectile((int)npc.Center.X, (int)npc.Center.Y, circularVelocity.X, circularVelocity.Y, mod.ProjectileType("PutridHook"), 20, 1, 0);
-					}
-			}
 			return true;
 		}
 		public override void PostAI()
 		{
+			
+			
+			
 			eyeID = -1;
 			Player player  = Main.player[npc.target];
 			for(int i = 0; i < 1000; i++)
@@ -177,6 +201,26 @@ namespace SOTS.NPCs.Boss
 					shootToX *= distance * 5;
 					shootToY *= distance * 5;
 					
+					
+					
+					
+			if(initiateHooks == -1)
+			{
+				initiateHooks = 0;
+				int Max = 0;
+					for(int i = Main.rand.Next(-30,31); i < 720; i += Main.rand.Next(30,61))
+					{
+						Max++;
+						if(Max > 12)
+						{
+							break;
+						}
+						Vector2 circularVelocity = new Vector2(-6, 0).RotatedBy(MathHelper.ToRadians(i));
+						Projectile.NewProjectile((int)npc.Center.X, (int)npc.Center.Y, circularVelocity.X, circularVelocity.Y, mod.ProjectileType("PutridHook"), 20, 1, 0);
+					}
+			}
+					
+					
 			if((npc.life <= (int)(npc.lifeMax * .7f) || (npc.life <= (int)(npc.lifeMax * .75f) && Main.expertMode)) && phase == 1)
 			{
 				phase = 2;
@@ -187,19 +231,19 @@ namespace SOTS.NPCs.Boss
 			}
 			if(phase == 1)
 			{
-				npc.ai[0]++;
+				ai1++;
 			}
 			if(phase == 4)
 			{
-				npc.ai[0]++;
+				ai1++;
 			}
 			if(phase == 6)
 			{
-				npc.ai[0]++;
+				ai1++;
 			}
 			if(phase == 7)
 			{
-				npc.ai[0]++;
+				ai1++;
 			}
 		
 		
@@ -214,7 +258,7 @@ namespace SOTS.NPCs.Boss
 			
 			if(phase == 1)
 			{
-				if(npc.ai[0] == 120)
+				if(ai1 == 120)
 					{
 						int npcProj = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, mod.NPCType("CursedPinky"));	
 						Main.npc[npcProj].velocity.X = shootToX;
@@ -222,7 +266,7 @@ namespace SOTS.NPCs.Boss
 			
 						Main.PlaySound(SoundID.Item21, (int)(npc.Center.X), (int)(npc.Center.Y));
 					}
-					if(npc.ai[0] == 130)
+					if(ai1 == 130)
 					{
 						int npcProj = NPC.NewNPC((int)npc.Center.X + (int)(3 * shootToY), (int)npc.Center.Y - (int)(3 * shootToX), mod.NPCType("CursedPinky"));	
 						Main.npc[npcProj].velocity.X = shootToX;
@@ -233,7 +277,7 @@ namespace SOTS.NPCs.Boss
 						Main.npc[npcProj].velocity.Y = shootToY;
 						Main.PlaySound(SoundID.Item21, (int)(npc.Center.X), (int)(npc.Center.Y));
 					}
-					if(npc.ai[0] == 140)
+					if(ai1 == 140)
 					{
 						int npcProj = NPC.NewNPC((int)npc.Center.X + (int)(6 * shootToY), (int)npc.Center.Y - (int)(6 * shootToX), mod.NPCType("CursedPinky"));	
 						Main.npc[npcProj].velocity.X = shootToX;
@@ -248,9 +292,9 @@ namespace SOTS.NPCs.Boss
 						Main.npc[npcProj].velocity.Y = shootToY;
 						Main.PlaySound(SoundID.Item21, (int)(npc.Center.X), (int)(npc.Center.Y));
 					}
-					if(npc.ai[0] >= 150)
+					if(ai1 >= 150)
 					{
-						npc.ai[0] = 10;
+						ai1 = 10;
 					}
 			}
 			int Num2 = 0;
@@ -348,7 +392,7 @@ namespace SOTS.NPCs.Boss
 			if(phase == 4)
 			{
 				npc.aiStyle = 44;
-					if(npc.ai[0] == 40)
+					if(ai1 == 40)
 					{
 						int npcProj = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, mod.NPCType("CursedPinky"));	
 						Main.npc[npcProj].velocity.X = shootToX * 2;
@@ -356,7 +400,7 @@ namespace SOTS.NPCs.Boss
 			
 						Main.PlaySound(SoundID.Item21, (int)(npc.Center.X), (int)(npc.Center.Y));
 					}
-					if(npc.ai[0] == 50)
+					if(ai1 == 50)
 					{
 						int npcProj = NPC.NewNPC((int)npc.Center.X + (int)(3 * shootToY), (int)npc.Center.Y - (int)(3 * shootToX), mod.NPCType("CursedPinky"));	
 						Main.npc[npcProj].velocity.X = shootToX * 2;
@@ -367,7 +411,7 @@ namespace SOTS.NPCs.Boss
 						Main.npc[npcProj].velocity.Y = shootToY * 2;
 						Main.PlaySound(SoundID.Item21, (int)(npc.Center.X), (int)(npc.Center.Y));
 					}
-					if(npc.ai[0] == 60)
+					if(ai1 == 60)
 					{
 						int npcProj = NPC.NewNPC((int)npc.Center.X + (int)(6 * shootToY), (int)npc.Center.Y - (int)(6 * shootToX), mod.NPCType("CursedPinky"));	
 						Main.npc[npcProj].velocity.X = shootToX * 2;
@@ -379,7 +423,7 @@ namespace SOTS.NPCs.Boss
 						
 						Main.PlaySound(SoundID.Item21, (int)(npc.Center.X), (int)(npc.Center.Y));
 					}
-					if(npc.ai[0] == 70)
+					if(ai1 == 70)
 					{
 						int npcProj = NPC.NewNPC((int)npc.Center.X + (int)(9 * shootToY), (int)npc.Center.Y - (int)(9 * shootToX), mod.NPCType("CursedPinky"));	
 						Main.npc[npcProj].velocity.X = shootToX * 2;
@@ -391,7 +435,7 @@ namespace SOTS.NPCs.Boss
 						
 						Main.PlaySound(SoundID.Item21, (int)(npc.Center.X), (int)(npc.Center.Y));
 					}
-					if(npc.ai[0] == 80)
+					if(ai1 == 80)
 					{
 						int npcProj = NPC.NewNPC((int)npc.Center.X + (int)(12 * shootToY), (int)npc.Center.Y - (int)(12 * shootToX), mod.NPCType("CursedPinky"));	
 						Main.npc[npcProj].velocity.X = shootToX * 2;
@@ -403,7 +447,7 @@ namespace SOTS.NPCs.Boss
 						
 						Main.PlaySound(SoundID.Item21, (int)(npc.Center.X), (int)(npc.Center.Y));
 					}
-					if(npc.ai[0] == 90)
+					if(ai1 == 90)
 					{
 						for(int i = 30; i < 330; i += 20/expertModifier)
 						{
@@ -411,9 +455,9 @@ namespace SOTS.NPCs.Boss
 							Projectile.NewProjectile((int)npc.Center.X, (int)npc.Center.Y, circularVelocity.X, circularVelocity.Y, mod.ProjectileType("PinkBullet"), 24, 1, 0);
 						}
 					}
-					if(npc.ai[0] >= 120)
+					if(ai1 >= 120)
 					{
-						npc.ai[0] = -260;
+						ai1 = -260;
 					}
 			}
 			
@@ -496,7 +540,7 @@ namespace SOTS.NPCs.Boss
 				}
 				
 				
-				if(npc.ai[0] == 40)
+				if(ai1 == 40)
 					{
 						int npcProj = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, mod.NPCType("CursedPinky"));	
 						Main.npc[npcProj].velocity.X = shootToX * 2;
@@ -506,7 +550,7 @@ namespace SOTS.NPCs.Boss
 			
 						Main.PlaySound(SoundID.Item21, (int)(npc.Center.X), (int)(npc.Center.Y));
 					}
-					if(npc.ai[0] == 50)
+					if(ai1 == 50)
 					{
 						int npcProj = NPC.NewNPC((int)npc.Center.X + (int)(3 * shootToY), (int)npc.Center.Y - (int)(3 * shootToX), mod.NPCType("CursedPinky"));	
 						Main.npc[npcProj].velocity.X = shootToX * 2;
@@ -522,7 +566,7 @@ namespace SOTS.NPCs.Boss
 						
 						Main.PlaySound(SoundID.Item21, (int)(npc.Center.X), (int)(npc.Center.Y));
 					}
-					if(npc.ai[0] == 60)
+					if(ai1 == 60)
 					{
 						int npcProj = NPC.NewNPC((int)npc.Center.X + (int)(6 * shootToY), (int)npc.Center.Y - (int)(6 * shootToX), mod.NPCType("CursedPinky"));	
 						Main.npc[npcProj].velocity.X = shootToX * 2;
@@ -538,9 +582,9 @@ namespace SOTS.NPCs.Boss
 						
 						Main.PlaySound(SoundID.Item21, (int)(npc.Center.X), (int)(npc.Center.Y));
 					}
-					if(npc.ai[0] >= 90)
+					if(ai1 >= 90)
 					{
-						npc.ai[0] = 0;
+						ai1 = 0;
 					}
 				
 				
@@ -565,10 +609,10 @@ namespace SOTS.NPCs.Boss
 				float randY = Main.rand.Next(-1,2) * hpMod;
 				npc.position.X += randX;
 				npc.position.Y += randY;
-				npc.ai[0] += hpMod;
-				if(npc.ai[0] >= 100 - ((expertModifier -1) * 40))
+				ai1 += hpMod;
+				if(ai1 >= 100 - ((expertModifier -1) * 40))
 				{
-					npc.ai[0] = 0;
+					ai1 = 0;
 					Projectile.NewProjectile(npc.Center.X + Main.rand.Next(-58,59), npc.Center.Y + Main.rand.Next(-58,59), 0, 0, mod.ProjectileType("PinkExplosion"), 33, 1, 0);
 				}
 				if(npc.life > 100)
