@@ -10,7 +10,7 @@ namespace SOTS.Items.Secrets.IceCream
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Condemned Bottle");
-			Tooltip.SetDefault("A bottle used to seal the infamous Alpha Virus\nThere is only one thing left to do now...");
+			Tooltip.SetDefault("No longer deletes planets");
 		}
 
 		public override void SetDefaults()

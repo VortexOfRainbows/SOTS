@@ -17,12 +17,12 @@ namespace SOTS.Items
 		{
 			
 			item.CloneDefaults(279);
-			item.damage = 13;
+			item.damage = 16;
 			item.thrown = true;
 			item.rare = 2;
 			item.autoReuse = true;            
 			item.shoot = mod.ProjectileType("ExplosiveKnife"); 
-            item.shootSpeed = 11.8f;
+            item.shootSpeed = 12.8f;
 			item.consumable = true;
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
@@ -40,7 +40,7 @@ namespace SOTS.Items
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(279, 10);
 			recipe.AddIngredient(168, 10);
-			recipe.AddIngredient(null, "GoblinRockBar", 1);
+			recipe.AddIngredient(null, "Goblinsteel", 1);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this, 10);
 			recipe.AddRecipe();

@@ -11,200 +11,155 @@ namespace SOTS.NPCs
         {
             //switch (type)
           //  {
-						if(Main.rand.Next(4) == 0)
-						{
-                        shop[nextSlot] = (mod.ItemType("BackAttachment"));  //this is an example of how to add your item
-                        nextSlot++;
-						}
 						if(Main.rand.Next(3) == 0)
 						{
-                        shop[nextSlot] = (mod.ItemType("DartBlaster"));  //this is an example of how to add your item
-                        nextSlot++;
 						
-						shop[nextSlot] = (mod.ItemType("SupremSticker"));  //this is an example of how to add your item
-                        nextSlot++;
-						}
-						if(Main.rand.Next(20) == 0)
-						{
-							
-                        shop[nextSlot] = (mod.ItemType("TheBarrel"));  //this is an example of how to add your item
+						shop[nextSlot] = (mod.ItemType("SupremSticker"));  
                         nextSlot++;
 						}
 						if(Main.rand.Next(12) == 0 && NPC.downedBoss2)
 						{
-						shop[nextSlot] = (ItemID.SawtoothShark);  //this is an example of how to add your item
+						shop[nextSlot] = (ItemID.SawtoothShark);  
                         nextSlot++;
 						
-						shop[nextSlot] = (ItemID.ReaverShark);  //this is an example of how to add your item
+						shop[nextSlot] = (ItemID.ReaverShark);  
                         nextSlot++;
 						
-						shop[nextSlot] = (ItemID.Swordfish);  //this is an example of how to add your item
+						shop[nextSlot] = (ItemID.Swordfish);  
                         nextSlot++;
 						}
 						if(Main.rand.Next(15) == 0 && NPC.downedBoss1)
 						{
-						shop[nextSlot] = (ItemID.BladedGlove);  //this is an example of how to add your item
+						shop[nextSlot] = (ItemID.BladedGlove);  
                         nextSlot++;
 						
-						shop[nextSlot] = (ItemID.Arkhalis);  //this is an example of how to add your item
+						shop[nextSlot] = (ItemID.Arkhalis);  
                         nextSlot++;
 						
-						shop[nextSlot] = (ItemID.EnchantedSword);  //this is an example of how to add your item
+						shop[nextSlot] = (ItemID.EnchantedSword);  
                         nextSlot++;
 						}
 						if(Main.rand.Next(7) == 0 && NPC.downedBoss1)
 						{
-						shop[nextSlot] = (ItemID.LesserHealingPotion);  //this is an example of how to add your item
+						shop[nextSlot] = (ItemID.LesserHealingPotion);  
                         nextSlot++;
 						
-						shop[nextSlot] = (ItemID.LesserManaPotion);  //this is an example of how to add your item
+						shop[nextSlot] = (ItemID.LesserManaPotion);  
                         nextSlot++;
 						
-						shop[nextSlot] = (ItemID.StrangeBrew);  //this is an example of how to add your item
+						shop[nextSlot] = (ItemID.StrangeBrew);  
                         nextSlot++;
 						}
 						if(Main.rand.Next(7) == 0 && NPC.downedBoss2)
 						{
-						shop[nextSlot] = (ItemID.BattlePotion);  //this is an example of how to add your item
+						shop[nextSlot] = (ItemID.BattlePotion);  
                         nextSlot++;
 						
-						shop[nextSlot] = (ItemID.CalmingPotion);  //this is an example of how to add your item
+						shop[nextSlot] = (ItemID.CalmingPotion);  
                         nextSlot++;
 						
-						shop[nextSlot] = (ItemID.EndurancePotion);  //this is an example of how to add your item
+						shop[nextSlot] = (ItemID.EndurancePotion);  
                         nextSlot++;
 						}
 						if(Main.rand.Next(7) == 0 && NPC.downedBoss3)
 						{
-						shop[nextSlot] = (ItemID.IronskinPotion);  //this is an example of how to add your item
+						shop[nextSlot] = (ItemID.IronskinPotion);  
                         nextSlot++;
 						
-						shop[nextSlot] = (ItemID.InfernoPotion);  //this is an example of how to add your item
+						shop[nextSlot] = (ItemID.InfernoPotion);  
                         nextSlot++;
 						
-						shop[nextSlot] = (ItemID.LifeforcePotion);  //this is an example of how to add your item
+						shop[nextSlot] = (ItemID.LifeforcePotion);  
                         nextSlot++;
 						
-						shop[nextSlot] = (ItemID.MagicPowerPotion);  //this is an example of how to add your item
+						shop[nextSlot] = (ItemID.MagicPowerPotion);  
                         nextSlot++;
 						
-						shop[nextSlot] = (ItemID.ManaRegenerationPotion);  //this is an example of how to add your item
+						shop[nextSlot] = (ItemID.ManaRegenerationPotion);  
                         nextSlot++;
 						}
 						if(Main.rand.Next(30) == 0)
 						{
-						shop[nextSlot] = (ItemID.Amethyst);  //this is an example of how to add your item
+						shop[nextSlot] = (ItemID.Amethyst);  
                         nextSlot++;
 						
-						shop[nextSlot] = (ItemID.Topaz);  //this is an example of how to add your item
+						shop[nextSlot] = (ItemID.Topaz);  
                         nextSlot++;
 						
-						shop[nextSlot] = (ItemID.Sapphire);  //this is an example of how to add your item
+						shop[nextSlot] = (ItemID.Sapphire);  
                         nextSlot++;
 						
-						shop[nextSlot] = (ItemID.Emerald);  //this is an example of how to add your item
+						shop[nextSlot] = (ItemID.Emerald);  
                         nextSlot++;
 						
-						shop[nextSlot] = (ItemID.Ruby);  //this is an example of how to add your item
+						shop[nextSlot] = (ItemID.Ruby);  
                         nextSlot++;
 						
-						shop[nextSlot] = (ItemID.Diamond);  //this is an example of how to add your item
+						shop[nextSlot] = (ItemID.Diamond);  
                         nextSlot++;
 						}
 						if(Main.rand.Next(30) == 0)
 						{
-						shop[nextSlot] = (ItemID.CopperOre);  //this is an example of how to add your item
+						shop[nextSlot] = (ItemID.CopperOre);  
                         nextSlot++;
 						
-						shop[nextSlot] = (ItemID.IronOre);  //this is an example of how to add your item
+						shop[nextSlot] = (ItemID.IronOre);  
                         nextSlot++;
 						
-						shop[nextSlot] = (ItemID.SilverOre);  //this is an example of how to add your item
+						shop[nextSlot] = (ItemID.SilverOre);  
                         nextSlot++;
 						
-						shop[nextSlot] = (ItemID.GoldOre);  //this is an example of how to add your item
+						shop[nextSlot] = (ItemID.GoldOre);  
                         nextSlot++;
 						
 						}
 						if(Main.rand.Next(30) == 0)
 						{
-						shop[nextSlot] = (ItemID.TinOre);  //this is an example of how to add your item
+						shop[nextSlot] = (ItemID.TinOre);  
                         nextSlot++;
 						
-						shop[nextSlot] = (ItemID.LeadOre);  //this is an example of how to add your item
+						shop[nextSlot] = (ItemID.LeadOre);  
                         nextSlot++;
 						
-						shop[nextSlot] = (ItemID.TungstenOre);  //this is an example of how to add your item
+						shop[nextSlot] = (ItemID.TungstenOre);  
                         nextSlot++;
 						
-						shop[nextSlot] = (ItemID.PlatinumOre);  //this is an example of how to add your item
+						shop[nextSlot] = (ItemID.PlatinumOre);  
                         nextSlot++;
 						
 						}
 						if(Main.rand.Next(12) == 0)
 						{
-						shop[nextSlot] = (ItemID.FlyingCarpet);  //this is an example of how to add your item
+						shop[nextSlot] = (ItemID.FlyingCarpet);  
                         nextSlot++;
 						
-						shop[nextSlot] = 857;  //this is an example of how to add your item
+						shop[nextSlot] = 857;  
                         nextSlot++;
 						
-						shop[nextSlot] = (ItemID.PharaohsRobe);  //this is an example of how to add your item
+						shop[nextSlot] = (ItemID.PharaohsRobe);  
                         nextSlot++;
 						
-						shop[nextSlot] = (ItemID.PharaohsMask);  //this is an example of how to add your item
+						shop[nextSlot] = (ItemID.PharaohsMask);  
                         nextSlot++;
 						
 						}
 						
 						if(Main.rand.Next(5) == 0)
 						{
-						shop[nextSlot] = (ItemID.IllegalGunParts);  //this is an example of how to add your item
+						shop[nextSlot] = (ItemID.IllegalGunParts);  
                         nextSlot++;
 						}
-						if(Main.rand.Next(9) == 0 && NPC.downedBoss3)
-						{
-						shop[nextSlot] = (mod.ItemType("PulsePistol"));  //this is an example of how to add your item
-                        nextSlot++;
-						}
-						
-						if(Main.rand.Next(7) == 0)
-						{
-						shop[nextSlot] = (mod.ItemType("BiggHands"));  //this is an example of how to add your item
-                        nextSlot++;
-						}
-		  }public override void SetupShop(int type, Chest shop, ref int nextSlot)
-        {
+		}
+		public override void SetupShop(int type, Chest shop, ref int nextSlot)
+		{
 			
 			
             switch (type)
             {
-                case NPCID.Merchant:  //change Dryad whith what NPC you want
- 
-                    if (NPC.downedBoss1) //if it's hardmode the NPC will sell this
+                case NPCID.Merchant: 
+					if (NPC.downedPlantBoss) 
                     {
-                        shop.item[nextSlot].SetDefaults(mod.ItemType("MidasMaker"));  //this is an example of how to add your item
-                        nextSlot++;
-						
-						if(Main.player[Main.myPlayer].ZoneSnow)
-						{
-						shop.item[nextSlot].SetDefaults(mod.ItemType("Ribbon"));  //this is an example of how to add your item
-                        nextSlot++;
-						}
-					
-                        shop.item[nextSlot].SetDefaults(mod.ItemType("EnchantedGoggles"));  //this is an example of how to add your item
-                        nextSlot++;
-                    } if (NPC.downedPlantBoss) //if it's hardmode the NPC will sell this
-                    {
-						
-                        shop.item[nextSlot].SetDefaults(mod.ItemType("CheckeredBoard"));  //this is an example of how to add your item
-                        nextSlot++;
-						
-						if(Main.eclipse)
-						{
-                        shop.item[nextSlot].SetDefaults(ItemID.Ectoplasm);  //this is an example of how to add your item
-                        nextSlot++;
-						}
+
 					}
                     break;
             }
@@ -212,23 +167,18 @@ namespace SOTS.NPCs
 			
             switch (type)
             {
-                case NPCID.ArmsDealer:  //change Dryad whith what NPC you want
+                case NPCID.ArmsDealer:
  
-                    if (Main.hardMode) //if it's hardmode the NPC will sell this
+                    if (Main.hardMode) 
                     {
-                        shop.item[nextSlot].SetDefaults(mod.ItemType("IchorSprayer"));  //this is an example of how to add your item
-                        nextSlot++;
+						
                     }
-                    if (NPC.downedBoss3) //if it's hardmode the NPC will sell this
+                    if (NPC.downedBoss3) 
                     {
-                        shop.item[nextSlot].SetDefaults(mod.ItemType("BulletSnapper"));  //this is an example of how to add your item
-                        nextSlot++;
+						
                     }
- 
- 
                     break;
             }
-			
-        }
-        }
+		}
     }
+}

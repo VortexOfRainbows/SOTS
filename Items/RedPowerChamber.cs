@@ -27,11 +27,11 @@ namespace SOTS.Items
 				{
 					if(player.statLifeMax2 > 20)
 					{
-			player.statLifeMax2 -= 10;
-			player.meleeDamage += 0.03f;
-			player.rangedDamage += 0.03f;
-			player.thrownDamage += 0.03f;
-			player.magicDamage += 0.03f;
+						player.statLifeMax2 -= 10;
+						player.meleeDamage += 0.03f;
+						player.rangedDamage += 0.03f;
+						player.thrownDamage += 0.03f;
+						player.magicDamage += 0.03f;
 					}
 				}
 		}

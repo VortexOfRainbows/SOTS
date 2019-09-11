@@ -14,7 +14,7 @@ namespace SOTS.Items.IceStuff
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Divided Heart");
-			Tooltip.SetDefault("The lower your health, the faster your firerate\nLowers enemy health by 2%");
+			Tooltip.SetDefault("Lowers enemy health by 5%");
 		}
 		public override void SetDefaults()
 		{
@@ -40,8 +40,7 @@ namespace SOTS.Items.IceStuff
 		{
 			
 				SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");	
-                modPlayer.StartingDamage += 2;
-                modPlayer.rapidity2 = true;
+                modPlayer.StartingDamage += 5;
 			
 				  
 		}

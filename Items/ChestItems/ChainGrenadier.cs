@@ -13,12 +13,12 @@ namespace SOTS.Items.ChestItems
 		}
 		public override void SetDefaults()
 		{
-            item.damage = 38;  //gun damage
-            item.ranged = true;   //its a gun so set this to true
-            item.width = 48;     //gun image width
-            item.height = 28;   //gun image  height
-            item.useTime = 30;  //how fast 
-            item.useAnimation = 30;
+            item.damage = 38; 
+            item.ranged = true;   
+            item.width = 48;    
+            item.height = 28; 
+            item.useTime = 10; 
+            item.useAnimation = 10;
             item.useStyle = 5;    
             item.noMelee = false;
 			item.knockBack = 1f;  
@@ -31,7 +31,7 @@ namespace SOTS.Items.ChestItems
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
           {
-              int numberProjectiles = 4;
+              int numberProjectiles = 1;
               for (int i = 0; i < numberProjectiles; i++)
               {
                   Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(8)); // This defines the projectiles random spread . 30 degree spread.
@@ -44,7 +44,6 @@ namespace SOTS.Items.ChestItems
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.ChainGun, 1);
 			recipe.AddIngredient(null, "Grenadier", 1);
-			recipe.AddIngredient(null, "CrushPistol", 1);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.SetResult(this);
 			recipe.AddRecipe();

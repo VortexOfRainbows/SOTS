@@ -11,7 +11,7 @@ namespace SOTS.Items.SpecialDrops
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Wyvern Sword");
-			Tooltip.SetDefault("");
+			Tooltip.SetDefault("Fires a burst of feathers");
 		}
 		public override void SetDefaults()
 		{
@@ -33,10 +33,10 @@ namespace SOTS.Items.SpecialDrops
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
           {
-              int numberProjectiles = 28;
+              int numberProjectiles = 4;
               for (int i = 0; i < numberProjectiles; i++)
               {
-                  Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(360)); // This defines the projectiles random spread . 30 degree spread.
+                  Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(30)); // This defines the projectiles random spread . 30 degree spread.
                   Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI);
               }
               return false; 
@@ -44,7 +44,7 @@ namespace SOTS.Items.SpecialDrops
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "SteelBar", 12);
+			recipe.AddIngredient(null, "Goblinsteel", 12);
 			recipe.AddIngredient(ItemID.GiantHarpyFeather, 2);
 			recipe.AddIngredient(ItemID.SoulofFlight, 2);
 			recipe.AddTile(TileID.MythrilAnvil);

@@ -85,30 +85,8 @@ namespace SOTS
 		
 	public override void AddRecipes()
 		{
+			
 			ModRecipe recipe = new ModRecipe(this);
-			recipe.AddIngredient(null, "ObsidianScale", 12);
-			recipe.AddIngredient(ItemID.HellstoneBar, 12);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SetResult(ItemID.HotlineFishingHook, 1);
-			recipe.AddRecipe();
-			
-			recipe = new ModRecipe(this);
-			recipe.AddIngredient(null, "CrusherEmblem", 1);
-			recipe.AddIngredient(null, "DemonBlood", 20);
-			recipe.AddIngredient(ItemID.Obsidian, 12);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(null, "ObsidianScale", 12);
-			recipe.AddRecipe();
-			
-			recipe = new ModRecipe(this);
-			recipe.AddIngredient(null, "DemonBlood", 24);
-			recipe.AddIngredient(null, "SteelBar", 1);
-			recipe.AddIngredient(ItemID.Obsidian, 1);
-			recipe.AddTile(TileID.Hellforge);
-			recipe.SetResult(ItemID.HellstoneBar, 1);
-			recipe.AddRecipe();
-			
-			recipe = new ModRecipe(this);
 			recipe.AddIngredient(null, "FatBass", 1);
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.SetResult(ItemID.Sashimi, 15);
@@ -118,15 +96,6 @@ namespace SOTS
 			recipe.AddIngredient(null, "SandFish", 1);
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.SetResult(ItemID.SandBlock, 25);
-			recipe.AddRecipe();
-			
-			recipe = new ModRecipe(this);
-			recipe.AddIngredient(null, "AngelCarp", 1);
-			recipe.AddIngredient(null, "EmptyPlanetariumOrb", 1);
-			recipe.AddIngredient(ItemID.TitaniumBar, 20);
-			recipe.AddIngredient(ItemID.AdamantiteBar, 20);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.SetResult(null, "PlanetariumOrb", 1);
 			recipe.AddRecipe();
 			
 			recipe = new ModRecipe(this);
@@ -253,12 +222,12 @@ namespace SOTS
                 //bossChecklist.Call("AddBoss", "Putrid Pinky", 4.2f, (Func<bool>)(() => SOTSWorld.downedPinky));
                 bossChecklist.Call("AddBossWithInfo", "Putrid Pinky", 4.2f, (Func<bool>)(() => SOTSWorld.downedPinky), "Use [i:" + ItemType("JarOfPeanuts") + "]");
                 bossChecklist.Call("AddBossWithInfo", "Pharaoh's Curse", 4.3f, (Func<bool>)(() => SOTSWorld.downedCurse), "Find the [i:" + ItemType("Sarcophagus") + "] in the pyramid");
-                bossChecklist.Call("AddBossWithInfo", "Cryptic Carver", 5.2f, (Func<bool>)(() => SOTSWorld.downedCarver), "Use [i:" + ItemType("MargritArk") + "]");
-                bossChecklist.Call("AddBossWithInfo", "Ethereal Entity", 6.5f, (Func<bool>)(() => SOTSWorld.downedEntity), "Use [i:" + ItemType("PlanetariumDiamond") + "] in a planetarium biome");
+                //bossChecklist.Call("AddBossWithInfo", "Cryptic Carver", 5.2f, (Func<bool>)(() => SOTSWorld.downedCarver), "Use [i:" + ItemType("MargritArk") + "]");
+                //bossChecklist.Call("AddBossWithInfo", "Ethereal Entity", 6.5f, (Func<bool>)(() => SOTSWorld.downedEntity), "Use [i:" + ItemType("PlanetariumDiamond") + "] in a planetarium biome");
 				
-                bossChecklist.Call("AddBossWithInfo", "Antimaterial Antlion", 7.21f, (Func<bool>)(() => SOTSWorld.downedAntilion), "Use [i:" + ItemType("ForbiddenPyramid") + "] in a desert biome");
+                //bossChecklist.Call("AddBossWithInfo", "Antimaterial Antlion", 7.21f, (Func<bool>)(() => SOTSWorld.downedAntilion), "Use [i:" + ItemType("ForbiddenPyramid") + "] in a desert biome");
                 bossChecklist.Call("AddBossWithInfo", "Icy Amalgamation", 8.21f, (Func<bool>)(() => SOTSWorld.downedAmalgamation), "Use [i:" + ItemType("FrostedKey") + "] on a [i:" + ItemType("FrostArtifact") + "] in a snow biome");
-                bossChecklist.Call("AddBossWithInfo", "The Queen and King", 11.51f, (Func<bool>)(() => SOTSWorld.downedChess), "Use [i:" + ItemType("CheckeredBall") + "] in an open area");
+                //bossChecklist.Call("AddBossWithInfo", "The Queen and King", 11.51f, (Func<bool>)(() => SOTSWorld.downedChess), "Use [i:" + ItemType("CheckeredBall") + "] in an open area");
             }
         }
 	}

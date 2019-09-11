@@ -11,27 +11,25 @@ namespace SOTS.Items
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Flashspark Boots");
-			Tooltip.SetDefault("Unstable speed!\nAllows for quick breaking and acceleration");
+			Tooltip.SetDefault("Allows flight, super fast running, and extra mobility on ice\nIncreases movement speed greatly\nProvides the ability to walk on water and lava\nGrants immunity to fire blocks and 10 seconds of immunity to lava");
 		}
 		public override void SetDefaults()
 		{
       
             item.width = 42;     
             item.height = 36;   
-            item.value = 15000000;
+            item.value = Item.sellPrice(0, 15, 0, 0);
             item.rare = 8;
 			item.accessory = true;
-			item.expert = true;
+			item.expert = false;
 
 		}
-
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "TheHardCore", 1);
 		    recipe.AddIngredient(ItemID.FrostsparkBoots, 1);
 			recipe.AddIngredient(ItemID.LavaWaders, 1);
-			recipe.AddIngredient(ItemID.GravityGlobe, 1);
+			recipe.AddIngredient(null, "AbsoluteBar", 12);
 			recipe.AddTile(TileID.TinkerersWorkbench);
 			recipe.SetResult(this);
 			recipe.AddRecipe();
@@ -40,28 +38,12 @@ namespace SOTS.Items
 		{
 			player.waterWalk = true; 
 			player.fireWalk = true; 
-			player.canRocket = true;
-			player.rocketBoots = 3; 
-			player.rocketTimeMax = 25; 
-			player.lavaImmune = true; 
+			player.lavaMax += 600; 
+			
+			player.rocketBoots = 2; 
 			player.iceSkate = true;
-			player.moveSpeed += 10f;
-			  if(player.controlLeft) 
-			  {
-				  if(player.velocity.X > 0)
-				  {
-					  player.velocity.X = -3;
-					  };
-			  player.velocity.X -= 0.25f;
-			  }
-			  if(player.controlRight)
-			  {
-				  if(player.velocity.X < 0)
-				  {
-					  player.velocity.X = 3;
-					  }
-			  player.velocity.X += 0.25f;
-			  }
+			player.moveSpeed += 0.2f;
+			player.accRunSpeed = 8f;
 			
 		}
 	}

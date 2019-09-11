@@ -10,7 +10,7 @@ namespace SOTS.Items.Secrets.IceCream
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Alpha Virus");
-			Tooltip.SetDefault("A superbug built to wipe out planets\nIt looks like strawberry icecream\nThe superbug can destroy worlds in mere minutes, it is highly advised to never release the virus unless you have a way to contain it");
+			Tooltip.SetDefault("No longer wipes out planets");
 		}
 
 		public override void SetDefaults()

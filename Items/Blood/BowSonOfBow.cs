@@ -32,15 +32,14 @@ namespace SOTS.Items.Blood
             item.autoReuse = true;
             item.shoot = mod.ProjectileType("ArrowSonOfArrow");
             item.shootSpeed = 14.5f;
-			item.expert = true;
 		}
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "CoreOfExpertise", 1);
+			recipe.AddIngredient(null, "Goblinsteel", 15);
+			recipe.AddIngredient(ItemID.Bone, 35);
 			recipe.AddIngredient(null, "BloodEssence", 20);
 			recipe.AddIngredient(null, "BluePowerChamber", 1);
-			recipe.AddIngredient(null, "SteelBar", 6);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this);
 			recipe.AddRecipe();

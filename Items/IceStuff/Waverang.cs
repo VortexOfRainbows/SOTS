@@ -12,7 +12,7 @@ namespace SOTS.Items.IceStuff
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Waverang");
-			Tooltip.SetDefault("It sure is cold");
+			Tooltip.SetDefault("");
 		}
 		public override void SetDefaults()
 		{
@@ -37,7 +37,6 @@ namespace SOTS.Items.IceStuff
 		{
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(null, "AbsoluteBar", 16);
-			recipe.AddIngredient(null, "Crosspipe", 1);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.SetResult(this);
 			recipe.AddRecipe();

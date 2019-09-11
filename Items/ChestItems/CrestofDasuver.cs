@@ -59,7 +59,6 @@ namespace SOTS.Items.ChestItems
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(null,"ShieldofDesecar", 1);
 			recipe.AddIngredient(null,"ShieldofStekpla", 1);
-			recipe.AddIngredient(null,"SteelBar", 12);
 			recipe.AddTile(TileID.TinkerersWorkbench);
 			recipe.SetResult(this);
 			recipe.AddRecipe();

@@ -11,12 +11,12 @@ namespace SOTS.Items.SpecialDrops
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Tiny Planet");
-			Tooltip.SetDefault("Surrounds you with orbital projectiles");
+			Tooltip.SetDefault("Surrounds you with 2 orbital projectiles");
 		}
 		public override void SetDefaults()
 		{
 	
-      
+			
             item.width = 34;     
             item.height = 34;   
             item.value = 125000;
@@ -29,7 +29,7 @@ namespace SOTS.Items.SpecialDrops
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			Probe++;
-			if(Probe == 45)
+			if(Probe == 180)
 			{
 				Probe = 0;
 				

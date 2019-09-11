@@ -11,7 +11,7 @@ namespace SOTS.Items
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Blood Boiler");
-			Tooltip.SetDefault("Their blood shall enrich you!");
+			Tooltip.SetDefault("The power of pure edge is in your fingertips");
 		}
 		public override void SetDefaults()
 		{

@@ -30,8 +30,8 @@ namespace SOTS.Items.Secrets.IceCream
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "IceCream", 500);
-			recipe.AddIngredient(ItemID.Glass, 100);
+			recipe.AddIngredient(null, "IceCream", 10);
+			recipe.AddIngredient(ItemID.Glass, 10);
 			recipe.AddTile(mod.TileType("IceCreamWorkbench"));
 			recipe.SetResult(this);
 			recipe.AddRecipe();

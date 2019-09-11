@@ -10,7 +10,7 @@ namespace SOTS.Items.Secrets.IceCream
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Alpha Polymer Door");
-			Tooltip.SetDefault("Prevents the spread of Alpha Virus");
+			Tooltip.SetDefault("No longer prevents the spread of Alpha Virus");
 		}
 
 		public override void SetDefaults()

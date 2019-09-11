@@ -14,7 +14,7 @@ namespace SOTS.Items.SoldStuff
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Suprem");
-			Tooltip.SetDefault("An ancient relic of the falling society of planet Earth\nIt origin links to a twat named GummyRice");
+			Tooltip.SetDefault("");
 		}
 		public override void SetDefaults()
 		{

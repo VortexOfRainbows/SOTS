@@ -36,7 +36,7 @@ namespace SOTS.Items
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "GoblinRockBar", 8);
+			recipe.AddIngredient(null, "Goblinsteel", 8);
 			recipe.AddIngredient(ItemID.Wood, 12);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this);

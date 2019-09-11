@@ -38,7 +38,7 @@ namespace SOTS.Items
 		{
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.ManaCrystal, 1);
-			recipe.AddIngredient(null, "SteelBar", 4);
+			recipe.AddIngredient(null, "Goblinsteel", 4);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this);
 			recipe.AddRecipe();

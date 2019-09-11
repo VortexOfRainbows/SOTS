@@ -13,7 +13,7 @@ namespace SOTS.Items.Blood
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Life Devourer");
-			Tooltip.SetDefault("Drains your life to generate blood which can be used for crafting\nIncreases max void by 20, void damage by 8%, and boosts void regen speed by 1\nWhen at extremely low life, it will remove soul fragments instead");
+			Tooltip.SetDefault("Drains your life to generate blood which can be used for crafting\nIncreases max void by 20, void damage by 8%, and boosts void regen speed by 1");
 			Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(7, 4));
 		}
 		public override void SetDefaults()
@@ -50,23 +50,12 @@ namespace SOTS.Items.Blood
 				player.QuickSpawnItem(mod.ItemType("BloodEssence"), 1);	
 				timer = 0;
 			}
-			
-			if(player.statLife < 3)
-			{
-			player.lifeRegen = 0;
-				if(timer >= 120 && player.statLifeMax2 > 1 && modPlayer.soulAmount > -100)
-				{
-					timer = 0;
-					modPlayer.soulAmount--;
-					player.QuickSpawnItem(mod.ItemType("SoulFragment"), 1);	
-				}
-			}
 		}
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(null, "RedPowerChamber", 4);
-			recipe.AddIngredient(null, "SteelBar", 4);
+			recipe.AddIngredient(null, "Goblinsteel", 4);
 			recipe.AddIngredient(null, "BrassBar", 4);
 			recipe.SetResult(this, 1);
 			recipe.AddRecipe();
