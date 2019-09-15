@@ -15,7 +15,7 @@ namespace SOTS.Projectiles
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Bloodaxe");
+			DisplayName.SetDefault("Bloody Hammer");
 			
 		}
 		
@@ -23,7 +23,7 @@ namespace SOTS.Projectiles
         {
 			projectile.CloneDefaults(274);
             aiType = 274;
-			projectile.alpha = 127;
+			projectile.alpha = 0;
 			projectile.timeLeft = 200;
 			projectile.width = 40;
 			projectile.height = 40;
@@ -34,11 +34,12 @@ namespace SOTS.Projectiles
 		}
 		public override void AI()
 		{
-			if(projectile.timeLeft<200f)
+			if(projectile.timeLeft < 200)
 			projectile.alpha++;
+		
 			projectile.rotation += (float)(Main.rand.Next(100)/100);
 					
-		float minDist = 560;
+					float minDist = 560;
 					int target2 = -1;
 					float dX = 0f;
 					float dY = 0f;
@@ -49,7 +50,7 @@ namespace SOTS.Projectiles
 						for(int i = 0; i < Main.npc.Length - 1; i++)
 						{
 							NPC target = Main.npc[i];
-							if(!target.friendly && target.dontTakeDamage == false)
+							if(!target.friendly && target.dontTakeDamage == false && target.lifeMax > 5 && target.active)
 							{
 								dX = target.Center.X - projectile.Center.X;
 								dY = target.Center.Y - projectile.Center.Y;
@@ -76,14 +77,9 @@ namespace SOTS.Projectiles
 							projectile.velocity += new Vector2(dX * speed, dY * speed);
 							}
 						}
-						
-						
-						
 					}
 			
 		}
-
-
 	}
 }
 		

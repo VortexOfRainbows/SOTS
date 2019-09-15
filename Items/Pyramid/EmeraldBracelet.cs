@@ -13,8 +13,7 @@ using SOTS.Void;
 namespace SOTS.Items.Pyramid
 {
 	public class EmeraldBracelet : ModItem
-	{	int timer = 1;
-		float boost = 0;
+	{	
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Emerald Bracelet");

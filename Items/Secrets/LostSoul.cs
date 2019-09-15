@@ -115,13 +115,7 @@ namespace SOTS.Items.Secrets
 					  Main.projectile[probe].position.X += -11.5f;
 				  }
 			  }
-				
-	}
-		
-		
-		
-		
-		
+			}
 		}
 		
 	}

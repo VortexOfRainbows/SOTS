@@ -87,13 +87,13 @@ namespace SOTS.Items.IceStuff
 			int ylocation = j * 16 + 8;
 			Main.mouseRightRelease = true;
             Player player = Main.LocalPlayer;
-					Main.NewText("Debug", 145, 145, 255);
+					//Main.NewText("Debug", 145, 145, 255);
 			for(int k = 0; k < 50; k++)
 			{
 				Item item = player.inventory[k];
 				if(item.type == mod.ItemType("FrostedKey") && !NPC.AnyNPCs(mod.NPCType("ShardKing")))
 				{
-					Main.NewText("Debug", 145, 145, 255); //storing spawn info as buffs to make it easy to spawn in multiplayer
+					//Main.NewText("Debug", 145, 145, 255); //storing spawn info as buffs to make it easy to spawn in multiplayer
 					player.AddBuff(mod.BuffType("SpawnBossIce"), ylocation, false);
 					break;
 				}

@@ -25,7 +25,7 @@ namespace SOTS.Items.Blood
             item.useStyle = 5;    
             item.knockBack = 3.5f;
             item.value = 250000;
-            item.rare = 5;
+            item.rare = 7;
 			item.UseSound = SoundID.Item92;
             item.noMelee = true; 
             item.autoReuse = true;

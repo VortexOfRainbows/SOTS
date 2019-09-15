@@ -19,7 +19,7 @@ namespace SOTS.Projectiles
         public override void SetDefaults()
         {
 			projectile.CloneDefaults(316);
-            aiType = 316; //18 is the demon scythe style
+            aiType = 316;
             projectile.width = 18;
             projectile.height = 32; 
             projectile.timeLeft = 240;
@@ -42,45 +42,6 @@ namespace SOTS.Projectiles
 		public override void Kill(int timeLeft)
 		{
 			
-			Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 18, 32, 206);
-			Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 18, 32, 206);
-			Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 18, 32, 206);
-			Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 18, 32, 206);
-			Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 18, 32, 206);
-			Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 18, 32, 206);
-			Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 18, 32, 206);
-			Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 18, 32, 206);
-			Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 18, 32, 206);
-			Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 18, 32, 206);
-			Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 18, 32, 206);
-			Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 18, 32, 206);
-			Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 18, 32, 206);
-			Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 18, 32, 206);
-			Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 18, 32, 206);
-			Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 18, 32, 206);
-			Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 18, 32, 206);
-			Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 18, 32, 206);
-			Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 18, 32, 206);
-			Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 18, 32, 206);
-			Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 18, 32, 206);
-			Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 18, 32, 206);
-			Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 18, 32, 206);
-			Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 18, 32, 206);
-			Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 18, 32, 206);
-			Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 18, 32, 206);
-			Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 18, 32, 206);
-			Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 18, 32, 206);
-			Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 18, 32, 206);
-			Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 18, 32, 206);
-			Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 18, 32, 206);
-			Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 18, 32, 206);
-			Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 18, 32, 206);
-			Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 18, 32, 206);
-			Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 18, 32, 206);
-			Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 18, 32, 206);
-			Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 18, 32, 206);
-			Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 18, 32, 206);
-			Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 18, 32, 206);
 			Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 18, 32, 206);
 		}
 

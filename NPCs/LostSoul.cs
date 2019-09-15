@@ -23,7 +23,7 @@ namespace SOTS.NPCs
             npc.lifeMax = 55;
             npc.damage = 40; 
             npc.defense = 3; 
-            npc.knockBackResist = 0.2f;
+            npc.knockBackResist = 0.8f;
             npc.width = 28;
             npc.height = 40;
 			Main.npcFrameCount[npc.type] = 6;  

@@ -17,7 +17,7 @@ namespace SOTS.Items.ChestItems
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Crest of Dasuver");
-			Tooltip.SetDefault("All is more\nGrants 1% bonus crit chance for every full inventory slot\nGrants 1 defense for each empty inventory slot");
+			Tooltip.SetDefault("Increases crit chance by 5%");
 		}
 		public override void SetDefaults()
 		{
@@ -27,31 +27,16 @@ namespace SOTS.Items.ChestItems
             item.value = 100000;
             item.rare = 5;
 			item.accessory = true;
+			item.defense = 4;
 			
 		}
 		
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			item.defense = 0;
-			critbonus = 0;
-			for(int i = 0; i < 50; i++)
-			{
-			Item inventoryItem = player.inventory[i];
-				if(inventoryItem.type != 0)
-				{
-					critbonus++;
-					
-					
-				}
-				if(inventoryItem.type == 0)
-				{
-					item.defense++;
-				}
-			}
-			player.meleeCrit += critbonus;
-			player.rangedCrit += critbonus;
-			player.magicCrit += critbonus;
-			player.thrownCrit += critbonus;
+			player.meleeCrit += 5;
+			player.rangedCrit += 5;
+			player.magicCrit += 5;
+			player.thrownCrit += 5;
 			
 		}
 		public override void AddRecipes()

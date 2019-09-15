@@ -113,71 +113,7 @@ namespace SOTS
 		
 		public override void ResetEffects()
         { 
-			//soul stats
-				
-			player.statLifeMax2 += soulAmount;
-			player.meleeDamage += (soulAmount) * .005f;
-			player.rangedDamage += (soulAmount) * .005f;
-			player.magicDamage += (soulAmount) * .005f;
-			player.minionDamage += (soulAmount) * .005f;
-			player.thrownDamage += (soulAmount) * .005f;
-			player.endurance -= soulAmount * .005f;
-			player.statDefense -= (int)(soulAmount * 0.1f);
 			
-			{//negative soul effects
-				if(soulAmount <= -5)
-				{
-					player.AddBuff(BuffID.Darkness, 300,false);
-				}
-				if(soulAmount <= -15)
-				{
-					player.AddBuff(BuffID.WaterCandle, 300,false);
-				}
-				if(soulAmount <= -35)
-				{
-					player.AddBuff(BuffID.Blackout, 300,false);
-				}
-				if(soulAmount <= -50)
-				{
-					player.AddBuff(BuffID.Silenced, 300,false);
-				}
-				if(soulAmount <= -80)
-				{
-					player.meleeDamage -= .4f;
-					player.rangedDamage -= .4f;
-					player.magicDamage -= .4f;
-					player.minionDamage -= .4f;
-					player.thrownDamage -= .4f;
-				}
-				if(soulAmount <= -100)
-				{
-								
-					player.meleeDamage -= 1;
-					player.rangedDamage -= 1;
-					player.magicDamage -= 1;
-					player.minionDamage -= 1;
-					player.thrownDamage -= 1;
-					player.AddBuff(BuffID.ShadowDodge, 300,false);
-				}
-			}
-			{	//Positive Soul effects
-				if(soulAmount >= 25)
-				{
-					player.AddBuff(BuffID.ChaosState, 300,false);
-				}
-				if(soulAmount >= 50)
-				{
-					player.AddBuff(148, 300,false);
-				}
-				if(soulAmount >= 150)
-				{
-					player.AddBuff(BuffID.Confused, 300,false);
-				}
-				if(soulAmount >= 400)
-				{
-					player.AddBuff(BuffID.Obstructed, 300,false);
-				}
-			}
 			
 		for(int i = 0; i < 200; i++)
 		{
@@ -268,10 +204,6 @@ namespace SOTS
 				caughtType = mod.ItemType("HoneyBlade"); }
 				if (Main.rand.Next(400) == 1) {
 				caughtType = mod.ItemType("SnappedLine");}
-				if (Main.rand.Next(7000) == 1)  {
-				caughtType = mod.ItemType("RainbowCrate"); }
-				if (Main.rand.Next(3000) == 1 && player.FindBuffIndex(BuffID.Crate) > -1) {
-				caughtType = mod.ItemType("RainbowCrate"); }
 				
 				
 				if (Main.rand.Next(24) == 1 && player.ZoneSkyHeight)   {
@@ -283,8 +215,6 @@ namespace SOTS
 				}
 				if (Main.rand.Next(24) == 1 && player.ZoneCrimson) {
 				caughtType = mod.ItemType("RottingBloodKoi"); }
-				if (Main.rand.Next(200) == 1 && !player.ZoneBeach && liquidType == 0){
-				caughtType = mod.ItemType("FatBass"); }
 				
 				if (Main.rand.Next(70) == 1 && player.ZoneSnow) {
 				caughtType = mod.ItemType("FrozenJavelin");}

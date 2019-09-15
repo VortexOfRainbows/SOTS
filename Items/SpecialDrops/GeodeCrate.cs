@@ -53,10 +53,6 @@ namespace SOTS.Items.SpecialDrops
 			{
 				player.QuickSpawnItem(mod.ItemType("ObsidianEruption"),1);
 			}
-			else
-			{
-				player.QuickSpawnItem(mod.ItemType("ObsidianScale"),Main.rand.Next(6,28));
-			}
 			
 			if(Main.rand.Next(5) <= 1)
 				player.QuickSpawnItem(ItemID.MasterBait,Main.rand.Next(1,5));
@@ -78,31 +74,9 @@ namespace SOTS.Items.SpecialDrops
 			{
 				player.QuickSpawnItem(mod.ItemType("IceCreamOre"),Main.rand.Next(12,24));
 			}
-			if(Main.rand.Next(40) == 1)
-			{
-				player.QuickSpawnItem(ItemID.BandofRegeneration,1);
-				if(Main.rand.Next(5) == 1)
-				{
-				player.QuickSpawnItem(mod.ItemType("PewpewCrystal"),1);
-				}
-			}
-			else if(Main.rand.Next(39) == 1)
-			{
-				player.QuickSpawnItem(ItemID.MagicMirror,1);
-				if(Main.rand.Next(5) == 1)
-				{
-				player.QuickSpawnItem(mod.ItemType("PrismStaff"),1);
-				}
-			}
-			else if(Main.rand.Next(38) == 1)
-			{
-				player.QuickSpawnItem(53,1);
-				if(Main.rand.Next(5) == 1)
-				{
-				player.QuickSpawnItem(mod.ItemType("AirCannon"),1);
-				}
-			}
-			else if(Main.rand.Next(37) == 1)
+			
+			
+			if(Main.rand.Next(37) == 1)
 			{
 				player.QuickSpawnItem(ItemID.HermesBoots,1);
 				if(Main.rand.Next(5) == 1)
@@ -127,11 +101,8 @@ namespace SOTS.Items.SpecialDrops
 				}
 			}
 			
-			if(Main.rand.Next(80) == 1)
-			{
-				player.QuickSpawnItem(mod.ItemType("TridentFlare"),1);
-			}
-			else if(Main.rand.Next(79) == 1)
+			
+			if(Main.rand.Next(79) == 1)
 			{
 				player.QuickSpawnItem(mod.ItemType("CaveIn"),1);
 			}
@@ -139,10 +110,7 @@ namespace SOTS.Items.SpecialDrops
 			{
 				player.QuickSpawnItem(mod.ItemType("Grenadier"),1);
 			}
-			else if(Main.rand.Next(77) == 1)
-			{
-				player.QuickSpawnItem(mod.ItemType("Discharge"),1);
-			}
+			
 			
 			if(Main.rand.Next(100) == 1)
 			{

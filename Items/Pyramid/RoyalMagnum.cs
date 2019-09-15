@@ -27,7 +27,7 @@ namespace SOTS.Items.Pyramid
             item.noMelee = true;
             item.knockBack = 4;
             item.value = Item.sellPrice(0, 1, 50, 0);
-            item.rare = 3;
+            item.rare = 4;
             item.UseSound = SoundID.Item11;
             item.autoReuse = false;
             item.shoot = 14; 

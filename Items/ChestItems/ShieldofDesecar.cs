@@ -11,14 +11,14 @@ using Microsoft.Xna.Framework.Graphics;
 
 
 namespace SOTS.Items.ChestItems
-{
+{	[AutoloadEquip(EquipType.Shield)]
 	public class ShieldofDesecar : ModItem
 	{
 		float shield = 0;
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Shield of Desecar");
-			Tooltip.SetDefault("Less is More\nGrants 1 defense for every 2 empty inventory slots");
+			Tooltip.SetDefault("Less is More\nGrants 1 defense for every 5 empty inventory slots");
 		}
 		public override void SetDefaults()
 		{
@@ -40,7 +40,7 @@ namespace SOTS.Items.ChestItems
 			Item inventoryItem = player.inventory[i];
 				if(inventoryItem.type == 0)
 				{
-					shield += 0.5f;
+					shield += 0.2f;
 				}
 			
 			}

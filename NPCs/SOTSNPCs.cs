@@ -125,10 +125,6 @@ namespace SOTS.NPCs
 					{
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("GoblinRockBar"), Main.rand.Next(2) + 1); 
 					}
-					if (Main.rand.Next(50) == 0) 
-					{
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("TinyPlanet"), 1); 
-					}
 				}
 				if (npc.type == NPCID.Plantera)  
 				{
@@ -184,7 +180,7 @@ namespace SOTS.NPCs
 				//if(npc.type == mod.NPCType("Snake") || npc.type == mod.NPCType("SnakePot") || npc.type == mod.NPCType("LostSoul"))
 				
 					maxSpawns = (int)(maxSpawns * 2.5f);
-					spawnRate = 40;
+					spawnRate = 50;
 			}
 		}
 		public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo) 

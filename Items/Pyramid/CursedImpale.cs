@@ -25,7 +25,7 @@ namespace SOTS.Items.Pyramid
 			item.useStyle = 5;
 			item.knockBack = 5;
 			item.value = Item.sellPrice(0, 2, 0, 0);
-			item.rare = 6;
+			item.rare = 5;
 			item.UseSound = SoundID.Item1;
 			item.autoReuse = false;            
 			item.shoot = mod.ProjectileType("CurseSpear"); 

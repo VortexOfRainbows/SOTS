@@ -27,23 +27,16 @@ namespace SOTS.Projectiles
 			projectile.thrown = false;
 			projectile.magic = true;
 			projectile.friendly = true;
-			projectile.penetrate = 16;
+			projectile.penetrate = 8;
 			projectile.alpha = 35;
-			projectile.timeLeft = 90;
+			projectile.timeLeft = 60;
+			projectile.tileCollide = false;
 		}
 		public override void AI()
 		{
-			if(rotation == -1)
-			{
-				if(Main.rand.Next(2) == 0)
-				{
-				rotation = 6;
-				}
-				else
-				{
-				rotation = -6;
-				}
-			}
+			projectile.alpha++;
+			rotation = 6;
+			rotation += 24;
 			projectile.rotation += MathHelper.ToRadians(rotation);
 			int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 40, 40, 32);
 			Main.dust[num1].noGravity = true;
@@ -52,15 +45,16 @@ namespace SOTS.Projectiles
 			
 			if(projectile.timeLeft < 61)
 			{
-				Vector2 circularLocation = new Vector2(projectile.velocity.X, projectile.velocity.Y).RotatedBy(MathHelper.ToRadians(rotation));
+				Vector2 circularLocation = new Vector2(projectile.velocity.X * 0.2f, projectile.velocity.Y * 0.2f).RotatedBy(MathHelper.ToRadians(rotation));
 				
 				Player player  = Main.player[projectile.owner];
-				projectile.velocity = circularLocation;
+				projectile.velocity *= 0.86f;
+				projectile.velocity += circularLocation;
 			}
 		}
 		public override void Kill(int timeLeft)
 		{
-			for(int i = 0; i < 35; i++)
+			for(int i = 0; i < 25; i++)
 			{
 			int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 40, 40, 32);
 			Main.dust[num1].noGravity = true;

@@ -3,7 +3,6 @@ NOTICE: This mod is not optimized for multiplayer, feel free to give it a try, b
 
 Bosses -> Currently 3, mostly bullet hells
 Items -> Around 200, unique gimmicks all around!
-Armors -> Not a strong point, but 6
 
 New Subclass
 -Currently in development, all classes but summon can utilize it
@@ -17,8 +16,9 @@ Pyramid Dungeon World Gen
 Lead Developer & Artist - VortexOfRainbows
 Quality Insurance & Director - FlameFreezer
 
-Update 0.18 SOTS RELOADED
--Reworked and Removed almost every old item, some will be rebalanced and added back later (300+ items removed lmao)
+Update 0.18 The Purge
+-Reworked and Removed almost every old item, some will be rebalanced and added back later (400+ items removed lmao)
+-CHALLENGES REMOVED, They didn't have good feedback
 -Added new pyramid biome
 -Fixed bugs and crafting recipe issues
 -Void rebalanced, it should now be more usable and less extremely overpowered or underpowered

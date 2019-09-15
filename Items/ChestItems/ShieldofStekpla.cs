@@ -11,13 +11,13 @@ using Microsoft.Xna.Framework.Graphics;
 
 
 namespace SOTS.Items.ChestItems
-{
+{	[AutoloadEquip(EquipType.Shield)]
 	public class ShieldofStekpla : ModItem
 	{ 	int critbonus = 0;
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Shield of Stekpla");
-			Tooltip.SetDefault("More is More\nGrants 1% bonus crit chance for every 2 full inventory slots");
+			Tooltip.SetDefault("More is More\nGrants 1% bonus crit chance for every 5 full inventory slots");
 		}
 		public override void SetDefaults()
 		{
@@ -43,10 +43,10 @@ namespace SOTS.Items.ChestItems
 					
 				}
 			}
-			player.meleeCrit += (int)(critbonus * 0.5);
-			player.rangedCrit += (int)(critbonus * 0.5);
-			player.magicCrit += (int)(critbonus * 0.5);
-			player.thrownCrit += (int)(critbonus * 0.5);
+			player.meleeCrit += (int)(critbonus * 0.2);
+			player.rangedCrit += (int)(critbonus * 0.2);
+			player.magicCrit += (int)(critbonus * 0.2);
+			player.thrownCrit += (int)(critbonus * 0.2);
 			
 		}
 	}

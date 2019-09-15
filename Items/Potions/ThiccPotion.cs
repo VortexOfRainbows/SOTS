@@ -33,15 +33,5 @@ namespace SOTS.Items.Potions
             item.consumable = true;       
 			
 		}
-		public override void AddRecipes()
-		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.BottledWater, 1);
-			recipe.AddIngredient(null, "FatBass", 1);
-			recipe.AddIngredient(ItemID.Daybloom, 1);
-			recipe.AddTile(13);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
-}
 	}
 }
