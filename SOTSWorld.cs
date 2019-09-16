@@ -1692,19 +1692,19 @@ namespace SOTS
 									
 									if(Main.maxTilesX > 8000)
 									{
-										counterRoom += 2;
-										counterLeft += 2;
-										counterRight += 2;
-										counterUp += 2;
-										counterDown += 2;
+										counterRoom += 3;
+										counterLeft += 3;
+										counterRight += 3;
+										counterUp += 3;
+										counterDown += 3;
 									}
 									else if(Main.maxTilesX > 6000)
 									{
-										counterRoom += 3f;
-										counterLeft += 3f;
-										counterRight += 3f;
-										counterUp += 3f;
-										counterDown += 3f;
+										counterRoom += 4f;
+										counterLeft += 4f;
+										counterRight += 4f;
+										counterUp += 4f;
+										counterDown += 4f;
 									}
 									else if(Main.maxTilesX > 4000)
 									{
@@ -1729,7 +1729,7 @@ namespace SOTS
 										int tilesUp = 0;
 										int tilesDown = 0;
 										int squareCount = 0;
-										for(int checkLeft = 0; checkLeft < 120; checkLeft++)
+										for(int checkLeft = 0; checkLeft < 80; checkLeft++)
 										{
 											Tile tileCheck = Framing.GetTileSafely(findTileX - checkLeft, findTileY);
 											if(tileCheck.active() == false && tileCheck.wall == (ushort)mod.WallType("PyramidWallTile"))
@@ -1743,7 +1743,7 @@ namespace SOTS
 												break;
 											}
 										}
-										for(int checkRight = 0; checkRight < 120; checkRight++)
+										for(int checkRight = 0; checkRight < 80; checkRight++)
 										{
 											Tile tileCheck = Framing.GetTileSafely(findTileX + checkRight, findTileY);
 											if(tileCheck.active() == false && tileCheck.wall == (ushort)mod.WallType("PyramidWallTile"))
@@ -1757,7 +1757,7 @@ namespace SOTS
 												break;
 											}
 										}
-										for(int checkUp = 0; checkUp < 120; checkUp++)
+										for(int checkUp = 0; checkUp < 80; checkUp++)
 										{
 											Tile tileCheck = Framing.GetTileSafely(findTileX, findTileY - checkUp);
 											if(tileCheck.active() == false && tileCheck.wall == (ushort)mod.WallType("PyramidWallTile"))
@@ -1771,7 +1771,7 @@ namespace SOTS
 												break;
 											}
 										}
-										for(int checkDown = 0; checkDown < 120; checkDown++)
+										for(int checkDown = 0; checkDown < 80; checkDown++)
 										{
 											Tile tileCheck = Framing.GetTileSafely(findTileX, findTileY + checkDown);
 											if(tileCheck.active() == false && tileCheck.wall == (ushort)mod.WallType("PyramidWallTile"))
@@ -2252,7 +2252,7 @@ namespace SOTS
 										{
 											WorldGen.PlaceTile(findTileX, findTileY - 1, (ushort)mod.TileType("ManaStatue")); //mana crystal
 										}
-										if(tile.type == (ushort)mod.TileType("PyramidSlabTile") && !tileLU.active() && !tileLU2.active() && !tileU.active() && !tileU2.active() && Main.rand.Next(size / 2) == 0)
+										if(tile.type == (ushort)mod.TileType("PyramidSlabTile") && !tileLU.active() && !tileLU2.active() && !tileU.active() && !tileU2.active() && Main.rand.Next(size / 3) == 0)
 										{
 											WorldGen.PlaceTile(findTileX, findTileY - 1, (ushort)mod.TileType("PyramidChestTile")); //Chests
 										}
@@ -2336,22 +2336,256 @@ namespace SOTS
 												}
 											}
 									
-										chest.item[slot].SetDefaults(mod.ItemType("BrittleGlass"));
-										slot++;
-										chest.item[slot].SetDefaults(mod.ItemType("BrittleIce"));
-										slot++;
-										chest.item[slot].SetDefaults(mod.ItemType("Icarus"));
-										slot++;
-										chest.item[slot].SetDefaults(mod.ItemType("DamageLock"));
-										slot++;
-										chest.item[slot].SetDefaults(mod.ItemType("ItemDecay"));
-										slot++;
-										chest.item[slot].SetDefaults(mod.ItemType("EnemyPermanence"));
-										slot++;
-										chest.item[slot].SetDefaults(mod.ItemType("SpiritsReleased"));
+										chest.item[slot].SetDefaults(ItemID.Chest);
+										chest.item[slot].stack = 10;
 										slot++;
 									}
 									
+								if(tile.type == mod.TileType("PyramidChestTile"))
+									{
+										int slot = 39;
+											for(int i = 0; i < 39; i++)
+											{
+												if(chest.item[i].type == 0 && i < slot)
+												{
+													slot = i;
+												}
+											}
+									
+										int rand = Main.rand.Next(12);
+										if(rand == 0)
+										{
+											chest.item[slot].SetDefaults(mod.ItemType("Aten"));
+											slot++;
+										}
+										if(rand == 1)
+										{
+											chest.item[slot].SetDefaults(mod.ItemType("EmeraldBracelet"));
+											slot++;
+										}
+										if(rand == 2)
+										{
+											chest.item[slot].SetDefaults(mod.ItemType("ImperialPike"));
+											slot++;
+										}
+										if(rand == 3)
+										{
+											chest.item[slot].SetDefaults(mod.ItemType("PharaohsCane"));
+											slot++;
+										}
+										if(rand == 4)
+										{
+											chest.item[slot].SetDefaults(mod.ItemType("PitatiLongbow"));
+											slot++;
+										}
+										if(rand == 5)
+										{
+											chest.item[slot].SetDefaults(mod.ItemType("RoyalMagnum"));
+											slot++;
+										}
+										if(rand == 6)
+										{
+											chest.item[slot].SetDefaults(mod.ItemType("SandstoneEdge"));
+											slot++;
+										}
+										if(rand == 7)
+										{
+											chest.item[slot].SetDefaults(mod.ItemType("SandstoneWarhammer"));
+											slot++;
+										}
+										if(rand == 8)
+										{
+											chest.item[slot].SetDefaults(mod.ItemType("ShiftingSands"));
+											slot++;
+										}
+										if(rand == 9)
+										{
+											chest.item[slot].SetDefaults(mod.ItemType("SunlightAmulet"));
+											slot++;
+										}
+										if(rand == 10)
+										{
+											chest.item[slot].SetDefaults(ItemID.FlyingCarpet);
+											slot++;
+										}
+										if(rand == 11)
+										{
+											chest.item[slot].SetDefaults(ItemID.SandstorminaBottle);
+											slot++;
+										}
+										
+										int second = Main.rand.Next(10);
+										if(second == 0)
+										{
+											chest.item[slot].SetDefaults(848);
+											slot++;
+											chest.item[slot].SetDefaults(866);
+											slot++;
+										}
+										if(second == 1)
+										{
+											chest.item[slot].SetDefaults(mod.ItemType("AnubisHat"));
+											slot++;
+										}
+										if(second > 1)
+										{
+											chest.item[slot].SetDefaults(mod.ItemType("JuryRiggedDrill"));
+											chest.item[slot].stack = Main.rand.Next(35) + 11;
+											slot++;
+										}
+										
+										int third = Main.rand.Next(12);
+										if(third == 0)
+										{
+											chest.item[slot].SetDefaults(ItemID.MiningPotion);
+											chest.item[slot].stack = Main.rand.Next(2) + 1;
+											slot++;
+										}
+										if(third == 1)
+										{
+											chest.item[slot].SetDefaults(ItemID.SpelunkerPotion);
+											chest.item[slot].stack = Main.rand.Next(2) + 1;
+											slot++;
+										}
+										if(third == 2)
+										{
+											chest.item[slot].SetDefaults(ItemID.BuilderPotion);
+											chest.item[slot].stack = Main.rand.Next(2) + 1;
+											slot++;
+										}
+										if(third == 3)
+										{
+											chest.item[slot].SetDefaults(ItemID.ShinePotion);
+											chest.item[slot].stack = Main.rand.Next(2) + 1;
+											slot++;
+										}
+										if(third == 4)
+										{
+											chest.item[slot].SetDefaults(ItemID.NightOwlPotion);
+											chest.item[slot].stack = Main.rand.Next(2) + 1;
+											slot++;
+										}
+										if(third == 5)
+										{
+											chest.item[slot].SetDefaults(ItemID.ArcheryPotion);
+											chest.item[slot].stack = Main.rand.Next(2) + 1;
+											slot++;
+										}
+										if(third == 6)
+										{
+											chest.item[slot].SetDefaults(ItemID.EndurancePotion);
+											chest.item[slot].stack = Main.rand.Next(2) + 1;
+											slot++;
+										}
+										if(third == 7)
+										{
+											chest.item[slot].SetDefaults(ItemID.SummoningPotion);
+											chest.item[slot].stack = Main.rand.Next(2) + 1;
+											slot++;
+										}
+										
+										
+										int fourth = Main.rand.Next(12);
+										if(fourth == 0)
+										{
+											chest.item[slot].SetDefaults(ItemID.WrathPotion);
+											chest.item[slot].stack = Main.rand.Next(2) + 1;
+											slot++;
+										}
+										if(fourth == 1)
+										{
+											chest.item[slot].SetDefaults(ItemID.HeartreachPotion);
+											chest.item[slot].stack = Main.rand.Next(2) + 1;
+											slot++;
+										}
+										if(fourth == 2)
+										{
+											chest.item[slot].SetDefaults(ItemID.RagePotion);
+											chest.item[slot].stack = Main.rand.Next(2) + 1;
+											slot++;
+										}
+										if(fourth == 3)
+										{
+											chest.item[slot].SetDefaults(ItemID.TitanPotion);
+											chest.item[slot].stack = Main.rand.Next(2) + 1;
+											slot++;
+										}
+										if(fourth == 4)
+										{
+											chest.item[slot].SetDefaults(ItemID.TeleportationPotion);
+											chest.item[slot].stack = Main.rand.Next(2) + 1;
+											slot++;
+										}
+										
+										int fifth = Main.rand.Next(8);
+										if(fifth == 0)
+										{
+											chest.item[slot].SetDefaults(ItemID.GoldBar);
+											chest.item[slot].stack = Main.rand.Next(9) + 5;
+											slot++;
+										}
+										if(fifth == 1)
+										{
+											chest.item[slot].SetDefaults(ItemID.PlatinumBar);
+											chest.item[slot].stack = Main.rand.Next(9) + 5;
+											slot++;
+										}
+										if(fifth == 2)
+										{
+											chest.item[slot].SetDefaults(ItemID.CrimtaneBar);
+											chest.item[slot].stack = Main.rand.Next(9) + 5;
+											slot++;
+										}
+										if(fifth == 3)
+										{
+											chest.item[slot].SetDefaults(ItemID.DemoniteBar);
+											chest.item[slot].stack = Main.rand.Next(9) + 5;
+											slot++;
+										}
+										
+										int thirdLast = Main.rand.Next(4);
+										if(thirdLast == 0)
+										{
+											chest.item[slot].SetDefaults(mod.ItemType("ExplosiveKnife"));
+											chest.item[slot].stack = Main.rand.Next(41) + 20;
+											slot++;
+										}
+										if(thirdLast == 1)
+										{
+											chest.item[slot].SetDefaults(ItemID.HellfireArrow);
+											chest.item[slot].stack = Main.rand.Next(41) + 20;
+											slot++;
+										}
+										if(thirdLast == 2)
+										{
+											chest.item[slot].SetDefaults(ItemID.AngelStatue);
+											slot++;
+										}
+										
+										
+										int secLast = Main.rand.Next(2);
+										if(secLast == 0)
+										{
+											chest.item[slot].SetDefaults(ItemID.RecallPotion);
+											chest.item[slot].stack = Main.rand.Next(2) + 2;
+											slot++;
+										}
+										
+										int last = Main.rand.Next(3);
+										if(last == 0)
+										{
+											chest.item[slot].SetDefaults(ItemID.Torch);
+											chest.item[slot].stack = Main.rand.Next(20) + 15;
+											slot++;
+										}
+										if(last == 1)
+										{
+											chest.item[slot].SetDefaults(ItemID.GoldCoin);
+											chest.item[slot].stack = Main.rand.Next(3) + 2;
+											slot++;
+										}
+										
+									}
 									
 								if (tile.type == TileID.Containers)
 								{
@@ -2401,6 +2635,11 @@ namespace SOTS
 											if(WorldGen.genRand.NextBool(3) && chest.item[0].type == 906)
 											{
 												chest.item[slot].SetDefaults(mod.ItemType("LavaPelter"));
+												slot++;
+											}
+											if(WorldGen.genRand.NextBool(2) && (chest.item[0].type == ItemID.Starfury || chest.item[0].type == ItemID.ShinyRedBalloon || chest.item[0].type == ItemID.LuckyHorseshoe))
+											{
+												chest.item[slot].SetDefaults(mod.ItemType("TinyPlanet"));
 												slot++;
 											}
 											if(WorldGen.genRand.NextBool(75))

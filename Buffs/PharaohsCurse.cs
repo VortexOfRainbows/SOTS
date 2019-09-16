@@ -35,11 +35,11 @@ namespace SOTS.Buffs
 				{
 					NPC.NewNPC((int)player.Center.X, (int)player.Center.Y + 1000, mod.NPCType("DeadlyFragment"));
 				}
-				if(modPlayer.weakerCurse)
+				if(modPlayer.weakerCurse && player.statLife > 100)
 				{
-					player.lifeRegen -= 5;
+					player.lifeRegen -= 4;
 				}
-				else
+				else if(!modPlayer.weakerCurse)
 				{
 					player.lifeRegen -= 50;
 				}

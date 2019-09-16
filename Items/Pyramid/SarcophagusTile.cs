@@ -59,7 +59,7 @@ namespace SOTS.Items.Pyramid
 			
 				if(!NPC.AnyNPCs(mod.NPCType("PharaohsCurse")))
 				{
-					Main.NewText("Debug", 145, 145, 255); //storing spawn info as buffs to make it easy to spawn in multiplayer
+					//Main.NewText("Debug", 145, 145, 255); //storing spawn info as buffs to make it easy to spawn in multiplayer
 					player.AddBuff(mod.BuffType("SpawnBossCurse"), ylocation, false);
 				}
 		}  

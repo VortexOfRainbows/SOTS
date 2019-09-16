@@ -87,12 +87,6 @@ namespace SOTS
 		{
 			
 			ModRecipe recipe = new ModRecipe(this);
-			recipe.AddIngredient(null, "FatBass", 1);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.SetResult(ItemID.Sashimi, 15);
-			recipe.AddRecipe();
-			
-			recipe = new ModRecipe(this);
 			recipe.AddIngredient(null, "SandFish", 1);
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.SetResult(ItemID.SandBlock, 25);

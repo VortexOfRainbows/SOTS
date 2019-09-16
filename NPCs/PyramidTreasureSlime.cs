@@ -28,7 +28,7 @@ namespace SOTS.NPCs
             npc.height = 32;
             animationType = NPCID.BlueSlime;
 			Main.npcFrameCount[npc.type] = 2;  
-            npc.value = 10000;
+            npc.value = 7000;
             npc.npcSlots = .5f;
             npc.boss = false;
             npc.lavaImmune = true;
@@ -71,24 +71,56 @@ namespace SOTS.NPCs
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("JuryRiggedDrill"), Main.rand.Next(2) + 1);	
 			}
 			
-			if(Main.rand.Next(30) == 0 || (Main.expertMode && Main.rand.Next(40) == 0))
+			if(Main.rand.Next(9) == 0 || (Main.expertMode && Main.rand.Next(20) == 0))
 			{
-				int rand = Main.rand.Next(4);
+				int rand = Main.rand.Next(12);
 				if(rand == 0)
 				{
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  ItemID.Aglet, 1);
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("Aten"), 1);
 				}
 				if(rand == 1)
 				{
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  ItemID.Radar, 1);
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("EmeraldBracelet"), 1);
 				}
 				if(rand == 2)
 				{
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  ItemID.ClimbingClaws, 1);
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("ImperialPike"), 1);
 				}
 				if(rand == 3)
 				{
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  3068, 1);
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("PharaohsCane"), 1);
+				}
+				if(rand == 4)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("PitatiLongbow"), 1);
+				}
+				if(rand == 5)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("RoyalMagnum"), 1);
+				}
+				if(rand == 6)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("SandstoneEdge"), 1);
+				}
+				if(rand == 7)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("SandstoneWarhammer"), 1);
+				}
+				if(rand == 8)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("ShiftingSands"), 1);
+				}
+				if(rand == 9)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("SunlightAmulet"), 1);
+				}
+				if(rand == 10)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  ItemID.SandstorminaBottle, 1);
+				}
+				if(rand == 11)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  ItemID.FlyingCarpet, 1);
 				}
 			}
 		}	

@@ -8,8 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
-//upon hitting an enemy, the bullet will spawn a javelin that will spawn to the side of the enemy and hit it (similar to Influx Waver)
-//currently this code is just copied from Dracula
+
 namespace SOTS.Projectiles 
 {    
     public class SandBullet : ModProjectile 

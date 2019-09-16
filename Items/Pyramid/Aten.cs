@@ -18,16 +18,16 @@ namespace SOTS.Items.Pyramid
 		}
         public override void SetDefaults()
         {
+            item.damage = 19;
             item.width = 34;
             item.height = 34;
             item.value = Item.sellPrice(0, 1, 50, 0);
             item.rare = 4;
             item.noMelee = true;
             item.useStyle = 5;
-            item.useAnimation = 40;
-            item.useTime = 40;
+            item.useAnimation = 60;
+            item.useTime = 60;
             item.knockBack = 4.5f;
-            item.damage = 25;
             item.noUseGraphic = true; 
             item.shoot = mod.ProjectileType("AtenProj");
             item.shootSpeed = 14.5f;

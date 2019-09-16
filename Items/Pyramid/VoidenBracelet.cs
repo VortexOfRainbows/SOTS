@@ -18,7 +18,7 @@ namespace SOTS.Items.Pyramid
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Voiden Bracelet");
-			Tooltip.SetDefault("Increases void damage and magic damage by 5%\nDecreases void cost by 10%");
+			Tooltip.SetDefault("Increases void damage and magic damage by 8%\nDecreases void cost by 10%");
 		}
 		public override void SetDefaults()
 		{
@@ -35,9 +35,9 @@ namespace SOTS.Items.Pyramid
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-			voidPlayer.voidDamage += 0.05f;
+			voidPlayer.voidDamage += 0.08f;
 			voidPlayer.voidCost -= 0.10f;
-			player.magicDamage += 0.05f;
+			player.magicDamage += 0.08f;
 		}
 		public override void AddRecipes()
 		{

@@ -47,7 +47,7 @@ namespace SOTS.Projectiles
 						for(int i = 0; i < Main.npc.Length - 1; i++)
 						{
 							NPC target = Main.npc[i];
-							if(!target.friendly && target.dontTakeDamage == false)
+							if(!target.friendly && target.dontTakeDamage == false && target.lifeMax > 5 && target.active)
 							{
 								dX = target.Center.X - projectile.Center.X;
 								dY = target.Center.Y - projectile.Center.Y;
