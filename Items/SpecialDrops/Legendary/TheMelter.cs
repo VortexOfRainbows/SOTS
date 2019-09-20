@@ -19,7 +19,7 @@ namespace SOTS.Items.SpecialDrops.Legendary
 		}
 		public override void SafeSetDefaults()
 		{
-            item.damage = 20;
+            item.damage = 40;
             item.magic = true;  
             item.width = 60;    
             item.height = 64;   
@@ -173,155 +173,155 @@ namespace SOTS.Items.SpecialDrops.Legendary
 		{
 		    frozenTime = 480;
 		    voidCost2 = 160;
-			item.damage = 20;
+			item.damage = 40;
 			
 			if(SOTSWorld.legendLevel == 1)
 			{
-				item.damage = 25;
+				item.damage = 45;
 				frozenTime = 470;
 				voidCost2 = 159;
 			}
 			if(SOTSWorld.legendLevel == 2)
 			{
-				item.damage = 32;
+				item.damage = 60;
 				frozenTime = 460;
 				voidCost2 = 157;
 			}
 			if(SOTSWorld.legendLevel == 3)
 			{
-				item.damage = 40;
+				item.damage = 70;
 				frozenTime = 450;
 				voidCost2 = 154;
 			}
 			if(SOTSWorld.legendLevel == 4)
 			{
-				item.damage = 50;
+				item.damage = 90;
 				frozenTime = 438;
 				voidCost2 = 150;
 			}
 			if(SOTSWorld.legendLevel == 5)
 			{
-				item.damage = 60;
+				item.damage = 100;
 				frozenTime = 425;
 				voidCost2 = 145;
 			}
 			if(SOTSWorld.legendLevel == 6)
 			{
-				item.damage = 70;
+				item.damage = 120;
 				frozenTime = 410;
 				voidCost2 = 139;
 			}
 			if(SOTSWorld.legendLevel == 7)
 			{
-				item.damage = 80;
+				item.damage = 140;
 				frozenTime = 393;
 				voidCost2 = 132;
 			}
 			if(SOTSWorld.legendLevel == 8)
 			{
-				item.damage = 90;
+				item.damage = 150;
 				frozenTime = 380;
 				voidCost2 = 124;
 			}
 			if(SOTSWorld.legendLevel == 9)
 			{
-				item.damage = 100;
+				item.damage = 170;
 				frozenTime = 370;
 				voidCost2 = 112;
 			}
 			if(SOTSWorld.legendLevel == 10)
 			{
-				item.damage = 120;
+				item.damage = 190;
 				frozenTime = 350;
 				voidCost2 = 100;
 			}
 			if(SOTSWorld.legendLevel == 11)
 			{
-				item.damage = 140;
+				item.damage = 210;
 				frozenTime = 345;
 				voidCost2 = 95;
 			}
 			if(SOTSWorld.legendLevel == 12)
 			{
-				item.damage = 150;
+				item.damage = 230;
 				frozenTime = 330;
 				voidCost2 = 90;
 			}
 			if(SOTSWorld.legendLevel == 13)
 			{
-				item.damage = 175;
+				item.damage = 245;
 				frozenTime = 300;
 				voidCost2 = 85;
 			}
 			if(SOTSWorld.legendLevel == 14)
 			{
-				item.damage = 200;
+				item.damage = 250;
 				frozenTime = 280;
 				voidCost2 = 80;
 			}
 			if(SOTSWorld.legendLevel == 15)
 			{
-				item.damage = 225;
+				item.damage = 275;
 				frozenTime = 260;
 				voidCost2 = 75;
 			}
 			if(SOTSWorld.legendLevel == 16)
 			{
-				item.damage = 245;
+				item.damage = 325;
 				frozenTime = 250;
 				voidCost2 = 70;
 			}
 			if(SOTSWorld.legendLevel == 17)
 			{
-				item.damage = 260;
+				item.damage = 340;
 				frozenTime = 240;
 				voidCost2 = 65;
 			}
 			if(SOTSWorld.legendLevel == 18)
 			{
-				item.damage = 270;
+				item.damage = 360;
 				frozenTime = 230;
 				voidCost2 = 60;
 			}
 			if(SOTSWorld.legendLevel == 19)
 			{
-				item.damage = 280;
+				item.damage = 380;
 				frozenTime = 220;
 				voidCost2 = 55;
 			}
 			if(SOTSWorld.legendLevel == 20)
 			{
-				item.damage = 290;
+				item.damage = 400;
 				frozenTime = 210;
 				voidCost2 = 50;
 			}
 			if(SOTSWorld.legendLevel == 21)
 			{
-				item.damage = 300;
+				item.damage = 420;
 				frozenTime = 200;
 				voidCost2 = 50;
 			}
 			if(SOTSWorld.legendLevel == 22)
 			{
-				item.damage = 320;
+				item.damage = 440;
 				frozenTime = 180;
 				voidCost2 = 50;
 			}
 			if(SOTSWorld.legendLevel == 23)
 			{
-				item.damage = 350;
+				item.damage = 460;
 				frozenTime = 150;
 				voidCost2 = 50;
 			}
 			if(SOTSWorld.legendLevel == 24)
 			{
-				item.damage = 425;
+				item.damage = 480;
 				frozenTime = 125;
 				voidCost2 = 50;
 			}
 			if(SOTSWorld.legendLevel == 25)
 			{
-				item.damage = 750;
+				item.damage = 500;
 				frozenTime = 100;
 				voidCost2 = 50;
 			}

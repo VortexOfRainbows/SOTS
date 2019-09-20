@@ -24,7 +24,7 @@ namespace SOTS.Items.Blood
             item.useAnimation = 18;
             item.useStyle = 5;    
             item.knockBack = 3.5f;
-            item.value = 250000;
+			item.value = Item.sellPrice(0, 7, 50, 0);
             item.rare = 7;
 			item.UseSound = SoundID.Item92;
             item.noMelee = true; 
