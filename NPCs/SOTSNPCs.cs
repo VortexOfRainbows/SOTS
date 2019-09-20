@@ -157,7 +157,7 @@ namespace SOTS.NPCs
 							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("MeguminLeggings"), 1); 
 					}
 				}
-			if (npc.type == 64 && Main.rand.Next(120) == 0)
+			if (npc.type == 64 && Main.rand.Next(70) == 0)
 				{
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("PinkJellyfishStaff"), 1); 
 				}
@@ -167,7 +167,7 @@ namespace SOTS.NPCs
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("PossessedChainmail"), 1); 
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("PossessedGreaves"), 1); 
 				}
-			if ((npc.type == 63 || npc.type == 103) && Main.rand.Next(120) == 0)
+			if ((npc.type == 63 || npc.type == 103) && Main.rand.Next(70) == 0)
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("BlueJellyfishStaff"), 1); 
 				}

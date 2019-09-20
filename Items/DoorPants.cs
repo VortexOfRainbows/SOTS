@@ -38,10 +38,10 @@ namespace SOTS.Items
         }
         public override void UpdateArmorSet(Player player)
         {	
-			player.setBonus = "Acceleration lasts longer";
+			player.setBonus = "Acceleration slightly lasts longer";
 			if(speedDuration > 1)
 			{
-				speedDuration += 0.1f;
+				speedDuration += 0.05f;
 			}
 		}
 		public override void UpdateEquip(Player player)
@@ -56,7 +56,7 @@ namespace SOTS.Items
 					  {
 						  player.velocity.X = -1;
 						 }
-				  player.velocity.X -= 1.2f;
+				  player.velocity.X -= 0.4f;
 				  }
 				  if(player.controlRight)
 				  {
@@ -64,7 +64,7 @@ namespace SOTS.Items
 					  {
 						  player.velocity.X = 1;
 					  }
-				  player.velocity.X += 1.2f;
+				  player.velocity.X += 0.4f;
 				  }
 			}
 			if(Main.tile[i,j].type == 11)
@@ -98,7 +98,7 @@ namespace SOTS.Items
 			
 			if(speedDuration > 0)
 			{
-				speedDuration -= .25f;
+				speedDuration -= .15f;
 			}
 		}
 		public override void AddRecipes()

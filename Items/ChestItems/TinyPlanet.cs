@@ -17,7 +17,7 @@ namespace SOTS.Items.ChestItems
 		public override void SetDefaults()
 		{
 	
-			
+			item.damage = 14;
             item.width = 34;     
             item.height = 34;   
             item.value = Item.sellPrice(0, 0, 75, 0);
@@ -38,22 +38,22 @@ namespace SOTS.Items.ChestItems
 		{
 				if (Probe == -1)
 				{
-					Probe = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, mod.ProjectileType("TinyPlanetTear"), 14, 0, player.whoAmI);
+					Probe = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, mod.ProjectileType("TinyPlanetTear"), item.damage, 0, player.whoAmI);
 					Main.projectile[Probe].ai[1] = 180;
 				}
 				if (!Main.projectile[Probe].active || Main.projectile[Probe].type != mod.ProjectileType("TinyPlanetTear"))
 				{
-					Probe = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, mod.ProjectileType("TinyPlanetTear"), 14, 0, player.whoAmI);
+					Probe = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, mod.ProjectileType("TinyPlanetTear"), item.damage, 0, player.whoAmI);
 					Main.projectile[Probe].ai[1] = 180;
 				}
 				Main.projectile[Probe].timeLeft = 6;
 				if (Probe2 == -1)
 				{
-					Probe2 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, mod.ProjectileType("TinyPlanetTear"), 14, 0, player.whoAmI);
+					Probe2 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, mod.ProjectileType("TinyPlanetTear"), item.damage, 0, player.whoAmI);
 				}
 				if (!Main.projectile[Probe2].active || Main.projectile[Probe2].type != mod.ProjectileType("TinyPlanetTear"))
 				{
-					Probe2 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, mod.ProjectileType("TinyPlanetTear"), 14, 0, player.whoAmI);
+					Probe2 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, mod.ProjectileType("TinyPlanetTear"), item.damage, 0, player.whoAmI);
 				}
 				Main.projectile[Probe2].timeLeft = 6;
 		}

@@ -24,7 +24,7 @@ namespace SOTS.Items.Pyramid
 			item.useAnimation = 20;
 			item.useStyle = 5;
 			item.knockBack = 5;
-			item.value = Item.sellPrice(0, 2, 0, 0);
+            item.value = Item.sellPrice(0, 2, 25, 0);
 			item.rare = 5;
 			item.UseSound = SoundID.Item1;
 			item.autoReuse = false;            

@@ -22,8 +22,8 @@ namespace SOTS.Items.SpecialDrops.Legendary
             item.melee = true;  
             item.width = 44;
             item.height = 44;  
-            item.useTime = 6; 
-            item.useAnimation = 6;
+            item.useTime = 11; 
+            item.useAnimation = 11;
             item.useStyle = 5;    
             item.knockBack = 0f;
             item.value = Item.sellPrice(1, 25, 0, 0);
@@ -51,8 +51,8 @@ namespace SOTS.Items.SpecialDrops.Legendary
 				}
 				if(player.altFunctionUse != 2)
 				{
-					item.useTime = 6;
-					item.useAnimation = 6;
+					item.useTime = 11;
+					item.useAnimation = 11;
 					item.noUseGraphic = true; 
 				}
 			return true;
