@@ -8,17 +8,18 @@ using SOTS.Void;
  
 namespace SOTS.Projectiles
 {
-    public class JuggernautProj : ModProjectile
+    public class UltraJuggernautProj : ModProjectile
     {	
-		public override void SetStaticDefaults()
+		int counter = 0;
+        public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("JuggernautProj");
+			DisplayName.SetDefault("UltraJuggernautProj");
 			
 		}
         public override void SetDefaults()
 		{
-			projectile.width = 42;
-			projectile.height = 42;
+			projectile.width = 66;
+			projectile.height = 66;
 			projectile.penetrate = -1;
 			projectile.timeLeft = 3000;
 			projectile.friendly = true;
@@ -27,7 +28,7 @@ namespace SOTS.Projectiles
         }
         public override bool PreDraw(Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch, Color lightColor)
         {
-            Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/JuggernautChain");    //this where the chain of grappling hook is drawn
+            Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/UltraJuggernautChain");    //this where the chain of grappling hook is drawn
                                                       //change YourModName with ur mod name/ and CustomHookPr_Chain with the name of ur one
             Vector2 position = projectile.Center;
             Vector2 mountedCenter = Main.player[projectile.owner].MountedCenter;
@@ -60,7 +61,22 @@ namespace SOTS.Projectiles
             }
 			return true;
         }
-        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough) 
+        public override void AI()
+        {
+            Player player = Main.player[projectile.owner];
+            counter ++;
+            if(counter == 30)
+            {
+               for(int i = 0; i < 360; i += 60)
+                {
+                    Vector2 circularLocation = new Vector2(projectile.velocity.X, projectile.velocity.Y).RotatedBy(MathHelper.ToRadians(i));
+                    circularLocation *= 2f;
+                   if(projectile.owner == Main.myPlayer)
+                   Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, circularLocation.X, circularLocation.Y, mod.ProjectileType("Miniball"), projectile.damage, projectile.knockBack * 0.5f, player.whoAmI);
+                }   
+            }          
+        }
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
         {
             width = 34;
             height = 34;
