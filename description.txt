@@ -14,7 +14,7 @@ Pyramid Dungeon World Gen
 -Handcrafted rooms
 
 Lead Developer & Artist - VortexOfRainbows
-Quality Insurance & Director - FlameFreezer
+Quality Insurance - FlameFreezer
 
 Update 0.18 The Purge
 -Reworked and Removed almost every old item, some will be rebalanced and added back later (400+ items removed lmao)
