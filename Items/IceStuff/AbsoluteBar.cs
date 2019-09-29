@@ -9,7 +9,7 @@ namespace SOTS.Items.IceStuff
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Absolute Alloy");
-			Tooltip.SetDefault("It feels cold to touch");
+			Tooltip.SetDefault("It burns to touch");
 		}
 		public override void SetDefaults()
 		{

@@ -62,11 +62,6 @@ namespace SOTS.Projectiles
 			worm = 0;
 			}
 			
-			int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 18, 18, 72);
-
-			
-			Main.dust[num1].noGravity = true;
-			Main.dust[num1].velocity *= 0.1f;
 		}
 	}
 }

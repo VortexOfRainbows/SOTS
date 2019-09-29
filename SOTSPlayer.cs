@@ -108,13 +108,14 @@ namespace SOTS
 		public bool PurpleBalloon = false;
 		public int StartingDamage = 0;
 		public bool ItemDivision = false;
+		public bool PushBack = false;
 		//public float projectileSize = 1;
 		
 		
 		public override void ResetEffects()
         { 
 			
-			
+		/* //probably code in a more efficient and-non-bug inducing way
 		for(int i = 0; i < 200; i++)
 		{
 			NPC target = Main.npc[i];
@@ -127,6 +128,8 @@ namespace SOTS
 			}
 		}
 		StartingDamage = 0;
+		*/
+		
 			
 			
 			
@@ -190,7 +193,7 @@ namespace SOTS
 			ItemDivision = false;
 			Eclipse = false;
 			//projectileSize = 1;
-			
+			PushBack = false;
 			
 			
 				if(PyramidBiome)
@@ -337,7 +340,20 @@ namespace SOTS
 			player.statLife += damage * corruptSmell;
 			}
 			
-			
+			if(PushBack)
+			{
+				float dX = npc.Center.X - player.Center.X;
+				float dY = npc.Center.Y - player.Center.Y;
+				float distance = (float) Math.Sqrt((double)(dX * dX + dY * dY));
+				float speed = 16.0f / distance;
+				dX *= speed;
+				dY *= speed;
+				
+				int Proj = Projectile.NewProjectile(npc.Center.X - dX * 5, npc.Center.Y - dY * 5, dX, dY, 507, 12, 25f, player.whoAmI);
+				Main.projectile[Proj].timeLeft = 15;
+				Main.projectile[Proj].alpha = 125;
+				Main.projectile[Proj].tileCollide = false;
+			}
 			
 			
 			

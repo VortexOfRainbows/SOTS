@@ -35,13 +35,8 @@ namespace SOTS.Items.Secrets
 			player.magicDamage -= player.magicDamage;
 			player.minionDamage -= player.minionDamage;
 			player.AddBuff(mod.BuffType("BackupBow"), 300);
-	}
-		
-		
-		
-		
-		
 		}
-		
 	}
+		
+}
 

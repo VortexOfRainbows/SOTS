@@ -34,16 +34,16 @@ namespace SOTS.Projectiles
 		{
 				target.AddBuff(mod.BuffType("FrozenThroughTime"), 280, false);
 			
-}
+		}
 		public override void OnHitPvp(Player target, int damage, bool crit)
 		{
 			if (Main.rand.NextBool(5))
 			{
 				target.AddBuff(mod.BuffType("FrozenThroughTime"), 280, false);
 			}
-}
+		}
 			
-}
+	}
 	
 }
 		

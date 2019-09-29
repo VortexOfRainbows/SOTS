@@ -74,7 +74,7 @@ namespace SOTS.NPCs
 				{
 					ai1 -= 5f;
 					npc.frame.Y += frame;
-					if(npc.frame.Y >= 5 * frame)
+					if(npc.frame.Y >= 6 * frame)
 					{
 						npc.frame.Y = 0;
 					}

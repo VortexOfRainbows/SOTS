@@ -56,7 +56,6 @@ namespace SOTS.Items.Blood
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(null, "RedPowerChamber", 4);
 			recipe.AddIngredient(null, "Goblinsteel", 4);
-			recipe.AddIngredient(null, "BrassBar", 4);
 			recipe.SetResult(this, 1);
 			recipe.AddRecipe();
 		}

@@ -14,7 +14,7 @@ namespace SOTS.Items
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Ultra Juggernaut");
-			Tooltip.SetDefault("Launches 6 bouncing mini spikeballs after travelling a certain distance \nYou need any help holding this?");
+			Tooltip.SetDefault("Launches 6 mini spikeballs after reaching certain distance\nYou need any help holding this?");
 		}
         public override void SetDefaults()
         {
