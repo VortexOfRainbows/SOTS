@@ -299,6 +299,7 @@ namespace SOTS.NPCs.Boss
 		int phase = 0;
 		public override void AI()
 		{
+			Player player =	Main.player[npc.target];
 			npc.TargetClosest(false);
 			int expertScale = 1;
 			if(Main.expertMode)
@@ -308,17 +309,18 @@ namespace SOTS.NPCs.Boss
 			if(phase == 0 && npc.life < (int)(npc.lifeMax * 0.5f))
 			{
 				phase = 1;
-				ai1 = 2200;
+				UnstableSerpent(player.Center.X - 1800, player.Center.Y, 40);
+				UnstableSerpent(player.Center.X + 1800, player.Center.Y, 40);
+				UnstableSerpent(player.Center.X, player.Center.Y + 1800, 40);
+				UnstableSerpent(player.Center.X, player.Center.Y - 1800, 40);
 			}
 			if(phase == 1 && npc.life < (int)(npc.lifeMax * 0.2f))
 			{
 				phase = 2;
-				ai1 = 2200;
 			}
 			
 			
 			
-			Player player =	Main.player[npc.target];
 			ai1++;
 			rotate += 1;
 			
@@ -409,7 +411,7 @@ namespace SOTS.NPCs.Boss
 				ai1 = 0;
 			}
 			
-			if(ai1 == 2200)
+			if(ai1 == 2200 && phase == 1)
 			{
 				UnstableSerpent(player.Center.X - 1800, player.Center.Y, 40);
 				UnstableSerpent(player.Center.X + 1800, player.Center.Y, 40);
@@ -431,11 +433,11 @@ namespace SOTS.NPCs.Boss
 			
 			if(!Main.expertMode)
 			{
-				if(phase == 2 && ai1 % 232 == 0)
+				if(phase == 2 && ai1 % 464 == 0)
 				{
 					UnstableSerpent(player.Center.X - 1800, player.Center.Y, 40);
 				}
-				if(phase == 2 && ai1 % 232 == 116)
+				if(phase == 2 && ai1 % 464 == 116)
 				{
 					UnstableSerpent(player.Center.X + 1800, player.Center.Y, 40);
 				}
@@ -443,19 +445,19 @@ namespace SOTS.NPCs.Boss
 			
 			if(Main.expertMode)
 			{
-				if(phase == 2 && ai1 % 232 == 0)
+				if(phase == 2 && ai1 % 464 == 0)
 				{
 					UnstableSerpent(player.Center.X - 1800, player.Center.Y, 40);
 				}
-				if(phase == 2 && ai1 % 232 == 58)
+				if(phase == 2 && ai1 % 464 == 116)
 				{
 					UnstableSerpent(player.Center.X, player.Center.Y - 1800, 40);
 				}
-				if(phase == 2 && ai1 % 232 == 116)
+				if(phase == 2 && ai1 % 464 == 232)
 				{
 					UnstableSerpent(player.Center.X + 1800, player.Center.Y, 40);
 				}
-				if(phase == 2 && ai1 % 232 == 174)
+				if(phase == 2 && ai1 % 464 == 348)
 				{
 					UnstableSerpent(player.Center.X, player.Center.Y + 1800, 40);
 				}
@@ -479,6 +481,7 @@ namespace SOTS.NPCs.Boss
 			float angY = player.Center.Y - y;
 			Vector2 properAngle = new Vector2(21, 0).RotatedBy(MathHelper.ToRadians(45) + Math.Atan2(angY, angX));
             Projectile.NewProjectile(x, y, properAngle.X, properAngle.Y, mod.ProjectileType("UnstableSerpent"), damage, 0, 0);
+			Main.PlaySound(SoundID.Item119, (int)(x), (int)(y));
 		}
 		public override void PostAI()
 		{
