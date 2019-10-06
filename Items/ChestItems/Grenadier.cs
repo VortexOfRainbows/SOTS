@@ -13,14 +13,14 @@ namespace SOTS.Items.ChestItems
 		}
 		public override void SetDefaults()
 		{
-            item.damage = 9;  //gun damage
-            item.ranged = true;   //its a gun so set this to true
-            item.width = 40;     //gun image width
-            item.height = 22;   //gun image  height
-            item.useTime = 64;  //how fast 
+            item.damage = 9;
+            item.ranged = true;  
+            item.width = 40;    
+            item.height = 22; 
+            item.useTime = 64;
             item.useAnimation = 64;
             item.useStyle = 5;    
-            item.noMelee = false;
+            item.noMelee = true;
 			item.knockBack = 1f;  
             item.value = 62500;
             item.rare = 6;

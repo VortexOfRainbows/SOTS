@@ -8,25 +8,25 @@ using Terraria.ModLoader;
  
 namespace SOTS.NPCs.Boss
 {[AutoloadBossHead]
-    public class CelestialSerpentHead : ModNPC
-    {	float ai1 = 0;
+    public class SubspaceSerpentHead : ModNPC
+    {	float ai1 = 240;
 		float ai2 = 0;
 		int despawn = 0;
 		float directX = 0;
 		float directY = 0;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Celestial Serpent");
+			DisplayName.SetDefault("Subspace Serpent");
 		}
         public override void SetDefaults()
         {
            
-            npc.lifeMax = 110000;      
+            npc.lifeMax = 120000;      
             npc.damage = 100;
             npc.defense = 0;    
             npc.knockBackResist = 0f;
-            npc.width = 50;
-            npc.height = 50;
+            npc.width = 40;
+            npc.height = 40;
             npc.boss = true;
             npc.lavaImmune = true;      
             npc.noGravity = true;         
@@ -41,7 +41,6 @@ namespace SOTS.NPCs.Boss
             npc.buffImmune[70] = true;
 			npc.aiStyle = 6;
         }
- 
         public override bool PreAI()
         {
             if (Main.netMode != 1)
@@ -56,14 +55,14 @@ namespace SOTS.NPCs.Boss
                     Main.npc[(int)latestNPC].realLife = npc.whoAmI;
                     Main.npc[(int)latestNPC].ai[3] = npc.whoAmI;
 					*/
-                    int randomWormLength = 40;
+                    int randomWormLength = 50;
                     for (int i = 0; i < randomWormLength; ++i)
                     {
-                        latestNPC = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, mod.NPCType("CelestialSerpentBody"), npc.whoAmI, 0, latestNPC);
+                        latestNPC = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, mod.NPCType("SubspaceSerpentBody"), npc.whoAmI, 0, latestNPC);
                         Main.npc[(int)latestNPC].realLife = npc.whoAmI;
                         Main.npc[(int)latestNPC].ai[3] = npc.whoAmI;
                     }
-                    latestNPC = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, mod.NPCType("CelestialSerpentTail"), npc.whoAmI, 0, latestNPC);
+                    latestNPC = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, mod.NPCType("SubspaceSerpentTail"), npc.whoAmI, 0, latestNPC);
                     Main.npc[(int)latestNPC].realLife = npc.whoAmI;
                     Main.npc[(int)latestNPC].ai[3] = npc.whoAmI;
  
@@ -293,6 +292,11 @@ namespace SOTS.NPCs.Boss
 		float goToX = 0;
 		float goToY = 0;
 		int phase = 0;
+		float areaX;
+		float areaY;
+		float areaX2;
+		float areaY2;
+		float keepRotate;
 		public override void AI()
 		{
 			Player player =	Main.player[npc.target];
@@ -302,33 +306,14 @@ namespace SOTS.NPCs.Boss
 			{
 				expertScale = 2;
 			}
-			if(phase == 0 && npc.life < (int)(npc.lifeMax * 0.55f))
-			{
-				phase = 1;
-				UnstableSerpent(player.Center.X - 1800, player.Center.Y, 40);
-				UnstableSerpent(player.Center.X + 1800, player.Center.Y, 40);
-				UnstableSerpent(player.Center.X, player.Center.Y + 1800, 40);
-				UnstableSerpent(player.Center.X, player.Center.Y - 1800, 40);
-				
-				NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, mod.NPCType("ChaosFlame"));
-				Main.PlaySound(SoundID.Item119, (int)(npc.Center.X), (int)(npc.Center.Y));
-			}
-			if(phase == 1 && npc.life < (int)(npc.lifeMax * 0.15f))
-			{
-				phase = 2;
-				NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, mod.NPCType("ChaosFlame"));
-				NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, mod.NPCType("ChaosFlame"));
-				Main.PlaySound(SoundID.Item119, (int)(npc.Center.X), (int)(npc.Center.Y));
-			}
-			
 			
 			
 			ai1++;
 			rotate += 1;
 			
-			if(ai1 >= 720 && ai1 <= 1440)
+			if(ai1 >= 720 && ai1 <= 1800)
 			{
-				Vector2 SpinTo = new Vector2(480, 0).RotatedBy(MathHelper.ToRadians(rotate * 1.75f));
+				Vector2 SpinTo = new Vector2(640, 0).RotatedBy(MathHelper.ToRadians(rotate * 2.25f));
 				
 				
 				goToX = player.Center.X + SpinTo.X - npc.Center.X;
@@ -360,113 +345,234 @@ namespace SOTS.NPCs.Boss
 					directX = 0;
 					directY = 0;
 					npc.rotation = (float)Math.Atan2(goToY, goToX) + 1.57f;
+					if(ai1 % 120 == 0)
+					{
+						int rand1 = Main.rand.Next(8);
+
+						int rand2 = Main.rand.Next(8);
+						while(rand2 == rand1)
+						{
+							rand2 = Main.rand.Next(8);
+						}
+						
+						int rand3 = Main.rand.Next(8);
+						while(rand3 == rand2 || rand3 == rand1)
+						{
+							rand3 = Main.rand.Next(8);
+						}
+						
+						int rand4 = Main.rand.Next(8);
+						while(rand4 == rand3 || rand4 == rand2 || rand4 == rand1)
+						{
+							rand4 = Main.rand.Next(8);
+						}
+						
+						if(Main.expertMode)
+						{
+							Laser(rand4, 45);
+						}
+						
+						Laser(rand3, 42);
+						
+						if(npc.life < (int)(npc.lifeMax * 0.5f))
+						Laser(rand2, 42);
+						
+						if(npc.life < (int)(npc.lifeMax * 0.25f))
+						Laser(rand1, 42);
+					}
 				}
 			}
-			if(ai1 > 1440 && ai1 < 1600)
+			if(ai1 == 1805)
 			{
-				Vector2 SpinTo = new Vector2(24, 0).RotatedBy(Math.Atan2(goToY, goToX));
-				directX = SpinTo.X;
-				directY = SpinTo.Y;
-			}
-			if(ai1 == 1600)
-			{
-				Vector2 SpinTo = new Vector2(2800, 0).RotatedBy(Math.Atan2(goToY, goToX) + MathHelper.ToRadians(180));
+				int rand1 = Main.rand.Next(4);
 				
-				for(int i = 0; i < 2 * expertScale; i++)
+				if(rand1 == 0)
 				{
-					Vector2 SpinToRand = new Vector2(2000, 0).RotatedBy(Math.Atan2(goToY, goToX) + MathHelper.ToRadians(Main.rand.Next(-60,61)));
-					UnstableSerpent(SpinToRand.X + player.Center.X, SpinToRand.Y + player.Center.Y, 40);
+					areaX = -900; // <--
+					areaY = -400;
+					areaX2 = 2400;
+					areaY2 = -400;
 				}
-				npc.position.X = player.Center.X + SpinTo.X - npc.height/2;
-				npc.position.Y = player.Center.Y + SpinTo.Y - npc.width/2;
+				if(rand1 == 1)
+				{
+					areaX = 800;
+					areaY = -700;  // ^
+					areaX2 = 800;
+					areaY2 = 2400;
+				}
+				if(rand1 == 2)
+				{
+					areaX = 900; // -->
+					areaY = 400;
+					areaX2 = -2400;
+					areaY2 = 400;
+				}
+				if(rand1 == 3)
+				{
+					areaX = -800;
+					areaY = 700; // \/
+					areaX2 = -800;
+					areaY2 = -2400;
+				}
 			}
-			if(ai1 == 1720)
+			if(ai1 > 1805 && ai1 <= 1810)
 			{
-				float shootToX = player.Center.X - npc.Center.X;
-				float shootToY = player.Center.Y - npc.Center.Y;
-				for(int i = 0; i < 270; i += 90)
-				{
-					Vector2 SpinTo = new Vector2(5, 0).RotatedBy(Math.Atan2(shootToY, shootToX) + MathHelper.ToRadians(i));
-					Projectile.NewProjectile(npc.Center.X, npc.Center.Y, SpinTo.X, SpinTo.Y, mod.ProjectileType("StarCluster"), 36, 0, 0);
-				}
-			}
-			if(ai1 == 1900)
-			{
-				float shootToX = player.Center.X - npc.Center.X;
-				float shootToY = player.Center.Y - npc.Center.Y;
-				for(int i = 0; i < 270; i += 90)
-				{
-					Vector2 SpinTo = new Vector2(9, 0).RotatedBy(Math.Atan2(shootToY, shootToX) + MathHelper.ToRadians(i));
-					Projectile.NewProjectile(npc.Center.X, npc.Center.Y, SpinTo.X, SpinTo.Y, mod.ProjectileType("StarCluster"), 36, 0, 0);
-				}
-			}
-			if(ai1 == 2080)
-			{
-				float shootToX = player.Center.X - npc.Center.X;
-				float shootToY = player.Center.Y - npc.Center.Y;
-				for(int i = 0; i < 270; i += 90)
-				{
-					Vector2 SpinTo = new Vector2(13, 0).RotatedBy(Math.Atan2(shootToY, shootToX) + MathHelper.ToRadians(i));
-					Projectile.NewProjectile(npc.Center.X, npc.Center.Y, SpinTo.X, SpinTo.Y, mod.ProjectileType("StarCluster"), 36, 0, 0);
-				}
-				if(phase == 0)
-				ai1 = 0;
-			}
+				goToX = player.Center.X + areaX2 - npc.Center.X;
+				goToY = player.Center.Y + areaY2 - npc.Center.Y;
+				
+				
 			
-			if(ai1 == 2200 && phase == 1)
-			{
-				UnstableSerpent(player.Center.X - 1800, player.Center.Y, 40);
-				UnstableSerpent(player.Center.X + 1800, player.Center.Y, 40);
-				UnstableSerpent(player.Center.X, player.Center.Y + 1800, 40);
-				UnstableSerpent(player.Center.X, player.Center.Y - 1800, 40);
-			}
-			if(ai1 == 2320)
-			{
-				float shootToX = player.Center.X - npc.Center.X;
-				float shootToY = player.Center.Y - npc.Center.Y;
-				for(int i = 0; i < 270; i += 90)
+				float distance = (float)System.Math.Sqrt((double)(goToX * goToX + goToY * goToY));
+				if(distance > 48)
 				{
-					Vector2 SpinTo = new Vector2(17, 0).RotatedBy(Math.Atan2(shootToY, shootToX) + MathHelper.ToRadians(i));
-					Projectile.NewProjectile(npc.Center.X, npc.Center.Y, SpinTo.X, SpinTo.Y, mod.ProjectileType("StarCluster"), 36, 0, 0);
+					ai1--;
+					distance = 8.5f / distance;
+									  
+					goToX *= distance * 5;
+					goToY *= distance * 5;
+					
+					directX = goToX;
+					directY = goToY;
 				}
-				//if(phase == 1)
-				NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, mod.NPCType("ChaosFlame"));
-				ai1 = 0;
 			}
+			if(ai1 > 1810 && ai1 <= 1815)
+			{
+				goToX = player.Center.X + areaX - npc.Center.X;
+				goToY = player.Center.Y + areaY - npc.Center.Y;
+				
+				
 			
-			if(!Main.expertMode)
-			{
-				if(phase == 2 && ai1 % 464 == 0)
+				float distance = (float)System.Math.Sqrt((double)(goToX * goToX + goToY * goToY));
+				if(distance > 48)
 				{
-					UnstableSerpent(player.Center.X - 1800, player.Center.Y, 40);
+					ai1--;
+					distance = 8.5f / distance;
+									  
+					goToX *= distance * 5;
+					goToY *= distance * 5;
+					
+					directX = goToX;
+					directY = goToY;
 				}
-				if(phase == 2 && ai1 % 464 == 116)
+				npc.rotation = (float)Math.Atan2(goToY, goToX) + 1.57f;
+				keepRotate = npc.rotation;
+				
+			}
+			if(ai1 >= 1820 && ai1 <= 2300)
+			{
+				npc.rotation = keepRotate;
+				directX = 0;
+				directY = 0;
+				
+				if(ai1 == 1822)
 				{
-					UnstableSerpent(player.Center.X + 1800, player.Center.Y, 40);
+					LaserWall(60);
+				}
+				if(ai1 % 100 == 0)
+				{
+					LaserWave(40);
 				}
 			}
+			if(ai1 == 2305)
+			{
+				int rand1 = Main.rand.Next(4);
+				
+				if(rand1 == 0)
+				{
+					areaX = -900; // <--
+					areaY = -400;
+					areaX2 = 2400;
+					areaY2 = -400;
+				}
+				if(rand1 == 1)
+				{
+					areaX = 800;
+					areaY = -700;  // ^
+					areaX2 = 800;
+					areaY2 = 2400;
+				}
+				if(rand1 == 2)
+				{
+					areaX = 900; // -->
+					areaY = 400;
+					areaX2 = -2400;
+					areaY2 = 400;
+				}
+				if(rand1 == 3)
+				{
+					areaX = -800;
+					areaY = 700; // \/
+					areaX2 = -800;
+					areaY2 = -2400;
+				}
+			}
+			if(ai1 > 2305 && ai1 <= 2310)
+			{
+				goToX = player.Center.X + areaX2 - npc.Center.X;
+				goToY = player.Center.Y + areaY2 - npc.Center.Y;
+				
+				
 			
-			if(Main.expertMode)
-			{
-				if(phase == 2 && ai1 % 464 == 0)
+				float distance = (float)System.Math.Sqrt((double)(goToX * goToX + goToY * goToY));
+				if(distance > 48)
 				{
-					UnstableSerpent(player.Center.X - 1800, player.Center.Y, 40);
+					ai1--;
+					distance = 8.5f / distance;
+									  
+					goToX *= distance * 5;
+					goToY *= distance * 5;
+					
+					directX = goToX;
+					directY = goToY;
 				}
-				if(phase == 2 && ai1 % 464 == 116)
-				{
-					UnstableSerpent(player.Center.X, player.Center.Y - 1800, 40);
-				}
-				if(phase == 2 && ai1 % 464 == 232)
-				{
-					UnstableSerpent(player.Center.X + 1800, player.Center.Y, 40);
-				}
-				if(phase == 2 && ai1 % 464 == 348)
-				{
-					UnstableSerpent(player.Center.X, player.Center.Y + 1800, 40);
-				}
-				if(phase == 2 && ai1 % 464 == 0 && Main.rand.Next(8) == 0)
-				NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, mod.NPCType("ChaosFlame"));
 			}
+			if(ai1 > 2310 && ai1 <= 2315)
+			{
+				goToX = player.Center.X + areaX - npc.Center.X;
+				goToY = player.Center.Y + areaY - npc.Center.Y;
+				
+				
+			
+				float distance = (float)System.Math.Sqrt((double)(goToX * goToX + goToY * goToY));
+				if(distance > 48)
+				{
+					ai1--;
+					distance = 8.5f / distance;
+									  
+					goToX *= distance * 5;
+					goToY *= distance * 5;
+					
+					directX = goToX;
+					directY = goToY;
+				}
+				npc.rotation = (float)Math.Atan2(goToY, goToX) + 1.57f;
+				keepRotate = npc.rotation;
+				
+			}
+			if(ai1 >= 2320 && ai1 <= 3175)
+			{
+				npc.rotation = keepRotate;
+				directX = 0;
+				directY = 0;
+			}
+			if(ai1 >= 2400 && ai1 <= 3175)
+			{
+				
+				if(ai1 == 2401)
+				{
+					LaserWall(60);
+				}
+				if(ai1 % 200 == 0)
+				{
+					LaserWarning(30);
+				}
+				if(ai1 % 200 == 100 || ai1 % 200 == 110 || ai1 % 200 == 120 || ai1 % 200 == 130 || ai1 % 200 == 140 || ai1 % 200 == 150)
+				{
+					LaserRapid(44);
+					if(ai1 % 200 == 150) LaserReset();
+				}
+			}
+			if(ai1 >= 3180) ai1 = 0;
 			
 			if(Main.player[npc.target].dead)
 			{
@@ -479,14 +585,217 @@ namespace SOTS.NPCs.Boss
 			npc.timeLeft = 10000;
 		}
 		int slither = 1;
-		public void UnstableSerpent(float x, float y, int damage)
+		public void LaserReset()
+		{
+			//reset npc.knockBackResist = 0.0f; to prepare for next warning
+			for(int j = 0; j < 200; j++)
+			{
+				NPC npc2 = Main.npc[j];
+				if(npc2.type == mod.NPCType("SubspaceSerpentBody") && npc2.active)
+				{
+					if(npc2.knockBackResist == 0.1f)
+					{
+						npc2.knockBackResist = 0.0f;
+					}
+				}
+			}
+		}
+		public void LaserRapid(int damage)
+		{
+			//using npc.knockBackResist = 0.1f; to detect segments that will fire
+			int direction = -1;
+			if(areaX == 900) // ^
+			direction = 1;
+			if(areaX == -900) // \/
+			direction = 2;
+			if(areaY == -700) // <--
+			direction = 3;
+			if(areaY == 700) //  -->
+			direction = 4;	
+			
+			for(int j = 0; j < 200; j++)
+			{
+				NPC npc2 = Main.npc[j];
+				if(npc2.type == mod.NPCType("SubspaceSerpentBody") && npc2.active)
+				{
+					if(npc2.knockBackResist == 0.1f)
+					{
+						float posX = npc2.Center.X;
+						float posY = npc2.Center.Y;
+						if(direction == 1)
+						{
+						Vector2 properAngle = new Vector2(0, -24);
+						Projectile.NewProjectile(posX, posY, properAngle.X, properAngle.Y, mod.ProjectileType("GreenShockBlast"), damage, 0, 0);
+						}
+						if(direction == 2)
+						{
+						Vector2 properAngle = new Vector2(0, 24);
+						Projectile.NewProjectile(posX, posY, properAngle.X, properAngle.Y, mod.ProjectileType("GreenShockBlast"), damage, 0, 0);
+						}
+						if(direction == 3)
+						{
+						Vector2 properAngle = new Vector2(-24, 0);
+						Projectile.NewProjectile(posX, posY, properAngle.X, properAngle.Y, mod.ProjectileType("GreenShockBlast"), damage, 0, 0);
+						}
+						if(direction == 4)
+						{
+						Vector2 properAngle = new Vector2(24, 0);
+						Projectile.NewProjectile(posX, posY, properAngle.X, properAngle.Y, mod.ProjectileType("GreenShockBlast"), damage, 0, 0);
+						}
+					
+					}
+				}
+			}
+		}
+		public void LaserWarning(int damage)
+		{
+			//using npc.knockBackResist = 0.1f; to prepare for rapid
+			int direction = -1;
+			if(areaX == 900) // ^
+			direction = 1;
+			if(areaX == -900) // \/
+			direction = 2;
+			if(areaY == -700) // <--
+			direction = 3;
+			if(areaY == 700) //  -->
+			direction = 4;	
+			
+			for(int j = 0; j < 200; j++)
+			{
+				NPC npc2 = Main.npc[j];
+				if(npc2.type == mod.NPCType("SubspaceSerpentBody") && npc2.active)
+				{
+					if((Main.rand.Next(4) == 0 && !Main.expertMode) || (Main.rand.Next(3) == 0 && Main.expertMode))
+					{
+					float posX = npc2.Center.X;
+					float posY = npc2.Center.Y;
+						if(direction == 1)
+						{
+						Vector2 properAngle = new Vector2(0, -8);
+						Projectile.NewProjectile(posX, posY, properAngle.X, properAngle.Y, mod.ProjectileType("GreenCellBlast"), damage, 0, 0);
+						}
+						if(direction == 2)
+						{
+						Vector2 properAngle = new Vector2(0, 8);
+						Projectile.NewProjectile(posX, posY, properAngle.X, properAngle.Y, mod.ProjectileType("GreenCellBlast"), damage, 0, 0);
+						}
+						if(direction == 3)
+						{
+						Vector2 properAngle = new Vector2(-8, 0);
+						Projectile.NewProjectile(posX, posY, properAngle.X, properAngle.Y, mod.ProjectileType("GreenCellBlast"), damage, 0, 0);
+						}
+						if(direction == 4)
+						{
+						Vector2 properAngle = new Vector2(8, 0);
+						Projectile.NewProjectile(posX, posY, properAngle.X, properAngle.Y, mod.ProjectileType("GreenCellBlast"), damage, 0, 0);
+						}
+						
+						
+						npc2.knockBackResist = 0.1f;
+					}
+				}
+			}
+		}
+		public void LaserWave(int damage)
 		{
 			Player player =	Main.player[npc.target];
-			float angX = player.Center.X - x;
-			float angY = player.Center.Y - y;
-			Vector2 properAngle = new Vector2(21, 0).RotatedBy(MathHelper.ToRadians(45) + Math.Atan2(angY, angX));
-            Projectile.NewProjectile(x, y, properAngle.X, properAngle.Y, mod.ProjectileType("UnstableSerpent"), damage, 0, 0);
-			Main.PlaySound(SoundID.Item119, (int)(x), (int)(y));
+			for(int j = 0; j < 200; j++)
+			{
+				NPC npc2 = Main.npc[j];
+				if(npc2.type == mod.NPCType("SubspaceSerpentBody") && npc2.active)
+				{
+					float posX = npc2.Center.X;
+					float posY = npc2.Center.Y;
+					float angleX = npc2.Center.X - player.Center.X;
+					float angleY = npc2.Center.Y - player.Center.Y;
+					Vector2 properAngle = new Vector2(-4, 0).RotatedBy(Math.Atan2(angleY, angleX));
+					Projectile.NewProjectile(posX, posY, properAngle.X, properAngle.Y, mod.ProjectileType("GreenWaveBlast"), damage, 0, 0);
+				}
+			}
+		}
+		public void LaserWall(int damage)
+		{
+			for(int i = 0; i < 2; i++)
+			{
+				float posX = npc.Center.X;
+				float posY = npc.Center.Y;
+				if(i == 1)
+				{
+					for(int j = 0; j < 200; j++)
+					{
+						NPC npc2 = Main.npc[j];
+						if(npc2.type == mod.NPCType("SubspaceSerpentTail") && npc2.active)
+						{
+							posX = npc2.Center.X;
+							posY = npc2.Center.Y;
+						}
+					}
+				}
+				Vector2 properAngle = new Vector2(21, 0).RotatedBy(MathHelper.ToRadians(45));
+				Projectile.NewProjectile(posX, posY, properAngle.X, properAngle.Y, mod.ProjectileType("EnergySerpent"), damage, 0, 0);
+				properAngle = new Vector2(-21, 0).RotatedBy(MathHelper.ToRadians(45));
+				Projectile.NewProjectile(posX, posY, properAngle.X, properAngle.Y, mod.ProjectileType("EnergySerpent"), damage, 0, 0);
+				properAngle = new Vector2(0, 21).RotatedBy(MathHelper.ToRadians(45));
+				Projectile.NewProjectile(posX, posY, properAngle.X, properAngle.Y, mod.ProjectileType("EnergySerpent"), damage, 0, 0);
+				properAngle = new Vector2(0, -21).RotatedBy(MathHelper.ToRadians(45));
+				Projectile.NewProjectile(posX, posY, properAngle.X, properAngle.Y, mod.ProjectileType("EnergySerpent"), damage, 0, 0);
+			}
+		}
+		public void Laser(int area, int damage)
+		{
+			Player player =	Main.player[npc.target];
+			float locationX = 0;
+			float locationY = 0;
+			if(area == 0)
+			{
+				locationX = -324;
+				locationY = -324;
+			}
+			if(area == 1)
+			{
+				locationX = 0;
+				locationY = -324;
+			}
+			if(area == 2)
+			{
+				locationX = 324;
+				locationY = -324;
+			}
+			if(area == 3)
+			{
+				locationX = 324;
+				locationY = 0;
+			}
+			if(area == 4)
+			{
+				locationX = 324;
+				locationY = 324;
+			}
+			if(area == 5)
+			{
+				locationX = 0;
+				locationY = 324;
+			}
+			if(area == 6)
+			{
+				locationX = -324;
+				locationY = 324;
+			}
+			if(area == 7)
+			{
+				locationX = -324;
+				locationY = 0;
+			}
+			
+			Main.PlaySound(SoundID.Item92, (int)(player.Center.X + locationX), (int)(player.Center.Y + locationY));
+			if(Main.rand.Next(2) == 0)
+			{
+				Projectile.NewProjectile(player.Center.X + locationX, player.Center.Y + locationY, 0, 0, mod.ProjectileType("plusLaser"), damage, 0, 0);
+			}
+			else
+			{
+				Projectile.NewProjectile(player.Center.X + locationX, player.Center.Y + locationY, 0, 0, mod.ProjectileType("XLaser"), damage, 0, 0);
+			}
 		}
 		public override void PostAI()
 		{
@@ -523,6 +832,11 @@ namespace SOTS.NPCs.Boss
 			writer.Write(goToY);
 			writer.Write(phase);
 			writer.Write(slither);
+			writer.Write(areaX);
+			writer.Write(areaX2);
+			writer.Write(areaY);
+			writer.Write(areaY2);
+			writer.Write(keepRotate);
 		}
 		public override void ReceiveExtraAI(BinaryReader reader)
 		{	
@@ -535,6 +849,11 @@ namespace SOTS.NPCs.Boss
 			goToY = reader.ReadSingle();
 			phase = reader.ReadInt32();
 			slither = reader.ReadInt32();
+			areaX = reader.ReadSingle();
+			areaX2 = reader.ReadSingle();
+			areaY = reader.ReadSingle();
+			areaY2 = reader.ReadSingle();
+			keepRotate = reader.ReadSingle();
 		}
 	}
 }

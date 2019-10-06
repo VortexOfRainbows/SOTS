@@ -24,7 +24,7 @@ namespace SOTS.Projectiles.Lightning
 			projectile.penetrate = -1; 
 			projectile.hostile = false;
 			projectile.friendly = false;
-			projectile.ranged = true;
+			projectile.magic = true;
 			projectile.timeLeft = 330;
 			projectile.width = 8;
 			projectile.height = 8;

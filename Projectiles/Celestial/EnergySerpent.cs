@@ -11,7 +11,7 @@ using Terraria.ID;
 
 namespace SOTS.Projectiles.Celestial
 {    
-    public class UnstableSerpent : ModProjectile 
+    public class EnergySerpent : ModProjectile 
     {	
 		int worm = 0;
 		int wait = 1;         
@@ -20,17 +20,17 @@ namespace SOTS.Projectiles.Celestial
 		
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Unstable Serpent");
+			DisplayName.SetDefault("Energy Serpent");
 			
 		}
 		
         public override void SetDefaults()
         {
-			projectile.width = 48;
-			projectile.height = 58;
+			projectile.width = 40;
+			projectile.height = 52;
             Main.projFrames[projectile.type] = 3;
 			projectile.friendly = false;
-			projectile.timeLeft = 720;
+			projectile.timeLeft = 60;
 			projectile.penetrate = -1;
 			projectile.tileCollide = false;
 			projectile.hostile = true;
@@ -38,7 +38,7 @@ namespace SOTS.Projectiles.Celestial
 		}
 		public override void OnHitPlayer(Player target, int damage, bool crit) 
 		{
-			target.AddBuff(31, 90, false);
+			target.AddBuff(39, 180, false);
 		}	
 		public override void AI()
 		{
@@ -48,9 +48,9 @@ namespace SOTS.Projectiles.Celestial
 				
 			if(projectile.frame == 0)
 			{
-				int Probe = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("UnstableSerpent"), projectile.damage, 0, 0);
+				int Probe = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("EnergySerpent"), projectile.damage, 0, 0);
 				Main.projectile[Probe].rotation = projectile.rotation;
-				Main.projectile[Probe].timeLeft = 90;
+				Main.projectile[Probe].timeLeft = 600;
 				Main.projectile[Probe].frame = 1;
 			}
 			if(projectile.timeLeft <= 2 && projectile.frame != 0)

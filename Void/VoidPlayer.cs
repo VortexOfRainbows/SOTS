@@ -52,7 +52,7 @@ namespace SOTS.Void
 		}
 
 		public override void UpdateDead() {
-			voidMeter = 0;
+			voidMeter = voidMeterMax2/2;
 			ResetVariables();
 		}
 

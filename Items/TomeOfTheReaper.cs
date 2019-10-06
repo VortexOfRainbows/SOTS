@@ -11,16 +11,16 @@ namespace SOTS.Items
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Tome of the Reaper");
-			Tooltip.SetDefault("Casts many demon scythes");
+			Tooltip.SetDefault("Cast many demon scythes");
 		}
 		public override void SetDefaults()
 		{
-            item.damage = 48; 
+            item.damage = 44; 
             item.magic = true; 
             item.width = 28;   
             item.height = 30;   
-            item.useTime = 7;   
-            item.useAnimation = 21;
+            item.useTime = 8;   
+            item.useAnimation = 24;
             item.useStyle = 5;    
             item.noMelee = true;  
             item.knockBack = 5.5f;
@@ -31,7 +31,7 @@ namespace SOTS.Items
             item.shoot = ProjectileID.DemonScythe; 
             item.shootSpeed = 9.5f;
 			item.mana = 16;
-			item.reuseDelay = 14;
+			item.reuseDelay = 16;
 
 		}
 
@@ -49,7 +49,7 @@ namespace SOTS.Items
 				counter++;
 				
 					Projectile.NewProjectile(position.X, position.Y, speedX, speedY, type, damage, knockBack, player.whoAmI);
-				if(counter >= 3)
+				if(counter >= 4)
 				{
 					counter = 0;
 					Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians(10)); 

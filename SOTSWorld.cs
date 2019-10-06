@@ -2642,6 +2642,11 @@ namespace SOTS
 												chest.item[slot].SetDefaults(mod.ItemType("TinyPlanet"));
 												slot++;
 											}
+											if(WorldGen.genRand.NextBool(6) && (chest.item[0].type == ItemID.IceBoomerang || chest.item[0].type == ItemID.IceBlade || chest.item[0].type == ItemID.IceSkates || chest.item[0].type == ItemID.BlizzardinaBottle || chest.item[0].type == ItemID.FlurryBoots))
+											{
+												chest.item[slot].SetDefaults(mod.ItemType("CryoCannon"));
+												slot++;
+											}
 											if(WorldGen.genRand.NextBool(75))
 											{
 												
