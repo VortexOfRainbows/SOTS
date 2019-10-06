@@ -10,7 +10,7 @@ namespace SOTS.Items.SpecialDrops
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Enchanted Pickaxe");
-			Tooltip.SetDefault("");
+			Tooltip.SetDefault("Shoots an echanted pickaxe beam that breaks blocks");
 		}
 		public override void SetDefaults()
 		{

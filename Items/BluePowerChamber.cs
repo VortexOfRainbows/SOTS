@@ -9,7 +9,7 @@ namespace SOTS.Items
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Blue Power Chamber");
-			Tooltip.SetDefault("Uses power from the soul\nIncreases damage by 1% but decreases max mana by 20 while in the inventory");
+			Tooltip.SetDefault("'Uses power from the soul'\nIncreases damage by 1% but decreases max mana by 20 while in the inventory");
 		}
 		public override void SetDefaults()
 		{

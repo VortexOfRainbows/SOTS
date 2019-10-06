@@ -9,7 +9,7 @@ namespace SOTS.Items.ChestItems
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Grenadier");
-			Tooltip.SetDefault("Born in trashfire; made of crap; developed by an idiot\nThe ultimate weapon");
+			Tooltip.SetDefault("'Born in trashfire; made of crap; developed by an idiot'\n'The ultimate weapon'");
 		}
 		public override void SetDefaults()
 		{

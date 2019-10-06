@@ -9,7 +9,7 @@ namespace SOTS.Items.ChestItems
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Chain Grenadier");
-			Tooltip.SetDefault("Born in bigger trashfire; made of even more crap; developed by 3 braincells\nA very good weapon");
+			Tooltip.SetDefault("'Born in bigger trashfire; made of even more crap; developed by 3 braincells'\n'A very good weapon'");
 		}
 		public override void SetDefaults()
 		{

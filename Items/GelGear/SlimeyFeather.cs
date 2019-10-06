@@ -9,7 +9,7 @@ namespace SOTS.Items.GelGear
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Slimey Feather");
-			Tooltip.SetDefault("I doubt this can be even a tiny bit aerodynamic");
+			Tooltip.SetDefault("'I doubt this can be even a tiny bit aerodynamic'");
 		}
 		public override void SetDefaults()
 		{
