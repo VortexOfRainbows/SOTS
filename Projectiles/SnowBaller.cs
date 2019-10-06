@@ -54,14 +54,13 @@ namespace SOTS.Projectiles
 			Projectile.NewProjectile(projectile.position.X, projectile.position.Y, 7, 4,  166, projectile.damage, projectile.knockBack, Main.myPlayer);
 			Projectile.NewProjectile(projectile.position.X, projectile.position.Y, -7, 4,  166, projectile.damage, projectile.knockBack, Main.myPlayer);
 			  
-			  }
-}
-			  
-			public override void AI()
+			}
+		} 
+		public override void AI()
         {
             projectile.type = 166; //This is the demon scythe projectile ID
         }
-		}
-		
 	}
+		
+}
 	

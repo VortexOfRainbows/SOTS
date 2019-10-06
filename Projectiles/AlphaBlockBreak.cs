@@ -32,8 +32,7 @@ namespace SOTS.Projectiles
 		}
 		public override void Kill(int timeLeft)
         {
- {
-				float explosionRadius = .75f;
+				float explosionRadius = 2f;
 				int minTileX = (int)(projectile.position.X / 16f - (float)explosionRadius);
 				int maxTileX = (int)(projectile.position.X / 16f + (float)explosionRadius);
 				int minTileY = (int)(projectile.position.Y / 16f - (float)explosionRadius);
@@ -121,9 +120,8 @@ namespace SOTS.Projectiles
 							}
 						}
 					}
-}
-        }
-	}
+				}
+		}
 	}
 }
 		

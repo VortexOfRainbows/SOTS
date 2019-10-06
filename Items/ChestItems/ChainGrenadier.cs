@@ -9,16 +9,16 @@ namespace SOTS.Items.ChestItems
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Chain Grenadier");
-			Tooltip.SetDefault("Born in bigger trashfire; made of even more crap; developed by 3 braincells\nA very good weapon");
+			Tooltip.SetDefault("'This is not a bad idea!'");
 		}
 		public override void SetDefaults()
 		{
-            item.damage = 38; 
+            item.damage = 36; 
             item.ranged = true;   
             item.width = 48;    
             item.height = 28; 
-            item.useTime = 10; 
-            item.useAnimation = 10;
+            item.useTime = 12; 
+            item.useAnimation = 12;
             item.useStyle = 5;    
             item.noMelee = false;
 			item.knockBack = 1f;  
@@ -43,6 +43,7 @@ namespace SOTS.Items.ChestItems
 		{
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.ChainGun, 1);
+			recipe.AddIngredient(ItemID.VortexBeater, 1);
 			recipe.AddIngredient(null, "Grenadier", 1);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.SetResult(this);
