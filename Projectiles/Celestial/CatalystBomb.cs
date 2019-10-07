@@ -134,7 +134,7 @@ namespace SOTS.Projectiles.Celestial
 			{
 				Detonate(10f);
 				Main.PlaySound(SoundID.Item119, (int)(projectile.Center.X), (int)(projectile.Center.Y));
-				if(player.ZoneUnderworldHeight && Main.myPlayer == projectile.owner)
+				if(player.ZoneUnderworldHeight)
 				{
 					if(!NPC.AnyNPCs(mod.NPCType("SubspaceSerpentHead")))
 					{

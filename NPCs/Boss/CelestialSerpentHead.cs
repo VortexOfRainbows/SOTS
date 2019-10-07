@@ -281,10 +281,6 @@ namespace SOTS.NPCs.Boss
             scale = 1f;  
             return null;
         }
-		public override void NPCLoot()
-		{
-			
-		}
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
             npc.lifeMax = (int)(npc.lifeMax * bossLifeScale * 0.75f);  //boss life scale in expertmode

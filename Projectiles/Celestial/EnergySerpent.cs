@@ -50,7 +50,7 @@ namespace SOTS.Projectiles.Celestial
 			{
 				int Probe = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("EnergySerpent"), projectile.damage, 0, 0);
 				Main.projectile[Probe].rotation = projectile.rotation;
-				Main.projectile[Probe].timeLeft = 600;
+				Main.projectile[Probe].timeLeft = 660;
 				Main.projectile[Probe].frame = 1;
 			}
 			if(projectile.timeLeft <= 2 && projectile.frame != 0)

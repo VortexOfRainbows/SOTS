@@ -19,8 +19,8 @@ namespace SOTS.NPCs.Boss
         {
             npc.width = 36;     
             npc.height = 40;            
-            npc.damage = 50;
-            npc.defense = 50;
+            npc.damage = 70;
+            npc.defense = 48;
             npc.lifeMax = 12104310; //arbitrary
             npc.knockBackResist = 0.0f;
             npc.noTileCollide = true;
@@ -34,6 +34,8 @@ namespace SOTS.NPCs.Boss
 			music = MusicID.Boss2;
             npc.buffImmune[69] = true;
             npc.buffImmune[70] = true;
+            npc.buffImmune[39] = true;
+            npc.buffImmune[24] = true;
            
         }
  
