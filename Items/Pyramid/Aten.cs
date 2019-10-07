@@ -14,7 +14,7 @@ namespace SOTS.Items.Pyramid
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Aten");
-			Tooltip.SetDefault("The defunct god... now in flail form");
+			Tooltip.SetDefault("'The defunct god... now in flail form'");
 		}
         public override void SetDefaults()
         {

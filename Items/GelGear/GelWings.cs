@@ -12,7 +12,7 @@ namespace SOTS.Items.GelGear
 		public override void SetStaticDefaults()
 		{	
 		DisplayName.SetDefault("Gelatinous Wings");
-			Tooltip.SetDefault("It really shouldn't hold up well");
+			Tooltip.SetDefault("Allows flight and slow fall\n'It really shouldn't hold up well'");
 		}
 
 		public override void SetDefaults()

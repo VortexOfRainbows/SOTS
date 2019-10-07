@@ -9,7 +9,7 @@ namespace SOTS.Items.GelGear
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Putrid Cell");
-			Tooltip.SetDefault("");
+			Tooltip.SetDefault("Access to infinite putrid bullets");
 		}public override void SetDefaults()
 		{
 			item.damage = 8;

@@ -17,7 +17,7 @@ namespace SOTS.Items.Secrets
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Microsoft Edge");
-			Tooltip.SetDefault("Gets more broken each swing");
+			Tooltip.SetDefault("'Gets more broken each swing!'");
 		}
 		public override void SetDefaults()
 		{

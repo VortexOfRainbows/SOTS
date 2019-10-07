@@ -9,7 +9,7 @@ namespace SOTS.Items.Pyramid
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Pharaoh's Cane");
-			Tooltip.SetDefault("Terrible for combat\nWho would ever want such a thing?");
+			Tooltip.SetDefault("Terrible for combat\n'Who would ever want such a thing?'");
 		}
 		public override void SetDefaults()
 		{

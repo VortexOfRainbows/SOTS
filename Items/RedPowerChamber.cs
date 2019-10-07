@@ -9,7 +9,7 @@ namespace SOTS.Items
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Red Power Chamber");
-			Tooltip.SetDefault("Uses power from the heart\nIncreases damage by 3% but decreases max life by 10 while in the inventory");
+			Tooltip.SetDefault("'Uses power from the heart'\nIncreases damage by 3% but decreases max life by 10 while in the inventory");
 		}
 		public override void SetDefaults()
 		{

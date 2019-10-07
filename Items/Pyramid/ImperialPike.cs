@@ -42,6 +42,6 @@ namespace SOTS.Items.Pyramid
                   Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI);
               }
               return true; 
-	}
+		}
 	}
 }

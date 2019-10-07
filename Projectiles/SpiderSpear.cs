@@ -26,7 +26,7 @@ namespace SOTS.Projectiles
 		{
 				target.AddBuff(BuffID.Venom, 180, false);
 			
-}
+		}
 		public override void OnHitPvp(Player target, int damage, bool crit)
 		{
 			if (Main.rand.NextBool(5))

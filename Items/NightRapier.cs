@@ -9,7 +9,7 @@ namespace SOTS.Items
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Night Rapier");
-			Tooltip.SetDefault("The power of pure darkness is at your fingertips");
+			Tooltip.SetDefault("'The power of pure darkness is at your fingertips'");
 		}
 		public override void SetDefaults()
 		{

@@ -11,8 +11,7 @@ namespace SOTS.Projectiles
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Imperial Guardsman's Pike");
-			
+			DisplayName.SetDefault("Imperial Guardsman's Pike");	
 		}
 		
         public override void SetDefaults()

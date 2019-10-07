@@ -13,7 +13,7 @@ namespace SOTS.Items.SpecialDrops //The directory for your .cs and .png; Example
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Snapped Line");
-			Tooltip.SetDefault("So that's where it went!");
+			Tooltip.SetDefault("'So that's where it went!'");
 		}
  
  

@@ -11,7 +11,7 @@ namespace SOTS.Items.SpecialDrops.Legendary
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Thundershock Shortbow");
-			Tooltip.SetDefault("Legendary drop\nLevels up as you progress");
+			Tooltip.SetDefault("Legendary drop\nLevels up as you progress\nUnleahses out a barrage of lighting orbs");
 		}
 		public override void SetDefaults()
 		{

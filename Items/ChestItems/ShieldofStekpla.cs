@@ -17,7 +17,7 @@ namespace SOTS.Items.ChestItems
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Shield of Stekpla");
-			Tooltip.SetDefault("More is More\nGrants 1% bonus crit chance for every 5 full inventory slots");
+			Tooltip.SetDefault("'More is More'\nGrants 1% bonus crit chance for every 5 full inventory slots");
 		}
 		public override void SetDefaults()
 		{

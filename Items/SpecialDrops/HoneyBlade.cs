@@ -11,7 +11,7 @@ namespace SOTS.Items.SpecialDrops
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Honey Blade");
-			Tooltip.SetDefault("A weirdly shaped piece of coagulated honey\nRight click secondary\nFound in pools of honey");
+			Tooltip.SetDefault("'A weirdly shaped piece of coagulated honey'\nRight click secondary\nFound in pools of honey");
 		}
 		public override void SetDefaults()
 		{

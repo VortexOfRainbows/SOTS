@@ -9,7 +9,7 @@ namespace SOTS.Items.SpecialDrops
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Planet Fish");
-			Tooltip.SetDefault("Huge and inedible to humans, though fish find them quite tastey\nCaught in sky lakes");
+			Tooltip.SetDefault("'Huge and inedible to humans, though fish find them quite tastey'\nCaught in sky lakes");
 		}
 		public override void SetDefaults()
 		{

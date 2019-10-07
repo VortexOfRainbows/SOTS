@@ -9,7 +9,7 @@ namespace SOTS.Items
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Bore Bullet");
-			Tooltip.SetDefault("Increases in damage as it pierces\nBusts bunkers effectively");
+			Tooltip.SetDefault("Increases in damage as it pierces\n'Busts bunkers effectively'");
 		}public override void SetDefaults()
 		{
 			item.damage = 18;

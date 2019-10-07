@@ -15,7 +15,7 @@ namespace SOTS.Items.SpecialDrops.Legendary
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Insignius");
-			Tooltip.SetDefault("Legendary drop\nLevels up as you progress\nCalls down a chain explosion from the heavens\nEXPLOSION!");
+			Tooltip.SetDefault("Legendary drop\nLevels up as you progress\nCalls down a chain explosion from the heavens\n'EXPLOSION!'");
 		}
 		public override void SafeSetDefaults()
 		{
