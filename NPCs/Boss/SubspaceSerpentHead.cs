@@ -42,7 +42,23 @@ namespace SOTS.NPCs.Boss
             npc.buffImmune[39] = true;
             npc.buffImmune[24] = true;
 			npc.aiStyle = 6;
+			bossBag = mod.ItemType("SubspaceBag");
         }
+		public override void BossLoot(ref string name, ref int potionType)
+		{ 
+			SOTSWorld.downedSubspace = true;
+			potionType = ItemID.GreaterHealingPotion;
+		
+			if(Main.expertMode)
+			
+			{ 
+			npc.DropBossBags();
+			} 
+			else 
+			{
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("SanguiteBar"), Main.rand.Next(16, 25)); 
+			}
+		}
         public override bool PreAI()
         {
             if (Main.netMode != 1)

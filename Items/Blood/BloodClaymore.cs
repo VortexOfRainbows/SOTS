@@ -36,7 +36,7 @@ namespace SOTS.Items.Blood
 		}
 		public override void GetVoid(Player player)
 		{
-				voidMana = 8;
+				voidMana = 4;
 		}
 		public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit) 
 		{

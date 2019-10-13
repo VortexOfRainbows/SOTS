@@ -14,23 +14,23 @@ namespace SOTS.Items.IceStuff
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Brittle Flail");
-			Tooltip.SetDefault("Snaps upon colliding with an enemy\nUpon snapping, multiple projectiles are released");
+			Tooltip.SetDefault("");
 		}
         public override void SetDefaults()
         {
-            item.width = 46;
+            item.damage = 40;
+            item.width = 42;
             item.height = 32;
-            item.value = Item.sellPrice(0, 4, 0, 0);
+            item.value = Item.sellPrice(0, 7, 25, 0);
             item.rare = 7;
             item.noMelee = true;
             item.useStyle = 5;
-            item.useAnimation = 40;
-            item.useTime = 40;
+            item.useAnimation = 30;
+            item.useTime = 30;
             item.knockBack = 7f;
-            item.damage = 45;
             item.noUseGraphic = true; 
             item.shoot = mod.ProjectileType("BrittleFlailProj");
-            item.shootSpeed = 18.5f;
+            item.shootSpeed = 13.5f;
             item.UseSound = SoundID.Item1;
             item.melee = true; 
             item.channel = true;
@@ -39,7 +39,7 @@ namespace SOTS.Items.IceStuff
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "AbsoluteBar", 7);
+			recipe.AddIngredient(null, "AbsoluteBar", 12);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.SetResult(this);
 			recipe.AddRecipe();

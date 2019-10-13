@@ -21,13 +21,21 @@ namespace SOTS
 		
 		public static int legendLevel = 0;
 		
-		public static bool downedPinky = false;
-		public static bool downedCarver = false;
-		public static bool downedCurse = false;
-		public static bool downedEntity = false;
 		
-		public static bool downedAntilion = false;
+		
+		public static bool downedPinky = false;
+		public static bool downedCurse = false;
+		
 		public static bool downedAmalgamation = false;
+		public static bool downedCelestial = false;
+		public static bool downedSubspace = false;
+		
+		
+		
+		
+		public static bool downedCarver = false;
+		public static bool downedEntity = false;
+		public static bool downedAntilion = false;
 		public static bool downedChess = false;
 		
 		public static bool challengeDecay = false;
@@ -49,6 +57,9 @@ namespace SOTS
 		downedAntilion = false;
 		downedAmalgamation = false;
 		downedChess = false;
+		
+		downedCelestial = false;
+		downedSubspace = false;
 		
 		challengeDecay = false;
 		challengeLock = false;
@@ -80,6 +91,12 @@ namespace SOTS
 			}
 			if (downedChess) {
 				downed.Add("chess");
+			}
+			if (downedCelestial) {
+				downed.Add("celestial");
+			}
+			if (downedSubspace) {
+				downed.Add("subspace");
 			}
 			
 			var challenge = new List<string>();
@@ -116,6 +133,8 @@ namespace SOTS
 			downedAntilion = downed.Contains("antilion");
 			downedAmalgamation = downed.Contains("amalgamation");
 			downedChess = downed.Contains("chess");
+			downedCelestial = downed.Contains("celestial");
+			downedSubspace = downed.Contains("subspace");
 			
 			
 			var challenge = tag.GetList<string>("challenge");
@@ -138,6 +157,8 @@ namespace SOTS
 				downedAmalgamation = flags[4];
 				downedChess = flags[5];
 				downedCurse = flags[6];
+				downedCelestial = flags[7];
+				downedSubspace = flags[8];
 				
 				BitsByte flags2 = reader.ReadByte();
 				challengeDecay = flags2[0];
@@ -158,6 +179,8 @@ namespace SOTS
 			flags[4] = downedAmalgamation;
 			flags[5] = downedChess;
 			flags[6] = downedCurse;
+			flags[7] = downedCelestial;
+			flags[8] = downedSubspace;
 			writer.Write(flags);
 			
 			BitsByte flags2 = new BitsByte();
@@ -178,6 +201,8 @@ namespace SOTS
 			downedAmalgamation = flags[4];
 			downedChess = flags[5];
 			downedCurse = flags[6];
+			downedCelestial = flags[7];
+			downedSubspace = flags[8];
 			
 			BitsByte flags2 = reader.ReadByte();
 			challengeDecay = flags2[0];
@@ -2674,13 +2699,13 @@ namespace SOTS
 			if(NPC.downedPirates)
 			legendLevel++;
 			if(NPC.downedPlantBoss)
-			legendLevel += 2;
+			legendLevel += 1;
 			if(NPC.downedGolemBoss)
 			legendLevel++;
 			if(NPC.downedMartians)
 			legendLevel++;
 			if(NPC.downedFishron)
-			legendLevel += 2;
+			legendLevel += 1;
 			if(NPC.downedHalloweenKing)
 			legendLevel++;
 			if(NPC.downedChristmasIceQueen)
@@ -2701,12 +2726,12 @@ namespace SOTS
 			//legendLevel++;
 			//if(downedCarver)
 			//legendLevel++;
-			//if(downedChess)
-			//legendLevel++;
+			if(downedSubspace)
+			legendLevel++;
 			if(downedPinky)
 			legendLevel++;
-			//if(downedEntity)
-			//legendLevel++;
+			if(downedCelestial)
+			legendLevel++;
 			if(Main.hardMode)
 			legendLevel += 2;
 		

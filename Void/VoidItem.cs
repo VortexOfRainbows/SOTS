@@ -10,6 +10,7 @@ using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
+using SOTS.Void;
 
 namespace SOTS.Void
 {
@@ -154,10 +155,9 @@ namespace SOTS.Void
 		}
 		public void DrainMana(Player player)
 		{
-			VoidPlayer.ModPlayer(player).voidMeter -= voidManaAmount;
-			if(voidManaAmount < 1)
+			if(voidManaAmount > 0)
 			{
-				VoidPlayer.ModPlayer(player).voidMeter -= 1;
+				VoidPlayer.ModPlayer(player).voidMeter -= voidManaAmount;
 			}
 		}
 	}

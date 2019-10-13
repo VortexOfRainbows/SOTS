@@ -12,7 +12,7 @@ namespace SOTS.Items.Blood
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Purple Jellyfish Staff");
-			Tooltip.SetDefault("Fires 2 purple orbs that, upon detonation, release purple thunder towards your cursor\nDrains void slowly while in the inventory, but provides a light source");
+			Tooltip.SetDefault("Fires 2 purple orbs that, upon detonation, release purple thunder towards your cursor\nDecreases void regen by 1 while in the inventory, but also provides a light source");
 		}
 		public override void SafeSetDefaults()
 		{
@@ -36,7 +36,7 @@ namespace SOTS.Items.Blood
 		}
 		public override void GetVoid(Player player)
 		{
-				voidMana = 6;
+				voidMana = 4;
 		}
 		public override void UpdateInventory(Player player)
 		{
@@ -44,16 +44,7 @@ namespace SOTS.Items.Blood
 				VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 				SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");	
 				//timer++;
-				if(modPlayer.bloodDecay)
-				{
-				timer ++;
-				}
-				if(timer >= 1800)
-				{
-					timer = 0;
-					voidPlayer.voidMeter -= 1;
-				}
-			
+				voidPlayer.voidRegen -= 0.1f;
 		}
 		public override void AddRecipes()
 		{

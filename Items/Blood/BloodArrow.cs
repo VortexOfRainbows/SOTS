@@ -10,7 +10,7 @@ namespace SOTS.Items.Blood
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Blood Arrow");
-			Tooltip.SetDefault("Pierces and lifesteals\nAutomatically refuels using 4 void\nDecays while in the inventory");
+			Tooltip.SetDefault("Pierces and lifesteals\nAutomatically refuels using 2 void\nDecreases void regen by 0.75 while in the inventory");
 		}public override void SafeSetDefaults()
 		{
 			item.damage = 11;
@@ -31,19 +31,11 @@ namespace SOTS.Items.Blood
 		{
 				VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 				SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");	
-				if(modPlayer.bloodDecay)
-				{
-				timer += (int)(item.stack * 0.1f);
-				}
-				if(timer >= 999)
-				{
-					timer = 0;
-					item.stack--;
-				}
-			
+				
+				voidPlayer.voidRegen -= 0.075f;
 				if(item.stack < 6)
 				{
-						voidPlayer.voidMeter -= 4;
+						voidPlayer.voidMeter -= 2;
 						item.stack += 10;
 				}
 		}

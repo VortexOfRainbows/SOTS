@@ -13,32 +13,25 @@ namespace SOTS.Projectiles
 {    
     public class BrittleBall : ModProjectile 
     {	
-    	int bounce = 999;
 		
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("BrittleBall");	
+			DisplayName.SetDefault("Brittle Ball");	
 		}
         public override void SetDefaults()
         {
 			projectile.CloneDefaults(1);
-            aiType = 1; //18 is the demon scythe style
-			projectile.penetrate = -1;
+            aiType = 1; 
+			projectile.penetrate = 15;
 			projectile.alpha = 0;
-			projectile.width = 48;
-			projectile.height = 50;
+			projectile.width = 38;
+			projectile.height = 38;
 			projectile.timeLeft = 960;
-
+			projectile.melee = true;
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{	
 			projectile.timeLeft -= 60;
-			bounce--;
-			if (bounce <= 0)
-			{
-				projectile.Kill();
-			}
-			else
 				if (projectile.velocity.X != oldVelocity.X)
 				{
 					projectile.velocity.X = -oldVelocity.X;

@@ -15,18 +15,21 @@ namespace SOTS.Projectiles
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("BrittleShard");	
+			DisplayName.SetDefault("Brittle Shard");	
 		}
         public override void SetDefaults()
         {
 			projectile.CloneDefaults(1);
-            aiType = 1; //18 is the demon scythe style
-			projectile.penetrate = 2;
+            aiType = 1; 
+			projectile.penetrate = 1;
 			projectile.alpha = 0;
 			projectile.width = 10;
 			projectile.height = 12;
-
-
+			projectile.melee = true;
+		}
+		public override void AI()
+		{
+			projectile.rotation = Main.rand.Next(38);
 		}
 	}
 }
