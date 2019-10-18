@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using SOTS.Void;
 
 namespace SOTS.Projectiles 
 {    
@@ -33,7 +34,11 @@ namespace SOTS.Projectiles
 		} 
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
+			
+			Player player = Main.player[projectile.owner];
+			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
             target.immune[projectile.owner] = 5;
+			voidPlayer.voidMeter += 1;
 		}
 		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
         {
@@ -42,6 +47,24 @@ namespace SOTS.Projectiles
             fallThrough = true;
             return true;
         }
+		public override void Kill(int timeLeft)
+        {
+			if(projectile.owner == Main.myPlayer)
+			{
+				for(int i = 0; i < 360; i += 45)
+				{
+					Vector2 spinLocation = new Vector2(-5,0).RotatedBy(MathHelper.ToRadians(i + Main.rand.Next(-10,11)));
+					int proj = Projectile.NewProjectile(projectile.Center.X - spinLocation.X * 4, projectile.Center.Y - spinLocation.Y * 4, spinLocation.X, spinLocation.Y + 1.1f, 520, projectile.damage, 0, projectile.owner);
+					Main.projectile[proj].penetrate = -1;
+					Main.projectile[proj].timeLeft = 9;
+					Main.projectile[proj].magic = false;
+					Main.projectile[proj].thrown = false;
+					Main.projectile[proj].ranged = true;
+					Main.projectile[proj].tileCollide = false;
+					Main.projectile[proj].type = 337;
+				}
+			}
+		}
 		public override void AI()
 		{
 			projectile.alpha -= 20;
@@ -53,9 +76,9 @@ namespace SOTS.Projectiles
 				projectile.spriteDirection = -1;
 			}
 			
-			if(projectile.timeLeft % 3 == 0)
+			if(projectile.timeLeft % 4 == 0)
 			{
-				for(int i = 0; i < 360; i += 15)
+				for(int i = 0; i < 360; i += 20)
 				{
 				Vector2 circularLocation = new Vector2(20, 0).RotatedBy(MathHelper.ToRadians(i));
 				int num1 = Dust.NewDust(new Vector2(projectile.Center.X + circularLocation.X - 4, projectile.Center.Y + circularLocation.Y - 4), 4, 4, 67);

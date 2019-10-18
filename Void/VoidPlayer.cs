@@ -33,7 +33,7 @@ namespace SOTS.Void
 			voidAnkh = tag.GetInt("voidAnkh");
 		}
 		
-		public float voidMeter = 0; 
+		public float voidMeter = 100; 
 		public float voidRegen = 0.0035f; 
 		public float voidCost = 1f; 
 		public float voidSpeed = 1f; 
@@ -96,16 +96,17 @@ namespace SOTS.Void
 		{
 			if(voidMeter < 0)
 			{
-				
-			player.lifeRegen += (int)(voidMeter * 0.75f);
-				voidMeter += -(float)(player.lifeRegen/360f);
-			
-			if(voidMeter <= -45)
-				voidMeter += -(float)(player.lifeRegen/90f);
-			
-			if(voidMeter <= -250)
-				voidMeter += 0.0167f;
-				
+				if(player.FindBuffIndex(mod.BuffType("VoidShock")) <= -1 && player.FindBuffIndex(mod.BuffType("VoidRecovery")) <= -1)
+				{
+					int time = 900 - voidMeterMax2;
+					if(time < 120) time = 120;
+					player.AddBuff(mod.BuffType("VoidShock"), time);
+				}
+				player.lifeRegen += (int)(voidMeter * 0.2f);
+				if(voidMeter <= -150)
+				{
+					voidMeter = -150;
+				}
 			}
 		}
 	}

@@ -12,7 +12,7 @@ using Terraria.ID;
 namespace SOTS.Projectiles 
 {    
     public class BoreBullet : ModProjectile 
-    {	int enemybore = 0;
+    {
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Bore Bullet");
@@ -32,12 +32,8 @@ namespace SOTS.Projectiles
 		}
 		public override void OnHitNPC(NPC n, int damage, float knockback, bool crit)
 		{
-			enemybore++;
-			projectile.damage = (int)(projectile.damage * (Math.Pow(1.25, -enemybore) + 1));
-			
-			
-		Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 22);
-            
+			projectile.damage += 2;
+			Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 22);
 		}
 		public override void AI()
 		{

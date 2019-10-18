@@ -223,13 +223,17 @@ namespace SOTS.Projectiles.Celestial
 			//projectile.Center = npc.Center;
 			projectile.alpha += 20;
 			projectile.localAI[0] += 1f;
-			if (projectile.localAI[0] > 10f) {
+			if (projectile.localAI[0] > 3f) {
 				projectile.damage = 0;
 			}
 			if (projectile.localAI[0] > 12f) {
 				projectile.Kill();
 			}
 		}
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+            target.immune[projectile.owner] = 4;
+        }
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) 
 		{
 			float point = 0f;

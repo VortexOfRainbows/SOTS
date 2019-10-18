@@ -112,7 +112,7 @@ namespace SOTS.Items
 							NPC npc = Main.npc[npcIndex];
 							int randRot = Main.rand.Next(360);
 							Vector2 rotatePos = new Vector2(-npc.width - 124, 0).RotatedBy(MathHelper.ToRadians(randRot));
-							Vector2 attackPos = new Vector2(18, 0).RotatedBy(MathHelper.ToRadians(randRot));
+							Vector2 attackPos = new Vector2(item.shootSpeed, 0).RotatedBy(MathHelper.ToRadians(randRot));
 							
 							float spawnPosX = npc.Center.X + rotatePos.X - proj.width/2;
 							float spawnPosY = npc.Center.Y + rotatePos.Y - proj.height/2;
@@ -131,7 +131,7 @@ namespace SOTS.Items
 							NPC npc = Main.npc[npcIndex1];
 							int randRot = Main.rand.Next(360);
 							Vector2 rotatePos = new Vector2(-npc.width - 124, 0).RotatedBy(MathHelper.ToRadians(randRot));
-							Vector2 attackPos = new Vector2(18, 0).RotatedBy(MathHelper.ToRadians(randRot));
+							Vector2 attackPos = new Vector2(item.shootSpeed, 0).RotatedBy(MathHelper.ToRadians(randRot));
 							
 							float spawnPosX = npc.Center.X + rotatePos.X - proj.width/2;
 							float spawnPosY = npc.Center.Y + rotatePos.Y - proj.height/2;
@@ -150,7 +150,7 @@ namespace SOTS.Items
 							NPC npc = Main.npc[npcIndex2];
 							int randRot = Main.rand.Next(360);
 							Vector2 rotatePos = new Vector2(-npc.width - 124, 0).RotatedBy(MathHelper.ToRadians(randRot));
-							Vector2 attackPos = new Vector2(18, 0).RotatedBy(MathHelper.ToRadians(randRot));
+							Vector2 attackPos = new Vector2(item.shootSpeed, 0).RotatedBy(MathHelper.ToRadians(randRot));
 							
 							float spawnPosX = npc.Center.X + rotatePos.X - proj.width/2;
 							float spawnPosY = npc.Center.Y + rotatePos.Y - proj.height/2;
@@ -169,7 +169,7 @@ namespace SOTS.Items
 							NPC npc = Main.npc[npcIndex3];
 							int randRot = Main.rand.Next(360);
 							Vector2 rotatePos = new Vector2(-npc.width - 124, 0).RotatedBy(MathHelper.ToRadians(randRot));
-							Vector2 attackPos = new Vector2(18, 0).RotatedBy(MathHelper.ToRadians(randRot));
+							Vector2 attackPos = new Vector2(item.shootSpeed, 0).RotatedBy(MathHelper.ToRadians(randRot));
 							
 							float spawnPosX = npc.Center.X + rotatePos.X - proj.width/2;
 							float spawnPosY = npc.Center.Y + rotatePos.Y - proj.height/2;

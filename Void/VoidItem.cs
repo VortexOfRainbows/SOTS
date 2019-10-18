@@ -141,7 +141,7 @@ namespace SOTS.Void
 		public sealed override bool CanUseItem(Player player) 
 		{
 			bool canUse = BeforeUseItem(player);
-			if(!canUse)
+			if(!canUse || player.FindBuffIndex(mod.BuffType("VoidRecovery")) > -1)
 			{
 				return false;
 			}

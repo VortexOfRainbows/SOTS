@@ -47,15 +47,19 @@ namespace SOTS.Projectiles.Celestial
 			
 			if(ai1 % 6 == 0)
 			{
-				Vector2 area = new Vector2(2000f, 0).RotatedBy(dir);
+				Vector2 area = new Vector2(1048f, 0).RotatedBy(dir);
 				area.X = projectile.Center.X + area.X;
 				area.Y = projectile.Center.Y + area.Y;
 				LaunchLaser(area);
 			}
+			if(ai1 % 4 == 0)
+			{
+			VoidPlayer.ModPlayer(player).voidMeter--;
+			}
 		}
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.immune[projectile.owner] = 3;
+            target.immune[projectile.owner] = 2;
         }
 		public void LaunchLaser(Vector2 area)
 		{
@@ -63,7 +67,6 @@ namespace SOTS.Projectiles.Celestial
 			int Probe = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("RedLaser"), projectile.damage, 0, 0);
 			Main.projectile[Probe].ai[0] = area.X;
 			Main.projectile[Probe].ai[1] = area.Y;
-			VoidPlayer.ModPlayer(player).voidMeter--;
 		}
 	}
 }

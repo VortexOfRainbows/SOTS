@@ -37,8 +37,8 @@ namespace SOTS.Projectiles
 		{ 
 			
 			int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 20, 26, 235);
-Main.dust[num1].noGravity = true;
-Main.dust[num1].velocity *= 0.1f;
+			Main.dust[num1].noGravity = true;
+			Main.dust[num1].velocity *= 0.1f;		
 			
 		}
 	}

@@ -18,12 +18,12 @@ namespace SOTS.Items.IceStuff
 		}
 		public override void SafeSetDefaults()
 		{
-            item.damage = 45;
+            item.damage = 52;
             item.ranged = true;
             item.width = 62;
             item.height = 30;
-            item.useTime = 14; 
-            item.useAnimation = 14;
+            item.useTime = 15; 
+            item.useAnimation = 15;
             item.useStyle = 5;    
             item.noMelee = true;
 			item.knockBack = 1f;  
@@ -37,7 +37,7 @@ namespace SOTS.Items.IceStuff
 		}
 		public override void GetVoid(Player player)
 		{
-				voidMana = 4;
+				voidMana = 5;
 		}
 		public override Vector2? HoldoutOffset()
 		{
@@ -47,7 +47,7 @@ namespace SOTS.Items.IceStuff
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
 			shot++;
-			if(shot % 4 == 0)
+			if(shot % 3 == 0)
 			{
 				for(int i = 0; i < 2; i ++)
 				{
@@ -55,7 +55,7 @@ namespace SOTS.Items.IceStuff
 				Projectile.NewProjectile(position.X, position.Y, angle.X, angle.Y, mod.ProjectileType("HypericeRocket"), damage, knockBack, player.whoAmI);
 				}
 			}
-			Projectile.NewProjectile(position.X, position.Y, speedX, speedY, mod.ProjectileType("IceImpale"), damage, knockBack, player.whoAmI);
+			Projectile.NewProjectile(position.X, position.Y, speedX * 1.6f, speedY * 1.6f, mod.ProjectileType("IceImpale"), damage, knockBack, player.whoAmI);
 			return false; 
 		}
 		public override void AddRecipes()
