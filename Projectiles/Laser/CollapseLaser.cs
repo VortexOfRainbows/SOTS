@@ -21,8 +21,8 @@ namespace SOTS.Projectiles.Laser
 
 		public override void SetDefaults() 
 		{
-			projectile.width = 10;
-			projectile.height = 10;
+			projectile.width = 16;
+			projectile.height = 16;
 			projectile.timeLeft = 60;
 			projectile.penetrate = -1;
 			projectile.hostile = false;
@@ -30,23 +30,27 @@ namespace SOTS.Projectiles.Laser
 			projectile.minion = true;
 			projectile.tileCollide = false;
 			projectile.ignoreWater = true;
+			projectile.alpha = 255;
 		}
 		public override void AI() 
 		{
+			Player player = Main.player[projectile.owner];
 			//projectile.Center = npc.Center;
 			projectile.localAI[0] += 1f;
+			projectile.ai[0]++;
 			if (projectile.localAI[0] == 2f) {
 				projectile.damage = 0;
-				projectile.alpha += 25;
+				projectile.alpha = 0;
 			}
-			if (projectile.localAI[0] > 35f) {
+			if(projectile.localAI[0] > 13f)
+			{
 				projectile.Kill();
 			}
-			projectile.alpha += 7;
+			projectile.alpha += 20;
 		}
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.immune[projectile.owner] = 0;
+            target.immune[projectile.owner] = 4;
 			projectile.damage--;
         }
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) 
@@ -88,7 +92,7 @@ namespace SOTS.Projectiles.Laser
 			{
 				return currentNPC;
 			}
-			float minDist = 1200;
+			float minDist = 450;
 			int target2 = -1;
 			float dX = 0f;
 			float dY = 0f;
@@ -111,10 +115,15 @@ namespace SOTS.Projectiles.Laser
 			}
 			return target2;
 		}
+		bool currentPointRange = false;
 		public bool FindClosestPoint(Vector2 pos, Vector2 pos2)
 		{
-			return true;
-			float minDist = 1200;
+			Player player = Main.player[projectile.owner];
+			if(currentPointRange)
+			{
+				return true;
+			}
+			float minDist = 450;
 			float dX = 0f;
 			float dY = 0f;
 			float distance = 0;
@@ -125,6 +134,7 @@ namespace SOTS.Projectiles.Laser
 			if(distance < minDist)
 			{
 				minDist = distance;
+				currentPointRange = true;
 				return true;
 			}
 			return false;
@@ -135,10 +145,10 @@ namespace SOTS.Projectiles.Laser
 			float dY = npc.Y - pos.Y;
 			float npcRad = (float)Math.Atan2(dY, dX);
 			//float diffRad = radians - npcRad;
-			float speed = 1f;
+			float speed = 1.25f;
 			float distance = (float)Math.Sqrt((double)(dX * dX + dY * dY));
 			speed /= distance;
-			Vector2 rnVelo = new Vector2(3f, 0).RotatedBy(radians);
+			Vector2 rnVelo = new Vector2(10f, 0).RotatedBy(radians);
 			rnVelo += new Vector2(dX * speed, dY * speed);
 			npcRad = (float)Math.Atan2(rnVelo.Y, rnVelo.X);
 			return npcRad;
@@ -154,7 +164,7 @@ namespace SOTS.Projectiles.Laser
 				if(distance < 24 && projectile.friendly)
 				{
 					if(projectile.owner == Main.myPlayer)
-					Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 0, 0, mod.ProjectileType("GreenExplosion"), projectile.damage, projectile.knockBack, Main.myPlayer, 0f, 0f);
+					Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 0, 0, mod.ProjectileType("ContinuumExplosion"), projectile.damage, projectile.knockBack, Main.myPlayer, 0f, 0f);
 					currentNPC = -1;
 					posListX.Add(npc.Center.X);
 					posListY.Add(npc.Center.Y);
@@ -169,42 +179,57 @@ namespace SOTS.Projectiles.Laser
 				float distance = (float) Math.Sqrt((double)(dX * dX + dY * dY));
 				if(distance < 24 && projectile.friendly)
 				{
+					currentPointRange = false;
 					return true;
 				}
 			}
 			return false;
 		}
 		Vector2 initialDirection = new Vector2(0f, 0f);
-		int toBeat = 10;
+		int toBeat = 15;
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Player player  = Main.player[projectile.owner];
-			
-			Color alpha = new Color(255, 0, 0) * ((255 - projectile.alpha) / 255f);
 			if(initialDirection.X == 0 && initialDirection.Y == 0)
 			{
 				initialDirection = projectile.velocity;
 				projectile.velocity *= 0f;
 			}
+			return false;
+		}
+		public override void PostDraw(SpriteBatch spriteBatch, Color lightColor)
+		{
+			float newAi = projectile.ai[0] / 13f;
+			double frequency = 0.3;
+			double center = 130;
+			double width = 125;
+			double red = Math.Sin(frequency * (double)newAi) * width + center;
+			double grn = Math.Sin(frequency * (double)newAi + 2.0) * width + center;
+			double blu = Math.Sin(frequency * (double)newAi + 4.0) * width + center;
+			Color color = new Color((int)red, (int)grn, (int)blu);
+			
+			color = color * ((255 - projectile.alpha) / 255f);
 			float radianDir = (float)Math.Atan2(initialDirection.Y, initialDirection.X);
 			
 			Vector2 drawPos = projectile.Center;
-			float unitDis = 12f;
+			int helixRot = (int)projectile.ai[0];
+			float unitDis = 1.9f;
 			int k = 0;
 			int i = 10;
 			int j = 0;
 			while(i != -1)
 			{
-				k++;
+				Vector2 curve = new Vector2(28f,0).RotatedBy(MathHelper.ToRadians(helixRot * 2f));
+				helixRot ++;
+				//k++;
 				
-				if(j >= toBeat || k >= 1000)
+				if(j >= toBeat || k >= 2500)
 				{
 					if(j < toBeat && j != 0)
 					{
-						NPC npc = Main.npc[FindClosestEnemy(drawPos)];
-						posListX.Add(npc.Center.X);
-						posListY.Add(npc.Center.Y);
-						npcs.Add(npc.whoAmI);
+						//NPC npc = Main.npc[FindClosestEnemy(drawPos)];
+						//posListX.Add(npc.Center.X);
+						//posListY.Add(npc.Center.Y);
+						//npcs.Add(npc.whoAmI);
 					}
 					
 					toBeat = j;
@@ -227,13 +252,18 @@ namespace SOTS.Projectiles.Laser
 					}
 				}
 				
+				if(currentNPC == -1 && !currentPointRange)	 
+				{
+					k += 3;
+				}
+				
 				if(npcs.Count >= toBeat && toBeat > -1 && FindClosestPoint(drawPos, new Vector2(posListX[j], posListY[j])))
 				{
 					bool increment = getHitbox(drawPos, false, new Vector2(posListX[j], posListY[j]));
 					if(increment)
 					{						
 						j++;
-						i = 20;
+						i = 15;
 					}
 				}
 				else if(FindClosestEnemy(drawPos) != -1 && !(npcs.Count >= toBeat && toBeat > -1))
@@ -242,16 +272,26 @@ namespace SOTS.Projectiles.Laser
 					if(increment)
 					{					
 						j++;
-						i = 20;
+						i = 15;
 					}
 				}
 				Vector2 laserVelo = new Vector2(unitDis, 0f).RotatedBy(radianDir);
 				drawPos.X += laserVelo.X;
 				drawPos.Y += laserVelo.Y;
-				spriteBatch.Draw(Main.projectileTexture[projectile.type], drawPos - Main.screenPosition, null, alpha, 0f, new Vector2(2, 2), 1f, SpriteEffects.None, 0f);
 				
+				spriteBatch.Draw(Main.projectileTexture[projectile.type], drawPos - Main.screenPosition, null, color, radianDir, new Vector2(8,8), 1f, SpriteEffects.None, 0f);
+				
+				Vector2 helixPos1 = drawPos + new Vector2(curve.X, 0).RotatedBy(radianDir + MathHelper.ToRadians(90));
+				spriteBatch.Draw(Main.projectileTexture[projectile.type], helixPos1 - Main.screenPosition, null, color, radianDir, new Vector2(8,8), 0.5f, SpriteEffects.None, 0f);
+				
+				Vector2 helixPos2 = drawPos + new Vector2(curve.X, 0).RotatedBy(radianDir - MathHelper.ToRadians(90));
+				spriteBatch.Draw(Main.projectileTexture[projectile.type], helixPos2 - Main.screenPosition, null, color, radianDir, new Vector2(8,8), 0.5f, SpriteEffects.None, 0f);
 			}
-			return false;
+				for(int l = 0; l < 5; l++) //because the overlapping lasers end up covering up for eachothers alpha, this will help make this look more consistent too
+				{
+				spriteBatch.Draw(Main.projectileTexture[mod.ProjectileType("ContinuumSphere")], drawPos - Main.screenPosition, null, color, radianDir, new Vector2(15,15), 1f, SpriteEffects.None, 0f);
+				}
+			//return false;
 			
 			/* //This is collision checking code, for blocks
 			Vector2 position = projectile.Center + unit * Distance;	
