@@ -24,7 +24,7 @@ namespace SOTS.Items.Blood
 			item.rare = 2;
 			item.maxStack = 333;
 			item.ammo = item.type;   
-			ItemID.Sets.ItemNoGravity[item.type] = true; 
+			ItemID.Sets.ItemNoGravity[item.type] = false; 
 
 		}
 		public override void AddRecipes()

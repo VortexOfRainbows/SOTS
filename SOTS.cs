@@ -221,7 +221,8 @@ namespace SOTS
 				
                 //bossChecklist.Call("AddBossWithInfo", "Antimaterial Antlion", 7.21f, (Func<bool>)(() => SOTSWorld.downedAntilion), "Use [i:" + ItemType("ForbiddenPyramid") + "] in a desert biome");
                 bossChecklist.Call("AddBossWithInfo", "Icy Amalgamation", 8.21f, (Func<bool>)(() => SOTSWorld.downedAmalgamation), "Use [i:" + ItemType("FrostedKey") + "] on a [i:" + ItemType("FrostArtifact") + "] in a snow biome");
-                //bossChecklist.Call("AddBossWithInfo", "The Queen and King", 11.51f, (Func<bool>)(() => SOTSWorld.downedChess), "Use [i:" + ItemType("CheckeredBall") + "] in an open area");
+                bossChecklist.Call("AddBossWithInfo", "Celestial Serpent", 10.9f, (Func<bool>)(() => SOTSWorld.downedCelestial), "Use [i:" + ItemType("CelestialTorch") + "] during night time");
+                bossChecklist.Call("AddBossWithInfo", "Subspace Serpent", 10.95f, (Func<bool>)(() => SOTSWorld.downedSubspace), "Tear a rift in time by detonating a [i:" + ItemType("CatalystBomb") + "] in hell");
             }
         }
 	}

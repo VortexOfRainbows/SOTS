@@ -21,7 +21,7 @@ namespace SOTS.NPCs.Boss
         public override void SetDefaults()
         {
            
-            npc.lifeMax = 120000;      
+            npc.lifeMax = 112500;      
             npc.damage = 100;
             npc.defense = 0;    
             npc.knockBackResist = 0f;
@@ -39,8 +39,26 @@ namespace SOTS.NPCs.Boss
 			music = MusicID.Boss2;
             npc.buffImmune[69] = true;
             npc.buffImmune[70] = true;
+            npc.buffImmune[39] = true;
+            npc.buffImmune[24] = true;
 			npc.aiStyle = 6;
+			bossBag = mod.ItemType("SubspaceBag");
         }
+		public override void BossLoot(ref string name, ref int potionType)
+		{ 
+			SOTSWorld.downedSubspace = true;
+			potionType = ItemID.GreaterHealingPotion;
+		
+			if(Main.expertMode)
+			
+			{ 
+			npc.DropBossBags();
+			} 
+			else 
+			{
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("SanguiteBar"), Main.rand.Next(16, 25)); 
+			}
+		}
         public override bool PreAI()
         {
             if (Main.netMode != 1)
@@ -280,10 +298,6 @@ namespace SOTS.NPCs.Boss
             scale = 1f;  
             return null;
         }
-		public override void NPCLoot()
-		{
-			
-		}
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
             npc.lifeMax = (int)(npc.lifeMax * bossLifeScale * 0.75f);  //boss life scale in expertmode
@@ -309,7 +323,7 @@ namespace SOTS.NPCs.Boss
 			
 			
 			ai1++;
-			rotate += 1;
+			rotate -= 1;
 			
 			if(ai1 >= 720 && ai1 <= 1800)
 			{
@@ -572,6 +586,25 @@ namespace SOTS.NPCs.Boss
 					if(ai1 % 200 == 150) LaserReset();
 				}
 			}
+			
+			
+			if(ai1 % 151 == 0 && (ai1 >= 1800 || ai1 <= 720))
+			{
+				int rand1 = Main.rand.Next(8);
+
+				int rand2 = Main.rand.Next(8);
+				while(rand2 == rand1)
+				{
+					rand2 = Main.rand.Next(8);
+				}
+				if(npc.life < (int)(npc.lifeMax * 0.35f) || (Main.expertMode && npc.life < (int)(npc.lifeMax * 0.75f)))
+					Laser(rand2, 42);
+				
+				if(npc.life < (int)(npc.lifeMax * 0.2f))
+					Laser(rand1, 42);
+			}
+			
+			
 			if(ai1 >= 3180) ai1 = 0;
 			
 			if(Main.player[npc.target].dead)
@@ -715,6 +748,7 @@ namespace SOTS.NPCs.Boss
 		}
 		public void LaserWall(int damage)
 		{
+			damage += 10;
 			for(int i = 0; i < 2; i++)
 			{
 				float posX = npc.Center.X;

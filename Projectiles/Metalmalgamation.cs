@@ -24,9 +24,9 @@ namespace SOTS.Projectiles
             projectile.friendly = true;	
             projectile.penetrate = -1;	
 			projectile.melee = true;	        
-            ProjectileID.Sets.YoyosLifeTimeMultiplier[projectile.type] = -1;
-            ProjectileID.Sets.YoyosMaximumRange[projectile.type] = 275f;
-            ProjectileID.Sets.YoyosTopSpeed[projectile.type] = 13.5f;
+            ProjectileID.Sets.YoyosLifeTimeMultiplier[projectile.type] = 11f;
+            ProjectileID.Sets.YoyosMaximumRange[projectile.type] = 225f;
+            ProjectileID.Sets.YoyosTopSpeed[projectile.type] = 11f;
         }
 		public override void AI()
 		{
@@ -35,13 +35,13 @@ namespace SOTS.Projectiles
 			Vector2 rotateArea = new Vector2(7, 0).RotatedBy(MathHelper.ToRadians(Epic));
 			if(Epic % 9 == 0)
 			{
-				int shard = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, rotateArea.X, rotateArea.Y, mod.ProjectileType("MargritBoltFriendly"), (int)(projectile.damage * .4f), projectile.knockBack, player.whoAmI);
+				int shard = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, rotateArea.X, rotateArea.Y, mod.ProjectileType("MargritBoltFriendly"), (int)(projectile.damage * .65f), projectile.knockBack, player.whoAmI);
 				Main.projectile[shard].penetrate = 1;
 				Main.projectile[shard].timeLeft = 27;
 				Main.projectile[shard].alpha = 125;
 				
 				rotateArea = rotateArea.RotatedBy(MathHelper.ToRadians(180));
-				shard = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, rotateArea.X, rotateArea.Y, mod.ProjectileType("MargritBoltFriendly"), (int)(projectile.damage * .4f), projectile.knockBack, player.whoAmI);
+				shard = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, rotateArea.X, rotateArea.Y, mod.ProjectileType("MargritBoltFriendly"), (int)(projectile.damage * .65f), projectile.knockBack, player.whoAmI);
 				Main.projectile[shard].penetrate = 1;
 				Main.projectile[shard].timeLeft = 27;
 				Main.projectile[shard].alpha = 125;

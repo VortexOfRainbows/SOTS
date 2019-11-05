@@ -7,7 +7,7 @@ namespace SOTS.Buffs
     {	
         public override void SetDefaults()
         {
-            DisplayName.SetDefault("Cryogen");
+            DisplayName.SetDefault("Ice Shield");
 			Description.SetDefault("A holy levitating ice shield surrounds you");
             Main.buffNoTimeDisplay[Type] = true;
             Main.buffNoSave[Type] = true;

@@ -17,7 +17,7 @@ namespace SOTS.Items.Pyramid
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Spirit Shield");
-			Tooltip.SetDefault("Increases void regen by 1, life regen by 1, and reduces damage taken by 1%");
+			Tooltip.SetDefault("Increases void regen by 1, life regen by 1, and reduces damage taken by 2%");
 		}
 		public override void SetDefaults()
 		{
@@ -37,7 +37,7 @@ namespace SOTS.Items.Pyramid
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			voidPlayer.voidRegen += 0.1f;
 			player.lifeRegen += 1;
-			player.endurance += 0.01f;
+			player.endurance += 0.02f;
 		}
 		public override void AddRecipes()
 		{

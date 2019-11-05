@@ -1,0 +1,6 @@
+Use blushie's element laser to learn... 
+the lasers ai[0] is the start point
+the lasers ai[1] is the end point
+the laser is summoned by abomination, and chains between it captive elements
+depending on the captive elements, the color and debuff of the laser changes, this will probably be arbitrary when you use it as a reference
+the sprite used is a 4x4 white cube

@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+
 namespace SOTS.Projectiles.Legendary
 {    
     public class PulverizerArm : ModProjectile 

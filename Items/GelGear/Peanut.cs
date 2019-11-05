@@ -9,7 +9,7 @@ namespace SOTS.Items.GelGear
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Peanut");
-			Tooltip.SetDefault("'The favorite snack of a Devilish slime'");
+			Tooltip.SetDefault("'The favorite snack of a devilish slime'");
 		}public override void SetDefaults()
 		{
 			item.width = 26;

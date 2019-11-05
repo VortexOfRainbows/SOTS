@@ -20,7 +20,7 @@ namespace SOTS.Items.IceStuff
         public override void SetDefaults()
         {
  
-            item.damage = 55;
+            item.damage = 50;
             item.melee = true; 
             item.useTime = 22;  
             item.useAnimation = 22;   

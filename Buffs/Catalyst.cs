@@ -13,12 +13,12 @@ namespace SOTS.Buffs
         public override void SetDefaults()
         {
            DisplayName.SetDefault("Catalyst");
-			Description.SetDefault("They're growing off you!");   
+			Description.SetDefault("");   
             Main.buffNoSave[Type] = true;
             Main.buffNoTimeDisplay[Type] = true;
 			Main.debuff[Type] = true;
         }
- 
+		/*
         public override void Update(Player player, ref int buffIndex)
         {
 			regenTimer += 1;
@@ -39,5 +39,6 @@ namespace SOTS.Buffs
 			regenTimer = 0;
 			}
         }
+		*/
     }
 }

@@ -14,17 +14,18 @@ Pyramid Dungeon World Gen
 -Handcrafted rooms
 
 Lead Developer & Artist - VortexOfRainbows
-Quality Insurance - FlameFreezer
+Quality Assurance & Playtester - FlameFreezer
 
 Update 0.18 The Purge
 -Reworked and Removed almost every old item, some will be rebalanced and added back later (400+ items removed lmao)
--CHALLENGES REMOVED, They didn't have good feedback
+-CHALLENGES REMOVED, They didn't have good feedback, nor were they really balanced around anything, different variations will be added back later
 -Added new pyramid biome
 -Fixed bugs and crafting recipe issues
 -Void rebalanced, it should now be more usable and less extremely overpowered or underpowered
 -Most secret or nigh unobtainable items have been changed or removed
 -Overpowered items have been nerfed, while void items recieve general consistency changes
 -More to come in future updates!
+-2 New bosses, removed a ton of old ones, however
 
 Update 0.17
 -More void stuff

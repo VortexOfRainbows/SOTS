@@ -40,8 +40,23 @@ namespace SOTS.NPCs.Boss
             npc.buffImmune[69] = true;
             npc.buffImmune[70] = true;
 			npc.aiStyle = 6;
+			bossBag = mod.ItemType("CelestialBag");
         }
- 
+		public override void BossLoot(ref string name, ref int potionType)
+		{ 
+			SOTSWorld.downedCelestial = true;
+			potionType = ItemID.GreaterHealingPotion;
+		
+			if(Main.expertMode)
+			
+			{ 
+			npc.DropBossBags();
+			} 
+			else 
+			{
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("StarShard"), Main.rand.Next(16, 25)); 
+			}
+		}
         public override bool PreAI()
         {
             if (Main.netMode != 1)
@@ -281,10 +296,6 @@ namespace SOTS.NPCs.Boss
             scale = 1f;  
             return null;
         }
-		public override void NPCLoot()
-		{
-			
-		}
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
             npc.lifeMax = (int)(npc.lifeMax * bossLifeScale * 0.75f);  //boss life scale in expertmode

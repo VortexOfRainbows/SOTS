@@ -47,7 +47,7 @@ namespace SOTS.Items
 			recipe.AddRecipe();
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-          {
+        {
               int numberProjectiles = 1;
 			  for (int i = 0; i < numberProjectiles; i++)
               {
@@ -57,6 +57,6 @@ namespace SOTS.Items
 				  Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, 316, damage, knockBack, player.whoAmI);
               }
               return false; 
-	}
+		}
 	}
 }

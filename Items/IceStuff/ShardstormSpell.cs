@@ -16,7 +16,7 @@ namespace SOTS.Items.IceStuff
 		}
 		public override void SetDefaults()
 		{
-            item.damage = 38;
+            item.damage = 36;
 			item.magic = true;
             item.width = 28;    
             item.height = 30; 
@@ -31,7 +31,7 @@ namespace SOTS.Items.IceStuff
             item.autoReuse = true;
             item.shootSpeed = 18f; //arbitrary 
 			item.shoot = mod.ProjectileType("Shardstorm");
-			item.mana = 28;
+			item.mana = 29;
 
 		}
 		public override void AddRecipes()
