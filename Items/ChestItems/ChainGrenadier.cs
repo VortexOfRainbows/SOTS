@@ -9,7 +9,7 @@ namespace SOTS.Items.ChestItems
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Chain Grenadier");
-			Tooltip.SetDefault("'This is not a bad idea!'");
+			Tooltip.SetDefault("'This is prove to be not a bad idea'");
 		}
 		public override void SetDefaults()
 		{

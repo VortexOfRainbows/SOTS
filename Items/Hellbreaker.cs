@@ -9,28 +9,28 @@ using SOTS.Void;
 
 namespace SOTS.Items
 {
-	public class CrabClaw : VoidItem
+	public class Hellbreaker : VoidItem
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Crab Claw");
-			Tooltip.SetDefault("Charge to increase damage up to 800%");
+			DisplayName.SetDefault("Hellbreaker");
+			Tooltip.SetDefault("Charge to increase damage up to 600%");
 		}
 		public override void SafeSetDefaults()
 		{
-            item.damage = 12;
+            item.damage = 40;
             item.melee = true;  
-            item.width = 28;
-            item.height = 20;  
-            item.useTime = 90; 
-            item.useAnimation = 90;
+            item.width = 50;
+            item.height = 50;  
+            item.useTime = 45; 
+            item.useAnimation = 45;
             item.useStyle = 5;    
             item.knockBack = 0f;
-            item.value = Item.sellPrice(0, 0, 50, 0);
-            item.rare = 2;
+            item.value = Item.sellPrice(0, 2, 50, 0);
+            item.rare = 3;
             item.UseSound = SoundID.Item22;
             item.autoReuse = true;
-            item.shoot = mod.ProjectileType("CrabClawArm"); 
+            item.shoot = mod.ProjectileType("HellbreakerArm"); 
             item.shootSpeed = 0f;
 			item.channel = true;
             item.noUseGraphic = true; 
@@ -65,6 +65,14 @@ namespace SOTS.Items
 		public override void GetVoid(Player player)
 		{
 				voidMana = 3;
+		}
+		public override void AddRecipes()
+		{
+			ModRecipe recipe = new ModRecipe(mod);
+			recipe.AddIngredient(ItemID.HellstoneBar, 18);
+			recipe.AddTile(TileID.Anvils);
+			recipe.SetResult(this);
+			recipe.AddRecipe();
 		}
 	}
 }
