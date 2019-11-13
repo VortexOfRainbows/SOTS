@@ -31,6 +31,7 @@ namespace SOTS.Projectiles.Lightning
 			projectile.friendly = true;
 			projectile.timeLeft = 60;
 			projectile.tileCollide = false;
+			projectile.magic = true;
 			projectile.hostile = false;
 		}
 		public override void AI()

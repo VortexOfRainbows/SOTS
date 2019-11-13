@@ -51,15 +51,6 @@ namespace SOTS.Items.Secrets
 			player.rangedDamage -= player.rangedDamage;
             SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
 			modPlayer.lostSoul = true;
-			if(modPlayer.Catalyst)
-			{
-			player.thrownDamage += 1.15f;
-			player.minionDamage += 0.15f;
-			player.meleeDamage += 1.15f;
-			player.magicDamage += 1.15f;
-			player.rangedDamage += 1.15f;
-				
-			}
 			if(player.controlDown && down <= 9 && down >= 1)
 			  {
 				  player.position.X = Main.projectile[probe].Center.X - (player.width * 0.5f);

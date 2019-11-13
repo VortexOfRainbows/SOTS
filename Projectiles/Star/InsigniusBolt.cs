@@ -24,7 +24,7 @@ namespace SOTS.Projectiles.Star
 			projectile.CloneDefaults(616);
             aiType = 616; //18 is the demon scythe style
 			projectile.alpha = 255;
-			projectile.timeLeft = 220;
+			projectile.timeLeft = 120;
 			projectile.width = 1;
 			projectile.height = 1;
 			projectile.tileCollide = false;

@@ -29,6 +29,7 @@ namespace SOTS.Projectiles.Laser
 			projectile.width = 24;
 			projectile.penetrate = -1;
 			projectile.friendly = true;
+			projectile.magic = true;
 			projectile.timeLeft = 1;
 			projectile.tileCollide = false;
 			projectile.hostile = false;

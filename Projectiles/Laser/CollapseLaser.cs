@@ -286,6 +286,8 @@ namespace SOTS.Projectiles.Laser
 				
 				Vector2 helixPos2 = drawPos + new Vector2(curve.X, 0).RotatedBy(radianDir - MathHelper.ToRadians(90));
 				spriteBatch.Draw(Main.projectileTexture[projectile.type], helixPos2 - Main.screenPosition, null, color, radianDir, new Vector2(8,8), 0.5f, SpriteEffects.None, 0f);
+				
+				Lighting.AddLight(drawPos, 255 * 0.2f / 255f, 255 * 0.2f / 255f, 255 * 0.2f / 255f);
 			}
 				for(int l = 0; l < 5; l++) //because the overlapping lasers end up covering up for eachothers alpha, this will help make this look more consistent too
 				{

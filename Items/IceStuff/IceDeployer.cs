@@ -17,7 +17,7 @@ namespace SOTS.Items.IceStuff
             
             item.width = 30;
             item.height = 30;
-			item.expert = true;
+			item.expert = false;
             item.useTime = 20;
             item.useAnimation = 20;
             item.useAnimation = 20;

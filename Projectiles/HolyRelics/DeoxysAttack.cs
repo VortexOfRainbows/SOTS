@@ -179,7 +179,7 @@ namespace SOTS.Projectiles.HolyRelics
 
 
 			Player player = Main.player[projectile.owner];
-            SOTSPlayer modPlayer = player.GetModPlayer<SOTSPlayer>(mod);
+            SOTSPlayer modPlayer = player.GetModPlayer<SOTSPlayer>();
 			Lighting.AddLight((int)(projectile.Center.X / 16f), (int)(projectile.Center.Y / 16f), 0.6f, 0.9f, 0.3f);
 		
 			if(modPlayer.deoxysPet == false)

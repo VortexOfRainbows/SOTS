@@ -62,7 +62,7 @@ namespace SOTS.Items.Blood
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");	
 			
-			while(voidPlayer.voidMeter < 0)
+			while(voidPlayer.voidMeter < voidPlayer.voidMeterMax2 / 10)
 			{
 			item.stack--;
 			voidPlayer.voidMeter += 2;

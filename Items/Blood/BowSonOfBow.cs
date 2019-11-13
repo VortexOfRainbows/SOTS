@@ -62,16 +62,6 @@ namespace SOTS.Items.Blood
 			
 				Projectile.NewProjectile(position.X - (speedY * 1), position.Y + (speedX * 1), speedX, speedY, type, damage, .5f, player.whoAmI);
 				
-				if(modPlayer.Andromeda)
-				{
-					Projectile.NewProjectile(position.X + (speedY * 2f), position.Y - (speedX * 2f), speedX, speedY, type, damage, .5f, player.whoAmI);
-			
-					Projectile.NewProjectile(position.X - (speedY * 2f), position.Y + (speedX * 2f), speedX, speedY, type, damage, .5f, player.whoAmI);
-					
-					Projectile.NewProjectile(position.X + (speedY * 3f), position.Y - (speedX * 3f), speedX, speedY, type, damage, .5f, player.whoAmI);
-			
-					Projectile.NewProjectile(position.X - (speedY * 3f), position.Y + (speedX * 3f), speedX, speedY, type, damage, .5f, player.whoAmI);
-				}
               return false; 
 		}
 	}

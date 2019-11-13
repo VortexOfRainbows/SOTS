@@ -67,7 +67,7 @@ namespace SOTS.NPCs
 			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("GelAxe"), Main.rand.Next(7) + 1);	
 			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("Peanut"), Main.rand.Next(12) + 1);	
 			
-			if(Main.rand.Next(9) == 0)
+			if(Main.rand.Next(7) == 0)
 			{
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("GelAxe"), Main.rand.Next(13) + 1);	
 			}
@@ -84,15 +84,12 @@ namespace SOTS.NPCs
 			{
 			//	Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("Sling"), 1);		
 			}
-			if(Main.rand.Next(220) == 0)
+			if(Main.rand.Next(200) == 0)
 			{
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("Grenadier"), 1);		
 			}
-			if(Main.rand.Next(220) == 0)
-			{
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("Discharge"), 1);		
-			}
-			if(Main.rand.Next(100) == 0 || (Main.expertMode && Main.rand.Next(80) == 0))
+			
+			if(Main.rand.Next(40) == 0 || (Main.expertMode && Main.rand.Next(40) == 0))
 			{
 				int rand = Main.rand.Next(4);
 				if(rand == 0)

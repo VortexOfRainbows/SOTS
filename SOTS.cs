@@ -180,7 +180,7 @@ namespace SOTS
         {
             if (Main.myPlayer != -1 && !Main.gameMenu)
             {
-                if(Main.player[Main.myPlayer].active && Main.player[Main.myPlayer].GetModPlayer<SOTSPlayer>(this).PlanetariumBiome) //this makes the music play only in Custom Biome
+                if(Main.player[Main.myPlayer].active && Main.player[Main.myPlayer].GetModPlayer<SOTSPlayer>().PlanetariumBiome) //this makes the music play only in Custom Biome
                 {
                     music = this.GetSoundSlot(SoundType.Music, "Sounds/Music/JourneyFromJar");  //add where is the custom music is located
 					priority = MusicPriority.BossLow;
@@ -189,7 +189,7 @@ namespace SOTS
             }
 			if (Main.myPlayer != -1 && !Main.gameMenu)
             {
-                if(Main.player[Main.myPlayer].active && Main.player[Main.myPlayer].GetModPlayer<SOTSPlayer>(this).GeodeBiome) 
+                if(Main.player[Main.myPlayer].active && Main.player[Main.myPlayer].GetModPlayer<SOTSPlayer>().GeodeBiome) 
                 {
                     music = this.GetSoundSlot(SoundType.Music, "Sounds/Music/GeodeMusic");  //add where is the custom music is located
 					priority = MusicPriority.BossLow;
@@ -198,7 +198,7 @@ namespace SOTS
             }
 			if (Main.myPlayer != -1 && !Main.gameMenu)
             {
-                if(Main.player[Main.myPlayer].active && Main.player[Main.myPlayer].GetModPlayer<SOTSPlayer>(this).PyramidBiome)
+                if(Main.player[Main.myPlayer].active && Main.player[Main.myPlayer].GetModPlayer<SOTSPlayer>().PyramidBiome)
                 {
                     music = MusicID.Desert;
 					priority = MusicPriority.BossLow;

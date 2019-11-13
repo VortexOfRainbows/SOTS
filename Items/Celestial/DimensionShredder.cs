@@ -21,6 +21,7 @@ namespace SOTS.Items.Celestial
 			item.damage = 34;
             item.width = 50;   
             item.height = 28;   
+			item.rare = 8;
             item.value = Item.sellPrice(0, 8, 25, 0);
             item.shootSpeed = 15.5f;
 		}
@@ -67,6 +68,10 @@ namespace SOTS.Items.Celestial
 			{
 				return true;
 			}
+		}
+		public override Vector2? HoldoutOffset()
+		{
+			return new Vector2(4, 0);
 		}
 		public override void AddRecipes()
 		{

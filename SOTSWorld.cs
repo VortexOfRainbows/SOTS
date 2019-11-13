@@ -2672,7 +2672,7 @@ namespace SOTS
 												chest.item[slot].SetDefaults(mod.ItemType("CryoCannon"));
 												slot++;
 											}
-											if(WorldGen.genRand.NextBool(75))
+											if(WorldGen.genRand.NextBool(80))
 											{
 												
 												chest.item[slot].SetDefaults(mod.ItemType("Grenadier"));

@@ -27,6 +27,7 @@ namespace SOTS.Items.Celestial
 			item.shoot = mod.ProjectileType("CeremonialSlash"); 
 			item.shootSpeed = 10;
 			item.knockBack *= 3;
+			item.expert = true;
 		}
 		public override void GetVoid(Player player)
 		{

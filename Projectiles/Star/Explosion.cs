@@ -135,22 +135,21 @@ namespace SOTS.Projectiles.Star
 									}
 									
 								}
-								
-				Vector2 position = projectile.Center;
-				Main.PlaySound(SoundID.Item14, (int)position.X, (int)position.Y);
-				int radius = 4; 
+			}	
+			Vector2 position = projectile.Center;
+			Main.PlaySound(SoundID.Item14, (int)position.X, (int)position.Y);
+			int radius = 4; 
 	 
-				for (int x = -radius; x <= radius; x++)
+			for (int x = -radius; x <= radius; x++)
+			{
+				for (int y = -radius; y <= radius; y++)
 				{
-					for (int y = -radius; y <= radius; y++)
-					{
-						int xPosition = (int)(x + position.X);
-						int yPosition = (int)(y + position.Y);
+					int xPosition = (int)(x + position.X);
+					int yPosition = (int)(y + position.Y);
 	 
-						if (Math.Sqrt(x * x + y * y) <= radius + 0.5)  
-						{
-									Dust.NewDust(new Vector2(xPosition, yPosition), 2, 2, 235);
-						}
+					if (Math.Sqrt(x * x + y * y) <= radius + 0.5)  
+					{
+								Dust.NewDust(new Vector2(xPosition, yPosition), 2, 2, 235);
 					}
 				}
 			}

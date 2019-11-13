@@ -52,7 +52,7 @@ namespace SOTS.Projectiles
 			    
 			
 			  
-            SOTSPlayer modPlayer = player.GetModPlayer<SOTSPlayer>(mod);
+            SOTSPlayer modPlayer = player.GetModPlayer<SOTSPlayer>();
             if (player.dead)
             {
                 modPlayer.PurpleBalloon = false;
