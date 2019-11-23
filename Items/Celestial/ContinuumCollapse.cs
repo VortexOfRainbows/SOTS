@@ -9,11 +9,11 @@ using System;
 namespace SOTS.Items.Celestial
 {
 	public class ContinuumCollapse : VoidItem
-	{	int coolDown = 20;
+	{	
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Continuum Collapse");
-			Tooltip.SetDefault("'Devour all that might be infinite'\nCan hit up to 15 enemies at a time");
+			Tooltip.SetDefault("'Devour all that might be infinite'\nCan hit up to 15 enemies at a time\nWill not hurt players");
 		}
 		public override void SafeSetDefaults()
 		{
@@ -29,7 +29,7 @@ namespace SOTS.Items.Celestial
 			item.autoReuse = true;            
 			item.shoot = mod.ProjectileType("ContinuumSphere"); 
 			item.shootSpeed = 1;
-			item.knockBack *= 3;
+			item.knockBack = 3;
 			item.channel = true;
 			item.UseSound = SoundID.Item92;
 			item.noUseGraphic = true;

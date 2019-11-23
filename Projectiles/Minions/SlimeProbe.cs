@@ -41,11 +41,7 @@ namespace SOTS.Projectiles.Minions
         {
             Player player = Main.player[projectile.owner];
             SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
-            if (player.dead)
-            {
-                modPlayer.Phankin = false;
-            }
-            if (modPlayer.Phankin)
+            if (!player.dead)
             {
                 projectile.timeLeft = 2;
             }

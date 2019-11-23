@@ -28,7 +28,7 @@ namespace SOTS.Projectiles.Minions
 			projectile.penetrate = -1;
 			projectile.friendly = false;
 			projectile.timeLeft = 960;
-			projectile.tileCollide = true;
+			projectile.tileCollide = false;
 			projectile.hostile = false;
 			projectile.minion = true;
 			projectile.alpha = 0;

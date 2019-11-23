@@ -53,10 +53,10 @@ namespace SOTS.NPCs
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
 				if(spawnInfo.spawnTileY <= Main.rockLayer && spawnInfo.spawnTileY >= Main.worldSurface){
-					return spawnInfo.spawnTileType == TileID.IceBlock || spawnInfo.spawnTileType == TileID.SnowBlock ? .2f : 0f;
+					return spawnInfo.spawnTileType == TileID.IceBlock || spawnInfo.spawnTileType == TileID.SnowBlock ? .11f : 0f;
 				}
 				else if(spawnInfo.spawnTileY <= Main.maxTilesY - 200 && spawnInfo.spawnTileY >= Main.rockLayer){
-					return spawnInfo.spawnTileType == TileID.IceBlock || spawnInfo.spawnTileType == TileID.SnowBlock ? .3f : 0f;
+					return spawnInfo.spawnTileType == TileID.IceBlock || spawnInfo.spawnTileType == TileID.SnowBlock ? .16f : 0f;
 				}
 			return 0f;
 		}
@@ -126,9 +126,9 @@ namespace SOTS.NPCs
 				}
 			}
 
-			if(Main.rand.Next(60) == 0 || (Main.expertMode && Main.rand.Next(50) == 0))
+			if(Main.rand.Next(25) == 0 || (Main.expertMode && Main.rand.Next(40) == 0))
 			{
-				int rand = Main.rand.Next(9);
+				int rand = Main.rand.Next(10);
 				if(rand == 0)
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  ItemID.IceBoomerang, 1);
@@ -164,6 +164,10 @@ namespace SOTS.NPCs
 				if(rand == 8)
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  ItemID.VikingHelmet, 1);
+				}
+				if(rand == 9)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("CryoCannon"), 1);
 				}
 			}
 		}	

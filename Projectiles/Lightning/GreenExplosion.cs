@@ -32,6 +32,7 @@ namespace SOTS.Projectiles.Lightning
 			projectile.timeLeft = 1;
 			projectile.tileCollide = false;
 			projectile.hostile = false;
+			projectile.magic = true;
 			projectile.alpha = 255;
 		}
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)

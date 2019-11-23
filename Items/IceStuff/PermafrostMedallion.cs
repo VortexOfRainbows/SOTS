@@ -20,7 +20,7 @@ namespace SOTS.Items.IceStuff
 		public override void SetDefaults()
 		{
 	
-			item.damage = 32;
+			item.damage = 36;
 			item.summon = true;
             item.width = 28;     
             item.height = 36;   

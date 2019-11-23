@@ -17,7 +17,7 @@ namespace SOTS.Projectiles.Lightning
 		
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Electric Shock");
+			DisplayName.SetDefault("Bloody Shock");
 			
 		}
 		
@@ -33,6 +33,7 @@ namespace SOTS.Projectiles.Lightning
 			projectile.tileCollide = false;
 			projectile.hostile = false;
 			projectile.alpha = 255;
+			projectile.melee = true;
 		}
 		public override void AI()
 		{

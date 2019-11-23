@@ -60,13 +60,13 @@ namespace SOTS.Projectiles.Star
 			if(wait < 0)
 			{
 				for(int i = 0; i < 3; i++)
-					{
-					int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 12, 12, 235);
+				{
+				int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 12, 12, 235);
 
 				
-					Main.dust[num1].noGravity = true;
-					Main.dust[num1].velocity *= 0.1f;
-					}
+				Main.dust[num1].noGravity = true;
+				Main.dust[num1].velocity *= 0.1f;
+				}
 			}
 			
 		}
@@ -76,63 +76,56 @@ namespace SOTS.Projectiles.Star
             SOTSPlayer modPlayer = (SOTSPlayer)owner.GetModPlayer(mod, "SOTSPlayer");
 		
 			
-			
-			 projectile.ai[1] = 0;
-						
-						 for(int i = 0; i < 200; i++)
-							{
-							   //Enemy NPC variable being set
-							   NPC target = Main.npc[i];
-
-							   //Getting the shooting trajectory
-							   float shootToX = target.position.X + (float)target.width * 0.5f - projectile.Center.X;
-							   float shootToY = target.position.Y + (float)target.height * 0.5f - projectile.Center.Y;
-							   float distance = (float)System.Math.Sqrt((double)(shootToX * shootToX + shootToY * shootToY));
-
-							   //If the distance between the projectile and the live target is active
-							   if(distance < 360f && !target.friendly && target.active)
-							   {
-								   if(projectile.ai[1] <= 3) //Assuming you are already incrementing this in AI outside of for loop
-								   {
-									   //Dividing the factor of 3f which is the desired velocity by distance
-									   distance = 1.8f / distance;
-						   
-									   //Multiplying the shoot trajectory with distance times a multiplier if you so choose to
-									   shootToX *= distance * 5;
-									   shootToY *= distance * 5;
-						   
-									   //Shoot projectile and set ai back to 0
-									   Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, shootToX, shootToY, mod.ProjectileType("InsigniusBolt"), projectile.damage, 0, Main.myPlayer, 0f, 0f); //Spawning a projectile
-									  projectile.ai[1]++;
-								   }
-							   }
-							}
-							if(projectile.knockBack > 0.99f)
-							{
-							if(modPlayer.megHat == true)
-							{
-								Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, Main.rand.Next(-9,10) * 1.15f, Main.rand.Next(-9,10) * 1.15f, mod.ProjectileType("GrenadierBolt"), projectile.damage, projectile.knockBack - (float)(1f * 0.5f), Main.myPlayer, 0f, 0f); //Spawning a projectile
-							}
-			Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, Main.rand.Next(-9,10) * 1.15f, Main.rand.Next(-9,10) * 1.15f, mod.ProjectileType("GrenadierBolt"), projectile.damage, projectile.knockBack - 0.5f, Main.myPlayer, 0f, 0f); //Spawning a projectile
-			Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, Main.rand.Next(-9,10) * 1.15f, Main.rand.Next(-9,10) * 1.15f, mod.ProjectileType("GrenadierBolt"), projectile.damage, projectile.knockBack - 0.5f, Main.myPlayer, 0f, 0f); //Spawning a projectile
-							}
-							else if(projectile.knockBack > 0f)
-							{
-			Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, Main.rand.Next(-2,10) * 1.15f * -(Math.Abs(projectile.velocity.X)/projectile.velocity.X), Main.rand.Next(-2,10) * 1.15f * -(Math.Abs(projectile.velocity.Y)/projectile.velocity.Y), mod.ProjectileType("GrenadierBolt"), projectile.damage, projectile.knockBack - 0.5f, Main.myPlayer, 0f, 0f); //Spawning a projectile
-			if(projectile.knockBack * Main.rand.Next(100) > 25)
+			if(projectile.owner == Main.myPlayer)
 			{
-			Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, Main.rand.Next(-2,10) * 1.15f * -(Math.Abs(projectile.velocity.X)/projectile.velocity.X), Main.rand.Next(-2,10) * 1.15f * -(Math.Abs(projectile.velocity.Y)/projectile.velocity.Y), mod.ProjectileType("GrenadierBolt"), projectile.damage, projectile.knockBack - 0.5f, Main.myPlayer, 0f, 0f); //Spawning a projectile
-			}
-			else if(projectile.knockBack * Main.rand.Next(100) > 10 && modPlayer.megHat == true)
-			{
-				Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, Main.rand.Next(-9,10) * 1.15f, Main.rand.Next(-9,10) * 1.15f, mod.ProjectileType("GrenadierBolt"), projectile.damage, projectile.knockBack - 0.21f, Main.myPlayer, 0f, 0f); //Spawning a projectile
-							
-			}
-							}
-							
+				projectile.ai[1] = 0;
+				for(int i = 0; i < 200; i++)
+				{
+				   NPC target = Main.npc[i];
+
+				   float shootToX = target.position.X + (float)target.width * 0.5f - projectile.Center.X;
+				   float shootToY = target.position.Y + (float)target.height * 0.5f - projectile.Center.Y;
+				   float distance = (float)System.Math.Sqrt((double)(shootToX * shootToX + shootToY * shootToY));
+
+				   if(distance < 300f && !target.friendly && target.active)
+				   {
+					   if(projectile.ai[1] <= 3)
+					   {
+						   distance = 1.6f / distance;
+				
+						   shootToX *= distance * 5;
+						   shootToY *= distance * 5;
+				
+						  Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, shootToX, shootToY, mod.ProjectileType("InsigniusBolt"), projectile.damage, 0, Main.myPlayer, 0f, 0f); 
+						  projectile.ai[1]++;
+					   }
+				   }
+				}
+				if(projectile.knockBack > 0.99f)
+				{
+					if(modPlayer.megHat == true)
+					{
+						Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, Main.rand.Next(-9,10) * 1.05f, Main.rand.Next(-9,10) * 1.05f, mod.ProjectileType("GrenadierBolt"), projectile.damage, projectile.knockBack - (float)(1f * 0.5f), Main.myPlayer, 0f, 0f); //Spawning a projectile
+					}
+					Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, Main.rand.Next(-9,10) * 1.05f, Main.rand.Next(-9,10) * 1.05f, mod.ProjectileType("GrenadierBolt"), projectile.damage, projectile.knockBack - 0.5f, Main.myPlayer, 0f, 0f); //Spawning a projectile
+					Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, Main.rand.Next(-9,10) * 1.05f, Main.rand.Next(-9,10) * 1.05f, mod.ProjectileType("GrenadierBolt"), projectile.damage, projectile.knockBack - 0.5f, Main.myPlayer, 0f, 0f); //Spawning a projectile
+				}
+				else if(projectile.knockBack > 0f)
+				{
+					Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, Main.rand.Next(-2,10) * 1.05f * -(Math.Abs(projectile.velocity.X)/projectile.velocity.X), Main.rand.Next(-2,10) * 1.15f * -(Math.Abs(projectile.velocity.Y)/projectile.velocity.Y), mod.ProjectileType("GrenadierBolt"), projectile.damage, projectile.knockBack - 0.5f, Main.myPlayer, 0f, 0f); //Spawning a projectile
+					if(projectile.knockBack * Main.rand.Next(100) > 21)
+					{
+						Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, Main.rand.Next(-2,10) * 1.05f * -(Math.Abs(projectile.velocity.X)/projectile.velocity.X), Main.rand.Next(-2,10) * 1.15f * -(Math.Abs(projectile.velocity.Y)/projectile.velocity.Y), mod.ProjectileType("GrenadierBolt"), projectile.damage, projectile.knockBack - 0.5f, Main.myPlayer, 0f, 0f); //Spawning a projectile
+					}
+					else if(projectile.knockBack * Main.rand.Next(100) > 12 && modPlayer.megHat == true)
+					{
+						Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, Main.rand.Next(-9,10) * 1.05f, Main.rand.Next(-9,10) * 1.05f, mod.ProjectileType("GrenadierBolt"), projectile.damage, projectile.knockBack - 0.21f, Main.myPlayer, 0f, 0f); //Spawning a projectile					
+					}
+				}
+			}		
             Vector2 position = projectile.Center;
             Main.PlaySound(SoundID.Item14, (int)position.X, (int)position.Y);
-            int radius = 4;     //this is the explosion radius, the highter is the value the bigger is the explosion
+            int radius = 4;     
  
             for (int x = -radius; x <= radius; x++)
             {
@@ -141,13 +134,12 @@ namespace SOTS.Projectiles.Star
                     int xPosition = (int)(x + position.X);
                     int yPosition = (int)(y + position.Y);
  
-                    if (Math.Sqrt(x * x + y * y) <= radius + 0.5)   //this make so the explosion radius is a circle
+                    if (Math.Sqrt(x * x + y * y) <= radius + 0.5) 
                     {
 								Dust.NewDust(new Vector2(xPosition, yPosition), 1, 1, 235);
 					}
                 }
             }
-			
         }
 	}
 }

@@ -31,7 +31,7 @@ namespace SOTS.Items.IceStuff
 		public override void OpenBossBag(Player player)
 		{
 
-			player.QuickSpawnItem(mod.ItemType("IceDeployer"));
+			player.QuickSpawnItem(mod.ItemType("PearlescentCore"));
 			player.QuickSpawnItem(mod.ItemType("AbsoluteBar"),Main.rand.Next(16, 33));
 			
 				

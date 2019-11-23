@@ -32,10 +32,8 @@ namespace SOTS.Items.Blood
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");	
-			if(modPlayer.bloodDecay)
-			{
+		
 			timer += (int)(item.stack * 0.01667f);
-			}
 			if(item.stack > 90)
 			{
 			timer += (int)(item.stack * 0.03333f);
@@ -53,7 +51,7 @@ namespace SOTS.Items.Blood
 				timer = 0;
 				item.stack--;
 			}
-			while(voidPlayer.voidMeter < 0)
+			while(voidPlayer.voidMeter < voidPlayer.voidMeterMax2 / 10)
 			{
 			item.stack--;
 			voidPlayer.voidMeter += 3;

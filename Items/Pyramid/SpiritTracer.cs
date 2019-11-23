@@ -106,8 +106,8 @@ namespace SOTS.Items.Pyramid
 						Vector2 rotatePos = new Vector2(-npc.width - 124, 0).RotatedBy(MathHelper.ToRadians(randRot));
 						Vector2 attackPos = new Vector2(18, 0).RotatedBy(MathHelper.ToRadians(randRot));
 						
-						float spawnPosX = npc.Center.X + rotatePos.X - proj.width/2;
-						float spawnPosY = npc.Center.Y + rotatePos.Y - proj.height/2;
+						float spawnPosX = npc.Center.X + rotatePos.X;
+						float spawnPosY = npc.Center.Y + rotatePos.Y;
 						
 						if(!npc.friendly && npc.lifeMax > 5 && npc.active)
 						{
@@ -125,8 +125,8 @@ namespace SOTS.Items.Pyramid
 						Vector2 rotatePos = new Vector2(-npc.width - 124, 0).RotatedBy(MathHelper.ToRadians(randRot));
 						Vector2 attackPos = new Vector2(18, 0).RotatedBy(MathHelper.ToRadians(randRot));
 						
-						float spawnPosX = npc.Center.X + rotatePos.X - proj.width/2;
-						float spawnPosY = npc.Center.Y + rotatePos.Y - proj.height/2;
+						float spawnPosX = npc.Center.X + rotatePos.X;
+						float spawnPosY = npc.Center.Y + rotatePos.Y;
 						
 						if(!npc.friendly && npc.lifeMax > 5 && npc.active)
 						{
@@ -144,8 +144,8 @@ namespace SOTS.Items.Pyramid
 						Vector2 rotatePos = new Vector2(-npc.width - 124, 0).RotatedBy(MathHelper.ToRadians(randRot));
 						Vector2 attackPos = new Vector2(18, 0).RotatedBy(MathHelper.ToRadians(randRot));
 						
-						float spawnPosX = npc.Center.X + rotatePos.X - proj.width/2;
-						float spawnPosY = npc.Center.Y + rotatePos.Y - proj.height/2;
+						float spawnPosX = npc.Center.X + rotatePos.X;
+						float spawnPosY = npc.Center.Y + rotatePos.Y;
 						
 						if(!npc.friendly && npc.lifeMax > 5 && npc.active)
 						{

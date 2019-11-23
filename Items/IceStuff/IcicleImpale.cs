@@ -28,7 +28,7 @@ namespace SOTS.Items.IceStuff
             item.noMelee = true;
 			item.knockBack = 1f;  
             item.value = Item.sellPrice(0, 8, 0, 0);
-            item.rare = 7;
+            item.rare = 9;
             item.UseSound = SoundID.Item61;
             item.autoReuse = true;
             item.shoot = mod.ProjectileType("HypericeRocket"); 

@@ -36,7 +36,6 @@ namespace SOTS.Items.Blood
 						
 						
 			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");	
-			modPlayer.bloodDecay = false;
 			
 			player.lifeRegen -= 5;
 			timer++;

@@ -29,6 +29,7 @@ namespace SOTS.Projectiles
 			projectile.hostile = false;
 			projectile.timeLeft = 49;
 			projectile.tileCollide = false;
+			projectile.magic = true;
 			projectile.alpha = 255;
 		}
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)

@@ -57,7 +57,7 @@ namespace SOTS.Projectiles.Celestial
 			}
 			
 			firerate++;
-			int reload = 12;
+			int reload = 16;
 			for(int i = 0; i < 200; i++)
 			{
 				NPC target = Main.npc[i];
