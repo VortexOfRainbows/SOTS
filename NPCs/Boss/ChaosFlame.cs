@@ -104,11 +104,11 @@ namespace SOTS.NPCs.Boss
 				int randX = Main.rand.Next(-500,501);
 				if(randX > 0)
 				{
-					randX += 250;
+					randX += 350;
 				}
-				if(randY < 0)
+				if(randX < 0)
 				{
-					randY -= 250;
+					randX -= 350;
 				}
 				npc.position.X = originX + randX - npc.width/2;
 				npc.position.Y = originY + randY - npc.height/2;
@@ -121,7 +121,7 @@ namespace SOTS.NPCs.Boss
 				float travelToY = target.position.Y + (float)target.height * 0.5f  - npc.Center.Y;
 				float distance = (float)System.Math.Sqrt((double)(travelToX * travelToX + travelToY * travelToY));
 
-				distance = 3.25f / distance;
+				distance = 2.25f / distance;
 						
 				travelToX *= distance * 5;
 				travelToY *= distance * 5;

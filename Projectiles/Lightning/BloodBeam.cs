@@ -108,63 +108,59 @@ namespace SOTS.Projectiles.Lightning
 				Main.PlaySound(SoundID.Item125, (int)(player.Center.X), (int)(player.Center.Y));
 				if(projectile.owner == Main.myPlayer)
 				{
-				projectile.alpha = 255;
-				
+				projectile.alpha = 255;	
+					bool activeDamageBox = true;
+					for(int i = projectile.timeLeft; i > 0; i--)
+					{
+						if(i % 30 == 0)
+						{
+							activeDamageBox = true;
+						}
+						float shootToX = cursorArea.X - player.Center.X;
+						float shootToY = cursorArea.Y - player.Center.Y;
+						float distance = (float)System.Math.Sqrt((double)(shootToX * shootToX + shootToY * shootToY));
+						
+						
+						float distancePlayerX = player.Center.X - projectile.Center.X;
+						float distancePlayerY = player.Center.Y - projectile.Center.Y;
+						float distancePlayer = (float)System.Math.Sqrt((double)(distancePlayerX * distancePlayerX + distancePlayerY * distancePlayerY));
+						
+						
+						for(int j = 0; j < 3; j++)
+						{
+							int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 16, 16, 235);
+						
+							Main.dust[num1].noGravity = true;
+							Main.dust[num1].velocity *= 0.1f;
+						}
+						if(distancePlayer >= 100 + (int)(1400f/240f * chargeCurrent))
+						{
+							break;
+						}
 							
-							
-							bool activeDamageBox = true;
-					   for(int i = projectile.timeLeft; i > 0; i--)
-					   {
-							if(i % 30 == 0)
+						
+						distance = 2f / distance;
+						shootToX *= distance * 2.5f;
+						shootToY *= distance * 2.5f;
+						
+						projectile.position.X += shootToX;
+						projectile.position.Y += shootToY;
+					
+						for(int k = 0; k < 200; k++)
+						{
+							NPC npc = Main.npc[k];
+							float distanceXNPC = npc.Center.X - projectile.Center.X;
+							float distanceYNPC = npc.Center.Y - projectile.Center.Y;
+							float distanceBetweenNPC = (float)System.Math.Sqrt((double)(distanceXNPC * distanceXNPC + distanceYNPC * distanceYNPC));
+							if(distanceBetweenNPC < (float)(npc.width * .6f) + 48 && npc.active && activeDamageBox && !npc.friendly) //making sure enemy is within range
 							{
-								activeDamageBox = true;
+								Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 0, 0, mod.ProjectileType("RedExplosion"), projectile.damage, projectile.knockBack, Main.myPlayer, 0f, 0f);
+								activeDamageBox = false;
 							}
-							float shootToX = cursorArea.X - player.Center.X;
-							float shootToY = cursorArea.Y - player.Center.Y;
-							float distance = (float)System.Math.Sqrt((double)(shootToX * shootToX + shootToY * shootToY));
-							
-							
-							float distancePlayerX = player.Center.X - projectile.Center.X;
-							float distancePlayerY = player.Center.Y - projectile.Center.Y;
-							float distancePlayer = (float)System.Math.Sqrt((double)(distancePlayerX * distancePlayerX + distancePlayerY * distancePlayerY));
-							
-							
-							for(int j = 0; j < 3; j++)
-							{
-								int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 16, 16, 235);
-							
-								Main.dust[num1].noGravity = true;
-								Main.dust[num1].velocity *= 0.1f;
-							}
-							if(distancePlayer >= 100 + (int)(1400f/240f * chargeCurrent))
-							{
-								break;
-							}
-								
-							
-							distance = 2f / distance;
-							shootToX *= distance * 2.5f;
-							shootToY *= distance * 2.5f;
-							
-								projectile.position.X += shootToX;
-								projectile.position.Y += shootToY;
-								
-									for(int k = 0; k < 200; k++)
-									{
-										NPC npc = Main.npc[k];
-										float distanceXNPC = npc.Center.X - projectile.Center.X;
-										float distanceYNPC = npc.Center.Y - projectile.Center.Y;
-										float distanceBetweenNPC = (float)System.Math.Sqrt((double)(distanceXNPC * distanceXNPC + distanceYNPC * distanceYNPC));
-										if(distanceBetweenNPC < (float)(npc.width * .6f) + 48 && npc.active && activeDamageBox && !npc.friendly) //making sure enemy is within range
-										{
-											Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 0, 0, mod.ProjectileType("RedExplosion"), projectile.damage, projectile.knockBack, Main.myPlayer, 0f, 0f);
-											activeDamageBox = false;
-										}
-									}
-					   }
+						}
+					}
 				}
-					projectile.Kill();
-				
+				projectile.Kill();
 			}
 		}
 		public override void PostDraw(Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch, Color lightColor)

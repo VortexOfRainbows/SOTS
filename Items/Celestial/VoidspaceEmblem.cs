@@ -18,7 +18,7 @@ namespace SOTS.Items.Celestial
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Voidspace Emblem");
-			Tooltip.SetDefault("Increases void damage and magic damage by 10%\nDecreases void cost by 10%\nIncreases void regen by 2.5 and max void by 50\nGenerates void essence when hit");
+			Tooltip.SetDefault("Increases void damage and magic damage by 10%\nDecreases void cost by 10%\nIncreases void regen by 2.5 and max void by 50\nGenerates blood essence when hit");
 		}
 		public override void SetDefaults()
 		{
@@ -55,8 +55,8 @@ namespace SOTS.Items.Celestial
 			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");	
 			if(modPlayer.onhit == 1)
 			{
-				player.QuickSpawnItem(mod.ItemType("BloodEssence"), 3 + (modPlayer.onhitdamage / 33));	
-				voidPlayer.voidMeter += 1 + (modPlayer.onhitdamage / 24);
+				player.QuickSpawnItem(mod.ItemType("BloodEssence"), 1 + (modPlayer.onhitdamage / 19));	
+				voidPlayer.voidMeter += 5 + (modPlayer.onhitdamage / 9);
 			}
 		}
 	}

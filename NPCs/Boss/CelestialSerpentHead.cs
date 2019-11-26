@@ -44,9 +44,10 @@ namespace SOTS.NPCs.Boss
         }
 		public override void BossLoot(ref string name, ref int potionType)
 		{ 
+			Player player = Main.player[npc.target];
 			SOTSWorld.downedCelestial = true;
 			potionType = ItemID.GreaterHealingPotion;
-		
+			npc.position = player.position;
 			if(Main.expertMode)
 			
 			{ 
@@ -55,6 +56,8 @@ namespace SOTS.NPCs.Boss
 			else 
 			{
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("StarShard"), Main.rand.Next(16, 25)); 
+				if(Main.rand.Next(20) == 0)
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("StrangeFruit"), 1); 
 			}
 		}
         public override bool PreAI()

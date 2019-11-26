@@ -37,7 +37,7 @@ namespace SOTS.Projectiles.Lightning
 		}
 		public override void AI()
 		{
-			for(int i = 0; i < 360; i += 15)
+			for(int i = 0; i < 360; i += 20)
 			{
 			Vector2 circularLocation = new Vector2(16, 0).RotatedBy(MathHelper.ToRadians(i));
 			

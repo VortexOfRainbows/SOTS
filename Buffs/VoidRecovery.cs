@@ -37,7 +37,7 @@ namespace SOTS.Buffs
                 player.DelBuff(buffIndex);
                 buffIndex--;
 			}
-			voidPlayer.voidRegen *= 7.5f;
+			voidPlayer.voidRegen *= 8f;
 		}
 
     }

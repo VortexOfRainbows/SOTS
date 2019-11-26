@@ -22,7 +22,7 @@ namespace SOTS.Projectiles.Pyramid
         public override void SetDefaults()
         {
 			projectile.aiStyle = 0;
-			projectile.thrown = true;
+			projectile.melee = true;
 			projectile.friendly = true;
 			projectile.width = 56;
 			projectile.height = 30;

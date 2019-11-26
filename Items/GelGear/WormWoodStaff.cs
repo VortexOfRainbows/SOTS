@@ -16,14 +16,14 @@ namespace SOTS.Items.GelGear
 		}
 		public override void SetDefaults()
 		{
-            item.damage = 24;  
+            item.damage = 19;  
             item.magic = true;  
             item.width = 34;    
             item.height = 34;   
-            item.useTime = 9;  
-            item.useAnimation = 36;
+            item.useTime = 11;  
+            item.useAnimation = 44;
             item.useStyle = 1;    
-			item.mana = 15;
+			item.mana = 17;
             item.knockBack = 1;
             item.value = 90000;
             item.rare = 4;
@@ -31,6 +31,9 @@ namespace SOTS.Items.GelGear
             item.autoReuse = true;
 			item.shoot = mod.ProjectileType("WormBullet"); 
             item.shootSpeed = 3;
+			item.reuseDelay = 20;
+			item.noMelee = true;
+			item.noMelee = true;
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
           {

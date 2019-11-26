@@ -24,7 +24,6 @@ namespace SOTS.Projectiles
         {
 			projectile.height = 40;
 			projectile.width = 40;
-			projectile.thrown = false;
 			projectile.magic = true;
 			projectile.friendly = true;
 			projectile.penetrate = 8;

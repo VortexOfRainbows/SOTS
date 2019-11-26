@@ -8,12 +8,11 @@ namespace SOTS.Buffs
     {
         public override void SetDefaults()
         {
-           DisplayName.SetDefault("Purple Balloon");
+			DisplayName.SetDefault("Purple Balloon");
 			Description.SetDefault("Fishing friend");   
             Main.buffNoSave[Type] = true;
             Main.buffNoTimeDisplay[Type] = true;
-		
-Main.lightPet[Type] = true;
+			Main.lightPet[Type] = true;
         }
  
         public override void Update(Player player, ref int buffIndex)
@@ -30,7 +29,7 @@ Main.lightPet[Type] = true;
 			if (petProjectileNotSpawned && player.whoAmI == Main.myPlayer)
 			{
 				Projectile.NewProjectile(player.position.X + player.width / 2, player.position.Y + player.height / 2, 0f, 0f, mod.ProjectileType("LuckyPurpleBalloon"), 0, 0f, player.whoAmI, 0f, 0f);
-}
+			}
         }
     }
 }

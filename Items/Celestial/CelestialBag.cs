@@ -33,6 +33,9 @@ namespace SOTS.Items.Celestial
 
 			player.QuickSpawnItem(mod.ItemType("AngelicCatalyst"));
 			player.QuickSpawnItem(mod.ItemType("StarShard") ,Main.rand.Next(16, 30));
+			
+			if(Main.rand.Next(10) == 0)
+				player.QuickSpawnItem(mod.ItemType("StrangeFruit"), 1);
 			/*	
 			if(Main.rand.Next(12) == 0)
 			player.QuickSpawnItem(mod.ItemType("GelWings"));

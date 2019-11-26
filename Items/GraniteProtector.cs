@@ -17,7 +17,7 @@ namespace SOTS.Items
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Granite Protector");
-			Tooltip.SetDefault("Reduces damage taken by 5%");
+			Tooltip.SetDefault("Reduces damage taken by 6%");
 		}
 		public override void SetDefaults()
 		{
@@ -27,14 +27,14 @@ namespace SOTS.Items
             item.height = 28;   
             item.value = Item.sellPrice(0, 0, 20, 0);
             item.rare = 2;
-			item.defense = 2;
+			item.defense = 1;
 			item.accessory = true;
 
 		}
 		
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			player.endurance += 0.05f;
+			player.endurance += 0.06f;
 		}
 		public override void AddRecipes()
 		{

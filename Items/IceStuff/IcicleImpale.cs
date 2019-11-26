@@ -22,18 +22,17 @@ namespace SOTS.Items.IceStuff
             item.ranged = true;
             item.width = 62;
             item.height = 30;
-            item.useTime = 15; 
-            item.useAnimation = 15;
+            item.useTime = 17; 
+            item.useAnimation = 17;
             item.useStyle = 5;    
             item.noMelee = true;
 			item.knockBack = 1f;  
-            item.value = Item.sellPrice(0, 8, 0, 0);
+            item.value = Item.sellPrice(0, 7, 80, 0);
             item.rare = 9;
             item.UseSound = SoundID.Item61;
             item.autoReuse = true;
             item.shoot = mod.ProjectileType("HypericeRocket"); 
-            item.shootSpeed = 8;
-			item.useAmmo = ItemID.Snowball;
+            item.shootSpeed = 19f;
 		}
 		public override void GetVoid(Player player)
 		{

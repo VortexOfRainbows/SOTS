@@ -13,7 +13,7 @@ namespace SOTS.Items.Celestial
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Continuum Collapse");
-			Tooltip.SetDefault("'Devour all that might be infinite'\nCan hit up to 15 enemies at a time\nWill not hurt players");
+			Tooltip.SetDefault("'Devour all that is infinite'\nCan hit up to 15 enemies at a time\nWill not hurt players");
 		}
 		public override void SafeSetDefaults()
 		{

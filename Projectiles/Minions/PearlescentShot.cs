@@ -33,7 +33,7 @@ namespace SOTS.Projectiles.Minions
 			projectile.timeLeft = 1800;
 			projectile.friendly = true;
 			projectile.hostile = false;
-			projectile.penetrate = 40;
+			projectile.penetrate = 30;
 		}
 		public override void AI()
 		{ 
@@ -54,7 +54,7 @@ namespace SOTS.Projectiles.Minions
 		} 
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.immune[projectile.owner] = Main.rand.Next(3);
+            target.immune[projectile.owner] = Main.rand.Next(6);
 		}
 	}
 }

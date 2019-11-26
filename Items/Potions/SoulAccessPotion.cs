@@ -41,6 +41,6 @@ namespace SOTS.Items.Potions
 			recipe.AddTile(13);
 			recipe.SetResult(this, 1);
 			recipe.AddRecipe();
-}
+		}
 	}
 }

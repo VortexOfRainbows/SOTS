@@ -88,7 +88,7 @@ namespace SOTS.Items
 						speed /= distance;
 					   
 						Vector2 fireTo = new Vector2(dX * speed, dY * speed);
-						int proj = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, fireTo.X, fireTo.Y, mod.ProjectileType("TangleFlower"), item.damage, 4.5f, projectile.owner, toHit.whoAmI, projectile.whoAmI);
+						int proj = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, fireTo.X, fireTo.Y, mod.ProjectileType("TangleFlower"), (int)(item.damage * ((player.minionDamage - 1f) + (player.allDamage - 1f))), 4.5f, projectile.owner, toHit.whoAmI, projectile.whoAmI);
 						counter = 0;
 						}
 					}

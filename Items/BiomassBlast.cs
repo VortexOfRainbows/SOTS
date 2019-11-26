@@ -15,21 +15,21 @@ namespace SOTS.Items
 		}
 		public override void SetDefaults()
 		{
-            item.damage = 16; 
+            item.damage = 15; 
             item.magic = true; 
             item.width = 28;   
             item.height = 30;   
-            item.useTime = 30;   
-            item.useAnimation = 30;
+            item.useTime = 33;   
+            item.useAnimation = 33;
             item.useStyle = 5;    
             item.noMelee = true;  
             item.knockBack = 3.25f;
-            item.value = Item.sellPrice(0, 2, 25, 0);
+            item.value = Item.sellPrice(0, 2, 0, 0);
             item.rare = 5;
             item.UseSound = SoundID.Item8;
             item.shoot = mod.ProjectileType("AcornOfJustice"); 
             item.shootSpeed = 15.5f;
-			item.mana = 10;
+			item.mana = 12;
 
 		}
 

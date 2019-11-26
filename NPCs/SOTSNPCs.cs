@@ -98,8 +98,7 @@ namespace SOTS.NPCs
 				
 				if (npc.type == NPCID.WallofFlesh)
 					{
-								Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemID.DemonHeart, 1); 
-								Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("HungryHunter"), 1); 
+							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("HungryHunter"), 1); 
 					}
 					
 				if (npc.type == NPCID.WyvernHead)  
@@ -128,7 +127,7 @@ namespace SOTS.NPCs
 				}
 				if (npc.type == NPCID.Plantera)  
 				{
-					if (Main.rand.Next(24) == 0) 
+					if (Main.rand.Next(20) == 0) 
 					{
 							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("ChlorophyteCrossFive"), 1); 
 					}
@@ -136,14 +135,14 @@ namespace SOTS.NPCs
 				}
 				if (npc.type == NPCID.UndeadMiner)  
 				{
-					if (Main.rand.Next(7) == 0) 
+					if (Main.rand.Next(5) == 0) 
 					{          
 						 Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("ManicMiner"), 1); 
 					}
 				}
-				if (npc.type == NPCID.BlueSlime || npc.type == NPCID.Crab)  
+				if (npc.type == NPCID.BlueSlime)  
 				{
-					if (Main.rand.Next(180) == 0) 
+					if (Main.rand.Next(100) == 0) 
 					{
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FireSpitter"), 1); 
 					}
@@ -164,17 +163,17 @@ namespace SOTS.NPCs
 							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("MeguminLeggings"), 1); 
 					}
 				}
-			if (npc.type == 64 && Main.rand.Next(70) == 0)
+			if (npc.type == 64 && Main.rand.Next(60) == 0)
 				{
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("PinkJellyfishStaff"), 1); 
 				}
-			if (npc.type == 140 && Main.rand.Next(150) == 0) //Possessed armor
+			if (npc.type == 140 && Main.rand.Next(120) == 0) //Possessed armor
 				{
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("PossessedHelmet"), 1); 
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("PossessedChainmail"), 1); 
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("PossessedGreaves"), 1); 
 				}
-			if ((npc.type == 63 || npc.type == 103) && Main.rand.Next(70) == 0)
+			if ((npc.type == 63 || npc.type == 103) && Main.rand.Next(60) == 0)
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("BlueJellyfishStaff"), 1); 
 				}
@@ -184,10 +183,11 @@ namespace SOTS.NPCs
 		{
 			if(player.GetModPlayer<SOTSPlayer>().PyramidBiome)
 			{
-				//if(npc.type == mod.NPCType("Snake") || npc.type == mod.NPCType("SnakePot") || npc.type == mod.NPCType("LostSoul"))
-				
-					maxSpawns = (int)(maxSpawns * 2.5f);
+				if(spawnRate > 50)
+				{
 					spawnRate = 50;
+					maxSpawns = (int)(maxSpawns * 2.5f);
+				}
 			}
 		}
 		public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo) 
@@ -213,8 +213,3 @@ namespace SOTS.NPCs
 		}
 	}
 }
-
- 
-    
-
-

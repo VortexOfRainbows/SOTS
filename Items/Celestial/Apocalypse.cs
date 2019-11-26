@@ -9,7 +9,7 @@ using System;
 namespace SOTS.Items.Celestial
 {
 	public class Apocalypse : VoidItem
-	{	float coolDown = 36;
+	{	float coolDown = 25f;
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Apocalypse");

@@ -74,6 +74,7 @@ namespace SOTS
 		//public float projectileSize = 1;
 		
 		public bool pearlescentMagic = false; //pearlescent core effect
+		public bool bloodstainedJewel = false; //bloodstained jewel effect
 		
 		
 		public override void ResetEffects()
@@ -121,7 +122,7 @@ namespace SOTS
 			//projectileSize = 1;
 			PushBack = false;
 			pearlescentMagic = false;
-			
+			bloodstainedJewel = false;
 			
 				if(PyramidBiome)
 				player.AddBuff(mod.BuffType("PharaohsCurse"), 16, false);
@@ -265,10 +266,6 @@ namespace SOTS
 				Main.projectile[Proj].alpha = 125;
 				Main.projectile[Proj].tileCollide = false;
 			}
-			
-			
-			
-	
 		}
 		public override void OnHitByProjectile(Projectile proj, int damage, bool crit)
 		{

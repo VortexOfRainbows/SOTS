@@ -12,8 +12,6 @@ namespace SOTS.Buffs
 			Description.SetDefault("Increases void regen by 10");   
             Main.buffNoSave[Type] = true;
             Main.buffNoTimeDisplay[Type] = false;
-			Main.debuff[Type] = false;
-		
         }
  
 		public override void Update(Player player, ref int buffIndex)
@@ -21,6 +19,5 @@ namespace SOTS.Buffs
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			voidPlayer.voidRegen += 1f;
 		}
-
     }
 }

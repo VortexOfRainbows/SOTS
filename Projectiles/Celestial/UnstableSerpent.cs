@@ -33,7 +33,7 @@ namespace SOTS.Projectiles.Celestial
 			projectile.timeLeft = 720;
 			projectile.penetrate = -1;
 			projectile.tileCollide = false;
-			projectile.hostile = true;
+			projectile.hostile = false;
 			projectile.alpha = 145;
 		}
 		public override void OnHitPlayer(Player target, int damage, bool crit) 
@@ -42,15 +42,30 @@ namespace SOTS.Projectiles.Celestial
 		}	
 		public override void AI()
 		{
+			float modUnit = 10f;
+			if(projectile.ai[0] == 1)
+			{
+				projectile.friendly = true;
+				projectile.hostile = false;
+				projectile.magic = true;
+				projectile.timeLeft = projectile.timeLeft > 90 ? 50 : projectile.timeLeft;
+				modUnit = 5f;
+			}
+			else
+			{
+				projectile.friendly = false;
+				projectile.hostile = true;
+				modUnit = 10f;
+			}
 			Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 2.5f / 255f, (255 - projectile.alpha) * 1.6f / 255f, (255 - projectile.alpha) * 2.4f / 255f);
 			if(projectile.frame == 0)
 				projectile.rotation = (float)Math.Atan2((double)projectile.velocity.Y, (double)projectile.velocity.X) + MathHelper.ToRadians(90);
 				
 			if(projectile.frame == 0)
 			{
-				int Probe = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("UnstableSerpent"), projectile.damage, 0, 0);
+				int Probe = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("UnstableSerpent"), projectile.damage, 0, projectile.owner, projectile.ai[0], 0);
 				Main.projectile[Probe].rotation = projectile.rotation;
-				Main.projectile[Probe].timeLeft = 90;
+				Main.projectile[Probe].timeLeft = projectile.ai[0] == 1 ? 20 : 90;
 				Main.projectile[Probe].frame = 1;
 			}
 			if(projectile.timeLeft <= 2 && projectile.frame != 0)
@@ -64,17 +79,17 @@ namespace SOTS.Projectiles.Celestial
 				oldVelocityX = projectile.velocity.X;
 			}
 			worm++;
-			if(worm <= 20)
+			if(worm <= modUnit * 2)
 			{
-			projectile.velocity.X += oldVelocityY / 10f;
-			projectile.velocity.Y += -oldVelocityX / 10f;
+			projectile.velocity.X += oldVelocityY / modUnit;
+			projectile.velocity.Y += -oldVelocityX / modUnit;
 			}
-			else if(worm >= 21 && worm <= 40)
+			else if(worm > modUnit * 2 && worm <= modUnit * 4)
 			{
-			projectile.velocity.X += -oldVelocityY / 10f;
-			projectile.velocity.Y += oldVelocityX / 10f;
+			projectile.velocity.X += -oldVelocityY / modUnit;
+			projectile.velocity.Y += oldVelocityX / modUnit;
 			}
-			if(worm >= 40)
+			if(worm >= modUnit * 4)
 			{
 			worm = 0;
 			}

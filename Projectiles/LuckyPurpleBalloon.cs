@@ -39,7 +39,6 @@ namespace SOTS.Projectiles
 		}
         public override bool PreAI()
         {
-			
             Player player = Main.player[projectile.owner];
 			player.bunny = false; // Relic from aiType
             return true;
@@ -47,13 +46,8 @@ namespace SOTS.Projectiles
 		public override void AI() 
 		{
 			Player player = Main.player[projectile.owner];
-		
-			
-			    
-			
-			  
             SOTSPlayer modPlayer = player.GetModPlayer<SOTSPlayer>();
-            if (player.dead)
+            if (player.dead || (player.ownedProjectileCounts[mod.ProjectileType("LuckyPurpleBalloon")] > 1 && projectile.alpha < 30))
             {
                 modPlayer.PurpleBalloon = false;
             }

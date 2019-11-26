@@ -35,34 +35,22 @@ namespace SOTS.Projectiles        //We need this to basically indicate the folde
         }
         public override void AI()
         {
-         
- 
-            //---------------------------------------------------This make this projectile1 shot another projectile2 to a target if is in between the distance and this projectile1 ------------------------------------------------------------------------
-
             projectile.rotation += 11.11111111f;   
  
-            //Getting the npc to fire at
             for (int i = 0; i < 200; i++)
             {
                 NPC target = Main.npc[i];
  
-                //Getting the shooting trajectory
               float shootToX = target.position.X + (float)target.width * 0.5f - projectile.Center.X;
               float shootToY = target.position.Y + (float)target.height * 0.5f - projectile.Center.Y;
              float distance = (float)System.Math.Sqrt((double)(shootToX * shootToX + shootToY * shootToY));
  
-                //If the distance between the projectile and the live target is active
-                if (distance < 1020f && !target.friendly && target.active)  //distance < 520 this is the projectile1 distance from the target if the tarhet is in that range the this projectile1 will shot the projectile2
+                if (distance < 1020f && !target.friendly && target.active)
                 {
-                    if (projectile.ai[0] > 20f)//this make so the projectile1 shoot a projectile every 2 seconds(60 = 1 second so 120 = 2 seconds)
+                    if (projectile.ai[0] > 20f)
                     {
-                        //Dividing the factor of 2f which is the desired velocity by distance
                         distance = 1.6f / distance;
  
-                        //Multiplying the shoot trajectory with distance times a multiplier if you so choose to
-                        //shootToX *= distance * 3;
-                      //  shootToY *= distance * 3;                
-                                          //Shoot projectile and set ai back to 0
 						if(shootX > 0.1f)	
 						{							
 						shootX -= 0.1f;

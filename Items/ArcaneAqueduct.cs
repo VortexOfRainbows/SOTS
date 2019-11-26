@@ -50,11 +50,11 @@ namespace SOTS.Items
 			rotation2 += 1f;
 				if (Probe == -1)
 				{
-					Probe = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, 27, item.damage, 0, player.whoAmI); //waterbolt proj
+					Probe = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, 27, (int)(item.damage * ((player.magicDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI); //waterbolt proj
 				}
 				if (!Main.projectile[Probe].active || Main.projectile[Probe].type != 27)
 				{
-					Probe = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, 27, item.damage, 0, player.whoAmI);
+					Probe = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, 27, (int)(item.damage * ((player.magicDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI);
 				}
 				Main.projectile[Probe].timeLeft = 6;
 				if (Probe != -1)
@@ -72,11 +72,11 @@ namespace SOTS.Items
 				
 				if (Probe2 == -1)
 				{
-					Probe2 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, 27, item.damage, 0, player.whoAmI);
+					Probe2 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, 27, (int)(item.damage * ((player.magicDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI);
 				}
 				if (!Main.projectile[Probe2].active || Main.projectile[Probe2].type != 27)
 				{
-					Probe2 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, 27, item.damage, 0, player.whoAmI);
+					Probe2 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, 27, (int)(item.damage * ((player.magicDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI);
 				}
 				Main.projectile[Probe2].timeLeft = 6;
 				if (Probe2 != -1)

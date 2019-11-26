@@ -26,7 +26,7 @@ namespace SOTS.Items
             item.useAnimation = 30;
             item.useStyle = 5;    
             item.knockBack = 0f;
-            item.value = Item.sellPrice(0, 1, 80, 0);
+            item.value = Item.sellPrice(0, 4, 50, 0);
             item.rare = 5;
             item.UseSound = SoundID.Item22;
             item.autoReuse = true;
