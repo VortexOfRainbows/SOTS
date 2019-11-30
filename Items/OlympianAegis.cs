@@ -17,7 +17,7 @@ namespace SOTS.Items
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Olympian Aegis");
-			Tooltip.SetDefault("Increases life regen by 1 and void regen by 1.5\nReduces damage taken by 7% and increases crit chance by 4%");
+			Tooltip.SetDefault("Increases life regen by 1 and void regen by 2\nReduces damage taken by 7% and increases crit chance by 4%");
 		}
 		public override void SetDefaults()
 		{
@@ -27,7 +27,7 @@ namespace SOTS.Items
             item.height = 42;   
             item.value = Item.sellPrice(0, 4, 75, 0);
             item.rare = 6;
-			item.defense = 5;
+			item.defense = 3;
 			item.accessory = true;
 
 		}
@@ -35,7 +35,7 @@ namespace SOTS.Items
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-			voidPlayer.voidRegen += 0.15f;
+			voidPlayer.voidRegen += 0.2f;
 			player.lifeRegen += 1;
 			player.endurance += 0.07f;
 			player.meleeCrit += 4;

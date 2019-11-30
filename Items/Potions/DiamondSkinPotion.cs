@@ -36,13 +36,13 @@ namespace SOTS.Items.Potions
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.BottledWater, 2);
+			recipe.AddIngredient(ItemID.BottledWater, 1);
 			recipe.AddIngredient(null, "JewelFish", 1);
 			recipe.AddIngredient(ItemID.IronskinPotion, 1);
 			recipe.AddIngredient(ItemID.EndurancePotion, 1);
 			recipe.AddIngredient(ItemID.Fireblossom, 1);
 			recipe.AddTile(13);
-			recipe.SetResult(this, 4);
+			recipe.SetResult(this, 1);
 			recipe.AddRecipe();
 }
 	}

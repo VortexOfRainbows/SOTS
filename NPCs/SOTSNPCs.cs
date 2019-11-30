@@ -26,7 +26,7 @@ namespace SOTS.NPCs
 				
 			if(npc.lifeMax > 5)
 			{
-				
+				/*
 				if(SOTSWorld.challengeIce)
 				{
 					if(Main.rand.Next(90) <= (int)(npc.lifeMax * 0.02) + 1)
@@ -63,119 +63,103 @@ namespace SOTS.NPCs
 					}
 							
 				}
-				 if (Main.rand.Next(100000) == 0) 
-					{
-							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("ThundershockShortbow"), 1); 
-					}
-				 if (Main.rand.Next(100000) == 0) 
-					{
-							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("PhantomicConductor"), 1); 
-					}
-				 if (Main.rand.Next(100000) == 0) 
-					{
-							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("TheMelter"), 1); 
-					}
-				 if (Main.rand.Next(100000) == 0) 
-					{
-							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("PrimeTalisman"), 1); 
-					}
-				 if (Main.rand.Next(100000) == 0) 
-					{
-							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("MourningStar"), 1); 
-					}
-				 if (Main.rand.Next(100000) == 0) 
-					{
-							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("DeoxysABall"), 1); 
-					}
-				 if (Main.rand.Next(100000) == 0) 
-					{
-							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("Pulverizer"), 1); 
-					}
-				 if (Main.rand.Next(200000) == 0) 
-					{
-							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("ZephyriousZepline"), 1); 
-					}
+				*/
 				
-				if (npc.type == NPCID.WallofFlesh)
-					{
-							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("HungryHunter"), 1); 
-					}
+				if (Main.rand.Next(100) == 0 || (npc.type == 170 || npc.type == 171 || npc.type == 180)) { //guarenteed from pigrons
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("AlmondMilk"), 1); 
+				}
+				else if (Main.rand.Next(100000) == 0) {
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("ThundershockShortbow"), 1); 
+				}
+				else if (Main.rand.Next(100000) == 0) {
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("PhantomicConductor"), 1); 
+				}
+				else if (Main.rand.Next(100000) == 0) {
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("TheMelter"), 1); 
+				}
+				else if (Main.rand.Next(100000) == 0) {
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("PrimeTalisman"), 1); 
+				}
+				else if (Main.rand.Next(100000) == 0) {
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("MourningStar"), 1); 
+				}
+				else if (Main.rand.Next(100000) == 0) {
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("DeoxysABall"), 1); 
+				}
+				else if (Main.rand.Next(100000) == 0) {
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("Pulverizer"), 1); 
+				}
+				else if (Main.rand.Next(200000) == 0) {
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("ZephyriousZepline"), 1); 
+				}
+				
+				if (npc.type == NPCID.WallofFlesh) {
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("HungryHunter"), 1); 
+				}
 					
-				if (npc.type == NPCID.WyvernHead)  
-				{
-					if (Main.rand.Next(20) == 0) 
-					{
-							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("WyvernSword"), 1); 
+				if (npc.type == NPCID.WyvernHead) {
+					if (Main.rand.Next(10) == 0) {
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("WyvernSword"), 1); 
 					}
-					if (Main.rand.Next(4) == 0) 
-					{
-							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemID.GiantHarpyFeather, 1); 
+					if (Main.rand.Next(3) == 0) {
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemID.GiantHarpyFeather, 1); 
 					}
 				}
 				
-				if (npc.type == NPCID.SkeletronHead)  
-				{
-					if (Main.rand.Next(20) == 0) 
+				if (npc.type == NPCID.SkeletronHead) {
+					if (Main.rand.Next(10) == 0) 
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("BulletShark"), 1); 
 				}
-				if (npc.type == NPCID.GoblinPeon || npc.type == NPCID.GoblinArcher || npc.type == NPCID.GoblinWarrior || npc.type == NPCID.GoblinSorcerer)  
-				{
-					if (Main.rand.Next(2) == 0) 
-					{
+				if (npc.type == NPCID.GoblinPeon || npc.type == NPCID.GoblinArcher || npc.type == NPCID.GoblinWarrior || npc.type == NPCID.GoblinSorcerer) { //golbins
+					if (Main.rand.Next(2) == 0) {
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("GoblinRockBar"), Main.rand.Next(2) + 1); 
 					}
 				}
-				if (npc.type == NPCID.Plantera)  
-				{
-					if (Main.rand.Next(20) == 0) 
-					{
+				if (npc.type == NPCID.PirateCaptain || npc.type == NPCID.PirateCorsair || npc.type == NPCID.PirateCrossbower || npc.type == NPCID.PirateDeadeye || npc.type == NPCID.Parrot) { //pirates
+					if (Main.rand.Next(10) == 0) {
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("Chocolate"), 1); 
+					}
+				}
+				if (npc.type == NPCID.Plantera) {
+					if (Main.rand.Next(20) == 0) {
 							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("ChlorophyteCrossFive"), 1); 
 					}
-					
 				}
-				if (npc.type == NPCID.UndeadMiner)  
-				{
-					if (Main.rand.Next(5) == 0) 
-					{          
+				if (npc.type == NPCID.UndeadMiner) {
+					if (Main.rand.Next(4) == 0) {          
 						 Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("ManicMiner"), 1); 
 					}
 				}
-				if (npc.type == NPCID.BlueSlime)  
-				{
-					if (Main.rand.Next(100) == 0) 
-					{
+				if (npc.type == NPCID.BlueSlime) {
+					if (Main.rand.Next(100) == 0) {
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FireSpitter"), 1); 
 					}
 				}
-				if (npc.type == NPCID.Crab)  
-				{
-					if (Main.rand.Next(40) == 0) 
-					{
+				if (npc.type == NPCID.Crab) {
+					if (Main.rand.Next(40) == 0) {
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("CrabClaw"), 1); 
 					}
 				}
-			if (npc.type == mod.NPCType("PutridPinkyPhase2"))
-				{
-					if (Main.rand.Next(25) == 0) 
-					{
+				if (npc.type == mod.NPCType("PutridPinkyPhase2")) {
+					if (Main.rand.Next(25) == 0) {
+							/*
 							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("MeguminHat"), 1); 
 							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("MeguminShirt"), 1); 
 							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("MeguminLeggings"), 1); 
+							*/
 					}
 				}
-			if (npc.type == 64 && Main.rand.Next(60) == 0)
-				{
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("PinkJellyfishStaff"), 1); 
+				if (npc.type == 64 && Main.rand.Next(60) == 0) {
+							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("PinkJellyfishStaff"), 1); 
 				}
-			if (npc.type == 140 && Main.rand.Next(120) == 0) //Possessed armor
-				{
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("PossessedHelmet"), 1); 
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("PossessedChainmail"), 1); 
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("PossessedGreaves"), 1); 
+				if (npc.type == 140 && Main.rand.Next(90) == 0) { //Possessed armor 
+							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("PossessedHelmet"), 1); 
+							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("PossessedChainmail"), 1); 
+							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("PossessedGreaves"), 1); 
 				}
-			if ((npc.type == 63 || npc.type == 103) && Main.rand.Next(60) == 0)
+				if ((npc.type == 63 || npc.type == 103) && Main.rand.Next(60) == 0)
 				{
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("BlueJellyfishStaff"), 1); 
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("BlueJellyfishStaff"), 1); 
 				}
 			}
 		}
@@ -205,8 +189,7 @@ namespace SOTS.NPCs
 				*/
 				if(Main.hardMode)
 				{
-					pool.Add(NPCID.Mummy,0.5f);
-				
+					pool.Add(NPCID.Mummy, 0.5f);
 				}
 			}
 			

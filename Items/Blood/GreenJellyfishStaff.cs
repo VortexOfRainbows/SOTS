@@ -52,7 +52,7 @@ namespace SOTS.Items.Blood
 			recipe.AddIngredient(null, "PurpleJellyfishStaff", 1);
 			recipe.AddIngredient(ItemID.SoulofLight, 15);
 			recipe.AddIngredient(ItemID.SoulofSight, 15);
-			recipe.AddIngredient(null, "BloodEssence", 25);
+			recipe.AddIngredient(null, "BloodEssence", 3);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.SetResult(this);
 			recipe.AddRecipe();

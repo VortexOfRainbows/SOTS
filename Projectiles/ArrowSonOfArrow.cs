@@ -48,106 +48,91 @@ namespace SOTS.Projectiles
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
 			bool stopCheck = false;
-			int startingChain = -1;
-					for(int i = 0; i < 200; i++)
-					{
-						NPC targetCheck = Main.npc[i];
-						if(targetCheck == target)
-						{
-							startingChain = i;
-						}
-					}
-					for(int i = startingChain; i < 200; i++)
-					{
-						if(Main.npc[i] != target && projectile.knockBack < 1 && projectile.knockBack > 0 && !stopCheck)
-						{
-							NPC target2 = Main.npc[i];
-							
-							float shootFromX = target.Center.X;
-							float shootFromY = target.Center.Y;
-						
-							if(target2.Center.X >= target.Center.X)
-							shootFromX += target.width;
-								
-							if(target2.Center.X <= target.Center.X)
-							shootFromX -= target.width;
-								
-							if(target2.Center.Y >= target.Center.Y)
-							shootFromY += target.height;
-								
-							if(target2.Center.Y <= target.Center.Y)
-							shootFromY -= target.height;
-								
-							
-						   
-						   float shootToX = target2.position.X + (float)target2.width * 0.5f - shootFromX;
-						   float shootToY = target2.position.Y + (float)target2.height * 0.5f - shootFromY;
-						   float distance = (float)System.Math.Sqrt((double)(shootToX * shootToX + shootToY * shootToY));
-						   float velocity = (float)System.Math.Sqrt((double)(projectile.velocity.X * projectile.velocity.X + projectile.velocity.Y * projectile.velocity.Y));
-
-						 
-						   if(distance < 800f && !target2.friendly && target2.active)
-						   {
-								   //Dividing the factor of 3f which is the desired velocity by distance
-								   distance = velocity / distance;
-					   
-								   //Multiplying the shoot trajectory with distance times a multiplier if you so choose to
-								   shootToX *= distance * 2;
-								   shootToY *= distance * 2;
-					   
-								   //Shoot projectile and set ai back to 0
-								   Projectile.NewProjectile(shootFromX, shootFromY, shootToX, shootToY, mod.ProjectileType("ArrowSonOfArrow"), projectile.damage, projectile.knockBack -= 0.1f, Main.myPlayer, 0f, 0f); //Spawning a projectile
-								   stopCheck = true;
-								   break;
-						   }
-						}
-					}
-					for(int i = 0; i < startingChain; i++)
-					{
-						if(Main.npc[i] != target && projectile.knockBack < 1 && projectile.knockBack > 0 && !stopCheck)
-						{
-							NPC target2 = Main.npc[i];
-							
-							float shootFromX = target.Center.X;
-							float shootFromY = target.Center.Y;
-						
-							if(target2.Center.X >= target.Center.X)
-							shootFromX += target.width;
-								
-							if(target2.Center.X <= target.Center.X)
-							shootFromX -= target.width;
-								
-							if(target2.Center.Y >= target.Center.Y)
-							shootFromY += target.height;
-								
-							if(target2.Center.Y <= target.Center.Y)
-							shootFromY -= target.height;
-								
-							
-						   
-						   float shootToX = target2.position.X + (float)target2.width * 0.5f - shootFromX;
-						   float shootToY = target2.position.Y + (float)target2.height * 0.5f - shootFromY;
-						   float distance = (float)System.Math.Sqrt((double)(shootToX * shootToX + shootToY * shootToY));
-						   float velocity = (float)System.Math.Sqrt((double)(projectile.velocity.X * projectile.velocity.X + projectile.velocity.Y * projectile.velocity.Y));
-
-						 
-						   if(distance < 800f && !target2.friendly && target2.active)
-						   {
-								   //Dividing the factor of 3f which is the desired velocity by distance
-								   distance = velocity / distance;
-					   
-								   //Multiplying the shoot trajectory with distance times a multiplier if you so choose to
-								   shootToX *= distance * 2;
-								   shootToY *= distance * 2;
-					   
-								   //Shoot projectile and set ai back to 0
-								   Projectile.NewProjectile(shootFromX, shootFromY, shootToX, shootToY, mod.ProjectileType("ArrowSonOfArrow"), projectile.damage, projectile.knockBack -= 0.1f, Main.myPlayer, 0f, 0f); //Spawning a projectile
-								   stopCheck = true;
-								   break;
-						   }
-						}
-					}
+			int startingChain = target.whoAmI;
+			for(int i = startingChain; i < 200; i++)
+			{
+				if(Main.npc[i] != target && projectile.knockBack < 1 && projectile.knockBack > 0 && !stopCheck && projectile.owner == Main.myPlayer)
+				{
+					NPC target2 = Main.npc[i];
 					
+					float shootFromX = target.Center.X;
+					float shootFromY = target.Center.Y;
+				
+					if(target2.Center.X >= target.Center.X)
+					shootFromX += target.width;
+						
+					if(target2.Center.X <= target.Center.X)
+					shootFromX -= target.width;
+						
+					if(target2.Center.Y >= target.Center.Y)
+					shootFromY += target.height;
+						
+					if(target2.Center.Y <= target.Center.Y)
+					shootFromY -= target.height;
+				
+					float shootToX = target2.position.X + (float)target2.width * 0.5f - shootFromX;
+					float shootToY = target2.position.Y + (float)target2.height * 0.5f - shootFromY;
+					float distance = (float)System.Math.Sqrt((double)(shootToX * shootToX + shootToY * shootToY));
+					float velocity = (float)System.Math.Sqrt((double)(projectile.velocity.X * projectile.velocity.X + projectile.velocity.Y * projectile.velocity.Y));
+				
+					
+					if(distance < 800f && !target2.friendly && target2.active)
+					{
+							//Dividing the factor of 3f which is the desired velocity by distance
+							distance = velocity / distance;
+				
+							//Multiplying the shoot trajectory with distance times a multiplier if you so choose to
+							shootToX *= distance * 2;
+							shootToY *= distance * 2;
+				
+							//Shoot projectile and set ai back to 0
+							Projectile.NewProjectile(shootFromX, shootFromY, shootToX, shootToY, mod.ProjectileType("ArrowSonOfArrow"), projectile.damage, projectile.knockBack -= 0.1f, Main.myPlayer, 0f, 0f); 
+							stopCheck = true;
+							break;
+					}
+				}
+			}
+			for(int i = 0; i < startingChain; i++)
+			{
+				if(Main.npc[i] != target && projectile.knockBack < 1 && projectile.knockBack > 0 && !stopCheck && projectile.owner == Main.myPlayer)
+				{
+					NPC target2 = Main.npc[i];
+					
+					float shootFromX = target.Center.X;
+					float shootFromY = target.Center.Y;
+				
+					if(target2.Center.X >= target.Center.X)
+					shootFromX += target.width;
+						
+					if(target2.Center.X <= target.Center.X)
+					shootFromX -= target.width;
+						
+					if(target2.Center.Y >= target.Center.Y)
+					shootFromY += target.height;
+						
+					if(target2.Center.Y <= target.Center.Y)
+					shootFromY -= target.height;
+						
+					float shootToX = target2.position.X + (float)target2.width * 0.5f - shootFromX;
+					float shootToY = target2.position.Y + (float)target2.height * 0.5f - shootFromY;
+					float distance = (float)System.Math.Sqrt((double)(shootToX * shootToX + shootToY * shootToY));
+					float velocity = (float)System.Math.Sqrt((double)(projectile.velocity.X * projectile.velocity.X + projectile.velocity.Y * projectile.velocity.Y));
+					if(distance < 800f && !target2.friendly && target2.active)
+					{
+							//Dividing the factor of 3f which is the desired velocity by distance
+							distance = velocity / distance;
+				
+							//Multiplying the shoot trajectory with distance times a multiplier if you so choose to
+							shootToX *= distance * 2;
+							shootToY *= distance * 2;
+				
+							//Shoot projectile and set ai back to 0
+							Projectile.NewProjectile(shootFromX, shootFromY, shootToX, shootToY, mod.ProjectileType("ArrowSonOfArrow"), projectile.damage, projectile.knockBack -= 0.1f, Main.myPlayer, 0f, 0f); 
+							stopCheck = true;
+							break;
+					}
+				}
+			}
 		}
 	}
 }

@@ -13,7 +13,7 @@ namespace SOTS.Items.Blood
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Life Devourer");
-			Tooltip.SetDefault("Drains your life to generate blood which can be used for crafting\nIncreases max void by 20, void damage by 8%, and boosts void regen speed by 1");
+			Tooltip.SetDefault("Drains your life to generate blood which can be used for crafting\nIncreases max void by 20, void damage by 8%, and boosts void regen speed by 1.5");
 			Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(7, 4));
 		}
 		public override void SetDefaults()
@@ -31,7 +31,7 @@ namespace SOTS.Items.Blood
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			voidPlayer.voidMeterMax2 += 20;
 			voidPlayer.voidDamage += 0.08f;
-			voidPlayer.voidRegen += 0.1f;
+			voidPlayer.voidRegen += 0.15f;
 						
 						
 						
@@ -53,7 +53,7 @@ namespace SOTS.Items.Blood
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "RedPowerChamber", 4);
+			recipe.AddIngredient(null, "RedPowerChamber", 1);
 			recipe.AddIngredient(null, "Goblinsteel", 4);
 			recipe.SetResult(this, 1);
 			recipe.AddRecipe();

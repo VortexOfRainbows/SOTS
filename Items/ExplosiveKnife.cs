@@ -11,13 +11,13 @@ namespace SOTS.Items
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Explosive Knife");
-			Tooltip.SetDefault("");
+			Tooltip.SetDefault("'Quite a deadly combination'");
 		}
 		public override void SetDefaults()
 		{
 			
 			item.CloneDefaults(279);
-			item.damage = 16;
+			item.damage = 17;
 			item.thrown = true;
 			item.rare = 2;
 			item.autoReuse = true;            
@@ -38,11 +38,11 @@ namespace SOTS.Items
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(279, 10);
-			recipe.AddIngredient(168, 10);
+			recipe.AddIngredient(279, 15);
+			recipe.AddIngredient(168, 15);
 			recipe.AddIngredient(null, "Goblinsteel", 1);
 			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this, 10);
+			recipe.SetResult(this, 15);
 			recipe.AddRecipe();
 		}
 	}

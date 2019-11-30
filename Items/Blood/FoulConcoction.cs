@@ -13,7 +13,7 @@ namespace SOTS.Items.Blood
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Foul Concoction");
-			Tooltip.SetDefault("Automatically consumed to refill void when low\nRefills 2 void");
+			Tooltip.SetDefault("Automatically consumed to refill void when low\nRefills 4 void");
 		}
 		public override void SetDefaults()
 		{
@@ -33,28 +33,28 @@ namespace SOTS.Items.Blood
 			recipe.AddIngredient(null, "Peanut", 1);
 			recipe.AddIngredient(ItemID.PinkGel, 1);
 			recipe.AddIngredient(ItemID.Acorn, 1);
-			recipe.SetResult(this, 1);
+			recipe.SetResult(this, 2);
 			recipe.AddRecipe();
 			
 			recipe = new ModRecipe(mod);
 			recipe.AddIngredient(null, "Peanut", 2);
 			recipe.AddIngredient(ItemID.Gel, 5);
 			recipe.AddIngredient(ItemID.Acorn, 2);
-			recipe.SetResult(this, 1);
+			recipe.SetResult(this, 2);
 			recipe.AddRecipe();
 			
 			recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.RottenChunk, 1);
 			recipe.AddIngredient(ItemID.Gel, 2);
 			recipe.AddIngredient(ItemID.Acorn, 2);
-			recipe.SetResult(this, 1);
+			recipe.SetResult(this, 2);
 			recipe.AddRecipe();
 			
 			recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.Vertebrae, 1);
 			recipe.AddIngredient(ItemID.Gel, 2);
 			recipe.AddIngredient(ItemID.Acorn, 2);
-			recipe.SetResult(this, 1);
+			recipe.SetResult(this, 2);
 			recipe.AddRecipe();
 		}
 		public override void UpdateInventory(Player player)
@@ -65,7 +65,7 @@ namespace SOTS.Items.Blood
 			while(voidPlayer.voidMeter < voidPlayer.voidMeterMax2 / 10)
 			{
 			item.stack--;
-			voidPlayer.voidMeter += 2;
+			voidPlayer.voidMeter += 4;
 			}
 			
 		}

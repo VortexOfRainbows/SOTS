@@ -85,7 +85,7 @@ namespace SOTS.Projectiles.Minions
 			{
 				projectile.rotation = (float)Math.Atan2((double)shootToY, (double)shootToX) + MathHelper.ToRadians(45);
 			}
-			else
+			else if(player.whoAmI == Main.myPlayer)
 			{
 				projectile.ai[1] += 1;
 				NPC target = Main.npc[FindClosestEnemy()];
@@ -104,7 +104,7 @@ namespace SOTS.Projectiles.Minions
 		public void LaunchLaser(Vector2 area)
 		{
 			Player player  = Main.player[projectile.owner];
-			int laser = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("BrightRedLaser"), projectile.damage, 0, 0);
+			int laser = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("BrightRedLaser"), projectile.damage, 0, projectile.owner);
 			Main.projectile[laser].ai[0] = area.X;
 			Main.projectile[laser].ai[1] = area.Y;
 		}

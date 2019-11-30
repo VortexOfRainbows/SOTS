@@ -31,5 +31,13 @@ namespace SOTS.Projectiles
 		{
 			projectile.rotation = Main.rand.Next(38);
 		}
+		public override void Kill(int timeLeft)
+		{
+			for(int i = 0; i < 12; i++)
+			{
+				int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 67);
+				Main.dust[num1].noGravity = true;
+			}
+		}
 	}
 }

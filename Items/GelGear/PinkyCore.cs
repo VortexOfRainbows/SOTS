@@ -10,10 +10,10 @@ namespace SOTS.Items.GelGear
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Putrid Cell");
-			Tooltip.SetDefault("Access to infinite putrid bullets\nDecreases void regen by 0.5 while in the inventory");
+			Tooltip.SetDefault("Access to infinite putrid bullets\nDecreases void regen by 1 while in the inventory");
 		}public override void SetDefaults()
 		{
-			item.damage = 8;
+			item.damage = 5;
 			item.ranged = true;
 			item.width = 36;
 			item.height = 36;
@@ -32,7 +32,7 @@ namespace SOTS.Items.GelGear
 				VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 				SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");	
 				
-				voidPlayer.voidRegen -= 0.05f;
+				voidPlayer.voidRegen -= 0.1f;
 		}
 		public override bool ConsumeAmmo(Player p)
 		{

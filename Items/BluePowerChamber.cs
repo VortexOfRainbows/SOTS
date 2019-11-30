@@ -27,10 +27,7 @@ namespace SOTS.Items
 					if(player.statManaMax2 > 20)
 					{
 						player.statManaMax2 -= 20;
-						player.meleeDamage += 0.01f;
-						player.rangedDamage += 0.01f;
-						player.thrownDamage += 0.01f;
-						player.magicDamage += 0.01f;
+						player.allDamage += 0.01f;
 					}
 				}
 		}
@@ -38,7 +35,7 @@ namespace SOTS.Items
 		{
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.ManaCrystal, 1);
-			recipe.AddIngredient(null, "Goblinsteel", 4);
+			recipe.AddIngredient(null, "Goblinsteel", 3);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this);
 			recipe.AddRecipe();

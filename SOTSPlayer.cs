@@ -75,6 +75,7 @@ namespace SOTS
 		
 		public bool pearlescentMagic = false; //pearlescent core effect
 		public bool bloodstainedJewel = false; //bloodstained jewel effect
+		public bool snakeSling = false; //snakeskin sling effect
 		
 		
 		public override void ResetEffects()
@@ -123,6 +124,7 @@ namespace SOTS
 			PushBack = false;
 			pearlescentMagic = false;
 			bloodstainedJewel = false;
+			snakeSling = false; 
 			
 				if(PyramidBiome)
 				player.AddBuff(mod.BuffType("PharaohsCurse"), 16, false);
@@ -486,11 +488,15 @@ namespace SOTS
 					}
 				}
 			}
+			if(snakeSling && item.ranged && item.damage > 3 && shotCounter % 5 == 0)
+			{
+				Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(8));
+				Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X * 1.1f, perturbedSpeed.Y * 1.1f, mod.ProjectileType("Pebble"), damage, knockBack, player.whoAmI);
+			}
 			if(libraActive == 1 && item.ranged == true && item.type != mod.ItemType("Vulcan"))
 			{
-				  Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(8));
-                  Projectile.NewProjectile(position.X, position.Y, -(perturbedSpeed.X/4f), -(perturbedSpeed.Y/4f), mod.ProjectileType("BackupArrow"), (int)(damage/2f) + 1, knockBack, player.whoAmI);
-				
+				Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(8));
+				Projectile.NewProjectile(position.X, position.Y, -(perturbedSpeed.X/4f), -(perturbedSpeed.Y/4f), mod.ProjectileType("BackupArrow"), (int)(damage/2f) + 1, knockBack, player.whoAmI);
 			}
 			if(doubledActive == 1 && item.fishingPole > 0)
 			{

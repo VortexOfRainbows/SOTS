@@ -12,7 +12,7 @@ namespace SOTS.Items
 			Tooltip.SetDefault("Increases in damage as it pierces\n'Busts bunkers effectively'");
 		}public override void SetDefaults()
 		{
-			item.damage = 18;
+			item.damage = 11;
 			item.ranged = true;
 			item.width = 18;
 			item.height = 26;

@@ -27,7 +27,7 @@ namespace SOTS.Items.ChestItems
             item.value = 100000;
             item.rare = 5;
 			item.accessory = true;
-			item.defense = 4;
+			item.defense = 3;
 			
 		}
 		

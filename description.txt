@@ -4,28 +4,28 @@ NOTICE: This mod is not optimized for multiplayer, feel free to give it a try, b
 Bosses -> Currently 5, mostly bullet hells
 Items -> Around 300, unique gimmicks all around!
 
-New Subclass
--Currently in development, all classes but summon can really utilize it
--Has a seperate meter that you don't want to drain
+New Subclass (void)
+-Has a seperate meter that you don't want to drain, or else you'll lose health
 
 Pyramid Dungeon World Gen
--For people who want new content, and don't want pharaoh clothes
--Unique bosses and items
--Handcrafted rooms
+-Unique boss and items
 
 Developer & Artist - VortexOfRainbows
 Quality Assurance - FlameFreezer
 
 Update 0.18 The Purge
--Reworked and Removed almost every old item, some will be rebalanced and added back later (400+ items removed lmao)
--CHALLENGES REMOVED, They didn't have good feedback, nor were they really balanced around anything, different variations will be added back later
--Added new pyramid biome
--Fixed bugs and crafting recipe issues
--Void rebalanced, it should now be more usable and less extremely overpowered or underpowered
+-Reworked or Removed almost every old item, some will be rebalanced and added back later (400+ items removed lmao)
+-CHALLENGES REMOVED, different variations might be added back later
+-Added pyramid biome
+-Replaced certain bosses
+
+-Void rebalanced, it should now be more forgiving
 -Most secret or nigh unobtainable items have been changed or removed
 -Overpowered items have been nerfed, while void items recieve general consistency changes
+
+-Fixed bugs and crafting recipe issues
+
 -More to come in future updates!
--2 New bosses, removed a ton of old ones, however
 
 Update 0.17
 -More void stuff

@@ -52,11 +52,10 @@ namespace SOTS.Items.Blood
 			recipe.AddIngredient(null, "PinkJellyfishStaff", 1);
 			recipe.AddIngredient(null, "BlueJellyfishStaff", 1);
 			recipe.AddIngredient(ItemID.JellyfishNecklace, 1);
+			recipe.AddIngredient(null, "CursedMatter", 5);
 			recipe.AddIngredient(null, "RedPowerChamber", 1);
 			recipe.AddIngredient(null, "BluePowerChamber", 1);
-			recipe.AddIngredient(null, "CursedMatter", 5);
-			recipe.AddIngredient(null, "BloodEssence", 5);
-			recipe.AddIngredient(ItemID.SoulofNight, 15);
+			recipe.AddIngredient(ItemID.SoulofNight, 12);
 			recipe.AddTile(TileID.DemonAltar);
 			recipe.SetResult(this);
 			recipe.AddRecipe();

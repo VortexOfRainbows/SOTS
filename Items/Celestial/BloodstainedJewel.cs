@@ -13,7 +13,7 @@ namespace SOTS.Items.Celestial
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Bloodstained Jewel");
-			Tooltip.SetDefault("Chance to heal for 100 health after taking damage\nThe chance increases after taking consecutive hits of damage\nWorks while in the inventory\nDecreases void regen by 2 and max void by 50");
+			Tooltip.SetDefault("Chance to heal for 100 health after taking damage\nThe chance increases after taking consecutive hits of damage\nWorks while in the inventory\nDecreases void regen by 2.5 and max void by 50");
 		}
 		public override void SetDefaults()
 		{
@@ -39,7 +39,7 @@ namespace SOTS.Items.Celestial
 			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");	
 			if(!modPlayer.bloodstainedJewel)
 			{
-				voidPlayer.voidRegen -= 0.2f;
+				voidPlayer.voidRegen -= 0.25f;
 				voidPlayer.voidMeterMax2 -= 50;
 				modPlayer.bloodstainedJewel = true;
 				if(modPlayer.onhit == 1)

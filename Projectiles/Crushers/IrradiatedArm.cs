@@ -52,7 +52,7 @@ namespace SOTS.Projectiles.Crushers
 			else if(rotateCurrent > 170 && initiateClap == -5)
 			{
 				rotateCurrent = 170;
-				increaseDamage = (float)((8f/170f * rotateCurrent) + 1);
+				increaseDamage = 9f; //setting the full charge value differently because it was not neccessary last time
 			}
 			if(increaseDamage >= 8.7f && initiateClap == -5)
 			{
@@ -60,7 +60,7 @@ namespace SOTS.Projectiles.Crushers
 			}
 			projectile.damage = (int)(initialDamage * increaseDamage);
 			
-			rotateAmount = 1.8f;
+			rotateAmount = 2.1f;
 			
 			if(projectile.active)
 			return true;
@@ -100,7 +100,7 @@ namespace SOTS.Projectiles.Crushers
 			projectile.rotation = projectile.velocity.ToRotation();
 			//projectile.ai[1] += projectile.rotation;
 			}
-			if(initiateTimer >= 60)
+			if(initiateTimer >= 40)
 			{
 				initiateClap = 1;
 			}
@@ -174,7 +174,7 @@ namespace SOTS.Projectiles.Crushers
 					{
 						double deg1 = (double)startingDirection; 
 						double rad1 = deg1 * (Math.PI / 180);
-						for(int i = 0; i < 9; i++)
+						for(int i = 0; i < (int)increaseDamage; i++)
 						{
 							double dist1 = 48 * (i + 1);
 							float positionX = player.Center.X - (int)(Math.Cos(rad1) * dist1);

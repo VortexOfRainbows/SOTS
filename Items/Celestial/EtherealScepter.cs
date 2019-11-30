@@ -19,7 +19,7 @@ namespace SOTS.Items.Celestial
 
 		public override void SetDefaults() 
 		{
-			item.damage = 54;
+			item.damage = 52;
 			item.knockBack = 4f;
 			item.mana = 24;
 			item.width = 40;

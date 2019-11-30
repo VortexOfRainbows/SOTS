@@ -12,7 +12,7 @@ namespace SOTS.Items.Potions
 		{
 			DisplayName.SetDefault("Soul Access Potion");
 			
-			Tooltip.SetDefault("Increases void regen by 10\n'May contain nuts'");
+			Tooltip.SetDefault("Increases void regen by 10");
 		}
 		public override void SetDefaults()
 		{
@@ -35,7 +35,7 @@ namespace SOTS.Items.Potions
 		{
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.BottledWater, 1);
-			recipe.AddIngredient(null, "SoulResidue", 4);
+			recipe.AddIngredient(null, "SoulResidue", 2);
 			recipe.AddIngredient(null, "Peanut", 2);
 			recipe.AddIngredient(ItemID.Deathweed, 1);
 			recipe.AddTile(13);

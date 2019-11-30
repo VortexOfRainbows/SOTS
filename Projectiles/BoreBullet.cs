@@ -16,9 +16,7 @@ namespace SOTS.Projectiles
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Bore Bullet");
-			
 		}
-		
         public override void SetDefaults()
         {
 			projectile.CloneDefaults(14);
@@ -27,8 +25,6 @@ namespace SOTS.Projectiles
 			projectile.width = 18;
 			projectile.height = 26;
 			projectile.alpha = 255;
-
-
 		}
 		public override void OnHitNPC(NPC n, int damage, float knockback, bool crit)
 		{
@@ -38,12 +34,8 @@ namespace SOTS.Projectiles
 		public override void AI()
 		{
 			int num1 = Dust.NewDust(new Vector2(projectile.Center.X - 4, projectile.Center.Y - 4), 2, 2, 1);
-
-			
 			Main.dust[num1].noGravity = true;
 			Main.dust[num1].velocity *= 0.1f;
-			
-			
 		}
 	}
 }

@@ -13,7 +13,7 @@ namespace SOTS.Items.Blood
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Blood Essence");
-			Tooltip.SetDefault("Decays while in the inventory\nAutomatically consumed to refill void when low\nRefills 3 void");
+			Tooltip.SetDefault("Decays while in the inventory\nAutomatically consumed to refill void when low\nRefills 2.5 void");
 			Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(7, 4));
 		}
 		public override void SetDefaults()
@@ -33,20 +33,8 @@ namespace SOTS.Items.Blood
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");	
 		
-			timer += (int)(item.stack * 0.01667f);
-			if(item.stack > 90)
-			{
-			timer += (int)(item.stack * 0.03333f);
-			}
-			if(item.stack > 300)
-			{
-			timer += (int)(item.stack * 0.05f);
-			}
-			if(item.stack > 500)
-			{
-			timer += (int)(item.stack * 0.1f);
-			}
-			if(timer >= 999)
+			timer += item.stack;
+			if(timer >= 1200)
 			{
 				timer = 0;
 				item.stack--;
@@ -54,7 +42,7 @@ namespace SOTS.Items.Blood
 			while(voidPlayer.voidMeter < voidPlayer.voidMeterMax2 / 10)
 			{
 			item.stack--;
-			voidPlayer.voidMeter += 3;
+			voidPlayer.voidMeter += 2.5f;
 			}
 			
 		}

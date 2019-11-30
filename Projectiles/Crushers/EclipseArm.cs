@@ -30,8 +30,8 @@ namespace SOTS.Projectiles.Crushers
 		
         public override void SetDefaults()
         {
-			projectile.height = 34;
 			projectile.width = 30;
+			projectile.height = 34;
 			projectile.penetrate = 24;
 			projectile.friendly = false;
 			projectile.timeLeft = 6004;
@@ -52,7 +52,7 @@ namespace SOTS.Projectiles.Crushers
 			else if(rotateCurrent > 170 && initiateClap == -5)
 			{
 				rotateCurrent = 170;
-				increaseDamage = (float)((5f/170f * rotateCurrent) + 1);
+				increaseDamage = 6f; //setting the full charge value differently because it was not neccessary last time
 			}
 			if(increaseDamage >= 4.7f && initiateClap == -5)
 			{
@@ -176,7 +176,7 @@ namespace SOTS.Projectiles.Crushers
 						double rad1 = deg1 * (Math.PI / 180);
 						for(int i = 0; i < 4; i++)
 						{
-							double dist1 = 80 * (i + 1);
+							double dist1 = 48 + (80 * i);
 							float positionX = player.Center.X - (int)(Math.Cos(rad1) * dist1);
 							float positionY = player.Center.Y - (int)(Math.Sin(rad1) * dist1);
 							Projectile.NewProjectile(positionX, positionY, 0, 0, mod.ProjectileType("EclipseCrush"), projectile.damage, initialDamage, Main.myPlayer, 0f, 0f);

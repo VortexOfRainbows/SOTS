@@ -61,6 +61,7 @@ namespace SOTS.NPCs
 			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("SoulResidue"), Main.rand.Next(2) + 3);	
 			
 			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("JuryRiggedDrill"), Main.rand.Next(7) + 1);	
+			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("ExplosiveKnife"), Main.rand.Next(10) + 5);	
 			
 			if(Main.rand.Next(6) == 0)
 			{

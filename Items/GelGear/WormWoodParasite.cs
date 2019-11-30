@@ -14,7 +14,7 @@ namespace SOTS.Items.GelGear
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Worm Wood Parasite");
-			Tooltip.SetDefault("Increases void regen speed by 0.75\nIncreases max void by 10\nLowers life regen speed");
+			Tooltip.SetDefault("Increases void regen speed by 1\nIncreases max void by 15\nLowers life regen speed");
 		}
 		public override void SetDefaults()
 		{
@@ -41,8 +41,8 @@ namespace SOTS.Items.GelGear
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-			voidPlayer.voidMeterMax2 += 10;
-			voidPlayer.voidRegen += 0.075f;
+			voidPlayer.voidMeterMax2 += 15;
+			voidPlayer.voidRegen += 0.1f;
 			player.lifeRegen -= 1;
 			
 		}

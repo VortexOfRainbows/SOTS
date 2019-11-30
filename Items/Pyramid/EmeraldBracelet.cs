@@ -17,7 +17,7 @@ namespace SOTS.Items.Pyramid
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Emerald Bracelet");
-			Tooltip.SetDefault("Increases void regen by 0.75");
+			Tooltip.SetDefault("Increases void regen by 1.25");
 		}
 		public override void SetDefaults()
 		{
@@ -34,7 +34,7 @@ namespace SOTS.Items.Pyramid
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-			voidPlayer.voidRegen += 0.075f;
+			voidPlayer.voidRegen += 0.125f;
 		}
 	}
 }

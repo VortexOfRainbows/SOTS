@@ -35,7 +35,8 @@ namespace SOTS.Projectiles.Crushers
 		}
 		public override void AI()
         {
-			if(expand == -1)
+			Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 1.5f / 255f, (255 - projectile.alpha) * 1.5f / 255f, (255 - projectile.alpha) * 1.5f / 255f);
+			if(expand == -1 && projectile.owner == Main.myPlayer)
 			{
 				expand = 0;
 				if(projectile.knockBack > 1)
@@ -43,6 +44,7 @@ namespace SOTS.Projectiles.Crushers
 					for(int i = 0; i < projectile.damage; i += (int)(projectile.knockBack * 2f))
 					{ 
 						int proj = Projectile.NewProjectile((projectile.Center.X), projectile.Center.Y, Main.rand.Next(-100, 101) * 0.025f, Main.rand.Next(-100, 101) * 0.025f, 410, 0, 0, 0);
+						Main.projectile[proj].friendly = false;
 						Main.projectile[proj].hostile = false;
 						Main.projectile[proj].timeLeft = Main.rand.Next(24, 60);
 					}

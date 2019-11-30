@@ -17,7 +17,7 @@ namespace SOTS.Projectiles.Crushers
 		
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Putrid Devourer");
+			DisplayName.SetDefault("Rad Crush");
 			
 		}
 		
@@ -35,14 +35,15 @@ namespace SOTS.Projectiles.Crushers
 		}
 		public override void AI()
         {
-			if(expand == -1)
+			Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 1.5f / 255f, (255 - projectile.alpha) * 1.5f / 255f, (255 - projectile.alpha) * 1.5f / 255f);
+			if(expand == -1 && projectile.owner == Main.myPlayer)
 			{
 				expand = 0;
 				if(projectile.knockBack > 1)
 				{
 					for(int i = 0; i < projectile.damage; i += (int)(projectile.knockBack * 7f))
 					{ 
-						int proj = Projectile.NewProjectile((projectile.Center.X), projectile.Center.Y, Main.rand.Next(-100, 101) * 0.025f, Main.rand.Next(-100, 101) * 0.025f, 95, (int)(projectile.damage * 0.5f), 0, 0);
+						int proj = Projectile.NewProjectile((projectile.Center.X), projectile.Center.Y, Main.rand.Next(-100, 101) * 0.02f, Main.rand.Next(-100, 101) * 0.02f, 95, (int)(projectile.damage * 0.5f), 0, projectile.owner);
 						Main.projectile[proj].hostile = false;
 						Main.projectile[proj].timeLeft = Main.rand.Next(24, 60);
 					}

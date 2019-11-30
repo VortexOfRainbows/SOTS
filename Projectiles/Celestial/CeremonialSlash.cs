@@ -50,6 +50,8 @@ namespace SOTS.Projectiles.Celestial
 				Vector2 area = new Vector2(1048f, 0).RotatedBy(dir);
 				area.X = projectile.Center.X + area.X;
 				area.Y = projectile.Center.Y + area.Y;
+				
+				if(player.whoAmI == Main.myPlayer)
 				LaunchLaser(area);
 			}
 			if(ai1 % 4 == 0)
@@ -64,7 +66,7 @@ namespace SOTS.Projectiles.Celestial
 		public void LaunchLaser(Vector2 area)
 		{
 			Player player  = Main.player[projectile.owner];
-			int Probe = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("RedLaser"), projectile.damage, 0, 0);
+			int Probe = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("RedLaser"), projectile.damage, 0, projectile.owner);
 			Main.projectile[Probe].ai[0] = area.X;
 			Main.projectile[Probe].ai[1] = area.Y;
 		}

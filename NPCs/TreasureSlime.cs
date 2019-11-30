@@ -57,7 +57,7 @@ namespace SOTS.NPCs
 		public override void NPCLoot()
 		{
 		
-			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, (ItemID.Leather), Main.rand.Next(5) + 1);
+			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, (ItemID.Leather), Main.rand.Next(4) + 1);
 			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, (ItemID.Wood), Main.rand.Next(20) + 10);
 			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, (ItemID.Gel), Main.rand.Next(4) + 3);
 		

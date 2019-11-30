@@ -154,7 +154,7 @@ namespace SOTS.Projectiles.Celestial
 		public void LaunchLaser(Vector2 area)
 		{
 			Player player  = Main.player[projectile.owner];
-			int Probe = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("RedLaser"), projectile.damage, 0, 0);
+			int Probe = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("RedLaser"), projectile.damage, 0, projectile.owner);
 			Main.projectile[Probe].ai[0] = area.X;
 			Main.projectile[Probe].ai[1] = area.Y;
 			VoidPlayer.ModPlayer(player).voidMeter--;
@@ -213,7 +213,7 @@ namespace SOTS.Projectiles.Celestial
 			projectile.penetrate = -1;
 			projectile.hostile = false;
 			projectile.friendly = true;
-			projectile.magic = true; //both damage types just in case i wanna repurpose it
+			projectile.magic = false; //both damage types just in case i wanna repurpose it
 			projectile.melee = true;
 			projectile.tileCollide = false;
 			projectile.ignoreWater = true;

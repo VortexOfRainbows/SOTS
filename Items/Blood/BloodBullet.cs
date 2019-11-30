@@ -13,7 +13,7 @@ namespace SOTS.Items.Blood
 			Tooltip.SetDefault("Homes and lifesteals\nAutomatically refuels using 2 void\nDecreases void regen by 0.75 while in the inventory");
 		}public override void SafeSetDefaults()
 		{
-			item.damage = 7;
+			item.damage = 6;
 			item.ranged = true;
 			item.width = 14;
 			item.height = 22;

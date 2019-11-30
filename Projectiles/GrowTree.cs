@@ -26,12 +26,12 @@ namespace SOTS.Projectiles
 			projectile.height = 64;
             Main.projFrames[projectile.type] = 5;
 			projectile.penetrate = -1;
-			projectile.timeLeft = 75;
+			projectile.timeLeft = 60;
 			projectile.tileCollide = false;
 			projectile.hostile = false;
 			projectile.ranged = false;
 			projectile.magic = true;
-			projectile.alpha = 55;
+			projectile.alpha = 35;
 		}
 		int damageCounter = 0;
 		bool latch = false;
@@ -55,26 +55,26 @@ namespace SOTS.Projectiles
 		public override void AI()
         {
 			Player player = Main.player[projectile.owner];
-			projectile.alpha++;
-			float distance = 24;
+			projectile.alpha += 2;
+			float distance = 24 - projectile.ai[1]/3;
 			if(projectile.ai[0] == 1)
 			{
-				distance = 18;
+				distance = 18 - projectile.ai[1]/3;
 			}
 			if(projectile.ai[0] == 9)
 			{
-				distance = 38;
+				distance = 38 - projectile.ai[1]/3;
 			}
-			Vector2 direction = new Vector2(distance,0).RotatedBy(projectile.rotation - MathHelper.ToRadians(90));
-			if(projectile.timeLeft < 73)
+			Vector2 direction = new Vector2(distance,0).RotatedBy(projectile.rotation - MathHelper.ToRadians(90 - projectile.ai[1]));
+			if(projectile.timeLeft < 58)
 			{
 				if(projectile.ai[0] != 10 && !projectile.friendly)
 				{
 					if(projectile.owner == Main.myPlayer)
 					{
-						int Probe = Projectile.NewProjectile(projectile.Center.X + direction.X, projectile.Center.Y + direction.Y, 0, 0, mod.ProjectileType("GrowTree"), projectile.damage, projectile.knockBack, player.whoAmI);
+						int Probe = Projectile.NewProjectile(projectile.Center.X + direction.X, projectile.Center.Y + direction.Y, 0, 0, mod.ProjectileType("GrowTree"), projectile.damage, projectile.knockBack, player.whoAmI, 0, projectile.ai[1]);
 						Main.projectile[Probe].ai[0] = projectile.ai[0] + 1;
-						Main.projectile[Probe].rotation = projectile.rotation;
+						Main.projectile[Probe].rotation = projectile.rotation - projectile.ai[1];
 						
 						if(Main.projectile[Probe].ai[0] != 10)
 						Main.projectile[Probe].frame = 4;

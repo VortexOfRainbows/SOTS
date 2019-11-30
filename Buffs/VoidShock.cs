@@ -22,9 +22,9 @@ namespace SOTS.Buffs
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			if(player.lifeRegen > 0)
 			{
-				player.lifeRegen -= player.lifeRegen;
+				player.lifeRegen = 0;
 			}
-			player.lifeRegen -= 5;
+			player.lifeRegen -= 7;
 			voidPlayer.voidRegen *= 0.1f;
 			if(player.buffTime[buffIndex] <= 6 || voidPlayer.voidMeter > 0)
 			{

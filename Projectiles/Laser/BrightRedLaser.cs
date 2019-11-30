@@ -46,7 +46,9 @@ namespace SOTS.Projectiles.Laser
 		}
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.immune[projectile.owner] = 0;
+            target.immune[projectile.owner] = 3;
+			if(projectile.melee) target.immune[projectile.owner] = 0;
+			
 			projectile.damage--;
         }
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) 

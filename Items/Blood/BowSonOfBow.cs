@@ -38,7 +38,7 @@ namespace SOTS.Items.Blood
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(null, "Goblinsteel", 15);
 			recipe.AddIngredient(ItemID.Bone, 35);
-			recipe.AddIngredient(null, "BloodEssence", 20);
+			recipe.AddIngredient(null, "BloodEssence", 5);
 			recipe.AddIngredient(null, "BluePowerChamber", 1);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this);

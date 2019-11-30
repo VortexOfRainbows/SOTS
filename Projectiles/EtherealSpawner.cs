@@ -35,8 +35,7 @@ namespace SOTS.Projectiles
 		
 		public override void Kill(int timeLeft)
 		{
-			
-				 NPC.NewNPC((int)projectile.Center.X, (int)projectile.Center.Y, mod.NPCType("EtherealChaser"));	
+			NPC.NewNPC((int)projectile.Center.X, (int)projectile.Center.Y, mod.NPCType("EtherealChaser"));	
 		}
 	}
 }

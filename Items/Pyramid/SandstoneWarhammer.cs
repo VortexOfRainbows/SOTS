@@ -33,11 +33,11 @@ namespace SOTS.Items.Pyramid
 			item.autoReuse = true;            
 			item.noMelee = false;
 			item.shoot = mod.ProjectileType("Bloodaxe");  
-            item.shootSpeed = 21.5f;
+            item.shootSpeed = 19.5f;
 		}
 		public override void GetVoid(Player player)
 		{
-				voidMana = 4;
+			voidMana = 4;
 		}
 	}
 }

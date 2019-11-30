@@ -87,7 +87,7 @@ namespace SOTS.Projectiles.Star
 				   float shootToY = target.position.Y + (float)target.height * 0.5f - projectile.Center.Y;
 				   float distance = (float)System.Math.Sqrt((double)(shootToX * shootToX + shootToY * shootToY));
 
-				   if(distance < 270f && !target.friendly && target.active)
+				   if(distance < 90f && !target.friendly && target.active)
 				   {
 					   if(projectile.ai[1] <= 3)
 					   {

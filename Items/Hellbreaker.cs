@@ -22,8 +22,8 @@ namespace SOTS.Items
             item.melee = true;  
             item.width = 50;
             item.height = 50;  
-            item.useTime = 45; 
-            item.useAnimation = 45;
+            item.useTime = 50; 
+            item.useAnimation = 50;
             item.useStyle = 5;    
             item.knockBack = 0f;
             item.value = Item.sellPrice(0, 1, 55, 0);
@@ -64,12 +64,12 @@ namespace SOTS.Items
 		}
 		public override void GetVoid(Player player)
 		{
-				voidMana = 3;
+				voidMana = 4;
 		}
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.HellstoneBar, 18);
+			recipe.AddIngredient(ItemID.HellstoneBar, 12);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this);
 			recipe.AddRecipe();

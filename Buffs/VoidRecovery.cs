@@ -21,9 +21,10 @@ namespace SOTS.Buffs
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			if(player.lifeRegen > 0)
 			{
-				player.lifeRegen -= player.lifeRegen;
+				player.lifeRegen = 0;
 			}
-			player.lifeRegen -= 20;
+			player.lifeRegen -= 10;
+			player.lifeRegen -= player.statLifeMax2/20;
 			voidPlayer.voidRegen += 1.25f;
 			voidPlayer.voidRegen += 0.0075f * voidPlayer.voidMeterMax;
 			voidPlayer.voidRegen += 0.0125f * Math.Abs(voidPlayer.voidMeter);	

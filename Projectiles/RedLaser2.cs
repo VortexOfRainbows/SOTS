@@ -41,28 +41,11 @@ namespace SOTS.Projectiles
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             target.immune[projectile.owner] = 0;
-			
-						Dust.NewDust(new Vector2(projectile.position.X , projectile.position.Y), 10, 30, 235);
+			Dust.NewDust(new Vector2(projectile.position.X , projectile.position.Y), 10, 30, 235);
         }
 		public override void Kill(int timeLeft)
 		{
-						Dust.NewDust(new Vector2(projectile.position.X , projectile.position.Y), 10, 30, 235);
-						Dust.NewDust(new Vector2(projectile.position.X , projectile.position.Y), 10, 30, 235);
-						Dust.NewDust(new Vector2(projectile.position.X , projectile.position.Y), 10, 30, 235);
-						Dust.NewDust(new Vector2(projectile.position.X , projectile.position.Y), 10, 30, 235);
-						Dust.NewDust(new Vector2(projectile.position.X , projectile.position.Y), 10, 30, 235);
-						Dust.NewDust(new Vector2(projectile.position.X , projectile.position.Y), 10, 30, 235);
-						Dust.NewDust(new Vector2(projectile.position.X , projectile.position.Y), 10, 30, 235);
-						Dust.NewDust(new Vector2(projectile.position.X , projectile.position.Y), 10, 30, 235);
-						Dust.NewDust(new Vector2(projectile.position.X , projectile.position.Y), 10, 30, 235);
-						Dust.NewDust(new Vector2(projectile.position.X , projectile.position.Y), 10, 30, 235);
-						Dust.NewDust(new Vector2(projectile.position.X , projectile.position.Y), 10, 30, 235);
-						Dust.NewDust(new Vector2(projectile.position.X , projectile.position.Y), 10, 30, 235);
-						Dust.NewDust(new Vector2(projectile.position.X , projectile.position.Y), 10, 30, 235);
-						Dust.NewDust(new Vector2(projectile.position.X , projectile.position.Y), 10, 30, 235);
-						Dust.NewDust(new Vector2(projectile.position.X , projectile.position.Y), 10, 30, 235);
-						Dust.NewDust(new Vector2(projectile.position.X , projectile.position.Y), 10, 30, 235);
-						Dust.NewDust(new Vector2(projectile.position.X , projectile.position.Y), 10, 30, 235);
+			Dust.NewDust(new Vector2(projectile.position.X , projectile.position.Y), 10, 30, 235);
 		}
 	}
 }

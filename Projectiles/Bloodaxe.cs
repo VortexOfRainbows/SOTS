@@ -27,57 +27,62 @@ namespace SOTS.Projectiles
 			projectile.timeLeft = 200;
 			projectile.width = 40;
 			projectile.height = 40;
-			
-
-
-
+			projectile.penetrate = 10;
 		}
 		public override void AI()
 		{
 			if(projectile.timeLeft < 200)
 			projectile.alpha++;
-		
-			projectile.rotation += (float)(Main.rand.Next(100)/100);
+			if(projectile.penetrate < 4)
+			{
+				projectile.friendly = false;
+				projectile.alpha += 3;
+			}
+			if(projectile.alpha > 240)
+			{
+				projectile.Kill();
+			}
+			projectile.rotation += 0.5f;
 					
-					float minDist = 560;
-					int target2 = -1;
-					float dX = 0f;
-					float dY = 0f;
-					float distance = 0;
-					float speed = 0.5f;
-					if(projectile.friendly == true && projectile.hostile == false)
+			float minDist = 360;
+			int target2 = -1;
+			float dX = 0f;
+			float dY = 0f;
+			float distance = 0;
+			float speed = 0.5f;
+			if(projectile.friendly == true && projectile.hostile == false)
+			{
+				for(int i = 0; i < Main.npc.Length - 1; i++)
+				{
+					NPC target = Main.npc[i];
+					if(!target.friendly && target.dontTakeDamage == false && target.lifeMax > 5 && target.active)
 					{
-						for(int i = 0; i < Main.npc.Length - 1; i++)
+						dX = target.Center.X - projectile.Center.X;
+						dY = target.Center.Y - projectile.Center.Y;
+						distance = (float) Math.Sqrt((double)(dX * dX + dY * dY));
+						if(distance < minDist)
 						{
-							NPC target = Main.npc[i];
-							if(!target.friendly && target.dontTakeDamage == false && target.lifeMax > 5 && target.active)
-							{
-								dX = target.Center.X - projectile.Center.X;
-								dY = target.Center.Y - projectile.Center.Y;
-								distance = (float) Math.Sqrt((double)(dX * dX + dY * dY));
-								if(distance < minDist)
-								{
-									minDist = distance;
-									target2 = i;
-								}
-							}
-						}
-						
-						if(target2 != -1)
-						{
-						NPC toHit = Main.npc[target2];
-							if(toHit.active == true)
-							{
-								
-							dX = toHit.Center.X - projectile.Center.X;
-							dY = toHit.Center.Y - projectile.Center.Y;
-							distance = (float)Math.Sqrt((double)(dX * dX + dY * dY));
-							speed /= distance;
-						   
-							projectile.velocity += new Vector2(dX * speed, dY * speed);
-							}
+							minDist = distance;
+							target2 = i;
 						}
 					}
+				}
+				
+				if(target2 != -1)
+				{
+				NPC toHit = Main.npc[target2];
+					if(toHit.active == true)
+					{
+						
+					dX = toHit.Center.X - projectile.Center.X;
+					dY = toHit.Center.Y - projectile.Center.Y;
+					distance = (float)Math.Sqrt((double)(dX * dX + dY * dY));
+					speed /= distance;
+				   
+					projectile.velocity += new Vector2(dX * speed, dY * speed);
+					}
+				}
+			}
 			
 		}
 	}

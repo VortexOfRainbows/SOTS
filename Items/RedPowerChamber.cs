@@ -28,10 +28,7 @@ namespace SOTS.Items
 					if(player.statLifeMax2 > 20)
 					{
 						player.statLifeMax2 -= 10;
-						player.meleeDamage += 0.03f;
-						player.rangedDamage += 0.03f;
-						player.thrownDamage += 0.03f;
-						player.magicDamage += 0.03f;
+						player.allDamage += 0.03f;
 					}
 				}
 		}
@@ -39,14 +36,14 @@ namespace SOTS.Items
 		{
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.LifeCrystal, 1);
-			recipe.AddIngredient(ItemID.GoldBar, 4);
+			recipe.AddIngredient(ItemID.GoldBar, 3);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this);
 			recipe.AddRecipe();
 			
 			recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.LifeCrystal, 1);
-			recipe.AddIngredient(ItemID.PlatinumBar, 4);
+			recipe.AddIngredient(ItemID.PlatinumBar, 3);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this);
 			recipe.AddRecipe();

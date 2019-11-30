@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 using SOTS.Void;
 
 
-namespace SOTS.Items
+namespace SOTS.Items.Pyramid
 {
 	public class AquaticEclipse : VoidItem
 	{
@@ -18,16 +18,16 @@ namespace SOTS.Items
 		}
 		public override void SafeSetDefaults()
 		{
-            item.damage = 50;
+            item.damage = 41;
             item.melee = true;  
-            item.width = 62;
-            item.height = 62;  
-            item.useTime = 60; 
-            item.useAnimation = 60;
+            item.width = 60;
+            item.height = 60;  
+            item.useTime = 61; 
+            item.useAnimation = 61;
             item.useStyle = 5;    
             item.knockBack = 0f;
-            item.value = Item.sellPrice(0, 15, 90, 25);
-            item.rare = 4;
+            item.value = Item.sellPrice(0, 5, 0, 0);
+            item.rare = 6;
             item.UseSound = SoundID.Item22;
             item.autoReuse = true;
             item.shoot = mod.ProjectileType("EclipseArm"); 
@@ -64,7 +64,7 @@ namespace SOTS.Items
 		}
 		public override void GetVoid(Player player)
 		{
-				voidMana = 4;
+				voidMana = 6;
 		}
 		public override void AddRecipes()
 		{
@@ -72,8 +72,10 @@ namespace SOTS.Items
 			recipe.AddIngredient(null, "Hellbreaker", 1);
 			recipe.AddIngredient(null, "WormWoodCollapse", 1);
 			recipe.AddIngredient(null, "CrabClaw", 1);
-			recipe.AddIngredient(ItemID.SoulofNight, 12);
-			recipe.AddIngredient(ItemID.SoulofLight, 12);
+			recipe.AddIngredient(null, "CursedMatter", 5);
+			recipe.AddIngredient(ItemID.SoulofNight, 10);
+			recipe.AddIngredient(ItemID.SoulofLight, 10);
+			recipe.AddIngredient(ItemID.Amethyst, 1);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.SetResult(this);
 			recipe.AddRecipe();

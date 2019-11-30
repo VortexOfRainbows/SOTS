@@ -39,6 +39,12 @@ namespace SOTS.NPCs
 		{
 			if(npc.ai[0] >= 10 && npc.ai[0] <= 59)
 			npc.ai[0] = 0;
+		
+			if (npc.life <= 0)
+            {
+				for(int amount = 0; amount < 3; amount++)
+				Gore.NewGore(new Vector2 (npc.Center.X, npc.Center.Y), default(Vector2), Main.rand.Next(51,54), 1f);	
+            }
 		}
 		public override void AI()
 		{
@@ -91,8 +97,6 @@ namespace SOTS.NPCs
 				Main.npc[npcSpawn].velocity.X += Main.rand.Next(-5,6);
 				Main.npc[npcSpawn].velocity.Y -= Main.rand.Next(3,8);
 			}
-			for(int amount = 0; amount < 3; amount++)
-			Gore.NewGore(new Vector2 (npc.Center.X, npc.Center.Y), default(Vector2), Main.rand.Next(51,54), 1f);	
 		}	
 	
 	}
@@ -132,6 +136,17 @@ namespace SOTS.NPCs
 			public override void HitEffect(int hitDirection, double damage)
 			{
 				ai2 = 0;
+				
+				if (npc.life <= 0)
+				{
+					for (int k = 0; k < 13; k++)
+					{
+						Dust.NewDust(npc.position, npc.width, npc.height, 151, 2.5f * (float)hitDirection, -2.5f, 0, default(Color), 0.7f);
+					}
+					Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/SnakeGore1"), 1f);
+					Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/SnakeGore2"), 1f);
+					Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/SnakeGore3"), 1f);
+				}
 			}
 			public override void OnHitPlayer(Player player, int damage, bool crit)
 			{
@@ -208,9 +223,8 @@ namespace SOTS.NPCs
 			}
 			public override void NPCLoot()
 			{
-				if(Main.rand.Next(5) == 0)
+				if(Main.rand.Next(4) == 0)
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("Snakeskin"), Main.rand.Next(2) + 1);	
 			}	
 		}
-	
 }

@@ -14,16 +14,16 @@ namespace SOTS.Items
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Irradiated Chain-Reactor");
-			Tooltip.SetDefault("Charge to increase damage up to 900%");
+			Tooltip.SetDefault("Charge to increase damage up to 900%\nAttack range scales with charge");
 		}
 		public override void SafeSetDefaults()
 		{
-            item.damage = 10;
+            item.damage = 11;
             item.melee = true;  
             item.width = 50;
             item.height = 50;  
-            item.useTime = 30; 
-            item.useAnimation = 30;
+            item.useTime = 32; 
+            item.useAnimation = 32;
             item.useStyle = 5;    
             item.knockBack = 0f;
             item.value = Item.sellPrice(0, 4, 50, 0);

@@ -2693,7 +2693,7 @@ namespace SOTS
 			if(NPC.downedQueenBee)
 			legendLevel++;
 			if(NPC.downedBoss3) 
-			legendLevel += 2;
+			legendLevel += 1;
 			if(NPC.downedGoblins)
 			legendLevel++;
 			if(NPC.downedPirates)
@@ -2724,8 +2724,8 @@ namespace SOTS
 			legendLevel++;
 			//if(downedAntilion)
 			//legendLevel++;
-			//if(downedCarver)
-			//legendLevel++;
+			if(downedCurse)
+			legendLevel++;
 			if(downedSubspace)
 			legendLevel++;
 			if(downedPinky)
@@ -2743,7 +2743,7 @@ namespace SOTS
 			
 		}
 		int variation = 0;
-		public void GeneratePyramidRoom(int x, int y, int direction)
+		public void GeneratePyramidRoom(int x, int y, int direction) //this is beyond inefficient and should be done differently
 		{
 			//direction 0 = left, 1 = right, 2 = up, 3 = down
 			if(direction == 0 || direction == 1 || direction == 2 || direction == 3)
