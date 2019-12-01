@@ -21,7 +21,7 @@ namespace SOTS.Items.GelGear
       
             item.width = 34;     
             item.height = 30;   
-            item.value = 90000;
+            item.value = Item.sellPrice(0, 1, 80, 0);
             item.rare = 4;
 			item.accessory = true;
 

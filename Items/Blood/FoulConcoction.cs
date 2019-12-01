@@ -13,14 +13,14 @@ namespace SOTS.Items.Blood
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Foul Concoction");
-			Tooltip.SetDefault("Automatically consumed to refill void when low\nRefills 4 void");
+			Tooltip.SetDefault("Automatically consumed when void is low\nRefills 4 void");
 		}
 		public override void SetDefaults()
 		{
 
 			item.width = 30;
 			item.height = 18;
-			item.value = 25;
+            item.value = Item.sellPrice(0, 0, 0, 20);
 			item.rare = 2;
 			item.maxStack = 333;
 			item.ammo = item.type;   

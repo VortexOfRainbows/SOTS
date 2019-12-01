@@ -16,7 +16,7 @@ namespace SOTS.Items
 
 			item.width = 30;
 			item.height = 24;
-			item.value = 125;
+            item.value = Item.sellPrice(0, 0, 1, 0);
 			item.rare = 2;
 			item.maxStack = 99;
 		}

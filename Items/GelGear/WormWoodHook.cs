@@ -21,7 +21,7 @@ namespace SOTS.Items.GelGear
 			item.knockBack = 0;
             item.width = 32;  
             item.height = 32;   
-            item.value = 90000;
+            item.value = Item.sellPrice(0, 1, 80, 0);
             item.rare = 4;
 			item.shoot = mod.ProjectileType("PinkyHook"); 
             item.shootSpeed = 13.33f;

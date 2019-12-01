@@ -25,7 +25,7 @@ namespace SOTS.Items.GelGear
             item.useStyle = 1;    
 			item.mana = 17;
             item.knockBack = 1;
-            item.value = 90000;
+            item.value = Item.sellPrice(0, 1, 80, 0);
             item.rare = 4;
             item.UseSound = SoundID.Item1;
             item.autoReuse = true;

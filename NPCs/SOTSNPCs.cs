@@ -136,7 +136,7 @@ namespace SOTS.NPCs
 					}
 				}
 				if (npc.type == NPCID.Crab) {
-					if (Main.rand.Next(40) == 0) {
+					if (Main.rand.Next(20) == 0) {
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("CrabClaw"), 1); 
 					}
 				}

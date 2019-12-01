@@ -149,7 +149,7 @@ namespace SOTS
 			
 			//just in case temple gets cucked
 			recipe = new ModRecipe(this);
-			recipe.AddIngredient(ItemID.TempleKey, 3);
+			recipe.AddIngredient(ItemID.TempleKey, 2);
 			recipe.AddIngredient(1293, 1); //power cell
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.SetResult(1292, 1); //altar
@@ -158,11 +158,11 @@ namespace SOTS
 			recipe = new ModRecipe(this);
 			recipe.AddIngredient(ItemID.TempleKey, 1);
 			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SetResult(1293, 1); //power cell
+			recipe.SetResult(1293, 2); //power cell
 			recipe.AddRecipe();
 			
 			recipe = new ModRecipe(this);
-			recipe.AddIngredient(1101, 40); //lizahrd brick
+			recipe.AddIngredient(1101, 30); //lizahrd brick
 			recipe.AddIngredient(ItemID.FallenStar, 5); //lizahrd brick
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.SetResult(1293, 1);
@@ -171,7 +171,7 @@ namespace SOTS
 			recipe = new ModRecipe(this);
 			recipe.AddIngredient(ItemID.TempleKey, 1);
 			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SetResult(1101, 50);
+			recipe.SetResult(1101, 75);
 			recipe.AddRecipe();
 			
 			

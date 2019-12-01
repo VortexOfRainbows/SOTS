@@ -13,7 +13,7 @@ namespace SOTS.Items.Blood
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Blood Essence");
-			Tooltip.SetDefault("Decays while in the inventory\nAutomatically consumed to refill void when low\nRefills 2.5 void");
+			Tooltip.SetDefault("Decays while in the inventory\nAutomatically consumed when void is low\nRefills 2.5 void");
 			Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(7, 4));
 		}
 		public override void SetDefaults()
@@ -21,8 +21,8 @@ namespace SOTS.Items.Blood
 
 			item.width = 22;
 			item.height = 22;
-			item.value = 200;
-			item.rare = 10;
+            item.value = Item.sellPrice(0, 0, 0, 75);
+			item.rare = 1;
 			item.maxStack = 999;
 			item.ammo = item.type;   
 			ItemID.Sets.ItemNoGravity[item.type] = true; 

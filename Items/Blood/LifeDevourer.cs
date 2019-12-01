@@ -20,7 +20,7 @@ namespace SOTS.Items.Blood
 		{
 			item.width = 30;
 			item.height = 44;
-			item.value = 100000;
+            item.value = Item.sellPrice(0, 2, 25, 0);
 			item.rare = 10;
 			item.maxStack = 1;
 			item.accessory = true;

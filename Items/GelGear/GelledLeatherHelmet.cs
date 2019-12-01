@@ -14,9 +14,9 @@ namespace SOTS.Items.GelGear
 			item.width = 24;
 			item.height = 26;
 
-			item.value = 2800;
+            item.value = Item.sellPrice(0, 0, 20, 0);
 			item.rare = 3;
-			item.defense = 4;
+			item.defense = 3;
 		}
 
 		public override void SetStaticDefaults()
@@ -42,12 +42,7 @@ namespace SOTS.Items.GelGear
 					Probe = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, mod.ProjectileType("SlimeProbe"), 9, 0, player.whoAmI);
 				}
 				Main.projectile[Probe].timeLeft = 6;
-			
-
-			
 		}
-		
-
 		public override void UpdateEquip(Player player)
 		{
 		

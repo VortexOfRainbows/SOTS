@@ -16,7 +16,7 @@ namespace SOTS.Items.GelGear
 
 			item.width = 30;
 			item.height = 24;
-			item.value = 125;
+            item.value = Item.sellPrice(0, 0, 0, 8);
 			item.rare = 1;
 			item.maxStack = 99;
 		}

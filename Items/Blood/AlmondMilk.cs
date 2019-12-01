@@ -13,7 +13,7 @@ namespace SOTS.Items.Blood
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Almond Milk");
-			Tooltip.SetDefault("Automatically consumed to refill void when low\nRefills 20 void");
+			Tooltip.SetDefault("Automatically consumed when void is low\nRefills 20 void");
 		}
 		public override void SetDefaults()
 		{

@@ -19,7 +19,7 @@ namespace SOTS.Items.Pyramid
 		public override void SafeSetDefaults()
 		{
 
-			item.damage = 25;
+			item.damage = 21;
 			item.melee = true;
 			item.width = 56;
 			item.height = 56;
@@ -33,11 +33,11 @@ namespace SOTS.Items.Pyramid
 			item.autoReuse = true;            
 			item.noMelee = false;
 			item.shoot = mod.ProjectileType("Bloodaxe");  
-            item.shootSpeed = 19.5f;
+            item.shootSpeed = 13.5f;
 		}
 		public override void GetVoid(Player player)
 		{
-			voidMana = 4;
+			voidMana = 6;
 		}
 	}
 }

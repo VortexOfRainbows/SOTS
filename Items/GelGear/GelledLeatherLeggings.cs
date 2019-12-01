@@ -13,7 +13,7 @@ namespace SOTS.Items.GelGear
 			item.width = 26;
 			item.height = 18;
 
-			item.value = 2800;
+            item.value = Item.sellPrice(0, 0, 20, 0);
 			item.rare = 3;
 			item.defense = 3;
 		}

@@ -27,7 +27,7 @@ namespace SOTS.Projectiles
 			projectile.timeLeft = 200;
 			projectile.width = 40;
 			projectile.height = 40;
-			projectile.penetrate = 10;
+			projectile.penetrate = 8;
 		}
 		public override void AI()
 		{
@@ -42,7 +42,6 @@ namespace SOTS.Projectiles
 			{
 				projectile.Kill();
 			}
-			projectile.rotation += 0.5f;
 					
 			float minDist = 360;
 			int target2 = -1;
@@ -50,7 +49,7 @@ namespace SOTS.Projectiles
 			float dY = 0f;
 			float distance = 0;
 			float speed = 0.5f;
-			if(projectile.friendly == true && projectile.hostile == false)
+			if(projectile.friendly == true && projectile.hostile == false && projectile.timeLeft > 110)
 			{
 				for(int i = 0; i < Main.npc.Length - 1; i++)
 				{

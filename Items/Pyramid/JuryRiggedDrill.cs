@@ -33,7 +33,7 @@ namespace SOTS.Items.Pyramid
 			item.tileBoost++;
 			item.useStyle = 5;
 			item.knockBack = 0;
-			item.value = Item.sellPrice(0, 0, 2, 0);
+			item.value = Item.sellPrice(0, 0, 1, 50);
 			item.rare = 5;
 			item.UseSound = SoundID.Item23;
 			item.autoReuse = true;

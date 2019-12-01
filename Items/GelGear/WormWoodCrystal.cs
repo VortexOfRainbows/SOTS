@@ -25,7 +25,7 @@ namespace SOTS.Items.GelGear
             item.useStyle = 1;    
             item.noMelee = true; 
             item.knockBack = 1;
-            item.value = 270;
+            item.value = Item.sellPrice(0, 0, 0, 60);
             item.rare = 4;
 			item.consumable = true;
 			item.maxStack = 999;

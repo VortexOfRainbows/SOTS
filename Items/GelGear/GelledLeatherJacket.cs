@@ -13,9 +13,9 @@ namespace SOTS.Items.GelGear
 			item.width = 30;
 			item.height = 20;
 
-			item.value = 2800;
+            item.value = Item.sellPrice(0, 0, 20, 0);
 			item.rare = 3;
-			item.defense = 5;
+			item.defense = 4;
 		}
 
 		public override void SetStaticDefaults()

@@ -29,7 +29,7 @@ namespace SOTS.Items.SpecialDrops
             item.UseSound = SoundID.Item20;
             item.autoReuse = true;
             item.shoot = 85; 
-            item.shootSpeed = 7;
+            item.shootSpeed = 5.5f;
 			item.useAmmo = 23; //setting ammo to reaquire gel
 
 		}

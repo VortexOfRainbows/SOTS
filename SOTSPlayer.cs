@@ -131,64 +131,52 @@ namespace SOTS
         } 
 		public override void CatchFish(Item fishingRod, Item bait, int power, int liquidType, int poolSize, int worldLayer, int questFish, ref int caughtType, ref bool junk)
         {
-			{ //Fish Set 1
+			 //Fish Set 1
 				
-				if (liquidType == 2 && Main.rand.Next(60) == 1)   {
-				caughtType = mod.ItemType("HoneyBlade"); }
-				
-				
-				if (Main.rand.Next(24) == 1 && player.ZoneSkyHeight)   {
-					caughtType = mod.ItemType("TinyPlanetFish"); 
-				}
-				if (Main.rand.Next(125) == 1 && player.ZoneDesert && Main.hardMode && !player.ZoneBeach)  {
-				caughtType = mod.ItemType("ForbiddenKnife"); }
-				
-				if (Main.rand.Next(7) == 1 && player.ZoneDesert && bait.bait >= 25 && !player.ZoneBeach){
-				caughtType = mod.ItemType("SandFish");}
-				if (Main.rand.Next(30) == 1 && player.ZoneDesert && bait.bait <= 15 && !player.ZoneBeach) {
-				caughtType = mod.ItemType("SandFish"); }
-				if (Main.rand.Next(125) == 1 && player.ZoneSnow && Main.hardMode)  {
-				caughtType = mod.ItemType("FrostKnife"); }
-				
-				if (Main.rand.Next(1000) == 1 && ZeplineBiome) {
-				caughtType = mod.ItemType("ZephyriousZepline"); }
+			if (liquidType == 2 && Main.rand.Next(60) == 1)   {
+			caughtType = mod.ItemType("HoneyBlade"); }
+			
+			
+			if (Main.rand.Next(24) == 1 && player.ZoneSkyHeight)   {
+			caughtType = mod.ItemType("TinyPlanetFish"); }
+			if (Main.rand.Next(125) == 1 && player.ZoneDesert && Main.hardMode && !player.ZoneBeach)  {
+			caughtType = mod.ItemType("ForbiddenKnife"); }
+			
+			if (Main.rand.Next(7) == 1 && player.ZoneDesert && bait.bait >= 25 && !player.ZoneBeach){
+			caughtType = mod.ItemType("SandFish");}
+			if (Main.rand.Next(30) == 1 && player.ZoneDesert && bait.bait <= 15 && !player.ZoneBeach) {
+			caughtType = mod.ItemType("SandFish"); }
+			if (Main.rand.Next(125) == 1 && player.ZoneSnow && Main.hardMode)  {
+			caughtType = mod.ItemType("FrostKnife"); }
+			
+			if (Main.rand.Next(1000) == 1 && ZeplineBiome) {
+			caughtType = mod.ItemType("ZephyriousZepline"); }
             //if (Main.rand.Next(330) == 1 && liquidType == 2 && poolSize >= 500)   {
 			//caughtType = mod.ItemType("ScaledFish");}
-			}
-			{ //Fish Set 2
-			   
-				if (player.ZoneBeach && liquidType == 0 && Main.rand.Next(175) == 1) 
-				{
-				caughtType = mod.ItemType("SpikyPufferfish"); }
-				if (liquidType == 2 && Main.rand.Next(50) == 1) 
-				{
-				caughtType = mod.ItemType("HiveFish"); }
-				if (liquidType == 1 && Main.rand.Next(130) == 1) 
-				{
-				caughtType = mod.ItemType("IceCreamOre"); }
-				if (liquidType == 1 && Main.rand.Next(70) == 1) 
-				{
-				caughtType = mod.ItemType("IceCream"); }
-				if (liquidType == 1 && Main.rand.Next(70) == 1) 
-				{
-				caughtType = mod.ItemType("IceCreamOre"); }
-				if (liquidType == 1 && Main.rand.Next(50) == 1)
-				{
-				caughtType = mod.ItemType("IceCream"); }
-				if (liquidType == 1 && Main.rand.Next(200) == 1)
-				{
-				caughtType = mod.ItemType("GeodeCrate"); }
-				if (liquidType == 1 && Main.rand.Next(35) == 0 && player.FindBuffIndex(BuffID.Crate) > -1)
-				{
-				caughtType = mod.ItemType("GeodeCrate"); }
-				if (liquidType == 1 && Main.rand.Next(60) == 0)
-				{
-				caughtType = mod.ItemType("JewelFish"); }
-				if (liquidType == 1 && player.FindBuffIndex(BuffID.Spelunker) > -1 && GeodeBiome && Main.rand.Next(55) == 0)
-				{
-				caughtType = mod.ItemType("JewelFish"); }
 			
-			}
+			//Fish Set 2
+			   
+			if (player.ZoneBeach && liquidType == 0 && Main.rand.Next(175) == 1) {
+			caughtType = mod.ItemType("SpikyPufferfish"); }
+			if (liquidType == 2 && Main.rand.Next(50) == 1) {
+			caughtType = mod.ItemType("HiveFish"); }
+			if (liquidType == 1 && Main.rand.Next(130) == 1) {
+			caughtType = mod.ItemType("IceCreamOre"); }
+			if (liquidType == 1 && Main.rand.Next(70) == 1) {
+			caughtType = mod.ItemType("IceCream"); }
+			if (liquidType == 1 && Main.rand.Next(70) == 1) {
+			caughtType = mod.ItemType("IceCreamOre"); }
+			if (liquidType == 1 && Main.rand.Next(50) == 1){
+			caughtType = mod.ItemType("IceCream"); }
+			if (liquidType == 1 && Main.rand.Next(200) == 1){
+			caughtType = mod.ItemType("GeodeCrate"); }
+			if (liquidType == 1 && Main.rand.Next(35) == 0 && player.FindBuffIndex(BuffID.Crate) > -1) {
+			caughtType = mod.ItemType("GeodeCrate"); }
+			if (liquidType == 1 && Main.rand.Next(60) == 0)	{
+			caughtType = mod.ItemType("JewelFish"); }
+			if (liquidType == 1 && player.FindBuffIndex(BuffID.Spelunker) > -1 && GeodeBiome && Main.rand.Next(55) == 0) {
+			caughtType = mod.ItemType("JewelFish"); }
+			
 			
             if (Main.rand.Next(1000) == 0 && player.ZoneBeach && liquidType == 0){
 			caughtType = mod.ItemType("PinkJellyfishStaff"); }
