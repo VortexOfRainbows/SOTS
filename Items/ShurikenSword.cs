@@ -22,12 +22,13 @@ namespace SOTS.Items
 			item.useAnimation = 20;
 			item.useStyle = 1;
 			item.knockBack = 3.5f;
-			item.value = 10000;
+			item.value = Item.sellPrice(0, 0, 25, 0);
 			item.rare = 2;
 			item.UseSound = SoundID.Item1;
 			item.autoReuse = false;            
 			item.shoot = 3; 
             item.shootSpeed = 24;
+			item.crit = 6;
 
 		}
 
@@ -35,6 +36,7 @@ namespace SOTS.Items
 		{
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.IronBar, 18);
+			recipe.AddIngredient(null, "Goblinsteel", 12);
 			recipe.AddIngredient(ItemID.Shuriken, 50);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this);
@@ -42,6 +44,7 @@ namespace SOTS.Items
 			
 			recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.LeadBar, 18);
+			recipe.AddIngredient(null, "Goblinsteel", 12);
 			recipe.AddIngredient(ItemID.Shuriken, 50);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this);

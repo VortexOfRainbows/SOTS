@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 
-namespace SOTS.Projectiles 
+namespace SOTS.Projectiles.Nature
 {    
     public class AcornOfJustice : ModProjectile 
     {	

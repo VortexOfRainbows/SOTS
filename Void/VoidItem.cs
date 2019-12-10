@@ -130,26 +130,41 @@ namespace SOTS.Void
 		}	
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) 
 		{
-				if(item.shoot != 10)
-				{
-				return true;
-				}
-				
+			if(item.shoot != 10)
+			{
+			return true;
+			}
+			
+			return false;
+		}
+		public sealed override bool ConsumeAmmo(Player player) ///this is the only way i have found to make void not be consumed when ammo is not present
+		{
+			if(item.useAmmo != 0)
+			DrainMana(player);
+			bool canUse = BeforeConsumeAmmo(player);
+			if(!canUse)
+			{
 				return false;
+			}
 			return true;
 		}
 		public sealed override bool CanUseItem(Player player) 
 		{
 			bool canUse = BeforeUseItem(player);
-			if(!canUse || player.FindBuffIndex(mod.BuffType("VoidRecovery")) > -1)
+			if(!canUse || player.FindBuffIndex(mod.BuffType("VoidRecovery")) > -1 || item.useAnimation < 2)
 			{
 				return false;
 			}
 			item.mana = 0;
+			if(item.useAmmo == 0)
 			DrainMana(player);
 			return true;
 		}
 		public virtual bool BeforeUseItem(Player player) 
+		{
+			return true;
+		}
+		public virtual bool BeforeConsumeAmmo(Player player) 
 		{
 			return true;
 		}

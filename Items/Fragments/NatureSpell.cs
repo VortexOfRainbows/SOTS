@@ -4,18 +4,18 @@ using Terraria.ModLoader;
 using System;
 using Microsoft.Xna.Framework;
 
-namespace SOTS.Items
+namespace SOTS.Items.Fragments
 {
 	public class NatureSpell : ModItem
 	{	int counter = 0;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Nature Spell");
+			DisplayName.SetDefault("Flower Spell");
 			Tooltip.SetDefault("Launches a seed that latches onto enemies\nWhen the seed blooms, it does 400% damage");
 		}
 		public override void SetDefaults()
 		{
-            item.damage = 4; 
+            item.damage = 5; 
             item.magic = true; 
             item.width = 28;   
             item.height = 30;   
@@ -28,11 +28,10 @@ namespace SOTS.Items
             item.rare = 1;
             item.UseSound = SoundID.Item8;
             item.shoot = mod.ProjectileType("FlowerSeed"); 
-            item.shootSpeed = 9.5f;
+            item.shootSpeed = 10f;
 			item.mana = 4;
 
 		}
-
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);

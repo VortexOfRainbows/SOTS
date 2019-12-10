@@ -22,7 +22,7 @@ namespace SOTS.Items.GelGear
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Gelled Helmet");
-			Tooltip.SetDefault("5% increased ranged and summon damage\nIncreases max minions");
+			Tooltip.SetDefault("4% increased summon damage");
 		}
 		
 		public override bool IsArmorSet(Item head, Item body, Item legs)
@@ -45,19 +45,14 @@ namespace SOTS.Items.GelGear
 		}
 		public override void UpdateEquip(Player player)
 		{
-		
-			player.minionDamage += 0.05f;
-			player.rangedDamage += 0.05f;
-			player.maxMinions += 1;
+			player.minionDamage += 0.04f;
 		}
-
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "GelBar", 24);
-			recipe.AddIngredient(ItemID.Leather, 20);
-			recipe.AddIngredient(null, "SlimeyFeather", 20);
-			recipe.AddIngredient(ItemID.SlimeStaff, 1);
+			recipe.AddIngredient(null, "GelBar", 20);
+			recipe.AddIngredient(ItemID.Leather, 16);
+			recipe.AddIngredient(null, "SlimeyFeather", 16);
 			recipe.SetResult(this);
 			recipe.AddTile(TileID.Anvils);
 			recipe.AddRecipe();

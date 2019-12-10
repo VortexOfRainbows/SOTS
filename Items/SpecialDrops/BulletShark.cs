@@ -33,7 +33,7 @@ namespace SOTS.Items.SpecialDrops
 		}
 		public override void GetVoid(Player player)
 		{
-				voidMana = 20;
+				voidMana = 9;
 		}
 	}
 }

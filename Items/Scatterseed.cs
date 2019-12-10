@@ -39,7 +39,6 @@ namespace SOTS.Items
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(null, "NatureSpell", 1);
 			recipe.AddIngredient(ItemID.CrimtaneBar, 8);
-			recipe.AddIngredient(ItemID.Boomstick, 1);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this);
 			recipe.AddRecipe();
@@ -47,7 +46,6 @@ namespace SOTS.Items
 			recipe = new ModRecipe(mod);
 			recipe.AddIngredient(null, "NatureSpell", 1);
 			recipe.AddIngredient(ItemID.DemoniteBar, 8);
-			recipe.AddIngredient(ItemID.Boomstick, 1);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this);
 			recipe.AddRecipe();

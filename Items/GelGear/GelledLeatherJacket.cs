@@ -21,7 +21,7 @@ namespace SOTS.Items.GelGear
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Gelled Jacket");
-			Tooltip.SetDefault("5% increased ranged crit");
+			Tooltip.SetDefault("Increases max minions");
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs)
         {
@@ -30,17 +30,14 @@ namespace SOTS.Items.GelGear
 
 		public override void UpdateEquip(Player player)
 		{
-		
-			player.rangedCrit += 5;
-			
+			player.maxMinions += 1;
 		}
-
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "GelBar", 20);
-			recipe.AddIngredient(ItemID.Leather, 16);
-			recipe.AddIngredient(null, "SlimeyFeather", 16);
+			recipe.AddIngredient(null, "GelBar", 22);
+			recipe.AddIngredient(ItemID.Leather, 18);
+			recipe.AddIngredient(null, "SlimeyFeather", 18);
 			recipe.SetResult(this);
 			recipe.AddTile(TileID.Anvils);
 			recipe.AddRecipe();
