@@ -174,7 +174,11 @@ namespace SOTS
 			recipe.SetResult(1101, 75);
 			recipe.AddRecipe();
 			
-			
+			recipe = new ModRecipe(this);
+			recipe.AddIngredient(null, "FragmentOfChaos", 75);
+			recipe.AddTile(TileID.MythrilAnvil);
+			recipe.SetResult(1326, 1); //rod of discord
+			recipe.AddRecipe();
 		}
 		public override void UpdateMusic(ref int music, ref MusicPriority priority)
         {
