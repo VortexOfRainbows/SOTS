@@ -29,6 +29,8 @@ namespace SOTS.Items.Pyramid
 		{
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.LifeCrystal, 1);
+			recipe.AddIngredient(null, "FragmentOfEvil", 1);
+			recipe.AddIngredient(null, "FragmentOfEarth", 1);
 			recipe.AddIngredient(ItemID.ShadowScale, 10);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this);
@@ -36,6 +38,8 @@ namespace SOTS.Items.Pyramid
 			
 			recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.LifeCrystal, 1);
+			recipe.AddIngredient(null, "FragmentOfEvil", 1);
+			recipe.AddIngredient(null, "FragmentOfEarth", 1);
 			recipe.AddIngredient(ItemID.TissueSample, 10);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this);

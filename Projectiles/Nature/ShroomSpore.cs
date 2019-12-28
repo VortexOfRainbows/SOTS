@@ -40,7 +40,7 @@ namespace SOTS.Projectiles.Nature
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
 			if(Main.rand.Next(7) == 0)
-			target.AddBuff(BuffID.Confused, 30, false);
+			target.AddBuff(BuffID.Confused, 90, false);
 			
 			projectile.damage = projectile.damage - (int)(projectile.damage * 0.5f);
 			projectile.friendly = projectile.penetrate > 3;

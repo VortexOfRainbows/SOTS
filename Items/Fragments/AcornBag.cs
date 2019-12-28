@@ -48,6 +48,7 @@ namespace SOTS.Items.Fragments
 		{
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.Wood, 20);
+			recipe.AddIngredient(null, "FragmentOfNature", 4);
 			recipe.AddIngredient(ItemID.Acorn, 10);
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.SetResult(this);

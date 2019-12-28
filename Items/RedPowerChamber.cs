@@ -17,7 +17,7 @@ namespace SOTS.Items
 			item.width = 30;
 			item.height = 30;
             item.value = Item.sellPrice(0, 1, 75, 0);
-			item.rare = 2;
+			item.rare = 1;
 			item.maxStack = 4;
 		}
 		public override void UpdateInventory(Player player)

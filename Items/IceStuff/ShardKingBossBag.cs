@@ -32,7 +32,9 @@ namespace SOTS.Items.IceStuff
 		{
 
 			player.QuickSpawnItem(mod.ItemType("PearlescentCore"));
-			player.QuickSpawnItem(mod.ItemType("AbsoluteBar"),Main.rand.Next(16, 33));
+			player.QuickSpawnItem(mod.ItemType("AbsoluteBar"),Main.rand.Next(26, 43));
+			player.QuickSpawnItem(ItemID.FrostCore,Main.rand.Next(2) + 1);
+			
 			
 				
 		}

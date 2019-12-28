@@ -12,6 +12,7 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.Graphics.Shaders;
 using Terraria.Localization;
+using SOTS.Void;
 
 namespace SOTS
 {
@@ -65,6 +66,7 @@ namespace SOTS
 		public bool lostSoul = false;
 		public int onhit = 0;
 		public int onhitdamage = 0;
+		public float attackSpeedMod = 0;
 		//some important variables 2
      
 		public bool PurpleBalloon = false;
@@ -76,7 +78,13 @@ namespace SOTS
 		public bool pearlescentMagic = false; //pearlescent core effect
 		public bool bloodstainedJewel = false; //bloodstained jewel effect
 		public bool snakeSling = false; //snakeskin sling effect
-		
+
+		public int CritLifesteal = 0; //crit clover
+		public float CritVoidsteal = 0f; //crit void charm
+		public int CritBonusDamage = 0; //crit coin + amplfiier
+		public bool CritFire = false; //hellfire icosahedron
+		public bool CritFrost = false; //borealis icosahedron
+		public bool CritCurseFire = false; //cursed icosahedron
 		
 		public override void ResetEffects()
         { 
@@ -102,6 +110,7 @@ namespace SOTS
 		{
 			onhit--;
 		}
+		attackSpeedMod = 0;
 		 //Some important variables 1
 			lostSoul = false;
 			orion = false;
@@ -125,31 +134,28 @@ namespace SOTS
 			pearlescentMagic = false;
 			bloodstainedJewel = false;
 			snakeSling = false; 
-			
-				if(PyramidBiome)
+			CritLifesteal = 0;
+			CritVoidsteal = 0f;
+			CritBonusDamage = 0;
+			CritFire = false; 
+			CritFrost = false; 
+			CritCurseFire = false; 
+			if(PyramidBiome)
 				player.AddBuff(mod.BuffType("PharaohsCurse"), 16, false);
         } 
 		public override void CatchFish(Item fishingRod, Item bait, int power, int liquidType, int poolSize, int worldLayer, int questFish, ref int caughtType, ref bool junk)
         {
 			 //Fish Set 1
-				
-			if (liquidType == 2 && Main.rand.Next(60) == 1)   {
-			caughtType = mod.ItemType("HoneyBlade"); }
-			
 			
 			if (Main.rand.Next(24) == 1 && player.ZoneSkyHeight)   {
 			caughtType = mod.ItemType("TinyPlanetFish"); }
-			if (Main.rand.Next(125) == 1 && player.ZoneDesert && Main.hardMode && !player.ZoneBeach)  {
-			caughtType = mod.ItemType("ForbiddenKnife"); }
 			
 			if (Main.rand.Next(7) == 1 && player.ZoneDesert && bait.bait >= 25 && !player.ZoneBeach){
 			caughtType = mod.ItemType("SandFish");}
 			if (Main.rand.Next(30) == 1 && player.ZoneDesert && bait.bait <= 15 && !player.ZoneBeach) {
 			caughtType = mod.ItemType("SandFish"); }
-			if (Main.rand.Next(125) == 1 && player.ZoneSnow && Main.hardMode)  {
-			caughtType = mod.ItemType("FrostKnife"); }
 			
-			if (Main.rand.Next(1000) == 1 && ZeplineBiome) {
+			if (Main.rand.Next(200) == 0 && ZeplineBiome) {
 			caughtType = mod.ItemType("ZephyriousZepline"); }
             //if (Main.rand.Next(330) == 1 && liquidType == 2 && poolSize >= 500)   {
 			//caughtType = mod.ItemType("ScaledFish");}
@@ -427,12 +433,7 @@ namespace SOTS
 					damage = 0;
 					player.statLife = player.statMana;
 				}
-				
 			}
-			
-			
-			
-			
 			return true;
 		}
 		int shotCounter = 0;
@@ -513,6 +514,12 @@ namespace SOTS
 		}
 		public override float UseTimeMultiplier(Item item)
 		{
+			float mod = attackSpeedMod;
+			if(mod > (item.useAnimation / 2f) -1f)
+			{
+				mod = ((item.useAnimation / 2f) -1f);
+			}
+			/*
 			if(ceres == true)
 			{
 				item.useTurn = true;
@@ -526,13 +533,70 @@ namespace SOTS
 			{
 				return 1.2f;
 			}
+			*/
+			if(mod != 0)
+			{
+				return 1 + mod;
+			}
 			return 1f;
 		}
-		//public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
-		//{
-		//}
+		public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+		{
+			if(crit)
+			{
+				if(CritLifesteal > 0)
+				{
+					player.statLife += CritLifesteal;
+					player.HealEffect(CritLifesteal);
+				}
+				if(CritVoidsteal > 0)
+				{
+					VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
+					voidPlayer.voidMeter += CritVoidsteal;
+				}
+				int randBuff = Main.rand.Next(3);
+				if(randBuff == 2 && CritCurseFire)
+				{
+					target.AddBuff(BuffID.CursedInferno, 300, false);
+				}
+				if(randBuff == 1 && CritFrost)
+				{
+					target.AddBuff(BuffID.Frostburn, 300, false);
+				}
+				else if(randBuff == 0 && CritFire)
+				{
+					target.AddBuff(BuffID.OnFire, 300, false);
+				}
+				damage += CritBonusDamage;
+			}
+		}
+		public override void ModifyHitNPC(Item item, NPC target, ref int damage, ref float knockback, ref bool crit) 
+		{
+			if(crit)
+			{
+				if(CritLifesteal > 0)
+				{
+					player.statLife += CritLifesteal;
+					player.HealEffect(CritLifesteal);
+				}
+				if(CritVoidsteal > 0)
+				{
+					VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
+					voidPlayer.voidMeter += CritVoidsteal;
+				}
+				int randBuff = Main.rand.Next(2);
+				if((randBuff == 1 && CritFrost) || (CritFire && CritFrost && Main.rand.Next(5) == 0))
+				{
+					target.AddBuff(BuffID.Frostburn, 300, false);
+				}
+				else if(randBuff == 0 && CritFire)
+				{
+					target.AddBuff(BuffID.OnFire, 300, false);
+				}
+				damage += CritBonusDamage;
+			}
+		}
 	}
-	
 }
 
 

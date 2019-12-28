@@ -36,7 +36,6 @@ namespace SOTS.NPCs.Boss
             npc.buffImmune[70] = true;
             npc.buffImmune[39] = true;
             npc.buffImmune[24] = true;
-           
         }
  
         public override bool PreAI()

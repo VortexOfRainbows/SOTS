@@ -55,13 +55,13 @@ namespace SOTS.Items.IceStuff
 			int type = mod.ProjectileType("BlizzardProbe");
 				if (Probe == -1)
 				{
-					Probe = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, type, (int)(item.damage * ((player.minionDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI); //waterbolt proj
+					Probe = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, type, (int)(item.damage * (1 + (player.minionDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI); //waterbolt proj
 					Projectile proj = Main.projectile[Probe];
 					proj.ai[1] = 0;
 				}
 				if (!Main.projectile[Probe].active || Main.projectile[Probe].type != type)
 				{
-					Probe = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, type, (int)(item.damage * ((player.minionDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI);
+					Probe = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, type, (int)(item.damage * (1 + (player.minionDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI);
 					Projectile proj = Main.projectile[Probe];
 					proj.ai[1] = 0;
 				}
@@ -80,13 +80,13 @@ namespace SOTS.Items.IceStuff
 				
 				if (Probe2 == -1)
 				{
-					Probe2 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, type, (int)(item.damage * ((player.minionDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI);
+					Probe2 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, type, (int)(item.damage * (1 + (player.minionDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI);
 					Projectile proj = Main.projectile[Probe2];
 					proj.ai[1] = 15;
 				}
 				if (!Main.projectile[Probe2].active || Main.projectile[Probe2].type != type)
 				{
-					Probe2 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, type, (int)(item.damage * ((player.minionDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI);
+					Probe2 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, type, (int)(item.damage * (1 + (player.minionDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI);
 					Projectile proj = Main.projectile[Probe2];
 					proj.ai[1] = 15;
 				}
@@ -104,13 +104,13 @@ namespace SOTS.Items.IceStuff
 				}
 				if (Probe3 == -1)
 				{
-					Probe3 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, type, (int)(item.damage * ((player.minionDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI); //waterbolt proj
+					Probe3 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, type, (int)(item.damage * (1 + (player.minionDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI); //waterbolt proj
 					Projectile proj = Main.projectile[Probe3];
 					proj.ai[1] = 30;
 				}
 				if (!Main.projectile[Probe3].active || Main.projectile[Probe3].type != type)
 				{
-					Probe3 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, type, (int)(item.damage * ((player.minionDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI);
+					Probe3 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, type, (int)(item.damage * (1 + (player.minionDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI);
 					Projectile proj = Main.projectile[Probe3];
 					proj.ai[1] = 30;
 				}
@@ -129,13 +129,13 @@ namespace SOTS.Items.IceStuff
 				
 				if (Probe4 == -1)
 				{
-					Probe4 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, type, (int)(item.damage * ((player.minionDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI);
+					Probe4 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, type, (int)(item.damage * (1 + (player.minionDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI);
 					Projectile proj = Main.projectile[Probe4];
 					proj.ai[1] = 45;
 				}
 				if (!Main.projectile[Probe4].active || Main.projectile[Probe4].type != type)
 				{
-					Probe4 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, type, (int)(item.damage * ((player.minionDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI);
+					Probe4 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, type, (int)(item.damage * (1 + (player.minionDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI);
 					Projectile proj = Main.projectile[Probe4];
 					proj.ai[1] = 45;
 				}
@@ -153,13 +153,13 @@ namespace SOTS.Items.IceStuff
 				}
 				if (Probe5 == -1)
 				{
-					Probe5 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, type, (int)(item.damage * ((player.minionDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI); //waterbolt proj
+					Probe5 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, type, (int)(item.damage * (1 + (player.minionDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI); //waterbolt proj
 					Projectile proj = Main.projectile[Probe5];
 					proj.ai[1] = 60;
 				}
 				if (!Main.projectile[Probe5].active || Main.projectile[Probe5].type != type)
 				{
-					Probe5 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, type, (int)(item.damage * ((player.minionDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI);
+					Probe5 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, type, (int)(item.damage * (1 + (player.minionDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI);
 					Projectile proj = Main.projectile[Probe5];
 					proj.ai[1] = 60;
 				}
@@ -178,13 +178,13 @@ namespace SOTS.Items.IceStuff
 				
 				if (Probe6 == -1)
 				{
-					Probe6 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, type, (int)(item.damage * ((player.minionDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI);
+					Probe6 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, type, (int)(item.damage * (1 + (player.minionDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI);
 					Projectile proj = Main.projectile[Probe6];
 					proj.ai[1] = 75;
 				}
 				if (!Main.projectile[Probe6].active || Main.projectile[Probe6].type != type)
 				{
-					Probe6 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, type, (int)(item.damage * ((player.minionDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI);
+					Probe6 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, type, (int)(item.damage * (1 + (player.minionDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI);
 					Projectile proj = Main.projectile[Probe6];
 					proj.ai[1] = 75;
 				}
@@ -202,13 +202,13 @@ namespace SOTS.Items.IceStuff
 				}
 				if (Probe7 == -1)
 				{
-					Probe7 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, type, (int)(item.damage * ((player.minionDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI); //waterbolt proj
+					Probe7 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, type, (int)(item.damage * (1 + (player.minionDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI); //waterbolt proj
 					Projectile proj = Main.projectile[Probe7];
 					proj.ai[1] = 90;
 				}
 				if (!Main.projectile[Probe7].active || Main.projectile[Probe7].type != type)
 				{
-					Probe7 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, type, (int)(item.damage * ((player.minionDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI);
+					Probe7 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, type, (int)(item.damage * (1 + (player.minionDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI);
 					Projectile proj = Main.projectile[Probe7];
 					proj.ai[1] = 90;
 				}
@@ -227,13 +227,13 @@ namespace SOTS.Items.IceStuff
 				
 				if (Probe8 == -1)
 				{
-					Probe8 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, type, (int)(item.damage * ((player.minionDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI);
+					Probe8 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, type, (int)(item.damage * (1 + (player.minionDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI);
 					Projectile proj = Main.projectile[Probe8];
 					proj.ai[1] = 105;
 				}
 				if (!Main.projectile[Probe8].active || Main.projectile[Probe8].type != type)
 				{
-					Probe8 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, type, (int)(item.damage * ((player.minionDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI);
+					Probe8 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, type, (int)(item.damage * (1 + (player.minionDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI);
 					Projectile proj = Main.projectile[Probe8];
 					proj.ai[1] = 105;
 				}

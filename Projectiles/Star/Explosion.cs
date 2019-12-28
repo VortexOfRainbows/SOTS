@@ -66,7 +66,7 @@ namespace SOTS.Projectiles.Star
 						Main.dust[num1].velocity *= 0.1f;
 					}
 			}
-			if(wait >= 360)
+			if(wait >= 60)
 			{
 				projectile.velocity.X *= 400f;
 				projectile.velocity.Y *= 400f;

@@ -26,7 +26,7 @@ namespace SOTS.Items
             item.width = 26;     
             item.height = 26;   
             item.value = Item.sellPrice(0, 0, 20, 0);
-            item.rare = 2;
+            item.rare = 1;
 			item.defense = 1;
 			item.accessory = true;
 
@@ -41,6 +41,7 @@ namespace SOTS.Items
 		{
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(3066, 50); //smooth marble
+			recipe.AddIngredient(null, "FragmentOfEarth", 4);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this);
 			recipe.AddRecipe();

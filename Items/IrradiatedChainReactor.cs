@@ -64,7 +64,7 @@ namespace SOTS.Items
 		}
 		public override void GetVoid(Player player)
 		{
-				voidMana = 4;
+			voidMana = 4;
 		}
 	}
 }

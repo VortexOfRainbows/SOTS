@@ -49,18 +49,18 @@ namespace SOTS.Projectiles.Nature
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
 			Player player = Main.player[projectile.owner];
-            target.immune[projectile.owner] = 15;
+            target.immune[projectile.owner] = 17;
 			if(projectile.velocity.X > 0) 
 			{
-				projectile.velocity.X *= 1.25f;
 				projectile.velocity.X += 2.4f;
-				projectile.velocity.Y += 2f;
 			}
 			if(projectile.velocity.X < 0) 
 			{
-				projectile.velocity.X *= 1.25f;
 				projectile.velocity.X -= 2.4f;
-				projectile.velocity.Y += 2f;
+			}
+			if(Math.Abs(projectile.velocity.X) > 20f)
+			{
+				projectile.velocity.X *= 0.5f;
 			}
 			if(projectile.velocity.X == 0)
 			{

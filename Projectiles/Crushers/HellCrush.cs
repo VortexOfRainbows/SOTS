@@ -63,6 +63,7 @@ namespace SOTS.Projectiles.Crushers
         {
 			Player player = Main.player[projectile.owner];
             target.immune[projectile.owner] = 10;
+			target.AddBuff(BuffID.OnFire, 360, false);
         }
 	}
 }

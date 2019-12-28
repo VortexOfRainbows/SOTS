@@ -44,79 +44,79 @@ namespace SOTS.Items.SpecialDrops.Legendary
 		{
 			if(SOTSWorld.legendLevel == 1)
 			{
-				voidCost2 = 159;
+				voidCost2 = 50;
 			}
 			if(SOTSWorld.legendLevel == 2)
 			{
-				voidCost2 = 157;
+				voidCost2 = 50;
 			}
 			if(SOTSWorld.legendLevel == 3)
 			{
-				voidCost2 = 154;
+				voidCost2 = 50;
 			}
 			if(SOTSWorld.legendLevel == 4)
 			{
-				voidCost2 = 150;
+				voidCost2 = 50;
 			}
 			if(SOTSWorld.legendLevel == 5)
 			{
-				voidCost2 = 145;
+				voidCost2 = 50;
 			}
 			if(SOTSWorld.legendLevel == 6)
 			{
-				voidCost2 = 139;
+				voidCost2 = 50;
 			}
 			if(SOTSWorld.legendLevel == 7)
 			{
-				voidCost2 = 132;
+				voidCost2 = 50;
 			}
 			if(SOTSWorld.legendLevel == 8)
 			{
-				voidCost2 = 124;
+				voidCost2 = 50;
 			}
 			if(SOTSWorld.legendLevel == 9)
 			{
-				voidCost2 = 112;
+				voidCost2 = 50;
 			}
 			if(SOTSWorld.legendLevel == 10)
 			{
-				voidCost2 = 100;
+				voidCost2 = 50;
 			}
 			if(SOTSWorld.legendLevel == 11)
 			{
-				voidCost2 = 95;
+				voidCost2 = 50;
 			}
 			if(SOTSWorld.legendLevel == 12)
 			{
-				voidCost2 = 90;
+				voidCost2 = 50;
 			}
 			if(SOTSWorld.legendLevel == 13)
 			{
-				voidCost2 = 85;
+				voidCost2 = 50;
 			}
 			if(SOTSWorld.legendLevel == 14)
 			{
-				voidCost2 = 80;
+				voidCost2 = 50;
 			}
 			if(SOTSWorld.legendLevel == 15)
 			{
-				voidCost2 = 75;
+				voidCost2 = 50;
 			}
 			if(SOTSWorld.legendLevel == 16)
 			{
-				voidCost2 = 70;
+				voidCost2 = 50;
 			}
 			if(SOTSWorld.legendLevel == 17)
 			{
-				voidCost2 = 65;
+				voidCost2 = 50;
 			}
 			if(SOTSWorld.legendLevel == 18)
 			{
-				voidCost2 = 60;
+				voidCost2 = 50;
 			}
 			if(SOTSWorld.legendLevel == 19)
 			{
-				voidCost2 = 55;
+				voidCost2 = 50;
 			}
 			if(SOTSWorld.legendLevel == 20)
 			{
@@ -326,8 +326,9 @@ namespace SOTS.Items.SpecialDrops.Legendary
 				voidCost2 = 50;
 			}
 			
-            item.useTime = frozenTime; 
-            item.useAnimation = frozenTime; 
+			item.damage /= 2;
+            item.useTime = frozenTime/2; 
+            item.useAnimation = frozenTime/2; 
 		
 		}
 	}

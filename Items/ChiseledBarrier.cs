@@ -54,11 +54,11 @@ namespace SOTS.Items
 			rotation2 += 1f;
 				if (Probe == -1)
 				{
-					Probe = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, 27, (int)(item.damage * ((player.magicDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI); //waterbolt proj
+					Probe = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, 27, (int)(item.damage * (1f + (player.magicDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI); //waterbolt proj
 				}
 				if (!Main.projectile[Probe].active || Main.projectile[Probe].type != 27)
 				{
-					Probe = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, 27, (int)(item.damage * ((player.magicDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI);
+					Probe = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, 27, (int)(item.damage * (1f + (player.magicDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI);
 				}
 				Main.projectile[Probe].timeLeft = 6;
 				if (Probe != -1)
@@ -76,11 +76,11 @@ namespace SOTS.Items
 				
 				if (Probe2 == -1)
 				{
-					Probe2 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, 27, (int)(item.damage * ((player.magicDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI);
+					Probe2 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, 27, (int)(item.damage * (1f + (player.magicDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI);
 				}
 				if (!Main.projectile[Probe2].active || Main.projectile[Probe2].type != 27)
 				{
-					Probe2 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, 27, (int)(item.damage * ((player.magicDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI);
+					Probe2 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, 27, (int)(item.damage * (1f + (player.magicDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI);
 				}
 				Main.projectile[Probe2].timeLeft = 6;
 				if (Probe2 != -1)
@@ -99,12 +99,12 @@ namespace SOTS.Items
 				
 				if (Probe3 == -1)
 				{
-					Probe3 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, mod.ProjectileType("TinyPlanetTear"), (int)(item.damage * ((player.magicDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI);
+					Probe3 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, mod.ProjectileType("TinyPlanetTear"), (int)(item.damage * (1f + (player.magicDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI);
 					Main.projectile[Probe3].ai[1] = 180;
 				}
 				if (!Main.projectile[Probe3].active || Main.projectile[Probe3].type != mod.ProjectileType("TinyPlanetTear"))
 				{
-					Probe3 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, mod.ProjectileType("TinyPlanetTear"), (int)(item.damage * ((player.magicDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI);
+					Probe3 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, mod.ProjectileType("TinyPlanetTear"), (int)(item.damage * (1f + (player.magicDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI);
 					Main.projectile[Probe3].ai[1] = 180;
 				}
 				Main.projectile[Probe3].timeLeft = 6;
@@ -112,11 +112,11 @@ namespace SOTS.Items
 				
 				if (Probe4 == -1)
 				{
-					Probe4 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, mod.ProjectileType("TinyPlanetTear"),	(int)(item.damage * ((player.magicDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI);
+					Probe4 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, mod.ProjectileType("TinyPlanetTear"),	(int)(item.damage * (1f + (player.magicDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI);
 				}
 				if (!Main.projectile[Probe4].active || Main.projectile[Probe4].type != mod.ProjectileType("TinyPlanetTear"))
 				{
-					Probe4 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, mod.ProjectileType("TinyPlanetTear"), (int)(item.damage * ((player.magicDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI);
+					Probe4 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, mod.ProjectileType("TinyPlanetTear"), (int)(item.damage * (1f + (player.magicDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI);
 				}
 				Main.projectile[Probe4].timeLeft = 6;
 				

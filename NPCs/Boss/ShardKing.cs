@@ -71,19 +71,19 @@ namespace SOTS.NPCs.Boss
 			{
 				Main.NewText("The key in your pocket starts to warm", 180, 250, 255);
 			}
-		SOTSWorld.downedAmalgamation = true;
-		potionType = ItemID.GreaterHealingPotion;
-	
-		if(Main.expertMode)
+			SOTSWorld.downedAmalgamation = true;
+			potionType = ItemID.GreaterHealingPotion;
 		
-		{ 
-		npc.DropBossBags();
-		} 
-		else 
+			if(Main.expertMode)
+			
+			{ 
+			npc.DropBossBags();
+			} 
+			else 
 			{
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("AbsoluteBar"), Main.rand.Next(16, 25)); 
-
-				}
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("AbsoluteBar"), Main.rand.Next(26, 35)); 
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemID.FrostCore, Main.rand.Next(2) + 1); 
+			}
 		
 		}
 		public override void AI()
@@ -266,7 +266,7 @@ namespace SOTS.NPCs.Boss
 						if(spike.type == mod.NPCType("FrostbiteSpike"))
 						{
 						amount++;
-						Projectile.NewProjectile(spike.Center.X + Main.rand.Next(-25,26), spike.Center.Y + Main.rand.Next(-25,26), 0, 0,  mod.ProjectileType("FrostShard"), 24, 0, Main.myPlayer);
+						Projectile.NewProjectile(spike.Center.X + Main.rand.Next(-25,26), spike.Center.Y + Main.rand.Next(-25,26), 0, 0,  mod.ProjectileType("FrostShard"), 24, 0, 0);
 						}
 					}
 					if(!Main.expertMode)
@@ -312,7 +312,7 @@ namespace SOTS.NPCs.Boss
 			
 			if(AICycle3 >= 120)
 				{
-					Projectile.NewProjectile(npc.Center.X + Main.rand.Next(-150,151), npc.Center.Y + Main.rand.Next(-150,151), 0, 0,  mod.ProjectileType("FrostShard"), 24, 0, Main.myPlayer);
+					Projectile.NewProjectile(npc.Center.X + Main.rand.Next(-150,151), npc.Center.Y + Main.rand.Next(-150,151), 0, 0,  mod.ProjectileType("FrostShard"), 24, 0, 0);
 					Main.PlaySound(SoundID.Item44, (int)(npc.Center.X), (int)(npc.Center.Y));
 					AICycle3 = 0;
 				}
@@ -321,20 +321,20 @@ namespace SOTS.NPCs.Boss
 			if(spawnShard)
 					{
 						Main.PlaySound(SoundID.Item44, (int)(npc.Center.X), (int)(npc.Center.Y));
-						Projectile.NewProjectile(npc.Center.X + Main.rand.Next(-150,151), npc.Center.Y + Main.rand.Next(-150,151), 0, 0,  mod.ProjectileType("FrostShard"), 24, 0, Main.myPlayer);
-						Projectile.NewProjectile(npc.Center.X + Main.rand.Next(-150,151), npc.Center.Y + Main.rand.Next(-150,151), 0, 0,  mod.ProjectileType("FrostShard"), 24, 0, Main.myPlayer);
+						Projectile.NewProjectile(npc.Center.X + Main.rand.Next(-150,151), npc.Center.Y + Main.rand.Next(-150,151), 0, 0,  mod.ProjectileType("FrostShard"), 24, 0, 0);
+						Projectile.NewProjectile(npc.Center.X + Main.rand.Next(-150,151), npc.Center.Y + Main.rand.Next(-150,151), 0, 0,  mod.ProjectileType("FrostShard"), 24, 0, 0);
 					 
 						if(Main.expertMode)
 						{ 
-							Projectile.NewProjectile(npc.Center.X + Main.rand.Next(-350,351), npc.Center.Y + Main.rand.Next(-350,351), 0, 0,  mod.ProjectileType("FrostShard"), 32, 0, Main.myPlayer);
-							Projectile.NewProjectile(npc.Center.X + Main.rand.Next(-350,351), npc.Center.Y + Main.rand.Next(-350,351), 0, 0,  mod.ProjectileType("FrostShard"), 32, 0, Main.myPlayer);
+							Projectile.NewProjectile(npc.Center.X + Main.rand.Next(-350,351), npc.Center.Y + Main.rand.Next(-350,351), 0, 0,  mod.ProjectileType("FrostShard"), 32, 0, 0);
+							Projectile.NewProjectile(npc.Center.X + Main.rand.Next(-350,351), npc.Center.Y + Main.rand.Next(-350,351), 0, 0,  mod.ProjectileType("FrostShard"), 32, 0, 0);
 						}
 						
 						if(!Main.player[npc.target].ZoneSnow)
 						{
-							Projectile.NewProjectile(npc.Center.X + Main.rand.Next(-150,151), npc.Center.Y + Main.rand.Next(-150,151), 0, 0,  mod.ProjectileType("FrostShard"), 24, 0, Main.myPlayer);
-							Projectile.NewProjectile(npc.Center.X + Main.rand.Next(-150,151), npc.Center.Y + Main.rand.Next(-150,151), 0, 0,  mod.ProjectileType("FrostShard"), 24, 0, Main.myPlayer);
-							Projectile.NewProjectile(npc.Center.X + Main.rand.Next(-150,151), npc.Center.Y + Main.rand.Next(-150,151), 0, 0,  mod.ProjectileType("FrostShard"), 24, 0, Main.myPlayer);
+							Projectile.NewProjectile(npc.Center.X + Main.rand.Next(-150,151), npc.Center.Y + Main.rand.Next(-150,151), 0, 0,  mod.ProjectileType("FrostShard"), 24, 0, 0);
+							Projectile.NewProjectile(npc.Center.X + Main.rand.Next(-150,151), npc.Center.Y + Main.rand.Next(-150,151), 0, 0,  mod.ProjectileType("FrostShard"), 24, 0, 0);
+							Projectile.NewProjectile(npc.Center.X + Main.rand.Next(-150,151), npc.Center.Y + Main.rand.Next(-150,151), 0, 0,  mod.ProjectileType("FrostShard"), 24, 0, 0);
 						}
 					}
 			 

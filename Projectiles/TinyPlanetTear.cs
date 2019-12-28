@@ -25,7 +25,7 @@ namespace SOTS.Projectiles
             projectile.hostile = false; 
             projectile.tileCollide = false;
             projectile.ignoreWater = true; 
-            projectile.ranged = true; 
+            projectile.ranged = false; 
             projectile.aiStyle = 0; //18 is the demon scythe style
 			projectile.alpha = 100;
 		}

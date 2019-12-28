@@ -29,6 +29,7 @@ namespace SOTS.Projectiles.Minions
             projectile.timeLeft = 3600; 
             projectile.penetrate = -1;
             projectile.tileCollide = true; 
+			projectile.minion = true;
             projectile.sentry = true;
 			ProjectileID.Sets.MinionTargettingFeature[projectile.type] = true;
         }
@@ -58,7 +59,8 @@ namespace SOTS.Projectiles.Minions
 				{
 					if(projectile.ai[0] == 9 && Main.myPlayer == projectile.owner)
 					{
-						Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, mod.ProjectileType("RedExplosion"), projectile.damage, projectile.knockBack, projectile.owner, 0f, 0f);
+						int proj = Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, mod.ProjectileType("RedExplosion"), projectile.damage, projectile.knockBack, projectile.owner, 0f, 0f);
+						Main.projectile[proj].minion = true;
 					}
 				}
             }

@@ -12,8 +12,8 @@ namespace SOTS.Items.IceStuff
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Frosted Key");
-			Tooltip.SetDefault("It's cold to the touch, you'd better get near something warm, like a campfire");
+			DisplayName.SetDefault("Frost Key");
+			Tooltip.SetDefault("It's cold to the touch\nYou'd better get near something warm, like a campfire");
 		}
 		public override void SetDefaults()
 		{
@@ -39,7 +39,7 @@ namespace SOTS.Items.IceStuff
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.IceBlock, 50);
+			recipe.AddIngredient(null, "FragmentOfPermafrost", 5);
 			recipe.AddIngredient(ItemID.HallowedBar, 12);
 			recipe.AddIngredient(ItemID.FrostCore, 2);
 			recipe.AddIngredient(ItemID.SoulofSight, 5);

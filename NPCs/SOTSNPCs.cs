@@ -17,12 +17,8 @@ namespace SOTS.NPCs
 			{
 			player = Main.player[npc.target];
 			}
-			else
-			{
-			player = Main.player[Main.myPlayer];
-			}
             SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");	
-			
+			bool ZoneForest = !player.GetModPlayer<SOTSPlayer>().PyramidBiome && !player.ZoneDesert && !player.ZoneCorrupt && !player.ZoneDungeon && !player.ZoneDungeon && !player.ZoneHoly && !player.ZoneMeteor && !player.ZoneJungle && !player.ZoneSnow && !player.ZoneCrimson && !player.ZoneGlowshroom && !player.ZoneUndergroundDesert && (player.ZoneDirtLayerHeight || player.ZoneOverworldHeight) && !player.ZoneBeach;
 				
 			if(npc.lifeMax > 5)
 			{
@@ -68,7 +64,47 @@ namespace SOTS.NPCs
 				if (Main.rand.Next(100) == 0 || (npc.type == 170 || npc.type == 171 || npc.type == 180)) { //guarenteed from pigrons
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("AlmondMilk"), 1); 
 				}
-				else if (Main.rand.Next(100000) == 0) {
+				if (Main.rand.Next(35) == 0) {
+					//priorities: otherworld > tide > nature > permafrost > earth >  inferno
+					//additional: evil & chaos (will not spawn in addition to forest)
+					if(player.ZoneSkyHeight || player.ZoneMeteor)
+					{
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FragmentOfOtherworld"), Main.rand.Next(2) + 1); 
+					}
+					else if(player.ZoneBeach || player.ZoneDungeon)
+					{
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FragmentOfTide"), Main.rand.Next(2) + 1); 
+					}
+					else if(ZoneForest || player.ZoneJungle)
+					{
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FragmentOfNature"), Main.rand.Next(2) + 1); 
+					}
+					else if(player.ZoneSnow)
+					{
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FragmentOfPermafrost"), Main.rand.Next(2) + 1); 
+					}
+					else if(player.ZoneUndergroundDesert || player.ZoneDesert || player.GetModPlayer<SOTSPlayer>().PyramidBiome || player.ZoneRockLayerHeight)
+					{
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FragmentOfEarth"), Main.rand.Next(2) + 1); 
+					}
+					else if(player.ZoneUnderworldHeight)
+					{
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FragmentOfInferno"), Main.rand.Next(2) + 1); 
+					}
+				}
+				else if(Main.rand.Next(34) == 0)
+				{
+					if(player.ZoneCorrupt || player.ZoneCrimson)
+					{
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FragmentOfEvil"), Main.rand.Next(2) + 1); 
+					}
+					if(player.ZoneHoly)
+					{
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FragmentOfChaos"), Main.rand.Next(2) + 1); 
+					}
+				}
+				
+				if (Main.rand.Next(100000) == 0) {
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("ThundershockShortbow"), 1); 
 				}
 				else if (Main.rand.Next(100000) == 0) {
@@ -107,8 +143,8 @@ namespace SOTS.NPCs
 				}
 				
 				if (npc.type == NPCID.SkeletronHead) {
-					if (Main.rand.Next(10) == 0) 
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("BulletShark"), 1); 
+				//	if (Main.rand.Next(10) == 0) 
+						//Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("BulletShark"), 1); 
 				}
 				if (npc.type == NPCID.GoblinPeon || npc.type == NPCID.GoblinArcher || npc.type == NPCID.GoblinWarrior || npc.type == NPCID.GoblinSorcerer) { //golbins
 					if (Main.rand.Next(2) == 0) {

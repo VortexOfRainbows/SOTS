@@ -20,7 +20,7 @@ namespace SOTS.NPCs
 		{
 			npc.CloneDefaults(NPCID.Slimer);
             npc.aiStyle = 44;
-            npc.lifeMax = 12;
+            npc.lifeMax = 20;
             npc.damage = 8; 
             npc.defense = 1; 
             npc.knockBackResist = 0.45f;
@@ -39,30 +39,30 @@ namespace SOTS.NPCs
             npc.HitSound = SoundID.NPCHit1;
             npc.DeathSound = SoundID.NPCDeath1;
 		}
-			public override void HitEffect(int hitDirection, double damage)
+		public override void HitEffect(int hitDirection, double damage)
+		{
+			if (npc.life <= 0)
 			{
-				if (npc.life <= 0)
+				for (int k = 0; k < 20; k++)
 				{
-					for (int k = 0; k < 20; k++)
-					{
-						int dust = Dust.NewDust(npc.position, npc.width, npc.height, 4, 0f, 0f, 150, Color.LightBlue, 1.5f);
-						Main.dust[dust].velocity *= 2f;
-						Main.dust[dust].noGravity = true;
-					}
-					int num1 = Main.rand.Next(4);
-					int num2;
-					for(num2 = Main.rand.Next(4); num2 == num1; num2 = Main.rand.Next(4))
-						
-					if(num1 == 0 || num2 == 0)
-					Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/BlueSlimerGore1"), 1f);
-					if(num1 == 1 || num2 == 1)
-					Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/BlueSlimerGore2"), 1f);
-					if(num1 == 2 || num2 == 2)
-					Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/BlueSlimerGore3"), 1f);
-					if(num1 == 3 || num2 == 3)
-					Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/BlueSlimerGore4"), 1f);
+					int dust = Dust.NewDust(npc.position, npc.width, npc.height, 4, 0f, 0f, 150, Color.LightBlue, 1.5f);
+					Main.dust[dust].velocity *= 2f;
+					Main.dust[dust].noGravity = true;
 				}
+				int num1 = Main.rand.Next(4);
+				int num2;
+				for(num2 = Main.rand.Next(4); num2 == num1; num2 = Main.rand.Next(4))
+					
+				if(num1 == 0 || num2 == 0)
+				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/BlueSlimerGore1"), 1f);
+				if(num1 == 1 || num2 == 1)
+				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/BlueSlimerGore2"), 1f);
+				if(num1 == 2 || num2 == 2)
+				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/BlueSlimerGore3"), 1f);
+				if(num1 == 3 || num2 == 3)
+				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/BlueSlimerGore4"), 1f);
 			}
+		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
 			return SpawnCondition.OverworldDaySlime.Chance * 0.2f;

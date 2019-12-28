@@ -36,6 +36,7 @@ namespace SOTS.Items
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
+			player.buffImmune[BuffID.Burning] = true;
 			player.waterWalk = true; 
 			player.fireWalk = true; 
 			player.lavaMax += 600; 
