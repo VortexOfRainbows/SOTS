@@ -1,6 +1,6 @@
 A mod which has nothing to do with secrets or shadows... yet
 NOTICE: This mod is not optimized for multiplayer, feel free to give it a try, but bugs are to expected.
-This mod is very early in development!
+!! This mod is very early in development !!
 
 Bosses -> Currently 5, Mostly bullet hells
 Items -> Around 300, unique gimmicks all around!
@@ -16,19 +16,14 @@ Quality Assurance & Playtesting - FlameFreezer
 
 Update 0.18 The Purge
 -Reworked or Removed almost every old item, some will be rebalanced and added back later (400+ items removed lmao)
+--Most secret or nigh unobtainable items have been changed or removed
 -CHALLENGES REMOVED, different variations might be added back later
 -Added pyramid biome
 -Replaced certain bosses
-
 -Void rebalanced, it should now be more forgiving
--Most secret or nigh unobtainable items have been changed or removed
--Overpowered items have been nerfed, while void items recieve general consistency changes
-
+--Overpowered items have been nerfed, while void items recieve general consistency changes
 -Fixed bugs and crafting recipe issues
-
 -More to come in future updates!
-
-
 
 Update 0.17
 -More void stuff

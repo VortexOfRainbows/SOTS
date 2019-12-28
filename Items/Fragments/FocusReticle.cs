@@ -53,7 +53,7 @@ namespace SOTS.Items.Fragments
 			recipe.AddIngredient(null, "EyeOfChaos", 1);
 			recipe.AddIngredient(null, "SoulCharm", 1);
 			recipe.AddIngredient(ItemID.LunarBar, 12);
-			recipe.AddTile(TileID.TinkerersWorkbench);
+			recipe.AddTile(TileID.LunarCraftingStation);
 			recipe.SetResult(this);
 			recipe.AddRecipe();
 		}
