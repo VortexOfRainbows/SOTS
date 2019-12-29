@@ -10,7 +10,7 @@ namespace SOTS.Items.SpecialDrops
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Enchanted Pickaxe");
-			Tooltip.SetDefault("Shoots an echanted pickaxe beam that breaks blocks");
+			Tooltip.SetDefault("Shoots an echanted pickaxe beam that breaks blocks\nAble to mine Hellstone");
 		}
 		public override void SetDefaults()
 		{
@@ -23,14 +23,14 @@ namespace SOTS.Items.SpecialDrops
 			item.shoot = mod.ProjectileType("EnchantedPickaxeProj");
 			item.shootSpeed = 7f;
 			item.useTurn = true;
-            item.useTime = 8;
-            item.useAnimation = 16;
+            item.useTime = 14;
+            item.useAnimation = 20;
 			item.pick = 75;
-			item.axe = 15;
+			item.axe = 5;
 			item.useStyle = 1;
 			item.knockBack = 5;
-            item.value = 100000;
-            item.rare = 4;
+			item.value = Item.sellPrice(0, 0, 80, 0);
+            item.rare = 2;
 			item.UseSound = SoundID.Item1;
 			item.tileBoost++;
 			item.autoReuse = true;
@@ -41,7 +41,7 @@ namespace SOTS.Items.SpecialDrops
           {
               int numberProjectiles = 0;
 			  fireTimer++;
-			  if(fireTimer >= 6)
+			  if(fireTimer >= 10)
 			  {
 				  fireTimer = 0;
 				  numberProjectiles = 1;

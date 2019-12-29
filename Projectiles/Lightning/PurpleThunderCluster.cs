@@ -56,33 +56,22 @@ namespace SOTS.Projectiles.Lightning
         }
 		public override void Kill(int timeLeft)
 		{
+			
+			Player player = Main.player[projectile.owner];
+			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
+			
+			Vector2 cursorArea = Main.MouseWorld;
+			
+			float shootToX = cursorArea.X - projectile.Center.X;
+			float shootToY = cursorArea.Y - projectile.Center.Y;
+			float distance = (float)System.Math.Sqrt((double)(shootToX * shootToX + shootToY * shootToY));
+	
+			distance = 6.25f / distance;
 		
-		Player player = Main.player[projectile.owner];
-        SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
+			shootToX *= distance * 5;
+			shootToY *= distance * 5;
 		
-		Vector2 cursorArea;
-					
-						if (player.gravDir == 1f)
-					{
-					cursorArea.Y = (float)Main.mouseY + Main.screenPosition.Y;
-					}
-					else
-					{
-					cursorArea.Y = Main.screenPosition.Y + (float)Main.screenHeight - (float)Main.mouseY;
-					}
-						cursorArea.X = (float)Main.mouseX + Main.screenPosition.X;
-		
-		
-				   float shootToX = cursorArea.X - projectile.Center.X;
-				   float shootToY = cursorArea.Y - projectile.Center.Y;
-				   float distance = (float)System.Math.Sqrt((double)(shootToX * shootToX + shootToY * shootToY));
-
-				   distance = 6.25f / distance;
-	   
-				   shootToX *= distance * 5;
-				   shootToY *= distance * 5;
-	   
-					Main.PlaySound(SoundID.Item94, (int)(projectile.Center.X), (int)(projectile.Center.Y));
+			Main.PlaySound(SoundID.Item94, (int)(projectile.Center.X), (int)(projectile.Center.Y));
 			if(projectile.owner == Main.myPlayer)
 			{
 				Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, shootToX, shootToY, mod.ProjectileType("PurpleLightning"), projectile.damage, projectile.knockBack, Main.myPlayer, 0f, 0f);
@@ -90,9 +79,6 @@ namespace SOTS.Projectiles.Lightning
 				Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, shootToX, shootToY, mod.ProjectileType("PurpleLightning"), projectile.damage, projectile.knockBack, Main.myPlayer, 0f, 0f);
 				Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, shootToX, shootToY, mod.ProjectileType("PurpleLightning"), projectile.damage, projectile.knockBack, Main.myPlayer, 0f, 0f); //Spawning a projectile
 			}
-		
-		
-				
 		}
 	}
 }

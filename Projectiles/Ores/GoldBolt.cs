@@ -47,21 +47,25 @@ namespace SOTS.Projectiles.Ores
 			Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 0.85f / 255f, (255 - projectile.alpha) * 0.1f / 255f, (255 - projectile.alpha) * 0.2f / 255f);
 			projectile.rotation += 0.2f;
 			
-			Vector2 cursorArea;
-			if (player.gravDir == 1f)
+			if(player.whoAmI == Main.myPlayer)
 			{
-			cursorArea.Y = (float)Main.mouseY + Main.screenPosition.Y;
+				projectile.netUpdate = true;
+				Vector2 cursorArea = Main.MouseWorld;
+				float dX = 0f;
+				float dY = 0f;
+				float distance = 0;
+				float speed = 3f;
+					
+				if(projectile.timeLeft > 192 && projectile.timeLeft < 212)
+				{
+					dX = cursorArea.X - projectile.Center.X;
+					dY = cursorArea.Y - projectile.Center.Y;
+					distance = (float)Math.Sqrt((double)(dX * dX + dY * dY));
+					speed /= distance;
+					projectile.velocity *= 0.9325f;
+					projectile.velocity += new Vector2(dX * speed, dY * speed);
+				}
 			}
-			else
-			{
-			cursorArea.Y = Main.screenPosition.Y + (float)Main.screenHeight - (float)Main.mouseY;
-			}
-			cursorArea.X = (float)Main.mouseX + Main.screenPosition.X;
-			float dX = 0f;
-			float dY = 0f;
-			float distance = 0;
-			float speed = 3f;
-				
 			if(projectile.timeLeft == 212)
 			{				
 				for(int i = 0; i < 360; i += 12)
@@ -73,17 +77,8 @@ namespace SOTS.Projectiles.Ores
 					Main.dust[num1].velocity = circularLocation * 0.2f;
 				}
 			}
+				
 			if(projectile.timeLeft == 192) projectile.tileCollide = true;
-			
-			if(projectile.timeLeft > 192 && projectile.timeLeft < 212)
-			{
-				dX = cursorArea.X - projectile.Center.X;
-				dY = cursorArea.Y - projectile.Center.Y;
-				distance = (float)Math.Sqrt((double)(dX * dX + dY * dY));
-				speed /= distance;
-			    projectile.velocity *= 0.9325f;
-				projectile.velocity += new Vector2(dX * speed, dY * speed);
-			}
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {

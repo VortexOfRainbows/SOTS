@@ -46,16 +46,7 @@ namespace SOTS.Items.Celestial
 		float counter = 0;
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-			Vector2 cursorPos;
-			if (player.gravDir == 1f)
-			{
-				cursorPos.Y = (float)Main.mouseY + Main.screenPosition.Y;
-			}
-			else
-			{
-				cursorPos.Y = Main.screenPosition.Y + (float)Main.screenHeight - (float)Main.mouseY;
-			}
-			cursorPos.X = (float)Main.mouseX + Main.screenPosition.X;
+			Vector2 cursorPos = Main.MouseWorld;
 			
             int numberProjectiles = 2;  //This defines how many projectiles to shot
             for (int i = 0; i < numberProjectiles; i++)

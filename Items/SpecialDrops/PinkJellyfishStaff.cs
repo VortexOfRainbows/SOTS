@@ -23,7 +23,7 @@ namespace SOTS.Items.SpecialDrops
             item.useAnimation = 19;
             item.useStyle = 5;    
             item.knockBack = 3;
-            item.value = 50000;
+			item.value = Item.sellPrice(0, 1, 0, 0);
             item.rare = 2;
 			item.UseSound = SoundID.Item93;
             item.noMelee = true; 

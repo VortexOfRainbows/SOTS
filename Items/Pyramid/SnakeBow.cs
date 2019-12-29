@@ -48,11 +48,9 @@ namespace SOTS.Items.Pyramid
 			recipe.AddRecipe();
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-          {
-			  
-                  Projectile.NewProjectile(position.X, position.Y, speedX, speedY, mod.ProjectileType("Snake"), damage, knockBack, player.whoAmI);
-              return false; 
-			  
+		{
+			Projectile.NewProjectile(position.X, position.Y, speedX, speedY, mod.ProjectileType("Snake"), damage, knockBack, player.whoAmI);
+			return false; 
 		}
 	}
 }

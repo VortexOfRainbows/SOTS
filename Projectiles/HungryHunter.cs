@@ -1,9 +1,13 @@
 using System;
+using System.IO;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ID;
 using SOTS.Void;
  
 namespace SOTS.Projectiles
@@ -26,6 +30,22 @@ namespace SOTS.Projectiles
 			projectile.aiStyle = 15;
 			projectile.melee = true;
         }
+		public override void SendExtraAI(BinaryWriter writer) 
+		{
+			writer.Write(projectile.rotation);
+			writer.Write(projectile.spriteDirection);
+			//writer.Write(damageCounter);
+			writer.Write(latch);
+			writer.Write(enemyIndex);
+		}
+		public override void ReceiveExtraAI(BinaryReader reader)
+		{	
+			projectile.rotation = reader.ReadSingle();
+			projectile.spriteDirection = reader.ReadInt32();
+			//damageCounter = reader.ReadInt32();
+			latch = reader.ReadBoolean();
+			enemyIndex = reader.ReadInt32();
+		}
         public override bool PreDraw(Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch, Color lightColor)
         {
             Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Hungry_Chain");    //this where the chain of grappling hook is drawn
@@ -66,6 +86,7 @@ namespace SOTS.Projectiles
 			Player player = Main.player[projectile.owner];
 			if(latch && player.channel && enemyIndex != -1)
 			{
+				projectile.netUpdate = true;
 				NPC target = Main.npc[enemyIndex];
 				if(target.active && !target.friendly)
 				{
@@ -89,18 +110,10 @@ namespace SOTS.Projectiles
 			projectile.friendly = true;
 			latch = true;
 			voidPlayer.voidMeter += 1;
-			for(int i = 0; i < 200; i++)
-			{
-				NPC npc = Main.npc[i];
-				if(npc == target)
-				{
-					enemyIndex = i;
-					break;
-				}
-			}
+			enemyIndex = target.whoAmI;
 			if(target.life <= 0)
 			{
-					enemyIndex = -1;
+				enemyIndex = -1;
 			}
         }
     }

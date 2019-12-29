@@ -61,29 +61,6 @@ namespace SOTS.Projectiles.Laser
 		List<float> posListY = new List<float>();
 		List<float> posListX = new List<float>();
 		List<int> npcs = new List<int>();
-		/*
-			first we need to find nearby enemies, the closest one will be targeted first
-			next we should choose to either move up or down in the enemy index chain, this will be based on whichever enemy is closest, this should be easy, 
-			considering we have ricochet code for items implemented already, (arrow son of arrow)
-			
-			we will save a list as the projectile travels through enemys, once each list hits a capacity of 10 (10 enemies accounted for), 
-			we can save the values and continue drawing the laser so it lasts longer then a frame, this will also be useful doing hitboxes
-			
-			the homing effect for enemies could be a connection of straight lines, but i think a laser turning would look cooler, so instead, we will write a method to find the radian difference between the direction the projectile is travelling
-			and the radians of the difference between the enemy pos and the laser pos, if the difference between these two is less then 180 degrees counterclockwise, turning left would be prefered, otherwise, we will turn right.
-			the turn will stop once we get with in a -1 to 1 range of the laser rotation and enemy rotation, because we cannot add perfectly to make it strike through, so it will have to snap into place instead.
-			the lasers motion won't be halted while turning, so continue moving the laser while we change the angular vector (or we can use a different vector if i can't find how to use .normalize())
-			
-			finally, we can finish the rest of the visual effects, like a helix around the primary laser
-			
-			REASON FOR FAILURE
-			_______________________
-			The reason why the laser is curving the wrong direction of the second go is because it changes targets midway throught the original burst
-			
-			Problems to fix
-			_______________________
-			The first laser will seek for a target until death, the second will stop upon hitting all its targets, this makes one longer than the other. The main problem at hand, however, is that the laser isn't hitting gaurenteed, which it always should
-		*/
 		int currentNPC = -1;
 		public int FindClosestEnemy(Vector2 pos)
 		{
@@ -187,6 +164,10 @@ namespace SOTS.Projectiles.Laser
 		}
 		Vector2 initialDirection = new Vector2(0f, 0f);
 		int toBeat = 15;
+		public override bool ShouldUpdatePosition() 
+		{
+			return false;
+		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
 			if(initialDirection.X == 0 && initialDirection.Y == 0)
@@ -222,7 +203,7 @@ namespace SOTS.Projectiles.Laser
 				helixRot ++;
 				//k++;
 				
-				if(j >= toBeat || k >= 2500)
+				if(j >= toBeat || k >= 500)
 				{
 					if(j < toBeat && j != 0)
 					{
@@ -254,7 +235,7 @@ namespace SOTS.Projectiles.Laser
 				
 				if(currentNPC == -1 && !currentPointRange)	 
 				{
-					k += 3;
+					k += 1;
 				}
 				
 				if(npcs.Count >= toBeat && toBeat > -1 && FindClosestPoint(drawPos, new Vector2(posListX[j], posListY[j])))

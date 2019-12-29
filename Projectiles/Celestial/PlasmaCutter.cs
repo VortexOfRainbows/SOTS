@@ -87,47 +87,42 @@ namespace SOTS.Projectiles.Celestial
 		public override void AI()
 		{
 			Player player  = Main.player[projectile.owner];
-			Vector2 cursorArea;
-			if (player.gravDir == 1f)
+			if(player.whoAmI == Main.myPlayer)
 			{
-			cursorArea.Y = (float)Main.mouseY + Main.screenPosition.Y;
-			}
-			else
-			{
-			cursorArea.Y = Main.screenPosition.Y + (float)Main.screenHeight - (float)Main.mouseY;
-			}
-			cursorArea.X = (float)Main.mouseX + Main.screenPosition.X;
+				projectile.netUpdate = true;
+				Vector2 cursorArea = Main.MouseWorld;
+					
+				float cursorX = cursorArea.X - player.Center.X;
+				float cursorY = cursorArea.Y - player.Center.Y;
 				
-			float cursorX = cursorArea.X - player.Center.X;
-			float cursorY = cursorArea.Y - player.Center.Y;
-			
-			float disX = player.Center.X - projectile.Center.X;
-			float disY = player.Center.Y - projectile.Center.Y;
-			projectile.rotation = (float)Math.Atan2(disY,disX) + MathHelper.ToRadians(225f);
-			
-			double deg = (double) projectile.ai[0]; 
-			double rad = deg * (Math.PI / 180);
-			
-			Vector2 ovalArea = new Vector2(96, 0).RotatedBy((float)Math.Atan2(cursorY,cursorX));
-			Vector2 ovalArea2 = new Vector2(232, 0).RotatedBy((float)rad);
-			ovalArea2.Y *= 0.185f;
-			ovalArea2 = ovalArea2.RotatedBy((float)Math.Atan2(cursorY,cursorX));
-			ovalArea.X += ovalArea2.X;
-			ovalArea.Y += ovalArea2.Y;
-			if(player.channel && !ReturnTo)
-			{
-			projectile.position.X = player.Center.X + ovalArea.X - projectile.width/2;
-			projectile.position.Y = player.Center.Y + ovalArea.Y - projectile.height/2;
-			}
-			else
-			{
-				ReturnTo = true;
+				float disX = player.Center.X - projectile.Center.X;
+				float disY = player.Center.Y - projectile.Center.Y;
+				projectile.rotation = (float)Math.Atan2(disY,disX) + MathHelper.ToRadians(225f);
 				
-				Vector2 newVelocity = new Vector2(5, 0).RotatedBy(Math.Atan2(disY, disX));
-				projectile.velocity = newVelocity;
-				if(Math.Abs(disX) < 22f && Math.Abs(disY) < 22f)
+				double deg = (double) projectile.ai[0]; 
+				double rad = deg * (Math.PI / 180);
+				
+				Vector2 ovalArea = new Vector2(96, 0).RotatedBy((float)Math.Atan2(cursorY,cursorX));
+				Vector2 ovalArea2 = new Vector2(232, 0).RotatedBy((float)rad);
+				ovalArea2.Y *= 0.185f;
+				ovalArea2 = ovalArea2.RotatedBy((float)Math.Atan2(cursorY,cursorX));
+				ovalArea.X += ovalArea2.X;
+				ovalArea.Y += ovalArea2.Y;
+				if(player.channel && !ReturnTo)
 				{
-					projectile.Kill();
+				projectile.position.X = player.Center.X + ovalArea.X - projectile.width/2;
+				projectile.position.Y = player.Center.Y + ovalArea.Y - projectile.height/2;
+				}
+				else
+				{
+					ReturnTo = true;
+					
+					Vector2 newVelocity = new Vector2(5, 0).RotatedBy(Math.Atan2(disY, disX));
+					projectile.velocity = newVelocity;
+					if(Math.Abs(disX) < 22f && Math.Abs(disY) < 22f)
+					{
+						projectile.Kill();
+					}
 				}
 			}
 			projectile.ai[0] += 5f;

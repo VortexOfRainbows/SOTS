@@ -33,11 +33,6 @@ namespace SOTS.Projectiles
 			projectile.magic = true;
 			projectile.alpha = 35;
 		}
-		int damageCounter = 0;
-		bool latch = false;
-		int enemyIndex = -1;
-		float diffPosX = 0;
-		float diffPosY = 0;
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor) 
 		{
 			return true;

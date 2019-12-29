@@ -49,6 +49,10 @@ namespace SOTS.Projectiles.Laser
 			return false;
 		}
 		int ai1 = 2;
+		public override bool ShouldUpdatePosition() 
+		{
+			return false;
+		}
 		public override void AI()
 		{
 			Player player  = Main.player[projectile.owner];
@@ -57,46 +61,40 @@ namespace SOTS.Projectiles.Laser
 				projectile.ai[0] = Main.rand.Next(1020);
 			}
 			projectile.ai[1] ++;
-			Vector2 cursorArea;
 			ai1++;			
-			if (player.gravDir == 1f)
+			Vector2 cursorArea = Main.MouseWorld;
+			if(Main.myPlayer == player.whoAmI)
 			{
-				cursorArea.Y = (float)Main.mouseY + Main.screenPosition.Y;
-			}
-			else
-			{
-				cursorArea.Y = Main.screenPosition.Y + (float)Main.screenHeight - (float)Main.mouseY;
-			}
-			cursorArea.X = (float)Main.mouseX + Main.screenPosition.X;
-		
-			float shootToX = cursorArea.X - player.Center.X;
-			float shootToY = cursorArea.Y - player.Center.Y;
-			float distance = (float)System.Math.Sqrt((double)(shootToX * shootToX + shootToY * shootToY));
+				projectile.netUpdate = true;
+				float shootToX = cursorArea.X - player.Center.X;
+				float shootToY = cursorArea.Y - player.Center.Y;
+				float distance = (float)System.Math.Sqrt((double)(shootToX * shootToX + shootToY * shootToY));
 
-			distance = 7.25f / distance;
-		   
-			shootToX *= distance * 5f;
-			shootToY *= distance * 5f;
-					   
-			double startingDirection = Math.Atan2((double)-shootToY, (double)-shootToX);
-			startingDirection *= 180/Math.PI;
-			
-			if(player.channel || projectile.timeLeft > 6)
-            {
-				projectile.timeLeft = 6;
-				projectile.alpha = 0;
-				if(Main.myPlayer == projectile.owner && ai1 % 3 == 0)
+				distance = 7.25f / distance;
+			   
+				shootToX *= distance * 5f;
+				shootToY *= distance * 5f;
+						   
+				double startingDirection = Math.Atan2((double)-shootToY, (double)-shootToX);
+				startingDirection *= 180/Math.PI;
+				
+				if(player.channel || projectile.timeLeft > 6)
 				{
-					int projID = Projectile.NewProjectile(player.Center.X, player.Center.Y, shootToX, shootToY, mod.ProjectileType("CollapseLaser"), projectile.damage, 1f, projectile.owner, projectile.ai[1], 0f);
-					Main.projectile[projID].ai[1] = projectile.ai[1];
-				}						
-            }
+					projectile.timeLeft = 6;
+					projectile.alpha = 0;
+					if(Main.myPlayer == projectile.owner && ai1 % 3 == 0)
+					{
+						int projID = Projectile.NewProjectile(player.Center.X, player.Center.Y, shootToX, shootToY, mod.ProjectileType("CollapseLaser"), projectile.damage, 1f, projectile.owner, projectile.ai[1], 0f);
+						Main.projectile[projID].ai[1] = projectile.ai[1];
+					}						
+				}
 				projectile.ai[0] = (float)startingDirection;
 				double deg = (double) projectile.ai[0]; 
 				double rad = deg * (Math.PI / 180);
 				double dist = 32;
 				projectile.position.X = player.Center.X - (int)(Math.Cos(rad) * dist) - projectile.width/2;
 				projectile.position.Y = player.Center.Y - (int)(Math.Sin(rad) * dist) - projectile.height/2;
+			}
 		}
 	}
 }

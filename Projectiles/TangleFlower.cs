@@ -65,7 +65,7 @@ namespace SOTS.Projectiles
 		public override void AI()
 		{
 			Player player = Main.player[projectile.owner];
-			
+			projectile.netUpdate = true;
 			projectile.rotation += 0.8f;
 			
 			if(!player.channel || !Main.projectile[(int)projectile.ai[1]].active || Main.projectile[(int)projectile.ai[1]].type != 17)

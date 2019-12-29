@@ -66,18 +66,8 @@ namespace SOTS.Projectiles.Celestial
 				//Enemy NPC variable being set
 
 				//Getting the shooting trajectory
-					Vector2 playerCursor;
+					Vector2 playerCursor = Main.MouseWorld;
 					
-					if (player.gravDir == 1f)
-					{
-					playerCursor.Y = (float)Main.mouseY + Main.screenPosition.Y;
-					}
-					else
-					{
-					playerCursor.Y = Main.screenPosition.Y + (float)Main.screenHeight - (float)Main.mouseY;
-					}
-					playerCursor.X = (float)Main.mouseX + Main.screenPosition.X;
-				
 					float shootToX = playerCursor.X - projectile.Center.X;
 					float shootToY = playerCursor.Y - projectile.Center.Y;
 					float distanceFromX = target.Center.X - playerCursor.X;

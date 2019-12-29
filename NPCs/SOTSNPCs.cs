@@ -103,7 +103,7 @@ namespace SOTS.NPCs
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FragmentOfChaos"), Main.rand.Next(2) + 1); 
 					}
 				}
-				
+				/*
 				if (Main.rand.Next(100000) == 0) {
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("ThundershockShortbow"), 1); 
 				}
@@ -128,7 +128,7 @@ namespace SOTS.NPCs
 				else if (Main.rand.Next(200000) == 0) {
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("ZephyriousZepline"), 1); 
 				}
-				
+				*/
 				if (npc.type == NPCID.WallofFlesh) {
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("HungryHunter"), 1); 
 				}

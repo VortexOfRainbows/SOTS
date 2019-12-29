@@ -93,7 +93,8 @@ namespace SOTS.Projectiles.Minions
 		public override void AI() 
 		{
 			Player player = Main.player[projectile.owner];
-
+		
+			projectile.netUpdate = true;
 			#region Active check
 			if (player.dead || !player.active) 
 			{

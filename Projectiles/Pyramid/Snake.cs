@@ -34,6 +34,26 @@ namespace SOTS.Projectiles.Pyramid
 			projectile.ranged = true;
 			projectile.alpha = 0;
 		}
+		public override void SendExtraAI(BinaryWriter writer) 
+		{
+			writer.Write(projectile.rotation);
+			writer.Write(projectile.spriteDirection);
+			writer.Write(damageCounter);
+			writer.Write(latch);
+			writer.Write(enemyIndex);
+			writer.Write(diffPosX);
+			writer.Write(diffPosY);
+		}
+		public override void ReceiveExtraAI(BinaryReader reader)
+		{	
+			projectile.rotation = reader.ReadSingle();
+			projectile.spriteDirection = reader.ReadInt32();
+			damageCounter = reader.ReadInt32();
+			latch = reader.ReadBoolean();
+			enemyIndex = reader.ReadInt32();
+			diffPosX = reader.ReadSingle();
+			diffPosY = reader.ReadSingle();
+		}
 		int damageCounter = 0;
 		bool latch = false;
 		int enemyIndex = -1;
@@ -61,6 +81,7 @@ namespace SOTS.Projectiles.Pyramid
 			
 			if(latch && enemyIndex != -1)
 			{
+				projectile.netUpdate = true;
 				NPC target = Main.npc[enemyIndex];
 				if(target.active && !target.friendly)
 				{

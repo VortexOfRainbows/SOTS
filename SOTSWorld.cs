@@ -19,8 +19,6 @@ namespace SOTS
 		public static int zeplineBiome = 0;
 		public static int geodeBiome = 0;
 		
-		public static int legendLevel = 0;
-		
 		
 		
 		public static bool downedPinky = false;
@@ -2681,67 +2679,7 @@ namespace SOTS
 								}
 			}
 		}	
-		public override void PreUpdate() 
-		{
-			legendLevel = 0;
-			if(NPC.downedSlimeKing)
-			legendLevel++;
-			if(NPC.downedBoss1)
-			legendLevel++;
-			if(NPC.downedBoss2)
-			legendLevel++;
-			if(NPC.downedQueenBee)
-			legendLevel++;
-			if(NPC.downedBoss3) 
-			legendLevel += 1;
-			if(NPC.downedGoblins)
-			legendLevel++;
-			if(NPC.downedPirates)
-			legendLevel++;
-			if(NPC.downedPlantBoss)
-			legendLevel += 1;
-			if(NPC.downedGolemBoss)
-			legendLevel++;
-			if(NPC.downedMartians)
-			legendLevel++;
-			if(NPC.downedFishron)
-			legendLevel += 1;
-			if(NPC.downedHalloweenKing)
-			legendLevel++;
-			if(NPC.downedChristmasIceQueen)
-			legendLevel++;
-			if(NPC.downedAncientCultist)
-			legendLevel++;
-			if(NPC.downedMoonlord)
-			legendLevel++;
-			if(NPC.downedMechBoss1)
-			legendLevel++;
-			if(NPC.downedMechBoss2)
-			legendLevel++;
-			if(NPC.downedMechBoss3)
-			legendLevel++;
-			if(downedAmalgamation)
-			legendLevel++;
-			//if(downedAntilion)
-			//legendLevel++;
-			if(downedCurse)
-			legendLevel++;
-			if(downedSubspace)
-			legendLevel++;
-			if(downedPinky)
-			legendLevel++;
-			if(downedCelestial)
-			legendLevel++;
-			if(Main.hardMode)
-			legendLevel += 2;
 		
-			if(legendLevel >= 25)
-			{
-				legendLevel = 25;
-			}
-		//25 max
-			
-		}
 		int variation = 0;
 		public void GeneratePyramidRoom(int x, int y, int direction) //this is beyond inefficient and should be done differently
 		{

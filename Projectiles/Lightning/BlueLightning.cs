@@ -29,6 +29,7 @@ namespace SOTS.Projectiles.Lightning
 			projectile.width = 8;
 			projectile.height = 8;
 			projectile.alpha = 255;
+			projectile.netImportant = true;
 		}
 		public override void AI()
 		{
@@ -53,11 +54,13 @@ namespace SOTS.Projectiles.Lightning
 			Main.dust[num5].noGravity = true;
 			Main.dust[num5].velocity *= 0.1f;
 			
-			
-			projectile.velocity.Y += (0.4f * (Main.rand.Next(-3, 4)));
-			
-			projectile.velocity.X += (0.4f * (Main.rand.Next(-3, 4)));
-			
+			if(Main.myPlayer == projectile.owner)
+			{
+				projectile.netUpdate = true;
+				projectile.velocity.Y += (0.3f * (Main.rand.Next(-3, 4)));
+				
+				projectile.velocity.X += (0.3f * (Main.rand.Next(-3, 4)));
+			}
 		}
 		public override void Kill(int timeLeft)
 		{

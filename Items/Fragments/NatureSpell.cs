@@ -44,9 +44,9 @@ namespace SOTS.Items.Fragments
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-					int Probe = Projectile.NewProjectile(position.X, position.Y, speedX, speedY, type, damage, knockBack, player.whoAmI);
-					Main.projectile[Probe].ai[1] = 4;
-				return false; 
+			int Probe = Projectile.NewProjectile(position.X, position.Y, speedX, speedY, type, damage, knockBack, player.whoAmI, 0, 4);
+			//Main.projectile[Probe].ai[1] = 4;
+			return false; 
 		}
 	}
 }

@@ -33,13 +33,12 @@ namespace SOTS.NPCs.Constructs
 				npc.height = 70;
 				Main.npcFrameCount[npc.type] = 3;  
 				npc.value = 3330;
-				npc.npcSlots = 5f;
+				npc.npcSlots = 3f;
 				npc.boss = false;
 				npc.lavaImmune = false;
 				npc.noGravity = false;
 				npc.noTileCollide = false;
 				npc.netAlways = true;
-				npc.netUpdate = true;
 				npc.HitSound = SoundID.NPCHit4;
 				npc.DeathSound = SoundID.NPCDeath14;
 			}

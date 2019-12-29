@@ -65,48 +65,39 @@ namespace SOTS.Projectiles.Minions
 		public override void AI()
         {
 			Player player = Main.player[projectile.owner];
-			
-			Vector2 playerCursor;
-			if (player.gravDir == 1f)
+			if(player.whoAmI == Main.myPlayer)
 			{
-			playerCursor.Y = (float)Main.mouseY + Main.screenPosition.Y;
-			}
-			else
-			{
-			playerCursor.Y = Main.screenPosition.Y + (float)Main.screenHeight - (float)Main.mouseY;
-			}
-			playerCursor.X = (float)Main.mouseX + Main.screenPosition.X;
-			
-			float shootToX = playerCursor.X - projectile.Center.X;
-			float shootToY = playerCursor.Y - projectile.Center.Y;
-					
-			projectile.tileCollide = true;
-			if(FindClosestEnemy() == -1)
-			{
-				projectile.rotation = (float)Math.Atan2((double)shootToY, (double)shootToX) + MathHelper.ToRadians(45);
-			}
-			else if(player.whoAmI == Main.myPlayer)
-			{
-				projectile.ai[1] += 1;
-				NPC target = Main.npc[FindClosestEnemy()];
-				shootToX = target.Center.X - projectile.Center.X;
-				shootToY = target.Center.Y - projectile.Center.Y;
-				projectile.rotation = (float)Math.Atan2((double)shootToY, (double)shootToX) + MathHelper.ToRadians(45);
-				if(projectile.ai[1] >= targetValue)
+				projectile.netUpdate = true;
+				Vector2 playerCursor = Main.MouseWorld;
+				
+				float shootToX = playerCursor.X - projectile.Center.X;
+				float shootToY = playerCursor.Y - projectile.Center.Y;
+						
+				projectile.tileCollide = true;
+				if(FindClosestEnemy() == -1)
 				{
-					targetValue = Main.rand.Next(60,130);
-					projectile.ai[1] = 0;
-					LaunchLaser(target.Center);
+					projectile.rotation = (float)Math.Atan2((double)shootToY, (double)shootToX) + MathHelper.ToRadians(45);
+				}
+				else
+				{
+					projectile.ai[1] += 1;
+					NPC target = Main.npc[FindClosestEnemy()];
+					shootToX = target.Center.X - projectile.Center.X;
+					shootToY = target.Center.Y - projectile.Center.Y;
+					projectile.rotation = (float)Math.Atan2((double)shootToY, (double)shootToX) + MathHelper.ToRadians(45);
+					if(projectile.ai[1] >= targetValue)
+					{
+						targetValue = Main.rand.Next(60,130);
+						projectile.ai[1] = 0;
+						LaunchLaser(target.Center);
+					}
 				}
 			}
-			
         }
 		public void LaunchLaser(Vector2 area)
 		{
 			Player player  = Main.player[projectile.owner];
-			int laser = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("BrightRedLaser"), projectile.damage, 0, projectile.owner);
-			Main.projectile[laser].ai[0] = area.X;
-			Main.projectile[laser].ai[1] = area.Y;
+			int laser = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("BrightRedLaser"), projectile.damage, 0, projectile.owner, area.X, area.Y);
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
@@ -117,6 +108,16 @@ namespace SOTS.Projectiles.Minions
 				spriteBatch.Draw(Main.projectileTexture[projectile.type], drawPos, null, color, projectile.rotation, drawOrigin, projectile.scale, SpriteEffects.None, 0f);
 			}
 			return true;
+		}
+		public override void SendExtraAI(BinaryWriter writer) 
+		{
+			writer.Write(projectile.rotation);
+			writer.Write(projectile.spriteDirection);
+		}
+		public override void ReceiveExtraAI(BinaryReader reader)
+		{	
+			projectile.rotation = reader.ReadSingle();
+			projectile.spriteDirection = reader.ReadInt32();
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{	

@@ -44,16 +44,7 @@ namespace SOTS.Items.IceStuff
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-			Vector2 cursorPos;
-			if (player.gravDir == 1f)
-			{
-				cursorPos.Y = (float)Main.mouseY + Main.screenPosition.Y;
-			}
-			else
-			{
-				cursorPos.Y = Main.screenPosition.Y + (float)Main.screenHeight - (float)Main.mouseY;
-			}
-			cursorPos.X = (float)Main.mouseX + Main.screenPosition.X;
+			Vector2 cursorPos = Main.MouseWorld;
 			Projectile.NewProjectile(cursorPos.X,  cursorPos.Y, 0, 0, type, damage, knockBack, player.whoAmI);
             return false;
 		}

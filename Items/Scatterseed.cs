@@ -52,9 +52,9 @@ namespace SOTS.Items
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-					int Probe = Projectile.NewProjectile(position.X, position.Y, speedX * (Main.rand.Next(90,111) * 0.007f), speedY * (Main.rand.Next(90,111) * 0.007f), type, damage, knockBack, player.whoAmI);
-					Main.projectile[Probe].ai[1] = 1.25f;
-				return false; 
+			int Probe = Projectile.NewProjectile(position.X, position.Y, speedX * (Main.rand.Next(90,111) * 0.007f), speedY * (Main.rand.Next(90,111) * 0.007f), type, damage, knockBack, player.whoAmI, 0, 1.25f);
+			//Main.projectile[Probe].ai[1] = 1.25f;
+			return false; 
 		}
 	}
 }

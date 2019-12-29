@@ -12,6 +12,7 @@ using SOTS.Void;
 
 namespace SOTS.Projectiles.Celestial
 {
+	/*
 	public class CeremonialKnife : ModProjectile 
     {
 		double startingDirection = 0.0;
@@ -198,6 +199,7 @@ namespace SOTS.Projectiles.Celestial
 			}
 		}
 	}
+	*/
 	public class RedLaser : ModProjectile
 	{
 		public override void SetStaticDefaults() 

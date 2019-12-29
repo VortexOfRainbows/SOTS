@@ -75,7 +75,7 @@ namespace SOTS.Projectiles.Lightning
 					scale = 100 + (int)(1400f/240f * chargeCurrent);
 					initiateWhenFull = true;
 				}
-				chargeCurrent += (float)(((SOTSWorld.legendLevel * 1.75f) + 2f) * 0.6f);
+				chargeCurrent += (float)(((1 * 1.75f) + 2f) * 0.6f);
 				projectile.damage = (int)(initialDamage * increaseDamage);
 				
 				

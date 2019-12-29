@@ -18,21 +18,19 @@ namespace SOTS
 {
     public class SOTSPlayer : ModPlayer
     {
-		public int soulAmount;
+		/*
 		public override TagCompound Save() {
-				
 			return new TagCompound {
 				
 				{"soulAmount", soulAmount},
 				};
 		}
-
 		public override void Load(TagCompound tag) 
 		{
 			soulAmount = tag.GetInt("soulAmount");
-		
 		}
-		 
+		*/
+		Vector2 playerMouseWorld;
 		public bool weakerCurse = false;
 		
 		public Vector2 starCen;
@@ -102,9 +100,8 @@ namespace SOTS
 		}
 		StartingDamage = 0;
 		*/
-		
 			
-			
+			 playerMouseWorld = Main.MouseWorld;
 			
 		if(onhit > 0)
 		{
@@ -155,8 +152,8 @@ namespace SOTS
 			if (Main.rand.Next(30) == 1 && player.ZoneDesert && bait.bait <= 15 && !player.ZoneBeach) {
 			caughtType = mod.ItemType("SandFish"); }
 			
-			if (Main.rand.Next(200) == 0 && ZeplineBiome) {
-			caughtType = mod.ItemType("ZephyriousZepline"); }
+			//if (Main.rand.Next(200) == 0 && ZeplineBiome) {
+			//caughtType = mod.ItemType("ZephyriousZepline"); }
             //if (Main.rand.Next(330) == 1 && liquidType == 2 && poolSize >= 500)   {
 			//caughtType = mod.ItemType("ScaledFish");}
 			
@@ -164,6 +161,8 @@ namespace SOTS
 			   
 			if (player.ZoneBeach && liquidType == 0 && Main.rand.Next(175) == 1) {
 			caughtType = mod.ItemType("SpikyPufferfish"); }
+			if (player.ZoneBeach && liquidType == 0 && Main.rand.Next(225) == 0) {
+			caughtType = mod.ItemType("CrabClaw"); }
 			if (liquidType == 2 && Main.rand.Next(50) == 1) {
 			caughtType = mod.ItemType("HiveFish"); }
 			if (liquidType == 1 && Main.rand.Next(130) == 1) {
@@ -337,25 +336,6 @@ namespace SOTS
 				
 			}
 			
-			
-			
-			
-			
-			
-			
-			
-			
-			Vector2 vector14;
-					
-						if (player.gravDir == 1f)
-					{
-					vector14.Y = (float)Main.mouseY + Main.screenPosition.Y;
-					}
-					else
-					{
-					vector14.Y = Main.screenPosition.Y + (float)Main.screenHeight - (float)Main.mouseY;
-					}
-						vector14.X = (float)Main.mouseX + Main.screenPosition.X;
 			if(BloodTapping == 1)
 			{
 				if(Main.rand.Next(10) == 0 && BloodTapping * damage > 20)
@@ -441,17 +421,8 @@ namespace SOTS
 		{
 			shotCounter++;
 			
-			Vector2 cursorPos;
-					
-			if (player.gravDir == 1f)
-			{
-			cursorPos.Y = (float)Main.mouseY + Main.screenPosition.Y;
-			}
-			else
-			{
-			cursorPos.Y = Main.screenPosition.Y + (float)Main.screenHeight - (float)Main.mouseY;
-			}
-			cursorPos.X = (float)Main.mouseX + Main.screenPosition.X;
+			Vector2 cursorPos = playerMouseWorld;
+			
 			float shootCursorX = player.Center.X - cursorPos.X;
 			float shootCursorY = player.Center.Y - cursorPos.Y;
 			Vector2 toCursor = new Vector2(-1, 0).RotatedBy(Math.Atan2(shootCursorY, shootCursorX));

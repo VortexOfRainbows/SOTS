@@ -73,6 +73,7 @@ namespace SOTS.Projectiles.Nature
 		int ai1 = 0;
 		public override void AI() 
 		{
+			projectile.netUpdate = true;
 			float veloX = projectile.velocity.X;
 			float veloY = projectile.velocity.Y;
 			

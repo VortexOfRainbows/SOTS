@@ -49,41 +49,38 @@ namespace SOTS.Projectiles.Celestial
 			Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 0.1f / 255f, (255 - projectile.alpha) * 0.9f / 255f, (255 - projectile.alpha) * 0.3f / 255f);
 			projectile.rotation += 0.3f;
 			
-			Vector2 cursorArea;
-			if (player.gravDir == 1f)
+			if(player.whoAmI == Main.myPlayer)
 			{
-			cursorArea.Y = (float)Main.mouseY + Main.screenPosition.Y;
-			}
-			else
-			{
-			cursorArea.Y = Main.screenPosition.Y + (float)Main.screenHeight - (float)Main.mouseY;
-			}
-			cursorArea.X = (float)Main.mouseX + Main.screenPosition.X;
-			float dX = 0f;
-			float dY = 0f;
-			float distance = 0;
-			float speed = 1f;
-				
-				
-			if(projectile.timeLeft > 192 && projectile.timeLeft < 224 && projectile.penetrate >= 9)
-			{
-				dX = cursorArea.X - projectile.Center.X;
-				dY = cursorArea.Y - projectile.Center.Y;
-				distance = (float)Math.Sqrt((double)(dX * dX + dY * dY));
-				speed /= distance;
-			    projectile.velocity *= 0.9725f;
-				projectile.velocity += new Vector2(dX * speed, dY * speed);
+				projectile.netUpdate = true;
+				Vector2 cursorArea = Main.MouseWorld;
+				float dX = 0f;
+				float dY = 0f;
+				float distance = 0;
+				float speed = 1f;
+					
+					
+				if(projectile.timeLeft > 192 && projectile.timeLeft < 224 && projectile.penetrate >= 9)
+				{
+					dX = cursorArea.X - projectile.Center.X;
+					dY = cursorArea.Y - projectile.Center.Y;
+					distance = (float)Math.Sqrt((double)(dX * dX + dY * dY));
+					speed /= distance;
+					projectile.velocity *= 0.9725f;
+					projectile.velocity += new Vector2(dX * speed, dY * speed);
+				}
 			}
 			if(projectile.timeLeft <= 20)
 			{
 				projectile.alpha += 7;
 				projectile.velocity *= 0.915f;
 			}
+			
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
 			Player player = Main.player[projectile.owner];
 			projectile.velocity *= 0.25f;
+			projectile.netUpdate = true;
 			if(target.life <= 2500)
 			{
             target.immune[projectile.owner] = 12;

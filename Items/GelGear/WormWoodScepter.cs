@@ -48,8 +48,8 @@ namespace SOTS.Items.GelGear
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			Vector2 SPos = Main.screenPosition + new Vector2(Main.mouseX, Main.mouseY);
-			position = SPos;
+			Vector2 cursorPos = Main.MouseWorld;
+			position = cursorPos;
 			for (int l = 0; l < Main.projectile.Length; l++)
 			{
 				Projectile proj = Main.projectile[l];

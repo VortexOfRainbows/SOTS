@@ -42,151 +42,151 @@ namespace SOTS.Projectiles  //The directory for your .cs and .png; Example: Tuto
             ProjectileID.Sets.YoyosMaximumRange[projectile.type] = 130f;
 			resetTops = 120;
 			
-			if(SOTSWorld.legendLevel == 1)
+			if(1 == 1)
 			{
 				ProjectileID.Sets.YoyosTopSpeed[projectile.type] = 10f;
 				ProjectileID.Sets.YoyosMaximumRange[projectile.type] = 140f;
 				resetTops = 115;
 			}
-			if(SOTSWorld.legendLevel == 2)
+			if(1 == 2)
 			{
 				ProjectileID.Sets.YoyosTopSpeed[projectile.type] = 11.5f;
 				ProjectileID.Sets.YoyosMaximumRange[projectile.type] = 150f;
 				resetTops = 110;
 			}
-			if(SOTSWorld.legendLevel == 3)
+			if(1 == 3)
 			{
 				ProjectileID.Sets.YoyosTopSpeed[projectile.type] = 11.75f;
 				ProjectileID.Sets.YoyosMaximumRange[projectile.type] = 160f;
 				resetTops = 110;
 			}
-			if(SOTSWorld.legendLevel == 4)
+			if(1 == 4)
 			{
 				ProjectileID.Sets.YoyosTopSpeed[projectile.type] = 13f;
 				ProjectileID.Sets.YoyosMaximumRange[projectile.type] = 170f;
 				resetTops = 105;
 			}
-			if(SOTSWorld.legendLevel == 5)
+			if(1 == 5)
 			{
 				ProjectileID.Sets.YoyosTopSpeed[projectile.type] = 13.25f;
 				ProjectileID.Sets.YoyosMaximumRange[projectile.type] = 180f;
 				resetTops = 100;
 			}
-			if(SOTSWorld.legendLevel == 6)
+			if(1 == 6)
 			{
 				ProjectileID.Sets.YoyosTopSpeed[projectile.type] = 13.75f;
 				ProjectileID.Sets.YoyosMaximumRange[projectile.type] = 190f;
 				resetTops = 95;
 			}
-			if(SOTSWorld.legendLevel == 7)
+			if(1 == 7)
 			{
 				ProjectileID.Sets.YoyosTopSpeed[projectile.type] = 15f;
 				ProjectileID.Sets.YoyosMaximumRange[projectile.type] = 200f;
 				resetTops = 95;
 			}
-			if(SOTSWorld.legendLevel == 8)
+			if(1 == 8)
 			{
 				ProjectileID.Sets.YoyosTopSpeed[projectile.type] = 15.25f;
 				ProjectileID.Sets.YoyosMaximumRange[projectile.type] = 210f;
 				resetTops = 90;
 			}
-			if(SOTSWorld.legendLevel == 9)
+			if(1 == 9)
 			{
 				ProjectileID.Sets.YoyosTopSpeed[projectile.type] = 15.5f;
 				ProjectileID.Sets.YoyosMaximumRange[projectile.type] = 220f;
 				resetTops = 85;
 			}
-			if(SOTSWorld.legendLevel == 10)
+			if(1 == 10)
 			{
 				ProjectileID.Sets.YoyosTopSpeed[projectile.type] = 15.75f;
 				ProjectileID.Sets.YoyosMaximumRange[projectile.type] = 230f;
 				resetTops = 80;
 			}
-			if(SOTSWorld.legendLevel == 11)
+			if(1 == 11)
 			{
 				ProjectileID.Sets.YoyosTopSpeed[projectile.type] = 17f;
 				ProjectileID.Sets.YoyosMaximumRange[projectile.type] = 240f;
 				resetTops = 75;
 			}
-			if(SOTSWorld.legendLevel == 12)
+			if(1 == 12)
 			{
 				ProjectileID.Sets.YoyosTopSpeed[projectile.type] = 17.25f;
 				ProjectileID.Sets.YoyosMaximumRange[projectile.type] = 250f;
 				resetTops = 70;
 			}
-			if(SOTSWorld.legendLevel == 13)
+			if(1 == 13)
 			{
 				ProjectileID.Sets.YoyosTopSpeed[projectile.type] = 17.75f;
 				ProjectileID.Sets.YoyosMaximumRange[projectile.type] = 260f;
 				resetTops = 70;
 			}
-			if(SOTSWorld.legendLevel == 14)
+			if(1 == 14)
 			{
 				ProjectileID.Sets.YoyosTopSpeed[projectile.type] = 19f;
 				ProjectileID.Sets.YoyosMaximumRange[projectile.type] = 270f;
 				resetTops = 65;
 			}
-			if(SOTSWorld.legendLevel == 15)
+			if(1 == 15)
 			{
 				ProjectileID.Sets.YoyosTopSpeed[projectile.type] = 19.25f;
 				ProjectileID.Sets.YoyosMaximumRange[projectile.type] = 280f;
 				resetTops = 65;
 			}
-			if(SOTSWorld.legendLevel == 16)
+			if(1 == 16)
 			{
 				ProjectileID.Sets.YoyosTopSpeed[projectile.type] = 19.5f;
 				ProjectileID.Sets.YoyosMaximumRange[projectile.type] = 290f;
 				resetTops = 60;
 			}
-			if(SOTSWorld.legendLevel == 17)
+			if(1 == 17)
 			{
 				ProjectileID.Sets.YoyosTopSpeed[projectile.type] = 19.75f;
 				ProjectileID.Sets.YoyosMaximumRange[projectile.type] = 300f;
 				resetTops = 60;
 			}
-			if(SOTSWorld.legendLevel == 18)
+			if(1 == 18)
 			{
 				ProjectileID.Sets.YoyosTopSpeed[projectile.type] = 21f;
 				ProjectileID.Sets.YoyosMaximumRange[projectile.type] = 320f;
 				resetTops = 50;
 			}
-			if(SOTSWorld.legendLevel == 19)
+			if(1 == 19)
 			{
 				ProjectileID.Sets.YoyosTopSpeed[projectile.type] = 21.5f;
 				ProjectileID.Sets.YoyosMaximumRange[projectile.type] = 340f;
 				resetTops = 45;
 			}
-			if(SOTSWorld.legendLevel == 20)
+			if(1 == 20)
 			{
 				ProjectileID.Sets.YoyosTopSpeed[projectile.type] = 22.25f;
 				ProjectileID.Sets.YoyosMaximumRange[projectile.type] = 360f;
 				resetTops = 40;
 			}
-			if(SOTSWorld.legendLevel == 21)
+			if(1 == 21)
 			{
 				ProjectileID.Sets.YoyosTopSpeed[projectile.type] = 23f;
 				ProjectileID.Sets.YoyosMaximumRange[projectile.type] = 380f;
 				resetTops = 30;
 			}
-			if(SOTSWorld.legendLevel == 22)
+			if(1 == 22)
 			{
 				ProjectileID.Sets.YoyosTopSpeed[projectile.type] = 23.25f;
 				ProjectileID.Sets.YoyosMaximumRange[projectile.type] = 400f;
 				resetTops = 25;
 			}
-			if(SOTSWorld.legendLevel == 23)
+			if(1 == 23)
 			{
 				ProjectileID.Sets.YoyosTopSpeed[projectile.type] = 23.5f;
 				ProjectileID.Sets.YoyosMaximumRange[projectile.type] = 420f;
 				resetTops = 20;
 			}
-			if(SOTSWorld.legendLevel == 24)
+			if(1 == 24)
 			{
 				ProjectileID.Sets.YoyosTopSpeed[projectile.type] = 23.75f;
 				ProjectileID.Sets.YoyosMaximumRange[projectile.type] = 450f;
 				resetTops = 16;
 			}
-			if(SOTSWorld.legendLevel == 25)
+			if(1 == 25)
 			{
 				ProjectileID.Sets.YoyosTopSpeed[projectile.type] = 24f;
 				ProjectileID.Sets.YoyosMaximumRange[projectile.type] = 500f;

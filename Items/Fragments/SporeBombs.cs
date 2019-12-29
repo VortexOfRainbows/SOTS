@@ -17,9 +17,9 @@ namespace SOTS.Items.Fragments
 		{
 			
 			item.CloneDefaults(279);
-			item.damage = 14;
-			item.useTime = 28;
-			item.useAnimation = 28;
+			item.damage = 13;
+			item.useTime = 29;
+			item.useAnimation = 29;
 			item.ranged = true;
 			item.thrown = false;
 			item.value = Item.sellPrice(0, 0, 80, 0);
@@ -29,7 +29,7 @@ namespace SOTS.Items.Fragments
 			item.maxStack = 1;
 			item.autoReuse = true;            
 			item.shoot = mod.ProjectileType("SporeBomb"); 
-            item.shootSpeed = 16.25f;
+            item.shootSpeed = 15.75f;
 			item.consumable = false;
 			
 		}

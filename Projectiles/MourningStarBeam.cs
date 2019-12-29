@@ -31,10 +31,7 @@ namespace SOTS.Projectiles
 			projectile.timeLeft = 1800;
 
 		}
-		
-			
-}
-	
+	}
 }
 		
 			

@@ -47,28 +47,18 @@ namespace SOTS.Projectiles
 				
 				
 			}
-			
-		Player player  = Main.player[projectile.owner];
-		Vector2 vector14;
-					
-						if (player.gravDir == 1f)
-					{
-					vector14.Y = (float)Main.mouseY + Main.screenPosition.Y;
-					}
-					else
-					{
-					vector14.Y = Main.screenPosition.Y + (float)Main.screenHeight - (float)Main.mouseY;
-					}
-						vector14.X = (float)Main.mouseX + Main.screenPosition.X;
+				
+			Player player  = Main.player[projectile.owner];
+			Vector2 vector14 = Main.MouseWorld;
 
-		double deg = (double) projectile.ai[1];
-		double rad = deg * (Math.PI / 180);
-		double dist = 16;
-	
-		projectile.position.X = vector14.X - (int)(Math.Cos(rad) * dist) - projectile.width/2;
-		projectile.position.Y = vector14.Y - (int)(Math.Sin(rad) * dist) - projectile.height/2;
- 
-		projectile.ai[1] += 1f;
+			double deg = (double) projectile.ai[1];
+			double rad = deg * (Math.PI / 180);
+			double dist = 16;
+		
+			projectile.position.X = vector14.X - (int)(Math.Cos(rad) * dist) - projectile.width/2;
+			projectile.position.Y = vector14.Y - (int)(Math.Sin(rad) * dist) - projectile.height/2;
+	 
+			projectile.ai[1] += 1f;
 		}
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
@@ -80,11 +70,5 @@ namespace SOTS.Projectiles
 			target.rotation += 0.01f;
 			*/
         }
-
-
-		
-		
-		
 	}
-	
 }

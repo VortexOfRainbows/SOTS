@@ -1,9 +1,13 @@
 using System;
+using System.IO;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-
 using Terraria;
 using Terraria.ModLoader;
+using Terraria.ID;
 
 namespace SOTS.Projectiles.Ores
 {    
@@ -28,6 +32,26 @@ namespace SOTS.Projectiles.Ores
 			projectile.tileCollide = true;
 			projectile.timeLeft = 9000;
 		}
+		public override void SendExtraAI(BinaryWriter writer) 
+		{
+			writer.Write(projectile.rotation);
+			writer.Write(projectile.spriteDirection);
+			//writer.Write(damageCounter);
+			writer.Write(latch);
+			writer.Write(enemyIndex);
+			writer.Write(diffPosX);
+			writer.Write(diffPosY);
+		}
+		public override void ReceiveExtraAI(BinaryReader reader)
+		{	
+			projectile.rotation = reader.ReadSingle();
+			projectile.spriteDirection = reader.ReadInt32();
+			//damageCounter = reader.ReadInt32();
+			latch = reader.ReadBoolean();
+			enemyIndex = reader.ReadInt32();
+			diffPosX = reader.ReadSingle();
+			diffPosY = reader.ReadSingle();
+		}
 		bool latch = false;
 		int enemyIndex = -1;
 		float diffPosX = 0;
@@ -40,6 +64,7 @@ namespace SOTS.Projectiles.Ores
 			
 			if(latch && enemyIndex != -1)
 			{
+				projectile.netUpdate = true;
 				NPC target = Main.npc[enemyIndex];
 				projectile.alpha += projectile.timeLeft % 2 == 0 ? 1 : 0;
 				if(projectile.alpha >= 210)

@@ -54,6 +54,6 @@ namespace SOTS.Items
                 Projectile.NewProjectile(vector2_1.X, vector2_1.Y, SpeedX, -SpeedY, type, damage, knockBack, Main.myPlayer, 0.0f, 2);
             }
             return false;
-	}
+		}
 	}
 }

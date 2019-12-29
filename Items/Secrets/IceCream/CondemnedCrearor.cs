@@ -32,24 +32,22 @@ namespace SOTS.Items.Secrets.IceCream
             item.shootSpeed = 24;
 
 		}
-          public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-          {
-			  
-			  Vector2 vector14;
+        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        {
+			Vector2 vector14;
 					
-						if (player.gravDir == 1f)
-					{
-					vector14.Y = (float)Main.mouseY + Main.screenPosition.Y;
-					}
-					else
-					{
-					vector14.Y = Main.screenPosition.Y + (float)Main.screenHeight - (float)Main.mouseY;
-					}
-						vector14.X = (float)Main.mouseX + Main.screenPosition.X;
-                Projectile.NewProjectile(vector14.X,  vector14.Y, 0, 0, type, damage, 1, Main.myPlayer, 0.0f, 1);
+			if (player.gravDir == 1f)
+			{
+				vector14.Y = (float)Main.mouseY + Main.screenPosition.Y;
+			}
+			else
+			{
+				vector14.Y = Main.screenPosition.Y + (float)Main.screenHeight - (float)Main.mouseY;
+			}
+			vector14.X = (float)Main.mouseX + Main.screenPosition.X;
+            Projectile.NewProjectile(vector14.X,  vector14.Y, 0, 0, type, damage, 1, Main.myPlayer, 0.0f, 1);
 				
-                    int radius = 6;     //this is the explosion radius, the highter is the value the bigger is the explosion
- 
+			int radius = 6;     //this is the explosion radius, the highter is the value the bigger is the explosion
 						
             for (int x = -radius; x <= radius; x++)
             {
@@ -66,18 +64,11 @@ namespace SOTS.Items.Secrets.IceCream
 					}
 				}
 			}
- 
-                    int xPosition2 = (int)(vector14.X / 16.0f);
-                    int yPosition2 = (int)(vector14.Y / 16.0f);
-                        WorldGen.KillTile(xPosition2, yPosition2, false, false, false);  //this make the explosion destroy tiles  
-						WorldGen.PlaceTile(xPosition2, yPosition2, mod.TileType("IceCreamBottleTile"));
- 
-						
-					
-					return false;
-					
-          
+            int xPosition2 = (int)(vector14.X / 16.0f);
+            int yPosition2 = (int)(vector14.Y / 16.0f);
+            WorldGen.KillTile(xPosition2, yPosition2, false, false, false);  //this make the explosion destroy tiles  
+			WorldGen.PlaceTile(xPosition2, yPosition2, mod.TileType("IceCreamBottleTile"));
+			return false;
+		}
 	}
-	
-}
 }

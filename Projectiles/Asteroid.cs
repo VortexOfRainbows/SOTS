@@ -30,43 +30,43 @@ namespace SOTS.Projectiles
 		}
 		public override void AI()
 		{
-				Player player  = Main.player[projectile.owner];
-				Vector2 vector14;
-							
-						if (player.gravDir == 1f)
-					{
-					vector14.Y = (float)Main.mouseY + Main.screenPosition.Y;
-					}
-					else
-					{
-					vector14.Y = Main.screenPosition.Y + (float)Main.screenHeight - (float)Main.mouseY;
-					}
-						vector14.X = (float)Main.mouseX + Main.screenPosition.X;
+			Player player  = Main.player[projectile.owner];
+			Vector2 vector14;
+						
+			if (player.gravDir == 1f)
+			{
+				vector14.Y = (float)Main.mouseY + Main.screenPosition.Y;
+			}
+			else
+			{
+				vector14.Y = Main.screenPosition.Y + (float)Main.screenHeight - (float)Main.mouseY;
+			}
+			vector14.X = (float)Main.mouseX + Main.screenPosition.X;
 
-				double deg = (double) projectile.ai[1];
-				double rad = deg * (Math.PI / 180);
-				double dist = 48;
+			double deg = (double) projectile.ai[1];
+			double rad = deg * (Math.PI / 180);
+			double dist = 48;
 			
-				projectile.position.X = vector14.X - (int)(Math.Cos(rad) * dist) - projectile.width/2;
-				projectile.position.Y = vector14.Y - (int)(Math.Sin(rad) * dist) - projectile.height/2;
+			projectile.position.X = vector14.X - (int)(Math.Cos(rad) * dist) - projectile.width/2;
+			projectile.position.Y = vector14.Y - (int)(Math.Sin(rad) * dist) - projectile.height/2;
 		 
-				projectile.ai[1] += 1f;
+			projectile.ai[1] += 1f;
+			
+			for(int i = 0; i < 1000; i++)
+			{
+				Projectile reflectProjectile = Main.projectile[i];
 				
-				for(int i = 0; i < 1000; i++)
+					float dX = reflectProjectile.Center.X - projectile.Center.X;
+					float dY = reflectProjectile.Center.Y - projectile.Center.Y;
+					float distance = (float) Math.Sqrt((double)(dX * dX + dY * dY));
+				if(distance < 24f && reflectProjectile.hostile && !reflectProjectile.friendly)
 				{
-					Projectile reflectProjectile = Main.projectile[i];
-					
-						float dX = reflectProjectile.Center.X - projectile.Center.X;
-						float dY = reflectProjectile.Center.Y - projectile.Center.Y;
-						float distance = (float) Math.Sqrt((double)(dX * dX + dY * dY));
-					if(distance < 24f && reflectProjectile.hostile && !reflectProjectile.friendly)
-					{
-						reflectProjectile.friendly = true;
-						reflectProjectile.hostile = false;
-						reflectProjectile.velocity.X *= -1;
-						reflectProjectile.velocity.Y *= -1;
-					}
+					reflectProjectile.friendly = true;
+					reflectProjectile.hostile = false;
+					reflectProjectile.velocity.X *= -1;
+					reflectProjectile.velocity.Y *= -1;
 				}
+			}
 			
 		} 
 		public override void PostDraw(Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch, Color lightColor)

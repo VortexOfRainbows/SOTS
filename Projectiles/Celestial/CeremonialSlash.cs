@@ -29,34 +29,28 @@ namespace SOTS.Projectiles.Celestial
 		public override void AI()
         {
 			Player player  = Main.player[projectile.owner];
-			Vector2 cursorArea;
-			if (player.gravDir == 1f)
+			if(player.whoAmI == Main.myPlayer)
 			{
-				cursorArea.Y = (float)Main.mouseY + Main.screenPosition.Y;
-			}
-			else
-			{
-				cursorArea.Y = Main.screenPosition.Y + (float)Main.screenHeight - (float)Main.mouseY;
-			}
-			cursorArea.X = (float)Main.mouseX + Main.screenPosition.X;
-			ai1++;
-			
-			float difX = cursorArea.X - projectile.Center.X;
-			float difY = cursorArea.Y - projectile.Center.Y;
-			float dir = (float)Math.Atan2((double)difY,(double)difX);
-			
-			if(ai1 % 6 == 0)
-			{
-				Vector2 area = new Vector2(1048f, 0).RotatedBy(dir);
-				area.X = projectile.Center.X + area.X;
-				area.Y = projectile.Center.Y + area.Y;
+				Vector2 cursorArea = Main.MouseWorld;
+				ai1++;
 				
-				if(player.whoAmI == Main.myPlayer)
-				LaunchLaser(area);
-			}
-			if(ai1 % 4 == 0)
-			{
-			VoidPlayer.ModPlayer(player).voidMeter--;
+				float difX = cursorArea.X - projectile.Center.X;
+				float difY = cursorArea.Y - projectile.Center.Y;
+				float dir = (float)Math.Atan2((double)difY,(double)difX);
+				
+				if(ai1 % 6 == 0)
+				{
+					Vector2 area = new Vector2(1048f, 0).RotatedBy(dir);
+					area.X = projectile.Center.X + area.X;
+					area.Y = projectile.Center.Y + area.Y;
+					
+					if(player.whoAmI == Main.myPlayer)
+					LaunchLaser(area);
+				}
+				if(ai1 % 4 == 0)
+				{
+				VoidPlayer.ModPlayer(player).voidMeter--;
+				}
 			}
 		}
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
@@ -66,9 +60,7 @@ namespace SOTS.Projectiles.Celestial
 		public void LaunchLaser(Vector2 area)
 		{
 			Player player  = Main.player[projectile.owner];
-			int Probe = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("RedLaser"), projectile.damage, 0, projectile.owner);
-			Main.projectile[Probe].ai[0] = area.X;
-			Main.projectile[Probe].ai[1] = area.Y;
+			int Probe = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("RedLaser"), projectile.damage, 0, projectile.owner, area.X, area.Y);
 		}
 	}
 }

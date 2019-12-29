@@ -50,18 +50,18 @@ namespace SOTS.Items.Fragments
 				Projectile projectile = Main.projectile[j];
 				if(projectile.type == 17 && player == Main.player[projectile.owner] && projectile.active)
 				{
-					for(int i = 0; i < 10; i++)
+					for(int i = 0; i < 5; i++)
 					{
 					int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 2);
 					Main.dust[num1].noGravity = true;
-					Main.dust[num1].velocity *= 0.75f;
+					Main.dust[num1].velocity *= 1.25f;
 					}
 					float minDist = 175;
 					int target2 = -1;
 					float dX = 0f;
 					float dY = 0f;
 					float distance = 0;
-					float speed = 8f;
+					float speed = 12f;
 					for(int i = 0; i < Main.npc.Length - 1; i++)
 					{
 						NPC target = Main.npc[i];
@@ -77,7 +77,7 @@ namespace SOTS.Items.Fragments
 							}
 						}
 					}
-					if(target2 != -1 && counter >= 42)
+					if(target2 != -1 && counter >= 35)
 					{
 						NPC toHit = Main.npc[target2];
 						if(toHit.active)
@@ -89,7 +89,9 @@ namespace SOTS.Items.Fragments
 						speed /= distance;
 					   
 						Vector2 fireTo = new Vector2(dX * speed, dY * speed);
-						int proj = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, fireTo.X, fireTo.Y, mod.ProjectileType("TangleFlower"), (int)(item.damage * (1 + (player.minionDamage - 1f) + (player.allDamage - 1f))), 4.5f, projectile.owner, toHit.whoAmI, projectile.whoAmI);
+						int proj = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, fireTo.X, fireTo.Y, 206, (int)(item.damage * (1 + (player.minionDamage - 1f) + (player.allDamage - 1f))), 4.5f, projectile.owner, 0, 0);
+						Main.projectile[proj].minion = true;
+						Main.projectile[proj].magic = false;
 						counter = 0;
 						}
 					}
