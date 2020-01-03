@@ -33,7 +33,7 @@ namespace SOTS.Items.Pyramid
             item.rare = 5;
             item.UseSound = SoundID.Item8;
             item.autoReuse = true;
-            item.shoot = mod.ProjectileType("CurseBall"); 
+            item.shoot = mod.ProjectileType("FriendlyCurseBall"); 
             item.shootSpeed = 9.5f;
 			item.mana = 16;
 			item.reuseDelay = 20;
@@ -102,45 +102,26 @@ namespace SOTS.Items.Pyramid
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
 			inInventory = false;
-				if(index1 != -1 && Main.projectile[index1].type == type && Main.projectile[index1].friendly && Main.projectile[index1].active)
-					Main.projectile[index1].velocity = new Vector2(speedX, speedY);
-				
-					index1 = Projectile.NewProjectile(position.X, position.Y, 0, 0, type, damage, knockBack, player.whoAmI);
-					Main.projectile[index1].friendly = true;
-					Main.projectile[index1].hostile = false;
-					Main.projectile[index1].alpha = 155;
-				
-				
-				if(index2 != -1 && Main.projectile[index2].type == type && Main.projectile[index2].friendly && Main.projectile[index2].active)
-					Main.projectile[index2].velocity = new Vector2(speedX, speedY);
-				
-					index2 = Projectile.NewProjectile(position.X, position.Y, 0, 0, type, damage, knockBack, player.whoAmI);
-					Main.projectile[index2].friendly = true;
-					Main.projectile[index2].hostile = false;
-					Main.projectile[index2].alpha = 155;
-				
-				
-				if(index3 != -1 && Main.projectile[index3].type == type && Main.projectile[index3].friendly && Main.projectile[index3].active)
-					Main.projectile[index3].velocity = new Vector2(speedX, speedY);
-				
-					index3 = Projectile.NewProjectile(position.X, position.Y, 0, 0, type, damage, knockBack, player.whoAmI);
-					Main.projectile[index3].friendly = true;
-					Main.projectile[index3].hostile = false;
-					Main.projectile[index3].alpha = 155;
-				
-				
-				if(index4 != -1 && Main.projectile[index4].type == type && Main.projectile[index4].friendly && Main.projectile[index4].active)
-					Main.projectile[index4].velocity = new Vector2(speedX, speedY);
-				
-					index4 = Projectile.NewProjectile(position.X, position.Y, 0, 0, type, damage, knockBack, player.whoAmI);
-					Main.projectile[index4].friendly = true;
-					Main.projectile[index4].hostile = false;
-					Main.projectile[index4].alpha = 155;
-				
-				
-					
-					
-				return false; 
+			if(index1 != -1 && Main.projectile[index1].type == type && Main.projectile[index1].friendly && Main.projectile[index1].active)
+				Main.projectile[index1].velocity = new Vector2(speedX, speedY);
+			
+				index1 = Projectile.NewProjectile(position.X, position.Y, 0, 0, type, damage, knockBack, player.whoAmI);
+						
+			if(index2 != -1 && Main.projectile[index2].type == type && Main.projectile[index2].friendly && Main.projectile[index2].active)
+				Main.projectile[index2].velocity = new Vector2(speedX, speedY);
+			
+				index2 = Projectile.NewProjectile(position.X, position.Y, 0, 0, type, damage, knockBack, player.whoAmI);
+			
+			if(index3 != -1 && Main.projectile[index3].type == type && Main.projectile[index3].friendly && Main.projectile[index3].active)
+				Main.projectile[index3].velocity = new Vector2(speedX, speedY);
+			
+				index3 = Projectile.NewProjectile(position.X, position.Y, 0, 0, type, damage, knockBack, player.whoAmI);
+						
+			if(index4 != -1 && Main.projectile[index4].type == type && Main.projectile[index4].friendly && Main.projectile[index4].active)
+				Main.projectile[index4].velocity = new Vector2(speedX, speedY);
+			
+				index4 = Projectile.NewProjectile(position.X, position.Y, 0, 0, type, damage, knockBack, player.whoAmI);
+			return false; 
 		}
 	}
 }

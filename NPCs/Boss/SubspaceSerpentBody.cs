@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -8,8 +9,7 @@ using Terraria.ModLoader;
 namespace SOTS.NPCs.Boss
 {   
     public class SubspaceSerpentBody : ModNPC
-    {	int ai1 = 0;
-	int ai2 = 0;
+    {	
 		public override void SetStaticDefaults()
 		{
 			
@@ -37,7 +37,15 @@ namespace SOTS.NPCs.Boss
             npc.buffImmune[39] = true;
             npc.buffImmune[24] = true;
         }
- 
+		
+		public override void SendExtraAI(BinaryWriter writer) 
+		{
+			writer.Write(npc.knockBackResist);
+		}
+		public override void ReceiveExtraAI(BinaryReader reader)
+		{	
+			npc.knockBackResist = reader.ReadSingle();
+		}
         public override bool PreAI()
         {
             if (npc.ai[3] > 0)

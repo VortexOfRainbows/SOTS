@@ -21,18 +21,20 @@ namespace SOTS.Buffs
  
         public override void Update(Player player, ref int buffIndex)
         {
-			NPC.SpawnOnPlayer(player.whoAmI, mod.NPCType("ShardKing"));
-			
-					for(int king = 0; king < 200; king++)
+			if(!NPC.AnyNPCs(mod.NPCType("ShardKing")))
+			{
+				NPC.SpawnOnPlayer(player.whoAmI, mod.NPCType("ShardKing"));
+				for(int king = 0; king < 200; king++)
+				{
+					NPC npc = Main.npc[king];
+					if(npc.type == mod.NPCType("ShardKing"))
 					{
-						NPC npc = Main.npc[king];
-						if(npc.type == mod.NPCType("ShardKing"))
-						{
-						npc.position.X = player.Center.X - npc.width/2;
-						npc.position.Y = player.Center.Y - npc.height/2 - 1200;
-						}
+					npc.position.X = player.Center.X - npc.width/2;
+					npc.position.Y = player.Center.Y - npc.height/2 - 1200;
 					}
-                player.DelBuff(buffIndex);
+				}
+			}
+            player.DelBuff(buffIndex);
         }
     }
 }

@@ -9,7 +9,9 @@ using Terraria.ModLoader;
 namespace SOTS.NPCs.Boss
 {
 	public class CursedPinky : ModNPC
-	{	bool initiate = true;
+	{	
+		int timeLeft = 0;
+		bool initiate = true;
 		float initialVelocityX = 0;
 		float initialVelocityY = 0;
 		public override void SendExtraAI(BinaryWriter writer) 
@@ -47,10 +49,18 @@ namespace SOTS.NPCs.Boss
             npc.noTileCollide = true;
             //npc.DeathSound = SoundID.NPCHit3;
             npc.netAlways = true;
-			npc.netUpdate = true;
 		}
 		public override void AI()
 		{	
+			timeLeft++;
+			if(timeLeft > 180)
+			{
+				npc.active = false;
+			}
+			if(Main.netMode != 1)
+			{
+				npc.netUpdate = true;
+			}
 			Player player  = Main.player[npc.target];
 			if(initiate == true)
 			{

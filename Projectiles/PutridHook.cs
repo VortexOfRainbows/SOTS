@@ -14,13 +14,24 @@ namespace SOTS.Projectiles
     public class PutridHook : ModProjectile 
     {
 		int wait = 1;
-		int hookTimer = 0;         
-		float rotate;
-				float oldVelocityY = 0;	
-				float oldVelocityX = 0;
-				bool collided = false;
-				
-		
+		int hookTimer = 0;      
+		float oldVelocityY = 0;	
+		float oldVelocityX = 0;
+		bool collided = false;
+		public override void SendExtraAI(BinaryWriter writer) 
+		{
+			writer.Write(hookTimer);
+			writer.Write(oldVelocityY);
+			writer.Write(oldVelocityX);
+			writer.Write(collided);
+		}
+		public override void ReceiveExtraAI(BinaryReader reader)
+		{	
+			hookTimer = reader.ReadInt32();
+			oldVelocityY = reader.ReadSingle();
+			oldVelocityX = reader.ReadSingle();
+			collided = reader.ReadBoolean();
+		}
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Putrid Hook");
@@ -38,16 +49,17 @@ namespace SOTS.Projectiles
 			projectile.hostile = true;
 			projectile.magic = false;
 			projectile.ranged = false;
+			projectile.netImportant = true;
 		}
 		public override bool PreAI()
 		{
-			if(projectile.knockBack == 10)
+			if(projectile.ai[0] == 10)
 			{
-				projectile.knockBack--;
+				projectile.ai[0]--;
 			}
-			if(projectile.knockBack == 2)
+			if(projectile.ai[0] == 2)
 			{
-				projectile.knockBack = 1;
+				projectile.ai[0] = 1;
 				hookTimer = 0;
 				wait = 1;
 				collided = false;
@@ -69,13 +81,10 @@ namespace SOTS.Projectiles
 				projectile.velocity.X += -oldVelocityX / 90f;
 				projectile.velocity.Y += -oldVelocityY / 90f;
 			}
-			else
+			if(collided)
 			{
-				if(projectile.knockBack == 1)
-				{
-					projectile.velocity.X *= 0.93f;
-					projectile.velocity.Y *= 0.93f;
-				}
+				projectile.velocity.X *= 0.93f;
+				projectile.velocity.Y *= 0.93f;
 			}
 			if(NPC.AnyNPCs(mod.NPCType("PutridPinkyPhase2")))
 			{
@@ -88,7 +97,7 @@ namespace SOTS.Projectiles
 			{
 				projectile.tileCollide = true;
 			}
-			if(hookTimer >= 360 && !collided)
+			if(hookTimer >= 300 && !collided)
 			{
 				projectile.velocity.X = 0;
 				projectile.velocity.Y = 0;
@@ -100,12 +109,10 @@ namespace SOTS.Projectiles
 				
 				if(friendlyProj.active && projectile.Center.X + 32 > friendlyProj.Center.X && projectile.Center.X - 32 < friendlyProj.Center.X && projectile.Center.Y + 32 > friendlyProj.Center.Y && projectile.Center.Y - 32 < friendlyProj.Center.Y && friendlyProj.friendly == true && friendlyProj.damage > 4 && !friendlyProj.sentry && !friendlyProj.minion)
 				{	
-					float newVelocityX = -friendlyProj.velocity.X;
-					float newVelocityY = -friendlyProj.velocity.Y;
 					friendlyProj.Kill();
 				}
 			}
-			
+			projectile.netUpdate = true;
 		}
 		public override void Kill(int timeLeft)
 		{
@@ -114,8 +121,8 @@ namespace SOTS.Projectiles
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{	
 			projectile.tileCollide = false;
-			projectile.velocity.X *= 0.93f;
-			projectile.velocity.Y *= 0.93f;
+			projectile.velocity.X *= 0.7f;
+			projectile.velocity.Y *= 0.7f;
 			collided = true;
 			return false;
 		}

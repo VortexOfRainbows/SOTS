@@ -35,13 +35,31 @@ namespace SOTS.Projectiles.Pyramid
             projectile.netImportant = true;
             projectile.minionSlots = 0f;
 		}
+		public override void SendExtraAI(BinaryWriter writer) 
+		{
+			writer.Write(projectile.rotation);
+			writer.Write(projectile.spriteDirection);
+			writer.Write(projectile.frame);
+			writer.Write(projectile.timeLeft);
+		}
+		public override void ReceiveExtraAI(BinaryReader reader)
+		{	
+			projectile.rotation = reader.ReadSingle();
+			projectile.spriteDirection = reader.ReadInt32();
+			projectile.frame = reader.ReadInt32();
+			projectile.timeLeft = reader.ReadInt32();
+		}
 		public override void AI()
         {
 			Player player = Main.player[projectile.owner];
 			
 			projectile.tileCollide = true;
-			
+			projectile.netUpdate = true;
             projectile.frameCounter++;
+			if(!projectile.active)
+			{
+				projectile.Kill();
+			}
             if (projectile.frameCounter >= 9)
             {
 				projectile.friendly = true;
@@ -55,81 +73,81 @@ namespace SOTS.Projectiles.Pyramid
 				projectile.rotation = (float)Math.Atan2((double)projectile.velocity.Y, (double)projectile.velocity.X) - MathHelper.ToRadians(180);
 				projectile.spriteDirection = -1;
 			}
-					float minDist = 400;
-					int target2 = -1;
-					float dX = 0f;
-					float dY = 0f;
-					float distance = 0;
-					float dXP = 0f;
-					float dYP = 0f;
-					float distanceP = 0;
-					float speed = 0.1f * Main.rand.Next(5,16);
-					if(projectile.friendly == true && projectile.hostile == false)
+			float minDist = 400;
+			int target2 = -1;
+			float dX = 0f;
+			float dY = 0f;
+			float distance = 0;
+			float dXP = 0f;
+			float dYP = 0f;
+			float distanceP = 0;
+			float speed = 0.1f * Main.rand.Next(5,16);
+			if(projectile.friendly == true && projectile.hostile == false)
+			{
+				for(int i = 0; i < Main.npc.Length - 1; i++)
+				{
+					NPC target = Main.npc[i];
+					if(!target.friendly && target.dontTakeDamage == false && target.lifeMax > 5 && target.active)
 					{
-						for(int i = 0; i < Main.npc.Length - 1; i++)
+						dX = target.Center.X - projectile.Center.X;
+						dY = target.Center.Y - projectile.Center.Y;
+						distance = (float) Math.Sqrt((double)(dX * dX + dY * dY));
+						if(distance < minDist)
 						{
-							NPC target = Main.npc[i];
-							if(!target.friendly && target.dontTakeDamage == false && target.lifeMax > 5 && target.active)
-							{
-								dX = target.Center.X - projectile.Center.X;
-								dY = target.Center.Y - projectile.Center.Y;
-								distance = (float) Math.Sqrt((double)(dX * dX + dY * dY));
-								if(distance < minDist)
-								{
-									minDist = distance;
-									target2 = i;
-									dXP = target.Center.X - player.Center.X;
-									dYP = target.Center.Y - player.Center.Y;
-									distanceP = (float) Math.Sqrt((double)(dXP * dXP + dYP * dYP));
-								}
-							}
-						}
-						
-						float playerdX = player.Center.X - projectile.Center.X;
-						float playerdY = player.Center.Y - projectile.Center.Y - 90;
-						float playerDistance = (float)Math.Sqrt((double)(playerdX * playerdX + playerdY * playerdY));
-						if(playerDistance >= 1800)
-						{
-							projectile.position.X = player.position.X;
-							projectile.position.Y = player.position.Y;
-							
-						}
-						
-						if(target2 != -1 && playerDistance <= 848 && distanceP <= 848)
-						{
-							NPC toHit = Main.npc[target2];
-							if(toHit.active == true)
-							{
-								
-							dX = toHit.Center.X - projectile.Center.X;
-							dY = toHit.Center.Y - projectile.Center.Y;
-							distance = (float)Math.Sqrt((double)(dX * dX + dY * dY));
-							speed /= distance;
-							projectile.velocity *= 0.9975f;
-							projectile.velocity += new Vector2(dX * speed, dY * speed);
-							}
-						}
-						else if(playerDistance <= 400)
-						{
-							if(player.active == true)
-							{
-								
-							speed /= playerDistance;
-							projectile.velocity *= 0.991f;
-							projectile.velocity += new Vector2(playerdX * speed, playerdY * speed) * 1.2f;
-							}
-						}
-						else if(playerDistance >= 200)
-						{
-							if(player.active == true)
-							{
-								
-							speed /= playerDistance;
-							projectile.velocity *= 0.95f;
-							projectile.velocity += new Vector2(playerdX * speed, playerdY * speed) * 1.2f;
-							}
+							minDist = distance;
+							target2 = i;
+							dXP = target.Center.X - player.Center.X;
+							dYP = target.Center.Y - player.Center.Y;
+							distanceP = (float) Math.Sqrt((double)(dXP * dXP + dYP * dYP));
 						}
 					}
+				}
+				
+				float playerdX = player.Center.X - projectile.Center.X;
+				float playerdY = player.Center.Y - projectile.Center.Y - 90;
+				float playerDistance = (float)Math.Sqrt((double)(playerdX * playerdX + playerdY * playerdY));
+				if(playerDistance >= 1800)
+				{
+					projectile.position.X = player.position.X;
+					projectile.position.Y = player.position.Y;
+					
+				}
+				
+				if(target2 != -1 && playerDistance <= 848 && distanceP <= 848)
+				{
+					NPC toHit = Main.npc[target2];
+					if(toHit.active == true)
+					{
+						
+					dX = toHit.Center.X - projectile.Center.X;
+					dY = toHit.Center.Y - projectile.Center.Y;
+					distance = (float)Math.Sqrt((double)(dX * dX + dY * dY));
+					speed /= distance;
+					projectile.velocity *= 0.9975f;
+					projectile.velocity += new Vector2(dX * speed, dY * speed);
+					}
+				}
+				else if(playerDistance <= 400)
+				{
+					if(player.active == true)
+					{
+						
+					speed /= playerDistance;
+					projectile.velocity *= 0.991f;
+					projectile.velocity += new Vector2(playerdX * speed, playerdY * speed) * 1.2f;
+					}
+				}
+				else if(playerDistance >= 200)
+				{
+					if(player.active == true)
+					{
+						
+					speed /= playerDistance;
+					projectile.velocity *= 0.95f;
+					projectile.velocity += new Vector2(playerdX * speed, playerdY * speed) * 1.2f;
+					}
+				}
+			}
         }
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{	

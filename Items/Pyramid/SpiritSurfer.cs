@@ -10,7 +10,7 @@ namespace SOTS.Items.Pyramid
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Spirit Surfer");
-			Tooltip.SetDefault("Summons an extremely fast spirit board mount\nDecreases void regen by 30 and life regen by 1 while active");
+			Tooltip.SetDefault("Summons an extremely fast spirit board mount\nDecreases void regen by 40 while active");
 		}
         public override void SetDefaults()
         {

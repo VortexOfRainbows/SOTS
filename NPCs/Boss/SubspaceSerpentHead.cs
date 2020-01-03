@@ -313,6 +313,11 @@ namespace SOTS.NPCs.Boss
 		float areaX2;
 		float areaY2;
 		float keepRotate;
+		int rand1 = -1;
+		int rand2 = -1;
+		int rand3 = -1;
+		int rand4 = -1;
+		int rand5 = -1;
 		public override void AI()
 		{
 			Player player =	Main.player[npc.target];
@@ -325,6 +330,7 @@ namespace SOTS.NPCs.Boss
 			
 			
 			ai1++;
+			ai2++;
 			rotate -= 1;
 			
 			if(ai1 >= 720 && ai1 <= 1800)
@@ -361,69 +367,75 @@ namespace SOTS.NPCs.Boss
 					directX = 0;
 					directY = 0;
 					npc.rotation = (float)Math.Atan2(goToY, goToX) + 1.57f;
-					if(ai1 % 120 == 0)
+				}
+				if(ai1 % 120 == 0)
+				{
+					rand1 = Main.rand.Next(8);
+					rand2 = Main.rand.Next(8);
+					rand3 = Main.rand.Next(8);
+					rand4 = Main.rand.Next(8);
+					while(rand2 == rand1)
 					{
-						int rand1 = Main.rand.Next(8);
-
-						int rand2 = Main.rand.Next(8);
-						while(rand2 == rand1)
-						{
-							rand2 = Main.rand.Next(8);
-						}
-						
-						int rand3 = Main.rand.Next(8);
-						while(rand3 == rand2 || rand3 == rand1)
-						{
-							rand3 = Main.rand.Next(8);
-						}
-						
-						int rand4 = Main.rand.Next(8);
-						while(rand4 == rand3 || rand4 == rand2 || rand4 == rand1)
-						{
-							rand4 = Main.rand.Next(8);
-						}
-						
+						rand2 = Main.rand.Next(8);
+					}
+					
+					while(rand3 == rand2 || rand3 == rand1)
+					{
+						rand3 = Main.rand.Next(8);
+					}
+					
+					while(rand4 == rand3 || rand4 == rand2 || rand4 == rand1)
+					{
+						rand4 = Main.rand.Next(8);
+					}
+					if(Main.netMode != 1)
+					{
 						if(Main.expertMode)
 						{
-							Laser(rand4, 45);
+							Laser(rand4, 45, Main.rand.Next(2));
 						}
 						
-						Laser(rand3, 42);
+						Laser(rand3, 42, Main.rand.Next(2));	
 						
 						if(npc.life < (int)(npc.lifeMax * 0.5f))
-						Laser(rand2, 42);
+						Laser(rand2, 42, Main.rand.Next(2));
+						
 						
 						if(npc.life < (int)(npc.lifeMax * 0.25f))
-						Laser(rand1, 42);
+						Laser(rand1, 42, Main.rand.Next(2));
 					}
 				}
 			}
 			if(ai1 == 1805)
 			{
-				int rand1 = Main.rand.Next(4);
+				if(Main.netMode != 1)
+				{
+					rand5 = Main.rand.Next(4);
+					npc.netUpdate = true;
+				}
 				
-				if(rand1 == 0)
+				if(rand5 == 0)
 				{
 					areaX = -900; // <--
 					areaY = -400;
 					areaX2 = 2400;
 					areaY2 = -400;
 				}
-				if(rand1 == 1)
+				if(rand5 == 1)
 				{
 					areaX = 800;
 					areaY = -700;  // ^
 					areaX2 = 800;
 					areaY2 = 2400;
 				}
-				if(rand1 == 2)
+				if(rand5 == 2)
 				{
 					areaX = 900; // -->
 					areaY = 400;
 					areaX2 = -2400;
 					areaY2 = 400;
 				}
-				if(rand1 == 3)
+				if(rand5 == 3)
 				{
 					areaX = -800;
 					areaY = 700; // \/
@@ -491,30 +503,33 @@ namespace SOTS.NPCs.Boss
 			}
 			if(ai1 == 2305)
 			{
-				int rand1 = Main.rand.Next(4);
-				
-				if(rand1 == 0)
+				if(Main.netMode != 1)
+				{
+					rand5 = Main.rand.Next(4);
+					npc.netUpdate = true;
+				}
+				if(rand5 == 0)
 				{
 					areaX = -900; // <--
 					areaY = -400;
 					areaX2 = 2400;
 					areaY2 = -400;
 				}
-				if(rand1 == 1)
+				if(rand5 == 1)
 				{
 					areaX = 800;
 					areaY = -700;  // ^
 					areaX2 = 800;
 					areaY2 = 2400;
 				}
-				if(rand1 == 2)
+				if(rand5 == 2)
 				{
 					areaX = 900; // -->
 					areaY = 400;
 					areaX2 = -2400;
 					areaY2 = 400;
 				}
-				if(rand1 == 3)
+				if(rand5 == 3)
 				{
 					areaX = -800;
 					areaY = 700; // \/
@@ -592,32 +607,38 @@ namespace SOTS.NPCs.Boss
 			
 			if(ai1 % 151 == 0 && (ai1 >= 1800 || ai1 <= 720))
 			{
-				int rand1 = Main.rand.Next(8);
-
-				int rand2 = Main.rand.Next(8);
+				rand1 = Main.rand.Next(8);
+				rand2 = Main.rand.Next(8);
 				while(rand2 == rand1)
 				{
 					rand2 = Main.rand.Next(8);
 				}
-				if(npc.life < (int)(npc.lifeMax * 0.35f) || (Main.expertMode && npc.life < (int)(npc.lifeMax * 0.75f)))
-					Laser(rand2, 42);
+				if(Main.netMode != 1)
+				{
+					if(npc.life < (int)(npc.lifeMax * 0.5f))
+					Laser(rand2, 42, Main.rand.Next(2));
 				
-				if(npc.life < (int)(npc.lifeMax * 0.2f))
-					Laser(rand1, 42);
+					if(npc.life < (int)(npc.lifeMax * 0.25f))
+					Laser(rand1, 42,  Main.rand.Next(2));
+				}
 			}
 			
 			
 			if(ai1 >= 3180) ai1 = 0;
 			
-			if(Main.player[npc.target].dead)
+			if(player.dead || !player.ZoneUnderworldHeight)
 			{
-			 despawn++;
+				despawn++;
 			}
-			if(despawn >= 720)
+			if(despawn >= 600)
 			{
-			npc.active = false;
+				npc.active = false;
 			}
 			npc.timeLeft = 10000;
+			if(Main.netMode != 1)
+			{
+				npc.netUpdate = true;
+			}
 		}
 		int slither = 1;
 		public void LaserReset()
@@ -628,10 +649,7 @@ namespace SOTS.NPCs.Boss
 				NPC npc2 = Main.npc[j];
 				if(npc2.type == mod.NPCType("SubspaceSerpentBody") && npc2.active)
 				{
-					if(npc2.knockBackResist == 0.1f)
-					{
-						npc2.knockBackResist = 0.0f;
-					}
+					npc2.knockBackResist = 0.0f;
 				}
 			}
 		}
@@ -700,32 +718,32 @@ namespace SOTS.NPCs.Boss
 				NPC npc2 = Main.npc[j];
 				if(npc2.type == mod.NPCType("SubspaceSerpentBody") && npc2.active)
 				{
-					if((Main.rand.Next(4) == 0 && !Main.expertMode) || (Main.rand.Next(3) == 0 && Main.expertMode))
+					int variator = j + npc.life + (int)ai1;
+					int additionVar = ((int)ai2 % 17) % 7;
+					if(variator % (23 + additionVar) > 4 && ((variator % 5 == 0 && !Main.expertMode) || (variator % 4 == 0 && Main.expertMode) || variator % (20 - additionVar) > 9))
 					{
-					float posX = npc2.Center.X;
-					float posY = npc2.Center.Y;
+						float posX = npc2.Center.X;
+						float posY = npc2.Center.Y;
 						if(direction == 1)
 						{
-						Vector2 properAngle = new Vector2(0, -8);
-						Projectile.NewProjectile(posX, posY, properAngle.X, properAngle.Y, mod.ProjectileType("GreenCellBlast"), damage, 0, 0);
+							Vector2 properAngle = new Vector2(0, -8);
+							Projectile.NewProjectile(posX, posY, properAngle.X, properAngle.Y, mod.ProjectileType("GreenCellBlast"), damage, 0, 0);
 						}
 						if(direction == 2)
 						{
-						Vector2 properAngle = new Vector2(0, 8);
-						Projectile.NewProjectile(posX, posY, properAngle.X, properAngle.Y, mod.ProjectileType("GreenCellBlast"), damage, 0, 0);
+							Vector2 properAngle = new Vector2(0, 8);
+							Projectile.NewProjectile(posX, posY, properAngle.X, properAngle.Y, mod.ProjectileType("GreenCellBlast"), damage, 0, 0);
 						}
 						if(direction == 3)
 						{
-						Vector2 properAngle = new Vector2(-8, 0);
-						Projectile.NewProjectile(posX, posY, properAngle.X, properAngle.Y, mod.ProjectileType("GreenCellBlast"), damage, 0, 0);
+							Vector2 properAngle = new Vector2(-8, 0);
+							Projectile.NewProjectile(posX, posY, properAngle.X, properAngle.Y, mod.ProjectileType("GreenCellBlast"), damage, 0, 0);
 						}
 						if(direction == 4)
 						{
-						Vector2 properAngle = new Vector2(8, 0);
-						Projectile.NewProjectile(posX, posY, properAngle.X, properAngle.Y, mod.ProjectileType("GreenCellBlast"), damage, 0, 0);
+							Vector2 properAngle = new Vector2(8, 0);
+							Projectile.NewProjectile(posX, posY, properAngle.X, properAngle.Y, mod.ProjectileType("GreenCellBlast"), damage, 0, 0);
 						}
-						
-						
 						npc2.knockBackResist = 0.1f;
 					}
 				}
@@ -777,7 +795,7 @@ namespace SOTS.NPCs.Boss
 				Projectile.NewProjectile(posX, posY, properAngle.X, properAngle.Y, mod.ProjectileType("EnergySerpent"), damage, 0, 0);
 			}
 		}
-		public void Laser(int area, int damage)
+		public void Laser(int area, int damage, int type)
 		{
 			Player player =	Main.player[npc.target];
 			float locationX = 0;
@@ -824,13 +842,18 @@ namespace SOTS.NPCs.Boss
 			}
 			
 			Main.PlaySound(SoundID.Item92, (int)(player.Center.X + locationX), (int)(player.Center.Y + locationY));
-			if(Main.rand.Next(2) == 0)
+			if(Main.netMode != 1)
 			{
-				Projectile.NewProjectile(player.Center.X + locationX, player.Center.Y + locationY, 0, 0, mod.ProjectileType("plusLaser"), damage, 0, 0);
-			}
-			else
-			{
-				Projectile.NewProjectile(player.Center.X + locationX, player.Center.Y + locationY, 0, 0, mod.ProjectileType("XLaser"), damage, 0, 0);
+				if(type == 0)
+				{
+					int proj = Projectile.NewProjectile(player.Center.X + locationX, player.Center.Y + locationY, 0, 0, mod.ProjectileType("plusLaser"), damage, 0, 0);
+					NetMessage.SendData(27, -1, -1, null, proj);
+				}
+				else
+				{
+					int proj = Projectile.NewProjectile(player.Center.X + locationX, player.Center.Y + locationY, 0, 0, mod.ProjectileType("XLaser"), damage, 0, 0);
+					NetMessage.SendData(27, -1, -1, null, proj);
+				}
 			}
 		}
 		public override void PostAI()
@@ -856,7 +879,7 @@ namespace SOTS.NPCs.Boss
 			}
 			
 		}
-		
+
 		public override void SendExtraAI(BinaryWriter writer) 
 		{
 			writer.Write(ai1);
@@ -873,6 +896,7 @@ namespace SOTS.NPCs.Boss
 			writer.Write(areaY);
 			writer.Write(areaY2);
 			writer.Write(keepRotate);
+			writer.Write(rand5);
 		}
 		public override void ReceiveExtraAI(BinaryReader reader)
 		{	
@@ -890,6 +914,7 @@ namespace SOTS.NPCs.Boss
 			areaY = reader.ReadSingle();
 			areaY2 = reader.ReadSingle();
 			keepRotate = reader.ReadSingle();
+			rand5 = reader.ReadInt32();
 		}
 	}
 }

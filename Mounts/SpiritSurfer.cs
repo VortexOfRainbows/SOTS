@@ -44,8 +44,7 @@ namespace SOTS.Mounts
 		public override void UpdateEffects(Player player)
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-			voidPlayer.voidRegen -= 3f;
-			player.lifeRegen -= 1;
+			voidPlayer.voidRegen -= 4f;
 					Vector2 curve = new Vector2(24,0).RotatedBy(MathHelper.ToRadians(variation));
 					if(player.velocity.X > 0.1)
 					{

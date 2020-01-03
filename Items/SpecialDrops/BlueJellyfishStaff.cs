@@ -34,10 +34,15 @@ namespace SOTS.Items.SpecialDrops
 			item.mana = 12;
 
 		}
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-        {
-                  Projectile.NewProjectile(position.X, position.Y, speedX, speedY, type, damage, knockBack, player.whoAmI);
-            return false;
-	}
+		public override void AddRecipes()
+		{
+			ModRecipe recipe = new ModRecipe(mod);
+			recipe.AddIngredient(ItemID.Sapphire, 5);
+			recipe.AddIngredient(null, "FragmentOfTide", 2);
+			recipe.AddIngredient(null, "FragmentOfPermafrost", 1);
+			recipe.AddTile(TileID.Anvils);
+			recipe.SetResult(this);
+			recipe.AddRecipe();
+		}
 	}
 }

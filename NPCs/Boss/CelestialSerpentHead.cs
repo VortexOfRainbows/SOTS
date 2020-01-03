@@ -10,7 +10,6 @@ namespace SOTS.NPCs.Boss
 {[AutoloadBossHead]
     public class CelestialSerpentHead : ModNPC
     {	float ai1 = 0;
-		float ai2 = 0;
 		int despawn = 0;
 		float directX = 0;
 		float directY = 0;
@@ -402,8 +401,12 @@ namespace SOTS.NPCs.Boss
 				float shootToY = player.Center.Y - npc.Center.Y;
 				for(int i = 0; i < 270; i += 90)
 				{
-					Vector2 SpinTo = new Vector2(5, 0).RotatedBy(Math.Atan2(shootToY, shootToX) + MathHelper.ToRadians(i));
-					Projectile.NewProjectile(npc.Center.X, npc.Center.Y, SpinTo.X, SpinTo.Y, mod.ProjectileType("StarCluster"), 36, 0, 0);
+					if(Main.netMode != 1)
+					{
+						Vector2 SpinTo = new Vector2(5, 0).RotatedBy(Math.Atan2(shootToY, shootToX) + MathHelper.ToRadians(i));
+						int proj = Projectile.NewProjectile(npc.Center.X, npc.Center.Y, SpinTo.X, SpinTo.Y, mod.ProjectileType("StarCluster"), 36, 0, 0);
+						NetMessage.SendData(27, -1, -1, null, proj);
+					}
 				}
 			}
 			if(ai1 == 1900)
@@ -412,8 +415,12 @@ namespace SOTS.NPCs.Boss
 				float shootToY = player.Center.Y - npc.Center.Y;
 				for(int i = 0; i < 270; i += 90)
 				{
-					Vector2 SpinTo = new Vector2(9, 0).RotatedBy(Math.Atan2(shootToY, shootToX) + MathHelper.ToRadians(i));
-					Projectile.NewProjectile(npc.Center.X, npc.Center.Y, SpinTo.X, SpinTo.Y, mod.ProjectileType("StarCluster"), 36, 0, 0);
+					if(Main.netMode != 1)
+					{
+						Vector2 SpinTo = new Vector2(9, 0).RotatedBy(Math.Atan2(shootToY, shootToX) + MathHelper.ToRadians(i));
+						int proj = Projectile.NewProjectile(npc.Center.X, npc.Center.Y, SpinTo.X, SpinTo.Y, mod.ProjectileType("StarCluster"), 36, 0, 0);
+						NetMessage.SendData(27, -1, -1, null, proj);
+					}
 				}
 			}
 			if(ai1 == 2080)
@@ -422,8 +429,12 @@ namespace SOTS.NPCs.Boss
 				float shootToY = player.Center.Y - npc.Center.Y;
 				for(int i = 0; i < 270; i += 90)
 				{
-					Vector2 SpinTo = new Vector2(13, 0).RotatedBy(Math.Atan2(shootToY, shootToX) + MathHelper.ToRadians(i));
-					Projectile.NewProjectile(npc.Center.X, npc.Center.Y, SpinTo.X, SpinTo.Y, mod.ProjectileType("StarCluster"), 36, 0, 0);
+					if(Main.netMode != 1)
+					{
+						Vector2 SpinTo = new Vector2(13, 0).RotatedBy(Math.Atan2(shootToY, shootToX) + MathHelper.ToRadians(i));
+						int proj = Projectile.NewProjectile(npc.Center.X, npc.Center.Y, SpinTo.X, SpinTo.Y, mod.ProjectileType("StarCluster"), 36, 0, 0);
+						NetMessage.SendData(27, -1, -1, null, proj);
+					}
 				}
 				if(phase == 0)
 				ai1 = 0;
@@ -442,8 +453,12 @@ namespace SOTS.NPCs.Boss
 				float shootToY = player.Center.Y - npc.Center.Y;
 				for(int i = 0; i < 270; i += 90)
 				{
-					Vector2 SpinTo = new Vector2(17, 0).RotatedBy(Math.Atan2(shootToY, shootToX) + MathHelper.ToRadians(i));
-					Projectile.NewProjectile(npc.Center.X, npc.Center.Y, SpinTo.X, SpinTo.Y, mod.ProjectileType("StarCluster"), 36, 0, 0);
+					if(Main.netMode != 1)
+					{
+						Vector2 SpinTo = new Vector2(17, 0).RotatedBy(Math.Atan2(shootToY, shootToX) + MathHelper.ToRadians(i));
+						int proj = Projectile.NewProjectile(npc.Center.X, npc.Center.Y, SpinTo.X, SpinTo.Y, mod.ProjectileType("StarCluster"), 36, 0, 0);
+						NetMessage.SendData(27, -1, -1, null, proj);
+					}
 				}
 				//if(phase == 1)
 				NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, mod.NPCType("ChaosFlame"));
@@ -493,6 +508,7 @@ namespace SOTS.NPCs.Boss
 			npc.active = false;
 			}
 			npc.timeLeft = 10000;
+			npc.netUpdate = true;
 		}
 		int slither = 1;
 		public void UnstableSerpent(float x, float y, int damage)
@@ -531,7 +547,6 @@ namespace SOTS.NPCs.Boss
 		public override void SendExtraAI(BinaryWriter writer) 
 		{
 			writer.Write(ai1);
-			writer.Write(ai2);
 			writer.Write(directX);
 			writer.Write(directY);
 			writer.Write(rotate);
@@ -543,7 +558,6 @@ namespace SOTS.NPCs.Boss
 		public override void ReceiveExtraAI(BinaryReader reader)
 		{	
 			ai1 = reader.ReadSingle();
-			ai2 = reader.ReadSingle();
 			directX = reader.ReadSingle();
 			directY = reader.ReadSingle();
 			rotate = reader.ReadSingle();

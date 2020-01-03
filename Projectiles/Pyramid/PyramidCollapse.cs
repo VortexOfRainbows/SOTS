@@ -30,6 +30,7 @@ namespace SOTS.Projectiles.Pyramid
 			projectile.alpha = 0;
 			projectile.tileCollide = false;
             Main.projFrames[projectile.type] = 3;
+			projectile.netImportant = true;
 		}
 		public override void AI()
 		{

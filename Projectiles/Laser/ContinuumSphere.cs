@@ -84,7 +84,7 @@ namespace SOTS.Projectiles.Laser
 					projectile.alpha = 0;
 					if(Main.myPlayer == projectile.owner && ai1 % 3 == 0)
 					{
-						int projID = Projectile.NewProjectile(player.Center.X, player.Center.Y, shootToX, shootToY, mod.ProjectileType("CollapseLaser"), projectile.damage, 1f, projectile.owner, projectile.ai[1], 0f);
+						int projID = Projectile.NewProjectile(player.Center.X + shootToX, player.Center.Y + shootToY, shootToX, shootToY, mod.ProjectileType("CollapseLaser"), projectile.damage, 1f, projectile.owner, projectile.ai[1], 0f);
 						Main.projectile[projID].ai[1] = projectile.ai[1];
 					}						
 				}

@@ -79,8 +79,6 @@ namespace SOTS.Items.Celestial
 					if(!npc.friendly && npc.lifeMax > 5 && npc.active)
 					{
 						int newIndex = Projectile.NewProjectile(spawnPosX, spawnPosY, attackPos.X, attackPos.Y, item.shoot, item.damage, item.knockBack, player.whoAmI);
-						Projectile newProj = Main.projectile[newIndex];
-						newProj.tileCollide = false;
 					}
 				}
 				if(npcIndex1 != -1)
@@ -96,8 +94,6 @@ namespace SOTS.Items.Celestial
 					if(!npc.friendly && npc.lifeMax > 5 && npc.active)
 					{
 						int newIndex1 = Projectile.NewProjectile(spawnPosX, spawnPosY, attackPos.X, attackPos.Y, item.shoot, item.damage, item.knockBack, player.whoAmI);
-						Projectile newProj = Main.projectile[newIndex1];
-						newProj.tileCollide = false;
 					}
 				}
 			}

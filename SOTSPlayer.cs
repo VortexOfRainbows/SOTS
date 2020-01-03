@@ -207,11 +207,11 @@ namespace SOTS
 			Tile tile = Framing.GetTileSafely(tileBehindX, tileBehindY);
 			if(tile.wall == (ushort)mod.WallType("PyramidWallTile"))
 			{
-            PyramidBiome = true;
+				PyramidBiome = true;
 			}
 			else
 			{
-            PyramidBiome = false;
+				PyramidBiome = (SOTSWorld.pyramidBiome > 0);
 			}
 		}
 		public override bool CustomBiomesMatch(Player other) 

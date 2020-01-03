@@ -30,18 +30,18 @@ namespace SOTS.Projectiles.Celestial
             projectile.ranged = true; 
             projectile.aiStyle = 1;
 			projectile.alpha = 100;
+			//projectile.netImportant = true;
 		}
 		public override void AI()
 		{
 			Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 0.1f / 255f, (255 - projectile.alpha) * 0.9f / 255f, (255 - projectile.alpha) * 0.3f / 255f);
 			if(projectile.timeLeft >= 30)
 			{
-			projectile.scale += 0.01f;
+				projectile.scale += 0.01f;
 			}
 			else
 			{
-			projectile.scale -= 0.03f;
-			
+				projectile.scale -= 0.03f;
 				int proj = Projectile.NewProjectile((projectile.Center.X), projectile.Center.Y, 24, 0, mod.ProjectileType("GreenCellBlast"), projectile.damage, 0, 0);
 				Main.projectile[proj].timeLeft = 30;
 				

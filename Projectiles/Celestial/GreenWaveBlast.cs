@@ -26,7 +26,7 @@ namespace SOTS.Projectiles.Celestial
 			projectile.width = 14;
 			projectile.height = 14;
 			projectile.friendly = false;
-			projectile.timeLeft = 720;
+			projectile.timeLeft = 360;
 			projectile.penetrate = -1;
 			projectile.tileCollide = false;
 			projectile.hostile = true;

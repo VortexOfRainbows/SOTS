@@ -14,10 +14,8 @@ namespace SOTS.Projectiles.Celestial
     public class UnstableSerpent : ModProjectile 
     {	
 		int worm = 0;
-		int wait = 1;         
 		float oldVelocityY = 0;	
 		float oldVelocityX = 0;
-		
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Unstable Serpent");
@@ -60,46 +58,48 @@ namespace SOTS.Projectiles.Celestial
 			float modUnit = 10f;
 			if(projectile.ai[0] == 1)
 			{
-				projectile.netUpdate = true;
 				projectile.friendly = true;
 				projectile.hostile = false;
 				projectile.magic = true;
-				projectile.timeLeft = projectile.timeLeft > 90 ? 50 : projectile.timeLeft;
+				projectile.timeLeft = projectile.timeLeft > 90 ? 44 : projectile.timeLeft;
 				modUnit = 5f;
 			}
 			else
 			{
 				projectile.friendly = false;
 				projectile.hostile = true;
-				modUnit = 10f;
+			}
+			if(projectile.ai[1] != -1)
+			{
+				projectile.ai[1] = -1;
+				projectile.netUpdate = true;
+				oldVelocityY = projectile.velocity.Y;	
+				oldVelocityX = projectile.velocity.X;
 			}
 			Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 2.5f / 255f, (255 - projectile.alpha) * 1.6f / 255f, (255 - projectile.alpha) * 2.4f / 255f);
+		
 			if(projectile.frame == 0)
 				projectile.rotation = (float)Math.Atan2((double)projectile.velocity.Y, (double)projectile.velocity.X) + MathHelper.ToRadians(90);
 				
-			if(projectile.frame == 0 && projectile.hostile)
+			if(projectile.frame == 0 && projectile.hostile && Main.myPlayer == projectile.owner)
 			{
-				int Probe = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("UnstableSerpent"), projectile.damage, 0, projectile.owner, projectile.ai[0], 0);
+				int Probe = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("UnstableSerpent"), projectile.damage, 0, Main.myPlayer, projectile.ai[0], 0);
 				Main.projectile[Probe].rotation = projectile.rotation;
-				Main.projectile[Probe].timeLeft = 90;
+				Main.projectile[Probe].timeLeft = 80;
 				Main.projectile[Probe].frame = 1;
+				projectile.netUpdate = true;
 			}
 			else if(projectile.frame == 0 && Main.myPlayer == projectile.owner)
 			{
 				int Probe = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("UnstableSerpent"), projectile.damage, 0, projectile.owner, projectile.ai[0], 0);
 				Main.projectile[Probe].rotation = projectile.rotation;
-				Main.projectile[Probe].timeLeft = 20;
+				Main.projectile[Probe].timeLeft = 15;
 				Main.projectile[Probe].frame = 1;
+				projectile.netUpdate = true;
 			}
-			if(projectile.timeLeft <= 4 && projectile.frame != 0)
+			if(projectile.timeLeft <= 3 && projectile.frame != 0)
 			{
 				projectile.frame = 2;
-			}
-			if(wait == 1)
-			{
-				wait++;
-				oldVelocityY = projectile.velocity.Y;	
-				oldVelocityX = projectile.velocity.X;
 			}
 			worm++;
 			if(worm <= modUnit * 2)

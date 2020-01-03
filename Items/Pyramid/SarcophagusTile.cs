@@ -13,7 +13,7 @@ namespace SOTS.Items.Pyramid
 	{
 		public override void SetDefaults()
 		{
-			minPick = 100; 
+			minPick = 110; 
 			Main.tileSolid[Type] = false;
 			Main.tileFrameImportant[Type] = true;
 			Main.tileLavaDeath[Type] = false;
@@ -56,12 +56,11 @@ namespace SOTS.Items.Pyramid
 			int ylocation = j * 16 + 8;
 			Main.mouseRightRelease = true;
             Player player = Main.LocalPlayer;
-			
-				if(!NPC.AnyNPCs(mod.NPCType("PharaohsCurse")))
-				{
-					//Main.NewText("Debug", 145, 145, 255); //storing spawn info as buffs to make it easy to spawn in multiplayer
-					player.AddBuff(mod.BuffType("SpawnBossCurse"), ylocation, false);
-				}
+			if(!NPC.AnyNPCs(mod.NPCType("PharaohsCurse")))
+			{
+				//Main.NewText("Debug", 145, 145, 255); //storing spawn info as buffs to make it easy to spawn in multiplayer
+				player.AddBuff(mod.BuffType("SpawnBossCurse"), ylocation, false);
+			}
 		}  
 		public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height)
 		{

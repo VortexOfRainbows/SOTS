@@ -3,37 +3,38 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using System;
 using Microsoft.Xna.Framework;
+using SOTS.Void;
 
 namespace SOTS.Items.SpecialDrops
 {
-	public class ManicMiner : ModItem
+	public class ManicMiner : VoidItem
 	{
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Manic Miner");
-			Tooltip.SetDefault("Converts mana into rays of mining");
+			Tooltip.SetDefault("Converts void into mining lasers");
 		}
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
-
-			item.width = 36;
-			item.height = 28;
-			item.useTime = 12;
-			item.useAnimation = 12;
+			item.width = 34;
+			item.height = 26;
+			item.useTime = 24;
+			item.useAnimation = 24;
 			item.useStyle = 5;
 			item.knockBack = 6;
-			item.value = 10000;
-			item.rare = 5;
+            item.value = Item.sellPrice(0, 1, 5, 0);
+			item.rare = 2;
 			item.UseSound = SoundID.Item12;
 			item.autoReuse = true;            
 			item.shoot = mod.ProjectileType("ManaMiner"); 
-            item.shootSpeed = 8;
-			item.mana = 20;
+            item.shootSpeed = 5.75f;
 		}
-		
+		public override void GetVoid(Player player)
+		{
+			voidMana = 3;
+		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-          {
-			  
+        {
               int numberProjectiles = 1;
               for (int i = 0; i < numberProjectiles; i++)
               {
@@ -42,7 +43,6 @@ namespace SOTS.Items.SpecialDrops
 
               }
               return false; 
-			  
-	}
+		}
 	}
 }

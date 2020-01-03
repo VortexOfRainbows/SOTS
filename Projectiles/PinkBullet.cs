@@ -32,11 +32,12 @@ namespace SOTS.Projectiles
 			projectile.width = 20;
 			projectile.friendly = false;
 			projectile.penetrate = -1;
-			projectile.timeLeft = 360;
+			projectile.timeLeft = 240;
 			projectile.tileCollide = false;
 			projectile.hostile = true;
 			projectile.magic = false;
 			projectile.ranged = false;
+			projectile.netImportant = true;
 		}
 		public override void AI()
 		{

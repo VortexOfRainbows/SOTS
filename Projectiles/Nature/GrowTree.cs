@@ -9,7 +9,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 
-namespace SOTS.Projectiles
+namespace SOTS.Projectiles.Nature
 {    
     public class GrowTree : ModProjectile 
     {	
@@ -31,7 +31,20 @@ namespace SOTS.Projectiles
 			projectile.hostile = false;
 			projectile.ranged = false;
 			projectile.magic = true;
+            projectile.netImportant = true;
 			projectile.alpha = 35;
+		}
+		public override void SendExtraAI(BinaryWriter writer) 
+		{
+			writer.Write(projectile.rotation);
+			writer.Write(projectile.spriteDirection);
+			writer.Write(projectile.frame);
+		}
+		public override void ReceiveExtraAI(BinaryReader reader)
+		{	
+			projectile.rotation = reader.ReadSingle();
+			projectile.spriteDirection = reader.ReadInt32();
+			projectile.frame = reader.ReadInt32();
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor) 
 		{
@@ -50,6 +63,7 @@ namespace SOTS.Projectiles
 		public override void AI()
         {
 			Player player = Main.player[projectile.owner];
+			projectile.netUpdate = true;
 			projectile.alpha += 2;
 			float distance = 24 - projectile.ai[1]/3;
 			if(projectile.ai[0] == 1)
@@ -67,6 +81,7 @@ namespace SOTS.Projectiles
 				{
 					if(projectile.owner == Main.myPlayer)
 					{
+						
 						int Probe = Projectile.NewProjectile(projectile.Center.X + direction.X, projectile.Center.Y + direction.Y, 0, 0, mod.ProjectileType("GrowTree"), projectile.damage, projectile.knockBack, player.whoAmI, 0, projectile.ai[1]);
 						Main.projectile[Probe].ai[0] = projectile.ai[0] + 1;
 						Main.projectile[Probe].rotation = projectile.rotation - projectile.ai[1];

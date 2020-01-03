@@ -17,7 +17,7 @@ namespace SOTS.Projectiles
 		
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Pulverizer");
+			DisplayName.SetDefault("Pink Explosion");
 			
 		}
 		
@@ -43,12 +43,18 @@ namespace SOTS.Projectiles
 			{
 				Main.PlaySound(SoundID.Item14, (int)(projectile.Center.X), (int)(projectile.Center.Y));
 				expand = 0;
-					for(int i = 0; i < 4 + (expertModifier * 4); i++)
-					{ 
-						int npc = NPC.NewNPC((int)projectile.Center.X, (int)projectile.Center.Y, mod.NPCType("CursedPinky"));	
-						Main.npc[npc].velocity.X = Main.rand.Next(-3,4) * expertModifier;
-						Main.npc[npc].velocity.Y = Main.rand.Next(-3,4) * expertModifier;
+				for(int i = 0; i < 1 + expertModifier; i++)
+				{ 
+					int npc = NPC.NewNPC((int)projectile.Center.X, (int)projectile.Center.Y, mod.NPCType("CursedPinky"));	
+					Main.npc[npc].velocity.X = Main.rand.Next(-3,4) * expertModifier;
+					Main.npc[npc].velocity.Y = Main.rand.Next(-3,4) * expertModifier;
+					
+					if(Main.netMode != 1)
+					{
+						int proj = Projectile.NewProjectile((projectile.Center.X), projectile.Center.Y, Main.rand.Next(-5, 6), Main.rand.Next(-5, 6), mod.ProjectileType("PinkBullet"), projectile.damage, 0, 0);
+						NetMessage.SendData(27, -1, -1, null, proj);
 					}
+				}
 			}
 			projectile.knockBack = 3.5f;
             projectile.frameCounter++;

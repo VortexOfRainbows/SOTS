@@ -152,8 +152,19 @@ namespace SOTS.Projectiles.Celestial
 				}
 			}
 		}
+		public override void SendExtraAI(BinaryWriter writer) 
+		{
+			writer.Write(projectile.rotation);
+			writer.Write(projectile.timeLeft);
+		}
+		public override void ReceiveExtraAI(BinaryReader reader)
+		{	
+			projectile.rotation = reader.ReadSingle();
+			projectile.timeLeft = reader.ReadInt32();
+		}
 		public override void AI()
 		{
+			projectile.netUpdate = true;
 			Player player = Main.player[projectile.owner];
 			Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 0.1f / 255f, (255 - projectile.alpha) * 0.9f / 255f, (255 - projectile.alpha) * 0.3f / 255f);
 			if(projectile.ai[0] == 0)
@@ -164,19 +175,16 @@ namespace SOTS.Projectiles.Celestial
 					projectile.velocity *= 0.96f;
 					if(projectile.timeLeft % 3 == 0 && projectile.timeLeft <= 180)
 					{
-					dis++;
-					Vector2 stormPos = new Vector2(dis * 3, 0).RotatedBy(MathHelper.ToRadians(count * 24));
-					
-					if(Main.myPlayer == projectile.owner)
-					{
-						int shard = Projectile.NewProjectile(projectile.Center.X - stormPos.X, projectile.Center.Y - stormPos.Y, 0, 0, projectile.type, projectile.damage, projectile.knockBack, player.whoAmI);
-						Main.projectile[shard].ai[0] = 1;
-						Main.projectile[shard].ai[1] = projectile.whoAmI;
-						Main.projectile[shard].timeLeft = 120;
-						Main.projectile[shard].rotation = (float)(MathHelper.ToRadians(180) + Math.Atan2(stormPos.Y, stormPos.X));
-					}
-					
-					count++;
+						dis++;
+						Vector2 stormPos = new Vector2(dis * 3, 0).RotatedBy(MathHelper.ToRadians(count * 24));
+						
+						if(Main.myPlayer == projectile.owner)
+						{
+							int shard = Projectile.NewProjectile(projectile.Center.X - stormPos.X, projectile.Center.Y - stormPos.Y, 0, 0, projectile.type, projectile.damage, projectile.knockBack, player.whoAmI, 1, projectile.whoAmI);
+							Main.projectile[shard].timeLeft = 120;
+							Main.projectile[shard].rotation = (float)(MathHelper.ToRadians(180) + Math.Atan2(stormPos.Y, stormPos.X));
+						}
+						count++;
 					}
 			}
 			else

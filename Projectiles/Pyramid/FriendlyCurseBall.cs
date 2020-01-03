@@ -11,7 +11,7 @@ using Terraria.ID;
 
 namespace SOTS.Projectiles.Pyramid
 {    
-    public class CurseBall : ModProjectile 
+    public class FriendlyCurseBall : ModProjectile 
     {	          
 		int bounce = 999;
 		public override void SetStaticDefaults()
@@ -24,23 +24,25 @@ namespace SOTS.Projectiles.Pyramid
         {
 			projectile.height = 18;
 			projectile.width = 18;
-			projectile.friendly = false;
-			projectile.timeLeft = 7200;
-			projectile.hostile = true;
-			projectile.alpha = 255;
+			projectile.friendly = true;
+			projectile.timeLeft = 2400;
+			projectile.hostile = false;
+			projectile.alpha = 155;
 			projectile.penetrate = 5;
-			projectile.netImportant = true;
 		}
 		public override void SendExtraAI(BinaryWriter writer) 
 		{
 			writer.Write(projectile.alpha);
+			writer.Write(projectile.timeLeft);
 		}
 		public override void ReceiveExtraAI(BinaryReader reader)
 		{	
 			projectile.alpha = reader.ReadInt32();
+			projectile.timeLeft = reader.ReadInt32();
 		}
 		public override void AI()
 		{
+			projectile.netUpdate = true;
 			projectile.alpha -= 1;
 			projectile.rotation += Main.rand.Next(-3,4);
 			if(projectile.timeLeft <= 200)
@@ -54,14 +56,10 @@ namespace SOTS.Projectiles.Pyramid
 			int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 18, 18, mod.DustType("CurseDust"));
 			Main.dust[num1].noGravity = true;
 			Main.dust[num1].alpha = projectile.alpha;
-			if(projectile.velocity.X == 0 && projectile.velocity.Y == 0)
-			{
-				projectile.Kill();
-			}
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{	
-			projectile.timeLeft -= 60;
+			projectile.timeLeft -= 120;
 			bounce--;
 			if (bounce <= 0)
 			{

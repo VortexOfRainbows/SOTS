@@ -11,7 +11,7 @@ namespace SOTS.Projectiles
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Curse Spear");
+			DisplayName.SetDefault("Cursed Impale");
 			
 		}
 		
@@ -26,9 +26,11 @@ namespace SOTS.Projectiles
 		{
 			Player player = Main.player[projectile.owner];
 			if(projectile.owner == Main.myPlayer)
-				Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, projectile.velocity.X, projectile.velocity.Y, 496, projectile.damage, projectile.knockBack * 0.3f, player.whoAmI);
-			
-            
+			{
+				int proj = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, projectile.velocity.X, projectile.velocity.Y, 496, projectile.damage, projectile.knockBack * 0.3f, player.whoAmI);
+				Main.projectile[proj].melee = true;
+				Main.projectile[proj].magic = false;
+            }
 		}
 	}
 }

@@ -26,6 +26,7 @@ namespace SOTS.Projectiles
 		}
 		public override void AI()
 		{
+			projectile.timeLeft -= 5;
 		}
 		public override void Kill(int timeLeft)
         {

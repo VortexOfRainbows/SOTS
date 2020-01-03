@@ -41,6 +41,8 @@ namespace SOTS.NPCs.Boss
 			writer.Write(expertScale);
 			writer.Write(teleportX);
 			writer.Write(teleportY);
+			writer.Write(npc.scale);
+			writer.Write(npc.dontTakeDamage);
 		}
 		public override void ReceiveExtraAI(BinaryReader reader)
 		{	
@@ -58,6 +60,8 @@ namespace SOTS.NPCs.Boss
 			expertScale = reader.ReadInt32();
 			teleportX = reader.ReadSingle();
 			teleportY = reader.ReadSingle();
+			npc.scale = reader.ReadSingle();
+			npc.dontTakeDamage = reader.ReadBoolean();
 		}
 		public override void SetStaticDefaults()
 		{
@@ -75,7 +79,7 @@ namespace SOTS.NPCs.Boss
             npc.width = 70;
             npc.height = 76; 
             Main.npcFrameCount[npc.type] = 48;  
-            npc.npcSlots = 30f;
+            npc.npcSlots = 20f;
             npc.boss = true;
             npc.lavaImmune = true;
             npc.noGravity = true;
@@ -198,6 +202,7 @@ namespace SOTS.NPCs.Boss
         }
 		public override bool PreAI()
 		{
+			npc.netUpdate = true;
 			inBlock = false;
 			int x = (int)(npc.Center.X / 16);
 			int y =	(int)(npc.Center.Y / 16);
@@ -280,16 +285,6 @@ namespace SOTS.NPCs.Boss
             npc.TargetClosest(false);
 			Player player = Main.player[npc.target];
 					  
-			if(!player.GetModPlayer<SOTSPlayer>().PyramidBiome)
-			{
-				
-					//npc.dontTakeDamage = true;
-			}
-			else if(initiate == 2)
-			{
-				
-					//npc.dontTakeDamage = false;
-			}
 			
 			
 			if(ai2 >= 400 && animationType != 1 && animationType != 2)
@@ -461,18 +456,6 @@ namespace SOTS.NPCs.Boss
 				ai3 = 0;
 			}
 			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
 			if(finishTeleport >= 0)
 			{
 				finishTeleport++;
@@ -493,8 +476,8 @@ namespace SOTS.NPCs.Boss
 					{
 						for(int i = 0; i < 5; i++)
 						{
-						int goreIndex = Gore.NewGore(new Vector2(npc.Center.X, npc.Center.Y), default(Vector2), Main.rand.Next(61,64), 1f);	
-						Main.gore[goreIndex].scale = 1.75f;
+							int goreIndex = Gore.NewGore(new Vector2(npc.Center.X, npc.Center.Y), default(Vector2), Main.rand.Next(61,64), 1f);	
+							Main.gore[goreIndex].scale = 1.75f;
 						}
 						for(int i = 0; i < 6 + (expertScale / 2); i++)
 						{
@@ -560,12 +543,13 @@ namespace SOTS.NPCs.Boss
 				finishTeleport = -1;
 				npc.aiStyle = 14;
 			}
-				
-			
-			
-			if(player.dead)
+			if(player.dead || !player.GetModPlayer<SOTSPlayer>().PyramidBiome)
 			{
-			 despawn++;
+				despawn++;
+			}
+			else if(despawn > 200)
+			{
+				despawn--;
 			}
 			if(despawn >= 360)
 			{

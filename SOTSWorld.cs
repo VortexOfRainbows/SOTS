@@ -17,6 +17,7 @@ namespace SOTS
 	{	
 		public static int planetarium = 0;
 		public static int zeplineBiome = 0;
+		public static int pyramidBiome = 0;
 		public static int geodeBiome = 0;
 		
 		
@@ -156,7 +157,9 @@ namespace SOTS
 				downedChess = flags[5];
 				downedCurse = flags[6];
 				downedCelestial = flags[7];
-				downedSubspace = flags[8];
+				
+				BitsByte flags3 = reader.ReadByte();
+				downedSubspace = flags3[0];
 				
 				BitsByte flags2 = reader.ReadByte();
 				challengeDecay = flags2[0];
@@ -178,8 +181,11 @@ namespace SOTS
 			flags[5] = downedChess;
 			flags[6] = downedCurse;
 			flags[7] = downedCelestial;
-			flags[8] = downedSubspace;
 			writer.Write(flags);
+			
+			BitsByte flags3 = new BitsByte();
+			flags3[0] = downedSubspace;
+			writer.Write(flags3);
 			
 			BitsByte flags2 = new BitsByte();
 			flags2[0] = challengeDecay;
@@ -200,7 +206,9 @@ namespace SOTS
 			downedChess = flags[5];
 			downedCurse = flags[6];
 			downedCelestial = flags[7];
-			downedSubspace = flags[8];
+			
+			BitsByte flags3 = reader.ReadByte();
+			downedSubspace = flags3[0];
 			
 			BitsByte flags2 = reader.ReadByte();
 			challengeDecay = flags2[0];
@@ -2312,10 +2320,11 @@ namespace SOTS
 		}
 		public override void TileCountsAvailable(int[] tileCounts)
 		{
-				//planetarium = tileCounts[mod.TileType("EmptyPlanetariumBlock")];  
-				//geodeBiome = tileCounts[mod.TileType("GeodeBlock")];
-				zeplineBiome = tileCounts[mod.TileType("ZeplineLureTile")];  
-			}
+			//planetarium = tileCounts[mod.TileType("EmptyPlanetariumBlock")];  
+			//geodeBiome = tileCounts[mod.TileType("GeodeBlock")];
+			zeplineBiome = tileCounts[mod.TileType("ZeplineLureTile")];  
+			pyramidBiome = tileCounts[mod.TileType("SarcophagusTile")];  
+		}
 		public override void PostWorldGen()
 		{
 				int xPosition2 = Main.maxTilesX/2;

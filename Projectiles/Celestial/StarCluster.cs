@@ -30,11 +30,25 @@ namespace SOTS.Projectiles.Celestial
 			projectile.timeLeft = 960;
 			projectile.tileCollide = true;
 			projectile.hostile = true;
-			projectile.alpha = 70;
-			projectile.ranged = false;
+			projectile.alpha = 45;
+			projectile.netImportant = true;
+		}
+		public override void SendExtraAI(BinaryWriter writer) 
+		{
+			writer.Write(projectile.timeLeft);
+			writer.Write(projectile.active);
+		}
+		public override void ReceiveExtraAI(BinaryReader reader)
+		{	
+			projectile.timeLeft = reader.ReadInt32();
+			projectile.active = reader.ReadBoolean();
 		}
 		public override void AI()
         {
+			if(Main.netMode != 1)
+			{
+				projectile.netUpdate = true;
+			}
 			Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 2.5f / 255f, (255 - projectile.alpha) * 1.6f / 255f, (255 - projectile.alpha) * 2.4f / 255f);
 			
 			int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 54, 58, 226);
@@ -47,12 +61,10 @@ namespace SOTS.Projectiles.Celestial
 			
 			if(projectile.timeLeft % 40 == 20)
 			{
-				projectile.alpha++;
 				Projectile.NewProjectile(projectile.Center.X + Main.rand.Next(-50,51), projectile.Center.Y + Main.rand.Next(-50,51), Main.rand.Next(-2,3), Main.rand.Next(-2,3), mod.ProjectileType("plusBeam"), projectile.damage, 0, 0);
 			}
 			if(projectile.timeLeft % 40 == 0)
 			{
-				projectile.alpha++;
 				Projectile.NewProjectile(projectile.Center.X + Main.rand.Next(-50,51), projectile.Center.Y + Main.rand.Next(-50,51), Main.rand.Next(-2,3), Main.rand.Next(-2,3), mod.ProjectileType("XBeam"), projectile.damage, 0, 0);
 			}
             projectile.frameCounter++;
@@ -65,14 +77,14 @@ namespace SOTS.Projectiles.Celestial
         }
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{	
-				if (projectile.velocity.X != oldVelocity.X)
-				{
-					projectile.velocity.X = -oldVelocity.X;
-				}
-				if (projectile.velocity.Y != oldVelocity.Y)
-				{
-					projectile.velocity.Y = -oldVelocity.Y;
-				}
+			if (projectile.velocity.X != oldVelocity.X)
+			{
+				projectile.velocity.X = -oldVelocity.X;
+			}
+			if (projectile.velocity.Y != oldVelocity.Y)
+			{
+				projectile.velocity.Y = -oldVelocity.Y;
+			}
 			return false;
 		}
 	}

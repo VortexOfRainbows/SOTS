@@ -30,9 +30,11 @@ namespace SOTS.Projectiles
 			projectile.timeLeft = 7200;
 			projectile.tileCollide = true;
 			projectile.alpha = 200;
+			projectile.netImportant = true;
 		}
 		public override void AI()
 		{
+			projectile.netUpdate = true;
 			Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 0.9f / 255f, (255 - projectile.alpha) * 0.1f / 255f, (255 - projectile.alpha) * 0.3f / 255f);
 			if(prepareFire == -2)
 			{

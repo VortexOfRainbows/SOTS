@@ -23,10 +23,10 @@ namespace SOTS.Items.SpecialDrops
 			item.shoot = mod.ProjectileType("EnchantedPickaxeProj");
 			item.shootSpeed = 7f;
 			item.useTurn = true;
-            item.useTime = 14;
-            item.useAnimation = 20;
+            item.useTime = 12;
+            item.useAnimation = 24;
 			item.pick = 75;
-			item.axe = 5;
+			item.axe = 10;
 			item.useStyle = 1;
 			item.knockBack = 5;
 			item.value = Item.sellPrice(0, 0, 80, 0);

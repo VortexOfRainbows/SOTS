@@ -10,36 +10,50 @@ namespace SOTS.NPCs.Boss
 {	[AutoloadBossHead]
 	public class PutridPinkyPhase2 : ModNPC
 	{
-		int resetVars = 0;
-		int initiateMovement = 0;
-		int despawn = 0;
-		int initiateHooks = -1;
-		int eyeID = -1;
-		int phase = 1;
-		float ai1 = 0;
-		int newRotation = 0;
-		int initiatePinky = -1;
 		int expertModifier = 1;
+		
+		private float attackPhase {
+			get => npc.ai[0];
+			set => npc.ai[0] = value;
+		}
+
+		private float attackTimer {
+			get => npc.ai[1];
+			set => npc.ai[1] = value;
+		}
+
+		private float rotationSpeed {
+			get => npc.ai[2];
+			set => npc.ai[2] = value;
+		}
+
+		private float rotationDistance {
+			get => npc.ai[3];
+			set => npc.ai[3] = value;
+		}
+		
+		private float fireToX {
+			get => npc.localAI[0];
+			set => npc.localAI[0] = value;
+		}
+
+		private float fireToY {
+			get => npc.localAI[1];
+			set => npc.localAI[1] = value;
+		}
+		
+		private float followPlayer {
+			get => npc.localAI[2];
+			set => npc.localAI[2] = value;
+		}
 		
 		public override void SendExtraAI(BinaryWriter writer) 
 		{
-			writer.Write(resetVars);
 			//writer.Write(initiateHooks);
-			//writer.Write(eyeID);
-		//	writer.Write(phase);
-			//writer.Write(newRotation);
-			//writer.Write(initiatePinky);
-			writer.Write(ai1);
 		}
 		public override void ReceiveExtraAI(BinaryReader reader)
 		{	
-			resetVars = reader.ReadInt32();
 			//initiateHooks = reader.ReadInt32();
-		//	eyeID = reader.ReadInt32();
-		//	phase = reader.ReadInt32();
-		//	newRotation = reader.ReadInt32();
-			//initiatePinky = reader.ReadInt32();
-			ai1 = reader.ReadSingle();
 		}
 		public override void SetStaticDefaults()
 		{
@@ -49,8 +63,8 @@ namespace SOTS.NPCs.Boss
 		public override void SetDefaults()
 		{
 			
-            //npc.aiStyle = 14;   
-			npc.lifeMax = 7000;
+            npc.aiStyle = -1;   
+			npc.lifeMax = 5500;
             npc.damage = 30;   
             npc.defense = 0;   
             npc.knockBackResist = 0f;
@@ -67,9 +81,7 @@ namespace SOTS.NPCs.Boss
             npc.DeathSound = SoundID.NPCDeath5;
             npc.buffImmune[20] = true;
             music = MusicID.Boss3;
-            npc.netAlways = true;
 			bossBag = mod.ItemType("PinkyBag");
-            npc.netUpdate = true;
 			
 			//bossBag = mod.ItemType("BossBagBloodLord");
 		}
@@ -77,12 +89,12 @@ namespace SOTS.NPCs.Boss
         {
             Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/PutridVine");  
                      
-			for(int i = 0; i < 1000; i++)
+			for(int i = 0; i < 200; i++)
 			{
-				if(Main.projectile[i].type == mod.ProjectileType("PutridHook") && Main.projectile[i].active)
+				if(Main.npc[i].type == mod.NPCType("PutridHook") && Main.npc[i].active)
 				{
 					Vector2 position = npc.Center;
-					Vector2 mountedCenter = Main.projectile[i].Center;
+					Vector2 mountedCenter = Main.npc[i].Center;
 					Microsoft.Xna.Framework.Rectangle? sourceRectangle = new Microsoft.Xna.Framework.Rectangle?();
 					Vector2 origin = new Vector2((float)texture.Width * 0.5f, (float)texture.Height * 0.5f);
 					float num1 = (float)texture.Height;
@@ -116,516 +128,141 @@ namespace SOTS.NPCs.Boss
         }
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
-            npc.lifeMax = (int)(npc.lifeMax * bossLifeScale * 0.8f);  //boss life scale in expertmode
+            npc.lifeMax = (int)(npc.lifeMax * bossLifeScale * 0.7f);  //boss life scale in expertmode
             npc.damage = (int)(npc.damage * 1.2f);  //boss damage increase in expermode
         }
 		
 		public override bool PreAI()
 		{
-			if(resetVars <= 5)
-			{
-					initiateMovement = 0;
-					despawn = 0;
-					eyeID = -1;
-					phase = 1;
-					ai1 = 0;
-					newRotation = 0;
-					initiatePinky = -1;
-					expertModifier = 1;
-					resetVars++;
-			}
 			if(Main.expertMode)
 			{
 				expertModifier = 2;
 			}
-            initiateMovement++;
-			if(initiateMovement >= 360)
-			{
-				npc.aiStyle = 14;   
-			}
-			
-			Player player  = Main.player[npc.target];
-			
 			return true;
 		}
-		public override void PostAI()
+		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
+			Texture2D texture = ModContent.GetTexture("SOTS/NPCs/Boss/PutridPinkyEye");
+			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
+			Vector2 drawPos = npc.Center - Main.screenPosition + new Vector2(0f, npc.gfxOffY);
 			
-			
-			
-			eyeID = -1;
-			Player player  = Main.player[npc.target];
-			for(int i = 0; i < 1000; i++)
-			{
-				Projectile eye = Main.projectile[i];
-				if(eye.type == mod.ProjectileType("PutridPinkyEye") && eye.active)
-				{
-					eyeID = i;
-					break;
-				}
-			}
-			
-					float shootToX = player.Center.X - npc.Center.X;
-					float shootToY = player.Center.Y - npc.Center.Y;
-					float distance = (float)System.Math.Sqrt((double)(shootToX * shootToX + shootToY * shootToY));
+			float shootToX = fireToX - npc.Center.X;
+			float shootToY = fireToY - npc.Center.Y;
+			float distance = (float)System.Math.Sqrt((double)(shootToX * shootToX + shootToY * shootToY));
 
-					distance = 1.1f / distance;
-						  
-					shootToX *= distance * 5;
-					shootToY *= distance * 5;
-				
-			if(eyeID != -1)
-			{
-				Projectile eye = Main.projectile[eyeID];
-				eye.position.X = npc.Center.X - 4;
-				eye.position.Y = npc.Center.Y - 4;
-				eye.position.X += shootToX;
-				eye.position.Y += shootToY * 2f;
-			}
-			else
-			{
-				Projectile.NewProjectile((int)npc.Center.X, (int)npc.Center.Y, 0, 0, mod.ProjectileType("PutridPinkyEye"), 0, 0, 0);
-			}
+			distance = 1.1f / distance;
+				  
+			shootToX *= distance * 5;
+			shootToY *= distance * 5;
+			
+			drawPos.X += shootToX;
+			drawPos.Y += shootToY * 1.5f;
+
+			spriteBatch.Draw(texture, drawPos, null, drawColor, npc.rotation, drawOrigin, npc.scale, SpriteEffects.None, 0f);
 		}
 		public override void AI()
 		{
+			npc.TargetClosest(true);
 			Player player  = Main.player[npc.target];
-			npc.TargetClosest(false);
 			
-					float shootToX = player.Center.X - npc.Center.X;
-					float shootToY = player.Center.Y - npc.Center.Y;
-					float distance = (float)System.Math.Sqrt((double)(shootToX * shootToX + shootToY * shootToY));
+			float shootToX = player.Center.X - npc.Center.X;
+			float shootToY = player.Center.Y - npc.Center.Y;
+			float distance = (float)System.Math.Sqrt((double)(shootToX * shootToX + shootToY * shootToY));
 
-					distance = 1.1f / distance;
-						  
-					shootToX *= distance * 5;
-					shootToY *= distance * 5;
-					
-					
-					
-					
-			if(initiateHooks == -1)
-			{
-				initiateHooks = 0;
-				int Max = 0;
-					for(int i = Main.rand.Next(-30,31); i < 720; i += Main.rand.Next(30,61))
-					{
-						Max++;
-						if(Max > 12)
-						{
-							break;
-						}
-						Vector2 circularVelocity = new Vector2(-6, 0).RotatedBy(MathHelper.ToRadians(i));
-						Projectile.NewProjectile((int)npc.Center.X, (int)npc.Center.Y, circularVelocity.X, circularVelocity.Y, mod.ProjectileType("PutridHook"), 20, 1, 0);
-					}
-			}
-					
-					
-			if((npc.life <= (int)(npc.lifeMax * .7f) || (npc.life <= (int)(npc.lifeMax * .75f) && Main.expertMode)) && phase == 1)
-			{
-				phase = 2;
-			}
-			if((npc.life <= (int)(npc.lifeMax * .3f) || (npc.life <= (int)(npc.lifeMax * .4f) && Main.expertMode)) && phase == 4)
-			{
-				phase = 5;
-			}
-			if(phase == 1)
-			{
-				ai1++;
-			}
-			if(phase == 4)
-			{
-				ai1++;
-			}
-			if(phase == 6)
-			{
-				ai1++;
-			}
-			if(phase == 7)
-			{
-				ai1++;
-			}
-		
-		
-			if(Main.player[npc.target].dead)
-			{
-				despawn++;
-			}
-			if(despawn >= 720)
-			{
-				npc.active = false;
-			}
-			
-			if(phase == 1)
-			{
-				if(ai1 == 120)
-					{
-						int npcProj = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, mod.NPCType("CursedPinky"));	
-						Main.npc[npcProj].velocity.X = shootToX;
-						Main.npc[npcProj].velocity.Y = shootToY;
-			
-						Main.PlaySound(SoundID.Item21, (int)(npc.Center.X), (int)(npc.Center.Y));
-					}
-					if(ai1 == 130)
-					{
-						int npcProj = NPC.NewNPC((int)npc.Center.X + (int)(3 * shootToY), (int)npc.Center.Y - (int)(3 * shootToX), mod.NPCType("CursedPinky"));	
-						Main.npc[npcProj].velocity.X = shootToX;
-						Main.npc[npcProj].velocity.Y = shootToY;
-			
-						npcProj = NPC.NewNPC((int)npc.Center.X - (int)(3 * shootToY), (int)npc.Center.Y + (int)(3 * shootToX), mod.NPCType("CursedPinky"));	
-						Main.npc[npcProj].velocity.X = shootToX;
-						Main.npc[npcProj].velocity.Y = shootToY;
-						Main.PlaySound(SoundID.Item21, (int)(npc.Center.X), (int)(npc.Center.Y));
-					}
-					if(ai1 == 140)
-					{
-						int npcProj = NPC.NewNPC((int)npc.Center.X + (int)(6 * shootToY), (int)npc.Center.Y - (int)(6 * shootToX), mod.NPCType("CursedPinky"));	
-						Main.npc[npcProj].velocity.X = shootToX;
-						Main.npc[npcProj].velocity.Y = shootToY;
-			
-						npcProj = NPC.NewNPC((int)npc.Center.X - (int)(6 * shootToY), (int)npc.Center.Y + (int)(6 * shootToX), mod.NPCType("CursedPinky"));	
-						Main.npc[npcProj].velocity.X = shootToX;
-						Main.npc[npcProj].velocity.Y = shootToY;
-						
-						npcProj = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, mod.NPCType("CursedPinky"));	
-						Main.npc[npcProj].velocity.X = shootToX;
-						Main.npc[npcProj].velocity.Y = shootToY;
-						Main.PlaySound(SoundID.Item21, (int)(npc.Center.X), (int)(npc.Center.Y));
-					}
-					if(ai1 >= 150)
-					{
-						ai1 = 10;
-					}
-			}
-			int Num2 = 0;
-			if(phase == 2)
-			{
-				newRotation += 1;
-				int Num = 0;
-				for(int i = 0; i < 1000; i++)
+			distance = 1f / distance;
+				  
+			shootToX *= distance * 5;
+			shootToY *= distance * 5;
+			if(Main.netMode != 1)
+			{   
+				if(attackPhase == 0)
 				{
-					Projectile hook = Main.projectile[i];
-					if(hook.type == mod.ProjectileType("PutridHook") && hook.active)
+					attackPhase = 1;
+					attackTimer = 900;
+					followPlayer = 1;
+					npc.netUpdate = true;
+					InitiateHooks();
+					return;
+				}
+				if(attackPhase == 1)
+				{
+					attackTimer--;
+					if(followPlayer == 1)
 					{
-						float moveToX = hook.Center.X - npc.Center.X;
-						float moveToY = hook.Center.Y - npc.Center.Y;
-						float distanceTo = (float)System.Math.Sqrt((double)(moveToX * moveToX + moveToY * moveToY));
-						Num++;
-						if(distanceTo >= 90)
+						fireToX = player.Center.X;
+						fireToY = player.Center.Y;
+					}
+					if(attackTimer == 600)
+					{
+						followPlayer = 0;
+					}
+					if(attackTimer == 570)
+					{
+						LaunchLaser(npc.Center, new Vector2(fireToX, fireToY), 180);
+						followPlayer = 1;
+					}
+					if(attackTimer == 540)
+					{
+						followPlayer = 0;
+					}
+					if(attackTimer == 510)
+					{
+						LaunchLaser(npc.Center, new Vector2(fireToX, fireToY), 120);
+						followPlayer = 1;
+					}
+					if(attackTimer == 480)
+					{
+						followPlayer = 0;
+					}
+					if(attackTimer == 420)
+					{
+						LaunchLaser(npc.Center, new Vector2(fireToX, fireToY), 60);
+						attackTimer = 900;
+						followPlayer = 1;
+					}
+					rotationSpeed = 1;
+					rotationDistance += rotationDistance < 120 ? 1 : rotationDistance > 120 ? -1 : 0;
+					npc.netUpdate = true;
+					for(int i = 0; i < 200; i++)
+					{
+						if(Main.npc[i].type == mod.NPCType("PutridHook") && Main.npc[i].active)
 						{
-							distanceTo = 2.5f / distanceTo;
-								  
-							moveToX *= distanceTo * 5;
-							moveToY *= distanceTo * 5;
-							hook.velocity.X = -moveToX;
-							hook.velocity.Y = -moveToY;
-							hook.knockBack = 0;
-						}
-						else
-						{
-							Num2++;
-							Vector2 rotationalPosition = new Vector2(-80, 0).RotatedBy(MathHelper.ToRadians((Num * 30) + newRotation)); 
-							moveToX = hook.Center.X - npc.Center.X + rotationalPosition.X;
-							moveToY = hook.Center.Y - npc.Center.Y + rotationalPosition.Y;
-							distanceTo = (float)System.Math.Sqrt((double)(moveToX * moveToX + moveToY * moveToY));
-							distanceTo = 1f / distanceTo;
-								  
-							moveToX *= distanceTo * 5;
-							moveToY *= distanceTo * 5;
-							hook.velocity.X = -moveToX;
-							hook.velocity.Y = -moveToY;
-							hook.rotation = MathHelper.ToRadians(Main.rand.Next(360));
+							Main.npc[i].ai[0] = player.Center.X;
+							Main.npc[i].ai[1] = player.Center.Y;
+							Main.npc[i].netUpdate = true;
 						}
 					}
 				}
 			}
-			if(Num2 >= 12)
+		}
+		private void LaunchLaser(Vector2 fromArea, Vector2 toArea, int time)
+		{
+			Vector2 direction = fromArea - toArea;
+			direction *= 2f;
+			int Probe = Projectile.NewProjectile(fromArea.X, fromArea.Y, 0, 0, mod.ProjectileType("PinkLaser"), (int)(npc.damage / Main.expertDamage), 0, 0, toArea.X + direction, toArea.Y + direction);
+			Main.projectile[Probe].timeLeft = time;
+			NetMessage.SendData(27, -1, -1, null, Probe);
+		}
+		private void InitiateHooks()
+		{
+			Player player  = Main.player[npc.target];
+			if(Main.netMode != 1)
 			{
-				phase = 3;
-			}
-			if(phase == 3)
-			{
-				newRotation += 1;
-				int Num = 0;
-				for(int i = 0; i < 1000; i++)
+				for(int i = 0; i < 12; i++)
 				{
-					Projectile hook = Main.projectile[i];
-					if(hook.type == mod.ProjectileType("PutridHook") && hook.active)
-					{
-							Num++;
-							Vector2 rotationalPosition = new Vector2(-80, 0).RotatedBy(MathHelper.ToRadians((Num * 30) + newRotation)); 
-								
-							hook.position.X = npc.Center.X + rotationalPosition.X - (hook.width/2);
-							hook.position.Y = npc.Center.Y + rotationalPosition.Y - (hook.width/2);
-								
-							hook.rotation = MathHelper.ToRadians(Main.rand.Next(360));
-							hook.velocity.X = 0;
-							hook.velocity.Y = 0;
-					}
+					int npcProj = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, mod.NPCType("PutridHook"));	
+					Main.npc[npcProj].ai[0] = player.Center.X;
+					Main.npc[npcProj].ai[1] = player.Center.Y;
+					Main.npc[npcProj].ai[2] = i;
+					Main.npc[npcProj].netUpdate = true;
 				}
-				if(initiatePinky == -1)
-				{
-					NPC.NewNPC((int)npc.Center.X + 200, (int)npc.Center.Y + 200, mod.NPCType("PinkyFlyer"));
-					NPC.NewNPC((int)npc.Center.X + 200, (int)npc.Center.Y - 200, mod.NPCType("PinkyFlyer"));	
-					NPC.NewNPC((int)npc.Center.X - 200, (int)npc.Center.Y + 200, mod.NPCType("PinkyFlyer"));	
-					NPC.NewNPC((int)npc.Center.X - 200, (int)npc.Center.Y - 200, mod.NPCType("PinkyFlyer"));	
-					initiatePinky = 0;
-				}
-				if(!NPC.AnyNPCs(mod.NPCType("PinkyFlyer")))
-				{
-					phase = 4;
-					for(int i = 0; i < 1000; i++)
-					{
-						Projectile hook = Main.projectile[i];
-						if(hook.type == mod.ProjectileType("PutridHook") && hook.active)
-						{
-								hook.knockBack = 2;
-								while(hook.velocity.X == 0 && hook.velocity.Y == 0)
-								{
-									hook.velocity.X = Main.rand.Next(-9,10);
-									hook.velocity.Y = Main.rand.Next(-9,10);
-								}
-						}
-					}
-				}
-			}
-			if(phase == 4)
-			{
-				npc.aiStyle = 44;
-					if(ai1 == 40)
-					{
-						int npcProj = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, mod.NPCType("CursedPinky"));	
-						Main.npc[npcProj].velocity.X = shootToX * 2;
-						Main.npc[npcProj].velocity.Y = shootToY * 2;
-			
-						Main.PlaySound(SoundID.Item21, (int)(npc.Center.X), (int)(npc.Center.Y));
-					}
-					if(ai1 == 50)
-					{
-						int npcProj = NPC.NewNPC((int)npc.Center.X + (int)(3 * shootToY), (int)npc.Center.Y - (int)(3 * shootToX), mod.NPCType("CursedPinky"));	
-						Main.npc[npcProj].velocity.X = shootToX * 2;
-						Main.npc[npcProj].velocity.Y = shootToY * 2;
-			
-						npcProj = NPC.NewNPC((int)npc.Center.X - (int)(3 * shootToY), (int)npc.Center.Y + (int)(3 * shootToX), mod.NPCType("CursedPinky"));	
-						Main.npc[npcProj].velocity.X = shootToX * 2;
-						Main.npc[npcProj].velocity.Y = shootToY * 2;
-						Main.PlaySound(SoundID.Item21, (int)(npc.Center.X), (int)(npc.Center.Y));
-					}
-					if(ai1 == 60)
-					{
-						int npcProj = NPC.NewNPC((int)npc.Center.X + (int)(6 * shootToY), (int)npc.Center.Y - (int)(6 * shootToX), mod.NPCType("CursedPinky"));	
-						Main.npc[npcProj].velocity.X = shootToX * 2;
-						Main.npc[npcProj].velocity.Y = shootToY * 2;
-			
-						npcProj = NPC.NewNPC((int)npc.Center.X - (int)(6 * shootToY), (int)npc.Center.Y + (int)(6 * shootToX), mod.NPCType("CursedPinky"));	
-						Main.npc[npcProj].velocity.X = shootToX * 2;
-						Main.npc[npcProj].velocity.Y = shootToY * 2;
-						
-						Main.PlaySound(SoundID.Item21, (int)(npc.Center.X), (int)(npc.Center.Y));
-					}
-					if(ai1 == 70)
-					{
-						int npcProj = NPC.NewNPC((int)npc.Center.X + (int)(9 * shootToY), (int)npc.Center.Y - (int)(9 * shootToX), mod.NPCType("CursedPinky"));	
-						Main.npc[npcProj].velocity.X = shootToX * 2;
-						Main.npc[npcProj].velocity.Y = shootToY * 2;
-			
-						npcProj = NPC.NewNPC((int)npc.Center.X - (int)(9 * shootToY), (int)npc.Center.Y + (int)(9 * shootToX), mod.NPCType("CursedPinky"));	
-						Main.npc[npcProj].velocity.X = shootToX * 2;
-						Main.npc[npcProj].velocity.Y = shootToY * 2;
-						
-						Main.PlaySound(SoundID.Item21, (int)(npc.Center.X), (int)(npc.Center.Y));
-					}
-					if(ai1 == 80)
-					{
-						int npcProj = NPC.NewNPC((int)npc.Center.X + (int)(12 * shootToY), (int)npc.Center.Y - (int)(12 * shootToX), mod.NPCType("CursedPinky"));	
-						Main.npc[npcProj].velocity.X = shootToX * 2;
-						Main.npc[npcProj].velocity.Y = shootToY * 2;
-			
-						npcProj = NPC.NewNPC((int)npc.Center.X - (int)(12 * shootToY), (int)npc.Center.Y + (int)(12 * shootToX), mod.NPCType("CursedPinky"));	
-						Main.npc[npcProj].velocity.X = shootToX * 2;
-						Main.npc[npcProj].velocity.Y = shootToY * 2;
-						
-						Main.PlaySound(SoundID.Item21, (int)(npc.Center.X), (int)(npc.Center.Y));
-					}
-					if(ai1 == 90)
-					{
-						for(int i = 30; i < 330; i += 20/expertModifier)
-						{
-							Vector2 circularVelocity = new Vector2(-shootToX * 1.4f, -shootToY * 1.4f).RotatedBy(MathHelper.ToRadians(i));
-							Projectile.NewProjectile((int)npc.Center.X, (int)npc.Center.Y, circularVelocity.X, circularVelocity.Y, mod.ProjectileType("PinkBullet"), 24, 1, 0);
-						}
-					}
-					if(ai1 >= 120)
-					{
-						ai1 = -260;
-					}
-			}
-			
-			
-			int Num3 = 0;
-			if(phase == 5)
-			{
-				newRotation += 1;
-				int Num = 0;
-				for(int i = 0; i < 1000; i++)
-				{
-					Projectile hook = Main.projectile[i];
-					if(hook.type == mod.ProjectileType("PutridHook") && hook.active)
-					{
-						float moveToX = hook.Center.X - npc.Center.X;
-						float moveToY = hook.Center.Y - npc.Center.Y;
-						float distanceTo = (float)System.Math.Sqrt((double)(moveToX * moveToX + moveToY * moveToY));
-						Num++;
-						if(distanceTo >= 90)
-						{
-							distanceTo = 2.5f / distanceTo;
-								  
-							moveToX *= distanceTo * 5;
-							moveToY *= distanceTo * 5;
-							hook.velocity.X = -moveToX;
-							hook.velocity.Y = -moveToY;
-							hook.knockBack = 0;
-						}
-						else
-						{
-							Num3++;
-							Vector2 rotationalPosition = new Vector2(-80, 0).RotatedBy(MathHelper.ToRadians((Num * 30) + newRotation)); 
-							moveToX = hook.Center.X - npc.Center.X + rotationalPosition.X;
-							moveToY = hook.Center.Y - npc.Center.Y + rotationalPosition.Y;
-							distanceTo = (float)System.Math.Sqrt((double)(moveToX * moveToX + moveToY * moveToY));
-							distanceTo = 1f / distanceTo;
-								  
-							moveToX *= distanceTo * 5;
-							moveToY *= distanceTo * 5;
-							hook.velocity.X = -moveToX;
-							hook.velocity.Y = -moveToY;
-							hook.rotation = MathHelper.ToRadians(Main.rand.Next(360));
-						}
-					}
-				}
-			}
-			if(Num3 >= 12)
-			{
-				phase = 6;
-				initiatePinky = -1;
-			}
-			if(phase == 6)
-			{
-				npc.aiStyle = 0;  
-				newRotation += 1;
-				int Num = 0;
-				for(int i = 0; i < 1000; i++)
-				{
-					Projectile hook = Main.projectile[i];
-					if(hook.type == mod.ProjectileType("PutridHook") && hook.active)
-					{
-							Num++;
-							Vector2 rotationalPosition = new Vector2(-80, 0).RotatedBy(MathHelper.ToRadians((Num * 30) + newRotation)); 
-								
-							hook.position.X = npc.Center.X + rotationalPosition.X - (hook.width/2);
-							hook.position.Y = npc.Center.Y + rotationalPosition.Y - (hook.width/2);
-								
-							hook.rotation = MathHelper.ToRadians(Main.rand.Next(360));
-							hook.velocity.X = 0;
-							hook.velocity.Y = 0;
-					}
-				}
-				if(initiatePinky == -1)
-				{
-					NPC.NewNPC((int)npc.Center.X + 200, (int)npc.Center.Y + 200, mod.NPCType("PinkyFlyer"));
-					NPC.NewNPC((int)npc.Center.X + 200, (int)npc.Center.Y - 200, mod.NPCType("PinkyFlyer"));	
-					NPC.NewNPC((int)npc.Center.X - 200, (int)npc.Center.Y + 200, mod.NPCType("PinkyFlyer"));	
-					NPC.NewNPC((int)npc.Center.X - 200, (int)npc.Center.Y - 200, mod.NPCType("PinkyFlyer"));	
-					initiatePinky = 0;
-				}
-				
-				
-				if(ai1 == 40)
-					{
-						int npcProj = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, mod.NPCType("CursedPinky"));	
-						Main.npc[npcProj].velocity.X = shootToX * 2;
-						Main.npc[npcProj].velocity.Y = shootToY * 2;
-						
-						Projectile.NewProjectile((int)npc.Center.X, (int)npc.Center.Y, shootToX * -2, shootToY * -2, mod.ProjectileType("PinkBullet"), 24, 1, 0);
-			
-						Main.PlaySound(SoundID.Item21, (int)(npc.Center.X), (int)(npc.Center.Y));
-					}
-					if(ai1 == 50)
-					{
-						int npcProj = NPC.NewNPC((int)npc.Center.X + (int)(3 * shootToY), (int)npc.Center.Y - (int)(3 * shootToX), mod.NPCType("CursedPinky"));	
-						Main.npc[npcProj].velocity.X = shootToX * 2;
-						Main.npc[npcProj].velocity.Y = shootToY * 2;
-			
-						npcProj = NPC.NewNPC((int)npc.Center.X - (int)(3 * shootToY), (int)npc.Center.Y + (int)(3 * shootToX), mod.NPCType("CursedPinky"));	
-						Main.npc[npcProj].velocity.X = shootToX * 2;
-						Main.npc[npcProj].velocity.Y = shootToY * 2;
-						
-						Projectile.NewProjectile((int)npc.Center.X + (int)(3 * shootToY), (int)npc.Center.Y - (int)(3 * shootToX), shootToX * -2, shootToY * -2, mod.ProjectileType("PinkBullet"), 24, 1, 0);
-						
-						Projectile.NewProjectile((int)npc.Center.X - (int)(3 * shootToY), (int)npc.Center.Y + (int)(3 * shootToX), shootToX * -2, shootToY * -2, mod.ProjectileType("PinkBullet"), 24, 1, 0);
-						
-						Main.PlaySound(SoundID.Item21, (int)(npc.Center.X), (int)(npc.Center.Y));
-					}
-					if(ai1 == 60)
-					{
-						int npcProj = NPC.NewNPC((int)npc.Center.X + (int)(6 * shootToY), (int)npc.Center.Y - (int)(6 * shootToX), mod.NPCType("CursedPinky"));	
-						Main.npc[npcProj].velocity.X = shootToX * 2;
-						Main.npc[npcProj].velocity.Y = shootToY * 2;
-			
-						npcProj = NPC.NewNPC((int)npc.Center.X - (int)(6 * shootToY), (int)npc.Center.Y + (int)(6 * shootToX), mod.NPCType("CursedPinky"));	
-						Main.npc[npcProj].velocity.X = shootToX * 2;
-						Main.npc[npcProj].velocity.Y = shootToY * 2;
-						
-						Projectile.NewProjectile((int)npc.Center.X + (int)(6 * shootToY), (int)npc.Center.Y - (int)(6 * shootToX), shootToX * -2, shootToY * -2, mod.ProjectileType("PinkBullet"), 24, 1, 0);
-						
-						Projectile.NewProjectile((int)npc.Center.X - (int)(6 * shootToY), (int)npc.Center.Y + (int)(6 * shootToX), shootToX * -2, shootToY * -2, mod.ProjectileType("PinkBullet"), 24, 1, 0);
-						
-						Main.PlaySound(SoundID.Item21, (int)(npc.Center.X), (int)(npc.Center.Y));
-					}
-					if(ai1 >= 90)
-					{
-						ai1 = 0;
-					}
-				
-				
-				if(!NPC.AnyNPCs(mod.NPCType("PinkyFlyer")))
-				{
-					phase = 7;
-					for(int i = 0; i < 1000; i++)
-					{
-						Projectile hook = Main.projectile[i];
-						if(hook.type == mod.ProjectileType("PutridHook") && hook.active)
-						{
-							hook.Kill();
-						}
-					}
-					Main.PlaySound(2, (int)(npc.Center.X), (int)(npc.Center.Y), 15);
-				}
-			}
-			if(phase == 7)
-			{
-				float hpMod = (npc.lifeMax / (npc.life + 2000));
-				float randX = Main.rand.Next(-1,2) * hpMod;
-				float randY = Main.rand.Next(-1,2) * hpMod;
-				npc.position.X += randX;
-				npc.position.Y += randY;
-				ai1 += hpMod;
-				if(ai1 >= 100 - ((expertModifier -1) * 40))
-				{
-					ai1 = 0;
-					Projectile.NewProjectile(npc.Center.X + Main.rand.Next(-58,59), npc.Center.Y + Main.rand.Next(-58,59), 0, 0, mod.ProjectileType("PinkExplosion"), 33, 1, 0);
-				}
-				if(npc.life > 100)
-				{
-					npc.life--;
-				}
-				
 			}
 		}
 		public override void HitEffect(int hitDirection, double damage) 
 		{
-			if (npc.life > 0) {
-				for (int i = 0; i < 3; i++) 
+			if (npc.life > 0) 
+			{
+				for (int i = 0; i < 10; i++) 
 				{
 					Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, 72, hitDirection, -1f, 100, new Color(100, 100, 100, 100), 1f);
 					dust.noGravity = true;

@@ -17,7 +17,7 @@ namespace SOTS.Items.Pyramid
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Spirit Glove");
-			Tooltip.SetDefault("Increases void regen by 0.5 and melee crit by 6%");
+			Tooltip.SetDefault("Increases void regen by 0.75 and melee crit chance by 8%");
 		}
 		public override void SetDefaults()
 		{
@@ -34,13 +34,23 @@ namespace SOTS.Items.Pyramid
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-			voidPlayer.voidRegen += 0.05f;
-			player.meleeCrit += 6;
+			voidPlayer.voidRegen += 0.075f;
+			player.meleeCrit += 8;
 		}
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(null, "SoulResidue", 32);
+			recipe.AddIngredient(ItemID.Emerald, 1);
+			recipe.AddIngredient(ItemID.GoldBar, 8);
+			recipe.AddTile(TileID.Anvils);
+			recipe.SetResult(this);
+			recipe.AddRecipe();
+			
+			recipe = new ModRecipe(mod);
+			recipe.AddIngredient(null, "SoulResidue", 32);
+			recipe.AddIngredient(ItemID.Emerald, 1);
+			recipe.AddIngredient(ItemID.PlatinumBar, 8);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this);
 			recipe.AddRecipe();

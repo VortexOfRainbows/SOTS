@@ -16,7 +16,7 @@ namespace SOTS.Items.Pyramid
 			drop = mod.ItemType("PyramidSlab");
 			AddMapEntry(new Color(170, 150, 85));
 			mineResist = 3.5f;
-			minPick = 100;
+			minPick = 110;
             soundType = 21;
             soundStyle = 2;
 			dustType = 32;

@@ -12,7 +12,7 @@ namespace SOTS.Items.Fragments
 		public override void SetStaticDefaults() 
 		{
 			DisplayName.SetDefault("Acorn Bag");
-			Tooltip.SetDefault("Summons an squirrel to fight for you");
+			Tooltip.SetDefault("Summons a squirrel to fight for you");
 			ItemID.Sets.GamepadWholeScreenUseRange[item.type] = true; 
 			ItemID.Sets.LockOnIgnoresCollision[item.type] = true;
 		}

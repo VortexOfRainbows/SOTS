@@ -56,7 +56,7 @@ namespace SOTS.Items.Blood
 			recipe.AddIngredient(null, "RedPowerChamber", 1);
 			recipe.AddIngredient(null, "BluePowerChamber", 1);
 			recipe.AddIngredient(ItemID.SoulofNight, 12);
-			recipe.AddTile(TileID.DemonAltar);
+			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.SetResult(this);
 			recipe.AddRecipe();
 		}

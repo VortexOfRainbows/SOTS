@@ -30,6 +30,7 @@ namespace SOTS.Projectiles.Celestial
             projectile.ranged = true; 
             projectile.aiStyle = 1;
 			projectile.alpha = 100;
+			//projectile.netImportant = true;
 		}
 		public override void AI()
 		{
@@ -45,28 +46,21 @@ namespace SOTS.Projectiles.Celestial
 			projectile.scale -= 0.01f;
 			}
 			projectile.rotation = 0;
-
-
-			
 		}
 		public override void Kill(int timeLeft)
 		{
+			int proj = Projectile.NewProjectile((projectile.Center.X), projectile.Center.Y,0, 5, 435, projectile.damage, 0, 0);
+			Main.projectile[proj].timeLeft = 30;
 			
-				int proj = Projectile.NewProjectile((projectile.Center.X), projectile.Center.Y,0, 5, 435, projectile.damage, 0, 0);
-				Main.projectile[proj].timeLeft = 30;
-				
-				proj = Projectile.NewProjectile((projectile.Center.X), projectile.Center.Y, 5, 0, 435, projectile.damage, 0, 0);
-				Main.projectile[proj].timeLeft = 30;
-				
-				proj = Projectile.NewProjectile((projectile.Center.X), projectile.Center.Y, 0, -5, 435, projectile.damage, 0, 0);
-				Main.projectile[proj].timeLeft = 30;
-				
-				proj = Projectile.NewProjectile((projectile.Center.X), projectile.Center.Y, -5, 0, 435, projectile.damage, 0, 0);
-				Main.projectile[proj].timeLeft = 30;
-
+			proj = Projectile.NewProjectile((projectile.Center.X), projectile.Center.Y, 5, 0, 435, projectile.damage, 0, 0);
+			Main.projectile[proj].timeLeft = 30;
+			
+			proj = Projectile.NewProjectile((projectile.Center.X), projectile.Center.Y, 0, -5, 435, projectile.damage, 0, 0);
+			Main.projectile[proj].timeLeft = 30;
+			
+			proj = Projectile.NewProjectile((projectile.Center.X), projectile.Center.Y, -5, 0, 435, projectile.damage, 0, 0);
+			Main.projectile[proj].timeLeft = 30;
 			
 		}
-		
 	}
-	
 }
