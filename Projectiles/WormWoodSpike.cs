@@ -17,7 +17,7 @@ namespace SOTS.Projectiles
 		bool latch;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("WormWoodSpike");
+			DisplayName.SetDefault("Wormwood Spike");
 			
 		}
 		public override void SendExtraAI(BinaryWriter writer) 

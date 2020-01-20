@@ -1076,7 +1076,6 @@ namespace SOTS
 											WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform
 											break;
 										case 6:
-											WorldGen.PlaceTile(k, l, (ushort)mod.TileType("BrightBarrel")); //chest
 											break;
 										case 7:
 											WorldGen.PlaceTile(k, l, 376); //crate
@@ -2355,23 +2354,6 @@ namespace SOTS
 							{
 								// Get a chest
 								var tile = Main.tile[chest.x, chest.y]; // the chest tile 
-								
-									
-								if(tile.type == mod.TileType("BrightBarrel"))
-									{
-										int slot = 39;
-											for(int i = 0; i < 39; i++)
-											{
-												if(chest.item[i].type == 0 && i < slot)
-												{
-													slot = i;
-												}
-											}
-									
-										chest.item[slot].SetDefaults(ItemID.Chest);
-										chest.item[slot].stack = 10;
-										slot++;
-									}
 									
 								if(tile.type == mod.TileType("PyramidChestTile"))
 									{
@@ -2631,12 +2613,6 @@ namespace SOTS
 											}
 										}
 										
-										
-											if((WorldGen.genRand.NextBool(3) && (chest.item[0].type == 934 || chest.item[0].type == 857)) || chest.item[0].type == 848) //checking for carpet or sandstorm in bottle
-											{
-												chest.item[slot].SetDefaults(mod.ItemType("ShiftingSands"));
-												slot++;
-											}
 											if(WorldGen.genRand.NextBool(45))
 											{
 												if(WorldGen.genRand.NextBool(2))

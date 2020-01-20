@@ -33,7 +33,7 @@ namespace SOTS.Items.Celestial
             item.shootSpeed = 22.5f;
 			item.noMelee = false;
 		}
-		public void RegisterPhantoms(Player player)
+		public void RegisterPhantoms(Player player, int type, int damage, float knockBack)
 		{
 			int npcIndex = -1;
 			int npcIndex1 = -1;
@@ -78,7 +78,7 @@ namespace SOTS.Items.Celestial
 					
 					if(!npc.friendly && npc.lifeMax > 5 && npc.active)
 					{
-						int newIndex = Projectile.NewProjectile(spawnPosX, spawnPosY, attackPos.X, attackPos.Y, item.shoot, item.damage, item.knockBack, player.whoAmI);
+						int newIndex = Projectile.NewProjectile(spawnPosX, spawnPosY, attackPos.X, attackPos.Y, type, damage, knockBack, player.whoAmI);
 					}
 				}
 				if(npcIndex1 != -1)
@@ -93,14 +93,14 @@ namespace SOTS.Items.Celestial
 					
 					if(!npc.friendly && npc.lifeMax > 5 && npc.active)
 					{
-						int newIndex1 = Projectile.NewProjectile(spawnPosX, spawnPosY, attackPos.X, attackPos.Y, item.shoot, item.damage, item.knockBack, player.whoAmI);
+						int newIndex1 = Projectile.NewProjectile(spawnPosX, spawnPosY, attackPos.X, attackPos.Y, type, damage, knockBack, player.whoAmI);
 					}
 				}
 			}
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			RegisterPhantoms(player);
+			RegisterPhantoms(player, type, damage, knockBack);
 			return false; 
 		}
 		public override void AddRecipes()	

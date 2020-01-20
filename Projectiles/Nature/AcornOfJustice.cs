@@ -28,9 +28,8 @@ namespace SOTS.Projectiles.Nature
 		}
 		public override void AI()
         {
-				projectile.rotation = (float)Math.Atan2((double)projectile.velocity.Y, (double)projectile.velocity.X) - MathHelper.ToRadians(125);
-				projectile.spriteDirection = 1;
-		
+			projectile.rotation = (float)Math.Atan2((double)projectile.velocity.Y, (double)projectile.velocity.X) - MathHelper.ToRadians(125);
+			projectile.spriteDirection = 1;
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{

@@ -12,13 +12,21 @@ using Terraria.ID;
 namespace SOTS.Projectiles
 {    
     public class FrostShard : ModProjectile 
-    {	int prepareFire = -2;
+    {	
+		private int prepareFire = -2;
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Frost Shard");
 			
 		}
-		
+		public override void SendExtraAI(BinaryWriter writer) 
+		{
+			writer.Write(prepareFire);
+		}
+		public override void ReceiveExtraAI(BinaryReader reader)
+		{	
+			prepareFire = reader.ReadInt32();
+		}
         public override void SetDefaults()
         {
 			projectile.aiStyle = 1;
@@ -34,11 +42,11 @@ namespace SOTS.Projectiles
 		}
 		public override void AI()
 		{
-			projectile.netUpdate = true;
 			Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 0.9f / 255f, (255 - projectile.alpha) * 0.1f / 255f, (255 - projectile.alpha) * 0.3f / 255f);
-			if(prepareFire == -2)
+			if(prepareFire == -2 && Main.netMode != 1)
 			{
 				prepareFire = Main.rand.Next(61,480);
+				projectile.netUpdate = true;
 			}
 			projectile.alpha -= 2;
 			int IcyAbomInt = -1;

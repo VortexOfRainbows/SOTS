@@ -11,24 +11,25 @@ namespace SOTS.Projectiles
     {	bool pull = false;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Worm Wood Hook");
+			DisplayName.SetDefault("Wormwood Hook");
 			
 		}
         public override void SetDefaults()
         {
             projectile.CloneDefaults(ProjectileID.GemHookDiamond);
-			projectile.width = 22;
-			projectile.height = 22;
+			projectile.width = 20;
+			projectile.height = 20;
 			projectile.penetrate = -1;
 			projectile.timeLeft = 1000000;
 			projectile.friendly = true;
-        } public override bool? CanUseGrapple(Player player)
+        } 
+		public override bool? CanUseGrapple(Player player)
         {
             return true;
         }
         public override bool? SingleGrappleHook(Player player)
         {
-          return true;
+			return true;
         }   
 		public override float GrappleRange()
         {
@@ -72,16 +73,21 @@ namespace SOTS.Projectiles
                 }
             }
         }
+		public override void AI()
+        {
+			projectile.scale = 1.2f;
+			projectile.rotation -= MathHelper.ToRadians(45);
+			projectile.spriteDirection = 1;
+		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-			
 			Player owner = Main.player[projectile.owner];
             target.immune[projectile.owner] = 0;
-			
-			Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("PinkHook2"), projectile.damage, 0, owner.whoAmI);
+			if(Main.myPlayer == projectile.owner)
+			{
+				Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("PinkHook2"), projectile.damage, 0, owner.whoAmI);
+			}
 			projectile.Kill();
-			projectile.position.X = target.Center.X + (projectile.position.X - projectile.Center.X);
-			projectile.position.Y = target.Center.Y - (projectile.Center.Y - projectile.position.Y);
         }
     }
 }

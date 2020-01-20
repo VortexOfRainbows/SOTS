@@ -13,15 +13,15 @@ namespace SOTS.Items.GelGear
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Worm Wood Collapse");
+			DisplayName.SetDefault("Wormwood Collapse");
 			Tooltip.SetDefault("Charge to increase damage up to 500%");
 		}
 		public override void SafeSetDefaults()
 		{
             item.damage = 30;
             item.melee = true;  
-            item.width = 42;
-            item.height = 42;  
+            item.width = 44;
+            item.height = 44;  
             item.useTime = 60; 
             item.useAnimation = 60;
             item.useStyle = 5;    
@@ -70,9 +70,7 @@ namespace SOTS.Items.GelGear
 		{
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(null, "WormWoodCore", 1);
-			recipe.AddIngredient(null, "SlimeyFeather", 12);
-			recipe.AddIngredient(null, "GelBar", 12);
-			recipe.AddIngredient(ItemID.Wood, 12);
+			recipe.AddIngredient(null, "Wormwood", 32);
 			recipe.AddIngredient(ItemID.PinkGel, 20);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this);

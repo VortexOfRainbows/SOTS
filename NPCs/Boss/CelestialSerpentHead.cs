@@ -325,14 +325,23 @@ namespace SOTS.NPCs.Boss
 				UnstableSerpent(player.Center.X, player.Center.Y + 1800, 40);
 				UnstableSerpent(player.Center.X, player.Center.Y - 1800, 40);
 				
-				NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, mod.NPCType("ChaosFlame"));
+				if(Main.netMode != 1)
+				{
+					int npc1 = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, mod.NPCType("ChaosFlame"));
+					Main.npc[npc1].netUpdate = true;
+				}
 				Main.PlaySound(SoundID.Item119, (int)(npc.Center.X), (int)(npc.Center.Y));
 			}
 			if(phase == 1 && npc.life < (int)(npc.lifeMax * 0.15f))
 			{
 				phase = 2;
-				NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, mod.NPCType("ChaosFlame"));
-				NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, mod.NPCType("ChaosFlame"));
+				if(Main.netMode != 1)
+				{
+					int npc1 = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, mod.NPCType("ChaosFlame"));
+					Main.npc[npc1].netUpdate = true;
+					npc1 = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, mod.NPCType("ChaosFlame"));
+					Main.npc[npc1].netUpdate = true;
+				}
 				Main.PlaySound(SoundID.Item119, (int)(npc.Center.X), (int)(npc.Center.Y));
 			}
 			
@@ -461,7 +470,11 @@ namespace SOTS.NPCs.Boss
 					}
 				}
 				//if(phase == 1)
-				NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, mod.NPCType("ChaosFlame"));
+				if(Main.netMode != 1)
+				{
+					int npc1 = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, mod.NPCType("ChaosFlame"));
+					Main.npc[npc1].netUpdate = true;
+				}
 				ai1 = 0;
 			}
 			
@@ -496,7 +509,13 @@ namespace SOTS.NPCs.Boss
 					UnstableSerpent(player.Center.X, player.Center.Y + 1800, 40);
 				}
 				if(phase == 2 && ai1 % 464 == 0 && Main.rand.Next(8) == 0)
-				NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, mod.NPCType("ChaosFlame"));
+				{
+					if(Main.netMode != 1)
+					{
+						int npc1 = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, mod.NPCType("ChaosFlame"));
+						Main.npc[npc1].netUpdate = true;
+					}
+				}
 			}
 			
 			if(Main.player[npc.target].dead)

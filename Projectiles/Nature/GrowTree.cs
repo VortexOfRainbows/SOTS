@@ -60,10 +60,19 @@ namespace SOTS.Projectiles.Nature
 			if(direction.X < 0)
 			hitDirection = -1;
 		}
+		private bool loaded = false;
+		public override bool PreAI()
+		{
+			if(!loaded)
+			{
+				projectile.netUpdate = true;
+				loaded = true;
+			}
+			return true;
+		}
 		public override void AI()
         {
 			Player player = Main.player[projectile.owner];
-			projectile.netUpdate = true;
 			projectile.alpha += 2;
 			float distance = 24 - projectile.ai[1]/3;
 			if(projectile.ai[0] == 1)
@@ -82,8 +91,7 @@ namespace SOTS.Projectiles.Nature
 					if(projectile.owner == Main.myPlayer)
 					{
 						
-						int Probe = Projectile.NewProjectile(projectile.Center.X + direction.X, projectile.Center.Y + direction.Y, 0, 0, mod.ProjectileType("GrowTree"), projectile.damage, projectile.knockBack, player.whoAmI, 0, projectile.ai[1]);
-						Main.projectile[Probe].ai[0] = projectile.ai[0] + 1;
+						int Probe = Projectile.NewProjectile(projectile.Center.X + direction.X, projectile.Center.Y + direction.Y, 0, 0, mod.ProjectileType("GrowTree"), projectile.damage, projectile.knockBack, player.whoAmI, projectile.ai[0] + 1, projectile.ai[1]);
 						Main.projectile[Probe].rotation = projectile.rotation - projectile.ai[1];
 						
 						if(Main.projectile[Probe].ai[0] != 10)

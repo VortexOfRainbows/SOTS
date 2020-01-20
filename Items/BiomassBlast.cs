@@ -38,7 +38,7 @@ namespace SOTS.Items
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(null, "Scatterseed", 1);
 			recipe.AddIngredient(null, "Snakeskin", 12);
-			recipe.AddIngredient(null, "SoulResidue", 20);
+			recipe.AddIngredient(null, "FragmentOfNature", 8);
 			recipe.AddIngredient(ItemID.Vilethorn, 1);
 			recipe.AddIngredient(ItemID.StaffofRegrowth, 1);
 			recipe.AddIngredient(ItemID.Acorn, 20);
@@ -49,19 +49,13 @@ namespace SOTS.Items
 			recipe = new ModRecipe(mod);
 			recipe.AddIngredient(null, "Scatterseed", 1);
 			recipe.AddIngredient(null, "Snakeskin", 12);
-			recipe.AddIngredient(null, "SoulResidue", 20);
+			recipe.AddIngredient(null, "FragmentOfNature", 8);
 			recipe.AddIngredient(ItemID.CrimsonRod, 1);
 			recipe.AddIngredient(ItemID.StaffofRegrowth, 1);
 			recipe.AddIngredient(ItemID.Acorn, 20);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this);
 			recipe.AddRecipe();
-		}
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-        {
-					Projectile.NewProjectile(position.X, position.Y, speedX, speedY, type, damage, knockBack, player.whoAmI);
-					
-				return false; 
 		}
 	}
 }

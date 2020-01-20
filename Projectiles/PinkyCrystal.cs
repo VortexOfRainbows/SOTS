@@ -17,7 +17,7 @@ namespace SOTS.Projectiles
 		
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Worm Wood Crystal");
+			DisplayName.SetDefault("Wormwood Crystal");
 			
 		}
 		
@@ -34,12 +34,11 @@ namespace SOTS.Projectiles
 		}
 		public override void Kill(int timeLeft)
 		{
-			for(int i = 0; i < 4; i++)
+			if(projectile.owner == Main.myPlayer)
 			{
-				if(projectile.owner == Main.myPlayer)
+				for(int i = 0; i < 3; i++)
 				{
 					Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, Main.rand.Next(-6,7), Main.rand.Next(-6,7), mod.ProjectileType("PinkyMusketBall"), (int)(projectile.damage * 1f), projectile.knockBack, Main.myPlayer);
-					
 					Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, Main.rand.Next(-6,7), Main.rand.Next(-6,7), 22, (int)(projectile.damage * 1f), projectile.knockBack, Main.myPlayer);
 				}
 			}

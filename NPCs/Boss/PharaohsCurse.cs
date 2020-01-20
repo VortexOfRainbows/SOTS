@@ -100,6 +100,10 @@ namespace SOTS.NPCs.Boss
 		}
 		public override void BossLoot(ref string name, ref int potionType)
 		{ 
+			if(!SOTSWorld.downedCurse)
+			{
+				Main.NewText("The pyramid's curse weakens", 155, 115, 0);
+			}
 			SOTSWorld.downedCurse = true;
 			potionType = ItemID.HealingPotion;
 		
@@ -251,13 +255,6 @@ namespace SOTS.NPCs.Boss
 			}
 			return true;
 		}
-	
-
-			int proj1 = -1;
-			int proj2 = -1;
-			int proj3 = -1;
-			int proj4 = -1;
-			
 		public override void AI()
 		{
 			if(ai2 % 5 == 0 && ai2 <= 360)
@@ -295,117 +292,15 @@ namespace SOTS.NPCs.Boss
 				npc.aiStyle = 14; 
 				teleportAttackType = 0;
 				finishTeleport = -1;
-				proj1 = Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 0, 0, mod.ProjectileType("CurseBall"), (int)(npc.damage * 0.45f), 0, 0);
-				proj2 = Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 0, 0, mod.ProjectileType("CurseBall"), (int)(npc.damage * 0.45f), 0, 0);
-				proj3 = Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 0, 0, mod.ProjectileType("CurseBall"), (int)(npc.damage * 0.45f), 0, 0);
-				proj4 = Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 0, 0, mod.ProjectileType("CurseBall"), (int)(npc.damage * 0.45f), 0, 0);
-				
-			}
-			if(ai3 >= 90)
-			{
-				if(proj1 != -1)
+				if(Main.netMode != 1)
 				{
-					Projectile proj = Main.projectile[proj1];
-					if(proj.active && proj.type == mod.ProjectileType("CurseBall") && proj.timeLeft >= 3600)
-					{
-						Vector2 rotatePos = new Vector2(-64, 0).RotatedBy(MathHelper.ToRadians(ai3));
-						proj.position.X = npc.Center.X + rotatePos.X - proj.width/2;
-						proj.position.Y = npc.Center.Y + rotatePos.Y - proj.height/2;
-					}
-				}
-				if(proj2 != -1)
-				{
-					Projectile proj = Main.projectile[proj2];
-					if(proj.active && proj.type == mod.ProjectileType("CurseBall") && proj.timeLeft >= 3600)
-					{
-						Vector2 rotatePos = new Vector2(-64, 0).RotatedBy(MathHelper.ToRadians(ai3 + 90));
-						proj.position.X = npc.Center.X + rotatePos.X - proj.width/2;
-						proj.position.Y = npc.Center.Y + rotatePos.Y - proj.height/2;
-					}
-					
-				}
-				if(proj3 != -1)
-				{
-					Projectile proj = Main.projectile[proj3];
-					if(proj.active && proj.type == mod.ProjectileType("CurseBall") && proj.timeLeft >= 3600)
-					{
-						Vector2 rotatePos = new Vector2(-64, 0).RotatedBy(MathHelper.ToRadians(ai3 + 180));
-						proj.position.X = npc.Center.X + rotatePos.X - proj.width/2;
-						proj.position.Y = npc.Center.Y + rotatePos.Y - proj.height/2;
-					}
-					
-				}
-				if(proj4 != -1)
-				{
-					Projectile proj = Main.projectile[proj4];
-					if(proj.active && proj.type == mod.ProjectileType("CurseBall") && proj.timeLeft >= 3600)
-					{
-						Vector2 rotatePos = new Vector2(-64, 0).RotatedBy(MathHelper.ToRadians(ai3 + 270));
-						proj.position.X = npc.Center.X + rotatePos.X - proj.width/2;
-						proj.position.Y = npc.Center.Y + rotatePos.Y - proj.height/2;
-					}
+					Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 0, 0, mod.ProjectileType("CurseSpike"), (int)(npc.damage * 0.45f), 0, Main.myPlayer, 90, 270);
+					Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 0, 0, mod.ProjectileType("CurseSpike"), (int)(npc.damage * 0.45f), 0, Main.myPlayer, 180, 330);
+					Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 0, 0, mod.ProjectileType("CurseSpike"), (int)(npc.damage * 0.45f), 0, Main.myPlayer, 270, 390);
+					Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 0, 0, mod.ProjectileType("CurseSpike"), (int)(npc.damage * 0.45f), 0, Main.myPlayer, 360, 450);
 				}
 			}
-			if(ai3 == 360)
-			{
-				if(proj1 != -1)
-				{
-					Projectile proj = Main.projectile[proj1];
-					if(proj.active && proj.type == mod.ProjectileType("CurseBall"))
-					{
-						proj.timeLeft = 1800;
-						Vector2 rotateVelocity = new Vector2(0, -2).RotatedBy(MathHelper.ToRadians(ai3));
-						proj.velocity.X = rotateVelocity.X;
-						proj.velocity.Y = rotateVelocity.Y;
-					}
-				}
-				proj1 = -1;
-			}
-			if(ai3 == 420)
-			{
-				if(proj2 != -1)
-				{
-					Projectile proj = Main.projectile[proj2];
-					if(proj.active && proj.type == mod.ProjectileType("CurseBall"))
-					{
-						proj.timeLeft = 1800;
-						Vector2 rotateVelocity = new Vector2(0, -2).RotatedBy(MathHelper.ToRadians(ai3 + 90));
-						proj.velocity.X = rotateVelocity.X;
-						proj.velocity.Y = rotateVelocity.Y;
-					}
-				}
-				proj2 = -1;
-			}
-			if(ai3 == 480)
-			{
-				if(proj3 != -1)
-				{
-					Projectile proj = Main.projectile[proj3];
-					if(proj.active && proj.type == mod.ProjectileType("CurseBall"))
-					{
-						proj.timeLeft = 1800;
-						Vector2 rotateVelocity = new Vector2(0, -2).RotatedBy(MathHelper.ToRadians(ai3 + 180));
-						proj.velocity.X = rotateVelocity.X;
-						proj.velocity.Y = rotateVelocity.Y;
-					}
-				}
-				proj3 = -1;
-			}
-			if(ai3 == 540)
-			{
-				if(proj4 != -1)
-				{
-					Projectile proj = Main.projectile[proj4];
-					if(proj.active && proj.type == mod.ProjectileType("CurseBall"))
-					{
-						proj.timeLeft = 1800;
-						Vector2 rotateVelocity = new Vector2(0, -2).RotatedBy(MathHelper.ToRadians(ai3 + 270));
-						proj.velocity.X = rotateVelocity.X;
-						proj.velocity.Y = rotateVelocity.Y;
-					}
-				}
-				proj4 = -1;
-			}
+			
 			int direction = -1;
 			
 			
@@ -422,14 +317,19 @@ namespace SOTS.NPCs.Boss
 			
 		
 			
-			if(ai3 == 900)
+			if(ai3 == 900 && !NPC.AnyNPCs(mod.NPCType("CurseFragment")))
 			{
-				NPC.NewNPC((int)npc.Center.X + 40, (int)npc.Center.Y, mod.NPCType("CurseFragment"));
-				NPC.NewNPC((int)npc.Center.X - 40, (int)npc.Center.Y, mod.NPCType("CurseFragment"));
-				if(Main.expertMode)
+				if(Main.netMode != 1)
 				{
-					NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y + 40, mod.NPCType("CurseFragment"));
-					NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y - 40, mod.NPCType("CurseFragment"));
+					int npc1 = NPC.NewNPC((int)npc.Center.X + 40, (int)npc.Center.Y, mod.NPCType("CurseFragment"));
+					Main.npc[npc1].netUpdate = true;
+					npc1 = NPC.NewNPC((int)npc.Center.X - 40, (int)npc.Center.Y, mod.NPCType("CurseFragment"));
+					Main.npc[npc1].netUpdate = true;
+					if(Main.expertMode)
+					{
+						npc1 = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y - 40, mod.NPCType("CurseFragment"));
+						Main.npc[npc1].netUpdate = true;
+					}
 				}
 				Main.PlaySound(SoundID.NPCDeath6, (int)(npc.Center.X), (int)(npc.Center.Y));
 			}
@@ -481,7 +381,10 @@ namespace SOTS.NPCs.Boss
 						}
 						for(int i = 0; i < 6 + (expertScale / 2); i++)
 						{
-							int lineProj = Projectile.NewProjectile(npc.Center.X + Main.rand.Next(-100,101), npc.Center.Y + Main.rand.Next(-20,21), 0, 7 + Main.rand.Next(-2,3), mod.ProjectileType("PyramidCollapse"), (int)(npc.damage * 0.7f), 0, 0);
+							if(Main.netMode != 1)
+							{
+								Projectile.NewProjectile(npc.Center.X + Main.rand.Next(-100,101), npc.Center.Y + Main.rand.Next(-20,21), 0, 7 + Main.rand.Next(-2,3), mod.ProjectileType("PyramidCollapse"), (int)(npc.damage * 0.7f), 0, Main.myPlayer);
+							}
 						}
 						Main.PlaySound(SoundID.Item14, (int)(npc.Center.X), (int)(npc.Center.Y));
 					}
@@ -497,48 +400,62 @@ namespace SOTS.NPCs.Boss
 				{
 					if(direction2 == 1 && finishTeleport % 4 == 0)
 					{
-						int lineProj = Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 7 * direction, 0, mod.ProjectileType("CurseBall"), (int)(npc.damage * 0.4f), 0, 0);
-						Main.projectile[lineProj].timeLeft = 2700;
+						if(Main.netMode != 1)
+						{
+							int lineProj = Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 7 * direction, 0, mod.ProjectileType("CurseBall"), (int)(npc.damage * 0.4f), 0, 0);
+							Main.projectile[lineProj].timeLeft = 2700;
+							NetMessage.SendData(27, -1, -1, null, lineProj);
+						}
 					}
 						
 					if(direction2 == -1 && finishTeleport % 4 == 0)
 					{
-						int lineProj = Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 0, 7 * direction, mod.ProjectileType("CurseBall"), (int)(npc.damage * 0.4f), 0, 0);
-						Main.projectile[lineProj].timeLeft = 2700;
+						if(Main.netMode != 1)
+						{
+							int lineProj = Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 0, 7 * direction, mod.ProjectileType("CurseBall"), (int)(npc.damage * 0.4f), 0, 0);
+							Main.projectile[lineProj].timeLeft = 2700;
+							NetMessage.SendData(27, -1, -1, null, lineProj);
+						}
 					}
 				}
 			}
 			if(finishTeleport >= 10 && teleportAttackType == 1)
 			{
-					if(Main.rand.Next(2) == 0)
+				if(Main.rand.Next(2) == 0)
+				{
+					direction2 = 1;
+				}
+				else
+				{
+					direction2 = -1;
+				}
+				if(inBlock)
+				{
+					for(int i = 0; i < 5; i++)
 					{
-						direction2 = 1;
+					int goreIndex = Gore.NewGore(new Vector2(npc.position.X, npc.position.Y), default(Vector2), Main.rand.Next(61,64), 1f);	
+					Main.gore[goreIndex].scale = 0.75f;
 					}
-					else
-					{
-						direction2 = -1;
-					}
-					if(inBlock)
-					{
-						for(int i = 0; i < 5; i++)
+					for(int i = 0; i < 6 + (expertScale / 2); i++)
+					{	
+						if(Main.netMode != 1)
 						{
-						int goreIndex = Gore.NewGore(new Vector2(npc.position.X, npc.position.Y), default(Vector2), Main.rand.Next(61,64), 1f);	
-						Main.gore[goreIndex].scale = 0.75f;
+							Projectile.NewProjectile(npc.Center.X + Main.rand.Next(-100,101), npc.Center.Y + Main.rand.Next(-20,21), 0, 7 + Main.rand.Next(-2,3), mod.ProjectileType("PyramidCollapse"), (int)(npc.damage * 0.7f), 0, Main.myPlayer);
 						}
-						for(int i = 0; i < 6 + (expertScale / 2); i++)
-						{
-							int lineProj = Projectile.NewProjectile(npc.Center.X + Main.rand.Next(-100,101), npc.Center.Y + Main.rand.Next(-20,21), 0, 7 + Main.rand.Next(-2,3), mod.ProjectileType("PyramidCollapse"), (int)(npc.damage * 0.7f), 0, 0);
-						}
-						Main.PlaySound(SoundID.Item14, (int)(npc.Center.X), (int)(npc.Center.Y));
 					}
-					else
+					Main.PlaySound(SoundID.Item14, (int)(npc.Center.X), (int)(npc.Center.Y));
+				}
+				else
+				{
+					for(int i = 0; i < 6 + (expertScale / 2); i++)
 					{
-						for(int i = 0; i < 6 + (expertScale / 2); i++)
+						if(Main.netMode != 1)
 						{
-							int lineProj = Projectile.NewProjectile(npc.Center.X + Main.rand.Next(-100,101), npc.Center.Y + Main.rand.Next(-20,21), 0, 7 + Main.rand.Next(-2,3), mod.ProjectileType("CurseBall"), (int)(npc.damage * 0.5f), 0, 0);
+							Projectile.NewProjectile(npc.Center.X + Main.rand.Next(-100,101), npc.Center.Y + Main.rand.Next(-20,21), 0, 7 + Main.rand.Next(-2,3), mod.ProjectileType("CurseBall"), (int)(npc.damage * 0.5f), 0, Main.myPlayer);
 						}
-						Main.PlaySound(SoundID.Item14, (int)(npc.Center.X), (int)(npc.Center.Y));
 					}
+					Main.PlaySound(SoundID.Item14, (int)(npc.Center.X), (int)(npc.Center.Y));
+				}
 				teleportAttackType = 1;
 				finishTeleport = -1;
 				npc.aiStyle = 14;
@@ -553,10 +470,8 @@ namespace SOTS.NPCs.Boss
 			}
 			if(despawn >= 360)
 			{
-			npc.active = false;
+				npc.active = false;
 			}
-		   
-
 		}
 	}
 }

@@ -22,7 +22,7 @@ namespace SOTS.NPCs.Constructs
 		{
 			npc.aiStyle = 10;
             npc.lifeMax = 300; 
-            npc.damage = 85; 
+            npc.damage = 40; 
             npc.defense = 0;   
             npc.knockBackResist = 0f;
             npc.width = 58;
@@ -43,13 +43,23 @@ namespace SOTS.NPCs.Constructs
 		int counter = 0;
 		public void SpellLaunch()
 		{
-			if(npc.damage > 0)
+			if(npc.ai[3] <= 0)
 			{
-				Projectile.NewProjectile(npc.Center.X, npc.Center.Y, npc.velocity.Y * -1, npc.velocity.X * -1,  mod.ProjectileType("NatureBolt"), (int)(npc.damage * 0.3f * (Main.expertMode ? 0.7f : 1)), 0, 0, 20, npc.target);
+				int damage = npc.damage / 2;
+				if (Main.expertMode) 
+				{
+					damage = (int)(damage / Main.expertDamage);
+				}
+				Projectile.NewProjectile(npc.Center.X, npc.Center.Y, npc.velocity.Y * -1, npc.velocity.X * -1,  mod.ProjectileType("NatureBolt"), damage, 0, 0, 20, npc.target);
 			}
 			else
 			{
-				Projectile.NewProjectile(npc.Center.X, npc.Center.Y, npc.velocity.Y * -1, npc.velocity.X * -1,  mod.ProjectileType("NatureBolt"), (int)(npc.ai[2] * 0.3f * (Main.expertMode ? 0.7f : 1)), 0, 0, 20, npc.target);
+				int damage = (int)npc.ai[3] / 2;
+				if (Main.expertMode) 
+				{
+					damage = (int)(damage / Main.expertDamage);
+				}
+				Projectile.NewProjectile(npc.Center.X, npc.Center.Y, npc.velocity.Y * -1, npc.velocity.X * -1,  mod.ProjectileType("NatureBolt"), damage, 0, 0, 20, npc.target);
 			}
 			//Main.PlaySound(SoundID.Item92, (int)(npc.Center.X), (int)(npc.Center.Y));
 		}
@@ -59,11 +69,16 @@ namespace SOTS.NPCs.Constructs
 			if(phase == 3)
 			{
 				npc.ai[0]++;
+				float speed = 6f;
 				Vector2 rotatePos = new Vector2(npc.ai[1], 0).RotatedBy(MathHelper.ToRadians(npc.ai[0] * 0.6f));
 				rotatePos = player.Center + rotatePos;
 				Vector2 vectorTo = rotatePos - npc.Center;
 				float distance = vectorTo.Length();
-				Vector2 goTo = new Vector2((6 < distance ? 6 : distance), 0).RotatedBy(Math.Atan2(vectorTo.Y, vectorTo.X));
+				if(npc.ai[1] < 100)
+				{
+					speed = 1f;
+				}
+				Vector2 goTo = new Vector2((speed < distance ? speed : distance), 0).RotatedBy(Math.Atan2(vectorTo.Y, vectorTo.X));
 				npc.velocity = goTo;
 				if((int)npc.ai[0] % 20 == 0)
 				{
@@ -98,7 +113,7 @@ namespace SOTS.NPCs.Constructs
 			{
 				counter++;
 			}
-			if(counter >= 420)
+			if(counter >= 540)
 			{
 				phase = 1;
 				npc.aiStyle = -1;

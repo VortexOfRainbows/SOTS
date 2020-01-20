@@ -134,12 +134,10 @@ namespace SOTS.NPCs
 				}
 					
 				if (npc.type == NPCID.WyvernHead) {
-					if (Main.rand.Next(10) == 0) {
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("WyvernSword"), 1); 
-					}
 					if (Main.rand.Next(3) == 0) {
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemID.GiantHarpyFeather, 1); 
 					}
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FragmentOfOtherworld"), Main.rand.Next(2) + 1); 
 				}
 				
 				if (npc.type == NPCID.SkeletronHead) {
@@ -156,46 +154,41 @@ namespace SOTS.NPCs
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("Chocolate"), 1); 
 					}
 				}
-				if (npc.type == NPCID.Plantera) {
-					if (Main.rand.Next(20) == 0) {
-							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("ChlorophyteCrossFive"), 1); 
-					}
-				}
 				if (npc.type == NPCID.UndeadMiner) {
-					if (Main.rand.Next(4) == 0) {          
+					if (Main.rand.Next(5) == 0) {          
 						 Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("ManicMiner"), 1); 
 					}
 				}
 				if (npc.type == NPCID.BlueSlime) {
-					if (Main.rand.Next(100) == 0) {
+					if (Main.rand.Next(120) == 0) {
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FireSpitter"), 1); 
 					}
 				}
 				if (npc.type == NPCID.Crab) {
-					if (Main.rand.Next(20) == 0) {
+					if (Main.rand.Next(18) == 0) {
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("CrabClaw"), 1); 
 					}
 				}
 				if (npc.type == mod.NPCType("PutridPinkyPhase2")) {
 					if (Main.rand.Next(25) == 0) {
-							/*
-							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("MeguminHat"), 1); 
-							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("MeguminShirt"), 1); 
-							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("MeguminLeggings"), 1); 
-							*/
+						/*
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("MeguminHat"), 1); 
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("MeguminShirt"), 1); 
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("MeguminLeggings"), 1); 
+						*/
 					}
 				}
 				if (npc.type == 64 && Main.rand.Next(60) == 0) {
-							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("PinkJellyfishStaff"), 1); 
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("PinkJellyfishStaff"), 1); 
 				}
 				if (npc.type == 140 && Main.rand.Next(90) == 0) { //Possessed armor 
-							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("PossessedHelmet"), 1); 
-							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("PossessedChainmail"), 1); 
-							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("PossessedGreaves"), 1); 
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("PossessedHelmet"), 1); 
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("PossessedChainmail"), 1); 
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("PossessedGreaves"), 1); 
 				}
 				if ((npc.type == 63 || npc.type == 103) && Main.rand.Next(60) == 0)
 				{
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("BlueJellyfishStaff"), 1); 
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("BlueJellyfishStaff"), 1); 
 				}
 			}
 		}

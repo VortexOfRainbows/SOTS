@@ -13,7 +13,6 @@ namespace SOTS.Projectiles.Pyramid
 {    
     public class CurseBall : ModProjectile 
     {	          
-		int bounce = 999;
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Curse");
@@ -31,51 +30,26 @@ namespace SOTS.Projectiles.Pyramid
 			projectile.penetrate = 5;
 			projectile.netImportant = true;
 		}
-		public override void SendExtraAI(BinaryWriter writer) 
-		{
-			writer.Write(projectile.alpha);
-		}
-		public override void ReceiveExtraAI(BinaryReader reader)
-		{	
-			projectile.alpha = reader.ReadInt32();
-		}
 		public override void AI()
 		{
-			projectile.alpha -= 1;
+			projectile.alpha -= projectile.alpha > 0 ? 1 : 0;
 			projectile.rotation += Main.rand.Next(-3,4);
-			if(projectile.timeLeft <= 200)
-			{
-				projectile.alpha += 2;
-				if(projectile.alpha >= 200)
-				{
-					projectile.Kill();
-				}
-			}
+			projectile.alpha = projectile.timeLeft <= 255 ? 200 - projectile.timeLeft : projectile.alpha;
 			int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 18, 18, mod.DustType("CurseDust"));
 			Main.dust[num1].noGravity = true;
 			Main.dust[num1].alpha = projectile.alpha;
-			if(projectile.velocity.X == 0 && projectile.velocity.Y == 0)
-			{
-				projectile.Kill();
-			}
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{	
 			projectile.timeLeft -= 60;
-			bounce--;
-			if (bounce <= 0)
+			if (projectile.velocity.X != oldVelocity.X)
 			{
-				projectile.Kill();
+				projectile.velocity.X = -oldVelocity.X;
 			}
-			else
-				if (projectile.velocity.X != oldVelocity.X)
-				{
-					projectile.velocity.X = -oldVelocity.X;
-				}
-				if (projectile.velocity.Y != oldVelocity.Y)
-				{
-					projectile.velocity.Y = -oldVelocity.Y;
-				}
+			if (projectile.velocity.Y != oldVelocity.Y)
+			{
+				projectile.velocity.Y = -oldVelocity.Y;
+			}
 			return false;
 		}
 	}

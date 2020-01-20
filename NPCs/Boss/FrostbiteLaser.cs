@@ -63,12 +63,13 @@ namespace SOTS.NPCs.Boss
 					Vector2 rotateVelocity2 = new Vector2(4, 0).RotatedBy(MathHelper.ToRadians(npc.ai[1]));
 					Vector2 rotateVelocity3 = new Vector2(0, 4).RotatedBy(MathHelper.ToRadians(npc.ai[1]));
 					Vector2 rotateVelocity4 = new Vector2(0, -4).RotatedBy(MathHelper.ToRadians(npc.ai[1]));
-					Projectile.NewProjectile(npc.Center.X, npc.Center.Y, rotateVelocity.X, rotateVelocity.Y, mod.ProjectileType("MargritBolt"), 32, 0, 0, 0f, 0f);
-					Projectile.NewProjectile(npc.Center.X, npc.Center.Y, rotateVelocity2.X, rotateVelocity2.Y, mod.ProjectileType("MargritBolt"), 32, 0, 0, 0f, 0f);
-					Projectile.NewProjectile(npc.Center.X, npc.Center.Y, rotateVelocity3.X, rotateVelocity3.Y, mod.ProjectileType("MargritBolt"), 32, 0, 0, 0f, 0f);
-					Projectile.NewProjectile(npc.Center.X, npc.Center.Y, rotateVelocity4.X, rotateVelocity4.Y, mod.ProjectileType("MargritBolt"), 32, 0, 0, 0f, 0f);
-					
-						
+					if(Main.netMode != 1)
+					{
+						Projectile.NewProjectile(npc.Center.X, npc.Center.Y, rotateVelocity.X, rotateVelocity.Y, mod.ProjectileType("MargritBolt"), 32, 0, Main.myPlayer, 0f, 0f);
+						Projectile.NewProjectile(npc.Center.X, npc.Center.Y, rotateVelocity2.X, rotateVelocity2.Y, mod.ProjectileType("MargritBolt"), 32, 0, Main.myPlayer, 0f, 0f);
+						Projectile.NewProjectile(npc.Center.X, npc.Center.Y, rotateVelocity3.X, rotateVelocity3.Y, mod.ProjectileType("MargritBolt"), 32, 0, Main.myPlayer, 0f, 0f);
+						Projectile.NewProjectile(npc.Center.X, npc.Center.Y, rotateVelocity4.X, rotateVelocity4.Y, mod.ProjectileType("MargritBolt"), 32, 0, Main.myPlayer, 0f, 0f);
+					}
 				}
 			}
 			else

@@ -11,13 +11,13 @@ namespace SOTS.Items.GelGear
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Worm Wood Hook");
+			DisplayName.SetDefault("Wormwood Hook");
 			Tooltip.SetDefault("Hooks onto organic matter, dealing damage and connecting you to them\nCan be used again before the hook returns");
 		}
 		public override void SetDefaults()
 		{
 			item.CloneDefaults(ItemID.AmethystHook);
-			item.damage = 25;
+			item.damage = 17;
 			item.knockBack = 0;
             item.width = 32;  
             item.height = 32;   
@@ -32,9 +32,7 @@ namespace SOTS.Items.GelGear
 		{
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(null, "WormWoodCore", 1);
-			recipe.AddIngredient(null, "SlimeyFeather", 48);
-			recipe.AddIngredient(null, "GelBar", 4);
-			recipe.AddIngredient(ItemID.Wood, 4);
+			recipe.AddIngredient(null, "Wormwood", 24);
 			recipe.AddIngredient(ItemID.PinkGel, 16);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this);

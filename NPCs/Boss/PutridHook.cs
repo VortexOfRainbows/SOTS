@@ -38,9 +38,9 @@ namespace SOTS.NPCs.Boss
 		{
 			
             npc.aiStyle = -1; 
-            npc.lifeMax = 250;   
+            npc.lifeMax = 350;   
             npc.damage = 40; 
-            npc.defense = 2;  
+            npc.defense = 10;  
             npc.knockBackResist = 0f;
             npc.width = 68;
             npc.height = 68;
@@ -53,45 +53,54 @@ namespace SOTS.NPCs.Boss
             npc.DeathSound = SoundID.NPCDeath5;
             npc.netAlways = true;
             npc.buffImmune[20] = true;
-			
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
 			Player player = Main.player[npc.target];
 			Texture2D texture = ModContent.GetTexture("SOTS/NPCs/Boss/PutridHookEye");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			Vector2 drawPos = npc.Center - Main.screenPosition + new Vector2(0f, npc.gfxOffY);
+			Vector2 drawPos = npc.Center - Main.screenPosition;
 			
 			float shootToX = aimToX - npc.Center.X;
 			float shootToY = aimToY - npc.Center.Y;
 			float distance = (float)System.Math.Sqrt((double)(shootToX * shootToX + shootToY * shootToY));
 
-			distance = 1f / distance;
+			distance = 2f/ distance;
 				  
 			shootToX *= distance * 5;
 			shootToY *= distance * 5;
 			
 			drawPos.X += shootToX;
-			drawPos.Y += shootToY;
-
+			drawPos.Y += -1 + shootToY + (texture.Height * 0.5f);
+			if(npc.scale == 1)
 			spriteBatch.Draw(texture, drawPos, null, drawColor, npc.rotation, drawOrigin, npc.scale, SpriteEffects.None, 0f);
 		}
 		public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) 
 		{
+			if(damage > 60 && !crit)
+			{
+				damage = 60; //actually 50 because of defense
+			}
 			if(projectile.active)
 			{
-				projectile.Kill();
+				projectile.velocity.X *= -0.9f;
+				projectile.velocity.Y *= -0.9f;
+				projectile.damage--;
+				if(projectile.damage < 15)
+				{
+					projectile.damage = 15;
+				}
 			}
 		}
 		public override void AI()
 		{	
-			Lighting.AddLight(npc.Center, (255 - npc.alpha) * 0.9f / 255f, (255 - npc.alpha) * 0.1f / 255f, (255 - npc.alpha) * 0.3f / 255f);
-			npc.rotation += 0.3f;
+			Lighting.AddLight(npc.Center, (255 - npc.alpha) * 1f / 155f, (255 - npc.alpha) * 1f / 155f, (255 - npc.alpha) * 1f / 155f);
+			npc.rotation += 0.21f;
 			int pIndex = -1;
 			for(int i = 0; i < 200; i++)
 			{
-				NPC npc = Main.npc[i];
-				if(npc.type == mod.NPCType("PutridPinkyPhase2") && npc.active)
+				NPC npc1 = Main.npc[i];
+				if(npc1.type == mod.NPCType("PutridPinkyPhase2") && npc1.active)
 				{
 					pIndex = i;
 					break;

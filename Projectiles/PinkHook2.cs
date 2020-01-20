@@ -11,13 +11,13 @@ namespace SOTS.Projectiles
     {	int enemyIndex = 0;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Worm Wood Hook");
+			DisplayName.SetDefault("Wormwood Hook");
 			
 		}
         public override void SetDefaults()
 		{
-			projectile.width = 22;
-			projectile.height = 22;
+			projectile.width = 20;
+			projectile.height = 20;
 			projectile.penetrate = -1;
 			projectile.timeLeft = 6;
 			projectile.friendly = true;
@@ -25,7 +25,7 @@ namespace SOTS.Projectiles
         }
         public override bool? SingleGrappleHook(Player player)
         {
-          return true;
+			return true;
         }
         public override void PostDraw(Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch, Color lightColor)
         {
@@ -63,57 +63,50 @@ namespace SOTS.Projectiles
         }
 		public override void AI()
 		{
-			if(!projectile.friendly)
+			projectile.scale = 1.2f;
+			Player player = Main.player[projectile.owner];
+			projectile.rotation = (float)Math.Atan2((double)projectile.Center.Y - player.Center.Y, (double)projectile.Center.X - player.Center.X) + MathHelper.ToRadians(45);
+			projectile.spriteDirection = 1;
+			if(projectile.ai[0] == -1)
 			{
-				NPC target = Main.npc[enemyIndex];
-				if(projectile.timeLeft < 3)
+				if(Main.myPlayer == projectile.owner)
 				{
-					projectile.Kill();
+					NPC target = Main.npc[enemyIndex];
+					if(target.active)
+					{
+						projectile.timeLeft = 6;
+						projectile.position.X = target.Center.X + (projectile.position.X - projectile.Center.X);
+						projectile.position.Y = target.Center.Y - (projectile.Center.Y - projectile.position.Y);
+					}
+					projectile.netUpdate = true;
 				}
-				if(target.active)
-				{
-					Player owner = Main.player[projectile.owner];
-					projectile.timeLeft = 60;
-					projectile.position.X = target.Center.X + (projectile.position.X - projectile.Center.X);
-					projectile.position.Y = target.Center.Y - (projectile.Center.Y - projectile.position.Y);
-					if(target.Center.X - 220 > owner.Center.X)
-					{
-						owner.velocity.X += .75f;
-					}
-					if(target.Center.X + 220 < owner.Center.X)
-					{
-						owner.velocity.X -= .75f;
-					}
-					if(target.Center.Y - 220 > owner.Center.Y)
-					{
-						owner.velocity.Y += .75f;
-					}
-					if(target.Center.Y + 220 < owner.Center.Y)
-					{
-						owner.velocity.Y -= .75f;
-					}
-				}
-				else
-				{
-					projectile.Kill();
-				}
+			}
+			if(target.Center.X - 220 > player.Center.X)
+			{
+				player.velocity.X += .75f;
+			}
+			if(target.Center.X + 220 < player.Center.X)
+			{
+				player.velocity.X -= .75f;
+			}
+			if(target.Center.Y - 220 > player.Center.Y)
+			{
+				player.velocity.Y += .75f;
+			}
+			if(target.Center.Y + 220 < player.Center.Y)
+			{
+				player.velocity.Y -= .75f;
 			}
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
 			Player owner = Main.player[projectile.owner];
             target.immune[projectile.owner] = 0;
-			projectile.timeLeft = 60;
+			projectile.timeLeft = 6;
 			projectile.friendly = false;
-			for(int i = 0; i < 200; i++)
-			{
-				NPC npc = Main.npc[i];
-				if(npc == target)
-				{
-					enemyIndex = i;
-					break;
-				}
-			}
+			enemyIndex = target.whoAmI;
+			projectile.ai[0] = -1;
+			projectile.netUpdate = true;
         }
     }
 }

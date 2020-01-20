@@ -38,7 +38,7 @@ namespace SOTS.Projectiles
 			Player player = Main.player[projectile.owner];
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
             target.immune[projectile.owner] = 8;
-			voidPlayer.voidMeter += 0.5f;
+			voidPlayer.voidMeter += 0.85f;
 		}
 		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
         {

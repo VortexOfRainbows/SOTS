@@ -32,28 +32,24 @@ namespace SOTS.NPCs.Boss
 			set => npc.ai[3] = value;
 		}
 		
-		private float fireToX {
-			get => npc.localAI[0];
-			set => npc.localAI[0] = value;
-		}
-
-		private float fireToY {
-			get => npc.localAI[1];
-			set => npc.localAI[1] = value;
-		}
-		
-		private float followPlayer {
-			get => npc.localAI[2];
-			set => npc.localAI[2] = value;
-		}
+		private float fireToX = 0;
+		private float fireToY = 0;
+		private float followPlayer = 0;
+		private float eyeReset = 0;
 		
 		public override void SendExtraAI(BinaryWriter writer) 
 		{
-			//writer.Write(initiateHooks);
+			writer.Write(fireToX);
+			writer.Write(fireToY);
+			writer.Write(followPlayer);
+			writer.Write(eyeReset);
 		}
 		public override void ReceiveExtraAI(BinaryReader reader)
 		{	
-			//initiateHooks = reader.ReadInt32();
+			fireToX = reader.ReadSingle();
+			fireToY = reader.ReadSingle();
+			followPlayer = reader.ReadSingle();
+			eyeReset = reader.ReadSingle();
 		}
 		public override void SetStaticDefaults()
 		{
@@ -65,7 +61,7 @@ namespace SOTS.NPCs.Boss
 			
             npc.aiStyle = -1;   
 			npc.lifeMax = 5500;
-            npc.damage = 30;   
+            npc.damage = 37;   
             npc.defense = 0;   
             npc.knockBackResist = 0f;
             npc.width = 116;
@@ -88,9 +84,10 @@ namespace SOTS.NPCs.Boss
 		public override bool PreDraw(Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch, Color lightColor)
         {
             Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/PutridVine");  
-                     
+            
 			for(int i = 0; i < 200; i++)
 			{
+				int alpha = 0;
 				if(Main.npc[i].type == mod.NPCType("PutridHook") && Main.npc[i].active)
 				{
 					Vector2 position = npc.Center;
@@ -107,7 +104,7 @@ namespace SOTS.NPCs.Boss
 						flag = false;
 					while (flag)
 					{
-						if ((double)vector2_4.Length() < (double)num1 + 1.0)
+						if ((double)vector2_4.Length() - texture.Height < (double)num1 + 1.0)
 						{
 							flag = false;
 						}
@@ -119,6 +116,8 @@ namespace SOTS.NPCs.Boss
 							vector2_4 = mountedCenter - position;
 							Microsoft.Xna.Framework.Color color2 = Lighting.GetColor((int)position.X / 16, (int)((double)position.Y / 16.0));
 							color2 = npc.GetAlpha(color2);
+							color2.A = (byte)(255 - alpha);
+							alpha += 10;
 							Main.spriteBatch.Draw(texture, position - Main.screenPosition, sourceRectangle, color2, rotation, origin, 1f, SpriteEffects.None, 0.0f);
 						}
 					}
@@ -143,21 +142,22 @@ namespace SOTS.NPCs.Boss
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
 			Texture2D texture = ModContent.GetTexture("SOTS/NPCs/Boss/PutridPinkyEye");
-			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			Vector2 drawPos = npc.Center - Main.screenPosition + new Vector2(0f, npc.gfxOffY);
+			Vector2 drawOrigin = new Vector2(texture.Width/2, texture.Height/2);
+			Vector2 drawPos = npc.Center - Main.screenPosition;
 			
 			float shootToX = fireToX - npc.Center.X;
 			float shootToY = fireToY - npc.Center.Y;
 			float distance = (float)System.Math.Sqrt((double)(shootToX * shootToX + shootToY * shootToY));
 
-			distance = 1.1f / distance;
+			distance = eyeReset * 1.2f * (npc.scale) / distance;
 				  
 			shootToX *= distance * 5;
 			shootToY *= distance * 5;
 			
 			drawPos.X += shootToX;
-			drawPos.Y += shootToY * 1.5f;
+			drawPos.Y += 4 + (shootToY * 2);
 
+			if(npc.scale == 1)
 			spriteBatch.Draw(texture, drawPos, null, drawColor, npc.rotation, drawOrigin, npc.scale, SpriteEffects.None, 0f);
 		}
 		public override void AI()
@@ -173,75 +173,89 @@ namespace SOTS.NPCs.Boss
 				  
 			shootToX *= distance * 5;
 			shootToY *= distance * 5;
-			if(Main.netMode != 1)
-			{   
-				if(attackPhase == 0)
+			if(attackPhase == 0)
+			{
+				eyeReset = 1;
+				attackPhase = 1;
+				attackTimer = 900;
+				followPlayer = 1;
+				
+				if(Main.netMode != 1)
+				npc.netUpdate = true;
+			
+				InitiateHooks();
+				return;
+			}
+			if(attackPhase == 1)
+			{
+				eyeReset = eyeReset < 1 ? eyeReset + 0.08f : 1;
+				attackTimer--;
+				if(followPlayer == 1)
 				{
-					attackPhase = 1;
+					fireToX = player.Center.X;
+					fireToY = player.Center.Y;
+				}
+				if(attackTimer == 600)
+				{
+					followPlayer = 0;
+				}
+				if(attackTimer == 570)
+				{
+					LaunchLaser(npc.Center, new Vector2(fireToX, fireToY));
+					followPlayer = 1;
+				}
+				if(attackTimer == 540)
+				{
+					followPlayer = 0;
+				}
+				if(attackTimer == 510)
+				{
+					LaunchLaser(npc.Center, new Vector2(fireToX, fireToY));
+					followPlayer = 1;
+				}
+				if(attackTimer == 480)
+				{
+					followPlayer = 0;
+				}
+				if(attackTimer == 450)
+				{
+					LaunchLaser(npc.Center, new Vector2(fireToX, fireToY));
 					attackTimer = 900;
 					followPlayer = 1;
-					npc.netUpdate = true;
-					InitiateHooks();
-					return;
 				}
-				if(attackPhase == 1)
+				rotationSpeed = 0.4f;
+				rotationDistance += rotationDistance < 120 ? 1 : rotationDistance > 120 ? -1 : 0;
+				
+				if(Main.netMode != 1)
+				npc.netUpdate = true;
+			}
+			for(int i = 0; i < 200; i++)
+			{
+				if(Main.npc[i].type == mod.NPCType("PutridHook") && Main.npc[i].active)
 				{
-					attackTimer--;
-					if(followPlayer == 1)
-					{
-						fireToX = player.Center.X;
-						fireToY = player.Center.Y;
-					}
-					if(attackTimer == 600)
-					{
-						followPlayer = 0;
-					}
-					if(attackTimer == 570)
-					{
-						LaunchLaser(npc.Center, new Vector2(fireToX, fireToY), 180);
-						followPlayer = 1;
-					}
-					if(attackTimer == 540)
-					{
-						followPlayer = 0;
-					}
-					if(attackTimer == 510)
-					{
-						LaunchLaser(npc.Center, new Vector2(fireToX, fireToY), 120);
-						followPlayer = 1;
-					}
-					if(attackTimer == 480)
-					{
-						followPlayer = 0;
-					}
-					if(attackTimer == 420)
-					{
-						LaunchLaser(npc.Center, new Vector2(fireToX, fireToY), 60);
-						attackTimer = 900;
-						followPlayer = 1;
-					}
-					rotationSpeed = 1;
-					rotationDistance += rotationDistance < 120 ? 1 : rotationDistance > 120 ? -1 : 0;
-					npc.netUpdate = true;
-					for(int i = 0; i < 200; i++)
-					{
-						if(Main.npc[i].type == mod.NPCType("PutridHook") && Main.npc[i].active)
-						{
-							Main.npc[i].ai[0] = player.Center.X;
-							Main.npc[i].ai[1] = player.Center.Y;
-							Main.npc[i].netUpdate = true;
-						}
-					}
+					Main.npc[i].ai[0] = player.Center.X;
+					Main.npc[i].ai[1] = player.Center.Y;
 				}
 			}
 		}
-		private void LaunchLaser(Vector2 fromArea, Vector2 toArea, int time)
+		private void LaunchLaser(Vector2 fromArea, Vector2 toArea)
 		{
+			int damage = npc.damage / 2;
+			if (Main.expertMode) 
+			{
+				damage = (int)(damage / Main.expertDamage);
+			}
 			Vector2 direction = fromArea - toArea;
-			direction *= 2f;
-			int Probe = Projectile.NewProjectile(fromArea.X, fromArea.Y, 0, 0, mod.ProjectileType("PinkLaser"), (int)(npc.damage / Main.expertDamage), 0, 0, toArea.X + direction, toArea.Y + direction);
-			Main.projectile[Probe].timeLeft = time;
-			NetMessage.SendData(27, -1, -1, null, Probe);
+			direction *= 6f;
+			if(direction.Length() > 1500)
+			{
+				direction.Normalize();
+				direction *= 1500;
+			}
+			if(Main.netMode != 1)
+			Projectile.NewProjectile(fromArea.X, fromArea.Y, 0, 0, mod.ProjectileType("PinkLaser"), damage, 0, Main.myPlayer, toArea.X - direction.X, toArea.Y - direction.Y);
+			//NetMessage.SendData(27, -1, -1, null, Probe);
+			eyeReset = -0.8f;
 		}
 		private void InitiateHooks()
 		{

@@ -12,8 +12,8 @@ namespace SOTS.NPCs.Boss
 	{	bool finishedRotating = false;
 		int thruster = 0;
 		int thrusterDistance = -500;
-				float thrusterBoost = 0;
-				double dist = 128;
+		float thrusterBoost = 0;
+		double dist = 128;
 		public override void SendExtraAI(BinaryWriter writer) 
 		{
 			writer.Write(finishedRotating);
@@ -57,10 +57,10 @@ namespace SOTS.NPCs.Boss
 		}
 		public override void AI()
 		{	
-				if(Main.expertMode)
-				{
-					npc.dontTakeDamage = true;
-				}
+			if(Main.expertMode)
+			{
+				npc.dontTakeDamage = true;
+			}
 			Lighting.AddLight(npc.Center, (255 - npc.alpha) * 0.9f / 255f, (255 - npc.alpha) * 0.1f / 255f, (255 - npc.alpha) * 0.3f / 255f);
 			int counter = 0;
 			
@@ -119,39 +119,43 @@ namespace SOTS.NPCs.Boss
 					npc.rotation = MathHelper.ToRadians(315);
 					npc.ai[1] = 315;
 				}
-			finishedRotating = true;
+				finishedRotating = true;
 			}
-			
-			thruster += Main.rand.Next(3);
-			
-				if(counter >= 9)
+			if(Main.netMode != 1)
+			{
+				thruster += Main.rand.Next(3);
+				npc.netUpdate = true;
+			}
+			if(counter >= 9)
+			{
+				npc.active = false;
+			}
+			if(thruster > 120)
+			{
+				if(thrusterDistance == -500)
 				{
-					npc.active = false;
-				}
-			
-				
-				if(thruster > 120)
-				{
-					if(thrusterDistance == -500)
+					if(Main.netMode != 1)
 					{
 						thrusterDistance = Main.rand.Next(120,361);
-					}
-					if(dist >= 128)
-					{
-						thrusterDistance--;
-						thrusterBoost = thrusterDistance * 0.01f;
-					}
-					if(dist <= 127)
-					{
-						thrusterDistance = -500;
-						thruster = -30;
-						thrusterBoost = 0;
-						dist = 128;
+						npc.netUpdate = true;
 					}
 				}
+				if(dist >= 128)
+				{
+					thrusterDistance--;
+					thrusterBoost = thrusterDistance * 0.01f;
+				}
+				if(dist <= 127)
+				{
+					thrusterDistance = -500;
+					thruster = -30;
+					thrusterBoost = 0;
+					dist = 128;
+				}
+			}
 			
 			
-				dist += thrusterBoost;
+			dist += thrusterBoost;
 			Vector2 rotateVelocity = new Vector2(-4, 0).RotatedBy(MathHelper.ToRadians(npc.ai[1]));
 			
 	
@@ -187,55 +191,7 @@ namespace SOTS.NPCs.Boss
 					npc.active = false;
 				}
 			}
-			
-			
-			
-			
-			
 		}
-		/*
-		public override void PostDraw(Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch, Color lightColor)
-        {
-				double deg = (double) npc.ai[1]; 
-				double rad = deg * (Math.PI / 180);
-				double dist = 960;
-				float positionX = npc.Center.X - (int)(Math.Cos(rad) * dist) - npc.width/2;
-				float positionY = npc.Center.Y - (int)(Math.Sin(rad) * dist) - npc.height/2;
-				
-            Texture2D texture = ModContent.GetTexture("SOTS/NPCs/Boss/LaserTargeting");    //this where the chain of grappling hook is drawn
-                                                      //change YourModName with ur mod name/ and CustomHookPr_Chain with the name of ur one
-            Vector2 position = new Vector2(positionX, positionY);
-            Vector2 mountedCenter = npc.Center;
-            Microsoft.Xna.Framework.Rectangle? sourceRectangle = new Microsoft.Xna.Framework.Rectangle?();
-            Vector2 origin = new Vector2((float)texture.Width * 0.5f, (float)texture.Height * 0.5f);
-            float num1 = (float)texture.Height;
-            Vector2 vector2_4 = mountedCenter - position;
-            float rotation = (float)Math.Atan2((double)vector2_4.Y, (double)vector2_4.X) - 1.57f;
-            bool flag = true;
-            if (float.IsNaN(position.X) && float.IsNaN(position.Y))
-                flag = false;
-            if (float.IsNaN(vector2_4.X) && float.IsNaN(vector2_4.Y))
-                flag = false;
-            while (flag)
-            {
-                if ((double)vector2_4.Length() < (double)num1 + 1.0)
-                {
-                    flag = false;
-                }
-                else
-                {
-                    Vector2 vector2_1 = vector2_4;
-                    vector2_1.Normalize();
-                    position += vector2_1 * num1;
-                    vector2_4 = mountedCenter - position;
-                    Microsoft.Xna.Framework.Color color2 = Lighting.GetColor((int)position.X / 16, (int)((double)position.Y / 16.0));
-                    color2 = npc.GetAlpha(color2);
-                    Main.spriteBatch.Draw(texture, position - Main.screenPosition, sourceRectangle, color2, rotation, origin, 1f, SpriteEffects.None, 0.0f);
-                }
-            }
-        }
-		*/
-	
 	}
 }
 

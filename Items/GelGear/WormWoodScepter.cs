@@ -10,9 +10,9 @@ namespace SOTS.Items.GelGear
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Worm Wood Scepter");
+			DisplayName.SetDefault("Wormwood Scepter");
 			
-			Tooltip.SetDefault("Summons a worm wood crystal to fire upon your enemies");
+			Tooltip.SetDefault("Summons a Wormwood Turret to fire upon your enemies");
 		}
  
         public override void SetDefaults()
@@ -38,9 +38,7 @@ namespace SOTS.Items.GelGear
 		{
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(null, "WormWoodCore", 1);
-			recipe.AddIngredient(null, "SlimeyFeather", 32);
-			recipe.AddIngredient(null, "GelBar", 12);
-			recipe.AddIngredient(ItemID.Wood, 8);
+			recipe.AddIngredient(null, "Wormwood", 28);
 			recipe.AddIngredient(ItemID.PinkGel, 32);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this);
@@ -60,6 +58,5 @@ namespace SOTS.Items.GelGear
 			}
 			return player.altFunctionUse != 2;
 		}
-
     }
 }

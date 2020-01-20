@@ -11,13 +11,13 @@ namespace SOTS.Items.GelGear
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Worm Wood Crystal");
-			Tooltip.SetDefault("Throws a crystal that explodes into gelatinous projectiles");
+			DisplayName.SetDefault("Wormwood Crystal");
+			Tooltip.SetDefault("A crystal that explodes into gelatinous projectiles");
 		}
 		public override void SetDefaults()
 		{
-            item.damage = 12; 
-            item.thrown = true; 
+            item.damage = 14; 
+            item.ranged = true; 
             item.width = 22; 
             item.height = 22; 
             item.useTime = 35;  
@@ -39,12 +39,10 @@ namespace SOTS.Items.GelGear
 		{
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(null, "WormWoodCore", 1);
-			recipe.AddIngredient(null, "SlimeyFeather", 4);
-			recipe.AddIngredient(null, "GelBar", 4);
-			recipe.AddIngredient(ItemID.Wood, 4);
-			recipe.AddIngredient(ItemID.PinkGel, 4);
+			recipe.AddIngredient(null, "Wormwood", 16);
+			recipe.AddIngredient(ItemID.PinkGel, 16);
 			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this, 333);
+			recipe.SetResult(this, 666);
 			recipe.AddRecipe();
 		}
 	}

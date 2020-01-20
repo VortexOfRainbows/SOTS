@@ -14,9 +14,9 @@ namespace SOTS.Items.SpecialDrops
 		}
 		public override void SetDefaults()
 		{
-            item.damage = 12;  //gun damage
-            item.melee = true;   //its a gun so set this to true
-            item.width = 34;     //gun image width
+            item.damage = 12;
+            item.melee = true;  
+            item.width = 34;   
             item.height = 34;   
             item.useStyle = 1;
             item.UseSound = SoundID.Item1;

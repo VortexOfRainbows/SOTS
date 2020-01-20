@@ -44,9 +44,9 @@ namespace SOTS
 		
 		public bool TurtleTem = false;
 		
-		public bool PlanetariumBiome = false;
+		//public bool PlanetariumBiome = false;
 		public bool ZeplineBiome = false;
-		public bool GeodeBiome = false;
+		//public bool GeodeBiome = false;
 		public bool PyramidBiome = false;
 		public bool HeartSwapDelay = false;
 		public int BloodTapping = 0;
@@ -147,11 +147,6 @@ namespace SOTS
 			if (Main.rand.Next(24) == 1 && player.ZoneSkyHeight)   {
 			caughtType = mod.ItemType("TinyPlanetFish"); }
 			
-			if (Main.rand.Next(7) == 1 && player.ZoneDesert && bait.bait >= 25 && !player.ZoneBeach){
-			caughtType = mod.ItemType("SandFish");}
-			if (Main.rand.Next(30) == 1 && player.ZoneDesert && bait.bait <= 15 && !player.ZoneBeach) {
-			caughtType = mod.ItemType("SandFish"); }
-			
 			//if (Main.rand.Next(200) == 0 && ZeplineBiome) {
 			//caughtType = mod.ItemType("ZephyriousZepline"); }
             //if (Main.rand.Next(330) == 1 && liquidType == 2 && poolSize >= 500)   {
@@ -163,42 +158,28 @@ namespace SOTS
 			caughtType = mod.ItemType("SpikyPufferfish"); }
 			if (player.ZoneBeach && liquidType == 0 && Main.rand.Next(225) == 0) {
 			caughtType = mod.ItemType("CrabClaw"); }
-			if (liquidType == 2 && Main.rand.Next(50) == 1) {
-			caughtType = mod.ItemType("HiveFish"); }
-			if (liquidType == 1 && Main.rand.Next(130) == 1) {
-			caughtType = mod.ItemType("IceCreamOre"); }
-			if (liquidType == 1 && Main.rand.Next(70) == 1) {
-			caughtType = mod.ItemType("IceCream"); }
-			if (liquidType == 1 && Main.rand.Next(70) == 1) {
-			caughtType = mod.ItemType("IceCreamOre"); }
-			if (liquidType == 1 && Main.rand.Next(50) == 1){
-			caughtType = mod.ItemType("IceCream"); }
-			if (liquidType == 1 && Main.rand.Next(200) == 1){
+			if (liquidType == 1 && Main.rand.Next(50) == 0){
 			caughtType = mod.ItemType("GeodeCrate"); }
-			if (liquidType == 1 && Main.rand.Next(35) == 0 && player.FindBuffIndex(BuffID.Crate) > -1) {
+			if (liquidType == 1 && Main.rand.Next(17) == 0 && player.FindBuffIndex(BuffID.Crate) > -1) {
 			caughtType = mod.ItemType("GeodeCrate"); }
-			if (liquidType == 1 && Main.rand.Next(60) == 0)	{
-			caughtType = mod.ItemType("JewelFish"); }
-			if (liquidType == 1 && player.FindBuffIndex(BuffID.Spelunker) > -1 && GeodeBiome && Main.rand.Next(55) == 0) {
-			caughtType = mod.ItemType("JewelFish"); }
 			
 			
-            if (Main.rand.Next(1000) == 0 && player.ZoneBeach && liquidType == 0){
+            if (Main.rand.Next(800) == 0 && player.ZoneBeach && liquidType == 0){
 			caughtType = mod.ItemType("PinkJellyfishStaff"); }
-            else if (Main.rand.Next(100) == 0 && player.ZoneBeach && liquidType == 0 && bait.type == 2438){ //Checks for pink jellyfish bait
+            else if (Main.rand.Next(50) == 0 && player.ZoneBeach && liquidType == 0 && bait.type == 2438){ //Checks for pink jellyfish bait
 			caughtType = mod.ItemType("PinkJellyfishStaff"); }
-            if (Main.rand.Next(1000) == 0 && player.ZoneRockLayerHeight && liquidType == 0){
+            if (Main.rand.Next(800) == 0 && player.ZoneRockLayerHeight && liquidType == 0){
 			caughtType = mod.ItemType("BlueJellyfishStaff"); }
-            else if (Main.rand.Next(100) == 0 && player.ZoneRockLayerHeight && liquidType == 0 && bait.type == 2436){ //Checks blue for jellyfish bait
+            else if (Main.rand.Next(50) == 0 && player.ZoneRockLayerHeight && liquidType == 0 && bait.type == 2436){ //Checks blue for jellyfish bait
 			caughtType = mod.ItemType("BlueJellyfishStaff"); }
-            else if (Main.rand.Next(100) == 0 && player.ZoneRockLayerHeight && liquidType == 0 && bait.type == 2437){ //Checks blue for jellyfish bait
+            else if (Main.rand.Next(50) == 0 && player.ZoneRockLayerHeight && liquidType == 0 && bait.type == 2437){ //Checks blue for jellyfish bait
 			caughtType = mod.ItemType("BlueJellyfishStaff"); }
 			
 		}
 		public override void UpdateBiomes()
         {
-            PlanetariumBiome = (SOTSWorld.planetarium > 0);
-            GeodeBiome = (SOTSWorld.geodeBiome > 300);
+            //PlanetariumBiome = (SOTSWorld.planetarium > 0);
+            //GeodeBiome = (SOTSWorld.geodeBiome > 300);
             ZeplineBiome = (SOTSWorld.zeplineBiome > 0);
 			
 			//checking for background walls
@@ -362,15 +343,15 @@ namespace SOTS
 			
 			Vector2 vector14;
 					
-						if (player.gravDir == 1f)
-					{
-					vector14.Y = (float)Main.mouseY + Main.screenPosition.Y;
-					}
-					else
-					{
-					vector14.Y = Main.screenPosition.Y + (float)Main.screenHeight - (float)Main.mouseY;
-					}
-						vector14.X = (float)Main.mouseX + Main.screenPosition.X;
+			if (player.gravDir == 1f)
+			{
+				vector14.Y = (float)Main.mouseY + Main.screenPosition.Y;
+			}
+			else
+			{
+				vector14.Y = Main.screenPosition.Y + (float)Main.screenHeight - (float)Main.mouseY;
+			}
+			vector14.X = (float)Main.mouseX + Main.screenPosition.X;
 						
 			if(BloodTapping * damage > 10)
 			{
@@ -433,7 +414,7 @@ namespace SOTS
 				  Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, mod.ProjectileType("PurpleBobber"), damage, type, player.whoAmI);
 				  //return false;
 			}
-			if(pearlescentMagic && item.magic && item.damage > 3 && shotCounter % 8 == 0)
+			if(pearlescentMagic && item.magic && item.damage > 3 && shotCounter % 6 == 0)
 			{
 				for(int i = 0; i < 1000; i++)
 				{

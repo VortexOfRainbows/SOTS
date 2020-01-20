@@ -22,7 +22,7 @@ namespace SOTS.Items.ChestItems
             item.noMelee = false;
 			item.knockBack = 1f;  
             item.value = 72500;
-            item.rare = 5;
+            item.rare = 4;
             item.UseSound = SoundID.Item11;
             item.autoReuse = true;
             item.shoot = mod.ProjectileType("LavaBall"); 

@@ -23,7 +23,7 @@ namespace SOTS.Projectiles.Laser
 		{
 			projectile.width = 8;
 			projectile.height = 8;
-			projectile.timeLeft = 300;
+			projectile.timeLeft = 120;
 			projectile.penetrate = -1;
 			projectile.hostile = true;
 			projectile.friendly = false;
@@ -33,9 +33,11 @@ namespace SOTS.Projectiles.Laser
 		public override void AI() 
 		{
 			//projectile.Center = npc.Center;
-			projectile.alpha += projectile.timeLeft <= 11 ? 20 : 0;
+			projectile.alpha += 2;
 			if (projectile.alpha > 200) {
 				projectile.damage = 0;
+			}
+			if (projectile.alpha > 250) {
 				projectile.Kill();
 			}
 		}
@@ -60,7 +62,7 @@ namespace SOTS.Projectiles.Laser
 				{
 					break;
 				}
-				if(Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), projectile.Center, position, 8f, ref point))
+				if(Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), projectile.Center, position, 10f, ref point))
 				{
 					return true;
 				}
@@ -68,17 +70,22 @@ namespace SOTS.Projectiles.Laser
 			return false;
 			//return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), projectile.Center, endPoint, 8f, ref point);
 		}
+		
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
+			bool dust = false;
+			if(projectile.alpha < 5)
+			{
+				dust = true;
+			}
 			Player player  = Main.player[projectile.owner];
 			Vector2 endPoint = new Vector2(projectile.ai[0], projectile.ai[1]);
 			Vector2 unit = endPoint - projectile.Center;
 			float length = unit.Length();
 			unit.Normalize();
-			for (float Distance = 0; Distance <= length; Distance += 5f) {
-				Distance += Main.rand.Next(4);
+			lightColor = lightColor * ((255 - projectile.alpha) / 255f);
+			for (float Distance = 0; Distance <= length; Distance += 4f) {
 				Vector2 drawPos = projectile.Center + unit * Distance - Main.screenPosition;
-				
 				Vector2 position = projectile.Center + unit * Distance;	
 				int i = (int)(position.X / 16);
 				int j =	(int)(position.Y / 16);
@@ -87,11 +94,22 @@ namespace SOTS.Projectiles.Laser
 					Distance -= 6f;
 					break;
 				}
-				Color alpha = new Color(255, 0, 225) * ((255 - projectile.alpha) / 255f);
-				//Color alpha = ((255 - projectile.alpha) / 255f);
-				if(Distance >= 30)
+				float size = 0.4f + (projectile.timeLeft/150f);
+				if(Distance < 180)
 				{
-				spriteBatch.Draw(Main.projectileTexture[projectile.type], drawPos, null, alpha, Distance, new Vector2(4, 4), 1f, SpriteEffects.None, 0f);
+					size += (180 - Distance)/120f;
+				}
+				if(Distance >= 40)
+				{
+					spriteBatch.Draw(Main.projectileTexture[projectile.type], drawPos, null, lightColor, (float)Math.Atan2(unit.Y, unit.X), new Vector2(Main.projectileTexture[projectile.type].Width * 0.5f, Main.projectileTexture[projectile.type].Height * 0.5f), size, SpriteEffects.None, 0f);
+					Lighting.AddLight(position, (255 - projectile.alpha) * 0.3f / 255f, (255 - projectile.alpha) * 0.3f / 255f, (255 - projectile.alpha) * 0.3f / 255f);
+					if(dust)
+					{
+						int num1 = Dust.NewDust(new Vector2(position.X, position.Y), 0, 0, 72);
+						Main.dust[num1].noGravity = true;
+						Main.dust[num1].velocity *= 2.5f;
+						Main.dust[num1].scale = 2f;
+					}
 				}
 			}
 			return false;

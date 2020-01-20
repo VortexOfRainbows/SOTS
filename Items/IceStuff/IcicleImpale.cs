@@ -14,7 +14,7 @@ namespace SOTS.Items.IceStuff
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Icicle Impale");
-			Tooltip.SetDefault("Launches large icicles\nRegenerates void upon hit");
+			Tooltip.SetDefault("Launches large icicles\nRegenerates tiny amount of void upon hit");
 		}
 		public override void SafeSetDefaults()
 		{

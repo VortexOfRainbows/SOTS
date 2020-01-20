@@ -11,7 +11,7 @@ namespace SOTS.Items.GelGear
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Worm Wood Staff");
+			DisplayName.SetDefault("Wormwood Staff");
 			Tooltip.SetDefault("Fires a burst of 4 wavy pink projectiles");
 		}
 		public override void SetDefaults()
@@ -50,10 +50,8 @@ namespace SOTS.Items.GelGear
 		{
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(null, "WormWoodCore", 1);
-			recipe.AddIngredient(null, "SlimeyFeather", 4);
-			recipe.AddIngredient(null, "GelBar", 6);
-			recipe.AddIngredient(ItemID.Wood, 8);
-			recipe.AddIngredient(ItemID.PinkGel, 30);
+			recipe.AddIngredient(null, "Wormwood", 16);
+			recipe.AddIngredient(ItemID.PinkGel, 32);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this);
 			recipe.AddRecipe();

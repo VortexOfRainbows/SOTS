@@ -75,10 +75,9 @@ namespace SOTS.NPCs
 			} 
 			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, (ItemID.Gel), Main.rand.Next(3) + 1);
 			
-			if(Main.rand.Next(3) == 0)
+			if(Main.rand.Next(5) == 0)
 			{
-			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("SlimeyFeather"), Main.rand.Next(3) + 1);	
-			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, (ItemID.Feather), Main.rand.Next(3) + 1);	
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, (ItemID.Feather), Main.rand.Next(2) + 1);	
 			}
 		}	
 	}

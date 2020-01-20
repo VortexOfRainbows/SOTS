@@ -12,7 +12,7 @@ namespace SOTS.Items.IceStuff
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Pearlescent Core");
-			Tooltip.SetDefault("Every 8th magic attack launches an additional laser projectile that does massive damage\nSome weapons won't trigger the effect\nIncreases max summons by 1\nWorks while in the inventory\nDecreases void regen by 3.25\n'The core of the artificial horror'");
+			Tooltip.SetDefault("Every 6th magic attack launches an additional laser projectile\nSome weapons won't trigger the effect\nIncreases max summons by 1\nWorks while in the inventory\nDecreases void regen by 3.25\n'The core of the artificial horror'");
 		}
 		public override void SetDefaults()
 		{

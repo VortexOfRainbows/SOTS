@@ -14,7 +14,7 @@ namespace SOTS.Items
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Irradiated Chain-Reactor");
-			Tooltip.SetDefault("Charge to increase damage up to 900%\nAttack range scales with charge");
+			Tooltip.SetDefault("Charge to increase damage up to 900%");
 		}
 		public override void SafeSetDefaults()
 		{

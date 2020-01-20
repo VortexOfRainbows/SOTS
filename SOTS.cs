@@ -86,13 +86,8 @@ namespace SOTS
 	public override void AddRecipes()
 		{
 			
-			ModRecipe recipe = new ModRecipe(this);
-			recipe.AddIngredient(null, "SandFish", 1);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.SetResult(ItemID.SandBlock, 25);
-			recipe.AddRecipe();
 			
-			recipe = new ModRecipe(this);
+			ModRecipe recipe = new ModRecipe(this);
 			recipe.AddIngredient(null, "GelBar", 10);
 			recipe.AddIngredient(null, "SlimeyFeather", 8);
 			recipe.AddTile(TileID.Anvils);
@@ -100,52 +95,10 @@ namespace SOTS
 			recipe.AddRecipe();
 			
 			recipe = new ModRecipe(this);
-			recipe.AddIngredient(null, "HiveFish", 1);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.SetResult(ItemID.Hive, 50);
-			recipe.AddRecipe();
-			
-			recipe = new ModRecipe(this);
 			recipe.AddIngredient(ItemID.Gel, 5);
 			recipe.AddTile(TileID.Solidifier);
 			recipe.SetResult(null, "GelBar", 2);
 			recipe.AddRecipe();
-			
-			recipe = new ModRecipe(this);
-			recipe.AddIngredient(null, "JewelFish", 1);
-			recipe.SetResult(ItemID.Amethyst, 10);
-			recipe.AddRecipe();
-			recipe.needLava = true;
-			
-			recipe = new ModRecipe(this);
-			recipe.AddIngredient(null, "JewelFish", 1);
-			recipe.SetResult(ItemID.Topaz, 10);
-			recipe.AddRecipe();
-			recipe.needLava = true;
-			
-			recipe = new ModRecipe(this);
-			recipe.AddIngredient(null, "JewelFish", 1);
-			recipe.SetResult(ItemID.Sapphire, 10);
-			recipe.AddRecipe();
-			recipe.needLava = true;
-			
-			recipe = new ModRecipe(this);
-			recipe.AddIngredient(null, "JewelFish", 1);
-			recipe.SetResult(ItemID.Emerald, 10);
-			recipe.AddRecipe();
-			recipe.needLava = true;
-			
-			recipe = new ModRecipe(this);
-			recipe.AddIngredient(null, "JewelFish", 1);
-			recipe.SetResult(ItemID.Ruby, 10);
-			recipe.AddRecipe();
-			recipe.needLava = true;
-			
-			recipe = new ModRecipe(this);
-			recipe.AddIngredient(null, "JewelFish", 1);
-			recipe.SetResult(ItemID.Diamond, 10);
-			recipe.AddRecipe();
-			recipe.needLava = true;
 			
 			//just in case temple gets cucked
 			recipe = new ModRecipe(this);
@@ -179,9 +132,17 @@ namespace SOTS
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.SetResult(1326, 1); //rod of discord
 			recipe.AddRecipe();
+			
+			recipe = new ModRecipe(this);
+			recipe.AddIngredient(null, "FragmentOfNature", 25);
+			recipe.AddIngredient(ItemID.HermesBoots, 1);
+			recipe.AddTile(TileID.Anvils);
+			recipe.SetResult(ItemID.FlowerBoots, 1);
+			recipe.AddRecipe();
 		}
 		public override void UpdateMusic(ref int music, ref MusicPriority priority)
         {
+			/*
             if (Main.myPlayer != -1 && !Main.gameMenu)
             {
                 if(Main.player[Main.myPlayer].active && Main.player[Main.myPlayer].GetModPlayer<SOTSPlayer>().PlanetariumBiome) //this makes the music play only in Custom Biome
@@ -191,6 +152,7 @@ namespace SOTS
 				
                 } 
             }
+			
 			if (Main.myPlayer != -1 && !Main.gameMenu)
             {
                 if(Main.player[Main.myPlayer].active && Main.player[Main.myPlayer].GetModPlayer<SOTSPlayer>().GeodeBiome) 
@@ -200,6 +162,7 @@ namespace SOTS
 				
                 } 
             }
+			*/
 			if (Main.myPlayer != -1 && !Main.gameMenu)
             {
                 if(Main.player[Main.myPlayer].active && Main.player[Main.myPlayer].GetModPlayer<SOTSPlayer>().PyramidBiome)

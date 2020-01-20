@@ -24,8 +24,6 @@ namespace SOTS.Items.SpecialDrops
 			item.useStyle = 1;
 			item.autoReuse = true;
 			item.createTile = mod.TileType("GeodeCrateTile");
-
-			
 		}
 		public override bool CanRightClick()
 		{
@@ -33,20 +31,20 @@ namespace SOTS.Items.SpecialDrops
 		}
 		public override void RightClick(Player player)
 		{
-			int randomItem = Main.rand.Next(7);
+			int randomItem = Main.rand.Next(3);
 			if(randomItem == 0)
 			{
-			player.QuickSpawnItem(mod.ItemType("LuckyPurpleBalloon"),1);
+				player.QuickSpawnItem(mod.ItemType("LuckyPurpleBalloon"),1);
 			}
 			else if(randomItem == 1)
 			{
 				if(Main.rand.Next(2) == 0 && NPC.downedBoss3)
 				{
-				player.QuickSpawnItem(ItemID.ObsidianShield,1);
+					player.QuickSpawnItem(ItemID.ObsidianShield,1);
 				}
 				else
 				{
-				player.QuickSpawnItem(ItemID.ObsidianHorseshoe,1);
+					player.QuickSpawnItem(ItemID.ObsidianHorseshoe,1);
 				}
 			}
 			else if(randomItem == 2)
@@ -65,16 +63,6 @@ namespace SOTS.Items.SpecialDrops
 			
 			if(Main.rand.Next(3) == 1)
 				player.QuickSpawnItem(ItemID.GoldCoin,Main.rand.Next(1,8));
-			
-			if(Main.rand.Next(3) == 1)
-			{
-				player.QuickSpawnItem(mod.ItemType("IceCream"),Main.rand.Next(6,12));
-			}
-			else
-			{
-				player.QuickSpawnItem(mod.ItemType("IceCreamOre"),Main.rand.Next(12,24));
-			}
-			
 			
 			if(Main.rand.Next(37) == 1)
 			{
@@ -100,8 +88,6 @@ namespace SOTS.Items.SpecialDrops
 				player.QuickSpawnItem(mod.ItemType("LavaPelter"),1);
 				}
 			}
-			
-			
 			if(Main.rand.Next(79) == 1)
 			{
 				player.QuickSpawnItem(mod.ItemType("CaveIn"),1);
@@ -110,8 +96,6 @@ namespace SOTS.Items.SpecialDrops
 			{
 				player.QuickSpawnItem(mod.ItemType("Grenadier"),1);
 			}
-			
-			
 			if(Main.rand.Next(100) == 1)
 			{
 				player.QuickSpawnItem(mod.ItemType("ShieldofDesecar"),1);
@@ -120,8 +104,6 @@ namespace SOTS.Items.SpecialDrops
 			{
 				player.QuickSpawnItem(mod.ItemType("ShieldofStekpla"),1);
 			}
-			
-			
 		}
 		public override void SetStaticDefaults()
 		{

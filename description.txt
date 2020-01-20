@@ -1,5 +1,5 @@
 A mod which has nothing to do with secrets or shadows... yet
-NOTICE: This mod is not optimized for multiplayer, feel free to give it a try, but bugs, mainly visual ones, might occur.
+NOTICE: This mod is not optimized for multiplayer, feel free to give it a try, but bugs might occur.
 !! This mod is very early in development !!
 
 Bosses -> Currently 5, Mostly bullet hells
@@ -11,9 +11,8 @@ New Subclass (void)
 Pyramid Dungeon World Gen
 -Unique boss and items
 
-Lead Developer, Artist, and Playtesting - Vortex#6230
-Minor Developer - FlameFreezer
-Playtesting - Crimsonkeep
+Developer, Artist, and Playtesting - Vortex#6230 (Discord)
+Playtesting - Crimsonkeep, FlameFreezer
 
 Update 0.18 The Purge
 -Reworked or Removed almost every old item, some will be rebalanced and added back later (400+ items removed lmao)
@@ -22,7 +21,6 @@ Update 0.18 The Purge
 -Added pyramid biome
 -Replaced certain bosses
 -Void rebalanced, it should now be more forgiving
---Overpowered items have been nerfed, while void items recieve general consistency changes
 -Fixed bugs and crafting recipe issues
 -More to come in future updates!
 

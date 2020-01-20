@@ -14,13 +14,11 @@ namespace SOTS.Projectiles
     public class WormBullet : ModProjectile 
     {	int worm = 0;
 		int wait = 1;         
-				float oldVelocityY = 0;	
-				float oldVelocityX = 0;
-		
-		
+		float oldVelocityY = 0;	
+		float oldVelocityX = 0;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Pinky Worm");
+			DisplayName.SetDefault("Wormwood Bullet");
 			
 		}
 		
@@ -35,8 +33,15 @@ namespace SOTS.Projectiles
 			projectile.timeLeft = 18000;
 			projectile.tileCollide = true;
 			projectile.hostile = false;
-			projectile.magic = false;
-			projectile.ranged = false;
+			projectile.magic = true;
+		}
+		public override void Kill(int timeLeft)
+		{
+			for(int i = 0; i < 20; i++)
+			{
+				int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 72);
+				Main.dust[num1].noGravity = true;
+			}
 		}
 		public override void AI()
 		{
