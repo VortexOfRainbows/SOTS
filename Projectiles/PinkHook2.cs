@@ -8,7 +8,7 @@ using Terraria.ModLoader;
 namespace SOTS.Projectiles
 {
     public class PinkHook2 : ModProjectile
-    {	int enemyIndex = 0;
+    {	int enemyIndex = -1;
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Wormwood Hook");
@@ -67,14 +67,18 @@ namespace SOTS.Projectiles
 			Player player = Main.player[projectile.owner];
 			projectile.rotation = (float)Math.Atan2((double)projectile.Center.Y - player.Center.Y, (double)projectile.Center.X - player.Center.X) + MathHelper.ToRadians(45);
 			projectile.spriteDirection = 1;
+			if(enemyIndex == -1)
+			{
+				return;
+			}
+			NPC target = Main.npc[enemyIndex];
 			if(projectile.ai[0] == -1)
 			{
 				if(Main.myPlayer == projectile.owner)
 				{
-					NPC target = Main.npc[enemyIndex];
 					if(target.active)
 					{
-						projectile.timeLeft = 6;
+						projectile.timeLeft = 12;
 						projectile.position.X = target.Center.X + (projectile.position.X - projectile.Center.X);
 						projectile.position.Y = target.Center.Y - (projectile.Center.Y - projectile.position.Y);
 					}
@@ -102,7 +106,7 @@ namespace SOTS.Projectiles
         {
 			Player owner = Main.player[projectile.owner];
             target.immune[projectile.owner] = 0;
-			projectile.timeLeft = 6;
+			projectile.timeLeft = 12;
 			projectile.friendly = false;
 			enemyIndex = target.whoAmI;
 			projectile.ai[0] = -1;

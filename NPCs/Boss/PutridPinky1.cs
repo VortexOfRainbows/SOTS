@@ -19,7 +19,7 @@ namespace SOTS.NPCs.Boss
 		{
 			
             npc.aiStyle = 14;  //5 is the flying AI
-            npc.lifeMax = 500;   //boss life
+            npc.lifeMax = 400;   //boss life
             npc.damage = 30;  //boss damage
             npc.defense = 0;    //boss defense
             npc.knockBackResist = 0f;
@@ -42,28 +42,22 @@ namespace SOTS.NPCs.Boss
 		}
 		public override void NPCLoot()
 		{
-			
-				for(int i = 0; i < 6; i++)
-				{
-					NPC.NewNPC((int)npc.Center.X + Main.rand.Next(-40,41), (int)npc.Center.Y + Main.rand.Next(-40,41), NPCID.Pinky);
-				}				
-					NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, mod.NPCType("PutridPinkyPhase2"));	
-					Projectile.NewProjectile((int)npc.Center.X, (int)npc.Center.Y, 0, 0, mod.ProjectileType("PinkExplosion"), 30, 0, 0);
-					NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, mod.NPCType("PutridPinkyEye"));	
+			for(int i = 0; i < 2; i++)
+			{
+				NPC.NewNPC((int)npc.Center.X + Main.rand.Next(-40,41), (int)npc.Center.Y + Main.rand.Next(-40,41), NPCID.Pinky);
+			}				
+			NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, mod.NPCType("PutridPinkyPhase2"));	
 		}
 		public override void AI()
 		{	
 			if(npc.life < 250)
 			{
-			
-				for(int i = 0; i < 6; i++)
+				for(int i = 0; i < 2; i++)
 				{
 					NPC.NewNPC((int)npc.Center.X + Main.rand.Next(-40,41), (int)npc.Center.Y + Main.rand.Next(-40,41), NPCID.Pinky);
 				}				
-					NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, mod.NPCType("PutridPinkyPhase2"));	
-					Projectile.NewProjectile((int)npc.Center.X, (int)npc.Center.Y, 0, 0, mod.ProjectileType("PinkExplosion"), 30, 0, 0);
-					NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, mod.NPCType("PutridPinkyEye"));	
-					npc.active = false;
+				NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, mod.NPCType("PutridPinkyPhase2"));	
+				npc.active = false;
 			}
 			npc.timeLeft = 600;
 			if(Main.player[npc.target].dead)

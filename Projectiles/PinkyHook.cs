@@ -22,22 +22,19 @@ namespace SOTS.Projectiles
 			projectile.penetrate = -1;
 			projectile.timeLeft = 1000000;
 			projectile.friendly = true;
+			projectile.melee = true;
         } 
-		public override bool? CanUseGrapple(Player player)
-        {
-            return true;
-        }
         public override bool? SingleGrappleHook(Player player)
         {
 			return true;
         }   
 		public override float GrappleRange()
         {
-            return 420f;
+            return 480f; //30 distance
         }
 		public override void GrappleRetreatSpeed(Player player, ref float speed)
         {
-            speed = 20f;
+            speed = 24f;
         }
         public override void PostDraw(Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch, Color lightColor)
         {
@@ -79,15 +76,5 @@ namespace SOTS.Projectiles
 			projectile.rotation -= MathHelper.ToRadians(45);
 			projectile.spriteDirection = 1;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
-        {
-			Player owner = Main.player[projectile.owner];
-            target.immune[projectile.owner] = 0;
-			if(Main.myPlayer == projectile.owner)
-			{
-				Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("PinkHook2"), projectile.damage, 0, owner.whoAmI);
-			}
-			projectile.Kill();
-        }
     }
 }

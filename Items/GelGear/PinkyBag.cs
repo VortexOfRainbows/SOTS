@@ -34,6 +34,7 @@ namespace SOTS.Items.GelGear
 			player.QuickSpawnItem(mod.ItemType("PinkyCore"));
 			player.QuickSpawnItem(mod.ItemType("WormWoodCore"));
 			player.QuickSpawnItem(ItemID.PinkGel,Main.rand.Next(40, 100));
+			player.QuickSpawnItem(mod.ItemType("Wormwood"),Main.rand.Next(40, 100));
 				
 			if(Main.rand.Next(12) == 0)
 			player.QuickSpawnItem(mod.ItemType("GelWings"));

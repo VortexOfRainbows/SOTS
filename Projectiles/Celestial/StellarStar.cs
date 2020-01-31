@@ -98,36 +98,44 @@ namespace SOTS.Projectiles.Celestial
 				projectile.alpha += 7;
 				projectile.velocity *= 0.945f;
 			}
+			if(projectile.ai[0] == 1)
+			{
+				Main.PlaySound(SoundID.Item9, (int)(projectile.Center.X), (int)(projectile.Center.Y));
+				projectile.ai[0] = 0;
+				int color = Main.rand.Next(2);
+				float size = 120f;
+				float starPosX = projectile.Center.X - size/2f;
+				float starPosY = projectile.Center.Y - size/6f;
+				for(int i = 0; i < 5; i ++)
+				{
+					float rads = MathHelper.ToRadians(144 * i);
+					for(float j = 0; j < size; j += 8f)
+					{
+						int num1 = Dust.NewDust(new Vector2(starPosX, starPosY), 0, 0, color % 2 == 0 ? 88 : 21);
+						Main.dust[num1].noGravity = true;
+						Main.dust[num1].velocity *= 0.1f;
+						
+						Vector2 rotationDirection = new Vector2(8f, 0).RotatedBy(rads);
+						starPosX += rotationDirection.X;
+						starPosY += rotationDirection.Y;
+					}
+				}
+				projectile.timeLeft = 40;
+			}
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
 			Player player = Main.player[projectile.owner];
             target.immune[projectile.owner] = 11 - (int)(projectile.ai[1] * 5);
+			projectile.ai[0] = 1;
 			projectile.velocity *= 0.8f;
-			float size = 120f;
-			float starPosX = projectile.Center.X - size/2f;
-			float starPosY = projectile.Center.Y - size/6f;
-			for(int i = 0; i < 5; i ++)
-			{
-				float rads = MathHelper.ToRadians(144 * i);
-				for(float j = 0; j < size; j += 8f)
-				{
-					int num1 = Dust.NewDust(new Vector2(starPosX, starPosY), 0, 0, projectile.timeLeft % 2 == 0 ? 88 : 21);
-					Main.dust[num1].noGravity = true;
-					Main.dust[num1].velocity *= 0.1f;
-					
-					Vector2 rotationDirection = new Vector2(8f, 0).RotatedBy(rads);
-					starPosX += rotationDirection.X;
-					starPosY += rotationDirection.Y;
-				}
-			}
 			
 			if(projectile.owner == Main.myPlayer)
 			Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("StellarHitbox"), projectile.damage, projectile.knockBack * 1.5f, player.whoAmI, projectile.ai[1]);
 		
-            Main.PlaySound(SoundID.Item9, (int)(projectile.Center.X), (int)(projectile.Center.Y));
 			projectile.timeLeft = 40;
 			projectile.friendly = false;
+			projectile.netUpdate = true;
 		}
 		public override void Kill(int timeLeft)
 		{

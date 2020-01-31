@@ -14,12 +14,12 @@ namespace SOTS.Items.SpecialDrops
 		{
 			item.width = 34;
 			item.height = 34;
-			item.value = 250000;
-			item.rare = 2;
+			item.value = 0;
+			item.rare = 1;
 			item.maxStack = 99;
 			item.consumable = true;
-			item.useTime = 10;
 			item.useAnimation = 15;
+			item.useTime = 10;
 			item.placeStyle = 0;
 			item.useStyle = 1;
 			item.autoReuse = true;

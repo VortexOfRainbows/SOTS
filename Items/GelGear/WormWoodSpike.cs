@@ -13,7 +13,7 @@ namespace SOTS.Items.GelGear
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Worm Wood Spike");
+			DisplayName.SetDefault("Wormwood Spike");
 			Tooltip.SetDefault("Enemies get stuck on it");
 		}
         public override void SetDefaults()

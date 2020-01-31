@@ -41,6 +41,7 @@ namespace SOTS.Projectiles
 			writer.Write(projectile.spriteDirection);
 			writer.Write(damageCounter);
 			writer.Write(latch);
+			writer.Write(projectile.frame);
 			writer.Write(enemyIndex);
 			writer.Write(diffPosX);
 			writer.Write(diffPosY);
@@ -51,6 +52,7 @@ namespace SOTS.Projectiles
 			projectile.spriteDirection = reader.ReadInt32();
 			damageCounter = reader.ReadInt32();
 			latch = reader.ReadBoolean();
+			projectile.frame = reader.ReadInt32();
 			enemyIndex = reader.ReadInt32();
 			diffPosX = reader.ReadSingle();
 			diffPosY = reader.ReadSingle();
@@ -185,13 +187,13 @@ namespace SOTS.Projectiles
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{
-				projectile.damage = (int)(projectile.damage * projectile.ai[1]);
-				enemyIndex = -1;
-				projectile.aiStyle = 0;
-				latch = true;
-				projectile.friendly = false;
-				projectile.velocity *= 0.3f;
-				projectile.tileCollide = false;
+			projectile.damage = (int)(projectile.damage * projectile.ai[1]);
+			enemyIndex = -1;
+			projectile.aiStyle = 0;
+			latch = true;
+			projectile.friendly = false;
+			projectile.velocity *= 0.3f;
+			projectile.tileCollide = false;
 			return false;
 		}
 		public override void Kill(int timeLeft)

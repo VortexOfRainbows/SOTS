@@ -43,6 +43,7 @@ namespace SOTS.Projectiles.Celestial
 			writer.Write(projectile.spriteDirection);
 			writer.Write(damageCounter);
 			writer.Write(latch);
+			writer.Write(projectile.friendly);
 			writer.Write(enemyIndex);
 			writer.Write(diffPosX);
 			writer.Write(diffPosY);
@@ -53,6 +54,7 @@ namespace SOTS.Projectiles.Celestial
 			projectile.spriteDirection = reader.ReadInt32();
 			damageCounter = reader.ReadInt32();
 			latch = reader.ReadBoolean();
+			projectile.friendly = reader.ReadBoolean();
 			enemyIndex = reader.ReadInt32();
 			diffPosX = reader.ReadSingle();
 			diffPosY = reader.ReadSingle();
@@ -139,13 +141,12 @@ namespace SOTS.Projectiles.Celestial
 					NPC toHit = Main.npc[target2];
 						if(toHit.active == true)
 						{
-							
-						dX = toHit.Center.X - projectile.Center.X;
-						dY = toHit.Center.Y - projectile.Center.Y;
-						distance = (float)Math.Sqrt((double)(dX * dX + dY * dY));
-						speed /= distance;
-						projectile.velocity *= 0.935f;
-						projectile.velocity += new Vector2(dX * speed, dY * speed);
+							dX = toHit.Center.X - projectile.Center.X;
+							dY = toHit.Center.Y - projectile.Center.Y;
+							distance = (float)Math.Sqrt((double)(dX * dX + dY * dY));
+							speed /= distance;
+							projectile.velocity *= 0.935f;
+							projectile.velocity += new Vector2(dX * speed, dY * speed);
 						}
 					}
 				}
@@ -157,6 +158,14 @@ namespace SOTS.Projectiles.Celestial
 				{
 					damageCounter = 0;
 					projectile.friendly = true;
+					for(int i = 0; i < 360; i += 15)
+					{
+						Vector2 circularLocation = new Vector2(-30, 0).RotatedBy(MathHelper.ToRadians(i));
+						
+						int num1 = Dust.NewDust(new Vector2(projectile.Center.X + circularLocation.X - 4, projectile.Center.Y + circularLocation.Y - 4), 4, 4, 21);
+						Main.dust[num1].noGravity = true;
+						Main.dust[num1].velocity = circularLocation * -0.15f;
+					}
 				}
 			}
 			if(projectile.damage <= 8)
@@ -177,7 +186,6 @@ namespace SOTS.Projectiles.Celestial
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-			
 			Player player = Main.player[projectile.owner];
 			projectile.friendly = false;
             target.immune[projectile.owner] = 0;
@@ -212,15 +220,8 @@ namespace SOTS.Projectiles.Celestial
 					projectile.tileCollide = true;
 					projectile.friendly = true;
 			}
-			for(int i = 0; i < 360; i += 15)
-			{
-				Vector2 circularLocation = new Vector2(-30, 0).RotatedBy(MathHelper.ToRadians(i));
-				
-				int num1 = Dust.NewDust(new Vector2(target.Center.X + circularLocation.X - 4, target.Center.Y + circularLocation.Y - 4), 4, 4, 21);
-				Main.dust[num1].noGravity = true;
-				Main.dust[num1].velocity = circularLocation * -0.15f;
-			}
 			projectile.velocity *= 0.45f;
+			projectile.netUpdate = true;
         }
 		public override void Kill(int timeLeft)
         {

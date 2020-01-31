@@ -34,7 +34,7 @@ namespace SOTS.Projectiles.Laser
 		{
 			//projectile.Center = npc.Center;
 			projectile.alpha += 2;
-			if (projectile.alpha > 200) {
+			if (projectile.alpha > 180) {
 				projectile.damage = 0;
 			}
 			if (projectile.alpha > 250) {

@@ -30,6 +30,7 @@ namespace SOTS.NPCs.Boss
 			set => npc.ai[3] = value;
 		}
 		
+		private int storeDamage = -1;
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Putrid Hook");
@@ -38,9 +39,9 @@ namespace SOTS.NPCs.Boss
 		{
 			
             npc.aiStyle = -1; 
-            npc.lifeMax = 350;   
+            npc.lifeMax = 225;   
             npc.damage = 40; 
-            npc.defense = 10;  
+            npc.defense = 8;  
             npc.knockBackResist = 0f;
             npc.width = 68;
             npc.height = 68;
@@ -70,6 +71,7 @@ namespace SOTS.NPCs.Boss
 			shootToX *= distance * 5;
 			shootToY *= distance * 5;
 			
+			drawColor = npc.GetAlpha(drawColor);
 			drawPos.X += shootToX;
 			drawPos.Y += -1 + shootToY + (texture.Height * 0.5f);
 			if(npc.scale == 1)
@@ -92,11 +94,28 @@ namespace SOTS.NPCs.Boss
 				}
 			}
 		}
+		public override void NPCLoot()
+		{
+			if(Main.netMode != 1)
+			{
+				int num1 = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, mod.NPCType("HookTurret"));	
+				NPC newNpc = Main.npc[num1];
+				newNpc.ai[0] = npc.ai[0];
+				newNpc.ai[1] = npc.ai[1];
+				newNpc.ai[2] = npc.ai[2];
+				newNpc.ai[3] = npc.ai[3];
+				npc.netUpdate = true;
+			}
+		}
 		public override void AI()
 		{	
 			Lighting.AddLight(npc.Center, (255 - npc.alpha) * 1f / 155f, (255 - npc.alpha) * 1f / 155f, (255 - npc.alpha) * 1f / 155f);
 			npc.rotation += 0.21f;
 			int pIndex = -1;
+			if(storeDamage == -1)
+			{
+				storeDamage = npc.damage;
+			}
 			for(int i = 0; i < 200; i++)
 			{
 				NPC npc1 = Main.npc[i];
@@ -123,6 +142,18 @@ namespace SOTS.NPCs.Boss
 			Vector2 rotationArea = new Vector2(rotationDistance, 0).RotatedBy(MathHelper.ToRadians(rotationAmt + (hookID * 30)));
 			rotationArea += putridPinky.Center;
 			npc.position = rotationArea - new Vector2(npc.width/2, npc.height/2);
+			
+			npc.alpha = putridPinky.alpha;
+			npc.dontTakeDamage = false;
+			if(npc.alpha > 0)
+			{
+				npc.dontTakeDamage = true;
+				npc.damage = 0;
+			}
+			else
+			{
+				npc.damage = storeDamage;
+			}
 		}
 	}
 }

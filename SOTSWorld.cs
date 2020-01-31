@@ -1706,614 +1706,570 @@ namespace SOTS
 						
 						
 						
-						float counterRoom = 0;
-						float counterLeft = 0;
-						float counterRight = 0;
-						float counterUp = 0;
-						float counterDown = 0;
-						
-						for(int findTileX = 100; findTileX < Main.maxTilesX - 100; findTileX++)
+				float counterRoom = 0;
+				float counterLeft = 0;
+				float counterRight = 0;
+				float counterUp = 0;
+				float counterDown = 0;
+				for(int findTileX = 100; findTileX < Main.maxTilesX - 100; findTileX++)
+				{
+					for(int findTileY = Main.maxTilesY - 100; findTileY > pyramidY + 30; findTileY--)
+					{
+						Tile tile = Framing.GetTileSafely(findTileX, findTileY);
+						if(tile.active() && tile.wall == (ushort)mod.WallType("PyramidWallTile") && findTileY > pyramidY + 70 && findTileY < pyramidY + (size - 70) && tile.type == (ushort)mod.TileType("PyramidSlabTile")) //generate indicator blocks
 						{
-							for(int findTileY = Main.maxTilesY - 100; findTileY > pyramidY + 30; findTileY--)
+							if(Main.maxTilesX > 8000)
 							{
-								Tile tile = Framing.GetTileSafely(findTileX, findTileY);
-								if(tile.active() && tile.wall == (ushort)mod.WallType("PyramidWallTile") && findTileY > pyramidY + 70 && findTileY < pyramidY + (size - 70) && tile.type == (ushort)mod.TileType("PyramidSlabTile")) //generate indicator blocks
+								counterRoom += 3;
+								counterLeft += 3;
+								counterRight += 3;
+								counterUp += 3;
+								counterDown += 3;
+							}
+							else if(Main.maxTilesX > 6000)
+							{
+								counterRoom += 4f;
+								counterLeft += 4f;
+								counterRight += 4f;
+								counterUp += 4f;
+								counterDown += 4f;
+							}
+							else if(Main.maxTilesX > 4000)
+							{
+								counterRoom += 4;
+								counterLeft += 4;
+								counterRight += 4;
+								counterUp += 4;
+								counterDown += 4;
+							}
+							if(counterRoom >= 200)
+							{
+								counterRoom = 0;
+								bool canBeLeft = false;
+								bool canBeRight = false;
+								bool canBeUp = false;
+								bool canBeDown = false;
+								int tilesLeft = 0;
+								int tilesRight = 0;
+								int tilesUp = 0;
+								int tilesDown = 0;
+								int squareCount = 0;
+								for(int checkLeft = 0; checkLeft < 80; checkLeft++)
 								{
-									
-									if(Main.maxTilesX > 8000)
+									Tile tileCheck = Framing.GetTileSafely(findTileX - checkLeft, findTileY);
+									if(tileCheck.active() == false && tileCheck.wall == (ushort)mod.WallType("PyramidWallTile"))
 									{
-										counterRoom += 3;
-										counterLeft += 3;
-										counterRight += 3;
-										counterUp += 3;
-										counterDown += 3;
+										tilesLeft = checkLeft;
+										break;
 									}
-									else if(Main.maxTilesX > 6000)
+									if(tileCheck.active() == true && tileCheck.wall == (ushort)mod.WallType("PyramidWallTile") && tileCheck.type == 151)
 									{
-										counterRoom += 4f;
-										counterLeft += 4f;
-										counterRight += 4f;
-										counterUp += 4f;
-										counterDown += 4f;
+										tilesLeft = -1;
+										break;
 									}
-									else if(Main.maxTilesX > 4000)
+								}
+								for(int checkRight = 0; checkRight < 80; checkRight++)
+								{
+									Tile tileCheck = Framing.GetTileSafely(findTileX + checkRight, findTileY);
+									if(tileCheck.active() == false && tileCheck.wall == (ushort)mod.WallType("PyramidWallTile"))
 									{
-										counterRoom += 4;
-										counterLeft += 4;
-										counterRight += 4;
-										counterUp += 4;
-										counterDown += 4;
+										tilesRight = checkRight;
+										break;
 									}
-									
-									
-									 
-									if(counterRoom >= 200)
+									if(tileCheck.active() == true && tileCheck.wall == (ushort)mod.WallType("PyramidWallTile") && tileCheck.type == 151)
 									{
-										counterRoom = 0;
-										bool canBeLeft = false;
-										bool canBeRight = false;
-										bool canBeUp = false;
-										bool canBeDown = false;
-										int tilesLeft = 0;
-										int tilesRight = 0;
-										int tilesUp = 0;
-										int tilesDown = 0;
-										int squareCount = 0;
-										for(int checkLeft = 0; checkLeft < 80; checkLeft++)
+										tilesRight = -1;
+										break;
+									}
+								}
+								for(int checkUp = 0; checkUp < 80; checkUp++)
+								{
+									Tile tileCheck = Framing.GetTileSafely(findTileX, findTileY - checkUp);
+									if(tileCheck.active() == false && tileCheck.wall == (ushort)mod.WallType("PyramidWallTile"))
+									{
+										tilesUp = checkUp;
+										break;
+									}
+									if(tileCheck.active() == true && tileCheck.wall == (ushort)mod.WallType("PyramidWallTile") && tileCheck.type == 151)
+									{
+										tilesUp = -1;
+										break;
+									}
+								}
+								for(int checkDown = 0; checkDown < 80; checkDown++)
+								{
+									Tile tileCheck = Framing.GetTileSafely(findTileX, findTileY + checkDown);
+									if(tileCheck.active() == false && tileCheck.wall == (ushort)mod.WallType("PyramidWallTile"))
+									{
+										tilesDown = checkDown;
+										break;
+									}
+									if(tileCheck.active() == true && tileCheck.wall == (ushort)mod.WallType("PyramidWallTile") && tileCheck.type == 151)
+									{
+										tilesDown = -1;
+										break;
+									}
+								}
+								for(int checkSquareX = -12; checkSquareX <= 12; checkSquareX++)
+								{
+									for(int checkSquareY = -12; checkSquareY <= 12; checkSquareY++)
+									{
+										Tile tileCheck = Framing.GetTileSafely(findTileX + checkSquareX, findTileY + checkSquareY);
+										if(tileCheck.type == (ushort)mod.TileType("PyramidSlabTile") && tileCheck.active() && tileCheck.wall == (ushort)mod.WallType("PyramidWallTile"))
 										{
-											Tile tileCheck = Framing.GetTileSafely(findTileX - checkLeft, findTileY);
-											if(tileCheck.active() == false && tileCheck.wall == (ushort)mod.WallType("PyramidWallTile"))
-											{
-												tilesLeft = checkLeft;
-												break;
-											}
-											if(tileCheck.active() == true && tileCheck.wall == (ushort)mod.WallType("PyramidWallTile") && tileCheck.type == 151)
-											{
-												tilesLeft = -1;
-												break;
-											}
-										}
-										for(int checkRight = 0; checkRight < 80; checkRight++)
-										{
-											Tile tileCheck = Framing.GetTileSafely(findTileX + checkRight, findTileY);
-											if(tileCheck.active() == false && tileCheck.wall == (ushort)mod.WallType("PyramidWallTile"))
-											{
-												tilesRight = checkRight;
-												break;
-											}
-											if(tileCheck.active() == true && tileCheck.wall == (ushort)mod.WallType("PyramidWallTile") && tileCheck.type == 151)
-											{
-												tilesRight = -1;
-												break;
-											}
-										}
-										for(int checkUp = 0; checkUp < 80; checkUp++)
-										{
-											Tile tileCheck = Framing.GetTileSafely(findTileX, findTileY - checkUp);
-											if(tileCheck.active() == false && tileCheck.wall == (ushort)mod.WallType("PyramidWallTile"))
-											{
-												tilesUp = checkUp;
-												break;
-											}
-											if(tileCheck.active() == true && tileCheck.wall == (ushort)mod.WallType("PyramidWallTile") && tileCheck.type == 151)
-											{
-												tilesUp = -1;
-												break;
-											}
-										}
-										for(int checkDown = 0; checkDown < 80; checkDown++)
-										{
-											Tile tileCheck = Framing.GetTileSafely(findTileX, findTileY + checkDown);
-											if(tileCheck.active() == false && tileCheck.wall == (ushort)mod.WallType("PyramidWallTile"))
-											{
-												tilesDown = checkDown;
-												break;
-											}
-											if(tileCheck.active() == true && tileCheck.wall == (ushort)mod.WallType("PyramidWallTile") && tileCheck.type == 151)
-											{
-												tilesDown = -1;
-												break;
-											}
-										}
-										for(int checkSquareX = -12; checkSquareX <= 12; checkSquareX++)
-										{
-											for(int checkSquareY = -12; checkSquareY <= 12; checkSquareY++)
-											{
-												Tile tileCheck = Framing.GetTileSafely(findTileX + checkSquareX, findTileY + checkSquareY);
-												if(tileCheck.type == (ushort)mod.TileType("PyramidSlabTile") && tileCheck.active() && tileCheck.wall == (ushort)mod.WallType("PyramidWallTile"))
-												{
-													squareCount++;
-													
-												}
-											}
-										}
-										
-										if(squareCount >= 625 && tilesDown >= 0 && tilesUp >= 0 && tilesLeft >= 0 && tilesRight >= 0)
-										{
-											if(tilesDown > tilesRight && tilesDown > tilesUp && tilesDown > tilesLeft)
-											{
-												canBeDown = true;
-											}
-											if(tilesRight > tilesDown && tilesRight > tilesUp && tilesRight > tilesLeft)
-											{
-												canBeRight = true;
-											}
-											if(tilesLeft > tilesDown && tilesLeft > tilesUp && tilesLeft > tilesRight)
-											{
-												canBeLeft = true;
-											}
-											if(tilesUp > tilesDown && tilesUp > tilesLeft && tilesUp > tilesRight) 
-											{
-												canBeUp = true;
-											}
-										}
-										
-										
-										
-										if(canBeRight && counterRight >= 3600)
-										{
-											counterRight = 0;
-											tile.type = (ushort)mod.TileType("RightIndicatorTile");
+											squareCount++;
 											
-												for(int checkSquareX = -12; checkSquareX <= 12; checkSquareX++)
-												{
-													for(int checkSquareY = -12; checkSquareY <= 12; checkSquareY++)
-													{
-														Tile tileCheck = Framing.GetTileSafely(findTileX + checkSquareX, findTileY + checkSquareY);
-														if(checkSquareX == -12 || checkSquareX == 12 || checkSquareY == -12 || checkSquareY == 12)
-														{
-															tileCheck.type = 151; //sandstoneBrick
-														}
-													}
-												}
-												for(int checkSquareX = -10; checkSquareX <= 10; checkSquareX++)
-												{
-													for(int checkSquareY = -10; checkSquareY <= 10; checkSquareY++)
-													{
-														Tile tileCheck = Framing.GetTileSafely(findTileX + checkSquareX, findTileY + checkSquareY);
-														if(checkSquareX == -10 || checkSquareX == 10 || checkSquareY == -10 || checkSquareY == 10)
-														{
-															tileCheck.type = 151; //sandstoneBrick
-														}
-													}
-												}
-										}
-										if(canBeLeft && counterLeft >= 3600)
-										{
-											counterLeft = 0;
-											tile.type = (ushort)mod.TileType("LeftIndicatorTile");
-											
-												for(int checkSquareX = -12; checkSquareX <= 12; checkSquareX++)
-												{
-													for(int checkSquareY = -12; checkSquareY <= 12; checkSquareY++)
-													{
-														Tile tileCheck = Framing.GetTileSafely(findTileX + checkSquareX, findTileY + checkSquareY);
-														if(checkSquareX == -12 || checkSquareX == 12 || checkSquareY == -12 || checkSquareY == 12)
-														{
-															tileCheck.type = 151; //sandstoneBrick
-														}
-													}
-												}
-												for(int checkSquareX = -10; checkSquareX <= 10; checkSquareX++)
-												{
-													for(int checkSquareY = -10; checkSquareY <= 10; checkSquareY++)
-													{
-														Tile tileCheck = Framing.GetTileSafely(findTileX + checkSquareX, findTileY + checkSquareY);
-														if(checkSquareX == -10 || checkSquareX == 10 || checkSquareY == -10 || checkSquareY == 10)
-														{
-															tileCheck.type = 151; //sandstoneBrick
-														}
-													}
-												}
-										}
-										if(canBeDown && counterDown >= 12000)
-										{
-											counterDown = 0;
-											tile.type = (ushort)mod.TileType("DownIndicatorTile");
-											
-												for(int checkSquareX = -12; checkSquareX <= 12; checkSquareX++)
-												{
-													for(int checkSquareY = -12; checkSquareY <= 12; checkSquareY++)
-													{
-														Tile tileCheck = Framing.GetTileSafely(findTileX + checkSquareX, findTileY + checkSquareY);
-														if(checkSquareX == -12 || checkSquareX == 12 || checkSquareY == -12 || checkSquareY == 12)
-														{
-															tileCheck.type = 151; //sandstoneBrick
-														}
-													}
-												}
-												for(int checkSquareX = -10; checkSquareX <= 10; checkSquareX++)
-												{
-													for(int checkSquareY = -10; checkSquareY <= 10; checkSquareY++)
-													{
-														Tile tileCheck = Framing.GetTileSafely(findTileX + checkSquareX, findTileY + checkSquareY);
-														if(checkSquareX == -10 || checkSquareX == 10 || checkSquareY == -10 || checkSquareY == 10)
-														{
-															tileCheck.type = 151; //sandstoneBrick
-														}
-													}
-												}
-										}
-										if(canBeUp && counterUp >= 1800)
-										{
-											counterUp = 0;
-											tile.type = (ushort)mod.TileType("UpIndicatorTile");
-											
-												for(int checkSquareX = -12; checkSquareX <= 12; checkSquareX++)
-												{
-													for(int checkSquareY = -12; checkSquareY <= 12; checkSquareY++)
-													{
-														Tile tileCheck = Framing.GetTileSafely(findTileX + checkSquareX, findTileY + checkSquareY);
-														if(checkSquareX == -12 || checkSquareX == 12 || checkSquareY == -12 || checkSquareY == 12)
-														{
-															tileCheck.type = 151; //sandstoneBrick
-														}
-													}
-												}
-												for(int checkSquareX = -10; checkSquareX <= 10; checkSquareX++)
-												{
-													for(int checkSquareY = -10; checkSquareY <= 10; checkSquareY++)
-													{
-														Tile tileCheck = Framing.GetTileSafely(findTileX + checkSquareX, findTileY + checkSquareY);
-														if(checkSquareX == -10 || checkSquareX == 10 || checkSquareY == -10 || checkSquareY == 10)
-														{
-															tileCheck.type = 151; //sandstoneBrick
-														}
-													}
-												}
 										}
 									}
 								}
-							}		
-						}
-						for(int findTileX = 100; findTileX < Main.maxTilesX - 100; findTileX++)
-						{
-							for(int findTileY = Main.maxTilesY - 100; findTileY > pyramidY + 30; findTileY--)
-							{
-								Tile tileCheck = Framing.GetTileSafely(findTileX, findTileY);
-								if(tileCheck.type == (ushort)mod.TileType("LeftIndicatorTile"))
+								
+								if(squareCount >= 625 && tilesDown >= 0 && tilesUp >= 0 && tilesLeft >= 0 && tilesRight >= 0)
 								{
-									GeneratePyramidRoom(findTileX, findTileY, 0);
+									if(tilesDown > tilesRight && tilesDown > tilesUp && tilesDown > tilesLeft)
+									{
+										canBeDown = true;
+									}
+									if(tilesRight > tilesDown && tilesRight > tilesUp && tilesRight > tilesLeft)
+									{
+										canBeRight = true;
+									}
+									if(tilesLeft > tilesDown && tilesLeft > tilesUp && tilesLeft > tilesRight)
+									{
+										canBeLeft = true;
+									}
+									if(tilesUp > tilesDown && tilesUp > tilesLeft && tilesUp > tilesRight) 
+									{
+										canBeUp = true;
+									}
 								}
-								if(tileCheck.type == (ushort)mod.TileType("RightIndicatorTile"))
+								
+								
+								
+								if(canBeRight && counterRight >= 3600)
 								{
+									counterRight = 0;
+									for(int checkSquareX = -12; checkSquareX <= 12; checkSquareX++)
+									{
+										for(int checkSquareY = -12; checkSquareY <= 12; checkSquareY++)
+										{
+											Tile tileCheck = Framing.GetTileSafely(findTileX + checkSquareX, findTileY + checkSquareY);
+											if(checkSquareX == -12 || checkSquareX == 12 || checkSquareY == -12 || checkSquareY == 12)
+											{
+												tileCheck.type = 151; //sandstoneBrick
+											}
+										}
+									}
+									for(int checkSquareX = -10; checkSquareX <= 10; checkSquareX++)
+									{
+										for(int checkSquareY = -10; checkSquareY <= 10; checkSquareY++)
+										{
+											Tile tileCheck = Framing.GetTileSafely(findTileX + checkSquareX, findTileY + checkSquareY);
+											if(checkSquareX == -10 || checkSquareX == 10 || checkSquareY == -10 || checkSquareY == 10)
+											{
+												tileCheck.type = 151; //sandstoneBrick
+											}
+										}
+									}
 									GeneratePyramidRoom(findTileX, findTileY, 1);
 								}
-							}
-						}
-						for(int findTileX = 100; findTileX < Main.maxTilesX - 100; findTileX++)
-						{
-							for(int findTileY = Main.maxTilesY - 100; findTileY > pyramidY + 30; findTileY--)
-							{
-								Tile tileCheck = Framing.GetTileSafely(findTileX, findTileY);
-								if(tileCheck.type == (ushort)mod.TileType("UpIndicatorTile"))
+								if(canBeLeft && counterLeft >= 3600)
 								{
-									GeneratePyramidRoom(findTileX, findTileY, 2);
+									counterLeft = 0;
+									for(int checkSquareX = -12; checkSquareX <= 12; checkSquareX++)
+									{
+										for(int checkSquareY = -12; checkSquareY <= 12; checkSquareY++)
+										{
+											Tile tileCheck = Framing.GetTileSafely(findTileX + checkSquareX, findTileY + checkSquareY);
+											if(checkSquareX == -12 || checkSquareX == 12 || checkSquareY == -12 || checkSquareY == 12)
+											{
+												tileCheck.type = 151; //sandstoneBrick
+											}
+										}
+									}
+									for(int checkSquareX = -10; checkSquareX <= 10; checkSquareX++)
+									{
+										for(int checkSquareY = -10; checkSquareY <= 10; checkSquareY++)
+										{
+											Tile tileCheck = Framing.GetTileSafely(findTileX + checkSquareX, findTileY + checkSquareY);
+											if(checkSquareX == -10 || checkSquareX == 10 || checkSquareY == -10 || checkSquareY == 10)
+											{
+												tileCheck.type = 151; //sandstoneBrick
+											}
+										}
+									}
+									GeneratePyramidRoom(findTileX, findTileY, 0);
 								}
-								if(tileCheck.type == (ushort)mod.TileType("DownIndicatorTile"))
+								if(canBeDown && counterDown >= 12000)
 								{
+									counterDown = 0;
+									for(int checkSquareX = -12; checkSquareX <= 12; checkSquareX++)
+									{
+										for(int checkSquareY = -12; checkSquareY <= 12; checkSquareY++)
+										{
+											Tile tileCheck = Framing.GetTileSafely(findTileX + checkSquareX, findTileY + checkSquareY);
+											if(checkSquareX == -12 || checkSquareX == 12 || checkSquareY == -12 || checkSquareY == 12)
+											{
+												tileCheck.type = 151; //sandstoneBrick
+											}
+										}
+									}
+									for(int checkSquareX = -10; checkSquareX <= 10; checkSquareX++)
+									{
+										for(int checkSquareY = -10; checkSquareY <= 10; checkSquareY++)
+										{
+											Tile tileCheck = Framing.GetTileSafely(findTileX + checkSquareX, findTileY + checkSquareY);
+											if(checkSquareX == -10 || checkSquareX == 10 || checkSquareY == -10 || checkSquareY == 10)
+											{
+												tileCheck.type = 151; //sandstoneBrick
+											}
+										}
+									}
 									GeneratePyramidRoom(findTileX, findTileY, 3);
 								}
+								if(canBeUp && counterUp >= 1800)
+								{
+									counterUp = 0;
+									for(int checkSquareX = -12; checkSquareX <= 12; checkSquareX++)
+									{
+										for(int checkSquareY = -12; checkSquareY <= 12; checkSquareY++)
+										{
+											Tile tileCheck = Framing.GetTileSafely(findTileX + checkSquareX, findTileY + checkSquareY);
+											if(checkSquareX == -12 || checkSquareX == 12 || checkSquareY == -12 || checkSquareY == 12)
+											{
+												tileCheck.type = 151; //sandstoneBrick
+											}
+										}
+									}
+									for(int checkSquareX = -10; checkSquareX <= 10; checkSquareX++)
+									{
+										for(int checkSquareY = -10; checkSquareY <= 10; checkSquareY++)
+										{
+											Tile tileCheck = Framing.GetTileSafely(findTileX + checkSquareX, findTileY + checkSquareY);
+											if(checkSquareX == -10 || checkSquareX == 10 || checkSquareY == -10 || checkSquareY == 10)
+											{
+												tileCheck.type = 151; //sandstoneBrick
+											}
+										}
+									}
+									GeneratePyramidRoom(findTileX, findTileY, 2);
+								}
 							}
 						}
+					}		
+				}
+				int[,] _zepline = {
+					{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
+					{3,3,3,3,3,3,3,3,3,3,3,2,3,2,2,2,2,2,2,2,2,2},	
+					{2,2,2,2,2,2,2,2,2,2,3,2,3,3,3,2,2,2,2,2,2,2},	
+					{0,0,0,0,0,0,0,3,3,2,3,2,3,3,3,3,3,2,2,2,2,2},	
+					{0,0,0,0,0,0,0,0,3,2,3,2,2,2,2,2,2,2,2,2,2,0},	
+					{0,0,0,0,0,0,0,0,0,2,3,3,3,3,3,3,3,2,3,2,0,0},	
+					{0,0,0,0,0,0,0,0,0,2,3,0,0,0,0,0,3,2,3,0,0,0},	
+					{0,0,0,0,0,0,0,0,0,0,3,0,5,9,5,0,3,2,0,0,0,0},	
+					{9,6,0,0,0,0,0,0,0,0,3,0,4,4,4,0,3,0,0,0,0,0},	
+					{3,3,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},	
+					{2,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},	
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},	
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},	
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{9,6,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},	
+					{3,3,3,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},	
+					{7,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},	
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},	
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},	
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},	
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},	
+					{9,6,6,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},	
+					{3,3,3,3,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},	
+					{2,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0},	
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2},	
+					{0,0,0,0,0,0,6,6,9,9,9,9,9,9,9,9,9,9,9,9,2,2},	
+					{0,0,0,0,0,0,3,3,9,9,9,9,9,9,9,9,9,9,9,9,2,2},	
+					{0,0,0,0,0,0,3,3,9,9,9,9,9,9,9,9,9,9,9,3,3,2},	
+					{9,9,9,9,9,9,9,3,9,9,9,9,9,9,9,9,9,9,9,3,3,2},	
+					{9,9,9,9,9,9,9,3,3,9,9,9,9,9,9,9,9,9,3,3,3,2},	
+					{9,9,9,9,9,9,9,3,3,3,9,9,9,9,9,9,9,3,3,3,2,2},	
+					{9,9,9,9,9,9,9,2,3,3,3,3,9,9,9,3,3,3,3,2,2,2},	
+					{9,9,9,9,9,9,9,2,2,3,3,3,3,9,3,3,3,3,2,2,2,2},	
+					{9,9,9,9,9,9,2,2,2,2,2,2,2,9,2,2,2,2,2,2,2,2},	
+					{9,9,9,9,9,2,2,2,2,2,2,9,9,9,9,3,3,2,2,2,2,2},	
+					{9,9,2,2,2,2,2,2,9,9,9,9,9,9,3,3,2,2,2,2,2,2},	
+					{9,2,2,2,2,2,9,9,9,9,9,9,9,3,3,3,3,3,3,3,3,3},	
+					{9,9,9,9,9,9,9,9,9,9,9,9,3,3,3,3,3,3,3,3,3,3},	
+					{9,9,9,9,9,9,9,9,9,9,9,3,3,3,3,3,3,3,3,3,3,3},	
+					{9,9,9,9,9,9,9,9,9,9,3,3,3,3,3,3,3,3,3,3,3,3},	
+					{3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3},	
+					{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},		
+				};	
+					int[,] _zeplineWalls = {
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0,1,1,0,0,0,0},
+					{0,0,0,1,1,1,1,1,1,1,1,0,2,2,2,0,1,1,0,0,0,0},
+					{2,2,2,0,1,1,1,1,1,1,1,0,2,2,2,0,1,1,0,0,0,0},
+					{0,0,2,0,1,1,1,1,1,1,1,0,2,2,2,0,1,1,0,0,0,0},
+					{0,0,2,0,1,1,1,1,1,1,1,0,2,2,2,0,1,1,0,0,0,0},
+					{0,0,2,0,1,1,1,1,1,1,1,0,2,2,2,0,1,1,0,0,0,0},
+					{0,0,2,0,1,1,1,1,1,1,1,0,2,2,2,0,1,1,0,0,0,0},
+					{0,0,2,0,1,1,1,1,1,1,1,0,2,2,2,0,1,1,0,0,0,0},
+					{0,0,2,0,1,1,1,1,1,1,1,0,2,2,2,0,1,1,1,0,0,0},
+					{2,2,2,2,0,1,1,1,1,1,1,0,2,2,2,0,1,1,1,0,0,0},
+					{0,0,0,2,0,1,1,1,1,1,1,0,2,2,2,0,1,1,1,0,0,0},
+					{0,0,0,2,0,1,1,1,1,1,1,0,2,2,2,0,1,1,1,0,0,0},
+					{0,0,0,2,0,1,1,1,1,1,1,0,2,2,2,0,1,1,1,0,0,0},
+					{0,0,0,2,0,1,1,1,1,1,1,0,2,2,2,0,1,1,1,0,0,0},
+					{0,0,0,2,0,1,1,1,1,1,1,0,2,2,2,0,1,1,1,0,0,0},
+					{0,0,0,2,0,1,1,1,1,1,1,0,2,2,2,0,1,1,1,0,0,0},
+					{2,2,2,2,2,0,1,1,1,1,1,0,2,2,2,0,1,1,1,1,0,0},
+					{0,0,0,0,2,0,1,1,1,1,1,0,2,2,2,0,1,1,1,1,0,0},
+					{0,0,0,0,2,0,1,1,1,1,1,0,2,2,2,0,1,1,1,1,0,0},
+					{0,0,0,0,2,0,1,1,1,1,1,0,2,2,2,0,1,1,1,1,0,0},
+					{0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				};
 						
-						
-						
-						
-						
-						int[,] _zepline = {
-							{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
-							{3,3,3,3,3,3,3,3,3,3,3,2,3,2,2,2,2,2,2,2,2,2},	
-							{2,2,2,2,2,2,2,2,2,2,3,2,3,3,3,2,2,2,2,2,2,2},	
-							{0,0,0,0,0,0,0,3,3,2,3,2,3,3,3,3,3,2,2,2,2,2},	
-							{0,0,0,0,0,0,0,0,3,2,3,2,2,2,2,2,2,2,2,2,2,0},	
-							{0,0,0,0,0,0,0,0,0,2,3,3,3,3,3,3,3,2,3,2,0,0},	
-							{0,0,0,0,0,0,0,0,0,2,3,0,0,0,0,0,3,2,3,0,0,0},	
-							{0,0,0,0,0,0,0,0,0,0,3,0,5,9,5,0,3,2,0,0,0,0},	
-							{9,6,0,0,0,0,0,0,0,0,3,0,4,4,4,0,3,0,0,0,0,0},	
-							{3,3,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},	
-							{2,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},	
-							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},	
-							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},	
-							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-							{9,6,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},	
-							{3,3,3,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},	
-							{7,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},	
-							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},	
-							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},	
-							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},	
-							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},	
-							{9,6,6,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},	
-							{3,3,3,3,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},	
-							{2,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0},	
-							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2},	
-							{0,0,0,0,0,0,6,6,9,9,9,9,9,9,9,9,9,9,9,9,2,2},	
-							{0,0,0,0,0,0,3,3,9,9,9,9,9,9,9,9,9,9,9,9,2,2},	
-							{0,0,0,0,0,0,3,3,9,9,9,9,9,9,9,9,9,9,9,3,3,2},	
-							{9,9,9,9,9,9,9,3,9,9,9,9,9,9,9,9,9,9,9,3,3,2},	
-							{9,9,9,9,9,9,9,3,3,9,9,9,9,9,9,9,9,9,3,3,3,2},	
-							{9,9,9,9,9,9,9,3,3,3,9,9,9,9,9,9,9,3,3,3,2,2},	
-							{9,9,9,9,9,9,9,2,3,3,3,3,9,9,9,3,3,3,3,2,2,2},	
-							{9,9,9,9,9,9,9,2,2,3,3,3,3,9,3,3,3,3,2,2,2,2},	
-							{9,9,9,9,9,9,2,2,2,2,2,2,2,9,2,2,2,2,2,2,2,2},	
-							{9,9,9,9,9,2,2,2,2,2,2,9,9,9,9,3,3,2,2,2,2,2},	
-							{9,9,2,2,2,2,2,2,9,9,9,9,9,9,3,3,2,2,2,2,2,2},	
-							{9,2,2,2,2,2,9,9,9,9,9,9,9,3,3,3,3,3,3,3,3,3},	
-							{9,9,9,9,9,9,9,9,9,9,9,9,3,3,3,3,3,3,3,3,3,3},	
-							{9,9,9,9,9,9,9,9,9,9,9,3,3,3,3,3,3,3,3,3,3,3},	
-							{9,9,9,9,9,9,9,9,9,9,3,3,3,3,3,3,3,3,3,3,3,3},	
-							{3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3},	
-							{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},		
-						};	
-							int[,] _zeplineWalls = {
-							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-							{0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0},
-							{0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0},
-							{0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0},
-							{0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0,1,1,0,0,0,0},
-							{0,0,0,1,1,1,1,1,1,1,1,0,2,2,2,0,1,1,0,0,0,0},
-							{2,2,2,0,1,1,1,1,1,1,1,0,2,2,2,0,1,1,0,0,0,0},
-							{0,0,2,0,1,1,1,1,1,1,1,0,2,2,2,0,1,1,0,0,0,0},
-							{0,0,2,0,1,1,1,1,1,1,1,0,2,2,2,0,1,1,0,0,0,0},
-							{0,0,2,0,1,1,1,1,1,1,1,0,2,2,2,0,1,1,0,0,0,0},
-							{0,0,2,0,1,1,1,1,1,1,1,0,2,2,2,0,1,1,0,0,0,0},
-							{0,0,2,0,1,1,1,1,1,1,1,0,2,2,2,0,1,1,0,0,0,0},
-							{0,0,2,0,1,1,1,1,1,1,1,0,2,2,2,0,1,1,1,0,0,0},
-							{2,2,2,2,0,1,1,1,1,1,1,0,2,2,2,0,1,1,1,0,0,0},
-							{0,0,0,2,0,1,1,1,1,1,1,0,2,2,2,0,1,1,1,0,0,0},
-							{0,0,0,2,0,1,1,1,1,1,1,0,2,2,2,0,1,1,1,0,0,0},
-							{0,0,0,2,0,1,1,1,1,1,1,0,2,2,2,0,1,1,1,0,0,0},
-							{0,0,0,2,0,1,1,1,1,1,1,0,2,2,2,0,1,1,1,0,0,0},
-							{0,0,0,2,0,1,1,1,1,1,1,0,2,2,2,0,1,1,1,0,0,0},
-							{0,0,0,2,0,1,1,1,1,1,1,0,2,2,2,0,1,1,1,0,0,0},
-							{2,2,2,2,2,0,1,1,1,1,1,0,2,2,2,0,1,1,1,1,0,0},
-							{0,0,0,0,2,0,1,1,1,1,1,0,2,2,2,0,1,1,1,1,0,0},
-							{0,0,0,0,2,0,1,1,1,1,1,0,2,2,2,0,1,1,1,1,0,0},
-							{0,0,0,0,2,0,1,1,1,1,1,0,2,2,2,0,1,1,1,1,0,0},
-							{0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-							{0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-							{0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-						};
-						
-							int pyramidPosX = pyramidX;
-							int pyramidPosY = pyramidY += (size - 40);
-							pyramidPosY -= (int)(.5f * _zepline.GetLength(1)); //incorrect grab length?!?! still works lol
-							
-							for(int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)
-							{
-								for (int y = 0; y < _zepline.GetLength(0); y++) {
-									for (int x = 0; x < _zepline.GetLength(1); x++) {
-										int k = pyramidPosX + x;
-										int l = pyramidPosY + y;
-										int k2 = pyramidPosX - x;
-										if (WorldGen.InWorld(k, l, 30)) {
-											Tile tile = Framing.GetTileSafely(k, l);
-											Tile tile2 = Framing.GetTileSafely(k2, l);
-											switch (_zepline[y, x]) {
-												case 0:
-													if(tile.type == (ushort)mod.TileType("PyramidSlabTile"))
-														tile.active(false);
-													
-													if(tile2.type == (ushort)mod.TileType("PyramidSlabTile"))
-														tile2.active(false);
-													break;
-												case 1:
-													break;
-												case 2:
-													if(tile.type == (ushort)mod.TileType("PyramidSlabTile"))
-													{
-														tile.type = (ushort)mod.TileType("PyramidSlabTile");
-														tile.active(true);
-														tile.slope(0);
-														tile.halfBrick(false);
-													}
-													if(tile2.type == (ushort)mod.TileType("PyramidSlabTile"))
-													{
-														tile2.type = (ushort)mod.TileType("PyramidSlabTile");
-														tile2.active(true);
-														tile2.slope(0);
-														tile2.halfBrick(false);
-													}
-													break;
-												case 3:
-													if(tile.type == (ushort)mod.TileType("PyramidSlabTile"))
-													{
-														tile.type = 274; //sandstone slab
-														tile.active(true);
-														tile.slope(0);
-														tile.halfBrick(false);
-													}
-													if(tile2.type == (ushort)mod.TileType("PyramidSlabTile"))
-													{
-														tile2.type = 274; 
-														tile2.active(true);
-														tile2.slope(0);
-														tile2.halfBrick(false);
-													}
-													break;
-												case 4:
-													if(tile.type == (ushort)mod.TileType("PyramidSlabTile"))
-													{
-														tile.type = 326; //waterfall
-														tile.active(true);
-														tile.slope(0);
-														tile.halfBrick(false);
-													}
-													if(tile2.type == (ushort)mod.TileType("PyramidSlabTile"))
-													{
-														tile2.type = 326; //waterfall
-														tile2.active(true);
-														tile2.slope(0);
-														tile2.halfBrick(false);
-													}
-													break;
-												case 5:
-													if(tile.type == (ushort)mod.TileType("PyramidSlabTile"))
-													{
-														tile.type = 326; //waterfall
-														tile.active(true);
-														tile.halfBrick(true);
-													}
-													if(tile2.type == (ushort)mod.TileType("PyramidSlabTile"))
-													{
-														tile2.type = 326; //waterfall
-														tile2.active(true);
-														tile2.halfBrick(true);
-													}
-													break;
-												case 6:
-													if(tile.type == (ushort)mod.TileType("PyramidSlabTile"))
-													{
-														tile.type = 274;
-														tile.active(true);
-														tile.halfBrick(true);
-													}
-													if(tile2.type == (ushort)mod.TileType("PyramidSlabTile"))
-													{
-														tile2.type = 274;
-														tile2.active(true);
-														tile2.halfBrick(true);
-													}
-													break;
-												case 7:
-													tile.type = (ushort)mod.TileType("ZeplineLureTile");
-													tile.slope(0);
-													tile.halfBrick(false);
-													tile.active(true);
-													break;
-												case 8:
-													if(tile.type == (ushort)mod.TileType("PyramidSlabTile"))
-													{
-														tile.type = 274; 
-														tile.active(true);
-														tile.slope(3);
-													}
-													if(tile2.type == (ushort)mod.TileType("PyramidSlabTile"))
-													{
-														tile2.type = 274;  
-														tile2.active(true);
-														tile2.slope(4);
-													}
-													break;
-												case 9:
-														tile.liquidType(0);
-														tile.liquid = 255;
-														tile.active(false);
-														WorldGen.SquareTileFrame(k, l, false);
-													
-														tile2.liquidType(0);
-														tile2.liquid = 255;
-														tile2.active(false);
-														WorldGen.SquareTileFrame(k2, l, false);
-												break;
-												break;
-											}
+				int pyramidPosX = pyramidX;
+				int pyramidPosY = pyramidY += (size - 40);
+				pyramidPosY -= (int)(.5f * _zepline.GetLength(1)); //incorrect grab length?!?! still works lol
+				
+				for(int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)
+				{
+					for (int y = 0; y < _zepline.GetLength(0); y++) {
+						for (int x = 0; x < _zepline.GetLength(1); x++) {
+							int k = pyramidPosX + x;
+							int l = pyramidPosY + y;
+							int k2 = pyramidPosX - x;
+							if (WorldGen.InWorld(k, l, 30)) {
+								Tile tile = Framing.GetTileSafely(k, l);
+								Tile tile2 = Framing.GetTileSafely(k2, l);
+								switch (_zepline[y, x]) {
+									case 0:
+										if(tile.type == (ushort)mod.TileType("PyramidSlabTile"))
+											tile.active(false);
+										
+										if(tile2.type == (ushort)mod.TileType("PyramidSlabTile"))
+											tile2.active(false);
+										break;
+									case 1:
+										break;
+									case 2:
+										if(tile.type == (ushort)mod.TileType("PyramidSlabTile"))
+										{
+											tile.type = (ushort)mod.TileType("PyramidSlabTile");
+											tile.active(true);
+											tile.slope(0);
+											tile.halfBrick(false);
 										}
-									}
+										if(tile2.type == (ushort)mod.TileType("PyramidSlabTile"))
+										{
+											tile2.type = (ushort)mod.TileType("PyramidSlabTile");
+											tile2.active(true);
+											tile2.slope(0);
+											tile2.halfBrick(false);
+										}
+										break;
+									case 3:
+										if(tile.type == (ushort)mod.TileType("PyramidSlabTile"))
+										{
+											tile.type = 274; //sandstone slab
+											tile.active(true);
+											tile.slope(0);
+											tile.halfBrick(false);
+										}
+										if(tile2.type == (ushort)mod.TileType("PyramidSlabTile"))
+										{
+											tile2.type = 274; 
+											tile2.active(true);
+											tile2.slope(0);
+											tile2.halfBrick(false);
+										}
+										break;
+									case 4:
+										if(tile.type == (ushort)mod.TileType("PyramidSlabTile"))
+										{
+											tile.type = 326; //waterfall
+											tile.active(true);
+											tile.slope(0);
+											tile.halfBrick(false);
+										}
+										if(tile2.type == (ushort)mod.TileType("PyramidSlabTile"))
+										{
+											tile2.type = 326; //waterfall
+											tile2.active(true);
+											tile2.slope(0);
+											tile2.halfBrick(false);
+										}
+										break;
+									case 5:
+										if(tile.type == (ushort)mod.TileType("PyramidSlabTile"))
+										{
+											tile.type = 326; //waterfall
+											tile.active(true);
+											tile.halfBrick(true);
+										}
+										if(tile2.type == (ushort)mod.TileType("PyramidSlabTile"))
+										{
+											tile2.type = 326; //waterfall
+											tile2.active(true);
+											tile2.halfBrick(true);
+										}
+										break;
+									case 6:
+										if(tile.type == (ushort)mod.TileType("PyramidSlabTile"))
+										{
+											tile.type = 274;
+											tile.active(true);
+											tile.halfBrick(true);
+										}
+										if(tile2.type == (ushort)mod.TileType("PyramidSlabTile"))
+										{
+											tile2.type = 274;
+											tile2.active(true);
+											tile2.halfBrick(true);
+										}
+										break;
+									case 7:
+										tile.type = (ushort)mod.TileType("ZeplineLureTile");
+										tile.slope(0);
+										tile.halfBrick(false);
+										tile.active(true);
+										break;
+									case 8:
+										if(tile.type == (ushort)mod.TileType("PyramidSlabTile"))
+										{
+											tile.type = 274; 
+											tile.active(true);
+											tile.slope(3);
+										}
+										if(tile2.type == (ushort)mod.TileType("PyramidSlabTile"))
+										{
+											tile2.type = 274;  
+											tile2.active(true);
+											tile2.slope(4);
+										}
+										break;
+									case 9:
+											tile.liquidType(0);
+											tile.liquid = 255;
+											tile.active(false);
+											WorldGen.SquareTileFrame(k, l, false);
+										
+											tile2.liquidType(0);
+											tile2.liquid = 255;
+											tile2.active(false);
+											WorldGen.SquareTileFrame(k2, l, false);
+									break;
+									break;
 								}
 							}
-							for (int y = 0; y < _zeplineWalls.GetLength(0); y++) {
-								for (int x = 0; x < _zeplineWalls.GetLength(1); x++) {
-									int k = pyramidPosX + x;
-									int l = pyramidPosY + y;
-									int k2 = pyramidPosX - x;
-									if (WorldGen.InWorld(k, l, 30)) {
-										Tile tile = Framing.GetTileSafely(k, l);
-										Tile tile2 = Framing.GetTileSafely(k2, l);
-										switch (_zeplineWalls[y, x]) {
-											case 0:
-												tile.wall = (ushort)mod.WallType("PyramidWallTile");  //sandbrick
-												tile2.wall = (ushort)mod.WallType("PyramidWallTile");
-												break;
-											case 1:
-												tile.wall = 226; //sandfall 
-												tile2.wall = 226;
-												break;
-											case 2:
-												tile.wall = 136; //waterfall
-												tile2.wall = 136;
-												break;
-											case 3:
-												break;
-											case 4:
-												break;
-										}
-									}
-								}
+						}
+					}
+				}
+				for (int y = 0; y < _zeplineWalls.GetLength(0); y++) {
+					for (int x = 0; x < _zeplineWalls.GetLength(1); x++) {
+						int k = pyramidPosX + x;
+						int l = pyramidPosY + y;
+						int k2 = pyramidPosX - x;
+						if (WorldGen.InWorld(k, l, 30)) {
+							Tile tile = Framing.GetTileSafely(k, l);
+							Tile tile2 = Framing.GetTileSafely(k2, l);
+							switch (_zeplineWalls[y, x]) {
+								case 0:
+									tile.wall = (ushort)mod.WallType("PyramidWallTile");  //sandbrick
+									tile2.wall = (ushort)mod.WallType("PyramidWallTile");
+									break;
+								case 1:
+									tile.wall = 226; //sandfall 
+									tile2.wall = 226;
+									break;
+								case 2:
+									tile.wall = 136; //waterfall
+									tile2.wall = 136;
+									break;
+								case 3:
+									break;
+								case 4:
+									break;
 							}
-							for(int findTileX = 100; findTileX < Main.maxTilesX - 100; findTileX++)
+						}
+					}
+				}
+				for(int findTileX = 100; findTileX < Main.maxTilesX - 100; findTileX++)
+				{
+					for(int findTileY = Main.maxTilesY - 100; findTileY > 100; findTileY--)
+					{
+						Tile tile = Framing.GetTileSafely(findTileX, findTileY);
+						Tile tileU = Framing.GetTileSafely(findTileX, findTileY -1);
+						Tile tileLU = Framing.GetTileSafely(findTileX - 1, findTileY-1);
+						Tile tileU2 = Framing.GetTileSafely(findTileX, findTileY -2);
+						Tile tileLU2 = Framing.GetTileSafely(findTileX - 1, findTileY-2);
+						Tile tileU3 = Framing.GetTileSafely(findTileX, findTileY -3);
+						Tile tileLU3 = Framing.GetTileSafely(findTileX - 1, findTileY-3);
+						
+						if(tile.type == (ushort)mod.TileType("PyramidSlabTile") && !tileLU.active() && !tileLU2.active() && !tileU.active() && !tileU2.active() && Main.rand.Next(4) == 0)
+						{
+							WorldGen.PlaceTile(findTileX, findTileY - 1, 28, true, true, -1, 3); //pots
+						}
+						if(tile.type == (ushort)mod.TileType("PyramidSlabTile") && !tileLU.active() && !tileLU2.active() && !tileU.active() && !tileU2.active() && Main.rand.Next(size / 2) == 0)
+						{
+							WorldGen.PlaceTile(findTileX, findTileY - 1, (ushort)mod.TileType("CrystalStatue")); //life crystal
+						}
+						if(tile.type == (ushort)mod.TileType("PyramidSlabTile") && !tileLU.active() && !tileLU2.active() && !tileU.active() && !tileU2.active() && Main.rand.Next(size / 2) == 0)
+						{
+							WorldGen.PlaceTile(findTileX, findTileY - 1, (ushort)mod.TileType("ManaStatue")); //mana crystal
+						}
+						if(tile.type == (ushort)mod.TileType("PyramidSlabTile") && !tileLU.active() && !tileLU2.active() && !tileU.active() && !tileU2.active() && Main.rand.Next(size / 3) == 0)
+						{
+							WorldGen.PlaceTile(findTileX, findTileY - 1, (ushort)mod.TileType("PyramidChestTile")); //Chests
+						}
+						if(tile.type == (ushort)mod.TileType("PyramidSlabTile") && !tileLU.active() && !tileLU2.active() && !tileU.active() && !tileU2.active() && !tileU3.active() && !tileLU3.active() && Main.rand.Next(size / 2) == 0)
+						{
+							WorldGen.PlaceTile(findTileX, findTileY - 1, TileID.Statues, true, true, -1, Main.rand.Next(71)); //random statue
+						}
+						if(tile.wall == (ushort)mod.WallType("PyramidWallTile") && Main.rand.Next(500) == 0)
+						{
+							int radius7 = 3;
+							for (int x = -radius7; x <= radius7; x++)
 							{
-								for(int findTileY = Main.maxTilesY - 100; findTileY > 100; findTileY--)
+								for (int y = -radius7; y <= radius7; y++)
 								{
-									Tile tile = Framing.GetTileSafely(findTileX, findTileY);
-									Tile tileU = Framing.GetTileSafely(findTileX, findTileY -1);
-									Tile tileLU = Framing.GetTileSafely(findTileX - 1, findTileY-1);
-									Tile tileU2 = Framing.GetTileSafely(findTileX, findTileY -2);
-									Tile tileLU2 = Framing.GetTileSafely(findTileX - 1, findTileY-2);
-									Tile tileU3 = Framing.GetTileSafely(findTileX, findTileY -3);
-									Tile tileLU3 = Framing.GetTileSafely(findTileX - 1, findTileY-3);
-									
-										if(tile.type == (ushort)mod.TileType("PyramidSlabTile") && !tileLU.active() && !tileLU2.active() && !tileU.active() && !tileU2.active() && Main.rand.Next(4) == 0)
+									int xPosition6 = findTileX + x;
+									int yPosition6 = findTileY + y; 
+					 
+									if (Math.Sqrt(x * x + y * y) <= radius7 + 0.5)   
+									{
+										Tile tileRad = Framing.GetTileSafely(xPosition6, yPosition6);
+										if(!tileRad.active())
 										{
-											WorldGen.PlaceTile(findTileX, findTileY - 1, 28, true, true, -1, 3); //pots
+											tileRad.type = 51; //cobweb
+											tileRad.active(true);
 										}
-										if(tile.type == (ushort)mod.TileType("PyramidSlabTile") && !tileLU.active() && !tileLU2.active() && !tileU.active() && !tileU2.active() && Main.rand.Next(size / 2) == 0)
-										{
-											WorldGen.PlaceTile(findTileX, findTileY - 1, (ushort)mod.TileType("CrystalStatue")); //life crystal
-										}
-										if(tile.type == (ushort)mod.TileType("PyramidSlabTile") && !tileLU.active() && !tileLU2.active() && !tileU.active() && !tileU2.active() && Main.rand.Next(size / 2) == 0)
-										{
-											WorldGen.PlaceTile(findTileX, findTileY - 1, (ushort)mod.TileType("ManaStatue")); //mana crystal
-										}
-										if(tile.type == (ushort)mod.TileType("PyramidSlabTile") && !tileLU.active() && !tileLU2.active() && !tileU.active() && !tileU2.active() && Main.rand.Next(size / 3) == 0)
-										{
-											WorldGen.PlaceTile(findTileX, findTileY - 1, (ushort)mod.TileType("PyramidChestTile")); //Chests
-										}
-										if(tile.type == (ushort)mod.TileType("PyramidSlabTile") && !tileLU.active() && !tileLU2.active() && !tileU.active() && !tileU2.active() && !tileU3.active() && !tileLU3.active() && Main.rand.Next(size / 2) == 0)
-										{
-											WorldGen.PlaceTile(findTileX, findTileY - 1, TileID.Statues, true, true, -1, Main.rand.Next(71)); //random statue
-										}
-										if(tile.wall == (ushort)mod.WallType("PyramidWallTile") && Main.rand.Next(500) == 0)
-										{
-											int radius7 = 3;
-											for (int x = -radius7; x <= radius7; x++)
-											{
-												for (int y = -radius7; y <= radius7; y++)
-												{
-													int xPosition6 = findTileX + x;
-													int yPosition6 = findTileY + y; 
-								 
-													if (Math.Sqrt(x * x + y * y) <= radius7 + 0.5)   
-													{
-														Tile tileRad = Framing.GetTileSafely(xPosition6, yPosition6);
-														if(!tileRad.active())
-														{
-															tileRad.type = 51; //cobweb
-															tileRad.active(true);
-														}
-													}
-												}
-											}
-										}
+									}
 								}
 							}
+						}
+					}
+				}
 			}));
 		
 		}
@@ -6309,22 +6265,8 @@ namespace SOTS
 							}
 						}
 					}
-					
 				}
 			}
 		}
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

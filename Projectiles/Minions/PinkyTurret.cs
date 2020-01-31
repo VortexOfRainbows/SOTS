@@ -35,7 +35,7 @@ namespace SOTS.Projectiles.Minions
         }
         public override void AI()
         {
-            projectile.rotation += 11.11111111f;   
+            projectile.rotation += 0.11f;   
  
             for (int i = 0; i < 200; i++)
             {

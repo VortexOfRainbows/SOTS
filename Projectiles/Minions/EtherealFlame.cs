@@ -61,6 +61,7 @@ namespace SOTS.Projectiles.Minions
         {
 			Player player = Main.player[projectile.owner];
 			projectile.ai[0] = 1;
+			projectile.ai[1] = 1;
 			if(target.life <= 2500)
 			{
             target.immune[projectile.owner] = 5;
@@ -69,24 +70,7 @@ namespace SOTS.Projectiles.Minions
 			{
             target.immune[projectile.owner] = 3;
 			}
-			int color = Main.rand.Next(2);
-			float size = 60f;
-			float starPosX = projectile.Center.X - size/2f;
-			float starPosY = projectile.Center.Y - size/6f;
-			for(int i = 0; i < 5; i ++)
-			{
-				float rads = MathHelper.ToRadians(144 * i);
-				for(float j = 0; j < size; j += 3f)
-				{
-					int num1 = Dust.NewDust(new Vector2(starPosX, starPosY), 0, 0, color == 0 ? 88 : 21);
-					Main.dust[num1].noGravity = true;
-					Main.dust[num1].velocity *= 0.1f;
-					
-					Vector2 rotationDirection = new Vector2(3f, 0).RotatedBy(rads);
-					starPosX += rotationDirection.X;
-					starPosY += rotationDirection.Y;
-				}
-			}
+			projectile.netUpdate = true;
 		}
 		bool atNewLocation = true;
 		Vector2 toLocation = new Vector2(0, 0);
@@ -188,9 +172,9 @@ namespace SOTS.Projectiles.Minions
 				}
 				else
 				{
+					projectile.ai[0]++;
 					projectile.friendly = false;
 					projectile.velocity *= 0.97f;
-					projectile.ai[0]++;
 				}
 				if(projectile.ai[0] == 11)
 				{
@@ -241,6 +225,29 @@ namespace SOTS.Projectiles.Minions
 				if (projectile.frame >= Main.projFrames[projectile.type]) {
 					projectile.frame = 0;
 				}
+			}
+			if(projectile.ai[1] == 1)
+			{
+				int color = Main.rand.Next(2);
+				float size = 60f;
+				float starPosX = projectile.Center.X - size/2f;
+				float starPosY = projectile.Center.Y - size/6f;
+				for(int i = 0; i < 5; i ++)
+				{
+					float rads = MathHelper.ToRadians(144 * i);
+					for(float j = 0; j < size; j += 3f)
+					{
+						int num1 = Dust.NewDust(new Vector2(starPosX, starPosY), 0, 0, color == 0 ? 88 : 21);
+						Main.dust[num1].noGravity = true;
+						Main.dust[num1].velocity *= 0.1f;
+						
+						Vector2 rotationDirection = new Vector2(3f, 0).RotatedBy(rads);
+						starPosX += rotationDirection.X;
+						starPosY += rotationDirection.Y;
+					}
+				}
+				Main.PlaySound(SoundID.Item9, (int)(projectile.Center.X), (int)(projectile.Center.Y));
+				projectile.ai[1] = 0;
 			}
 			Lighting.AddLight(projectile.Center, Color.White.ToVector3() * 0.78f);
 			#endregion

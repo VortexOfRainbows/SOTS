@@ -9,12 +9,42 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace SOTS.Items.Challenges
+namespace SOTS.Items.GelGear.Furniture
 {
-	public class BrightBarrel : ModTile
-	{	int repeatMessage = 0;
-		bool fixVisualBug = false;
-		bool between = false;
+	public class WormwoodBarrel : ModItem
+	{
+		public override void SetStaticDefaults()
+		{
+			Tooltip.SetDefault("Wormwood Barrel");
+			Tooltip.SetDefault("");
+		}
+
+		public override void SetDefaults()
+		{
+			item.width = 24;
+			item.height = 26;
+			item.maxStack = 999;
+			item.useTurn = true;
+			item.autoReuse = true;
+			item.useAnimation = 15;
+			item.useTime = 10;
+			item.useStyle = 1;
+			item.rare = 1;
+			item.consumable = true;
+			item.createTile = mod.TileType("WormwoodBarrelTile");
+		}
+		public override void AddRecipes()
+		{
+			ModRecipe recipe = new ModRecipe(mod);
+			recipe.AddIngredient(null, "Wormwood", 9);
+			recipe.AddIngredient(ItemID.IronBar, 1);
+			recipe.AddTile(TileID.WorkBenches);
+			recipe.SetResult(this, 1);
+			recipe.AddRecipe();
+		}
+	}
+	public class WormwoodBarrelTile : ModTile
+	{	
 		public override void SetDefaults()
 		{
 			Main.tileLighted[Type] = true;
@@ -33,23 +63,22 @@ namespace SOTS.Items.Challenges
 			TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(new Func<int, int, int, int, int, int>(Chest.AfterPlacement_Hook), -1, 0, false);
 			TileObjectData.newTile.AnchorInvalidTiles = new int[] { 127 };
 			TileObjectData.newTile.StyleHorizontal = true;
-			TileObjectData.newTile.LavaDeath = false;
+			TileObjectData.newTile.LavaDeath = true;
 			TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
 			TileObjectData.addTile(Type);
 			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Challenge Barrel");
-			AddMapEntry(new Color(200, 200, 200), name, MapChestName);
+			name.SetDefault("Wormwood Barrel");
+			AddMapEntry(new Color(140, 70, 20), name, MapChestName);
 			dustType = 7;
 			disableSmartCursor = true;
 			adjTiles = new int[] { TileID.Containers };
-			chest = "Challenge Barrel";
-			chestDrop = 343;
+			chest = "Wormwood Barrel";
+			chestDrop = mod.ItemType("WormwoodBarrel");
 		}
 		public override bool HasSmartInteract()
 		{
 			return true;
 		}
-
 		public string MapChestName(string name, int i, int j)
 		{
 			int left = i;
@@ -86,7 +115,6 @@ namespace SOTS.Items.Challenges
 		}
 		public override void RightClick(int i, int j)
 		{
-			fixVisualBug = true;
 			Player player = Main.LocalPlayer;
 			Tile tile = Main.tile[i, j];
 			Main.mouseRightRelease = false;
@@ -155,12 +183,7 @@ namespace SOTS.Items.Challenges
 					Recipe.FindRecipes();
 				}
 			}
-				
-				
-			
-			
 		}
-
 		public override void MouseOver(int i, int j)
 		{
 			Player player = Main.LocalPlayer;
@@ -183,10 +206,10 @@ namespace SOTS.Items.Challenges
 			}
 			else
 			{
-				player.showItemIconText = Main.chest[chest].name.Length > 0 ? Main.chest[chest].name : "Challenge Barrel";
-				if (player.showItemIconText == "Challenge Barrel")
+				player.showItemIconText = Main.chest[chest].name.Length > 0 ? Main.chest[chest].name : "Wormwood Barrel";
+				if (player.showItemIconText == "Wormwood Barrel")
 				{
-					player.showItemIcon2 = 343;
+					player.showItemIcon2 = chestDrop;
 					player.showItemIconText = "";
 				}
 			}

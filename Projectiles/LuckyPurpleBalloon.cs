@@ -28,7 +28,7 @@ namespace SOTS.Projectiles
             projectile.height = 64; 
             projectile.timeLeft = 255;
             projectile.penetrate = -1; 
-            projectile.friendly = true; 
+            projectile.friendly = false; 
             projectile.hostile = false; 
             projectile.tileCollide = false;
             projectile.ignoreWater = true; 
