@@ -50,7 +50,7 @@ namespace SOTS.Items.IceStuff
 			{
 				for(int i = 0; i < 2; i ++)
 				{
-				Vector2 angle = new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians(7.5f - (5 * i)));
+				Vector2 angle = new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians(2.5f - (5 * i)));
 				Projectile.NewProjectile(position.X, position.Y, angle.X, angle.Y, mod.ProjectileType("HypericeRocket"), damage, knockBack, player.whoAmI);
 				}
 			}

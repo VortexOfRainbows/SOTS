@@ -31,6 +31,7 @@ namespace SOTS.NPCs.Boss
 		}
 		
 		private int storeDamage = -1;
+		private int counter = 0;
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Putrid Hook");
@@ -40,7 +41,7 @@ namespace SOTS.NPCs.Boss
 			
             npc.aiStyle = -1; 
             npc.lifeMax = 225;   
-            npc.damage = 40; 
+            npc.damage = 32; 
             npc.defense = 8;  
             npc.knockBackResist = 0f;
             npc.width = 68;
@@ -87,11 +88,15 @@ namespace SOTS.NPCs.Boss
 			{
 				projectile.velocity.X *= -0.9f;
 				projectile.velocity.Y *= -0.9f;
-				projectile.damage--;
-				if(projectile.damage < 15)
+				if(projectile.damage > 10)
 				{
-					projectile.damage = 15;
+					projectile.damage--;
 				}
+				projectile.netUpdate = true;
+			}
+			if(npc.defense == 9999)
+			{
+				damage = 0;
 			}
 		}
 		public override void NPCLoot()
@@ -104,7 +109,7 @@ namespace SOTS.NPCs.Boss
 				newNpc.ai[1] = npc.ai[1];
 				newNpc.ai[2] = npc.ai[2];
 				newNpc.ai[3] = npc.ai[3];
-				npc.netUpdate = true;
+				newNpc.netUpdate = true;
 			}
 		}
 		public override void AI()
@@ -112,6 +117,7 @@ namespace SOTS.NPCs.Boss
 			Lighting.AddLight(npc.Center, (255 - npc.alpha) * 1f / 155f, (255 - npc.alpha) * 1f / 155f, (255 - npc.alpha) * 1f / 155f);
 			npc.rotation += 0.21f;
 			int pIndex = -1;
+			int totalHook = 0;
 			if(storeDamage == -1)
 			{
 				storeDamage = npc.damage;
@@ -119,10 +125,13 @@ namespace SOTS.NPCs.Boss
 			for(int i = 0; i < 200; i++)
 			{
 				NPC npc1 = Main.npc[i];
-				if(npc1.type == mod.NPCType("PutridPinkyPhase2") && npc1.active)
+				if(npc1.type == mod.NPCType("PutridPinkyPhase2") && npc1.active && pIndex == -1)
 				{
 					pIndex = i;
-					break;
+				}
+				if(npc1.type == npc.type && npc1.active)
+				{
+					totalHook++;
 				}
 			}
 			if(pIndex == -1)
@@ -142,9 +151,23 @@ namespace SOTS.NPCs.Boss
 			Vector2 rotationArea = new Vector2(rotationDistance, 0).RotatedBy(MathHelper.ToRadians(rotationAmt + (hookID * 30)));
 			rotationArea += putridPinky.Center;
 			npc.position = rotationArea - new Vector2(npc.width/2, npc.height/2);
-			
+				
+			counter++;
+			if(Main.netMode != 1 && counter % 15 == 0)
+			{
+				npc.netUpdate = true;
+			}
+				
 			npc.alpha = putridPinky.alpha;
 			npc.dontTakeDamage = false;
+			if(totalHook <= 4)
+			{
+				npc.defense = 9999;
+				if(npc.life < npc.lifeMax && counter % 15 == 0)
+				{
+					npc.life++;
+				}
+			}
 			if(npc.alpha > 0)
 			{
 				npc.dontTakeDamage = true;

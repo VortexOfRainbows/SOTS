@@ -11,16 +11,23 @@ using Terraria.ID;
 
 namespace SOTS.Projectiles
 {    
-    public class PinkBullet : ModProjectile 
-    {	int bounce = 24;
-		int wait = 1;         
-				float oldVelocityY = 0;	
-				float oldVelocityX = 0;
-		
-		
+    public class PinkTracer : ModProjectile 
+    {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Putrid Bullet");
+			DisplayName.SetDefault("Putrid Tracer");
+			ProjectileID.Sets.TrailCacheLength[projectile.type] = 12;  
+			ProjectileID.Sets.TrailingMode[projectile.type] = 1;    
+		}
+		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		{
+			Vector2 drawOrigin = new Vector2(Main.projectileTexture[projectile.type].Width * 0.5f, projectile.height * 0.5f);
+			for (int k = 0; k < projectile.oldPos.Length; k++) {
+				Vector2 drawPos = projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, projectile.gfxOffY);
+				Color color = projectile.GetAlpha(lightColor) * ((float)(projectile.oldPos.Length - k) / (float)projectile.oldPos.Length);
+				spriteBatch.Draw(Main.projectileTexture[projectile.type], drawPos, null, color, projectile.rotation, drawOrigin, projectile.scale, SpriteEffects.None, 0f);
+			}
+			return true;
 		}
         public override void SetDefaults()
         {
@@ -48,16 +55,7 @@ namespace SOTS.Projectiles
 		}
 		public override void AI()
 		{
-			if(wait == 1)
-			{
-				wait++;
-				oldVelocityY = projectile.velocity.Y;	
-				oldVelocityX = projectile.velocity.X;
-			}
-			projectile.velocity.X += -oldVelocityX / 120f;
-			projectile.velocity.Y += -oldVelocityY / 120f;
-			
-			int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 20, 20, 72);
+			int num1 = Dust.NewDust(new Vector2(projectile.Center.X - 1, projectile.Center.Y - 1), 2, 2, 72);
 			Main.dust[num1].noGravity = true;
 			Main.dust[num1].velocity *= 0.1f;
 			

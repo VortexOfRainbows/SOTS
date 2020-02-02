@@ -65,7 +65,7 @@ namespace SOTS.NPCs.Boss
 			
             npc.aiStyle = -1; 
             npc.lifeMax = 250;   
-            npc.damage = 40; 
+            npc.damage = 32; 
             npc.defense = 0;  
             npc.knockBackResist = 0f;
             npc.width = 36;
@@ -126,9 +126,9 @@ namespace SOTS.NPCs.Boss
 			{
 				eyeReset = 0.3f;
 				fireRate = 0;
-				npc.netUpdate = true;
 				if(Main.netMode != 1)
 				{
+					npc.netUpdate = true;
 					float shootToX = aimToX - npc.Center.X;
 					float shootToY = aimToY - npc.Center.Y;
 					float distance = (float)System.Math.Sqrt((double)(shootToX * shootToX + shootToY * shootToY));

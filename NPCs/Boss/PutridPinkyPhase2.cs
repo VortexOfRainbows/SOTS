@@ -67,7 +67,7 @@ namespace SOTS.NPCs.Boss
 			
             npc.aiStyle = -1;   
 			npc.lifeMax = 5500;
-            npc.damage = 37;   
+            npc.damage = 32;   
             npc.defense = 0;   
             npc.knockBackResist = 0f;
             npc.width = 116;
@@ -138,7 +138,7 @@ namespace SOTS.NPCs.Boss
         }
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
-            npc.lifeMax = (int)(npc.lifeMax * bossLifeScale * 0.7f);  //boss life scale in expertmode
+            npc.lifeMax = (int)(npc.lifeMax * bossLifeScale * 0.7f) + 1;  //boss life scale in expertmode
             npc.damage = (int)(npc.damage * 1.2f);  //boss damage increase in expermode
         }
 		
@@ -171,16 +171,17 @@ namespace SOTS.NPCs.Boss
 			if(npc.scale == 1)
 			spriteBatch.Draw(texture, drawPos, null, drawColor, npc.rotation, drawOrigin, npc.scale, SpriteEffects.None, 0f);
 		}
-		private void DustCircle(float x, float y, float j, float dist, float speed, float scaleMod)
+		private void DustCircle(float x, float y, float j, float dist, float scaleMod)
 		{
 			for(float i = 0; i < 360; i += j)
 			{
-				Vector2 circularLocation = new Vector2(dist, 0).RotatedBy(MathHelper.ToRadians(i));
+				Vector2 circularLocation = new Vector2(-dist, 0).RotatedBy(MathHelper.ToRadians(i));
 				
-				int num1 = Dust.NewDust(new Vector2(x + circularLocation.X - 4, y + circularLocation.Y - 4), 4, 4, 72);
+				int num1 = Dust.NewDust(new Vector2(x - 4, y - 4), 4, 4, 72);
 				Main.dust[num1].noGravity = true;
-				Main.dust[num1].velocity = circularLocation / circularLocation.Length() * speed;
-				Main.dust[num1].scale *= scaleMod;
+				Main.dust[num1].velocity = circularLocation * 0.08f;
+				//Main.dust[num1].alpha = 0;
+				Main.dust[num1].scale *= 2.5f;
 			}
 		}
 		public override void AI()
@@ -207,11 +208,14 @@ namespace SOTS.NPCs.Boss
 				followPlayer = 1;
 				rotateDir = Main.rand.Next(2) == 1 ? -1 : 1;
 				rotationSpeed = 0.4f * rotateDir;
-				if(Main.netMode != 1)
-				npc.netUpdate = true;
 			
 				InitiateHooks();
 				return;
+			}
+			if(followPlayer == 1)
+			{
+				fireToX = player.Center.X;
+				fireToY = player.Center.Y;
 			}
 			if(attackPhase == 1)
 			{
@@ -219,45 +223,18 @@ namespace SOTS.NPCs.Boss
 				rotationSpeed = rotationSpeed * rotateDir > 0.4f ? rotationSpeed * 0.99f : rotationSpeed * 1.01f;
 				eyeReset = eyeReset < 1 ? eyeReset + 0.08f : 1;
 				attackTimer--;
-				if(followPlayer == 1)
-				{
-					fireToX = player.Center.X;
-					fireToY = player.Center.Y;
-				}
-				if(attackTimer == 900 || attackTimer == 630 || attackTimer == 360)
+				if(attackTimer == 900 || attackTimer == 630 || attackTimer == 360 || attackTimer == 840 || attackTimer == 570 || attackTimer == 300 || attackTimer == 780 || attackTimer == 510 || attackTimer == 240)
 				{
 					followPlayer = 0;
-					DustCircle(npc.Center.X, npc.Center.Y, 10, 128, -12, 2);
+					DustCircle(npc.Center.X, npc.Center.Y, 10, 128, 2);
 				}
-				if(attackTimer == 870 || attackTimer == 600 || attackTimer == 330)
+				if(attackTimer == 870 || attackTimer == 600 || attackTimer == 330 || attackTimer == 810 || attackTimer == 540 || attackTimer == 270 || attackTimer == 750 || attackTimer == 480 || attackTimer == 210)
 				{
 					LaunchLaser(npc.Center, new Vector2(fireToX, fireToY));
 					followPlayer = 1;
 				}
-				if(attackTimer == 840 || attackTimer == 570 || attackTimer == 300)
+				if(attackTimer == 0) // next pattern
 				{
-					followPlayer = 0;
-					DustCircle(npc.Center.X, npc.Center.Y, 10, 128, -12, 2);
-				}
-				if(attackTimer == 810 || attackTimer == 540 || attackTimer == 270)
-				{
-					LaunchLaser(npc.Center, new Vector2(fireToX, fireToY));
-					followPlayer = 1;
-				}
-				if(attackTimer == 780 || attackTimer == 510 || attackTimer == 240)
-				{
-					followPlayer = 0;
-					DustCircle(npc.Center.X, npc.Center.Y, 10, 128, -12, 2);
-				}
-				if(attackTimer == 750 || attackTimer == 480)
-				{
-					LaunchLaser(npc.Center, new Vector2(fireToX, fireToY));
-					followPlayer = 1;
-				}
-				
-				if(attackTimer == 210) //final laser before next pattern
-				{
-					LaunchLaser(npc.Center, new Vector2(fireToX, fireToY));
 					followPlayer = 1;
 					attackPhase = 2;
 					attackTimer = 1200;
@@ -265,9 +242,6 @@ namespace SOTS.NPCs.Boss
 					storeDamage = npc.damage;
 					npc.damage = 0;
 				}
-				
-				if(Main.netMode != 1)
-				npc.netUpdate = true;
 			}
 			if(attackPhase == 2)
 			{
@@ -275,7 +249,7 @@ namespace SOTS.NPCs.Boss
 				if(attackTimer >= 1000)
 				{
 					npc.alpha += 3;
-					rotationSpeed *= 1.01f;
+					rotationSpeed *= 1.012f;
 					rotationDistance += rotationDistance < 300 ? 1.5f : rotationDistance > 300 ? -1.5f : 0;
 					npc.velocity *= 0.92f;
 					npc.velocity += toPlayer * 0.22f;
@@ -287,7 +261,7 @@ namespace SOTS.NPCs.Boss
 				else if(attackTimer > 950)
 				{
 					npc.velocity *= 0.5f;
-					rotationSpeed *= 0.9625f;
+					rotationSpeed *= 0.959f;
 					npc.alpha -= 5;
 					if(npc.alpha < 0)
 					{
@@ -315,6 +289,7 @@ namespace SOTS.NPCs.Boss
 					attackTimer = -1;
 					rotationDistance = 1;
 					BurstAttack(1, 5f);
+					BurstSpiral();
 				}
 				if(attackTimer == -10)
 				{
@@ -324,13 +299,54 @@ namespace SOTS.NPCs.Boss
 				if(attackTimer == -20)
 				{
 					rotationDistance = 4;
-					attackPhase = 1;
-					attackTimer = 1500;
+					attackPhase = 3;
+					attackTimer = 1800;
 					BurstAttack(1, 8f);
+					exponentialMod = -20;
 				}
 				
-				if(Main.netMode != 1)
-				npc.netUpdate = true;
+			}
+			if(attackPhase == 3)
+			{
+				rotationDistance += rotationDistance < 120 ? 1.5f : rotationDistance > 120 ? -1.5f : 0;
+				rotationSpeed = rotationSpeed * rotateDir > 0.7f ? rotationSpeed * 0.99f : rotationSpeed * 1.01f;
+				eyeReset = eyeReset < 1 ? eyeReset + 0.08f : 1;
+				attackTimer--;
+				if(attackTimer <= 1100)
+				{
+					if(exponentialMod > -11)
+					{
+						if(exponentialMod == -5)
+						{
+							rotateDir *= -1;
+							rotationSpeed = Main.rand.Next(30,61) * 0.1f * rotateDir;
+						}
+						rotationDistance += exponentialMod;
+						exponentialMod--;
+					}
+				}
+				if(attackTimer == 990 || attackTimer == 960 || attackTimer == 930 || attackTimer == 690 || attackTimer == 660 || attackTimer == 630 || attackTimer == 390 || attackTimer == 360 || attackTimer == 330)
+				{
+					for(int i = 0; i < 200; i++)
+					{
+						if(Main.npc[i].type == mod.NPCType("PutridHook") && Main.npc[i].active)
+						{
+							DustCircle(Main.npc[i].Center.X, Main.npc[i].Center.Y, 20, 64, 1);
+						}
+					}
+				}
+				if(attackTimer == 900 || attackTimer == 600 || attackTimer == 300)
+				{
+					rotationSpeed = 0;
+					exponentialMod = 10;
+					BurstAttack(2, 14f);
+					BurstAttack(2, 10f);
+				}
+				if(attackTimer == 200)
+				{
+					attackTimer = 1200;
+					attackPhase = 1;
+				}
 			}
 			npc.dontTakeDamage = false;
 			if(npc.alpha > 55)
@@ -343,13 +359,18 @@ namespace SOTS.NPCs.Boss
 				{
 					Main.npc[i].ai[0] = player.Center.X;
 					Main.npc[i].ai[1] = player.Center.Y;
-					if(attackPhase == 2 || attackPhase == 3)
+					if(attackPhase == 2)
 					{
-						float aimToX = npc.Center.X - Main.npc[i].Center.X;
-						float aimToY = npc.Center.Y - Main.npc[i].Center.Y;
-						Vector2 aimTo = new Vector2(5, 0).RotatedBy(Math.Atan2(aimToY, aimToX) + MathHelper.ToRadians(180));
-						aimToX = aimTo.X + npc.Center.X;
-						aimToY = aimTo.Y + npc.Center.Y;
+						Main.npc[i].ai[0] = npc.Center.X;
+						Main.npc[i].ai[1] = npc.Center.Y;
+					}
+					if(attackPhase == 3)
+					{
+						float aimToX = Main.npc[i].Center.X - npc.Center.X;
+						float aimToY = Main.npc[i].Center.Y - npc.Center.Y;
+						Vector2 aimTo = new Vector2(100, 0).RotatedBy(Math.Atan2(aimToY, aimToX));
+						aimToX = aimTo.X + Main.npc[i].Center.X;
+						aimToY = aimTo.Y + Main.npc[i].Center.Y;
 						
 						Main.npc[i].ai[0] = aimToX;
 						Main.npc[i].ai[1] = aimToY;
@@ -365,32 +386,64 @@ namespace SOTS.NPCs.Boss
 			{
 				npc.active = false;
 			}
+			
+			if(Main.netMode != 1)
+			npc.netUpdate = true;
+		}
+		private void BurstSpiral()
+		{
+			for(int i = 0; i < 200; i++)
+			{
+				if(Main.npc[i].type == mod.NPCType("HookTurret") && Main.npc[i].active)
+				{
+					if(Main.npc[i].ai[2] == -1)
+					{
+						Main.npc[i].ai[3] = Main.rand.Next(76, 125);
+						//Main.npc[i].netUpdate = true;
+					}
+				}
+			}
 		}
 		private void BurstAttack(int type, float speed)
 		{
-			if(type == 1 || type == 0)
+			for(int i = 0; i < 200; i++)
 			{
-				for(int i = 0; i < 200; i++)
+				if(Main.npc[i].type == mod.NPCType("PutridHook") && Main.npc[i].active)
 				{
-					if(Main.npc[i].type == mod.NPCType("PutridHook") && Main.npc[i].active)
+					float aimToX = npc.Center.X - Main.npc[i].Center.X;
+					float aimToY = npc.Center.Y - Main.npc[i].Center.Y;
+					Vector2 aimTo = new Vector2(speed, 0).RotatedBy(Math.Atan2(aimToY, aimToX) + MathHelper.ToRadians(180));
+					
+					int damage = npc.damage / 2;
+					if (Main.expertMode) 
 					{
-						float aimToX = npc.Center.X - Main.npc[i].Center.X;
-						float aimToY = npc.Center.Y - Main.npc[i].Center.Y;
-						Vector2 aimTo = new Vector2(speed, 0).RotatedBy(Math.Atan2(aimToY, aimToX) + MathHelper.ToRadians(180));
-						aimToX = aimTo.X + npc.Center.X;
-						aimToY = aimTo.Y + npc.Center.Y;
-						
-						Main.npc[i].ai[0] = aimToX;
-						Main.npc[i].ai[1] = aimToY;
-						
-						int damage = npc.damage / 2;
-						if (Main.expertMode) 
-						{
-							damage = (int)(damage / Main.expertDamage);
-						}
+						damage = (int)(damage / Main.expertDamage);
+					}
 			
-						if(Main.netMode != 1 && type == 1)
-						Projectile.NewProjectile(npc.Center.X, npc.Center.Y, aimTo.X, aimTo.Y, mod.ProjectileType("PinkBullet"), damage, 0, Main.myPlayer);
+					if(Main.netMode != 1 && type == 1)
+					Projectile.NewProjectile(Main.npc[i].Center.X, Main.npc[i].Center.Y, aimTo.X, aimTo.Y, mod.ProjectileType("PinkBullet"), damage, 0, Main.myPlayer);
+				
+					damage = (npc.damage + 20) / 2;
+					if (Main.expertMode) 
+					{
+						damage = (int)(damage / Main.expertDamage);
+					}
+					
+					if(Main.netMode != 1 && type == 2)
+					{
+						Vector2 aimTo2 = new Vector2(aimTo.X, aimTo.Y).RotatedBy(MathHelper.ToRadians(15));
+						Vector2 aimTo3 = new Vector2(aimTo.X, aimTo.Y).RotatedBy(MathHelper.ToRadians(-15));
+						Projectile.NewProjectile(Main.npc[i].Center.X, Main.npc[i].Center.Y, aimTo.X, aimTo.Y, mod.ProjectileType("PinkTracer"), damage, 0, Main.myPlayer);
+						Projectile.NewProjectile(Main.npc[i].Center.X, Main.npc[i].Center.Y, aimTo2.X, aimTo2.Y, mod.ProjectileType("PinkTracer"), damage, 0, Main.myPlayer);
+						Projectile.NewProjectile(Main.npc[i].Center.X, Main.npc[i].Center.Y, aimTo3.X, aimTo3.Y, mod.ProjectileType("PinkTracer"), damage, 0, Main.myPlayer);
+						if(Main.expertMode)
+						{
+							Vector2 aimTo4 = new Vector2(aimTo.X, aimTo.Y).RotatedBy(MathHelper.ToRadians(7.5f));
+							Vector2 aimTo5 = new Vector2(aimTo.X, aimTo.Y).RotatedBy(MathHelper.ToRadians(-7.5f));
+							Projectile.NewProjectile(Main.npc[i].Center.X, Main.npc[i].Center.Y, aimTo4.X, aimTo4.Y, mod.ProjectileType("PinkTracer"), damage, 0, Main.myPlayer);
+							Projectile.NewProjectile(Main.npc[i].Center.X, Main.npc[i].Center.Y, aimTo5.X, aimTo5.Y, mod.ProjectileType("PinkTracer"), damage, 0, Main.myPlayer);
+						}
+					
 					}
 				}
 			}
@@ -424,7 +477,7 @@ namespace SOTS.NPCs.Boss
 					Main.npc[npcProj].ai[0] = player.Center.X;
 					Main.npc[npcProj].ai[1] = player.Center.Y;
 					Main.npc[npcProj].ai[2] = i;
-					Main.npc[npcProj].netUpdate = true;
+					//Main.npc[npcProj].netUpdate = true;
 				}
 			}
 		}
