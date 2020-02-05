@@ -40,10 +40,10 @@ namespace SOTS.Items.IceStuff
 		{
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(null, "FragmentOfPermafrost", 5);
-			recipe.AddIngredient(ItemID.HallowedBar, 12);
-			recipe.AddIngredient(ItemID.FrostCore, 2);
-			recipe.AddIngredient(ItemID.SoulofSight, 5);
-			recipe.AddIngredient(ItemID.SoulofMight, 5);
+			recipe.AddIngredient(ItemID.HallowedBar, 5);
+			recipe.AddIngredient(ItemID.FrostCore, 1);
+			recipe.AddIngredient(ItemID.SoulofSight, 3);
+			recipe.AddIngredient(ItemID.SoulofMight, 3);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.SetResult(this, 1);
 			recipe.AddRecipe();

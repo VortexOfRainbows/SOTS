@@ -2,7 +2,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
  
-namespace SOTS.Items
+namespace SOTS.Items.Pyramid
 {
     public class LuckyPurpleBalloon : ModItem
     {
@@ -16,10 +16,20 @@ namespace SOTS.Items
             item.CloneDefaults(ItemID.Carrot);
             item.shoot = mod.ProjectileType("LuckyPurpleBalloon");
             item.buffType = mod.BuffType("PurpleBalloon");
-			item.value = 75000;
-			item.rare = 4;
+            item.value = Item.sellPrice(0, 2, 25, 0);
+            item.rare = 5;
+			item.width = 18;
+			item.height = 42;
         }
- 
+		public override void AddRecipes()
+		{
+			ModRecipe recipe = new ModRecipe(mod);
+			recipe.AddIngredient(null, "CursedMatter", 4);
+			recipe.AddIngredient(ItemID.Sapphire, 1);
+			recipe.AddTile(TileID.Anvils);
+			recipe.SetResult(this);
+			recipe.AddRecipe();
+		}
         public override void UseStyle(Player player)
         {
             if (player.whoAmI == Main.myPlayer && player.itemTime == 0)

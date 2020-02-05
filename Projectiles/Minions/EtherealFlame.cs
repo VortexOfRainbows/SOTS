@@ -71,6 +71,8 @@ namespace SOTS.Projectiles.Minions
             target.immune[projectile.owner] = 3;
 			}
 			projectile.netUpdate = true;
+			if(Main.myPlayer == projectile.owner)
+			Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("SmallStellarHitbox"), 0, 0, Main.myPlayer);
 		}
 		bool atNewLocation = true;
 		Vector2 toLocation = new Vector2(0, 0);
@@ -228,6 +230,7 @@ namespace SOTS.Projectiles.Minions
 			}
 			if(projectile.ai[1] == 1)
 			{
+				/*
 				int color = Main.rand.Next(2);
 				float size = 60f;
 				float starPosX = projectile.Center.X - size/2f;
@@ -247,6 +250,7 @@ namespace SOTS.Projectiles.Minions
 					}
 				}
 				Main.PlaySound(SoundID.Item9, (int)(projectile.Center.X), (int)(projectile.Center.Y));
+				*/
 				projectile.ai[1] = 0;
 			}
 			Lighting.AddLight(projectile.Center, Color.White.ToVector3() * 0.78f);
