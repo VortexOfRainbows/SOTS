@@ -17,7 +17,7 @@ namespace SOTS.Items.Fragments
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Putrid Coin");
-			Tooltip.SetDefault("Critical strikes have a 50% chance to deal 20 more damage\nReceiving damage has a 50% chance to poison you");
+			Tooltip.SetDefault("Critical strikes have a 50% chance to deal 30 more damage\nReceiving damage has a 50% chance to poison you");
 		}
 		public override void SetDefaults()
 		{
@@ -32,7 +32,7 @@ namespace SOTS.Items.Fragments
 			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");	
 			if(Main.rand.Next(2) == 0)
 			{
-				modPlayer.CritBonusDamage += 10;
+				modPlayer.CritBonusDamage += 15;
 				if(modPlayer.onhit == 1)
 				{
 					player.AddBuff(BuffID.Poisoned, 300, false); //5 seconds

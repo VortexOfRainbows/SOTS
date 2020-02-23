@@ -35,8 +35,9 @@ namespace SOTS.Items.Potions
 		{
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.BottledWater, 1);
-			recipe.AddIngredient(null, "SoulResidue", 2);
-			recipe.AddIngredient(null, "Peanut", 2);
+			recipe.AddIngredient(null, "PhantomFish", 1);
+			recipe.AddIngredient(null, "SoulResidue", 1);
+			recipe.AddIngredient(null, "Peanut", 1);
 			recipe.AddIngredient(ItemID.Deathweed, 1);
 			recipe.AddTile(13);
 			recipe.SetResult(this, 1);

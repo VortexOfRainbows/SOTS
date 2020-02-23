@@ -12,6 +12,8 @@ namespace SOTS.Dusts
 			dust.velocity.Y = Main.rand.Next(-10, 11) * 0.2f;
 			dust.velocity.X = Main.rand.Next(-10, 11) * 0.2f;
 			dust.noGravity = true;
+			dust.position.X -= 2;
+			dust.position.Y += 2;
 		}
 		public override bool MidUpdate(Dust dust)
 		{

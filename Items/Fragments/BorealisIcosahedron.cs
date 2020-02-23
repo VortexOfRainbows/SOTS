@@ -37,7 +37,7 @@ namespace SOTS.Items.Fragments
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.FrostCore, 1);
 			recipe.AddIngredient(null, "AbsoluteBar", 6);
-			recipe.AddIngredient(null, "FragmentOfPermafrost", 6);
+			recipe.AddIngredient(null, "FragmentOfPermafrost", 6); //replace later (dissolving permafrost)
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.SetResult(this);
 			recipe.AddRecipe();

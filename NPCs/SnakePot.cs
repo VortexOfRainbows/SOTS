@@ -150,7 +150,7 @@ namespace SOTS.NPCs
 			}
 			public override void OnHitPlayer(Player player, int damage, bool crit)
 			{
-				player.AddBuff(BuffID.Venom, 90, true);
+				player.AddBuff(BuffID.Venom, 72, true);
 			}  
 			public override void FindFrame(int frameHeight) 
 			{

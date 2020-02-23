@@ -67,6 +67,7 @@ namespace SOTS.Items
 			recipe.AddIngredient(null, "SpiritTracer", 1);
 			recipe.AddIngredient(ItemID.DaedalusStormbow, 1);
 			recipe.AddIngredient(ItemID.SpectreBar, 10);
+			recipe.AddIngredient(null, "FragmentOfTide", 8);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.SetResult(this);
 			recipe.AddRecipe();

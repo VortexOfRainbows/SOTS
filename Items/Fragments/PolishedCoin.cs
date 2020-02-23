@@ -17,7 +17,7 @@ namespace SOTS.Items.Fragments
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Polished Coin");
-			Tooltip.SetDefault("Critical strikes have a 50% chance to deal 30 more damage\n3% increased crit chance\nImmunity to bleeding and poisoned debuffs");
+			Tooltip.SetDefault("Critical strikes have a 50% chance to deal 40 more damage\n3% increased crit chance\nImmunity to bleeding and poisoned debuffs");
 		}
 		public override void SetDefaults()
 		{
@@ -39,7 +39,7 @@ namespace SOTS.Items.Fragments
 			
 			if(Main.rand.Next(2) == 0)
 			{
-				modPlayer.CritBonusDamage += 15;
+				modPlayer.CritBonusDamage += 20;
 			}
             player.buffImmune[BuffID.Bleeding] = true; 
             player.buffImmune[BuffID.Poisoned] = true; 

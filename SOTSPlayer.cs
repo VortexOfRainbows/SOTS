@@ -158,24 +158,78 @@ namespace SOTS
 			caughtType = mod.ItemType("SpikyPufferfish"); }
 			if (player.ZoneBeach && liquidType == 0 && Main.rand.Next(225) == 0) {
 			caughtType = mod.ItemType("CrabClaw"); }
-			if (liquidType == 1 && Main.rand.Next(50) == 0){
-			caughtType = mod.ItemType("GeodeCrate"); }
-			if (liquidType == 1 && Main.rand.Next(17) == 0 && player.FindBuffIndex(BuffID.Crate) > -1) {
-			caughtType = mod.ItemType("GeodeCrate"); }
 			
 			
-            if (Main.rand.Next(800) == 0 && player.ZoneBeach && liquidType == 0){
+            if (scaleCatch2(power, 0, 90, 150, 750) && player.ZoneBeach && liquidType == 0){
 			caughtType = mod.ItemType("PinkJellyfishStaff"); }
-            else if (Main.rand.Next(50) == 0 && player.ZoneBeach && liquidType == 0 && bait.type == 2438){ //Checks for pink jellyfish bait
+            else if (scaleCatch2(power, 0, 70, 30, 150) && player.ZoneBeach && liquidType == 0 && bait.type == 2438){ //Checks for pink jellyfish bait
 			caughtType = mod.ItemType("PinkJellyfishStaff"); }
-            if (Main.rand.Next(800) == 0 && player.ZoneRockLayerHeight && liquidType == 0){
+			
+            if (scaleCatch2(power, 0, 90, 150, 750) && player.ZoneRockLayerHeight && liquidType == 0){
 			caughtType = mod.ItemType("BlueJellyfishStaff"); }
-            else if (Main.rand.Next(50) == 0 && player.ZoneRockLayerHeight && liquidType == 0 && bait.type == 2436){ //Checks blue for jellyfish bait
+            else if (scaleCatch2(power, 0, 70, 30, 150) && player.ZoneRockLayerHeight && liquidType == 0 && bait.type == 2436){ //Checks blue jellyfish bait
 			caughtType = mod.ItemType("BlueJellyfishStaff"); }
-            else if (Main.rand.Next(50) == 0 && player.ZoneRockLayerHeight && liquidType == 0 && bait.type == 2437){ //Checks blue for jellyfish bait
+            else if (scaleCatch2(power, 0, 70, 30, 150) && player.ZoneRockLayerHeight && liquidType == 0 && bait.type == 2437){ //Checks green jellyfish bait
 			caughtType = mod.ItemType("BlueJellyfishStaff"); }
 			
+			if(ZeplineBiome)
+			{
+				junk = false;
+			}
+            if (scaleCatch2(power, 0, 40, 7, 11) && ZeplineBiome && liquidType == 0){
+			caughtType = mod.ItemType("PhantomFish"); }
+			else if(scaleCatch2(power, 0, 80, 8, 14) && PyramidBiome && !ZeplineBiome && liquidType == 0){
+			caughtType = mod.ItemType("PhantomFish"); }
+			
+            if (scaleCatch2(power, 20, 80, 7, 20) && ZeplineBiome && liquidType == 0){ //gains the same rarity as Phantom Fish when at 80, fails to catch below 20 power
+			caughtType = mod.ItemType("Curgeon"); }
+			else if(scaleCatch2(power, 30, 150, 12, 25) && PyramidBiome && !ZeplineBiome && liquidType == 0){
+			caughtType = mod.ItemType("Curgeon"); }
+				
 		}
+		/** minPower is the minimum power required, and yields a 1/maxRate chance of catching
+		*	maxPower is the maximum power required, and yields a 1/minRate chance of catching
+		*	rates are overall rounded down
+		*	anything below minPower will fail to catch
+		*	pre condition: minPower < maxPower, minRate < maxRate
+		*	post condition: returns true at a specific chance.
+		*/
+		public bool scaleCatch2(int power, int minPower, int maxPower, int minRate, int maxRate)
+		{
+			if(power < minPower)
+			{
+				return false;
+			}
+			int fixRate = maxRate - minRate;
+			power -= minPower;
+			maxPower -= minPower;
+			float powerRate = (float)power / maxPower;
+			int rate = maxRate - (int)(fixRate * powerRate);
+			if(rate < minRate)
+			{
+				rate = minRate;
+			}
+			return Main.rand.Next(rate) == 0;
+		}
+		/*
+		public int scaleCatch(int power, int minPower, int maxPower, int minRate, int maxRate)
+		{
+			int fixRate = maxRate - minRate;
+			power -= minPower;
+			maxPower -= minPower;
+			float powerRate = (float)power / maxPower;
+			int rate = maxRate - (int)(fixRate * powerRate);
+			if(rate > maxRate)
+			{
+				rate = maxRate;
+			}
+			if(rate < minRate)
+			{
+				rate = minRate;
+			}
+			return rate;
+		}
+		*/
 		public override void UpdateBiomes()
         {
             //PlanetariumBiome = (SOTSWorld.planetarium > 0);
@@ -410,7 +464,7 @@ namespace SOTS
 			
 			if(PurpleBalloon && item.fishingPole > 0)
 			{
-				  Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(40));
+				  Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(50));
 				  Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, mod.ProjectileType("PurpleBobber"), damage, type, player.whoAmI);
 				  //return false;
 			}

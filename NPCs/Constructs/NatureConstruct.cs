@@ -65,25 +65,30 @@ namespace SOTS.NPCs.Constructs
 			}
 			public void SpellLaunch()
 			{
+				int damage = npc.damage / 2;
+				if (Main.expertMode) 
+				{
+					damage = (int)(damage / Main.expertDamage);
+				}
 				if(spellAmt == 1)
 				{
-					Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 0, -7,  mod.ProjectileType("NatureBolt"), (int)(npc.damage * 0.33f), 0, 0, 40, npc.target);
+					Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 0, -7,  mod.ProjectileType("NatureBolt"), damage, 0, 0, 40, npc.target);
 				}
 				if(spellAmt == 2)
 				{
-					Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 1, -6,  mod.ProjectileType("NatureBolt"), (int)(npc.damage * 0.33f), 0, 0, 60, npc.target);
+					Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 1, -6,  mod.ProjectileType("NatureBolt"), damage, 0, 0, 60, npc.target);
 				}
 				if(spellAmt == 3)
 				{
-					Projectile.NewProjectile(npc.Center.X, npc.Center.Y, -1, -6,  mod.ProjectileType("NatureBolt"), (int)(npc.damage * 0.33f), 0, 0, 80, npc.target);
+					Projectile.NewProjectile(npc.Center.X, npc.Center.Y, -1, -6,  mod.ProjectileType("NatureBolt"), damage, 0, 0, 80, npc.target);
 				}
 				if(spellAmt == 4)
 				{
-					Projectile.NewProjectile(npc.Center.X, npc.Center.Y, -2, -5,  mod.ProjectileType("NatureBolt"), (int)(npc.damage * 0.33f), 0, 0, 100, npc.target);
+					Projectile.NewProjectile(npc.Center.X, npc.Center.Y, -2, -5,  mod.ProjectileType("NatureBolt"), damage, 0, 0, 100, npc.target);
 				}
 				if(spellAmt == 5)
 				{
-					Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 2, -5,  mod.ProjectileType("NatureBolt"), (int)(npc.damage * 0.33f), 0, 0, 120, npc.target);
+					Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 2, -5,  mod.ProjectileType("NatureBolt"), damage, 0, 0, 120, npc.target);
 					canSpell = true;
 				}
 				Main.PlaySound(SoundID.Item92, (int)(npc.Center.X), (int)(npc.Center.Y));

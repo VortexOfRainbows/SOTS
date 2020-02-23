@@ -28,6 +28,7 @@ namespace SOTS.Projectiles.Crushers
             Main.projFrames[projectile.type] = 5;
 			projectile.penetrate = -1;
 			projectile.friendly = true;
+			projectile.melee = true;
 			projectile.timeLeft = 24;
 			projectile.tileCollide = false;
 			projectile.hostile = false;

@@ -18,15 +18,15 @@ namespace SOTS.NPCs.Boss
 		public override void SetDefaults()
 		{
 			
-            npc.aiStyle = 14;  //5 is the flying AI
-            npc.lifeMax = 400;   //boss life
-            npc.damage = 30;  //boss damage
-            npc.defense = 0;    //boss defense
+            npc.aiStyle = 14; 
+            npc.lifeMax = 400;   
+            npc.damage = 40; 
+            npc.defense = 0;   
             npc.knockBackResist = 0f;
             npc.width = 38;
             npc.height = 38;
-            animationType = NPCID.SkeletronHead;   //this boss will behavior like the DemonEye
-            Main.npcFrameCount[npc.type] = 1;    //boss frame/animation
+            animationType = NPCID.SkeletronHead;  
+            Main.npcFrameCount[npc.type] = 1; 
             npc.value = 20000;
             npc.npcSlots = 1f;
             npc.boss = false;
@@ -35,10 +35,7 @@ namespace SOTS.NPCs.Boss
             npc.noTileCollide = true;
             npc.HitSound = SoundID.NPCHit1;
             npc.DeathSound = SoundID.NPCDeath1;
-            //music = MusicID.GoblinArmy;
             npc.netAlways = true;
-			
-			//bossBag = mod.ItemType("ZBossBag3");
 		}
 		public override void NPCLoot()
 		{
@@ -62,11 +59,11 @@ namespace SOTS.NPCs.Boss
 			npc.timeLeft = 600;
 			if(Main.player[npc.target].dead)
 			{
-			 despawn++;
+				despawn++;
 			}
 			if(despawn >= 720)
 			{
-			npc.active = false;
+				npc.active = false;
 			}
 		}
 	}

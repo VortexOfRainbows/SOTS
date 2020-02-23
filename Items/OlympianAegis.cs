@@ -49,7 +49,6 @@ namespace SOTS.Items
 			recipe.AddIngredient(null, "GraniteProtector", 1);
 			recipe.AddIngredient(null, "SpiritShield", 1);
 			recipe.AddIngredient(null, "CrestofDasuver", 1);
-			recipe.AddIngredient(null, "BluePowerChamber", 1);
 			recipe.AddTile(TileID.TinkerersWorkbench);
 			recipe.SetResult(this);
 			recipe.AddRecipe();

@@ -16,10 +16,10 @@ namespace SOTS.Items.SpecialDrops
 
 			item.width = 34;
 			item.height = 34;
-			item.value = 5500;
-			item.rare = 2;
+            item.value = Item.sellPrice(0, 0, 10, 0);
+			item.rare = 1;
 			item.maxStack = 99;
-			item.bait = 15;
+			item.bait = 5;
 		}
 	}
 }

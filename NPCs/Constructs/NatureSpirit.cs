@@ -22,7 +22,7 @@ namespace SOTS.NPCs.Constructs
 		{
 			npc.aiStyle = 10;
             npc.lifeMax = 300; 
-            npc.damage = 40; 
+            npc.damage = 34; 
             npc.defense = 0;   
             npc.knockBackResist = 0f;
             npc.width = 58;
@@ -39,6 +39,9 @@ namespace SOTS.NPCs.Constructs
             npc.netAlways = false;
 			music = MusicID.Boss3;
 		}
+		private int InitiateHealth = 1200;
+		private float ExpertHealthMult = 1.5f;
+		
 		int phase = 1;
 		int counter = 0;
 		public void SpellLaunch()
@@ -145,14 +148,14 @@ namespace SOTS.NPCs.Constructs
 				if(phase == 1)
 				{
 					phase = 2;
-					npc.lifeMax = (int)(2000 * (Main.expertMode ? 1.5 : 1));
-					npc.life = (int)(2000 * (Main.expertMode ? 1.5 : 1));
+					npc.lifeMax = (int)(InitiateHealth * (Main.expertMode ? ExpertHealthMult : 1));
+					npc.life = (int)(InitiateHealth * (Main.expertMode ? ExpertHealthMult : 1));
 				}
 			}
 		}
 		public override void NPCLoot()
 		{
-			
+			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("DissolvingNature"), 1);	
 		}	
 	}
 }

@@ -41,7 +41,7 @@ namespace SOTS.NPCs.Boss
 			
             npc.aiStyle = -1; 
             npc.lifeMax = 225;   
-            npc.damage = 32; 
+            npc.damage = 40; 
             npc.defense = 8;  
             npc.knockBackResist = 0f;
             npc.width = 68;
@@ -99,6 +99,10 @@ namespace SOTS.NPCs.Boss
 				damage = 0;
 			}
 		}
+        public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+        {
+            npc.damage = (int)(npc.damage * 0.8f);  
+        }
 		public override void NPCLoot()
 		{
 			if(Main.netMode != 1)

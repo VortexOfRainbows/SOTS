@@ -33,13 +33,25 @@ namespace SOTS.Items.Pyramid
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.SandstoneSlab, 2);
 			recipe.AddTile(TileID.Autohammer);
-			recipe.SetResult(this, 1);
+			recipe.SetResult(this, 4);
 			recipe.AddRecipe();
 			
 			recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.SandstoneSlab, 2);
 			recipe.AddTile(TileID.LunarCraftingStation);
-			recipe.SetResult(this, 1);
+			recipe.SetResult(this, 4);
+			recipe.AddRecipe();
+			
+			recipe = new ModRecipe(mod);
+			recipe.AddIngredient(null, "PyramidSlab", 1);
+			recipe.AddTile(TileID.WorkBenches);
+			recipe.SetResult(this, 4);
+			recipe.AddRecipe();
+			
+			recipe = new ModRecipe(mod);
+			recipe.AddIngredient(null, "PyramidWall", 4);
+			recipe.AddTile(TileID.WorkBenches);
+			recipe.SetResult(ItemID.SandstoneSlab, 2);
 			recipe.AddRecipe();
 		}
 	}

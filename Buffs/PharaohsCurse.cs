@@ -28,7 +28,7 @@ namespace SOTS.Buffs
 			{
 				if(!NPC.AnyNPCs(mod.NPCType("DeadlyFragment")))
 				{
-					if(Main.rand.Next(2000) == 0)
+					if(Main.rand.Next(3600) == 0)
 					{
 						if(Main.netMode != 1)
 						{
@@ -37,7 +37,7 @@ namespace SOTS.Buffs
 						}
 					}
 				}
-				else if(Main.rand.Next(12000) == 0)
+				else if(Main.rand.Next(18000) == 0)
 				{
 					if(Main.netMode != 1)
 					{
@@ -47,9 +47,13 @@ namespace SOTS.Buffs
 				}
 				if(modPlayer.weakerCurse && player.statLife > 100)
 				{
-					player.lifeRegen -= 4;
+					player.lifeRegen -= 3;
 				}
-				else if(!modPlayer.weakerCurse)
+				if(modPlayer.weakerCurse && player.statLife > 200)
+				{
+					player.lifeRegen -= 1;
+				}
+				if(!modPlayer.weakerCurse)
 				{
 					player.lifeRegen -= 50;
 				}

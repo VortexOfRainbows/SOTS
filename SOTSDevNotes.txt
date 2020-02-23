@@ -1,0 +1,118 @@
+//Currently Unfixable?
+1. Snakeskin armor may have minor visual/despawn bugs? (not a big deal)
+
+//Balance
+1. Shuriken slicer to vibrant iron
+2. Dissolving Nether => Focus Crystal, Dissolving Frostbite => Permafrost Isocahedron, Dissolving Evil => Cursed Isocahedron
+
+//Check For Bugs
+1. Check for other bosses that possibly need damage normalization
+
+//Ideas (YTBA, yet to be added)
+Priority: 2 Crushers
+Remaining Spirits
+
+Putrid Pinky Spawn Animation -> Place down peanuts -> Pinky eats it -> pinky grows -> pinky explodes and transforms into monster
+
+1. Lashes Of Lightning (Void + Magic) (otherworld + electrum)
+2. Thunder Jacket
+	1. Recieving damage will deal massive damage back to the attacker, but drains void when hit
+3. Spark Stompers (generates a greek fire trail behind you)
+4. Replace all the Blood Essence items
+	1. New Void Accessory: Platinum/Gold
+		3. Upgrades into electrum battery, which removes the downside
+6. New Ore, Spawns in space as little planet "clusters"
+	1. It's called Electrum (plate), (yellow and blue) and can be mined with demonite level or above after having defeated Putrid Pinky
+	2. It will also be craftable (for the people who don't have new worlds) silver + gold + otherworld fragment
+	3. Requires a skyforge, and acts as an alternative to hellstone (clouds + electrum / obsidian + hellstone)
+	4. Skyforge can be crafted out of hellforge and some of the ore if needed
+	5. Supercharged Electrum
+		1. Shockwaves explosions to other nearby electrum plates, releasing a storm of projectiles
+	6. Electrum plats will be struck with lightning every now-and-then, supercharging it
+7. Goblinsteel + Permafrost fragments => Frigid Gear, baby versions of icy amalgamation drops
+8. Vibrant Iron/Lead Gear <= Iron + Glowing Mushroom + Earth Fragments
+9. More Pyramid Fish
+	2. Zephyrous Zepline
+		1. Rare pyramid fish, found only at the zepline lure
+		2. Strong yoyo, mirrors cascade in terms of tier. Does less damage, goes less distance, but also has a spining ring of projectiles around it
+	3. Zephyr Fish are more common
+	4. Snakefin
+		1. Alternative crafting for summoner's potion
+		2. Can be turned to snakeskin, sashimi, or cooked fish
+	5. Spectre Whale 
+		1. Used for double vision potion
+		2. Uncommon pyramid fish, found more commonly at the zepline lure
+	6. Pyramid Crate
+10. New Pyramid enemy
+	1. Blockade Mimic
+		1. Can spawn upon breaking a pyramid block
+		2. can only move X/Y one at a time
+		3. charges back and forth
+		4. doesn't hurt you for a bit after spawning
+		5. cannot go through walls (except after it first escapes one)
+	2. Perturbed Soul
+		1. More aggressive soul variant
+		2. Same health and damage, but rushes you down
+
+Complete:
+
+2/21/20
+1. Cursed Caviar complete
+2. Slowing down production, I'm no longer forcing myself to work on this
+3. Update Released
+
+2/20/20
+1. Curgeon Added
+2. Started on Cursed Caviar
+
+2/17/20
+1. Voidspace emblem takes batteries
+2. Curgeon Sprite + Cursed Caviar Sprite + Pyramid Crate Sprite
+
+2/16/20
+1. Pharaoh Curse Debuff damage lowered. -4 when greater than 200, -3 when greater than 100 but less than 200. prev: -4 when greater than 100
+	1. Deadly fragment spawnrate also decreased. (just one) 1/2000 per frame => 1/3600, (more than one) 1/12000 per frame => 1/18000
+2. Snake venom shorten duration: 90 frames => 72 frames
+3. Normalized Pharaoh's Curse Damage, Increased Expert scale to compensate: 0.65 => 0.8
+	1. Basically: Nerfed Normal Mode Damage, Expert Damage Maintained
+4. Increased Putrid Pinky Damage (and summons), 32 => 40, but decreased expert scale to compensate: 1.2 => 0.8
+	1. Basically: Buffed Normal Mode Damage, Nerfed Expert Damage
+5. Added various recipes for various pyramid blocks
+6. Added Platinum and Gold Batteries
+
+2/15/20
+1. Phantom Fish added, required for Soul Access, Got in Pyramid and Zepline
+2. Catch rate multiplier methods
+3. Obsidian Eruption increased hitbox size (star and explosion) + tile detection turned to cursor.Y detection
+	1. Lowered damage by 1 and firerate by 2 to compensate
+	2. Inferno Fragment cost increased
+
+2/13/20
+1. Phantom Phish, Gold Battery, and Platinum Battery sprites made
+
+2/12/20
+1. Blightful tonic added
+	1. fixed consumability and made buff effects not-reapply
+
+2/11/20
+1. Added dissolving nature, required for biomass blast
+2. Normalized Nature Spirit Damage and Health values
+
+2/6/20
+1. Sharanga visual and effect changed, crafting recipe change
+2. Redacted blood items and power cores, modified some recipes, and relocated (folders) some void items
+3. Buffed Voidspace to compensate for blood essence removal
+4. Buffed Obsidian Eruption Star block detection limit
+
+2/5/20
+1. Obsidian Eruption now costs Infernal Fragment + Otherworld
+2. Changes to recipes: possesed armor now costs evil fragments, curse ward no longer costs heart crysstal, now costs warding charm
+3. Geode Crate Redacted
+4. Tweaked damage values and purple balloon location
+5. Wormwood helix bullets now spawn closer to the end of the barrel
+
+2/4/20
+1. Lucky Purple Balloon to Pyramid Drop
+2. Finished Fixing Purple Balloon
+3. Shrink purple balloon projectile (looks more like an accessory)
+4. Celestial Flame Multiplayer Dust spawns all sides (now uses a dust gen proj)

@@ -15,7 +15,7 @@ Developer, Artist, and Playtesting - Vortex#6230 (Discord)
 Playtesting - Crimsonkeep, FlameFreezer
 
 Update 0.18 The Purge
--Reworked or Removed almost every old item, some will be rebalanced and added back later (400+ items removed lmao)
+-Reworked or Removed almost every old item, some will be rebalanced and added back later (400+ items removed)
 --Most secret or nigh unobtainable items have been changed or removed
 -CHALLENGES REMOVED, different variations might be added back later
 -Added pyramid biome

@@ -28,7 +28,7 @@ namespace SOTS.Items.Pyramid
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.LifeCrystal, 1);
+			recipe.AddIngredient(null, "WardingCharm", 1);
 			recipe.AddIngredient(null, "FragmentOfEvil", 1);
 			recipe.AddIngredient(null, "FragmentOfEarth", 1);
 			recipe.AddIngredient(ItemID.ShadowScale, 10);
@@ -37,7 +37,7 @@ namespace SOTS.Items.Pyramid
 			recipe.AddRecipe();
 			
 			recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.LifeCrystal, 1);
+			recipe.AddIngredient(null, "WardingCharm", 1);
 			recipe.AddIngredient(null, "FragmentOfEvil", 1);
 			recipe.AddIngredient(null, "FragmentOfEarth", 1);
 			recipe.AddIngredient(ItemID.TissueSample, 10);

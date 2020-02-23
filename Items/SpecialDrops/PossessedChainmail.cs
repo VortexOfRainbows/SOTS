@@ -40,6 +40,7 @@ namespace SOTS.Items.SpecialDrops
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.IronChainmail, 1);
 			recipe.AddIngredient(ItemID.SoulofNight, 15);
+			recipe.AddIngredient(null, "FragmentOfEvil", 3);
 			recipe.SetResult(this);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.AddRecipe();
@@ -47,6 +48,7 @@ namespace SOTS.Items.SpecialDrops
 			recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.LeadChainmail, 1);
 			recipe.AddIngredient(ItemID.SoulofNight, 15);
+			recipe.AddIngredient(null, "FragmentOfEvil", 3);
 			recipe.SetResult(this);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.AddRecipe();

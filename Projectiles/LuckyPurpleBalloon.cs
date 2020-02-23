@@ -78,15 +78,16 @@ namespace SOTS.Projectiles
 				plusY = 2;
 			}
 			projectile.velocity *= 0.1f;
-			projectile.rotation = player.velocity.X * 0.04f;
 			projectile.position.X = player.Center.X - projectile.width/2;
 			projectile.position.Y = player.Center.Y - projectile.height/2;
-			projectile.position.X += (float)(67 * Main.player[projectile.owner].direction);
+			projectile.position.X -= (float)(27 * Main.player[projectile.owner].direction);
             float gravDir = Main.player[projectile.owner].gravDir;
-            projectile.position.Y -= (30f + plusY) * gravDir;
+            projectile.position.Y -= (40f + plusY) * gravDir;
+			projectile.position.Y += Main.player[projectile.owner].gfxOffY;
+			projectile.rotation = player.velocity.X * 0.03f;
 			if(gravDir == -1)
 			{
-				projectile.rotation = MathHelper.ToRadians(180);
+				projectile.rotation = MathHelper.ToRadians(180) + (player.velocity.X * -0.03f);
 			}
 		}
 	}

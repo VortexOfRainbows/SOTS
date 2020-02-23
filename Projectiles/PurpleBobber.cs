@@ -17,6 +17,7 @@ namespace SOTS.Projectiles
 			projectile.bobber = true;
 			projectile.penetrate = -1;
 			projectile.timeLeft = 2000;
+			projectile.height += 8;
         }
 		public override bool PreAI()
 		{
@@ -51,12 +52,12 @@ namespace SOTS.Projectiles
                 int type = Main.player[projectile.owner].inventory[Main.player[projectile.owner].selectedItem].type;
                 float gravDir = Main.player[projectile.owner].gravDir;
  
-                pPosX += (float)(60 * Main.player[projectile.owner].direction);
-                if (Main.player[projectile.owner].direction < 0)
+                pPosX += (float)(-20 * Main.player[projectile.owner].direction);
+                if (Main.player[projectile.owner].direction > 0)
                 {
 					pPosX -= 13f;
                 }
-                pPosY -= 30f * gravDir;
+                pPosY -= 40f * gravDir;
  
                 if (gravDir == -1f)
                 {

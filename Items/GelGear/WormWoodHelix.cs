@@ -38,8 +38,8 @@ namespace SOTS.Items.GelGear
         {
 			Vector2 projVelocity1 = new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians(45));
 			Vector2 projVelocity2 = new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians(315));
-			Projectile.NewProjectile(position.X, position.Y, projVelocity1.X * 0.35f, projVelocity1.Y * 0.35f, mod.ProjectileType("Fusion1"), damage, knockBack, Main.myPlayer);
-			Projectile.NewProjectile(position.X, position.Y, projVelocity2.X * 0.35f, projVelocity2.Y * 0.35f, mod.ProjectileType("Fusion2"), damage, knockBack, Main.myPlayer);
+			Projectile.NewProjectile(position.X + speedX * 4, position.Y + speedY * 4, projVelocity1.X * 0.325f, projVelocity1.Y * 0.325f, mod.ProjectileType("Fusion1"), damage, knockBack, Main.myPlayer);
+			Projectile.NewProjectile(position.X + speedX * 4, position.Y + speedY * 4, projVelocity2.X * 0.325f, projVelocity2.Y * 0.325f, mod.ProjectileType("Fusion2"), damage, knockBack, Main.myPlayer);
 			
 			return false;
 		}

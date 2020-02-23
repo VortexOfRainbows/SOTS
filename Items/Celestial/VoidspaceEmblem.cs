@@ -18,7 +18,7 @@ namespace SOTS.Items.Celestial
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Voidspace Emblem");
-			Tooltip.SetDefault("Increases void damage and magic damage by 10%\nDecreases void cost by 10%\nIncreases void regen by 3.75 and max void by 50\nGenerates blood essence when hit");
+			Tooltip.SetDefault("Increases void damage and magic damage by 10%\nDecreases void cost by 10%\nIncreases void regen by 3.75 and max void by 50\nRegenerate void when hit");
 		}
 		public override void SetDefaults()
 		{
@@ -36,9 +36,18 @@ namespace SOTS.Items.Celestial
 		{
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(null, "SanguiteBar", 15);
-			recipe.AddIngredient(null, "LifeDevourer", 1);
 			recipe.AddIngredient(null, "WormWoodParasite", 1);
 			recipe.AddIngredient(null, "VoidenBracelet", 1);
+			recipe.AddIngredient(null, "GoldBattery", 1);
+			recipe.SetResult(this);
+			recipe.AddTile(TileID.MythrilAnvil);
+			recipe.AddRecipe();
+			
+			recipe = new ModRecipe(mod);
+			recipe.AddIngredient(null, "SanguiteBar", 15);
+			recipe.AddIngredient(null, "WormWoodParasite", 1);
+			recipe.AddIngredient(null, "VoidenBracelet", 1);
+			recipe.AddIngredient(null, "PlatinumBattery", 1);
 			recipe.SetResult(this);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.AddRecipe();
@@ -55,8 +64,7 @@ namespace SOTS.Items.Celestial
 			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");	
 			if(modPlayer.onhit == 1)
 			{
-				player.QuickSpawnItem(mod.ItemType("BloodEssence"), 1 + (modPlayer.onhitdamage / 25));	
-				voidPlayer.voidMeter += 5 + (modPlayer.onhitdamage / 12);
+				voidPlayer.voidMeter += 3 + (modPlayer.onhitdamage / 9);
 			}
 		}
 	}

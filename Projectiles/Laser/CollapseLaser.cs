@@ -223,7 +223,7 @@ namespace SOTS.Projectiles.Laser
 				i++;
 				if(i >= 30)
 				{
-					if(npcs.Count >= toBeat && toBeat > -1 && FindClosestPoint(drawPos, new Vector2(posListX[j], posListY[j])))
+					if(npcs.Count >= toBeat && toBeat > -1 && FindClosestPoint(drawPos, new Vector2(posListX[j], posListY[j]))) 
 					{
 						radianDir = Redirect(radianDir, drawPos, new Vector2(posListX[j], posListY[j]));
 					}
@@ -238,7 +238,7 @@ namespace SOTS.Projectiles.Laser
 					k += 1;
 				}
 				
-				if(npcs.Count >= toBeat && toBeat > -1 && FindClosestPoint(drawPos, new Vector2(posListX[j], posListY[j])))
+				if(npcs.Count >= toBeat && toBeat > -1 && FindClosestPoint(drawPos, new Vector2(posListX[j], posListY[j]))) 
 				{
 					bool increment = getHitbox(drawPos, false, new Vector2(posListX[j], posListY[j]));
 					if(increment)

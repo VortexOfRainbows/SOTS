@@ -67,7 +67,7 @@ namespace SOTS.NPCs.Boss
 			
             npc.aiStyle = -1;   
 			npc.lifeMax = 5500;
-            npc.damage = 32;   
+            npc.damage = 40; 
             npc.defense = 0;   
             npc.knockBackResist = 0f;
             npc.width = 116;
@@ -138,8 +138,8 @@ namespace SOTS.NPCs.Boss
         }
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
-            npc.lifeMax = (int)(npc.lifeMax * bossLifeScale * 0.7f) + 1;  //boss life scale in expertmode
-            npc.damage = (int)(npc.damage * 1.2f);  //boss damage increase in expermode
+            npc.lifeMax = (int)(npc.lifeMax * bossLifeScale * 0.7f) + 1;  
+            npc.damage = (int)(npc.damage * 0.8f);  
         }
 		
 		public override bool PreAI()

@@ -22,7 +22,7 @@ namespace SOTS.Projectiles.HolyRelics
         public override void SetDefaults()
         {
 			projectile.CloneDefaults(616);
-            aiType = 616; //18 is the demon scythe style
+            aiType = 616; 
 			projectile.alpha = 255;
 			projectile.timeLeft = 900;
 			projectile.width = 1;

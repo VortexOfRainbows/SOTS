@@ -38,7 +38,7 @@ namespace SOTS.Items
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(null, "Scatterseed", 1);
 			recipe.AddIngredient(null, "Snakeskin", 12);
-			recipe.AddIngredient(null, "FragmentOfNature", 8);
+			recipe.AddIngredient(null, "DissolvingNature", 1);
 			recipe.AddIngredient(ItemID.Vilethorn, 1);
 			recipe.AddIngredient(ItemID.StaffofRegrowth, 1);
 			recipe.AddIngredient(ItemID.Acorn, 20);
@@ -49,7 +49,7 @@ namespace SOTS.Items
 			recipe = new ModRecipe(mod);
 			recipe.AddIngredient(null, "Scatterseed", 1);
 			recipe.AddIngredient(null, "Snakeskin", 12);
-			recipe.AddIngredient(null, "FragmentOfNature", 8);
+			recipe.AddIngredient(null, "DissolvingNature", 1);
 			recipe.AddIngredient(ItemID.CrimsonRod, 1);
 			recipe.AddIngredient(ItemID.StaffofRegrowth, 1);
 			recipe.AddIngredient(ItemID.Acorn, 20);

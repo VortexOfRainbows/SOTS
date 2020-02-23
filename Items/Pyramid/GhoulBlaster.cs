@@ -40,9 +40,9 @@ namespace SOTS.Items.Pyramid
 		{
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.PhoenixBlaster, 1);
+			recipe.AddIngredient(null, "RoyalMagnum", 1);
 			recipe.AddIngredient(null, "CursedMatter", 4);
 			recipe.AddIngredient(null, "SoulResidue", 12);
-			recipe.AddIngredient(null, "RoyalMagnum", 1);
 			recipe.AddIngredient(ItemID.SoulofNight, 15);
 			recipe.AddIngredient(ItemID.Ruby, 1);
 			recipe.AddTile(TileID.MythrilAnvil);

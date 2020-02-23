@@ -27,6 +27,7 @@ namespace SOTS.Projectiles.Crushers
 			projectile.width = 70;
             Main.projFrames[projectile.type] = 5;
 			projectile.penetrate = -1;
+			projectile.melee = true;
 			projectile.friendly = true;
 			projectile.timeLeft = 24;
 			projectile.tileCollide = false;
@@ -63,6 +64,7 @@ namespace SOTS.Projectiles.Crushers
         {
 			Player player = Main.player[projectile.owner];
             target.immune[projectile.owner] = 10;
+			if(Main.rand.Next(3) == 0)
 			target.AddBuff(BuffID.OnFire, 360, false);
         }
 	}

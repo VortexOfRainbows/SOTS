@@ -202,7 +202,7 @@ namespace SOTS.NPCs.Boss
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
             npc.lifeMax = (int)((npc.lifeMax * bossLifeScale * 0.75f));  
-            npc.damage = (int)(npc.damage * 0.65f); 
+            npc.damage = (int)(npc.damage * 0.8f); 
         }
 		public override bool PreAI()
 		{
@@ -257,6 +257,12 @@ namespace SOTS.NPCs.Boss
 		}
 		public override void AI()
 		{
+			int damage = npc.damage / 2;
+			if (Main.expertMode) 
+			{
+				damage = (int)(damage / Main.expertDamage);
+			}
+			
 			if(ai2 % 5 == 0 && ai2 <= 360)
 			{
 				npc.scale += 0.01f;
@@ -294,10 +300,10 @@ namespace SOTS.NPCs.Boss
 				finishTeleport = -1;
 				if(Main.netMode != 1)
 				{
-					Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 0, 0, mod.ProjectileType("CurseSpike"), (int)(npc.damage * 0.45f), 0, Main.myPlayer, 90, 270);
-					Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 0, 0, mod.ProjectileType("CurseSpike"), (int)(npc.damage * 0.45f), 0, Main.myPlayer, 180, 330);
-					Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 0, 0, mod.ProjectileType("CurseSpike"), (int)(npc.damage * 0.45f), 0, Main.myPlayer, 270, 390);
-					Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 0, 0, mod.ProjectileType("CurseSpike"), (int)(npc.damage * 0.45f), 0, Main.myPlayer, 360, 450);
+					Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 0, 0, mod.ProjectileType("CurseSpike"), damage, 0, Main.myPlayer, 90, 270);
+					Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 0, 0, mod.ProjectileType("CurseSpike"), damage, 0, Main.myPlayer, 180, 330);
+					Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 0, 0, mod.ProjectileType("CurseSpike"), damage, 0, Main.myPlayer, 270, 390);
+					Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 0, 0, mod.ProjectileType("CurseSpike"), damage, 0, Main.myPlayer, 360, 450);
 				}
 			}
 			
@@ -383,7 +389,7 @@ namespace SOTS.NPCs.Boss
 						{
 							if(Main.netMode != 1)
 							{
-								Projectile.NewProjectile(npc.Center.X + Main.rand.Next(-100,101), npc.Center.Y + Main.rand.Next(-20,21), 0, 7 + Main.rand.Next(-2,3), mod.ProjectileType("PyramidCollapse"), (int)(npc.damage * 0.7f), 0, Main.myPlayer);
+								Projectile.NewProjectile(npc.Center.X + Main.rand.Next(-100,101), npc.Center.Y + Main.rand.Next(-20,21), 0, 7 + Main.rand.Next(-2,3), mod.ProjectileType("PyramidCollapse"), (int)(damage * 1.5f), 0, Main.myPlayer);
 							}
 						}
 						Main.PlaySound(SoundID.Item14, (int)(npc.Center.X), (int)(npc.Center.Y));
@@ -402,7 +408,7 @@ namespace SOTS.NPCs.Boss
 					{
 						if(Main.netMode != 1)
 						{
-							int lineProj = Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 7 * direction, 0, mod.ProjectileType("CurseBall"), (int)(npc.damage * 0.4f), 0, 0);
+							int lineProj = Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 7 * direction, 0, mod.ProjectileType("CurseBall"), damage, 0, 0);
 							Main.projectile[lineProj].timeLeft = 2700;
 							NetMessage.SendData(27, -1, -1, null, lineProj);
 						}
@@ -412,7 +418,7 @@ namespace SOTS.NPCs.Boss
 					{
 						if(Main.netMode != 1)
 						{
-							int lineProj = Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 0, 7 * direction, mod.ProjectileType("CurseBall"), (int)(npc.damage * 0.4f), 0, 0);
+							int lineProj = Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 0, 7 * direction, mod.ProjectileType("CurseBall"), damage, 0, 0);
 							Main.projectile[lineProj].timeLeft = 2700;
 							NetMessage.SendData(27, -1, -1, null, lineProj);
 						}
@@ -440,7 +446,7 @@ namespace SOTS.NPCs.Boss
 					{	
 						if(Main.netMode != 1)
 						{
-							Projectile.NewProjectile(npc.Center.X + Main.rand.Next(-100,101), npc.Center.Y + Main.rand.Next(-20,21), 0, 7 + Main.rand.Next(-2,3), mod.ProjectileType("PyramidCollapse"), (int)(npc.damage * 0.7f), 0, Main.myPlayer);
+							Projectile.NewProjectile(npc.Center.X + Main.rand.Next(-100,101), npc.Center.Y + Main.rand.Next(-20,21), 0, 7 + Main.rand.Next(-2,3), mod.ProjectileType("PyramidCollapse"), (int)(damage * 1.5f), 0, Main.myPlayer);
 						}
 					}
 					Main.PlaySound(SoundID.Item14, (int)(npc.Center.X), (int)(npc.Center.Y));
@@ -451,7 +457,7 @@ namespace SOTS.NPCs.Boss
 					{
 						if(Main.netMode != 1)
 						{
-							Projectile.NewProjectile(npc.Center.X + Main.rand.Next(-100,101), npc.Center.Y + Main.rand.Next(-20,21), 0, 7 + Main.rand.Next(-2,3), mod.ProjectileType("CurseBall"), (int)(npc.damage * 0.5f), 0, Main.myPlayer);
+							Projectile.NewProjectile(npc.Center.X + Main.rand.Next(-100,101), npc.Center.Y + Main.rand.Next(-20,21), 0, 7 + Main.rand.Next(-2,3), mod.ProjectileType("CurseBall"), (int)(damage * 1.25f), 0, Main.myPlayer);
 						}
 					}
 					Main.PlaySound(SoundID.Item14, (int)(npc.Center.X), (int)(npc.Center.Y));

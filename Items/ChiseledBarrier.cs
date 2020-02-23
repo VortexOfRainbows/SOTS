@@ -38,7 +38,6 @@ namespace SOTS.Items
 			recipe.AddIngredient(null, "MarbleDefender", 1);
 			recipe.AddIngredient(null, "ArcaneAqueduct", 1);
 			recipe.AddIngredient(null, "TinyPlanet", 1);
-			recipe.AddIngredient(null, "RedPowerChamber", 1);
 			recipe.AddTile(TileID.TinkerersWorkbench);
 			recipe.SetResult(this);
 			recipe.AddRecipe();
