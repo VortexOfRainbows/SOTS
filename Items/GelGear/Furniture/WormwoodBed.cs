@@ -45,21 +45,26 @@ namespace SOTS.Items.GelGear.Furniture
 		{
 			Main.tileFrameImportant[Type] = true;
 			Main.tileLavaDeath[Type] = true;
+			TileID.Sets.HasOutlines[Type] = true;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style4x2);
 			TileObjectData.newTile.CoordinateHeights = new int[]{ 16,18 };
 			TileObjectData.addTile(Type);
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsChair);
 			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Bed");
+			name.SetDefault("Wormwood Bed");
 			AddMapEntry(new Color(140, 70, 20), name);
 			dustType = 7;
-			disableSmartCursor = false;
+			//disableSmartCursor = true;
 			adjTiles = new int[]{ TileID.Beds };
 			bed = true;
 		}
 		public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height)
 		{
-			offsetY = -2;
+			//offsetY = -2;
+		}
+		public override bool HasSmartInteract()
+		{
+			return true;
 		}
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{

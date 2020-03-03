@@ -30,7 +30,5 @@ namespace SOTS.Items.Pyramid
             item.shootSpeed = 8;
 
 		}
-
-		
 	}
 }

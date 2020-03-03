@@ -172,19 +172,32 @@ namespace SOTS
             else if (scaleCatch2(power, 0, 70, 30, 150) && player.ZoneRockLayerHeight && liquidType == 0 && bait.type == 2437){ //Checks green jellyfish bait
 			caughtType = mod.ItemType("BlueJellyfishStaff"); }
 			
-			if(ZeplineBiome)
-			{
-				junk = false;
-			}
-            if (scaleCatch2(power, 0, 40, 7, 11) && ZeplineBiome && liquidType == 0){
+            if (scaleCatch2(power, 0, 30, 5, 10) && ZeplineBiome && liquidType == 0){
+			caughtType = mod.ItemType("SeaSnake"); }
+			else if(scaleCatch2(power, 0, 60, 6, 12) && PyramidBiome && !ZeplineBiome && liquidType == 0){
+			caughtType = mod.ItemType("SeaSnake"); }
+			else if (scaleCatch2(power, 0, 40, 7, 11) && ZeplineBiome && liquidType == 0){
 			caughtType = mod.ItemType("PhantomFish"); }
 			else if(scaleCatch2(power, 0, 80, 8, 14) && PyramidBiome && !ZeplineBiome && liquidType == 0){
 			caughtType = mod.ItemType("PhantomFish"); }
-			
-            if (scaleCatch2(power, 20, 80, 7, 20) && ZeplineBiome && liquidType == 0){ //gains the same rarity as Phantom Fish when at 80, fails to catch below 20 power
+			else if (scaleCatch2(power, 20, 80, 7, 20) && ZeplineBiome && liquidType == 0){ //gains the same rarity as Phantom Fish when at 80, fails to catch below 20 power
 			caughtType = mod.ItemType("Curgeon"); }
 			else if(scaleCatch2(power, 30, 150, 12, 25) && PyramidBiome && !ZeplineBiome && liquidType == 0){
 			caughtType = mod.ItemType("Curgeon"); }
+			else if (scaleCatch2(power, 0, 200, 100, 300) && ZeplineBiome && liquidType == 0){ //1/300 at 0, 1/200 at 100, 1/100 at 200, etc
+			caughtType = mod.ItemType("ZephyrousZeppelin"); }
+            else if (scaleCatch2(power, 0, 200, 100, 300) && ZeplineBiome && liquidType == 0){ //1/300 at 0, 1/200 at 100, 1/100 at 200, etc
+			caughtType = ItemID.ZephyrFish; }
+			else if(!player.HasBuff(BuffID.Crate))
+			{
+				if(scaleCatch2(power, 0, 200, 20, 200) && (PyramidBiome || ZeplineBiome) && liquidType == 0){
+				caughtType = mod.ItemType("PyramidCrate"); }
+			}
+			else
+			{
+				if(scaleCatch2(power, 0, 200, 10, 100) && (PyramidBiome || ZeplineBiome) && liquidType == 0){
+				caughtType = mod.ItemType("PyramidCrate"); }
+			}
 				
 		}
 		/** minPower is the minimum power required, and yields a 1/maxRate chance of catching
@@ -317,58 +330,50 @@ namespace SOTS
 				{
 					amount++;
 				}
-				
-				 for(int i = Main.rand.Next(200); amount > 0; i = Main.rand.Next(200))
+				for(int i = Main.rand.Next(200); amount > 0; i = Main.rand.Next(200))
 				{
-				   NPC target2 = Main.npc[i];
+					NPC target2 = Main.npc[i];
 					
-				float shootFromX = target.Center.X;
-				float shootFromY = target.Center.Y;
-				
+					float shootFromX = target.Center.X;
+					float shootFromY = target.Center.Y;
+					
 					if(target2.Center.X >= target.Center.X)
-					shootFromX += target.width;
+						shootFromX += target.width;
 						
 					if(target2.Center.X <= target.Center.X)
-					shootFromX -= target.width;
+						shootFromX -= target.width;
 						
 					if(target2.Center.Y >= target.Center.Y)
-					shootFromY += target.height;
+						shootFromY += target.height;
 						
 					if(target2.Center.Y <= target.Center.Y)
-					shootFromY -= target.height;
+						shootFromY -= target.height;
 						
 					
-				   
-				   float shootToX = target2.position.X + (float)target2.width * 0.5f - shootFromX;
-				   float shootToY = target2.position.Y + (float)target2.height * 0.5f - shootFromY;
-				   float distance = (float)System.Math.Sqrt((double)(shootToX * shootToX + shootToY * shootToY));
+					 
+					float shootToX = target2.position.X + (float)target2.width * 0.5f - shootFromX;
+					float shootToY = target2.position.Y + (float)target2.height * 0.5f - shootFromY;
+					float distance = (float)System.Math.Sqrt((double)(shootToX * shootToX + shootToY * shootToY));
 
-				   //If the distance between the projectile and the live target is active
-				   if(distance < 320f && !target2.friendly && target2.active)
-				   {
-					   if(amount > 0)
-					   {
-						amount--;
-					   
-						   //Dividing the factor of 3f which is the desired velocity by distance
-						   distance = 0.2f / distance;
-			   
-						   //Multiplying the shoot trajectory with distance times a multiplier if you so choose to
-						   shootToX *= distance * 5;
-						   shootToY *= distance * 5;
-			   
-						   //Shoot projectile and set ai back to 0
-						   Projectile.NewProjectile(shootFromX, shootFromY, shootToX, shootToY, mod.ProjectileType("OrionChain"), (int)(proj.damage * 0.75f), 0, Main.myPlayer, 0f, 0f); //Spawning a projectile
-					   }
-				   }
-				   else
-				   {
-					amount -= 0.01f;  
-				   }
+					if(distance < 320f && !target2.friendly && target2.active)
+					{
+						if(amount > 0)
+						{
+							amount--;
+					  
+							distance = 0.2f / distance;
+					 
+							shootToX *= distance * 5;
+							shootToY *= distance * 5;
+					 
+							Projectile.NewProjectile(shootFromX, shootFromY, shootToX, shootToY, mod.ProjectileType("OrionChain"), (int)(proj.damage * 0.75f), 0, Main.myPlayer, 0f, 0f); //Spawning a projectile
+						}
+					}
+					else
+					{
+						amount -= 0.01f;  
+					}
 				}
-				
-				
-				
 			}
 			
 			if(BloodTapping == 1)
@@ -497,7 +502,7 @@ namespace SOTS
 			{
 				for(int i = doubledAmount; i > 0; i--)
 				{
-				  Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(40));
+				  Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians(i % 2 == 0 ? i * 6 : i * -6));
 				  Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI);
 				}
 			}

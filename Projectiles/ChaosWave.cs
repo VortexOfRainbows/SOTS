@@ -22,15 +22,16 @@ namespace SOTS.Projectiles
         public override void SetDefaults()
         {
 			projectile.CloneDefaults(14);
-            aiType = 14; //18 is the demon scythe style
+            aiType = 14; 
 			projectile.alpha = 255;
 			projectile.timeLeft = 1000000;
 		}
 		public override void AI()
-		{Dust.NewDust(new Vector2(projectile.Center.X, projectile.Center.Y), 0, 0, 206);
-		Dust.NewDust(new Vector2(projectile.Center.X, projectile.Center.Y), 0, 0, 206);
-		Dust.NewDust(new Vector2(projectile.Center.X, projectile.Center.Y), 0, 0, 206);
-		Dust.NewDust(new Vector2(projectile.Center.X, projectile.Center.Y), 0, 0, 206);
+		{
+			for(int i = 0; i < 4; i++)
+			{
+				Dust.NewDust(new Vector2(projectile.Center.X, projectile.Center.Y), 0, 0, 206);
+			}
 			projectile.alpha = 255;
 		}
 		public override void Kill(int timeLeft)
@@ -38,7 +39,7 @@ namespace SOTS.Projectiles
  
             Vector2 position = projectile.Center;
             Main.PlaySound(SoundID.Item14, (int)position.X, (int)position.Y);
-            int radius = 20;     //this is the explosion radius, the highter is the value the bigger is the explosion
+            int radius = 20;   
  
             for (int x = -radius; x <= radius; x++)
             {
@@ -47,10 +48,10 @@ namespace SOTS.Projectiles
                     int xPosition = (int)(x + position.X / 16.0f);
                     int yPosition = (int)(y + position.Y / 16.0f);
  
-                    if (Math.Sqrt(x * x + y * y) <= radius + 0.5)   //this make so the explosion radius is a circle
+                    if (Math.Sqrt(x * x + y * y) <= radius + 0.5)
                     {
-                        WorldGen.KillTile(xPosition, yPosition, false, false, false);  //this make the explosion destroy tiles  
-                        Dust.NewDust(position, 22, 22, DustID.Smoke, 0.0f, 0.0f, 206, new Color(), 1f);  //this is the dust that will spawn after the explosion
+                        WorldGen.KillTile(xPosition, yPosition, false, false, false); 
+                        Dust.NewDust(position, 22, 22, DustID.Smoke, 0.0f, 0.0f, 206, new Color(), 1f); 
                     }
                 }
             }

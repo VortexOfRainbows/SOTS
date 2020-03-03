@@ -48,7 +48,7 @@ namespace SOTS.Items.GelGear.Furniture
 			Main.tileTable[Type] = true;
 			Main.tileLavaDeath[Type] = true;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style3x2);
-			TileObjectData.newTile.CoordinateHeights = new[]{ 16, 16 };
+			TileObjectData.newTile.CoordinateHeights = new[]{ 16, 18 };
 			TileObjectData.addTile(Type);
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
 			AddMapEntry(new Color(140, 70, 20));

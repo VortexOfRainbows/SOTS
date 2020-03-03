@@ -14,6 +14,9 @@ Pyramid Dungeon World Gen
 Developer, Artist, and Playtesting - Vortex#6230 (Discord)
 Playtesting - Crimsonkeep, FlameFreezer
 
+Update 0.18.1 
+-More pyramid stuff and resprites
+
 Update 0.18 The Purge
 -Reworked or Removed almost every old item, some will be rebalanced and added back later (400+ items removed)
 --Most secret or nigh unobtainable items have been changed or removed

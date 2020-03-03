@@ -4,6 +4,7 @@
 //Balance
 1. Shuriken slicer to vibrant iron
 2. Dissolving Nether => Focus Crystal, Dissolving Frostbite => Permafrost Isocahedron, Dissolving Evil => Cursed Isocahedron
+3. Zepline Room Expansion
 
 //Check For Bugs
 1. Check for other bosses that possibly need damage normalization
@@ -31,18 +32,6 @@ Putrid Pinky Spawn Animation -> Place down peanuts -> Pinky eats it -> pinky gro
 	6. Electrum plats will be struck with lightning every now-and-then, supercharging it
 7. Goblinsteel + Permafrost fragments => Frigid Gear, baby versions of icy amalgamation drops
 8. Vibrant Iron/Lead Gear <= Iron + Glowing Mushroom + Earth Fragments
-9. More Pyramid Fish
-	2. Zephyrous Zepline
-		1. Rare pyramid fish, found only at the zepline lure
-		2. Strong yoyo, mirrors cascade in terms of tier. Does less damage, goes less distance, but also has a spining ring of projectiles around it
-	3. Zephyr Fish are more common
-	4. Snakefin
-		1. Alternative crafting for summoner's potion
-		2. Can be turned to snakeskin, sashimi, or cooked fish
-	5. Spectre Whale 
-		1. Used for double vision potion
-		2. Uncommon pyramid fish, found more commonly at the zepline lure
-	6. Pyramid Crate
 10. New Pyramid enemy
 	1. Blockade Mimic
 		1. Can spawn upon breaking a pyramid block
@@ -53,8 +42,34 @@ Putrid Pinky Spawn Animation -> Place down peanuts -> Pinky eats it -> pinky gro
 	2. Perturbed Soul
 		1. More aggressive soul variant
 		2. Same health and damage, but rushes you down
+11. Tether Cord
+	1. Attaches a second player to you
 
 Complete:
+
+3/2/20
+1. Zephyr Fish added to Lure Pool
+2. Zeppelin Added
+3. Sea (Water) Snake added
+4. Double Vision Re-added
+
+2/29/20
+1. Started Work On Zephyrous Zeppelin
+
+2/26/20
+1. Pyramid Crate Added, Also Spawns in pyramid
+2. Fixed Jury Rigged Drill, also nerfed uses 10 => 9
+3. Wormwood Table and Bed sprites, minor changes for consistency and highlights
+
+2/23/20
+1. Manic Miner added to Golden Treasure Slime pool, drop rates increased overall
+	1. Damage Decreased: 45 => 40
+2. Miner's Pickaxe Resprite, Miner's Sword Resprite
+	1. Crit increased 4% => 10% (on both)
+	2. Pickaxe Shoot Speed increased: 3.5 => 3.75
+3. Pyramid Crate Started
+
+- Update .18
 
 2/21/20
 1. Cursed Caviar complete
