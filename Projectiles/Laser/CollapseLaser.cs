@@ -36,27 +36,24 @@ namespace SOTS.Projectiles.Laser
 		{
 			Player player = Main.player[projectile.owner];
 			//projectile.Center = npc.Center;
-			projectile.localAI[0] += 1f;
 			projectile.ai[0]++;
-			if (projectile.localAI[0] == 2f) {
-				projectile.damage = 0;
+			if(projectile.localAI[0] == 1f)
+			{
 				projectile.alpha = 0;
 			}
-			if(projectile.localAI[0] > 13f)
+			if (projectile.localAI[0] >= 2f) {
+				projectile.damage = 0;
+				projectile.alpha += 25;
+			}
+			if(projectile.localAI[0] > 10f)
 			{
 				projectile.Kill();
 			}
-			projectile.alpha += 20;
+			projectile.localAI[0] += 1f;
 		}
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
-        {
-            target.immune[projectile.owner] = 4;
-			projectile.damage--;
-        }
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) 
 		{
-			return false;
-			//return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), projectile.Center, endPoint, 8f, ref point);
+			return false; //make sure there is no hitbox on the laser before hitbox check
 		}
 		List<float> posListY = new List<float>();
 		List<float> posListX = new List<float>();
@@ -125,9 +122,9 @@ namespace SOTS.Projectiles.Laser
 			float speed = 1.25f;
 			float distance = (float)Math.Sqrt((double)(dX * dX + dY * dY));
 			speed /= distance;
-			Vector2 rnVelo = new Vector2(10f, 0).RotatedBy(radians);
+			Vector2 rnVelo = new Vector2(10f, 0).RotatedBy(radians); //this the number adjusted by the turn rate, higher = more bendy
 			rnVelo += new Vector2(dX * speed, dY * speed);
-			npcRad = (float)Math.Atan2(rnVelo.Y, rnVelo.X);
+			npcRad = (float)Math.Atan2(rnVelo.Y, rnVelo.X); //turn velocity into rotation, this contributes to a few things
 			return npcRad;
 		}
 		public bool getHitbox(Vector2 drawpos, bool hitbox, Vector2 destination)
@@ -179,21 +176,23 @@ namespace SOTS.Projectiles.Laser
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
-			float newAi = projectile.ai[0] / 13f;
-			double frequency = 0.3;
+			float newAi = projectile.ai[0] * 2 / 13f;
+			double frequency = 0.3; //set up constants for the color spectrum variables
 			double center = 130;
 			double width = 125;
-			double red = Math.Sin(frequency * (double)newAi) * width + center;
-			double grn = Math.Sin(frequency * (double)newAi + 2.0) * width + center;
-			double blu = Math.Sin(frequency * (double)newAi + 4.0) * width + center;
-			Color color = new Color((int)red, (int)grn, (int)blu);
-			
-			color = color * ((255 - projectile.alpha) / 255f);
+			Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Laser/CollapseLaserHighlight"); //load the secondary required textures
+			Texture2D texture2 = ModContent.GetTexture("SOTS/Projectiles/Laser/ContinuumSphereHighlight");
 			float radianDir = (float)Math.Atan2(initialDirection.Y, initialDirection.X);
+			Color color = new Color(100,100,100); //initialize a color variable, this white color won't be used, but the variable will
+			Color white = new Color(255, 255, 255); //initialize white color
+			if(projectile.alpha > 200)
+			{
+				white *= ((255 - projectile.alpha) / 255f); //make the white color scale with alpha, but not as much as the other colors, this is to make sure it looks like Last Prism
+			}
 			
 			Vector2 drawPos = projectile.Center;
 			int helixRot = (int)projectile.ai[0];
-			float unitDis = 1.9f;
+			float unitDis = 1.5f; //initiate a distance constant, this determines the "speed" at which the laser moves and bends
 			int k = 0;
 			int i = 10;
 			int j = 0;
@@ -203,7 +202,7 @@ namespace SOTS.Projectiles.Laser
 				helixRot ++;
 				//k++;
 				
-				if(j >= toBeat || k >= 500)
+				if(j >= toBeat || k >= 700)
 				{
 					if(j < toBeat && j != 0)
 					{
@@ -256,24 +255,37 @@ namespace SOTS.Projectiles.Laser
 						i = 15;
 					}
 				}
+				newAi += 0.5f/13f; //make color change on the way through the beam
+				double red = Math.Sin(frequency * (double)newAi) * width + center;
+				double grn = Math.Sin(frequency * (double)newAi + 2.0) * width + center;
+				double blu = Math.Sin(frequency * (double)newAi + 4.0) * width + center;
 				Vector2 laserVelo = new Vector2(unitDis, 0f).RotatedBy(radianDir);
 				drawPos.X += laserVelo.X;
 				drawPos.Y += laserVelo.Y;
-				
-				spriteBatch.Draw(Main.projectileTexture[projectile.type], drawPos - Main.screenPosition, null, color, radianDir, new Vector2(8,8), 1f, SpriteEffects.None, 0f);
+				color = new Color((int)red, (int)grn, (int)blu);
+				color *= ((255 - projectile.alpha) / 255f);
+				spriteBatch.Draw(Main.projectileTexture[projectile.type], drawPos - Main.screenPosition, null, color, radianDir, new Vector2(7,7), 1f, SpriteEffects.None, 0f);
 				
 				Vector2 helixPos1 = drawPos + new Vector2(curve.X, 0).RotatedBy(radianDir + MathHelper.ToRadians(90));
-				spriteBatch.Draw(Main.projectileTexture[projectile.type], helixPos1 - Main.screenPosition, null, color, radianDir, new Vector2(8,8), 0.5f, SpriteEffects.None, 0f);
+				spriteBatch.Draw(Main.projectileTexture[projectile.type], helixPos1 - Main.screenPosition, null, color, radianDir, new Vector2(7,7), 0.5f, SpriteEffects.None, 0f);
 				
 				Vector2 helixPos2 = drawPos + new Vector2(curve.X, 0).RotatedBy(radianDir - MathHelper.ToRadians(90));
-				spriteBatch.Draw(Main.projectileTexture[projectile.type], helixPos2 - Main.screenPosition, null, color, radianDir, new Vector2(8,8), 0.5f, SpriteEffects.None, 0f);
+				spriteBatch.Draw(Main.projectileTexture[projectile.type], helixPos2 - Main.screenPosition, null, color, radianDir, new Vector2(7,7), 0.5f, SpriteEffects.None, 0f);
 				
-				Lighting.AddLight(drawPos, 255 * 0.2f / 255f, 255 * 0.2f / 255f, 255 * 0.2f / 255f);
+				spriteBatch.Draw(texture, drawPos - Main.screenPosition, null, white, radianDir, new Vector2(7,7), 1f, SpriteEffects.None, 0f);
+				spriteBatch.Draw(texture, helixPos2 - Main.screenPosition, null, white, radianDir, new Vector2(7,7), 0.5f, SpriteEffects.None, 0f);
+				spriteBatch.Draw(texture, helixPos1 - Main.screenPosition, null, white, radianDir, new Vector2(7,7), 0.5f, SpriteEffects.None, 0f);
+				
+				Lighting.AddLight(drawPos, 255 * 1.2f / 255f, 255 * 1.2f / 255f, 255 * 1.2f / 255f); //adds game light at the area
 			}
-				for(int l = 0; l < 5; l++) //because the overlapping lasers end up covering up for eachothers alpha, this will help make this look more consistent too
-				{
+			Vector2 laserVelo2 = new Vector2(20, 0f).RotatedBy(radianDir); //move the draw point even farther away so the end orb looks more even with the start orb
+			drawPos.X += laserVelo2.X;
+			drawPos.Y += laserVelo2.Y;
+			for(int l = 0; l < 5; l++) //because the overlapping lasers end up covering up for eachothers alpha, this will help make this look more consistent too
+			{
 				spriteBatch.Draw(Main.projectileTexture[mod.ProjectileType("ContinuumSphere")], drawPos - Main.screenPosition, null, color, radianDir, new Vector2(15,15), 1f, SpriteEffects.None, 0f);
-				}
+				spriteBatch.Draw(texture2, drawPos - Main.screenPosition, null, white, radianDir, new Vector2(15,15), 1f, SpriteEffects.None, 0f);
+			}
 			//return false;
 			
 			/* //This is collision checking code, for blocks

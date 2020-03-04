@@ -16,6 +16,7 @@ Playtesting - Crimsonkeep, FlameFreezer
 
 Update 0.18.2
 -Fixed undownloadable error
+-Icon added
 
 Update 0.18.1 
 -More pyramid stuff and resprites

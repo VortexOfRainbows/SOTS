@@ -36,19 +36,24 @@ namespace SOTS.Projectiles.Laser
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
+			return false;
+		}
+		public override void PostDraw(SpriteBatch spriteBatch, Color lightColor)
+		{
 			Vector2 drawOrigin = new Vector2(Main.projectileTexture[projectile.type].Width * 0.5f, projectile.height * 0.5f);
-			float newAi = projectile.ai[1] / 13f;
+			float newAi = projectile.ai[1] * 2 / 13f;
 			double frequency = 0.3;
 			double center = 130;
 			double width = 125;
 			double red = Math.Sin(frequency * (double)newAi) * width + center;
 			double grn = Math.Sin(frequency * (double)newAi + 2.0) * width + center;
 			double blu = Math.Sin(frequency * (double)newAi + 4.0) * width + center;
+			Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Laser/ContinuumSphereHighlight");
 			Color color = new Color((int)red, (int)grn, (int)blu);
 			spriteBatch.Draw(Main.projectileTexture[projectile.type], projectile.Center - Main.screenPosition, null, color, projectile.rotation, drawOrigin, projectile.scale, SpriteEffects.None, 0f);
-			return false;
+			spriteBatch.Draw(texture, projectile.Center - Main.screenPosition, null, new Color(255, 255, 255, 255 - projectile.alpha), projectile.rotation, drawOrigin, projectile.scale, SpriteEffects.None, 0f);
 		}
-		int ai1 = 2;
+		int ai1 = 8;
 		public override bool ShouldUpdatePosition() 
 		{
 			return false;
@@ -70,7 +75,7 @@ namespace SOTS.Projectiles.Laser
 				float shootToY = cursorArea.Y - player.Center.Y;
 				float distance = (float)System.Math.Sqrt((double)(shootToX * shootToX + shootToY * shootToY));
 
-				distance = 7.25f / distance;
+				distance = 9.75f / distance;
 			   
 				shootToX *= distance * 5f;
 				shootToY *= distance * 5f;
@@ -82,7 +87,7 @@ namespace SOTS.Projectiles.Laser
 				{
 					projectile.timeLeft = 6;
 					projectile.alpha = 0;
-					if(Main.myPlayer == projectile.owner && ai1 % 3 == 0)
+					if(Main.myPlayer == projectile.owner && ai1 % 9 == 0)
 					{
 						int projID = Projectile.NewProjectile(player.Center.X + shootToX, player.Center.Y + shootToY, shootToX, shootToY, mod.ProjectileType("CollapseLaser"), projectile.damage, 1f, projectile.owner, projectile.ai[1], 0f);
 						Main.projectile[projID].ai[1] = projectile.ai[1];
