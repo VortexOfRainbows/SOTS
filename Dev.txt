@@ -1,3 +1,5 @@
+The following is my development plans :D
+
 //Currently Unfixable?
 1. Snakeskin armor may have minor visual/despawn bugs? (not a big deal)
 

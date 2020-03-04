@@ -14,6 +14,9 @@ Pyramid Dungeon World Gen
 Developer, Artist, and Playtesting - Vortex#6230 (Discord)
 Playtesting - Crimsonkeep, FlameFreezer
 
+Update 0.18.2
+-Fixed undownloadable error
+
 Update 0.18.1 
 -More pyramid stuff and resprites
 
