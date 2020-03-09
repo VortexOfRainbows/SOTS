@@ -35,9 +35,35 @@ namespace SOTS.Projectiles.Laser
 			projectile.hostile = false;
 			projectile.alpha = 255;
 		}
+		public override void Kill(int timeLeft)
+        {
+			if(projectile.ai[0] == 1)
+			{
+				for(int i = 0; i < 360; i += 40)
+				{
+					Vector2 circularLocation = new Vector2(-12, 0).RotatedBy(MathHelper.ToRadians(i + projectile.ai[1]));
+					
+					int num1 = Dust.NewDust(new Vector2(projectile.Center.X + circularLocation.X - 4, projectile.Center.Y + circularLocation.Y - 4), 4, 4, 66);
+					Main.dust[num1].noGravity = true;
+					Main.dust[num1].velocity = circularLocation * 0.35f;
+					
+					float newAi = projectile.ai[1] * 2 / 13f;
+					double frequency = 0.3;
+					double center = 130;
+					double width = 125;
+					double red = Math.Sin(frequency * (double)newAi) * width + center;
+					double grn = Math.Sin(frequency * (double)newAi + 2.0) * width + center;
+					double blu = Math.Sin(frequency * (double)newAi + 4.0) * width + center;
+					Color color2 = new Color((int)red, (int)grn, (int)blu);
+					Main.dust[num1].scale = 2f;
+					Main.dust[num1].color = color2;
+				}
+			}
+		}
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.immune[projectile.owner] = 1;
+            target.immune[projectile.owner] = 5;
+			projectile.ai[0] = 1;
         }
 	}
 }

@@ -12,7 +12,7 @@ using SOTS.Void;
 
 namespace SOTS.Projectiles.Laser
 {
-	public class CollapseLaser : ModProjectile
+	public class SmallCollapseLaser : ModProjectile
 	{
 		public override void SetStaticDefaults() 
 		{
@@ -38,10 +38,12 @@ namespace SOTS.Projectiles.Laser
 			{
 				initialDirection = projectile.velocity;
 				projectile.velocity *= 0f;
+				kToBeat = 10 + (int)(190 * (projectile.ai[1]/85f));
+				fToBeat = 100 + (int)(1900 * (projectile.ai[1]/85f));
+				toBeat = 1 + (int)(14 * (projectile.ai[1]/85f));
 				if(completedLoads == 0)
 					LaserDraw(null);
 			}
-		
 			return true;
 		}
 		public override void AI() 
@@ -51,15 +53,15 @@ namespace SOTS.Projectiles.Laser
 			projectile.ai[0]++;
 			if(completedLoads > 0)
 			{
-				projectile.alpha = 0;
+				projectile.alpha = 255 - (int)(projectile.ai[1] * 3);
 			}
 			if(completedLoads > 1)
 			{
-				projectile.alpha = 100;
-			}
-			if(completedLoads > 2)
-			{
 				projectile.alpha = 230 + (completedLoads * 2);
+				if(255 - (int)(projectile.ai[1] * 3) > 230)
+				{
+					projectile.alpha = 255 - (int)(projectile.ai[1] * 3) + (completedLoads * 2);
+				}
 			}
 			if(projectile.alpha > 255)
 			{
@@ -135,7 +137,7 @@ namespace SOTS.Projectiles.Laser
 			float dY = npc.Y - pos.Y;
 			float npcRad = (float)Math.Atan2(dY, dX);
 			//float diffRad = radians - npcRad;
-			float speed = 1.25f;//this the number adjusted that adjusts turn rate, higher = less bendy
+			float speed = 1.25f; //this the number adjusted that adjusts turn rate, higher = less bendy
 			float distance = (float)Math.Sqrt((double)(dX * dX + dY * dY));
 			speed /= distance;
 			Vector2 rnVelo = new Vector2(5.6f, 0).RotatedBy(radians); //this the number adjusted by the turn rate, higher = more bendy
@@ -176,9 +178,9 @@ namespace SOTS.Projectiles.Laser
 			return false;
 		}
 		Vector2 initialDirection = new Vector2(0f, 0f);
-		int toBeat = 15;
+		int toBeat = 1;
 		int kToBeat = 200;
-		int fToBeat = 2000;
+		int fToBeat = 4000;
 		int completedLoads = 0;
 		public override bool ShouldUpdatePosition() 
 		{
@@ -199,9 +201,11 @@ namespace SOTS.Projectiles.Laser
 			float radianDir = (float)Math.Atan2(initialDirection.Y, initialDirection.X);
 			Color color = new Color(100,100,100); //initialize a color variable, this white color won't be used, but the variable will
 			Color white = new Color(255, 255, 255); //initialize white color
-			if(projectile.alpha > 200)
+			white *= ((255 - projectile.alpha) / 255f); //make the white color scale with alpha, but not as much as the other colors, this is to make sure it looks like Last Prism
+			float loadScale = (0.5f * (projectile.ai[1]/85f)); //the charging lasers slowly gain scale
+			if(loadScale < 0)
 			{
-				white *= ((255 - projectile.alpha) / 255f); //make the white color scale with alpha, but not as much as the other colors, this is to make sure it looks like Last Prism
+				loadScale = 0;
 			}
 			
 			Vector2 drawPos = projectile.Center;
@@ -210,17 +214,17 @@ namespace SOTS.Projectiles.Laser
 			int k = 0;
 			int i = 10;
 			int j = 0;
-			int forceTerminate = 0;
+			int forceTerminate = 0; 
 			while(i != -1)
 			{
+				Vector2 curve = new Vector2(28f * (projectile.ai[1]/85f),0).RotatedBy(MathHelper.ToRadians(helixRot * 2f));
+				helixRot--;
+				
 				forceTerminate++;
 				if(forceTerminate > fToBeat)
 				{
 					break;
 				}
-				Vector2 curve = new Vector2(28f,0).RotatedBy(MathHelper.ToRadians(helixRot * 2f));
-				helixRot--;
-				
 				if(j >= toBeat || k >= kToBeat)
 				{
 					toBeat = j;
@@ -282,12 +286,12 @@ namespace SOTS.Projectiles.Laser
 				Vector2 helixPos2 = drawPos + new Vector2(curve.X, 0).RotatedBy(radianDir - MathHelper.ToRadians(90));
 				if(completedLoads > 0 && spriteBatch != null) //checking if it is the second strand that starts (calculated strand)
 				{
-					spriteBatch.Draw(Main.projectileTexture[projectile.type], drawPos - Main.screenPosition, null, color, radianDir, new Vector2(14,7), 1f, SpriteEffects.None, 0f);
-					spriteBatch.Draw(Main.projectileTexture[projectile.type], helixPos1 - Main.screenPosition, null, color, radianDir, new Vector2(14,7), 0.5f, SpriteEffects.None, 0f);	
-					spriteBatch.Draw(Main.projectileTexture[projectile.type], helixPos2 - Main.screenPosition, null, color, radianDir, new Vector2(14,7), 0.5f, SpriteEffects.None, 0f);
-					spriteBatch.Draw(texture, drawPos - Main.screenPosition, null, white, radianDir, new Vector2(14,7), 1f, SpriteEffects.None, 0f);
-					spriteBatch.Draw(texture, helixPos2 - Main.screenPosition, null, white, radianDir, new Vector2(14,7), 0.5f, SpriteEffects.None, 0f);
-					spriteBatch.Draw(texture, helixPos1 - Main.screenPosition, null, white, radianDir, new Vector2(14,7), 0.5f, SpriteEffects.None, 0f);
+					spriteBatch.Draw(Main.projectileTexture[projectile.type], drawPos - Main.screenPosition, null, color, radianDir, new Vector2(14,7), 0.4f + loadScale, SpriteEffects.None, 0f);
+					spriteBatch.Draw(Main.projectileTexture[projectile.type], helixPos1 - Main.screenPosition, null, color, radianDir, new Vector2(14,7), 0.5f * (0.4f + loadScale), SpriteEffects.None, 0f);
+					spriteBatch.Draw(Main.projectileTexture[projectile.type], helixPos2 - Main.screenPosition, null, color, radianDir, new Vector2(14,7), 0.5f * (0.4f + loadScale), SpriteEffects.None, 0f);
+					spriteBatch.Draw(texture, drawPos - Main.screenPosition, null, white, radianDir, new Vector2(14,7), 0.4f + loadScale, SpriteEffects.None, 0f);
+					spriteBatch.Draw(texture, helixPos2 - Main.screenPosition, null, white, radianDir, new Vector2(14,7), 0.5f * (0.4f + loadScale), SpriteEffects.None, 0f);
+					spriteBatch.Draw(texture, helixPos1 - Main.screenPosition, null, white, radianDir, new Vector2(14,7), 0.5f * (0.4f + loadScale), SpriteEffects.None, 0f);
 					Lighting.AddLight(drawPos, 255 * 1.2f / 255f, 255 * 1.2f / 255f, 255 * 1.2f / 255f); //adds game light at the area
 				}
 			}
@@ -298,23 +302,11 @@ namespace SOTS.Projectiles.Laser
 			{
 				if(completedLoads > 0 && spriteBatch != null)
 				{
-					spriteBatch.Draw(Main.projectileTexture[mod.ProjectileType("ContinuumSphere")], drawPos - Main.screenPosition, null, color, radianDir, new Vector2(15,15), 1f, SpriteEffects.None, 0f);
-					spriteBatch.Draw(texture2, drawPos - Main.screenPosition, null, white, radianDir, new Vector2(15,15), 1f, SpriteEffects.None, 0f);
+					spriteBatch.Draw(Main.projectileTexture[mod.ProjectileType("ContinuumSphere")], drawPos - Main.screenPosition, null, color, radianDir, new Vector2(15,15), 0.5f + loadScale, SpriteEffects.None, 0f);
+					spriteBatch.Draw(texture2, drawPos - Main.screenPosition, null, white, radianDir, new Vector2(15,15), 0.5f + loadScale, SpriteEffects.None, 0f);
 				}
 			}
 			completedLoads++;
-			//return false;
-			
-			/* //This is collision checking code, for blocks
-			Vector2 position = projectile.Center + unit * Distance;	
-			int i = (int)(position.X / 16);
-			int j =	(int)(position.Y / 16);
-			if(Main.tile[i, j].active() && Main.tileSolidTop[Main.tile[i, j].type] == false && Main.tileSolid[Main.tile[i, j].type] == true)
-			{
-				Distance -= 6f;
-				break;
-			}
-			*/
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Color lightColor)
 		{

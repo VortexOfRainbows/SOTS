@@ -28,6 +28,7 @@ namespace SOTS.Buffs
 			voidPlayer.voidRegen += 1.25f;
 			voidPlayer.voidRegen += 0.0075f * voidPlayer.voidMeterMax;
 			voidPlayer.voidRegen += 0.0125f * Math.Abs(voidPlayer.voidMeter);	
+			player.channel = false;
 			if(voidPlayer.voidMeter < 0)
 			{
 				voidPlayer.voidRegen += 0.0375f * Math.Abs(voidPlayer.voidMeter);	

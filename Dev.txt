@@ -6,10 +6,10 @@ The following is my development plans :D
 //Balance
 1. Shuriken slicer to vibrant iron
 2. Dissolving Nether => Focus Crystal, Dissolving Frostbite => Permafrost Isocahedron, Dissolving Evil => Cursed Isocahedron
-3. Zepline Room Expansion
 
 //Check For Bugs
 1. Check for other bosses that possibly need damage normalization
+2. Test worldgen more
 
 //Ideas (YTBA, yet to be added)
 Priority: 2 Crushers
@@ -48,6 +48,28 @@ Putrid Pinky Spawn Animation -> Place down peanuts -> Pinky eats it -> pinky gro
 	1. Attaches a second player to you
 
 Complete:
+
+3/8/20
+1. More Continuum Collapse visuals and performance updates, sprite added
+	Tested : Works in multiplayer
+2. Slight changes to Pyramid Worldgen
+	1. Small world size : 250 => 275
+		1. This is to compensate for the new Zeppelin Room
+		2. Room amount counter increased : 4 => 4.75
+	2. Medium world size : 300 => 310
+	3. Big world size : 350 => 360
+	4. Changed downwards stair min left/right position 50 => 85
+		1. This is to compensate for the new Zeppelin Room
+	5. New Zeppelin room
+	6. Burial Room moved closer to the end of the chamber, and always opposite the exit to the final layer
+	7. Spikes now generate after cooridors
+	8. Crates generate in pyramids naturally
+
+3/5/20
+1. Code now hidden
+
+3/3/20 & 3/4/20 & 3/5/20
+1. Continuum Collapse visual overhaul WIP
 
 3/2/20
 1. Zephyr Fish added to Lure Pool

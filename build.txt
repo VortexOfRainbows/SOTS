@@ -2,7 +2,7 @@
 author = Vortex Of Rainbows
 version = 0.18.2
 displayName = Secrets Of The Shadows
-hideCode = false
+hideCode = true
 hideResources = false
 includeSource = true
 buildIgnore = *.csproj, *.user, obj\*, bin\*, .vs\*

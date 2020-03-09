@@ -13,25 +13,25 @@ namespace SOTS.Items.Celestial
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Continuum Collapse");
-			Tooltip.SetDefault("'Devour all that is infinite'\nCan hit up to 15 enemies at a time\nWill not hurt players");
+			Tooltip.SetDefault("'Devour all that is infinite, including your system's memory'\nCan hit up to 15 enemies at a time\nWill not hurt players");
 		}
 		public override void SafeSetDefaults()
 		{
-			item.damage = 200;
+			item.damage = 120;
 			item.magic = true;
 			item.width = 26;
 			item.height = 32;
             item.value = Item.sellPrice(0, 20, 0, 0);
 			item.rare = 12;
-			item.useTime = 10;
-			item.useAnimation = 10;
+			item.useTime = 20;
+			item.useAnimation = 20;
 			item.useStyle = 5;
 			item.autoReuse = true;            
 			item.shoot = mod.ProjectileType("ContinuumSphere"); 
 			item.shootSpeed = 1;
 			item.knockBack = 3;
 			item.channel = true;
-			item.UseSound = SoundID.Item92;
+			item.UseSound = SoundID.Item15; //phaseblade
 			item.noUseGraphic = true;
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
@@ -60,7 +60,7 @@ namespace SOTS.Items.Celestial
 		}
 		public override void GetVoid(Player player)
 		{
-			voidMana = 6;
+			voidMana = 8;
 		}
 	}
 }

@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+
 namespace SOTS.Projectiles.Laser
 {    
     public class ContinuumSphere : ModProjectile 
@@ -27,6 +28,8 @@ namespace SOTS.Projectiles.Laser
 			projectile.tileCollide = false;
 			projectile.hostile = false;
 		}
+		Vector2[] orbs = new Vector2[6]; //these should be the same size
+		Vector2[] orbsTo = new Vector2[6];
 		public override bool PreAI()
         {
 			if(projectile.active)
@@ -50,10 +53,25 @@ namespace SOTS.Projectiles.Laser
 			double blu = Math.Sin(frequency * (double)newAi + 4.0) * width + center;
 			Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Laser/ContinuumSphereHighlight");
 			Color color = new Color((int)red, (int)grn, (int)blu);
-			spriteBatch.Draw(Main.projectileTexture[projectile.type], projectile.Center - Main.screenPosition, null, color, projectile.rotation, drawOrigin, projectile.scale, SpriteEffects.None, 0f);
-			spriteBatch.Draw(texture, projectile.Center - Main.screenPosition, null, new Color(255, 255, 255, 255 - projectile.alpha), projectile.rotation, drawOrigin, projectile.scale, SpriteEffects.None, 0f);
+			if(orbs.Length == 1)
+			{
+				spriteBatch.Draw(Main.projectileTexture[projectile.type], projectile.Center - Main.screenPosition, null, color, projectile.rotation, drawOrigin, projectile.scale, SpriteEffects.None, 0f);
+				spriteBatch.Draw(texture, projectile.Center - Main.screenPosition, null, new Color(255, 255, 255, 255 - projectile.alpha), projectile.rotation, drawOrigin, projectile.scale, SpriteEffects.None, 0f);
+			}
+			else if(ai1 >= 9)
+			{
+				for(int i = 0; i < orbs.Length; i++)
+				{
+					spriteBatch.Draw(Main.projectileTexture[projectile.type], orbs[i] - Main.screenPosition, null, color, projectile.rotation, drawOrigin, projectile.scale * (0.75f + (0.25f * (ai2/85f))), SpriteEffects.None, 0f);
+					spriteBatch.Draw(texture, orbs[i] - Main.screenPosition, null, new Color(255, 255, 255, 255 - projectile.alpha), projectile.rotation, drawOrigin, projectile.scale * 0.75f, SpriteEffects.None, 0f);
+				}
+			}
 		}
-		int ai1 = 8;
+		float expo = 1f;
+		int ai1 = 0;
+		float distance2 = 36;
+		int distCounter = 0;
+		float ai2 = 0;
 		public override bool ShouldUpdatePosition() 
 		{
 			return false;
@@ -65,20 +83,74 @@ namespace SOTS.Projectiles.Laser
 			{
 				projectile.ai[0] = Main.rand.Next(1020);
 			}
-			projectile.ai[1] ++;
-			ai1++;			
 			Vector2 cursorArea = Main.MouseWorld;
+			float shootToX = cursorArea.X - player.Center.X;
+			float shootToY = cursorArea.Y - player.Center.Y;
+			float distance = (float)System.Math.Sqrt((double)(shootToX * shootToX + shootToY * shootToY));
+			distance = 4f / distance;
+			shootToX *= distance * 5f;
+			shootToY *= distance * 5f;
+			expo *= 1.0075f;
+			if(distance2 < 16 && orbs.Length == 6)
+			{ 
+				orbs = new Vector2[5];
+				orbsTo = new Vector2[5];
+			}
+			if(distance2 < 12 && orbs.Length == 5)
+			{ 
+				orbs = new Vector2[4];
+				orbsTo = new Vector2[4];
+			}
+			if(distance2 < 9 && orbs.Length == 4)
+			{ 
+				orbs = new Vector2[3];
+				orbsTo = new Vector2[3];
+			}
+			if(distance2 < 6 && orbs.Length == 3)
+			{ 
+				orbs = new Vector2[2];
+				orbsTo = new Vector2[2];
+			}
+			if(distance2 == 0 && orbs.Length == 2)
+			{
+				orbs = new Vector2[1];
+				orbsTo = new Vector2[1];
+				distCounter++;
+			}
+			for(int i = 0; i < orbs.Length; i++)
+			{
+				Vector2 rotate = new Vector2(distance2, 0).RotatedBy(MathHelper.ToRadians(i * (360f/orbs.Length) + (ai1 * expo)));
+				orbs[i] = projectile.Center + rotate;
+				Vector2 distanceToP = new Vector2(shootToX, shootToY);
+				orbsTo[i] = (distanceToP * 2f) + projectile.Center + rotate;
+			}
+			projectile.ai[1] ++;
+			if(ai2 < 85)
+			{
+				ai2 += 1.0625f/3f;
+			}
+			if(distance2 > 6)
+			{
+				distance2 -= 0.15f;
+			}
+			else if(distance2 > 3)
+			{
+				distance2 -= 0.10f;
+			}
+			else if(distance2 > 0)
+			{
+				distance2 -= 0.05f;
+			}
+			else
+			{
+				distance2 = 0;
+			}
+			ai1++;			
+			
 			if(Main.myPlayer == player.whoAmI)
 			{
 				projectile.netUpdate = true;
-				float shootToX = cursorArea.X - player.Center.X;
-				float shootToY = cursorArea.Y - player.Center.Y;
-				float distance = (float)System.Math.Sqrt((double)(shootToX * shootToX + shootToY * shootToY));
 
-				distance = 9.75f / distance;
-			   
-				shootToX *= distance * 5f;
-				shootToY *= distance * 5f;
 						   
 				double startingDirection = Math.Atan2((double)-shootToY, (double)-shootToX);
 				startingDirection *= 180/Math.PI;
@@ -87,10 +159,25 @@ namespace SOTS.Projectiles.Laser
 				{
 					projectile.timeLeft = 6;
 					projectile.alpha = 0;
-					if(Main.myPlayer == projectile.owner && ai1 % 9 == 0)
+					if(Main.myPlayer == projectile.owner && ai1 % 2 == 0 && ai1 > 1)
 					{
-						int projID = Projectile.NewProjectile(player.Center.X + shootToX, player.Center.Y + shootToY, shootToX, shootToY, mod.ProjectileType("CollapseLaser"), projectile.damage, 1f, projectile.owner, projectile.ai[1], 0f);
-						Main.projectile[projID].ai[1] = projectile.ai[1];
+						for(int i = 0; i < orbs.Length; i++)
+						{
+							float shootToX2 = orbsTo[i].X - player.Center.X;
+							float shootToY2 = orbsTo[i].Y - player.Center.Y;
+							float distance2 = (float)System.Math.Sqrt((double)(shootToX2 * shootToX2 + shootToY2 * shootToY2));
+							distance2 = 4f / distance2;
+							shootToX2 *= distance2 * 5f;
+							shootToY2 *= distance2 * 5f;
+							if(orbs.Length != 1)
+							{
+								Projectile.NewProjectile(orbs[i].X + shootToX2, orbs[i].Y + shootToY2, shootToX2, shootToY2, mod.ProjectileType("SmallCollapseLaser"), (int)(projectile.damage), 1f, projectile.owner, projectile.ai[1], ai2); //second ai slot is scale
+							}
+							else
+							{
+								Projectile.NewProjectile(orbs[i].X + shootToX2, orbs[i].Y + shootToY2, shootToX2, shootToY2, mod.ProjectileType("CollapseLaser"), projectile.damage * 3, 1f, projectile.owner, projectile.ai[1], 0f);
+							}
+						}
 					}						
 				}
 				projectile.ai[0] = (float)startingDirection;

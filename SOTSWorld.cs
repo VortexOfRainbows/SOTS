@@ -1316,34 +1316,33 @@ namespace SOTS
 									break;
 								}
 							}
-						 }
-						 pyramidY -= 15;
-						 int direction = Main.rand.Next(2);
-						 int nextAmount = Main.rand.Next(6,16);
-						 int size = 300;
-						 int endingTileX = -1;
-						 int endingTileY = -1;
-						 int initialPath = 1;
-						 
-						 if(Main.maxTilesX > 4000)
-						 size = 250;
-						 
-						 
-						 if(Main.maxTilesX > 6000)
-						 size = 300;
-						 
-						 
-						 if(Main.maxTilesX > 8000)
-						 size = 350;
-						 
-						 
-							if(direction == 0)
-							{
-								direction = -1;
-							}
+						}
+						pyramidY -= 15;
+						int direction = Main.rand.Next(2);
+						int finalDirection = direction;
+						int nextAmount = Main.rand.Next(6,16);
+						int size = 300;
+						int endingTileX = -1;
+						int endingTileY = -1;
+						int initialPath = 1;
+						
+						if(Main.maxTilesX > 4000)
+						size = 275;
+						
+						
+						if(Main.maxTilesX > 6000)
+						size = 310;
+						
+						
+						if(Main.maxTilesX > 8000)
+						size = 360;
+						if(direction == 0)
+						{
+							direction = -1;
+						}
 							
-						 for(int pyramidLevel = 0; pyramidLevel < size; pyramidLevel++)
-						 {							for(int h = -pyramidLevel; h <= pyramidLevel; h++)
+						for(int pyramidLevel = 0; pyramidLevel < size; pyramidLevel++)
+						{							for(int h = -pyramidLevel; h <= pyramidLevel; h++)
 							{
 								Tile tile = Framing.GetTileSafely(pyramidX + h, pyramidY + pyramidLevel);
 								if(tile.type != TileID.BlueDungeonBrick && tile.type != TileID.GreenDungeonBrick && tile.type != TileID.PinkDungeonBrick && tile.wall != 7 && tile.wall != 8 && tile.wall != 9 && tile.wall != 94 && tile.wall != 95 && tile.wall != 96 && tile.wall != 97 && tile.wall != 98 && tile.wall != 99) //check for not dungeon!
@@ -1418,21 +1417,22 @@ namespace SOTS
 								}
 								endingTileY = pyramidY + pyramidLevel;
 							}
-						 }
-						
+						}
 						for(int totalAmount = 0; totalAmount < size; totalAmount += nextAmount)
 						{
 							direction *= -1;
 							nextAmount = Main.rand.Next(6,31);
-							if(totalAmount > size - 240)
+							if(totalAmount > size - 230)
 							{
-								if(endingTileX > pyramidX && endingTileX < pyramidX + 50)
+								if(endingTileX > pyramidX && endingTileX < pyramidX + 85)
 								{
 									direction = 1;
+									finalDirection = -1;
 								}
-								if(endingTileX < pyramidX && endingTileX > pyramidX - 50)
+								if(endingTileX < pyramidX && endingTileX > pyramidX - 85)
 								{
 									direction = -1;
+									finalDirection = 1;
 								}
 							}
 							for(int g = nextAmount; g > 0; g--)
@@ -1504,50 +1504,6 @@ namespace SOTS
 									Tile tile = Framing.GetTileSafely(findTileX, findTileY);
 									Tile tileLeft = Framing.GetTileSafely(findTileX - 1, findTileY);
 									Tile tileRight = Framing.GetTileSafely(findTileX + 1, findTileY);
-									Tile tileUp = Framing.GetTileSafely(findTileX, findTileY - 1);
-									Tile tileDown = Framing.GetTileSafely(findTileX, findTileY + 1);
-									if(tile.type == (ushort)mod.TileType("PyramidSlabTile") && tile.active() && tileLeft.type == (ushort)mod.TileType("PyramidSlabTile") && tileLeft.active() && tileRight.type == (ushort)mod.TileType("PyramidSlabTile") && tileRight.active())
-									{
-										counterSpike++;
-										if(counterSpike >= 100)
-										{
-											counterSpike = 0;
-											for(int sizeSpike = 0; sizeSpike < Main.rand.Next(4,20); sizeSpike++)
-											{
-													Tile tileSpikeR = Framing.GetTileSafely(findTileX + sizeSpike, findTileY);
-													Tile tileSpikeRU = Framing.GetTileSafely(findTileX + sizeSpike, findTileY - 1);
-													Tile tileSpikeRD = Framing.GetTileSafely(findTileX + sizeSpike, findTileY + 1);
-													Tile tileSpikeL = Framing.GetTileSafely(findTileX - sizeSpike, findTileY);
-													Tile tileSpikeLU = Framing.GetTileSafely(findTileX - sizeSpike, findTileY - 1);
-													Tile tileSpikeLD = Framing.GetTileSafely(findTileX - sizeSpike, findTileY + 1);
-													
-												if(tileSpikeR.active() && tileSpikeR.type == (ushort)mod.TileType("PyramidSlabTile") && tileSpikeL.active() && tileSpikeL.type == (ushort)mod.TileType("PyramidSlabTile"))
-												{
-													if(tileSpikeLU.active() == false && tileSpikeLD.active() == true)
-													{
-														tileSpikeL.type = 232; //wooden spike
-													}
-													if(tileSpikeRU.active() == false && tileSpikeRD.active() == true)
-													{
-														tileSpikeR.type = 232; //wooden spike
-													}
-													if(tileSpikeLU.active() == true && tileSpikeLD.active() == false)
-													{
-														tileSpikeL.type = 232; //wooden spike
-													}
-													if(tileSpikeRU.active() == true && tileSpikeRD.active() == false)
-													{
-														tileSpikeR.type = 232; //wooden spike
-													}
-												}
-												else
-												{
-													break;
-												}
-											}
-										}
-										
-									}
 									if(tile.type == (ushort)mod.TileType("PyramidSlabTile"))
 									{
 										if(tileLeft.active() && tile.active() && !tileRight.active() && tileRight.wall == (ushort)mod.WallType("PyramidWallTile"))
@@ -1600,6 +1556,47 @@ namespace SOTS
 												}
 											}
 										}
+										if(tile.type == (ushort)mod.TileType("PyramidSlabTile") && tile.active() && tileLeft.type == (ushort)mod.TileType("PyramidSlabTile") && tileLeft.active() && tileRight.type == (ushort)mod.TileType("PyramidSlabTile") && tileRight.active())
+										{
+											counterSpike++;
+											if(counterSpike >= 100)
+											{
+												counterSpike = 0;
+												for(int sizeSpike = 0; sizeSpike < Main.rand.Next(4,20); sizeSpike++)
+												{
+														Tile tileSpikeR = Framing.GetTileSafely(findTileX + sizeSpike, findTileY);
+														Tile tileSpikeRU = Framing.GetTileSafely(findTileX + sizeSpike, findTileY - 1);
+														Tile tileSpikeRD = Framing.GetTileSafely(findTileX + sizeSpike, findTileY + 1);
+														Tile tileSpikeL = Framing.GetTileSafely(findTileX - sizeSpike, findTileY);
+														Tile tileSpikeLU = Framing.GetTileSafely(findTileX - sizeSpike, findTileY - 1);
+														Tile tileSpikeLD = Framing.GetTileSafely(findTileX - sizeSpike, findTileY + 1);
+														
+													if(tileSpikeR.active() && tileSpikeR.type == (ushort)mod.TileType("PyramidSlabTile") && tileSpikeL.active() && tileSpikeL.type == (ushort)mod.TileType("PyramidSlabTile"))
+													{
+														if(tileSpikeLU.active() == false && tileSpikeLD.active() == true)
+														{
+															tileSpikeL.type = 232; //wooden spike
+														}
+														if(tileSpikeRU.active() == false && tileSpikeRD.active() == true)
+														{
+															tileSpikeR.type = 232; //wooden spike
+														}
+														if(tileSpikeLU.active() == true && tileSpikeLD.active() == false)
+														{
+															tileSpikeL.type = 232; //wooden spike
+														}
+														if(tileSpikeRU.active() == true && tileSpikeRD.active() == false)
+														{
+															tileSpikeR.type = 232; //wooden spike
+														}
+													}
+													else
+													{
+														break;
+													}
+												}
+											}
+										}
 									}
 								}
 							}
@@ -1634,7 +1631,7 @@ namespace SOTS
 							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4,4,0,0,0,0,0,0,0,0,4,4,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4,4,4,4,0,0,0,3,0,0,4,4,4,4,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 						};	
-							int bossPosX = pyramidX + ((size - 120)* direction);
+							int bossPosX = pyramidX + ((size - 115) * finalDirection);
 							int bossPosY = pyramidY + (size - 50);
 							bossPosY -= (int)(.5f * _bossRoom.GetLength(0));
 							bossPosX -= (int)(.5f * _bossRoom.GetLength(1));
@@ -1718,15 +1715,15 @@ namespace SOTS
 						Tile tile = Framing.GetTileSafely(findTileX, findTileY);
 						if(tile.active() && tile.wall == (ushort)mod.WallType("PyramidWallTile") && findTileY > pyramidY + 70 && findTileY < pyramidY + (size - 70) && tile.type == (ushort)mod.TileType("PyramidSlabTile")) //generate indicator blocks
 						{
-							if(Main.maxTilesX > 8000)
+							if(Main.maxTilesX > 8000) //large
 							{
-								counterRoom += 3;
-								counterLeft += 3;
-								counterRight += 3;
-								counterUp += 3;
-								counterDown += 3;
+								counterRoom += 3f;
+								counterLeft += 3f;
+								counterRight += 3f;
+								counterUp += 3f;
+								counterDown += 3f;
 							}
-							else if(Main.maxTilesX > 6000)
+							else if(Main.maxTilesX > 6000) //medium
 							{
 								counterRoom += 4f;
 								counterLeft += 4f;
@@ -1734,13 +1731,13 @@ namespace SOTS
 								counterUp += 4f;
 								counterDown += 4f;
 							}
-							else if(Main.maxTilesX > 4000)
+							else if(Main.maxTilesX > 4000) //small
 							{
-								counterRoom += 4;
-								counterLeft += 4;
-								counterRight += 4;
-								counterUp += 4;
-								counterDown += 4;
+								counterRoom += 4.75f;
+								counterLeft += 4.75f;
+								counterRight += 4.75f;
+								counterUp += 4.75f;
+								counterDown += 4.75f;
 							}
 							if(counterRoom >= 200)
 							{
@@ -1958,99 +1955,99 @@ namespace SOTS
 					}		
 				}
 				int[,] _zepline = {
-					{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
-					{3,3,3,3,3,3,3,3,3,3,3,2,3,2,2,2,2,2,2,2,2,2},	
-					{2,2,2,2,2,2,2,2,2,2,3,2,3,3,3,2,2,2,2,2,2,2},	
-					{0,0,0,0,0,0,0,3,3,2,3,2,3,3,3,3,3,2,2,2,2,2},	
-					{0,0,0,0,0,0,0,0,3,2,3,2,2,2,2,2,2,2,2,2,2,0},	
-					{0,0,0,0,0,0,0,0,0,2,3,3,3,3,3,3,3,2,3,2,0,0},	
-					{0,0,0,0,0,0,0,0,0,2,3,0,0,0,0,0,3,2,3,0,0,0},	
-					{0,0,0,0,0,0,0,0,0,0,3,0,5,9,5,0,3,2,0,0,0,0},	
-					{9,6,0,0,0,0,0,0,0,0,3,0,4,4,4,0,3,0,0,0,0,0},	
-					{3,3,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},	
-					{2,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},	
-					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},	
-					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},	
-					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-					{9,6,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},	
-					{3,3,3,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},	
-					{7,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},	
-					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},	
-					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},	
-					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},	
-					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},	
-					{9,6,6,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},	
-					{3,3,3,3,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},	
-					{2,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0},	
-					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2},	
-					{0,0,0,0,0,0,6,6,9,9,9,9,9,9,9,9,9,9,9,9,2,2},	
-					{0,0,0,0,0,0,3,3,9,9,9,9,9,9,9,9,9,9,9,9,2,2},	
-					{0,0,0,0,0,0,3,3,9,9,9,9,9,9,9,9,9,9,9,3,3,2},	
-					{9,9,9,9,9,9,9,3,9,9,9,9,9,9,9,9,9,9,9,3,3,2},	
-					{9,9,9,9,9,9,9,3,3,9,9,9,9,9,9,9,9,9,3,3,3,2},	
-					{9,9,9,9,9,9,9,3,3,3,9,9,9,9,9,9,9,3,3,3,2,2},	
-					{9,9,9,9,9,9,9,2,3,3,3,3,9,9,9,3,3,3,3,2,2,2},	
-					{9,9,9,9,9,9,9,2,2,3,3,3,3,9,3,3,3,3,2,2,2,2},	
-					{9,9,9,9,9,9,2,2,2,2,2,2,2,9,2,2,2,2,2,2,2,2},	
-					{9,9,9,9,9,2,2,2,2,2,2,9,9,9,9,3,3,2,2,2,2,2},	
-					{9,9,2,2,2,2,2,2,9,9,9,9,9,9,3,3,2,2,2,2,2,2},	
-					{9,2,2,2,2,2,9,9,9,9,9,9,9,3,3,3,3,3,3,3,3,3},	
-					{9,9,9,9,9,9,9,9,9,9,9,9,3,3,3,3,3,3,3,3,3,3},	
-					{9,9,9,9,9,9,9,9,9,9,9,3,3,3,3,3,3,3,3,3,3,3},	
-					{9,9,9,9,9,9,9,9,9,9,3,3,3,3,3,3,3,3,3,3,3,3},	
-					{3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3},	
-					{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},		
+					{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
+					{3,3,3,3,3,3,3,3,3,3,3,2,3,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},	
+					{2,2,2,2,2,2,2,2,2,2,3,2,3,3,3,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,2,2,2,2,2,2,2,2},	
+					{0,0,0,0,0,0,0,3,3,2,3,2,3,3,3,3,3,2,2,2,2,2,2,2,2,2,0,0,0,0,0,2,2,2,2,2,2,2,2,2,2},	
+					{0,0,0,0,0,0,0,0,3,2,3,2,2,2,2,2,2,2,2,2,2,2,2,2,9,9,5,0,0,0,5,9,9,2,2,2,3,2,2,2,2},	
+					{0,0,0,0,0,0,0,0,0,2,3,3,3,3,3,3,3,2,3,2,3,2,3,2,4,4,4,0,0,0,4,4,4,2,2,3,3,3,2,2,2},	
+					{0,0,0,0,0,0,0,0,0,2,3,0,0,0,0,0,3,2,3,0,3,0,3,2,2,2,3,0,0,0,3,2,2,2,3,3,0,3,3,2,2},	
+					{0,0,0,0,0,0,0,0,0,0,3,0,5,9,5,0,3,2,0,0,0,0,0,0,2,2,3,0,0,0,3,2,2,3,3,0,0,0,3,3,2},	
+					{9,6,0,0,0,0,0,0,0,0,3,0,4,4,4,0,3,0,0,0,0,0,0,0,0,2,2,0,0,0,2,2,3,3,0,0,0,0,0,3,3},	
+					{3,3,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},	
+					{2,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},	
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},	
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},	
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,6,9,9,9,9,9,9,9,3},
+					{9,6,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,3,3,9,9,9,9,9,3,3},	
+					{3,3,3,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,3,3,9,9,9,3,3,2},	
+					{7,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,3,3,9,3,3,2,2},	
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,3,9,3,2,2,2},	
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,6,6,9,9,2,2,9,2,2,2,2},	
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,6,9,6,6,0,1,3,3,3,3,2,2,9,2,2,2,2},	
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,3,3,3,8,0,0,1,3,3,3,2,2,9,2,2,2,2},	
+					{9,6,6,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,2,2,2,9,2,2,2,2},	
+					{3,3,3,3,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,9,9,9,9,9,9,9,9,9,6,2,2,2,2,2,9,2,2,2,2},	
+					{2,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,3,6,9,9,9,9,9,6,3,3,2,2,2,2,2,9,2,2,2,2},	
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,3,3,3,3,9,3,3,3,3,3,2,2,2,2,2,9,2,2,2,2},	
+					{0,0,0,0,0,0,6,6,9,9,9,9,9,9,9,9,9,9,9,9,2,2,2,3,3,9,3,3,2,2,2,2,2,2,2,2,9,2,2,2,2},	
+					{0,0,0,0,0,0,3,3,9,9,9,9,9,9,9,9,9,9,9,9,2,2,2,2,2,9,2,2,2,2,2,2,2,2,2,2,9,2,2,2,2},	
+					{0,0,0,0,0,0,3,3,9,9,9,9,9,9,9,9,9,9,9,3,3,2,2,2,2,9,9,9,3,3,3,3,3,3,9,9,9,2,2,2,2},	
+					{9,9,9,9,9,9,9,3,9,9,9,9,9,9,9,9,9,9,9,3,3,2,2,2,2,3,9,9,9,9,9,9,9,9,9,9,9,2,2,2,2},	
+					{9,9,9,9,9,9,9,3,3,9,9,9,9,9,9,9,9,9,3,3,3,2,2,2,2,3,3,9,9,9,9,9,9,9,9,9,9,2,2,2,2},	
+					{9,9,9,9,9,9,9,3,3,3,9,9,9,9,9,9,9,3,3,3,2,2,3,3,3,3,3,3,3,9,9,9,9,9,9,9,3,2,2,2,2},	
+					{9,9,9,9,9,9,9,2,3,3,3,3,9,9,9,3,3,3,3,2,2,2,2,3,3,3,3,3,9,9,9,9,9,9,9,3,3,2,2,2,2},	
+					{9,9,9,9,9,9,9,2,2,3,3,3,3,9,3,3,3,3,2,2,2,2,2,2,3,3,3,9,9,9,9,9,9,9,3,3,3,2,2,2,2},	
+					{9,9,9,9,9,9,2,2,2,2,2,2,2,9,2,2,2,2,2,2,2,2,2,2,2,3,9,9,9,9,9,9,9,3,3,3,3,2,2,2,2},	
+					{9,9,9,9,9,2,2,2,2,2,2,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,3,3,3,3,3,2,2,2,2},	
+					{9,9,2,2,2,2,2,2,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,3,3,3,3,3,3,2,2,2,2},	
+					{9,2,2,2,2,2,9,9,9,9,9,9,9,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3},	
+					{9,9,9,9,9,9,9,9,9,9,9,9,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3},	
+					{9,9,9,9,9,9,9,9,9,9,9,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3},	
+					{9,9,9,9,9,9,9,9,9,9,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3},	
+					{3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3},	
+					{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},		
 				};	
 					int[,] _zeplineWalls = {
-					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-					{0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0},
-					{0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0},
-					{0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0},
-					{0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0,1,1,0,0,0,0},
-					{0,0,0,1,1,1,1,1,1,1,1,0,2,2,2,0,1,1,0,0,0,0},
-					{2,2,2,0,1,1,1,1,1,1,1,0,2,2,2,0,1,1,0,0,0,0},
-					{0,0,2,0,1,1,1,1,1,1,1,0,2,2,2,0,1,1,0,0,0,0},
-					{0,0,2,0,1,1,1,1,1,1,1,0,2,2,2,0,1,1,0,0,0,0},
-					{0,0,2,0,1,1,1,1,1,1,1,0,2,2,2,0,1,1,0,0,0,0},
-					{0,0,2,0,1,1,1,1,1,1,1,0,2,2,2,0,1,1,0,0,0,0},
-					{0,0,2,0,1,1,1,1,1,1,1,0,2,2,2,0,1,1,0,0,0,0},
-					{0,0,2,0,1,1,1,1,1,1,1,0,2,2,2,0,1,1,1,0,0,0},
-					{2,2,2,2,0,1,1,1,1,1,1,0,2,2,2,0,1,1,1,0,0,0},
-					{0,0,0,2,0,1,1,1,1,1,1,0,2,2,2,0,1,1,1,0,0,0},
-					{0,0,0,2,0,1,1,1,1,1,1,0,2,2,2,0,1,1,1,0,0,0},
-					{0,0,0,2,0,1,1,1,1,1,1,0,2,2,2,0,1,1,1,0,0,0},
-					{0,0,0,2,0,1,1,1,1,1,1,0,2,2,2,0,1,1,1,0,0,0},
-					{0,0,0,2,0,1,1,1,1,1,1,0,2,2,2,0,1,1,1,0,0,0},
-					{0,0,0,2,0,1,1,1,1,1,1,0,2,2,2,0,1,1,1,0,0,0},
-					{2,2,2,2,2,0,1,1,1,1,1,0,2,2,2,0,1,1,1,1,0,0},
-					{0,0,0,0,2,0,1,1,1,1,1,0,2,2,2,0,1,1,1,1,0,0},
-					{0,0,0,0,2,0,1,1,1,1,1,0,2,2,2,0,1,1,1,1,0,0},
-					{0,0,0,0,2,0,1,1,1,1,1,0,2,2,2,0,1,1,1,1,0,0},
-					{0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-					{0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-					{0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,2,2,2,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,2,2,2,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,2,2,2,2,2,2,2,0,0,0,0,0,0,0,0},
+					{0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,2,2,2,2,2,2,2,0,0,0,0,0,0,0,0},
+					{0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,2,2,2,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,1,1,1,1,1,1,1,1,0,2,2,2,0,1,1,0,0,0,0,0,0,0,0,0,2,2,2,0,0,0,0,0,0,0,0,0,0,0},
+					{2,2,2,0,1,1,1,1,1,1,1,0,2,2,2,0,1,1,0,0,0,0,0,0,0,0,0,2,2,2,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,2,0,1,1,1,1,1,1,1,0,2,2,2,0,1,1,0,0,0,0,0,0,0,0,0,2,2,2,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,2,0,1,1,1,1,1,1,1,0,2,2,2,0,1,1,0,0,0,0,0,0,0,0,0,2,2,2,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,2,0,1,1,1,1,1,1,1,0,2,2,2,0,1,1,0,0,0,0,0,0,0,0,0,2,2,2,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,2,0,1,1,1,1,1,1,1,0,2,2,2,0,1,1,0,0,0,0,0,0,0,0,0,2,2,2,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,2,0,1,1,1,1,1,1,1,0,2,2,2,0,1,1,0,0,0,0,0,0,0,0,0,2,2,2,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,2,0,1,1,1,1,1,1,1,0,2,2,2,0,1,1,1,0,0,0,0,0,0,0,0,2,2,2,0,0,0,0,0,0,0,0,0,0,0},
+					{2,2,2,2,0,1,1,1,1,1,1,0,2,2,2,0,1,1,1,0,0,0,0,0,0,0,0,2,2,2,0,2,0,0,0,0,0,0,0,0,0},
+					{0,0,0,2,0,1,1,1,1,1,1,0,2,2,2,0,1,1,1,0,0,0,0,0,0,0,0,2,2,2,0,2,0,0,0,0,0,0,0,0,0},
+					{0,0,0,2,0,1,1,1,1,1,1,0,2,2,2,0,1,1,1,0,0,0,0,0,0,0,0,2,2,2,0,2,0,0,0,0,0,0,0,0,0},
+					{0,0,0,2,0,1,1,1,1,1,1,0,2,2,2,0,1,1,1,0,0,0,0,0,0,0,0,2,2,2,0,2,0,0,0,0,0,0,0,0,0},
+					{0,0,0,2,0,1,1,1,1,1,1,0,2,2,2,0,1,1,1,0,0,0,0,0,0,0,0,2,2,2,2,2,2,2,0,0,0,0,0,0,0},
+					{0,0,0,2,0,1,1,1,1,1,1,0,2,2,2,0,1,1,1,0,0,0,0,2,2,2,2,2,2,2,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,2,0,1,1,1,1,1,1,0,2,2,2,0,1,1,1,0,0,0,0,2,0,0,0,2,2,2,0,0,0,0,0,0,0,0,0,0,0},
+					{2,2,2,2,2,0,1,1,1,1,1,0,2,2,2,0,1,1,1,1,0,0,0,2,0,0,0,2,2,2,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,2,0,1,1,1,1,1,0,2,2,2,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,2,0,1,1,1,1,1,0,2,2,2,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,2,0,1,1,1,1,1,0,2,2,2,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				};
 						
 				int pyramidPosX = pyramidX;
 				int pyramidPosY = pyramidY += (size - 40);
-				pyramidPosY -= (int)(.5f * _zepline.GetLength(1)); //incorrect grab length?!?! still works lol
+				pyramidPosY -= (int)(.5f * _zepline.GetLength(0)) - 10;
 				
 				for(int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)
 				{
@@ -2071,82 +2068,59 @@ namespace SOTS
 											tile2.active(false);
 										break;
 									case 1:
+										tile.type = 274; 
+										tile.active(true);
+										tile.slope(4);
+										tile2.type = 274;  
+										tile2.active(true);
+										tile2.slope(3);
 										break;
 									case 2:
-										if(tile.type == (ushort)mod.TileType("PyramidSlabTile"))
-										{
-											tile.type = (ushort)mod.TileType("PyramidSlabTile");
-											tile.active(true);
-											tile.slope(0);
-											tile.halfBrick(false);
-										}
-										if(tile2.type == (ushort)mod.TileType("PyramidSlabTile"))
-										{
-											tile2.type = (ushort)mod.TileType("PyramidSlabTile");
-											tile2.active(true);
-											tile2.slope(0);
-											tile2.halfBrick(false);
-										}
+										tile.type = (ushort)mod.TileType("PyramidSlabTile");
+										tile.active(true);
+										tile.slope(0);
+										tile.halfBrick(false);
+										tile2.type = (ushort)mod.TileType("PyramidSlabTile");
+										tile2.active(true);
+										tile2.slope(0);
+										tile2.halfBrick(false);
 										break;
 									case 3:
-										if(tile.type == (ushort)mod.TileType("PyramidSlabTile"))
-										{
-											tile.type = 274; //sandstone slab
-											tile.active(true);
-											tile.slope(0);
-											tile.halfBrick(false);
-										}
-										if(tile2.type == (ushort)mod.TileType("PyramidSlabTile"))
-										{
-											tile2.type = 274; 
-											tile2.active(true);
-											tile2.slope(0);
-											tile2.halfBrick(false);
-										}
+										tile.type = 274; //sandstone slab
+										tile.active(true);
+										tile.slope(0);
+										tile.halfBrick(false);
+										tile2.type = 274; 
+										tile2.active(true);
+										tile2.slope(0);
+										tile2.halfBrick(false);
 										break;
 									case 4:
-										if(tile.type == (ushort)mod.TileType("PyramidSlabTile"))
-										{
-											tile.type = 326; //waterfall
-											tile.active(true);
-											tile.slope(0);
-											tile.halfBrick(false);
-										}
-										if(tile2.type == (ushort)mod.TileType("PyramidSlabTile"))
-										{
-											tile2.type = 326; //waterfall
-											tile2.active(true);
-											tile2.slope(0);
-											tile2.halfBrick(false);
-										}
+										tile.type = 326; //waterfall
+										tile.active(true);
+										tile.slope(0);
+										tile.halfBrick(false);
+										
+										tile2.type = 326; //waterfall
+										tile2.active(true);
+										tile2.slope(0);
+										tile2.halfBrick(false);
 										break;
 									case 5:
-										if(tile.type == (ushort)mod.TileType("PyramidSlabTile"))
-										{
-											tile.type = 326; //waterfall
-											tile.active(true);
-											tile.halfBrick(true);
-										}
-										if(tile2.type == (ushort)mod.TileType("PyramidSlabTile"))
-										{
-											tile2.type = 326; //waterfall
-											tile2.active(true);
-											tile2.halfBrick(true);
-										}
+										tile.type = 326; //waterfall
+										tile.active(true);
+										tile.halfBrick(true);
+										tile2.type = 326; //waterfall
+										tile2.active(true);
+										tile2.halfBrick(true);
 										break;
 									case 6:
-										if(tile.type == (ushort)mod.TileType("PyramidSlabTile"))
-										{
-											tile.type = 274;
-											tile.active(true);
-											tile.halfBrick(true);
-										}
-										if(tile2.type == (ushort)mod.TileType("PyramidSlabTile"))
-										{
-											tile2.type = 274;
-											tile2.active(true);
-											tile2.halfBrick(true);
-										}
+										tile.type = 274;
+										tile.active(true);
+										tile.halfBrick(true);
+										tile2.type = 274;
+										tile2.active(true);
+										tile2.halfBrick(true);
 										break;
 									case 7:
 										tile.type = (ushort)mod.TileType("ZeplineLureTile");
@@ -2155,29 +2129,23 @@ namespace SOTS
 										tile.active(true);
 										break;
 									case 8:
-										if(tile.type == (ushort)mod.TileType("PyramidSlabTile"))
-										{
-											tile.type = 274; 
-											tile.active(true);
-											tile.slope(3);
-										}
-										if(tile2.type == (ushort)mod.TileType("PyramidSlabTile"))
-										{
-											tile2.type = 274;  
-											tile2.active(true);
-											tile2.slope(4);
-										}
+										tile.type = 274; 
+										tile.active(true);
+										tile.slope(3);
+										tile2.type = 274;  
+										tile2.active(true);
+										tile2.slope(4);
 										break;
 									case 9:
-											tile.liquidType(0);
-											tile.liquid = 255;
-											tile.active(false);
-											WorldGen.SquareTileFrame(k, l, false);
+										tile.liquidType(0);
+										tile.liquid = 255;
+										tile.active(false);
+										WorldGen.SquareTileFrame(k, l, false);
 										
-											tile2.liquidType(0);
-											tile2.liquid = 255;
-											tile2.active(false);
-											WorldGen.SquareTileFrame(k2, l, false);
+										tile2.liquidType(0);
+										tile2.liquid = 255;
+										tile2.active(false);
+										WorldGen.SquareTileFrame(k2, l, false);
 									break;
 									break;
 								}
@@ -2225,22 +2193,25 @@ namespace SOTS
 						Tile tileLU2 = Framing.GetTileSafely(findTileX - 1, findTileY-2);
 						Tile tileU3 = Framing.GetTileSafely(findTileX, findTileY -3);
 						Tile tileLU3 = Framing.GetTileSafely(findTileX - 1, findTileY-3);
-						
-						if(tile.type == (ushort)mod.TileType("PyramidSlabTile") && !tileLU.active() && !tileLU2.active() && !tileU.active() && !tileU2.active() && Main.rand.Next(4) == 0)
+						if(tile.type == (ushort)mod.TileType("PyramidSlabTile") && !tileLU.active() && !tileLU2.active() && !tileU.active() && !tileU2.active() && Main.rand.Next(5) == 0)
 						{
 							WorldGen.PlaceTile(findTileX, findTileY - 1, 28, true, true, -1, 3); //pots
 						}
-						if(tile.type == (ushort)mod.TileType("PyramidSlabTile") && !tileLU.active() && !tileLU2.active() && !tileU.active() && !tileU2.active() && Main.rand.Next(size / 2) == 0)
+						if(tile.type == (ushort)mod.TileType("PyramidSlabTile") && !tileLU.active() && !tileLU2.active() && !tileU.active() && !tileU2.active() && Main.rand.Next(size / 3) == 0)
 						{
 							WorldGen.PlaceTile(findTileX, findTileY - 1, (ushort)mod.TileType("CrystalStatue")); //life crystal
 						}
-						if(tile.type == (ushort)mod.TileType("PyramidSlabTile") && !tileLU.active() && !tileLU2.active() && !tileU.active() && !tileU2.active() && Main.rand.Next(size / 2) == 0)
+						if(tile.type == (ushort)mod.TileType("PyramidSlabTile") && !tileLU.active() && !tileLU2.active() && !tileU.active() && !tileU2.active() && Main.rand.Next(size / 3) == 0)
 						{
 							WorldGen.PlaceTile(findTileX, findTileY - 1, (ushort)mod.TileType("ManaStatue")); //mana crystal
 						}
 						if(tile.type == (ushort)mod.TileType("PyramidSlabTile") && !tileLU.active() && !tileLU2.active() && !tileU.active() && !tileU2.active() && Main.rand.Next(size / 3) == 0)
 						{
 							WorldGen.PlaceTile(findTileX, findTileY - 1, (ushort)mod.TileType("PyramidChestTile")); //Chests
+						}
+						if(tile.type == (ushort)mod.TileType("PyramidSlabTile") && !tileLU.active() && !tileLU2.active() && !tileU.active() && !tileU2.active() && Main.rand.Next(size / 3) == 0)
+						{
+							GenerateCrate(findTileX, findTileY - 1);
 						}
 						if(tile.type == (ushort)mod.TileType("PyramidSlabTile") && !tileLU.active() && !tileLU2.active() && !tileU.active() && !tileU2.active() && !tileU3.active() && !tileLU3.active() && Main.rand.Next(size / 2) == 0)
 						{
@@ -2624,7 +2595,7 @@ namespace SOTS
 			}
 			else
 			{
-				WorldGen.PlaceTile(x, y, mod.TileType("PyramidCrateTile"));
+				WorldGen.PlaceTile(x + 1, y, mod.TileType("PyramidCrateTile"));
 			}
 		}
 		public void GeneratePyramidRoom(int x, int y, int direction) //this is beyond inefficient and should be done differently
@@ -3472,7 +3443,7 @@ namespace SOTS
 							{2,2,0,0,0,0,0,4,2,0,0,0,0,0,0,0,0},
 							{3,3,3,0,0,0,0,5,3,0,0,0,0,0,0,0,0},
 							{2,2,2,2,0,0,0,0,3,0,0,0,0,0,0,0,0},
-							{3,3,3,3,3,0,0,0,3,0,0,0,5,6,0,7,0}
+							{3,3,3,3,3,0,0,0,3,0,0,0,0,6,0,7,0}
 						};	
 						
 						int PosX = x;
