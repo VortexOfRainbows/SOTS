@@ -1,6 +1,7 @@
 A mod which has nothing to do with secrets or shadows... yet
 NOTICE: This mod is not optimized for multiplayer, feel free to give it a try, but bugs might occur.
 !! This mod is very early in development !!
+!! A Large world is recommended in order for the pyramid to properly generate without overriding vanilla structures, among other things !!
 
 Bosses -> Currently 5, Mostly bullet hells
 Items -> Around 300, unique gimmicks all around!
@@ -14,10 +15,12 @@ Pyramid Dungeon World Gen
 Developer, Artist, and Playtesting - Vortex#6230 (Make sure you're in the tmodloader server if you're to DM me)
 Playtesting - Crimsonkeep, FlameFreezer
 
+Update 0.18.3
+-Pyramid worldgen improved, Zeppelin room changed
+
 Update 0.18.2
 -Fixed undownloadable error
 -Icon added
--Pyramid worldgen improved, Zeppelin room changed
 
 Update 0.18.1 
 -More pyramid stuff and resprites

@@ -1150,91 +1150,92 @@ namespace SOTS
 						}
 					}
 					
-					
-						for(int i = 0; i < 3; i++)
+					/*
+					for(int i = 0; i < 3; i++)
+					{
+						int EnchantedShrineX = Main.rand.Next(40, (Main.maxTilesX - 40));
+						int EnchantedShrineY = (int)WorldGen.rockLayer + 300 + Main.rand.Next(-25,26); //692 - small, //820 - med //1270 - large
+						int radius5 = 9;
+						
+						for (int x = -radius5; x <= radius5; x++)
 						{
-							int EnchantedShrineX = Main.rand.Next(40, (Main.maxTilesX - 40));
-							int EnchantedShrineY = (int)WorldGen.rockLayer + 300 + Main.rand.Next(-25,26); //692 - small, //820 - med //1270 - large
-							int radius5 = 9;
-							
-							for (int x = -radius5; x <= radius5; x++)
+							for (int y = -radius5; y <= radius5; y++)
 							{
-								for (int y = -radius5; y <= radius5; y++)
-								{
-									int xPosition6 = (int)(x + EnchantedShrineX);
-									int yPosition6 = (int)(y + (EnchantedShrineY - 2)); 
+								int xPosition6 = (int)(x + EnchantedShrineX);
+								int yPosition6 = (int)(y + (EnchantedShrineY - 2)); 
 				 
-									if (Math.Sqrt(x * x + y * y) <= radius5 + 0.5)   //this make so the explosion radius is a circle
-									{
-										WorldGen.KillTile(xPosition6 , yPosition6 , false, false, false);  //this make the explosion destroy tiles  
-									}
+								if (Math.Sqrt(x * x + y * y) <= radius5 + 0.5)   //this make so the explosion radius is a circle
+								{
+									WorldGen.KillTile(xPosition6 , yPosition6 , false, false, false);  //this make the explosion destroy tiles  
 								}
 							}
-							
-							WorldGen.PlaceTile(EnchantedShrineX, EnchantedShrineY, 1);
-							WorldGen.PlaceTile(EnchantedShrineX, EnchantedShrineY + 1, 1);
-							
-							WorldGen.PlaceTile(EnchantedShrineX +1, EnchantedShrineY, 1);
-							WorldGen.PlaceTile(EnchantedShrineX -1, EnchantedShrineY, 1);
-							WorldGen.PlaceTile(EnchantedShrineX +1, EnchantedShrineY + 1, 1);
-							WorldGen.PlaceTile(EnchantedShrineX -1, EnchantedShrineY + 1, 1);
-							
-							WorldGen.PlaceTile(EnchantedShrineX +2, EnchantedShrineY, 1);
-							WorldGen.PlaceTile(EnchantedShrineX -2, EnchantedShrineY, 1);
-							WorldGen.PlaceTile(EnchantedShrineX +3, EnchantedShrineY, 1);
-							WorldGen.PlaceTile(EnchantedShrineX -3, EnchantedShrineY, 1);
-							
-							WorldGen.PlaceTile(EnchantedShrineX +2, EnchantedShrineY, 1);
-							WorldGen.PlaceTile(EnchantedShrineX -2, EnchantedShrineY, 1);
-							WorldGen.PlaceTile(EnchantedShrineX +3, EnchantedShrineY, 1);
-							WorldGen.PlaceTile(EnchantedShrineX -3, EnchantedShrineY, 1);
-							
-							WorldGen.PlaceTile(EnchantedShrineX, EnchantedShrineY + 2, 30);
-							WorldGen.PlaceTile(EnchantedShrineX + 1, EnchantedShrineY + 2, 30);
-							WorldGen.PlaceTile(EnchantedShrineX - 1, EnchantedShrineY + 2, 30);
-							WorldGen.PlaceTile(EnchantedShrineX + 2, EnchantedShrineY + 2, 30);
-							WorldGen.PlaceTile(EnchantedShrineX - 2, EnchantedShrineY + 2, 30);
-							WorldGen.PlaceTile(EnchantedShrineX + 2, EnchantedShrineY + 1, 30);
-							WorldGen.PlaceTile(EnchantedShrineX - 2, EnchantedShrineY + 1, 30);
-							WorldGen.PlaceTile(EnchantedShrineX + 3, EnchantedShrineY + 2, 30);
-							WorldGen.PlaceTile(EnchantedShrineX - 3, EnchantedShrineY + 2, 30);
-							WorldGen.PlaceTile(EnchantedShrineX + 3, EnchantedShrineY + 1, 30);
-							WorldGen.PlaceTile(EnchantedShrineX - 3, EnchantedShrineY + 1, 30);
-							WorldGen.PlaceTile(EnchantedShrineX + 4, EnchantedShrineY + 2, 30);
-							WorldGen.PlaceTile(EnchantedShrineX - 4, EnchantedShrineY + 2, 30);
-							WorldGen.PlaceTile(EnchantedShrineX + 4, EnchantedShrineY + 1, 30);
-							WorldGen.PlaceTile(EnchantedShrineX - 4, EnchantedShrineY + 1, 30);
-							WorldGen.PlaceTile(EnchantedShrineX + 4, EnchantedShrineY, 30);
-							WorldGen.PlaceTile(EnchantedShrineX - 4, EnchantedShrineY, 30);
-							WorldGen.PlaceTile(EnchantedShrineX + 4, EnchantedShrineY - 1, 30);
-							WorldGen.PlaceTile(EnchantedShrineX - 4, EnchantedShrineY - 1, 30);
-							WorldGen.PlaceTile(EnchantedShrineX + 4, EnchantedShrineY - 2, 30);
-							WorldGen.PlaceTile(EnchantedShrineX - 4, EnchantedShrineY - 2, 30);
-							WorldGen.PlaceTile(EnchantedShrineX + 4, EnchantedShrineY - 3, 30);
-							WorldGen.PlaceTile(EnchantedShrineX - 4, EnchantedShrineY - 3, 30);
-							WorldGen.PlaceTile(EnchantedShrineX + 4, EnchantedShrineY - 4, 30);
-							WorldGen.PlaceTile(EnchantedShrineX - 4, EnchantedShrineY - 4, 30);
-							WorldGen.PlaceTile(EnchantedShrineX + 4, EnchantedShrineY - 5, 30);
-							WorldGen.PlaceTile(EnchantedShrineX - 4, EnchantedShrineY - 5, 30);
-							WorldGen.PlaceTile(EnchantedShrineX + 4, EnchantedShrineY - 6, 30);
-							WorldGen.PlaceTile(EnchantedShrineX - 4, EnchantedShrineY - 6, 30);
-							WorldGen.PlaceTile(EnchantedShrineX + 3, EnchantedShrineY - 6, 30);
-							WorldGen.PlaceTile(EnchantedShrineX - 3, EnchantedShrineY - 6, 30);
-							WorldGen.PlaceTile(EnchantedShrineX + 2, EnchantedShrineY - 6, 30);
-							WorldGen.PlaceTile(EnchantedShrineX - 2, EnchantedShrineY - 6, 30);
-							WorldGen.PlaceTile(EnchantedShrineX + 2, EnchantedShrineY - 5, 124);
-							WorldGen.PlaceTile(EnchantedShrineX - 2, EnchantedShrineY - 5, 124);
-							WorldGen.PlaceTile(EnchantedShrineX + 2, EnchantedShrineY - 4, 124);
-							WorldGen.PlaceTile(EnchantedShrineX - 2, EnchantedShrineY - 4, 124);
-							WorldGen.PlaceTile(EnchantedShrineX + 2, EnchantedShrineY - 3, 124);
-							WorldGen.PlaceTile(EnchantedShrineX - 2, EnchantedShrineY - 3, 124);
-							WorldGen.PlaceTile(EnchantedShrineX + 2, EnchantedShrineY - 2, 124);
-							WorldGen.PlaceTile(EnchantedShrineX - 2, EnchantedShrineY - 2, 124);
-							WorldGen.PlaceTile(EnchantedShrineX + 2, EnchantedShrineY - 1, 124);
-							WorldGen.PlaceTile(EnchantedShrineX - 2, EnchantedShrineY - 1, 124);
-							
-							WorldGen.PlaceTile(EnchantedShrineX, EnchantedShrineY - 1, mod.TileType("EnchantedPickShrineTile"));
 						}
+						
+						WorldGen.PlaceTile(EnchantedShrineX, EnchantedShrineY, 1);
+						WorldGen.PlaceTile(EnchantedShrineX, EnchantedShrineY + 1, 1);
+						
+						WorldGen.PlaceTile(EnchantedShrineX +1, EnchantedShrineY, 1);
+						WorldGen.PlaceTile(EnchantedShrineX -1, EnchantedShrineY, 1);
+						WorldGen.PlaceTile(EnchantedShrineX +1, EnchantedShrineY + 1, 1);
+						WorldGen.PlaceTile(EnchantedShrineX -1, EnchantedShrineY + 1, 1);
+						
+						WorldGen.PlaceTile(EnchantedShrineX +2, EnchantedShrineY, 1);
+						WorldGen.PlaceTile(EnchantedShrineX -2, EnchantedShrineY, 1);
+						WorldGen.PlaceTile(EnchantedShrineX +3, EnchantedShrineY, 1);
+						WorldGen.PlaceTile(EnchantedShrineX -3, EnchantedShrineY, 1);
+						
+						WorldGen.PlaceTile(EnchantedShrineX +2, EnchantedShrineY, 1);
+						WorldGen.PlaceTile(EnchantedShrineX -2, EnchantedShrineY, 1);
+						WorldGen.PlaceTile(EnchantedShrineX +3, EnchantedShrineY, 1);
+						WorldGen.PlaceTile(EnchantedShrineX -3, EnchantedShrineY, 1);
+						
+						WorldGen.PlaceTile(EnchantedShrineX, EnchantedShrineY + 2, 30);
+						WorldGen.PlaceTile(EnchantedShrineX + 1, EnchantedShrineY + 2, 30);
+						WorldGen.PlaceTile(EnchantedShrineX - 1, EnchantedShrineY + 2, 30);
+						WorldGen.PlaceTile(EnchantedShrineX + 2, EnchantedShrineY + 2, 30);
+						WorldGen.PlaceTile(EnchantedShrineX - 2, EnchantedShrineY + 2, 30);
+						WorldGen.PlaceTile(EnchantedShrineX + 2, EnchantedShrineY + 1, 30);
+						WorldGen.PlaceTile(EnchantedShrineX - 2, EnchantedShrineY + 1, 30);
+						WorldGen.PlaceTile(EnchantedShrineX + 3, EnchantedShrineY + 2, 30);
+						WorldGen.PlaceTile(EnchantedShrineX - 3, EnchantedShrineY + 2, 30);
+						WorldGen.PlaceTile(EnchantedShrineX + 3, EnchantedShrineY + 1, 30);
+						WorldGen.PlaceTile(EnchantedShrineX - 3, EnchantedShrineY + 1, 30);
+						WorldGen.PlaceTile(EnchantedShrineX + 4, EnchantedShrineY + 2, 30);
+						WorldGen.PlaceTile(EnchantedShrineX - 4, EnchantedShrineY + 2, 30);
+						WorldGen.PlaceTile(EnchantedShrineX + 4, EnchantedShrineY + 1, 30);
+						WorldGen.PlaceTile(EnchantedShrineX - 4, EnchantedShrineY + 1, 30);
+						WorldGen.PlaceTile(EnchantedShrineX + 4, EnchantedShrineY, 30);
+						WorldGen.PlaceTile(EnchantedShrineX - 4, EnchantedShrineY, 30);
+						WorldGen.PlaceTile(EnchantedShrineX + 4, EnchantedShrineY - 1, 30);
+						WorldGen.PlaceTile(EnchantedShrineX - 4, EnchantedShrineY - 1, 30);
+						WorldGen.PlaceTile(EnchantedShrineX + 4, EnchantedShrineY - 2, 30);
+						WorldGen.PlaceTile(EnchantedShrineX - 4, EnchantedShrineY - 2, 30);
+						WorldGen.PlaceTile(EnchantedShrineX + 4, EnchantedShrineY - 3, 30);
+						WorldGen.PlaceTile(EnchantedShrineX - 4, EnchantedShrineY - 3, 30);
+						WorldGen.PlaceTile(EnchantedShrineX + 4, EnchantedShrineY - 4, 30);
+						WorldGen.PlaceTile(EnchantedShrineX - 4, EnchantedShrineY - 4, 30);
+						WorldGen.PlaceTile(EnchantedShrineX + 4, EnchantedShrineY - 5, 30);
+						WorldGen.PlaceTile(EnchantedShrineX - 4, EnchantedShrineY - 5, 30);
+						WorldGen.PlaceTile(EnchantedShrineX + 4, EnchantedShrineY - 6, 30);
+						WorldGen.PlaceTile(EnchantedShrineX - 4, EnchantedShrineY - 6, 30);
+						WorldGen.PlaceTile(EnchantedShrineX + 3, EnchantedShrineY - 6, 30);
+						WorldGen.PlaceTile(EnchantedShrineX - 3, EnchantedShrineY - 6, 30);
+						WorldGen.PlaceTile(EnchantedShrineX + 2, EnchantedShrineY - 6, 30);
+						WorldGen.PlaceTile(EnchantedShrineX - 2, EnchantedShrineY - 6, 30);
+						WorldGen.PlaceTile(EnchantedShrineX + 2, EnchantedShrineY - 5, 124);
+						WorldGen.PlaceTile(EnchantedShrineX - 2, EnchantedShrineY - 5, 124);
+						WorldGen.PlaceTile(EnchantedShrineX + 2, EnchantedShrineY - 4, 124);
+						WorldGen.PlaceTile(EnchantedShrineX - 2, EnchantedShrineY - 4, 124);
+						WorldGen.PlaceTile(EnchantedShrineX + 2, EnchantedShrineY - 3, 124);
+						WorldGen.PlaceTile(EnchantedShrineX - 2, EnchantedShrineY - 3, 124);
+						WorldGen.PlaceTile(EnchantedShrineX + 2, EnchantedShrineY - 2, 124);
+						WorldGen.PlaceTile(EnchantedShrineX - 2, EnchantedShrineY - 2, 124);
+						WorldGen.PlaceTile(EnchantedShrineX + 2, EnchantedShrineY - 1, 124);
+						WorldGen.PlaceTile(EnchantedShrineX - 2, EnchantedShrineY - 1, 124);
+						
+						WorldGen.PlaceTile(EnchantedShrineX, EnchantedShrineY - 1, mod.TileType("EnchantedPickShrineTile"));
+					}
+					*/
 						
 						
 				})); 
@@ -1468,37 +1469,45 @@ namespace SOTS
 						int counterSpike = 0;
 						for(int findTileX = 100; findTileX < Main.maxTilesX - 100; findTileX++)
 						{
+							for(int y1 = 2; y1 >= -2; y1--) //top cooridor
+							{
+								int higherUpY = pyramidY + 30;
+								Tile selectTile = Framing.GetTileSafely(findTileX, higherUpY + y1);
+								Tile selectTileLeft = Framing.GetTileSafely(findTileX - 1, higherUpY + y1);
+								Tile selectTileLeft2 = Framing.GetTileSafely(findTileX - 2, higherUpY + y1);
+								Tile selectTileRight = Framing.GetTileSafely(findTileX + 1, higherUpY + y1);
+								Tile selectTileRight2 = Framing.GetTileSafely(findTileX + 2, higherUpY + y1);
+								if(selectTile.type == (ushort)mod.TileType("PyramidSlabTile") && selectTileLeft.type == (ushort)mod.TileType("PyramidSlabTile") && selectTileLeft2.type == (ushort)mod.TileType("PyramidSlabTile") && selectTileRight.type == (ushort)mod.TileType("PyramidSlabTile") && selectTileRight2.type == (ushort)mod.TileType("PyramidSlabTile"))
+								{
+									selectTile.active(false);
+								}
+							}
+							for(int y1 = 2; y1 >= -2; y1--) //zeppelin room and burial room cooridor
+							{
+								int higherUpY = pyramidY + (size - 40);
+								Tile selectTile = Framing.GetTileSafely(findTileX, higherUpY + y1);
+								Tile selectTileLeft = Framing.GetTileSafely(findTileX - 1, higherUpY + y1);
+								Tile selectTileLeft2 = Framing.GetTileSafely(findTileX - 2, higherUpY + y1);
+								Tile selectTileRight = Framing.GetTileSafely(findTileX + 1, higherUpY + y1);
+								Tile selectTileRight2 = Framing.GetTileSafely(findTileX + 2, higherUpY + y1);
+								if(selectTile.type == (ushort)mod.TileType("PyramidSlabTile") && selectTileLeft.type == (ushort)mod.TileType("PyramidSlabTile") && selectTileLeft2.type == (ushort)mod.TileType("PyramidSlabTile") && selectTileRight.type == (ushort)mod.TileType("PyramidSlabTile") && selectTileRight2.type == (ushort)mod.TileType("PyramidSlabTile"))
+								{
+									selectTile.active(false);
+								}
+							}
+							for(int y1 = 2; y1 >= -2; y1--) //sandslabe cooridor for zepline room
+							{
+								int higherUpY = pyramidY + (size - 12);
+								Tile selectTile = Framing.GetTileSafely(findTileX, higherUpY + y1);
+								if(selectTile.type == (ushort)mod.TileType("PyramidSlabTile") && selectTile.active() == true)
+								{
+									selectTile.type = 274;
+								}
+							}
 							for(int findTileY = Main.maxTilesY - 100; findTileY > pyramidY + 30; findTileY--)
 							{
 								int max = Math.Abs((int)((findTileY - pyramidY) * 0.8f));
 								int min = Math.Abs((int)((findTileY - pyramidY) * 0.5f));
-								
-								if(findTileY == pyramidY + (size - 40)) //cooridor for zepline room
-								{
-									for(int y1 = 2; y1 >= -2; y1--)
-									{
-										Tile selectTile = Framing.GetTileSafely(findTileX, findTileY + y1);
-										Tile selectTileLeft = Framing.GetTileSafely(findTileX - 1, findTileY + y1);
-										Tile selectTileLeft2 = Framing.GetTileSafely(findTileX - 2, findTileY + y1);
-										Tile selectTileRight = Framing.GetTileSafely(findTileX + 1, findTileY + y1);
-										Tile selectTileRight2 = Framing.GetTileSafely(findTileX + 2, findTileY + y1);
-										if(selectTile.type == (ushort)mod.TileType("PyramidSlabTile") && selectTileLeft.type == (ushort)mod.TileType("PyramidSlabTile") && selectTileLeft2.type == (ushort)mod.TileType("PyramidSlabTile") && selectTileRight.type == (ushort)mod.TileType("PyramidSlabTile") && selectTileRight2.type == (ushort)mod.TileType("PyramidSlabTile"))
-										{
-											selectTile.active(false);
-										}
-									}
-								}
-								if(findTileY == pyramidY + (size - 12)) //sandslabe cooridor for zepline room
-								{
-									for(int y1 = 2; y1 >= -2; y1--)
-									{
-										Tile selectTile = Framing.GetTileSafely(findTileX, findTileY + y1);
-										if(selectTile.type == (ushort)mod.TileType("PyramidSlabTile") && selectTile.active() == true)
-										{
-											selectTile.type = 274;
-										}
-									}
-								}
 								if(findTileY <= pyramidY + (size - 70) && findTileY >= pyramidY + 10)
 								{
 									Tile tile = Framing.GetTileSafely(findTileX, findTileY);
@@ -1779,7 +1788,7 @@ namespace SOTS
 										break;
 									}
 								}
-								for(int checkUp = 0; checkUp < 80; checkUp++)
+								for(int checkUp = 0; checkUp < 40; checkUp++)
 								{
 									Tile tileCheck = Framing.GetTileSafely(findTileX, findTileY - checkUp);
 									if(tileCheck.active() == false && tileCheck.wall == (ushort)mod.WallType("PyramidWallTile"))
@@ -1822,10 +1831,6 @@ namespace SOTS
 								
 								if(squareCount >= 625 && tilesDown >= 0 && tilesUp >= 0 && tilesLeft >= 0 && tilesRight >= 0)
 								{
-									if(tilesDown > tilesRight && tilesDown > tilesUp && tilesDown > tilesLeft)
-									{
-										canBeDown = true;
-									}
 									if(tilesRight > tilesDown && tilesRight > tilesUp && tilesRight > tilesLeft)
 									{
 										canBeRight = true;
@@ -1834,14 +1839,15 @@ namespace SOTS
 									{
 										canBeLeft = true;
 									}
-									if(tilesUp > tilesDown && tilesUp > tilesLeft && tilesUp > tilesRight) 
+									if(tilesDown > tilesUp && tilesDown > tilesLeft && tilesDown > tilesRight) 
+									{
+										canBeDown = true;
+									}
+									if((int)(tilesUp * 1.2f) > tilesRight && (int)(tilesUp * 1.2f) > tilesDown && (int)(tilesUp * 1.2f) > tilesLeft) //check this last because of the priority modifications
 									{
 										canBeUp = true;
 									}
 								}
-								
-								
-								
 								if(canBeRight && counterRight >= 3600)
 								{
 									counterRight = 0;
@@ -2193,29 +2199,32 @@ namespace SOTS
 						Tile tileLU2 = Framing.GetTileSafely(findTileX - 1, findTileY-2);
 						Tile tileU3 = Framing.GetTileSafely(findTileX, findTileY -3);
 						Tile tileLU3 = Framing.GetTileSafely(findTileX - 1, findTileY-3);
-						if(tile.type == (ushort)mod.TileType("PyramidSlabTile") && !tileLU.active() && !tileLU2.active() && !tileU.active() && !tileU2.active() && Main.rand.Next(5) == 0)
+						if(tile.type == (ushort)mod.TileType("PyramidSlabTile") && !tileLU.active() && !tileLU2.active() && !tileU.active() && !tileU2.active())
 						{
-							WorldGen.PlaceTile(findTileX, findTileY - 1, 28, true, true, -1, 3); //pots
-						}
-						if(tile.type == (ushort)mod.TileType("PyramidSlabTile") && !tileLU.active() && !tileLU2.active() && !tileU.active() && !tileU2.active() && Main.rand.Next(size / 3) == 0)
-						{
-							WorldGen.PlaceTile(findTileX, findTileY - 1, (ushort)mod.TileType("CrystalStatue")); //life crystal
-						}
-						if(tile.type == (ushort)mod.TileType("PyramidSlabTile") && !tileLU.active() && !tileLU2.active() && !tileU.active() && !tileU2.active() && Main.rand.Next(size / 3) == 0)
-						{
-							WorldGen.PlaceTile(findTileX, findTileY - 1, (ushort)mod.TileType("ManaStatue")); //mana crystal
-						}
-						if(tile.type == (ushort)mod.TileType("PyramidSlabTile") && !tileLU.active() && !tileLU2.active() && !tileU.active() && !tileU2.active() && Main.rand.Next(size / 3) == 0)
-						{
-							WorldGen.PlaceTile(findTileX, findTileY - 1, (ushort)mod.TileType("PyramidChestTile")); //Chests
-						}
-						if(tile.type == (ushort)mod.TileType("PyramidSlabTile") && !tileLU.active() && !tileLU2.active() && !tileU.active() && !tileU2.active() && Main.rand.Next(size / 3) == 0)
-						{
-							GenerateCrate(findTileX, findTileY - 1);
-						}
-						if(tile.type == (ushort)mod.TileType("PyramidSlabTile") && !tileLU.active() && !tileLU2.active() && !tileU.active() && !tileU2.active() && !tileU3.active() && !tileLU3.active() && Main.rand.Next(size / 2) == 0)
-						{
-							WorldGen.PlaceTile(findTileX, findTileY - 1, TileID.Statues, true, true, -1, Main.rand.Next(71)); //random statue
+							if(Main.rand.Next(5) == 0)
+							{
+								WorldGen.PlaceTile(findTileX, findTileY - 1, 28, true, true, -1, 3); //pots
+							}
+							else if(Main.rand.Next(size / 2) == 0)
+							{
+								WorldGen.PlaceTile(findTileX, findTileY - 1, (ushort)mod.TileType("CrystalStatue")); //life crystal
+							}
+							else if(Main.rand.Next(size / 2) == 0)
+							{
+								WorldGen.PlaceTile(findTileX, findTileY - 1, (ushort)mod.TileType("ManaStatue")); //mana crystal
+							}
+							else if(Main.rand.Next(size / 3) == 0)
+							{
+								WorldGen.PlaceTile(findTileX, findTileY - 1, (ushort)mod.TileType("PyramidChestTile")); //Chests
+							}
+							else if(Main.rand.Next((int)(size / 3.5f)) == 0)
+							{
+								GenerateCrate(findTileX, findTileY - 1);
+							}
+							else if(!tileU3.active() && !tileLU3.active() && Main.rand.Next(size / 2) == 0)
+							{
+								WorldGen.PlaceTile(findTileX, findTileY - 1, TileID.Statues, true, true, -1, Main.rand.Next(71)); //random statue
+							}
 						}
 						if(tile.wall == (ushort)mod.WallType("PyramidWallTile") && Main.rand.Next(500) == 0)
 						{

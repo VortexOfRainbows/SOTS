@@ -46,8 +46,20 @@ Putrid Pinky Spawn Animation -> Place down peanuts -> Pinky eats it -> pinky gro
 		2. Same health and damage, but rushes you down
 11. Tether Cord
 	1. Attaches a second player to you
+12. Enchanted Sword and Pickaxe Shrines in pyramid
+	1. Drops Blade Fragment or Drill Fragment	
+	2. Enchanted Pickaxe //modify stats
+	3. Arkhalis or Enchated Sword
 
 Complete:
+
+3/11/20
+1. More minor continuum collapse changes
+2. More Pyramid Changes
+	1. Downward (North Entrance) tunnels max length changed, 80 => 40 (this is to avoid it poking into the entrance)
+		2. Downward tunnel priority increased: 100% => 120% (only tunnel with modified priority)
+	2. New Top level cooridor to prevent North entrances from poking into it (also for later things :D)
+3. Gore Modified
 
 3/8/20
 1. More Continuum Collapse visuals and performance updates, sprite added
@@ -62,7 +74,7 @@ Complete:
 		1. This is to compensate for the new Zeppelin Room
 	5. New Zeppelin room
 	6. Burial Room moved closer to the end of the chamber, and always opposite the exit to the final layer
-	7. Spikes now generate after cooridors
+	7. Spikes now generate procedurally after cooridors
 	8. Crates generate in pyramids naturally
 
 3/5/20

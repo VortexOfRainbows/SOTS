@@ -18,7 +18,14 @@ namespace SOTS.Projectiles.Laser
 		{
 			DisplayName.SetDefault("Continuum Collapse");
 		}
-
+		public override bool ShouldUpdatePosition() 
+		{
+			return false;
+		}
+		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		{
+			return false;
+		}
 		public override void SetDefaults() 
 		{
 			projectile.width = 16;
@@ -39,7 +46,7 @@ namespace SOTS.Projectiles.Laser
 				initialDirection = projectile.velocity;
 				projectile.velocity *= 0f;
 				if(completedLoads == 0)
-					LaserDraw(null);
+					LaserDraw(null); //this will initiate the hitboxes without requiring the projectile to be drawn. This stops some lag, and also makes hitboxes spawn regardless of lag
 			}
 		
 			return true;
@@ -53,13 +60,17 @@ namespace SOTS.Projectiles.Laser
 			{
 				projectile.alpha = 0;
 			}
-			if(completedLoads > 1)
+			if(completedLoads > 1 && projectile.timeLeft > 10) //make sure the projectile has been loaded once (lag accounting) and has been active atmost than 2 times
 			{
 				projectile.alpha = 100;
 			}
-			if(completedLoads > 2)
+			else if(completedLoads > 2 && projectile.timeLeft > 9) //make sure the projectile has been loaded twice (lag accounting) and has been active atmost than 3 times
 			{
-				projectile.alpha = 230 + (completedLoads * 2);
+				projectile.alpha = 145;
+			}
+			else if(completedLoads > 3) //after the initial frames,
+			{
+				projectile.alpha = 230 + ((10 - projectile.timeLeft) * 2); //completed loads being used in the actual alpha calculation formula would make faster framerates have less frames of the afterimage projectile visual, so timeleft is used instead
 			}
 			if(projectile.alpha > 255)
 			{
@@ -180,14 +191,6 @@ namespace SOTS.Projectiles.Laser
 		int kToBeat = 200;
 		int fToBeat = 2000;
 		int completedLoads = 0;
-		public override bool ShouldUpdatePosition() 
-		{
-			return false;
-		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
-		{
-			return false;
-		}
 		public void LaserDraw(SpriteBatch spriteBatch)
 		{
 			float newAi = projectile.ai[0] * 2 / 13f;
