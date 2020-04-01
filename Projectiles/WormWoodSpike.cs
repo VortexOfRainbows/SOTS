@@ -101,15 +101,12 @@ namespace SOTS.Projectiles
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-			
 			Player player = Main.player[projectile.owner];
-			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");	
             target.immune[projectile.owner] = 15;
 			projectile.timeLeft = 3000;
 			projectile.friendly = true;
 			latch = true;
-			voidPlayer.voidMeter += 1;
 			if(target.lifeMax > 10 && !target.boss && target.CanBeChasedBy())
 			{
 				enemyIndex = target.whoAmI;

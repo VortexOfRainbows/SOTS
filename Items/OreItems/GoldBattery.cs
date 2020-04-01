@@ -49,6 +49,7 @@ namespace SOTS.Items.OreItems
 			if(modPlayer.onhit == 1)
 			{
 				voidPlayer.voidMeter += 2 + (modPlayer.onhitdamage / 11);
+				VoidPlayer.VoidEffect(player, 2 + (modPlayer.onhitdamage / 11));
 				if(voidPlayer.voidMeter >= voidPlayer.voidMeterMax2 - 5 && Main.rand.Next(10) == 0)
 				{
 					int minute = 3600;

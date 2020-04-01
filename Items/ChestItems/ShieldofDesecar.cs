@@ -44,9 +44,7 @@ namespace SOTS.Items.ChestItems
 				}
 			
 			}
-					item.defense += (int)shield;
-			
-			
+			item.defense += (int)shield;
 		}
 	}
 }

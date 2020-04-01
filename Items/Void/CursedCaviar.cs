@@ -45,16 +45,19 @@ namespace SOTS.Items.Void
 				{
 					player.AddBuff(BuffID.WellFed, 1800, true);
 					voidPlayer.voidMeter += 20;
+					VoidPlayer.VoidEffect(player, 20);
 				}
 				else if(rand <= 14) //35%, 8, 9, 10, 11, 12, 13, 14
 				{
 					player.AddBuff(BuffID.ManaRegeneration, 1800, true);
 					voidPlayer.voidMeter += 15;
+					VoidPlayer.VoidEffect(player, 15);
 				}
 				else //25%, 15, 16, 17, 18, 19
 				{
 					player.AddBuff(BuffID.Battle, 1800, true);
 					voidPlayer.voidMeter += 10;
+					VoidPlayer.VoidEffect(player, 10);
 				}
 				item.stack--;
 			}

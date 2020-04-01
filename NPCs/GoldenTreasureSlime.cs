@@ -88,11 +88,11 @@ namespace SOTS.NPCs
 			{
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("MinersSword"), 1);		
 			}
-			if(Main.rand.Next(150) == 0)
+			if(Main.rand.Next(120) == 0)
 			{
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("ShieldOfDesecar"), 1);		
 			}
-			if(Main.rand.Next(150) == 0)
+			if(Main.rand.Next(120) == 0)
 			{
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("ShieldOfStekpla"), 1);		
 			}

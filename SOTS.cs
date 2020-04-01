@@ -88,8 +88,7 @@ namespace SOTS
 			
 			
 			ModRecipe recipe = new ModRecipe(this);
-			recipe.AddIngredient(null, "GelBar", 10);
-			recipe.AddIngredient(null, "SlimeyFeather", 8);
+			recipe.AddIngredient(null, "Wormwood", 30);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(ItemID.SlimeStaff, 1);
 			recipe.AddRecipe();

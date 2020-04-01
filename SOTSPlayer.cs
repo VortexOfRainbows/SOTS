@@ -306,8 +306,6 @@ namespace SOTS
 				
 				int Proj = Projectile.NewProjectile(npc.Center.X - dX * 5, npc.Center.Y - dY * 5, dX, dY, 507, 12, 25f, player.whoAmI);
 				Main.projectile[Proj].timeLeft = 15;
-				Main.projectile[Proj].alpha = 125;
-				Main.projectile[Proj].tileCollide = false;
 			}
 		}
 		public override void OnHitByProjectile(Projectile proj, int damage, bool crit)
@@ -557,13 +555,11 @@ namespace SOTS
 			{
 				if(CritLifesteal > 0)
 				{
-					player.statLife += CritLifesteal;
-					player.HealEffect(CritLifesteal);
+					Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, mod.ProjectileType("HealProj"), 0, 0, player.whoAmI, CritLifesteal, 6);
 				}
 				if(CritVoidsteal > 0)
 				{
-					VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-					voidPlayer.voidMeter += CritVoidsteal;
+					Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, mod.ProjectileType("HealProj"), 2, 0, player.whoAmI, CritVoidsteal, 5);
 				}
 				int randBuff = Main.rand.Next(3);
 				if(randBuff == 2 && CritCurseFire)
@@ -587,13 +583,11 @@ namespace SOTS
 			{
 				if(CritLifesteal > 0)
 				{
-					player.statLife += CritLifesteal;
-					player.HealEffect(CritLifesteal);
+					Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, mod.ProjectileType("HealProj"), 0, 0, player.whoAmI, CritLifesteal, 6);
 				}
 				if(CritVoidsteal > 0)
 				{
-					VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-					voidPlayer.voidMeter += CritVoidsteal;
+					Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, mod.ProjectileType("HealProj"), 2, 0, player.whoAmI, CritVoidsteal, 5);
 				}
 				int randBuff = Main.rand.Next(2);
 				if((randBuff == 1 && CritFrost) || (CritFire && CritFrost && Main.rand.Next(5) == 0))

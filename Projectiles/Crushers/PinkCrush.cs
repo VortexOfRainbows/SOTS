@@ -35,7 +35,7 @@ namespace SOTS.Projectiles.Crushers
 		public override void AI()
         {
 			Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 1.5f / 255f, (255 - projectile.alpha) * 1.5f / 255f, (255 - projectile.alpha) * 1.5f / 255f);
-			if(expand == -1 && projectile.owner == Main.myPlayer)
+			if(expand == -1/* && projectile.owner == Main.myPlayer */)
 			{
 				expand = 0;
 				if(projectile.knockBack > 1)

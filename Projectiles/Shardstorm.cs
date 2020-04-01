@@ -48,28 +48,26 @@ namespace SOTS.Projectiles
 					Main.PlaySound(SoundID.Item44, (int)(projectile.Center.X - stormPos.X), (int)(projectile.Center.Y - stormPos.Y));
 					if(Main.myPlayer == projectile.owner)
 					{
-						int shard = Projectile.NewProjectile(projectile.Center.X - stormPos.X, projectile.Center.Y - stormPos.Y, 0, 0, projectile.type, projectile.damage, projectile.knockBack, player.whoAmI);
-						Main.projectile[shard].ai[0] = 1;
-						Main.projectile[shard].timeLeft = 720;
-						Main.projectile[shard].rotation = (float)(MathHelper.ToRadians(180) + Math.Atan2(stormPos.Y, stormPos.X));
+						int shard = Projectile.NewProjectile(projectile.Center.X - stormPos.X, projectile.Center.Y - stormPos.Y, 0, 0, projectile.type, projectile.damage, projectile.knockBack, player.whoAmI, 1, (float)(MathHelper.ToRadians(180) + Math.Atan2(stormPos.Y, stormPos.X)));
 					}
 					count++;
 				}
 			}
 			else
 			{
+				projectile.timeLeft = projectile.timeLeft < 100 ? 720 : projectile.timeLeft;
 				if(projectile.timeLeft >= 702)
 				{
 					projectile.alpha -= 15;
-					projectile.rotation += MathHelper.ToRadians(10);
-					projectile.velocity = new Vector2(8, 0).RotatedBy(projectile.rotation);
+					projectile.ai[1] += MathHelper.ToRadians(10);
+					projectile.velocity = new Vector2(8, 0).RotatedBy(projectile.ai[1]);
 				}
 				else
 				{
 					projectile.timeLeft--;
 					projectile.friendly = true;
 					projectile.penetrate = 2;
-					projectile.velocity = new Vector2(24, 0).RotatedBy(projectile.rotation);
+					projectile.velocity = new Vector2(24, 0).RotatedBy(projectile.ai[1]);
 					projectile.alpha += 6;
 					if(projectile.timeLeft <= 610)
 					{
@@ -78,6 +76,7 @@ namespace SOTS.Projectiles
 					}
 				}
 			}
+			projectile.rotation = projectile.ai[1];
 		}
 	}
 }

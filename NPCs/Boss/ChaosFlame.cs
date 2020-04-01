@@ -12,7 +12,6 @@ namespace SOTS.NPCs.Boss
 	{
 		int despawn = 0;
 		float rotateTimer = 0;
-	
 		public override void SetStaticDefaults()
 		{
 			
@@ -20,7 +19,6 @@ namespace SOTS.NPCs.Boss
 		}
 		public override void SetDefaults()
 		{
-			
             npc.aiStyle = 14; 
 			npc.lifeMax = 600;
             npc.damage = 70; 
@@ -46,11 +44,11 @@ namespace SOTS.NPCs.Boss
         }
 		public void GenerateDust()
 		{
-			for(int j = 0; j < 6; j ++)
+			for(int j = 0; j < 3; j ++)
 			{
 				for(int i = 0; i < 360; i += 15)
 				{
-					Vector2 circularLocation = new Vector2(48 + j * 12, 0).RotatedBy(MathHelper.ToRadians(i + j * 5));
+					Vector2 circularLocation = new Vector2(48 + j * 12, 0).RotatedBy(MathHelper.ToRadians(i + j * 10));
 					
 					int num1 = Dust.NewDust(new Vector2(npc.Center.X + circularLocation.X - 4, npc.Center.Y + circularLocation.Y - 4), 4, 4, 134);
 					Main.dust[num1].noGravity = true;
@@ -62,7 +60,7 @@ namespace SOTS.NPCs.Boss
 		{
 			Lighting.AddLight(npc.Center, (255 - npc.alpha) * 2.5f / 255f, (255 - npc.alpha) * 1.6f / 255f, (255 - npc.alpha) * 2.4f / 255f);
 			float rotateAmount = 170 * 0.012f;
-			int dist = 200;
+			int dist = 360;
 			
 			Player target = Main.player[npc.target];
 			
@@ -102,6 +100,7 @@ namespace SOTS.NPCs.Boss
 				GenerateDust();
 				int randY = Main.rand.Next(-500,501);
 				int randX = Main.rand.Next(-500,501);
+				
 				if(randX > 0)
 				{
 					randX += 350;
@@ -110,12 +109,10 @@ namespace SOTS.NPCs.Boss
 				{
 					randX -= 350;
 				}
+				
 				npc.position.X = originX + randX - npc.width/2;
 				npc.position.Y = originY + randY - npc.height/2;
-				
-				
 				GenerateDust();
-				
 				
 				float travelToX = target.position.X + (float)target.width * 0.5f - npc.Center.X;
 				float travelToY = target.position.Y + (float)target.height * 0.5f  - npc.Center.Y;
@@ -128,14 +125,13 @@ namespace SOTS.NPCs.Boss
 				npc.velocity.X = travelToX;
 				npc.velocity.Y = travelToY;
 			}
-		   
 			if(Main.player[npc.target].dead)
 			{
-			 despawn++;
+				despawn++;
 			}
 			if(despawn >= 360)
 			{
-			npc.active = false;
+				npc.active = false;
 			}
 			else
 			{

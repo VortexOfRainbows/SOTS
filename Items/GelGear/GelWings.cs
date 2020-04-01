@@ -44,7 +44,7 @@ namespace SOTS.Items.GelGear
 		{
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(null, "WormWoodCore", 1);
-			recipe.AddIngredient(null, "SlimeyFeather", 24);
+			recipe.AddIngredient(null, "Wormwood", 24);
 			recipe.AddIngredient(ItemID.Feather, 24);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this);

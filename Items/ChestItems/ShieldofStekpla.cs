@@ -43,11 +43,10 @@ namespace SOTS.Items.ChestItems
 					
 				}
 			}
-			player.meleeCrit += (int)(critbonus * 0.2);
-			player.rangedCrit += (int)(critbonus * 0.2);
-			player.magicCrit += (int)(critbonus * 0.2);
-			player.thrownCrit += (int)(critbonus * 0.2);
-			
+			player.meleeCrit += (int)(critbonus * 0.2f);
+			player.rangedCrit += (int)(critbonus * 0.2f);
+			player.magicCrit += (int)(critbonus * 0.2f);
+			player.thrownCrit += (int)(critbonus * 0.2f);
 		}
 	}
 }

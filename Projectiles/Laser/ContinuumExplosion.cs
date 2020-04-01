@@ -30,7 +30,7 @@ namespace SOTS.Projectiles.Laser
 			projectile.penetrate = -1;
 			projectile.friendly = true;
 			projectile.magic = true;
-			projectile.timeLeft = 1;
+			projectile.timeLeft = 2;
 			projectile.tileCollide = false;
 			projectile.hostile = false;
 			projectile.alpha = 255;
@@ -64,6 +64,7 @@ namespace SOTS.Projectiles.Laser
         {
             target.immune[projectile.owner] = 5;
 			projectile.ai[0] = 1;
+			projectile.netUpdate = true;
         }
 	}
 }

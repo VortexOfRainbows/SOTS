@@ -23,6 +23,7 @@ namespace SOTS.Projectiles.Crushers
             aiType = 410; 
 			projectile.melee = true;
 			projectile.penetrate = -1;
+			projectile.timeLeft = 255;
 		}
 		public override void AI()
 		{

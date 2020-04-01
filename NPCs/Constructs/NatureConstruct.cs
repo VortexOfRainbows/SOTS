@@ -16,6 +16,20 @@ namespace SOTS.NPCs.Constructs
 			int ai2 = 30;
 			int num1;
 			float dir;
+			bool canSpell = true;
+			private float delay = 360;
+			public override void SendExtraAI(BinaryWriter writer) 
+			{
+				writer.Write(delay);
+				writer.Write(dir);
+				writer.Write(canSpell);
+			}
+			public override void ReceiveExtraAI(BinaryReader reader)
+			{	
+				delay = reader.ReadSingle();
+				dir = reader.ReadSingle();
+				canSpell = reader.ReadBoolean();
+			}
 			public override void SetStaticDefaults()
 			{
 				
@@ -56,9 +70,7 @@ namespace SOTS.NPCs.Constructs
 
 				spriteBatch.Draw(texture, drawPos, null, drawColor, dir, drawOrigin, npc.scale + 0.04f, SpriteEffects.None, 0f);
 			}
-			bool canSpell = true;
 			int spellAmt = 0;
-			int delay = 0;
 			public void InitiateSpell()
 			{
 				canSpell = false;
@@ -72,24 +84,31 @@ namespace SOTS.NPCs.Constructs
 				}
 				if(spellAmt == 1)
 				{
-					Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 0, -7,  mod.ProjectileType("NatureBolt"), damage, 0, 0, 40, npc.target);
+					if(Main.netMode != 1)
+					Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 0, -7,  mod.ProjectileType("NatureBolt"), damage, 0, Main.myPlayer, 40, npc.target);
 				}
 				if(spellAmt == 2)
 				{
-					Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 1, -6,  mod.ProjectileType("NatureBolt"), damage, 0, 0, 60, npc.target);
+					if(Main.netMode != 1)
+					Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 1, -6,  mod.ProjectileType("NatureBolt"), damage, 0, Main.myPlayer, 60, npc.target);
 				}
 				if(spellAmt == 3)
 				{
-					Projectile.NewProjectile(npc.Center.X, npc.Center.Y, -1, -6,  mod.ProjectileType("NatureBolt"), damage, 0, 0, 80, npc.target);
+					if(Main.netMode != 1)
+					Projectile.NewProjectile(npc.Center.X, npc.Center.Y, -1, -6,  mod.ProjectileType("NatureBolt"), damage, 0, Main.myPlayer, 80, npc.target);
 				}
 				if(spellAmt == 4)
 				{
-					Projectile.NewProjectile(npc.Center.X, npc.Center.Y, -2, -5,  mod.ProjectileType("NatureBolt"), damage, 0, 0, 100, npc.target);
+					if(Main.netMode != 1)
+					Projectile.NewProjectile(npc.Center.X, npc.Center.Y, -2, -5,  mod.ProjectileType("NatureBolt"), damage, 0, Main.myPlayer, 100, npc.target);
 				}
 				if(spellAmt == 5)
 				{
-					Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 2, -5,  mod.ProjectileType("NatureBolt"), damage, 0, 0, 120, npc.target);
+					if(Main.netMode != 1)
+					Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 2, -5,  mod.ProjectileType("NatureBolt"), damage, 0, Main.myPlayer, 120, npc.target);
+				
 					canSpell = true;
+					npc.netUpdate = true;
 				}
 				Main.PlaySound(SoundID.Item92, (int)(npc.Center.X), (int)(npc.Center.Y));
 			}
@@ -151,9 +170,10 @@ namespace SOTS.NPCs.Constructs
 				{
 					dir -= MathHelper.ToRadians(360);
 				}
-				if(Main.rand.Next(360 + delay) <= (Main.expertMode ? 1 : 0) && canSpell)
+				if(delay <= (Main.expertMode ? 1 : 0) && canSpell)
 				{
-					delay = 240;
+					delay = 240 + Main.rand.Next(180);
+					npc.netUpdate = true;
 					InitiateSpell();
 				}
 				if(!canSpell)

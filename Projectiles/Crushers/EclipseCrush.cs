@@ -46,8 +46,6 @@ namespace SOTS.Projectiles.Crushers
 					for(int i = 0; i < projectile.damage; i += (int)(projectile.knockBack * 1.85f))
 					{ 
 						int proj = Projectile.NewProjectile((projectile.Center.X), projectile.Center.Y, Main.rand.Next(-100, 101) * 0.03f, Main.rand.Next(-100, 101) * 0.03f, mod.ProjectileType("EclipseBubble"), (int)(projectile.damage * 0.08f), 0, projectile.owner);
-						Main.projectile[proj].friendly = true;
-						Main.projectile[proj].hostile = false;
 						Main.projectile[proj].timeLeft = Main.rand.Next(52, 156);
 					}
 				}

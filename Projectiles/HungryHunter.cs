@@ -109,7 +109,8 @@ namespace SOTS.Projectiles
 			projectile.timeLeft = 3000;
 			projectile.friendly = true;
 			latch = true;
-			voidPlayer.voidMeter += 1;
+			if(player.whoAmI == Main.myPlayer)
+			Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, mod.ProjectileType("HealProj"), 2, 0, projectile.owner, 1.15f, 5);
 			enemyIndex = target.whoAmI;
 			if(target.life <= 0)
 			{

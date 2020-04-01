@@ -18,7 +18,7 @@ namespace SOTS.Items
 		}
 		public override void SafeSetDefaults()
 		{
-            item.damage = 11;
+            item.damage = 13;
             item.melee = true;  
             item.width = 50;
             item.height = 50;  

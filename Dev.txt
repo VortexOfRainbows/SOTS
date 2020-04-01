@@ -5,15 +5,19 @@ The following is my development plans :D
 
 //Balance
 1. Shuriken slicer to vibrant iron
+
+//Later--- Balance
 2. Dissolving Nether => Focus Crystal, Dissolving Frostbite => Permafrost Isocahedron, Dissolving Evil => Cursed Isocahedron
+3. Cursed Isocahedron takes uranium drop/ celestial drop?
+4. Focus Crystal takes subspace serpent drop
+5. Soul Charm takes Avaritia Scouter drop
 
 //Check For Bugs
 1. Check for other bosses that possibly need damage normalization
 2. Test worldgen more
 
 //Ideas (YTBA, yet to be added)
-Priority: 2 Crushers
-Remaining Spirits
+Priority: Remaining Spirits
 
 Putrid Pinky Spawn Animation -> Place down peanuts -> Pinky eats it -> pinky grows -> pinky explodes and transforms into monster
 
@@ -29,11 +33,11 @@ Putrid Pinky Spawn Animation -> Place down peanuts -> Pinky eats it -> pinky gro
 	2. It will also be craftable (for the people who don't have new worlds) silver + gold + otherworld fragment
 	3. Requires a skyforge, and acts as an alternative to hellstone (clouds + electrum / obsidian + hellstone)
 	4. Skyforge can be crafted out of hellforge and some of the ore if needed
-	5. Supercharged Electrum
-		1. Shockwaves explosions to other nearby electrum plates, releasing a storm of projectiles
-	6. Electrum plats will be struck with lightning every now-and-then, supercharging it
-7. Goblinsteel + Permafrost fragments => Frigid Gear, baby versions of icy amalgamation drops
-8. Vibrant Iron/Lead Gear <= Iron + Glowing Mushroom + Earth Fragments
+	6. Electrum plats will be struck with lightning every now-and-then
+		1. This super charges it, causing it to now zap nearby enemies (and players)
+		2. Drops more electrum (*5-15)
+7. Goblinsteel + Permafrost fragments => Frigid Gear, baby versions of icy amalgamation drops (Early Game Mage)
+8. Vibrant Iron/Lead Gear <= Iron + Glowing Mushroom + Earth Fragments (Early Game Ranged)
 10. New Pyramid enemy
 	1. Blockade Mimic
 		1. Can spawn upon breaking a pyramid block
@@ -44,14 +48,57 @@ Putrid Pinky Spawn Animation -> Place down peanuts -> Pinky eats it -> pinky gro
 	2. Perturbed Soul
 		1. More aggressive soul variant
 		2. Same health and damage, but rushes you down
-11. Tether Cord
+11. Tether Cord in pyramid
 	1. Attaches a second player to you
 12. Enchanted Sword and Pickaxe Shrines in pyramid
 	1. Drops Blade Fragment or Drill Fragment	
 	2. Enchanted Pickaxe //modify stats
-	3. Arkhalis or Enchated Sword
+	3. Arkhalis or Enchanted Sword
+13. Dissolving Element Blocks
+	1. Give off cool particles, can be used in summoning rituals
+14. World Check items that scans for important set pieces to make sure they spawned correctly, spawns in the starter home, also craftable
+	1. Lizahrd altar, Biome chests, Total shadow orbs in world, Ice Momument Altar, Pharaoh's Sarcophagus
+15. Gelled Leather armor => Wormwood Armor (Early Game Summon)
+	1. Pre-Putrid Pinky
+16. Earthen Construct
+	1. Hides behind wall like worm, pokes head out, shots player, hides back in wall, repeat
+	2. Spirit hides in the background walls (alpha), and pokes it's head out trying to attack player
+		1. Attacks somewhat around the player, rather than on the player
+		2. Releases a few projectiles as it comes out
+		3. 3 fake spirits do the same thing, but are smaller, less damaging, and cannot be attacked
+
 
 Complete:
+
+3/29/20
+1. Nature Construct Bug fixes
+2. Dissolving Nature block made, also works as a template
+
+3/28/20
+1. Void Heal Effect added
+	1. All lifesteal/manasteal/voidsteal projectiles and items have been given visual upgrades
+		1. Along with crit-steal items
+	2. Hungry Hunter voidsteal buffed: 1 => 1.15
+	3. Despawns when too many projectiles exist
+2. Wormwood spike no longer heals void
+3. Some more folder cleaning
+4. Cardiac Collapse and Soul Eater added
+5. Server synced (visuals aren't 100% synced, but the attributes are) decorations projectiles from crushers
+6. Server synced nature construct
+7. Server synced cryo cannon and it's upgrades
+	1. Also gave 10% frostburn chance for 100 frames
+	2. Also a slight blast radius increase
+8. Server synced shard storm
+
+3/22/20 & 3/23/20 & 2/25/20
+1. Finished Soul Eater and Cardiac Collapse sprites
+
+3/19/20
+1. Shield of Desecar/Stekpla rates increased from golden treasure slimes: 1/150 => 1/120
+
+3/18/20
+1. All slimy feather recipes changed to wormwood
+2. Slimy feather removed
 
 3/11/20
 1. More minor continuum collapse changes

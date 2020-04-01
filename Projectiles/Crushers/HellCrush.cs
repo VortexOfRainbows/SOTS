@@ -46,7 +46,6 @@ namespace SOTS.Projectiles.Crushers
 					{ 
 						int proj = Projectile.NewProjectile((projectile.Center.X), projectile.Center.Y, Main.rand.Next(-100, 101) * 0.015f, Main.rand.Next(-100, 101) * 0.015f, 85, (int)(projectile.damage * 0.1f), 0, projectile.owner);
 						Main.projectile[proj].melee = true;
-						Main.projectile[proj].hostile = false;
 						Main.projectile[proj].timeLeft = Main.rand.Next(24, 60);
 					}
 				}

@@ -35,9 +35,8 @@ namespace SOTS.Items.GelGear
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "GelBar", 16);
+			recipe.AddIngredient(null, "Wormwood", 16);
 			recipe.AddIngredient(ItemID.Leather, 10);
-			recipe.AddIngredient(null, "SlimeyFeather", 10);
 			recipe.SetResult(this);
 			recipe.AddTile(TileID.Anvils);
 			recipe.AddRecipe();

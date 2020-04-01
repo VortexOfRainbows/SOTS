@@ -46,6 +46,7 @@ namespace SOTS.NPCs.Constructs
 		int counter = 0;
 		public void SpellLaunch()
 		{
+			
 			if(npc.ai[3] <= 0)
 			{
 				int damage = npc.damage / 2;
@@ -53,7 +54,8 @@ namespace SOTS.NPCs.Constructs
 				{
 					damage = (int)(damage / Main.expertDamage);
 				}
-				Projectile.NewProjectile(npc.Center.X, npc.Center.Y, npc.velocity.Y * -1, npc.velocity.X * -1,  mod.ProjectileType("NatureBolt"), damage, 0, 0, 20, npc.target);
+				if(Main.netMode != 1)
+				Projectile.NewProjectile(npc.Center.X, npc.Center.Y, npc.velocity.Y * -1, npc.velocity.X * -1,  mod.ProjectileType("NatureBolt"), damage, 0, Main.myPlayer, 20, npc.target);
 			}
 			else
 			{
@@ -62,7 +64,8 @@ namespace SOTS.NPCs.Constructs
 				{
 					damage = (int)(damage / Main.expertDamage);
 				}
-				Projectile.NewProjectile(npc.Center.X, npc.Center.Y, npc.velocity.Y * -1, npc.velocity.X * -1,  mod.ProjectileType("NatureBolt"), damage, 0, 0, 20, npc.target);
+				if(Main.netMode != 1)
+				Projectile.NewProjectile(npc.Center.X, npc.Center.Y, npc.velocity.Y * -1, npc.velocity.X * -1,  mod.ProjectileType("NatureBolt"), damage, 0, Main.myPlayer, 20, npc.target);
 			}
 			//Main.PlaySound(SoundID.Item92, (int)(npc.Center.X), (int)(npc.Center.Y));
 		}

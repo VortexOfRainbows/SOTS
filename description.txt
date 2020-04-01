@@ -1,7 +1,8 @@
 A mod which has nothing to do with secrets or shadows... yet
+This mod's main plan is to add generated structures in the world, some are sort-of like roguelike dungeons.
 NOTICE: This mod is not optimized for multiplayer, feel free to give it a try, but bugs might occur.
-!! This mod is very early in development !!
-!! A Large world is recommended in order for the pyramid to properly generate without overriding vanilla structures, among other things !!
+!! This mod is early in development !!
+!! A large world is recommended in order for the generated structures to spawn without overriding vanilla structures !!
 
 Bosses -> Currently 5, Mostly bullet hells
 Items -> Around 300, unique gimmicks all around!
@@ -12,11 +13,14 @@ New Subclass (void)
 Pyramid Dungeon World Gen
 -Unique boss and items
 
-Developer, Artist, and Playtesting - Vortex#6230 (Make sure you're in the tmodloader server if you're to DM me)
+Development - Vortex#6230 (Make sure you're in the tmodloader server if you're to DM me)
 Playtesting - Crimsonkeep, FlameFreezer
 
 Update 0.18.3
--Pyramid worldgen improved, Zeppelin room changed
+-Pyramid worldgen improved
+-Lifesteal, Manasteal, and Voidsteal visuals improved
+-Fixed a few multiplayer compatibility issues
+-More items
 
 Update 0.18.2
 -Fixed undownloadable error

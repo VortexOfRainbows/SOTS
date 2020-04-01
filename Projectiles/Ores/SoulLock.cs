@@ -24,8 +24,8 @@ namespace SOTS.Projectiles.Ores
         {
 			projectile.CloneDefaults(263);
             aiType = 263; 
-			projectile.height = 43;
-			projectile.width = 43;
+			projectile.height = 2;
+			projectile.width = 2;
 			projectile.penetrate = 1;
 			projectile.friendly = false;
 			projectile.timeLeft = 60;
@@ -41,8 +41,8 @@ namespace SOTS.Projectiles.Ores
 				NPC npc = Main.npc[(int)projectile.ai[0]];
 				if(!npc.friendly && npc.lifeMax > 5 && npc.active)
 				{
-					projectile.position.X = npc.Center.X - projectile.width/2f;
-					projectile.position.Y = npc.Center.Y - projectile.height/2f;
+					projectile.position.X = npc.Center.X - 1;
+					projectile.position.Y = npc.Center.Y - 1;
 				}
 				else
 				{
@@ -77,7 +77,7 @@ namespace SOTS.Projectiles.Ores
 			
 			if(player.whoAmI == Main.myPlayer)
 			{
-				Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("HealProj"), 0, 0, player.whoAmI, heal);	
+				Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("HealProj"), 0, 0, player.whoAmI, heal, 0);	
 			}
         }
 		public override void Kill(int timeLeft)

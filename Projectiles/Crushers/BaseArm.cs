@@ -18,8 +18,8 @@ namespace SOTS.Projectiles.Crushers
 		}
         public override void SetDefaults()
         {
-			projectile.height = 26;
-			projectile.width = 22;
+			projectile.width = 26;
+			projectile.height = 22;
 			projectile.penetrate = -1;
 			projectile.friendly = false;
 			projectile.timeLeft = 6004;

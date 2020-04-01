@@ -65,6 +65,7 @@ namespace SOTS.Items.Celestial
 			if(modPlayer.onhit == 1)
 			{
 				voidPlayer.voidMeter += 3 + (modPlayer.onhitdamage / 9);
+				VoidPlayer.VoidEffect(player, 3 + (modPlayer.onhitdamage / 9));
 			}
 		}
 	}

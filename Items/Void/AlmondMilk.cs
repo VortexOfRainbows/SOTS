@@ -34,8 +34,9 @@ namespace SOTS.Items.Void
 			
 			while(voidPlayer.voidMeter < voidPlayer.voidMeterMax2 / 10)
 			{
-			item.stack--;
-			voidPlayer.voidMeter += 20;
+				item.stack--;
+				voidPlayer.voidMeter += 20;
+				VoidPlayer.VoidEffect(player, 20);
 			}
 			
 		}

@@ -10,10 +10,12 @@ using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
+using Terraria.Graphics.Shaders;
+using Terraria.Localization;
+using static Terraria.ModLoader.ModContent;
 
 namespace SOTS.Void
 {
-	
 	public class VoidPlayer : ModPlayer
 	{
 		public int voidMeterMax = 100;
@@ -55,7 +57,15 @@ namespace SOTS.Void
 			voidMeter = voidMeterMax2/2;
 			ResetVariables();
 		}
-
+		public static void VoidEffect(Player player, int voidAmount)
+		{
+			//CombatText.NewText(new Rectangle((int)player.position.X, (int)player.position.Y, player.width, player.height), new Color(100, 80, 115, 255), string.Concat(voidAmount), false, false);
+			if(player.whoAmI == Main.myPlayer)
+			{
+				Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, ProjectileType<VoidHealEffect>(), 0, 0, player.whoAmI, Main.rand.Next(360), voidAmount);
+				//NetMessage.SendData(43, -1, -1, "", player.whoAmI, (float)voidAmount, 0f, 0f, 0);
+			}
+		}
 		private void ResetVariables() {
 			//make sure damage is 100% before making modifications
 			voidDamage = 1f;
