@@ -29,15 +29,12 @@ namespace SOTS.Items.GelGear
 		}
 		public override void UpdateInventory(Player player)
 		{
-				VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-				SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");	
-				
-				voidPlayer.voidRegen -= 0.1f;
+			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
+			voidPlayer.voidRegen -= 0.1f;
 		}
 		public override bool ConsumeAmmo(Player p)
 		{
-				return false;
-			
+			return false;
 		}
 	}
 }

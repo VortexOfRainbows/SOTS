@@ -73,25 +73,21 @@ namespace SOTS.NPCs
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("MinersPickaxe"), Main.rand.Next(2) + 1);	
 			}
 			
-			if(Main.rand.Next(70) == 0)
+			if(Main.rand.Next(40) == 0)
 			{
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  ItemID.ObsidianRose, 1);		
 			}
-			if(Main.rand.Next(70) == 0)
+			else if(Main.rand.Next(40) == 0)
 			{
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  ItemID.DemonScythe, 1);		
 			}
-			if(Main.rand.Next(70) == 0)
+			else if(Main.rand.Next(39) == 0)
 			{
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  ItemID.MagmaStone, 1);		
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  ItemID.MagmaStone, 1);
 			}
-			if(Main.rand.Next(140) == 0)
+			else if (Main.rand.Next(39) == 0)
 			{
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  ItemID.GuideVoodooDoll, 1);		
-			}
-			if(Main.rand.Next(70) == 0)
-			{
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  ItemID.Cascade, 1);		
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemID.Cascade, 1);
 			}
 			if(Main.rand.Next(2) == 0 || Main.expertMode)
 			{
@@ -146,7 +142,7 @@ namespace SOTS.NPCs
 				}
 			}
 
-			if(Main.rand.Next(20) == 0 || (Main.expertMode && Main.rand.Next(30) == 0))
+			if(Main.rand.Next(18) == 0 || (Main.expertMode && Main.rand.Next(30) == 0))
 			{
 				int rand = Main.rand.Next(5);
 				if(rand == 0)

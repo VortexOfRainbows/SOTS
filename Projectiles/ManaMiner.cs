@@ -126,10 +126,10 @@ namespace SOTS.Projectiles
 							}
 						}
 					}
-}
-        }
+				}
+			}
+		}
 	}
-}
 }
 		
 			

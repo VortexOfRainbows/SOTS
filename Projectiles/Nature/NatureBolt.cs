@@ -68,7 +68,7 @@ namespace SOTS.Projectiles.Nature
 		public override void Kill(int timeLeft)
 		{
 			Projectile.NewProjectile(trueTarget.X, trueTarget.Y, 0, 0, mod.ProjectileType("NatureBeat"), projectile.damage, 0, 0);
-			Main.PlaySound(SoundID.Item93, (int)(projectile.Center.X), (int)(projectile.Center.Y));
+			Main.PlaySound(2, (int)(projectile.Center.X), (int)(projectile.Center.Y), 93, 0.75f);
 		}
 	}
 }

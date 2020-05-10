@@ -83,7 +83,7 @@ namespace SOTS.Projectiles.Laser
 			Vector2 unit = endPoint - projectile.Center;
 			float length = unit.Length();
 			unit.Normalize();
-			lightColor = lightColor * ((255 - projectile.alpha) / 255f);
+			lightColor = new Color(255, 255, 255) * ((255 - projectile.alpha) / 255f);
 			for (float Distance = 0; Distance <= length; Distance += 4f) {
 				Vector2 drawPos = projectile.Center + unit * Distance - Main.screenPosition;
 				Vector2 position = projectile.Center + unit * Distance;	

@@ -9,7 +9,7 @@ using SOTS.Void;
 namespace SOTS.Items.Void
 {
 	public class AlmondMilk : ModItem
-	{	int timer = 0;
+	{
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Almond Milk");
@@ -17,28 +17,45 @@ namespace SOTS.Items.Void
 		}
 		public override void SetDefaults()
 		{
-
 			item.width = 22;
 			item.height = 38;
-            item.value = Item.sellPrice(0, 0, 3, 0);
-			item.rare = 2;
-			item.maxStack = 66;
-			item.ammo = item.type;   
-			ItemID.Sets.ItemNoGravity[item.type] = false; 
+			item.value = Item.sellPrice(0, 0, 20, 0);
+			item.rare = 1;
+			item.maxStack = 999;
 
+			item.useStyle = 2;
+			item.useTime = 15;
+			item.useAnimation = 15;
+			item.UseSound = SoundID.Item2;
+			item.consumable = true;
+		}
+		public override bool UseItem(Player player)
+		{
+			return true;
+		}
+		public void RefillEffect(Player player)
+		{
+			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
+			voidPlayer.voidMeter += 20;
+			VoidPlayer.VoidEffect(player, 20);
+		}
+		public override bool ConsumeItem(Player player)
+		{
+			return true;
+		}
+		public override void OnConsumeItem(Player player)
+		{
+			RefillEffect(player);
+			base.OnConsumeItem(player);
 		}
 		public override void UpdateInventory(Player player)
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");	
-			
 			while(voidPlayer.voidMeter < voidPlayer.voidMeterMax2 / 10)
 			{
+				RefillEffect(player);
 				item.stack--;
-				voidPlayer.voidMeter += 20;
-				VoidPlayer.VoidEffect(player, 20);
 			}
-			
 		}
 	}
 }

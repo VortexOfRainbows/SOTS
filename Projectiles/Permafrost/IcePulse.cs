@@ -66,7 +66,7 @@ namespace SOTS.Projectiles.Permafrost
 			Player player = Main.player[projectile.owner];
             target.immune[projectile.owner] = 10;
 			if(Main.rand.Next(10) == 0)
-			target.AddBuff(BuffID.Frostburn, 100, false);
+			target.AddBuff(BuffID.Frostburn, 300, false);
         }
 	}
 }

@@ -12,7 +12,7 @@ namespace SOTS.Mounts
 		{	
 			mountData.spawnDust = 229;
 			mountData.buff = mod.BuffType("IceShield");
-			mountData.heightBoost = 10;
+			mountData.heightBoost = 2;
 			mountData.fallDamage = 0.5f;
 			mountData.runSpeed = 14f;
 			mountData.dashSpeed = 14f;
@@ -32,7 +32,7 @@ namespace SOTS.Mounts
 			mountData.xOffset = 0;
 			mountData.bodyFrame = 0;
 			mountData.yOffset = 0;
-			mountData.playerHeadOffset = 13;
+			mountData.playerHeadOffset = 0;
 			mountData.standingFrameCount = 4;
 			mountData.standingFrameDelay = 6;
 			mountData.standingFrameStart = 0;
@@ -58,14 +58,13 @@ namespace SOTS.Mounts
 				mountData.textureHeight = mountData.backTexture.Height;
 			}
 		}
-			public override void UpdateEffects(Player player)
+		public override void UpdateEffects(Player player)
         {
-				player.statDefense += 8;
-                Rectangle rect = player.getRect();
-                //Dust.NewDust(new Vector2(rect.X, rect.Y), rect.Width, rect.Height, 229);
-				
-				player.armorEffectDrawOutlines = true;
+			player.statDefense += 8;
+               Rectangle rect = player.getRect();
+               //Dust.NewDust(new Vector2(rect.X, rect.Y), rect.Width, rect.Height, 229);
+			
+			player.armorEffectDrawOutlines = true;
         }
-		
-		}
 	}
+}

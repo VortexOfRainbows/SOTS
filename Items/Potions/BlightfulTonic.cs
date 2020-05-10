@@ -28,7 +28,7 @@ namespace SOTS.Items.Potions
             item.useTime = 16;
             item.consumable = true;     
 			item.buffType = BuffID.Obstructed;
-            item.buffTime = 300;
+            item.buffTime = 120;
 		}
 		public override bool ConsumeItem(Player player) 
 		{

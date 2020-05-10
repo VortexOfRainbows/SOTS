@@ -22,7 +22,6 @@ namespace SOTS.Items
             item.rare = 8;
 			item.accessory = true;
 			item.expert = false;
-
 		}
 		public override void AddRecipes()
 		{
@@ -40,7 +39,6 @@ namespace SOTS.Items
 			player.waterWalk = true; 
 			player.fireWalk = true; 
 			player.lavaMax += 600; 
-			
 			player.rocketBoots = 2; 
 			player.iceSkate = true;
 			player.moveSpeed += 0.2f;

@@ -17,9 +17,7 @@ namespace SOTS.Projectiles.Permafrost
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("IceImpale");
-			
 		}
-		
         public override void SetDefaults()
         {
 			projectile.friendly = true;

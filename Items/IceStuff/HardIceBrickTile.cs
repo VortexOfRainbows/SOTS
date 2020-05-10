@@ -26,6 +26,10 @@ namespace SOTS.Items.IceStuff
 			r = 2.5f;
 			g = 12.5f;
 			b = 13.5f;
+			r *= 0.4f;
+			g *= 0.4f;
+			b *= 0.4f;
+
 		}
 		public override bool CanExplode(int i, int j)
 		{

@@ -9,7 +9,7 @@ using SOTS.Void;
 namespace SOTS.Items.Void
 {
 	public class Chocolate : ModItem
-	{	int timer = 0;
+	{
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Chocolate");
@@ -22,21 +22,40 @@ namespace SOTS.Items.Void
 			item.height = 32;
             item.value = Item.sellPrice(0, 0, 2, 0);
 			item.rare = 3;
-			item.maxStack = 99;
-			item.ammo = item.type;   
-			ItemID.Sets.ItemNoGravity[item.type] = false; 
+			item.maxStack = 999;
 
+			item.useStyle = 2;
+			item.useTime = 15;
+			item.useAnimation = 15;
+			item.UseSound = SoundID.Item2;
+			item.consumable = true;
+		}
+		public override bool UseItem(Player player)
+		{
+			return true;
+		}
+		public void RefillEffect(Player player)
+		{
+			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
+			voidPlayer.voidMeter += 15;
+			VoidPlayer.VoidEffect(player, 15);
+		}
+		public override bool ConsumeItem(Player player)
+		{
+			return true;
+		}
+		public override void OnConsumeItem(Player player)
+		{
+			RefillEffect(player);
+			base.OnConsumeItem(player);
 		}
 		public override void UpdateInventory(Player player)
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");	
-			
 			while(voidPlayer.voidMeter < voidPlayer.voidMeterMax2 / 10)
 			{
+				RefillEffect(player);
 				item.stack--;
-				voidPlayer.voidMeter += 15;
-				VoidPlayer.VoidEffect(player, 15);
 			}
 			
 		}

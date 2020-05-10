@@ -84,15 +84,15 @@ namespace SOTS.NPCs
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("MinersPickaxe"), Main.rand.Next(2) + 1);	
 			}
 			
-			if(Main.rand.Next(40) == 0)
+			if(Main.rand.Next(30) == 0)
 			{
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("MinersSword"), 1);		
 			}
-			if(Main.rand.Next(120) == 0)
+			if(Main.rand.Next(50) == 0)
 			{
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("ShieldOfDesecar"), 1);		
 			}
-			if(Main.rand.Next(120) == 0)
+			else if(Main.rand.Next(49) == 0)
 			{
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("ShieldOfStekpla"), 1);		
 			}
@@ -155,7 +155,7 @@ namespace SOTS.NPCs
 				}
 			}
 
-			if(Main.rand.Next(15) == 0 || (Main.expertMode && Main.rand.Next(30) == 0))
+			if(Main.rand.Next(12) == 0 || (Main.expertMode && Main.rand.Next(30) == 0))
 			{
 				int rand = Main.rand.Next(14);
 				if(rand == 0)

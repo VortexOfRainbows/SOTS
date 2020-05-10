@@ -12,7 +12,7 @@ namespace SOTS.Mounts
 		{	
 			mountData.spawnDust = mod.DustType("LostSoulDust");
 			mountData.buff = mod.BuffType("SpiritSurfer");
-			mountData.heightBoost = 10;
+			mountData.heightBoost = 0;
 			mountData.runSpeed = 20f;
 			mountData.dashSpeed = 20f;
 			mountData.flightTimeMax = 999999999;
@@ -25,12 +25,12 @@ namespace SOTS.Mounts
 			int[] array = new int[mountData.totalFrames];
 			for (int l = 0; l < array.Length; l++)
 			{
-				array[l] = 1;
+				array[l] = 2;
 			}
 			mountData.playerYOffsets = array;
 			mountData.xOffset = 0;
 			mountData.bodyFrame = 6;
-			mountData.yOffset = 13;
+			mountData.yOffset = 6;
 			mountData.playerHeadOffset = 0;
 			
 			if (Main.netMode != 2)
@@ -40,7 +40,6 @@ namespace SOTS.Mounts
 			}
 		}
 		float variation = 0;
-		int variationD = 0;
 		public override void UpdateEffects(Player player)
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);

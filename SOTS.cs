@@ -5,10 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;
-using Terraria.GameContent.Dyes;
-using Terraria.GameContent.UI;
-using Terraria.Graphics.Effects;
-using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -19,7 +15,7 @@ namespace SOTS
 {
 	public class SOTS : Mod
 	{	
-	
+		
 		internal static SOTS Instance;
 
 		public SOTS()
@@ -33,10 +29,6 @@ namespace SOTS
 				AutoloadSounds = true
 			};
 		}
-	
-	
-	
-	
 		private UserInterface _VoidUserInterface;
 		internal VoidUI VoidUI;
 		
@@ -79,11 +71,40 @@ namespace SOTS
 				);
 			}
 		}
-		
-		
-		
-		
-	public override void AddRecipes()
+		internal enum SOTSMessageType : byte
+		{
+			SOTSSyncPlayer,
+			OrbitalCounterChanged
+		}
+		public override void HandlePacket(BinaryReader reader, int whoAmI)
+		{
+			SOTSMessageType msgType = (SOTSMessageType)reader.ReadByte();
+			switch (msgType)
+			{
+				case SOTSMessageType.SOTSSyncPlayer:
+					byte playernumber = reader.ReadByte();
+					SOTSPlayer modPlayer = Main.player[playernumber].GetModPlayer<SOTSPlayer>();
+					int orbitalCounter = reader.ReadInt32();
+					modPlayer.orbitalCounter = orbitalCounter;
+					// SyncPlayer will be called automatically, so there is no need to forward this data to other clients.
+					break;
+				case SOTSMessageType.OrbitalCounterChanged:
+					playernumber = reader.ReadByte();
+					modPlayer = Main.player[playernumber].GetModPlayer<SOTSPlayer>();
+					modPlayer.orbitalCounter = reader.ReadInt32();
+					// Unlike SyncPlayer, here we have to relay/forward these changes to all other connected clients
+					if (Main.netMode == NetmodeID.Server)
+					{
+						var packet = GetPacket();
+						packet.Write((byte)SOTSMessageType.OrbitalCounterChanged);
+						packet.Write(playernumber);
+						packet.Write(modPlayer.orbitalCounter);
+						packet.Send(-1, playernumber);
+					}
+					break;
+			}
+		}
+		public override void AddRecipes()
 		{
 			
 			

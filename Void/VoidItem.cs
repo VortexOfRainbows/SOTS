@@ -1,16 +1,8 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using Terraria;
-using Terraria.DataStructures;
-using Terraria.GameInput;
-using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.IO;
-using SOTS.Void;
 
 namespace SOTS.Void
 {
@@ -41,9 +33,9 @@ namespace SOTS.Void
 			GetVoid(player);
 			item.mana = 1;
 			voidManaAmount = (int)(voidMana * voidPlayer.voidCost);
-			float totalBuff = 0;
 			/*
-			totalBuff = (float)((player.meleeDamage + player.magicDamage + player.minionDamage + player.rangedDamage + player.thrownDamage)/5f - 1f);
+				float totalBuff = 0;
+				totalBuff = (float)((player.meleeDamage + player.magicDamage + player.minionDamage + player.rangedDamage + player.thrownDamage)/5f - 1f);
 				//Finding the universalDamage upgrade
 				if(player.meleeDamage <= player.magicDamage && player.meleeDamage <= player.minionDamage && player.meleeDamage <= player.rangedDamage && player.meleeDamage <= player.thrownDamage)
 				{
@@ -71,9 +63,8 @@ namespace SOTS.Void
 					realDamageBoost += totalBuff;
 				}				
 			*/
-			
-				damage = (int)(damage * realDamageBoost + 5E-06f);
-			
+
+			damage = (int)(damage * realDamageBoost + 5E-06f);
 		}
 		public override void GetWeaponKnockback(Player player, ref float knockback) 	
 		{
@@ -139,8 +130,8 @@ namespace SOTS.Void
 		}
 		public sealed override bool ConsumeAmmo(Player player) ///this is the only way i have found to make void not be consumed when ammo is not present
 		{
-			if(item.useAmmo != 0)
-			DrainMana(player);
+			if(item.useAmmo != 0 && BeforeDrainMana(player))
+				DrainMana(player);
 			bool canUse = BeforeConsumeAmmo(player);
 			if(!canUse)
 			{
@@ -156,23 +147,34 @@ namespace SOTS.Void
 				return false;
 			}
 			item.mana = 0;
-			if(item.useAmmo == 0)
-			DrainMana(player);
+			if(item.useAmmo == 0 && BeforeDrainMana(player))
+				DrainMana(player);
+			return true;
+		}
+		//<summary>
+		// return false to not consume void
+		//</summary>
+		public virtual bool BeforeDrainMana(Player player)
+		{
 			return true;
 		}
 		public virtual bool BeforeUseItem(Player player) 
 		{
 			return true;
 		}
-		public virtual bool BeforeConsumeAmmo(Player player) 
+		//<summary>
+		// return false to not consume ammo
+		//</summary>
+		public virtual bool BeforeConsumeAmmo(Player player)
 		{
 			return true;
 		}
-		public void DrainMana(Player player)
+		public static void DrainMana(Player player)
 		{
 			if(voidManaAmount > 0)
 			{
-				VoidPlayer.ModPlayer(player).voidMeter -= voidManaAmount;
+				if(player.whoAmI == Main.myPlayer)
+					VoidPlayer.ModPlayer(player).voidMeter -= voidManaAmount;
 			}
 		}
 	}

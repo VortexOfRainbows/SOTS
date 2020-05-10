@@ -56,8 +56,6 @@ Putrid Pinky Spawn Animation -> Place down peanuts -> Pinky eats it -> pinky gro
 	3. Arkhalis or Enchanted Sword
 13. Dissolving Element Blocks
 	1. Give off cool particles, can be used in summoning rituals
-14. World Check items that scans for important set pieces to make sure they spawned correctly, spawns in the starter home, also craftable
-	1. Lizahrd altar, Biome chests, Total shadow orbs in world, Ice Momument Altar, Pharaoh's Sarcophagus
 15. Gelled Leather armor => Wormwood Armor (Early Game Summon)
 	1. Pre-Putrid Pinky
 16. Earthen Construct
@@ -65,10 +63,77 @@ Putrid Pinky Spawn Animation -> Place down peanuts -> Pinky eats it -> pinky gro
 	2. Spirit hides in the background walls (alpha), and pokes it's head out trying to attack player
 		1. Attacks somewhat around the player, rather than on the player
 		2. Releases a few projectiles as it comes out
-		3. 3 fake spirits do the same thing, but are smaller, less damaging, and cannot be attacked
-
+		3. 2 fake spirits do the same thing, but are smaller, less damaging, and cannot be attacked
+17. Frozen Construct
+	1. Covered in spikes
+	2. Rolls towards player, and around walls like blazing wheel
+	3. Spririt has bullets rotating around it.
+		1. Circles around the top parts of the screen.
+		2. Launches the entire bullet ring at a time.
+		3. Bullets leave ice spikes on the floor where they land.
+18. Make a wall version of the Worldgen Capture
 
 Complete:
+
+5/ /20
+To DO:
+test death text in multiplayer
+make frigid armor
+make eskimo goblino
+make potions cost more herbs
+
+5/3/20
+1. Organized many variables and some life regen mechanics.
+2. Added a shatter shard on hit mechanism, decreased max penetrate, increased top speed
+3. Custom Void Death text and animation
+4. Shatter Heart Shield
+5. Nerfed Foul Concoction crafting recipes, buffed Cursed Caviar buff durations
+6. Can manually consume all void ammo, Increased limits for void max stack to 999 for all items, no longer fits in ammo slot
+8. decreased blightful tonic annoying obstruction time
+9. Nerfed Shatter Blade
+
+5/2/20
+1. Javelin damage stats reworked, impact dust
+2. Shatter blade repair animation, repairs faster, less damage, less crit damage, more kb, more usespeed
+	1. Shatter shards last longer, but lessens upon hitting enemy, travels faster
+	2. Repair degrades overtime if not fully repaired
+	3. Gains autoswing
+	4. Multiplayer compatability
+	5. No longer extra crit damage
+	6. Reworked in general
+	7. Less noisy, along with nature spirits
+3. Fixed weapon placement on mounts
+4. Pink laser has more light and is generally brighter
+
+5/1/20
+1. Putrid Eye, new expert pinky drop: animated sprite, animated use graphic, cool!
+2. Nerfed frigid book
+3. Buffed tracer bows, makes them work better in closed spaces
+4. Frigid javelin and sword
+
+4/30/20 Birthday :D
+1. Resprited Cryo cannon, cryo cannon buffed, added Frigid Bar
+	1. No longer appears in ice chests, Permafrost fragments appear in their stead
+2. Frigid staff, frigid book, and shoe ice
+
+4/27/20 & 4/28/20
+1. Now Stores liquid
+2. Properly exports the worldgen array
+3. You can manually increase the confirm loop to allow for more tabletop objects
+
+4/5/20 & 4/6/20 & 4/7/20 & 4/8/20 & 4/9/20 & 4/10/20
+1. Began work on dev tools
+2. Styling Complete, Visual Complete, Tooltip modified, Fixed crafting recipes, Can now paste structures, Doors hate everything about this, but now work slightly better, Multi direction objects hate this (ex: chairs)
+3. Manic Miner Consumes 1 more void
+
+
+4/4/20 & 4/5/20
+1. Dissolving block fixes, also changes color based on paint
+2. Worldgen Scanner Added, Strange Chest now spawns at starting structure
+3. Hardened Ice Blocks emit less light: 100% => 40%
+4. Golden Treasure Slime Droprates buffed: Miners Sword: 1/40 => 1/30, Shields Of Math: 1/120 => 1/50, Default Special Drops: 1/15 => 1/12
+5. Frozen Treasure Slime Droprates buffed: Default Special Drops: 1/25 => 1/15
+6. Shadow Treasure Slime Droprates buffed: Default Special Drops: 1/20 => 1/18, Obsidian Rose, Demon Scythe, Magma Stone, Cascade 1/70 => 1/40, Voodoo Doll Removed from drops
 
 3/29/20
 1. Nature Construct Bug fixes

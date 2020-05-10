@@ -34,11 +34,16 @@ namespace SOTS.Items.Celestial
 			item.UseSound = SoundID.Item15; //phaseblade
 			item.noUseGraphic = true;
 		}
+		public override bool BeforeDrainMana(Player player)
+		{
+			return false;
+		}
+		public override float UseTimeMultiplier(Player player)
+		{
+			return 1f;
+		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-            SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
-			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-			
 			bool summon = true;
 			for (int l = 0; l < Main.projectile.Length; l++)
 			{
@@ -56,7 +61,7 @@ namespace SOTS.Items.Celestial
 					return true; 
 				}
 			}
-              return false; 
+            return false; 
 		}
 		public override void GetVoid(Player player)
 		{

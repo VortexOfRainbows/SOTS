@@ -13,27 +13,27 @@ namespace SOTS.Items.ChestItems
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Cryo Cannon");
-			Tooltip.SetDefault("");
+			Tooltip.SetDefault("Uses snowballs as ammo");
 		}
 		public override void SetDefaults()
 		{
-            item.damage = 7;
+            item.damage = 10;
             item.ranged = true;
             item.width = 34;
             item.height = 30;
-            item.useTime = 30; 
-            item.useAnimation = 30;
+            item.useTime = 38; 
+            item.useAnimation = 38;
             item.useStyle = 5;    
             item.noMelee = true;
-			item.knockBack = 1.6f;  
+			item.knockBack = 2f;  
             item.value = Item.sellPrice(0, 2, 0, 0);
             item.rare = 2;
             item.UseSound = SoundID.Item61;
             item.autoReuse = true;
             item.shoot = mod.ProjectileType("IceCluster"); 
-            item.shootSpeed = 13;
+            item.shootSpeed = 9.5f;
 			item.useAmmo = ItemID.Snowball;
-			item.crit = 2;
+			item.crit = 6;
 		}
 		public override Vector2? HoldoutOffset()
 		{
@@ -42,8 +42,7 @@ namespace SOTS.Items.ChestItems
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.Diamond, 5);
-			recipe.AddIngredient(null, "FragmentOfPermafrost", 4);
+			recipe.AddIngredient(null, "FrigidBar", 8);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this);
 			recipe.AddRecipe();

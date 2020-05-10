@@ -1,23 +1,19 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+using SOTS.Buffs;
+using SOTS.Void;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.IO;
-using Terraria.Graphics.Shaders;
-using Terraria.Localization;
-using SOTS.Void;
+using static SOTS.SOTS;
 
 namespace SOTS
 {
-    public class SOTSPlayer : ModPlayer
-    {
+	public class SOTSPlayer : ModPlayer
+	{
 		/*
 		public override TagCompound Save() {
 			return new TagCompound {
@@ -32,18 +28,22 @@ namespace SOTS
 		*/
 		Vector2 playerMouseWorld;
 		public bool weakerCurse = false;
-		
+		public int brokenFrigidSword = 0;
+		public int orbitalCounter = 0;
+		public int shardOnHit = 0;
+		public int bonusShardDamage = 0;
+
 		public Vector2 starCen;
-        private const int saveVersion = 0;
-		
+		private const int saveVersion = 0;
+
 		public int mourningStarFire = 0;
-		
+
 		public bool deoxysPet = false;
-		
+
 		public bool DapperChu = false;
-		
+
 		public bool TurtleTem = false;
-		
+
 		//public bool PlanetariumBiome = false;
 		public bool ZeplineBiome = false;
 		//public bool GeodeBiome = false;
@@ -66,13 +66,13 @@ namespace SOTS
 		public int onhitdamage = 0;
 		public float attackSpeedMod = 0;
 		//some important variables 2
-     
+
 		public bool PurpleBalloon = false;
 		public int StartingDamage = 0;
 		public bool ItemDivision = false;
 		public bool PushBack = false; // marble protecter effect
-		//public float projectileSize = 1;
-		
+									  //public float projectileSize = 1;
+
 		public bool pearlescentMagic = false; //pearlescent core effect
 		public bool bloodstainedJewel = false; //bloodstained jewel effect
 		public bool snakeSling = false; //snakeskin sling effect
@@ -83,32 +83,46 @@ namespace SOTS
 		public bool CritFire = false; //hellfire icosahedron
 		public bool CritFrost = false; //borealis icosahedron
 		public bool CritCurseFire = false; //cursed icosahedron
-		
-		public override void ResetEffects()
-        { 
-		/* //probably code in a more efficient and-non-bug inducing way
-		for(int i = 0; i < 200; i++)
+		public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
 		{
-			NPC target = Main.npc[i];
-			if(target.life < 5000000)
+			ModPacket packet = mod.GetPacket();
+			packet.Write((byte)SOTSMessageType.SOTSSyncPlayer);
+			packet.Write((byte)player.whoAmI);
+			packet.Write(orbitalCounter);
+			packet.Send(toWho, fromWho);
+		}
+		public override void SendClientChanges(ModPlayer clientPlayer)
+		{
+			// Here we would sync something like an RPG stat whenever the player changes it.
+			SOTSPlayer clone = clientPlayer as SOTSPlayer;
+			if (clone.orbitalCounter != orbitalCounter)
 			{
-				for(int life = target.life; life > (target.lifeMax * 0.01 * (100 - StartingDamage)); life--)
-				{
-					target.life--;
-				}
+				// Send a Mod Packet with the changes.
+				var packet = mod.GetPacket();
+				packet.Write((byte)SOTSMessageType.OrbitalCounterChanged);
+				packet.Write((byte)player.whoAmI);
+				packet.Write(orbitalCounter);
+				packet.Send();
 			}
 		}
-		StartingDamage = 0;
-		*/
-			
-			 playerMouseWorld = Main.MouseWorld;
-			
-		if(onhit > 0)
+		public override void ResetEffects()
 		{
-			onhit--;
-		}
-		attackSpeedMod = 0;
-		 //Some important variables 1
+			brokenFrigidSword = brokenFrigidSword > 0 ? brokenFrigidSword - 1 : brokenFrigidSword;
+			orbitalCounter++;
+			if (orbitalCounter % 180 == 0)
+			{
+				SendClientChanges(this);
+			}
+			shardOnHit = 0;
+			bonusShardDamage = 0;
+			playerMouseWorld = Main.MouseWorld;
+
+			if (onhit > 0)
+			{
+				onhit--;
+			}
+			attackSpeedMod = 0;
+			//Some important variables 1
 			lostSoul = false;
 			orion = false;
 			megSet = false;
@@ -130,75 +144,75 @@ namespace SOTS
 			PushBack = false;
 			pearlescentMagic = false;
 			bloodstainedJewel = false;
-			snakeSling = false; 
+			snakeSling = false;
 			CritLifesteal = 0;
 			CritVoidsteal = 0f;
 			CritBonusDamage = 0;
-			CritFire = false; 
-			CritFrost = false; 
-			CritCurseFire = false; 
-			if(PyramidBiome)
+			CritFire = false;
+			CritFrost = false;
+			CritCurseFire = false;
+			if (PyramidBiome)
 				player.AddBuff(mod.BuffType("PharaohsCurse"), 16, false);
-        } 
+		}
 		public override void CatchFish(Item fishingRod, Item bait, int power, int liquidType, int poolSize, int worldLayer, int questFish, ref int caughtType, ref bool junk)
-        {
-			 //Fish Set 1
-			
-			if (Main.rand.Next(24) == 1 && player.ZoneSkyHeight)   {
-			caughtType = mod.ItemType("TinyPlanetFish"); }
-			
+		{
+			//Fish Set 1
+
+			if (Main.rand.Next(24) == 1 && player.ZoneSkyHeight) {
+				caughtType = mod.ItemType("TinyPlanetFish"); }
+
 			//if (Main.rand.Next(200) == 0 && ZeplineBiome) {
 			//caughtType = mod.ItemType("ZephyriousZepline"); }
-            //if (Main.rand.Next(330) == 1 && liquidType == 2 && poolSize >= 500)   {
+			//if (Main.rand.Next(330) == 1 && liquidType == 2 && poolSize >= 500)   {
 			//caughtType = mod.ItemType("ScaledFish");}
-			
+
 			//Fish Set 2
-			   
+
 			if (player.ZoneBeach && liquidType == 0 && Main.rand.Next(175) == 1) {
-			caughtType = mod.ItemType("SpikyPufferfish"); }
+				caughtType = mod.ItemType("SpikyPufferfish"); }
 			if (player.ZoneBeach && liquidType == 0 && Main.rand.Next(225) == 0) {
-			caughtType = mod.ItemType("CrabClaw"); }
-			
-			
-            if (scaleCatch2(power, 0, 90, 150, 750) && player.ZoneBeach && liquidType == 0){
-			caughtType = mod.ItemType("PinkJellyfishStaff"); }
-            else if (scaleCatch2(power, 0, 70, 30, 150) && player.ZoneBeach && liquidType == 0 && bait.type == 2438){ //Checks for pink jellyfish bait
-			caughtType = mod.ItemType("PinkJellyfishStaff"); }
-			
-            if (scaleCatch2(power, 0, 90, 150, 750) && player.ZoneRockLayerHeight && liquidType == 0){
-			caughtType = mod.ItemType("BlueJellyfishStaff"); }
-            else if (scaleCatch2(power, 0, 70, 30, 150) && player.ZoneRockLayerHeight && liquidType == 0 && bait.type == 2436){ //Checks blue jellyfish bait
-			caughtType = mod.ItemType("BlueJellyfishStaff"); }
-            else if (scaleCatch2(power, 0, 70, 30, 150) && player.ZoneRockLayerHeight && liquidType == 0 && bait.type == 2437){ //Checks green jellyfish bait
-			caughtType = mod.ItemType("BlueJellyfishStaff"); }
-			
-            if (scaleCatch2(power, 0, 30, 5, 10) && ZeplineBiome && liquidType == 0){
-			caughtType = mod.ItemType("SeaSnake"); }
-			else if(scaleCatch2(power, 0, 60, 6, 12) && PyramidBiome && !ZeplineBiome && liquidType == 0){
-			caughtType = mod.ItemType("SeaSnake"); }
-			else if (scaleCatch2(power, 0, 40, 7, 11) && ZeplineBiome && liquidType == 0){
-			caughtType = mod.ItemType("PhantomFish"); }
-			else if(scaleCatch2(power, 0, 80, 8, 14) && PyramidBiome && !ZeplineBiome && liquidType == 0){
-			caughtType = mod.ItemType("PhantomFish"); }
-			else if (scaleCatch2(power, 20, 80, 7, 20) && ZeplineBiome && liquidType == 0){ //gains the same rarity as Phantom Fish when at 80, fails to catch below 20 power
-			caughtType = mod.ItemType("Curgeon"); }
-			else if(scaleCatch2(power, 30, 150, 12, 25) && PyramidBiome && !ZeplineBiome && liquidType == 0){
-			caughtType = mod.ItemType("Curgeon"); }
-			else if (scaleCatch2(power, 0, 200, 100, 300) && ZeplineBiome && liquidType == 0){ //1/300 at 0, 1/200 at 100, 1/100 at 200, etc
-			caughtType = mod.ItemType("ZephyrousZeppelin"); }
-            else if (scaleCatch2(power, 0, 200, 100, 300) && ZeplineBiome && liquidType == 0){ //1/300 at 0, 1/200 at 100, 1/100 at 200, etc
-			caughtType = ItemID.ZephyrFish; }
-			else if(!player.HasBuff(BuffID.Crate))
+				caughtType = mod.ItemType("CrabClaw"); }
+
+
+			if (ScaleCatch2(power, 0, 90, 150, 750) && player.ZoneBeach && liquidType == 0) {
+				caughtType = mod.ItemType("PinkJellyfishStaff"); }
+			else if (ScaleCatch2(power, 0, 70, 30, 150) && player.ZoneBeach && liquidType == 0 && bait.type == 2438) { //Checks for pink jellyfish bait
+				caughtType = mod.ItemType("PinkJellyfishStaff"); }
+
+			if (ScaleCatch2(power, 0, 90, 150, 750) && player.ZoneRockLayerHeight && liquidType == 0) {
+				caughtType = mod.ItemType("BlueJellyfishStaff"); }
+			else if (ScaleCatch2(power, 0, 70, 30, 150) && player.ZoneRockLayerHeight && liquidType == 0 && bait.type == 2436) { //Checks blue jellyfish bait
+				caughtType = mod.ItemType("BlueJellyfishStaff"); }
+			else if (ScaleCatch2(power, 0, 70, 30, 150) && player.ZoneRockLayerHeight && liquidType == 0 && bait.type == 2437) { //Checks green jellyfish bait
+				caughtType = mod.ItemType("BlueJellyfishStaff"); }
+
+			if (ScaleCatch2(power, 0, 30, 5, 10) && ZeplineBiome && liquidType == 0) {
+				caughtType = mod.ItemType("SeaSnake"); }
+			else if (ScaleCatch2(power, 0, 60, 6, 12) && PyramidBiome && !ZeplineBiome && liquidType == 0) {
+				caughtType = mod.ItemType("SeaSnake"); }
+			else if (ScaleCatch2(power, 0, 40, 7, 11) && ZeplineBiome && liquidType == 0) {
+				caughtType = mod.ItemType("PhantomFish"); }
+			else if (ScaleCatch2(power, 0, 80, 8, 14) && PyramidBiome && !ZeplineBiome && liquidType == 0) {
+				caughtType = mod.ItemType("PhantomFish"); }
+			else if (ScaleCatch2(power, 20, 80, 7, 20) && ZeplineBiome && liquidType == 0) { //gains the same rarity as Phantom Fish when at 80, fails to catch below 20 power
+				caughtType = mod.ItemType("Curgeon"); }
+			else if (ScaleCatch2(power, 30, 150, 12, 25) && PyramidBiome && !ZeplineBiome && liquidType == 0) {
+				caughtType = mod.ItemType("Curgeon"); }
+			else if (ScaleCatch2(power, 0, 200, 100, 300) && ZeplineBiome && liquidType == 0) { //1/300 at 0, 1/200 at 100, 1/100 at 200, etc
+				caughtType = mod.ItemType("ZephyrousZeppelin"); }
+			else if (ScaleCatch2(power, 0, 200, 100, 300) && ZeplineBiome && liquidType == 0) { //1/300 at 0, 1/200 at 100, 1/100 at 200, etc
+				caughtType = ItemID.ZephyrFish; }
+			else if (!player.HasBuff(BuffID.Crate))
 			{
-				if(scaleCatch2(power, 0, 200, 20, 200) && (PyramidBiome || ZeplineBiome) && liquidType == 0){
-				caughtType = mod.ItemType("PyramidCrate"); }
+				if (ScaleCatch2(power, 0, 200, 20, 200) && (PyramidBiome || ZeplineBiome) && liquidType == 0) {
+					caughtType = mod.ItemType("PyramidCrate"); }
 			}
 			else
 			{
-				if(scaleCatch2(power, 0, 200, 10, 100) && (PyramidBiome || ZeplineBiome) && liquidType == 0){
-				caughtType = mod.ItemType("PyramidCrate"); }
+				if (ScaleCatch2(power, 0, 200, 10, 100) && (PyramidBiome || ZeplineBiome) && liquidType == 0) {
+					caughtType = mod.ItemType("PyramidCrate"); }
 			}
-				
+
 		}
 		/** minPower is the minimum power required, and yields a 1/maxRate chance of catching
 		*	maxPower is the maximum power required, and yields a 1/minRate chance of catching
@@ -207,9 +221,9 @@ namespace SOTS
 		*	pre condition: minPower < maxPower, minRate < maxRate
 		*	post condition: returns true at a specific chance.
 		*/
-		public bool scaleCatch2(int power, int minPower, int maxPower, int minRate, int maxRate)
+		public bool ScaleCatch2(int power, int minPower, int maxPower, int minRate, int maxRate)
 		{
-			if(power < minPower)
+			if (power < minPower)
 			{
 				return false;
 			}
@@ -218,7 +232,7 @@ namespace SOTS
 			maxPower -= minPower;
 			float powerRate = (float)power / maxPower;
 			int rate = maxRate - (int)(fixRate * powerRate);
-			if(rate < minRate)
+			if (rate < minRate)
 			{
 				rate = minRate;
 			}
@@ -244,16 +258,16 @@ namespace SOTS
 		}
 		*/
 		public override void UpdateBiomes()
-        {
-            //PlanetariumBiome = (SOTSWorld.planetarium > 0);
-            //GeodeBiome = (SOTSWorld.geodeBiome > 300);
-            ZeplineBiome = (SOTSWorld.zeplineBiome > 0);
-			
+		{
+			//PlanetariumBiome = (SOTSWorld.planetarium > 0);
+			//GeodeBiome = (SOTSWorld.geodeBiome > 300);
+			ZeplineBiome = (SOTSWorld.zeplineBiome > 0);
+
 			//checking for background walls
 			int tileBehindX = (int)(player.Center.X / 16);
 			int tileBehindY = (int)(player.Center.Y / 16);
 			Tile tile = Framing.GetTileSafely(tileBehindX, tileBehindY);
-			if(tile.wall == (ushort)mod.WallType("PyramidWallTile"))
+			if (tile.wall == (ushort)mod.WallType("PyramidWallTile"))
 			{
 				PyramidBiome = true;
 			}
@@ -262,12 +276,12 @@ namespace SOTS
 				PyramidBiome = (SOTSWorld.pyramidBiome > 0);
 			}
 		}
-		public override bool CustomBiomesMatch(Player other) 
+		public override bool CustomBiomesMatch(Player other)
 		{
 			var modOther = other.GetModPlayer<SOTSPlayer>();
 			return PyramidBiome == modOther.PyramidBiome;
 		}
-		public override void CopyCustomBiomesTo(Player other) 
+		public override void CopyCustomBiomesTo(Player other)
 		{
 			var modOther = other.GetModPlayer<SOTSPlayer>();
 			modOther.PyramidBiome = PyramidBiome;
@@ -278,8 +292,11 @@ namespace SOTS
 			flags[0] = PyramidBiome;
 			writer.Write(flags);
 		}
-
-		public override void ReceiveCustomBiomes(BinaryReader reader) 
+		public override void ModifyHitByNPC(NPC npc, ref int damage, ref bool crit)
+		{
+			base.ModifyHitByNPC(npc, ref damage, ref crit);
+		}
+		public override void ReceiveCustomBiomes(BinaryReader reader)
 		{
 			BitsByte flags = reader.ReadByte();
 			PyramidBiome = flags[0];
@@ -289,21 +306,21 @@ namespace SOTS
 			onhitdamage = damage;
 			onhit = 2;
 			HeartSwapBonus -= damage;
-			if(HeartSwapBonus < 0)
+			if (HeartSwapBonus < 0)
 			{
-			HeartSwapBonus = 0;
+				HeartSwapBonus = 0;
 			}
-			
-			
-			if(PushBack)
+
+
+			if (PushBack)
 			{
 				float dX = npc.Center.X - player.Center.X;
 				float dY = npc.Center.Y - player.Center.Y;
-				float distance = (float) Math.Sqrt((double)(dX * dX + dY * dY));
+				float distance = (float)Math.Sqrt((double)(dX * dX + dY * dY));
 				float speed = 16.0f / distance;
 				dX *= speed;
 				dY *= speed;
-				
+
 				int Proj = Projectile.NewProjectile(npc.Center.X - dX * 5, npc.Center.Y - dY * 5, dX, dY, 507, 12, 25f, player.whoAmI);
 				Main.projectile[Proj].timeLeft = 15;
 			}
@@ -313,93 +330,93 @@ namespace SOTS
 			onhitdamage = damage;
 			onhit = 2;
 			HeartSwapBonus -= damage;
-			if(HeartSwapBonus < 0)
+			if (HeartSwapBonus < 0)
 			{
-			HeartSwapBonus = 0;
+				HeartSwapBonus = 0;
 			}
-			
+
 		}
 		public override void OnHitNPCWithProj(Projectile proj, NPC target, int damage, float knockback, bool crit)
 		{
-			if(orion == true)
+			if (orion == true)
 			{
 				float amount = 0;
-				for(int j = Main.rand.Next(2); j == 0; j = Main.rand.Next((int)(1 + amount)))
+				for (int j = Main.rand.Next(2); j == 0; j = Main.rand.Next((int)(1 + amount)))
 				{
 					amount++;
 				}
-				for(int i = Main.rand.Next(200); amount > 0; i = Main.rand.Next(200))
+				for (int i = Main.rand.Next(200); amount > 0; i = Main.rand.Next(200))
 				{
 					NPC target2 = Main.npc[i];
-					
+
 					float shootFromX = target.Center.X;
 					float shootFromY = target.Center.Y;
-					
-					if(target2.Center.X >= target.Center.X)
-						shootFromX += target.width;
-						
-					if(target2.Center.X <= target.Center.X)
-						shootFromX -= target.width;
-						
-					if(target2.Center.Y >= target.Center.Y)
-						shootFromY += target.height;
-						
-					if(target2.Center.Y <= target.Center.Y)
-						shootFromY -= target.height;
-						
-					
-					 
-					float shootToX = target2.position.X + (float)target2.width * 0.5f - shootFromX;
-					float shootToY = target2.position.Y + (float)target2.height * 0.5f - shootFromY;
-					float distance = (float)System.Math.Sqrt((double)(shootToX * shootToX + shootToY * shootToY));
 
-					if(distance < 320f && !target2.friendly && target2.active)
+					if (target2.Center.X >= target.Center.X)
+						shootFromX += target.width;
+
+					if (target2.Center.X <= target.Center.X)
+						shootFromX -= target.width;
+
+					if (target2.Center.Y >= target.Center.Y)
+						shootFromY += target.height;
+
+					if (target2.Center.Y <= target.Center.Y)
+						shootFromY -= target.height;
+
+
+
+					float shootToX = target2.position.X + target2.width * 0.5f - shootFromX;
+					float shootToY = target2.position.Y + target2.height * 0.5f - shootFromY;
+					float distance = (float)Math.Sqrt((shootToX * shootToX + shootToY * shootToY));
+
+					if (distance < 320f && !target2.friendly && target2.active)
 					{
-						if(amount > 0)
+						if (amount > 0)
 						{
 							amount--;
-					  
+
 							distance = 0.2f / distance;
-					 
+
 							shootToX *= distance * 5;
 							shootToY *= distance * 5;
-					 
+
 							Projectile.NewProjectile(shootFromX, shootFromY, shootToX, shootToY, mod.ProjectileType("OrionChain"), (int)(proj.damage * 0.75f), 0, Main.myPlayer, 0f, 0f); //Spawning a projectile
 						}
 					}
 					else
 					{
-						amount -= 0.01f;  
+						amount -= 0.01f;
 					}
 				}
 			}
-			
-			if(BloodTapping == 1)
+
+			if (BloodTapping == 1)
 			{
-				if(Main.rand.Next(10) == 0 && BloodTapping * damage > 20)
+				if (Main.rand.Next(10) == 0 && BloodTapping * damage > 20)
 				{
-					player.statLife += (int)(BloodTapping * damage/20);
-					player.HealEffect((int)(BloodTapping * damage/20));
+					player.statLife += (int)(BloodTapping * damage / 20);
+					player.HealEffect((int)(BloodTapping * damage / 20));
 				}
 			}
-			
-			if(megShirt == true)
+
+			if (megShirt == true)
 			{
-				if(Main.rand.Next(35) == 0)
+				if (Main.rand.Next(35) == 0)
 				{
-					Item.NewItem((int)target.position.X, (int)target.position.Y, target.width, target.height,  ItemID.Heart);	
+					Item.NewItem((int)target.position.X, (int)target.position.Y, target.width, target.height, ItemID.Heart);
 				}
-				if(Main.rand.Next(35) == 0)
+				if (Main.rand.Next(35) == 0)
 				{
-					Item.NewItem((int)target.position.X, (int)target.position.Y, target.width, target.height,  ItemID.Star);
+					Item.NewItem((int)target.position.X, (int)target.position.Y, target.width, target.height, ItemID.Star);
 				}
 			}
-		}	
+		}
 		public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit)
 		{
-			
+
 			Vector2 vector14;
-					
+
 			if (player.gravDir == 1f)
 			{
 				vector14.Y = (float)Main.mouseY + Main.screenPosition.Y;
@@ -409,34 +426,43 @@ namespace SOTS
 				vector14.Y = Main.screenPosition.Y + (float)Main.screenHeight - (float)Main.mouseY;
 			}
 			vector14.X = (float)Main.mouseX + Main.screenPosition.X;
-						
-			if(BloodTapping * damage > 10)
+
+			if (BloodTapping * damage > 10)
 			{
-					player.statLife += (int)(BloodTapping * damage/10);
-					player.HealEffect((int)(BloodTapping * damage/10));
+				player.statLife += (int)(BloodTapping * damage / 10);
+				player.HealEffect((int)(BloodTapping * damage / 10));
 			}
-			if(megShirt == true)
+			if (megShirt == true)
 			{
-				if(Main.rand.Next(35) == 0)
+				if (Main.rand.Next(35) == 0)
 				{
-					Item.NewItem((int)target.position.X, (int)target.position.Y, target.width, target.height,  ItemID.Heart);	
+					Item.NewItem((int)target.position.X, (int)target.position.Y, target.width, target.height, ItemID.Heart);
 				}
-				if(Main.rand.Next(35) == 0)
+				if (Main.rand.Next(35) == 0)
 				{
-					Item.NewItem((int)target.position.X, (int)target.position.Y, target.width, target.height,  ItemID.Star);
+					Item.NewItem((int)target.position.X, (int)target.position.Y, target.width, target.height, ItemID.Star);
 				}
 			}
 		}
-		public override void SetupStartInventory(IList<Item> items)
+		public override void SetupStartInventory(IList<Item> items, bool mediumcoreDeath)
 		{
-				Item item = new Item();
-				item.SetDefaults(mod.ItemType("ImitationCrate"));   //this is an example of how to add your moded item
-				item.stack = 1;         //this is the stack of the item
-				items.Add(item);
+			/*
+			Item item = new Item();
+			item.SetDefaults(mod.ItemType("ImitationCrate"));
+			item.stack = 1;        
+			items.Add(item); */
 		}
 		public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
 		{
 			float downgrade = 0.5f;
+			if(shardOnHit > 0 && damage > 5)
+			{
+				for(int i = 0; i < shardOnHit; i++)
+				{
+					Vector2 circularSpeed = new Vector2(0, -12).RotatedBy(MathHelper.ToRadians(i * (360f/shardOnHit)));
+					Projectile.NewProjectile(player.Center.X, player.Center.Y, circularSpeed.X, circularSpeed.Y, mod.ProjectileType("ShatterShard"), 10 + bonusShardDamage, 3f, player.whoAmI);
+				}
+			}
 			if(Main.expertMode == true)
 			{
 				downgrade = 0.75f;
@@ -452,7 +478,7 @@ namespace SOTS
 					player.statLife = player.statMana;
 				}
 			}
-			return true;
+			return base.PreHurt(pvp, quiet, ref damage, ref hitDirection, ref crit, ref customDamage, ref playSound, ref genGore, ref damageSource);
 		}
 		int shotCounter = 0;
 		public override bool Shoot(Item item, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

@@ -19,20 +19,16 @@ namespace SOTS
 		public static int zeplineBiome = 0;
 		public static int pyramidBiome = 0;
 		public static int geodeBiome = 0;
-		
-		
-		
+
 		public static bool downedPinky = false;
 		public static bool downedCurse = false;
 		
 		public static bool downedAmalgamation = false;
 		public static bool downedCelestial = false;
 		public static bool downedSubspace = false;
-		
-		
-		
-		
-		public static bool downedCarver = false;
+
+        #region unused
+        public static bool downedCarver = false;
 		public static bool downedEntity = false;
 		public static bool downedAntilion = false;
 		public static bool downedChess = false;
@@ -44,9 +40,9 @@ namespace SOTS
 		public static bool challengeIce = false;
 		public static bool challengeGlass = false;
 		public static bool challengeIcarus = false;
-		
-		
-		public override void Initialize()
+        #endregion
+
+        public override void Initialize()
 		{
 			downedPinky = false;
 			downedCarver = false;
@@ -1076,6 +1072,7 @@ namespace SOTS
 											WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform
 											break;
 										case 6:
+											WorldGen.PlaceTile(k, l, mod.TileType("StrangeChestTile"));
 											break;
 										case 7:
 											WorldGen.PlaceTile(k, l, 376); //crate
@@ -1703,7 +1700,6 @@ namespace SOTS
 														tile.active(true);
 														tile.slope(4);
 													break;
-												break;
 											}
 										}
 									}
@@ -2153,7 +2149,6 @@ namespace SOTS
 										tile2.active(false);
 										WorldGen.SquareTileFrame(k2, l, false);
 									break;
-									break;
 								}
 							}
 						}
@@ -2287,7 +2282,14 @@ namespace SOTS
 			{
 				// Get a chest
 				var tile = Main.tile[chest.x, chest.y]; // the chest tile 
-									
+				if (tile.type == mod.TileType("StrangeChestTile"))
+				{
+					int slot = 0;
+					chest.item[slot].SetDefaults(mod.ItemType("WorldgenScanner"));
+					slot++;
+					chest.item[slot].SetDefaults(mod.ItemType("WorldgeCapture"));
+					slot++;
+				}
 				if(tile.type == mod.TileType("PyramidChestTile"))
 				{
 					int slot = 39;
@@ -2583,7 +2585,8 @@ namespace SOTS
 					}
 					if(WorldGen.genRand.NextBool(6) && (chest.item[0].type == ItemID.IceBoomerang || chest.item[0].type == ItemID.IceBlade || chest.item[0].type == ItemID.IceSkates || chest.item[0].type == ItemID.BlizzardinaBottle || chest.item[0].type == ItemID.FlurryBoots))
 					{
-						chest.item[slot].SetDefaults(mod.ItemType("CryoCannon"));
+						chest.item[slot].SetDefaults(mod.ItemType("FragmentOfPermafrost"));
+						chest.item[slot].stack = Main.rand.Next(3) + 5;
 						slot++;
 					}
 					if(WorldGen.genRand.NextBool(80))
@@ -2715,7 +2718,6 @@ namespace SOTS
 												WorldGen.SquareTileFrame(k, l, false);
 												break;
 											case 9:
-												break;
 												break;
 											
 										}
@@ -2982,8 +2984,6 @@ namespace SOTS
 											case 9:
 												tile.active(true);
 												break;
-												break;
-											
 										}
 									}
 								}
@@ -3070,7 +3070,6 @@ namespace SOTS
 											case 9:
 												tile.active(false);
 												WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform //platform
-												break;
 												break;
 											
 										}
@@ -4656,10 +4655,8 @@ namespace SOTS
 							{7,7,2,7,2,7,7,3,2,3,7,7,2,7,2,7,7}
 						};	
 						
-						int PosX = x;
-						int PosY = y;
-						PosX -= (int)(.5f * _pyramidRoom.GetLength(1));
-						PosY -= (int)(.5f * _pyramidRoom.GetLength(0));
+						int PosX = x - (int)(.5f * _pyramidRoom.GetLength(1));
+						int PosY = y - (int)(.5f * _pyramidRoom.GetLength(0));
 						//i = vertical, j = horizontal
 						for(int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)
 						{
@@ -4982,7 +4979,6 @@ namespace SOTS
 												tile.active(false);
 												WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform //platform
 												break;
-												break;
 											
 										}
 									}
@@ -5248,7 +5244,6 @@ namespace SOTS
 											case 9:
 												tile.active(false);
 												WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform //platform
-												break;
 												break;
 											
 										}
@@ -5619,8 +5614,6 @@ namespace SOTS
 												tile.active(false);
 												WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform
 												break;
-												break;
-											
 										}
 									}
 								}
@@ -5707,7 +5700,6 @@ namespace SOTS
 											case 9:
 												tile.active(false);
 												WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform //platform
-												break;
 												break;
 											
 										}
@@ -6153,7 +6145,6 @@ namespace SOTS
 												tile.active(false);
 												WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform //platform
 												break;
-												break;
 											
 										}
 									}
@@ -6241,7 +6232,6 @@ namespace SOTS
 											case 9:
 												tile.active(false);
 												WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform //platform
-												break;
 												break;
 											
 										}

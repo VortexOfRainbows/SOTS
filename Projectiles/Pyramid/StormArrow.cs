@@ -76,7 +76,7 @@ namespace SOTS.Projectiles.Pyramid
 			{
 				NPC npc = Main.npc[npcIndex];
 				float spawnPosX = npc.Center.X;
-				float spawnPosY = npc.position.Y - 50;
+				float spawnPosY = npc.position.Y - 24;
 				
 				for(int i = 0; i < 25; i++)
 				{
@@ -95,7 +95,7 @@ namespace SOTS.Projectiles.Pyramid
 			{
 				NPC npc = Main.npc[npcIndex1];
 				float spawnPosX = npc.Center.X;
-				float spawnPosY = npc.position.Y - 50;
+				float spawnPosY = npc.position.Y - 24;
 				
 				for(int i = 0; i < 25; i++)
 				{
@@ -114,7 +114,7 @@ namespace SOTS.Projectiles.Pyramid
 			{
 				NPC npc = Main.npc[npcIndex2];
 				float spawnPosX = npc.Center.X;
-				float spawnPosY = npc.position.Y - 50;
+				float spawnPosY = npc.position.Y - 24;
 				
 				for(int i = 0; i < 25; i++)
 				{
@@ -133,7 +133,7 @@ namespace SOTS.Projectiles.Pyramid
 			{
 				NPC npc = Main.npc[npcIndex3];
 				float spawnPosX = npc.Center.X;
-				float spawnPosY = npc.position.Y - 50;
+				float spawnPosY = npc.position.Y - 24;
 				
 				for(int i = 0; i < 25; i++)
 				{

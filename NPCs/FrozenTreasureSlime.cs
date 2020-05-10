@@ -126,7 +126,7 @@ namespace SOTS.NPCs
 				}
 			}
 
-			if(Main.rand.Next(25) == 0 || (Main.expertMode && Main.rand.Next(40) == 0))
+			if(Main.rand.Next(15) == 0 || (Main.expertMode && Main.rand.Next(40) == 0))
 			{
 				int rand = Main.rand.Next(10);
 				if(rand == 0)

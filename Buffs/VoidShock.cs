@@ -20,11 +20,7 @@ namespace SOTS.Buffs
 		public override void Update(Player player, ref int buffIndex)
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-			if(player.lifeRegen > 0)
-			{
-				player.lifeRegen = 0;
-			}
-			player.lifeRegen -= 7;
+			voidPlayer.voidShock = true;
 			voidPlayer.voidRegen *= 0.1f;
 			if(player.buffTime[buffIndex] <= 6 || voidPlayer.voidMeter > 0)
 			{

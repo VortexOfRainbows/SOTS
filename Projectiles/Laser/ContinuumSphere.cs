@@ -1,13 +1,9 @@
 using System;
-using System.IO;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
-using Terraria.ID;
+using SOTS.Void;
 
 namespace SOTS.Projectiles.Laser
 {    
@@ -145,23 +141,23 @@ namespace SOTS.Projectiles.Laser
 			{
 				distance2 = 0;
 			}
-			ai1++;			
-			
-			if(Main.myPlayer == player.whoAmI)
+			ai1++;
+
+			if (Main.myPlayer == player.whoAmI)
 			{
 				projectile.netUpdate = true;
 
-						   
+
 				double startingDirection = Math.Atan2((double)-shootToY, (double)-shootToX);
-				startingDirection *= 180/Math.PI;
-				
-				if(player.channel || projectile.timeLeft > 6)
+				startingDirection *= 180 / Math.PI;
+
+				if (player.channel || projectile.timeLeft > 6)
 				{
 					projectile.timeLeft = 6;
 					projectile.alpha = 0;
-					if(Main.myPlayer == projectile.owner && ai1 % 2 == 0 && ai1 > 1)
+					if (Main.myPlayer == projectile.owner && ai1 % 2 == 0 && ai1 > 1)
 					{
-						for(int i = 0; i < orbs.Length; i++)
+						for (int i = 0; i < orbs.Length; i++)
 						{
 							float shootToX2 = orbsTo[i].X - player.Center.X;
 							float shootToY2 = orbsTo[i].Y - player.Center.Y;
@@ -169,7 +165,7 @@ namespace SOTS.Projectiles.Laser
 							distance2 = 4f / distance2;
 							shootToX2 *= distance2 * 5f;
 							shootToY2 *= distance2 * 5f;
-							if(orbs.Length != 1)
+							if (orbs.Length != 1)
 							{
 								Projectile.NewProjectile(orbs[i].X + shootToX2, orbs[i].Y + shootToY2, shootToX2, shootToY2, mod.ProjectileType("SmallCollapseLaser"), (int)(projectile.damage), 1f, projectile.owner, projectile.ai[1], ai2); //second ai slot is scale
 							}
@@ -178,7 +174,11 @@ namespace SOTS.Projectiles.Laser
 								Projectile.NewProjectile(orbs[i].X + shootToX2, orbs[i].Y + shootToY2, shootToX2, shootToY2, mod.ProjectileType("CollapseLaser"), projectile.damage * 3, 1f, projectile.owner, projectile.ai[1], 0f);
 							}
 						}
-					}						
+					}
+				}
+				if (ai1 % 20 == 0 && Main.myPlayer == player.whoAmI)
+				{
+					VoidItem.DrainMana(player);
 				}
 				projectile.ai[0] = (float)startingDirection;
 				double deg = (double) projectile.ai[0]; 

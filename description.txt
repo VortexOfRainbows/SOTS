@@ -1,6 +1,5 @@
 A mod which has nothing to do with secrets or shadows... yet
 This mod's main plan is to add generated structures in the world, some are sort-of like roguelike dungeons.
-NOTICE: This mod is not optimized for multiplayer, feel free to give it a try, but bugs might occur.
 !! This mod is early in development !!
 !! A large world is recommended in order for the generated structures to spawn without overriding vanilla structures !!
 
@@ -8,7 +7,9 @@ Bosses -> Currently 5, Mostly bullet hells
 Items -> Around 300, unique gimmicks all around!
 
 New Subclass (void)
--Has a seperate meter that you don't want to drain, or else you'll lose health
+-A new resource similar to mana
+-Unleash very powerful attacks
+-Exists on melee, ranged, and magic items
 
 Pyramid Dungeon World Gen
 -Unique boss and items

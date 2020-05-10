@@ -11,7 +11,7 @@ namespace SOTS.Items.Celestial
 	{	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Star Storm Spell");
+			DisplayName.SetDefault("Starstorm Spell");
 			Tooltip.SetDefault("A volley of celestial projectiles target your cursor");
 		}
 		public override void SetDefaults()
