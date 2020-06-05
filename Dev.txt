@@ -75,12 +75,13 @@ Putrid Pinky Spawn Animation -> Place down peanuts -> Pinky eats it -> pinky gro
 
 Complete:
 
-5/ /20
+5/25/20
 To DO:
 test death text in multiplayer
 make frigid armor
 make eskimo goblino
-make potions cost more herbs
+shoe ice visual broke, fix it
+1. Double vision costs shiverthorn
 
 5/3/20
 1. Organized many variables and some life regen mechanics.

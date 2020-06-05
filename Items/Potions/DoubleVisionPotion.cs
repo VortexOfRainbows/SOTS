@@ -53,6 +53,7 @@ namespace SOTS.Items.Potions
 			recipe.AddIngredient(null, "PhantomFish", 1);
 			recipe.AddIngredient(null, "SeaSnake", 1);
 			recipe.AddIngredient(null, "FragmentOfTide", 1);
+			recipe.AddIngredient(ItemID.Shiverthorn, 1);
 			recipe.AddTile(13);
 			recipe.SetResult(this, 1);
 			recipe.AddRecipe();

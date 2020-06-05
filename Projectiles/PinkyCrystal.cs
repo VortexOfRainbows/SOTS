@@ -10,7 +10,6 @@ namespace SOTS.Projectiles
 			DisplayName.SetDefault("Wormwood Crystal");
 			
 		}
-		
         public override void SetDefaults()
         {
 			projectile.aiStyle = 2;
