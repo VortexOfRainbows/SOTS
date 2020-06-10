@@ -37,7 +37,7 @@ namespace SOTS.Items.IceStuff
 		{
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.Diamond, 1);
-			recipe.AddIngredient(null, "FrigidBar", 9);
+			recipe.AddIngredient(null, "FrigidBar", 8);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this);
 			recipe.AddRecipe();

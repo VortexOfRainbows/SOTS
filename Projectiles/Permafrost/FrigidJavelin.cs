@@ -1,23 +1,20 @@
 using System;
-using System.IO;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
-using System.Diagnostics;
 
 namespace SOTS.Projectiles.Permafrost
 {    
     public class FrigidJavelin : ModProjectile 
     {
+		int bounceCounter = 0;
 		int counter = 0;
 		int counter2 = 72;
 		bool startAnim = false;
 		float storeRot = 0;
+		bool hasDoneDamage = false;
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Frigid Javelin");
@@ -36,6 +33,12 @@ namespace SOTS.Projectiles.Permafrost
 			projectile.penetrate = -1;
 			projectile.tileCollide = false;
 		}
+		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		{
+			hasDoneDamage = true;
+			target.immune[projectile.owner] = 5;
+			base.OnHitNPC(target, damage, knockback, crit);
+		}
 		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
 		{
 			width = 14;
@@ -45,23 +48,44 @@ namespace SOTS.Projectiles.Permafrost
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{
-			projectile.velocity *= 0;
-			projectile.tileCollide = false;
-			projectile.friendly = false;
-			projectile.extraUpdates = 2;
-			startAnim = true;
-			for(int i = 0; i < 6; i ++)
+			Player player = Main.player[projectile.owner];
+			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
+			if (bounceCounter >= modPlayer.frigidJavelinBoost)
 			{
-				int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 34, 34, 67);
-				Main.dust[num1].noGravity = true;
-				Main.dust[num1].velocity *= 3.4f;
-				Main.dust[num1].scale = 1f;
+				storeRot = projectile.rotation;
+				projectile.velocity *= 0;
+				projectile.tileCollide = false;
+				projectile.friendly = false;
+				projectile.extraUpdates = 2;
+				startAnim = true;
+				for (int i = 0; i < 6; i++)
+				{
+					int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 34, 34, 67);
+					Main.dust[num1].noGravity = true;
+					Main.dust[num1].velocity *= 3.4f;
+					Main.dust[num1].scale = 1f;
 
-				num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 34, 34, 67);
-				Main.dust[num1].noGravity = true;
-				Main.dust[num1].velocity *= 2.2f;
-				Main.dust[num1].scale = 2f;
+					num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 34, 34, 67);
+					Main.dust[num1].noGravity = true;
+					Main.dust[num1].velocity *= 2.2f;
+					Main.dust[num1].scale = 2f;
+				}
 			}
+			else
+			{
+				hasDoneDamage = false;
+				if (projectile.velocity.X != oldVelocity.X)
+				{
+					projectile.velocity.X = -oldVelocity.X;
+				}
+				if (projectile.velocity.Y != oldVelocity.Y)
+				{
+					projectile.velocity.Y = -oldVelocity.Y;
+				}
+				projectile.rotation = (float)Math.Atan2(projectile.velocity.Y, projectile.velocity.X) + MathHelper.ToRadians(45);
+				storeRot = projectile.rotation;
+			}
+			bounceCounter++;
 			return false;
 		}
 		public override bool ShouldUpdatePosition()
@@ -83,6 +107,7 @@ namespace SOTS.Projectiles.Permafrost
 			if(counter != -1)
 				counter += 3;
 			Player player = Main.player[projectile.owner];
+			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
 			if (projectile.timeLeft <= 7170)
 			{
 				if(counter != -1)
@@ -111,7 +136,6 @@ namespace SOTS.Projectiles.Permafrost
 			if(projectile.timeLeft > 7170)
 			{
 				projectile.rotation = (float)Math.Atan2(projectile.velocity.Y, projectile.velocity.X) + MathHelper.ToRadians(45);
-				storeRot = projectile.rotation;
 				projectile.position.Y = player.Center.Y - projectile.height / 2;
 				projectile.position.X = player.Center.X - projectile.width / 2;
 				Vector2 rotater = new Vector2(0, counter * 2).RotatedBy(MathHelper.ToRadians(6 * counter));

@@ -16,7 +16,7 @@ namespace SOTS.Items.IceStuff
 		}
         public override void SetDefaults()
         {
-            item.damage = 15;
+            item.damage = 13;
             item.magic = true;
             item.width = 34;
             item.height = 34;
@@ -40,14 +40,25 @@ namespace SOTS.Items.IceStuff
 			recipe.SetResult(this);
 			recipe.AddRecipe();
 		}
+		public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat)
+		{
+			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
+			if(modPlayer.shardSpellExtra != 0)
+			{
+				item.useTime = 12;
+			}
+			else
+			{
+				item.useTime = 20;
+			}
+			base.ModifyWeaponDamage(player, ref add, ref mult, ref flat);
+		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
 			Vector2 toPos = Main.MouseWorld;
 			for(int i = 0; i < 1; i++)
 			{
 				Vector2 newPos = position + new Vector2(Main.rand.Next(-48, 49), Main.rand.Next(-48, 19));
-				Vector2 dist = toPos - newPos;
-				float distance = dist.Length();
 				float speed = new Vector2(speedX, speedY).Length();
 				Vector2 speed2 = new Vector2(speed, 0).RotatedBy(Math.Atan2(toPos.Y - newPos.Y, toPos.X - newPos.X));
 				if(item.crit + player.magicCrit + 4 >= Main.rand.Next(100) + 1)

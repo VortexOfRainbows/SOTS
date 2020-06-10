@@ -19,7 +19,6 @@ namespace SOTS.Items.IceStuff
 		}
 		public override void SetDefaults()
 		{
-	
 			item.damage = 36;
 			item.summon = true;
             item.width = 28;     
@@ -27,7 +26,6 @@ namespace SOTS.Items.IceStuff
             item.value = Item.sellPrice(0, 5, 50, 0);
             item.rare = 7;
 			item.accessory = true;
-
 		}
 		float rotation = 0;
 		float rotation2 = 0;

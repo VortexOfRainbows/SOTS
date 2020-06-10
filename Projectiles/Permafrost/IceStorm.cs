@@ -12,7 +12,6 @@ namespace SOTS.Projectiles.Permafrost
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Ice Storm");
-			
 		}
         public override void SetDefaults()
         {
@@ -30,9 +29,11 @@ namespace SOTS.Projectiles.Permafrost
 		}
 		public override void AI()
 		{
+			Player player = Main.player[projectile.owner];
+			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
 			Vector2 circularLocation = new Vector2(-distance, 4).RotatedBy(MathHelper.ToRadians(rotation));
 			rotation += 15;
-			distance -= 0.525f;
+			distance -= 0.525f + 0.1f * modPlayer.shardSpellExtra;
 			if(distance > 1)
 			{
 				int num1 = Dust.NewDust(new Vector2(projectile.Center.X + circularLocation.X - 4, projectile.Center.Y + circularLocation.Y - 4), 4, 4, 67);

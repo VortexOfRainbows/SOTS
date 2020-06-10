@@ -29,6 +29,8 @@ namespace SOTS
 		Vector2 playerMouseWorld;
 		public bool weakerCurse = false;
 		public int brokenFrigidSword = 0;
+		public int shardSpellExtra = 0;
+		public int frigidJavelinBoost = 0;
 		public int orbitalCounter = 0;
 		public int shardOnHit = 0;
 		public int bonusShardDamage = 0;
@@ -107,6 +109,8 @@ namespace SOTS
 		}
 		public override void ResetEffects()
 		{
+			shardSpellExtra = 0;
+			frigidJavelinBoost = 0;
 			brokenFrigidSword = brokenFrigidSword > 0 ? brokenFrigidSword - 1 : brokenFrigidSword;
 			orbitalCounter++;
 			if (orbitalCounter % 180 == 0)

@@ -37,12 +37,21 @@ namespace SOTS.Projectiles.Nature
 		{
 			if(projectile.alpha >= 250)
 			{
-			Player player = Main.player[(int)(projectile.ai[1])];
-			projectile.position = player.Center;
-			Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Nature/NatureReticle");
-			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			Vector2 drawPos = trueTarget - Main.screenPosition + new Vector2(0f, projectile.gfxOffY);
-			spriteBatch.Draw(texture, drawPos, null, drawColor, projectile.rotation, drawOrigin, 0.30f - projectile.ai[0], SpriteEffects.None, 0f);
+				Color color = new Color(100, 100, 100, 0);
+				Player player = Main.player[(int)(projectile.ai[1])];
+				projectile.position = player.Center;
+				Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Nature/NatureReticle");
+				Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
+				Vector2 drawPos = trueTarget - Main.screenPosition + new Vector2(0f, projectile.gfxOffY);
+				for (int k = 0; k < 7; k++)
+				{
+					float x = Main.rand.Next(-10, 11) * 0.15f;
+					float y = Main.rand.Next(-10, 11) * 0.15f;
+					Main.spriteBatch.Draw(texture,
+					new Vector2(drawPos.X + x, drawPos.Y + y),
+					null, color, projectile.rotation, drawOrigin, 0.30f - projectile.ai[0], SpriteEffects.None, 0f);
+				}
+				//spriteBatch.Draw(texture, drawPos, null, drawColor, projectile.rotation, drawOrigin, 0.30f - projectile.ai[0], SpriteEffects.None, 0f);
 			}
 		}
 		Vector2 targetPos;
@@ -68,7 +77,7 @@ namespace SOTS.Projectiles.Nature
 		public override void Kill(int timeLeft)
 		{
 			Projectile.NewProjectile(trueTarget.X, trueTarget.Y, 0, 0, mod.ProjectileType("NatureBeat"), projectile.damage, 0, 0);
-			Main.PlaySound(2, (int)(projectile.Center.X), (int)(projectile.Center.Y), 93, 0.75f);
+			Main.PlaySound(2, (int)(projectile.Center.X), (int)(projectile.Center.Y), 93, 0.35f);
 		}
 	}
 }

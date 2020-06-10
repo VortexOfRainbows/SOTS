@@ -39,50 +39,48 @@ namespace SOTS.Items.IceStuff
         public override void UpdateArmorSet(Player player)
         {	
 			player.setBonus = "Nearby enemies and projectiles will have their velocities slowed";
+			float minDist = 160;
+			float dX = 0f;
+			float dY = 0f;
+			float distanceEnemy = 0;
 			
-				float minDist = 160;
-				float dX = 0f;
-				float dY = 0f;
-				float distanceEnemy = 0;
-				
-					for(int j = 0; j < Main.npc.Length - 1; j++)
+			for(int j = 0; j < Main.npc.Length - 1; j++)
+			{
+				NPC target = Main.npc[j];
+				if(!target.friendly && target.dontTakeDamage == false && target.active)
 					{
-						NPC target = Main.npc[j];
-						if(!target.friendly && target.dontTakeDamage == false && target.active)
-							{
-								dX = target.Center.X - player.Center.X;
-								dY = target.Center.Y - player.Center.Y;
-								distanceEnemy = (float) Math.Sqrt((double)(dX * dX + dY * dY));
-								if(distanceEnemy < minDist)
-								{
-									target.velocity.X *= 0.98f;
-									target.velocity.Y *= 0.98f;
-								}
-							}	
-					}
-					
-					for(int j = 0; j < Main.projectile.Length - 1; j++)
+						dX = target.Center.X - player.Center.X;
+						dY = target.Center.Y - player.Center.Y;
+						distanceEnemy = (float) Math.Sqrt((double)(dX * dX + dY * dY));
+						if(distanceEnemy < minDist)
+						{
+							target.velocity.X *= 0.98f;
+							target.velocity.Y *= 0.98f;
+						}
+					}	
+			}
+			
+			for(int j = 0; j < Main.projectile.Length - 1; j++)
+			{
+				Projectile target = Main.projectile[j];
+				if(!target.friendly && target.damage > 0 && target.active && target.hostile)
 					{
-						Projectile target = Main.projectile[j];
-						if(!target.friendly && target.damage > 0 && target.active && target.hostile)
-							{
-								dX = target.Center.X - player.Center.X;
-								dY = target.Center.Y - player.Center.Y;
-								distanceEnemy = (float) Math.Sqrt((double)(dX * dX + dY * dY));
-								if(distanceEnemy < minDist)
-								{
-									target.velocity.X *= 0.98f;
-									target.velocity.Y *= 0.98f;
-													
-									if(Math.Abs(target.velocity.X) < 0.01f)
-									target.Kill();
-									
-									if(Math.Abs(target.velocity.Y) < 0.01f)
-									target.Kill(); 
-								}
-							}	
-					}
-					
+						dX = target.Center.X - player.Center.X;
+						dY = target.Center.Y - player.Center.Y;
+						distanceEnemy = (float) Math.Sqrt((double)(dX * dX + dY * dY));
+						if(distanceEnemy < minDist)
+						{
+							target.velocity.X *= 0.98f;
+							target.velocity.Y *= 0.98f;
+											
+							if(Math.Abs(target.velocity.X) < 0.01f)
+							target.Kill();
+							
+							if(Math.Abs(target.velocity.Y) < 0.01f)
+							target.Kill(); 
+						}
+					}	
+			}
 		}
 		public override void UpdateEquip(Player player)
 		{

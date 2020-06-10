@@ -10,7 +10,7 @@ namespace SOTS.Items.IceStuff
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Shatter Heart Shield");
-			Tooltip.SetDefault("Getting hit surrounds you with 1, 2, or 3 ice shards\nIncreases max life by 10");
+			Tooltip.SetDefault("Getting hit surrounds you with ice shards\nIncreases max life by 10");
 		}
 		public override void SetDefaults()
 		{

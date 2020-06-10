@@ -3,6 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace SOTS.Items.Potions
 {
@@ -12,7 +13,34 @@ namespace SOTS.Items.Potions
 		{
 			DisplayName.SetDefault("Blightful Tonic");
 			
-			Tooltip.SetDefault("Randomly recieve 2 of the following:\nIronskin for 15 minutes\nGood Vibes for 13 minutes\nSwiftness for 11 minutes\nRegeneration for 9 minutes\n'Looks vile'");
+			Tooltip.SetDefault("Randomly recieve 2 of the following:\nIronskin for 15 minutes\nGood Vibes for 13 minutes\nSwiftness for 11 minutes\nRegeneration for 9 minutes");
+		}
+		public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
+		{
+			Texture2D texture = mod.GetTexture("Items/Potions/BlightfulTonicEffect");
+			Color color = new Color(100, 100, 100, 0);
+			for (int k = 0; k < 7; k++)
+			{
+				float x = Main.rand.Next(-10, 11) * 0.15f;
+				float y = Main.rand.Next(-10, 11) * 0.15f;
+				Main.spriteBatch.Draw(texture,
+				new Vector2(position.X + x, position.Y + y),
+				null, color * (1f - (item.alpha / 255f)), 0f, origin, scale, SpriteEffects.None, 0f);
+			}
+		}
+		public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
+		{
+			Texture2D texture = mod.GetTexture("Items/Potions/BlightfulTonicEffect");
+			Color color = new Color(100, 100, 100, 0);
+			Vector2 drawOrigin = new Vector2(Main.itemTexture[item.type].Width * 0.5f, item.height * 0.5f);
+			for (int k = 0; k < 7; k++)
+			{
+				float x = Main.rand.Next(-10, 11) * 0.15f;
+				float y = Main.rand.Next(-10, 11) * 0.15f;
+				Main.spriteBatch.Draw(texture,
+				new Vector2((float)(item.Center.X - (int)Main.screenPosition.X) + x, (float)(item.Center.Y - (int)Main.screenPosition.Y) + y),
+				null, color * (1f - (item.alpha / 255f)), rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+			}
 		}
 		public override void SetDefaults()
 		{
@@ -28,7 +56,7 @@ namespace SOTS.Items.Potions
             item.useTime = 16;
             item.consumable = true;     
 			item.buffType = BuffID.Obstructed;
-            item.buffTime = 120;
+            item.buffTime = 60;
 		}
 		public override bool ConsumeItem(Player player) 
 		{

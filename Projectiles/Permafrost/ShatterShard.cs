@@ -11,7 +11,7 @@ namespace SOTS.Projectiles.Permafrost
 		int rotation = 0;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Soul Lock");
+			DisplayName.SetDefault("Shatter Shard");
 			
 		}
 		

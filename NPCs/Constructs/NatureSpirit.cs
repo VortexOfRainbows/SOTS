@@ -119,7 +119,7 @@ namespace SOTS.NPCs.Constructs
 			{
 				counter++;
 			}
-			if(counter >= 540)
+			if(counter >= 900)
 			{
 				phase = 1;
 				npc.aiStyle = -1;
@@ -137,7 +137,7 @@ namespace SOTS.NPCs.Constructs
 				Color color = npc.GetAlpha(lightColor) * ((float)(npc.oldPos.Length - k) / (float)npc.oldPos.Length);
 				spriteBatch.Draw(texture, drawPos, null, color * 0.5f, npc.rotation, drawOrigin, npc.scale, SpriteEffects.None, 0f);
 			}
-			return true;
+			return false;
 		}	
 		public override void HitEffect(int hitDirection, double damage)
 		{
@@ -155,6 +155,21 @@ namespace SOTS.NPCs.Constructs
 					npc.life = (int)(InitiateHealth * (Main.expertMode ? ExpertHealthMult : 1));
 				}
 			}
+		}
+		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
+		{
+			Texture2D texture = Main.npcTexture[npc.type];
+			Color color = new Color(100, 100, 100, 0);
+			Vector2 drawOrigin = new Vector2(Main.npcTexture[npc.type].Width * 0.5f, npc.height * 0.5f);
+			for (int k = 0; k < 7; k++)
+			{
+				float x = Main.rand.Next(-10, 11) * 0.45f;
+				float y = Main.rand.Next(-10, 11) * 0.45f;
+				Main.spriteBatch.Draw(texture,
+				new Vector2((float)(npc.Center.X - (int)Main.screenPosition.X) + x, (float)(npc.Center.Y - (int)Main.screenPosition.Y) + y),
+				null, color, 0f, drawOrigin, 1f, SpriteEffects.None, 0f);
+			}
+			base.PostDraw(spriteBatch, drawColor);
 		}
 		public override void NPCLoot()
 		{

@@ -1,7 +1,3 @@
-using System;
-using System.IO;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -20,7 +16,7 @@ namespace SOTS.Items.IceStuff
 
 			item.width = 34;
 			item.height = 30;
-			item.value = 400000;
+			item.value = Item.sellPrice(0, 7, 0, 0);
 			item.rare = 6;
 			item.maxStack = 1;
 			
@@ -39,8 +35,7 @@ namespace SOTS.Items.IceStuff
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "FragmentOfPermafrost", 5);
-			recipe.AddIngredient(ItemID.HallowedBar, 5);
+			recipe.AddIngredient(null, "DissolvingAurora", 1);
 			recipe.AddIngredient(ItemID.FrostCore, 1);
 			recipe.AddIngredient(ItemID.SoulofSight, 3);
 			recipe.AddIngredient(ItemID.SoulofMight, 3);
