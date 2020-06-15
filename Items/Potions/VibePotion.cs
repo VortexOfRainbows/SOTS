@@ -19,7 +19,7 @@ namespace SOTS.Items.Potions
 			item.width = 24;
 			item.height = 30;
             item.value = Item.sellPrice(0, 0, 2, 0);
-			item.rare = 2;
+			item.rare = 1;
 			item.maxStack = 30;
             item.buffType = mod.BuffType("GoodVibes");   
             item.buffTime = 10000; //around 3 minutes

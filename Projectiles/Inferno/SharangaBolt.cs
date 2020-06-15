@@ -38,8 +38,6 @@ namespace SOTS.Projectiles.Inferno
 			projectile.alpha = 0;
 			projectile.width = 14;
 			projectile.height = 38;
-
-
 		}
 		public override void Kill(int timeLeft)
 		{

@@ -1,10 +1,6 @@
 using System;
 using System.IO;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
@@ -13,10 +9,6 @@ namespace SOTS.Projectiles.Minions
     public class CursedBlade : ModProjectile 
     {
 		int initiate = -1;
-		float oldPositionY;
-		float oldPositionX;
-		float oldPlayerPositionY;
-		float oldPlayerPositionX;
 		double startingRotation;
 		float rotationAreaX;
 		float rotationAreaY;
@@ -76,7 +68,7 @@ namespace SOTS.Projectiles.Minions
 		}
 		public override void AI()
 		{
-			Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 2.4f / 255f, (255 - projectile.alpha) * 2.55f / 255f, (255 - projectile.alpha) * 1.35f / 255f);
+			Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 2.2f / 255f, (255 - projectile.alpha) * 0.75f / 255f, (255 - projectile.alpha) * 2.45f / 255f);
 			if(initiate == -1)
 			{
 				startingRotation = Main.rand.Next(360);
@@ -91,16 +83,6 @@ namespace SOTS.Projectiles.Minions
 				{
 					projectile.timeLeft = 6;
 				}
-				
-				float betweenPlayerX = oldPositionX - oldPlayerPositionX;
-				float betweenPlayerY = oldPositionY - oldPlayerPositionY;
-				float betweenPlayer = (float)System.Math.Sqrt((double)(betweenPlayerX * betweenPlayerX + betweenPlayerY * betweenPlayerY));
-
-				float betweenPlayer2 = 5.25f / betweenPlayer;
-			   
-				betweenPlayerX *= betweenPlayer2 * 5;
-				betweenPlayerY *= betweenPlayer2 * 5;
-						   
 					
 				double deg = (double)startingRotation; 
 				double rad = deg * (Math.PI / 180);

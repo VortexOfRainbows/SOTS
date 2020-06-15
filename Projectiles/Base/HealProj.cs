@@ -36,6 +36,8 @@ namespace SOTS.Projectiles.Base
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Heal Proj");
+			ProjectileID.Sets.TrailCacheLength[projectile.type] = 30;
+			ProjectileID.Sets.TrailingMode[projectile.type] = 1;
 		}
         public override void SetDefaults()
         {
@@ -47,6 +49,28 @@ namespace SOTS.Projectiles.Base
 			projectile.friendly = false;
 			projectile.hostile = false;
 			projectile.alpha = 255;
+		}
+		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		{
+			if ((int) type == 7)
+			{
+				projectile.alpha = 0;
+				Texture2D texture = mod.GetTexture("Projectiles/Base/CeremonialEffect");
+				Vector2 drawOrigin = new Vector2(2, 2);
+				for (int k = 0; k < 11; k++)
+				{
+					float x = Main.rand.Next(-10, 11) * 0.75f;
+					float y = Main.rand.Next(-10, 11) * 0.75f;
+					for (int j = 0; j < projectile.oldPos.Length; j++)
+					{
+						Color color = new Color(100, 100, 100, 0);
+						Vector2 drawPos = projectile.oldPos[j] - Main.screenPosition + drawOrigin + new Vector2(0f, projectile.gfxOffY);
+						color *= ((float)(projectile.oldPos.Length - j) / (float)projectile.oldPos.Length);
+						spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, projectile.rotation, drawOrigin, projectile.scale, SpriteEffects.None, 0f);
+					}
+				}
+			}
+			return false;
 		}
 		private void genDust()
 		{
@@ -114,10 +138,18 @@ namespace SOTS.Projectiles.Base
 			{
 				return 11f;
 			}
+			if ((int)type == 7) //Ceremonial Dagger
+			{
+				return 9f;
+			}
 			return 14.5f;
 		}
 		private float getMinDist()
 		{
+			if ((int)type == 7) //Ceremonial Dagger
+			{
+				return 9f;
+			}
 			return 20f;
 		}
 		private void additionalEffects()

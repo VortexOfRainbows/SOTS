@@ -31,7 +31,6 @@ namespace SOTS.Items
 			item.crit = 6;
 
 		}
-
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);

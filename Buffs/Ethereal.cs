@@ -8,7 +8,7 @@ namespace SOTS.Buffs
     {
 		public override void SetDefaults()
 		{
-			DisplayName.SetDefault("Ethereal Torch");
+			DisplayName.SetDefault("Ethereal");
 			Description.SetDefault("Ethereal Flames assist you in combat");
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;

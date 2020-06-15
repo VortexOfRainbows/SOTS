@@ -1,14 +1,6 @@
-using System;
-using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.DataStructures;
-using Terraria.Enums;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.ObjectData;
-using Microsoft.Xna.Framework.Graphics;
-
 
 namespace SOTS.Items.Fragments
 {
@@ -35,9 +27,9 @@ namespace SOTS.Items.Fragments
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
+			recipe.AddIngredient(null, "DissolvingAurora", 1);
 			recipe.AddIngredient(ItemID.FrostCore, 1);
 			recipe.AddIngredient(null, "AbsoluteBar", 6);
-			recipe.AddIngredient(null, "FragmentOfPermafrost", 6); //replace later (dissolving permafrost)
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.SetResult(this);
 			recipe.AddRecipe();

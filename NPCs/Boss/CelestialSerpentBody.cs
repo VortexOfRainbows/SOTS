@@ -8,8 +8,9 @@ using Terraria.ModLoader;
 namespace SOTS.NPCs.Boss
 {   
     public class CelestialSerpentBody : ModNPC
-    {	int ai1 = 0;
-	int ai2 = 0;
+    {	
+        int ai1 = 0;
+	    int ai2 = 0;
 		public override void SetStaticDefaults()
 		{
 			
@@ -36,7 +37,7 @@ namespace SOTS.NPCs.Boss
             npc.buffImmune[70] = true;
             npc.buffImmune[39] = true;
             npc.buffImmune[24] = true;
-           
+            npc.buffImmune[BuffID.Frostburn] = true;
         }
  
         public override bool PreAI()

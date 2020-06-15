@@ -52,12 +52,12 @@ namespace SOTS.NPCs
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-				if(spawnInfo.spawnTileY <= Main.rockLayer && spawnInfo.spawnTileY >= Main.worldSurface){
-					return spawnInfo.spawnTileType == TileID.IceBlock || spawnInfo.spawnTileType == TileID.SnowBlock ? .11f : 0f;
-				}
-				else if(spawnInfo.spawnTileY <= Main.maxTilesY - 200 && spawnInfo.spawnTileY >= Main.rockLayer){
-					return spawnInfo.spawnTileType == TileID.IceBlock || spawnInfo.spawnTileType == TileID.SnowBlock ? .16f : 0f;
-				}
+			if(spawnInfo.spawnTileY <= Main.rockLayer && spawnInfo.spawnTileY >= Main.worldSurface){
+				return spawnInfo.spawnTileType == TileID.IceBlock || spawnInfo.spawnTileType == TileID.SnowBlock ? .11f : 0f;
+			}
+			else if(spawnInfo.spawnTileY <= Main.maxTilesY - 200 && spawnInfo.spawnTileY >= Main.rockLayer){
+				return spawnInfo.spawnTileType == TileID.IceBlock || spawnInfo.spawnTileType == TileID.SnowBlock ? .16f : 0f;
+			}
 			return 0f;
 		}
 		public override void NPCLoot()

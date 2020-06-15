@@ -1,14 +1,6 @@
-using System;
-using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.DataStructures;
-using Terraria.Enums;
 using Terraria.ID;
-using Terraria.Localization;
-using Terraria.ModLoader;
-using Terraria.ObjectData;
-using Microsoft.Xna.Framework.Graphics;
-
+using Terraria.ModLoader;		
 
 namespace SOTS.Items.Fragments
 {
@@ -39,8 +31,8 @@ namespace SOTS.Items.Fragments
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(null, "BorealisIcosahedron", 1);
 			recipe.AddIngredient(null, "HellfireIcosahedron", 1);
-			recipe.AddIngredient(ItemID.ChlorophyteBar, 10); //To be replaced later (dissolving evil)
-			recipe.AddIngredient(ItemID.CursedFlame, 10); 
+			recipe.AddIngredient(null, "StarShard", 5);
+			recipe.AddIngredient(ItemID.CursedFlame, 10); //To be replaced later (dissolving evil)
 			recipe.AddTile(TileID.TinkerersWorkbench);
 			recipe.SetResult(this);
 			recipe.AddRecipe();

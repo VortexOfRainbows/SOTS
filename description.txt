@@ -1,4 +1,4 @@
-A mod which has nothing to do with secrets or shadows... yet
+A mod which has nothing to do with secrets or shadows... yet.
 This mod's main plan is to add generated structures in the world, some are sort-of like roguelike dungeons.
 !! This mod is early in development !!
 !! A large world is recommended in order for the generated structures to spawn without overriding vanilla structures !!
@@ -14,14 +14,17 @@ New Subclass (void)
 Pyramid Dungeon World Gen
 -Unique boss and items
 
-Development - Vortex#6230 (Make sure you're in the tmodloader server if you're to DM me)
+Development - Vortex#6230
 Playtesting - Crimsonkeep, FlameFreezer
 
 Update 0.18.3
 -Pyramid worldgen improved
--Lifesteal, Manasteal, and Voidsteal visuals improved
--Fixed a few multiplayer compatibility issues
--More items
+-Visual improvements in various places
+-Permafrost Fragment item pool expansion
+-More Items, Enemies, and an Armor set
+-Remade some items and added old ones back.
+-Item balancing, especially with summon items
+-Bug fixes
 
 Update 0.18.2
 -Fixed undownloadable error

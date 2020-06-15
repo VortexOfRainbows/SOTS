@@ -76,6 +76,10 @@ namespace SOTS.Projectiles.Permafrost
 							total++;
 						}
 					}
+					if(ofTotal > 60)
+					{
+						projectile.Kill();
+					}
 					Vector2 rotateCenter = new Vector2(96, 0).RotatedBy(MathHelper.ToRadians(modPlayer.orbitalCounter + (ofTotal * 360f / total)));
 					rotateCenter += player.Center;
 					Vector2 toRotate = rotateCenter - projectile.Center;

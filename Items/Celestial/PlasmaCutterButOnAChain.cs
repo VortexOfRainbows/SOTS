@@ -65,7 +65,7 @@ namespace SOTS.Items.Celestial
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "SanguiteBar", 15);
+			recipe.AddIngredient(null, "SanguiteBar", 10);
 			recipe.AddIngredient(3098, 1); //butchers chainsaw
 			recipe.AddIngredient(ItemID.Chain, 5);
 			recipe.AddTile(TileID.MythrilAnvil);
@@ -73,7 +73,7 @@ namespace SOTS.Items.Celestial
 			recipe.AddRecipe();
 			
 			recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "SanguiteBar", 60);
+			recipe.AddIngredient(null, "SanguiteBar", 40);
 			recipe.AddIngredient(ItemID.Chain, 5);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.SetResult(this);

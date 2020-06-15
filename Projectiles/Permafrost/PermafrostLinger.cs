@@ -10,7 +10,7 @@ namespace SOTS.Projectiles.Permafrost
     {	int expand = -1;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Permafrost Linger");
+			DisplayName.SetDefault("Lingering Permafrost");
 		}
         public override void SetDefaults()
         {

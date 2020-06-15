@@ -55,7 +55,7 @@ namespace SOTS.Projectiles.Celestial
 					starPosY += rotationDirection.Y;
 				}
 			}
-			Main.PlaySound(SoundID.Item9, (int)(projectile.Center.X), (int)(projectile.Center.Y));
+			Main.PlaySound(2, (int)(projectile.Center.X), (int)(projectile.Center.Y), 9, 0.75f);
 		}
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {

@@ -35,7 +35,7 @@ namespace SOTS.Items.Potions
 		{
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.BottledWater, 1);
-			recipe.AddIngredient(null, "Snakeskin", 3);
+			recipe.AddIngredient(null, "Snakeskin", 8);
 			recipe.AddIngredient(ItemID.Blinkroot, 1);
 			recipe.AddTile(13);
 			recipe.SetResult(this, 1);
@@ -44,6 +44,7 @@ namespace SOTS.Items.Potions
 			recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.BottledWater, 1);
 			recipe.AddIngredient(null, "SeaSnake", 1);
+			recipe.AddIngredient(ItemID.Blinkroot, 1);
 			recipe.AddTile(13);
 			recipe.SetResult(this, 1);
 			recipe.AddRecipe();

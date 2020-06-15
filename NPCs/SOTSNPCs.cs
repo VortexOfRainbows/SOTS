@@ -19,45 +19,6 @@ namespace SOTS.NPCs
 				
 			if(npc.lifeMax > 5)
 			{
-				/*
-				if(SOTSWorld.challengeIce)
-				{
-					if(Main.rand.Next(90) <= (int)(npc.lifeMax * 0.02) + 1)
-					{
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("EternalFragment"), (int)(npc.lifeMax * 0.005) + 1 + Main.rand.Next(9));
-					}
-					if(Main.rand.Next(10) == 0)
-					{
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("OverhealHeart"), 1);
-					}
-				}
-				if(modPlayer.ItemDivision && npc.lifeMax > 1 && npc.type != -2 && npc.type != -1 && npc.type != 81 && npc.type != 13 && npc.type != 14 && npc.type != 15)
-				{
-							int npcCheck = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, npc.type);	
-							Main.npc[npcCheck].lifeMax = 1;
-							Main.npc[npcCheck].life = 1;
-							Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 0, 0, mod.ProjectileType("Starsplosion"), (int)(npc.lifeMax * 0.15f) + 25, 0, Main.myPlayer, 0f, 0f);
-				}
-				if(npc.FindBuffIndex(mod.BuffType("OverhealHeart")) > -1)
-				{
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("OverhealHeart"), 1); 
-				}
-
-
-				if(npc.FindBuffIndex(mod.BuffType("DropAmmo")) > -1)
-				{
-					if(Main.rand.Next(5) == 0)
-					{
-					  Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemID.MusketBall, Main.rand.Next(9) + 1); 
-					}
-					if(Main.rand.Next(5) == 0)
-					{
-					  Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemID.WoodenArrow, Main.rand.Next(9) + 1); 
-					}
-							
-				}
-				*/
-				
 				if (Main.rand.Next(100) == 0 || (npc.type == 170 || npc.type == 171 || npc.type == 180)) { //guarenteed from pigrons
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("AlmondMilk"), 1); 
 				}
@@ -100,32 +61,12 @@ namespace SOTS.NPCs
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FragmentOfChaos"), Main.rand.Next(2) + 1); 
 					}
 				}
-				/*
-				if (Main.rand.Next(100000) == 0) {
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("ThundershockShortbow"), 1); 
+				if (player.ZoneSnow && (Main.rand.Next(40) == 0 && !Main.expertMode)){
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("StrawberryIcecream"),1);
 				}
-				else if (Main.rand.Next(100000) == 0) {
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("PhantomicConductor"), 1); 
+				if (player.ZoneSnow && (Main.rand.Next(50) == 0 && !Main.expertMode)){
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("StrawberryIcecream"), 1);
 				}
-				else if (Main.rand.Next(100000) == 0) {
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("TheMelter"), 1); 
-				}
-				else if (Main.rand.Next(100000) == 0) {
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("PrimeTalisman"), 1); 
-				}
-				else if (Main.rand.Next(100000) == 0) {
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("MourningStar"), 1); 
-				}
-				else if (Main.rand.Next(100000) == 0) {
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("DeoxysABall"), 1); 
-				}
-				else if (Main.rand.Next(100000) == 0) {
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("Pulverizer"), 1); 
-				}
-				else if (Main.rand.Next(200000) == 0) {
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("ZephyriousZepline"), 1); 
-				}
-				*/
 				if (npc.type == NPCID.WallofFlesh) {
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("HungryHunter"), 1); 
 				}
@@ -142,7 +83,7 @@ namespace SOTS.NPCs
 						//Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("BulletShark"), 1); 
 				}
 				if (npc.type == NPCID.GoblinPeon || npc.type == NPCID.GoblinArcher || npc.type == NPCID.GoblinWarrior || npc.type == NPCID.GoblinSorcerer) { //golbins
-					if (Main.rand.Next(2) == 0) {
+					if (Main.rand.Next(2) == 0 || Main.expertMode) {
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("Goblinsteel"), Main.rand.Next(2) + 1); 
 					}
 				}
@@ -150,6 +91,10 @@ namespace SOTS.NPCs
 					if (Main.rand.Next(10) == 0) {
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("Chocolate"), 1); 
 					}
+				}
+				if (npc.type == NPCID.ElfCopter && Main.rand.Next(12) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("HelicopterParts"), 1);
 				}
 				if (npc.type == NPCID.UndeadMiner) {
 					if (Main.rand.Next(5) == 0) {          
@@ -164,15 +109,6 @@ namespace SOTS.NPCs
 				if (npc.type == NPCID.Crab) {
 					if (Main.rand.Next(18) == 0) {
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("CrabClaw"), 1); 
-					}
-				}
-				if (npc.type == mod.NPCType("PutridPinkyPhase2")) {
-					if (Main.rand.Next(25) == 0) {
-						/*
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("MeguminHat"), 1); 
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("MeguminShirt"), 1); 
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("MeguminLeggings"), 1); 
-						*/
 					}
 				}
 				if (npc.type == 64 && Main.rand.Next(60) == 0) {

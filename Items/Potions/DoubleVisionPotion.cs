@@ -18,7 +18,7 @@ namespace SOTS.Items.Potions
 			item.width = 20;
 			item.height = 32;
             item.value = Item.sellPrice(0, 0, 10, 0);
-			item.rare = 2;
+			item.rare = 3;
 			item.maxStack = 30;
             item.buffType = mod.BuffType("DoubleVision");   
 			int minute = 3600;

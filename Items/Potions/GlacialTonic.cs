@@ -13,7 +13,7 @@ namespace SOTS.Items.Potions
 		{
 			DisplayName.SetDefault("Glacial Tonic");
 			
-			Tooltip.SetDefault("Randomly recieve 2 of the following:\nWarmth for 15 minutes\nGood Vibes for 13 minutes\nTitan for 11 minutes\nMana Regeneration for 9 minutes");
+			Tooltip.SetDefault("Randomly recieve 2 of the following:\nWarmth for 15 minutes\nBrittle for 13 minutes\nTitan for 11 minutes\nMana Regeneration for 9 minutes");
 		}
 		public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
@@ -38,7 +38,7 @@ namespace SOTS.Items.Potions
 				float x = Main.rand.Next(-10, 11) * 0.15f;
 				float y = Main.rand.Next(-10, 11) * 0.15f;
 				Main.spriteBatch.Draw(texture,
-				new Vector2((float)(item.Center.X - (int)Main.screenPosition.X) + x, (float)(item.Center.Y - (int)Main.screenPosition.Y) + y),
+				new Vector2((float)(item.Center.X - (int)Main.screenPosition.X) + x, (float)(item.Center.Y - (int)Main.screenPosition.Y) + y + 2),
 				null, color * (1f - (item.alpha / 255f)), rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			}
 		}
@@ -66,19 +66,19 @@ namespace SOTS.Items.Potions
 		{
 			int type1 = Main.rand.Next(4);
 			int type2 = Main.rand.Next(4);
-			while(type1 == (player.HasBuff(BuffID.Warmth) ? 0 : -1) || type1 == (player.HasBuff(mod.BuffType("GoodVibes")) ? 1 : -1) || type1 == (player.HasBuff(BuffID.Titan) ? 2 : -1) || type1 == (player.HasBuff(BuffID.ManaRegeneration) ? 3 : -1))
+			while(type1 == (player.HasBuff(BuffID.Warmth) ? 0 : -1) || type1 == (player.HasBuff(mod.BuffType("Brittle")) ? 1 : -1) || type1 == (player.HasBuff(BuffID.Titan) ? 2 : -1) || type1 == (player.HasBuff(BuffID.ManaRegeneration) ? 3 : -1))
 			{
 				type1 = Main.rand.Next(4);
-				if(player.HasBuff(BuffID.Warmth) && player.HasBuff(mod.BuffType("GoodVibes")) && player.HasBuff(BuffID.Titan) && player.HasBuff(BuffID.ManaRegeneration))
+				if(player.HasBuff(BuffID.Warmth) && player.HasBuff(mod.BuffType("Brittle")) && player.HasBuff(BuffID.Titan) && player.HasBuff(BuffID.ManaRegeneration))
 				{
 					type1 = -1;
 					break;
 				}
 			}
-			while(type1 == type2 || type2 == (player.HasBuff(BuffID.Warmth) ? 0 : -1) || type2 == (player.HasBuff(mod.BuffType("GoodVibes")) ? 1 : -1) || type2 == (player.HasBuff(BuffID.Titan) ? 2 : -1) || type2 == (player.HasBuff(BuffID.ManaRegeneration) ? 3 : -1))
+			while(type1 == type2 || type2 == (player.HasBuff(BuffID.Warmth) ? 0 : -1) || type2 == (player.HasBuff(mod.BuffType("Brittle")) ? 1 : -1) || type2 == (player.HasBuff(BuffID.Titan) ? 2 : -1) || type2 == (player.HasBuff(BuffID.ManaRegeneration) ? 3 : -1))
 			{
 				type2 = Main.rand.Next(4);
-				if(player.HasBuff(BuffID.Warmth) && player.HasBuff(mod.BuffType("GoodVibes")) && player.HasBuff(BuffID.Titan) && player.HasBuff(BuffID.ManaRegeneration))
+				if(player.HasBuff(BuffID.Warmth) && player.HasBuff(mod.BuffType("Brittle")) && player.HasBuff(BuffID.Titan) && player.HasBuff(BuffID.ManaRegeneration))
 				{
 					type2 = -1;
 					break;
@@ -90,7 +90,7 @@ namespace SOTS.Items.Potions
 				if(type1 == -1 && type2 == -1)
 				{
 					player.AddBuff(BuffID.Warmth, minute * 15, true);
-					player.AddBuff(mod.BuffType("GoodVibes"), minute * 13, true);
+					player.AddBuff(mod.BuffType("Brittle"), minute * 13, true);
 					player.AddBuff(BuffID.Titan, minute * 11, true);
 					player.AddBuff(BuffID.ManaRegeneration, minute * 9, true);
 				}
@@ -100,7 +100,7 @@ namespace SOTS.Items.Potions
 				}
 				if(type1 == 1 || type2 == 1)
 				{
-					player.AddBuff(mod.BuffType("GoodVibes"), minute * 13, true);
+					player.AddBuff(mod.BuffType("Brittle"), minute * 13, true);
 				}
 				if(type1 == 2 || type2 == 2)
 				{

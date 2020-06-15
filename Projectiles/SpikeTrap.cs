@@ -52,8 +52,8 @@ namespace SOTS.Projectiles
 		{
 			for(int i = 0; i < 5; i++)
 			{
-			int goreIndex = Gore.NewGore(new Vector2(projectile.position.X, projectile.position.Y), default(Vector2), Main.rand.Next(61,64), 1f);	
-			Main.gore[goreIndex].scale = 0.45f;
+				int goreIndex = Gore.NewGore(new Vector2(projectile.position.X, projectile.position.Y), default(Vector2), Main.rand.Next(61,64), 1f);	
+				Main.gore[goreIndex].scale = 0.45f;
 			}
             Main.PlaySound(SoundID.Item14, (int)(projectile.Center.X), (int)(projectile.Center.Y));
 			

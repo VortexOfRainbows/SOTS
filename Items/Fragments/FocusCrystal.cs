@@ -45,8 +45,7 @@ namespace SOTS.Items.Fragments
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(null, "PolishedCoin", 1);
 			recipe.AddIngredient(null, "OtherworldlyAmplifier", 1);
-			recipe.AddIngredient(ItemID.Ectoplasm, 10);
-			recipe.AddIngredient(ItemID.CrystalShard, 10); //To be replaced later (dissolving inferno)
+			recipe.AddIngredient(null, "SanguiteBar", 5); //To be replaced later (dissolving inferno)
 			recipe.AddIngredient(null, "FragmentOfInferno", 5);
 			recipe.AddTile(TileID.TinkerersWorkbench);
 			recipe.SetResult(this);

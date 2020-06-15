@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -12,16 +13,25 @@ namespace SOTS.NPCs.Constructs
 	{	
 		public override void SetStaticDefaults()
 		{
-			
 			DisplayName.SetDefault("Permafrost Spirit");
 			NPCID.Sets.TrailCacheLength[npc.type] = 5;  
-			NPCID.Sets.TrailingMode[npc.type] = 0;   
+			NPCID.Sets.TrailingMode[npc.type] = 0;
+		}
+		public override void SendExtraAI(BinaryWriter writer)
+		{
+			writer.Write(phase);
+			writer.Write(counter);
+		}
+		public override void ReceiveExtraAI(BinaryReader reader)
+		{
+			phase = reader.ReadInt32();
+			counter = reader.ReadInt32();
 		}
 		public override void SetDefaults()
 		{
 			npc.aiStyle = 10;
-            npc.lifeMax = 500; 
-            npc.damage = 52; 
+            npc.lifeMax = 700; 
+            npc.damage = 64; 
             npc.defense = 0;   
             npc.knockBackResist = 0f;
             npc.width = 58;
@@ -38,7 +48,7 @@ namespace SOTS.NPCs.Constructs
             npc.netAlways = false;
 			music = MusicID.Boss3;
 		}
-		private int InitiateHealth = 2000;
+		private int InitiateHealth = 3000;
 		private float ExpertHealthMult = 1.25f;
 		
 		int phase = 1;
@@ -73,7 +83,12 @@ namespace SOTS.NPCs.Constructs
 			Player player = Main.player[npc.target];
 			if(phase == 3)
 			{
-				if((int)npc.ai[0] % 270 == 269)
+				npc.dontTakeDamage = false;
+				if (Main.netMode != 1)
+				{
+					npc.netUpdate = true;
+				}
+				if ((int)npc.ai[0] % 270 == 269)
 				{
 					npc.ai[1]++;
 					if ((int)npc.ai[1] % 10 == 0)
@@ -110,6 +125,10 @@ namespace SOTS.NPCs.Constructs
 			}
 			if(phase == 2)
 			{
+				if (Main.netMode != 1)
+				{
+					npc.netUpdate = true;
+				}
 				npc.dontTakeDamage = false;
 				npc.aiStyle = -1;
 				npc.ai[0] = 0;
@@ -126,6 +145,10 @@ namespace SOTS.NPCs.Constructs
 			}
 			if(counter >= 1200)
 			{
+				if (Main.netMode != 1)
+				{
+					npc.netUpdate = true;
+				}
 				phase = 1;
 				npc.aiStyle = -1;
 				npc.velocity.Y -= 0.014f;

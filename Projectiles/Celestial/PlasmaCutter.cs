@@ -86,6 +86,7 @@ namespace SOTS.Projectiles.Celestial
 		bool ReturnTo = false;
 		public override void AI()
 		{
+			Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 0.2f / 255f, (255 - projectile.alpha) * 1.1f / 255f, (255 - projectile.alpha) * 0.4f / 255f);
 			Player player  = Main.player[projectile.owner];
 			if(player.whoAmI == Main.myPlayer)
 			{

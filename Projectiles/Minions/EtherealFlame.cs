@@ -114,8 +114,8 @@ namespace SOTS.Projectiles.Minions
 			#endregion
 
 			#region Find target
-			float distanceFromTarget = 775f;
-			Vector2 targetCenter = projectile.position;
+			float distanceFromTarget = 1000f;
+			Vector2 targetCenter = projectile.Center;
 			bool foundTarget = false;
 			int targetWidth = 0;
 
@@ -125,9 +125,10 @@ namespace SOTS.Projectiles.Minions
 				NPC npc = Main.npc[player.MinionAttackTargetNPC];
 				float between = Vector2.Distance(npc.Center, player.Center);
 				
-				if (between < 1200f) 
+				if (between < 1600f) 
 				{
 					distanceFromTarget = between;
+					targetWidth = npc.width;
 					targetCenter = npc.Center;
 					foundTarget = true;
 				}
@@ -140,12 +141,11 @@ namespace SOTS.Projectiles.Minions
 					if (npc.CanBeChasedBy()) 
 					{
 						float between = Vector2.Distance(npc.Center, player.Center);
-						bool closest = Vector2.Distance(player.Center, targetCenter) > between;
 						bool inRange = between < distanceFromTarget;
 						bool lineOfSight = Collision.CanHitLine(projectile.position, projectile.width, projectile.height, npc.position, npc.width, npc.height);
 						
-						bool closeThroughWall = between < 500f; //should attack semi-reliably through walls
-						if (((closest && inRange) || !foundTarget) && (lineOfSight || closeThroughWall))
+						bool closeThroughWall = between < 800f; //should attack semi-reliably through walls
+						if (inRange && (lineOfSight || closeThroughWall))
 						{
 							distanceFromTarget = between;
 							targetWidth = npc.width;
@@ -181,7 +181,7 @@ namespace SOTS.Projectiles.Minions
 				if(projectile.ai[0] == 11)
 				{
 					projectile.velocity *= 0f;
-					Vector2 nextLocation = new Vector2(56 + targetWidth/1.2f, 0).RotatedBy(Math.Atan2(projectile.Center.Y - targetCenter.Y, projectile.Center.X - targetCenter.X) - MathHelper.ToRadians(15));
+					Vector2 nextLocation = new Vector2(56 + targetWidth/1.2f, 0).RotatedBy(Math.Atan2(projectile.Center.Y - targetCenter.Y, projectile.Center.X - targetCenter.X) - MathHelper.ToRadians(Main.rand.Next(105)));
 					projectile.position = new Vector2(targetCenter.X + nextLocation.X - projectile.width/2, targetCenter.Y + nextLocation.Y - projectile.height/2);
 				}
 				if(projectile.ai[0] > 16)

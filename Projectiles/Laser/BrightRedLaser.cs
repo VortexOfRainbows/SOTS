@@ -34,6 +34,8 @@ namespace SOTS.Projectiles.Laser
 		public override void AI() 
 		{
 			//projectile.Center = npc.Center;
+			if((int)projectile.localAI[0] == 0)
+				Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 12, 0.7f);
 			projectile.localAI[0] += 1f;
 			if (projectile.localAI[0] == 2f) {
 				projectile.damage = 0;

@@ -44,6 +44,7 @@ namespace SOTS.Items.SpecialDrops
 			recipe.AddIngredient(ItemID.BottledWater, 1);
 			recipe.AddIngredient(this, 1);
 			recipe.AddIngredient(null, "SoulResidue", 1);
+			recipe.AddIngredient(ItemID.Daybloom, 1);
 			recipe.AddTile(13);
 			recipe.SetResult(ItemID.SummoningPotion, 1);
 			recipe.AddRecipe();

@@ -146,7 +146,7 @@ namespace SOTS.NPCs.Constructs
 			Player player = spawnInfo.player;
 			if(player.ZoneSnow)
 			{
-				return spawnInfo.spawnTileType == TileID.IceBlock || spawnInfo.spawnTileType == TileID.SnowBlock ? .03f : 0f;
+				return spawnInfo.spawnTileType == TileID.IceBlock || spawnInfo.spawnTileType == TileID.SnowBlock ? .02f : 0f;
 			}
 			return 0;
 		}

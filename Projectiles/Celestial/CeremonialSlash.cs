@@ -1,19 +1,12 @@
-using System;
-using System.IO;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
-using Terraria.ID;
-using SOTS.Void;
 
 namespace SOTS.Projectiles.Celestial
 {    
     public class CeremonialSlash : ModProjectile 
-    {	int ai1 = 0;
+    {
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Ceremonial Slash");
@@ -21,46 +14,49 @@ namespace SOTS.Projectiles.Celestial
 		
         public override void SetDefaults()
         {
-			projectile.CloneDefaults(595);
-            aiType = 595;
-			Main.projFrames[projectile.type] = Main.projFrames[595];  
+			Main.projFrames[projectile.type] = Main.projFrames[595];  //28 proj frames
 			projectile.width = 96;
+			projectile.height = 60;
+			projectile.friendly = true;
+			projectile.melee = true;
+			projectile.tileCollide = false;
+			projectile.penetrate = -1;
+			projectile.timeLeft = 64;
+			projectile.alpha = 0;
+		}
+		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		{
+			Texture2D texture = Main.projectileTexture[projectile.type];
+			Color color = new Color(100, 100, 100, 0);
+			Vector2 drawOrigin = new Vector2(Main.projectileTexture[projectile.type].Width * 0.5f, projectile.height * 0.5f);
+			for (int k = 0; k < 8; k++)
+			{
+				float x = Main.rand.Next(-10, 11) * 0.55f;
+				float y = Main.rand.Next(-10, 11) * 0.55f;
+				Main.spriteBatch.Draw(texture,
+				new Vector2((float)(projectile.Center.X - (int)Main.screenPosition.X) + x, (float)(projectile.Center.Y - (int)Main.screenPosition.Y) + y),
+				new Rectangle(0, 60 * (((int)projectile.ai[0] + projectile.frame) % 28), 96, 60), color * (1f - (projectile.alpha / 255f)), projectile.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
+			}
+			return false;
 		}
 		public override void AI()
-        {
-			Player player  = Main.player[projectile.owner];
-			if(player.whoAmI == Main.myPlayer)
-			{
-				Vector2 cursorArea = Main.MouseWorld;
-				ai1++;
-				
-				float difX = cursorArea.X - projectile.Center.X;
-				float difY = cursorArea.Y - projectile.Center.Y;
-				float dir = (float)Math.Atan2((double)difY,(double)difX);
-				
-				if(ai1 % 6 == 0)
-				{
-					Vector2 area = new Vector2(1048f, 0).RotatedBy(dir);
-					area.X = projectile.Center.X + area.X;
-					area.Y = projectile.Center.Y + area.Y;
-					
-					if(player.whoAmI == Main.myPlayer)
-					LaunchLaser(area);
-				}
-				if(ai1 % 4 == 0)
-				{
-				VoidPlayer.ModPlayer(player).voidMeter--;
-				}
-			}
+		{
+			projectile.rotation = projectile.velocity.ToRotation();
+			projectile.frame++;
+			projectile.alpha += 6;
 		}
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.immune[projectile.owner] = 2;
+            target.immune[projectile.owner] = 4;
+			if(crit && damage > 20 && projectile.owner == Main.myPlayer)
+			{
+				Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, mod.ProjectileType("HealProj"), 0, 0, projectile.owner, damage / 20, 7);
+			}
         }
 		public void LaunchLaser(Vector2 area)
 		{
 			Player player  = Main.player[projectile.owner];
-			int Probe = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("RedLaser"), projectile.damage, 0, projectile.owner, area.X, area.Y);
+			//Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("RedLaser"), projectile.damage, 0, projectile.owner, area.X, area.Y);
 		}
 	}
 }

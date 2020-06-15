@@ -13,7 +13,6 @@ namespace SOTS.NPCs.Constructs
 	{	
 		public override void SetStaticDefaults()
 		{
-			
 			DisplayName.SetDefault("Nature Spirit");
 			NPCID.Sets.TrailCacheLength[npc.type] = 5;  
 			NPCID.Sets.TrailingMode[npc.type] = 0;   
@@ -39,6 +38,16 @@ namespace SOTS.NPCs.Constructs
             npc.netAlways = false;
 			music = MusicID.Boss3;
 		}
+		public override void SendExtraAI(BinaryWriter writer)
+		{
+			writer.Write(phase);
+			writer.Write(counter);
+		}
+		public override void ReceiveExtraAI(BinaryReader reader)
+		{
+			phase = reader.ReadInt32();
+			counter = reader.ReadInt32();
+		}
 		private int InitiateHealth = 1200;
 		private float ExpertHealthMult = 1.5f;
 		
@@ -55,7 +64,7 @@ namespace SOTS.NPCs.Constructs
 					damage = (int)(damage / Main.expertDamage);
 				}
 				if(Main.netMode != 1)
-				Projectile.NewProjectile(npc.Center.X, npc.Center.Y, npc.velocity.Y * -1, npc.velocity.X * -1,  mod.ProjectileType("NatureBolt"), damage, 0, Main.myPlayer, 20, npc.target);
+					Projectile.NewProjectile(npc.Center.X, npc.Center.Y, npc.velocity.Y * -1, npc.velocity.X * -1,  mod.ProjectileType("NatureBolt"), damage, 0, Main.myPlayer, 20, npc.target);
 			}
 			else
 			{
@@ -65,7 +74,7 @@ namespace SOTS.NPCs.Constructs
 					damage = (int)(damage / Main.expertDamage);
 				}
 				if(Main.netMode != 1)
-				Projectile.NewProjectile(npc.Center.X, npc.Center.Y, npc.velocity.Y * -1, npc.velocity.X * -1,  mod.ProjectileType("NatureBolt"), damage, 0, Main.myPlayer, 20, npc.target);
+					Projectile.NewProjectile(npc.Center.X, npc.Center.Y, npc.velocity.Y * -1, npc.velocity.X * -1,  mod.ProjectileType("NatureBolt"), damage, 0, Main.myPlayer, 20, npc.target);
 			}
 			//Main.PlaySound(SoundID.Item92, (int)(npc.Center.X), (int)(npc.Center.Y));
 		}
@@ -74,6 +83,11 @@ namespace SOTS.NPCs.Constructs
 			Player player = Main.player[npc.target];
 			if(phase == 3)
 			{
+				if (Main.netMode != 1)
+				{
+					npc.netUpdate = true;
+				}
+				npc.dontTakeDamage = false;
 				npc.ai[0]++;
 				float speed = 6f;
 				Vector2 rotatePos = new Vector2(npc.ai[1], 0).RotatedBy(MathHelper.ToRadians(npc.ai[0] * 0.6f));
@@ -105,6 +119,10 @@ namespace SOTS.NPCs.Constructs
 			}
 			if(phase == 2)
 			{
+				if (Main.netMode != 1)
+				{
+					npc.netUpdate = true;
+				}
 				npc.dontTakeDamage = false;
 				npc.aiStyle = -1;
 				npc.ai[0] = 0;
@@ -121,6 +139,10 @@ namespace SOTS.NPCs.Constructs
 			}
 			if(counter >= 900)
 			{
+				if (Main.netMode != 1)
+				{
+					npc.netUpdate = true;
+				}
 				phase = 1;
 				npc.aiStyle = -1;
 				npc.velocity.Y -= 0.014f;
@@ -145,8 +167,8 @@ namespace SOTS.NPCs.Constructs
 			{
 				for(int i = 0; i < 50; i ++)
 				{
-				int dust = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, mod.DustType("BigNatureDust"));
-				Main.dust[dust].velocity *= 5f;
+					int dust = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, mod.DustType("BigNatureDust"));
+					Main.dust[dust].velocity *= 5f;
 				}
 				if(phase == 1)
 				{

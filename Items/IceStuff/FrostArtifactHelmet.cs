@@ -73,44 +73,41 @@ namespace SOTS.Items.IceStuff
 							target.velocity.X *= 0.98f;
 							target.velocity.Y *= 0.98f;
 											
-							if(Math.Abs(target.velocity.X) < 0.01f)
-							target.Kill();
-							
-							if(Math.Abs(target.velocity.Y) < 0.01f)
-							target.Kill(); 
+							if(Math.Abs(target.velocity.X) < 0.01f && Math.Abs(target.velocity.Y) < 0.01f)
+								target.Kill();
 						}
 					}	
 			}
 		}
 		public override void UpdateEquip(Player player)
 		{
-			for(int i = 0; i < 5; i++)
+			for(int i = 0; i < 2; i++)
 			{
 				int num1 = Dust.NewDust(new Vector2(player.position.X, player.position.Y), player.width, player.height, 67);
 				Main.dust[num1].noGravity = true;
 				Main.dust[num1].velocity *= 7.5f;
 			}
 				
-				float minDist = 240;
-				float dX = 0f;
-				float dY = 0f;
-				float distanceEnemy = 0;
-				
-					for(int j = 0; j < Main.npc.Length - 1; j++)
+			float minDist = 240;
+			float dX = 0f;
+			float dY = 0f;
+			float distanceEnemy = 0;
+			
+			for(int j = 0; j < Main.npc.Length - 1; j++)
+			{
+				NPC target = Main.npc[j];
+				if(!target.friendly && target.dontTakeDamage == false && target.active)
 					{
-						NPC target = Main.npc[j];
-						if(!target.friendly && target.dontTakeDamage == false && target.active)
-							{
-								dX = target.Center.X - player.Center.X;
-								dY = target.Center.Y - player.Center.Y;
-								distanceEnemy = (float) Math.Sqrt((double)(dX * dX + dY * dY));
-								if(distanceEnemy < minDist)
-								{
-									target.AddBuff(BuffID.Frostburn, 240, false);
-								}
-							}	
-					}
-				
+						dX = target.Center.X - player.Center.X;
+						dY = target.Center.Y - player.Center.Y;
+						distanceEnemy = (float) Math.Sqrt((double)(dX * dX + dY * dY));
+						if(distanceEnemy < minDist)
+						{
+							target.AddBuff(BuffID.Frostburn, 240, false);
+						}
+					}	
+			}
+			
 			player.meleeDamage += 0.15f;
 			player.rangedDamage += 0.15f;
 		}

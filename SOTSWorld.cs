@@ -2565,8 +2565,8 @@ namespace SOTS
 					}
 					if(WorldGen.genRand.NextBool(5) && chest.item[0].type == 997)
 					{
-						chest.item[slot].SetDefaults(mod.ItemType("CaveIn"));
-						slot++;
+						//chest.item[slot].SetDefaults(mod.ItemType("CaveIn"));
+						//slot++;
 					}
 					if(WorldGen.genRand.NextBool(7) && chest.item[0].type == 54)
 					{
@@ -2575,8 +2575,8 @@ namespace SOTS
 					}
 					if(WorldGen.genRand.NextBool(3) && chest.item[0].type == 906)
 					{
-						chest.item[slot].SetDefaults(mod.ItemType("LavaPelter"));
-						slot++;
+						//chest.item[slot].SetDefaults(mod.ItemType("LavaPelter"));
+						//slot++;
 					}
 					if(WorldGen.genRand.NextBool(2) && (chest.item[0].type == ItemID.Starfury || chest.item[0].type == ItemID.ShinyRedBalloon || chest.item[0].type == ItemID.LuckyHorseshoe))
 					{

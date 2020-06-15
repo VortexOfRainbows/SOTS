@@ -1,37 +1,46 @@
 using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
-using Terraria.DataStructures;
 using SOTS.Void;
-using System;
+using Terraria.ID;
+using Microsoft.Xna.Framework;
 
 namespace SOTS.Items.Celestial
 {
 	public class CeremonialKnife : VoidItem
-	{	int coolDown = 20;
+	{
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Ceremonial Knife");
-			Tooltip.SetDefault("");
+			Tooltip.SetDefault("Critical hits steal life");
 		}
 		public override void SafeSetDefaults()
 		{
-			item.CloneDefaults(3368); //arhkalis
-			item.damage = 62;
+			item.melee = true;
+			item.damage = 63;
 			item.width = 26;
 			item.height = 32;
             item.value = Item.sellPrice(0, 10, 0, 0);
 			item.rare = 8;
-			item.autoReuse = true;            
+			item.useTime = 7;
+			item.useAnimation = 14;
+			item.useStyle = 5;
+			item.UseSound = SoundID.Item1;
+			item.autoReuse = true;
+			item.noUseGraphic = true;
+			item.noMelee = true;
 			item.shoot = mod.ProjectileType("CeremonialSlash"); 
-			item.shootSpeed = 10;
-			item.knockBack *= 3;
+			item.shootSpeed = 14;
+			item.knockBack = 2f;
 			item.expert = true;
+		}
+		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+		{
+			Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(15));
+			Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI, Main.rand.Next(28));
+			return false;
 		}
 		public override void GetVoid(Player player)
 		{
-			voidMana = 3;
+			voidMana = 5;
 		}
 	}
 }

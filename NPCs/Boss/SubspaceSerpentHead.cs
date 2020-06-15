@@ -41,6 +41,7 @@ namespace SOTS.NPCs.Boss
             npc.buffImmune[70] = true;
             npc.buffImmune[39] = true;
             npc.buffImmune[24] = true;
+			npc.buffImmune[BuffID.Frostburn] = true;
 			npc.aiStyle = 6;
 			bossBag = mod.ItemType("SubspaceBag");
         }

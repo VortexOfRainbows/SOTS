@@ -37,6 +37,7 @@ namespace SOTS.NPCs.Boss
             npc.buffImmune[70] = true;
             npc.buffImmune[39] = true;
             npc.buffImmune[24] = true;
+            npc.buffImmune[BuffID.Frostburn] = true;
         }
 		float ai2 = 0;
         public override bool PreAI()
