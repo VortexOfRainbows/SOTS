@@ -1,10 +1,4 @@
-using System;
-using System.IO;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
@@ -37,10 +31,10 @@ namespace SOTS.Projectiles
 		{ 
 			projectile.alpha = 255;
 			int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 32, 32, 235);
-Main.dust[num1].noGravity = true;
-Main.dust[num1].velocity *= 0.1f;
-			
-}public override bool OnTileCollide(Vector2 oldVelocity)
+			Main.dust[num1].noGravity = true;
+			Main.dust[num1].velocity *= 0.1f;
+		}	
+		public override bool OnTileCollide(Vector2 oldVelocity)
 		{	
 			//If collide with tile, reduce the penetrate.
 			//So the projectile can reflect at most 5 times

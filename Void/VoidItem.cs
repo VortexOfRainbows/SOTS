@@ -16,61 +16,34 @@ namespace SOTS.Void
 			
 		}
 		public sealed override void SetDefaults() {
-			item.shoot = 10; //placeholder projectile 
+			item.shoot = 10; 
 			item.magic = false;
 			item.melee = false;
-			item.ranged = false; //placeholder damage setting
+			item.ranged = false; 
 			
 			SafeSetDefaults();
 			item.mana = 1;
 			item.thrown = false;
 			item.summon = false;
 		}
-		public sealed override void GetWeaponDamage(Player player, ref int damage) 
+		public sealed override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat)
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			float realDamageBoost = voidPlayer.voidDamage;
 			GetVoid(player);
 			item.mana = 1;
 			voidManaAmount = (int)(voidMana * voidPlayer.voidCost);
-			/*
-				float totalBuff = 0;
-				totalBuff = (float)((player.meleeDamage + player.magicDamage + player.minionDamage + player.rangedDamage + player.thrownDamage)/5f - 1f);
-				//Finding the universalDamage upgrade
-				if(player.meleeDamage <= player.magicDamage && player.meleeDamage <= player.minionDamage && player.meleeDamage <= player.rangedDamage && player.meleeDamage <= player.thrownDamage)
-				{
-					totalBuff = player.meleeDamage - 1;
-				}
-				if(player.magicDamage <= player.meleeDamage && player.magicDamage <= player.minionDamage && player.magicDamage <= player.rangedDamage && player.magicDamage <= player.thrownDamage)
-				{
-					totalBuff = player.magicDamage - 1;
-				}	
-				if(player.minionDamage <= player.magicDamage && player.minionDamage <= player.meleeDamage && player.minionDamage <= player.rangedDamage && player.minionDamage <= player.thrownDamage)
-				{
-					totalBuff = player.minionDamage - 1;
-				}
-				if(player.rangedDamage <= player.meleeDamage && player.rangedDamage <= player.minionDamage && player.rangedDamage <= player.magicDamage && player.rangedDamage <= player.thrownDamage)
-				{
-					totalBuff = player.rangedDamage - 1;
-				}	
-				if(player.thrownDamage <= player.meleeDamage && player.thrownDamage <= player.minionDamage && player.thrownDamage <= player.magicDamage && player.thrownDamage <= player.rangedDamage)
-				{
-					totalBuff = player.thrownDamage - 1;
-				}
-
-				if(!item.magic && !item.thrown && !item.summon && !item.melee && !item.ranged)
-				{
-					realDamageBoost += totalBuff;
-				}				
-			*/
-
-			damage = (int)(damage * realDamageBoost + 5E-06f);
+			if(voidManaAmount < 1)
+			{
+				voidManaAmount = 1;
+			}
+			add += 1 - realDamageBoost;
 		}
 		public override void GetWeaponKnockback(Player player, ref float knockback) 	
 		{
 			if(!item.magic && !item.thrown && !item.summon && !item.melee && !item.ranged)
 			{
-			knockback = knockback + VoidPlayer.ModPlayer(player).voidKnockback;
+				knockback = knockback + VoidPlayer.ModPlayer(player).voidKnockback;
 			}
 		}
 		public sealed override void GetWeaponCrit(Player player, ref int crit) 

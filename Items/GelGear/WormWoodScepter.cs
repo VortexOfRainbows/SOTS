@@ -11,10 +11,8 @@ namespace SOTS.Items.GelGear
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Wormwood Scepter");
-			
-			Tooltip.SetDefault("Summons a Wormwood Turret to fire upon your enemies");
+			Tooltip.SetDefault("Summons a Wormwood Turret to fire upon up to 4 enemies at a time");
 		}
- 
         public override void SetDefaults()
         {
             item.damage = 21;  
@@ -48,14 +46,6 @@ namespace SOTS.Items.GelGear
 		{
 			Vector2 cursorPos = Main.MouseWorld;
 			position = cursorPos;
-			for (int l = 0; l < Main.projectile.Length; l++)
-			{
-				Projectile proj = Main.projectile[l];
-				if (proj.active && proj.type == item.shoot && proj.owner == player.whoAmI)
-				{
-					proj.active = false;
-				}
-			}
 			return player.altFunctionUse != 2;
 		}
     }

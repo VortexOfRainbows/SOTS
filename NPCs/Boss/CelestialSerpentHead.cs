@@ -20,9 +20,9 @@ namespace SOTS.NPCs.Boss
         public override void SetDefaults()
         {
            
-            npc.lifeMax = 110000;      
+            npc.lifeMax = 120000;      
             npc.damage = 100;
-            npc.defense = 0;    
+            npc.defense = 50;    
             npc.knockBackResist = 0f;
             npc.width = 50;
             npc.height = 50;
@@ -32,15 +32,14 @@ namespace SOTS.NPCs.Boss
             npc.noTileCollide = true;  
             npc.HitSound = SoundID.NPCHit1;
             npc.DeathSound = SoundID.NPCDeath32;
-            npc.value = 10000;
-            npc.npcSlots = 25;
+			npc.value = 100000;
+			npc.npcSlots = 25;
             npc.netAlways = true;
 			music = MusicID.Boss2;
-            npc.buffImmune[69] = true;
-            npc.buffImmune[70] = true;
-            npc.buffImmune[39] = true;
-			npc.buffImmune[24] = true;
-            npc.buffImmune[BuffID.Frostburn] = true;
+			for (int i = 0; i < Main.maxBuffTypes; i++)
+			{
+				npc.buffImmune[i] = true;
+			}
 			npc.aiStyle = 6;
 			bossBag = mod.ItemType("CelestialBag");
         }
@@ -521,14 +520,17 @@ namespace SOTS.NPCs.Boss
 			
 			if(Main.player[npc.target].dead)
 			{
-			 despawn++;
+				despawn++;
 			}
 			if(despawn >= 720)
 			{
-			npc.active = false;
+				npc.active = false;
 			}
 			npc.timeLeft = 10000;
-			npc.netUpdate = true;
+			if (Main.netMode != 1)
+			{
+				npc.netUpdate = true;
+			}
 		}
 		int slither = 1;
 		public void UnstableSerpent(float x, float y, int damage)
@@ -540,30 +542,47 @@ namespace SOTS.NPCs.Boss
             Projectile.NewProjectile(x, y, properAngle.X, properAngle.Y, mod.ProjectileType("UnstableSerpent"), damage, 0, 0);
 			Main.PlaySound(SoundID.Item119, (int)(x), (int)(y));
 		}
+		float currentHealth = -1;
 		public override void PostAI()
 		{
 			Lighting.AddLight(npc.Center, (255 - npc.alpha) * 2.5f / 255f, (255 - npc.alpha) * 1.6f / 255f, (255 - npc.alpha) * 2.4f / 255f);
-			if(slither > 0)
+			if (slither > 0)
 			{
 				slither += 2;
 				npc.velocity = new Vector2(directX, directY).RotatedBy(MathHelper.ToRadians(slither - 30));
 			}
-			if(slither > 60)
+			if (slither > 60)
 			{
 				slither = -1;
 			}
-			if(slither < 0)
+			if (slither < 0)
 			{
 				slither -= 2;
 				npc.velocity = new Vector2(directX, directY).RotatedBy(MathHelper.ToRadians(slither + 30));
 			}
-			if(slither < -60)
+			if (slither < -60)
 			{
 				slither = 1;
 			}
-			
+			/*
+			if (currentHealth == -1)
+				currentHealth = npc.life;
+
+			if (npc.life < currentHealth - 1000)
+			{
+				npc.life = (int)currentHealth - 1000;
+			}
+			if (currentHealth > npc.life)
+			{
+				currentHealth -= 1000f / 60;
+			}
+			else
+			{
+				currentHealth = npc.life;
+			}
+			*/
+
 		}
-		
 		public override void SendExtraAI(BinaryWriter writer) 
 		{
 			writer.Write(ai1);

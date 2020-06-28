@@ -10,8 +10,7 @@ namespace SOTS.NPCs.Boss
 {	[AutoloadBossHead]
 	public class PutridPinkyPhase2 : ModNPC
 	{
-		int expertModifier = 1;
-		
+		private int expertModifier = 1;
 		private float attackPhase {
 			get => npc.ai[0];
 			set => npc.ai[0] = value;

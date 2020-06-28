@@ -123,7 +123,7 @@ namespace SOTS.Projectiles.Celestial
 					for(int i = 0; i < Main.npc.Length - 1; i++)
 					{
 						NPC target = Main.npc[i];
-						if(!target.friendly && target.dontTakeDamage == false && target.lifeMax > 5)
+						if(!target.friendly && target.dontTakeDamage == false && target.lifeMax > 5 && target.CanBeChasedBy())
 						{
 							dX = target.Center.X - projectile.Center.X;
 							dY = target.Center.Y - projectile.Center.Y;

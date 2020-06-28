@@ -158,7 +158,7 @@ namespace SOTS.Void
 			
 			
 			
-			voidRegen = 0.175f; 
+			voidRegen = 0.25f; 
 			
 			voidRegen += 0.05f * (float)voidAnkh;
 			

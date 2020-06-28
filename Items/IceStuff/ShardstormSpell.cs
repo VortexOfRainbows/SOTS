@@ -1,7 +1,6 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using System;
 using Microsoft.Xna.Framework;
 using SOTS.Void;
 
@@ -38,6 +37,8 @@ namespace SOTS.Items.IceStuff
 		{
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(null, "AbsoluteBar", 10);
+			recipe.AddIngredient(null, "ShardStaff", 1);
+			recipe.AddIngredient(null, "StormSpell", 1);
 			recipe.SetResult(this);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.AddRecipe();

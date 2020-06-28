@@ -19,7 +19,7 @@ namespace SOTS.NPCs.Boss
             npc.width = 40;             
             npc.height = 40;         
             npc.damage = 40;
-            npc.defense = 0;
+            npc.defense = 50;
             npc.lifeMax = 12312412;  //arbitrary
             npc.knockBackResist = 0.0f;
             //npc.behindTiles = true;
@@ -32,11 +32,10 @@ namespace SOTS.NPCs.Boss
             npc.HitSound = SoundID.NPCHit1;
             npc.DeathSound = SoundID.NPCDeath32;
 			music = MusicID.Boss2;
-            npc.buffImmune[69] = true;
-            npc.buffImmune[70] = true;
-            npc.buffImmune[39] = true;
-            npc.buffImmune[24] = true;
-            npc.buffImmune[BuffID.Frostburn] = true;
+            for (int i = 0; i < Main.maxBuffTypes; i++)
+            {
+                npc.buffImmune[i] = true;
+            }
         }
 		float ai2 = 0;
         public override bool PreAI()

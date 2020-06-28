@@ -14,8 +14,6 @@ The following is my development plans :D
 //Ideas (YTBA, yet to be added)
 Priority: Remaining Spirits
 
-Putrid Pinky Spawn Animation -> Place down peanuts -> Pinky eats it -> pinky grows -> pinky explodes and transforms into monster
-
 1. Lashes Of Lightning (Void + Magic) (otherworld + electrum)
 2. Thunder Jacket
 	1. Recieving damage will deal massive damage back to the attacker, but drains void when hit
@@ -39,20 +37,10 @@ Putrid Pinky Spawn Animation -> Place down peanuts -> Pinky eats it -> pinky gro
 		3. charges back and forth
 		4. doesn't hurt you for a bit after spawning
 		5. cannot go through walls (except after it first escapes one)
-	2. Perturbed Soul
-		1. More aggressive soul variant
-		2. Same health and damage, but rushes you down
 11. Tether Cord in pyramid
 	1. Attaches a second player to you
-12. Enchanted Sword and Pickaxe Shrines in pyramid
-	1. Drops Blade Fragment or Drill Fragment	
-	2. Enchanted Pickaxe //modify stats
-	3. Arkhalis or Enchanted Sword
 13. Dissolving Element Blocks
 	1. Give off cool particles, can be used in summoning rituals
-15. Gelled Leather armor => Wormwood Armor (Early Game Summon)
-	1. Pre-Putrid Pinky
-	2. Setbonus: King Slime colored pinky minion rotates around you and extends to hit nearby enemies
 16. Earthen Construct
 	1. Hides behind wall like worm, pokes head out, shots player, hides back in wall, repeat
 	2. Spirit hides in the background walls (alpha), and pokes it's head out trying to attack player
@@ -62,10 +50,65 @@ Putrid Pinky Spawn Animation -> Place down peanuts -> Pinky eats it -> pinky gro
 18. Make a wall version of the Worldgen Capture
 
 Next Update:
-1. tow cable, enchanted shrines
-2. Earthen items and vibrant items
-3. Pyramid enemies
-4. Setup homepage and discord
+2. Earthen items, Earthen construct, and vibrant items
+3. Pyramid enemies, Leaking pyramid brick
+6. Banners for various enemies
+
+9. Normalize expert damage for serpants
+
+Later:
+4. Integrate support for new boss checklist
+
+6/27/20
+1. Removed the capability to home onto dummies for several homing weapons (still missing some probably)
+2. Vibrant Sword, Gun, Cannon, Staff
+3. Glowy Shrrom
+4. Tome of the Reaper fires at different velocities.
+5. Serpents now immune to every debuff, defense increased 35 => 90, 40 => 100, now have a dps cap per segment
+
+6/21/20
+1. Stormshard spell requires storm spell and shard staff
+2. Armaggedon accelerates faster, has a lower top speed, and fires 2 projectiles at once, more immune frame penetration
+	1. Apocalypse has less immune frame penetration
+3. Nerfed wing knife firerate and kb, timeleft, homing range, and homing speed, rotation is now aligned with velocity, lowered volume. Buffed velocity
+4. Aten stars go through blocks, also slower
+5. Continuum Collapse now gives off colored light, more visual changes
+6. Pinky turret and Aura Staff now count as legitamate sentries. Pinky turret uses different attack
+
+6/20/20
+1. Sprited Earthen Construct
+2. Extended blooming hook range
+
+6/19/20
+1. new void weapon added, Abyssal Fury, broken villain sword
+2. Ceremonial dagger buffs
+3. Continuum Collapse visual improvement
+4. Lowered spawnrate for ice construct
+
+6/18/20
+1. Pyramid now generates with enchanted pickaxe and sword shrines
+2. Enchanted pickaxe no longer fires a projectile
+3. Spirit bows now work out of inventory
+4. Brittle ball particle effects
+
+6/17/20
+1. Gelled Armor => Wormwood Armor, works in multiplayer
+2. Patchleather hat to use AltHair
+
+6/16/20
+1. Fixed "Begin cannot be called until end has been successfully called" (thanks Creeper da Snek!)
+2. Flowering Slime complete, works fine in multiplayer
+3. Pyramid generation is more streamlined, smaller, and prioritizes non-underrground deserts
+
+6/15/20
+1. Added gel gore to many slimes, lowered fragment drop rates from Eskimo goblin
+
+Update 0.18.3.2
+
+6/15/20
+1. Homepage Added, Discord is public
+
+Update 0.18.3
 
 6/14/20
 1. Eskimo Goblin Added

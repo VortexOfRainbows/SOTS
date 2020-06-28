@@ -31,7 +31,11 @@ namespace SOTS.Items.Pyramid
 		int Probe = -1;
 		int Probe2 = -1;
 		int Probe3 = -1;
-        public override void UpdateArmorSet(Player player)
+		public override void DrawHair(ref bool drawHair, ref bool drawAltHair)
+		{
+			drawAltHair = true;
+		}
+		public override void UpdateArmorSet(Player player)
         {	
 			player.setBonus = "Summons a flock of flying snakes to assist in combat";
 			int counter = 0;

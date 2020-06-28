@@ -59,6 +59,25 @@ namespace SOTS.NPCs
 			}
 			return 0f;
 		}
+		public override void HitEffect(int hitDirection, double damage)
+		{
+			if (npc.life > 0)
+			{
+				int num = 0;
+				while ((double)num < damage / (double)npc.lifeMax * 100.0)
+				{
+					Dust.NewDust(npc.position, npc.width, npc.height, 4, (float)hitDirection, -1f, npc.alpha, new Color(98, 88, 176, 100), 1f);
+					num++;
+				}
+			}
+			else
+			{
+				for (int k = 0; k < 50; k++)
+				{
+					Dust.NewDust(npc.position, npc.width, npc.height, 4, (float)(2 * hitDirection), -2f, npc.alpha, new Color(98, 88, 176, 100), 1f);
+				}
+			}
+		}
 		public override void NPCLoot()
 		{
 		

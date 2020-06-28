@@ -1,13 +1,7 @@
 using System;
-using System.IO;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
-using Terraria.ID;
 
 namespace SOTS.Projectiles.Pyramid
 {    
@@ -41,7 +35,7 @@ namespace SOTS.Projectiles.Pyramid
 				for(int i = 0; i < 200; i++) //find first enemy
 				{
 					NPC npc = Main.npc[i];
-					if(!npc.friendly && npc.lifeMax > 5 && npc.active)
+					if(!npc.friendly && npc.lifeMax > 5 && npc.active && npc.CanBeChasedBy())
 					{
 						if(npcIndex != i && npcIndex1 != i && npcIndex2 != i && npcIndex3 != i)
 						{

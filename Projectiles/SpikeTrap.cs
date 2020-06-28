@@ -55,8 +55,8 @@ namespace SOTS.Projectiles
 				int goreIndex = Gore.NewGore(new Vector2(projectile.position.X, projectile.position.Y), default(Vector2), Main.rand.Next(61,64), 1f);	
 				Main.gore[goreIndex].scale = 0.45f;
 			}
-            Main.PlaySound(SoundID.Item14, (int)(projectile.Center.X), (int)(projectile.Center.Y));
-			
+			Main.PlaySound(2, (int)(projectile.Center.X), (int)(projectile.Center.Y), 14, 0.4f);
+
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{	
@@ -65,7 +65,6 @@ namespace SOTS.Projectiles
 			projectile.velocity.Y = 0;
 			return false;
 		}
-
 	}
 }
 		

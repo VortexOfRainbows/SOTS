@@ -1,9 +1,6 @@
 using System;
-using System.IO;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
@@ -24,13 +21,21 @@ namespace SOTS.Projectiles.Laser
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
+			if (completedLoads > 0)
+			{
+				LaserDraw(spriteBatch);
+			}
+			return false;
+		}
+		public override bool PreDrawExtras(SpriteBatch spriteBatch)
+		{
 			return false;
 		}
 		public override void SetDefaults() 
 		{
 			projectile.width = 16;
 			projectile.height = 16;
-			projectile.timeLeft = 12;
+			projectile.timeLeft = 24;
 			projectile.penetrate = -1;
 			projectile.hostile = false;
 			projectile.friendly = true;
@@ -38,6 +43,7 @@ namespace SOTS.Projectiles.Laser
 			projectile.tileCollide = false;
 			projectile.ignoreWater = true;
 			projectile.alpha = 255;
+			projectile.extraUpdates = 2;
 		}
 		public override bool PreAI() 
 		{
@@ -45,12 +51,12 @@ namespace SOTS.Projectiles.Laser
 			{
 				initialDirection = projectile.velocity;
 				projectile.velocity *= 0f;
-				if(completedLoads == 0)
+				if (completedLoads == 0)
 					LaserDraw(null); //this will initiate the hitboxes without requiring the projectile to be drawn. This stops some lag, and also makes hitboxes spawn regardless of lag
 			}
-		
 			return true;
 		}
+		int counter = -2;
 		public override void AI() 
 		{
 			Player player = Main.player[projectile.owner];
@@ -59,20 +65,13 @@ namespace SOTS.Projectiles.Laser
 			if(completedLoads > 0)
 			{
 				projectile.alpha = 0;
+				if (counter >= 1)
+				{
+					projectile.alpha = 230 + (counter * 1);
+				}
+				counter++;
 			}
-			if(completedLoads > 1 && projectile.timeLeft > 10) //make sure the projectile has been loaded once (lag accounting) and has been active atmost than 2 times
-			{
-				projectile.alpha = 100;
-			}
-			else if(completedLoads > 2 && projectile.timeLeft > 9) //make sure the projectile has been loaded twice (lag accounting) and has been active atmost than 3 times
-			{
-				projectile.alpha = 145;
-			}
-			else if(completedLoads > 3) //after the initial frames,
-			{
-				projectile.alpha = 230 + ((10 - projectile.timeLeft) * 2); //completed loads being used in the actual alpha calculation formula would make faster framerates have less frames of the afterimage projectile visual, so timeleft is used instead
-			}
-			if(projectile.alpha > 255)
+			if (projectile.alpha > 255)
 			{
 				projectile.active = false;
 				projectile.Kill();
@@ -101,7 +100,7 @@ namespace SOTS.Projectiles.Laser
 			for(int i = 0; i < Main.npc.Length; i++)
 			{
 				NPC target = Main.npc[i];
-				if(!target.friendly && target.dontTakeDamage == false && target.lifeMax > 5 && target.active && !npcs.Contains(i))
+				if(!target.friendly && target.dontTakeDamage == false && target.lifeMax > 5 && target.active && !npcs.Contains(i) && target.CanBeChasedBy())
 				{
 					dX = target.Center.X - pos.X;
 					dY = target.Center.Y - pos.Y;
@@ -200,7 +199,7 @@ namespace SOTS.Projectiles.Laser
 			Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Laser/CollapseLaserHighlight"); //load the secondary required textures
 			Texture2D texture2 = ModContent.GetTexture("SOTS/Projectiles/Laser/ContinuumSphereHighlight");
 			float radianDir = (float)Math.Atan2(initialDirection.Y, initialDirection.X);
-			Color color = new Color(100,100,100); //initialize a color variable, this white color won't be used, but the variable will
+			Color color = new Color(100, 100, 100); //initialize a color variable, this white color won't be used, but the variable will
 			Color white = new Color(255, 255, 255); //initialize white color
 			if(projectile.alpha > 200)
 			{
@@ -217,13 +216,17 @@ namespace SOTS.Projectiles.Laser
 			while(i != -1)
 			{
 				forceTerminate++;
-				if(forceTerminate > fToBeat)
+				newAi += 0.5f / 13f; //make color change on the way through the beam
+				Vector2 laserVelo = new Vector2(unitDis, 0f).RotatedBy(radianDir);
+				drawPos.X += laserVelo.X;
+				drawPos.Y += laserVelo.Y;
+				Vector2 curve = new Vector2(28f, 0).RotatedBy(MathHelper.ToRadians(helixRot * 2f));
+				helixRot--;
+
+				if (forceTerminate > fToBeat)
 				{
 					break;
 				}
-				Vector2 curve = new Vector2(28f,0).RotatedBy(MathHelper.ToRadians(helixRot * 2f));
-				helixRot--;
-				
 				if(j >= toBeat || k >= kToBeat)
 				{
 					toBeat = j;
@@ -272,32 +275,28 @@ namespace SOTS.Projectiles.Laser
 						i = 15;
 					}
 				}
-				newAi += 0.5f/13f; //make color change on the way through the beam
-				double red = Math.Sin(frequency * (double)newAi) * width + center;
-				double grn = Math.Sin(frequency * (double)newAi + 2.0) * width + center;
-				double blu = Math.Sin(frequency * (double)newAi + 4.0) * width + center;
-				Vector2 laserVelo = new Vector2(unitDis, 0f).RotatedBy(radianDir);
-				drawPos.X += laserVelo.X;
-				drawPos.Y += laserVelo.Y;
-				color = new Color((int)red, (int)grn, (int)blu);
-				color *= ((255 - projectile.alpha) / 255f);
-				Vector2 helixPos1 = drawPos + new Vector2(curve.X, 0).RotatedBy(radianDir + MathHelper.ToRadians(90));
-				Vector2 helixPos2 = drawPos + new Vector2(curve.X, 0).RotatedBy(radianDir - MathHelper.ToRadians(90));
-				if(completedLoads > 0 && spriteBatch != null) //checking if it is the second strand that starts (calculated strand)
+				if(spriteBatch != null) //checking if it is the second strand that starts (calculated strand)
 				{
-					spriteBatch.Draw(Main.projectileTexture[projectile.type], drawPos - Main.screenPosition, null, color, radianDir, new Vector2(14,7), 1f, SpriteEffects.None, 0f);
-					spriteBatch.Draw(Main.projectileTexture[projectile.type], helixPos1 - Main.screenPosition, null, color, radianDir, new Vector2(14,7), 0.5f, SpriteEffects.None, 0f);	
-					spriteBatch.Draw(Main.projectileTexture[projectile.type], helixPos2 - Main.screenPosition, null, color, radianDir, new Vector2(14,7), 0.5f, SpriteEffects.None, 0f);
-					spriteBatch.Draw(texture, drawPos - Main.screenPosition, null, white, radianDir, new Vector2(14,7), 1f, SpriteEffects.None, 0f);
-					spriteBatch.Draw(texture, helixPos2 - Main.screenPosition, null, white, radianDir, new Vector2(14,7), 0.5f, SpriteEffects.None, 0f);
-					spriteBatch.Draw(texture, helixPos1 - Main.screenPosition, null, white, radianDir, new Vector2(14,7), 0.5f, SpriteEffects.None, 0f);
-					Lighting.AddLight(drawPos, 255 * 1.2f / 255f, 255 * 1.2f / 255f, 255 * 1.2f / 255f); //adds game light at the area
+					double red = Math.Sin(frequency * (double)newAi) * width + center;
+					double grn = Math.Sin(frequency * (double)newAi + 2.0) * width + center;
+					double blu = Math.Sin(frequency * (double)newAi + 4.0) * width + center;
+					color = new Color((int)red, (int)grn, (int)blu);
+					color *= ((255 - projectile.alpha) / 255f);
+					Vector2 helixPos1 = drawPos + new Vector2(curve.X, 0).RotatedBy(radianDir + MathHelper.ToRadians(90));
+					Vector2 helixPos2 = drawPos + new Vector2(curve.X, 0).RotatedBy(radianDir - MathHelper.ToRadians(90));
+					Lighting.AddLight(drawPos, new Vector3((int)red, (int)grn, (int)blu) * (255 - projectile.alpha) / 20000f); //adds game light at the area
+					spriteBatch.Draw(Main.projectileTexture[projectile.type], helixPos1 - Main.screenPosition, null, color, radianDir, new Vector2(14, 7), 0.5f, SpriteEffects.None, 0f);
+					spriteBatch.Draw(Main.projectileTexture[projectile.type], helixPos2 - Main.screenPosition, null, color, radianDir, new Vector2(14, 7), 0.5f, SpriteEffects.None, 0f);
+					spriteBatch.Draw(texture, helixPos2 - Main.screenPosition, null, white, radianDir, new Vector2(14, 7), 0.5f, SpriteEffects.None, 0f);
+					spriteBatch.Draw(texture, helixPos1 - Main.screenPosition, null, white, radianDir, new Vector2(14, 7), 0.5f, SpriteEffects.None, 0f);
+					spriteBatch.Draw(Main.projectileTexture[projectile.type], drawPos - Main.screenPosition, null, color, radianDir, new Vector2(14, 7), 1f, SpriteEffects.None, 0f);
+					spriteBatch.Draw(texture, drawPos - Main.screenPosition, null, white, radianDir, new Vector2(14, 7), 1f, SpriteEffects.None, 0f);
 				}
 			}
 			Vector2 laserVelo2 = new Vector2(10f, 0f).RotatedBy(radianDir); //relocate end sphere to the tip of the laser
-			drawPos.X += laserVelo2.X;
-			drawPos.Y += laserVelo2.Y;
-			for(int l = 0; l < 5; l++) //because the overlapping lasers end up covering up for eachothers alpha, this will help make this look more consistent too
+			drawPos.X += laserVelo2.X * 2;
+			drawPos.Y += laserVelo2.Y * 2;
+			for(int l = 0; l < 6; l++) //because the overlapping lasers end up covering up for eachothers alpha, this will help make this look more consistent too
 			{
 				if(completedLoads > 0 && spriteBatch != null)
 				{
@@ -318,13 +317,6 @@ namespace SOTS.Projectiles.Laser
 				break;
 			}
 			*/
-		}
-		public override void PostDraw(SpriteBatch spriteBatch, Color lightColor)
-		{
-			if(completedLoads > 0)
-			{
-				LaserDraw(spriteBatch);
-			}
 		}
 	}
 }

@@ -22,10 +22,15 @@ namespace SOTS.Projectiles.Minions
 			projectile.minion = true;
 			projectile.width = 24;
 			projectile.height = 44;
-			projectile.tileCollide = false;
+			projectile.tileCollide = true;
 			projectile.timeLeft = 1800;
 			projectile.friendly = true;
 			projectile.hostile = false;
+		}
+		public override bool OnTileCollide(Vector2 oldVelocity)
+		{
+			projectile.Kill();
+			return false;
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{

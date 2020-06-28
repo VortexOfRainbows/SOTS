@@ -69,7 +69,7 @@ namespace SOTS.Projectiles.Celestial
 				float shootToY = target.position.Y - projectile.Center.Y;
 				float distance = (float)System.Math.Sqrt((double)(shootToX * shootToX + shootToY * shootToY));
 	
-				if(distance < 360f && !target.friendly && target.active && target.lifeMax > Main.rand.Next(3000000) && projectile.alpha < 30)
+				if(distance < 360f && !target.friendly && target.active && target.lifeMax > Main.rand.Next(3000000) && projectile.alpha < 30 && target.CanBeChasedBy())
 				{
 					distance = 3f / distance;
 				

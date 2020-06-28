@@ -9,8 +9,6 @@ namespace SOTS.NPCs.Boss
 {   
     public class CelestialSerpentBody : ModNPC
     {	
-        int ai1 = 0;
-	    int ai2 = 0;
 		public override void SetStaticDefaults()
 		{
 			
@@ -21,7 +19,7 @@ namespace SOTS.NPCs.Boss
             npc.width = 36;     
             npc.height = 50;            
             npc.damage = 50;
-            npc.defense = 45;
+            npc.defense = 90;
             npc.lifeMax = 12104310; //arbitrary
             npc.knockBackResist = 0.0f;
             npc.noTileCollide = true;
@@ -33,13 +31,28 @@ namespace SOTS.NPCs.Boss
             npc.HitSound = SoundID.NPCHit1;
             npc.DeathSound = SoundID.NPCDeath32;
 			music = MusicID.Boss2;
-            npc.buffImmune[69] = true;
-            npc.buffImmune[70] = true;
-            npc.buffImmune[39] = true;
-            npc.buffImmune[24] = true;
-            npc.buffImmune[BuffID.Frostburn] = true;
+            for(int i = 0; i < Main.maxBuffTypes; i++)
+            {
+                npc.buffImmune[i] = true;
+            }
         }
- 
+        float currentDPS = -1;
+        float DPSregenRate = 0.1f;
+        float maxDPS = 250;
+        public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
+        {
+
+            if (damage - (defense/2) > currentDPS)
+            {
+                damage = currentDPS + (defense / 2);
+                currentDPS = 0;
+            }
+            else
+            {
+                currentDPS -= (float)damage - (defense / 2);
+            }
+            return true;
+        }
         public override bool PreAI()
         {
             if (npc.ai[3] > 0)
@@ -83,12 +96,18 @@ namespace SOTS.NPCs.Boss
             return false;
         }
  
-        public override bool PreDraw(Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch, Color drawColor)
+        public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
         {
             Texture2D texture = Main.npcTexture[npc.type];
             Vector2 origin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
             Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition, new Rectangle?(), drawColor, npc.rotation, origin, npc.scale, SpriteEffects.None, 0);
             return false;
+        }
+        public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
+        {
+            Texture2D texture = mod.GetTexture("NPCs/Boss/DPSBarrier");
+            Vector2 origin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
+            Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition, new Rectangle?(), drawColor * (0.5f + (0.25f * (maxDPS - currentDPS) / maxDPS)), 0, origin, (maxDPS - currentDPS)/maxDPS, SpriteEffects.None, 0);
         }
         public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position)
         {
@@ -99,6 +118,18 @@ namespace SOTS.NPCs.Boss
 		{
 			Lighting.AddLight(npc.Center, (255 - npc.alpha) * 2.5f / 255f, (255 - npc.alpha) * 1.6f / 255f, (255 - npc.alpha) * 2.4f / 255f);
 			npc.timeLeft = 100000;
-		}
+
+            if (currentDPS == -1)
+                currentDPS = maxDPS;
+
+            if (currentDPS < maxDPS)
+            {
+                currentDPS += (maxDPS / 60) * DPSregenRate;
+            }
+            else
+            {
+                currentDPS = maxDPS;
+            }
+        }
     }
 }

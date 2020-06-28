@@ -1,9 +1,4 @@
-using System;
-using System.IO;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
@@ -25,9 +20,9 @@ namespace SOTS.Projectiles.Minions
             projectile.hostile = false; 
             projectile.friendly = false; 
             projectile.ignoreWater = true;  
-            Main.projFrames[projectile.type] = 1; 
-            projectile.timeLeft = 3600; 
-            projectile.penetrate = -1;
+            Main.projFrames[projectile.type] = 1;
+			projectile.timeLeft = Projectile.SentryLifeTime;
+			projectile.penetrate = -1;
             projectile.tileCollide = true; 
 			projectile.minion = true;
             projectile.sentry = true;
@@ -42,9 +37,11 @@ namespace SOTS.Projectiles.Minions
 			return true;
 		}
         public override void AI()
-        {
-			
-			projectile.netUpdate = true;
+		{
+			Main.player[projectile.owner].UpdateMaxTurrets();
+			if(projectile.owner == Main.myPlayer)
+				projectile.netUpdate = true;
+
 			Player player = Main.player[projectile.owner];
 			sphereRadius = 255f + (130f * (player.minionDamage - 1f)) + (130f * (player.allDamage - 1f));
 			Lighting.AddLight(projectile.Center, sphereRadius / 255f, sphereRadius / 255f, sphereRadius / 255f);

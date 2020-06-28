@@ -33,7 +33,7 @@ namespace SOTS.Items.OreItems
 		}
 		public override void GetVoid(Player player)
 		{
-			voidMana = 4;
+			voidMana = 5;
 		}
 		public override void AddRecipes()
 		{

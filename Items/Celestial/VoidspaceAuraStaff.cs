@@ -11,10 +11,8 @@ namespace SOTS.Items.Celestial
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Voidspace Aura Staff");
-			
-			Tooltip.SetDefault("Summons a voidspace cell on your cursor\nGrants stat boosts while in the radius of the cell\nVoid regen increased by 5, life regen by 5, defense by 5, and reduces damage taken by 10%\nDamages all enemies within range\nRange scales with summon damage\n1 minute duration");
+			Tooltip.SetDefault("Summons a voidspace cell on your cursor\nGrants stat boosts while in the radius of the cell\nVoid regen increased by 5, life regen by 5, defense by 5, and reduces damage taken by 10%\nDamages all enemies within range\nRange scales with summon damage");
 		}
- 
         public override void SetDefaults()
         {
             item.damage = 48;  
@@ -45,14 +43,6 @@ namespace SOTS.Items.Celestial
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
 			position = Main.MouseWorld;
-			for (int l = 0; l < Main.projectile.Length; l++)
-			{
-				Projectile proj = Main.projectile[l];
-				if (proj.active && proj.type == item.shoot && proj.owner == player.whoAmI)
-				{
-					proj.active = false;
-				}
-			}
 			return player.altFunctionUse != 2;
 		}
     }

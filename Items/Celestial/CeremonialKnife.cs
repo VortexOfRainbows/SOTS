@@ -15,14 +15,14 @@ namespace SOTS.Items.Celestial
 		public override void SafeSetDefaults()
 		{
 			item.melee = true;
-			item.damage = 63;
+			item.damage = 66;
 			item.width = 26;
 			item.height = 32;
             item.value = Item.sellPrice(0, 10, 0, 0);
 			item.rare = 8;
 			item.useTime = 7;
 			item.useAnimation = 14;
-			item.useStyle = 5;
+			item.useStyle = 1;
 			item.UseSound = SoundID.Item1;
 			item.autoReuse = true;
 			item.noUseGraphic = true;
@@ -40,7 +40,7 @@ namespace SOTS.Items.Celestial
 		}
 		public override void GetVoid(Player player)
 		{
-			voidMana = 5;
+			voidMana = 4;
 		}
 	}
 }

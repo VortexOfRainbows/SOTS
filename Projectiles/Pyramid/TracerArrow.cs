@@ -40,7 +40,7 @@ namespace SOTS.Projectiles.Pyramid
 				for(int i = 0; i < 200; i++) //find first enemy
 				{
 					NPC npc = Main.npc[i];
-					if(!npc.friendly && npc.lifeMax > 5 && npc.active)
+					if(!npc.friendly && npc.lifeMax > 5 && npc.active && npc.CanBeChasedBy())
 					{
 						if(npcIndex != i && npcIndex1 != i && npcIndex2 != i)
 						{

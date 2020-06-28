@@ -111,6 +111,17 @@ namespace SOTS.NPCs
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("CrabClaw"), 1); 
 					}
 				}
+				if (npc.type == NPCID.Mothron && NPC.downedPlantBoss)
+				{
+					if (Main.rand.Next(5) == 0 && !Main.expertMode)
+					{
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("BrokenVillainSword"), 1);
+					}
+					else if (Main.rand.Next(4) == 0 && Main.expertMode)
+					{
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("BrokenVillainSword"), 1);
+					}
+				}
 				if (npc.type == 64 && Main.rand.Next(60) == 0) {
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("PinkJellyfishStaff"), 1); 
 				}

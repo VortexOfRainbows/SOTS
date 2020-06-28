@@ -20,19 +20,20 @@ namespace SOTS.Projectiles
 			projectile.friendly = true;
 			projectile.width = 34;
 			projectile.height = 26;
-			projectile.timeLeft = 90000;
+			projectile.timeLeft = 6000;
 			projectile.penetrate = -1;
 			projectile.tileCollide = true;
 		}
 		public override void AI()
-		{ 
+		{
+			projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
 			projectile.alpha = 0;		
-			float minDist = 560;
+			float minDist = 500;
 			int target2 = -1;
 			float dX = 0f;
 			float dY = 0f;
 			float distance = 0;
-			float speed = 0.5f;
+			float speed = 0.4f;
 			if(projectile.friendly == true && projectile.hostile == false)
 			{
 				for(int i = 0; i < Main.npc.Length - 1; i++)
@@ -53,35 +54,32 @@ namespace SOTS.Projectiles
 				
 				if(target2 != -1)
 				{
-				NPC toHit = Main.npc[target2];
+					NPC toHit = Main.npc[target2];
 					if(toHit.active == true)
-					{
-						
-					dX = toHit.Center.X - projectile.Center.X;
-					dY = toHit.Center.Y - projectile.Center.Y;
-					distance = (float)Math.Sqrt((double)(dX * dX + dY * dY));
-					speed /= distance;
+					{						dX = toHit.Center.X - projectile.Center.X;
+						dY = toHit.Center.Y - projectile.Center.Y;
+						distance = (float)Math.Sqrt((double)(dX * dX + dY * dY));
+						speed /= distance;
 				   
-					projectile.velocity += new Vector2(dX * speed, dY * speed);
+						projectile.velocity += new Vector2(dX * speed, dY * speed);
 					}
 				}
 			}
 		}
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-			projectile.timeLeft -= 15000;
+			projectile.timeLeft -= 1000;
         }
 		public override void Kill(int timeLeft)
 		{
 			for(int i = 0; i < 3; i++)
 			{
-			int goreIndex = Gore.NewGore(new Vector2(projectile.position.X, projectile.position.Y), default(Vector2), Main.rand.Next(61,64), 1f);	
-			Main.gore[goreIndex].scale = 0.65f;
-			Main.gore[goreIndex].velocity.Y *= 0.25f;
-			Main.gore[goreIndex].velocity.X *= 0.25f;
+				int goreIndex = Gore.NewGore(new Vector2(projectile.position.X, projectile.position.Y), default(Vector2), Main.rand.Next(61,64), 1f);	
+				Main.gore[goreIndex].scale = 0.65f;
+				Main.gore[goreIndex].velocity.Y *= 0.25f;
+				Main.gore[goreIndex].velocity.X *= 0.25f;
 			}
-            Main.PlaySound(SoundID.Item14, (int)(projectile.Center.X), (int)(projectile.Center.Y));
-			
+            Main.PlaySound(2, (int)(projectile.Center.X), (int)(projectile.Center.Y), 14, 0.4f);
 		}
 	}
 }

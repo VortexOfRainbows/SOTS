@@ -90,7 +90,7 @@ namespace SOTS.Projectiles.Minions
 			{
 				// Fix overlap with other minions
 				Projectile other = Main.projectile[i];
-				if (i != projectile.whoAmI && other.active && other.owner == projectile.owner && Math.Abs(projectile.position.X - other.position.X) + Math.Abs(projectile.position.Y - other.position.Y) < projectile.width)
+				if (i != projectile.whoAmI && other.active && other.owner == projectile.owner && Math.Abs(projectile.position.X - other.position.X) + Math.Abs(projectile.position.Y - other.position.Y) < projectile.width && other.type == projectile.type)
 				{
 					if (projectile.position.X < other.position.X) projectile.velocity.X -= overlapVelocity;
 					else projectile.velocity.X += overlapVelocity;
@@ -126,7 +126,7 @@ namespace SOTS.Projectiles.Minions
 				for (int i = 0; i < Main.maxNPCs; i++)
 				{
 					NPC npc = Main.npc[i];
-					if (npc.CanBeChasedBy())
+					if (npc.CanBeChasedBy() && npc.active)
 					{
 						float between = Vector2.Distance(npc.Center, projectile.Center);
 						bool closest = Vector2.Distance(projectile.Center, targetCenter) > between;

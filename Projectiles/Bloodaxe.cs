@@ -1,13 +1,7 @@
 using System;
-using System.IO;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
-using Terraria.ID;
 
 namespace SOTS.Projectiles 
 {    
@@ -16,9 +10,7 @@ namespace SOTS.Projectiles
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Bloody Hammer");
-			
 		}
-		
         public override void SetDefaults()
         {
 			projectile.CloneDefaults(274);
@@ -54,7 +46,7 @@ namespace SOTS.Projectiles
 				for(int i = 0; i < Main.npc.Length - 1; i++)
 				{
 					NPC target = Main.npc[i];
-					if(!target.friendly && target.dontTakeDamage == false && target.lifeMax > 5 && target.active)
+					if(!target.friendly && target.dontTakeDamage == false && target.lifeMax > 5 && target.active && target.CanBeChasedBy())
 					{
 						dX = target.Center.X - projectile.Center.X;
 						dY = target.Center.Y - projectile.Center.Y;

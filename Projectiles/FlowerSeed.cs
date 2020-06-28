@@ -172,10 +172,10 @@ namespace SOTS.Projectiles
 			}
 			if(target.life <= 0)
 			{
-					enemyIndex = -1;
-					projectile.aiStyle = 1;
-					latch = false;
-					projectile.tileCollide = true;
+				enemyIndex = -1;
+				projectile.aiStyle = 1;
+				latch = false;
+				projectile.tileCollide = true;
 			}
         }
 		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough) 
@@ -200,8 +200,8 @@ namespace SOTS.Projectiles
         {
 			for(int i = 0; i < 15; i++)
 			{
-			int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 2);
-			Main.dust[num1].noGravity = true;
+				int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 2);
+				Main.dust[num1].noGravity = true;
 			}
 		}
 	}

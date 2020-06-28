@@ -1,11 +1,7 @@
-using System;
-using System.IO;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
 
 namespace SOTS.NPCs
 {
@@ -28,13 +24,8 @@ namespace SOTS.NPCs
             npc.height = 28;
             animationType = NPCID.BlueSlime;
 			Main.npcFrameCount[npc.type] = 2;  
-            npc.value = 300;
+            npc.value = 250;
             npc.npcSlots = .5f;
-            npc.boss = false;
-            npc.lavaImmune = false;
-            npc.noGravity = false;
-            npc.noTileCollide = false;
-            npc.netAlways = false;
 			npc.alpha = 90;
             npc.HitSound = SoundID.NPCHit1;
             npc.DeathSound = SoundID.NPCDeath1;
@@ -52,16 +43,33 @@ namespace SOTS.NPCs
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			return SpawnCondition.OverworldDaySlime.Chance * 0.1f;
+			return SpawnCondition.OverworldDaySlime.Chance * 0.08f;
+		}
+		public override void HitEffect(int hitDirection, double damage)
+		{
+			if (npc.life > 0)
+			{
+				int num = 0;
+				while ((double)num < damage / (double)npc.lifeMax * 100.0)
+				{
+					Dust.NewDust(npc.position, npc.width, npc.height, 4, (float)hitDirection, -1f, npc.alpha, new Color(148, 107, 80, 100), 1f);
+					num++;
+				}
+			}
+			else
+			{
+				for (int k = 0; k < 50; k++)
+				{
+					Dust.NewDust(npc.position, npc.width, npc.height, 4, (float)(2 * hitDirection), -2f, npc.alpha, new Color(148, 107, 80, 100), 1f);
+				}
+			}
 		}
 		public override void NPCLoot()
 		{
-		
 			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, (ItemID.Leather), Main.rand.Next(4) + 1);
 			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, (ItemID.Wood), Main.rand.Next(20) + 10);
 			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, (ItemID.Gel), Main.rand.Next(4) + 3);
 		
-			//Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("GelBar"), Main.rand.Next(3) + 3);	
 			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("GelAxe"), Main.rand.Next(7) + 1);	
 			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("Peanut"), Main.rand.Next(12) + 1);	
 			
@@ -108,6 +116,5 @@ namespace SOTS.NPCs
 				}
 			}
 		}	
-	
 	}
 }

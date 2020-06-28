@@ -20,8 +20,6 @@ namespace SOTS
 
 		public SOTS()
 		{
-			Instance = this;
-			
 			Properties = new ModProperties()
 			{
 				Autoload = true,
@@ -33,25 +31,27 @@ namespace SOTS
 		internal VoidUI VoidUI;
 		
 		public override void Load()
-        {
-            if (!Main.dedServ)
+		{
+			Instance = ModContent.GetInstance<SOTS>();
+			if (!Main.dedServ)
             {
                 VoidUI = new VoidUI();
                 VoidUI.Activate();
                 _VoidUserInterface = new UserInterface();
                 _VoidUserInterface.SetState(VoidUI);
-
             }
         }
 		public override void Unload() 
 		{
 			Instance = null;
+			VoidBarSprite._backgroundTexture = null;
+			VoidBarBorder._backgroundTexture = null;
 		}
 		public override void UpdateUI(GameTime gameTime) 
 		{
 			if (_VoidUserInterface != null)
 			{
-						_VoidUserInterface.Update(gameTime);
+				_VoidUserInterface.Update(gameTime);
 			}
 		}
 

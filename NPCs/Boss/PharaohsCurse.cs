@@ -342,15 +342,15 @@ namespace SOTS.NPCs.Boss
 			
 			if(ai3 == 1100)
 			{
-				teleportTo(player.Center.X, player.Center.Y - 400);
+				teleportTo(player.Center.X, player.Center.Y - 440);
 			}
 			if(ai3 == 1150)
 			{
-				teleportTo(player.Center.X, player.Center.Y - 400);
+				teleportTo(player.Center.X, player.Center.Y - 440);
 			}
 			if(ai3 == 1200)
 			{
-				teleportTo(player.Center.X, player.Center.Y - 400);
+				teleportTo(player.Center.X, player.Center.Y - 440);
 			}
 			if(ai3 == 1250)
 			{
@@ -439,8 +439,8 @@ namespace SOTS.NPCs.Boss
 				{
 					for(int i = 0; i < 5; i++)
 					{
-					int goreIndex = Gore.NewGore(new Vector2(npc.position.X, npc.position.Y), default(Vector2), Main.rand.Next(61,64), 1f);	
-					Main.gore[goreIndex].scale = 0.75f;
+						int goreIndex = Gore.NewGore(new Vector2(npc.position.X, npc.position.Y), default(Vector2), Main.rand.Next(61,64), 1f);	
+						Main.gore[goreIndex].scale = 0.75f;
 					}
 					for(int i = 0; i < 6 + (expertScale / 2); i++)
 					{	

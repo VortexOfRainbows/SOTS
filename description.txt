@@ -17,6 +17,18 @@ Pyramid Dungeon World Gen
 Development - Vortex#6230
 Playtesting - Crimsonkeep, FlameFreezer
 
+Update 0.18.4
+-Pyramid prioritizes finding a non-underground desert
+-Pyramid is now smaller
+-Visual improvements in various places
+-Expanded content, Remade some old content
+-Buffed default void regen speed, modified void costs around the board
+-Bug fixes (Thanks Creeper da Snek! and the people in the Discord server)
+
+Update 0.18.3.2
+-Some small tweaks
+-Homepage added!
+
 Update 0.18.3
 -Pyramid worldgen improved
 -Visual improvements in various places

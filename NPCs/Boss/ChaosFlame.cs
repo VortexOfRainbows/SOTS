@@ -20,9 +20,9 @@ namespace SOTS.NPCs.Boss
 		public override void SetDefaults()
 		{
             npc.aiStyle = 14; 
-			npc.lifeMax = 600;
+			npc.lifeMax = 1200;
             npc.damage = 70; 
-            npc.defense = 10;  
+            npc.defense = 60;  
             npc.knockBackResist = 0f;
             npc.width = 72;
             npc.height = 118;

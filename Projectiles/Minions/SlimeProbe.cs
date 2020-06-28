@@ -40,18 +40,11 @@ namespace SOTS.Projectiles.Minions
         public override void CheckActive()
         {
             Player player = Main.player[projectile.owner];
-            SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
-            if (!player.dead)
-            {
-                projectile.timeLeft = 2;
-            }
         }
- 
         public override void CreateDust()
         {
             Lighting.AddLight((int)(projectile.Center.X / 16f), (int)(projectile.Center.Y / 16f), 0.6f, 0.9f, 0.3f);
         }
- 
         public override void SelectFrame()
         {
             projectile.frameCounter++;

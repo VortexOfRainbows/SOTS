@@ -36,16 +36,16 @@ namespace SOTS.Items.Celestial
 		int count = 0;
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-			coolDown -= 1.65f;
-			count++;
-			type = count % 3 == 0 ? mod.ProjectileType("BluePunch") : count % 3 == 1 ? mod.ProjectileType("PurplePunch") : mod.ProjectileType("SilverPunch");
-              int numberProjectiles = 1;
-              for (int i = 0; i < numberProjectiles; i++)
-              {
-                  Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(18)); 
-                  Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI, 0, Main.rand.Next(2) == 0 ? 1 : -1);
-              }
-              return false; 
+			coolDown -= 2f;
+			int numberProjectiles = 2;
+			for (int i = 0; i < numberProjectiles; i++)
+			{
+				count++;
+				type = count % 3 == 0 ? mod.ProjectileType("BluePunch") : count % 3 == 1 ? mod.ProjectileType("PurplePunch") : mod.ProjectileType("SilverPunch");
+				Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(18)); 
+				Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI, 0, Main.rand.Next(2) == 0 ? 1 : -1);
+            }
+			return false; 
 		}
 		public override void UpdateInventory(Player player)
 		{
@@ -55,8 +55,8 @@ namespace SOTS.Items.Celestial
 			if(coolDown > 22f)
 				coolDown = 22f;
 			
-			if(coolDown < 6f)
-				coolDown = 6f;
+			if(coolDown < 8f)
+				coolDown = 8f;
 			
 			item.useTime = (int)coolDown;
 			item.useAnimation = (int)coolDown;

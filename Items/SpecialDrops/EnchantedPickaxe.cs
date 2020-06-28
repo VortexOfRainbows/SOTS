@@ -1,16 +1,16 @@
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using System;
-using Microsoft.Xna.Framework;
+
 namespace SOTS.Items.SpecialDrops
 {
 	public class EnchantedPickaxe : ModItem
-	{	int fireTimer = 0;
+	{	
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Enchanted Pickaxe");
-			Tooltip.SetDefault("Shoots an echanted pickaxe beam that breaks blocks\nAble to mine Hellstone");
+			Tooltip.SetDefault("");
 		}
 		public override void SetDefaults()
 		{
@@ -19,39 +19,42 @@ namespace SOTS.Items.SpecialDrops
             item.width = 34;   
             item.height = 34;   
             item.useStyle = 1;
-            item.UseSound = SoundID.Item1;
-			item.shoot = mod.ProjectileType("EnchantedPickaxeProj");
-			item.shootSpeed = 7f;
 			item.useTurn = true;
-            item.useTime = 12;
-            item.useAnimation = 24;
-			item.pick = 75;
-			item.axe = 10;
-			item.useStyle = 1;
-			item.knockBack = 5;
-			item.value = Item.sellPrice(0, 0, 80, 0);
+            item.useTime = 20;
+            item.useAnimation = 20;
+			item.pick = 100;
+			item.knockBack = 2.5f;
+			item.value = Item.sellPrice(0, 3, 0, 0);
             item.rare = 2;
 			item.UseSound = SoundID.Item1;
-			item.tileBoost++;
+			item.tileBoost = 2;
 			item.autoReuse = true;
-			item.channel = true;
-			
 		}
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-          {
-              int numberProjectiles = 0;
-			  fireTimer++;
-			  if(fireTimer >= 10)
-			  {
-				  fireTimer = 0;
-				  numberProjectiles = 1;
-			  }
-              for (int i = 0; i < numberProjectiles; i++)
-              {
-                  Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(0)); // This defines the projectiles random spread . 30 degree spread.
-                  Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI);
-              }
-              return false; 
-	}
+		public override void MeleeEffects(Player player, Rectangle hitbox)
+		{
+			if (Main.rand.Next(5) == 0)
+			{
+				int num = Main.rand.Next(3);
+				int type;
+				if (num == 0)
+				{
+					type = 15;
+				}
+				else
+				{
+					if (num == 1)
+					{
+						type = 57;
+					}
+					else
+					{
+						type = 58;
+					}
+				}
+				int num1 = Dust.NewDust(new Vector2(hitbox.X, hitbox.Y), hitbox.Width, hitbox.Height, type, player.direction * 2, 0f, 150, default(Color), 1.3f);
+				Main.dust[num1].velocity *= 0.2f;
+			}
+			base.MeleeEffects(player, hitbox);
+		}
 	}
 }

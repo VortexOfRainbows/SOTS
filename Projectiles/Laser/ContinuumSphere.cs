@@ -26,13 +26,6 @@ namespace SOTS.Projectiles.Laser
 		}
 		Vector2[] orbs = new Vector2[6]; //these should be the same size
 		Vector2[] orbsTo = new Vector2[6];
-		public override bool PreAI()
-        {
-			if(projectile.active)
-			return true;
-		
-			return false;
-		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
 			return false;
@@ -72,8 +65,11 @@ namespace SOTS.Projectiles.Laser
 		{
 			return false;
 		}
-		public override void AI()
+		public override bool PreAI()
 		{
+			if (!projectile.active)
+				return false;
+
 			Player player  = Main.player[projectile.owner];
 			if(projectile.ai[1] == 0f)
 			{
@@ -145,24 +141,28 @@ namespace SOTS.Projectiles.Laser
 
 			if (Main.myPlayer == player.whoAmI)
 			{
-				projectile.netUpdate = true;
-
-
 				double startingDirection = Math.Atan2((double)-shootToY, (double)-shootToX);
 				startingDirection *= 180 / Math.PI;
+				projectile.ai[0] = (float)startingDirection;
+				double deg = (double)projectile.ai[0];
+				double rad = deg * (Math.PI / 180);
+				double dist = 32;
+				projectile.position.X = player.Center.X - (int)(Math.Cos(rad) * dist) - projectile.width / 2;
+				projectile.position.Y = player.Center.Y - (int)(Math.Sin(rad) * dist) - projectile.height / 2;
 
+				projectile.netUpdate = true;
 				if (player.channel || projectile.timeLeft > 6)
 				{
 					projectile.timeLeft = 6;
 					projectile.alpha = 0;
-					if (Main.myPlayer == projectile.owner && ai1 % 2 == 0 && ai1 > 1)
+					if (Main.myPlayer == projectile.owner && ai1 > 1)
 					{
 						for (int i = 0; i < orbs.Length; i++)
 						{
 							float shootToX2 = orbsTo[i].X - player.Center.X;
 							float shootToY2 = orbsTo[i].Y - player.Center.Y;
 							float distance2 = (float)System.Math.Sqrt((double)(shootToX2 * shootToX2 + shootToY2 * shootToY2));
-							distance2 = 4f / distance2;
+							distance2 = 3.9f / distance2;
 							shootToX2 *= distance2 * 5f;
 							shootToY2 *= distance2 * 5f;
 							if (orbs.Length != 1)
@@ -180,13 +180,8 @@ namespace SOTS.Projectiles.Laser
 				{
 					VoidItem.DrainMana(player);
 				}
-				projectile.ai[0] = (float)startingDirection;
-				double deg = (double) projectile.ai[0]; 
-				double rad = deg * (Math.PI / 180);
-				double dist = 32;
-				projectile.position.X = player.Center.X - (int)(Math.Cos(rad) * dist) - projectile.width/2;
-				projectile.position.Y = player.Center.Y - (int)(Math.Sin(rad) * dist) - projectile.height/2;
 			}
+			return true;
 		}
 	}
 }

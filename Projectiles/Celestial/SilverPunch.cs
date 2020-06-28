@@ -35,7 +35,7 @@ namespace SOTS.Projectiles.Celestial
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.immune[projectile.owner] = 7;
+            target.immune[projectile.owner] = 5;
 		}
 		public override void AI()
 		{ 
@@ -60,7 +60,7 @@ namespace SOTS.Projectiles.Celestial
 				for(int i = 0; i < Main.npc.Length - 1; i++)
 				{
 					NPC target = Main.npc[i];
-					if(!target.friendly && target.dontTakeDamage == false && target.lifeMax > 5 && target.active)
+					if(!target.friendly && target.dontTakeDamage == false && target.lifeMax > 5 && target.active && target.CanBeChasedBy())
 					{
 						dX = target.Center.X - projectile.Center.X;
 						dY = target.Center.Y - projectile.Center.Y;

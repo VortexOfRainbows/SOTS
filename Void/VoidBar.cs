@@ -1,18 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
 using Terraria;
-using Terraria.GameContent.Dyes;
-using Terraria.Graphics.Effects;
-using Terraria.Graphics.Shaders;
-using Terraria.ID;
-using Terraria.Localization;
-using Terraria.ModLoader;
 using Terraria.UI;
-using Terraria.GameContent.UI;
-using Terraria.GameContent;
 using Terraria.GameContent.UI.Elements;
-using Terraria.GameContent.UI.States;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -89,7 +77,8 @@ namespace SOTS.Void
 			string voidManaText = voidmeter.ToString();
 			string voidManaMaxText = VoidPlayer.ModPlayer(player).voidMeterMax2.ToString();
 			
-			text.SetText(voidManaText  + "/" + voidManaMaxText + " Void"); 
+			if(text != null)
+				text.SetText(voidManaText  + "/" + voidManaMaxText + " Void"); 
 			float quotient = 1f;
 			//Calculate quotient
 			switch (stat)

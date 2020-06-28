@@ -1,7 +1,6 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using System;
 using Microsoft.Xna.Framework;
 using SOTS.Void;
 
@@ -9,8 +8,6 @@ namespace SOTS.Items
 {
 	public class SpectreSpiritStorm : VoidItem
 	{
-		int currentIndex = -1;
-		bool inInventory = false;
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Spectre Spirit Storm");
@@ -39,25 +36,14 @@ namespace SOTS.Items
 		}
 		public override void GetVoid(Player player)
 		{
-				voidMana = 6;
+			voidMana = 6;
 		}
 		public override Vector2? HoldoutOffset()
 		{
 			return new Vector2(4, 0);
 		}
-        public override bool BeforeUseItem(Player player)
-		{
-			if(inInventory)
-				return true;
-			return false;
-		}
-		public override void UpdateInventory(Player player)
-		{
-			inInventory = true;
-		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			inInventory = false;
 			Projectile.NewProjectile(position.X, position.Y, speedX, speedY, mod.ProjectileType("StormArrow"), damage, knockBack, player.whoAmI, 0, type);
 			return false; 
 		}

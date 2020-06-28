@@ -43,6 +43,25 @@ namespace SOTS.NPCs
 		{
 			return true;
 		}
+		public override void HitEffect(int hitDirection, double damage)
+		{
+			if (npc.life > 0)
+			{
+				int num = 0;
+				while ((double)num < damage / (double)npc.lifeMax * 100.0)
+				{
+					Dust.NewDust(npc.position, npc.width, npc.height, 4, (float)hitDirection, -1f, npc.alpha, new Color(186, 168, 84, 100), 1f);
+					num++;
+				}
+			}
+			else
+			{
+				for (int k = 0; k < 50; k++)
+				{
+					Dust.NewDust(npc.position, npc.width, npc.height, 4, (float)(2 * hitDirection), -2f, npc.alpha, new Color(186, 168, 84, 100), 1f);
+				}
+			}
+		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
 			if(spawnInfo.player.GetModPlayer<SOTSPlayer>().PyramidBiome && spawnInfo.spawnTileType == (ushort)mod.TileType("PyramidSlabTile"))

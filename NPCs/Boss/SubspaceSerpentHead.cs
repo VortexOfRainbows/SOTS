@@ -21,9 +21,9 @@ namespace SOTS.NPCs.Boss
         public override void SetDefaults()
         {
            
-            npc.lifeMax = 112500;      
+            npc.lifeMax = 130000;      
             npc.damage = 100;
-            npc.defense = 0;    
+            npc.defense = 50;    
             npc.knockBackResist = 0f;
             npc.width = 40;
             npc.height = 40;
@@ -33,15 +33,14 @@ namespace SOTS.NPCs.Boss
             npc.noTileCollide = true;  
             npc.HitSound = SoundID.NPCHit1;
             npc.DeathSound = SoundID.NPCDeath32;
-            npc.value = 10000;
+            npc.value = 100000;
             npc.npcSlots = 25;
             npc.netAlways = true;
 			music = MusicID.Boss2;
-            npc.buffImmune[69] = true;
-            npc.buffImmune[70] = true;
-            npc.buffImmune[39] = true;
-            npc.buffImmune[24] = true;
-			npc.buffImmune[BuffID.Frostburn] = true;
+			for (int i = 0; i < Main.maxBuffTypes; i++)
+			{
+				npc.buffImmune[i] = true;
+			}
 			npc.aiStyle = 6;
 			bossBag = mod.ItemType("SubspaceBag");
         }

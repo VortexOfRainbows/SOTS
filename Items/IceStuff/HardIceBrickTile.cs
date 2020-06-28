@@ -23,9 +23,9 @@ namespace SOTS.Items.IceStuff
 
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
 		{
-			r = 2.5f;
-			g = 12.5f;
-			b = 13.5f;
+			r = 1.25f;
+			g = 6.5f;
+			b = 6.75f;
 			r *= 0.4f;
 			g *= 0.4f;
 			b *= 0.4f;
