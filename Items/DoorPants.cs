@@ -3,11 +3,6 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.World.Generation;
-using Microsoft.Xna.Framework;
-using Terraria.GameContent.Generation;
-using System.Linq;
- 
 
 namespace SOTS.Items
 {
@@ -29,7 +24,7 @@ namespace SOTS.Items
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Door Pants");
-			Tooltip.SetDefault("Accelerates horizontal movement when going through vanilla doors");
+			Tooltip.SetDefault("Accelerates horizontal movement when going through doors");
 		}
 		
 		public override bool IsArmorSet(Item head, Item body, Item legs)

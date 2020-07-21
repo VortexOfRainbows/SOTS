@@ -25,7 +25,7 @@ namespace SOTS.Items.Vibrant
             item.noMelee = true;
 			item.knockBack = 3f;  
             item.value = Item.sellPrice(0, 0, 80, 0);
-            item.rare = ItemRarityID.Green;
+            item.rare = ItemRarityID.Blue;
             item.UseSound = SoundID.Item61;
             item.autoReuse = true;
             item.shoot = mod.ProjectileType("VibrantBall"); 

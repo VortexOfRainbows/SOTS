@@ -40,13 +40,15 @@ namespace SOTS.Projectiles.Vibrant
 			int num1 = Dust.NewDust(new Vector2(helixPos1.X - 4, helixPos1.Y - 4), 4, 4, 44);
 			Main.dust[num1].noGravity = true;
 			Main.dust[num1].velocity *= 0.2f;
-			
+			Main.dust[num1].alpha = 200;
+
 			Vector2 helixPos2 = projectile.Center + new Vector2(curve.X, 0).RotatedBy(radianDir - MathHelper.ToRadians(90));
 			num1 = Dust.NewDust(new Vector2(helixPos2.X - 4, helixPos2.Y - 4), 4, 4, 44);
 			Main.dust[num1].noGravity = true;
 			Main.dust[num1].velocity *= 0.2f;
+			Main.dust[num1].alpha = 200;
 
-			if(projectile.timeLeft % 12 == 0)
+			if (projectile.timeLeft % 12 == 0)
 			{
 				float currentVelo = projectile.velocity.Length();
 				float minDist = 360;
@@ -98,6 +100,7 @@ namespace SOTS.Projectiles.Vibrant
 			{
 				int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 44);
 				Main.dust[num1].noGravity = true;
+				Main.dust[num1].alpha = 200;
 			}
 		}
 	}

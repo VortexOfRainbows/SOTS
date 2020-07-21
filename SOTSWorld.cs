@@ -4,6 +4,7 @@ using System.Diagnostics.PerformanceData;
 using System.IO;
 using System.Linq;
 using Microsoft.Xna.Framework;
+using SOTS.Items;
 using Terraria;
 using Terraria.GameContent.Generation;
 using Terraria.ID;
@@ -1405,7 +1406,7 @@ namespace SOTS
 							selectTile.type = 274;
 						}
 					}
-					for(int findTileY = pyramidY + (size - 47); findTileY > pyramidY + 10; findTileY--)
+					for(int findTileY = pyramidY + (size - 55); findTileY > pyramidY + 10; findTileY--)
 					{
 						int max = Math.Abs((int)((findTileY - pyramidY) * 0.8f));
 						int min = Math.Abs((int)((findTileY - pyramidY) * 0.5f));
@@ -1665,7 +1666,7 @@ namespace SOTS
 					}
 				}
 				float counterRoom = 0;
-				for (int findTileY = pyramidY + (size - 70); findTileY > pyramidY + 40; findTileY--)
+				for (int findTileY = pyramidY + (size - 70); findTileY > pyramidY + 25; findTileY--)
 				{
 					counterRoom += 4f;
 					int width = findTileY - pyramidY;
@@ -1932,7 +1933,7 @@ namespace SOTS
 					{3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3},	
 					{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},		
 				};	
-					int[,] _zeplineWalls = {
+				int[,] _zeplineWalls = {
 					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,2,2,2,0,0,0,0,0,0,0,0,0,0},
@@ -1979,7 +1980,7 @@ namespace SOTS
 				};
 						
 				int pyramidPosX = pyramidX;
-				int pyramidPosY = pyramidY += (size - 40);
+				int pyramidPosY = pyramidY + (size - 40);
 				pyramidPosY -= (int)(.5f * _zepline.GetLength(0)) - 10;
 				
 				for(int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)
@@ -2114,7 +2115,58 @@ namespace SOTS
 						}
 					}
 				}
-				for(int findTileX = 100; findTileX < Main.maxTilesX - 100; findTileX++)
+
+				//rebuild outside of pyramid
+				for (int pyramidLevel = 0; pyramidLevel < size; pyramidLevel++)
+				{
+					for (int h = -pyramidLevel; h <= pyramidLevel; h++)
+					{
+						Tile tile = Framing.GetTileSafely(pyramidX + h, pyramidY + pyramidLevel);
+						if(pyramidLevel >= 20 && h < -pyramidLevel + 2 && h > pyramidLevel - 2)
+							if (tile.type != TileID.BlueDungeonBrick && tile.type != TileID.GreenDungeonBrick && tile.type != TileID.PinkDungeonBrick && tile.wall != 7 && tile.wall != 8 && tile.wall != 9 && tile.wall != 94 && tile.wall != 95 && tile.wall != 96 && tile.wall != 97 && tile.wall != 98 && tile.wall != 99) //check for not dungeon!
+							{
+								tile.type = (ushort)mod.TileType("PyramidSlabTile");
+								tile.slope(0);
+								tile.halfBrick(false);
+								tile.liquidType(0);
+								tile.liquid = 0;
+								tile.active(true);
+							}
+					}
+				}
+
+				for (int findTileY = pyramidY + (size - 30); findTileY > pyramidY + 30; findTileY--)
+				{
+					int width = findTileY - pyramidY;
+					for(int t = 0; t < 6; t++)
+					{
+						int findTileX = pyramidX + Main.rand.Next(-width, width + 1);
+						Tile tile = Framing.GetTileSafely(findTileX, findTileY);
+
+						for (int built = 0; built < 2; built++)
+						{
+							int tileX = findTileX;
+							if (tile.wall == (ushort)mod.WallType("PyramidWallTile") && (!tile.active() || Main.rand.Next(size / 3) == 0))
+							{
+								Tile tile2 = Framing.GetTileSafely(findTileX, findTileY - 3);
+								Tile tile3 = Framing.GetTileSafely(findTileX, findTileY + 3);
+								if (tile2.active() && tile2.type == (ushort)mod.TileType("PyramidSlabTile") && tile2.wall == (ushort)mod.WallType("PyramidWallTile"))
+								{
+									if (tile3.active() && tile3.type == (ushort)mod.TileType("PyramidSlabTile") && tile3.wall == (ushort)mod.WallType("PyramidWallTile"))
+									{
+										InfectionTester.Generate(new Vector2(findTileX * 16, findTileY * 16), mod);
+										findTileX += Main.rand.Next(-20, 21);
+									}
+									else break;
+								}
+								else break;
+							}
+							else break;
+						}
+					}
+				}
+
+				for (int findTileX = 100; findTileX < Main.maxTilesX - 100; findTileX++)
 				{
 					for(int findTileY = Main.maxTilesY - 100; findTileY > 100; findTileY--)
 					{
@@ -2552,7 +2604,7 @@ namespace SOTS
 				{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
 				{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
 				{1,1,1,1,1,1,1,1,1,7,1,1,1,1,1,1,1,1,1},
-				{8,8,8,8,8,8,8,4,0,0,0,4,8,8,8,8,8,8,8},
+				{8,8,8,8,8,8,8,4,13,13,13,4,8,8,8,8,8,8,8},
 				{0,2,8,8,8,10,10,10,10,10,10,10,10,10,8,8,8,2,0},
 				{0,2,2,8,8,9,4,4,4,4,4,4,4,11,8,8,2,2,0},
 				{0,0,2,2,8,8,8,9,4,4,4,11,8,8,8,2,2,0,0},
@@ -2577,7 +2629,7 @@ namespace SOTS
 							{
 								case 0:
 									tile.active(true);
-									tile.type = 511;
+									tile.type = (ushort)mod.TileType("PyramidSlabTile");
 									tile.slope(0);
 									tile.halfBrick(false);
 									break;
@@ -2691,6 +2743,12 @@ namespace SOTS
 											}
 										}
 									}
+									break;
+								case 13:
+									tile.active(true);
+									tile.type = (ushort)mod.TileType("CursedHive");
+									tile.slope(0);
+									tile.halfBrick(false);
 									break;
 							}
 						}

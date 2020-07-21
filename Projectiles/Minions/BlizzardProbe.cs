@@ -27,7 +27,7 @@ namespace SOTS.Projectiles.Minions
             Main.projFrames[projectile.type] = 1;
 			projectile.penetrate = -1;
 			projectile.friendly = false;
-			projectile.timeLeft = 960;
+			projectile.timeLeft = 300;
 			projectile.tileCollide = false;
 			projectile.hostile = false;
 			projectile.minion = true;
@@ -78,6 +78,10 @@ namespace SOTS.Projectiles.Minions
         {
 			Player player = Main.player[projectile.owner];
 			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
+			if (projectile.timeLeft > 100)
+			{
+				projectile.timeLeft = 300;
+			}
 			if (player.whoAmI == Main.myPlayer)
 			{
 				if (modPlayer.orbitalCounter % 60 == 0)

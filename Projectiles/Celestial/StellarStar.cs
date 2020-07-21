@@ -1,9 +1,5 @@
 using System;
-using System.IO;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
@@ -12,9 +8,7 @@ using Terraria.ID;
 namespace SOTS.Projectiles.Celestial
 {    
     public class StellarStar : ModProjectile 
-    {	int bounce = 8;
-		int wait = 1;              
-		float Speed = 1f;
+    {	
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("The Stariest of Starry Stars");
@@ -28,7 +22,7 @@ namespace SOTS.Projectiles.Celestial
 			projectile.friendly = true;
 			projectile.width = 14;
 			projectile.height = 14;
-			projectile.timeLeft = 3600;
+			projectile.timeLeft = 1200;
 			projectile.penetrate = -1;
 			projectile.tileCollide = false;
 		}
@@ -136,9 +130,6 @@ namespace SOTS.Projectiles.Celestial
 			projectile.timeLeft = 40;
 			projectile.friendly = false;
 			projectile.netUpdate = true;
-		}
-		public override void Kill(int timeLeft)
-		{
 		}
 	}
 }

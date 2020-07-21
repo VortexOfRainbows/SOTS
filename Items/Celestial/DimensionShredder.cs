@@ -45,7 +45,7 @@ namespace SOTS.Items.Celestial
 					Vector2 rotatePos = new Vector2(96, 0).RotatedBy(MathHelper.ToRadians(rot));
 					proj.position.X = rotatePos.X + player.Center.X - proj.width/2;
 					proj.position.Y = rotatePos.Y + player.Center.Y - proj.height/2;
-					proj.timeLeft = 6;
+					proj.timeLeft = 2;
 				}
 				else
 				{

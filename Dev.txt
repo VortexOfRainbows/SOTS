@@ -1,8 +1,5 @@
 The following is my development plans :D
 
-//Balance
-1. Shuriken slicer to vibrant iron
-
 //Later--- Balance
 2. Dissolving Nether => Focus Crystal, Dissolving Evil => Cursed Isocahedron
 5. Soul Charm takes Avaritia Scouter drop, heals mana
@@ -29,35 +26,96 @@ Priority: Remaining Spirits
 	6. Electrum plats will be struck with lightning every now-and-then
 		1. This super charges it, causing it to now zap nearby enemies (and players)
 		2. Drops more electrum (*5-15)
-8. Vibrant Iron/Lead Gear <= Iron + Glowing Mushroom + Earth Fragments (Early Game Ranged)
-10. New Pyramid enemy
-	1. Blockade Mimic
-		1. Can spawn upon breaking a pyramid block
-		2. can only move X/Y one at a time
-		3. charges back and forth
-		4. doesn't hurt you for a bit after spawning
-		5. cannot go through walls (except after it first escapes one)
 11. Tether Cord in pyramid
 	1. Attaches a second player to you
 13. Dissolving Element Blocks
 	1. Give off cool particles, can be used in summoning rituals
-16. Earthen Construct
-	1. Hides behind wall like worm, pokes head out, shots player, hides back in wall, repeat
-	2. Spirit hides in the background walls (alpha), and pokes it's head out trying to attack player
-		1. Attacks somewhat around the player, rather than on the player
-		2. Releases a few projectiles as it comes out
-		3. 2 fake spirits do the same thing, but are smaller, less damaging, and cannot be attacked
 18. Make a wall version of the Worldgen Capture
 
 Next Update:
-2. Earthen items, Earthen construct, and vibrant items
-3. Pyramid enemies, Leaking pyramid brick
 6. Banners for various enemies
-
-9. Normalize expert damage for serpants
 
 Later:
 4. Integrate support for new boss checklist
+
+7/20/20
+1. Blue Slimer only spawns in forests
+2. Placeable hive bricks do not spawn wall mimics
+3. Resized wall mimic release radius to only break a 3x3
+4. Wall mimic is no longer spawned by worms
+5. Wall mimic successfully spawns in walls, even in multiplayer
+
+
+7/19/20
+1. Dark Eye animated, doesn't sync with other dashes sadly ;(
+2. Dark Eye successfully drops, works in multiplayer
+3. Dark Eye more easily dashes through grounded enemies
+4. Infected pyramid brick worldgen, Infected brick spawns wall mimics
+
+7/18/20
+1. More work on Dark Eye
+2. Fixed tiny planet in multiplayer and added new rotation algorithm, same for arcane aqueduct.
+3. Fixed equipment summons doubling up in multiplayer
+
+7/17/20
+1. Wall Mimic, properly netsyncs
+2. The Dark Eye
+3. Sword/pick shrine room fixed
+
+7/16/20
+1. Infected Pyramid Tile
+
+7/15/20
+1. Sitting Mushroom complete, Cooked mushroom void heal, Sitting mushroom netsyncs
+2. Spore Sprayer
+
+7/13/20
+1. Scarlet and Violet stars
+2. Gave the dissolving blocks a bullshit actuated effect that doens't even look good
+3. Sprited Mushroom enemy
+
+7/12/20
+1. Dissolving Earth Block
+2. Earthen Spirit Staff, netsynces OK, though with some desyncs. It will never be anything more than visual and audio impact, and still minor.
+3. Sprited Violet and Scarlet stars	
+
+7/11/20
+1. Stellar Star spell timeleft 3600 => 1200 frames (60 sec => 20 sec)
+2. Earthen Construct and spirit now properly netsync
+3. Dissolving Earth
+4. Seismic Tonic, Fixed bugs with tonic crashing
+
+7/6/20
+1. Earthen Construct AI
+2. Vibrant Blade damage 16 => 13
+
+7/4/20 && 7/5/20
+1. Added armor
+2. Buffed possed armor
+3. Vibrant Rifle
+4. Minor armor resprites
+5. vibrant rifle multiplayer works fine
+6. Gore for Earthen Construct
+7. Buffed echo disk (from wall banging) and blooming vine
+
+7/3/20
+1. Sprited the items of vibrant armor pieces
+
+6/30/20
+1. Echo Disk
+2. Celestial Serpent resprite
+3. Frost probe no longer homes on dummies
+
+6/28/20
+1. Buffed serpent cannon damage persistence
+2. Galaxy blade damage 66 => 70, usetime 18 => 14
+3. Starstorm cost less mana 8 => 6
+4. Steller Serpent Staff damage 36 => 40
+5. Steller Shot fires faster 23 => 21, and fires an additional bullet each time
+6. Armageddon has increased critical strike chance 4% => 14%
+7. Normalize expert damage for serpants //nevermind, already normalized
+
+
 
 6/27/20
 1. Removed the capability to home onto dummies for several homing weapons (still missing some probably)

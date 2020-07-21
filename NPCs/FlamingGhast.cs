@@ -85,7 +85,7 @@ namespace SOTS.NPCs
             {
                 for (int k = 0; k < 6; k++)
                 {
-					int index = Projectile.NewProjectile((npc.Center.X), npc.Center.Y, Main.rand.Next(-7, 8), Main.rand.Next(-7, 8), 96, 30, npc.target, 0);
+					int index = Projectile.NewProjectile((npc.Center.X), npc.Center.Y, Main.rand.Next(-7, 8), Main.rand.Next(-7, 8), 96, 30, 0);
 					Main.projectile[index].friendly = true;
 					Main.projectile[index].hostile = true;
                 }

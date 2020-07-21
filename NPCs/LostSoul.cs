@@ -92,7 +92,7 @@ namespace SOTS.NPCs
 		}
 		public override void NPCLoot()
 		{
-				if(Main.rand.Next(2) == 0 || Main.expertMode)
+			if(Main.rand.Next(2) == 0 || Main.expertMode)
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("SoulResidue"), Main.rand.Next(2) + 1);	
 		}	
 	}

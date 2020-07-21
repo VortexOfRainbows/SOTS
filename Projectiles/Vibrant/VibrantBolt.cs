@@ -19,7 +19,7 @@ namespace SOTS.Projectiles.Vibrant
 			projectile.penetrate = 1;
 			projectile.width = 14;
 			projectile.height = 14;
-			projectile.alpha = 0;
+			projectile.alpha = 255;
 			projectile.timeLeft = 20;
 		}
 		public override void Kill(int timeLeft)
@@ -29,15 +29,18 @@ namespace SOTS.Projectiles.Vibrant
 				int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 44);
 				Main.dust[num1].noGravity = true;
 				Main.dust[num1].velocity *= 1.2f;
+				Main.dust[num1].alpha = 200;
 			}
 		}
 		public override void AI()
 		{
-			if(Main.rand.NextBool(3))
+			projectile.alpha -= 30;
+			if (Main.rand.NextBool(3))
 			{
 				int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 44);
 				Main.dust[num1].noGravity = true;
 				Main.dust[num1].velocity *= 0.1f;
+				Main.dust[num1].alpha = 200;
 			}
 
 			projectile.rotation = projectile.velocity.ToRotation();

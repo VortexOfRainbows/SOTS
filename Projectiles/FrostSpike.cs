@@ -1,13 +1,6 @@
 using System;
-using System.IO;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
-using Terraria.ID;
 
 namespace SOTS.Projectiles
 {    
@@ -16,9 +9,7 @@ namespace SOTS.Projectiles
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("FrostSpike");
-			
 		}
-		
         public override void SetDefaults()
         {
             projectile.width = 50;
@@ -28,14 +19,19 @@ namespace SOTS.Projectiles
             projectile.friendly = true; 
             projectile.hostile = false; 
             projectile.tileCollide = false;
-            projectile.ignoreWater = true; 
-            projectile.melee = true; 
-            projectile.aiStyle = 0; //18 is the demon scythe style
+            projectile.ignoreWater = true;
+			projectile.netImportant = true;
+			projectile.melee = true; 
+            projectile.aiStyle = 0;
 			projectile.alpha = 0;
 		}
 		public override void AI()
 		{
-					
+			if (projectile.timeLeft > 100)
+			{
+				projectile.timeLeft = 300;
+			}
+
 			Player player  = Main.player[projectile.owner];
 			projectile.rotation += 0.25f;
 			double deg = (double) projectile.ai[1]; 
@@ -43,7 +39,6 @@ namespace SOTS.Projectiles
 			double dist = 96;
 			projectile.position.X = player.Center.X - (int)(Math.Cos(rad) * dist) - projectile.width/2;
 			projectile.position.Y = player.Center.Y - (int)(Math.Sin(rad) * dist) - projectile.height/2;
-		 
 			projectile.ai[1] += 2f;
 			
 		}

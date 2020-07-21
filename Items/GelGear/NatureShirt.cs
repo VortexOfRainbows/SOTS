@@ -18,6 +18,7 @@ namespace SOTS.Items.GelGear
 		public override void DrawHands(ref bool drawHands, ref bool drawArms)
 		{
 			drawHands = true;
+			drawArms = false;
 		}
 		public override void SetStaticDefaults()
 		{

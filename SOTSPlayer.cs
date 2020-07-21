@@ -28,6 +28,7 @@ namespace SOTS
 		*/
 		Vector2 playerMouseWorld;
 		public bool weakerCurse = false;
+		public bool vibrantArmor = false;
 		public int brokenFrigidSword = 0;
 		public int shardSpellExtra = 0;
 		public int frigidJavelinBoost = 0;
@@ -109,6 +110,7 @@ namespace SOTS
 		}
 		public override void ResetEffects()
 		{
+			vibrantArmor = false;
 			shardSpellExtra = 0;
 			frigidJavelinBoost = 0;
 			brokenFrigidSword = brokenFrigidSword > 0 ? brokenFrigidSword - 1 : brokenFrigidSword;
@@ -324,9 +326,12 @@ namespace SOTS
 				float speed = 16.0f / distance;
 				dX *= speed;
 				dY *= speed;
-
-				int Proj = Projectile.NewProjectile(npc.Center.X - dX * 5, npc.Center.Y - dY * 5, dX, dY, 507, 12, 25f, player.whoAmI);
-				Main.projectile[Proj].timeLeft = 15;
+				if(Main.myPlayer == player.whoAmI)
+				{
+					int Proj = Projectile.NewProjectile(npc.Center.X - dX * 5, npc.Center.Y - dY * 5, dX, dY, 507, 12, 25f, player.whoAmI);
+					Main.projectile[Proj].timeLeft = 15;
+					Main.projectile[Proj].netUpdate = true;
+				}
 			}
 		}
 		public override void OnHitByProjectile(Projectile proj, int damage, bool crit)
@@ -464,7 +469,8 @@ namespace SOTS
 				for(int i = 0; i < shardOnHit; i++)
 				{
 					Vector2 circularSpeed = new Vector2(0, -12).RotatedBy(MathHelper.ToRadians(i * (360f/shardOnHit)));
-					Projectile.NewProjectile(player.Center.X, player.Center.Y, circularSpeed.X, circularSpeed.Y, mod.ProjectileType("ShatterShard"), 10 + bonusShardDamage, 3f, player.whoAmI);
+					if(Main.myPlayer == player.whoAmI)
+						Projectile.NewProjectile(player.Center.X, player.Center.Y, circularSpeed.X, circularSpeed.Y, mod.ProjectileType("ShatterShard"), 10 + bonusShardDamage, 3f, player.whoAmI);
 				}
 			}
 			if(Main.expertMode == true)

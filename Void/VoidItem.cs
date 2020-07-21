@@ -37,7 +37,7 @@ namespace SOTS.Void
 			{
 				voidManaAmount = 1;
 			}
-			add += 1 - realDamageBoost;
+			add += realDamageBoost - 1;
 		}
 		public override void GetWeaponKnockback(Player player, ref float knockback) 	
 		{

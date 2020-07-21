@@ -1,10 +1,5 @@
-using System;
-using System.IO;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
-
 using Terraria.ModLoader;
 
 namespace SOTS.Items.SoldStuff
@@ -22,18 +17,14 @@ namespace SOTS.Items.SoldStuff
             item.width = 60;     
             item.height = 22;   
             item.value = 15000000;
-            item.rare = 4;
+            item.rare = ItemRarityID.Red;
 			item.accessory = true;
 			item.defense = 69696969;
-
+			item.expert = true;
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			player.endurance = -696968f;
-			
-            
-					
 		}
-		
 	}
 }

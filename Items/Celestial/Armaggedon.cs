@@ -32,6 +32,7 @@ namespace SOTS.Items.Celestial
 			item.consumable = false;
 			item.noMelee = true;
 			item.noUseGraphic = true;
+			item.crit = 10;
 		}
 		int count = 0;
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

@@ -17,12 +17,12 @@ namespace SOTS.Items.Celestial
 		public override void SetDefaults()
 		{
 
-			item.damage = 66;
+			item.damage = 70;
 			item.melee = true;
 			item.width = 42;
 			item.height = 42;
-			item.useTime = 18;
-			item.useAnimation = 18;
+			item.useTime = 14;
+			item.useAnimation = 14;
 			item.useStyle = 1;
 			item.knockBack = 4.5f;
 			item.value = Item.sellPrice(0, 9, 0, 0);

@@ -46,7 +46,6 @@ namespace SOTS.NPCs.Constructs
             npc.HitSound = SoundID.NPCHit54;
             npc.DeathSound = SoundID.NPCDeath6;
             npc.netAlways = false;
-			music = MusicID.Boss3;
 		}
 		private int InitiateHealth = 3000;
 		private float ExpertHealthMult = 1.25f;

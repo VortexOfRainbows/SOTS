@@ -80,7 +80,7 @@ namespace SOTS.Projectiles.Minions
 		{
 			Player player = Main.player[projectile.owner];
 		
-			projectile.netUpdate = true;
+			projectile.netUpdate = true; //idk why this works but I'm keeping it here because it does
 			#region Active check
 			if (player.dead || !player.active) 
 			{
@@ -144,7 +144,7 @@ namespace SOTS.Projectiles.Minions
 						bool inRange = between < distanceFromTarget;
 						bool lineOfSight = Collision.CanHitLine(projectile.position, projectile.width, projectile.height, npc.position, npc.width, npc.height);
 						
-						bool closeThroughWall = between < 800f; //should attack semi-reliably through walls
+						bool closeThroughWall = between < 200f; //should attack semi-reliably through walls
 						if (inRange && (lineOfSight || closeThroughWall))
 						{
 							distanceFromTarget = between;

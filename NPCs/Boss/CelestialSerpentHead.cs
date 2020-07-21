@@ -50,9 +50,8 @@ namespace SOTS.NPCs.Boss
 			potionType = ItemID.GreaterHealingPotion;
 			npc.position = player.position;
 			if(Main.expertMode)
-			
 			{ 
-			npc.DropBossBags();
+				npc.DropBossBags();
 			} 
 			else 
 			{
@@ -287,7 +286,6 @@ namespace SOTS.NPCs.Boss
  
             return true;
         }
- 
         public override bool PreDraw(Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch, Color drawColor)
         {
             Texture2D texture = Main.npcTexture[npc.type];

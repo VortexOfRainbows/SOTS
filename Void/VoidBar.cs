@@ -90,6 +90,10 @@ namespace SOTS.Void
 				default:
 					break;
 			}
+			if(quotient > 1)
+			{
+				quotient = 1;
+			}
 			barAmount.Width.Set(quotient * 188, 0f);
 			Recalculate();
 

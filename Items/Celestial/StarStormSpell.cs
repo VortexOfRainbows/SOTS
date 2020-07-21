@@ -31,7 +31,7 @@ namespace SOTS.Items.Celestial
             item.autoReuse = true;
             item.shootSpeed = 51f; 
 			item.shoot = mod.ProjectileType("StellarStar");
-			item.mana = 8;
+			item.mana = 6;
 
 		}
 		public override void AddRecipes()

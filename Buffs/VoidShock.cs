@@ -21,7 +21,7 @@ namespace SOTS.Buffs
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			voidPlayer.voidShock = true;
-			voidPlayer.voidRegen *= 0.1f;
+			voidPlayer.voidRegen *= 0.01f;
 			if(player.buffTime[buffIndex] <= 6 || voidPlayer.voidMeter > 0)
 			{
 				if(player.buffTime[buffIndex] <= 6 )

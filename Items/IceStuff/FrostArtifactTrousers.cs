@@ -32,17 +32,18 @@ namespace SOTS.Items.IceStuff
 		{
 			player.moveSpeed += 0.1f;
 			player.meleeSpeed += 0.1f;
-			
-			if (Probe == -1)
+			if (Main.myPlayer == player.whoAmI)
 			{
+				if (Probe == -1)
+				{
 					Probe = Projectile.NewProjectile(player.Center.X, player.Center.Y - 150, 0, 0, mod.ProjectileType("FrostProbe"), 60, 1, player.whoAmI);
-					}
+				}
 				if (!Main.projectile[Probe].active || Main.projectile[Probe].type != mod.ProjectileType("FrostProbe"))
 				{
 					Probe = Projectile.NewProjectile(player.Center.X, player.Center.Y - 150, 0, 0, mod.ProjectileType("FrostProbe"), 60, 1, player.whoAmI);
 				}
 				Main.projectile[Probe].timeLeft = 6;
-				
+			}
 		}
 		public override void AddRecipes()
 		{

@@ -140,7 +140,7 @@ namespace SOTS.NPCs
 			{
 				for (int i = 0; i < 30; i++)
 				{
-					Dust.NewDust(npc.position, npc.width, npc.height, 53, 2.5f * (float)hitDirection, -2.5f, 0, new Color(), 1f);
+					Dust.NewDust(npc.position, npc.width, npc.height, DustID.Blood, 2.5f * (float)hitDirection, -2.5f, 0, new Color(), 1f);
 				}
 				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/SnakeGore1"), 1f);
 				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/SnakeGore2"), 1f);
@@ -150,7 +150,7 @@ namespace SOTS.NPCs
 			{
 				for (int i = 0; i < damage / (float)npc.lifeMax * 50.0; i++)
 				{
-					Dust.NewDust(npc.position, npc.width, npc.height, 53, (float)hitDirection, -1f, 0, new Color(), 0.8f);
+					Dust.NewDust(npc.position, npc.width, npc.height, DustID.Blood, (float)hitDirection, -1f, 0, new Color(), 0.8f);
 				}
 			}
 		}

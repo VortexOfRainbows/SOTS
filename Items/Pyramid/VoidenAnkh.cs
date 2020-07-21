@@ -38,9 +38,10 @@ namespace SOTS.Items.Pyramid
 			
 			if(voidPlayer.voidAnkh < 5)
 			{
-			voidPlayer.voidMeterMax += 20;
-			voidPlayer.voidAnkh += 1;
-			return true;
+				voidPlayer.voidMeterMax += 20;
+				VoidPlayer.VoidEffect(player, 20);
+				voidPlayer.voidAnkh += 1;
+				return true;
 			}
 			return false;
 		}

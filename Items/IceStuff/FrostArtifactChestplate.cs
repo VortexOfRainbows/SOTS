@@ -30,20 +30,21 @@ namespace SOTS.Items.IceStuff
 
 		public override void UpdateEquip(Player player)
 		{
-				player.meleeCrit += 10;
-				player.rangedCrit += 10;
-				
-			if (Probe == -1)
+			player.meleeCrit += 10;
+			player.rangedCrit += 10;
+			if (Main.myPlayer == player.whoAmI)
 			{
+				if (Probe == -1)
+				{
 					Probe = Projectile.NewProjectile(player.Center.X, player.Center.Y - 150, 0, 0, mod.ProjectileType("FrostSpike"), 60, 1, player.whoAmI);
-					}
+				}
 				if (!Main.projectile[Probe].active || Main.projectile[Probe].type != mod.ProjectileType("FrostSpike"))
 				{
 					Probe = Projectile.NewProjectile(player.Center.X, player.Center.Y - 150, 0, 0, mod.ProjectileType("FrostSpike"), 60, 1, player.whoAmI);
 				}
 				Main.projectile[Probe].timeLeft = 6;
+			}
 		}
-
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);

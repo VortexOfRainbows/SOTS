@@ -14,7 +14,7 @@ namespace SOTS.Items.Vibrant
 		}
 		public override void SafeSetDefaults()
 		{
-			item.damage = 16;
+			item.damage = 13;
 			item.melee = true;
 			item.width = 32;
 			item.height = 34;

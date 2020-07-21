@@ -20,8 +20,8 @@ namespace SOTS.Items.Celestial
             item.ranged = true;   
             item.width = 60;    
             item.height = 24;  
-            item.useTime = 23;  
-            item.useAnimation = 23;
+            item.useTime = 21;  
+            item.useAnimation = 21;
             item.useStyle = 5;    
             item.noMelee = true; 
             item.knockBack = 1;
@@ -39,7 +39,7 @@ namespace SOTS.Items.Celestial
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-            int numberProjectiles = 2 + Main.rand.Next(2);
+            int numberProjectiles = 3 + Main.rand.Next(2);
             for (int i = 0; i < numberProjectiles; i++)
             {
                 Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(4));
@@ -49,7 +49,7 @@ namespace SOTS.Items.Celestial
 				  
 			Vector2 perturbedSpeed3 = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(32)); 
 			  
-			if(numberProjectiles == 2)
+			if(numberProjectiles == 3)
             Projectile.NewProjectile(position.X, position.Y, perturbedSpeed2.X * 0.75f, perturbedSpeed2.Y * 0.75f, mod.ProjectileType("StellarStar"), damage, knockBack, player.whoAmI);
 			  
             Projectile.NewProjectile(position.X, position.Y, perturbedSpeed3.X * 0.75f, perturbedSpeed3.Y * 0.75f, mod.ProjectileType("StellarStar"), damage, knockBack, player.whoAmI);

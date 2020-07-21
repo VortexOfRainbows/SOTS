@@ -47,24 +47,30 @@ namespace SOTS.NPCs.Boss
 			{
 				npc.alpha = 100;
 			}
-			int dust = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y),32, 20, mod.DustType("CurseDust"));
+			int dust = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), 32, 28, mod.DustType("CurseDust"));
 			Main.dust[dust].alpha = npc.alpha;
 			Main.dust[dust].noGravity = true;
-			Main.dust[dust].velocity.Y = -4;
+			Main.dust[dust].velocity.Y *= 0.6f;
 			Main.dust[dust].velocity.X = -npc.velocity.X;
-			
-					if(!player.GetModPlayer<SOTSPlayer>().PyramidBiome)
-					{
-						npc.dontTakeDamage = false;
-					}
-					
-					
 		}
-		
-		public override void NPCLoot()
+		public override void HitEffect(int hitDirection, double damage)
 		{
-			for(int i = 0; i < 9; i ++)
-			Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), 32, 28, mod.DustType("CurseDust"));
-		}	
+			if (npc.life > 0)
+			{
+				int num = 0;
+				while ((double)num < damage / (double)npc.lifeMax * 10.0)
+				{
+					Dust.NewDust(npc.position, npc.width, npc.height, mod.DustType("CurseDust"), (float)(2 * hitDirection), -2f);
+					num++;
+				}
+			}
+			else
+			{
+				for (int k = 0; k < 14; k++)
+				{
+					Dust.NewDust(npc.position, npc.width, npc.height, mod.DustType("CurseDust"), (float)(2 * hitDirection), -2f);
+				}
+			}
+		}
 	}
 }

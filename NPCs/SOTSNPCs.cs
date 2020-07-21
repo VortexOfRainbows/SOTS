@@ -140,10 +140,10 @@ namespace SOTS.NPCs
 		{
 			if(player.GetModPlayer<SOTSPlayer>().PyramidBiome)
 			{
-				if(spawnRate > 50)
+				if(spawnRate > 60)
 				{
-					spawnRate = 50;
-					maxSpawns = (int)(maxSpawns * 2.5f);
+					spawnRate = 60;
+					maxSpawns = (int)(maxSpawns * 2f);
 				}
 			}
 		}

@@ -142,10 +142,15 @@ namespace SOTS.Items.Fragments
 				color.A = 0;
 			}
 			ulong randSeed2 = Main.TileFrameSeed ^ (ulong)((long)j << 32 | (long)((ulong)i));
-			for (int l = 0; l < 7; l++)
+			for (int l = 0; l < 7 - (Main.tile[i, j].inActive() ? 1 : 0); l++)
 			{
 				float x = (float)Utils.RandomInt(ref randSeed2, -16, 17) * 0.1f;
 				float y = (float)Utils.RandomInt(ref randSeed2, -16, 17) * 0.1f;
+				if (Main.tile[i, j].inActive() && l < 4)
+				{
+					x = 0;
+					y = 0;
+				}
 				bool canUp = true;
 				bool canDown = true;
 				bool canLeft = true;
@@ -190,8 +195,8 @@ namespace SOTS.Items.Fragments
 				new Rectangle(0, 20 * (Main.tile[i, j].halfBrick() ? 1 : Main.tile[i, j].slope() > 0 ? Main.tile[i, j].slope() + 1 : 0), 16, 20), color, 0f, default, 1f, SpriteEffects.None, 0f);
 			}
 			//spriteBatch.Draw(texture, drawPos, null, color, 0, new Vector2(0,0), 1, SpriteEffects.None, 0f);
-			
-			return true;
+
+			return !Main.tile[i, j].inActive();
 		}
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
         {

@@ -35,33 +35,36 @@ namespace SOTS.Items.GelGear
         public override void UpdateArmorSet(Player player)
         {	
 			player.setBonus = "Summons three Blooming Hooks to assist in combat";
-			if (Probe == -1)
+			if (Main.myPlayer == player.whoAmI)
 			{
-				Probe = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, mod.ProjectileType("BloomingHook"), (int)(11 * (1f + (player.minionDamage - 1f) + (player.allDamage - 1f))), 0.4f, player.whoAmI);
+				if (Probe == -1)
+				{
+					Probe = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, mod.ProjectileType("BloomingHook"), (int)(11 * (1f + (player.minionDamage - 1f) + (player.allDamage - 1f))), 0.4f, player.whoAmI);
+				}
+				if (!Main.projectile[Probe].active || Main.projectile[Probe].type != mod.ProjectileType("BloomingHook"))
+				{
+					Probe = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, mod.ProjectileType("BloomingHook"), (int)(11 * (1f + (player.minionDamage - 1f) + (player.allDamage - 1f))), 0.4f, player.whoAmI);
+				}
+				Main.projectile[Probe].timeLeft = 6;
+				if (Probe2 == -1)
+				{
+					Probe2 = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, mod.ProjectileType("BloomingHook"), (int)(11 * (1f + (player.minionDamage - 1f) + (player.allDamage - 1f))), 0.4f, player.whoAmI);
+				}
+				if (!Main.projectile[Probe2].active || Main.projectile[Probe2].type != mod.ProjectileType("BloomingHook"))
+				{
+					Probe2 = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, mod.ProjectileType("BloomingHook"), (int)(11 * (1f + (player.minionDamage - 1f) + (player.allDamage - 1f))), 0.4f, player.whoAmI);
+				}
+				Main.projectile[Probe2].timeLeft = 6;
+				if (Probe3 == -1)
+				{
+					Probe3 = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, mod.ProjectileType("BloomingHook"), (int)(11 * (1f + (player.minionDamage - 1f) + (player.allDamage - 1f))), 0.4f, player.whoAmI);
+				}
+				if (!Main.projectile[Probe3].active || Main.projectile[Probe3].type != mod.ProjectileType("BloomingHook"))
+				{
+					Probe3 = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, mod.ProjectileType("BloomingHook"), (int)(11 * (1f + (player.minionDamage - 1f) + (player.allDamage - 1f))), 0.4f, player.whoAmI);
+				}
+				Main.projectile[Probe3].timeLeft = 6;
 			}
-			if (!Main.projectile[Probe].active || Main.projectile[Probe].type != mod.ProjectileType("BloomingHook"))
-			{
-				Probe = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, mod.ProjectileType("BloomingHook"), (int)(11 * (1f + (player.minionDamage - 1f) + (player.allDamage - 1f))), 0.4f, player.whoAmI);
-			}
-			Main.projectile[Probe].timeLeft = 6;
-			if (Probe2 == -1)
-			{
-				Probe2 = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, mod.ProjectileType("BloomingHook"), (int)(11 * (1f + (player.minionDamage - 1f) + (player.allDamage - 1f))), 0.4f, player.whoAmI);
-			}
-			if (!Main.projectile[Probe2].active || Main.projectile[Probe2].type != mod.ProjectileType("BloomingHook"))
-			{
-				Probe2 = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, mod.ProjectileType("BloomingHook"), (int)(11 * (1f + (player.minionDamage - 1f) + (player.allDamage - 1f))), 0.4f, player.whoAmI);
-			}
-			Main.projectile[Probe2].timeLeft = 6;
-			if (Probe3 == -1)
-			{
-				Probe3 = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, mod.ProjectileType("BloomingHook"), (int)(11 * (1f + (player.minionDamage - 1f) + (player.allDamage - 1f))), 0.4f, player.whoAmI);
-			}
-			if (!Main.projectile[Probe3].active || Main.projectile[Probe3].type != mod.ProjectileType("BloomingHook"))
-			{
-				Probe3 = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, mod.ProjectileType("BloomingHook"), (int)(11 * (1f + (player.minionDamage - 1f) + (player.allDamage - 1f))), 0.4f, player.whoAmI);
-			}
-			Main.projectile[Probe3].timeLeft = 6;
 		}
 		public override void UpdateEquip(Player player)
 		{

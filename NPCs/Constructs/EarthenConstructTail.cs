@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -8,8 +9,7 @@ using Terraria.ModLoader;
 namespace SOTS.NPCs.Constructs
 {   
     public class EarthenConstructTail : ModNPC
-    {	int ai1 = 0;
-	int ai2 = 0;
+    {	
 		public override void SetStaticDefaults()
 		{
 			
@@ -32,7 +32,46 @@ namespace SOTS.NPCs.Constructs
             npc.HitSound = SoundID.NPCHit4;
             npc.DeathSound = SoundID.NPCDeath14;
         }
- 
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write(npc.scale);
+            writer.Write(npc.width);
+            writer.Write(npc.height);
+        }
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            npc.scale = reader.ReadSingle();
+            npc.width = reader.ReadInt32();
+            npc.height = reader.ReadInt32();
+        }
+        public override void HitEffect(int hitDirection, double damage)
+        {
+            if (npc.life <= 0)
+            {
+
+                for (int k = 0; k < 10; k++)
+                {
+                    Dust.NewDust(npc.position, npc.width, npc.height, 82, 2.5f * (float)hitDirection, -2.5f, 0, default(Color), 0.7f);
+                }
+                for (int i = 0; i < 5; i++)
+                {
+                    int dust = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, mod.DustType("BigEarthDust"));
+                    Main.dust[dust].velocity *= 5f;
+                }
+                //Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/EarthenConstructGore2"), 1f);
+                if(Main.rand.NextBool(3))
+                    Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/EarthenConstructGore1"), 1f);
+                if (Main.rand.NextBool(3))
+                    Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/EarthenConstructGore3"), 1f);
+                if (Main.rand.NextBool(3))
+                    Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/EarthenConstructGore4"), 1f);
+                if (Main.rand.NextBool(3))
+                    Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/EarthenConstructGore5"), 1f);
+
+                for (int i = 0; i < 4; i++)
+                    Gore.NewGore(npc.position, npc.velocity, Main.rand.Next(61, 64), 1f);
+            }
+        }
         public override bool PreAI()
         {
             if (npc.ai[3] > 0)
@@ -52,12 +91,16 @@ namespace SOTS.NPCs.Constructs
                     NetMessage.SendData(28, -1, -1, null, npc.whoAmI, -1f, 0.0f, 0.0f, 0, 0, 0);
                 }
             }
-            if(npc.ai[2] != -1)
+            if(npc.ai[2] >= 0)
             {
                 npc.scale = 5f / (npc.ai[2] + 6);
                 npc.width = (int)(npc.width * npc.scale);
                 npc.height = (int)(npc.height * npc.scale);
-                npc.ai[2] = -1;
+                npc.ai[2] = -npc.ai[2];
+                if(Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    npc.netUpdate = true;
+                }
             }
  
             if (npc.ai[1] < (double)Main.npc.Length)
@@ -89,7 +132,7 @@ namespace SOTS.NPCs.Constructs
             Vector2 origin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
             Texture2D texture2 = mod.GetTexture("NPCs/Constructs/EarthenConstruct");
             Vector2 origin2 = new Vector2(texture2.Width * 0.5f, texture2.Height * 0.5f);
-            Main.spriteBatch.Draw(texture2, npc.Center - Main.screenPosition, new Rectangle?(), drawColor, npc.rotation - MathHelper.ToRadians(npc.localAI[0]), origin2, npc.scale + 0.04f, SpriteEffects.None, 0);
+            Main.spriteBatch.Draw(texture2, npc.Center - Main.screenPosition, new Rectangle?(), drawColor, npc.rotation - MathHelper.ToRadians(npc.localAI[1]), origin2, npc.scale + 0.04f, SpriteEffects.None, 0);
             Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition, new Rectangle?(), drawColor, npc.rotation - MathHelper.ToRadians(90), origin, npc.scale + 0.04f, SpriteEffects.None, 0);
             return false;
         }
@@ -99,7 +142,7 @@ namespace SOTS.NPCs.Constructs
         }
 		public override void PostAI()
 		{
-            npc.localAI[0] += 3;
+            npc.localAI[1] += 3;
 			npc.timeLeft = 100;
 		}
     }

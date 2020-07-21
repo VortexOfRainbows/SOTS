@@ -52,9 +52,8 @@ namespace SOTS.NPCs.Boss
 		
 			npc.position = player.position;
 			if(Main.expertMode)
-			
 			{ 
-			npc.DropBossBags();
+				npc.DropBossBags();
 			} 
 			else 
 			{

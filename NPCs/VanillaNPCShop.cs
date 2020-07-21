@@ -16,9 +16,7 @@ namespace SOTS.NPCs
 			}
 		}
 		public override void SetupShop(int type, Chest shop, ref int nextSlot)
-		{
-			
-			
+		{	
             switch (type)
             {
                 case NPCID.Merchant: 

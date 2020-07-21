@@ -28,18 +28,21 @@ namespace SOTS.Items.IceStuff
 		int[] Probes = { -1, -1, -1, -1, -1, -1, -1, -1 };
 		public void ProbesGen(Player player)
 		{
-			int type = mod.ProjectileType("BlizzardProbe");
-			for (int i = 0; i < Probes.Length; i++)
+			int type = mod.ProjectileType("BlizzardProbe"); 
+			if (player.whoAmI == Main.myPlayer)
 			{
-				if (Probes[i] == -1)
+				for (int i = 0; i < Probes.Length; i++)
 				{
-					Probes[i] = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, type, (int)(item.damage * (1 + (player.minionDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI, i, i * 15);
+					if (Probes[i] == -1)
+					{
+						Probes[i] = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, type, (int)(item.damage * (1 + (player.minionDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI, i, i * 15);
+					}
+					if (!Main.projectile[Probes[i]].active || Main.projectile[Probes[i]].type != type || Main.projectile[Probes[i]].ai[0] != i)
+					{
+						Probes[i] = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, type, (int)(item.damage * (1 + (player.minionDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI, i, i * 15);
+					}
+					Main.projectile[Probes[i]].timeLeft = 6;
 				}
-				if (!Main.projectile[Probes[i]].active || Main.projectile[Probes[i]].type != type || Main.projectile[Probes[i]].ai[0] != i)
-				{
-					Probes[i] = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, type, (int)(item.damage * (1 + (player.minionDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI, i, i * 15);
-				}
-				Main.projectile[Probes[i]].timeLeft = 6;
 			}
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)

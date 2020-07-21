@@ -4,6 +4,9 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
+using System;
+using System.Linq;
 
 namespace SOTS.Items.Potions
 {
@@ -62,54 +65,52 @@ namespace SOTS.Items.Potions
 		{
 			return true;
 		}
-		public override bool UseItem(Player player) 
+		public override bool UseItem(Player player)
 		{
-			int type1 = Main.rand.Next(4);
-			int type2 = Main.rand.Next(4);
-			while(type1 == (player.HasBuff(BuffID.Ironskin) ? 0 : -1) || type1 == (player.HasBuff(mod.BuffType("GoodVibes")) ? 1 : -1) || type1 == (player.HasBuff(BuffID.Swiftness) ? 2 : -1) || type1 == (player.HasBuff(BuffID.Regeneration) ? 3 : -1))
-			{
-				type1 = Main.rand.Next(4);
-				if(player.HasBuff(BuffID.Ironskin) && player.HasBuff(mod.BuffType("GoodVibes")) && player.HasBuff(BuffID.Swiftness) && player.HasBuff(BuffID.Regeneration))
-				{
-					type1 = -1;
-					break;
-				}
-			}
-			while(type1 == type2 || type2 == (player.HasBuff(BuffID.Ironskin) ? 0 : -1) || type2 == (player.HasBuff(mod.BuffType("GoodVibes")) ? 1 : -1) || type2 == (player.HasBuff(BuffID.Swiftness) ? 2 : -1) || type2 == (player.HasBuff(BuffID.Regeneration) ? 3 : -1))
-			{
-				type2 = Main.rand.Next(4);
-				if(player.HasBuff(BuffID.Ironskin) && player.HasBuff(mod.BuffType("GoodVibes")) && player.HasBuff(BuffID.Swiftness) && player.HasBuff(BuffID.Regeneration))
-				{
-					type2 = -1;
-					break;
-				}
-			}
 			int minute = 3600;
+			int type1 = -1;
+			int type2 = -1;
+			int buff1 = BuffID.Ironskin;
+			int buff2 = mod.BuffType("GoodVibes");
+			int buff3 = BuffID.Swiftness;
+			int buff4 = BuffID.Regeneration;
+			List<int> capableEffects = new List<int>();
+
+			if (!player.HasBuff(buff1))
+				capableEffects.Add(buff1);
+			if (!player.HasBuff(buff2))
+				capableEffects.Add(buff2);
+			if (!player.HasBuff(buff3))
+				capableEffects.Add(buff3);
+			if (!player.HasBuff(buff4))
+				capableEffects.Add(buff4);
+			
+			if(capableEffects.Count() >= 1)
+			{
+				type1 = capableEffects[Main.rand.Next(capableEffects.Count())];
+				capableEffects.Remove(type1);
+			}
+
+			if (capableEffects.Count() >= 1)
+				type2 = capableEffects[Main.rand.Next(capableEffects.Count())];
+
             if (player.whoAmI == Main.myPlayer && player.itemTime == 0)
             {
 				if(type1 == -1 && type2 == -1)
 				{
-					player.AddBuff(BuffID.Ironskin, minute * 15, true);
-					player.AddBuff(mod.BuffType("GoodVibes"), minute * 13, true);
-					player.AddBuff(BuffID.Swiftness, minute * 11, true);
-					player.AddBuff(BuffID.Regeneration, minute * 9, true);
+					player.AddBuff(buff1, minute * 15, true);
+					player.AddBuff(buff2, minute * 13, true);
+					player.AddBuff(buff3, minute * 11, true);
+					player.AddBuff(buff4, minute * 9, true);
 				}
-				if(type1 == 0 || type2 == 0)
-				{
-					player.AddBuff(BuffID.Ironskin, minute * 15, true);
-				}
-				if(type1 == 1 || type2 == 1)
-				{
-					player.AddBuff(mod.BuffType("GoodVibes"), minute * 13, true);
-				}
-				if(type1 == 2 || type2 == 2)
-				{
-					player.AddBuff(BuffID.Swiftness, minute * 11, true);
-				}
-				if(type1 == 3 || type2 == 3)
-				{
-					player.AddBuff(BuffID.Regeneration, minute * 9, true);
-				}
+				if(type1 == buff1 || type2 == buff1)
+					player.AddBuff(buff1, minute * 15, true);
+				if(type1 == buff2 || type2 == buff2)
+					player.AddBuff(buff2, minute * 13, true);
+				if(type1 == buff3 || type2 == buff3)
+					player.AddBuff(buff3, minute * 11, true);
+				if(type1 == buff4 || type2 == buff4)
+					player.AddBuff(buff4, minute * 9, true);
             }
 			return true;
 		}

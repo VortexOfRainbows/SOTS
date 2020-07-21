@@ -32,6 +32,7 @@ namespace SOTS.Projectiles.Vibrant
 				int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 44);
 				Main.dust[num1].noGravity = true;
 				Main.dust[num1].velocity *= 1.2f;
+				Main.dust[num1].alpha = 200;
 			}
 			if (Main.myPlayer == projectile.owner)
 			{
@@ -50,6 +51,7 @@ namespace SOTS.Projectiles.Vibrant
 			int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 44);
 			Main.dust[num1].noGravity = true;
 			Main.dust[num1].velocity *= 0.1f;
+			Main.dust[num1].alpha = 200;
 
 			projectile.velocity *= 0.94f;
 			projectile.rotation += 0.6f;

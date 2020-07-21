@@ -176,11 +176,10 @@ namespace SOTS.Projectiles.Celestial
 			{
 				for(int i = 0; i < 360; i += 40)
 				{
-				Vector2 circularLocation = new Vector2(10, 0).RotatedBy(MathHelper.ToRadians(i));
-				int num1 = Dust.NewDust(new Vector2(projectile.Center.X + circularLocation.X - 4, projectile.Center.Y + circularLocation.Y - 4), 4, 4, 21);
-				Main.dust[num1].noGravity = true;
-				Main.dust[num1].velocity = projectile.velocity.RotatedBy(MathHelper.ToRadians(180));
-				
+					Vector2 circularLocation = new Vector2(10, 0).RotatedBy(MathHelper.ToRadians(i));
+					int num1 = Dust.NewDust(new Vector2(projectile.Center.X + circularLocation.X - 4, projectile.Center.Y + circularLocation.Y - 4), 4, 4, 21);
+					Main.dust[num1].noGravity = true;
+					Main.dust[num1].velocity = projectile.velocity.RotatedBy(MathHelper.ToRadians(180));
 				}
 			}
 		}
@@ -191,8 +190,8 @@ namespace SOTS.Projectiles.Celestial
             target.immune[projectile.owner] = 0;
 			projectile.tileCollide = false;
 			latch = true;
-			projectile.damage = (int)(projectile.damage * 0.9275f);
-			projectile.damage -= 2;
+			projectile.damage = (int)(projectile.damage * 0.95f);
+			projectile.damage--;
 			for(int i = 0; i < 200; i++)
 			{
 				NPC npc = Main.npc[i];

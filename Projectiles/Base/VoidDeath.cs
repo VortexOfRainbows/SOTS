@@ -17,8 +17,7 @@ namespace SOTS.Projectiles.Base
 			projectile.width = 70;
             Main.projFrames[projectile.type] = 14;
 			projectile.penetrate = -1;
-			projectile.friendly = false;
-			projectile.melee = false;
+			projectile.friendly = true;
 			projectile.timeLeft = 70;
 			projectile.tileCollide = false;
 			projectile.hostile = false;
@@ -26,7 +25,6 @@ namespace SOTS.Projectiles.Base
 		}
 		public override void AI()
         {
-			projectile.knockBack = 1f;
             projectile.frameCounter++;
             if (projectile.frameCounter >= 3)
             {

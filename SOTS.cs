@@ -10,6 +10,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI;
 using SOTS.Void;
+using SOTS.Items.Pyramid;
 
 namespace SOTS
 {
@@ -74,7 +75,9 @@ namespace SOTS
 		internal enum SOTSMessageType : byte
 		{
 			SOTSSyncPlayer,
-			OrbitalCounterChanged
+			OrbitalCounterChanged,
+			SyncDashServer,
+			SyncDashClient
 		}
 		public override void HandlePacket(BinaryReader reader, int whoAmI)
 		{

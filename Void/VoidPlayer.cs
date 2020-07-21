@@ -15,12 +15,14 @@ namespace SOTS.Void
 	{
 		public int voidMeterMax = 100;
 		public int voidAnkh = 0;
+		public int voidStar = 0;
 		public override TagCompound Save() {
 				
 			return new TagCompound {
 				
 				{"voidMeterMax", voidMeterMax},
 				{"voidAnkh", voidAnkh},
+				{"voidStar", voidStar},
 				};
 		}
 
@@ -28,6 +30,7 @@ namespace SOTS.Void
 		{
 			voidMeterMax = tag.GetInt("voidMeterMax");
 			voidAnkh = tag.GetInt("voidAnkh");
+			voidStar = tag.GetInt("voidStar");
 		}
 		
 		public float voidMeter = 100; 
@@ -144,14 +147,14 @@ namespace SOTS.Void
 			voidCost = 1f; 
 			voidMeter += (float)(voidRegen / 60);
 			
-			if(voidMeter > voidMeterMax2)
+			voidMeterMax2 = voidMeterMax;
+
+			if (voidMeter > voidMeterMax2)
 			{
 				//make sure meter doesn't go above max
 				voidMeter = voidMeterMax2;
 			}
-			
-			voidMeterMax2 = voidMeterMax;
-			
+
 			voidKnockback = 0f;
 			voidCrit = 0;
 			
@@ -161,10 +164,11 @@ namespace SOTS.Void
 			voidRegen = 0.25f; 
 			
 			voidRegen += 0.05f * (float)voidAnkh;
-			
-			
-			
-			if(voidMeter != 0)
+			voidRegen += 0.1f * (float)voidStar;
+
+
+
+			if (voidMeter != 0)
 			{
 				VoidUI.visible = true;
 			}

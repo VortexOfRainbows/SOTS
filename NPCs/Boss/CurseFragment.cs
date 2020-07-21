@@ -38,14 +38,28 @@ namespace SOTS.NPCs.Boss
             npc.netAlways = false;
 		}
 		public override void AI()
-		{	
-			Dust.NewDust(new Vector2(npc.Center.X - 8, npc.Center.Y - 8), 16, 16, mod.DustType("CurseDust"));
-		
-		}
-		public override void NPCLoot()
 		{
-			for(int i = 0; i < 9; i ++)
-			Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), 28, 32, mod.DustType("CurseDust"));
-		}	
+			int num1 = Dust.NewDust(npc.position, npc.width, npc.height, mod.DustType("CurseDust"));
+			Main.dust[num1].noGravity = true;
+		}
+		public override void HitEffect(int hitDirection, double damage)
+		{
+			if (npc.life > 0)
+			{
+				int num = 0;
+				while ((double)num < damage / (double)npc.lifeMax * 10.0)
+				{
+					Dust.NewDust(npc.position, npc.width, npc.height, mod.DustType("CurseDust"), (float)(2 * hitDirection), -2f);
+					num++;
+				}
+			}
+			else
+			{
+				for (int k = 0; k < 14; k++)
+				{
+					Dust.NewDust(npc.position, npc.width, npc.height, mod.DustType("CurseDust"), (float)(2 * hitDirection), -2f);
+				}
+			}
+		}
 	}
 }

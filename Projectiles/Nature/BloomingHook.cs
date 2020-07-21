@@ -36,6 +36,8 @@ namespace SOTS.Projectiles.Nature
 			projectile.minion = true;
 			projectile.minionSlots = 0f;
 			projectile.penetrate = -1;
+			projectile.timeLeft = 300;
+			projectile.netImportant = true;
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
@@ -74,6 +76,10 @@ namespace SOTS.Projectiles.Nature
 			Vector2 targetCenter = projectile.Center;
 			bool foundTarget = false;
 
+			if (projectile.timeLeft > 100)
+			{
+				projectile.timeLeft = 300;
+			}
 			if (player.HasMinionAttackTargetNPC)
 			{
 				NPC npc = Main.npc[player.MinionAttackTargetNPC];
@@ -164,7 +170,7 @@ namespace SOTS.Projectiles.Nature
 
 			projectile.rotation = rotateVector.ToRotation();
 			aiCounter2++;
-			if (aiCounter2 >= 90 && ((target.X != -1 && target.Y != -1) || frame != 0))
+			if (aiCounter2 >= 75 && ((target.X != -1 && target.Y != -1) || frame != 0))
 			{
 				projectile.frameCounter++;
 				if (projectile.frameCounter >= 5)
@@ -174,7 +180,7 @@ namespace SOTS.Projectiles.Nature
 					{
 						if (Main.myPlayer == projectile.owner)
 						{
-							Projectile.NewProjectile(projectile.Center, rotateVector * 3f, mod.ProjectileType("FriendlyFlowerBolt"), projectile.damage, 1f, owner.whoAmI);
+							Projectile.NewProjectile(projectile.Center, rotateVector * 5.5f, mod.ProjectileType("FriendlyFlowerBolt"), projectile.damage, 1f, owner.whoAmI);
 							projectile.netUpdate = true;
 						}
 					}

@@ -19,10 +19,10 @@ Playtesting - Crimsonkeep, FlameFreezer
 
 Update 0.18.4
 -Pyramid prioritizes finding a non-underground desert
--Pyramid is now smaller
+-Pyramid is now smaller, has a new room
 -Visual improvements in various places
--Expanded content, Remade some old content
--Buffed default void regen speed, modified void costs around the board
+-Expanded content, Remade some old content.
+-Buffed default void regen speed, modified void costs in various areas
 -Bug fixes (Thanks Creeper da Snek! and the people in the Discord server)
 
 Update 0.18.3.2
