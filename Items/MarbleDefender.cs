@@ -1,18 +1,10 @@
-using System;
-using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.DataStructures;
-using Terraria.Enums;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.ObjectData;
-using Microsoft.Xna.Framework.Graphics;
-using SOTS.Void;
 
 namespace SOTS.Items
 {	[AutoloadEquip(EquipType.Shield)]
-	public class MarbleDefender : ModItem
+	public class MarbleDefender : ModItem	
 	{	
 		public override void SetStaticDefaults()
 		{
@@ -29,9 +21,7 @@ namespace SOTS.Items
             item.rare = 1;
 			item.defense = 1;
 			item.accessory = true;
-
 		}
-		
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");	
@@ -40,7 +30,7 @@ namespace SOTS.Items
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(3066, 50); //smooth marble
+			recipe.AddIngredient(ItemID.MarbleBlock, 50); //smooth marble
 			recipe.AddIngredient(null, "FragmentOfEarth", 4);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this);

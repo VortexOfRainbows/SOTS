@@ -146,14 +146,15 @@ namespace SOTS.Void
 			voidSpeed = 1f; 
 			voidCost = 1f; 
 			voidMeter += (float)(voidRegen / 60);
-			
-			voidMeterMax2 = voidMeterMax;
 
 			if (voidMeter > voidMeterMax2)
 			{
 				//make sure meter doesn't go above max
 				voidMeter = voidMeterMax2;
 			}
+
+			voidMeterMax2 = voidMeterMax;
+
 
 			voidKnockback = 0f;
 			voidCrit = 0;

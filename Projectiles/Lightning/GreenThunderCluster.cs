@@ -44,11 +44,9 @@ namespace SOTS.Projectiles.Lightning
 			
 			Player player  = Main.player[projectile.owner];
 			
-			
-				int num1 = Dust.NewDust(new Vector2(projectile.Center.X + circularLocation.X - 4, projectile.Center.Y + circularLocation.Y - 4), 4, 4, 107);
-				Main.dust[num1].noGravity = true;
-				Main.dust[num1].velocity *= 0.1f;
-			
+			int num1 = Dust.NewDust(new Vector2(projectile.Center.X + circularLocation.X - 4, projectile.Center.Y + circularLocation.Y - 4), 4, 4, 107);
+			Main.dust[num1].noGravity = true;
+			Main.dust[num1].velocity *= 0.1f;
 		}
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {

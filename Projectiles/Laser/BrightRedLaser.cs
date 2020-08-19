@@ -99,7 +99,7 @@ namespace SOTS.Projectiles.Laser
 				}
 				Color alpha = new Color(255, 0, 0) * ((255 - projectile.alpha) / 255f);
 				//Color alpha = ((255 - projectile.alpha) / 255f);
-				spriteBatch.Draw(Main.projectileTexture[projectile.type], drawPos, null, alpha, Distance, new Vector2(2, 2), (0.01f * (float)Main.rand.Next(50,151)), SpriteEffects.None, 0f);
+				spriteBatch.Draw(Main.projectileTexture[projectile.type], drawPos, null, alpha, Distance, new Vector2(5, 5), (0.01f * (float)Main.rand.Next(50,151)), SpriteEffects.None, 0f);
 			}
 			return false;
 		}

@@ -20,8 +20,8 @@ namespace SOTS.Items
 	
 			item.damage = 30;
 			item.magic = true;
-            item.width = 34;     
-            item.height = 48;   
+            item.width = 30;     
+            item.height = 36;   
             item.value = Item.sellPrice(0, 4, 50, 0);
             item.rare = 6;
 			item.accessory = true;

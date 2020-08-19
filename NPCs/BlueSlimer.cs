@@ -1,11 +1,9 @@
-using System;
-using System.IO;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+using SOTS.Items.Banners;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
+using static Terraria.ModLoader.ModContent;
 
 namespace SOTS.NPCs
 {
@@ -34,6 +32,8 @@ namespace SOTS.NPCs
 			npc.alpha = 100;
             npc.HitSound = SoundID.NPCHit1;
             npc.DeathSound = SoundID.NPCDeath1;
+			banner = npc.type;
+			bannerItem = ItemType<BlueSlimerBanner>();
 		}
 		public override void HitEffect(int hitDirection, double damage)
 		{

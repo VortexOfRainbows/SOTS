@@ -22,15 +22,16 @@ namespace SOTS.Items.ChestItems
 		{
 			item.width = 32;
 			item.height = 28;
-			item.maxStack = 999;
+			item.maxStack = 99;
 			item.useTurn = true;
 			item.autoReuse = true;
 			item.useAnimation = 15;
-			item.useTime = 15;
+			item.useTime = 10;
 			item.useStyle = 1;
-			item.rare = 1;
+			item.value = Item.sellPrice(0, 0, 10, 0);
+			item.rare = 0;
 			item.consumable = true;
-			item.createTile = mod.TileType("StrangeChestTile");
+			item.createTile = mod.TileType("LockedStrangeChest");
 		}
 	}
 	public class StrangeChestTile : ModTile
@@ -41,7 +42,6 @@ namespace SOTS.Items.ChestItems
 			Main.tileSpelunker[Type] = true;
 			Main.tileContainer[Type] = true;
 			Main.tileShine2[Type] = true;
-			Main.tileShine[Type] = 1200;
 			Main.tileFrameImportant[Type] = true;
 			Main.tileNoAttach[Type] = true;
 			Main.tileValue[Type] = 500;
@@ -59,7 +59,7 @@ namespace SOTS.Items.ChestItems
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Strange Chest");
 			AddMapEntry(new Color(180, 130, 100), name, MapChestName);
-			dustType = 7;
+			dustType = mod.DustType("AvaritianDust");
 			disableSmartCursor = true;
 			adjTiles = new int[] { TileID.Containers };
 			chest = "Strange Chest";

@@ -200,7 +200,7 @@ namespace SOTS.Items.Fragments
 		}
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
         {
-            Framing.SelfFrame8Way(i, j, Main.tile[i, j], resetFrame);
+			Framing.SelfFrame8Way(i, j, Main.tile[i, j], resetFrame);
             return false;
         }
 	}

@@ -1,7 +1,9 @@
 using Microsoft.Xna.Framework;
+using SOTS.Items.Banners;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Terraria.ModLoader.ModContent;
 
 namespace SOTS.NPCs
 {
@@ -27,6 +29,8 @@ namespace SOTS.NPCs
             npc.HitSound = SoundID.NPCHit1;
             npc.DeathSound = SoundID.NPCDeath16;
             npc.netAlways = true;
+			banner = npc.type;
+			bannerItem = ItemType<SittingMushroomBanner>();
 		}
 		public override void AI()
 		{

@@ -1,9 +1,10 @@
 using Microsoft.Xna.Framework;
+using SOTS.Items.Banners;
 using System.IO;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
+using static Terraria.ModLoader.ModContent;
 
 namespace SOTS.NPCs
 {
@@ -30,6 +31,8 @@ namespace SOTS.NPCs
 			npc.alpha = 75;
             npc.HitSound = SoundID.NPCHit1;
             npc.DeathSound = SoundID.NPCDeath1;
+			banner = npc.type;
+			bannerItem = ItemType<NatureSlimeBanner>();
 		}
 		public override bool PreAI()
 		{

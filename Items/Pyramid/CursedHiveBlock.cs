@@ -13,7 +13,7 @@ namespace SOTS.Items.Pyramid
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Infected Pyramid Brick");
-			Tooltip.SetDefault("A living clump of matter residing in a broken down brick\'It has the consistency of a tumor'");
+			Tooltip.SetDefault("A living clump of matter residing in a broken down brick\n'It has the consistency of a tumor'");
 		}
 		public override void SetDefaults()
 		{
@@ -113,7 +113,7 @@ namespace SOTS.Items.Pyramid
 		public override void SetDefaults()
 		{
 			projectile.alpha = 255;
-			projectile.timeLeft = 5;
+			projectile.timeLeft = 24;
 			projectile.friendly = false;
 			projectile.tileCollide = false;
 			projectile.width = 40;

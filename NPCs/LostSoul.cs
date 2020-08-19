@@ -1,11 +1,9 @@
-using System;
-using System.IO;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+using SOTS.Items.Banners;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
+using static Terraria.ModLoader.ModContent; 
 
 namespace SOTS.NPCs
 {
@@ -36,6 +34,8 @@ namespace SOTS.NPCs
             npc.HitSound = SoundID.NPCHit54;
             npc.DeathSound = SoundID.NPCDeath6;
             npc.DeathSound = null;
+			banner = npc.type;
+			bannerItem = ItemType<LostSoulBanner>();
 		}
 		public override void AI()
 		{

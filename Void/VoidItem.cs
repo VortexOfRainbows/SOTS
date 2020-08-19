@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using SOTS.Items.Otherworld;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
@@ -64,7 +65,7 @@ namespace SOTS.Void
 			TooltipLine tt = tooltips.FirstOrDefault(x => x.Name == "Damage" && x.mod == "Terraria");
 			if (tt != null) 
 			{
-			string[] splitText = tt.text.Split(' ');
+				string[] splitText = tt.text.Split(' ');
 				string damageValue = splitText.First();
 				string damageWord = splitText.Last();
 				
@@ -84,11 +85,15 @@ namespace SOTS.Void
 			TooltipLine tt2 = tooltips.FirstOrDefault(x => x.Name == "UseMana" && x.mod == "Terraria");
 			if (tt2 != null) 
 			{
-			string[] splitText = tt2.text.Split(' ');
+				string[] splitText = tt2.text.Split(' ');
 				//string damageValue = splitText.First();
 				//string damageWord = splitText.Last();
-				tt2.text = "Consumes " + voidManaText + " void";
-				
+				if(item.accessory == false)
+					tt2.text = "Consumes " + voidManaText + " void";
+				else
+				{
+					tooltips.Remove(tt2);
+				} 
 			}
 			
 		}	
@@ -96,9 +101,8 @@ namespace SOTS.Void
 		{
 			if(item.shoot != 10)
 			{
-			return true;
+				return true;
 			}
-			
 			return false;
 		}
 		public sealed override bool ConsumeAmmo(Player player) ///this is the only way i have found to make void not be consumed when ammo is not present
@@ -112,6 +116,11 @@ namespace SOTS.Void
 			}
 			return true;
 		}
+		public void OnUseEffects(Player player)
+		{
+			BeadPlayer modPlayer = player.GetModPlayer<BeadPlayer>();
+			modPlayer.attackNum++;
+		}
 		public sealed override bool CanUseItem(Player player) 
 		{
 			bool canUse = BeforeUseItem(player);
@@ -119,6 +128,7 @@ namespace SOTS.Void
 			{
 				return false;
 			}
+			OnUseEffects(player);
 			item.mana = 0;
 			if(item.useAmmo == 0 && BeforeDrainMana(player))
 				DrainMana(player);

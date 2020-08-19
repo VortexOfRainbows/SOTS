@@ -20,7 +20,7 @@ namespace SOTS.Items.Void
 			item.width = 22;
 			item.height = 30;
             item.value = Item.sellPrice(0, 0, 7, 50);
-			item.rare = 2;
+			item.rare = 1;
 			item.maxStack = 999;
 
 			item.useStyle = 2;

@@ -1,10 +1,9 @@
-using System;
-using System.IO;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+using SOTS.Items.Banners;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Terraria.ModLoader.ModContent;
 
 namespace SOTS.NPCs
 {
@@ -35,7 +34,9 @@ namespace SOTS.NPCs
             npc.DeathSound = SoundID.NPCDeath6;
             npc.netAlways = true;
             npc.netUpdate = true;
-					
+			banner = npc.type;
+			bannerItem = ItemType<FlamingGhastBanner>();
+
 		}
 		public override void AI()
 		{
@@ -78,17 +79,27 @@ namespace SOTS.NPCs
 		public override void HitEffect(int hitDirection, double damage)
         {
             if (npc.life > 0)
-            {
-				
-            }
+			{
+				int num = 0;
+				while ((double)num < damage / (double)npc.lifeMax * 50.0)
+				{
+					Dust.NewDust(npc.position, npc.width, npc.height, mod.DustType("CurseDust"), (float)(2 * hitDirection), -2f);
+					num++;
+				}
+			}
             else
-            {
-                for (int k = 0; k < 6; k++)
-                {
-					int index = Projectile.NewProjectile((npc.Center.X), npc.Center.Y, Main.rand.Next(-7, 8), Main.rand.Next(-7, 8), 96, 30, 0);
-					Main.projectile[index].friendly = true;
-					Main.projectile[index].hostile = true;
-                }
+			{
+				if (Main.netMode != 1)
+				{
+					for (int k = 0; k < 30; k++)
+					{
+						Dust.NewDust(npc.position, npc.width, npc.height, mod.DustType("CurseDust"), (float)(2 * hitDirection), -2f);
+					}
+					for (int k = 0; k < 8; k++)
+					{
+						Projectile.NewProjectile((npc.Center.X), npc.Center.Y, Main.rand.Next(-7, 8), Main.rand.Next(-7, 8), 96, 32, 0);
+					}
+				}
             }		
 		}
 	}

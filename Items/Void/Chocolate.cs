@@ -1,8 +1,6 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
-using Terraria.DataStructures;
 using SOTS.Void;
 
 
@@ -17,11 +15,10 @@ namespace SOTS.Items.Void
 		}
 		public override void SetDefaults()
 		{
-
 			item.width = 26;
 			item.height = 32;
             item.value = Item.sellPrice(0, 0, 2, 0);
-			item.rare = 3;
+			item.rare = 1;
 			item.maxStack = 999;
 
 			item.useStyle = 2;

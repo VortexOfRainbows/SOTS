@@ -26,7 +26,7 @@ namespace SOTS.Items.Void
 			item.useStyle = 2;
 			item.useTime = 15;
 			item.useAnimation = 15;
-			item.UseSound = SoundID.Item2;
+			item.UseSound = SoundID.Item3;
 			item.consumable = true;
 		}
 		public override bool UseItem(Player player)

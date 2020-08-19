@@ -1,7 +1,9 @@
 using Microsoft.Xna.Framework;
+using SOTS.Items.Banners;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Terraria.ModLoader.ModContent;
 
 namespace SOTS.NPCs
 {
@@ -29,6 +31,8 @@ namespace SOTS.NPCs
 			npc.alpha = 90;
             npc.HitSound = SoundID.NPCHit1;
             npc.DeathSound = SoundID.NPCDeath1;
+			banner = npc.type;
+			bannerItem = ItemType<TreasureSlimeBanner>();
 		}
 		public override bool PreAI()
 		{
@@ -43,6 +47,9 @@ namespace SOTS.NPCs
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
+			SOTSPlayer modPlayer = spawnInfo.player.GetModPlayer<SOTSPlayer>();
+			if (modPlayer.PlanetariumBiome)
+				return 0;
 			return SpawnCondition.OverworldDaySlime.Chance * 0.08f;
 		}
 		public override void HitEffect(int hitDirection, double damage)

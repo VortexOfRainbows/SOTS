@@ -12,14 +12,14 @@ namespace SOTS.NPCs
 			Player player = Main.player[Main.myPlayer];
 			if(npc.target <= 255)
 			{
-			player = Main.player[npc.target];
+				player = Main.player[npc.target];
 			}
             SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");	
 			bool ZoneForest = !player.GetModPlayer<SOTSPlayer>().PyramidBiome && !player.ZoneDesert && !player.ZoneCorrupt && !player.ZoneDungeon && !player.ZoneDungeon && !player.ZoneHoly && !player.ZoneMeteor && !player.ZoneJungle && !player.ZoneSnow && !player.ZoneCrimson && !player.ZoneGlowshroom && !player.ZoneUndergroundDesert && (player.ZoneDirtLayerHeight || player.ZoneOverworldHeight) && !player.ZoneBeach;
 				
 			if(npc.lifeMax > 5)
 			{
-				if (Main.rand.Next(100) == 0 || (npc.type == 170 || npc.type == 171 || npc.type == 180)) { //guarenteed from pigrons
+				if (Main.rand.Next(90) == 0 || (npc.type == 170 || npc.type == 171 || npc.type == 180)) { //guarenteed from pigrons
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("AlmondMilk"), 1); 
 				}
 				if (Main.rand.Next(35) == 0) {
@@ -61,18 +61,29 @@ namespace SOTS.NPCs
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FragmentOfChaos"), Main.rand.Next(2) + 1); 
 					}
 				}
-				if (player.ZoneSnow && (Main.rand.Next(40) == 0 && !Main.expertMode)){
+				if (player.ZoneSnow && (Main.rand.Next(90) == 0 && Main.expertMode)){
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("StrawberryIcecream"),1);
 				}
-				if (player.ZoneSnow && (Main.rand.Next(50) == 0 && !Main.expertMode)){
+				if (player.ZoneSnow && (Main.rand.Next(100) == 0 && !Main.expertMode)){
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("StrawberryIcecream"), 1);
+				}
+				if (modPlayer.PlanetariumBiome)
+				{
+					if (Main.rand.Next(90) == 0 && Main.expertMode)
+					{
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("DigitalCornSyrup"), 1);
+					}
+					if (Main.rand.Next(100) == 0 && !Main.expertMode)
+					{
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("DigitalCornSyrup"), 1);
+					}
 				}
 				if (npc.type == NPCID.WallofFlesh) {
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("HungryHunter"), 1); 
 				}
 					
 				if (npc.type == NPCID.WyvernHead) {
-					if (Main.rand.Next(3) == 0) {
+					if (Main.rand.Next(5) == 0) {
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemID.GiantHarpyFeather, 1); 
 					}
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FragmentOfOtherworld"), Main.rand.Next(2) + 1); 
@@ -130,7 +141,7 @@ namespace SOTS.NPCs
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("PossessedChainmail"), 1); 
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("PossessedGreaves"), 1); 
 				}
-				if ((npc.type == 63 || npc.type == 103) && Main.rand.Next(60) == 0)
+				if ((npc.type == 63 || npc.type == 103) && Main.rand.Next(50) == 0)
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("BlueJellyfishStaff"), 1); 
 				}
@@ -144,6 +155,23 @@ namespace SOTS.NPCs
 				{
 					spawnRate = 60;
 					maxSpawns = (int)(maxSpawns * 2f);
+				}
+			}
+			if (player.GetModPlayer<SOTSPlayer>().PlanetariumBiome) //spawnrates for this biome have to be very high due to how npc spawning in sky height works. I also manually despawn other sky enemies
+			{
+				if(Main.hardMode)
+				{
+					spawnRate = (int)(spawnRate /= 60); //essentially setting it to 10
+					if (spawnRate < 1)
+						spawnRate++;
+					maxSpawns = (int)(maxSpawns * 2.25f);
+				}
+				else
+				{
+					spawnRate = (int)(spawnRate /= 50); //essentially setting it to 12
+					if (spawnRate < 1)
+						spawnRate++;
+					maxSpawns = (int)(maxSpawns * 1.75f);
 				}
 			}
 		}
@@ -165,7 +193,18 @@ namespace SOTS.NPCs
 					pool.Add(NPCID.Mummy, 0.5f);
 				}
 			}
-			
+			if(spawnInfo.player.GetModPlayer<SOTSPlayer>().PlanetariumBiome)
+			{
+				bool correctBlock = (Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY + 3].type == mod.TileType("DullPlatingTile") || Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY + 3].type == mod.TileType("PortalPlatingTile") || Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY + 3].type == mod.TileType("AvaritianPlatingTile")) && Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY + 3].nactive();
+				pool[0] = 0f;
+				if(correctBlock)
+				{
+					pool.Add(mod.NPCType("HoloSlime"), 0.4f);
+					pool.Add(mod.NPCType("HoloEye"), 0.1f);
+					pool.Add(mod.NPCType("HoloBlade"), 0.175f);
+					pool.Add(mod.NPCType("TwilightDevil"), 0.05f);
+				}
+			}
 		}
 	}
 }

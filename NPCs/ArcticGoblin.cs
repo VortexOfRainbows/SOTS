@@ -1,8 +1,9 @@
 using Microsoft.Xna.Framework;
+using SOTS.Items.Banners;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
+using static Terraria.ModLoader.ModContent;
 
 namespace SOTS.NPCs
 {
@@ -20,6 +21,8 @@ namespace SOTS.NPCs
 			npc.damage = 24;
 			animationType = NPCID.GoblinPeon;
 			Main.npcFrameCount[npc.type] = 16;
+			banner = npc.type;
+			bannerItem = ItemType<ArcticGoblinBanner>();
 		}
 		public override void AI()
 		{

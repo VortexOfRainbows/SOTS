@@ -141,7 +141,7 @@ namespace SOTS.Projectiles
 			hitbox = new Rectangle((int)(projectile.Center.X - 11), (int)(projectile.Center.Y- 8), 22, 16);
 			if(projectile.frame == 1)
 			{
-			hitbox = new Rectangle((int)(projectile.position.X), (int)(projectile.position.Y), projectile.width, projectile.height);
+				hitbox = new Rectangle((int)(projectile.position.X), (int)(projectile.position.Y), projectile.width, projectile.height);
 			}
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)

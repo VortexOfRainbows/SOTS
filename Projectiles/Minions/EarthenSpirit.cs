@@ -198,13 +198,20 @@ namespace SOTS.Projectiles.Minions
 
 				Vector2 direction = targetCenter - projectile.Center;
 				float distance = direction.Length() + 0.1f;
-				direction.Normalize();
-				if(distance > speed)
+				if (distance > 1.1f)
 				{
-					distance = speed;
+					direction.Normalize();
+					if (distance > speed)
+					{
+						distance = speed;
+					}
+					direction *= distance;
+					projectile.velocity = direction;
 				}
-				direction *= distance;
-				projectile.velocity = direction;
+				else
+				{
+					projectile.velocity *= 0f;
+				}
 				projectile.alpha += 10;
 
 				if (projectile.alpha > 255)

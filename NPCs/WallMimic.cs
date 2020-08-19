@@ -1,11 +1,11 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SOTS.Items.Pyramid;
+using SOTS.Items.Banners;
 using System;
-using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Terraria.ModLoader.ModContent;
 
 namespace SOTS.NPCs
 {
@@ -56,6 +56,8 @@ namespace SOTS.NPCs
             npc.DeathSound = SoundID.NPCDeath14;
             npc.netAlways = true;
 			npc.noGravity = true;
+			banner = npc.type;
+			bannerItem = ItemType<WallMimicBanner>();
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{

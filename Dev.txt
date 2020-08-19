@@ -18,25 +18,141 @@ Priority: Remaining Spirits
 4. Replace all the Blood Essence items
 	1. New Void Accessory: Platinum/Gold
 		3. Upgrades into electrum battery, which removes the downside
-6. New Ore, Spawns in space as little planet "clusters"
-	1. It's called Electrum (plate), (yellow and blue) and can be mined with demonite level or above after having defeated Putrid Pinky
-	2. It will also be craftable (for the people who don't have new worlds) silver + gold + otherworld fragment
-	3. Requires a skyforge, and acts as an alternative to hellstone (clouds + electrum / obsidian + hellstone)
-	4. Skyforge can be crafted out of hellforge and some of the ore if needed
-	6. Electrum plats will be struck with lightning every now-and-then
-		1. This super charges it, causing it to now zap nearby enemies (and players)
-		2. Drops more electrum (*5-15)
 11. Tether Cord in pyramid
 	1. Attaches a second player to you
 13. Dissolving Element Blocks
 	1. Give off cool particles, can be used in summoning rituals
-18. Make a wall version of the Worldgen Capture
+
+19. New Planetarium biome in sky
+	1. Summon Advisor by destroying 3 Constructs
+20. 3 Different locked chests
+	1. Meteorite: Fire and meteorite based
+	2. Sunplate: Electric based items
+	3. Avaritia: "Code Based Items"
+	4. Must unluck chests via key obtained from advisor
+	5. Each chest contains items and some material to craft items
 
 Next Update:
-6. Banners for various enemies
+1. Pyramid chests to no longer spawn close to surface
+2. Nerf Construct spawn rate and health, Nerf Treasure slime damage and possible health.
 
-Later:
-4. Integrate support for new boss checklist
+Next Development Time: 
+1. Holo-Eye, Holo-Slime, Holo-Blade, Twilight Devil
+	Banner next
+8. Otherworldly Construct
+	Only construct without a spirit. The spirit runs away immediately
+	The ACTUAL spririt is part of the second phase of Advisor
+	Advisor will drop all his loot (keys and bars) and the spirit acts as an additional second phase with loot (Dissolving Aether).
+10. Twilight Gel and Twilight Assassin Armor (Void Melee)
+
+8/17/20
+1. Twilight beads laser no longer pierces
+2. Twilight beads tooltip fix
+3. Minor nerfs to bladegen, bigger nerfs to Twilight Beads
+4. Server Synced twilight beads and bladegen
+5. Added blade necklace
+6. Fixed minor counting error for each item
+7. Items drop from enemies
+
+8/16/20
+1. Slight buffs to Wormwood Parasite
+2. Blade Generator has increased damage, also slower blade travel speed when rotating
+3. Began work on Twilight Beads => epix (true)
+
+8/15/20
+1. Blade Generator item added, may need balancing
+
+8/14/20
+1. Sprited twilight beads and swordgen
+2. Added more visuals to blade, as well as slight changes
+3. Tested, Holo-Blade is server synced fine
+
+8/12/20 - 8/13/20
+1. Sprited Gateway and Added Gateway
+	1. Currently useless
+2. Started on Holo Sword, basic motion and framework completed
+3. Holo-Eye now doesn't have a dissapearing pupil when not locked onto target
+
+8/8/20
+1. Sprited Otherworldly Construct (Not the best sprite but that doesn't matter)
+
+8/7/20
+1. Server Testing: Twilight Devil functions fine in multiplayer
+	1. Mob spawning works fine in multiplayer :D
+2. Twilight Devil now turns at a set speed, no longer turns while preparing to fire shotgun burst
+
+8/6/20
+1. Manual despawn to override harpy and wyvern spawns in the Planetarium //nevermind
+	1. Removed harpies and other enemies from Planetarium spawn pool: Thanks Qwerty3.14!
+2. Work on actually getting the NPCs to spawn.
+3. Holo Eye now only targets on players within closer range, though they still target after leaving that range
+4. Some visual improvements for Twilight Devil
+
+
+8/5/20
+1. Modified a few drop rates
+2. Fixed bug where strawberry icecream wouldn't drop in expert mode
+3. Strawberry icecream is now as rare as almond milk. Almond milk is now slightly less rare. All void healing items now share rarity 1 (blue)
+	1. Almond milk makes drinking sound upon manual consumption
+4. Digital Corn Syrup drops in planetarium biome, and from Sky Pots
+	1. Hearts and Star are 50% chance drops from their respective pot decor variants
+	2. Likewise, Digital Corn Syrup drops more often from void decor pots
+5. Fixed bug with Ghast death explosions not realeasing server synced projectiles. Flaming Ghast releases slightly more projectiles. Now properly generate gore
+6. Phaoroh's Curse now properly generates dust gore. Infected pyramid brick properly has a tooltip.
+7. Holoslime sound effect, fixed up some teleportation glitches
+8. Twilight Devil added
+9. Fixed bug where Void Meter Max would be decieving and not work in multiplayer.
+
+8/4/20
+1. HoloSlime checked in multiplayer, functions fine
+2. Sprited Digital Corn Syrup
+
+8/3/20
+1. More HoloSlime
+
+8/2/20
+1. Resprite Chiseled Barrier (Thanks Blasfah)
+2. Fixed an error i accidently caused with Earthen Spirit Staff
+3. Holo Eye added, works fine, server syncs fine
+4. Started on HoloSlime
+
+7/31/20
+1. Sketched a few ideas
+2. Sprited a few ideas
+3. Biome syncing planetarium, maybe get some music if possible
+4. Holo Eye started, not much progress, however
+
+7/29/20
+1. Final Touches on pot generator, works in multiplayer
+2. Hardlight fabricator, table, chair
+3. Digital Display and also Chain Thing can be placed on tabletops
+4. Pots, Chests, Displays, Tables, Fabricators, etc spawn on top of the islands now.
+	1. Pot Gen was especially hard, but was completed.
+
+7/28/20
+1. Digital Display added: Increases void damage, has unique animations in inventory and placed; similar to bewitching table and other like it.
+2. Sky Pots now, themed around the biome
+3. Pot Generators!
+
+7/27/20
+1. All chests working 
+2. 10 islands and the primary island finished
+3. Spawning mechanisms for the islands
+4. Sky Chain
+5. Wall version of capture //a bit jank like the og
+
+7/26/20
+1. Dull Plating, Portal Plating
+2. Chests and keys
+
+7/25/20
+1. Avaritian Plating
+
+Update 0.18.4 released!
+
+7/21-25/20
+1. Lost my logs for this one
+2. Basically: Dark Eye + Banners
 
 7/20/20
 1. Blue Slimer only spawns in forests

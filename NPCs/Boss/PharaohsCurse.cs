@@ -65,12 +65,10 @@ namespace SOTS.NPCs.Boss
 		}
 		public override void SetStaticDefaults()
 		{
-			
 			DisplayName.SetDefault("Pharaoh's Curse");
 		}
 		public override void SetDefaults()
 		{
-			
             npc.aiStyle = 14; 
 			npc.lifeMax = 6000;
             npc.damage = 45;   
@@ -477,6 +475,28 @@ namespace SOTS.NPCs.Boss
 			if(despawn >= 360)
 			{
 				npc.active = false;
+			}
+		}
+		public override void HitEffect(int hitDirection, double damage)
+		{
+			if (npc.life > 0)
+			{
+				int num = 0;
+				while ((double)num < damage / (double)npc.lifeMax * 60.0)
+				{
+					Dust.NewDust(npc.position, npc.width, npc.height, mod.DustType("CurseDust"), (float)(2 * hitDirection), -2f);
+					num++;
+				}
+			}
+			else
+			{
+				if (Main.netMode != 1)
+				{
+					for (int k = 0; k < 80; k++)
+					{
+						Dust.NewDust(npc.position, npc.width, npc.height, mod.DustType("CurseDust"), (float)(2 * hitDirection), -2f);
+					}
+				}
 			}
 		}
 	}

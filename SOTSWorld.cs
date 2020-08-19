@@ -2233,7 +2233,7 @@ namespace SOTS
 		}
 		public override void TileCountsAvailable(int[] tileCounts)
 		{
-			//planetarium = tileCounts[mod.TileType("EmptyPlanetariumBlock")];  
+			planetarium = tileCounts[mod.TileType("DullPlatingTile")] + tileCounts[mod.TileType("AvaritianPlatingTile")];  
 			//geodeBiome = tileCounts[mod.TileType("GeodeBlock")];
 			zeplineBiome = tileCounts[mod.TileType("ZeplineLureTile")];  
 			pyramidBiome = tileCounts[mod.TileType("SarcophagusTile")];  

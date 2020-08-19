@@ -1,9 +1,8 @@
 using Microsoft.Xna.Framework;
-using SOTS.Buffs;
-using SOTS.Void;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -47,7 +46,7 @@ namespace SOTS
 
 		public bool TurtleTem = false;
 
-		//public bool PlanetariumBiome = false;
+		public bool PlanetariumBiome = false;
 		public bool ZeplineBiome = false;
 		//public bool GeodeBiome = false;
 		public bool PyramidBiome = false;
@@ -108,8 +107,41 @@ namespace SOTS
 				packet.Send();
 			}
 		}
+		public void DespawnSkyEnemies()
+		{
+			int[] unableEnemies = { NPCID.Harpy , NPCID.WyvernHead , NPCID.BlueSlime , NPCID.GreenSlime, NPCID.Pinky, NPCID.YellowSlime, NPCID.PurpleSlime};
+			for(int i = 0; i < Main.npc.Length; i++)
+			{
+				NPC npc = Main.npc[i];
+				if((unableEnemies.Contains(npc.type)) && npc.target == player.whoAmI && npc.active)
+				{
+					bool withinBounds = false;
+					for (int j = 0; j < Main.player.Length; j++)
+					{
+						Player other = Main.player[j];
+						if (other.active)
+						{
+							float distanceX = other.Center.X - npc.Center.X;
+							float distanceY = other.Center.Y - npc.Center.Y;
+							distanceX = Math.Abs(distanceX);
+							distanceY = Math.Abs(distanceY);
+							if (distanceX < 992 && distanceY < 560)
+							{
+								withinBounds = true;
+							}
+						}
+					}
+					if(!withinBounds && npc.life >= npc.lifeMax)
+						npc.active = false;
+				}
+			}
+		}
 		public override void ResetEffects()
 		{
+			if(PlanetariumBiome)
+			{
+				//DespawnSkyEnemies();
+			}
 			vibrantArmor = false;
 			shardSpellExtra = 0;
 			frigidJavelinBoost = 0;
@@ -265,7 +297,7 @@ namespace SOTS
 		*/
 		public override void UpdateBiomes()
 		{
-			//PlanetariumBiome = (SOTSWorld.planetarium > 0);
+			PlanetariumBiome = (SOTSWorld.planetarium > 150) && player.Center.Y < Main.worldSurface * 16 * 0.5f;
 			//GeodeBiome = (SOTSWorld.geodeBiome > 300);
 			ZeplineBiome = (SOTSWorld.zeplineBiome > 0);
 
@@ -285,17 +317,19 @@ namespace SOTS
 		public override bool CustomBiomesMatch(Player other)
 		{
 			var modOther = other.GetModPlayer<SOTSPlayer>();
-			return PyramidBiome == modOther.PyramidBiome;
+			return PyramidBiome == modOther.PyramidBiome && PlanetariumBiome == modOther.PlanetariumBiome;
 		}
 		public override void CopyCustomBiomesTo(Player other)
 		{
 			var modOther = other.GetModPlayer<SOTSPlayer>();
 			modOther.PyramidBiome = PyramidBiome;
+			modOther.PlanetariumBiome = PlanetariumBiome;
 		}
 		public override void SendCustomBiomes(BinaryWriter writer)
 		{
 			BitsByte flags = new BitsByte();
 			flags[0] = PyramidBiome;
+			flags[1] = PlanetariumBiome;
 			writer.Write(flags);
 		}
 		public override void ModifyHitByNPC(NPC npc, ref int damage, ref bool crit)
@@ -306,6 +340,7 @@ namespace SOTS
 		{
 			BitsByte flags = reader.ReadByte();
 			PyramidBiome = flags[0];
+			PlanetariumBiome = flags[1];
 		}
 		public override void OnHitByNPC(NPC npc, int damage, bool crit)
 		{
