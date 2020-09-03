@@ -36,7 +36,7 @@ namespace SOTS.NPCs
             npc.height = 54;
 			Main.npcFrameCount[npc.type] = 1;  
             npc.value = 200;
-            npc.npcSlots = 1f;
+            npc.npcSlots = 2f;
             npc.HitSound = SoundID.NPCHit53;
             npc.DeathSound = SoundID.NPCDeath14;
 			npc.lavaImmune = true;

@@ -14,7 +14,7 @@ namespace SOTS.Items.Fragments
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Dissolving Nature");
-			Tooltip.SetDefault("'Your limbs ache'\nReduces damage dealt by 10% while in the inventory");
+			Tooltip.SetDefault("Reduces damage dealt by 10% while in the inventory");
 			Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(5, 6));
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)

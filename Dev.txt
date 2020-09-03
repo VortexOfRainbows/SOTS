@@ -34,16 +34,70 @@ Priority: Remaining Spirits
 
 Next Update:
 1. Pyramid chests to no longer spawn close to surface
-2. Nerf Construct spawn rate and health, Nerf Treasure slime damage and possible health.
+2. Nerf Treasure slime damage and possibly health.
+3. Coconut Gun && Kitchen Sink
 
 Next Development Time: 
 1. Holo-Eye, Holo-Slime, Holo-Blade, Twilight Devil
 	Banner next
 8. Otherworldly Construct
-	Only construct without a spirit. The spirit runs away immediately
+	No need for a banner.
+9. Advisor
 	The ACTUAL spririt is part of the second phase of Advisor
 	Advisor will drop all his loot (keys and bars) and the spirit acts as an additional second phase with loot (Dissolving Aether).
 10. Twilight Gel and Twilight Assassin Armor (Void Melee)
+
+8/31/20 - 9/2/20
+1. Worked on Epic wings!
+2. Figured out how to Spritebatch on the player using playerlayer. This means I can make the wings better looking now!
+3. Made the wings draw in a unique way. This makes them a bit large, but also gives them a unique shape!
+4. Boosters for wings added
+	1. Next: More work on wings (visuals) and start on disconnected Construct
+
+8/30/20
+1. Spirit Despawns immediately (also server synced)
+2. Dissolving Aether is now more potent
+
+8/27/20
+1. Dissolving Elements removed flavor text
+2. Otherworldly spirit beginnings (no AI yet until boss)
+3. Dissolving Aether
+	1. To Do: Make sure the spirit despawns immediately, Dissolving aether potency changes, server sync despawn.
+
+8/26/20
+1. Phase Cannon added, Server synced too, no obtain yet
+2. Dimension Shredder damage now scales with actual damage
+3. Noticed: Rotating visuals of the Phase cannon and construct are not synced
+
+8/25/20
+1. Holo Blade npc slots 1f => 2f
+
+8/24/20
+1. Otherworld Construct server syncs fine! Some more fixes and particle effects. Gore finished.
+	1. Damage balanced a tad. Server synced.
+	2. Spirit, and Non-tethered next
+2. Permafrost construct spawn rate 0.0125 => 0.01, Health 325 => 275
+3. Nature Construct spawn rate 0.0125 => 0.01 (jungle spawn rates remain the same), Health 175 => 150
+4. Earthen Construct Damage 24 => 28, Fires 1 less projectile per burst in Expert, Health 300 => 250, Defense 0 => 20, Spawn rate 0.0075 => 0.006 (desert and corrupt/holy remain the same)
+	1. Crimson now changes rates as well
+5. Money amounts among constructs increased around the board (except nature)
+
+8/23/20
+1. Finished attacking AI for Otherworld Construct
+	1. Next: Balancing Damage, Server Syncing, Gore, Spirit, Non-tehtered construct
+
+8/22/20
+1. Basic motion for the Otherworld construct and its vine animated
+	1. Attacking AI and non-tethered construct next
+
+8/21/20
+1. Started on the construct, lots of problems
+2. To fix: change the way that the hook is drawn, in order to make it more bendy and properly align with the construct
+	1. Use enemy position to determine direction of hook
+	2. Extend the length of the hook /= 3 instead or something 
+		1. Alternatively, make it scale in a non-linear way
+		2. Lock the length to make it not squeeze past a certain point
+	3. Draw starting at the construct so the rotation of the hooks is better
 
 8/17/20
 1. Twilight beads laser no longer pierces
@@ -65,7 +119,7 @@ Next Development Time:
 8/14/20
 1. Sprited twilight beads and swordgen
 2. Added more visuals to blade, as well as slight changes
-3. Tested, Holo-Blade is server synced fine
+3. Tested, Holo-Blade is server synced ok, could be better visually bugs sometimes but is functionally the same
 
 8/12/20 - 8/13/20
 1. Sprited Gateway and Added Gateway

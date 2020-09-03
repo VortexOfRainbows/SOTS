@@ -39,9 +39,9 @@ namespace SOTS.NPCs.Constructs
 		{
 			//npc.CloneDefaults(NPCID.BlackSlime);
 			npc.aiStyle = 0;
-			npc.lifeMax = 175;  
+			npc.lifeMax = 150;  
 			npc.damage = 30; 
-			npc.defense = 7;  
+			npc.defense = 6;  
 			npc.knockBackResist = 0.1f;
 			npc.width = 120;
 			npc.height = 70;
@@ -239,7 +239,7 @@ namespace SOTS.NPCs.Constructs
 			bool ZoneForest = !player.GetModPlayer<SOTSPlayer>().PyramidBiome && !player.ZoneDesert && !player.ZoneCorrupt && !player.ZoneDungeon && !player.ZoneDungeon && !player.ZoneHoly && !player.ZoneMeteor && !player.ZoneJungle && !player.ZoneSnow && !player.ZoneCrimson && !player.ZoneGlowshroom && !player.ZoneUndergroundDesert && (player.ZoneDirtLayerHeight || player.ZoneOverworldHeight) && !player.ZoneBeach;
 			if(ZoneForest)
 			{
-				return (SpawnCondition.Overworld.Chance * 0.0125f);
+				return (SpawnCondition.Overworld.Chance * 0.01f);
 			}
 			return (SpawnCondition.SurfaceJungle.Chance * 0.025f) + (SpawnCondition.UndergroundJungle.Chance * 0.0075f);
 		}

@@ -18,9 +18,9 @@ namespace SOTS.NPCs.Constructs
 		}
         public override void SetDefaults()
         {
-            npc.lifeMax = 300;      
-            npc.damage = 24;   
-            npc.defense = 0;   
+            npc.lifeMax = 250;      
+            npc.damage = 28;   
+            npc.defense = 20;   
             npc.knockBackResist = 0f;
             npc.width = 58; 
             npc.height = 58; 
@@ -29,7 +29,7 @@ namespace SOTS.NPCs.Constructs
             npc.noTileCollide = true;
             npc.HitSound = SoundID.NPCHit4;
             npc.DeathSound = SoundID.NPCDeath14;
-            npc.value = 3750;
+            npc.value = 5050;
             npc.npcSlots = 3f;
             npc.netAlways = true;
             npc.behindTiles = true;
@@ -444,7 +444,7 @@ namespace SOTS.NPCs.Constructs
                 int count = 3;
                 if (Main.expertMode)
                 {
-                    count += 2;
+                    count += 1;
                 }
                 for(int i = 0; i < count; i++)
                 {
@@ -503,13 +503,13 @@ namespace SOTS.NPCs.Constructs
             Player player = spawnInfo.player;
             if(player.ZoneDesert || player.ZoneUndergroundDesert || (player.ZoneRockLayerHeight && !player.ZoneDungeon && !player.ZoneJungle && !player.ZoneSnow))
             {
-                if(player.ZoneCorrupt || player.ZoneHoly)
+                if(player.ZoneCorrupt || player.ZoneHoly || player.ZoneCrimson)
                 {
                     return 0.0025f;
                 }
                 if(player.ZoneRockLayerHeight)
                 {
-                    return 0.0075f;
+                    return 0.006f;
                 }    
                 return 0.01f;
                 

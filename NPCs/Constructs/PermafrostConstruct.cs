@@ -20,14 +20,14 @@ namespace SOTS.NPCs.Constructs
 		{
 			//npc.CloneDefaults(NPCID.BlackSlime);
 			npc.aiStyle = 26; //unicorn AI
-			npc.lifeMax = 325;  
+			npc.lifeMax = 275;  
 			npc.damage = 33; 
 			npc.defense = 10;  
 			npc.knockBackResist = 0.1f;
 			npc.width = 90;
 			npc.height = 90;
 			Main.npcFrameCount[npc.type] = 1;  
-			npc.value = 5075;
+			npc.value = 7075;
 			npc.npcSlots = 3f;
 			npc.boss = false;
 			npc.lavaImmune = false;
@@ -146,7 +146,7 @@ namespace SOTS.NPCs.Constructs
 			Player player = spawnInfo.player;
 			if(player.ZoneSnow)
 			{
-				return spawnInfo.spawnTileType == TileID.IceBlock || spawnInfo.spawnTileType == TileID.SnowBlock ? .0125f : 0f;
+				return spawnInfo.spawnTileType == TileID.IceBlock || spawnInfo.spawnTileType == TileID.SnowBlock ? .01f : 0f;
 			}
 			return 0;
 		}

@@ -35,7 +35,7 @@ namespace SOTS.Items.Celestial
 		{
 			if(index1 == -1)
 			{
-				index1 = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, mod.ProjectileType("DimensionPortal"), item.damage, item.knockBack, player.whoAmI);
+				index1 = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, mod.ProjectileType("DimensionPortal"), (int)(item.damage * (player.rangedDamage + player.allDamage - 1f)), item.knockBack, player.whoAmI);
 			}
 			if(index1 != -1)
 			{

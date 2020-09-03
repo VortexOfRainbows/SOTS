@@ -14,7 +14,7 @@ namespace SOTS.Items.Fragments
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Dissolving Earth");
-			Tooltip.SetDefault("'Your bones become fragile'\nReduces endurance by 10% while in the inventory");
+			Tooltip.SetDefault("Reduces endurance by 10% while in the inventory");
 			Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(6, 8));
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)

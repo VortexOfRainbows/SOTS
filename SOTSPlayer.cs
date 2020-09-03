@@ -34,6 +34,7 @@ namespace SOTS
 		public int orbitalCounter = 0;
 		public int shardOnHit = 0;
 		public int bonusShardDamage = 0;
+		public int phaseCannonIndex = -1;
 
 		public Vector2 starCen;
 		private const int saveVersion = 0;
