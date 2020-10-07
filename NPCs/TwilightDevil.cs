@@ -235,6 +235,7 @@ namespace SOTS.NPCs
 		}
 		public override void NPCLoot()
 		{
+			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("TwilightGel"), Main.rand.Next(2) + 1);
 			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("JarOfSouls"), 1);
 			if(Main.rand.Next(20) == 0)
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("TwilightBeads"), 1);

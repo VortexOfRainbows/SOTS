@@ -18,15 +18,15 @@ namespace SOTS.NPCs
 		{
 			//npc.CloneDefaults(NPCID.BlackSlime);
 			npc.aiStyle = 1;
-            npc.lifeMax = 150;  
-            npc.damage = 40; 
-            npc.defense = 7;  
+            npc.lifeMax = 90;  
+            npc.damage = 25; 
+            npc.defense = 8;  
             npc.knockBackResist = 0.5f;
             npc.width = 32;
             npc.height = 28;
             animationType = NPCID.BlueSlime;
 			Main.npcFrameCount[npc.type] = 2;  
-            npc.value = 10000;
+            npc.value = 1000;
             npc.npcSlots = .5f;
             npc.boss = false;
             npc.lavaImmune = true;

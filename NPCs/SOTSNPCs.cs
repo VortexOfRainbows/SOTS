@@ -2,6 +2,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using System.Collections.Generic;
+using System.Xml.Schema;
 
 namespace SOTS.NPCs
 {
@@ -66,6 +67,14 @@ namespace SOTS.NPCs
 				}
 				if (player.ZoneSnow && (Main.rand.Next(100) == 0 && !Main.expertMode)){
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("StrawberryIcecream"), 1);
+				}
+				if (npc.type == NPCID.ZombieMushroom || npc.type == NPCID.ZombieMushroomHat || npc.type == NPCID.MushiLadybug || npc.type == NPCID.AnomuraFungus || npc.type == NPCID.FungiBulb || npc.type == NPCID.FungoFish || npc.type == NPCID.GiantFungiBulb) {
+					if (Main.rand.Next(9) == 0 && Main.expertMode) {
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("CookedMushroom"), 1);
+					}
+					if (Main.rand.Next(10) == 0 && !Main.expertMode) {
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("CookedMushroom"), 1);
+					}
 				}
 				if (modPlayer.PlanetariumBiome)
 				{
@@ -161,20 +170,26 @@ namespace SOTS.NPCs
 			{
 				if(Main.hardMode)
 				{
-					spawnRate = (int)(spawnRate /= 60); //essentially setting it to 10
+					spawnRate = (int)(spawnRate /= 50); //essentially setting it to 12
 					if (spawnRate < 1)
-						spawnRate++;
-					maxSpawns = (int)(maxSpawns * 2.25f);
+						spawnRate = 1;
+					maxSpawns = (int)(maxSpawns * 2f);
 				}
 				else
 				{
-					spawnRate = (int)(spawnRate /= 50); //essentially setting it to 12
+					spawnRate = (int)(spawnRate /= 40); //essentially setting it to 15
 					if (spawnRate < 1)
-						spawnRate++;
-					maxSpawns = (int)(maxSpawns * 1.75f);
+						spawnRate = 1;
+					maxSpawns = (int)(maxSpawns * 1.5f);
 				}
 			}
 		}
+		public static int HookGetBossHeadTextureIndex(On.Terraria.NPC.orig_GetBossHeadTextureIndex orig, NPC self)
+        {
+			if(self.type == NPCID.EyeofCthulhu)
+				return -1;
+			return orig(self);
+        }
 		public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo) 
 		{
 			if(spawnInfo.player.GetModPlayer<SOTSPlayer>().PyramidBiome && spawnInfo.spawnTileType == (ushort)mod.TileType("PyramidSlabTile"))
@@ -202,7 +217,8 @@ namespace SOTS.NPCs
 					pool.Add(mod.NPCType("HoloSlime"), 0.4f);
 					pool.Add(mod.NPCType("HoloEye"), 0.1f);
 					pool.Add(mod.NPCType("HoloBlade"), 0.175f);
-					pool.Add(mod.NPCType("TwilightDevil"), 0.05f);
+					pool.Add(mod.NPCType("TwilightDevil"), 0.01f);
+					pool.Add(mod.NPCType("OtherworldlyConstructHead"), 0.007f);
 				}
 			}
 		}

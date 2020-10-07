@@ -71,7 +71,9 @@ namespace SOTS.NPCs
 		public override void NPCLoot()
 		{
 			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("CursedMatter"), Main.rand.Next(2) + 2);	
-			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  ItemID.Ichor, Main.rand.Next(4) + 2);	
+			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  ItemID.Ichor, Main.rand.Next(4) + 2);
+			if (Main.rand.Next(20) == 0)
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("CursedCaviar"), 1);
 		}
 		public override void HitEffect(int hitDirection, double damage)
         {

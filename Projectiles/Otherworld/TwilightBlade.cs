@@ -14,8 +14,6 @@ namespace SOTS.Projectiles.Otherworld
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Twilight Blade");
-			ProjectileID.Sets.TrailCacheLength[projectile.type] = 20;
-			ProjectileID.Sets.TrailingMode[projectile.type] = 0;
 		}
 		public override void SendExtraAI(BinaryWriter writer)
 		{

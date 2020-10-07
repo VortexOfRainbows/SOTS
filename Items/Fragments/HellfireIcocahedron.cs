@@ -17,7 +17,7 @@ namespace SOTS.Items.Fragments
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Hellfire Icosahedron");
-			Tooltip.SetDefault("Critical strikes may burn enemies");
+			Tooltip.SetDefault("Critical strikes may burn enemies\n3% increased crit chance");
 		}
 		public override void SetDefaults()
 		{
@@ -31,6 +31,11 @@ namespace SOTS.Items.Fragments
 		{
 			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");	
 			modPlayer.CritFire = true;
+			player.meleeCrit += 3;
+			player.rangedCrit += 3;
+			player.magicCrit += 3;
+			player.thrownCrit += 3;
+
 		}
 		public override void AddRecipes()
 		{

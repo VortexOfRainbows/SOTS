@@ -23,6 +23,7 @@ namespace SOTS.Projectiles.Otherworld
 			projectile.tileCollide = false;
 			projectile.penetrate = -1;
 			projectile.alpha = 100;
+			projectile.ranged = true;
 		}
 		public override void SendExtraAI(BinaryWriter writer)
 		{
@@ -82,10 +83,12 @@ namespace SOTS.Projectiles.Otherworld
 			{
 				Lighting.AddLight(projectile.Center, 0.95f * ((255 - projectile.alpha)/255), 0.45f * ((255 - projectile.alpha) / 255), 0.95f * ((255 - projectile.alpha)/255));
 				NPC owner = Main.npc[(int)projectile.ai[1]];
-				if (!owner.active || owner.type != mod.NPCType("OtherworldlyConstructHead2"))
+				if (!owner.active || !(owner.type == mod.NPCType("OtherworldlyConstructHead2") || owner.type == mod.NPCType("OtherworldlyConstructHead") || owner.type == mod.NPCType("TheAdvisorHead")))
 				{
 					projectile.Kill();
 				}
+				if (owner.type == mod.NPCType("TheAdvisorHead"))
+					projectile.extraUpdates = 1;
 			}
 			if(projectile.ai[1] == -3)
 			{

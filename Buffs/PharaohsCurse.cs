@@ -19,8 +19,10 @@ namespace SOTS.Buffs
 		public override void Update(Player player, ref int buffIndex)
 		{
 			bool update = true;
-			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");	
-			if(SOTSWorld.downedCurse)
+			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
+			if (SOTSWorld.downedBoss2)
+				modPlayer.weakerCurse = true;
+			if (SOTSWorld.downedCurse)
 			{
 				update = false;
 			}

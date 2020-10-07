@@ -40,7 +40,7 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void UpdateInventory(Player player)
 		{
-				Lighting.AddLight(player.Center, 14.5f, 0.25f, 11.5f);
+				Lighting.AddLight(player.Center, 0.9f, 0.05f, 0.9f);
 				VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 				SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");	
 				//timer++;

@@ -17,7 +17,7 @@ namespace SOTS.Items.Fragments
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Clover Charm");
-			Tooltip.SetDefault("Critical strikes have a 50% chance to steal life\n2% increased crit chance");
+			Tooltip.SetDefault("Critical strikes have a 50% chance to steal life\n3% increased crit chance");
 		}
 		public override void SetDefaults()
 		{
@@ -31,13 +31,13 @@ namespace SOTS.Items.Fragments
 		{
 			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");	
 			
-			player.meleeCrit += 2;
-			player.rangedCrit += 2;
-			player.magicCrit += 2;
-			player.thrownCrit += 2;
+			player.meleeCrit += 3;
+			player.rangedCrit += 3;
+			player.magicCrit += 3;
+			player.thrownCrit += 3;
 			
 			if(Main.rand.Next(2) == 0)
-				modPlayer.CritLifesteal += Main.rand.Next(3) + 2;
+				modPlayer.CritLifesteal += Main.rand.Next(3) + 3;
 		}
 		public override void AddRecipes()
 		{

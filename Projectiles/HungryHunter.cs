@@ -29,7 +29,8 @@ namespace SOTS.Projectiles
 			projectile.friendly = true;
 			projectile.aiStyle = 15;
 			projectile.melee = true;
-        }
+			projectile.localNPCHitCooldown = 15;
+		}
 		public override void SendExtraAI(BinaryWriter writer) 
 		{
 			writer.Write(projectile.rotation);
@@ -100,12 +101,12 @@ namespace SOTS.Projectiles
 			}
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
-        {
-			
+		{
+			projectile.localNPCImmunity[target.whoAmI] = projectile.localNPCHitCooldown;
+			target.immune[projectile.owner] = 0;
 			Player player = Main.player[projectile.owner];
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");	
-            target.immune[projectile.owner] = 15;
 			projectile.timeLeft = 3000;
 			projectile.friendly = true;
 			latch = true;

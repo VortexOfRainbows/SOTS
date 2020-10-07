@@ -19,8 +19,8 @@ namespace SOTS.NPCs.Constructs
         public override void SetDefaults()
         {
             npc.lifeMax = 250;      
-            npc.damage = 28;   
-            npc.defense = 20;   
+            npc.damage = 18;   
+            npc.defense = 12;   
             npc.knockBackResist = 0f;
             npc.width = 58; 
             npc.height = 58; 
@@ -507,9 +507,9 @@ namespace SOTS.NPCs.Constructs
                 {
                     return 0.0025f;
                 }
-                if(player.ZoneRockLayerHeight)
+                if(player.ZoneRockLayerHeight && !player.ZoneUndergroundDesert)
                 {
-                    return 0.006f;
+                    return 0.005f;
                 }    
                 return 0.01f;
                 

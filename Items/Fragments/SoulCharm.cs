@@ -36,8 +36,8 @@ namespace SOTS.Items.Fragments
 			player.magicCrit += 3;
 			player.thrownCrit += 3;
 			
-			modPlayer.CritLifesteal += 1 + Main.rand.Next(2);
-			modPlayer.CritVoidsteal += 1.25f;
+			modPlayer.CritLifesteal += 2 + Main.rand.Next(2);
+			modPlayer.CritVoidsteal += 2.25f;
 		}
 		public override void AddRecipes()
 		{

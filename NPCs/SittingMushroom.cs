@@ -109,7 +109,7 @@ namespace SOTS.NPCs
 		}
 		public override void NPCLoot()
 		{
-			if(npc.HasBuff(BuffID.OnFire))
+			if(npc.HasBuff(BuffID.OnFire) || Main.rand.Next(10) == 0)
 			{
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("CookedMushroom"), Main.rand.Next(2) + 3);
 			}

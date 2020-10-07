@@ -14,17 +14,15 @@ namespace SOTS.Items.GelGear
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Wormwood Parasite");
-			Tooltip.SetDefault("Increases void regen speed by 1\nIncreases max void by 20\nLowers life regen speed");
+			Tooltip.SetDefault("Increases void regen speed by 1 and void crit by 8%\nCritical strikes heal small amounts of void\nIncreases max void by 20\nLowers life regen speed");
 		}
 		public override void SetDefaults()
 		{
-      
             item.width = 34;     
             item.height = 30;   
             item.value = Item.sellPrice(0, 1, 80, 0);
             item.rare = 4;
 			item.accessory = true;
-
 		}
 		public override void AddRecipes()
 		{
@@ -38,10 +36,13 @@ namespace SOTS.Items.GelGear
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
+			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
+			modPlayer.CritVoidsteal += 0.33f;
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			voidPlayer.voidMeterMax2 += 20;
 			voidPlayer.voidRegen += 0.1f;
-			if(player.lifeRegen > 0)
+			voidPlayer.voidCrit += 8;
+			if (player.lifeRegen > 0)
 				player.lifeRegen -= 1;
 		}
 	}

@@ -44,7 +44,7 @@ namespace SOTS.Items.Fragments
 		}
 		public override void SetDefaults() 
 		{
-			item.damage = 19;
+			item.damage = 21;
 			item.knockBack = 4f;
 			item.mana = 18;
 			item.width = 40;

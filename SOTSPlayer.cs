@@ -1,4 +1,6 @@
 using Microsoft.Xna.Framework;
+using SOTS.Items.Otherworld.EpicWings;
+using SOTS.Void;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -35,6 +37,9 @@ namespace SOTS
 		public int shardOnHit = 0;
 		public int bonusShardDamage = 0;
 		public int phaseCannonIndex = -1;
+		public float assassinateNum = 1;
+		public int assassinateFlat = 0;
+		public bool assassinate = false;
 
 		public Vector2 starCen;
 		private const int saveVersion = 0;
@@ -82,16 +87,20 @@ namespace SOTS
 
 		public int CritLifesteal = 0; //crit clover
 		public float CritVoidsteal = 0f; //crit void charm
+		public float maxCritVoidStealPerSecond = 0;
+		public float maxCritVoidStealPerSecondTimer = 0;
 		public int CritBonusDamage = 0; //crit coin + amplfiier
 		public bool CritFire = false; //hellfire icosahedron
 		public bool CritFrost = false; //borealis icosahedron
 		public bool CritCurseFire = false; //cursed icosahedron
 		public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
 		{
+			TestWingsPlayer testPlayer = player.GetModPlayer<TestWingsPlayer>();
 			ModPacket packet = mod.GetPacket();
 			packet.Write((byte)SOTSMessageType.SOTSSyncPlayer);
 			packet.Write((byte)player.whoAmI);
 			packet.Write(orbitalCounter);
+			packet.Write(testPlayer.creativeFlight);
 			packet.Send(toWho, fromWho);
 		}
 		public override void SendClientChanges(ModPlayer clientPlayer)
@@ -139,6 +148,10 @@ namespace SOTS
 		}
 		public override void ResetEffects()
 		{
+			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
+			assassinateFlat = 0;
+			assassinateNum = 1;
+			assassinate = false;
 			if(PlanetariumBiome)
 			{
 				//DespawnSkyEnemies();
@@ -190,6 +203,13 @@ namespace SOTS
 			CritFire = false;
 			CritFrost = false;
 			CritCurseFire = false;
+
+			maxCritVoidStealPerSecond = voidPlayer.voidRegen * 20; //max stored voidsteal is 20x the voidRegen speed
+			maxCritVoidStealPerSecondTimer += voidPlayer.voidRegen / 30f; //max stored voidsteal regenerates at the twice rate as normal voidRegen (basically, stores 20 seconds of regen)
+			if (maxCritVoidStealPerSecondTimer > maxCritVoidStealPerSecond)
+			{
+				maxCritVoidStealPerSecondTimer = maxCritVoidStealPerSecond;
+			}
 			if (PyramidBiome)
 				player.AddBuff(mod.BuffType("PharaohsCurse"), 16, false);
 		}
@@ -383,6 +403,24 @@ namespace SOTS
 		}
 		public override void OnHitNPCWithProj(Projectile proj, NPC target, int damage, float knockback, bool crit)
 		{
+			if(assassinate)
+			{
+				target.AddBuff(mod.BuffType("Assassination"), 900);
+				float mult = 1 - assassinateNum;
+				int life = target.life;
+				if ((life < target.lifeMax * mult || life <= assassinateFlat) && target.HasBuff(mod.BuffType("Assassination")))
+				{
+					target.StrikeNPC(life + assassinateFlat + ((target.defense + 1) / 2), 0, 0, true);
+					for (int i = 0; i < 60; i++)
+					{
+						Vector2 rotate = new Vector2(target.width / 2 + 4, 0).RotatedBy(MathHelper.ToRadians(Main.GlobalTime * 120 + target.whoAmI * 7 + 120 * i));
+						int num1 = Dust.NewDust(new Vector2(target.Center.X + rotate.X - 4, target.Center.Y + rotate.Y - 4), 0, 0, 235);
+						Main.dust[num1].noGravity = true;
+						Main.dust[num1].scale *= 2f;
+						Main.dust[num1].velocity *= 1.5f;
+					}
+				}
+			}
 			if (orion == true)
 			{
 				float amount = 0;
@@ -459,7 +497,24 @@ namespace SOTS
 		}
 		public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit)
 		{
-
+			if (assassinate)
+			{
+				target.AddBuff(mod.BuffType("Assassination"), 900);
+				float mult = 1 - assassinateNum;
+				int life = target.life;
+				if ((life < target.lifeMax * mult || life <= assassinateFlat) && target.HasBuff(mod.BuffType("Assassination")))
+				{
+					target.StrikeNPC(life + assassinateFlat + ((target.defense + 1) / 2), 0, 0, true);
+					for (int i = 0; i < 60; i++)
+					{
+						Vector2 rotate = new Vector2(target.width / 2 + 4, 0).RotatedBy(MathHelper.ToRadians(Main.GlobalTime * 120 + target.whoAmI * 7 + 120 * i));
+						int num1 = Dust.NewDust(new Vector2(target.Center.X + rotate.X - 4, target.Center.Y + rotate.Y - 4), 0, 0, 235);
+						Main.dust[num1].noGravity = true;
+						Main.dust[num1].scale *= 2f;
+						Main.dust[num1].velocity *= 1.5f;
+					}
+				}
+			}
 			Vector2 vector14;
 
 			if (player.gravDir == 1f)
@@ -629,8 +684,9 @@ namespace SOTS
 				{
 					Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, mod.ProjectileType("HealProj"), 0, 0, player.whoAmI, CritLifesteal, 6);
 				}
-				if(CritVoidsteal > 0)
+				if(CritVoidsteal > 0 && maxCritVoidStealPerSecondTimer > 0)
 				{
+					maxCritVoidStealPerSecondTimer -= CritVoidsteal;
 					Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, mod.ProjectileType("HealProj"), 2, 0, player.whoAmI, CritVoidsteal, 5);
 				}
 				int randBuff = Main.rand.Next(3);
@@ -657,8 +713,9 @@ namespace SOTS
 				{
 					Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, mod.ProjectileType("HealProj"), 0, 0, player.whoAmI, CritLifesteal, 6);
 				}
-				if(CritVoidsteal > 0)
+				if (CritVoidsteal > 0 && maxCritVoidStealPerSecondTimer > 0)
 				{
+					maxCritVoidStealPerSecondTimer -= CritVoidsteal;
 					Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, mod.ProjectileType("HealProj"), 2, 0, player.whoAmI, CritVoidsteal, 5);
 				}
 				int randBuff = Main.rand.Next(2);

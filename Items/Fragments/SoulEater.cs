@@ -20,8 +20,8 @@ namespace SOTS.Items.Fragments
 		{
             item.damage = 10;
             item.melee = true;  
-            item.width = 46;
-            item.height = 46;  
+            item.width = 40;
+            item.height = 40;  
             item.useTime = 24; 
             item.useAnimation = 24;
             item.useStyle = 5;    

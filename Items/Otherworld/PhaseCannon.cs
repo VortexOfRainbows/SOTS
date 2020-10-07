@@ -41,11 +41,6 @@ namespace SOTS.Items.Otherworld
 				if(proj.alpha > 0)
 					proj.alpha -= 6;
 			}
-		}
-		public override void UpdateInventory(Player player)
-		{
-			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
-			ref int index = ref modPlayer.phaseCannonIndex;
 			if (index == -1)
 			{
 				Vector2 mouse = Main.MouseWorld;
@@ -54,7 +49,7 @@ namespace SOTS.Items.Otherworld
 					index = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, mod.ProjectileType("OtherworldlyTracer"), item.damage, item.knockBack, player.whoAmI, 1000, -1);
 				}
 			}
-			else if(index < -1)
+			else if (index < -1)
 			{
 				index++;
 			}

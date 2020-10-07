@@ -40,11 +40,11 @@ namespace SOTS.Items
 		}
 		public override void UpdateInventory(Player player)
 		{
-				Lighting.AddLight(player.Center, 7.25f, 7.25f, 7.25f);
-				VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-				SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");	
-				//timer++;
-				voidPlayer.voidRegen -= 0.075f;
+			Lighting.AddLight(player.Center, 1f, 1f, 1f);
+			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
+			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");	
+			//timer++;
+			voidPlayer.voidRegen -= 0.075f;
 		}
 		public override void AddRecipes()
 		{

@@ -66,6 +66,11 @@ namespace SOTS.Projectiles.Laser
 		public override void AI()
 		{
 			Player player  = Main.player[projectile.owner];
+			if (projectile.hide == false)
+			{
+				Main.player[projectile.owner].heldProj = projectile.whoAmI;
+				projectile.alpha = 0;
+			}
 			Vector2 cursorArea = Main.MouseWorld;
 			float shootToX = cursorArea.X - player.Center.X;
 			float shootToY = cursorArea.Y - player.Center.Y;

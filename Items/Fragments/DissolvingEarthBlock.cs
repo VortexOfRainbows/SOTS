@@ -195,7 +195,7 @@ namespace SOTS.Items.Fragments
 			}
 			//spriteBatch.Draw(texture, drawPos, null, color, 0, new Vector2(0,0), 1, SpriteEffects.None, 0f);
 			
-			return !Main.tile[i, j].inActive();
+			return true;
 		}
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
         {

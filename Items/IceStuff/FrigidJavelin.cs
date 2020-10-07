@@ -15,12 +15,12 @@ namespace SOTS.Items.IceStuff
 		}
 		public override void SafeSetDefaults()
 		{
-            item.damage = 30;  
+            item.damage = 42;  
             item.magic = true;  
             item.width = 46;    
             item.height = 46;
-			item.useAnimation = 48;
-			item.useTime = 48;
+			item.useAnimation = 44;
+			item.useTime = 44;
 			item.useStyle = 5;    
             item.knockBack = 5.25f;
             item.value = Item.sellPrice(0, 0, 80, 0);

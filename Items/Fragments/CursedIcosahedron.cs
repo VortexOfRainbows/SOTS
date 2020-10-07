@@ -9,7 +9,7 @@ namespace SOTS.Items.Fragments
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Cursed Icosahedron");
-			Tooltip.SetDefault("Critical strikes may afflict enemies with frostburn, burn, or cursed flames");
+			Tooltip.SetDefault("Critical strikes may afflict enemies with frostburn, burn, or cursed flames\n3% increased crit chance");
 		}
 		public override void SetDefaults()
 		{
@@ -25,6 +25,10 @@ namespace SOTS.Items.Fragments
 			modPlayer.CritFrost = true;
 			modPlayer.CritFire = true;
 			modPlayer.CritCurseFire = true;
+			player.meleeCrit += 3;
+			player.rangedCrit += 3;
+			player.magicCrit += 3;
+			player.thrownCrit += 3;
 		}
 		public override void AddRecipes()
 		{

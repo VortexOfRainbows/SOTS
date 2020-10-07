@@ -18,15 +18,15 @@ namespace SOTS.NPCs
 		{
 			//npc.CloneDefaults(NPCID.BlackSlime);
 			npc.aiStyle = 1;
-            npc.lifeMax = 150;  
-            npc.damage = 45; 
-            npc.defense = 7;  
+            npc.lifeMax = 160;  
+            npc.damage = 40; 
+            npc.defense = 12;  
             npc.knockBackResist = 0.5f;
             npc.width = 36;
             npc.height = 32;
             animationType = NPCID.BlueSlime;
 			Main.npcFrameCount[npc.type] = 2;  
-            npc.value = 10000;
+            npc.value = 5000;
             npc.npcSlots = .5f;
             npc.boss = false;
             npc.lavaImmune = true;
@@ -54,8 +54,7 @@ namespace SOTS.NPCs
 		{
 			if(NPC.downedBoss3)
 			{
-					return SpawnCondition.Underworld.Chance * 0.07f;
-				
+				return SpawnCondition.Underworld.Chance * 0.07f;
 			}
 			return 0f;
 		}

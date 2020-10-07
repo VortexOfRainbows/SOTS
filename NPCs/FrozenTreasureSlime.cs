@@ -18,9 +18,9 @@ namespace SOTS.NPCs
 		{
 			//npc.CloneDefaults(NPCID.BlackSlime);
 			npc.aiStyle = 1;
-            npc.lifeMax = 60;  
-            npc.damage = 38; 
-            npc.defense = 3;  
+            npc.lifeMax = 70;  
+            npc.damage = 30; 
+            npc.defense = 6;  
             npc.knockBackResist = 0.8f;
             npc.width = 32;
             npc.height = 28;
@@ -147,7 +147,7 @@ namespace SOTS.NPCs
 
 			if(Main.rand.Next(15) == 0 || (Main.expertMode && Main.rand.Next(40) == 0))
 			{
-				int rand = Main.rand.Next(10);
+				int rand = Main.rand.Next(9);
 				if(rand == 0)
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  ItemID.IceBoomerang, 1);
@@ -183,10 +183,6 @@ namespace SOTS.NPCs
 				if(rand == 8)
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  ItemID.VikingHelmet, 1);
-				}
-				if(rand == 9)
-				{
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("CryoCannon"), 1);
 				}
 			}
 		}	

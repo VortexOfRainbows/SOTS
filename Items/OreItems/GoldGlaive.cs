@@ -11,7 +11,7 @@ namespace SOTS.Items.OreItems
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Gold Glaive");
-			Tooltip.SetDefault("Fires 3 bolts at your cursor, each dealing 45% damage");
+			Tooltip.SetDefault("Fires 3 bolts at your cursor, each dealing 50% damage");
 		}
 		public override void SafeSetDefaults()
 		{
@@ -55,7 +55,7 @@ namespace SOTS.Items.OreItems
 			  for (int i = 0; i < numberProjectiles; i++)
               {
                   Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians(160 + (i * 20)));
-                  Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, mod.ProjectileType("GoldBolt"), (int)(damage * 0.45f), knockBack, player.whoAmI);
+                  Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, mod.ProjectileType("GoldBolt"), (int)(damage * 0.5f) + 1, knockBack, player.whoAmI);
               }
               return true; 
 		}

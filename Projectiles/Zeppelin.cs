@@ -44,7 +44,7 @@ namespace SOTS.Projectiles
 		}
         public override void PostAI()
         {
-			Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 1.5f / 255f, (255 - projectile.alpha) * 1.5f / 255f, (255 - projectile.alpha) * 1.5f / 255f);
+			Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 0.7f / 255f, (255 - projectile.alpha) * 1f / 255f, (255 - projectile.alpha) * 1.45f / 255f);
 			if(storeData == -1 && projectile.owner == Main.myPlayer)
 			{
 				storeData = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("Razorwater"), (int)(projectile.damage * 0.75f) + 1, 0, Main.myPlayer, 0, projectile.whoAmI);

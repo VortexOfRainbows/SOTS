@@ -441,7 +441,7 @@ namespace SOTS.Items.Pyramid
 							for (int w = -1; w < 2; w++)
 							{
 								Tile tile = Framing.GetTileSafely(i + k, j + w);
-								if(Main.tileSolid[tile.type] == true && tile.active() && Main.tileSolidTop[tile.type] == false)
+								if(Main.tileSolid[tile.type] == true && !tile.inActive() && Main.tileSolidTop[tile.type] == false && tile.active())
 								{
 									flag = false;
 								}
@@ -482,7 +482,7 @@ namespace SOTS.Items.Pyramid
 							for (int w = -1; w < 2; w++)
 							{
 								Tile tile = Framing.GetTileSafely(i + k, j + w);
-								if (Main.tileSolid[tile.type] == true && tile.active() && Main.tileSolidTop[tile.type] == false)
+								if (Main.tileSolid[tile.type] == true && !tile.inActive() && Main.tileSolidTop[tile.type] == false && tile.active())
 								{
 									flag = false;
 								}

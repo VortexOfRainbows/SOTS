@@ -26,6 +26,13 @@ namespace SOTS.Projectiles.Pyramid
 			projectile.minion = true;
 			projectile.alpha = 0;
             projectile.minionSlots = 0f;
+			projectile.usesLocalNPCImmunity = true;
+			projectile.localNPCHitCooldown = 40;
+		}
+		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		{
+			projectile.localNPCImmunity[target.whoAmI] = projectile.localNPCHitCooldown;
+			target.immune[projectile.owner] = 0;
 		}
 		int counter = 0;
 		public override void SendExtraAI(BinaryWriter writer) 

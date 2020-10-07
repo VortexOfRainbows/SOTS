@@ -41,10 +41,10 @@ namespace SOTS.NPCs
 		public override void AI()
 		{
 			ai1++;
-				int num1 = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), 48, 24, mod.DustType("CurseDust"));
-				Main.dust[num1].noGravity = true;
-				Main.dust[num1].velocity.X = npc.velocity.X;
-				Main.dust[num1].velocity.Y = -5;
+			int num1 = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), 48, 24, mod.DustType("CurseDust"));
+			Main.dust[num1].noGravity = true;
+			Main.dust[num1].velocity.X = npc.velocity.X;
+			Main.dust[num1].velocity.Y = -5;
 		}
 		int frame = 0;
 		public override void FindFrame(int frameHeight) 
@@ -73,8 +73,10 @@ namespace SOTS.NPCs
 		}
 		public override void NPCLoot()
 		{
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("CursedMatter"), Main.rand.Next(2) + 2);	
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  ItemID.CursedFlame, Main.rand.Next(4) + 2);	
+			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("CursedMatter"), Main.rand.Next(2) + 2);	
+			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  ItemID.CursedFlame, Main.rand.Next(4) + 2);
+			if (Main.rand.Next(20) == 0)
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("CursedCaviar"), 1);
 		}
 		public override void HitEffect(int hitDirection, double damage)
         {

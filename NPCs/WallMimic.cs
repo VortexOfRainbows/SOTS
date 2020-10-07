@@ -298,6 +298,8 @@ namespace SOTS.NPCs
 			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("CursedHiveBlock"), Main.rand.Next(7) + 3);
 			if(dropSpecial || Main.rand.Next(200) == 0)
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("TheDarkEye"), 1);
+			if(Main.rand.Next(20) == 0)
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("CursedCaviar"), 1);
 		}
 		public override void HitEffect(int hitDirection, double damage)
 		{

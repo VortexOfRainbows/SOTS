@@ -24,13 +24,13 @@ namespace SOTS.NPCs.Constructs
 			npc.aiStyle = 0;
 			npc.lifeMax = 500;  
 			npc.damage = 45; 
-			npc.defense = 28;  
+			npc.defense = 16;  
 			npc.knockBackResist = 0.1f;
 			npc.width = 70;
 			npc.height = 82;
 			Main.npcFrameCount[npc.type] = 1;  
 			npc.value = 12550;
-			npc.npcSlots = 3f;
+			npc.npcSlots = 5f;
 			npc.lavaImmune = true;
 			npc.noGravity = true;
 			npc.noTileCollide = false;
@@ -39,7 +39,6 @@ namespace SOTS.NPCs.Constructs
 			npc.HitSound = SoundID.NPCHit4;
 			npc.DeathSound = SoundID.NPCDeath14;
 		}
-		
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
 			dir = (float)Math.Atan2(aimTo.Y - npc.Center.Y, aimTo.X - npc.Center.X);
@@ -54,28 +53,7 @@ namespace SOTS.NPCs.Constructs
 			Vector2 centerOfCircle = hookTile + distanceToOwner / 4;
 			float startingRadians = distanceToOwner.ToRotation();
 			float radius = distanceToOwner.Length() / 4;
-			/*
-			float startingRotation = npc.rotation + (npc.spriteDirection + 1) * 0.5f * MathHelper.ToRadians(180);
-			float speed = distanceToOwner.Length() / 3;
-			Vector2 towards = new Vector2(speed, 0).RotatedBy(startingRotation);
-			Vector2 currentPos = npcPos;
-			for (int i = 0; i < 10; i++)
-			{
-				speed = distanceToOwner.Length() / (11 - i);
-				float dX = 0f;
-				float dY = 0f;
-				float distance = 0;
-				dX = hookTile.X - currentPos.X;
-				dY = hookTile.Y - currentPos.Y;
-				distance = (float)Math.Sqrt((double)(dX * dX + dY * dY));
-				towards += new Vector2(dX * speed, dY * speed);
-				towards = new Vector2(speed, 0).RotatedBy(towards.ToRotation());
-				Vector2 pos = towards + currentPos;
-				Vector2 dynamicAddition = new Vector2(2f, 0).RotatedBy(MathHelper.ToRadians(i * 36 + ai1));
-				Vector2 drawPos = pos - Main.screenPosition;
-				currentPos = pos;
-				spriteBatch.Draw(texture, drawPos + dynamicAddition, null, npc.GetAlpha(drawColor), towards.ToRotation() + MathHelper.ToRadians(45), drawOrigin, npc.scale, SpriteEffects.None, 0f);
-			} */
+
 			Vector2 vector2_1 = new Vector2(-1, 0).RotatedBy(MathHelper.ToRadians(0.3f * ai1));
 			int max = 20;
 			for (int i = max; i > 0; i--)
@@ -113,7 +91,11 @@ namespace SOTS.NPCs.Constructs
 			}
 			return true;
 		}
-		public override void HitEffect(int hitDirection, double damage)
+        public override bool CheckActive()
+        {
+            return false;
+        }
+        public override void HitEffect(int hitDirection, double damage)
 		{
 			if (npc.life <= 0)
 			{
@@ -171,6 +153,7 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override bool PreAI()
 		{
+			npc.dontCountMe = true;
 			Player player = Main.player[npc.target];
 			npc.TargetClosest(true);
 			if((aimTo.X == -1 && aimTo.Y == -1) || (hookTile.X == -1 && hookTile.Y == -1))
@@ -181,6 +164,8 @@ namespace SOTS.NPCs.Constructs
 				return false;
 			}
 			aimTo = player.Center;
+			npc.ai[2] = hookTile.X;
+			npc.ai[3] = hookTile.Y;
 			return true;
 		}
 		bool flag = false;
@@ -247,7 +232,8 @@ namespace SOTS.NPCs.Constructs
 			Player player = Main.player[npc.target];
 			Vector2 toPlayer = player.Center - npc.Center;
 			Vector2 playerLoc = player.Center;
-			if (toPlayer.Length() > 900 && npc.ai[0] < 270)
+			bool lineOfSight = Collision.CanHitLine(npc.position, npc.width, npc.height, player.position, player.width, player.height);
+			if ((toPlayer.Length() > 900 || !lineOfSight) && npc.ai[0] < 270)
 				return;
 			if(toPlayer.Length() < 240)
 			{
@@ -325,7 +311,7 @@ namespace SOTS.NPCs.Constructs
 			Main.npc[n].localAI[1] = -1;
 			if (Main.netMode != 1)
 				Main.npc[n].netUpdate = true;
-			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("FragmentOfOtherworld"), Main.rand.Next(4) + 4);	
+			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("FragmentOfOtherworld"), Main.rand.Next(2) + 3);	
 		}	
 	}
 }

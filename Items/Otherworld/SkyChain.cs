@@ -38,7 +38,7 @@ namespace SOTS.Items.Otherworld
 		{
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(null, "AvaritianPlating", 4);
-			recipe.AddIngredient(ItemID.Torch, 1);
+			recipe.AddIngredient(null, "TwilightGel", 4);
 			recipe.AddTile(mod.TileType("HardlightFabricatorTile"));
 			recipe.SetResult(this, 1);
 			recipe.AddRecipe();

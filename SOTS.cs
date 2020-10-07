@@ -11,6 +11,7 @@ using Terraria.ModLoader;
 using Terraria.UI;
 using SOTS.Void;
 using SOTS.Items.Pyramid;
+using SOTS.Items.Otherworld.EpicWings;
 
 namespace SOTS
 {
@@ -76,8 +77,7 @@ namespace SOTS
 		{
 			SOTSSyncPlayer,
 			OrbitalCounterChanged,
-			SyncDashServer,
-			SyncDashClient
+			SyncCreativeFlight
 		}
 		public override void HandlePacket(BinaryReader reader, int whoAmI)
 		{
@@ -87,8 +87,11 @@ namespace SOTS
 				case SOTSMessageType.SOTSSyncPlayer:
 					byte playernumber = reader.ReadByte();
 					SOTSPlayer modPlayer = Main.player[playernumber].GetModPlayer<SOTSPlayer>();
+					TestWingsPlayer testPlayer = Main.player[playernumber].GetModPlayer<TestWingsPlayer>();
 					int orbitalCounter = reader.ReadInt32();
 					modPlayer.orbitalCounter = orbitalCounter;
+					bool creativeFlight = reader.ReadBoolean();
+					testPlayer.creativeFlight = creativeFlight;
 					// SyncPlayer will be called automatically, so there is no need to forward this data to other clients.
 					break;
 				case SOTSMessageType.OrbitalCounterChanged:
@@ -105,12 +108,24 @@ namespace SOTS
 						packet.Send(-1, playernumber);
 					}
 					break;
+				case SOTSMessageType.SyncCreativeFlight:
+					playernumber = reader.ReadByte(); 
+					testPlayer = Main.player[playernumber].GetModPlayer<TestWingsPlayer>();
+					testPlayer.creativeFlight = reader.ReadBoolean();
+					// Unlike SyncPlayer, here we have to relay/forward these changes to all other connected clients
+					if (Main.netMode == NetmodeID.Server)
+					{
+						var packet = GetPacket();
+						packet.Write((byte)SOTSMessageType.SyncCreativeFlight);
+						packet.Write(playernumber);
+						packet.Write(testPlayer.creativeFlight);
+						packet.Send(-1, playernumber);
+					}
+					break;
 			}
 		}
 		public override void AddRecipes()
 		{
-			
-			
 			ModRecipe recipe = new ModRecipe(this);
 			recipe.AddIngredient(null, "Wormwood", 30);
 			recipe.AddTile(TileID.Anvils);
@@ -206,11 +221,12 @@ namespace SOTS
                 //bossChecklist.Call("AddBoss", "Putrid Pinky", 4.2f, (Func<bool>)(() => SOTSWorld.downedPinky));
                 bossChecklist.Call("AddBossWithInfo", "Putrid Pinky", 4.2f, (Func<bool>)(() => SOTSWorld.downedPinky), "Use [i:" + ItemType("JarOfPeanuts") + "]");
                 bossChecklist.Call("AddBossWithInfo", "Pharaoh's Curse", 4.3f, (Func<bool>)(() => SOTSWorld.downedCurse), "Find the [i:" + ItemType("Sarcophagus") + "] in the pyramid");
-                //bossChecklist.Call("AddBossWithInfo", "Cryptic Carver", 5.2f, (Func<bool>)(() => SOTSWorld.downedCarver), "Use [i:" + ItemType("MargritArk") + "]");
-                //bossChecklist.Call("AddBossWithInfo", "Ethereal Entity", 6.5f, (Func<bool>)(() => SOTSWorld.downedEntity), "Use [i:" + ItemType("PlanetariumDiamond") + "] in a planetarium biome");
-				
-                //bossChecklist.Call("AddBossWithInfo", "Antimaterial Antlion", 7.21f, (Func<bool>)(() => SOTSWorld.downedAntilion), "Use [i:" + ItemType("ForbiddenPyramid") + "] in a desert biome");
-                bossChecklist.Call("AddBossWithInfo", "Icy Amalgamation", 8.21f, (Func<bool>)(() => SOTSWorld.downedAmalgamation), "Use [i:" + ItemType("FrostedKey") + "] on a [i:" + ItemType("FrostArtifact") + "] in a snow biome");
+				bossChecklist.Call("AddBossWithInfo", "The Advisor", 4.3f, (Func<bool>)(() => SOTSWorld.downedAdvisor), "idk");
+				//bossChecklist.Call("AddBossWithInfo", "Cryptic Carver", 5.2f, (Func<bool>)(() => SOTSWorld.downedCarver), "Use [i:" + ItemType("MargritArk") + "]");
+				//bossChecklist.Call("AddBossWithInfo", "Ethereal Entity", 6.5f, (Func<bool>)(() => SOTSWorld.downedEntity), "Use [i:" + ItemType("PlanetariumDiamond") + "] in a planetarium biome");
+
+				//bossChecklist.Call("AddBossWithInfo", "Antimaterial Antlion", 7.21f, (Func<bool>)(() => SOTSWorld.downedAntilion), "Use [i:" + ItemType("ForbiddenPyramid") + "] in a desert biome");
+				bossChecklist.Call("AddBossWithInfo", "Icy Amalgamation", 8.21f, (Func<bool>)(() => SOTSWorld.downedAmalgamation), "Use [i:" + ItemType("FrostedKey") + "] on a [i:" + ItemType("FrostArtifact") + "] in a snow biome");
                 bossChecklist.Call("AddBossWithInfo", "Celestial Serpent", 10.9f, (Func<bool>)(() => SOTSWorld.downedCelestial), "Use [i:" + ItemType("CelestialTorch") + "] during night time");
                 bossChecklist.Call("AddBossWithInfo", "Subspace Serpent", 10.95f, (Func<bool>)(() => SOTSWorld.downedSubspace), "Tear a rift in hell by detonating a [i:" + ItemType("CatalystBomb") + "]");
             }

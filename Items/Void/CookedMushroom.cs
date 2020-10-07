@@ -16,13 +16,11 @@ namespace SOTS.Items.Void
 		}
 		public override void SetDefaults()
 		{
-
 			item.width = 22;
 			item.height = 22;
             item.value = Item.sellPrice(0, 0, 12, 50);
 			item.rare = 1;
 			item.maxStack = 999;
-
 			item.useStyle = 2;
 			item.useTime = 15;
 			item.useAnimation = 15;
@@ -61,27 +59,15 @@ namespace SOTS.Items.Void
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.GlowingMushroom, 7);
+			recipe.AddIngredient(ItemID.VileMushroom, 2);
 			recipe.AddTile(TileID.CookingPots);
 			recipe.SetResult(this, 1);
 			recipe.AddRecipe();
 
 			recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.Mushroom, 2);
+			recipe.AddIngredient(ItemID.ViciousMushroom, 2);
 			recipe.AddTile(TileID.CookingPots);
 			recipe.SetResult(this, 1);
-			recipe.AddRecipe();
-
-			recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.VileMushroom, 3);
-			recipe.AddTile(TileID.CookingPots);
-			recipe.SetResult(this, 2);
-			recipe.AddRecipe();
-
-			recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.ViciousMushroom, 3);
-			recipe.AddTile(TileID.CookingPots);
-			recipe.SetResult(this, 2);
 			recipe.AddRecipe();
 		}
 	}

@@ -39,6 +39,12 @@ namespace SOTS.Items.Otherworld
 			recipe.AddTile(mod.TileType("HardlightFabricatorTile"));
 			recipe.SetResult(this, 1);
 			recipe.AddRecipe();
+			recipe = new ModRecipe(mod);
+			recipe.AddIngredient(null, "TwilightGel", 1);
+			recipe.AddIngredient(ItemID.StoneBlock, 1);
+			recipe.AddTile(mod.TileType("HardlightFabricatorTile"));
+			recipe.SetResult(this, 1);
+			recipe.AddRecipe();
 		}
 	}
 	public class DullPlatingTile : ModTile

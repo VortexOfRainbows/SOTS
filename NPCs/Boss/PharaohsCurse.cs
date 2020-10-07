@@ -100,7 +100,7 @@ namespace SOTS.NPCs.Boss
 		{ 
 			if(!SOTSWorld.downedCurse)
 			{
-				Main.NewText("The pyramid's curse weakens", 155, 115, 0);
+				Main.NewText("The pyramid's curse weakens once more", 155, 115, 0);
 			}
 			SOTSWorld.downedCurse = true;
 			potionType = ItemID.HealingPotion;

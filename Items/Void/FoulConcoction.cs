@@ -17,13 +17,11 @@ namespace SOTS.Items.Void
 		}
 		public override void SetDefaults()
 		{
-
 			item.width = 30;
 			item.height = 18;
             item.value = Item.sellPrice(0, 0, 0, 50);
 			item.rare = 1;
 			item.maxStack = 999;
-
 			item.useStyle = 2;
 			item.useTime = 15;
 			item.useAnimation = 15;
@@ -63,27 +61,6 @@ namespace SOTS.Items.Void
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(null, "Peanut", 1);
 			recipe.AddIngredient(ItemID.PinkGel, 1);
-			recipe.AddIngredient(ItemID.Acorn, 1);
-			recipe.SetResult(this, 2);
-			recipe.AddRecipe();
-
-			recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "Peanut", 5);
-			recipe.AddIngredient(ItemID.Gel, 5);
-			recipe.AddIngredient(ItemID.Acorn, 5);
-			recipe.SetResult(this, 2);
-			recipe.AddRecipe();
-
-			recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.RottenChunk, 1);
-			recipe.AddIngredient(ItemID.Gel, 1);
-			recipe.AddIngredient(ItemID.Acorn, 1);
-			recipe.SetResult(this, 1);
-			recipe.AddRecipe();
-
-			recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.Vertebrae, 1);
-			recipe.AddIngredient(ItemID.Gel, 1);
 			recipe.AddIngredient(ItemID.Acorn, 1);
 			recipe.SetResult(this, 1);
 			recipe.AddRecipe();

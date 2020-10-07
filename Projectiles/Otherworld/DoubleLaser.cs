@@ -57,7 +57,7 @@ namespace SOTS.Projectiles.Otherworld
 			for(int i = 0; i < Main.npc.Length; i++)
 			{
 				NPC npc = Main.npc[i];
-				if(npc.active && !npc.friendly)
+				if(npc.active && !npc.friendly && !npc.dontTakeDamage)
 				{
 					targetHitbox = new Rectangle((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height);
 					if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), position - new Vector2(16, 0), position + new Vector2(16, 0), 32f, ref point))
@@ -96,7 +96,7 @@ namespace SOTS.Projectiles.Otherworld
 				Vector2 position = currentPos;
 				int i = (int)(position.X / 16);
 				int j = (int)(position.Y / 16);
-				if ((Main.tile[i, j].active() && Main.tileSolidTop[Main.tile[i, j].type] == false && Main.tileSolid[Main.tile[i, j].type] == true && Distance < 119) || collidingNPC)
+				if (!WorldGen.InWorld(i, j, 20) || (Main.tile[i, j].active() && Main.tileSolidTop[Main.tile[i, j].type] == false && Main.tileSolid[Main.tile[i, j].type] == true && Distance < 119) || collidingNPC)
 				{
 					Vector2 additional = new Vector2(additionalEnd, 0f).RotatedBy(radianDir);
 					currentPos += additional;

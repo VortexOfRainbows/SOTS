@@ -21,16 +21,20 @@ namespace SOTS.Void
 			return new TagCompound {
 				
 				{"voidMeterMax", voidMeterMax},
+				{"voidMeterMax2", voidMeterMax2},
 				{"voidAnkh", voidAnkh},
 				{"voidStar", voidStar},
+				{"voidMeter", voidMeter},
 				};
 		}
 
 		public override void Load(TagCompound tag) 
 		{
 			voidMeterMax = tag.GetInt("voidMeterMax");
+			voidMeterMax2 = tag.GetInt("voidMeterMax2");
 			voidAnkh = tag.GetInt("voidAnkh");
 			voidStar = tag.GetInt("voidStar");
+			voidMeter = tag.GetFloat("voidMeter");
 		}
 		
 		public float voidMeter = 100; 
@@ -68,15 +72,15 @@ namespace SOTS.Void
 		}
 		public static string[] voidDeathMessages = {
 			" was extremely careless.",
-			" was devoured by the void.",
+			//" was devoured by the void.",
 			" was consumed by the void.",
-			" was taken by the void.",
+			//" was taken by the void.",
 			" was devoured by the darkness.",
-			" was consumed by the darkness.",
-			" was taken by the darkness.",
+			//" was consumed by the darkness.",
+			//" was taken by the darkness.",
 			" doesn't understand void mechanics.",
-			" couldn't handle their own power.",
-			" didn't manage their void well.",
+			//" couldn't handle their own power.",
+			//" didn't manage their void well.",
 			" died."
 		};
 
@@ -147,7 +151,7 @@ namespace SOTS.Void
 			voidCost = 1f; 
 			voidMeter += (float)(voidRegen / 60);
 
-			if (voidMeter > voidMeterMax2)
+			if (voidMeter > voidMeterMax2) //resets void to zero when joining world accidentally, must fix later
 			{
 				//make sure meter doesn't go above max
 				voidMeter = voidMeterMax2;

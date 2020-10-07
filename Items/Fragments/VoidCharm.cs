@@ -1,13 +1,6 @@
-using System;
-using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.DataStructures;
-using Terraria.Enums;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.ObjectData;
-using Microsoft.Xna.Framework.Graphics;
 
 
 namespace SOTS.Items.Fragments
@@ -37,7 +30,7 @@ namespace SOTS.Items.Fragments
 			player.thrownCrit += 2;
 			
 			if(Main.rand.Next(2) == 0)
-				modPlayer.CritVoidsteal += 1.25f;
+				modPlayer.CritVoidsteal += 2.5f + Main.rand.Next(2);
 		}
 		public override void AddRecipes()
 		{

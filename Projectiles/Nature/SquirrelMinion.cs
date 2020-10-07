@@ -37,6 +37,8 @@ namespace SOTS.Projectiles.Nature
 			projectile.minion = true;
 			projectile.minionSlots = 1f;
 			projectile.penetrate = -1;
+			projectile.usesLocalNPCImmunity = true;
+			projectile.localNPCHitCooldown = 17;
 		}
 		public override bool? CanCutTiles()
 		{
@@ -49,8 +51,9 @@ namespace SOTS.Projectiles.Nature
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
 			Player player = Main.player[projectile.owner];
-            target.immune[projectile.owner] = 17;
-			if(projectile.velocity.X > 0) 
+			projectile.localNPCImmunity[target.whoAmI] = projectile.localNPCHitCooldown;
+			target.immune[projectile.owner] = 0;
+			if (projectile.velocity.X > 0) 
 			{
 				projectile.velocity.X += 2.4f;
 			}

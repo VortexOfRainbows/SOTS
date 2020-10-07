@@ -57,8 +57,8 @@ namespace SOTS.Projectiles.Laser
 				Vector2 position = projectile.Center + unit * Distance;	
 				int i = (int)(position.X / 16);
 				int j =	(int)(position.Y / 16);
-				
-				if(Main.tile[i, j].active() && Main.tileSolidTop[Main.tile[i, j].type] == false && Main.tileSolid[Main.tile[i, j].type] == true)
+
+				if (!WorldGen.InWorld(i, j, 20) || Main.tile[i, j].active() && Main.tileSolidTop[Main.tile[i, j].type] == false && Main.tileSolid[Main.tile[i, j].type] == true)
 				{
 					break;
 				}
@@ -89,7 +89,7 @@ namespace SOTS.Projectiles.Laser
 				Vector2 position = projectile.Center + unit * Distance;	
 				int i = (int)(position.X / 16);
 				int j =	(int)(position.Y / 16);
-				if(Main.tile[i, j].active() && Main.tileSolidTop[Main.tile[i, j].type] == false && Main.tileSolid[Main.tile[i, j].type] == true)
+				if (!WorldGen.InWorld(i, j, 20) || Main.tile[i, j].active() && Main.tileSolidTop[Main.tile[i, j].type] == false && Main.tileSolid[Main.tile[i, j].type] == true)
 				{
 					Distance -= 6f;
 					break;

@@ -18,7 +18,7 @@ namespace SOTS.Items.Celestial
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Voidspace Emblem");
-			Tooltip.SetDefault("Increases void damage and magic damage by 10%\nDecreases void cost by 10%\nIncreases void regen by 3.75 and max void by 50\nRegenerate void when hit");
+			Tooltip.SetDefault("Increases void damage and magic damage by 10%\nIncreases void crit by 10%\nCritical strikes heal small amounts of void\nDecreases void cost by 10%\nIncreases void regen by 3.75 and max void by 50\nRegenerate void when hit");
 		}
 		public override void SetDefaults()
 		{
@@ -60,13 +60,15 @@ namespace SOTS.Items.Celestial
 			player.magicDamage += 0.1f;
 			voidPlayer.voidRegen += 0.375f;
 			voidPlayer.voidMeterMax2 += 50;
-			
+			voidPlayer.voidCrit += 10;
+
 			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");	
 			if(modPlayer.onhit == 1)
 			{
 				voidPlayer.voidMeter += 3 + (modPlayer.onhitdamage / 9);
 				VoidPlayer.VoidEffect(player, 3 + (modPlayer.onhitdamage / 9));
 			}
+			modPlayer.CritVoidsteal = 0.7f;
 		}
 	}
 }

@@ -29,13 +29,16 @@ Priority: Remaining Spirits
 	1. Meteorite: Fire and meteorite based
 	2. Sunplate: Electric based items
 	3. Avaritia: "Code Based Items"
-	4. Must unluck chests via key obtained from advisor
+	4. Must unlock chests via key obtained from advisor
 	5. Each chest contains items and some material to craft items
 
 Next Update:
 1. Pyramid chests to no longer spawn close to surface
-2. Nerf Treasure slime damage and possibly health.
 3. Coconut Gun && Kitchen Sink
+6. Nerf construct damage once again?
+7. Server Sync Advisor
+8. Advisor Spirit
+9. Advisor Treasure bag
 
 Next Development Time: 
 1. Holo-Eye, Holo-Slime, Holo-Blade, Twilight Devil
@@ -46,13 +49,185 @@ Next Development Time:
 	The ACTUAL spririt is part of the second phase of Advisor
 	Advisor will drop all his loot (keys and bars) and the spirit acts as an additional second phase with loot (Dissolving Aether).
 10. Twilight Gel and Twilight Assassin Armor (Void Melee)
+	1. Grants an eye turret that you can double-tap down to fire a laser with
+	2. Laser does little damage, but inflicts strong debuff that increases crit damage and chance upon enemy
+	3. Costs 5 void  to launch laser
 
-8/31/20 - 9/2/20
+10/7/20
+1. 
+
+10/6/20
+1. Advisor expertmode missile rate reduced 150% => 125%
+	1. Missile homing coefficient also reduced 0.15f => 0.125f
+	2. Missile damage decreased 100% => 80%
+2. Laser attack once again speed up
+	1. Damage 175% => 200%
+3. Thunder Column strike down scale increased 300% => 450%, damage 150% => 175%
+4. Advisor hp increased... 9000 => 10000, damage 50 => 54 (all attacks scale off the same base damage)
+5. Thunder Column alternating directions
+6. Fixed out of bounds error for some lasers
+7. Tazer attack no longer tries to predict movement
+	1. Speed of laser buffed to compensate 3.5f => 4.25f
+	2. 1 less segment worth of hit detection 6 => 5
+8. Phase Transition is 5% faster (40, 60) => (45, 65)
+9. Twilight Devil and Otherworldly Construct spawn 5x less often
+10. Advisor bosshead properly transitions
+11. Advisor bossbag beginnings
+
+10/5/20
+1. Zephyrous zeppelin glow changed color
+2. Advisor defense 36 => 30
+3. Advisor Tazer and Column
+	1. Laser fires too many, lessen the length of the attack
+4. Phase Eye HP: 20 => 50
+5. Spead up laser attack
+	1. less lasers fired = less lag too
+6. Double attack mode activates sooner in expert 50% => 60%
+
+
+
+10/4/20
+1. Laser attack for advisor
+2. Second phase for advisor
+
+10/3/20
+1. Worked on laser projectile for Advisor
+2. Advisor movement and animation slight changes
+
+10/2/20
+1. Void meter fix part 2, should now save void properly
+2. Advisor Missile attack, Tracer attack
+3. Explosive Knife Nerf: damage 17 => 15, usetime 15 => 17, velocity 12.8 => 12
+4. Hungry hunter doesn't proc Iframes, using local counter
+5. Epic Wings immune alpha changes
+
+9/29/20 - 9/30/20
+1. Fixed error with Platinum battery and Gold battery having incorrect descriptions
+2. More work on advisor (have a lot of hw sadly ;-;)
+
+9/28/20
+1/ Platinum dart no longer weighs things down, just slows instead.
+2. Putrid Eye damage 36 => 40
+
+
+9/27/20
+1. Wings change alpha (and tint color!) based on stealth
+2. Earthen Construct, Otherworldly Construct, Detached Construct defense (20, 28, 24) => (12, 16, 14)
+3. Twilight Devil spawn weighting 0.065 => 0.05
+4. Planetarium spawn max hmode, nmode (2.25x, 2x) => (1.75x, 1.5x)
+5. Planetarium spawn rate hmode, nmode (60x, 50x) => (50x, 40x) //multipliers are high due to unique spawning parameters
+6. Putrid Eye damage 30 => 36
+7. Frigid Javelin damage 30 => 42, usetime 48 => 44, I frames triggered 5 => 3
+8. Work on holo missile
+
+9/24/20
+1. Less otherworldly fragment drop from otherworldly construct
+2. Advisor now spawns and aggros properly, same with construct buddies
+3. Putrid eye appears in front when held
+	1. To Do: More work on advisor attacks
+
+9/23/20
+1. Removed cryo cannon from ice treasure slime pool
+2. Phase Eye added, needs server sync testing
+3. Advisor visuals and work on attacks
+	1. Completed conduit stab attack, holo eyes, and lightning projectiles
+4. To Do: work on getting advisor to spawn in properly
+
+9/21/20
+1. Void Meter saves upon exitting, preventing unessesary consumption of void consumables
+2. Void death has less death wording possibilities
+3. Final touches on Advisor legs
+4. Crusher visuals (hellbreaker and soul eater)
+	1. To Do: work on advisor attack patterns, check out visuals for crushers
+
+9/20/20
+1. Work on Advisor visuals. Set up base code of tendrils, 
+	1. To Do: further work on them in order to get them to transition from curved to straight smoothly
+	2. Fire particles onto hellbreaker, shadow trail to soul eater
+
+9/16/20
+1. Treasure Slime damage 27 => 17, hp 45 => 35
+2. Gold Treasure Slime damage 40 => 25, hp 150 => 90, def 7 => 8
+3. Frozen Treasure Slime damage 38 => 30, hp 60 => 70, def 3 => 6
+4. Pyramid Treasure Slime damage 45 => 36, hp 200 => 140, def 7 => 12
+5. Shadow Treasure Slime damage 45 => 40, hp 150 => 160, def 7 => 12,
+6. Money amounts normalized and more consistent for treasure slimes
+7. Curse Ward nullified, pyramid now becomes accessable after Boss2, no longer requires crafting
+8. Tile collide hitbox for winged knife made smaller
+9. Pyramid now spawns on non-sand after failed desert finding
+10. Earthen Construt damage 28 (24) => 18, defense 20 (0) => 16, spawnrate 0.006 (0.0075) => 0.005
+11. Earthen Spirit Staff damage 19 => 21
+12. Flower Hook, Flying Snake, Earth spirit, Tiny Planet, Arcane Aqueduct, and Squirrel have independent i frame counters (thanks qwerty3.14)	
+	1. Flying snake i frames 10 => 40 (compensating for what is basically a 3x damage buff)
+	2. Flower hook now can properly hit 3 bullets at a time
+	3. Flying snake damage from [14, 15, 16] => [14, 14, 14]
+	4. Tiny planet and Aqueduct i frames 15 => 20
+13. Some more work on Advisor
+
+9/15/20
+1. Voidsteal buffed for Void Charm 50% 1.25 => 50% 2.5f-3.5f, Soul Charm 1.25f => 2.25f
+2. Clover Charm buffed 2% crit => 3% crit, 50% heal 2-4, 50% heal 3 => 5, Soul Charm 1-2 => 2-3
+	1. Slight buffs to Focus Reticle healing and void healing
+3. Hellfire, Cursed, Borealis Icosahedron crit bonus 0% => 3%
+4. Hellbreaker damage buffed: 40 => 45, Aquatic eclipse 41 => 45
+5. Platinum dart slows enemies less
+6. Platinum Scythe crit chance 21 (+ 4) => 11 (+ 4)
+	1. Buffed curse damage 75% => 120% + 1
+	2. Crits no longer deal less damage
+7. Gold Glaive orb damage 45% => 50%
+8. Gold and Plat battery regen 0.25 => 0.75, max 10 => 20
+9. Wormwood parasite void crit 0% => 8%, critical hits heal void 0 => 0.33
+	1. Stats added to Voidspace Emblem 10% and 0.7
+10. Jellyfish staves light reduced by a lot
+11. Crafting recipe for foul concoction nerfed (only the main recipe now, result 2 => 1), Cooked mushroom recipe nerfed (only evil mushrooms now, result 2/3 => 1/2)
+	1. 10% chance to drop cooked mushroom from Sitting Mushroom
+	2. 10% chance for foul concoc drops from Blooming Slime
+	3. 5% chance for cursed caviar drops form Wall Mimic and Ghasts
+	4. 10% chance to drop cooked mushroom from various mushroom biome enemies
+12. Some visuals for Advisor
+13. Phase cannon can crit
+14. Void crit increases work properly
+15. Void critsteal now has an internal buffer that caps out when you crit too much
+	1. can store 20 seconds of your void regen
+	2. recharges twice as fast as default void regen
+
+9/13/20
+1. Sprite for Advisor
+
+9/12/20
+1. Slight visual changes to Epic Wings
+2. Starlight Tonic
+
+9/11/20
+1. Assassination Potion added
+2. Twilight Gel added
+
+9/9/20
+1. Aether block
+2. Reverted changes for actuated dissolving blocks
+3. More fixes for the wings
+
+9/7/20
+1. Slight fixes on Epic Wings
+2. Twilight gyroscope added as a stepping stone for epic wingsss
+3. Stats changes to Epic Wings
+4. Server synced Epic Wings
+5. Detached Construct and Gore
+	1. To Do: Check detached contruct a bit more for mistakes
+	2. Dissolving aether block and tonic
+
+9/6/20
+1. Finished Epic Wings
+	1. Next: Start on disconnected Construct, Server sync wings
+
+8/31/20 - 9/6/20
 1. Worked on Epic wings!
 2. Figured out how to Spritebatch on the player using playerlayer. This means I can make the wings better looking now!
 3. Made the wings draw in a unique way. This makes them a bit large, but also gives them a unique shape!
 4. Boosters for wings added
-	1. Next: More work on wings (visuals) and start on disconnected Construct
+5. Varius visual improvements. Work on custom dust.
+6. Can go through platforms. Visual improvements. Dust improvements
+	1. Next: Start on disconnected Construct
 
 8/30/20
 1. Spirit Despawns immediately (also server synced)

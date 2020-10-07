@@ -21,6 +21,13 @@ namespace SOTS.Projectiles.Nature
 			projectile.minionSlots = 0f;
 			projectile.alpha = 255;
 			projectile.timeLeft = 700;
+			projectile.usesLocalNPCImmunity = true;
+			projectile.localNPCHitCooldown = 10;
+		}
+		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		{
+			projectile.localNPCImmunity[target.whoAmI] = projectile.localNPCHitCooldown;
+			target.immune[projectile.owner] = 0;
 		}
 		public override void Kill(int timeLeft)
 		{

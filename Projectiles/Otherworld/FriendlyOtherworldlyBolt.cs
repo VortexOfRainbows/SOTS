@@ -23,6 +23,7 @@ namespace SOTS.Projectiles.Otherworld
 			projectile.timeLeft = 720;
 			projectile.tileCollide = true;
 			projectile.penetrate = 1;
+			projectile.ranged = true;
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{

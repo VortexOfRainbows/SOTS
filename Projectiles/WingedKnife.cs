@@ -11,7 +11,6 @@ namespace SOTS.Projectiles
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Winged Knife");
-			
 		}
         public override void SetDefaults()
         {
@@ -23,6 +22,13 @@ namespace SOTS.Projectiles
 			projectile.timeLeft = 6000;
 			projectile.penetrate = -1;
 			projectile.tileCollide = true;
+		}
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+		{
+			width = 10;
+			height = 10;
+			fallThrough = true;
+			return true;
 		}
 		public override void AI()
 		{

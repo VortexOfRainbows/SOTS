@@ -36,7 +36,7 @@ namespace SOTS.Projectiles.Permafrost
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
 			hasDoneDamage = true;
-			target.immune[projectile.owner] = 5;
+			target.immune[projectile.owner] = 3;
 			base.OnHitNPC(target, damage, knockback, crit);
 		}
 		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)

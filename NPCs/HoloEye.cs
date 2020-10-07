@@ -283,7 +283,9 @@ namespace SOTS.NPCs
 		}
 		public override void NPCLoot()
 		{
-			if(Main.rand.Next(2) == 0 || Main.expertMode)
+			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("TwilightGel"), Main.rand.Next(2) + 1);
+
+			if (Main.rand.Next(2) == 0 || Main.expertMode)
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FragmentOfOtherworld"), Main.rand.Next(2) + 1);
 
 			if (Main.rand.Next(100) == 0) ;

@@ -32,8 +32,8 @@ namespace SOTS.Items.Fragments
 		{
 			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");	
 			
-			modPlayer.CritLifesteal += 1 + (Main.rand.Next(4) == 0 ? 1 : 0);
-			modPlayer.CritVoidsteal += 1f;
+			modPlayer.CritLifesteal += 1 + (Main.rand.Next(3) == 0 ? 1 : 0);
+			modPlayer.CritVoidsteal += 1.25f;
 			modPlayer.CritFrost = true;
 			modPlayer.CritFire = true;
 			modPlayer.CritCurseFire = true;

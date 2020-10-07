@@ -76,8 +76,7 @@ namespace SOTS.Projectiles.Ores
 					projectile.aiStyle = 0;
 					projectile.position.X = target.Center.X - projectile.width/2 - diffPosX;
 					projectile.position.Y = target.Center.Y - projectile.height/2 - diffPosY;
-					target.velocity.X *= target.boss ? 0.995f : 0.985f;
-					target.velocity.Y += target.boss ? 0.005f : target.lifeMax > 200 ? 0.02f : 0.04f;
+					target.velocity *= target.boss ? 0.998f : 0.985f;
 				}
 				else
 				{

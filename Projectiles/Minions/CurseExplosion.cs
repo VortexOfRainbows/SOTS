@@ -33,6 +33,14 @@ namespace SOTS.Projectiles.Minions
 			projectile.tileCollide = false;
 			projectile.hostile = false;
 			projectile.alpha = 255;
+			projectile.usesLocalNPCImmunity = true;
+			projectile.localNPCHitCooldown = 10;
+		}
+		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		{
+			if (projectile.knockBack >= 0)
+				projectile.localNPCImmunity[target.whoAmI] = projectile.localNPCHitCooldown;
+			target.immune[projectile.owner] = 0;
 		}
 		public override void AI()
 		{
@@ -48,15 +56,6 @@ namespace SOTS.Projectiles.Minions
 			
 			}
 		}
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
-        {
-			if(projectile.knockBack >= 0)
-            target.immune[projectile.owner] = 10;
-		
-			if(projectile.knockBack <= -1)
-            target.immune[projectile.owner] = 0;
-		
-        }
 	}
 }
 		

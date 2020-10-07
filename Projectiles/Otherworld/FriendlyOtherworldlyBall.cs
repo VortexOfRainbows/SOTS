@@ -24,6 +24,7 @@ namespace SOTS.Projectiles.Otherworld
 			projectile.timeLeft = 30;
 			projectile.tileCollide = false;
 			projectile.penetrate = -1;
+			projectile.ranged = true;
 		}
 		public override void ModifyDamageHitbox(ref Rectangle hitbox)
 		{

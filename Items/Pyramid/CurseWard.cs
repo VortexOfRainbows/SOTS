@@ -9,11 +9,10 @@ namespace SOTS.Items.Pyramid
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Curse Ward");
-			Tooltip.SetDefault("Weakens the pyramid's curse while in the inventory");
+			Tooltip.SetDefault("Weakens the pyramid's curse while in the inventory\nNo longer needed, as the curse will weaken automatically after killing the BoC or EoW");
 		}
 		public override void SetDefaults()
 		{
-
 			item.width = 40;
 			item.height = 44;
 			item.value = 0;
@@ -24,26 +23,6 @@ namespace SOTS.Items.Pyramid
 		{
 			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");	
 			modPlayer.weakerCurse = true;
-		}
-		public override void AddRecipes()
-		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "WardingCharm", 1);
-			recipe.AddIngredient(null, "FragmentOfEvil", 1);
-			recipe.AddIngredient(null, "FragmentOfEarth", 1);
-			recipe.AddIngredient(ItemID.ShadowScale, 10);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
-			
-			recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "WardingCharm", 1);
-			recipe.AddIngredient(null, "FragmentOfEvil", 1);
-			recipe.AddIngredient(null, "FragmentOfEarth", 1);
-			recipe.AddIngredient(ItemID.TissueSample, 10);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
 		}
 	}
 }

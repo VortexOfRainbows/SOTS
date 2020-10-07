@@ -24,10 +24,13 @@ namespace SOTS.Projectiles.Minions
 			projectile.magic = true;
 			projectile.netImportant = true;
 			projectile.alpha = 255;
+			projectile.usesLocalNPCImmunity = true;
+			projectile.localNPCHitCooldown = 20;
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			target.immune[projectile.owner] = 15;
+			projectile.localNPCImmunity[target.whoAmI] = projectile.localNPCHitCooldown;
+			target.immune[projectile.owner] = 0;
 		}
 		public override void AI()
 		{

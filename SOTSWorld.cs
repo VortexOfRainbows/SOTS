@@ -21,6 +21,7 @@ namespace SOTS
 		public static int zeplineBiome = 0;
 		public static int pyramidBiome = 0;
 		public static int geodeBiome = 0;
+		public static bool downedBoss2 = false;
 
 		public static bool downedPinky = false;
 		public static bool downedCurse = false;
@@ -28,9 +29,9 @@ namespace SOTS
 		public static bool downedAmalgamation = false;
 		public static bool downedCelestial = false;
 		public static bool downedSubspace = false;
+		public static bool downedAdvisor = false;
 
-        #region unused
-        public static bool downedCarver = false;
+		#region unused
 		public static bool downedEntity = false;
 		public static bool downedAntilion = false;
 		public static bool downedChess = false;
@@ -47,10 +48,10 @@ namespace SOTS
         public override void Initialize()
 		{
 			downedPinky = false;
-			downedCarver = false;
+			downedAdvisor = false;
 			downedCurse = false;
 			downedEntity = false;
-			
+			downedBoss2 = false;
 			downedAntilion = false;
 			downedAmalgamation = false;
 			downedChess = false;
@@ -71,8 +72,8 @@ namespace SOTS
 			if (downedPinky) {
 				downed.Add("pinky");
 			}
-			if (downedCarver) {
-				downed.Add("carver");
+			if (downedAdvisor) {
+				downed.Add("advisor");
 			}
 			if (downedCurse) {
 				downed.Add("curse");
@@ -95,7 +96,11 @@ namespace SOTS
 			if (downedSubspace) {
 				downed.Add("subspace");
 			}
-			
+			if (downedBoss2)
+			{
+				downed.Add("boss2");
+			}
+
 			var challenge = new List<string>();
 			if (challengeDecay) {
 				challenge.Add("decay");
@@ -124,7 +129,7 @@ namespace SOTS
 		public override void Load(TagCompound tag) {
 			var downed = tag.GetList<string>("downed");
 			downedPinky = downed.Contains("pinky");
-			downedCarver = downed.Contains("carver");
+			downedAdvisor = downed.Contains("advisor");
 			downedCurse = downed.Contains("curse");
 			downedEntity = downed.Contains("entity");
 			downedAntilion = downed.Contains("antilion");
@@ -132,8 +137,9 @@ namespace SOTS
 			downedChess = downed.Contains("chess");
 			downedCelestial = downed.Contains("celestial");
 			downedSubspace = downed.Contains("subspace");
-			
-			
+			downedBoss2 = downed.Contains("boss2");
+
+
 			var challenge = tag.GetList<string>("challenge");
 			challengeDecay = challenge.Contains("decay");
 			challengeLock = challenge.Contains("lock");
@@ -148,7 +154,7 @@ namespace SOTS
 			if (loadVersion == 0) {
 				BitsByte flags = reader.ReadByte();
 				downedPinky = flags[0];
-				downedCarver = flags[1];
+				downedAdvisor = flags[1];
 				downedEntity = flags[2];
 				downedAntilion = flags[3];
 				downedAmalgamation = flags[4];
@@ -158,7 +164,8 @@ namespace SOTS
 				
 				BitsByte flags3 = reader.ReadByte();
 				downedSubspace = flags3[0];
-				
+				downedBoss2 = flags3[1];
+
 				BitsByte flags2 = reader.ReadByte();
 				challengeDecay = flags2[0];
 				challengeLock = flags2[1];
@@ -172,7 +179,7 @@ namespace SOTS
 		public override void NetSend(BinaryWriter writer) {
 			BitsByte flags = new BitsByte();
 			flags[0] = downedPinky;
-			flags[1] = downedCarver;
+			flags[1] = downedAdvisor;
 			flags[2] = downedEntity;
 			flags[3] = downedAntilion;
 			flags[4] = downedAmalgamation;
@@ -183,6 +190,7 @@ namespace SOTS
 			
 			BitsByte flags3 = new BitsByte();
 			flags3[0] = downedSubspace;
+			flags3[1] = downedBoss2;
 			writer.Write(flags3);
 			
 			BitsByte flags2 = new BitsByte();
@@ -197,7 +205,7 @@ namespace SOTS
 		public override void NetReceive(BinaryReader reader) {
 			BitsByte flags = reader.ReadByte();
 			downedPinky = flags[0];
-			downedCarver = flags[1];
+			downedAdvisor = flags[1];
 			downedEntity = flags[2];
 			downedAntilion = flags[3];
 			downedAmalgamation = flags[4];
@@ -207,7 +215,8 @@ namespace SOTS
 			
 			BitsByte flags3 = reader.ReadByte();
 			downedSubspace = flags3[0];
-			
+			downedBoss2 = flags3[1];
+
 			BitsByte flags2 = reader.ReadByte();
 			challengeDecay = flags2[0];
 			challengeLock = flags2[1];
@@ -216,8 +225,15 @@ namespace SOTS
 			challengeGlass = flags2[4];
 			challengeIcarus = flags2[5];
 		}
-
-        public override void ModifyWorldGenTasks(List<GenPass> tasks, ref float totalWeight)
+		public override void PostUpdate()
+		{
+			if(NPC.downedBoss2 && !downedBoss2)
+			{
+				downedBoss2 = true;
+				Main.NewText("The pyramid's curse weakens", 155, 115, 0);
+			}
+		}
+		public override void ModifyWorldGenTasks(List<GenPass> tasks, ref float totalWeight)
         {
             int genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Shinies"));
             int genIndexGems = tasks.FindIndex(genpass => genpass.Name.Equals("Random Gems"));
@@ -1171,7 +1187,7 @@ namespace SOTS
 						for(int ydown = 0; ydown != -1; ydown++)
 						{
 							Tile tile = Framing.GetTileSafely(xCheck, ydown);
-							if (tile.active() && tile.type == TileID.Sand)
+							if (tile.active() && (tile.type == TileID.Sand || checks >= 1000))
 							{
 								if ((!WorldGen.UndergroundDesertLocation.Contains(new Point(xCheck, ydown + 60)) && !WorldGen.UndergroundDesertLocation.Contains(new Point(xCheck, ydown + 120))) || checks > 200)
 								{

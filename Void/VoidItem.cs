@@ -49,10 +49,7 @@ namespace SOTS.Void
 		}
 		public sealed override void GetWeaponCrit(Player player, ref int crit) 
 		{
-			if(!item.magic && !item.thrown && !item.summon && !item.melee && !item.ranged)
-			{
-				crit = crit + VoidPlayer.ModPlayer(player).voidCrit + 4;
-			}
+			crit = crit + VoidPlayer.ModPlayer(player).voidCrit;
 		}
 		public virtual void GetVoid(Player player)
 		{

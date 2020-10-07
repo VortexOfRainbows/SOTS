@@ -17,12 +17,14 @@ namespace SOTS.Items
 		{
 			
 			item.CloneDefaults(279);
-			item.damage = 17;
+			item.damage = 15;
+			item.useTime = 17;
+			item.useAnimation = 17;
 			item.thrown = true;
 			item.rare = 2;
 			item.autoReuse = true;            
 			item.shoot = mod.ProjectileType("ExplosiveKnife"); 
-            item.shootSpeed = 12.8f;
+            item.shootSpeed = 12f;
 			item.consumable = true;
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

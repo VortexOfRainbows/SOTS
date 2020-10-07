@@ -12,7 +12,7 @@ namespace SOTS.Items.OreItems
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Platinum Scythe");
-			Tooltip.SetDefault("Critical hits permanently curse enemies, but deal less damage\nThis effect can stack up to 9 times, and deals 75% damage");
+			Tooltip.SetDefault("Critical hits permanently curse enemies\nThis effect can stack up to 9 times, and deals 120% damage");
 		}
 		public override void SafeSetDefaults()
 		{
@@ -29,24 +29,18 @@ namespace SOTS.Items.OreItems
 			item.value = Item.sellPrice(0, 0, 35, 0);
             item.rare = 2;
             item.UseSound = SoundID.Item71;
-			item.crit = 21;
+			item.crit = 11;
 		}
 		public override void ModifyHitNPC(Player player, NPC target, ref int damage, ref float knockBack, ref bool crit)
 		{
 			if(crit)
 			{
-				Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, mod.ProjectileType("PlatinumCurse"), (int)(damage * 0.75f), 0, player.whoAmI, target.whoAmI, 0f);
-				damage /= 2;
-				damage -= 3;
-				if(damage < 7)
-				{
-					damage = 7;
-				}
+				Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, mod.ProjectileType("PlatinumCurse"), (int)(damage * 1.2f) + 1, 0, player.whoAmI, target.whoAmI, 0f);
 			}
 		}
 		public override void GetVoid(Player player)
 		{
-			voidMana = 4;
+			voidMana = 5;
 		}
 		public override void AddRecipes()
 		{

@@ -197,7 +197,7 @@ namespace SOTS.Projectiles.Base
 					{
 						VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 						voidPlayer.voidMeter += amount;
-						VoidPlayer.VoidEffect(player, (int)(amount + 0.5f));
+						VoidPlayer.VoidEffect(player, (int)(amount + 0.95f));
 					}
 					projectile.Kill();
 				}

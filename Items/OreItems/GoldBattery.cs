@@ -10,7 +10,7 @@ namespace SOTS.Items.OreItems
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Gold Battery");
-			Tooltip.SetDefault("Increases void regen by 0.25 and max void by 10\nRegenerate void when hit, but also have a 10% chance to recieve ichor when near max void");
+			Tooltip.SetDefault("Increases void regen by 0.75 and max void by 20\nRegenerate void when hit, but also have a 10% chance to recieve ichor when near max void");
 		}
 		public override void SetDefaults()
 		{
@@ -35,8 +35,8 @@ namespace SOTS.Items.OreItems
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-			voidPlayer.voidRegen += 0.025f;
-			voidPlayer.voidMeterMax2 += 10;
+			voidPlayer.voidRegen += 0.075f;
+			voidPlayer.voidMeterMax2 += 20;
 			
 			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");	
 			if(modPlayer.onhit == 1)

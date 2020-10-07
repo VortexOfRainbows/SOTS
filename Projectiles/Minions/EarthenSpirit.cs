@@ -33,6 +33,13 @@ namespace SOTS.Projectiles.Minions
 			projectile.minion = true;
 			projectile.minionSlots = 1f;
 			projectile.penetrate = -1;
+			projectile.usesLocalNPCImmunity = true;
+			projectile.localNPCHitCooldown = 10;
+		}
+		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		{
+			projectile.localNPCImmunity[target.whoAmI] = projectile.localNPCHitCooldown;
+			target.immune[projectile.owner] = 0;
 		}
 		public override void SendExtraAI(BinaryWriter writer)
 		{
@@ -220,7 +227,7 @@ namespace SOTS.Projectiles.Minions
 					if (readyToFight)
 						projectile.ai[0]++;
 
-					if ((int)modPlayer.orbitalCounter % 60 == (ofTotal * 60 / total))
+					if (total != 0 && (int)modPlayer.orbitalCounter % 60 == (int)(ofTotal * 60f / total + 0.5f) % 60)
 					{
 						if (readyToFight)
 						{
