@@ -5,6 +5,10 @@ namespace SOTS.Items.Otherworld
 {
 	class MeteoriteKey : ModItem
 	{
+		public override void SetStaticDefaults()
+		{
+			Tooltip.SetDefault("Opens one locked Meteorite Chest");
+		}
 		public override void SetDefaults()
 		{
 			//item.CloneDefaults(ItemID.GoldenKey);

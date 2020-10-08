@@ -21,7 +21,7 @@ namespace SOTS.Items.Otherworld.EpicWings
 		public override void SetStaticDefaults()
 		{	
 			DisplayName.SetDefault("Machina Booster");
-			Tooltip.SetDefault("Allows flight and slow fall\nIncreases void regen by 1\nDouble tap space bar to gain multidirectional flight\nDecreases void regen by 40 while active");
+			Tooltip.SetDefault("Allows flight and slow fall\nIncreases void regen by 1\nDouble tap spacebar to gain multidirectional flight\nDecreases void regen by 40 while active");
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
@@ -292,6 +292,7 @@ namespace SOTS.Items.Otherworld.EpicWings
 			player.noFallDmg = true;
 			player.maxFallSpeed *= 4f;
 			player.wingTime = -1;
+
 			if (player.controlDown && !(player.controlUp || player.controlJump) && !TilesBelow())
 			{
 				movingVert = true;

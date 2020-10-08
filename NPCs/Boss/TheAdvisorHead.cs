@@ -625,7 +625,7 @@ namespace SOTS.NPCs.Boss
 											{
 												damage2 = (int)(damage2 / Main.expertDamage);
 											}
-											Projectile.NewProjectile(hookPos[i].X + npc.Center.X, hookPos[i].Y + npc.Center.Y, downStrike.X * 1f, downStrike.Y * 1f, mod.ProjectileType("PhaseSpear"), damage2, 0, Main.myPlayer);
+											Projectile.NewProjectile(hookPos[i].X + npc.Center.X - downStrike.X, hookPos[i].Y + npc.Center.Y - downStrike.Y, downStrike.X * 1f, downStrike.Y * 1f, mod.ProjectileType("PhaseSpear"), damage2, 0, Main.myPlayer);
 										}
 									hookPos[i] += downStrike;
 
@@ -1036,7 +1036,7 @@ namespace SOTS.NPCs.Boss
 							damage2 = (int)(damage2 / Main.expertDamage);
 						}
 						damage2 = (int)(damage2 * 0.8f);
-						Projectile.NewProjectile(npc.Center.X + fromCenter.X, npc.Center.Y + Math.Abs(shift.X) + 4 + fromCenter.Y, fromCenter.SafeNormalize(Vector2.Zero).X * 4.25f, fromCenter.SafeNormalize(Vector2.Zero).Y * 4.25f, mod.ProjectileType("ThunderColumnBlue"), damage2, 0, Main.myPlayer, 3f);
+						Projectile.NewProjectile(npc.Center.X + fromCenter.X, npc.Center.Y + Math.Abs(shift.X) + 4 + fromCenter.Y, fromCenter.SafeNormalize(Vector2.Zero).X * 3.75f, fromCenter.SafeNormalize(Vector2.Zero).Y * 3.75f, mod.ProjectileType("ThunderColumnBlue"), damage2, 0, Main.myPlayer, 3f);
 					}
 				}
 				if (attackTimer2 > 990)
@@ -1060,8 +1060,18 @@ namespace SOTS.NPCs.Boss
 					int dust = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, mod.DustType("BigAetherDust"));
 					Main.dust[dust].velocity *= 5f;
 				}
-				for (int i = 0; i < 18; i++)
-					Gore.NewGore(npc.position, npc.velocity, Main.rand.Next(61, 64), 1f);
+				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/TheAdvisorGore1"), 1f);
+				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/TheAdvisorGore2"), 1f);
+				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/TheAdvisorGore3"), 1f);
+				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/TheAdvisorGore4"), 1f);
+				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/TheAdvisorGore5"), 1f);
+				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/TheAdvisorGore6"), 1f);
+				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/TheAdvisorGore7"), 1f);
+				for (int i = 0; i < 24; i++)
+                {
+					Gore.NewGore(npc.position + new Vector2((float)(npc.width * Main.rand.Next(100)) / 100f, (float)(npc.height * Main.rand.Next(100)) / 100f) - Vector2.One * 10f, npc.velocity, Main.rand.Next(61, 64), 1f);
+					Gore.NewGore(npc.position + new Vector2((npc.width * Main.rand.Next(100)) / 100f, npc.height) - Vector2.One * 10f, npc.velocity, mod.GetGoreSlot("Gores/OtherworldVineGore"), 1f);
+				}
 			}
 		}
 		public override void BossLoot(ref string name, ref int potionType)

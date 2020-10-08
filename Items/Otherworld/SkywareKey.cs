@@ -6,6 +6,10 @@ namespace SOTS.Items.Otherworld
 {
 	class SkywareKey : ModItem
 	{
+		public override void SetStaticDefaults()
+		{
+			Tooltip.SetDefault("Opens one locked Skyware Chest");
+		}
 		public override void SetDefaults()
 		{
 			//item.CloneDefaults(ItemID.GoldenKey);

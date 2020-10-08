@@ -38,7 +38,6 @@ Next Update:
 6. Nerf construct damage once again?
 7. Server Sync Advisor
 8. Advisor Spirit
-9. Advisor Treasure bag
 
 Next Development Time: 
 1. Holo-Eye, Holo-Slime, Holo-Blade, Twilight Devil
@@ -54,7 +53,9 @@ Next Development Time:
 	3. Costs 5 void  to launch laser
 
 10/7/20
-1. 
+1. Readded some files lost overnight (idk where they went)
+2. Speed of laser nerfed to compensate 4.25f => 3.75f
+3. Advisor Gore
 
 10/6/20
 1. Advisor expertmode missile rate reduced 150% => 125%

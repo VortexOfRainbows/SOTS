@@ -5,6 +5,10 @@ namespace SOTS.Items.Otherworld
 {
 	class StrangeKey : ModItem
 	{
+		public override void SetStaticDefaults()
+		{
+			Tooltip.SetDefault("Opens one locked Strange Chest");
+		}
 		public override void SetDefaults()
 		{
 			//item.CloneDefaults(ItemID.GoldenKey);

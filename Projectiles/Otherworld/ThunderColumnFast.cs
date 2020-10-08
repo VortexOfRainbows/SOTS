@@ -22,6 +22,7 @@ namespace SOTS.Projectiles.Otherworld
 			projectile.tileCollide = false;
 			projectile.penetrate = -1;
 			projectile.extraUpdates = 4;
+			projectile.scale = 0.8f;
 		}
 		Vector2[] trailPos = new Vector2[30];
 		float[] trailRot = new float[30];
@@ -93,14 +94,14 @@ namespace SOTS.Projectiles.Otherworld
 					iterator++;
 				}
 			}
-			if(endHow == 1 && endHow != 2 && Main.rand.NextBool(3))
+			if(endHow == 1 && endHow != 2)
 			{
 				int dust = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 242);
-				Main.dust[dust].scale *= 3f * (10f - iterator) / 10f;
+				Main.dust[dust].scale *= 5f * (30f - iterator) / 30f;
 				Main.dust[dust].velocity *= 2f;
 				Main.dust[dust].noGravity = true;
 			}
-			if (iterator >= 10)
+			if (iterator >= 30)
 				projectile.Kill();
 		}
 		int endHow = 0;
@@ -158,22 +159,33 @@ namespace SOTS.Projectiles.Otherworld
 				originalPos = new Vector2(projectile.ai[0], projectile.ai[1]);
 				projectile.ai[0] = 0;
 				projectile.ai[1] = 0;
+				Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 92);
 			}
 			checkPos();
 			Player player = Main.player[projectile.owner];
 			Vector2 toPlayer = player.Center - projectile.Center;
 			if(counter2 > 600)
-            {
+			{
+				projectile.extraUpdates = 9;
+				Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 94);
 				counter2 = -100000;
-				projectile.scale = 4.5f;
+				projectile.scale *= 4.5f;
 				projectile.position = originalPos - new Vector2(projectile.width / 2, projectile.height / 2);
+				projectile.velocity = new Vector2(0, originalVelo.Length());
+				projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
+				projectile.netUpdate = true;
+				cataloguePos();
 			}
 			counter++;
 			counter2++;
 			if(counter >= 0)
             {
-				counter = -14;
-				if(projectile.velocity.Length() != 0f)
+				counter = -10;
+				if (counter2 < 0)
+				{
+					projectile.ai[1] = 0;
+				}
+				if (projectile.velocity.Length() != 0f)
 				{
 					Vector2 toPos = originalPos - projectile.Center;
 					if(counter2 < 0)
@@ -183,11 +195,7 @@ namespace SOTS.Projectiles.Otherworld
 					projectile.velocity = new Vector2(originalVelo.Length(), 0).RotatedBy(toPos.ToRotation() + MathHelper.ToRadians(projectile.ai[1]));
 					projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
 				}
-				projectile.ai[1] = Main.rand.Next(-45, 46);
-				if(counter2 < 0)
-                {
-					projectile.ai[1] = 0;
-				}
+				projectile.ai[1] = Main.rand.Next(-35, 36);
 				projectile.netUpdate = true;
 				cataloguePos();
             }
