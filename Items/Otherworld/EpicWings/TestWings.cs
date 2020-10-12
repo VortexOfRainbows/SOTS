@@ -21,7 +21,7 @@ namespace SOTS.Items.Otherworld.EpicWings
 		public override void SetStaticDefaults()
 		{	
 			DisplayName.SetDefault("Machina Booster");
-			Tooltip.SetDefault("Allows flight and slow fall\nIncreases void regen by 1\nDouble tap spacebar to gain multidirectional flight\nDecreases void regen by 40 while active");
+			Tooltip.SetDefault("Allows flight and slow fall\nIncreases void regen by 1\nDouble tap spacebar to gain fast, multidirectional flight\nDecreases void regen by 40 while active");
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
@@ -643,7 +643,7 @@ namespace SOTS.Items.Otherworld.EpicWings
 								dust.velocity = dustVelo;
 								dust.scale += 0.3f;
 								dust.scale *= scale;
-								dust.shader = GameShaders.Armor.GetSecondaryShader(drawInfo.wingShader, drawPlayer);
+								dust.shader = GameShaders.Armor.GetSecondaryShader(drawPlayer.cWings, drawPlayer);
 								dust.alpha = (int)(0.7f * (int)(255 - colorDust.A));
 								Main.playerDrawDust.Add(index);
 							}
@@ -659,7 +659,7 @@ namespace SOTS.Items.Otherworld.EpicWings
 								dust.velocity *= 0.8f;
 								dust.velocity += dustVelo;
 								dust.scale *= scale;
-								dust.shader = GameShaders.Armor.GetSecondaryShader(drawInfo.wingShader, drawPlayer);
+								dust.shader = GameShaders.Armor.GetSecondaryShader(drawPlayer.cWings, drawPlayer);
 								dust.alpha = (int)(0.7f * (255 - (255 * dustAlpha)));
 								Main.playerDrawDust.Add(index);
 							}
@@ -714,7 +714,7 @@ namespace SOTS.Items.Otherworld.EpicWings
 										dust.velocity *= 0;
 										dust.scale *= 0.45f;
 										dust.scale *= scale;
-										dust.shader = GameShaders.Armor.GetSecondaryShader(drawInfo.wingShader, drawPlayer);
+										dust.shader = GameShaders.Armor.GetSecondaryShader(drawPlayer.cWings, drawPlayer);
 										dust.alpha = (int)(0.7f * (int)(255 - colorDust.A));
 										Main.playerDrawDust.Add(index);
 									}

@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using Terraria.Graphics.Shaders;
 
 namespace SOTS.Projectiles.Celestial
 {    
@@ -17,8 +18,9 @@ namespace SOTS.Projectiles.Celestial
 		{
 			DisplayName.SetDefault("Normal Turtle Storm");
 			ProjectileID.Sets.TrailCacheLength[projectile.type] = 4;  
-			ProjectileID.Sets.TrailingMode[projectile.type] = 2;    
-			
+			ProjectileID.Sets.TrailingMode[projectile.type] = 2;
+			Main.projPet[projectile.type] = true;
+			ProjectileID.Sets.LightPet[projectile.type] = true;
 		}
 		
         public override void SetDefaults()
@@ -30,11 +32,16 @@ namespace SOTS.Projectiles.Celestial
 			projectile.hostile = false;
 			projectile.timeLeft = 480;
 			projectile.tileCollide = false;
-			projectile.magic = true;
+			projectile.minion = false;
 			projectile.alpha = 0;
+		}
+		public override bool PreAI()
+		{
+			return true;
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
+			Player player = Main.player[projectile.owner];
 			Vector2 drawOrigin = new Vector2(Main.projectileTexture[projectile.type].Width * 0.5f, projectile.height * 0.5f);
 			for (int k = 0; k < projectile.oldPos.Length; k++) {
 				Vector2 drawPos = projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, projectile.gfxOffY);
@@ -66,7 +73,7 @@ namespace SOTS.Projectiles.Celestial
 				
 				if(Main.myPlayer == projectile.owner)
 				{
-					Projectile.NewProjectile(position.X, position.Y, 0, 0, mod.ProjectileType("StellarHitbox"), projectile.damage, projectile.knockBack, player.whoAmI);
+					Projectile.NewProjectile(position.X, position.Y, 0, 0, mod.ProjectileType("StellarHitbox"), 110, projectile.knockBack, player.whoAmI);
 				}
 				int radius = 2; 
 				for (int x = -radius; x <= radius; x++)
@@ -88,9 +95,9 @@ namespace SOTS.Projectiles.Celestial
 		int breh = -1;
 		public override void AI()
 		{
+			Player player = Main.player[projectile.owner];
 			breh = breh == -1 ? Main.rand.Next(90) : breh;
 			NPC target = Main.npc[(int)projectile.ai[1]];
-			Player player = Main.player[projectile.owner];
 			Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 0.5f / 255f, (255 - projectile.alpha) * 1.1f / 255f, (255 - projectile.alpha) * 0.4f / 255f);
 			if(projectile.ai[0] == 1 && projectile.timeLeft > 90)
 			{
@@ -98,7 +105,7 @@ namespace SOTS.Projectiles.Celestial
 				Main.PlaySound(SoundID.Item16, (int)(projectile.Center.X - stormPos.X), (int)(projectile.Center.Y - stormPos.Y)); //fart sound
 				if(Main.myPlayer == projectile.owner)
 				{
-					int shard = Projectile.NewProjectile(projectile.Center.X - stormPos.X, projectile.Center.Y - stormPos.Y, 0, 0, projectile.type, projectile.damage, projectile.knockBack, player.whoAmI);
+					int shard = Projectile.NewProjectile(projectile.Center.X - stormPos.X, projectile.Center.Y - stormPos.Y, 0, 0, projectile.type, 0, projectile.knockBack, player.whoAmI);
 					Main.projectile[shard].ai[1] = projectile.ai[1];
 					Main.projectile[shard].timeLeft = 450;
 					Main.projectile[shard].rotation = (float)(MathHelper.ToRadians(180) + Math.Atan2(stormPos.Y, stormPos.X));

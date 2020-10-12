@@ -9,7 +9,7 @@ namespace SOTS.Items.Fragments
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Borealis Icosahedron");
-			Tooltip.SetDefault("Critical strikes may frostburn enemies\n3% increased crit chance");
+			Tooltip.SetDefault("Critical strikes may cause a frostburn explosion, dealing 100% critical damage\n3% increased crit chance");
 		}
 		public override void SetDefaults()
 		{

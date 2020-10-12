@@ -32,7 +32,11 @@ namespace SOTS.Projectiles.Celestial
 			projectile.alpha = 100;
 			//projectile.netImportant = true;
 		}
-		public override void AI()
+        public override Color? GetAlpha(Color lightColor)
+        {
+            return Color.White;
+        }
+        public override void AI()
 		{
 			Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 0.9f / 255f, (255 - projectile.alpha) * 0.3f / 255f, (255 - projectile.alpha) * 0.1f / 255f);
 			if(projectile.timeLeft >= 30)

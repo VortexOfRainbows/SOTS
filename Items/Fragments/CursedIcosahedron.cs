@@ -9,7 +9,7 @@ namespace SOTS.Items.Fragments
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Cursed Icosahedron");
-			Tooltip.SetDefault("Critical strikes may afflict enemies with frostburn, burn, or cursed flames\n3% increased crit chance");
+			Tooltip.SetDefault("Critical strikes may cause a release of cursed thunder, dealing 100% critical damage\nCritical strikes may also cause frostburn or flaming explosions, dealing 100% critical damage\n3% increased crit chance");
 		}
 		public override void SetDefaults()
 		{

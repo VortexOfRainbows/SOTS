@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
  
@@ -11,6 +12,12 @@ namespace SOTS.Projectiles
     public class PurpleBobber : ModProjectile
     {	
 		int rodBobberType = -1;
+        public override void SetStaticDefaults()
+        {
+            Main.projFrames[projectile.type] = 1;
+            Main.projPet[projectile.type] = true;
+            ProjectileID.Sets.LightPet[projectile.type] = true;
+        }
         public override void SetDefaults()
         {
 			projectile.CloneDefaults(ProjectileID.BobberGolden); 
@@ -19,9 +26,14 @@ namespace SOTS.Projectiles
 			projectile.timeLeft = 2000;
 			projectile.height += 8;
         }
-		public override bool PreAI()
-		{
-			if(rodBobberType == -1)
+        public override void AI()
+        {
+            Player player = Main.player[projectile.owner];
+            base.AI();
+        }
+        public override bool PreAI()
+        {
+            if (rodBobberType == -1)
 			{
 				rodBobberType = (int)projectile.knockBack;
 				projectile.aiStyle = 61;
@@ -31,9 +43,10 @@ namespace SOTS.Projectiles
 			}
 			return true;
 		}
-        public override bool PreDrawExtras(SpriteBatch spriteBatch)    
-        {	
-			Lighting.AddLight(projectile.Center, 0.3f, 0.1f, 0.24f);
+        public override bool PreDrawExtras(SpriteBatch spriteBatch)
+        {
+            Player player1 = Main.player[projectile.owner];
+            Lighting.AddLight(projectile.Center, 0.3f, 0.1f, 0.24f);
 			Player owner = null;
             if (projectile.owner != -1)
             {
@@ -153,9 +166,8 @@ namespace SOTS.Projectiles
                             }
                         }
                         rotation2 = (float)Math.Atan2((double)projPosY, (double)projPosX) - 1.57f;
-                        Microsoft.Xna.Framework.Color color2 = Lighting.GetColor((int)value.X / 16, (int)(value.Y / 16f), new Microsoft.Xna.Framework.Color(132, 121, 174));    //fishing line color
- 
-                        Main.spriteBatch.Draw(Main.fishingLineTexture, new Vector2(value.X - Main.screenPosition.X + (float)Main.fishingLineTexture.Width * 0.5f, value.Y - Main.screenPosition.Y + (float)Main.fishingLineTexture.Height * 0.5f), new Microsoft.Xna.Framework.Rectangle?(new Microsoft.Xna.Framework.Rectangle(0, 0, Main.fishingLineTexture.Width, (int)num)), color2, rotation2, new Vector2((float)Main.fishingLineTexture.Width * 0.5f, 0f), 1f, SpriteEffects.None, 0f);
+                        Color color2 = Lighting.GetColor((int)value.X / 16, (int)(value.Y / 16f), new Color(132, 121, 174));    //fishing line color
+                        Main.spriteBatch.Draw(Main.fishingLineTexture, new Vector2(value.X - Main.screenPosition.X + (float)Main.fishingLineTexture.Width * 0.5f, value.Y - Main.screenPosition.Y + (float)Main.fishingLineTexture.Height * 0.5f), new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Main.fishingLineTexture.Width, (int)num)), color2, rotation2, new Vector2((float)Main.fishingLineTexture.Width * 0.5f, 0f), 1f, SpriteEffects.None, 0f);
                     }
                 }
             }

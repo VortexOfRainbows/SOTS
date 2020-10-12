@@ -52,6 +52,17 @@ Next Development Time:
 	2. Laser does little damage, but inflicts strong debuff that increases crit damage and chance upon enemy
 	3. Costs 5 void  to launch laser
 
+10/11/20
+1. Dye related bugs are not within my realm of control... they exist in vanilla too...
+2. Fixed Voidspace Aura Cell despawning
+3. Pets are affected by dyes now
+4. Now Celestial and Subspace serpent crosses always glow (Color.White)
+5. Cell staff no longer crits
+6. Isocahedron's now have very OP special effects, may require nerfing later lol
+
+10/10/20
+1. Encountered a ton of dye related bugs, will have to find out how to fix them all... :(
+
 10/7/20
 1. Readded some files lost overnight (idk where they went)
 2. Speed of laser nerfed to compensate 4.25f => 3.75f

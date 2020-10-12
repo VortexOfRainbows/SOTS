@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 using Terraria;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -14,39 +15,33 @@ namespace SOTS.Projectiles
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Lucky Purple Balloon");
-			
+			Main.projFrames[projectile.type] = 1;
+			Main.projPet[projectile.type] = true;
+			ProjectileID.Sets.LightPet[projectile.type] = true;
 		}
-		
         public override void SetDefaults()
         {
-		
-			
             projectile.CloneDefaults(198);
             aiType = 198;
-            Main.projFrames[projectile.type] = 1;
 			projectile.netImportant = true;
             projectile.width = 18;
             projectile.height = 34; 
             projectile.timeLeft = 255;
             projectile.penetrate = -1; 
-            projectile.friendly = false; 
-            projectile.hostile = false; 
+            projectile.friendly = true; 
             projectile.tileCollide = false;
             projectile.ignoreWater = true; 
-            projectile.magic = true; 
-			
-
-
+            projectile.light = 0.5f;
 		}
         public override bool PreAI()
-        {
-            Player player = Main.player[projectile.owner];
-			player.bunny = false; // Relic from aiType
-            return true;
-        }
-		public override void AI() 
 		{
 			Player player = Main.player[projectile.owner];
+			player.hornet = false; // Relic from aiType
+            return true;
+        }
+        public override void AI()
+        {
+            Player player = Main.player[projectile.owner];
             SOTSPlayer modPlayer = player.GetModPlayer<SOTSPlayer>();
             if (player.dead || (player.ownedProjectileCounts[mod.ProjectileType("LuckyPurpleBalloon")] > 1 && projectile.alpha < 30))
             {

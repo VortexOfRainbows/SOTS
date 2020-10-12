@@ -33,6 +33,7 @@ namespace SOTS.Items.Celestial
 			item.channel = true;
 			item.UseSound = SoundID.Item15; //phaseblade
 			item.noUseGraphic = true;
+			item.noMelee = true;
 		}
 		public override bool BeforeDrainMana(Player player)
 		{

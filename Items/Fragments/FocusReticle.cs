@@ -17,7 +17,7 @@ namespace SOTS.Items.Fragments
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Focus Reticle");
-			Tooltip.SetDefault("25% increased crit chance\nCritical strikes deal 50 more damage\nCritical strikes may afflict enemies with frostburn, burn, or cursed flames\nCritical strikes steal life and regenerate void\nImmunity to bleeding and poisoned debuffs");
+			Tooltip.SetDefault("25% increased crit chance\nCritical strikes deal 50 more damage\nCritical strikes may detonate enemies for 100% damage\nCritical strikes steal life and regenerate void\nImmunity to bleeding and poisoned debuffs");
 		}
 		public override void SetDefaults()
 		{

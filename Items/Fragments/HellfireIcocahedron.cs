@@ -1,14 +1,6 @@
-using System;
-using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.DataStructures;
-using Terraria.Enums;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.ObjectData;
-using Microsoft.Xna.Framework.Graphics;
-
 
 namespace SOTS.Items.Fragments
 {
@@ -17,7 +9,7 @@ namespace SOTS.Items.Fragments
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Hellfire Icosahedron");
-			Tooltip.SetDefault("Critical strikes may burn enemies\n3% increased crit chance");
+			Tooltip.SetDefault("Critical strikes may cause a flaming explosion, dealing 50% critical damage\n3% increased crit chance");
 		}
 		public override void SetDefaults()
 		{

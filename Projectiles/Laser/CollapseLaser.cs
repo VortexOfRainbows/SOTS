@@ -27,6 +27,10 @@ namespace SOTS.Projectiles.Laser
 			}
 			return false;
 		}
+		public override bool CanDamage()
+		{
+			return false;
+		}
 		public override bool PreDrawExtras(SpriteBatch spriteBatch)
 		{
 			return false;
@@ -284,7 +288,10 @@ namespace SOTS.Projectiles.Laser
 					color *= ((255 - projectile.alpha) / 255f);
 					Vector2 helixPos1 = drawPos + new Vector2(curve.X, 0).RotatedBy(radianDir + MathHelper.ToRadians(90));
 					Vector2 helixPos2 = drawPos + new Vector2(curve.X, 0).RotatedBy(radianDir - MathHelper.ToRadians(90));
-					Lighting.AddLight(drawPos, new Vector3((int)red, (int)grn, (int)blu) * (255 - projectile.alpha) / 20000f); //adds game light at the area
+
+					if(forceTerminate % 4 == 0)
+						Lighting.AddLight(drawPos, new Vector3((int)red, (int)grn, (int)blu) * (255 - projectile.alpha) / 20000f); //adds game light at the area
+
 					spriteBatch.Draw(Main.projectileTexture[projectile.type], helixPos1 - Main.screenPosition, null, color, radianDir, new Vector2(14, 7), 0.5f, SpriteEffects.None, 0f);
 					spriteBatch.Draw(Main.projectileTexture[projectile.type], helixPos2 - Main.screenPosition, null, color, radianDir, new Vector2(14, 7), 0.5f, SpriteEffects.None, 0f);
 					spriteBatch.Draw(texture, helixPos2 - Main.screenPosition, null, white, radianDir, new Vector2(14, 7), 0.5f, SpriteEffects.None, 0f);

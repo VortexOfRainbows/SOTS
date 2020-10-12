@@ -24,9 +24,7 @@ namespace SOTS.Projectiles.Minions
 			projectile.timeLeft = Projectile.SentryLifeTime;
 			projectile.penetrate = -1;
             projectile.tileCollide = true; 
-			projectile.minion = true;
             projectile.sentry = true;
-			ProjectileID.Sets.MinionTargettingFeature[projectile.type] = true;
         }
 		float sphereRadius = 215f;
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor) 
@@ -57,7 +55,6 @@ namespace SOTS.Projectiles.Minions
 					if(projectile.ai[0] == 9 && Main.myPlayer == projectile.owner)
 					{
 						int proj = Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, mod.ProjectileType("RedExplosion"), projectile.damage, projectile.knockBack, projectile.owner, 0f, 0f);
-						Main.projectile[proj].minion = true;
 					}
 				}
             }
