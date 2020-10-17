@@ -9,7 +9,7 @@ namespace SOTS.Items.Fragments
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Cursed Icosahedron");
-			Tooltip.SetDefault("Critical strikes may cause a release of cursed thunder, dealing 100% critical damage\nCritical strikes may also cause frostburn or flaming explosions, dealing 100% critical damage\n3% increased crit chance");
+			Tooltip.SetDefault("Critical strikes may cause a release of cursed thunder, dealing 50% critical damage\nCritical strikes may also cause frostburn or flaming explosions, dealing 50% critical damage\n3% increased crit chance");
 		}
 		public override void SetDefaults()
 		{
@@ -22,8 +22,6 @@ namespace SOTS.Items.Fragments
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");	
-			modPlayer.CritFrost = true;
-			modPlayer.CritFire = true;
 			modPlayer.CritCurseFire = true;
 			player.meleeCrit += 3;
 			player.rangedCrit += 3;

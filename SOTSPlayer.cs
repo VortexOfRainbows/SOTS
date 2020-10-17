@@ -696,39 +696,38 @@ namespace SOTS
 				if (randBuff == 2 && CritCurseFire)
 				{
 					Main.PlaySound(2, (int)target.Center.X, (int)target.Center.Y, 93, 0.9f);
-					target.AddBuff(BuffID.CursedInferno, 1200, false);
+					target.AddBuff(BuffID.CursedInferno, 900, false);
 					int numberProjectiles = 4;
 					int rand = Main.rand.Next(360);
 					for (int i = 0; i < numberProjectiles; i++)
 					{
 						Vector2 perturbedSpeed = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(i * 90 + rand));
 						if (Main.myPlayer == player.whoAmI)
-							Projectile.NewProjectile(target.Center.X, target.Center.Y, perturbedSpeed.X, perturbedSpeed.Y, mod.ProjectileType("CursedThunder"), damage * 2, 1f, player.whoAmI, 2);
+							Projectile.NewProjectile(target.Center.X, target.Center.Y, perturbedSpeed.X, perturbedSpeed.Y, mod.ProjectileType("CursedThunder"), damage, 1f, player.whoAmI, 2);
 					}
 				}
-				else if (randBuff == 1 && CritFrost)
+				else if (randBuff == 1 && (CritFrost || CritCurseFire))
 				{
-					target.AddBuff(BuffID.Frostburn, 1200, false);
-					if (Main.myPlayer == player.whoAmI)
-						Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, mod.ProjectileType("IcePulseSummon"), damage * 2, 1f, player.whoAmI, 3);
-				}
-				else if (randBuff == 0 && CritFire)
-				{
-					target.AddBuff(BuffID.OnFire, 1200, false);
+					target.AddBuff(BuffID.Frostburn, 900, false);
 					if (Main.myPlayer == player.whoAmI)
 					{
-						if (!CritCurseFire)
-						{
-							Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, mod.ProjectileType("SharangaBlastSummon"), damage, 1f, player.whoAmI, 3);
-							if (target.immune[player.whoAmI] >= 5)
-							{
-								target.StrikeNPC(damage, 0, 0);
-							}
-						}
+						if (CritFrost)
+							Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, mod.ProjectileType("IcePulseSummon"), damage * 2, 1f, player.whoAmI, 3);
 						else
+							Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, mod.ProjectileType("IcePulseSummon"), damage, 1f, player.whoAmI, 3);
+					}
+				}
+				else if (randBuff == 0 && (CritFire || CritCurseFire))
+				{
+					target.AddBuff(BuffID.OnFire, 900, false);
+					if (Main.myPlayer == player.whoAmI)
+					{
+						if (CritCurseFire && CritFire)
 						{
 							Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, mod.ProjectileType("SharangaBlastSummon"), damage * 2, 1f, player.whoAmI, 3);
 						}
+						else
+							Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, mod.ProjectileType("SharangaBlastSummon"), damage, 1f, player.whoAmI, 3);
 					}
 				}
 			}
@@ -753,35 +752,38 @@ namespace SOTS
 				if (randBuff == 2 && CritCurseFire)
 				{
 					Main.PlaySound(2, (int)target.Center.X, (int)target.Center.Y, 93, 0.9f);
-					target.AddBuff(BuffID.CursedInferno, 1200, false);
+					target.AddBuff(BuffID.CursedInferno, 900, false);
 					int numberProjectiles = 4;
 					int rand = Main.rand.Next(360);
 					for (int i = 0; i < numberProjectiles; i++)
 					{
 						Vector2 perturbedSpeed = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(i * 90 + rand));
 						if (Main.myPlayer == player.whoAmI)
-							Projectile.NewProjectile(target.Center.X, target.Center.Y, perturbedSpeed.X, perturbedSpeed.Y, mod.ProjectileType("CursedThunder"), damage * 2, 1f, player.whoAmI, 2);
+							Projectile.NewProjectile(target.Center.X, target.Center.Y, perturbedSpeed.X, perturbedSpeed.Y, mod.ProjectileType("CursedThunder"), damage, 1f, player.whoAmI, 2);
 					}
 				}
-				else if (randBuff == 1 && CritFrost)
+				else if (randBuff == 1 && (CritFrost || CritCurseFire))
 				{
-					target.AddBuff(BuffID.Frostburn, 1200, false);
+					target.AddBuff(BuffID.Frostburn, 900, false);
 					if (Main.myPlayer == player.whoAmI)
-						Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, mod.ProjectileType("IcePulseSummon"), damage * 2, 1f, player.whoAmI, 3);
+					{
+						if(CritFrost)
+							Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, mod.ProjectileType("IcePulseSummon"), damage * 2, 1f, player.whoAmI, 3);
+						else
+							Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, mod.ProjectileType("IcePulseSummon"), damage, 1f, player.whoAmI, 3);
+					}
 				}
-				else if(randBuff == 0 && CritFire)
+				else if(randBuff == 0 && (CritFire || CritCurseFire))
 				{
-					target.AddBuff(BuffID.OnFire, 1200, false);
+					target.AddBuff(BuffID.OnFire, 900, false);
 					if (Main.myPlayer == player.whoAmI)
                     {
-						if(!CritCurseFire)
-						{
-							Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, mod.ProjectileType("SharangaBlastSummon"), damage, 1f, player.whoAmI, 3);
-						}
-						else
+						if (CritCurseFire && CritFire)
 						{
 							Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, mod.ProjectileType("SharangaBlastSummon"), damage * 2, 1f, player.whoAmI, 3);
 						}
+						else
+							Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, mod.ProjectileType("SharangaBlastSummon"), damage, 1f, player.whoAmI, 3);
 					}
 				}
 			}

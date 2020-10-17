@@ -52,6 +52,12 @@ Next Development Time:
 	2. Laser does little damage, but inflicts strong debuff that increases crit damage and chance upon enemy
 	3. Costs 5 void  to launch laser
 
+10/15/20
+1. Cursed Icosahedron nerf
+	1. Damage nerfed
+	2. Debuff duration nerfed
+2. Collector more visuals (only a little)
+
 10/11/20
 1. Dye related bugs are not within my realm of control... they exist in vanilla too...
 2. Fixed Voidspace Aura Cell despawning

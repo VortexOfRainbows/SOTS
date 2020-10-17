@@ -36,19 +36,30 @@ namespace SOTS.NPCs.Constructs
 			npc.HitSound = SoundID.NPCHit4;
 			npc.DeathSound = SoundID.NPCDeath14;
 		}
+		float spiritScale = 0f;
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
 			Texture2D texture = Main.npcTexture[npc.type];
 			Texture2D texture4 = mod.GetTexture("NPCs/Constructs/CollectorDrill");
+			Texture2D texture5 = mod.GetTexture("NPCs/Constructs/CollectorSpirit");
 			Vector2 drawOrigin = new Vector2(texture4.Width * 0.5f, texture4.Height * 0.5f);
+			Vector2 drawOrigin2 = new Vector2(texture5.Width * 0.5f, texture5.Height * 0.5f);
 
 			for (int i = 0; i < 2; i++)
 			{
 				int direction = i * 2 - 1;
-				float overrideRotation = MathHelper.ToRadians(35 * -direction);
+				float overrideRotation = MathHelper.ToRadians(55 * -direction);
 				Vector2 fromBody = npc.Center + new Vector2(direction * 24, 10 + npc.ai[1] * 0.35f - npc.ai[2] * 0.35f).RotatedBy(npc.rotation);
 				Vector2 drawPos = fromBody - Main.screenPosition + new Vector2(0f, npc.gfxOffY);
 				spriteBatch.Draw(texture4, drawPos, null, drawColor, npc.rotation + overrideRotation, drawOrigin, (npc.ai[1] - npc.ai[2]) * 0.009f, direction == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+			}
+			Color color = new Color(100, 100, 100, 0);
+			for (int k = 0; k < 7; k++)
+			{
+				float x = Main.rand.Next(-10, 11) * 0.25f;
+				float y = Main.rand.Next(-10, 11) * 0.25f;
+				Vector2 drawPos = npc.Center - Main.screenPosition + new Vector2(0f, npc.gfxOffY + 6);
+				Main.spriteBatch.Draw(texture5, new Vector2(drawPos.X + x, drawPos.Y + y), null, color * (1f - (npc.alpha / 255f)), npc.rotation, drawOrigin2, spiritScale, SpriteEffects.None, 0f);
 			}
 			return true;
 		}
@@ -143,21 +154,38 @@ namespace SOTS.NPCs.Constructs
 				npc.velocity *= 0f;
 				if(npc.ai[1] < 100)
 				{
-					npc.ai[1] += 2;
+					npc.ai[1] += 0.5f;
 				}
 				else if(npc.ai[3] < 100)
                 {
-					npc.ai[3]++;
+					npc.ai[3] += 0.5f;
+					if (spiritScale < 0.9f)
+					{
+						spiritScale += 0.005f;
+						for (int k = 0; k < 360; k += 10)
+						{
+							Vector2 circularLocation = new Vector2(-38 * npc.scale, 0).RotatedBy(MathHelper.ToRadians(k));
+							circularLocation += 0.5f * new Vector2(Main.rand.Next(-2, 3), Main.rand.Next(-2, 3));
+							int type = DustID.Electric;
+							if (Main.rand.NextBool(30))
+							{
+								int num1 = Dust.NewDust(new Vector2(npc.Center.X + circularLocation.X - 4, npc.Center.Y + circularLocation.Y - 10), 4, 4, type);
+								Main.dust[num1].noGravity = true;
+								Main.dust[num1].scale *= 1f + 0.166f * npc.scale;
+								Main.dust[num1].velocity = -circularLocation * 0.07f;
+							}
+						}
+					}
 				}
 				else if(npc.ai[2] < 100)
 				{
-					npc.ai[2]++;
-                }
+					npc.ai[2] += 1f;
+				}
 				else
                 {
 					npc.ai[3]++;
 					float ai3 = npc.ai[3] - 100;
-                }
+				}
             }
 			return true;
 		}
