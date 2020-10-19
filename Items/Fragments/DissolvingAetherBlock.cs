@@ -11,7 +11,7 @@ namespace SOTS.Items.Fragments
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Aether Block");
+			DisplayName.SetDefault("Purple Aether Block");
 			Tooltip.SetDefault("");
 		}
 

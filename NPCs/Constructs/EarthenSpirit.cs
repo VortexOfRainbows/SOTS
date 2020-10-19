@@ -289,8 +289,13 @@ namespace SOTS.NPCs.Constructs
 				npc.velocity.Y -= 0.014f;
 				npc.dontTakeDamage = true;
 			}
-			int num = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, mod.DustType("BigEarthDust"));
-			Main.dust[num].alpha = npc.alpha;
+			int dust2 = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, mod.DustType("CopyDust4"));
+			Dust dust = Main.dust[dust2];
+			dust.color = new Color(255, 191, 0);
+			dust.noGravity = true;
+			dust.fadeIn = 0.1f;
+			dust.scale *= 2f;
+			dust.alpha = npc.alpha;
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{

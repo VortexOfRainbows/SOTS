@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.IO;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -11,6 +12,20 @@ namespace SOTS.Projectiles.Otherworld
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Thunder Column");
+		}
+		public override void SendExtraAI(BinaryWriter writer)
+		{
+			writer.Write(projectile.velocity.X);
+			writer.Write(projectile.velocity.Y);
+			writer.Write(projectile.scale);
+			writer.Write(projectile.rotation);
+		}
+		public override void ReceiveExtraAI(BinaryReader reader)
+		{
+			projectile.velocity.X = reader.ReadSingle();
+			projectile.velocity.Y = reader.ReadSingle();
+			projectile.scale = reader.ReadSingle();
+			projectile.rotation = reader.ReadSingle();
 		}
 		public override void SetDefaults()
 		{
@@ -58,7 +73,7 @@ namespace SOTS.Projectiles.Otherworld
 							y = 0;
                         }
 						if(trailPos[k] != projectile.Center)
-							Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, trailRot[k], drawOrigin, scale, SpriteEffects.None, 0f);
+							Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, betweenPositions.ToRotation() + MathHelper.ToRadians(90), drawOrigin, scale, SpriteEffects.None, 0f);
 					}
 				}
 				previousPosition = currentPos;
@@ -69,20 +84,15 @@ namespace SOTS.Projectiles.Otherworld
 		public void cataloguePos()
         {
 			Vector2 current = projectile.Center;
-			float currentR = projectile.rotation;
 			for (int i = 0; i < trailPos.Length; i++)
 			{
 				Vector2 previousPosition = trailPos[i];
-				float previousR = trailRot[i];
 				trailPos[i] = current;
 				current = previousPosition;
-				trailRot[i] = currentR;
-				currentR = previousR;
 			}
         }
 		public void checkPos()
 		{
-			bool flag = false;
 			float iterator = 0f;
 			Vector2 current = projectile.Center;
 			for (int i = 0; i < trailPos.Length; i++)
@@ -174,17 +184,20 @@ namespace SOTS.Projectiles.Otherworld
 			counter++;
 			counter2++;
 			if(counter >= 0)
-            {
-				counter = -14;
-				if(projectile.velocity.Length() != 0f)
-				{
-					Vector2 toPos = originalPos - projectile.Center;
-					projectile.velocity = new Vector2(originalVelo.Length(), 0).RotatedBy(toPos.ToRotation() + MathHelper.ToRadians(projectile.ai[1]));
-					projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
-				}
-				projectile.ai[1] = Main.rand.Next(-45, 46);
-				projectile.netUpdate = true;
+			{
 				cataloguePos();
+				counter = -14;
+				if (Main.netMode != 1)
+				{
+					if (projectile.velocity.Length() != 0f)
+					{
+						Vector2 toPos = originalPos - projectile.Center;
+						projectile.velocity = new Vector2(originalVelo.Length(), 0).RotatedBy(toPos.ToRotation() + MathHelper.ToRadians(projectile.ai[1]));
+						projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
+					}
+					projectile.ai[1] = Main.rand.Next(-45, 46);
+					projectile.netUpdate = true;
+				}
             }
 		}
 	}

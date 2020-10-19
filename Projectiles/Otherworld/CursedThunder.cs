@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using System.IO;
 
 namespace SOTS.Projectiles.Otherworld
 {
@@ -149,7 +150,7 @@ namespace SOTS.Projectiles.Otherworld
                 {
 					for (int i = 0; i < 3; i += 2)
 					{
-						if (Main.netMode != 1)
+						if (projectile.owner == Main.myPlayer)
 						{
 							Vector2 perturbedSpeed = new Vector2(originalVelo.X, originalVelo.Y).RotatedBy(MathHelper.ToRadians((i - 1) * 45f));
 							Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, perturbedSpeed.X, perturbedSpeed.Y, mod.ProjectileType("CursedThunder"), projectile.damage, 1f, Main.myPlayer, projectile.ai[0] - 1);
@@ -163,18 +164,17 @@ namespace SOTS.Projectiles.Otherworld
 			counter++;
 			counter2++;
 			if(counter >= 0)
-            {
+			{
 				counter = -10;
-				if(projectile.velocity.Length() != 0f)
+				if (projectile.velocity.Length() != 0f)
 				{
 					Vector2 toPos = originalPos - projectile.Center;
 					projectile.velocity = new Vector2(originalVelo.Length(), 0).RotatedBy(toPos.ToRotation() + MathHelper.ToRadians(projectile.ai[1]));
 					projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
 				}
 				projectile.ai[1] = Main.rand.Next(-45, 46);
-				projectile.netUpdate = true;
 				cataloguePos();
-            }
+			}
 		}
 	}
 }

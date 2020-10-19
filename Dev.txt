@@ -37,7 +37,6 @@ Next Update:
 3. Coconut Gun && Kitchen Sink
 6. Nerf construct damage once again?
 7. Server Sync Advisor
-8. Advisor Spirit
 
 Next Development Time: 
 1. Holo-Eye, Holo-Slime, Holo-Blade, Twilight Devil
@@ -51,6 +50,22 @@ Next Development Time:
 	1. Grants an eye turret that you can double-tap down to fire a laser with
 	2. Laser does little damage, but inflicts strong debuff that increases crit damage and chance upon enemy
 	3. Costs 5 void  to launch laser
+
+10/18/20
+1. Spirit Dust visuals improved
+2. Advisor => Otherworldly Spirit => Collector finished!
+3. Dissolving Aether transitions between colors
+4. Syncing Errors
+	1. Spawning issues with Advisor fixed
+	2. Lightning successfully synced and removed some unneccesary data storing
+	3. Rocket homing with advisor fixed
+	4. Collector and Spirit issues fixed
+5. Next
+	1. need a custom projectile for assassination potion to server sync
+
+
+10/17/20
+1. a bit of work on collector (a tad busy)
 
 10/15/20
 1. Cursed Icosahedron nerf

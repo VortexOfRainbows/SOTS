@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using System.IO;
 
 namespace SOTS.Projectiles.Otherworld
 {
@@ -11,6 +12,20 @@ namespace SOTS.Projectiles.Otherworld
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Thunder Column");
+		}
+		public override void SendExtraAI(BinaryWriter writer)
+		{
+			writer.Write(projectile.velocity.X);
+			writer.Write(projectile.velocity.Y);
+			writer.Write(projectile.scale);
+			writer.Write(projectile.rotation);
+		}
+		public override void ReceiveExtraAI(BinaryReader reader)
+		{
+			projectile.velocity.X = reader.ReadSingle();
+			projectile.velocity.Y = reader.ReadSingle();
+			projectile.scale = reader.ReadSingle();
+			projectile.rotation = reader.ReadSingle();
 		}
 		public override void SetDefaults()
 		{
@@ -24,7 +39,6 @@ namespace SOTS.Projectiles.Otherworld
 			projectile.extraUpdates = 1;
 		}
 		Vector2[] trailPos = new Vector2[10];
-		float[] trailRot = new float[10];
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
 			if (runOnce)
@@ -58,7 +72,7 @@ namespace SOTS.Projectiles.Otherworld
 							y = 0;
                         }
 						if(trailPos[k] != projectile.Center)
-							Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, trailRot[k], drawOrigin, scale, SpriteEffects.None, 0f);
+							Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, betweenPositions.ToRotation() + MathHelper.ToRadians(90), drawOrigin, scale, SpriteEffects.None, 0f);
 					}
 				}
 				previousPosition = currentPos;
@@ -69,15 +83,11 @@ namespace SOTS.Projectiles.Otherworld
 		public void cataloguePos()
         {
 			Vector2 current = projectile.Center;
-			float currentR = projectile.rotation;
 			for (int i = 0; i < trailPos.Length; i++)
 			{
 				Vector2 previousPosition = trailPos[i];
-				float previousR = trailRot[i];
 				trailPos[i] = current;
 				current = previousPosition;
-				trailRot[i] = currentR;
-				currentR = previousR;
 			}
         }
 		public void checkPos()
@@ -153,16 +163,19 @@ namespace SOTS.Projectiles.Otherworld
 			Vector2 toPlayer = player.Center - projectile.Center;
 			projectile.ai[0]++;
 			if(projectile.ai[0] >= 0)
-            {
-				projectile.ai[0] = -20;
-				if(projectile.velocity.Length() != 0f)
-				{
-					projectile.velocity = new Vector2(projectile.velocity.Length(), 0).RotatedBy(projectile.velocity.ToRotation() + MathHelper.ToRadians(projectile.ai[1]));
-					projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
-				}
-				projectile.ai[1] = Main.rand.Next(-40, 41);
-				projectile.netUpdate = true;
+			{
 				cataloguePos();
+				projectile.ai[0] = -20;
+				if (projectile.owner == Main.myPlayer)
+				{
+					if (projectile.velocity.Length() != 0f)
+					{
+						projectile.velocity = new Vector2(projectile.velocity.Length(), 0).RotatedBy(projectile.velocity.ToRotation() + MathHelper.ToRadians(projectile.ai[1]));
+						projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
+					}
+					projectile.ai[1] = Main.rand.Next(-40, 41);
+					projectile.netUpdate = true;
+				}
             }
 		}
 	}

@@ -29,7 +29,9 @@ namespace SOTS.Items.Fragments
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
 			Texture2D texture = Main.itemTexture[item.type];
-			Color color = new Color(100, 100, 100, 0);
+			Color color = new Color(167, 45, 225, 0);
+			Color color2 = new Color(64, 178, 172, 0);
+			color = Color.Lerp(color, color2, 0.5f + new Vector2(-0.5f, 0).RotatedBy(MathHelper.ToRadians((float)Main.GlobalTime * 50)).X);
 			for (int k = 0; k < 7; k++)
 			{
 				float x = Main.rand.Next(-10, 11) * 0.15f;
@@ -54,7 +56,9 @@ namespace SOTS.Items.Fragments
 			}
 
 			Texture2D texture = Main.itemTexture[item.type];
-			Color color = new Color(100, 100, 100, 0);
+			Color color = new Color(167, 45, 225, 0);
+			Color color2 = new Color(64, 178, 172, 0);
+			color = Color.Lerp(color, color2, 0.5f + new Vector2(-0.5f, 0).RotatedBy(MathHelper.ToRadians((float)Main.GlobalTime * 50)).X);
 			Vector2 drawOrigin = new Vector2(Main.itemTexture[item.type].Width * 0.5f, item.height * 0.5f);
 			for (int k = 0; k < 7; k++)
 			{

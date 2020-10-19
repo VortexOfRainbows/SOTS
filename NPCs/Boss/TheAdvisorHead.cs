@@ -46,6 +46,32 @@ namespace SOTS.NPCs.Boss
 		{
 			DisplayName.SetDefault("The Advisor");
 		}
+		public override void SendExtraAI(BinaryWriter writer)
+		{
+			writer.Write(ConstructIds[0]);
+			writer.Write(ConstructIds[1]);
+			writer.Write(ConstructIds[2]);
+			writer.Write(ConstructIds[3]);
+
+			writer.Write(dormant);
+			writer.Write(moveLegsDynamic);
+			writer.Write(moveLegsReturn);
+			writer.Write(watchPlayer);
+			writer.Write(npc.dontTakeDamage);
+		}
+		public override void ReceiveExtraAI(BinaryReader reader)
+		{
+			ConstructIds[0] = reader.ReadInt32();
+			ConstructIds[1] = reader.ReadInt32();
+			ConstructIds[2] = reader.ReadInt32();
+			ConstructIds[3] = reader.ReadInt32();
+
+			dormant = reader.ReadBoolean();
+			moveLegsDynamic = reader.ReadBoolean();
+			moveLegsReturn = reader.ReadBoolean();
+			watchPlayer = reader.ReadBoolean();
+			npc.dontTakeDamage = reader.ReadBoolean();
+		}
 		public override bool CheckActive()
 		{
 			return !dormant;
@@ -73,17 +99,17 @@ namespace SOTS.NPCs.Boss
             npc.buffImmune[BuffID.CursedInferno] = true;
             npc.buffImmune[BuffID.ShadowFlame] = true;
             bossBag = mod.ItemType("TheAdvisorBossBag");
-            //bossBag = mod.ItemType("BossBagBloodLord");
-        }
+			music = -1;
+			musicPriority = (MusicPriority)(-1);
+			//bossBag = mod.ItemType("BossBagBloodLord");
+		}
 		public static int[] ConstructIds = { -1, -1, -1, -1 };
 		bool dormant = true;
 		int dormantCounter = 0;
 		int ai1 = 0;
 		float ai3 = 0;
-		float ai3Speed = 0;
 		float hookDistortion = 1f;
 		float hookDistortionShake = 0f;
-		float prevai3 = 0;
 		float laserDirection = 0f;
 		float nextLaserDirection = 0f;
 		public void DrawGlow(SpriteBatch spriteBatch, Color lightColor)
@@ -463,6 +489,8 @@ namespace SOTS.NPCs.Boss
 					npc.dontTakeDamage = false;
 					npc.dontCountMe = false;
 				}
+				if(Main.netMode != 1)
+					npc.netUpdate = true;
 				return false;
 			}
 			if (Main.expertMode)
@@ -511,18 +539,27 @@ namespace SOTS.NPCs.Boss
 		public override void AI()
 		{
 			music = MusicID.Boss4;
+			musicPriority = MusicPriority.BossLow;
 			npc.TargetClosest(false);
 			npc.spriteDirection = 1;
 			bool phase2 = npc.life < npc.lifeMax * (0.45f + (Main.expertMode ? 0.2f : 0));
 			if(attackPhase1 == -1 && (attackPhase2 == -1 || phase2))
             {	
-				attackPhase1 = Main.rand.Next(3);
-				attackTimer1 = 0;
+				if(Main.netMode != 1)
+				{
+					attackPhase1 = Main.rand.Next(3);
+					attackTimer1 = 0;
+					npc.netUpdate = true;
+				}
 			}
 			if(attackPhase2 == -1 && (attackPhase1 == -2 || phase2))
 			{
-				attackPhase2 = Main.rand.Next(3);
-				attackTimer2 = 0;
+				if (Main.netMode != 1)
+				{
+					attackPhase2 = Main.rand.Next(3);
+					attackTimer2 = 0;
+					npc.netUpdate = true;
+				}
 			}
 			if (attackPhase1 == -2)
 			{
@@ -776,7 +813,7 @@ namespace SOTS.NPCs.Boss
 									damage2 = (int)(damage2 / Main.expertDamage);
 								}
 								damage2 = (int)(damage2 * 1.75f);
-								Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 0, -10f, mod.ProjectileType("ThunderColumnFast"), damage2, 0, player.whoAmI, fireToX, fireToY);
+								Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 0, -10f, mod.ProjectileType("ThunderColumnFast"), damage2, npc.target, Main.myPlayer, fireToX, fireToY);
 							}
 						}
 					}
@@ -898,7 +935,7 @@ namespace SOTS.NPCs.Boss
 								damage2 = (int)(damage2 / Main.expertDamage);
 							}
 							damage2 = (int)(damage2 * 0.8f);
-							Projectile.NewProjectile(npc.Center.X - 54, npc.Center.Y + 20, Main.rand.Next(-10, 11) * 0.5f, Main.rand.Next(-10, 11) * 0.5f, mod.ProjectileType("HoloMissile"), damage2, 0, Main.myPlayer);
+							Projectile.NewProjectile(npc.Center.X - 54, npc.Center.Y + 20, Main.rand.Next(-10, 11) * 0.5f, Main.rand.Next(-10, 11) * 0.5f, mod.ProjectileType("HoloMissile"), damage2, 0, Main.myPlayer, 0, npc.target);
 						}
 						Main.PlaySound(2, (int)npc.Center.X - 54, (int)npc.Center.Y + 20, 61, 1f);
 						for (int i = 0; i < 15; i++)
@@ -917,7 +954,7 @@ namespace SOTS.NPCs.Boss
 							{
 								damage2 = (int)(damage2 / Main.expertDamage);
 							}
-							Projectile.NewProjectile(npc.Center.X + 54, npc.Center.Y + 20, Main.rand.Next(-10, 11) * 0.5f, Main.rand.Next(-10, 11) * 0.5f, mod.ProjectileType("HoloMissile"), damage2, 0, Main.myPlayer);
+							Projectile.NewProjectile(npc.Center.X + 54, npc.Center.Y + 20, Main.rand.Next(-10, 11) * 0.5f, Main.rand.Next(-10, 11) * 0.5f, mod.ProjectileType("HoloMissile"), damage2, 0, Main.myPlayer, 0, npc.target);
 						}
 						Main.PlaySound(2, (int)npc.Center.X + 54, (int)npc.Center.Y + 20, 61, 1f);
 						for (int i = 0; i < 15; i++)
@@ -1114,6 +1151,13 @@ namespace SOTS.NPCs.Boss
 					}
 				}
 			}
+		}
+		public override void NPCLoot()
+		{
+			int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, mod.NPCType("OtherworldlySpirit"));
+			Main.npc[n].velocity.Y = -10f;
+			if (Main.netMode != 1)
+				Main.npc[n].netUpdate = true;
 		}
 	}
 }

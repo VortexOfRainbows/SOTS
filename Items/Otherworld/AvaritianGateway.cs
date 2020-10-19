@@ -16,7 +16,7 @@ namespace SOTS.Items.Otherworld
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Avaritian Gateway");
-			Tooltip.SetDefault("'A strange portal that leads nowhere'\nServes as the spawning location for the Advisor (TBA)");
+			Tooltip.SetDefault("'A strange portal that leads nowhere'\nServes as the spawning location for the Advisor");
 		}
 		public override void SetDefaults()
 		{
@@ -126,7 +126,8 @@ namespace SOTS.Items.Otherworld
 						}
 						if(!activated)
 						{
-							direction += direction.SafeNormalize(Vector2.Zero) * 80f; 
+							direction = direction.SafeNormalize(Vector2.Zero) * -240f;
+							direction.Y += 80;
 							if (Main.netMode != 1)
 							{
 								int npc = NPC.NewNPC(i * 16 + 8 + (int)direction.X, j * 16 + 8 + (int)direction.Y, mod.NPCType("OtherworldlyConstructHead2"));

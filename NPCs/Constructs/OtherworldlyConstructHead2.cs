@@ -141,7 +141,7 @@ namespace SOTS.NPCs.Constructs
 					int i = (int)(pos.X / 16);
 					int j = (int)(pos.Y / 16);
 					Tile tile = Framing.GetTileSafely(i, j);
-					if(tile.active() && !Main.tileSolidTop[tile.type] && Main.tileSolid[tile.type])
+					if (tile.nactive() && Main.tileSolid[(int)tile.type])
 					{
 						foundTile = true;
 						return new Vector2(i * 16, j * 16) + new Vector2(8, 8);
@@ -149,7 +149,33 @@ namespace SOTS.NPCs.Constructs
 				}
 				blockDist += 16f;
 			}
-			return new Vector2(-1, -1);
+			blockDist = 16;
+			endnow = 0;
+			while (!foundTile)
+			{
+				endnow++;
+				if (endnow > 64)
+				{
+					return new Vector2(-2, -2);
+				}
+				for (float r = 180; r < 360; r += 30f / endnow)
+				{
+					if (r > 360)
+						break;
+					Vector2 rotationalDistance = new Vector2(-blockDist, 0).RotatedBy(MathHelper.ToRadians(r));
+					Vector2 pos = npc.Center + rotationalDistance;
+					int i = (int)(pos.X / 16);
+					int j = (int)(pos.Y / 16);
+					Tile tile = Framing.GetTileSafely(i, j);
+					if (tile.nactive() && Main.tileSolid[(int)tile.type])
+					{
+						foundTile = true;
+						return new Vector2(i * 16, j * 16) + new Vector2(8, 8);
+					}
+				}
+				blockDist += 16f;
+			}
+			return new Vector2(npc.Center.X, npc.Center.Y);
 		}
 		public override bool PreAI()
 		{

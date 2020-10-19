@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using System.IO;
 
 namespace SOTS.Projectiles.Otherworld
 {
@@ -11,6 +12,20 @@ namespace SOTS.Projectiles.Otherworld
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Thunder Column");
+		}
+		public override void SendExtraAI(BinaryWriter writer)
+		{
+			writer.Write(projectile.velocity.X);
+			writer.Write(projectile.velocity.Y);
+			writer.Write(projectile.scale);
+			writer.Write(projectile.rotation);
+		}
+		public override void ReceiveExtraAI(BinaryReader reader)
+		{
+			projectile.velocity.X = reader.ReadSingle();
+			projectile.velocity.Y = reader.ReadSingle();
+			projectile.scale = reader.ReadSingle();
+			projectile.rotation = reader.ReadSingle();
 		}
 		public override void SetDefaults()
 		{
@@ -138,7 +153,8 @@ namespace SOTS.Projectiles.Otherworld
 		Vector2 originalPos = Vector2.Zero;
         public override void AI()
 		{
-			if(projectile.Center.Y > Main.player[projectile.owner].Center.Y)
+			Player player = Main.player[(int)projectile.knockBack];
+			if (projectile.Center.Y > player.Center.Y)
             {
 				projectile.tileCollide = true;
             }
@@ -162,7 +178,6 @@ namespace SOTS.Projectiles.Otherworld
 				Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 92);
 			}
 			checkPos();
-			Player player = Main.player[projectile.owner];
 			Vector2 toPlayer = player.Center - projectile.Center;
 			if(counter2 > 600)
 			{
@@ -173,7 +188,6 @@ namespace SOTS.Projectiles.Otherworld
 				projectile.position = originalPos - new Vector2(projectile.width / 2, projectile.height / 2);
 				projectile.velocity = new Vector2(0, originalVelo.Length());
 				projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
-				projectile.netUpdate = true;
 				cataloguePos();
 			}
 			counter++;
@@ -196,7 +210,6 @@ namespace SOTS.Projectiles.Otherworld
 					projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
 				}
 				projectile.ai[1] = Main.rand.Next(-35, 36);
-				projectile.netUpdate = true;
 				cataloguePos();
             }
 		}
