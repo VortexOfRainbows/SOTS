@@ -40,10 +40,10 @@ namespace SOTS.Items.Otherworld
 			recipe.SetResult(this, 1);
 			recipe.AddRecipe();
 			recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "TwilightGel", 1);
-			recipe.AddIngredient(ItemID.StoneBlock, 1);
+			recipe.AddIngredient(null, "TwilightGel", 5);
+			recipe.AddIngredient(null, "TwilightShard", 1);
 			recipe.AddTile(mod.TileType("HardlightFabricatorTile"));
-			recipe.SetResult(this, 1);
+			recipe.SetResult(this, 5);
 			recipe.AddRecipe();
 		}
 	}

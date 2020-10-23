@@ -427,6 +427,8 @@ namespace SOTS.Items.Otherworld
                     }
                 }
             }
+            if (SOTSWorld.downedAdvisor && Main.rand.Next(50) == 0)
+                Item.NewItem(i * 16, j * 16, 16, 16, mod.ItemType("TwilightShard"), 1, false, 0, false, false);
         }
     }
     internal class Pots : ModItem

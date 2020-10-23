@@ -217,7 +217,6 @@ namespace SOTS.NPCs.Constructs
 						Main.PlaySound(2, (int)npc.Center.X, (int)npc.Center.Y, 121, 1.3f);
 					if (ai3 > 180 && runAway)
                     {
-						runAway = false;
 						for (int j = 0; j < 300; j++)
                         {
 							npc.position += npc.velocity * 4f;
@@ -238,8 +237,9 @@ namespace SOTS.NPCs.Constructs
 								dust.alpha = npc.alpha;
 							}
 						}
+						runAway = false;
 					}
-					if(ai3 > 185)
+					if(ai3 > 240)
                     {
 						npc.active = false;
                     }

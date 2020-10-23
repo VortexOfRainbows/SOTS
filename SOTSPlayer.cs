@@ -318,7 +318,7 @@ namespace SOTS
 		*/
 		public override void UpdateBiomes()
 		{
-			PlanetariumBiome = (SOTSWorld.planetarium > 150) && player.Center.Y < Main.worldSurface * 16 * 0.5f;
+			PlanetariumBiome = (SOTSWorld.planetarium > 250) && player.Center.Y < Main.worldSurface * 16 * 0.6f;
 			//GeodeBiome = (SOTSWorld.geodeBiome > 300);
 			ZeplineBiome = (SOTSWorld.zeplineBiome > 0);
 
@@ -403,24 +403,6 @@ namespace SOTS
 		}
 		public override void OnHitNPCWithProj(Projectile proj, NPC target, int damage, float knockback, bool crit)
 		{
-			if(assassinate)
-			{
-				target.AddBuff(mod.BuffType("Assassination"), 900);
-				float mult = 1 - assassinateNum;
-				int life = target.life;
-				if ((life < target.lifeMax * mult || life <= assassinateFlat) && target.HasBuff(mod.BuffType("Assassination")))
-				{
-					target.StrikeNPC(life + assassinateFlat + ((target.defense + 1) / 2), 0, 0, true);
-					for (int i = 0; i < 60; i++)
-					{
-						Vector2 rotate = new Vector2(target.width / 2 + 4, 0).RotatedBy(MathHelper.ToRadians(Main.GlobalTime * 120 + target.whoAmI * 7 + 120 * i));
-						int num1 = Dust.NewDust(new Vector2(target.Center.X + rotate.X - 4, target.Center.Y + rotate.Y - 4), 0, 0, 235);
-						Main.dust[num1].noGravity = true;
-						Main.dust[num1].scale *= 2f;
-						Main.dust[num1].velocity *= 1.5f;
-					}
-				}
-			}
 			if (orion == true)
 			{
 				float amount = 0;
@@ -497,24 +479,6 @@ namespace SOTS
 		}
 		public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit)
 		{
-			if (assassinate)
-			{
-				target.AddBuff(mod.BuffType("Assassination"), 900);
-				float mult = 1 - assassinateNum;
-				int life = target.life;
-				if ((life < target.lifeMax * mult || life <= assassinateFlat) && target.HasBuff(mod.BuffType("Assassination")))
-				{
-					target.StrikeNPC(life + assassinateFlat + ((target.defense + 1) / 2), 0, 0, true);
-					for (int i = 0; i < 60; i++)
-					{
-						Vector2 rotate = new Vector2(target.width / 2 + 4, 0).RotatedBy(MathHelper.ToRadians(Main.GlobalTime * 120 + target.whoAmI * 7 + 120 * i));
-						int num1 = Dust.NewDust(new Vector2(target.Center.X + rotate.X - 4, target.Center.Y + rotate.Y - 4), 0, 0, 235);
-						Main.dust[num1].noGravity = true;
-						Main.dust[num1].scale *= 2f;
-						Main.dust[num1].velocity *= 1.5f;
-					}
-				}
-			}
 			Vector2 vector14;
 
 			if (player.gravDir == 1f)

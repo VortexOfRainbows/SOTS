@@ -58,6 +58,7 @@ namespace SOTS.NPCs.Boss
 			writer.Write(moveLegsReturn);
 			writer.Write(watchPlayer);
 			writer.Write(npc.dontTakeDamage);
+			writer.Write(npc.dontCountMe);
 		}
 		public override void ReceiveExtraAI(BinaryReader reader)
 		{
@@ -71,6 +72,7 @@ namespace SOTS.NPCs.Boss
 			moveLegsReturn = reader.ReadBoolean();
 			watchPlayer = reader.ReadBoolean();
 			npc.dontTakeDamage = reader.ReadBoolean();
+			npc.dontCountMe = reader.ReadBoolean();
 		}
 		public override bool CheckActive()
 		{
@@ -474,9 +476,21 @@ namespace SOTS.NPCs.Boss
 				npc.velocity.Y = new Vector2(0.08f, 0).RotatedBy(MathHelper.ToRadians(ai1)).Y;
 				npc.dontTakeDamage = true;
 				npc.dontCountMe = true;
-				if (!NPC.AnyNPCs(mod.NPCType("OtherworldlyConstructHead2")))
+				bool constructsActive = false;
+				for (int i = 0; i < 4; i++)
 				{
-					if((npc.Center - player.Center).Length() < 400f && lineOfSight)
+					if (ConstructIds[i] != -1)
+					{
+						NPC construct = Main.npc[ConstructIds[i]];
+						if (construct.active && construct.type == mod.NPCType("OtherworldlyConstructHead2"))
+						{
+							constructsActive = true;
+						}
+					}
+				}
+				if (!constructsActive)
+				{
+					if ((npc.Center - player.Center).Length() < 400f && lineOfSight)
 					{
 						dormantCounter++;
 					}
@@ -489,8 +503,6 @@ namespace SOTS.NPCs.Boss
 					npc.dontTakeDamage = false;
 					npc.dontCountMe = false;
 				}
-				if(Main.netMode != 1)
-					npc.netUpdate = true;
 				return false;
 			}
 			if (Main.expertMode)

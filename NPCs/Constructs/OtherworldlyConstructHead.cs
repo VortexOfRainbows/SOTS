@@ -210,7 +210,8 @@ namespace SOTS.NPCs.Constructs
 			Main.npc[n].localAI[1] = -1;
 			if (Main.netMode != 1)
 				Main.npc[n].netUpdate = true;
-			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("FragmentOfOtherworld"), Main.rand.Next(4) + 4);	
+			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("FragmentOfOtherworld"), Main.rand.Next(4) + 4);
+			if ((Main.expertMode || Main.rand.Next(2) == 0) && SOTSWorld.downedAdvisor) Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("TwilightShard"), 1);
 		}	
 	}
 }

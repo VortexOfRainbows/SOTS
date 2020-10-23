@@ -18,7 +18,7 @@ namespace SOTS.Buffs
             SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
             modPlayer.assassinateNum *= 0.9f;
             modPlayer.assassinate = true;
-            modPlayer.assassinateFlat = 20;
+            modPlayer.assassinateFlat += 20;
         }
         public override void Update(NPC npc, ref int buffIndex)
         {

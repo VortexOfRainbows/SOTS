@@ -288,7 +288,7 @@ namespace SOTS.NPCs
 			if (Main.rand.Next(2) == 0 || Main.expertMode)
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FragmentOfOtherworld"), Main.rand.Next(2) + 1);
 
-			if (Main.rand.Next(100) == 0) ;
+			if (Main.rand.Next(5) == 0 && SOTSWorld.downedAdvisor) Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("TwilightShard"), 1);
 				//Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("SporeSprayer"), 1);
 		}
 		public override void HitEffect(int hitDirection, double damage)

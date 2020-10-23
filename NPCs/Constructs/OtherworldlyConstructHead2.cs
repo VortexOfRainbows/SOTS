@@ -130,7 +130,7 @@ namespace SOTS.NPCs.Constructs
 				endnow++;
 				if(endnow > 64)
 				{
-					return new Vector2(-2, -2);
+					break;
 				}
 				for(float r = 0; r < 180; r += 30f / endnow)
 				{
@@ -156,7 +156,7 @@ namespace SOTS.NPCs.Constructs
 				endnow++;
 				if (endnow > 64)
 				{
-					return new Vector2(-2, -2);
+					break;
 				}
 				for (float r = 180; r < 360; r += 30f / endnow)
 				{
@@ -337,7 +337,8 @@ namespace SOTS.NPCs.Constructs
 			Main.npc[n].localAI[1] = -1;
 			if (Main.netMode != 1)
 				Main.npc[n].netUpdate = true;
-			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("FragmentOfOtherworld"), Main.rand.Next(2) + 3);	
+			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("FragmentOfOtherworld"), Main.rand.Next(2) + 3);
+			if ((Main.expertMode || Main.rand.Next(2) == 0) && SOTSWorld.downedAdvisor) Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("TwilightShard"), 1);
 		}	
 	}
 }

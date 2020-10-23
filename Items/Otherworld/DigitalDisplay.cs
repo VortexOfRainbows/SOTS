@@ -76,6 +76,16 @@ namespace SOTS.Items.Otherworld
 			item.consumable = true;
 			item.createTile = mod.TileType("DigitalDisplayTile");
 		}
+		public override void AddRecipes()
+		{
+			ModRecipe recipe = new ModRecipe(mod);
+			recipe.AddIngredient(null, "DissolvingAether", 1);
+			recipe.AddIngredient(null, "TwilightShard", 3);
+			recipe.AddIngredient(null, "TwilightGel", 20);
+			recipe.AddTile(mod.TileType("HardlightFabricator"));
+			recipe.SetResult(this, 1);
+			recipe.AddRecipe();
+		}
 	}	
 	public class DigitalDisplayTile : ModTile
 	{

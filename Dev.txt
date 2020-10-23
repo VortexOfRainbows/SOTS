@@ -15,16 +15,10 @@ Priority: Remaining Spirits
 2. Thunder Jacket
 	1. Recieving damage will deal massive damage back to the attacker, but drains void when hit
 3. Spark Stompers (generates a greek fire trail behind you)
-4. Replace all the Blood Essence items
-	1. New Void Accessory: Platinum/Gold
-		3. Upgrades into electrum battery, which removes the downside
 11. Tether Cord in pyramid
 	1. Attaches a second player to you
 13. Dissolving Element Blocks
 	1. Give off cool particles, can be used in summoning rituals
-
-19. New Planetarium biome in sky
-	1. Summon Advisor by destroying 3 Constructs
 20. 3 Different locked chests
 	1. Meteorite: Fire and meteorite based
 	2. Sunplate: Electric based items
@@ -36,7 +30,6 @@ Next Update:
 1. Pyramid chests to no longer spawn close to surface
 3. Coconut Gun && Kitchen Sink
 6. Nerf construct damage once again?
-7. Server Sync Advisor
 
 Next Development Time: 
 1. Holo-Eye, Holo-Slime, Holo-Blade, Twilight Devil
@@ -51,7 +44,22 @@ Next Development Time:
 	2. Laser does little damage, but inflicts strong debuff that increases crit damage and chance upon enemy
 	3. Costs 5 void  to launch laser
 
-10/18/20
+10/22/20
+1. Twilight Shard
+	1. Drops from Sky pots and sky enemies post-adv
+	2. Used to make biome block, stuff later
+2. 3 Alloys
+	1. Custom item color
+3. Planetarium biome is accounted for slightly lower now
+4. Slight modifications to forest special slime spawn rates, moved to SOTSNPC to better keep track of spawnrates etc.
+5. Boosts to max spawns in Planetarium (Hardmode, PreHardmode) 2 => 2.5, 1.5 => 2
+6. Increased spawn weighting for Twilight Devil and Otherworldly Construct head (0.01 => 0.02, 0.007 => 0.01)
+7. Recipes for Pot gen, Dig Display
+8. Primordial Cluster
+9. LOTS of progress on Transmutation Table
+	1. Next: Fix drawing errors, modifications to drawing swords
+
+10/18/20 & 10/21/20
 1. Spirit Dust visuals improved
 2. Advisor => Otherworldly Spirit => Collector finished!
 3. Dissolving Aether transitions between colors
@@ -60,8 +68,13 @@ Next Development Time:
 	2. Lightning successfully synced and removed some unneccesary data storing
 	3. Rocket homing with advisor fixed
 	4. Collector and Spirit issues fixed
-5. Next
-	1. need a custom projectile for assassination potion to server sync
+	5. Otherworldly spirit now only drops 3 dissolving aether, regardless of players in world
+	6. Advisor more reliably awakens now
+	7. Spirit animation consistency slightly tuned
+		1. My testing method itself is likely the cause of error
+	8. Fixed some inconsistency with Advisor awakening in multiplayer
+	9. Assassination potion now works in multiplayer
+6. Otherworldly construct tethering problems fixed
 
 
 10/17/20

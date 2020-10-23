@@ -246,28 +246,8 @@ namespace SOTS.NPCs
 			}
 			base.PostDraw(spriteBatch, drawColor);
 		}
-		public override bool PreAI()
-		{
-			//if(initiateSize == 1)
-			//{
-			//	initiateSize = -1;
-				//	npc.scale = 1.3f;
-				//	npc.width = (int)(npc.width * npc.scale);
-				//	npc.height = (int)(npc.height * npc.scale);
-			//}
-			return true;
-		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			return 0;
-			//spawnrates manually added in SOTSNPCs.EditSpawnPool in order to avoid conflicts in hardmode
-			Player player = spawnInfo.player;
-			SOTSPlayer modPlayer = player.GetModPlayer<SOTSPlayer>();
-			bool correctBlock = spawnInfo.spawnTileType == mod.TileType("DullPlatingTile") || spawnInfo.spawnTileType == mod.TileType("PortalPlatingTile") || spawnInfo.spawnTileType == mod.TileType("AvaritianPlatingTile");
-			if (modPlayer.PlanetariumBiome && correctBlock)
-			{
-				return 0.4f;
-			}
 			return 0;
 		}
 		public override void HitEffect(int hitDirection, double damage)
@@ -291,6 +271,7 @@ namespace SOTS.NPCs
 		}
 		public override void NPCLoot()
 		{
+			if (Main.rand.Next(20) == 0 && SOTSWorld.downedAdvisor) Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("TwilightShard"), 1);
 			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("TwilightGel"), Main.rand.Next(2) + 1);
 		}
 	}

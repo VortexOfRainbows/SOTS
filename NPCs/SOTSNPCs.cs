@@ -3,11 +3,65 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using System.Collections.Generic;
 using System.Xml.Schema;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
+using Steamworks;
 
 namespace SOTS.NPCs
 {
     public class SOTSNPCs : GlobalNPC
     {
+        public override bool PreDraw(NPC npc, SpriteBatch spriteBatch, Color drawColor)
+        {
+			if(npc.HasBuff(mod.BuffType("Assassination")))
+            {
+
+            }
+            return base.PreDraw(npc, spriteBatch, drawColor);
+        }
+        public override void ModifyHitByItem(NPC npc, Player player, Item item, ref int damage, ref float knockback, ref bool crit)
+		{
+			hitBy(npc, player, null, item, ref damage, ref knockback, ref crit);
+			base.ModifyHitByItem(npc, player, item, ref damage, ref knockback, ref crit);
+		}
+        public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+		{
+			hitBy(npc, Main.player[projectile.owner], projectile, null, ref damage, ref knockback, ref crit);
+			base.ModifyHitByProjectile(npc, projectile, ref damage, ref knockback, ref crit, ref hitDirection);
+        }
+		public void hitBy(NPC npc, Player player, Projectile projectile, Item item, ref int damage, ref float knockback, ref bool crit)
+		{
+			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
+			if (modPlayer.assassinate)
+			{
+				npc.AddBuff(mod.BuffType("Assassination"), 900);
+				float mult = 1 - modPlayer.assassinateNum;
+				int life = npc.life - (damage - (npc.defense + 1) / 2);
+				if ((life < npc.lifeMax * mult || life <= modPlayer.assassinateFlat) && npc.HasBuff(mod.BuffType("Assassination")))
+				{
+					damage += life + modPlayer.assassinateFlat + ((npc.defense + 1) / 2);
+					crit = true;
+					for (int i = 0; i < 60; i++)
+					{
+						Vector2 rotate = new Vector2(npc.width / 2 + 4, 0).RotatedBy(MathHelper.ToRadians(Main.GlobalTime * 120 + npc.whoAmI * 7 + 120 * i));
+						int num1 = Dust.NewDust(new Vector2(npc.Center.X + rotate.X - 4, npc.Center.Y + rotate.Y - 4), 0, 0, 235);
+						Main.dust[num1].noGravity = true;
+						Main.dust[num1].scale *= 2f;
+						Main.dust[num1].velocity *= 1.5f;
+					}
+				}
+			}
+		}
+        public override void OnHitByItem(NPC npc, Player player, Item item, int damage, float knockback, bool crit)
+        {
+			//hitBy(npc, player, null, item, ref damage, ref knockback, ref crit);
+            base.OnHitByItem(npc, player, item, damage, knockback, crit);
+        }
+        public override void OnHitByProjectile(NPC npc, Projectile projectile, int damage, float knockback, bool crit)
+		{
+			//hitBy(npc, Main.player[projectile.owner], projectile, null, ref damage, ref knockback, ref crit);
+			base.OnHitByProjectile(npc, projectile, damage, knockback, crit);
+        }
         public override void NPCLoot(NPC npc)
         {
 			Player player = Main.player[Main.myPlayer];
@@ -173,14 +227,14 @@ namespace SOTS.NPCs
 					spawnRate = (int)(spawnRate /= 50); //essentially setting it to 12
 					if (spawnRate < 1)
 						spawnRate = 1;
-					maxSpawns = (int)(maxSpawns * 2f);
+					maxSpawns = (int)(maxSpawns * 2.5f);
 				}
 				else
 				{
 					spawnRate = (int)(spawnRate /= 40); //essentially setting it to 15
 					if (spawnRate < 1)
 						spawnRate = 1;
-					maxSpawns = (int)(maxSpawns * 1.5f);
+					maxSpawns = (int)(maxSpawns * 2f);
 				}
 			}
 		}
@@ -190,9 +244,11 @@ namespace SOTS.NPCs
 				return -1;
 			return orig(self);
         }
-		public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo) 
+		public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
 		{
-			if(spawnInfo.player.GetModPlayer<SOTSPlayer>().PyramidBiome && spawnInfo.spawnTileType == (ushort)mod.TileType("PyramidSlabTile"))
+			Player player = spawnInfo.player;
+			bool ZoneForest = !player.GetModPlayer<SOTSPlayer>().PyramidBiome && !player.ZoneDesert && !player.ZoneCorrupt && !player.ZoneDungeon && !player.ZoneDungeon && !player.ZoneHoly && !player.ZoneMeteor && !player.ZoneJungle && !player.ZoneSnow && !player.ZoneCrimson && !player.ZoneGlowshroom && !player.ZoneUndergroundDesert && (player.ZoneDirtLayerHeight || player.ZoneOverworldHeight) && !player.ZoneBeach;	
+			if (spawnInfo.player.GetModPlayer<SOTSPlayer>().PyramidBiome && spawnInfo.spawnTileType == (ushort)mod.TileType("PyramidSlabTile"))
 			{
 				/*
 				pool.Add(mod.NPCType("SnakePot"),0.5f);
@@ -208,7 +264,7 @@ namespace SOTS.NPCs
 					pool.Add(NPCID.Mummy, 0.5f);
 				}
 			}
-			if(spawnInfo.player.GetModPlayer<SOTSPlayer>().PlanetariumBiome)
+			else if(spawnInfo.player.GetModPlayer<SOTSPlayer>().PlanetariumBiome)
 			{
 				bool correctBlock = (Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY + 3].type == mod.TileType("DullPlatingTile") || Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY + 3].type == mod.TileType("PortalPlatingTile") || Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY + 3].type == mod.TileType("AvaritianPlatingTile")) && Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY + 3].nactive();
 				pool[0] = 0f;
@@ -217,9 +273,15 @@ namespace SOTS.NPCs
 					pool.Add(mod.NPCType("HoloSlime"), 0.4f);
 					pool.Add(mod.NPCType("HoloEye"), 0.1f);
 					pool.Add(mod.NPCType("HoloBlade"), 0.175f);
-					pool.Add(mod.NPCType("TwilightDevil"), 0.01f);
-					pool.Add(mod.NPCType("OtherworldlyConstructHead"), 0.007f);
+					pool.Add(mod.NPCType("TwilightDevil"), 0.02f);
+					pool.Add(mod.NPCType("OtherworldlyConstructHead"), 0.01f);
 				}
+			}
+			else if (ZoneForest)
+			{
+				pool.Add(mod.NPCType("NatureSlime"), SpawnCondition.OverworldDaySlime.Chance * 0.15f);
+				pool.Add(mod.NPCType("BlueSlimer"), SpawnCondition.OverworldDaySlime.Chance * 0.1f);
+				pool.Add(mod.NPCType("TreasureSlime"), SpawnCondition.OverworldDaySlime.Chance * 0.1f);
 			}
 		}
 	}

@@ -71,9 +71,12 @@ namespace SOTS.NPCs.Constructs
 					npc.velocity *= 0f;
 					NPC collector = Main.npc[collectorId];
 					if(collector.type != mod.NPCType("Collector"))
-                    {
-						npc.StrikeNPC(10000, 0, 0);
-                    }
+					{
+						int n = NPC.NewNPC((int)npc.Center.X + 6, (int)npc.position.Y, mod.NPCType("Collector"));
+						Main.npc[n].netUpdate = true;
+						collectorId = n;
+						npc.netUpdate = true;
+					}
 					else
                     {
 						float ai3 = collector.ai[3];
@@ -89,7 +92,7 @@ namespace SOTS.NPCs.Constructs
 							dust4.scale *= 2.5f;
 							if (ai3 % 30 == 0)
 							{
-								if (Main.netMode == 1)
+								if (Main.netMode != 1)
 								{
 									int item = Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("DissolvingAether"), 1);
 									Main.item[item].velocity = new Vector2(-5, 0).RotatedBy(MathHelper.ToRadians(-10 - ai3 * 4 / 3f));

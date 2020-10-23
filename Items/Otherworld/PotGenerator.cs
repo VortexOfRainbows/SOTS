@@ -78,6 +78,16 @@ namespace SOTS.Items.Otherworld
 			item.consumable = true;
 			item.createTile = mod.TileType("PotGeneratorTile");
 		}
+		public override void AddRecipes()
+		{
+			ModRecipe recipe = new ModRecipe(mod);
+			recipe.AddIngredient(null, "DissolvingAether", 1);
+			recipe.AddIngredient(null, "TwilightShard", 5);
+			recipe.AddIngredient(null, "TwilightGel", 30);
+			recipe.AddTile(mod.TileType("HardlightFabricator"));
+			recipe.SetResult(this, 1);
+			recipe.AddRecipe();
+		}
 	}	
 	public class PotGeneratorTile : ModTile
 	{

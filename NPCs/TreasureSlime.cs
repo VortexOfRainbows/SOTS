@@ -47,10 +47,7 @@ namespace SOTS.NPCs
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			SOTSPlayer modPlayer = spawnInfo.player.GetModPlayer<SOTSPlayer>();
-			if (modPlayer.PlanetariumBiome)
-				return 0;
-			return SpawnCondition.OverworldDaySlime.Chance * 0.08f;
+			return 0;//migrated spawn chance to global npc
 		}
 		public override void HitEffect(int hitDirection, double damage)
 		{

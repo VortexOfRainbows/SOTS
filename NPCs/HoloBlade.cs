@@ -168,6 +168,7 @@ namespace SOTS.NPCs
 		}
 		public override void NPCLoot()
 		{
+			if (Main.rand.Next(20) == 0 && SOTSWorld.downedAdvisor) Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("TwilightShard"), 1);
 			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("TwilightGel"), Main.rand.Next(2) + 1);
 
 			if (Main.rand.Next(10) == 0)

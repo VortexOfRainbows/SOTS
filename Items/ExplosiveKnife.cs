@@ -1,7 +1,6 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using System;
 using Microsoft.Xna.Framework;
 
 namespace SOTS.Items
@@ -15,7 +14,6 @@ namespace SOTS.Items
 		}
 		public override void SetDefaults()
 		{
-			
 			item.CloneDefaults(279);
 			item.damage = 15;
 			item.useTime = 17;

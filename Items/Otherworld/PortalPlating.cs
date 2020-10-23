@@ -27,14 +27,6 @@ namespace SOTS.Items.Otherworld
 			item.consumable = true;
 			item.createTile = mod.TileType("PortalPlatingTile");
 		}
-		public override void AddRecipes()
-		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "PortalPlatingWall", 4);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.SetResult(this, 1);
-			recipe.AddRecipe();
-		}
 	}
 	public class PortalPlatingTile : ModTile
 	{
