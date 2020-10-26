@@ -44,6 +44,16 @@ Next Development Time:
 	2. Laser does little damage, but inflicts strong debuff that increases crit damage and chance upon enemy
 	3. Costs 5 void  to launch laser
 
+10/25/20
+1. Platform Generator
+	1. Finished and Server synced!
+
+10/23/20 & 10/24/20
+1. Finished Transmutation Table
+	1. Extra effects (Undoing)
+	2. Finished server syncing
+	3. Extra effects (Selecting)
+
 10/22/20
 1. Twilight Shard
 	1. Drops from Sky pots and sky enemies post-adv
@@ -423,7 +433,11 @@ Next Development Time:
 7/25/20
 1. Avaritian Plating
 
+
+
 Update 0.18.4 released!
+
+
 
 7/21-25/20
 1. Lost my logs for this one

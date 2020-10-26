@@ -89,8 +89,8 @@ namespace SOTS
 		}
 		public override void OnCraft(Item item, Recipe recipe)
 		{
-			Player player = Main.player[item.owner];
-			if (recipe.requiredTile[0] == TileID.DemonAltar || recipe.requiredTile[0] == mod.ItemType("TransmutationAltarTile"))
+			Player player = Main.LocalPlayer;
+			if (recipe.requiredTile[0] == TileID.DemonAltar || recipe.requiredTile[0] == mod.TileType("TransmutationAltarTile"))
             {
 				Tile tile = FindTATile(player);
 				if(tile != null)
@@ -103,10 +103,15 @@ namespace SOTS
 					{
 						return;
 					}
+					Item item2 = recipe.createItem;
 					TransmutationAltarStorage entity = (TransmutationAltarStorage)TileEntity.ByID[index];
-					entity.itemsArray[0] = item.type;
-					entity.itemAmountsArray[0] = item.stack;
-					entity.itemFrames[0] = Main.itemTexture[item.type].Height / recipe.requiredItem[0].height;
+
+
+					Projectile projectile = Main.projectile[Projectile.NewProjectile(player.Center, Vector2.Zero, mod.ProjectileType("DataTransferProj"), 0, 0, Main.myPlayer, index, 0)];
+					DataTransferProj proj = (DataTransferProj)projectile.modProjectile;
+					proj.itemsArray[0] = item2.type;
+					proj.itemAmountsArray[0] = item2.stack;
+					proj.itemFrames[0] = Main.itemTexture[item2.type].Height / recipe.requiredItem[0].height;
 					int amountOfUniqueItems = 0;
 					for (int l = 0; l < recipe.requiredItem.Length; l++)
 					{
@@ -118,17 +123,144 @@ namespace SOTS
 							break;
 					}
 					for (int i = 0; i < (amountOfUniqueItems < 20 ? amountOfUniqueItems : 19); i++)
-                    {
+					{
 						int itemType = recipe.requiredItem[i].type;
 						int itemStack = recipe.requiredItem[i].stack;
 						int itemFrames = Main.itemTexture[itemType].Height / recipe.requiredItem[i].height;
-						entity.itemsArray[i + 1] = itemType;
-						entity.itemAmountsArray[i + 1] = itemStack;
-						entity.itemFrames[i + 1] = itemFrames;
+						proj.itemsArray[i + 1] = itemType;
+						proj.itemAmountsArray[i + 1] = itemStack;
+						proj.itemFrames[i + 1] = itemFrames;
 					}
-					entity.netUpdate = true;
+					for (int i = amountOfUniqueItems; i < 19; i++)
+					{
+						proj.itemsArray[i + 1] = 0;
+						proj.itemAmountsArray[i + 1] = 0;
+						proj.itemFrames[i + 1] = 0;
+					}
+					projectile.netUpdate = true;
+					//Main.NewText("I am Netmode: " + Main.netMode);
 				}
 			}
 		}
     }
+	public class DataTransferProj : ModProjectile
+	{
+		public int[] itemsArray = new int[20];
+		public int[] itemAmountsArray = new int[20];
+		public int[] itemFrames = new int[20];
+		public override void SendExtraAI(BinaryWriter writer)
+		{
+			for (int i = 0; i < 20; i++)
+			{
+				writer.Write(itemsArray[i]);
+			}
+			for (int i = 0; i < 20; i++)
+			{
+				writer.Write(itemAmountsArray[i]);
+			}
+			for (int i = 0; i < 20; i++)
+			{
+				writer.Write(itemFrames[i]);
+			}
+			base.SendExtraAI(writer);
+        }
+        public override void ReceiveExtraAI(BinaryReader reader)
+		{
+			for (int i = 0; i < 20; i++)
+			{
+				itemsArray[i] = reader.ReadInt32();
+			}
+			for (int i = 0; i < 20; i++)
+			{
+				itemAmountsArray[i] = reader.ReadInt32();
+			}
+			for (int i = 0; i < 20; i++)
+			{
+				itemFrames[i] = reader.ReadInt32();
+			}
+			base.ReceiveExtraAI(reader);
+        }
+        public static DataTransferProj ModProjectile(Projectile proj)
+		{
+			return (DataTransferProj)GetModProjectile(proj.type);
+		}
+		public override void SetStaticDefaults()
+		{
+			DisplayName.SetDefault("Data Transfer Proj"); //Do you enjoy how all my net sycning is done via projectiles?
+		}
+		public override void SetDefaults()
+		{
+			projectile.alpha = 255;
+			projectile.timeLeft = 24;
+			projectile.friendly = false;
+			projectile.tileCollide = false;
+			projectile.width = 36;
+			projectile.height = 36;
+			//projectile.extraUpdates = 4;
+		}
+		public override bool? CanCutTiles()
+		{
+			return false;
+		}
+        public override bool PreAI()
+        {
+			if(projectile.owner == Main.myPlayer)
+            {
+				projectile.netUpdate = true;
+            }
+			return true;
+        }
+        public override void AI()
+		{
+			projectile.alpha = 255;
+			if(projectile.timeLeft < 22)
+				projectile.Kill();
+		}
+		public bool checkArraySame(int[] arr1, int[] arr2)
+        {
+			if (arr1.Length != arr2.Length)
+				return false;
+
+			bool diff = false;
+			for(int i = 0; i < arr1.Length; i++)
+            {
+				if (arr1[i] != arr2[i])
+				{
+					diff = true;
+					break;
+				}
+            }
+
+			return !diff;
+        }
+		public override void Kill(int timeLeft)
+		{
+			TransmutationAltarStorage entity = (TransmutationAltarStorage)TileEntity.ByID[(int)projectile.ai[0]];
+			if(Main.netMode != 1)
+            {
+				if (!checkArraySame(entity.itemAmountsArray, itemAmountsArray) || !checkArraySame(entity.itemsArray, itemsArray) || !checkArraySame(entity.itemFrames, itemFrames))
+				{
+					entity.itemAmountsArray = itemAmountsArray;
+					entity.itemsArray = itemsArray;
+					entity.itemFrames = itemFrames;
+					entity.netUpdate = true;
+
+					Vector2 dynamicAddition = new Vector2(3, 0).RotatedBy(MathHelper.ToRadians(Main.GlobalTime * 40));
+					int amountOfUniqueItems = 1;
+					int totalItems = 0;
+					for (int l = 1; l < entity.itemsArray.Length; l++)
+					{
+						if (entity.itemsArray[l] != 0)
+						{
+							amountOfUniqueItems++;
+							totalItems += entity.itemAmountsArray[l];
+						}
+					}
+					Vector2 pos = new Vector2((float)(entity.Position.X * 16 + 24), (float)(entity.Position.Y * 16 + 24));
+					pos.Y -= 80 + dynamicAddition.Y + (totalItems + entity.itemAmountsArray[0]) * 0.5f;
+					Projectile.NewProjectile(pos, Vector2.Zero, mod.ProjectileType("UndoParticles"), 0, 1, Main.myPlayer, entity.Position.X, entity.Position.Y);
+				}
+            }
+		}
+	}
 }

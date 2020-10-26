@@ -99,7 +99,7 @@ namespace SOTS.Items.Otherworld.EpicWings
 			{
 				player.wingFrame = 2;
 			}
-			else if (player.controlJump && player.velocity.Y != 0f)
+			else if ((player.controlJump && player.velocity.Y != 0f) || player.velocity.Y != 0f)
 			{
 				player.wingFrame = 1;
 			}
@@ -683,7 +683,10 @@ namespace SOTS.Items.Otherworld.EpicWings
 						{
 							Color color2 = new Color(110, 110, 110, 0);
 							color2 = changeColorBasedOnStealth(color2, drawPlayer);
-							for (int k = 0; k < 6; k++)
+							if (!drawPlayer.controlJump)
+								color2 *= 0.5f;
+							int amt = drawPlayer.controlJump ? 6 : 2;
+							for (int k = 0; k < amt; k++)
 							{
 								float x = Main.rand.Next(-10, 11) * 0.1f;
 								float y = Main.rand.Next(-10, 11) * 0.1f;
@@ -702,7 +705,7 @@ namespace SOTS.Items.Otherworld.EpicWings
 								Vector2 tilt3 = new Vector2(tilt2.X, 0).RotatedBy(rotation - rotationI);
 								Vector2 tilt = new Vector2(0, 1).RotatedBy(rotation - rotationI);
 								Vector2 currentPos2 = currentPos + Main.screenPosition;
-								if (type == (int)EpicWingType.Default && Main.rand.NextBool(18))
+								if (type == (int)EpicWingType.Default && Main.rand.NextBool(18) && drawPlayer.controlJump)
 								{
 									if (drawInfo.shadow == 0f)
 									{

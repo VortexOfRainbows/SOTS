@@ -4,14 +4,14 @@ using Terraria.ModLoader;
 using System;
 using Microsoft.Xna.Framework;
 
-namespace SOTS.Items.Otherworld
+namespace SOTS.Items.Otherworld.FromChests
 {
-	public class TEst : ModItem
+	public class UndoArrow : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("test");
-			Tooltip.SetDefault("'Quite a deadly combination'");
+			Tooltip.SetDefault("hi there");
 		}
 		public override void SetDefaults()
 		{

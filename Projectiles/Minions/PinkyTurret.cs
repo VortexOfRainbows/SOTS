@@ -22,10 +22,10 @@ namespace SOTS.Projectiles.Minions
             projectile.friendly = false;
             projectile.ignoreWater = true;  
             Main.projFrames[projectile.type] = 1; 
-            projectile.timeLeft = 7200;    
             projectile.penetrate = -1;
-            projectile.tileCollide = true; 
+            projectile.tileCollide = false; 
             projectile.sentry = true;
+			projectile.netImportant = true;
 			projectile.timeLeft = Projectile.SentryLifeTime;
 		}
 		public int findTargets(int[] npcList)

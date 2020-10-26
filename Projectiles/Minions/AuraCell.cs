@@ -23,8 +23,9 @@ namespace SOTS.Projectiles.Minions
             Main.projFrames[projectile.type] = 1;
 			projectile.timeLeft = Projectile.SentryLifeTime;
 			projectile.penetrate = -1;
-            projectile.tileCollide = true; 
-            projectile.sentry = true;
+            projectile.tileCollide = false;
+			projectile.netImportant = true;
+			projectile.sentry = true;
         }
 		float sphereRadius = 215f;
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor) 

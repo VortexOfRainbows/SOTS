@@ -84,7 +84,7 @@ namespace SOTS.Items.Otherworld
 			recipe.AddIngredient(null, "DissolvingAether", 1);
 			recipe.AddIngredient(null, "TwilightShard", 5);
 			recipe.AddIngredient(null, "TwilightGel", 30);
-			recipe.AddTile(mod.TileType("HardlightFabricator"));
+			recipe.AddTile(mod.TileType("HardlightFabricatorTile"));
 			recipe.SetResult(this, 1);
 			recipe.AddRecipe();
 		}
