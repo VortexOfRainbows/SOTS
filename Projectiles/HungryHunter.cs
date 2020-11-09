@@ -29,6 +29,7 @@ namespace SOTS.Projectiles
 			projectile.friendly = true;
 			projectile.aiStyle = 15;
 			projectile.melee = true;
+			projectile.usesLocalNPCImmunity = true;
 			projectile.localNPCHitCooldown = 15;
 		}
 		public override void SendExtraAI(BinaryWriter writer) 
@@ -111,7 +112,7 @@ namespace SOTS.Projectiles
 			projectile.friendly = true;
 			latch = true;
 			if(player.whoAmI == Main.myPlayer)
-			Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, mod.ProjectileType("HealProj"), 2, 0, projectile.owner, 1.15f, 5);
+			Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, mod.ProjectileType("HealProj"), 2, 0, projectile.owner, 1, 5);
 			enemyIndex = target.whoAmI;
 			if(target.life <= 0)
 			{

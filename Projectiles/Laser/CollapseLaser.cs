@@ -43,7 +43,7 @@ namespace SOTS.Projectiles.Laser
 			projectile.penetrate = -1;
 			projectile.hostile = false;
 			projectile.friendly = true;
-			projectile.minion = true;
+			projectile.magic = true;
 			projectile.tileCollide = false;
 			projectile.ignoreWater = true;
 			projectile.alpha = 255;

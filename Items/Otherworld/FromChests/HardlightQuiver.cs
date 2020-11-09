@@ -1,0 +1,52 @@
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
+using SOTS.Void;
+
+namespace SOTS.Items.Otherworld.FromChests
+{
+	public class HardlightQuiver : ModItem
+	{
+		public override void SetStaticDefaults()
+		{
+			DisplayName.SetDefault("Hardlight Quiver");
+			Tooltip.SetDefault("Grants access to infinite hardlight arrows\nHardlight arrows travel faster and are not affected by gravity\nWhen above 50% void, arrows will be supercharged at the cost of some void\nSupercharged arrows travel instantly, and gain slight homing at longer ranges\nDecreases void regen by 1 while in the inventory");
+		}public override void SetDefaults()
+		{
+			item.damage = 6;
+			item.ranged = true;
+			item.width = 32;
+			item.height = 32;
+			item.maxStack = 1;
+			item.consumable = false;           
+			item.knockBack = 0.2f;
+            item.value = Item.sellPrice(0, 4, 0, 0);
+			item.rare = ItemRarityID.LightPurple; 
+			item.shoot = mod.ProjectileType("HardlightArrow");  
+			item.shootSpeed = 1f;           
+			item.ammo = AmmoID.Arrow;   
+		}
+		public override void UpdateInventory(Player player)
+		{
+			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
+			voidPlayer.voidRegen -= 0.1f;
+			if(voidPlayer.voidMeter > voidPlayer.voidMeterMax2 * 0.5f)
+			{
+				item.shoot = mod.ProjectileType("ChargedHardlightArrow");
+			}
+			else
+			{
+				item.shoot = mod.ProjectileType("HardlightArrow");
+			}
+		}
+		public override bool ConsumeAmmo(Player player)
+		{
+			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
+			if (voidPlayer.voidMeter > voidPlayer.voidMeterMax2 * 0.5f)
+			{
+				voidPlayer.voidMeter -= 0.5f;
+			}
+			return false;
+		}
+	}
+}

@@ -30,6 +30,7 @@ Next Update:
 1. Pyramid chests to no longer spawn close to surface
 3. Coconut Gun && Kitchen Sink
 6. Nerf construct damage once again?
+7. Buff all crusher items
 
 Next Development Time: 
 1. Holo-Eye, Holo-Slime, Holo-Blade, Twilight Devil
@@ -43,6 +44,39 @@ Next Development Time:
 	1. Grants an eye turret that you can double-tap down to fire a laser with
 	2. Laser does little damage, but inflicts strong debuff that increases crit damage and chance upon enemy
 	3. Costs 5 void  to launch laser
+
+11/8/20
+1. Hardlight Quiver
+	1. Next: Recipe and smol nerfs
+
+
+11/7/20
+1. Supernova hammer damage nerfed 30 => 27
+	1. Seekers do not crit now
+	2. Other small changes to damage on seeker kill, 2 * 80% => 1 * 150%
+2. Both items work fine in multiplayer
+3. Section chief scythe knockback on proj buffed
+	1. Void cost nerfed slighly 8 => 7
+4. Cataclysm disc added
+
+
+11/6/20
+1. Supernova hammer and seekers finished
+2. Next:
+	1. Nerf hammer
+	2. Server sync both items
+
+11/2/20
+1. Some work on supernova hammer
+
+11/1/20
+1. Section Chief Scythe finished
+
+10/29/20
+1. Cataclysm disc sprited
+
+10/28/20
+1. Sprited some melee weapons
 
 10/25/20
 1. Platform Generator

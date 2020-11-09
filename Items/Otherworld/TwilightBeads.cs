@@ -17,7 +17,7 @@ namespace SOTS.Items.Otherworld
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Twilight Beads");
-			Tooltip.SetDefault("Increases void regen by 1\nGetting hit summons 5 Souls of Retaliation into the air\nEvery 10th void attack will release the souls in the form of a powerful laser");
+			Tooltip.SetDefault("Increases void regen by 1\nGetting hit summons 5 Souls of Retaliation into the air, assuming you have less than 5 Souls active already\nEvery 10th void attack will release the souls in the form of a powerful laser");
 		}
 		public override void SafeSetDefaults()
 		{
@@ -57,7 +57,7 @@ namespace SOTS.Items.Otherworld
 					currentSouls++;
 				}
 			}
-			if (currentSouls < 1)
+			if (currentSouls < 5)
 			{
 				spawnSouls = true;
 			}

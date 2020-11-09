@@ -51,7 +51,7 @@ namespace SOTS.Items.Fragments
 				{
 					float x = Main.rand.Next(-10, 11) * 0.15f;
 					float y = Main.rand.Next(-10, 11) * 0.15f;
-					Main.spriteBatch.Draw(texture, new Vector2((float)(position.X + x), (float)(position.Y + y)) + rotationAround, frame, new Color(100, 100, 100, 0) * (1f - (item.alpha / 255f)), 0f, drawOrigin, scale * 1.2f, SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture, new Vector2((float)(position.X + x), (float)(position.Y + y)) + rotationAround, frame, new Color(100, 100, 100, 0) * (1f - (item.alpha / 255f)), 0f, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
 				}
 			}
 			for (int k = 0; k < 7; k++)
@@ -60,7 +60,7 @@ namespace SOTS.Items.Fragments
 				Rectangle frame = new Rectangle(0, 22 * frameNum, 22, 22);
 				float x = Main.rand.Next(-10, 11) * 0.15f;
 				float y = Main.rand.Next(-10, 11) * 0.15f;
-				Main.spriteBatch.Draw(texture, new Vector2((float)(position.X + x), (float)(position.Y + y)), frame, new Color(100, 100, 100, 0) * (1f - (item.alpha / 255f)), 0f, drawOrigin, scale * 1.2f, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, new Vector2((float)(position.X + x), (float)(position.Y + y)), frame, new Color(100, 100, 100, 0) * (1f - (item.alpha / 255f)), 0f, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
 			}
 			return false;
 		}
@@ -80,7 +80,7 @@ namespace SOTS.Items.Fragments
 				{
 					float x = Main.rand.Next(-10, 11) * 0.15f;
 					float y = Main.rand.Next(-10, 11) * 0.15f;
-					Main.spriteBatch.Draw(texture, new Vector2((float)(item.Center.X - (int)Main.screenPosition.X) + x, (float)(item.Center.Y - (int)Main.screenPosition.Y) + y) + rotationAround, frame, new Color(100, 100, 100, 0) * (1f - (item.alpha / 255f)), rotation, drawOrigin, scale * 1.2f, SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture, new Vector2((float)(item.Center.X - (int)Main.screenPosition.X) + x, (float)(item.Center.Y - (int)Main.screenPosition.Y) + y) + rotationAround, frame, new Color(100, 100, 100, 0) * (1f - (item.alpha / 255f)), rotation, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
 				}
 			}
 			for (int k = 0; k < 7; k++)
@@ -89,7 +89,7 @@ namespace SOTS.Items.Fragments
 				Rectangle frame = new Rectangle(0, 22 * frameNum, 22, 22);
 				float x = Main.rand.Next(-10, 11) * 0.15f;
 				float y = Main.rand.Next(-10, 11) * 0.15f;
-				Main.spriteBatch.Draw(texture, new Vector2((float)(item.Center.X - (int)Main.screenPosition.X) + x, (float)(item.Center.Y - (int)Main.screenPosition.Y) + y), frame, new Color(100, 100, 100, 0) * (1f - (item.alpha / 255f)), 0f, drawOrigin, scale * 1.2f, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, new Vector2((float)(item.Center.X - (int)Main.screenPosition.X) + x, (float)(item.Center.Y - (int)Main.screenPosition.Y) + y), frame, new Color(100, 100, 100, 0) * (1f - (item.alpha / 255f)), 0f, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
 			}
 			return false;
 		}

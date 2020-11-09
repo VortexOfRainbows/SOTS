@@ -63,11 +63,6 @@ namespace SOTS.Projectiles.Otherworld
 				projectile.Kill();
 				return;
 			}
-			if(!beadPlayer.RetaliationSouls || ofTotal > 4)
-			{
-				projectile.Kill();
-				return;
-			}
 			if (beadPlayer.attackNum > 10 && counter >= maxCounter && projectile.owner == Main.myPlayer)
 			{
 				active = true;
