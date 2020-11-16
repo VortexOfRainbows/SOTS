@@ -15,7 +15,7 @@ namespace SOTS.Items.Otherworld
 		}
 		public override void SetDefaults()
 		{
-            item.damage = 26; 
+            item.damage = 30; 
             item.ranged = true;  
             item.width = 52;   
             item.height = 28; 

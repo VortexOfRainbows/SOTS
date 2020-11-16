@@ -141,6 +141,13 @@ namespace SOTS.NPCs
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("DigitalCornSyrup"), 1);
 					}
 				}
+				if(npc.type == mod.NPCType("OtherworldlyConstructHead") || npc.type == mod.NPCType("OtherworldlyConstructHead2"))
+                {
+					if(Main.rand.Next(100) == 0)
+					{
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("PhaseCannon"), 1);
+					}
+                }
 				if (npc.type == NPCID.WallofFlesh) {
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("HungryHunter"), 1); 
 				}

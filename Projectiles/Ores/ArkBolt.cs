@@ -57,7 +57,7 @@ namespace SOTS.Projectiles.Ores
 				int npcIndex1 = -1;
 				for(int j = 0; j < 2; j++)
 				{
-					double distanceTB = 196;
+					double distanceTB = 216;
 					for(int i = 0; i < 200; i++) //find first enemy
 					{
 						NPC npc = Main.npc[i];
@@ -87,7 +87,7 @@ namespace SOTS.Projectiles.Ores
 					if(npcIndex != -1)
 					{
 						NPC npc = Main.npc[npcIndex];
-						if(!npc.friendly && npc.lifeMax > 5 && npc.active)
+						if(!npc.friendly && npc.lifeMax > 5 && npc.active && !npc.dontTakeDamage)
 						{
 							LaunchLaser(npc.Center);
 						}
@@ -95,7 +95,7 @@ namespace SOTS.Projectiles.Ores
 					if(npcIndex1 != -1)
 					{
 						NPC npc = Main.npc[npcIndex1];
-						if(!npc.friendly && npc.lifeMax > 5 && npc.active)
+						if(!npc.friendly && npc.lifeMax > 5 && npc.active && !npc.dontTakeDamage)
 						{
 							LaunchLaser(npc.Center);
 						}

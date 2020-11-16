@@ -5,13 +5,13 @@ using SOTS.Void;
 
 namespace SOTS.Items.Celestial
 {
-	public class AngelicCatalyst : ModItem
+	public class AngelicCatalyst : VoidItem
 	{
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Angelic Catalyst");
 			Tooltip.SetDefault("Provides access to an infinite supply of celestial arrows\nDecreases void regen by 2.25 while in the inventory");
-		}public override void SetDefaults()
+		}public override void SafeSetDefaults()
 		{
 			item.damage = 3;
 			item.ranged = true;
@@ -34,9 +34,9 @@ namespace SOTS.Items.Celestial
 				
 				voidPlayer.voidRegen -= 0.225f;
 		}
-		public override bool ConsumeAmmo(Player p)
+		public override bool BeforeConsumeAmmo(Player p)
 		{
-				return false;
+			return false;
 		}
 	}
 }

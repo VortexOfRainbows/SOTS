@@ -62,11 +62,6 @@ namespace SOTS.NPCs
 				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/BlueSlimerGore3"), 1f);
 				if(num1 != 3)
 				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/BlueSlimerGore4"), 1f);
-
-				if (Main.expertMode)
-				{
-					NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, NPCID.BlueSlime);
-				}
 			}
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
@@ -81,6 +76,10 @@ namespace SOTS.NPCs
 		}
 		public override void NPCLoot()
 		{
+			if (Main.expertMode)
+			{
+				NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, NPCID.BlueSlime);
+			}
 			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, (ItemID.Gel), Main.rand.Next(3) + 1);
 			if(Main.rand.Next(5) == 0)
 			{

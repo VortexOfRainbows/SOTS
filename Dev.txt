@@ -31,6 +31,7 @@ Next Update:
 3. Coconut Gun && Kitchen Sink
 6. Nerf construct damage once again?
 7. Buff all crusher items
+8. Flowering slimes to attack players only after injured
 
 Next Development Time: 
 1. Holo-Eye, Holo-Slime, Holo-Blade, Twilight Devil
@@ -45,9 +46,14 @@ Next Development Time:
 	2. Laser does little damage, but inflicts strong debuff that increases crit damage and chance upon enemy
 	3. Costs 5 void  to launch laser
 
+11/13/20 & 11/14/20
+1. Bug fixes
+2. Cataclysm Musket Pouch
+	1. server syncs fine (quiver too)
+3. Buffed phase cannon due to tiering into a rare enemy drop
+
 11/8/20
 1. Hardlight Quiver
-	1. Next: Recipe and smol nerfs
 
 
 11/7/20

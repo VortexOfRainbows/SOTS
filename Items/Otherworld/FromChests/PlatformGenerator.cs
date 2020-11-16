@@ -79,6 +79,15 @@ namespace SOTS.Items.Otherworld.FromChests
 			if(hideVisual)
 				modPlayer.hideChains = true;
 		}
+		public override void AddRecipes()
+		{
+			ModRecipe recipe = new ModRecipe(mod);
+			recipe.AddIngredient(null, "DissolvingAether", 1);
+			recipe.AddIngredient(null, "HardlightAlloy", 8);
+			recipe.AddTile(mod.TileType("HardlightFabricatorTile"));
+			recipe.SetResult(this);
+			recipe.AddRecipe();
+		}
 	}
 	public class PlatformPlayer : ModPlayer
 	{

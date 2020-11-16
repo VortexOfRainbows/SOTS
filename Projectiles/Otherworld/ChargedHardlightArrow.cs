@@ -40,7 +40,7 @@ namespace SOTS.Projectiles.Otherworld
 			if(initialDirection.X == 0 && initialDirection.Y == 0)
 			{
 				projectile.ai[0] = Main.rand.Next(360);
-				projectile.position += projectile.velocity.SafeNormalize(Vector2.Zero) * 48;
+				projectile.position += projectile.velocity.SafeNormalize(Vector2.Zero) * 24;
 				initialDirection = projectile.velocity;
 				projectile.velocity *= 0f;
 				if(completedLoads == 0)
@@ -99,7 +99,7 @@ namespace SOTS.Projectiles.Otherworld
 				for (int i = 0; i < Main.npc.Length; i++)
 				{
 					NPC target = Main.npc[i];
-					if (target.active && !target.friendly)
+					if (target.active && !target.friendly && !target.dontTakeDamage)
 					{
 						if (target.Hitbox.Intersects(new Rectangle((int)pos.X - 8, (int)pos.Y -8, projectile.width, projectile.height)))
 						{
@@ -153,7 +153,7 @@ namespace SOTS.Projectiles.Otherworld
 			if(hitbox)
 			{
 				NPC target = Main.npc[FindClosestEnemy(drawpos, dist)];
-				if(target.Hitbox.Intersects(new Rectangle((int)drawpos.X - 8, (int)drawpos.Y - 8, projectile.width, projectile.height)) && projectile.friendly)
+				if(target.Hitbox.Intersects(new Rectangle((int)drawpos.X - 8, (int)drawpos.Y - 8, projectile.width, projectile.height)) && projectile.friendly && !target.dontTakeDamage)
 				{
 					if(projectile.owner == Main.myPlayer)
 						Projectile.NewProjectile(drawpos.X, drawpos.Y, 0, 0, mod.ProjectileType("HardlightArrowDamage"), projectile.damage, projectile.knockBack, Main.myPlayer, 0f, 0f);
@@ -174,7 +174,7 @@ namespace SOTS.Projectiles.Otherworld
 			return false;
 		}
 		Vector2 initialDirection = new Vector2(0f, 0f);
-		int distance = 1000;
+		int distance = 750;
 		int completedLoads = 0;
 		public override bool ShouldUpdatePosition() 
 		{
@@ -190,7 +190,7 @@ namespace SOTS.Projectiles.Otherworld
 			float radianDir = (float)Math.Atan2(initialDirection.Y, initialDirection.X);
 			Vector2 drawPos = projectile.Center;
 			int helixRot = (int)projectile.ai[0];
-			float unitDis = 1.5f; //initiate a distance constant, this determines the "speed" at which the laser moves and bends
+			float unitDis = 2f; //initiate a distance constant, this determines the "speed" at which the laser moves and bends
 			bool stop = false;
 			int counter = 0; 
 			while(counter < distance)
