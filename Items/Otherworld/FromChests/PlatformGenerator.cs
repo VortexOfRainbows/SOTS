@@ -68,7 +68,7 @@ namespace SOTS.Items.Otherworld.FromChests
             item.height = 34;
 			item.knockBack = 1f;
             item.value = Item.sellPrice(0, 4, 0, 0);
-            item.rare = 9;
+			item.rare = ItemRarityID.LightPurple;
 			item.accessory = true;
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)

@@ -1,7 +1,5 @@
 using System;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-
 using Terraria;
 using Terraria.ModLoader;
 
@@ -13,9 +11,7 @@ namespace SOTS.Projectiles.Ores
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Ark Bolt");
-			
 		}
-		
         public override void SetDefaults()
         {
 			projectile.aiStyle = 1;
@@ -114,7 +110,7 @@ namespace SOTS.Projectiles.Ores
 		public void LaunchLaser(Vector2 area)
 		{
 			Player player  = Main.player[projectile.owner];
-			int Probe = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("BrightRedLaser"), (int)(projectile.damage * 2.5f), 0, projectile.owner, area.X, area.Y);
+			int Probe = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("BrightRedLaser"), (int)(projectile.damage * 1.5f) + 1, 0, projectile.owner, area.X, area.Y);
 			Main.projectile[Probe].magic = true;
 			Main.projectile[Probe].minion = false;
 		}

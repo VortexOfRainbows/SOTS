@@ -10,14 +10,12 @@ namespace SOTS.Items.IceStuff
 	{
 		public override void SetDefaults()
 		{
-
 			item.width = 26;
 			item.height = 20;
-            item.value = Item.sellPrice(0, 2, 0, 0);
-			item.rare = 2;
-			item.defense = 2;
+            item.value = Item.sellPrice(0, 1, 0, 0);
+			item.rare = ItemRarityID.Green;
+			item.defense = 3;
 		}
-
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Frigid Crown");

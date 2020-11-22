@@ -5,7 +5,6 @@ using Terraria.ModLoader;
 
 namespace SOTS.Items.Pyramid
 {
-
 	public class JuryRiggedDrill : ModItem
 	{
 		int counter = 0;
@@ -16,10 +15,8 @@ namespace SOTS.Items.Pyramid
 			DisplayName.SetDefault("Jury Rigged Drill");
 			Tooltip.SetDefault("Can break the walls of the pyramid\n'Might only withstand a few hits'");
 		}
-
 		public override void SetDefaults()
 		{
-
 			item.damage = 24;
 			item.melee = true;
 			item.width = 34;

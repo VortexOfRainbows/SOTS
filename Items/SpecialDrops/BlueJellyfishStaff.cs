@@ -1,8 +1,6 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using System;
-using Microsoft.Xna.Framework;
 
 namespace SOTS.Items.SpecialDrops
 {
@@ -15,23 +13,23 @@ namespace SOTS.Items.SpecialDrops
 		}
 		public override void SetDefaults()
 		{
-            item.damage = 21;
+            item.damage = 17;
             item.magic = true; 
             item.width = 32;    
             item.height = 32; 
             item.useTime = 30; 
             item.useAnimation = 30;
-            item.useStyle = 5;    
+            item.useStyle = ItemUseStyleID.HoldingOut;    
             item.knockBack = 3;
 			item.value = Item.sellPrice(0, 1, 25, 0);
-            item.rare = 3;
+            item.rare = ItemRarityID.Green;
 			item.UseSound = SoundID.Item92;
             item.noMelee = true; 
             item.autoReuse = false;
             item.shootSpeed = 14.5f; 
 			item.shoot = mod.ProjectileType("BlueThunderCluster");
 			Item.staff[item.type] = true; 
-			item.mana = 12;
+			item.mana = 15;
 
 		}
 		public override void AddRecipes()

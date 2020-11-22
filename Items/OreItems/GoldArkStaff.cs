@@ -10,12 +10,11 @@ namespace SOTS.Items.OreItems
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Gold Ark Staff");
-			Tooltip.SetDefault("Deal 250% damage to up to 2 enemies surrounding the initially hit enemy");
+			Tooltip.SetDefault("Deal 150% damage to up to 2 enemies surrounding the initially hit enemy");
 		}
 		public override void SafeSetDefaults()
 		{
-
-			item.damage = 24;
+			item.damage = 40;
 			item.magic = true;
 			item.width = 36;
 			item.height = 36;
@@ -24,13 +23,12 @@ namespace SOTS.Items.OreItems
 			item.useStyle = 1;
 			item.knockBack = 3.5f;
             item.value = Item.sellPrice(0, 0, 35, 0);
-			item.rare = 2;
+			item.rare = ItemRarityID.Green;
 			item.UseSound = SoundID.Item8;
 			item.autoReuse = true;     
 			item.noMelee = true;
 			item.shoot = mod.ProjectileType("ArkBolt"); 
             item.shootSpeed = 12.5f;
-
 		}
 		public override void GetVoid(Player player)
 		{

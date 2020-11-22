@@ -12,14 +12,14 @@ namespace SOTS.Items.IceStuff
 
 			item.width = 30;
 			item.height = 28;
-            item.value = Item.sellPrice(0, 2, 20, 0);
+            item.value = Item.sellPrice(0, 1, 20, 0);
 			item.rare = 2;
-			item.defense = 3;
+			item.defense = 4;
 		}
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Frigid Robe");
-			Tooltip.SetDefault("Frigid Javelin gains bouncing capabilities");
+			Tooltip.SetDefault("Frigid Javelin gains better bouncing capabilities");
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs)
         {
@@ -28,9 +28,8 @@ namespace SOTS.Items.IceStuff
 		public override void UpdateArmorSet(Player player)
 		{
 			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
-			player.setBonus = "Allows the ability to double jump";
-			player.doubleJumpBlizzard = true;
-			modPlayer.frigidJavelinBoost++;
+			player.setBonus = "Frigid Javelin no longer costs void";
+			modPlayer.frigidJavelinNoCost = true;
 		}
 		public override void DrawHands(ref bool drawHands, ref bool drawArms)
 		{

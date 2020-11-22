@@ -9,15 +9,12 @@ namespace SOTS.Items.IceStuff
 	{
 		public override void SetDefaults()
 		{
-
 			item.width = 34;
 			item.height = 22;
-
-            item.value = Item.sellPrice(0, 2, 20, 0);
-			item.rare = 2;
-			item.defense = 7;
+            item.value = Item.sellPrice(0, 1, 40, 0);
+			item.rare = ItemRarityID.Green;
+			item.defense = 10;
 		}
-
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Shatter Shard Chestplate");
@@ -29,21 +26,23 @@ namespace SOTS.Items.IceStuff
 		}
 		public override void UpdateArmorSet(Player player)
 		{
-			player.setBonus = "Increases life regen by 1";
+			player.setBonus = "Increases life regen by 1\nImmunity to chilled, frozen, and frostburn";
 			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
 			player.lifeRegen++;
-
+			player.buffImmune[BuffID.Chilled] = true;
+			player.buffImmune[BuffID.Frozen] = true;
+			player.buffImmune[BuffID.Frostburn] = true;
 			modPlayer.bonusShardDamage += 3;
 		}
 		public override void UpdateEquip(Player player)
 		{
 			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
 			int rand = Main.rand.Next(10);
-			if (rand >= 0 && rand <= 4) //0,1,2,3,4 50%
+			if (rand >= 0 && rand <= 2) //0,1,2 30%
 				modPlayer.shardOnHit += 1;
-			if (rand >= 5 && rand <= 7) //5,6,7 30%
+			if (rand >= 3 && rand <= 6) //3,4,5,6 40%
 				modPlayer.shardOnHit += 2;
-			if (rand >= 8) //9 20%
+			if (rand >= 7) //7, 8, 9 30%
 				modPlayer.shardOnHit += 3;
 		}
 		public override void AddRecipes()

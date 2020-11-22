@@ -34,7 +34,7 @@ namespace SOTS.Void
 			GetVoid(player);
 			item.mana = 1;
 			voidManaAmount = (int)(voidMana * voidPlayer.voidCost);
-			if(voidManaAmount < 1)
+			if(voidManaAmount < 1 && item.type != mod.ItemType("FrigidJavelin"))
 			{
 				voidManaAmount = 1;
 			}

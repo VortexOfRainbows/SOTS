@@ -60,6 +60,7 @@ namespace SOTS.Items.GelGear.Furniture
 			AddMapEntry(new Color(140, 70, 20));
 			dustType = 7;
 			disableSmartCursor = true;
+			adjTiles = new int[] { TileID.Chairs };
 		}
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)

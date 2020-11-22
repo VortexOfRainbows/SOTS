@@ -103,6 +103,7 @@ namespace SOTS.Items.Otherworld
 			AddMapEntry(new Color(55, 55, 55));
 			disableSmartCursor = true;
 			dustType = mod.DustType("AvaritianDust");
+			adjTiles = new int[] { TileID.Chairs };
 		}
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)

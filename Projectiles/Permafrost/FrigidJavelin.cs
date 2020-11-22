@@ -14,14 +14,12 @@ namespace SOTS.Projectiles.Permafrost
 		int counter2 = 72;
 		bool startAnim = false;
 		float storeRot = 0;
-		bool hasDoneDamage = false;
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Frigid Javelin");
 			ProjectileID.Sets.TrailCacheLength[projectile.type] = 30;  
 			ProjectileID.Sets.TrailingMode[projectile.type] = 0;    
 		}
-		
         public override void SetDefaults()
         {
 			projectile.magic = true;
@@ -35,7 +33,6 @@ namespace SOTS.Projectiles.Permafrost
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			hasDoneDamage = true;
 			target.immune[projectile.owner] = 3;
 			base.OnHitNPC(target, damage, knockback, crit);
 		}
@@ -50,7 +47,7 @@ namespace SOTS.Projectiles.Permafrost
 		{
 			Player player = Main.player[projectile.owner];
 			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
-			if (bounceCounter >= modPlayer.frigidJavelinBoost)
+			if (bounceCounter >= modPlayer.frigidJavelinBoost + 1)
 			{
 				storeRot = projectile.rotation;
 				projectile.velocity *= 0;
@@ -73,7 +70,6 @@ namespace SOTS.Projectiles.Permafrost
 			}
 			else
 			{
-				hasDoneDamage = false;
 				if (projectile.velocity.X != oldVelocity.X)
 				{
 					projectile.velocity.X = -oldVelocity.X;

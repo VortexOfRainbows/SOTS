@@ -36,7 +36,6 @@ namespace SOTS.NPCs.Boss
 		}
 		public override void SetDefaults()
 		{
-			
             npc.aiStyle = 10;
             npc.lifeMax = 27500;
             npc.damage = 40; 
@@ -92,11 +91,11 @@ namespace SOTS.NPCs.Boss
 			bool spawnShard = false;
 			if(Main.player[npc.target].dead)
 			{
-			 despawn++;
+				despawn++;
 			}
 			if(despawn >= 720)
 			{
-			npc.active = false;
+				npc.active = false;
 			}
 			AICycle++;
 			

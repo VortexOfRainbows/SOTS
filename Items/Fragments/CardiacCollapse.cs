@@ -18,7 +18,7 @@ namespace SOTS.Items.Fragments
 		}
 		public override void SafeSetDefaults()
 		{
-            item.damage = 15;
+            item.damage = 23;
             item.melee = true;  
             item.width = 46;
             item.height = 46;  

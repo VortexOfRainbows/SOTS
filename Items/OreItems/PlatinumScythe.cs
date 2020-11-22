@@ -12,35 +12,44 @@ namespace SOTS.Items.OreItems
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Platinum Scythe");
-			Tooltip.SetDefault("Critical hits permanently curse enemies\nThis effect can stack up to 9 times, and deals 120% damage");
+			Tooltip.SetDefault("Attacks permanently curse enemies for 3 damage per second, stacking up to 10 times");
 		}
-		public override void SafeSetDefaults()
+        public override void SafeSetDefaults()
 		{
-            item.damage = 19;  
+            item.damage = 32;  
             item.melee = true; 
             item.width = 40;    
             item.height = 40;  
-            item.useTime = 21;
-            item.useAnimation = 21;
+            item.useTime = 30;
+            item.useAnimation = 30;
             item.useStyle = 1;   
             item.autoReuse = true; 
 			item.useTurn = true;
-            item.knockBack = 1.55f;
+            item.knockBack = 4f;
 			item.value = Item.sellPrice(0, 0, 35, 0);
-            item.rare = 2;
+            item.rare = ItemRarityID.Green;
             item.UseSound = SoundID.Item71;
 			item.crit = 11;
 		}
+		public override void MeleeEffects(Player player, Rectangle hitbox)
+		{
+			if (Main.rand.NextBool(12))
+			{
+				Dust dust = Dust.NewDustDirect(hitbox.Location.ToVector2() - new Vector2(5f), hitbox.Width, hitbox.Height, mod.DustType("CopyDust4"), 0, -2, 200, new Color(), 1f);
+				dust.velocity *= 0.4f;
+				dust.color = new Color(100, 100, 255, 120);
+				dust.noGravity = true;
+				dust.fadeIn = 0.1f;
+				dust.scale *= 1.5f;
+			}
+		}
 		public override void ModifyHitNPC(Player player, NPC target, ref int damage, ref float knockBack, ref bool crit)
 		{
-			if(crit)
-			{
-				Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, mod.ProjectileType("PlatinumCurse"), (int)(damage * 1.2f) + 1, 0, player.whoAmI, target.whoAmI, 0f);
-			}
+			//Now modified in DebuffNPC
 		}
 		public override void GetVoid(Player player)
 		{
-			voidMana = 5;
+			voidMana = 10;
 		}
 		public override void AddRecipes()
 		{

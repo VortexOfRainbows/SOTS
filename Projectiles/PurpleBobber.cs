@@ -26,6 +26,11 @@ namespace SOTS.Projectiles
 			projectile.timeLeft = 2000;
 			projectile.height += 8;
         }
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+        {
+            fallThrough = true;
+            return base.TileCollideStyle(ref width, ref height, ref fallThrough);
+        }
         public override void AI()
         {
             Player player = Main.player[projectile.owner];

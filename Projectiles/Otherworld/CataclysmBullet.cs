@@ -133,13 +133,6 @@ namespace SOTS.Projectiles.Otherworld
 				current = previousPosition;
 			}
         }
-		public void movePosTogether()
-		{
-			for (int i = 0; i < trailPos.Length; i++)
-			{
-				Vector2 previousPosition = trailPos[i];
-			}
-		}
 		public void checkPos()
 		{
 			float iterator = 0f;

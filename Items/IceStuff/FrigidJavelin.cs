@@ -11,7 +11,7 @@ namespace SOTS.Items.IceStuff
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Frigid Javelin");
-			Tooltip.SetDefault("Throw a powerful, fast traveling javelin");
+			Tooltip.SetDefault("Throw a powerful, fast traveling javelin that ricochets of surfaces");
 		}
 		public override void SafeSetDefaults()
 		{
@@ -24,7 +24,7 @@ namespace SOTS.Items.IceStuff
 			item.useStyle = 5;    
             item.knockBack = 5.25f;
             item.value = Item.sellPrice(0, 0, 80, 0);
-            item.rare = 2;
+            item.rare = ItemRarityID.Green;
 			item.UseSound = SoundID.Item1;
 			item.autoReuse = true;
 			item.shoot = mod.ProjectileType("FrigidJavelin"); 
@@ -39,7 +39,12 @@ namespace SOTS.Items.IceStuff
 		}
 		public override void GetVoid(Player player)
 		{
-			voidMana = 7;
+			voidMana = 5;
+			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
+			if(modPlayer.frigidJavelinNoCost)
+            {
+				voidMana = 0;
+            }
 		}
 		public override float UseTimeMultiplier(Player player)
 		{

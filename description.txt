@@ -3,7 +3,7 @@ This mod's main plan is to add generated structures in the world, some are sort-
 !! This mod is early in development !!
 !! A large world is recommended in order for the generated structures to spawn without overriding vanilla structures !!
 
-Bosses -> Currently 5, Mostly bullet hells
+Bosses -> Currently 6, Mostly bullet hells
 Items -> Around 300, unique gimmicks all around!
 
 New Subclass (void)
@@ -11,11 +11,15 @@ New Subclass (void)
 -Unleash very powerful attacks
 -Exists on melee, ranged, and magic items
 
-Pyramid Dungeon World Gen
--Unique boss and items
+Currents Stuctures:
+-Pyramid Dungeon Worldgen
+-Planetarium Temple Worldgen
 
-Development - Vortex#6230
+Development and Art - Vortex#6230
 Art - Blasfah
+
+Update 0.19.0
+-Big thanks to qwerty3.14 for their extensive feedback
 
 Update 0.18.4
 -Pyramid prioritizes finding a non-underground desert

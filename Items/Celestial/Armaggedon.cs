@@ -11,11 +11,11 @@ namespace SOTS.Items.Celestial
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Armaggedon");
-			Tooltip.SetDefault("'Power straight from the heavens'\nFirerate increases after each use\nProvides a small light source");
+			Tooltip.SetDefault("Firerate increases after each use\nProvides a small light source\n'Power straight from the heavens'");
 		}
 		public override void SafeSetDefaults()
 		{
-			item.damage = 69;
+			item.damage = 70;
 			item.melee = true;
 			item.width = 26;
 			item.height = 26;
@@ -73,7 +73,7 @@ namespace SOTS.Items.Celestial
 		}
 		public override void GetVoid(Player player)
 		{
-			voidMana = 3;
+			voidMana = 5;
 		}
 	}
 }

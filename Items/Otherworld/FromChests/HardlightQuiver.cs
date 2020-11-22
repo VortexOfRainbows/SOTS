@@ -26,11 +26,10 @@ namespace SOTS.Items.Otherworld.FromChests
 			item.shootSpeed = 1f;           
 			item.ammo = AmmoID.Arrow;   
 		}
-		public override void UpdateInventory(Player player)
+		public void UpdateShoot(Player player)
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-			voidPlayer.voidRegen -= 0.1f;
-			if(voidPlayer.voidMeter > voidPlayer.voidMeterMax2 * 0.5f)
+			if (voidPlayer.voidMeter > voidPlayer.voidMeterMax2 * 0.5f)
 			{
 				item.shoot = mod.ProjectileType("ChargedHardlightArrow");
 			}
@@ -39,9 +38,15 @@ namespace SOTS.Items.Otherworld.FromChests
 				item.shoot = mod.ProjectileType("HardlightArrow");
 			}
 		}
+		public override void UpdateInventory(Player player)
+		{
+			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
+			voidPlayer.voidRegen -= 0.1f;
+		}
 		public override bool BeforeConsumeAmmo(Player player)
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
+			UpdateShoot(player);
 			if (voidPlayer.voidMeter > voidPlayer.voidMeterMax2 * 0.5f)
 			{
 				voidPlayer.voidMeter -= 0.75f;

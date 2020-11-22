@@ -1,14 +1,6 @@
-using System;
-using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.DataStructures;
-using Terraria.Enums;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.ObjectData;
-using Microsoft.Xna.Framework.Graphics;
-
 
 namespace SOTS.Items.ChestItems
 {	[AutoloadEquip(EquipType.Shield)]
@@ -18,33 +10,45 @@ namespace SOTS.Items.ChestItems
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Shield of Desecar");
-			Tooltip.SetDefault("'Less is More'\nGrants 1 defense for every 5 empty inventory slots");
+			Tooltip.SetDefault("'Less is More'\nGrants 1 defense for every 4 empty inventory slots");
 		}
 		public override void SetDefaults()
 		{
-            
             item.width = 34;     
-            item.height = 32;     
-            item.value = 50000;
-            item.rare = 4;
+            item.height = 32;
+			item.value = Item.sellPrice(0, 1, 0, 0);
+			item.rare = ItemRarityID.Green;
 			item.accessory = true;
-			
 		}
-		
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			item.defense = 0;
 			shield = 0;
 			for(int i = 0; i < 50; i++)
 			{
-			Item inventoryItem = player.inventory[i];
+				Item inventoryItem = player.inventory[i];
 				if(inventoryItem.type == 0)
 				{
-					shield += 0.2f;
+					shield += 0.25f;
 				}
-			
 			}
 			item.defense += (int)shield;
+		}
+		public override void AddRecipes()
+		{
+			ModRecipe recipe = new ModRecipe(mod);
+			recipe.AddIngredient(null, "DissolvingEarth", 1);
+			recipe.AddIngredient(ItemID.TungstenBar, 20);
+			recipe.AddTile(TileID.Anvils);
+			recipe.SetResult(this);
+			recipe.AddRecipe();
+
+			recipe = new ModRecipe(mod);
+			recipe.AddIngredient(null, "DissolvingEarth", 1);
+			recipe.AddIngredient(ItemID.SilverBar, 20);
+			recipe.AddTile(TileID.Anvils);
+			recipe.SetResult(this);
+			recipe.AddRecipe();
 		}
 	}
 }

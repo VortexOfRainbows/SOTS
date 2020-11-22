@@ -1,7 +1,3 @@
-using System;
-using System.IO;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using SOTS.Void;
@@ -10,18 +6,18 @@ using Terraria.ModLoader;
 namespace SOTS.Items.GelGear
 {
 	public class WormWoodParasite : ModItem
-	{	int timer = 1;
+	{	
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Wormwood Parasite");
-			Tooltip.SetDefault("Increases void regen speed by 1 and void crit by 8%\nCritical strikes heal small amounts of void\nIncreases max void by 20\nLowers life regen speed");
+			Tooltip.SetDefault("Increases void regen speed by 1 and void crit by 8%\nCritical strikes heal small amounts of void\nIncreases max void by 20\nLowers life regen speed by 1");
 		}
 		public override void SetDefaults()
 		{
             item.width = 34;     
             item.height = 30;   
             item.value = Item.sellPrice(0, 1, 80, 0);
-            item.rare = 4;
+            item.rare = ItemRarityID.LightRed;
 			item.accessory = true;
 		}
 		public override void AddRecipes()

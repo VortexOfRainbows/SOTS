@@ -16,7 +16,7 @@ namespace SOTS.Items.Pyramid
 	{
 		public override void SetStaticDefaults()
 		{
-			Tooltip.SetDefault("Allows the ability to perform an instant dash to the left or right at the cost of 5 void\nAlso allows the ability to dash through walls\nDashing into enemies will strike them, but consumes more void");
+			Tooltip.SetDefault("Allows the ability to perform an instant dash to the left or right at the cost of 4 void\nAlso allows the ability to dash through walls\nDashing into enemies will strike them, but consumes more void");
 		}
 		Vector2 toPos = new Vector2(3.75f, 0);
 		Vector2 CurrentPos = new Vector2(0, 0);
@@ -358,21 +358,21 @@ namespace SOTS.Items.Pyramid
 			{
 				capableVoid = 0;
 			}
-			capableVoid += 5;
+			capableVoid += 4;
 			if (value > capableVoid * damageMult)
 			{
 				value = capableVoid * damageMult;
 			}
 			player.immune = true;
 			player.immuneTime = 30;
-			voidPlayer.voidMeter -= value / damageMult - 5;
+			voidPlayer.voidMeter -= value / damageMult - 4;
 			if (Main.myPlayer == player.whoAmI)
 				Projectile.NewProjectile(npc.Center, Vector2.Zero, mod.ProjectileType("DarkEyeDamage"), (int)(1.25f * value * voidPlayer.voidDamage), 0, Main.myPlayer);
 		}
 		public void teleportEffect(Player player)
 		{
 			VoidPlayer voidPlayer = player.GetModPlayer<VoidPlayer>();
-			voidPlayer.voidMeter -= 5 * voidPlayer.voidCost;
+			voidPlayer.voidMeter -= 4 * voidPlayer.voidCost;
 			alpha1 = 0;
 			alpha2 = 0;
 			player.immune = true;
@@ -461,11 +461,11 @@ namespace SOTS.Items.Pyramid
 									{
 										if(Main.hardMode)
 										{
-											calculateDamage(player, npc, 7f);
+											calculateDamage(player, npc, 9f);
 										}
 										else
 										{
-											calculateDamage(player, npc, 3.5f);
+											calculateDamage(player, npc, 4.5f);
 										}
 									}
 								}
@@ -502,11 +502,11 @@ namespace SOTS.Items.Pyramid
 									{
 										if (Main.hardMode)
 										{
-											calculateDamage(player, npc, 7f);
+											calculateDamage(player, npc, 9f);
 										}
 										else
 										{
-											calculateDamage(player, npc, 3.5f);
+											calculateDamage(player, npc, 4.5f);
 										}
 									}
 								}

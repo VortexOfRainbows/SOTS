@@ -13,18 +13,18 @@ namespace SOTS.Items.Celestial
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Apocalypse");
-			Tooltip.SetDefault("'Power straight from the underworld'\nFirerate increases after each use\nProvides a small light source\nWill not hurt players");
+			Tooltip.SetDefault("Release green thunder towards your cursor\nGreen thunder chains off enemies for 90% damage\nFirerate increases after each use\nProvides a light source while in the inventory\n'Power straight from the underworld'");
 		}
 		public override void SafeSetDefaults()
 		{
-			item.damage = 66;
+			item.damage = 70;
 			item.magic = true;
 			item.width = 30;
 			item.height = 26;
             item.value = Item.sellPrice(0, 10, 0, 0);
-			item.rare = 8;
-			item.useTime = 25;
-			item.useAnimation = 25;
+			item.rare = ItemRarityID.Yellow;
+			item.useTime = 29;
+			item.useAnimation = 29;
 			item.useStyle = 5;
 			item.autoReuse = true;            
 			item.shoot = mod.ProjectileType("GreenLightning"); 
@@ -39,11 +39,11 @@ namespace SOTS.Items.Celestial
 			Lighting.AddLight(player.Center, 1.25f, 1.25f, 1.25f);
 			coolDown += 0.01f;
 			
-			if(coolDown > 25f)
-				coolDown = 25f;
+			if(coolDown > 29f)
+				coolDown = 29f;
 			
-			if(coolDown < 10f)
-				coolDown = 10f;
+			if(coolDown < 12f)
+				coolDown = 12f;
 			
 			item.useTime = (int)coolDown;
 			item.useAnimation = (int)coolDown;
@@ -60,14 +60,17 @@ namespace SOTS.Items.Celestial
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
 			Vector2 cursorArea = Main.MouseWorld;
-            Projectile.NewProjectile(position.X, position.Y, speedX, speedY, type, damage, knockBack, player.whoAmI, cursorArea.X, cursorArea.Y);
-            Projectile.NewProjectile(position.X, position.Y, speedX, speedY, type, damage, knockBack, player.whoAmI, cursorArea.X, cursorArea.Y);
-			coolDown -= 1.95f;
+			for(int i = 0; i < 2; i++)
+			{
+				Vector2 speed = new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians(-1.5f + 3 * i));
+				Projectile.NewProjectile(position.X, position.Y, speed.X, speed.Y, type, damage, knockBack, player.whoAmI, 0, 6f);
+			}
+			coolDown -= 2.15f;
 			return false; 
 		}
 		public override void GetVoid(Player player)
 		{
-			voidMana = 5;
+			voidMana = 6;
 		}
 	}
 }

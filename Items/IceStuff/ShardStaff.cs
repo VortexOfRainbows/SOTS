@@ -27,7 +27,7 @@ namespace SOTS.Items.IceStuff
             item.knockBack = 2.5f;
 			item.shootSpeed = 9;
             item.value = Item.sellPrice(0, 0, 80, 0);
-            item.rare = 2;
+            item.rare = ItemRarityID.Green;
             item.UseSound = SoundID.Item43;
             item.mana = 12;
 			item.shoot = mod.ProjectileType("IceShard");

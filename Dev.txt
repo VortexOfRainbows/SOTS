@@ -11,10 +11,6 @@ The following is my development plans :D
 //Ideas (YTBA, yet to be added)
 Priority: Remaining Spirits
 
-1. Lashes Of Lightning (Void + Magic) (otherworld + electrum)
-2. Thunder Jacket
-	1. Recieving damage will deal massive damage back to the attacker, but drains void when hit
-3. Spark Stompers (generates a greek fire trail behind you)
 11. Tether Cord in pyramid
 	1. Attaches a second player to you
 13. Dissolving Element Blocks
@@ -30,21 +26,145 @@ Next Update:
 1. Pyramid chests to no longer spawn close to surface
 3. Coconut Gun && Kitchen Sink
 6. Nerf construct damage once again?
-7. Buff all crusher items
 8. Flowering slimes to attack players only after injured
+9. Update boss checklist support (later)
 
 Next Development Time: 
 1. Holo-Eye, Holo-Slime, Holo-Blade, Twilight Devil
 	Banner next
-8. Otherworldly Construct
-	No need for a banner.
-9. Advisor
-	The ACTUAL spririt is part of the second phase of Advisor
-	Advisor will drop all his loot (keys and bars) and the spirit acts as an additional second phase with loot (Dissolving Aether).
 10. Twilight Gel and Twilight Assassin Armor (Void Melee)
 	1. Grants an eye turret that you can double-tap down to fire a laser with
 	2. Laser does little damage, but inflicts strong debuff that increases crit damage and chance upon enemy
 	3. Costs 5 void  to launch laser
+
+11/21/20 part 2
+1. Void regen is more dynamic
+	1. Regen slightly faster at high void and high health
+	2. Regen slightly slower at low void and low health
+	3. Regen much faster while not moving
+2. Vibe Potion
+	1. Duration 3 min => 6 min
+	2. Now gives increased voidregen and liferegen when standing still
+3. Fixed hardlight and cataclysm ammo not consuming void properly
+4. Bosschecklist updates for Advisor
+
+
+11/20/20 && 11/21/20
+1. Calculator 
+	1. Works OK in multiplayer!
+	2. Overlapp fixed
+	3. Baby advisor chills farther away (even farther with purple balloon)
+2. Purple Balloon bobber now goes through platforms
+3. Vibrant Cannon
+	1. Damage 20 => 18
+	2. Void cost 20 => 22
+4. Platinum Scythe Changes
+	1. Damage 19 => 32
+	2. Usetime 21 => 30
+	3. Knockback 1.55f => 4f
+	4. Curse happens every hit instead of just on crits
+		1. Cursed now functions like a debuff, except no enemy is immune to it
+	5. Voidcost 5 => 10
+5. Section Chief's Scythe also curses now
+	1. Voidcost 7 => 10
+	2. Damage 31 => 40
+6. Both scythes now create some particles on swing
+7. Platinum Dart changes
+	1. Slowdown is applied differently, deteriorates slower 420 frames => 2000 frames
+	2. Fits through smaller gaps more easily
+	3. Usetime 22 => 15
+	4. Damage 20 => 15
+	5. Velocity 12.5f => 14f
+	6. Voidcost 4 => 3	
+	7. Creates platinum dust upon death instead of cloud dust
+8. Jellyfish Staffs
+	1. Overhauled visuals
+	2. Overhauled ricochet (pink, purple, green)
+	3. Accuracy changes (generally buffs)
+	3. Purple Jellyfish Staff
+		1. Now takes Dissolving Aether instead of Jellyfish necklace.
+		2. Projectiles fired 8 => 6
+		3. Damage 40 => 32
+		4. Voidcost 4 => 7
+		5. Usetime 18 => 20
+		6. No longer drains void while in the inventory, light source size slightly changes
+	4. Pink Jellyfish Staff
+		1. Damage 18 => 14
+		2. Mana cost 10 => 13
+		3. Usetime 19 => 20
+		4. No longer lingers
+	5. Blue Jellyfish Staff
+		1. Damage 21 => 17
+		2. Mana cost 12 => 15
+		3. No longer lingers
+	6. Green Jellyfish Staff
+		1. No longer pierces, now ricochets like the others
+		2. No longer travels through blocks on the initial shot
+		3. Only hits enemies once per zap
+		4. No longer drains void while in the inventory
+		5. Damage 60 => 66
+	7. Apocalypse
+		1. Same changes as Green
+		2. Damage 66 => 70
+		3. Max speed 10 => 12, Min 24 => 29
+		4. Void cost 5 => 6
+9. Armaggeddon
+	1. Damage 69 => 70
+	2. Void cost 3 => 5
+10. These changes between Apocalypse and Armaggeddon will offer a better reasons to prefer one over the other.
+
+11/18/20 && 11/19/20
+1. You can now craft watches at Wormwood and Holo furniture
+2. Wormwood Staff:
+	1. Damage 19 - 20
+	2. Usetime, Animation 11, 44 => 8, 24
+	3. No more use cooldown, but no longer autoReuse
+	4. Mana cost 17 => 20
+	5. Reworked projectile, now bounces and is more erratically moving
+3. Dark Eye Void cost dropped to 4
+	1. Does more damage at the cost of less void
+4. Crusher weapons are now affected by Void and Melee attack speed
+	1. Void attack speed decreases charge time without increasing voidcost
+	2. Melee speed decreases charge time and increases voidcost
+5. Crusher Base damage buffs
+	1. Chain Reactor (unobtainable) 13 => 15
+	2. Crab Claw 12 => 18
+	3. Cardiac Collapse 15 => 23
+	4. Soul Eater 10 => 17
+	5. Hell Breaker 45 => 55
+	6. Wormwood Collapse 30 => 40
+	7. Aquatic Eclipse 45 => 64
+6. Starshot Crossbow
+	1. Works in multiplayer
+	2. POGU
+7. Calculator 
+	1. Pet portion works pog!
+	2. Homing portion works pog!
+	3. Works OK in multiplayer!
+	4. Overlapp fixed
+
+11/17/20
+Balance changes courtesy of Qwerty3.14
+1. Putrid Eye damage 40 => 50
+2. Desecar and Stekpla buffed: every 4 items instead of 5
+	1. Dasuver crit chance increased by 1%
+	2. Craftable: 1 dissolving earth/aurora and silver/tungsten bars
+3. Gold Ark Staff
+	1. Damage 24 => 40
+	2. Aura 250% => 150%, radius also increased 196 => 216
+4. Gold Glaive
+	1. Damage 21 => 28 (buff)
+	2. UseTime 20 => 31 (nerf, but makes void cost less intensive)
+	3. Bolts 50% => 75%
+	4. Spear range increased
+5. Frigid Javelin
+	1. Bouncing (no armor, armor, set bonus) 0, 3, 4 => 1, 4, 4
+	2. Void Cost 7 => 5
+6. Frigid Armor
+	1. Crown: Defense 2 => 3
+	2. Robe: Defense 3 => 4, setbonus no longer gives double jump, but makes Frigid Javelin free to use
+	3. Greaves: Defense 3 => 4, now increases voidspeed by 10%
+	4. Chestplate: Defense 7 => 10, setbonus gives immunity to ice debuffs, shard average 1.7 => 2
 
 11/13/20 & 11/14/20
 1. Bug fixes

@@ -18,7 +18,7 @@ namespace SOTS.Items.GelGear
 		}
 		public override void SafeSetDefaults()
 		{
-            item.damage = 30;
+            item.damage = 40;
             item.melee = true;  
             item.width = 44;
             item.height = 44;  

@@ -37,8 +37,8 @@ namespace SOTS.Projectiles.Vibrant
                 float num3 = (float)((double)Main.mouseY + Main.screenPosition.Y - vector2_2.Y);
                 if ((double)Main.player[projectile.owner].gravDir == -1.0)
                     num3 = (float)((double)(Main.screenHeight - Main.mouseY) + Main.screenPosition.Y - vector2_2.Y);
-                float num4 = (float)Math.Sqrt((double)num2 * (double)num2 + (double)num3 * (double)num3);
-                float num5 = (float)Math.Sqrt((double)num2 * (double)num2 + (double)num3 * (double)num3);
+                float num4 = (float)Math.Sqrt(num2 * (double)num2 + num3 * (double)num3);
+                float num5 = (float)Math.Sqrt(num2 * (double)num2 + num3 * (double)num3);
                 float num6 = num1 / num5;
                 float num7 = num2 * num6;
                 float num8 = num3 * num6;

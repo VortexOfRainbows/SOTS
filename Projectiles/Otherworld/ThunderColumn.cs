@@ -160,7 +160,6 @@ namespace SOTS.Projectiles.Otherworld
 			}
 			checkPos();
 			Player player = Main.player[projectile.owner];
-			Vector2 toPlayer = player.Center - projectile.Center;
 			projectile.ai[0]++;
 			if(projectile.ai[0] >= 0)
 			{

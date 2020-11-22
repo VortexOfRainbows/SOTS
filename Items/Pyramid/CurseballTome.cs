@@ -1,7 +1,6 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using System;
 using Microsoft.Xna.Framework;
 
 namespace SOTS.Items.Pyramid
@@ -37,7 +36,6 @@ namespace SOTS.Items.Pyramid
             item.shootSpeed = 9.5f;
 			item.mana = 16;
 			item.reuseDelay = 20;
-
 		}
         public override bool CanUseItem(Player player)
 		{

@@ -11,15 +11,14 @@ namespace SOTS.Items.OreItems
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Platinum Dart");
-			Tooltip.SetDefault("A heavy dart that sticks to enemies");
+			Tooltip.SetDefault("A heavy dart that sticks to enemies, slowing them down drastically");
 		}
 		public override void SafeSetDefaults()
 		{
-			
 			item.CloneDefaults(279);
-			item.damage = 20;
-			item.useTime = 22;
-			item.useAnimation = 22;
+			item.damage = 15;
+			item.useTime = 15;
+			item.useAnimation = 15;
 			item.ranged = true;
 			item.thrown = false;
 			item.value = Item.sellPrice(0, 0, 35, 0);
@@ -29,13 +28,12 @@ namespace SOTS.Items.OreItems
 			item.maxStack = 1;
 			item.autoReuse = true;            
 			item.shoot = mod.ProjectileType("PlatinumDart"); 
-            item.shootSpeed = 12.5f;
+            item.shootSpeed = 14f;
 			item.consumable = false;
-			
 		}
 		public override void GetVoid(Player player)
 		{
-			voidMana = 4;
+			voidMana = 3;
 		}
 		public override void AddRecipes()
 		{

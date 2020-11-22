@@ -1,7 +1,6 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using System;
 using Microsoft.Xna.Framework;
 
 namespace SOTS.Items.SpecialDrops
@@ -11,28 +10,27 @@ namespace SOTS.Items.SpecialDrops
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Pink Jellyfish Staff");
-			Tooltip.SetDefault("Fires pink lightning which chains off enemies");
+			Tooltip.SetDefault("Fires pink lightning which chains off enemies for 60% damage");
 		}
 		public override void SetDefaults()
 		{
-            item.damage = 18;
+            item.damage = 14;
             item.magic = true; 
             item.width = 32;    
             item.height = 32; 
-            item.useTime = 19; 
-            item.useAnimation = 19;
-            item.useStyle = 5;    
+            item.useTime = 20; 
+            item.useAnimation = 20;
+            item.useStyle = ItemUseStyleID.HoldingOut;    
             item.knockBack = 3;
 			item.value = Item.sellPrice(0, 1, 0, 0);
-            item.rare = 2;
+            item.rare = ItemRarityID.Green;
 			item.UseSound = SoundID.Item93;
             item.noMelee = true; 
             item.autoReuse = false;
-            item.shootSpeed = 14.5f; 
+            item.shootSpeed = 5.5f; 
 			item.shoot = mod.ProjectileType("PinkLightning");
 			Item.staff[item.type] = true; 
-			item.mana = 10;
-
+			item.mana = 13;
 		}
 		public override void AddRecipes()
 		{
@@ -44,12 +42,13 @@ namespace SOTS.Items.SpecialDrops
 			recipe.AddRecipe();
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-        {
-                  Vector2 perturbedSpeed = new Vector2(speedX * .1f, speedY * .1f).RotatedByRandom(MathHelper.ToRadians(90)); 
-                  Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI);
-                  Projectile.NewProjectile(position.X, position.Y, -perturbedSpeed.X, -perturbedSpeed.Y, type, damage, knockBack, player.whoAmI);
-				  
-                  Projectile.NewProjectile(position.X, position.Y, speedX, speedY, type, damage, knockBack, player.whoAmI);
+		{
+			for (int i = 0; i < 2; i++)
+			{
+				Vector2 perturbedSpeed = new Vector2(speedX * .66f, speedY * .66f).RotatedByRandom(MathHelper.ToRadians(25));
+				Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI, 2.5f);
+			}
+            Projectile.NewProjectile(position.X, position.Y, speedX, speedY, type, damage, knockBack, player.whoAmI, 2.5f);
             return false;
 		}
 	}

@@ -1,9 +1,9 @@
-using System;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using SOTS.Void;
+
 namespace SOTS.Items.OreItems
 {
 	public class GoldGlaive : VoidItem
@@ -11,20 +11,20 @@ namespace SOTS.Items.OreItems
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Gold Glaive");
-			Tooltip.SetDefault("Fires 3 bolts at your cursor, each dealing 50% damage");
+			Tooltip.SetDefault("Fires 3 bolts at your cursor, each dealing 75% damage");
 		}
 		public override void SafeSetDefaults()
 		{
-			item.damage = 21;
+			item.damage = 28;
 			item.melee = true;
 			item.width = 42;
 			item.height = 40;
-			item.useTime = 20;
-			item.useAnimation = 20;
+			item.useTime = 31;
+			item.useAnimation = 31;
 			item.useStyle = 5;
 			item.knockBack = 5;
             item.value = Item.sellPrice(0, 0, 35, 0);
-			item.rare = 2;
+			item.rare = ItemRarityID.Green;
 			item.UseSound = SoundID.Item1;       
 			item.shoot = mod.ProjectileType("GoldSpear"); 
             item.shootSpeed = 3.8f;
@@ -45,17 +45,11 @@ namespace SOTS.Items.OreItems
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-              int numberProjectiles = 1;
-			  for (int i = 0; i < numberProjectiles; i++)
-              {
-                  Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(0));
-                  Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI);
-              }
-              numberProjectiles = 3;
+              int numberProjectiles = 3;
 			  for (int i = 0; i < numberProjectiles; i++)
               {
                   Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians(160 + (i * 20)));
-                  Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, mod.ProjectileType("GoldBolt"), (int)(damage * 0.5f) + 1, knockBack, player.whoAmI);
+                  Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, mod.ProjectileType("GoldBolt"), (int)(damage * 0.75f) + 1, knockBack, player.whoAmI);
               }
               return true; 
 		}

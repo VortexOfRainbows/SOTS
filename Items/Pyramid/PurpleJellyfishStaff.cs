@@ -8,20 +8,20 @@ using SOTS.Void;
 namespace SOTS.Items.Pyramid
 {
 	public class PurpleJellyfishStaff : VoidItem
-	{	int timer = 0;
+	{	
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Purple Jellyfish Staff");
-			Tooltip.SetDefault("Fires 2 purple orbs that, upon detonation, release purple thunder towards your cursor\nDecreases void regen by 1 while in the inventory, but also provides a light source");
+			Tooltip.SetDefault("Fires 2 purple orbs that, upon detonation, release purple thunder towards your cursor\nPurple thunder chains off enemies for 70% damage\nProvides a light source while in the inventory");
 		}
 		public override void SafeSetDefaults()
 		{
-            item.damage = 40;
+            item.damage = 32;
 			item.magic = true;
             item.width = 32;    
             item.height = 32; 
-            item.useTime = 18; 
-            item.useAnimation = 18;
+            item.useTime = 20; 
+            item.useAnimation = 20;
             item.useStyle = 5;    
             item.knockBack = 3.5f;
 			item.value = Item.sellPrice(0, 2, 25, 0);
@@ -32,26 +32,21 @@ namespace SOTS.Items.Pyramid
             item.shootSpeed = 6.25f; 
 			item.shoot = mod.ProjectileType("PurpleThunderCluster");
 			Item.staff[item.type] = true; 
-
 		}
 		public override void GetVoid(Player player)
 		{
-				voidMana = 4;
+			voidMana = 7;
 		}
 		public override void UpdateInventory(Player player)
-		{
-				Lighting.AddLight(player.Center, 0.9f, 0.05f, 0.9f);
-				VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-				SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");	
-				//timer++;
-				voidPlayer.voidRegen -= 0.1f;
+		{ 
+			Lighting.AddLight(player.Center, 0.75f, 0.75f, 0.75f);
 		}
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(null, "PinkJellyfishStaff", 1);
 			recipe.AddIngredient(null, "BlueJellyfishStaff", 1);
-			recipe.AddIngredient(ItemID.JellyfishNecklace, 1);
+			recipe.AddIngredient(null, "DissolvingAether", 1);
 			recipe.AddIngredient(null, "CursedMatter", 5);
 			recipe.AddIngredient(ItemID.SoulofNight, 12);
 			recipe.AddIngredient(ItemID.Amethyst, 1);
@@ -61,11 +56,9 @@ namespace SOTS.Items.Pyramid
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-                  Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(90)); 
-                  Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI);
-                  Projectile.NewProjectile(position.X, position.Y, -perturbedSpeed.X, -perturbedSpeed.Y, type, damage, knockBack, player.whoAmI);
-              
-                  //Projectile.NewProjectile(position.X, position.Y, speedX, speedY, type, damage, knockBack, player.whoAmI);
+            Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(90)); 
+            Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI, 0);
+            Projectile.NewProjectile(position.X, position.Y, -perturbedSpeed.X, -perturbedSpeed.Y, type, damage, knockBack, player.whoAmI, 0);
             return false;
 		}
 	}

@@ -1,11 +1,8 @@
-using System;
 using Microsoft.Xna.Framework;
-
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using SOTS.Void;
-
 
 namespace SOTS.Items.Fragments
 {
@@ -18,7 +15,7 @@ namespace SOTS.Items.Fragments
 		}
 		public override void SafeSetDefaults()
 		{
-            item.damage = 45;
+            item.damage = 55;
             item.melee = true;  
             item.width = 46;
             item.height = 46;  

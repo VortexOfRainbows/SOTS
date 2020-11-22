@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using Microsoft.Xna.Framework;
+using SOTS.Void;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -43,16 +44,17 @@ namespace SOTS.Projectiles.Crushers
 		private bool released = false; 
 		private float rotationTimer = 0; //assume 170 is full rotation, 0 has not been rotated
 		private int explosive = 1;
-		private int currentCharge = 0; //how close are we to chargeTime?
-		private int initiateTimer = 0; //how close are we to releaseTime?
+		float currentCharge = 0; //how close are we to chargeTime?
+		float initiateTimer = 0; //how close are we to releaseTime?
 		private bool flip = false; //direction?
 		private bool initiate = true; //initiate some variables
 		private int initialDamage; //what is the initial damage?
 		private float accelerateAmount = 0;
 		
 		public override bool PreAI()
-        {
-			if(initiate)
+		{
+			VoidPlayer modPlayer = VoidPlayer.ModPlayer(Main.player[projectile.owner]);
+			if (initiate)
 			{
 				initiate = false;
 				initialDamage = projectile.damage;
@@ -69,7 +71,7 @@ namespace SOTS.Projectiles.Crushers
 			}
 			if(currentCharge < chargeTime && !released) //not charged and not released
 			{
-				currentCharge++;
+				currentCharge += 1 * (1f / Main.player[projectile.owner].meleeSpeed + modPlayer.voidSpeed - 1);
 				explosive = explosiveCountMin + (int)(((float)currentCharge/(float)chargeTime) * (explosiveCountMax + 1 - explosiveCountMin)); //count
 				explosive = explosive < explosiveCountMin ? explosiveCountMin : explosiveCountMax < explosive ? explosiveCountMax : explosive; //making sure the explosive amount is within range
 				/** Here's an example of the maxExplosion/minExplosion system
@@ -83,7 +85,7 @@ namespace SOTS.Projectiles.Crushers
 			}
 			else if(!released) //after full charge, before release
 			{
-				initiateTimer += 1;
+				initiateTimer += 1 * (1f / Main.player[projectile.owner].meleeSpeed + modPlayer.voidSpeed - 1);
 				projectile.damage = (int)(initialDamage * maxDamage);
 			}
 				

@@ -71,7 +71,7 @@ namespace SOTS.Projectiles.Lightning
 			Main.PlaySound(SoundID.Item94, (int)(projectile.Center.X), (int)(projectile.Center.Y));
 				
 			if(projectile.owner == Main.myPlayer)
-			Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, shootToX, shootToY, mod.ProjectileType("GreenLightning"), projectile.damage, projectile.knockBack, Main.myPlayer, cursorArea.X, cursorArea.Y);
+				Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, shootToX, shootToY, mod.ProjectileType("GreenLightning"), projectile.damage, projectile.knockBack, Main.myPlayer, 0, 5f);
 		}
 	}
 }

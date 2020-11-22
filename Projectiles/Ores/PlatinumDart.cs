@@ -1,13 +1,9 @@
 using System;
 using System.IO;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.ModLoader;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace SOTS.Projectiles.Ores
 {    
@@ -16,9 +12,7 @@ namespace SOTS.Projectiles.Ores
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Platinum Dart");
-			
 		}
-		
         public override void SetDefaults()
         {
 			projectile.aiStyle = 1;
@@ -38,7 +32,6 @@ namespace SOTS.Projectiles.Ores
 			writer.Write(projectile.spriteDirection);
 			//writer.Write(damageCounter);
 			writer.Write(latch);
-			writer.Write(enemyIndex);
 			writer.Write(diffPosX);
 			writer.Write(diffPosY);
 		}
@@ -48,26 +41,30 @@ namespace SOTS.Projectiles.Ores
 			projectile.spriteDirection = reader.ReadInt32();
 			//damageCounter = reader.ReadInt32();
 			latch = reader.ReadBoolean();
-			enemyIndex = reader.ReadInt32();
 			diffPosX = reader.ReadSingle();
 			diffPosY = reader.ReadSingle();
 		}
+		bool runOnce = true;
 		bool latch = false;
-		int enemyIndex = -1;
 		float diffPosX = 0;
 		float diffPosY = 0;
 		public override void AI()
         {
+			if(runOnce)
+            {
+				runOnce = false;
+				projectile.ai[1] = -1;
+            }
 			Player player = Main.player[projectile.owner];
 			projectile.rotation = (float)Math.Atan2((double)projectile.velocity.Y, (double)projectile.velocity.X) + MathHelper.ToRadians(45);
 			projectile.spriteDirection = 1;
 			
-			if(latch && enemyIndex != -1)
+			if(latch && (int)projectile.ai[1] != -1)
 			{
 				projectile.netUpdate = true;
-				NPC target = Main.npc[enemyIndex];
-				projectile.alpha += projectile.timeLeft % 2 == 0 ? 1 : 0;
-				if(projectile.alpha >= 210)
+				NPC target = Main.npc[(int)projectile.ai[1]];
+				projectile.alpha += projectile.timeLeft % 10 == 0 ? 1 : 0;
+				if(projectile.alpha >= 200)
 				{
 					projectile.Kill();
 				}
@@ -76,7 +73,6 @@ namespace SOTS.Projectiles.Ores
 					projectile.aiStyle = 0;
 					projectile.position.X = target.Center.X - projectile.width/2 - diffPosX;
 					projectile.position.Y = target.Center.Y - projectile.height/2 - diffPosY;
-					target.velocity *= target.boss ? 0.998f : 0.985f;
 				}
 				else
 				{
@@ -84,7 +80,13 @@ namespace SOTS.Projectiles.Ores
 				}
 			}
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+        {
+			width = 12;
+			height = 12;
+            return base.TileCollideStyle(ref width, ref height, ref fallThrough);
+        }
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
 			Player player = Main.player[projectile.owner];
 			projectile.friendly = false;
@@ -97,8 +99,8 @@ namespace SOTS.Projectiles.Ores
 				
 			if(diffPosY == 0)
 			diffPosY = target.Center.Y - projectile.Center.Y;
-				
-			enemyIndex = target.whoAmI;
+
+			projectile.ai[1] = target.whoAmI;
 			
 			if(target.life <= 0)
 			{
@@ -107,10 +109,14 @@ namespace SOTS.Projectiles.Ores
         }
 		public override void Kill(int timeLeft)
         {
-			for(int i = 0; i < 15; i++)
+			if(timeLeft > 1)
+				Main.PlaySound(SoundID.Dig, projectile.Center);
+			for(int i = 0; i < 18; i++)
 			{
-			int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 16);
-			Main.dust[num1].noGravity = true;
+				int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Platinum);
+				Main.dust[num1].noGravity = true;
+				Main.dust[num1].velocity += projectile.velocity * 0.2f;
+				Main.dust[num1].scale = 1.25f;
 			}
 		}
 	}

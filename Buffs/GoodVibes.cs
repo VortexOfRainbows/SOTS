@@ -9,18 +9,20 @@ namespace SOTS.Buffs
         public override void SetDefaults()
         {
             DisplayName.SetDefault("Good Vibes");
-			Description.SetDefault("Increased attack speed while not moving");   
+			Description.SetDefault("Increased stats while not moving");   
             Main.buffNoSave[Type] = true;
             Main.buffNoTimeDisplay[Type] = false;
         }
- 
 		public override void Update(Player player, ref int buffIndex)
 		{
 			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
+			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
+			voidPlayer.maxStandingTimer += 1.5f;
 			modPlayer.attackSpeedMod += 0.05f;
-			if(!player.controlRight && !player.controlLeft && Math.Abs(player.velocity.X) < 0.1f && Math.Abs(player.velocity.Y) < 0.1f)
+			if(Math.Abs(player.velocity.X) < 0.1f && Math.Abs(player.velocity.Y) < 0.1f)
 			{	
 				modPlayer.attackSpeedMod += 0.15f;
+				player.lifeRegen += 4;
 			}
 		}
     }

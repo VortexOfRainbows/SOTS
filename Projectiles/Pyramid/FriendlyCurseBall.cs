@@ -1,13 +1,7 @@
-using System;
 using System.IO;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
-using Terraria.ID;
 
 namespace SOTS.Projectiles.Pyramid
 {    
@@ -17,9 +11,7 @@ namespace SOTS.Projectiles.Pyramid
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Curse");
-			
 		}
-		
         public override void SetDefaults()
         {
 			projectile.height = 18;
@@ -42,7 +34,13 @@ namespace SOTS.Projectiles.Pyramid
 		}
 		public override void AI()
 		{
-			projectile.netUpdate = true;
+			if(Main.myPlayer == projectile.owner)
+				projectile.netUpdate = true;
+
+			if (projectile.velocity.Length() > 1)
+				projectile.tileCollide = true;
+			else
+				projectile.tileCollide = false;
 			projectile.alpha -= 1;
 			projectile.rotation += Main.rand.Next(-3,4);
 			if(projectile.timeLeft <= 200)
@@ -66,6 +64,7 @@ namespace SOTS.Projectiles.Pyramid
 				projectile.Kill();
 			}
 			else
+			{
 				if (projectile.velocity.X != oldVelocity.X)
 				{
 					projectile.velocity.X = -oldVelocity.X;
@@ -74,6 +73,7 @@ namespace SOTS.Projectiles.Pyramid
 				{
 					projectile.velocity.Y = -oldVelocity.Y;
 				}
+			}
 			return false;
 		}
 	}

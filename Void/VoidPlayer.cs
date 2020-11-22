@@ -1,13 +1,10 @@
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.GameInput;
-using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
-using Terraria.Graphics.Shaders;
-using Terraria.Localization;
 using static Terraria.ModLoader.ModContent;
 using SOTS.Projectiles.Base;
+using System;
 
 namespace SOTS.Void
 {
@@ -44,6 +41,8 @@ namespace SOTS.Void
 		public int voidMeterMax2 = 0;
 		public bool voidShock = false;
 		public bool voidRecovery = false;
+		public float voidMultiplier = 1f;
+		public float voidRegenMultiplier = 1f;
 
 		public static VoidPlayer ModPlayer(Player player) {
 			return player.GetModPlayer<VoidPlayer>();
@@ -136,20 +135,46 @@ namespace SOTS.Void
 				}
 			}
 		}
-
+		float standingTimer = 1;
+		public float maxStandingTimer = 2;
+		public void ApplyDynamicMultiplier()
+        {
+			voidMultiplier = 0.85f;
+			float hpMult = (float)player.statLife / player.statLifeMax2;
+			hpMult *= 0.2f;
+			float voidMult = (float)voidMeter / voidMeterMax2;
+			voidMult *= 0.2f;
+			if(Math.Abs(player.velocity.X) <= 0.1f && Math.Abs(player.velocity.Y) <= 0.1f)
+            {
+				standingTimer += 0.005f;
+				if (standingTimer > maxStandingTimer)
+					standingTimer = maxStandingTimer;
+			}
+			else
+			{
+				if (standingTimer > 1)
+					standingTimer -= 0.05f;
+				if (standingTimer < 1)
+					standingTimer = 1;
+			}
+			voidMultiplier += hpMult + voidMult;
+			voidMultiplier *= standingTimer;
+		}
 		private void ResetVariables() {
 			voidShock = false;
 			voidRecovery = false;
-
-			//make sure damage is 100% before making modifications
 			voidDamage = 1f;
 			
 			//percent damage grows as health lowers
 			//voidDamage += 1f - (float)((float)player.statLife / (float)player.statLifeMax2);
 			
 			voidSpeed = 1f; 
-			voidCost = 1f; 
-			voidMeter += (float)(voidRegen / 60);
+			voidCost = 1f;
+			ApplyDynamicMultiplier();
+			if (voidRegen > 0)
+				voidMeter += (float)(voidRegen / 60f) * (voidRegenMultiplier + voidMultiplier - 1);
+			else
+				voidMeter += (float)(voidRegen / 60f);
 
 			if (voidMeter > voidMeterMax2) //resets void to zero when joining world accidentally, must fix later
 			{
@@ -158,21 +183,12 @@ namespace SOTS.Void
 			}
 
 			voidMeterMax2 = voidMeterMax;
-
-
 			voidKnockback = 0f;
 			voidCrit = 0;
-			
-			
-			
-			
 			voidRegen = 0.25f; 
-			
 			voidRegen += 0.05f * (float)voidAnkh;
 			voidRegen += 0.1f * (float)voidStar;
-
-
-
+			maxStandingTimer = 2;
 			if (voidMeter != 0)
 			{
 				VoidUI.visible = true;
@@ -194,6 +210,21 @@ namespace SOTS.Void
 					voidMeter = -150;
 				}
 			}
+		}
+		public override float UseTimeMultiplier(Item item)
+		{
+			float standard = voidSpeed;
+			int time = item.useAnimation;
+			int cannotPass = 2;
+			float current = time / standard;
+			if (current < cannotPass)
+			{
+				standard = time / 2f;
+			}
+			if (item.modItem is VoidItem isVoid)
+				if (item.channel == false)
+					return standard;
+			return base.UseTimeMultiplier(item);
 		}
 	}
 }

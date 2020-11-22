@@ -1,16 +1,13 @@
 using System;
 using System.IO;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
+using SOTS.Void;
 using Terraria;
 using Terraria.ModLoader;
-using Terraria.ID;
+
 namespace SOTS.Projectiles.Crushers
 {    
-    public class BaseArm : ModProjectile 
+    public abstract class CrusherProjectile : ModProjectile 
     {	
 		public override void SetStaticDefaults()
 		{
@@ -27,34 +24,35 @@ namespace SOTS.Projectiles.Crushers
 			projectile.hostile = false;
 			projectile.alpha = 0;
 		}
-		
+
 		///These are for modification
-		private float maxDamage = 5; //total damage %, 1 for no increase, 5 for 500% at max charge, etc
-		private int chargeTime = 180; //charge time in frames
-		private int explosiveCountMin = 3; //amount of explosions minimum
-		private int explosiveCountMax = 5; //amount of explosions max
-		private float explosiveRange = 48; //distance between each explosion
-		private float releaseTime = 120; //how long in frames until auto-release
+		public float maxDamage = 5; //total damage %, 1 for no increase, 5 for 500% at max charge, etc
+		public int chargeTime = 180; //charge time in frames
+		public int explosiveCountMin = 3; //amount of explosions minimum
+		public int explosiveCountMax = 5; //amount of explosions max
+		public float explosiveRange = 48; //distance between each explosion
+		public float releaseTime = 120; //how long in frames until auto-release
 		///Make sure to change the released projectile down near the bottom
-		
+
 		///These are also for modification (but not recommended)
-		private float accSpeed = 0.3f; //speed of the retraction, scales exponentially
-		private float initialExplosiveRange = 48; //distance between player and first explosion (also the distance between the player and the crusher)
-		
+		public float accSpeed = 0.3f; //speed of the retraction, scales exponentially
+		public float initialExplosiveRange = 48; //distance between player and first explosion (also the distance between the player and the crusher)
+
 		///DO NOT MODIFY
-		private bool released = false; 
-		private float rotationTimer = 0; //assume 170 is full rotation, 0 has not been rotated
-		private int explosive = 1;
-		private int currentCharge = 0; //how close are we to chargeTime?
-		private int initiateTimer = 0; //how close are we to releaseTime?
-		private bool flip = false; //direction?
-		private bool initiate = true; //initiate some variables
-		private int initialDamage; //what is the initial damage?
-		private float accelerateAmount = 0;
+		bool released = false;
+		float rotationTimer = 0; //assume 170 is full rotation, 0 has not been rotated
+		int explosive = 1;
+		float currentCharge = 0; //how close are we to chargeTime?
+		float initiateTimer = 0; //how close are we to releaseTime?
+		bool flip = false; //direction?
+		bool initiate = true; //initiate some variables
+		int initialDamage; //what is the initial damage?
+		float accelerateAmount = 0;
 		
-		public override bool PreAI()
-        {
-			if(initiate)
+		public sealed override bool PreAI()
+		{
+			VoidPlayer modPlayer = VoidPlayer.ModPlayer(Main.player[projectile.owner]);
+			if (initiate)
 			{
 				initiate = false;
 				initialDamage = projectile.damage;
@@ -71,7 +69,7 @@ namespace SOTS.Projectiles.Crushers
 			}
 			if(currentCharge < chargeTime && !released) //not charged and not released
 			{
-				currentCharge++;
+				currentCharge += 1 * (1f / Main.player[projectile.owner].meleeSpeed + modPlayer.voidSpeed - 1);
 				explosive = explosiveCountMin + (int)(((float)currentCharge/(float)chargeTime) * (explosiveCountMax + 1 - explosiveCountMin)); //count
 				explosive = explosive < explosiveCountMin ? explosiveCountMin : explosiveCountMax < explosive ? explosiveCountMax : explosive; //making sure the explosive amount is within range
 				/** Here's an example of the maxExplosion/minExplosion system
@@ -85,13 +83,21 @@ namespace SOTS.Projectiles.Crushers
 			}
 			else if(!released) //after full charge, before release
 			{
-				initiateTimer += 1;
+				initiateTimer += 1 * (1f / Main.player[projectile.owner].meleeSpeed + modPlayer.voidSpeed - 1);
 				projectile.damage = (int)(initialDamage * maxDamage);
 			}
 				
 			return projectile.active;
 		}
-		public override void AI()
+		public virtual int ExplosionType()
+        {
+			return mod.ProjectileType("PinkCrush");
+        }
+		public virtual bool UseCustomExplosionEffect(float x, float y, float dist)
+        {
+			return false;
+        }
+		public sealed override void AI()
 		{
 			projectile.ai[0]++;
 			Player player  = Main.player[projectile.owner];
@@ -134,7 +140,8 @@ namespace SOTS.Projectiles.Crushers
 								double distance = (explosiveRange * i) + initialExplosiveRange;
 								float positionX = player.Center.X - (int)(Math.Cos(rad1) * distance);
 								float positionY = player.Center.Y - (int)(Math.Sin(rad1) * distance);
-								Projectile.NewProjectile(positionX, positionY, 0, 0, mod.ProjectileType("PinkCrush"), projectile.damage, initialDamage, Main.myPlayer, 0f, 0f);
+								if(!UseCustomExplosionEffect(positionX, positionY, (float)distance))
+									Projectile.NewProjectile(positionX, positionY, 0, 0, ExplosionType(), projectile.damage, initialDamage, Main.myPlayer, 0f, 0f);
 							}
 						}
 						projectile.Kill();

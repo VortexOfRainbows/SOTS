@@ -27,12 +27,19 @@ namespace SOTS
 			soulAmount = tag.GetInt("soulAmount");
 		}
 		*/
+		public static SOTSPlayer ModPlayer(Player player)
+		{
+			return player.GetModPlayer<SOTSPlayer>();
+		}
 		Vector2 playerMouseWorld;
+		public bool petAdvisor = false;
+		public int typhonRange = 0;
 		public bool weakerCurse = false;
 		public bool vibrantArmor = false;
 		public int brokenFrigidSword = 0;
 		public int shardSpellExtra = 0;
 		public int frigidJavelinBoost = 0;
+		public bool frigidJavelinNoCost = false;
 		public int orbitalCounter = 0;
 		public int shardOnHit = 0;
 		public int bonusShardDamage = 0;
@@ -146,9 +153,29 @@ namespace SOTS
 				}
 			}
 		}
+		int Probe = -1;
+		public void PetAdvisor()
+        {
+			if (Main.myPlayer == player.whoAmI)
+			{
+				if (Probe == -1)
+				{
+					Probe = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, mod.ProjectileType("AdvisorPet"), 0, 0, player.whoAmI, 0);
+				}
+				if (!Main.projectile[Probe].active || Main.projectile[Probe].type != mod.ProjectileType("AdvisorPet") || Main.projectile[Probe].owner != player.whoAmI)
+				{
+					Probe = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, mod.ProjectileType("AdvisorPet"), 0, 0, player.whoAmI, 0);
+				}
+				Main.projectile[Probe].timeLeft = 6;
+			}
+		}
 		public override void ResetEffects()
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
+			if(petAdvisor)
+				PetAdvisor();
+			petAdvisor = false;
+			typhonRange = 0;
 			assassinateFlat = 0;
 			assassinateNum = 1;
 			assassinate = false;
@@ -159,6 +186,7 @@ namespace SOTS
 			vibrantArmor = false;
 			shardSpellExtra = 0;
 			frigidJavelinBoost = 0;
+			frigidJavelinNoCost = false;
 			brokenFrigidSword = brokenFrigidSword > 0 ? brokenFrigidSword - 1 : brokenFrigidSword;
 			orbitalCounter++;
 			if (orbitalCounter % 180 == 0)
@@ -614,31 +642,17 @@ namespace SOTS
 		}
 		public override float UseTimeMultiplier(Item item)
 		{
-			float mod = attackSpeedMod;
-			if(mod > (item.useAnimation / 2f) -1f)
+			float standard = 1 + attackSpeedMod;
+			int time = item.useAnimation;
+			int cannotPass = 2;
+			float current = time / standard;
+			if (current < cannotPass)
 			{
-				mod = ((item.useAnimation / 2f) -1f);
+				standard = time / 2f;
 			}
-			/*
-			if(ceres == true)
-			{
-				item.useTurn = true;
-				item.autoReuse = true;
-			}
-			if(megHat == true && item.useAnimation > 4 && item.magic == true)
-			{
-				return 1.25f;
-			}
-			else if(ceres == true && item.useAnimation > 4)
-			{
-				return 1.2f;
-			}
-			*/
-			if(mod != 0)
-			{
-				return 1 + mod;
-			}
-			return 1f;
+			if (item.channel == false)
+				return standard;
+			return base.UseTimeMultiplier(item);
 		}
 		public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
 		{

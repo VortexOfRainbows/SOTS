@@ -122,7 +122,8 @@ namespace SOTS.Projectiles.Minions
 		int counter = 0;
 		int SentryID = -1;
 		int SentryType = -1;
-		bool runEffectOnce = false; public override void SendExtraAI(BinaryWriter writer)
+		bool runEffectOnce = false; 
+		public override void SendExtraAI(BinaryWriter writer)
 		{
 			writer.Write(SentryID);
 			writer.Write(SentryType);

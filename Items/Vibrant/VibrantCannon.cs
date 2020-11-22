@@ -15,7 +15,7 @@ namespace SOTS.Items.Vibrant
 		}
 		public override void SafeSetDefaults()
 		{
-            item.damage = 20;
+            item.damage = 18;
             item.ranged = true;
             item.width = 36;
             item.height = 30;
@@ -33,7 +33,7 @@ namespace SOTS.Items.Vibrant
 		}
 		public override void GetVoid(Player player)
 		{
-			voidMana = 20;
+			voidMana = 22;
 		}
 		public override Vector2? HoldoutOffset()
 		{

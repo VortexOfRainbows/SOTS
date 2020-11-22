@@ -24,13 +24,12 @@ namespace SOTS.Items.Otherworld.FromChests
 			item.rare = ItemRarityID.LightPurple; 
 			item.shoot = mod.ProjectileType("CataclysmBullet");  
 			item.shootSpeed = 1f;           
-			item.ammo = AmmoID.Bullet;   
+			item.ammo = AmmoID.Bullet;
 		}
-		public override void UpdateInventory(Player player)
+		public void UpdateShoot(Player player)
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-			voidPlayer.voidRegen -= 0.1f;
-			if(voidPlayer.voidMeter > voidPlayer.voidMeterMax2 * 0.5f)
+			if (voidPlayer.voidMeter > voidPlayer.voidMeterMax2 * 0.5f)
 			{
 				item.shoot = mod.ProjectileType("ChargedCataclysmBullet");
 			}
@@ -39,9 +38,15 @@ namespace SOTS.Items.Otherworld.FromChests
 				item.shoot = mod.ProjectileType("CataclysmBullet");
 			}
 		}
+		public override void UpdateInventory(Player player)
+		{
+			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
+			voidPlayer.voidRegen -= 0.1f;
+		}
 		public override bool BeforeConsumeAmmo(Player player)
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
+			UpdateShoot(player);
 			if (voidPlayer.voidMeter > voidPlayer.voidMeterMax2 * 0.5f)
 			{
 				voidPlayer.voidMeter -= 0.75f;

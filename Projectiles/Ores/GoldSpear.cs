@@ -1,8 +1,4 @@
-using System;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-
-using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace SOTS.Projectiles.Ores
@@ -11,13 +7,12 @@ namespace SOTS.Projectiles.Ores
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Gold Spear");
-			
+			DisplayName.SetDefault("Gold Glaive");
 		}
         public override void SetDefaults()
         {
-            projectile.CloneDefaults(367); //obsidian swordfish
-            aiType = 367;
+            projectile.CloneDefaults(ProjectileID.TheRottedFork); //obsidian swordfish
+            aiType = ProjectileID.TheRottedFork;
             projectile.melee = true;
 			projectile.alpha = 0; 
 		}

@@ -1,10 +1,4 @@
-using System;
-using System.IO;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
@@ -12,9 +6,9 @@ using Terraria.ID;
 namespace SOTS.Projectiles.Lightning
 {    
     public class PurpleThunderCluster : ModProjectile 
-    {	float distance = 30f;  
+    {	
+		float distance = 30f;  
 		int rotation = 0;
-		
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Thunder Cluster");
@@ -36,19 +30,15 @@ namespace SOTS.Projectiles.Lightning
 		}
 		public override void AI()
 		{
+			Player player = Main.player[projectile.owner];
 			Vector2 circularLocation = new Vector2(projectile.velocity.X -distance, projectile.velocity.Y).RotatedBy(MathHelper.ToRadians(rotation));
 			rotation += 15;
 			distance -= 0.25f;
 			projectile.scale *= 0.99f;
 			projectile.alpha++;
-			
-			Player player  = Main.player[projectile.owner];
-			
-			
-				int num1 = Dust.NewDust(new Vector2(projectile.Center.X + circularLocation.X - 4, projectile.Center.Y + circularLocation.Y - 4), 4, 4, 173);
-				Main.dust[num1].noGravity = true;
-				Main.dust[num1].velocity *= 0.1f;
-			
+			int num1 = Dust.NewDust(new Vector2(projectile.Center.X + circularLocation.X - 4, projectile.Center.Y + circularLocation.Y - 4), 4, 4, 173);
+			Main.dust[num1].noGravity = true;
+			Main.dust[num1].velocity *= 0.1f;
 		}
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
@@ -56,7 +46,6 @@ namespace SOTS.Projectiles.Lightning
         }
 		public override void Kill(int timeLeft)
 		{
-			
 			Player player = Main.player[projectile.owner];
 			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
 			
@@ -66,7 +55,7 @@ namespace SOTS.Projectiles.Lightning
 			float shootToY = cursorArea.Y - projectile.Center.Y;
 			float distance = (float)System.Math.Sqrt((double)(shootToX * shootToX + shootToY * shootToY));
 	
-			distance = 6.25f / distance;
+			distance = 1.45f / distance;
 		
 			shootToX *= distance * 5;
 			shootToY *= distance * 5;
@@ -74,10 +63,8 @@ namespace SOTS.Projectiles.Lightning
 			Main.PlaySound(SoundID.Item94, (int)(projectile.Center.X), (int)(projectile.Center.Y));
 			if(projectile.owner == Main.myPlayer)
 			{
-				Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, shootToX, shootToY, mod.ProjectileType("PurpleLightning"), projectile.damage, projectile.knockBack, Main.myPlayer, 0f, 0f);
-				Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, shootToX, shootToY, mod.ProjectileType("PurpleLightning"), projectile.damage, projectile.knockBack, Main.myPlayer, 0f, 0f);
-				Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, shootToX, shootToY, mod.ProjectileType("PurpleLightning"), projectile.damage, projectile.knockBack, Main.myPlayer, 0f, 0f);
-				Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, shootToX, shootToY, mod.ProjectileType("PurpleLightning"), projectile.damage, projectile.knockBack, Main.myPlayer, 0f, 0f); //Spawning a projectile
+				for(int i = 0; i < 3; i++)
+					Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, shootToX, shootToY, mod.ProjectileType("PurpleLightning"), projectile.damage, projectile.knockBack, Main.myPlayer, 4.25f, 0f);
 			}
 		}
 	}
