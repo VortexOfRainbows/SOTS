@@ -39,7 +39,6 @@ namespace SOTS.Projectiles.Otherworld
 			projectile.extraUpdates = 4;
 		}
 		Vector2[] trailPos = new Vector2[10];
-		float[] trailRot = new float[10];
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
 			if (runOnce)

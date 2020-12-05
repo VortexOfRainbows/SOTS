@@ -10,7 +10,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Cataclysm Musket Pouch");
-			Tooltip.SetDefault("Grants access to infinite cataclysm bullets\nCataclysm bullets travel faster and more erratically than normal bullets\nThey will also incur 20% damage to an enemy surrounding the initially hit enemy\nWhen above 50% void, bullets will be supercharged at the cost of some void\nSupercharged bullets travel instantly, and gain increased arking capabilies\nDecreases void regen by 1 while in the inventory");
+			Tooltip.SetDefault("Grants access to infinite cataclysm bullets\nCataclysm bullets travel faster and more erratically than normal bullets\nThey will also incur 20% damage to an enemy surrounding the initially hit enemy\nWhen above 50% void, bullets will be supercharged at the cost of some void\nSupercharged bullets travel instantly, and gain increased arcing capabilies\nDecreases void regen by 1 while in the inventory");
 		}public override void SafeSetDefaults()
 		{
 			item.damage = 8;

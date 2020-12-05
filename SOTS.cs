@@ -16,8 +16,9 @@ using SOTS.Items.Otherworld.EpicWings;
 namespace SOTS
 {
 	public class SOTS : Mod
-	{	
-		
+	{
+		public static ModHotKey BlinkHotKey;
+
 		internal static SOTS Instance;
 
 		public SOTS()
@@ -35,6 +36,8 @@ namespace SOTS
 		public override void Load()
 		{
 			Instance = ModContent.GetInstance<SOTS>();
+			BlinkHotKey = RegisterHotKey("Blink", "X");
+
 			if (!Main.dedServ)
             {
                 VoidUI = new VoidUI();
@@ -48,6 +51,7 @@ namespace SOTS
 			Instance = null;
 			VoidBarSprite._backgroundTexture = null;
 			VoidBarBorder._backgroundTexture = null;
+			BlinkHotKey = null;
 		}
 		public override void UpdateUI(GameTime gameTime) 
 		{
@@ -227,8 +231,8 @@ namespace SOTS
 
 				//bossChecklist.Call("AddBossWithInfo", "Antimaterial Antlion", 7.21f, (Func<bool>)(() => SOTSWorld.downedAntilion), "Use [i:" + ItemType("ForbiddenPyramid") + "] in a desert biome");
 				bossChecklist.Call("AddBossWithInfo", "Icy Amalgamation", 8.21f, (Func<bool>)(() => SOTSWorld.downedAmalgamation), "Use [i:" + ItemType("FrostedKey") + "] on a [i:" + ItemType("FrostArtifact") + "] in a snow biome");
-                bossChecklist.Call("AddBossWithInfo", "Celestial Serpent", 10.9f, (Func<bool>)(() => SOTSWorld.downedCelestial), "Use [i:" + ItemType("CelestialTorch") + "] during night time");
-                bossChecklist.Call("AddBossWithInfo", "Subspace Serpent", 10.95f, (Func<bool>)(() => SOTSWorld.downedSubspace), "Tear a rift in hell by detonating a [i:" + ItemType("CatalystBomb") + "]");
+                bossChecklist.Call("AddBossWithInfo", "Celestial Serpent", 11.1f, (Func<bool>)(() => SOTSWorld.downedCelestial), "Use [i:" + ItemType("CelestialTorch") + "] during night time");
+                bossChecklist.Call("AddBossWithInfo", "Subspace Serpent", 11.2f, (Func<bool>)(() => SOTSWorld.downedSubspace), "Tear a rift in hell by detonating a [i:" + ItemType("CatalystBomb") + "]");
             }
         }
 	}

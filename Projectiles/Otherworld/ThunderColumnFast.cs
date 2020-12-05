@@ -40,7 +40,6 @@ namespace SOTS.Projectiles.Otherworld
 			projectile.scale = 0.8f;
 		}
 		Vector2[] trailPos = new Vector2[30];
-		float[] trailRot = new float[30];
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
 			if (runOnce)
@@ -74,7 +73,7 @@ namespace SOTS.Projectiles.Otherworld
 							y = 0;
                         }
 						if(trailPos[k] != projectile.Center)
-							Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, trailRot[k], drawOrigin, scale, SpriteEffects.None, 0f);
+							Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, betweenPositions.ToRotation() + MathHelper.ToRadians(90), drawOrigin, scale, SpriteEffects.None, 0f);
 					}
 				}
 				previousPosition = currentPos;
@@ -85,15 +84,11 @@ namespace SOTS.Projectiles.Otherworld
 		public void cataloguePos()
         {
 			Vector2 current = projectile.Center;
-			float currentR = projectile.rotation;
 			for (int i = 0; i < trailPos.Length; i++)
 			{
 				Vector2 previousPosition = trailPos[i];
-				float previousR = trailRot[i];
 				trailPos[i] = current;
 				current = previousPosition;
-				trailRot[i] = currentR;
-				currentR = previousR;
 			}
         }
 		public void checkPos()

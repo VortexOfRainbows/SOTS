@@ -9,7 +9,7 @@ namespace SOTS.Items.OreItems
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Gold Ark Staff");
+			DisplayName.SetDefault("Gold Arc Staff");
 			Tooltip.SetDefault("Deal 150% damage to up to 2 enemies surrounding the initially hit enemy");
 		}
 		public override void SafeSetDefaults()

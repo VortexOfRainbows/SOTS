@@ -13,7 +13,7 @@ namespace SOTS.Projectiles
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Wormwood Bullet");
-			ProjectileID.Sets.TrailCacheLength[projectile.type] = 60;
+			ProjectileID.Sets.TrailCacheLength[projectile.type] = 50;
 			ProjectileID.Sets.TrailingMode[projectile.type] = 1;
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
@@ -54,7 +54,8 @@ namespace SOTS.Projectiles
 			bounceCount++;
 			if(bounceCount > 5)
 			{
-				projectile.timeLeft = 60;
+				if(projectile.timeLeft > 60)
+					projectile.timeLeft = 60;
 				end = true;
 				projectile.velocity *= 0;
 			}

@@ -19,9 +19,11 @@ namespace SOTS
 	public class SOTSItem : GlobalItem
 	{
 		public static int[] rarities1;
+		public static int[] dedicated;
 		public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
 		{
-			rarities1 = new int[] { mod.ItemType("StarlightAlloy"), mod.ItemType("HardlightAlloy"), mod.ItemType("OtherworldlyAlloy"), mod.ItemType("PotGenerator"), mod.ItemType("PrecariousCluster") };
+			rarities1 = new int[] { mod.ItemType("StarlightAlloy"), mod.ItemType("HardlightAlloy"), mod.ItemType("OtherworldlyAlloy"), mod.ItemType("PotGenerator"), mod.ItemType("PrecariousCluster"), mod.ItemType("Calculator")};
+			dedicated = new int[] { mod.ItemType("Calculator"), mod.ItemType("TerminatorAcorns") };
 			if (rarities1.Contains(item.type))
 			{
 				foreach (TooltipLine line2 in tooltips)
@@ -32,6 +34,17 @@ namespace SOTS
 					}
 				}
 			}
+			if(dedicated.Contains(item.type))
+            {
+				Color color = Color.White;
+				if (item.type == mod.ItemType("TerminatorAcorns"))
+					color = new Color(255, 115, 0);
+				if (item.type == mod.ItemType("Calculator"))
+					color = new Color(0, 130, 235, 255);
+				TooltipLine line = new TooltipLine(mod, "Dedicated", "Dedicated Item");
+				line.overrideColor = color;
+				tooltips.Add(line);
+            }
 		}
 		public Tile FindTATile(Player player)
         {

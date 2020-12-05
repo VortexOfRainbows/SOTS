@@ -15,12 +15,12 @@ namespace SOTS.Items.Celestial
 		}
 		public override void SetDefaults()
 		{
-            item.damage = 60; 
+            item.damage = 66; 
             item.magic = true; 
             item.width = 28;   
             item.height = 30;   
-            item.useTime = 34;   
-            item.useAnimation = 34;
+            item.useTime = 30;   
+            item.useAnimation = 30;
             item.useStyle = 5;    
             item.noMelee = true;  
             item.knockBack = 6.5f;
@@ -30,10 +30,9 @@ namespace SOTS.Items.Celestial
             item.autoReuse = true;
             item.shoot = mod.ProjectileType("DeathBlade"); 
             item.shootSpeed = 9.5f;
-			item.mana = 14;
+			item.mana = 12;
 
 		}
-
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);

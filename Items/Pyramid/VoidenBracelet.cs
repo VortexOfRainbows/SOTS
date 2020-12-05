@@ -1,13 +1,6 @@
-using System;
-using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.DataStructures;
-using Terraria.Enums;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.ObjectData;
-using Microsoft.Xna.Framework.Graphics;
 using SOTS.Void;
 
 namespace SOTS.Items.Pyramid
@@ -18,7 +11,7 @@ namespace SOTS.Items.Pyramid
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Voiden Bracelet");
-			Tooltip.SetDefault("Increases void damage and magic damage by 8%\nDecreases void cost by 10%");
+			Tooltip.SetDefault("Increases void damage and magic damage by 8%\nReduces void cost by 8%");
 		}
 		public override void SetDefaults()
 		{
@@ -36,7 +29,7 @@ namespace SOTS.Items.Pyramid
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			voidPlayer.voidDamage += 0.08f;
-			voidPlayer.voidCost -= 0.10f;
+			voidPlayer.voidCost -= 0.08f;
 			player.magicDamage += 0.08f;
 		}
 		public override void AddRecipes()

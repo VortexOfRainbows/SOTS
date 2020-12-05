@@ -12,14 +12,17 @@ New Subclass (void)
 -Exists on melee, ranged, and magic items
 
 Currents Stuctures:
+-Ice Monumentbro 
 -Pyramid Dungeon Worldgen
 -Planetarium Temple Worldgen
 
-Development and Art - Vortex#6230
-Art - Blasfah
+Credits:
+-Development and Art - Vortex#6230
+-Art - Blasfah
+-Misc - FlameFreezer
 
 Update 0.19.0
--Big thanks to qwerty3.14 for their extensive feedback
+-Big thanks to qwerty3.14 for their extensive feedback in many areas of the mod!
 
 Update 0.18.4
 -Pyramid prioritizes finding a non-underground desert

@@ -15,18 +15,12 @@ Priority: Remaining Spirits
 	1. Attaches a second player to you
 13. Dissolving Element Blocks
 	1. Give off cool particles, can be used in summoning rituals
-20. 3 Different locked chests
-	1. Meteorite: Fire and meteorite based
-	2. Sunplate: Electric based items
-	3. Avaritia: "Code Based Items"
-	4. Must unlock chests via key obtained from advisor
-	5. Each chest contains items and some material to craft items
 
 Next Update:
 1. Pyramid chests to no longer spawn close to surface
 3. Coconut Gun && Kitchen Sink
 6. Nerf construct damage once again?
-8. Flowering slimes to attack players only after injured
+7. Nerf spirit health
 9. Update boss checklist support (later)
 
 Next Development Time: 
@@ -36,6 +30,49 @@ Next Development Time:
 	1. Grants an eye turret that you can double-tap down to fire a laser with
 	2. Laser does little damage, but inflicts strong debuff that increases crit damage and chance upon enemy
 	3. Costs 5 void  to launch laser
+
+12/4/20 & 12/5/20
+1. Largely decreased immune time and largely increased cooldown for blink pack
+2. Terminator Acorns finished
+	1. Syncs in multiplayer
+3. Balance
+	1. Apocalypse Damage 70 => 100
+	2. Armaggedon Damage 70 => 100
+	3. Ceremonial Knife Damage 66 => 60, Lifesteal nerfed drastically 5% => 2.5% damage
+	4. Dance of Death Damage 60 => 66, Use Time 34 => 30, Mana Cost 14 => 12
+	5. Dimension Shredder Damage 34 => 38
+	6. Plasma Cutter but on a Chain Damage 110 => 140
+	7. Galaxy Blade Damage 70 => 84
+	8. Voidspace Aura Damage 48 => 46, Overall reduced stat gain, Slower attack speed, but Sphere radius scales slightly better
+	9. Starstorm Spell Damage 56 => 60, Use Time 11 => 10, Velocity 51f => 45f, stars spawn slightly closer
+	10. Stellar Serpent Staff Damage 40 => 50, Velocity 21.5f => 20f, Mana Cost 27 => 22, 
+		Now induces less Immunity frames, 
+		No longer crafted with wormwood staff, 
+		Lasts longer 44 => 60, 
+		creates less children projectiles 15 => 12
+	11. Stellar Shot Use Time 21 => 18, Damage 42 => 44
+	12. Serpent Launcher and Ethereal Scepter remained unchanged.
+4. Decreases trail length slightly for some projectiles to make them less distracting...
+	1. Wormwood staff, Starcore Assault rifle, Terminator Squirrel
+5. Fix multiplayer syncing bugs for some trailing projectiles...
+	1. Terminator Acorns, Cataclysm Bullets, Hardlight Arrows
+
+11/29/20 & 12/3/20
+1. Poyoyo Work
+2. Cursed Apple Sprite
+3. Sprited Terminator Acorns
+Been kinda busy cannot get much done sadly
+
+11/27/20 & 11/28/20
+1. Vibrancy Module
+2. Blink Pack Finished, works fine in multiplayer
+3. Machina Booster costs starlight bar
+4. Poyoyo added, works fine in multiplayer
+
+11/24/20
+1. Starcore Assault Rifle 
+2. Checked: Jellyfish staves sync fine!
+	1. Starcore also seems to sync fine
 
 11/21/20 part 2
 1. Void regen is more dynamic

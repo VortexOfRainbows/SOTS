@@ -70,6 +70,7 @@ namespace SOTS.Items.Otherworld.EpicWings
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(null, "TwilightGyroscope", 1);
 			recipe.AddIngredient(null, "DissolvingAether", 1);
+			recipe.AddIngredient(null, "StarlightAlloy", 20);
 			recipe.AddIngredient(ItemID.SoulofFlight, 20);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.SetResult(this);
@@ -78,6 +79,7 @@ namespace SOTS.Items.Otherworld.EpicWings
 			recipe = new ModRecipe(mod);
 			recipe.AddIngredient(null, "TwilightGyroscope", 1);
 			recipe.AddIngredient(null, "DissolvingAether", 1);
+			recipe.AddIngredient(null, "StarlightAlloy", 20);
 			recipe.AddIngredient(ItemID.SoulofFlight, 20);
 			recipe.AddTile(mod.TileType("HardlightFabricatorTile"));
 			recipe.SetResult(this);

@@ -48,9 +48,9 @@ namespace SOTS.Projectiles.Celestial
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             target.immune[projectile.owner] = 4;
-			if(crit && damage > 20 && projectile.owner == Main.myPlayer)
+			if(crit && damage > 40 && projectile.owner == Main.myPlayer)
 			{
-				Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, mod.ProjectileType("HealProj"), 0, 0, projectile.owner, damage / 20, 7);
+				Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, mod.ProjectileType("HealProj"), 0, 0, projectile.owner, damage / 40, 7);
 			}
         }
 		public void LaunchLaser(Vector2 area)

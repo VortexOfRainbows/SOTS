@@ -15,7 +15,7 @@ namespace SOTS.Items.Celestial
 		}
 		public override void SafeSetDefaults()
 		{
-			item.damage = 70;
+			item.damage = 100;
 			item.melee = true;
 			item.width = 26;
 			item.height = 26;

@@ -110,6 +110,7 @@ namespace SOTS.Projectiles.Lightning
 			projectile.tileCollide = false;
 			projectile.velocity *= 0f;
 			projectile.friendly = false;
+			projectile.netUpdate = true;
 		}
 		int counter = 0;
 		public override bool PreAI()

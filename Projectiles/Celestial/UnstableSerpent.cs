@@ -19,9 +19,7 @@ namespace SOTS.Projectiles.Celestial
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Unstable Serpent");
-			
 		}
-		
         public override void SetDefaults()
         {
 			projectile.width = 48;
@@ -35,7 +33,12 @@ namespace SOTS.Projectiles.Celestial
 			projectile.alpha = 145;
 			projectile.netImportant = true;
 		}
-		public override void OnHitPlayer(Player target, int damage, bool crit) 
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+			target.immune[projectile.owner] = 5;
+            base.OnHitNPC(target, damage, knockback, crit);
+        }
+        public override void OnHitPlayer(Player target, int damage, bool crit) 
 		{
 			target.AddBuff(31, 90, false);
 		}	
@@ -61,7 +64,7 @@ namespace SOTS.Projectiles.Celestial
 				projectile.friendly = true;
 				projectile.hostile = false;
 				projectile.magic = true;
-				projectile.timeLeft = projectile.timeLeft > 90 ? 44 : projectile.timeLeft;
+				projectile.timeLeft = projectile.timeLeft > 90 ? 60 : projectile.timeLeft;
 				modUnit = 5f;
 			}
 			else
@@ -93,7 +96,7 @@ namespace SOTS.Projectiles.Celestial
 			{
 				int Probe = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("UnstableSerpent"), projectile.damage, 0, projectile.owner, projectile.ai[0], 0);
 				Main.projectile[Probe].rotation = projectile.rotation;
-				Main.projectile[Probe].timeLeft = 15;
+				Main.projectile[Probe].timeLeft = 12;
 				Main.projectile[Probe].frame = 1;
 				projectile.netUpdate = true;
 			}

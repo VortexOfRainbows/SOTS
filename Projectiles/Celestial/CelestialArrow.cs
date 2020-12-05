@@ -15,7 +15,7 @@ namespace SOTS.Projectiles.Celestial
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Celestial Rocket");
+			DisplayName.SetDefault("Celestial Arrow");
 			
 		}
 		
@@ -38,18 +38,14 @@ namespace SOTS.Projectiles.Celestial
 			{
 				for(int i = 0; i < 360; i += 24)
 				{
-				Vector2 circularLocation = new Vector2(-15, 0).RotatedBy(MathHelper.ToRadians(i));
-				
-				int num1 = Dust.NewDust(new Vector2(projectile.Center.X + circularLocation.X - 4, projectile.Center.Y + circularLocation.Y - 4), 4, 4, 56);
-				Main.dust[num1].noGravity = true;
-				Main.dust[num1].velocity *= 0.1f;
-				
-				circularLocation = new Vector2(-21, 0).RotatedBy(MathHelper.ToRadians(i));
-				
-				num1 = Dust.NewDust(new Vector2(projectile.Center.X + circularLocation.X - 4, projectile.Center.Y + circularLocation.Y - 4), 4, 4, 173);
-				Main.dust[num1].noGravity = true;
-				Main.dust[num1].velocity *= 0.1f;
-				
+					Vector2 circularLocation = new Vector2(-15, 0).RotatedBy(MathHelper.ToRadians(i));
+					int num1 = Dust.NewDust(new Vector2(projectile.Center.X + circularLocation.X - 4, projectile.Center.Y + circularLocation.Y - 4), 4, 4, 56);
+					Main.dust[num1].noGravity = true;
+					Main.dust[num1].velocity *= 0.1f;
+					circularLocation = new Vector2(-21, 0).RotatedBy(MathHelper.ToRadians(i));
+					num1 = Dust.NewDust(new Vector2(projectile.Center.X + circularLocation.X - 4, projectile.Center.Y + circularLocation.Y - 4), 4, 4, 173);
+					Main.dust[num1].noGravity = true;
+					Main.dust[num1].velocity *= 0.1f;
 				}
 				
 				if(Main.myPlayer == projectile.owner)

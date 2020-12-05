@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static SOTS.SOTS;
@@ -32,6 +33,9 @@ namespace SOTS
 			return player.GetModPlayer<SOTSPlayer>();
 		}
 		Vector2 playerMouseWorld;
+		public float BlinkedAmount = 0;
+		public int BlinkType = 0;
+		public int BlinkDamage = 0;
 		public bool petAdvisor = false;
 		public int typhonRange = 0;
 		public bool weakerCurse = false;
@@ -153,6 +157,17 @@ namespace SOTS
 				}
 			}
 		}
+		public override void ProcessTriggers(TriggersSet triggersSet)
+		{
+			if (SOTS.BlinkHotKey.JustPressed)
+			{
+				if (BlinkType == 1 && !player.HasBuff(BuffID.ChaosState) && !player.mount.Active && !(player.grappling[0] >= 0))
+				{
+					Vector2 toCursor = Main.MouseWorld - player.Center;
+					Projectile.NewProjectile(player.Center, toCursor.SafeNormalize(Vector2.Zero), mod.ProjectileType("Blink1"), 0, 0, player.whoAmI);
+				}
+			}
+		}
 		int Probe = -1;
 		public void PetAdvisor()
         {
@@ -172,7 +187,18 @@ namespace SOTS
 		public override void ResetEffects()
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-			if(petAdvisor)
+			if(player.HasBuff(BuffID.ChaosState))
+            {
+				BlinkedAmount = 0;
+			}
+			if(BlinkedAmount > 0 && BlinkedAmount < 2)
+            {
+				BlinkedAmount -= 0.002f;
+				if (BlinkedAmount < 0) BlinkedAmount = 0;
+            }
+			BlinkDamage = 0;
+			BlinkType = 0;
+			if (petAdvisor)
 				PetAdvisor();
 			petAdvisor = false;
 			typhonRange = 0;

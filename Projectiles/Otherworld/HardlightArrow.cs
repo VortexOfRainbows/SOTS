@@ -98,6 +98,17 @@ namespace SOTS.Projectiles.Otherworld
 		Vector2 storeVelocity = Vector2.Zero;
 		public override bool PreAI()
 		{
+			if(projectile.ai[1] == -1)
+            {
+				projectile.ai[1]--;
+				for (int i = 0; i < 20; i++)
+				{
+					int dust = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Electric);
+					Main.dust[dust].scale *= 1f;
+					Main.dust[dust].velocity += projectile.velocity * 0.1f;
+					Main.dust[dust].noGravity = true;
+				}
+			}
 			projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
 			if (runOnce)
 			{
@@ -151,19 +162,30 @@ namespace SOTS.Projectiles.Otherworld
 		}
 		public void triggerStop()
 		{
-			for (int i = 0; i < 20; i++)
-			{
-				int dust = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Electric);
-				Main.dust[dust].scale *= 1f;
-				Main.dust[dust].velocity += projectile.velocity * 0.1f;
-				Main.dust[dust].noGravity = true;
-			}
 			endHow = 1;
 			projectile.tileCollide = false;
 			projectile.friendly = false;
 			projectile.velocity *= 0f;
 			storeVelocity = Vector2.Zero;
+			projectile.ai[1] = -1;
+			projectile.netUpdate = true;
 		}
-    }
+		public override void SendExtraAI(BinaryWriter writer)
+		{
+			writer.Write(projectile.tileCollide);
+			writer.Write(projectile.friendly);
+			writer.Write(storeVelocity.X);
+			writer.Write(storeVelocity.Y);
+			base.SendExtraAI(writer);
+		}
+		public override void ReceiveExtraAI(BinaryReader reader)
+		{
+			projectile.tileCollide = reader.ReadBoolean();
+			projectile.friendly = reader.ReadBoolean();
+			storeVelocity.X = reader.ReadSingle();
+			storeVelocity.Y = reader.ReadSingle();
+			base.ReceiveExtraAI(reader);
+		}
+	}
 }
 		

@@ -16,12 +16,12 @@ namespace SOTS.Items.Celestial
 		}
 		public override void SetDefaults()
 		{
-            item.damage = 56;
+            item.damage = 60;
 			item.magic = true;
             item.width = 28;    
             item.height = 30; 
-            item.useTime = 11; 
-            item.useAnimation = 11;
+            item.useTime = 10; 
+            item.useAnimation = 10;
             item.useStyle = 5;    
             item.knockBack = 1.5f;
 			item.value = Item.sellPrice(0, 9, 0, 0);
@@ -29,10 +29,9 @@ namespace SOTS.Items.Celestial
 			item.UseSound = SoundID.Item92;
             item.noMelee = true; 
             item.autoReuse = true;
-            item.shootSpeed = 51f; 
+            item.shootSpeed = 45f; 
 			item.shoot = mod.ProjectileType("StellarStar");
 			item.mana = 6;
-
 		}
 		public override void AddRecipes()
 		{
@@ -52,7 +51,7 @@ namespace SOTS.Items.Celestial
             for (int i = 0; i < numberProjectiles; i++)
             {
 				counter += Main.rand.Next(85, 216);
-				Vector2 rotateArea = new Vector2(550, 0).RotatedBy(MathHelper.ToRadians(counter));
+				Vector2 rotateArea = new Vector2(500, 0).RotatedBy(MathHelper.ToRadians(counter));
 				rotateArea += cursorPos;
 				rotateArea.X += Main.rand.Next(-50, 51);
 				rotateArea.Y += Main.rand.Next(-50, 51);

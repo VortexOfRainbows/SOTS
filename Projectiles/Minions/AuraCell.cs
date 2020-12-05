@@ -42,11 +42,11 @@ namespace SOTS.Projectiles.Minions
 				projectile.netUpdate = true;
 
 			Player player = Main.player[projectile.owner];
-			sphereRadius = 255f + (130f * (player.minionDamage - 1f)) + (130f * (player.allDamage - 1f));
+			sphereRadius = 255f + (150f * (player.minionDamage - 1f)) + (150f * (player.allDamage - 1f));
 			Lighting.AddLight(projectile.Center, sphereRadius / 255f, sphereRadius / 255f, sphereRadius / 255f);
 			if(projectile.ai[0] >= 10)
 			{
-				projectile.ai[0] = -75;
+				projectile.ai[0] = -85;
 			}
             for (int i = 0; i < Main.maxNPCs; i++)
             {

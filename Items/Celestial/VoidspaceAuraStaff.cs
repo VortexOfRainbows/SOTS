@@ -11,11 +11,11 @@ namespace SOTS.Items.Celestial
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Voidspace Aura Staff");
-			Tooltip.SetDefault("Summons a voidspace cell on your cursor\nGrants stat boosts while in the radius of the cell\nVoid regen increased by 5, life regen by 5, defense by 5, and reduces damage taken by 10%\nDamages all enemies within range\nRange scales with summon damage");
+			Tooltip.SetDefault("Summons a voidspace cell on your cursor\nGrants stat boosts while in the radius of the cell\nVoid regen increased by 4, life regen by 4, defense by 4, and reduces damage taken by 5%\nDamages all enemies within range\nRange scales with summon damage");
 		}
         public override void SetDefaults()
         {
-            item.damage = 48;  
+            item.damage = 46;  
             item.mana = 12;   
             item.width = 44;    
             item.height = 44;    

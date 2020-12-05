@@ -13,7 +13,7 @@ namespace SOTS.Items.SpecialDrops
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Zephyrous Zeppelin");
-			Tooltip.SetDefault("Surrounded by a ring of razorwater");
+			Tooltip.SetDefault("Surrounded by a ring of razorwater that deals 75% damage");
 		}
         public override void SetDefaults()
         {

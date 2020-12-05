@@ -16,21 +16,21 @@ namespace SOTS.Items.Celestial
 		}
 		public override void SetDefaults()
 		{
-            item.damage = 40;  
+            item.damage = 50;  
             item.magic = true;  
             item.width = 46;    
             item.height = 46;   
             item.useTime = 40;  
             item.useAnimation = 40;
             item.useStyle = 1;    
-			item.mana = 27;
+			item.mana = 22;
             item.knockBack = 5.5f;
 			item.value = Item.sellPrice(0, 9, 50, 0);
             item.rare = 8;
             item.UseSound = SoundID.Item119;
             item.autoReuse = true;
 			item.shoot = mod.ProjectileType("UnstableSerpent"); 
-            item.shootSpeed = 21.5f;
+            item.shootSpeed = 20f;
 			item.noMelee = true;
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
@@ -47,7 +47,6 @@ namespace SOTS.Items.Celestial
 		{
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(null, "StarShard", 15);
-			recipe.AddIngredient(null, "WormWoodStaff", 1);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.SetResult(this);
 			recipe.AddRecipe();

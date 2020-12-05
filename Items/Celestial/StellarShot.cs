@@ -16,12 +16,12 @@ namespace SOTS.Items.Celestial
 		}
 		public override void SetDefaults()
 		{
-            item.damage = 42;   
+            item.damage = 44;   
             item.ranged = true;   
             item.width = 60;    
             item.height = 24;  
-            item.useTime = 21;  
-            item.useAnimation = 21;
+            item.useTime = 18;  
+            item.useAnimation = 18;
             item.useStyle = 5;    
             item.noMelee = true; 
             item.knockBack = 1;

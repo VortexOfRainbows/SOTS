@@ -187,10 +187,6 @@ namespace SOTS.Projectiles.Otherworld
 			checkPos();
 			Player player = Main.player[projectile.owner];
 			Vector2 toPlayer = player.Center - projectile.Center;
-			if(counter2 > 30 - projectile.ai[0] * 1)
-            {
-
-			}
 			counter++;
 			counter2++;
 			if(counter >= 0)
@@ -212,6 +208,21 @@ namespace SOTS.Projectiles.Otherworld
 			projectile.tileCollide = false;
 			projectile.friendly = false;
 			projectile.velocity *= 0f;
+			projectile.netUpdate = true;
+		}
+		public override void SendExtraAI(BinaryWriter writer)
+		{
+			writer.Write(projectile.tileCollide);
+			writer.Write(projectile.friendly);
+			writer.Write(endHow);
+			base.SendExtraAI(writer);
+		}
+		public override void ReceiveExtraAI(BinaryReader reader)
+		{
+			projectile.tileCollide = reader.ReadBoolean();
+			projectile.friendly = reader.ReadBoolean();
+			endHow = reader.ReadInt32();
+			base.ReceiveExtraAI(reader);
 		}
 	}
 }
