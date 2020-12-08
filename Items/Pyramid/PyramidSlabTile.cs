@@ -9,6 +9,7 @@ namespace SOTS.Items.Pyramid
 	{
 		public override void SetDefaults()
 		{
+			Main.tileMerge[Type][ModContent.TileType<OvergrownPyramidTile>()] = true;
 			Main.tileSolid[Type] = true;
 			Main.tileMergeDirt[Type] = true;
 			Main.tileBlockLight[Type] = true;
@@ -23,10 +24,6 @@ namespace SOTS.Items.Pyramid
 		}
 		public override bool CanExplode(int i, int j)
 		{
-			if (Main.tile[i, j].type == mod.TileType("PyramidSlab"))
-			{
-				return false;
-			}
 			return false;
 		}
 		public override bool Slope(int i, int j)

@@ -31,6 +31,18 @@ Next Development Time:
 	2. Laser does little damage, but inflicts strong debuff that increases crit damage and chance upon enemy
 	3. Costs 5 void  to launch laser
 
+12/5/20 & 12/6/20
+1. Increased wall place speeds to match vanilla
+2. New blocks for the new pyramid room
+	1. Make sure the grass and vines are server synced
+3. Added 8 more pyramid room variants
+	1. Slightly increased room spawn rate to make up for new overgrowth room
+4. Refracting Crystal
+5. Zepline block has a function now
+6. Must still server sync zepline block
+	1. Block breaking
+	2. Also must zeppelin fishing requirements no longer require setpiece
+
 12/4/20 & 12/5/20
 1. Largely decreased immune time and largely increased cooldown for blink pack
 2. Terminator Acorns finished

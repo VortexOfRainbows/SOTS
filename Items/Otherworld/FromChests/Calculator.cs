@@ -17,7 +17,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		{
             item.width = 30;     
             item.height = 36;   
-            item.value = Item.sellPrice(0, 4, 50, 0);
+            item.value = Item.sellPrice(0, 10, 0, 0);
 			item.rare = ItemRarityID.LightPurple;
 			item.accessory = true;
 		}

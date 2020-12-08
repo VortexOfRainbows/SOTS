@@ -13,16 +13,15 @@ namespace SOTS.Items.Pyramid
 			DisplayName.SetDefault("Unsafe Pyramid Wall");
 			Tooltip.SetDefault("Changes the biome to pyramid when in front of\nAlso envokes the Pharaoh's Curse");
 		}
-
 		public override void SetDefaults()
 		{
-			item.width = 16;
-			item.height = 16;
+			item.width = 32;
+			item.height = 32;
 			item.maxStack = 999;
 			item.useTurn = true;
 			item.autoReuse = true;
-			item.useAnimation = 14;
-			item.useTime = 10;
+			item.useAnimation = 15;
+			item.useTime = 7;
 			item.useStyle = 1;
 			item.rare = 5;
 			item.consumable = true;
@@ -52,6 +51,43 @@ namespace SOTS.Items.Pyramid
 			recipe.AddIngredient(null, "PyramidWall", 4);
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.SetResult(ItemID.SandstoneSlab, 2);
+			recipe.AddRecipe();
+		}
+	}
+	public class OvergrownPyramidWall : ModItem
+	{
+		public override void SetStaticDefaults()
+		{
+			DisplayName.SetDefault("Unsafe Overgrown Pyramid Wall");
+			Tooltip.SetDefault("Changes the biome to pyramid when in front of\nAlso envokes the Pharaoh's Curse");
+		}
+		public override void SetDefaults()
+		{
+			item.width = 28;
+			item.height = 28;
+			item.maxStack = 999;
+			item.useTurn = true;
+			item.autoReuse = true;
+			item.useAnimation = 15;
+			item.useTime = 7;
+			item.useStyle = 1;
+			item.rare = 5;
+			item.consumable = true;
+			item.createWall = mod.WallType("OvergrownPyramidWallWall");
+		}
+		public override void AddRecipes()
+		{
+			ModRecipe recipe = new ModRecipe(mod);
+			recipe = new ModRecipe(mod);
+			recipe.AddIngredient(null, "OvergrownPyramidBlock", 1);
+			recipe.AddTile(TileID.WorkBenches);
+			recipe.SetResult(this, 4);
+			recipe.AddRecipe();
+
+			recipe = new ModRecipe(mod);
+			recipe.AddIngredient(this, 4);
+			recipe.AddTile(TileID.WorkBenches);
+			recipe.SetResult(ModContent.ItemType<OvergrownPyramidBlock>(), 1);
 			recipe.AddRecipe();
 		}
 	}

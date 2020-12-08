@@ -15,7 +15,6 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void SetDefaults()
 		{
-
 			item.damage = 18;
 			item.ranged = true;
 			item.width = 22;
@@ -33,20 +32,17 @@ namespace SOTS.Items.Pyramid
             item.shootSpeed = 20;
 			item.useAmmo = AmmoID.Arrow;
 		}
-		
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-          {
-			  
-              int numberProjectiles = 1;
-              for (int i = 0; i < numberProjectiles; i++)
-              {
-                  Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(2)); // This defines the projectiles random spread . 30 degree spread.
-                  Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI);
-                  Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X * 0.4f, perturbedSpeed.Y * 0.4f, type, damage, knockBack, player.whoAmI);
+        {
+		   int numberProjectiles = 1;
+			for (int i = 0; i < numberProjectiles; i++)
+			{
+			    Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(2)); // This defines the projectiles random spread . 30 degree spread.
+			    Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI);
+			    Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X * 0.4f, perturbedSpeed.Y * 0.4f, type, damage, knockBack, player.whoAmI);
 
-              }
-              return false; 
-			  
-	}
+			}
+			return false; 
+		}
 	}
 }

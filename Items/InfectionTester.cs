@@ -170,7 +170,12 @@ namespace SOTS.Items
 			position = Main.MouseWorld;
 			if (player.altFunctionUse == 2)
 			{
-				Generate(position, mod, false);
+				SOTSWorldgenHelper.GenerateAcediaRoom((int)position.X /16, (int)position.Y / 16, mod, Main.rand.Next(-1, 2));
+				return false;
+			}
+			if (player.altFunctionUse == 2)
+			{
+				//Generate(position, mod, false);
 				return false;
 			}
 			Generate(position, mod, true);

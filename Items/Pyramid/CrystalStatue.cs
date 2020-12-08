@@ -17,7 +17,8 @@ namespace SOTS.Items.Pyramid
         {
             Main.tileFrameImportant[Type] = true;
             TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
-			TileObjectData.newTile.Origin = new Point16(0, 1);
+            TileObjectData.newTile.CoordinateHeights = new int[] { 16, 18 };
+            TileObjectData.newTile.Origin = new Point16(0, 1);
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Crystal Statue");		
 			AddMapEntry(new Color(175, 0, 0), name);
@@ -26,10 +27,7 @@ namespace SOTS.Items.Pyramid
             TileObjectData.addTile(Type);
 			mineResist = 2.5f;
 			dustType = 12;
- 
         }
- 
- 
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
             Item.NewItem(i * 16, j * 16, 32, 32, ItemID.LifeCrystal);//this defines what to drop when this tile is destroyed

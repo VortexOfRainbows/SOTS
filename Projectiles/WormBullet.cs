@@ -97,6 +97,8 @@ namespace SOTS.Projectiles
 		float direction = 0.03f;
         public override void AI()
 		{
+			if (end)
+				projectile.friendly = false;
 			if (runOnce)
 			{
 				if(projectile.velocity.Y < 0)

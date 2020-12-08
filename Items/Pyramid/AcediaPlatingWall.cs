@@ -3,13 +3,13 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 
-namespace SOTS.Items.Otherworld
+namespace SOTS.Items.Pyramid
 {
-	public class PortalPlatingWall : ModItem
+	public class AcediaPlatingWall : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Avaritian Plating Wall");
+			DisplayName.SetDefault("Acedia Plating Wall");
 			Tooltip.SetDefault("");
 		}
 
@@ -25,38 +25,37 @@ namespace SOTS.Items.Otherworld
 			item.useStyle = 1;
 			item.rare = 9;
 			item.consumable = true;
-			item.createWall = mod.WallType("AvaritianPlatingWallWall");
+			item.createWall = mod.WallType("AcediaPlatingWallWall");
 		}
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "AvaritianPlating", 1);
+			recipe.AddIngredient(null, "AcediaPlating", 1);
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.SetResult(this, 4);
 			recipe.AddRecipe();
 		}
 	}
-	public class AvaritianPlatingWallWall : ModWall
+	public class AcediaPlatingWallWall : ModWall
 	{
 		public override void SetDefaults()
 		{
 			Main.wallLargeFrames[Type] = (byte)2;
 			Main.wallHouse[Type] = true;
-			dustType = mod.DustType("AvaritianDust");
-			drop = mod.ItemType("PortalPlatingWall");
-			AddMapEntry(new Color(52, 150, 140));
+			dustType = mod.DustType("AcedianDust");
+			drop = mod.ItemType("AcediaPlatingWall");
+			AddMapEntry(new Color(180, 64, 170));
 		}
 	}
-	public class PortalPlatingWallWall : ModWall
+	public class UnsafeAcediaWallWall : ModWall
 	{
-
 		public override void SetDefaults()
 		{
 			Main.wallLargeFrames[Type] = (byte)2;
 			Main.wallHouse[Type] = false;
-			dustType = mod.DustType("AvaritianDust");
-			drop = mod.ItemType("PortalPlatingWall");
-			AddMapEntry(new Color(52, 150, 140));
+			dustType = mod.DustType("AcedianDust");
+			drop = mod.ItemType("AcediaPlatingWall");
+			AddMapEntry(new Color(180, 64, 170));
 		}
 		public override bool CanExplode(int i, int j)
 		{
@@ -65,9 +64,6 @@ namespace SOTS.Items.Otherworld
 		public override void KillWall(int i, int j, ref bool fail)
 		{
 			fail = true;
-
-			//if (SOTSWorld.downedEntity)
-				fail = false;
 		}
 	}
 }

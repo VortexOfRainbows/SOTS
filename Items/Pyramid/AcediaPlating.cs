@@ -3,13 +3,13 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace SOTS.Items.Otherworld
+namespace SOTS.Items.Pyramid
 {
-	public class PortalPlating : ModItem
+	public class AcediaPlating : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Avaritian Portal Plating");
+			DisplayName.SetDefault("Acedia Portal Plating");
 			Tooltip.SetDefault("'It bares striking resemblance to luminite'");
 		}
 
@@ -25,26 +25,25 @@ namespace SOTS.Items.Otherworld
 			item.useStyle = 1;
 			item.rare = ItemRarityID.Cyan;
 			item.consumable = true;
-			item.createTile = mod.TileType("PortalPlatingTile");
+			item.createTile = mod.TileType("AcediaPlatingTile");
 		}
 	}
-	public class PortalPlatingTile : ModTile
+	public class AcediaPlatingTile : ModTile
 	{
 		public override void SetDefaults()
 		{
 			Main.tileSolid[Type] = true;
 			//Main.tileBrick[Type] = true;
 			Main.tileMergeDirt[Type] = false;
-			Main.tileMerge[Type][mod.TileType("AvaritianPlating")] = false;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
-			drop = mod.ItemType("PortalPlating");
-			AddMapEntry(new Color(64, 180, 170));
+			drop = mod.ItemType("AcediaPlating");
+			AddMapEntry(new Color(180, 64, 170));
 			mineResist = 2f;
 			minPick = 200;
 			soundType = 21;
 			soundStyle = 2;
-			dustType = mod.DustType("AvaritianDust");
+			dustType = mod.DustType("AcedianDust");
 		}
 		public override bool CanExplode(int i, int j)
 		{
@@ -53,7 +52,9 @@ namespace SOTS.Items.Otherworld
 		public override bool Slope(int i, int j)
 		{
 			//if (SOTSWorld.downedEntity)
-			return true;
+				return true;
+
+			return false;
 		}
 	}
 }

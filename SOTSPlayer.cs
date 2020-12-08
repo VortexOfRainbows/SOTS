@@ -380,7 +380,7 @@ namespace SOTS
 			int tileBehindX = (int)(player.Center.X / 16);
 			int tileBehindY = (int)(player.Center.Y / 16);
 			Tile tile = Framing.GetTileSafely(tileBehindX, tileBehindY);
-			if (tile.wall == (ushort)mod.WallType("PyramidWallTile"))
+			if (tile.wall == (ushort)mod.WallType("PyramidWallTile") || tile.wall == (ushort)mod.WallType("OvergrownPyramidWallWall"))
 			{
 				PyramidBiome = true;
 			}

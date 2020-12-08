@@ -20,8 +20,8 @@ namespace SOTS.Items.Otherworld
 			item.maxStack = 999;
 			item.useTurn = true;
 			item.autoReuse = true;
-			item.useAnimation = 14;
-			item.useTime = 10;
+			item.useAnimation = 15;
+			item.useTime = 7;
 			item.useStyle = 1;
 			item.rare = 9;
 			item.consumable = true;

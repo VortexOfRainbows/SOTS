@@ -13,16 +13,19 @@ using static Terraria.ModLoader.ModContent;
 using SOTS.Items.Otherworld.FromChests;
 using System.Linq;
 using System.Collections.Generic;
+using SOTS.Items.Pyramid;
 
 namespace SOTS
 {
 	public class SOTSItem : GlobalItem
 	{
 		public static int[] rarities1;
+		public static int[] rarities2;
 		public static int[] dedicated;
 		public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
 		{
 			rarities1 = new int[] { mod.ItemType("StarlightAlloy"), mod.ItemType("HardlightAlloy"), mod.ItemType("OtherworldlyAlloy"), mod.ItemType("PotGenerator"), mod.ItemType("PrecariousCluster"), mod.ItemType("Calculator")};
+			rarities2 = new int[] { ModContent.ItemType<RefractingCrystal>(), ModContent.ItemType<CursedApple>() };
 			dedicated = new int[] { mod.ItemType("Calculator"), mod.ItemType("TerminatorAcorns") };
 			if (rarities1.Contains(item.type))
 			{
@@ -34,7 +37,17 @@ namespace SOTS
 					}
 				}
 			}
-			if(dedicated.Contains(item.type))
+			if (rarities2.Contains(item.type))
+			{
+				foreach (TooltipLine line2 in tooltips)
+				{
+					if (line2.mod == "Terraria" && line2.Name == "ItemName")
+					{
+						line2.overrideColor = new Color(210, 0, 0);
+					}
+				}
+			}
+			if (dedicated.Contains(item.type))
             {
 				Color color = Color.White;
 				if (item.type == mod.ItemType("TerminatorAcorns"))

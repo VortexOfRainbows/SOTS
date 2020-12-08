@@ -11,7 +11,7 @@ namespace SOTS.Items.Pyramid
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Zeppelin Lure");
-			Tooltip.SetDefault("'A strange artifact'\nAttracts various types of exotic fish");
+			Tooltip.SetDefault("'You shouldn't have this'");
 		}
 
 		public override void SetDefaults()
