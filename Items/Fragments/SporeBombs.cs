@@ -11,7 +11,7 @@ namespace SOTS.Items.Fragments
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Spore Bombs");
-			Tooltip.SetDefault("Throw a cluster of explosive spore sacks\n'The toxic grenades look almost edible'");
+			Tooltip.SetDefault("Throw a cluster of explosive spore sacks\nReleased spores deal 75% damage\n'The toxic grenades look almost edible'");
 		}
 		public override void SetDefaults()
 		{

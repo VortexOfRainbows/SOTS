@@ -52,7 +52,7 @@ namespace SOTS.Projectiles.Nature
 			{
 				for(int i = 0; i < Main.rand.Next(2) + 2; i++)
 				{ 
-					int proj = Projectile.NewProjectile((projectile.Center.X), projectile.Center.Y, Main.rand.Next(-100, 101) * 0.02f, Main.rand.Next(-100, 101) * 0.02f, 228, (int)(projectile.damage * 0.6f), 0, projectile.owner); //Spore Cloud (chlorophyte saber)
+					int proj = Projectile.NewProjectile((projectile.Center.X), projectile.Center.Y, Main.rand.Next(-100, 101) * 0.02f, Main.rand.Next(-100, 101) * 0.02f, 228, (int)(projectile.damage * 0.75f), 0, projectile.owner); //Spore Cloud (chlorophyte saber)
 					Main.projectile[proj].friendly = true;
 					Main.projectile[proj].hostile = false;
 					Main.projectile[proj].alpha += 70;

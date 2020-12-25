@@ -46,7 +46,7 @@ namespace SOTS.Items.Void
 				Vector2 circularSpeed = new Vector2(0, -12);
 				int calc = 10 + modPlayer.bonusShardDamage;
 				if (calc <= 0) calc = 1;
-				Projectile.NewProjectile(player.Center.X, player.Center.Y, circularSpeed.X, circularSpeed.Y, mod.ProjectileType("ShatterShard"), calc, 3f, player.whoAmI);
+					Projectile.NewProjectile(player.Center.X, player.Center.Y, circularSpeed.X, circularSpeed.Y, mod.ProjectileType("ShatterShard"), calc, 3f, player.whoAmI);
 				
 			}
 			else
@@ -58,7 +58,7 @@ namespace SOTS.Items.Void
 					Vector2 circularSpeed = new Vector2(12, 0).RotatedBy(MathHelper.ToRadians(i * 180));
 					int calc = 10 + modPlayer.bonusShardDamage;
 					if (calc <= 0) calc = 1;
-					Projectile.NewProjectile(player.Center.X, player.Center.Y, circularSpeed.X, circularSpeed.Y, mod.ProjectileType("ShatterShard"), calc, 3f, player.whoAmI);
+						Projectile.NewProjectile(player.Center.X, player.Center.Y, circularSpeed.X, circularSpeed.Y, mod.ProjectileType("ShatterShard"), calc, 3f, player.whoAmI);
 				}
 			}
 		}
@@ -74,7 +74,7 @@ namespace SOTS.Items.Void
 		public override void UpdateInventory(Player player)
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-			while(voidPlayer.voidMeter < voidPlayer.voidMeterMax2 / 10)
+			while(voidPlayer.voidMeter < (voidPlayer.voidMeterMax2 - voidPlayer.lootingSouls) / 10 && voidPlayer.voidMeterMax2 - voidPlayer.lootingSouls > 40)
 			{
 				RefillEffect(player);
 				item.stack--;

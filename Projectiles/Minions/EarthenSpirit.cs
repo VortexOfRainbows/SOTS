@@ -207,7 +207,7 @@ namespace SOTS.Projectiles.Minions
 				float distance = direction.Length() + 0.1f;
 				if (distance > 1.1f)
 				{
-					direction.Normalize();
+					direction = direction.SafeNormalize(Vector2.Zero);
 					if (distance > speed)
 					{
 						distance = speed;

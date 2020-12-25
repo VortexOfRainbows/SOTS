@@ -112,7 +112,7 @@ namespace SOTS.Projectiles
 										{
 											if (Main.tile[x, y].wall == 0 && Main.netMode != 0)
 											{
-												NetMessage.SendData(17, -1, -1, null, 2, (float)x, (float)y, 0f, 0, 0, 0);
+												NetMessage.SendData(MessageID.TileChange, -1, -1, null, 2, (float)x, (float)y, 0f, 0, 0, 0);
 											}
 										}
 									}

@@ -40,7 +40,7 @@ namespace SOTS.Projectiles.Otherworld
 			if(initialDirection.X == 0 && initialDirection.Y == 0)
 			{
 				projectile.ai[0] = Main.rand.Next(360);
-				projectile.position += projectile.velocity.SafeNormalize(Vector2.Zero) * 24;
+				projectile.position += projectile.velocity.SafeNormalize(Vector2.Zero) * 18;
 				initialDirection = projectile.velocity;
 				projectile.velocity *= 0f;
 				if(completedLoads == 0)
@@ -174,7 +174,7 @@ namespace SOTS.Projectiles.Otherworld
 			return false;
 		}
 		Vector2 initialDirection = new Vector2(0f, 0f);
-		int distance = 750;
+		int distance = 550;
 		int completedLoads = 0;
 		public override bool ShouldUpdatePosition() 
 		{
@@ -186,11 +186,12 @@ namespace SOTS.Projectiles.Otherworld
 		}
 		public void LaserDraw(SpriteBatch spriteBatch)
 		{
+			Player player = Main.player[projectile.owner];
 			Texture2D texture = Main.projectileTexture[projectile.type];
 			float radianDir = (float)Math.Atan2(initialDirection.Y, initialDirection.X);
 			Vector2 drawPos = projectile.Center;
 			int helixRot = (int)projectile.ai[0];
-			float unitDis = 2f; //initiate a distance constant, this determines the "speed" at which the laser moves and bends
+			float unitDis = 3f; //initiate a distance constant, this determines the "speed" at which the laser moves and bends
 			bool stop = false;
 			int counter = 0; 
 			while(counter < distance)
@@ -201,7 +202,7 @@ namespace SOTS.Projectiles.Otherworld
 				drawPos.X += laserVelo.X;
 				drawPos.Y += laserVelo.Y;
 				counter++;
-				float enemyMinDist = counter * 0.125f + 10;
+				float enemyMinDist = counter * 0.175f + 20 + SOTSPlayer.ModPlayer(player).typhonRange * 1.2f;
 				if(stop)
 				{
 					break;

@@ -38,9 +38,9 @@ namespace SOTS.Items.Pyramid
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
 			drop = mod.ItemType("AcediaPlating");
-			AddMapEntry(new Color(180, 64, 170));
+			AddMapEntry(new Color(44, 12, 62));
 			mineResist = 2f;
-			minPick = 200;
+			minPick = 210;
 			soundType = 21;
 			soundStyle = 2;
 			dustType = mod.DustType("AcedianDust");
@@ -51,9 +51,6 @@ namespace SOTS.Items.Pyramid
 		}
 		public override bool Slope(int i, int j)
 		{
-			//if (SOTSWorld.downedEntity)
-				return true;
-
 			return false;
 		}
 	}

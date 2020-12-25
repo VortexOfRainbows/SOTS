@@ -302,22 +302,23 @@ namespace SOTS.Projectiles.Otherworld
 		bool hasHitYet = false;
 		bool effect = true;
 		int counter = 0;
-        public override void AI(Projectile projectile)
+        public override void PostAI(Projectile projectile)
         {
 			counter++;
-			if(!hasHitYet && counter >= 5)
-            {
+			if (!hasHitYet && counter >= 5)
+			{
 				Player player = Main.player[projectile.owner];
 				SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-				if(modPlayer.typhonRange > 0)
-                {
+				if (modPlayer.typhonRange > 0)
+				{
 					float minDist = modPlayer.typhonRange * 2;
 					int target2 = -1;
 					float dX = 0f;
 					float dY = 0f;
 					float distance = 0;
 					float speed = (float)Math.Sqrt((double)(projectile.velocity.X * projectile.velocity.X + projectile.velocity.Y * projectile.velocity.Y));
-					if (speed > 1f && projectile.friendly == true && projectile.hostile == false && projectile.damage > 0 && (projectile.ranged || projectile.melee || projectile.magic || projectile.thrown || (!projectile.sentry && !projectile.minion)) && player == Main.player[projectile.owner] && projectile.active && (projectile.modProjectile == null || projectile.modProjectile.ShouldUpdatePosition()) && (projectile.modProjectile == null || projectile.modProjectile.CanDamage()) && player.heldProj != projectile.whoAmI)
+					bool capable = speed > 1f && (projectile.ranged || projectile.melee || projectile.magic || projectile.thrown || (!projectile.sentry && !projectile.minion)) && (projectile.modProjectile == null || projectile.modProjectile.ShouldUpdatePosition()) && (projectile.modProjectile == null || projectile.modProjectile.CanDamage());
+					if (!SOTSPlayer.typhonBlacklist.Contains(projectile.type) && projectile.friendly == true && projectile.hostile == false && projectile.damage > 0 && player == Main.player[projectile.owner] && projectile.active && player.heldProj != projectile.whoAmI && (capable || SOTSPlayer.typhonWhitelist.Contains(projectile.type)))
 					{
 						for (int i = 0; i < Main.npc.Length; i++)
 						{
@@ -386,7 +387,7 @@ namespace SOTS.Projectiles.Otherworld
 					}
 				}
             }
-            base.AI(projectile);
+            base.PostAI(projectile);
         }
 		public void LaserTo(int advisorId, Projectile projectile, int extraAlpha)
         {

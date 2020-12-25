@@ -18,7 +18,6 @@ namespace SOTS
     public class SOTSWorld : ModWorld
 	{	
 		public static int planetarium = 0;
-		public static int zeplineBiome = 0;
 		public static int pyramidBiome = 0;
 		public static int geodeBiome = 0;
 		public static bool downedBoss2 = false;
@@ -2278,7 +2277,6 @@ namespace SOTS
 		{
 			planetarium = tileCounts[mod.TileType("DullPlatingTile")] + tileCounts[mod.TileType("AvaritianPlatingTile")];  
 			//geodeBiome = tileCounts[mod.TileType("GeodeBlock")];
-			zeplineBiome = tileCounts[mod.TileType("ZeplineLureTile")];  
 			pyramidBiome = tileCounts[mod.TileType("SarcophagusTile")];  
 		}
 		public override void PostWorldGen()

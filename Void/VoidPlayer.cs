@@ -5,14 +5,20 @@ using Terraria.ModLoader.IO;
 using static Terraria.ModLoader.ModContent;
 using SOTS.Projectiles.Base;
 using System;
+using Microsoft.Xna.Framework;
+using static SOTS.SOTS;
 
 namespace SOTS.Void
 {
 	public class VoidPlayer : ModPlayer
 	{
+		public static Color soulLootingColor = new Color(66, 56, 111);
+		public static int soulColorCounter = 0;
 		public int voidMeterMax = 100;
 		public int voidAnkh = 0;
 		public int voidStar = 0;
+		public int lootingSouls = 0;
+		public int soulsOnKill = 0;
 		public override TagCompound Save() {
 				
 			return new TagCompound {
@@ -22,9 +28,26 @@ namespace SOTS.Void
 				{"voidAnkh", voidAnkh},
 				{"voidStar", voidStar},
 				{"voidMeter", voidMeter},
+				{"lootingSouls", lootingSouls},
 				};
 		}
-
+		public override void SendClientChanges(ModPlayer clientPlayer)
+		{
+			// Here we would sync something like an RPG stat whenever the player changes it.
+			VoidPlayer cloneV = clientPlayer as VoidPlayer;
+			if (cloneV.lootingSouls != lootingSouls)
+			{
+				// Send a Mod Packet with the changes.
+				var packet = mod.GetPacket();
+				packet.Write((byte)SOTSMessageType.SyncLootingSoulsAndVoidMax);
+				packet.Write((byte)player.whoAmI);
+				packet.Write(lootingSouls);
+				packet.Write(voidMeterMax);
+				packet.Write(voidMeterMax2);
+				packet.Write(voidMeter);
+				packet.Send();
+			}
+		}
 		public override void Load(TagCompound tag) 
 		{
 			voidMeterMax = tag.GetInt("voidMeterMax");
@@ -32,6 +55,7 @@ namespace SOTS.Void
 			voidAnkh = tag.GetInt("voidAnkh");
 			voidStar = tag.GetInt("voidStar");
 			voidMeter = tag.GetFloat("voidMeter");
+			lootingSouls = tag.GetInt("lootingSouls");
 		}
 		
 		public float voidMeter = 100; 
@@ -160,14 +184,39 @@ namespace SOTS.Void
 			voidMultiplier += hpMult + voidMult;
 			voidMultiplier *= standingTimer;
 		}
+		public void UseSouls()
+        {
+			if(Main.mouseRight && Main.mouseRightRelease && player.ownedProjectileCounts[mod.ProjectileType("HarvestingStrike")] < 1)
+            {
+				if(Main.myPlayer == player.whoAmI)
+					Projectile.NewProjectile(Main.MouseWorld, Vector2.Zero, mod.ProjectileType("HarvestingStrike"), 1, 0, player.whoAmI);
+            }
+        }
 		private void ResetVariables() {
+
+			soulColorCounter++;
+			soulLootingColor = Color.Lerp(new Color(66, 56, 111), new Color(171, 3, 35), 0.5f + new Vector2(0.5f, 0).RotatedBy(MathHelper.ToRadians(soulColorCounter * 1.5f)).X);
+			if(soulsOnKill > 0)
+				UseSouls();
+			if(soulColorCounter % 40 == 0)
+            {
+				if(soulsOnKill <= 0)
+                {
+					if (lootingSouls > 0)
+						lootingSouls--;
+                }
+				if(soulColorCounter % 160 == 0)
+                {
+					SendClientChanges(this);
+                }
+            }
 			voidShock = false;
 			voidRecovery = false;
 			voidDamage = 1f;
-			
+			soulsOnKill = 0;
 			//percent damage grows as health lowers
 			//voidDamage += 1f - (float)((float)player.statLife / (float)player.statLifeMax2);
-			
+
 			voidSpeed = 1f; 
 			voidCost = 1f;
 			ApplyDynamicMultiplier();
@@ -176,7 +225,12 @@ namespace SOTS.Void
 			else
 				voidMeter += (float)(voidRegen / 60f);
 
-			if (voidMeter > voidMeterMax2) //resets void to zero when joining world accidentally, must fix later
+			if (lootingSouls > voidMeterMax2)
+				lootingSouls = voidMeterMax2;
+
+			voidMeterMax2 -= lootingSouls;
+
+			if (voidMeter > voidMeterMax2)
 			{
 				//make sure meter doesn't go above max
 				voidMeter = voidMeterMax2;

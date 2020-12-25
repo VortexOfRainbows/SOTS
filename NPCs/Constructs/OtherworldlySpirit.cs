@@ -50,6 +50,7 @@ namespace SOTS.NPCs.Constructs
             npc.HitSound = SoundID.NPCHit54;
             npc.DeathSound = SoundID.NPCDeath6;
             npc.netAlways = false;
+			npc.rarity = 2;
 		}
 		private int InitiateHealth = 6000;
 		private float ExpertHealthMult = 1.5f;
@@ -103,6 +104,8 @@ namespace SOTS.NPCs.Constructs
 						if(ai3 >= 100)
 						{
 							npc.StrikeNPC(10000, 0, 0);
+							if (Main.netMode != 0)
+								NetMessage.SendData(28, -1, -1, null, npc.whoAmI, 10000, 0, 0, 0, 0, 0);
 						}
 					}
                 }

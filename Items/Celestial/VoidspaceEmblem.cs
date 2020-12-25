@@ -18,7 +18,7 @@ namespace SOTS.Items.Celestial
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Voidspace Emblem");
-			Tooltip.SetDefault("Increases void damage and magic damage by 10%\nIncreases void crit by 10%\nCritical strikes heal small amounts of void\nReduces void cost by 8%\nIncreases void regen by 3.75 and max void by 50\nRegenerate void when hit");
+			Tooltip.SetDefault("Increases void damage and magic damage by 10%\nIncreases void crit by 10%\nCritical strikes heal small amounts of void\nReduces void cost by 8%\nIncreases void regen by 3.75 and max void by 50\nRegenerate void when hit\nImmunity to broken armor and ichor");
 		}
 		public override void SetDefaults()
 		{
@@ -38,16 +38,7 @@ namespace SOTS.Items.Celestial
 			recipe.AddIngredient(null, "SanguiteBar", 15);
 			recipe.AddIngredient(null, "WormWoodParasite", 1);
 			recipe.AddIngredient(null, "VoidenBracelet", 1);
-			recipe.AddIngredient(null, "GoldBattery", 1);
-			recipe.SetResult(this);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.AddRecipe();
-			
-			recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "SanguiteBar", 15);
-			recipe.AddIngredient(null, "WormWoodParasite", 1);
-			recipe.AddIngredient(null, "VoidenBracelet", 1);
-			recipe.AddIngredient(null, "PlatinumBattery", 1);
+			recipe.AddIngredient(null, "SkywareBattery", 1);
 			recipe.SetResult(this);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.AddRecipe();
@@ -69,6 +60,9 @@ namespace SOTS.Items.Celestial
 				VoidPlayer.VoidEffect(player, 3 + (modPlayer.onhitdamage / 9));
 			}
 			modPlayer.CritVoidsteal = 0.7f;
+
+			player.buffImmune[BuffID.BrokenArmor] = true;
+			player.buffImmune[BuffID.Ichor] = true;
 		}
 	}
 }

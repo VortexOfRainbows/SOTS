@@ -24,7 +24,6 @@ namespace SOTS.Projectiles
 			projectile.bobber = true;
 			projectile.penetrate = -1;
 			projectile.timeLeft = 2000;
-			projectile.height += 8;
         }
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
         {

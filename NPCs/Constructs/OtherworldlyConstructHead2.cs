@@ -38,6 +38,7 @@ namespace SOTS.NPCs.Constructs
 			npc.alpha = 0;
 			npc.HitSound = SoundID.NPCHit4;
 			npc.DeathSound = SoundID.NPCDeath14;
+			npc.rarity = 5;
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{

@@ -31,6 +31,86 @@ Next Development Time:
 	2. Laser does little damage, but inflicts strong debuff that increases crit damage and chance upon enemy
 	3. Costs 5 void  to launch laser
 
+12/24/20 (Christmas EVE :D)
+1. Skyware Battery Added
+2. Changed the way collision works with various lightnings to stop ghost hits (Arclight Orbs, Hardlight Glaive, Cursed Icosahedron)
+3. Added whitelist and blacklist to Typhon (advisor) homing to allow for me to more easily make direct changes to the item.
+	1. Added Arclight Orb Thunder Column to blacklist
+	2. Added Hardlight Arrow to whitelist
+4. Typhon now functions as PostAI() instead of AI()
+5. Increased homing slightly on Hardlight Arrow (I believe the bullet equivalent is far stronger), also increased distance and lowered graphics slightly to reduce lag
+	1. Also increased brightness
+	2. Increased homing when paired with calculator to allow for actual synergy with the charged projectile
+6. Halo Particles from Machina Booster appear when vanitied
+7. Spore bombs deal slightly more spore damage 60% -> 75%
+8. Finished Hardlight Fishing Pole
+9. Some changes to Purple Bobber that don't really matter
+
+12/23/20
+1. Hardlight Glaive finished
+2. Glowmask and new sprite to Section Chief's Scythe, use turn removed due to it being unrequired
+3. Decreased trail length on Arclight Orb Lightning
+4. Hardlight Glaive Checked: Server syncs fine enough
+5. Reworked Skyward Blades due to massive amount of bugs, server syncs now, alpha transitioning
+
+12/22/20
+1. More work on Hardlight Glaive
+
+12/21/20
+1. Increased projectile speed on Skyward Blade to avoid some bugs
+2. Added ghost projectile to Skyward Blades to allow the last hit to function properly, along with some other things to fix Skyward Blades
+3. Fixed platinum dart multiplayer syncing
+4. Arclight orbs finished. Server syncs fine
+5. Began working on hardlight glaive
+
+12/18/20 & 12/19/20 & 12/20/20
+1. Checked: Flare detonator server syncs fine.
+2. Skyward Blades finished. Server syncs OK enough
+3. Sprited Hardlight Glaive, Arclight Orbs, Skyware Battery
+
+12/16/20 & 12/17/20
+1. Flare Detonator beginnings
+2. Fixed slight rotation bug with RBG rifle
+3. Fixed slight animation issues with Flare Detonator (took longer than it should've)
+
+12/13/20 & 12/14/20 & 12/15/20 & 12/16/20
+1. Fixed bugs regarding platinum curse dps, though buffs to make up for it dps 3 => 4
+2. Ghost Pepper Added !!! :D
+3. Souls don't drop from statued enemies
+4. Deadly Fragment (purple bitch) damage 43 => 35, lifemax 40 => 35
+5. Curse Fragment (purple bitch 2) damage 45 => 35, lifemax 80 => 60
+6. Both pet accessories work in vanity regardless of player accessory visuals
+7. Deteorite souls over time while not wearing apple
+8. Only 99 harvest stacks max 
+9. Ghost pepper modified and final touches
+10. Enchanted pickaxe damage 12 => 14, useTime 20 -> 18, range 2 -> 3
+11. Terminator Acorn gravity 0.08 -> 0.09
+	1. Terminator squirrel fires faster 72 -> 66, shootspeed 11 -> 16.5, slightly reduced spread all around
+12. Synced wall mimic unique death animation in multiplayer
+13. Ghost Pepper Syncing
+	1. Different players have different soul ownerships: Check
+	2. Stacking harvesting is the same between clients: Pretty much
+		1. Some syncing errors but I'm pretty sure they're mainly caused by lag, which I only get because I have two instances of terraria open. 
+		   People playing from different computer shouldn't have the same inaccuracy errors.
+14. Ghost pepper souls reduced, but now gain more dynamically from higher cost enemies. Bosses, mimics, etc all drop more.
+	1. All rare enemies cost/drop more souls
+	2. Constructs and their spirits are now counted as rare enemies with values 5 and 2 respectively.
+15. Increased cost of manually crafting Rod of Discord 75 fragment of chaos -> 125 fragments of chaos.
+	1. However, grinding for it naturally should now be easier thanks to Cursed Apple
+16. Fully server synced platinum scythe curse and harvesting strikes!
+
+12/12/20
+1. Sprited and added Acedia Gateway
+2. Portal platings cannot be sloped
+3. Gates cannot be broken
+
+12/8/20
+1. Removed Zepline biome as a fishing requirement
+2. This generally results in buffs to pyramid fishing rates all around
+3. Checked:
+	1. Overgrown blocks are server synced
+	2. Zepline blocks are server synced
+
 12/5/20 & 12/6/20
 1. Increased wall place speeds to match vanilla
 2. New blocks for the new pyramid room
@@ -41,13 +121,12 @@ Next Development Time:
 5. Zepline block has a function now
 6. Must still server sync zepline block
 	1. Block breaking
-	2. Also must zeppelin fishing requirements no longer require setpiece
 
 12/4/20 & 12/5/20
 1. Largely decreased immune time and largely increased cooldown for blink pack
 2. Terminator Acorns finished
 	1. Syncs in multiplayer
-3. Balance
+3. Balance (Qwerty recommends buffs...)
 	1. Apocalypse Damage 70 => 100
 	2. Armaggedon Damage 70 => 100
 	3. Ceremonial Knife Damage 66 => 60, Lifesteal nerfed drastically 5% => 2.5% damage

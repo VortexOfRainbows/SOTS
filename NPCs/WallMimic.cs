@@ -149,6 +149,8 @@ namespace SOTS.NPCs
 				if(eyeSpeed >= 9000)
 				{
 					npc.StrikeNPC(666676, 1, 0);
+					if (Main.netMode != 0)
+						NetMessage.SendData(28, -1, -1, null, npc.whoAmI, 666676, 1, 0, 0, 0, 0);
 				}
 			}
 			return !dropSpecial;

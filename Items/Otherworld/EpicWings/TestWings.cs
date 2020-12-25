@@ -759,7 +759,6 @@ namespace SOTS.Items.Otherworld.EpicWings
 				*/
 			}
 		});
-
 		public override void ModifyDrawLayers(List<PlayerLayer> layers)
 		{
 			int wingLayer = layers.FindIndex(l => l == PlayerLayer.Wings);

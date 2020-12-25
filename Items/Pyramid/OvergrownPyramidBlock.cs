@@ -42,7 +42,7 @@ namespace SOTS.Items.Pyramid
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
 			drop = mod.ItemType("OvergrownPyramidBlock");
-			AddMapEntry(new Color(40, 180, 120));
+			AddMapEntry(new Color(40, 160, 100));
 			mineResist = 1.5f;
 			minPick = 180;
 			soundType = 21;

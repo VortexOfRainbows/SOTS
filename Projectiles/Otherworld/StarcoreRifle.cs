@@ -40,7 +40,8 @@ namespace SOTS.Projectiles.Otherworld
 		}
 		public override bool PreAI()
         {
-            if(projectile.timeLeft > projectile.damage)
+            Player player = Main.player[projectile.owner];
+            if (projectile.timeLeft > projectile.damage)
             {
                 projectile.timeLeft = (int)projectile.damage;
             }
@@ -67,8 +68,10 @@ namespace SOTS.Projectiles.Otherworld
             }
             if (projectile.hide == false)
             {
-                Main.player[projectile.owner].heldProj = projectile.whoAmI;
                 projectile.alpha = 0;
+                player.ChangeDir(projectile.direction);
+                player.heldProj = projectile.whoAmI;
+                player.itemRotation = MathHelper.WrapAngle(projectile.rotation + MathHelper.ToRadians(projectile.direction == -1 ? 90 : -90));
             }
             projectile.hide = false;
             projectile.spriteDirection = projectile.direction;

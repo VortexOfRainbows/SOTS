@@ -57,7 +57,11 @@ namespace SOTS.Items.Otherworld
 			disableSmartCursor = true;
 			dustType = mod.DustType("AvaritianDust");
 		}
-		public override void NumDust(int i, int j, bool fail, ref int num)
+        public override bool CanKillTile(int i, int j, ref bool blockDamaged)
+        {
+            return false;
+        }
+        public override void NumDust(int i, int j, bool fail, ref int num)
 		{
 			num = 2;
 		}
@@ -149,55 +153,6 @@ namespace SOTS.Items.Otherworld
 			r = 0.9f;
 			g = 0.9f;
 			b = 1.1f;
-		}
-		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
-		{
-			int type = Main.tile[i, j].frameX/18 + (Main.tile[i, j].frameY/18 * 9);
-
-
-			Texture2D texture = mod.GetTexture("Items/Otherworld/HardlightGearBorder");
-			Texture2D texture2 = mod.GetTexture("Items/Otherworld/HardlightGearFill");
-			ulong randSeed = Main.TileFrameSeed ^ (ulong)((long)j << 32 | (long)((ulong)i));
-			Color color;
-			color = WorldGen.paintColor((int)Main.tile[i, j].color()) * (100f / 255f);
-			color.A = 0;
-			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
-			if (Main.drawToScreen)
-			{
-				zero = Vector2.Zero;
-			}
-			/*
-			Vector2 dynamicAddition = new Vector2(3, 0).RotatedBy(MathHelper.ToRadians(Main.GlobalTime * 40));
-			if(type == -1)
-				for (int k = 0; k < 5; k++)
-				{
-					Vector2 pos = new Vector2((float)(i * 16 - (int)Main.screenPosition.X) + 8, (float)(j * 16 - (int)Main.screenPosition.Y) + 8) + zero;
-					pos.Y -= 20 + dynamicAddition.Y;
-					if(k == 0)
-						Main.spriteBatch.Draw(texture2, pos, null, color * 0.5f, Main.GlobalTime * (i % 2 == 0 ? 1 : -1), new Vector2(13, 13), 0.8f, SpriteEffects.None, 0f);
-
-					Main.spriteBatch.Draw(texture, pos, null, color, Main.GlobalTime * (i % 2 == 0 ? 1 : -1), new Vector2(13, 13), 0.8f, SpriteEffects.None, 0f);
-				}
-			if(type == 65)
-				for (int k = 0; k < 5; k++)
-				{
-					Vector2 pos = new Vector2((float)(i * 16 - (int)Main.screenPosition.X) + 9, (float)(j * 16 - (int)Main.screenPosition.Y) + 9) + zero;
-					if (k == 0)
-						Main.spriteBatch.Draw(texture2, pos, null, color * 0.5f, Main.GlobalTime, new Vector2(13, 13), 0.5f, SpriteEffects.None, 0f);
-
-					Main.spriteBatch.Draw(texture, pos, null, color, Main.GlobalTime, new Vector2(13, 13), 0.75f, SpriteEffects.None, 0f);
-				}
-			if(type == 69)
-				for (int k = 0; k < 5; k++)
-				{
-					Vector2 pos = new Vector2((float)(i * 16 - (int)Main.screenPosition.X) + 9, (float)(j * 16 - (int)Main.screenPosition.Y) + 9) + zero;
-					if (k == 0)
-						Main.spriteBatch.Draw(texture2, pos, null, color * 0.5f, -Main.GlobalTime, new Vector2(13, 13), 0.5f, SpriteEffects.None, 0f);
-
-					Main.spriteBatch.Draw(texture, pos, null, color, -Main.GlobalTime, new Vector2(13, 13), 0.75f, SpriteEffects.None, 0f);
-				}
-				*/
-			return true;
 		}
 	}
 }

@@ -3,6 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using SOTS.Void;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace SOTS.Items.Otherworld.FromChests
 {
@@ -11,26 +12,37 @@ namespace SOTS.Items.Otherworld.FromChests
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Section Chief's Scythe");
-			Tooltip.SetDefault("Critical hits summon a Soul of Retaliation into the air\nEvery 10th void attack will release the soul in the form of a powerful laser\nDirect melee hits permanently curse enemies for 3 damage per second, stacking up to 10 times");
+			Tooltip.SetDefault("Critical hits summon a Soul of Retaliation into the air\nEvery 10th void attack will release the soul in the form of a powerful laser\nDirect melee hits permanently curse enemies for 4 damage per second, stacking up to 10 times");
 		}
 		public override void SafeSetDefaults()
 		{
-            item.damage = 40;  
+            item.damage = 48;  
             item.melee = true; 
-            item.width = 56;    
-            item.height = 52;  
+            item.width = 58;    
+            item.height = 58;  
             item.useTime = 24;
             item.useAnimation = 24;
             item.useStyle = 1;   
             item.autoReuse = true; 
-			item.useTurn = true;
             item.knockBack = 3f;
 			item.value = Item.sellPrice(0, 5, 0, 0);
             item.rare = ItemRarityID.LightPurple;
             item.UseSound = SoundID.Item71;
 			item.crit = 11;
+			if (!Main.dedServ)
+			{
+				item.GetGlobalItem<ItemUseGlow>().glowTexture = mod.GetTexture("Items/Otherworld/FromChests/HardlightScytheGlow");
+			}
+
 			item.shoot = mod.ProjectileType("ScytheSlash");
 			item.shootSpeed = 15f;
+		}
+		public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
+		{
+			Texture2D texture = mod.GetTexture("Items/Otherworld/FromChests/HardlightScytheGlow");
+			Color color = Color.White;
+			Vector2 drawOrigin = new Vector2(Main.itemTexture[item.type].Width * 0.5f, item.height * 0.5f);
+			Main.spriteBatch.Draw(texture, new Vector2((float)(item.Center.X - (int)Main.screenPosition.X), (float)(item.Center.Y - (int)Main.screenPosition.Y) + 2), null, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 		}
 		public override void MeleeEffects(Player player, Rectangle hitbox)
 		{

@@ -15,7 +15,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		public override void SafeSetDefaults()
 		{
 
-			item.damage = 27;
+			item.damage = 32;
 			item.ranged = true;
 			item.width = 48;
 			item.height = 32;

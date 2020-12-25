@@ -68,7 +68,7 @@ namespace SOTS.Items.Void
 		public override void UpdateInventory(Player player)
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-			while(voidPlayer.voidMeter < voidPlayer.voidMeterMax2 / 10)
+			while(voidPlayer.voidMeter < (voidPlayer.voidMeterMax2 - voidPlayer.lootingSouls) / 10 && voidPlayer.voidMeterMax2 - voidPlayer.lootingSouls > 40)
 			{
 				RefillEffect(player);
 				item.stack--;

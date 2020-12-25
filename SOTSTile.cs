@@ -9,7 +9,7 @@ namespace SOTS
     {
         public override bool CanKillTile(int i, int j, int type, ref bool blockDamaged)
         {
-            if(Main.tile[i, j - 1].type == (ushort)mod.TileType("AvaritianGatewayTile"))
+            if(Main.tile[i, j - 1].type == (ushort)mod.TileType("AvaritianGatewayTile") || Main.tile[i, j - 1].type == (ushort)mod.TileType("AcediaGatewayTile"))
             {
                 int frame = Main.tile[i, j - 1].frameX / 18 + (Main.tile[i, j - 1].frameY / 18 * 9);
                 if(frame >= 65 && frame <= 69)

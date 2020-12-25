@@ -10,18 +10,16 @@ using Terraria.ModLoader;
 namespace SOTS.NPCs.Boss
 {
 	public class DeadlyFragment : ModNPC
-	{	float ai1 = 0;
-		int frame;
+	{	
 		public override void SetStaticDefaults()
 		{
-			
 			DisplayName.SetDefault("Curse Fragment");
 		}
 		public override void SetDefaults()
 		{
 			npc.aiStyle = 86;
-            npc.lifeMax = 40; 
-            npc.damage = 43; 
+            npc.lifeMax = 35; 
+            npc.damage = 35; 
             npc.defense = 0;   
             npc.knockBackResist = 0f;
             npc.width = 32;
@@ -38,10 +36,13 @@ namespace SOTS.NPCs.Boss
             npc.DeathSound = SoundID.NPCDeath6;
             npc.netAlways = false;
 		}
-		public override void AI()
+        public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+		{
+			//npc.damage = (int)(npc.damage * 1.5f); 
+        }
+        public override void AI()
 		{	
 			Player player = Main.player[npc.target];
-			ai1++;
 			npc.alpha++;
 			if(npc.alpha >= 255)
 			{

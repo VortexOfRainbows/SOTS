@@ -272,7 +272,7 @@ namespace SOTS.Projectiles.Minions
 
 			projectile.ai[0]++;
 			// Default movement parameters (here for attacking)
-			float firerate = 72f;
+			float firerate = 66f;
 			float speed = 22f;
 			float inertia = 8f;
 			float rotationDirection = 0;
@@ -305,10 +305,10 @@ namespace SOTS.Projectiles.Minions
 					if (projectile.ai[0] >= firerate)
 					{
 						projectile.ai[0] -= firerate;
-						float shootspeed = 11f;
+						float shootspeed = 16.5f;
 						for(int i = 0; i < 2 + Main.rand.Next(2) + Main.rand.Next(2) + Main.rand.Next(2); i++)
 						{
-							Vector2 newDirection = direction.RotatedByRandom(MathHelper.ToRadians(16 + i * 4)).SafeNormalize(Vector2.Zero);
+							Vector2 newDirection = direction.RotatedByRandom(MathHelper.ToRadians(15 + i * 3)).SafeNormalize(Vector2.Zero);
 							Vector2 offset = newDirection * projectile.width / 2;
 							newDirection *= shootspeed;
 							Vector2 projVelo = newDirection;

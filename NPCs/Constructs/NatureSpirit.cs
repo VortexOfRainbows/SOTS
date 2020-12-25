@@ -36,6 +36,7 @@ namespace SOTS.NPCs.Constructs
             npc.HitSound = SoundID.NPCHit54;
             npc.DeathSound = SoundID.NPCDeath6;
             npc.netAlways = false;
+			npc.rarity = 2;
 		}
 		public override void SendExtraAI(BinaryWriter writer)
 		{

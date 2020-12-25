@@ -1,5 +1,9 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using SOTS.Items.Otherworld.EpicWings;
+using SOTS.Items.Otherworld.FromChests;
+using SOTS.Items.Pyramid;
+using SOTS.Projectiles.Otherworld;
 using SOTS.Void;
 using System;
 using System.Collections.Generic;
@@ -33,10 +37,16 @@ namespace SOTS
 			return player.GetModPlayer<SOTSPlayer>();
 		}
 		Vector2 playerMouseWorld;
+		public bool rainbowGlowmasks = false;
+		public int skywardBlades = 0;
+		public float cursorRadians = 0;
+		public bool petPepper = false;
 		public float BlinkedAmount = 0;
 		public int BlinkType = 0;
 		public int BlinkDamage = 0;
 		public bool petAdvisor = false;
+		public static List<int> typhonBlacklist = new List<int>();
+		public static List<int> typhonWhitelist = new List<int>();
 		public int typhonRange = 0;
 		public bool weakerCurse = false;
 		public bool vibrantArmor = false;
@@ -64,7 +74,6 @@ namespace SOTS
 		public bool TurtleTem = false;
 
 		public bool PlanetariumBiome = false;
-		public bool ZeplineBiome = false;
 		//public bool GeodeBiome = false;
 		public bool PyramidBiome = false;
 		public bool HeartSwapDelay = false;
@@ -90,7 +99,6 @@ namespace SOTS
 		public int StartingDamage = 0;
 		public bool ItemDivision = false;
 		public bool PushBack = false; // marble protecter effect
-									  //public float projectileSize = 1;
 
 		public bool pearlescentMagic = false; //pearlescent core effect
 		public bool bloodstainedJewel = false; //bloodstained jewel effect
@@ -107,11 +115,13 @@ namespace SOTS
 		public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
 		{
 			TestWingsPlayer testPlayer = player.GetModPlayer<TestWingsPlayer>();
+			VoidPlayer voidPlayer = player.GetModPlayer<VoidPlayer>();
 			ModPacket packet = mod.GetPacket();
 			packet.Write((byte)SOTSMessageType.SOTSSyncPlayer);
 			packet.Write((byte)player.whoAmI);
 			packet.Write(orbitalCounter);
 			packet.Write(testPlayer.creativeFlight);
+			packet.Write(voidPlayer.lootingSouls);
 			packet.Send(toWho, fromWho);
 		}
 		public override void SendClientChanges(ModPlayer clientPlayer)
@@ -127,6 +137,70 @@ namespace SOTS
 				packet.Write(orbitalCounter);
 				packet.Send();
 			}
+			if (clone.skywardBlades != skywardBlades)
+			{
+				// Send a Mod Packet with the changes.
+				var packet = mod.GetPacket();
+				packet.Write((byte)SOTSMessageType.SyncPlayerKnives);
+				packet.Write((byte)player.whoAmI);
+				packet.Write(skywardBlades);
+				packet.Write(cursorRadians);
+				packet.Send();
+			}
+		}
+		public int bladeAlpha = 0;
+		public static readonly PlayerLayer BladeEffectBack = new PlayerLayer("SOTS", "BladeEffectBack", PlayerLayer.MiscEffectsBack, delegate (PlayerDrawInfo drawInfo) 
+		{
+			Mod mod = ModLoader.GetMod("SOTS");
+			Player drawPlayer = drawInfo.drawPlayer;
+			SOTSPlayer modPlayer = drawPlayer.GetModPlayer<SOTSPlayer>();
+			if (modPlayer.skywardBlades > 0)
+			{
+				float drawX = (int)drawInfo.position.X + drawPlayer.width / 2;
+				float drawY = (int)drawInfo.position.Y + drawPlayer.height / 2;
+				int amt = modPlayer.skywardBlades;
+				float total = amt * 8;
+				Color color2 = Color.White.MultiplyRGBA(Lighting.GetColor((int)drawX / 16, (int)drawY / 16));
+				drawX -= Main.screenPosition.X;
+				drawY -= Main.screenPosition.Y;
+				for (int i = 0; i < amt; i++)
+				{
+					Color color = color2;
+					float number = 0;
+					if(i == 0)
+						number = 0;
+					if (i == 1)
+						number = -7.5f;
+					if (i == 2)
+						number = 7.5f;
+					if (i == 3)
+						number = -15;
+					if (i == 4)
+						number = 15;
+					Vector2 moveDraw = new Vector2(64, 0).RotatedBy(modPlayer.cursorRadians + MathHelper.ToRadians(number));
+					Texture2D texture = mod.GetTexture("Projectiles/Otherworld/SkywardBladeBeam");
+					DrawData data = new DrawData(texture, new Vector2(drawX, drawY) + moveDraw, null, color * ((255 - modPlayer.bladeAlpha)/255f), modPlayer.cursorRadians - 0.5f * MathHelper.ToRadians(number) + MathHelper.ToRadians(90), new Vector2(texture.Width / 2f, texture.Height / 2f), 1f, SpriteEffects.None, 0);
+					Main.playerDrawData.Add(data);
+
+					int recurse = 1;
+					if (modPlayer.rainbowGlowmasks)
+					{
+						color = new Color(Main.DiscoR, Main.DiscoG, Main.DiscoB, 0);
+						recurse = 2;
+					}
+					for (int j = 0; j < recurse; j++)
+					{
+						texture = mod.GetTexture("Projectiles/Otherworld/SkywardBladeGlowmask");
+						data = new DrawData(texture, new Vector2(drawX, drawY) + moveDraw, null, color * ((255 - modPlayer.bladeAlpha) / 255f), modPlayer.cursorRadians - 0.5f * MathHelper.ToRadians(number) + MathHelper.ToRadians(90), new Vector2(texture.Width / 2f, texture.Height / 2f), 1f, SpriteEffects.None, 0);
+						Main.playerDrawData.Add(data);
+					}
+				}
+			}
+		});
+		public override void ModifyDrawLayers(List<PlayerLayer> layers)
+		{
+			BladeEffectBack.visible = true;
+			layers.Insert(0, BladeEffectBack);
 		}
 		public void DespawnSkyEnemies()
 		{
@@ -161,7 +235,7 @@ namespace SOTS
 		{
 			if (SOTS.BlinkHotKey.JustPressed)
 			{
-				if (BlinkType == 1 && !player.HasBuff(BuffID.ChaosState) && !player.mount.Active && !(player.grappling[0] >= 0))
+				if (BlinkType == 1 && !player.HasBuff(BuffID.ChaosState) && !player.mount.Active && !(player.grappling[0] >= 0) && !player.frozen)
 				{
 					Vector2 toCursor = Main.MouseWorld - player.Center;
 					Projectile.NewProjectile(player.Center, toCursor.SafeNormalize(Vector2.Zero), mod.ProjectileType("Blink1"), 0, 0, player.whoAmI);
@@ -169,6 +243,7 @@ namespace SOTS
 			}
 		}
 		int Probe = -1;
+		int Probe2 = -1;
 		public void PetAdvisor()
         {
 			if (Main.myPlayer == player.whoAmI)
@@ -184,6 +259,21 @@ namespace SOTS
 				Main.projectile[Probe].timeLeft = 6;
 			}
 		}
+		public void PetPepper()
+		{
+			if (Main.myPlayer == player.whoAmI)
+			{
+				if (Probe2 == -1)
+				{
+					Probe2 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, mod.ProjectileType("GhostPepper"), 0, 0, player.whoAmI, 0);
+				}
+				if (!Main.projectile[Probe2].active || Main.projectile[Probe2].type != mod.ProjectileType("GhostPepper") || Main.projectile[Probe2].owner != player.whoAmI)
+				{
+					Probe2 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, mod.ProjectileType("GhostPepper"), 0, 0, player.whoAmI, 0);
+				}
+				Main.projectile[Probe2].timeLeft = 6;
+			}
+		}
 		public override void ResetEffects()
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
@@ -195,12 +285,68 @@ namespace SOTS
             {
 				BlinkedAmount -= 0.002f;
 				if (BlinkedAmount < 0) BlinkedAmount = 0;
-            }
+			}
+			if(player.whoAmI == Main.myPlayer)
+			{
+				cursorRadians = (Main.MouseWorld - player.Center).ToRotation();
+				if(skywardBlades >= 0)
+				{
+					SendClientChanges(this);
+					if (player.HeldItem.type == mod.ItemType("SkywardBlades"))
+					{
+						if (this.bladeAlpha > 0)
+							this.bladeAlpha -= 5;
+						else
+							this.bladeAlpha = 0;
+					}
+					else
+					{
+						if (this.bladeAlpha < 255)
+							this.bladeAlpha += 5;
+						else
+							this.bladeAlpha = 255;
+					}
+				}
+				if(skywardBlades == 0)
+                {
+					skywardBlades = -1;
+					SendClientChanges(this);
+                }
+			}
 			BlinkDamage = 0;
 			BlinkType = 0;
 			if (petAdvisor)
 				PetAdvisor();
-			petAdvisor = false;
+			if (petPepper)
+				PetPepper();
+			petPepper = false;
+			petAdvisor = false; 
+			rainbowGlowmasks = false;
+			for (int i = 9 + player.extraAccessorySlots; i < player.armor.Length; i++) //checking vanity slots
+            {
+				Item item = player.armor[i];
+				if(item.type == ModContent.ItemType<CursedApple>())
+				{
+					petPepper = true;
+				}
+				if (item.type == ModContent.ItemType<Calculator>())
+				{
+					petAdvisor = true;
+				}
+				if (item.type == ModContent.ItemType<SkywareBattery>())
+				{
+					rainbowGlowmasks = true;
+				}
+				if (item.type == ModContent.ItemType<TestWings>())
+				{
+					TestWingsPlayer testWingsPlayer = (TestWingsPlayer)player.GetModPlayer(mod, "TestWingsPlayer");
+					if(!testWingsPlayer.canCreativeFlight)
+                    {
+						testWingsPlayer.HaloDust();
+					}
+				}
+			}
+
 			typhonRange = 0;
 			assassinateFlat = 0;
 			assassinateNum = 1;
@@ -299,30 +445,24 @@ namespace SOTS
 			else if (ScaleCatch2(power, 0, 70, 30, 150) && player.ZoneRockLayerHeight && liquidType == 0 && bait.type == 2437) { //Checks green jellyfish bait
 				caughtType = mod.ItemType("BlueJellyfishStaff"); }
 
-			if (ScaleCatch2(power, 0, 30, 5, 10) && ZeplineBiome && liquidType == 0) {
+			if (ScaleCatch2(power, 0, 30, 5, 10) && PyramidBiome && liquidType == 0) {
 				caughtType = mod.ItemType("SeaSnake"); }
-			else if (ScaleCatch2(power, 0, 60, 6, 12) && PyramidBiome && !ZeplineBiome && liquidType == 0) {
-				caughtType = mod.ItemType("SeaSnake"); }
-			else if (ScaleCatch2(power, 0, 40, 7, 11) && ZeplineBiome && liquidType == 0) {
+			else if (ScaleCatch2(power, 0, 40, 7, 11) && PyramidBiome && liquidType == 0) {
 				caughtType = mod.ItemType("PhantomFish"); }
-			else if (ScaleCatch2(power, 0, 80, 8, 14) && PyramidBiome && !ZeplineBiome && liquidType == 0) {
-				caughtType = mod.ItemType("PhantomFish"); }
-			else if (ScaleCatch2(power, 20, 80, 7, 20) && ZeplineBiome && liquidType == 0) { //gains the same rarity as Phantom Fish when at 80, fails to catch below 20 power
+			else if (ScaleCatch2(power, 20, 80, 7, 20) && PyramidBiome && liquidType == 0) { //gains the same rarity as Phantom Fish when at 80, fails to catch below 20 power
 				caughtType = mod.ItemType("Curgeon"); }
-			else if (ScaleCatch2(power, 30, 150, 12, 25) && PyramidBiome && !ZeplineBiome && liquidType == 0) {
-				caughtType = mod.ItemType("Curgeon"); }
-			else if (ScaleCatch2(power, 0, 200, 100, 300) && ZeplineBiome && liquidType == 0) { //1/300 at 0, 1/200 at 100, 1/100 at 200, etc
+			else if (ScaleCatch2(power, 0, 200, 100, 300) && PyramidBiome && liquidType == 0) { //1/300 at 0, 1/200 at 100, 1/100 at 200, etc
 				caughtType = mod.ItemType("ZephyrousZeppelin"); }
-			else if (ScaleCatch2(power, 0, 200, 100, 300) && ZeplineBiome && liquidType == 0) { //1/300 at 0, 1/200 at 100, 1/100 at 200, etc
+			else if (ScaleCatch2(power, 0, 200, 100, 300) && PyramidBiome && liquidType == 0) { //1/300 at 0, 1/200 at 100, 1/100 at 200, etc
 				caughtType = ItemID.ZephyrFish; }
 			else if (!player.HasBuff(BuffID.Crate))
 			{
-				if (ScaleCatch2(power, 0, 200, 20, 200) && (PyramidBiome || ZeplineBiome) && liquidType == 0) {
+				if (ScaleCatch2(power, 0, 200, 20, 200) && PyramidBiome && liquidType == 0) {
 					caughtType = mod.ItemType("PyramidCrate"); }
 			}
 			else
 			{
-				if (ScaleCatch2(power, 0, 200, 10, 100) && (PyramidBiome || ZeplineBiome) && liquidType == 0) {
+				if (ScaleCatch2(power, 0, 200, 10, 100) && PyramidBiome && liquidType == 0) {
 					caughtType = mod.ItemType("PyramidCrate"); }
 			}
 
@@ -374,7 +514,6 @@ namespace SOTS
 		{
 			PlanetariumBiome = (SOTSWorld.planetarium > 250) && player.Center.Y < Main.worldSurface * 16 * 0.6f;
 			//GeodeBiome = (SOTSWorld.geodeBiome > 300);
-			ZeplineBiome = (SOTSWorld.zeplineBiome > 0);
 
 			//checking for background walls
 			int tileBehindX = (int)(player.Center.X / 16);
@@ -792,7 +931,14 @@ namespace SOTS
 				}
 			}
 		}
-	}
+        public override void Initialize()
+		{
+			SOTSPlayer.typhonBlacklist.Add(ModContent.ProjectileType<ArcColumn>());
+
+			SOTSPlayer.typhonWhitelist.Add(ModContent.ProjectileType<HardlightArrow>());
+			base.Initialize();
+        }
+    }
 }
 
 

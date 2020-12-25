@@ -13,7 +13,6 @@ namespace SOTS.NPCs.Constructs
 		float dir = 0f;
 		public override void SetStaticDefaults()
 		{
-			
 			DisplayName.SetDefault("Permafrost Construct");
 		}
 		public override void SetDefaults()
@@ -37,6 +36,7 @@ namespace SOTS.NPCs.Constructs
 			npc.alpha = 255;
 			npc.HitSound = SoundID.NPCHit4;
 			npc.DeathSound = SoundID.NPCDeath14;
+			npc.rarity = 5;
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{

@@ -95,7 +95,6 @@ namespace SOTS.Projectiles.Otherworld
 			return endHow == 0;
 		}
 		bool runOnce = true;
-		Vector2 storeVelocity = Vector2.Zero;
 		public override bool PreAI()
 		{
 			if(projectile.ai[1] == -1)
@@ -117,11 +116,10 @@ namespace SOTS.Projectiles.Otherworld
 					trailPos[i] = Vector2.Zero;
 				}
 				runOnce = false;
-				storeVelocity = projectile.velocity * 2f;
+				projectile.velocity = projectile.velocity * 2f;
 			}
 			if (!runOnce)
 			{
-				projectile.velocity = storeVelocity;
 				if (projectile.ai[0] % 3 == 0)
 					cataloguePos();
 			}
@@ -166,7 +164,6 @@ namespace SOTS.Projectiles.Otherworld
 			projectile.tileCollide = false;
 			projectile.friendly = false;
 			projectile.velocity *= 0f;
-			storeVelocity = Vector2.Zero;
 			projectile.ai[1] = -1;
 			projectile.netUpdate = true;
 		}
@@ -174,16 +171,12 @@ namespace SOTS.Projectiles.Otherworld
 		{
 			writer.Write(projectile.tileCollide);
 			writer.Write(projectile.friendly);
-			writer.Write(storeVelocity.X);
-			writer.Write(storeVelocity.Y);
 			base.SendExtraAI(writer);
 		}
 		public override void ReceiveExtraAI(BinaryReader reader)
 		{
 			projectile.tileCollide = reader.ReadBoolean();
 			projectile.friendly = reader.ReadBoolean();
-			storeVelocity.X = reader.ReadSingle();
-			storeVelocity.Y = reader.ReadSingle();
 			base.ReceiveExtraAI(reader);
 		}
 	}

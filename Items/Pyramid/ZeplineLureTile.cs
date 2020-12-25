@@ -188,6 +188,8 @@ namespace SOTS.Items.Pyramid
 									dust.velocity += projectile.velocity;
 								}
 								WorldGen.KillTile(i + x, j + y, false, false, false);
+								if (!Main.tile[i, j].active() && Main.netMode != 0)
+									NetMessage.SendData(MessageID.TileChange, -1, -1, null, 0, (float)i, (float)j, 0f, 0, 0, 0);
 							}
 						}
 					}

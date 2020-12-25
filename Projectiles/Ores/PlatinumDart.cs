@@ -15,12 +15,10 @@ namespace SOTS.Projectiles.Ores
 		}
         public override void SetDefaults()
         {
-			projectile.aiStyle = 1;
 			projectile.width = 26;
 			projectile.height = 26;
-            projectile.magic = true;
 			projectile.penetrate = 2;
-			projectile.ranged = false;
+			projectile.ranged = true;
 			projectile.alpha = 0; 
 			projectile.friendly = true;
 			projectile.tileCollide = true;
@@ -28,19 +26,19 @@ namespace SOTS.Projectiles.Ores
 		}
 		public override void SendExtraAI(BinaryWriter writer) 
 		{
-			writer.Write(projectile.rotation);
-			writer.Write(projectile.spriteDirection);
+			writer.Write(projectile.alpha);
 			//writer.Write(damageCounter);
 			writer.Write(latch);
+			writer.Write(projectile.friendly);
 			writer.Write(diffPosX);
 			writer.Write(diffPosY);
 		}
 		public override void ReceiveExtraAI(BinaryReader reader)
 		{	
-			projectile.rotation = reader.ReadSingle();
-			projectile.spriteDirection = reader.ReadInt32();
+			projectile.alpha = reader.ReadInt32();
 			//damageCounter = reader.ReadInt32();
 			latch = reader.ReadBoolean();
+			projectile.friendly = reader.ReadBoolean();
 			diffPosX = reader.ReadSingle();
 			diffPosY = reader.ReadSingle();
 		}
@@ -59,7 +57,7 @@ namespace SOTS.Projectiles.Ores
 			projectile.rotation = (float)Math.Atan2((double)projectile.velocity.Y, (double)projectile.velocity.X) + MathHelper.ToRadians(45);
 			projectile.spriteDirection = 1;
 			
-			if(latch && (int)projectile.ai[1] != -1)
+			if(latch && (int)projectile.ai[1] != -1 && projectile.owner == Main.myPlayer)
 			{
 				projectile.netUpdate = true;
 				NPC target = Main.npc[(int)projectile.ai[1]];
@@ -70,7 +68,6 @@ namespace SOTS.Projectiles.Ores
 				}
 				if(target.active && !target.friendly)
 				{
-					projectile.aiStyle = 0;
 					projectile.position.X = target.Center.X - projectile.width/2 - diffPosX;
 					projectile.position.Y = target.Center.Y - projectile.height/2 - diffPosY;
 				}
@@ -79,6 +76,12 @@ namespace SOTS.Projectiles.Ores
 					projectile.Kill();
 				}
 			}
+			if(projectile.ai[1] == -1)
+            {
+				projectile.velocity.Y += 0.09f;
+				if (projectile.velocity.Y > 30)
+					projectile.velocity.Y = 30;
+            }
 		}
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
         {
@@ -95,10 +98,10 @@ namespace SOTS.Projectiles.Ores
 			latch = true;
 			
 			if(diffPosX == 0)
-			diffPosX = target.Center.X - projectile.Center.X;
+				diffPosX = target.Center.X - projectile.Center.X;
 				
 			if(diffPosY == 0)
-			diffPosY = target.Center.Y - projectile.Center.Y;
+				diffPosY = target.Center.Y - projectile.Center.Y;
 
 			projectile.ai[1] = target.whoAmI;
 			

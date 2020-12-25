@@ -14,20 +14,20 @@ namespace SOTS.Items.SpecialDrops
 		}
 		public override void SetDefaults()
 		{
-            item.damage = 12;
+            item.damage = 14;
             item.melee = true;  
             item.width = 34;   
             item.height = 34;   
             item.useStyle = 1;
 			item.useTurn = true;
-            item.useTime = 20;
-            item.useAnimation = 20;
+            item.useTime = 18;
+            item.useAnimation = 18;
 			item.pick = 100;
 			item.knockBack = 2.5f;
 			item.value = Item.sellPrice(0, 3, 0, 0);
-            item.rare = 2;
+            item.rare = ItemRarityID.LightRed;
 			item.UseSound = SoundID.Item1;
-			item.tileBoost = 2;
+			item.tileBoost = 3;
 			item.autoReuse = true;
 		}
 		public override void MeleeEffects(Player player, Rectangle hitbox)

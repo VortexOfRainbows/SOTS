@@ -155,6 +155,7 @@ namespace SOTS.Projectiles.Otherworld
 				projectile.velocity *= 0f;
 				originalVelo *= 0f;
 				projectile.ai[0] = 0f;
+				projectile.friendly = false;
 			}
 			counter++;
 			counter2++;

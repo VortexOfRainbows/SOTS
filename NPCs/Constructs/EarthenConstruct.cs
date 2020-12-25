@@ -13,7 +13,6 @@ namespace SOTS.NPCs.Constructs
 		int despawn = 0;
 		public override void SetStaticDefaults()
 		{
-			
 			DisplayName.SetDefault("Earthen Construct");
 		}
         public override void SetDefaults()
@@ -34,6 +33,7 @@ namespace SOTS.NPCs.Constructs
             npc.netAlways = true;
             npc.behindTiles = true;
 			npc.aiStyle = 6;
+            npc.rarity = 5;
         }
         public void DoSound()
         {

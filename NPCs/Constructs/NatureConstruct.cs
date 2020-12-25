@@ -55,6 +55,7 @@ namespace SOTS.NPCs.Constructs
 			npc.netAlways = true;
 			npc.HitSound = SoundID.NPCHit4;
 			npc.DeathSound = SoundID.NPCDeath14;
+			npc.rarity = 5;
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{

@@ -109,7 +109,7 @@ namespace SOTS.Projectiles.Otherworld
 				Main.dust[dust].velocity *= 1f;
 				Main.dust[dust].noGravity = true;
 			}
-			if (iterator >= 10)
+			if (iterator >= trailPos.Length)
 				projectile.Kill();
 		}
 		int endHow = 0;

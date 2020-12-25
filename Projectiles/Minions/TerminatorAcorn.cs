@@ -154,7 +154,7 @@ namespace SOTS.Projectiles.Minions
 		}
         public override void AI()
 		{
-			projectile.velocity.Y += 0.08f;
+			projectile.velocity.Y += 0.09f;
 			base.AI();
         }
         public void checkPos()

@@ -17,7 +17,7 @@ namespace SOTS.Items.Fragments
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Polished Coin");
-			Tooltip.SetDefault("Critical strikes have a 50% chance to deal 40 more damage\n3% increased crit chance\nImmunity to bleeding and poisoned debuffs");
+			Tooltip.SetDefault("Critical strikes have a 50% chance to deal 40 more damage\n3% increased crit chance\nImmunity to bleeding and poisoned");
 		}
 		public override void SetDefaults()
 		{

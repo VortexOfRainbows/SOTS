@@ -6,6 +6,7 @@ using System.Xml.Schema;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Steamworks;
+using SOTS.Void;
 
 namespace SOTS.NPCs
 {
@@ -32,6 +33,7 @@ namespace SOTS.NPCs
 		public void hitBy(NPC npc, Player player, Projectile projectile, Item item, ref int damage, ref float knockback, ref bool crit)
 		{
 			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
+			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			if (modPlayer.assassinate)
 			{
 				npc.AddBuff(mod.BuffType("Assassination"), 900);
@@ -72,7 +74,7 @@ namespace SOTS.NPCs
             SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");	
 			bool ZoneForest = !player.GetModPlayer<SOTSPlayer>().PyramidBiome && !player.ZoneDesert && !player.ZoneCorrupt && !player.ZoneDungeon && !player.ZoneDungeon && !player.ZoneHoly && !player.ZoneMeteor && !player.ZoneJungle && !player.ZoneSnow && !player.ZoneCrimson && !player.ZoneGlowshroom && !player.ZoneUndergroundDesert && (player.ZoneDirtLayerHeight || player.ZoneOverworldHeight) && !player.ZoneBeach;
 				
-			if(npc.lifeMax > 5)
+			if(npc.lifeMax > 5 && !npc.SpawnedFromStatue)
 			{
 				if (Main.rand.Next(90) == 0 || (npc.type == 170 || npc.type == 171 || npc.type == 180)) { //guarenteed from pigrons
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("AlmondMilk"), 1); 

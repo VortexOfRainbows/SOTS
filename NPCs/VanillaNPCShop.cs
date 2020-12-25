@@ -11,7 +11,7 @@ namespace SOTS.NPCs
         {
 			if(Main.rand.Next(3) == 0)
 			{
-				shop[nextSlot] = (mod.ItemType("SupremSticker"));  
+				shop[nextSlot] = mod.ItemType("SupremSticker");  
 				nextSlot++;
 			}
 		}
@@ -20,24 +20,11 @@ namespace SOTS.NPCs
             switch (type)
             {
                 case NPCID.Merchant: 
-					if (NPC.downedPlantBoss) 
-                    {
-
+					if (Main.LocalPlayer.HasItem(mod.ItemType("FlareDetonator")))
+					{
+						shop.item[nextSlot].SetDefaults(mod.ItemType("BlackFlare"));
+						nextSlot++;
 					}
-                    break;
-            }
-            switch (type)
-            {
-                case NPCID.ArmsDealer:
- 
-                    if (Main.hardMode) 
-                    {
-						
-                    }
-                    if (NPC.downedBoss3) 
-                    {
-						
-                    }
                     break;
             }
 		}

@@ -12,6 +12,7 @@ using Terraria.UI;
 using SOTS.Void;
 using SOTS.Items.Pyramid;
 using SOTS.Items.Otherworld.EpicWings;
+using SOTS.NPCs.ArtificialDebuffs;
 
 namespace SOTS
 {
@@ -81,7 +82,10 @@ namespace SOTS
 		{
 			SOTSSyncPlayer,
 			OrbitalCounterChanged,
-			SyncCreativeFlight
+			SyncCreativeFlight,
+			SyncLootingSoulsAndVoidMax,
+			SyncGlobalNPC,
+			SyncPlayerKnives
 		}
 		public override void HandlePacket(BinaryReader reader, int whoAmI)
 		{
@@ -92,10 +96,13 @@ namespace SOTS
 					byte playernumber = reader.ReadByte();
 					SOTSPlayer modPlayer = Main.player[playernumber].GetModPlayer<SOTSPlayer>();
 					TestWingsPlayer testPlayer = Main.player[playernumber].GetModPlayer<TestWingsPlayer>();
+					VoidPlayer voidPlayer = Main.player[playernumber].GetModPlayer<VoidPlayer>();
 					int orbitalCounter = reader.ReadInt32();
 					modPlayer.orbitalCounter = orbitalCounter;
 					bool creativeFlight = reader.ReadBoolean();
 					testPlayer.creativeFlight = creativeFlight;
+					int lootingSouls = reader.ReadInt32();
+					voidPlayer.lootingSouls = lootingSouls;
 					// SyncPlayer will be called automatically, so there is no need to forward this data to other clients.
 					break;
 				case SOTSMessageType.OrbitalCounterChanged:
@@ -112,7 +119,7 @@ namespace SOTS
 						packet.Send(-1, playernumber);
 					}
 					break;
-				case SOTSMessageType.SyncCreativeFlight:
+                case SOTSMessageType.SyncCreativeFlight:
 					playernumber = reader.ReadByte(); 
 					testPlayer = Main.player[playernumber].GetModPlayer<TestWingsPlayer>();
 					testPlayer.creativeFlight = reader.ReadBoolean();
@@ -123,6 +130,61 @@ namespace SOTS
 						packet.Write((byte)SOTSMessageType.SyncCreativeFlight);
 						packet.Write(playernumber);
 						packet.Write(testPlayer.creativeFlight);
+						packet.Send(-1, playernumber);
+					}
+					break;
+				case SOTSMessageType.SyncLootingSoulsAndVoidMax:
+					playernumber = reader.ReadByte();
+					voidPlayer = Main.player[playernumber].GetModPlayer<VoidPlayer>();
+					voidPlayer.lootingSouls = reader.ReadInt32();
+					voidPlayer.voidMeterMax = reader.ReadInt32();
+					voidPlayer.voidMeterMax2 = reader.ReadInt32();
+					voidPlayer.voidMeter = reader.ReadSingle();
+					// Unlike SyncPlayer, here we have to relay/forward these changes to all other connected clients
+					if (Main.netMode == NetmodeID.Server)
+					{
+						var packet = GetPacket();
+						packet.Write((byte)SOTSMessageType.SyncLootingSoulsAndVoidMax);
+						packet.Write(playernumber);
+						packet.Write(voidPlayer.lootingSouls);
+						packet.Write(voidPlayer.voidMeterMax);
+						packet.Write(voidPlayer.voidMeterMax2);
+						packet.Write(voidPlayer.voidMeter);
+						packet.Send(-1, playernumber);
+					}
+					break;
+				case SOTSMessageType.SyncGlobalNPC:
+					playernumber = reader.ReadByte();
+					int npcNumber = reader.ReadInt32();
+					DebuffNPC debuffNPC = (DebuffNPC)GetGlobalNPC("DebuffNPC");
+					debuffNPC = (DebuffNPC)debuffNPC.Instance(Main.npc[npcNumber]);
+					debuffNPC.HarvestCurse = reader.ReadInt32();
+					debuffNPC.PlatinumCurse = reader.ReadInt32();
+					// Unlike SyncPlayer, here we have to relay/forward these changes to all other connected clients
+					if (Main.netMode == NetmodeID.Server)
+					{
+						var packet = GetPacket();
+						packet.Write((byte)SOTSMessageType.SyncGlobalNPC);
+						packet.Write(playernumber);
+						packet.Write(npcNumber);
+						packet.Write(debuffNPC.HarvestCurse);
+						packet.Write(debuffNPC.PlatinumCurse);
+						packet.Send(-1, playernumber);
+					}
+					break;
+				case SOTSMessageType.SyncPlayerKnives:
+					playernumber = reader.ReadByte();
+					modPlayer = Main.player[playernumber].GetModPlayer<SOTSPlayer>();
+					modPlayer.skywardBlades = reader.ReadInt32();
+					modPlayer.cursorRadians = reader.ReadSingle();
+					// Unlike SyncPlayer, here we have to relay/forward these changes to all other connected clients
+					if (Main.netMode == NetmodeID.Server)
+					{
+						var packet = GetPacket();
+						packet.Write((byte)SOTSMessageType.SyncPlayerKnives);
+						packet.Write(playernumber);
+						packet.Write(modPlayer.skywardBlades);
+						packet.Write(modPlayer.cursorRadians);
 						packet.Send(-1, playernumber);
 					}
 					break;
@@ -170,7 +232,7 @@ namespace SOTS
 			recipe.AddRecipe();
 			
 			recipe = new ModRecipe(this);
-			recipe.AddIngredient(null, "FragmentOfChaos", 75);
+			recipe.AddIngredient(null, "FragmentOfChaos", 125);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.SetResult(1326, 1); //rod of discord
 			recipe.AddRecipe();

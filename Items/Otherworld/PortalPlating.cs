@@ -41,7 +41,7 @@ namespace SOTS.Items.Otherworld
 			drop = mod.ItemType("PortalPlating");
 			AddMapEntry(new Color(64, 180, 170));
 			mineResist = 2f;
-			minPick = 200;
+			minPick = 210;
 			soundType = 21;
 			soundStyle = 2;
 			dustType = mod.DustType("AvaritianDust");
@@ -52,8 +52,7 @@ namespace SOTS.Items.Otherworld
 		}
 		public override bool Slope(int i, int j)
 		{
-			//if (SOTSWorld.downedEntity)
-			return true;
+			return false;
 		}
 	}
 }
