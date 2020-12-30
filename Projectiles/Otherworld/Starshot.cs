@@ -23,6 +23,14 @@ namespace SOTS.Projectiles.Otherworld
             projectile.tileCollide = false;
             projectile.light = 0.8f;
         }
+        public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
+        {
+            Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Otherworld/Starshot");
+            Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
+            Vector2 drawPos = projectile.Center - Main.screenPosition;
+            Color color = Color.White;
+            spriteBatch.Draw(texture, drawPos, null, color, projectile.rotation, drawOrigin, projectile.scale, projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+        }
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
             damage /= 2;

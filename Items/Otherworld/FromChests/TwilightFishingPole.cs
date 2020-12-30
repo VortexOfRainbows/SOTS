@@ -22,8 +22,8 @@ namespace SOTS.Items.Otherworld.FromChests
 		{
 			Texture2D texture = mod.GetTexture("Items/Otherworld/FromChests/TwilightFishingPoleGlow");
 			Color color = Color.White;
-			Vector2 drawOrigin = new Vector2(Main.itemTexture[item.type].Width * 0.5f, item.height * 0.5f);
-			Main.spriteBatch.Draw(texture, new Vector2((float)(item.Center.X - (int)Main.screenPosition.X), (float)(item.Center.Y - (int)Main.screenPosition.Y) + 2), null, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+			Vector2 drawOrigin = new Vector2(Main.itemTexture[item.type].Width * 0.5f, Main.itemTexture[item.type].Height * 0.5f);
+			Main.spriteBatch.Draw(texture, new Vector2((float)(item.Center.X - (int)Main.screenPosition.X), (float)(item.Center.Y - (int)Main.screenPosition.Y) - 2), null, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 		}
 
 		public override void SetDefaults()

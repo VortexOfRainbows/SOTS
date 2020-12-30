@@ -4,7 +4,7 @@ This mod's main plan is to add generated structures in the world, some are sort-
 !! A large world is recommended in order for the generated structures to spawn without overriding vanilla structures !!
 
 Bosses -> Currently 6, Mostly bullet hells
-Items -> Around 300, unique gimmicks all around!
+Items -> Around 350, unique gimmicks all around!
 
 New Subclass (void)
 -A new resource similar to mana
@@ -17,12 +17,19 @@ Currents Stuctures:
 -Planetarium Temple Worldgen
 
 Credits:
+(Current)
 -Development and Art - Vortex#6230
 -Art - Blasfah
+-Beta Testers - Crimsonkeep
+(Past)
 -Misc - FlameFreezer
 
 Update 0.19.0
--Big thanks to qwerty3.14 for their extensive feedback in many areas of the mod!
+-Big thanks to qwerty3.14 for extensive feedback in many areas of the mod!
+-Balancing changes, overhauls, and visual improvements in many areas (including various items)
+-New Boss and Biome with lots of new items
+-More items scattered in various places
+-Various bug fixes
 
 Update 0.18.4
 -Pyramid prioritizes finding a non-underground desert

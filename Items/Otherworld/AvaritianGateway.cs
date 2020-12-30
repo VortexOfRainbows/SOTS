@@ -57,7 +57,11 @@ namespace SOTS.Items.Otherworld
 			disableSmartCursor = true;
 			dustType = mod.DustType("AvaritianDust");
 		}
-        public override bool CanKillTile(int i, int j, ref bool blockDamaged)
+		public override bool CanExplode(int i, int j)
+		{
+			return false;
+		}
+		public override bool CanKillTile(int i, int j, ref bool blockDamaged)
         {
             return false;
         }

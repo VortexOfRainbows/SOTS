@@ -51,6 +51,104 @@ namespace SOTS.Items.Otherworld.FromChests
 			recipe.SetResult(this, 1);
 			recipe.AddRecipe();
 		}
+		public static void AddTransmutationRecipes(Mod mod) //called in SOTS
+        {
+			ModRecipe recipe = new ModRecipe(mod);
+			recipe.AddIngredient(ItemID.TinBar, 1);
+			recipe.AddTile(mod.TileType("TransmutationAltarTile"));
+			recipe.SetResult(ItemID.CopperBar, 1);
+			recipe.AddRecipe();
+
+			recipe = new ModRecipe(mod);
+			recipe.AddIngredient(ItemID.CopperBar, 1);
+			recipe.AddTile(mod.TileType("TransmutationAltarTile"));
+			recipe.SetResult(ItemID.TinBar, 1);
+			recipe.AddRecipe();
+
+			recipe = new ModRecipe(mod);
+			recipe.AddIngredient(ItemID.IronBar, 1);
+			recipe.AddTile(mod.TileType("TransmutationAltarTile"));
+			recipe.SetResult(ItemID.LeadBar, 1);
+			recipe.AddRecipe();
+
+			recipe = new ModRecipe(mod);
+			recipe.AddIngredient(ItemID.LeadBar, 1);
+			recipe.AddTile(mod.TileType("TransmutationAltarTile"));
+			recipe.SetResult(ItemID.IronBar, 1);
+			recipe.AddRecipe();
+
+			recipe = new ModRecipe(mod);
+			recipe.AddIngredient(ItemID.SilverBar, 1);
+			recipe.AddTile(mod.TileType("TransmutationAltarTile"));
+			recipe.SetResult(ItemID.TungstenBar, 1);
+			recipe.AddRecipe();
+
+			recipe = new ModRecipe(mod);
+			recipe.AddIngredient(ItemID.TungstenBar, 1);
+			recipe.AddTile(mod.TileType("TransmutationAltarTile"));
+			recipe.SetResult(ItemID.SilverBar, 1);
+			recipe.AddRecipe();
+
+			recipe = new ModRecipe(mod);
+			recipe.AddIngredient(ItemID.GoldBar, 1);
+			recipe.AddTile(mod.TileType("TransmutationAltarTile"));
+			recipe.SetResult(ItemID.PlatinumBar, 1);
+			recipe.AddRecipe();
+
+			recipe = new ModRecipe(mod);
+			recipe.AddIngredient(ItemID.PlatinumBar, 1);
+			recipe.AddTile(mod.TileType("TransmutationAltarTile"));
+			recipe.SetResult(ItemID.GoldBar, 1);
+			recipe.AddRecipe();
+
+			recipe = new ModRecipe(mod);
+			recipe.AddIngredient(ItemID.CopperOre, 3);
+			recipe.AddTile(mod.TileType("TransmutationAltarTile"));
+			recipe.SetResult(ItemID.IronOre, 1);
+			recipe.AddRecipe();
+
+			recipe = new ModRecipe(mod);
+			recipe.AddIngredient(ItemID.IronOre, 3);
+			recipe.AddTile(mod.TileType("TransmutationAltarTile"));
+			recipe.SetResult(ItemID.SilverOre, 1);
+			recipe.AddRecipe();
+
+			recipe = new ModRecipe(mod);
+			recipe.AddIngredient(ItemID.SilverOre, 3);
+			recipe.AddTile(mod.TileType("TransmutationAltarTile"));
+			recipe.SetResult(ItemID.GoldOre, 1);
+			recipe.AddRecipe();
+
+			recipe = new ModRecipe(mod);
+			recipe.AddIngredient(ItemID.TinOre, 3);
+			recipe.AddTile(mod.TileType("TransmutationAltarTile"));
+			recipe.SetResult(ItemID.LeadOre, 1);
+			recipe.AddRecipe();
+
+			recipe = new ModRecipe(mod);
+			recipe.AddIngredient(ItemID.LeadOre, 3);
+			recipe.AddTile(mod.TileType("TransmutationAltarTile"));
+			recipe.SetResult(ItemID.TungstenOre, 1);
+			recipe.AddRecipe();
+
+			recipe = new ModRecipe(mod);
+			recipe.AddIngredient(ItemID.TungstenOre, 3);
+			recipe.AddTile(mod.TileType("TransmutationAltarTile"));
+			recipe.SetResult(ItemID.PlatinumOre, 1);
+			recipe.AddRecipe();
+
+			recipe = new ModRecipe(mod);
+			recipe.AddIngredient(ItemID.DemoniteBar, 1);
+			recipe.AddTile(mod.TileType("TransmutationAltarTile"));
+			recipe.SetResult(ItemID.CrimtaneBar, 1);
+			recipe.AddRecipe();
+
+			recipe = new ModRecipe(mod);
+			recipe.AddIngredient(ItemID.CrimtaneBar, 1);
+			recipe.AddTile(mod.TileType("TransmutationAltarTile"));
+			recipe.SetResult(ItemID.DemoniteBar, 1);
+			recipe.AddRecipe();
+		}
 	}
 	public class TransmutationAltarTile : ModTile
 	{

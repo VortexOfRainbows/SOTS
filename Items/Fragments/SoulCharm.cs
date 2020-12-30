@@ -17,13 +17,13 @@ namespace SOTS.Items.Fragments
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Soul Charm");
-			Tooltip.SetDefault("Critical strikes steal life and regenerate void\n3% increased crit chance");
+			Tooltip.SetDefault("Critical strikes steal life, regenerate void, and recover mana\n3% increased crit chance");
 		}
 		public override void SetDefaults()
 		{
             item.width = 30;     
             item.height = 34;  
-            item.value = Item.sellPrice(0, 4, 50, 0);
+            item.value = Item.sellPrice(0, 5, 0, 0);
             item.rare = 8;
 			item.accessory = true;
 		}
@@ -35,7 +35,8 @@ namespace SOTS.Items.Fragments
 			player.rangedCrit += 3;
 			player.magicCrit += 3;
 			player.thrownCrit += 3;
-			
+
+			modPlayer.CritManasteal += 7 + Main.rand.Next(4);
 			modPlayer.CritLifesteal += 2 + Main.rand.Next(2);
 			modPlayer.CritVoidsteal += 2.25f;
 		}
@@ -44,6 +45,7 @@ namespace SOTS.Items.Fragments
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(null, "CloverCharm", 1);
 			recipe.AddIngredient(null, "VoidCharm", 1);
+			recipe.AddIngredient(null, "Starbelt", 1);
 			recipe.AddIngredient(ItemID.Ectoplasm, 10); 
 			//recipe.AddIngredient(ItemID.Ectoplasm, 1); //To be replaced later (dissolving tide)
 			recipe.AddTile(TileID.TinkerersWorkbench);

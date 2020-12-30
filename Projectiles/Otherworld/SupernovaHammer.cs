@@ -20,8 +20,16 @@ namespace SOTS.Projectiles.Otherworld
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Supernova Hammer");
-		}
-		public override void SetDefaults()
+        }
+        public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
+        {
+            Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Otherworld/SupernovaHammerGlow");
+            Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
+            Vector2 drawPos = projectile.Center - Main.screenPosition;
+            Color color = Color.White;
+            spriteBatch.Draw(texture, drawPos, null, color, projectile.rotation, drawOrigin, projectile.scale, projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+        }
+        public override void SetDefaults()
         {
             projectile.width = 64;
             projectile.height = 64;

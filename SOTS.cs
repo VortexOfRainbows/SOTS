@@ -13,9 +13,48 @@ using SOTS.Void;
 using SOTS.Items.Pyramid;
 using SOTS.Items.Otherworld.EpicWings;
 using SOTS.NPCs.ArtificialDebuffs;
+using SOTS.Items.Otherworld.FromChests;
 
 namespace SOTS
 {
+	/*
+	public static class SOTSGlowmasks
+	{
+		const short Count = 1;
+		public static short StarbeltGlow;
+		static short End;
+		static bool Loaded;
+		public static void LoadGlowmasks()
+		{
+			Array.Resize(ref Main.glowMaskTexture, Main.glowMaskTexture.Length + Count);
+			short i = (short)(Main.glowMaskTexture.Length - Count);
+
+			Main.glowMaskTexture[i] = ModContent.GetTexture("SOTS/Items/Otherworld/FromChests/Starbelt_WaistGlow");
+			StarbeltGlow = i;
+			i++;
+			End = i;
+			Loaded = true;
+		}
+		public static void UnloadGlowmasks()
+		{
+			if (Main.glowMaskTexture.Length == End)
+			{
+				Array.Resize(ref Main.glowMaskTexture, Main.glowMaskTexture.Length - Count);
+			}
+			else if (Main.glowMaskTexture.Length > End && Main.glowMaskTexture.Length > Count)
+			{
+				for (int i = End - Count; i < End; i++)
+				{
+					Main.glowMaskTexture[i] = ModContent.GetTexture("Terraria/Item_0");
+				}
+			}
+
+			Loaded = false;
+			StarbeltGlow = 0;
+			End = 0;
+		}
+    }
+	*/
 	public class SOTS : Mod
 	{
 		public static ModHotKey BlinkHotKey;
@@ -33,9 +72,10 @@ namespace SOTS
 		}
 		private UserInterface _VoidUserInterface;
 		internal VoidUI VoidUI;
-		
+
 		public override void Load()
 		{
+			//SOTSGlowmasks.LoadGlowmasks();
 			Instance = ModContent.GetInstance<SOTS>();
 			BlinkHotKey = RegisterHotKey("Blink", "X");
 
@@ -49,6 +89,7 @@ namespace SOTS
         }
 		public override void Unload() 
 		{
+			//SOTSGlowmasks.UnloadGlowmasks();
 			Instance = null;
 			VoidBarSprite._backgroundTexture = null;
 			VoidBarBorder._backgroundTexture = null;
@@ -192,6 +233,8 @@ namespace SOTS
 		}
 		public override void AddRecipes()
 		{
+			TransmutationAltar.AddTransmutationRecipes(this);
+
 			ModRecipe recipe = new ModRecipe(this);
 			recipe.AddIngredient(null, "Wormwood", 30);
 			recipe.AddTile(TileID.Anvils);

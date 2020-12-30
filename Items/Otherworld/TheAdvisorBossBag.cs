@@ -31,9 +31,23 @@ namespace SOTS.Items.Otherworld
 		public override void OpenBossBag(Player player)
 		{
 			player.QuickSpawnItem(mod.ItemType("TwilightGyroscope"));
-			player.QuickSpawnItem(mod.ItemType("SkywareKey"));
-			player.QuickSpawnItem(mod.ItemType("StrangeKey"));
-			player.QuickSpawnItem(mod.ItemType("MeteoriteKey"));
+
+			if(Main.rand.NextBool(3))
+				player.QuickSpawnItem(mod.ItemType("StarlightAlloy"), Main.rand.Next(12, 19));
+			else
+				player.QuickSpawnItem(mod.ItemType("SkywareKey"));
+
+
+			if (Main.rand.NextBool(3))
+				player.QuickSpawnItem(mod.ItemType("OtherworldlyAlloy"), Main.rand.Next(12, 19));
+			else
+				player.QuickSpawnItem(mod.ItemType("MeteoriteKey"));
+
+
+			if (Main.rand.NextBool(3))
+				player.QuickSpawnItem(mod.ItemType("HardlightAlloy"), Main.rand.Next(12, 19));
+			else
+				player.QuickSpawnItem(mod.ItemType("StrangeKey"));
 		}
 	}
 }

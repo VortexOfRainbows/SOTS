@@ -141,7 +141,7 @@ namespace SOTS.Void
 				player.lifeRegen -= 7;
 				if (player.statLife <= 0 && player.whoAmI == Main.myPlayer)
 				{
-					player.KillMe(PlayerDeathReason.ByCustomReason(player.name + " was devoured by the void."), 10.0, 0, false);
+					player.KillMe(PlayerDeathReason.ByCustomReason(player.name + voidDeathMessages[Main.rand.Next(voidDeathMessages.Length)]), 10.0, 0, false);
 				}
 			}
 			if (voidRecovery)
@@ -155,7 +155,7 @@ namespace SOTS.Void
 				player.lifeRegen -= player.statLifeMax2 / 20;
 				if (player.statLife <= 0 && player.whoAmI == Main.myPlayer)
 				{
-					player.KillMe(PlayerDeathReason.ByCustomReason(player.name + " was consumed by the void."), 10.0, 0, false);
+					player.KillMe(PlayerDeathReason.ByCustomReason(player.name + voidDeathMessages[Main.rand.Next(voidDeathMessages.Length)]), 10.0, 0, false);
 				}
 			}
 		}

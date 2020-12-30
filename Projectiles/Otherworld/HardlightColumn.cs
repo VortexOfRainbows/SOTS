@@ -143,6 +143,12 @@ namespace SOTS.Projectiles.Otherworld
 			}
 			if(runOnce)
 			{
+				if(projectile.ai[1] == -1)
+				{
+					projectile.extraUpdates = 3;
+					projectile.ai[1] = 0;
+					Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 94, 0.6f);
+				}
 				originalVelo = projectile.velocity;
 				for (int i = 0; i < trailPos.Length; i++)
 				{

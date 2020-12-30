@@ -12,7 +12,7 @@ namespace SOTS.Items.GelGear
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Wormwood Helix");
-			Tooltip.SetDefault("Launches fusion shots");
+			Tooltip.SetDefault("Converts musket balls into helix shots");
 		}
 		public override void SetDefaults()
 		{
@@ -30,17 +30,31 @@ namespace SOTS.Items.GelGear
             item.UseSound = SoundID.Item11;
             item.autoReuse = true;
             item.shoot = 10; 
-            item.shootSpeed = 8f;
-			item.reuseDelay = 8;
+            item.shootSpeed = 12f;
 			item.useAmmo = AmmoID.Bullet;
 		}
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override Vector2? HoldoutOffset()
         {
-			Vector2 projVelocity1 = new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians(45));
-			Vector2 projVelocity2 = new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians(315));
-			Projectile.NewProjectile(position.X + speedX * 4, position.Y + speedY * 4, projVelocity1.X * 0.325f, projVelocity1.Y * 0.325f, mod.ProjectileType("Fusion1"), damage, knockBack, Main.myPlayer);
-			Projectile.NewProjectile(position.X + speedX * 4, position.Y + speedY * 4, projVelocity2.X * 0.325f, projVelocity2.Y * 0.325f, mod.ProjectileType("Fusion2"), damage, knockBack, Main.myPlayer);
-			
+            return new Vector2(-0.5f, 0);
+        }
+        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        {
+			if(type == ProjectileID.Bullet)
+			{
+				speedX *= 0.65f;
+				speedY *= 0.65f;
+				Vector2 projVelocity1 = new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians(45));
+				Vector2 projVelocity2 = new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians(315));
+				Projectile.NewProjectile(position.X + speedX * 3, position.Y + speedY * 3, projVelocity1.X * 0.325f, projVelocity1.Y * 0.325f, mod.ProjectileType("Fusion1"), damage, knockBack, Main.myPlayer);
+				Projectile.NewProjectile(position.X + speedX * 3, position.Y + speedY * 3, projVelocity2.X * 0.325f, projVelocity2.Y * 0.325f, mod.ProjectileType("Fusion2"), damage, knockBack, Main.myPlayer);
+			}
+			else
+			{
+				Vector2 projVelocity1 = new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians(-2f));
+				Vector2 projVelocity2 = new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians(2f));
+				Projectile.NewProjectile(position.X + speedX, position.Y, projVelocity1.X, projVelocity1.Y, type, damage, knockBack, Main.myPlayer);
+				Projectile.NewProjectile(position.X + speedX, position.Y, projVelocity2.X, projVelocity2.Y, type, damage, knockBack, Main.myPlayer);
+			}
 			return false;
 		}
 		public override void AddRecipes()

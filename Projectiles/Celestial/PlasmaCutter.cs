@@ -18,10 +18,8 @@ namespace SOTS.Projectiles.Celestial
 			DisplayName.SetDefault("Time to die");
 			ProjectileID.Sets.TrailCacheLength[projectile.type] = 12;  
 			ProjectileID.Sets.TrailingMode[projectile.type] = 2;    
-			
-		}
-		
-        public override void SetDefaults()
+		}        
+		public override void SetDefaults()
         {
             projectile.width = 50;
             projectile.height = 50; 

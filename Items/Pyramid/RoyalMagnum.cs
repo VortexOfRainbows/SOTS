@@ -12,7 +12,7 @@ namespace SOTS.Items.Pyramid
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Royal Magnum");
-      Tooltip.SetDefault("Upon hitting an enemy, the pyramid's wrath is incurred, summoning a phantom javelin");
+      Tooltip.SetDefault("Summon a phantom javelin upon hitting an enemy");
 		}
 		public override void SetDefaults()
 		{

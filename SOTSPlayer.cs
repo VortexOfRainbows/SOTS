@@ -105,6 +105,11 @@ namespace SOTS
 		public bool snakeSling = false; //snakeskin sling effect
 
 		public int CritLifesteal = 0; //crit clover
+		public float maxCritLifestealPerSecond = 0;
+		public float maxCritLifestealPerSecondTimer = 0;
+		public float CritManasteal = 0f; //starbelt
+		public float maxCritManastealPerSecond = 0;
+		public float maxCritManastealPerSecondTimer = 0;
 		public float CritVoidsteal = 0f; //crit void charm
 		public float maxCritVoidStealPerSecond = 0;
 		public float maxCritVoidStealPerSecondTimer = 0;
@@ -274,9 +279,34 @@ namespace SOTS
 				Main.projectile[Probe2].timeLeft = 6;
 			}
 		}
-		public override void ResetEffects()
+        public override void PostUpdate()
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
+			maxCritVoidStealPerSecond = voidPlayer.voidRegen * 20; //max stored voidsteal is 20x the voidRegen speed
+			maxCritVoidStealPerSecondTimer += (voidPlayer.voidRegen + CritVoidsteal / 10f) / 30f; //max stored voidsteal regenerates at the twice rate as normal voidRegen (basically, stores 20 seconds of regen) 
+			//Add critvoidsteal to the timer in some way to make it scale well with multiple voidsteal accessories. Same logic applies to other stat steals
+			if (maxCritVoidStealPerSecondTimer > maxCritVoidStealPerSecond)
+			{
+				maxCritVoidStealPerSecondTimer = maxCritVoidStealPerSecond;
+			}
+
+			maxCritLifestealPerSecond = (player.lifeRegen * 3) + 6; //max stored lifesteal is 3x lifeRegen (1 lifeRegen = 0.5 life per second) speed + 6 
+			maxCritLifestealPerSecondTimer += (player.lifeRegen + 3 + CritLifesteal) / 60f; //max stored lifesteal regenerates at the twice rate as normal regen (excluding movement based factors) (basically regenerates 3 life to the pool per second, faster with increased regen)
+			if (maxCritLifestealPerSecondTimer > maxCritLifestealPerSecond)
+			{
+				maxCritLifestealPerSecondTimer = maxCritLifestealPerSecond;
+			}
+
+			maxCritManastealPerSecond = 50 + player.statManaMax2 / 5; //max stored manasteal is 50 + 1/5th of the mana max
+			maxCritManastealPerSecondTimer += (6.5f + CritManasteal / 1.5f) / 60f; //max stored voidsteal regenerates at the twice rate as normal voidRegen (basically regenerates 6.5 mana to the pool per second, the pool grows with larger max mana)
+			if (maxCritManastealPerSecondTimer > maxCritManastealPerSecond)
+			{
+				maxCritManastealPerSecondTimer = maxCritManastealPerSecond;
+			}
+			base.PostUpdate();
+        }
+        public override void ResetEffects()
+		{
 			if(player.HasBuff(BuffID.ChaosState))
             {
 				BlinkedAmount = 0;
@@ -292,26 +322,29 @@ namespace SOTS
 				if(skywardBlades >= 0)
 				{
 					SendClientChanges(this);
-					if (player.HeldItem.type == mod.ItemType("SkywardBlades"))
-					{
-						if (this.bladeAlpha > 0)
-							this.bladeAlpha -= 5;
-						else
-							this.bladeAlpha = 0;
-					}
-					else
-					{
-						if (this.bladeAlpha < 255)
-							this.bladeAlpha += 5;
-						else
-							this.bladeAlpha = 255;
-					}
 				}
 				if(skywardBlades == 0)
                 {
 					skywardBlades = -1;
 					SendClientChanges(this);
                 }
+			}
+			if (skywardBlades >= 0)
+			{
+				if (player.HeldItem.type == mod.ItemType("SkywardBlades"))
+				{
+					if (this.bladeAlpha > 0)
+						this.bladeAlpha -= 5;
+					else
+						this.bladeAlpha = 0;
+				}
+				else
+				{
+					if (this.bladeAlpha < 255)
+						this.bladeAlpha += 5;
+					else
+						this.bladeAlpha = 255;
+				}
 			}
 			BlinkDamage = 0;
 			BlinkType = 0;
@@ -399,17 +432,11 @@ namespace SOTS
 			snakeSling = false;
 			CritLifesteal = 0;
 			CritVoidsteal = 0f;
+			CritManasteal = 0f;
 			CritBonusDamage = 0;
 			CritFire = false;
 			CritFrost = false;
 			CritCurseFire = false;
-
-			maxCritVoidStealPerSecond = voidPlayer.voidRegen * 20; //max stored voidsteal is 20x the voidRegen speed
-			maxCritVoidStealPerSecondTimer += voidPlayer.voidRegen / 30f; //max stored voidsteal regenerates at the twice rate as normal voidRegen (basically, stores 20 seconds of regen)
-			if (maxCritVoidStealPerSecondTimer > maxCritVoidStealPerSecond)
-			{
-				maxCritVoidStealPerSecondTimer = maxCritVoidStealPerSecond;
-			}
 			if (PyramidBiome)
 				player.AddBuff(mod.BuffType("PharaohsCurse"), 16, false);
 		}
@@ -823,9 +850,16 @@ namespace SOTS
 		{
 			if(crit)
 			{
-				if(CritLifesteal > 0)
+				if (CritManasteal > 0 && maxCritManastealPerSecondTimer > 0)
 				{
-					if(Main.myPlayer == player.whoAmI)
+					maxCritManastealPerSecondTimer -= CritManasteal;
+					if (Main.myPlayer == player.whoAmI)
+						Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, mod.ProjectileType("HealProj"), 1, 0, player.whoAmI, CritManasteal, 3);
+				}
+				if (CritLifesteal > 0 && maxCritLifestealPerSecondTimer > 0)
+				{
+					maxCritLifestealPerSecondTimer -= CritLifesteal;
+					if (Main.myPlayer == player.whoAmI)
 						Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, mod.ProjectileType("HealProj"), 0, 0, player.whoAmI, CritLifesteal, 6);
 				}
 				if(CritVoidsteal > 0 && maxCritVoidStealPerSecondTimer > 0)
@@ -878,13 +912,20 @@ namespace SOTS
 		public override void ModifyHitNPC(Item item, NPC target, ref int damage, ref float knockback, ref bool crit) 
 		{
 			if(crit)
-			{
-				if(CritLifesteal > 0)
+			{ 
+				if (CritManasteal > 0 && maxCritManastealPerSecondTimer > 0)
 				{
+					maxCritManastealPerSecondTimer -= CritManasteal;
+					if (Main.myPlayer == player.whoAmI)
+						Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, mod.ProjectileType("HealProj"), 1, 0, player.whoAmI, CritManasteal, 3);
+				}
+				if (CritLifesteal > 0 && maxCritLifestealPerSecondTimer > 0)
+				{
+					maxCritLifestealPerSecondTimer -= CritLifesteal;
 					if (Main.myPlayer == player.whoAmI)
 						Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, mod.ProjectileType("HealProj"), 0, 0, player.whoAmI, CritLifesteal, 6);
 				}
-				if (CritVoidsteal > 0 && maxCritVoidStealPerSecondTimer > 0)
+				if(CritVoidsteal > 0 && maxCritVoidStealPerSecondTimer > 0)
 				{
 					maxCritVoidStealPerSecondTimer -= CritVoidsteal;
 					if (Main.myPlayer == player.whoAmI)

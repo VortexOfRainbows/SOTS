@@ -37,7 +37,10 @@ namespace SOTS.Projectiles.Otherworld
             {
                 spriteBatch.Draw(texture, drawPos, null, color, projectile.rotation, drawOrigin, projectile.scale, projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
             }
-		}
+            color = Color.White;
+            texture = ModContent.GetTexture("SOTS/Projectiles/Otherworld/StarcoreRifleGlow");
+            spriteBatch.Draw(texture, drawPos, null, color, projectile.rotation, drawOrigin, projectile.scale, projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+        }
 		public override bool PreAI()
         {
             Player player = Main.player[projectile.owner];

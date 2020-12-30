@@ -59,7 +59,7 @@ namespace SOTS.Items.Celestial
 				voidPlayer.voidMeter += 3 + (modPlayer.onhitdamage / 9);
 				VoidPlayer.VoidEffect(player, 3 + (modPlayer.onhitdamage / 9));
 			}
-			modPlayer.CritVoidsteal = 0.7f;
+			modPlayer.CritVoidsteal += 0.7f;
 
 			player.buffImmune[BuffID.BrokenArmor] = true;
 			player.buffImmune[BuffID.Ichor] = true;

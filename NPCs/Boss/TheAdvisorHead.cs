@@ -40,6 +40,8 @@ namespace SOTS.NPCs.Boss
 		float fireToY = 0;
 		float eyeReset = 2.5f;
 		bool glow = false;
+		int lastAttackPhase1 = -1;
+		int lastAttackPhase2 = -1;
 		Vector2[] hookPos = {new Vector2(-1, -1) , new Vector2(-1, -1) , new Vector2(-1, -1) , new Vector2(-1, -1) };
 		Vector2[] hookPosTrue = { new Vector2(-1, -1), new Vector2(-1, -1), new Vector2(-1, -1), new Vector2(-1, -1) };
 		public override void SetStaticDefaults()
@@ -81,15 +83,15 @@ namespace SOTS.NPCs.Boss
 		public override void SetDefaults()
         {
             npc.aiStyle = 0;
-            npc.lifeMax = 10000;
-            npc.damage = 54;
-            npc.defense = 30;
+            npc.lifeMax = 11000;
+            npc.damage = 52;
+            npc.defense = 22;
             npc.knockBackResist = 0f;
             npc.width = 78;
             npc.height = 98;
             Main.npcFrameCount[npc.type] = 1;
             npc.value = 150000;
-            npc.npcSlots = 10f;
+            npc.npcSlots = 15f;
             npc.boss = true;
             npc.lavaImmune = true;
             npc.noGravity = true;
@@ -191,7 +193,7 @@ namespace SOTS.NPCs.Boss
 					{
 						amt = 56f;
 					}
-					float att = attackTimer2 - (990f - speed);
+					float att = attackTimer2 - (810f - speed);
 					if (att > 0)
 					{
 						att = speed - att;
@@ -349,7 +351,7 @@ namespace SOTS.NPCs.Boss
         }
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
-			npc.lifeMax = (int)(npc.lifeMax * bossLifeScale * 0.6f);  
+			npc.lifeMax = (int)(npc.lifeMax * bossLifeScale * 0.65f);  
             npc.damage = (int)(npc.damage * 0.8f);  
         }
 		bool moveLegsDynamic = true;
@@ -501,6 +503,7 @@ namespace SOTS.NPCs.Boss
 					npc.dontTakeDamage = false;
 					npc.dontCountMe = false;
 				}
+				npc.netUpdate = true;
 				return false;
 			}
 			if (Main.expertMode)
@@ -557,7 +560,11 @@ namespace SOTS.NPCs.Boss
             {	
 				if(Main.netMode != 1)
 				{
-					attackPhase1 = Main.rand.Next(3);
+					while (attackPhase1 == lastAttackPhase1 || attackPhase1 < 0)
+					{
+						attackPhase1 = Main.rand.Next(3);
+					}
+					lastAttackPhase1 = (int)attackPhase1;
 					attackTimer1 = 0;
 					npc.netUpdate = true;
 				}
@@ -566,7 +573,11 @@ namespace SOTS.NPCs.Boss
 			{
 				if (Main.netMode != 1)
 				{
-					attackPhase2 = Main.rand.Next(3);
+					while(attackPhase2 == lastAttackPhase2 || attackPhase2 < 0)
+					{
+						attackPhase2 = Main.rand.Next(3);
+					}
+					lastAttackPhase2 = (int)attackPhase2;
 					attackTimer2 = 0;
 					npc.netUpdate = true;
 				}
@@ -1050,7 +1061,7 @@ namespace SOTS.NPCs.Boss
 				watchPlayer = true; //found out that this actually worked better?
 				Vector2 circularAddition = new Vector2(48, 0).RotatedBy(MathHelper.ToRadians(attackTimer2 * 7));
 				Vector2 toLocation = player.Center + new Vector2(0, -40 + circularAddition.Y);
-				if (attackTimer2 > 180 && attackTimer2 % 90 <= 45 && attackTimer2 < 900)
+				if (attackTimer2 > 180 && attackTimer2 % 90 <= 45 && attackTimer2 < 720)
 				{
 					float speedMod = attackTimer2 % 90;
 					speedMod /= 90f;
@@ -1067,7 +1078,7 @@ namespace SOTS.NPCs.Boss
 				fireToX = player.Center.X;
 				fireToY = player.Center.Y;
 				eyeReset = 2.5f;
-				if (attackTimer2 >= 180 && attackTimer2 % 90 == 0 && attackTimer2 < 990)
+				if (attackTimer2 >= 180 && attackTimer2 % 90 == 0 && attackTimer2 < 810)
 				{
 					Main.PlaySound(2, (int)npc.Center.X, (int)npc.Center.Y, 93, 1.3f);
 					Vector2 shift = new Vector2(16, 0).RotatedBy(MathHelper.ToRadians(new Vector2(fireToX, fireToY).ToRotation()));
@@ -1075,6 +1086,7 @@ namespace SOTS.NPCs.Boss
 					Vector2 fromCenter = playerCenter - npc.Center;
 					fromCenter = fromCenter.SafeNormalize(Vector2.Zero);
 					fromCenter *= 72f;
+					float velocityA = 3.55f;
 					if (Main.netMode != 1)
 					{
 						int damage2 = npc.damage / 2;
@@ -1083,10 +1095,10 @@ namespace SOTS.NPCs.Boss
 							damage2 = (int)(damage2 / Main.expertDamage);
 						}
 						damage2 = (int)(damage2 * 0.8f);
-						Projectile.NewProjectile(npc.Center.X + fromCenter.X, npc.Center.Y + Math.Abs(shift.X) + 4 + fromCenter.Y, fromCenter.SafeNormalize(Vector2.Zero).X * 3.75f, fromCenter.SafeNormalize(Vector2.Zero).Y * 3.75f, mod.ProjectileType("ThunderColumnBlue"), damage2, 0, Main.myPlayer, 3f);
+						Projectile.NewProjectile(npc.Center.X + fromCenter.X, npc.Center.Y + Math.Abs(shift.X) + 4 + fromCenter.Y, fromCenter.SafeNormalize(Vector2.Zero).X * velocityA, fromCenter.SafeNormalize(Vector2.Zero).Y * velocityA, mod.ProjectileType("ThunderColumnBlue"), damage2, 0, Main.myPlayer, 3f);
 					}
 				}
-				if (attackTimer2 > 990)
+				if (attackTimer2 > 810)
 				{
 					watchPlayer = true;
 					attackPhase2 = -1;
@@ -1135,29 +1147,62 @@ namespace SOTS.NPCs.Boss
 				int type = Main.rand.Next(3);
 				if (type  == 0)
 				{
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("MeteoriteKey"), 1);
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("SkywareKey"), 1);
-					if(Main.rand.Next(3) == 0)
+					if (Main.rand.Next(3) == 0)
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("OtherworldlyAlloy"), Main.rand.Next(10, 17));
+					else
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("MeteoriteKey"), 1);
+
+					if (Main.rand.Next(3) == 0)
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("StarlightAlloy"), Main.rand.Next(10, 17));
+					else
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("SkywareKey"), 1);
+
+					if (Main.rand.Next(3) == 0)
 					{
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("StrangeKey"), 1);
+						if (Main.rand.Next(3) == 0)
+							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("HardlightAlloy"), Main.rand.Next(10, 17));
+						else
+							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("StrangeKey"), 1);
 					}
 				}
 				if (type == 1)
 				{
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("SkywareKey"), 1);
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("StrangeKey"), 1);
+					if (Main.rand.Next(3) == 0)
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("StarlightAlloy"), Main.rand.Next(10, 17));
+					else
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("SkywareKey"), 1);
+
+					if (Main.rand.Next(3) == 0)
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("HardlightAlloy"), Main.rand.Next(10, 17));
+					else
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("StrangeKey"), 1);
+
 					if (Main.rand.Next(3) == 0)
 					{
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("MeteoriteKey"), 1);
+						if (Main.rand.Next(3) == 0)
+							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("OtherworldlyAlloy"), Main.rand.Next(10, 17));
+						else
+							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("MeteoriteKey"), 1);
 					}
 				}
 				if (type == 2)
 				{
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("MeteoriteKey"), 1);
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("StrangeKey"), 1);
+					if (Main.rand.Next(3) == 0)
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("OtherworldlyAlloy"), Main.rand.Next(10, 17));
+					else
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("MeteoriteKey"), 1);
+
+					if (Main.rand.Next(3) == 0)
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("HardlightAlloy"), Main.rand.Next(10, 17));
+					else
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("StrangeKey"), 1);
+
 					if (Main.rand.Next(3) == 0)
 					{
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("SkywareKey"), 1);
+						if (Main.rand.Next(3) == 0)
+							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("StarlightAlloy"), Main.rand.Next(10, 17));
+						else
+							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("SkywareKey"), 1);
 					}
 				}
 			}

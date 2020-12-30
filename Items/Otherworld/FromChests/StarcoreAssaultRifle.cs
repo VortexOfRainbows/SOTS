@@ -54,6 +54,11 @@ namespace SOTS.Items.Otherworld.FromChests
 			Texture2D texture = mod.GetTexture("Items/Otherworld/FromChests/StarcoreAssaultRifleEffect");
 			for (int k = 0; k < 2; k++)
 				Main.spriteBatch.Draw(texture, item.Center - Main.screenPosition + new Vector2(0, 2), null, new Color(Main.DiscoR, Main.DiscoG, Main.DiscoB, 0), rotation, new Vector2(texture.Width/2, texture.Height/2), scale, SpriteEffects.None, 0f);
+			
+			texture = mod.GetTexture("Items/Otherworld/FromChests/StarcoreAssaultRifleGlow");
+			Color color = Color.White;
+			Vector2 drawOrigin = new Vector2(Main.itemTexture[item.type].Width * 0.5f, item.height * 0.5f);
+			Main.spriteBatch.Draw(texture, new Vector2((float)(item.Center.X - (int)Main.screenPosition.X), (float)(item.Center.Y - (int)Main.screenPosition.Y) + 2), null, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			base.PostDrawInWorld(spriteBatch, lightColor, alphaColor, rotation, scale, whoAmI);
         }
         public override void GetVoid(Player player)

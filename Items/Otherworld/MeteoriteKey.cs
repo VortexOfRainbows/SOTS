@@ -14,8 +14,8 @@ namespace SOTS.Items.Otherworld
 			//item.CloneDefaults(ItemID.GoldenKey);
 			item.width = 18;
 			item.height = 36;
-			item.maxStack = 99;
-			item.rare = 1;
+			item.maxStack = 99; 
+			item.rare = 2;
 
 			//item.useAnimation = 15;
 			//item.useTime = 10;

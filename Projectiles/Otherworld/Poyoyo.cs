@@ -23,7 +23,15 @@ namespace SOTS.Projectiles.Otherworld
             ProjectileID.Sets.YoyosTopSpeed[projectile.type] = 18f;
             // YoyosTopSpeed is top speed of the yoyo projectile.
             // Vanilla values range from 9f(Wood) to 17.5f(Terrarian), and defaults to 10f
-		}
+        }
+        public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
+        {
+            Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Otherworld/PoyoyoGlow");
+            Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
+            Vector2 drawPos = projectile.Center - Main.screenPosition;
+            Color color = Color.White;
+            spriteBatch.Draw(texture, drawPos, null, color, projectile.rotation, drawOrigin, projectile.scale, projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+        }
         public override void SetDefaults()
         {
             projectile.extraUpdates = 0;
@@ -46,7 +54,7 @@ namespace SOTS.Projectiles.Otherworld
         {
             if (storeData == -1 && projectile.owner == Main.myPlayer)
             {
-                storeData = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("RainbowTrail"), (int)(projectile.damage * 0.55f) + 1, 0, projectile.owner, 0, projectile.whoAmI);
+                storeData = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("RainbowTrail"), (int)(projectile.damage * 0.6f) + 1, 0, projectile.owner, 0, projectile.whoAmI);
             }
         }
     }

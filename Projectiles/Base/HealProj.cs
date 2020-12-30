@@ -36,7 +36,7 @@ namespace SOTS.Projectiles.Base
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Heal Proj");
-			ProjectileID.Sets.TrailCacheLength[projectile.type] = 30;
+			ProjectileID.Sets.TrailCacheLength[projectile.type] = 10;
 			ProjectileID.Sets.TrailingMode[projectile.type] = 1;
 		}
         public override void SetDefaults()
@@ -59,8 +59,8 @@ namespace SOTS.Projectiles.Base
 				Vector2 drawOrigin = new Vector2(2, 2);
 				for (int k = 0; k < 11; k++)
 				{
-					float x = Main.rand.Next(-10, 11) * 0.75f;
-					float y = Main.rand.Next(-10, 11) * 0.75f;
+					float x = Main.rand.Next(-10, 11) * 0.15f;
+					float y = Main.rand.Next(-10, 11) * 0.15f;
 					for (int j = 0; j < projectile.oldPos.Length; j++)
 					{
 						Color color = new Color(100, 100, 100, 0);
@@ -140,7 +140,8 @@ namespace SOTS.Projectiles.Base
 			}
 			if ((int)type == 7) //Ceremonial Dagger
 			{
-				return 9f;
+				projectile.extraUpdates = 3;
+				return 4.6f;
 			}
 			return 14.5f;
 		}
@@ -185,13 +186,13 @@ namespace SOTS.Projectiles.Base
 					{
 						player.statLife += (int)amount;
 						if(player.whoAmI == Main.myPlayer)
-						player.HealEffect((int)amount);
+							player.HealEffect((int)amount);
 					}
 					if(healType == 1)
 					{
 						player.statMana += (int)amount;
 						if(player.whoAmI == Main.myPlayer)
-						player.ManaEffect((int)amount);
+							player.ManaEffect((int)amount);
 					}
 					if(healType == 2)
 					{

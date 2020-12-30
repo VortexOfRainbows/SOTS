@@ -1,5 +1,3 @@
-using System;
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
@@ -17,7 +15,7 @@ namespace SOTS.Items.Fragments
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Focus Reticle");
-			Tooltip.SetDefault("25% increased crit chance\nCritical strikes deal 50 more damage\nCritical strikes may detonate enemies for 50% critical damage\nCritical strikes steal life and regenerate void\nImmunity to bleeding and poisoned debuffs");
+			Tooltip.SetDefault("25% increased crit chance\nCritical strikes deal 50 more damage\nCritical strikes may detonate enemies for 50% critical damage\nCritical strikes steal life, regenerate void, and recover mana\nImmunity to bleeding and poisoned debuffs");
 		}
 		public override void SetDefaults()
 		{
@@ -34,6 +32,7 @@ namespace SOTS.Items.Fragments
 			
 			modPlayer.CritLifesteal += 1 + (Main.rand.Next(3) == 0 ? 1 : 0);
 			modPlayer.CritVoidsteal += 1.25f;
+			modPlayer.CritManasteal += 5 + Main.rand.Next(4);
 			modPlayer.CritCurseFire = true;
 			player.meleeCrit += 25;
 			player.rangedCrit += 25;

@@ -17,5 +17,15 @@ namespace SOTS
             }
             return base.CanKillTile(i, j, type, ref blockDamaged);
         }
+        public override bool CanExplode(int i, int j, int type)
+        {
+            if (Main.tile[i, j - 1].type == (ushort)mod.TileType("AvaritianGatewayTile") || Main.tile[i, j - 1].type == (ushort)mod.TileType("AcediaGatewayTile"))
+            {
+                int frame = Main.tile[i, j - 1].frameX / 18 + (Main.tile[i, j - 1].frameY / 18 * 9);
+                if (frame >= 65 && frame <= 69)
+                    return false;
+            }
+            return base.CanExplode(i, j, type);
+        }
     }
 }

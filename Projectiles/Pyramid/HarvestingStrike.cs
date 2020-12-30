@@ -38,7 +38,7 @@ namespace SOTS.Projectiles.Pyramid
 				{
 					NPC npc = Main.npc[i];
 					int amt = DebuffNPC.HarvestCost(npc);
-					if (voidPlayer.lootingSouls >= amt && !npc.immortal)
+					if (voidPlayer.lootingSouls >= amt && !npc.immortal && !npc.friendly)
 						if (npc.active && npc.Hitbox.Intersects(projectile.Hitbox) && (npc.realLife == npc.whoAmI || npc.realLife <= 0) && !npc.dontTakeDamage)
 						{
 							Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, ModContent.ProjectileType<HarvestLock>(), 0, 0, player.whoAmI, npc.whoAmI);

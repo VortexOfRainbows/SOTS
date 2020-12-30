@@ -154,6 +154,7 @@ namespace SOTS.Projectiles.Otherworld
 			{
 				storeData = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, projectile.velocity.X, projectile.velocity.Y, mod.ProjectileType("HardlightTrail"), (int)(projectile.damage * 1f) + 1, projectile.knockBack * 0.75f, projectile.owner, 0, projectile.whoAmI);
 				projectile.ai[1] = storeData;
+				projectile.netUpdate = true;
 			}
 		}
 	}

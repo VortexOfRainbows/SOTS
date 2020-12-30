@@ -12,7 +12,7 @@ namespace SOTS.Projectiles.Pyramid
     	int counter = 50;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("AtenProj");
+			DisplayName.SetDefault("Aten");
 			
 		}
         public override void SetDefaults()
@@ -27,8 +27,7 @@ namespace SOTS.Projectiles.Pyramid
         }
         public override bool PreDraw(Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch, Color lightColor)
         {
-            Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/AtenChain");    //this where the chain of grappling hook is drawn
-                                                      //change YourModName with ur mod name/ and CustomHookPr_Chain with the name of ur one
+            Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/AtenChain");  
             Vector2 position = projectile.Center;
             Vector2 mountedCenter = Main.player[projectile.owner].MountedCenter;
             Microsoft.Xna.Framework.Rectangle? sourceRectangle = new Microsoft.Xna.Framework.Rectangle?();

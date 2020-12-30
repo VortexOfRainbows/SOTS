@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.ID;
@@ -24,6 +25,14 @@ namespace SOTS.Projectiles.Otherworld
             projectile.timeLeft = 20;
             projectile.hide = true;
             projectile.alpha = 255;
+        }
+        public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
+        {
+            Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Otherworld/StarshotCrossbowGlow");
+            Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
+            Vector2 drawPos = projectile.Center - Main.screenPosition;
+            Color color = Color.White;
+            spriteBatch.Draw(texture, drawPos, null, color, projectile.rotation, drawOrigin, projectile.scale, projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
         }
         bool ended = false;
         public override bool PreAI()

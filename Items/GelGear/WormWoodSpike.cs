@@ -18,6 +18,7 @@ namespace SOTS.Items.GelGear
 		}
         public override void SetDefaults()
         {
+            item.damage = 32;
             item.width = 36;
             item.height = 28;
             item.value = Item.sellPrice(0, 1, 80, 0);
@@ -27,7 +28,6 @@ namespace SOTS.Items.GelGear
             item.useAnimation = 40;
             item.useTime = 40;
             item.knockBack = 4.5f;
-            item.damage = 28;
             item.noUseGraphic = true; 
             item.shoot = mod.ProjectileType("WormWoodSpike");
             item.shootSpeed = 14.5f;

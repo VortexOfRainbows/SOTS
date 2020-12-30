@@ -38,8 +38,14 @@ namespace SOTS.Projectiles.Inferno
 		{
 			hitbox = new Rectangle((int)(projectile.position.X - projectile.width/2), (int)(projectile.position.Y - projectile.height/2), projectile.width * 2, projectile.height * 2);
 		}
+		bool runOnce = true;
 		public override void AI()
-        {
+		{
+			if(runOnce)
+			{
+				Main.PlaySound(SoundID.Item14, (int)(projectile.Center.X), (int)(projectile.Center.Y));
+				runOnce = false;
+            }
 			Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 1.5f / 255f, (255 - projectile.alpha) * 1.5f / 255f, (255 - projectile.alpha) * 1.5f / 255f);
 			projectile.knockBack = 3.5f;
             projectile.frameCounter++;

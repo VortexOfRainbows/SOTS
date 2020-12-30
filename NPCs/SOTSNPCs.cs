@@ -233,17 +233,17 @@ namespace SOTS.NPCs
 			{
 				if(Main.hardMode)
 				{
-					spawnRate = (int)(spawnRate /= 50); //essentially setting it to 12
-					if (spawnRate < 1)
-						spawnRate = 1;
-					maxSpawns = (int)(maxSpawns * 2.5f);
-				}
-				else
-				{
 					spawnRate = (int)(spawnRate /= 40); //essentially setting it to 15
 					if (spawnRate < 1)
 						spawnRate = 1;
-					maxSpawns = (int)(maxSpawns * 2f);
+					maxSpawns = (int)(maxSpawns * 2.25f);
+				}
+				else
+				{
+					spawnRate = (int)(spawnRate /= 30); //essentially setting it to 20
+					if (spawnRate < 1)
+						spawnRate = 1;
+					maxSpawns = (int)(maxSpawns * 1.75f);
 				}
 			}
 		}

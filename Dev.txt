@@ -31,6 +31,60 @@ Next Development Time:
 	2. Laser does little damage, but inflicts strong debuff that increases crit damage and chance upon enemy
 	3. Costs 5 void  to launch laser
 
+12/29/20
+1. Fixed some drawing issues on Chained Plasma and Infernal Hook
+2. Chained plasma deals less damage and arcs less in order to put it in more fair competition with Poyo-yo
+	1. Removed immunity reset bug, added some more range
+3. Poyo rainbow damage slightly increased 55% -> 60%
+
+12/28/20
+1. Added Glowmask to remaining Starlight Alloy items
+2. Added spritesheet and accessory glowmask to Starbelt
+3. Obsidian Fury now makes explosive and fire sounds on star detonation and summoning respectively
+4. Inferno Hook Added
+5. Various ore conversions added to the Transmutation Altar
+6. Slightly modified Skyware Battery effect
+7. Chained Plasma Added
+
+12/27/20
+1. Lashes of Lightning finished. Server syncs Fine Enough
+2. Skyward blades now properly go transparent in multiplayer
+3. Wormwood Helix overhauled (syncs fine in multiplayer)
+	1. No more fusion shots, now only helix	
+	2. Visuals overhauled
+	3. Can now shoot normal bullets
+	4. Hold offset changed
+4. Advisor Changes
+	Advisor no longer will use the same attack of each color twice in a row
+	Advisor Defense 30 -> 22 (11 damage off each attack as opposed to 15)
+	Advisor damage 54 -> 52
+	Advisor Lifemax 10000 -> 11000 //Increased health to compensate for defense changes (overall still a nerf) also 5% increased expert health scale
+	Advisor Taser Attack:
+		1. Slightly decreased velocity 3.75 -> 3.55 (actually is bigger than it looks)
+		2. Doesn't do as many taser attacks each taser cycle
+5. Fixed Twilight Fishing Pole glowmask
+6. Starbelt added, still need spritesheet
+	1. Added manasteal to tinkers
+7. Ceremonial Knife lifesteal effect changed
+8. Added a limit to critical manasteal and critical lifesteal. These can be modified later for balance
+9. Voidspace Emblem properly applies crit voidsteal
+
+12/26/20
+1. Gateways no longer explode
+2. Work on Lashes of Lightning
+3. Earthen Constructs no longer spawn at beaches
+4. Futhur decreased spawnrates in planetarium, and max spawns
+5. Wormwood Crystal buffed damage 14 -> 16
+6. Wormwood Spike 28 -> 32
+7. Wormwood Helix reuse delay completely removed 8 -> 0
+8. Advisor may now drop alloys directly instead of keys
+
+12/25/20 (Christmas :D)
+1. Royal Magnum description change
+2. Ghost Pepper no longer effects town npcs
+3. Resprites to Platinum Scythe and Skyware Key Courtesy of Blasfah
+4. Increased rarity by one on several keys
+
 12/24/20 (Christmas EVE :D)
 1. Skyware Battery Added
 2. Changed the way collision works with various lightnings to stop ghost hits (Arclight Orbs, Hardlight Glaive, Cursed Icosahedron)
