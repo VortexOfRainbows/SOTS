@@ -106,7 +106,7 @@ namespace SOTS.Projectiles.Base
 				int num1 = Dust.NewDust(new Vector2(projectile.position.X , projectile.position.Y), projectile.width, projectile.height, 67);
 				Main.dust[num1].noGravity = true;
 				Main.dust[num1].velocity *= 0.1f;
-				if(projectile.timeLeft % 10 == 0)
+				if(projectile.timeLeft % 12 == 0)
 				{
 					additionalEffects();
 				}
@@ -128,7 +128,8 @@ namespace SOTS.Projectiles.Base
 		{
 			if((int)type == 4)
 			{
-				return 10f;
+				projectile.extraUpdates = 2;
+				return 11f;
 			}
 			if((int)type == 5) 
 			{

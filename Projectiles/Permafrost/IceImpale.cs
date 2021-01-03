@@ -29,13 +29,19 @@ namespace SOTS.Projectiles.Permafrost
 			projectile.timeLeft = 640;
 
 
-		} 
+		}
+		bool hasHit = false;
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
 			Player player = Main.player[projectile.owner];
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
             target.immune[projectile.owner] = 8;
-			Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, mod.ProjectileType("HealProj"), 2, 0, projectile.owner, 0.85f, 4);
+			if(!hasHit)
+            {
+				if(player.whoAmI == Main.myPlayer)
+					Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, mod.ProjectileType("HealProj"), 2, 0, projectile.owner, 3f, 4);
+				hasHit = true;
+            }
 		}
 		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
         {

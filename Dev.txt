@@ -31,6 +31,19 @@ Next Development Time:
 	2. Laser does little damage, but inflicts strong debuff that increases crit damage and chance upon enemy
 	3. Costs 5 void  to launch laser
 
+1/2/21
+1. 
+
+1/1/21 NEW YEAR POG
+1. Icicle Impale Damage 52 -> 72
+	1. Also increased travel speed of healing projectiles and changed hold offset (offset also changed for hyperice cluster cannon)
+	2. Impale void healing increased, but only applies to the first enemy hit (0.85 -> 3)	
+	3. Hyperice Rockets now split into projectiles that do 100% damage instead of 79% (this also functions as a buff to hyperice cluster cannon)
+2. Code Corrupter added, must test multiplayer syncing
+
+12/31/20
+1. Checked: Made Plasma Chain server sync fine enough, Inferno Hook also syncs
+
 12/29/20
 1. Fixed some drawing issues on Chained Plasma and Infernal Hook
 2. Chained plasma deals less damage and arcs less in order to put it in more fair competition with Poyo-yo

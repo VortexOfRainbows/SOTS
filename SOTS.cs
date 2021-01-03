@@ -201,6 +201,7 @@ namespace SOTS
 					debuffNPC = (DebuffNPC)debuffNPC.Instance(Main.npc[npcNumber]);
 					debuffNPC.HarvestCurse = reader.ReadInt32();
 					debuffNPC.PlatinumCurse = reader.ReadInt32();
+					debuffNPC.DestableCurse = reader.ReadInt32();
 					// Unlike SyncPlayer, here we have to relay/forward these changes to all other connected clients
 					if (Main.netMode == NetmodeID.Server)
 					{
@@ -210,6 +211,7 @@ namespace SOTS
 						packet.Write(npcNumber);
 						packet.Write(debuffNPC.HarvestCurse);
 						packet.Write(debuffNPC.PlatinumCurse);
+						packet.Write(debuffNPC.DestableCurse);
 						packet.Send(-1, playernumber);
 					}
 					break;

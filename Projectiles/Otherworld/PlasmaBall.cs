@@ -121,7 +121,11 @@ namespace SOTS.Projectiles.Otherworld
 
             Vector2 toPlayer = player.Center - projectile.Center;
             float distance = toPlayer.Length();
-            projectile.velocity *= 0.9f;
+            if (Main.myPlayer == projectile.owner)
+            {
+                projectile.netUpdate = true;
+                projectile.velocity *= 0.9f;
+            }
 
             if(projectile.Center.X - player.Center.X > 0)
                 projectile.direction = 1;
@@ -135,9 +139,11 @@ namespace SOTS.Projectiles.Otherworld
             player.itemRotation = MathHelper.WrapAngle((float)Math.Atan2(projectile.Center.Y - player.Center.Y, projectile.Center.X - player.Center.X) + MathHelper.ToRadians(projectile.direction == -1 ? 180 : 0));
             if (!player.channel || hasStopped)
             {
-                projectile.velocity *= 0.7f;
+                if (Main.myPlayer == projectile.owner)
+                    projectile.velocity *= 0.7f;
                 hasStopped = true;
-                projectile.velocity += new Vector2(-8, 0).RotatedBy(Math.Atan2(projectile.Center.Y - player.Center.Y, projectile.Center.X - player.Center.X));
+                if (Main.myPlayer == projectile.owner)
+                    projectile.velocity += new Vector2(-8, 0).RotatedBy(Math.Atan2(projectile.Center.Y - player.Center.Y, projectile.Center.X - player.Center.X));
                 projectile.tileCollide = false;
                 if (distance < 14)
                 {
@@ -159,7 +165,6 @@ namespace SOTS.Projectiles.Otherworld
             }
             if (Main.myPlayer == projectile.owner)
             {
-                projectile.netUpdate = true;
                 Vector2 projectileSpeed = projectile.velocity.SafeNormalize(Vector2.Zero) * projectile.velocity.Length();
                 Vector2 add = Main.MouseWorld - projectile.Center;
                 float toPlayerL = (projectile.Center - player.Center).Length();
@@ -169,7 +174,10 @@ namespace SOTS.Projectiles.Otherworld
                     projectile.velocity += add;
                 }
             }
-            projectile.velocity += new Vector2(-1.1f, 0).RotatedBy(Math.Atan2(projectile.Center.Y - player.Center.Y, projectile.Center.X - player.Center.X));
+            if (Main.myPlayer == projectile.owner)
+            {
+                projectile.velocity += new Vector2(-1.1f, 0).RotatedBy(Math.Atan2(projectile.Center.Y - player.Center.Y, projectile.Center.X - player.Center.X));
+            }
             return false;
         }
         public override void AI()

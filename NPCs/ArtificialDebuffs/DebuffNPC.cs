@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework;
 using Steamworks;
 using SOTS.Void;
 using static SOTS.SOTS;
+using System;
 
 namespace SOTS.NPCs.ArtificialDebuffs
 {
@@ -16,6 +17,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
         public override bool InstancePerEntity => true;
         public int PlatinumCurse = 0;
         public int HarvestCurse = 0;
+        public int DestableCurse = 0;
         public void SendClientChanges(Player player, NPC npc)
         {
             // Send a Mod Packet with the changes.
@@ -25,6 +27,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
             packet.Write(npc.whoAmI);
             packet.Write(HarvestCurse);
             packet.Write(PlatinumCurse);
+            packet.Write(DestableCurse);
             packet.Send();
         }
         public override void PostDraw(NPC npc, SpriteBatch spriteBatch, Color drawColor)
@@ -49,7 +52,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 for (int plat = PlatinumCurse; plat > 0; plat /= 10)
                 {
                     int currentNum = plat % 10;
-                    frame = new Rectangle(1 + ((1 + currentNum) * (texture.Width / 11)), 1, texture.Width / 11 - 1, texture.Height - 1);
+                    frame = new Rectangle(1 + ((1 + currentNum) * (texture.Width / 11)), 1, texture.Width / 11 - 2, texture.Height - 2);
                     for (int i = 0; i < 6; i++)
                     {
                         float x = Main.rand.Next(-10, 11) * 0.3f;
@@ -61,6 +64,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 }
                 pos.X -= 4;
                 frame = new Rectangle(0, 0, texture.Width / 11, texture.Height);
+                pos.Y -= 1;
                 for (int i = 0; i < 6; i++)
                 {
                     float x = Main.rand.Next(-10, 11) * 0.3f;
@@ -89,7 +93,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 for (int plat = HarvestCurse; plat > 0; plat /= 10)
                 {
                     int currentNum = plat % 10;
-                    frame = new Rectangle(1 + ((1 + currentNum) * (texture.Width / 11)), 1, texture.Width / 11 - 1, texture.Height - 1);
+                    frame = new Rectangle(1 + ((1 + currentNum) * (texture.Width / 11)), 1, texture.Width / 11 - 2, texture.Height - 2);
                     for (int i = 0; i < 6; i++)
                     {
                         float x = Main.rand.Next(-10, 11) * 0.3f;
@@ -101,6 +105,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 }
                 pos.X -= 4;
                 frame = new Rectangle(0, 0, texture.Width / 11, texture.Height);
+                pos.Y -= 1;
                 for (int i = 0; i < 6; i++)
                 {
                     float x = Main.rand.Next(-10, 11) * 0.3f;
@@ -108,6 +113,48 @@ namespace SOTS.NPCs.ArtificialDebuffs
                     Main.spriteBatch.Draw(texture, pos - Main.screenPosition + new Vector2(x, y), frame, color, 0f, origin, 1f, SpriteEffects.None, 0f);
                 }
                 Main.spriteBatch.Draw(texture, pos - Main.screenPosition, frame, VoidPlayer.soulLootingColor, 0f, origin, 1f, SpriteEffects.None, 0f);
+                height += 24;
+            }
+            if (DestableCurse > 0)
+            {
+                drawColor = Color.White;
+                Color color = new Color(VoidPlayer.destabilizeColor.R, VoidPlayer.destabilizeColor.G, VoidPlayer.destabilizeColor.B, 0);
+                Texture2D texture = mod.GetTexture("NPCs/ArtificialDebuffs/Destabilized");
+                int size = 0;
+                for (int plat = DestableCurse; plat > 0; plat /= 10)
+                {
+                    size++;
+                }
+                Vector2 pos = new Vector2(npc.Center.X, npc.position.Y);
+                pos.X += size * ((texture.Width / 11f) - 2) / 2f;
+                pos.X += 4;
+                pos.Y -= height;
+                Vector2 origin = new Vector2(texture.Width / 22, texture.Height / 2);
+                Rectangle frame;
+                for (int plat = DestableCurse; plat > 0; plat /= 10)
+                {
+                    int currentNum = plat % 10;
+                    frame = new Rectangle(1 + ((1 + currentNum) * (texture.Width / 11)), 1, texture.Width / 11 - 2, texture.Height - 2);
+                    for (int i = 0; i < 6; i++)
+                    {
+                        float x = Main.rand.Next(-10, 11) * 0.3f;
+                        float y = Main.rand.Next(-10, 11) * 0.3f;
+                        Main.spriteBatch.Draw(texture, pos - Main.screenPosition + new Vector2(x, y), frame, color, 0f, origin, 1f, SpriteEffects.None, 0f);
+                    }
+                    Main.spriteBatch.Draw(texture, pos - Main.screenPosition, frame, VoidPlayer.destabilizeColor, 0f, origin, 1f, SpriteEffects.None, 0f);
+                    pos.X -= (texture.Width / 11f) - 2;
+                }
+                pos.X -= 4;
+                frame = new Rectangle(0, 0, texture.Width / 11, texture.Height);
+                pos.Y -= 1;
+                for (int i = 0; i < 6; i++)
+                {
+                    float x = Main.rand.Next(-10, 11) * 0.3f;
+                    float y = Main.rand.Next(-10, 11) * 0.3f;
+                    Main.spriteBatch.Draw(texture, pos - Main.screenPosition + new Vector2(x, y), frame, color, 0f, origin, 1f, SpriteEffects.None, 0f);
+                }
+                Main.spriteBatch.Draw(texture, pos - Main.screenPosition, frame, VoidPlayer.destabilizeColor, 0f, origin, 1f, SpriteEffects.None, 0f);
+                height += 24;
             }
             base.PostDraw(npc, spriteBatch, drawColor);
         }
@@ -139,6 +186,35 @@ namespace SOTS.NPCs.ArtificialDebuffs
         }
         public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
+            Player player = Main.player[projectile.owner];
+            if (npc.immortal)
+            {
+                return;
+            }
+            if(Main.rand.NextFloat(100f) < 5f * DestableCurse)
+            {
+                if (!crit)
+                    crit = true;
+                else
+                    damage *= 2;
+            }
+            if (projectile.type == mod.ProjectileType("CodeVolley") || projectile.type == mod.ProjectileType("CodeBurst"))
+            {
+                if(projectile.type == mod.ProjectileType("CodeVolley"))
+                {
+                    if (Main.rand.NextFloat(100f) < 100 * Math.Pow(0.7f, 1 + DestableCurse * 0.45f) && DestableCurse < 20)
+                        DestableCurse++;
+                    if (Main.myPlayer == player.whoAmI && Main.netMode == 1)
+                        SendClientChanges(player, npc);
+                }
+                if (projectile.type == mod.ProjectileType("CodeBurst"))
+                {
+                    if (Main.rand.NextFloat(100f) < 100 * Math.Pow(0.3f, 1 + DestableCurse * 0.45f) && DestableCurse < 20)
+                        DestableCurse++;
+                    if (Main.myPlayer == player.whoAmI && Main.netMode == 1)
+                        SendClientChanges(player, npc);
+                }
+            }
             base.ModifyHitByProjectile(npc, projectile, ref damage, ref knockback, ref crit, ref hitDirection);
         }
         public override void ModifyHitByItem(NPC npc, Player player, Item item, ref int damage, ref float knockback, ref bool crit)
@@ -146,6 +222,13 @@ namespace SOTS.NPCs.ArtificialDebuffs
             if (npc.immortal)
             {
                 return;
+            }
+            if (Main.rand.NextFloat(100f) < 5f * DestableCurse)
+            {
+                if (!crit)
+                    crit = true;
+                else
+                    damage *= 2;
             }
             if (item.type == mod.ItemType("PlatinumScythe") || item.type == mod.ItemType("SectionChiefsScythe"))
             {
@@ -185,6 +268,16 @@ namespace SOTS.NPCs.ArtificialDebuffs
                     dust.noGravity = true;
                     dust.fadeIn = 0.1f;
                     dust.scale *= 1.5f;
+                }
+            }
+            for (int i = 0; i < DestableCurse; i++)
+            {
+                if (Main.rand.NextBool(20 + i * 2))
+                {
+                    Dust dust = Dust.NewDustDirect(npc.position - new Vector2(5f), npc.width, npc.height, mod.DustType("CodeDust"));
+                    dust.velocity *= 0.75f;
+                    dust.noGravity = true;
+                    dust.scale *= 2.25f;
                 }
             }
             float impaledDarts = 0;

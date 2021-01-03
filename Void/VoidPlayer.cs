@@ -13,6 +13,7 @@ namespace SOTS.Void
 	public class VoidPlayer : ModPlayer
 	{
 		public static Color soulLootingColor = new Color(66, 56, 111);
+		public static Color destabilizeColor = new Color(80, 190, 80);
 		public static int soulColorCounter = 0;
 		public int voidMeterMax = 100;
 		public int voidAnkh = 0;
@@ -195,6 +196,7 @@ namespace SOTS.Void
 		private void ResetVariables() {
 
 			soulColorCounter++;
+			destabilizeColor = Color.Lerp(new Color(80, 190, 80), new Color(64, 178, 172), 0.5f + new Vector2(0.5f, 0).RotatedBy(MathHelper.ToRadians(soulColorCounter * 1.25f)).X);
 			soulLootingColor = Color.Lerp(new Color(66, 56, 111), new Color(171, 3, 35), 0.5f + new Vector2(0.5f, 0).RotatedBy(MathHelper.ToRadians(soulColorCounter * 1.5f)).X);
 			if(soulsOnKill > 0)
 				UseSouls();

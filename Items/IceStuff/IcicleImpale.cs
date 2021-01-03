@@ -2,9 +2,6 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 using SOTS.Void;
 
 namespace SOTS.Items.IceStuff
@@ -14,11 +11,11 @@ namespace SOTS.Items.IceStuff
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Icicle Impale");
-			Tooltip.SetDefault("Launches large icicles\nRegenerates tiny amount of void upon hit");
+			Tooltip.SetDefault("Launches large icicles\nRegenerates void upon hit");
 		}
 		public override void SafeSetDefaults()
 		{
-            item.damage = 52;
+            item.damage = 72;
             item.ranged = true;
             item.width = 62;
             item.height = 30;
@@ -36,11 +33,11 @@ namespace SOTS.Items.IceStuff
 		}
 		public override void GetVoid(Player player)
 		{
-				voidMana = 5;
+			voidMana = 5;
 		}
 		public override Vector2? HoldoutOffset()
 		{
-			return new Vector2(7, 0);
+			return new Vector2(-2, -1);
 		}
 		int shot = 0;
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

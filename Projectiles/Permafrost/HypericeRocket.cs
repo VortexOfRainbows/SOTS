@@ -28,8 +28,6 @@ namespace SOTS.Projectiles.Permafrost
 			projectile.height = 18;
 			projectile.alpha = 0;
 			projectile.timeLeft = 640;
-
-
 		}
 		public override void Kill(int timeLeft)
 		{
@@ -46,7 +44,7 @@ namespace SOTS.Projectiles.Permafrost
 				for (int i = 0; i < 4; i++)
 				{
 					Vector2 perturbedSpeed = new Vector2(projectile.velocity.X, projectile.velocity.Y).RotatedBy(MathHelper.ToRadians(15 - (10 * i)));
-					Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, perturbedSpeed.X, perturbedSpeed.Y, mod.ProjectileType("IceCluster"), (int)(projectile.damage * 0.79f), 0, projectile.owner);
+					Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, perturbedSpeed.X, perturbedSpeed.Y, mod.ProjectileType("IceCluster"), (int)(projectile.damage * 1f), 0, projectile.owner);
 				}
 			}
 		}

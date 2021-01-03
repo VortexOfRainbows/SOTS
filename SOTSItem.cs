@@ -308,6 +308,8 @@ namespace SOTS
 			Player drawPlayer = drawInfo.drawPlayer;
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(drawPlayer);
 			Mod mod = ModLoader.GetMod("SOTS");
+			if (drawInfo.shadow != 0)
+				return;
 			if (!drawPlayer.HeldItem.IsAir)
 			{
 				Item item = drawPlayer.HeldItem;
