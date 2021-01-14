@@ -24,8 +24,16 @@ namespace SOTS.Items.Otherworld.FromChests
 					if (line.mod == "Terraria" && line.Name == "Tooltip0") //checks the name of the tootip line
 					{
 						line.text = "Press the " + "'" + key + "' key to blink towards your cursor\nBlinking through enemies will deal damage and trigger a lower cooldown, but can only be done up to 3 times in quick succession\nProvides some immunity after dashing\nNegates fall damage";
+						return;
 					}
-
+				}
+			}
+			foreach (TooltipLine line in tooltips) //goes through each tooltip line
+			{
+				if (line.mod == "Terraria" && line.Name == "Tooltip0")
+				{
+					string key = "Unbound";
+					line.text = "Press the " + "'" + key + "' key to blink towards your cursor\nBlinking through enemies will deal damage and trigger a lower cooldown, but can only be done up to 3 times in quick succession\nProvides some immunity after dashing\nNegates fall damage";
 				}
 			}
 			base.ModifyTooltips(tooltips);

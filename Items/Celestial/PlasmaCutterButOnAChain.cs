@@ -13,7 +13,7 @@ namespace SOTS.Items.Celestial
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Plasma Cutter but on a Chain");
+			DisplayName.SetDefault("Plasma Cutter on a Chain");
 			Tooltip.SetDefault("'This is utmost wonderful idea'");
 		}
 		public override void SetDefaults()
@@ -66,15 +66,7 @@ namespace SOTS.Items.Celestial
 		{
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(null, "SanguiteBar", 10);
-			recipe.AddIngredient(3098, 1); //butchers chainsaw
-			recipe.AddIngredient(ItemID.Chain, 5);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
-			
-			recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "SanguiteBar", 40);
-			recipe.AddIngredient(ItemID.Chain, 5);
+			recipe.AddIngredient(null, "ChainedPlasma", 1);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.SetResult(this);
 			recipe.AddRecipe();

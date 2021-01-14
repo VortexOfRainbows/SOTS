@@ -58,7 +58,7 @@ namespace SOTS.Projectiles.Laser
 				{
 					break;
 				}
-				if(Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), projectile.Center, position, 24f, ref point))
+				if(Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), projectile.Center, position, 32f, ref point))
 				{
 					return true;
 				}
@@ -90,10 +90,10 @@ namespace SOTS.Projectiles.Laser
 					Distance -= 6f;
 					break;
 				}
-				float size = 0.4f + (projectile.timeLeft/150f);
+				float size = 0.6f + (projectile.timeLeft/150f);
 				if(Distance < 180)
 				{
-					size += (180 - Distance)/150f;
+					size += 0.8f * (180 - Distance)/150f;
 				}
 				if(Distance >= 40)
 				{

@@ -36,7 +36,8 @@ namespace SOTS.Projectiles.Base
         public override void AI()
         {
             Player player = Main.player[projectile.owner];
-            if(runOnce)
+            SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
+            if (runOnce)
             {
                 runOnce = false;
                 float counter = 0;
@@ -108,12 +109,19 @@ namespace SOTS.Projectiles.Base
                 if (Math.Abs(player.velocity.Y + addY) < 27)
                     player.velocity.Y += addY - 1;
 
-                if(!hit || SOTSPlayer.ModPlayer(player).BlinkedAmount >= 2)
-                    player.AddBuff(BuffID.ChaosState, 60 + (int)counter);
+                if(!hit || modPlayer.BlinkedAmount >= 2)
+                {
+                    float temp = modPlayer.BlinkedAmount;
+                    if (temp > 2)
+                        temp = 2;
+                     
+                    float bonus = 0.85f + temp * 0.5f;
+                    player.AddBuff(BuffID.ChaosState, (int)(bonus * (60 + counter) * modPlayer.blinkPackMult));
+                }
                 player.immuneTime = 10 + (int)(counter / 12f);
                 player.immune = true;
                 Main.PlaySound(SoundID.Item8, Main.player[projectile.owner].Center);
-                SOTSPlayer.ModPlayer(player).BlinkedAmount += 1.25f;
+                modPlayer.BlinkedAmount += 1.25f;
             }
         }
 	}

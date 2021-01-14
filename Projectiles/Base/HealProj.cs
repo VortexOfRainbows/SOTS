@@ -72,6 +72,7 @@ namespace SOTS.Projectiles.Base
 			}
 			return false;
 		}
+		int counter = 0;
 		private void genDust()
 		{
 			if((int)type == 0) //platinum staff
@@ -123,6 +124,18 @@ namespace SOTS.Projectiles.Base
 				Main.dust[num1].noGravity = true;
 				Main.dust[num1].velocity *= 0.1f;
 			}
+			if ((int)type == 8) //Macaroni Heal
+			{
+				counter++;
+				var num372 = Dust.NewDust(projectile.Center - new Vector2(5), 0, 0, mod.DustType("CopyDust4"), 0, 0, 100, default, 1.6f);
+				Dust dust2 = Main.dust[num372];
+				dust2.velocity *= 0.1f;
+				dust2.noGravity = true;
+				dust2.color = Color.Lerp(new Color(255, 240, 50, 100), new Color(235, 240, 50, 100), new Vector2(-0.5f, 0).RotatedBy(MathHelper.ToRadians(counter * 3)).X + 0.5f);
+				dust2.noGravity = true;
+				dust2.fadeIn = 0.1f;
+				dust2.scale *= 0.7f;
+			}
 		}
 		private float getSpeed()
 		{
@@ -144,11 +157,16 @@ namespace SOTS.Projectiles.Base
 				projectile.extraUpdates = 3;
 				return 4.6f;
 			}
+			if ((int)type == 8)  //Macaroni Heal
+			{
+				projectile.extraUpdates = 5;
+				return 7.0f;
+			}
 			return 14.5f;
 		}
 		private float getMinDist()
 		{
-			if ((int)type == 7) //Ceremonial Dagger
+			if ((int)type == 7 || (int)type == 8) //Ceremonial Dagger
 			{
 				return 9f;
 			}
@@ -189,8 +207,12 @@ namespace SOTS.Projectiles.Base
 						if(player.whoAmI == Main.myPlayer)
 							player.HealEffect((int)amount);
 					}
-					if(healType == 1)
+					if(healType == 1 || (int)type == 8)
 					{
+						if ((int)type == 8)
+                        {
+							amount *= Main.rand.NextFloat(2f, 5f);
+                        }
 						player.statMana += (int)amount;
 						if(player.whoAmI == Main.myPlayer)
 							player.ManaEffect((int)amount);

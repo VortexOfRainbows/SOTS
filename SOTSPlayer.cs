@@ -37,6 +37,11 @@ namespace SOTS
 			return player.GetModPlayer<SOTSPlayer>();
 		}
 		Vector2 playerMouseWorld;
+		public int HoloEyeDamage = 0;
+		public bool HoloEye = false;
+		public bool HoloEyeAttack = false;
+		public bool HoloEyeAutoAttack = false;
+		public float blinkPackMult = 1f;
 		public bool rainbowGlowmasks = false;
 		public int skywardBlades = 0;
 		public float cursorRadians = 0;
@@ -246,9 +251,18 @@ namespace SOTS
 					Projectile.NewProjectile(player.Center, toCursor.SafeNormalize(Vector2.Zero), mod.ProjectileType("Blink1"), 0, 0, player.whoAmI);
 				}
 			}
+			if (SOTS.ArmorSetHotKey.JustPressed)
+			{
+				HoloEyeAttack = true;
+			}
+			else
+			{
+				HoloEyeAttack = false;
+			}
 		}
 		int Probe = -1;
 		int Probe2 = -1;
+		int Probe3 = -1;
 		public void PetAdvisor()
         {
 			if (Main.myPlayer == player.whoAmI)
@@ -279,7 +293,22 @@ namespace SOTS
 				Main.projectile[Probe2].timeLeft = 6;
 			}
 		}
-        public override void PostUpdate()
+		public void PetHoloEye()
+		{
+			if (Main.myPlayer == player.whoAmI)
+			{
+				if (Probe3 == -1)
+				{
+					Probe3 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, mod.ProjectileType("HoloEye"), 1 + HoloEyeDamage, 0, player.whoAmI, 0);
+				}
+				if (!Main.projectile[Probe3].active || Main.projectile[Probe3].type != mod.ProjectileType("HoloEye") || Main.projectile[Probe3].owner != player.whoAmI)
+				{
+					Probe3 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, mod.ProjectileType("HoloEye"), 1 + HoloEyeDamage, 0, player.whoAmI, 0);
+				}
+				Main.projectile[Probe3].timeLeft = 6;
+			}
+		}
+		public override void PostUpdate()
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			maxCritVoidStealPerSecond = voidPlayer.voidRegen * 20; //max stored voidsteal is 20x the voidRegen speed
@@ -346,15 +375,21 @@ namespace SOTS
 						this.bladeAlpha = 255;
 				}
 			}
+			HoloEyeAutoAttack = false;
+			blinkPackMult = 1f;
 			BlinkDamage = 0;
 			BlinkType = 0;
 			if (petAdvisor)
 				PetAdvisor();
 			if (petPepper)
 				PetPepper();
+			if (HoloEye)
+				PetHoloEye();
 			petPepper = false;
 			petAdvisor = false; 
-			rainbowGlowmasks = false;
+			rainbowGlowmasks = false; 
+			HoloEye = false;
+			HoloEyeDamage = 0;
 			for (int i = 9 + player.extraAccessorySlots; i < player.armor.Length; i++) //checking vanity slots
             {
 				Item item = player.armor[i];
@@ -369,6 +404,11 @@ namespace SOTS
 				if (item.type == ModContent.ItemType<SkywareBattery>())
 				{
 					rainbowGlowmasks = true;
+				}
+				if (item.type == ModContent.ItemType<TwilightAssassinsCirclet>())
+				{
+					HoloEye = true;
+					HoloEyeDamage += (int)(33 * (1f + (player.minionDamage - 1f) + (player.allDamage - 1f)));
 				}
 				if (item.type == ModContent.ItemType<TestWings>())
 				{
@@ -975,6 +1015,7 @@ namespace SOTS
         public override void Initialize()
 		{
 			SOTSPlayer.typhonBlacklist.Add(ModContent.ProjectileType<ArcColumn>());
+			SOTSPlayer.typhonBlacklist.Add(ModContent.ProjectileType<MacaroniBeam>());
 
 			SOTSPlayer.typhonWhitelist.Add(ModContent.ProjectileType<HardlightArrow>());
 			base.Initialize();

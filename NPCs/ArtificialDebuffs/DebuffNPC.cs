@@ -184,6 +184,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 }
             }
         }
+        bool hitByRay = false;
         public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
             Player player = Main.player[projectile.owner];
@@ -207,13 +208,28 @@ namespace SOTS.NPCs.ArtificialDebuffs
                     if (Main.myPlayer == player.whoAmI && Main.netMode == 1)
                         SendClientChanges(player, npc);
                 }
-                if (projectile.type == mod.ProjectileType("CodeBurst"))
+                if (projectile.type == mod.ProjectileType("CodeBurst") && projectile.ai[1] != -1)
                 {
                     if (Main.rand.NextFloat(100f) < 100 * Math.Pow(0.3f, 1 + DestableCurse * 0.45f) && DestableCurse < 20)
                         DestableCurse++;
                     if (Main.myPlayer == player.whoAmI && Main.netMode == 1)
                         SendClientChanges(player, npc);
                 }
+
+                if (projectile.type == mod.ProjectileType("CodeBurst") && projectile.ai[1] == -1)
+                {
+                    if (Main.rand.NextFloat(100f) < 100 * Math.Pow(0.25f, 1 + DestableCurse * 0.5f) && DestableCurse < 20)
+                        DestableCurse++;
+                    if (Main.myPlayer == player.whoAmI && Main.netMode == 1)
+                        SendClientChanges(player, npc);
+                }
+            }
+            if (projectile.type == mod.ProjectileType("DestabilizingBeam") && !hitByRay)
+            {
+                hitByRay = true;
+                DestableCurse += 4;
+                if (Main.myPlayer == player.whoAmI && Main.netMode == 1)
+                    SendClientChanges(player, npc);
             }
             base.ModifyHitByProjectile(npc, projectile, ref damage, ref knockback, ref crit, ref hitDirection);
         }

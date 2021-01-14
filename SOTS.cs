@@ -58,6 +58,7 @@ namespace SOTS
 	public class SOTS : Mod
 	{
 		public static ModHotKey BlinkHotKey;
+		public static ModHotKey ArmorSetHotKey;
 
 		internal static SOTS Instance;
 
@@ -77,7 +78,8 @@ namespace SOTS
 		{
 			//SOTSGlowmasks.LoadGlowmasks();
 			Instance = ModContent.GetInstance<SOTS>();
-			BlinkHotKey = RegisterHotKey("Blink", "X");
+			BlinkHotKey = RegisterHotKey("Blink", "V");
+			ArmorSetHotKey = RegisterHotKey("Armor Set", "F");
 
 			if (!Main.dedServ)
             {
@@ -94,6 +96,7 @@ namespace SOTS
 			VoidBarSprite._backgroundTexture = null;
 			VoidBarBorder._backgroundTexture = null;
 			BlinkHotKey = null;
+			ArmorSetHotKey = null;
 		}
 		public override void UpdateUI(GameTime gameTime) 
 		{

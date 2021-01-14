@@ -151,10 +151,11 @@ namespace SOTS.Projectiles.Pyramid
 			float orbital = modPlayer.orbitalCounter;
 			if (mode == 0)
 			{
+				bool hasHoloEye = modPlayer.HoloEye;
 				projectile.velocity *= 0.625f;
 				Vector2 toLocation = projectile.Center;
 				toLocation.X = player.Center.X;
-				toLocation.Y = player.Center.Y - 64 + Main.player[projectile.owner].gfxOffY;
+				toLocation.Y = player.Center.Y - 64 + (hasHoloEye ? -48 : 0) + Main.player[projectile.owner].gfxOffY;
 				Vector2 goTo = toLocation - projectile.Center;
 				Vector2 newGoTo = goTo.SafeNormalize(Vector2.Zero);
 				float dist = 1.5f + goTo.Length() * 0.01f;

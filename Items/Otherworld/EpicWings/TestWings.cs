@@ -507,6 +507,8 @@ namespace SOTS.Items.Otherworld.EpicWings
 			Texture2D bonusPiece = mod.GetTexture("Items/Otherworld/EpicWings/WingPart4EffectFill");
 			Texture2D bonusPiece2 = mod.GetTexture("Items/Otherworld/EpicWings/WingPart4EffectOutline");
 			Texture2D bonusPiece3 = mod.GetTexture("Items/Otherworld/EpicWings/WingBooster2Effect");
+			Texture2D boosterPieceGlow = mod.GetTexture("Items/Otherworld/EpicWings/WingBooster2Glow");
+			Texture2D wingPieceGlow = mod.GetTexture("Items/Otherworld/EpicWings/WingPart4Glow");
 			int type = testWingsPlayer.epicWingType;
 			switch (type)
 			{
@@ -543,6 +545,7 @@ namespace SOTS.Items.Otherworld.EpicWings
 			List<DrawData> drawData = new List<DrawData>();
 			List<DrawData> drawData2 = new List<DrawData>();
 			List<DrawData> drawData3 = new List<DrawData>();
+			List<DrawData> drawData4 = new List<DrawData>();
 			int wingNum = 0;
 			for (int j = 0; j < 2; j++)
 			{
@@ -550,7 +553,7 @@ namespace SOTS.Items.Otherworld.EpicWings
 				direction *= -drawPlayer.direction;
 				Vector2 currentPos = position;
 				currentPos.X -= direction + drawPlayer.direction;
-				currentPos.Y -= 2 * drawPlayer.gravDir;
+				currentPos.Y -= 4 * drawPlayer.gravDir;
 				if (mode == 0)
 				{
 					currentPos.X -= direction * 4;
@@ -669,6 +672,17 @@ namespace SOTS.Items.Otherworld.EpicWings
 						DrawData data = (new DrawData(currentTexture, currentPos, null, color * alpha, rotation + overrideRotation - MathHelper.ToRadians(90), origin, scale, spriteEffects, 0));
 						data.shader = drawInfo.wingShader;
 						drawData.Add(data);
+						data = (new DrawData(boosterPieceGlow, currentPos, null, changeColorBasedOnStealth(Color.White, drawPlayer) * alpha, rotation + overrideRotation - MathHelper.ToRadians(90), origin, scale, spriteEffects, 0));
+						data.shader = drawInfo.wingShader;
+						drawData4.Add(data);
+						Color color3 = new Color(60, 70, 80, 0) * 0.4f;
+						for (int i2 = 0; i2 < 360; i2 += 30)
+						{
+							Vector2 addition = new Vector2(-Main.rand.Next(15) * 0.1f + 1.75f, 0).RotatedBy(MathHelper.ToRadians(i2));
+							data = (new DrawData(boosterPieceGlow, currentPos + addition, null, changeColorBasedOnStealth(color3, drawPlayer) * alpha, rotation + overrideRotation - MathHelper.ToRadians(90), origin, scale, spriteEffects, 0));
+							data.shader = drawInfo.wingShader;
+							drawData4.Add(data);
+						}
 					}
 					else
 					{
@@ -681,8 +695,25 @@ namespace SOTS.Items.Otherworld.EpicWings
 						DrawData data = (new DrawData(currentTexture, currentPos - vector2_1, null, color * alpha, rotation - rotationI, origin, scale, spriteEffects, 0));
 						data.shader = drawInfo.wingShader;
 						drawData.Add(data);
+						if (type == (int)EpicWingType.Default && (i % 3 == 0 && i != 0))
+                        {
+							data = (new DrawData(wingPieceGlow, currentPos - vector2_1, null, changeColorBasedOnStealth(Color.White, drawPlayer) * alpha, rotation - rotationI, origin, scale, spriteEffects, 0));
+							data.shader = drawInfo.wingShader;
+							drawData4.Add(data);
+                        }							
 						if (type == (int)EpicWingType.Default && mode == 1 && (i % 3 == 0 && i != 0))
 						{
+							if (drawPlayer.controlJump)
+							{
+								Color color3 = new Color(60, 70, 80, 0) * 0.4f;
+								for (int i2 = 0; i2 < 360; i2 += 30)
+								{
+									Vector2 addition = new Vector2(-Main.rand.Next(15) * 0.1f + 1.75f, 0).RotatedBy(MathHelper.ToRadians(i2));
+									data = (new DrawData(wingPieceGlow, currentPos + addition - vector2_1, null, changeColorBasedOnStealth(color3, drawPlayer) * alpha, rotation - rotationI, origin, scale, spriteEffects, 0));
+									data.shader = drawInfo.wingShader;
+									drawData4.Add(data);
+								}
+							}
 							Color color2 = new Color(110, 110, 110, 0);
 							color2 = changeColorBasedOnStealth(color2, drawPlayer);
 							if (!drawPlayer.controlJump)
@@ -705,8 +736,8 @@ namespace SOTS.Items.Otherworld.EpicWings
 								}
 								Vector2 tilt2 = new Vector2(0, 4.5f).RotatedBy(MathHelper.ToRadians(testWingsPlayer.randCounter * 20));
 								Vector2 tilt3 = new Vector2(tilt2.X, 0).RotatedBy(rotation - rotationI);
-								Vector2 tilt = new Vector2(0, 1).RotatedBy(rotation - rotationI);
-								Vector2 currentPos2 = currentPos + Main.screenPosition;
+								Vector2 tilt = new Vector2(0, 1).RotatedBy(rotation - rotationI) * drawPlayer.gravDir;
+								Vector2 currentPos2 = currentPos - vector2_1 + Main.screenPosition;
 								if (type == (int)EpicWingType.Default && Main.rand.NextBool(18) && drawPlayer.controlJump)
 								{
 									if (drawInfo.shadow == 0f)
@@ -744,6 +775,8 @@ namespace SOTS.Items.Otherworld.EpicWings
 			for (int i = 0; i < drawData.Count; i++) //add the more important layers on so they don't have weired overlap
 				if ((i % 10) % 3 == 0 || mode == 0)
 					Main.playerDrawData.Add(drawData[i]);
+			for (int i = 0; i < drawData4.Count; i++)
+				Main.playerDrawData.Add(drawData4[i]);
 
 			// Here we generate visual dust while our glowmask is visible
 			if (Main.rand.NextBool(10))

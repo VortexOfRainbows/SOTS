@@ -10,11 +10,11 @@ using Terraria.ModLoader;
 
 namespace SOTS.Projectiles.Otherworld
 {    
-    public class SkywardBladeBeam : ModProjectile 
+    public class MacaroniBeam : ModProjectile 
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Skyward Blade");
+			DisplayName.SetDefault("Crescent Beam");
 		}
 		public override void SetDefaults()
         {
@@ -24,10 +24,10 @@ namespace SOTS.Projectiles.Otherworld
 			projectile.friendly = true;
 			projectile.timeLeft = 900;
 			projectile.tileCollide = false;
-			projectile.ranged = true;
+			projectile.magic = true;
 			projectile.hostile = false;
 			projectile.netImportant = true;
-			projectile.alpha = 0;
+			projectile.alpha = 255;
 			projectile.extraUpdates = 899;
 		}
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
@@ -36,7 +36,7 @@ namespace SOTS.Projectiles.Otherworld
 			height = 8;
             return base.TileCollideStyle(ref width, ref height, ref fallThrough);
         }
-		Vector2 aimTo = new Vector2(0, 0);
+		Vector2 ogPos = new Vector2(0, 0);
 		bool runOnce = true;
 		int counter = 0;
 		public override void AI()
@@ -49,16 +49,17 @@ namespace SOTS.Projectiles.Otherworld
 			}
 			if (runOnce)
 			{
+				ogPos = projectile.Center;
 				for (int i = 0; i < 12; i++)
 				{
-					var num371 = Dust.NewDust(projectile.Center - new Vector2(5) - new Vector2(10, 10), 24, 24, mod.DustType("CopyDust4"), 0, 0, 100, default, 1.6f);
-					Dust dust = Main.dust[num371];
-					dust.velocity += projectile.velocity * 0.5f;
-					dust.noGravity = true;
-					dust.color = Color.Lerp(new Color(0, 200, 220, 100), new Color(40, 70, 180, 100), new Vector2(-0.5f, 0).RotatedBy(MathHelper.ToRadians(counter * 3)).X + 0.5f);
-					dust.noGravity = true;
-					dust.fadeIn = 0.2f;
-					dust.alpha = projectile.alpha;
+					var num372 = Dust.NewDust(projectile.Center - new Vector2(5) - new Vector2(10, 10), 24, 24, mod.DustType("CopyDust4"), 0, 0, 100, default, 1.6f);
+					Dust dust2 = Main.dust[num372];
+					dust2.velocity += projectile.velocity * 0.5f;
+					dust2.noGravity = true;
+					dust2.color = Color.Lerp(new Color(255, 240, 50, 100), new Color(235, 240, 50, 100), new Vector2(-0.5f, 0).RotatedBy(MathHelper.ToRadians(counter * 3)).X + 0.5f);
+					dust2.noGravity = true;
+					dust2.fadeIn = 0.2f;
+					dust2.scale *= 1.4f;
 				}
 				runOnce = false;
 				projectile.netUpdate = true;
@@ -66,19 +67,15 @@ namespace SOTS.Projectiles.Otherworld
 			}
 			counter++;
 			Vector2 rotational = new Vector2(8, 0).RotatedBy(MathHelper.ToRadians(counter * 4));
-			for (int i = -1; i < 2; i += 2)
-			{
-				var num371 = Dust.NewDust(projectile.Center - new Vector2(5), 4, 4, mod.DustType("CopyDust4"), 0, 0, 100, default, 1.6f);
-				Dust dust = Main.dust[num371];
-				dust.position += new Vector2(0, rotational.X * i).RotatedBy(projectile.velocity.ToRotation());
-				dust.velocity *= 0.1f;
-				dust.noGravity = true;
-				dust.color = Color.Lerp(new Color(0, 200, 220, 100), new Color(40, 70, 180, 100), new Vector2(-0.5f, 0).RotatedBy(MathHelper.ToRadians(counter * 3)).X + 0.5f);
-				dust.noGravity = true;
-				dust.fadeIn = 0.2f;
-				dust.scale *= 0.8f;
-				dust.alpha = projectile.alpha;
-			}
+			var num371 = Dust.NewDust(projectile.Center - new Vector2(5), 0, 0, mod.DustType("CopyDust4"), 0, 0, 100, default, 1.6f);
+			Dust dust = Main.dust[num371];
+			dust.position += new Vector2(0, rotational.X).RotatedBy(projectile.velocity.ToRotation());
+			dust.velocity *= 0.05f;
+			dust.noGravity = true;
+			dust.color = Color.Lerp(new Color(255, 240, 50, 100), new Color(235, 240, 50, 100), new Vector2(-0.5f, 0).RotatedBy(MathHelper.ToRadians(counter * 3)).X + 0.5f);
+			dust.noGravity = true;
+			dust.fadeIn = 0.2f;
+			dust.scale *= 1.0f;
 			if(counter > 5)
             {
 				projectile.tileCollide = true;
@@ -92,18 +89,24 @@ namespace SOTS.Projectiles.Otherworld
 				Dust dust = Main.dust[num371];
 				dust.velocity += projectile.velocity * 0.3f;
 				dust.noGravity = true;
-				dust.color = Color.Lerp(new Color(0, 200, 220, 100), new Color(40, 70, 180, 100), new Vector2(-0.5f, 0).RotatedBy(MathHelper.ToRadians(counter * 3)).X + 0.5f);
+				dust.color = Color.Lerp(new Color(255, 240, 50, 100), new Color(235, 240, 50, 100), new Vector2(-0.5f, 0).RotatedBy(MathHelper.ToRadians(counter * 3)).X + 0.5f);
 				dust.noGravity = true;
 				dust.fadeIn = 0.2f;
-				dust.alpha = projectile.alpha;
 			}
 		}
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
 			Player player = Main.player[projectile.owner];
 			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
-			modPlayer.skywardBlades++;
-			modPlayer.SendClientChanges(modPlayer);
+			int heal = 1;
+			if (Main.rand.Next(2) == 0) heal = 2;
+
+			if (Main.rand.Next(6) == 0) heal = 3;
+
+			if (player.whoAmI == Main.myPlayer)
+			{
+				Projectile.NewProjectile(ogPos.X, ogPos.Y, 0, 0, mod.ProjectileType("HealProj"), 0, 0, player.whoAmI, heal, 8);
+			}
 			base.OnHitNPC(target, damage, knockback, crit);
         }
     }

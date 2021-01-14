@@ -31,7 +31,7 @@ namespace SOTS.Items.Otherworld.FromChests
             item.UseSound = SoundID.Item44;
 			item.crit = 2;
 			item.shoot = mod.ProjectileType("SkywardBladeBeam");
-			item.shootSpeed = 15f;
+			item.shootSpeed = 5.5f;
 			item.noMelee = true;
 			item.noUseGraphic = true;
 		}

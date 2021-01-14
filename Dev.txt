@@ -26,13 +26,32 @@ Next Update:
 Next Development Time: 
 1. Holo-Eye, Holo-Slime, Holo-Blade, Twilight Devil
 	Banner next
-10. Twilight Gel and Twilight Assassin Armor (Void Melee)
-	1. Grants an eye turret that you can double-tap down to fire a laser with
-	2. Laser does little damage, but inflicts strong debuff that increases crit damage and chance upon enemy
-	3. Costs 5 void  to launch laser
+
+1/13/21
+1. Finishing Up HoloEye summon
+2. Bug fixes with special tooltips (blink pack)
+3. More visual improvements on glowmasking Test Wings
+4. Increased range and size of putrid eye laser
+5. Further lowered spawnrate in planetarium
+6. Fixed and Changed visuals on Skyward Blade
+7. New Item: Crescent Staff, still needs to be BALANCED and checked for server syncing
+8. Starcore Assault rifle damage increased 19 -> 23
+9. Sprited Ark Staff Mk2
+
+1/11/21
+1. More work on HoloEye summon
+
+1/10/21
+1. Worked on the skeleton code for the HoloEye summon
+
+1/9/21
+1. Dynamically increased cooldown for blinkpack as you dash through more enemies, but lower cooldown for default dashes
+2. Added some statistics and stuff to Twilight Assassin Armor, still needs work
+3. Fixed some bugs and added some new visuals to Test Wings
 
 1/2/21
-1. 
+1. Sprited and fully animated and added draw effects to Twilight Assassin Armor
+2. Checked
 
 1/1/21 NEW YEAR POG
 1. Icicle Impale Damage 52 -> 72

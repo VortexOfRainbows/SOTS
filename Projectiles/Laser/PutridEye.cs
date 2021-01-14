@@ -153,7 +153,7 @@ namespace SOTS.Projectiles.Laser
 						dist = -12;
 						Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 0.8f / 255f, (255 - projectile.alpha) * 0.8f / 255f, (255 - projectile.alpha) * 0.8f / 255f);
 						Main.PlaySound(SoundID.Item94, (int)(projectile.Center.X), (int)(projectile.Center.Y));
-						Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("FriendlyPinkLaser"), projectile.damage, 1f, projectile.owner, projectile.Center.X + shootToX * 50, projectile.Center.Y + shootToY * 50);
+						Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("FriendlyPinkLaser"), projectile.damage, 1f, projectile.owner, projectile.Center.X + shootToX * 60, projectile.Center.Y + shootToY * 60);
 					}						
 				}
 				projectile.netUpdate = true;

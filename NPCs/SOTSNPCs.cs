@@ -36,7 +36,7 @@ namespace SOTS.NPCs
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			if (modPlayer.assassinate)
 			{
-				npc.AddBuff(mod.BuffType("Assassination"), 900);
+				npc.AddBuff(mod.BuffType("Assassination"), 30 * modPlayer.assassinateFlat);
 				float mult = 1 - modPlayer.assassinateNum;
 				int life = npc.life - (damage - (npc.defense + 1) / 2);
 				if ((life < npc.lifeMax * mult || life <= modPlayer.assassinateFlat) && npc.HasBuff(mod.BuffType("Assassination")))
@@ -233,14 +233,14 @@ namespace SOTS.NPCs
 			{
 				if(Main.hardMode)
 				{
-					spawnRate = (int)(spawnRate /= 40); //essentially setting it to 15
+					spawnRate = (int)(spawnRate /= 30); //essentially setting it to 17
 					if (spawnRate < 1)
 						spawnRate = 1;
 					maxSpawns = (int)(maxSpawns * 2.25f);
 				}
 				else
 				{
-					spawnRate = (int)(spawnRate /= 30); //essentially setting it to 20
+					spawnRate = (int)(spawnRate /= 24); //essentially setting it to 25
 					if (spawnRate < 1)
 						spawnRate = 1;
 					maxSpawns = (int)(maxSpawns * 1.75f);

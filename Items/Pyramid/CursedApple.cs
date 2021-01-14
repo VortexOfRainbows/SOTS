@@ -22,11 +22,6 @@ namespace SOTS.Items.Pyramid
 			item.width = 26;
 			item.height = 32;
 			item.maxStack = 1;
-			item.useTurn = true;
-			item.autoReuse = true;
-			item.useAnimation = 15;
-			item.useTime = 10;
-			item.useStyle = 1;
 			item.rare = 6;
 			//item.consumable = true;
 			//item.createTile = mod.TileType("CursedAppleTile");
