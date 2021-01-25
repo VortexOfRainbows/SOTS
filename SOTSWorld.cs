@@ -5,6 +5,9 @@ using System.IO;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using SOTS.Items;
+using SOTS.Items.Otherworld;
+using SOTS.Items.Otherworld.FromChests;
+using SOTS.Items.Potions;
 using Terraria;
 using Terraria.GameContent.Generation;
 using Terraria.ID;
@@ -1164,8 +1167,90 @@ namespace SOTS
 						}
 					}
 						
-				})); 
-			tasks.Insert(genIndexEnd + 2, new PassLegacy("genIndexModPyramid", delegate (GenerationProgress progress)
+				}));
+			tasks.Insert(genIndexEnd + 2, new PassLegacy("genIndexModPlanetarium", delegate (GenerationProgress progress)
+			{
+				progress.Message = "Generating Sky Artifact";
+				int dungeonSide = -1;
+				if (Main.dungeonX > (int)(Main.maxTilesX / 2))
+				{
+					dungeonSide = 1;
+				}
+				// -1 = dungeon on left, 1 = dungeon on right
+				int pyramidX = -1;
+				int checks = 0;
+				if (dungeonSide == -1)
+				{
+					int xCheck = Main.rand.Next(400, (int)(Main.maxTilesX / 2));
+					for (; xCheck != -1; xCheck = Main.rand.Next(400, (int)(Main.maxTilesX / 2)))
+					{
+						pyramidX = xCheck;
+						bool validLocation = false;
+						for (int ydown = 0; ydown != -1; ydown++)
+						{
+							Tile tile = Framing.GetTileSafely(xCheck, ydown);
+							if (tile.active() && (tile.type == TileID.SnowBlock || tile.type == TileID.IceBlock))
+							{
+								validLocation = true;
+								break;
+							}
+							else if (tile.active() && Main.tileSolid[tile.type])
+							{
+								break;
+							}
+						}
+						checks++;
+						if (validLocation || checks >= 300)
+						{
+							bool force = false;
+							if (checks >= 400)
+							{
+								force = true;
+							}
+							if (SOTSWorldgenHelper.GeneratePlanetariumFull(mod, pyramidX, 140, force))
+							{
+								return;
+							}
+						}
+					}
+				}
+				if (dungeonSide == 1)
+				{
+					int xCheck = Main.rand.Next((int)(Main.maxTilesX / 2), Main.maxTilesX - 400);
+					for (; xCheck != -1; xCheck = Main.rand.Next((int)(Main.maxTilesX / 2), Main.maxTilesX - 400))
+					{
+						pyramidX = xCheck;
+						bool validLocation = false;
+						for (int ydown = 0; ydown != -1; ydown++)
+						{
+							Tile tile = Framing.GetTileSafely(xCheck, ydown);
+							if (tile.active() && (tile.type == TileID.SnowBlock || tile.type == TileID.IceBlock))
+							{
+								validLocation = true;
+								break;
+							}
+							else if(tile.active() && Main.tileSolid[tile.type])
+                            {
+								break;
+                            }
+						}
+						checks++;
+						if (validLocation || checks >= 300)
+						{
+							bool force = false;
+							if (checks >= 400)
+							{
+								force = true;
+							}
+							if (SOTSWorldgenHelper.GeneratePlanetariumFull(mod, pyramidX, 140, force))
+							{
+								return;
+							}
+						}
+					}
+				}
+			}));
+			tasks.Insert(genIndexEnd + 3, new PassLegacy("genIndexModPyramid", delegate (GenerationProgress progress)
 			{
 				progress.Message = "Generating A Pyramid";
 				///Finding the dungeon
@@ -2271,7 +2356,7 @@ namespace SOTS
 					}
 				}
 			}));
-		
+			
 		}
 		public override void TileCountsAvailable(int[] tileCounts)
 		{
@@ -2300,21 +2385,189 @@ namespace SOTS
 			}
             WorldGen.KillTile(xPosition2, yPosition2, false, false, false);	  
 			WorldGen.PlaceTile(xPosition2, yPosition2, mod.TileType("IceCreamBottleTile"));
-			
+
 			// Iterate chests
+			List<int> starItemPool2 = new List<int>() { ModContent.ItemType<SkywareBattery>(), ModContent.ItemType<Poyoyo>(), ModContent.ItemType<SupernovaHammer>(), ModContent.ItemType<StarshotCrossbow>(), ModContent.ItemType<LashesOfLightning>(), ModContent.ItemType<Starbelt>(), ModContent.ItemType<TwilightAssassinsCirclet>() };
+			List<int> lightItemPool2 = new List<int>() { ModContent.ItemType<HardlightQuiver>(), ModContent.ItemType<CodeCorrupter>(), ModContent.ItemType<PlatformGenerator>(), ModContent.ItemType<Calculator>(), ModContent.ItemType<TwilightAssassinsLeggings>(), ModContent.ItemType<TwilightFishingPole>(), ModContent.ItemType<ChainedPlasma>() };
+			List<int> fireItemPool2 = new List<int>() { ModContent.ItemType<BlinkPack>(), ModContent.ItemType<FlareDetonator>(), ModContent.ItemType<VibrancyModule>(), ModContent.ItemType<CataclysmMusketPouch>(), ModContent.ItemType<TerminatorAcorns>(), ModContent.ItemType<TwilightAssassinsChestplate>(), ModContent.ItemType<InfernoHook>() };
+
+			List<int> starItemPool = new List<int>() { ModContent.ItemType<SkywareBattery>(), ModContent.ItemType<Poyoyo>(), ModContent.ItemType<SupernovaHammer>(), ModContent.ItemType<StarshotCrossbow>(),ModContent.ItemType<LashesOfLightning>(), ModContent.ItemType<Starbelt>(), ModContent.ItemType<TwilightAssassinsCirclet>() };
+			List<int> lightItemPool = new List<int>() { ModContent.ItemType<HardlightQuiver>(), ModContent.ItemType<CodeCorrupter>(), ModContent.ItemType<PlatformGenerator>(), ModContent.ItemType<Calculator>(), ModContent.ItemType<TwilightAssassinsLeggings>(), ModContent.ItemType<TwilightFishingPole>(), ModContent.ItemType<ChainedPlasma>() };
+			List<int> fireItemPool = new List<int>() { ModContent.ItemType<BlinkPack>(), ModContent.ItemType<FlareDetonator>(), ModContent.ItemType<VibrancyModule>(), ModContent.ItemType<CataclysmMusketPouch>(), ModContent.ItemType<TerminatorAcorns>(), ModContent.ItemType<TwilightAssassinsChestplate>(), ModContent.ItemType<InfernoHook>() };
 			foreach (Chest chest in Main.chest.Where(c => c != null))
 			{
 				// Get a chest
 				var tile = Main.tile[chest.x, chest.y]; // the chest tile 
+				if (tile.type == mod.TileType("LockedStrangeChest") || tile.type == mod.TileType("LockedSkywareChest") || tile.type == mod.TileType("LockedMeteoriteChest"))
+				{
+					int type = tile.type == mod.TileType("LockedStrangeChest") ? 0 : tile.type == mod.TileType("LockedSkywareChest") ? 1 : 2;
+					int slot = 39;
+					for (int i = 0; i < 39; i++)
+					{
+						if (chest.item[i].type == 0 && i < slot)
+						{
+							slot = i;
+						}
+					}
+					int firstType = 0;
+					if (type == 0)
+					{
+						firstType = lightItemPool2[Main.rand.Next(lightItemPool2.Count)];
+						if (lightItemPool.Count > 0)
+						{
+							int rand = Main.rand.Next(lightItemPool.Count);
+							firstType = lightItemPool[rand];
+							lightItemPool.RemoveAt(rand);
+						}
+					}
+					else if (type == 1)
+					{
+						firstType = starItemPool2[Main.rand.Next(starItemPool2.Count)];
+						if (starItemPool.Count > 0)
+						{
+							int rand = Main.rand.Next(starItemPool.Count);
+							firstType = starItemPool[rand];
+							starItemPool.RemoveAt(rand);
+						}
+					}
+					else
+					{
+						firstType = fireItemPool2[Main.rand.Next(fireItemPool2.Count)];
+						if (fireItemPool.Count > 0)
+						{
+							int rand = Main.rand.Next(fireItemPool.Count);
+							firstType = fireItemPool[rand];
+							fireItemPool.RemoveAt(rand);
+						}
+					}
+					chest.item[slot].SetDefaults(firstType); //add primary item to chest loot
+					slot++;
+
+					if (!Main.rand.NextBool(3)) //Adds ores and shards to chest
+					{
+						int amt = Main.rand.Next(5, 9); //5 to 8
+						int rand = Main.rand.Next(9);
+						int secondType = ModContent.ItemType<HardlightAlloy>();
+						if (type == 0 || rand == 0)
+							secondType = ModContent.ItemType<HardlightAlloy>();
+						if (type == 1 || rand == 1)
+							secondType = ModContent.ItemType<StarlightAlloy>();
+						if (type == 2 || rand == 2)
+							secondType = ModContent.ItemType<OtherworldlyAlloy>();
+						chest.item[slot].SetDefaults(secondType);
+						chest.item[slot].stack = amt;
+						slot++;
+					}
+					else
+					{
+						int secondType = ModContent.ItemType<TwilightShard>();
+						int amt = Main.rand.Next(6, 10); //6 to 9
+						chest.item[slot].SetDefaults(secondType);
+						chest.item[slot].stack = amt;
+						slot++;
+					}
+
+					if (!Main.rand.NextBool(3)) //Adds ammo or stars to chest
+					{
+						int amt = Main.rand.Next(66, 101); //66 to 100
+						int[] ammoItems = new int[] { ItemID.JestersArrow, ItemID.HellfireArrow, ItemID.MeteorShot, ItemID.FallenStar, ModContent.ItemType<ExplosiveKnife>() };
+						int rand = Main.rand.Next(ammoItems.Length);
+						int thirdType = ammoItems[rand];
+						if (thirdType == ItemID.FallenStar) //cut quantity if stars 13 - 20
+						{
+							amt /= 5;
+						}
+						chest.item[slot].SetDefaults(thirdType);
+						chest.item[slot].stack = amt;
+						slot++;
+					}
+					if(Main.rand.Next(5) <= 2) //adds healing
+                    {
+						int fourthType = ItemID.RestorationPotion;
+						int amt = Main.rand.Next(10, 15); //10 to 14
+						chest.item[slot].SetDefaults(fourthType);
+						chest.item[slot].stack = amt;
+						slot++;
+					}
+					if (!Main.rand.NextBool(5)) //adds first potions 80%
+					{
+						int amt = Main.rand.Next(2) + 1; //1 to 2
+						int[] potions1 = new int[] { ModContent.ItemType<AssassinationPotion>(), ModContent.ItemType<BrittlePotion>(), ModContent.ItemType<RoughskinPotion>(), ModContent.ItemType<SoulAccessPotion>(), ModContent.ItemType<VibePotion>(), ItemID.LifeforcePotion, ItemID.HeartreachPotion, ItemID.ManaRegenerationPotion, ItemID.MagicPowerPotion, ItemID.AmmoReservationPotion, ItemID.InfernoPotion};
+						int rand = Main.rand.Next(potions1.Length);
+						int fifthType = potions1[rand];
+						chest.item[slot].SetDefaults(fifthType);
+						chest.item[slot].stack = amt;
+						slot++;
+					}
+					if (Main.rand.NextBool(5)) //adds second potions 20%
+					{
+						int amt = 1;
+						int[] potions2 = new int[] { ModContent.ItemType<BlightfulTonic>(), ModContent.ItemType<GlacialTonic>(), ModContent.ItemType<SeismicTonic>(), ModContent.ItemType<StarlightTonic>(), ModContent.ItemType<DoubleVisionPotion>() };
+						int rand = Main.rand.Next(potions2.Length);
+						int fifthType = potions2[rand];
+						chest.item[slot].SetDefaults(fifthType);
+						chest.item[slot].stack = amt;
+						slot++;
+					}
+
+					if (!Main.rand.NextBool(3)) //Adds torches
+					{
+						int amt = Main.rand.Next(15, 30); //15 to 29
+						int sixthType = ItemID.Torch;
+						chest.item[slot].SetDefaults(sixthType);
+						chest.item[slot].stack = amt;
+						slot++;
+					}
+					if (Main.rand.NextBool(2))
+					{
+						chest.item[slot].SetDefaults(ItemID.GoldCoin);
+						chest.item[slot].stack = Main.rand.Next(3) + 4; // 4 to 6
+						slot++;
+					}
+					if (Main.rand.NextBool(5)) //20%
+					{
+						int amt = 1; 
+						int seventhType = ModContent.ItemType<StrangeKey>();
+						if (type == 0)
+						{
+							if (Main.rand.NextBool(7))
+								seventhType = ModContent.ItemType<StrangeKey>();
+							else if(Main.rand.NextBool(2))
+								seventhType = ModContent.ItemType<SkywareKey>();
+							else
+								seventhType = ModContent.ItemType<MeteoriteKey>();
+
+						}
+						if (type == 1)
+						{
+							if (Main.rand.NextBool(7))
+								seventhType = ModContent.ItemType<SkywareKey>();
+							else if (Main.rand.NextBool(2))
+								seventhType = ModContent.ItemType<StrangeKey>();
+							else
+								seventhType = ModContent.ItemType<MeteoriteKey>();
+						}
+						if (type == 2)
+						{
+							if (Main.rand.NextBool(7))
+								seventhType = ModContent.ItemType<MeteoriteKey>();
+							else if (Main.rand.NextBool(2))
+								seventhType = ModContent.ItemType<SkywareKey>();
+							else
+								seventhType = ModContent.ItemType<StrangeKey>();
+						}
+						chest.item[slot].SetDefaults(seventhType);
+						chest.item[slot].stack = amt;
+						slot++;
+					}
+				}
 				if (tile.type == mod.TileType("StrangeChestTile"))
 				{
 					int slot = 0;
 					chest.item[slot].SetDefaults(mod.ItemType("WorldgenScanner"));
 					slot++;
-					chest.item[slot].SetDefaults(mod.ItemType("WorldgeCapture"));
-					slot++;
 				}
-				if(tile.type == mod.TileType("PyramidChestTile"))
+				if (tile.type == mod.TileType("PyramidChestTile"))
 				{
 					int slot = 39;
 					for(int i = 0; i < 39; i++)

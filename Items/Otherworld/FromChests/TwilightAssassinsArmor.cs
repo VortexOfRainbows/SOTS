@@ -43,11 +43,11 @@ namespace SOTS.Items.Otherworld.FromChests
 							"\nIncreases minion and melee damage by 7%" +
 							"\nIncreased max void by 50" +
 							"\nProvides a Holo Eye minion to assist in combat" +
-							"\nPress the " + "'" + key + "' key to make it launch a destabilizing beam that applies 4 levels of destabilized, but can only once per enemy" +
+							"\nPress the " + "'" + key + "' key to make it launch a destabilizing beam that applies 4 levels of destabilized, but only once per enemy" +
 							"\nDestabilized enemies gain a 5% flat chance to be critically striked" +
 							"\nThis is calculated after normal crits, allowing some attacks to double crit" +
 							"\nCosts 6 void to launch" +
-							"\nHolo Eye remains active while worn in vanity slots";
+							"\nHolo Eye remains active in the inventory when favorited or while worn in vanity slots";
 						return;
 					}
 				}
@@ -61,11 +61,11 @@ namespace SOTS.Items.Otherworld.FromChests
 						"\nIncreases minion and melee damage by 7%" +
 						"\nIncreased max void by 50" +
 						"\nProvides a Holo Eye minion to assist in combat" +
-						"\nPress the " + "'" + key + "' key to make it launch a destabilizing beam that applies 4 levels of destabilized, but can only once per enemy" +
+						"\nPress the " + "'" + key + "' key to make it launch a destabilizing beam that applies 4 levels of destabilized, but only once per enemy" +
 						"\nDestabilized enemies gain a 5% flat chance to be critically striked" +
 						"\nThis is calculated after normal crits, allowing some attacks to double crit" +
 						"\nCosts 6 void to launch" +
-						"\nHolo Eye remains active while worn in vanity slots";
+						"\nHolo Eye remains active in the inventory when favorited or while worn in vanity slots";
 				}
 			}
 			base.ModifyTooltips(tooltips);
@@ -114,12 +114,16 @@ namespace SOTS.Items.Otherworld.FromChests
 			SOTSPlayer modPlayer = player.GetModPlayer<SOTSPlayer>();
 			modPlayer.HoloEye = true;
 			modPlayer.HoloEyeDamage += (int)(33 * (1f + (player.minionDamage - 1f) + (player.allDamage - 1f)));
-
-
 		}
 		public override void AddRecipes()
 		{
-
+			ModRecipe recipe = new ModRecipe(mod);
+			recipe.AddIngredient(null, "StarlightAlloy", 12);
+			recipe.AddIngredient(null, "HardlightAlloy", 12);
+			recipe.AddIngredient(null, "DissolvingAether", 1);
+			recipe.AddTile(mod.TileType("HardlightFabricatorTile"));
+			recipe.SetResult(this);
+			recipe.AddRecipe();
 		}
 	}
 
@@ -182,7 +186,13 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override void AddRecipes()
 		{
-
+			ModRecipe recipe = new ModRecipe(mod);
+			recipe.AddIngredient(ItemID.HellstoneBar, 12);
+			recipe.AddIngredient(null, "HardlightAlloy", 20);
+			recipe.AddIngredient(null, "DissolvingAether", 1);
+			recipe.AddTile(mod.TileType("HardlightFabricatorTile"));
+			recipe.SetResult(this);
+			recipe.AddRecipe();
 		}
 	}
 
@@ -238,7 +248,13 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override void AddRecipes()
 		{
-
+			ModRecipe recipe = new ModRecipe(mod);
+			recipe.AddIngredient(null, "OtherworldlyAlloy", 12);
+			recipe.AddIngredient(null, "HardlightAlloy", 16);
+			recipe.AddIngredient(null, "DissolvingAether", 1);
+			recipe.AddTile(mod.TileType("HardlightFabricatorTile"));
+			recipe.SetResult(this);
+			recipe.AddRecipe();
 		}
 	}
 	public class TwilightAssassinPlayer : ModPlayer

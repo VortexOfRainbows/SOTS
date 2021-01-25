@@ -60,7 +60,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "OtherworldlyAlloy", 16);
+			recipe.AddIngredient(null, "HardlightAlloy", 16);
 			recipe.AddTile(mod.TileType("HardlightFabricatorTile"));
 			recipe.SetResult(this);
 			recipe.AddRecipe();

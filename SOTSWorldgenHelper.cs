@@ -3,6 +3,7 @@ using System.Diagnostics;
 using Terraria;
 using Terraria.ModLoader;
 using SOTS.Items.Otherworld;
+using Microsoft.Xna.Framework;
 
 namespace SOTS
 {
@@ -272,7 +273,7 @@ namespace SOTS
 			}
 			return false;
 		}
-		public static void GenerateSkyArtifact(int x, int y, Mod mod)
+		public static bool GenerateSkyArtifact(int x, int y, Mod mod, bool force = false)
 		{
 			int[,] _structure = {
 				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,8,1,1,1,1,1,1,1,8,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -370,6 +371,11 @@ namespace SOTS
 			};
 			int PosX = x;    //spawnX and spawnY is where you want the anchor to be when this generates
 			int PosY = y - 40;
+
+			if (!Empty(PosX, PosY, _structure.GetLength(1), _structure.GetLength(0), 5) && !force)
+			{
+				return false;
+			}
 			//i = vertical, j = horizontal
 			for (int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)    //Increase the iterations on this outermost for loop if tabletop-objects are not properly spawning
 			{
@@ -635,6 +641,7 @@ namespace SOTS
 					}
 				}
 			}
+			return true;
 		}
 		public static bool GenerateArtifactIslands(int x, int y, int type, Mod mod, int x2 = -1, int y2 = -1)
 		{
@@ -1781,6 +1788,62 @@ namespace SOTS
 					}
 				}
 			}
+		}
+		public static bool GeneratePlanetariumFull(Mod mod, int i, int j, bool force = false)
+        {
+			Vector2 tileLocation = new Vector2(i, j);
+			if(!SOTSWorldgenHelper.GenerateSkyArtifact((int)tileLocation.X, (int)tileLocation.Y, mod, force))
+            {
+				return false;
+            }
+			for (int r = 0; r < 30; r++)
+			{
+				tileLocation = new Vector2(i, j);
+				if (Main.rand.Next(2) == 0)
+				{
+					tileLocation.X += Main.rand.Next(300);
+				}
+				else
+				{
+					tileLocation.X -= Main.rand.Next(300);
+				}
+
+				if (Main.rand.Next(2) == 0)
+				{
+					tileLocation.Y += Main.rand.Next(50);
+				}
+				else
+				{
+					tileLocation.Y -= Main.rand.Next(36) + 50;
+				}
+
+				int extend = 0;
+				while (!SOTSWorldgenHelper.GenerateArtifactIslands((int)tileLocation.X, (int)tileLocation.Y, r % 10, mod))
+				{
+					tileLocation = new Vector2(i, j);
+					if (Main.rand.Next(2) == 0)
+					{
+						tileLocation.X += Main.rand.Next(300 + extend);
+					}
+					else
+					{
+						tileLocation.X -= Main.rand.Next(300 + extend);
+					}
+
+					if (Main.rand.Next(2) == 0)
+					{
+						tileLocation.Y += Main.rand.Next(50);
+					}
+					else
+					{
+						tileLocation.Y -= Main.rand.Next(36) + 50;
+					}
+
+					extend++;
+				}
+			}
+			SOTSWorldgenHelper.DistributeSkyThings(mod, 30, 7, 10, 4, 5, 45);
+			return true;
 		}
 	}
 }

@@ -88,49 +88,46 @@ namespace SOTS.NPCs.Boss
 			Player player  = Main.player[npc.target];
 			frame = frameHeight;
 			
-                if (Main.npc[(int)npc.ai[3]].velocity.X == 0 && Main.npc[(int)npc.ai[3]].velocity.Y == 0)
-				{
-					ai1 += 4.75f;
-				}
-					
-				ai1 += 0.75f;
-				if (ai1 >= 5f) 
-				{
-					ai1 -= 5f;
-					npc.frame.Y += frame;
-					if(npc.frame.Y >= 22 * frame)
-					{
-						npc.frame.Y = 0;
-					}
-					if(npc.frame.Y == frame * 10)
-					{
-					
-						float shootToX = player.Center.X - npc.Center.X;
-						float shootToY = player.Center.Y - npc.Center.Y;
-						float distance = (float)System.Math.Sqrt((double)(shootToX * shootToX + shootToY * shootToY));
-
-						distance = 5f / distance;
-								  
-						shootToX *= distance * 5;
-						shootToY *= distance * 5;
-						Projectile.NewProjectile(npc.Center.X, npc.Center.Y, shootToX, shootToY, mod.ProjectileType("BlueCellBlast"), 30, 0f, 0);
-					}
-					if(npc.frame.Y == 0)
-					{
-					
-						float shootToX = player.Center.X - npc.Center.X;
-						float shootToY = player.Center.Y - npc.Center.Y;
-						float distance = (float)System.Math.Sqrt((double)(shootToX * shootToX + shootToY * shootToY));
-
-						distance = 5f / distance;
-								  
-						shootToX *= distance * 5;
-						shootToY *= distance * 5;
-						Projectile.NewProjectile(npc.Center.X, npc.Center.Y, shootToX, shootToY, mod.ProjectileType("PurpleCellBlast"), 30, 0f, 0);
-					}
-				}
+            if (Main.npc[(int)npc.ai[3]].velocity.X == 0 && Main.npc[(int)npc.ai[3]].velocity.Y == 0)
+			{
+				ai1 += 4.75f;
+			}
 				
-			
+			ai1 += 0.75f;
+			if (ai1 >= 5f) 
+			{
+				ai1 -= 5f;
+				npc.frame.Y += frame;
+				if(npc.frame.Y >= 22 * frame)
+				{
+					npc.frame.Y = 0;
+				}
+				if(npc.frame.Y == frame * 10)
+				{
+					float shootToX = player.Center.X - npc.Center.X;
+					float shootToY = player.Center.Y - npc.Center.Y;
+					float distance = (float)System.Math.Sqrt((double)(shootToX * shootToX + shootToY * shootToY));
+
+					distance = 5f / distance;
+							  
+					shootToX *= distance * 5;
+					shootToY *= distance * 5;
+					Projectile.NewProjectile(npc.Center.X, npc.Center.Y, shootToX, shootToY, mod.ProjectileType("BlueCellBlast"), 30, 0f, 0);
+				}
+				if(npc.frame.Y == 0)
+				{
+				
+					float shootToX = player.Center.X - npc.Center.X;
+					float shootToY = player.Center.Y - npc.Center.Y;
+					float distance = (float)System.Math.Sqrt((double)(shootToX * shootToX + shootToY * shootToY));
+
+					distance = 5f / distance;
+							  
+					shootToX *= distance * 5;
+					shootToY *= distance * 5;
+					Projectile.NewProjectile(npc.Center.X, npc.Center.Y, shootToX, shootToY, mod.ProjectileType("PurpleCellBlast"), 30, 0f, 0);
+				}
+			}
 		}
        // public override bool PreDraw(Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch, Color drawColor)
        // {
@@ -141,7 +138,6 @@ namespace SOTS.NPCs.Boss
       //  }
         public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position)
         {
- 
             return false;       //this make that the npc does not have a health bar
         }
 		public override void PostAI()

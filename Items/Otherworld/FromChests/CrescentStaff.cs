@@ -17,21 +17,26 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override void SafeSetDefaults()
 		{
-            item.damage = 28;
+            item.damage = 36;
             item.ranged = true;
-            item.width = 34;
-            item.height = 34;
-            item.useTime = 6; 
+            item.width = 40;
+            item.height = 40;
+            item.useTime = 10; 
             item.useAnimation = 30;
-            item.useStyle = 1;    
+            item.useStyle = 5;    
             item.noMelee = true;
 			item.knockBack = 2f;
 			item.value = Item.sellPrice(0, 3, 80, 0);
 			item.rare = ItemRarityID.LightPurple;
 			item.UseSound = SoundID.Item8;
             item.autoReuse = true;
-            item.shoot = mod.ProjectileType("MacaroniMoon"); 
+            item.shoot = mod.ProjectileType("MacaroniMoon");
             item.shootSpeed = 4.25f;
+			if (!Main.dedServ)
+			{
+				item.GetGlobalItem<ItemUseGlow>().glowTexture = mod.GetTexture("Items/Otherworld/FromChests/CrescentStaffGlow");
+			}
+			Item.staff[item.type] = true;
 		}
 		int projectileNum = 0;
 		int highestProjectileNum = 0;
@@ -50,11 +55,11 @@ namespace SOTS.Items.Otherworld.FromChests
         }
         public override void GetVoid(Player player)
 		{
-			voidMana = 12;
+			voidMana = 8;
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians((speedX < 0 ? -1 : 1) * (-50f + 25f * projectileNum)));
+			Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians((speedX < 0 ? -1 : 1) * (-20f + 20f * projectileNum)));
 			speedX = perturbedSpeed.X;
 			speedY = perturbedSpeed.Y;
 			position += new Vector2(speedX, speedY) * 6;

@@ -305,4 +305,453 @@ namespace SOTS.Items.Banners
 			item.placeStyle = 14;
 		}
 	}
+	public class HoloSlimeBanner : ModBanner
+	{
+		public override void SafeSetDefaults()
+		{
+			item.createTile = TileType<HoloSlimeBannerTile>();
+		}
+		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
+		{
+			Texture2D texture = mod.GetTexture("Items/Banners/HoloSlimeBannerOutline");
+			Texture2D texture2 = mod.GetTexture("Items/Banners/HoloSlimeBannerFill");
+			Color color = new Color(110, 110, 110, 0);
+			for (int k = 0; k < 5; k++)
+			{
+				float x = Main.rand.Next(-10, 11) * 0.03f;
+				float y = Main.rand.Next(-10, 11) * 0.03f;
+				if (k == 0)
+					Main.spriteBatch.Draw(texture2, new Vector2(position.X, position.Y), null, color * 0.5f, 0f, origin, scale, SpriteEffects.None, 0f);
+
+				Main.spriteBatch.Draw(texture, new Vector2(position.X + x, position.Y + y), null, color * (1f - (item.alpha / 255f)), 0f, origin, scale, SpriteEffects.None, 0f);
+			}
+			return false;
+		}
+		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
+		{
+			Texture2D texture = mod.GetTexture("Items/Banners/HoloSlimeBannerOutline");
+			Texture2D texture2 = mod.GetTexture("Items/Banners/HoloSlimeBannerFill");
+			Color color = new Color(110, 110, 110, 0);
+			Vector2 drawOrigin = new Vector2(Main.itemTexture[item.type].Width * 0.5f, item.height * 0.5f);
+			for (int k = 0; k < 5; k++)
+			{
+				float x = Main.rand.Next(-10, 11) * 0.03f;
+				float y = Main.rand.Next(-10, 11) * 0.03f;
+				if (k == 0)
+					Main.spriteBatch.Draw(texture2, new Vector2((float)(item.Center.X - (int)Main.screenPosition.X), (float)(item.Center.Y - (int)Main.screenPosition.Y) + 2), null, color * 0.5f, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+
+				Main.spriteBatch.Draw(texture, new Vector2((float)(item.Center.X - (int)Main.screenPosition.X) + x, (float)(item.Center.Y - (int)Main.screenPosition.Y) + y + 2), null, color * (1f - (item.alpha / 255f)), rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+			}
+			return false;
+		}
+	}
+	public class HoloSwordBanner : ModBanner
+	{
+		public override void SetStaticDefaults()
+		{
+			DisplayName.SetDefault("Holo Blade Banner");
+		}
+		public override void SafeSetDefaults()
+		{
+			item.createTile = TileType<HoloSwordBannerTile>();
+		}
+		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
+		{
+			Texture2D texture = mod.GetTexture("Items/Banners/HoloSwordBannerOutline");
+			Texture2D texture2 = mod.GetTexture("Items/Banners/HoloSwordBannerFill");
+			Color color = new Color(110, 110, 110, 0);
+			for (int k = 0; k < 5; k++)
+			{
+				float x = Main.rand.Next(-10, 11) * 0.03f;
+				float y = Main.rand.Next(-10, 11) * 0.03f;
+				if (k == 0)
+					Main.spriteBatch.Draw(texture2, new Vector2(position.X, position.Y), null, color * 0.5f, 0f, origin, scale, SpriteEffects.None, 0f);
+
+				Main.spriteBatch.Draw(texture, new Vector2(position.X + x, position.Y + y), null, color * (1f - (item.alpha / 255f)), 0f, origin, scale, SpriteEffects.None, 0f);
+			}
+			return false;
+		}
+		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
+		{
+			Texture2D texture = mod.GetTexture("Items/Banners/HoloSwordBannerOutline");
+			Texture2D texture2 = mod.GetTexture("Items/Banners/HoloSwordBannerFill");
+			Color color = new Color(110, 110, 110, 0);
+			Vector2 drawOrigin = new Vector2(Main.itemTexture[item.type].Width * 0.5f, item.height * 0.5f);
+			for (int k = 0; k < 5; k++)
+			{
+				float x = Main.rand.Next(-10, 11) * 0.03f;
+				float y = Main.rand.Next(-10, 11) * 0.03f;
+				if (k == 0)
+					Main.spriteBatch.Draw(texture2, new Vector2((float)(item.Center.X - (int)Main.screenPosition.X), (float)(item.Center.Y - (int)Main.screenPosition.Y) + 2), null, color * 0.5f, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+
+				Main.spriteBatch.Draw(texture, new Vector2((float)(item.Center.X - (int)Main.screenPosition.X) + x, (float)(item.Center.Y - (int)Main.screenPosition.Y) + y + 2), null, color * (1f - (item.alpha / 255f)), rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+			}
+			return false;
+		}
+	}
+	public class HoloEyeBanner : ModBanner
+	{
+		public override void SafeSetDefaults()
+		{
+			item.createTile = TileType<HoloEyeBannerTile>();
+		}
+		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
+		{
+			Texture2D texture2 = mod.GetTexture("Items/Banners/HoloEyeBannerBase");
+			Main.spriteBatch.Draw(texture2, new Vector2(position.X, position.Y), null, drawColor, 0f, origin, scale, SpriteEffects.None, 0f);
+			return false;
+		}
+		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
+		{
+			Texture2D texture2 = mod.GetTexture("Items/Banners/HoloEyeBannerBase");
+			Vector2 drawOrigin = new Vector2(Main.itemTexture[item.type].Width * 0.5f, item.height * 0.5f);
+			Main.spriteBatch.Draw(texture2, new Vector2((float)(item.Center.X - (int)Main.screenPosition.X), (float)(item.Center.Y - (int)Main.screenPosition.Y) + 2), null, lightColor * (1f - (item.alpha / 255f)), rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+			return false;
+		}
+		public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
+		{
+			Texture2D texture = mod.GetTexture("Items/Banners/HoloEyeBannerOutline");
+			Texture2D texture2 = mod.GetTexture("Items/Banners/HoloEyeBannerFill");
+			Color color = new Color(110, 110, 110, 0);
+			for (int k = 0; k < 5; k++)
+			{
+				float x = Main.rand.Next(-10, 11) * 0.03f;
+				float y = Main.rand.Next(-10, 11) * 0.03f;
+				if (k == 0)
+					Main.spriteBatch.Draw(texture2, new Vector2(position.X, position.Y), null, color * 0.5f, 0f, origin, scale, SpriteEffects.None, 0f);
+
+				Main.spriteBatch.Draw(texture, new Vector2(position.X + x, position.Y + y), null, color * (1f - (item.alpha / 255f)), 0f, origin, scale, SpriteEffects.None, 0f);
+			}
+		}
+        public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
+        {
+			Texture2D texture = mod.GetTexture("Items/Banners/HoloEyeBannerOutline");
+			Texture2D texture2 = mod.GetTexture("Items/Banners/HoloEyeBannerFill");
+			Color color = new Color(110, 110, 110, 0);
+			Vector2 drawOrigin = new Vector2(Main.itemTexture[item.type].Width * 0.5f, item.height * 0.5f);
+			for (int k = 0; k < 5; k++)
+			{
+				float x = Main.rand.Next(-10, 11) * 0.03f;
+				float y = Main.rand.Next(-10, 11) * 0.03f;
+				if (k == 0)
+					Main.spriteBatch.Draw(texture2, new Vector2((float)(item.Center.X - (int)Main.screenPosition.X), (float)(item.Center.Y - (int)Main.screenPosition.Y) + 2), null, color * 0.5f, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+
+				Main.spriteBatch.Draw(texture, new Vector2((float)(item.Center.X - (int)Main.screenPosition.X) + x, (float)(item.Center.Y - (int)Main.screenPosition.Y) + y + 2), null, color * (1f - (item.alpha / 255f)), rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+			}
+		}
+	}
+	public class HoloSlimeBannerTile : ModTile
+	{
+		public override void SetDefaults()
+		{
+			Main.tileFrameImportant[Type] = true;
+			Main.tileNoAttach[Type] = true;
+			Main.tileLavaDeath[Type] = true;
+			TileObjectData.newTile.CopyFrom(TileObjectData.Style1x2Top);
+			TileObjectData.newTile.Height = 3;
+			TileObjectData.newTile.CoordinateHeights = new[] { 16, 16, 16 };
+			TileObjectData.newTile.StyleHorizontal = true;
+			TileObjectData.newTile.AnchorTop = new AnchorData(AnchorType.SolidTile | AnchorType.SolidSide | AnchorType.SolidBottom, TileObjectData.newTile.Width, 0);
+			TileObjectData.newTile.StyleWrapLimit = 1;
+			TileObjectData.addTile(Type);
+			dustType = -1;
+			disableSmartCursor = true;
+			ModTranslation name = CreateMapEntryName();
+			name.SetDefault("Banner");
+			AddMapEntry(new Color(13, 88, 130), name);
+		}
+
+		public override void KillMultiTile(int i, int j, int frameX, int frameY)
+		{
+			string item;
+			item = "HoloSlimeBanner";
+			Item.NewItem(i * 16, j * 16, 16, 48, mod.ItemType(item));
+		}
+		public override void NearbyEffects(int i, int j, bool closer)
+		{
+			if (closer)
+			{
+				Player player = Main.LocalPlayer;
+				string type;
+				type = "HoloSlime";
+				player.NPCBannerBuff[mod.NPCType(type)] = true;
+				player.hasBanner = true;
+			}
+		}
+        public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
+        {
+            return false;
+        }
+        public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
+		{
+			Texture2D texture = mod.GetTexture("Items/Banners/HoloSlimeBannerTileFill");
+			Texture2D texture2 = mod.GetTexture("Items/Banners/HoloSlimeBannerTileOutline");
+			ulong randSeed = Main.TileFrameSeed ^ (ulong)((long)j << 32 | (long)((ulong)i));
+			Color color = new Color(90, 90, 90, 0);
+			int frameX = Main.tile[i, j].frameX;
+			int frameY = Main.tile[i, j].frameY;
+			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
+			if (Main.drawToScreen)
+			{
+				zero = Vector2.Zero;
+			}
+			for (int k = 0; k < 6; k++)
+			{
+				float x = Main.rand.Next(-10, 11) * 0.05f;
+				float y = Main.rand.Next(-10, 11) * 0.05f;
+				if(k <= 2)
+                {
+					x = 0;
+					y = 0;
+				}
+				if (k == 0)
+					Main.spriteBatch.Draw(texture, new Vector2((float)(i * 16 - (int)Main.screenPosition.X) + x, (float)(j * 16 - (int)Main.screenPosition.Y) + y) + zero, new Rectangle(frameX, frameY, 16, 16), color * 0.5f, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture2, new Vector2((float)(i * 16 - (int)Main.screenPosition.X) + x, (float)(j * 16 - (int)Main.screenPosition.Y) + y) + zero, new Rectangle(frameX, frameY, 16, 16), color, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+			}
+		}
+		public override void SetSpriteEffects(int i, int j, ref SpriteEffects spriteEffects)
+		{
+			if (i % 2 == 1)
+			{
+				spriteEffects = SpriteEffects.FlipHorizontally;
+			}
+		}
+	}
+	public class HoloSwordBannerTile : ModTile
+	{
+		public override void SetDefaults()
+		{
+			Main.tileFrameImportant[Type] = true;
+			Main.tileNoAttach[Type] = true;
+			Main.tileLavaDeath[Type] = true;
+			TileObjectData.newTile.CopyFrom(TileObjectData.Style1x2Top);
+			TileObjectData.newTile.Height = 3;
+			TileObjectData.newTile.CoordinateHeights = new[] { 16, 16, 16 };
+			TileObjectData.newTile.StyleHorizontal = true;
+			TileObjectData.newTile.AnchorTop = new AnchorData(AnchorType.SolidTile | AnchorType.SolidSide | AnchorType.SolidBottom, TileObjectData.newTile.Width, 0);
+			TileObjectData.newTile.StyleWrapLimit = 1;
+			TileObjectData.addTile(Type);
+			dustType = -1;
+			disableSmartCursor = true;
+			ModTranslation name = CreateMapEntryName();
+			name.SetDefault("Banner");
+			AddMapEntry(new Color(13, 88, 130), name);
+		}
+
+		public override void KillMultiTile(int i, int j, int frameX, int frameY)
+		{
+			string item;
+			item = "HoloSwordBanner";
+			Item.NewItem(i * 16, j * 16, 16, 48, mod.ItemType(item));
+		}
+		public override void NearbyEffects(int i, int j, bool closer)
+		{
+			if (closer)
+			{
+				Player player = Main.LocalPlayer;
+				string type;
+				type = "HoloBlade";
+				player.NPCBannerBuff[mod.NPCType(type)] = true;
+				player.hasBanner = true;
+			}
+		}
+		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
+		{
+			return false;
+		}
+		public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
+		{
+			Texture2D texture = mod.GetTexture("Items/Banners/HoloSwordBannerTileFill");
+			Texture2D texture2 = mod.GetTexture("Items/Banners/HoloSwordBannerTileOutline");
+			ulong randSeed = Main.TileFrameSeed ^ (ulong)((long)j << 32 | (long)((ulong)i));
+			Color color = new Color(90, 90, 90, 0);
+			int frameX = Main.tile[i, j].frameX;
+			int frameY = Main.tile[i, j].frameY;
+			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
+			if (Main.drawToScreen)
+			{
+				zero = Vector2.Zero;
+			}
+			for (int k = 0; k < 6; k++)
+			{
+				float x = Main.rand.Next(-10, 11) * 0.05f;
+				float y = Main.rand.Next(-10, 11) * 0.05f;
+				if (k <= 2)
+				{
+					x = 0;
+					y = 0;
+				}
+				if (k == 0)
+					Main.spriteBatch.Draw(texture, new Vector2((float)(i * 16 - (int)Main.screenPosition.X) + x, (float)(j * 16 - (int)Main.screenPosition.Y) + y) + zero, new Rectangle(frameX, frameY, 16, 16), color * 0.5f, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture2, new Vector2((float)(i * 16 - (int)Main.screenPosition.X) + x, (float)(j * 16 - (int)Main.screenPosition.Y) + y) + zero, new Rectangle(frameX, frameY, 16, 16), color, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+			}
+		}
+		public override void SetSpriteEffects(int i, int j, ref SpriteEffects spriteEffects)
+		{
+			if (i % 2 == 1)
+			{
+				spriteEffects = SpriteEffects.FlipHorizontally;
+			}
+		}
+	}
+	public class HoloEyeBannerTile : ModTile
+	{
+		public override void SetDefaults()
+		{
+			Main.tileFrameImportant[Type] = true;
+			Main.tileNoAttach[Type] = true;
+			Main.tileLavaDeath[Type] = true;
+			TileObjectData.newTile.CopyFrom(TileObjectData.Style1x2Top);
+			TileObjectData.newTile.Height = 3;
+			TileObjectData.newTile.CoordinateHeights = new[] { 16, 16, 16 };
+			TileObjectData.newTile.StyleHorizontal = true;
+			TileObjectData.newTile.AnchorTop = new AnchorData(AnchorType.SolidTile | AnchorType.SolidSide | AnchorType.SolidBottom, TileObjectData.newTile.Width, 0);
+			TileObjectData.newTile.StyleWrapLimit = 1;
+			TileObjectData.addTile(Type);
+			dustType = -1;
+			disableSmartCursor = true;
+			ModTranslation name = CreateMapEntryName();
+			name.SetDefault("Banner");
+			AddMapEntry(new Color(13, 88, 130), name);
+		}
+
+		public override void KillMultiTile(int i, int j, int frameX, int frameY)
+		{
+			string item;
+			item = "HoloEyeBanner";
+			Item.NewItem(i * 16, j * 16, 16, 48, mod.ItemType(item));
+		}
+		public override void NearbyEffects(int i, int j, bool closer)
+		{
+			if (closer)
+			{
+				Player player = Main.LocalPlayer;
+				string type;
+				type = "HoloEye";
+				player.NPCBannerBuff[mod.NPCType(type)] = true;
+				player.hasBanner = true;
+			}
+		}
+		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
+		{
+			if (Main.tile[i, j].frameX != 0 || Main.tile[i, j].frameY != 0)
+			{
+				return true;
+			}
+			Texture2D texture = mod.GetTexture("Items/Banners/HoloEyeBannerTileFill");
+			Texture2D texture2 = mod.GetTexture("Items/Banners/HoloEyeBannerTileOutline");
+			Texture2D texture3 = mod.GetTexture("Items/Banners/HoloEyeBannerTilePupil");
+			ulong randSeed = Main.TileFrameSeed ^ (ulong)((long)j << 32 | (long)((ulong)i));
+			Color color = new Color(90, 90, 90, 0);
+			int frameX = Main.tile[i, j].frameX;
+			int frameY = Main.tile[i, j].frameY;
+			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
+			if (Main.drawToScreen)
+			{
+				zero = Vector2.Zero;
+			}
+			for (int k = 0; k < 6; k++)
+			{
+				float x = Main.rand.Next(-10, 11) * 0.05f;
+				float y = Main.rand.Next(-10, 11) * 0.05f;
+
+				Vector2 between = Main.LocalPlayer.Center - new Vector2(i * 16 + 8, j * 16 + 40);
+				between = between.SafeNormalize(Vector2.Zero) * 1.75f;
+				if (k <= 2)
+				{
+					x = 0;
+					y = 0;
+				}
+				x -= 2;
+				y -= 2;
+				if (k == 0)
+					Main.spriteBatch.Draw(texture, new Vector2((float)(i * 16 - (int)Main.screenPosition.X) + x, (float)(j * 16 - (int)Main.screenPosition.Y) + y) + zero, null, color * 0.5f, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture2, new Vector2((float)(i * 16 - (int)Main.screenPosition.X) + x, (float)(j * 16 - (int)Main.screenPosition.Y) + y) + zero, null, color, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+
+				x += 10;
+				y += 40;
+				Main.spriteBatch.Draw(texture3, new Vector2((float)(i * 16 - (int)Main.screenPosition.X) + x, (float)(j * 16 - (int)Main.screenPosition.Y) + y) + zero + between, null, color, 0f, new Vector2(4, 4), 1f, SpriteEffects.None, 0f);
+			}
+			return true;
+		}
+		public override void SetSpriteEffects(int i, int j, ref SpriteEffects spriteEffects)
+		{
+			if (i % 2 == 1)
+			{
+				spriteEffects = SpriteEffects.FlipHorizontally;
+			}
+		}
+	}
+	public class SOTSBanners2 : ModTile
+	{
+		public override void SetDefaults()
+		{
+			Main.tileFrameImportant[Type] = true;
+			Main.tileNoAttach[Type] = true;
+			Main.tileLavaDeath[Type] = true;
+			TileObjectData.newTile.CopyFrom(TileObjectData.Style1x2Top);
+			TileObjectData.newTile.Height = 3;
+			TileObjectData.newTile.CoordinateHeights = new[] { 16, 16, 16 };
+			TileObjectData.newTile.StyleHorizontal = true;
+			TileObjectData.newTile.AnchorTop = new AnchorData(AnchorType.SolidTile | AnchorType.SolidSide | AnchorType.SolidBottom, TileObjectData.newTile.Width, 0);
+			TileObjectData.newTile.StyleWrapLimit = 111;
+			TileObjectData.addTile(Type);
+			dustType = -1;
+			disableSmartCursor = true;
+			ModTranslation name = CreateMapEntryName();
+			name.SetDefault("Banner");
+			AddMapEntry(new Color(13, 88, 130), name);
+		}
+
+		public override void KillMultiTile(int i, int j, int frameX, int frameY)
+		{
+			int style = frameX / 18;
+			string item;
+			switch (style)
+			{
+				case 0:
+					item = "TwilightDevilBanner";
+					break;
+				default:
+					return;
+			}
+			Item.NewItem(i * 16, j * 16, 16, 48, mod.ItemType(item));
+		}
+
+		public override void NearbyEffects(int i, int j, bool closer)
+		{
+			if (closer)
+			{
+				Player player = Main.LocalPlayer;
+				int style = Main.tile[i, j].frameX / 18;
+				string type;
+				switch (style)
+				{
+					case 0:
+						type = "TwilightDevil";
+						break;
+					default:
+						return;
+				}
+				player.NPCBannerBuff[mod.NPCType(type)] = true;
+				player.hasBanner = true;
+			}
+		}
+
+		public override void SetSpriteEffects(int i, int j, ref SpriteEffects spriteEffects)
+		{
+			if (i % 2 == 1)
+			{
+				spriteEffects = SpriteEffects.FlipHorizontally;
+			}
+		}
+	}
+	public class TwilightDevilBanner : ModBanner
+	{
+		public override void SafeSetDefaults()
+		{
+			item.createTile = TileType<SOTSBanners2>();
+			item.placeStyle = 0;
+		}
+	}
 }

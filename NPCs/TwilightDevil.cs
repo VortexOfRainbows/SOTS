@@ -66,8 +66,8 @@ namespace SOTS.NPCs
             npc.DeathSound = SoundID.NPCDeath6;
             npc.netAlways = true;
 			npc.buffImmune[BuffID.Frostburn] = true;
-			//banner = npc.type;
-			//bannerItem = ItemType<BleedingGhastBanner>();
+			banner = npc.type;
+			bannerItem = ItemType<TwilightDevilBanner>();
 		}
 		private int initiateHardmode = 0;
 		public override bool PreAI()

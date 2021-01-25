@@ -28,7 +28,83 @@ namespace SOTS.Items.Pyramid
 			item.useStyle = 1;
 			item.rare = 5;
 			item.consumable = true;
-			item.createTile = mod.TileType("OvergrownPyramidTile");
+			item.createTile = mod.TileType("OvergrownPyramidTileSafe");
+		}
+	}
+	public class OvergrownPyramidTileSafe : ModTile
+	{
+		public override void SetDefaults()
+		{
+			TileID.Sets.NeedsGrassFraming[Type] = true;
+			TileID.Sets.NeedsGrassFramingDirt[Type] = ModContent.TileType<PyramidSlabTile>();
+			Main.tileSolid[Type] = true;
+			Main.tileMergeDirt[Type] = false;
+			Main.tileBlockLight[Type] = true;
+			Main.tileLighted[Type] = true;
+			drop = mod.ItemType("OvergrownPyramidBlock");
+			AddMapEntry(new Color(40, 160, 100));
+			mineResist = 1.5f;
+			soundType = 21;
+			soundStyle = 2;
+			dustType = DustID.Grass;
+		}
+		public override void RandomUpdate(int i, int j)
+		{
+			if (!Main.rand.NextBool(8))
+				if (!Main.tile[i, j - 1].active())
+				{
+					WorldGen.PlaceTile(i, j - 1, mod.TileType("CursedGrass"), true, false, -1, Main.rand.Next(12));
+					Main.tile[i, j - 1].color(Main.tile[i, j].color());
+					NetMessage.SendTileSquare(-1, i, j - 1, 3, TileChangeType.None);
+				}
+				else if (Main.rand.NextBool(8))
+					GrowCurseVine(i, j);
+			base.RandomUpdate(i, j);
+		}
+		public static void GrowCurseVine(int i, int j)
+		{
+			if (!Main.tile[i, j + 1].active() && !Main.tile[i, j + 1].lava())
+			{
+				var flag9 = false;
+				for (var VineY = j; VineY > j - 10; VineY--)
+				{
+					if (Main.tile[i, VineY].bottomSlope())
+					{
+						flag9 = false;
+						break;
+					}
+					if (Main.tile[i, VineY].active() && !Main.tile[i, VineY].bottomSlope())
+					{
+						flag9 = true;
+						break;
+					}
+				}
+
+				if (flag9)
+				{
+					var num47 = i;
+					var num48 = j + 1;
+					Main.tile[num47, num48].type = (ushort)ModContent.TileType<CursedVine>();
+					Main.tile[num47, num48].active(true);
+					Main.tile[num47, num48].color(Main.tile[i, j].color());
+					WorldGen.SquareTileFrame(num47, num48, true);
+					if (Main.netMode == 2)
+					{
+						NetMessage.SendTileSquare(-1, num47, num48, 3, TileChangeType.None);
+					}
+				}
+			}
+		}
+		public override bool CanExplode(int i, int j)
+		{
+			return true;
+		}
+		public override bool Slope(int i, int j)
+		{
+			if (SOTSWorld.downedCurse)
+				return true;
+
+			return true;
 		}
 	}
 	public class OvergrownPyramidTile : ModTile

@@ -231,20 +231,10 @@ namespace SOTS.NPCs
 			}
 			if (player.GetModPlayer<SOTSPlayer>().PlanetariumBiome) //spawnrates for this biome have to be very high due to how npc spawning in sky height works. I also manually despawn other sky enemies
 			{
-				if(Main.hardMode)
-				{
-					spawnRate = (int)(spawnRate /= 30); //essentially setting it to 17
-					if (spawnRate < 1)
-						spawnRate = 1;
-					maxSpawns = (int)(maxSpawns * 2.25f);
-				}
-				else
-				{
-					spawnRate = (int)(spawnRate /= 24); //essentially setting it to 25
-					if (spawnRate < 1)
-						spawnRate = 1;
-					maxSpawns = (int)(maxSpawns * 1.75f);
-				}
+				spawnRate = (int)(spawnRate /= 30); //essentially setting it to 20
+				if (spawnRate < 1)
+					spawnRate = 1;
+				maxSpawns = (int)(maxSpawns * 1.75f);
 			}
 		}
 		public static int HookGetBossHeadTextureIndex(On.Terraria.NPC.orig_GetBossHeadTextureIndex orig, NPC self)
@@ -282,8 +272,8 @@ namespace SOTS.NPCs
 					pool.Add(mod.NPCType("HoloSlime"), 0.4f);
 					pool.Add(mod.NPCType("HoloEye"), 0.1f);
 					pool.Add(mod.NPCType("HoloBlade"), 0.175f);
-					pool.Add(mod.NPCType("TwilightDevil"), 0.02f);
-					pool.Add(mod.NPCType("OtherworldlyConstructHead"), 0.01f);
+					pool.Add(mod.NPCType("TwilightDevil"), 0.03f);
+					pool.Add(mod.NPCType("OtherworldlyConstructHead"), 0.015f);
 				}
 			}
 			else if (ZoneForest)

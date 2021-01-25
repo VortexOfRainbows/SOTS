@@ -301,7 +301,7 @@ namespace SOTS.Projectiles.Minions
 				aiCounter2++;
 				if (aiCounter2 >= 54 && distanceToTarget2 < 1080)
 				{
-					Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 96, 0.75f);
+					Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 96, 0.5f);
 					if (Main.myPlayer == projectile.owner)
 					{
 						Projectile.NewProjectile(projectile.Center, rotateVector * 5.75f, mod.ProjectileType("CodeBurst"), projectile.damage, 1f, owner.whoAmI, 0, -1);

@@ -94,6 +94,7 @@ namespace SOTS.Items.Otherworld
 			Main.tileLighted[Type] = true;
 			Main.tileFrameImportant[Type] = true;
 			Main.tileNoAttach[Type] = true;
+			TileID.Sets.HasOutlines[Type] = true;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style3x2);
 			TileObjectData.newTile.RandomStyleRange = 3;
 			TileObjectData.newTile.StyleHorizontal = false;
@@ -107,6 +108,10 @@ namespace SOTS.Items.Otherworld
 			disableSmartCursor = true;
 			dustType = mod.DustType("AvaritianDust");
 		}
+        public override bool HasSmartInteract()
+        {
+            return true;
+        }
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
 			int drop = mod.ItemType("DigitalDisplay");

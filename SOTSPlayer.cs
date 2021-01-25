@@ -164,7 +164,7 @@ namespace SOTS
 			Mod mod = ModLoader.GetMod("SOTS");
 			Player drawPlayer = drawInfo.drawPlayer;
 			SOTSPlayer modPlayer = drawPlayer.GetModPlayer<SOTSPlayer>();
-			if (modPlayer.skywardBlades > 0)
+			if (modPlayer.skywardBlades > 0 && !drawPlayer.dead)
 			{
 				float drawX = (int)drawInfo.position.X + drawPlayer.width / 2;
 				float drawY = (int)drawInfo.position.Y + drawPlayer.height / 2;
@@ -407,8 +407,9 @@ namespace SOTS
 				}
 				if (item.type == ModContent.ItemType<TwilightAssassinsCirclet>())
 				{
+					if (!HoloEye)
+						HoloEyeDamage += (int)(33 * (1f + (player.minionDamage - 1f) + (player.allDamage - 1f)));
 					HoloEye = true;
-					HoloEyeDamage += (int)(33 * (1f + (player.minionDamage - 1f) + (player.allDamage - 1f)));
 				}
 				if (item.type == ModContent.ItemType<TestWings>())
 				{
@@ -419,7 +420,17 @@ namespace SOTS
 					}
 				}
 			}
-
+			for(int i = 0; i < player.inventory.Length; i++)
+			{
+				Item item = player.inventory[i];
+				if (item.type == ModContent.ItemType<TwilightAssassinsCirclet>() && item.favorited)
+				{
+					if (!HoloEye)
+						HoloEyeDamage += (int)(33 * (1f + (player.minionDamage - 1f) + (player.allDamage - 1f)));
+					HoloEye = true;
+					break;
+				}
+			}
 			typhonRange = 0;
 			assassinateFlat = 0;
 			assassinateNum = 1;
@@ -579,7 +590,7 @@ namespace SOTS
 		*/
 		public override void UpdateBiomes()
 		{
-			PlanetariumBiome = (SOTSWorld.planetarium > 250) && player.Center.Y < Main.worldSurface * 16 * 0.6f;
+			PlanetariumBiome = (SOTSWorld.planetarium > 100) && player.Center.Y < Main.worldSurface * 16 * 0.6f;
 			//GeodeBiome = (SOTSWorld.geodeBiome > 300);
 
 			//checking for background walls

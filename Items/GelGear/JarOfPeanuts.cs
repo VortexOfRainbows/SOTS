@@ -41,19 +41,17 @@ namespace SOTS.Items.GelGear
 		}
 		public override bool CanUseItem(Player player)
 		{
-		return !NPC.AnyNPCs(mod.NPCType("PutridPinky1")) && !NPC.AnyNPCs(mod.NPCType("PutridPinkyPhase2"));
-	
+			return !NPC.AnyNPCs(mod.NPCType("PutridPinky1")) && !NPC.AnyNPCs(mod.NPCType("PutridPinkyPhase2"));
 		}
 		public override bool UseItem(Player player)
 		{
-		NPC.SpawnOnPlayer(player.whoAmI, mod.NPCType("PutridPinky1"));
-		Main.PlaySound(0, (int)player.position.X, (int)player.position.Y, 0);
-		if(!NPC.AnyNPCs(mod.NPCType("PutridPinky1")) && !NPC.AnyNPCs(mod.NPCType("PutridPinkyPhase2")))
-		{
-		//		 NPC.NewNPC((int)player.Center.X, (int)player.Center.Y - 600, mod.NPCType("PutridPinky1"));	
-		}
-		return true;
-		
+			NPC.SpawnOnPlayer(player.whoAmI, mod.NPCType("PutridPinky1"));
+			Main.PlaySound(0, (int)player.position.X, (int)player.position.Y, 0);
+			if(!NPC.AnyNPCs(mod.NPCType("PutridPinky1")) && !NPC.AnyNPCs(mod.NPCType("PutridPinkyPhase2")))
+			{
+			//		 NPC.NewNPC((int)player.Center.X, (int)player.Center.Y - 600, mod.NPCType("PutridPinky1"));	
+			}
+			return true;
 		}
 	}
 }

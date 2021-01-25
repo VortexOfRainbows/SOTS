@@ -17,8 +17,8 @@ namespace SOTS.NPCs.Constructs
 		}
         public override void SetDefaults()
         {
-            npc.lifeMax = 250;      
-            npc.damage = 18;   
+            npc.lifeMax = 225;      
+            npc.damage = 16;   
             npc.defense = 12;   
             npc.knockBackResist = 0f;
             npc.width = 58; 

@@ -20,7 +20,7 @@ namespace SOTS.NPCs.Constructs
 			//npc.CloneDefaults(NPCID.BlackSlime);
 			npc.aiStyle = 26; //unicorn AI
 			npc.lifeMax = 275;  
-			npc.damage = 33; 
+			npc.damage = 25; 
 			npc.defense = 10;  
 			npc.knockBackResist = 0.1f;
 			npc.width = 90;

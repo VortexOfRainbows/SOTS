@@ -15,6 +15,7 @@ using System.Linq;
 using System.Collections.Generic;
 using SOTS.Items.Pyramid;
 using SOTS.Void;
+using SOTS.Items.Celestial;
 
 namespace SOTS
 {
@@ -26,8 +27,8 @@ namespace SOTS
 		public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
 		{
 			rarities1 = new int[] { mod.ItemType("StarlightAlloy"), mod.ItemType("HardlightAlloy"), mod.ItemType("OtherworldlyAlloy"), mod.ItemType("PotGenerator"), mod.ItemType("PrecariousCluster"), mod.ItemType("Calculator")};
-			rarities2 = new int[] { ModContent.ItemType<RefractingCrystal>(), ModContent.ItemType<CursedApple>() };
-			dedicated = new int[] { mod.ItemType("Calculator"), mod.ItemType("TerminatorAcorns"), ModContent.ItemType<CursedApple>() };
+			rarities2 = new int[] { ItemType<RefractingCrystal>(), ItemType<CursedApple>()};
+			dedicated = new int[] { mod.ItemType("Calculator"), mod.ItemType("TerminatorAcorns"), ModContent.ItemType<CursedApple>(), ItemType<ArcStaffMk2>(), ItemType<PlasmaCutterButOnAChain>() };
 			if (rarities1.Contains(item.type))
 			{
 				foreach (TooltipLine line2 in tooltips)
@@ -51,11 +52,11 @@ namespace SOTS
 			if (dedicated.Contains(item.type))
             {
 				Color color = Color.White;
-				if (item.type == mod.ItemType("TerminatorAcorns"))
+				if (item.type == mod.ItemType("TerminatorAcorns") || item.type == ItemType<PlasmaCutterButOnAChain>())
 					color = new Color(255, 115, 0);
 				if (item.type == mod.ItemType("Calculator"))
 					color = new Color(0, 130, 235, 255);
-				if (item.type == mod.ItemType("CursedApple"))
+				if (item.type == mod.ItemType("CursedApple") || item.type == ItemType<ArcStaffMk2>())
 					color = VoidPlayer.soulLootingColor;
 				TooltipLine line = new TooltipLine(mod, "Dedicated", "Dedicated Item");
 				line.overrideColor = color;

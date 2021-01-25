@@ -113,6 +113,7 @@ namespace SOTS.Projectiles.Otherworld
 
 				if (!WorldGen.InWorld(i, j, 20) || (Main.tile[i, j].active() && Main.tileSolidTop[Main.tile[i, j].type] == false && Main.tileSolid[Main.tile[i, j].type] == true && Distance < 119))
 				{
+					position -= laserVelo;
 					Vector2 velo = new Vector2(0, Main.rand.Next(-7, 8) * size).RotatedBy(laserVelo.ToRotation());
 					for (int k = 0; k < 2; k++)
 					{

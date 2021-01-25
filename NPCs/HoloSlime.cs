@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Items.Banners;
 using System.IO;
 using Terraria;
 using Terraria.ID;
@@ -44,8 +45,8 @@ namespace SOTS.NPCs
 			npc.buffImmune[BuffID.OnFire] = true;
 			npc.buffImmune[BuffID.Frostburn] = true;
 			//npc.DeathSound = SoundID.NPCDeath14;
-			//banner = npc.type;
-			//bannerItem = ItemType<FrozenTreasureSlimeBanner>();
+			banner = npc.type;
+			bannerItem = ItemType<HoloSlimeBanner>();
 		}
 		public bool AirBelow(int i, int j, int dist)
 		{

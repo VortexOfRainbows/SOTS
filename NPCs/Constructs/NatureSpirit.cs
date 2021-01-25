@@ -20,7 +20,7 @@ namespace SOTS.NPCs.Constructs
 		public override void SetDefaults()
 		{
 			npc.aiStyle = 10;
-            npc.lifeMax = 300; 
+            npc.lifeMax = 250; 
             npc.damage = 34; 
             npc.defense = 0;   
             npc.knockBackResist = 0f;
@@ -48,7 +48,7 @@ namespace SOTS.NPCs.Constructs
 			phase = reader.ReadInt32();
 			counter = reader.ReadInt32();
 		}
-		private int InitiateHealth = 1200;
+		private int InitiateHealth = 1000;
 		private float ExpertHealthMult = 1.5f;
 		
 		int phase = 1;

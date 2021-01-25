@@ -48,8 +48,8 @@ namespace SOTS.NPCs.Constructs
             npc.netAlways = false;
 			npc.rarity = 2;
 		}
-		private int InitiateHealth = 3000;
-		private float ExpertHealthMult = 1.25f;
+		private int InitiateHealth = 2000;
+		private float ExpertHealthMult = 1.5f;
 		
 		int phase = 1;
 		int counter = 0;

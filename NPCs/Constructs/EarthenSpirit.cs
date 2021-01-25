@@ -22,7 +22,7 @@ namespace SOTS.NPCs.Constructs
 		public override void SetDefaults()
 		{
 			npc.aiStyle = 10;
-            npc.lifeMax = 500; 
+            npc.lifeMax = 450; 
             npc.damage = 50; 
             npc.defense = 0;   
             npc.knockBackResist = 0f;
@@ -72,7 +72,7 @@ namespace SOTS.NPCs.Constructs
 			reticleAlpha = reader.ReadSingle();
 			npc.dontTakeDamage = reader.ReadBoolean();
 		}
-		private int InitiateHealth = 1500;
+		private int InitiateHealth = 1000;
 		private float ExpertHealthMult = 1.5f;
 		private Vector2 reticlePos = new Vector2(-1, -1);
 		private float reticleAlpha = 0;

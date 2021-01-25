@@ -60,8 +60,8 @@ namespace SOTS.NPCs
 			npc.netAlways = true;
 			npc.buffImmune[BuffID.OnFire] = true;
 			npc.buffImmune[BuffID.Frostburn] = true;
-			//banner = npc.type;
-			//bannerItem = ItemType<SittingMushroomBanner>();
+			banner = npc.type;
+			bannerItem = ItemType<HoloEyeBanner>();
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{

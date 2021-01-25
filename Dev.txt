@@ -2,7 +2,6 @@ The following is my development plans :D
 
 //Later--- Balance
 2. Dissolving Nether => Focus Crystal, Dissolving Evil => Cursed Isocahedron
-5. Soul Charm takes Avaritia Scouter drop, heals mana
 
 //Check For Bugs
 1. Check for other bosses that possibly need damage normalization
@@ -13,19 +12,52 @@ Priority: Remaining Spirits
 
 11. Tether Cord in pyramid
 	1. Attaches a second player to you
-13. Dissolving Element Blocks
+13. Dissolving Element Blocks			
 	1. Give off cool particles, can be used in summoning rituals
 
 Next Update:
 1. Pyramid chests to no longer spawn close to surface
 3. Coconut Gun && Kitchen Sink
-6. Nerf construct damage once again?
-7. Nerf spirit health
 9. Update boss checklist support (later)
 
-Next Development Time: 
-1. Holo-Eye, Holo-Slime, Holo-Blade, Twilight Devil
-	Banner next
+1/24/21
+1. Added HoloSword banner
+2. Added outline and smart cursor compatability to the digital display
+3. Banners drop properly from biome enemies
+4. No longer higher spawnrates in planetarium during hardmode, unified spawnrates (set to hardmode)
+5. Reduced number of blocks required to create a planetarium biome in the sky 250 => 100
+6. 50% increased spawn weighting of both twilight devil and detached construct (0.02 => 0.03, 0.01 => 0.015)
+7. Spirits: (phase 1, phase 2)
+	Otherworld: max life 1750 -> 1500
+	Nature: 300 -> 250, 1200 -> 1000
+	Earth: 500 -> 450, 1500 -> 1000
+	Permafrost: 700 -> 600, 3000 -> 2000, Increased expert life scale 1.25 -> 1.5
+8. Constructs:
+	Earth: Damage 18 -> 16, Tail damage 28 -> 16, Life max 250 -> 225
+	Nature: Damage 30 -> 20, Life max 150 -> 125
+	Permafrost: Damage 33 -> 25
+	
+
+1/21/21
+1. Added HoloEye banner
+2. Next: must add outline and smart cursor to digital display
+
+1/18/21 & 1/19/21
+1. Added placeable overgrown tile block
+2. Added Holo Slime banner
+
+1/17/21
+1. Filled out some more item pools for planetarium
+
+1/16/21
+1. Got Planetarium to naturally spawn. Spawns with some items, but needs to be further filled out.
+
+1/15/21
+1. Finished Arc Staff Mk2
+2. Checked: Crescent staff and Arc Staff both sync OK
+
+1/14/21
+1. Some changes to nerf Crescent staff
 
 1/13/21
 1. Finishing Up HoloEye summon

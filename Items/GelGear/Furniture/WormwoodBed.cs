@@ -54,7 +54,7 @@ namespace SOTS.Items.GelGear.Furniture
 			name.SetDefault("Wormwood Bed");
 			AddMapEntry(new Color(140, 70, 20), name);
 			dustType = 7;
-			//disableSmartCursor = true;
+			disableSmartCursor = true;
 			adjTiles = new int[]{ TileID.Beds };
 			bed = true;
 		}

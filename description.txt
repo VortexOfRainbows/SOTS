@@ -12,7 +12,7 @@ New Subclass (void)
 -Exists on melee, ranged, and magic items
 
 Currents Stuctures:
--Ice Monumentbro 
+-Ice Monument 
 -Pyramid Dungeon Worldgen
 -Planetarium Temple Worldgen
 

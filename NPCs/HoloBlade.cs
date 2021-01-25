@@ -45,8 +45,8 @@ namespace SOTS.NPCs
 			npc.buffImmune[BuffID.Frostburn] = true;
 			npc.noTileCollide = true;
 			npc.noGravity = true;
-			//banner = npc.type;
-			//bannerItem = ItemType<SittingMushroomBanner>();
+			banner = npc.type;
+			bannerItem = ItemType<HoloSwordBanner>();
 		}
 		Vector2 consistentAcceleration = new Vector2(0, 0);
 		Vector2 savePos = new Vector2(0, 0);
