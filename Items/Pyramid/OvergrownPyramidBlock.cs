@@ -84,13 +84,16 @@ namespace SOTS.Items.Pyramid
 				{
 					var num47 = i;
 					var num48 = j + 1;
-					Main.tile[num47, num48].type = (ushort)ModContent.TileType<CursedVine>();
-					Main.tile[num47, num48].active(true);
-					Main.tile[num47, num48].color(Main.tile[i, j].color());
-					WorldGen.SquareTileFrame(num47, num48, true);
-					if (Main.netMode == 2)
+					if(Main.tile[num47, num48].liquid == 0)
 					{
-						NetMessage.SendTileSquare(-1, num47, num48, 3, TileChangeType.None);
+						Main.tile[num47, num48].type = (ushort)ModContent.TileType<CursedVine>();
+						Main.tile[num47, num48].active(true);
+						Main.tile[num47, num48].color(Main.tile[i, j].color());
+						WorldGen.SquareTileFrame(num47, num48, true);
+						if (Main.netMode == 2)
+						{
+							NetMessage.SendTileSquare(-1, num47, num48, 3, TileChangeType.None);
+						}
 					}
 				}
 			}
@@ -161,13 +164,16 @@ namespace SOTS.Items.Pyramid
 				{
 					var num47 = i;
 					var num48 = j + 1;
-					Main.tile[num47, num48].type = (ushort)ModContent.TileType<CursedVine>();
-					Main.tile[num47, num48].active(true);
-					Main.tile[num47, num48].color(Main.tile[i, j].color());
-					WorldGen.SquareTileFrame(num47, num48, true);
-					if (Main.netMode == 2)
+					if (Main.tile[num47, num48].liquid == 0)
 					{
-						NetMessage.SendTileSquare(-1, num47, num48, 3, TileChangeType.None);
+						Main.tile[num47, num48].type = (ushort)ModContent.TileType<CursedVine>();
+						Main.tile[num47, num48].active(true);
+						Main.tile[num47, num48].color(Main.tile[i, j].color());
+						WorldGen.SquareTileFrame(num47, num48, true);
+						if (Main.netMode == 2)
+						{
+							NetMessage.SendTileSquare(-1, num47, num48, 3, TileChangeType.None);
+						}
 					}
 				}
 			}
@@ -245,7 +251,7 @@ namespace SOTS.Items.Pyramid
 		}
         public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
         {
-			if (!Main.tile[i, j - 1].active() || !(Main.tile[i, j - 1].type == mod.TileType("CursedVine") || Main.tile[i, j - 1].type == mod.TileType("OvergrownPyramidTile")))
+			if (!Main.tile[i, j - 1].active() || !(Main.tile[i, j - 1].type == mod.TileType("CursedVine") || Main.tile[i, j - 1].type == mod.TileType("OvergrownPyramidTile") || Main.tile[i, j - 1].type == mod.TileType("OvergrownPyramidTileSafe")))
 				WorldGen.KillTile(i, j, false, false, false);
             return base.TileFrame(i, j, ref resetFrame, ref noBreak);
         }

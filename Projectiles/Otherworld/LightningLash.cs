@@ -159,7 +159,7 @@ namespace SOTS.Projectiles.Otherworld
 		{
 			Player player = Main.player[projectile.owner];
 			Vector2 center = player.Center + new Vector2(16 * player.direction, -16);
-			bool hitThroughWall = Collision.CanHitLine(center - new Vector2(5, 5), projectile.width, projectile.height, target.Hitbox.TopLeft(), target.Hitbox.Width, target.Hitbox.Height);
+			bool hitThroughWall = Collision.CanHitLine(center - new Vector2(5, 5), projectile.width, projectile.height, target.Hitbox.TopLeft(), target.Hitbox.Width, target.Hitbox.Height) && !target.friendly;
 			return hitThroughWall || target.behindTiles;
         }
         int initialDirection = 1;

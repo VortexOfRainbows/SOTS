@@ -366,7 +366,7 @@ namespace SOTS.NPCs.Constructs
                 Vector2 circularLocation = new Vector2(256, 0).RotatedBy(MathHelper.ToRadians(eternalCounter));
                 goTo.X += circularLocation.X;
                 Vector2 velo = goTo - npc.Center;
-                velo.Normalize();
+                velo = velo.SafeNormalize(Vector2.Zero);
                 if (12 >= (goTo - npc.Center).Length())
                 {
                     velo *= (goTo - npc.Center).Length();

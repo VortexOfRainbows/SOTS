@@ -5,15 +5,18 @@ using System.IO;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using SOTS.Items;
+using SOTS.Items.ChestItems;
 using SOTS.Items.Otherworld;
 using SOTS.Items.Otherworld.FromChests;
 using SOTS.Items.Potions;
+using SOTS.Items.Void;
 using Terraria;
 using Terraria.GameContent.Generation;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
+using Terraria.ObjectData;
 using Terraria.World.Generation;
 
 namespace SOTS
@@ -779,47 +782,47 @@ namespace SOTS
 				*/
 			tasks.Insert(genIndexGems, new PassLegacy("ModdedSOTSStructures", delegate (GenerationProgress progress)
 			{
-					progress.Message = "Generating Surface Structures";
-						
-						int iceY = -1;
-						int iceX = -1;
-						for(int xCheck = Main.rand.Next(Main.maxTilesX); xCheck != -1; xCheck = Main.rand.Next(Main.maxTilesX))
-						{
-							for(int ydown = 0; ydown != -1; ydown++)
-							{
-								Tile tile = Framing.GetTileSafely(xCheck, ydown);
-								if(tile.active() && tile.type == TileID.SnowBlock)
-								{
-									iceY = ydown;
-									break;
-								}
-								else if(tile.active())
-								{
-									break;
-								}
-							}
-							if(iceY != -1)
-							{
-								iceX = xCheck;
-								break;
-							}
-						 }
-						 
-					int radius9 = 12;
-					for (int x = -radius9; x <= radius9; x++)
+				progress.Message = "Generating Surface Structures";
+					
+				int iceY = -1;
+				int iceX = -1;
+				for(int xCheck = Main.rand.Next(Main.maxTilesX); xCheck != -1; xCheck = Main.rand.Next(Main.maxTilesX))
+				{
+					for(int ydown = 0; ydown != -1; ydown++)
 					{
-						for (int y = -radius9; y <= radius9; y++)
+						Tile tile = Framing.GetTileSafely(xCheck, ydown);
+						if(tile.active() && tile.type == TileID.SnowBlock)
 						{
-							int xPosition6 = iceX + x;
-							int yPosition6 = iceY + -Math.Abs(y); 
-		 
-							if (Math.Sqrt(x * x + y * y) <= radius9 + 0.5)   
-							{
-								WorldGen.KillTile(xPosition6 , yPosition6 , false, false, false);
-							}
+							iceY = ydown;
+							break;
+						}
+						else if(tile.active())
+						{
+							break;
 						}
 					}
-					int[,] _iceArtifact = {
+					if(iceY != -1)
+					{
+						iceX = xCheck;
+						break;
+					}
+				}
+					 
+				int radius9 = 12;
+				for (int x = -radius9; x <= radius9; x++)
+				{
+					for (int y = -radius9; y <= radius9; y++)
+					{
+						int xPosition6 = iceX + x;
+						int yPosition6 = iceY + -Math.Abs(y); 
+		 
+						if (Math.Sqrt(x * x + y * y) <= radius9 + 0.5)   
+						{
+							WorldGen.KillTile(xPosition6 , yPosition6 , false, false, false);
+						}
+					}
+				}
+				int[,] _iceArtifact = {
 					{0,0,0,0,0,0,1,2,3,0,0,0,0,0,0},
 					{0,0,0,0,0,1,2,4,2,3,0,0,0,0,0},
 					{0,0,0,0,1,2,4,4,4,2,3,0,0,0,0},
@@ -852,7 +855,7 @@ namespace SOTS
 					{0,0,2,2,2,2,2,2,2,2,2,2,2,0,0},
 					{8,8,2,2,2,2,2,2,2,2,2,2,2,8,8}
 				};	
-					int[,] _iceArtifactWalls = {
+				int[,] _iceArtifactWalls = {
 					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -886,147 +889,147 @@ namespace SOTS
 					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}
 				};
 				
-					int iceArtifactPositionX = iceX;
-					int iceArtifactPositionY = iceY - _iceArtifact.GetLength(0);
-					iceArtifactPositionX -= (int)(.5f * _iceArtifact.GetLength(1));
-					//iceArtifactPositionY -= (int)(.5f * _iceArtifact.GetLength(0));
-					for(int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)
-					{
-						for (int y = 0; y < _iceArtifact.GetLength(0); y++) {
-							for (int x = 0; x < _iceArtifact.GetLength(1); x++) {
-								int k = iceArtifactPositionX + x;
-								int l = iceArtifactPositionY + y;
-								if (WorldGen.InWorld(k, l, 30)) {
-									Tile tile = Framing.GetTileSafely(k, l);
-									switch (_iceArtifact[y, x]) {
-										case 0:
-											tile.active(false);
-											break;
-										case 1:
-											tile.type = 148; //snowbrick
-											tile.slope(2);
-											tile.active(true);
-											break;
-										case 2:
-											tile.type = 148; //snowbrick
-											tile.active(true);
-											tile.slope(0);
-											break;
-										case 3:
-											tile.type = 148; //snowbrick
-											tile.active(true);
-											tile.slope(1);
-											break;
-										case 4:
-											tile.type = 321; //boreal
-											tile.active(true);
-											tile.slope(0);
-											break;
-										case 5:
-											WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 19); //boreal platform
-											break;
-										case 6:
-											WorldGen.PlaceTile(k, l, (ushort)mod.TileType("FrostArtifactTile"));
-											break;
-										case 7:
-											tile.type = (ushort)mod.TileType("HardIceBrickTile"); //ice
-											tile.active(true);
-											tile.slope(0);
-											break;
-										case 8:
-											tile.type = TileID.SnowBlock;
-											tile.active(true);
-											tile.slope(0);
-											break;
-										case 9:
-											break;
-										
-									}
-								}
-							}
-						}
-					}
-					for (int y = 0; y < _iceArtifactWalls.GetLength(0); y++) {
-						for (int x = 0; x < _iceArtifactWalls.GetLength(1); x++) {
+				int iceArtifactPositionX = iceX;
+				int iceArtifactPositionY = iceY - _iceArtifact.GetLength(0);
+				iceArtifactPositionX -= (int)(.5f * _iceArtifact.GetLength(1));
+				//iceArtifactPositionY -= (int)(.5f * _iceArtifact.GetLength(0));
+				for(int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)
+				{
+					for (int y = 0; y < _iceArtifact.GetLength(0); y++) {
+						for (int x = 0; x < _iceArtifact.GetLength(1); x++) {
 							int k = iceArtifactPositionX + x;
 							int l = iceArtifactPositionY + y;
 							if (WorldGen.InWorld(k, l, 30)) {
 								Tile tile = Framing.GetTileSafely(k, l);
-								switch (_iceArtifactWalls[y, x]) {
+								switch (_iceArtifact[y, x]) {
 									case 0:
+										tile.active(false);
 										break;
 									case 1:
-										tile.wall = (ushort)WallID.SnowflakeWallpaper; //snowflake wall
+										tile.type = 148; //snowbrick
+										tile.slope(2);
+										tile.active(true);
 										break;
 									case 2:
-										tile.wall = 31; //snowbrick wall
+										tile.type = 148; //snowbrick
+										tile.active(true);
+										tile.slope(0);
 										break;
 									case 3:
-										tile.wall = 149; //boreal wall
+										tile.type = 148; //snowbrick
+										tile.active(true);
+										tile.slope(1);
 										break;
+									case 4:
+										tile.type = 321; //boreal
+										tile.active(true);
+										tile.slope(0);
+										break;
+									case 5:
+										WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 19); //boreal platform
+										break;
+									case 6:
+										WorldGen.PlaceTile(k, l, (ushort)mod.TileType("FrostArtifactTile"));
+										break;
+									case 7:
+										tile.type = (ushort)mod.TileType("HardIceBrickTile"); //ice
+										tile.active(true);
+										tile.slope(0);
+										break;
+									case 8:
+										tile.type = TileID.SnowBlock;
+										tile.active(true);
+										tile.slope(0);
+										break;
+									case 9:
+										break;
+									
 								}
 							}
 						}
 					}
-					int radius6 = 10;
-					for (int x = -radius6; x <= radius6; x++)
-					{
-						for (int y = -radius6; y <= radius6; y++)
-						{
-							int xPosition6 = iceX + x;
-							int yPosition6 = iceY + Math.Abs(y); 
-		 
-							if (Math.Sqrt(x * x + y * y) <= radius6 + 0.5)   
-							{
-								WorldGen.PlaceTile(xPosition6, yPosition6, TileID.SnowBlock);
-								Tile tile = Framing.GetTileSafely(xPosition6, yPosition6);
-								tile.slope(0);
-							}
-						}
-					}
-					
-						int spawnX = -1;
-						int spawnY = -1;
-						int randomOne = Main.rand.Next(2);
-						if(randomOne == 0)
-						{
-							randomOne = -1;
-						}
-						for(int xCheck = (int)(Main.maxTilesX * 0.5f) + (randomOne * Main.rand.Next(15,41)); xCheck != -1; xCheck = (int)(Main.maxTilesX * 0.5f) + (randomOne * Main.rand.Next(15,41)))
-						{
-							for(int ydown = 0; ydown != -1; ydown++)
-							{
-								Tile tile = Framing.GetTileSafely(xCheck, ydown);
-								if(tile.active() && Main.tileSolid[(int)tile.type]) //grass block
-								{
-									spawnY = ydown;
+				}
+				for (int y = 0; y < _iceArtifactWalls.GetLength(0); y++) {
+					for (int x = 0; x < _iceArtifactWalls.GetLength(1); x++) {
+						int k = iceArtifactPositionX + x;
+						int l = iceArtifactPositionY + y;
+						if (WorldGen.InWorld(k, l, 30)) {
+							Tile tile = Framing.GetTileSafely(k, l);
+							switch (_iceArtifactWalls[y, x]) {
+								case 0:
 									break;
-								}
+								case 1:
+									tile.wall = (ushort)WallID.SnowflakeWallpaper; //snowflake wall
+									break;
+								case 2:
+									tile.wall = 31; //snowbrick wall
+									break;
+								case 3:
+									tile.wall = 149; //boreal wall
+									break;
 							}
-							if(spawnY != -1)
+						}
+					}
+				}
+				int radius6 = 10;
+				for (int x = -radius6; x <= radius6; x++)
+				{
+					for (int y = -radius6; y <= radius6; y++)
+					{
+						int xPosition6 = iceX + x;
+						int yPosition6 = iceY + Math.Abs(y); 
+		 
+						if (Math.Sqrt(x * x + y * y) <= radius6 + 0.5)   
+						{
+							WorldGen.PlaceTile(xPosition6, yPosition6, TileID.SnowBlock);
+							Tile tile = Framing.GetTileSafely(xPosition6, yPosition6);
+							tile.slope(0);
+						}
+					}
+				}
+				
+					int spawnX = -1;
+					int spawnY = -1;
+					int randomOne = Main.rand.Next(2);
+					if(randomOne == 0)
+					{
+						randomOne = -1;
+					}
+					for(int xCheck = (int)(Main.maxTilesX * 0.5f) + (randomOne * Main.rand.Next(15,41)); xCheck != -1; xCheck = (int)(Main.maxTilesX * 0.5f) + (randomOne * Main.rand.Next(15,41)))
+					{
+						for(int ydown = 0; ydown != -1; ydown++)
+						{
+							Tile tile = Framing.GetTileSafely(xCheck, ydown);
+							if(tile.active() && Main.tileSolid[(int)tile.type]) //grass block
 							{
-								spawnX = xCheck;
+								spawnY = ydown;
 								break;
 							}
-						 }
-						 
-						 
-					int radius8 = 10;
-					for (int x = -radius8; x <= radius8; x++)
-					{
-						for (int y = -radius8; y <= radius8; y++)
+						}
+						if(spawnY != -1)
 						{
-							int xPosition6 = spawnX + x;
-							int yPosition6 = spawnY + -Math.Abs(y); 
+							spawnX = xCheck;
+							break;
+						}
+					 }
+					 
+					 
+				int radius8 = 10;
+				for (int x = -radius8; x <= radius8; x++)
+				{
+					for (int y = -radius8; y <= radius8; y++)
+					{
+						int xPosition6 = spawnX + x;
+						int yPosition6 = spawnY + -Math.Abs(y); 
 		 
-							if (Math.Sqrt(x * x + y * y) <= radius8 + 0.5)   
-							{
-								WorldGen.KillTile(xPosition6 , yPosition6 , false, false, false);
-							}
+						if (Math.Sqrt(x * x + y * y) <= radius8 + 0.5)   
+						{
+							WorldGen.KillTile(xPosition6 , yPosition6 , false, false, false);
 						}
 					}
+				}
 					
-					int[,] _startingHouse = {
+				int[,] _startingHouse = {
 					{4,4,4,0,0,4,4,4,0,0,0,0,0},
 					{8,1,8,0,0,8,1,8,0,0,0,0,0},
 					{9,1,9,0,0,9,1,9,0,0,0,2,0},
@@ -1040,7 +1043,7 @@ namespace SOTS
 					{0,12,0,9,10,9,11,0,0,0,0,12,0},
 					{4,4,4,4,4,4,4,4,4,4,4,4,4}
 				};	
-					int[,] _startingHouseWalls = {
+				int[,] _startingHouseWalls = {
 					{0,0,0,0,0,0,0,0,0,0,0,0,0},
 					{0,0,0,0,0,0,0,0,0,0,0,0,0},
 					{0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -1055,119 +1058,138 @@ namespace SOTS
 					{0,0,0,0,0,0,0,0,0,0,0,0,0}
 				};
 				
-					int housePosX = spawnX;
-					int housePosY = spawnY - _startingHouse.GetLength(0);
-					housePosX -= (int)(.5f * _startingHouse.GetLength(1));
-					
-					for(int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)
-					{
-						for (int y = 0; y < _startingHouse.GetLength(0); y++) {
-							for (int x = 0; x < _startingHouse.GetLength(1); x++) {
-								int k = housePosX + x;
-								int l = housePosY + y + 1;
-								if (WorldGen.InWorld(k, l, 30)) {
-									Tile tile = Framing.GetTileSafely(k, l);
-									switch (_startingHouse[y, x]) {
-										case 0:
-											tile.active(false);
-											break;
-										case 1:
-											tile.type = TileID.WoodenBeam; //beam
-											tile.active(true);
-											break;
-										case 2:
-											tile.type = TileID.Candles;
-											tile.active(true);
-											break;
-										case 3:
-											tile.type = 50; //book
-											tile.active(true);
-											break;
-										case 4:
-											tile.type = TileID.WoodBlock; //wood
-											tile.active(true);
-											tile.slope(0);
-											break;
-										case 5:
-											WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform
-											break;
-										case 6:
-											WorldGen.PlaceTile(k, l, mod.TileType("StrangeChestTile"));
-											break;
-										case 7:
-											WorldGen.PlaceTile(k, l, 376); //crate
-											break;
-										case 8:
-											WorldGen.PlaceTile(k, l, TileID.Banners, true, true, -1, 0); //banner
-											break;
-										case 9:
-											break;
-										case 10:
-											WorldGen.PlaceTile(k, l, TileID.Tables, true, true, -1, 0); //table
-											break;
-										case 11:
-											WorldGen.PlaceTile(k, l, TileID.Chairs, true, true, -1, 0); //chair
-											break;
-										case 12:
-											WorldGen.PlaceTile(k, l, TileID.ClosedDoor, true, true, -1, 0); //door
-											break;
-										
-									}
-								}
-							}
-						}
-					}
-					for (int y = 0; y < _startingHouseWalls.GetLength(0); y++) {
-						for (int x = 0; x < _startingHouseWalls.GetLength(1); x++) {
+				int housePosX = spawnX;
+				int housePosY = spawnY - _startingHouse.GetLength(0);
+				housePosX -= (int)(.5f * _startingHouse.GetLength(1));
+				
+				for(int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)
+				{
+					for (int y = 0; y < _startingHouse.GetLength(0); y++) {
+						for (int x = 0; x < _startingHouse.GetLength(1); x++) {
 							int k = housePosX + x;
 							int l = housePosY + y + 1;
 							if (WorldGen.InWorld(k, l, 30)) {
 								Tile tile = Framing.GetTileSafely(k, l);
-								switch (_startingHouseWalls[y, x]) {
+								switch (_startingHouse[y, x]) {
 									case 0:
+										tile.active(false);
 										break;
 									case 1:
-										tile.wall = 106; //fence
+										tile.type = TileID.WoodenBeam; //beam
+										tile.active(true);
 										break;
 									case 2:
-										tile.wall = 4; //wooden
+										tile.type = TileID.Candles;
+										tile.active(true);
 										break;
 									case 3:
-										tile.wall = 27; //planked
+										tile.type = 50; //book
+										tile.active(true);
 										break;
 									case 4:
-										tile.wall = WallID.Glass; //glass
+										tile.type = TileID.WoodBlock; //wood
+										tile.active(true);
+										tile.slope(0);
 										break;
+									case 5:
+										WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform
+										break;
+									case 6:
+										WorldGen.PlaceTile(k, l, mod.TileType("StrangeChestTile"));
+										break;
+									case 7:
+										WorldGen.PlaceTile(k, l, 376); //crate
+										break;
+									case 8:
+										WorldGen.PlaceTile(k, l, TileID.Banners, true, true, -1, 0); //banner
+										break;
+									case 9:
+										break;
+									case 10:
+										WorldGen.PlaceTile(k, l, TileID.Tables, true, true, -1, 0); //table
+										break;
+									case 11:
+										WorldGen.PlaceTile(k, l, TileID.Chairs, true, true, -1, 0); //chair
+										break;
+									case 12:
+										WorldGen.PlaceTile(k, l, TileID.ClosedDoor, true, true, -1, 0); //door
+										break;
+									
 								}
 							}
 						}
 					}
-					int radius7 = 10;
-					for (int x = -radius7; x <= radius7; x++)
+				}
+				for (int y = 0; y < _startingHouseWalls.GetLength(0); y++) {
+					for (int x = 0; x < _startingHouseWalls.GetLength(1); x++) {
+						int k = housePosX + x;
+						int l = housePosY + y + 1;
+						if (WorldGen.InWorld(k, l, 30)) {
+							Tile tile = Framing.GetTileSafely(k, l);
+							switch (_startingHouseWalls[y, x]) {
+								case 0:
+									break;
+								case 1:
+									tile.wall = 106; //fence
+									break;
+								case 2:
+									tile.wall = 4; //wooden
+									break;
+								case 3:
+									tile.wall = 27; //planked
+									break;
+								case 4:
+									tile.wall = WallID.Glass; //glass
+									break;
+							}
+						}
+					}
+				}
+				int radius7 = 10;
+				for (int x = -radius7; x <= radius7; x++)
+				{
+					for (int y = -radius7; y <= radius7; y++)
 					{
-						for (int y = -radius7; y <= radius7; y++)
-						{
-							int xPosition6 = spawnX + x;
-							int yPosition6 = spawnY + Math.Abs(y); 
+						int xPosition6 = spawnX + x;
+						int yPosition6 = spawnY + Math.Abs(y); 
 		 
-							if (Math.Sqrt(x * x + y * y) <= radius7 + 0.5)   
+						if (Math.Sqrt(x * x + y * y) <= radius7 + 0.5)   
+						{
+							Tile tile = Framing.GetTileSafely(xPosition6, yPosition6);
+							Tile tile2 = Framing.GetTileSafely(xPosition6, yPosition6 - 1);
+							if(!tile.active())
 							{
-								Tile tile = Framing.GetTileSafely(xPosition6, yPosition6);
-								Tile tile2 = Framing.GetTileSafely(xPosition6, yPosition6 - 1);
-								if(!tile.active())
-								{
-								tile.type = TileID.Dirt;
-								}
-								if(!tile2.active() && tile.type == TileID.Dirt)
-								{
-								tile.type = 2;	
-								}
-								tile.active();
+							tile.type = TileID.Dirt;
 							}
+							if(!tile2.active() && tile.type == TileID.Dirt)
+							{
+							tile.type = 2;	
+							}
+							tile.active();
 						}
 					}
-						
-				}));
+				}
+				bool coconutGenerated = false;
+				while(!coconutGenerated)
+				{
+					int direction = Main.rand.NextBool(2) ? -1 : 1;
+					int fromBorder = 70 + Main.rand.Next(20);
+					if(direction == -1)
+                    {
+						fromBorder = Main.maxTilesX - fromBorder;
+                    }
+					for (int j = 0; j < Main.maxTilesY; j++)
+					{
+						Tile tile = Framing.GetTileSafely(fromBorder, j);
+						if(tile.liquidType() == 0 && tile.liquid > 1)
+                        {
+							SOTSWorldgenHelper.GenerateCoconutIsland(mod, fromBorder, j, direction);
+							coconutGenerated = true;
+							break;
+                        }
+					}
+                }
+			}));
 			tasks.Insert(genIndexEnd + 2, new PassLegacy("genIndexModPlanetarium", delegate (GenerationProgress progress)
 			{
 				progress.Message = "Generating Sky Artifact";
@@ -1200,10 +1222,10 @@ namespace SOTS
 							}
 						}
 						checks++;
-						if (validLocation || checks >= 300)
+						if (validLocation || checks >= 50)
 						{
 							bool force = false;
-							if (checks >= 400)
+							if (checks >= 55)
 							{
 								force = true;
 							}
@@ -2356,7 +2378,6 @@ namespace SOTS
 					}
 				}
 			}));
-			
 		}
 		public override void TileCountsAvailable(int[] tileCounts)
 		{
@@ -2518,12 +2539,6 @@ namespace SOTS
 						chest.item[slot].stack = amt;
 						slot++;
 					}
-					if (Main.rand.NextBool(2))
-					{
-						chest.item[slot].SetDefaults(ItemID.GoldCoin);
-						chest.item[slot].stack = Main.rand.Next(3) + 4; // 4 to 6
-						slot++;
-					}
 					if (Main.rand.NextBool(5)) //20%
 					{
 						int amt = 1; 
@@ -2560,6 +2575,12 @@ namespace SOTS
 						chest.item[slot].stack = amt;
 						slot++;
 					}
+					if (Main.rand.NextBool(2))
+					{
+						chest.item[slot].SetDefaults(ItemID.GoldCoin);
+						chest.item[slot].stack = Main.rand.Next(3) + 4; // 4 to 6
+						slot++;
+					}
 				}
 				if (tile.type == mod.TileType("StrangeChestTile"))
 				{
@@ -2578,7 +2599,7 @@ namespace SOTS
 						}
 					}
 				
-					int rand = Main.rand.Next(12);
+					int rand = WorldGen.genRand.Next(12);
 					if(rand == 0)
 					{
 						chest.item[slot].SetDefaults(mod.ItemType("Aten"));
@@ -2640,7 +2661,7 @@ namespace SOTS
 						slot++;
 					}
 					
-					int second = Main.rand.Next(10);
+					int second = WorldGen.genRand.Next(10);
 					if(second == 0)
 					{
 						chest.item[slot].SetDefaults(848);
@@ -2656,130 +2677,130 @@ namespace SOTS
 					if(second > 1)
 					{
 						chest.item[slot].SetDefaults(mod.ItemType("JuryRiggedDrill"));
-						chest.item[slot].stack = Main.rand.Next(35) + 11;
+						chest.item[slot].stack = WorldGen.genRand.Next(35) + 11;
 						slot++;
 					}
 					
-					int third = Main.rand.Next(12);
+					int third = WorldGen.genRand.Next(12);
 					if(third == 0)
 					{
 						chest.item[slot].SetDefaults(ItemID.MiningPotion);
-						chest.item[slot].stack = Main.rand.Next(2) + 1;
+						chest.item[slot].stack = WorldGen.genRand.Next(2) + 1;
 						slot++;
 					}
 					if(third == 1)
 					{
 						chest.item[slot].SetDefaults(ItemID.SpelunkerPotion);
-						chest.item[slot].stack = Main.rand.Next(2) + 1;
+						chest.item[slot].stack = WorldGen.genRand.Next(2) + 1;
 						slot++;
 					}
 					if(third == 2)
 					{
 						chest.item[slot].SetDefaults(ItemID.BuilderPotion);
-						chest.item[slot].stack = Main.rand.Next(2) + 1;
+						chest.item[slot].stack = WorldGen.genRand.Next(2) + 1;
 						slot++;
 					}
 					if(third == 3)
 					{
 						chest.item[slot].SetDefaults(ItemID.ShinePotion);
-						chest.item[slot].stack = Main.rand.Next(2) + 1;
+						chest.item[slot].stack = WorldGen.genRand.Next(2) + 1;
 						slot++;
 					}
 					if(third == 4)
 					{
 						chest.item[slot].SetDefaults(ItemID.NightOwlPotion);
-						chest.item[slot].stack = Main.rand.Next(2) + 1;
+						chest.item[slot].stack = WorldGen.genRand.Next(2) + 1;
 						slot++;
 					}
 					if(third == 5)
 					{
 						chest.item[slot].SetDefaults(ItemID.ArcheryPotion);
-						chest.item[slot].stack = Main.rand.Next(2) + 1;
+						chest.item[slot].stack = WorldGen.genRand.Next(2) + 1;
 						slot++;
 					}
 					if(third == 6)
 					{
 						chest.item[slot].SetDefaults(ItemID.EndurancePotion);
-						chest.item[slot].stack = Main.rand.Next(2) + 1;
+						chest.item[slot].stack = WorldGen.genRand.Next(2) + 1;
 						slot++;
 					}
 					if(third == 7)
 					{
 						chest.item[slot].SetDefaults(ItemID.SummoningPotion);
-						chest.item[slot].stack = Main.rand.Next(2) + 1;
+						chest.item[slot].stack = WorldGen.genRand.Next(2) + 1;
 						slot++;
 					}
 					
 					
-					int fourth = Main.rand.Next(12);
+					int fourth = WorldGen.genRand.Next(12);
 					if(fourth == 0)
 					{
 						chest.item[slot].SetDefaults(ItemID.WrathPotion);
-						chest.item[slot].stack = Main.rand.Next(2) + 1;
+						chest.item[slot].stack = WorldGen.genRand.Next(2) + 1;
 						slot++;
 					}
 					if(fourth == 1)
 					{
 						chest.item[slot].SetDefaults(ItemID.HeartreachPotion);
-						chest.item[slot].stack = Main.rand.Next(2) + 1;
+						chest.item[slot].stack = WorldGen.genRand.Next(2) + 1;
 						slot++;
 					}
 					if(fourth == 2)
 					{
 						chest.item[slot].SetDefaults(ItemID.RagePotion);
-						chest.item[slot].stack = Main.rand.Next(2) + 1;
+						chest.item[slot].stack = WorldGen.genRand.Next(2) + 1;
 						slot++;
 					}
 					if(fourth == 3)
 					{
 						chest.item[slot].SetDefaults(ItemID.TitanPotion);
-						chest.item[slot].stack = Main.rand.Next(2) + 1;
+						chest.item[slot].stack = WorldGen.genRand.Next(2) + 1;
 						slot++;
 					}
 					if(fourth == 4)
 					{
 						chest.item[slot].SetDefaults(ItemID.TeleportationPotion);
-						chest.item[slot].stack = Main.rand.Next(2) + 1;
+						chest.item[slot].stack = WorldGen.genRand.Next(2) + 1;
 						slot++;
 					}
 					
-					int fifth = Main.rand.Next(8);
+					int fifth = WorldGen.genRand.Next(8);
 					if(fifth == 0)
 					{
 						chest.item[slot].SetDefaults(ItemID.GoldBar);
-						chest.item[slot].stack = Main.rand.Next(9) + 5;
+						chest.item[slot].stack = WorldGen.genRand.Next(9) + 5;
 						slot++;
 					}
 					if(fifth == 1)
 					{
 						chest.item[slot].SetDefaults(ItemID.PlatinumBar);
-						chest.item[slot].stack = Main.rand.Next(9) + 5;
+						chest.item[slot].stack = WorldGen.genRand.Next(9) + 5;
 						slot++;
 					}
 					if(fifth == 2)
 					{
 						chest.item[slot].SetDefaults(ItemID.CrimtaneBar);
-						chest.item[slot].stack = Main.rand.Next(9) + 5;
+						chest.item[slot].stack = WorldGen.genRand.Next(9) + 5;
 						slot++;
 					}
 					if(fifth == 3)
 					{
 						chest.item[slot].SetDefaults(ItemID.DemoniteBar);
-						chest.item[slot].stack = Main.rand.Next(9) + 5;
+						chest.item[slot].stack = WorldGen.genRand.Next(9) + 5;
 						slot++;
 					}
 					
-					int thirdLast = Main.rand.Next(4);
+					int thirdLast = WorldGen.genRand.Next(4);
 					if(thirdLast == 0)
 					{
 						chest.item[slot].SetDefaults(mod.ItemType("ExplosiveKnife"));
-						chest.item[slot].stack = Main.rand.Next(41) + 20;
+						chest.item[slot].stack = WorldGen.genRand.Next(41) + 20;
 						slot++;
 					}
 					if(thirdLast == 1)
 					{
 						chest.item[slot].SetDefaults(ItemID.HellfireArrow);
-						chest.item[slot].stack = Main.rand.Next(41) + 20;
+						chest.item[slot].stack = WorldGen.genRand.Next(41) + 20;
 						slot++;
 					}
 					if(thirdLast == 2)
@@ -2789,31 +2810,30 @@ namespace SOTS
 					}
 					
 					
-					int secLast = Main.rand.Next(2);
+					int secLast = WorldGen.genRand.Next(2);
 					if(secLast == 0)
 					{
 						chest.item[slot].SetDefaults(ItemID.RecallPotion);
-						chest.item[slot].stack = Main.rand.Next(2) + 2;
+						chest.item[slot].stack = WorldGen.genRand.Next(2) + 2;
 						slot++;
 					}
 					
-					int last = Main.rand.Next(3);
+					int last = WorldGen.genRand.Next(3);
 					if(last == 0)
 					{
 						chest.item[slot].SetDefaults(ItemID.Torch);
-						chest.item[slot].stack = Main.rand.Next(20) + 15;
+						chest.item[slot].stack = WorldGen.genRand.Next(20) + 15;
 						slot++;
 					}
 					if(last == 1)
 					{
 						chest.item[slot].SetDefaults(ItemID.GoldCoin);
-						chest.item[slot].stack = Main.rand.Next(3) + 2;
+						chest.item[slot].stack = WorldGen.genRand.Next(3) + 2;
 						slot++;
 					}
 				}
 				if (tile.type == TileID.Containers)
 				{
-					
 					int slot = 39;
 					for(int i = 0; i < 39; i++)
 					{
@@ -2822,7 +2842,26 @@ namespace SOTS
 							slot = i;
 						}
 					}
-					
+
+					TileObjectData tileData = TileObjectData.GetTileData(tile);
+					int style = TileObjectData.GetTileStyle(tile);
+					Tile tile2 = Main.tile[chest.x, chest.y + 2];
+					if (style == 31 && tile2.type == TileID.SandstoneBrick) //Coconut Chest
+					{
+						chest.item[slot].SetDefaults(ModContent.ItemType<CoconutGun>());
+						slot++;
+						chest.item[slot].SetDefaults(ModContent.ItemType<AlmondMilk>());
+						chest.item[slot].stack = 10; // 3 to 5
+						slot++;
+						chest.item[slot].SetDefaults(ItemID.LifeCrystal);
+						slot++;
+						chest.item[slot].SetDefaults(ItemID.ManaCrystal);
+						slot++;
+						chest.item[slot].SetDefaults(ItemID.GoldCoin);
+						chest.item[slot].stack = Main.rand.Next(3) + 3; // 3 to 5
+						slot++;
+					}
+
 					if(WorldGen.genRand.NextBool(45))
 					{
 						if(WorldGen.genRand.NextBool(2))
@@ -2865,11 +2904,6 @@ namespace SOTS
 						//chest.item[slot].SetDefaults(mod.ItemType("FragmentOfPermafrost"));
 						//chest.item[slot].stack = Main.rand.Next(3) + 5;
 						//slot++;
-					}
-					if(WorldGen.genRand.NextBool(80))
-					{
-						chest.item[slot].SetDefaults(mod.ItemType("Grenadier"));
-						slot++;
 					}
 				}
 			}

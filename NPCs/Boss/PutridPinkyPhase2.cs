@@ -86,7 +86,7 @@ namespace SOTS.NPCs.Boss
 			
 			//bossBag = mod.ItemType("BossBagBloodLord");
 		}
-		public override bool PreDraw(Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
             Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/PutridVine");  
             
@@ -97,7 +97,7 @@ namespace SOTS.NPCs.Boss
 				{
 					Vector2 position = npc.Center;
 					Vector2 mountedCenter = Main.npc[i].Center;
-					Microsoft.Xna.Framework.Rectangle? sourceRectangle = new Microsoft.Xna.Framework.Rectangle?();
+					Rectangle? sourceRectangle = new Microsoft.Xna.Framework.Rectangle?();
 					Vector2 origin = new Vector2((float)texture.Width * 0.5f, (float)texture.Height * 0.5f);
 					float num1 = (float)texture.Height;
 					Vector2 vector2_4 = mountedCenter - position;

@@ -31,8 +31,6 @@ namespace SOTS.Projectiles.Otherworld
 			projectile.usesIDStaticNPCImmunity = true;
 			projectile.idStaticNPCHitCooldown = 14;
 		}
-		int counter = 0;
-		int counter2 = 0;
 		Color color = Color.White;
 		public override bool PreAI()
 		{
@@ -44,9 +42,6 @@ namespace SOTS.Projectiles.Otherworld
 				}
 				runOnce = false;
 			}
-			if(!end)
-				counter += 1;
-			counter2++;
 			return base.PreAI();
 		}
 		public override void PostAI()

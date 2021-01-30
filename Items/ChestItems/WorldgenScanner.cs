@@ -2,6 +2,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using System.Linq;
+using SOTS.Void;
 
 namespace SOTS.Items.ChestItems
 {
@@ -111,14 +112,13 @@ namespace SOTS.Items.ChestItems
 			{
 				Main.NewText("Pirahna Gun: Not Found", 255, 0, 0);
 			}
-
+			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 
 			ShadowOrbs /= 4;
 			Main.NewText("Shadow Orbs/Crimson Hearts: " + ShadowOrbs, ShadowOrbs <= 15 ? (byte)255 : (byte)0, ShadowOrbs >= 12 ? (byte)255 : (byte)0, 0);
 			Main.NewText("Water Walking Boots: " + WaterWalkingBoots, WaterWalkingBoots <= 10 ? (byte)255 : (byte)0, WaterWalkingBoots >= 3 ? (byte)255 : (byte)0, 0);
 			Main.NewText("Lava Charms: " + LavaCharms, LavaCharms <= 10 ? (byte)255 : (byte)0, LavaCharms >= 3 ? (byte)255 : (byte)0, 0);
 			Main.NewText("Flower Boots: " + FlowerBoots, FlowerBoots <= 10 ? (byte)255 : (byte)0, FlowerBoots >= 3 ? (byte)255 : (byte)0, 0);
-
 			return true;
 		}
 		public override void AddRecipes()

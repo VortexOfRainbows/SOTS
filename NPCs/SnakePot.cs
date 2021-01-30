@@ -74,14 +74,6 @@ namespace SOTS.NPCs
 					Main.PlaySound(13, (int)(npc.Center.X), (int)(npc.Center.Y));
 				}
 		}
-		public override float SpawnChance(NPCSpawnInfo spawnInfo)
-		{
-			if(spawnInfo.player.GetModPlayer<SOTSPlayer>().PyramidBiome && spawnInfo.spawnTileType == (ushort)mod.TileType("PyramidSlabTile"))
-			{
-				return 0.3f;
-			}
-			return 0;
-		}
 		public override void NPCLoot()
 		{
 			
@@ -221,14 +213,6 @@ namespace SOTS.NPCs
 						npc.spriteDirection = -1;
 					}
 				}
-		}
-		public override float SpawnChance(NPCSpawnInfo spawnInfo)
-		{
-			if(spawnInfo.player.GetModPlayer<SOTSPlayer>().PyramidBiome && spawnInfo.spawnTileType == (ushort)mod.TileType("PyramidSlabTile"))
-			{
-				return 1f;
-			}
-			return 0;
 		}
 		public override void NPCLoot()
 		{

@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Dusts;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -27,7 +28,7 @@ namespace SOTS.Projectiles.Otherworld
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Texture2D texture = mod.GetTexture("Projectiles/Otherworld/OtherworldlyBolt");
+			Texture2D texture = Main.projectileTexture[projectile.type];
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			for (int k = 0; k < projectile.oldPos.Length; k++)
 			{
@@ -50,11 +51,13 @@ namespace SOTS.Projectiles.Otherworld
 		{
 			for (int i = 0; i < 20; i++)
 			{
-				int dust = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 242);
-				Main.dust[dust].velocity *= 2f;
-				Main.dust[dust].scale *= 4f;
+				int dust = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, ModContent.DustType<CopyDust4>());
+				Main.dust[dust].velocity *= 1.4f;
+				Main.dust[dust].scale *= 1.75f;
 				Main.dust[dust].velocity += projectile.velocity;
 				Main.dust[dust].noGravity = true;
+				Main.dust[dust].fadeIn = 0.2f;
+				Main.dust[dust].color = new Color(100, 80, 200);
 			}
 		}
 		bool runOnce = true;

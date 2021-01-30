@@ -54,7 +54,7 @@ namespace SOTS.Projectiles.Nature
 		{
 			if(projectile.alpha >= 250)
 			{
-			projectile.ai[0] -= 0.01f;
+				projectile.ai[0] -= 0.01f;
 			}
 			projectile.velocity *= 0.97f;
 			projectile.rotation += 0.3f;

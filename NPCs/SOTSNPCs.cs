@@ -247,26 +247,28 @@ namespace SOTS.NPCs
 		{
 			Player player = spawnInfo.player;
 			bool ZoneForest = !player.GetModPlayer<SOTSPlayer>().PyramidBiome && !player.ZoneDesert && !player.ZoneCorrupt && !player.ZoneDungeon && !player.ZoneDungeon && !player.ZoneHoly && !player.ZoneMeteor && !player.ZoneJungle && !player.ZoneSnow && !player.ZoneCrimson && !player.ZoneGlowshroom && !player.ZoneUndergroundDesert && (player.ZoneDirtLayerHeight || player.ZoneOverworldHeight) && !player.ZoneBeach;	
-			if (spawnInfo.player.GetModPlayer<SOTSPlayer>().PyramidBiome && spawnInfo.spawnTileType == (ushort)mod.TileType("PyramidSlabTile"))
+			if (spawnInfo.player.GetModPlayer<SOTSPlayer>().PyramidBiome)
 			{
-				/*
-				pool.Add(mod.NPCType("SnakePot"),0.5f);
-				
-				pool.Add(mod.NPCType("Snake"),1f);
-				
-				pool.Add(mod.NPCType("LostSoul"),0.7f);
-				
-				pool.Add(mod.NPCType("PyramidTreasureSlime"),0.4f);
-				*/
-				if(Main.hardMode)
+				if(spawnInfo.spawnTileType == (ushort)mod.TileType("PyramidSlabTile"))
 				{
-					pool.Add(NPCID.Mummy, 0.5f);
+					pool[0] = 0f;
+					pool.Add(mod.NPCType("SnakePot"), 0.3f);
+					pool.Add(mod.NPCType("Snake"), 1f);
+					pool.Add(mod.NPCType("LostSoul"), 0.6f);
+					pool.Add(mod.NPCType("PyramidTreasureSlime"), 0.1f);
+					if (Main.hardMode)
+					{
+						pool.Add(NPCID.Mummy, 0.5f);
+						pool.Add(mod.NPCType("BleedingGhast"), 0.2f);
+						pool.Add(mod.NPCType("FlamingGhast"), 0.2f);
+					}
 				}
 			}
 			else if(spawnInfo.player.GetModPlayer<SOTSPlayer>().PlanetariumBiome)
 			{
 				bool correctBlock = (Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY + 3].type == mod.TileType("DullPlatingTile") || Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY + 3].type == mod.TileType("PortalPlatingTile") || Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY + 3].type == mod.TileType("AvaritianPlatingTile")) && Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY + 3].nactive();
-				pool[0] = 0f;
+				for(int i = 0; i < pool.Count; i++)
+					pool[i] = 0f;
 				if(correctBlock)
 				{
 					pool.Add(mod.NPCType("HoloSlime"), 0.4f);

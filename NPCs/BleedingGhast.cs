@@ -62,10 +62,11 @@ namespace SOTS.NPCs
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
+			/* moved to global npc
 			if(spawnInfo.player.GetModPlayer<SOTSPlayer>().PyramidBiome && spawnInfo.spawnTileType == (ushort)mod.TileType("PyramidSlabTile") && Main.hardMode)
 			{
 				return 0.2f;
-			}
+			} */
 			return 0;
 		}
 		public override void NPCLoot()

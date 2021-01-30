@@ -17,6 +17,15 @@ namespace SOTS.Projectiles.Pyramid
 			Main.projPet[projectile.type] = true;
 			//Main.vanityPet[projectile.type] = true;
 		}
+		public sealed override void SetDefaults()
+		{
+			projectile.width = 34;
+			projectile.height = 36;
+			projectile.tileCollide = false;
+			projectile.friendly = true;
+			projectile.penetrate = -1;
+			projectile.ignoreWater = true;
+		}
 		Vector2[] trailPos = new Vector2[13];
 		bool runOnce = true;
         public override bool PreAI()
@@ -52,14 +61,6 @@ namespace SOTS.Projectiles.Pyramid
 				trailPos[i] = current;
 				current = previousPosition;
 			}
-		}
-		public sealed override void SetDefaults()
-		{
-			projectile.width = 34;
-			projectile.height = 36;
-			projectile.tileCollide = false;
-			projectile.friendly = true;
-			projectile.penetrate = -1;
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{

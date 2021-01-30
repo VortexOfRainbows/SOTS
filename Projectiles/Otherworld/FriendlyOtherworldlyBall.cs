@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Dusts;
 using SOTS.Projectiles.Base;
 using Terraria;
 using Terraria.ID;
@@ -34,7 +35,7 @@ namespace SOTS.Projectiles.Otherworld
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Texture2D texture = mod.GetTexture("Projectiles/Otherworld/OtherworldlyBall");
+			Texture2D texture = Main.projectileTexture[projectile.type];
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			for (int k = 0; k < projectile.oldPos.Length; k++)
 			{
@@ -62,7 +63,7 @@ namespace SOTS.Projectiles.Otherworld
 			{
 				float x = Main.rand.Next(-10, 11) * 0.1f;
 				float y = Main.rand.Next(-10, 11) * 0.1f;
-				Main.spriteBatch.Draw(texture, new Vector2((float)(projectile.Center.X - (int)Main.screenPosition.X) + x, (float)(projectile.Center.Y - (int)Main.screenPosition.Y) + y), null, color * (1f - (projectile.alpha / 255f)), projectile.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, new Vector2((float)(projectile.Center.X - (int)Main.screenPosition.X) + x, (float)(projectile.Center.Y - (int)Main.screenPosition.Y) + y), null, color * (1f - (projectile.alpha / 255f)), projectile.rotation, drawOrigin, projectile.scale, SpriteEffects.None, 0f);
 			}
 			base.PostDraw(spriteBatch, drawColor);
 		}
@@ -75,7 +76,7 @@ namespace SOTS.Projectiles.Otherworld
 		}
 		public override void Kill(int timeLeft)
 		{
-			Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 14, 0.6f);
+			Main.PlaySound(3, (int)projectile.Center.X, (int)projectile.Center.Y, 53, 0.75f);
 			if (projectile.owner == Main.myPlayer)
 			{
 				for(int i = 0; i < 8; i++)
@@ -83,37 +84,50 @@ namespace SOTS.Projectiles.Otherworld
 					Vector2 circular = new Vector2(3, 0).RotatedBy(MathHelper.ToRadians(i * 45));
 					Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, circular.X, circular.Y, mod.ProjectileType("FriendlyOtherworldlyBolt"), projectile.damage, projectile.knockBack, Main.myPlayer);
 				}
+				for (int i = 0; i < 3; i++)
+				{
+					Vector2 circular = new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(i + Main.rand.Next(120) + 120 * i));
+					Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, circular.X, circular.Y, mod.ProjectileType("PhaseColumn"), projectile.damage, projectile.knockBack, Main.myPlayer, 2, 0);
+				}
 			}
 			for (int i = 0; i < 35; i++)
 			{
 				Vector2 circularLocation = new Vector2(12, 0);
 				resetVector2(ref circularLocation, i);
-				int dust = Dust.NewDust(new Vector2(projectile.Center.X - 4, projectile.Center.Y - 3), 0, 0, 242);
+				int dust = Dust.NewDust(new Vector2(projectile.Center.X - 4, projectile.Center.Y - 3), 0, 0, ModContent.DustType<CopyDust4>());
 				Main.dust[dust].velocity = circularLocation;
-				Main.dust[dust].velocity *= 2f;
-				Main.dust[dust].scale *= 7f;
-				Main.dust[dust].noGravity = true;
-
-				resetVector2(ref circularLocation, i);
-				dust = Dust.NewDust(new Vector2(projectile.Center.X - 4, projectile.Center.Y - 3), 0, 0, 242);
-				Main.dust[dust].velocity = circularLocation;
-				Main.dust[dust].velocity *= 4f;
-				Main.dust[dust].scale *= 6f;
-				Main.dust[dust].noGravity = true;
-
-				resetVector2(ref circularLocation, i);
-				dust = Dust.NewDust(new Vector2(projectile.Center.X - 4, projectile.Center.Y - 3), 0, 0, 242);
-				Main.dust[dust].velocity = circularLocation;
-				Main.dust[dust].velocity *= 6.5f;
+				Main.dust[dust].velocity *= 3.5f;
 				Main.dust[dust].scale *= 5f;
 				Main.dust[dust].noGravity = true;
+				Main.dust[dust].fadeIn = 0.2f;
+				Main.dust[dust].color = new Color(100, 80, 200);
 
 				resetVector2(ref circularLocation, i);
-				dust = Dust.NewDust(new Vector2(projectile.Center.X - 4, projectile.Center.Y - 3), 0, 0, 242);
+				dust = Dust.NewDust(new Vector2(projectile.Center.X - 4, projectile.Center.Y - 3), 0, 0, ModContent.DustType<CopyDust4>());
 				Main.dust[dust].velocity = circularLocation;
-				Main.dust[dust].velocity *= 10f;
+				Main.dust[dust].velocity *= 6f;
 				Main.dust[dust].scale *= 4f;
 				Main.dust[dust].noGravity = true;
+				Main.dust[dust].fadeIn = 0.2f;
+				Main.dust[dust].color = new Color(100, 80, 200);
+
+				resetVector2(ref circularLocation, i);
+				dust = Dust.NewDust(new Vector2(projectile.Center.X - 4, projectile.Center.Y - 3), 0, 0, ModContent.DustType<CopyDust4>());
+				Main.dust[dust].velocity = circularLocation;
+				Main.dust[dust].velocity *= 8f;
+				Main.dust[dust].scale *= 3f;
+				Main.dust[dust].noGravity = true;
+				Main.dust[dust].fadeIn = 0.2f;
+				Main.dust[dust].color = new Color(100, 80, 200);
+
+				resetVector2(ref circularLocation, i);
+				dust = Dust.NewDust(new Vector2(projectile.Center.X - 4, projectile.Center.Y - 3), 0, 0, ModContent.DustType<CopyDust4>());
+				Main.dust[dust].velocity = circularLocation;
+				Main.dust[dust].velocity *= 12f;
+				Main.dust[dust].scale *= 2f;
+				Main.dust[dust].noGravity = true;
+				Main.dust[dust].fadeIn = 0.2f;
+				Main.dust[dust].color = new Color(100, 80, 200);
 			}
 		}
 		public override void AI()

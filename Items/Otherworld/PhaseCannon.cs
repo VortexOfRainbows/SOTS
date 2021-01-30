@@ -1,5 +1,6 @@
 using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -15,21 +16,39 @@ namespace SOTS.Items.Otherworld
 		}
 		public override void SetDefaults()
 		{
-            item.damage = 30; 
+            item.damage = 27; 
             item.ranged = true;  
             item.width = 52;   
-            item.height = 28; 
+            item.height = 26; 
             item.useTime = 90; 
             item.useAnimation = 90;
             item.useStyle = 5;    
             item.noMelee = true;
             item.knockBack = 4f;
-            item.value = Item.sellPrice(0, 2, 25, 0);
+            item.value = Item.sellPrice(0, 3, 25, 0);
             item.rare = ItemRarityID.LightPurple;
             item.UseSound = SoundID.Item92;
             item.autoReuse = true;
             item.shoot = mod.ProjectileType("FriendlyOtherworldlyBall");
 			item.shootSpeed = 10; //not important
+			if (!Main.dedServ)
+			{
+				item.GetGlobalItem<ItemUseGlow>().glowTexture = mod.GetTexture("Items/Otherworld/PhaseCannonGlow");
+				item.GetGlobalItem<ItemUseGlow>().glowOffsetX = -2;
+				item.GetGlobalItem<ItemUseGlow>().glowOffsetY = 1;
+			}
+
+		}
+        public override Vector2? HoldoutOffset()
+        {
+            return new Vector2(-2, 1);
+        }
+        public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
+		{
+			Texture2D texture = mod.GetTexture("Items/Otherworld/PhaseCannonGlow");
+			Color color = Color.White;
+			Vector2 drawOrigin = new Vector2(Main.itemTexture[item.type].Width * 0.5f, item.height * 0.5f);
+			Main.spriteBatch.Draw(texture, new Vector2((float)(item.Center.X - (int)Main.screenPosition.X), (float)(item.Center.Y - (int)Main.screenPosition.Y) + 2), null, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 		}
 		public override void HoldItem(Player player)
 		{

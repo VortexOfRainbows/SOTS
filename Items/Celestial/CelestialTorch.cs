@@ -44,8 +44,7 @@ namespace SOTS.Items.Celestial
 		}
 		public override bool CanUseItem(Player player)
 		{
-		return !NPC.AnyNPCs(mod.NPCType("CelestialSerpentHead")) && !Main.dayTime;
-	
+			return !NPC.AnyNPCs(mod.NPCType("CelestialSerpentHead")) && !Main.dayTime;
 		}
 		public override bool UseItem(Player player)
 		{

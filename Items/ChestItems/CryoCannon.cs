@@ -19,8 +19,8 @@ namespace SOTS.Items.ChestItems
 		{
             item.damage = 10;
             item.ranged = true;
-            item.width = 34;
-            item.height = 30;
+            item.width = 50;
+            item.height = 32;
             item.useTime = 38; 
             item.useAnimation = 38;
             item.useStyle = 5;    
@@ -37,7 +37,7 @@ namespace SOTS.Items.ChestItems
 		}
 		public override Vector2? HoldoutOffset()
 		{
-			return new Vector2(7, 0);
+			return new Vector2(-1, -2);
 		}
 		public override void AddRecipes()
 		{

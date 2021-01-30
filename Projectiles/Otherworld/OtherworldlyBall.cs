@@ -61,7 +61,7 @@ namespace SOTS.Projectiles.Otherworld
 			{
 				float x = Main.rand.Next(-10, 11) * 0.1f;
 				float y = Main.rand.Next(-10, 11) * 0.1f;
-				Main.spriteBatch.Draw(texture, new Vector2((float)(projectile.Center.X - (int)Main.screenPosition.X) + x, (float)(projectile.Center.Y - (int)Main.screenPosition.Y) + y), null, color * (1f - (projectile.alpha / 255f)), projectile.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, new Vector2((float)(projectile.Center.X - (int)Main.screenPosition.X) + x, (float)(projectile.Center.Y - (int)Main.screenPosition.Y) + y), null, color * (1f - (projectile.alpha / 255f)), projectile.rotation, drawOrigin, projectile.scale, SpriteEffects.None, 0f);
 			}
 			base.PostDraw(spriteBatch, drawColor);
 		}

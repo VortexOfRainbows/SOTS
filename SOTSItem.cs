@@ -16,6 +16,8 @@ using System.Collections.Generic;
 using SOTS.Items.Pyramid;
 using SOTS.Void;
 using SOTS.Items.Celestial;
+using SOTS.Items.Otherworld;
+using SOTS.Items.ChestItems;
 
 namespace SOTS
 {
@@ -23,12 +25,23 @@ namespace SOTS
 	{
         public static int[] rarities1;
 		public static int[] rarities2;
-		public static int[] dedicated;
+		public static int[] dedicatedOrange;
+		public static int[] dedicatedBlue;
+		public static int[] dedicatedPurpleRed;
+		public static int[] dedicatedPastelPink;
+		static bool runOnce = true;
 		public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
 		{
-			rarities1 = new int[] { mod.ItemType("StarlightAlloy"), mod.ItemType("HardlightAlloy"), mod.ItemType("OtherworldlyAlloy"), mod.ItemType("PotGenerator"), mod.ItemType("PrecariousCluster"), mod.ItemType("Calculator")};
-			rarities2 = new int[] { ItemType<RefractingCrystal>(), ItemType<CursedApple>()};
-			dedicated = new int[] { mod.ItemType("Calculator"), mod.ItemType("TerminatorAcorns"), ModContent.ItemType<CursedApple>(), ItemType<ArcStaffMk2>(), ItemType<PlasmaCutterButOnAChain>() };
+			if(runOnce)
+			{
+				rarities1 = new int[] { mod.ItemType("StarlightAlloy"), mod.ItemType("HardlightAlloy"), mod.ItemType("OtherworldlyAlloy"), mod.ItemType("PotGenerator"), mod.ItemType("PrecariousCluster"), mod.ItemType("Calculator") };
+				rarities2 = new int[] { ItemType<RefractingCrystal>(), ItemType<CursedApple>() };
+				dedicatedOrange = new int[] { mod.ItemType("TerminatorAcorns"), ItemType<PlasmaCutterButOnAChain>(), ItemType<CoconutGun>() };
+				dedicatedBlue = new int[] { mod.ItemType("Calculator") };
+				dedicatedPurpleRed = new int[] { ItemType<CursedApple>(), ItemType<ArcStaffMk2>() };
+				dedicatedPastelPink = new int[] { ItemType<StrangeFruit>() };
+				runOnce = false;
+            }
 			if (rarities1.Contains(item.type))
 			{
 				foreach (TooltipLine line2 in tooltips)
@@ -49,19 +62,42 @@ namespace SOTS
 					}
 				}
 			}
-			if (dedicated.Contains(item.type))
+			bool dedicated = false;
+			Color dedicatedColor = Color.White;
+			if(dedicatedOrange.Contains(item.type))
+			{
+				dedicatedColor = new Color(255, 115, 0);
+				dedicated = true;
+			}
+			if (dedicatedBlue.Contains(item.type))
+			{
+				dedicatedColor = new Color(0, 130, 235, 255);
+				dedicated = true;
+			}
+			if (dedicatedPurpleRed.Contains(item.type))
             {
-				Color color = Color.White;
-				if (item.type == mod.ItemType("TerminatorAcorns") || item.type == ItemType<PlasmaCutterButOnAChain>())
-					color = new Color(255, 115, 0);
-				if (item.type == mod.ItemType("Calculator"))
-					color = new Color(0, 130, 235, 255);
-				if (item.type == mod.ItemType("CursedApple") || item.type == ItemType<ArcStaffMk2>())
-					color = VoidPlayer.soulLootingColor;
+				dedicatedColor = VoidPlayer.soulLootingColor;
+				dedicated = true;
+			}
+			if (dedicatedPastelPink.Contains(item.type))
+			{
+				Color color = new Color(211, 0, 194);
+				foreach (TooltipLine line2 in tooltips)
+				{
+					if (line2.mod == "Terraria" && line2.Name == "ItemName")
+					{
+						line2.overrideColor = color;
+					}
+				}
+				dedicatedColor = new Color(255, 158, 235);
+				dedicated = true;
+			}
+			if (dedicated)
+			{
 				TooltipLine line = new TooltipLine(mod, "Dedicated", "Dedicated Item");
-				line.overrideColor = color;
+				line.overrideColor = dedicatedColor;
 				tooltips.Add(line);
-            }
+			}
 		}
 		public Tile FindTATile(Player player)
         {
@@ -374,8 +410,18 @@ namespace SOTS
 							//value = new DrawData(Main.itemTexture[item.type], new Vector2((float)((int)(value2.X - Main.screenPosition.X + vector10.X)), (float)((int)(value2.Y - Main.screenPosition.Y + vector10.Y))), new Microsoft.Xna.Framework.Rectangle?(new Microsoft.Xna.Framework.Rectangle(0, 0, Main.itemTexture[item.type].Width, Main.itemTexture[item.type].Height)), item.GetAlpha(color37), drawPlayer.itemRotation, origin5, item.scale, effect, 0);
 							//Main.playerDrawData.Add(value);
 
-							DrawData value = new DrawData(texture, new Vector2((float)((int)(location.X - Main.screenPosition.X + vector10.X)), (float)((int)(location.Y - Main.screenPosition.Y + vector10.Y))), new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Main.itemTexture[item.type].Width, Main.itemTexture[item.type].Height)), Color.White, drawPlayer.itemRotation, origin5, item.scale, drawInfo.spriteEffects, 0);
-							Main.playerDrawData.Add(value);
+							Color color = new Color(Main.DiscoR, Main.DiscoG, Main.DiscoB, 0);
+							int recurse = 1;
+							bool rainbow = item.type == ModContent.ItemType<PhaseCannon>() && modPlayer.rainbowGlowmasks;
+							if (rainbow)
+							{
+								recurse = 2;
+							}
+							for (int i = 0; i < recurse; i++)
+							{
+								DrawData value = new DrawData(texture, new Vector2((float)((int)(location.X - Main.screenPosition.X + vector10.X)), (float)((int)(location.Y - Main.screenPosition.Y + vector10.Y))), new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Main.itemTexture[item.type].Width, Main.itemTexture[item.type].Height)), rainbow ? color : Color.White, drawPlayer.itemRotation, origin5, item.scale, drawInfo.spriteEffects, 0);
+								Main.playerDrawData.Add(value);
+							}
 						}
 					}
 					else

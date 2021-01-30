@@ -16,9 +16,54 @@ Priority: Remaining Spirits
 	1. Give off cool particles, can be used in summoning rituals
 
 Next Update:
-1. Pyramid chests to no longer spawn close to surface
-3. Coconut Gun && Kitchen Sink
-9. Update boss checklist support (later)
+1. Pyramid chests to no longer spawn close to surface (idc about this tbh)
+3. Kitchen Sink
+4. Subspace Scissors
+5. Void Bar pos stays after relog
+11. Prefixes for void
+6. Flux Slime
+7. Slime gun upgrade
+8. Biome Chest Weapons
+9. Void Low Warning
+
+Boss Rework Ideas:
+PP to move during nonmoving attacks. Fix despawning issue. Slower projectiles/projectile rate from eye minions.
+Subspace Serpent cross attacks to attack faster and release lightning
+
+1/29/21
+1. Coconut island spawns naturally and coconut gun is in there too
+
+1/28/21
+1. Coconut Gun added, should work in multiplayer, dedicated Item
+2. Added these items to the dedicated pool:
+	1. Strange fruit
+3. Cyro cannon resprited
+4. Coconut Island finished, must still spawn at ocean + work on Strange Keystone
+5. Fixed some bugs regarding Overgrown Pyramid Tile Safe Vines
+
+
+1/27/21
+1. Crescent staff into a magic weapon (FIX)
+2. Phase cannon visual changes, now creates lightning, damage 30 -> 27
+3. Advisor no longer counted as a Boss until activated. This fix the Calamity healthbar and boss zen.
+4. Vanilla spawns removed from pyramid tile spawn rates in pyramid
+5. Fixed Nan (Not a number) error of Earthen construct 
+6. Attempted to enact a pot gen fix in multiplayer, not sure if it works
+7. lashes of lightning no longer hits town NPCs
+8. Phase tracer and blade necklace blades ignore water
+9. Slight optimization to Pet Advisor's code
+10. Updated support for boss checklist
+
+1/25/21
+1. Forum and Changelog done
+2. Changed max checks for planetarium worldgen 300, 400 -> 50, 55
+3. Fixed spritebatch error again
+4. New Icon
+
+
+-- Update 0.19.0
+
+
 
 1/24/21
 1. Added HoloSword banner

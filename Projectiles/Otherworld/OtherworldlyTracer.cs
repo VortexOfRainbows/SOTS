@@ -24,6 +24,7 @@ namespace SOTS.Projectiles.Otherworld
 			projectile.penetrate = -1;
 			projectile.alpha = 100;
 			projectile.ranged = true;
+			projectile.ignoreWater = true;
 		}
 		public override void SendExtraAI(BinaryWriter writer)
 		{
@@ -42,11 +43,13 @@ namespace SOTS.Projectiles.Otherworld
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
 			Texture2D texture = Main.projectileTexture[projectile.type];
+			if (projectile.ai[1] == -1 || hasPlayer)
+				texture = mod.GetTexture("Projectiles/Otherworld/OtherworldlyTracerAlt");
 			Color color = new Color(110, 110, 110, 0);
 			Vector2 drawOrigin = new Vector2(Main.projectileTexture[projectile.type].Width * 0.5f, projectile.height * 0.5f);
 			for(int i = 0; i < 1 + (int)(ai1)/30; i++)
 			{
-				for (int k = 0; k < 7; k++)
+				for (int k = 0; k < 7 - (hasPlayer ? 2 : 0); k++)
 				{
 					float x = Main.rand.Next(-10, 11) * 0.1f;
 					float y = Main.rand.Next(-10, 11) * 0.1f;
@@ -59,6 +62,7 @@ namespace SOTS.Projectiles.Otherworld
 		{
 			//Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 14, 0.6f);
 		}
+		bool hasPlayer = false;
 		float[] rotation = { 0, 0, 0 };
 		float[] rotationSpeed = { 0, 0, 0 };
 		float[] sizes = { 0.4f, 0.7f, 1.1f};
@@ -68,7 +72,8 @@ namespace SOTS.Projectiles.Otherworld
 		{
 			if(projectile.ai[1] == -1)
 			{
-				Lighting.AddLight(projectile.Center, 0.95f * ((255 - projectile.alpha) / 255), 0.45f * ((255 - projectile.alpha) / 255), 0.95f * ((255 - projectile.alpha) / 255));
+				hasPlayer = true;
+				Lighting.AddLight(projectile.Center, 0.45f * ((255 - projectile.alpha) / 255), 0.4f * ((255 - projectile.alpha) / 255), 0.95f * ((255 - projectile.alpha) / 255));
 				if (projectile.alpha < 255)
 					projectile.alpha += 3;
 

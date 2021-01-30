@@ -16,7 +16,7 @@ namespace SOTS.Items.ChestItems
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Worldgen Paste");
-			Tooltip.SetDefault("Development tool, NOT MEANT FOR GAMEPLAY\nGenerates the Planetarium Biome on your cursor\nActual biome name pending");
+			Tooltip.SetDefault("Development tool, NOT MEANT FOR GAMEPLAY\nGenerates the Coconut Island on your cursor");
 		}
 		public override void SetDefaults()
 		{
@@ -86,9 +86,15 @@ namespace SOTS.Items.ChestItems
 			}
 			SOTSWorldgenHelper.DistributeSkyThings(mod, 24, 7, 7, 4, 5, 45);
 		}
+		public void PasteCoconut()
+		{
+			Vector2 mousePos = Main.MouseWorld;
+			Vector2 tileLocation = mousePos / 16f;
+			SOTSWorldgenHelper.GenerateCoconutIsland(mod, (int)tileLocation.X, (int)tileLocation.Y, Main.rand.NextBool(2) ? 1 : -1);
+		}
 		public override bool UseItem(Player player)
 		{
-			PasteStructure();
+			PasteCoconut();
             return true;
 		}
 	}

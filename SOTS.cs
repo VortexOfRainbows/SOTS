@@ -14,6 +14,11 @@ using SOTS.Items.Pyramid;
 using SOTS.Items.Otherworld.EpicWings;
 using SOTS.NPCs.ArtificialDebuffs;
 using SOTS.Items.Otherworld.FromChests;
+using SOTS.NPCs.Boss;
+using SOTS.Items.GelGear;
+using SOTS.Items.Otherworld;
+using SOTS.Items.IceStuff;
+using SOTS.Items.Celestial;
 
 namespace SOTS
 {
@@ -95,6 +100,9 @@ namespace SOTS
 			Instance = null;
 			VoidBarSprite._backgroundTexture = null;
 			VoidBarBorder._backgroundTexture = null;
+			VoidBarBorder2._backgroundTexture = null;
+			BarDivider._backgroundTexture = null;
+			SoulBar._backgroundTexture = null;
 			BlinkHotKey = null;
 			ArmorSetHotKey = null;
 		}
@@ -329,21 +337,115 @@ namespace SOTS
             Mod bossChecklist = ModLoader.GetMod("BossChecklist");
             if(bossChecklist != null)
             {
-                // AddBoss, bossname, order or value in terms of vanilla bosses, inline method for retrieving downed value.
-                //bossChecklist.Call(....
-                // To include a description:
-                //bossChecklist.Call("AddBoss", "Putrid Pinky", 4.2f, (Func<bool>)(() => SOTSWorld.downedPinky));
-                bossChecklist.Call("AddBossWithInfo", "Putrid Pinky", 4.2f, (Func<bool>)(() => SOTSWorld.downedPinky), "Use [i:" + ItemType("JarOfPeanuts") + "]");
-                bossChecklist.Call("AddBossWithInfo", "Pharaoh's Curse", 4.3f, (Func<bool>)(() => SOTSWorld.downedCurse), "Find the [i:" + ItemType("Sarcophagus") + "] in the pyramid");
-				bossChecklist.Call("AddBossWithInfo", "The Advisor", 5.9f, (Func<bool>)(() => SOTSWorld.downedAdvisor), "Destroy the 4 tethered Otherworldly Constructs on the Planetarium");
+				// AddBoss, bossname, order or value in terms of vanilla bosses, inline method for retrieving downed value.
+				//bossChecklist.Call(....
+				// To include a description:
+				//bossChecklist.Call("AddBoss", "Putrid Pinky", 4.2f, (Func<bool>)(() => SOTSWorld.downedPinky));
+				//bossChecklist.Call("AddBossWithInfo", "Putrid Pinky", 4.2f, (Func<bool>)(() => SOTSWorld.downedPinky), "Use [i:" + ItemType("JarOfPeanuts") + "]");	
+				//bossChecklist.Call("AddBossWithInfo", "Pharaoh's Curse", 4.3f, (Func<bool>)(() => SOTSWorld.downedCurse), "Find the [i:" + ItemType("Sarcophagus") + "] in the pyramid");
+
+				bossChecklist.Call(
+					"AddBoss", 
+					4.25f, 
+					new List<int>() { ModContent.NPCType<PutridPinkyPhase2>() }, 
+					this, 
+					"Putrid Pinky", 
+					(Func<bool>)(() => SOTSWorld.downedPinky),
+					ModContent.ItemType<JarOfPeanuts>(), 
+					new List<int>() { }, 
+					new List<int>() { ModContent.ItemType<PinkyBag>(), ModContent.ItemType<WormWoodCore>(), ModContent.ItemType<Wormwood>(), ItemID.PinkGel},
+					"Summon in any biome at any time using a [i:" + ModContent.ItemType<JarOfPeanuts>() + "]",
+					"{0} has robbed everyone of their peanuts!", 
+					"SOTS/NPCs/Boss/PutridPinky1_Display", 
+					"SOTS/NPCs/Boss/PutridPinkyPhase2_Head_Boss",
+					(Func<bool>)(() => true));
+				bossChecklist.Call(
+					"AddBoss",
+					4.5f,
+					new List<int>() { ModContent.NPCType<PharaohsCurse>() },
+					this,
+					"Pharaoh's Curse",
+					(Func<bool>)(() => SOTSWorld.downedCurse),
+					ModContent.ItemType<Sarcophagus>(),
+					new List<int>() { },
+					new List<int>() { ModContent.ItemType<CurseBag>(), ModContent.ItemType<CursedMatter>() },
+					"Activate the [i:" + ModContent.ItemType<Sarcophagus>() + "] in the pyramid",
+					"",
+					"",
+					"",
+					(Func<bool>)(() => true));
+				bossChecklist.Call(
+					"AddBoss",
+					5.9f,
+					new List<int>() { ModContent.NPCType<TheAdvisorHead>() },
+					this,
+					"The Advisor",
+					(Func<bool>)(() => SOTSWorld.downedAdvisor),
+					ModContent.ItemType<AvaritianGateway>(),
+					new List<int>() { },
+					new List<int>() { ModContent.ItemType<TheAdvisorBossBag>(), ModContent.ItemType<SkywareKey>(), ModContent.ItemType<StarlightAlloy>(), ModContent.ItemType<StrangeKey>(), ModContent.ItemType<HardlightAlloy>(), ModContent.ItemType<MeteoriteKey>(), ModContent.ItemType<OtherworldlyAlloy>() },
+					"Destroy the 4 tethered Otherworldly Constructs of the Planetarium",
+					"",
+					"SOTS/NPCs/Boss/Advisor_Display",
+					"",
+					(Func<bool>)(() => true));
+				bossChecklist.Call(
+					"AddBoss",
+					8.2f,
+					new List<int>() { ModContent.NPCType<ShardKing>() },
+					this,
+					"Icy Amalgamation",
+					(Func<bool>)(() => SOTSWorld.downedAmalgamation),
+					new List<int>() { ModContent.ItemType<FrostedKey>(), ModContent.ItemType<FrostArtifact>() },
+					new List<int>() { },
+					new List<int>() { ModContent.ItemType<ShardKingBossBag>(), ModContent.ItemType<AbsoluteBar>(), ItemID.FrostCore },
+					"Activate the [i:" + ModContent.ItemType<FrostArtifact>() + "] of the snow biome using [i:" + ModContent.ItemType<FrostedKey>() + "]",
+					"",
+					"",
+					"",
+					(Func<bool>)(() => true));
+				bossChecklist.Call(
+					"AddBoss",
+					11.4f,
+					new List<int>() { ModContent.NPCType<CelestialSerpentHead>(), ModContent.NPCType<CelestialSerpentBody>(), ModContent.NPCType<CelestialSerpentTail>() },
+					this,
+					"Celestial Serpent",
+					(Func<bool>)(() => SOTSWorld.downedCelestial),
+					new List<int>() { ModContent.ItemType<CelestialTorch>() },
+					new List<int>() { },
+					new List<int>() { ModContent.ItemType<CelestialBag>(), ModContent.ItemType<StarShard>(), ModContent.ItemType<StrangeFruit>() },
+					"Use a [i:" + ModContent.ItemType<CelestialTorch>() + "] during the night",
+					"",
+					"SOTS/NPCs/Boss/CelestialSerpent_Display",
+					"",
+					(Func<bool>)(() => true));
+				bossChecklist.Call(
+					"AddBoss",
+					11.41f,
+					new List<int>() { ModContent.NPCType<SubspaceSerpentHead>(), ModContent.NPCType<SubspaceSerpentBody>(), ModContent.NPCType<SubspaceSerpentTail>() },
+					this,
+					"Subspace Serpent",
+					(Func<bool>)(() => SOTSWorld.downedSubspace),
+					new List<int>() { ModContent.ItemType<CatalystBomb>() },
+					new List<int>() { },
+					new List<int>() { ModContent.ItemType<SubspaceBag>(), ModContent.ItemType<SanguiteBar>()},
+					"Tear a dimensional rift in hell by detonating a [i:" + ModContent.ItemType<CatalystBomb>() + "]",
+					"",
+					"SOTS/NPCs/Boss/SubspaceSerpent_Display",
+					"",
+					(Func<bool>)(() => true));
+
+
+				//bossChecklist.Call("AddBossWithInfo", "The Advisor", 5.9f, (Func<bool>)(() => SOTSWorld.downedAdvisor), "Destroy the 4 tethered Otherworldly Constructs on the Planetarium");
 				//bossChecklist.Call("AddBossWithInfo", "Cryptic Carver", 5.2f, (Func<bool>)(() => SOTSWorld.downedCarver), "Use [i:" + ItemType("MargritArk") + "]");
 				//bossChecklist.Call("AddBossWithInfo", "Ethereal Entity", 6.5f, (Func<bool>)(() => SOTSWorld.downedEntity), "Use [i:" + ItemType("PlanetariumDiamond") + "] in a planetarium biome");
 
 				//bossChecklist.Call("AddBossWithInfo", "Antimaterial Antlion", 7.21f, (Func<bool>)(() => SOTSWorld.downedAntilion), "Use [i:" + ItemType("ForbiddenPyramid") + "] in a desert biome");
-				bossChecklist.Call("AddBossWithInfo", "Icy Amalgamation", 8.21f, (Func<bool>)(() => SOTSWorld.downedAmalgamation), "Use [i:" + ItemType("FrostedKey") + "] on a [i:" + ItemType("FrostArtifact") + "] in a snow biome");
-                bossChecklist.Call("AddBossWithInfo", "Celestial Serpent", 11.1f, (Func<bool>)(() => SOTSWorld.downedCelestial), "Use [i:" + ItemType("CelestialTorch") + "] during night time");
-                bossChecklist.Call("AddBossWithInfo", "Subspace Serpent", 11.2f, (Func<bool>)(() => SOTSWorld.downedSubspace), "Tear a rift in hell by detonating a [i:" + ItemType("CatalystBomb") + "]");
-            }
+				//bossChecklist.Call("AddBossWithInfo", "Icy Amalgamation", 8.21f, (Func<bool>)(() => SOTSWorld.downedAmalgamation), "Use [i:" + ItemType("FrostedKey") + "] on a [i:" + ItemType("FrostArtifact") + "] in a snow biome");
+				//bossChecklist.Call("AddBossWithInfo", "Celestial Serpent", 11.1f, (Func<bool>)(() => SOTSWorld.downedCelestial), "Use [i:" + ItemType("CelestialTorch") + "] during night time");
+               // bossChecklist.Call("AddBossWithInfo", "Subspace Serpent", 11.2f, (Func<bool>)(() => SOTSWorld.downedSubspace), "Tear a rift in hell by detonating a [i:" + ItemType("CatalystBomb") + "]");
+
+			 }
         }
 	}
 }

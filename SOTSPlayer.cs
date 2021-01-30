@@ -1026,6 +1026,7 @@ namespace SOTS
         public override void Initialize()
 		{
 			SOTSPlayer.typhonBlacklist.Add(ModContent.ProjectileType<ArcColumn>());
+			SOTSPlayer.typhonBlacklist.Add(ModContent.ProjectileType<PhaseColumn>());
 			SOTSPlayer.typhonBlacklist.Add(ModContent.ProjectileType<MacaroniBeam>());
 
 			SOTSPlayer.typhonWhitelist.Add(ModContent.ProjectileType<HardlightArrow>());

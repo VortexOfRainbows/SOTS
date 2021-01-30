@@ -39,29 +39,29 @@ namespace SOTS.NPCs
 		}
 		public override void AI()
 		{
-				int num1 = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), 28, 24, mod.DustType("LostSoulDust"));
-				Main.dust[num1].noGravity = true;
-				Main.dust[num1].velocity.X = npc.velocity.X;
-				Main.dust[num1].velocity.Y = -3;
-				Main.dust[num1].alpha = npc.alpha;
-				npc.dontTakeDamage = false;
-				
-				if(ai2 == 0)
+			int num1 = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), 28, 24, mod.DustType("LostSoulDust"));
+			Main.dust[num1].noGravity = true;
+			Main.dust[num1].velocity.X = npc.velocity.X;
+			Main.dust[num1].velocity.Y = -3;
+			Main.dust[num1].alpha = npc.alpha;
+			npc.dontTakeDamage = false;
+			
+			if(ai2 == 0)
+			{
+				npc.alpha++;
+				if(npc.alpha >= 235)
 				{
-					npc.alpha++;
-					if(npc.alpha >= 235)
-					{
-						ai2 = -1;
-					}
+					ai2 = -1;
 				}
-				if(ai2 == -1)
+			}
+			if(ai2 == -1)
+			{
+				npc.alpha--;
+				if(npc.alpha <= 20)
 				{
-					npc.alpha--;
-					if(npc.alpha <= 20)
-					{
-						ai2 = 0;
-					}
+					ai2 = 0;
 				}
+			}
 			ai1++;
 			npc.rotation = 0;
 		}
@@ -81,14 +81,6 @@ namespace SOTS.NPCs
 				}
 				
 			
-		}
-		public override float SpawnChance(NPCSpawnInfo spawnInfo)
-		{
-			if(spawnInfo.player.GetModPlayer<SOTSPlayer>().PyramidBiome && spawnInfo.spawnTileType == (ushort)mod.TileType("PyramidSlabTile"))
-			{
-				return 0.6f;
-			}
-			return 0;
 		}
 		public override void NPCLoot()
 		{

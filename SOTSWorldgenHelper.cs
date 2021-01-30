@@ -4,6 +4,8 @@ using Terraria;
 using Terraria.ModLoader;
 using SOTS.Items.Otherworld;
 using Microsoft.Xna.Framework;
+using SOTS.Items.Pyramid;
+using SOTS.Items.ChestItems;
 
 namespace SOTS
 {
@@ -11,10 +13,10 @@ namespace SOTS
 	{
 		public static void GenerateAcediaRoom(int x, int y, Mod mod, int direction = 1)
 		{
-			if(direction != 1 && direction != -1)
-            {
+			if (direction != 1 && direction != -1)
+			{
 				return;
-            }
+			}
 			int spawnX = x;
 			int spawnY = y;
 			int[,] _structure = {
@@ -72,7 +74,7 @@ namespace SOTS
 					}
 				}
 			}
-					//i = vertical, j = horizontal
+			//i = vertical, j = horizontal
 			for (int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)    //Increase the iterations on this outermost for loop if tabletop-objects are not properly spawning
 			{
 				for (int i = 0; i < _structure.GetLength(0); i++)
@@ -1699,7 +1701,7 @@ namespace SOTS
 					}
 				}
 			}
-			while(totalChests < maxChests)
+			while (totalChests < maxChests)
 			{
 				int i = Main.rand.Next(15, Main.maxTilesX - 15);
 				int j = Main.rand.Next(15, Main.maxTilesY - 15);
@@ -1790,12 +1792,12 @@ namespace SOTS
 			}
 		}
 		public static bool GeneratePlanetariumFull(Mod mod, int i, int j, bool force = false)
-        {
+		{
 			Vector2 tileLocation = new Vector2(i, j);
-			if(!SOTSWorldgenHelper.GenerateSkyArtifact((int)tileLocation.X, (int)tileLocation.Y, mod, force))
-            {
+			if (!SOTSWorldgenHelper.GenerateSkyArtifact((int)tileLocation.X, (int)tileLocation.Y, mod, force))
+			{
 				return false;
-            }
+			}
 			for (int r = 0; r < 30; r++)
 			{
 				tileLocation = new Vector2(i, j);
@@ -1844,6 +1846,241 @@ namespace SOTS
 			}
 			SOTSWorldgenHelper.DistributeSkyThings(mod, 30, 7, 10, 4, 5, 45);
 			return true;
+		}
+		public static void GenerateCoconutIsland(Mod mod, int x, int y, int direction = 1)
+		{
+			if(direction != 1 && direction != -1)
+            {
+				return;
+            }
+			int[,] _structure = {
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,2,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,2,2,2,2,2,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,2,2,2,2,2,2,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,2,2,2,2,2,4,0,0,5,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,2,2,2,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,2,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,3,2,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,3,2,2,2,7,2,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,6,0,0,2,2,2,7,11,11,2,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,6,0,12,12,12,12,12,12,2,2,7,11,11,11,11,11,11,13,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,0,0,0,0,0,0,0},
+				{0,0,12,12,12,12,12,12,12,12,12,12,2,11,7,7,11,11,11,11,11,11,14,0,9,0,0,0,0,0,0,0,0,0,12,12,12,12,12,0,6,0,0,0,0},
+				{15,12,12,12,12,12,12,12,12,12,12,2,2,11,11,7,11,7,11,11,11,11,11,11,11,11,11,13,0,0,0,0,12,12,12,12,12,12,12,12,12,12,0,0,15},
+				{15,15,12,12,12,12,12,12,12,12,2,2,2,2,2,11,11,7,7,7,11,11,16,11,11,11,11,11,11,11,7,7,12,12,12,12,12,12,12,12,17,17,17,17,15},
+				{0,15,17,12,12,12,12,12,2,2,2,2,2,2,2,2,11,7,7,11,7,11,11,11,11,11,7,7,7,7,7,12,12,12,12,12,12,12,17,17,17,15,15,15,19},
+				{0,15,15,17,17,12,12,12,12,12,12,2,2,2,7,7,7,7,11,7,7,11,11,11,7,7,7,7,12,12,12,12,12,12,12,12,17,17,17,17,15,15,19,0,0},
+				{0,0,15,15,17,17,17,12,12,12,2,2,2,2,2,2,2,7,7,7,7,11,11,11,7,7,7,12,12,12,12,12,12,12,12,17,17,17,17,15,15,19,0,0,0},
+				{0,0,0,15,15,15,17,17,12,12,12,12,12,2,2,2,2,7,2,7,11,11,11,7,7,12,12,12,12,12,12,12,12,12,17,17,17,15,15,15,0,0,0,0,0},
+				{0,0,0,0,0,15,15,15,17,12,12,12,12,12,12,2,2,7,2,7,11,11,7,7,12,12,12,12,12,12,12,12,12,17,17,15,15,15,0,0,0,0,0,0,0},
+				{0,0,0,0,0,20,15,15,15,17,12,12,12,2,2,2,2,2,2,7,11,7,7,12,12,12,12,12,12,12,12,12,17,17,15,15,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,15,15,15,17,12,12,12,12,2,2,2,2,7,2,7,2,12,12,12,12,12,12,12,12,12,17,15,15,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,20,15,17,17,17,17,12,12,12,2,2,2,2,7,2,2,12,12,12,12,12,12,17,17,15,15,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,15,15,17,17,17,17,17,12,12,12,12,2,2,2,2,12,12,12,12,12,17,15,15,15,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,15,15,15,15,17,17,17,17,17,2,2,2,2,2,2,12,15,17,17,15,15,15,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,20,15,15,15,15,17,17,2,2,2,2,2,2,15,15,15,15,15,19,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,20,15,15,17,17,17,15,2,2,2,2,2,15,15,0,0,0,0,21,0,3,2,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,17,10,10,2,2,2,2,2,2,8,0,0,1,2,2,2,2,4,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,22,10,2,2,2,2,2,2,2,1,2,2,2,2,2,2,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,2,2,2,2,23,23,2,2,2,2,2,2,2,2,2,2,2,2,2,4,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,4,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,2,2,2,2,2,12,17,2,2,2,2,2,2,4,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,2,2,12,17,15,15,0,5,2,2,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,2,2,12,12,17,15,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,12,17,17,15,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,12,17,15,15,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,2,12,17,15,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,17,15,15,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,17,15,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,17,17,15,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,17,17,15,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}
+			};
+			int PosX = x - 22 * direction; //spawnX and spawnY is where you want the anchor to be when this generates
+			int PosY = y - 14;
+			//i = vertical, j = horizontal
+			for (int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)    //Increase the iterations on this outermost for loop if tabletop-objects are not properly spawning
+			{
+				for (int i = 0; i < _structure.GetLength(0); i++)
+				{
+					for (int j = _structure.GetLength(1) - 1; j >= 0; j--)
+					{
+						int k = PosX + j * direction;
+						int l = PosY + i;
+						if (WorldGen.InWorld(k, l, 30))
+						{
+							Tile tile = Framing.GetTileSafely(k, l);
+							switch (_structure[i, j])
+							{
+								case 0:
+									break;
+								case 1:
+									tile.active(true);
+									tile.type = 1;
+									tile.slope(0);
+									tile.halfBrick(true);
+									tile.wall = (ushort)WallID.Stone;
+									break;
+								case 2:
+									tile.active(true);
+									tile.type = 1;
+									tile.slope(0);
+									tile.halfBrick(false);
+									tile.wall = (ushort)WallID.Stone;
+									break;
+								case 3:
+									tile.active(true);
+									tile.type = 1;
+									tile.slope((byte)(direction == 1 ? 2 : 1));
+									tile.halfBrick(false);
+									tile.wall = (ushort)WallID.Stone;
+									break;
+								case 4:
+									tile.active(true);
+									tile.type = 1;
+									tile.slope((byte)(direction == 1 ? 3 : 4));
+									tile.halfBrick(false);
+									tile.wall = (ushort)WallID.Stone;
+									break;
+								case 5:
+									tile.active(true);
+									tile.type = 1;
+									tile.slope((byte)(direction == 1 ? 4 : 3));
+									tile.halfBrick(false);
+									tile.wall = (ushort)WallID.Stone;
+									break;
+								case 6:
+									if (confirmPlatforms == 1)
+									{
+										tile.active(false);
+										tile.slope(0);
+										tile.halfBrick(false);
+										WorldGen.PlaceTile(k, l, 20, true, true, -1, 18);
+										WorldGen.GrowPalmTree(k, l);
+									}
+									break;
+								case 7:
+									tile.active(true);
+									tile.type = (ushort)ModContent.TileType<PyramidSlabTile>();
+									tile.slope(0);
+									tile.halfBrick(false);
+									tile.wall = (ushort)WallID.SandstoneBrick;
+									break;
+								case 8:
+									tile.active(true);
+									tile.type = 1;
+									tile.slope((byte)(direction == 1 ? 1 : 2));
+									tile.halfBrick(false);
+									break;
+								case 9:
+									if (confirmPlatforms == 1)
+									{
+										tile.active(false);
+										tile.slope(0);
+										tile.halfBrick(false);
+										WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<StrangeKeystoneTile>(), true, true, -1, 0);
+									}
+									break;
+								case 10:
+									tile.wall = (ushort)WallID.SandstoneBrick;
+									break;
+								case 11:
+									tile.active(true);
+									tile.type = (ushort)ModContent.TileType<OvergrownPyramidTileSafe>();
+									tile.slope(0);
+									tile.halfBrick(false);
+									tile.wall = (ushort)WallID.GrassUnsafe;
+									break;
+								case 12:
+									tile.active(true);
+									tile.type = 53;
+									tile.slope(0);
+									tile.halfBrick(false);
+									tile.wall = (ushort)WallID.Sandstone;
+									break;
+								case 13:
+									tile.active(true);
+									tile.type = (ushort)ModContent.TileType<OvergrownPyramidTileSafe>();
+									tile.slope(0);
+									tile.halfBrick(true);
+									tile.wall = (ushort)WallID.GrassUnsafe;
+									break;
+								case 14:
+									tile.active(true);
+									tile.type = (ushort)ModContent.TileType<OvergrownPyramidTileSafe>();
+									tile.slope((byte)(direction == 1 ? 1 : 2));
+									tile.halfBrick(false);
+									tile.wall = (ushort)WallID.GrassUnsafe;
+									break;
+								case 15:
+									tile.active(true);
+									tile.type = 396;
+									tile.slope(0);
+									tile.halfBrick(false);
+									tile.wall = (ushort)WallID.Sandstone;
+									break;
+								case 16:
+									tile.active(true);
+									tile.type = (ushort)ModContent.TileType<OvergrownPyramidTileSafe>();
+									tile.slope(0);
+									tile.halfBrick(false);
+									tile.wall = (ushort)WallID.GrassUnsafe;
+									break;
+								case 17:
+									tile.active(true);
+									tile.type = 397;
+									tile.slope(0);
+									tile.halfBrick(false);
+									tile.wall = (ushort)WallID.Sandstone;
+									break;
+								case 19:
+									tile.active(true);
+									tile.type = 396;
+									tile.slope((byte)(direction == 1 ? 3 : 4));
+									tile.halfBrick(false);
+									tile.wall = (ushort)WallID.Sandstone;
+									break;
+								case 20:
+									tile.active(true);
+									tile.type = 396;
+									tile.slope((byte)(direction == 1 ? 4 : 3));
+									tile.halfBrick(false);
+									tile.wall = (ushort)WallID.Sandstone;
+									break;
+								case 21:
+									if (confirmPlatforms == 1)
+									{
+										tile.active(false);
+										tile.slope(0);
+										tile.halfBrick(false);
+										WorldGen.PlaceTile(k - (direction != 1 ? 1 : 0), l, 376, true, true, -1, 0);
+									}
+									break;
+								case 22:
+									if (confirmPlatforms == 1)
+									{
+										tile.active(false);
+										tile.slope(0);
+										tile.halfBrick(false);
+										WorldGen.PlaceTile(k - (direction != 1 ? 1 : 0), l, 21, true, true, -1, 31);
+										tile.wall = (ushort)WallID.SandstoneBrick;
+									}
+									break;
+								case 23:
+									tile.active(true);
+									tile.type = 151;
+									tile.slope(0);
+									tile.halfBrick(false);
+									break;
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 }

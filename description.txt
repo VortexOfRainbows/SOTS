@@ -24,11 +24,16 @@ Credits:
 (Past)
 -Misc - FlameFreezer
 
+Update 0.19.1
+-Just a quick hotfix in attempt to fix some bugs such as...
+-Fixed game crash on attempting to load world
+-Fixed enemies from other mods spawning too frequently in planetarium
+-New Mod icon
+
 Update 0.19.0
 -Big thanks to qwerty3.14 for extensive feedback in many areas of the mod!
 -Balancing changes, overhauls, and visual improvements in many areas (including various items)
 -New Boss and Biome with lots of new items
--More items scattered in various places
 -Various bug fixes
 
 Update 0.18.4

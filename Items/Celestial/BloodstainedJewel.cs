@@ -60,7 +60,7 @@ namespace SOTS.Items.Celestial
 						healChance += 0.025f * modPlayer.onhitdamage;
 						if(modPlayer.onhitdamage > 75)
 						{
-						healChance += 3.55f;
+							healChance += 3.55f;
 						}
 					}
 				}

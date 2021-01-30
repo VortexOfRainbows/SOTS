@@ -35,6 +35,7 @@ namespace SOTS.Projectiles.Otherworld
 			projectile.hostile = false;
 			projectile.netImportant = true;
 			projectile.alpha = 200;
+			projectile.ignoreWater = true;
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{

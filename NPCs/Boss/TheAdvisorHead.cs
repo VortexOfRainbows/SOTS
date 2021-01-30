@@ -61,6 +61,7 @@ namespace SOTS.NPCs.Boss
 			writer.Write(watchPlayer);
 			writer.Write(npc.dontTakeDamage);
 			writer.Write(npc.dontCountMe);
+			writer.Write(npc.boss);
 		}
 		public override void ReceiveExtraAI(BinaryReader reader)
 		{
@@ -75,6 +76,7 @@ namespace SOTS.NPCs.Boss
 			watchPlayer = reader.ReadBoolean();
 			npc.dontTakeDamage = reader.ReadBoolean();
 			npc.dontCountMe = reader.ReadBoolean();
+			npc.boss = reader.ReadBoolean();
 		}
 		public override bool CheckActive()
 		{
@@ -92,7 +94,7 @@ namespace SOTS.NPCs.Boss
             Main.npcFrameCount[npc.type] = 1;
             npc.value = 150000;
             npc.npcSlots = 15f;
-            npc.boss = true;
+            npc.boss = false;
             npc.lavaImmune = true;
             npc.noGravity = true;
             npc.noTileCollide = true;
@@ -502,6 +504,7 @@ namespace SOTS.NPCs.Boss
 					dormant = false;
 					npc.dontTakeDamage = false;
 					npc.dontCountMe = false;
+					npc.boss = true;
 				}
 				npc.netUpdate = true;
 				return false;

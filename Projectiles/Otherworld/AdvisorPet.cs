@@ -302,13 +302,37 @@ namespace SOTS.Projectiles.Otherworld
 		bool hasHitYet = false;
 		bool effect = true;
 		int counter = 0;
-        public override void PostAI(Projectile projectile)
-        {
+		int petAdvisorID = -1;
+		public override void PostAI(Projectile projectile)
+		{
+			Player player = Main.player[projectile.owner];
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
+			if(modPlayer.petAdvisor && !hasHitYet && counter >= 5 && modPlayer.typhonRange > 0)
+			{
+				if (petAdvisorID == -1)
+				{
+					for (int i = 0; i < Main.projectile.Length; i++)
+					{
+						Projectile proj = Main.projectile[i];
+						if (proj.active && proj.owner == projectile.owner && proj.type == mod.ProjectileType("AdvisorPet"))
+						{
+							petAdvisorID = i;
+							break;
+						}
+					}
+				}
+				else
+				{
+					Projectile proj = Main.projectile[petAdvisorID];
+					if (!(proj.active && proj.owner == projectile.owner && proj.type == mod.ProjectileType("AdvisorPet")))
+					{
+						petAdvisorID = -1;
+					}
+				}
+			}
 			counter++;
 			if (!hasHitYet && counter >= 5)
 			{
-				Player player = Main.player[projectile.owner];
-				SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 				if (modPlayer.typhonRange > 0)
 				{
 					float minDist = modPlayer.typhonRange * 2;
@@ -351,16 +375,6 @@ namespace SOTS.Projectiles.Otherworld
 
 								float close = (velocity1 - velocity2).Length() * 40f;
 								projectile.velocity = new Vector2(dX * speed, dY * speed);
-								int petAdvisorID = -1;
-								for(int i = 0; i < Main.projectile.Length; i++)
-                                {
-									Projectile proj = Main.projectile[i];
-									if(proj.active && proj.owner == projectile.owner && proj.type == mod.ProjectileType("AdvisorPet"))
-                                    {
-										petAdvisorID = i;
-										break;
-									}
-                                }
 								if(petAdvisorID != -1 && effect)
 								{
 									Projectile proj = Main.projectile[petAdvisorID];
