@@ -1,28 +1,22 @@
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
-using System;
-using Microsoft.Xna.Framework;
 using SOTS.Void;
 
 namespace SOTS.Items.Pyramid
 {
 	public class SandstoneWarhammer : VoidItem
 	{
-		int currentIndex = -1;
-		bool inInventory = false;
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Sandstone Warhammer");
-			Tooltip.SetDefault("Launches homing bloody hammer projectiles");
+			Tooltip.SetDefault("Launches homing hammers");
 		}
 		public override void SafeSetDefaults()
 		{
-
 			item.damage = 21;
 			item.melee = true;
-			item.width = 56;
-			item.height = 56;
+			item.width = 40;
+			item.height = 40;
 			item.useTime = 18;
 			item.useAnimation = 18;
 			item.useStyle = 1;

@@ -2850,7 +2850,7 @@ namespace SOTS
 					{
 						chest.item[slot].SetDefaults(ModContent.ItemType<CoconutGun>());
 						slot++;
-						chest.item[slot].SetDefaults(ModContent.ItemType<AlmondMilk>());
+						chest.item[slot].SetDefaults(ModContent.ItemType<CoconutMilk>());
 						chest.item[slot].stack = 10; // 3 to 5
 						slot++;
 						chest.item[slot].SetDefaults(ItemID.LifeCrystal);
@@ -2874,36 +2874,20 @@ namespace SOTS
 						}
 						slot++;
 					}
-					if(WorldGen.genRand.NextBool(7) && chest.item[0].type == 975)
+					if(WorldGen.genRand.NextBool(7) && chest.item[0].type == ItemID.ShoeSpikes)
 					{
 						chest.item[slot].SetDefaults(mod.ItemType("SpikedClub"));
 						slot++;
 					}
-					if(WorldGen.genRand.NextBool(5) && chest.item[0].type == 997)
-					{
-						//chest.item[slot].SetDefaults(mod.ItemType("CaveIn"));
-						//slot++;
-					}
-					if(WorldGen.genRand.NextBool(7) && chest.item[0].type == 54)
+					if(WorldGen.genRand.NextBool(7) && chest.item[0].type == ItemID.HermesBoots)
 					{
 						chest.item[slot].SetDefaults(mod.ItemType("WingedKnife"));
 						slot++;
-					}
-					if(WorldGen.genRand.NextBool(3) && chest.item[0].type == 906)
-					{
-						//chest.item[slot].SetDefaults(mod.ItemType("LavaPelter"));
-						//slot++;
 					}
 					if(WorldGen.genRand.NextBool(2) && (chest.item[0].type == ItemID.Starfury || chest.item[0].type == ItemID.ShinyRedBalloon || chest.item[0].type == ItemID.LuckyHorseshoe))
 					{
 						chest.item[slot].SetDefaults(mod.ItemType("TinyPlanet"));
 						slot++;
-					}
-					if(WorldGen.genRand.NextBool(6) && (chest.item[0].type == ItemID.IceBoomerang || chest.item[0].type == ItemID.IceBlade || chest.item[0].type == ItemID.IceSkates || chest.item[0].type == ItemID.BlizzardinaBottle || chest.item[0].type == ItemID.FlurryBoots))
-					{
-						//chest.item[slot].SetDefaults(mod.ItemType("FragmentOfPermafrost"));
-						//chest.item[slot].stack = Main.rand.Next(3) + 5;
-						//slot++;
 					}
 				}
 			}

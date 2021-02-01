@@ -21,7 +21,6 @@ namespace SOTS.Items
 		}
 		public override void SetDefaults()
 		{
-      
 			item.maxStack = 1;
             item.width = 34;     
             item.height = 42;   
@@ -29,9 +28,7 @@ namespace SOTS.Items
             item.rare = 6;
 			item.defense = 3;
 			item.accessory = true;
-
 		}
-		
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);

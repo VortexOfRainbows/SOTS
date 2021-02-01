@@ -127,7 +127,6 @@ namespace SOTS.Projectiles.Minions
 			Vector2 properLoop = new Vector2(initialLoop.X, initialLoop.Y).RotatedBy(MathHelper.ToRadians(modPlayer.orbitalCounter * 2.15f));
 			projectile.position.X = properLoop.X + player.Center.X - projectile.width / 2;
 			projectile.position.Y = properLoop.Y + player.Center.Y - projectile.height / 2;
-
 		}
 		public void LaunchLaser(Vector2 area)
 		{

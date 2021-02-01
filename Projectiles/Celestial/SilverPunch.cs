@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using SOTS.Dusts;
 
 namespace SOTS.Projectiles.Celestial
 {    
@@ -32,10 +33,28 @@ namespace SOTS.Projectiles.Celestial
 			projectile.ignoreWater = true;
 			projectile.alpha = 40;
             Main.projFrames[projectile.type] = 5;
+			projectile.usesLocalNPCImmunity = true;
+			projectile.localNPCHitCooldown = 10;
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
-        {
-            target.immune[projectile.owner] = 5;
+		{
+			projectile.localNPCImmunity[target.whoAmI] = projectile.localNPCHitCooldown;
+			target.immune[projectile.owner] = 0;
+		}
+		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		{
+			Texture2D texture = Main.projectileTexture[projectile.type];
+			Vector2 origin = new Vector2(texture.Width / 2, projectile.height / 2);
+			Color color = Color.Black;
+			for (int i = 0; i < 360; i += 30)
+			{
+				Vector2 circular = new Vector2(Main.rand.NextFloat(3.5f, 5), 0).RotatedBy(MathHelper.ToRadians(i));
+				color = new Color(160, 170, 190, 0);
+				Main.spriteBatch.Draw(texture, projectile.Center + circular - Main.screenPosition, new Rectangle(0, projectile.height * projectile.frame, projectile.width, projectile.height), color * ((255f - projectile.alpha) / 255f), projectile.rotation, origin, projectile.scale, SpriteEffects.None, 0.0f);
+			}
+			color = new Color(60, 60, 80);
+			Main.spriteBatch.Draw(texture, projectile.Center - Main.screenPosition, new Rectangle(0, projectile.height * projectile.frame, projectile.width, projectile.height), color, projectile.rotation, origin, projectile.scale, SpriteEffects.None, 0.0f);
+			return false;
 		}
 		public override void AI()
 		{ 
@@ -87,6 +106,32 @@ namespace SOTS.Projectiles.Celestial
 					}
 				}
 			}
+			if (Main.rand.NextBool(2))
+			{
+				Dust dust = Dust.NewDustDirect(projectile.Center - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
+				dust.velocity *= 0.2f;
+				dust.velocity -= 2 * projectile.velocity.SafeNormalize(Vector2.Zero);
+				dust.scale *= 2;
+				dust.noGravity = true;
+				dust.fadeIn = 0.2f;
+				dust.color = new Color(160, 170, 190, 0);
+				dust.alpha = 100;
+			}
+		}
+		public override void Kill(int timeLeft)
+		{
+			for (int i = 0; i < 32; i++)
+			{
+				Dust dust = Dust.NewDustDirect(projectile.Center - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
+				dust.velocity *= 1.2f;
+				dust.velocity += 5 * projectile.velocity.SafeNormalize(Vector2.Zero);
+				dust.scale *= 2;
+				dust.noGravity = true;
+				dust.fadeIn = 0.2f;
+				dust.color = new Color(160, 170, 190, 0);
+				dust.alpha = 100;
+			}
+			base.Kill(timeLeft);
 		}
 	}
 }

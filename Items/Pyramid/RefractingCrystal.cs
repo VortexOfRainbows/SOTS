@@ -50,10 +50,7 @@ namespace SOTS.Items.Pyramid
 				}
 				Rectangle frame = new Rectangle(0, 0, 20, 18);
 				Vector2 rotationAround = new Vector2((4 + mult) * scale, 0).RotatedBy(MathHelper.ToRadians(60 * i + counter));
-				for (int k = 0; k < 1; k++)
-				{
-					Main.spriteBatch.Draw(texture, new Vector2((float)(position.X), (float)(position.Y)) + rotationAround, frame, color * 1f, 0f, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
-				}
+				Main.spriteBatch.Draw(texture, new Vector2((float)(position.X), (float)(position.Y)) + rotationAround, frame, color * 1f, 0f, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
 			}
 			return true;
 		}
@@ -62,7 +59,7 @@ namespace SOTS.Items.Pyramid
 			int i = (int)item.Center.X / 16;
 			int j = (int)item.Center.Y / 16;
 			Tile tile = Framing.GetTileSafely(i, j);
-			if (tile.wall > 0)
+			if (tile.wall > 0 || j > Main.rockLayer)
             {
 				return true;
             }
@@ -78,14 +75,13 @@ namespace SOTS.Items.Pyramid
 			float midDay = 27000f;
 			float percent = (float)time / (float)maxTime;
 			float lightIntesity = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(180f * percent)).Y;
-			//Main.NewText(time + " = " + percent);
 			Texture2D texture = mod.GetTexture("Items/Pyramid/WhitePixel");
-			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Width * 0.5f);
-			float counter = time * 0.4f;
-			//int bonus = (int)(counter / 360f);
-			float mult = new Vector2(-11.75f, 0).RotatedBy(MathHelper.ToRadians(180f * percent)).Y;
+			Vector2 drawOrigin;
+			float counter = time * 0.024f;
+			float mult = new Vector2(-11.8f, 0).RotatedBy(MathHelper.ToRadians(180f * percent)).Y;
 			for (i = 0; i < 6; i++)
 			{
+				drawOrigin = new Vector2(texture2.Width * 0.5f, texture2.Height * 0.5f);
 				Color color = new Color(255, 0, 0, 0);
 				switch (i)
 				{
@@ -108,15 +104,16 @@ namespace SOTS.Items.Pyramid
 						color = new Color(140, 0, 255, 0);
 						break;
 				}
-				Vector2 rotateAroundArea = new Vector2(0, 5) + (new Vector2(5, 0).RotatedBy(MathHelper.ToRadians(180 * percent)));
+				Vector2 rotateAroundArea = new Vector2(0, 2) + (new Vector2(6f, 0).RotatedBy(MathHelper.ToRadians(180 * percent)));
 				Vector2 rotationAround = rotateAroundArea + new Vector2((12 + mult) * scale, 0).RotatedBy(MathHelper.ToRadians(60 * i + counter));
+				Vector2 rotationAround2 = 0.5f * new Vector2((12 + mult * 0.5f) * scale, 0).RotatedBy(MathHelper.ToRadians(60 * i + counter));
 				float rotation2 = rotationAround.ToRotation() - MathHelper.ToRadians(90);
 				float dist = 2;
 				float scale2 = 1 + 0.5f * lightIntesity;
-				//Main.spriteBatch.Draw(texture2, item.Center + rotationAround - Main.screenPosition, null, color * lightIntesity, rotation + rotation2, drawOrigin, 1, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture2, rotationAround2 + item.Center - Main.screenPosition + new Vector2(0, 2), null, color * lightIntesity, rotation, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
 				for (int k = 0; k < 51; k++)
 				{
-					scale2 += 0.1f + 0.025f * lightIntesity;
+					scale2 += 0.1f + 0.01f * lightIntesity;
 					dist += 2;
 					Vector2 fromCenter = item.Center + new Vector2(0, dist * scale).RotatedBy(rotation2);
 					int width = (int)(2 * scale2);

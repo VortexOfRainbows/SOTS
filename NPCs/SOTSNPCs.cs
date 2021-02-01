@@ -7,19 +7,12 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Steamworks;
 using SOTS.Void;
+using SOTS.Items.Void;
 
 namespace SOTS.NPCs
 {
     public class SOTSNPCs : GlobalNPC
     {
-        public override bool PreDraw(NPC npc, SpriteBatch spriteBatch, Color drawColor)
-        {
-			if(npc.HasBuff(mod.BuffType("Assassination")))
-            {
-
-            }
-            return base.PreDraw(npc, spriteBatch, drawColor);
-        }
         public override void ModifyHitByItem(NPC npc, Player player, Item item, ref int damage, ref float knockback, ref bool crit)
 		{
 			hitBy(npc, player, null, item, ref damage, ref knockback, ref crit);
@@ -54,16 +47,6 @@ namespace SOTS.NPCs
 				}
 			}
 		}
-        public override void OnHitByItem(NPC npc, Player player, Item item, int damage, float knockback, bool crit)
-        {
-			//hitBy(npc, player, null, item, ref damage, ref knockback, ref crit);
-            base.OnHitByItem(npc, player, item, damage, knockback, crit);
-        }
-        public override void OnHitByProjectile(NPC npc, Projectile projectile, int damage, float knockback, bool crit)
-		{
-			//hitBy(npc, Main.player[projectile.owner], projectile, null, ref damage, ref knockback, ref crit);
-			base.OnHitByProjectile(npc, projectile, damage, knockback, crit);
-        }
         public override void NPCLoot(NPC npc)
         {
 			Player player = Main.player[Main.myPlayer];
@@ -73,150 +56,101 @@ namespace SOTS.NPCs
 			}
             SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");	
 			bool ZoneForest = !player.GetModPlayer<SOTSPlayer>().PyramidBiome && !player.ZoneDesert && !player.ZoneCorrupt && !player.ZoneDungeon && !player.ZoneDungeon && !player.ZoneHoly && !player.ZoneMeteor && !player.ZoneJungle && !player.ZoneSnow && !player.ZoneCrimson && !player.ZoneGlowshroom && !player.ZoneUndergroundDesert && (player.ZoneDirtLayerHeight || player.ZoneOverworldHeight) && !player.ZoneBeach;
-				
-			if(npc.lifeMax > 5 && !npc.SpawnedFromStatue)
+
+			if (npc.lifeMax > 5 && !npc.SpawnedFromStatue)
 			{
-				if (Main.rand.Next(90) == 0 || (npc.type == 170 || npc.type == 171 || npc.type == 180)) { //guarenteed from pigrons
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("AlmondMilk"), 1); 
-				}
-				if (Main.rand.Next(35) == 0) {
+				if ((Main.rand.Next(90) == 0 && Main.expertMode) || (Main.rand.Next(100) == 0 && !Main.expertMode) || (npc.type == NPCID.PigronCorruption || npc.type == NPCID.PigronHallow || npc.type == NPCID.PigronCrimson))
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("AlmondMilk"), 1);
+
+				if (Main.rand.NextBool(35))
+				{
 					//priorities: otherworld > tide > nature > permafrost > earth >  inferno
 					//additional: evil & chaos (will not spawn in addition to forest)
-					if(player.ZoneSkyHeight || player.ZoneMeteor)
-					{
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FragmentOfOtherworld"), Main.rand.Next(2) + 1); 
-					}
-					else if(player.ZoneBeach || player.ZoneDungeon)
-					{
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FragmentOfTide"), Main.rand.Next(2) + 1); 
-					}
-					else if(ZoneForest || player.ZoneJungle)
-					{
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FragmentOfNature"), Main.rand.Next(2) + 1); 
-					}
-					else if(player.ZoneSnow)
-					{
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FragmentOfPermafrost"), Main.rand.Next(2) + 1); 
-					}
-					else if(player.ZoneUndergroundDesert || player.ZoneDesert || player.GetModPlayer<SOTSPlayer>().PyramidBiome || player.ZoneRockLayerHeight)
-					{
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FragmentOfEarth"), Main.rand.Next(2) + 1); 
-					}
-					else if(player.ZoneUnderworldHeight)
-					{
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FragmentOfInferno"), Main.rand.Next(2) + 1); 
-					}
+					if (player.ZoneSkyHeight || player.ZoneMeteor)
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FragmentOfOtherworld"), Main.rand.Next(2) + 1);
+					else if (player.ZoneBeach || player.ZoneDungeon)
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FragmentOfTide"), Main.rand.Next(2) + 1);
+					else if (ZoneForest || player.ZoneJungle)
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FragmentOfNature"), Main.rand.Next(2) + 1);
+					else if (player.ZoneSnow)
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FragmentOfPermafrost"), Main.rand.Next(2) + 1);
+					else if (player.ZoneUndergroundDesert || player.ZoneDesert || player.GetModPlayer<SOTSPlayer>().PyramidBiome || player.ZoneRockLayerHeight)
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FragmentOfEarth"), Main.rand.Next(2) + 1);
+					else if (player.ZoneUnderworldHeight)
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FragmentOfInferno"), Main.rand.Next(2) + 1);
 				}
-				else if(Main.rand.Next(34) == 0)
+				else if (Main.rand.NextBool(34))
 				{
-					if(player.ZoneCorrupt || player.ZoneCrimson)
-					{
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FragmentOfEvil"), Main.rand.Next(2) + 1); 
-					}
-					if(player.ZoneHoly)
-					{
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FragmentOfChaos"), Main.rand.Next(2) + 1); 
-					}
+					if (player.ZoneCorrupt || player.ZoneCrimson)
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FragmentOfEvil"), Main.rand.Next(2) + 1);
+					if (player.ZoneHoly)
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FragmentOfChaos"), Main.rand.Next(2) + 1);
 				}
-				if (player.ZoneSnow && (Main.rand.Next(90) == 0 && Main.expertMode)){
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("StrawberryIcecream"),1);
-				}
-				if (player.ZoneSnow && (Main.rand.Next(100) == 0 && !Main.expertMode)){
+
+				if (player.ZoneSnow && ((Main.rand.NextBool(90) && Main.expertMode) || (Main.rand.NextBool(100) && !Main.expertMode)))
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("StrawberryIcecream"), 1);
-				}
-				if (npc.type == NPCID.ZombieMushroom || npc.type == NPCID.ZombieMushroomHat || npc.type == NPCID.MushiLadybug || npc.type == NPCID.AnomuraFungus || npc.type == NPCID.FungiBulb || npc.type == NPCID.FungoFish || npc.type == NPCID.GiantFungiBulb) {
-					if (Main.rand.Next(9) == 0 && Main.expertMode) {
+				if (player.ZoneBeach && ((Main.rand.NextBool(120) && Main.expertMode) || (Main.rand.NextBool(150) && !Main.expertMode)))
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<CoconutMilk>(), 1);
+
+				if (npc.type == NPCID.ZombieMushroom || npc.type == NPCID.ZombieMushroomHat || npc.type == NPCID.MushiLadybug || npc.type == NPCID.AnomuraFungus || npc.type == NPCID.FungiBulb || npc.type == NPCID.FungoFish || npc.type == NPCID.GiantFungiBulb)
+					if ((Main.rand.NextBool(10) && !Main.expertMode) || (Main.rand.NextBool(9) && Main.expertMode))
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("CookedMushroom"), 1);
-					}
-					if (Main.rand.Next(10) == 0 && !Main.expertMode) {
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("CookedMushroom"), 1);
-					}
-				}
+
 				if (modPlayer.PlanetariumBiome)
-				{
-					if (Main.rand.Next(90) == 0 && Main.expertMode)
-					{
+					if ((Main.rand.NextBool(90) && Main.expertMode) || (Main.rand.NextBool(100) && !Main.expertMode))
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("DigitalCornSyrup"), 1);
-					}
-					if (Main.rand.Next(100) == 0 && !Main.expertMode)
-					{
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("DigitalCornSyrup"), 1);
-					}
-				}
-				if(npc.type == mod.NPCType("OtherworldlyConstructHead") || npc.type == mod.NPCType("OtherworldlyConstructHead2"))
-                {
-					if(Main.rand.Next(100) == 0)
-					{
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("PhaseCannon"), 1);
-					}
-                }
-				if (npc.type == NPCID.WallofFlesh) {
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("HungryHunter"), 1); 
-				}
-					
-				if (npc.type == NPCID.WyvernHead) {
-					if (Main.rand.Next(5) == 0) {
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemID.GiantHarpyFeather, 1); 
-					}
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FragmentOfOtherworld"), Main.rand.Next(2) + 1); 
-				}
-				
-				if (npc.type == NPCID.SkeletronHead) {
-				//	if (Main.rand.Next(10) == 0) 
-						//Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("BulletShark"), 1); 
-				}
-				if (npc.type == NPCID.GoblinPeon || npc.type == NPCID.GoblinArcher || npc.type == NPCID.GoblinWarrior || npc.type == NPCID.GoblinSorcerer) { //golbins
-					if (Main.rand.Next(2) == 0 || Main.expertMode) {
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("Goblinsteel"), Main.rand.Next(2) + 1); 
-					}
-				}
-				if (npc.type == NPCID.PirateCaptain || npc.type == NPCID.PirateCorsair || npc.type == NPCID.PirateCrossbower || npc.type == NPCID.PirateDeadeye || npc.type == NPCID.Parrot) { //pirates
-					if (Main.rand.Next(10) == 0) {
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("Chocolate"), 1); 
-					}
-				}
-				if (npc.type == NPCID.ElfCopter && Main.rand.Next(12) == 0)
+
+				if (npc.type == mod.NPCType("OtherworldlyConstructHead") || npc.type == mod.NPCType("OtherworldlyConstructHead2") && Main.rand.NextBool(100))
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("PhaseCannon"), 1);
+
+				if (npc.type == NPCID.WallofFlesh)
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("HungryHunter"), 1);
+
+				if (npc.type == NPCID.WyvernHead)
 				{
+					if (Main.rand.NextBool(5))
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemID.GiantHarpyFeather, 1);
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FragmentOfOtherworld"), Main.rand.Next(2) + 1);
+				}
+
+				if (npc.type == NPCID.GoblinPeon || npc.type == NPCID.GoblinArcher || npc.type == NPCID.GoblinWarrior || npc.type == NPCID.GoblinSorcerer)
+				{
+					if (Main.rand.Next(3) <= 1 || Main.expertMode)
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("Goblinsteel"), Main.rand.Next(2) + 1);
+				}
+
+				if (npc.type == NPCID.PirateCaptain || npc.type == NPCID.PirateCorsair || npc.type == NPCID.PirateCrossbower || npc.type == NPCID.PirateDeadeye || npc.type == NPCID.Parrot)
+				{
+					if (Main.rand.NextBool(10))
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("Chocolate"), 1);
+				}
+
+				if (npc.type == NPCID.ElfCopter && Main.rand.NextBool(12))
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("HelicopterParts"), 1);
-				}
-				if (npc.type == NPCID.UndeadMiner) {
-					if (Main.rand.Next(5) == 0) {          
-						 Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("ManicMiner"), 1); 
-					}
-				}
-				if (npc.type == NPCID.BlueSlime) {
-					if (Main.rand.Next(120) == 0) {
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FireSpitter"), 1); 
-					}
-				}
-				if (npc.type == NPCID.Crab) {
-					if (Main.rand.Next(18) == 0) {
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("CrabClaw"), 1); 
-					}
-				}
-				if (npc.type == NPCID.Mothron && NPC.downedPlantBoss)
+
+				if (npc.type == NPCID.UndeadMiner && Main.rand.NextBool(5))
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("ManicMiner"), 1);
+
+				if (npc.type == NPCID.BlueSlime && Main.rand.NextBool(120))
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FireSpitter"), 1);
+
+				if (npc.type == NPCID.Crab && Main.rand.NextBool(18))
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("CrabClaw"), 1);
+
+				if (npc.type == NPCID.Mothron && NPC.downedPlantBoss && ((Main.rand.NextBool(5) && !Main.expertMode) || (Main.rand.NextBool(4) && Main.expertMode)))
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("BrokenVillainSword"), 1);
+
+				if (npc.type == NPCID.PossessedArmor && Main.rand.NextBool(90))
 				{
-					if (Main.rand.Next(5) == 0 && !Main.expertMode)
-					{
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("BrokenVillainSword"), 1);
-					}
-					else if (Main.rand.Next(4) == 0 && Main.expertMode)
-					{
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("BrokenVillainSword"), 1);
-					}
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("PossessedHelmet"), 1);
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("PossessedChainmail"), 1);
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("PossessedGreaves"), 1);
 				}
-				if (npc.type == 64 && Main.rand.Next(60) == 0) {
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("PinkJellyfishStaff"), 1); 
-				}
-				if (npc.type == 140 && Main.rand.Next(90) == 0) { //Possessed armor 
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("PossessedHelmet"), 1); 
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("PossessedChainmail"), 1); 
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("PossessedGreaves"), 1); 
-				}
-				if ((npc.type == 63 || npc.type == 103) && Main.rand.Next(50) == 0)
-				{
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("BlueJellyfishStaff"), 1); 
-				}
+
+				if (npc.type == NPCID.PinkJellyfish && Main.rand.NextBool(60))
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("PinkJellyfishStaff"), 1);
+				if ((npc.type == NPCID.BlueJellyfish || npc.type == NPCID.GreenJellyfish) && Main.rand.NextBool(50))
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("BlueJellyfishStaff"), 1);
 			}
 		}
 		public override void EditSpawnRate(Player player, ref int spawnRate, ref int maxSpawns) 
@@ -237,12 +171,6 @@ namespace SOTS.NPCs
 				maxSpawns = (int)(maxSpawns * 1.75f);
 			}
 		}
-		public static int HookGetBossHeadTextureIndex(On.Terraria.NPC.orig_GetBossHeadTextureIndex orig, NPC self)
-        {
-			if(self.type == NPCID.EyeofCthulhu)
-				return -1;
-			return orig(self);
-        }
 		public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
 		{
 			Player player = spawnInfo.player;

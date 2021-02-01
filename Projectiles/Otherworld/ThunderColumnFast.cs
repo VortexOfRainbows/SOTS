@@ -39,7 +39,7 @@ namespace SOTS.Projectiles.Otherworld
 			projectile.extraUpdates = 4;
 			projectile.scale = 0.8f;
 		}
-		Vector2[] trailPos = new Vector2[30];
+		Vector2[] trailPos = new Vector2[24];
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
 			if (runOnce)
@@ -54,7 +54,7 @@ namespace SOTS.Projectiles.Otherworld
                 {
 					return false;
                 }
-				Color color = new Color(130, 130, 130, 0);
+				Color color = new Color(150, 150, 150, 0);
 				Vector2 drawPos = trailPos[k] - Main.screenPosition;
 				Vector2 currentPos = trailPos[k];
 				Vector2 betweenPositions = previousPosition - currentPos;
@@ -63,7 +63,7 @@ namespace SOTS.Projectiles.Otherworld
 				for (int i = 0; i < max; i++)
 				{
 					drawPos = previousPosition + -betweenPositions * (i / max) - Main.screenPosition;
-					for (int j = 0; j < 6; j++)
+					for (int j = 0; j < 5; j++)
 					{
 						float x = Main.rand.Next(-10, 11) * 0.2f * scale;
 						float y = Main.rand.Next(-10, 11) * 0.2f * scale;
@@ -107,11 +107,11 @@ namespace SOTS.Projectiles.Otherworld
 			if(endHow == 1 && endHow != 2)
 			{
 				int dust = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 242);
-				Main.dust[dust].scale *= 5f * (30f - iterator) / 30f;
+				Main.dust[dust].scale *= 5f * (trailPos.Length - iterator) / (float)trailPos.Length;
 				Main.dust[dust].velocity *= 2f;
 				Main.dust[dust].noGravity = true;
 			}
-			if (iterator >= 30)
+			if (iterator >= trailPos.Length)
 				projectile.Kill();
 		}
 		int endHow = 0;
@@ -126,7 +126,7 @@ namespace SOTS.Projectiles.Otherworld
 		{
 			float point = 0f;
 			Vector2 previousPosition = projectile.Center;
-			for (int k = 0; k < 20; k++)
+			for (int k = 0; k < 16; k++)
 			{
 				float scale = projectile.scale * (trailPos.Length - k) / (float)trailPos.Length;
 				if (trailPos[k] == Vector2.Zero)

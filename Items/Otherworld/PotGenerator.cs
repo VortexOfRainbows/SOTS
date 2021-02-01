@@ -370,7 +370,8 @@ namespace SOTS.Items.Otherworld
 			if (projectile.ai[0] == 0)
 			{
 				WorldGen.PlaceTile(i, j, mod.TileType("SkyPots"), false, false, -1, (int)projectile.ai[1]);
-				NetMessage.SendTileSquare(Main.myPlayer, i, j, 3);
+				if(Main.netMode != 1)
+					NetMessage.SendTileSquare(Main.myPlayer, i, j, 3);
 				Main.PlaySound(SoundID.Item4, projectile.Center);
 				Vector2 position = projectile.Center;
 				for (int k = 0; k < 360; k += 15)

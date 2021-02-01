@@ -326,8 +326,8 @@ namespace SOTS
 				maxCritLifestealPerSecondTimer = maxCritLifestealPerSecond;
 			}
 
-			maxCritManastealPerSecond = 50 + player.statManaMax2 / 5; //max stored manasteal is 50 + 1/5th of the mana max
-			maxCritManastealPerSecondTimer += (6.5f + CritManasteal / 1.5f) / 60f; //max stored voidsteal regenerates at the twice rate as normal voidRegen (basically regenerates 6.5 mana to the pool per second, the pool grows with larger max mana)
+			maxCritManastealPerSecond = 30 + player.statManaMax2 / 6; //max stored manasteal is 30 + 1/6th of the mana max
+			maxCritManastealPerSecondTimer += (6f + CritManasteal / 1.5f) / 60f; //max stored voidsteal regenerates at the twice rate as normal voidRegen (basically regenerates 6 mana to the pool per second, the pool grows with larger max mana)
 			if (maxCritManastealPerSecondTimer > maxCritManastealPerSecond)
 			{
 				maxCritManastealPerSecondTimer = maxCritManastealPerSecond;
@@ -435,10 +435,6 @@ namespace SOTS
 			assassinateFlat = 0;
 			assassinateNum = 1;
 			assassinate = false;
-			if(PlanetariumBiome)
-			{
-				//DespawnSkyEnemies();
-			}
 			vibrantArmor = false;
 			shardSpellExtra = 0;
 			frigidJavelinBoost = 0;

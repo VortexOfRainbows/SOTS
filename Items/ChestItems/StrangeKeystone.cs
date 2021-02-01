@@ -10,13 +10,13 @@ namespace SOTS.Items.ChestItems
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Strange Keystone");
+			DisplayName.SetDefault("Strange Obelisk");
 			Tooltip.SetDefault("It suffers from small cracks under intense sunlight\n'Feels hollow'");
 		}
 		public override void SetDefaults()
 		{
-			item.width = 30;
-			item.height = 36;
+			item.width = 32;
+			item.height = 42;
 			item.maxStack = 999;
 			item.useTurn = true;
 			item.autoReuse = true;
@@ -27,6 +27,30 @@ namespace SOTS.Items.ChestItems
 			item.value = Item.sellPrice(0, 0, 0, 0);
 			item.consumable = true;
 			item.createTile = mod.TileType("StrangeKeystoneTile");
+		}
+	}
+	public class StrangeKeystoneBroken : ModItem
+	{
+		public override void SetStaticDefaults()
+		{
+			DisplayName.SetDefault("Broken Obelisk");
+			Tooltip.SetDefault("");
+		}
+		public override void SetDefaults()
+		{
+			item.width = 32;
+			item.height = 20;
+			item.maxStack = 999;
+			item.useTurn = true;
+			item.autoReuse = true;
+			item.useAnimation = 15;
+			item.useTime = 10;
+			item.useStyle = 1;
+			item.rare = ItemRarityID.Orange;
+			item.value = Item.sellPrice(0, 0, 0, 0);
+			item.consumable = true;
+			item.createTile = mod.TileType("StrangeKeystoneTile");
+			item.placeStyle = 1;
 		}
 	}
 	public class StrangeKeystoneTile : ModTile
@@ -47,10 +71,14 @@ namespace SOTS.Items.ChestItems
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
-             if(frameX == 0)
-             {
-                Item.NewItem(i * 16, j * 16, 48, 64, mod.ItemType("StrangeKeystone"));
-             }
+			if(frameX == 0)
+			{
+			   Item.NewItem(i * 16, j * 16, 48, 64, mod.ItemType("StrangeKeystone"));
+			}
+			if(frameX >= 32)
+			{
+				Item.NewItem(i * 16, j * 16, 48, 64, mod.ItemType("StrangeKeystoneBroken"));
+			}
         }
 	    public override bool CanExplode(int i, int j)
 		{

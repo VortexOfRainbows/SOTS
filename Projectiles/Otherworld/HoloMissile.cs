@@ -69,6 +69,7 @@ namespace SOTS.Projectiles.Otherworld
 			float approaching = ((540f - projectile.timeLeft) / 540f);
 			projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
 			Lighting.AddLight(projectile.Center, 0.5f, 0.65f, 0.75f);
+
 			Player player  = Main.player[(int)projectile.ai[1]];
 			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
 			int dust = Dust.NewDust(projectile.Center + new Vector2(-4, -4), 0, 0, DustID.Electric, 0, 0, projectile.alpha, default, 1.25f);

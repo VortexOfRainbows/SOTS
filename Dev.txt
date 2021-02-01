@@ -25,13 +25,37 @@ Next Update:
 7. Slime gun upgrade
 8. Biome Chest Weapons
 9. Void Low Warning
+12. Archaelogist NPC
 
 Boss Rework Ideas:
 PP to move during nonmoving attacks. Fix despawning issue. Slower projectiles/projectile rate from eye minions.
 Subspace Serpent cross attacks to attack faster and release lightning
 
+1/31/21
+1. More work on Refracting Crystal
+2. Sandstone hammer resprite courtesy of Arcri, Visuals changed, buffed time of projectile, changed piercing capability/interaction
+3. Reduce trail length on Purple Lightning and draw iterations on Purple Lightning from the advisor in order to reduce lag, also reduced collision
+4. Jeweled Gauntlet is now a Void-Melee weapon, firerate and damage buffs (21 -> 12, 43 -> 54), requires Sandstone Warhammer to craft
+	1. Following changes also apply to Armageddon
+	2. Visuals buffed
+	3. Homing buffed
+	4. Velocity increased 7 -> 9, uses local Iframes
+	5. Local iframes means massive damage increase for Armageddon, thus, damage has been nerfed 100 -> 80
+	6. Apocalypse Damage buffed to compensate 100 -> 110
+5. Reduced Crit mana steal max pool by a lot (50 + 1/5 max mana) -> (30 + 1/6 max mana), slightly reuced flat regen rate (6.5 -> 6)
+
+1/30/21
+1. Void consumables more efficiently coded for future proofing
+2. Some code and formatting optimizations in SOTSNPCs for drops
+3. Almond milk lower rates in normal mode, higher goblin steel drops in normal mode
+4. Coconut milk added, drops from beach enemies
+5. Coconut milk in Coconut Chest
+6. Resprites Courtesy of Arcri
+7. More Refracting Crystal Visuals
+
 1/29/21
 1. Coconut island spawns naturally and coconut gun is in there too
+2. Refracting Crystal Visuals
 
 1/28/21
 1. Coconut Gun added, should work in multiplayer, dedicated Item
@@ -53,6 +77,10 @@ Subspace Serpent cross attacks to attack faster and release lightning
 8. Phase tracer and blade necklace blades ignore water
 9. Slight optimization to Pet Advisor's code
 10. Updated support for boss checklist
+
+
+-- Update 0.19.1
+
 
 1/25/21
 1. Forum and Changelog done

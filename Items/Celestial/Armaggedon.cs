@@ -15,7 +15,7 @@ namespace SOTS.Items.Celestial
 		}
 		public override void SafeSetDefaults()
 		{
-			item.damage = 100;
+			item.damage = 80;
 			item.melee = true;
 			item.width = 26;
 			item.height = 26;
@@ -28,8 +28,7 @@ namespace SOTS.Items.Celestial
             item.UseSound = SoundID.Item19;
             item.autoReuse = true;       
 			item.shoot = mod.ProjectileType("BluePunch"); 
-            item.shootSpeed = 7f;
-			item.consumable = false;
+            item.shootSpeed = 9f;
 			item.noMelee = true;
 			item.noUseGraphic = true;
 			item.crit = 10;
