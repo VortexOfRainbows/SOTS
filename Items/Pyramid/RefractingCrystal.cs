@@ -6,6 +6,8 @@ using Microsoft.Xna.Framework;
 using Terraria.ObjectData;
 using Terraria.DataStructures;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Items.ChestItems;
+using SOTS.Dusts;
 
 namespace SOTS.Items.Pyramid
 {
@@ -125,7 +127,127 @@ namespace SOTS.Items.Pyramid
 
 			return base.PreDrawInWorld(spriteBatch, lightColor, alphaColor, ref rotation, ref scale, whoAmI);
         }
-
+		int counter = 0;
+        public override void Update(ref float gravity, ref float maxFallSpeed)
+		{
+			int i = (int)item.Center.X / 16;
+			int j = (int)item.Center.Y / 16;
+			j += 4;
+			Tile tile = Framing.GetTileSafely(i, j);
+			bool day = Main.dayTime;
+			if (tile.wall > 0 || j > Main.rockLayer || Main.raining || !day)
+			{
+				return;
+			}
+			float time = (float)Main.time;
+			float maxTime = 54000f;
+			float minTime = 0f;
+			float midDay = 27000f;
+			if((time > midDay - 750 && time < midDay + 750) || counter > 0)
+            {
+				if(tile.type == ModContent.TileType<StrangeKeystoneTile>())
+                {
+					int frameX = tile.frameX / 16;
+					int frameY = tile.frameY / 16;
+					if (frameX <= 2)
+					{
+						counter++;
+						int i2 = i - frameX;
+						int j2 = j - frameY;
+						for (int k = 0; k < 3; k++)
+						{
+							for (int h = 0; h < 4; h++)
+							{
+								i2 = i - frameX + k;
+								j2 = j - frameY + h;
+								tile = Framing.GetTileSafely(i2, j2);
+								if(counter >= 300)
+								{
+									if (tile.type == ModContent.TileType<StrangeKeystoneTile>())
+									{
+										if(h == 2 && k == 1)
+										{
+											Vector2 middlePos = new Vector2(i2 * 16 + 8, j2 * 16 + 8);
+											if (Main.netMode != 1)
+											{
+												int item = Item.NewItem((int)middlePos.X, (int)middlePos.Y, 0,0, mod.ItemType("PhotonGeyser"), 1);
+												NetMessage.SendData(MessageID.SyncItem, -1, -1, null, item, 1f, 0.0f, 0.0f, 0, 0, 0);
+											}
+											Main.PlaySound(2, middlePos, 14);
+											int cc = 0;
+											for(int l = 0; l < 360; l += 3)
+											{
+												int type = cc % 7;
+												Color color = Color.White;
+												cc += 1 + Main.rand.Next(2);
+												switch (type)
+												{
+													case 0:
+														color = new Color(255, 0, 0, 0);
+														break;
+													case 1:
+														color = new Color(255, 140, 0, 0);
+														break;
+													case 2:
+														color = new Color(255, 255, 0, 0);
+														break;
+													case 3:
+														color = new Color(0, 255, 0, 0);
+														break;
+													case 4:
+														color = new Color(0, 255, 255, 0);
+														break;
+													case 5:
+														color = new Color(0, 0, 255, 0);
+														break;
+													case 6:
+														color = new Color(140, 0, 255, 0);
+														break;
+												}
+												Vector2 circular = new Vector2(16, 0).RotatedBy(MathHelper.ToRadians(l));
+												for(int u = 1; u < 3; u++)
+												{
+													Dust dust = Dust.NewDustDirect(middlePos - new Vector2(5) + circular, 0, 0, ModContent.DustType<CopyDust4>());
+													dust.fadeIn = 0.2f;
+													dust.noGravity = true;
+													dust.alpha = 50;
+													dust.color = color;
+													dust.scale *= 1.75f * u;
+													dust.velocity *= 0.5f;
+													dust.velocity += circular * 0.4f / u;
+												}
+											}
+										}
+										tile.frameX += 54;
+										if (Main.netMode == 2)
+										{
+											NetMessage.SendTileSquare(-1, i2, j2, 5, TileChangeType.None);
+										}
+									}
+								}
+								else
+								{
+									if(Main.rand.Next(450) <= counter)
+									{
+										WorldGen.KillTile(i2, j2, true, true, false);
+										if(Main.rand.NextBool(2))
+											Main.PlaySound(SoundID.Tink, new Vector2(i2 * 16 + 8, j2 * 16 + 8));
+									}
+								}
+							}
+						}
+					}
+					else
+					{
+						counter = 0;
+					}
+				}
+				else
+				{
+					counter = 0;
+				}
+			}
+		}
         public override void SetDefaults()
 		{
 			item.width = 20;

@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -25,6 +26,7 @@ namespace SOTS.Projectiles.Pyramid
 		int randseed = -1;
 		public override void AI() //The projectile's AI/ what the projectile does
 		{
+			Player player = Main.player[projectile.owner];
 			if(randseed == -1)
 			{
 				Main.PlaySound(SoundID.Item14, projectile.Center);
@@ -36,6 +38,7 @@ namespace SOTS.Projectiles.Pyramid
 					Main.dust[num].velocity = circularLocation;
 					Main.dust[num].scale = 3f;
 					Main.dust[num].noGravity = true;
+					Main.dust[num].shader = GameShaders.Armor.GetSecondaryShader(SOTSPlayer.ModPlayer(player).darkEyeShader, player);
 				}
 				for (int i = 0; i < 360; i += 10)
 				{
@@ -46,6 +49,7 @@ namespace SOTS.Projectiles.Pyramid
 					Main.dust[num].velocity = circularLocation;
 					Main.dust[num].scale = 3f;
 					Main.dust[num].noGravity = true;
+					Main.dust[num].shader = GameShaders.Armor.GetSecondaryShader(SOTSPlayer.ModPlayer(player).darkEyeShader, player);
 				}
 				for (int i = 0; i < 360; i += 10)
 				{
@@ -56,6 +60,7 @@ namespace SOTS.Projectiles.Pyramid
 					Main.dust[num].velocity = circularLocation;
 					Main.dust[num].scale = 3f;
 					Main.dust[num].noGravity = true;
+					Main.dust[num].shader = GameShaders.Armor.GetSecondaryShader(SOTSPlayer.ModPlayer(player).darkEyeShader, player);
 				}
 			}
 		}

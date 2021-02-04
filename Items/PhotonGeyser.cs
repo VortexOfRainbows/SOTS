@@ -1,6 +1,7 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Projectiles.Laser;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -12,7 +13,7 @@ namespace SOTS.Items
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Photon Geyser");
-			Tooltip.SetDefault("Unleash a homing beam of erupting light");
+			Tooltip.SetDefault("Unleash a helix of homing rainbow light");
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frameNotUsed, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
@@ -106,7 +107,12 @@ namespace SOTS.Items
 			item.shootSpeed = 22f;
 			item.noMelee = true;
 			item.noUseGraphic = true;
-			item.mana = 30;
+			item.mana = 50;
+		}
+		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+		{
+			Projectile.NewProjectile(position.X, position.Y, speedX, speedY, mod.ProjectileType("PrismOrb"), damage, knockBack, player.whoAmI, 0, ModContent.ProjectileType<PrismLaser>());
+			return true;
 		}
 	}
 }

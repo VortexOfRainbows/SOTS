@@ -15,7 +15,7 @@ namespace SOTS.Items.IceStuff
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Shatter Blade");
-			Tooltip.SetDefault("Shatters on critical strike, surrounding you with 3 ice shards\nMust be repaired after shattering\n'Don't worry, it's not a durability system'");
+			Tooltip.SetDefault("Shatters on critical strike, surrounding you with 3 ice shards\nRepairs itself after shattering\n'Don't worry, it's not a durability system'");
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
@@ -118,7 +118,7 @@ namespace SOTS.Items.IceStuff
 		public override void ModifyHitNPC(Player player, NPC target, ref int damage, ref float knockBack, ref bool crit)
 		{
 			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
-			if (crit)
+			if (crit && player.whoAmI == Main.myPlayer)
 			{
 				for(int i = 0; i < 3; i++)
 				{

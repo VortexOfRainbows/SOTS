@@ -19,8 +19,8 @@ namespace SOTS.Items.Otherworld.FromChests
 		{
             item.damage = 23;
             item.ranged = true;
-            item.width = 58;
-            item.height = 24;
+            item.width = 70;
+            item.height = 30;
             item.useTime = 5; 
             item.useAnimation = 20;
             item.useStyle = 5;    
@@ -47,14 +47,26 @@ namespace SOTS.Items.Otherworld.FromChests
 			Player player = Main.player[Main.myPlayer];
 			Texture2D texture = mod.GetTexture("Items/Otherworld/FromChests/StarcoreAssaultRifleEffect");
 			for (int k = 0; k < 2; k++)
-				Main.spriteBatch.Draw(texture, position, frame, new Color(Main.DiscoR, Main.DiscoG, Main.DiscoB, 0), 0f, origin, scale, SpriteEffects.None, 0f); 
+				Main.spriteBatch.Draw(texture, position, frame, new Color(Main.DiscoR, Main.DiscoG, Main.DiscoB, 0), 0f, origin, scale, SpriteEffects.None, 0f);
+			texture = mod.GetTexture("Items/Otherworld/FromChests/StarcoreAssaultRifleEffect2");
+			for (int k = 0; k < 2; k++)
+				Main.spriteBatch.Draw(texture, position, frame, new Color(Main.DiscoG, Main.DiscoB, Main.DiscoR, 0), 0f, origin, scale, SpriteEffects.None, 0f);
+			texture = mod.GetTexture("Items/Otherworld/FromChests/StarcoreAssaultRifleEffect3");
+			for (int k = 0; k < 2; k++)
+				Main.spriteBatch.Draw(texture, position, frame, new Color(Main.DiscoB, Main.DiscoR, Main.DiscoG, 0), 0f, origin, scale, SpriteEffects.None, 0f);
 		}
         public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
 		{
 			Texture2D texture = mod.GetTexture("Items/Otherworld/FromChests/StarcoreAssaultRifleEffect");
 			for (int k = 0; k < 2; k++)
 				Main.spriteBatch.Draw(texture, item.Center - Main.screenPosition + new Vector2(0, 2), null, new Color(Main.DiscoR, Main.DiscoG, Main.DiscoB, 0), rotation, new Vector2(texture.Width/2, texture.Height/2), scale, SpriteEffects.None, 0f);
-			
+			texture = mod.GetTexture("Items/Otherworld/FromChests/StarcoreAssaultRifleEffect2");
+			for (int k = 0; k < 2; k++)
+				Main.spriteBatch.Draw(texture, item.Center - Main.screenPosition + new Vector2(0, 2), null, new Color(Main.DiscoG, Main.DiscoB, Main.DiscoR, 0), rotation, new Vector2(texture.Width / 2, texture.Height / 2), scale, SpriteEffects.None, 0f);
+			texture = mod.GetTexture("Items/Otherworld/FromChests/StarcoreAssaultRifleEffect3");
+			for (int k = 0; k < 2; k++)
+				Main.spriteBatch.Draw(texture, item.Center - Main.screenPosition + new Vector2(0, 2), null, new Color(Main.DiscoB, Main.DiscoR, Main.DiscoG, 0), rotation, new Vector2(texture.Width / 2, texture.Height / 2), scale, SpriteEffects.None, 0f);
+
 			texture = mod.GetTexture("Items/Otherworld/FromChests/StarcoreAssaultRifleGlow");
 			Color color = Color.White;
 			Vector2 drawOrigin = new Vector2(Main.itemTexture[item.type].Width * 0.5f, item.height * 0.5f);

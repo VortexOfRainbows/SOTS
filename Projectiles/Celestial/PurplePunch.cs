@@ -45,7 +45,7 @@ namespace SOTS.Projectiles.Celestial
 				color = new Color(170, 100, 190, 0);
 				Main.spriteBatch.Draw(texture, projectile.Center + circular - Main.screenPosition, new Rectangle(0, projectile.height * projectile.frame, projectile.width, projectile.height), color * ((255f - projectile.alpha) / 255f), projectile.rotation, origin, projectile.scale, SpriteEffects.None, 0.0f);
 			}
-			color = new Color(60, 0, 80);
+			color = new Color(160, 100, 180);
 			Main.spriteBatch.Draw(texture, projectile.Center - Main.screenPosition, new Rectangle(0, projectile.height * projectile.frame, projectile.width, projectile.height), color, projectile.rotation, origin, projectile.scale, SpriteEffects.None, 0.0f);
 			return false;
 		}
@@ -69,7 +69,7 @@ namespace SOTS.Projectiles.Celestial
 			float speed = 0.275f;
 			if (projectile.friendly == true && projectile.hostile == false)
 			{
-				for (int i = 0; i < Main.npc.Length - 1; i++)
+				for (int i = 0; i < Main.npc.Length; i++)
 				{
 					NPC target = Main.npc[i];
 					if (!target.friendly && target.dontTakeDamage == false && target.lifeMax > 5 && target.active && target.CanBeChasedBy())

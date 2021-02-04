@@ -270,6 +270,11 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 amt += 10;
             if (npc.rarity == 5)
                 amt += 10;
+            List<int> minibosses = new List<int>() { NPCID.Mothron , NPCID.IceQueen , NPCID.SantaNK1 , NPCID.Everscream, NPCID.MourningWood, NPCID.Pumpking, NPCID.GoblinSummoner, NPCID.MartianSaucerCore, NPCID.LunarTowerSolar, NPCID.LunarTowerNebula, NPCID.LunarTowerStardust , NPCID.LunarTowerVortex };
+            if (minibosses.Contains(npc.type))
+            {
+                amt += 50;
+            }
             return amt;
         }
         public override void PostAI(NPC npc)
@@ -329,6 +334,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 return;
             if(HarvestCurse > 0)
             {
+                npc.extraValue = 0;
                 HarvestCurse--;
                 npc.NPCLoot();
             }

@@ -100,7 +100,7 @@ namespace SOTS.NPCs
 					if ((Main.rand.NextBool(90) && Main.expertMode) || (Main.rand.NextBool(100) && !Main.expertMode))
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("DigitalCornSyrup"), 1);
 
-				if (npc.type == mod.NPCType("OtherworldlyConstructHead") || npc.type == mod.NPCType("OtherworldlyConstructHead2") && Main.rand.NextBool(100))
+				if ((npc.type == mod.NPCType("OtherworldlyConstructHead") || npc.type == mod.NPCType("OtherworldlyConstructHead2")) && Main.rand.NextBool(100))
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("PhaseCannon"), 1);
 
 				if (npc.type == NPCID.WallofFlesh)
@@ -111,6 +111,11 @@ namespace SOTS.NPCs
 					if (Main.rand.NextBool(5))
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemID.GiantHarpyFeather, 1);
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FragmentOfOtherworld"), Main.rand.Next(2) + 1);
+				}
+				if(npc.type == NPCID.VoodooDemon || npc.type == NPCID.BoneSerpentHead)
+				{
+					if(Main.rand.NextBool(2) || Main.expertMode)
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FragmentOfInferno"), Main.rand.Next(2) + 1);
 				}
 
 				if (npc.type == NPCID.GoblinPeon || npc.type == NPCID.GoblinArcher || npc.type == NPCID.GoblinWarrior || npc.type == NPCID.GoblinSorcerer)
@@ -168,7 +173,7 @@ namespace SOTS.NPCs
 				spawnRate = (int)(spawnRate /= 30); //essentially setting it to 20
 				if (spawnRate < 1)
 					spawnRate = 1;
-				maxSpawns = (int)(maxSpawns * 1.75f);
+				maxSpawns = (int)(maxSpawns * 2.5f);
 			}
 		}
 		public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)

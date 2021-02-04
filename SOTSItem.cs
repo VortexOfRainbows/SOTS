@@ -18,6 +18,7 @@ using SOTS.Void;
 using SOTS.Items.Celestial;
 using SOTS.Items.Otherworld;
 using SOTS.Items.ChestItems;
+using SOTS.Items;
 
 namespace SOTS
 {
@@ -29,6 +30,7 @@ namespace SOTS
 		public static int[] dedicatedBlue;
 		public static int[] dedicatedPurpleRed;
 		public static int[] dedicatedPastelPink;
+		public static int[] dedicatedRainbow;
 		static bool runOnce = true;
 		public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
 		{
@@ -40,6 +42,7 @@ namespace SOTS
 				dedicatedBlue = new int[] { mod.ItemType("Calculator") };
 				dedicatedPurpleRed = new int[] { ItemType<CursedApple>(), ItemType<ArcStaffMk2>() };
 				dedicatedPastelPink = new int[] { ItemType<StrangeFruit>() };
+				dedicatedRainbow = new int[] { ItemType<PhotonGeyser>() };
 				runOnce = false;
             }
 			if (rarities1.Contains(item.type))
@@ -77,6 +80,11 @@ namespace SOTS
 			if (dedicatedPurpleRed.Contains(item.type))
             {
 				dedicatedColor = VoidPlayer.soulLootingColor;
+				dedicated = true;
+			}
+			if (dedicatedRainbow.Contains(item.type))
+			{
+				dedicatedColor = VoidPlayer.pastelRainbow;
 				dedicated = true;
 			}
 			if (dedicatedPastelPink.Contains(item.type))

@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.IO;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -103,9 +104,29 @@ namespace SOTS.Projectiles.Otherworld
 				projectile.velocity *= 0;
 				projectile.friendly = false;
 				projectile.extraUpdates = 1;
+				if (Main.myPlayer == projectile.owner)
+					projectile.netUpdate = true;
 			}
 		}
-        public override bool PreAI()
+		public override void SendExtraAI(BinaryWriter writer)
+		{
+			writer.Write(projectile.tileCollide);
+			writer.Write(projectile.friendly);
+			writer.Write(end);
+			writer.Write(projectile.extraUpdates);
+			writer.Write(bounceCount);
+			base.SendExtraAI(writer);
+		}
+		public override void ReceiveExtraAI(BinaryReader reader)
+		{
+			projectile.tileCollide = reader.ReadBoolean();
+			projectile.friendly = reader.ReadBoolean();
+			end = reader.ReadBoolean();
+			projectile.extraUpdates = reader.ReadInt32();
+			bounceCount = reader.ReadInt32();
+			base.ReceiveExtraAI(reader);
+		}
+		public override bool PreAI()
 		{
 			if (runOnce)
 			{

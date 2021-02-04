@@ -12,6 +12,7 @@ using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameInput;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static SOTS.SOTS;
@@ -37,6 +38,7 @@ namespace SOTS
 			return player.GetModPlayer<SOTSPlayer>();
 		}
 		Vector2 playerMouseWorld;
+		public int darkEyeShader = 0;
 		public int HoloEyeDamage = 0;
 		public bool HoloEye = false;
 		public bool HoloEyeAttack = false;
@@ -390,6 +392,7 @@ namespace SOTS
 			rainbowGlowmasks = false; 
 			HoloEye = false;
 			HoloEyeDamage = 0;
+			darkEyeShader = 0;
 			for (int i = 9 + player.extraAccessorySlots; i < player.armor.Length; i++) //checking vanity slots
             {
 				Item item = player.armor[i];
@@ -420,7 +423,15 @@ namespace SOTS
 					}
 				}
 			}
-			for(int i = 0; i < player.inventory.Length; i++)
+			for (int i = 0; i < 10; i++) //iterating through armor + accessories
+			{
+				Item item = player.armor[i];
+				if (item.type == ModContent.ItemType<TheDarkEye>())
+				{
+					darkEyeShader = GameShaders.Armor.GetShaderIdFromItemId(player.dye[i].type);
+				}
+			}
+			for (int i = 0; i < player.inventory.Length; i++)
 			{
 				Item item = player.inventory[i];
 				if (item.type == ModContent.ItemType<TwilightAssassinsCirclet>() && item.favorited)

@@ -14,6 +14,7 @@ namespace SOTS.Void
 	{
 		public static Color soulLootingColor = new Color(66, 56, 111);
 		public static Color destabilizeColor = new Color(80, 190, 80);
+		public static Color pastelRainbow = Color.White;
 		public static int soulColorCounter = 0;
 		public int voidMeterMax = 100;
 		public int voidAnkh = 0;
@@ -55,7 +56,8 @@ namespace SOTS.Void
 			voidMeterMax2 = tag.GetInt("voidMeterMax2");
 			voidAnkh = tag.GetInt("voidAnkh");
 			voidStar = tag.GetInt("voidStar");
-			voidMeter = tag.GetFloat("voidMeter");
+			if(tag.ContainsKey("voidMeter"))
+				voidMeter = tag.GetFloat("voidMeter");
 			lootingSouls = tag.GetInt("lootingSouls");
 		}
 		
@@ -193,12 +195,24 @@ namespace SOTS.Void
 					Projectile.NewProjectile(Main.MouseWorld, Vector2.Zero, mod.ProjectileType("HarvestingStrike"), 1, 0, player.whoAmI);
             }
         }
-		private void ResetVariables() {
-
+		public void ColorUpdate()
+		{
 			soulColorCounter++;
 			destabilizeColor = Color.Lerp(new Color(80, 190, 80), new Color(64, 178, 172), 0.5f + new Vector2(0.5f, 0).RotatedBy(MathHelper.ToRadians(soulColorCounter * 1.25f)).X);
 			soulLootingColor = Color.Lerp(new Color(66, 56, 111), new Color(171, 3, 35), 0.5f + new Vector2(0.5f, 0).RotatedBy(MathHelper.ToRadians(soulColorCounter * 1.5f)).X);
-			if(soulsOnKill > 0)
+			float newAi = soulColorCounter * 3 / 13f;
+			double frequency = 0.3;
+			double center = 200;
+			double width = 55;
+			double red = Math.Sin(frequency * (double)newAi) * width + center;
+			double grn = Math.Sin(frequency * (double)newAi + 2.0) * width + center;
+			double blu = Math.Sin(frequency * (double)newAi + 4.0) * width + center;
+			pastelRainbow = new Color((int)red, (int)grn, (int)blu);
+		}
+		private void ResetVariables() 
+		{
+			ColorUpdate();
+			if (soulsOnKill > 0)
 				UseSouls();
 			if(soulColorCounter % 40 == 0)
             {

@@ -199,6 +199,11 @@ namespace SOTS.Projectiles.Minions
 			float distanceToIdlePosition = vectorToIdlePosition.Length();
 			if (Main.myPlayer == player.whoAmI && distanceToIdlePosition > 1800f)
 			{
+				if(distanceToIdlePosition > 2400f)
+					for (int i = 0; i < trailPos.Length; i++)
+					{
+						trailPos[i] = Vector2.Zero;
+					}
 				projectile.position = idlePosition;
 				projectile.velocity *= 0.1f;
 				projectile.netUpdate = true;

@@ -353,10 +353,14 @@ namespace SOTS.Projectiles.Otherworld
 								dY = target.Center.Y - projectile.Center.Y;
 								distance = (float)Math.Sqrt((double)(dX * dX + dY * dY));
 								Rectangle increasedHitbox = new Rectangle(projectile.Hitbox.X - modPlayer.typhonRange, projectile.Hitbox.Y - modPlayer.typhonRange, projectile.width + 2 * modPlayer.typhonRange, projectile.height + 2 * modPlayer.typhonRange);
-								if (distance < minDist && target.Hitbox.Intersects(increasedHitbox) && Collision.CanHitLine(projectile.position, projectile.width, projectile.height, target.position, target.width, target.height))
+								if (distance < minDist && target.Hitbox.Intersects(increasedHitbox))
 								{
-									minDist = distance;
-									target2 = i;
+									bool lineOfSight = Collision.CanHitLine(projectile.position, projectile.width, projectile.height, target.position, target.width, target.height);
+									if(lineOfSight)
+									{
+										minDist = distance;
+										target2 = i;
+									}
 								}
 							}
 						}

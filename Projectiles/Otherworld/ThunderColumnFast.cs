@@ -36,10 +36,10 @@ namespace SOTS.Projectiles.Otherworld
 			projectile.timeLeft = 3600;
 			projectile.tileCollide = false;
 			projectile.penetrate = -1;
-			projectile.extraUpdates = 4;
+			projectile.extraUpdates = 3;
 			projectile.scale = 0.8f;
 		}
-		Vector2[] trailPos = new Vector2[24];
+		Vector2[] trailPos = new Vector2[22];
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
 			if (runOnce)
@@ -161,7 +161,7 @@ namespace SOTS.Projectiles.Otherworld
 			}
 			if(runOnce)
 			{
-				originalVelo = projectile.velocity;
+				originalVelo = projectile.velocity * 1.25f;
 				for (int i = 0; i < trailPos.Length; i++)
 				{
 					trailPos[i] = Vector2.Zero;

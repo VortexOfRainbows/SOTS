@@ -1,13 +1,7 @@
-using System;
-using System.IO;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
-using Terraria.ID;
 
 namespace SOTS.Projectiles.Otherworld
 {    
@@ -37,8 +31,6 @@ namespace SOTS.Projectiles.Otherworld
 			projectile.localNPCImmunity[target.whoAmI] = projectile.localNPCHitCooldown;
 			target.immune[projectile.owner] = 0;
 		}
-		int counter = 0;
-		int counter2 = 0;
 		Color color = Color.White;
 		public override bool PreAI()
 		{
@@ -50,9 +42,6 @@ namespace SOTS.Projectiles.Otherworld
 				}
 				runOnce = false;
 			}
-			if(!end)
-				counter += 1;
-			counter2++;
 			return base.PreAI();
 		}
 		public override void PostAI()
@@ -175,10 +164,6 @@ namespace SOTS.Projectiles.Otherworld
 					end = true;
 				}
 			}
-			else
-            {
-				//projectile.position += projectile.velocity * 0.18f;
-            }
 		}
         public override bool ShouldUpdatePosition()
         {

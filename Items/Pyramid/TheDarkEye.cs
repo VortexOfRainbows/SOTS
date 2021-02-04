@@ -4,6 +4,7 @@ using SOTS;
 using SOTS.Void;
 using System;
 using Terraria;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Default;
@@ -91,7 +92,7 @@ namespace SOTS.Items.Pyramid
 		int alpha2 = 0;
 		Vector2 npcPosStore1;
 		Vector2 npcPosStore2;
-		public static Vector2 StaticDrawDetect(Mod mod, Vector2 player, int i, int alpha1, int alpha2, int rotation, ref Vector2 toVelo, bool final = false)
+		public static Vector2 StaticDrawDetect(Mod mod, Vector2 player, int i, int alpha1, int alpha2, int rotation, ref Vector2 toVelo, bool final = false, Player player2 = null)
 		{
 			Vector2 npcPosStore1 = player;
 			Vector2 npcPosStore2 = player;
@@ -102,6 +103,7 @@ namespace SOTS.Items.Pyramid
 				Main.dust[num].velocity *= 1.5f;
 				Main.dust[num].scale = 2.1f;
 				Main.dust[num].noGravity = true;
+				Main.dust[num].shader = GameShaders.Armor.GetSecondaryShader(SOTSPlayer.ModPlayer(player2).darkEyeShader, player2);
 			}
 			Vector2 finalPos = player;
 			float dX;
@@ -165,7 +167,7 @@ namespace SOTS.Items.Pyramid
 				if (i == -1)
 				{
 					if (j > 12)
-						dust(mod, finalPos + circularLocation, i, alpha1, alpha2, final);
+						dust(mod, finalPos + circularLocation, i, alpha1, alpha2, final, player2.whoAmI);
 					if (j == 159)
 					{
 						finalPos += toVelo * 12;
@@ -178,6 +180,7 @@ namespace SOTS.Items.Pyramid
 								Main.dust[num].velocity *= 1.5f;
 								Main.dust[num].scale = 2.1f;
 								Main.dust[num].noGravity = true;
+								Main.dust[num].shader = GameShaders.Armor.GetSecondaryShader(SOTSPlayer.ModPlayer(player2).darkEyeShader, player2);
 							}
 						}
 					}
@@ -185,7 +188,7 @@ namespace SOTS.Items.Pyramid
 				if (i == 1)
 				{
 					if (j > 12)
-						dust(mod, finalPos + circularLocation, i, alpha1, alpha2, final);
+						dust(mod, finalPos + circularLocation, i, alpha1, alpha2, final, player2.whoAmI);
 					if (j == 159)
 					{
 						finalPos += toVelo * 12;
@@ -198,6 +201,7 @@ namespace SOTS.Items.Pyramid
 								Main.dust[num].velocity *= 1.5f;
 								Main.dust[num].scale = 2.1f;
 								Main.dust[num].noGravity = true;
+								Main.dust[num].shader = GameShaders.Armor.GetSecondaryShader(SOTSPlayer.ModPlayer(player2).darkEyeShader, player2);
 							}
 						}
 					}
@@ -282,6 +286,7 @@ namespace SOTS.Items.Pyramid
 								int num = Dust.NewDust(new Vector2(finalPos.X - 5 + circularRotation.X, finalPos.Y - 6 + circularRotation.Y), 0, 0, mod.DustType("ShortlivedCurseDust"));
 								Main.dust[num].velocity *= 0.1f;
 								Main.dust[num].alpha = 255 - (alpha1 < 45 ? alpha1 : 45);
+								Main.dust[num].shader = GameShaders.Armor.GetSecondaryShader(SOTSPlayer.ModPlayer(player).darkEyeShader, player);
 							}
 							if (final)
 							{
@@ -289,6 +294,7 @@ namespace SOTS.Items.Pyramid
 								Main.dust[num].velocity *= 1.5f;
 								Main.dust[num].scale = 2.1f;
 								Main.dust[num].noGravity = true;
+								Main.dust[num].shader = GameShaders.Armor.GetSecondaryShader(SOTSPlayer.ModPlayer(player).darkEyeShader, player);
 							}
 						}
 					}
@@ -308,6 +314,7 @@ namespace SOTS.Items.Pyramid
 								int num = Dust.NewDust(new Vector2(finalPos.X - 5 + circularRotation.X, finalPos.Y - 6 + circularRotation.Y), 0, 0, mod.DustType("ShortlivedCurseDust"));
 								Main.dust[num].velocity *= 0.1f;
 								Main.dust[num].alpha = 255 - (alpha2 < 45 ? alpha2 : 45);
+								Main.dust[num].shader = GameShaders.Armor.GetSecondaryShader(SOTSPlayer.ModPlayer(player).darkEyeShader, player);
 							}
 							if(final)
 							{
@@ -315,6 +322,7 @@ namespace SOTS.Items.Pyramid
 								Main.dust[num].velocity *= 1.5f;
 								Main.dust[num].scale = 2.1f;
 								Main.dust[num].noGravity = true;
+								Main.dust[num].shader = GameShaders.Armor.GetSecondaryShader(SOTSPlayer.ModPlayer(player).darkEyeShader, player);
 							}
 						}
 					}
@@ -328,24 +336,28 @@ namespace SOTS.Items.Pyramid
 			int i = (int)pos.X / 16;
 			int j = (int)pos.Y / 16;
 			Tile tile = Framing.GetTileSafely(i, j);
+			Player player = Main.player[whoAmI];
 			if (final)
 			{
 				int num = Dust.NewDust(pos - new Vector2(5, 6), 0, 0, 21);
 				Main.dust[num].velocity *= 0.1f;
 				Main.dust[num].scale = 2.1f;
 				Main.dust[num].noGravity = true;
+				Main.dust[num].shader = GameShaders.Armor.GetSecondaryShader(SOTSPlayer.ModPlayer(player).darkEyeShader, player);
 			}
 			else if (type == -1 && alpha1 > 0 && Main.myPlayer == whoAmI)
 			{
 				int num = Dust.NewDust(pos - new Vector2(5, 6), 0, 0, mod.DustType("ShortlivedCurseDust"));
 				Main.dust[num].velocity *= 0.1f;
 				Main.dust[num].alpha = 255 - (alpha1 < 45 ? alpha1 : 45);
+				Main.dust[num].shader = GameShaders.Armor.GetSecondaryShader(SOTSPlayer.ModPlayer(player).darkEyeShader, player);
 			}
 			else if (type == 1 && alpha2 > 0 && Main.myPlayer == whoAmI)
 			{
 				int num = Dust.NewDust(pos - new Vector2(5, 6), 0, 0, mod.DustType("ShortlivedCurseDust"));
 				Main.dust[num].velocity *= 0.1f;
 				Main.dust[num].alpha = 255 - (alpha2 < 45 ? alpha2 : 45);
+				Main.dust[num].shader = GameShaders.Armor.GetSecondaryShader(SOTSPlayer.ModPlayer(player).darkEyeShader, player);
 			}
 		}
 		public void calculateDamage(Player player, NPC npc, float damageMult)
@@ -550,7 +562,7 @@ namespace SOTS.Items.Pyramid
 			{
 				Vector2 velo = Vector2.Zero;
 				effect = true;
-				Vector2 finalPos = TheDarkEye.StaticDrawDetect(mod, projectile.Center, (int)projectile.ai[0], (int)projectile.ai[1], projectile.damage, (int)projectile.knockBack, ref velo, true);
+				Vector2 finalPos = TheDarkEye.StaticDrawDetect(mod, projectile.Center, (int)projectile.ai[0], (int)projectile.ai[1], projectile.damage, (int)projectile.knockBack, ref velo, true, player);
 				Main.PlaySound(SoundID.Item8, Main.player[projectile.owner].Center);
 				player.position = finalPos - new Vector2(player.width / 2, player.height / 2);
 				if(player.velocity.Y > 1)

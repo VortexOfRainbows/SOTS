@@ -64,11 +64,21 @@ namespace SOTS.Projectiles.Laser
             return false;
         }
         bool ended = false;
+        int ai2 = 0;
         public override bool PreAI()
         {
             Player player = Main.player[projectile.owner];
-            if (!Main.player[projectile.owner].channel)
-                ended = true;
+            projectile.ai[1] += 0.35f;
+            if (projectile.ai[1] < 100)
+            {
+                projectile.ai[1] *= 1.035f;
+            }
+            else
+            {
+                projectile.ai[1] = 100;
+                ai2++;
+            }
+            if (!player.channel && projectile.ai[1] >= 100 && ai2 >= 5) ended = true;
             if (!ended && projectile.timeLeft < 2)
                 projectile.timeLeft = 2;
             Vector2 vector2_1 = Main.player[projectile.owner].RotatedRelativePoint(Main.player[projectile.owner].MountedCenter, true);

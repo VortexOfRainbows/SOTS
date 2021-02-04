@@ -14,27 +14,64 @@ Priority: Remaining Spirits
 	1. Attaches a second player to you
 13. Dissolving Element Blocks			
 	1. Give off cool particles, can be used in summoning rituals
+14. Pyramid chests to no longer spawn close to surface (idc about this tbh)
+15. Kitchen Sink (idc about this tbh)
 
 Next Update:
-1. Pyramid chests to no longer spawn close to surface (idc about this tbh)
-3. Kitchen Sink
 4. Subspace Scissors
 5. Void Bar pos stays after relog
-11. Prefixes for void
 6. Flux Slime
 7. Slime gun upgrade
 8. Biome Chest Weapons
 9. Void Low Warning
 12. Archaelogist NPC
+17. Prefixes for voids
+20. Royal Jelly, Peanut Butter, PB&J
+21. Rework cursed impale
+22. Greyscale Rainbow for Starcore Assault Rifle
 
 Boss Rework Ideas:
 PP to move during nonmoving attacks. Fix despawning issue. Slower projectiles/projectile rate from eye minions.
 Subspace Serpent cross attacks to attack faster and release lightning
 
+2/3/21
+1. Max Spawns in the planetarium 1.75x -> 2.5x
+2. Photon Geyser is obtainable from using refracting crystal on the Obelisk, Unlock method works OK in multiplayer (missing particles)
+3. Dark Eye is dyeable
+4. Implemented starcore assault rifle resprite
+5. Ghoul Blaster KB increased 1.7 -> 3, reworked visuals and effect, should act as a buff
+	1. Homing increased
+6. Cursed Impale damage 26 -> 30
+
+2/2/21
+1. More work on Photon Geyser (Practically finished now)
+2. Loaded in some pyramid resprites. Resprited weapons had their rarities and prices lowered slightly.
+3. Pyramid Items:
+	Pitati Longbow: Has a more unique effect, fires out an Emerald Bolt, this should make it considerably stronger
+	Sandstone Edge: Has a more unique effect, releases Emerald Bolts upon critical strike, Autoswing, damage 26 -> 28, useTime 25 -> 22
+	Sandstone Warhammer: Damage 21 -> 23
+	Imperial Pike: Now generates a damage trail + autoswing
+	Royal Magnum: Damage 11 -> 14, useTime 15 -> 14, effect visuals changed, functions pretty similar, Knockback 4 -> 3
+4. Multiplayer:
+	Synced Pitati and Sandstone Edge new effects
+	Starcore Assault rifle synced
+	Photon Geyser synced fine
+5. Resprited Granite Protector
+6. Inferno fragment has 50% normal mode, 100% expert mode drop rate from Voodoo Demons and Bone Serpents
+7. Robotic Squirrel will stop creating a Teleport trail after 2400 units traveled from the player (in order to reduce lag). The trail will return after returning.
+8. Ghost Pepper can no longer duplicate dropped money in expert (in fact, you may lose some!)
+9. Added Mothron and the Minibosses, Pillars to Cursed Apple higher cost pool (+50)
+10. Another small change to the Pet Advisor, in attempt to reduce lag, particularly in multiplayer
+
+2/1/21
+1. Void meter saving fix
+2. More work on Photon Geyser
+
 1/31/21
 1. More work on Refracting Crystal
 2. Sandstone hammer resprite courtesy of Arcri, Visuals changed, buffed time of projectile, changed piercing capability/interaction
 3. Reduce trail length on Purple Lightning and draw iterations on Purple Lightning from the advisor in order to reduce lag, also reduced collision
+	1. Also lowered extra updates 4 -> 3, which also makes them a little slower
 4. Jeweled Gauntlet is now a Void-Melee weapon, firerate and damage buffs (21 -> 12, 43 -> 54), requires Sandstone Warhammer to craft
 	1. Following changes also apply to Armageddon
 	2. Visuals buffed

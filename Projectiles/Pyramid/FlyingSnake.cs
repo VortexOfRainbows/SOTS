@@ -109,7 +109,7 @@ namespace SOTS.Projectiles.Pyramid
 			}
 			if (projectile.friendly == true && projectile.hostile == false)
 			{
-				for(int i = 0; i < Main.npc.Length - 1; i++)
+				for(int i = 0; i < Main.npc.Length; i++)
 				{
 					NPC target = Main.npc[i];
 					if(target.CanBeChasedBy() && !foundTarget)

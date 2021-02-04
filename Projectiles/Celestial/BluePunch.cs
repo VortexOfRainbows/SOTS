@@ -45,7 +45,7 @@ namespace SOTS.Projectiles.Celestial
 				color = new Color(100, 100, 255, 0);
 				Main.spriteBatch.Draw(texture, projectile.Center + circular - Main.screenPosition, new Rectangle(0, projectile.height * projectile.frame, projectile.width, projectile.height), color * ((255f - projectile.alpha) / 255f), projectile.rotation, origin, projectile.scale, SpriteEffects.None, 0.0f);
 			}
-			color = new Color(0, 0, 100);
+			color = new Color(100, 100, 200);
 			Main.spriteBatch.Draw(texture, projectile.Center - Main.screenPosition, new Rectangle(0, projectile.height * projectile.frame, projectile.width, projectile.height), color, projectile.rotation, origin, projectile.scale, SpriteEffects.None, 0.0f);
 			return false;
 		}

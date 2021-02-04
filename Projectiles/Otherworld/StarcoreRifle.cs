@@ -16,8 +16,8 @@ namespace SOTS.Projectiles.Otherworld
 		}
 		public override void SetDefaults() 
 		{
-			projectile.width = 24;
-			projectile.height = 58;
+			projectile.width = 30;
+			projectile.height = 70;
             projectile.aiStyle = 14;
 			projectile.friendly = false;
 			projectile.penetrate = -1;
@@ -34,9 +34,13 @@ namespace SOTS.Projectiles.Otherworld
 			Vector2 drawPos = projectile.Center - Main.screenPosition;
 			Color color = new Color(Main.DiscoR, Main.DiscoG, Main.DiscoB, 0);
 			for (int k = 0; k < 2; k++)
-            {
                 spriteBatch.Draw(texture, drawPos, null, color, projectile.rotation, drawOrigin, projectile.scale, projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
-            }
+            texture = ModContent.GetTexture("SOTS/Projectiles/Otherworld/StarcoreRifleEffect2");
+            for (int k = 0; k < 2; k++)
+                spriteBatch.Draw(texture, drawPos, null, new Color(Main.DiscoG, Main.DiscoB, Main.DiscoR, 0), projectile.rotation, drawOrigin, projectile.scale, projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+            texture = ModContent.GetTexture("SOTS/Projectiles/Otherworld/StarcoreRifleEffect3");
+            for (int k = 0; k < 2; k++)
+                spriteBatch.Draw(texture, drawPos, null, new Color(Main.DiscoB, Main.DiscoR, Main.DiscoG, 0), projectile.rotation, drawOrigin, projectile.scale, projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
             color = Color.White;
             texture = ModContent.GetTexture("SOTS/Projectiles/Otherworld/StarcoreRifleGlow");
             spriteBatch.Draw(texture, drawPos, null, color, projectile.rotation, drawOrigin, projectile.scale, projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);

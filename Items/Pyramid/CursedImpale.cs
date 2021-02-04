@@ -11,11 +11,11 @@ namespace SOTS.Items.Pyramid
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Cursed Impale");
-			Tooltip.SetDefault("Fires shadowflame upon hitting an enemy");
+			Tooltip.SetDefault("Releases a short ranged burst of energy");
 		}
 		public override void SetDefaults()
 		{
-			item.damage = 26;
+			item.damage = 30;
 			item.melee = true;
 			item.width = 44;
 			item.height = 44;
@@ -43,13 +43,13 @@ namespace SOTS.Items.Pyramid
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-              int numberProjectiles = 1;
-			  for (int i = 0; i < numberProjectiles; i++)
-              {
-                  Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(0));
-                  Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI);
-              }
-              return true; 
+			int numberProjectiles = 1;
+			for (int i = 0; i < numberProjectiles; i++)
+			{
+				Projectile.NewProjectile(position.X, position.Y, speedX, speedY, type, damage, knockBack, player.whoAmI);
+				//Projectile.NewProjectile(position.X, position.Y, speedX, speedY, mod.ProjectileType("RubyBurst"), damage, knockBack, player.whoAmI);
+			}
+			return false; 
 		}
 	}
 }
