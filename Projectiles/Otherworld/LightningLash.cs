@@ -1,18 +1,13 @@
-using System;
 using System.IO;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
-using Terraria.ID;
 
 namespace SOTS.Projectiles.Otherworld
 {    
     public class LightningLash : ModProjectile 
-    {	int wait = 0;
+    {
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Lightning Lash");
@@ -63,9 +58,7 @@ namespace SOTS.Projectiles.Otherworld
 			int dist = trailPos.Length;
 			for (int i = 0; i < dist; i++)
 			{
-				bool collided = false;
 				center += toVelo * 5.5f;
-
 				for (int reps = 0; reps < 3; reps++)
 				{
 					Vector2 attemptToPosition = (projectile.Center + toVelo * 3f) - addPos;

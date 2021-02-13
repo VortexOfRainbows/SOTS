@@ -9,6 +9,7 @@ using Steamworks;
 using SOTS.Void;
 using static SOTS.SOTS;
 using System;
+using SOTS.Projectiles.BiomeChest;
 
 namespace SOTS.NPCs.ArtificialDebuffs
 {
@@ -18,6 +19,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
         public int PlatinumCurse = 0;
         public int HarvestCurse = 0;
         public int DestableCurse = 0;
+        public int BleedingCurse = 0;
         public void SendClientChanges(Player player, NPC npc)
         {
             // Send a Mod Packet with the changes.
@@ -28,6 +30,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
             packet.Write(HarvestCurse);
             packet.Write(PlatinumCurse);
             packet.Write(DestableCurse);
+            packet.Write(BleedingCurse);
             packet.Send();
         }
         public override void PostDraw(NPC npc, SpriteBatch spriteBatch, Color drawColor)
@@ -156,6 +159,47 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 Main.spriteBatch.Draw(texture, pos - Main.screenPosition, frame, VoidPlayer.destabilizeColor, 0f, origin, 1f, SpriteEffects.None, 0f);
                 height += 24;
             }
+            if (BleedingCurse > 0)
+            {
+                drawColor = new Color(255, 0, 0);
+                Color color = new Color(255, 50, 50, 0);
+                Texture2D texture = mod.GetTexture("NPCs/ArtificialDebuffs/Bleeding");
+                int size = 0;
+                for (int plat = BleedingCurse; plat > 0; plat /= 10)
+                {
+                    size++;
+                }
+                Vector2 pos = new Vector2(npc.Center.X, npc.position.Y);
+                pos.X += size * ((texture.Width / 11f) - 2) / 2f;
+                pos.X += 4;
+                pos.Y -= height;
+                Vector2 origin = new Vector2(texture.Width / 22, texture.Height / 2);
+                Rectangle frame;
+                for (int plat = BleedingCurse; plat > 0; plat /= 10)
+                {
+                    int currentNum = plat % 10;
+                    frame = new Rectangle(1 + ((1 + currentNum) * (texture.Width / 11)), 1, texture.Width / 11 - 2, texture.Height - 2);
+                    for (int i = 0; i < 6; i++)
+                    {
+                        float x = Main.rand.Next(-10, 11) * 0.3f;
+                        float y = Main.rand.Next(-10, 11) * 0.3f;
+                        Main.spriteBatch.Draw(texture, pos - Main.screenPosition + new Vector2(x, y), frame, color, 0f, origin, 1f, SpriteEffects.None, 0f);
+                    }
+                    Main.spriteBatch.Draw(texture, pos - Main.screenPosition, frame, drawColor, 0f, origin, 1f, SpriteEffects.None, 0f);
+                    pos.X -= (texture.Width / 11f) - 2;
+                }
+                pos.X -= 4;
+                frame = new Rectangle(0, 0, texture.Width / 11, texture.Height);
+                pos.Y -= 1;
+                for (int i = 0; i < 6; i++)
+                {
+                    float x = Main.rand.Next(-10, 11) * 0.3f;
+                    float y = Main.rand.Next(-10, 11) * 0.3f;
+                    Main.spriteBatch.Draw(texture, pos - Main.screenPosition + new Vector2(x, y), frame, color, 0f, origin, 1f, SpriteEffects.None, 0f);
+                }
+                Main.spriteBatch.Draw(texture, pos - Main.screenPosition, frame, drawColor, 0f, origin, 1f, SpriteEffects.None, 0f);
+                height += 24;
+            }
             base.PostDraw(npc, spriteBatch, drawColor);
         }
         public override void OnHitByItem(NPC npc, Player player, Item item, int damage, float knockback, bool crit)
@@ -279,6 +323,10 @@ namespace SOTS.NPCs.ArtificialDebuffs
         }
         public override void PostAI(NPC npc)
         {
+            if(npc.immortal)
+            {
+                return;
+            }
             for(int i = 0; i < PlatinumCurse; i++)
             {
                 if(Main.rand.NextBool(20 + i))
@@ -302,23 +350,87 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 }
             }
             float impaledDarts = 0;
-            for(int i = 0; i < Main.projectile.Length; i++)
+            float flowered = 0;
+            for (int i = 0; i < Main.projectile.Length; i++)
             {
                 Projectile proj = Main.projectile[i];
                 if (!proj.friendly && proj.active && proj.type == mod.ProjectileType("PlatinumDart") && (int)proj.ai[1] == npc.whoAmI && proj.timeLeft < 8998)
                 {
                     impaledDarts++;
                 }
+                if (!proj.friendly && proj.active && proj.type == mod.ProjectileType("Rebar") && (int)proj.ai[1] == npc.whoAmI && proj.timeLeft < 8998)
+                {
+                    if (Main.rand.NextBool(3))
+                    {
+                        Vector2 rotate = new Vector2(18, 0).RotatedBy(proj.rotation);
+                        Dust dust = Dust.NewDustDirect(proj.Center + rotate - new Vector2(5f), 0, 0, DustID.Blood);
+                        dust.velocity *= 0.10f;
+                        dust.noGravity = false;
+                        dust.scale *= 1.75f;
+                    }
+                    if ((int)proj.ai[0] == npc.whoAmI)
+                    {
+                        Player player = Main.player[proj.owner];
+                        if (Main.myPlayer == player.whoAmI && Main.netMode == 1)
+                            SendClientChanges(player, npc);
+                        BleedingCurse++;
+                        proj.ai[0] = -1;
+                    }
+                }
+                if (!proj.friendly && proj.active && proj.type == mod.ProjectileType("FloweringBud") && proj.timeLeft < 8998)
+                {
+                    FloweringBud flower = (FloweringBud)proj.modProjectile;
+                    if(flower.effected[npc.whoAmI] && !npc.immortal && npc.type != ModContent.NPCType<BloomingHook>())
+                    {
+                        flowered++;
+                        if (flowered <= 1)
+                        {
+                            Player player = Main.player[proj.owner];
+                            SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
+                            if(modPlayer.halfLifeRegen < 3)
+                                modPlayer.halfLifeRegen += 3;
+                            modPlayer.halfLifeRegen++;
+                            if (npc.boss)
+                                modPlayer.halfLifeRegen++;
+                        }
+                        if (flower.enemyIndex == npc.whoAmI)
+                        {
+                            flowered++;
+                        }
+                        else
+                        {
+                            Vector2 toFlower = new Vector2(proj.Center.X, proj.position.Y - 8) - new Vector2(npc.Center.X, npc.position.Y + npc.height);
+                            float dist = toFlower.Length();
+                            toFlower = toFlower.SafeNormalize(Vector2.Zero);
+                            float mult = (dist * 0.025f) * (npc.boss ? 0.05f : 1);
+                            toFlower *= 0.5f + mult;
+                            npc.position += toFlower;
+                        }
+                    }
+                }
             }
-            float mult = 0.125f;
+            if (flowered >= 1)
+            {
+                isFlowered = true;
+            }
+            else
+                isFlowered = false;
+            float dartMult = 0.125f;
             if(npc.boss == true)
             {
-                mult = 0.05f;
+                dartMult = 0.05f;
             }
-            float negativeVeloMult = 1 - 1 / (1 + mult * impaledDarts);
-            npc.position -= npc.velocity * negativeVeloMult;
+            float flowerMult = 0.5f;
+            if (npc.boss == true)
+            {
+                flowerMult = 0.05f;
+            }
+            float dartVeloMult = 1 / (1 + dartMult * impaledDarts);
+            float flowerVeloMult = 1 / (1 + flowerMult * flowered);
+            npc.position -= npc.velocity * (1 - dartVeloMult * flowerVeloMult);
             base.PostAI(npc);
         }
+        bool isFlowered = false;
         public override void UpdateLifeRegen(NPC npc, ref int damage)
         {
             if(PlatinumCurse > 0)
@@ -326,7 +438,43 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 npc.lifeRegen -= PlatinumCurse * 8;
                 damage = PlatinumCurse;
             }
+            if (BleedingCurse > 0)
+            {
+                npc.lifeRegen -= BleedingCurse * 10;
+                damage += BleedingCurse / 2;
+            }
+            if(isFlowered)
+            {
+                npc.lifeRegen -= 8;
+            }
             base.UpdateLifeRegen(npc, ref damage);
+        }
+        public override bool PreDraw(NPC npc, SpriteBatch spriteBatch, Color drawColor)
+        {
+            for (int i = 0; i < Main.maxNPCs; i++)
+            {
+                Projectile proj = Main.projectile[i];
+                if (!proj.friendly && proj.active && proj.type == mod.ProjectileType("FloweringBud") && proj.timeLeft < 8998)
+                {
+                    FloweringBud flower = (FloweringBud)proj.modProjectile;
+                    if (flower.effected[npc.whoAmI] && npc.type != ModContent.NPCType<BloomingHook>())
+                    {
+                        Texture2D texture2 = mod.GetTexture("Projectiles/BiomeChest/TangleGrowthVine");
+                        float scale = proj.scale;
+                        scale *= 0.7f;
+                        Vector2 drawPos;
+                        Vector2 betweenPositions = npc.Center - proj.Center;
+                        Color color = Color.White;
+                        float max = betweenPositions.Length() / (texture2.Width * scale);
+                        for (int k = 0; k < max; k++)
+                        {
+                            drawPos = npc.Center + -betweenPositions * (k / max) - Main.screenPosition;
+                            Main.spriteBatch.Draw(texture2, drawPos, null, color, betweenPositions.ToRotation(), new Vector2(texture2.Width / 2, texture2.Height / 2), scale, SpriteEffects.None, 0f);
+                        }
+                    }
+                }
+            }
+            return base.PreDraw(npc, spriteBatch, drawColor);
         }
         public override void NPCLoot(NPC npc)
         {

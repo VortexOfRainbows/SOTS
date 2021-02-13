@@ -16,23 +16,58 @@ Priority: Remaining Spirits
 	1. Give off cool particles, can be used in summoning rituals
 14. Pyramid chests to no longer spawn close to surface (idc about this tbh)
 15. Kitchen Sink (idc about this tbh)
+16. Marble Fates and Granite Omega Golem
 
 Next Update:
 4. Subspace Scissors
-5. Void Bar pos stays after relog
 6. Flux Slime
 7. Slime gun upgrade
 8. Biome Chest Weapons
 9. Void Low Warning
 12. Archaelogist NPC
 17. Prefixes for voids
-20. Royal Jelly, Peanut Butter, PB&J
-21. Rework cursed impale
-22. Greyscale Rainbow for Starcore Assault Rifle
+20. Peanut Butter, PB&J
+21. Implement new sprites and music
+22. Reduce Craftability of jellyfish staves, orbs no longer go into walls
 
 Boss Rework Ideas:
 PP to move during nonmoving attacks. Fix despawning issue. Slower projectiles/projectile rate from eye minions.
 Subspace Serpent cross attacks to attack faster and release lightning
+
+2/11/21 & 2/12/21
+1. Some PP resprites and changes.
+	1. Hooks are now smaller, hooks are now more animated
+	2. PP now owns its hooks, allowing for multiple PPs to exist in a world without interfering with each other (even thought that shouldn't normally happen)
+	3. PP now moves backwards when firing the laser, and drifts towards the player slowly during the fight when too far away (~35 blocks away)
+	4. Hooks now move a bit more dynamically, allowing for slight randomization in hook related attacks
+	5. Hook Turrets no longer take damage in any difficulty (expert and normal)
+	6. PP will now aggressively rush down players behind tiles
+	7. PP will now recollect hooks that are too far away, or during a designated attack, or frantically during a fight when nearing lower hp (min belo 50%)
+	8. PP hooks no longer are capped at recieving 56 damage
+	9. Decreased scatter of pink projectiles during crush attack
+	10. Decreased laser duration; damage duration reduced to 1 second from 1.33 seconds
+2. Tangle Staff no longer works on dontTakeDamage enemies
+3. Next: More resprites, PP server syncing :(
+
+2/8/21
+1. Added some PP resprites, not done yet
+2. Changed the way PP vines draw in order to allow for more dynamic hook distance
+
+2/6/21
+1. Void Bar position stays the same upon relog
+2. Added Sawflake, server syncs fine enough
+3. Added Tangle Staff, server syncs fine enough (aaaAAAHHH)
+
+2/5/21
+1. Resprite for Platinum Dart
+2. Sprited base for Tangling Staff
+3. Royal Jelly
+
+2/4/21
+1. Reworked Curse Impale
+2. Resprites for Batteries
+3. Greyscale overlay for Rainbow for Starcore Assault Rifle
+4. Worked on Rebar Rifle, works well in multiplayer
 
 2/3/21
 1. Max Spawns in the planetarium 1.75x -> 2.5x

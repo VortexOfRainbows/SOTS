@@ -25,7 +25,7 @@ namespace SOTS.Items.SpecialDrops
             item.noMelee = true;
             item.knockBack = 0;
             item.value = Item.sellPrice(0, 0, 10, 0);
-            item.rare = 2;
+            item.rare = 1;
             item.UseSound = SoundID.Item20;
             item.autoReuse = true;
             item.shoot = 85;

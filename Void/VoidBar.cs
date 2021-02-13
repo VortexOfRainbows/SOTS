@@ -16,7 +16,6 @@ namespace SOTS.Void
         private VoidBarMode stat;
         private float width;
         private float height;
-
         public VoidBar(VoidBarMode stat, int height, int width)
         {
             this.stat = stat;

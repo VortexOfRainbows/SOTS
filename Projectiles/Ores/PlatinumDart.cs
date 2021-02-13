@@ -15,8 +15,8 @@ namespace SOTS.Projectiles.Ores
 		}
         public override void SetDefaults()
         {
-			projectile.width = 26;
-			projectile.height = 26;
+			projectile.width = 22;
+			projectile.height = 22;
 			projectile.penetrate = 2;
 			projectile.ranged = true;
 			projectile.alpha = 0; 

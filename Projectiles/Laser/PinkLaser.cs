@@ -23,7 +23,7 @@ namespace SOTS.Projectiles.Laser
 		{
 			projectile.width = 8;
 			projectile.height = 8;
-			projectile.timeLeft = 120;
+			projectile.timeLeft = 90;
 			projectile.penetrate = -1;
 			projectile.hostile = true;
 			projectile.friendly = false;
@@ -33,8 +33,8 @@ namespace SOTS.Projectiles.Laser
 		public override void AI() 
 		{
 			//projectile.Center = npc.Center;
-			projectile.alpha += 2;
-			if (projectile.alpha > 160) {
+			projectile.alpha += 3;
+			if (projectile.alpha > 180) {
 				projectile.damage = 0;
 			}
 			if (projectile.alpha > 250) {

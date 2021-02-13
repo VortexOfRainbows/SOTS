@@ -29,19 +29,34 @@ namespace SOTS.NPCs.Boss
 			get => npc.ai[3];
 			set => npc.ai[3] = value;
 		}
+		private float owner
+		{
+			get => npc.localAI[0];
+			set => npc.localAI[0] = value;
+		}
+		private float rotationAmtStorage
+		{
+			get => npc.localAI[1];
+			set => npc.localAI[1] = value;
+		}
 		private float eyeReset = 0;
 		private float fireRate = 0;
 		int initiate = -1;
-		
+		public override bool CheckActive()
+		{
+			return false;
+		}
 		public override void SendExtraAI(BinaryWriter writer) 
 		{
 			writer.Write(fireRate);
 			writer.Write(eyeReset);
+			writer.Write(owner);
 		}
 		public override void ReceiveExtraAI(BinaryReader reader)
 		{	
 			fireRate = reader.ReadSingle();
 			eyeReset = reader.ReadSingle();
+			owner = reader.ReadSingle();
 		}
 		public override void SetStaticDefaults()
 		{
@@ -54,22 +69,22 @@ namespace SOTS.NPCs.Boss
 			Texture2D texture = Main.npcTexture[npc.type];
 			Vector2 drawOrigin = new Vector2(Main.npcTexture[npc.type].Width * 0.5f, texture.Height * 0.5f);
 			for (int k = 0; k < npc.oldPos.Length; k++) {
-				Vector2 drawPos = npc.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0, 4);
+				Vector2 drawPos = npc.oldPos[k] - Main.screenPosition + drawOrigin;
 				Color color = npc.GetAlpha(lightColor) * ((float)(npc.oldPos.Length - k) / (float)npc.oldPos.Length);
 				spriteBatch.Draw(texture, drawPos, null, color * 0.35f, npc.rotation, drawOrigin, npc.scale, SpriteEffects.None, 0f);
 			}
-			return true;
+			Draw(spriteBatch, lightColor);
+			return false;
 		}	
 		public override void SetDefaults()
 		{
-			
             npc.aiStyle = -1; 
             npc.lifeMax = 250;   
             npc.damage = 40; 
             npc.defense = 0;  
             npc.knockBackResist = 0f;
-            npc.width = 36;
-            npc.height = 36;
+            npc.width = 34;
+            npc.height = 34;
             npc.value = 0;
             npc.npcSlots = 1f;
             npc.lavaImmune = true;
@@ -79,37 +94,46 @@ namespace SOTS.NPCs.Boss
             npc.DeathSound = SoundID.NPCDeath5;
             npc.netAlways = true;
             npc.buffImmune[20] = true;
+			npc.alpha = 100;
 		}
-		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
+		public void Draw(SpriteBatch spriteBatch, Color drawColor)
 		{
 			Player player = Main.player[npc.target];
 			Texture2D texture = ModContent.GetTexture("SOTS/NPCs/Boss/PutridHookEye");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Vector2 drawPos = npc.Center - Main.screenPosition;
-			
+
+			texture = Main.npcTexture[npc.type];
+			drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
+			spriteBatch.Draw(texture, drawPos, null, drawColor, npc.rotation, drawOrigin, npc.scale, SpriteEffects.None, 0f);
 			float shootToX = aimToX - npc.Center.X;
 			float shootToY = aimToY - npc.Center.Y;
 			float distance = (float)System.Math.Sqrt((double)(shootToX * shootToX + shootToY * shootToY));
 
-			distance = eyeReset * 2f/ distance;
+			distance = eyeReset * 1f / distance;
 				  
 			shootToX *= distance * 5;
 			shootToY *= distance * 5;
 			
 			drawPos.X += shootToX;
-			drawPos.Y += -1 + shootToY + (texture.Height * 0.5f);
-			if(npc.scale == 1)
+            drawPos.Y += -1 + shootToY;
+			drawColor = npc.GetAlpha(drawColor); 
+			texture = ModContent.GetTexture("SOTS/NPCs/Boss/PutridHookEye");
+			drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			spriteBatch.Draw(texture, drawPos, null, drawColor, npc.rotation, drawOrigin, npc.scale, SpriteEffects.None, 0f);
+
 		}
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
             npc.damage = (int)(npc.damage * 0.8f);  
         }
 		public override void AI()
-		{	
+		{
+			npc.dontTakeDamage = true;
 			if(initiate == -1 && Main.netMode != 1)
 			{
-				npc.velocity = new Vector2(12, 0).RotatedBy(MathHelper.ToRadians(rotationAmt + (hookID * 30)));
+				rotationAmtStorage = rotationAmt;
+				npc.velocity = new Vector2(12, 0).RotatedBy(MathHelper.ToRadians(rotationAmt + hookID));
 				rotationAmt = 124;
 				hookID = -1;
 				npc.netUpdate = true;
@@ -122,7 +146,7 @@ namespace SOTS.NPCs.Boss
 				aimToX = aimTo.X + npc.Center.X;
 				aimToY = aimTo.Y + npc.Center.Y;
 				npc.netUpdate = true;
-				fireRate += Main.expertMode ? 10.5f : 6.5f;
+				fireRate += Main.expertMode ? 6.5f : 5.5f;
 			}
 			fireRate++;
 			eyeReset = eyeReset < 1 ? eyeReset + 0.05f : 1;
@@ -147,20 +171,14 @@ namespace SOTS.NPCs.Boss
 					{
 						damage = (int)(damage / Main.expertDamage);
 					}
-					
 					if(Main.netMode != 1)
-					Projectile.NewProjectile(npc.Center.X, npc.Center.Y, shootToX, shootToY, mod.ProjectileType("PinkBullet"), damage, 0, Main.myPlayer);
+						Projectile.NewProjectile(npc.Center.X, npc.Center.Y, shootToX, shootToY, mod.ProjectileType("PinkBullet"), damage, 0, Main.myPlayer);
 				}
 			}
 			
 			npc.velocity *= 0.97f;
 			Lighting.AddLight(npc.Center, (255 - npc.alpha) * 1f / 155f, (255 - npc.alpha) * 1f / 155f, (255 - npc.alpha) * 1f / 155f);
-			npc.rotation += 0.07f;
 			int pIndex = -1;
-			if(Main.expertMode)
-			{
-				npc.dontTakeDamage = true;
-			}
 			for(int i = 0; i < 200; i++)
 			{
 				NPC npc1 = Main.npc[i];

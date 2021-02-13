@@ -7,8 +7,9 @@ namespace SOTS.Void
 {
     internal class DragableUIPanel : UIPanel
     {
-		private Vector2 offset;
+		public Vector2 offset;
 		public bool dragging;
+		public int type = -1;
 
 		public override void MouseDown(UIMouseEvent evt) {
 			base.MouseDown(evt);
@@ -58,6 +59,10 @@ namespace SOTS.Void
 				Top.Pixels = Utils.Clamp(Top.Pixels, 0, parentSpace.Bottom - Height.Pixels);
 				// Recalculate forces the UI system to do the positioning math again.
 				Recalculate();
+			}
+			if(type == 0)
+			{
+				VoidPlayer.voidBarOffset = new Vector2(Left.Pixels, Top.Pixels);
 			}
 		}
     }

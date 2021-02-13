@@ -23,8 +23,8 @@ namespace SOTS.Items.OreItems
 			item.thrown = false;
 			item.value = Item.sellPrice(0, 0, 35, 0);
 			item.rare = 2;
-			item.width = 26;
-			item.height = 26;
+			item.width = 22;
+			item.height = 22;
 			item.maxStack = 1;
 			item.autoReuse = true;            
 			item.shoot = mod.ProjectileType("PlatinumDart"); 

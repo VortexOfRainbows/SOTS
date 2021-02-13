@@ -14,7 +14,6 @@ namespace SOTS.Projectiles.Otherworld
 		{
 			DisplayName.SetDefault("Spiral Death Beam");
 		}
-
 		public override void SetDefaults() 
 		{
 			projectile.width = 16;

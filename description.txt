@@ -18,11 +18,13 @@ Currents Stuctures:
 
 Credits:
 (Current)
--Development and Art - Vortex#6230
--Art - Blasfah
--Beta Testers - Crimsonkeep
+Mod Creator, Programmer, Art - Vortex#6230
+Art - Blasfah, DeJuiceTD, Naka
+Misc, Direction - TacoBurritoGuacamole
+Testers - Crimsonkeep
+Music - BananaLizard
 (Past)
--Misc - FlameFreezer
+Misc, Direction - FlameFreezer
 
 Update 0.19.1
 -Just a quick hotfix in attempt to fix some bugs such as...

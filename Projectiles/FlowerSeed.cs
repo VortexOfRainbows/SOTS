@@ -146,8 +146,6 @@ namespace SOTS.Projectiles
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-			
-			Player player = Main.player[projectile.owner];
 			projectile.friendly = false;
             target.immune[projectile.owner] = 0;
 			projectile.tileCollide = false;
@@ -155,21 +153,7 @@ namespace SOTS.Projectiles
 			projectile.damage = (int)(projectile.damage * projectile.ai[1]);
 			projectile.velocity *= 0.1f;
 			projectile.aiStyle = 0;
-			for(int i = 0; i < 200; i++)
-			{
-				NPC npc = Main.npc[i];
-				if(npc == target)
-				{
-					if(diffPosX == 0)
-					diffPosX = npc.Center.X - projectile.Center.X;
-				
-					if(diffPosY == 0)
-					diffPosY = npc.Center.Y - projectile.Center.Y;
-				
-					enemyIndex = i;
-					break;
-				}
-			}
+			enemyIndex = target.whoAmI;
 			if(target.life <= 0)
 			{
 				enemyIndex = -1;

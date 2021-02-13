@@ -31,8 +31,8 @@ namespace SOTS.Projectiles
 		}
         public override void SetDefaults()
         {
-			projectile.height = 20;
-			projectile.width = 20;
+			projectile.height = 22;
+			projectile.width = 22;
 			projectile.friendly = false;
 			projectile.penetrate = -1;
 			projectile.timeLeft = 330;
@@ -48,7 +48,7 @@ namespace SOTS.Projectiles
 			{
 				Vector2 circularLocation = new Vector2(-8, 0).RotatedBy(MathHelper.ToRadians(i));
 				
-				int num1 = Dust.NewDust(new Vector2(projectile.Center.X + circularLocation.X - 4, projectile.Center.Y + circularLocation.Y - 4), 4, 4, 72);
+				int num1 = Dust.NewDust(projectile.Center + circularLocation - new Vector2(5), 0, 0, 72);
 				Main.dust[num1].noGravity = true;
 				Main.dust[num1].velocity = circularLocation * 0.45f;
 			}

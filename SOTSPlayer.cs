@@ -37,7 +37,9 @@ namespace SOTS
 		{
 			return player.GetModPlayer<SOTSPlayer>();
 		}
-		Vector2 playerMouseWorld;
+        Vector2 playerMouseWorld;
+		public int halfLifeRegen = 0;
+		public int additionalHeal = 0;
 		public int darkEyeShader = 0;
 		public int HoloEyeDamage = 0;
 		public bool HoloEye = false;
@@ -338,7 +340,9 @@ namespace SOTS
         }
         public override void ResetEffects()
 		{
-			if(player.HasBuff(BuffID.ChaosState))
+			player.lifeRegen += halfLifeRegen / 2;
+			halfLifeRegen = 0;
+			if (player.HasBuff(BuffID.ChaosState))
             {
 				BlinkedAmount = 0;
 			}
@@ -377,6 +381,7 @@ namespace SOTS
 						this.bladeAlpha = 255;
 				}
 			}
+			additionalHeal = 0;
 			HoloEyeAutoAttack = false;
 			blinkPackMult = 1f;
 			BlinkDamage = 0;
@@ -1030,6 +1035,11 @@ namespace SOTS
 				}
 			}
 		}
+        public override void GetHealLife(Item item, bool quickHeal, ref int healValue)
+        {
+			healValue += additionalHeal;
+            base.GetHealLife(item, quickHeal, ref healValue);
+        }
         public override void Initialize()
 		{
 			SOTSPlayer.typhonBlacklist.Add(ModContent.ProjectileType<ArcColumn>());

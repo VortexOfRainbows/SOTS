@@ -8,6 +8,8 @@ using Microsoft.Xna.Framework;
 using Steamworks;
 using SOTS.Void;
 using SOTS.Items.Void;
+using SOTS.NPCs.Boss;
+using SOTS.Items.SpecialDrops;
 
 namespace SOTS.NPCs
 {
@@ -156,6 +158,10 @@ namespace SOTS.NPCs
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("PinkJellyfishStaff"), 1);
 				if ((npc.type == NPCID.BlueJellyfish || npc.type == NPCID.GreenJellyfish) && Main.rand.NextBool(50))
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("BlueJellyfishStaff"), 1);
+
+				if(npc.type == NPCID.QueenBee && (!NPC.downedBoss1 || Main.rand.NextBool(20)))
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<RoyalJelly>(), 1);
+
 			}
 		}
 		public override void EditSpawnRate(Player player, ref int spawnRate, ref int maxSpawns) 

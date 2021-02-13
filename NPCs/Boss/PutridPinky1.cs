@@ -38,7 +38,7 @@ namespace SOTS.NPCs.Boss
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
 			Player player = Main.player[npc.target];
-			Texture2D texture = ModContent.GetTexture("SOTS/NPCs/Boss/PutridHookEye");
+			Texture2D texture = ModContent.GetTexture("SOTS/NPCs/Boss/PutridEye2");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Vector2 drawPos = npc.Center - Main.screenPosition;
 			aimTo = player.Center;

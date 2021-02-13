@@ -12,6 +12,7 @@ namespace SOTS.Void
 {
 	public class VoidPlayer : ModPlayer
 	{
+		public static Vector2 voidBarOffset = new Vector2(500, 30);
 		public static Color soulLootingColor = new Color(66, 56, 111);
 		public static Color destabilizeColor = new Color(80, 190, 80);
 		public static Color pastelRainbow = Color.White;
@@ -31,7 +32,23 @@ namespace SOTS.Void
 				{"voidStar", voidStar},
 				{"voidMeter", voidMeter},
 				{"lootingSouls", lootingSouls},
+				{"voidBarOffsetX", voidBarOffset.X},
+				{"voidBarOffsetY", voidBarOffset.Y},
 				};
+		}
+		public override void Load(TagCompound tag)
+		{
+			voidMeterMax = tag.GetInt("voidMeterMax");
+			voidMeterMax2 = tag.GetInt("voidMeterMax2");
+			voidAnkh = tag.GetInt("voidAnkh");
+			voidStar = tag.GetInt("voidStar");
+			if (tag.ContainsKey("voidMeter"))
+				voidMeter = tag.GetFloat("voidMeter");
+			lootingSouls = tag.GetInt("lootingSouls");
+			if (tag.ContainsKey("voidBarOffsetX"))
+				voidBarOffset.X = tag.GetFloat("voidBarOffsetX");
+			if (tag.ContainsKey("voidBarOffsetY"))
+				voidBarOffset.Y = tag.GetFloat("voidBarOffsetY");
 		}
 		public override void SendClientChanges(ModPlayer clientPlayer)
 		{
@@ -49,16 +66,6 @@ namespace SOTS.Void
 				packet.Write(voidMeter);
 				packet.Send();
 			}
-		}
-		public override void Load(TagCompound tag) 
-		{
-			voidMeterMax = tag.GetInt("voidMeterMax");
-			voidMeterMax2 = tag.GetInt("voidMeterMax2");
-			voidAnkh = tag.GetInt("voidAnkh");
-			voidStar = tag.GetInt("voidStar");
-			if(tag.ContainsKey("voidMeter"))
-				voidMeter = tag.GetFloat("voidMeter");
-			lootingSouls = tag.GetInt("lootingSouls");
 		}
 		
 		public float voidMeter = 100; 

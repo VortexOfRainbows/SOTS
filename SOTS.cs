@@ -19,6 +19,7 @@ using SOTS.Items.GelGear;
 using SOTS.Items.Otherworld;
 using SOTS.Items.IceStuff;
 using SOTS.Items.Celestial;
+using SOTS.Projectiles.BiomeChest;
 
 namespace SOTS
 {
@@ -103,6 +104,7 @@ namespace SOTS
 			VoidBarBorder2._backgroundTexture = null;
 			BarDivider._backgroundTexture = null;
 			SoulBar._backgroundTexture = null;
+			VoidUI.voidUI = null;
 			BlinkHotKey = null;
 			ArmorSetHotKey = null;
 		}
@@ -137,7 +139,8 @@ namespace SOTS
 			SyncCreativeFlight,
 			SyncLootingSoulsAndVoidMax,
 			SyncGlobalNPC,
-			SyncPlayerKnives
+			SyncPlayerKnives,
+			SyncRexFlower
 		}
 		public override void HandlePacket(BinaryReader reader, int whoAmI)
 		{
@@ -213,6 +216,7 @@ namespace SOTS
 					debuffNPC.HarvestCurse = reader.ReadInt32();
 					debuffNPC.PlatinumCurse = reader.ReadInt32();
 					debuffNPC.DestableCurse = reader.ReadInt32();
+					debuffNPC.BleedingCurse = reader.ReadInt32();
 					// Unlike SyncPlayer, here we have to relay/forward these changes to all other connected clients
 					if (Main.netMode == NetmodeID.Server)
 					{
@@ -223,6 +227,7 @@ namespace SOTS
 						packet.Write(debuffNPC.HarvestCurse);
 						packet.Write(debuffNPC.PlatinumCurse);
 						packet.Write(debuffNPC.DestableCurse);
+						packet.Write(debuffNPC.BleedingCurse);
 						packet.Send(-1, playernumber);
 					}
 					break;

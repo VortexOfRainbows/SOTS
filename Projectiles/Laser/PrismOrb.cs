@@ -171,7 +171,7 @@ namespace SOTS.Projectiles.Laser
                 for (int i = 0; i < 7; i++)
                 {
                     Projectile.NewProjectile(projectile.Center, projectile.velocity, ModContent.ProjectileType<PrismLaser>(), projectile.damage, projectile.knockBack, Main.myPlayer, i);
-                }
+                }   
             base.Kill(timeLeft);
         }
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
