@@ -269,6 +269,7 @@ namespace SOTS.NPCs.Boss
 				{
 					followPlayer = 0;
 					DustCircle(npc.Center.X, npc.Center.Y, 10, 128, 2);
+					Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 15, 1.2f);
 				}
 				if(attackTimer == 870 || attackTimer == 600 || attackTimer == 330 || attackTimer == 810 || attackTimer == 540 || attackTimer == 270 || attackTimer == 750 || attackTimer == 480 || attackTimer == 210)
 				{
@@ -335,8 +336,15 @@ namespace SOTS.NPCs.Boss
 					npc.alpha = alphaMin;
 					rotateDir = Main.rand.Next(2) == 1 ? -1 : 1;
 				}
-				if(rotationDistance == 0 && attackTimer > 0)
-				{	
+				if (attackTimer == 960)
+					Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 15, 1.0f);
+				if (attackTimer == 950)
+					Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 15, 1.15f);
+				if (attackTimer == 940)
+					Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 15, 1.3f);
+				if (rotationDistance == 0 && attackTimer > 0)
+				{
+					Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 14, 1.3f);
 					npc.damage = storeDamage;
 					rotationSpeed = 7f * rotateDir;
 					attackTimer = -1;
@@ -359,16 +367,16 @@ namespace SOTS.NPCs.Boss
 				}
 			}
 			else
-            {
-				npc.velocity *= 0.98f;
+			{
+				npc.velocity *= 0.97f;
 				Vector2 vectorToPlayer = player.Center - npc.Center;
 				bool loS = Collision.CanHitLine(player.position, player.width, player.height, npc.position, npc.width, npc.height);
 				if (vectorToPlayer.Length() > 560 || !loS)
 				{
-					npc.velocity *= 0.9775f;
+					npc.velocity *= 0.975f;
 					float speedMult = vectorToPlayer.Length() * 0.01f;
 					if(!loS)
-						speedMult += 44;
+						speedMult += 56;
 					npc.velocity += toPlayer.SafeNormalize(Vector2.Zero) * (0.0125f * speedMult);
 				}
 				double distanceTB = 1600;
@@ -482,6 +490,7 @@ namespace SOTS.NPCs.Boss
 							DustCircle(Main.npc[i].Center.X, Main.npc[i].Center.Y, 20, 64, 1);
 						}
 					}
+					Main.PlaySound(SoundID.Item15, npc.Center);
 				}
 				if(attackTimer == 900 || attackTimer == 600 || attackTimer == 300)
 				{
@@ -618,7 +627,7 @@ namespace SOTS.NPCs.Boss
 				Projectile.NewProjectile(fromArea.X, fromArea.Y, 0, 0, mod.ProjectileType("PinkLaser"), damage, 0, Main.myPlayer, toArea.X - direction.X, toArea.Y - direction.Y);
 			//NetMessage.SendData(27, -1, -1, null, Probe);
 			eyeReset = -0.8f;
-			npc.velocity += direction.SafeNormalize(Vector2.Zero) * 3.5f;
+			npc.velocity += direction.SafeNormalize(Vector2.Zero) * 2.75f;
 			Main.PlaySound(SoundID.Item94, (int)(fromArea.X), (int)(fromArea.Y));
 		}
 		private void InitiateHooks()
@@ -657,6 +666,7 @@ namespace SOTS.NPCs.Boss
 				Gore.NewGore(npc.position + new Vector2(0, 24), npc.velocity, mod.GetGoreSlot("Gores/ppGore_1"), 1f);
 				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/ppGore_2"), 1f);
 				Gore.NewGore(npc.position + new Vector2(24, 0), npc.velocity, mod.GetGoreSlot("Gores/ppGore_3"), 1f);
+				Gore.NewGore(npc.Center - new Vector2(26, 26), npc.velocity, mod.GetGoreSlot("Gores/ppGore_4"), 1f);
 				for (int i = 0; i < Main.npc.Length; i++)
 				{
 					if (Main.npc[i].type == mod.NPCType("PutridHook") && Main.npc[i].active && (int)Main.npc[i].localAI[0] == npc.whoAmI)

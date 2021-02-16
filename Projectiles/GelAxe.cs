@@ -1,13 +1,7 @@
-using System;
-using System.IO;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using Terraria;
 
 namespace SOTS.Projectiles 
 {    
@@ -26,9 +20,8 @@ namespace SOTS.Projectiles
             aiType = 3; //18 is the demon scythe style
 			projectile.penetrate = 3;
 			projectile.alpha = 0;
-			projectile.width = 30;
-			projectile.height = 30;
-
+			projectile.width = 32;
+			projectile.height = 20;
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{	
@@ -40,12 +33,22 @@ namespace SOTS.Projectiles
 			wait = 1;
 			return false;
 		}
-		public override void AI()
+        public override void Kill(int timeLeft)
+		{
+			for(int i = 0; i < 20; i ++)
+			{
+				Dust dust = Dust.NewDustDirect(projectile.position - new Vector2(5), projectile.width, projectile.height, DustID.t_Slime, 0, 0, projectile.alpha, new Color(0, 0, 255, 100), 1f);
+				dust.scale *= 1.5f;
+				dust.velocity *= 1.5f;
+			}
+			base.Kill(timeLeft);
+        }
+        public override void AI()
 		{
 			if(wait == 1)
 			{
-			projectile.velocity.X *= 0.9f;
-			projectile.velocity.Y *= 0.9f;
+				projectile.velocity.X *= 0.9f;
+				projectile.velocity.Y *= 0.9f;
 			}
 		}
 	}

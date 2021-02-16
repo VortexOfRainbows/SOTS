@@ -18,8 +18,8 @@ namespace SOTS.Items.SpecialDrops
 			item.CloneDefaults(ItemID.Shuriken);
 			item.damage = 11;
 			item.thrown = true;
-			item.width = 30;
-			item.height = 30;
+			item.width = 32;
+			item.height = 20;
 			item.useStyle = 1;
 			item.knockBack = 1.75f;
 			item.value = 100;

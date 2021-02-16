@@ -31,8 +31,17 @@ Next Update:
 22. Reduce Craftability of jellyfish staves, orbs no longer go into walls
 
 Boss Rework Ideas:
-PP to move during nonmoving attacks. Fix despawning issue. Slower projectiles/projectile rate from eye minions.
+Slower projectiles/projectile rate from eye minions.
 Subspace Serpent cross attacks to attack faster and release lightning
+
+2/15/21
+1. PP Works in multiplayer, some sound effects
+2. Resprite Fire Spitter and Gel Axe, Fire spitter drop rate halved 1/120 -> 1/240, Gel axe particles
+3. Jellyfish Staff Resprites
+
+2/14/21
+1. Fixed bug where PP hooks reflected destabilization lasers
+2. Added more sound cues to PP, also eyeball gore
 
 2/11/21 & 2/12/21
 1. Some PP resprites and changes.
@@ -47,7 +56,6 @@ Subspace Serpent cross attacks to attack faster and release lightning
 	9. Decreased scatter of pink projectiles during crush attack
 	10. Decreased laser duration; damage duration reduced to 1 second from 1.33 seconds
 2. Tangle Staff no longer works on dontTakeDamage enemies
-3. Next: More resprites, PP server syncing :(
 
 2/8/21
 1. Added some PP resprites, not done yet

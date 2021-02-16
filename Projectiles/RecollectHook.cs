@@ -30,8 +30,14 @@ namespace SOTS.Projectiles
             return false;
         }
         int hookId = -1;
+        bool playOnce = true;
         public override bool PreAI()
         {
+            if(playOnce)
+            {
+                Main.PlaySound(SoundID.Item99, projectile.Center);
+                playOnce = false;
+            }
             if (projectile.ai[0] == -1)
                 projectile.Kill();
             NPC owner = Main.npc[(int)projectile.ai[0]];
@@ -96,7 +102,7 @@ namespace SOTS.Projectiles
                         hook.localAI[1] = 0; // temp2;
                         hook.localAI[0] = owner.whoAmI;
                         hook.netUpdate = true;
-                        Main.PlaySound(SoundID.Splash, (int)hook.Center.X, (int)hook.Center.Y, 0, 1.2f);
+                        Main.PlaySound(SoundID.NPCHit, (int)hook.Center.X, (int)hook.Center.Y, 1, 1.2f);
                     }
                     projectile.Kill();
                 }

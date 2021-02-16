@@ -15,7 +15,7 @@ namespace SOTS.Items.SpecialDrops
 		{
             item.damage = 17;
             item.magic = true; 
-            item.width = 32;    
+            item.width = 34;    
             item.height = 32; 
             item.useTime = 30; 
             item.useAnimation = 30;

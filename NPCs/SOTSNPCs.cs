@@ -138,7 +138,7 @@ namespace SOTS.NPCs
 				if (npc.type == NPCID.UndeadMiner && Main.rand.NextBool(5))
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("ManicMiner"), 1);
 
-				if (npc.type == NPCID.BlueSlime && Main.rand.NextBool(120))
+				if (npc.type == NPCID.BlueSlime && Main.rand.NextBool(240))
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FireSpitter"), 1);
 
 				if (npc.type == NPCID.Crab && Main.rand.NextBool(18))

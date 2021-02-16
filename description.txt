@@ -25,6 +25,9 @@ Testers - Crimsonkeep
 Music - BananaLizard
 (Past)
 Misc, Direction - FlameFreezer
+(Other Contributions)
+Item glowmask code - Qwerty3.14
+
 
 Update 0.19.1
 -Just a quick hotfix in attempt to fix some bugs such as...
@@ -33,7 +36,7 @@ Update 0.19.1
 -New Mod icon
 
 Update 0.19.0
--Big thanks to qwerty3.14 for extensive feedback in many areas of the mod!
+-Big thanks to qwerty3.14 for extensive feedback in many areas of the mod (and glowmask code)!
 -Balancing changes, overhauls, and visual improvements in many areas (including various items)
 -New Boss and Biome with lots of new items
 -Various bug fixes

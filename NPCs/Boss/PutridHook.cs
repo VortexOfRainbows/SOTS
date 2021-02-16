@@ -41,10 +41,12 @@ namespace SOTS.NPCs.Boss
 		public override void SendExtraAI(BinaryWriter writer)
 		{
 			writer.Write(owner);
+			writer.Write(randMult);
 		}
 		public override void ReceiveExtraAI(BinaryReader reader)
 		{
 			owner = reader.ReadSingle();
+			randMult = reader.ReadSingle();
 		}
 		public override bool CheckActive()
 		{
@@ -145,7 +147,7 @@ namespace SOTS.NPCs.Boss
 		}
 		public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) 
 		{
-			if(projectile.active)
+			if(projectile.active && (projectile.modProjectile == null || projectile.modProjectile.ShouldUpdatePosition()))
 			{
 				projectile.velocity.X *= -0.9f;
 				projectile.velocity.Y *= -0.9f;
@@ -176,6 +178,8 @@ namespace SOTS.NPCs.Boss
 			if (runOnce)
             {
 				randMult = Main.rand.NextFloat(0.8f, 1.2f) * (Main.rand.Next(2) * 2 - 1);
+				if(Main.netMode != 1)
+					npc.netUpdate = true;
 				for (int i = 0; i < 12; i++)
                 {
 					counterArr[i] = 0;
@@ -206,11 +210,11 @@ namespace SOTS.NPCs.Boss
 						hookID++;
 					if (diff > -30 && diff < 0)
 						hookID--;
-					if (diff > 330)
+					if (diff > 330 && diff <= 360)
                     {
 						hookID--;
 					}
-					if (diff < -330)
+					if (diff < -330 && diff >= -360)
 					{
 						hookID++;
 					}
