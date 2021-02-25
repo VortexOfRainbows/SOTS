@@ -3,6 +3,8 @@ using Microsoft.Xna.Framework.Graphics;
 using SOTS.Items.Otherworld.EpicWings;
 using SOTS.Items.Otherworld.FromChests;
 using SOTS.Items.Pyramid;
+using SOTS.Items.SpecialDrops;
+using SOTS.Projectiles.BiomeChest;
 using SOTS.Projectiles.Otherworld;
 using SOTS.Void;
 using System;
@@ -38,6 +40,7 @@ namespace SOTS
 			return player.GetModPlayer<SOTSPlayer>();
 		}
         Vector2 playerMouseWorld;
+		public int lightDragon = -1;
 		public int halfLifeRegen = 0;
 		public int additionalHeal = 0;
 		public int darkEyeShader = 0;
@@ -905,7 +908,7 @@ namespace SOTS
 			{
 				standard = time / 2f;
 			}
-			if (item.channel == false)
+			if (item.channel == false || item.type == ModContent.ItemType<OlympianAxe>())
 				return standard;
 			return base.UseTimeMultiplier(item);
 		}
@@ -1048,6 +1051,10 @@ namespace SOTS
 
 			SOTSPlayer.typhonWhitelist.Add(ModContent.ProjectileType<HardlightArrow>());
 			base.Initialize();
+        }
+        public override bool PreItemCheck()
+		{
+			return base.PreItemCheck();
         }
     }
 }

@@ -17,17 +17,25 @@ Currents Stuctures:
 -Planetarium Temple Worldgen
 
 Credits:
-(Current)
-Mod Creator, Programmer, Art - Vortex#6230
-Art - Blasfah, DeJuiceTD, Naka
-Misc, Direction - TacoBurritoGuacamole
-Testers - Crimsonkeep
-Music - BananaLizard
-(Past)
-Misc, Direction - FlameFreezer
-(Other Contributions)
-Item glowmask code - Qwerty3.14
+(Current Developers)
+Programmer, Art, Direction: Vortex#6230
+Art: Blasfah
+Misc, Direction, Art: TacoBurritoGuacamole
+Testers: Crimsonkeep
+Music: BananaLizard
 
+(Contributors)
+Misc, Direction: FlameFreezer
+Art: Arcri, DeJuiceTD, Naka 
+
+(Other Contributions)
+Item glowmask code: Qwerty3.14
+
+Update 0.19.2
+-More Items
+-New Worldgen structure in the Ocean
+-Putrid Pinky Reworks, both visual and functional
+-Many item reworks, both visual and functional
 
 Update 0.19.1
 -Just a quick hotfix in attempt to fix some bugs such as...

@@ -14,8 +14,8 @@ namespace SOTS.Items.ChestItems
 		}
 		public override void SetDefaults()
 		{
-            item.width = 34;     
-            item.height = 32;
+            item.width = 28;     
+            item.height = 36;
 			item.value = Item.sellPrice(0, 1, 0, 0);
 			item.rare = ItemRarityID.Green;
 			item.accessory = true;
@@ -40,14 +40,7 @@ namespace SOTS.Items.ChestItems
 		{
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(null, "DissolvingAurora", 1);
-			recipe.AddIngredient(ItemID.TungstenBar, 20);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
-
-			recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "DissolvingAurora", 1);
-			recipe.AddIngredient(ItemID.SilverBar, 20);
+			recipe.AddIngredient(ItemID.PlatinumBar, 20);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this);
 			recipe.AddRecipe();

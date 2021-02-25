@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using SOTS.Void;
 using Terraria;
 using Terraria.ModLoader;
@@ -11,27 +13,40 @@ namespace SOTS.Projectiles.Crushers
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Base Arm");
+			DisplayName.SetDefault("Crusher Arm");
 		}
-        public override void SetDefaults()
+        public sealed override void SetDefaults()
         {
-			projectile.width = 26;
-			projectile.height = 22;
+			projectile.width = 30;
+			projectile.height = 30;
 			projectile.penetrate = -1;
 			projectile.friendly = false;
 			projectile.timeLeft = 6004;
 			projectile.tileCollide = false;
 			projectile.hostile = false;
 			projectile.alpha = 0;
+			SafeSetDefaults();
 		}
+		public virtual void SafeSetDefaults()
+        {
 
+        }
+
+		public Vector2[] arms = new Vector2[2];
+		bool[] setsActive = new bool[1];
+		int consumedVoid = 0;
 		///These are for modification
+		public int trailLength = 0;
+		public List<Vector2>[] stored;
 		public float maxDamage = 5; //total damage %, 1 for no increase, 5 for 500% at max charge, etc
 		public int chargeTime = 180; //charge time in frames
-		public int explosiveCountMin = 3; //amount of explosions minimum
-		public int explosiveCountMax = 5; //amount of explosions max
+		public int minExplosions = 3; //amount of explosions minimum
+		public int maxExplosions = 5; //amount of explosions max
 		public float explosiveRange = 48; //distance between each explosion
 		public float releaseTime = 120; //how long in frames until auto-release
+		public float armDist = 15;
+		public float finalDist = 170;
+		public float exponentReduction = 0.5f;
 		///Make sure to change the released projectile down near the bottom
 
 		///These are also for modification (but not recommended)
@@ -40,140 +55,267 @@ namespace SOTS.Projectiles.Crushers
 
 		///DO NOT MODIFY
 		bool released = false;
-		float rotationTimer = 0; //assume 170 is full rotation, 0 has not been rotated
+		float rotationTimer = 0; //assume finalDist is full rotation, 0 has not been rotated
 		int explosive = 1;
 		float currentCharge = 0; //how close are we to chargeTime?
 		float initiateTimer = 0; //how close are we to releaseTime?
-		bool flip = false; //direction?
-		bool initiate = true; //initiate some variables
-		int initialDamage; //what is the initial damage?
 		float accelerateAmount = 0;
-		
+
+		int initialDamage; 
+		bool runOnce = true; 
+		public virtual void VoidConsumption(float charge, ref int consumedAmt)
+		{
+			Player player = Main.player[projectile.owner];
+			if (charge >= 0.25f && consumedAmt == 0)
+			{
+				consumedAmt++;
+				VoidItem.DrainMana(player);
+			}
+			if (charge >= 0.50f && consumedAmt == 1)
+			{
+				consumedAmt++;
+				VoidItem.DrainMana(player);
+			}
+			if (charge >= 0.75f && consumedAmt == 2)
+			{
+				consumedAmt++;
+				VoidItem.DrainMana(player);
+			}
+		}
 		public sealed override bool PreAI()
 		{
-			VoidPlayer modPlayer = VoidPlayer.ModPlayer(Main.player[projectile.owner]);
-			if (initiate)
+			Player player = Main.player[projectile.owner];
+			VoidPlayer modPlayer = VoidPlayer.ModPlayer(player);
+			if (runOnce)
 			{
-				initiate = false;
+				if(trailLength > 0)
+					trailLength++;
+				stored = new List<Vector2>[arms.Length];
+				for(int i = 0; i < stored.Length; i++)
+                {
+					stored[i] = new List<Vector2>();
+                }
+				setsActive = new bool[arms.Length / 2];
+				for (int i = 0; i < setsActive.Length; i++)
+					setsActive[i] = false;
+				for (int i = 0; i < arms.Length; i++)
+                {
+					arms[i] = projectile.Center;
+				}
+				runOnce = false;
 				initialDamage = projectile.damage;
-				if(projectile.knockBack == 1) //knockback has been used on the item to store the projectile's direction
-				{
-					flip = true;
-					projectile.spriteDirection = -1;
-					projectile.knockBack = -1;
-				}
-				if(projectile.knockBack == 0)
-				{
-					projectile.knockBack = -1;
-				}
 			}
-			if(currentCharge < chargeTime && !released) //not charged and not released
+			if (projectile.owner == Main.myPlayer)
 			{
-				currentCharge += 1 * (1f / Main.player[projectile.owner].meleeSpeed + modPlayer.voidSpeed - 1);
-				explosive = explosiveCountMin + (int)(((float)currentCharge/(float)chargeTime) * (explosiveCountMax + 1 - explosiveCountMin)); //count
-				explosive = explosive < explosiveCountMin ? explosiveCountMin : explosiveCountMax < explosive ? explosiveCountMax : explosive; //making sure the explosive amount is within range
-				/** Here's an example of the maxExplosion/minExplosion system
-				* Say your min is 3 and max is 5, we start by finding the possible numbers, 3, 4, and 5 (3 numbers total)
-				* Now we split those numbers among 3 charge percentages, 0-33 : 3, 34-66 : 4, 67 - 100 : 5
-				* The various code above MAY not be optimal, but it works
-				*/
-				rotationTimer = ((float)currentCharge/(float)chargeTime) * 170; //making the rotation timer proportional to the charge time completed
-				float increaseDamage = 1 + ((maxDamage - 1f)/170f) * rotationTimer;
-				projectile.damage = (int)(initialDamage * increaseDamage);
-			}
-			else if(!released) //after full charge, before release
-			{
-				initiateTimer += 1 * (1f / Main.player[projectile.owner].meleeSpeed + modPlayer.voidSpeed - 1);
-				projectile.damage = (int)(initialDamage * maxDamage);
-			}
-				
-			return projectile.active;
-		}
-		public virtual int ExplosionType()
-        {
-			return mod.ProjectileType("PinkCrush");
-        }
-		public virtual bool UseCustomExplosionEffect(float x, float y, float dist)
-        {
-			return false;
-        }
-		public sealed override void AI()
-		{
-			projectile.ai[0]++;
-			Player player  = Main.player[projectile.owner];
-			if(player.whoAmI == Main.myPlayer)
-			{
-				if((int)projectile.ai[0] % 3 == 0)
+				Vector2 cursorArea = Main.MouseWorld;
+				if (counter % 3 == 0)
 				{
 					projectile.netUpdate = true;
 				}
-				Vector2 cursorArea = Main.MouseWorld;
-					
-				float shootToX = cursorArea.X - player.Center.X;
-				float shootToY = cursorArea.Y - player.Center.Y;
-				double direction = Math.Atan2((double)-shootToY, (double)-shootToX);
-				double degDirection = direction	* 180/Math.PI;
-							
-				if(initiateTimer >= releaseTime)
+				counter++;
+				projectile.ai[0] = cursorArea.X;
+				projectile.ai[1] = cursorArea.Y;
+			}
+			if (!released) //not charged and not released
+			{
+				currentCharge += 1 * (1f / player.meleeSpeed + modPlayer.voidSpeed - 1);
+				float chargePercentage = currentCharge / chargeTime;
+				chargePercentage = (float)Math.Pow(chargePercentage, exponentReduction);
+				if (chargePercentage > 1)
 				{
-					released = true;
+					initiateTimer += 1 * (1f / Main.player[projectile.owner].meleeSpeed + modPlayer.voidSpeed - 1);
+					chargePercentage = 1;
 				}
-				if(player.channel || projectile.timeLeft > 6001)
+				int prev = consumedVoid;
+				VoidConsumption(chargePercentage, ref consumedVoid);
+				if(prev != consumedVoid)
+                {
+					Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 15, 1.0f + 0.1f * consumedVoid);
+                }
+
+				float explosiveCount = maxExplosions - minExplosions;
+				explosiveCount *= chargePercentage;
+                explosiveCount += 0.3f; 
+				explosive = (int)explosiveCount + minExplosions;
+
+				rotationTimer = chargePercentage * finalDist; //making the rotation timer proportional to the charge time completed
+				float increaseDamage = maxDamage * chargePercentage;
+				projectile.damage = (int)(initialDamage * increaseDamage);
+			}
+
+			Vector2 goToArea = new Vector2(projectile.ai[0], projectile.ai[1]) - player.Center;
+			Vector2 normalized = goToArea.SafeNormalize(new Vector2(1, 0));
+			normalized *= projectile.velocity.Length();
+			projectile.Center = player.Center + normalized;
+			projectile.velocity = normalized;
+			projectile.rotation = projectile.velocity.ToRotation();
+			player.heldProj = projectile.whoAmI;
+			return projectile.active;
+		}
+        public sealed override bool ShouldUpdatePosition()
+        {
+            return false;
+        }
+        public virtual int ExplosionType()
+        {
+			return mod.ProjectileType("PinkCrush");
+        }
+		public virtual bool UseCustomExplosionEffect(float x, float y, float dist, float rotation)
+        {
+			return false;
+        }
+		int counter = 0;
+		public sealed override void AI()
+		{
+			Player player = Main.player[projectile.owner];
+			float shootToX = projectile.ai[0] - player.Center.X;
+			float shootToY = projectile.ai[1] - player.Center.Y;
+			double direction = Math.Atan2((double)-shootToY, (double)-shootToX);
+			double degDirection = direction	* 180/Math.PI;
+						
+			if(initiateTimer >= releaseTime)
+			{
+				released = true;
+			}
+			if(player.channel || projectile.timeLeft > 6001)
+			{
+				projectile.timeLeft = 6000;
+				projectile.alpha = 0;
+			}
+			else
+			{
+				released = true;
+			}
+			if (projectile.hide == false)
+			{
+				player.ChangeDir(projectile.direction);
+				player.heldProj = projectile.whoAmI;
+				player.itemRotation = (projectile.velocity * projectile.direction).ToRotation();
+				player.itemTime = 2;
+				player.itemAnimation = 2;
+				projectile.alpha = 0;
+			}
+			for (int i = 0; i < arms.Length; i++)
+			{
+				bool flip = i % 2 == 1;
+				int set = i / 2;
+				float deg;
+				float charge = rotationTimer;
+				charge -= set * armDist;
+				if (charge > 0 && !released)
 				{
-					projectile.timeLeft = 6000;
-					projectile.alpha = 0;
+					setsActive[set] = true;
 				}
-				else
+				if (flip)
 				{
-					released = true;
+					deg = charge + 5 + (float)degDirection; //add rotate
 				}
-				if(released)
+				else //when not flip
 				{
-					accelerateAmount += accSpeed;
-					if(rotationTimer <= 0) //collision
+					deg = -charge - 5 + (float)degDirection; //subtract rotate
+				}
+				arms[i] = new Vector2(-initialExplosiveRange, 0).RotatedBy(MathHelper.ToRadians(deg));
+				if(trailLength > 0)
+				{
+					cataloguePos(i, player.Center + arms[i]);
+				}
+			}
+			if (released)
+			{
+				accelerateAmount += accSpeed;
+				int amt = setsActive.Length;
+				for(int j = 0; j < amt; j++)
+				{
+					float charge = rotationTimer;
+					charge -= j * armDist;
+					if (charge <= 0 && setsActive[j]) //collision
 					{
-						if(projectile.owner == Main.myPlayer)
+						setsActive[j] = false;
+						double rad1 = direction;
+						if (projectile.owner == Main.myPlayer)
 						{
-							double rad1 = direction;
-							for(int i = 0; i < explosive; i++)
+							for (int i = 0; i < explosive; i++)
 							{
 								double distance = (explosiveRange * i) + initialExplosiveRange;
 								float positionX = player.Center.X - (int)(Math.Cos(rad1) * distance);
 								float positionY = player.Center.Y - (int)(Math.Sin(rad1) * distance);
-								if(!UseCustomExplosionEffect(positionX, positionY, (float)distance))
-									Projectile.NewProjectile(positionX, positionY, 0, 0, ExplosionType(), projectile.damage, initialDamage, Main.myPlayer, 0f, 0f);
+								if (!UseCustomExplosionEffect(positionX, positionY, (float)distance, (float)rad1))
+									Projectile.NewProjectile(positionX, positionY, projectile.velocity.X, projectile.velocity.Y, ExplosionType(), projectile.damage, projectile.knockBack, Main.myPlayer, initialDamage, 0f);
 							}
 						}
-						projectile.Kill();
+						ExplosionSound();
 					}
-					rotationTimer -= accelerateAmount; //start to close the crushers
 				}
-				if(flip)
+				if (!setsActive[0])
+					projectile.Kill();
+				rotationTimer -= accelerateAmount; //start to close the crushers
+			}
+		}
+		public virtual void ExplosionSound()
+		{
+			Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 14, 1.1f);
+		}
+		public virtual Texture2D ArmTexture(int handNum, int direction)
+        {
+			return Main.projectileTexture[projectile.type];
+		}
+		public void cataloguePos(int arm, Vector2 next)
+		{
+			List<Vector2> trail = stored[arm];
+			trail.Add(next);
+			if (trail.Count > trailLength) // || (trail.Count > 1 && trail[trail.Count - 2] == trail[trail.Count - 1]))
+				trail.RemoveAt(0);
+			stored[arm] = trail;
+		}
+		public sealed override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		{
+			if (runOnce)
+				return false;
+			Player player = Main.player[projectile.owner];
+			//VoidPlayer modPlayer = VoidPlayer.ModPlayer(player);
+			Vector2 cursorArea = new Vector2(projectile.ai[0], projectile.ai[1]);
+			float shootToX = cursorArea.X - player.Center.X;
+			float shootToY = cursorArea.Y - player.Center.Y;
+			double direction = Math.Atan2(-shootToY, -shootToX);
+			double degDirection = direction * 180 / Math.PI;
+			for (int i = 0; i < arms.Length; i++)
+			{
+				Vector2 pos = arms[i];
+				Texture2D texture = ArmTexture(i, projectile.direction);
+				Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
+
+				float rotation;
+				bool flip = i % 2 == 1;
+				int set = i / 2;
+				float deg;
+				float charge = rotationTimer;
+				charge -= set * armDist;
+				if (flip)
 				{
-					projectile.ai[1] = rotationTimer + 5 + (float)degDirection; //add rotate
-					projectile.rotation = MathHelper.ToRadians(projectile.ai[1] + 315);
+					deg = charge + 5 + (float)degDirection; //add rotate
 				}
 				else //when not flip
 				{
-					projectile.ai[1] = -rotationTimer - 5 + (float)degDirection; //subtract rotate
-					projectile.rotation = MathHelper.ToRadians(projectile.ai[1] + 225);
+					deg = -charge - 5 + (float)degDirection; //subtract rotate
 				}
-				double deg = (double) projectile.ai[1]; 
-				double rad = deg * (Math.PI / 180);
-				projectile.position.X = player.Center.X - (int)(Math.Cos(rad) * initialExplosiveRange) - projectile.width/2;
-				projectile.position.Y = player.Center.Y - (int)(Math.Sin(rad) * initialExplosiveRange) - projectile.height/2;
+				rotation = MathHelper.ToRadians(deg + (flip ? 315 : 225));
+				if (setsActive[set] && charge > 0 && pos != projectile.Center)
+				{
+					List<Vector2> trail = stored[i];
+					for (int j = 1; j < trail.Count; j++)
+					{
+						Color color = projectile.GetAlpha(lightColor) * ((float)j / trailLength) * 0.4f;
+						Vector2 pos2 = trail[j];
+						spriteBatch.Draw(texture, pos2 - Main.screenPosition, new Rectangle(0, 0, texture.Width, texture.Height), color, rotation, origin, 1.05f, !flip ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+					}
+					spriteBatch.Draw(texture, player.Center + pos - Main.screenPosition, new Rectangle(0, 0, texture.Width, texture.Height), projectile.GetAlpha(lightColor), rotation, origin, 1.05f, !flip ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+				}
 			}
-		}
-		public override void SendExtraAI(BinaryWriter writer) 
-		{
-			writer.Write(projectile.rotation);
-			writer.Write(projectile.spriteDirection);
-		}
-		public override void ReceiveExtraAI(BinaryReader reader)
-		{	
-			projectile.rotation = reader.ReadSingle();
-			projectile.spriteDirection = reader.ReadInt32();
-		}
-	}
+			Texture2D headTexture = Main.projectileTexture[projectile.type];
+			Vector2 origin2 = new Vector2(headTexture.Width / 2, headTexture.Height / 2);
+			spriteBatch.Draw(headTexture, projectile.Center - Main.screenPosition, new Rectangle(0, 0, headTexture.Width, headTexture.Height), lightColor, projectile.rotation + MathHelper.ToRadians(45), origin2, 1.05f, projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+			return false;
+        }
+    }
 }
 		

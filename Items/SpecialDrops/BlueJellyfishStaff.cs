@@ -30,14 +30,12 @@ namespace SOTS.Items.SpecialDrops
 			item.shoot = mod.ProjectileType("BlueThunderCluster");
 			Item.staff[item.type] = true; 
 			item.mana = 15;
-
 		}
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.Sapphire, 5);
-			recipe.AddIngredient(null, "FragmentOfTide", 2);
-			recipe.AddIngredient(null, "FragmentOfPermafrost", 1);
+			recipe.AddIngredient(ItemID.Sapphire, 15);
+			recipe.AddIngredient(null, "FragmentOfTide", 4);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this);
 			recipe.AddRecipe();

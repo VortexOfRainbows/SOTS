@@ -23,15 +23,19 @@ namespace SOTS.Projectiles.Otherworld
 			projectile.tileCollide = false;
 			projectile.hostile = false;
 			projectile.alpha = 255;
+			projectile.usesLocalNPCImmunity = true;
+			projectile.localNPCHitCooldown = 24;
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
+			Player player = Main.player[projectile.owner];
+			projectile.localNPCImmunity[target.whoAmI] = projectile.localNPCHitCooldown;
+			target.immune[projectile.owner] = 0;
+			//Main.NewText(projectile.whoAmI + " " + projectile.penetrate + " " + projectile.timeLeft);
 			if(projectile.ai[1] <= 0)
             {
 				return;
             }
-			Player player = Main.player[projectile.owner];
-			target.immune[projectile.owner] = 0;
 			if (projectile.owner == Main.myPlayer)
 			{
 				int npcIndex = -1;

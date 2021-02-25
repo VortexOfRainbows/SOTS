@@ -23,7 +23,7 @@ namespace SOTS.Items.Pyramid
             item.useAnimation = 14;
             item.useStyle = 5;    
             item.noMelee = true;
-            item.knockBack = 3f;
+            item.knockBack = 2.5f;
             item.value = Item.sellPrice(0, 1, 50, 0);
             item.rare = 3;
             item.UseSound = SoundID.Item11;

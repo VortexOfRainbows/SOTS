@@ -1,3 +1,4 @@
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -28,6 +29,10 @@ namespace SOTS.Items.SpecialDrops
             item.shoot = ProjectileID.Flames;
             item.shootSpeed = 5.5f;
             item.useAmmo = 23; 
+        }
+        public override Vector2? HoldoutOffset()
+        {
+            return new Vector2(-0.5f, 0);
         }
     }
 }

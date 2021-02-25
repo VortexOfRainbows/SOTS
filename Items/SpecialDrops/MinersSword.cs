@@ -9,7 +9,8 @@ namespace SOTS.Items.SpecialDrops
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Miner's Sword");
-		}
+            Tooltip.SetDefault("");
+        }
 		public override void SetDefaults()
 		{
             item.damage = 20; 
@@ -21,7 +22,7 @@ namespace SOTS.Items.SpecialDrops
             item.useStyle = 1;    
             item.knockBack = 2;
             item.value = Item.sellPrice(0, 0, 80, 0);
-            item.rare = 3;
+            item.rare = ItemRarityID.Blue;
             item.UseSound = SoundID.Item1;
             item.autoReuse = false;
             item.useTurn = true;

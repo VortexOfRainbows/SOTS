@@ -10,6 +10,7 @@ using SOTS.Void;
 using static SOTS.SOTS;
 using System;
 using SOTS.Projectiles.BiomeChest;
+using SOTS.Buffs;
 
 namespace SOTS.NPCs.ArtificialDebuffs
 {
@@ -447,6 +448,10 @@ namespace SOTS.NPCs.ArtificialDebuffs
             {
                 npc.lifeRegen -= 8;
             }
+            if(npc.HasBuff(ModContent.BuffType<Infected>()))
+            {
+                npc.lifeRegen -= 24;
+            }
             base.UpdateLifeRegen(npc, ref damage);
         }
         public override bool PreDraw(NPC npc, SpriteBatch spriteBatch, Color drawColor)
@@ -474,7 +479,49 @@ namespace SOTS.NPCs.ArtificialDebuffs
                     }
                 }
             }
+            if(npc.HasBuff(ModContent.BuffType<Infected>()) && !npc.immortal)
+            {
+                Texture2D texture = Main.projectileTexture[ModContent.ProjectileType<Pathogen>()];
+                Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
+                Color color;
+                float dimensions = (float)Math.Sqrt(npc.width * npc.height);
+                int max = (int)(dimensions / 6 + 3) * 10;
+                for (int k = 0; k < max; k++)
+                {
+                    float total = 3600f / max;
+                    float counter = (float)(Main.GlobalTime * 60);
+                    float length = dimensions;
+                    Vector2 lengthMod = new Vector2(length / 24f, 0).RotatedBy(MathHelper.ToRadians(counter * 5));
+                    Vector2 circularLength = new Vector2(length / 16f + lengthMod.X, 0).RotatedBy(MathHelper.ToRadians(k * total + counter * 2));
+                    Vector2 circularPos = new Vector2(length, 0).RotatedBy(MathHelper.ToRadians(k * total * 0.1f));
+                    Vector2 bonus = new Vector2(circularLength.X, 0).RotatedBy(MathHelper.ToRadians(k * total * 0.1f));
+                    color = new Color(250, 250, 250, 0);
+                    circularPos += bonus;
+                    Vector2 drawPos = npc.Center + circularPos - Main.screenPosition;
+                    color = npc.GetAlpha(color);
+                    Main.spriteBatch.Draw(texture, drawPos, null, color, npc.rotation, drawOrigin, 0.33f, SpriteEffects.None, 0f);
+                }
+            }
             return base.PreDraw(npc, spriteBatch, drawColor);
+        }
+        public override void HitEffect(NPC npc, int hitDirection, double damageTaken)
+        {
+            if (npc.HasBuff(ModContent.BuffType<Infected>()) && npc.life <= 0)
+            {
+                int index = npc.FindBuffIndex(ModContent.BuffType<Infected>());
+                int time = npc.buffTime[index];
+                int damage = time / 60;
+                Main.PlaySound(2, (int)npc.Center.X, (int)npc.Center.Y, 14, 0.6f);
+                if (Main.netMode != 1)
+                {
+                    for (int i = 0; i < 3; i++)
+                    {
+                        Vector2 circular = new Vector2(3, 0).RotatedBy(MathHelper.ToRadians(Main.rand.Next(360)));
+                        Projectile.NewProjectile(npc.Center.X, npc.Center.Y, circular.X, -circular.Y, mod.ProjectileType("Pathogen"), damage, 0, Main.myPlayer, -1);
+                    }
+                }
+            }
+            base.HitEffect(npc, hitDirection, damageTaken);
         }
         public override void NPCLoot(NPC npc)
         {

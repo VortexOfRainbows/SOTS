@@ -16,8 +16,8 @@ namespace SOTS.Items.SpecialDrops
 		{
             item.damage = 14;
             item.melee = true;  
-            item.width = 34;   
-            item.height = 34;   
+            item.width = 30;   
+            item.height = 30;   
             item.useStyle = 1;
 			item.useTurn = true;
             item.useTime = 18;

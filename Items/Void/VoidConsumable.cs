@@ -201,8 +201,8 @@ namespace SOTS.Items.Void
 		}
 		public override void SafeSetDefaults()
 		{
-			item.width = 30;
-			item.height = 16;
+			item.width = 28;
+			item.height = 22;
 			item.value = Item.sellPrice(0, 0, 12, 50);
 			item.rare = 1;
 			item.UseSound = SoundID.Item2;

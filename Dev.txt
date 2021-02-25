@@ -19,25 +19,109 @@ Priority: Remaining Spirits
 16. Marble Fates and Granite Omega Golem
 
 Next Update:
-4. Subspace Scissors
+3. Biome Chest Weapons
 6. Flux Slime
-7. Slime gun upgrade
-8. Biome Chest Weapons
-9. Void Low Warning
-12. Archaelogist NPC
 17. Prefixes for voids
 20. Peanut Butter, PB&J
-21. Implement new sprites and music
-22. Reduce Craftability of jellyfish staves, orbs no longer go into walls
+22. Rework Crushers/Claws internally
+23. Spider Claw weapon
+25. Resprite Putrid Eye
+26. Chaos Spirit Staff
+27. Tidal Construct + Tidal Spirit + Dissolving Deluge
+28. Nature Spirit Staff
+
+Perhaps:
+1. Archaelogist NPC
+2. Subspace Scissors
+3. Void Low Warning
+4. Slime gun upgrade
 
 Boss Rework Ideas:
-Slower projectiles/projectile rate from eye minions.
 Subspace Serpent cross attacks to attack faster and release lightning
 
+2/23/21 & 2/24/21
+1. Fixed bug Regarding Cataclysm Musket Pouch ricochet amount when used with Minishark, Clockworks Assault Rifle, and Flintlock Pistol in tandum with other Mods (Spirit and some others?)
+2. Goblinsteel Drop rates: Expert, Normal (100% 1-2, 66% 1-2) -> (50% 1, 40% 1)
+3. Fixed Putrid Pinky boss checklist display
+4. Crusher Changes
+	1. Crushers now list the amount of time needed to reach max charge (without attack speed or melee speed modification)
+	2. All Crushers now consume void across 4 intervals that are universal: 0%, 25%, 50%, and 75%
+		1. No longer consumes void while holding charged
+		2. Decaying exponential charge rates for all crushers, varying in exponent power
+			1. Changed Crusher damage algorithm due to new decaying exponential growth
+			2. Usespeed modifications with charging allow for WAY faster attack speeds across all crushers
+			3. Attacking too fast may incur a damage penalty (lower than 100%)
+	3. Crab Claw:
+		1. Recipe changed (now requires 15 topaz and 4 fragments of tide, but no longer requires earth)
+		2. KB 0 -> 10
+		3. No longer strikes through walls
+	4. Soul Eater:
+		1. KB 0 -> 7.5
+		2. Void 2 -> 5
+		3. No longer strikes through walls
+	5. Cardiac Collapse:
+		1. KB 0 -> 8.5
+		2. Void 3 -> 6
+		3. No longer strikes through walls
+		4. Releases one more healing projectile
+	6. Wormwood Collapse
+		1. KB 0 -> 7
+		2. No longer strikes through walls
+		3. Charge Time 150 -> 180
+		4. Damage 40 -> 34
+	6. Aquatic Eclipse
+		1. KB 0 -> 10
+		2. Still strikes through walls
+		3. Charge Time 150 -> 180
+		4. Void 6 -> 7
+		5. Damage 64 -> 60
+		6. No longer inflicts slow -> delayed kb
+		7. Releases slightly less bubbles, but bubbles will now travel slightly in the direction of the collapse
+			1. Bubble damage 8% -> 10%
+			2. Bubbles now hit multiple enemies, but never one enemy more than once
+	7. Hellbreaker
+		1. KB 0 -> 8
+		2. No longer strikes through walls
+		3. Charge Time 190 -> 270
+		4. Void 4 -> 6
+		5. Flame projectiles now move towards cursor more
+		6. Damage 55 -> 47
+	8. Crushers work better in multiplayer than before
+	9. All crushers are drawn with a handle
+6. Resprited Caviar and Cooked Mushroom (Blas)
+
+2/21/21 & 2/22/21
+1. Resprited Desecar and Stekpla shield (Blas)
+	1. Also changed recipe slightly from tungsten/silver -> plat/gold
+2. Crusher Class reworked, now feels and works a lot better
+	1. I still need to apply these changes to the other crushers!
+
+2/17/21 & 2/18/21
+1. Finished Pathogen Regurgitator, works in multiplayer
+2. Added gel particles to putrid pinky and others when hit
+3. Worked on Stardust Dragon Clone
+4. PPP1 Rework
+5. The final 4 putrid hooks should be unkillable
+6. Putrid Pinky has a Custom Boss healthbar
+7. Purtid Eye direction updates every frame, making it feel smoother
+8. Enchanted pickaxe retexture
+9. Shatter Blade resprite, damage increased 11 -> 15, shard damage increased from 9 -> 15, spawns 4 shards
+	1. The resprite also give sit far better range, making in a more versatile weapon
+
+2/16/21
+1. Olympian Axe finished
+2. Lower knockback for Royal Magnum 3 -> 2.5
+3. Sprited Pathogen Regurgitator base
+
 2/15/21
-1. PP Works in multiplayer, some sound effects
-2. Resprite Fire Spitter and Gel Axe, Fire spitter drop rate halved 1/120 -> 1/240, Gel axe particles
-3. Jellyfish Staff Resprites
+1. PP Works in multiplayer (syncs fine), some sound effects
+2. Resprite Fire Spitter and Gel Axe, Fire spitter drop rate halved 1/120 -> 1/240, Gel axe particles and smaller tile collide hitbox
+3. Jellyfish Staff Resprites, recipe now calls for 5 -> 15 gems, and 4 fragments of tide for Blue, no longer permafrost
+4. Green, Purple both bounce off of walls now
+5. Focus Reticle Resprite
+6. Pyramid Music activates after entering the Pyramid with weaker curse
+
+--Beta Released--
 
 2/14/21
 1. Fixed bug where PP hooks reflected destabilization lasers

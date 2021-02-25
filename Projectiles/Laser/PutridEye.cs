@@ -56,7 +56,6 @@ namespace SOTS.Projectiles.Laser
 			float dist2 = dist > 14 ? 14 : dist;
 			dist2 = dist2 <= 2 ? dist2 * ((12 + dist2)/14f) : dist2;
 			spriteBatch.Draw(texture, projectile.Center - new Vector2(dist2, 0).RotatedBy(direction) - Main.screenPosition, null, lightColor, projectile.rotation, new Vector2(7, 7), 0.9f - (dist2/14f * 0.25f), SpriteEffects.None, 0f);
-			
 		}
 		public override bool ShouldUpdatePosition() 
 		{
@@ -68,8 +67,14 @@ namespace SOTS.Projectiles.Laser
 			Player player  = Main.player[projectile.owner];
 			if (projectile.hide == false)
 			{
+				if (projectile.Center.X < player.Center.X)
+					projectile.direction = -1;
+				else
+					projectile.direction = 1;
 				Main.player[projectile.owner].heldProj = projectile.whoAmI;
 				projectile.alpha = 0;
+                player.ChangeDir(projectile.direction);
+                player.itemRotation = MathHelper.WrapAngle(projectile.rotation + MathHelper.ToRadians(projectile.direction == -1 ? 0 : -180));
 			}
 			Vector2 cursorArea = Main.MouseWorld;
 			float shootToX = cursorArea.X - player.Center.X;
@@ -89,6 +94,30 @@ namespace SOTS.Projectiles.Laser
 			}
 			double startingDirection = Math.Atan2((double)-shootToY, (double)-shootToX);
 			double direction = Math.Atan2(player.Center.Y - projectile.Center.Y, player.Center.X - projectile.Center.X);
+			projectile.rotation = (float)direction;
+			if (Main.myPlayer == player.whoAmI)
+			{
+				startingDirection *= 180 / Math.PI;
+				double deg = startingDirection;
+				double rad = deg * (Math.PI / 180);
+				double dist2 = 20;
+				projectile.position.X = player.Center.X - (int)(Math.Cos(rad) * dist2) - projectile.width / 2;
+				projectile.position.Y = player.Center.Y - (int)(Math.Sin(rad) * dist2) - projectile.height / 2;
+				if (player.channel || projectile.timeLeft > 6)
+				{
+					projectile.timeLeft = 6;
+					projectile.alpha = 0;
+					if (Main.myPlayer == projectile.owner && dist >= 20)
+					{
+						VoidItem.DrainMana(player);
+						dist = -12;
+						Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 0.8f / 255f, (255 - projectile.alpha) * 0.8f / 255f, (255 - projectile.alpha) * 0.8f / 255f);
+						Main.PlaySound(SoundID.Item94, (int)(projectile.Center.X), (int)(projectile.Center.Y));
+						Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("FriendlyPinkLaser"), projectile.damage, 1f, projectile.owner, projectile.Center.X + shootToX * 60, projectile.Center.Y + shootToY * 60);
+					}
+				}
+				projectile.netUpdate = true;
+			}
 			if (dist >= 2 && counter % 3 == 0)
 			{
 				if(dist <= 3)
@@ -134,29 +163,6 @@ namespace SOTS.Projectiles.Laser
 					Main.dust[num1].noGravity = true;
 					Main.dust[num1].velocity = projectile.velocity.RotatedBy(MathHelper.ToRadians(180));
 				}
-			}
-			if (Main.myPlayer == player.whoAmI)
-			{
-				startingDirection *= 180/Math.PI;
-				double deg = startingDirection;
-				double rad = deg * (Math.PI / 180);
-				double dist2 = 20;
-				projectile.position.X = player.Center.X - (int)(Math.Cos(rad) * dist2) - projectile.width / 2;
-				projectile.position.Y = player.Center.Y - (int)(Math.Sin(rad) * dist2) - projectile.height / 2;
-				if (player.channel || projectile.timeLeft > 6)
-				{
-					projectile.timeLeft = 6;
-					projectile.alpha = 0;
-					if(Main.myPlayer == projectile.owner && dist >= 20)
-					{
-						VoidItem.DrainMana(player);
-						dist = -12;
-						Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 0.8f / 255f, (255 - projectile.alpha) * 0.8f / 255f, (255 - projectile.alpha) * 0.8f / 255f);
-						Main.PlaySound(SoundID.Item94, (int)(projectile.Center.X), (int)(projectile.Center.Y));
-						Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("FriendlyPinkLaser"), projectile.damage, 1f, projectile.owner, projectile.Center.X + shootToX * 60, projectile.Center.Y + shootToY * 60);
-					}						
-				}
-				projectile.netUpdate = true;
 			}
 		}
 	}

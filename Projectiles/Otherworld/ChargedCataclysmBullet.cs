@@ -138,6 +138,7 @@ namespace SOTS.Projectiles.Otherworld
 							Projectile.NewProjectile(addPos.X, addPos.Y, projectile.velocity.X, projectile.velocity.Y, mod.ProjectileType("CataclysmBulletDamage"), projectile.damage, projectile.knockBack, Main.myPlayer, -1f, 5f);
 						if (projectile.friendly)
 							collided = true;
+						projectile.friendly = false;
 						for (int k = i + 1; k < trailPos.Length; k++)
 						{
 							trailPos[k] = Vector2.Zero;

@@ -145,15 +145,29 @@ namespace SOTS.NPCs.Boss
 			if(npc.scale == 1)
 				spriteBatch.Draw(texture, drawPos, null, drawColor, npc.rotation, drawOrigin, npc.scale, SpriteEffects.None, 0f);
 		}
-		public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) 
+		public override void ModifyHitByItem(Player player, Item item, ref int damage, ref float knockback, ref bool crit)
 		{
-			if(projectile.active && (projectile.modProjectile == null || projectile.modProjectile.ShouldUpdatePosition()))
+			base.ModifyHitByItem(player, item, ref damage, ref knockback, ref crit);
+		}
+		public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+		{
+			if (projectile.active && (projectile.modProjectile == null || projectile.modProjectile.ShouldUpdatePosition()))
 			{
 				projectile.velocity.X *= -0.9f;
 				projectile.velocity.Y *= -0.9f;
 				projectile.netUpdate = true;
 			}
 		}
+        public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
+		{
+			if (npc.defense > 1000)
+			{
+				damage = 0;
+				crit = false;
+				return false;
+			}
+			return true;
+        }
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
             npc.damage = (int)(npc.damage * 0.8f);  
@@ -248,10 +262,10 @@ namespace SOTS.NPCs.Boss
 			if(totalHook <= 4)
 			{
 				npc.defense = 9999;
-				if(npc.life < npc.lifeMax && counter % 15 == 0)
-				{
+				if(counter % (totalHook * totalHook) == 0)
+                {
 					npc.life++;
-				}
+                }
 			}
 			else
             {
@@ -267,7 +281,20 @@ namespace SOTS.NPCs.Boss
 				npc.damage = storeDamage;
 			}
 		}
-	}
+        public override void HitEffect(int hitDirection, double damage)
+		{
+			if (npc.life > 0)
+			{
+				for (int i = 0; i < 4; i++)
+				{
+					Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.PinkSlime, hitDirection * 2, 0, 120);
+					dust.scale *= 1.5f;
+				}
+				return;
+			}
+			base.HitEffect(hitDirection, damage);
+        }
+    }
 }
 
 

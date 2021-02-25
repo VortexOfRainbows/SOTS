@@ -121,7 +121,7 @@ namespace SOTS.Projectiles.Otherworld
 				if (npc.active && npc.Hitbox.Intersects(new Rectangle((int)addPos.X - 12, (int)addPos.Y - 12, 24, 24)) && !npc.friendly)
 				{
 					if (projectile.owner == Main.myPlayer && projectile.friendly)
-						Projectile.NewProjectile(addPos.X, addPos.Y, projectile.velocity.X, projectile.velocity.Y, mod.ProjectileType("CataclysmBulletDamage"), projectile.damage, 5f, Main.myPlayer, (int)projectile.knockBack, projectile.ai[1] - 1);
+						Projectile.NewProjectile(addPos.X, addPos.Y, projectile.velocity.X, projectile.velocity.Y, mod.ProjectileType("CataclysmBulletDamage"), projectile.damage, 2f, Main.myPlayer, (int)projectile.knockBack, projectile.ai[1] - 1);
 					if(projectile.friendly)
                     {
 						hit = true;

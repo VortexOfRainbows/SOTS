@@ -5,14 +5,12 @@ using Terraria.ModLoader;
 namespace SOTS.Items.GelGear
 {
 	[AutoloadEquip(EquipType.Head)]
-	
 	public class NatureWreath : ModItem
 	{	int Probe = -1;
 		int Probe2 = -1;
 		int Probe3 = -1;
 		public override void SetDefaults()
 		{
-
 			item.width = 28;
 			item.height = 18;
             item.value = Item.sellPrice(0, 0, 50, 0);

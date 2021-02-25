@@ -30,9 +30,21 @@ namespace SOTS.Projectiles.Lightning
 			projectile.penetrate = 24;
 			projectile.friendly = true;
 			projectile.timeLeft = 60;
-			projectile.tileCollide = false;
+			projectile.tileCollide = true;
 			projectile.magic = true;
 			projectile.hostile = false;
+		}
+		public override bool OnTileCollide(Vector2 oldVelocity)
+		{
+			if (projectile.velocity.X != oldVelocity.X)
+			{
+				projectile.velocity.X = -oldVelocity.X;
+			}
+			if (projectile.velocity.Y != oldVelocity.Y)
+			{
+				projectile.velocity.Y = -oldVelocity.Y;
+			}
+			return false;
 		}
 		public override void AI()
 		{

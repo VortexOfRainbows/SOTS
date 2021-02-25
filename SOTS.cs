@@ -93,8 +93,23 @@ namespace SOTS
                 VoidUI.Activate();
                 _VoidUserInterface = new UserInterface();
                 _VoidUserInterface.SetState(VoidUI);
-            }
-        }
+			}
+			Mod yabhb = ModLoader.GetMod("FKBossHealthBar");
+			if (yabhb != null)
+			{
+				yabhb.Call("hbStart");
+				yabhb.Call("hbSetTexture",
+					GetTexture("UI/PinkyHealthbarLeft"),
+					GetTexture("UI/PinkyHealthbarMid"),
+					GetTexture("UI/PinkyHealthbarEnd"),
+					GetTexture("UI/PinkyHealthbarFill"));
+				yabhb.Call("hbSetMidBarOffset", -36, 12);
+				yabhb.Call("hbSetBossHeadCentre", 16, 30);
+				yabhb.Call("hbSetFillDecoOffset", 10);
+				yabhb.Call("hbLoopMidBar", true);
+				yabhb.Call("hbFinishSingle", ModContent.NPCType<PutridPinkyPhase2>());
+			}
+		}
 		public override void Unload() 
 		{
 			//SOTSGlowmasks.UnloadGlowmasks();
@@ -329,11 +344,12 @@ namespace SOTS
             }
 			*/
 			if (Main.myPlayer != -1 && !Main.gameMenu)
-            {
-                if(Main.player[Main.myPlayer].active && Main.player[Main.myPlayer].GetModPlayer<SOTSPlayer>().PyramidBiome)
+			{
+				Player player = Main.player[Main.myPlayer];
+				if (player.active && player.GetModPlayer<SOTSPlayer>().PyramidBiome)
                 {
-                    music = MusicID.Desert;
-					priority = MusicPriority.BossLow;
+                    music =  SOTSPlayer.ModPlayer(player).weakerCurse ? GetSoundSlot(SoundType.Music, "Sounds/Music/Grand_Pyramid") : MusicID.Desert;
+					priority = MusicPriority.BiomeHigh;
                 } 
             }
         }
@@ -362,7 +378,7 @@ namespace SOTS
 					"Summon in any biome at any time using a [i:" + ModContent.ItemType<JarOfPeanuts>() + "]",
 					"{0} has robbed everyone of their peanuts!", 
 					"SOTS/NPCs/Boss/PutridPinky1_Display", 
-					"SOTS/NPCs/Boss/PutridPinkyPhase2_Head_Boss",
+					"SOTS/NPCs/Boss/PutridPinky1_Head_Boss",
 					(Func<bool>)(() => true));
 				bossChecklist.Call(
 					"AddBoss",

@@ -23,12 +23,18 @@ namespace SOTS.Projectiles
 			projectile.width = 32;
 			projectile.height = 20;
 		}
-		public override bool OnTileCollide(Vector2 oldVelocity)
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+        {
+			width = 16;
+			height = 12;
+            return base.TileCollideStyle(ref width, ref height, ref fallThrough);
+        }
+        public override bool OnTileCollide(Vector2 oldVelocity)
 		{	
 			projectile.tileCollide = false;
 			projectile.timeLeft = 120;
 			projectile.velocity.X *= 0.3f;
-			projectile.velocity.Y *= 0.5f;
+			projectile.velocity.Y *= 0.3f;
 			projectile.aiStyle = 0;
 			wait = 1;
 			return false;
@@ -37,9 +43,9 @@ namespace SOTS.Projectiles
 		{
 			for(int i = 0; i < 20; i ++)
 			{
-				Dust dust = Dust.NewDustDirect(projectile.position - new Vector2(5), projectile.width, projectile.height, DustID.t_Slime, 0, 0, projectile.alpha, new Color(0, 0, 255, 100), 1f);
-				dust.scale *= 1.5f;
-				dust.velocity *= 1.5f;
+				Dust dust = Dust.NewDustDirect(projectile.position - new Vector2(5), projectile.width, projectile.height, DustID.t_Slime, 0, 0, 100, new Color(0, 0, 255, 100), 1f);
+				dust.scale *= 1.1f;
+				dust.velocity *= 1.15f;
 			}
 			base.Kill(timeLeft);
         }

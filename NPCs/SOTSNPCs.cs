@@ -10,6 +10,7 @@ using SOTS.Void;
 using SOTS.Items.Void;
 using SOTS.NPCs.Boss;
 using SOTS.Items.SpecialDrops;
+using SOTS.Items;
 
 namespace SOTS.NPCs
 {
@@ -122,8 +123,10 @@ namespace SOTS.NPCs
 
 				if (npc.type == NPCID.GoblinPeon || npc.type == NPCID.GoblinArcher || npc.type == NPCID.GoblinWarrior || npc.type == NPCID.GoblinSorcerer)
 				{
-					if (Main.rand.Next(3) <= 1 || Main.expertMode)
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("Goblinsteel"), Main.rand.Next(2) + 1);
+					if (Main.rand.Next(5) <= 1 && !Main.expertMode)
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<Goblinsteel>(), 1);
+					if (Main.rand.NextBool(2) && Main.expertMode)
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<Goblinsteel>(), 1);
 				}
 
 				if (npc.type == NPCID.PirateCaptain || npc.type == NPCID.PirateCorsair || npc.type == NPCID.PirateCrossbower || npc.type == NPCID.PirateDeadeye || npc.type == NPCID.Parrot)
@@ -161,6 +164,8 @@ namespace SOTS.NPCs
 
 				if(npc.type == NPCID.QueenBee && (!NPC.downedBoss1 || Main.rand.NextBool(20)))
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<RoyalJelly>(), 1);
+				if(npc.type == NPCID.GreekSkeleton && Main.rand.NextBool(20))
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<OlympianAxe>(), 1);
 
 			}
 		}

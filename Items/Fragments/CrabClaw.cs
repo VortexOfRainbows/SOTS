@@ -1,11 +1,9 @@
-using System;
 using Microsoft.Xna.Framework;
-
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using SOTS.Void;
-
+using SOTS.Projectiles.Crushers;
 
 namespace SOTS.Items.Fragments
 {
@@ -14,67 +12,44 @@ namespace SOTS.Items.Fragments
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Crab Claw");
-			Tooltip.SetDefault("Charge to increase damage up to 800%");
+			Tooltip.SetDefault("Charge to increase damage up to 800%\nTakes 4 seconds to reach max charge");
 		}
 		public override void SafeSetDefaults()
 		{
             item.damage = 18;
             item.melee = true;  
-            item.width = 28;
-            item.height = 20;  
-            item.useTime = 90; 
-            item.useAnimation = 90;
+            item.width = 32;
+            item.height = 26;  
+            item.useTime = 30; 
+            item.useAnimation = 30;
             item.useStyle = 5;    
-            item.knockBack = 0f;
+            item.knockBack = 10f;
             item.value = Item.sellPrice(0, 0, 50, 0);
-            item.rare = 2;
+            item.rare = ItemRarityID.Green;
             item.UseSound = SoundID.Item22;
             item.autoReuse = true;
-            item.shoot = mod.ProjectileType("CrabClawArm"); 
-            item.shootSpeed = 0f;
+            item.shoot = ModContent.ProjectileType<CrabCrusher>(); 
+            item.shootSpeed = 18f;
 			item.channel = true;
             item.noUseGraphic = true; 
             item.noMelee = true;
-			Item.staff[item.type] = true; 
 		}
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.Topaz, 5);
-			recipe.AddIngredient(null, "FragmentOfTide", 2);
-			recipe.AddIngredient(null, "FragmentOfEarth", 1);
+			recipe.AddIngredient(ItemID.Topaz, 15);
+			recipe.AddIngredient(null, "FragmentOfTide", 4);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this);
 			recipe.AddRecipe();
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-        {
-            SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
-				VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-			
-				bool summon = true;
-				for (int l = 0; l < Main.projectile.Length; l++)
-				{
-					Projectile proj = Main.projectile[l];
-					if(proj.active && proj.type == item.shoot && Main.player[proj.owner] == player)
-					{
-						summon = false;
-					}
-				}
-			if(player.altFunctionUse != 2)
-			{
-				item.UseSound = SoundID.Item22;
-				if(summon)
-				{
-					Projectile.NewProjectile(position.X, position.Y, speedX, speedY, type, damage, 0, player.whoAmI);
-					Projectile.NewProjectile(position.X, position.Y, speedX, speedY, type, damage, 1, player.whoAmI);
-				}
-			}
-              return false; 
+		{
+			return player.ownedProjectileCounts[type] <= 0;
 		}
 		public override void GetVoid(Player player)
 		{
-				voidMana = 3;
+			voidMana = 3;
 		}
 	}
 }

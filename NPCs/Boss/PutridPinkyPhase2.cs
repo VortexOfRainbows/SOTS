@@ -390,7 +390,10 @@ namespace SOTS.NPCs.Boss
 							float disX = hook.Center.X - npc.Center.X;
 							float disY = hook.Center.Y - npc.Center.Y;
 							double dis = Math.Sqrt(disX * disX + disY * disY);
-							if (dis > distanceTB || (Main.rand.NextBool(Main.expertMode ? 1200 + (npc.life / 2) : 1800 + (npc.life / 2)) && npc.life < npc.lifeMax / 2))
+							int bonus = (npc.life / 2);
+							if (bonus < 0)
+								bonus = 0;
+							if (dis > distanceTB || (Main.rand.NextBool(Main.expertMode ? 1200 + bonus : 1800 + bonus) && npc.life < npc.lifeMax / 2))
 							{
 								Recollect(Main.npc[i]);
 							}
@@ -649,18 +652,18 @@ namespace SOTS.NPCs.Boss
 			{
 				for (int i = 0; i < 10; i++) 
 				{
-					Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, 72, hitDirection * 3, 0, 100, new Color(100, 100, 100, 100), 1f);
-					dust.noGravity = true;
+					Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.PinkSlime, hitDirection * 2, 0, 120);
+					dust.scale *= 1.5f;
 				}
 				return;
 			}
 			else
 			{
-				for (int i = 0; i < 35; i++)
+				for (int i = 0; i < 55; i++)
 				{
-					Dust dust = Dust.NewDustDirect(npc.position - new Vector2(5), npc.width, npc.height, 72, hitDirection * 3, 0, 100, new Color(100, 100, 100, 100), 1f);
-					dust.noGravity = true;
-					dust.scale *= 2;
+					Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.PinkSlime, hitDirection * 1, 0, 120);
+					dust.noGravity = false;
+					dust.scale *= 2.3f;
 					dust.velocity *= 2;
 				}
 				Gore.NewGore(npc.position + new Vector2(0, 24), npc.velocity, mod.GetGoreSlot("Gores/ppGore_1"), 1f);

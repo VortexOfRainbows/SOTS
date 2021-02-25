@@ -1,0 +1,71 @@
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
+
+namespace SOTS.Projectiles.BiomeChest
+{
+	public class SmokePixel : ModProjectile
+	{
+		public override void SetStaticDefaults()
+		{
+			DisplayName.SetDefault("Pathogen Cloud");
+		}
+		public override void SetDefaults()
+		{
+			projectile.width = 96;
+			projectile.height = 96;
+			projectile.friendly = true;
+			projectile.ranged = true;
+			projectile.timeLeft = 130;
+			projectile.tileCollide = false;
+			projectile.penetrate = -1;
+			projectile.ai[0] = 32;
+		}
+		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		{
+			target.immune[projectile.owner] = 0;
+		}
+		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		{
+			Texture2D texture = Main.projectileTexture[projectile.type];
+			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
+			for (int k = 0; k < 240; k++)
+			{
+				Vector2 lengthMod = new Vector2(1.0f, 0).RotatedBy(MathHelper.ToRadians(projectile.ai[1] * 10));
+				Vector2 circularModifier = new Vector2(0.5f, 0).RotatedBy(MathHelper.ToRadians(k * 1.5f) + projectile.rotation);
+				Vector2 circularLength = new Vector2(1.5f + lengthMod.X, 0).RotatedBy(MathHelper.ToRadians(k * 27));
+				Vector2 circularPos = new Vector2(projectile.ai[0] * 2, 0).RotatedBy(MathHelper.ToRadians(k * 1.5f) + projectile.rotation);
+				Vector2 bonus = new Vector2(circularLength.X, 0).RotatedBy(MathHelper.ToRadians(k * 1.5f) + projectile.rotation);
+				Color color = new Color(100, 100, 100, 0);
+				float mod = Math.Abs(circularModifier.X);
+				if (mod < 0.25f) mod = 0.25f;
+				circularPos.Y *= 0.5f + mod;
+				circularPos += bonus;
+				Vector2 drawPos = projectile.Center + circularPos - Main.screenPosition;
+				color = projectile.GetAlpha(color);
+				for (int j = 0; j < 5; j++)
+				{
+					float x = Main.rand.Next(-10, 11) * 0.15f;
+					float y = Main.rand.Next(-10, 11) * 0.15f;
+					Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, projectile.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
+				}
+				float circularRot = circularPos.ToRotation();
+				float dist = circularPos.Length();
+				Main.spriteBatch.Draw(texture, projectile.Center - Main.screenPosition, new Rectangle(0, 0, (int)dist, texture.Height), projectile.GetAlpha(Color.White), circularRot, drawOrigin, 1f, SpriteEffects.None, 0f);
+			}
+			
+			return false;
+		}
+		public override void AI()
+		{
+			Lighting.AddLight(projectile.Center, 1f, 0.5f, 1f);
+			projectile.rotation += MathHelper.ToRadians(1);
+			projectile.alpha += 2;
+			projectile.ai[0] = 32;
+			projectile.ai[1]++;
+		}
+	}
+}

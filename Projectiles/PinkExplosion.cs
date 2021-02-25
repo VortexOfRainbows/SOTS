@@ -39,6 +39,7 @@ namespace SOTS.Projectiles
 		}
 		public override void AI()
         {
+			projectile.rotation = projectile.ai[0];
 			projectile.knockBack = 3.5f;
             projectile.frameCounter++;
             if (projectile.frameCounter >= 8)

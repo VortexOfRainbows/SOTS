@@ -1689,7 +1689,7 @@
             </summary>
             <param name="item">The item being used</param>
             <param name="player">The player using the item</param>
-            <param name="add">Used for additively stacking buffs (most common). Only ever use += on this field. Things with effects like "5% increased MyDamageClass damage" would use this: `add += 0.05`</param>
+            <param name="add">Used for additively stacking buffs (most common). Only ever use += on this field. Things with effects like "5% increased MyDamageClass damage" would use this: `add += 0.05f`</param>
             <param name="mult">Use to directly multiply the player's effective damage. Good for debuffs, or things which should stack separately (eg ammo type buffs)</param>
             <param name="flat">This is a flat damage bonus that will be added after add and mult are applied. It facilitates effects like "4 more damage from weapons"</param>
         </member>
@@ -1962,35 +1962,35 @@
             <summary>
             Allows you to determine whether the skin/shirt on the player's arms and hands are drawn when a body armor is worn.
             Note that if drawHands is false, the arms will not be drawn either.
-            
+            "body" is the player's associated body equipment texture.
             This method is not instanced.
             </summary>
         </member>
         <member name="M:Terraria.ModLoader.GlobalItem.DrawHair(System.Int32,System.Boolean@,System.Boolean@)">
             <summary>
             Allows you to determine whether the player's hair or alt (hat) hair will be drawn when a head armor is worn.
-            
+            "head" is the player's associated head equipment texture.
             This method is not instanced.
             </summary>
         </member>
         <member name="M:Terraria.ModLoader.GlobalItem.DrawHead(System.Int32)">
             <summary>
             Return false to hide the player's head when a head armor is worn. Returns true by default.
-            
+            "head" is the player's associated head equipment texture.
             This method is not instanced.
             </summary>
         </member>
         <member name="M:Terraria.ModLoader.GlobalItem.DrawBody(System.Int32)">
             <summary>
             Return false to hide the player's body when a body armor is worn. Returns true by default.
-            
+            "body" is the player's associated body equipment texture.
             This method is not instanced.
             </summary>
         </member>
         <member name="M:Terraria.ModLoader.GlobalItem.DrawLegs(System.Int32,System.Int32)">
             <summary>
             Return false to hide the player's legs when a leg armor or shoe accessory is worn. Returns true by default.
-            
+            "legs" and "shoes" are the player's associated legs and shoes equipment textures.
             This method is not instanced.
             </summary>
         </member>
@@ -2496,10 +2496,10 @@
         </member>
         <member name="M:Terraria.ModLoader.GlobalNPC.BossHeadSlot(Terraria.NPC,System.Int32@)">
             <summary>
-            Allows you to customize the boss head texture used by an NPC based on its state.
+            Allows you to customize the boss head texture used by an NPC based on its state. Set index to -1 to stop the texture from being displayed.
             </summary>
             <param name="npc"></param>
-            <param name="index"></param>
+            <param name="index">The index for NPCID.Sets.BossHeadTextures</param>
         </member>
         <member name="M:Terraria.ModLoader.GlobalNPC.BossHeadRotation(Terraria.NPC,System.Single@)">
             <summary>
@@ -3044,6 +3044,11 @@
             The speed at which the grapple pulls the player after hitting something. Defaults to 11, but the Bat Hook uses 16.
             </summary>
         </member>
+        <member name="M:Terraria.ModLoader.GlobalProjectile.GrappleTargetPoint(Terraria.Projectile,Terraria.Player,System.Single@,System.Single@)">
+            <summary>
+            The location that the grappling hook pulls the player to. Defaults to the center of the hook projectile.
+            </summary>
+        </member>
         <member name="T:Terraria.ModLoader.GlobalRecipe">
             <summary>
             This class provides hooks that control all recipes in the game.
@@ -3188,7 +3193,7 @@
         </member>
         <member name="M:Terraria.ModLoader.GlobalTile.KillTile(System.Int32,System.Int32,System.Int32,System.Boolean@,System.Boolean@,System.Boolean@)">
             <summary>
-            Allows you to determine what happens when the tile at the given coordinates is killed or hit with a pickaxe. Fail determines whether the tile is mined, effectOnly makes it so that only dust is created, and noItem stops items from dropping.
+            Allows you to determine what happens when the tile at the given coordinates is killed or hit with a pickaxe. If <paramref name="fail"/> is true, the tile will not be mined; <paramref name="effectOnly"/> makes it so that only dust is created; <paramref name="noItem"/> stops items from dropping.
             </summary>
             <param name="i"></param>
             <param name="j"></param>
@@ -5857,7 +5862,7 @@
             Allows you to temporarily modify this weapon's damage based on player buffs, etc. This is useful for creating new classes of damage, or for making subclasses of damage (for example, Shroomite armor set boosts).
             </summary>
             <param name="player">The player using the item</param>
-            <param name="add">Used for additively stacking buffs (most common). Only ever use += on this field. Things with effects like "5% increased MyDamageClass damage" would use this: `add += 0.05`</param>
+            <param name="add">Used for additively stacking buffs (most common). Only ever use += on this field. Things with effects like "5% increased MyDamageClass damage" would use this: `add += 0.05f`</param>
             <param name="mult">Use to directly multiply the player's effective damage. Good for debuffs, or things which should stack separately (eg ammo type buffs)</param>
             <param name="flat">This is a flat damage bonus that will be added after add and mult are applied. It facilitates effects like "4 more damage from weapons"</param>
         </member>
@@ -6973,9 +6978,9 @@
         </member>
         <member name="M:Terraria.ModLoader.ModNPC.BossHeadSlot(System.Int32@)">
             <summary>
-            Allows you to customize the boss head texture used by this NPC based on its state.
+            Allows you to customize the boss head texture used by this NPC based on its state. Set index to -1 to stop the texture from being displayed.
             </summary>
-            <param name="index"></param>
+            <param name="index">The index for NPCID.Sets.BossHeadTextures</param>
         </member>
         <member name="M:Terraria.ModLoader.ModNPC.BossHeadRotation(System.Single@)">
             <summary>
@@ -7582,7 +7587,7 @@
             Allows you to temporarily modify this weapon's damage based on player buffs, etc. This is useful for creating new classes of damage, or for making subclasses of damage (for example, Shroomite armor set boosts).
             </summary>
             <param name="item">The item being used</param>
-            <param name="add">Used for additively stacking buffs (most common). Only ever use += on this field. Things with effects like "5% increased MyDamageClass damage" would use this: `add += 0.05`</param>
+            <param name="add">Used for additively stacking buffs (most common). Only ever use += on this field. Things with effects like "5% increased MyDamageClass damage" would use this: `add += 0.05f`</param>
             <param name="mult">Use to directly multiply the player's effective damage. Good for debuffs, or things which should stack separately (eg ammo type buffs)</param>
             <param name="flat">This is a flat damage bonus that will be added after add and mult are applied. It facilitates effects like "4 more damage from weapons"</param>
         </member>
@@ -7903,12 +7908,12 @@
         </member>
         <member name="M:Terraria.ModLoader.ModPlayer.ShiftClickSlot(Terraria.Item[],System.Int32,System.Int32)">
             <summary>
-            Called whenever the player shift-clicks an item slot. This can be used to override default clicking behavior (ie. selling or trashing items).
+            Called whenever the player shift-clicks an item slot. This can be used to override default clicking behavior (ie. selling, trashing, moving items).
             </summary>
             <param name="inventory">The array of items the slot is part of.</param>
             <param name="context">The Terraria.UI.ItemSlot.Context of the inventory.</param>
             <param name="slot">The index in the inventory of the clicked slot.</param>
-            <returns>Whether or not to block the default code (sell and trash) from running. Returns false by default.</returns>
+            <returns>Whether or not to block the default code (sell, trash, move, etc) from running. Returns false by default.</returns>
         </member>
         <member name="M:Terraria.ModLoader.ModPlayer.PostSellItem(Terraria.NPC,Terraria.Item[],Terraria.Item)">
             <summary>
@@ -8387,6 +8392,11 @@
         <member name="M:Terraria.ModLoader.ModProjectile.GrapplePullSpeed(Terraria.Player,System.Single@)">
             <summary>
             The speed at which the grapple pulls the player after hitting something. Defaults to 11, but the Bat Hook uses 16.
+            </summary>
+        </member>
+        <member name="M:Terraria.ModLoader.ModProjectile.GrappleTargetPoint(Terraria.Player,System.Single@,System.Single@)">
+            <summary>
+            The location that the grappling hook pulls the player to. Defaults to the center of the hook projectile.
             </summary>
         </member>
         <member name="M:Terraria.ModLoader.ModProjectile.DrawBehind(System.Int32,System.Collections.Generic.List{System.Int32},System.Collections.Generic.List{System.Int32},System.Collections.Generic.List{System.Int32},System.Collections.Generic.List{System.Int32})">
@@ -9974,6 +9984,11 @@
         <member name="T:Terraria.ModLoader.RecipeHooks">
             <summary>
             This is where all ModRecipe and GlobalRecipe hooks are gathered and called.
+            </summary>
+        </member>
+        <member name="F:Terraria.ModLoader.RecipeHooks.setupRecipes">
+            <summary>
+            Set when tML sets up modded recipes. Used to detect misuse of the ModRecipe ctor
             </summary>
         </member>
         <member name="M:Terraria.ModLoader.RecipeHooks.RecipeAvailable(Terraria.Recipe)">

@@ -25,7 +25,7 @@ namespace SOTS.Items.IceStuff
 				spriteBatch.Draw(texture, position, frame, drawColor, 0, origin, scale, SpriteEffects.None, 0f);
 			if(broken == 1)
 			{
-				spriteBatch.Draw(texture2, position, new Rectangle(0, 38 * counter + 1, 34, 37), drawColor, 0, origin, scale, SpriteEffects.None, 0f);
+				spriteBatch.Draw(texture2, position, new Rectangle(0, 46 * counter + 1, 42, 45), drawColor, 0, origin, scale, SpriteEffects.None, 0f);
 			}
 			return false;
 		}
@@ -34,19 +34,19 @@ namespace SOTS.Items.IceStuff
 			Texture2D texture = mod.GetTexture("Items/IceStuff/ShatterBlade");
 			Texture2D texture2 = mod.GetTexture("Items/IceStuff/ShatterFix");
 			if (broken == 0)
-				spriteBatch.Draw(texture, item.Center - Main.screenPosition, new Rectangle(0, 0, 34, 34), lightColor, 0, new Vector2(17,17), scale, SpriteEffects.None, 0f);
+				spriteBatch.Draw(texture, item.Center - Main.screenPosition, new Rectangle(0, 0, 42, 42), lightColor, 0, new Vector2(17,17), scale, SpriteEffects.None, 0f);
 			if (broken == 1)
 			{
-				spriteBatch.Draw(texture2, item.Center - Main.screenPosition, new Rectangle(0, 38 * counter + 1, 34, 37), lightColor, 0, new Vector2(17, 17), scale, SpriteEffects.None, 0f);
+				spriteBatch.Draw(texture2, item.Center - Main.screenPosition, new Rectangle(0, 46 * counter + 1, 42, 45), lightColor, 0, new Vector2(17, 17), scale, SpriteEffects.None, 0f);
 			}
 			return false;
 		}
 		public override void SetDefaults()
 		{
-			item.damage = 11;
+			item.damage = 15;
 			item.melee = true;
-			item.width = 34;
-			item.height = 34;
+			item.width = 42;
+			item.height = 42;
 			item.useTime = 15;
 			item.useAnimation = 15;
 			item.useStyle = 1;
@@ -120,10 +120,10 @@ namespace SOTS.Items.IceStuff
 			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
 			if (crit && player.whoAmI == Main.myPlayer)
 			{
-				for(int i = 0; i < 3; i++)
+				for(int i = 0; i < 4; i++)
 				{
-					Vector2 circularSpeed = new Vector2(0, 12).RotatedBy(MathHelper.ToRadians(i * 120));
-					int calc = damage + modPlayer.bonusShardDamage - 2;
+					Vector2 circularSpeed = new Vector2(0, 12).RotatedBy(MathHelper.ToRadians(i * 90));
+					int calc = damage + modPlayer.bonusShardDamage;		
 					if (calc <= 0) calc = 1;
 					Projectile.NewProjectile(player.Center.X, player.Center.Y, circularSpeed.X, circularSpeed.Y, mod.ProjectileType("ShatterShard"), calc, 3f, player.whoAmI);
 				}

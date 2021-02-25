@@ -19,7 +19,7 @@ namespace SOTS.Items.Otherworld.FromChests
 			item.height = 32;
 			item.maxStack = 1;
 			item.consumable = false;           
-			item.knockBack = 0.2f;
+			item.knockBack = 1f;
             item.value = Item.sellPrice(0, 4, 0, 0);
 			item.rare = ItemRarityID.LightPurple; 
 			item.shoot = mod.ProjectileType("CataclysmBullet");  

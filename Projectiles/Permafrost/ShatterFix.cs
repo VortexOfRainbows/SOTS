@@ -13,8 +13,8 @@ namespace SOTS.Projectiles.Permafrost
 		}
         public override void SetDefaults()
         {
-			projectile.width = 34;
-			projectile.height = 38;
+			projectile.width = 42;
+			projectile.height = 46;
 			projectile.penetrate = -1;
 			Main.projFrames[projectile.type] = 11;
 			projectile.friendly = false;
@@ -65,13 +65,14 @@ namespace SOTS.Projectiles.Permafrost
 			Player player = Main.player[projectile.owner];
 			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
 			modPlayer.brokenFrigidSword = 3;
+			player.heldProj = projectile.whoAmI;
 
-			projectile.position = player.Center + new Vector2(22 * player.direction, -26) - new Vector2(17, 17);
+			projectile.position = player.Center + new Vector2(22 * player.direction, -26) - new Vector2(21, 23);
 			projectile.spriteDirection = player.direction;
 			if (projectile.frame != (int)projectile.ai[0])
 			{
 				projectile.frame = (int)projectile.ai[0];
-				Bang(1.5f * projectile.frame * player.direction, -1.5f * projectile.frame);
+				Bang(2f * projectile.frame * player.direction, -2f * projectile.frame);
 				if (projectile.frame == 10)
 				{
 					projectile.Kill();

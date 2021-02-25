@@ -35,7 +35,7 @@ namespace SOTS.Items.SpecialDrops
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.Amethyst, 5);
+			recipe.AddIngredient(ItemID.Amethyst, 15);
 			recipe.AddIngredient(null, "FragmentOfTide", 4);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this);
