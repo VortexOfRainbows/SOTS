@@ -11,11 +11,19 @@ using SOTS.Items.Void;
 using SOTS.NPCs.Boss;
 using SOTS.Items.SpecialDrops;
 using SOTS.Items;
+using SOTS.Buffs;
 
 namespace SOTS.NPCs
 {
     public class SOTSNPCs : GlobalNPC
     {
+        public override void SetDefaults(NPC npc)
+        {
+			if(npc.type == NPCID.BlackRecluse || npc.type == NPCID.WallCreeper || npc.type == NPCID.WallCreeperWall || npc.type == NPCID.BlackRecluseWall || npc.type == NPCID.JungleCreeperWall || npc.type == NPCID.JungleCreeper)
+            {
+				npc.buffImmune[ModContent.BuffType<WebbedNPC>()] = true;
+            }
+        }
         public override void ModifyHitByItem(NPC npc, Player player, Item item, ref int damage, ref float knockback, ref bool crit)
 		{
 			hitBy(npc, player, null, item, ref damage, ref knockback, ref crit);

@@ -21,25 +21,29 @@ Priority: Remaining Spirits
 Next Update:
 3. Biome Chest Weapons
 6. Flux Slime
-17. Prefixes for voids
 20. Peanut Butter, PB&J
-22. Rework Crushers/Claws internally
-23. Spider Claw weapon
 25. Resprite Putrid Eye
 26. Chaos Spirit Staff
 27. Tidal Construct + Tidal Spirit + Dissolving Deluge
 28. Nature Spirit Staff
+29. Wormwood Changes
 
 Perhaps:
 1. Archaelogist NPC
 2. Subspace Scissors
 3. Void Low Warning
 4. Slime gun upgrade
+5. Prefixes for voids
 
 Boss Rework Ideas:
 Subspace Serpent cross attacks to attack faster and release lightning
 
-2/23/21 & 2/24/21
+2/25/21
+1. Added a minum of 5 frames before crushers can be released
+2. Added Fly Catcher, so far the most unique one
+3. Aquatic Eclipse Damage 70 -> 92, max 600% -> 700%
+
+2/23/21 & 2/24/21 & 2/25/21
 1. Fixed bug Regarding Cataclysm Musket Pouch ricochet amount when used with Minishark, Clockworks Assault Rifle, and Flintlock Pistol in tandum with other Mods (Spirit and some others?)
 2. Goblinsteel Drop rates: Expert, Normal (100% 1-2, 66% 1-2) -> (50% 1, 40% 1)
 3. Fixed Putrid Pinky boss checklist display
@@ -74,7 +78,7 @@ Subspace Serpent cross attacks to attack faster and release lightning
 		2. Still strikes through walls
 		3. Charge Time 150 -> 180
 		4. Void 6 -> 7
-		5. Damage 64 -> 60
+		5. Damage 64 -> 70
 		6. No longer inflicts slow -> delayed kb
 		7. Releases slightly less bubbles, but bubbles will now travel slightly in the direction of the collapse
 			1. Bubble damage 8% -> 10%
@@ -85,7 +89,7 @@ Subspace Serpent cross attacks to attack faster and release lightning
 		3. Charge Time 190 -> 270
 		4. Void 4 -> 6
 		5. Flame projectiles now move towards cursor more
-		6. Damage 55 -> 47
+		6. Damage 55 -> 48
 	8. Crushers work better in multiplayer than before
 	9. All crushers are drawn with a handle
 6. Resprited Caviar and Cooked Mushroom (Blas)

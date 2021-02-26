@@ -22,6 +22,8 @@ namespace SOTS.Projectiles.Crushers
 			accSpeed = 0.6f;
 			initialExplosiveRange = 48;
 			exponentReduction = 0.45f;
+			minDamage = -0.4f;
+			minTimeBeforeRelease = 3;
 		}
         public override int ExplosionType()
         {

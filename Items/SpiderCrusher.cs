@@ -4,27 +4,27 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using SOTS.Void;
 
-namespace SOTS.Items.SpecialDrops
+namespace SOTS.Items
 {
 	public class SpiderCrusher : VoidItem
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Spider Crusher");
-			Tooltip.SetDefault("Charge to increase damage up to 500%");
+			DisplayName.SetDefault("Fly Catcher");
+			Tooltip.SetDefault("Charge to increase damage up to 180%\nReleases spider webs that slow hit enemies\nReleases more when charged\n\nTakes 2.5 seconds to reach max charge\n'That's really clever actually'");
 		}
 		public override void SafeSetDefaults()
 		{
-            item.damage = 40;
+            item.damage = 42;
             item.melee = true;  
             item.width = 44;
             item.height = 44;  
-            item.useTime = 60; 
-            item.useAnimation = 60;
+            item.useTime = 30; 
+            item.useAnimation = 30;
             item.useStyle = 5;    
-            item.knockBack = 0f;
-            item.value = Item.sellPrice(0, 1, 80, 0);
-            item.rare = 4;
+            item.knockBack = 8f;
+            item.value = Item.sellPrice(0, 2, 0, 0);
+            item.rare = ItemRarityID.LightRed;
             item.UseSound = SoundID.Item22;
             item.autoReuse = true;
             item.shoot = mod.ProjectileType("SpiderCrusher"); 
@@ -39,7 +39,16 @@ namespace SOTS.Items.SpecialDrops
 		}
 		public override void GetVoid(Player player)
 		{
-			voidMana = 4;
+			voidMana = 5;
+		}
+		public override void AddRecipes()
+		{
+			ModRecipe recipe = new ModRecipe(mod);
+			recipe.AddIngredient(ItemID.SpiderFang, 18);
+			recipe.AddIngredient(null, "DissolvingEarth", 1);
+			recipe.AddTile(TileID.MythrilAnvil);
+			recipe.SetResult(this);
+			recipe.AddRecipe();
 		}
 	}
 }

@@ -13,7 +13,7 @@ namespace SOTS.Projectiles.Crushers
         {
 			projectile.width = 28;
 			projectile.height = 28;
-			maxDamage = 6;
+			maxDamage = 7;
 			chargeTime = 180;
 			explosiveRange = 70;
 			releaseTime = 150;
@@ -22,6 +22,7 @@ namespace SOTS.Projectiles.Crushers
 			accSpeed = 0.4f;
 			initialExplosiveRange = 56;
 			exponentReduction = 0.6f;
+			minDamage = 0.3f;
 		}
 		public override int ExplosionType()
 		{

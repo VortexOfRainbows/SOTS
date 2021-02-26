@@ -15,8 +15,8 @@ namespace SOTS.Projectiles.Crushers
 		{
 			DisplayName.SetDefault("Crusher Arm");
 		}
-        public sealed override void SetDefaults()
-        {
+		public sealed override void SetDefaults()
+		{
 			projectile.width = 30;
 			projectile.height = 30;
 			projectile.penetrate = -1;
@@ -47,9 +47,10 @@ namespace SOTS.Projectiles.Crushers
 		public float armDist = 15;
 		public float finalDist = 170;
 		public float exponentReduction = 0.5f;
+		public float minDamage = 0f;
 		///Make sure to change the released projectile down near the bottom
 
-		///These are also for modification (but not recommended)
+		public float minTimeBeforeRelease = 5;
 		public float accSpeed = 0.3f; //speed of the retraction, scales exponentially
 		public float initialExplosiveRange = 48; //distance between player and first explosion (also the distance between the player and the crusher)
 
@@ -88,8 +89,8 @@ namespace SOTS.Projectiles.Crushers
 			VoidPlayer modPlayer = VoidPlayer.ModPlayer(player);
 			if (runOnce)
 			{
-				if(trailLength > 0)
-					trailLength++;
+				//if(trailLength > 0)
+					//trailLength++;
 				stored = new List<Vector2>[arms.Length];
 				for(int i = 0; i < stored.Length; i++)
                 {
@@ -139,7 +140,7 @@ namespace SOTS.Projectiles.Crushers
 				explosive = (int)explosiveCount + minExplosions;
 
 				rotationTimer = chargePercentage * finalDist; //making the rotation timer proportional to the charge time completed
-				float increaseDamage = maxDamage * chargePercentage;
+				float increaseDamage = minDamage + ((maxDamage - minDamage) * chargePercentage);
 				projectile.damage = (int)(initialDamage * increaseDamage);
 			}
 
@@ -160,7 +161,7 @@ namespace SOTS.Projectiles.Crushers
         {
 			return mod.ProjectileType("PinkCrush");
         }
-		public virtual bool UseCustomExplosionEffect(float x, float y, float dist, float rotation)
+		public virtual bool UseCustomExplosionEffect(float x, float y, float dist, float rotation, float chargePercent = 1f)
         {
 			return false;
         }
@@ -177,7 +178,7 @@ namespace SOTS.Projectiles.Crushers
 			{
 				released = true;
 			}
-			if(player.channel || projectile.timeLeft > 6001)
+			if(player.channel || projectile.timeLeft > 6001 || currentCharge < minTimeBeforeRelease)
 			{
 				projectile.timeLeft = 6000;
 				projectile.alpha = 0;
@@ -239,7 +240,10 @@ namespace SOTS.Projectiles.Crushers
 								double distance = (explosiveRange * i) + initialExplosiveRange;
 								float positionX = player.Center.X - (int)(Math.Cos(rad1) * distance);
 								float positionY = player.Center.Y - (int)(Math.Sin(rad1) * distance);
-								if (!UseCustomExplosionEffect(positionX, positionY, (float)distance, (float)rad1))
+								float charge2 = currentCharge / finalDist;
+								if (charge2 > 1)
+									charge2 = 1f;
+								if (!UseCustomExplosionEffect(positionX, positionY, (float)distance, (float)rad1, charge2))
 									Projectile.NewProjectile(positionX, positionY, projectile.velocity.X, projectile.velocity.Y, ExplosionType(), projectile.damage, projectile.knockBack, Main.myPlayer, initialDamage, 0f);
 							}
 						}

@@ -428,7 +428,15 @@ namespace SOTS.NPCs.ArtificialDebuffs
             }
             float dartVeloMult = 1 / (1 + dartMult * impaledDarts);
             float flowerVeloMult = 1 / (1 + flowerMult * flowered);
-            npc.position -= npc.velocity * (1 - dartVeloMult * flowerVeloMult);
+            float finalSlowdown = 1f;
+            if(npc.HasBuff(ModContent.BuffType<WebbedNPC>()))
+            {
+                if(!npc.boss)
+                    finalSlowdown *= 0.2f;
+                else
+                    finalSlowdown *= 0.875f;
+            }
+            npc.position -= npc.velocity * (1 - dartVeloMult * flowerVeloMult * finalSlowdown);
             base.PostAI(npc);
         }
         bool isFlowered = false;
