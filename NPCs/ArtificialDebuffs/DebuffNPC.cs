@@ -381,7 +381,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 if (!proj.friendly && proj.active && proj.type == mod.ProjectileType("FloweringBud") && proj.timeLeft < 8998)
                 {
                     FloweringBud flower = (FloweringBud)proj.modProjectile;
-                    if(flower.effected[npc.whoAmI] && !npc.immortal && npc.type != ModContent.NPCType<BloomingHook>())
+                    if(flower.effected[npc.whoAmI] && !npc.immortal && npc.type != ModContent.NPCType<BloomingHook>() && npc.realLife == -1)
                     {
                         flowered++;
                         if (flowered <= 1)
@@ -403,7 +403,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
                             Vector2 toFlower = new Vector2(proj.Center.X, proj.position.Y - 8) - new Vector2(npc.Center.X, npc.position.Y + npc.height);
                             float dist = toFlower.Length();
                             toFlower = toFlower.SafeNormalize(Vector2.Zero);
-                            float mult = (dist * 0.025f) * (npc.boss ? 0.05f : 1);
+                            float mult = (dist * 0.025f) * (npc.boss ? 0.01f : 1);
                             toFlower *= 0.5f + mult;
                             npc.position += toFlower;
                         }
@@ -424,7 +424,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
             float flowerMult = 0.5f;
             if (npc.boss == true)
             {
-                flowerMult = 0.05f;
+                flowerMult = 0.04f;
             }
             float dartVeloMult = 1 / (1 + dartMult * impaledDarts);
             float flowerVeloMult = 1 / (1 + flowerMult * flowered);

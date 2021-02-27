@@ -275,6 +275,8 @@ namespace SOTS.Projectiles.Crushers
 		{
 			if (runOnce)
 				return false;
+			if (projectile.type == ModContent.ProjectileType<HellbreakerCrusher>())
+				lightColor = Color.White;
 			Player player = Main.player[projectile.owner];
 			//VoidPlayer modPlayer = VoidPlayer.ModPlayer(player);
 			Vector2 cursorArea = new Vector2(projectile.ai[0], projectile.ai[1]);

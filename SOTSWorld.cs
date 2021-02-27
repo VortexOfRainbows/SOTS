@@ -144,7 +144,6 @@ namespace SOTS
 			downedSubspace = downed.Contains("subspace");
 			downedBoss2 = downed.Contains("boss2");
 
-
 			var challenge = tag.GetList<string>("challenge");
 			challengeDecay = challenge.Contains("decay");
 			challengeLock = challenge.Contains("lock");

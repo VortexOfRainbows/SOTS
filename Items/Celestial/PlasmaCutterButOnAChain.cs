@@ -41,17 +41,17 @@ namespace SOTS.Items.Celestial
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
             SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
-				VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
+			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			
-				bool summon = true;
-				for (int l = 0; l < Main.projectile.Length; l++)
+			bool summon = true;
+			for (int l = 0; l < Main.projectile.Length; l++)
+			{
+				Projectile proj = Main.projectile[l];
+				if(proj.active && proj.type == item.shoot && Main.player[proj.owner] == player)
 				{
-					Projectile proj = Main.projectile[l];
-					if(proj.active && proj.type == item.shoot && Main.player[proj.owner] == player)
-					{
-						summon = false;
-					}
+					summon = false;
 				}
+			}
 			if(player.altFunctionUse != 2)
 			{
 				item.UseSound = SoundID.Item22;
@@ -60,7 +60,7 @@ namespace SOTS.Items.Celestial
 					Projectile.NewProjectile(position.X, position.Y, speedX, speedY, type, damage, knockBack, player.whoAmI, (float)Math.Atan2(speedY, speedX) + 90f, 0);
 				}
 			}
-              return false; 
+			return false; 
 		}
 		public override void AddRecipes()
 		{

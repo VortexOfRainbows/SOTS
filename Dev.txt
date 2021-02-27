@@ -3,10 +3,6 @@ The following is my development plans :D
 //Later--- Balance
 2. Dissolving Nether => Focus Crystal, Dissolving Evil => Cursed Isocahedron
 
-//Check For Bugs
-1. Check for other bosses that possibly need damage normalization
-2. Test worldgen more
-
 //Ideas (YTBA, yet to be added)
 Priority: Remaining Spirits
 
@@ -37,6 +33,14 @@ Perhaps:
 
 Boss Rework Ideas:
 Subspace Serpent cross attacks to attack faster and release lightning
+
+2/26/21
+1. Fixed bug with music appearing incorrectly.
+2. Tangle Staff is even weaker on bosses and doesn't effect worm segments
+3. Hellbreaker now glows
+4. Sprited Nature Spirit Staff and Tidal Construct
+
+--Beta Released--
 
 2/25/21
 1. Added a minum of 5 frames before crushers can be released
