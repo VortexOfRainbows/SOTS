@@ -23,44 +23,6 @@ using SOTS.Projectiles.BiomeChest;
 
 namespace SOTS
 {
-	/*
-	public static class SOTSGlowmasks
-	{
-		const short Count = 1;
-		public static short StarbeltGlow;
-		static short End;
-		static bool Loaded;
-		public static void LoadGlowmasks()
-		{
-			Array.Resize(ref Main.glowMaskTexture, Main.glowMaskTexture.Length + Count);
-			short i = (short)(Main.glowMaskTexture.Length - Count);
-
-			Main.glowMaskTexture[i] = ModContent.GetTexture("SOTS/Items/Otherworld/FromChests/Starbelt_WaistGlow");
-			StarbeltGlow = i;
-			i++;
-			End = i;
-			Loaded = true;
-		}
-		public static void UnloadGlowmasks()
-		{
-			if (Main.glowMaskTexture.Length == End)
-			{
-				Array.Resize(ref Main.glowMaskTexture, Main.glowMaskTexture.Length - Count);
-			}
-			else if (Main.glowMaskTexture.Length > End && Main.glowMaskTexture.Length > Count)
-			{
-				for (int i = End - Count; i < End; i++)
-				{
-					Main.glowMaskTexture[i] = ModContent.GetTexture("Terraria/Item_0");
-				}
-			}
-
-			Loaded = false;
-			StarbeltGlow = 0;
-			End = 0;
-		}
-    }
-	*/
 	public class SOTS : Mod
 	{
 		public static ModHotKey BlinkHotKey;
@@ -130,7 +92,19 @@ namespace SOTS
 				_VoidUserInterface.Update(gameTime);
 			}
 		}
-
+		public static Vector2 CalculateBezierPoint(float t, Vector2 p0, Vector2 p1, Vector2 p2, Vector2 p3)
+		{
+			float u = 1 - t;
+			float tt = t * t;
+			float uu = u * u;
+			float uuu = uu * u;
+			float ttt = tt * t;
+			Vector2 p = uuu * p0; //first term
+			p += 3 * uu * t * p1; //second term
+			p += 3 * u * tt * p2; //third term
+			p += ttt * p3; //fourth term
+			return p;
+		}
 		public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
         {
 			int mouseTextIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Inventory"));
@@ -468,5 +442,14 @@ namespace SOTS
 
 			 }
         }
+		public override void AddRecipeGroups()
+		{
+			RecipeGroup group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Silver Bar", new int[]
+			{
+				ItemID.SilverBar,
+				ItemID.TungstenBar
+			});
+			RecipeGroup.RegisterGroup("SOTS:SilverBar", group);
+		}
 	}
 }

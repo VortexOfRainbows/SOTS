@@ -33,8 +33,8 @@ namespace SOTS.Items.Fragments
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(null, "BorealisIcosahedron", 1);
 			recipe.AddIngredient(null, "HellfireIcosahedron", 1);
-			recipe.AddIngredient(null, "StarShard", 5);
-			recipe.AddIngredient(ItemID.CursedFlame, 10); //To be replaced later (dissolving evil)
+			recipe.AddIngredient(null, "StarShard", 5); //To be replaced later (dissolving evil)
+			recipe.AddIngredient(ItemID.CursedFlame, 10); 
 			recipe.AddTile(TileID.TinkerersWorkbench);
 			recipe.SetResult(this);
 			recipe.AddRecipe();

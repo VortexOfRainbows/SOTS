@@ -25,7 +25,6 @@ namespace SOTS.Void
 			SafeSetDefaults();
 			item.mana = 1;
 			item.thrown = false;
-			item.summon = false;
 		}
 		public sealed override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat)
 		{
@@ -33,11 +32,18 @@ namespace SOTS.Void
 			float realDamageBoost = voidPlayer.voidDamage;
 			GetVoid(player);
 			item.mana = 1;
-			voidManaAmount = (int)(voidMana * voidPlayer.voidCost);
-			if(voidManaAmount < 1 && item.type != mod.ItemType("FrigidJavelin"))
+			if(!item.summon)
 			{
-				voidManaAmount = 1;
+				voidManaAmount = (int)(voidMana * voidPlayer.voidCost);
+				if (voidManaAmount < 1 && item.type != mod.ItemType("FrigidJavelin"))
+				{
+					voidManaAmount = 1;
+				}
 			}
+			else
+            {
+				voidManaAmount = voidMana;
+            }
 			add += realDamageBoost - 1;
 		}
 		public override void GetWeaponKnockback(Player player, ref float knockback) 	
@@ -54,6 +60,10 @@ namespace SOTS.Void
 		public virtual void GetVoid(Player player)
 		{
 			voidMana = 1;
+			if(item.summon)
+            {
+				voidMana = VoidPlayer.minionVoidCost(VoidPlayer.voidMinion(item.shoot));
+            }
 		}
 		public sealed override void ModifyTooltips(List<TooltipLine> tooltips) 
 		{
@@ -69,13 +79,16 @@ namespace SOTS.Void
 				tt.text = damageValue + " void " + damageWord;
 				
 				if(item.melee)
-				tt.text = damageValue + " void + melee " + damageWord;
+					tt.text = damageValue + " void + melee " + damageWord;
 				
 				if(item.ranged)
-				tt.text = damageValue + " void + ranged " + damageWord;
+					tt.text = damageValue + " void + ranged " + damageWord;
 			
 				if(item.magic)
-				tt.text = damageValue + " void + magic " + damageWord;
+					tt.text = damageValue + " void + magic " + damageWord;
+
+				if (item.summon)
+					tt.text = damageValue + " void + summon " + damageWord;
 			}
 				
 			string voidManaText = voidManaAmount.ToString();
@@ -120,14 +133,15 @@ namespace SOTS.Void
 		}
 		public sealed override bool CanUseItem(Player player) 
 		{
+			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			bool canUse = BeforeUseItem(player);
-			if(!canUse || player.FindBuffIndex(mod.BuffType("VoidRecovery")) > -1 || item.useAnimation < 2)
+			if(!canUse || player.FindBuffIndex(mod.BuffType("VoidRecovery")) > -1 || item.useAnimation < 2 || (player.altFunctionUse != 2 && item.summon && (voidPlayer.voidMeterMax2 - voidPlayer.lootingSouls - voidPlayer.VoidMinionConsumption) < voidMana))
 			{
 				return false;
 			}
 			OnUseEffects(player);
 			item.mana = 0;
-			if(item.useAmmo == 0 && BeforeDrainMana(player))
+			if(item.useAmmo == 0 && BeforeDrainMana(player) && !item.summon)
 				DrainMana(player);
 			return true;
 		}

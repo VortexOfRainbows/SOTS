@@ -16,12 +16,12 @@ namespace SOTS.Items
         }
         public override void SetDefaults()
         {
-            item.damage = 33;
+            item.damage = 40;
             item.ranged = true;
             item.width = 58;
             item.height = 34;
-            item.useTime = 25;
-            item.useAnimation = 25;
+            item.useTime = 24;
+            item.useAnimation = 24;
             item.useStyle = 5;
             item.noMelee = true;
             item.knockBack = 3;

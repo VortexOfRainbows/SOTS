@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Items;
 using SOTS.Items.Otherworld.EpicWings;
 using SOTS.Items.Otherworld.FromChests;
 using SOTS.Items.Pyramid;
@@ -39,7 +40,11 @@ namespace SOTS
 		{
 			return player.GetModPlayer<SOTSPlayer>();
 		}
-        Vector2 playerMouseWorld;
+		public bool petPepper = false;
+		public bool petAdvisor = false;
+		public int petPinky = -1;
+
+		Vector2 playerMouseWorld;
 		public int lightDragon = -1;
 		public int halfLifeRegen = 0;
 		public int additionalHeal = 0;
@@ -52,11 +57,9 @@ namespace SOTS
 		public bool rainbowGlowmasks = false;
 		public int skywardBlades = 0;
 		public float cursorRadians = 0;
-		public bool petPepper = false;
 		public float BlinkedAmount = 0;
 		public int BlinkType = 0;
 		public int BlinkDamage = 0;
-		public bool petAdvisor = false;
 		public static List<int> typhonBlacklist = new List<int>();
 		public static List<int> typhonWhitelist = new List<int>();
 		public int typhonRange = 0;
@@ -270,6 +273,7 @@ namespace SOTS
 		int Probe = -1;
 		int Probe2 = -1;
 		int Probe3 = -1;
+		int Probe4 = -1;
 		public void PetAdvisor()
         {
 			if (Main.myPlayer == player.whoAmI)
@@ -313,6 +317,21 @@ namespace SOTS
 					Probe3 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, mod.ProjectileType("HoloEye"), 1 + HoloEyeDamage, 0, player.whoAmI, 0);
 				}
 				Main.projectile[Probe3].timeLeft = 6;
+			}
+		}
+		public void PetPinky()
+		{
+			if (Main.myPlayer == player.whoAmI)
+			{
+				if (Probe4 == -1)
+				{
+					Probe4 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, mod.ProjectileType("PetPutridPinkyCrystal"), petPinky, 0, player.whoAmI, 0);
+				}
+				if (!Main.projectile[Probe4].active || Main.projectile[Probe4].type != mod.ProjectileType("PetPutridPinkyCrystal") || Main.projectile[Probe4].owner != player.whoAmI)
+				{
+					Probe4 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, mod.ProjectileType("PetPutridPinkyCrystal"), petPinky, 0, player.whoAmI, 0);
+				}
+				Main.projectile[Probe4].timeLeft = 6;
 			}
 		}
 		public override void PostUpdate()
@@ -395,6 +414,9 @@ namespace SOTS
 				PetPepper();
 			if (HoloEye)
 				PetHoloEye();
+			if (petPinky >= 0)
+				PetPinky();
+			petPinky = -1;
 			petPepper = false;
 			petAdvisor = false; 
 			rainbowGlowmasks = false; 
@@ -411,6 +433,10 @@ namespace SOTS
 				if (item.type == ModContent.ItemType<Calculator>())
 				{
 					petAdvisor = true;
+				}
+				if (item.type == ModContent.ItemType<PeanutButter>())
+				{
+					petPinky = 0;
 				}
 				if (item.type == ModContent.ItemType<SkywareBattery>())
 				{

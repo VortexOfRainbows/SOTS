@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using SOTS.Void;
+using SOTS.Dusts;
 
 namespace SOTS.Projectiles.Laser
 {    
@@ -27,8 +28,8 @@ namespace SOTS.Projectiles.Laser
 		
         public override void SetDefaults()
         {
-			projectile.height = 46;
-			projectile.width = 46;
+			projectile.height = 44;
+			projectile.width = 44;
 			projectile.friendly = false;
 			projectile.timeLeft = 6004;
 			projectile.tileCollide = false;
@@ -37,8 +38,7 @@ namespace SOTS.Projectiles.Laser
 		public override bool PreAI()
         {
 			if(projectile.active)
-			return true;
-		
+				return true;
 			return false;
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
@@ -48,14 +48,57 @@ namespace SOTS.Projectiles.Laser
 		public override void PostDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
 			Player player = Main.player[projectile.owner];
-			Vector2 drawOrigin = new Vector2(23, 23);
-			double direction = Math.Atan2(player.Center.Y - projectile.Center.Y, player.Center.X - projectile.Center.X);
+			double direction = (player.Center - projectile.Center).ToRotation();
 			Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Laser/PutridPupil");
 			Texture2D texture2 = ModContent.GetTexture("SOTS/Projectiles/Laser/PutridEye");
+			Vector2 drawOrigin = new Vector2(texture2.Width / 2, texture2.Height / 2);
+			Vector2 drawOrigin2 = new Vector2(texture.Width / 2, texture.Height / 2);
 			spriteBatch.Draw(texture2, projectile.Center - Main.screenPosition, null, lightColor, (float)direction + MathHelper.ToRadians(225), drawOrigin, projectile.scale, SpriteEffects.None, 0f);
-			float dist2 = dist > 14 ? 14 : dist;
+			float dist2 = dist > 16 ? 16 : dist;
 			dist2 = dist2 <= 2 ? dist2 * ((12 + dist2)/14f) : dist2;
-			spriteBatch.Draw(texture, projectile.Center - new Vector2(dist2, 0).RotatedBy(direction) - Main.screenPosition, null, lightColor, projectile.rotation, new Vector2(7, 7), 0.9f - (dist2/14f * 0.25f), SpriteEffects.None, 0f);
+			spriteBatch.Draw(texture, projectile.Center - new Vector2(dist2, 0).RotatedBy(direction) - Main.screenPosition, null, lightColor, (float)direction, drawOrigin2, 1.1f - (dist2/14f * 0.18f), SpriteEffects.None, 0f);
+			if (dist >= 2)
+			{
+				DrawCircle(true, 6 + dist, 60, 1);
+			}
+			if (dist >= 8)
+			{
+				DrawCircle(true, dist, 120, 1);
+			}
+			if (dist >= 14)
+			{
+				DrawCircle(true, -6 + dist, 180, 1);
+			}
+		}
+		public void DrawCircle(bool spriteBatch, float size, float dist, float colorMod = 1)
+		{
+			Player player = Main.player[projectile.owner];
+			Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Laser/PutridEyeDecor");
+			Vector2 drawOrigin2 = new Vector2(texture.Width / 2, texture.Height / 2);
+			Color lightColor = new Color(100, 100, 100, 0);
+			double direction = (player.Center - projectile.Center).ToRotation();
+			for (int i = 0; i < 360; i += 5)
+			{
+				Vector2 circularLocation = new Vector2(size, 0).RotatedBy(MathHelper.ToRadians(i));
+				circularLocation.X *= 0.6f;
+				circularLocation = circularLocation.RotatedBy(direction);
+				Vector2 circularVelo = circularLocation;
+				circularLocation += projectile.Center - new Vector2(dist, 0).RotatedBy(direction);
+				if(spriteBatch)
+					Main.spriteBatch.Draw(texture, circularLocation - Main.screenPosition, null, lightColor * colorMod, MathHelper.ToRadians(i), drawOrigin2, 0.4f, SpriteEffects.None, 0f);
+				else
+				{
+					lightColor = new Color(255, 200, 230);
+					Dust dust = Dust.NewDustDirect(new Vector2(circularLocation.X - 4, circularLocation.Y - 4), 0, 0, ModContent.DustType<CopyDust4>());
+					dust.noGravity = true;
+					dust.velocity *= 0.6f;
+					dust.velocity += circularVelo.SafeNormalize(Vector2.Zero) * 2.5f;
+					dust.fadeIn = 0.1f;
+					dust.color = lightColor;
+					dust.scale *= 1.4f;
+					dust.alpha = 100;
+				}
+			}
 		}
 		public override bool ShouldUpdatePosition() 
 		{
@@ -75,6 +118,8 @@ namespace SOTS.Projectiles.Laser
 				projectile.alpha = 0;
                 player.ChangeDir(projectile.direction);
                 player.itemRotation = MathHelper.WrapAngle(projectile.rotation + MathHelper.ToRadians(projectile.direction == -1 ? 0 : -180));
+				player.itemTime = 2;
+				player.itemAnimation = 2;
 			}
 			Vector2 cursorArea = Main.MouseWorld;
 			float shootToX = cursorArea.X - player.Center.X;
@@ -93,7 +138,7 @@ namespace SOTS.Projectiles.Laser
 				dist = 20;
 			}
 			double startingDirection = Math.Atan2((double)-shootToY, (double)-shootToX);
-			double direction = Math.Atan2(player.Center.Y - projectile.Center.Y, player.Center.X - projectile.Center.X);
+			double direction = (player.Center - projectile.Center).ToRotation();
 			projectile.rotation = (float)direction;
 			if (Main.myPlayer == player.whoAmI)
 			{
@@ -107,63 +152,29 @@ namespace SOTS.Projectiles.Laser
 				{
 					projectile.timeLeft = 6;
 					projectile.alpha = 0;
-					if (Main.myPlayer == projectile.owner && dist >= 20)
-					{
-						VoidItem.DrainMana(player);
-						dist = -12;
-						Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 0.8f / 255f, (255 - projectile.alpha) * 0.8f / 255f, (255 - projectile.alpha) * 0.8f / 255f);
-						Main.PlaySound(SoundID.Item94, (int)(projectile.Center.X), (int)(projectile.Center.Y));
-						Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("FriendlyPinkLaser"), projectile.damage, 1f, projectile.owner, projectile.Center.X + shootToX * 60, projectile.Center.Y + shootToY * 60);
-					}
 				}
 				projectile.netUpdate = true;
 			}
-			if (dist >= 2 && counter % 3 == 0)
+			if(dist >= 20)
 			{
-				if(dist <= 3)
-					Main.PlaySound(SoundID.Item15, (int)(projectile.Center.X), (int)(projectile.Center.Y));
-				for (int i = 0; i < 360; i += 10)
+				DrawCircle(false, 6 + dist, 60, 1);
+				DrawCircle(false, dist, 120, 1);
+				DrawCircle(false, -6 + dist, 180, 1);
+				if (Main.myPlayer == projectile.owner)
 				{
-					
-					Vector2 circularLocation = new Vector2((6 + dist), 0).RotatedBy(MathHelper.ToRadians(i));
-					circularLocation.X *= 0.6f;
-					circularLocation = circularLocation.RotatedBy(direction);
-					circularLocation += projectile.Center - new Vector2(60, 0).RotatedBy(direction);
-					int num1 = Dust.NewDust(new Vector2(circularLocation.X - 4, circularLocation.Y - 4), 4, 4, 72);
-					Main.dust[num1].noGravity = true;
-					Main.dust[num1].velocity = projectile.velocity.RotatedBy(MathHelper.ToRadians(180));
+					Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("FriendlyPinkLaser"), projectile.damage, 1f, projectile.owner, projectile.Center.X + shootToX * 60, projectile.Center.Y + shootToY * 60);
+					VoidItem.DrainMana(player);
 				}
+				dist = -10;
+				Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 0.8f / 255f, (255 - projectile.alpha) * 0.8f / 255f, (255 - projectile.alpha) * 0.8f / 255f);
+				Main.PlaySound(SoundID.Item94, (int)(projectile.Center.X), (int)(projectile.Center.Y));
 			}
-			if (dist >= 8 && counter % 3 == 0)
-			{
-				if (dist <= 9)
-					Main.PlaySound(SoundID.Item15, (int)(projectile.Center.X), (int)(projectile.Center.Y));
-				for (int i = 0; i < 360; i += 10)
-				{
-					Vector2 circularLocation = new Vector2(dist, 0).RotatedBy(MathHelper.ToRadians(i));
-					circularLocation.X *= 0.6f;
-					circularLocation = circularLocation.RotatedBy(direction);
-					circularLocation += projectile.Center - new Vector2(120, 0).RotatedBy(direction);
-					int num1 = Dust.NewDust(new Vector2(circularLocation.X - 4, circularLocation.Y - 4), 4, 4, 72);
-					Main.dust[num1].noGravity = true;
-					Main.dust[num1].velocity = projectile.velocity.RotatedBy(MathHelper.ToRadians(180));
-				}
-			}
-			if (dist >= 14 && counter % 3 == 0)
-			{
-				if (dist <= 15)
-					Main.PlaySound(SoundID.Item15, (int)(projectile.Center.X), (int)(projectile.Center.Y));
-				for (int i = 0; i < 360; i += 10)
-				{
-					Vector2 circularLocation = new Vector2(dist - 6, 0).RotatedBy(MathHelper.ToRadians(i));
-					circularLocation.X *= 0.6f;
-					circularLocation = circularLocation.RotatedBy(direction);
-					circularLocation += projectile.Center - new Vector2(180, 0).RotatedBy(direction);
-					int num1 = Dust.NewDust(new Vector2(circularLocation.X - 4, circularLocation.Y - 4), 4, 4, 72);
-					Main.dust[num1].noGravity = true;
-					Main.dust[num1].velocity = projectile.velocity.RotatedBy(MathHelper.ToRadians(180));
-				}
-			}
+			if(dist >= 2.8f && dist <= 3.2f)
+				Main.PlaySound(SoundID.Item15, (int)(projectile.Center.X), (int)(projectile.Center.Y));
+			if (dist >= 8.8f && dist <= 9.2f)
+				Main.PlaySound(SoundID.Item15, (int)(projectile.Center.X), (int)(projectile.Center.Y));
+			if (dist >= 14.8f && dist <= 15.2f)
+				Main.PlaySound(SoundID.Item15, (int)(projectile.Center.X), (int)(projectile.Center.Y));
 		}
 	}
 }

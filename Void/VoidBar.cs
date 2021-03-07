@@ -3,7 +3,8 @@ using Terraria.UI;
 using Terraria.GameContent.UI.Elements;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-
+using Terraria.ModLoader;
+using System.Collections.Generic;
 
 namespace SOTS.Void
 {
@@ -23,18 +24,18 @@ namespace SOTS.Void
             this.height = 30f;
         }
 		private VoidBarSprite barAmount;
-		private VoidBarSprite barAmount2;
 		private SoulBar barAmount3;
 		private BarDivider barDivider;
-		private VoidBarBorder barBackground;
+		private VoidBarBorder2 barBackground;
 		private VoidBarBorder2 outline;
 		private UIText text;
-		public override void OnInitialize()
+
+        public override void OnInitialize()
 		{
 			Height.Set(height, 0f); //Set Height of element
 			Width.Set(width, 0f);   //Set Width of element
 
-			barBackground = new VoidBarBorder(); 
+			barBackground = new VoidBarBorder2(); 
 			barBackground.Left.Set(0f, 0f);
 			barBackground.Top.Set(0f, 0f);
 			barBackground.Width.Set(width, 0f);
@@ -58,14 +59,6 @@ namespace SOTS.Void
 			barAmount.Top.Set(6f, 0f);
 			barAmount.Width.Set(188, 0f);
 			barAmount.Height.Set(18, 0f);
-			
-			barAmount2 = new VoidBarSprite();
-			barAmount2.SetPadding(0);
-			barAmount2.Left.Set(6f, 0f);
-			barAmount2.Top.Set(6f, 0f);
-			barAmount2.backgroundColor = new Color(164, 55, 65); 
-			barAmount2.Width.Set(188, 0f);
-			barAmount2.Height.Set(18, 0f);
 
 			barAmount3 = new SoulBar();
 			barAmount3.SetPadding(0);
@@ -79,7 +72,6 @@ namespace SOTS.Void
 			text.Height.Set(height, 0f);
 			text.Top.Set(height - 42 - text.MinHeight.Pixels / 2, 0f); 
 
-			barBackground.Append(barAmount2);
 			barBackground.Append(barAmount);
 			barBackground.Append(barAmount3);
 			barBackground.Append(barDivider);
@@ -99,17 +91,34 @@ namespace SOTS.Void
 				voidmeter = 0;
 			}
 			string voidManaText = voidmeter.ToString();
-			string voidManaMaxText = voidPlayer.voidMeterMax2.ToString();
+			int voidMax = voidPlayer.voidMeterMax2 - voidPlayer.VoidMinionConsumption;
+			string voidManaMaxText = voidMax.ToString();
 			string voidSoulsText = voidPlayer.lootingSouls.ToString();
 			barAmount3.backgroundColor = VoidPlayer.soulLootingColor;
 			if (text != null)
 			{
-				text.SetText("Void: " + voidManaText + " / " + voidManaMaxText);
-				if(voidPlayer.lootingSouls > 0)
+				string textThing = "Void: ";
+				if (voidMax - voidPlayer.lootingSouls <= 0)
+                {
+					textThing += "0 ";
+                }
+				else
 				{
-					voidManaMaxText = (voidPlayer.voidMeterMax2 - voidPlayer.lootingSouls).ToString();
-					text.SetText("Void: " + (voidPlayer.lootingSouls < voidPlayer.voidMeterMax2 ? (voidManaText + "/" + voidManaMaxText) + " " : "0 ") + "(" + voidSoulsText + ")");
+					voidManaMaxText = (voidMax - voidPlayer.lootingSouls).ToString();
+					textThing += voidManaText + " / " + voidManaMaxText;
+                }
+				if(voidPlayer.lootingSouls > 0 || voidPlayer.VoidMinionConsumption > 0)
+				{
+					textThing += " (";
+					if (voidPlayer.VoidMinionConsumption > 0)
+						textThing += voidPlayer.VoidMinionConsumption.ToString();
+					if (voidPlayer.lootingSouls > 0 && voidPlayer.VoidMinionConsumption > 0)
+						textThing += " + ";
+					if (voidPlayer.lootingSouls > 0)
+						textThing += voidSoulsText;
+					textThing += ")";
 				}
+				text.SetText(textThing);
 			}
 			float quotient = 1f;
 			float quotient2 = 1f;
@@ -124,9 +133,50 @@ namespace SOTS.Void
 				default:
 					break;
 			}
-			if(quotient > 1)
+			Texture2D fill = ModContent.GetTexture("SOTS/Void/SoulBar");
+			Texture2D divider = ModContent.GetTexture("SOTS/Void/SoulBarDivider");
+			if (quotient > 1)
 			{
 				quotient = 1;
+			}
+			if (quotient < 0)
+				quotient = 0;
+			Vector2 padding = new Vector2(6, 6);
+			int prevRight = (int)(quotient * 188);
+			int length = 40;
+			int height = 18;
+			Texture2D fill2 = ModContent.GetTexture("SOTS/Void/VoidBarSprite");
+			spriteBatch.Draw(fill2, new Rectangle((int)(VoidPlayer.voidBarOffset.X + padding.X), (int)(VoidPlayer.voidBarOffset.Y + padding.Y), 188, 18), new Color(164, 55, 65));
+			List<Rectangle> rectangles = new List<Rectangle>();
+			List<Color> colors = new List<Color>();
+			for (int i = 0; i < voidPlayer.VoidMinions.Count; i++)
+            {
+				int type = voidPlayer.VoidMinions[i];
+				int nextType = -1;
+				if (i < voidPlayer.VoidMinions.Count - 1)
+					nextType = voidPlayer.VoidMinions[i + 1];
+				int cost = VoidPlayer.minionVoidCost(type);
+				length = (int)(cost / (float)voidPlayer.voidMeterMax2 * 188f);
+				Color color = Color.White;
+				color = VoidPlayer.minionVoidColor(type);
+				if (length + prevRight >= 188)
+					length = 188 - prevRight;
+				spriteBatch.Draw(fill, new Rectangle((int)(VoidPlayer.voidBarOffset.X + padding.X + prevRight), (int)(VoidPlayer.voidBarOffset.Y + padding.Y), length, height), color);
+				if(i == 0)
+				{
+					rectangles.Add(new Rectangle((int)(VoidPlayer.voidBarOffset.X + padding.X + prevRight + 1), (int)(VoidPlayer.voidBarOffset.Y + padding.Y - 2), 6, 22));
+					colors.Add(color);
+				}					
+				prevRight += length;
+				if (nextType == -1 || nextType != type)
+				{
+					rectangles.Add(new Rectangle((int)(VoidPlayer.voidBarOffset.X + padding.X + prevRight), (int)(VoidPlayer.voidBarOffset.Y + padding.Y - 2), 6, 22));
+					colors.Add(color);
+				}
+			}
+			for(int i = 0; i < rectangles.Count; i++)
+			{
+				spriteBatch.Draw(divider, rectangles[i], colors[i]);
 			}
 			barAmount.Width.Set(quotient * 188, 0f);
 			if(voidPlayer.lootingSouls > 0)
@@ -142,8 +192,11 @@ namespace SOTS.Void
 				barDivider.Width.Set(0, 0);
 			}
 			Recalculate();
-
 			base.Draw(spriteBatch);
 		}
+        protected override void DrawSelf(SpriteBatch spriteBatch)
+        {
+            base.DrawSelf(spriteBatch);
+        }
     }
 }

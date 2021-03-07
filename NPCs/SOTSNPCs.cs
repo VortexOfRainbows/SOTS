@@ -172,7 +172,9 @@ namespace SOTS.NPCs
 
 				if(npc.type == NPCID.QueenBee && (!NPC.downedBoss1 || Main.rand.NextBool(20)))
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<RoyalJelly>(), 1);
-				if(npc.type == NPCID.GreekSkeleton && Main.rand.NextBool(20))
+				if (npc.type == ModContent.NPCType<PutridPinkyPhase2>() && (!NPC.downedBoss1 || Main.rand.NextBool(20)))
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<PeanutButter>(), 1);
+				if (npc.type == NPCID.GreekSkeleton && Main.rand.NextBool(20))
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<OlympianAxe>(), 1);
 
 			}
@@ -198,10 +200,10 @@ namespace SOTS.NPCs
 		public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
 		{
 			Player player = spawnInfo.player;
-			bool ZoneForest = !player.GetModPlayer<SOTSPlayer>().PyramidBiome && !player.ZoneDesert && !player.ZoneCorrupt && !player.ZoneDungeon && !player.ZoneDungeon && !player.ZoneHoly && !player.ZoneMeteor && !player.ZoneJungle && !player.ZoneSnow && !player.ZoneCrimson && !player.ZoneGlowshroom && !player.ZoneUndergroundDesert && (player.ZoneDirtLayerHeight || player.ZoneOverworldHeight) && !player.ZoneBeach;	
+			bool ZoneForest = !player.GetModPlayer<SOTSPlayer>().PyramidBiome && !player.ZoneDesert && !player.ZoneCorrupt && !player.ZoneDungeon && !player.ZoneDungeon && !player.ZoneHoly && !player.ZoneMeteor && !player.ZoneJungle && !player.ZoneSnow && !player.ZoneCrimson && !player.ZoneGlowshroom && !player.ZoneUndergroundDesert && (player.ZoneDirtLayerHeight || player.ZoneOverworldHeight) && !player.ZoneBeach;
 			if (spawnInfo.player.GetModPlayer<SOTSPlayer>().PyramidBiome)
 			{
-				if(spawnInfo.spawnTileType == (ushort)mod.TileType("PyramidSlabTile"))
+				if (spawnInfo.spawnTileType == (ushort)mod.TileType("PyramidSlabTile"))
 				{
 					pool[0] = 0f;
 					pool.Add(mod.NPCType("SnakePot"), 0.3f);
@@ -216,12 +218,12 @@ namespace SOTS.NPCs
 					}
 				}
 			}
-			else if(spawnInfo.player.GetModPlayer<SOTSPlayer>().PlanetariumBiome)
+			else if (spawnInfo.player.GetModPlayer<SOTSPlayer>().PlanetariumBiome)
 			{
 				bool correctBlock = (Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY + 3].type == mod.TileType("DullPlatingTile") || Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY + 3].type == mod.TileType("PortalPlatingTile") || Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY + 3].type == mod.TileType("AvaritianPlatingTile")) && Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY + 3].nactive();
-				for(int i = 0; i < pool.Count; i++)
+				for (int i = 0; i < pool.Count; i++)
 					pool[i] = 0f;
-				if(correctBlock)
+				if (correctBlock)
 				{
 					pool.Add(mod.NPCType("HoloSlime"), 0.4f);
 					pool.Add(mod.NPCType("HoloEye"), 0.1f);
@@ -232,9 +234,24 @@ namespace SOTS.NPCs
 			}
 			else if (ZoneForest)
 			{
-				pool.Add(mod.NPCType("NatureSlime"), SpawnCondition.OverworldDaySlime.Chance * 0.15f);
+				if (SOTSWorld.downedPinky)
+				{
+					pool.Add(ModContent.NPCType<FluxSlime>(), SpawnCondition.OverworldDaySlime.Chance * 0.10f);
+					pool.Add(mod.NPCType("NatureSlime"), SpawnCondition.OverworldDaySlime.Chance * 0.05f);
+				}
+				else
+				{
+					pool.Add(mod.NPCType("NatureSlime"), SpawnCondition.OverworldDaySlime.Chance * 0.15f);
+				}
 				pool.Add(mod.NPCType("BlueSlimer"), SpawnCondition.OverworldDaySlime.Chance * 0.1f);
 				pool.Add(mod.NPCType("TreasureSlime"), SpawnCondition.OverworldDaySlime.Chance * 0.1f);
+			}
+			else if (player.ZoneCorrupt || player.ZoneCrimson)
+			{
+				if (SOTSWorld.downedPinky)
+				{
+					pool.Add(ModContent.NPCType<FluxSlime>(), 0.10f);
+				}
 			}
 		}
 	}

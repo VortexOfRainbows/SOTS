@@ -18,7 +18,7 @@ namespace SOTS.Items.GelGear
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
 			Texture2D texture = mod.GetTexture("Items/GelGear/PutridEyeEmpty");
-			Vector2 origin2 = new Vector2(5, 5);
+			Vector2 origin2 = new Vector2(7, 7);
 			if (CurrentPos.X != toPos.X || CurrentPos.Y != toPos.Y)
 			{
 				Vector2 to = toPos - CurrentPos;
@@ -39,14 +39,14 @@ namespace SOTS.Items.GelGear
 				waitTime--;
 			Texture2D texture2 = mod.GetTexture("Items/GelGear/PutridPupil");
 			spriteBatch.Draw(texture, position, frame, drawColor, 0, origin, scale, SpriteEffects.None, 0f);
-			spriteBatch.Draw(texture2, position + new Vector2(25 * scale, 17 * scale) + CurrentPos * scale, null, drawColor, 0, origin2, scale, SpriteEffects.None, 1f);
+			spriteBatch.Draw(texture2, position + new Vector2(27 * scale, 17 * scale) + CurrentPos * scale, null, drawColor, 0, origin2, scale, SpriteEffects.None, 1f);
 			return false;
 		}
 		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
 		{
 			Texture2D texture = mod.GetTexture("Items/GelGear/PutridEyeEmpty");
-			Vector2 origin = new Vector2(23, 23);
-			Vector2 origin2 = new Vector2(5, 5);
+			Vector2 origin = new Vector2(item.width/2, item.height/2);
+			Vector2 origin2 = new Vector2(7, 7);
 			if (CurrentPos.X != toPos.X || CurrentPos.Y != toPos.Y)
 			{
 				Vector2 to = toPos - CurrentPos;
@@ -67,15 +67,15 @@ namespace SOTS.Items.GelGear
 				waitTime--;
 			Texture2D texture2 = mod.GetTexture("Items/GelGear/PutridPupil");
 			spriteBatch.Draw(texture, item.Center - Main.screenPosition, null, lightColor, 0, origin, scale, SpriteEffects.None, 0f);
-			spriteBatch.Draw(texture2, item.position + new Vector2(25 * scale, 17 * scale) - Main.screenPosition + CurrentPos * scale, null, lightColor, 0, origin2, scale, SpriteEffects.None, 1f);
+			spriteBatch.Draw(texture2, item.position + new Vector2(27 * scale, 17 * scale) - Main.screenPosition + CurrentPos * scale, null, lightColor, 0, origin2, scale, SpriteEffects.None, 1f);
 			return false;
 		}
 		public override void SafeSetDefaults()
 		{
             item.damage = 50;  
             item.magic = true;  
-            item.width = 46;    
-            item.height = 46;   
+            item.width = 44;    
+            item.height = 44;   
             item.useTime = 40;
 			item.useAnimation = 40;
             item.useStyle = 5;    

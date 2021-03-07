@@ -267,8 +267,8 @@ namespace SOTS.Projectiles.BiomeChest
 		{
 			if(bloom)
 			{
-				spriteBatch.Draw(mod.GetTexture("Gores/CircleAura"), projectile.Center - Main.screenPosition, null, new Color(120, 180, 140) * (30f / 255f) * (projectile.timeLeft / 1500f), 0f, new Vector2(300f, 300f), bubbleSize / 600f, SpriteEffects.None, 0f);
-				spriteBatch.Draw(mod.GetTexture("Gores/CircleBorder"), projectile.Center - Main.screenPosition, null, new Color(100, 160, 120) * 0.35f * (projectile.timeLeft / 1500f), 0f, new Vector2(300f, 300f), bubbleSize / 600f, SpriteEffects.None, 0f);
+				spriteBatch.Draw(mod.GetTexture("Gores/CircleAura"), projectile.Center - Main.screenPosition, null, new Color(120, 160, 140) * (50f / 255f) * (projectile.timeLeft / 1500f), 0f, new Vector2(300f, 300f), bubbleSize / 600f, SpriteEffects.None, 0f);
+				spriteBatch.Draw(mod.GetTexture("Gores/CircleBorder"), projectile.Center - Main.screenPosition, null, new Color(100, 140, 120) * 0.5f * (projectile.timeLeft / 1500f), 0f, new Vector2(300f, 300f), bubbleSize / 600f, SpriteEffects.None, 0f);
 				Texture2D texture = mod.GetTexture("Projectiles/BiomeChest/TangleGrowth");
 				Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 				Main.spriteBatch.Draw(texture, projectile.Center - Main.screenPosition, null, Color.White, projectile.rotation, drawOrigin, projectile.scale, SpriteEffects.None, 0f);

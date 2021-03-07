@@ -11,6 +11,7 @@ using static SOTS.SOTS;
 using System;
 using SOTS.Projectiles.BiomeChest;
 using SOTS.Buffs;
+using SOTS.Projectiles.Minions;
 
 namespace SOTS.NPCs.ArtificialDebuffs
 {
@@ -322,6 +323,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
             }
             return amt;
         }
+        bool pinkied = false;
         public override void PostAI(NPC npc)
         {
             if(npc.immortal)
@@ -352,9 +354,31 @@ namespace SOTS.NPCs.ArtificialDebuffs
             }
             float impaledDarts = 0;
             float flowered = 0;
+            pinkied = false;
             for (int i = 0; i < Main.projectile.Length; i++)
             {
                 Projectile proj = Main.projectile[i];
+                if (proj.friendly && proj.active && proj.type == ModContent.ProjectileType<Projectiles.Minions.FluxSlimeBall>())
+                {
+                    Projectiles.Minions.FluxSlimeBall slimeBall = proj.modProjectile as Projectiles.Minions.FluxSlimeBall;
+                    if (slimeBall != null)
+                    {
+                        if (slimeBall.targetID == npc.whoAmI && slimeBall.hasHit)
+                        {
+                            pinkied = true;
+                            Projectile owner = Main.projectile[(int)proj.ai[0]];
+                            if(owner.type == ModContent.ProjectileType<PetPutridPinkyCrystal>())
+                            {
+                                Vector2 toOwner = new Vector2(proj.Center.X, proj.position.Y - 8) - new Vector2(npc.Center.X, npc.position.Y + npc.height);
+                                float dist = toOwner.Length();
+                                toOwner = toOwner.SafeNormalize(Vector2.Zero);
+                                float mult = dist * 0.002f * (npc.boss ? 0.01f : 1);
+                                toOwner *= 0.3f + mult;
+                                npc.position.X += toOwner.X;
+                            }
+                        }
+                    }
+                }
                 if (!proj.friendly && proj.active && proj.type == mod.ProjectileType("PlatinumDart") && (int)proj.ai[1] == npc.whoAmI && proj.timeLeft < 8998)
                 {
                     impaledDarts++;
@@ -436,6 +460,13 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 else
                     finalSlowdown *= 0.875f;
             }
+            if (pinkied)
+            {
+                if (!npc.boss)
+                    finalSlowdown *= 0.625f;
+                else
+                    finalSlowdown *= 0.95f;
+            }
             npc.position -= npc.velocity * (1 - dartVeloMult * flowerVeloMult * finalSlowdown);
             base.PostAI(npc);
         }
@@ -459,6 +490,11 @@ namespace SOTS.NPCs.ArtificialDebuffs
             if(npc.HasBuff(ModContent.BuffType<Infected>()))
             {
                 npc.lifeRegen -= 24;
+                damage += 1;
+            }
+            if(pinkied)
+            {
+                npc.lifeRegen -= 12;
             }
             base.UpdateLifeRegen(npc, ref damage);
         }

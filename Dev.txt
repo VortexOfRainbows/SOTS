@@ -15,14 +15,12 @@ Priority: Remaining Spirits
 16. Marble Fates and Granite Omega Golem
 
 Next Update:
-3. Biome Chest Weapons
-6. Flux Slime
-20. Peanut Butter, PB&J
-25. Resprite Putrid Eye
+3. Otherworld Spirit Staff
+20. PB&J
 26. Chaos Spirit Staff
 27. Tidal Construct + Tidal Spirit + Dissolving Deluge
-28. Nature Spirit Staff
 29. Wormwood Changes
+30. Banners for: Flux Slime, 
 
 Perhaps:
 1. Archaelogist NPC
@@ -30,9 +28,41 @@ Perhaps:
 3. Void Low Warning
 4. Slime gun upgrade
 5. Prefixes for voids
+6. Bone Clapper
+7. Electrolyte Seperator
+8. Granite Claymore
 
 Boss Rework Ideas:
 Subspace Serpent cross attacks to attack faster and release lightning
+
+3/4/21
+1. Began work on Doomstick
+
+
+3/3/21
+1. Putrid Pinky (Peanut Butter) pet now works great (and in multiplayer!)
+2. Flux Slime spawns naturally after Putrid Pinky has been slain (replaces 66% of Nature Slime spawns, statistically)
+3. Lowered leather and wood drop rates from Treasure Slime
+
+3/2/21
+1. Flux Slime server syncs fine. Visuals work better
+2. Lowered some item drops from flowering slime
+3. Added corrosive gel and vial of acid, yet to be used in crafting
+4. Began work on Putrid Pinky pet
+
+2/28/21 & 2/29/21 & 3/1/21
+1. Tangle Staff damage 60 -> 80, increased visibility of circle, decreased green tint slightly
+2. Pathogen Regurgitator damage 33 -> 40, useTime 25 -> 24, Chance of debuff 1/10 -> 1/7
+3. Some changes to Putrid Eye that also result in it firing faster when used manually and automatically
+	1. Circular tracers follow it better
+	2. Also resprited
+4. Pyramid Volume is better now
+5. Nature Spirit Staff added
+	1. First Void Minion POGGERS
+	2. Cool laser visuals, works in multiplayer
+6. Increased attack range of Spirit Minions
+7. Began Work on flux slime (+Bezier Curve)
+
 
 2/26/21
 1. Fixed bug with music appearing incorrectly.

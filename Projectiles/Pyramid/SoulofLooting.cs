@@ -63,7 +63,7 @@ namespace SOTS.Projectiles.Pyramid
 				if (proj.type == projectile.type && proj.active && (int)proj.ai[0] == owner)
 					count++;
             }
-			if(count > 40 || voidPlayer.lootingSouls >= voidPlayer.voidMeterMax2)
+			if(count > 40 || voidPlayer.lootingSouls >= voidPlayer.voidMeterMax2 - voidPlayer.VoidMinionConsumption)
             {
 				projectile.Kill();
             }
@@ -94,7 +94,7 @@ namespace SOTS.Projectiles.Pyramid
 			owner = (int)projectile.ai[0];
 			Player player = Main.player[owner];
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-			if (voidPlayer.lootingSouls < voidPlayer.voidMeterMax2)
+			if (voidPlayer.lootingSouls < voidPlayer.voidMeterMax2 - voidPlayer.VoidMinionConsumption)
 			{
 				Main.PlaySound(7, (int)projectile.Center.X, (int)projectile.Center.Y, 0, 1.3f);
 				voidPlayer.lootingSouls++;

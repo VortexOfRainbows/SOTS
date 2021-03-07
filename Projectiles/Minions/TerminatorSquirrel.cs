@@ -62,6 +62,7 @@ namespace SOTS.Projectiles.Minions
 			projectile.tileCollide = false;
 			projectile.friendly = true;
 			projectile.minion = true;
+			projectile.ignoreWater = true;
 			projectile.minionSlots = 1f;
 			projectile.penetrate = -1;
 		}

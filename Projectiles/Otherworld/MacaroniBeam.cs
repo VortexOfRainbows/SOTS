@@ -1,11 +1,5 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using SOTS.Items.Otherworld;
-using SOTS.Items.Otherworld.FromChests;
-using System;
-using System.IO;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace SOTS.Projectiles.Otherworld
@@ -18,8 +12,8 @@ namespace SOTS.Projectiles.Otherworld
 		}
 		public override void SetDefaults()
         {
-			projectile.width = 10;
-			projectile.height = 40;
+			projectile.width = 16;
+			projectile.height = 16;
 			projectile.penetrate = 1;
 			projectile.friendly = true;
 			projectile.timeLeft = 900;

@@ -7,6 +7,8 @@ using SOTS.Projectiles.Base;
 using System;
 using Microsoft.Xna.Framework;
 using static SOTS.SOTS;
+using System.Collections.Generic;
+using SOTS.Projectiles.Minions;
 
 namespace SOTS.Void
 {
@@ -16,6 +18,7 @@ namespace SOTS.Void
 		public static Color soulLootingColor = new Color(66, 56, 111);
 		public static Color destabilizeColor = new Color(80, 190, 80);
 		public static Color pastelRainbow = Color.White;
+		public static Color natureColor = new Color(180, 240, 180);
 		public static int soulColorCounter = 0;
 		public int voidMeterMax = 100;
 		public int voidAnkh = 0;
@@ -23,9 +26,9 @@ namespace SOTS.Void
 		public int lootingSouls = 0;
 		public int soulsOnKill = 0;
 		public override TagCompound Save() {
-				
+
 			return new TagCompound {
-				
+
 				{"voidMeterMax", voidMeterMax},
 				{"voidMeterMax2", voidMeterMax2},
 				{"voidAnkh", voidAnkh},
@@ -50,7 +53,7 @@ namespace SOTS.Void
 			if (tag.ContainsKey("voidBarOffsetY"))
 				voidBarOffset.Y = tag.GetFloat("voidBarOffsetY");
 		}
-		public override void SendClientChanges(ModPlayer clientPlayer)
+        public override void SendClientChanges(ModPlayer clientPlayer)
 		{
 			// Here we would sync something like an RPG stat whenever the player changes it.
 			VoidPlayer cloneV = clientPlayer as VoidPlayer;
@@ -67,10 +70,10 @@ namespace SOTS.Void
 				packet.Send();
 			}
 		}
-		
-		public float voidMeter = 100; 
-		public float voidRegen = 0.0035f; 
-		public float voidCost = 1f; 
+
+		public float voidMeter = 100;
+		public float voidRegen = 0.0035f;
+		public float voidCost = 1f;
 		public float voidSpeed = 1f;
 		public int voidMeterMax2 = 0;
 		public bool voidShock = false;
@@ -89,15 +92,14 @@ namespace SOTS.Void
 		public override void ResetEffects() {
 			ResetVariables();
 		}
-
 		public override void UpdateDead() {
-			voidMeter = voidMeterMax2/2;
+			voidMeter = voidMeterMax2 / 2;
 			ResetVariables();
 		}
 		public static void VoidEffect(Player player, int voidAmount)
 		{
 			//CombatText.NewText(new Rectangle((int)player.position.X, (int)player.position.Y, player.width, player.height), new Color(100, 80, 115, 255), string.Concat(voidAmount), false, false);
-			if(player.whoAmI == Main.myPlayer)
+			if (player.whoAmI == Main.myPlayer)
 			{
 				Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, ProjectileType<VoidHealEffect>(), 0, 0, player.whoAmI, Main.rand.Next(360), voidAmount);
 				//NetMessage.SendData(43, -1, -1, "", player.whoAmI, (float)voidAmount, 0f, 0f, 0);
@@ -116,7 +118,6 @@ namespace SOTS.Void
 			//" didn't manage their void well.",
 			" died."
 		};
-
 		public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
 		{
 			if (voidShock || voidRecovery)
@@ -139,9 +140,10 @@ namespace SOTS.Void
 			}
 			return base.PreKill(damage, hitDirection, pvp, ref playSound, ref genGore, ref damageSource);
 		}
+		public List<int> VoidMinions = new List<int>();
 		public override void UpdateBadLifeRegen()
 		{
-			if(voidShock)
+			if (voidShock)
 			{
 				if (player.lifeRegen > 0)
 				{
@@ -172,14 +174,14 @@ namespace SOTS.Void
 		float standingTimer = 1;
 		public float maxStandingTimer = 2;
 		public void ApplyDynamicMultiplier()
-        {
+		{
 			voidMultiplier = 0.85f;
 			float hpMult = (float)player.statLife / player.statLifeMax2;
 			hpMult *= 0.2f;
 			float voidMult = (float)voidMeter / voidMeterMax2;
 			voidMult *= 0.2f;
-			if(Math.Abs(player.velocity.X) <= 0.1f && Math.Abs(player.velocity.Y) <= 0.1f)
-            {
+			if (Math.Abs(player.velocity.X) <= 0.1f && Math.Abs(player.velocity.Y) <= 0.1f)
+			{
 				standingTimer += 0.005f;
 				if (standingTimer > maxStandingTimer)
 					standingTimer = maxStandingTimer;
@@ -195,13 +197,13 @@ namespace SOTS.Void
 			voidMultiplier *= standingTimer;
 		}
 		public void UseSouls()
-        {
-			if(Main.mouseRight && Main.mouseRightRelease && player.ownedProjectileCounts[mod.ProjectileType("HarvestingStrike")] < 1)
-            {
-				if(Main.myPlayer == player.whoAmI)
+		{
+			if (Main.mouseRight && Main.mouseRightRelease && player.ownedProjectileCounts[mod.ProjectileType("HarvestingStrike")] < 1)
+			{
+				if (Main.myPlayer == player.whoAmI)
 					Projectile.NewProjectile(Main.MouseWorld, Vector2.Zero, mod.ProjectileType("HarvestingStrike"), 1, 0, player.whoAmI);
-            }
-        }
+			}
+		}
 		public void ColorUpdate()
 		{
 			soulColorCounter++;
@@ -215,7 +217,64 @@ namespace SOTS.Void
 			double grn = Math.Sin(frequency * (double)newAi + 2.0) * width + center;
 			double blu = Math.Sin(frequency * (double)newAi + 4.0) * width + center;
 			pastelRainbow = new Color((int)red, (int)grn, (int)blu);
+			natureColor = Color.Lerp(new Color(65, 180, 80), new Color(180, 240, 180), + new Vector2(0.5f, 0).RotatedBy(MathHelper.ToRadians(soulColorCounter * 1.0f)).X);
 		}
+		public int RegisterVoidMinions()
+		{
+			VoidMinions = new List<int>();
+			for (int i = 0; i < Main.projectile.Length; i++)
+			{
+				Projectile projectile = Main.projectile[i];
+				if (projectile.owner == player.whoAmI && projectile.active && isVoidMinion(projectile))
+				{
+					VoidMinions.Add(voidMinion(projectile));
+				}
+			}
+			int total = 0;
+			for (int i = 0; i < VoidMinions.Count; i++)
+			{
+				int type = VoidMinions[i];
+				total += minionVoidCost(type);
+			}
+			return total;
+		}
+		public int VoidMinionConsumption = 0;
+		public static int minionVoidCost(int type)
+		{
+			if (type == (int)VoidMinionID.NatureSpirit)
+				return 40;
+			return 1;
+		}
+		public static Color minionVoidColor(int type)
+		{
+			if (type == (int)VoidMinionID.NatureSpirit)
+				return VoidPlayer.natureColor;
+			return Color.White;
+		}
+		public static bool isVoidMinion(Projectile projectile)
+        {
+			return voidMinion(projectile) > -1;
+        }
+		public static int voidMinion(Projectile projectile)
+        {
+			if (projectile.type == ProjectileType<NatureSpirit>())
+				return (int)VoidMinionID.NatureSpirit;
+			return -1;
+		}
+		public static bool isVoidMinion(int type)
+		{
+			return voidMinion(type) > -1;
+		}
+		public static int voidMinion(int type)
+		{
+			if (type == ProjectileType<NatureSpirit>())
+				return (int)VoidMinionID.NatureSpirit;
+			return -1;
+		}
+		public enum VoidMinionID
+        {
+			NatureSpirit
+        }
 		private void ResetVariables() 
 		{
 			ColorUpdate();
@@ -248,9 +307,11 @@ namespace SOTS.Void
 			else
 				voidMeter += (float)(voidRegen / 60f);
 
+			VoidMinionConsumption = RegisterVoidMinions();
+			voidMeterMax2 -= VoidMinionConsumption;
+
 			if (lootingSouls > voidMeterMax2)
 				lootingSouls = voidMeterMax2;
-
 			voidMeterMax2 -= lootingSouls;
 
 			if (voidMeter > voidMeterMax2)

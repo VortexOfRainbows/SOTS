@@ -127,14 +127,26 @@ namespace SOTS.Projectiles.Base
 			if ((int)type == 8) //Macaroni Heal
 			{
 				counter++;
-				var num372 = Dust.NewDust(projectile.Center - new Vector2(5), 0, 0, mod.DustType("CopyDust4"), 0, 0, 100, default, 1.6f);
-				Dust dust2 = Main.dust[num372];
-				dust2.velocity *= 0.1f;
-				dust2.noGravity = true;
-				dust2.color = Color.Lerp(new Color(255, 240, 50, 100), new Color(235, 240, 50, 100), new Vector2(-0.5f, 0).RotatedBy(MathHelper.ToRadians(counter * 3)).X + 0.5f);
-				dust2.noGravity = true;
-				dust2.fadeIn = 0.1f;
-				dust2.scale *= 0.7f;
+				Dust dust = Dust.NewDustDirect(projectile.Center - new Vector2(5), 0, 0, mod.DustType("CopyDust4"), 0, 0, 100, default, 1.6f);
+				dust.velocity *= 0.1f;
+				dust.noGravity = true;
+				dust.color = Color.Lerp(new Color(255, 240, 50, 100), new Color(235, 240, 50, 100), new Vector2(-0.5f, 0).RotatedBy(MathHelper.ToRadians(counter * 3)).X + 0.5f);
+				dust.noGravity = true;
+				dust.fadeIn = 0.1f;
+				dust.scale *= 0.7f;
+			}
+			if ((int)type == 9) //Nature Heal
+			{
+				Color color1 = new Color(177, 238, 181, 100);
+				Color color2 = new Color(64, 178, 77, 100);
+				counter++;
+				Dust dust = Dust.NewDustDirect(projectile.Center - new Vector2(5), 0, 0, mod.DustType("CopyDust4"), 0, 0, 100, default, 1.6f);
+				dust.velocity *= 0.1f;
+				dust.noGravity = true;
+				dust.color = Color.Lerp(color1, color2, new Vector2(-0.5f, 0).RotatedBy(MathHelper.ToRadians(counter * 3)).X + 0.5f);
+				dust.noGravity = true;
+				dust.fadeIn = 0.1f;
+				dust.scale *= 0.7f;
 			}
 		}
 		private float getSpeed()
@@ -157,7 +169,7 @@ namespace SOTS.Projectiles.Base
 				projectile.extraUpdates = 3;
 				return 4.6f;
 			}
-			if ((int)type == 8)  //Macaroni Heal
+			if ((int)type == 8 || (int) type == 9)  //Macaroni Heal or Nature Heal
 			{
 				projectile.extraUpdates = 5;
 				return 7.0f;
@@ -166,7 +178,7 @@ namespace SOTS.Projectiles.Base
 		}
 		private float getMinDist()
 		{
-			if ((int)type == 7 || (int)type == 8) //Ceremonial Dagger
+			if ((int)type == 7 || (int)type == 8 || (int)type == 9) //Ceremonial Dagger, Macaroni Heal or Nature Heal
 			{
 				return 9f;
 			}

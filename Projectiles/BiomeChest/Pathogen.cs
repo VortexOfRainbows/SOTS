@@ -34,7 +34,7 @@ namespace SOTS.Projectiles.BiomeChest
 		{
 			projectile.localNPCImmunity[target.whoAmI] = projectile.localNPCHitCooldown;
 			target.immune[projectile.owner] = 0;
-			if(Main.rand.NextBool(10))
+			if(Main.rand.NextBool(7))
             {
 				if (crit)
 					damage /= 2;

@@ -71,7 +71,7 @@ namespace SOTS.Items.Void
 		public sealed override void UpdateInventory(Player player)
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-			while (voidPlayer.voidMeter < (voidPlayer.voidMeterMax2 - voidPlayer.lootingSouls) / 10 && voidPlayer.voidMeterMax2 - voidPlayer.lootingSouls > GetVoidAmt() && item.stack > 0)
+			while (voidPlayer.voidMeter < (voidPlayer.voidMeterMax2 - voidPlayer.lootingSouls - voidPlayer.VoidMinionConsumption) / 10 && voidPlayer.voidMeterMax2 - voidPlayer.lootingSouls - voidPlayer.VoidMinionConsumption > GetVoidAmt() && item.stack > 0)
 			{
 				OnActivation(player);
 				if(ConsumeStack())

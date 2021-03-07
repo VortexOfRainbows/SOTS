@@ -8,13 +8,12 @@ using System.IO;
 
 namespace SOTS.Projectiles.Minions
 {
-	public class EarthenSpirit : ModProjectile
+	public class EarthenSpirit : SpiritMinion
 	{
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Earthen Spirit");
 			ProjectileID.Sets.MinionTargettingFeature[projectile.type] = true;
-
 			Main.projPet[projectile.type] = true;
 			ProjectileID.Sets.MinionSacrificable[projectile.type] = true;
 			// Don't mistake this with "if this is true, then it will automatically home". It is just for damage reduction for certain NPCs
@@ -28,12 +27,12 @@ namespace SOTS.Projectiles.Minions
 			projectile.width = 34;
 			projectile.height = 34;
 			projectile.tileCollide = false;
-
 			projectile.friendly = true;
 			projectile.minion = true;
 			projectile.minionSlots = 1f;
 			projectile.penetrate = -1;
 			projectile.usesLocalNPCImmunity = true;
+			projectile.ignoreWater = true;
 			projectile.localNPCHitCooldown = 10;
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
@@ -58,17 +57,6 @@ namespace SOTS.Projectiles.Minions
 		public override bool MinionContactDamage()
 		{
 			return true;
-		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
-		{
-			Texture2D texture = Main.projectileTexture[projectile.type];
-			Vector2 drawOrigin = new Vector2(Main.projectileTexture[projectile.type].Width * 0.5f, projectile.height * 0.5f);
-			for (int k = 0; k < projectile.oldPos.Length; k++) {
-				Vector2 drawPos = projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, projectile.gfxOffY);
-				Color color = projectile.GetAlpha(lightColor) * ((float)(projectile.oldPos.Length - k) / (float)projectile.oldPos.Length);
-				spriteBatch.Draw(texture, drawPos, null, color * 0.5f, projectile.rotation, drawOrigin, projectile.scale, SpriteEffects.None, 0f);
-			}
-			return false;
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
@@ -130,9 +118,6 @@ namespace SOTS.Projectiles.Minions
 			#endregion
 
 			#region General behavior
-			Vector2 idlePosition = player.Center;
-			idlePosition.Y -= 96f;
-
 			bool found = false;
 			int ofTotal = 0;
 			int total = 0;
@@ -150,10 +135,12 @@ namespace SOTS.Projectiles.Minions
 					total++;
 				}
 			}
+			if (Main.myPlayer == player.whoAmI)
+				projectile.ai[1] = ofTotal;
 			#endregion
 
 			#region Find target
-			float distanceFromTarget = 800f;
+			float distanceFromTarget = 1000f;
 			Vector2 targetCenter = projectile.Center;
 			bool foundTarget = false;
 
@@ -163,7 +150,6 @@ namespace SOTS.Projectiles.Minions
 				NPC npc = Main.npc[player.MinionAttackTargetNPC];
 				float between = Vector2.Distance(npc.Center, projectile.Center);
 				float between2 = Vector2.Distance(npc.Center, player.Center);
-
 				if (between2 < distanceFromTarget) 
 				{
 					distanceFromTarget = between;
@@ -184,7 +170,7 @@ namespace SOTS.Projectiles.Minions
 						bool lineOfSight = Collision.CanHitLine(projectile.position, projectile.width, projectile.height, npc.position, npc.width, npc.height);
 						
 						bool closeThroughWall = between < 100f; //should attack semi-reliably through walls
-						if (inRange && (lineOfSight || closeThroughWall) && between2 < 1000f)
+						if (inRange && (lineOfSight || closeThroughWall) && between2 < distanceFromTarget)
 						{
 							distanceFromTarget = between;
 							targetCenter = npc.Center;
@@ -196,8 +182,9 @@ namespace SOTS.Projectiles.Minions
 			#endregion
 
 			#region Movement
+			Vector2 idlePosition = player.Center;
+			idlePosition.Y -= 96f;
 			float speed = 10f;
-
 			if (foundTarget)
 			{
 				if (projectile.alpha >= 255)
@@ -227,7 +214,7 @@ namespace SOTS.Projectiles.Minions
 					if (readyToFight)
 						projectile.ai[0]++;
 
-					if (total != 0 && (int)modPlayer.orbitalCounter % 60 == (int)(ofTotal * 60f / total + 0.5f) % 60)
+					if (total != 0 && (int)modPlayer.orbitalCounter % 60 == (int)(projectile.ai[1] * 60f / total + 0.5f) % 60)
 					{
 						if (readyToFight)
 						{
@@ -250,38 +237,19 @@ namespace SOTS.Projectiles.Minions
 			}
 			else
 			{
-				projectile.ai[0] = 0;
+				GoIdle();
 				readyToFight = false;
+				projectile.ai[0] = 0;
 				projectile.alpha -= 8;
-				if(projectile.alpha < 0)
+				if (projectile.alpha < 0)
 				{
 					projectile.alpha = 0;
 				}
-
-				Vector2 toPlayer = idlePosition - projectile.Center;
-				float distance = toPlayer.Length();
-				speed = 10f;
-				projectile.velocity = new Vector2(-speed, 0).RotatedBy(Math.Atan2(projectile.Center.Y - idlePosition.Y, projectile.Center.X - idlePosition.X));
-
-				if (distance < 256)
-				{
-					Vector2 rotateCenter = new Vector2(64, 0).RotatedBy(MathHelper.ToRadians(modPlayer.orbitalCounter + (ofTotal * 360f / total)));
-					rotateCenter += idlePosition;
-					Vector2 toRotate = rotateCenter - projectile.Center;
-					float dist2 = toRotate.Length();
-					if (dist2 > 12)
-					{
-						dist2 = 12;
-					}
-					projectile.velocity = new Vector2(-dist2, 0).RotatedBy(Math.Atan2(projectile.Center.Y - rotateCenter.Y, projectile.Center.X - rotateCenter.X));
-				}
-
 				Vector2 vectorToIdlePosition = idlePosition - projectile.Center;
 				float distanceToIdlePosition = vectorToIdlePosition.Length();
 				if (Main.myPlayer == player.whoAmI && distanceToIdlePosition > 1400f)
 				{
 					projectile.ai[0] = 0;
-					readyToFight = false;
 					projectile.alpha = 0;
 					projectile.position = idlePosition;
 					projectile.velocity *= 0.1f;
