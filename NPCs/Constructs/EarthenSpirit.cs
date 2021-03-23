@@ -40,6 +40,11 @@ namespace SOTS.NPCs.Constructs
             npc.netAlways = true;
 			npc.rarity = 2;
 		}
+		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+		{
+			npc.damage = 70;
+			npc.lifeMax = 750;
+		}
 		public override void SendExtraAI(BinaryWriter writer)
 		{
 			writer.Write(phase);

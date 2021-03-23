@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using SOTS.Buffs;
+using SOTS.Items.Fragments;
 using SOTS.Projectiles;
 using Terraria;
 using Terraria.ID;
@@ -12,17 +13,17 @@ namespace SOTS.Items
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Doomstick");
-            Tooltip.SetDefault("");
+            Tooltip.SetDefault("Fires two shotgun blasts in quick succession\nRight click to launch a 140% damage hook that pulls in enemies\nPulls you toward bosses instead\nKilled enemies drop packs of health and mana");
         }
 		public override void SetDefaults()
 		{
-            item.damage = 21; 
+            item.damage = 26; 
             item.ranged = true;  
             item.width = 58;   
             item.height = 20;
-            item.useTime = 12; 
-            item.useAnimation = 24;
-            item.reuseDelay = 44;
+            item.useTime = 10; 
+            item.useAnimation = 20;
+            item.reuseDelay = 32;
             item.useStyle = ItemUseStyleID.HoldingOut;    
             item.knockBack = 3f;
             item.value = Item.sellPrice(0, 6, 0, 0);
@@ -43,6 +44,11 @@ namespace SOTS.Items
         {
             return true;
         }
+        public override void HoldItem(Player player)
+        {
+            SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
+            modPlayer.doomDrops = true;
+        }
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
             if(player.altFunctionUse == 2)
@@ -51,14 +57,19 @@ namespace SOTS.Items
                 perturbedSpeed *= 24f;
                 speedX = perturbedSpeed.X;
                 speedY = perturbedSpeed.Y;
-                type = ModContent.ProjectileType<DoomstickHoldOut>();
-                return player.ownedProjectileCounts[ModContent.ProjectileType<DoomstickHoldOut>()] < 1;
+                damage = (int)(damage * 1.4f);
+                if(player.ownedProjectileCounts[ModContent.ProjectileType<DoomstickHoldOut>()] < 1)
+                {
+                    int proj = Projectile.NewProjectile(position.X, position.Y, speedX, speedY, ModContent.ProjectileType<DoomstickHoldOut>(), damage, knockBack, player.whoAmI);
+                    Projectile.NewProjectile(position.X, position.Y, speedX, speedY, ModContent.ProjectileType<Doomhook>(), damage, knockBack, player.whoAmI, proj);
+                }
+                return false;
             }
             Main.PlaySound(item.UseSound, player.Center);
             int amt = 3 + Main.rand.Next(2);
             for(int i = 0; i < amt; i++)
             {
-                Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(10));
+                Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(20));
                 Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X * (0.825f + (.1f * i)), perturbedSpeed.Y * (0.825f + (.1f * i)), type, damage, knockBack, player.whoAmI);
             }
             return false;
@@ -73,13 +84,24 @@ namespace SOTS.Items
             else
             {
                 item.noUseGraphic = false;
-                item.reuseDelay = 44;
+                item.reuseDelay = 32;
             }
             return player.ownedProjectileCounts[ModContent.ProjectileType<DoomstickHoldOut>()] < 1;
         }
         public override bool ConsumeAmmo(Player player)
         {
             return player.altFunctionUse != 2;
+        }
+        public override void AddRecipes()
+        {
+            ModRecipe recipe = new ModRecipe(mod);
+            recipe.AddIngredient(ItemID.Boomstick, 1);
+            recipe.AddIngredient(ModContent.ItemType<FragmentOfInferno>(), 4);
+            recipe.AddIngredient(ItemID.SoulofFright, 20);
+            recipe.AddIngredient(ItemID.IllegalGunParts, 1);
+            recipe.AddTile(TileID.MythrilAnvil);
+            recipe.SetResult(this);
+            recipe.AddRecipe();
         }
     }
 }

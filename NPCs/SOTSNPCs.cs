@@ -174,6 +174,8 @@ namespace SOTS.NPCs
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<RoyalJelly>(), 1);
 				if (npc.type == ModContent.NPCType<PutridPinkyPhase2>() && (!NPC.downedBoss1 || Main.rand.NextBool(20)))
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<PeanutButter>(), 1);
+				if (npc.type == NPCID.SkeletronHead && (!NPC.downedBoss1 || Main.rand.NextBool(20)))
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<Baguette>(), 1);
 				if (npc.type == NPCID.GreekSkeleton && Main.rand.NextBool(20))
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<OlympianAxe>(), 1);
 
@@ -236,8 +238,8 @@ namespace SOTS.NPCs
 			{
 				if (SOTSWorld.downedPinky)
 				{
-					pool.Add(ModContent.NPCType<FluxSlime>(), SpawnCondition.OverworldDaySlime.Chance * 0.10f);
-					pool.Add(mod.NPCType("NatureSlime"), SpawnCondition.OverworldDaySlime.Chance * 0.05f);
+					pool.Add(ModContent.NPCType<FluxSlime>(), SpawnCondition.OverworldDaySlime.Chance * 0.05f);
+					pool.Add(mod.NPCType("NatureSlime"), SpawnCondition.OverworldDaySlime.Chance * 0.10f);
 				}
 				else
 				{

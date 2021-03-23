@@ -20,7 +20,7 @@ namespace SOTS.NPCs.Constructs
 		public override void SetDefaults()
 		{
 			npc.aiStyle = 10;
-            npc.lifeMax = 250; 
+            npc.lifeMax = 275; 
             npc.damage = 34; 
             npc.defense = 0;   
             npc.knockBackResist = 0f;
@@ -37,6 +37,11 @@ namespace SOTS.NPCs.Constructs
             npc.DeathSound = SoundID.NPCDeath6;
             npc.netAlways = false;
 			npc.rarity = 2;
+		}
+		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+		{
+			npc.damage = 54;
+			npc.lifeMax = 400;
 		}
 		public override void SendExtraAI(BinaryWriter writer)
 		{

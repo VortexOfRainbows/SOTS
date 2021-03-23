@@ -15,7 +15,6 @@ namespace SOTS.Items.Fragments
 		}
 		public override void SetDefaults()
 		{
-			
 			item.CloneDefaults(279);
 			item.damage = 4;
 			item.useTime = 23;
@@ -24,14 +23,13 @@ namespace SOTS.Items.Fragments
 			item.thrown = false;
 			item.value = Item.sellPrice(0, 0, 20, 0);
 			item.rare = 1;
-			item.width = 26;
-			item.height = 32;
+			item.width = 32;
+			item.height = 36;
 			item.maxStack = 1;
 			item.autoReuse = false;            
 			item.shoot = mod.ProjectileType("BerryBomb"); 
             item.shootSpeed = 15.5f;
 			item.consumable = false;
-			
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {

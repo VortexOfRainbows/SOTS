@@ -39,7 +39,7 @@ namespace SOTS.Projectiles
         public override bool PreAI()
         {
             Player player = Main.player[projectile.owner];
-            if (!Main.mouseRight && Main.myPlayer == projectile.owner)
+            if ((player.ownedProjectileCounts[ModContent.ProjectileType<Doomhook>()] < 1) && Main.myPlayer == projectile.owner && projectile.timeLeft <= 2)
             {
                 ended = true;
                 projectile.netUpdate = true;

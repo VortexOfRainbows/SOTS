@@ -43,7 +43,10 @@ namespace SOTS
 		public bool petPepper = false;
 		public bool petAdvisor = false;
 		public int petPinky = -1;
-
+		public bool doomDrops = false;
+		public bool baguetteDrops = false;
+		public int baguetteLength = 0;
+		public int baguetteLengthCounter = 0;
 		Vector2 playerMouseWorld;
 		public int lightDragon = -1;
 		public int halfLifeRegen = 0;
@@ -362,6 +365,20 @@ namespace SOTS
         }
         public override void ResetEffects()
 		{
+			baguetteDrops = false;
+			if (baguetteLengthCounter >= 180)
+			{
+				if(baguetteLength > 0)
+					baguetteLength--;
+				baguetteLengthCounter = baguetteLength * 3;
+			}
+			if (baguetteLength > 0)
+				baguetteLengthCounter++;
+			else
+            {
+				baguetteLengthCounter = 0;
+            }
+			doomDrops = false;
 			player.lifeRegen += halfLifeRegen / 2;
 			halfLifeRegen = 0;
 			if (player.HasBuff(BuffID.ChaosState))

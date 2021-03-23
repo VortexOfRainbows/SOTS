@@ -46,7 +46,7 @@ namespace SOTS.Items
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.SpiderFang, 18);
 			recipe.AddIngredient(null, "DissolvingEarth", 1);
-			recipe.AddTile(TileID.MythrilAnvil);
+			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this);
 			recipe.AddRecipe();
 		}

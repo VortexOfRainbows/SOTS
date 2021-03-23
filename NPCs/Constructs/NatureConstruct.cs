@@ -61,15 +61,17 @@ namespace SOTS.NPCs.Constructs
 		{
 			Player player = Main.player[npc.target];
 			Texture2D texture = ModContent.GetTexture("SOTS/NPCs/Constructs/NatureConstructHead");
+			Texture2D texture2 = ModContent.GetTexture("SOTS/NPCs/Constructs/NatureConstructHeadGlow");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Vector2 drawPos = npc.Center - Main.screenPosition + new Vector2(0f, npc.gfxOffY);
 			if(npc.frame.Y == 70) //frame 2
-			drawPos.Y -= 4;
+				drawPos.Y -= 4;
 				
 			if(npc.frame.Y == 140) //frame 3
-			drawPos.Y -= 2;
-
-			spriteBatch.Draw(texture, drawPos, null, drawColor, dir, drawOrigin, npc.scale + 0.04f, SpriteEffects.None, 0f);
+				drawPos.Y -= 2;
+			float bonusDir = npc.direction != 1 ? MathHelper.ToRadians(180) : 0;
+			spriteBatch.Draw(texture, drawPos, null, drawColor, dir - bonusDir, drawOrigin, npc.scale, npc.direction == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+			spriteBatch.Draw(texture2, drawPos, null, Color.White, dir - bonusDir, drawOrigin, npc.scale, npc.direction == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 		}
 		int spellAmt = 0;
 		public void InitiateSpell()

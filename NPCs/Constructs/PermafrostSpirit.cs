@@ -48,6 +48,11 @@ namespace SOTS.NPCs.Constructs
             npc.netAlways = false;
 			npc.rarity = 2;
 		}
+		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+		{
+			npc.damage = 90;
+			npc.lifeMax = 1200;
+		}
 		private int InitiateHealth = 2000;
 		private float ExpertHealthMult = 1.5f;
 		

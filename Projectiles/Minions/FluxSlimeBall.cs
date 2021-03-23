@@ -173,7 +173,12 @@ namespace SOTS.Projectiles.Minions
 					NPC target = Main.npc[targetID];
 					if(target.active && !target.friendly && (owner.Center - projectile.Center).Length() < 800 && (owner.Center - player.Center).Length() < 1600)
 					{
-						Vector2 rotationArea = new Vector2(((target.width + target.height) / 2) - 4, 0).RotatedBy((owner.Center - target.Center).ToRotation());
+						Vector2 rotationArea = new Vector2(1, 0).RotatedBy((owner.Center - target.Center).ToRotation());
+						float Xmult = rotationArea.X;
+						float Ymult = rotationArea.Y;
+						float width = target.width * Xmult * 0.5f;
+						float height = target.height * Ymult * 0.5f;
+						rotationArea = new Vector2(width, height);
 						toPos = target.Center + rotationArea;
 						if (!hasHit)
 							instant = false;

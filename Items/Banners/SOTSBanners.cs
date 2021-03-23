@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.NPCs;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
@@ -117,6 +118,7 @@ namespace SOTS.Items.Banners
 						break;
 					case 6:
 						type = "NatureSlime";
+						player.NPCBannerBuff[ModContent.NPCType<BloomingHook>()] = true;
 						break;
 					case 7:
 						type = "FlamingGhast";

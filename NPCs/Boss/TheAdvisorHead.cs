@@ -1217,5 +1217,5 @@ namespace SOTS.NPCs.Boss
 			if (Main.netMode != 1)
 				Main.npc[n].netUpdate = true;
 		}
-	}
+    }
 }

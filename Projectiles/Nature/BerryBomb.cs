@@ -16,6 +16,7 @@ namespace SOTS.Projectiles.Nature
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Berry Bomb");
+			Main.projFrames[projectile.type] = 3;
 		}
         public override void SetDefaults()
         {
@@ -25,16 +26,26 @@ namespace SOTS.Projectiles.Nature
 			projectile.magic = false;
 			projectile.melee = false;
 			projectile.ranged = true;
-			projectile.width = 14;
-			projectile.height = 14;
+			projectile.width = 20;
+			projectile.height = 26;
 			projectile.penetrate = 1;
 			projectile.timeLeft = 900;
 			projectile.alpha = 0;
+			projectile.hide = true;
 		}
-		public override void AI()
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+        {
+			width = 14;
+			height = 14;
+			return true;
+        }
+        public override void AI()
 		{
 			if(projectile.timeLeft >= 800)
 			{
+				projectile.spriteDirection = projectile.direction;
+				projectile.hide = false;
+				projectile.frame = Main.rand.Next(3);
 				projectile.scale = 0.01f * Main.rand.Next(86, 121);
 				projectile.timeLeft = Main.rand.Next(21, 43);
 			}
@@ -52,7 +63,7 @@ namespace SOTS.Projectiles.Nature
 			{
 				for(int i = 0; i < 3; i++)
 				{ 
-					int proj = Projectile.NewProjectile((projectile.Center.X), projectile.Center.Y, Main.rand.Next(-100, 101) * 0.03f, Main.rand.Next(-100, 101) * 0.03f, 406, (int)(projectile.damage * 0.7f) + 1, 0, projectile.owner); //slime gun
+					int proj = Projectile.NewProjectile((projectile.Center.X), projectile.Center.Y, Main.rand.Next(-100, 101) * 0.03f, Main.rand.Next(-100, 101) * 0.03f, ProjectileID.SlimeGun, (int)(projectile.damage * 0.7f) + 1, 0, projectile.owner); //slime gun
 					Main.projectile[proj].friendly = true;
 					Main.projectile[proj].hostile = false;
 					Main.projectile[proj].timeLeft = Main.rand.Next(12, 24);

@@ -26,8 +26,7 @@ namespace SOTS.Items
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			player.lifeRegen += 1;
-			if(!hideVisual)
-				modPlayer.petPinky += (int)(item.damage * (1f + (player.minionDamage - 1f) + (player.allDamage - 1f)));
+			modPlayer.petPinky += (int)(item.damage * (1f + (player.minionDamage - 1f) + (player.allDamage - 1f)));
 		}
 	}
 }

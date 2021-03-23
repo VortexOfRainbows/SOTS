@@ -117,7 +117,7 @@ namespace SOTS.Projectiles.Celestial
 				projectile.timeLeft = 40;
 			}
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
 			Player player = Main.player[projectile.owner];
             target.immune[projectile.owner] = 11 - (int)(projectile.ai[1] * 5);

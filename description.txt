@@ -21,12 +21,12 @@ Credits:
 Programmer, Art, Direction: Vortex#6230
 Art: Blasfah
 Misc, Direction, Art: TacoBurritoGuacamole
-Testers: Crimsonkeep
 Music: BananaLizard
 
 (Contributors)
 Misc, Direction: FlameFreezer
 Art: Arcri, DeJuiceTD, Naka 
+Testers: Crimsonkeep
 
 (Other Contributions)
 Item glowmask code: Qwerty3.14

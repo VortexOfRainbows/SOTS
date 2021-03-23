@@ -12,6 +12,7 @@ using System;
 using SOTS.Projectiles.BiomeChest;
 using SOTS.Buffs;
 using SOTS.Projectiles.Minions;
+using SOTS.Items;
 
 namespace SOTS.NPCs.ArtificialDebuffs
 {
@@ -355,6 +356,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
             float impaledDarts = 0;
             float flowered = 0;
             pinkied = false;
+            bool hooked = false;
             for (int i = 0; i < Main.projectile.Length; i++)
             {
                 Projectile proj = Main.projectile[i];
@@ -369,12 +371,47 @@ namespace SOTS.NPCs.ArtificialDebuffs
                             Projectile owner = Main.projectile[(int)proj.ai[0]];
                             if(owner.type == ModContent.ProjectileType<PetPutridPinkyCrystal>())
                             {
-                                Vector2 toOwner = new Vector2(proj.Center.X, proj.position.Y - 8) - new Vector2(npc.Center.X, npc.position.Y + npc.height);
+                                Vector2 toOwner = new Vector2(owner.Center.X, owner.position.Y - 8) - new Vector2(npc.Center.X, npc.position.Y + npc.height);
                                 float dist = toOwner.Length();
                                 toOwner = toOwner.SafeNormalize(Vector2.Zero);
-                                float mult = dist * 0.002f * (npc.boss ? 0.01f : 1);
-                                toOwner *= 0.3f + mult;
+                                float mult = dist * 0.0015f * (npc.boss ? 0.01f : 1);
+                                toOwner *= 0.25f + mult;
                                 npc.position.X += toOwner.X;
+                            }
+                        }
+                    }
+                }
+                if (proj.friendly && proj.active && proj.type == ModContent.ProjectileType<Projectiles.Doomhook>())
+                {
+                    Projectiles.Doomhook hook = proj.modProjectile as Projectiles.Doomhook;
+                    if (hook != null)
+                    {
+                        if (hook.targetID == npc.whoAmI && hook.hasHit && !hook.letGo)
+                        {
+                            hooked = true;
+                            Projectile owner = Main.projectile[(int)proj.ai[0]];
+                            if (owner.type == ModContent.ProjectileType<Projectiles.DoomstickHoldOut>())
+                            {
+                                if(!npc.boss)
+                                {
+                                    Vector2 toOwner = owner.Center - npc.Center;
+                                    float dist = toOwner.Length();
+                                    toOwner = toOwner.SafeNormalize(Vector2.Zero);
+                                    float mult = dist * 0.0075f;
+                                    toOwner *= 4.8f + mult;
+                                    npc.position += toOwner;
+                                }
+                                else
+                                {
+                                    Player player = Main.player[proj.owner];
+                                    Vector2 toNPC = npc.Center - player.Center;
+                                    float dist = toNPC.Length();
+                                    toNPC = toNPC.SafeNormalize(Vector2.Zero);
+                                    float mult = dist * 0.0045f;
+                                    toNPC.X *= 5.6f + mult * 1.2f;
+                                    toNPC.Y *= 4.2f + mult;
+                                    player.velocity += toNPC * 0.1f;
+                                }
                             }
                         }
                     }
@@ -466,6 +503,13 @@ namespace SOTS.NPCs.ArtificialDebuffs
                     finalSlowdown *= 0.625f;
                 else
                     finalSlowdown *= 0.95f;
+            }
+            if(hooked)
+            {
+                if (!npc.boss)
+                    finalSlowdown *= 0.4f;
+                else
+                    finalSlowdown *= 0.975f;
             }
             npc.position -= npc.velocity * (1 - dartVeloMult * flowerVeloMult * finalSlowdown);
             base.PostAI(npc);
@@ -579,6 +623,22 @@ namespace SOTS.NPCs.ArtificialDebuffs
             }
             else
             {
+                int packCount = 0;
+                int baguetteCount = 0;
+                for(int i = 0; i < Main.maxItems; i++)
+                {
+                    Item item = Main.item[i];
+                    if(item.type == ModContent.ItemType<HealPack>() || item.type == ModContent.ItemType<ManaPack>())
+                    {
+                        if(item.active)
+                            packCount++;
+                    }
+                    if (item.type == ModContent.ItemType<BaguetteCrumb>())
+                    {
+                        if (item.active)
+                            baguetteCount++;
+                    }
+                }
                 for (int i = 0; i < Main.maxPlayers; i++)
                 {
                     Player player = Main.player[i];
@@ -594,6 +654,29 @@ namespace SOTS.NPCs.ArtificialDebuffs
                                 Projectile proj = Projectile.NewProjectileDirect(npc.Center, perturbedSpeed, mod.ProjectileType("SoulofLooting"), 0, 0, Main.myPlayer, player.whoAmI, 0);
                                 proj.netUpdate = true;
                             }
+                        }
+                        if(SOTSPlayer.ModPlayer(player).doomDrops && packCount < 40)
+                        {
+                            int rand = Main.rand.Next(4);
+                            if (player.statLifeMax2 > player.statLife)
+                                for(int j = 0; j < rand; j++)
+                                    Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<HealPack>(), 1);
+                            rand = 3 - rand;
+                            if (player.statManaMax2 > player.statMana)
+                                for (int j = 0; j < rand; j++)
+                                    Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<ManaPack>(), 1);
+                        }
+                        if (SOTSPlayer.ModPlayer(player).baguetteDrops && baguetteCount < 40)
+                        {
+                            int rand = Main.rand.Next(2);
+                            if(rand >= 1)
+                                rand += Main.rand.Next(3) / 2;
+                            if (rand >= 2)
+                                rand += Main.rand.Next(4) / 3;
+                            if (rand >= 3)
+                                rand += Main.rand.Next(5) / 4;
+                            for (int j = 0; j < rand; j++)
+                                Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<BaguetteCrumb>(), 1);
                         }
                     }
                 }

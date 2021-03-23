@@ -15,6 +15,7 @@ namespace SOTS.Items.Fragments
 			ItemID.Sets.GamepadWholeScreenUseRange[item.type] = true; 
 			ItemID.Sets.LockOnIgnoresCollision[item.type] = true;
 		}
+		/*
 		public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
 			Texture2D texture = mod.GetTexture("Items/Fragments/EarthenSpiritStaffEffect");
@@ -41,21 +42,21 @@ namespace SOTS.Items.Fragments
 				new Vector2((float)(item.Center.X - (int)Main.screenPosition.X) + x, (float)(item.Center.Y - (int)Main.screenPosition.Y) + y + 2),
 				null, color * (1f - (item.alpha / 255f)), rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			}
-		}
+		} 
+		*/
 		public override void SetDefaults() 
 		{
 			item.damage = 21;
 			item.knockBack = 4f;
 			item.mana = 18;
-			item.width = 40;
-			item.height = 52;
+			item.width = 38;
+			item.height = 36;
 			item.useTime = 36;
 			item.useAnimation = 36;
 			item.useStyle = 1;
 			item.value = Item.sellPrice(0, 3, 0, 0);
 			item.rare = 3;
 			item.UseSound = SoundID.Item44;
-
 			item.noMelee = true;
 			item.summon = true;
 			item.buffType = mod.BuffType("SpiritAid");

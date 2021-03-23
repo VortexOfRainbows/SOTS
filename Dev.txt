@@ -15,29 +15,77 @@ Priority: Remaining Spirits
 16. Marble Fates and Granite Omega Golem
 
 Next Update:
-3. Otherworld Spirit Staff
-20. PB&J
-26. Chaos Spirit Staff
-27. Tidal Construct + Tidal Spirit + Dissolving Deluge
-29. Wormwood Changes
-30. Banners for: Flux Slime, 
+1. Otherworld Spirit Staff
+2. PB&J
+3. Chaos Spirit Staff
+4. Tidal Construct + Tidal Spirit + Dissolving Deluge
+5. Wormwood Changes + change wormwood recipe to no longer require hardened gel
+6. Banners for: Flux Slime, 
 
 Perhaps:
 1. Archaelogist NPC
 2. Subspace Scissors
 3. Void Low Warning
-4. Slime gun upgrade
 5. Prefixes for voids
 6. Bone Clapper
 7. Electrolyte Seperator
-8. Granite Claymore
+9. Holoslime TP nerf
+10. Spaghetti Whip
+11. Mobile Fortress Generator: One for every tavernkeep armor set
+12. Dark Eye Nerf
+13. Nerf Bees against PP
+14. Buff PP slam attack projectile speed? Faster ring attack cycle (expert)
 
 Boss Rework Ideas:
 Subspace Serpent cross attacks to attack faster and release lightning
 
+3/22/21
+1. Changed the expert scaling of the Spirits, making them easier to fight in expert.
+2. Nature Spirit base health 250 -> 275.
+3. Baguette Drops from Skeletron
+4. Began work on Tidal Spirit
+5. To Do: Tidal construct gore, server syncing, spirit, spawning
+
+3/19/21
+1. To Do: Tidal construct gore, server syncing, spirit, spawning
+2. Added Tidal Construct Gore
+
+3/15/21 through 3/18/21
+1. Begun Work on Tidal Construct
+
+3/14/21
+1. Nature slime hooks should be effected by banner (needs testing)
+
+3/13/21
+1. More Baguette stuff
+2. Baguette works in multiplayer
+
+3/12/21
+1. Baguette now grows in distance, has crumbs, trail works better
+	1. Todo: Bigger hitboxes in middle when growing
+
+3/11/21
+1. Doomstick works well enough in multiplayer
+2. Resprite Nature Spirit Staff
+3. Began work on the foundation for Baguette
+	1. Todo: Baguette Rush buff, Shorten trail length, distance, etc. in order to make it less strainuous to run.
+
+3/8/21
+1. More work on Doomstick
+	1. Added Heal and Mana packs
+2. Changed Putrid Pinky Pet pull slightly
+3. Swap replacement percents for Flux Slime 66%, Nature Slime 34% -> Nature Slime 66%, Flux Slime 34%
+4. Next: Server Syncing
+
+3/7/21 (Catching up on some resprites)
+1. Resprited Icosahedrons
+2. Berry Bomb resprite
+3. Resprited Nature Construct + Gore + Glowmask
+4. Putrid Pinky Pet fixed not hitting certain enemies
+5. Earthen Staff Resprite
+
 3/4/21
 1. Began work on Doomstick
-
 
 3/3/21
 1. Putrid Pinky (Peanut Butter) pet now works great (and in multiplayer!)

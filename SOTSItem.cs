@@ -31,6 +31,7 @@ namespace SOTS
 		public static int[] dedicatedPurpleRed;
 		public static int[] dedicatedPastelPink;
 		public static int[] dedicatedRainbow;
+		public static int[] dedicatedBloodRed;
 		static bool runOnce = true;
 		public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
 		{
@@ -38,11 +39,12 @@ namespace SOTS
 			{
 				rarities1 = new int[] { mod.ItemType("StarlightAlloy"), mod.ItemType("HardlightAlloy"), mod.ItemType("OtherworldlyAlloy"), mod.ItemType("PotGenerator"), mod.ItemType("PrecariousCluster"), mod.ItemType("Calculator") };
 				rarities2 = new int[] { ItemType<RefractingCrystal>(), ItemType<CursedApple>() };
-				dedicatedOrange = new int[] { mod.ItemType("TerminatorAcorns"), ItemType<PlasmaCutterButOnAChain>(), ItemType<CoconutGun>() };
-				dedicatedBlue = new int[] { mod.ItemType("Calculator") };
-				dedicatedPurpleRed = new int[] { ItemType<CursedApple>(), ItemType<ArcStaffMk2>() };
-				dedicatedPastelPink = new int[] { ItemType<StrangeFruit>() };
-				dedicatedRainbow = new int[] { ItemType<PhotonGeyser>() };
+				dedicatedOrange = new int[] { mod.ItemType("TerminatorAcorns"), ItemType<PlasmaCutterButOnAChain>(), ItemType<CoconutGun>() }; //friends
+				dedicatedBlue = new int[] { mod.ItemType("Calculator") }; //friends 2
+				dedicatedPurpleRed = new int[] { ItemType<CursedApple>(), ItemType<ArcStaffMk2>() }; //James
+				dedicatedPastelPink = new int[] { ItemType<StrangeFruit>() }; //Tris
+				dedicatedRainbow = new int[] { ItemType<PhotonGeyser>() }; //Vortex
+				dedicatedBloodRed = new int[] { ItemType<Doomstick>() }; //Blasfah
 				runOnce = false;
             }
 			if (rarities1.Contains(item.type))
@@ -98,6 +100,11 @@ namespace SOTS
 					}
 				}
 				dedicatedColor = new Color(255, 158, 235);
+				dedicated = true;
+			}
+			if (dedicatedBloodRed.Contains(item.type))
+			{
+				dedicatedColor = new Color(102, 0, 0);
 				dedicated = true;
 			}
 			if (dedicated)

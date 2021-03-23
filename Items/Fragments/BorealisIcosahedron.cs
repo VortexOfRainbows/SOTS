@@ -13,8 +13,8 @@ namespace SOTS.Items.Fragments
 		}
 		public override void SetDefaults()
 		{
-            item.width = 26;     
-            item.height = 26;  
+            item.width = 24;     
+            item.height = 28;  
             item.value = Item.sellPrice(0, 1, 50, 0);
             item.rare = 7;
 			item.accessory = true;
@@ -27,7 +27,6 @@ namespace SOTS.Items.Fragments
 			player.rangedCrit += 3;
 			player.magicCrit += 3;
 			player.thrownCrit += 3;
-
 		}
 		public override void AddRecipes()
 		{
