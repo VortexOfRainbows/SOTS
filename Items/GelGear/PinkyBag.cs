@@ -1,3 +1,4 @@
+using SOTS.NPCs.Boss;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -23,7 +24,7 @@ namespace SOTS.Items.GelGear
 			item.consumable = true;
 			//bossBagNPC = mod.NPCType("PutridPinky2Head");
 		}
-		public override int BossBagNPC => mod.NPCType("PutridPinkyPhase2");
+		public override int BossBagNPC => ModContent.NPCType<PutridPinkyPhase2>();
 		public override bool CanRightClick()
 		{
 			return true;

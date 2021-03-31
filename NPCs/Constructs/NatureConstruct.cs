@@ -242,7 +242,7 @@ namespace SOTS.NPCs.Constructs
 			bool ZoneForest = !player.GetModPlayer<SOTSPlayer>().PyramidBiome && !player.ZoneDesert && !player.ZoneCorrupt && !player.ZoneDungeon && !player.ZoneDungeon && !player.ZoneHoly && !player.ZoneMeteor && !player.ZoneJungle && !player.ZoneSnow && !player.ZoneCrimson && !player.ZoneGlowshroom && !player.ZoneUndergroundDesert && (player.ZoneDirtLayerHeight || player.ZoneOverworldHeight) && !player.ZoneBeach;
 			if(ZoneForest)
 			{
-				return (SpawnCondition.Overworld.Chance * 0.01f);
+				return SpawnCondition.Overworld.Chance * 0.01f;
 			}
 			return (SpawnCondition.SurfaceJungle.Chance * 0.025f) + (SpawnCondition.UndergroundJungle.Chance * 0.0075f);
 		}

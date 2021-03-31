@@ -52,11 +52,7 @@ namespace SOTS.NPCs
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			if (spawnInfo.player.ZoneSnow && !spawnInfo.player.ZoneCorrupt && !spawnInfo.player.ZoneCrimson && (NPC.downedBoss1 || NPC.downedGoblins) && spawnInfo.player.ZoneOverworldHeight)
-			{
-				return 0.08f;
-			}
-			return (Main.invasionType == InvasionID.GoblinArmy && spawnInfo.player.ZoneOverworldHeight && spawnInfo.player.ZoneSnow && !spawnInfo.player.ZoneCorrupt && !spawnInfo.player.ZoneCrimson) ? 0.1f : 0;
+			return 0;
 		}
 		public override void NPCLoot()
 		{

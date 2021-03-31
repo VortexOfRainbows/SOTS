@@ -16,28 +16,87 @@ Priority: Remaining Spirits
 
 Next Update:
 1. Otherworld Spirit Staff
-2. PB&J
 3. Chaos Spirit Staff
-4. Tidal Construct + Tidal Spirit + Dissolving Deluge
 5. Wormwood Changes + change wormwood recipe to no longer require hardened gel
 6. Banners for: Flux Slime, 
+7. Biome Chest items to spawn correctly
 
-Perhaps:
+10. Aqua-Necro Core (Stronger necro chestplate, 1 ranged attack per second will gain a steam aura that does 33% damage rapidly)
+11. Riptide Trident (Launches you towards your cursor at the cost of void, deal damage while traveling, bounce off of enemies)
+12. Heart of the Sea: accessory that permanently causes Ripple potion effect
+14. Prismarine Necklace: Sharktooth Necklace + Heart of the Sea
+15. Wintry Traveler: Riptide Trident + Frigid Javelin
+16. Electrolyte Seperator
+
+Priority 2:
+1. Void Low Warning
+2. Prefixes for voids
+3. Bone Clapper
+4. PP hooks to scale in mult
+5. Peanut Gun
+6. Horn of Plenty: 10% more drops accessory
+7. Void Debuffs: Void Consumables Delay, Max Health Decrease
+
+Priority 3:
 1. Archaelogist NPC
 2. Subspace Scissors
-3. Void Low Warning
-5. Prefixes for voids
-6. Bone Clapper
-7. Electrolyte Seperator
-9. Holoslime TP nerf
-10. Spaghetti Whip
-11. Mobile Fortress Generator: One for every tavernkeep armor set
-12. Dark Eye Nerf
-13. Nerf Bees against PP
-14. Buff PP slam attack projectile speed? Faster ring attack cycle (expert)
+3. Spaghetti Whip
+4. Mobile Fortress Generator: One for every tavernkeep armor set
+5. Buff PP slam attack projectile speed? Faster ring attack cycle (expert)
+
 
 Boss Rework Ideas:
 Subspace Serpent cross attacks to attack faster and release lightning
+
+3/30/21
+1. Advisor Expert Health 14299 -> 14500, this results in a marginal multiplayer scaling buff too
+2. Icy Amalgamation Expert Health 37499 -> 37500, no scaling buff
+3. Sandwich Added + Stacking compatability with Peanut Butter
+4. PP pet is now netImportant, should work better in multiplayer
+5. All Dissolving Element blocks now create more visually appealing dusts
+6. Added dissolving element walls for all available types that create the special effects on the tile in front
+7. Dissolving element tiles are now slightly effected by paints better than before
+8. 
+
+3/29/21
+1. Dissolving Deluge is now required for Spirit Storm
+2. Ripple potion added, still need to check Multiplayer
+3. Abyssal Tonic added, still need to check Multiplayer
+4. Changed some variables to make photon geyser more dynamic when homing
+5. Deluge Block added!!! POG
+
+3/28/21
+1. Attempted some Arctic Goblin spawn rate changes (needs testing still)
+2. Coconut Gun Changes: damage 27 -> 23, void 44 -> 40
+
+3/27/21
+1. Pot Generator cannot be broken until Advisor is killed
+2. Platinum dart no longer has velocity after impact (fixes server thing)
+3. Manic Miner Void cost 4 -> 6, no longer has inaccuracy spread, 5 less silver sell, Drop Chance 20% -> 2%
+4. Reshade Bleeding Effect
+5. Spore Bomb recipe 2 stingers -> 12 stingers, spawns slightly less bombs per throw, spore damage 75% -> 50%
+6. Sand Slime is now in the Pyramid spawn pool (slightly more common than snake pot)
+7. Deadly Fragment expert scaling changed, now considerably weaker in expert mode (damage 70 -> 45, life 70 -> 50)
+8. Bees now do 60% damage to Putrid Pinky Hooks, 80% to Main body
+9. Bees now do 80% to Pharaoh's Curse
+10. Holoslimes now teleport 1 more block further above the player when warping
+11. Reverses Dark Eye void cost changes: Now cost 5 void again, damage changes not reverted
+12. Possible putrid pinky error fixed?
+
+3/24/21 & 3/25/21
+1. Tidal Spirit Syncs fine in multiplayer
+2. Tidal Construct syncs fine in multiplayer
+3. Shatter Shard Chestplate life regen 1 -> 2
+4. Began work on Dissolving Deluge, Abyssal Tonic
+
+3/23/21
+1. More work on Tidal Spirit
+2. Jar of Peanut Recipe: Peanuts 5 -> 15
+3. Foul Concoction Recipe: Peanuts 1 -> 2
+4. Orbitals on Chiseled Barrier and Bulwark of the Ancients disabled when hidden
+5. Nature Spirit damage decreased 34 -> 30, Expert: 54 -> 44
+6. Permafrost Spirit damage decreased 64 -> 60, Expert 90 -> 80
+7. Added Tidal Construct to various spawn pools, might need tweaking later
 
 3/22/21
 1. Changed the expert scaling of the Spirits, making them easier to fight in expert.

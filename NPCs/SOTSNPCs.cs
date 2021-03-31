@@ -12,6 +12,7 @@ using SOTS.NPCs.Boss;
 using SOTS.Items.SpecialDrops;
 using SOTS.Items;
 using SOTS.Buffs;
+using SOTS.NPCs.Constructs;
 
 namespace SOTS.NPCs
 {
@@ -32,6 +33,16 @@ namespace SOTS.NPCs
         public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
 		{
 			hitBy(npc, Main.player[projectile.owner], projectile, null, ref damage, ref knockback, ref crit);
+			List<int> nerfBeeNPC = new List<int>() { ModContent.NPCType<PutridHook>() };
+			List<int> nerfBeeBoss = new List<int>() { ModContent.NPCType<PutridPinkyPhase2>(), ModContent.NPCType<Boss.PharaohsCurse>() };
+			List<int> nerfBeeProj = new List<int>() { ProjectileID.Bee, ProjectileID.GiantBee };
+			if (nerfBeeProj.Contains(projectile.type))
+            {
+				if(nerfBeeBoss.Contains(npc.type))
+					damage = (int)(damage * 0.8f);
+				if(nerfBeeNPC.Contains(npc.type))
+					damage = (int)(damage * 0.6f);
+			}
 			base.ModifyHitByProjectile(npc, projectile, ref damage, ref knockback, ref crit, ref hitDirection);
         }
 		public void hitBy(NPC npc, Player player, Projectile projectile, Item item, ref int damage, ref float knockback, ref bool crit)
@@ -146,8 +157,8 @@ namespace SOTS.NPCs
 				if (npc.type == NPCID.ElfCopter && Main.rand.NextBool(12))
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("HelicopterParts"), 1);
 
-				if (npc.type == NPCID.UndeadMiner && Main.rand.NextBool(5))
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("ManicMiner"), 1);
+				if (npc.type == NPCID.UndeadMiner && Main.rand.NextBool(50))
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<ManicMiner>(), 1);
 
 				if (npc.type == NPCID.BlueSlime && Main.rand.NextBool(240))
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FireSpitter"), 1);
@@ -212,6 +223,7 @@ namespace SOTS.NPCs
 					pool.Add(mod.NPCType("Snake"), 1f);
 					pool.Add(mod.NPCType("LostSoul"), 0.6f);
 					pool.Add(mod.NPCType("PyramidTreasureSlime"), 0.1f);
+					pool.Add(NPCID.SandSlime, 0.35f);
 					if (Main.hardMode)
 					{
 						pool.Add(NPCID.Mummy, 0.5f);
@@ -254,6 +266,34 @@ namespace SOTS.NPCs
 				{
 					pool.Add(ModContent.NPCType<FluxSlime>(), 0.10f);
 				}
+			}
+			if(player.ZoneBeach && !spawnInfo.player.ZonePeaceCandle) //guarenteed to not spawn when a peace candle is nearby
+			{
+				if(NPC.downedBoss1)
+                {
+					if(NPC.downedBoss3)
+					{
+						pool.Add(ModContent.NPCType<TidalConstruct>(), SpawnCondition.OceanMonster.Chance * 0.0275f);
+					}
+					else
+					{
+						pool.Add(ModContent.NPCType<TidalConstruct>(), SpawnCondition.OceanMonster.Chance * 0.0175f);
+					}
+                }
+				else
+					pool.Add(ModContent.NPCType<TidalConstruct>(), SpawnCondition.OceanMonster.Chance * 0.0075f);
+			}
+			if(player.ZoneDungeon)
+            {
+				pool.Add(ModContent.NPCType<TidalConstruct>(), SpawnCondition.DungeonNormal.Chance * 0.0135f);
+			}
+			if (spawnInfo.player.ZoneSnow && !spawnInfo.player.ZoneCorrupt && !spawnInfo.player.ZoneCrimson && (NPC.downedBoss1 || NPC.downedGoblins) && spawnInfo.player.ZoneOverworldHeight)
+			{
+				pool.Add(ModContent.NPCType<ArcticGoblin>(), SpawnCondition.Overworld.Chance * 0.1f);
+			}
+			else if(Main.invasionType == InvasionID.GoblinArmy && spawnInfo.player.ZoneOverworldHeight && spawnInfo.player.ZoneSnow && !spawnInfo.player.ZoneCorrupt && !spawnInfo.player.ZoneCrimson)
+			{
+				pool.Add(ModContent.NPCType<ArcticGoblin>(), 0.1f);
 			}
 		}
 	}

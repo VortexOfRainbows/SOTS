@@ -353,7 +353,7 @@ namespace SOTS.NPCs.Boss
         }
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
-			npc.lifeMax = (int)(npc.lifeMax * bossLifeScale * 0.65f);  
+			npc.lifeMax = (int)(npc.lifeMax * bossLifeScale * 0.6591f);  
             npc.damage = (int)(npc.damage * 0.8f);  
         }
 		bool moveLegsDynamic = true;

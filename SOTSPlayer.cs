@@ -43,6 +43,9 @@ namespace SOTS
 		public bool petPepper = false;
 		public bool petAdvisor = false;
 		public int petPinky = -1;
+		public bool rippleEffect = false;
+		public int rippleTimer = 0;
+		public int rippleBonusDamage = 0;
 		public bool doomDrops = false;
 		public bool baguetteDrops = false;
 		public int baguetteLength = 0;
@@ -177,6 +180,8 @@ namespace SOTS
 			Mod mod = ModLoader.GetMod("SOTS");
 			Player drawPlayer = drawInfo.drawPlayer;
 			SOTSPlayer modPlayer = drawPlayer.GetModPlayer<SOTSPlayer>();
+			if (drawInfo.shadow != 0)
+				return;
 			if (modPlayer.skywardBlades > 0 && !drawPlayer.dead)
 			{
 				float drawX = (int)drawInfo.position.X + drawPlayer.width / 2;
@@ -433,6 +438,24 @@ namespace SOTS
 				PetHoloEye();
 			if (petPinky >= 0)
 				PetPinky();
+			if(rippleEffect)
+			{
+				rippleTimer++;
+				float healthPercent = (float)player.statLife / (float)player.statLifeMax2;
+				int timerMax = (int)(75 * healthPercent) + 15;
+				if(rippleTimer > timerMax)
+				{
+					if (Main.myPlayer == player.whoAmI)
+						Projectile.NewProjectile(player.Center, new Vector2(8, 0).RotatedBy(MathHelper.ToRadians(Main.rand.Next(360))), ModContent.ProjectileType<Projectiles.Tide.RippleWave>(), 10 + rippleBonusDamage, 0f, player.whoAmI, 1, 0);
+					rippleTimer -= timerMax;
+                }
+			}
+			else
+            {
+				rippleTimer = 0;
+            }
+			rippleEffect = false;
+			rippleBonusDamage = 0;
 			petPinky = -1;
 			petPepper = false;
 			petAdvisor = false; 
@@ -510,7 +533,6 @@ namespace SOTS
 			shardOnHit = 0;
 			bonusShardDamage = 0;
 			playerMouseWorld = Main.MouseWorld;
-
 			if (onhit > 0)
 			{
 				onhit--;

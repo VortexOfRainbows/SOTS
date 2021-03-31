@@ -256,7 +256,15 @@ namespace SOTS.Projectiles.Tide
 			//Vector2 varyingVelocity = new Vector2(1.5f, 0).RotatedBy(MathHelper.ToRadians(projectile.ai[0] * 2));
 			projectile.position += projectile.velocity; // + new Vector2(varyingVelocity.X, 0).RotatedBy(projectile.rotation);
 			Player target = Main.player[(int)projectile.ai[0]];
-			if(stabalizeBendRatio < 3)
+			if (target.ZoneDungeon)
+			{
+				projectile.tileCollide = false;
+			}
+			else
+			{
+				projectile.tileCollide = true;
+			}
+			if (stabalizeBendRatio < 3)
 				stabalizeBendRatio += 0.0005f;
 			if(target.active && !target.dead)
             {

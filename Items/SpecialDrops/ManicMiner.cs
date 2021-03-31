@@ -21,9 +21,9 @@ namespace SOTS.Items.SpecialDrops
 			item.useTime = 24;
 			item.useAnimation = 24;
 			item.useStyle = 5;
-			item.knockBack = 6;
-            item.value = Item.sellPrice(0, 1, 5, 0);
-			item.rare = 2;
+			item.knockBack = 5;
+            item.value = Item.sellPrice(0, 1, 0, 0);
+			item.rare = ItemRarityID.Blue;
 			item.UseSound = SoundID.Item12;
 			item.autoReuse = true;            
 			item.shoot = mod.ProjectileType("ManaMiner"); 
@@ -31,18 +31,11 @@ namespace SOTS.Items.SpecialDrops
 		}
 		public override void GetVoid(Player player)
 		{
-			voidMana = 4;
+			voidMana = 6;
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-              int numberProjectiles = 1;
-              for (int i = 0; i < numberProjectiles; i++)
-              {
-                  Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(2)); // This defines the projectiles random spread . 30 degree spread.
-                  Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI);
-
-              }
-              return false; 
+			return true; 
 		}
 	}
 }

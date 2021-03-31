@@ -99,7 +99,7 @@ namespace SOTS.Projectiles.Laser
 					break;
 				}
 				currentPos += direction;
-				if(k > 30)
+				if(k > waveLength / 12f)
 				{
 					int npc = FindClosestEnemy(currentPos);
 					if (npc != -1)

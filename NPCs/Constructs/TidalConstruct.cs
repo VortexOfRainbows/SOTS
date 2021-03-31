@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Runtime.Remoting.Messaging;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -14,7 +15,21 @@ namespace SOTS.NPCs.Constructs
 {
 	public class TidalConstruct : ModNPC
 	{
-		int timer = 0;
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+			writer.Write(projectiles[0]);
+			writer.Write(projectiles[1]);
+			writer.Write(projectiles[2]);
+			writer.Write(projectiles[3]);
+		}
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+			projectiles[0] = reader.ReadInt32();
+			projectiles[1] = reader.ReadInt32();
+			projectiles[2] = reader.ReadInt32();
+			projectiles[3] = reader.ReadInt32();
+		}
+        int timer = 0;
 		int ai1 = 0;
 		float dir = 0f;
 		public override void SetStaticDefaults()
@@ -32,7 +47,7 @@ namespace SOTS.NPCs.Constructs
 			npc.height = 62;
 			Main.npcFrameCount[npc.type] = 12;
 			npc.value = 12550;
-			npc.npcSlots = 3f;
+			npc.npcSlots = 6f;
 			npc.lavaImmune = true;
 			npc.noGravity = true;
 			npc.noTileCollide = true;
@@ -49,7 +64,8 @@ namespace SOTS.NPCs.Constructs
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			DrawVines(true);
+			if(projectiles[0] != -1 && projectiles[1] != -1 && projectiles[2] != -1 && projectiles[3] != -1 && Main.netMode != NetmodeID.Server)
+				DrawVines(true);
 			return false;
 		}
 		public void DrawVines(bool draw, bool gore = false)
@@ -100,14 +116,14 @@ namespace SOTS.NPCs.Constructs
 					int mult = j - 2; // 0, 1
 					rotation = npc.rotation + MathHelper.ToRadians((mult + 0.5f) * 30 * (0.5f + 0.9f * (0.5f - modi.X)) - rot);
 				}
-				int i = -1;
+				int h = -1;
 				int max = 6;
 				if (trail)
 				{
-					i = 0;
+					h = 0;
 					max = 1;
 				}
-				for (; i < max; i++)
+				for (int i = h; i < max; i++)
 				{
 					Rectangle frame = new Rectangle(0, 0, texture.Width, 18);
 					if (i != 0)
@@ -185,7 +201,8 @@ namespace SOTS.NPCs.Constructs
 				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/TidalConstructGore5"), 1f);
 				for (int i = 0; i < 9; i++)
 					Gore.NewGore(npc.position, npc.velocity, Main.rand.Next(61, 64), 1f);
-				DrawVines(true, true);
+				if (projectiles[0] != -1 && projectiles[1] != -1 && projectiles[2] != -1 && projectiles[3] != -1 && Main.netMode != NetmodeID.Server)
+					DrawVines(true, true);
 			}
 		}
 		public override void FindFrame(int frameHeight)
@@ -211,6 +228,7 @@ namespace SOTS.NPCs.Constructs
 			Vector2 toPlayer = player.Center - npc.Center;
 			if (runOnce)
 			{
+				projectiles = new int[] { -1, -1, -1, -1 };
 				npc.ai[0] = 90;
 				runOnce = false;
 				for(int i = 0; i < projectiles.Length; i++)
@@ -220,10 +238,13 @@ namespace SOTS.NPCs.Constructs
 						projectiles[i] = Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<TidalConstructTrail>(), 0, 0, Main.myPlayer, 0, npc.whoAmI);
 						//Main.projectile[projectiles[i]].netUpdate = true;
                     }
-                }
+				}
+				if (Main.netMode != NetmodeID.MultiplayerClient)
+					npc.netUpdate = true;
 			}
 			npc.rotation = toPlayer.ToRotation();
-			DrawVines(false);
+			if (projectiles[0] != -1 && projectiles[1] != -1 && projectiles[2] != -1 && projectiles[3] != -1 && Main.netMode != NetmodeID.Server)
+				DrawVines(false);
 			npc.TargetClosest(true);
 			if(aimTo.X == -1 && aimTo.Y == -1)
 			{
@@ -290,7 +311,11 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override void PostAI()
 		{
-			npc.velocity = Collision.TileCollision(npc.position, npc.velocity, npc.width, npc.height, true);
+			Player player = Main.player[npc.target];
+			if (!player.ZoneDungeon)
+			{
+				npc.velocity = Collision.TileCollision(npc.position, npc.velocity, npc.width, npc.height, true);
+			}
 		}
 		public override void NPCLoot()
 		{

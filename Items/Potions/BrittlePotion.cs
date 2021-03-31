@@ -36,14 +36,6 @@ namespace SOTS.Items.Potions
 			recipe.AddTile(13);
 			recipe.SetResult(this, 1);
 			recipe.AddRecipe();
-			
-			recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.BottledWater, 1);
-			recipe.AddIngredient(null, "FragmentOfPermafrost", 1);
-			recipe.AddIngredient(ItemID.Shiverthorn, 1);
-			recipe.AddTile(13);
-			recipe.SetResult(this, 1);
-			recipe.AddRecipe();
 		}
 	}
 }

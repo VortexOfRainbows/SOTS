@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Items.GelGear;
 using SOTS.Projectiles;
 using Terraria;
 using Terraria.ID;
@@ -82,7 +83,7 @@ namespace SOTS.NPCs.Boss
             npc.buffImmune[20] = true;
 			npc.alpha = 60;
             music = MusicID.Boss3;
-			bossBag = mod.ItemType("PinkyBag");
+			bossBag = ModContent.ItemType<PinkyBag>();
 		}
 		const int alphaMin = 60;
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
@@ -166,7 +167,6 @@ namespace SOTS.NPCs.Boss
             npc.lifeMax = (int)(npc.lifeMax * bossLifeScale * 0.7f) + 1;  
             npc.damage = (int)(npc.damage * 0.8f);  
         }
-		
 		public override bool PreAI()
 		{
 			if(Main.expertMode)
@@ -670,18 +670,21 @@ namespace SOTS.NPCs.Boss
 				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/ppGore_2"), 1f);
 				Gore.NewGore(npc.position + new Vector2(24, 0), npc.velocity, mod.GetGoreSlot("Gores/ppGore_3"), 1f);
 				Gore.NewGore(npc.Center - new Vector2(26, 26), npc.velocity, mod.GetGoreSlot("Gores/ppGore_4"), 1f);
-				for (int i = 0; i < Main.npc.Length; i++)
+				if(Main.netMode != NetmodeID.Server)
 				{
-					if (Main.npc[i].type == mod.NPCType("PutridHook") && Main.npc[i].active && (int)Main.npc[i].localAI[0] == npc.whoAmI)
+					for (int i = 0; i < Main.npc.Length; i++)
 					{
-						Draw(Main.npc[i].Center, true);
+						if (Main.npc[i].type == mod.NPCType("PutridHook") && Main.npc[i].active && (int)Main.npc[i].localAI[0] == npc.whoAmI)
+						{
+							Draw(Main.npc[i].Center, true);
+						}
 					}
-				}
-				for (int i = 0; i < Main.projectile.Length; i++)
-				{
-					if (Main.projectile[i].type == mod.ProjectileType("RecollectHook") && Main.projectile[i].active && (int)Main.projectile[i].ai[0] == npc.whoAmI)
+					for (int i = 0; i < Main.projectile.Length; i++)
 					{
-						Draw(Main.projectile[i].Center, true);
+						if (Main.projectile[i].type == mod.ProjectileType("RecollectHook") && Main.projectile[i].active && (int)Main.projectile[i].ai[0] == npc.whoAmI)
+						{
+							Draw(Main.projectile[i].Center, true);
+						}
 					}
 				}
 			}
@@ -690,7 +693,6 @@ namespace SOTS.NPCs.Boss
 		{ 
 			SOTSWorld.downedPinky = true;
 			potionType = ItemID.HealingPotion;
-		
 			if(Main.expertMode)
 			{ 
 				npc.DropBossBags();

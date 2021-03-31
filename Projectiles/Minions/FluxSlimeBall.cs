@@ -17,7 +17,8 @@ namespace SOTS.Projectiles.Minions
 			DisplayName.SetDefault("Flux Slime Ball");
 		}
         public override void SetDefaults()
-        {
+		{
+			projectile.netImportant = true;
 			projectile.height = 18;
 			projectile.width = 18;
 			projectile.friendly = true;

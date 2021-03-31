@@ -42,7 +42,11 @@ namespace SOTS.Projectiles.Ores
 			diffPosX = reader.ReadSingle();
 			diffPosY = reader.ReadSingle();
 		}
-		bool runOnce = true;
+        public override bool ShouldUpdatePosition()
+        {
+            return !latch;
+        }
+        bool runOnce = true;
 		bool latch = false;
 		float diffPosX = 0;
 		float diffPosY = 0;
@@ -59,10 +63,10 @@ namespace SOTS.Projectiles.Ores
 			
 			if(latch && (int)projectile.ai[1] != -1 && projectile.owner == Main.myPlayer)
 			{
-				projectile.netUpdate = true;
 				NPC target = Main.npc[(int)projectile.ai[1]];
 				projectile.alpha += projectile.timeLeft % 10 == 0 ? 1 : 0;
-				if(projectile.alpha >= 200)
+				projectile.netUpdate = true;
+				if (projectile.alpha >= 200)
 				{
 					projectile.Kill();
 				}
@@ -104,8 +108,9 @@ namespace SOTS.Projectiles.Ores
 				diffPosY = target.Center.Y - projectile.Center.Y;
 
 			projectile.ai[1] = target.whoAmI;
-			
-			if(target.life <= 0)
+			diffPosX *= 0.9f;
+			diffPosY *= 0.9f;
+			if (target.life <= 0)
 			{
 				projectile.Kill();
 			}

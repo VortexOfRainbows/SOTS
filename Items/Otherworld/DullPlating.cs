@@ -74,10 +74,7 @@ namespace SOTS.Items.Otherworld
 		}
 		public override bool Slope(int i, int j)
 		{
-			//if (SOTSWorld.downedEntity)
-				return true;
-
-			return false;
+			return true;
 		}
 	}
 }

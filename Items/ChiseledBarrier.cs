@@ -13,7 +13,7 @@ namespace SOTS.Items
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Chiseled Barrier");
-			Tooltip.SetDefault("Surrounds you with 4 orbital projectiles\nLaunches attackers away from you with javelins");
+			Tooltip.SetDefault("Surrounds you with 4 orbital projectiles\nLaunches attackers away from you with javelins\nProjectiles disabled when hidden");
 		}
 		public override void SetDefaults()
 		{
@@ -42,7 +42,7 @@ namespace SOTS.Items
 			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");	
 			modPlayer.PushBack = true;
 			
-			if(Main.myPlayer == player.whoAmI)
+			if(Main.myPlayer == player.whoAmI && !hideVisual)
 			{ 
 				if (Probe == -1)
 				{

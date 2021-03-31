@@ -114,7 +114,11 @@ namespace SOTS.Items.Otherworld
 			disableSmartCursor = true;
 			dustType = mod.DustType("AvaritianDust");
 		}
-		public override void KillMultiTile(int i, int j, int frameX, int frameY)
+        public override bool CanKillTile(int i, int j, ref bool blockDamaged)
+        {
+            return SOTSWorld.downedAdvisor;
+        }
+        public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
 			int drop = mod.ItemType("PotGenerator");
 			Item.NewItem(i * 16, j * 16, 32, 16, drop);

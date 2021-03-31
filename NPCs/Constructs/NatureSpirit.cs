@@ -21,7 +21,7 @@ namespace SOTS.NPCs.Constructs
 		{
 			npc.aiStyle = 10;
             npc.lifeMax = 275; 
-            npc.damage = 34; 
+            npc.damage = 30; 
             npc.defense = 0;   
             npc.knockBackResist = 0f;
             npc.width = 58;
@@ -40,7 +40,7 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
 		{
-			npc.damage = 54;
+			npc.damage = 44;
 			npc.lifeMax = 400;
 		}
 		public override void SendExtraAI(BinaryWriter writer)

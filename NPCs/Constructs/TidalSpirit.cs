@@ -34,14 +34,14 @@ namespace SOTS.NPCs.Constructs
 		{
 			npc.aiStyle = 10;
             npc.lifeMax = 960; 
-            npc.damage = 80; 
+            npc.damage = 60; 
             npc.defense = 0;   
             npc.knockBackResist = 0f;
             npc.width = 58;
             npc.height = 58;
 			Main.npcFrameCount[npc.type] = 1;   
             npc.value = 35075;
-            npc.npcSlots = 4f;
+            npc.npcSlots = 7f;
             npc.boss = false;
             npc.lavaImmune = true;
             npc.noGravity = true;
@@ -53,12 +53,12 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
 		{
-			npc.damage = 100;
+			npc.damage = 80;
 			npc.lifeMax = 1500;
 		}
 		Vector2 projectileVelo = Vector2.Zero;
 		private int InitiateHealth = 3000;
-		private float ExpertHealthMult = 1.5f;
+		private float ExpertHealthMult = 1.25f;
 		int phase = 1;
 		int counter = 0;
 		int direction = 1;
@@ -74,75 +74,144 @@ namespace SOTS.NPCs.Constructs
 					npc.netUpdate = true;
 				}
 
-				if (npc.ai[1] < 360)
+				if(npc.ai[3] % 2 == 0)
 				{
-					if (npc.ai[1] > 270)
+					if (npc.ai[1] < 360)
 					{
-						npc.velocity *= 0.1f;
-						if (npc.ai[2] % 2 == 0)
+						if (npc.ai[1] > 270)
+						{
+							npc.velocity *= 0.1f;
+							if (npc.ai[2] % 14 == 0)
+							{
+								Vector2 toPlayer = player.Center - npc.Center;
+								toPlayer = toPlayer.SafeNormalize(new Vector2(1, 0));
+								if (projectileVelo == Vector2.Zero)
+									projectileVelo = toPlayer;
+								int damage2 = npc.damage / 2;
+								if (Main.expertMode)
+								{
+									damage2 = (int)(damage2 / Main.expertDamage);
+								}
+								Main.PlaySound(2, (int)npc.Center.X, (int)npc.Center.Y, 21, 0.8f);
+								int last = -1;
+								for (int i = 0; i < 2; i++)
+								{
+									float spread = 11.5f;
+									Vector2 circleGen = new Vector2(spread, 0).RotatedBy(MathHelper.ToRadians(npc.ai[2] * 2.0f));
+									Vector2 velo = projectileVelo.RotatedBy(MathHelper.ToRadians(circleGen.X - (i * 2 - 1) * 11.5f));
+									float speed = 7f;
+									if (Main.netMode != 1)
+									{
+										int temp = Projectile.NewProjectile(npc.Center, velo * speed, ModContent.ProjectileType<TidalWave>(), damage2, 0f, Main.myPlayer, last, 0);
+										last = temp;
+									}
+								}
+								npc.ai[1] += 5;
+							}
+							npc.ai[2]++;
+						}
+						else
+						{
+							npc.ai[1]++;
+							npc.ai[0]++;
+							Vector2 circleGen = new Vector2(20f, 0).RotatedBy(MathHelper.ToRadians(npc.ai[0]));
+							Vector2 rotatePos = new Vector2(720 * direction, 0).RotatedBy(MathHelper.ToRadians(circleGen.X));
+							//Vector2 rotateAround = new Vector2(npc.ai[1], 0).RotatedBy(MathHelper.ToRadians(npc.ai[1] * 2));
+							Vector2 toCircle = rotatePos + player.Center - npc.Center;
+							float dist = toCircle.Length();
+							toCircle = toCircle.SafeNormalize(Vector2.Zero);
+							float speed = 9.5f;
+							if (speed > dist)
+							{
+								speed = dist;
+							}
+							toCircle *= speed;
+							npc.velocity = toCircle;
+						}
+					}
+					else
+					{
+						if (Main.netMode != 1)
+							npc.netUpdate = true;
+						npc.ai[0] += Main.rand.Next(180);
+						npc.ai[1] = 0;
+						npc.ai[2] = 0;
+						npc.ai[3]++;
+						projectileVelo = Vector2.Zero;
+						direction *= -1;
+					}
+				}
+				else
+				{
+					npc.ai[0]++;
+					if (npc.ai[1] < 440)
+					{
+						npc.ai[1] += 1.15f;
+					}
+					else
+					{
+						npc.ai[2]++;
+						if (npc.ai[2] % 100 == 0)
 						{
 							Vector2 toPlayer = player.Center - npc.Center;
-							toPlayer = toPlayer.SafeNormalize(new Vector2(1, 0));
-							if(projectileVelo == Vector2.Zero)
-								projectileVelo = toPlayer;
+							toPlayer = toPlayer.SafeNormalize(new Vector2(1, 0)).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-25f, 25f)));
+							projectileVelo = toPlayer;
 							int damage2 = npc.damage / 2;
 							if (Main.expertMode)
 							{
 								damage2 = (int)(damage2 / Main.expertDamage);
 							}
-							for(int i = 0; i < 2; i++)
+							Main.PlaySound(2, (int)npc.Center.X, (int)npc.Center.Y, 21, 0.8f);
+							int last = -1;
+							for (int i = 0; i < 2; i++)
 							{
-								float spread = 12.5f;
-								Vector2 circleGen = new Vector2(spread, 0).RotatedBy(MathHelper.ToRadians(npc.ai[2] * 2.0f));
-								Vector2 velo = projectileVelo.RotatedBy(MathHelper.ToRadians(circleGen.X - (i * 2 - 1) * 10.5f));
-
+								Vector2 velo = projectileVelo.RotatedBy(MathHelper.ToRadians((i * 2 - 1) * -11.5f));
+								float speed2 = 5.7f;
 								if (Main.netMode != 1)
 								{
-									Projectile.NewProjectileDirect(npc.Center, velo * 8.5f, ModContent.ProjectileType<TidalWave>(), damage2, 0f, Main.myPlayer, 0, 0);
+									int temp = Projectile.NewProjectile(npc.Center, velo * speed2, ModContent.ProjectileType<TidalWave>(), damage2, 0f, Main.myPlayer, last, 0);
+									last = temp;
 								}
 							}
-							npc.ai[1]++;
 						}
-						npc.ai[2]++;
-					}
-					else
-					{
-						npc.ai[1]++;
-						npc.ai[0]++;
-						Vector2 circleGen = new Vector2(20f, 0).RotatedBy(MathHelper.ToRadians(npc.ai[0]));
-						Vector2 rotatePos = new Vector2(720 * direction, 0).RotatedBy(MathHelper.ToRadians(circleGen.X));
-						//Vector2 rotateAround = new Vector2(npc.ai[1], 0).RotatedBy(MathHelper.ToRadians(npc.ai[1] * 2));
-						Vector2 toCircle = rotatePos + player.Center - npc.Center;
-						float dist = toCircle.Length();
-						toCircle = toCircle.SafeNormalize(Vector2.Zero);
-						float speed = 9.5f;
-						if (speed > dist)
+						else if(npc.ai[2] > 600) //6 * 72
 						{
-							speed = dist;
+							if (Main.netMode != 1)
+								npc.netUpdate = true;
+							npc.ai[0] += Main.rand.Next(180);
+							npc.ai[1] = 0;
+							npc.ai[2] = 0;
+							npc.ai[3]++;
+							projectileVelo = Vector2.Zero;
+							direction *= -1;
 						}
-						toCircle *= speed;
-						npc.velocity = toCircle;
 					}
+					Vector2 circleGen = new Vector2(20f + npc.ai[1] * 0.015f, 0).RotatedBy(MathHelper.ToRadians(npc.ai[0] * 2.15f));
+					Vector2 rotatePos = new Vector2(0, (npc.ai[1] + 60) * -1).RotatedBy(MathHelper.ToRadians(circleGen.X));
+					rotatePos.Y *= 0.85f;
+					Vector2 toCircle = rotatePos + player.Center - npc.Center;
+					float dist = toCircle.Length();
+					toCircle = toCircle.SafeNormalize(Vector2.Zero);
+					float speed = 12.5f;
+					if (speed > dist)
+					{
+						speed = dist;
+					}
+					toCircle *= speed;
+					npc.velocity = toCircle;
 				}
-				else
-				{
-					if (Main.netMode != 1)
-						npc.netUpdate = true;
-					npc.ai[0] += Main.rand.Next(180);
-					npc.ai[1] = 0;
-					npc.ai[2] = 0;
-					projectileVelo = Vector2.Zero;
-					direction *= -1;
-                }
 			}
-			if(phase == 2)
+			if (phase == 2)
 			{
 				if (Main.netMode != 1)
 					npc.netUpdate = true;
+				direction = Main.rand.Next(2) * 2 - 1;
 				npc.dontTakeDamage = false;
 				npc.aiStyle = -1;
 				npc.ai[0] = Main.rand.Next(180);
 				npc.ai[1] = 0;
+				npc.ai[2] = 0;
+				npc.ai[3] = 0;
 				phase = 3;
 			}
 			else if(phase == 1)
@@ -159,7 +228,6 @@ namespace SOTS.NPCs.Constructs
 				{
 					npc.netUpdate = true;
 				}
-				direction = Main.rand.Next(2) * 2 - 1;
 				phase = 1;
 				npc.aiStyle = -1;
 				npc.velocity.Y -= 0.014f;
@@ -221,7 +289,7 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override void NPCLoot()
 		{
-			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("DissolvingAurora"), 1);	
+			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("DissolvingDeluge"), 1);	
 		}	
 	}
 }

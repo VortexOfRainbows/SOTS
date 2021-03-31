@@ -14,7 +14,6 @@ namespace SOTS.Items.Fragments
 			DisplayName.SetDefault("Aurora Block");
 			Tooltip.SetDefault("");
 		}
-
 		public override void SetDefaults()
 		{
 			item.width = 16;
@@ -39,18 +38,30 @@ namespace SOTS.Items.Fragments
 	}
 	public class DissolvingAuroraTile : ModTile
 	{
+		public static Color color = new Color(45, 95, 115);
 		public override void SetDefaults()
 		{
 			Main.tileSolid[Type] = true;
 			Main.tileShine2[Type] = true;
 			Main.tileLighted[Type] = true;
 			drop = mod.ItemType("DissolvingAuroraBlock");
-			AddMapEntry(new Color(177, 238, 181));
+			AddMapEntry(color);
 			mineResist = 0.2f;
-			//soundType = 21;
-			//soundStyle = 2;
-			dustType = mod.DustType("BigPermafrostDust");
 			TileID.Sets.GemsparkFramingTypes[Type] = Type;
+		}
+		public override void NumDust(int i, int j, bool fail, ref int num)
+		{
+			num = 5;
+		}
+		public override bool CreateDust(int i, int j, ref int type)
+		{
+			Dust dust = Dust.NewDustDirect(new Vector2(i * 16, j * 16) - new Vector2(5), 16, 16, 267);
+			dust.color = color;
+			dust.noGravity = true;
+			dust.fadeIn = 0.1f;
+			dust.scale *= 1.8f;
+			dust.velocity *= 2.4f;
+			return false;
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
 		{
@@ -61,8 +72,8 @@ namespace SOTS.Items.Fragments
 			g *= 0.3f;
 			b *= 0.3f;
 		}
-		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
-		{
+		public static void DrawEffects(int i, int j, SpriteBatch spriteBatch, Mod mod, bool wall = false)
+        {
 			Texture2D texture = mod.GetTexture("Gores/AuroraParticle");
 			Texture2D textureBlock = mod.GetTexture("Gores/AuroraBlockOutline");
 			Color color;
@@ -74,15 +85,12 @@ namespace SOTS.Items.Fragments
 			for (int k = 0; k < 16; k += 2)
 			{
 				Vector2 location = new Vector2(i * 16, j * 16);
-				color = WorldGen.paintColor((int)Main.tile[i, j].color()) * (100f / 255f);
-				if (color.A > Color.White.A)
-				{
-					color.A -= Color.White.A;
-				}
-				else
-				{
-					color.A = 0;
-				}
+				//color = DissolvingAuroraTile.color;
+				//if (Main.tile[i, j].color() != 0)
+				color = WorldGen.paintColor((int)Main.tile[i, j].color());
+				if (wall && Main.tile[i, j].wallColor() != 0)
+					color = WorldGen.paintColor((int)Main.tile[i, j].wallColor());
+				color = new Color(color.R, color.G, color.B, 0);
 				int seed = k + i + j + (i * j);
 				int uniqueParticleFrame = i - seed + (int)(Main.GlobalTime * 10); //serves as a type of randomizer for the particles
 				if (i % 2 == 0)
@@ -127,75 +135,76 @@ namespace SOTS.Items.Fragments
 					{
 						float x = (float)Utils.RandomInt(ref randSeed, -16, 17) * 0.05f;
 						float y = (float)Utils.RandomInt(ref randSeed, -16, 17) * 0.05f;
-						Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y - 2) + zero, new Rectangle(0, 6 * (uniqueParticleFrame % 4), 6, 6), color, 0f, new Vector2(3,3), 0.75f, SpriteEffects.None, 0f);
+						Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y - 2) + zero, new Rectangle(0, 6 * (uniqueParticleFrame % 4), 6, 6), color, 0f, new Vector2(3, 3), 0.75f, SpriteEffects.None, 0f);
 					}
 					//spriteBatch.Draw(texture, drawPos, null, color, 0, new Vector2(0,0), 1, SpriteEffects.None, 0f);
 				}
 			}
-			color = WorldGen.paintColor((int)Main.tile[i, j].color()) * (100f / 255f);
-			if (color.A > Color.White.A)
+			if (Main.tileSolid[Main.tile[i, j].type] && !Main.tileSolidTop[Main.tile[i, j].type])
 			{
-				color.A -= Color.White.A;
-			}
-			else
-			{
-				color.A = 0;
-			}
-			ulong randSeed2 = Main.TileFrameSeed ^ (ulong)((long)j << 32 | (long)((ulong)i));
-			for (int l = 0; l < 7 - (Main.tile[i, j].inActive() ? 1 : 0); l++)
-			{
-				float x = (float)Utils.RandomInt(ref randSeed2, -16, 17) * 0.1f;
-				float y = (float)Utils.RandomInt(ref randSeed2, -16, 17) * 0.1f;
-				if (Main.tile[i, j].inActive() && l < 4)
+				//color = DissolvingAuroraTile.color;
+				//if (Main.tile[i, j].color() != 0)
+				color = WorldGen.paintColor((int)Main.tile[i, j].color());
+				if (wall && Main.tile[i, j].wallColor() != 0)
+					color = WorldGen.paintColor((int)Main.tile[i, j].wallColor());
+				color = new Color(color.R, color.G, color.B, 0);
+				ulong randSeed2 = Main.TileFrameSeed ^ (ulong)((long)j << 32 | (long)((ulong)i));
+				for (int l = 0; l < 7 - (Main.tile[i, j].inActive() ? 1 : 0); l++)
 				{
-					x = 0;
-					y = 0;
-				}
-				bool canUp = true;
-				bool canDown = true;
-				bool canLeft = true;
-				bool canRight = true;
-				if(Main.tile[i, j - 1].active() && Main.tileSolid[Main.tile[i, j - 1].type])
-					canUp = false;
-				
-				if(Main.tile[i, j + 1].active() && Main.tileSolid[Main.tile[i, j + 1].type])
-					canDown = false;
-				
-				if(Main.tile[i + 1, j].active() && Main.tileSolid[Main.tile[i + 1, j].type])
-					canRight = false;
-				
-				if(Main.tile[i - 1, j].active() && Main.tileSolid[Main.tile[i - 1, j].type])
-					canLeft = false;
-				
-				if(!canUp && !canDown)
-				{
-					y = 0;
-				}
-				else if(!canUp || !canDown)
-				{
-					if(!canUp)
-					y = Math.Abs(y);
-				
-					if(!canDown)
-					y = -Math.Abs(y);
-				}
-				if(!canRight && !canLeft)
-				{
-					x = 0;
-				}
-				else if(!canRight || !canLeft)
-				{
-					if(!canRight)
-					x = -Math.Abs(x);
-				
-					if(!canLeft)
-					x = Math.Abs(x);
-				}
-				Main.spriteBatch.Draw(textureBlock, new Vector2((float)(i * 16 - (int)Main.screenPosition.X) + x, (float)(j * 16 - (int)Main.screenPosition.Y) + y - 2) + zero, 
-				new Rectangle(0, 20 * (Main.tile[i, j].halfBrick() ? 1 : Main.tile[i, j].slope() > 0 ? Main.tile[i, j].slope() + 1 : 0), 16, 20), color, 0f, default, 1f, SpriteEffects.None, 0f);
-			}
-			//spriteBatch.Draw(texture, drawPos, null, color, 0, new Vector2(0,0), 1, SpriteEffects.None, 0f);
+					float x = (float)Utils.RandomInt(ref randSeed2, -16, 17) * 0.1f;
+					float y = (float)Utils.RandomInt(ref randSeed2, -16, 17) * 0.1f;
+					if (Main.tile[i, j].inActive() && l < 4)
+					{
+						x = 0;
+						y = 0;
+					}
+					bool canUp = true;
+					bool canDown = true;
+					bool canLeft = true;
+					bool canRight = true;
+					if (Main.tile[i, j - 1].active() && Main.tileSolid[Main.tile[i, j - 1].type])
+						canUp = false;
 
+					if (Main.tile[i, j + 1].active() && Main.tileSolid[Main.tile[i, j + 1].type])
+						canDown = false;
+
+					if (Main.tile[i + 1, j].active() && Main.tileSolid[Main.tile[i + 1, j].type])
+						canRight = false;
+
+					if (Main.tile[i - 1, j].active() && Main.tileSolid[Main.tile[i - 1, j].type])
+						canLeft = false;
+
+					if (!canUp && !canDown)
+					{
+						y = 0;
+					}
+					else if (!canUp || !canDown)
+					{
+						if (!canUp)
+							y = Math.Abs(y);
+
+						if (!canDown)
+							y = -Math.Abs(y);
+					}
+					if (!canRight && !canLeft)
+					{
+						x = 0;
+					}
+					else if (!canRight || !canLeft)
+					{
+						if (!canRight)
+							x = -Math.Abs(x);
+
+						if (!canLeft)
+							x = Math.Abs(x);
+					}
+					Main.spriteBatch.Draw(textureBlock, new Vector2((float)(i * 16 - (int)Main.screenPosition.X) + x, (float)(j * 16 - (int)Main.screenPosition.Y) + y - 2) + zero, new Rectangle(0, 20 * (Main.tile[i, j].halfBrick() ? 1 : Main.tile[i, j].slope() > 0 ? Main.tile[i, j].slope() + 1 : 0), 16, 20), color, 0f, default, 1f, SpriteEffects.None, 0f);
+				}
+			}
+		}
+		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
+		{
+			DrawEffects(i, j, spriteBatch, mod);
 			return true;
 		}
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)

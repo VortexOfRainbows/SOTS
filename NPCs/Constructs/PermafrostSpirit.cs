@@ -31,7 +31,7 @@ namespace SOTS.NPCs.Constructs
 		{
 			npc.aiStyle = 10;
             npc.lifeMax = 700; 
-            npc.damage = 64; 
+            npc.damage = 60; 
             npc.defense = 0;   
             npc.knockBackResist = 0f;
             npc.width = 58;
@@ -50,7 +50,7 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
 		{
-			npc.damage = 90;
+			npc.damage = 80;
 			npc.lifeMax = 1200;
 		}
 		private int InitiateHealth = 2000;

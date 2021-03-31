@@ -93,7 +93,7 @@ namespace SOTS.NPCs
 			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
 			float distX = npc.Center.X - player.Center.X;
 			bool left = distX > 0;
-			float distY = npc.Center.Y - (player.Center.Y - 96);
+			float distY = npc.Center.Y - (player.Center.Y - 112);
 			Vector2 toPlayer = new Vector2(-distX, -distY);
 			float length = toPlayer.Length() + 0.1f;
 			Vector2 checkPos = npc.Center;

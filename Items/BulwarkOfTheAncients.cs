@@ -14,7 +14,7 @@ namespace SOTS.Items
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Bulwark Of The Ancients");
-			Tooltip.SetDefault("Grants immunity to knockback and fire blocks\nGrants immunity to most debuffs\nIncreases life regen by 1, void regen by 2, reduces damage taken by 7%, and increases crit chance by 4%\nSurrounds you with 4 orbital projectiles\nGrants permanent hunter and dangersense effects");
+			Tooltip.SetDefault("Grants immunity to knockback and fire blocks\nGrants immunity to most debuffs\nIncreases life regen by 1, void regen by 2, reduces damage taken by 7%, and increases crit chance by 4%\nSurrounds you with 4 orbital projectiles\nGrants permanent hunter and dangersense effects\nProjectiles disabled when hidden");
 		}
 		public override void SetDefaults()
 		{
@@ -72,7 +72,7 @@ namespace SOTS.Items
 			player.dangerSense = true;
 			
 			//Surrounds you with 4 orbital projectiles
-			if(Main.myPlayer == player.whoAmI)
+			if(Main.myPlayer == player.whoAmI && !hideVisual)
 			{
 				if (Probe == -1)
 				{

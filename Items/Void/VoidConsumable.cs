@@ -257,7 +257,7 @@ namespace SOTS.Items.Void
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "Peanut", 1);
+			recipe.AddIngredient(null, "Peanut", 2);
 			recipe.AddIngredient(ItemID.PinkGel, 1);
 			recipe.AddIngredient(ItemID.Acorn, 1);
 			recipe.SetResult(this, 1);

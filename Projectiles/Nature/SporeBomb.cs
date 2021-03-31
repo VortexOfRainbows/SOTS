@@ -1,10 +1,4 @@
-using System;
-using System.IO;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
@@ -52,7 +46,7 @@ namespace SOTS.Projectiles.Nature
 			{
 				for(int i = 0; i < Main.rand.Next(2) + 2; i++)
 				{ 
-					int proj = Projectile.NewProjectile((projectile.Center.X), projectile.Center.Y, Main.rand.Next(-100, 101) * 0.02f, Main.rand.Next(-100, 101) * 0.02f, 228, (int)(projectile.damage * 0.75f), 0, projectile.owner); //Spore Cloud (chlorophyte saber)
+					int proj = Projectile.NewProjectile((projectile.Center.X), projectile.Center.Y, Main.rand.Next(-100, 101) * 0.02f, Main.rand.Next(-100, 101) * 0.02f, ProjectileID.SporeCloud, (int)(projectile.damage * 0.50f) + 1, 0, projectile.owner); //Spore Cloud (chlorophyte saber)
 					Main.projectile[proj].friendly = true;
 					Main.projectile[proj].hostile = false;
 					Main.projectile[proj].alpha += 70;
