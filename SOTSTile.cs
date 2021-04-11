@@ -55,15 +55,15 @@ namespace SOTS
         public override bool PreDraw(int i, int j, int type, SpriteBatch spriteBatch)
         {
             Tile tile = Framing.GetTileSafely(i, j);
-            if (tile.wall == ModContent.WallType<NatureWallWall>())
+            if (tile.wall == ModContent.WallType<NatureWallWall>() && tile.type != (ushort)ModContent.TileType<DissolvingNatureTile>())
                 DissolvingNatureTile.DrawEffects(i, j, spriteBatch, mod, true);
-            if (tile.wall == ModContent.WallType<EarthWallWall>())
+            if (tile.wall == ModContent.WallType<EarthWallWall>() && tile.type != (ushort)ModContent.TileType<DissolvingEarthTile>())
                 DissolvingEarthTile.DrawEffects(i, j, spriteBatch, mod, true);
-            if (tile.wall == ModContent.WallType<AuroraWallWall>())
+            if (tile.wall == ModContent.WallType<AuroraWallWall>() && tile.type != (ushort)ModContent.TileType<DissolvingAuroraTile>())
                 DissolvingAuroraTile.DrawEffects(i, j, spriteBatch, mod, true);
-            if (tile.wall == ModContent.WallType<AetherWallWall>())
+            if (tile.wall == ModContent.WallType<AetherWallWall>() && tile.type != (ushort)ModContent.TileType<DissolvingAetherTile>())
                 DissolvingAetherTile.DrawEffects(i, j, spriteBatch, mod, true);
-            if (tile.wall == ModContent.WallType<DelugeWallWall>())
+            if (tile.wall == ModContent.WallType<DelugeWallWall>() && tile.type != (ushort)ModContent.TileType<DissolvingDelugeTile>())
                 DissolvingDelugeTile.DrawEffects(i, j, spriteBatch, mod, true);
             return base.PreDraw(i, j, type, spriteBatch);
         }

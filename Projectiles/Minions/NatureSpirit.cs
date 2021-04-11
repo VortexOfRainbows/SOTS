@@ -17,7 +17,6 @@ namespace SOTS.Projectiles.Minions
 			ProjectileID.Sets.TrailCacheLength[projectile.type] = 5;  
 			ProjectileID.Sets.TrailingMode[projectile.type] = 0;   
 		}
-
 		public sealed override void SetDefaults()
 		{
 			projectile.width = 34;

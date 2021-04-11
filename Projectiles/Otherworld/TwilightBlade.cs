@@ -18,10 +18,12 @@ namespace SOTS.Projectiles.Otherworld
 		public override void SendExtraAI(BinaryWriter writer)
 		{
 			writer.Write(active);
+			writer.Write(ofTotal2);
 		}
 		public override void ReceiveExtraAI(BinaryReader reader)
 		{
 			active = reader.ReadBoolean();
+			ofTotal2 = reader.ReadInt32();
 		}
 		public override void SetDefaults()
         {
@@ -55,6 +57,7 @@ namespace SOTS.Projectiles.Otherworld
 			base.PostDraw(spriteBatch, drawColor);
 		}
 		Vector2 aimTo = new Vector2(0, 0);
+		int ofTotal2 = 0;
 		float rotate = 0;
 		bool active = false;
 		public override void AI()
@@ -84,7 +87,9 @@ namespace SOTS.Projectiles.Otherworld
 					total++;
 				}
 			}
-			if(ofTotal >= bladePlayer.maxBlades || bladePlayer.maxBlades == 0)
+			if (Main.myPlayer == player.whoAmI)
+				ofTotal2 = ofTotal;
+			if (ofTotal2 >= bladePlayer.maxBlades || bladePlayer.maxBlades == 0)
 			{
 				projectile.Kill();
 			}
@@ -110,7 +115,7 @@ namespace SOTS.Projectiles.Otherworld
 						projectile.netUpdate = true;
 					}
 				}
-				Vector2 rotateCenter = new Vector2(64, 0).RotatedBy(MathHelper.ToRadians(-modPlayer.orbitalCounter * 1.15f + (ofTotal * 360f / total)));
+				Vector2 rotateCenter = new Vector2(64, 0).RotatedBy(MathHelper.ToRadians(-modPlayer.orbitalCounter * 1.15f + (ofTotal2 * 360f / total)));
 				rotateCenter += player.Center;
 				Vector2 toRotate = rotateCenter - projectile.Center;
 				float dist2 = toRotate.Length();

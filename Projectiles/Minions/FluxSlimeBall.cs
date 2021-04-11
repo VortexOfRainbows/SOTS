@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Terraria;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
@@ -66,7 +67,17 @@ namespace SOTS.Projectiles.Minions
 			}
 			Texture2D texture = ModContent.GetTexture("SOTS/NPCs/FluxSlimeVine");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			Projectile owner = Main.projectile[(int)projectile.ai[0]];
+			Projectile parent = null;
+			for (short i = 0; i < Main.maxProjectiles; i++)
+			{
+				Projectile proj = Main.projectile[i];
+				if (proj.active && proj.owner == projectile.owner && proj.identity == (int)projectile.ai[0])
+				{
+					parent = proj;
+					break;
+				}
+			}
+			Projectile owner = parent;
 			Vector2 ownerCenter = owner.Center;
 			Vector2 dynamicScaling = new Vector2(20, 0).RotatedBy(MathHelper.ToRadians(aiCounter * 1.1f));
 			float moreScaling = 1.00f - 0.05f * Math.Abs(dynamicScaling.X) / 40f;
@@ -155,13 +166,25 @@ namespace SOTS.Projectiles.Minions
 				runOnce = false;
 				direction = (int)projectile.ai[1] / 60;
 				direction %= 2;
+			}
+			//Projectile owner = Main.projectile[(int)projectile.ai[0]];
+			Projectile parent = null;
+			for (short i = 0; i < Main.maxProjectiles; i++)
+            {
+				Projectile proj = Main.projectile[i];
+				if(proj.active && proj.owner == projectile.owner && proj.identity == (int)projectile.ai[0])
+                {
+					parent = proj;
+					break;
+                }
             }
-			Projectile owner = Main.projectile[(int)projectile.ai[0]];
+			Projectile owner = parent;
+			//Main.NewText(owner.identity + " " + owner.whoAmI);
 			Player player = Main.player[projectile.owner];
 			shader = player.cPet;
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			projectile.ai[1] += 0.4f;
-			if (owner.type == ModContent.ProjectileType<PetPutridPinkyCrystal>() && owner.active)
+			if (owner != null && owner.type == ModContent.ProjectileType<PetPutridPinkyCrystal>() && owner.active)
 			{
 				Vector2 length = new Vector2(4, 0).RotatedBy(MathHelper.ToRadians((180 * direction) + modPlayer.orbitalCounter * (1 + 0.5f * direction)));
 				Vector2 rotate = new Vector2(24 + length.X, 0).RotatedBy(MathHelper.ToRadians(projectile.ai[1]));
@@ -215,8 +238,12 @@ namespace SOTS.Projectiles.Minions
 				projectile.timeLeft = 2;
 			}
 			else
-            {
-				projectile.Kill();
+			{
+				if (Main.myPlayer == projectile.owner)
+				{
+					projectile.Kill();
+					projectile.netUpdate = true;
+				}
 			}
 			aiCounter += 1 * projectile.direction;
 		}

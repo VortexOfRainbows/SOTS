@@ -14,7 +14,7 @@ namespace SOTS.Items
 		public override void SetStaticDefaults() 
 		{
 			DisplayName.SetDefault("Starlight Serpent Staff");
-			Tooltip.SetDefault("Summons an Starlight Serpent to fight for you\nRight click to add onto the most recently summoned serpent, left click to summon a new serpent");
+			Tooltip.SetDefault("Summons an Starlight Serpent to fight for you\nRight click to add onto the most recently summoned serpent, left click to summon a new serpent\nThis item was made for testing purposes");
 			ItemID.Sets.GamepadWholeScreenUseRange[item.type] = true; 
 			ItemID.Sets.LockOnIgnoresCollision[item.type] = true;
 			ItemID.Sets.StaffMinionSlotsRequired[item.type] = 1;

@@ -15,9 +15,16 @@ namespace SOTS.Projectiles.Minions
 			DisplayName.SetDefault("Spirit");
 			ProjectileID.Sets.MinionTargettingFeature[projectile.type] = true;
 			ProjectileID.Sets.TrailCacheLength[projectile.type] = 5;  
-			ProjectileID.Sets.TrailingMode[projectile.type] = 0;   
+			ProjectileID.Sets.TrailingMode[projectile.type] = 0;
 		}
-
+		public override void SendExtraAI(BinaryWriter writer)
+		{
+			writer.Write(ofTotal2);
+		}
+		public override void ReceiveExtraAI(BinaryReader reader)
+		{
+			ofTotal2 = reader.ReadInt32();
+		}
 		public override void SetDefaults()
 		{
 			projectile.width = 34;
@@ -53,12 +60,12 @@ namespace SOTS.Projectiles.Minions
 				Main.spriteBatch.Draw(texture, new Vector2((float)(projectile.Center.X - (int)Main.screenPosition.X) + x, (float)(projectile.Center.Y - (int)Main.screenPosition.Y) + y), null, color * ((255 - projectile.alpha) / 255f), 0f, drawOrigin, projectile.scale, SpriteEffects.None, 0f);
 			}
 		}
-		public void GoIdle() 
+		int ofTotal2 = 0;
+		int updateNetCounter = 0;
+		public void GoIdle(float speed = 10f) 
 		{
 			Player player = Main.player[projectile.owner];
 			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
-			Vector2 idlePosition = player.Center;
-			idlePosition.Y -= 96f;
 			bool found = false;
 			int ofTotal = 0;
 			int total = 0;
@@ -76,14 +83,22 @@ namespace SOTS.Projectiles.Minions
 					total++;
 				}
 			}
+			if (Main.myPlayer == player.whoAmI)
+            {
+				ofTotal2 = ofTotal;
+				updateNetCounter++;
+				if (updateNetCounter % 60 == 0)
+					projectile.netUpdate = true;
+            }
 
+			Vector2 idlePosition = player.Center;
+			idlePosition.Y -= 96f + total * 4;
 			Vector2 toPlayer = idlePosition - projectile.Center;
 			float distance = toPlayer.Length();
-			float speed = 10f;
 			projectile.velocity = new Vector2(-speed, 0).RotatedBy(Math.Atan2(projectile.Center.Y - idlePosition.Y, projectile.Center.X - idlePosition.X));
 			if (distance < 256)
 			{
-				Vector2 rotateCenter = new Vector2(64, 0).RotatedBy(MathHelper.ToRadians(modPlayer.orbitalCounter + (ofTotal * 360f / total)));
+				Vector2 rotateCenter = new Vector2(64 + total * 4, 0).RotatedBy(MathHelper.ToRadians(modPlayer.orbitalCounter + (ofTotal2 * 360f / total)));
 				rotateCenter += idlePosition;
 				Vector2 toRotate = rotateCenter - projectile.Center;
 				float dist2 = toRotate.Length();

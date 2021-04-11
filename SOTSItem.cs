@@ -19,6 +19,7 @@ using SOTS.Items.Celestial;
 using SOTS.Items.Otherworld;
 using SOTS.Items.ChestItems;
 using SOTS.Items;
+using SOTS.Items.Fragments;
 
 namespace SOTS
 {
@@ -37,13 +38,13 @@ namespace SOTS
 		{
 			if(runOnce)
 			{
-				rarities1 = new int[] { mod.ItemType("StarlightAlloy"), mod.ItemType("HardlightAlloy"), mod.ItemType("OtherworldlyAlloy"), mod.ItemType("PotGenerator"), mod.ItemType("PrecariousCluster"), mod.ItemType("Calculator") };
+				rarities1 = new int[] { ItemType<StarlightAlloy>(), ItemType<HardlightAlloy>(), ItemType<OtherworldlyAlloy>(), ItemType<PotGenerator>(), ItemType<PrecariousCluster>(), ItemType<Calculator>() };
 				rarities2 = new int[] { ItemType<RefractingCrystal>(), ItemType<CursedApple>() };
-				dedicatedOrange = new int[] { mod.ItemType("TerminatorAcorns"), ItemType<PlasmaCutterButOnAChain>(), ItemType<CoconutGun>() }; //friends
-				dedicatedBlue = new int[] { mod.ItemType("Calculator") }; //friends 2
+				dedicatedOrange = new int[] { ItemType<TerminatorAcorns>(), ItemType<PlasmaCutterButOnAChain>(), ItemType<CoconutGun>() }; //friends
+				dedicatedBlue = new int[] { ItemType<Calculator>() }; //friends 2
 				dedicatedPurpleRed = new int[] { ItemType<CursedApple>(), ItemType<ArcStaffMk2>() }; //James
 				dedicatedPastelPink = new int[] { ItemType<StrangeFruit>() }; //Tris
-				dedicatedRainbow = new int[] { ItemType<PhotonGeyser>() }; //Vortex
+				dedicatedRainbow = new int[] { ItemType<Traingun>() /*ItemType<PhotonGeyser>()*/ }; //Vortex
 				dedicatedBloodRed = new int[] { ItemType<Doomstick>() }; //Blasfah
 				runOnce = false;
             }
@@ -87,7 +88,7 @@ namespace SOTS
 			if (dedicatedRainbow.Contains(item.type))
 			{
 				dedicatedColor = VoidPlayer.pastelRainbow;
-				dedicated = true;
+				//dedicated = true;
 			}
 			if (dedicatedPastelPink.Contains(item.type))
 			{

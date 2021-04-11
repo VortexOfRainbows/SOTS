@@ -55,7 +55,7 @@ namespace SOTS.Void
 
 			barAmount = new VoidBarSprite(); 
 			barAmount.SetPadding(0);
-			barAmount.Left.Set(6f, 0f);
+			barAmount.Left.Set(5.01f, 0f);
 			barAmount.Top.Set(6f, 0f);
 			barAmount.Width.Set(188, 0f);
 			barAmount.Height.Set(18, 0f);
@@ -146,6 +146,7 @@ namespace SOTS.Void
 			int length = 40;
 			int height = 18;
 			Texture2D fill2 = ModContent.GetTexture("SOTS/Void/VoidBarSprite");
+			Texture2D divider2 = ModContent.GetTexture("SOTS/Void/VoidBarDivider");
 			spriteBatch.Draw(fill2, new Rectangle((int)(VoidPlayer.voidBarOffset.X + padding.X), (int)(VoidPlayer.voidBarOffset.Y + padding.Y), 188, 18), new Color(164, 55, 65));
 			List<Rectangle> rectangles = new List<Rectangle>();
 			List<Color> colors = new List<Color>();
@@ -164,7 +165,7 @@ namespace SOTS.Void
 				spriteBatch.Draw(fill, new Rectangle((int)(VoidPlayer.voidBarOffset.X + padding.X + prevRight), (int)(VoidPlayer.voidBarOffset.Y + padding.Y), length, height), color);
 				if(i == 0)
 				{
-					rectangles.Add(new Rectangle((int)(VoidPlayer.voidBarOffset.X + padding.X + prevRight + 1), (int)(VoidPlayer.voidBarOffset.Y + padding.Y - 2), 6, 22));
+					rectangles.Add(new Rectangle((int)(VoidPlayer.voidBarOffset.X + padding.X + prevRight), (int)(VoidPlayer.voidBarOffset.Y + padding.Y - 2), 6, 22));
 					colors.Add(color);
 				}					
 				prevRight += length;
@@ -176,7 +177,14 @@ namespace SOTS.Void
 			}
 			for(int i = 0; i < rectangles.Count; i++)
 			{
-				spriteBatch.Draw(divider, rectangles[i], colors[i]);
+				if(i == 0)
+				{
+					spriteBatch.Draw(divider2, rectangles[i], Color.Gray);
+				}
+				else
+				{
+					spriteBatch.Draw(divider, rectangles[i], colors[i]);
+				}
 			}
 			barAmount.Width.Set(quotient * 188, 0f);
 			if(voidPlayer.lootingSouls > 0)

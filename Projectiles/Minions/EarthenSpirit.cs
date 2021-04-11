@@ -44,11 +44,13 @@ namespace SOTS.Projectiles.Minions
 		{
 			writer.Write(projectile.alpha);
 			writer.Write(readyToFight);
+			base.SendExtraAI(writer);
 		}
 		public override void ReceiveExtraAI(BinaryReader reader)
 		{
 			projectile.alpha = reader.ReadInt32();
 			readyToFight = reader.ReadBoolean();
+			base.ReceiveExtraAI(reader);
 		}
 		public override bool? CanCutTiles()
 		{

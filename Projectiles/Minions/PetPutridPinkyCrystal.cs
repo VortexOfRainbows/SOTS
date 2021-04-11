@@ -91,7 +91,7 @@ namespace SOTS.Projectiles.Minions
 				for(int i = 0; i < hooks.Length; i++)
                 {
 					if(Main.myPlayer == projectile.owner)
-						hooks[i] = Projectile.NewProjectile(projectile.Center, Vector2.Zero, ModContent.ProjectileType<FluxSlimeBall>(), projectile.damage, projectile.knockBack, projectile.owner,	projectile.whoAmI, i * 60);
+						hooks[i] = Projectile.NewProjectile(projectile.Center, Vector2.Zero, ModContent.ProjectileType<FluxSlimeBall>(), projectile.damage, projectile.knockBack, Main.myPlayer, projectile.identity, i * 60);
                 }
             }
 			bool hasHooked = false;

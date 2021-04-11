@@ -137,7 +137,7 @@ namespace SOTS.Items.Fragments
 				if (extraJ != 0)
 					next2 = Framing.GetTileSafely(i, j + extraJ);
 				bool run = true;
-				if ((next.active() && Main.tileSolid[next.type]) || (next1.active() && Main.tileSolid[next1.type] && (next1.type == ModContent.TileType<DissolvingDelugeTile>() || next1.wall == ModContent.WallType<DelugeWallWall>())) || (next2.active() && Main.tileSolid[next2.type] && (next2.type == ModContent.TileType<DissolvingDelugeTile>() || next2.wall == ModContent.WallType<DelugeWallWall>())))
+				if ((next.active() && (Main.tileSolid[next.type] || next1.wall == ModContent.WallType<DelugeWallWall>())) || (next1.active() && ((Main.tileSolid[next1.type] && next1.type == ModContent.TileType<DissolvingDelugeTile>()) || next1.wall == ModContent.WallType<DelugeWallWall>())) || (next2.active() && ((Main.tileSolid[next2.type] && next2.type == ModContent.TileType<DissolvingDelugeTile>()) || next2.wall == ModContent.WallType<DelugeWallWall>())))
 					run = false;
 				if (run)
 					for (int k = 0; k < 8; k += 1)
@@ -172,11 +172,11 @@ namespace SOTS.Items.Fragments
 
 						color *= (float)(14f / 14f);
 						ulong randSeed = Main.TileFrameSeed ^ (ulong)((long)j << 32 | (long)((ulong)i));
-						for (int l = 0; l < 5; l++)
+						for (int l = 0; l < 3; l++)
 						{
 							float x = (float)Utils.RandomInt(ref randSeed, -16, 17) * 0.05f;
 							float y = (float)Utils.RandomInt(ref randSeed, -16, 17) * 0.05f;
-							Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y) + zero, null, color, MathHelper.ToRadians(timer), new Vector2(3, 2), 0.75f, SpriteEffects.None, 0f);
+							Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y) + zero, null, color * 0.825f, MathHelper.ToRadians(timer), new Vector2(3, 2), 0.75f, SpriteEffects.None, 0f);
 						}
 					}
 			}

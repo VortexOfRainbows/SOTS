@@ -44,7 +44,7 @@ namespace SOTS.Items.Fragments
 			Main.tileShine2[Type] = true;
 			Main.tileLighted[Type] = true;
 			drop = mod.ItemType("DissolvingEarthBlock");
-			AddMapEntry(new Color(177, 238, 181));
+			AddMapEntry(new Color(255, 191, 0));
 			mineResist = 0.2f;
 			TileID.Sets.GemsparkFramingTypes[Type] = Type;
 		}
@@ -55,7 +55,7 @@ namespace SOTS.Items.Fragments
 		public override bool CreateDust(int i, int j, ref int type)
 		{
 			Dust dust = Dust.NewDustDirect(new Vector2(i * 16, j * 16) - new Vector2(5), 16, 16, 267);
-			dust.color = new Color(177, 238, 181);
+			dust.color = new Color(255, 191, 0);
 			dust.noGravity = true;
 			dust.fadeIn = 0.1f;
 			dust.scale *= 1.8f;

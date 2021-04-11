@@ -213,11 +213,26 @@ namespace SOTS.Void
 			double frequency = 0.3;
 			double center = 200;
 			double width = 55;
-			double red = Math.Sin(frequency * (double)newAi) * width + center;
-			double grn = Math.Sin(frequency * (double)newAi + 2.0) * width + center;
-			double blu = Math.Sin(frequency * (double)newAi + 4.0) * width + center;
+			double red = Math.Sin(frequency * newAi) * width + center;
+			double grn = Math.Sin(frequency * newAi + 2.0) * width + center;
+			double blu = Math.Sin(frequency * newAi + 4.0) * width + center;
 			pastelRainbow = new Color((int)red, (int)grn, (int)blu);
 			natureColor = Color.Lerp(new Color(65, 180, 80), new Color(180, 240, 180), + new Vector2(0.5f, 0).RotatedBy(MathHelper.ToRadians(soulColorCounter * 1.0f)).X);
+		}
+		public static Color pastelAttempt(float radians)
+		{
+			float newAi = radians;
+			double center = 190;
+			Vector2 circlePalette = new Vector2(1, 0).RotatedBy(newAi);
+			double width = 65 * circlePalette.Y;
+			int red = (int)(center + width);
+			circlePalette = new Vector2(1, 0).RotatedBy(newAi + MathHelper.ToRadians(120));
+			width = 65 * circlePalette.Y;
+			int grn = (int)(center + width);
+			circlePalette = new Vector2(1, 0).RotatedBy(newAi + MathHelper.ToRadians(240));
+			width = 65 * circlePalette.Y;
+			int blu = (int)(center + width);
+			return new Color(red, grn, blu);
 		}
 		public int RegisterVoidMinions()
 		{
@@ -243,12 +258,16 @@ namespace SOTS.Void
 		{
 			if (type == (int)VoidMinionID.NatureSpirit)
 				return 40;
+			if (type == (int)VoidMinionID.ChaosSpirit)
+				return 150;
 			return 1;
 		}
 		public static Color minionVoidColor(int type)
 		{
 			if (type == (int)VoidMinionID.NatureSpirit)
 				return VoidPlayer.natureColor;
+			if (type == (int)VoidMinionID.ChaosSpirit)
+				return VoidPlayer.pastelRainbow;
 			return Color.White;
 		}
 		public static bool isVoidMinion(Projectile projectile)
@@ -257,9 +276,7 @@ namespace SOTS.Void
         }
 		public static int voidMinion(Projectile projectile)
         {
-			if (projectile.type == ProjectileType<NatureSpirit>())
-				return (int)VoidMinionID.NatureSpirit;
-			return -1;
+			return voidMinion(projectile.type);
 		}
 		public static bool isVoidMinion(int type)
 		{
@@ -269,11 +286,14 @@ namespace SOTS.Void
 		{
 			if (type == ProjectileType<NatureSpirit>())
 				return (int)VoidMinionID.NatureSpirit;
+			if (type == ProjectileType<ChaosSpirit>())
+				return (int)VoidMinionID.ChaosSpirit;
 			return -1;
 		}
 		public enum VoidMinionID
         {
-			NatureSpirit
+			NatureSpirit,
+			ChaosSpirit
         }
 		private void ResetVariables() 
 		{

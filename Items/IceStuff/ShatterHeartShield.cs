@@ -10,7 +10,7 @@ namespace SOTS.Items.IceStuff
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Shatter Heart Shield");
-			Tooltip.SetDefault("Getting hit surrounds you with ice shards\nIncreases max life by 10");
+			Tooltip.SetDefault("Getting hit surrounds you with ice shards\nIncreases max life by 20");
 		}
 		public override void SetDefaults()
 		{
@@ -34,7 +34,7 @@ namespace SOTS.Items.IceStuff
 				modPlayer.shardOnHit += 3;
 
 			modPlayer.bonusShardDamage += 2;
-			player.statLifeMax2 += 10;
+			player.statLifeMax2 += 20;
 		}
 		public override void AddRecipes()
 		{
