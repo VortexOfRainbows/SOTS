@@ -32,7 +32,6 @@ namespace SOTS.Items.Fragments
 			item.summon = true;
 			item.buffType = mod.BuffType("NatureSpiritAid");
 			item.shoot = mod.ProjectileType("NatureSpirit");
-			item.mana = 18;
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) 
 		{

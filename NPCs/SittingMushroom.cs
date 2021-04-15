@@ -60,7 +60,7 @@ namespace SOTS.NPCs
 			if((int)npc.ai[1] % 7 == 0 && npc.ai[1] >= 7)
 			{
 				Vector2 distance = npc.Center - player.Center;
-				distance.Normalize();
+				distance = distance.SafeNormalize(Vector2.Zero);
 				distance *= -8f;
 				int damage2 = npc.damage / 2;
 				if (Main.expertMode)

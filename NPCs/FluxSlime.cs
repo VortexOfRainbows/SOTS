@@ -136,7 +136,7 @@ namespace SOTS.NPCs
 					total++;
 				}
 			}
-			if (Main.netMode != 1 && counter >= 150 * (1 + total)) 
+			if (Main.netMode != NetmodeID.MultiplayerClient && counter >= 150 * (1 + total)) 
 			{
 				counter = 0;
 				if (total < 3)

@@ -13,22 +13,20 @@ namespace SOTS.Items.Fragments
 		}
 		public override void SetDefaults()
 		{
-
-			item.damage = 9;
+			item.damage = 11;
 			item.melee = true;
-			item.width = 36;
-			item.height = 36;
-			item.useTime = 34;
-			item.useAnimation = 34;
-			item.useStyle = 1;
+			item.width = 46;
+			item.height = 50;
+			item.useTime = 30;
+			item.useAnimation = 30;
+			item.useStyle = ItemUseStyleID.SwingThrow;
 			item.knockBack = 5.75f;
 			item.value = Item.sellPrice(0, 0, 20, 0);
-			item.rare = 1;
+			item.rare = ItemRarityID.Blue;
 			item.UseSound = SoundID.Item18;
 			item.autoReuse = false;            
 			item.shoot = mod.ProjectileType("ShroomSpore"); 
-            item.shootSpeed = 4.5f;
-
+            item.shootSpeed = 5f;
 		}
 		public override void AddRecipes()
 		{

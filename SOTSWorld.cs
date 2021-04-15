@@ -2873,9 +2873,9 @@ namespace SOTS
 						}
 						slot++;
 					}
-					if(WorldGen.genRand.NextBool(7) && chest.item[0].type == ItemID.ShoeSpikes)
+					if(WorldGen.genRand.NextBool(5) && (chest.item[0].type == ItemID.ShoeSpikes || chest.item[0].type == ItemID.ClimbingClaws))
 					{
-						chest.item[slot].SetDefaults(mod.ItemType("SpikedClub"));
+						chest.item[slot].SetDefaults(ModContent.ItemType<SpikedClub>());
 						slot++;
 					}
 					if(WorldGen.genRand.NextBool(7) && chest.item[0].type == ItemID.HermesBoots)

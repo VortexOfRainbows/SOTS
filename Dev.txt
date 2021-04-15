@@ -14,27 +14,27 @@ Priority: Remaining Spirits
 15. Kitchen Sink (idc about this tbh)
 16. Marble Fates and Granite Omega Golem
 17. Chaos Spirit Boss: "Lux"
+18. Fix PPP hook wrong spot bug when cause is found
 
 Next Update:
-1. Otherworld Spirit Staff
+1. Otherworld Spirit Staff: summons a minion that accumulates 4 orbs around it. It fires the 4 spheres in quick succession (as lightning). Takes time to recharge the spheres.
 5. Wormwood Changes + change wormwood recipe to no longer require hardened gel
-6. Banners for: Flux Slime, 
+6. Banners for: Flux Slime,  (are nature slime hooks effected by banner)?
 7. Biome Chest items to spawn correctly
 
 10. Aqua-Necro Core (Stronger necro chestplate, 1 ranged attack per second will gain a steam aura that does 33% damage rapidly)
 11. Riptide Trident (Launches you towards your cursor at the cost of void, deal damage while traveling, bounce off of enemies)
 14. Prismarine Necklace: Sharktooth Necklace + Heart of the Sea
 15. Wintry Traveler: Riptide Trident + Frigid Javelin
-16. Electrolyte Seperator
 
 Priority 2:
 1. Void Low Warning
 2. Prefixes for voids
 3. Bone Clapper
-4. PP hooks to scale in mult
 5. Peanut Gun: Fires peanuts that call in Air Raid Pinkies
 6. Horn of Plenty: 10% more drops accessory
 7. Void Debuffs: Void Consumables Delay, Max Health Decrease
+8. Electrolyte Seperator
 
 Priority 3:
 1. Archaelogist NPC
@@ -45,6 +45,27 @@ Priority 3:
 
 Boss Rework Ideas:
 Subspace Serpent cross attacks to attack faster and release lightning
+
+4/14/21
+1. Spore Club damage 9 -> 11, resprited, bigger hitbox, use speed 34 -> 30, velo 4.5 -> 5, penetrate 2 -> 3
+	1. Damage reduction from penetrate 50% -> 25%
+2. Spiked Club can now scale even higher with spiked accessories (now noted in tooltip). resprited, bigger hitbox
+	1. Modified sell price and rarity slightly
+	2. Increased spawn rate ~14% -> 20%
+	3. Now can spawn in chests that contain Climbing claws in addition to with shoe spikes
+	4. Spike trap resprite -> slightly bigger hitbox. Can now fall through small gaps, slightly less loud when expiring
+3. Flower Spell resprited, bloom damage 400% -> 500%, mana cost 4 -> 5
+4. Biomass blast resprited, no longer costs staff of regrowth
+
+4/12/21
+1. Updated break requirements for pot gen slightly
+2. Arctic goblin seems good (spawnrates)
+3. Putrid Hook expert damage 64 -> 60
+4. Putrid Hook expert health (450) stays the same, but now increases in multiplayer scaling
+5. Advisor now takes 80% damage from bees rounded down (like the other Pre-HM bosses)
+6. Earthen Spirit staff damage 21 -> 16, now a void weapon that costs 20 void, attacks 50% slower
+
+(Beta Released 0_19_2_2)
 
 4/10/21 & 4/11/21
 1. Some new visuals for Chaos Spirit to reduce lag and increase rainbow effect on laser.
@@ -80,13 +101,13 @@ Subspace Serpent cross attacks to attack faster and release lightning
 
 3/29/21
 1. Dissolving Deluge is now required for Spirit Storm
-2. Ripple potion added, still need to check Multiplayer
-3. Abyssal Tonic added, still need to check Multiplayer
+2. Ripple potion added
+3. Abyssal Tonic added
 4. Changed some variables to make photon geyser more dynamic when homing
 5. Deluge Block added!!! POG
 
 3/28/21
-1. Attempted some Arctic Goblin spawn rate changes (needs testing still)
+1. Attempted some Arctic Goblin spawn rate changes
 2. Coconut Gun Changes: damage 27 -> 23, void 44 -> 40
 
 3/27/21
@@ -133,7 +154,7 @@ Subspace Serpent cross attacks to attack faster and release lightning
 1. Begun Work on Tidal Construct
 
 3/14/21
-1. Nature slime hooks should be effected by banner (needs testing)
+1. Nature slime hooks should be effected by banner
 
 3/13/21
 1. More Baguette stuff
@@ -197,7 +218,7 @@ Subspace Serpent cross attacks to attack faster and release lightning
 3. Hellbreaker now glows
 4. Sprited Nature Spirit Staff and Tidal Construct
 
---Beta Released--
+--Beta Released (0_19_2_1)--
 
 2/25/21
 1. Added a minum of 5 frames before crushers can be released
@@ -286,7 +307,7 @@ Subspace Serpent cross attacks to attack faster and release lightning
 5. Focus Reticle Resprite
 6. Pyramid Music activates after entering the Pyramid with weaker curse
 
---Beta Released--
+--Beta Released (0_19_2)--
 
 2/14/21
 1. Fixed bug where PP hooks reflected destabilization lasers

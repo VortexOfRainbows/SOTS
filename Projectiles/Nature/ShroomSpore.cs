@@ -9,9 +9,7 @@ namespace SOTS.Projectiles.Nature
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Spore");
-			
 		}
-		
         public override void SetDefaults()
         {
 			projectile.CloneDefaults(512);
@@ -35,8 +33,8 @@ namespace SOTS.Projectiles.Nature
 			if(Main.rand.Next(7) == 0)
 			target.AddBuff(BuffID.Confused, 90, false);
 			
-			projectile.damage = projectile.damage - (int)(projectile.damage * 0.5f);
-			projectile.friendly = projectile.penetrate > 3;
+			projectile.damage = (int)(projectile.damage * 0.75f);
+			projectile.friendly = projectile.penetrate > 2;
 		}
 	}
 }

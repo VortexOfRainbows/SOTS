@@ -1,9 +1,9 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using System;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+using SOTS.Projectiles;
+
 namespace SOTS.Items.ChestItems
 {
 	public class SpikedClub : ModItem
@@ -11,43 +11,34 @@ namespace SOTS.Items.ChestItems
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Spiked Club");
-			Tooltip.SetDefault("Lays down spike traps");
-
+			Tooltip.SetDefault("Lays down spike traps\nLays down more traps when wearing climbing related accessories");
 		}
 		public override void SetDefaults()
 		{
-
 			item.damage = 12;
 			item.melee = true;
-			item.width = 42;
-			item.height = 42;
+			item.width = 50;
+			item.height = 50;
 			item.useTime = 38;
 			item.useAnimation = 38;
-			item.useStyle = 1;
+			item.useStyle = ItemUseStyleID.SwingThrow;
 			item.knockBack = 3;
-			item.value = 52500;
-			item.rare = 3;
+			item.value = Item.sellPrice(0, 1, 0, 0);
+			item.rare = ItemRarityID.Blue;
 			item.UseSound = SoundID.Item1;
 			item.autoReuse = true;            
-			item.shoot = mod.ProjectileType("SpikeTrap"); 
-            item.shootSpeed = 3.4f;
-
+			item.shoot = ModContent.ProjectileType<SpikeTrap>(); 
+            item.shootSpeed = 3.5f;
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-          {
-			  
-                  Projectile.NewProjectile(position.X, position.Y, speedX, speedY, type, damage, knockBack, player.whoAmI);
-				  if(player.spikedBoots >= 1)
-				  {
-                  Projectile.NewProjectile(position.X, position.Y, speedX * 1.25f, speedY * 1.25f, type, damage, knockBack, player.whoAmI);
-				  
-				  }
-				  if(player.spikedBoots >= 2)
-				  {
-                  Projectile.NewProjectile(position.X, position.Y, speedX * 1.5f, speedY * 1.5f, type, damage, knockBack, player.whoAmI);
-				  
-				  }
-              return false; 
+		{
+			Projectile.NewProjectile(position.X, position.Y, speedX, speedY, type, damage, knockBack, player.whoAmI);
+			for(int i = 0; i < player.spikedBoots; i++)
+			{
+				float speedMult = 1.25f + i * 0.25f;
+				Projectile.NewProjectile(position.X, position.Y, speedX * speedMult, speedY * speedMult, type, damage, knockBack, player.whoAmI);
+			}
+			return true; 
 		}
 	}
 }

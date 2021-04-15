@@ -1,12 +1,12 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+using SOTS.Void;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace SOTS.Items.Fragments
 {
-	public class EarthenSpiritStaff : ModItem
+	public class EarthenSpiritStaff : VoidItem
 	{
 		public override void SetStaticDefaults() 
 		{
@@ -44,29 +44,26 @@ namespace SOTS.Items.Fragments
 			}
 		} 
 		*/
-		public override void SetDefaults() 
+		public override void SafeSetDefaults() 
 		{
-			item.damage = 21;
+			item.damage = 16;
 			item.knockBack = 4f;
-			item.mana = 18;
 			item.width = 38;
 			item.height = 36;
-			item.useTime = 36;
-			item.useAnimation = 36;
+			item.useTime = 20;
+			item.useAnimation = 20;
 			item.useStyle = 1;
 			item.value = Item.sellPrice(0, 3, 0, 0);
-			item.rare = 3;
+			item.rare = ItemRarityID.Orange;
 			item.UseSound = SoundID.Item44;
 			item.noMelee = true;
 			item.summon = true;
 			item.buffType = mod.BuffType("SpiritAid");
 			item.shoot = mod.ProjectileType("EarthenSpirit");
 		}
-
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) 
 		{
 			player.AddBuff(item.buffType, 2);
-
 			position = Main.MouseWorld;
 			return true;
 		}

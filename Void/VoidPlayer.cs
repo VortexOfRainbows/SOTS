@@ -19,6 +19,7 @@ namespace SOTS.Void
 		public static Color destabilizeColor = new Color(80, 190, 80);
 		public static Color pastelRainbow = Color.White;
 		public static Color natureColor = new Color(180, 240, 180);
+		public static Color EarthColor = new Color(230, 220, 145);
 		public static int soulColorCounter = 0;
 		public int voidMeterMax = 100;
 		public int voidAnkh = 0;
@@ -70,7 +71,6 @@ namespace SOTS.Void
 				packet.Send();
 			}
 		}
-
 		public float voidMeter = 100;
 		public float voidRegen = 0.0035f;
 		public float voidCost = 1f;
@@ -80,15 +80,12 @@ namespace SOTS.Void
 		public bool voidRecovery = false;
 		public float voidMultiplier = 1f;
 		public float voidRegenMultiplier = 1f;
-
 		public static VoidPlayer ModPlayer(Player player) {
 			return player.GetModPlayer<VoidPlayer>();
 		}
-
 		public float voidDamage = 1f;
 		public float voidKnockback;
 		public int voidCrit;
-
 		public override void ResetEffects() {
 			ResetVariables();
 		}
@@ -218,6 +215,7 @@ namespace SOTS.Void
 			double blu = Math.Sin(frequency * newAi + 4.0) * width + center;
 			pastelRainbow = new Color((int)red, (int)grn, (int)blu);
 			natureColor = Color.Lerp(new Color(65, 180, 80), new Color(180, 240, 180), + new Vector2(0.5f, 0).RotatedBy(MathHelper.ToRadians(soulColorCounter * 1.0f)).X);
+			EarthColor = Color.Lerp(new Color(230, 220, 145), new Color(255, 190, 0), + new Vector2(0.5f, 0).RotatedBy(MathHelper.ToRadians(soulColorCounter * 1.2f)).X);
 		}
 		public static Color pastelAttempt(float radians)
 		{
@@ -260,6 +258,8 @@ namespace SOTS.Void
 				return 40;
 			if (type == (int)VoidMinionID.ChaosSpirit)
 				return 150;
+			if (type == (int)VoidMinionID.EarthenSpirit)
+				return 20;
 			return 1;
 		}
 		public static Color minionVoidColor(int type)
@@ -268,6 +268,8 @@ namespace SOTS.Void
 				return VoidPlayer.natureColor;
 			if (type == (int)VoidMinionID.ChaosSpirit)
 				return VoidPlayer.pastelRainbow;
+			if (type == (int)VoidMinionID.EarthenSpirit)
+				return VoidPlayer.EarthColor;
 			return Color.White;
 		}
 		public static bool isVoidMinion(Projectile projectile)
@@ -288,12 +290,15 @@ namespace SOTS.Void
 				return (int)VoidMinionID.NatureSpirit;
 			if (type == ProjectileType<ChaosSpirit>())
 				return (int)VoidMinionID.ChaosSpirit;
+			if (type == ProjectileType<EarthenSpirit>())
+				return (int)VoidMinionID.EarthenSpirit;
 			return -1;
 		}
 		public enum VoidMinionID
         {
 			NatureSpirit,
-			ChaosSpirit
+			ChaosSpirit,
+			EarthenSpirit
         }
 		private void ResetVariables() 
 		{

@@ -34,7 +34,7 @@ namespace SOTS.NPCs
 		{
 			hitBy(npc, Main.player[projectile.owner], projectile, null, ref damage, ref knockback, ref crit);
 			List<int> nerfBeeNPC = new List<int>() { ModContent.NPCType<PutridHook>() };
-			List<int> nerfBeeBoss = new List<int>() { ModContent.NPCType<PutridPinkyPhase2>(), ModContent.NPCType<Boss.PharaohsCurse>() };
+			List<int> nerfBeeBoss = new List<int>() { ModContent.NPCType<PutridPinkyPhase2>(), ModContent.NPCType<Boss.PharaohsCurse>(), ModContent.NPCType<TheAdvisorHead>() };
 			List<int> nerfBeeProj = new List<int>() { ProjectileID.Bee, ProjectileID.GiantBee };
 			if (nerfBeeProj.Contains(projectile.type))
             {

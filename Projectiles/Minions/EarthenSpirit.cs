@@ -14,12 +14,8 @@ namespace SOTS.Projectiles.Minions
 		{
 			DisplayName.SetDefault("Earthen Spirit");
 			ProjectileID.Sets.MinionTargettingFeature[projectile.type] = true;
-			Main.projPet[projectile.type] = true;
-			ProjectileID.Sets.MinionSacrificable[projectile.type] = true;
-			// Don't mistake this with "if this is true, then it will automatically home". It is just for damage reduction for certain NPCs
-			ProjectileID.Sets.Homing[projectile.type] = true;
-			ProjectileID.Sets.TrailCacheLength[projectile.type] = 5;  
-			ProjectileID.Sets.TrailingMode[projectile.type] = 0;   
+			ProjectileID.Sets.TrailCacheLength[projectile.type] = 5;
+			ProjectileID.Sets.TrailingMode[projectile.type] = 0;
 		}
 
 		public sealed override void SetDefaults()
@@ -29,7 +25,7 @@ namespace SOTS.Projectiles.Minions
 			projectile.tileCollide = false;
 			projectile.friendly = true;
 			projectile.minion = true;
-			projectile.minionSlots = 1f;
+			projectile.minionSlots = 0f;
 			projectile.penetrate = -1;
 			projectile.usesLocalNPCImmunity = true;
 			projectile.ignoreWater = true;
@@ -215,8 +211,8 @@ namespace SOTS.Projectiles.Minions
 					projectile.alpha = 255;	
 					if (readyToFight)
 						projectile.ai[0]++;
-
-					if (total != 0 && (int)modPlayer.orbitalCounter % 60 == (int)(projectile.ai[1] * 60f / total + 0.5f) % 60)
+					int cooldown = 90;
+					if (total != 0 && (int)modPlayer.orbitalCounter % cooldown == (int)(projectile.ai[1] * (float)cooldown / total + 0.5f) % cooldown)
 					{
 						if (readyToFight)
 						{

@@ -12,7 +12,7 @@ namespace SOTS.Items
 		public override void SetStaticDefaults() 
 		{
 			DisplayName.SetDefault("Chaos Spirit Staff");
-			Tooltip.SetDefault("Summons an Chaos Spirit to fight for you\nLocks onto one enemy at a time");
+			Tooltip.SetDefault("Summons a Chaos Spirit to fight for you\nLocks onto one enemy at a time");
 			ItemID.Sets.GamepadWholeScreenUseRange[item.type] = true; 
 			ItemID.Sets.LockOnIgnoresCollision[item.type] = true;
 		}
@@ -20,7 +20,6 @@ namespace SOTS.Items
 		{
 			item.damage = 48;
 			item.knockBack = 4f;
-			item.mana = 14;
 			item.width = 38;
 			item.height = 38;
 			item.useTime = 36;

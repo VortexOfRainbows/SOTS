@@ -42,7 +42,7 @@ namespace SOTS
                 if (frame >= 65 && frame <= 69)
                     return false;
             }
-            if (Main.tile[i, j - 1].type == (ushort)ModContent.TileType<PotGeneratorTile>())
+            if (Main.tile[i, j - 1].type == (ushort)ModContent.TileType<PotGeneratorTile>() && !SOTSWorld.downedAdvisor)
             {
                 return false;
             }

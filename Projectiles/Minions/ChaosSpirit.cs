@@ -277,8 +277,8 @@ namespace SOTS.Projectiles.Minions
 				float speed = -13.5f;
 				NPC npc = Main.npc[targetID];
 				Vector2 npcCenter = npc.Center;
-				if(!npc.active || npc.friendly || npc.type != targetType)
-                {
+				if(!(!npc.friendly && npc.dontTakeDamage == false && npc.active && npc.CanBeChasedBy()))
+				{
 					targetID = -1;
 					targetType = -1;
 					return;

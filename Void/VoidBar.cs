@@ -160,8 +160,8 @@ namespace SOTS.Void
 				length = (int)(cost / (float)voidPlayer.voidMeterMax2 * 188f);
 				Color color = Color.White;
 				color = VoidPlayer.minionVoidColor(type);
-				if (length + prevRight >= 188)
-					length = 188 - prevRight;
+				if (length + prevRight >= 187)
+					length = 187 - prevRight;
 				spriteBatch.Draw(fill, new Rectangle((int)(VoidPlayer.voidBarOffset.X + padding.X + prevRight), (int)(VoidPlayer.voidBarOffset.Y + padding.Y), length, height), color);
 				if(i == 0)
 				{

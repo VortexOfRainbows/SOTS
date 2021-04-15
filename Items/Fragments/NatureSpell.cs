@@ -1,36 +1,34 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using System;
 using Microsoft.Xna.Framework;
 
 namespace SOTS.Items.Fragments
 {
 	public class NatureSpell : ModItem
-	{	int counter = 0;
+	{
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Flower Spell");
-			Tooltip.SetDefault("Launches a seed that latches onto enemies\nWhen the seed blooms, it does 400% damage");
+			Tooltip.SetDefault("Launches a seed that latches onto enemies\nWhen the seed blooms, it does 500% damage");
 		}
 		public override void SetDefaults()
 		{
             item.damage = 5; 
             item.magic = true; 
-            item.width = 28;   
-            item.height = 30;   
+            item.width = 30;   
+            item.height = 36;   
             item.useTime = 30;   
             item.useAnimation = 30;
-            item.useStyle = 5;    
+            item.useStyle = ItemUseStyleID.HoldingOut;    
             item.noMelee = true;  
             item.knockBack = 2.5f;
 			item.value = Item.sellPrice(0, 0, 20, 0);
-            item.rare = 1;
+            item.rare = ItemRarityID.Blue;
             item.UseSound = SoundID.Item8;
             item.shoot = mod.ProjectileType("FlowerSeed"); 
             item.shootSpeed = 10f;
-			item.mana = 4;
-
+			item.mana = 5;
 		}
 		public override void AddRecipes()
 		{
@@ -44,8 +42,7 @@ namespace SOTS.Items.Fragments
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-			int Probe = Projectile.NewProjectile(position.X, position.Y, speedX, speedY, type, damage, knockBack, player.whoAmI, 0, 4);
-			//Main.projectile[Probe].ai[1] = 4;
+			Projectile.NewProjectile(position.X, position.Y, speedX, speedY, type, damage, knockBack, player.whoAmI, 0, 5);
 			return false; 
 		}
 	}
