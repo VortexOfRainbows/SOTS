@@ -11,7 +11,7 @@ namespace SOTS.Items.GelGear.Furniture
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Wormwood Chair");
+			DisplayName.SetDefault("Goopwood Chair");
 			Tooltip.SetDefault("");
 		}
 

@@ -10,7 +10,7 @@ namespace SOTS.Items.GelGear
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Wormwood");
+			DisplayName.SetDefault("Goopwood");
 			Tooltip.SetDefault("");
 		}
 
@@ -32,7 +32,7 @@ namespace SOTS.Items.GelGear
 		{
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.Wood, 2);
-			recipe.AddIngredient(null, "GelBar", 1);
+			recipe.AddIngredient(ItemID.Gel, 5);
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.SetResult(this, 2);
 			recipe.AddRecipe();

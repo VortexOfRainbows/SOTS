@@ -27,7 +27,7 @@ namespace SOTS.Projectiles.Minions
 		{
 			DisplayName.SetDefault("Chaos Spirit");
 			ProjectileID.Sets.MinionTargettingFeature[projectile.type] = true;
-			ProjectileID.Sets.TrailCacheLength[projectile.type] = 5;
+			ProjectileID.Sets.TrailCacheLength[projectile.type] = 12;
 			ProjectileID.Sets.TrailingMode[projectile.type] = 0;
 		}
 		public sealed override void SetDefaults()
@@ -199,7 +199,7 @@ namespace SOTS.Projectiles.Minions
 			}
 			if (player.HasBuff(mod.BuffType("ChaosSpiritAid")))
 			{
-				projectile.timeLeft = 2;
+				projectile.timeLeft = 6;
 			}
 			#endregion
 
@@ -255,7 +255,7 @@ namespace SOTS.Projectiles.Minions
 							float between = Vector2.Distance(npc.Center, projectile.Center);
 							bool inRange = between < distanceFromTarget;
 							bool lineOfSight = Collision.CanHitLine(player.position, player.width, player.height, npc.position, npc.width, npc.height);
-							bool closeThroughWall = between < 100f; //should attack semi-reliably through walls
+							bool closeThroughWall = between < 240f; //should attack semi-reliably through walls
 							if (inRange && (lineOfSight || closeThroughWall) && between < distanceFromTarget)
 							{
 								distanceFromTarget = between;
@@ -344,9 +344,8 @@ namespace SOTS.Projectiles.Minions
 			}
 			#endregion
 
-			#region Animation and visuals
 			Lighting.AddLight(projectile.Center, 2.0f * 0.5f * ((255 - projectile.alpha) / 255f), 1.4f * 0.5f * ((255 - projectile.alpha) / 255f), 2.0f * 0.5f * ((255 - projectile.alpha) / 255f));
-			#endregion
+			MoveAwayFromOthers(true, 0.125f, 3.5f);
 
 			if (Main.myPlayer == player.whoAmI)
 			{

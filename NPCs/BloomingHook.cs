@@ -47,6 +47,7 @@ namespace SOTS.NPCs
 			npc.alpha = 75;
             npc.HitSound = SoundID.NPCHit1;
             npc.DeathSound = SoundID.NPCDeath1;
+			//banner = npc.type;
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{

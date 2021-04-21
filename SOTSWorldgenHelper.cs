@@ -264,16 +264,16 @@ namespace SOTS
 						Tile tile = Framing.GetTileSafely(k, l);
 						if (tile.active())
 						{
-							counting++;
+							return false;
 						}
 					}
+					else
+                    {
+						return false;
+                    }
 				}
 			}
-			if (counting < max)
-			{
-				return true;
-			}
-			return false;
+			return true;
 		}
 		public static bool GenerateSkyArtifact(int x, int y, Mod mod, bool force = false)
 		{
@@ -1660,6 +1660,829 @@ namespace SOTS
 
 			return true;
 		}
+		public static bool GenerateBiomeChestIslands(int x, int y, int type, Mod mod, bool residual = false)
+        {
+			if (residual == true)
+            {
+				ushort firstUniqueTile = 0;
+				ushort secondUniqueTile = 0;
+				if(type == 0)
+                {
+					firstUniqueTile = TileID.CrimtaneBrick;
+					secondUniqueTile = (ushort)ModContent.TileType<DullPlatingTile>();
+				}
+				if (type == 1)
+				{
+					firstUniqueTile = TileID.DemoniteBrick;
+					secondUniqueTile = (ushort)ModContent.TileType<DullPlatingTile>();
+				}
+				if (type == 2)
+				{
+					firstUniqueTile = TileID.GoldBrick;
+					secondUniqueTile = TileID.CobaltBrick;
+				}
+				if (type == 3)
+				{
+					firstUniqueTile = TileID.JungleGrass;
+					secondUniqueTile = TileID.Mudstone;
+				}
+				if (type == 4)
+				{
+					firstUniqueTile = TileID.IceBrick;
+					secondUniqueTile = TileID.SnowBrick;
+				}
+				int[,] _structure = {
+					{0,0,0,1,0,0,0,0,0,1,0,0,0},
+					{2,2,3,3,3,2,2,2,3,3,3,2,2},
+					{0,5,5,6,6,6,2,6,6,6,5,5,0},
+					{0,0,5,5,6,6,2,6,6,5,5,0,0},
+					{0,2,2,2,2,2,2,2,2,2,2,2,0},
+					{0,0,0,5,5,6,2,6,5,5,0,0,0},
+					{0,0,0,0,5,5,2,5,5,0,0,0,0},
+					{0,0,0,0,0,5,2,5,0,0,0,0,0},
+					{0,0,0,0,0,0,2,0,0,0,0,0,0},
+					{0,0,0,0,0,0,2,0,0,0,0,0,0}
+				};
+				int PosX = x - 6;  //spawnX and spawnY is where you want the anchor to be when this generates
+				int PosY = y - 1;
+				if (!Empty(PosX, PosY, _structure.GetLength(1), _structure.GetLength(0), 5))
+				{
+					return false;
+				}
+				//i = vertical, j = horizontal
+				for (int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)    //Increase the iterations on this outermost for loop if tabletop-objects are not properly spawning
+				{
+					for (int i = 0; i < _structure.GetLength(0); i++)
+					{
+						for (int j = _structure.GetLength(1) - 1; j >= 0; j--)
+						{
+							int k = PosX + j;
+							int l = PosY + i;
+							if (WorldGen.InWorld(k, l, 30))
+							{
+								Tile tile = Framing.GetTileSafely(k, l);
+								switch (_structure[i, j])
+								{
+									case 0:
+										if (confirmPlatforms == 0)
+										{
+											tile.active(false);
+											tile.halfBrick(false);
+											tile.slope(0);
+										}
+										break;
+									case 1:
+										if (confirmPlatforms == 0)
+											tile.active(false);
+										WorldGen.PlaceTile(k, l, ModContent.TileType<SkyChainTile>(), true, true, -1, 0);
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+									case 2:
+										tile.active(true);
+										tile.type = firstUniqueTile;
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+									case 3:
+										tile.active(true);
+										tile.type = (ushort)ModContent.TileType<AvaritianPlatingTile>();
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+									case 5:
+										tile.active(true);
+										tile.type = secondUniqueTile;
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+									case 6:
+										tile.active(true);
+										tile.type = (ushort)ModContent.TileType<DullPlatingTile>();
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+								}
+							}
+						}
+					}
+				}
+				return true;
+            }
+			if(type == 0)
+            {
+				int[,] _structure = {
+				{0,0,0,1,1,1,1,1,1,1,1,0,0,0},
+				{0,0,1,2,2,2,2,2,2,2,2,1,0,0},
+				{0,0,1,2,1,1,1,1,1,1,2,1,0,0},
+				{0,1,1,1,1,0,0,0,0,1,1,1,1,0},
+				{0,0,1,0,0,0,0,0,0,0,0,1,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,1,4,0,0,0,3,0,0,0,0,4,1,0},
+				{2,1,1,1,4,4,1,1,4,4,1,1,1,2},
+				{2,2,2,2,1,1,1,1,1,1,2,2,2,2},
+				{0,2,2,2,2,2,2,2,2,2,2,2,2,0},
+				{0,0,0,2,2,2,2,2,2,2,2,0,0,0},
+				{0,0,0,0,2,2,2,2,2,2,0,0,0,0},
+				{0,0,0,0,0,2,2,2,2,0,0,0,0,0},
+				{0,0,0,0,0,0,2,2,0,0,0,0,0,0},
+				{0,0,0,0,0,0,2,2,0,0,0,0,0,0}
+				};
+				int PosX = x - 6;  //spawnX and spawnY is where you want the anchor to be when this generates
+				int PosY = y - 10;
+
+				if (!Empty(PosX, PosY, _structure.GetLength(1), _structure.GetLength(0), 5))
+				{
+					return false;
+				}
+				//i = vertical, j = horizontal
+				for (int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)    //Increase the iterations on this outermost for loop if tabletop-objects are not properly spawning
+				{
+					for (int i = 0; i < _structure.GetLength(0); i++)
+					{
+						for (int j = _structure.GetLength(1) - 1; j >= 0; j--)
+						{
+							int k = PosX + j;
+							int l = PosY + i;
+							if (WorldGen.InWorld(k, l, 30))
+							{
+								Tile tile = Framing.GetTileSafely(k, l);
+								switch (_structure[i, j])
+								{
+									case 0:
+										if (confirmPlatforms == 0)
+										{
+											tile.active(false);
+											tile.halfBrick(false);
+											tile.slope(0);
+										}
+										break;
+									case 1:
+										tile.active(true);
+										tile.type = 347;
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+									case 2:
+										tile.active(true);
+										tile.type = (ushort)ModContent.TileType<DullPlatingTile>();
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+									case 3:
+										if (confirmPlatforms == 1)
+										{
+											tile.active(false);
+											tile.slope(0);
+											tile.halfBrick(false);
+											WorldGen.PlaceTile(k, l, 21, true, true, -1, 25);
+										}
+										break;
+									case 4:
+										tile.active(true);
+										tile.type = 347;
+										tile.slope(0);
+										tile.halfBrick(true);
+										break;
+								}
+							}
+						}
+					}
+				}
+				_structure = new int[,] {
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,1,1,1,1,1,1,0,0,0,0},
+				{0,0,0,2,1,1,1,1,1,1,2,0,0,0},
+				{0,0,0,2,1,3,3,3,3,1,2,0,0,0},
+				{0,0,0,2,1,3,3,3,3,1,2,0,0,0},
+				{0,0,0,2,1,3,3,3,3,1,2,0,0,0},
+				{0,0,0,2,1,3,3,3,3,1,2,0,0,0},
+				{0,0,0,2,1,3,3,3,3,1,2,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0}
+				};
+				//i = vertical, j = horizontal
+				for (int i = 0; i < _structure.GetLength(0); i++)
+				{
+					for (int j = _structure.GetLength(1) - 1; j >= 0; j--)
+					{
+						int k = PosX + j;
+						int l = PosY + i;
+						if (WorldGen.InWorld(k, l, 30))
+						{
+							Tile tile = Framing.GetTileSafely(k, l);
+							switch (_structure[i, j])
+							{
+								case 0:
+									tile.wall = 0;
+									break;
+								case 1:
+									tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
+									break;
+								case 2:
+									tile.wall = 174;
+									break;
+								case 3:
+									tile.wall = 92;
+									break;
+							}
+						}
+					}
+				}
+			}
+			if(type == 1)
+            {
+				int[,] _structure = {
+					{0,0,0,1,1,1,1,1,1,1,1,0,0,0},
+					{0,0,1,2,2,2,2,2,2,2,2,1,0,0},
+					{0,0,1,2,1,1,1,1,1,1,2,1,0,0},
+					{0,1,1,1,1,0,0,0,0,1,1,1,1,0},
+					{0,0,1,0,0,0,0,0,0,0,0,1,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,1,4,0,0,0,3,0,0,0,0,4,1,0},
+					{2,1,1,1,4,4,1,1,4,4,1,1,1,2},
+					{2,2,2,2,1,1,1,1,1,1,2,2,2,2},
+					{0,6,6,2,2,2,2,2,2,2,2,6,6,0},
+					{0,0,0,6,6,6,6,6,6,6,6,0,0,0},
+					{0,0,0,0,6,6,6,6,6,6,0,0,0,0},
+					{0,0,0,0,0,6,6,6,6,0,0,0,0,0},
+					{0,0,0,0,0,0,6,6,0,0,0,0,0,0},
+					{0,0,0,0,0,0,6,6,0,0,0,0,0,0}
+				};
+				int PosX = x - 6;  //spawnX and spawnY is where you want the anchor to be when this generates
+				int PosY = y - 10;
+				if (!Empty(PosX, PosY, _structure.GetLength(1), _structure.GetLength(0), 5))
+				{
+					return false;
+				}
+				//i = vertical, j = horizontal
+				for (int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)    //Increase the iterations on this outermost for loop if tabletop-objects are not properly spawning
+				{
+					for (int i = 0; i < _structure.GetLength(0); i++)
+					{
+						for (int j = _structure.GetLength(1) - 1; j >= 0; j--)
+						{
+							int k = PosX + j;
+							int l = PosY + i;
+							if (WorldGen.InWorld(k, l, 30))
+							{
+								Tile tile = Framing.GetTileSafely(k, l);
+								switch (_structure[i, j])
+								{
+									case 0:
+										if (confirmPlatforms == 0)
+										{
+											tile.active(false);
+											tile.halfBrick(false);
+											tile.slope(0);
+										}
+										break;
+									case 1:
+										tile.active(true);
+										tile.type = 140;
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+									case 2:
+										tile.active(true);
+										tile.type = 152;
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+									case 3:
+										if (confirmPlatforms == 1)
+										{
+											tile.active(false);
+											tile.slope(0);
+											tile.halfBrick(false);
+											WorldGen.PlaceTile(k, l, 21, true, true, -1, 24);
+										}
+										break;
+									case 4:
+										tile.active(true);
+										tile.type = 140;
+										tile.slope(0);
+										tile.halfBrick(true);
+										break;
+									case 6:
+										tile.active(true);
+										tile.type = (ushort)ModContent.TileType<DullPlatingTile>();
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+								}
+							}
+						}
+					}
+				}
+				_structure = new int[,] {
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,1,1,1,1,0,0,0,0,0},
+					{0,0,0,2,1,1,1,1,1,1,2,0,0,0},
+					{0,0,0,2,1,3,3,3,3,1,2,0,0,0},
+					{0,0,0,2,1,3,3,3,3,1,2,0,0,0},
+					{0,0,0,2,1,3,3,3,3,1,2,0,0,0},
+					{0,0,0,2,1,3,3,3,3,1,2,0,0,0},
+					{0,0,0,0,1,3,3,3,3,1,2,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0}
+				};
+				//i = vertical, j = horizontal
+				for (int i = 0; i < _structure.GetLength(0); i++)
+				{
+					for (int j = _structure.GetLength(1) - 1; j >= 0; j--)
+					{
+						int k = PosX + j;
+						int l = PosY + i;
+						if (WorldGen.InWorld(k, l, 30))
+						{
+							Tile tile = Framing.GetTileSafely(k, l);
+							switch (_structure[i, j])
+							{
+								case 0:
+									tile.wall = 0;
+									break;
+								case 1:
+									tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
+									break;
+								case 2:
+									tile.wall = 33;
+									break;
+								case 3:
+									tile.wall = 88;
+									break;
+							}
+						}
+					}
+				}
+			}
+			if(type == 2)
+            {
+				int[,] _structure = {
+					{0,0,0,1,1,1,1,1,1,1,1,0,0,0},
+					{0,0,1,2,2,2,2,2,2,2,2,1,0,0},
+					{0,0,1,2,1,1,1,1,1,1,2,1,0,0},
+					{0,1,1,1,1,0,0,0,0,1,1,1,1,0},
+					{0,0,1,0,0,0,0,0,0,0,0,1,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,1,4,0,0,0,3,0,0,0,0,4,1,0},
+					{2,1,1,1,4,4,1,1,4,4,1,1,1,2},
+					{2,2,2,2,1,1,1,1,1,1,2,2,2,2},
+					{0,6,6,2,2,2,2,2,2,2,2,6,6,0},
+					{0,0,0,7,7,7,6,7,7,7,7,0,0,0},
+					{0,0,0,0,6,6,6,6,6,6,0,0,0,0},
+					{0,0,0,0,0,7,6,7,7,0,0,0,0,0},
+					{0,0,0,0,0,0,6,7,0,0,0,0,0,0},
+					{0,0,0,0,0,0,6,7,0,0,0,0,0,0}
+				};
+				int PosX = x - 6;  //spawnX and spawnY is where you want the anchor to be when this generates
+				int PosY = y - 10;
+				if (!Empty(PosX, PosY, _structure.GetLength(1), _structure.GetLength(0), 5))
+				{
+					return false;
+				}
+				//i = vertical, j = horizontal
+				for (int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)    //Increase the iterations on this outermost for loop if tabletop-objects are not properly spawning
+				{
+					for (int i = 0; i < _structure.GetLength(0); i++)
+					{
+						for (int j = _structure.GetLength(1) - 1; j >= 0; j--)
+						{
+							int k = PosX + j;
+							int l = PosY + i;
+							if (WorldGen.InWorld(k, l, 30))
+							{
+								Tile tile = Framing.GetTileSafely(k, l);
+								switch (_structure[i, j])
+								{
+									case 0:
+										if (confirmPlatforms == 0)
+										{
+											tile.active(false);
+											tile.halfBrick(false);
+											tile.slope(0);
+										}
+										break;
+									case 1:
+										tile.active(true);
+										tile.type = 45;
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+									case 2:
+										tile.active(true);
+										tile.type = 121;
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+									case 3:
+										if (confirmPlatforms == 1)
+										{
+											tile.active(false);
+											tile.slope(0);
+											tile.halfBrick(false);
+											WorldGen.PlaceTile(k, l, 21, true, true, -1, 26);
+										}
+										break;
+									case 4:
+										tile.active(true);
+										tile.type = 45;
+										tile.slope(0);
+										tile.halfBrick(true);
+										break;
+									case 6:
+										tile.active(true);
+										tile.type = (ushort)ModContent.TileType<AvaritianPlatingTile>();
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+									case 7:
+										tile.active(true);
+										tile.type = (ushort)ModContent.TileType<DullPlatingTile>();
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+								}
+							}
+						}
+					}
+				}
+				_structure = new int[,] {
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,1,1,1,1,0,0,0,0,0},
+					{0,0,0,2,1,1,1,1,1,1,2,0,0,0},
+					{0,0,0,2,1,3,3,3,3,1,2,0,0,0},
+					{0,0,0,2,1,3,4,4,3,1,2,0,0,0},
+					{0,0,0,2,1,3,4,4,3,1,2,0,0,0},
+					{0,0,0,2,1,3,4,4,3,1,2,0,0,0},
+					{0,0,0,2,1,3,4,4,3,1,2,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0}
+				};
+				//i = vertical, j = horizontal
+				for (int i = 0; i < _structure.GetLength(0); i++)
+				{
+					for (int j = _structure.GetLength(1) - 1; j >= 0; j--)
+					{
+						int k = PosX + j;
+						int l = PosY + i;
+						if (WorldGen.InWorld(k, l, 30))
+						{
+							Tile tile = Framing.GetTileSafely(k, l);
+							switch (_structure[i, j])
+							{
+								case 0:
+									tile.wall = 0;
+									break;
+								case 1:
+									tile.wall = (ushort)ModContent.WallType<AvaritianPlatingWallWall>();
+									break;
+								case 2:
+									tile.wall = 10;
+									break;
+								case 3:
+									tile.wall = 89;
+									break;
+								case 4:
+									tile.wall = 93;
+									break;
+							}
+						}
+					}
+				}
+			}
+			if(type == 3)
+            {
+				int[,] _structure = {
+					{0,0,0,1,1,1,1,1,1,1,1,0,0,0},
+					{0,0,1,1,2,2,2,2,2,2,1,1,0,0},
+					{0,0,1,2,1,1,1,1,1,1,2,1,0,0},
+					{0,1,1,1,1,0,0,3,0,1,1,1,1,0},
+					{0,0,1,0,0,0,0,0,0,0,0,1,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,1,5,0,0,0,4,0,0,0,0,5,1,0},
+					{2,1,1,1,5,5,1,1,5,5,1,1,1,2},
+					{2,2,2,2,1,1,1,1,1,1,2,2,2,2},
+					{0,7,7,2,2,2,2,2,2,2,2,7,7,0},
+					{0,0,0,7,7,7,7,7,7,7,7,0,0,0},
+					{0,0,0,0,7,7,7,7,7,7,0,0,0,0},
+					{0,0,0,0,0,7,7,7,7,0,0,0,0,0},
+					{0,0,0,0,0,0,7,7,0,0,0,0,0,0},
+					{0,0,0,0,0,0,7,7,0,0,0,0,0,0}
+				};
+				int PosX = x - 6;  //spawnX and spawnY is where you want the anchor to be when this generates
+				int PosY = y - 10;
+				if (!Empty(PosX, PosY, _structure.GetLength(1), _structure.GetLength(0), 5))
+				{
+					return false;
+				}
+				//i = vertical, j = horizontal
+				for (int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)    //Increase the iterations on this outermost for loop if tabletop-objects are not properly spawning
+				{
+					for (int i = 0; i < _structure.GetLength(0); i++)
+					{
+						for (int j = _structure.GetLength(1) - 1; j >= 0; j--)
+						{
+							int k = PosX + j;
+							int l = PosY + i;
+							if (WorldGen.InWorld(k, l, 30))
+							{
+								Tile tile = Framing.GetTileSafely(k, l);
+								switch (_structure[i, j])
+								{
+									case 0:
+										if (confirmPlatforms == 0)
+										{
+											tile.active(false);
+											tile.halfBrick(false);
+											tile.slope(0);
+										}
+										break;
+									case 1:
+										tile.active(true);
+										tile.type = 60;
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+									case 2:
+										tile.active(true);
+										tile.type = 120;
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+									case 3:
+										tile.active(true);
+										tile.type = 62;
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+									case 4:
+										if (confirmPlatforms == 1)
+										{
+											tile.active(false);
+											tile.slope(0);
+											tile.halfBrick(false);
+											WorldGen.PlaceTile(k, l, 21, true, true, -1, 23);
+										}
+										break;
+									case 5:
+										tile.active(true);
+										tile.type = 60;
+										tile.slope(0);
+										tile.halfBrick(true);
+										break;
+									case 7:
+										tile.active(true);
+										tile.type = (ushort)ModContent.TileType<DullPlatingTile>();
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+								}
+							}
+						}
+					}
+				}
+				_structure = new int[,] {
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,1,1,1,1,1,0,0,0,0,0},
+					{0,0,0,2,1,1,1,1,1,1,2,0,0,0},
+					{0,0,0,2,1,3,3,3,3,1,2,0,0,0},
+					{0,0,0,2,1,3,3,3,3,1,2,0,0,0},
+					{0,0,0,2,1,3,3,3,3,1,2,0,0,0},
+					{0,0,0,2,1,3,3,3,3,1,2,0,0,0},
+					{0,0,0,2,1,3,3,3,3,1,2,0,0,0},
+					{0,0,0,0,0,0,0,0,0,1,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0}
+				};
+				//i = vertical, j = horizontal
+				for (int i = 0; i < _structure.GetLength(0); i++)
+				{
+					for (int j = _structure.GetLength(1) - 1; j >= 0; j--)
+					{
+						int k = PosX + j;
+						int l = PosY + i;
+						if (WorldGen.InWorld(k, l, 30))
+						{
+							Tile tile = Framing.GetTileSafely(k, l);
+							switch (_structure[i, j])
+							{
+								case 0:
+									tile.wall = 0;
+									break;
+								case 1:
+									tile.wall = (ushort)ModContent.WallType<AvaritianPlatingWallWall>();
+									break;
+								case 2:
+									tile.wall = 67;
+									break;
+								case 3:
+									tile.wall = 91;
+									break;
+							}
+						}
+					}
+				}
+
+			}
+			if(type == 4)
+            {
+				int[,] _structure = {
+					{0,0,0,1,1,1,1,1,1,1,1,0,0,0},
+					{0,0,1,2,2,2,2,2,2,2,2,1,0,0},
+					{0,0,1,2,1,1,1,1,1,1,2,1,0,0},
+					{0,1,1,1,1,0,0,0,0,1,1,1,1,0},
+					{0,0,1,0,0,0,0,0,0,0,0,1,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,1,4,0,0,0,3,0,0,0,0,4,1,0},
+					{2,1,1,1,4,4,1,1,4,4,1,1,1,2},
+					{2,2,2,2,1,1,1,1,1,1,2,2,2,2},
+					{0,6,6,2,2,2,2,2,2,2,2,6,6,0},
+					{0,0,0,6,6,6,6,6,6,6,6,0,0,0},
+					{0,0,0,0,6,6,6,6,6,6,0,0,0,0},
+					{0,0,0,0,0,6,6,6,6,0,0,0,0,0},
+					{0,0,0,0,0,0,6,6,0,0,0,0,0,0},
+					{0,0,0,0,0,0,6,6,0,0,0,0,0,0}
+				};
+				int PosX = x - 6;  //spawnX and spawnY is where you want the anchor to be when this generates
+				int PosY = y - 10;
+				if (!Empty(PosX, PosY, _structure.GetLength(1), _structure.GetLength(0), 5))
+				{
+					return false;
+				}
+				//i = vertical, j = horizontal
+				for (int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)    //Increase the iterations on this outermost for loop if tabletop-objects are not properly spawning
+				{
+					for (int i = 0; i < _structure.GetLength(0); i++)
+					{
+						for (int j = _structure.GetLength(1) - 1; j >= 0; j--)
+						{
+							int k = PosX + j;
+							int l = PosY + i;
+							if (WorldGen.InWorld(k, l, 30))
+							{
+								Tile tile = Framing.GetTileSafely(k, l);
+								switch (_structure[i, j])
+								{
+									case 0:
+										if (confirmPlatforms == 0)
+										{
+											tile.active(false);
+											tile.halfBrick(false);
+											tile.slope(0);
+										}
+										break;
+									case 1:
+										tile.active(true);
+										tile.type = 206;
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+									case 2:
+										tile.active(true);
+										tile.type = 148;
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+									case 3:
+										if (confirmPlatforms == 1)
+										{
+											tile.active(false);
+											tile.slope(0);
+											tile.halfBrick(false);
+											WorldGen.PlaceTile(k, l, 21, true, true, -1, 27);
+										}
+										break;
+									case 4:
+										tile.active(true);
+										tile.type = 206;
+										tile.slope(0);
+										tile.halfBrick(true);
+										break;
+									case 6:
+										tile.active(true);
+										tile.type = (ushort)ModContent.TileType<DullPlatingTile>();
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+								}
+							}
+						}
+					}
+				}
+				_structure = new int[,] {
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,1,1,1,1,1,1,0,0,0,0},
+					{0,0,0,2,1,1,1,1,1,1,2,0,0,0},
+					{0,0,0,2,1,3,3,3,3,1,2,0,0,0},
+					{0,0,0,2,1,3,3,3,3,1,2,0,0,0},
+					{0,0,0,2,1,3,3,3,3,1,2,0,0,0},
+					{0,0,0,2,1,3,3,3,3,1,2,0,0,0},
+					{0,0,0,2,1,3,3,3,3,1,2,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0}
+				};
+				//i = vertical, j = horizontal
+				for (int i = 0; i < _structure.GetLength(0); i++)
+				{
+					for (int j = _structure.GetLength(1) - 1; j >= 0; j--)
+					{
+						int k = PosX + j;
+						int l = PosY + i;
+						if (WorldGen.InWorld(k, l, 30))
+						{
+							Tile tile = Framing.GetTileSafely(k, l);
+							switch (_structure[i, j])
+							{
+								case 0:
+									tile.wall = 0;
+									break;
+								case 1:
+									tile.wall = (ushort)ModContent.WallType<AvaritianPlatingWallWall>();
+									break;
+								case 2:
+									tile.wall = 84;
+									break;
+								case 3:
+									tile.wall = 90;
+									break;
+							}
+						}
+					}
+				}
+			}
+			if(!residual)
+			{
+				int direction = Main.rand.Next(2) * 2 - 1;
+				int directionV = Main.rand.Next(2) * 2 - 1;
+				Vector2 tileLocation = new Vector2(x, y);
+				for (int r = 0; r < 4; r++)
+				{
+					if (r == 1)
+					{
+						direction *= -1;
+						directionV *= -1;
+					}
+					tileLocation = new Vector2(x, y);
+					tileLocation.X += direction * (10 + Main.rand.Next(45));
+					tileLocation.Y += directionV * Main.rand.Next(80);
+
+					int extend = 0;
+					while (!GenerateBiomeChestIslands((int)tileLocation.X, (int)tileLocation.Y, type, mod, true))
+					{
+						tileLocation = new Vector2(x, y);
+						tileLocation.X += direction * (10 + Main.rand.Next(45 + extend));
+						tileLocation.Y += directionV * (Main.rand.Next(80));
+						extend += 2;
+					}
+				}
+			}
+			return true;
+        }
 		public static bool SkytileValid(Tile tile, Mod mod)
 		{
 			return tile.active() && (tile.type == (ushort)mod.TileType("DullPlatingTile") || tile.type == (ushort)mod.TileType("AvaritianPlatingTile"));
@@ -1841,6 +2664,28 @@ namespace SOTS
 						tileLocation.Y -= Main.rand.Next(36) + 50;
 					}
 
+					extend++;
+				}
+			}
+			int direction = Main.rand.Next(2) * 2 - 1;
+			for (int r = 0; r < 2; r++)
+			{
+				int type = 2;
+				if (r == 1)
+				{
+					direction *= -1;
+					type = 4;
+				}
+				tileLocation = new Vector2(i, j);
+				tileLocation.X += direction * (150 + Main.rand.Next(240));
+				tileLocation.Y += Main.rand.Next(50);
+
+				int extend = 0;
+				while (!GenerateBiomeChestIslands((int)tileLocation.X, (int)tileLocation.Y, type, mod))
+				{
+					tileLocation = new Vector2(i, j);
+					tileLocation.X += direction * (150 + Main.rand.Next(240));
+					tileLocation.Y += Main.rand.Next(50);
 					extend++;
 				}
 			}

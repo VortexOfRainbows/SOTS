@@ -10,7 +10,7 @@ namespace SOTS.Items.GelGear.Furniture
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Wormwood Platform");
+			DisplayName.SetDefault("Goopwood Platform");
 			Tooltip.SetDefault("");
 		}
 

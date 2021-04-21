@@ -1,33 +1,27 @@
 The following is my development plans :D
 
-//Later--- Balance
-2. Dissolving Nether => Focus Crystal, Dissolving Evil => Cursed Isocahedron
-
-//Ideas (YTBA, yet to be added)
-Priority: Remaining Spirits
-
-11. Tether Cord in pyramid
+1. Dissolving Nether => Focus Crystal, Dissolving Evil => Cursed Isocahedron
+2. Tether Cord in pyramid
 	1. Attaches a second player to you
-13. Dissolving Element Blocks			
+3. Dissolving Element Blocks			
 	1. Give off cool particles, can be used in summoning rituals
-14. Pyramid chests to no longer spawn close to surface (idc about this tbh)
-15. Kitchen Sink (idc about this tbh)
-16. Marble Fates and Granite Omega Golem
-17. Chaos Spirit Boss: "Lux"
-18. Fix PPP hook wrong spot bug when cause is found
+4. Pyramid chests to no longer spawn close to surface (idc about this tbh)
+5. Kitchen Sink (idc about this tbh)
+6. Marble Fates and Granite Omega Golem
+7. Chaos Spirit Boss: "Lux"
+8. Fix PPP hook wrong spot bug when cause is found
+9. Sharanga Hardmode upgrade
 
-Next Update:
-1. Otherworld Spirit Staff: summons a minion that accumulates 4 orbs around it. It fires the 4 spheres in quick succession (as lightning). Takes time to recharge the spheres.
-5. Wormwood Changes + change wormwood recipe to no longer require hardened gel
-6. Banners for: Flux Slime,  (are nature slime hooks effected by banner)?
-7. Biome Chest items to spawn correctly
+High Priority:
+1. Wormwood (Goopwood) Changes
 
 10. Aqua-Necro Core (Stronger necro chestplate, 1 ranged attack per second will gain a steam aura that does 33% damage rapidly)
 11. Riptide Trident (Launches you towards your cursor at the cost of void, deal damage while traveling, bounce off of enemies)
 14. Prismarine Necklace: Sharktooth Necklace + Heart of the Sea
 15. Wintry Traveler: Riptide Trident + Frigid Javelin
+16. Antigrav booties
 
-Priority 2:
+Mid Priority:
 1. Void Low Warning
 2. Prefixes for voids
 3. Bone Clapper
@@ -35,16 +29,54 @@ Priority 2:
 6. Horn of Plenty: 10% more drops accessory
 7. Void Debuffs: Void Consumables Delay, Max Health Decrease
 8. Electrolyte Seperator
+9. Ethereal Tonic
+10. Void accessory reforge: increases max void...
+11. Timelord's Potion: attempt using .aiStyle, otherwise would require a lot of workaround...
 
-Priority 3:
+Low Priority:
 1. Archaelogist NPC
 2. Subspace Scissors
 3. Spaghetti Whip
 4. Mobile Fortress Generator: One for every tavernkeep armor set
 5. Buff PP slam attack projectile speed? Faster ring attack cycle (expert)
+6. Sharanga Upgrade
 
 Boss Rework Ideas:
 Subspace Serpent cross attacks to attack faster and release lightning
+
+4/20/21
+1. Modified Planetarium Generation to make things no longer spawn out of bounds as often. Also added two biome chest items to the planetarium generation.
+2. Fixed bug where Planetarium was forced after 55 when dungeon was left and 400 when dungeon was right. Now universally 55 attempts until force.
+3. Frozen and Hallow biome chests will spawn in the planetarium, Evil and Jungle biome chests will spawn over their respective biomes, or randomly if forced.
+	1. All items spawn correctly!
+4. Shield of Desecar/Stekpla rates adjusted. Spawns at 1/25 or 4% instead of 1/45.
+5. Buffed Pathogen Regurgitator shootspeed, 7.5 -> 10.5
+
+4/19/21
+1. Flux Slime banner added (nature slime hook and flux slime hook aren't effected, sadly can't get them to work properly)
+
+
+(Dev Beta 0_19_2_3 released)
+
+
+4/18/21
+1. Resprited Advisor (thanks Hugekraken), new gore 
+
+4/16/21
+1. Finished visuals on Otherworld Spirit minion Attack
+2. Otherworldly Spirit Staff syncs fine in multiplayer! POGGER3
+3. Earthen Spirit attack rate lowered 60 cooldown -> 80 cooldown
+4. Fixed minor pixel rounding glitch with void minions in the void meter
+5. Removed Hardened Gel
+6. Wormwood is now officially named Goopwood
+
+4/15/21
+1. Holo Eye drops less Otherworld fragments, (50% (100% expert), 1-2 -> 20% (20% expert), 1)
+2. Bug fixed some spirit problems.
+3. Began work on Otherworldly Spirit Staff
+	1. Otherworldly Spirit AI is mostly finished
+4. All spirit minions have more appropriate trails
+5. Reverted earthen spirit attack rate change
 
 4/14/21
 1. Spore Club damage 9 -> 11, resprited, bigger hitbox, use speed 34 -> 30, velo 4.5 -> 5, penetrate 2 -> 3

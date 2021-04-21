@@ -30,7 +30,7 @@ namespace SOTS.Items
             item.UseSound = SoundID.Item34;
             item.autoReuse = true;
             item.shoot = ModContent.ProjectileType<Pathogen>();
-            item.shootSpeed = 7.5f;
+            item.shootSpeed = 10.5f;
             if (!Main.dedServ)
             {
                 item.GetGlobalItem<ItemUseGlow>().glowTexture = mod.GetTexture("Items/PathogenRegurgitator_Glow");

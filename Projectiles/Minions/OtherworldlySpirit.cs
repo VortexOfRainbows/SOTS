@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using System.IO;
+using SOTS.Void;
 
 namespace SOTS.Projectiles.Minions
 {
@@ -14,10 +15,10 @@ namespace SOTS.Projectiles.Minions
 		{
 			DisplayName.SetDefault("Otherworldly Spirit");
 			ProjectileID.Sets.MinionTargettingFeature[projectile.type] = true;
-			ProjectileID.Sets.TrailCacheLength[projectile.type] = 5;  
-			ProjectileID.Sets.TrailingMode[projectile.type] = 0;   
+			ProjectileID.Sets.TrailCacheLength[projectile.type] = 10;
+			ProjectileID.Sets.TrailingMode[projectile.type] = 0;
 		}
-		public sealed override void SetDefaults()
+        public sealed override void SetDefaults()
 		{
 			projectile.width = 34;
 			projectile.height = 34;
@@ -28,13 +29,117 @@ namespace SOTS.Projectiles.Minions
 			projectile.ignoreWater = true;
 			projectile.localNPCHitCooldown = 10;
 		}
-		public override bool? CanCutTiles()
+        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		{
+			Color color2 = VoidPlayer.OtherworldColor;
+			Texture2D texture = Main.projectileTexture[projectile.type];
+			Vector2 drawOrigin = new Vector2(Main.projectileTexture[projectile.type].Width * 0.5f, projectile.height * 0.5f);
+			for (int k = 0; k < projectile.oldPos.Length; k++)
+			{
+				Vector2 drawPos = projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, projectile.gfxOffY);
+				Color color = projectile.GetAlpha(color2) * ((float)(projectile.oldPos.Length - k) / (float)projectile.oldPos.Length);
+				spriteBatch.Draw(texture, drawPos, null, color * 0.5f, projectile.rotation, drawOrigin, projectile.scale, SpriteEffects.None, 0f);
+			}
+			return false;
+		}
+        public override void PostDraw(SpriteBatch spriteBatch, Color lightColor)
+		{
+			Texture2D texture = Main.projectileTexture[projectile.type];
+			Color color = VoidPlayer.OtherworldColor * 0.75f;
+			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
+			for (int k = 0; k < 9; k++)
+			{
+				float x = Main.rand.Next(-10, 11) * 0.25f;
+				float y = Main.rand.Next(-10, 11) * 0.25f;
+				Main.spriteBatch.Draw(texture, new Vector2((float)(projectile.Center.X - (int)Main.screenPosition.X) + x, (float)(projectile.Center.Y - (int)Main.screenPosition.Y) + y), null, color, 0f, drawOrigin, projectile.scale, SpriteEffects.None, 0f);
+			}
+			texture = mod.GetTexture("Projectiles/Minions/OtherworldlySpiritBall");
+			drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
+			for (int i = 0; i < orbLocations.Length; i++)
+            {
+				if(!orbLocations[i].Equals(projectile.Center))
+				{
+					for (int k = 0; k < 5; k++)
+					{
+						float x = Main.rand.Next(-10, 11) * 0.25f;
+						float y = Main.rand.Next(-10, 11) * 0.25f;
+						Main.spriteBatch.Draw(texture, orbLocations[i] - Main.screenPosition + new Vector2(x, y), null, color, 0f, drawOrigin, projectile.scale, SpriteEffects.None, 0f);
+					}
+				}
+            }
+		}
+        public override bool? CanCutTiles()
 		{
 			return false;
 		}
 		public override bool MinionContactDamage()
 		{
 			return true;
+		}
+		bool runOnce = true;
+		Vector2[] orbLocations = new Vector2[4];
+		float[] orbCounter = new float[4];
+		public void rotateOrbs(Vector2 npcCenter)
+		{
+			if (runOnce)
+			{
+				runOnce = false;
+				for (int i = 0; i < orbLocations.Length; i++)
+				{
+					orbLocations[i] = projectile.Center;
+				}
+			}
+			for (int i = 0; i < orbLocations.Length; i++)
+			{
+				if(orbCounter[i] >= -30)
+				{
+					float distance = 42f;
+					if (orbCounter[i] < 0)
+					{
+						orbCounter[i]++;
+						Vector2 toLocation = new Vector2(distance + (orbCounter[i] * distance / 30f), 0).RotatedBy(MathHelper.ToRadians(projectile.ai[0] * 1.67f + 90 * i)) + projectile.Center;
+						orbLocations[i] = toLocation;
+					}
+					else if (orbCounter[i] >= 0)
+					{
+						Vector2 toLocation;
+						if (!npcCenter.Equals(Vector2.Zero) && (i == 0 || orbCounter[i - 1] > 8 || orbCounter[i - 1] < 0 || orbCounter[i] > 0))
+						{
+							float currentAI = orbCounter[i]++;
+							Vector2 rotationalVelo = new Vector2(0, 48 * 0.33f).RotatedBy(MathHelper.ToRadians(55f + currentAI * 8.5f));
+							toLocation = npcCenter - orbLocations[i];
+							toLocation = new Vector2(rotationalVelo.X, 0).RotatedBy(toLocation.ToRotation());
+							if (currentAI >= 30)
+							{
+								//Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 43, 0.4f);
+								if (Main.myPlayer == projectile.owner)
+								{
+									Projectile.NewProjectileDirect(orbLocations[i], new Vector2(1, 0).RotatedBy(toLocation.ToRotation()) * 12, ModContent.ProjectileType<OtherworldLightning>(), projectile.damage, projectile.knockBack, Main.myPlayer, 0, 0);
+								}
+								orbCounter[i] = -60;
+								orbLocations[i] = projectile.Center;
+								return;
+							}
+							else
+							{
+								orbLocations[i] += toLocation;
+							}
+						}
+						else
+						{
+							toLocation = new Vector2(distance, 0).RotatedBy(MathHelper.ToRadians(projectile.ai[0] * 1.67f + 90 * i)) + projectile.Center;
+							orbLocations[i] = toLocation;
+							orbCounter[i] = 0;
+						}
+					}
+				}
+				else
+                {
+					if ((i == 0 || orbCounter[i - 1] >= 0) && (npcCenter.Equals(Vector2.Zero) || (orbCounter[0] < 0 && orbCounter[1] < 0 && orbCounter[2] < 0 && orbCounter[3] < 0)))
+						orbCounter[i]++;
+					orbLocations[i] = projectile.Center;
+                }
+			}
 		}
 		public override void AI() 
 		{
@@ -43,15 +148,12 @@ namespace SOTS.Projectiles.Minions
 			#region Active check
 			if (player.dead || !player.active) 
 			{
-				player.ClearBuff(mod.BuffType("NatureSpiritAid"));
+				player.ClearBuff(mod.BuffType("OtherworldlySpiritAid"));
 			}
-			if (player.HasBuff(mod.BuffType("NatureSpiritAid")))
+			if (player.HasBuff(mod.BuffType("OtherworldlySpiritAid")))
 			{
-				projectile.timeLeft = 2;
+				projectile.timeLeft = 6;
 			}
-			#endregion
-
-			#region General behavior
 			bool found = false;
 			int ofTotal = 0;
 			int total = 0;
@@ -70,26 +172,25 @@ namespace SOTS.Projectiles.Minions
 				}
 			}
 			if (Main.myPlayer == player.whoAmI)
-				projectile.ai[1] = ofTotal;
+			{
+				if(total > 0)
+					projectile.ai[0] = modPlayer.orbitalCounter + (ofTotal * 360f / total);
+			}
 			#endregion
-
 			#region Find target
-			float distanceFromTarget = 1000f;
+			float distanceFromTarget = 1200f;
 			Vector2 targetCenter = projectile.Center;
 			bool foundTarget = false;
-			float npcWidthHeight = 0;
-
 			// This code is required if your minion weapon has the targeting feature
 			if (player.HasMinionAttackTargetNPC)
 			{
 				NPC npc = Main.npc[player.MinionAttackTargetNPC];
-				float between = Vector2.Distance(npc.Center, player.Center);
+				float between = Vector2.Distance(npc.Center, projectile.Center);
 				if (between < distanceFromTarget) 
 				{
 					distanceFromTarget = between;
 					targetCenter = npc.Center;
 					foundTarget = true;
-					npcWidthHeight = (float)Math.Sqrt(npc.width * npc.height);
 				}
 			}
 			if (!foundTarget) 
@@ -99,17 +200,17 @@ namespace SOTS.Projectiles.Minions
 					NPC npc = Main.npc[i];
 					if (npc.CanBeChasedBy()) 
 					{
-						float between = Vector2.Distance(npc.Center, player.Center);
+						float between = Vector2.Distance(npc.Center, projectile.Center);
+						float between2 = Vector2.Distance(npc.Center, player.Center);
 						bool inRange = between < distanceFromTarget;
 						bool lineOfSight = Collision.CanHitLine(player.position, player.width, player.height, npc.position, npc.width, npc.height);
 						
-						bool closeThroughWall = between < 100f; //should attack semi-reliably through walls
+						bool closeThroughWall = between2 < 360f; //should attack semi-reliably through walls
 						if (inRange && (lineOfSight || closeThroughWall) && between < distanceFromTarget)
 						{
 							distanceFromTarget = between;
 							targetCenter = npc.Center;
 							foundTarget = true;
-							npcWidthHeight = (float)Math.Sqrt(npc.width * npc.height);
 						}
 					}
 				}
@@ -119,59 +220,39 @@ namespace SOTS.Projectiles.Minions
 			#region Movement
 			Vector2 idlePosition = player.Center;
 			idlePosition.Y -= 96f;
-			float speed = 13.5f;
-			if(projectile.ai[0] > 0)
-            {
-				projectile.ai[0] *= 0.975f;
-				projectile.ai[0] -= 0.1f;
-            }
-			else
-            {
-				projectile.ai[0] = 0;
-            }
 			if (foundTarget)
 			{
-				Vector2 toPos = targetCenter + new Vector2(72 + npcWidthHeight + projectile.ai[0], 0).RotatedBy(MathHelper.ToRadians(modPlayer.orbitalCounter + (360f / total * projectile.ai[1])));
-				Vector2 direction = toPos - projectile.Center;
+				float speed = -14f;
+				Vector2 npcCenter = targetCenter;
+				Vector2 direction = npcCenter - projectile.Center;
 				float distance = direction.Length();
-				bool inRange = distance < 96 + npcWidthHeight;
 				direction = direction.SafeNormalize(Vector2.Zero);
-				if (distance > speed)
-				{
-					distance = speed;
-				}
-				direction *= distance;
-				projectile.velocity = direction;
-				Vector2 toNPC = targetCenter - projectile.Center;
-				int fireRate = 72;
-				if((int)(modPlayer.orbitalCounter + (float)fireRate / total * projectile.ai[1]) % fireRate == 0 && inRange)
-				{
-					Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 43, 0.4f);
-					if (Main.myPlayer == projectile.owner)
-					{
-						Projectile.NewProjectile(projectile.Center, toNPC.SafeNormalize(Vector2.Zero) * 3, mod.ProjectileType("NatureBeam"), projectile.damage, projectile.knockBack, projectile.owner);
-					}
-					projectile.ai[0] = 32;
-				}
+				int intDirection = direction.X > 0 ? 1 : -1;
+				Vector2 rotateBy = new Vector2(0, 18 * intDirection).RotatedBy(projectile.rotation);
+				rotateBy += direction.SafeNormalize(Vector2.Zero) * intDirection;
+				projectile.rotation = rotateBy.ToRotation() - MathHelper.ToRadians(90) * intDirection;
+				direction *= (float)Math.Pow(distance, 1.25) * 0.006f + speed;
+				projectile.velocity += direction;
+				projectile.velocity *= 0.5f;
+				rotateOrbs(npcCenter);
 			}
 			else
 			{
+				rotateOrbs(Vector2.Zero);
 				GoIdle();
-				Vector2 vectorToIdlePosition = idlePosition - projectile.Center;
-				float distanceToIdlePosition = vectorToIdlePosition.Length();
-				if (Main.myPlayer == player.whoAmI && distanceToIdlePosition > 1400f)
-				{
-					projectile.position = idlePosition;
-					projectile.velocity *= 0.1f;
-					projectile.netUpdate = true;
-				}
+			}
+			Vector2 vectorToIdlePosition = idlePosition - projectile.Center;
+			float distanceToIdlePosition = vectorToIdlePosition.Length();
+			if (Main.myPlayer == player.whoAmI && distanceToIdlePosition > 1400f)
+			{
+				projectile.Center = idlePosition;
+				projectile.velocity *= 0.1f;
+				projectile.netUpdate = true;
 			}
 			#endregion
 
-			#region Animation and visuals
-			Lighting.AddLight(projectile.Center, 2.0f * 0.5f * ((255 - projectile.alpha) / 255f), 2.4f * 0.5f * ((255 - projectile.alpha) / 255f), 1.8f * 0.5f * ((255 - projectile.alpha) / 255f));
-			#endregion
-
+			Lighting.AddLight(projectile.Center, VoidPlayer.OtherworldColor.R / 255f, VoidPlayer.OtherworldColor.G / 255f * ((255 - projectile.alpha) / 255f), VoidPlayer.OtherworldColor.B / 255f * ((255 - projectile.alpha) / 255f));
+			MoveAwayFromOthers(true, 0.11f, 2f);
 			if (Main.myPlayer == player.whoAmI)
 			{
 				projectile.netUpdate = true;

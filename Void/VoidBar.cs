@@ -142,8 +142,8 @@ namespace SOTS.Void
 			if (quotient < 0)
 				quotient = 0;
 			Vector2 padding = new Vector2(6, 6);
-			int prevRight = (int)(quotient * 188);
-			int length = 40;
+			float prevRight = quotient * 188;
+			float length = 40;
 			int height = 18;
 			Texture2D fill2 = ModContent.GetTexture("SOTS/Void/VoidBarSprite");
 			Texture2D divider2 = ModContent.GetTexture("SOTS/Void/VoidBarDivider");
@@ -157,21 +157,21 @@ namespace SOTS.Void
 				if (i < voidPlayer.VoidMinions.Count - 1)
 					nextType = voidPlayer.VoidMinions[i + 1];
 				int cost = VoidPlayer.minionVoidCost(type);
-				length = (int)(cost / (float)voidPlayer.voidMeterMax2 * 188f);
+				length = cost / (float)voidPlayer.voidMeterMax2 * 188f;
 				Color color = Color.White;
 				color = VoidPlayer.minionVoidColor(type);
-				if (length + prevRight >= 187)
-					length = 187 - prevRight;
-				spriteBatch.Draw(fill, new Rectangle((int)(VoidPlayer.voidBarOffset.X + padding.X + prevRight), (int)(VoidPlayer.voidBarOffset.Y + padding.Y), length, height), color);
+				if (length + prevRight >= 188)
+					length = 188 - prevRight;
+				spriteBatch.Draw(fill, new Rectangle((int)(VoidPlayer.voidBarOffset.X + padding.X + (int)prevRight), (int)(VoidPlayer.voidBarOffset.Y + padding.Y), (int)(length + 1), height), color);
 				if(i == 0)
 				{
-					rectangles.Add(new Rectangle((int)(VoidPlayer.voidBarOffset.X + padding.X + prevRight), (int)(VoidPlayer.voidBarOffset.Y + padding.Y - 2), 6, 22));
+					rectangles.Add(new Rectangle((int)(VoidPlayer.voidBarOffset.X + padding.X + (int)prevRight), (int)(VoidPlayer.voidBarOffset.Y + padding.Y - 2), 6, 22));
 					colors.Add(color);
 				}					
 				prevRight += length;
 				if (nextType == -1 || nextType != type)
 				{
-					rectangles.Add(new Rectangle((int)(VoidPlayer.voidBarOffset.X + padding.X + prevRight), (int)(VoidPlayer.voidBarOffset.Y + padding.Y - 2), 6, 22));
+					rectangles.Add(new Rectangle((int)(VoidPlayer.voidBarOffset.X + padding.X + (int)prevRight), (int)(VoidPlayer.voidBarOffset.Y + padding.Y - 2), 6, 22));
 					colors.Add(color);
 				}
 			}

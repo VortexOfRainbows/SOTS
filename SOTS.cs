@@ -248,12 +248,6 @@ namespace SOTS
 			recipe.SetResult(ItemID.SlimeStaff, 1);
 			recipe.AddRecipe();
 			
-			recipe = new ModRecipe(this);
-			recipe.AddIngredient(ItemID.Gel, 5);
-			recipe.AddTile(TileID.Solidifier);
-			recipe.SetResult(null, "GelBar", 2);
-			recipe.AddRecipe();
-			
 			//just in case temple gets cucked
 			recipe = new ModRecipe(this);
 			recipe.AddIngredient(ItemID.TempleKey, 2);
@@ -324,9 +318,18 @@ namespace SOTS
                 {
                     music = (SOTSPlayer.ModPlayer(player).weakerCurse || SOTSWorld.downedBoss2) ? GetSoundSlot(SoundType.Music, "Sounds/Music/Grand_Pyramid") : MusicID.Desert;
 					priority = MusicPriority.BiomeHigh;
-                } 
-            }
-        }
+                }
+			}
+			if (Main.myPlayer != -1 && !Main.gameMenu)
+			{
+				Player player = Main.player[Main.myPlayer];
+				if (player.active && player.GetModPlayer<SOTSPlayer>().PlanetariumBiome)
+				{
+					music = GetSoundSlot(SoundType.Music, "Sounds/Music/Planetarium");
+					priority = MusicPriority.BossLow;
+				}
+			}
+		}
 		public override void PostSetupContent()
         {
             Mod bossChecklist = ModLoader.GetMod("BossChecklist");

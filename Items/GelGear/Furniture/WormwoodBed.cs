@@ -10,7 +10,7 @@ namespace SOTS.Items.GelGear.Furniture
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Wormwood Bed");
+			DisplayName.SetDefault("Goopwood Bed");
 			Tooltip.SetDefault("");
 		}
 

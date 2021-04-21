@@ -13,7 +13,7 @@ namespace SOTS.Items.GelGear.Furniture
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Wormwood Door");
+			DisplayName.SetDefault("Goopwood Door");
 			Tooltip.SetDefault("");
 		}
 

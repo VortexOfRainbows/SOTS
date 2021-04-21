@@ -16,12 +16,7 @@ namespace SOTS.Buffs
 		{
 			if (player.ownedProjectileCounts[mod.ProjectileType("NatureSpirit")] > 0) 
 			{
-				player.buffTime[buffIndex] = 18000;
-			}
-			else 
-			{
-				player.DelBuff(buffIndex);
-				buffIndex--;
+				player.buffTime[buffIndex] = 6;
 			}
 		}
     }

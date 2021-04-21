@@ -118,7 +118,6 @@ namespace SOTS.Items.Banners
 						break;
 					case 6:
 						type = "NatureSlime";
-						player.NPCBannerBuff[ModContent.NPCType<BloomingHook>()] = true;
 						break;
 					case 7:
 						type = "FlamingGhast";
@@ -714,6 +713,9 @@ namespace SOTS.Items.Banners
 				case 0:
 					item = "TwilightDevilBanner";
 					break;
+				case 1:
+					item = "FluxSlimeBanner";
+					break;
 				default:
 					return;
 			}
@@ -731,6 +733,9 @@ namespace SOTS.Items.Banners
 				{
 					case 0:
 						type = "TwilightDevil";
+						break;
+					case 1:
+						type = "FluxSlime";
 						break;
 					default:
 						return;
@@ -754,6 +759,14 @@ namespace SOTS.Items.Banners
 		{
 			item.createTile = TileType<SOTSBanners2>();
 			item.placeStyle = 0;
+		}
+	}
+	public class FluxSlimeBanner : ModBanner
+	{
+		public override void SafeSetDefaults()
+		{
+			item.createTile = TileType<SOTSBanners2>();
+			item.placeStyle = 1;
 		}
 	}
 }

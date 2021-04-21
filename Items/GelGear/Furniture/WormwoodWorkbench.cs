@@ -11,7 +11,7 @@ namespace SOTS.Items.GelGear.Furniture
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Wormwood Workbench");
+			DisplayName.SetDefault("Goopwood Workbench");
 			Tooltip.SetDefault("");
 		}
 

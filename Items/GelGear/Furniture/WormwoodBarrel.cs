@@ -15,7 +15,7 @@ namespace SOTS.Items.GelGear.Furniture
 	{
 		public override void SetStaticDefaults()
 		{
-			Tooltip.SetDefault("Wormwood Barrel");
+			DisplayName.SetDefault("Goopwood Barrel");
 			Tooltip.SetDefault("");
 		}
 

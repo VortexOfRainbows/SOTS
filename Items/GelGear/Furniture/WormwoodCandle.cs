@@ -14,7 +14,7 @@ namespace SOTS.Items.GelGear.Furniture
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Wormwood Candle");
+			DisplayName.SetDefault("Goopwood Candle");
 			Tooltip.SetDefault("");
 		}
 

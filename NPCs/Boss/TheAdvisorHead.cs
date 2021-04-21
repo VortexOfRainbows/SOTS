@@ -127,6 +127,7 @@ namespace SOTS.NPCs.Boss
 			if (attackPhase2 == 0)
 			{
 				Texture2D texture2 = ModContent.GetTexture("SOTS/NPCs/Boss/AdvisorMissileAttachment");
+				Texture2D texture3 = ModContent.GetTexture("SOTS/NPCs/Boss/AdvisorMissileAttachment_Highlight");
 				Vector2 drawOrigin2 = new Vector2(texture2.Width * 0.5f, texture2.Height * 0.5f);
 				if (attackTimer2 > 0)
 				{
@@ -152,12 +153,20 @@ namespace SOTS.NPCs.Boss
 					{
 						Vector2 circularRotation = new Vector2(0, -amt).RotatedBy(MathHelper.ToRadians(deg * direction));
 						Main.spriteBatch.Draw(texture2, new Vector2((float)(npc.Center.X - (int)Main.screenPosition.X), (float)(npc.Center.Y - (int)Main.screenPosition.Y) + 20) + circularRotation, null, lightColor, 0f, drawOrigin2, 1f, direction == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+						if (glow)
+							for (int k = 0; k < 7; k++)
+							{
+								float x = Main.rand.Next(-10, 11) * 0.1f;
+								float y = Main.rand.Next(-10, 11) * 0.1f;
+								Main.spriteBatch.Draw(texture3, new Vector2((float)(npc.Center.X - (int)Main.screenPosition.X), (float)(npc.Center.Y - (int)Main.screenPosition.Y) + 20) + circularRotation + new Vector2(x, y), null, color, 0f, drawOrigin2, 1f, direction == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+							}
 					}
 				}
 			}
 			if (attackPhase2 == 1)
 			{
 				Texture2D texture2 = ModContent.GetTexture("SOTS/NPCs/Boss/AdvisorLaserAttachment");
+				Texture2D texture3 = ModContent.GetTexture("SOTS/NPCs/Boss/AdvisorLaserAttachment_Highlight");
 				Vector2 drawOrigin2 = new Vector2(texture2.Width * 0.5f, texture2.Height * 0.5f);
 				if (attackTimer2 > 0)
 				{
@@ -179,12 +188,20 @@ namespace SOTS.NPCs.Boss
 					{
 						Vector2 circularRotation = new Vector2(0, -amt).RotatedBy(MathHelper.ToRadians(deg + 90 * direction));
 						Main.spriteBatch.Draw(texture2, new Vector2((float)(npc.Center.X - (int)Main.screenPosition.X), (float)(npc.Center.Y - (int)Main.screenPosition.Y) + Math.Abs(shift.X) + 4) + circularRotation, null, lightColor, MathHelper.ToRadians(laserDirection), drawOrigin2, 1f, direction == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+						if (glow)
+							for (int k = 0; k < 7; k++)
+							{
+								float x = Main.rand.Next(-10, 11) * 0.1f;
+								float y = Main.rand.Next(-10, 11) * 0.1f;
+								Main.spriteBatch.Draw(texture3, new Vector2((float)(npc.Center.X - (int)Main.screenPosition.X), (float)(npc.Center.Y - (int)Main.screenPosition.Y) + Math.Abs(shift.X) + 4) + circularRotation + new Vector2(x, y), null, color, MathHelper.ToRadians(laserDirection), drawOrigin2, 1f, direction == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+							}
 					}
 				}
 			}
 			if (attackPhase2 == 2)
 			{
 				Texture2D texture2 = ModContent.GetTexture("SOTS/NPCs/Boss/AdvisorTazerAttachment");
+				Texture2D texture3 = ModContent.GetTexture("SOTS/NPCs/Boss/AdvisorTazerAttachment_Highlight");
 				Vector2 drawOrigin2 = new Vector2(texture2.Width * 0.5f, texture2.Height * 0.5f);
 				if (attackTimer2 > 0)
 				{
@@ -207,7 +224,14 @@ namespace SOTS.NPCs.Boss
                     }
 					Vector2 shift = new Vector2(16, 0).RotatedBy(deg);
 					Vector2 circularRotation = new Vector2(amt, 0).RotatedBy(deg);
-					Main.spriteBatch.Draw(texture2, new Vector2((float)(npc.Center.X - (int)Main.screenPosition.X), (float)(npc.Center.Y - (int)Main.screenPosition.Y) + Math.Abs(shift.X) + 4) + circularRotation, null, lightColor, deg, drawOrigin2, 1f, SpriteEffects.FlipHorizontally, 0f);
+                    Main.spriteBatch.Draw(texture2, new Vector2((float)(npc.Center.X - (int)Main.screenPosition.X), (float)(npc.Center.Y - (int)Main.screenPosition.Y) + Math.Abs(shift.X) + 4) + circularRotation, null, lightColor, deg, drawOrigin2, 1f, SpriteEffects.FlipHorizontally, 0f);
+					if (glow)
+						for (int k = 0; k < 7; k++)
+						{
+							float x = Main.rand.Next(-10, 11) * 0.1f;
+							float y = Main.rand.Next(-10, 11) * 0.1f;
+							Main.spriteBatch.Draw(texture3, new Vector2((float)(npc.Center.X - (int)Main.screenPosition.X), (float)(npc.Center.Y - (int)Main.screenPosition.Y) + Math.Abs(shift.X) + 4) + circularRotation + new Vector2(x, y), null, color, deg, drawOrigin2, 1f, SpriteEffects.FlipHorizontally, 0f);
+						}
 				}
 			}
 			for (int k = 0; k < 7; k++)
@@ -554,8 +578,8 @@ namespace SOTS.NPCs.Boss
 		}
 		public override void AI()
 		{
-			music = MusicID.Boss4;
-			musicPriority = MusicPriority.BossLow;
+			music = MusicID.Boss2;
+			musicPriority = MusicPriority.BossMedium;
 			npc.TargetClosest(false);
 			npc.spriteDirection = 1;
 			bool phase2 = npc.life < npc.lifeMax * (0.45f + (Main.expertMode ? 0.2f : 0));
@@ -1122,13 +1146,13 @@ namespace SOTS.NPCs.Boss
 					int dust = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, mod.DustType("BigAetherDust"));
 					Main.dust[dust].velocity *= 5f;
 				}
-				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/TheAdvisorGore1"), 1f);
-				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/TheAdvisorGore2"), 1f);
-				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/TheAdvisorGore3"), 1f);
-				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/TheAdvisorGore4"), 1f);
-				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/TheAdvisorGore5"), 1f);
-				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/TheAdvisorGore6"), 1f);
-				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/TheAdvisorGore7"), 1f);
+				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/Advisor/TheAdvisorGore1"), 1f);
+				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/Advisor/TheAdvisorGore2"), 1f);
+				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/Advisor/TheAdvisorGore3"), 1f);
+				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/Advisor/TheAdvisorGore4"), 1f);
+				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/Advisor/TheAdvisorGore5"), 1f);
+				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/Advisor/TheAdvisorGore6"), 1f);
+				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/Advisor/TheAdvisorGore7"), 1f);
 				for (int i = 0; i < 24; i++)
                 {
 					Gore.NewGore(npc.position + new Vector2((float)(npc.width * Main.rand.Next(100)) / 100f, (float)(npc.height * Main.rand.Next(100)) / 100f) - Vector2.One * 10f, npc.velocity, Main.rand.Next(61, 64), 1f);

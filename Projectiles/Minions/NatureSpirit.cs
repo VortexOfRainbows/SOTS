@@ -14,7 +14,7 @@ namespace SOTS.Projectiles.Minions
 		{
 			DisplayName.SetDefault("Nature Spirit");
 			ProjectileID.Sets.MinionTargettingFeature[projectile.type] = true;
-			ProjectileID.Sets.TrailCacheLength[projectile.type] = 5;  
+			ProjectileID.Sets.TrailCacheLength[projectile.type] = 7;  
 			ProjectileID.Sets.TrailingMode[projectile.type] = 0;   
 		}
 		public sealed override void SetDefaults()
@@ -168,9 +168,8 @@ namespace SOTS.Projectiles.Minions
 			}
 			#endregion
 
-			#region Animation and visuals
 			Lighting.AddLight(projectile.Center, 2.0f * 0.5f * ((255 - projectile.alpha) / 255f), 2.4f * 0.5f * ((255 - projectile.alpha) / 255f), 1.8f * 0.5f * ((255 - projectile.alpha) / 255f));
-			#endregion
+			MoveAwayFromOthers();
 
 			if (Main.myPlayer == player.whoAmI)
 			{

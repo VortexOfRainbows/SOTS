@@ -33,7 +33,7 @@ namespace SOTS.NPCs
             npc.HitSound = SoundID.NPCHit1;
             npc.DeathSound = SoundID.NPCDeath1;
 			banner = npc.type;
-			bannerItem = ItemType<NatureSlimeBanner>();
+			bannerItem = ItemType<FluxSlimeBanner>();
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{

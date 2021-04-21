@@ -50,6 +50,7 @@ namespace SOTS.NPCs
 			npc.alpha = 70;
             npc.HitSound = SoundID.NPCHit1;
             npc.DeathSound = SoundID.NPCDeath1;
+			//banner = npc.type;
 		}
 		float counter2 = 0;
 		float randMult = 1f;

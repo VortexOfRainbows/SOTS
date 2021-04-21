@@ -25,11 +25,12 @@ Music: BananaLizard
 
 (Contributors)
 Misc, Direction: FlameFreezer
-Art: Arcri, DeJuiceTD, Naka 
+Art: Arcri, DeJuiceTD, Hugekraken
 Testers: Crimsonkeep
 
 (Other Contributions)
 Item glowmask code: Qwerty3.14
+Small Art Contributions: Naka
 
 Update 0.19.2
 -More Items

@@ -14,7 +14,7 @@ namespace SOTS.Projectiles.Minions
 		{
 			DisplayName.SetDefault("Earthen Spirit");
 			ProjectileID.Sets.MinionTargettingFeature[projectile.type] = true;
-			ProjectileID.Sets.TrailCacheLength[projectile.type] = 5;
+			ProjectileID.Sets.TrailCacheLength[projectile.type] = 8;
 			ProjectileID.Sets.TrailingMode[projectile.type] = 0;
 		}
 
@@ -111,7 +111,7 @@ namespace SOTS.Projectiles.Minions
 			}
 			if (player.HasBuff(mod.BuffType("SpiritAid")))
 			{
-				projectile.timeLeft = 2;
+				projectile.timeLeft = 6;
 			}
 			#endregion
 
@@ -211,7 +211,7 @@ namespace SOTS.Projectiles.Minions
 					projectile.alpha = 255;	
 					if (readyToFight)
 						projectile.ai[0]++;
-					int cooldown = 90;
+					int cooldown = 80;
 					if (total != 0 && (int)modPlayer.orbitalCounter % cooldown == (int)(projectile.ai[1] * (float)cooldown / total + 0.5f) % cooldown)
 					{
 						if (readyToFight)
@@ -256,9 +256,8 @@ namespace SOTS.Projectiles.Minions
 			}
 			#endregion
 
-			#region Animation and visuals
 			Lighting.AddLight(projectile.Center, 2.4f * 0.5f * ((255 - projectile.alpha) / 255f), 2.2f * 0.5f * ((255 - projectile.alpha) / 255f), 1.4f * 0.5f * ((255 - projectile.alpha) / 255f));
-			#endregion
+			MoveAwayFromOthers();
 
 			if (Main.myPlayer == player.whoAmI)
 			{
