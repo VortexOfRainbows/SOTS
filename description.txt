@@ -19,13 +19,15 @@ Currents Stuctures:
 Credits:
 (Current Developers)
 Programmer, Art, Direction: Vortex#6230
-Art: Blasfah
+Art: Blasfah, HugeKraken
 Misc, Direction, Art: TacoBurritoGuacamole
 Music: BananaLizard
 
-(Contributors)
+(Past Developers)
 Misc, Direction: FlameFreezer
-Art: Arcri, DeJuiceTD, Hugekraken
+
+(Contributors)
+Art: Arcri, DeJuiceTD
 Testers: Crimsonkeep
 
 (Other Contributions)

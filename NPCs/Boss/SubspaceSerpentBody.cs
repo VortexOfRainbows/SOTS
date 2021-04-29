@@ -12,13 +12,12 @@ namespace SOTS.NPCs.Boss
     {
         public override void SetStaticDefaults()
         {
-
             DisplayName.SetDefault("Subspace Serpent");
         }
         public override void SetDefaults()
         {
-            npc.width = 36;
-            npc.height = 40;
+            npc.width = 48;
+            npc.height = 34;
             npc.damage = 70;
             npc.defense = 100;
             npc.lifeMax = 12104310; //arbitrary
@@ -36,6 +35,7 @@ namespace SOTS.NPCs.Boss
             {
                 npc.buffImmune[i] = true;
             }
+            Main.npcFrameCount[npc.type] = 8;
         }
         float currentDPS = -1;
         float DPSregenRate = 0.1f;
@@ -61,6 +61,34 @@ namespace SOTS.NPCs.Boss
         {
             npc.knockBackResist = reader.ReadSingle();
         }
+        public override void FindFrame(int frameHeight)
+        {
+            NPC parent = Main.npc[(int)npc.ai[1]];
+            int frameHeight2 = frameHeight;
+            if(parent.type == ModContent.NPCType<SubspaceSerpentHead>())
+            {
+                frameHeight2 = 44;
+            }
+            int targetFrame = parent.frame.Y / frameHeight2;
+            int currentFrame = npc.frame.Y / frameHeight;
+            if (currentFrame != targetFrame)
+            {
+                npc.frameCounter++;
+                if (npc.frameCounter >= 4)
+                {
+                    currentFrame = targetFrame;
+                    npc.frameCounter = 0;
+                }
+            }
+            else
+            {
+                npc.frameCounter = 0;
+            }
+            if (currentFrame > 7)
+                currentFrame = 0;
+            npc.frame.Y = currentFrame * frameHeight;
+
+        }
         public override bool PreAI()
         {
             if (npc.ai[3] > 0)
@@ -81,54 +109,58 @@ namespace SOTS.NPCs.Boss
 
             if (npc.ai[1] < (double)Main.npc.Length)
             {
-                // We're getting the center of this NPC.
                 Vector2 npcCenter = new Vector2(npc.position.X + (float)npc.width * 0.5f, npc.position.Y + (float)npc.height * 0.5f);
-                // Then using that center, we calculate the direction towards the 'parent NPC' of this NPC.
                 float dirX = Main.npc[(int)npc.ai[1]].position.X + (float)(Main.npc[(int)npc.ai[1]].width / 2) - npcCenter.X;
                 float dirY = Main.npc[(int)npc.ai[1]].position.Y + (float)(Main.npc[(int)npc.ai[1]].height / 2) - npcCenter.Y;
-                // We then use Atan2 to get a correct rotation towards that parent NPC.
                 npc.rotation = (float)Math.Atan2(dirY, dirX) + 1.57f;
-                // We also get the length of the direction vector.
                 float length = (float)Math.Sqrt(dirX * dirX + dirY * dirY);
-                // We calculate a new, correct distance.
-                float dist = (length - (float)npc.width) / length;
+                float dist = (length - npc.height) / length;
                 float posX = dirX * dist;
                 float posY = dirY * dist;
-
-                // Reset the velocity of this NPC, because we don't want it to move on its own
                 npc.velocity = Vector2.Zero;
-                // And set this NPCs position accordingly to that of this NPCs parent NPC.
                 npc.position.X = npc.position.X + posX;
                 npc.position.Y = npc.position.Y + posY;
             }
             return false;
         }
 
-        public override bool PreDraw(Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch, Color drawColor)
-        {
-            Texture2D texture = Main.npcTexture[npc.type];
-            Vector2 origin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-            Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition, new Rectangle?(), drawColor, npc.rotation, origin, npc.scale, SpriteEffects.None, 0);
-            return false;
-        }
-        public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
+        public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
         {
             Texture2D texture = mod.GetTexture("NPCs/Boss/DPSBarrier2");
             Vector2 origin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
             Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition, new Rectangle?(), drawColor * (0.5f + (0.25f * (maxDPS - currentDPS) / maxDPS)), 0, origin, (maxDPS - currentDPS) / maxDPS, SpriteEffects.None, 0);
+            texture = Main.npcTexture[npc.type];
+            origin = new Vector2(texture.Width * 0.5f, npc.height * 0.5f);
+            Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition, npc.frame, drawColor, npc.rotation, origin, npc.scale, SpriteEffects.None, 0);
+            return false;
+        }
+        int counter = 0;
+        public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
+        {
+            Texture2D texture = mod.GetTexture("NPCs/Boss/SubspaceSerpentBodyGlow");
+            Vector2 origin = new Vector2(texture.Width * 0.5f, npc.height * 0.5f);
+            Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition, npc.frame, Color.White, npc.rotation, origin, npc.scale, SpriteEffects.None, 0);
+            counter++;
+            if (counter > 12)
+                counter = 0;
+            for (int j = 0; j < 2; j++)
+            {
+                float bonusAlphaMult = 1 - 1 * (counter / 12f);
+                float dir = j * 2 - 1;
+                Vector2 offset = new Vector2(counter * 0.8f * dir, 0).RotatedBy(npc.rotation);
+                Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition + offset, npc.frame, new Color(100, 100, 100, 0) * bonusAlphaMult * ((255f - npc.alpha) / 255f), npc.rotation, origin, 1.00f, SpriteEffects.None, 0.0f);
+            }
         }
         public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position)
         {
-            return false;       //this make that the npc does not have a health bar
+            return false;   //this make that the npc does not have a health bar
         }
         public override void PostAI()
         {
             Lighting.AddLight(npc.Center, (255 - npc.alpha) * 2.5f / 255f, (255 - npc.alpha) * 1.6f / 255f, (255 - npc.alpha) * 2.4f / 255f);
             npc.timeLeft = 100000;
-
             if (currentDPS == -1)
                 currentDPS = maxDPS;
-
             if (currentDPS < maxDPS)
             {
                 currentDPS += (maxDPS / 60) * DPSregenRate;

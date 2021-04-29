@@ -55,17 +55,6 @@ namespace SOTS.Projectiles.Minions
 				current = previousPosition;
 			}
 		}
-		public sealed override void SetDefaults()
-		{
-			projectile.width = 32;
-			projectile.height = 32;
-			projectile.tileCollide = false;
-			projectile.friendly = true;
-			projectile.minion = true;
-			projectile.ignoreWater = true;
-			projectile.minionSlots = 1f;
-			projectile.penetrate = -1;
-		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
 			if (runOnce)
@@ -116,6 +105,17 @@ namespace SOTS.Projectiles.Minions
 				spriteBatch.Draw(texture, drawPos, null, color * 0.4f, projectile.rotation, drawOrigin, projectile.scale, SpriteEffects.None, 0f);
 			}
 			return true;
+		}
+		public sealed override void SetDefaults()
+		{
+			projectile.width = 32;
+			projectile.height = 32;
+			projectile.tileCollide = false;
+			projectile.friendly = true;
+			projectile.minion = true;
+			projectile.ignoreWater = true;
+			projectile.minionSlots = 1f;
+			projectile.penetrate = -1;
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{

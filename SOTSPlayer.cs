@@ -5,6 +5,7 @@ using SOTS.Items.Otherworld.EpicWings;
 using SOTS.Items.Otherworld.FromChests;
 using SOTS.Items.Pyramid;
 using SOTS.Items.SpecialDrops;
+using SOTS.NPCs.Boss;
 using SOTS.Projectiles.BiomeChest;
 using SOTS.Projectiles.Otherworld;
 using SOTS.Void;
@@ -1113,13 +1114,31 @@ namespace SOTS
 			SOTSPlayer.typhonBlacklist.Add(ModContent.ProjectileType<ArcColumn>());
 			SOTSPlayer.typhonBlacklist.Add(ModContent.ProjectileType<PhaseColumn>());
 			SOTSPlayer.typhonBlacklist.Add(ModContent.ProjectileType<MacaroniBeam>());
-
 			SOTSPlayer.typhonWhitelist.Add(ModContent.ProjectileType<HardlightArrow>());
 			base.Initialize();
         }
         public override bool PreItemCheck()
 		{
 			return base.PreItemCheck();
+        }
+        public override void ModifyScreenPosition()
+        {
+			for(int i = 0; i < 1000; i++)
+            {
+				Projectile projectile = Main.projectile[i];
+				if(projectile.type == ModContent.ProjectileType<Projectiles.Celestial.SubspaceEye>() && projectile.active)
+                {
+					int current = projectile.alpha;
+					if (current > 200)
+						current = 200;
+					float percent = projectile.alpha / 200f;
+					percent = 1 - percent;
+					Vector2 toSubEye = projectile.Center - player.Center;
+					Main.screenPosition += toSubEye * percent;
+					break;
+                }
+            }
+            base.ModifyScreenPosition();
         }
     }
 }

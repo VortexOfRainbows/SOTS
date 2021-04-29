@@ -11,18 +11,16 @@ namespace SOTS.NPCs.Boss
     {	
 		public override void SetStaticDefaults()
 		{
-			
 			DisplayName.SetDefault("Subspace Serpent");
-		}
+        }
         public override void SetDefaults()
         {
-            npc.width = 40;             
-            npc.height = 40;         
+            npc.width = 48;             
+            npc.height = 36;         
             npc.damage = 40;
             npc.defense = 50;
-            npc.lifeMax = 12312412;  //arbitrary
+            npc.lifeMax = 12312412;
             npc.knockBackResist = 0.0f;
-            //npc.behindTiles = true;
             npc.noTileCollide = true;
             npc.boss = true;
             npc.netAlways = true;
@@ -36,10 +34,45 @@ namespace SOTS.NPCs.Boss
             {
                 npc.buffImmune[i] = true;
             }
+            Main.npcFrameCount[npc.type] = 8;
         }
-		float ai2 = 0;
+        public override void FindFrame(int frameHeight)
+        {
+            NPC parent = Main.npc[(int)npc.ai[1]];
+            int frameHeight2 = 36;
+            int targetFrame = parent.frame.Y / frameHeight2;
+            int currentFrame = npc.frame.Y / frameHeight;
+            if (currentFrame != targetFrame)
+            {
+                npc.frameCounter++;
+                if (npc.frameCounter >= 4)
+                {
+                    currentFrame = targetFrame;
+                    npc.frameCounter = 0;
+                }
+            }
+            else
+            {
+                npc.frameCounter = 0;
+            }
+            if (currentFrame > 7)
+                currentFrame = 0;
+            npc.frame.Y = currentFrame * frameHeight;
+
+        }
+        float ai2 = 0;
         public override bool PreAI()
         {
+            if (glow > 0)
+                glow -= 0.5f;
+            if (runOnce)
+            {
+                for (int i = 0; i < trailPos.Length; i++)
+                {
+                    trailPos[i] = Vector2.Zero;
+                }
+                runOnce = false;
+            }
             if (npc.ai[3] > 0)
                 npc.realLife = (int)npc.ai[3];
             if (npc.target < 0 || npc.target == byte.MaxValue || Main.player[npc.target].dead)
@@ -58,32 +91,106 @@ namespace SOTS.NPCs.Boss
  
             if (npc.ai[1] < (double)Main.npc.Length)
             {
-                // We're getting the center of this NPC.
                 Vector2 npcCenter = new Vector2(npc.position.X + (float)npc.width * 0.5f, npc.position.Y + (float)npc.height * 0.5f);
-                // Then using that center, we calculate the direction towards the 'parent NPC' of this NPC.
                 float dirX = Main.npc[(int)npc.ai[1]].position.X + (float)(Main.npc[(int)npc.ai[1]].width / 2) - npcCenter.X;
                 float dirY = Main.npc[(int)npc.ai[1]].position.Y + (float)(Main.npc[(int)npc.ai[1]].height / 2) - npcCenter.Y;
-                // We then use Atan2 to get a correct rotation towards that parent NPC.
                 npc.rotation = (float)Math.Atan2(dirY, dirX) + 1.57f;
-                // We also get the length of the direction vector.
                 float length = (float)Math.Sqrt(dirX * dirX + dirY * dirY);
-                // We calculate a new, correct distance.
-                float dist = (length - (float)npc.width) / length;
+                float dist = (length - npc.height) / length;
                 float posX = dirX * dist;
                 float posY = dirY * dist;
- 
-                // Reset the velocity of this NPC, because we don't want it to move on its own
                 npc.velocity = Vector2.Zero;
-                // And set this NPCs position accordingly to that of this NPCs parent NPC.
                 npc.position.X = npc.position.X + posX;
                 npc.position.Y = npc.position.Y + posY;
             }
+            cataloguePos();
             return false;
         }
-		float ai1 = 0;
+        Vector2[] trailPos = new Vector2[12];
+        bool runOnce = true;
+        float glow = 14f;
+        public void cataloguePos()
+        {
+            Vector2 current = npc.Center + new Vector2(0, 20).RotatedBy(npc.rotation);
+            Vector2 velo = new Vector2(0, 20).RotatedBy(npc.rotation) * 0.1f;
+            for (int i = 0; i < trailPos.Length; i++)
+            {
+                if (trailPos[i] != Vector2.Zero)
+                    trailPos[i] += velo * (trailPos.Length - i) / (float)trailPos.Length;
+                Vector2 previousPosition = trailPos[i];
+                trailPos[i] = current;
+                current = previousPosition;
+            }
+        }
+        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        {
+            DrawTrail();
+            Texture2D texture = Main.npcTexture[npc.type];
+            Vector2 origin = new Vector2(texture.Width * 0.5f, npc.height * 0.5f);
+            Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition, npc.frame, lightColor, npc.rotation, origin, npc.scale, SpriteEffects.None, 0);
+            texture = mod.GetTexture("NPCs/Boss/SubspaceSerpentTailGlow");
+            origin = new Vector2(texture.Width * 0.5f, npc.height * 0.5f);
+            Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition, npc.frame, Color.White, npc.rotation, origin, npc.scale, SpriteEffects.None, 0);
+            counter++;
+            if (counter > 12)
+                counter = 0;
+            for (int j = 0; j < 2; j++)
+            {
+                float bonusAlphaMult = 1 - 1 * (counter / 12f);
+                float dir = j * 2 - 1;
+                Vector2 offset = new Vector2(counter * 0.8f * dir, 0).RotatedBy(npc.rotation);
+                Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition + offset, npc.frame, new Color(100, 100, 100, 0) * bonusAlphaMult * ((255f - npc.alpha) / 255f), npc.rotation, origin, 1.00f, SpriteEffects.None, 0.0f);
+            }
+            return false;
+        }
+        public void DrawTrail()
+        {
+            if (runOnce)
+                return;
+            Texture2D texture2 = mod.GetTexture("NPCs/Boss/SerpentTailTrail");
+            Vector2 drawOrigin2 = new Vector2(texture2.Width * 0.5f, texture2.Height * 0.5f);
+            Vector2 current = npc.Center + new Vector2(0, 20).RotatedBy(npc.rotation);
+            Vector2 previousPosition = current;
+            Color color = new Color(90, 120, 90, 0);
+            for (int k = 0; k < trailPos.Length; k++)
+            {
+                float scale = npc.scale * (trailPos.Length - k) / (float)trailPos.Length;
+                scale *= 1f;
+                if (trailPos[k] == Vector2.Zero)
+                {
+                    return;
+                }
+                Vector2 drawPos = trailPos[k] - Main.screenPosition;
+                Vector2 currentPos = trailPos[k];
+                Vector2 betweenPositions = previousPosition - currentPos;
+                if(betweenPositions.Length() > 120)
+                {
+                    return;
+                }
+                color *= 0.95f;
+                float max = betweenPositions.Length() / (4 * scale);
+                for (int i = 0; i < max; i++)
+                {
+                    drawPos = previousPosition + -betweenPositions * (i / max) - Main.screenPosition;
+                    for (int j = 0; j < 4; j++)
+                    {
+                        float x = Main.rand.Next(-10, 11) * 0.1f * scale;
+                        float y = Main.rand.Next(-10, 11) * 0.1f * scale;
+                        if (j <= 1)
+                        {
+                            x = 0;
+                            y = 0;
+                        }
+                        Main.spriteBatch.Draw(texture2, drawPos + new Vector2(x, y), null, color, npc.rotation, drawOrigin2, scale, npc.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f); ;
+                    }
+                }
+                previousPosition = currentPos;
+            }
+        }
+        int counter = 0;
+        float ai1 = 0;
         public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position)
         {
- 
             return false;       //this make that the npc does not have a health bar
         }
 		public override void PostAI()

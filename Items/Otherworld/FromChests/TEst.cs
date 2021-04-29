@@ -15,14 +15,13 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override void SetDefaults()
 		{
-			
 			item.CloneDefaults(279);
 			item.damage = 17;
 			item.thrown = true;
 			item.rare = 2;
 			item.autoReuse = true;            
-			item.shoot = mod.ProjectileType("ThunderColumn"); 
-            item.shootSpeed = 2f;
+			item.shoot = mod.ProjectileType("SubspaceEye"); 
+            item.shootSpeed = 0.0f;
 			item.consumable = true;
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
@@ -31,7 +30,7 @@ namespace SOTS.Items.Otherworld.FromChests
 			for (int i = 0; i < numberProjectiles; i++)
 			{
 				Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedBy(i * MathHelper.ToRadians(90));
-			    Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI, 3);
+			    Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI);
 			}
 			return false; 
 		}

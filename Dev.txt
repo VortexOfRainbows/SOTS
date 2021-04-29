@@ -11,15 +11,26 @@ The following is my development plans :D
 7. Chaos Spirit Boss: "Lux"
 8. Fix PPP hook wrong spot bug when cause is found
 9. Sharanga Hardmode upgrade
+10. Ghost Town to Evil Biome
 
 High Priority:
 1. Wormwood (Goopwood) Changes
+2. Change Catalyst bomb Recipe (make it craft at cheaper, with less stuff, and multiple)
+3. Remove negative Vregen in inventory items
+4. Frigid Hourglass: New ShSh (Icy) drop
+5. Subspace Servant's Ring, Handheld Gateway, Subspace Jar: New Subspace Serpent drop (choose one name)
+6. Prevent Advisor from Despawning when too far. Despawn when not in Planetarium. Nerf Lightning Column on entry to not deal damage.
+7. New Pharaoh Expert Drop: Heart in a Jar, aura of damage that releases ghosts
+	1. Spirit tracer becomes normal drop
+	2. Ghosts dash towards the enemy
+8. Resprites from HugeKraken
+9. Fix display for subspace serpent
 
-10. Aqua-Necro Core (Stronger necro chestplate, 1 ranged attack per second will gain a steam aura that does 33% damage rapidly)
-11. Riptide Trident (Launches you towards your cursor at the cost of void, deal damage while traveling, bounce off of enemies)
-14. Prismarine Necklace: Sharktooth Necklace + Heart of the Sea
-15. Wintry Traveler: Riptide Trident + Frigid Javelin
-16. Antigrav booties
+2. Aqua-Necro Core (Stronger necro chestplate, 1 ranged attack per second will gain a steam aura that does 33% damage rapidly)
+3. Riptide Trident (Launches you towards your cursor at the cost of void, deal damage while traveling, bounce off of enemies)
+4. Prismarine Necklace: Sharktooth Necklace + Heart of the Sea
+5. Wintry Traveler: Riptide Trident + Frigid Javelin
+6. Antigrav booties
 
 Mid Priority:
 1. Void Low Warning
@@ -41,8 +52,23 @@ Low Priority:
 5. Buff PP slam attack projectile speed? Faster ring attack cycle (expert)
 6. Sharanga Upgrade
 
-Boss Rework Ideas:
-Subspace Serpent cross attacks to attack faster and release lightning
+4/28/21
+1. Removed anti-cheese cause it's not actually practical
+2. Moving screen towards subspace glare achieve!
+
+4/27/21
+1. Animated Serpent, Serpent Trail, Some anti-cheese for dash attack
+
+4/23/21
+1. Noehtnap Effect!
+
+4/22/21
+1. Continued Rework
+	1. Made a lot of progress with the Wall of Worms attack.
+
+4/21/21
+1. Continued working on reworking the boss!
+	1. Made a lot of progress on laser wave attack.
 
 4/20/21
 1. Modified Planetarium Generation to make things no longer spawn out of bounds as often. Also added two biome chest items to the planetarium generation.
@@ -51,7 +77,13 @@ Subspace Serpent cross attacks to attack faster and release lightning
 	1. All items spawn correctly!
 4. Shield of Desecar/Stekpla rates adjusted. Spawns at 1/25 or 4% instead of 1/45.
 5. Buffed Pathogen Regurgitator shootspeed, 7.5 -> 10.5
-
+6. Began Subspace Serpent Rework:
+	1. Lightning added to cross attack:
+	2. Todo: Transition phase
+		3. 8 sided cross
+		4. Lightning cross more telegraphed and obvious
+		5. Can move the crosses at lower health, along with spawning an additional cross >:)
+	
 4/19/21
 1. Flux Slime banner added (nature slime hook and flux slime hook aren't effected, sadly can't get them to work properly)
 
