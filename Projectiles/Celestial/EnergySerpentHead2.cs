@@ -222,7 +222,7 @@ namespace SOTS.Projectiles.Celestial
 						dust.scale *= 3.5f;
 						dust.velocity *= 2.5f;
 					}
-					Vector2 velo = projectile.velocity.SafeNormalize(new Vector2(1, 0)).RotatedBy(MathHelper.ToRadians(90)) * 5.75f;// * (i * 2 - 1);
+					Vector2 velo = projectile.velocity.SafeNormalize(new Vector2(1, 0)).RotatedBy(MathHelper.ToRadians(90)) * 5.0f;// * (i * 2 - 1);
 					if (Main.netMode != 1)
 					{
 						Projectile.NewProjectile(projectile.Center, velo, ModContent.ProjectileType<InfernoPhaseBolt>(), projectile.damage, 0, Main.myPlayer);

@@ -15,9 +15,8 @@ The following is my development plans :D
 
 High Priority:
 1. Wormwood (Goopwood) Changes
-3. Remove negative Vregen in inventory items
-4. Frigid Hourglass: New ShSh (Icy) drop
-5. Subspace Locket: New Subspace Serpent drop (choose one name)
+4. Frigid Hourglass: New Icy drop
+5. Subspace Locket: New Subspace Serpent drop
 6. Prevent Advisor from Despawning when too far. Despawn when not in Planetarium. Nerf Lightning Column on entry to not deal damage.
 7. New Pharaoh Expert Drop: Heart in a Jar, aura of damage that releases ghosts
 	1. Spirit tracer becomes normal drop
@@ -25,8 +24,6 @@ High Priority:
 8. Resprites from HugeKraken
 9. Fix display for subspace serpent
 10. Glowmask for new Otherworld Construct
-12. Make Subspace Serpent work in multiplayer
-	1. Nerf spiral attack?
 
 2. Aqua-Necro Core (Stronger necro chestplate, 1 ranged attack per second will gain a steam aura that does 33% damage rapidly)
 3. Riptide Trident (Launches you towards your cursor at the cost of void, deal damage while traveling, bounce off of enemies)
@@ -54,9 +51,20 @@ Low Priority:
 4. Mobile Fortress Generator: One for every tavernkeep armor set
 5. Buff PP slam attack projectile speed? Faster ring attack cycle (expert)
 6. Sharanga Upgrade
+7. Remove negative Vregen in inventory items
 
-5/9/21
-1. 
+5/8/21 & 5/9/21
+1. Patchleather resprite, recipe requires less shadow scales/tissue samples
+	1. Patchleather chestplate and boots increases damage by 5% -> 10%
+	2. Pants -> Boots
+	3. Snakes lock onto the player and enemy more easily
+2. Nerfed Double dash from subspace by decreasing orange bullet speed
+3. Subspace Drop Reworks and Resprites:
+	1. Dance of Death:
+		1. Visuals overhauled
+		2. Damage 66 -> 90, all scythes have seperate i-frame counters now, don't slow down as much when hitting an enemy, die quicker
+		3. Sell Price 9 g -> 15 g	
+		4. Now has comparable damage to nebula stuff, but with different usability
 
 5/8/21
 1. Some subspace nerfs

@@ -9,18 +9,16 @@ namespace SOTS.Items.Pyramid
 	{
 		public override void SetDefaults()
 		{
-
-			item.width = 30;
-			item.height = 20;
+			item.width = 28;
+			item.height = 18;
 			item.value = Item.sellPrice(0, 0, 80, 0);
 			item.rare = 4;
 			item.defense = 4;
 		}
-
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Patch Leather Tunic");
-			Tooltip.SetDefault("Increases minion damage by 5%\nGrants immunity to venom and poison debuffs");
+			Tooltip.SetDefault("Increases minion damage by 10%\nGrants immunity to venom and poison debuffs");
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs)
         {
@@ -31,15 +29,15 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void UpdateEquip(Player player)
 		{
-			player.minionDamage += 0.05f;
-			player.buffImmune[20] = true;
-			player.buffImmune[70] = true;
+			player.minionDamage += 0.10f;
+			player.buffImmune[BuffID.Venom] = true;
+			player.buffImmune[BuffID.Poisoned] = true;
 		}
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(null, "Snakeskin", 28);
-			recipe.AddIngredient(ItemID.ShadowScale, 15);
+			recipe.AddIngredient(ItemID.ShadowScale, 10);
 			recipe.AddIngredient(ItemID.Leather, 10);
 			recipe.SetResult(this);
 			recipe.AddTile(TileID.Anvils);
@@ -47,7 +45,7 @@ namespace SOTS.Items.Pyramid
 			
 			recipe = new ModRecipe(mod);
 			recipe.AddIngredient(null, "Snakeskin", 28);
-			recipe.AddIngredient(ItemID.TissueSample, 15);
+			recipe.AddIngredient(ItemID.TissueSample, 10);
 			recipe.AddIngredient(ItemID.Leather, 10);
 			recipe.SetResult(this);
 			recipe.AddTile(TileID.Anvils);

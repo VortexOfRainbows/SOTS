@@ -28,7 +28,7 @@ namespace SOTS.Projectiles.Celestial
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Texture2D texture = mod.GetTexture("Projectiles/Otherworld/OtherworldlyBolt");
+			Texture2D texture = Main.projectileTexture[projectile.type];
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			for (int k = 0; k < projectile.oldPos.Length; k++)
 			{
@@ -49,15 +49,16 @@ namespace SOTS.Projectiles.Celestial
 		}
 		public override void Kill(int timeLeft)
 		{
-			for (int i = 0; i < 12; i++)
+			for (int i = 0; i < 20; i++)
 			{
 				int dust2 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, ModContent.DustType<CopyDust4>());
 				Dust dust = Main.dust[dust2];
-				dust.color = new Color(255, 130, 100, 0);
+				dust.color = new Color(255, 130, 0, 0);
 				dust.noGravity = true;
 				dust.fadeIn = 0.1f;
 				dust.scale *= 2.75f;
 				dust.velocity *= 2.5f;
+				dust.velocity -= projectile.velocity * 1.5f;
 			}
 		}
 		public override void OnHitPlayer(Player target, int damage, bool crit)
@@ -78,7 +79,7 @@ namespace SOTS.Projectiles.Celestial
 				projectile.rotation = projectile.velocity.ToRotation();
 				runOnce = false;
 			}
-			Vector2 varyingVelocity = new Vector2(-5f, 0).RotatedBy(MathHelper.ToRadians(projectile.ai[0] * 2.2f));
+			Vector2 varyingVelocity = new Vector2(-4f, 0).RotatedBy(MathHelper.ToRadians(projectile.ai[0] * 1.5f));
 			projectile.position += projectile.velocity + new Vector2(varyingVelocity.X, varyingVelocity.Y * 0.15f).RotatedBy(projectile.rotation);
 		}
 	}

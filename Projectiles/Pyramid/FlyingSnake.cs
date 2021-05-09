@@ -11,7 +11,6 @@ namespace SOTS.Projectiles.Pyramid
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Snakey Boi");
-			
 		}
         public override void SetDefaults()
         {
@@ -67,11 +66,11 @@ namespace SOTS.Projectiles.Pyramid
                 projectile.frameCounter = 0;
                 projectile.frame = (projectile.frame + 1) % 4;
             }
-			projectile.rotation = (float)Math.Atan2((double)projectile.velocity.Y, (double)projectile.velocity.X);
+			projectile.rotation = projectile.velocity.ToRotation();
 			projectile.spriteDirection = 1;
 			if(projectile.velocity.X < 0)
 			{
-				projectile.rotation = (float)Math.Atan2((double)projectile.velocity.Y, (double)projectile.velocity.X) - MathHelper.ToRadians(180);
+				projectile.rotation = projectile.velocity.ToRotation() - MathHelper.ToRadians(180);
 				projectile.spriteDirection = -1;
 			}
 			float minDist = 480;
@@ -114,7 +113,7 @@ namespace SOTS.Projectiles.Pyramid
 					NPC target = Main.npc[i];
 					if(target.CanBeChasedBy() && !foundTarget)
 					{
-						bool lineOfSight = Collision.CanHitLine(projectile.position, projectile.width, projectile.height, target.position, target.width, target.height);
+						bool lineOfSight = Collision.CanHitLine(projectile.Center, 4, 4, target.position, target.width, target.height);
 						dX = target.Center.X - projectile.Center.X;
 						dY = target.Center.Y - projectile.Center.Y;
 						distance = (float) Math.Sqrt((double)(dX * dX + dY * dY));
@@ -137,12 +136,13 @@ namespace SOTS.Projectiles.Pyramid
 					if(counter % 2 == 0)
 						projectile.netUpdate = true;
 				}
-				float playerdX = player.Center.X - projectile.Center.X;
-				float playerdY = player.Center.Y - projectile.Center.Y - 90;
-				Vector2 playerd = new Vector2(playerdX, playerdY) + new Vector2(0, -45).RotatedBy(MathHelper.ToRadians((unique * 120) + counter * 2));
-				float playerDistance = (float)Math.Sqrt((double)(playerd.X * playerd.X + playerd.Y * playerd.Y));
+				Vector2 circular = new Vector2(0, -48).RotatedBy(MathHelper.ToRadians((unique * 120) + counter * 2));
+				circular.Y *= 0.5f;
+				circular.Y -= 96f;
+				Vector2 playerd = player.Center + circular;
+				float playerDistance = Vector2.Distance(player.Center, projectile.Center);
 				
-				if (playerDistance > 1200f && !foundTarget)
+				if (playerDistance > 2100f && !foundTarget)
 				{
 					if (player.active == true)
 					{
@@ -159,7 +159,7 @@ namespace SOTS.Projectiles.Pyramid
 					projectile.tileCollide = true;
 				}
 
-				if (target2 != -1 && playerDistance <= 848 && distanceP <= 848)
+				if (target2 != -1 && playerDistance <= 1200 && distanceP <= 1200)
 				{
 					NPC toHit = Main.npc[target2];
 					if(toHit.active == true)
@@ -168,43 +168,27 @@ namespace SOTS.Projectiles.Pyramid
 						dY = toHit.Center.Y - projectile.Center.Y;
 						distance = (float)Math.Sqrt((double)(dX * dX + dY * dY));
 						speed /= distance;
-						projectile.velocity *= 0.996f;
+						projectile.velocity *= 0.994f;
 						projectile.velocity += new Vector2(dX * speed, dY * speed);
 					}
 				}
-				else if(playerDistance <= 400)
+				else
 				{
-					if(playerDistance <= 120)
+					Vector2 toPlayer = playerd - projectile.Center;
+					projectile.rotation = toPlayer.ToRotation();
+					if (toPlayer.X < 0)
 					{
-						if (player.active == true)
-						{
-							speed /= playerDistance;
-							projectile.velocity *= 0.8f;
-							if (speed > playerDistance * 0.6f)
-							{
-								speed = playerDistance * 0.6f;
-							}
-							projectile.velocity += new Vector2(playerd.X * speed, playerd.Y * speed);
-						}
+						projectile.rotation = toPlayer.ToRotation() - MathHelper.ToRadians(180);
+						projectile.spriteDirection = -1;
 					}
-					else
+					float dist = toPlayer.Length();
+					toPlayer = toPlayer.SafeNormalize(Vector2.Zero);
+					float speed2 = speed * 5 + dist * 0.005f;
+					if (speed2 > dist)
 					{
-						if (player.active == true)
-						{
-							speed /= playerDistance;
-							projectile.velocity *= 0.97f;
-							projectile.velocity += new Vector2(playerd.X * speed, playerd.Y * speed) * 1.2f;
-						}
+						speed2 = dist;
 					}
-				}
-				else if(playerDistance >= 200)
-				{
-					if(player.active == true)
-					{
-						speed /= playerDistance;
-						projectile.velocity *= 0.94f;
-						projectile.velocity += new Vector2(playerd.X * speed, playerd.Y * speed) * 1.2f;
-					}
+					projectile.velocity = toPlayer * speed2;
 				}
 			}
         }

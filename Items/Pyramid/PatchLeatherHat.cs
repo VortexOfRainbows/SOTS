@@ -10,20 +10,17 @@ namespace SOTS.Items.Pyramid
 	{	
 		public override void SetDefaults()
 		{
-
 			item.width = 28;
-			item.height = 16;
+			item.height = 14;
 			item.value = Item.sellPrice(0, 0, 80, 0);
 			item.rare = 4;
 			item.defense = 3;
 		}
-
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Patch Leather Hat");
-			Tooltip.SetDefault("Increases max minions");
+			Tooltip.SetDefault("Increases max minions by 1");
 		}
-		
 		public override bool IsArmorSet(Item head, Item body, Item legs)
         {
             return body.type == mod.ItemType("PatchLeatherTunic") && legs.type == mod.ItemType("PatchLeatherPants");
@@ -90,15 +87,13 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void UpdateEquip(Player player)
 		{
-			player.maxMinions += 1;
-			
+			player.maxMinions++;
 		}
-
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(null, "Snakeskin", 24);
-			recipe.AddIngredient(ItemID.ShadowScale, 12);
+			recipe.AddIngredient(ItemID.ShadowScale, 8);
 			recipe.AddIngredient(ItemID.Leather, 8);
 			recipe.SetResult(this);
 			recipe.AddTile(TileID.Anvils);
@@ -106,7 +101,7 @@ namespace SOTS.Items.Pyramid
 			
 			recipe = new ModRecipe(mod);
 			recipe.AddIngredient(null, "Snakeskin", 24);
-			recipe.AddIngredient(ItemID.TissueSample, 12);
+			recipe.AddIngredient(ItemID.TissueSample, 8);
 			recipe.AddIngredient(ItemID.Leather, 8);
 			recipe.SetResult(this);
 			recipe.AddTile(TileID.Anvils);
