@@ -12,14 +12,14 @@ namespace SOTS.Projectiles.Minions
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Vibrant Ring");
+			DisplayName.SetDefault("Thunder Ring");
 		}
 		public override void SetDefaults()
 		{
 			projectile.width = 48;
 			projectile.height = 48;
 			projectile.friendly = true;
-			projectile.melee = true;
+			projectile.melee = false;
 			projectile.timeLeft = 40;
 			projectile.tileCollide = false;
 			projectile.penetrate = -1;

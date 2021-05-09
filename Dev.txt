@@ -15,22 +15,25 @@ The following is my development plans :D
 
 High Priority:
 1. Wormwood (Goopwood) Changes
-2. Change Catalyst bomb Recipe (make it craft at cheaper, with less stuff, and multiple)
 3. Remove negative Vregen in inventory items
 4. Frigid Hourglass: New ShSh (Icy) drop
-5. Subspace Servant's Ring, Handheld Gateway, Subspace Jar: New Subspace Serpent drop (choose one name)
+5. Subspace Locket: New Subspace Serpent drop (choose one name)
 6. Prevent Advisor from Despawning when too far. Despawn when not in Planetarium. Nerf Lightning Column on entry to not deal damage.
 7. New Pharaoh Expert Drop: Heart in a Jar, aura of damage that releases ghosts
 	1. Spirit tracer becomes normal drop
 	2. Ghosts dash towards the enemy
 8. Resprites from HugeKraken
 9. Fix display for subspace serpent
+10. Glowmask for new Otherworld Construct
+12. Make Subspace Serpent work in multiplayer
+	1. Nerf spiral attack?
 
 2. Aqua-Necro Core (Stronger necro chestplate, 1 ranged attack per second will gain a steam aura that does 33% damage rapidly)
 3. Riptide Trident (Launches you towards your cursor at the cost of void, deal damage while traveling, bounce off of enemies)
 4. Prismarine Necklace: Sharktooth Necklace + Heart of the Sea
 5. Wintry Traveler: Riptide Trident + Frigid Javelin
 6. Antigrav booties
+7. Tangle staff visuals to not work on worms
 
 Mid Priority:
 1. Void Low Warning
@@ -51,6 +54,39 @@ Low Priority:
 4. Mobile Fortress Generator: One for every tavernkeep armor set
 5. Buff PP slam attack projectile speed? Faster ring attack cycle (expert)
 6. Sharanga Upgrade
+
+5/9/21
+1. 
+
+5/8/21
+1. Some subspace nerfs
+2. Drastically lowered crafting cost for Catalyst bomb and Celestial Torch
+3. Subspace serpent works in multiplayer!
+4. 
+
+5/7/21
+1. More subspace! Darkness attacks work! almost done!
+2. Work on fire projectile.
+3. SUBSPACE SERPENT REWORK COMPLETE?
+
+5/6/21
+1. Otherworldly Spirit staff to chest pools
+2. More subspace serpent boss stuff
+	1. To fix issue: npc.ai[3] (ai4) needs to be changed for the eye attacks (darkness attacks)
+
+5/5/21
+1. Began working on second phase wall attack. Created a few projectiles.
+
+5/2/21 & 5/3/21
+1. Second phase dash attack
+2. Fixed bug with Heart of the Sea
+
+5/1/21
+1. Second phase cross attack.
+
+4/29/21
+1. More work on serpent attacks
+2. Phase 2 transition completed
 
 4/28/21
 1. Removed anti-cheese cause it's not actually practical

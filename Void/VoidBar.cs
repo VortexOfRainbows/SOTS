@@ -186,7 +186,7 @@ namespace SOTS.Void
 					spriteBatch.Draw(divider, rectangles[i], colors[i]);
 				}
 			}
-			barAmount.Width.Set(quotient * 188, 0f);
+			barAmount.Width.Set((int)(quotient * 188 + 1f), 0f);
 			if(voidPlayer.lootingSouls > 0)
 			{
 				barAmount3.Width.Set(quotient2 * 188, 0f);

@@ -19,9 +19,10 @@ Currents Stuctures:
 Credits:
 (Current Developers)
 Programmer, Art, Direction: Vortex#6230
+Emotional Support, Direction, Art: TacoBurritoGuacamole
 Art: Blasfah, HugeKraken
-Misc, Direction, Art: TacoBurritoGuacamole
 Music: BananaLizard
+Testers: DreadSoul
 
 (Past Developers)
 Misc, Direction: FlameFreezer
@@ -38,6 +39,7 @@ Update 0.19.2
 -More Items
 -New Worldgen structure in the Ocean
 -Putrid Pinky Reworks, both visual and functional
+-Subspace Serpent has been completely reworked
 -Many item reworks, both visual and functional
 
 Update 0.19.1

@@ -83,11 +83,11 @@ namespace SOTS.Projectiles.Celestial
 			projectile.netUpdate = true;
 			if(target.life <= 2500)
 			{
-            target.immune[projectile.owner] = 12;
+				target.immune[projectile.owner] = 12;
 			}
 			else
 			{
-            target.immune[projectile.owner] = 9;
+				target.immune[projectile.owner] = 9;
 			}
 		}
 		public override void Kill(int timeLeft)

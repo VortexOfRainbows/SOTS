@@ -20,7 +20,7 @@ namespace SOTS.Projectiles.Celestial
             projectile.tileCollide = false;
             projectile.width = 0;
             projectile.height = 0;
-            projectile.timeLeft = 1200;
+            projectile.timeLeft = 1400;
             projectile.hide = true; // Prevents projectile from being drawn normally. Use in conjunction with DrawBehind.
         }
         public override void DrawBehind(int index, List<int> drawCacheProjsBehindNPCsAndTiles, List<int> drawCacheProjsBehindNPCs, List<int> drawCacheProjsBehindProjectiles, List<int> drawCacheProjsOverWiresUI)
@@ -29,15 +29,22 @@ namespace SOTS.Projectiles.Celestial
         }
         private List<Vector3> lightSpots = new List<Vector3>();
         private int fadeInTimer = 0;
+        int counter = 0;
         public override void AI()
         {
             //Main.NewText(projectile.timeLeft);
-            projectile.ai[1]++;
+            counter++;
             NPC master = Main.npc[(int)projectile.ai[0]];
-            if(master.active && master.type == ModContent.NPCType<NPCs.Boss.SubspaceEye>())
+            if(master.active && (master.type == ModContent.NPCType<NPCs.Boss.SubspaceEye>() || master.type == ModContent.NPCType<NPCs.Boss.SubspaceSerpentHead>()) && (master.ai[3] != -1 || projectile.ai[1] == -1))
             {
-                projectile.timeLeft = 257;
+                if ((int)projectile.ai[1] != -1)
+                    projectile.timeLeft = 257;
                 projectile.Center = master.Center;
+            }
+            else
+            {
+                if (projectile.timeLeft > 257)
+                    projectile.timeLeft = 257;
             }
             if (projectile.timeLeft < 255)
             {
@@ -54,6 +61,8 @@ namespace SOTS.Projectiles.Celestial
                 {
                     fadeInTimer++;
                 }
+                if (fadeInTimer > 255)
+                    fadeInTimer = 255;
             }
             projectile.alpha = fadeInTimer;
             if (Main.netMode != 1)
@@ -73,14 +82,30 @@ namespace SOTS.Projectiles.Celestial
             {
                 Vector2 spotCoords = new Vector2(spot.X, spot.Y);
                 float size = spot.Z / scale;
-                for (float localX = -size; localX < size; localX++)
+                float sizeX = size;
+                float sizeY = size;
+                int alphaBase = 255;
+                int alphaScale = 4;
+                if ((int)projectile.ai[1] == -1)
                 {
-                    for (float localY = -size; localY < size; localY++)
+                    alphaBase = 0;
+                    alphaScale = 3;
+                    sizeX = Main.screenWidth / 2 / scale + 200;
+                }
+                for (float localX = -sizeX; localX < sizeX; localX++)
+                {
+                    for (float localY = -sizeY; localY < sizeY; localY++)
                     {
                         float distFromCenter = new Vector2(localX, localY).Length();
+                        if ((int)projectile.ai[1] == -1)
+                            distFromCenter = Math.Abs(localY);
                         if (distFromCenter < size)
                         {
-                            float alpha = size + 255 - (distFromCenter * 4);
+                            float alpha = size + alphaBase - (distFromCenter * alphaScale);
+                            if (alpha > 255)
+                                alpha = 255;
+                            if (alpha < 0)
+                                alpha = 0;
                             int x = (int)spotCoords.X + (int)localX;
                             int y = (int)spotCoords.Y + (int)localY;
                             int loc = x + y * width;
@@ -103,7 +128,6 @@ namespace SOTS.Projectiles.Celestial
                 }
             }
         }
-
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
             if (!projectile.active)
@@ -124,23 +148,14 @@ namespace SOTS.Projectiles.Celestial
                 }
             }
 
-            if(projectile.ai[1] < 5 || projectile.timeLeft < 5)
+            if(counter < 5 || projectile.timeLeft < 5)
             {
                 lightsUpdate(true); //reset color
                 lightSpots = new List<Vector3>();
-                lightSpots.Add(new Vector3((drawPlayer.Center.X - Main.screenPosition.X) / scale, (drawPlayer.Center.Y - Main.screenPosition.Y) / scale, 1560f));
-                NPC master = Main.npc[(int)projectile.ai[0]];
-                if (master.ai[3] > 0)
-                {
-                    lightSpots.Add(new Vector3((master.Center.X - Main.screenPosition.X) / scale, (master.Center.Y - Main.screenPosition.Y) / scale, master.ai[3]));
-                }
-                /* for (int i = 0; i < Main.projectile.Length; i++)
-                {
-                    if (Main.projectile[i].active && (Main.projectile[i].type == mod.ProjectileType("EtimsicCannon") || Main.projectile[i].type == mod.ProjectileType("EtimsicWall")) && Main.projectile[i].ai[1] == 1)
-                    {
-                        lightSpots.Add(new Vector3((Main.projectile[i].Center.X - Main.screenPosition.X) / scale, (Main.projectile[i].Center.Y - Main.screenPosition.Y) / scale, 40));
-                    }
-                } */
+                if((int)projectile.ai[1] == 0)
+                    lightSpots.Add(new Vector3((drawPlayer.Center.X - Main.screenPosition.X) / scale, (drawPlayer.Center.Y - Main.screenPosition.Y) / scale, 1560f));
+                else if ((int)projectile.ai[1] == -1)
+                    lightSpots.Add(new Vector3((drawPlayer.Center.X - Main.screenPosition.X) / scale, (drawPlayer.Center.Y - Main.screenPosition.Y) / scale, 1280f));
                 lightsUpdate(false); //now that we have lights make them transparent
             }
             Texture2D TheShadow = new Texture2D(Main.graphics.GraphicsDevice, width, height);

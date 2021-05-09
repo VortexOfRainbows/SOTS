@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework;
 using static SOTS.SOTS;
 using System.Collections.Generic;
 using SOTS.Projectiles.Minions;
+using SOTS.Buffs;
 
 namespace SOTS.Void
 {
@@ -383,6 +384,12 @@ namespace SOTS.Void
 				{
 					voidMeter = -150;
 				}
+			}
+			if (player.HasBuff(ModContent.BuffType<SulfurBurn>()))
+			{
+				if(voidRegen > 0)
+					voidRegen *= 0.5f;
+				voidRegen -= 100f;
 			}
 		}
 		public override float UseTimeMultiplier(Item item)

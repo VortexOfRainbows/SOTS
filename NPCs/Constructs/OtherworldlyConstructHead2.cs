@@ -24,8 +24,8 @@ namespace SOTS.NPCs.Constructs
 			npc.damage = 45; 
 			npc.defense = 16;  
 			npc.knockBackResist = 0.1f;
-			npc.width = 70;
-			npc.height = 82;
+			npc.width = 72;
+			npc.height = 74;
 			Main.npcFrameCount[npc.type] = 1;  
 			npc.value = 12550;
 			npc.npcSlots = 5f;

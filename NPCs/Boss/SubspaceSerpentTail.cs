@@ -36,6 +36,10 @@ namespace SOTS.NPCs.Boss
             }
             Main.npcFrameCount[npc.type] = 8;
         }
+        public override bool CanHitPlayer(Player target, ref int cooldownSlot)
+        {
+            return !npc.dontTakeDamage;
+        }
         public override void FindFrame(int frameHeight)
         {
             NPC parent = Main.npc[(int)npc.ai[1]];
@@ -55,10 +59,16 @@ namespace SOTS.NPCs.Boss
             {
                 npc.frameCounter = 0;
             }
+            npc.alpha = parent.alpha;
+            npc.dontTakeDamage = parent.dontTakeDamage;
             if (currentFrame > 7)
                 currentFrame = 0;
             npc.frame.Y = currentFrame * frameHeight;
 
+        }
+        public override bool CheckActive()
+        {
+            return false;
         }
         float ai2 = 0;
         public override bool PreAI()
@@ -104,6 +114,10 @@ namespace SOTS.NPCs.Boss
                 npc.position.Y = npc.position.Y + posY;
             }
             cataloguePos();
+            if (Main.netMode != 1)
+            {
+                npc.netUpdate = true;
+            }
             return false;
         }
         Vector2[] trailPos = new Vector2[12];
@@ -124,13 +138,28 @@ namespace SOTS.NPCs.Boss
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
-            DrawTrail();
-            Texture2D texture = Main.npcTexture[npc.type];
+            Texture2D texture = mod.GetTexture("NPCs/Boss/SubspaceSerpentTailFill");
             Vector2 origin = new Vector2(texture.Width * 0.5f, npc.height * 0.5f);
-            Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition, npc.frame, lightColor, npc.rotation, origin, npc.scale, SpriteEffects.None, 0);
+            NPC head = Main.npc[npc.realLife];
+            SubspaceSerpentHead subHead = head.modNPC as SubspaceSerpentHead;
+            bool phase2 = subHead.hasEnteredSecondPhase;
+            if (phase2)
+            {
+                Color color = new Color(phase2 ? 0 : 255, phase2 ? 255 : 0, 0);
+                for (int i = 0; i < 2; i++)
+                {
+                    int direction = i * 2 - 1;
+                    Vector2 toTheSide = new Vector2(2 * direction, 0).RotatedBy(npc.rotation);
+                    Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition + toTheSide, npc.frame, color * ((255f - npc.alpha) / 255f) * ((255f - npc.alpha) / 255f), npc.rotation, origin, 1f, SpriteEffects.None, 0);
+                }
+            }
+            DrawTrail();
+            texture = Main.npcTexture[npc.type];
+            origin = new Vector2(texture.Width * 0.5f, npc.height * 0.5f);
+            Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition, npc.frame, lightColor * ((255f - npc.alpha) / 255f), npc.rotation, origin, npc.scale, SpriteEffects.None, 0);
             texture = mod.GetTexture("NPCs/Boss/SubspaceSerpentTailGlow");
             origin = new Vector2(texture.Width * 0.5f, npc.height * 0.5f);
-            Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition, npc.frame, Color.White, npc.rotation, origin, npc.scale, SpriteEffects.None, 0);
+            Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition, npc.frame, Color.White * ((255f - npc.alpha) / 255f), npc.rotation, origin, npc.scale, SpriteEffects.None, 0);
             counter++;
             if (counter > 12)
                 counter = 0;
@@ -181,7 +210,7 @@ namespace SOTS.NPCs.Boss
                             x = 0;
                             y = 0;
                         }
-                        Main.spriteBatch.Draw(texture2, drawPos + new Vector2(x, y), null, color, npc.rotation, drawOrigin2, scale, npc.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f); ;
+                        Main.spriteBatch.Draw(texture2, drawPos + new Vector2(x, y), null, color * ((255f - npc.alpha) / 255f), npc.rotation, drawOrigin2, scale, npc.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f); ;
                     }
                 }
                 previousPosition = currentPos;

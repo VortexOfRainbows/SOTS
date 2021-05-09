@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
-using Terraria.ID;
+using SOTS.Buffs;
 
 namespace SOTS.Projectiles.Celestial
 {    
@@ -92,7 +92,7 @@ namespace SOTS.Projectiles.Celestial
 		}
 		public override void OnHitPlayer(Player target, int damage, bool crit) 
 		{
-			target.AddBuff(39, 120, false); //cursed flames
+			target.AddBuff(ModContent.BuffType<AbyssalInferno>(), 60, false);
 		}
 	}
 }

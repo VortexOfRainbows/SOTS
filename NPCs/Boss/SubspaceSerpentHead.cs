@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Buffs;
 using SOTS.Dusts;
 using SOTS.Projectiles.Celestial;
 using Terraria;
@@ -56,6 +57,7 @@ namespace SOTS.NPCs.Boss
             npc.value = 100000;
             npc.npcSlots = 25;
             npc.netAlways = true;
+            npc.target = -1;
             music = MusicID.Boss2;
             for (int i = 0; i < Main.maxBuffTypes; i++)
             {
@@ -64,6 +66,14 @@ namespace SOTS.NPCs.Boss
             //npc.aiStyle = 6;
             bossBag = mod.ItemType("SubspaceBag");
             Main.npcFrameCount[npc.type] = 8;
+        }
+        public override bool CanHitPlayer(Player target, ref int cooldownSlot)
+        {
+            return !npc.dontTakeDamage;
+        }
+        public override bool CheckActive()
+        {
+            return false;
         }
         public override void BossLoot(ref string name, ref int potionType)
         {
@@ -82,7 +92,7 @@ namespace SOTS.NPCs.Boss
         }
         public override bool PreAI()
         {
-            if (Main.netMode != 1)
+            if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 if (npc.ai[0] == 0)
                 {
@@ -92,12 +102,12 @@ namespace SOTS.NPCs.Boss
                     for (int i = 0; i < randomWormLength; ++i)
                     {
                         latestNPC = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, mod.NPCType("SubspaceSerpentBody"), npc.whoAmI, 0, latestNPC);
-                        Main.npc[(int)latestNPC].realLife = npc.whoAmI;
-                        Main.npc[(int)latestNPC].ai[3] = npc.whoAmI;
+                        Main.npc[latestNPC].realLife = npc.whoAmI;
+                        Main.npc[latestNPC].ai[3] = npc.whoAmI;
                     }
                     latestNPC = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, mod.NPCType("SubspaceSerpentTail"), npc.whoAmI, 0, latestNPC);
-                    Main.npc[(int)latestNPC].realLife = npc.whoAmI;
-                    Main.npc[(int)latestNPC].ai[3] = npc.whoAmI;
+                    Main.npc[latestNPC].realLife = npc.whoAmI;
+                    Main.npc[latestNPC].ai[3] = npc.whoAmI;
 
                     // We're setting npc.ai[0] to 1, so that this 'if' is not triggered again.
                     npc.ai[0] = 1;
@@ -185,9 +195,18 @@ namespace SOTS.NPCs.Boss
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
         {
-            Texture2D texture = Main.npcTexture[npc.type];
+            Texture2D texture = mod.GetTexture("NPCs/Boss/SubspaceSerpentHeadFill");
             Vector2 origin = new Vector2(texture.Width * 0.5f, npc.height * 0.5f);
-            Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition, npc.frame, drawColor, npc.rotation, origin, npc.scale, SpriteEffects.None, 0);
+            if (hasEnteredSecondPhase)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    Vector2 toTheSide = new Vector2(2, 0).RotatedBy(npc.rotation + MathHelper.ToRadians(i * -90));
+                    Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition + toTheSide, npc.frame, new Color(0, 255, 0) * ((255f - npc.alpha) / 255f) * ((255f - npc.alpha) / 255f), npc.rotation, origin, 1f, SpriteEffects.None, 0);
+                }
+            }
+            texture = Main.npcTexture[npc.type];
+            Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition, npc.frame, drawColor * ((255f - npc.alpha) / 255f), npc.rotation, origin, npc.scale, SpriteEffects.None, 0);
             return false;
         }
         int counter = 0;
@@ -195,7 +214,7 @@ namespace SOTS.NPCs.Boss
         {
             Texture2D texture = mod.GetTexture("NPCs/Boss/SubspaceSerpentHeadGlow");
             Vector2 origin = new Vector2(texture.Width * 0.5f, npc.height * 0.5f);
-            Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition, npc.frame, Color.White, npc.rotation, origin, npc.scale, SpriteEffects.None, 0);
+            Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition, npc.frame, Color.White * ((255f - npc.alpha) / 255f), npc.rotation, origin, npc.scale, SpriteEffects.None, 0);
             counter++;
             if (counter > 12)
                 counter = 0;
@@ -217,16 +236,17 @@ namespace SOTS.NPCs.Boss
             npc.lifeMax = (int)(npc.lifeMax * bossLifeScale * 0.75f);  //boss life scale in expertmode
             npc.damage = 160;
         }
+        public bool hasEnteredSecondPhase = false;
         bool runOnce = true;
         float rotate = 0;
         public void TransitionPhase(int Tphase)
         {
             if (Tphase == 0)
             {
-                ai1 = 480;
+                ai1 = 540;
                 ai2 = 0;
-                ai3 = 0;
-                ai4 = 0;
+                ai3 = 300;
+                ai4 = -1;
             }
             if (Tphase == 1)
             {
@@ -248,7 +268,18 @@ namespace SOTS.NPCs.Boss
                 ai1 = 2000;
                 ai2 = 0;
                 ai3 = 0;
+                ai4 = 1;
+            }
+            if (Tphase == 5)
+            {
+                ai1 = 510;
+                ai2 = 0;
+                ai3 = 0;
                 ai4 = 0;
+            }
+            else
+            {
+                npc.dontTakeDamage = false;
             }
             phase = Tphase;
         }
@@ -259,7 +290,7 @@ namespace SOTS.NPCs.Boss
             if (directVelo.X < 0)
                 targetFrame = 4;
             int currentFrame = npc.frame.Y / frameHeight;
-            if(currentFrame != targetFrame)
+            if(currentFrame != targetFrame || (phase == 4 || (phase == 0 && hasEnteredSecondPhase && ai3 < 250 && ai3 > 160)))
             {
                 npc.frameCounter++;
                 if(npc.frameCounter >= 6)
@@ -275,37 +306,116 @@ namespace SOTS.NPCs.Boss
             if (currentFrame > 7)
                 currentFrame = 0;
             npc.frame.Y = currentFrame * frameHeight;
-
         }
         public override void AI()
         {
             Player player = Main.player[npc.target];
-            npc.TargetClosest(false);
+            if (npc.target < 0 || npc.target == (int)byte.MaxValue || (player.dead || !player.active))
+            {
+                npc.TargetClosest(true);
+                player = Main.player[npc.target];
+                npc.netUpdate = true;
+            }
+            npc.spriteDirection = 1;
             rotate++;
             if (runOnce)
             {
-                left = player.Center.X < Main.spawnTileX * 16;
-                ai1 = 360;
+                hasEnteredSecondPhase = false;
+                left = player.Center.X < (Main.maxTilesX / 2) * 16;
                 runOnce = false;
                 rotate = Main.rand.Next(120);
+                TransitionPhase(0);
             }
             if (phase == 0)
             {
                 ai1--;
                 if (ai1 <= 0)
                 {
-                    TransitionPhase(1);
+                    float mult = 0.6f;
+                    if (Main.expertMode)
+                        mult = 0.65f;
+                    if (npc.life < npc.lifeMax * mult && !hasEnteredSecondPhase)
+                    {
+                        TransitionPhase(5);
+                    }
+                    else
+                        TransitionPhase(1);
                     return;
+                }
+                if(hasEnteredSecondPhase)
+                {
+                    rotate++;
+                    ai3--;
+                    if(ai3 > 190 && ai3 < 250)
+                    {
+                        directVelo *= 0.94f;
+                    }
+                    if(ai3 == 200)
+                    {
+                        prevLocation = player.Center;
+                    }
+                    if(ai3 == 190)
+                    {
+                        Vector2 goTo = prevLocation - npc.Center;
+                        directVelo = goTo.SafeNormalize(Vector2.Zero) * 24f;
+                        Main.PlaySound(SoundID.Roar, (int)npc.Center.X, (int)npc.Center.Y, 0, 0.8f);
+                        if (Main.netMode != 1)
+                        {
+                            for(int i = 0; i < 16; i++)
+                            {
+                                Vector2 bulletSpread = new Vector2(15, 0).RotatedBy(MathHelper.ToRadians(i * 22.5f));
+                                bulletSpread.Y -= 3.5f;
+                                int damage2 = npc.damage / 2;
+                                if (Main.expertMode)
+                                {
+                                    damage2 = (int)(damage2 / Main.expertDamage);
+                                }
+                                Projectile.NewProjectile(npc.Center, bulletSpread, ModContent.ProjectileType<SubspaceLingeringFlame>(), (int)(damage2 * 0.75f), 0, Main.myPlayer);
+                            }
+                        }
+                    }
+                    if(ai3 <= 190 && ai3 > 160 && ai3 % 3 == 0)
+                    {
+                        if (Main.netMode != 1)
+                        {
+                            int damage2 = npc.damage / 2;
+                            if (Main.expertMode)
+                            {
+                                damage2 = (int)(damage2 / Main.expertDamage);
+                            }
+                            Vector2 goTo = player.Center - npc.Center;
+                            Vector2 velocity = goTo.SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-45.5f, 45.5f)));
+                            Projectile.NewProjectile(npc.Center + velocity * 32, velocity * 11.5f + new Vector2(0, -4.5f), ModContent.ProjectileType<SubspaceLingeringFlame>(), (int)(damage2 * 0.75f), 0, Main.myPlayer);
+                        }
+                    }
+                    if (ai3 < 160)
+                        ai3 = 250;
                 }
             }
             if (phase == 1)
             {
+                Vector2 playerCenter = player.Center;
+                float num = 1;
+                for (int i = 0; i < Main.maxPlayers; i++)
+                {
+                    Player target = Main.player[i];
+                    if (player.whoAmI != target.whoAmI && !target.dead && target.ZoneUnderworldHeight && Vector2.Distance(target.Center, npc.Center) < 2000)
+                    {
+                        playerCenter += target.Center;
+                        num++;
+                    }
+                }
+                playerCenter = playerCenter /= num;
                 ai1--;
                 int numCrosses = 2;
-                if (Main.expertMode && Main.rand.NextBool(3))
+                if (Main.expertMode && Main.rand.NextBool(4) && !hasEnteredSecondPhase)
                     numCrosses++;
-                CircularAttack(30, numCrosses);
-                if (ai1 <= 0)
+                if (Main.expertMode && Main.rand.NextBool(10) && hasEnteredSecondPhase)
+                    numCrosses++;
+                if (hasEnteredSecondPhase)
+                    numCrosses++;
+                CircularAttack(playerCenter, 30, numCrosses);
+                if (ai1 <= 0 ||(hasEnteredSecondPhase && ai1 < 120))
                 {
                     TransitionPhase(2);
                     return;
@@ -314,20 +424,25 @@ namespace SOTS.NPCs.Boss
             if (phase == 2)
             {
                 ai1--;
-                Vector2 toPlayer = player.Center - npc.Center;
-                float dist = toPlayer.Length();
+                int max = 6;
+                if (hasEnteredSecondPhase)
+                    max = 4;
                 if (ai1 <= 0)
                 {
-                    if (ai4 > 6)
+                    if (ai4 > max)
                     {
                         TransitionPhase(3);
                         return;
                     }
-                    else if (dist > 1500)
+                    else // if (dist > 1500)
                     {
                         ai1 = 250;
                         prevLocation = DoIndicator(Main.rand.Next(-120, 121), Main.rand.Next(-14, 15), Main.rand.Next(-120, 121));
                     }
+                }
+                else if(ai1 == 240 && hasEnteredSecondPhase)
+                {
+                    DoIndicator(ai3, Main.rand.Next(-14, 15), 0, false, true);
                 }
                 else if (ai1 == 140)
                 {
@@ -336,7 +451,6 @@ namespace SOTS.NPCs.Boss
                     ai3 *= -1;
                     ai4++;
                     savedir = prevdir;
-
                     /*
                     #region make sure it is going towards the player lol
                     Vector2 velo = savedir.RotatedBy(MathHelper.ToRadians(90)) * 0.8f;
@@ -366,8 +480,7 @@ namespace SOTS.NPCs.Boss
                         savedir *= -1;
                     #endregion
                     */
-
-                    if (ai4 <= 6)
+                    if (ai4 <= max)
                         ai1 = 0;
                 }
                 ai2++;
@@ -384,17 +497,15 @@ namespace SOTS.NPCs.Boss
                         dust.velocity *= 2.5f;
                     }
                     //for (int i = 0; i < 2; i++)
+                    Vector2 velo = savedir.RotatedBy(MathHelper.ToRadians(90)) * 0.8f;// * (i * 2 - 1);
+                    if (Main.netMode != 1)
                     {
-                        Vector2 velo = savedir.RotatedBy(MathHelper.ToRadians(90)) * 0.8f;// * (i * 2 - 1);
-                        if (Main.netMode != 1)
+                        int damage2 = npc.damage / 2;
+                        if (Main.expertMode)
                         {
-                            int damage2 = npc.damage / 2;
-                            if (Main.expertMode)
-                            {
-                                damage2 = (int)(damage2 / Main.expertDamage);
-                            }
-                            Projectile.NewProjectile(npc.Center, velo, ModContent.ProjectileType<CellBlast>(), (int)(damage2 * 0.75f), 0, Main.myPlayer);
+                            damage2 = (int)(damage2 / Main.expertDamage);
                         }
+                        Projectile.NewProjectile(npc.Center, velo, ModContent.ProjectileType<CellBlast>(), (int)(damage2 * 0.75f), 0, Main.myPlayer);
                     }
                 }
             }
@@ -406,17 +517,18 @@ namespace SOTS.NPCs.Boss
                 {
                     ai1 = 1900;
                     prevLocation = player.Center;
-                    prevLocation = DoIndicator(worldSide, 540 + ai2, 0, true);
+                    prevLocation = DoIndicator(worldSide, 540 + ai2, 0, true, false);
                 }
                 else if(ai1 <= 1850 && ai1 > 1750 && ai1 % 10 == 0)
                 { 
                     ai2 += 100;
-                    DoIndicator(worldSide, ai2, 0, true);
+                    DoIndicator(worldSide, ai2, 0, true, hasEnteredSecondPhase);
                 }
                 if (ai1 == 1760)
                 {
                     DoDash(1, true);
-                    SerpentRing();
+                    if(!hasEnteredSecondPhase)
+                        SerpentRing();
                 }
                 if (ai1 <= 1710)
                 {
@@ -432,40 +544,280 @@ namespace SOTS.NPCs.Boss
                 int worldSide = left ? 1 : -1;
                 if (ai1 <= 2000 && ai1 > 1900 && ai1 % 10 == 0)
                 {
-                    ai4 += 100;
-                    DoIndicator(-worldSide, ai4, ModContent.ProjectileType<EnergySerpentHead>(), true);
+                    if ((int)ai1 == 1980)
+                    {
+                        if (hasEnteredSecondPhase)
+                            Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<Projectiles.Celestial.SubspaceEye>(), 0, 0, Main.myPlayer, npc.whoAmI, -1);
+                    }
+                    ai3 += 100;
+                    DoIndicator(-worldSide, ai3, ModContent.ProjectileType<EnergySerpentHead>(), true);
                 }
-                ai1--;
-                if (ai1 < 1900 && ai1 % 10 == 0 && !player.dead && player.ZoneUnderworldHeight)
+                if ((int)ai1 == 1900)
+                    Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<Projectiles.Celestial.SubspaceEyeWall>(), 0, (hasEnteredSecondPhase ? 1 : 0), Main.myPlayer, npc.whoAmI, worldSide);
+                if(ai1 < 1800 && ai2 % 20 <= 1 && Main.netMode != 1)
                 {
-                    if(player.Center.X > npc.Center.X && !left)
+                    for (int i = 0; i < Main.maxPlayers; i++)
                     {
-                        Projectile.NewProjectile(player.Center + new Vector2(0, 800), new Vector2(0, -36), ModContent.ProjectileType<EnergySerpentHead>(), 1000, 0, Main.myPlayer, 12, -2);
-                    }
-                    if (player.Center.X < npc.Center.X && left)
-                    {
-                        Projectile.NewProjectile(player.Center + new Vector2(0, 800), new Vector2(0, -36), ModContent.ProjectileType<EnergySerpentHead>(), 1000, 0, Main.myPlayer, 12, -2);
+                        Player target = Main.player[i];
+                        if (!target.dead && target.ZoneUnderworldHeight)
+                        {
+                            if (target.Center.X - 64 > npc.Center.X && !left)
+                            {
+                                target.AddBuff(ModContent.BuffType<SulfurBurn>(), 20);
+                                Projectile.NewProjectile(target.Center + new Vector2(0, 800), new Vector2(0, -56), ModContent.ProjectileType<EnergySerpentHead>(), 1000, 0, Main.myPlayer, 12, -2);
+                            }
+                            if (target.Center.X + 64 < npc.Center.X && left)
+                            {
+                                target.AddBuff(ModContent.BuffType<SulfurBurn>(), 20);
+                                Projectile.NewProjectile(target.Center + new Vector2(0, 800), new Vector2(0, -56), ModContent.ProjectileType<EnergySerpentHead>(), 1000, 0, Main.myPlayer, 12, -2);
+                            }
+                        }
                     }
                 }
+                if(hasEnteredSecondPhase)
+                {
+                    if (ai1 > 1880)
+                        ai1--;
+                    else if (ai1 > 0)
+                    {
+                        if (ai3 <= 0 || ai3 > 900)
+                            ai3 = 900;
+                        ai1 = -1; 
+                        ai4 = 0;
+                    }
+                }
+                else
+                {
+                    ai1--;
+                }
+                Vector2 toPlayer = player.Center - npc.Center;
+                float distToPlayer = toPlayer.Length();
                 ai2++;
-                ai3 = npc.whoAmI;
-                SlitherWall(worldSide, ai2);
-                if((Main.expertMode && ai1 % 40 == 0) || (!Main.expertMode && ai1 % 50 == 0))
+                float dist = 620;
+                float speed = 20;
+                if (hasEnteredSecondPhase)
                 {
-                    SnakeFromWall(worldSide);
+                    ai2 += 0.5f;
+                    dist = 240;
+                    speed = 3.5f + distToPlayer * 0.0013f;
                 }
-                if(ai1 % 300 == 0)
+                SlitherWall(worldSide, ai2, dist, speed);
+                if(!hasEnteredSecondPhase)
                 {
-                    Vector2 circular = new Vector2(1200, 0).RotatedBy(MathHelper.ToRadians(30 + (rotate * 2 + Main.rand.Next(-30, 31)) % 120));
-                    SerpentRing(circular + player.Center);
+                    if ((Main.expertMode && ai1 % 45 == 0) || (!Main.expertMode && ai1 % 55 == 0))
+                    {
+                        SnakeFromWall(worldSide);
+                    }
+                    if (ai1 % 330 == 0)
+                    {
+                        Vector2 circular = new Vector2(1200, 0).RotatedBy(MathHelper.ToRadians(30 + (rotate * 2 + Main.rand.Next(-30, 31)) % 120));
+                        SerpentRing(circular + player.Center);
+                    }
+                    if(ai1 < 915)
+                        ai4 = -1;
+                    if (ai1 < 900)
+                    {
+                        TransitionPhase(0);
+                        left = !left;
+                        return;
+                    }
                 }
-                if (ai1 < 900)
+                else if(ai1 <= 0)
                 {
-                    TransitionPhase(0);
-                    left = !left;
+                    ai3--;
+                    if(ai3 >= 700 && ai3  % 50 == 0)
+                    {
+                        if (ai4 <= 10)
+                        {
+                            ai4 = player.Center.Y;
+                        }
+                        int num = 3;
+                        if (Main.expertMode)
+                            num = 4;
+                        int interval = Main.rand.Next(num);
+                        int counter = 0;
+                        for (int i = -12; i < 13; i++)
+                        {
+                            counter++;
+                            if(counter % num != interval)
+                            {
+                                Vector2 spawnPos = new Vector2((250 - ai3 + 650) * 1.5f * worldSide, 75 * i);
+                                spawnPos.X += npc.Center.X;
+                                spawnPos.Y += ai4;
+                                if (Main.netMode != 1)
+                                {
+                                    int damage2 = npc.damage / 2;
+                                    if (Main.expertMode)
+                                    {
+                                        damage2 = (int)(damage2 / Main.expertDamage);
+                                    }
+                                    Projectile.NewProjectile(spawnPos, new Vector2(worldSide * 4, 0), ModContent.ProjectileType<GreaterCellBlast>(), (int)(damage2 * 1.1f), 0, Main.myPlayer, 0, npc.whoAmI);
+                                }
+                            }
+                        }
+                        if (Main.netMode != 1)
+                            Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<Projectiles.Celestial.SubspaceEyeWall>(), 0, 0, Main.myPlayer, npc.whoAmI, (250 - ai3 + 700) * 1.5f * worldSide);
+                    }
+                    if (ai3 <= 380)
+                    {
+                        ai4 = -1;
+                    }
+                    if (ai3 < 350)
+                    {
+                        ai3 = 900;
+                        ai1--;
+                    }
+                    if(ai1 < -2)
+                    {
+                        TransitionPhase(0);
+                        left = !left;
+                        return;
+                    }
                 }
             }
-
+            if (phase == 5)
+            {
+                if((int)ai3 == 0)
+                {
+                    Vector2 playerCenter = player.Center;
+                    float num = 1;
+                    for (int i = 0; i < Main.maxPlayers; i++)
+                    {
+                        Player target = Main.player[i];
+                        if (player.whoAmI != target.whoAmI && !target.dead && target.ZoneUnderworldHeight && Vector2.Distance(target.Center, npc.Center) < 2000)
+                        {
+                            playerCenter += target.Center;
+                            num++;
+                        }
+                    }
+                    playerCenter = playerCenter /= num;
+                    CircularAttack(playerCenter, 28f, 0, (int)ai1 + 60, 1f);
+                    ai1--;
+                    if (npc.alpha < 0)
+                        npc.alpha = 0;
+                    if ((int)ai1 % 2 == 0)
+                    {
+                        if(npc.alpha < 255)
+                            npc.alpha++;
+                    }
+                    if ((int)ai1 == 255)
+                    {
+                        npc.dontTakeDamage = true;
+                        if (Main.netMode != 1)
+                        {
+                            ai4 = NPC.NewNPC((int)playerCenter.X, (int)playerCenter.Y + (int)player.height, ModContent.NPCType<SubspaceEye>());
+                            NPC eye = Main.npc[(int)ai4];
+                            eye.realLife = npc.whoAmI;
+                            prevLocation = playerCenter;
+                        }
+                    }
+                    if(ai1 < 0)
+                    {
+                        ai1 = 960;
+                        ai3++;
+                    }
+                }
+                else
+                {
+                    ai1--;
+                    NPC eye = Main.npc[(int)ai4];
+                    if ((!eye.active || eye.type != ModContent.NPCType<SubspaceEye>()) && ai3 != 3)
+                    {
+                        ai1 = 510;
+                        ai3 = 3;
+                    }
+                    else
+                    {
+                        for(int i = 0; i < Main.maxPlayers; i++)
+                        {
+                            Player target = Main.player[i];
+                            if(target.active && !target.dead && target.ZoneUnderworldHeight && Vector2.Distance(target.Center, eye.Center) > 660)
+                                target.AddBuff(ModContent.BuffType<SulfurBurn>(), 20);
+                        }
+                        if ((int)ai3 == 1)
+                        {
+                            if (ai1 % 5 == 0 && Main.netMode != 1)
+                            {
+                                for (int i = 0; i < 6; i++)
+                                {
+                                    float randEdit = Main.rand.NextFloat(-6, 6);
+                                    Vector2 away = new Vector2(900 + randEdit, 0).RotatedBy(MathHelper.ToRadians(i * 60 + ai1 * 0.72f));
+                                    Vector2 to = away.SafeNormalize(Vector2.Zero) * -4.5f;
+                                    away += eye.Center;
+                                    int damage2 = npc.damage / 2;
+                                    if (Main.expertMode)
+                                    {
+                                        damage2 = (int)(damage2 / Main.expertDamage);
+                                    }
+                                    int type = 0;   
+                                    if (Main.expertMode && Main.rand.NextBool(16))
+                                        type = 1;
+                                    Projectile.NewProjectile(away, to, ModContent.ProjectileType<WaveBlast>(), (int)(damage2 * 0.8f), 3, Main.myPlayer, type);
+                                }
+                            }
+                            if (ai1 < 0)
+                            {
+                                ai1 = 840;
+                                ai3++;
+                            }
+                        }
+                        if((int)ai3 == 2)
+                        {
+                            SubspaceEye subEye = eye.modNPC as SubspaceEye;
+                            Vector2 fromEye = player.Center - eye.Center;
+                            if(ai1 % 120 == 0 && Main.netMode != 1 && ai1 < 720)
+                            {
+                                for (int i = 0; i < 2; i++)
+                                {
+                                    subEye.eyeRecoil = -0.8f;
+                                    Vector2 away = new Vector2(24, 0).RotatedBy(fromEye.ToRotation() + MathHelper.ToRadians(Main.rand.NextFloat(-22.5f, 22.5f)));
+                                    Vector2 to = away.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(4, 12);
+                                    away += eye.Center;
+                                    int damage2 = npc.damage / 2;
+                                    if (Main.expertMode)
+                                    {
+                                        damage2 = (int)(damage2 / Main.expertDamage);
+                                    }
+                                    int type = Main.rand.Next(10);
+                                    if (type < 5)
+                                        type = 0;
+                                    else
+                                        type = 1;
+                                    Projectile.NewProjectile(away, to, ModContent.ProjectileType<CrossLaser>(), (int)(damage2 * 0.80f), 3, Main.myPlayer, type);
+                                }
+                            }
+                            if (ai1 < 0)
+                            {
+                                ai1 = 510;
+                                ai3++;
+                            }
+                        }
+                        if ((int)ai3 == 3)
+                        {
+                            hasEnteredSecondPhase = true;
+                            if (npc.alpha > 255)
+                                npc.alpha = 255;
+                            if ((int)ai1 % 2 == 0)
+                            {
+                                if(npc.alpha > 0)
+                                    npc.alpha--;
+                            }
+                            if ((int)ai1 == 255)
+                            {
+                                npc.dontTakeDamage = false;
+                                eye.ai[3] = -1;
+                                eye.netUpdate = true;
+                            }
+                            if(ai1 < 0)
+                            {
+                                TransitionPhase(2);
+                                return;
+                            }
+                        }
+                    }
+                    CircularAttack(prevLocation, 28f, 0, 660, 1f);
+                }
+            }
             #region active check
             if (player.dead || !player.ZoneUnderworldHeight)
             {
@@ -496,35 +848,51 @@ namespace SOTS.NPCs.Boss
                 {
                     damage2 = (int)(damage2 / Main.expertDamage);
                 }
-                Vector2 circular = new Vector2(Main.rand.NextFloat(12f, 18f) * direction, 0);
-                Projectile.NewProjectile(area, circular, ModContent.ProjectileType<EnergySerpentHead>(), (int)(damage2 * 0.8f), 0, Main.myPlayer, 6, -1);
+                Vector2 circular = new Vector2(Main.rand.NextFloat(12f, 16f) * direction, 0);
+                Projectile.NewProjectile(area, circular, ModContent.ProjectileType<EnergySerpentHead>(), (int)(damage2 * 0.8f), 0, Main.myPlayer, Main.rand.Next(5, 7), -1);
             }
         }
-        public void SlitherWall(int direction, float rotate)
+        public void SlitherWall(int direction, float rotate, float dist = 620, float offset = 20)
         {
             Player player = Main.player[npc.target];
-            Vector2 circular = new Vector2(0, -620).RotatedBy(MathHelper.ToRadians(rotate * 2 * direction));
-            Vector2 toLocation = new Vector2(npc.Center.X + 20 * direction, player.Center.Y + circular.Y);
+            Vector2 circular = new Vector2(0, -dist).RotatedBy(MathHelper.ToRadians(rotate * 2 * direction));
+            Vector2 toLocation = new Vector2(npc.Center.X + offset * direction, player.Center.Y + circular.Y);
             Vector2 goTo = toLocation - npc.Center;
             float speed = 15f;
             if (speed > goTo.Length())
                 speed = goTo.Length();
             directVelo = goTo.SafeNormalize(Vector2.Zero) * speed;
         }
-        public Vector2 DoIndicator(float rand1, float rand2, float rand3, bool phase3 = false)
+        public Vector2 DoIndicator(float rand1, float rand2, float rand3, bool phase3 = false, bool redIndicator = false)
         {
             Player player = Main.player[npc.target];
             if (!phase3)
             {
-                float dist = rand1 + 360;
-                Vector2 selectArea = new Vector2(dist, 0).RotatedBy(MathHelper.ToRadians(rotate * 1.75f + rand3));
-                Vector2 velo = selectArea.SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.ToRadians(rand2 + 90));
-                prevdir = velo.SafeNormalize(Vector2.Zero);
-                if (Main.netMode != 1)
+                if(!redIndicator)
                 {
-                    Projectile.NewProjectile(selectArea + player.Center, velo, ModContent.ProjectileType<DashIndicator>(), 0, 0, Main.myPlayer);
+                    float dist = rand1 + 360;
+                    Vector2 selectArea = new Vector2(dist, 0).RotatedBy(MathHelper.ToRadians(rotate * 1.75f + rand3));
+                    Vector2 velo = selectArea.SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.ToRadians(rand2 + 90));
+                    prevdir = velo.SafeNormalize(Vector2.Zero);
+                    if (Main.netMode != 1)
+                    {
+                        Projectile.NewProjectile(selectArea + player.Center, velo, ModContent.ProjectileType<DashIndicator>(), 0, 0, Main.myPlayer);
+                    }
+                    return selectArea + player.Center;
                 }
-                return selectArea + player.Center;
+                else
+                {
+                    Vector2 offset = prevdir * 360f * rand1;
+                    int damage2 = npc.damage / 2;
+                    if (Main.expertMode)
+                    {
+                        damage2 = (int)(damage2 / Main.expertDamage);
+                    }
+                    if (Main.netMode != 1)
+                    {
+                        Projectile.NewProjectile(prevLocation + offset, prevdir.RotatedBy(MathHelper.ToRadians(rand2 + 90)), ModContent.ProjectileType<DashIndicator2>(), (int)(damage2 * 0.75f), 0, Main.myPlayer, rand1);
+                    }
+                }
             }
             else
             {
@@ -540,12 +908,18 @@ namespace SOTS.NPCs.Boss
                         {
                             damage2 = (int)(damage2 / Main.expertDamage);
                         }
-                        Projectile.NewProjectile(selectArea + prevLocation + new Vector2(0, 1500), new Vector2(0, -56), ModContent.ProjectileType<EnergySerpentHead>(), damage2 * 2, 0, Main.myPlayer, 32, npc.whoAmI);
+                        if(hasEnteredSecondPhase)
+                            Projectile.NewProjectile(selectArea + prevLocation + new Vector2(0, 1500), new Vector2(0, -56), ModContent.ProjectileType<EnergySerpentHead2>(), damage2 * 2, 0, Main.myPlayer, 32, npc.whoAmI);
+                        else
+                            Projectile.NewProjectile(selectArea + prevLocation + new Vector2(0, 1500), new Vector2(0, -56), ModContent.ProjectileType<EnergySerpentHead>(), damage2 * 2, 0, Main.myPlayer, 32, npc.whoAmI);
                     }
                 }
                 else if (Main.netMode != 1)
                 {
-                    Projectile.NewProjectile(selectArea + prevLocation, new Vector2(0, -1), ModContent.ProjectileType<DashIndicator>(), 0, 0, Main.myPlayer);
+                    if (redIndicator)
+                        Projectile.NewProjectile(selectArea + prevLocation, new Vector2(0, -1), ModContent.ProjectileType<DashIndicator>(), 0, 0, Main.myPlayer, 0, -1);
+                    else
+                        Projectile.NewProjectile(selectArea + prevLocation, new Vector2(0, -1), ModContent.ProjectileType<DashIndicator>(), 0, 0, Main.myPlayer);
                 }
                 return selectArea + prevLocation;
             }
@@ -584,12 +958,12 @@ namespace SOTS.NPCs.Boss
                 SerpentRing(area);
             }
         }
-        public void CircularAttack(float speed = 30, int amt = 2)
+        public void CircularAttack(Vector2 newCenter, float speed = 30, int amt = 2, int distance = 640, float verticalMult = 0.8f)
         {
             Player player = Main.player[npc.target];
-            Vector2 toLocation = new Vector2(640, 0).RotatedBy(MathHelper.ToRadians(rotate * 2.15f));
-            toLocation.Y *= 0.75f;
-            toLocation += player.Center;
+            Vector2 toLocation = new Vector2(distance, 0).RotatedBy(MathHelper.ToRadians(rotate * 2.15f));
+            toLocation.Y *= verticalMult;
+            toLocation += newCenter;
             Vector2 goTo = toLocation - npc.Center;
             if (goTo.Length() > 48 && ai2 != 1)
                 directVelo = goTo.SafeNormalize(Vector2.Zero) * speed;
@@ -599,36 +973,140 @@ namespace SOTS.NPCs.Boss
                 ai2 = 1;
                 npc.Center = toLocation;
             }
-            if (ai1 % 120 == 0 && Main.netMode != 1)
+            if(phase == 1 && amt > 0)
             {
-                if (amt > 8)
-                    amt = 8;
-                List<int> unavailable = new List<int>();
-                for (int i = 0; i < amt; i++)
+                if (ai1 % 120 == 0 && Main.netMode != 1)
                 {
-                    int rand = Main.rand.Next(8);
-                    while (unavailable.Contains(rand))
+                    if (amt > 8)
+                        amt = 8;
+                    List<int> unavailable = new List<int>();
+                    List<int> storeValues = new List<int>();
+                    List<Vector2> spawnPositions = new List<Vector2>();
+                    List<Vector2> veloPositions = new List<Vector2>();
+                    for (int i = 0; i < amt; i++)
                     {
-                        rand = Main.rand.Next(8);
+                        int rand = Main.rand.Next(8);
+                        while (unavailable.Contains(rand))
+                        {
+                            rand = Main.rand.Next(8);
+                        }
+                        unavailable.Add(rand);
+                        storeValues.Add(rand);
+                        Vector2 spawnLocation = LaserArea(rand);
+                        spawnPositions.Add(spawnLocation);
                     }
-                    unavailable.Add(rand);
-                    Vector2 spawnLocation = LaserArea(rand);
-                    int type = Main.rand.Next(10);
-                    if (type < 5)
-                        type = 0;
-                    else
-                        type = 1;
-                    float odds = Main.rand.NextFloat(15);
-                    if (odds < 2)
-                        type = 2;
-                    int damage2 = npc.damage / 2;
-                    if (Main.expertMode)
+                    for (int i = 0; i < amt; i++)
                     {
-                        damage2 = (int)(damage2 / Main.expertDamage);
+                        int Moving = 0;
+                        if (hasEnteredSecondPhase && Main.rand.NextBool(3))
+                        {
+                            Moving = 3;
+                        }
+                        Vector2 spawnLocation = spawnPositions[i];
+                        List<int> moveAvailable = CapableAreas(storeValues[i]);
+                        int rand = Main.rand.Next(moveAvailable.Count);
+                        int rand2 = moveAvailable[rand];
+                        while (unavailable.Contains(rand2))
+                        {
+                            moveAvailable.Remove(rand2);
+                            if (moveAvailable.Count <= 0)
+                            {
+                                rand2 = -1;
+                                break;
+                            }
+                            rand = Main.rand.Next(moveAvailable.Count);
+                            rand2 = moveAvailable[rand];
+                        }
+                        Vector2 velo = Vector2.Zero;
+                        if (rand2 >= 0 && Moving == 3)
+                        {
+                            Vector2 moveTo = LaserArea(rand2);
+                            unavailable.Add(rand2);
+                            velo = (moveTo - spawnLocation) / 320f;
+                        }
+                        veloPositions.Add(velo);
                     }
-                    Projectile.NewProjectile(spawnLocation + player.Center, Vector2.Zero, ModContent.ProjectileType<CrossLaser>(), (int)(damage2 * 0.8f), 0, Main.myPlayer, type);
+                    for (int i = 0; i < spawnPositions.Count; i++)
+                    {
+                        Vector2 spawnLocation = spawnPositions[i];
+                        Vector2 velo = veloPositions[i];
+                        int Moving = 0;
+                        if (!velo.Equals(Vector2.Zero))
+                        {
+                            Moving = 3;
+                        }
+                        int damage2 = npc.damage / 2;
+                        if (Main.expertMode)
+                        {
+                            damage2 = (int)(damage2 / Main.expertDamage);
+                        }
+                        int type = Main.rand.Next(10);
+                        if (type < 5)
+                            type = 0;
+                        else
+                            type = 1;
+                        float odds = Main.rand.NextFloat(15);
+                        if(hasEnteredSecondPhase)
+                            odds = Main.rand.NextFloat(20);
+                        if (odds < 2)
+                            type = 2;
+                        Projectile.NewProjectile(spawnLocation + newCenter, velo, ModContent.ProjectileType<CrossLaser>(), (int)(damage2 * 0.8f), 0, Main.myPlayer, type + Moving);
+                    }
                 }
             }
+        }
+        public List<int> CapableAreas(int rnArea)
+        {
+            List<int> available = new List<int>();
+            if(rnArea == 0)
+            {
+                available.Add(1);
+                available.Add(7);
+            }
+            if (rnArea == 1)
+            {
+                available.Add(0);
+                available.Add(2);
+                available.Add(3);
+                available.Add(7);
+            }
+            if (rnArea == 2)
+            {
+                available.Add(1);
+                available.Add(3);
+            }
+            if (rnArea == 3)
+            {
+                available.Add(2);
+                available.Add(4);
+                available.Add(1);
+                available.Add(5);
+            }
+            if (rnArea == 4)
+            {
+                available.Add(5);
+                available.Add(3);
+            }
+            if (rnArea == 5)
+            {
+                available.Add(6);
+                available.Add(7);
+                available.Add(3);
+                available.Add(4);
+            }
+            if (rnArea == 6)
+            {
+                available.Add(5);
+                available.Add(7);
+            }
+            if (rnArea == 7)
+            {
+                available.Add(6);
+                available.Add(0);
+                available.Add(1);
+                available.Add(5);
+            }
+            return available;
         }
         public Vector2 LaserArea(int area)
         {
@@ -696,9 +1174,13 @@ namespace SOTS.NPCs.Boss
                 slither = 1;
             }
         }
-		public override void SendExtraAI(BinaryWriter writer) 
-		{
-			writer.Write(ai1);
+		public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write(phase);
+            writer.Write(hasEnteredSecondPhase);
+            writer.Write(left);
+            writer.Write(rotate);
+            writer.Write(ai1);
 			writer.Write(directVelo.X);
 			writer.Write(directVelo.Y);
             writer.Write(prevLocation.X);
@@ -707,8 +1189,12 @@ namespace SOTS.NPCs.Boss
             writer.Write(prevdir.Y);
         }
 		public override void ReceiveExtraAI(BinaryReader reader)
-		{	
-			ai1 = reader.ReadSingle();
+        {
+            phase = reader.ReadInt32();
+            hasEnteredSecondPhase = reader.ReadBoolean();
+            left = reader.ReadBoolean();
+            rotate = reader.ReadSingle();
+            ai1 = reader.ReadSingle();
             directVelo.X = reader.ReadSingle();
             directVelo.Y = reader.ReadSingle();
             prevLocation.X = reader.ReadSingle();

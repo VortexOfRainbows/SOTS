@@ -3,6 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using System;
 using Microsoft.Xna.Framework;
+using SOTS.Projectiles.Celestial;
 
 namespace SOTS.Items.Otherworld.FromChests
 {
@@ -20,8 +21,8 @@ namespace SOTS.Items.Otherworld.FromChests
 			item.thrown = true;
 			item.rare = 2;
 			item.autoReuse = true;            
-			item.shoot = mod.ProjectileType("SubspaceEye"); 
-            item.shootSpeed = 0.0f;
+			item.shoot = ModContent.ProjectileType<SubspaceLingeringFlame>(); 
+            item.shootSpeed = 5.0f;
 			item.consumable = true;
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
@@ -30,9 +31,10 @@ namespace SOTS.Items.Otherworld.FromChests
 			for (int i = 0; i < numberProjectiles; i++)
 			{
 				Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedBy(i * MathHelper.ToRadians(90));
-			    Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI);
+			   // Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI, 1, -1);
+				//Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI, 1, -2);
 			}
-			return false; 
+			return true; 
 		}
 	}
 }

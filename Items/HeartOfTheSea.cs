@@ -26,7 +26,7 @@ namespace SOTS.Items
 		{
 			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
 			modPlayer.rippleBonusDamage += 16;
-			if(hideVisual)
+			if(!hideVisual)
 				modPlayer.rippleEffect = true;
 			player.statLifeMax2 += 20;
 			if(player.HasBuff(ModContent.BuffType<RippleBuff>()))

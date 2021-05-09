@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Buffs;
 using SOTS.Items;
 using SOTS.Items.Otherworld.EpicWings;
 using SOTS.Items.Otherworld.FromChests;
@@ -1123,22 +1124,45 @@ namespace SOTS
         }
         public override void ModifyScreenPosition()
         {
+			Vector2 screenDimensions = new Vector2(Main.screenWidth, Main.screenHeight);
 			for(int i = 0; i < 1000; i++)
             {
 				Projectile projectile = Main.projectile[i];
 				if(projectile.type == ModContent.ProjectileType<Projectiles.Celestial.SubspaceEye>() && projectile.active)
                 {
 					int current = projectile.alpha;
-					if (current > 200)
-						current = 200;
-					float percent = projectile.alpha / 200f;
-					percent = 1 - percent;
-					Vector2 toSubEye = projectile.Center - player.Center;
-					Main.screenPosition += toSubEye * percent;
+					current -= 50;
+					if (current < 0)
+						current = 0;
+					float percent = (float)current / 205f;
+					if((int)projectile.ai[1] == -1)
+					{
+						percent *= 0.5f;
+						Vector2 toSubEye = projectile.Center - player.Center;
+						if (toSubEye.Length() < 4000f)
+							Main.screenPosition.X = (Main.screenPosition.X * (1f - percent)) + ((projectile.Center.X - (screenDimensions.X / 2)) * percent);
+					}
+					else
+					{
+						Vector2 toSubEye = projectile.Center - player.Center;
+						if (toSubEye.Length() < 4000f)
+							Main.screenPosition = (Main.screenPosition * (1f - percent)) + ((new Vector2(projectile.Center.X, projectile.Center.Y) - (screenDimensions / 2)) * percent);
+					}
 					break;
                 }
             }
             base.ModifyScreenPosition();
+        }
+        public override void UpdateBadLifeRegen()
+		{
+			if (player.HasBuff(ModContent.BuffType<AbyssalInferno>()))
+            {
+				if(player.lifeRegen > 0)
+					player.lifeRegen = 0;
+				player.lifeRegenTime = 0;
+				player.lifeRegen -= 60;
+            }
+			base.UpdateBadLifeRegen();
         }
     }
 }

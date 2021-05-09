@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.ModLoader;
 using SOTS.Void;
 using SOTS.Dusts;
+using SOTS.Buffs;
 
 namespace SOTS.Projectiles.Celestial
 {    
@@ -25,7 +26,11 @@ namespace SOTS.Projectiles.Celestial
 			projectile.alpha = 55;
 			projectile.scale = 1f;
 		}
-		public override bool? CanHitNPC(NPC target)
+        public override void OnHitPlayer(Player target, int damage, bool crit)
+		{
+			target.AddBuff(ModContent.BuffType<AbyssalInferno>(), 60, false);
+		}
+        public override bool? CanHitNPC(NPC target)
 		{
 			return false;
 		}
@@ -46,6 +51,11 @@ namespace SOTS.Projectiles.Celestial
 					return false;
 				}
 				float scale = projectile.scale * 1.5f;
+				if(k > trailPos.Length - 15)
+                {
+					int scaleDown = k - (trailPos.Length - 15);
+					scale -= 0.1f * scaleDown;
+                }
 				Vector2 drawPos = trailPos[k] - Main.screenPosition;
 				Vector2 currentPos = trailPos[k];
 				Vector2 betweenPositions = previousPosition - currentPos;

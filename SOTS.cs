@@ -419,7 +419,7 @@ namespace SOTS
 					(Func<bool>)(() => true));
 				bossChecklist.Call(
 					"AddBoss",
-					11.41f,
+					12.9f,
 					new List<int>() { ModContent.NPCType<SubspaceSerpentHead>(), ModContent.NPCType<SubspaceSerpentBody>(), ModContent.NPCType<SubspaceSerpentTail>() },
 					this,
 					"Subspace Serpent",

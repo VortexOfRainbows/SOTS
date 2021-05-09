@@ -38,8 +38,12 @@ namespace SOTS.NPCs.Boss
             Main.npcFrameCount[npc.type] = 8;
         }
         float currentDPS = -1;
-        float DPSregenRate = 0.1f;
+        private float DPSregenRate = 0.1f;
         float maxDPS = 250;
+        public override bool CanHitPlayer(Player target, ref int cooldownSlot)
+        {
+            return !npc.dontTakeDamage;
+        }
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
             if (damage - (defense / 2) > currentDPS)
@@ -69,6 +73,8 @@ namespace SOTS.NPCs.Boss
             {
                 frameHeight2 = 44;
             }
+            npc.alpha = parent.alpha;
+            npc.dontTakeDamage = parent.dontTakeDamage;
             int targetFrame = parent.frame.Y / frameHeight2;
             int currentFrame = npc.frame.Y / frameHeight;
             if (currentFrame != targetFrame)
@@ -103,7 +109,10 @@ namespace SOTS.NPCs.Boss
                     npc.life = 0;
                     npc.HitEffect(0, 10.0);
                     npc.active = false;
-                    NetMessage.SendData(28, -1, -1, null, npc.whoAmI, -1f, 0.0f, 0.0f, 0, 0, 0);
+                }
+                if (!npc.active && Main.netMode == NetmodeID.Server)
+                {
+                    NetMessage.SendData(MessageID.StrikeNPC, -1, -1, null, npc.whoAmI, -1f, 0f, 0f, 0, 0, 0);
                 }
             }
 
@@ -126,12 +135,26 @@ namespace SOTS.NPCs.Boss
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
         {
-            Texture2D texture = mod.GetTexture("NPCs/Boss/DPSBarrier2");
-            Vector2 origin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-            Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition, new Rectangle?(), drawColor * (0.5f + (0.25f * (maxDPS - currentDPS) / maxDPS)), 0, origin, (maxDPS - currentDPS) / maxDPS, SpriteEffects.None, 0);
+            Texture2D texture = mod.GetTexture("NPCs/Boss/SubspaceSerpentBodyFill");
+            Vector2 origin = new Vector2(texture.Width * 0.5f, npc.height * 0.5f);
+            float percentShield = (maxDPS - currentDPS) / maxDPS;
+            NPC head = Main.npc[npc.realLife];
+            SubspaceSerpentHead subHead = head.modNPC as SubspaceSerpentHead;
+            bool phase2 = subHead.hasEnteredSecondPhase;
+            if (phase2)
+                percentShield = 0.3334f;
+            if (percentShield > 0 || phase2)
+            {
+                Color color = new Color(phase2 ? 0 : 255, phase2 ? 255 : 0, 0);
+                for (int i = 0; i < 2; i++)
+                {
+                    int direction = i * 2 - 1;
+                    Vector2 toTheSide = new Vector2(6 * percentShield * direction, 0).RotatedBy(npc.rotation);
+                    Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition + toTheSide, npc.frame, color * ((255f - npc.alpha) / 255f) * ((255f - npc.alpha) / 255f), npc.rotation, origin, 1f, SpriteEffects.None, 0);
+                }
+            }
             texture = Main.npcTexture[npc.type];
-            origin = new Vector2(texture.Width * 0.5f, npc.height * 0.5f);
-            Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition, npc.frame, drawColor, npc.rotation, origin, npc.scale, SpriteEffects.None, 0);
+            Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition, npc.frame, drawColor * ((255f - npc.alpha) / 255f), npc.rotation, origin, npc.scale, SpriteEffects.None, 0);
             return false;
         }
         int counter = 0;
@@ -139,7 +162,7 @@ namespace SOTS.NPCs.Boss
         {
             Texture2D texture = mod.GetTexture("NPCs/Boss/SubspaceSerpentBodyGlow");
             Vector2 origin = new Vector2(texture.Width * 0.5f, npc.height * 0.5f);
-            Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition, npc.frame, Color.White, npc.rotation, origin, npc.scale, SpriteEffects.None, 0);
+            Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition, npc.frame, Color.White * ((255f - npc.alpha) / 255f), npc.rotation, origin, npc.scale, SpriteEffects.None, 0);
             counter++;
             if (counter > 12)
                 counter = 0;
@@ -155,19 +178,50 @@ namespace SOTS.NPCs.Boss
         {
             return false;   //this make that the npc does not have a health bar
         }
+        public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+        {
+            DPSregenRate += 0.15f * numPlayers;
+            base.ScaleExpertStats(numPlayers, bossLifeScale);
+        }
+        public override bool CheckActive()
+        {
+            return false;
+        }
         public override void PostAI()
         {
+            NPC head = Main.npc[npc.realLife];
+            SubspaceSerpentHead subHead = head.modNPC as SubspaceSerpentHead;
+            bool phase2 = subHead.hasEnteredSecondPhase;
+            float mult = 0.6f;
+            if (Main.expertMode)
+                mult = 0.65f;
+            bool wantsPhase2 = (npc.life < npc.lifeMax * mult && !phase2);
+            maxDPS = 250;
+            if (wantsPhase2)
+                maxDPS = 100;
+            if (phase2)
+                maxDPS = 350;
             Lighting.AddLight(npc.Center, (255 - npc.alpha) * 2.5f / 255f, (255 - npc.alpha) * 1.6f / 255f, (255 - npc.alpha) * 2.4f / 255f);
             npc.timeLeft = 100000;
+
             if (currentDPS == -1)
                 currentDPS = maxDPS;
             if (currentDPS < maxDPS)
             {
-                currentDPS += (maxDPS / 60) * DPSregenRate;
+                if(!wantsPhase2)
+                    currentDPS += (maxDPS / 60) * DPSregenRate;
+                if (phase2 || wantsPhase2)
+                {
+                    currentDPS += (maxDPS / 180) * DPSregenRate * 0.9f;
+                }
             }
             else
             {
                 currentDPS = maxDPS;
+            }
+            if (Main.netMode != 1)
+            {
+                npc.netUpdate = true;
             }
         }
     }

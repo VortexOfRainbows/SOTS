@@ -34,11 +34,9 @@ namespace SOTS.Items.Celestial
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.Bomb, 5);
-			recipe.AddIngredient(ItemID.Ectoplasm, 3);
-			recipe.AddIngredient(null,"SoulResidue", 3);
-			recipe.AddIngredient(ItemID.SoulofNight, 3);
-			recipe.AddIngredient(ItemID.SoulofSight, 3);
+			recipe.AddIngredient(ItemID.Bomb, 1);
+			recipe.AddIngredient(ItemID.Ectoplasm, 1);
+			recipe.AddIngredient(ItemID.SoulofNight, 1);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.SetResult(this);
 			recipe.AddRecipe();
