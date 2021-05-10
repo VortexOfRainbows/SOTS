@@ -3,60 +3,28 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using System;
 using Microsoft.Xna.Framework;
+using SOTS.Projectiles.Celestial;
 
 namespace SOTS.Items.Celestial
 {
 	public class DimensionShredder : ModItem
-	{	int index1 = -1;
-		float rot = 0;
-		bool inInventory = false;
+	{
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Dimension Shredder");
-			Tooltip.SetDefault("66% chance to not consume ammo\n'Tear a rift through your enemies'");
+			Tooltip.SetDefault("Summons dimensional wisps around you that fire towards your cursor\n66% chance to not consume ammo\n'Tear a rift through your enemies'");
 		}
 		public override void SetDefaults()
 		{
 			item.CloneDefaults(1929); //chaingun
-			item.damage = 38;
-            item.width = 50;   
-            item.height = 28;   
+			item.damage = 42;
+            item.width = 48;   
+            item.height = 32;   
 			item.rare = 8;
-            item.value = Item.sellPrice(0, 8, 25, 0);
+			item.useTime = 4;
+			item.useAnimation = 4;
+            item.value = Item.sellPrice(0, 15, 0, 0);
             item.shootSpeed = 15.5f;
-		}
-        public override bool CanUseItem(Player player)
-		{
-			if(inInventory)
-				return true;
-			return false;
-		}
-		public override void HoldItem(Player player) 
-		{
-			if(index1 == -1)
-			{
-				index1 = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, mod.ProjectileType("DimensionPortal"), (int)(item.damage * (player.rangedDamage + player.allDamage - 1f)), item.knockBack, player.whoAmI);
-			}
-			if(index1 != -1)
-			{
-				Projectile proj = Main.projectile[index1];
-				if(proj.type == mod.ProjectileType("DimensionPortal") && proj.active)
-				{
-					Vector2 rotatePos = new Vector2(96, 0).RotatedBy(MathHelper.ToRadians(rot));
-					proj.position.X = rotatePos.X + player.Center.X - proj.width/2;
-					proj.position.Y = rotatePos.Y + player.Center.Y - proj.height/2;
-					proj.timeLeft = 2;
-				}
-				else
-				{
-					index1 = -1;
-				}
-			}
-		}
-		public override void UpdateInventory(Player player)
-		{
-			inInventory = true;
-			rot += 1.33f;
 		}
 		public override bool ConsumeAmmo(Player p)
 		{
@@ -71,7 +39,7 @@ namespace SOTS.Items.Celestial
 		}
 		public override Vector2? HoldoutOffset()
 		{
-			return new Vector2(4, 0);
+			return new Vector2(-1, 0.5f);
 		}
 		public override void AddRecipes()
 		{
@@ -86,7 +54,24 @@ namespace SOTS.Items.Celestial
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
 			num++;
-			if(num % 3 == 0)
+			if (num % 30 == 0)
+			{
+				Vector2 randomized = new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-60, 60)));
+				Projectile.NewProjectile(position, randomized * 0.25f, ModContent.ProjectileType<DimensionalFlame>(), damage, knockBack, player.whoAmI);
+			}
+			if(num % 2 == 0)
+				for (int i = 0; i < Main.maxProjectiles; i++)
+				{
+					Projectile projectile = Main.projectile[i];
+					if (projectile.active && projectile.owner == player.whoAmI && projectile.type == ModContent.ProjectileType<DimensionalFlame>())
+					{
+						Vector2 center = new Vector2(projectile.Center.X, projectile.Center.Y);
+						Vector2 toCursor = Main.MouseWorld - center;
+						Vector2 toVelo = new Vector2((float)Math.Sqrt(speedX * speedX + speedY * speedY), 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-1, 1)) + toCursor.ToRotation());
+						Projectile.NewProjectile(center, toVelo, type, damage, knockBack, player.whoAmI);
+					}
+				}
+			if (num % 3 == 0)
 			{
 				Projectile.NewProjectile(position.X + (speedY * 0.2f), position.Y - (speedX * 0.2f), speedX, speedY, type, damage, knockBack, player.whoAmI);
 				return false;
@@ -96,7 +81,6 @@ namespace SOTS.Items.Celestial
 				Projectile.NewProjectile(position.X - (speedY * 0.2f), position.Y + (speedX * 0.2f), speedX, speedY, type, damage, knockBack, player.whoAmI);
 				return false;
 			}
-			inInventory = false;
 			return true; 
 		}
 	}

@@ -23,17 +23,17 @@ namespace SOTS.Projectiles.Celestial
 			projectile.width = 66;
 			projectile.height = 46;
 			projectile.timeLeft = 240;
-			projectile.penetrate = 9;
+			projectile.penetrate = 5;
 			projectile.alpha = 100;
 			projectile.tileCollide = false;
 			projectile.usesLocalNPCImmunity = true;
-			projectile.localNPCHitCooldown = 20;
+			projectile.localNPCHitCooldown = 15;
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
 			target.immune[projectile.owner] = 0;
 			projectile.localNPCImmunity[target.whoAmI] = projectile.localNPCHitCooldown;
-			projectile.velocity *= 0.33f;
+			projectile.velocity *= 0.25f;
 			projectile.netUpdate = true;
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
@@ -70,13 +70,13 @@ namespace SOTS.Projectiles.Celestial
 			{
 				projectile.netUpdate = true;
 				Vector2 cursorArea = Main.MouseWorld;
-				if(projectile.timeLeft > 192 && projectile.timeLeft < 224 && projectile.penetrate >= 9)
+				if(projectile.timeLeft > 192 && projectile.timeLeft < 224 && projectile.penetrate >= 5)
 				{
 					float dX = cursorArea.X - projectile.Center.X;
 					float dY = cursorArea.Y - projectile.Center.Y;
 					float distance = (float)Math.Sqrt((double)(dX * dX + dY * dY));
 					float speed = 1f / distance;
-					projectile.velocity *= 0.9725f;
+					projectile.velocity *= 0.95f;
 					projectile.velocity += new Vector2(dX * speed, dY * speed);
 				}
 			}

@@ -18,16 +18,16 @@ namespace SOTS.Items.Celestial
 		}
 		public override void SetDefaults()
 		{
-            item.damage = 140;
+            item.damage = 130;
             item.melee = true;  
-            item.width = 28;
-            item.height = 20;  
-            item.useTime = 25; 
-            item.useAnimation = 25;
-            item.useStyle = 5;    
+            item.width = 64;
+            item.height = 54;  
+            item.useTime = 28; 
+            item.useAnimation = 28;
+            item.useStyle = ItemUseStyleID.SwingThrow;    
             item.knockBack = 6f;
-            item.value = Item.sellPrice(0, 8, 50, 0);
-            item.rare = 8;
+            item.value = Item.sellPrice(0, 15, 0, 0);
+            item.rare = ItemRarityID.Yellow;
             item.UseSound = SoundID.Item22;
             item.autoReuse = true;
             item.shoot = mod.ProjectileType("PlasmaCutter"); 
@@ -38,11 +38,24 @@ namespace SOTS.Items.Celestial
             item.noMelee = true;
 			Item.staff[item.type] = true; 
 		}
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override float UseTimeMultiplier(Player player)
+		{
+			float distance = Vector2.Distance(player.Center, Main.MouseWorld);
+			if (distance < 48)
+				distance = 48;
+			if (distance > 896)
+				distance = 896;
+			float spinSpeed = 1 + (2574f / distance);
+			int speedMod = (int)(28f - spinSpeed);
+			if (speedMod < 6)
+				speedMod = 6;
+			int useTime = speedMod;
+			item.useTime = useTime;
+			item.useAnimation = useTime;
+			return base.UseTimeMultiplier(player);
+        }
+        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-            SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
-			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-			
 			bool summon = true;
 			for (int l = 0; l < Main.projectile.Length; l++)
 			{
@@ -67,6 +80,7 @@ namespace SOTS.Items.Celestial
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(null, "SanguiteBar", 10);
 			recipe.AddIngredient(null, "ChainedPlasma", 1);
+			recipe.AddIngredient(ItemID.ButchersChainsaw, 1);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.SetResult(this);
 			recipe.AddRecipe();

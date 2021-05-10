@@ -24,6 +24,7 @@ High Priority:
 8. Resprites from HugeKraken
 9. Fix display for subspace serpent
 10. Glowmask for new Otherworld Construct
+11. Change Ice Impale and Focus crystal appropriately (sanguite)
 
 2. Aqua-Necro Core (Stronger necro chestplate, 1 ranged attack per second will gain a steam aura that does 33% damage rapidly)
 3. Riptide Trident (Launches you towards your cursor at the cost of void, deal damage while traveling, bounce off of enemies)
@@ -62,9 +63,37 @@ Low Priority:
 3. Subspace Drop Reworks and Resprites:
 	1. Dance of Death:
 		1. Visuals overhauled
-		2. Damage 66 -> 90, all scythes have seperate i-frame counters now, don't slow down as much when hitting an enemy, die quicker
+		2. Damage 66 -> 110, penetrate 9 -> 6, all scythes have seperate i-frame counters now, better tracking
 		3. Sell Price 9 g -> 15 g	
 		4. Now has comparable damage to nebula stuff, but with different usability
+	2. Voidspace Emblem:
+		1. Sell Price 7.75 g -> 10 g
+	3. Apocalypse
+		1. Sell Price 10 g - > 15 g
+		2. UseTime 29-12 -> 15. No longer gets faster while using. This also means it is more easily effected by speed modifiers.
+		3. Damage 110 -> 330
+		4. Spread lowered
+		5. Void Cost 6 -> 8
+		6. Green Jellyfish Staff damage 66 -> 70
+	4. Bloodstained Jewel: Replaced by Foggy Clairvoyance, a new item
+		1. ToDO: Finish this item lol
+	5. Plasma Cutter:
+		1. Damage 140 -> 130
+		2. Now has a damage trail and adjustable range
+		3. Damage and speed is more abundant at lower range
+		4. Requires Butcher's Chainsaw
+		5. Sell Price 8.5 g -> 15 g
+	6. Dimension Shredder
+		1. Damage 38 -> 42
+		2. No longer spawns a portal while held, now only when fired (every 30 shots)
+		3. Sell Price 8.5 g -> 15 g
+	7. Voidspace Aura Staff
+		1. Sell Price 9 g -> 15 g
+		2. Visuals Overhauled
+		3. Radius grows better once again
+		4. Rate of fire increased 90 -> 45
+		5. Aura lasts for 10 -> 5 seconds after leaving
+		6. Damage 46 -> 90
 
 5/8/21
 1. Some subspace nerfs

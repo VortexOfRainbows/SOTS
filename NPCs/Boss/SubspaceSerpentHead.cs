@@ -553,7 +553,10 @@ namespace SOTS.NPCs.Boss
                     DoIndicator(-worldSide, ai3, ModContent.ProjectileType<EnergySerpentHead>(), true);
                 }
                 if ((int)ai1 == 1900)
+                {
                     Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<Projectiles.Celestial.SubspaceEyeWall>(), 0, (hasEnteredSecondPhase ? 1 : 0), Main.myPlayer, npc.whoAmI, worldSide);
+                    Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<Projectiles.Celestial.SubspaceEyeWall>(), 0, (hasEnteredSecondPhase ? 1 : 0), Main.myPlayer, npc.whoAmI, 1000 * worldSide);
+                }
                 if(ai1 < 1800 && ai2 % 20 <= 1 && Main.netMode != 1)
                 {
                     for (int i = 0; i < Main.maxPlayers; i++)
@@ -570,6 +573,18 @@ namespace SOTS.NPCs.Boss
                             {
                                 target.AddBuff(ModContent.BuffType<SulfurBurn>(), 20);
                                 Projectile.NewProjectile(target.Center + new Vector2(0, 800), new Vector2(0, -56), ModContent.ProjectileType<EnergySerpentHead>(), 1000, 0, Main.myPlayer, 12, -2);
+                            }
+                            if (target.Center.X - 2324 > npc.Center.X && left)
+                            {
+                                target.AddBuff(ModContent.BuffType<SulfurBurn>(), 20);
+                                if (target.Center.X - 2400 > npc.Center.X)
+                                   Projectile.NewProjectile(target.Center + new Vector2(0, 800), new Vector2(0, -56), ModContent.ProjectileType<EnergySerpentHead>(), 1000, 0, Main.myPlayer, 12, -2);
+                            }
+                            if (target.Center.X + 2324 < npc.Center.X && !left)
+                            {
+                                target.AddBuff(ModContent.BuffType<SulfurBurn>(), 20);
+                                if (target.Center.X + 2400 < npc.Center.X)
+                                    Projectile.NewProjectile(target.Center + new Vector2(0, 800), new Vector2(0, -56), ModContent.ProjectileType<EnergySerpentHead>(), 1000, 0, Main.myPlayer, 12, -2);
                             }
                         }
                     }
@@ -757,12 +772,14 @@ namespace SOTS.NPCs.Boss
                             }
                             if (ai1 < 0)
                             {
-                                ai1 = 840;
+                                ai1 = 510;
                                 ai3++;
                             }
                         }
                         if((int)ai3 == 2)
                         {
+                            ai3++;
+                            /*
                             SubspaceEye subEye = eye.modNPC as SubspaceEye;
                             Vector2 fromEye = player.Center - eye.Center;
                             if(ai1 % 120 == 0 && Main.netMode != 1 && ai1 < 720)
@@ -791,6 +808,7 @@ namespace SOTS.NPCs.Boss
                                 ai1 = 510;
                                 ai3++;
                             }
+                            */
                         }
                         if ((int)ai3 == 3)
                         {

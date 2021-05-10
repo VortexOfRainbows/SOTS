@@ -42,6 +42,42 @@ namespace SOTS
 		{
 			return player.GetModPlayer<SOTSPlayer>();
 		}
+		public void TrailStuff()
+		{
+			FluidCurse = false;
+			if (player.HasBuff(ModContent.BuffType<FluidCurse>()))
+            {
+				PetFluidCurse();
+				FluidCurse = true;
+				CataloguePrevPositions = true;
+            }
+			if(CataloguePrevPositions)
+            {
+				storedPositions.Add(player.Center);
+				storedFramesWings.Add(player.wingFrame);
+				storedFramesBody.Add(player.bodyFrame);
+				storedFramesLegs.Add(player.legFrame);
+				storedDirection.Add(player.direction);
+				if (storedPositions.Count > CataloguePositionLength)
+                {
+					storedPositions.RemoveAt(0);
+					storedFramesWings.RemoveAt(0);
+					storedFramesBody.RemoveAt(0);
+					storedFramesLegs.RemoveAt(0);
+					storedDirection.RemoveAt(0);
+				}
+            }
+			CataloguePrevPositions = false;
+			CataloguePositionLength = 120;
+		}
+		public bool FluidCurse = false;
+		public bool CataloguePrevPositions = false;
+		public int CataloguePositionLength = 120;
+		public List<Vector2> storedPositions = new List<Vector2>();
+		public List<int> storedFramesWings = new List<int>();
+		public List<Rectangle> storedFramesBody = new List<Rectangle>();
+		public List<Rectangle> storedFramesLegs = new List<Rectangle>();
+		public List<int> storedDirection = new List<int>();
 		public bool petPepper = false;
 		public bool petAdvisor = false;
 		public int petPinky = -1;
@@ -232,35 +268,6 @@ namespace SOTS
 			BladeEffectBack.visible = true;
 			layers.Insert(0, BladeEffectBack);
 		}
-		public void DespawnSkyEnemies()
-		{
-			int[] unableEnemies = { NPCID.Harpy , NPCID.WyvernHead , NPCID.BlueSlime , NPCID.GreenSlime, NPCID.Pinky, NPCID.YellowSlime, NPCID.PurpleSlime};
-			for(int i = 0; i < Main.npc.Length; i++)
-			{
-				NPC npc = Main.npc[i];
-				if((unableEnemies.Contains(npc.type)) && npc.target == player.whoAmI && npc.active)
-				{
-					bool withinBounds = false;
-					for (int j = 0; j < Main.player.Length; j++)
-					{
-						Player other = Main.player[j];
-						if (other.active)
-						{
-							float distanceX = other.Center.X - npc.Center.X;
-							float distanceY = other.Center.Y - npc.Center.Y;
-							distanceX = Math.Abs(distanceX);
-							distanceY = Math.Abs(distanceY);
-							if (distanceX < 992 && distanceY < 560)
-							{
-								withinBounds = true;
-							}
-						}
-					}
-					if(!withinBounds && npc.life >= npc.lifeMax)
-						npc.active = false;
-				}
-			}
-		}
 		public override void ProcessTriggers(TriggersSet triggersSet)
 		{
 			if (SOTS.BlinkHotKey.JustPressed)
@@ -284,6 +291,7 @@ namespace SOTS
 		int Probe2 = -1;
 		int Probe3 = -1;
 		int Probe4 = -1;
+		int Probe5 = -1;
 		public void PetAdvisor()
         {
 			if (Main.myPlayer == player.whoAmI)
@@ -344,6 +352,20 @@ namespace SOTS
 				Main.projectile[Probe4].timeLeft = 6;
 			}
 		}
+		public void PetFluidCurse()
+		{
+			if (Main.myPlayer == player.whoAmI)
+			{
+				if (Probe5 == -1)
+				{
+					Probe5 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, mod.ProjectileType("FluidFollower"), 0, 0, player.whoAmI);
+				}
+				if (!Main.projectile[Probe5].active || Main.projectile[Probe5].type != mod.ProjectileType("FluidFollower") || Main.projectile[Probe5].owner != player.whoAmI)
+				{
+					Probe5 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, mod.ProjectileType("FluidFollower"), 0, 0, player.whoAmI);
+				}
+			}
+		}
 		public override void PostUpdate()
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
@@ -372,6 +394,7 @@ namespace SOTS
         }
         public override void ResetEffects()
 		{
+			TrailStuff();
 			baguetteDrops = false;
 			if (baguetteLengthCounter >= 180)
 			{

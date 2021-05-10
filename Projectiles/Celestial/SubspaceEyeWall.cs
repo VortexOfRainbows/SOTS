@@ -153,7 +153,11 @@ namespace SOTS.Projectiles.Celestial
             Texture2D TheShadow = new Texture2D(Main.graphics.GraphicsDevice, width, height);
             TheShadow.SetData(0, null, defaultdataColors, 0, width * height);
             float offset = projectile.ai[1];
-            if(projectile.ai[1] > 0)
+            if (projectile.ai[1] > 0 && Math.Abs(projectile.ai[1]) < 1000)
+            {
+                offset -= Main.screenWidth + 800;
+            }
+            if(projectile.ai[1] < 0 && Math.Abs(projectile.ai[1]) >= 1000)
             {
                 offset -= Main.screenWidth + 800;
             }

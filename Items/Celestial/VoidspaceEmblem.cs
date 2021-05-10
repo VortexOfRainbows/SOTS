@@ -1,20 +1,12 @@
-using System;
-using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.DataStructures;
-using Terraria.Enums;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.ObjectData;
-using Microsoft.Xna.Framework.Graphics;
 using SOTS.Void;
 
 namespace SOTS.Items.Celestial
 {
 	public class VoidspaceEmblem : ModItem
-	{	int timer = 1;
-		float boost = 0;
+	{	
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Voidspace Emblem");
@@ -22,16 +14,13 @@ namespace SOTS.Items.Celestial
 		}
 		public override void SetDefaults()
 		{
-      
 			item.maxStack = 1;
-            item.width = 26;     
-            item.height = 28;   
-            item.value = Item.sellPrice(0, 7, 75, 0);
-            item.rare = 8;
+            item.width = 32;     
+            item.height = 36;   
+            item.value = Item.sellPrice(0, 10, 0, 0);
+            item.rare = ItemRarityID.Yellow;
 			item.accessory = true;
-
 		}
-		
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
@@ -39,8 +28,8 @@ namespace SOTS.Items.Celestial
 			recipe.AddIngredient(null, "WormWoodParasite", 1);
 			recipe.AddIngredient(null, "VoidenBracelet", 1);
 			recipe.AddIngredient(null, "SkywareBattery", 1);
-			recipe.SetResult(this);
 			recipe.AddTile(TileID.MythrilAnvil);
+			recipe.SetResult(this);
 			recipe.AddRecipe();
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)

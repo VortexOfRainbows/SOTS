@@ -2,14 +2,12 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
-using Terraria.DataStructures;
 using SOTS.Void;
-using System;
 
 namespace SOTS.Items.Celestial
 {
 	public class Apocalypse : VoidItem
-	{	float coolDown = 25f;
+	{
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Apocalypse");
@@ -17,14 +15,14 @@ namespace SOTS.Items.Celestial
 		}
 		public override void SafeSetDefaults()
 		{
-			item.damage = 110;
+			item.damage = 330;
 			item.magic = true;
 			item.width = 30;
-			item.height = 26;
-            item.value = Item.sellPrice(0, 10, 0, 0);
+			item.height = 30;
+            item.value = Item.sellPrice(0, 15, 0, 0);
 			item.rare = ItemRarityID.Yellow;
-			item.useTime = 29;
-			item.useAnimation = 29;
+			item.useTime = 15;
+			item.useAnimation = 15;
 			item.useStyle = 5;
 			item.autoReuse = true;            
 			item.shoot = mod.ProjectileType("GreenLightning"); 
@@ -37,16 +35,6 @@ namespace SOTS.Items.Celestial
 		public override void UpdateInventory(Player player)
 		{
 			Lighting.AddLight(player.Center, 1.25f, 1.25f, 1.25f);
-			coolDown += 0.01f;
-			
-			if(coolDown > 29f)
-				coolDown = 29f;
-			
-			if(coolDown < 12f)
-				coolDown = 12f;
-			
-			item.useTime = (int)coolDown;
-			item.useAnimation = (int)coolDown;
 		}
 		public override void AddRecipes()
 		{
@@ -59,18 +47,16 @@ namespace SOTS.Items.Celestial
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-			Vector2 cursorArea = Main.MouseWorld;
 			for(int i = 0; i < 2; i++)
 			{
-				Vector2 speed = new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians(-1.5f + 3 * i));
+				Vector2 speed = new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians(-1.0f + 2 * i));
 				Projectile.NewProjectile(position.X, position.Y, speed.X, speed.Y, type, damage, knockBack, player.whoAmI, 0, 6f);
 			}
-			coolDown -= 2.15f;
 			return false; 
 		}
 		public override void GetVoid(Player player)
 		{
-			voidMana = 6;
+			voidMana = 8;
 		}
 	}
 }

@@ -1,7 +1,7 @@
-using System;
 using Terraria;
 using Terraria.ModLoader;
 using SOTS.Void;
+
 namespace SOTS.Buffs
 {
     public class VoidSickness : ModBuff
