@@ -11,10 +11,10 @@ New Subclass (void)
 -Unleash very powerful attacks
 -Exists on melee, ranged, and magic items
 
-Currents Stuctures:
--Ice Monument 
+Major Stuctures:
 -Pyramid Dungeon Worldgen
 -Planetarium Temple Worldgen
+-Plus a handful of smaller structures
 
 Credits:
 (Current Developers)
@@ -33,7 +33,7 @@ Testers: Crimsonkeep
 
 (Other Contributions)
 Item glowmask code: Qwerty3.14
-Small Art Contributions: Naka
+Small Art Contributions: Naka, Heart Plus Up!
 
 Update 0.19.2
 -More Items

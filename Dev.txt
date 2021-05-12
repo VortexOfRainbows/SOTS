@@ -20,7 +20,6 @@ High Priority:
 7. New Pharaoh Expert Drop: Heart in a Jar, aura of damage that releases ghosts
 	1. Spirit tracer becomes normal drop
 	2. Ghosts dash towards the enemy
-8. Resprites from HugeKraken
 9. Fix display for subspace serpent
 
 2. Aqua-Necro Core (Stronger necro chestplate, 1 ranged attack per second will gain a steam aura that does 33% damage rapidly)
@@ -58,6 +57,7 @@ Low Priority:
 	4. Vibrant Staff damage 14 -> 16, homes more frequently, decreased homing range
 	5. Echo Disc damage 10 -> 12
 2. Vibrant helmet crit 3% -> 5%
+3. Focus Crystal resprite by HeartPlusUp
 
 5/10/21
 1. Finished functional side of Foggy Clairvoyance
