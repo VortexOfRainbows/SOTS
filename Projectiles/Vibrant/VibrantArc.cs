@@ -1,61 +1,78 @@
 using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using SOTS.Dusts;
+using SOTS.Void;
 using Terraria;
 using Terraria.ModLoader;
 
 namespace SOTS.Projectiles.Vibrant
 {    
-    public class VibrantArk : ModProjectile 
+    public class VibrantArc : ModProjectile 
     {	
 		int helixRot = 0;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Vibrant");
-			
+			DisplayName.SetDefault("Vibrant Arc");
 		}
-		
         public override void SetDefaults()
         {
 			projectile.tileCollide = true;
-			projectile.width = 12;
-			projectile.height = 12;
+			projectile.width = 16;
+			projectile.height = 16;
             projectile.magic = true;
 			projectile.penetrate = 1;
 			projectile.alpha = 0; 
 			projectile.friendly = true;
 			projectile.timeLeft = 3000;
 		}
+		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		{
+			Texture2D texture = Main.projectileTexture[projectile.type];
+			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
+			Color color = VoidPlayer.VibrantColorAttempt(projectile.whoAmI * 30);
+			Vector2 drawPos = projectile.Center - Main.screenPosition;
+			color = projectile.GetAlpha(color);
+			for (int j = 0; j < 3; j++)
+			{
+				float x = Main.rand.Next(-10, 11) * 0.1f;
+				float y = Main.rand.Next(-10, 11) * 0.1f;
+				Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, projectile.rotation, drawOrigin, projectile.scale, SpriteEffects.None, 0f);
+			}
+			return false;
+		}
 		int counter = 0;
 		public override void AI()
         {
-			Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 1.5f / 255f, (255 - projectile.alpha) * 1.75f / 255f, (255 - projectile.alpha) * 0.2f / 255f);
 			projectile.rotation = (float)Math.Atan2((double)projectile.velocity.Y, (double)projectile.velocity.X) - MathHelper.ToRadians(135);
 			projectile.spriteDirection = 1;
 			
 			Vector2 curve = new Vector2(12f,0).RotatedBy(MathHelper.ToRadians(helixRot * 5f));
 			helixRot ++;
 			
-			float radianDir = (float)Math.Atan2((double)projectile.velocity.Y, (double)projectile.velocity.X);
-			Vector2 helixPos1 = projectile.Center + new Vector2(curve.X, 0).RotatedBy(radianDir + MathHelper.ToRadians(90));
-			int num1 = Dust.NewDust(new Vector2(helixPos1.X - 4, helixPos1.Y - 4), 4, 4, 44);
-			Main.dust[num1].noGravity = true;
-			Main.dust[num1].velocity *= 0.2f;
-			Main.dust[num1].alpha = 200;
-
-			Vector2 helixPos2 = projectile.Center + new Vector2(curve.X, 0).RotatedBy(radianDir - MathHelper.ToRadians(90));
-			num1 = Dust.NewDust(new Vector2(helixPos2.X - 4, helixPos2.Y - 4), 4, 4, 44);
-			Main.dust[num1].noGravity = true;
-			Main.dust[num1].velocity *= 0.2f;
-			Main.dust[num1].alpha = 200;
-
-			if (projectile.timeLeft % 12 == 0)
+			for(int i = 0; i < 2; i++)
+            {
+				int direction = i * 2 - 1;
+				float radianDir = (float)Math.Atan2((double)projectile.velocity.Y, (double)projectile.velocity.X);
+				Vector2 helixPos1 = projectile.Center + new Vector2(curve.X, 0).RotatedBy(radianDir + direction * MathHelper.ToRadians(90));
+				int num1 = Dust.NewDust(new Vector2(helixPos1.X - 4, helixPos1.Y - 4), 0, 0, ModContent.DustType<CopyDust4>());
+				Dust dust = Main.dust[num1];
+				Color color2 = VoidPlayer.VibrantColorAttempt(projectile.whoAmI * 30);
+				dust.color = color2;
+				dust.noGravity = true;
+				dust.fadeIn = 0.1f;
+				dust.scale *= 0.75f;
+				dust.alpha = projectile.alpha;
+				dust.velocity *= 0.1f;
+			}
+			if (projectile.timeLeft % 8 == 0)
 			{
 				float currentVelo = projectile.velocity.Length();
-				float minDist = 360;
+				float minDist = 240;
 				int target2 = -1;
-				float dX = 0f;
-				float dY = 0f;
-				float distance = 0;
+				float dX;
+				float dY;
+				float distance;
 				float speed = 12.5f + counter;
 				if (projectile.friendly == true && projectile.hostile == false && projectile.timeLeft > 110)
 				{
@@ -75,7 +92,6 @@ namespace SOTS.Projectiles.Vibrant
 							}
 						}
 					}
-
 					if (target2 != -1)
 					{
 						NPC toHit = Main.npc[target2];
@@ -96,11 +112,17 @@ namespace SOTS.Projectiles.Vibrant
 		}
 		public override void Kill(int timeLeft)
 		{
-			for(int i = 0; i < 12; i++)
+			for(int i = 0; i < 10; i++)
 			{
-				int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 44);
-				Main.dust[num1].noGravity = true;
-				Main.dust[num1].alpha = 200;
+				int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, ModContent.DustType<CopyDust4>());
+				Dust dust = Main.dust[num1];
+				Color color2 = VoidPlayer.VibrantColorAttempt(projectile.whoAmI * 30);
+				dust.color = color2;
+				dust.noGravity = true;
+				dust.fadeIn = 0.1f;
+				dust.scale *= 2.25f;
+				dust.alpha = projectile.alpha;
+				dust.velocity *= 1.5f;
 			}
 		}
 	}

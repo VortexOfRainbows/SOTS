@@ -4,7 +4,6 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using SOTS.Void;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria.DataStructures;
 
 namespace SOTS.Items.Vibrant
 {
@@ -17,10 +16,10 @@ namespace SOTS.Items.Vibrant
 		}
 		public override void SafeSetDefaults()
 		{
-            item.damage = 12;
+            item.damage = 15;
             item.ranged = true;
             item.width = 30;
-            item.height = 20;
+            item.height = 22;
             item.useTime = 5; 
             item.useAnimation = 5;
             item.useStyle = 5;    
@@ -28,7 +27,7 @@ namespace SOTS.Items.Vibrant
 			item.knockBack = 2f;  
             item.value = Item.sellPrice(0, 0, 80, 0);
             item.rare = ItemRarityID.Blue;
-            item.UseSound = SoundID.Item11;
+            item.UseSound = SoundID.Item91;
             item.autoReuse = false;
             item.shoot = mod.ProjectileType("VibrantBolt"); 
             item.shootSpeed = 24f;
@@ -41,7 +40,7 @@ namespace SOTS.Items.Vibrant
 			if (modPlayer.vibrantArmor == true)
 			{
 				Texture2D texture = mod.GetTexture("Items/Vibrant/VibrantRifle");
-				Main.spriteBatch.Draw(texture, position - new Vector2((texture.Width - item.width)/ 2 - 3.5f, -2), null, drawColor, 0f, origin, scale * 0.85f, SpriteEffects.None, 0f); //I had to position and draw this by testing values manually ughh
+				Main.spriteBatch.Draw(texture, position - new Vector2((texture.Width - item.width)/ 2 - 3.5f, 0), null, drawColor, 0f, origin, scale * 0.85f, SpriteEffects.None, 0f); //I had to position and draw this by testing values manually ughh
 				return false;
 			}
 			return true;
@@ -53,15 +52,11 @@ namespace SOTS.Items.Vibrant
 			{
 				item.autoReuse = true;
 				item.noUseGraphic = true;
-				//item.useAnimation = 9;
-				//item.UseSound = null;
 			}
 			else
 			{
 				item.autoReuse = false;
 				item.noUseGraphic = false;
-				item.useAnimation = 5;
-				item.UseSound = SoundID.Item11;
 			}
 		}
 		public override void GetWeaponKnockback(Player player, ref float knockback)
@@ -84,10 +79,11 @@ namespace SOTS.Items.Vibrant
 			triggerItemUpdates(player);
 			if (modPlayer.vibrantArmor == true)
 			{
-				Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(10));
+				float mult = 1.33f;
+				Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(4.5f));
 				Projectile.NewProjectile(position, Vector2.Zero, mod.ProjectileType("VibrantRifle"), 0, 0, player.whoAmI, perturbedSpeed.ToRotation() - new Vector2(speedX, speedY).ToRotation());
-				speedX = perturbedSpeed.X;
-				speedY = perturbedSpeed.Y;
+				speedX = perturbedSpeed.X * mult;
+				speedY = perturbedSpeed.Y * mult;
 				//Main.PlaySound(SoundID.Item11, position);
 			}
 			return true; 

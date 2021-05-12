@@ -1,14 +1,6 @@
-using System;
-using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.DataStructures;
-using Terraria.Enums;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.ObjectData;
-using Microsoft.Xna.Framework.Graphics;
-
 
 namespace SOTS.Items.Fragments
 {
@@ -17,26 +9,25 @@ namespace SOTS.Items.Fragments
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Focus Crystal");
-			Tooltip.SetDefault("Critical strikes deal 40 more damage\n5% increased crit chance\nImmunity to bleeding and poisoned debuffs");
+			Tooltip.SetDefault("Critical strikes deal 60 more damage\n5% increased crit chance\nImmunity to bleeding and poisoned debuffs");
 		}
 		public override void SetDefaults()
 		{
             item.width = 36;     
             item.height = 34;  
-            item.value = Item.sellPrice(0, 5, 25, 0);
-            item.rare = 8;
+            item.value = Item.sellPrice(0, 10, 0, 0);
+            item.rare = ItemRarityID.Yellow;
 			item.accessory = true;
 			item.defense = 1;
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");	
-			
 			player.meleeCrit += 5;
 			player.rangedCrit += 5;
 			player.magicCrit += 5;
 			player.thrownCrit += 5;
-			modPlayer.CritBonusDamage += 20;
+			modPlayer.CritBonusDamage += 30;
             player.buffImmune[BuffID.Bleeding] = true; 
             player.buffImmune[BuffID.Poisoned] = true; 
 		}

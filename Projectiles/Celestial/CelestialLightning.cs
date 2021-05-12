@@ -103,7 +103,7 @@ namespace SOTS.Projectiles.Celestial
 		Vector2 addPos = Vector2.Zero;
 		Vector2 originalVelo = Vector2.Zero;
 		Vector2 originalPos = Vector2.Zero;
-		int[] randStorage = new int[140];
+		int[] randStorage = new int[120];
 		int dist = 120;
 		public override void AI()
 		{

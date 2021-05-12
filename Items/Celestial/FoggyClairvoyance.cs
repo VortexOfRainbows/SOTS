@@ -18,7 +18,7 @@ namespace SOTS.Items.Celestial
 			item.maxStack = 1;
             item.width = 34;     
             item.height = 40;   
-            item.value = Item.sellPrice(0, 10, 0, 0);
+            item.value = Item.sellPrice(0, 15, 0, 0);
             item.rare = ItemRarityID.Yellow;
 			item.accessory = true;
 		}
@@ -33,7 +33,7 @@ namespace SOTS.Items.Celestial
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			player.AddBuff(ModContent.BuffType<FluidCurse>(), 30);
+			player.AddBuff(ModContent.BuffType<FluidCurse>(), 3);
 			List<int> bList = new List<int>() { BuffID.PotionSickness, ModContent.BuffType<FluidCurse>(), ModContent.BuffType<VoidRecovery>(), ModContent.BuffType<VoidShock>(), ModContent.BuffType<VoidSickness>(), BuffID.ManaSickness };
 			for(int i = 0; i < player.buffImmune.Length; i++)
             {

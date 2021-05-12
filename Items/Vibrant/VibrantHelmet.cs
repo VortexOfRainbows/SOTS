@@ -6,29 +6,25 @@ using SOTS.Void;
 namespace SOTS.Items.Vibrant
 {
 	[AutoloadEquip(EquipType.Head)]
-	
 	public class VibrantHelmet : ModItem
 	{
 		public override void SetDefaults()
 		{
-			item.width = 26;
-			item.height = 24;
+			item.width = 22;
+			item.height = 22;
             item.value = Item.sellPrice(0, 0, 80, 0);
 			item.rare = 1;
 			item.defense = 3;
 		}
-
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Vibrant Helmet");
-			Tooltip.SetDefault("Increases max void by 50\n3% increased ranged crit chance");
-			
+			Tooltip.SetDefault("Increases max void by 50\n5% increased ranged crit chance");
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs)
         {
             return body.type == mod.ItemType("VibrantChestplate") && legs.type == mod.ItemType("VibrantLeggings");
         }
-
         public override void UpdateArmorSet(Player player)
         {	
 			player.setBonus = "Increases void regen by 2\nGrants autofire to the Vibrant Pistol at the cost of accuracy";
@@ -41,7 +37,7 @@ namespace SOTS.Items.Vibrant
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			voidPlayer.voidMeterMax2 += 50;
-			player.rangedCrit += 3;
+			player.rangedCrit += 5;
 		}
 		public override void AddRecipes()
 		{

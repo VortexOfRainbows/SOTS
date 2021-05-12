@@ -115,8 +115,6 @@ namespace SOTS.Projectiles.Celestial
 					iterator++;
 				}
 			}
-			//if (iterator >= trailPos.Length)
-			//	projectile.Kill();
 		}
 		int endHow = 0;
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)

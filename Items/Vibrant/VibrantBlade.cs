@@ -14,14 +14,14 @@ namespace SOTS.Items.Vibrant
 		}
 		public override void SafeSetDefaults()
 		{
-			item.damage = 13;
+			item.damage = 15;
 			item.melee = true;
-			item.width = 32;
-			item.height = 34;
+			item.width = 40;
+			item.height = 40;
 			item.useTime = 24;
 			item.useAnimation = 24;
 			item.useStyle = ItemUseStyleID.SwingThrow;
-			item.knockBack = 4f;
+			item.knockBack = 2.5f;
 			item.value = Item.sellPrice(0, 0, 80, 0);
 			item.rare = ItemRarityID.Blue;
 			item.UseSound = SoundID.Item1;

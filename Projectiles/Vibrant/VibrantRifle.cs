@@ -15,7 +15,7 @@ namespace SOTS.Projectiles.Vibrant
 		}
 		public override void SetDefaults() 
 		{
-			projectile.width = 20;
+			projectile.width = 26;
 			projectile.height = 46;
             projectile.aiStyle = 20;
 			projectile.friendly = false;

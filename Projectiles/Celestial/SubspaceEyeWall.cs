@@ -86,11 +86,6 @@ namespace SOTS.Projectiles.Celestial
             float sizeY = height;
             float sizeX = width;
             int counter = 0;
-            int alphaScale = 2;
-            if (Math.Abs(projectile.ai[1]) > 1)
-            {
-                alphaScale = 3;
-            }
             for (float localX = 0; localX < sizeX; localX++)
             {
                 if(localX < (255 / 2) + 1)

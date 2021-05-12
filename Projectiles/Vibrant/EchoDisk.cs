@@ -3,6 +3,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using SOTS.Void;
+using SOTS.Dusts;
 
 namespace SOTS.Projectiles.Vibrant
 {    
@@ -10,8 +12,8 @@ namespace SOTS.Projectiles.Vibrant
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Echo Disk");
-			ProjectileID.Sets.TrailCacheLength[projectile.type] = 20;  
+			DisplayName.SetDefault("Echo Disc");
+			ProjectileID.Sets.TrailCacheLength[projectile.type] = 10;  
 			ProjectileID.Sets.TrailingMode[projectile.type] = 2;
 			Main.projFrames[projectile.type] = 2;
 		}
@@ -28,48 +30,34 @@ namespace SOTS.Projectiles.Vibrant
 			projectile.extraUpdates = 2;
 			projectile.alpha = 0;
 		}
-		public override void Kill(int timeLeft)
+		public void DustRing()
 		{
-			if (projectile.frame == 1)
+			for (int i = 0; i < 360; i += 10)
 			{
-				for (int i = 0; i < 360; i += 8)
-				{
-					Vector2 circularLocation = new Vector2(-10, 0).RotatedBy(MathHelper.ToRadians(i));
-
-					int num1 = Dust.NewDust(new Vector2(projectile.Center.X + circularLocation.X - 4, projectile.Center.Y + circularLocation.Y - 4), 4, 4, DustID.Lead);
-					Main.dust[num1].noGravity = true;
-					Main.dust[num1].scale = 1.25f;
-					Main.dust[num1].velocity = circularLocation * 0.35f;
-				}
-			}
-			else
-			{
-				for (int i = 0; i < 360; i += 8)
-				{
-					Vector2 circularLocation = new Vector2(-10, 0).RotatedBy(MathHelper.ToRadians(i));
-
-					int num1 = Dust.NewDust(new Vector2(projectile.Center.X + circularLocation.X - 4, projectile.Center.Y + circularLocation.Y - 4), 4, 4, 44);
-					Main.dust[num1].noGravity = true;
-					Main.dust[num1].scale = 1.25f;
-					Main.dust[num1].velocity = circularLocation * 0.35f;
-					Main.dust[num1].alpha = 200;
-				}
+				Vector2 circularLocation = new Vector2(-9, 0).RotatedBy(MathHelper.ToRadians(i));
+				int num1 = Dust.NewDust(new Vector2(projectile.Center.X + circularLocation.X - 4, projectile.Center.Y + circularLocation.Y - 4), 4, 4, ModContent.DustType<CopyDust4>());
+				Dust dust = Main.dust[num1];
+				dust.color = color;
+				dust.noGravity = true;
+				dust.fadeIn = 0.1f;
+				dust.scale *= 1.75f;
+				dust.alpha = 70;
+				dust.velocity *= 0.1f;
+				dust.velocity += circularLocation * 0.25f;
 			}
 		}
+		public override void Kill(int timeLeft)
+		{
+			color = new Color(80, 120, 220, 0);
+			DustRing();
+		}
+		Color color = new Color(180, 230, 100, 0);
 		public override void AI()
 		{
 			projectile.rotation += 0.47f;
 			if(projectile.ai[0] == 1)
 			{
-				for (int i = 0; i < 360; i += 8)
-				{
-					Vector2 circularLocation = new Vector2(-10, 0).RotatedBy(MathHelper.ToRadians(i));
-
-					int num1 = Dust.NewDust(new Vector2(projectile.Center.X + circularLocation.X - 4, projectile.Center.Y + circularLocation.Y - 4), 4, 4, DustID.Lead);
-					Main.dust[num1].noGravity = true;
-					Main.dust[num1].scale = 1.25f;
-					Main.dust[num1].velocity = circularLocation * 0.35f;
-				}
+				DustRing();
 				projectile.timeLeft = 90;
 				projectile.frame = 0;
 				projectile.ai[0] = -1;
@@ -98,8 +86,8 @@ namespace SOTS.Projectiles.Vibrant
 				{
 					projectile.tileCollide = true;
 				}
-				Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 1.5f / 255f, (255 - projectile.alpha) * 1.75f / 255f, (255 - projectile.alpha) * 0.2f / 255f);
 			}
+			Lighting.AddLight(projectile.Center, color.R / 255f, color.G / 255f, color.B * 1.75f / 255f);
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
@@ -108,13 +96,28 @@ namespace SOTS.Projectiles.Vibrant
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
+			DrawTrail(spriteBatch, lightColor);
+			Texture2D texture = Main.projectileTexture[projectile.type];
+			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, projectile.height * 0.5f);
+			Color color = new Color(100, 100, 100, 0);
+			Vector2 drawPos = projectile.Center - Main.screenPosition;
+			color = projectile.GetAlpha(color);
+			for (int j = 0; j < 5; j++)
+			{
+				float x = Main.rand.Next(-10, 11) * 0.1f;
+				float y = Main.rand.Next(-10, 11) * 0.1f;
+				Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), new Rectangle(0, projectile.height * projectile.frame, projectile.width, projectile.height), color, projectile.rotation, drawOrigin, projectile.scale, SpriteEffects.None, 0f);
+			}
+			return false;
+		}
+		public void DrawTrail(SpriteBatch spriteBatch, Color lightColor)
+		{
 			Vector2 drawOrigin = new Vector2(Main.projectileTexture[projectile.type].Width * 0.5f, projectile.height * 0.5f);
 			for (int k = 0; k < projectile.oldPos.Length; k++) {
 				Vector2 drawPos = projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, projectile.gfxOffY);
 				Color color = projectile.GetAlpha(lightColor) * ((float)(projectile.oldPos.Length - k) / (float)projectile.oldPos.Length);
 				spriteBatch.Draw(Main.projectileTexture[projectile.type], drawPos, new Rectangle(0, projectile.height * projectile.frame, projectile.width, projectile.height), color * 0.5f, projectile.rotation, drawOrigin, projectile.scale, SpriteEffects.None, 0f);
 			}
-			return true;
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{

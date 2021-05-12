@@ -3,6 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using SOTS.Void;
+using SOTS.Items.SpecialDrops;
 
 namespace SOTS.Items.IceStuff
 {
@@ -15,7 +16,7 @@ namespace SOTS.Items.IceStuff
 		}
 		public override void SafeSetDefaults()
 		{
-            item.damage = 72;
+            item.damage = 75;
             item.ranged = true;
             item.width = 62;
             item.height = 30;
@@ -24,8 +25,8 @@ namespace SOTS.Items.IceStuff
             item.useStyle = 5;    
             item.noMelee = true;
 			item.knockBack = 1f;  
-            item.value = Item.sellPrice(0, 7, 80, 0);
-            item.rare = 9;
+            item.value = Item.sellPrice(0, 10, 0, 0);
+            item.rare = ItemRarityID.Yellow;
             item.UseSound = SoundID.Item61;
             item.autoReuse = true;
             item.shoot = mod.ProjectileType("HypericeRocket"); 
@@ -33,7 +34,7 @@ namespace SOTS.Items.IceStuff
 		}
 		public override void GetVoid(Player player)
 		{
-			voidMana = 5;
+			voidMana = 7;
 		}
 		public override Vector2? HoldoutOffset()
 		{
@@ -58,7 +59,8 @@ namespace SOTS.Items.IceStuff
 		{
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(null, "HypericeClusterCannon", 1);
-			recipe.AddIngredient(null, "SanguiteBar", 12);
+			recipe.AddIngredient(ModContent.ItemType<HelicopterParts>(), 1);
+			recipe.AddIngredient(null, "DissolvingAurora", 1);
 			recipe.SetResult(this);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.AddRecipe();

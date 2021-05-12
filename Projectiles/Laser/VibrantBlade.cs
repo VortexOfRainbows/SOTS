@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Void;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -52,7 +53,7 @@ namespace SOTS.Projectiles.Laser
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			for (int k = 0; k < projectile.oldPos.Length; k++)
 			{
-				Color color = new Color(100, 100, 100, 0);
+				Color color = VoidPlayer.VibrantColorAttempt(k);
 				Vector2 drawPos = projectile.oldPos[k] - Main.screenPosition + drawOrigin;
 				color = projectile.GetAlpha(color) * ((projectile.oldPos.Length - k) / (float)projectile.oldPos.Length) * 0.5f;
 				for (int j = 0; j < 7; j++)
@@ -70,7 +71,7 @@ namespace SOTS.Projectiles.Laser
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
 			Texture2D texture = Main.projectileTexture[projectile.type];
-			Color color = new Color(100, 100, 100, 0);
+			Color color = VoidPlayer.VibrantColor;
 			Vector2 drawOrigin = new Vector2(Main.projectileTexture[projectile.type].Width * 0.5f, projectile.height * 0.5f);
 			for (int k = 0; k < 7; k++)
 			{
@@ -118,7 +119,7 @@ namespace SOTS.Projectiles.Laser
 			if (projectile.owner == Main.myPlayer)
 			{
 				projectile.netUpdate = true;
-				Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("VibrantRing"), projectile.damage, 0, Main.myPlayer);
+				Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("VibrantRing"), projectile.damage, projectile.knockBack * 0.1f, Main.myPlayer);
 			}
 		}
 	}

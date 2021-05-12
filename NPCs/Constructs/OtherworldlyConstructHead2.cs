@@ -54,7 +54,7 @@ namespace SOTS.NPCs.Constructs
 			float radius = distanceToOwner.Length() / 4;
 
 			Vector2 vector2_1 = new Vector2(-1, 0).RotatedBy(MathHelper.ToRadians(0.3f * ai1));
-			int max = 20;
+			int max = 16;
 			for (int i = max; i > 0; i--)
 			{
 				float minDist = 40;
@@ -90,7 +90,21 @@ namespace SOTS.NPCs.Constructs
 			}
 			return true;
 		}
-        public override bool CheckActive()
+		bool glow = false;
+		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
+		{
+			Texture2D texture = mod.GetTexture("NPCs/Constructs/OtherworldlyConstructHead2Glow");
+			Color color = new Color(110, 110, 110, 0);
+			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
+			if (glow)
+				for (int k = 0; k < 5; k++)
+				{
+					float x = Main.rand.Next(-10, 11) * 0.1f;
+					float y = Main.rand.Next(-10, 11) * 0.1f;
+					Main.spriteBatch.Draw(texture, new Vector2((float)(npc.Center.X - (int)Main.screenPosition.X) + x, (float)(npc.Center.Y - (int)Main.screenPosition.Y) + y + 2), new Rectangle(0, npc.frame.Y, npc.width, npc.height), color * ((255 - npc.alpha) / 255f), npc.rotation, drawOrigin, npc.scale, npc.spriteDirection == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+				}
+		}
+		public override bool CheckActive()
         {
             return false;
         }
@@ -267,10 +281,11 @@ namespace SOTS.NPCs.Constructs
 				playerLoc = circular + npc.Center;
 			}
 			npc.ai[0]++;
-			if(npc.ai[0] >= 270)
+			if (npc.ai[0] >= 270)
 			{
+				glow = true;
 				npc.velocity *= 0.25f;
-				if(npc.ai[0] % 90 == 0)
+				if (npc.ai[0] % 90 == 0)
 				{
 					int damage = npc.damage / 2;
 					if (Main.expertMode)
@@ -278,7 +293,7 @@ namespace SOTS.NPCs.Constructs
 						damage = (int)(damage / Main.expertDamage);
 					}
 					npc.ai[1]++;
-					if(npc.ai[1] < 6)
+					if (npc.ai[1] < 6)
 					{
 						float locX = playerLoc.X + Main.rand.Next(-200, 201);
 						float locY = playerLoc.Y + Main.rand.Next(-200, 201);
@@ -304,7 +319,7 @@ namespace SOTS.NPCs.Constructs
 							Projectile.NewProjectile(locX, locY, 0, 0, mod.ProjectileType("OtherworldlyTracer"), damage, 0f, Main.myPlayer, 751 - npc.ai[0], npc.whoAmI);
 					}
 				}
-				if(npc.ai[1] >= 6)
+				if (npc.ai[1] >= 6)
 				{
 					npc.ai[1] = 0;
 					npc.ai[0] = -90;
@@ -312,7 +327,7 @@ namespace SOTS.NPCs.Constructs
 					for (int i = 0; i < Main.projectile.Length; i++)
 					{
 						Projectile proj = Main.projectile[i];
-						if(proj.active && proj.type == mod.ProjectileType("OtherworldlyTracer") && proj.ai[1] == npc.whoAmI)
+						if (proj.active && proj.type == mod.ProjectileType("OtherworldlyTracer") && proj.ai[1] == npc.whoAmI)
 						{
 							int damage = npc.damage / 2;
 							if (Main.expertMode)
@@ -328,6 +343,8 @@ namespace SOTS.NPCs.Constructs
 					npc.velocity = -12 * toPlayer.SafeNormalize(new Vector2(0, 1));
 				}
 			}
+			else
+				glow = false;
 		}
 		public override void NPCLoot()
 		{

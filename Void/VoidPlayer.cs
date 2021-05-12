@@ -22,6 +22,7 @@ namespace SOTS.Void
 		public static Color natureColor = new Color(180, 240, 180);
 		public static Color EarthColor = new Color(230, 220, 145);
 		public static Color OtherworldColor = new Color(167, 45, 225, 0);
+		public static Color VibrantColor = new Color(85, 125, 215, 0);
 		public static int soulColorCounter = 0;
 		public int voidMeterMax = 100;
 		public int voidAnkh = 0;
@@ -221,6 +222,11 @@ namespace SOTS.Void
 			Color color = new Color(167, 45, 225, 0);
 			Color color2 = new Color(64, 178, 172, 0);
 			OtherworldColor = Color.Lerp(color, color2, 0.5f + new Vector2(0.5f, 0).RotatedBy(MathHelper.ToRadians(soulColorCounter * 1.0f)).X);
+			VibrantColor = Color.Lerp(new Color(80, 120, 220, 0), new Color(180, 230, 100, 0), 0.5f + new Vector2(0.5f, 0).RotatedBy(MathHelper.ToRadians(soulColorCounter * 2.5f)).X);
+		}
+		public static Color VibrantColorAttempt(float degrees)
+        {
+			return Color.Lerp(new Color(80, 120, 220, 0), new Color(180, 230, 100, 0), 0.5f + new Vector2(0.5f, 0).RotatedBy(MathHelper.ToRadians(soulColorCounter * 2.5f + degrees)).X);
 		}
 		public static Color pastelAttempt(float radians)
 		{

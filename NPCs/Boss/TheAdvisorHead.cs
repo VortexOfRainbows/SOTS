@@ -1,10 +1,7 @@
 using System;
 using System.IO;
-using System.Security.Authentication;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MonoMod.RuntimeDetour;
-using Steamworks;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -13,7 +10,6 @@ namespace SOTS.NPCs.Boss
 {	[AutoloadBossHead]
 	public class TheAdvisorHead : ModNPC
 	{
-		private int expertModifier = 1;
 		int despawn = 0;
 		private float attackPhase1 {
 			get => npc.ai[0];
@@ -533,10 +529,6 @@ namespace SOTS.NPCs.Boss
 				npc.netUpdate = true;
 				return false;
 			}
-			if (Main.expertMode)
-			{
-				expertModifier = 2;
-			}
 			return true;
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
@@ -760,8 +752,7 @@ namespace SOTS.NPCs.Boss
 				Vector2 toLocation = player.Center + new Vector2(0, -200 + circularAddition.Y);
 				MoveTo(toLocation, 7f * speedMod * speedMod, 0.007f * speedMod * speedMod, 20f);
             }
-
-			if (attackPhase1 == 1)
+			if(attackPhase1 == 1)
 			{
 				Vector2 circularAddition = new Vector2(8, 0).RotatedBy(MathHelper.ToRadians(attackTimer1 * 7));
 				Vector2 toLocation = player.Center + new Vector2(0, -200 + circularAddition.Y);
@@ -827,7 +818,7 @@ namespace SOTS.NPCs.Boss
 									Projectile.NewProjectile(npc.Center.X, npc.Center.Y, toProj.X, toProj.Y, mod.ProjectileType("OtherworldlyBall"), damage, 0, Main.myPlayer);
 							}
 						}
-						MoveTo(toLocation, -12f, 0, 1);
+						MoveTo(toLocation, -12f, 0.1f, 1);
 						ai3 += npc.velocity.X * 1.2f;
 					}
 				}
@@ -836,7 +827,6 @@ namespace SOTS.NPCs.Boss
 					tracerCounter = 0;
 				}
 			}
-
 			if(attackPhase1 == 2)
             {
 				watchPlayer = false;
@@ -902,20 +892,26 @@ namespace SOTS.NPCs.Boss
 			if(steepCoef < 2f)
             {
 				noSteep = true;
-            }
+			}
+			float distance = (npc.Center - toLocation).Length();
 			int i = (int)(npc.Center.X / 16);
 			int j = (int)(npc.Center.Y / 16);
 			if (Main.tile[i, j].active() && Main.tileSolidTop[Main.tile[i, j].type] == false && Main.tileSolid[Main.tile[i, j].type] == true)
             {
 				if (speed < 4f)
 					speed = 4f;
-				speed *= 2f;
-				speedMultDist *= 1.5f;
+				speed *= 2.4f;
+				speedMultDist *= 2f;
 			}
-			speed = speed + (npc.Center - toLocation).Length() * speedMultDist;
-			if (speed > (npc.Center - toLocation).Length())
+			else if (distance > 2400f)
 			{
-				speed = (npc.Center - toLocation).Length();
+				speed *= 3f;
+				speedMultDist *= 3f;
+			}
+			speed = speed + distance * speedMultDist;
+			if (speed > distance)
+			{
+				speed = distance;
 			}
 			Vector2 velo = (npc.Center - toLocation).SafeNormalize(new Vector2(1, 0));
 			npc.velocity.Y *= 0f;
@@ -1094,7 +1090,7 @@ namespace SOTS.NPCs.Boss
 					speedMod /= 90f;
 					if (attackPhase1 == -1 || attackPhase1 == -2)
 					{
-						MoveTo(toLocation, 16f * speedMod, 0.01f * speedMod, 10f);
+						MoveTo(toLocation, 17.5f * speedMod, 0.012f * speedMod, 10f);
 						ai3 += npc.velocity.X * 1.2f;
 					}
 				}

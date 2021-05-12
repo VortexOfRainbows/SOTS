@@ -8,6 +8,7 @@ using SOTS.Items.Pyramid;
 using SOTS.Items.SpecialDrops;
 using SOTS.NPCs.Boss;
 using SOTS.Projectiles.BiomeChest;
+using SOTS.Projectiles.Celestial;
 using SOTS.Projectiles.Otherworld;
 using SOTS.Void;
 using System;
@@ -49,35 +50,17 @@ namespace SOTS
             {
 				PetFluidCurse();
 				FluidCurse = true;
-				CataloguePrevPositions = true;
-            }
-			if(CataloguePrevPositions)
-            {
-				storedPositions.Add(player.Center);
-				storedFramesWings.Add(player.wingFrame);
-				storedFramesBody.Add(player.bodyFrame);
-				storedFramesLegs.Add(player.legFrame);
-				storedDirection.Add(player.direction);
-				if (storedPositions.Count > CataloguePositionLength)
-                {
-					storedPositions.RemoveAt(0);
-					storedFramesWings.RemoveAt(0);
-					storedFramesBody.RemoveAt(0);
-					storedFramesLegs.RemoveAt(0);
-					storedDirection.RemoveAt(0);
-				}
-            }
-			CataloguePrevPositions = false;
-			CataloguePositionLength = 120;
+			}
+			float mult = player.statLife / (float)player.statLifeMax2;
+			if (mult < 0) mult = 0;
+			mult = (float)Math.Sqrt(mult);
+			if (mult > 1) mult = 1;
+			FluidCurseMult = 4 + (int)(60 * (1 - mult));
+			if (FluidCurseMult > 60)
+				FluidCurseMult = 60;
 		}
 		public bool FluidCurse = false;
-		public bool CataloguePrevPositions = false;
-		public int CataloguePositionLength = 120;
-		public List<Vector2> storedPositions = new List<Vector2>();
-		public List<int> storedFramesWings = new List<int>();
-		public List<Rectangle> storedFramesBody = new List<Rectangle>();
-		public List<Rectangle> storedFramesLegs = new List<Rectangle>();
-		public List<int> storedDirection = new List<int>();
+		public float FluidCurseMult = 120;
 		public bool petPepper = false;
 		public bool petAdvisor = false;
 		public int petPinky = -1;
@@ -292,6 +275,7 @@ namespace SOTS
 		int Probe3 = -1;
 		int Probe4 = -1;
 		int Probe5 = -1;
+		int Probe6 = -1;
 		public void PetAdvisor()
         {
 			if (Main.myPlayer == player.whoAmI)
@@ -363,6 +347,14 @@ namespace SOTS
 				if (!Main.projectile[Probe5].active || Main.projectile[Probe5].type != mod.ProjectileType("FluidFollower") || Main.projectile[Probe5].owner != player.whoAmI)
 				{
 					Probe5 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, mod.ProjectileType("FluidFollower"), 0, 0, player.whoAmI);
+				}
+				if (Probe6 == -1)
+				{
+					Probe6 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, ModContent.ProjectileType<ClairvoyanceShade>(), 0, 0, player.whoAmI);
+				}
+				if (!Main.projectile[Probe6].active || Main.projectile[Probe6].type != ModContent.ProjectileType<ClairvoyanceShade>() || Main.projectile[Probe6].owner != player.whoAmI)
+				{
+					Probe6 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, ModContent.ProjectileType<ClairvoyanceShade>(), 0, 0, player.whoAmI);
 				}
 			}
 		}
@@ -1148,11 +1140,13 @@ namespace SOTS
         public override void ModifyScreenPosition()
         {
 			Vector2 screenDimensions = new Vector2(Main.screenWidth, Main.screenHeight);
+			bool seenSubspace = false;
 			for(int i = 0; i < 1000; i++)
             {
 				Projectile projectile = Main.projectile[i];
 				if(projectile.type == ModContent.ProjectileType<Projectiles.Celestial.SubspaceEye>() && projectile.active)
                 {
+					seenSubspace = true;
 					int current = projectile.alpha;
 					current -= 50;
 					if (current < 0)
@@ -1173,6 +1167,15 @@ namespace SOTS
 					}
 					break;
                 }
+				if(!seenSubspace)
+				{
+					if (projectile.type == ModContent.ProjectileType<Projectiles.Celestial.FluidFollower>() && projectile.active && projectile.owner == Main.myPlayer)
+					{
+						Vector2 toSubEye = projectile.Center - player.Center;
+						if (toSubEye.Length() < 4000f)
+							Main.screenPosition = new Vector2(projectile.Center.X, projectile.Center.Y) - (screenDimensions / 2);
+					}
+				}
             }
             base.ModifyScreenPosition();
         }

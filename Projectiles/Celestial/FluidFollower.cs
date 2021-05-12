@@ -7,6 +7,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Terraria.Graphics.Shaders;
+using System;
 
 namespace SOTS.Projectiles.Celestial
 {    
@@ -73,11 +74,20 @@ namespace SOTS.Projectiles.Celestial
         {
 			Player player = Main.player[projectile.owner];
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-			if(modPlayer.FluidCurse && player.active)
-            {
-				projectile.timeLeft = 60;
-				projectile.Center = modPlayer.storedPositions[0];
-            }
+			if (modPlayer.FluidCurse && player.active)
+			{
+				projectile.timeLeft = (int)modPlayer.FluidCurseMult;
+				Vector2 toPlayer = player.Center - projectile.Center;
+				float dist = toPlayer.Length();
+				float speed = (0.4f + dist * 0.1f / (float)Math.Pow(modPlayer.FluidCurseMult, 0.5f));
+				if (speed > dist)
+					speed = dist;
+				projectile.Center += toPlayer.SafeNormalize(Vector2.Zero) * speed;
+			}
+			else
+			{
+				projectile.Kill();
+			}
 			projectile.alpha = 255 - (int)(projectile.timeLeft * 255f / 60f);
         }
     }

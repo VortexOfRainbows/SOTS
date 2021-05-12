@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Void;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -21,9 +22,12 @@ namespace SOTS.Projectiles.Laser
 			projectile.timeLeft = 60;
 			projectile.tileCollide = false;
 			projectile.penetrate = -1;
+			projectile.usesLocalNPCImmunity = true;
+			projectile.localNPCHitCooldown = 15;
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
+			projectile.localNPCImmunity[target.whoAmI] = projectile.localNPCHitCooldown;
 			target.immune[projectile.owner] = 0;
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
@@ -33,10 +37,10 @@ namespace SOTS.Projectiles.Laser
 			for (int k = 0; k < 120; k++)
 			{
 				Vector2 circularPos = new Vector2(projectile.ai[0], 0).RotatedBy(MathHelper.ToRadians(k * 3) + projectile.rotation);
-				Color color = new Color(100, 100, 100, 0);
+				Color color = VoidPlayer.VibrantColorAttempt(3 * k);
 				Vector2 drawPos = projectile.Center + circularPos - Main.screenPosition;
 				color = projectile.GetAlpha(color) * 0.1f;
-				for (int j = 0; j < 6; j++)
+				for (int j = 0; j < 4; j++)
 				{
 					float x = Main.rand.Next(-10, 11) * 0.15f;
 					float y = Main.rand.Next(-10, 11) * 0.15f;
@@ -69,14 +73,6 @@ namespace SOTS.Projectiles.Laser
 				{
 					projectile.ai[1] = 0;
 				}
-			}
-			if(projectile.timeLeft % 20 == 0)
-			{
-				projectile.friendly = true;
-			}
-			else
-			{
-				projectile.friendly = false;
 			}
 		}
 	}

@@ -20,6 +20,7 @@ using SOTS.Items.Otherworld;
 using SOTS.Items.ChestItems;
 using SOTS.Items;
 using SOTS.Items.Fragments;
+using SOTS.Items.Vibrant;
 
 namespace SOTS
 {

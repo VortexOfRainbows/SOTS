@@ -550,7 +550,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 if (!proj.friendly && proj.active && proj.type == mod.ProjectileType("FloweringBud") && proj.timeLeft < 8998)
                 {
                     FloweringBud flower = (FloweringBud)proj.modProjectile;
-                    if (flower.effected[npc.whoAmI] && npc.type != ModContent.NPCType<BloomingHook>())
+                    if (flower.effected[npc.whoAmI] && npc.type != ModContent.NPCType<BloomingHook>() && npc.realLife == -1)
                     {
                         Texture2D texture2 = mod.GetTexture("Projectiles/BiomeChest/TangleGrowthVine");
                         float scale = proj.scale;

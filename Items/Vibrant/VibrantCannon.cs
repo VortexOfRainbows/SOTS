@@ -17,8 +17,8 @@ namespace SOTS.Items.Vibrant
 		{
             item.damage = 18;
             item.ranged = true;
-            item.width = 36;
-            item.height = 30;
+            item.width = 38;
+            item.height = 28;
             item.useTime = 50; 
             item.useAnimation = 50;
             item.useStyle = 5;    
@@ -37,7 +37,7 @@ namespace SOTS.Items.Vibrant
 		}
 		public override Vector2? HoldoutOffset()
 		{
-			return new Vector2(4, 0);
+			return new Vector2(-0.25f, -0.25f);
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {

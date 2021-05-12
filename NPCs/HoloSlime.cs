@@ -36,7 +36,7 @@ namespace SOTS.NPCs
             animationType = NPCID.BlueSlime;
 			Main.npcFrameCount[npc.type] = 2;  
             npc.value = 200;
-            npc.npcSlots = 1f;
+            npc.npcSlots = 1.25f;
             npc.lavaImmune = true;
             npc.netAlways = true;
 			npc.alpha = 40;

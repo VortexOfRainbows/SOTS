@@ -15,20 +15,19 @@ namespace SOTS.Items
 		}
 		public override void SafeSetDefaults()
 		{
-
 			item.damage = 58;
 			item.ranged = true;
 			item.width = 36;
 			item.height = 74;
-			item.useTime = 16;
-			item.useAnimation = 16;
+			item.useTime = 13;
+			item.useAnimation = 13;
 			item.useStyle = 5;
 			item.knockBack = 1.5f;
-			item.value = Item.sellPrice(0, 7, 25, 0);
-			item.rare = 5;
+			item.value = Item.sellPrice(0, 10, 0, 0);
+			item.rare = ItemRarityID.Yellow;
 			item.UseSound = SoundID.Item5;
 			item.autoReuse = true;            
-			item.shoot = 1; 
+			item.shoot = 10; 
             item.shootSpeed = 21.5f;
 			item.useAmmo = AmmoID.Arrow;
 			item.noMelee = true;
@@ -40,7 +39,7 @@ namespace SOTS.Items
 		}
 		public override Vector2? HoldoutOffset()
 		{
-			return new Vector2(4, 0);
+			return new Vector2(-1, 0);
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{

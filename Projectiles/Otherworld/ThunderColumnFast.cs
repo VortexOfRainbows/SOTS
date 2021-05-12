@@ -31,7 +31,7 @@ namespace SOTS.Projectiles.Otherworld
 		{
 			projectile.width = 14;
 			projectile.height = 14;
-			projectile.hostile = true;
+			projectile.hostile = false;
 			projectile.friendly = false;
 			projectile.timeLeft = 3600;
 			projectile.tileCollide = false;
@@ -174,6 +174,8 @@ namespace SOTS.Projectiles.Otherworld
 			}
 			checkPos();
 			Vector2 toPlayer = player.Center - projectile.Center;
+			if (counter2 > 240)
+				projectile.hostile = true;
 			if(counter2 > 600)
 			{
 				projectile.extraUpdates = 9;

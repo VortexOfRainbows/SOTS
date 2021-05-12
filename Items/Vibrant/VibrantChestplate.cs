@@ -10,14 +10,12 @@ namespace SOTS.Items.Vibrant
 	{
 		public override void SetDefaults()
 		{
-
-			item.width = 34;
+			item.width = 30;
 			item.height = 20;
-			item.value = Item.sellPrice(0, 0, 90, 0);
+			item.value = Item.sellPrice(0, 1, 0, 0);
 			item.rare = 1;
 			item.defense = 4;
 		}
-
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Vibrant Chestplate");
@@ -27,7 +25,6 @@ namespace SOTS.Items.Vibrant
         {
             return head.type == mod.ItemType("VibrantHelmet") && legs.type == mod.ItemType("VibrantLeggings");
         }
-
 		public override void UpdateEquip(Player player)
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);

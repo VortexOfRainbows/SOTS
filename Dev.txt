@@ -17,21 +17,17 @@ High Priority:
 1. Wormwood (Goopwood) Changes
 4. Frigid Hourglass: New Icy drop
 5. Subspace Locket: New Subspace Serpent drop
-6. Prevent Advisor from Despawning when too far. Despawn when not in Planetarium. Nerf Lightning Column on entry to not deal damage.
 7. New Pharaoh Expert Drop: Heart in a Jar, aura of damage that releases ghosts
 	1. Spirit tracer becomes normal drop
 	2. Ghosts dash towards the enemy
 8. Resprites from HugeKraken
 9. Fix display for subspace serpent
-10. Glowmask for new Otherworld Construct
-11. Change Ice Impale and Focus crystal appropriately (sanguite)
 
 2. Aqua-Necro Core (Stronger necro chestplate, 1 ranged attack per second will gain a steam aura that does 33% damage rapidly)
 3. Riptide Trident (Launches you towards your cursor at the cost of void, deal damage while traveling, bounce off of enemies)
 4. Prismarine Necklace: Sharktooth Necklace + Heart of the Sea
 5. Wintry Traveler: Riptide Trident + Frigid Javelin
 6. Antigrav booties
-7. Tangle staff visuals to not work on worms
 
 Mid Priority:
 1. Void Low Warning
@@ -53,6 +49,36 @@ Low Priority:
 5. Buff PP slam attack projectile speed? Faster ring attack cycle (expert)
 6. Sharanga Upgrade
 7. Remove negative Vregen in inventory items
+
+5/10/21 & 5/11/21
+1. Repsprites and Visual Changes:
+	1. Vibrant Blade Damage 13 -> 15, Knockback 4 -> 2.5f, uses local immunity instead of alternating .friendly (more consistent), hits 5 max times instead of 4
+	2. Vibrant Cannon
+	3. Vibrant Pistol; damage 12 -> 15, some hitbox changes, decreased Setbonus spread, increased setbonus velocity to 1.33x (from 1x)
+	4. Vibrant Staff damage 14 -> 16, homes more frequently, decreased homing range
+	5. Echo Disc damage 10 -> 12
+2. Vibrant helmet crit 3% -> 5%
+
+5/10/21
+1. Finished functional side of Foggy Clairvoyance
+2. Tangle staff no longer creates visuals for worms
+3. Advisor now moves considerably faster when too far away, and slightly faster when in walls. Thunder column don't do damage until 60 frames alive.
+	1. Moves faster in tazer mode
+	2. Moves faster in orb casting mode (now has dist multiplier)
+4. Advisor's Otherworldly construct now glows similar to Advisor when attacking.
+	1. Decreased amount of vines 40 -> 32
+5. Holoslimes cost more NPC slots 1 -> 1.25.
+6. Icicle Impale damage 72 -> 75.
+	1. No longer crafted with sanguite, instead uses helicopter parts and dissolving aurora
+	2. Sell price 7.8 g -> 10 g
+	3. Voidcost 5 -> 7
+7. Spectre Spirit Storm firerate 16 -> 13
+	1. Sell price 7.25 g -> 10 g
+8. Focus Crystal
+	1. Crit damage bonus 40 -> 60
+	2. Sell price 5.25 g -> 10 g
+9. Vibrant Armor Resprite:
+	1. Chestplate sell 0.9 g -> 1 g
 
 5/8/21 & 5/9/21
 1. Patchleather resprite, recipe requires less shadow scales/tissue samples

@@ -1,3 +1,4 @@
+using SOTS.Projectiles.Vibrant;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -13,7 +14,7 @@ namespace SOTS.Items.Vibrant
 		}
 		public override void SetDefaults()
 		{
-			item.damage = 14;
+			item.damage = 16;
 			item.magic = true;
 			item.width = 32;
 			item.height = 32;
@@ -22,10 +23,10 @@ namespace SOTS.Items.Vibrant
 			item.useStyle = 5;
 			item.knockBack = 2.5f;
 			item.value = Item.sellPrice(0, 0, 80, 0);
-			item.rare = 1;
+			item.rare = ItemRarityID.Blue;
 			item.UseSound = SoundID.Item8;
 			item.autoReuse = true;            
-			item.shoot = mod.ProjectileType("VibrantArk"); 
+			item.shoot = ModContent.ProjectileType<VibrantArc>(); 
             item.shootSpeed = 12f;
 			item.noMelee = true;
 			Item.staff[item.type] = true; //this makes the useStyle animate as a staff
