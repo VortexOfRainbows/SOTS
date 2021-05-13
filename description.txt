@@ -3,13 +3,13 @@ This mod's main plan is to add generated structures in the world, some are sort-
 !! This mod is early in development !!
 !! A large world is recommended in order for the generated structures to spawn without overriding vanilla structures !!
 
-Bosses -> Currently 6, Mostly bullet hells
-Items -> Around 350, unique gimmicks all around!
+Bosses -> Currently 6, mostly bullet hells
+Items -> Nearly 400, unique gimmicks all around!
 
 New Subclass (void)
 -A new resource similar to mana
 -Unleash very powerful attacks
--Exists on melee, ranged, and magic items
+-Exists on melee, ranged, magic, and summon items
 
 Major Stuctures:
 -Pyramid Dungeon Worldgen
@@ -36,7 +36,7 @@ Item glowmask code: Qwerty3.14
 Small Art Contributions: Naka, Heart Plus Up!
 
 Update 0.19.2
--More Items
+-More Items, such as the introduction of Void+Summon items
 -New Worldgen structure in the Ocean
 -Putrid Pinky Reworks, both visual and functional
 -Subspace Serpent has been completely reworked

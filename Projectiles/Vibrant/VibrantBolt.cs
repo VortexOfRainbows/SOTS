@@ -58,6 +58,8 @@ namespace SOTS.Projectiles.Vibrant
 		public override void AI()
 		{
 			projectile.alpha -= 30;
+			if (projectile.alpha < 0)
+				projectile.alpha = 0;
 			int num2 = Dust.NewDust(new Vector2(projectile.Center.X - 4, projectile.Center.Y - 4), 0, 0, mod.DustType("CopyDust4"));
 			Dust dust = Main.dust[num2];
 			Color color2 = VoidPlayer.VibrantColorAttempt(projectile.whoAmI * 12);

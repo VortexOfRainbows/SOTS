@@ -342,19 +342,19 @@ namespace SOTS
 			{
 				if (Probe5 == -1)
 				{
-					Probe5 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, mod.ProjectileType("FluidFollower"), 0, 0, player.whoAmI);
+					Probe5 = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, mod.ProjectileType("FluidFollower"), 0, 0, player.whoAmI);
 				}
 				if (!Main.projectile[Probe5].active || Main.projectile[Probe5].type != mod.ProjectileType("FluidFollower") || Main.projectile[Probe5].owner != player.whoAmI)
 				{
-					Probe5 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, mod.ProjectileType("FluidFollower"), 0, 0, player.whoAmI);
+					Probe5 = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, mod.ProjectileType("FluidFollower"), 0, 0, player.whoAmI);
 				}
 				if (Probe6 == -1)
 				{
-					Probe6 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, ModContent.ProjectileType<ClairvoyanceShade>(), 0, 0, player.whoAmI);
+					Probe6 = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, ModContent.ProjectileType<ClairvoyanceShade>(), 0, 0, player.whoAmI);
 				}
 				if (!Main.projectile[Probe6].active || Main.projectile[Probe6].type != ModContent.ProjectileType<ClairvoyanceShade>() || Main.projectile[Probe6].owner != player.whoAmI)
 				{
-					Probe6 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, ModContent.ProjectileType<ClairvoyanceShade>(), 0, 0, player.whoAmI);
+					Probe6 = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, ModContent.ProjectileType<ClairvoyanceShade>(), 0, 0, player.whoAmI);
 				}
 			}
 		}

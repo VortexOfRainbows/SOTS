@@ -5,8 +5,6 @@ The following is my development plans :D
 	1. Attaches a second player to you
 3. Dissolving Element Blocks			
 	1. Give off cool particles, can be used in summoning rituals
-4. Pyramid chests to no longer spawn close to surface (idc about this tbh)
-5. Kitchen Sink (idc about this tbh)
 6. Marble Fates and Granite Omega Golem
 7. Chaos Spirit Boss: "Lux"
 8. Fix PPP hook wrong spot bug when cause is found
@@ -15,39 +13,47 @@ The following is my development plans :D
 
 High Priority:
 1. Wormwood (Goopwood) Changes
-4. Frigid Hourglass: New Icy drop
-5. Subspace Locket: New Subspace Serpent drop
-7. New Pharaoh Expert Drop: Heart in a Jar, aura of damage that releases ghosts
+2. Fix display for subspace serpent
+3. Catalyst bomb + Scales
+4. Subspace Scissors
+
+Next:
+1. Frigid Hourglass: New Icy drop
+2. Subspace Locket: New Subspace Serpent drop
+3. New Pharaoh Expert Drop: Heart in a Jar, aura of damage that releases ghosts
 	1. Spirit tracer becomes normal drop
 	2. Ghosts dash towards the enemy
-9. Fix display for subspace serpent
 
-2. Aqua-Necro Core (Stronger necro chestplate, 1 ranged attack per second will gain a steam aura that does 33% damage rapidly)
-3. Riptide Trident (Launches you towards your cursor at the cost of void, deal damage while traveling, bounce off of enemies)
-4. Prismarine Necklace: Sharktooth Necklace + Heart of the Sea
-5. Wintry Traveler: Riptide Trident + Frigid Javelin
-6. Antigrav booties
+4. Aqua-Necro Core (Stronger necro chestplate, 1 ranged attack per second will gain a steam aura that does 33% damage rapidly)
+5. Riptide Trident (Launches you towards your cursor at the cost of void, deal damage while traveling, bounce off of enemies)
+6. Prismarine Necklace: Sharktooth Necklace + Heart of the Sea
+7. Wintry Traveler: Riptide Trident + Frigid Javelin
+8. Antigrav booties
 
 Mid Priority:
 1. Void Low Warning
 2. Prefixes for voids
 3. Bone Clapper
-5. Peanut Gun: Fires peanuts that call in Air Raid Pinkies
-6. Horn of Plenty: 10% more drops accessory
-7. Void Debuffs: Void Consumables Delay, Max Health Decrease
-8. Electrolyte Seperator
-9. Ethereal Tonic
-10. Void accessory reforge: increases max void...
-11. Timelord's Potion: attempt using .aiStyle, otherwise would require a lot of workaround...
+4. Peanut Gun: Fires peanuts that call in Air Raid Pinkies
+5. Horn of Plenty: 10% more drops accessory
+6. Void Debuffs: Void Consumables Delay, Max Health Decrease
+8. Ethereal Tonic
+9. Void accessory reforge: increases max void...
+10. Timelord's Potion: attempt using .aiStyle, otherwise would require a lot of workaround...
 
 Low Priority:
 1. Archaelogist NPC
-2. Subspace Scissors
-3. Spaghetti Whip
-4. Mobile Fortress Generator: One for every tavernkeep armor set
-5. Buff PP slam attack projectile speed? Faster ring attack cycle (expert)
-6. Sharanga Upgrade
-7. Remove negative Vregen in inventory items
+2. Spaghetti Whip
+3. Mobile Fortress Generator: One for every tavernkeep armor set
+4. Buff PP slam attack projectile speed? Faster ring attack cycle (expert)
+5. Sharanga Upgrade
+6. Remove negative Vregen in inventory items
+7. Electrolyte Seperator
+
+5/12/21
+1. Foggy clairvoyance resprite finished, works in Multiplayer
+2. Advisor Orphan Sprite Updated
+
 
 5/10/21 & 5/11/21
 1. Repsprites and Visual Changes:

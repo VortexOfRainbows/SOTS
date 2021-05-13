@@ -25,8 +25,8 @@ namespace SOTS.NPCs.Constructs
 			npc.damage = 40; 
 			npc.defense = 14;  
 			npc.knockBackResist = 0.1f;
-			npc.width = 70;
-			npc.height = 82;
+			npc.width = 72;
+			npc.height = 74;
 			Main.npcFrameCount[npc.type] = 1;  
 			npc.value = 9550;
 			npc.npcSlots = 4f;
@@ -44,6 +44,20 @@ namespace SOTS.NPCs.Constructs
 			dir = (float)Math.Atan2(aimTo.Y - npc.Center.Y, aimTo.X - npc.Center.X);
 			npc.rotation = dir + (npc.spriteDirection - 1) * 0.5f * -MathHelper.ToRadians(180);
 			return true;
+		}
+		bool glow = false;
+		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
+		{
+			Texture2D texture = mod.GetTexture("NPCs/Constructs/OtherworldlyConstructHeadGlow");
+			Color color = new Color(110, 110, 110, 0);
+			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
+			if (glow)
+				for (int k = 0; k < 5; k++)
+				{
+					float x = Main.rand.Next(-10, 11) * 0.1f;
+					float y = Main.rand.Next(-10, 11) * 0.1f;
+					Main.spriteBatch.Draw(texture, new Vector2((float)(npc.Center.X - (int)Main.screenPosition.X) + x, (float)(npc.Center.Y - (int)Main.screenPosition.Y) + y + 2), new Rectangle(0, npc.frame.Y, npc.width, npc.height), color * ((255 - npc.alpha) / 255f), npc.rotation, drawOrigin, npc.scale, npc.spriteDirection == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+				}
 		}
 		public override void HitEffect(int hitDirection, double damage)
 		{
@@ -143,6 +157,7 @@ namespace SOTS.NPCs.Constructs
 			npc.ai[0]++;
 			if(npc.ai[0] >= 270)
 			{
+				glow = true;
 				npc.velocity *= 0.25f;
 				if(npc.ai[0] % 90 == 0)
 				{
@@ -202,6 +217,8 @@ namespace SOTS.NPCs.Constructs
 					npc.velocity = -12 * toPlayer.SafeNormalize(new Vector2(0, 1));
 				}
 			}
+			else
+				glow = false;
 		}
 		public override void NPCLoot()
 		{
