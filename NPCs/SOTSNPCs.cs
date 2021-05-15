@@ -13,6 +13,7 @@ using SOTS.Items.SpecialDrops;
 using SOTS.Items;
 using SOTS.Buffs;
 using SOTS.NPCs.Constructs;
+using SOTS.Items.Celestial;
 
 namespace SOTS.NPCs
 {
@@ -99,7 +100,12 @@ namespace SOTS.NPCs
 					else if (player.ZoneUndergroundDesert || player.ZoneDesert || player.GetModPlayer<SOTSPlayer>().PyramidBiome || player.ZoneRockLayerHeight)
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FragmentOfEarth"), Main.rand.Next(2) + 1);
 					else if (player.ZoneUnderworldHeight)
+					{
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FragmentOfInferno"), Main.rand.Next(2) + 1);
+						if(SOTSWorld.downedSubspace)
+							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<SanguiteBar>(), Main.rand.Next(2) + 4);
+
+					}
 				}
 				else if (Main.rand.NextBool(34))
 				{

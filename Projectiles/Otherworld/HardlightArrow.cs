@@ -1,8 +1,5 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SOTS.Items.Otherworld;
-using Steamworks;
-using System;
 using System.IO;
 using Terraria;
 using Terraria.ID;

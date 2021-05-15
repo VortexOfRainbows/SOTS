@@ -13,8 +13,7 @@ namespace SOTS.Items.Celestial
 		}
 		public override void SetDefaults()
 		{
-
-			item.width = 36;
+			item.width = 30;
 			item.height = 32;
 			item.value = 0;
 			item.rare = 6;
@@ -30,8 +29,7 @@ namespace SOTS.Items.Celestial
 		}
 		public override void OpenBossBag(Player player)
 		{
-
-			player.QuickSpawnItem(mod.ItemType("CeremonialKnife"));
+			player.QuickSpawnItem(ModContent.ItemType<SubspaceScissors>());
 			player.QuickSpawnItem(mod.ItemType("SanguiteBar") ,Main.rand.Next(16, 30));
 			/*	
 			if(Main.rand.Next(12) == 0)

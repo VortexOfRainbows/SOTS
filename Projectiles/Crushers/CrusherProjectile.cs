@@ -83,6 +83,10 @@ namespace SOTS.Projectiles.Crushers
 				VoidItem.DrainMana(player);
 			}
 		}
+		public virtual bool CanCharge()
+        {
+			return true;
+        }
 		public sealed override bool PreAI()
 		{
 			Player player = Main.player[projectile.owner];
@@ -119,29 +123,33 @@ namespace SOTS.Projectiles.Crushers
 			}
 			if (!released) //not charged and not released
 			{
-				currentCharge += 1 * (1f / player.meleeSpeed + modPlayer.voidSpeed - 1);
-				float chargePercentage = currentCharge / chargeTime;
-				chargePercentage = (float)Math.Pow(chargePercentage, exponentReduction);
-				if (chargePercentage > 1)
+				if(CanCharge())
 				{
-					initiateTimer += 1 * (1f / Main.player[projectile.owner].meleeSpeed + modPlayer.voidSpeed - 1);
-					chargePercentage = 1;
+					currentCharge += 1 * (1f / player.meleeSpeed + modPlayer.voidSpeed - 1);
+					float chargePercentage = currentCharge / chargeTime;
+					chargePercentage = (float)Math.Pow(chargePercentage, exponentReduction);
+					if (chargePercentage > 1)
+					{
+						initiateTimer += 1 * (1f / Main.player[projectile.owner].meleeSpeed + modPlayer.voidSpeed - 1);
+						chargePercentage = 1;
+					}
+					int prev = consumedVoid;
+					VoidConsumption(chargePercentage, ref consumedVoid);
+					if (prev != consumedVoid)
+					{
+						Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 15, 1.0f + 0.1f * consumedVoid);
+					}
+
+					float explosiveCount = maxExplosions - minExplosions;
+					explosiveCount *= chargePercentage;
+					explosiveCount += 0.3f;
+					explosive = (int)explosiveCount + minExplosions;
+
+					rotationTimer = chargePercentage * finalDist; //making the rotation timer proportional to the charge time completed
+					float increaseDamage = minDamage + ((maxDamage - minDamage) * chargePercentage);
+					if(ModContent.ProjectileType<SubspaceCrusher>() != projectile.type)
+						projectile.damage = (int)(initialDamage * increaseDamage);
 				}
-				int prev = consumedVoid;
-				VoidConsumption(chargePercentage, ref consumedVoid);
-				if(prev != consumedVoid)
-                {
-					Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 15, 1.0f + 0.1f * consumedVoid);
-                }
-
-				float explosiveCount = maxExplosions - minExplosions;
-				explosiveCount *= chargePercentage;
-                explosiveCount += 0.3f; 
-				explosive = (int)explosiveCount + minExplosions;
-
-				rotationTimer = chargePercentage * finalDist; //making the rotation timer proportional to the charge time completed
-				float increaseDamage = minDamage + ((maxDamage - minDamage) * chargePercentage);
-				projectile.damage = (int)(initialDamage * increaseDamage);
 			}
 
 			Vector2 goToArea = new Vector2(projectile.ai[0], projectile.ai[1]) - player.Center;
@@ -275,7 +283,7 @@ namespace SOTS.Projectiles.Crushers
 		{
 			if (runOnce)
 				return false;
-			if (projectile.type == ModContent.ProjectileType<HellbreakerCrusher>())
+			if (projectile.type == ModContent.ProjectileType<HellbreakerCrusher>() || projectile.type == ModContent.ProjectileType<SubspaceCrusher>())
 				lightColor = Color.White;
 			Player player = Main.player[projectile.owner];
 			//VoidPlayer modPlayer = VoidPlayer.ModPlayer(player);

@@ -1,10 +1,5 @@
 using System;
-using System.IO;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
@@ -12,13 +7,11 @@ using Terraria.ID;
 namespace SOTS.Projectiles 
 {    
     public class ControlledChaos : ModProjectile 
-    {	int wait = 0;
+    {
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Wave Of Destruction");
-			
 		}
-		
         public override void SetDefaults()
         {
 			projectile.CloneDefaults(14);
@@ -27,15 +20,15 @@ namespace SOTS.Projectiles
 			projectile.timeLeft = 30;
 		}
 		public override void AI()
-		{Dust.NewDust(new Vector2(projectile.Center.X, projectile.Center.Y), 0, 0, 206);
-		Dust.NewDust(new Vector2(projectile.Center.X, projectile.Center.Y), 0, 0, 206);
-		Dust.NewDust(new Vector2(projectile.Center.X, projectile.Center.Y), 0, 0, 206);
-		Dust.NewDust(new Vector2(projectile.Center.X, projectile.Center.Y), 0, 0, 206);
+		{
+            Dust.NewDust(new Vector2(projectile.Center.X, projectile.Center.Y), 0, 0, 206);
+		    Dust.NewDust(new Vector2(projectile.Center.X, projectile.Center.Y), 0, 0, 206);
+		    Dust.NewDust(new Vector2(projectile.Center.X, projectile.Center.Y), 0, 0, 206);
+		    Dust.NewDust(new Vector2(projectile.Center.X, projectile.Center.Y), 0, 0, 206);
 			projectile.alpha = 255;
 		}
 		public override void Kill(int timeLeft)
         {
- 
             Vector2 position = projectile.Center;
             Main.PlaySound(SoundID.Item14, (int)position.X, (int)position.Y);
             int radius = 2;     //this is the explosion radius, the highter is the value the bigger is the explosion
@@ -54,7 +47,6 @@ namespace SOTS.Projectiles
                     }
                 }
             }
-			
         }
 	}
 }

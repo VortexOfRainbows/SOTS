@@ -1,37 +1,37 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 using SOTS.Void;
 
-namespace SOTS.Items
+namespace SOTS.Items.Celestial
 {
-	public class SpiderCrusher : VoidItem
+	public class SubspaceScissors : VoidItem
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Fly Catcher");
-			Tooltip.SetDefault("Charge to increase damage up to 180%\nReleases spider webs that slow hit enemies\nReleases more when charged\nTakes 2.5 seconds to reach max charge\n'That's really clever actually'");
+			DisplayName.SetDefault("Spirit Scissors");
+			Tooltip.SetDefault("'Assistance from purgatory'");
 		}
 		public override void SafeSetDefaults()
 		{
-            item.damage = 42;
+            item.damage = 180;
             item.melee = true;  
-            item.width = 44;
-            item.height = 44;  
+            item.width = 52;
+            item.height = 52;  
             item.useTime = 30; 
             item.useAnimation = 30;
             item.useStyle = 5;    
-            item.knockBack = 8f;
-            item.value = Item.sellPrice(0, 2, 0, 0);
-            item.rare = ItemRarityID.LightRed;
-            item.UseSound = SoundID.Item22;
+            item.knockBack = 5f;
+            item.value = Item.sellPrice(0, 15, 0, 0);
+			item.rare = ItemRarityID.Yellow;
+			item.UseSound = SoundID.Item22;
             item.autoReuse = true;
-            item.shoot = mod.ProjectileType("SpiderCrusher"); 
+            item.shoot = mod.ProjectileType("SubspaceCrusher"); 
             item.shootSpeed = 18f;
 			item.channel = true;
             item.noUseGraphic = true; 
             item.noMelee = true;
+			item.expert = true;
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
@@ -39,16 +39,16 @@ namespace SOTS.Items
 		}
 		public override void GetVoid(Player player)
 		{
-			voidMana = 5;
+			voidMana = 17;
 		}
 		public override void AddRecipes()
 		{
+			/*
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.SpiderFang, 18);
-			recipe.AddIngredient(null, "DissolvingEarth", 1);
-			recipe.AddTile(TileID.Anvils);
+			recipe.AddIngredient(null, "SanguiteBar", 15);
+			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.SetResult(this);
-			recipe.AddRecipe();
+			recipe.AddRecipe(); */
 		}
 	}
 }

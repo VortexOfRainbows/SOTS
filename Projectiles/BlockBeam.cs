@@ -1,24 +1,17 @@
 using System;
-using System.IO;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.ModLoader;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace SOTS.Projectiles 
 {    
     public class BlockBeam : ModProjectile 
-    {	int wait = 0;
+    {
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Brass Beam");
 			
 		}
-		
         public override void SetDefaults()
         {
 			projectile.CloneDefaults(260);
@@ -108,11 +101,12 @@ namespace SOTS.Projectiles
 							{
 								for (int y = j - 1; y <= j + 1; y++)
 								{
-									if(Main.tile[x, y] != null && Main.tile[x, y].wall > 0)
+									if (Main.tile[x, y] != null && Main.tile[x, y].wall > 0 && canKillWalls && WallLoader.CanExplode(x, y, Main.tile[x, y].wall))
 									{
-										if (Main.tile[x, y].wall == 0 && Main.netMode != 0)
+										WorldGen.KillWall(x, y, false);
+										if (Main.tile[x, y].wall == 0 && Main.netMode != NetmodeID.SinglePlayer)
 										{
-											NetMessage.SendData(17, -1, -1, null, 2, (float)x, (float)y, 0f, 0, 0, 0);
+											NetMessage.SendData(MessageID.TileChange, -1, -1, null, 2, (float)x, (float)y, 0f, 0, 0, 0);
 										}
 									}
 								}

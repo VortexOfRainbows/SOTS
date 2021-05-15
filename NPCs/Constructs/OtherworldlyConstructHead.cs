@@ -1,17 +1,14 @@
 using System;
-using System.Diagnostics;
-using System.Runtime.Remoting.Messaging;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MonoMod.RuntimeDetour;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+
 namespace SOTS.NPCs.Constructs
 {
 	public class OtherworldlyConstructHead : ModNPC
 	{
-		int timer = 0;
 		int ai1 = 0;
 		float dir = 0f;
 		public override void SetStaticDefaults()
@@ -95,7 +92,6 @@ namespace SOTS.NPCs.Constructs
 			return true;
 		}
 		bool flag = false;
-		bool flag2 = false;
 		Vector2 rotateVector = new Vector2(12, 0);
 		public override void AI()
 		{

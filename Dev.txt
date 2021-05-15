@@ -13,11 +13,6 @@ The following is my development plans :D
 
 High Priority:
 1. Wormwood (Goopwood) Changes
-2. Fix display for subspace serpent
-3. Catalyst bomb + Scales
-4. Subspace Scissors
-
-Next:
 1. Frigid Hourglass: New Icy drop
 2. Subspace Locket: New Subspace Serpent drop
 3. New Pharaoh Expert Drop: Heart in a Jar, aura of damage that releases ghosts
@@ -50,10 +45,18 @@ Low Priority:
 6. Remove negative Vregen in inventory items
 7. Electrolyte Seperator
 
-5/12/21
+5/14/21 & 5/15/21
+1. Subspace scissors finished. Will act as the temporary expert drop.
+2. Resprites for Subspace Treasure Bag, Catalyst bomb, and Scales (bars).
+3. Next: Catalyst bomb rework, wormwood recipes
+4. Cross appears over lava
+5. Temporary Portraits are in!
+
+5/12/21 & 5/13/21
 1. Foggy clairvoyance resprite finished, works in Multiplayer
 2. Advisor Orphan Sprite Updated
-
+3. Began work on Subspace Scissors
+4. Snake wall attack now has delay while transitioning
 
 5/10/21 & 5/11/21
 1. Repsprites and Visual Changes:

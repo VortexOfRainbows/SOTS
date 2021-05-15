@@ -619,18 +619,21 @@ namespace SOTS.NPCs.Boss
                 SlitherWall(worldSide, ai2, dist, speed);
                 if(!hasEnteredSecondPhase)
                 {
-                    if ((Main.expertMode && ai1 % 45 == 0) || (!Main.expertMode && ai1 % 55 == 0))
+                    if(ai1 > 1000)
                     {
-                        SnakeFromWall(worldSide);
+                        if ((Main.expertMode && ai1 % 45 == 0) || (!Main.expertMode && ai1 % 55 == 0))
+                        {
+                            SnakeFromWall(worldSide);
+                        }
+                        if (ai1 % 330 == 0)
+                        {
+                            Vector2 circular = new Vector2(1200, 0).RotatedBy(MathHelper.ToRadians(30 + (rotate * 2 + Main.rand.Next(-30, 31)) % 120));
+                            SerpentRing(circular + player.Center);
+                        }
                     }
-                    if (ai1 % 330 == 0)
-                    {
-                        Vector2 circular = new Vector2(1200, 0).RotatedBy(MathHelper.ToRadians(30 + (rotate * 2 + Main.rand.Next(-30, 31)) % 120));
-                        SerpentRing(circular + player.Center);
-                    }
-                    if(ai1 < 915)
+                    if(ai1 < 935)
                         ai4 = -1;
-                    if (ai1 < 900)
+                    if (ai1 < 920)
                     {
                         TransitionPhase(0);
                         left = !left;
@@ -867,7 +870,7 @@ namespace SOTS.NPCs.Boss
                     damage2 = (int)(damage2 / Main.expertDamage);
                 }
                 Vector2 circular = new Vector2(Main.rand.NextFloat(12f, 16f) * direction, 0);
-                Projectile.NewProjectile(area, circular, ModContent.ProjectileType<EnergySerpentHead>(), (int)(damage2 * 0.8f), 0, Main.myPlayer, Main.rand.Next(5, 7), -1);
+                Projectile.NewProjectile(area, circular, ModContent.ProjectileType<EnergySerpentHead>(), (int)(damage2 * 0.95f), 0, Main.myPlayer, Main.rand.Next(5, 7), -1);
             }
         }
         public void SlitherWall(int direction, float rotate, float dist = 620, float offset = 20)

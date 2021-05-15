@@ -8,16 +8,15 @@ namespace SOTS.Items.Celestial
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Sanguite Bar");
+			DisplayName.SetDefault("Sanguite Scales");
 			Tooltip.SetDefault("'It smells of sulfur and blood'");
 		}
 		public override void SetDefaults()
 		{
-
-			item.width = 30;
-			item.height = 24;
+			item.width = 26;
+			item.height = 28;
             item.value = Item.sellPrice(0, 0, 75, 0);
-			item.rare = 8;
+			item.rare = ItemRarityID.Yellow;
 			item.maxStack = 99;
 		}
 	}

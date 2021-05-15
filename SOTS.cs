@@ -384,7 +384,7 @@ namespace SOTS
 					new List<int>() { ModContent.ItemType<TheAdvisorBossBag>(), ModContent.ItemType<SkywareKey>(), ModContent.ItemType<StarlightAlloy>(), ModContent.ItemType<StrangeKey>(), ModContent.ItemType<HardlightAlloy>(), ModContent.ItemType<MeteoriteKey>(), ModContent.ItemType<OtherworldlyAlloy>() },
 					"Destroy the 4 tethered Otherworldly Constructs of the Planetarium",
 					"",
-					"SOTS/NPCs/Boss/Advisor_Display",
+					"SOTS/BossCL/AdvisorPortrait",
 					"",
 					(Func<bool>)(() => true));
 				bossChecklist.Call(
@@ -429,7 +429,7 @@ namespace SOTS
 					new List<int>() { ModContent.ItemType<SubspaceBag>(), ModContent.ItemType<SanguiteBar>()},
 					"Tear a dimensional rift in hell by detonating a [i:" + ModContent.ItemType<CatalystBomb>() + "]",
 					"",
-					"SOTS/NPCs/Boss/SubspaceSerpent_Display",
+					"SOTS/BossCL/SubspaceSerpentPortrait",
 					"",
 					(Func<bool>)(() => true));
 

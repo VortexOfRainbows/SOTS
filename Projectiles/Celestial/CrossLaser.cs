@@ -1,8 +1,8 @@
 using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
-using SOTS.NPCs.Boss;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -24,9 +24,14 @@ namespace SOTS.Projectiles.Celestial
             projectile.friendly = false; 
             projectile.hostile = false; 
             projectile.tileCollide = false;
-            projectile.ignoreWater = true; 
+            projectile.ignoreWater = true;
+			projectile.hide = true;
 		}
-		float finalRotation = 0;
+        public override void DrawBehind(int index, List<int> drawCacheProjsBehindNPCsAndTiles, List<int> drawCacheProjsBehindNPCs, List<int> drawCacheProjsBehindProjectiles, List<int> drawCacheProjsOverWiresUI)
+        {
+			drawCacheProjsOverWiresUI.Add(index);
+        }
+        float finalRotation = 0;
 		float bonusRotation = 420f;
 		bool runOnce = true;
 		Color color = Color.White;

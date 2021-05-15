@@ -19,7 +19,7 @@ namespace SOTS.Projectiles.Celestial
 			projectile.timeLeft = 3600;
 			projectile.penetrate = -1;
 			projectile.tileCollide = false;
-			projectile.magic = true;
+			projectile.melee = true;
 			projectile.alpha = 255;
 			projectile.ai[1] = -1;
 			projectile.extraUpdates = 1;

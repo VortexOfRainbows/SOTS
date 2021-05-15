@@ -1,8 +1,5 @@
-using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using System;
-using Microsoft.Xna.Framework;
 
 namespace SOTS.Items.Celestial
 {
@@ -11,16 +8,16 @@ namespace SOTS.Items.Celestial
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Catalyst Bomb");
-			Tooltip.SetDefault("'Shatter the environment around you'");
+			Tooltip.SetDefault("");
 		}
 		public override void SetDefaults()
 		{
 			item.damage = 100;
-			item.width = 22;
-			item.height = 28;
+			item.width = 34;
+			item.height = 38;
 			item.useStyle = 1;
 			item.value = 0;
-			item.rare = 8;
+			item.rare = ItemRarityID.Yellow;
 			item.useTime = 30;
 			item.useAnimation = 30;
 			item.UseSound = SoundID.Item1;
@@ -34,7 +31,7 @@ namespace SOTS.Items.Celestial
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.Bomb, 1);
+			recipe.AddIngredient(ItemID.Bomb, 5);
 			recipe.AddIngredient(ItemID.Ectoplasm, 1);
 			recipe.AddIngredient(ItemID.SoulofNight, 1);
 			recipe.AddTile(TileID.MythrilAnvil);

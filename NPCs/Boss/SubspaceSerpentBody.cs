@@ -132,7 +132,6 @@ namespace SOTS.NPCs.Boss
             }
             return false;
         }
-
         public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
         {
             Texture2D texture = mod.GetTexture("NPCs/Boss/SubspaceSerpentBodyFill");
