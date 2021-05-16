@@ -89,8 +89,8 @@ namespace SOTS.Projectiles.Celestial
 			{
 				for (int j = minTileY; j <= maxTileY; j++)
 				{
-					float diffX = Math.Abs((float)i - projectile.position.X / 16f);
-					float diffY = Math.Abs((float)j - projectile.position.Y / 16f);
+					float diffX = Math.Abs((float)i - projectile.Center.X / 16f);
+					float diffY = Math.Abs((float)j - projectile.Center.Y / 16f);
 					double distanceToTile = Math.Sqrt((double)(diffX * diffX + diffY * diffY));
 					if (distanceToTile < (double)explosionRadius)
 					{
@@ -128,6 +128,16 @@ namespace SOTS.Projectiles.Celestial
 			Player player = Main.player[projectile.owner];
 			if(projectile.ai[0] == 0)
 			{
+				for (int i = 0; i < particleList.Count; i++)
+				{
+					FireParticle particle = particleList[i];
+					Dust dust = Dust.NewDustDirect(new Vector2(particle.position.X - 4, particle.position.Y - 4), 4, 4, ModContent.DustType<CopyDust4>());
+					dust.noGravity = true;
+					dust.velocity *= 1.25f;
+					dust.scale *= 2.5f;
+					dust.fadeIn = 0.1f;
+					dust.color = new Color(50, 150, 50);
+				}
 				for (int i = 0; i < 360; i += 2)
 				{
 					if (Main.rand.NextBool(3))
@@ -144,7 +154,7 @@ namespace SOTS.Projectiles.Celestial
 					}
 				}
 				for (int i = 0; i < 24; i++)
-					Gore.NewGore(projectile.Center + new Vector2(Main.rand.NextFloat(12, 36), 0).RotatedBy(MathHelper.ToRadians(i * 15)), default(Vector2), Main.rand.Next(61, 64), 1.25f);
+					Gore.NewGore(projectile.position + new Vector2(Main.rand.NextFloat(12, 36), 0).RotatedBy(MathHelper.ToRadians(i * 15)), default(Vector2), Main.rand.Next(61, 64), 1.25f);
 				if (player.ZoneUnderworldHeight)
 				{
 					Main.PlaySound(SoundID.Item119, (int)projectile.Center.X, (int)projectile.Center.Y);
@@ -165,16 +175,6 @@ namespace SOTS.Projectiles.Celestial
 				else
 				{
 					Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 14, 1.0f);
-					for (int i = 0; i < particleList.Count; i++)
-					{
-						FireParticle particle = particleList[i];
-						Dust dust = Dust.NewDustDirect(new Vector2(particle.position.X - 4, particle.position.Y - 4), 4, 4, ModContent.DustType<CopyDust4>());
-						dust.noGravity = true;
-						dust.velocity *= 1.25f;
-						dust.scale *= 2.5f;
-						dust.fadeIn = 0.1f;
-						dust.color = new Color(50, 150, 50);
-					}
 				}
 			}
 		}
@@ -280,7 +280,7 @@ namespace SOTS.Projectiles.Celestial
 						if (Main.myPlayer == projectile.owner)
 						{
 							Vector2 circular = new Vector2(Main.rand.NextFloat(6f, 8f), 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)));
-							if (Main.rand.NextBool(3))
+							if (Main.rand.NextBool(3) && player.ZoneUnderworldHeight)
 								Projectile.NewProjectile(projectile.Center, circular, ModContent.ProjectileType<PurgatoryGhost>(), 0, projectile.knockBack, projectile.owner, 0, Main.rand.Next(2) * 2 - 1);
 							Vector2 perturbedSpeed = (circular.SafeNormalize(Vector2.Zero) * 2f * Main.rand.NextFloat(0.5f, 1.5f)).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360f)));
 							Projectile.NewProjectile(projectile.Center, perturbedSpeed, ModContent.ProjectileType<PurgatoryLightning>(), 0, 1f, Main.myPlayer, Main.rand.Next(2));

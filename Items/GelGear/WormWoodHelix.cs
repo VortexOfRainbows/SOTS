@@ -11,7 +11,7 @@ namespace SOTS.Items.GelGear
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Wormwood Helix");
+			DisplayName.SetDefault("Goopwood Helix");
 			Tooltip.SetDefault("Converts musket balls into helix shots");
 		}
 		public override void SetDefaults()
@@ -60,9 +60,8 @@ namespace SOTS.Items.GelGear
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "WormWoodCore", 1);
+			recipe.AddIngredient(ModContent.ItemType<CorrosiveGel>(), 24);
 			recipe.AddIngredient(null, "Wormwood", 24);
-			recipe.AddIngredient(ItemID.PinkGel, 24);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this);
 			recipe.AddRecipe();

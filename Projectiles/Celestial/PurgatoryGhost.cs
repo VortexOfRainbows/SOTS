@@ -30,6 +30,10 @@ namespace SOTS.Projectiles.Celestial
 			target.immune[projectile.owner] = 0;
 			projectile.friendly = false;
 			lockedVelo = true;
+			if (Main.myPlayer == projectile.owner)
+			{
+				projectile.netUpdate = true;
+			}
 		}
 		Vector2[] trailPos = new Vector2[20];
 		public void TrailPreDraw(SpriteBatch spriteBatch, Color lightColor)
@@ -85,10 +89,6 @@ namespace SOTS.Projectiles.Celestial
 		bool lockedVelo = false;
         public override void AI()
 		{
-			if(projectile.timeLeft % 2 == 0 && Main.myPlayer == projectile.owner)
-            {
-				projectile.netUpdate = true;
-			}
 			if (projectile.ai[1] == 0)
 			{
 				for (int i = 0; i < 360; i += 30)
@@ -155,6 +155,10 @@ namespace SOTS.Projectiles.Celestial
 				}
 				if (target2 != -1)
 				{
+					if (Main.myPlayer == projectile.owner)
+					{
+						projectile.netUpdate = true;
+					}
 					if (counter < 1f)
 						counter += 0.005f;
 					else
@@ -199,6 +203,10 @@ namespace SOTS.Projectiles.Celestial
 				runOnce = false;
 				projectile.velocity = projectile.velocity * -2f;
 				initialSpeed = projectile.velocity.Length();
+				if (Main.myPlayer == projectile.owner)
+				{
+					projectile.netUpdate = true;
+				}
 			}
 			if (!runOnce)
 			{
@@ -225,6 +233,7 @@ namespace SOTS.Projectiles.Celestial
 		}
 		public override void SendExtraAI(BinaryWriter writer)
 		{
+			writer.Write(initialSpeed);
 			writer.Write(projectile.velocity.X);
 			writer.Write(projectile.velocity.Y);
 			writer.Write(lockVelo.X);
@@ -232,10 +241,10 @@ namespace SOTS.Projectiles.Celestial
 			writer.Write(projectile.tileCollide);
 			writer.Write(projectile.friendly);
 			writer.Write(lockedVelo);
-			base.SendExtraAI(writer);
 		}
 		public override void ReceiveExtraAI(BinaryReader reader)
 		{
+			initialSpeed = reader.ReadSingle();
 			projectile.velocity.X = reader.ReadSingle();
 			projectile.velocity.Y = reader.ReadSingle();
 			lockVelo.X = reader.ReadSingle();
@@ -243,7 +252,6 @@ namespace SOTS.Projectiles.Celestial
 			projectile.tileCollide = reader.ReadBoolean();
 			projectile.friendly = reader.ReadBoolean();
 			lockedVelo = reader.ReadBoolean();
-			base.ReceiveExtraAI(reader);
 		}
 		public override void Kill(int timeLeft)
 		{

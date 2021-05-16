@@ -12,7 +12,7 @@ The following is my development plans :D
 10. Ghost Town to Evil Biome
 
 High Priority:
-1. Wormwood (Goopwood) Changes
+1. Goopwood sprite Changes
 1. Frigid Hourglass: New Icy drop
 2. Subspace Locket: New Subspace Serpent drop
 3. New Pharaoh Expert Drop: Heart in a Jar, aura of damage that releases ghosts
@@ -45,12 +45,21 @@ Low Priority:
 6. Remove negative Vregen in inventory items
 7. Electrolyte Seperator
 
+
+-- Update 19.2 Released --
+
+
 5/14/21 & 5/15/21
 1. Subspace scissors finished. Will act as the temporary expert drop.
 2. Resprites for Subspace Treasure Bag, Catalyst bomb, and Scales (bars).
-3. Next: Catalyst bomb rework, wormwood recipes
+3. Goopwood now use corrosive gel instead of pink gel/wormwood core, sell prices normalized.
+	1. Putrid pinky now drops Vial of Acid, and all other drops at lower rates.
+	2. Gel wings now cost corrosive gel, less feathers
+	3. Goopwood needs solidifier
 4. Cross appears over lava
 5. Temporary Portraits are in!
+6. Catalyst bomb finished, no longer does damage
+7. Better music quality + Putrid Pinky track!
 
 5/12/21 & 5/13/21
 1. Foggy clairvoyance resprite finished, works in Multiplayer

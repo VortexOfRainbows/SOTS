@@ -32,9 +32,9 @@ namespace SOTS.Items.GelGear
 		public override void OpenBossBag(Player player)
 		{
 			player.QuickSpawnItem(mod.ItemType("PutridEye"));
-			player.QuickSpawnItem(mod.ItemType("WormWoodCore"));
-			player.QuickSpawnItem(ItemID.PinkGel,Main.rand.Next(40, 100));
-			player.QuickSpawnItem(mod.ItemType("Wormwood"),Main.rand.Next(40, 100));
+			player.QuickSpawnItem(ModContent.ItemType<VialofAcid>(), Main.rand.Next(20, 30));
+			player.QuickSpawnItem(ItemID.PinkGel,Main.rand.Next(40, 60));
+			player.QuickSpawnItem(mod.ItemType("Wormwood"),Main.rand.Next(20, 30));
 				
 			if(Main.rand.Next(12) == 0)
 			player.QuickSpawnItem(mod.ItemType("GelWings"));

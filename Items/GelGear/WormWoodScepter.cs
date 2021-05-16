@@ -3,14 +3,13 @@ using Terraria.ID;
 using Microsoft.Xna.Framework;
 using Terraria.ModLoader;
  
- 
 namespace SOTS.Items.GelGear    
 {
     public class WormWoodScepter : ModItem
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Wormwood Scepter");
+			DisplayName.SetDefault("Goopwood Scepter");
 			Tooltip.SetDefault("Summons a Wormwood Turret to fire upon up to 4 enemies at a time");
 		}
         public override void SetDefaults()
@@ -24,7 +23,7 @@ namespace SOTS.Items.GelGear
             item.useStyle = 1;  
             item.noMelee = true;
             item.knockBack = 0;  
-            item.value = Item.sellPrice(0, 1, 80, 0);
+            item.value = Item.sellPrice(0, 2, 0, 0);
             item.rare = 4;  
             item.UseSound = SoundID.Item44; 
             item.autoReuse = true;   
@@ -35,10 +34,9 @@ namespace SOTS.Items.GelGear
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "WormWoodCore", 1);
-			recipe.AddIngredient(null, "Wormwood", 28);
-			recipe.AddIngredient(ItemID.PinkGel, 32);
-			recipe.AddTile(TileID.Anvils);
+            recipe.AddIngredient(ModContent.ItemType<CorrosiveGel>(), 32);
+            recipe.AddIngredient(null, "Wormwood", 28);
+            recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this);
 			recipe.AddRecipe();
 		}

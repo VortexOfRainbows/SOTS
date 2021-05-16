@@ -13,7 +13,7 @@ namespace SOTS.Items.GelGear
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Wormwood Collapse");
+			DisplayName.SetDefault("Goopwood Collapse");
 			Tooltip.SetDefault("Charge to increase damage up to 500%\nTakes 3 seconds to reach max charge");
 		}
 		public override void SafeSetDefaults()
@@ -26,7 +26,7 @@ namespace SOTS.Items.GelGear
             item.useAnimation = 30;
             item.useStyle = 5;    
             item.knockBack = 7f;
-            item.value = Item.sellPrice(0, 1, 80, 0);
+            item.value = Item.sellPrice(0, 2, 0, 0);
             item.rare = ItemRarityID.LightRed;
             item.UseSound = SoundID.Item22;
             item.autoReuse = true;
@@ -47,9 +47,8 @@ namespace SOTS.Items.GelGear
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "WormWoodCore", 1);
+			recipe.AddIngredient(ModContent.ItemType<CorrosiveGel>(), 20);
 			recipe.AddIngredient(null, "Wormwood", 32);
-			recipe.AddIngredient(ItemID.PinkGel, 20);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this);
 			recipe.AddRecipe();

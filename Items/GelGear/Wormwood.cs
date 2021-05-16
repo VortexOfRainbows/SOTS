@@ -33,7 +33,7 @@ namespace SOTS.Items.GelGear
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.Wood, 2);
 			recipe.AddIngredient(ItemID.Gel, 5);
-			recipe.AddTile(TileID.WorkBenches);
+			recipe.AddTile(TileID.Solidifier);
 			recipe.SetResult(this, 2);
 			recipe.AddRecipe();
 		}

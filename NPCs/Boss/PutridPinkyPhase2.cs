@@ -82,7 +82,7 @@ namespace SOTS.NPCs.Boss
             npc.DeathSound = SoundID.NPCDeath5;
             npc.buffImmune[20] = true;
 			npc.alpha = 60;
-            music = MusicID.Boss3;
+            music = mod.GetSoundSlot(SoundType.Music, "Sounds/Music/PutridPinky");
 			bossBag = ModContent.ItemType<PinkyBag>();
 		}
 		const int alphaMin = 60;

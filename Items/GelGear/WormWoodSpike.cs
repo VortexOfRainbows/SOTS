@@ -1,19 +1,14 @@
-using System;
-using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.Graphics.Effects;
-using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
-using SOTS.Void;
- 
+
 namespace SOTS.Items.GelGear
 {
     public class WormWoodSpike : ModItem
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Wormwood Spike");
+			DisplayName.SetDefault("Goopwood Spike");
 			Tooltip.SetDefault("Enemies get stuck on it");
 		}
         public override void SetDefaults()
@@ -21,7 +16,7 @@ namespace SOTS.Items.GelGear
             item.damage = 32;
             item.width = 36;
             item.height = 28;
-            item.value = Item.sellPrice(0, 1, 80, 0);
+            item.value = Item.sellPrice(0, 2, 0, 0);
             item.rare = 4;
             item.noMelee = true;
             item.useStyle = 5;
@@ -38,10 +33,9 @@ namespace SOTS.Items.GelGear
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "WormWoodCore", 1);
-			recipe.AddIngredient(null, "Wormwood", 16);
-			recipe.AddIngredient(ItemID.PinkGel, 32);
-			recipe.AddTile(TileID.Anvils);
+            recipe.AddIngredient(ModContent.ItemType<CorrosiveGel>(), 32);
+            recipe.AddIngredient(null, "Wormwood", 16);
+            recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this);
 			recipe.AddRecipe();
 		}

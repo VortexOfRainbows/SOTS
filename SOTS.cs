@@ -316,7 +316,7 @@ namespace SOTS
 				Player player = Main.player[Main.myPlayer];
 				if (player.active && player.GetModPlayer<SOTSPlayer>().PyramidBiome)
                 {
-                    music = (SOTSPlayer.ModPlayer(player).weakerCurse || SOTSWorld.downedBoss2) ? GetSoundSlot(SoundType.Music, "Sounds/Music/Grand_Pyramid") : MusicID.Desert;
+                    music = (SOTSPlayer.ModPlayer(player).weakerCurse || SOTSWorld.downedBoss2) ? GetSoundSlot(SoundType.Music, "Sounds/Music/AncientPyramid") : MusicID.Desert;
 					priority = MusicPriority.BiomeHigh;
                 }
 			}
@@ -351,7 +351,7 @@ namespace SOTS
 					(Func<bool>)(() => SOTSWorld.downedPinky),
 					ModContent.ItemType<JarOfPeanuts>(), 
 					new List<int>() { }, 
-					new List<int>() { ModContent.ItemType<PinkyBag>(), ModContent.ItemType<WormWoodCore>(), ModContent.ItemType<Wormwood>(), ItemID.PinkGel},
+					new List<int>() { ModContent.ItemType<PinkyBag>(), ModContent.ItemType<VialofAcid>(), ModContent.ItemType<Wormwood>(), ItemID.PinkGel},
 					"Summon in any biome at any time using a [i:" + ModContent.ItemType<JarOfPeanuts>() + "]",
 					"{0} has robbed everyone of their peanuts!", 
 					"SOTS/NPCs/Boss/PutridPinky1_Display", 

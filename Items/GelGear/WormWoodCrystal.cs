@@ -1,6 +1,3 @@
-using System;
-using Microsoft.Xna.Framework;
-
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -11,7 +8,7 @@ namespace SOTS.Items.GelGear
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Wormwood Crystal");
+			DisplayName.SetDefault("Goopwood Crystal");
 			Tooltip.SetDefault("A crystal that explodes into gelatinous projectiles");
 		}
 		public override void SetDefaults()
@@ -38,9 +35,8 @@ namespace SOTS.Items.GelGear
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "WormWoodCore", 1);
+			recipe.AddIngredient(ModContent.ItemType<CorrosiveGel>(), 16);
 			recipe.AddIngredient(null, "Wormwood", 16);
-			recipe.AddIngredient(ItemID.PinkGel, 16);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this, 666);
 			recipe.AddRecipe();

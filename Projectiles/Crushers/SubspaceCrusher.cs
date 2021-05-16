@@ -100,7 +100,7 @@ namespace SOTS.Projectiles.Crushers
         }
         public override void PostDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
-			if (runOnce)
+			if (runOnce || storage.Count <= 1)
 				return;
 			Texture2D texture = mod.GetTexture("Projectiles/Crushers/SubspaceLine");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
