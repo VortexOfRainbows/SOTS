@@ -30,13 +30,9 @@ namespace SOTS.Items.IceStuff
 		}
 		public override void OpenBossBag(Player player)
 		{
-
-			player.QuickSpawnItem(mod.ItemType("PearlescentCore"));
+			player.QuickSpawnItem(ModContent.ItemType<FrigidHourglass>());
 			player.QuickSpawnItem(mod.ItemType("AbsoluteBar"),Main.rand.Next(26, 43));
 			player.QuickSpawnItem(ItemID.FrostCore,Main.rand.Next(2) + 1);
-			
-			
-				
 		}
 	}
 }

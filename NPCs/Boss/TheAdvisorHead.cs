@@ -818,7 +818,7 @@ namespace SOTS.NPCs.Boss
 									Projectile.NewProjectile(npc.Center.X, npc.Center.Y, toProj.X, toProj.Y, mod.ProjectileType("OtherworldlyBall"), damage, 0, Main.myPlayer);
 							}
 						}
-						MoveTo(toLocation, -12f, 0.1f, 1);
+						MoveTo(toLocation, -12f, 0, 1);
 						ai3 += npc.velocity.X * 1.2f;
 					}
 				}
@@ -903,7 +903,7 @@ namespace SOTS.NPCs.Boss
 				speed *= 2.4f;
 				speedMultDist *= 2f;
 			}
-			else if (distance > 2400f)
+			else if (distance > 2400f && speedMultDist > 0)
 			{
 				speed *= 3f;
 				speedMultDist *= 3f;

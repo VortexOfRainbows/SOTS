@@ -26,7 +26,7 @@ namespace SOTS.Items.IceStuff
 		}
 		public override void UpdateArmorSet(Player player)
 		{
-			player.setBonus = "Increases life regen by 2\nImmunity to chilled, frozen, and frostburn";
+			player.setBonus = "Increases life regen by 2\nImmunity to Chilled, Frozen, and Frostburn";
 			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
 			player.lifeRegen += 2;
 			player.buffImmune[BuffID.Chilled] = true;

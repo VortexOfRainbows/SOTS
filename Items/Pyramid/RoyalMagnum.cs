@@ -21,14 +21,14 @@ namespace SOTS.Items.Pyramid
             item.height = 22;
             item.useTime = 14;
             item.useAnimation = 14;
-            item.useStyle = 5;    
+            item.useStyle = ItemUseStyleID.HoldingOut;    
             item.noMelee = true;
             item.knockBack = 2.5f;
             item.value = Item.sellPrice(0, 1, 50, 0);
-            item.rare = 3;
+            item.rare = ItemRarityID.Orange;
             item.UseSound = SoundID.Item11;
             item.autoReuse = false;
-            item.shoot = 14; 
+            item.shoot = ProjectileID.Bullet; 
             item.shootSpeed = 3.25f;
 			item.useAmmo = AmmoID.Bullet;
 		}

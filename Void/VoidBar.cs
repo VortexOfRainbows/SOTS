@@ -29,7 +29,6 @@ namespace SOTS.Void
 		private VoidBarBorder2 barBackground;
 		private VoidBarBorder2 outline;
 		private UIText text;
-
         public override void OnInitialize()
 		{
 			Height.Set(height, 0f); //Set Height of element
@@ -85,10 +84,15 @@ namespace SOTS.Void
 		{
 			Player player = Main.player[Main.myPlayer];
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
+			DrawIce(spriteBatch, true);
 			int voidmeter = (int)voidPlayer.voidMeter;
 			if(voidmeter < 0)
 			{
 				voidmeter = 0;
+			}
+			if (voidPlayer.frozenVoid)
+			{
+				voidmeter = (int)voidPlayer.frozenVoidCount;
 			}
 			string voidManaText = voidmeter.ToString();
 			int voidMax = voidPlayer.voidMeterMax2 - voidPlayer.VoidMinionConsumption;
@@ -201,6 +205,54 @@ namespace SOTS.Void
 			}
 			Recalculate();
 			base.Draw(spriteBatch);
+			DrawIce(spriteBatch, false);
+		}
+		public void DrawIce(SpriteBatch spriteBatch, bool shadow = false)
+		{
+			Player player = Main.player[Main.myPlayer];
+			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
+			Texture2D frozenBar = ModContent.GetTexture("SOTS/Void/FrozenVoidBar");
+			Texture2D fill = ModContent.GetTexture("SOTS/Void/FrozenVoidBarFill");
+			Texture2D frozenBarBorder = ModContent.GetTexture("SOTS/Void/FrozenVoidBarBorder");
+			Vector2 padding = new Vector2(-2, 0);
+			Rectangle frame = new Rectangle((int)(VoidPlayer.voidBarOffset.X + padding.X), (int)(VoidPlayer.voidBarOffset.Y + padding.Y), frozenBar.Width, frozenBar.Height);
+			if (voidPlayer.frozenVoid)
+			{
+				if (!shadow && voidPlayer.frozenDuration >= 30)
+				{
+					float frozenPercent2 = (float)voidPlayer.frozenDuration / (float)voidPlayer.frozenMaxDuration;
+					spriteBatch.Draw(fill, frame, new Color(255, 255, 255) * 0.1f);
+					spriteBatch.Draw(frozenBarBorder, new Vector2(VoidPlayer.voidBarOffset.X, VoidPlayer.voidBarOffset.Y) + padding, new Rectangle(0, 0, frozenBarBorder.Width, frozenBarBorder.Height), new Color(255, 255, 255));
+					spriteBatch.Draw(frozenBar, new Vector2(VoidPlayer.voidBarOffset.X, VoidPlayer.voidBarOffset.Y) + padding, new Rectangle(0, 0, (int)(frozenBar.Width * frozenPercent2), frozenBar.Height), new Color(255, 255, 255));
+				}
+				else if (shadow && voidPlayer.frozenDuration < 30)
+					for (int i = 0; i < 6; i++)
+					{
+						float distance = 30 - voidPlayer.frozenDuration;
+						float alphaMult = (40 - distance) / 40f;
+						Vector2 circular = new Vector2(1.0f * distance, 0).RotatedBy(MathHelper.ToRadians(2 * voidPlayer.frozenDuration + 60 * i));
+						spriteBatch.Draw(fill, VoidPlayer.voidBarOffset + circular + padding, new Rectangle(0, 0, fill.Width, fill.Height), new Color(100, 100, 100, 0) * 0.05f * alphaMult);
+						spriteBatch.Draw(frozenBarBorder, VoidPlayer.voidBarOffset + circular + padding, new Rectangle(0, 0, frozenBarBorder.Width, frozenBarBorder.Height), new Color(100, 100, 100, 0) * 0.5f * alphaMult);
+					}
+			}
+			else
+			{
+				if (!shadow)
+				{
+					float frozenPercent = (float)voidPlayer.frozenCounter / (float)voidPlayer.frozenMinTimer;
+					frame = new Rectangle(0, 0, (int)(frozenBarBorder.Width * frozenPercent), frozenBarBorder.Height);
+					spriteBatch.Draw(frozenBarBorder, new Vector2(VoidPlayer.voidBarOffset.X, VoidPlayer.voidBarOffset.Y) + padding, frame, new Color(255, 255, 255));
+				}
+				else if (voidPlayer.frozenCounter > voidPlayer.frozenMinTimer - 30)
+					for (int i = 0; i < 6; i++)
+					{
+						float distance = voidPlayer.frozenMinTimer - voidPlayer.frozenCounter;
+						float alphaMult = (40 - distance) / 40f;
+						Vector2 circular = new Vector2(1.0f * distance, 0).RotatedBy(MathHelper.ToRadians(2 * voidPlayer.frozenCounter + 60 * i));
+						spriteBatch.Draw(fill, VoidPlayer.voidBarOffset + circular + padding, new Rectangle(0, 0, fill.Width, fill.Height), new Color(100, 100, 100, 0) * 0.05f * alphaMult);
+						spriteBatch.Draw(frozenBar, VoidPlayer.voidBarOffset + circular + padding, new Rectangle(0, 0, frozenBar.Width, frozenBar.Height), new Color(100, 100, 100, 0) * 0.5f * alphaMult);
+					}
+			}
 		}
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {

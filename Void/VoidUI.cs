@@ -35,11 +35,8 @@ namespace SOTS.Void
 		bool runOnce = true;
 		public override void Update(GameTime gameTime)
 		{
-			if(runOnce)
-			{
-				voidUI.Left.Set(VoidPlayer.voidBarOffset.X, 0f);
-				voidUI.Top.Set(VoidPlayer.voidBarOffset.Y, 0f);
-			}
+			voidUI.Left.Set(VoidPlayer.voidBarOffset.X, 0f);
+			voidUI.Top.Set(VoidPlayer.voidBarOffset.Y, 0f);
 			base.Update(gameTime);
 		}
         public override void OnDeactivate()

@@ -31,7 +31,6 @@ namespace SOTS.Items.Vibrant
             item.autoReuse = false;
             item.shoot = mod.ProjectileType("VibrantBolt"); 
             item.shootSpeed = 24f;
-			item.channel = true;
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
@@ -81,7 +80,10 @@ namespace SOTS.Items.Vibrant
 			{
 				float mult = 1.33f;
 				Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(4.5f));
-				Projectile.NewProjectile(position, Vector2.Zero, mod.ProjectileType("VibrantRifle"), 0, 0, player.whoAmI, perturbedSpeed.ToRotation() - new Vector2(speedX, speedY).ToRotation());
+				if (position == player.Center)
+				{
+					Projectile.NewProjectile(position, Vector2.Zero, mod.ProjectileType("VibrantRifle"), 0, 0, player.whoAmI, perturbedSpeed.ToRotation() - new Vector2(speedX, speedY).ToRotation());
+				}
 				speedX = perturbedSpeed.X * mult;
 				speedY = perturbedSpeed.Y * mult;
 				//Main.PlaySound(SoundID.Item11, position);

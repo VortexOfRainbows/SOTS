@@ -28,7 +28,6 @@ namespace SOTS.Items.Celestial
 			item.shoot = mod.ProjectileType("GreenLightning"); 
 			item.shootSpeed = 1;
 			item.knockBack = 5;
-			item.channel = true;
 			item.UseSound = SoundID.Item92;
 			item.noUseGraphic = true;
 		}

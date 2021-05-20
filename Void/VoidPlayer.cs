@@ -10,6 +10,7 @@ using static SOTS.SOTS;
 using System.Collections.Generic;
 using SOTS.Projectiles.Minions;
 using SOTS.Buffs;
+using Terraria.ID;
 
 namespace SOTS.Void
 {
@@ -29,6 +30,12 @@ namespace SOTS.Void
 		public int voidStar = 0;
 		public int lootingSouls = 0;
 		public int soulsOnKill = 0;
+		public bool frozenVoid = false;
+		public int frozenCounter = 0;
+		public int frozenDuration = 0;
+		public int frozenMaxDuration = 0;
+		public int frozenMinTimer = 3600;
+		public float frozenVoidCount = 0;
 		public override TagCompound Save() {
 
 			return new TagCompound {
@@ -318,7 +325,11 @@ namespace SOTS.Void
 			EarthenSpirit,
 			OtherworldSpirit
         }
-		private void ResetVariables() 
+        public override void PostUpdateEquips()
+        {
+            base.PostUpdateEquips();
+        }
+        private void ResetVariables() 
 		{
 			ColorUpdate();
 			if (soulsOnKill > 0)
@@ -357,12 +368,57 @@ namespace SOTS.Void
 				lootingSouls = voidMeterMax2;
 			voidMeterMax2 -= lootingSouls;
 
+			if (frozenMaxDuration > 0)
+			{
+				if (frozenDuration > 0)
+                {
+					frozenDuration--;
+					frozenVoid = true;
+                }
+				else
+				{
+					frozenVoid = false;
+					frozenCounter++;
+					if (frozenCounter >= frozenMinTimer)
+					{
+						//Main.NewText("Frozen");
+						frozenCounter = 0;
+						frozenDuration = frozenMaxDuration;
+						frozenVoidCount = voidMeter;
+					}
+					//Main.NewText(frozenCounter);
+				}
+            }
+			else
+			{
+				frozenVoid = false;
+				frozenCounter = 0;
+				frozenDuration = 0;
+			}
+			if (this.frozenCounter == this.frozenMinTimer - 30 && Main.myPlayer == player.whoAmI)
+			{
+				Main.PlaySound(SoundID.Item, (int)player.Center.X, (int)player.Center.Y, 29, 1.1f, -0.1f);
+			}
+			if (this.frozenDuration == 30 && Main.myPlayer == player.whoAmI)
+			{
+				Main.PlaySound(SoundID.Item, (int)player.Center.X, (int)player.Center.Y, 29, 1.1f, 0.3f);
+			}
+
+			frozenMaxDuration = 0;
+			frozenMinTimer = 3600;
 			if (voidMeter > voidMeterMax2)
 			{
 				//make sure meter doesn't go above max
-				voidMeter = voidMeterMax2;
+				voidMeter = voidMeterMax2; 
+				frozenVoidCount = voidMeter;
 			}
-
+			else
+            {
+				if(frozenVoid)
+                {
+					voidMeter = frozenVoidCount;
+                }
+			}
 			voidMeterMax2 = voidMeterMax;
 			voidKnockback = 0f;
 			voidCrit = 0;
@@ -377,7 +433,7 @@ namespace SOTS.Void
 		}
 		public override void PostUpdateBuffs()
 		{
-			if(voidMeter < 0)
+			if (voidMeter < 0)
 			{
 				if(!voidShock && !voidRecovery)
 				{

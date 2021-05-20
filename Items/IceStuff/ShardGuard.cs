@@ -20,8 +20,8 @@ namespace SOTS.Items.IceStuff
 			item.maxStack = 1;
             item.width = 38;     
             item.height = 34;   
-            item.value = Item.sellPrice(0, 1, 10, 0);
-            item.rare = 7;
+            item.value = Item.sellPrice(0, 5, 0, 0);
+            item.rare = ItemRarityID.Lime;
 			item.defense = 1;
 			item.accessory = true;
 		}

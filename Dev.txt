@@ -13,11 +13,12 @@ The following is my development plans :D
 
 High Priority:
 1. Goopwood sprite Changes
-1. Frigid Hourglass: New Icy drop
 2. Subspace Locket: New Subspace Serpent drop
 3. New Pharaoh Expert Drop: Heart in a Jar, aura of damage that releases ghosts
 	1. Spirit tracer becomes normal drop
 	2. Ghosts dash towards the enemy
+4. Fix Subspace Spinny attack, knockback immunity
+5. Make Putrid Pinky cycle faster in expert mode
 
 4. Aqua-Necro Core (Stronger necro chestplate, 1 ranged attack per second will gain a steam aura that does 33% damage rapidly)
 5. Riptide Trident (Launches you towards your cursor at the cost of void, deal damage while traveling, bounce off of enemies)
@@ -44,6 +45,17 @@ Low Priority:
 5. Sharanga Upgrade
 6. Remove negative Vregen in inventory items
 7. Electrolyte Seperator
+
+5/18/21
+1. Made SUBSTANTIAL progress on Subspace Locket.
+2. 
+
+5/17/21
+1. Shard Guard price increased, 1.1 g -> 5g
+2. Frigid Hourglass finished, now drops from Icy's treasure bag. Removed pearlescent core.
+
+5/16/21
+1. Fixed bug where advisor would be launched towards the player after tracer attack, instead of going backwards as intented.
 
 
 -- Update 19.2 Released --

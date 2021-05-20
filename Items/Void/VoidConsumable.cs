@@ -34,7 +34,12 @@ namespace SOTS.Items.Void
         {
 
         }
-		public sealed override bool UseItem(Player player)
+        public sealed override bool CanUseItem(Player player)
+		{
+			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
+			return !voidPlayer.frozenVoid;
+        }
+        public sealed override bool UseItem(Player player)
 		{
 			return true;
 		}
@@ -71,7 +76,7 @@ namespace SOTS.Items.Void
 		public sealed override void UpdateInventory(Player player)
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-			while (voidPlayer.voidMeter < (voidPlayer.voidMeterMax2 - voidPlayer.lootingSouls - voidPlayer.VoidMinionConsumption) / 10 && voidPlayer.voidMeterMax2 - voidPlayer.lootingSouls - voidPlayer.VoidMinionConsumption > GetVoidAmt() && item.stack > 0)
+			while (voidPlayer.voidMeter < (voidPlayer.voidMeterMax2 - voidPlayer.lootingSouls - voidPlayer.VoidMinionConsumption) / 10 && voidPlayer.voidMeterMax2 - voidPlayer.lootingSouls - voidPlayer.VoidMinionConsumption > GetVoidAmt() && item.stack > 0 && !voidPlayer.frozenVoid)
 			{
 				OnActivation(player);
 				if(ConsumeStack())

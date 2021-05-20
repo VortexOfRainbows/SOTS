@@ -19,7 +19,6 @@ namespace SOTS.Projectiles.Pyramid
             projectile.melee = true;
 			projectile.alpha = 0;
 		}
-
 		int storeData = -1;
 		public override void PostAI()
 		{

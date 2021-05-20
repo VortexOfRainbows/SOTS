@@ -369,7 +369,6 @@ namespace SOTS
 				Item item = drawPlayer.HeldItem;
 				Texture2D texture = item.GetGlobalItem<ItemUseGlow>().glowTexture;
 				Vector2 zero2 = Vector2.Zero;
-
 				bool isTwilightPole = item.type == mod.ItemType("TwilightFishingPole") && drawPlayer.ownedProjectileCounts[mod.ProjectileType("TwilightBobber")]> 0;
 				if (texture != null && (drawPlayer.itemAnimation > 0 || isTwilightPole))
 				{
