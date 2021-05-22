@@ -10,7 +10,6 @@ namespace SOTS.NPCs.Boss
 {
 	public class FrostbiteProbe : ModNPC
 	{	bool finishedRotating = false;
-	
 		public override void SetStaticDefaults()
 		{
 			
@@ -18,7 +17,6 @@ namespace SOTS.NPCs.Boss
 		}
 		public override void SetDefaults()
 		{
-			
             npc.aiStyle = -1; 
             npc.lifeMax = 200;   
             npc.damage = 20; 
@@ -35,7 +33,6 @@ namespace SOTS.NPCs.Boss
             npc.DeathSound = SoundID.NPCDeath6;
             npc.netAlways = true;
             npc.buffImmune[44] = true;
-			
 		}
 		public override void AI()
 		{	
@@ -162,24 +159,3 @@ namespace SOTS.NPCs.Boss
 		}
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -41,7 +41,6 @@ namespace SOTS
 		}
 		private UserInterface _VoidUserInterface;
 		internal VoidUI VoidUI;
-
 		public override void Load()
 		{
 			//SOTSGlowmasks.LoadGlowmasks();

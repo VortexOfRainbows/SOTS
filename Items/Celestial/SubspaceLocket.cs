@@ -2,7 +2,9 @@ using Microsoft.Xna.Framework;
 using SOTS.Projectiles.Celestial;
 using SOTS.Projectiles.Otherworld;
 using System;
+using System.Collections.Generic;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -41,14 +43,39 @@ namespace SOTS.Items.Celestial
 		public static SubspacePlayer ModPlayer(Player player)
 		{
 			return player.GetModPlayer<SubspacePlayer>();
-		}
+        }
+        public static readonly PlayerLayer DrawServant = new PlayerLayer("SOTS", "DrawServant", PlayerLayer.MiscEffectsBack, delegate (PlayerDrawInfo drawInfo)
+        {
+            Mod mod = ModLoader.GetMod("SOTS");
+            Player drawPlayer = drawInfo.drawPlayer;
+            SubspacePlayer modPlayer = SubspacePlayer.ModPlayer(drawPlayer);
+            int Probe = modPlayer.Probe;
+            for(int i = 0; i < Main.projectile.Length; i++)
+            {
+                Projectile proj = Main.projectile[i];
+                SubspaceServant subServ = proj.modProjectile as SubspaceServant;
+                if(subServ != null && proj.owner == Main.myPlayer && proj.active)
+                {
+                    float drawX = (int)drawInfo.position.X + drawPlayer.width / 2;
+                    float drawY = (int)drawInfo.position.Y + drawPlayer.height / 2;
+                    Color color = Color.White.MultiplyRGBA(Lighting.GetColor((int)drawX / 16, (int)drawY / 16));
+                    subServ.PreDraw(Main.spriteBatch, color);
+                    subServ.PostDraw(Main.spriteBatch, color);
+                }
+            }
+        });
+        public override void ModifyDrawLayers(List<PlayerLayer> layers)
+        {
+            DrawServant.visible = true;
+            layers.Insert(0, DrawServant);
+        }
         public override void ResetEffects()
 		{
 			if(servantActive)
 				Summon();
 			servantActive = false;
         }
-		int Probe = -1;
+		public int Probe = -1;
 		public void Summon()
 		{
 			int type = ModContent.ProjectileType<SubspaceServant>();
@@ -98,7 +125,30 @@ namespace SOTS.Items.Celestial
                     var Damage = weaponDamage;
                     var knockBack = sItem.knockBack;
                     if (sItem.useAmmo > 0)
-                        player.PickAmmo(sItem, ref shoot, ref speed, ref canShoot, ref Damage, ref knockBack, ItemID.Sets.gunProj[sItem.type]);
+                    {
+                        Item obj = new Item();
+                        var flag1 = false;
+                        for (var index = 54; index < 58; ++index)
+                        {
+                            if (player.inventory[index].ammo == sItem.useAmmo && player.inventory[index].stack > 0)
+                            {
+                                obj = player.inventory[index];
+                                break;
+                            }
+                        }
+                        if (!flag1)
+                        {
+                            for (var index = 0; index < 54; ++index)
+                            {
+                                if (player.inventory[index].ammo == sItem.useAmmo && player.inventory[index].stack > 0)
+                                {
+                                    obj = player.inventory[index];
+                                    break;
+                                }
+                            }
+                        }
+                        PickAmmo(sItem, ref shoot, ref speed, ref canShoot, ref Damage, ref knockBack, !ItemLoader.ConsumeAmmo(sItem, obj, player));
+                    }
                     else
                         canShoot = true;
                     if (ItemID.Sets.gunProj[sItem.type])
@@ -1301,25 +1351,34 @@ namespace SOTS.Items.Celestial
                         }
                         else if(!modded)
                         {
-                               var index = Projectile.NewProjectile(vector2_1.X, vector2_1.Y, num6, num7, shoot, Damage, num1, i, 0.0f, 0.0f);
+                            int index = Projectile.NewProjectile(vector2_1.X, vector2_1.Y, num6, num7, shoot, Damage, num1, i, 0.0f, 0.0f);
                             if (sItem.type == 726)
                                 Main.projectile[index].magic = true;
                             if (sItem.type == 724 || sItem.type == 676)
                                 Main.projectile[index].melee = true;
                             if (shoot == 80)
                             {
-                                Main.projectile[index].ai[0] = (float)Player.tileTargetX;
-                                Main.projectile[index].ai[1] = (float)Player.tileTargetY;
+                                Main.projectile[index].ai[0] = Player.tileTargetX;
+                                Main.projectile[index].ai[1] = Player.tileTargetY;
                             }
 
                             if (shoot == 442)
                             {
-                                Main.projectile[index].ai[0] = (float)Player.tileTargetX;
-                                Main.projectile[index].ai[1] = (float)Player.tileTargetY;
+                                Main.projectile[index].ai[0] = Player.tileTargetX;
+                                Main.projectile[index].ai[1] = Player.tileTargetY;
                             }
 
                             if ((player.thrownCost50 || player.thrownCost33) && player.inventory[player.selectedItem].thrown)
                                 Main.projectile[index].noDropItem = true;
+                        }
+                        else
+                        {
+                            Vector2 shootTo = new Vector2(num6, num7);
+                            bool Shoot = ItemLoader.Shoot(sItem, player, ref Center, ref shootTo.X, ref shootTo.Y, ref shoot, ref Damage, ref knockBack);
+                            if (Shoot)
+                            {
+                                Projectile.NewProjectile(vector2_1, shootTo, shoot, Damage, knockBack, player.whoAmI);
+                            }
                         }
                     }
                     else if (sItem.useStyle == 5)
@@ -1332,10 +1391,11 @@ namespace SOTS.Items.Celestial
         }
         public Vector2 UseVanillaItemAnimation(Vector2 Center, Item sItem, int itemAnimation, int maxAnimation, ref int direction, ref float itemRotation)
         {
+            if (sItem.mana > 0 && (sItem.type != (int)sbyte.MaxValue || !player.spaceGun))
+                player.manaRegenDelay = (int)player.maxRegenDelay;
             Vector2 itemLocation = Center;
             if (sItem.useStyle == 1)
             {
-
                 itemLocation = Center -= new Vector2(0, 22);
                 if(itemAnimation == maxAnimation)
                 { 
@@ -1370,7 +1430,7 @@ namespace SOTS.Items.Celestial
                     else
                     {
                         var num = 6f;
-                        itemLocation.X = (float)(Center.X + (Main.itemTexture[sItem.type].Width * 0.5 - num) * direction);
+                        itemLocation.X = (float)(Center.X - (Main.itemTexture[sItem.type].Width * 0.5 - num) * direction);
                         itemLocation.Y = Center.Y + 20f;
                     }
 
@@ -1434,7 +1494,7 @@ namespace SOTS.Items.Celestial
                             num1 = 38f;
                         if (sItem.type == 2330 || sItem.type == 2320 || sItem.type == 2341)
                             num1 += 4f;
-                        itemLocation.X = (float)(Center.X + (Main.itemTexture[sItem.type].Width * 0.5 - num1) * direction);
+                        itemLocation.X = (float)(Center.X - (Main.itemTexture[sItem.type].Width * 0.5 - num1) * direction);
                         var num2 = 10f;
                         if (Main.itemTexture[sItem.type].Height > 32)
                             num2 = 10f;
@@ -1502,6 +1562,7 @@ namespace SOTS.Items.Celestial
             {
                 if (sItem.type == ItemID.SpiritFlame)
                 {
+                    //Center -= new Vector2(10, 22);
                     itemRotation = 0.0f;
                     itemLocation.X = Center.X + (float)(6 * direction);
                     itemLocation.Y = Center.Y + 6f;
@@ -1522,5 +1583,1115 @@ namespace SOTS.Items.Celestial
             }
             return itemLocation;
         }
-	}
+        public void UseVanillaItemHitbox(Vector2 itemLocation, Vector2 Center, Vector2 Velocity, Item sItem, int itemAnimation, int maxAnimation, ref int direction, ref float itemRotation)
+        {
+            Center -= new Vector2(10, 22);
+            if ((sItem.damage >= 0 && sItem.type > 0 && (!sItem.noMelee || sItem.type == ItemID.NebulaBlaze || sItem.type == ItemID.SpiritFlame)) && itemAnimation > 0)
+            {
+                var flag2 = false;
+                Rectangle r = new Rectangle((int)itemLocation.X, (int)itemLocation.Y, 32, 32);
+                if (!Main.dedServ) r = new Rectangle((int)itemLocation.X, (int)itemLocation.Y, Main.itemTexture[sItem.type].Width, Main.itemTexture[sItem.type].Height);
+                r.Width = (int)((double)r.Width * sItem.scale);
+                r.Height = (int)((double)r.Height * sItem.scale);
+                if (direction == -1)
+                    r.X -= r.Width;
+                r.Y -= r.Height;
+                if (sItem.useStyle == 1)
+                {
+                    if ((double)itemAnimation < (double)maxAnimation * 0.333)
+                    {
+                        if (direction == -1)
+                            r.X -= (int)(r.Width * 1.4 - r.Width);
+                        r.Width = (int)(r.Width * 1.4);
+                        r.Y += (int)(r.Height * 0.5);
+                        r.Height = (int)(r.Height * 1.1);
+                    }
+                    else if ((double)itemAnimation >= (double)maxAnimation * 0.666)
+                    {
+                        if (direction == 1)
+                            r.X -= (int)(r.Width * 1.2);
+                        r.Width *= 2;
+                        r.Y -= (int)(r.Height * 1.4 - r.Height);
+                        r.Height = (int)(r.Height * 1.4);
+                    }
+                }
+                else if (sItem.useStyle == 3)
+                {
+                    if ((double)itemAnimation > (double)maxAnimation * 0.666)
+                    {
+                        flag2 = true;
+                    }
+                    else
+                    {
+                        if (direction == -1)
+                            r.X -= (int)((double)r.Width * 1.4 - (double)r.Width);
+                        r.Width = (int)((double)r.Width * 1.4);
+                        r.Y += (int)((double)r.Height * 0.6);
+                        r.Height = (int)((double)r.Height * 0.6);
+                    }
+                }
+                ItemLoader.MeleeEffects(sItem, player, r);
+                if (sItem.type == ItemID.NebulaBlaze)
+                    flag2 = true;
+                if (sItem.type == ItemID.SpiritFlame)
+                {
+                    flag2 = true;
+                    var vector2_1 = itemLocation + new Vector2((float)(direction * 30), -8f);
+                    var num = maxAnimation - 2;
+                    var vector2_2 = vector2_1 - Center - Velocity;
+                    var amount = 0.0f;
+                    while ((double)amount < 1.0)
+                    {
+                        var vector2_3 = Vector2.Lerp(Center + vector2_2, vector2_1, amount);
+                        var dust = Main.dust[Dust.NewDust(vector2_1 - Vector2.One * 8f, 16, 16, 27, 0.0f, -2f, 0, new Color(), 1f)];
+                        dust.noGravity = true;
+                        dust.position = vector2_3;
+                        dust.velocity = new Vector2(0.0f, -2.0f);
+                        dust.scale = 1.2f;
+                        dust.alpha = 200;
+                        amount += 0.2f;
+                    }
+                }
+
+                if (!flag2)
+                {
+                    if (sItem.type == ItemID.EnchantedSword && Main.rand.Next(5) == 0)
+                    {
+                        int Type;
+                        switch (Main.rand.Next(3))
+                        {
+                            case 0:
+                                Type = 15;
+                                break;
+                            case 1:
+                                Type = 57;
+                                break;
+                            default:
+                                Type = 58;
+                                break;
+                        }
+
+                        var index = Dust.NewDust(new Vector2((float)r.X, (float)r.Y), r.Width, r.Height, Type,
+                            (float)(direction * 2), 0.0f, 150, new Color(), 1.3f);
+                        Main.dust[index].velocity *= 0.2f;
+                    }
+
+                    if (sItem.type == ItemID.InfluxWaver && Main.rand.Next(2) == 0)
+                    {
+                        var Type = Utils.SelectRandom<int>(Main.rand, new int[2]
+                        {
+                            226,
+                            229
+                        });
+                        var index = Dust.NewDust(new Vector2((float)r.X, (float)r.Y), r.Width, r.Height, Type,
+                            (float)(direction * 2), 0.0f, 150, new Color(), 1f);
+                        Main.dust[index].velocity *= 0.2f;
+                        Main.dust[index].noGravity = true;
+                    }
+
+                    if ((sItem.type == 44 || sItem.type == 45 || (sItem.type == 46 || sItem.type == 103) || sItem.type == 104) && Main.rand.Next(15) == 0)
+                        Dust.NewDust(new Vector2((float)r.X, (float)r.Y), r.Width, r.Height, 14, (float)(direction * 2), 0.0f, 150, new Color(), 1.3f);
+                    if (sItem.type == 273 || sItem.type == 675)
+                    {
+                        if (Main.rand.Next(5) == 0)
+                            Dust.NewDust(new Vector2((float)r.X, (float)r.Y), r.Width, r.Height, 14,
+                                (float)(direction * 2), 0.0f, 150, new Color(), 1.4f);
+                        var index = Dust.NewDust(new Vector2((float)r.X, (float)r.Y), r.Width, r.Height, 27,
+                            Velocity.X * 0.2f + (float)(direction * 3), Velocity.Y * 0.2f, 100,
+                            new Color(), 1.2f);
+                        Main.dust[index].noGravity = true;
+                        Main.dust[index].velocity.X /= 2f;
+                        Main.dust[index].velocity.Y /= 2f;
+                    }
+
+                    if (sItem.type == 723 && Main.rand.Next(2) == 0)
+                    {
+                        var index = Dust.NewDust(new Vector2((float)r.X, (float)r.Y), r.Width, r.Height, 64, 0.0f,
+                            0.0f, 150, new Color(), 1.2f);
+                        Main.dust[index].noGravity = true;
+                    }
+
+                    if (sItem.type == ItemID.Starfury)
+                    {
+                        if (Main.rand.Next(5) == 0)
+                            Dust.NewDust(new Vector2((float)r.X, (float)r.Y), r.Width, r.Height, 58, 0.0f, 0.0f, 150, new Color(), 1.2f);
+                        if (Main.rand.Next(10) == 0)
+                            Gore.NewGore(new Vector2((float)r.X, (float)r.Y), new Vector2(), Main.rand.Next(16, 18), 1f);
+                    }
+
+                    if (sItem.type == 3065)
+                    {
+                        var index1 = Dust.NewDust(new Vector2((float)r.X, (float)r.Y), r.Width, r.Height, 58, 0.0f,
+                            0.0f, 150, new Color(), 1.2f);
+                        Main.dust[index1].velocity *= 0.5f;
+                        if (Main.rand.Next(8) == 0)
+                        {
+                            var index2 = Gore.NewGore(new Vector2((float)r.Center.X, (float)r.Center.Y),
+                                new Vector2(), 16, 1f);
+                            Main.gore[index2].velocity *= 0.5f;
+                            Main.gore[index2].velocity += new Vector2((float)direction, 0.0f);
+                        }
+                    }
+
+                    if (sItem.type == 190)
+                    {
+                        var index = Dust.NewDust(new Vector2((float)r.X, (float)r.Y), r.Width, r.Height, 40,
+                            Velocity.X * 0.2f + (float)(direction * 3), Velocity.Y * 0.2f, 0,
+                            new Color(), 1.2f);
+                        Main.dust[index].noGravity = true;
+                    }
+                    else if (sItem.type == 213)
+                    {
+                        var index = Dust.NewDust(new Vector2((float)r.X, (float)r.Y), r.Width, r.Height, 3,
+                            Velocity.X * 0.2f + (float)(direction * 3), Velocity.Y * 0.2f, 0,
+                            new Color(), 1.2f);
+                        Main.dust[index].noGravity = true;
+                    }
+
+                    if (sItem.type == 121)
+                    {
+                        for (var index1 = 0; index1 < 2; ++index1)
+                        {
+                            var index2 = Dust.NewDust(new Vector2((float)r.X, (float)r.Y), r.Width, r.Height, 6,
+                                Velocity.X * 0.2f + (float)(direction * 3), Velocity.Y * 0.2f, 100,
+                                new Color(), 2.5f);
+                            Main.dust[index2].noGravity = true;
+                            Main.dust[index2].velocity.X *= 2f;
+                            Main.dust[index2].velocity.Y *= 2f;
+                        }
+                    }
+
+                    if (sItem.type == 122 || sItem.type == 217)
+                    {
+                        var index = Dust.NewDust(new Vector2((float)r.X, (float)r.Y), r.Width, r.Height, 6,
+                            Velocity.X * 0.2f + (float)(direction * 3), Velocity.Y * 0.2f, 100,
+                            new Color(), 1.9f);
+                        Main.dust[index].noGravity = true;
+                    }
+
+                    if (sItem.type == 155)
+                    {
+                        var index = Dust.NewDust(new Vector2((float)r.X, (float)r.Y), r.Width, r.Height, 172,
+                            Velocity.X * 0.2f + (float)(direction * 3), Velocity.Y * 0.2f, 100,
+                            new Color(), 0.9f);
+                        Main.dust[index].noGravity = true;
+                        Main.dust[index].velocity *= 0.1f;
+                    }
+
+                    if (sItem.type == 676 && Main.rand.Next(3) == 0)
+                    {
+                        var index = Dust.NewDust(new Vector2((float)r.X, (float)r.Y), r.Width, r.Height, 67,
+                            Velocity.X * 0.2f + (float)(direction * 3), Velocity.Y * 0.2f, 90,
+                            new Color(), 1.5f);
+                        Main.dust[index].noGravity = true;
+                        Main.dust[index].velocity *= 0.2f;
+                    }
+
+                    if (sItem.type == 3063)
+                    {
+                        var index = Dust.NewDust(r.TopLeft(), r.Width, r.Height, 66, 0.0f, 0.0f, 150, Color.Transparent,
+                            0.85f);
+                        Main.dust[index].color = Main.hslToRgb(Main.rand.NextFloat(), 1f, 0.5f);
+                        Main.dust[index].noGravity = true;
+                        Main.dust[index].velocity /= 2f;
+                    }
+
+                    if (sItem.type == 3823)
+                    {
+                        var dust = Dust.NewDustDirect(r.TopLeft(), r.Width, r.Height, 6, Velocity.X * 0.2f + (float)(direction * 3), Velocity.Y * 0.2f, 100, Color.Transparent, 0.7f);
+                        dust.noGravity = true;
+                        dust.velocity *= 2f;
+                        dust.fadeIn = 0.9f;
+                    }
+
+                    if (sItem.type == 724 && Main.rand.Next(5) == 0)
+                    {
+                        var index = Dust.NewDust(new Vector2((float)r.X, (float)r.Y), r.Width, r.Height, 67,
+                            Velocity.X * 0.2f + (float)(direction * 3), Velocity.Y * 0.2f, 90,
+                            new Color(), 1.5f);
+                        Main.dust[index].noGravity = true;
+                        Main.dust[index].velocity *= 0.2f;
+                    }
+
+                    if (sItem.type >= 795 && sItem.type <= 802 && Main.rand.Next(3) == 0)
+                    {
+                        var index = Dust.NewDust(new Vector2((float)r.X, (float)r.Y), r.Width, r.Height, 115, Velocity.X * 0.2f + (float)(direction * 3), Velocity.Y * 0.2f, 140, new Color(), 1.5f);
+                        Main.dust[index].noGravity = true;
+                        Main.dust[index].velocity *= 0.25f;
+                    }
+
+                    if (sItem.type == 367 || sItem.type == 368 || sItem.type == 674)
+                    {
+                        if (Main.rand.Next(3) == 0)
+                        {
+                            var index = Dust.NewDust(new Vector2((float)r.X, (float)r.Y), r.Width, r.Height, 57, Velocity.X * 0.2f + (float)(direction * 3), Velocity.Y * 0.2f, 100, new Color(), 1.1f);
+                            Main.dust[index].noGravity = true;
+                            Main.dust[index].velocity.X /= 2f;
+                            Main.dust[index].velocity.Y /= 2f;
+                            Main.dust[index].velocity.X += (float)(direction * 2);
+                        }
+
+                        if (Main.rand.Next(4) == 0)
+                        {
+                            var index = Dust.NewDust(new Vector2((float)r.X, (float)r.Y), r.Width, r.Height, 43, 0.0f,
+                                0.0f, 254, new Color(), 0.3f);
+                            Main.dust[index].velocity *= 0.0f;
+                        }
+                    }
+
+                    if (sItem.type >= 198 && sItem.type <= 203 || sItem.type >= 3764 && sItem.type <= 3769)
+                    {
+                        var R = 0.5f;
+                        var G = 0.5f;
+                        var B = 0.5f;
+                        if (sItem.type == 198 || sItem.type == 3764)
+                        {
+                            R *= 0.1f;
+                            G *= 0.5f;
+                            B *= 1.2f;
+                        }
+                        else if (sItem.type == 199 || sItem.type == 3765)
+                        {
+                            R *= 1f;
+                            G *= 0.2f;
+                            B *= 0.1f;
+                        }
+                        else if (sItem.type == 200 || sItem.type == 3766)
+                        {
+                            R *= 0.1f;
+                            G *= 1f;
+                            B *= 0.2f;
+                        }
+                        else if (sItem.type == 201 || sItem.type == 3767)
+                        {
+                            R *= 0.8f;
+                            G *= 0.1f;
+                            B *= 1f;
+                        }
+                        else if (sItem.type == 202 || sItem.type == 3768)
+                        {
+                            R *= 0.8f;
+                            G *= 0.9f;
+                            B *= 1f;
+                        }
+                        else if (sItem.type == 203 || sItem.type == 3769)
+                        {
+                            R *= 0.9f;
+                            G *= 0.9f;
+                            B *= 0.1f;
+                        }
+
+                        Lighting.AddLight(
+                            (int)(((double)itemLocation.X + 6.0 + (double)Velocity.X) / 16.0),
+                            (int)(((double)itemLocation.Y - 14.0) / 16.0), R, G, B);
+                    }
+                    if (Main.myPlayer == player.whoAmI && sItem.damage > 0)
+                    {
+                        var num1 = sItem.damage;
+                        if (sItem.melee)
+                            num1 = (int)(sItem.damage * player.meleeDamage);
+                        if (sItem.ranged)
+                            num1 = (int)(sItem.damage * player.rangedDamage);
+                        if (sItem.magic)
+                            num1 = (int)(sItem.damage * player.magicDamage);
+                        if (sItem.summon)
+                            num1 = (int)(sItem.damage * player.minionDamage);
+                        if (sItem.thrown)
+                            num1 = (int)(sItem.damage * player.thrownDamage);
+                        var knockBack = sItem.knockBack;
+                        var num2 = 1f;
+                        if (player.kbGlove)
+                            ++num2;
+                        if (player.kbBuff)
+                            num2 += 0.5f;
+                        var num3 = knockBack * num2;
+                        if (sItem.type != ItemID.GoldenBugNet)
+                        {
+                            for (var index1 = 0; index1 < 200; ++index1)
+                            {
+                                if (Main.npc[index1].active && Main.npc[index1].immune[player.whoAmI] == 0)
+                                {
+                                    if (!Main.npc[index1].dontTakeDamage)
+                                    {
+                                        if (!Main.npc[index1].friendly ||
+                                            Main.npc[index1].type == NPCID.Guide && player.killGuide ||
+                                            Main.npc[index1].type == NPCID.Clothier && player.killClothier)
+                                        {
+                                            var rectangle = new Rectangle((int)Main.npc[index1].position.X, (int)Main.npc[index1].position.Y, Main.npc[index1].width, Main.npc[index1].height);
+                                            if (r.Intersects(rectangle))
+                                            {
+                                                var crit = false;
+                                                if (sItem.melee && Main.rand.Next(1, 101) <= player.meleeCrit)
+                                                    crit = true;
+                                                if (sItem.ranged && Main.rand.Next(1, 101) <= player.rangedCrit)
+                                                    crit = true;
+                                                if (sItem.magic && Main.rand.Next(1, 101) <= player.magicCrit)
+                                                    crit = true;
+                                                if (sItem.thrown && Main.rand.Next(1, 101) <= player.thrownCrit)
+                                                    crit = true;
+                                                var banner = Item.NPCtoBanner(Main.npc[index1].BannerID());
+                                                if (banner > 0 && player.NPCBannerBuff[banner])
+                                                    num1 = !Main.expertMode ? (int)(num1 * ItemID.Sets.BannerStrength[Item.BannerToItem(banner)].NormalDamageDealt) : (int)(num1 * ItemID.Sets.BannerStrength[Item.BannerToItem(banner)].ExpertDamageDealt);
+                                                var num8 = Main.DamageVar((float)num1);
+
+                                                ModItem mItem = sItem.modItem;
+                                                player.OnHit(Main.npc[index1].Center.X, Main.npc[index1].Center.Y, Main.npc[index1]);
+                                                if (player.armorPenetration > 0)
+                                                    num8 += Main.npc[index1].checkArmorPenetration(player.armorPenetration);
+                                                if (mItem != null)
+                                                {
+                                                    mItem.ModifyHitNPC(player, Main.npc[index1], ref num8, ref num3, ref crit);
+                                                    NPCLoader.ModifyHitByItem(Main.npc[index1], player, sItem, ref num8, ref num3, ref crit);
+                                                }
+                                                var num9 = (int)Main.npc[index1].StrikeNPC(num8, num3, direction, crit, false, false);
+                                                if (mItem != null)
+                                                {
+                                                    mItem.OnHitNPC(player, Main.npc[index1], num8, num3, crit);
+                                                    NPCLoader.OnHitByItem(Main.npc[index1], player, sItem, num8, num3, crit);
+                                                    player.StatusNPC(sItem.type, index1);
+                                                }
+                                                if (sItem.type == ItemID.Bladetongue)
+                                                {
+                                                    var vector2_1 = new Vector2((direction * 100 + Main.rand.Next(-25, 26)), Main.rand.Next(-75, 76));
+                                                    vector2_1.Normalize();
+                                                    vector2_1 *= (float)Main.rand.Next(30, 41) * 0.1f;
+                                                    var vector2_2 = new Vector2(
+                                                        (float)(r.X + Main.rand.Next(r.Width)),
+                                                        (float)(r.Y + Main.rand.Next(r.Height)));
+                                                    vector2_2 = (vector2_2 + Main.npc[index1].Center * 2f) / 3f;
+                                                    Projectile.NewProjectile(vector2_2.X, vector2_2.Y, vector2_1.X, vector2_1.Y, ProjectileID.IchorSplash, (int)((double)num1 * 0.7), num3 * 0.7f, player.whoAmI, 0.0f, 0.0f);
+                                                }
+
+                                                var flag3 = !Main.npc[index1].immortal;
+                                                if (player.beetleOffense && flag3)
+                                                {
+                                                    player.beetleCounter += (float)num9;
+                                                    player.beetleCountdown = 0;
+                                                }
+
+                                                if (sItem.type == 1826 && (Main.npc[index1].value > 0.0 || Main.npc[index1].damage > 0 && !Main.npc[index1].friendly)) pumpkinSword(index1, (int)((double)num1 * 1.5), num3);
+
+                                                if (sItem.type == 1123 && flag3)
+                                                {
+                                                    var num10 = Main.rand.Next(1, 4);
+                                                    if (player.strongBees && Main.rand.Next(3) == 0)
+                                                        ++num10;
+                                                    for (var index2 = 0; index2 < num10; ++index2)
+                                                    {
+                                                        var num11 =
+                                                            (float)(direction * 2) +
+                                                            (float)Main.rand.Next(-35, 36) * 0.02f;
+                                                        var num12 = (float)Main.rand.Next(-35, 36) * 0.02f;
+                                                        var SpeedX = num11 * 0.2f;
+                                                        var SpeedY = num12 * 0.2f;
+                                                        Projectile.NewProjectile((float)(r.X + r.Width / 2), (float)(r.Y + r.Height / 2), SpeedX, SpeedY,player.beeType(), player.beeDamage(num8 / 3), player.beeKB(0.0f), player.whoAmI, 0.0f, 0.0f);
+                                                    }
+                                                }
+
+                                                if (Main.npc[index1].value > 0.0 && player.coins && Main.rand.Next(5) == 0)
+                                                {
+                                                    var Type = 71;
+                                                    if (Main.rand.Next(10) == 0)
+                                                        Type = 72;
+                                                    if (Main.rand.Next(100) == 0)
+                                                        Type = 73;
+                                                    var number = Item.NewItem((int)Main.npc[index1].position.X, (int)Main.npc[index1].position.Y, Main.npc[index1].width, Main.npc[index1].height, Type, 1, false, 0, false, false);
+                                                    Main.item[number].stack = Main.rand.Next(1, 11);
+                                                    Main.item[number].velocity.Y = Main.rand.Next(-20, 1) * 0.2f;
+                                                    Main.item[number].velocity.X = Main.rand.Next(10, 31) * 0.2f * direction;
+                                                    if (Main.netMode == 1)
+                                                        NetMessage.SendData(MessageID.SyncItem, -1, -1, null, number, 0.0f, 0.0f, 0.0f, 0, 0, 0);
+                                                }
+
+                                                var num13 = Item.NPCtoBanner(Main.npc[index1].BannerID());
+                                                if (num13 >= 0)
+                                                    player.lastCreatureHit = num13;
+                                                if (Main.netMode != 0)
+                                                {
+                                                    if (crit)
+                                                        NetMessage.SendData(MessageID.StrikeNPC, -1, -1, null, index1, num8, num3, direction, 1, 0, 0);
+                                                    else
+                                                        NetMessage.SendData(MessageID.StrikeNPC, -1, -1, null, index1, num8, num3, direction, 0, 0, 0);
+                                                }
+
+                                                if (player.accDreamCatcher)
+                                                    player.addDPS(num8);
+                                                Main.npc[index1].immune[player.whoAmI] = itemAnimation;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            if (player.hostile)
+                            {
+                                for (var index1 = 0; index1 < (int)byte.MaxValue; ++index1)
+                                {
+                                    if (index1 != player.whoAmI && Main.player[index1].active && Main.player[index1].hostile && !Main.player[index1].immune && !Main.player[index1].dead && (Main.player[player.whoAmI].team == 0 || Main.player[player.whoAmI].team != Main.player[index1].team))
+                                    {
+                                        var rectangle = new Rectangle((int)Main.player[index1].position.X, (int)Main.player[index1].position.Y, Main.player[index1].width, Main.player[index1].height);
+                                        if (r.Intersects(rectangle) && player.CanHit((Entity)Main.player[index1]))
+                                        {
+                                            var flag3 = false;
+                                            if (Main.rand.Next(1, 101) <= 10)
+                                                flag3 = true;
+                                            var num8 = Main.DamageVar((float)num1);
+                                            player.StatusPvP(sItem.type, index1);
+                                            player.OnHit(Main.player[index1].Center.X, Main.player[index1].Center.Y,
+                                                (Entity)Main.player[index1]);
+                                            var playerDeathReason = PlayerDeathReason.ByPlayer(player.whoAmI);
+                                            ModItem mItem = sItem.modItem;
+                                            if (mItem != null)
+                                            {
+                                                mItem.ModifyHitPvp(player, Main.player[index1], ref num8, ref flag3);
+                                                PlayerHooks.ModifyHitPvp(player, sItem, Main.player[index1], ref num8, ref flag3);
+                                                //PlayerLoader stuff if it exists
+                                            }
+                                            var num9 = (int)Main.player[index1].Hurt(playerDeathReason, num8, direction, true, false, flag3, -1);
+                                            if (mItem != null)
+                                            {
+                                                mItem.OnHitPvp(player, Main.player[index1], num8, flag3);
+                                                PlayerHooks.OnHitPvp(player, sItem, Main.player[index1], num8, flag3);
+                                                player.StatusNPC(sItem.type, index1);
+                                            }
+                                            if (sItem.type == ItemID.Bladetongue)
+                                            {
+                                                var vector2_1 = new Vector2(
+                                                    (float)(direction * 100 + Main.rand.Next(-25, 26)),
+                                                    (float)Main.rand.Next(-75, 76));
+                                                vector2_1.Normalize();
+                                                vector2_1 *= (float)Main.rand.Next(30, 41) * 0.1f;
+                                                var vector2_2 = new Vector2((float)(r.X + Main.rand.Next(r.Width)),
+                                                    (float)(r.Y + Main.rand.Next(r.Height)));
+                                                vector2_2 = (vector2_2 + Main.player[index1].Center * 2f) / 3f;
+                                                Projectile.NewProjectile(vector2_2.X, vector2_2.Y, vector2_1.X, vector2_1.Y, ProjectileID.IchorSplash, (int)((double)num1 * 0.7), num3 * 0.7f, player.whoAmI, 0.0f, 0.0f);
+                                            }
+
+                                            if (player.beetleOffense)
+                                            {
+                                                player.beetleCounter += (float)num9;
+                                                player.beetleCountdown = 0;
+                                            }
+                                            if (sItem.type == ItemID.BeeKeeper)
+                                            {
+                                                var num10 = Main.rand.Next(1, 4);
+                                                if (player.strongBees && Main.rand.Next(3) == 0)
+                                                    ++num10;
+                                                for (var index2 = 0; index2 < num10; ++index2)
+                                                {
+                                                    var num11 =
+                                                        (float)(direction * 2) +
+                                                        (float)Main.rand.Next(-35, 36) * 0.02f;
+                                                    var num12 = (float)Main.rand.Next(-35, 36) * 0.02f;
+                                                    var SpeedX = num11 * 0.2f;
+                                                    var SpeedY = num12 * 0.2f;
+                                                    Projectile.NewProjectile(r.X + r.Width / 2, r.Y + r.Height / 2, SpeedX, SpeedY, player.beeType(), player.beeDamage(num8 / 3), player.beeKB(0.0f), player.whoAmI, 0.0f, 0.0f);
+                                                }
+                                            }
+                                            //if (sItem.type == ItemID.TheHorsemansBlade && Main.npc[index1].value > 0.0)
+                                            //    pumpkinSword(index1, (int)(num1 * 1.5), num3);
+                                            if (Main.netMode != 0)
+                                                NetMessage.SendPlayerHurt(index1, playerDeathReason, num8, direction, flag3, true, -1, -1, -1);
+                                        }
+                                    }
+                                }
+                            }
+
+                            if (sItem.type == ItemID.Hammush && (itemAnimation == (int)(maxAnimation * 0.1) || itemAnimation == (int)(maxAnimation * 0.3) || (itemAnimation == (int)(maxAnimation * 0.5) || itemAnimation == (int)(maxAnimation * 0.7)) || itemAnimation == (int)(maxAnimation * 0.9)))
+                            {
+                                var num8 = 0.0f;
+                                var num9 = 0.0f;
+                                var num10 = 0.0f;
+                                var num11 = 0.0f;
+                                if (itemAnimation == (int)(maxAnimation * 0.9))
+                                    num8 = -7f;
+                                if (itemAnimation == (int)(maxAnimation * 0.7))
+                                {
+                                    num8 = -6f;
+                                    num9 = 2f;
+                                }
+                                if (itemAnimation == (int)(maxAnimation * 0.5))
+                                {
+                                    num8 = -4f;
+                                    num9 = 4f;
+                                }
+                                if (itemAnimation == (int)((double)maxAnimation * 0.3))
+                                {
+                                    num8 = -2f;
+                                    num9 = 6f;
+                                }
+                                if (itemAnimation == (int)((double)maxAnimation * 0.1))
+                                    num9 = 7f;
+                                if (itemAnimation == (int)((double)maxAnimation * 0.7))
+                                    num11 = 26f;
+                                if (itemAnimation == (int)((double)maxAnimation * 0.3))
+                                {
+                                    num11 -= 4f;
+                                    num10 -= 20f;
+                                }
+                                if (itemAnimation == (int)((double)maxAnimation * 0.1))
+                                    num10 += 6f;
+                                if (direction == -1)
+                                {
+                                    if (itemAnimation == (int)((double)maxAnimation * 0.9))
+                                        num11 -= 8f;
+                                    if (itemAnimation == (int)((double)maxAnimation * 0.7))
+                                        num11 -= 6f;
+                                }
+                                var num12 = num8 * 1.5f;
+                                var num13 = num9 * 1.5f;
+                                var num14 = num11 * (float)direction;
+                                var num15 = num10;
+                                Projectile.NewProjectile((float)(r.X + r.Width / 2) + num14, (float)(r.Y + r.Height / 2) + num15, (float)direction * num13, num12 , ProjectileID.Mushroom, num1 / 2, 0.0f, player.whoAmI, 0.0f, 0.0f);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        private void pumpkinSword(int i, int dmg, float kb)
+        {
+            var checkScreenHeight = Main.LogicCheckScreenHeight;
+            var checkScreenWidth = Main.LogicCheckScreenWidth;
+            var num1 = Main.rand.Next(100, 300);
+            var num2 = Main.rand.Next(100, 300);
+            var num3 = Main.rand.Next(2) != 0
+                ? num1 + (checkScreenWidth / 2 - num1)
+                : num1 - (checkScreenWidth / 2 + num1);
+            var num4 = Main.rand.Next(2) != 0
+                ? num2 + (checkScreenHeight / 2 - num2)
+                : num2 - (checkScreenHeight / 2 + num2);
+            var num5 = num3 + (int)player.Center.X;
+            var num6 = num4 + (int)player.Center.Y;
+            var num7 = 8f;
+            var vector2 = new Vector2(num5, num6);
+            var num8 = Main.npc[i].Center.X - vector2.X;
+            var num9 = Main.npc[i].Center.Y - vector2.Y;
+            var num10 = (float)Math.Sqrt(num8 * num8 + num9 * num9);
+            var num11 = num7 / num10;
+            var SpeedX = num8 * num11;
+            var SpeedY = num9 * num11;
+            Projectile.NewProjectile(num5, num6, SpeedX, SpeedY, ProjectileID.FlamingJack, dmg, kb, player.whoAmI, i, 0.0f);
+        }
+        public void PickAmmo(Item sItem, ref int shoot, ref float speed, ref bool canShoot, ref int Damage, ref float KnockBack, bool dontConsume = false)
+        {
+            var obj = new Item();
+            var flag1 = false;
+            for (var index = 54; index < 58; ++index)
+            {
+                if (player.inventory[index].ammo == sItem.useAmmo && player.inventory[index].stack > 0)
+                {
+                    obj = player.inventory[index];
+                    canShoot = true;
+                    flag1 = true;
+                    break;
+                }
+            }
+
+            if (!flag1)
+            {
+                for (var index = 0; index < 54; ++index)
+                {
+                    if (player.inventory[index].ammo == sItem.useAmmo && player.inventory[index].stack > 0)
+                    {
+                        obj = player.inventory[index];
+                        canShoot = true;
+                        break;
+                    }
+                }
+            }
+
+            if (!canShoot)
+                return;
+            if (sItem.type == ItemID.SnowmanCannon)
+            {
+                shoot = 338 + obj.shoot / 3;
+            }
+            else if (sItem.useAmmo == AmmoID.Rocket)
+            {
+                shoot += obj.shoot;
+            }
+            else if (sItem.useAmmo == 780)
+                shoot += obj.shoot;
+            else if (obj.shoot > 0)
+                shoot = obj.shoot;
+            if (sItem.type == 3019 && shoot == 1)
+                shoot = 485;
+            if (sItem.type == 3052)
+                shoot = 495;
+            if (shoot == 42)
+            {
+                if (obj.type == ItemID.EbonsandBlock)
+                {
+                    shoot = 65;
+                    Damage += 5;
+                }
+                else if (obj.type == ItemID.PearlsandBlock)
+                {
+                    shoot = 68;
+                    Damage += 5;
+                }
+                else if (obj.type == ItemID.CrimsandBlock)
+                {
+                    shoot = 354;
+                    Damage += 5;
+                }
+            }
+
+            if (sItem.type == ItemID.BeesKnees && shoot == 1)
+                shoot = 469;
+            if (player.magicQuiver && (sItem.useAmmo == AmmoID.Arrow || sItem.useAmmo == AmmoID.Stake))
+            {
+                KnockBack = (float)(int)((double)KnockBack * 1.1);
+                speed *= 1.1f;
+            }
+
+            speed += obj.shootSpeed;
+            if (obj.ranged)
+            {
+                if (obj.damage > 0)
+                    Damage += (int)((double)obj.damage * (double)player.rangedDamage);
+            }
+            else
+                Damage += obj.damage;
+
+            if (sItem.useAmmo == AmmoID.Arrow && player.archery)
+            {
+                if ((double)speed < 20.0)
+                {
+                    speed *= 1.2f;
+                    if ((double)speed > 20.0)
+                        speed = 20f;
+                }
+
+                Damage = (int)((double)Damage * 1.2);
+            }
+
+            KnockBack += obj.knockBack;
+            var flag2 = dontConsume;
+            if (sItem.type == 3475 && Main.rand.Next(3) != 0)
+                flag2 = true;
+            if (sItem.type == 3540 && Main.rand.Next(3) != 0)
+                flag2 = true;
+            if (player.magicQuiver && sItem.useAmmo == AmmoID.Arrow && Main.rand.Next(5) == 0)
+                flag2 = true;
+            if (player.ammoBox && Main.rand.Next(5) == 0)
+                flag2 = true;
+            if (player.ammoPotion && Main.rand.Next(5) == 0)
+                flag2 = true;
+            if (sItem.type == 1782 && Main.rand.Next(3) == 0)
+                flag2 = true;
+            if (sItem.type == 98 && Main.rand.Next(3) == 0)
+                flag2 = true;
+            if (sItem.type == 2270 && Main.rand.Next(2) == 0)
+                flag2 = true;
+            if (sItem.type == 533 && Main.rand.Next(2) == 0)
+                flag2 = true;
+            if (sItem.type == 1929 && Main.rand.Next(2) == 0)
+                flag2 = true;
+            if (sItem.type == 1553 && Main.rand.Next(2) == 0)
+                flag2 = true;
+            if (sItem.type == 434 && player.itemAnimation < sItem.useAnimation - 2)
+                flag2 = true;
+            if (player.ammoCost80 && Main.rand.Next(5) == 0)
+                flag2 = true;
+            if (player.ammoCost75 && Main.rand.Next(4) == 0)
+                flag2 = true;
+            if (shoot == 85 && player.itemAnimation < player.itemAnimationMax - 6)
+                flag2 = true;
+            if ((shoot == 145 || shoot == 146 || (shoot == 147 || shoot == 148) || shoot == 149) &&
+                player.itemAnimation < player.itemAnimationMax - 5)
+                flag2 = true;
+            if (flag2 || !obj.consumable)
+                return;
+            --obj.stack;
+            if (obj.stack > 0)
+                return;
+            obj.active = false;
+            obj.TurnToAir();
+        }
+        public void PickFrame(Item sItem, int itemAnimation, int maxAnimation, int direction, float itemRotation, ref int frame)
+        {
+            if (itemAnimation > 0 && sItem.useStyle != 10)
+            {
+                if (sItem.useStyle == 1 || sItem.type == 0)
+                {
+                    if ((double)itemAnimation < (double)maxAnimation * 0.333)
+                        frame = 3;
+                    else if ((double)itemAnimation < (double)maxAnimation * 0.666)
+                        frame = 2;
+                    else
+                        frame = 1;
+                }
+                else if (sItem.useStyle == 2)
+                {
+                    if ((double)itemAnimation > (double)maxAnimation * 0.5)
+                        frame = 3;
+                    else
+                        frame = 2;
+                }
+                else if (sItem.useStyle == 3)
+                {
+                    frame = 3;
+                }
+                else if (sItem.useStyle == 4)
+                {
+                    frame = 2;
+                }
+                else
+                {
+                    if (sItem.useStyle != 5)
+                        return;
+                    if (sItem.type == 281 || sItem.type == 986)
+                    {
+                        frame = 2;
+                    }
+                    else
+                    {
+                        var num4 = itemRotation * (float)direction;
+                        frame = 3;
+                        if ((double)num4 < -0.75)
+                        {
+                            frame = 2;
+                        }
+                        if ((double)num4 <= 0.6)
+                            return;
+                        frame = 4;
+                    }
+                }
+            }
+        }
+        public Vector2 DrawPlayerItemPos(int itemtype)
+        {
+            var num = 10f;
+            var vector2 = new Vector2((float)(Main.itemTexture[itemtype].Width / 2), (float)(Main.itemTexture[itemtype].Height / 2));
+            if (itemtype == 95)
+            {
+                num = 6f;
+                vector2.Y += 2f;
+            }
+            else if (itemtype == 1295)
+                num = 4f;
+            else if (itemtype == 3611)
+                num = 2f;
+            else if (itemtype == 3350)
+                num = 2f;
+            else if (itemtype == 2624)
+                num = 4f;
+            else if (itemtype == 3018)
+                num = 2f;
+            else if (itemtype == 3007)
+            {
+                num = 4f;
+                vector2.Y += 4f;
+            }
+            else if (itemtype == 3107)
+            {
+                num = 4f;
+                vector2.Y += 2f;
+            }
+            else if (itemtype == 3008)
+            {
+                num = -12f;
+                vector2.Y += 2f;
+            }
+            else if (itemtype == 1255)
+            {
+                num = 6f;
+                vector2.Y += 0.0f;
+            }
+            else if (itemtype == 2269)
+            {
+                num = 2f;
+                vector2.Y += 2f;
+            }
+            else if (itemtype == 1265)
+            {
+                num = -8f;
+                vector2.Y += 4f;
+            }
+            else if (itemtype == 2272)
+            {
+                num = 0.0f;
+                vector2.Y += 4f;
+            }
+            else if (itemtype == 3029)
+                num = 4f;
+            else if (itemtype == 2796)
+            {
+                num = -28f;
+                vector2.Y += 2f;
+            }
+            else if (itemtype == 2797)
+                num = 0.0f;
+            else if (itemtype == 2610)
+                num = 0.0f;
+            else if (itemtype == 2623)
+            {
+                num = -30f;
+                vector2.Y -= 4f;
+            }
+            else if (itemtype == 3546)
+            {
+                num = -14f;
+                vector2.Y -= 6f;
+            }
+            else if (itemtype == 1835)
+            {
+                num = -2f;
+                vector2.Y += 2f;
+            }
+            else if (itemtype == 2624)
+                num = -4f;
+            else if (itemtype == 3859)
+                num = -2f;
+            else if (itemtype == 2888)
+                num = 6f;
+            else if (itemtype == 2223)
+            {
+                num = 2f;
+                vector2.Y -= 2f;
+            }
+            else if (itemtype == 1782)
+            {
+                num = 0.0f;
+                vector2.Y += 4f;
+            }
+            else if (itemtype == 1929)
+            {
+                num = 0.0f;
+                vector2.Y += 2f;
+            }
+            else if (itemtype == 2270)
+                num = -4f;
+            else if (itemtype == 1784)
+            {
+                num = 0.0f;
+                vector2.Y += 4f;
+            }
+            else if (itemtype == 1000)
+            {
+                num = 6f;
+                vector2.Y += 0.0f;
+            }
+            else if (itemtype == 1178)
+            {
+                num = 4f;
+                vector2.Y += 0.0f;
+            }
+            else if (itemtype == 1319)
+            {
+                num = 0.0f;
+                vector2.Y += 0.0f;
+            }
+            else if (itemtype == 1297)
+            {
+                num = -8f;
+                vector2.Y += 0.0f;
+            }
+            else if (itemtype == 1121)
+            {
+                num = 6f;
+                vector2.Y -= 2f;
+            }
+            else if (itemtype == 1314)
+                num = 2f;
+            else if (itemtype == 1258)
+            {
+                num = 2f;
+                vector2.Y -= 2f;
+            }
+            else if (itemtype == 1155)
+            {
+                num = -10f;
+                vector2.Y -= 2f;
+            }
+            else if (itemtype == 1156)
+                num = -2f;
+            else if (itemtype == 96)
+            {
+                num = -8f;
+                vector2.Y += 2f;
+            }
+            else if (itemtype == 1870)
+            {
+                num = -8f;
+                vector2.Y += 2f;
+            }
+            else if (itemtype == 1260)
+            {
+                num = -8f;
+                vector2.Y += 2f;
+            }
+            else if (itemtype == 1254)
+            {
+                num = -6f;
+                vector2.Y += 2f;
+            }
+            else if (itemtype == 98)
+            {
+                num = -5f;
+                vector2.Y -= 2f;
+            }
+            else if (itemtype == 534)
+            {
+                num = -2f;
+                vector2.Y += 1f;
+            }
+            else if (itemtype == 679)
+            {
+                num = 0.0f;
+                vector2.Y += 2f;
+            }
+            else if (itemtype == 964)
+            {
+                num = 0.0f;
+                vector2.Y += 0.0f;
+            }
+            else if (itemtype == 533)
+            {
+                num = -7f;
+                vector2.Y -= 2f;
+            }
+            else if (itemtype == 1553)
+            {
+                num = -10f;
+                vector2.Y -= 2f;
+            }
+            else if (itemtype == 506)
+            {
+                num = 0.0f;
+                vector2.Y -= 2f;
+            }
+            else if (itemtype == 1910)
+            {
+                num = 0.0f;
+                vector2.Y -= 2f;
+            }
+            else if (itemtype == 494 || itemtype == 508)
+            {
+                num = -2f;
+            }
+            else
+            {
+                switch (itemtype)
+                {
+                    case 434:
+                        num = 0.0f;
+                        vector2.Y -= 2f;
+                        break;
+                    case 514:
+                        num = 0.0f;
+                        vector2.Y += 3f;
+                        break;
+                    default:
+                        if (itemtype == 435 || itemtype == 436 || (itemtype == 481 || itemtype == 578) || (itemtype == 1187 || itemtype == 1194 || (itemtype == 1201 || itemtype == 1229)))
+                        {
+                            num = -2f;
+                            vector2.Y -= 2f;
+                            break;
+                        }
+                        switch (itemtype)
+                        {
+                            case 126:
+                                num = 4f;
+                                vector2.Y += 4f;
+                                break;
+                            case (int)sbyte.MaxValue:
+                                num = 4f;
+                                vector2.Y += 2f;
+                                break;
+                            case 157:
+                                num = 6f;
+                                vector2.Y += 2f;
+                                break;
+                            case 160:
+                                num = -8f;
+                                break;
+                            case 197:
+                                num = -5f;
+                                vector2.Y += 4f;
+                                break;
+                            case 800:
+                                num = 4f;
+                                vector2.Y += 2f;
+                                break;
+                            default:
+                                if (itemtype == 164 || itemtype == 219)
+                                {
+                                    num = 0.0f;
+                                    vector2.Y += 2f;
+                                    break;
+                                }
+
+                                if (itemtype == 165 || itemtype == 272)
+                                {
+                                    num = 4f;
+                                    vector2.Y += 4f;
+                                    break;
+                                }
+
+                                switch (itemtype)
+                                {
+                                    case 266:
+                                        num = 0.0f;
+                                        vector2.Y += 2f;
+                                        break;
+                                    case 281:
+                                        num = 6f;
+                                        vector2.Y -= 6f;
+                                        break;
+                                    case 682:
+                                        num = 4f;
+                                        break;
+                                    case 758:
+                                        num -= 20f;
+                                        vector2.Y += 0.0f;
+                                        break;
+                                    case 759:
+                                        num -= 18f;
+                                        vector2.Y += 2f;
+                                        break;
+                                    case 760:
+                                        num -= 12f;
+                                        vector2.Y += 2f;
+                                        break;
+                                    case 779:
+                                        num = 0.0f;
+                                        vector2.Y += 2f;
+                                        break;
+                                    case 905:
+                                        num = -5f;
+                                        vector2.Y += 0.0f;
+                                        break;
+                                    case 930:
+                                        num = 4f;
+                                        vector2.Y += 2f;
+                                        break;
+                                    case 986:
+                                        num = 6f;
+                                        vector2.Y -= 10f;
+                                        break;
+                                    case 1946:
+                                        num -= 12f;
+                                        vector2.Y += 2f;
+                                        break;
+                                    case 3788:
+                                        num = 2f;
+                                        vector2.Y += 2f;
+                                        break;
+                                    case 3870:
+                                        num = 4f;
+                                        vector2.Y += 4f;
+                                        break;
+                                }
+                                break;
+                        }
+                        break;
+                }
+            }
+            vector2.X = num;
+            return vector2;
+        }
+    }
 }

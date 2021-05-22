@@ -428,7 +428,7 @@ namespace SOTS
 
 							Color color = new Color(Main.DiscoR, Main.DiscoG, Main.DiscoB, 0);
 							int recurse = 1;
-							bool rainbow = item.type == ModContent.ItemType<PhaseCannon>() && modPlayer.rainbowGlowmasks;
+							bool rainbow = item.type == ItemType<PhaseCannon>() && modPlayer.rainbowGlowmasks;
 							if (rainbow)
 							{
 								recurse = 2;

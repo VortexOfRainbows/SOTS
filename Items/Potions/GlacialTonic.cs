@@ -15,7 +15,7 @@ namespace SOTS.Items.Potions
 		{
 			DisplayName.SetDefault("Glacial Tonic");
 			
-			Tooltip.SetDefault("Randomly recieve 2 of the following:\nWarmth for 15 minutes\nBrittle for 13 minutes\nTitan for 11 minutes\nMana Regeneration for 9 minutes");
+			Tooltip.SetDefault("Randomly receive 2 of the following:\nWarmth for 15 minutes\nBrittle for 13 minutes\nTitan for 11 minutes\nMana Regeneration for 9 minutes");
 		}
 		public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{

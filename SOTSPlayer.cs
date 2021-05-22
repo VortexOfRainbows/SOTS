@@ -198,7 +198,7 @@ namespace SOTS
 		public int bladeAlpha = 0;
 		public static readonly PlayerLayer BladeEffectBack = new PlayerLayer("SOTS", "BladeEffectBack", PlayerLayer.MiscEffectsBack, delegate (PlayerDrawInfo drawInfo) 
 		{
-			Mod mod = ModLoader.GetMod("SOTS");
+			Mod mod = ModLoader.GetMod("SOTS");	
 			Player drawPlayer = drawInfo.drawPlayer;
 			SOTSPlayer modPlayer = drawPlayer.GetModPlayer<SOTSPlayer>();
 			if (drawInfo.shadow != 0)

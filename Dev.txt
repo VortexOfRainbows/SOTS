@@ -17,8 +17,10 @@ High Priority:
 3. New Pharaoh Expert Drop: Heart in a Jar, aura of damage that releases ghosts
 	1. Spirit tracer becomes normal drop
 	2. Ghosts dash towards the enemy
-4. Fix Subspace Spinny attack, knockback immunity
-5. Make Putrid Pinky cycle faster in expert mode
+4. Fix Subspace Spinny attack, knockback immunity, rng related nerfs... MUSIC
+5. Make Putrid Pinky cycle faster in expert mode, resprite polish
+6. A few more enemies (Wisp and Amongus)
+7. Icy Amalgamation Resprite
 
 4. Aqua-Necro Core (Stronger necro chestplate, 1 ranged attack per second will gain a steam aura that does 33% damage rapidly)
 5. Riptide Trident (Launches you towards your cursor at the cost of void, deal damage while traveling, bounce off of enemies)
@@ -46,9 +48,11 @@ Low Priority:
 6. Remove negative Vregen in inventory items
 7. Electrolyte Seperator
 
-5/18/21
+5/18/21 & 5/19/21 & 5/20/21 & 5/21/21
 1. Made SUBSTANTIAL progress on Subspace Locket.
-2. 
+2. Putrid Pinky drops stuff in normal mode now lol
+3. Fixed error with nature spell not sticking correctly (needs testing)
+4. Next: Make Locket always use ItemLoader.Shoot()
 
 5/17/21
 1. Shard Guard price increased, 1.1 g -> 5g

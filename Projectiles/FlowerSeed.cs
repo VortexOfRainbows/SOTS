@@ -1,25 +1,17 @@
 using System;
 using System.IO;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
-using Terraria.ID;
 
 namespace SOTS.Projectiles
 {    
     public class FlowerSeed : ModProjectile 
     {	
-		
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Flower Seed");
-			
 		}
-		
         public override void SetDefaults()
         {
 			projectile.aiStyle = 1;
@@ -154,7 +146,13 @@ namespace SOTS.Projectiles
 			projectile.velocity *= 0.1f;
 			projectile.aiStyle = 0;
 			enemyIndex = target.whoAmI;
-			if(target.life <= 0)
+			if (diffPosX == 0)
+				diffPosX = target.Center.X - projectile.Center.X;
+			if (diffPosY == 0)
+				diffPosY = target.Center.Y - projectile.Center.Y;
+			diffPosX *= 0.9f;
+			diffPosY *= 0.9f;
+			if (target.life <= 0)
 			{
 				enemyIndex = -1;
 				projectile.aiStyle = 1;

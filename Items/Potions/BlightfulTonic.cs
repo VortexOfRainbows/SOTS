@@ -16,7 +16,7 @@ namespace SOTS.Items.Potions
 		{
 			DisplayName.SetDefault("Blightful Tonic");
 			
-			Tooltip.SetDefault("Randomly recieve 2 of the following:\nIronskin for 15 minutes\nGood Vibes for 13 minutes\nSwiftness for 11 minutes\nRegeneration for 9 minutes");
+			Tooltip.SetDefault("Randomly receive 2 of the following:\nIronskin for 15 minutes\nGood Vibes for 13 minutes\nSwiftness for 11 minutes\nRegeneration for 9 minutes");
 		}
 		public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{

@@ -1,5 +1,5 @@
 A mod which has nothing to do with secrets or shadows... yet.
-This mod's main plan is to add generated structures in the world, some are sort-of like roguelike dungeons.
+This mod's main plan is to add generated structures to the world, some are sort-of like roguelike dungeons.
 !! This mod is early in development !!
 !! A large world is recommended in order for the generated structures to spawn without overriding vanilla structures !!
 
@@ -20,8 +20,9 @@ Credits:
 (Current Developers)
 Programmer, Direction, Art: Vortex#6230
 Emotional Support, Direction, Art: TacoBurritoGuacamole
+Music, Art: Heart Plus Up!
 Art: HugeKraken
-Music: BananaLizard, Heart Plus Up!
+Music: BananaLizard
 Testers: DreadSoul
 
 (Past Developers)

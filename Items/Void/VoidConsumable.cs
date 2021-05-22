@@ -202,7 +202,7 @@ namespace SOTS.Items.Void
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Cursed Caviar");
-			Tooltip.SetDefault("40% chance to refill 20 void and recieve Well Fed for 90 seconds\n35% chance to refill 15 void and recieve Mana Regeneration for 90 seconds\n25% chance to refill 10 void and recieve Battle for 90 seconds");
+			Tooltip.SetDefault("40% chance to refill 20 void and receive Well Fed for 90 seconds\n35% chance to refill 15 void and receive Mana Regeneration for 90 seconds\n25% chance to refill 10 void and receive Battle for 90 seconds");
 		}
 		public override void SafeSetDefaults()
 		{
