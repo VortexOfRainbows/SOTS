@@ -12,16 +12,16 @@ The following is my development plans :D
 10. Ghost Town to Evil Biome
 
 High Priority:
-1. Goopwood sprite Changes
-2. Subspace Locket: New Subspace Serpent drop
-3. New Pharaoh Expert Drop: Heart in a Jar, aura of damage that releases ghosts
+1. New Pharaoh Expert Drop: Heart in a Jar, aura of damage that releases ghosts
 	1. Spirit tracer becomes normal drop
 	2. Ghosts dash towards the enemy
-4. Fix Subspace Spinny attack, knockback immunity, rng related nerfs... MUSIC
-5. Make Putrid Pinky cycle faster in expert mode, resprite polish
-6. A few more enemies (Wisp and Amongus)
-7. Icy Amalgamation Resprite
+2. Fix Subspace Spinny attack, knockback immunity, rng related nerfs... MUSIC (+Box), Gore, Index error for loot bag
+3. Resprite polish
+4. A few more enemies (Wisp and Amongus)
+5. Icy Amalgamation Resprite
+6. Obelisk changes
 
+1. Goopwood sprite Changes
 4. Aqua-Necro Core (Stronger necro chestplate, 1 ranged attack per second will gain a steam aura that does 33% damage rapidly)
 5. Riptide Trident (Launches you towards your cursor at the cost of void, deal damage while traveling, bounce off of enemies)
 6. Prismarine Necklace: Sharktooth Necklace + Heart of the Sea
@@ -48,11 +48,18 @@ Low Priority:
 6. Remove negative Vregen in inventory items
 7. Electrolyte Seperator
 
-5/18/21 & 5/19/21 & 5/20/21 & 5/21/21
-1. Made SUBSTANTIAL progress on Subspace Locket.
+5/23/21
+1. Resprites! Heart polished up a handful of sprites.
+2. Spirit Tracer is no longer an expert-mode item, now crafted
+3. 
+
+5/18/21 & 5/19/21 & 5/20/21 & 5/21/21 & 5/22/21 & 5/23/21
+1. Subspace Locket!!! :D. SERVER SYNCS FINE ENOUGH!!! THANK GOD!!!
 2. Putrid Pinky drops stuff in normal mode now lol
 3. Fixed error with nature spell not sticking correctly (needs testing)
-4. Next: Make Locket always use ItemLoader.Shoot()
+4. Fixed bug with Cursed Blade doing more damage than intended.
+5. Optimized some code for door pants/bug fixes
+6. Subspace Scissors is now a crafted drop. Damage 180 -> 190
 
 5/17/21
 1. Shard Guard price increased, 1.1 g -> 5g

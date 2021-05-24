@@ -10,7 +10,7 @@ namespace SOTS.Items.IceStuff
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Frigid Hourglass");
-			Tooltip.SetDefault("Freezes your void meter for 10 seconds every minute\nProvides immunity to Slow, Chilled, Frozen, and Frostburn\nIncreases movement speed by 10%");
+			Tooltip.SetDefault("Freezes your void meter for 15 seconds every minute\nProvides immunity to Slow, Chilled, Frozen, and Frostburn\nIncreases movement speed by 10%");
 		}
 		public override void SetDefaults()
 		{
@@ -26,8 +26,8 @@ namespace SOTS.Items.IceStuff
 		{
 			player.moveSpeed += 0.1f;
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-			voidPlayer.frozenMaxDuration += 600;
-			voidPlayer.frozenMinTimer -= 600;
+			voidPlayer.frozenMaxDuration += 900;
+			voidPlayer.frozenMinTimer -= 900;
 			player.buffImmune[BuffID.Slow] = true;
 			player.buffImmune[BuffID.Chilled] = true;
 			player.buffImmune[BuffID.Frozen] = true;

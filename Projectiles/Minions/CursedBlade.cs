@@ -16,43 +16,22 @@ namespace SOTS.Projectiles.Minions
 		float goToCursorY;
 		float cursorDistance;
 		float eternalBetweenPlayer = 196;
-		
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Cursed Blade");
-			
 		}
 		public override void SendExtraAI(BinaryWriter writer) 
 		{
 			writer.Write(projectile.rotation);
 			writer.Write(projectile.spriteDirection);
 			writer.Write(initiate);
-			/*
-			writer.Write(oldPositionY);
-			writer.Write(oldPositionX);
-			writer.Write(oldPlayerPositionY);
-			writer.Write(oldPlayerPositionX);
-			writer.Write(startingRotation);
-			writer.Write(rotationAreaX);
-			writer.Write(rotationAreaY);
-			*/
 		}
 		public override void ReceiveExtraAI(BinaryReader reader)
 		{	
 			projectile.rotation = reader.ReadSingle();
 			projectile.spriteDirection = reader.ReadInt32();
 			initiate = reader.ReadInt32();
-			/*
-			oldPositionY = reader.ReadSingle();
-			oldPositionX = reader.ReadSingle();
-			oldPlayerPositionY = reader.ReadSingle();
-			oldPlayerPositionX = reader.ReadSingle();
-			startingRotation = reader.ReadDouble();
-			rotationAreaX = reader.ReadSingle();
-			rotationAreaY = reader.ReadSingle();
-			*/
 		}
-		
         public override void SetDefaults()
         {
 			projectile.height = 24;

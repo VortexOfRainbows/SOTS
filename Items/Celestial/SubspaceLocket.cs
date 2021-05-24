@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using SOTS.Projectiles.Celestial;
-using SOTS.Projectiles.Otherworld;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -16,7 +16,7 @@ namespace SOTS.Items.Celestial
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Subspace Locket");
-			Tooltip.SetDefault("");
+			Tooltip.SetDefault("Summons a Subspace Servant to assist in combat\nUses the weapon in your last inventory slot for you\n'You've proven yourself plenty'");
 		}
 		public override void SetDefaults()
 		{
@@ -27,19 +27,70 @@ namespace SOTS.Items.Celestial
 			item.accessory = true;
 			item.expert = true;
 		}
-        public override void UpdateVanity(Player player, EquipType type)
-		{
-		}
+        bool accessory = true;
         public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			SubspacePlayer modPlayer = SubspacePlayer.ModPlayer(player);
-			if(!hideVisual)
-				modPlayer.servantActive = true;
-		}
-	}
+			modPlayer.servantActive = true;
+        }
+        public override void UpdateInventory(Player player)
+        {
+            accessory = false;
+        }
+        Texture2D itemTextureOutline;
+        public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
+        {
+            Player player = Main.LocalPlayer;
+            SubspacePlayer modPlayer = SubspacePlayer.ModPlayer(player);
+            Texture2D texture = Main.itemTexture[item.type];
+            if(itemTextureOutline == null)
+            {
+                Color[] data = SubspaceServant.Greenify(texture, new Color(0, 255, 0));
+                itemTextureOutline = new Texture2D(Main.graphics.GraphicsDevice, texture.Width, texture.Height);
+                itemTextureOutline.SetData(0, null, data, 0, texture.Width * texture.Height);
+            }
+            if(modPlayer.foundItem && accessory)
+                for (int i = 0; i < 4; i++)
+                {
+                    Vector2 circular = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(90 * i));
+                    spriteBatch.Draw(itemTextureOutline, position + circular, frame, Color.White, 0f, origin, scale, SpriteEffects.None, 0f);
+                }
+            return base.PreDrawInInventory(spriteBatch, position, frame, drawColor, itemColor, origin, scale);
+        }
+    }
+    public class SubspaceItem : GlobalItem
+    {
+        public static int itemID = -1;
+        public static Texture2D itemTextureOutline;
+        public override bool PreDrawInInventory(Item item, SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
+        {
+            Player player = Main.LocalPlayer;
+            if(player.inventory[49] == item)
+            {
+                SubspacePlayer modPlayer = SubspacePlayer.ModPlayer(player);
+                Texture2D texture = Main.itemTexture[item.type];
+                if (itemID != item.type || itemTextureOutline == null)
+                {
+                    Color[] data = SubspaceServant.Greenify(texture, new Color(0, 255, 0));
+                    itemTextureOutline = new Texture2D(Main.graphics.GraphicsDevice, texture.Width, texture.Height);
+                    itemTextureOutline.SetData(0, null, data, 0, texture.Width * texture.Height);
+                    itemID = item.type;
+                }
+                if (modPlayer.foundItem)
+                    for (int i = 0; i < 4; i++)
+                    {
+                        Vector2 circular = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(90 * i));
+                        spriteBatch.Draw(itemTextureOutline, position + circular, frame, Color.White, 0f, origin, scale, SpriteEffects.None, 0f);
+                    }
+            }
+            return true;
+        }
+    }
 	public class SubspacePlayer : ModPlayer
 	{
+        public bool foundItem = false;
 		public bool servantActive = false;
+        public bool servantIsVanity = false;
 		public static SubspacePlayer ModPlayer(Player player)
 		{
 			return player.GetModPlayer<SubspacePlayer>();
@@ -54,7 +105,7 @@ namespace SOTS.Items.Celestial
             {
                 Projectile proj = Main.projectile[i];
                 SubspaceServant subServ = proj.modProjectile as SubspaceServant;
-                if(subServ != null && proj.owner == Main.myPlayer && proj.active)
+                if(subServ != null && proj.owner == drawInfo.drawPlayer.whoAmI && proj.active)
                 {
                     float drawX = (int)drawInfo.position.X + drawPlayer.width / 2;
                     float drawY = (int)drawInfo.position.Y + drawPlayer.height / 2;
@@ -70,10 +121,21 @@ namespace SOTS.Items.Celestial
             layers.Insert(0, DrawServant);
         }
         public override void ResetEffects()
-		{
-			if(servantActive)
+        {
+            servantIsVanity = false;
+            for (int i = 9 + player.extraAccessorySlots; i < player.armor.Length; i++) //checking vanity slots
+            {
+                Item item = player.armor[i];
+                if (item.type == ModContent.ItemType<SubspaceLocket>())
+                {
+                    servantActive = true;
+                    servantIsVanity = true;
+                }
+            }
+            if (servantActive)
 				Summon();
 			servantActive = false;
+            foundItem = false;
         }
 		public int Probe = -1;
 		public void Summon()
@@ -101,13 +163,9 @@ namespace SOTS.Items.Celestial
             shouldBeRotation = 0;
             int i = player.whoAmI;
             var weaponDamage = player.GetWeaponDamage(sItem);
-            if (true)
+            if (i == Main.myPlayer)
             {
                 var flag2 = true;
-                if ((sItem.type == 65 || sItem.type == 676 || (sItem.type == 723 || sItem.type == 724) ||
-                     (sItem.type == 757 || sItem.type == 674 || (sItem.type == 675 || sItem.type == 989)) ||
-                     (sItem.type == 1226 || sItem.type == 1227)))//&& player.itemAnimation != player.maxAnimation - 1)
-                    flag2 = true; //= false; 
                 if (sItem.shoot > 0 && flag2)
                 {
                     var shoot = sItem.shoot;
@@ -332,7 +390,13 @@ namespace SOTS.Items.Celestial
                             if ((double)player.gravDir == -1.0)
                                 vector2_1.Y = Main.screenPosition.Y + (float)Main.screenHeight - (float)Main.mouseY;
                         }
-
+                        bool Shoot1 = ItemLoader.Shoot(sItem, player, ref vector2_1, ref num6, ref num7, ref shoot, ref Damage, ref knockBack);
+                        bool Shoot2 = PlayerHooks.Shoot(player, sItem, ref vector2_1, ref num6, ref num7, ref shoot, ref Damage, ref knockBack);
+                        if (!Shoot1 || !Shoot2)
+                        {
+                            player.position = temp;
+                            return;
+                        }
                         if (shoot == 76)
                         {
                             shoot += Main.rand.Next(3);
@@ -1349,7 +1413,7 @@ namespace SOTS.Items.Celestial
                             Projectile.NewProjectile(vector2_1.X, vector2_1.Y - player.gravDir * 4f, num10, num11, shoot,
                                 Damage, num1, i, 0.0f, (float)Main.rand.Next(12) / 6f);
                         }
-                        else if(!modded)
+                        else
                         {
                             int index = Projectile.NewProjectile(vector2_1.X, vector2_1.Y, num6, num7, shoot, Damage, num1, i, 0.0f, 0.0f);
                             if (sItem.type == 726)
@@ -1361,24 +1425,13 @@ namespace SOTS.Items.Celestial
                                 Main.projectile[index].ai[0] = Player.tileTargetX;
                                 Main.projectile[index].ai[1] = Player.tileTargetY;
                             }
-
                             if (shoot == 442)
                             {
                                 Main.projectile[index].ai[0] = Player.tileTargetX;
                                 Main.projectile[index].ai[1] = Player.tileTargetY;
                             }
-
                             if ((player.thrownCost50 || player.thrownCost33) && player.inventory[player.selectedItem].thrown)
                                 Main.projectile[index].noDropItem = true;
-                        }
-                        else
-                        {
-                            Vector2 shootTo = new Vector2(num6, num7);
-                            bool Shoot = ItemLoader.Shoot(sItem, player, ref Center, ref shootTo.X, ref shootTo.Y, ref shoot, ref Damage, ref knockBack);
-                            if (Shoot)
-                            {
-                                Projectile.NewProjectile(vector2_1, shootTo, shoot, Damage, knockBack, player.whoAmI);
-                            }
                         }
                     }
                     else if (sItem.useStyle == 5)
@@ -1933,23 +1986,15 @@ namespace SOTS.Items.Celestial
                                                 if (banner > 0 && player.NPCBannerBuff[banner])
                                                     num1 = !Main.expertMode ? (int)(num1 * ItemID.Sets.BannerStrength[Item.BannerToItem(banner)].NormalDamageDealt) : (int)(num1 * ItemID.Sets.BannerStrength[Item.BannerToItem(banner)].ExpertDamageDealt);
                                                 var num8 = Main.DamageVar((float)num1);
-
-                                                ModItem mItem = sItem.modItem;
                                                 player.OnHit(Main.npc[index1].Center.X, Main.npc[index1].Center.Y, Main.npc[index1]);
                                                 if (player.armorPenetration > 0)
                                                     num8 += Main.npc[index1].checkArmorPenetration(player.armorPenetration);
-                                                if (mItem != null)
-                                                {
-                                                    mItem.ModifyHitNPC(player, Main.npc[index1], ref num8, ref num3, ref crit);
-                                                    NPCLoader.ModifyHitByItem(Main.npc[index1], player, sItem, ref num8, ref num3, ref crit);
-                                                }
+                                                NPCLoader.ModifyHitByItem(Main.npc[index1], player, sItem, ref num8, ref num3, ref crit);
+                                                PlayerHooks.ModifyHitNPC(player, sItem, Main.npc[index1], ref num8, ref num3, ref crit);
                                                 var num9 = (int)Main.npc[index1].StrikeNPC(num8, num3, direction, crit, false, false);
-                                                if (mItem != null)
-                                                {
-                                                    mItem.OnHitNPC(player, Main.npc[index1], num8, num3, crit);
-                                                    NPCLoader.OnHitByItem(Main.npc[index1], player, sItem, num8, num3, crit);
-                                                    player.StatusNPC(sItem.type, index1);
-                                                }
+                                                NPCLoader.OnHitByItem(Main.npc[index1], player, sItem, num8, num3, crit);
+                                                PlayerHooks.OnHitNPC(player, sItem, Main.npc[index1], num8, num3, crit);
+                                                player.StatusNPC(sItem.type, index1);
                                                 if (sItem.type == ItemID.Bladetongue)
                                                 {
                                                     var vector2_1 = new Vector2((direction * 100 + Main.rand.Next(-25, 26)), Main.rand.Next(-75, 76));
@@ -2040,20 +2085,12 @@ namespace SOTS.Items.Celestial
                                             player.OnHit(Main.player[index1].Center.X, Main.player[index1].Center.Y,
                                                 (Entity)Main.player[index1]);
                                             var playerDeathReason = PlayerDeathReason.ByPlayer(player.whoAmI);
-                                            ModItem mItem = sItem.modItem;
-                                            if (mItem != null)
-                                            {
-                                                mItem.ModifyHitPvp(player, Main.player[index1], ref num8, ref flag3);
-                                                PlayerHooks.ModifyHitPvp(player, sItem, Main.player[index1], ref num8, ref flag3);
-                                                //PlayerLoader stuff if it exists
-                                            }
+                                            ItemLoader.ModifyHitPvp(sItem, player, Main.player[index1], ref num8, ref flag3);
+                                            PlayerHooks.ModifyHitPvp(player, sItem, Main.player[index1], ref num8, ref flag3);
                                             var num9 = (int)Main.player[index1].Hurt(playerDeathReason, num8, direction, true, false, flag3, -1);
-                                            if (mItem != null)
-                                            {
-                                                mItem.OnHitPvp(player, Main.player[index1], num8, flag3);
-                                                PlayerHooks.OnHitPvp(player, sItem, Main.player[index1], num8, flag3);
-                                                player.StatusNPC(sItem.type, index1);
-                                            }
+                                            ItemLoader.OnHitPvp(sItem, player, Main.player[index1], num8, flag3);
+                                            PlayerHooks.OnHitPvp(player, sItem, Main.player[index1], num8, flag3);
+                                            player.StatusPvP(sItem.type, index1);
                                             if (sItem.type == ItemID.Bladetongue)
                                             {
                                                 var vector2_1 = new Vector2(

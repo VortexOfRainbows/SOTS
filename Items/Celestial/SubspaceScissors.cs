@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using SOTS.Void;
+using Terraria.ModLoader;
 
 namespace SOTS.Items.Celestial
 {
@@ -14,10 +15,10 @@ namespace SOTS.Items.Celestial
 		}
 		public override void SafeSetDefaults()
 		{
-            item.damage = 180;
+            item.damage = 190;
             item.melee = true;  
-            item.width = 52;
-            item.height = 52;  
+            item.width = 46;
+            item.height = 46;  
             item.useTime = 30; 
             item.useAnimation = 30;
             item.useStyle = 5;    
@@ -31,7 +32,6 @@ namespace SOTS.Items.Celestial
 			item.channel = true;
             item.noUseGraphic = true; 
             item.noMelee = true;
-			item.expert = true;
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
@@ -43,12 +43,11 @@ namespace SOTS.Items.Celestial
 		}
 		public override void AddRecipes()
 		{
-			/*
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(null, "SanguiteBar", 15);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.SetResult(this);
-			recipe.AddRecipe(); */
+			recipe.AddRecipe();
 		}
 	}
 }

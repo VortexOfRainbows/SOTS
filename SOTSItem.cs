@@ -45,7 +45,7 @@ namespace SOTS
 				dedicatedBlue = new int[] { ItemType<Calculator>() }; //friends 2
 				dedicatedPurpleRed = new int[] { ItemType<CursedApple>(), ItemType<ArcStaffMk2>() }; //James
 				dedicatedPastelPink = new int[] { ItemType<StrangeFruit>() }; //Tris
-				dedicatedRainbow = new int[] { ItemType<Traingun>() /*ItemType<PhotonGeyser>()*/ }; //Vortex
+				dedicatedRainbow = new int[] { ItemType<Traingun>(), ItemType<SubspaceLocket>() /*ItemType<PhotonGeyser>()*/ }; //Vortex
 				dedicatedBloodRed = new int[] { ItemType<Doomstick>() }; //Blasfah
 				runOnce = false;
             }
@@ -89,7 +89,7 @@ namespace SOTS
 			if (dedicatedRainbow.Contains(item.type))
 			{
 				dedicatedColor = VoidPlayer.pastelRainbow;
-				//dedicated = true;
+				dedicated = true;
 			}
 			if (dedicatedPastelPink.Contains(item.type))
 			{

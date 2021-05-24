@@ -2,6 +2,7 @@ using Terraria;
 using Terraria.ID;
 using Microsoft.Xna.Framework;
 using SOTS.Void;
+using Terraria.ModLoader;
 
 namespace SOTS.Items.Pyramid
 {
@@ -14,7 +15,6 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void SafeSetDefaults()
 		{
-
 			item.damage = 33;
 			item.ranged = true;
 			item.width = 30;
@@ -31,15 +31,22 @@ namespace SOTS.Items.Pyramid
             item.shootSpeed = 16.5f;
 			item.useAmmo = AmmoID.Arrow;
 			item.noMelee = true;
-			item.expert = true;
+		}
+		public override void AddRecipes()
+		{
+			ModRecipe recipe = new ModRecipe(mod);
+			recipe.AddIngredient(null, "CursedMatter", 10);
+			recipe.AddTile(TileID.Anvils);
+			recipe.SetResult(this);
+			recipe.AddRecipe();
 		}
 		public override void GetVoid(Player player)
 		{
-				voidMana = 6;
+			voidMana = 6;
 		}
 		public override Vector2? HoldoutOffset()
 		{
-			return new Vector2(6, 0);
+			return new Vector2(-1, 0);
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{

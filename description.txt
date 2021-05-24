@@ -38,6 +38,12 @@ Audio Engineering: apotofkoolaid
 Item glowmask code: Qwerty3.14
 Minor Art Contributions: Naka, Heart Plus Up!
 
+Update 0.19.3
+-New Expert drops for Icy Amalgamation, Subspace Serpent
+-Various Resprites
+-Some balance changes
+-Bug Fixes
+
 Update 0.19.2
 -More Items, such as the introduction of Void+Summon items
 -New Worldgen structures in the Ocean, Sky, and Planetarium

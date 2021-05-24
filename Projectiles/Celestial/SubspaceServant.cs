@@ -61,6 +61,26 @@ namespace SOTS.Projectiles.Celestial
 		int frame = 0;
 		int trailingType = 0;
 		Vector2 oldPosition;
+        public override void SendExtraAI(BinaryWriter writer)
+		{
+			writer.Write(oldPosition.X);
+			writer.Write(oldPosition.Y);
+			writer.Write(itemLocation.X);
+			writer.Write(itemLocation.Y);
+			writer.Write(itemRotation);
+			writer.Write(direction);
+			base.SendExtraAI(writer);
+        }
+        public override void ReceiveExtraAI(BinaryReader reader)
+		{
+			oldPosition.X = reader.ReadSingle();
+			oldPosition.Y = reader.ReadSingle();
+			itemLocation.X = reader.ReadSingle();
+			itemLocation.Y = reader.ReadSingle();
+			itemRotation = reader.ReadSingle();
+			direction = reader.ReadInt32();
+			base.ReceiveExtraAI(reader);
+        }
         public override void AI()
 		{
 			Player player = Main.player[projectile.owner];
@@ -69,81 +89,86 @@ namespace SOTS.Projectiles.Celestial
 			Item item = player.inventory[49];
 			sItem = item;
 			int type = item.type;
-			if (trailingType == 0)
+			if(Main.myPlayer == player.whoAmI)
 			{
-				idlePosition.X -= player.direction * 72;
+				if (trailingType == 0)
+				{
+					idlePosition.X -= player.direction * 64f;
+				}
+				if (trailingType == 1) //magic
+				{
+					idlePosition.Y -= 48f;
+					Vector2 toCursor = Main.MouseWorld - player.Center;
+					toCursor = toCursor.SafeNormalize(Vector2.Zero) * -128f;
+					toCursor.Y *= 0.375f;
+					toCursor.Y = -Math.Abs(toCursor.Y);
+					idlePosition += toCursor;
+				}
+				if (trailingType == 2) //ranged
+				{
+					idlePosition.Y -= 64f;
+					Vector2 toCursor = Main.MouseWorld - player.Center;
+					toCursor = toCursor.SafeNormalize(Vector2.Zero) * 128f;
+					toCursor.Y *= 0.4125f;
+					idlePosition += toCursor;
+				}
+				if (trailingType == 3) //melee
+				{
+					//idlePosition.Y += 8f + (float)Math.Sqrt(item.width * item.height) * 0.5f;
+					Vector2 toCursor = Main.MouseWorld - player.Center;
+					float lengthToCursor = -32 + toCursor.Length();
+					toCursor = toCursor.SafeNormalize(Vector2.Zero) * lengthToCursor;
+					idlePosition += toCursor;
+				}
+				if (trailingType == 4) //melee, but no melee ?
+				{
+					idlePosition.Y += 32f;
+					Vector2 toCursor = Main.MouseWorld - player.Center;
+					float lengthToCursor = -32 + toCursor.Length() * 0.66f;
+					toCursor.Y *= 0.7f;
+					toCursor = toCursor.SafeNormalize(Vector2.Zero) * lengthToCursor;
+					idlePosition += toCursor;
+				}
+				projectile.netUpdate = true;
+				Vector2 toIdle = idlePosition - projectile.Center;
+				float dist = toIdle.Length();
+				float speed = 3 + (float)Math.Pow(dist, 1.45) * 0.002f;
+				if (dist < speed)
+				{
+					speed = toIdle.Length();
+				}
+				projectile.velocity = toIdle.SafeNormalize(Vector2.Zero) * speed;
+				if (direction == 1)
+				{
+					if (projectile.ai[0] < direction)
+						projectile.ai[0] += 0.1f;
+				}
+				else
+				{
+					if (projectile.ai[0] > direction)
+						projectile.ai[0] -= 0.1f;
+				}
+				oldPosition = projectile.Center + new Vector2(-5 * projectile.ai[0], 2);
+				if (projectile.ai[1] >= 24)
+				{
+					projectile.ai[1] -= 24f;
+				}
+				Vector2 circular = new Vector2(2f, 0).RotatedBy(MathHelper.ToRadians(15 * projectile.ai[1]));
+				projectile.ai[1] += 0.75f;
+				if (circular.Y > 0)
+					circular.Y *= 0.5f;
+				projectile.velocity.Y += circular.Y;
+				projectile.position += projectile.velocity;
 			}
-			if(trailingType == 1) //magic
-			{
-				idlePosition.Y -= 48f;
-				Vector2 toCursor = Main.MouseWorld - player.Center;
-				toCursor = toCursor.SafeNormalize(Vector2.Zero) * -128f;
-				toCursor.Y *= 0.375f;
-				toCursor.Y = -Math.Abs(toCursor.Y);
-				idlePosition += toCursor;
-			}
-			if (trailingType == 2) //ranged
-			{
-				idlePosition.Y -= 64f;
-				Vector2 toCursor = Main.MouseWorld - player.Center;
-				toCursor = toCursor.SafeNormalize(Vector2.Zero) * 128f;
-				toCursor.Y *= 0.4125f;
-				idlePosition += toCursor;
-			}
-			if(trailingType == 3) //melee
-			{
-				idlePosition.Y += 8f + (float)Math.Sqrt(item.width * item.height) * 0.5f;
-				Vector2 toCursor = Main.MouseWorld - player.Center;
-				float lengthToCursor = -(8 + (float)Math.Sqrt(item.width * item.height) * 0.5f) + toCursor.Length();
-				toCursor = toCursor.SafeNormalize(Vector2.Zero) * lengthToCursor;
-				idlePosition += toCursor;
-			}
-			if (trailingType == 4) //melee, but no melee ?
-			{
-				idlePosition.Y += 32f;
-				Vector2 toCursor = Main.MouseWorld - player.Center;
-				float lengthToCursor = -32 + toCursor.Length() * 0.66f;
-				toCursor.Y *= 0.7f;
-				toCursor = toCursor.SafeNormalize(Vector2.Zero) * lengthToCursor;
-				idlePosition += toCursor;
-			}
-			Vector2 toIdle = idlePosition - projectile.Center;
-			float dist = toIdle.Length();
-			float speed = 3 + (float)Math.Pow(dist, 1.5) * 0.002f;
-			if(dist < speed)
-            {
-				speed = toIdle.Length();
-            }
-			projectile.velocity = toIdle.SafeNormalize(Vector2.Zero) * speed; 
-			if(direction == 1)
-            {
-				if(projectile.ai[0] < direction)
-					projectile.ai[0] += 0.1f;
-			}
-			else
-			{
-				if (projectile.ai[0] > direction)
-					projectile.ai[0] -= 0.1f;
-			}
-			oldPosition = projectile.Center + new Vector2(-5 * projectile.ai[0], 2);
-			projectile.ai[1]++;
-			if(projectile.ai[1] > 24)
-            {
-				projectile.ai[1] = 0;
-			}
-			Vector2 circular = new Vector2(-2f, 0).RotatedBy(MathHelper.ToRadians(15 * projectile.ai[1]));
-			if (circular.Y > 0)
-				circular.Y *= 0.5f;
-			projectile.velocity.Y += circular.Y;
-			projectile.position += projectile.velocity;
 			Lighting.AddLight(projectile.Center, new Vector3(75, 30, 75) * 1f / 255f);
 
 			#region coolStuff
-			List<int> blackList = new List<int>() { ItemID.BookStaff, ModContent.ItemType<LashesOfLightning>() };
+			List<int> blackList = new List<int>() { ItemID.BookStaff, ModContent.ItemType<LashesOfLightning>(), ModContent.ItemType<SkywardBlades>() };
 			//player.ItemCheck(player.whoAmI);
 			//trailingType = 0;
-			if (item.active && !item.IsAir && !item.summon && !item.thrown && !item.channel && !blackList.Contains(type))
+			if (lastItem == item.type && item.active && !item.IsAir && !item.summon && !item.thrown && !item.channel && !blackList.Contains(type) && (item.useStyle == 1 || item.useStyle == 5) && !subPlayer.servantIsVanity)
 			{
+				subPlayer.foundItem = true;
 				Projectile proj = new Projectile();
 				proj.SetDefaults(item.shoot);
 				if(proj.aiStyle == 19 || item.ammo > 0)
@@ -217,8 +242,9 @@ namespace SOTS.Projectiles.Celestial
 						if (!can)
 						{
 							UseTime = FullUseTime + 1;
-							frame = projectile.velocity.Length() > 1f ? 5 : 0;
-							direction = player.direction;
+							frame = projectile.velocity.Length() > 2f ? 5 : 0;
+							if (player.whoAmI == Main.myPlayer)
+								direction = player.direction;
 							return;
 						}
 						ItemLoader.UseItem(item, player);
@@ -244,12 +270,21 @@ namespace SOTS.Projectiles.Celestial
 					}
 					//direction = projectile.direction;
 					Vector2 position2 = projectile.Center;
-					itemLocation = subPlayer.UseVanillaItemAnimation(position2, item, UseTime, FullUseTime, ref direction, ref itemRotation);
-					subPlayer.UseVanillaItemHitbox(itemLocation, projectile.Center, projectile.velocity, item, UseTime, FullUseTime, ref direction, ref itemRotation);
+					if(Main.myPlayer == player.whoAmI)
+					{
+						itemLocation = subPlayer.UseVanillaItemAnimation(position2, item, UseTime, FullUseTime, ref direction, ref itemRotation);
+						subPlayer.UseVanillaItemHitbox(itemLocation, projectile.Center, projectile.velocity, item, UseTime, FullUseTime, ref direction, ref itemRotation);
+					}
+					else
+					{
+						int fakeDirection = direction;
+						itemLocation = subPlayer.UseVanillaItemAnimation(position2, item, UseTime, FullUseTime, ref fakeDirection, ref itemRotation);
+						subPlayer.UseVanillaItemHitbox(itemLocation, projectile.Center, projectile.velocity, item, UseTime, FullUseTime, ref fakeDirection, ref itemRotation);
+					}
 					subPlayer.PickFrame(sItem, UseTime, FullUseTime, direction, itemRotation, ref frame);
 					if(item.melee || item.type == ItemID.Toxikarp || item.type == ItemID.SpiritFlame)
                     {
-						if (item.noMelee || item.shoot > 0)
+						if (item.noMelee)
 							trailingType = 4;
 						else
 							trailingType = 3;
@@ -266,43 +301,62 @@ namespace SOTS.Projectiles.Celestial
 				else
 				{
 					trailingType = 0;
-					frame = projectile.velocity.Length() > 1f ? 5 : 0;
-					direction = player.direction;
+					frame = projectile.velocity.Length() > 2f ? 5 : 0;
+					if (player.whoAmI == Main.myPlayer)
+						direction = player.direction;
 				}
 			}
 			else
 			{
 				trailingType = 0;
-				frame = projectile.velocity.Length() > 1f ? 5 : 0;
-				direction = player.direction;
+				frame = projectile.velocity.Length() > 2f ? 5 : 0;
+				if(player.whoAmI == Main.myPlayer)
+					direction = player.direction;
 				UseTime = -1000;
-            }
+				Texture2D texture = Main.itemTexture[item.type];
+				if (lastItem != sItem.type || itemTextureOutline == null)
+				{
+					itemTextureOutline = new Texture2D(Main.graphics.GraphicsDevice, texture.Width, texture.Height);
+					itemTextureOutline.SetData(0, null, Greenify(texture, new Color(0, 255, 0)), 0, texture.Width * texture.Height);
+					lastItem = sItem.type;
+				}
+			}
 			#endregion
 		}
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
-			DrawTail(spriteBatch, Color.White);
 			Texture2D texture = mod.GetTexture("Projectiles/Celestial/SubspaceServantBody");
+			Texture2D textureOutline = mod.GetTexture("Projectiles/Celestial/SubspaceServantBodyOutline");
 			Vector2 drawPos = projectile.Center - Main.screenPosition + new Vector2(0, -4);
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 6 / 2);
+			for (int k = 0; k < 4; k++)
+			{
+				Vector2 circular = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(90 * k));
+				spriteBatch.Draw(textureOutline, drawPos + circular, new Rectangle(0, frame * texture.Height / 6, texture.Width, texture.Height / 6), Color.White, projectile.rotation, origin, projectile.scale, direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+			}
+			DrawItemAnimation(spriteBatch, true);
+			DrawTail(spriteBatch, true);
+			DrawWings(spriteBatch);
+			DrawTail(spriteBatch, false);
 			spriteBatch.Draw(texture, drawPos, new Rectangle(0, frame * texture.Height / 6, texture.Width, texture.Height / 6), Color.White, projectile.rotation, origin, projectile.scale, direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 			return false;
         }
         public override void PostDraw(SpriteBatch spriteBatch, Color lightColor)
         {
-			DrawItemAnimation(spriteBatch, lightColor);
+			DrawItemAnimation(spriteBatch, false);
 			Texture2D texture = mod.GetTexture("Projectiles/Celestial/SubspaceServantArms");
 			Vector2 drawPos = projectile.Center - Main.screenPosition + new Vector2(0, -4);
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 6 / 2);
 			spriteBatch.Draw(texture, drawPos, new Rectangle(0, frame * texture.Height / 6, texture.Width, texture.Height / 6), Color.White, projectile.rotation, origin, projectile.scale, direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 		}
-		public void DrawTail(SpriteBatch spriteBatch, Color lightColor)
+		public void DrawTail(SpriteBatch spriteBatch, bool outLine = false)
 		{
-			if(oldPosition == null)
-            {
+			if (oldPosition == null)
+			{
 				return;
-            }
+			}
 			Texture2D texture = mod.GetTexture("Projectiles/Celestial/SubspaceServantTail");
+			Texture2D textureOutline = mod.GetTexture("Projectiles/Celestial/SubspaceServantTailOutline");
 			Texture2D texture2 = mod.GetTexture("Projectiles/Celestial/SubspaceServantTailScales");
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
 			Vector2 center = projectile.Center;
@@ -310,34 +364,79 @@ namespace SOTS.Projectiles.Celestial
 			float scale = projectile.scale;
 			List<Vector2> positions = new List<Vector2>();
 			List<float> rotations = new List<float>();
-			for (int i = 0; i < 8; i ++)
+			for (int i = 0; i < 9; i++)
 			{
 				Vector2 toOldPosition = oldPosition - center;
 				toOldPosition.SafeNormalize(Vector2.Zero);
-				velo += toOldPosition * 0.345f;
+				velo += toOldPosition * 0.333f;
 				velo = velo.SafeNormalize(Vector2.Zero) * scale * 4;
 				center += velo;
-				Vector2 drawPos = center - Main.screenPosition + new Vector2(0, -14 + projectile.height / 2);
+				Vector2 drawPos = center - Main.screenPosition + new Vector2(0, -16 + projectile.height / 2);
 				positions.Add(drawPos);
 				rotations.Add(velo.ToRotation() - MathHelper.ToRadians(90));
-				scale -= 0.075f;
+				scale -= 0.0725f;
 			}
-			for(int i = 7; i >= 0; i--)
+			if (outLine)
 			{
-				spriteBatch.Draw(texture, positions[i], new Rectangle(0, 0, texture.Width, texture.Height), Color.White, rotations[i], origin, (1 - i * 0.08f), direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+				for (int i = 8; i >= 0; i--)
+				{
+					for (int k = 0; k < 4; k++)
+					{
+						Vector2 circular = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(90 * k));
+						spriteBatch.Draw(textureOutline, positions[i] + circular, new Rectangle(0, 0, texture.Width, texture.Height), Color.White, rotations[i], origin, (1 - i * 0.08f), direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+					}
+				}
 			}
-			for (int i = 7; i >= 0; i--)
+			else
 			{
-				spriteBatch.Draw(texture2, positions[i], new Rectangle(0, 0, texture.Width, texture.Height), Color.White, rotations[i], origin, (1 - i * 0.08f), direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+				for (int i = 8; i >= 0; i--)
+				{
+					spriteBatch.Draw(texture, positions[i], new Rectangle(0, 0, texture.Width, texture.Height), Color.White, rotations[i], origin, (1 - i * 0.08f), direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+				}
+				for (int i = 8; i >= 0; i--)
+				{
+					spriteBatch.Draw(texture2, positions[i], new Rectangle(0, 0, texture.Width, texture.Height), Color.White, rotations[i], origin, (1 - i * 0.08f), direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+				}
 			}
 		}
-		public void DrawItemAnimation(SpriteBatch spriteBatch, Color lightColor)
+		public void DrawWings(SpriteBatch spriteBatch)
+		{
+			Texture2D texture = mod.GetTexture("Projectiles/Celestial/SubspaceServantWings");
+			Texture2D textureOutline = mod.GetTexture("Projectiles/Celestial/SubspaceServantWingsOutline");
+			Vector2 drawPos = projectile.Center - Main.screenPosition + new Vector2(-8 * direction, -4);
+			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 6 / 2);
+			int frame = (int)(projectile.ai[1] / 4);
+			if(frame < 0)
+            {
+				frame = 0;
+            }
+			if(frame > 5)
+            {
+				frame = 5;
+            }
+			for (int k = 0; k < 4; k++)
+			{
+				Vector2 circular = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(90 * k));
+				spriteBatch.Draw(textureOutline, drawPos + circular, new Rectangle(0, frame * texture.Height / 6, texture.Width, texture.Height / 6), Color.White, projectile.rotation, origin, projectile.scale, direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+			}
+			spriteBatch.Draw(texture, drawPos, new Rectangle(0, frame * texture.Height / 6, texture.Width, texture.Height / 6), Color.White, projectile.rotation, origin, projectile.scale, direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+		}
+		int lastItem = -1;
+		Texture2D itemTextureOutline;
+		public void DrawItemAnimation(SpriteBatch spriteBatch, bool outline = false)
         {
 			Player player = Main.player[projectile.owner];
 			if (sItem != null && !sItem.IsAir)
 			{
 				Item item = sItem;
 				Texture2D texture = Main.itemTexture[item.type];
+				if(lastItem != sItem.type || itemTextureOutline == null)
+				{
+					itemTextureOutline = new Texture2D(Main.graphics.GraphicsDevice, texture.Width, texture.Height);
+					itemTextureOutline.SetData(0, null, Greenify(texture, new Color(0, 255, 0)), 0, texture.Width * texture.Height);
+					lastItem = sItem.type;
+				}
+				Texture2D textureOutline = itemTextureOutline;
 				if (itemLocation != null && texture != null && UseTime != -1000 && UseTime <= FullUseTime && (!item.noUseGraphic || item.type == ModContent.ItemType<VibrantPistol>()))
 				{
 					Vector2 location = itemLocation;
@@ -348,38 +447,61 @@ namespace SOTS.Projectiles.Celestial
 							float rotation = itemRotation + 0.785f * direction;
 							int width = 0;
 							Vector2 origin = new Vector2(0f, Main.itemTexture[item.type].Height);
+							var num23 = 0;
+							var num24 = 0;
+							if (sItem.type == ItemID.Toxikarp)
+							{
+								num23 = 8 * -direction;
+								num24 = 2;
+							}
 
+							if (sItem.type == ItemID.ApprenticeStaffT3)
+							{
+								num23 = 12 * -direction;
+								num24 = 12;
+							}
+
+							if (sItem.type == ItemID.SkyFracture)
+								num24 = (int)(8 * Math.Cos((double)rotation));
 							if (direction == -1)
 							{
 								origin = new Vector2(Main.itemTexture[item.type].Width, Main.itemTexture[item.type].Height);
 								width -= Main.itemTexture[item.type].Width;
 							}
+							location += new Vector2(num23, num24);
+							if(outline)
+								for (int i = 0; i < 4; i++)
+								{
+									Vector2 circular = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(90 * i));
+									spriteBatch.Draw(textureOutline, new Vector2((int)(location.X - Main.screenPosition.X + origin.X + width), (int)(location.Y - Main.screenPosition.Y)) + circular, new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Main.itemTexture[item.type].Width, Main.itemTexture[item.type].Height)),
+										Color.White, rotation, origin, item.scale, direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
+								}
+							else
 							spriteBatch.Draw(texture, new Vector2((int)(location.X - Main.screenPosition.X + origin.X + width), (int)(location.Y - Main.screenPosition.Y)), new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Main.itemTexture[item.type].Width, Main.itemTexture[item.type].Height)), 
 								Color.White, rotation, origin, item.scale, direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
 						}
 						else if (item.type == ItemID.SpiritFlame)
 						{
 							var vector2_1 = location;
-							var texture2D = Main.itemTexture[item.type];
-							var r = texture2D.Frame(1, 1, 0, 0);
+							var r = texture.Frame(1, 1, 0, 0);
 							var vector2_3 = new Vector2((float)(r.Width / 2 * direction), 0.0f);
 							var origin4 = r.Size() / 2f;
-							var color20 = new Color(120, 40, 222, 0) * (float)(((double)((float)((double)player.miscCounter / 75.0 * 6.28318548202515)).ToRotationVector2().X * 1.0 + 0.0) / 2.0 * 0.300000011920929 + 0.850000023841858) * 0.5f;
-							var num23 = 2f;
-							for (var num24 = 0.0f; (double)num24 < 4.0; ++num24)
-							{
-								spriteBatch.Draw(Main.glowMaskTexture[218],
-									(vector2_1 - Main.screenPosition + vector2_3).Floor() +
-									(num24 * 1.570796f).ToRotationVector2() * num23, new Microsoft.Xna.Framework.Rectangle?(r),
-									color20, itemRotation, origin4,
-									item.scale, direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
-							}
-							spriteBatch.Draw(texture2D, (vector2_1 - Main.screenPosition + vector2_3).Floor(),
-								new Microsoft.Xna.Framework.Rectangle?(r),
-								item.GetAlpha(Color.White)
-									.MultiplyRGBA(new Color(new Vector4(0.5f, 0.5f, 0.5f, 0.8f))),
-								itemRotation, origin4, item.scale, direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
-								0);
+							if (outline)
+								for (int i = 0; i < 4; i++)
+								{
+									Vector2 circular = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(90 * i));
+									spriteBatch.Draw(textureOutline, circular + (vector2_1 - Main.screenPosition + vector2_3).Floor(),
+									new Microsoft.Xna.Framework.Rectangle?(r),
+									item.GetAlpha(Color.White),
+									itemRotation, origin4, item.scale, direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
+									0);
+								}
+							else 
+								spriteBatch.Draw(texture, (vector2_1 - Main.screenPosition + vector2_3).Floor(),
+							new Microsoft.Xna.Framework.Rectangle?(r),
+							item.GetAlpha(Color.White),
+							itemRotation, origin4, item.scale, direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
+							0);
 						}
 						else
 						{
@@ -401,21 +523,52 @@ namespace SOTS.Projectiles.Celestial
 							{
 								origin5 = new Vector2((Main.itemTexture[item.type].Width + num107), (float)(Main.itemTexture[item.type].Height / 2));
 							}
-							spriteBatch.Draw(texture, new Vector2((int)(location.X - Main.screenPosition.X + vector10.X), (int)(location.Y - Main.screenPosition.Y + vector10.Y)), new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Main.itemTexture[item.type].Width, Main.itemTexture[item.type].Height)), 
-								Color.White, itemRotation, origin5, item.scale, direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
+							if (outline)
+								for (int i = 0; i < 4; i++)
+								{
+									Vector2 circular = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(90 * i));
+									spriteBatch.Draw(textureOutline, circular + new Vector2((int)(location.X - Main.screenPosition.X + vector10.X), (int)(location.Y - Main.screenPosition.Y + vector10.Y)), new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Main.itemTexture[item.type].Width, Main.itemTexture[item.type].Height)),
+									Color.White, itemRotation, origin5, item.scale, direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
+								}
+							else spriteBatch.Draw(texture, new Vector2((int)(location.X - Main.screenPosition.X + vector10.X), (int)(location.Y - Main.screenPosition.Y + vector10.Y)), new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Main.itemTexture[item.type].Width, Main.itemTexture[item.type].Height)), 
+							Color.White, itemRotation, origin5, item.scale, direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
 						}
 					}
 					else
 					{
-						spriteBatch.Draw(texture, new Vector2((float)((int)(location.X - Main.screenPosition.X)),
-							(float)((int)(location.Y - Main.screenPosition.Y))), new Rectangle?(new Rectangle(0, 0, texture.Width, texture.Height)), Color.White, itemRotation,
-							 new Vector2(texture.Width * 0.5f - texture.Width * 0.5f * direction, texture.Height),
-							item.scale,
-							direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
-							0);
+						if (outline)
+							for (int i = 0; i < 4; i++)
+							{
+								Vector2 circular = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(90 * i));
+								spriteBatch.Draw(textureOutline, circular + new Vector2((float)((int)(location.X - Main.screenPosition.X)),
+								(float)((int)(location.Y - Main.screenPosition.Y))), new Rectangle?(new Rectangle(0, 0, texture.Width, texture.Height)), Color.White, itemRotation,
+								 new Vector2(texture.Width * 0.5f - texture.Width * 0.5f * direction, texture.Height),
+								item.scale,
+								direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
+								0);
+							}
+						else spriteBatch.Draw(texture, new Vector2((float)((int)(location.X - Main.screenPosition.X)),
+						(float)((int)(location.Y - Main.screenPosition.Y))), new Rectangle?(new Rectangle(0, 0, texture.Width, texture.Height)), Color.White, itemRotation,
+						 new Vector2(texture.Width * 0.5f - texture.Width * 0.5f * direction, texture.Height),
+						item.scale,
+						direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
+						0);
 					}
 				}
 			}
 		}
+		public static Color[] Greenify(Texture2D texture, Color color)
+        {
+			int width = texture.Width;
+			int height = texture.Height;
+			Color[] data = new Color[width * height];
+			texture.GetData(data);
+			for(int i = 0; i < width * height; i++)
+            {
+				if(data[i].A >= 255)
+					data[i] = color;
+            }
+			return data;
+        }
     }
 }
