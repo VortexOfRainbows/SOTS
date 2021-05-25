@@ -28,6 +28,11 @@ namespace SOTS.Items.ChestItems
 			item.consumable = true;
 			item.createTile = mod.TileType("StrangeKeystoneTile");
 		}
+		public override void UpdateInventory(Player player)
+		{
+			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
+			modPlayer.weakerCurse = true;
+		}
 	}
 	public class StrangeKeystoneBroken : ModItem
 	{

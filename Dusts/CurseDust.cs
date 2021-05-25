@@ -13,10 +13,8 @@ namespace SOTS.Dusts
 			dust.velocity.X = Main.rand.Next(-10, 11) * 0.2f;
 			dust.scale *= Main.rand.Next(5, 10) * 0.1f;
 		}
-
 		public override bool MidUpdate(Dust dust)
 		{
-			
 			if (!dust.noLight)
 			{
 				float strength = dust.scale * 2.5f;

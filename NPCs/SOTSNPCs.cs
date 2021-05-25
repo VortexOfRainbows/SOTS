@@ -291,7 +291,7 @@ namespace SOTS.NPCs
 			}
 			if(player.ZoneDungeon)
             {
-				pool.Add(ModContent.NPCType<TidalConstruct>(), SpawnCondition.DungeonNormal.Chance * 0.0135f);
+				pool.Add(ModContent.NPCType<TidalConstruct>(), SpawnCondition.DungeonNormal.Chance * 0.0075f);
 			}
 			if (spawnInfo.player.ZoneSnow && !spawnInfo.player.ZoneCorrupt && !spawnInfo.player.ZoneCrimson && (NPC.downedBoss1 || NPC.downedGoblins) && spawnInfo.player.ZoneOverworldHeight)
 			{

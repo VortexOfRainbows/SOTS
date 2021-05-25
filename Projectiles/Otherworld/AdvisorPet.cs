@@ -48,7 +48,6 @@ namespace SOTS.Projectiles.Otherworld
 		public float fireToX = 0;
 		public float fireToY = 0;
 		public float eyeReset = 2.5f;
-		bool runOnce = true;
 		public override bool PreAI()
 		{
 			Player player = Main.player[projectile.owner];
@@ -306,11 +305,15 @@ namespace SOTS.Projectiles.Otherworld
 		public override void PostAI(Projectile projectile)
 		{
 			Player player = Main.player[projectile.owner];
+			float distP = Vector2.Distance(player.Center, projectile.Center);
+			if (!projectile.active || !player.active || projectile.damage == 0 || distP > 2000f || counter > 900f || SOTSPlayer.typhonBlacklist.Contains(projectile.type))
+				return;
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			if(modPlayer.petAdvisor && !hasHitYet && counter >= 5 && modPlayer.typhonRange > 0)
 			{
 				if (petAdvisorID == -1)
 				{
+					//Main.NewText("Advisor Check " + projectile.whoAmI);
 					for (int i = 0; i < Main.projectile.Length; i++)
 					{
 						Projectile proj = Main.projectile[i];
@@ -337,29 +340,27 @@ namespace SOTS.Projectiles.Otherworld
 				{
 					float minDist = modPlayer.typhonRange * 2;
 					int target2 = -1;
-					float dX = 0f;
-					float dY = 0f;
-					float distance = 0;
-					float speed = (float)Math.Sqrt((double)(projectile.velocity.X * projectile.velocity.X + projectile.velocity.Y * projectile.velocity.Y));
+					float speed = projectile.velocity.Length();
 					bool capable = speed > 1f && (projectile.ranged || projectile.melee || projectile.magic || projectile.thrown || (!projectile.sentry && !projectile.minion)) && (projectile.modProjectile == null || projectile.modProjectile.ShouldUpdatePosition()) && (projectile.modProjectile == null || projectile.modProjectile.CanDamage());
-					if (!SOTSPlayer.typhonBlacklist.Contains(projectile.type) && projectile.friendly == true && projectile.hostile == false && projectile.damage > 0 && player == Main.player[projectile.owner] && projectile.active && player.heldProj != projectile.whoAmI && (capable || SOTSPlayer.typhonWhitelist.Contains(projectile.type)))
+					if (projectile.friendly == true && projectile.hostile == false && player.heldProj != projectile.whoAmI && (capable || SOTSPlayer.typhonWhitelist.Contains(projectile.type)))
 					{
+						//Main.NewText("past Check " + projectile.whoAmI);
 						for (int i = 0; i < Main.npc.Length; i++)
 						{
 							NPC target = Main.npc[i];
-							if (!target.friendly && target.dontTakeDamage == false && target.chaseable && target.CanBeChasedBy())
+							if (target.CanBeChasedBy())
 							{
-								dX = target.Center.X - projectile.Center.X;
-								dY = target.Center.Y - projectile.Center.Y;
-								distance = (float)Math.Sqrt((double)(dX * dX + dY * dY));
-								Rectangle increasedHitbox = new Rectangle(projectile.Hitbox.X - modPlayer.typhonRange, projectile.Hitbox.Y - modPlayer.typhonRange, projectile.width + 2 * modPlayer.typhonRange, projectile.height + 2 * modPlayer.typhonRange);
-								if (distance < minDist && target.Hitbox.Intersects(increasedHitbox))
+								float distance = Vector2.Distance(projectile.Center, target.Center);
+								if (distance < minDist)
 								{
-									bool lineOfSight = Collision.CanHitLine(projectile.position, projectile.width, projectile.height, target.position, target.width, target.height);
-									if(lineOfSight)
+									Rectangle increasedHitbox = new Rectangle(projectile.Hitbox.X - modPlayer.typhonRange, projectile.Hitbox.Y - modPlayer.typhonRange, projectile.width + 2 * modPlayer.typhonRange, projectile.height + 2 * modPlayer.typhonRange);
+									if(target.Hitbox.Intersects(increasedHitbox))
 									{
-										minDist = distance;
-										target2 = i;
+										if (Collision.CanHitLine(projectile.position, projectile.width, projectile.height, target.position, target.width, target.height))
+										{
+											minDist = distance;
+											target2 = i;
+										}
 									}
 								}
 							}
@@ -369,16 +370,11 @@ namespace SOTS.Projectiles.Otherworld
 							NPC toHit = Main.npc[target2];
 							if (toHit.active == true)
 							{
-								dX = toHit.Center.X - projectile.Center.X;
-								dY = toHit.Center.Y - projectile.Center.Y;
-								distance = (float)Math.Sqrt((double)(dX * dX + dY * dY));
-								speed /= distance;
-
+								Vector2 goTo = (toHit.Center - projectile.Center).SafeNormalize(Vector2.Zero) * speed;
 								Vector2 velocity1 = projectile.velocity.SafeNormalize(Vector2.Zero);
-								Vector2 velocity2 = new Vector2(dX * speed, dY * speed).SafeNormalize(Vector2.Zero);
-
+								Vector2 velocity2 = goTo.SafeNormalize(Vector2.Zero);
 								float close = (velocity1 - velocity2).Length() * 40f;
-								projectile.velocity = new Vector2(dX * speed, dY * speed);
+								projectile.velocity = goTo;
 								if(petAdvisorID != -1 && effect)
 								{
 									Projectile proj = Main.projectile[petAdvisorID];
@@ -396,7 +392,7 @@ namespace SOTS.Projectiles.Otherworld
 									}
 									effect = false;
 								}
-								if(projectile.Hitbox.Intersects(toHit.Hitbox))
+								//if(projectile.Hitbox.Intersects(toHit.Hitbox))
                                 {
 									hasHitYet = true;
                                 }
@@ -405,7 +401,6 @@ namespace SOTS.Projectiles.Otherworld
 					}
 				}
             }
-            base.PostAI(projectile);
         }
 		public void LaserTo(int advisorId, Projectile projectile, int extraAlpha)
         {

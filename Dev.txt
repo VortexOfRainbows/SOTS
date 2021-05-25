@@ -18,11 +18,11 @@ High Priority:
 2. Fix Subspace Spinny attack, knockback immunity, rng related nerfs... MUSIC (+Box), Gore, Index error for loot bag
 3. Resprite polish
 4. A few more enemies (Wisp and Amongus)
-5. Icy Amalgamation Resprite
-6. Obelisk changes
+5. Icy Amalgamation Resprite, buffs
+6. Change spawning weapon 
+7. Replace Brittle flail
 
 1. Goopwood sprite Changes
-4. Aqua-Necro Core (Stronger necro chestplate, 1 ranged attack per second will gain a steam aura that does 33% damage rapidly)
 5. Riptide Trident (Launches you towards your cursor at the cost of void, deal damage while traveling, bounce off of enemies)
 6. Prismarine Necklace: Sharktooth Necklace + Heart of the Sea
 7. Wintry Traveler: Riptide Trident + Frigid Javelin
@@ -48,10 +48,18 @@ Low Priority:
 6. Remove negative Vregen in inventory items
 7. Electrolyte Seperator
 
-5/23/21
+5/24/21
+1. Fixed bug with Chaos Spirit Staff being in the wrong loot pool!
+2. Advisor pet now only calculates homing once, stops homing after 15 seconds (900 ticks); less lag + nerf.
+	1. Blacklisted Arc Staff Mk2 in hopes to prevent some lag.
+3. Multiplayer Subspace Locket syncs better!
+4. Cut down Tidal Construct spawn rates (dungeon) by about 45%
+5. Strange Obelisk allows early access to the Pyramid.
+6. Began work on Heart in a Jar
+
+5/23/21 
 1. Resprites! Heart polished up a handful of sprites.
 2. Spirit Tracer is no longer an expert-mode item, now crafted
-3. 
 
 5/18/21 & 5/19/21 & 5/20/21 & 5/21/21 & 5/22/21 & 5/23/21
 1. Subspace Locket!!! :D. SERVER SYNCS FINE ENOUGH!!! THANK GOD!!!

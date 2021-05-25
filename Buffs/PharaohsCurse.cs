@@ -1,4 +1,3 @@
-using System;
 using Terraria;
 using Terraria.ModLoader;
  
@@ -13,10 +12,8 @@ namespace SOTS.Buffs
             Main.buffNoSave[Type] = true;
             Main.buffNoTimeDisplay[Type] = true;
 			Main.debuff[Type] = true;
-		
         }
- 
-		public override void Update(Player player, ref int buffIndex)
+        public override void Update(Player player, ref int buffIndex)
 		{
 			bool update = true;
 			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");

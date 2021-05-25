@@ -59,6 +59,7 @@ namespace SOTS
 			if (FluidCurseMult > 60)
 				FluidCurseMult = 60;
 		}
+		public bool CurseAura = false;
 		public bool FluidCurse = false;
 		public float FluidCurseMult = 120;
 		public bool petPepper = false;
@@ -358,6 +359,17 @@ namespace SOTS
 				}
 			}
 		}
+		public void doCurseAura()
+        {
+			for(int i = 0; i < Main.maxNPCs; i++)
+            {
+				NPC npc = Main.npc[i];
+				if(npc.active && !npc.friendly && npc.life > 5 && !npc.dontTakeDamage && Vector2.Distance(npc.Center, player.Center) <= 320)
+                {
+					npc.AddBuff(ModContent.BuffType<Buffs.PharaohsCurse>(), 120);
+                }
+            }
+        }
 		public override void PostUpdate()
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
@@ -387,6 +399,7 @@ namespace SOTS
         public override void ResetEffects()
 		{
 			TrailStuff();
+			doCurseAura();
 			baguetteDrops = false;
 			if (baguetteLengthCounter >= 180)
 			{
@@ -585,6 +598,7 @@ namespace SOTS
 			CritFire = false;
 			CritFrost = false;
 			CritCurseFire = false;
+			CurseAura = false;
 			if (PyramidBiome)
 				player.AddBuff(mod.BuffType("PharaohsCurse"), 16, false);
 		}
@@ -1130,6 +1144,8 @@ namespace SOTS
 			SOTSPlayer.typhonBlacklist.Add(ModContent.ProjectileType<ArcColumn>());
 			SOTSPlayer.typhonBlacklist.Add(ModContent.ProjectileType<PhaseColumn>());
 			SOTSPlayer.typhonBlacklist.Add(ModContent.ProjectileType<MacaroniBeam>());
+			SOTSPlayer.typhonBlacklist.Add(ModContent.ProjectileType<GenesisArc>());
+			SOTSPlayer.typhonBlacklist.Add(ModContent.ProjectileType<GenesisCore>());
 			SOTSPlayer.typhonWhitelist.Add(ModContent.ProjectileType<HardlightArrow>());
 			base.Initialize();
         }

@@ -10,6 +10,7 @@ using SOTS.Items.Celestial;
 using System.Collections.Generic;
 using SOTS.Items.Otherworld.FromChests;
 using SOTS.Items.Vibrant;
+using SOTS.Items.Otherworld;
 
 namespace SOTS.Projectiles.Celestial
 {
@@ -54,6 +55,7 @@ namespace SOTS.Projectiles.Celestial
 		public override bool ShouldUpdatePosition() { return false; }
 		Item sItem;
 		Vector2 itemLocation;
+		Vector2 cursorArea;
 		int UseTime = 0;
 		int FullUseTime = 0;
 		float itemRotation = 0;
@@ -63,22 +65,28 @@ namespace SOTS.Projectiles.Celestial
 		Vector2 oldPosition;
         public override void SendExtraAI(BinaryWriter writer)
 		{
+			writer.Write(cursorArea.X);
+			writer.Write(cursorArea.Y);
 			writer.Write(oldPosition.X);
 			writer.Write(oldPosition.Y);
 			writer.Write(itemLocation.X);
 			writer.Write(itemLocation.Y);
 			writer.Write(itemRotation);
 			writer.Write(direction);
+			writer.Write(trailingType);
 			base.SendExtraAI(writer);
         }
         public override void ReceiveExtraAI(BinaryReader reader)
 		{
+			cursorArea.X = reader.ReadSingle();
+			cursorArea.Y = reader.ReadSingle();
 			oldPosition.X = reader.ReadSingle();
 			oldPosition.Y = reader.ReadSingle();
 			itemLocation.X = reader.ReadSingle();
 			itemLocation.Y = reader.ReadSingle();
 			itemRotation = reader.ReadSingle();
 			direction = reader.ReadInt32();
+			trailingType = reader.ReadInt32();
 			base.ReceiveExtraAI(reader);
         }
         public override void AI()
@@ -89,8 +97,13 @@ namespace SOTS.Projectiles.Celestial
 			Item item = player.inventory[49];
 			sItem = item;
 			int type = item.type;
-			if(Main.myPlayer == player.whoAmI)
+			if(cursorArea != null)
 			{
+				if (Main.myPlayer == player.whoAmI)
+				{
+					cursorArea = Main.MouseWorld;
+					projectile.netUpdate = true;
+				}
 				if (trailingType == 0)
 				{
 					idlePosition.X -= player.direction * 64f;
@@ -98,7 +111,7 @@ namespace SOTS.Projectiles.Celestial
 				if (trailingType == 1) //magic
 				{
 					idlePosition.Y -= 48f;
-					Vector2 toCursor = Main.MouseWorld - player.Center;
+					Vector2 toCursor = cursorArea - player.Center;
 					toCursor = toCursor.SafeNormalize(Vector2.Zero) * -128f;
 					toCursor.Y *= 0.375f;
 					toCursor.Y = -Math.Abs(toCursor.Y);
@@ -107,7 +120,7 @@ namespace SOTS.Projectiles.Celestial
 				if (trailingType == 2) //ranged
 				{
 					idlePosition.Y -= 64f;
-					Vector2 toCursor = Main.MouseWorld - player.Center;
+					Vector2 toCursor = cursorArea - player.Center;
 					toCursor = toCursor.SafeNormalize(Vector2.Zero) * 128f;
 					toCursor.Y *= 0.4125f;
 					idlePosition += toCursor;
@@ -115,7 +128,7 @@ namespace SOTS.Projectiles.Celestial
 				if (trailingType == 3) //melee
 				{
 					//idlePosition.Y += 8f + (float)Math.Sqrt(item.width * item.height) * 0.5f;
-					Vector2 toCursor = Main.MouseWorld - player.Center;
+					Vector2 toCursor = cursorArea - player.Center;
 					float lengthToCursor = -32 + toCursor.Length();
 					toCursor = toCursor.SafeNormalize(Vector2.Zero) * lengthToCursor;
 					idlePosition += toCursor;
@@ -123,13 +136,12 @@ namespace SOTS.Projectiles.Celestial
 				if (trailingType == 4) //melee, but no melee ?
 				{
 					idlePosition.Y += 32f;
-					Vector2 toCursor = Main.MouseWorld - player.Center;
+					Vector2 toCursor = cursorArea - player.Center;
 					float lengthToCursor = -32 + toCursor.Length() * 0.66f;
 					toCursor.Y *= 0.7f;
 					toCursor = toCursor.SafeNormalize(Vector2.Zero) * lengthToCursor;
 					idlePosition += toCursor;
 				}
-				projectile.netUpdate = true;
 				Vector2 toIdle = idlePosition - projectile.Center;
 				float dist = toIdle.Length();
 				float speed = 3 + (float)Math.Pow(dist, 1.45) * 0.002f;
@@ -163,7 +175,7 @@ namespace SOTS.Projectiles.Celestial
 			Lighting.AddLight(projectile.Center, new Vector3(75, 30, 75) * 1f / 255f);
 
 			#region coolStuff
-			List<int> blackList = new List<int>() { ItemID.BookStaff, ModContent.ItemType<LashesOfLightning>(), ModContent.ItemType<SkywardBlades>() };
+			List<int> blackList = new List<int>() { ItemID.BookStaff, ModContent.ItemType<LashesOfLightning>(), ModContent.ItemType<SkywardBlades>(), ItemID.GolemFist, ItemID.Flairon, ModContent.ItemType<PhaseCannon>() };
 			//player.ItemCheck(player.whoAmI);
 			//trailingType = 0;
 			if (lastItem == item.type && item.active && !item.IsAir && !item.summon && !item.thrown && !item.channel && !blackList.Contains(type) && (item.useStyle == 1 || item.useStyle == 5) && !subPlayer.servantIsVanity)

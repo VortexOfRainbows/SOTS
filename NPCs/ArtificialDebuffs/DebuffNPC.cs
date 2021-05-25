@@ -13,6 +13,7 @@ using SOTS.Projectiles.BiomeChest;
 using SOTS.Buffs;
 using SOTS.Projectiles.Minions;
 using SOTS.Items;
+using SOTS.Dusts;
 
 namespace SOTS.NPCs.ArtificialDebuffs
 {
@@ -536,7 +537,23 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 npc.lifeRegen -= 24;
                 damage += 1;
             }
-            if(pinkied)
+            if (npc.HasBuff(ModContent.BuffType<PharaohsCurse>()))
+            {
+                npc.lifeRegen -= 20;
+                damage += 1;
+                if(Main.rand.NextBool(3))
+                {
+                    Vector2 circular = new Vector2(4, 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)));
+                    Dust dust = Dust.NewDustDirect(npc.position - new Vector2(5), npc.width, npc.height, ModContent.DustType<CurseDust>());
+                    dust.velocity *= 1.25f;
+                    dust.velocity += 1f * circular.SafeNormalize(Vector2.Zero);
+                    dust.scale = 1.35f;
+                    dust.noGravity = true;
+                    dust.color = new Color(150, 100, 130, 0);
+                    dust.alpha = 70;
+                }
+            }
+            if (pinkied)
             {
                 npc.lifeRegen -= 12;
             }

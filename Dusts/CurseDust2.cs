@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 
 namespace SOTS.Dusts
 {
-	public class ShortlivedCurseDust : ModDust
+	public class CurseDust2 : ModDust
 	{
 		public override void OnSpawn(Dust dust)
 		{
@@ -16,8 +16,8 @@ namespace SOTS.Dusts
 		}
 		public override bool MidUpdate(Dust dust)
 		{
-			dust.scale *= 0.9f;
-			dust.alpha += 5;
+			dust.scale *= 0.97f;
+			dust.alpha += 3;
 			if(dust.scale <= 0.1f || dust.alpha >= 255)
 			{
 				dust.active = false;
