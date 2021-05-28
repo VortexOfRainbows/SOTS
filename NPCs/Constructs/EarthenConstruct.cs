@@ -498,24 +498,6 @@ namespace SOTS.NPCs.Constructs
                 if (!gennedGore) genGore(hitDirection);
             }
         }
-        public override float SpawnChance(NPCSpawnInfo spawnInfo)
-        {
-            Player player = spawnInfo.player;
-            if(!player.ZoneBeach)
-                if(player.ZoneDesert || player.ZoneUndergroundDesert || (player.ZoneRockLayerHeight && !player.ZoneDungeon && !player.ZoneJungle && !player.ZoneSnow))
-                {
-                    if(player.ZoneCorrupt || player.ZoneHoly || player.ZoneCrimson)
-                    {
-                        return 0.0025f;
-                    }
-                    if(player.ZoneRockLayerHeight && !player.ZoneUndergroundDesert)
-                    {
-                        return 0.005f;
-                    }    
-                    return 0.01f;
-                }
-            return 0;
-        }
         public override void NPCLoot()
         {
             if (!gennedGore) genGore(0);

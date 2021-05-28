@@ -14,15 +14,13 @@ namespace SOTS.Items.GelGear
 		}
 		public override void SetDefaults()
 		{
-
-			item.width = 40;
+			item.width = 32;
 			item.height = 32;
 			item.value = 0;
-			item.rare = 6;
+			item.rare = ItemRarityID.LightPurple;
 			item.expert = true;
 			item.maxStack = 99;
 			item.consumable = true;
-			//bossBagNPC = mod.NPCType("PutridPinky2Head");
 		}
 		public override int BossBagNPC => ModContent.NPCType<PutridPinkyPhase2>();
 		public override bool CanRightClick()
@@ -35,33 +33,26 @@ namespace SOTS.Items.GelGear
 			player.QuickSpawnItem(ModContent.ItemType<VialofAcid>(), Main.rand.Next(20, 30));
 			player.QuickSpawnItem(ItemID.PinkGel,Main.rand.Next(40, 60));
 			player.QuickSpawnItem(mod.ItemType("Wormwood"), Main.rand.Next(20, 30));
-				
-			if(Main.rand.Next(12) == 0)
-			player.QuickSpawnItem(mod.ItemType("GelWings"));
-		
-			if(Main.rand.Next(12) == 0)
-			player.QuickSpawnItem(mod.ItemType("WormWoodParasite"));
-		
-			if(Main.rand.Next(12) == 0)
-			player.QuickSpawnItem(mod.ItemType("WormWoodHelix"));
-		
-			if(Main.rand.Next(12) == 0)
-			player.QuickSpawnItem(mod.ItemType("WormWoodCrystal"),Main.rand.Next(200, 500));
-		
-			if(Main.rand.Next(12) == 0)
-			player.QuickSpawnItem(mod.ItemType("WormWoodHook"));
-		
-			if(Main.rand.Next(12) == 0)
-			player.QuickSpawnItem(mod.ItemType("WormWoodCollapse"));
-		
-			if(Main.rand.Next(12) == 0)
-			player.QuickSpawnItem(mod.ItemType("WormWoodScepter"));
-		
-			if(Main.rand.Next(12) == 0)
-			player.QuickSpawnItem(mod.ItemType("WormWoodStaff"));
-		
-			if(Main.rand.Next(12) == 0)
-			player.QuickSpawnItem(mod.ItemType("WormWoodSpike"));
+
+			int rand = Main.rand.Next(12);
+			if(rand == 0)
+				player.QuickSpawnItem(mod.ItemType("GelWings"));
+			if(rand == 1)
+				player.QuickSpawnItem(mod.ItemType("WormWoodParasite"));
+			if(rand == 2)
+				player.QuickSpawnItem(mod.ItemType("WormWoodHelix"));
+			if(rand == 3)
+				player.QuickSpawnItem(mod.ItemType("WormWoodCrystal"), Main.rand.Next(333, 667));
+			if(rand == 4)
+				player.QuickSpawnItem(mod.ItemType("WormWoodHook"));
+			if(rand == 5)
+				player.QuickSpawnItem(mod.ItemType("WormWoodCollapse"));
+			if(rand == 6)
+				player.QuickSpawnItem(mod.ItemType("WormWoodScepter"));
+			if(rand == 7)
+				player.QuickSpawnItem(mod.ItemType("WormWoodStaff"));
+			if(rand == 8)
+				player.QuickSpawnItem(mod.ItemType("WormWoodSpike"));
 		}
 	}
 }

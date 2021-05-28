@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using SOTS.Dusts;
-using SOTS.Items.ChestItems;
 using System;
 using Terraria;
 using Terraria.DataStructures;
@@ -13,6 +12,24 @@ using static Terraria.ModLoader.ModContent;
 
 namespace SOTS.Items.Otherworld
 {
+	public class StrangeChest : ModItem
+	{
+		public override void SetDefaults()
+		{
+			item.width = 32;
+			item.height = 26;
+			item.maxStack = 99;
+			item.useTurn = true;
+			item.autoReuse = true;
+			item.useAnimation = 15;
+			item.useTime = 10;
+			item.useStyle = 1;
+			item.value = Item.sellPrice(0, 0, 10, 0);
+			item.rare = ItemRarityID.White;
+			item.consumable = true;
+			item.createTile = mod.TileType("LockedStrangeChest");
+		}
+	}
 	public class LockedStrangeChest : ModTile
 	{
 		public override void SetDefaults()
@@ -20,7 +37,6 @@ namespace SOTS.Items.Otherworld
 			Main.tileSpelunker[Type] = true;
 			Main.tileContainer[Type] = true;
 			Main.tileShine2[Type] = true;
-			//Main.tileShine[Type] = 1200;
 			Main.tileFrameImportant[Type] = true;
 			Main.tileNoAttach[Type] = true;
 			Main.tileValue[Type] = 500;
@@ -47,19 +63,14 @@ namespace SOTS.Items.Otherworld
 			chest = "Strange Chest";
 			chestDrop = ItemType<StrangeChest>();
 		}
-
 		public override ushort GetMapOption(int i, int j) => (ushort)(Main.tile[i, j].frameX / 36);
-
 		public override bool HasSmartInteract() => true;
-
 		public override bool IsLockedChest(int i, int j) => Main.tile[i, j].frameX / 36 == 1;
-
 		public override bool UnlockChest(int i, int j, ref short frameXAdjustment, ref int dustType, ref bool manual)
 		{
 			dustType = this.dustType;
 			return true;
 		}
-
 		public string MapChestName(string name, int i, int j)
 		{
 			int left = i;
@@ -87,18 +98,15 @@ namespace SOTS.Items.Otherworld
 				return name + ": " + Main.chest[chest].name;
 			}
 		}
-
 		public override void NumDust(int i, int j, bool fail, ref int num)
 		{
 			num = 10;
 		}
-
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
 			Item.NewItem(i * 16, j * 16, 32, 32, chestDrop);
 			Chest.DestroyChest(i, j);
 		}
-
 		public override bool NewRightClick(int i, int j)
 		{
 			Player player = Main.LocalPlayer;
@@ -186,7 +194,6 @@ namespace SOTS.Items.Otherworld
 			}
 			return true;
 		}
-
 		public override void MouseOver(int i, int j)
 		{
 			Player player = Main.LocalPlayer;
@@ -221,7 +228,6 @@ namespace SOTS.Items.Otherworld
 			player.noThrow = 2;
 			player.showItemIcon = true;
 		}
-
 		public override void MouseOverFar(int i, int j)
 		{
 			MouseOver(i, j);

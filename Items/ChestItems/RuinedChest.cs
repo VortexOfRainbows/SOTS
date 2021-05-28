@@ -10,14 +10,8 @@ using Terraria.ObjectData;
 
 namespace SOTS.Items.ChestItems
 {
-	public class StrangeChest : ModItem
+	public class RuinedChest : ModItem
 	{
-		public override void SetStaticDefaults()
-		{
-			Tooltip.SetDefault("Strange Chest");
-			Tooltip.SetDefault("'From another world'");
-		}
-
 		public override void SetDefaults()
 		{
 			item.width = 32;
@@ -29,12 +23,12 @@ namespace SOTS.Items.ChestItems
 			item.useTime = 10;
 			item.useStyle = 1;
 			item.value = Item.sellPrice(0, 0, 10, 0);
-			item.rare = 0;
+			item.rare = ItemRarityID.White;
 			item.consumable = true;
-			item.createTile = mod.TileType("LockedStrangeChest");
+			item.createTile = mod.TileType("RuinedChestTile");
 		}
 	}
-	public class StrangeChestTile : ModTile
+	public class RuinedChestTile : ModTile
 	{
 		public override void SetDefaults()
 		{
@@ -57,19 +51,18 @@ namespace SOTS.Items.ChestItems
 			TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
 			TileObjectData.addTile(Type);
 			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Strange Chest");
+			name.SetDefault("Ruined Chest");
 			AddMapEntry(new Color(180, 130, 100), name, MapChestName);
 			dustType = mod.DustType("AvaritianDust");
 			disableSmartCursor = true;
 			adjTiles = new int[] { TileID.Containers };
-			chest = "Strange Chest";
-			chestDrop = mod.ItemType("StrangeChest");
+			chest = "Ruined Chest";
+			chestDrop = mod.ItemType("RuinedChest");
 		}
 		public override bool HasSmartInteract()
 		{
 			return true;
 		}
-
 		public string MapChestName(string name, int i, int j)
 		{
 			int left = i;
@@ -93,12 +86,10 @@ namespace SOTS.Items.ChestItems
 				return name + ": " + Main.chest[chest].name;
 			}
 		}
-
 		public override void NumDust(int i, int j, bool fail, ref int num)
 		{
 			num = 2;
 		}
-
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
 			Item.NewItem(i * 16, j * 16, 32, 32, chestDrop);
@@ -174,12 +165,7 @@ namespace SOTS.Items.ChestItems
 					Recipe.FindRecipes();
 				}
 			}
-
-
-
-
 		}
-
 		public override void MouseOver(int i, int j)
 		{
 			Player player = Main.LocalPlayer;
@@ -202,17 +188,16 @@ namespace SOTS.Items.ChestItems
 			}
 			else
 			{
-				player.showItemIconText = Main.chest[chest].name.Length > 0 ? Main.chest[chest].name : "Strange Chest";
-				if (player.showItemIconText == "Strange Chest")
+				player.showItemIconText = Main.chest[chest].name.Length > 0 ? Main.chest[chest].name : "Ruined Chest";
+				if (player.showItemIconText == "Ruined Chest")
 				{
-					player.showItemIcon2 = mod.ItemType("StrangeChest");
+					player.showItemIcon2 = mod.ItemType("RuinedChest");
 					player.showItemIconText = "";
 				}
 			}
 			player.noThrow = 2;
 			player.showItemIcon = true;
 		}
-
 		public override void MouseOverFar(int i, int j)
 		{
 			MouseOver(i, j);

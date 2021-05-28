@@ -14,6 +14,8 @@ using SOTS.Buffs;
 using SOTS.Projectiles.Minions;
 using SOTS.Items;
 using SOTS.Dusts;
+using SOTS.Projectiles.Celestial;
+using SOTS.Projectiles.Pyramid;
 
 namespace SOTS.NPCs.ArtificialDebuffs
 {
@@ -622,8 +624,16 @@ namespace SOTS.NPCs.ArtificialDebuffs
                     for (int i = 0; i < 3; i++)
                     {
                         Vector2 circular = new Vector2(3, 0).RotatedBy(MathHelper.ToRadians(Main.rand.Next(360)));
-                        Projectile.NewProjectile(npc.Center.X, npc.Center.Y, circular.X, -circular.Y, mod.ProjectileType("Pathogen"), damage, 0, Main.myPlayer, -1);
+                        Projectile.NewProjectile(npc.Center.X, npc.Center.Y, circular.X, circular.Y, mod.ProjectileType("Pathogen"), damage, 0, Main.myPlayer, -1);
                     }
+                }
+            }
+            if (npc.HasBuff(ModContent.BuffType<PharaohsCurse>()) && npc.life <= 0)
+            {
+                if (Main.netMode != 1)
+                {
+                    Vector2 circular = new Vector2(4.5f, 0).RotatedBy(MathHelper.ToRadians(Main.rand.Next(360)));
+                    Projectile.NewProjectile(npc.Center.X, npc.Center.Y, circular.X, circular.Y, ModContent.ProjectileType<CurseGhost>(), (int)(npc.lifeMax * 0.1f) + 10, 0, Main.myPlayer, -1);
                 }
             }
             base.HitEffect(npc, hitDirection, damageTaken);

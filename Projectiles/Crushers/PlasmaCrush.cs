@@ -65,19 +65,19 @@ namespace SOTS.Projectiles.Crushers
 			Vector2 drawPos = trailPos[1] - Main.screenPosition;
 			Vector2 currentPos = trailPos[1];
 			Vector2 betweenPositions = previousPosition - currentPos;
-			float max = betweenPositions.Length() / (2.5f * scale);
+			float max = betweenPositions.Length() / (texture.Width * 0.5f * scale);
 			for (int i = 0; i < max; i++)
 			{
 				Color color = this.color;
-				color = color.MultiplyRGBA(new Color(120, 150, 110, 0));
+				color = color.MultiplyRGBA(new Color(170, 255, 160, 0));
 				drawPos = previousPosition + -betweenPositions * (i / max) - Main.screenPosition;
 				if (i == 0)
 					color *= 0.5f;
-				for (int j = 0; j < 4; j++)
+				for (int j = 0; j < 2; j++)
 				{
 					float x = Main.rand.Next(-10, 11) * 0.1f * scale;
 					float y = Main.rand.Next(-10, 11) * 0.1f * scale;
-					if (j <= 1)
+					if (j == 0)
 					{
 						x = 0;
 						y = 0;
@@ -91,11 +91,7 @@ namespace SOTS.Projectiles.Crushers
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
 		{
 			float point = 0f;
-			if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), trailPos[0], trailPos[1], 30f, ref point))
-			{
-				return true;
-			}
-			return false;
+			return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), trailPos[0], trailPos[1], 30f, ref point);
 		}
         public override bool ShouldUpdatePosition()
         {

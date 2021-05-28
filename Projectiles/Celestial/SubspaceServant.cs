@@ -178,7 +178,7 @@ namespace SOTS.Projectiles.Celestial
 			List<int> blackList = new List<int>() { ItemID.BookStaff, ModContent.ItemType<LashesOfLightning>(), ModContent.ItemType<SkywardBlades>(), ItemID.GolemFist, ItemID.Flairon, ModContent.ItemType<PhaseCannon>() };
 			//player.ItemCheck(player.whoAmI);
 			//trailingType = 0;
-			if (lastItem == item.type && item.active && !item.IsAir && !item.summon && !item.thrown && !item.channel && !blackList.Contains(type) && (item.useStyle == 1 || item.useStyle == 5) && !subPlayer.servantIsVanity)
+			if (lastItem == item.type && item.active && !item.IsAir && !item.summon && !item.thrown && !item.channel && !blackList.Contains(type) && (item.useStyle == 1 || item.useStyle == 5) && !subPlayer.servantIsVanity && !item.consumable)
 			{
 				subPlayer.foundItem = true;
 				Projectile proj = new Projectile();

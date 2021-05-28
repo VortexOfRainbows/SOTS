@@ -1,13 +1,5 @@
-using System;
-using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.DataStructures;
-using Terraria.Enums;
-using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.ObjectData;
-using Microsoft.Xna.Framework.Graphics;
 using SOTS.Void;
 
 namespace SOTS.Items.Pyramid
@@ -28,9 +20,7 @@ namespace SOTS.Items.Pyramid
             item.value = Item.sellPrice(0, 1, 50, 0);
             item.rare = 4;
 			item.accessory = true;
-
 		}
-		
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);

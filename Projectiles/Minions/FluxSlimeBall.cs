@@ -36,6 +36,10 @@ namespace SOTS.Projectiles.Minions
 		float[] randSeed1 = new float[6];
 		public int targetID = -1;
 		public bool hasHit = false;
+        public override bool? CanCutTiles()
+        {
+            return false;
+        }
         public override void SendExtraAI(BinaryWriter writer)
         {
 			writer.Write(targetID);

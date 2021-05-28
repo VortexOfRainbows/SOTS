@@ -1,9 +1,4 @@
-using System;
-using System.IO;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.ID;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
 
@@ -19,7 +14,6 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void SetDefaults()
 		{
-
 			item.width = 36;
 			item.height = 34;
 			item.value = 0;
@@ -27,7 +21,6 @@ namespace SOTS.Items.Pyramid
 			item.expert = true;
 			item.maxStack = 99;
 			item.consumable = true;
-			//bossBagNPC = mod.NPCType("PutridPinky2Head");
 		}
 		public override int BossBagNPC => mod.NPCType("PharaohsCurse");
 		public override bool CanRightClick()
@@ -36,10 +29,8 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void OpenBossBag(Player player)
 		{
-
-			player.QuickSpawnItem(mod.ItemType("SpiritTracer"));
+			player.QuickSpawnItem(ModContent.ItemType<HeartInAJar>());
 			player.QuickSpawnItem(mod.ItemType("CursedMatter"),Main.rand.Next(14, 25));
-			
 		}
 	}
 }

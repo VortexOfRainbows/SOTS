@@ -36,7 +36,7 @@ Testers: Crimsonkeep
 (Other Contributions)
 Audio Engineering: apotofkoolaid
 Item glowmask code: Qwerty3.14
-Minor Art Contributions: Naka, Heart Plus Up!
+Minor Art Contributions: Naka
 
 Update 0.19.3
 -New Expert drops for Icy Amalgamation, Subspace Serpent

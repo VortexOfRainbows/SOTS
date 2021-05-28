@@ -4,45 +4,46 @@ using SOTS.Dusts;
 using System;
 using System.IO;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace SOTS.Projectiles.Celestial
+namespace SOTS.Projectiles.Pyramid
 {
-	public class PurgatoryGhost : ModProjectile
+	public class CurseGhost : ModProjectile
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Purgatory Ghost");
+			DisplayName.SetDefault("Curse Ghost");
 		}
 		public override void SetDefaults()
 		{
 			projectile.width = 30;
 			projectile.height = 26;
-			projectile.penetrate = -1;
+			projectile.penetrate = 7;
 			projectile.timeLeft = 510;
-			projectile.melee = true;
+			//projectile.melee = true;
 			projectile.friendly = true;
 			projectile.tileCollide = false;
 			projectile.ignoreWater = true;
-		}
-		public override bool? CanCutTiles()
-		{
-			return false;
+			projectile.usesLocalNPCImmunity = true;
+			projectile.localNPCHitCooldown = 30;
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			target.immune[projectile.owner] = 0;
-			projectile.friendly = false;
+			Player player = Main.player[projectile.owner];
+			target.immune[player.whoAmI] = 0;
+			if (projectile.penetrate <= 2)
+				projectile.friendly = false;
 			lockedVelo = true;
-			if (Main.myPlayer == projectile.owner)
+			if (Main.netMode != 1)
 			{
 				projectile.netUpdate = true;
 			}
 		}
-		Vector2[] trailPos = new Vector2[16];
+		Vector2[] trailPos = new Vector2[10];
 		public void TrailPreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Texture2D texture = mod.GetTexture("Projectiles/Celestial/PurgatoryGhostTail");
+			Texture2D texture = mod.GetTexture("Projectiles/Pyramid/CurseGhostTrail");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Vector2 previousPosition = projectile.Center + new Vector2(-12 * projectile.spriteDirection, 0).RotatedBy(projectile.rotation);
 			for (int k = 0; k < trailPos.Length; k++)
@@ -78,7 +79,7 @@ namespace SOTS.Projectiles.Celestial
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Texture2D texture2 = mod.GetTexture("Projectiles/Celestial/PurgatoryGhost");
+			Texture2D texture2 = mod.GetTexture("Projectiles/Pyramid/CurseGhost");
 			TrailPreDraw(spriteBatch, lightColor);
 			float rotation = projectile.rotation;
 			Color color = Color.White;
@@ -91,36 +92,25 @@ namespace SOTS.Projectiles.Celestial
 		float scaleVelocity = 1f;
 		Vector2 lockVelo = Vector2.Zero;
 		bool lockedVelo = false;
+        public override bool? CanCutTiles()
+        {
+			return false;
+        }
         public override void AI()
 		{
 			if (projectile.ai[1] == 0)
 			{
-				for (int i = 0; i < 360; i += 30)
+				for (int i = 0; i < 360; i += 10)
 				{
 					Vector2 circularLocation = new Vector2(-12, 0).RotatedBy(MathHelper.ToRadians(i));
-					Dust dust = Dust.NewDustDirect(new Vector2(projectile.Center.X + circularLocation.X - 4, projectile.Center.Y + circularLocation.Y - 4), 4, 4, 107);
+					Dust dust = Dust.NewDustDirect(new Vector2(projectile.Center.X + circularLocation.X - 4, projectile.Center.Y + circularLocation.Y - 4), 4, 4, ModContent.DustType<CurseDust>());
 					dust.noGravity = true;
 					dust.velocity *= 0.1f;
-					dust.velocity += circularLocation * 0.3f;
-					dust.scale *= 1.35f;
-				}
-				for (int i = 0; i < 360; i += 30)
-				{
-					Vector2 circularLocation = new Vector2(-12, 0).RotatedBy(MathHelper.ToRadians(i));
-					Dust dust = Dust.NewDustDirect(new Vector2(projectile.Center.X + circularLocation.X - 4, projectile.Center.Y + circularLocation.Y - 4), 4, 4, ModContent.DustType<CopyDust4>());
-					dust.noGravity = true;
-					dust.velocity *= 0.5f;
-					dust.velocity += circularLocation * 0.15f;
-					dust.scale *= 2.5f;
-					dust.fadeIn = 0.1f;
-					dust.color = new Color(33, 100, 33);
-				}
-				if (Main.myPlayer == projectile.owner)
-				{
-					Vector2 perturbedSpeed = (projectile.velocity.SafeNormalize(Vector2.Zero) * 3.75f * Main.rand.NextFloat(0.5f, 1.5f)).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360f)));
-					Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<PurgatoryLightning>(), projectile.damage, 1f, Main.myPlayer, Main.rand.Next(2));
+					dust.velocity += circularLocation * 0.6f;
+					dust.scale *= 1.65f;
 				}
 				projectile.ai[1] = Main.rand.Next(2) * 2 - 1;
+				Main.PlaySound(SoundID.NPCKilled, (int)projectile.Center.X, (int)projectile.Center.Y, 39, 0.825f, -0.4f);
 			}
 			Vector2 circular = new Vector2(0, 15 * scaleVelocity).RotatedBy(MathHelper.ToRadians(projectile.ai[0] * 4.5f * projectile.ai[1]));
 			scaleVelocity *= 0.99f;
@@ -131,15 +121,15 @@ namespace SOTS.Projectiles.Celestial
 			}
 			projectile.velocity = projectile.velocity.SafeNormalize(Vector2.Zero) * initialSpeed;
 			projectile.velocity = projectile.velocity.RotatedBy(MathHelper.ToRadians(circular.X));
-			float minDist = 800;
+			float minDist = 1000;
 			int target2 = -1;
 			float distance;
-			if (projectile.active && projectile.friendly && projectile.damage > 0 && !projectile.hostile && !lockedVelo)
+			if (projectile.friendly == true && projectile.damage > 0 && projectile.hostile == false && !lockedVelo)
 			{
 				for (int i = 0; i < Main.npc.Length; i++)
 				{
 					NPC target = Main.npc[i];
-					if (target.CanBeChasedBy())
+					if (!target.friendly && target.dontTakeDamage == false && target.lifeMax > 5 && target.CanBeChasedBy())
 					{
 						distance = Vector2.Distance(target.Center, projectile.Center);
 						if (distance < minDist)
@@ -151,12 +141,12 @@ namespace SOTS.Projectiles.Celestial
 				}
 				if (target2 != -1)
 				{
-					if (Main.myPlayer == projectile.owner)
+					if (Main.netMode != 1)
 					{
 						projectile.netUpdate = true;
 					}
 					if (counter < 1f)
-						counter += 0.005f;
+						counter += 0.01f;
 					else
 						counter = 1;
 					NPC toHit = Main.npc[target2];
@@ -199,7 +189,7 @@ namespace SOTS.Projectiles.Celestial
 				runOnce = false;
 				projectile.velocity = projectile.velocity * -2f;
 				initialSpeed = projectile.velocity.Length();
-				if (Main.myPlayer == projectile.owner)
+				if (Main.netMode != 1)
 				{
 					projectile.netUpdate = true;
 				}
@@ -253,14 +243,13 @@ namespace SOTS.Projectiles.Celestial
 		{
 			for (int k = 0; k < trailPos.Length; k++)
 			{
-				for (int i = 0; i < (int)(1 + 0.25f * (20 - k)); i++)
+				for (int i = 0; i < (int)(1 + 0.33f * (12 - k)); i++)
 				{
-					Dust dust = Dust.NewDustDirect(new Vector2(trailPos[k].X  - 4, trailPos[k].Y - 4), 4, 4, ModContent.DustType<CopyDust4>());
+					Dust dust = Dust.NewDustDirect(new Vector2(trailPos[k].X  - 4, trailPos[k].Y - 4), 4, 4, ModContent.DustType<CurseDust>());
 					dust.noGravity = true;
 					dust.velocity *= 2.5f - k * 0.1f;
-					dust.scale *= 1.75f;
+					dust.scale *= 2.05f;
 					dust.fadeIn = 0.1f;
-					dust.color = new Color(160, 255, 140, 0);
 				}
 			}
 		}

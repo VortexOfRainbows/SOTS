@@ -1,8 +1,6 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
-using Terraria.DataStructures;
 using SOTS.Void;
 
 
@@ -17,9 +15,8 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void SetDefaults()
 		{
-
-			item.width = 18;
-			item.height = 30;
+			item.width = 26;
+			item.height = 44;
 			item.useAnimation = 12;
 			item.useTime = 12;
 			item.useStyle = 3;
@@ -34,8 +31,6 @@ namespace SOTS.Items.Pyramid
 		{
 			Main.PlaySound(4, (int)(player.Center.X), (int)(player.Center.Y), 39);
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");	
-			
 			if(voidPlayer.voidAnkh < 5)
 			{
 				voidPlayer.voidMeterMax += 20;

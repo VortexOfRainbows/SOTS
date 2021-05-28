@@ -1,7 +1,6 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Localization;
 using Microsoft.Xna.Framework;
 
 namespace SOTS.Items.GelGear
@@ -13,7 +12,6 @@ namespace SOTS.Items.GelGear
 			DisplayName.SetDefault("Goopwood");
 			Tooltip.SetDefault("");
 		}
-
 		public override void SetDefaults()
 		{
 			item.width = 28;
@@ -43,6 +41,7 @@ namespace SOTS.Items.GelGear
 		public override void SetDefaults()
 		{
 			Main.tileSolid[Type] = true;
+			Main.tileBrick[Type] = true;
 			Main.tileMergeDirt[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;

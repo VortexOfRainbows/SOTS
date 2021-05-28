@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+
 namespace SOTS.NPCs.Constructs
 {
 	public class PermafrostConstruct : ModNPC
@@ -17,7 +18,6 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override void SetDefaults()
 		{
-			//npc.CloneDefaults(NPCID.BlackSlime);
 			npc.aiStyle = 26; //unicorn AI
 			npc.lifeMax = 275;  
 			npc.damage = 25; 
@@ -40,11 +40,9 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Player player = Main.player[npc.target];
 			Texture2D texture = ModContent.GetTexture("SOTS/NPCs/Constructs/PermafrostConstructHead");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Vector2 drawPos = npc.Center - Main.screenPosition + new Vector2(0f, npc.gfxOffY);
-
 			Texture2D texture2 = Main.npcTexture[npc.type];
 			Vector2 drawOrigin2 = new Vector2(texture2.Width * 0.5f, texture2.Height * 0.5f);
 			Color color = new Color(100, 100, 100, 0);
@@ -56,7 +54,6 @@ namespace SOTS.NPCs.Constructs
 				new Vector2((float)(npc.Center.X - (int)Main.screenPosition.X) + x, (float)(npc.Center.Y - (int)Main.screenPosition.Y) + y),
 				null, color * (1f - (npc.alpha / 255f)), npc.rotation, drawOrigin2, npc.scale, SpriteEffects.None, 0f);
 			}
-
 			spriteBatch.Draw(texture, drawPos, null, drawColor, dir, drawOrigin, 1f, SpriteEffects.None, 0f);
 			return false;
 		}
@@ -140,15 +137,6 @@ namespace SOTS.NPCs.Constructs
 				}
 			}
 			return true;
-		}
-		public override float SpawnChance(NPCSpawnInfo spawnInfo)
-		{
-			Player player = spawnInfo.player;
-			if(player.ZoneSnow)
-			{
-				return spawnInfo.spawnTileType == TileID.IceBlock || spawnInfo.spawnTileType == TileID.SnowBlock ? .01f : 0f;
-			}
-			return 0;
 		}
 		public override void NPCLoot()
 		{

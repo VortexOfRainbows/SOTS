@@ -361,14 +361,15 @@ namespace SOTS
 		}
 		public void doCurseAura()
         {
-			for(int i = 0; i < Main.maxNPCs; i++)
-            {
-				NPC npc = Main.npc[i];
-				if(npc.active && !npc.friendly && npc.life > 5 && !npc.dontTakeDamage && Vector2.Distance(npc.Center, player.Center) <= 320)
-                {
-					npc.AddBuff(ModContent.BuffType<Buffs.PharaohsCurse>(), 120);
-                }
-            }
+			if(CurseAura)
+				for(int i = 0; i < Main.maxNPCs; i++)
+				{
+					NPC npc = Main.npc[i];
+					if(npc.active && !npc.friendly && npc.lifeMax > 5 && !npc.dontTakeDamage && Vector2.Distance(npc.Center, player.Center) <= 270)
+					{
+						npc.AddBuff(ModContent.BuffType<Buffs.PharaohsCurse>(), 120);
+					}
+				}
         }
 		public override void PostUpdate()
 		{

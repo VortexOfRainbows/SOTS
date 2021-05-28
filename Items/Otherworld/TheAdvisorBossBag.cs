@@ -1,5 +1,6 @@
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace SOTS.Items.Otherworld
@@ -13,15 +14,50 @@ namespace SOTS.Items.Otherworld
 		}
 		public override void SetDefaults()
 		{
-
-			item.width = 36;
+			item.width = 32;
 			item.height = 32;
 			item.value = 0;
 			item.rare = 6;
 			item.expert = true;
 			item.maxStack = 99;
 			item.consumable = true;
-			//bossBagNPC = mod.NPCType("PutridPinky2Head");
+		}
+        public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
+        {
+			Texture2D texture = mod.GetTexture("Items/Otherworld/TheAdvisorBossBagGlow");
+			Color color = new Color(110, 110, 110, 0);
+			for (int k = 0; k < 6; k++)
+			{
+				float x = Main.rand.Next(-10, 11) * 0.1f;
+				float y = Main.rand.Next(-10, 11) * 0.1f;
+				if (k == 0)
+				{
+					x = 0;
+					y = 0;
+				}
+				Main.spriteBatch.Draw(texture,
+				new Vector2(position.X + x, position.Y + y),
+				null, color * (1f - (item.alpha / 255f)), 0f, origin, scale, SpriteEffects.None, 0f);
+			}
+		}
+        public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
+        {
+			Texture2D texture = mod.GetTexture("Items/Otherworld/TheAdvisorBossBagGlow");
+			Color color = new Color(110, 110, 110, 0);
+			Vector2 drawOrigin = new Vector2(Main.itemTexture[item.type].Width * 0.5f, item.height * 0.5f);
+			for (int k = 0; k < 6; k++)
+			{
+				float x = Main.rand.Next(-10, 11) * 0.1f;
+				float y = Main.rand.Next(-10, 11) * 0.1f;
+				if (k == 0)
+				{
+					x = 0;
+					y = 0;
+				}
+				Main.spriteBatch.Draw(texture,
+				new Vector2((float)(item.Center.X - (int)Main.screenPosition.X) + x, (float)(item.Center.Y - (int)Main.screenPosition.Y) + y + 2),
+				null, color * (1f - (item.alpha / 255f)), rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+			}
 		}
 		public override int BossBagNPC => mod.NPCType("TheAdvisorHead");
 		public override bool CanRightClick()
@@ -31,19 +67,14 @@ namespace SOTS.Items.Otherworld
 		public override void OpenBossBag(Player player)
 		{
 			player.QuickSpawnItem(mod.ItemType("TwilightGyroscope"));
-
 			if(Main.rand.NextBool(3))
 				player.QuickSpawnItem(mod.ItemType("StarlightAlloy"), Main.rand.Next(12, 19));
 			else
 				player.QuickSpawnItem(mod.ItemType("SkywareKey"));
-
-
 			if (Main.rand.NextBool(3))
 				player.QuickSpawnItem(mod.ItemType("OtherworldlyAlloy"), Main.rand.Next(12, 19));
 			else
 				player.QuickSpawnItem(mod.ItemType("MeteoriteKey"));
-
-
 			if (Main.rand.NextBool(3))
 				player.QuickSpawnItem(mod.ItemType("HardlightAlloy"), Main.rand.Next(12, 19));
 			else

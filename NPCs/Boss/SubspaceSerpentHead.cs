@@ -54,18 +54,24 @@ namespace SOTS.NPCs.Boss
             npc.noTileCollide = true;
             npc.HitSound = SoundID.NPCHit1;
             npc.DeathSound = SoundID.NPCDeath32;
-            npc.value = 100000;
+            npc.value = 500000;
             npc.npcSlots = 25;
             npc.netAlways = true;
             npc.target = -1;
-            music = MusicID.Boss2;
+            music = mod.GetSoundSlot(SoundType.Music, "Sounds/Music/SubspaceSerpent");
             for (int i = 0; i < Main.maxBuffTypes; i++)
             {
                 npc.buffImmune[i] = true;
             }
-            //npc.aiStyle = 6;
             bossBag = mod.ItemType("SubspaceBag");
             Main.npcFrameCount[npc.type] = 8;
+        }
+        public override void HitEffect(int hitDirection, double damage)
+        {
+            if (npc.life <= 0)
+            {
+                Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/Subspace/SubspaceSerpentHeadGore"), 1f);
+            }
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
@@ -77,10 +83,13 @@ namespace SOTS.NPCs.Boss
         }
         public override void BossLoot(ref string name, ref int potionType)
         {
-            Player player = Main.player[npc.target];
+            if(npc.target >= 0)
+            {
+                Player player = Main.player[npc.target];
+                npc.position = player.position;
+            }
             SOTSWorld.downedSubspace = true;
             potionType = ItemID.GreaterHealingPotion;
-            npc.position = player.position;
             if (Main.expertMode)
             {
                 npc.DropBossBags();
@@ -250,6 +259,7 @@ namespace SOTS.NPCs.Boss
             }
             if (Tphase == 1)
             {
+                ResetRotation();
                 ai1 = 720;
                 ai2 = 0;
                 ai3 = 0;
@@ -272,6 +282,7 @@ namespace SOTS.NPCs.Boss
             }
             if (Tphase == 5)
             {
+                ResetRotation();
                 ai1 = 510;
                 ai2 = 0;
                 ai3 = 0;
@@ -408,9 +419,7 @@ namespace SOTS.NPCs.Boss
                 playerCenter = playerCenter /= num;
                 ai1--;
                 int numCrosses = 2;
-                if (Main.expertMode && Main.rand.NextBool(4) && !hasEnteredSecondPhase)
-                    numCrosses++;
-                if (Main.expertMode && Main.rand.NextBool(10) && hasEnteredSecondPhase)
+                if ((Main.expertMode && ai1 <= 240) || (!Main.expertMode && ai1 <= 240))
                     numCrosses++;
                 if (hasEnteredSecondPhase)
                     numCrosses++;
@@ -746,6 +755,7 @@ namespace SOTS.NPCs.Boss
                     }
                     else
                     {
+                        player.noKnockback = true;
                         for(int i = 0; i < Main.maxPlayers; i++)
                         {
                             Player target = Main.player[i];
@@ -979,6 +989,12 @@ namespace SOTS.NPCs.Boss
                 SerpentRing(area);
             }
         }
+        public void ResetRotation()
+        {
+            Player player = Main.player[npc.target];
+            rotate = MathHelper.ToDegrees((npc.Center - player.Center).ToRotation()) / 2.15f;
+            Main.NewText(rotate * 2.15f);
+        }
         public void CircularAttack(Vector2 newCenter, float speed = 30, int amt = 2, int distance = 640, float verticalMult = 0.8f)
         {
             Player player = Main.player[npc.target];
@@ -1047,6 +1063,7 @@ namespace SOTS.NPCs.Boss
                         }
                         veloPositions.Add(velo);
                     }
+                    bool purpled = false;
                     for (int i = 0; i < spawnPositions.Count; i++)
                     {
                         Vector2 spawnLocation = spawnPositions[i];
@@ -1066,11 +1083,14 @@ namespace SOTS.NPCs.Boss
                             type = 0;
                         else
                             type = 1;
-                        float odds = Main.rand.NextFloat(15);
+                        float odds = Main.rand.NextFloat(12);
                         if(hasEnteredSecondPhase)
-                            odds = Main.rand.NextFloat(20);
-                        if (odds < 2)
-                            type = 2;
+                            odds = Main.rand.NextFloat(18);
+                        if (odds < 2 && !purpled)
+                        {
+                            type = 2; 
+                            purpled = true;
+                        }
                         Projectile.NewProjectile(spawnLocation + newCenter, velo, ModContent.ProjectileType<CrossLaser>(), (int)(damage2 * 0.8f), 0, Main.myPlayer, type + Moving);
                     }
                 }

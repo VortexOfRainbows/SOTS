@@ -36,6 +36,13 @@ namespace SOTS.NPCs.Boss
             }
             Main.npcFrameCount[npc.type] = 8;
         }
+        public override void HitEffect(int hitDirection, double damage)
+        {
+            if (npc.life <= 0)
+            {
+                Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/Subspace/SubspaceSerpentTailGore"), 1f);
+            }
+        }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
             return !npc.dontTakeDamage;

@@ -14,7 +14,6 @@ namespace SOTS.NPCs.Constructs
 		int ai1;
 		int initiateSpeed = 1;
 		int ai2 = 30;
-		int num1;
 		float dir;
 		bool canSpell = true;
 		private float delay = 360;
@@ -232,19 +231,6 @@ namespace SOTS.NPCs.Constructs
 						npc.spriteDirection = -1;
 					}
 				}
-		}
-		public override float SpawnChance(NPCSpawnInfo spawnInfo)
-		{
-			Player player = spawnInfo.player;
-			SOTSPlayer modPlayer = spawnInfo.player.GetModPlayer<SOTSPlayer>();
-			if (modPlayer.PlanetariumBiome)
-				return 0;
-			bool ZoneForest = !player.GetModPlayer<SOTSPlayer>().PyramidBiome && !player.ZoneDesert && !player.ZoneCorrupt && !player.ZoneDungeon && !player.ZoneDungeon && !player.ZoneHoly && !player.ZoneMeteor && !player.ZoneJungle && !player.ZoneSnow && !player.ZoneCrimson && !player.ZoneGlowshroom && !player.ZoneUndergroundDesert && (player.ZoneDirtLayerHeight || player.ZoneOverworldHeight) && !player.ZoneBeach;
-			if(ZoneForest)
-			{
-				return SpawnCondition.Overworld.Chance * 0.01f;
-			}
-			return (SpawnCondition.SurfaceJungle.Chance * 0.025f) + (SpawnCondition.UndergroundJungle.Chance * 0.0075f);
 		}
 		public override void NPCLoot()
 		{

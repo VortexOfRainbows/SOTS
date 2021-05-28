@@ -265,6 +265,8 @@ namespace SOTS.NPCs
 				}
 				pool.Add(mod.NPCType("BlueSlimer"), SpawnCondition.OverworldDaySlime.Chance * 0.1f);
 				pool.Add(mod.NPCType("TreasureSlime"), SpawnCondition.OverworldDaySlime.Chance * 0.1f);
+				if (player.statLifeMax2 >= 120)
+					pool.Add(ModContent.NPCType<NatureConstruct>(), SpawnCondition.Overworld.Chance * 0.01f);
 			}
 			else if (player.ZoneCorrupt || player.ZoneCrimson)
 			{
@@ -275,31 +277,62 @@ namespace SOTS.NPCs
 			}
 			if(player.ZoneBeach && !spawnInfo.player.ZonePeaceCandle) //guarenteed to not spawn when a peace candle is nearby
 			{
-				if(NPC.downedBoss1)
-                {
-					if(NPC.downedBoss3)
+				if (player.statLifeMax2 >= 120)
+				{
+					if (NPC.downedBoss1)
 					{
-						pool.Add(ModContent.NPCType<TidalConstruct>(), SpawnCondition.OceanMonster.Chance * 0.0275f);
+						if (NPC.downedBoss3)
+						{
+							pool.Add(ModContent.NPCType<TidalConstruct>(), SpawnCondition.OceanMonster.Chance * 0.0275f);
+						}
+						else
+						{
+							pool.Add(ModContent.NPCType<TidalConstruct>(), SpawnCondition.OceanMonster.Chance * 0.0175f);
+						}
 					}
 					else
-					{
-						pool.Add(ModContent.NPCType<TidalConstruct>(), SpawnCondition.OceanMonster.Chance * 0.0175f);
-					}
-                }
-				else
-					pool.Add(ModContent.NPCType<TidalConstruct>(), SpawnCondition.OceanMonster.Chance * 0.0075f);
+						pool.Add(ModContent.NPCType<TidalConstruct>(), SpawnCondition.OceanMonster.Chance * 0.0075f);
+				}
 			}
-			if(player.ZoneDungeon)
-            {
-				pool.Add(ModContent.NPCType<TidalConstruct>(), SpawnCondition.DungeonNormal.Chance * 0.0075f);
-			}
-			if (spawnInfo.player.ZoneSnow && !spawnInfo.player.ZoneCorrupt && !spawnInfo.player.ZoneCrimson && (NPC.downedBoss1 || NPC.downedGoblins) && spawnInfo.player.ZoneOverworldHeight)
+			else if (!player.ZoneBeach)
 			{
-				pool.Add(ModContent.NPCType<ArcticGoblin>(), SpawnCondition.Overworld.Chance * 0.1f);
+				if (player.ZoneDesert || player.ZoneUndergroundDesert || (player.ZoneRockLayerHeight && !player.ZoneDungeon && !player.ZoneJungle && !player.ZoneSnow))
+				{
+					if(player.statLifeMax2 >= 120)
+                    {
+						if (player.ZoneCorrupt || player.ZoneHoly || player.ZoneCrimson)
+						{
+							pool.Add(ModContent.NPCType<EarthenConstruct>(), 0.0025f);
+						}
+						else if (player.ZoneRockLayerHeight && !player.ZoneUndergroundDesert)
+						{
+							pool.Add(ModContent.NPCType<EarthenConstruct>(), 0.005f);
+						}
+						else
+							pool.Add(ModContent.NPCType<EarthenConstruct>(), 0.01f);
+					}
+				}
+			}
+			if (player.ZoneDungeon)
+			{
+				if (player.statLifeMax2 >= 120)
+					pool.Add(ModContent.NPCType<TidalConstruct>(), SpawnCondition.DungeonNormal.Chance * 0.0075f);
+			}
+			if (spawnInfo.player.ZoneSnow)
+			{
+				if(!spawnInfo.player.ZoneCorrupt && !spawnInfo.player.ZoneCrimson && (NPC.downedBoss1 || NPC.downedGoblins) && spawnInfo.player.ZoneOverworldHeight)
+					pool.Add(ModContent.NPCType<ArcticGoblin>(), SpawnCondition.Overworld.Chance * 0.1f);
+				if (player.statLifeMax2 >= 120)
+					pool.Add(ModContent.NPCType<PermafrostConstruct>(), spawnInfo.spawnTileType == TileID.IceBlock || spawnInfo.spawnTileType == TileID.SnowBlock ? .01f : 0f);
 			}
 			else if(Main.invasionType == InvasionID.GoblinArmy && spawnInfo.player.ZoneOverworldHeight && spawnInfo.player.ZoneSnow && !spawnInfo.player.ZoneCorrupt && !spawnInfo.player.ZoneCrimson)
 			{
 				pool.Add(ModContent.NPCType<ArcticGoblin>(), 0.1f);
+			}
+			else if(player.ZoneJungle)
+			{
+				if (player.statLifeMax2 >= 120)
+					pool.Add(ModContent.NPCType<NatureConstruct>(), (SpawnCondition.SurfaceJungle.Chance * 0.025f) + (SpawnCondition.UndergroundJungle.Chance * 0.0075f));
 			}
 		}
 	}

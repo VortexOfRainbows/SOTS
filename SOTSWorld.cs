@@ -562,7 +562,7 @@ namespace SOTS
 										WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform
 										break;
 									case 6:
-										WorldGen.PlaceTile(k, l, mod.TileType("StrangeChestTile"));
+										WorldGen.PlaceTile(k, l, ModContent.TileType<RuinedChestTile>());
 										break;
 									case 7:
 										WorldGen.PlaceTile(k, l, 376); //crate
@@ -2100,7 +2100,7 @@ namespace SOTS
 						slot++;
 					}
 				}
-				if (tile.type == mod.TileType("StrangeChestTile"))
+				if (tile.type == ModContent.TileType<RuinedChestTile>())
 				{
 					int slot = 0;
 					chest.item[slot].SetDefaults(mod.ItemType("WorldgenScanner"));

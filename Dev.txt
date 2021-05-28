@@ -12,15 +12,16 @@ The following is my development plans :D
 10. Ghost Town to Evil Biome
 
 High Priority:
-1. New Pharaoh Expert Drop: Heart in a Jar, aura of damage that releases ghosts
-	1. Spirit tracer becomes normal drop
-	2. Ghosts dash towards the enemy
-2. Fix Subspace Spinny attack, knockback immunity, rng related nerfs... MUSIC (+Box), Gore, Index error for loot bag
+2. Subspace: Music Box
 3. Resprite polish
 4. A few more enemies (Wisp and Amongus)
 5. Icy Amalgamation Resprite, buffs
-6. Change spawning weapon 
-7. Replace Brittle flail
+6. Replace Brittle flail
+7. Run through and redo the gores that need to be done
+10. Permafrost Construct resprite + spirit
+11. Advisor Respawn with scanner, fix in multiplayer
+12. Void Debuffs: Void Consumables Delay, Max Health Decrease
+13. Peanut Gun: Fires peanuts that call in Air Raid Pinkies
 
 1. Goopwood sprite Changes
 5. Riptide Trident (Launches you towards your cursor at the cost of void, deal damage while traveling, bounce off of enemies)
@@ -32,9 +33,7 @@ Mid Priority:
 1. Void Low Warning
 2. Prefixes for voids
 3. Bone Clapper
-4. Peanut Gun: Fires peanuts that call in Air Raid Pinkies
 5. Horn of Plenty: 10% more drops accessory
-6. Void Debuffs: Void Consumables Delay, Max Health Decrease
 8. Ethereal Tonic
 9. Void accessory reforge: increases max void...
 10. Timelord's Potion: attempt using .aiStyle, otherwise would require a lot of workaround...
@@ -48,14 +47,37 @@ Low Priority:
 6. Remove negative Vregen in inventory items
 7. Electrolyte Seperator
 
-5/24/21
+5/27/21
+1. Subspace Serpent now has Gore, drops 5x the money (1 plat I believe)
+2. Terminator acorns now has a max trail length (lag prevention).
+3. Heart Plus Resprites! I'm not listing them!
+4. Glowing Advisor Boss Bag
+5. Gel Wings
+6. Constructs no longer spawn until 120 hp
+
+5/26/21
+1. Resprites:
+	1. Cursed Matter + Gel Wings (kinda)
+		1. TRANSPARANCY YES
+2. No Knockback during Subspace Eye, index error for loot bag fixed, cross attack now goes in a set order of amounts:
+	1. 2, 2, 2, 3, 3, 3
+	2. 3, 3, 3, 4, 4
+	3. The chances of a purple spawning are slightly increased, but only one can spawn at a time
+3. Subspace Circling now locks into the closest place to the player.
+
+5/25/21
+1. Began work on Heart in a Jar
+2. Ghosts now home through blocks
+3. Severely reduced drawing iterations on spirit scissors in an attempt to reduce lag
+4. More bug fixes for Sub Locket
+
+5/24/21 
 1. Fixed bug with Chaos Spirit Staff being in the wrong loot pool!
 2. Advisor pet now only calculates homing once, stops homing after 15 seconds (900 ticks); less lag + nerf.
 	1. Blacklisted Arc Staff Mk2 in hopes to prevent some lag.
 3. Multiplayer Subspace Locket syncs better!
 4. Cut down Tidal Construct spawn rates (dungeon) by about 45%
 5. Strange Obelisk allows early access to the Pyramid.
-6. Began work on Heart in a Jar
 
 5/23/21 
 1. Resprites! Heart polished up a handful of sprites.

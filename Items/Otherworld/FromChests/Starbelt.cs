@@ -1,16 +1,11 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Mono.Cecil.Cil;
 using SOTS.Items.Otherworld.EpicWings;
-using SOTS.Void;
 using System.Collections.Generic;
-using System.Runtime.Remoting.Messaging;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Config;
 
 namespace SOTS.Items.Otherworld.FromChests
 {

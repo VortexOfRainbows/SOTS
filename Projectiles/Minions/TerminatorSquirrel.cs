@@ -68,13 +68,13 @@ namespace SOTS.Projectiles.Minions
 			{
 				float scale = projectile.scale * (trailPos.Length - k) / (float)trailPos.Length;
 				scale *= 1f;
-				if (trailPos[k] == Vector2.Zero)
-				{
-					return true;
-				}
 				Vector2 drawPos = trailPos[k] - Main.screenPosition;
 				Vector2 currentPos = trailPos[k];
 				Vector2 betweenPositions = previousPosition - currentPos;
+				if (trailPos[k] == Vector2.Zero || betweenPositions.Length() > 3000)
+				{
+					return true;
+				}
 				color *= 0.95f;
 				float max = betweenPositions.Length() / (4 * scale);
 				for (int i = 0; i < max; i++)

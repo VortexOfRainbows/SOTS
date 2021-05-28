@@ -54,7 +54,7 @@ namespace SOTS.Projectiles.Celestial
                 {
 					return false;
                 }
-				Color color = new Color(100, 120, 110, 0);
+				Color color = new Color(120, 250, 130, 0);
 				Vector2 drawPos = trailPos[k] - Main.screenPosition;
 				Vector2 currentPos = trailPos[k];
 				Vector2 betweenPositions = previousPosition - currentPos;
@@ -63,15 +63,10 @@ namespace SOTS.Projectiles.Celestial
 				for (int i = 0; i < max; i++)
 				{
 					drawPos = previousPosition + -betweenPositions * (i / max) - Main.screenPosition;
-					for (int j = 0; j < 5; j++)
+					for (int j = 0; j < 3; j++)
 					{
 						float x = Main.rand.Next(-10, 11) * 0.2f * scale;
 						float y = Main.rand.Next(-10, 11) * 0.2f * scale;
-						if (j < 2)
-                        {
-							x = 0;
-							y = 0;
-                        }
 						if(trailPos[k] != projectile.Center)
 							Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, betweenPositions.ToRotation() + MathHelper.ToRadians(90), drawOrigin, scale, SpriteEffects.None, 0f);
 					}
