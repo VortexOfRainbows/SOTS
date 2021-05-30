@@ -223,10 +223,8 @@ namespace SOTS.NPCs.Boss
 			Player player  = Main.player[npc.target];
 			float shootToX = player.Center.X - npc.Center.X;
 			float shootToY = player.Center.Y - npc.Center.Y;
-			float distance = (float)System.Math.Sqrt((double)(shootToX * shootToX + shootToY * shootToY));
-
+			float distance = (float)Math.Sqrt((double)(shootToX * shootToX + shootToY * shootToY));
 			distance = 1f / distance;
-				  
 			shootToX *= distance * 5;
 			shootToY *= distance * 5;
 			Vector2 toPlayer = new Vector2(shootToX, shootToY);

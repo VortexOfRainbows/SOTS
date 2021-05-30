@@ -1,4 +1,3 @@
-
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -14,14 +13,13 @@ namespace SOTS.Items.Pyramid
 		}
         public override void SetDefaults()
         {
-            
-            item.width = 28;
-            item.height = 26;
+            item.width = 36;
+            item.height = 38;
             item.useTime = 20;
             item.useAnimation = 20;
             item.useStyle = 1;
 			item.value = Item.sellPrice(0, 5, 0, 0);
-            item.rare = 6;
+            item.rare = ItemRarityID.LightPurple;
             item.UseSound = SoundID.Item1;
             item.noMelee = true;
             item.mountType = mod.MountType("SpiritSurfer");

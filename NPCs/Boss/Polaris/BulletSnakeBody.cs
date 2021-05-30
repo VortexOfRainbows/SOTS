@@ -5,37 +5,39 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
  
-namespace SOTS.NPCs.Boss
+namespace SOTS.NPCs.Boss.Polaris
 {   
-    public class FrostHydra_WingBody : ModNPC
-    {	int ai1 = 0;
-	int ai2 = 0;
+    public class BulletSnakeBody : ModNPC
+    {
 		public override void SetStaticDefaults()
 		{
-			
-			DisplayName.SetDefault("Frost Hydra");
+			DisplayName.SetDefault("Bullet Snake");
 		}
         public override void SetDefaults()
         {
-            npc.width = 30;               //this is where you put the npc sprite width.     important
-            npc.height = 82;              //this is where you put the npc sprite height.   important
-            npc.damage = 33;
-            npc.defense = 40;
+            npc.width = 26;
+            npc.height = 34;   
+            npc.damage = 60;
+            npc.defense = 30;
             npc.lifeMax = 20000;  
             npc.knockBackResist = 0.0f;
-            //npc.behindTiles = true;
             npc.noTileCollide = true;
             npc.netAlways = true;
             npc.noGravity = true;
             npc.dontCountMe = true;
-            npc.value = 100;
-            npc.HitSound = SoundID.NPCHit1;
-            npc.DeathSound = SoundID.NPCDeath32;
-			music = MusicID.Boss2;
-            npc.buffImmune[44] = true;
-           
+            npc.value = 0;
+            npc.buffImmune[BuffID.Frostburn] = true;
+            npc.buffImmune[BuffID.Ichor] = true;
+            npc.buffImmune[BuffID.OnFire] = true;
         }
- 
+        public override Color? GetAlpha(Color drawColor)
+        {
+            return Color.White;
+        }
+        public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+        {
+            npc.damage = (int)(npc.damage * 0.75f);
+        }
         public override bool PreAI()
         {
             if (npc.ai[3] > 0)
@@ -52,46 +54,46 @@ namespace SOTS.NPCs.Boss
                     npc.life = 0;
                     npc.HitEffect(0, 10.0);
                     npc.active = false;
-                    NetMessage.SendData(28, -1, -1, null, npc.whoAmI, -1f, 0.0f, 0.0f, 0, 0, 0);
+                    NetMessage.SendData(MessageID.StrikeNPC, -1, -1, null, npc.whoAmI, -1f, 0.0f, 0.0f, 0, 0, 0);
                 }
             }
  
             if (npc.ai[1] < (double)Main.npc.Length)
             {
-                // We're getting the center of this NPC.
+                NPC lastNpc = Main.npc[(int)npc.ai[1]];
                 Vector2 npcCenter = new Vector2(npc.position.X + (float)npc.width * 0.5f, npc.position.Y + (float)npc.height * 0.5f);
-                // Then using that center, we calculate the direction towards the 'parent NPC' of this NPC.
-                float dirX = Main.npc[(int)npc.ai[1]].position.X + (float)(Main.npc[(int)npc.ai[1]].width / 2) - npcCenter.X;
-                float dirY = Main.npc[(int)npc.ai[1]].position.Y + (float)(Main.npc[(int)npc.ai[1]].height / 2) - npcCenter.Y;
-                // We then use Atan2 to get a correct rotation towards that parent NPC.
+                float dirX = lastNpc.position.X + (float)(lastNpc.width / 2) - npcCenter.X;
+                float dirY = lastNpc.position.Y + (float)(lastNpc.height / 2) - npcCenter.Y;
                 npc.rotation = (float)Math.Atan2(dirY, dirX) + 1.57f;
-                // We also get the length of the direction vector.
                 float length = (float)Math.Sqrt(dirX * dirX + dirY * dirY);
-                // We calculate a new, correct distance.
-                float dist = (length - (float)npc.width) / length;
+                float height = npc.height - 2;
+                if (lastNpc.type == ModContent.NPCType<BulletSnakeWing>())
+                    height -= 4;
+                float dist = (length - height) / length;
                 float posX = dirX * dist;
                 float posY = dirY * dist;
- 
-                // Reset the velocity of this NPC, because we don't want it to move on its own
                 npc.velocity = Vector2.Zero;
-                // And set this NPCs position accordingly to that of this NPCs parent NPC.
                 npc.position.X = npc.position.X + posX;
                 npc.position.Y = npc.position.Y + posY;
+                if (dirX > 0)
+                    npc.direction = 1;
+                else
+                    npc.direction = -1;
             }
+            npc.spriteDirection = npc.direction;
             return false;
         }
  
-        public override bool PreDraw(Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch, Color drawColor)
+        public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
         {
             Texture2D texture = Main.npcTexture[npc.type];
-            Vector2 origin = new Vector2((texture.Width * 0.5f), (texture.Height * 0.5f) - 44);
-            Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition, new Rectangle?(), drawColor, npc.rotation, origin, npc.scale, SpriteEffects.None, 0);
+            Vector2 origin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
+            Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition, null, Color.White, npc.rotation, origin, npc.scale, npc.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : 0, 0);
             return false;
         }
         public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position)
         {
- 
-            return false;       //this make that the npc does not have a health bar
+            return false;
         }
 		public override void PostAI()
 		{

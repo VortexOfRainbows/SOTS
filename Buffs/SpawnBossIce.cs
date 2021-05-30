@@ -15,13 +15,13 @@ namespace SOTS.Buffs
         }
         public override void Update(Player player, ref int buffIndex)
         {
-			if(!NPC.AnyNPCs(mod.NPCType("ShardKing")))
+			if(!NPC.AnyNPCs(mod.NPCType("Polaris")))
 			{
-				NPC.SpawnOnPlayer(player.whoAmI, mod.NPCType("ShardKing"));
+				NPC.SpawnOnPlayer(player.whoAmI, mod.NPCType("Polaris"));
 				for(int king = 0; king < 200; king++)
 				{
 					NPC npc = Main.npc[king];
-					if(npc.type == mod.NPCType("ShardKing"))
+					if(npc.type == mod.NPCType("Polaris"))
 					{
 					npc.position.X = player.Center.X - npc.width/2;
 					npc.position.Y = player.Center.Y - npc.height/2 - 1200;

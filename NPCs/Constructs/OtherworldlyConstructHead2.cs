@@ -1,7 +1,6 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MonoMod.RuntimeDetour;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -9,7 +8,6 @@ namespace SOTS.NPCs.Constructs
 {
 	public class OtherworldlyConstructHead2 : ModNPC
 	{
-		int timer = 0;
 		int ai1 = 0;
 		float dir = 0f;
 		public override void SetStaticDefaults()

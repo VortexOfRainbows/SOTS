@@ -15,13 +15,13 @@ High Priority:
 2. Subspace: Music Box
 3. Resprite polish
 4. A few more enemies (Wisp and Amongus)
-5. Icy Amalgamation Resprite, buffs
 6. Replace Brittle flail
 7. Run through and redo the gores that need to be done
 10. Permafrost Construct resprite + spirit
 11. Advisor Respawn with scanner, fix in multiplayer
 12. Void Debuffs: Void Consumables Delay, Max Health Decrease
 13. Peanut Gun: Fires peanuts that call in Air Raid Pinkies
+14. Secret Jingle
 
 1. Goopwood sprite Changes
 5. Riptide Trident (Launches you towards your cursor at the cost of void, deal damage while traveling, bounce off of enemies)
@@ -46,6 +46,15 @@ Low Priority:
 5. Sharanga Upgrade
 6. Remove negative Vregen in inventory items
 7. Electrolyte Seperator
+
+5/28/21 & 5/29/21 & 5/30/21
+1. Frosted Key doesn't debuff you
+2. Polaris damage scale makes more sense
+3. Polaris Spikes invulnerable in all modes
+4. Polaris second phase triggers at an interval that makes more sense
+5. Polaris tier moved to Post all mechs, to allow for chlorophyte gear being used on it
+6. Finished Polaris Rework!
+	7. Polaris Next: Gore for main body
 
 5/27/21
 1. Subspace Serpent now has Gore, drops 5x the money (1 plat I believe)

@@ -1,11 +1,7 @@
-using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace SOTS.Projectiles.Pyramid
 {
-	
 	public class JuryRiggedDrill : ModProjectile
 	{
 		public override void SetStaticDefaults()
@@ -23,10 +19,6 @@ namespace SOTS.Projectiles.Pyramid
 			projectile.hide = true;
 			projectile.ownerHitCheck = true;
 			projectile.melee = true;
-		}
-		public override void Kill(int timeLeft)
-		{
-			
 		}
 	}
 }

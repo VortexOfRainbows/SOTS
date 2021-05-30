@@ -175,7 +175,7 @@ namespace SOTS.Projectiles.Celestial
 			Lighting.AddLight(projectile.Center, new Vector3(75, 30, 75) * 1f / 255f);
 
 			#region coolStuff
-			List<int> blackList = new List<int>() { ItemID.BookStaff, ModContent.ItemType<LashesOfLightning>(), ModContent.ItemType<SkywardBlades>(), ItemID.GolemFist, ItemID.Flairon, ModContent.ItemType<PhaseCannon>() };
+			List<int> blackList = new List<int>() { ItemID.BookStaff, ModContent.ItemType<LashesOfLightning>(), ModContent.ItemType<SkywardBlades>(), ItemID.GolemFist, ItemID.Flairon, ModContent.ItemType<PhaseCannon>(), ModContent.ItemType<HardlightGlaive>() };
 			//player.ItemCheck(player.whoAmI);
 			//trailingType = 0;
 			if (lastItem == item.type && item.active && !item.IsAir && !item.summon && !item.thrown && !item.channel && !blackList.Contains(type) && (item.useStyle == 1 || item.useStyle == 5) && !subPlayer.servantIsVanity && !item.consumable)

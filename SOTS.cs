@@ -19,7 +19,7 @@ using SOTS.Items.GelGear;
 using SOTS.Items.Otherworld;
 using SOTS.Items.IceStuff;
 using SOTS.Items.Celestial;
-using SOTS.Projectiles.BiomeChest;
+using SOTS.NPCs.Boss.Polaris;
 
 namespace SOTS
 {
@@ -27,9 +27,7 @@ namespace SOTS
 	{
 		public static ModHotKey BlinkHotKey;
 		public static ModHotKey ArmorSetHotKey;
-
 		internal static SOTS Instance;
-
 		public SOTS()
 		{
 			Properties = new ModProperties()
@@ -368,7 +366,7 @@ namespace SOTS
 					new List<int>() { ModContent.ItemType<CurseBag>(), ModContent.ItemType<CursedMatter>() },
 					"Activate the [i:" + ModContent.ItemType<Sarcophagus>() + "] in the pyramid",
 					"",
-					"",
+					"SOTS/BossCL/Depression",
 					"",
 					(Func<bool>)(() => true));
 				bossChecklist.Call(
@@ -388,17 +386,17 @@ namespace SOTS
 					(Func<bool>)(() => true));
 				bossChecklist.Call(
 					"AddBoss",
-					8.2f,
-					new List<int>() { ModContent.NPCType<ShardKing>() },
+					9.2f,
+					new List<int>() { ModContent.NPCType<Polaris>() },
 					this,
-					"Icy Amalgamation",
+					"Polaris",
 					(Func<bool>)(() => SOTSWorld.downedAmalgamation),
 					new List<int>() { ModContent.ItemType<FrostedKey>(), ModContent.ItemType<FrostArtifact>() },
 					new List<int>() { },
-					new List<int>() { ModContent.ItemType<ShardKingBossBag>(), ModContent.ItemType<AbsoluteBar>(), ItemID.FrostCore },
+					new List<int>() { ModContent.ItemType<PolarisBossBag>(), ModContent.ItemType<AbsoluteBar>(), ItemID.FrostCore },
 					"Activate the [i:" + ModContent.ItemType<FrostArtifact>() + "] of the snow biome using [i:" + ModContent.ItemType<FrostedKey>() + "]",
 					"",
-					"",
+					"SOTS/BossCL/PolarisPortrait",
 					"",
 					(Func<bool>)(() => true));
 				bossChecklist.Call(

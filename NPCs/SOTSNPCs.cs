@@ -14,11 +14,60 @@ using SOTS.Items;
 using SOTS.Buffs;
 using SOTS.NPCs.Constructs;
 using SOTS.Items.Celestial;
+using SOTS.NPCs.Boss.Polaris;
 
 namespace SOTS.NPCs
 {
     public class SOTSNPCs : GlobalNPC
     {
+		public static bool isPolarisNPC(int type)
+        {
+			return (type == ModContent.NPCType<BulletSnakeHead>() || type == ModContent.NPCType<BulletSnakeWing>() || type == ModContent.NPCType<BulletSnakeBody>() || type == ModContent.NPCType<BulletSnakeEnd>() || type == ModContent.NPCType<Polaris>() || type == ModContent.NPCType<PolarisLaser>() || type == ModContent.NPCType<PolarisCannon>());
+		}
+        public override bool PreAI(NPC npc)
+		{
+			if(isPolarisNPC(npc.type))
+			{
+				if (Main.rand.NextBool(2))
+				{
+					npc.HitSound = SoundID.NPCHit4;
+				}
+				else
+				{
+					npc.HitSound = SoundID.Item50;
+				}
+				if(npc.DeathSound != SoundID.NPCDeath14)
+					npc.DeathSound = SoundID.NPCDeath14;
+			}
+			return base.PreAI(npc);
+        }
+        public override void HitEffect(NPC npc, int hitDirection, double damage)
+        {
+			if(npc.life <= 0)
+			{
+				if (isPolarisNPC(npc.type))
+				{
+					for (int i = 0; i < 3; i++)
+					{
+						Gore.NewGore(npc.position + new Vector2((float)(npc.width * Main.rand.Next(100)) / 100f, (float)(npc.height * Main.rand.Next(100)) / 100f) - Vector2.One * 10f, npc.velocity * 0.5f, Main.rand.Next(61, 64), 1f);
+					}
+					for (int i = 0; i < 15; i++)
+					{
+						int num1 = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y) - new Vector2(5), npc.width, npc.height, mod.DustType("CopyDust4"));
+						Dust dust = Main.dust[num1];
+						dust.velocity *= 2f;
+						dust.velocity += npc.velocity * 0.2f;
+						dust.noGravity = true;
+						dust.scale += 1.0f;
+						dust.color = new Color(200, 250, 250, 100);
+						dust.fadeIn = 0.1f;
+						dust.scale *= 1.5f;
+						dust.alpha = npc.alpha;
+					}
+				}
+			}
+            base.HitEffect(npc, hitDirection, damage);
+        }
         public override void SetDefaults(NPC npc)
         {
 			if(npc.type == NPCID.BlackRecluse || npc.type == NPCID.WallCreeper || npc.type == NPCID.WallCreeperWall || npc.type == NPCID.BlackRecluseWall || npc.type == NPCID.JungleCreeperWall || npc.type == NPCID.JungleCreeper)

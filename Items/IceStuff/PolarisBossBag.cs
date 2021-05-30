@@ -1,10 +1,11 @@
+using SOTS.NPCs.Boss.Polaris;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace SOTS.Items.IceStuff
 {
-	public class ShardKingBossBag : ModItem
+	public class PolarisBossBag : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -13,26 +14,21 @@ namespace SOTS.Items.IceStuff
 		}
 		public override void SetDefaults()
 		{
-
-			item.width = 52;
-			item.height = 32;
+			item.width = 48;
+			item.height = 34;
 			item.value = 0;
-			item.rare = 9;
+			item.rare = ItemRarityID.Cyan;
 			item.expert = true;
 			item.maxStack = 99;
 			item.consumable = true;
-			//bossBagNPC = mod.NPCType("ShardKing");
 		}
-		public override int BossBagNPC => mod.NPCType("ShardKing");
-		public override bool CanRightClick()
-		{
-			return true;
-		}
+		public override int BossBagNPC => ModContent.NPCType<Polaris>();
+		public override bool CanRightClick() { return true; }
 		public override void OpenBossBag(Player player)
 		{
 			player.QuickSpawnItem(ModContent.ItemType<FrigidHourglass>());
-			player.QuickSpawnItem(mod.ItemType("AbsoluteBar"),Main.rand.Next(26, 43));
-			player.QuickSpawnItem(ItemID.FrostCore,Main.rand.Next(2) + 1);
+			player.QuickSpawnItem(mod.ItemType("AbsoluteBar"), Main.rand.Next(26, 43));
+			player.QuickSpawnItem(ItemID.FrostCore, Main.rand.Next(2) + 1);
 		}
 	}
 }

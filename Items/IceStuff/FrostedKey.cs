@@ -9,28 +9,15 @@ namespace SOTS.Items.IceStuff
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Frost Key");
-			Tooltip.SetDefault("It's cold to the touch\nYou'd better get near something warm, like a campfire");
+			Tooltip.SetDefault("'Cold to the touch'");
 		}
 		public override void SetDefaults()
 		{
-
-			item.width = 34;
-			item.height = 30;
+			item.width = 22;
+			item.height = 36;
 			item.value = Item.sellPrice(0, 7, 0, 0);
-			item.rare = 6;
+			item.rare = ItemRarityID.LightPurple;
 			item.maxStack = 1;
-			
-		}
-		public override void UpdateInventory(Player player) 
-		{
-			if(player.FindBuffIndex(87) < 0) //Checking for campfire buff
-			{
-				if(!SOTSWorld.downedAmalgamation)
-				{
-					player.AddBuff(46, 6); //adding chilled
-					player.AddBuff(44, 6); //adding frostburn
-				}
-			}
 		}
 		public override void AddRecipes()
 		{
