@@ -81,9 +81,7 @@ namespace SOTS.Items.Vibrant
 				float mult = 1.33f;
 				Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(4.5f));
 				if (position == player.Center)
-				{
 					Projectile.NewProjectile(position, Vector2.Zero, mod.ProjectileType("VibrantRifle"), 0, 0, player.whoAmI, perturbedSpeed.ToRotation() - new Vector2(speedX, speedY).ToRotation());
-				}
 				speedX = perturbedSpeed.X * mult;
 				speedY = perturbedSpeed.Y * mult;
 				//Main.PlaySound(SoundID.Item11, position);

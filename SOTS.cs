@@ -386,7 +386,7 @@ namespace SOTS
 					(Func<bool>)(() => true));
 				bossChecklist.Call(
 					"AddBoss",
-					9.2f,
+					9.05f,
 					new List<int>() { ModContent.NPCType<Polaris>() },
 					this,
 					"Polaris",

@@ -82,7 +82,8 @@ namespace SOTS.Items.Otherworld.FromChests
 			Main.PlaySound(SoundID.Item11, position);
 			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
 			Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians((speedX < 0 ? -1 : 1) * (-3f + 1.75f * projectileNum)));
-			Projectile.NewProjectile(position, Vector2.Zero, mod.ProjectileType("StarcoreRifle"), item.useTime + (projectileNum >= highestProjectileNum - 1 && highestProjectileNum > 3 ? item.reuseDelay - 1 : 0) + 1, 0, player.whoAmI, perturbedSpeed.ToRotation() - new Vector2(speedX, speedY).ToRotation());
+			if (position == player.Center)
+				Projectile.NewProjectile(position, Vector2.Zero, mod.ProjectileType("StarcoreRifle"), item.useTime + (projectileNum >= highestProjectileNum - 1 && highestProjectileNum > 3 ? item.reuseDelay - 1 : 0) + 1, 0, player.whoAmI, perturbedSpeed.ToRotation() - new Vector2(speedX, speedY).ToRotation());
 			speedX = perturbedSpeed.X;
 			speedY = perturbedSpeed.Y;
 			position += new Vector2(speedX, speedY) * 6;

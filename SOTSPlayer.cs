@@ -2,6 +2,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Buffs;
 using SOTS.Items;
+using SOTS.Items.IceStuff;
+using SOTS.Items.Otherworld;
 using SOTS.Items.Otherworld.EpicWings;
 using SOTS.Items.Otherworld.FromChests;
 using SOTS.Items.Pyramid;
@@ -88,6 +90,7 @@ namespace SOTS
 		public float BlinkedAmount = 0;
 		public int BlinkType = 0;
 		public int BlinkDamage = 0;
+		public static List<int> locketBlacklist = new List<int>();
 		public static List<int> typhonBlacklist = new List<int>();
 		public static List<int> typhonWhitelist = new List<int>();
 		public int typhonRange = 0;
@@ -1142,6 +1145,10 @@ namespace SOTS
         }
         public override void Initialize()
 		{
+			locketBlacklist = new List<int>() { ItemID.BookStaff, ModContent.ItemType<LashesOfLightning>(), ModContent.ItemType<SkywardBlades>(), ItemID.GolemFist, ItemID.Flairon, 
+				ModContent.ItemType<PhaseCannon>(), ModContent.ItemType<Items.Otherworld.FromChests.HardlightGlaive>(), 
+				ModContent.ItemType<Items.Otherworld.FromChests.SupernovaHammer>(), ItemID.MonkStaffT1, ModContent.ItemType<FrigidJavelin>() };
+
 			SOTSPlayer.typhonBlacklist.Add(ModContent.ProjectileType<ArcColumn>());
 			SOTSPlayer.typhonBlacklist.Add(ModContent.ProjectileType<PhaseColumn>());
 			SOTSPlayer.typhonBlacklist.Add(ModContent.ProjectileType<MacaroniBeam>());

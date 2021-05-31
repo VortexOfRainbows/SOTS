@@ -47,6 +47,10 @@ Low Priority:
 6. Remove negative Vregen in inventory items
 7. Electrolyte Seperator
 
+5/31/21
+1. Starcore Assault rifle works with Locket, blacklisted some items...
+2. 
+
 5/28/21 & 5/29/21 & 5/30/21
 1. Frosted Key doesn't debuff you
 2. Polaris damage scale makes more sense

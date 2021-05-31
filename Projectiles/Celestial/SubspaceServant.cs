@@ -175,20 +175,20 @@ namespace SOTS.Projectiles.Celestial
 			Lighting.AddLight(projectile.Center, new Vector3(75, 30, 75) * 1f / 255f);
 
 			#region coolStuff
-			List<int> blackList = new List<int>() { ItemID.BookStaff, ModContent.ItemType<LashesOfLightning>(), ModContent.ItemType<SkywardBlades>(), ItemID.GolemFist, ItemID.Flairon, ModContent.ItemType<PhaseCannon>(), ModContent.ItemType<HardlightGlaive>() };
 			//player.ItemCheck(player.whoAmI);
 			//trailingType = 0;
-			if (lastItem == item.type && item.active && !item.IsAir && !item.summon && !item.thrown && !item.channel && !blackList.Contains(type) && (item.useStyle == 1 || item.useStyle == 5) && !subPlayer.servantIsVanity && !item.consumable)
+			bool capable = false;
+			Projectile proj = new Projectile();
+			proj.SetDefaults(item.shoot);
+			if (proj.aiStyle == 19 || item.ammo > 0 || item.fishingPole > 0)
+			{
+				capable = true;
+			}
+			proj.active = false;
+			proj.Kill();
+			if (!capable && lastItem == item.type && item.active && !item.IsAir && !item.summon && !item.thrown && !item.channel && !SOTSPlayer.locketBlacklist.Contains(type) && (item.useStyle == 1 || item.useStyle == 5) && !subPlayer.servantIsVanity && !item.consumable)
 			{
 				subPlayer.foundItem = true;
-				Projectile proj = new Projectile();
-				proj.SetDefaults(item.shoot);
-				if(proj.aiStyle == 19 || item.ammo > 0)
-                {
-					return;
-				}
-				proj.active = false;
-				proj.Kill();
 				float allSpeed = ItemLoader.UseTimeMultiplier(item, player) * PlayerHooks.UseTimeMultiplier(player, item);
 				FullUseTime = !sItem.melee ? (int)(sItem.useAnimation / (float)allSpeed) : (int)(sItem.useAnimation / (float)allSpeed * (double)player.meleeSpeed);
 				int fireRate = !sItem.melee ? (int)(sItem.useTime / (float)allSpeed) : (int)(sItem.useTime / (float)allSpeed * (double)player.meleeSpeed);
@@ -449,7 +449,7 @@ namespace SOTS.Projectiles.Celestial
 					lastItem = sItem.type;
 				}
 				Texture2D textureOutline = itemTextureOutline;
-				if (itemLocation != null && texture != null && UseTime != -1000 && UseTime <= FullUseTime && (!item.noUseGraphic || item.type == ModContent.ItemType<VibrantPistol>()))
+				if (itemLocation != null && texture != null && UseTime != -1000 && UseTime <= FullUseTime && (!item.noUseGraphic || item.type == ModContent.ItemType<VibrantPistol>() || item.type == ModContent.ItemType<StarcoreAssaultRifle>()))
 				{
 					Vector2 location = itemLocation;
 					if (item.useStyle == 5)
