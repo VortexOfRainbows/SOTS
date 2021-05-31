@@ -41,7 +41,7 @@ namespace SOTS.Items.Pyramid
 			drop = mod.ItemType("CursedHiveBlock");
 			AddMapEntry(new Color(51, 46, 91));
 			mineResist = 0.5f;
-			soundType = SoundID.Dig;
+			soundType = SoundID.Tink;
 			soundStyle = 2;
 			//dustType = mod.DustType("CurseDust"); //too much light
 			dustType = 32;
@@ -73,10 +73,10 @@ namespace SOTS.Items.Pyramid
 			drop = mod.ItemType("CursedHiveBlock");
 			AddMapEntry(new Color(51, 46, 91));
 			mineResist = 0.5f;
-			soundType = SoundID.Dig;
+			soundType = SoundID.Tink;
 			soundStyle = 2;
 			//dustType = mod.DustType("CurseDust"); //too much light
-			dustType = 32;
+			dustType = DustID.Sand;
 		}
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
 		{

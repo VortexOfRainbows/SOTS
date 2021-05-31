@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
+using Terraria.ID;
 
 namespace SOTS.Items.Pyramid
 {
@@ -18,9 +19,9 @@ namespace SOTS.Items.Pyramid
 			AddMapEntry(new Color(170, 150, 85));
 			mineResist = 3.5f;
 			minPick = 110;
-            soundType = 21;
+            soundType = SoundID.Tink;
             soundStyle = 2;
-			dustType = 32;
+			dustType = DustID.Sand;
 		}
 		public override bool CanExplode(int i, int j)
 		{
