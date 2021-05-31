@@ -21,7 +21,7 @@ namespace SOTS.Items.Pyramid
 			minPick = 110;
             soundType = SoundID.Tink;
             soundStyle = 2;
-			dustType = DustID.Sand;
+			dustType = 32;
 		}
 		public override bool CanExplode(int i, int j)
 		{

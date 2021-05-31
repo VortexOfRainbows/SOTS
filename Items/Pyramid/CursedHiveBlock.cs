@@ -76,7 +76,7 @@ namespace SOTS.Items.Pyramid
 			soundType = SoundID.Tink;
 			soundStyle = 2;
 			//dustType = mod.DustType("CurseDust"); //too much light
-			dustType = DustID.Sand;
+			dustType = 32;
 		}
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
 		{
