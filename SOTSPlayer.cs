@@ -8,6 +8,7 @@ using SOTS.Items.Otherworld.EpicWings;
 using SOTS.Items.Otherworld.FromChests;
 using SOTS.Items.Pyramid;
 using SOTS.Items.SpecialDrops;
+using SOTS.Items.Vibrant;
 using SOTS.NPCs.Boss;
 using SOTS.Projectiles.BiomeChest;
 using SOTS.Projectiles.Celestial;
@@ -1146,7 +1147,7 @@ namespace SOTS
         public override void Initialize()
 		{
 			locketBlacklist = new List<int>() { ItemID.BookStaff, ModContent.ItemType<LashesOfLightning>(), ModContent.ItemType<SkywardBlades>(), ItemID.GolemFist, ItemID.Flairon, 
-				ModContent.ItemType<PhaseCannon>(), ModContent.ItemType<Items.Otherworld.FromChests.HardlightGlaive>(), 
+				ModContent.ItemType<PhaseCannon>(), ModContent.ItemType<Items.Otherworld.FromChests.HardlightGlaive>(), ModContent.ItemType<StarcoreAssaultRifle>(), ModContent.ItemType<VibrantPistol>(),
 				ModContent.ItemType<Items.Otherworld.FromChests.SupernovaHammer>(), ItemID.MonkStaffT1, ModContent.ItemType<FrigidJavelin>() };
 
 			SOTSPlayer.typhonBlacklist.Add(ModContent.ProjectileType<ArcColumn>());
