@@ -5,15 +5,15 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.Utilities;
 using Microsoft.Xna.Framework;
-//using SOTS.Items.Trophies;
+using SOTS.Items.Pyramid;
 
 namespace SOTS.Items.MusicBoxes
 {
-	public class PutridPinkyMusicBox : ModItem
+	public class AncientPyramidMusicBox : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Music Box (Putrid Pinky)");
+			DisplayName.SetDefault("Music Box (Ancient Pyramid)");
 		}
 
 		public override void SetDefaults()
@@ -24,25 +24,27 @@ namespace SOTS.Items.MusicBoxes
 			item.useTime = 10;
 			item.autoReuse = true;
 			item.consumable = true;
-			item.createTile = mod.TileType("PutridPinkyMusicBoxTile");
+			item.createTile = mod.TileType("AncientPyramidMusicBoxTile");
 			item.width = 24;
 			item.height = 24;
 			item.rare = ItemRarityID.LightRed;
 			item.value = 100000;
 			item.accessory = true;
 		}
-
-		/*public override void AddRecipes()
+		
+		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "PutridPinkyTrophy", 1);
+			recipe.AddIngredient(null, "PyramidSlab", 10);
+			recipe.AddIngredient(null, "CursedHiveBlock", 10);
+			recipe.AddIngredient(null, "SoulResidue", 10);
 			recipe.AddIngredient(ItemID.MusicBox);
 			recipe.AddTile(TileID.HeavyWorkBench);
 			recipe.SetResult(this);
 			recipe.AddRecipe();
-		}*/
+		}
 	}
-	public class PutridPinkyMusicBoxTile : ModTile
+	public class AncientPyramidMusicBoxTile : ModTile
 	{
 		public override void SetDefaults()
 		{
@@ -61,7 +63,7 @@ namespace SOTS.Items.MusicBoxes
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 16, 48, mod.ItemType("PutridPinkyMusicBox"));
+			Item.NewItem(i * 16, j * 16, 16, 48, mod.ItemType("AncientPyramidMusicBox"));
 		}
 
 		public override void MouseOver(int i, int j)
@@ -69,7 +71,7 @@ namespace SOTS.Items.MusicBoxes
 			Player player = Main.LocalPlayer;
 			player.noThrow = 2;
 			player.showItemIcon = true;
-			player.showItemIcon2 = mod.ItemType("PutridPinkyMusicBox");
+			player.showItemIcon2 = mod.ItemType("AncientPyramidMusicBox");
 		}
 	}
 }

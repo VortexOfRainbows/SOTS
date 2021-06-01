@@ -570,7 +570,7 @@ namespace SOTS.NPCs.Boss
 		}
 		public override void AI()
 		{
-			music = MusicID.Boss2;
+			music = mod.GetSoundSlot(SoundType.Music, "Sounds/Music/Advisor");
 			musicPriority = MusicPriority.BossMedium;
 			npc.TargetClosest(false);
 			npc.spriteDirection = 1;

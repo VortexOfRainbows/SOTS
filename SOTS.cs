@@ -70,7 +70,9 @@ namespace SOTS
 				yabhb.Call("hbFinishSingle", ModContent.NPCType<PutridPinkyPhase2>());
 			}
 			//Music Box Stuff
-			AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/PutridPinky"), ItemType("PutridPinkyMusicBox"), TileType("PutridPinkyMusicBox_Tile"));
+			AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/PutridPinky"), ItemType("PutridPinkyMusicBox"), TileType("PutridPinkyMusicBoxTile"));
+			AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/SubspaceSerpent"), ItemType("SubspaceSerpentMusicBox"), TileType("SubspaceSerpentMusicBoxTile"));
+			AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/AncientPyramid"), ItemType("AncientPyramidMusicBox"), TileType("AncientPyramidMusicBoxTile"));
 		}
 		public override void Unload() 
 		{
@@ -350,9 +352,9 @@ namespace SOTS
 					"Putrid Pinky",
 					(Func<bool>)(() => SOTSWorld.downedPinky),
 					ModContent.ItemType<JarOfPeanuts>(),
-					new List<int>() { },
+					new List<int>() { ModContent.ItemType<PutridPinkyMusicBox>() },
 					new List<int>() { ModContent.ItemType<PinkyBag>(), ModContent.ItemType<VialofAcid>(), ModContent.ItemType<Wormwood>(), ItemID.PinkGel },
-				"Summon in any biome at any time using a [i:" + ModContent.ItemType<JarOfPeanuts>() + "]",
+					"Summon in any biome at any time using a [i:" + ModContent.ItemType<JarOfPeanuts>() + "]",
 					"{0} has robbed everyone of their peanuts!",
 					"SOTS/NPCs/Boss/PutridPinky1_Display",
 					"SOTS/NPCs/Boss/PutridPinky1_Head_Boss",
@@ -425,7 +427,7 @@ namespace SOTS
 					"Subspace Serpent",
 					(Func<bool>)(() => SOTSWorld.downedSubspace),
 					new List<int>() { ModContent.ItemType<CatalystBomb>() },
-					new List<int>() { },
+					new List<int>() { ModContent.ItemType<SubspaceSerpentMusicBox>() },
 					new List<int>() { ModContent.ItemType<SubspaceBag>(), ModContent.ItemType<SanguiteBar>()},
 					"Tear a dimensional rift in hell by detonating a [i:" + ModContent.ItemType<CatalystBomb>() + "]",
 					"",

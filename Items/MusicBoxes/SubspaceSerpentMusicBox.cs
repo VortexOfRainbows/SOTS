@@ -9,11 +9,11 @@ using Microsoft.Xna.Framework;
 
 namespace SOTS.Items.MusicBoxes
 {
-	public class PutridPinkyMusicBox : ModItem
+	public class SubspaceSerpentMusicBox : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Music Box (Putrid Pinky)");
+			DisplayName.SetDefault("Music Box (Subspace Serpent)");
 		}
 
 		public override void SetDefaults()
@@ -24,7 +24,7 @@ namespace SOTS.Items.MusicBoxes
 			item.useTime = 10;
 			item.autoReuse = true;
 			item.consumable = true;
-			item.createTile = mod.TileType("PutridPinkyMusicBoxTile");
+			item.createTile = mod.TileType("SubspaceSerpentMusicBoxTile");
 			item.width = 24;
 			item.height = 24;
 			item.rare = ItemRarityID.LightRed;
@@ -35,14 +35,14 @@ namespace SOTS.Items.MusicBoxes
 		/*public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "PutridPinkyTrophy", 1);
+			recipe.AddIngredient(null, "SubspaceSerpentTrophy", 1);
 			recipe.AddIngredient(ItemID.MusicBox);
 			recipe.AddTile(TileID.HeavyWorkBench);
 			recipe.SetResult(this);
 			recipe.AddRecipe();
 		}*/
 	}
-	public class PutridPinkyMusicBoxTile : ModTile
+	public class SubspaceSerpentMusicBoxTile : ModTile
 	{
 		public override void SetDefaults()
 		{
@@ -61,7 +61,7 @@ namespace SOTS.Items.MusicBoxes
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 16, 48, mod.ItemType("PutridPinkyMusicBox"));
+			Item.NewItem(i * 16, j * 16, 16, 48, mod.ItemType("SubspaceSerpentMusicBox"));
 		}
 
 		public override void MouseOver(int i, int j)
@@ -69,7 +69,7 @@ namespace SOTS.Items.MusicBoxes
 			Player player = Main.LocalPlayer;
 			player.noThrow = 2;
 			player.showItemIcon = true;
-			player.showItemIcon2 = mod.ItemType("PutridPinkyMusicBox");
+			player.showItemIcon2 = mod.ItemType("SubspaceSerpentMusicBox");
 		}
 	}
 }
