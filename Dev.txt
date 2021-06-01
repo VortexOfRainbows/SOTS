@@ -25,13 +25,13 @@ High Priority:
 14. Secret Jingle
 15. Check Polaris multiplayer compatability
 
-1. Goopwood sprite Changes
-5. Riptide Trident (Launches you towards your cursor at the cost of void, deal damage while traveling, bounce off of enemies)
-6. Prismarine Necklace: Sharktooth Necklace + Heart of the Sea
-7. Wintry Traveler: Riptide Trident + Frigid Javelin
-8. Antigrav booties
-
 Mid Priority:
+1. Goopwood sprite Changes
+2. Riptide Trident (Launches you towards your cursor at the cost of void, deal damage while traveling, bounce off of enemies)
+3. Prismarine Necklace: Sharktooth Necklace + Heart of the Sea
+4. Wintry Traveler: Riptide Trident + Frigid Javelin
+5. Antigrav booties
+
 1. Void Low Warning
 2. Prefixes for voids
 3. Bone Clapper
@@ -49,9 +49,11 @@ Low Priority:
 6. Remove negative Vregen in inventory items
 7. Electrolyte Seperator
 
+6/1/21
+1. 
+
 5/31/21
 1. Starcore Assault rifle works with Locket, blacklisted some items...
-2. 
 
 5/28/21 & 5/29/21 & 5/30/21
 1. Frosted Key doesn't debuff you

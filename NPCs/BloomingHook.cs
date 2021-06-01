@@ -62,17 +62,18 @@ namespace SOTS.NPCs
 				{
 					radius = -radius;
 				}
-				Vector2 centerOfCircle = owner.Center + distanceToOwner/2;
+				Vector2 centerOfCircle = owner.Center + distanceToOwner / 2;
 				float startingRadians = distanceToOwner.ToRotation();
-				for(int i = 9; i > 0; i--)
+				for(int i = 9; i > 1; i--)
 				{
 					Vector2 rotationPos = new Vector2(radius, 0).RotatedBy(MathHelper.ToRadians(18 * i));
 					rotationPos.Y /= 4f;
 					rotationPos = rotationPos.RotatedBy(startingRadians);
 					Vector2 pos = rotationPos += centerOfCircle;
-					Vector2 dynamicAddition = new Vector2(2.5f, 0).RotatedBy(MathHelper.ToRadians(i * 36 + aiCounter * 2));
+					Vector2 circular = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(18 * i));
+					Vector2 dynamicAddition = new Vector2(0.5f + 2.0f * circular.Y, 0).RotatedBy(MathHelper.ToRadians(i * 36 + aiCounter * 2));
 					Vector2 drawPos = pos - Main.screenPosition;
-					spriteBatch.Draw(texture, drawPos + dynamicAddition, null, npc.GetAlpha(drawColor), MathHelper.ToRadians(18 * i - 45) + startingRadians, drawOrigin, npc.scale, SpriteEffects.None, 0f); 
+					spriteBatch.Draw(texture, drawPos + dynamicAddition, null, npc.GetAlpha(drawColor), MathHelper.ToRadians(18 * i - 45) + startingRadians, drawOrigin, npc.scale * 0.9f, SpriteEffects.None, 0f); 
 				}
 			}
 			return true;
@@ -139,7 +140,7 @@ namespace SOTS.NPCs
 			}
 
 
-			npc.rotation = rotateVector.ToRotation();
+			npc.rotation = rotateVector.ToRotation() + MathHelper.ToRadians(90) + npc.velocity.X * 0.075f;
 			aiCounter2++;
 			if (aiCounter2 >= 210 && (distanceToTarget2.Length() < 196f || frame != 0))
 			{
