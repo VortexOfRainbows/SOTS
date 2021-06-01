@@ -19,6 +19,7 @@ using SOTS.Items.GelGear;
 using SOTS.Items.Otherworld;
 using SOTS.Items.IceStuff;
 using SOTS.Items.Celestial;
+using SOTS.Items.MusicBoxes;
 using SOTS.NPCs.Boss.Polaris;
 
 namespace SOTS
@@ -68,6 +69,8 @@ namespace SOTS
 				yabhb.Call("hbLoopMidBar", true);
 				yabhb.Call("hbFinishSingle", ModContent.NPCType<PutridPinkyPhase2>());
 			}
+			//Music Box Stuff
+			AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/PutridPinky"), ItemType("PutridPinkyMusicBox"), TileType("PutridPinkyMusicBox_Tile"));
 		}
 		public override void Unload() 
 		{
@@ -340,18 +343,18 @@ namespace SOTS
 				//bossChecklist.Call("AddBossWithInfo", "Pharaoh's Curse", 4.3f, (Func<bool>)(() => SOTSWorld.downedCurse), "Find the [i:" + ItemType("Sarcophagus") + "] in the pyramid");
 
 				bossChecklist.Call(
-					"AddBoss", 
-					4.25f, 
-					new List<int>() { ModContent.NPCType<PutridPinkyPhase2>() }, 
-					this, 
-					"Putrid Pinky", 
+					"AddBoss",
+					4.25f,
+					new List<int>() { ModContent.NPCType<PutridPinkyPhase2>() },
+					this,
+					"Putrid Pinky",
 					(Func<bool>)(() => SOTSWorld.downedPinky),
-					ModContent.ItemType<JarOfPeanuts>(), 
-					new List<int>() { }, 
-					new List<int>() { ModContent.ItemType<PinkyBag>(), ModContent.ItemType<VialofAcid>(), ModContent.ItemType<Wormwood>(), ItemID.PinkGel},
-					"Summon in any biome at any time using a [i:" + ModContent.ItemType<JarOfPeanuts>() + "]",
-					"{0} has robbed everyone of their peanuts!", 
-					"SOTS/NPCs/Boss/PutridPinky1_Display", 
+					ModContent.ItemType<JarOfPeanuts>(),
+					new List<int>() { },
+					new List<int>() { ModContent.ItemType<PinkyBag>(), ModContent.ItemType<VialofAcid>(), ModContent.ItemType<Wormwood>(), ItemID.PinkGel },
+				"Summon in any biome at any time using a [i:" + ModContent.ItemType<JarOfPeanuts>() + "]",
+					"{0} has robbed everyone of their peanuts!",
+					"SOTS/NPCs/Boss/PutridPinky1_Display",
 					"SOTS/NPCs/Boss/PutridPinky1_Head_Boss",
 					(Func<bool>)(() => true));
 				bossChecklist.Call(
