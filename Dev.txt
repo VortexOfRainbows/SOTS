@@ -12,6 +12,7 @@ The following is my development plans :D
 10. Ghost Town to Evil Biome
 
 High Priority:
+1. Advisor: Music + Music Box
 2. Subspace: Music Box
 3. Resprite polish
 4. A few more enemies (Wisp and Amongus)
@@ -22,6 +23,7 @@ High Priority:
 12. Void Debuffs: Void Consumables Delay, Max Health Decrease
 13. Peanut Gun: Fires peanuts that call in Air Raid Pinkies
 14. Secret Jingle
+15. Check Polaris multiplayer compatability
 
 1. Goopwood sprite Changes
 5. Riptide Trident (Launches you towards your cursor at the cost of void, deal damage while traveling, bounce off of enemies)

@@ -41,7 +41,7 @@ namespace SOTS.Projectiles.Nature
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture = ModContent.GetTexture("SOTS/NPCs/BloomingVine");
+			Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Nature/BloomingVine");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Player owner = Main.player[projectile.owner];
 			if (owner.active && !owner.dead)
