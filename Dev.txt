@@ -12,18 +12,15 @@ The following is my development plans :D
 10. Ghost Town to Evil Biome
 
 High Priority:
-1. Advisor: Music + Music Box
-2. Subspace: Music Box
+1. Advisor: Music Box
 3. Resprite polish
 4. A few more enemies (Wisp and Amongus)
 6. Replace Brittle flail
 7. Run through and redo the gores that need to be done
-10. Permafrost Construct resprite + spirit
-11. Advisor Respawn with scanner, fix in multiplayer
-12. Void Debuffs: Void Consumables Delay, Max Health Decrease
-13. Peanut Gun: Fires peanuts that call in Air Raid Pinkies
-14. Secret Jingle
-15. Check Polaris multiplayer compatability
+8. Advisor Respawn with scanner, fix in multiplayer
+9. Void Debuffs: Void Consumables Delay, Max Health Decrease
+10. Peanut Gun: Fires peanuts that call in Air Raid Pinkies
+11. Secret Jingle
 
 Mid Priority:
 1. Goopwood sprite Changes
@@ -50,7 +47,12 @@ Low Priority:
 7. Electrolyte Seperator
 
 6/1/21
-1. 
+1. Flowering Slime changes (Blasfah)
+2. Spirit Dusts changed in order to make them look better.
+3. Permafrost Spirit Recolors + dust changes (Blasfah + Vortex)
+4. Made serious progress on the Lesser Wisp enemy. Works in multiplayer.
+	1. Needed: Sans wisp + Spawning properly
+5. Polaris syncs fine in multiplayer.
 
 5/31/21
 1. Starcore Assault rifle works with Locket, blacklisted some items...

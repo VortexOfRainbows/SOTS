@@ -161,7 +161,7 @@ namespace SOTS.NPCs.Constructs
 			}
 			int dust2 = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 267);
 			Dust dust = Main.dust[dust2];
-			dust.color = new Color(45, 96, 114);
+			dust.color = new Color(65, 136, 164);
 			dust.noGravity = true;
 			dust.fadeIn = 0.1f;
 			dust.scale *= 2f;
@@ -181,12 +181,17 @@ namespace SOTS.NPCs.Constructs
 		{
 			if (npc.life <= 0)
 			{
-				for(int i = 0; i < 50; i ++)
+				for (int i = 0; i < 50; i++)
 				{
-				int dust = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, mod.DustType("BigPermafrostDust"));
-				Main.dust[dust].velocity *= 5f;
+					int dust3 = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 267);
+					Dust dust4 = Main.dust[dust3];
+					dust4.velocity *= 2.5f;
+					dust4.color = new Color(65, 136, 164);
+					dust4.noGravity = true;
+					dust4.fadeIn = 0.1f;
+					dust4.scale *= 2.5f;
 				}
-				if(phase == 1)
+				if (phase == 1)
 				{
 					phase = 2;
 					npc.lifeMax = (int)(InitiateHealth * (Main.expertMode ? ExpertHealthMult : 1));

@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using System;
 using Microsoft.Xna.Framework;
 using SOTS.Projectiles.Celestial;
+using SOTS.Projectiles.Inferno;
 
 namespace SOTS.Items.Otherworld.FromChests
 {
@@ -21,7 +22,7 @@ namespace SOTS.Items.Otherworld.FromChests
 			item.thrown = true;
 			item.rare = 2;
 			item.autoReuse = true;            
-			item.shoot = ModContent.ProjectileType<PurgatoryGhost>(); 
+			item.shoot = ModContent.ProjectileType<LesserWispLaser>(); 
             item.shootSpeed = 5.0f;
 			item.consumable = true;
 		}
