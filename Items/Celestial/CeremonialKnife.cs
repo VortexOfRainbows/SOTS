@@ -15,8 +15,8 @@ namespace SOTS.Items.Celestial
 		{
 			item.melee = true;
 			item.damage = 100;
-			item.width = 28;
-			item.height = 32;
+			item.width = 30;
+			item.height = 34;
             item.value = Item.sellPrice(0, 69, 0, 0);
 			item.rare = ItemRarityID.Yellow;
 			item.useTime = 7;
