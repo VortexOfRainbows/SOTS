@@ -14,15 +14,15 @@ namespace SOTS.Items
 		{
 			DisplayName.SetDefault("Arcane Aqueduct");
 			Tooltip.SetDefault("Surrounds you with 2 orbital projectiles");
-			Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(8, 8));
+			//Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(8, 8));
 		}
 		public override void SetDefaults()
 		{
 	
 			item.damage = 14;
 			item.magic = true;
-            item.width = 34;     
-            item.height = 34;   
+            item.width = 28;     
+            item.height = 44;   
             item.value = Item.sellPrice(0, 2, 0, 0);
             item.rare = 2;
 			item.accessory = true;
