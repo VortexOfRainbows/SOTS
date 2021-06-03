@@ -253,12 +253,14 @@ namespace SOTS.Void
 		public int RegisterVoidMinions()
 		{
 			VoidMinions = new List<int>();
+			List<int> whoAmI = new List<int>();
 			for (int i = 0; i < Main.projectile.Length; i++)
 			{
 				Projectile projectile = Main.projectile[i];
 				if (projectile.owner == player.whoAmI && projectile.active && isVoidMinion(projectile))
 				{
 					VoidMinions.Add(voidMinion(projectile));
+					whoAmI.Add(projectile.whoAmI);
 				}
 			}
 			int total = 0;
@@ -266,6 +268,18 @@ namespace SOTS.Void
 			{
 				int type = VoidMinions[i];
 				total += minionVoidCost(type);
+			}
+			for (int i = VoidMinions.Count - 1; i >= 0; i--)
+			{
+				if(total > voidMeterMax2)
+				{
+					int type = VoidMinions[i];
+					Projectile projectile = Main.projectile[whoAmI[i]];
+					projectile.active = false;
+					projectile.Kill();
+					total -= minionVoidCost(type);
+					VoidMinions.RemoveAt(i);
+				}
 			}
 			return total;
 		}
@@ -364,8 +378,10 @@ namespace SOTS.Void
 			VoidMinionConsumption = RegisterVoidMinions();
 			voidMeterMax2 -= VoidMinionConsumption;
 
-			if (lootingSouls > voidMeterMax2)
+			if (lootingSouls > voidMeterMax2 && lootingSouls > 0)
 				lootingSouls = voidMeterMax2;
+			if (lootingSouls < 0)
+				lootingSouls = 0;
 			voidMeterMax2 -= lootingSouls;
 
 			if (frozenMaxDuration > 0)

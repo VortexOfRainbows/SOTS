@@ -32,7 +32,7 @@ namespace SOTS.NPCs.Inferno
             npc.width = 26;
             npc.height = 32;
 			Main.npcFrameCount[npc.type] = 1;  
-            npc.value = 125;
+            npc.value = 50;
             npc.npcSlots = 0.25f;
             npc.HitSound = SoundID.NPCHit30;
             npc.DeathSound = SoundID.NPCDeath6;

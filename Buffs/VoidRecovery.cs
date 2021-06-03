@@ -19,7 +19,7 @@ namespace SOTS.Buffs
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			voidPlayer.voidRecovery = true;
 			voidPlayer.voidRegen += 1.25f;
-			voidPlayer.voidRegen += 0.0075f * voidPlayer.voidMeterMax;
+			voidPlayer.voidRegen += 0.0075f * voidPlayer.voidMeterMax2;
 			voidPlayer.voidRegen += 0.0125f * Math.Abs(voidPlayer.voidMeter);	
 			player.channel = false;
 			if(voidPlayer.voidMeter < 0)
