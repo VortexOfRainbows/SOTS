@@ -21,6 +21,7 @@ High Priority:
 9. Void Debuffs: Void Consumables Delay, Max Health Decrease
 10. Peanut Gun: Fires peanuts that call in Air Raid Pinkies
 11. Secret Jingle
+12. Change tile merging for Pyramid Brick + Cursed variant
 
 Mid Priority:
 1. Goopwood sprite Changes
@@ -46,6 +47,10 @@ Low Priority:
 6. Remove negative Vregen in inventory items
 7. Electrolyte Seperator
 
+6/3/21
+1. Fixed bug with void minions and max void.
+2. 
+
 6/1/21
 1. Flowering Slime changes (Blasfah)
 2. Spirit Dusts changed in order to make them look better.
@@ -55,7 +60,7 @@ Low Priority:
 5. Polaris syncs fine in multiplayer.
 
 5/31/21
-1. Starcore Assault rifle works with Locket, blacklisted some items...
+1. Locket; blacklisted some items...
 
 5/28/21 & 5/29/21 & 5/30/21
 1. Frosted Key doesn't debuff you
