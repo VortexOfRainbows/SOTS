@@ -19,7 +19,7 @@ namespace SOTS.Projectiles
 			projectile.CloneDefaults(3);
             aiType = 3; //18 is the demon scythe style
 			projectile.penetrate = 3;
-			projectile.alpha = 0;
+			projectile.alpha = 25;
 			projectile.width = 32;
 			projectile.height = 20;
 		}
