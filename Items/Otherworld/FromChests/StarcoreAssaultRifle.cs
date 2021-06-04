@@ -31,7 +31,7 @@ namespace SOTS.Items.Otherworld.FromChests
 			item.UseSound = SoundID.Item11;
             item.autoReuse = true;
             item.shoot = mod.ProjectileType("StarcoreBullet"); 
-            item.shootSpeed = 3.5f;
+            item.shootSpeed = 4f;
 			item.reuseDelay = 10;
 			item.noUseGraphic = true;
 		}

@@ -15,6 +15,7 @@ using SOTS.Buffs;
 using SOTS.NPCs.Constructs;
 using SOTS.Items.Celestial;
 using SOTS.NPCs.Boss.Polaris;
+using SOTS.NPCs.Inferno;
 
 namespace SOTS.NPCs
 {
@@ -382,6 +383,10 @@ namespace SOTS.NPCs
 			{
 				if (player.statLifeMax2 >= 120)
 					pool.Add(ModContent.NPCType<NatureConstruct>(), (SpawnCondition.SurfaceJungle.Chance * 0.025f) + (SpawnCondition.UndergroundJungle.Chance * 0.0075f));
+			}
+			if(spawnInfo.player.ZoneUnderworldHeight)
+			{
+				pool.Add(ModContent.NPCType<LesserWisp>(), SpawnCondition.Underworld.Chance * 0.175f);
 			}
 		}
 	}

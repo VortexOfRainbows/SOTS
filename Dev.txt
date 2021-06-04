@@ -14,7 +14,7 @@ The following is my development plans :D
 High Priority:
 1. Advisor: Music Box
 3. Resprite polish
-4. A few more enemies (Wisp and Amongus)
+4. Amogus
 6. Replace Brittle flail
 7. Run through and redo the gores that need to be done
 8. Advisor Respawn with scanner, fix in multiplayer
@@ -49,7 +49,9 @@ Low Priority:
 
 6/3/21
 1. Fixed bug with void minions and max void.
-2. 
+2. Sans works in multiplayer!
+3. Changed the way starcore draws to make it less awful on CPU.
+4. 
 
 6/1/21
 1. Flowering Slime changes (Blasfah)

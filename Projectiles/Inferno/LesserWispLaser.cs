@@ -64,6 +64,19 @@ namespace SOTS.Projectiles.Inferno
                 }
 			}
         }
+        public override bool PreAI()
+        {
+			if(projectile.ai[1] == -1)
+            {
+				sans = true;
+            }
+			else
+            {
+				sans = false;
+            }
+            return base.PreAI();
+        }
+        bool sans = false;
 		bool runOnce = false;
 		int counter = 0;
 		public override void AI() 
@@ -88,7 +101,7 @@ namespace SOTS.Projectiles.Inferno
 				counter++;
 			if (runOnce)
 			{
-				Main.PlaySound(2, (int)(projectile.Center.X), (int)(projectile.Center.Y), 94, 0.75f, 0.4f);
+				Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 94, 0.75f, 0.4f);
 				Laser();
 				runOnce = false;
 				//projectile.friendly = true;
@@ -130,7 +143,7 @@ namespace SOTS.Projectiles.Inferno
 			Color color;
 			for (int i = 0; i < particleList.Count; i++)
 			{
-				color = new Color(235, 60, 0, 0);
+				color = sans ? new Color(30, 60, 225, 0) : new Color(235, 60, 0, 0);
 				Vector2 drawPos = particleList[i].position - Main.screenPosition;
 				color = projectile.GetAlpha(color) * (0.35f + 0.65f * particleList[i].scale);
 				for (int j = 0; j < 2; j++)
@@ -142,7 +155,7 @@ namespace SOTS.Projectiles.Inferno
 			}
 			if(projectile.ai[0] < 40)
 			{
-				Texture2D texture2 = ModContent.GetTexture("SOTS/Projectiles/Inferno/WispIndicator");
+				Texture2D texture2 = sans ? ModContent.GetTexture("SOTS/Projectiles/Inferno/SansIndicator") : ModContent.GetTexture("SOTS/Projectiles/Inferno/WispIndicator");
 				Vector2 drawOrigin2 = new Vector2(0, 2);
 				for(int j = 0; j < 450; j++)
 				{
@@ -152,7 +165,7 @@ namespace SOTS.Projectiles.Inferno
 					{
 
 						Vector2 circular = new Vector2(0, i * 0.25f * (40 - projectile.ai[0])).RotatedBy(projectile.velocity.ToRotation());
-						Main.spriteBatch.Draw(texture2, projectile.Center + offset + circular - Main.screenPosition, new Rectangle(0, 0, 2, 4), new Color(255, 100, 100) * (projectile.ai[0] / 40f) * alphaMult, projectile.velocity.ToRotation(), drawOrigin2, 0.5f, SpriteEffects.None, 0f);
+						Main.spriteBatch.Draw(texture2, projectile.Center + offset + circular - Main.screenPosition, new Rectangle(0, 0, 2, 4), (sans ? new Color(100, 100, 255) : new Color(255, 100, 100)) * (projectile.ai[0] / 40f) * alphaMult, projectile.velocity.ToRotation(), drawOrigin2, 0.5f, SpriteEffects.None, 0f);
 					}
 					int x = (int)(projectile.Center.X + offset.X) / 16;
 					int y = (int)(projectile.Center.Y + offset.Y) / 16;
@@ -161,19 +174,30 @@ namespace SOTS.Projectiles.Inferno
 						break;
 					}
 				}
-				texture = Main.projectileTexture[projectile.type];
+				texture = sans ? ModContent.GetTexture("SOTS/Projectiles/Inferno/SansBones") : Main.projectileTexture[projectile.type];
 				drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
+				float scale = sans ? 0.75f : 1f;
 				for (int j = 0; j < 3; j++)
 				{
 					for (int i = 0; i < 4; i++)
 					{
 						float x = Main.rand.NextFloat(-1f, 1f);
 						float y = Main.rand.NextFloat(-1f, 1f);
-						Main.spriteBatch.Draw(texture, projectile.Center + new Vector2(x, y) - Main.screenPosition, null, new Color(150, 100, 100, 0), projectile.rotation * (1 + j * 0.33f), drawOrigin, (projectile.scale * 1.25f + projectile.ai[0] * 0.01f) * (1 - j * 0.33f), SpriteEffects.None, 0f);
+						Main.spriteBatch.Draw(texture, projectile.Center + new Vector2(x, y) - Main.screenPosition, null, sans ? new Color(100, 100, 175, 0) : new Color(150, 100, 100, 0), projectile.rotation * (1 + j * 0.33f), drawOrigin, scale * (projectile.scale * 1.25f + projectile.ai[0] * 0.01f) * (sans ? (1.2f - j * 0.4f) : (1 - j * 0.33f)), SpriteEffects.None, 0f);
 					}
 				}
 			}
 			return false;
 		}
-	}
+        public override void PostDraw(SpriteBatch spriteBatch, Color lightColor)
+        {
+			if(sans && projectile.ai[0] < 40)
+			{
+				Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Inferno/BlasfartsGreatestCreation");
+				Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
+				Main.spriteBatch.Draw(texture, projectile.Center - Main.screenPosition, null, Color.White, projectile.velocity.ToRotation() - MathHelper.ToRadians(90), drawOrigin, 1.15f, SpriteEffects.None, 0f);
+			}
+			base.PostDraw(spriteBatch, lightColor);
+        }
+    }
 }

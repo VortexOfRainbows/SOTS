@@ -15,7 +15,7 @@ namespace SOTS.Projectiles.Otherworld
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Starcore Bullet");
-			ProjectileID.Sets.TrailCacheLength[projectile.type] = 35;
+			ProjectileID.Sets.TrailCacheLength[projectile.type] = 32;
 			ProjectileID.Sets.TrailingMode[projectile.type] = 1;
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
@@ -24,10 +24,10 @@ namespace SOTS.Projectiles.Otherworld
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			for (int k = 0; k < projectile.oldPos.Length; k++)
 			{
-				Color color2 = new Color(110, 110, 110, 0).MultiplyRGBA(color);
+				Color color2 = new Color(150, 150, 150, 0).MultiplyRGBA(color);
 				Vector2 drawPos = projectile.oldPos[k] - Main.screenPosition + drawOrigin;
 				color2 = projectile.GetAlpha(color2) * ((projectile.oldPos.Length - k) / (float)projectile.oldPos.Length) * 0.5f;
-				for (int j = 0; j < 5; j++)
+				for (int j = 0; j < 3; j++)
 				{
 					float x = Main.rand.Next(-10, 11) * 0.1f;
 					float y = Main.rand.Next(-10, 11) * 0.1f;
@@ -48,7 +48,7 @@ namespace SOTS.Projectiles.Otherworld
 			projectile.timeLeft = 7200;
 			projectile.tileCollide = true;
 			projectile.ranged = true;
-			projectile.extraUpdates = 5;
+			projectile.extraUpdates = 4;
 			projectile.usesLocalNPCImmunity = true;
 			projectile.localNPCHitCooldown = 24 * (1 + projectile.extraUpdates);
 		}
