@@ -26,7 +26,7 @@ namespace SOTS.NPCs.Constructs
 			npc.height = 74;
 			Main.npcFrameCount[npc.type] = 1;  
 			npc.value = 12550;
-			npc.npcSlots = 5f;
+			npc.npcSlots = 0f;
 			npc.lavaImmune = true;
 			npc.noGravity = true;
 			npc.noTileCollide = false;

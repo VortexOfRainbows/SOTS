@@ -16,11 +16,10 @@ High Priority:
 3. Resprite polish
 4. Amogus
 7. Run through and redo the gores that need to be done
-8. Advisor Respawn with scanner, fix in multiplayer
-9. Void Debuffs: Void Consumables Delay, Max Health Decrease
-10. Peanut Gun: Fires peanuts that call in Air Raid Pinkies
-11. Secret Jingle
-12. Book of Virtues
+8. Void Debuffs: Void Consumables Delay, Max Health Decrease
+9. Peanut Gun: Fires peanuts that call in Air Raid Pinkies
+10. Secret Jingle
+11. Book of Virtues
 
 Mid Priority:
 1. Goopwood sprite Changes
@@ -52,7 +51,11 @@ Low Priority:
 2. Sans works in multiplayer!
 3. Changed the way starcore draws to make it less awful on CPU. This also nerfs its I-frame duration (longer).
 4. Pyramid tiles merge properly. Fixed worldgen in Pyramid Nature room.
-5. 
+5. Blue Slimer Resprite
+6. Changed naming conventions regarding Avaritian stuff -> Avaritia stuff
+7. Worldgen Scanner renamed -> Planetary Analyzer
+	1. Works in Multiplayer + Respawns the Advisor upon use (assuming the player is far enough away)
+8. Reduced Max spawns in the Planetarium by 20%
 
 6/1/21
 1. Flowering Slime changes (Blasfah)
