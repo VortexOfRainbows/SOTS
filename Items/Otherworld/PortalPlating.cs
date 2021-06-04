@@ -9,7 +9,7 @@ namespace SOTS.Items.Otherworld
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Avaritian Portal Plating");
+			DisplayName.SetDefault("Avaritia Portal Plating");
 			Tooltip.SetDefault("'It bares striking resemblance to luminite'");
 		}
 

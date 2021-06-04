@@ -263,7 +263,7 @@ namespace SOTS.NPCs
 				spawnRate = (int)(spawnRate /= 30); //essentially setting it to 20
 				if (spawnRate < 1)
 					spawnRate = 1;
-				maxSpawns = (int)(maxSpawns * 2.5f);
+				maxSpawns = (int)(maxSpawns * 2f);
 			}
 		}
 		public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)

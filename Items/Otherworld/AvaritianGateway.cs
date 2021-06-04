@@ -15,7 +15,7 @@ namespace SOTS.Items.Otherworld
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Avaritian Gateway");
+			DisplayName.SetDefault("Avaritia Gateway");
 			Tooltip.SetDefault("'A strange portal that leads nowhere'\nServes as the spawning location for the Advisor");
 		}
 		public override void SetDefaults()
@@ -76,79 +76,88 @@ namespace SOTS.Items.Otherworld
 		}
         public override void RandomUpdate(int i, int j)
 		{
+			SpawnAdvisor(i, j, mod);
+			base.RandomUpdate(i, j);
+		}
+		public static bool SpawnAdvisor(int i, int j, Mod mod)
+		{
 			int type = Main.tile[i, j].frameX / 18 + (Main.tile[i, j].frameY / 18 * 9);
-			bool playerNear = false;
-			for(int k = 0; k < Main.player.Length; k++)
-            {
-				Vector2 pos = new Vector2(i * 16 + 8, j * 16 + 8);
-				Player player = Main.player[k];
-				if((player.Center - pos).Length() < 3000f)
-                {
-					playerNear = true;
-					break;
-				}
-            }
-			if(type == 58 && !playerNear)
-            {
-				if(!NPC.AnyNPCs(mod.NPCType("TheAdvisorHead")))
-                {
-					if(Main.netMode != 1)
+			if (type == 58)
+			{
+				bool playerNear = false;
+				for (int k = 0; k < Main.player.Length; k++)
+				{
+					Vector2 pos = new Vector2(i * 16 + 8, j * 16 + 8);
+					Player player = Main.player[k];
+					if ((player.Center - pos).Length() < 2800f)
 					{
-						int npc = NPC.NewNPC(i * 16 + 8, j * 16 + 8 - 128, mod.NPCType("TheAdvisorHead"));
-						Main.npc[npc].netUpdate = true;
+						playerNear = true;
+						break;
 					}
-					for(int k = 0; k < 4; k++)
+				}
+				if (!playerNear)
+				{
+					if (!NPC.AnyNPCs(mod.NPCType("TheAdvisorHead")))
 					{
-						float degrees = 0;
-						if (k == 0)
-							degrees = 80f;
-						if (k == 1)
-							degrees = 40f;
-						if (k == 2)
-							degrees = -40f;
-						if (k == 3)
-							degrees = -80f;
-						Vector2 direction = new Vector2(0, 1500).RotatedBy(MathHelper.ToRadians(degrees));
-						bool activated = false;
-						for(int l = 0; l < 1500; l += 16)
-                        {
-							direction -= direction.SafeNormalize(Vector2.Zero) * 16f;
-							int addX = (int)direction.X / 16;
-							int addY = (int)direction.Y / 16;
-							int locX = addX + i;
-							int locY = addY + j;
-							Tile tile = Framing.GetTileSafely(locX, locY);
-							if (tile.active() && !Main.tileSolidTop[tile.type] && Main.tileSolid[tile.type] && (tile.type == (ushort)mod.TileType("AvaritianPlatingTile") || tile.type == (ushort)mod.TileType("PortalPlatingTile") || tile.type == (ushort)mod.TileType("DullPlatingTile")))
+						if (Main.netMode != 1)
+						{
+							int npc = NPC.NewNPC(i * 16 + 8, j * 16 + 8 - 128, mod.NPCType("TheAdvisorHead"));
+							Main.npc[npc].netUpdate = true;
+						}
+						for (int k = 0; k < 4; k++)
+						{
+							float degrees = 0;
+							if (k == 0)
+								degrees = 80f;
+							if (k == 1)
+								degrees = 40f;
+							if (k == 2)
+								degrees = -40f;
+							if (k == 3)
+								degrees = -80f;
+							Vector2 direction = new Vector2(0, 1500).RotatedBy(MathHelper.ToRadians(degrees));
+							bool activated = false;
+							for (int l = 0; l < 1500; l += 16)
 							{
-								direction += direction.SafeNormalize(Vector2.Zero) * 80f;
+								direction -= direction.SafeNormalize(Vector2.Zero) * 16f;
+								int addX = (int)direction.X / 16;
+								int addY = (int)direction.Y / 16;
+								int locX = addX + i;
+								int locY = addY + j;
+								Tile tile = Framing.GetTileSafely(locX, locY);
+								if (tile.active() && !Main.tileSolidTop[tile.type] && Main.tileSolid[tile.type] && (tile.type == (ushort)mod.TileType("AvaritianPlatingTile") || tile.type == (ushort)mod.TileType("PortalPlatingTile") || tile.type == (ushort)mod.TileType("DullPlatingTile")))
+								{
+									direction += direction.SafeNormalize(Vector2.Zero) * 80f;
 
+									if (Main.netMode != 1)
+									{
+										int npc = NPC.NewNPC(i * 16 + 8 + (int)direction.X, j * 16 + 8 + (int)direction.Y, mod.NPCType("OtherworldlyConstructHead2"));
+										Main.npc[npc].netUpdate = true;
+										TheAdvisorHead.ConstructIds[k] = npc;
+									}
+									activated = true;
+									break;
+								}
+							}
+							if (!activated)
+							{
+								direction = direction.SafeNormalize(Vector2.Zero) * -240f;
+								direction.Y += 80;
 								if (Main.netMode != 1)
 								{
 									int npc = NPC.NewNPC(i * 16 + 8 + (int)direction.X, j * 16 + 8 + (int)direction.Y, mod.NPCType("OtherworldlyConstructHead2"));
 									Main.npc[npc].netUpdate = true;
 									TheAdvisorHead.ConstructIds[k] = npc;
 								}
-								activated = true;
-								break;
 							}
 						}
-						if(!activated)
-						{
-							direction = direction.SafeNormalize(Vector2.Zero) * -240f;
-							direction.Y += 80;
-							if (Main.netMode != 1)
-							{
-								int npc = NPC.NewNPC(i * 16 + 8 + (int)direction.X, j * 16 + 8 + (int)direction.Y, mod.NPCType("OtherworldlyConstructHead2"));
-								Main.npc[npc].netUpdate = true;
-								TheAdvisorHead.ConstructIds[k] = npc;
-							}
-						}
-					} 
-                }
-            }
-			base.RandomUpdate(i, j);
-        }
-        public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
+						return true;
+					}
+				}
+			}
+			return false;
+		}
+		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
 		{
 			int type = Main.tile[i, j].frameX / 18 + (Main.tile[i, j].frameY / 18 * 9);
 			if (type != 58)
