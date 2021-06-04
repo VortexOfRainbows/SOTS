@@ -15,11 +15,12 @@ High Priority:
 1. Advisor: Music Box
 3. Resprite polish
 4. Amogus
-7. Run through and redo the gores that need to be done
-8. Void Debuffs: Void Consumables Delay, Max Health Decrease
-9. Peanut Gun: Fires peanuts that call in Air Raid Pinkies
-10. Secret Jingle
-11. Book of Virtues
+5. Run through and redo the gores that need to be done
+6. Void Debuffs: Void Consumables Delay, Max Health Decrease
+7. Peanut Gun: Fires peanuts that call in Air Raid Pinkies
+8. Secret Jingle
+9. Book of Virtues
+10. Assassination Potion NERF
 
 Mid Priority:
 1. Goopwood sprite Changes
@@ -45,6 +46,10 @@ Low Priority:
 5. Sharanga Upgrade
 6. Remove negative Vregen in inventory items
 7. Electrolyte Seperator
+
+6/4/21
+1. Wall mimic eye glowmask
+2. 
 
 6/3/21
 1. Fixed bug with void minions and max void.

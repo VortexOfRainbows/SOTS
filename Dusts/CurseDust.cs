@@ -8,7 +8,7 @@ namespace SOTS.Dusts
 	{
 		public override void OnSpawn(Dust dust)
 		{
-			dust.frame = new Rectangle(2, Main.rand.Next(3) * 12, 10, 12);
+			dust.frame = new Rectangle(1, 1 + Main.rand.Next(3) * 12, 12, 12);
 			dust.velocity.Y = Main.rand.Next(-10, 11) * 0.2f;
 			dust.velocity.X = Main.rand.Next(-10, 11) * 0.2f;
 			dust.scale *= Main.rand.Next(5, 10) * 0.1f;

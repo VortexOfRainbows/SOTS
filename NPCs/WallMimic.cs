@@ -65,6 +65,8 @@ namespace SOTS.NPCs
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, 25);
 			Vector2 drawPos = npc.Center - Main.screenPosition;
 			spriteBatch.Draw(texture, drawPos, new Rectangle(0, npc.frame.Y, 50, 50), drawColor, npc.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
+			texture = ModContent.GetTexture("SOTS/NPCs/WallMimicGlow");
+			spriteBatch.Draw(texture, drawPos, new Rectangle(0, npc.frame.Y, 50, 50), Color.White, npc.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
 			return false;
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
@@ -80,13 +82,13 @@ namespace SOTS.NPCs
 
 			distance = 1f / distance;
 
-			shootToX *= distance * 4;
-			shootToY *= distance * 4;
+			shootToX *= distance * 3f;
+			shootToY *= distance * 2;
 
 			drawColor = npc.GetAlpha(drawColor);
 			drawPos.X += shootToX;
 			drawPos.Y += shootToY;
-			spriteBatch.Draw(texture, drawPos, null, drawColor, npc.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
+			spriteBatch.Draw(texture, drawPos, null, drawColor, npc.rotation, drawOrigin, 0.9f, SpriteEffects.None, 0f);
 		}
 		bool hasMoved = false;
 		bool ready = false;
@@ -100,21 +102,16 @@ namespace SOTS.NPCs
 			aimToX = rotation.X + npc.Center.X;
 			aimToY = rotation.Y + npc.Center.Y;
 			#region dust
-			int num1 = Dust.NewDust(new Vector2(npc.Center.X - 6, npc.position.Y - 6), 0, 0, mod.DustType("CurseDust"));
-			Main.dust[num1].noGravity = true;
-			Main.dust[num1].velocity.Y = -7f;
-			num1 = Dust.NewDust(new Vector2(npc.Center.X - 6, npc.position.Y + npc.height - 6), 0, 0, mod.DustType("CurseDust"));
-			Main.dust[num1].noGravity = true;
-			Main.dust[num1].velocity.Y = 7f;
-			num1 = Dust.NewDust(new Vector2(npc.position.X - 6, npc.Center.Y - 6), 0, 0, mod.DustType("CurseDust"));
-			Main.dust[num1].noGravity = true;
-			Main.dust[num1].velocity.X = -7f;
-			num1 = Dust.NewDust(new Vector2(npc.position.X - 6 + npc.width, npc.Center.Y - 6), 0, 0, mod.DustType("CurseDust"));
-			Main.dust[num1].noGravity = true;
-			Main.dust[num1].velocity.X = 7f;
+			for(int k = 0; k < 4; k++)
+            {
+				Vector2 from = new Vector2(24, 0).RotatedBy(Math.PI / 2 * k);
+				Dust dust = Dust.NewDustDirect(npc.Center - new Vector2(5) + from, 0, 0, mod.DustType("CurseDust"));
+				dust.noGravity = true;
+				dust.scale = 0.9f + Main.rand.NextFloat(-0.1f, 0.1f);
+				dust.velocity *= 0.45f;
+				dust.velocity += from * 0.25f;
+			}
 			#endregion
-
-
 			int i = (int)npc.Center.X / 16;
 			int j = (int)npc.Center.Y / 16;
 			Tile tile = Framing.GetTileSafely(i, j);
@@ -298,7 +295,7 @@ namespace SOTS.NPCs
 			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FragmentOfEarth"), Main.rand.Next(2) + 1);
 			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("SoulResidue"), Main.rand.Next(2) + 1);
 			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("CursedHiveBlock"), Main.rand.Next(7) + 3);
-			if(dropSpecial || Main.rand.Next(200) == 0)
+			if(dropSpecial || Main.rand.NextBool(200))
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("TheDarkEye"), 1);
 			if(Main.rand.Next(20) == 0)
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("CursedCaviar"), 1);
@@ -324,7 +321,6 @@ namespace SOTS.NPCs
 				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/WallMimicGore2"), 1f);
 				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/WallMimicGore3"), 1f);
 				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/WallMimicGore4"), 1f);
-
 				for (int i = 0; i < 9; i++)
 					Gore.NewGore(npc.position, npc.velocity, Main.rand.Next(61, 64), 1f);
 			}
