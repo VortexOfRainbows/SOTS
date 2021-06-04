@@ -34,6 +34,7 @@ namespace SOTS.Items.Pyramid
 	{
 		public override void SetDefaults()
 		{
+			Main.tileBrick[Type] = true;
 			Main.tileSolid[Type] = true;
 			Main.tileMergeDirt[Type] = true;
 			Main.tileBlockLight[Type] = true;
@@ -66,6 +67,7 @@ namespace SOTS.Items.Pyramid
 	{
 		public override void SetDefaults()
 		{
+			Main.tileBrick[Type] = true;
 			Main.tileSolid[Type] = true;
 			Main.tileMergeDirt[Type] = true;
 			Main.tileBlockLight[Type] = true;

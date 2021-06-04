@@ -11,11 +11,12 @@ namespace SOTS.Items.Pyramid
 		public override void SetDefaults()
 		{
 			Main.tileMerge[Type][ModContent.TileType<OvergrownPyramidTile>()] = true;
+			Main.tileBrick[Type] = true;
 			Main.tileSolid[Type] = true;
 			Main.tileMergeDirt[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
-			drop = mod.ItemType("PyramidSlab");
+			drop = ModContent.ItemType<PyramidSlab>();
 			AddMapEntry(new Color(170, 150, 85));
 			mineResist = 3.5f;
 			minPick = 110;

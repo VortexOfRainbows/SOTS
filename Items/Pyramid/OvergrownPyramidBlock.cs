@@ -114,6 +114,7 @@ namespace SOTS.Items.Pyramid
 	{
 		public override void SetDefaults()
 		{
+			//Main.tileMerge[Type][ModContent.TileType<PyramidSlabTile>()] = true;
 			TileID.Sets.NeedsGrassFraming[Type] = true;
 			TileID.Sets.NeedsGrassFramingDirt[Type] = ModContent.TileType<PyramidSlabTile>();
 			Main.tileSolid[Type] = true;
