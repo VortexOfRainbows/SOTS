@@ -386,7 +386,7 @@ namespace SOTS.NPCs
 			}
 			if(spawnInfo.player.ZoneUnderworldHeight)
 			{
-				pool.Add(ModContent.NPCType<LesserWisp>(), SpawnCondition.Underworld.Chance * 0.175f);
+				pool.Add(ModContent.NPCType<LesserWisp>(), SpawnCondition.Underworld.Chance * 0.15f);
 			}
 		}
 	}

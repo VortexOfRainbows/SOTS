@@ -21,6 +21,7 @@ using SOTS.Items.ChestItems;
 using SOTS.Items;
 using SOTS.Items.Fragments;
 using SOTS.Items.Vibrant;
+using SOTS.Items.Inferno;
 
 namespace SOTS
 {
@@ -39,14 +40,14 @@ namespace SOTS
 		{
 			if(runOnce)
 			{
-				rarities1 = new int[] { ItemType<StarlightAlloy>(), ItemType<HardlightAlloy>(), ItemType<OtherworldlyAlloy>(), ItemType<PotGenerator>(), ItemType<PrecariousCluster>(), ItemType<Calculator>() };
+				rarities1 = new int[] { ItemType<StarlightAlloy>(), ItemType<HardlightAlloy>(), ItemType<OtherworldlyAlloy>(), ItemType<PotGenerator>(), ItemType<PrecariousCluster>(), ItemType<Calculator>(), ItemType<BookOfVirtues>() };
 				rarities2 = new int[] { ItemType<RefractingCrystal>(), ItemType<CursedApple>() };
 				dedicatedOrange = new int[] { ItemType<TerminatorAcorns>(), ItemType<PlasmaCutterButOnAChain>(), ItemType<CoconutGun>() }; //friends
 				dedicatedBlue = new int[] { ItemType<Calculator>() }; //friends 2
 				dedicatedPurpleRed = new int[] { ItemType<CursedApple>(), ItemType<ArcStaffMk2>() }; //James
 				dedicatedPastelPink = new int[] { ItemType<StrangeFruit>() }; //Tris
 				dedicatedRainbow = new int[] { ItemType<Traingun>(), ItemType<SubspaceLocket>() /*ItemType<PhotonGeyser>()*/ }; //Vortex
-				dedicatedBloodRed = new int[] { ItemType<Doomstick>() }; //Blasfah
+				dedicatedBloodRed = new int[] { ItemType<Doomstick>(), ItemType<BookOfVirtues>() }; //Blasfah
 				runOnce = false;
             }
 			if (rarities1.Contains(item.type))

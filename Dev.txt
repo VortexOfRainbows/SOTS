@@ -21,6 +21,7 @@ High Priority:
 8. Secret Jingle
 9. Book of Virtues
 10. Assassination Potion NERF
+11. Need wisp banner
 
 Mid Priority:
 1. Goopwood sprite Changes
@@ -49,7 +50,10 @@ Low Priority:
 
 6/4/21
 1. Wall mimic eye glowmask
-2. 
+2. Some tile fixes
+3. Lesser Wisps spawn in groups of 3-4 from 3-5
+4. Lesser Wisp spawnrate lowered, life 40 (80) -> 35 (70)
+5. Book of Virtues After
 
 6/3/21
 1. Fixed bug with void minions and max void.

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using SOTS.Projectiles.Minions;
 using SOTS.Buffs;
 using Terraria.ID;
+using SOTS.Projectiles.Inferno;
 
 namespace SOTS.Void
 {
@@ -294,6 +295,8 @@ namespace SOTS.Void
 				return 20;
 			if (type == (int)VoidMinionID.OtherworldSpirit)
 				return 65;
+			if (type == (int)VoidMinionID.BethanySpirit)
+				return 12;
 			return 1;
 		}
 		public static Color minionVoidColor(int type)
@@ -306,7 +309,9 @@ namespace SOTS.Void
 				return VoidPlayer.EarthColor;
 			if (type == (int)VoidMinionID.OtherworldSpirit)
 				return new Color(OtherworldColor.R, OtherworldColor.G, OtherworldColor.B);
-			return Color.White;
+			if (type == (int)VoidMinionID.BethanySpirit)
+				return new Color(170, 220, 255);
+				return Color.White;
 		}
 		public static bool isVoidMinion(Projectile projectile)
         {
@@ -330,6 +335,8 @@ namespace SOTS.Void
 				return (int)VoidMinionID.EarthenSpirit;
 			if (type == ProjectileType<OtherworldlySpirit>())
 				return (int)VoidMinionID.OtherworldSpirit;
+			if (type == ProjectileType<SpectralWisp>())
+				return (int)VoidMinionID.BethanySpirit;
 			return -1;
 		}
 		public enum VoidMinionID
@@ -337,7 +344,8 @@ namespace SOTS.Void
 			NatureSpirit,
 			ChaosSpirit,
 			EarthenSpirit,
-			OtherworldSpirit
+			OtherworldSpirit,
+			BethanySpirit
         }
         public override void PostUpdateEquips()
         {

@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
 using SOTS.Items.Banners;
 using SOTS.Items.Fragments;
+using SOTS.Items.Inferno;
 using SOTS.Projectiles.Celestial;
 using SOTS.Projectiles.Inferno;
 using System;
@@ -25,7 +26,7 @@ namespace SOTS.NPCs.Inferno
 		public override void SetDefaults()
 		{
             npc.aiStyle = 0; 
-            npc.lifeMax = 40;   
+            npc.lifeMax = 35;   
             npc.damage = 35; 
             npc.defense = 16;  
             npc.knockBackResist = 0.5f;
@@ -119,7 +120,7 @@ namespace SOTS.NPCs.Inferno
 						npc.ai[1] = -120;
 					}
 					else
-						for (int i = 0; i < Main.rand.Next(2, 5); i++)
+						for (int i = 0; i < Main.rand.Next(2, 4); i++)
 							NPC.NewNPC((int)npc.Center.X, (int)npc.position.Y + npc.height, this.npc.type, 0, -1, -Main.rand.Next(120) - 240);
 					npc.netUpdate = true;
 				}
@@ -292,7 +293,7 @@ namespace SOTS.NPCs.Inferno
 		public override void NPCLoot()
 		{ 
 			if(sans)
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<ChaosBadge>(), 1);
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<BookOfVirtues>(), 1);
 			if (Main.rand.NextBool(15))
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, sans ? ItemID.LivingUltrabrightFireBlock : ItemID.LivingFireBlock, Main.rand.Next(10, 21));
 			else if (Main.rand.NextBool(25))
