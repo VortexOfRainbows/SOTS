@@ -34,7 +34,7 @@ namespace SOTS
 		public static int[] dedicatedPurpleRed;
 		public static int[] dedicatedPastelPink;
 		public static int[] dedicatedRainbow;
-		public static int[] dedicatedBloodRed;
+		public static int[] dedicatedBlasfah;
 		static bool runOnce = true;
 		public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
 		{
@@ -47,7 +47,7 @@ namespace SOTS
 				dedicatedPurpleRed = new int[] { ItemType<CursedApple>(), ItemType<ArcStaffMk2>() }; //James
 				dedicatedPastelPink = new int[] { ItemType<StrangeFruit>() }; //Tris
 				dedicatedRainbow = new int[] { ItemType<Traingun>(), ItemType<SubspaceLocket>() /*ItemType<PhotonGeyser>()*/ }; //Vortex
-				dedicatedBloodRed = new int[] { ItemType<Doomstick>(), ItemType<BookOfVirtues>() }; //Blasfah
+				dedicatedBlasfah = new int[] { ItemType<Doomstick>(), ItemType<BookOfVirtues>() }; //Blasfah
 				runOnce = false;
             }
 			if (rarities1.Contains(item.type))
@@ -105,9 +105,9 @@ namespace SOTS
 				dedicatedColor = new Color(255, 158, 235);
 				dedicated = true;
 			}
-			if (dedicatedBloodRed.Contains(item.type))
+			if (dedicatedBlasfah.Contains(item.type))
 			{
-				dedicatedColor = new Color(102, 0, 0);
+				dedicatedColor = new Color(60, 8, 163);
 				dedicated = true;
 			}
 			if (dedicated)

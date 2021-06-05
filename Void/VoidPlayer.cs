@@ -69,7 +69,7 @@ namespace SOTS.Void
 		{
 			// Here we would sync something like an RPG stat whenever the player changes it.
 			VoidPlayer cloneV = clientPlayer as VoidPlayer;
-			if (cloneV.lootingSouls != lootingSouls)
+			if (cloneV.lootingSouls != lootingSouls || cloneV.voidMeterMax2 != voidMeterMax2)
 			{
 				// Send a Mod Packet with the changes.
 				var packet = mod.GetPacket();
@@ -280,6 +280,7 @@ namespace SOTS.Void
 					projectile.Kill();
 					total -= minionVoidCost(type);
 					VoidMinions.RemoveAt(i);
+					SendClientChanges(this);
 				}
 			}
 			return total;
@@ -296,7 +297,7 @@ namespace SOTS.Void
 			if (type == (int)VoidMinionID.OtherworldSpirit)
 				return 65;
 			if (type == (int)VoidMinionID.BethanySpirit)
-				return 12;
+				return 15;
 			return 1;
 		}
 		public static Color minionVoidColor(int type)

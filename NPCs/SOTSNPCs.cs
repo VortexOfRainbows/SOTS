@@ -100,15 +100,15 @@ namespace SOTS.NPCs
 		{
 			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-			if (modPlayer.assassinate)
+			if (modPlayer.assassinate && !npc.boss)
 			{
-				npc.AddBuff(mod.BuffType("Assassination"), 30 * modPlayer.assassinateFlat);
+				npc.AddBuff(ModContent.BuffType<Assassination>(), 30 * modPlayer.assassinateFlat);
 				float mult = 1 - modPlayer.assassinateNum;
 				int life = npc.life - (damage - (npc.defense + 1) / 2);
-				if ((life < npc.lifeMax * mult || life <= modPlayer.assassinateFlat) && npc.HasBuff(mod.BuffType("Assassination")))
+				if ((life < npc.lifeMax * mult || life <= modPlayer.assassinateFlat) && npc.HasBuff(ModContent.BuffType<Assassination>()))
 				{
-					damage += life + modPlayer.assassinateFlat + ((npc.defense + 1) / 2);
-					crit = true;
+					damage += 2 * (life + modPlayer.assassinateFlat + ((npc.defense + 1) / 2));
+					//crit = true;
 					for (int i = 0; i < 60; i++)
 					{
 						Vector2 rotate = new Vector2(npc.width / 2 + 4, 0).RotatedBy(MathHelper.ToRadians(Main.GlobalTime * 120 + npc.whoAmI * 7 + 120 * i));

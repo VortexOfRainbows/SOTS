@@ -19,9 +19,8 @@ High Priority:
 6. Void Debuffs: Void Consumables Delay, Max Health Decrease
 7. Peanut Gun: Fires peanuts that call in Air Raid Pinkies
 8. Secret Jingle
-9. Book of Virtues
-10. Assassination Potion NERF
-11. Need wisp banner
+9. Book of Virtues: Needs server syncing
+10. Need wisp banner
 
 Mid Priority:
 1. Goopwood sprite Changes
@@ -31,6 +30,7 @@ Mid Priority:
 5. Antigrav booties
 6. Replace Brittle flail
 
+Mid Priority 2:
 1. Void Low Warning
 2. Prefixes for voids
 3. Bone Clapper
@@ -48,12 +48,17 @@ Low Priority:
 6. Remove negative Vregen in inventory items
 7. Electrolyte Seperator
 
+6/5/21
+1. Assassination potion doesn't cause crits for free and doesn't work on bosses.
+2. 
+
 6/4/21
 1. Wall mimic eye glowmask
 2. Some tile fixes
 3. Lesser Wisps spawn in groups of 3-4 from 3-5
 4. Lesser Wisp spawnrate lowered, life 40 (80) -> 35 (70)
-5. Book of Virtues After
+5. Book of Virtues Completed.
+	1. Next: Server Syncing
 
 6/3/21
 1. Fixed bug with void minions and max void.

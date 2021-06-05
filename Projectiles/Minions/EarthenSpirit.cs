@@ -22,8 +22,8 @@ namespace SOTS.Projectiles.Minions
 			projectile.height = 34;
 			projectile.tileCollide = false;
 			projectile.friendly = true;
-			projectile.minion = true;
-			projectile.minionSlots = 0f;
+			//projectile.minion = true;
+			//projectile.minionSlots = 0f;
 			projectile.penetrate = -1;
 			projectile.usesLocalNPCImmunity = true;
 			projectile.ignoreWater = true;

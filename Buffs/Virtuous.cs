@@ -8,7 +8,7 @@ namespace SOTS.Buffs
 		public override void SetDefaults()
 		{
 			DisplayName.SetDefault("Virtuous");
-			Description.SetDefault("Spectral Wisps assist you in combat");
+			Description.SetDefault("'Spiritual Companionship'");
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
 		}

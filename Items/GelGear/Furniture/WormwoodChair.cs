@@ -14,7 +14,6 @@ namespace SOTS.Items.GelGear.Furniture
 			DisplayName.SetDefault("Goopwood Chair");
 			Tooltip.SetDefault("");
 		}
-
 		public override void SetDefaults()
 		{
 			item.width = 16;
@@ -25,7 +24,7 @@ namespace SOTS.Items.GelGear.Furniture
 			item.useAnimation = 15;
 			item.useTime = 10;
 			item.useStyle = 1;
-			item.rare = 1;
+			item.rare = ItemRarityID.Blue;
 			item.value = 0;
 			item.consumable = true;
 			item.createTile = mod.TileType("WormwoodChairTile");
@@ -47,7 +46,7 @@ namespace SOTS.Items.GelGear.Furniture
 			Main.tileNoAttach[Type] = true;
 			Main.tileLavaDeath[Type] = true;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style1x2);
-			TileObjectData.newTile.CoordinateHeights = new[]{16, 16};
+			TileObjectData.newTile.CoordinateHeights = new[]{16, 18};
 			TileObjectData.newTile.Direction = TileObjectDirection.PlaceLeft;
 			TileObjectData.newTile.StyleWrapLimit = 2;
 			TileObjectData.newTile.StyleMultiplier = 2;
@@ -62,7 +61,6 @@ namespace SOTS.Items.GelGear.Furniture
 			disableSmartCursor = true;
 			adjTiles = new int[] { TileID.Chairs };
 		}
-
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
 			Item.NewItem(i * 16, j * 16, 32, 16, mod.ItemType("WormwoodChair"));

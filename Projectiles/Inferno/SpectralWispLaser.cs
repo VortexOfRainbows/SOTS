@@ -65,10 +65,11 @@ namespace SOTS.Projectiles.Inferno
 				}
 				int x = (int)current.X / 16;
 				int y = (int)current.Y / 16;
-				if (!WorldGen.InWorld(x, y, 20) || (Main.tile[x, y].active() && !Main.tileSolidTop[Main.tile[x, y].type] && Main.tileSolid[Main.tile[x, y].type]))
+				Tile tile = Framing.GetTileSafely(x, y);
+				if (!WorldGen.InWorld(x, y, 20) || (tile.active() && !Main.tileSolidTop[tile.type] && Main.tileSolid[tile.type]))
 				{
 					break;
-                }
+				}
 			}
         }
 		bool runOnce = false;
@@ -160,7 +161,8 @@ namespace SOTS.Projectiles.Inferno
 					}
 					int x = (int)(projectile.Center.X + offset.X) / 16;
 					int y = (int)(projectile.Center.Y + offset.Y) / 16;
-					if (!WorldGen.InWorld(x, y, 20) || Main.tile[x, y].active() && !Main.tileSolidTop[Main.tile[x, y].type] && Main.tileSolid[Main.tile[x, y].type])
+					Tile tile = Framing.GetTileSafely(x, y);
+					if (!WorldGen.InWorld(x, y, 20) || (tile.active() && !Main.tileSolidTop[tile.type] && Main.tileSolid[tile.type]))
 					{
 						break;
 					}

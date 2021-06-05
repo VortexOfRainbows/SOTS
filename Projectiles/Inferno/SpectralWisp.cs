@@ -26,10 +26,10 @@ namespace SOTS.Projectiles.Inferno
 			projectile.height = 12;
 			projectile.penetrate = -1;
 			projectile.friendly = true;
-			projectile.minionSlots = 0f;
+			//projectile.minionSlots = 0f;
 			projectile.tileCollide = false;
 			projectile.hostile = false;
-			projectile.minion = true;
+			//projectile.minion = true;
 			projectile.alpha = 0;
             projectile.netImportant = true;
 			projectile.usesLocalNPCImmunity = true;
@@ -51,7 +51,7 @@ namespace SOTS.Projectiles.Inferno
         public int FindClosestEnemy()
 		{
 			Player player = Main.player[projectile.owner];
-			float minDist = 1200;
+			float minDist = 640;
 			int target2 = -1;
 			/*if (player.HasMinionAttackTargetNPC)
 			{
@@ -89,7 +89,8 @@ namespace SOTS.Projectiles.Inferno
 				current += goOutFromPlayer * 16;
 				int i2 = (int)current.X / 16;
 				int j = (int)current.Y / 16;
-				if (!WorldGen.InWorld(i2, j, 20) || (Main.tile[i2, j].active() && !Main.tileSolidTop[Main.tile[i2, j].type] && Main.tileSolid[Main.tile[i2, j].type]))
+				Tile tile = Framing.GetTileSafely(i2, j);
+				if (!WorldGen.InWorld(i2, j, 20) || (tile.active() && !Main.tileSolidTop[tile.type] && Main.tileSolid[tile.type]))
 				{
 					break;
 				}
@@ -126,6 +127,7 @@ namespace SOTS.Projectiles.Inferno
 				}
 			}
 		}
+		int storeTotal = 0;
 		public override void AI()
 		{
 			Player player = Main.player[projectile.owner];
@@ -140,29 +142,32 @@ namespace SOTS.Projectiles.Inferno
 			}
 			#endregion
 			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
-			bool found = false;
 			int ofTotal = 0;
 			int total = 0;
-			for (int i = 0; i < Main.projectile.Length; i++)
-			{
-				Projectile proj = Main.projectile[i];
-				if (proj.type == projectile.type && proj.active && projectile.active && proj.owner == projectile.owner)
-				{
-					if (proj == projectile)
-					{
-						found = true;
-					}
-					if (!found)
-						ofTotal++;
-					total++;
-				}
-			}
 			if (Main.myPlayer == player.whoAmI)
 			{
+				bool found = false;
+				for (int i = 0; i < Main.projectile.Length; i++)
+				{
+					Projectile proj = Main.projectile[i];
+					if (proj.type == projectile.type && proj.active && projectile.active && proj.owner == projectile.owner)
+					{
+						if (proj == projectile)
+						{
+							found = true;
+						}
+						if (!found)
+							ofTotal++;
+						total++;
+					}
+				}
 				projectile.ai[0] = ofTotal;
-				if (modPlayer.orbitalCounter % 60 == 0)
+				storeTotal = total;
+				if ((int)projectile.ai[1] % 40 == 0)
 					projectile.netUpdate = true;
 			}
+			ofTotal = (int)projectile.ai[0];
+			total = storeTotal;
 			projectile.ai[1]++;
 			int direction = 1;
 			int increment = 2;
@@ -179,7 +184,7 @@ namespace SOTS.Projectiles.Inferno
 			}
 			if (total >= ringSize)
 				total = ringSize;
-			Vector2 orbit = new Vector2(8 + increment * 16, 0).RotatedBy(MathHelper.ToRadians(modPlayer.orbitalCounter * 2f * multiplier * direction + (projectile.ai[0] * 360f / total)));
+			Vector2 orbit = new Vector2(8 + increment * 16, 0).RotatedBy(MathHelper.ToRadians(modPlayer.orbitalCounter * 2f * multiplier * direction + (ofTotal * 360f / total)));
 			Vector2 toLocation = player.Center + new Vector2(0, 2) + orbit;
 			Vector2 goTo = toLocation - projectile.Center;
 			if (currentTarget == -1)
@@ -205,7 +210,7 @@ namespace SOTS.Projectiles.Inferno
 					else if (attackCounter < 100)
 					{
 						attackCounter += 0.5f;
-						if (attackCounter == 90)
+						if (attackCounter == 90 && Main.myPlayer == projectile.owner)
 						{
 							Projectile.NewProjectile(projectile.Center + toNPC.SafeNormalize(Vector2.Zero) * 40, toNPC.SafeNormalize(Vector2.Zero) * 5, ModContent.ProjectileType<SpectralWispLaser>(), projectile.damage, 1f, Main.myPlayer, 0, 0);
 						}
@@ -267,12 +272,14 @@ namespace SOTS.Projectiles.Inferno
 		}
 		public override void SendExtraAI(BinaryWriter writer)
 		{
+			writer.Write(storeTotal);
 			writer.Write(currentTarget);
 			writer.Write(projectile.rotation);
 			writer.Write(projectile.spriteDirection);
 		}
 		public override void ReceiveExtraAI(BinaryReader reader)
 		{
+			storeTotal = reader.ReadInt32();
 			currentTarget = reader.ReadInt32();
 			projectile.rotation = reader.ReadSingle();
 			projectile.spriteDirection = reader.ReadInt32();

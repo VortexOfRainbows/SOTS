@@ -39,7 +39,7 @@ namespace SOTS.Items.GelGear
 		}
         public override bool WingUpdate(Player player, bool inUse)
 		{
-			if (player.controlJump && player.wingTime > 0)
+			if (player.controlJump && player.wingTime > 0 && player.velocity.Y != 0)
 			{
 				player.wingFrameCounter++;
 				if (player.wingFrameCounter >= 20)

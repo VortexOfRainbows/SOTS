@@ -13,7 +13,6 @@ namespace SOTS.Items.GelGear.Furniture
 			DisplayName.SetDefault("Goopwood Table");
 			Tooltip.SetDefault("");
 		}
-
 		public override void SetDefaults()
 		{
 			item.width = 32;
@@ -56,7 +55,6 @@ namespace SOTS.Items.GelGear.Furniture
 			disableSmartCursor = true;
 			adjTiles = new int[] { TileID.Tables };
 		}
-
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
 			Item.NewItem(i * 16, j * 16, 32, 16, mod.ItemType("WormwoodTable"));

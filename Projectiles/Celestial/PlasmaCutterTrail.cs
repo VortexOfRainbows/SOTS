@@ -146,13 +146,23 @@ namespace SOTS.Projectiles.Celestial
 			counter++;
 			if (projectile.ai[1] != -1 && end == false)
 			{
-				Projectile proj = Main.projectile[(int)projectile.ai[1]];
-				if(proj.active && proj.type == ModContent.ProjectileType<PlasmaCutter>() && proj.owner == projectile.owner && ((int)proj.ai[1] == projectile.whoAmI || (int)proj.ai[0] == projectile.whoAmI))
+				Projectile parent = null;
+				for (short i = 0; i < Main.maxProjectiles; i++)
 				{
-					Vector2 center = proj.Center;
+					Projectile proj = Main.projectile[i];
+					if (proj.active && proj.owner == projectile.owner && proj.identity == (int)projectile.ai[1])
+					{
+						parent = proj;
+						break;
+					}
+				}
+				Projectile owner = parent;
+				if(owner != null && owner.active && owner.type == ModContent.ProjectileType<PlasmaCutter>() && owner.owner == projectile.owner && ((int)owner.ai[1] == projectile.whoAmI || (int)owner.ai[0] == projectile.whoAmI))
+				{
+					Vector2 center = owner.Center;
 					projectile.Center = center;
-					projectile.velocity = proj.velocity;
-					projectile.rotation = proj.rotation;
+					projectile.velocity = owner.velocity;
+					projectile.rotation = owner.rotation;
 					float circular = new Vector2(projectile.ai[0], 0).RotatedBy(MathHelper.ToRadians(counter * 12f)).X;
 					projectile.Center += new Vector2(0, circular - 24).RotatedBy(MathHelper.ToRadians(45) + projectile.rotation);
 					projectile.timeLeft = 120;
