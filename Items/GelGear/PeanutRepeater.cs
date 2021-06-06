@@ -16,7 +16,7 @@ namespace SOTS.Items.GelGear
 		}
 		public override void SetDefaults()
 		{
-            item.damage = 25;  
+            item.damage = 27;  
             item.ranged = true;    
             item.width = 66;  
             item.height = 22;   
