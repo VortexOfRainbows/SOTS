@@ -71,6 +71,7 @@ namespace SOTS
 			}
 			//Music Box Stuff
 			AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/PutridPinky"), ItemType("PutridPinkyMusicBox"), TileType("PutridPinkyMusicBoxTile"));
+			AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/Polaris"), ItemType("PolarisMusicBox"), TileType("PolarisMusicBoxTile"));
 			AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/SubspaceSerpent"), ItemType("SubspaceSerpentMusicBox"), TileType("SubspaceSerpentMusicBoxTile"));
 			AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/AncientPyramid"), ItemType("AncientPyramidMusicBox"), TileType("AncientPyramidMusicBoxTile"));
 		}
@@ -397,7 +398,7 @@ namespace SOTS
 					"Polaris",
 					(Func<bool>)(() => SOTSWorld.downedAmalgamation),
 					new List<int>() { ModContent.ItemType<FrostedKey>(), ModContent.ItemType<FrostArtifact>() },
-					new List<int>() { },
+					new List<int>() { ModContent.ItemType<PolarisMusicBox>() },
 					new List<int>() { ModContent.ItemType<PolarisBossBag>(), ModContent.ItemType<AbsoluteBar>(), ItemID.FrostCore },
 					"Activate the [i:" + ModContent.ItemType<FrostArtifact>() + "] of the snow biome using [i:" + ModContent.ItemType<FrostedKey>() + "]",
 					"",

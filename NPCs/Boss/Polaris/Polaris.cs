@@ -57,8 +57,8 @@ namespace SOTS.NPCs.Boss.Polaris
             npc.lavaImmune = true;
             npc.noGravity = true;
             npc.noTileCollide = true;
-            music = MusicID.FrostMoon;
-            npc.netAlways = true;
+            music = mod.GetSoundSlot(SoundType.Music, "Sounds/Music/Polaris");
+			npc.netAlways = true;
             npc.buffImmune[BuffID.Frostburn] = true;
 			npc.buffImmune[BuffID.Ichor] = true;
 			npc.buffImmune[BuffID.OnFire] = true;

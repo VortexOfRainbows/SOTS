@@ -13,11 +13,10 @@ The following is my development plans :D
 
 High Priority:
 1. Advisor: Music Box
-2. Polaris: Music + Music Box
-3. Run through and redo the gores that need to be done
-4. Void Debuffs: Void Consumables Delay, Max Health Decrease
-5. Peanut Gun: Fires peanuts that call in Air Raid Pinkies
-6. Secret Jingle
+2. Run through and redo the gores that need to be done
+3. Void Debuffs: Void Consumables Delay, Max Health Decrease
+4. Peanut Gun: Fires peanuts that call in Air Raid Pinkies
+5. Secret Jingle
 
 Mid Priority:
 1. Goopwood sprite Changes
