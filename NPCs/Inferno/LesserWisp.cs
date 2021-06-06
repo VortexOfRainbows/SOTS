@@ -46,8 +46,8 @@ namespace SOTS.NPCs.Inferno
 			npc.noGravity = true;
 			npc.ai[0] = 0;
 			npc.ai[2] = 1;
-			//banner = npc.type;
-			//bannerItem = ItemType<HoloSwordBanner>();
+			banner = npc.type;
+			bannerItem = ItemType<LesserWispBanner>();
 		}
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {

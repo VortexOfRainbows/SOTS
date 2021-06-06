@@ -78,22 +78,18 @@ namespace SOTS.Items.GelGear.Furniture
 			adjTiles = new int[] { TileID.ClosedDoor };
 			openDoorID = mod.TileType("WormwoodDoorOpen");
 		}
-
 		public override bool HasSmartInteract()
 		{
 			return true;
 		}
-
 		public override void NumDust(int i, int j, bool fail, ref int num)
 		{
 			num = 1;
 		}
-
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
 			Item.NewItem(i * 16, j * 16, 16, 48, mod.ItemType("WormwoodDoor"));
 		}
-
 		public override void MouseOver(int i, int j)
 		{
 			Player player = Main.LocalPlayer;
@@ -160,7 +156,6 @@ namespace SOTS.Items.GelGear.Furniture
 			adjTiles = new int[] { TileID.OpenDoor };
 			closeDoorID = mod.TileType("WormwoodDoorClosed");
 		}
-
 		public override bool HasSmartInteract()
 		{
 			return true;

@@ -13,14 +13,11 @@ The following is my development plans :D
 
 High Priority:
 1. Advisor: Music Box
-3. Resprite polish
-4. Amogus
-5. Run through and redo the gores that need to be done
-6. Void Debuffs: Void Consumables Delay, Max Health Decrease
-7. Peanut Gun: Fires peanuts that call in Air Raid Pinkies
-8. Secret Jingle
-9. Book of Virtues: Needs server syncing
-10. Need wisp banner
+2. Polaris: Music + Music Box
+3. Run through and redo the gores that need to be done
+4. Void Debuffs: Void Consumables Delay, Max Health Decrease
+5. Peanut Gun: Fires peanuts that call in Air Raid Pinkies
+6. Secret Jingle
 
 Mid Priority:
 1. Goopwood sprite Changes
@@ -47,10 +44,16 @@ Low Priority:
 5. Sharanga Upgrade
 6. Remove negative Vregen in inventory items
 7. Electrolyte Seperator
+8. Amogus
 
 6/5/21
 1. Assassination potion doesn't cause crits for free and doesn't work on bosses.
-2. 
+2. Ton of multiplayer bug fixes.
+3. Lesser Wisp Banner
+4. Some resprites from Heart
+5. Door Band + Door equipment work with modded doors + changes to turning speed
+6. Began working on Peanut Repeater
+7. Goopwood Helix damage 22 -> 20
 
 6/4/21
 1. Wall mimic eye glowmask

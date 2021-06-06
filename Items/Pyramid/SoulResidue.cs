@@ -1,6 +1,6 @@
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ID;
 
 namespace SOTS.Items.Pyramid
 {
@@ -13,11 +13,10 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void SetDefaults()
 		{
-
 			item.width = 26;
 			item.height = 24;
 			item.value = Item.sellPrice(0, 0, 2, 50);
-			item.rare = 4;
+			item.rare = ItemRarityID.LightRed;
 			item.maxStack = 999;
 		}
 	}

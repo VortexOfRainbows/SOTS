@@ -716,6 +716,9 @@ namespace SOTS.Items.Banners
 				case 1:
 					item = "FluxSlimeBanner";
 					break;
+				case 2:
+					item = "LesserWispBanner";
+					break;
 				default:
 					return;
 			}
@@ -736,6 +739,9 @@ namespace SOTS.Items.Banners
 						break;
 					case 1:
 						type = "FluxSlime";
+						break;
+					case 2:
+						type = "LesserWisp";
 						break;
 					default:
 						return;
@@ -767,6 +773,14 @@ namespace SOTS.Items.Banners
 		{
 			item.createTile = TileType<SOTSBanners2>();
 			item.placeStyle = 1;
+		}
+	}
+	public class LesserWispBanner : ModBanner
+	{
+		public override void SafeSetDefaults()
+		{
+			item.createTile = TileType<SOTSBanners2>();
+			item.placeStyle = 2;
 		}
 	}
 }

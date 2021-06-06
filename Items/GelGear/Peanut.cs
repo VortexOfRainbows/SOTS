@@ -10,14 +10,17 @@ namespace SOTS.Items.GelGear
 		{
 			DisplayName.SetDefault("Peanut");
 			Tooltip.SetDefault("'The favorite snack of a devilish slime'");
-		}public override void SetDefaults()
+		}
+		public override void SetDefaults()
 		{
 			item.width = 26;
 			item.height = 26;
 			item.maxStack = 999;      
 			item.knockBack = 1.15f;
 			item.value = Item.sellPrice(0, 0, 0, 25);
-			item.rare = 1;       
+			item.rare = 1;
+			item.ammo = item.type;
+			item.consumable = true;
 		}
 	}
 }
