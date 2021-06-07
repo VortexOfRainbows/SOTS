@@ -59,6 +59,12 @@ namespace SOTS.Projectiles.Nature
 				Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y) - new Vector2(5), 26, 26, 0);
 				Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y) - new Vector2(5), 26, 26, 7);
 			}
+			if(Main.myPlayer == projectile.owner)
+			{
+				Vector2 location = new Vector2(projectile.Center.X, projectile.Center.Y - 480);
+				Vector2 fromLocation = location + new Vector2(1920 * (Main.rand.Next(2) * 2 - 1), Main.rand.NextFloat(-128, 128));
+				Projectile.NewProjectile(fromLocation, Vector2.Zero, ModContent.ProjectileType<PinkyBomber>(), projectile.damage, projectile.knockBack, Main.myPlayer, location.X, location.Y);
+			}
 		}
 	}
 }

@@ -107,7 +107,7 @@ namespace SOTS
 			}
 			if (dedicatedBlasfah.Contains(item.type))
 			{
-				dedicatedColor = new Color(60, 8, 163);
+				dedicatedColor = new Color(90, 12, 240);
 				dedicated = true;
 			}
 			if (dedicated)

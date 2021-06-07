@@ -22,7 +22,8 @@ namespace SOTS.Projectiles.Tide
 		public override void SetDefaults()
         {
             projectile.width = 18;
-            projectile.height = 18; 
+            projectile.height = 18;
+			projectile.ranged = true;
 			projectile.friendly = true;
             projectile.hostile = false; 
 			projectile.timeLeft = 60;

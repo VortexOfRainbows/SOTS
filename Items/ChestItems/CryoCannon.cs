@@ -48,14 +48,9 @@ namespace SOTS.Items.ChestItems
 			recipe.AddRecipe();
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-        {
-              int numberProjectiles = 1;
-              for (int i = 0; i < numberProjectiles; i++)
-              {
-                  Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(3));
-                  Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, mod.ProjectileType("IceCluster"), damage, knockBack, player.whoAmI);
-              }
-              return false; 
+		{
+			Projectile.NewProjectile(position.X, position.Y, speedX, speedY, mod.ProjectileType("IceCluster"), damage, knockBack, player.whoAmI, -1);
+			return false; 
 		}
 	}
 }

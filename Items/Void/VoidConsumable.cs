@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
 using SOTS.Void;
 using System.Collections.Generic;
+using SOTS.Buffs;
 
 namespace SOTS.Items.Void
 {
@@ -14,6 +15,8 @@ namespace SOTS.Items.Void
 		{
 			TooltipLine line = new TooltipLine(mod, "VoidConsumable", "Automatically consumed when void is low");
 			tooltips.Add(line);
+			//line = new TooltipLine(mod, "VoidDelay", GetSatiateDuration() + " second cooldown");
+			//tooltips.Add(line);
 			base.ModifyTooltips(tooltips);
         }
         public sealed override void SetDefaults()
@@ -37,7 +40,7 @@ namespace SOTS.Items.Void
         public sealed override bool CanUseItem(Player player)
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-			return !voidPlayer.frozenVoid;
+			return !voidPlayer.frozenVoid && !player.HasBuff(ModContent.BuffType<Satiated>());
         }
         public sealed override bool UseItem(Player player)
 		{
@@ -55,11 +58,17 @@ namespace SOTS.Items.Void
 		}
 		public sealed override void OnConsumeItem(Player player)
 		{
+			Activate(player);
+		}
+		public void Activate(Player player)
+		{
+			//int time = 60 * GetSatiateDuration();
+			//player.AddBuff(ModContent.BuffType<Satiated>(), time + 10);
 			OnActivation(player);
-			if(!ConsumeStack())
-            {
+			if (!ConsumeStack())
+			{
 				item.stack++;
-            }
+			}
 		}
 		public virtual bool ConsumeStack()
         {
@@ -68,7 +77,11 @@ namespace SOTS.Items.Void
 		public virtual int GetVoidAmt()
         {
 			return 20;
-        }
+		}
+		public virtual int GetSatiateDuration()
+		{
+			return 5;
+		}
 		public virtual void OnActivation(Player player)
 		{
 			RefillEffect(player, GetVoidAmt());
@@ -76,11 +89,9 @@ namespace SOTS.Items.Void
 		public sealed override void UpdateInventory(Player player)
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-			while (voidPlayer.voidMeter < (voidPlayer.voidMeterMax2 - voidPlayer.lootingSouls - voidPlayer.VoidMinionConsumption) / 10 && voidPlayer.voidMeterMax2 - voidPlayer.lootingSouls - voidPlayer.VoidMinionConsumption > GetVoidAmt() && item.stack > 0 && !voidPlayer.frozenVoid)
+			while (voidPlayer.voidMeter < (voidPlayer.voidMeterMax2 - voidPlayer.lootingSouls - voidPlayer.VoidMinionConsumption) / 10 && voidPlayer.voidMeterMax2 - voidPlayer.lootingSouls - voidPlayer.VoidMinionConsumption > GetVoidAmt() && item.stack > 0 && CanUseItem(player))
 			{
-				OnActivation(player);
-				if(ConsumeStack())
-					item.stack--;
+				Activate(player);
 			}
 		}
 	}
@@ -99,7 +110,15 @@ namespace SOTS.Items.Void
 			item.rare = 1;
 			item.UseSound = SoundID.Item3;
 		}
-	}
+        public override int GetSatiateDuration()
+        {
+            return 7;
+        }
+        public override int GetVoidAmt()
+        {
+            return 20;
+        }
+    }
 	public class CoconutMilk : VoidConsumable
 	{
 		public override void SetStaticDefaults()
@@ -116,8 +135,12 @@ namespace SOTS.Items.Void
         public override int GetVoidAmt()
         {
             return 30;
-        }
-    }
+		}
+		public override int GetSatiateDuration()
+		{
+			return 10;
+		}
+	}
 	public class CookedMushroom : VoidConsumable
 	{
 		public override void SetStaticDefaults()
@@ -136,8 +159,12 @@ namespace SOTS.Items.Void
         public override int GetVoidAmt()
         {
             return 13;
-        }
-        public override void OnActivation(Player player)
+		}
+		public override int GetSatiateDuration()
+		{
+			return 4;
+		}
+		public override void OnActivation(Player player)
 		{
 			RefillEffect(player, GetVoidAmt());
 			player.AddBuff(BuffID.Poisoned, 120, true);
@@ -175,8 +202,12 @@ namespace SOTS.Items.Void
         public override int GetVoidAmt()
         {
 			return 15;
-        }
-    }
+		}
+		public override int GetSatiateDuration()
+		{
+			return 5;
+		}
+	}
 	public class Chocolate : VoidConsumable
 	{
 		public override void SetStaticDefaults()
@@ -195,6 +226,10 @@ namespace SOTS.Items.Void
 		public override int GetVoidAmt()
 		{
 			return 15;
+		}
+		public override int GetSatiateDuration()
+		{
+			return 4;
 		}
 	}
 	public class CursedCaviar : VoidConsumable
@@ -231,6 +266,10 @@ namespace SOTS.Items.Void
 				player.AddBuff(BuffID.Battle, 5400, true);
 			}
 		}
+		public override int GetSatiateDuration()
+		{
+			return 3;
+		}
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
@@ -258,6 +297,10 @@ namespace SOTS.Items.Void
 		public override int GetVoidAmt()
 		{
 			return 4;
+		}
+		public override int GetSatiateDuration()
+		{
+			return 3;
 		}
 		public override void AddRecipes()
 		{
@@ -287,8 +330,12 @@ namespace SOTS.Items.Void
         public override int GetVoidAmt()
         {
             return 10;
-        }
-        public override void OnActivation(Player player)
+		}
+		public override int GetSatiateDuration()
+		{
+			return 3;
+		}
+		public override void OnActivation(Player player)
 		{
 			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
 			int rand = Main.rand.Next(2);
