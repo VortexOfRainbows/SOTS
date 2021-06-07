@@ -10,7 +10,7 @@ namespace SOTS.Items.Inferno
 		public override void SetStaticDefaults() 
 		{
 			DisplayName.SetDefault("Book of Virtues");
-			Tooltip.SetDefault("Summons a Spectral Wisp that defends you from nearby enemies\nThe wisp does 75% damage on contanct with enemies, and 100% with its laser");
+			Tooltip.SetDefault("Summons a Spectral Wisp that defends you from nearby enemies\nThe wisp does 75% damage on contact with enemies, and 100% with its laser");
 			ItemID.Sets.GamepadWholeScreenUseRange[item.type] = true; 
 			ItemID.Sets.LockOnIgnoresCollision[item.type] = true;
 		}

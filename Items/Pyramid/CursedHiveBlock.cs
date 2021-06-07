@@ -1,10 +1,7 @@
-
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
-using Microsoft.Xna.Framework.Graphics;
-using System;
 
 namespace SOTS.Items.Pyramid
 {
@@ -13,7 +10,7 @@ namespace SOTS.Items.Pyramid
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Infected Pyramid Brick");
-			Tooltip.SetDefault("A living clump of matter residing in a broken down brick\n'It has the consistency of a tumor'");
+			Tooltip.SetDefault("");// A living clump of matter residing in a broken down brick\n'It has the consistency of a tumor'");
 		}
 		public override void SetDefaults()
 		{

@@ -17,6 +17,7 @@ High Priority:
 3. Void Debuffs: Void Consumables Delay, Max Health Decrease
 4. Secret Jingle
 5. Fragment resprites
+6. Polaris: Make theme louder
 
 Mid Priority:
 1. Goopwood sprite Changes
@@ -45,10 +46,10 @@ Low Priority:
 7. Electrolyte Seperator
 8. Amogus
 
-6/6/21
+6/6/21 & 6/7/21
 1. Peanut Repeater added. Hasn't been been tested in multiplayer
 2. Snow weapon fixes
-3. 
+3. Void Shock now makes you take more damage, faster negative-regen, lasts for 10 seconds no matter what. Void Recovery lasts 1/3 a second longer always.
 
 6/5/21
 1. Assassination potion doesn't cause crits for free and doesn't work on bosses.

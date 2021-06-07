@@ -169,20 +169,6 @@ namespace SOTS.Items.Void
 			RefillEffect(player, GetVoidAmt());
 			player.AddBuff(BuffID.Poisoned, 120, true);
         }
-		public override void AddRecipes()
-		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.VileMushroom, 2);
-			recipe.AddTile(TileID.CookingPots);
-			recipe.SetResult(this, 1);
-			recipe.AddRecipe();
-
-			recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.ViciousMushroom, 2);
-			recipe.AddTile(TileID.CookingPots);
-			recipe.SetResult(this, 1);
-			recipe.AddRecipe();
-		}
 	}
 	public class DigitalCornSyrup : VoidConsumable
 	{
@@ -301,15 +287,6 @@ namespace SOTS.Items.Void
 		public override int GetSatiateDuration()
 		{
 			return 3;
-		}
-		public override void AddRecipes()
-		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "Peanut", 2);
-			recipe.AddIngredient(ItemID.PinkGel, 1);
-			recipe.AddIngredient(ItemID.Acorn, 1);
-			recipe.SetResult(this, 1);
-			recipe.AddRecipe();
 		}
 	}
 	public class StrawberryIcecream : VoidConsumable

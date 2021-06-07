@@ -97,7 +97,8 @@ namespace SOTS.Void
 		public float voidDamage = 1f;
 		public float voidKnockback;
 		public int voidCrit;
-		public override void ResetEffects() {
+		public override void ResetEffects()
+		{
 			ResetVariables();
 		}
 		public override void UpdateDead() {
@@ -132,7 +133,7 @@ namespace SOTS.Void
 			{
 				//damageSource = PlayerDeathReason.ByCustomReason(Main.LocalPlayer.name + " was consumed by the void.");
 			}
-			if (damage == 10.0 && voidShock)
+			if (voidShock)
 			{
 				genGore = false; //apparently, genGore false doesn't remove almost anygore what-so-ever
 				damageSource = PlayerDeathReason.ByCustomReason(Main.LocalPlayer.name + voidDeathMessages[0]);
@@ -153,12 +154,13 @@ namespace SOTS.Void
 		{
 			if (voidShock)
 			{
+				player.lifeRegen = 0;
 				if (player.lifeRegen > 0)
 				{
 					player.lifeRegen = 0;
 				}
 				player.lifeRegenTime = 0;
-				player.lifeRegen -= 7;
+				player.lifeRegen -= 16;
 				if (player.statLife <= 0 && player.whoAmI == Main.myPlayer)
 				{
 					player.KillMe(PlayerDeathReason.ByCustomReason(player.name + voidDeathMessages[Main.rand.Next(voidDeathMessages.Length)]), 10.0, 0, false);
@@ -462,9 +464,9 @@ namespace SOTS.Void
 			{
 				if(!voidShock && !voidRecovery)
 				{
-					int time = 900 - voidMeterMax2;
-					if(time < 120) time = 120;
+					int time = 600;
 					player.AddBuff(mod.BuffType("VoidShock"), time);
+					//if(time < 120) time = 120;
 				}
 				player.lifeRegen += (int)(voidMeter * 0.2f);
 				if(voidMeter <= -150)
