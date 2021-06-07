@@ -12,7 +12,8 @@ using Terraria.ID;
 namespace SOTS.Projectiles.Permafrost
 {    
     public class IcePulseSummon : ModProjectile 
-    {	int expand = -1;
+    {
+		bool runOnce = true;
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Ice Pulse");
@@ -33,8 +34,6 @@ namespace SOTS.Projectiles.Permafrost
 		public override void AI()
         {
 			Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 1.5f / 255f, (255 - projectile.alpha) * 1.5f / 255f, (255 - projectile.alpha) * 1.5f / 255f);
-			
-			
             projectile.frameCounter++;
             if (projectile.frameCounter >= 4)
             {
@@ -42,11 +41,10 @@ namespace SOTS.Projectiles.Permafrost
                 projectile.frameCounter = 0;
                 projectile.frame = (projectile.frame + 1) % 4;
             }
-			if(expand == -1)
+			if(runOnce)
 			{
 				Main.PlaySound(SoundID.Item50, (int)(projectile.Center.X), (int)(projectile.Center.Y));
-				expand = 0;
-				for(int i = 0; i < 360; i += 10)
+				for (int i = 0; i < 360; i += 10)
 				{
 					Vector2 circularLocation = new Vector2(-14, 0).RotatedBy(MathHelper.ToRadians(i));
 					
@@ -55,6 +53,7 @@ namespace SOTS.Projectiles.Permafrost
 					Main.dust[num1].scale = 1.75f;
 					Main.dust[num1].velocity = circularLocation * 0.35f;
 				}
+				runOnce = false;
 			}
         }
 		public override void ModifyDamageHitbox(ref Rectangle hitbox) 

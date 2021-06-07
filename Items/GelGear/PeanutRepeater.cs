@@ -12,7 +12,7 @@ namespace SOTS.Items.GelGear
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Peanut Repeater");
-			Tooltip.SetDefault("Launches tasty peanuts\n20% chance to not consume ammo");
+			Tooltip.SetDefault("Launches tasty peanuts that attract Pinky Air Raids\n20% chance to not consume ammo");
 		}
 		public override void SetDefaults()
 		{

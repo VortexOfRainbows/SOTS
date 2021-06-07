@@ -15,8 +15,7 @@ High Priority:
 1. Advisor: Music Box
 2. Run through and redo the gores that need to be done
 3. Void Debuffs: Void Consumables Delay, Max Health Decrease
-4. Peanut Gun: Fires peanuts that call in Air Raid Pinkies
-5. Secret Jingle
+4. Secret Jingle
 
 Mid Priority:
 1. Goopwood sprite Changes
@@ -47,7 +46,7 @@ Low Priority:
 
 6/6/21
 1. Peanut Repeater added
-2. 
+2. Snow weapon fixes
 
 6/5/21
 1. Assassination potion doesn't cause crits for free and doesn't work on bosses.
