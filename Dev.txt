@@ -16,6 +16,7 @@ High Priority:
 2. Run through and redo the gores that need to be done
 3. Void Debuffs: Void Consumables Delay, Max Health Decrease
 4. Secret Jingle
+5. Fragment resprites
 
 Mid Priority:
 1. Goopwood sprite Changes
@@ -45,8 +46,9 @@ Low Priority:
 8. Amogus
 
 6/6/21
-1. Peanut Repeater added
+1. Peanut Repeater added. Hasn't been been tested in multiplayer
 2. Snow weapon fixes
+3. 
 
 6/5/21
 1. Assassination potion doesn't cause crits for free and doesn't work on bosses.
