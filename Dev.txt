@@ -14,10 +14,9 @@ The following is my development plans :D
 High Priority:
 1. Advisor: Music Box
 2. Run through and redo the gores that need to be done
-3. Void Debuffs: Void Consumables Delay, Max Health Decrease
-4. Secret Jingle
-5. Fragment resprites
-6. Polaris: Make theme louder
+3. Secret Jingle
+4. Fragment resprites
+5. Polaris: Make theme louder
 
 Mid Priority:
 1. Goopwood sprite Changes
@@ -50,6 +49,8 @@ Low Priority:
 1. Peanut Repeater added. Hasn't been been tested in multiplayer
 2. Snow weapon fixes
 3. Void Shock now makes you take more damage, faster negative-regen, lasts for 10 seconds no matter what. Void Recovery lasts 1/3 a second longer always.
+4. More Pyramid Tile + Resprites
+5. Less statues in pyramid
 
 6/5/21
 1. Assassination potion doesn't cause crits for free and doesn't work on bosses.

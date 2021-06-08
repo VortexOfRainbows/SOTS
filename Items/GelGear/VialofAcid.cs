@@ -16,7 +16,6 @@ namespace SOTS.Items.GelGear
 			item.width = 24;
 			item.height = 24;
 			item.maxStack = 999;
-			item.useStyle = ItemUseStyleID.SwingThrow;
 			item.rare = ItemRarityID.Blue;
 			item.value = Item.sellPrice(0, 0, 2, 0);
 		}

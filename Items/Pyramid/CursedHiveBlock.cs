@@ -37,7 +37,7 @@ namespace SOTS.Items.Pyramid
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
 			drop = mod.ItemType("CursedHiveBlock");
-			AddMapEntry(new Color(51, 46, 91));
+			AddMapEntry(new Color(140, 115, 60));
 			mineResist = 0.5f;
 			soundType = SoundID.Tink;
 			soundStyle = 2;
@@ -70,7 +70,7 @@ namespace SOTS.Items.Pyramid
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
 			drop = mod.ItemType("CursedHiveBlock");
-			AddMapEntry(new Color(51, 46, 91));
+			AddMapEntry(new Color(140, 115, 60));
 			mineResist = 0.5f;
 			soundType = SoundID.Tink;
 			soundStyle = 2;
@@ -104,7 +104,6 @@ namespace SOTS.Items.Pyramid
 	}
 	public class ReleaseWallMimic : ModProjectile
 	{
-		int wait = 0;
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Release Wall Mimic"); //Do you enjoy how all my net sycning is done via projectiles?
@@ -131,7 +130,6 @@ namespace SOTS.Items.Pyramid
 				Main.npc[npc1].netUpdate = true;
 				Main.npc[npc1].ai[2] = 900;
 			}
-
 			Main.PlaySound(SoundID.Item14, (int)(projectile.Center.X), (int)(projectile.Center.Y));
 			int x2 = (int)(projectile.Center.X / 16f);
 			int y2 = (int)(projectile.Center.Y / 16f);

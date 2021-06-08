@@ -92,9 +92,20 @@ namespace SOTS.Items.ChestItems
 			Vector2 tileLocation = mousePos / 16f;
 			SOTSWorldgenHelper.GenerateCoconutIsland(mod, (int)tileLocation.X, (int)tileLocation.Y, Main.rand.NextBool(2) ? 1 : -1);
 		}
+		public void PasteStarter()
+		{
+			Vector2 mousePos = Main.MouseWorld;
+			Vector2 tileLocation = mousePos / 16f;
+			int xOffset = 0;
+			for(int i = 0; i < 3; i++)
+			{
+				SOTSWorldgenHelper.GenerateStarterHouse(mod, (int)tileLocation.X + xOffset, (int)tileLocation.Y, i);
+				xOffset += 40;
+			}
+		}
 		public override bool UseItem(Player player)
 		{
-			PasteCoconut();
+			PasteStarter();
             return true;
 		}
 	}
