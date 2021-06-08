@@ -15,8 +15,8 @@ namespace SOTS.Items
 		{
 			item.damage = 12;
 			item.maxStack = 1;
-            item.width = 26;     
-            item.height = 26;   
+            item.width = 28;     
+            item.height = 36;   
             item.value = Item.sellPrice(0, 0, 20, 0);
             item.rare = 1;
 			item.defense = 1;
