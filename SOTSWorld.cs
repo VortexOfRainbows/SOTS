@@ -455,7 +455,7 @@ namespace SOTS
 					}
 				}
 
-				SOTSWorldgenHelper.GenerateStarterHouseFull(mod);
+				SOTSWorldgenHelper.GenerateStarterHouseFull(mod, 3);
 
 				bool coconutGenerated = false;
 				while(!coconutGenerated)

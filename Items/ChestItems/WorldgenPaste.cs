@@ -99,9 +99,10 @@ namespace SOTS.Items.ChestItems
 			int xOffset = 0;
 			for(int i = 0; i < 3; i++)
 			{
-				SOTSWorldgenHelper.GenerateStarterHouse(mod, (int)tileLocation.X + xOffset, (int)tileLocation.Y, i);
-				xOffset += 40;
+				//SOTSWorldgenHelper.GenerateStarterHouse(mod, (int)tileLocation.X + xOffset, (int)tileLocation.Y, i);
+				//xOffset += 40;
 			}
+			SOTSWorldgenHelper.GenerateStarterHouse(mod, (int)tileLocation.X + xOffset, (int)tileLocation.Y, 3);
 		}
 		public override bool UseItem(Player player)
 		{
