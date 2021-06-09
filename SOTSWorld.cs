@@ -250,7 +250,8 @@ namespace SOTS
 			tasks.Insert(genIndexGems, new PassLegacy("ModdedSOTSStructures", delegate (GenerationProgress progress)
 			{
 				progress.Message = "Generating Surface Structures";
-					
+				SOTSWorldgenHelper.GenerateStarterHouseFull(mod, Main.rand.Next(4));
+
 				int iceY = -1;
 				int iceX = -1;
 				for(int xCheck = Main.rand.Next(Main.maxTilesX); xCheck != -1; xCheck = Main.rand.Next(Main.maxTilesX))
@@ -455,7 +456,6 @@ namespace SOTS
 					}
 				}
 
-				SOTSWorldgenHelper.GenerateStarterHouseFull(mod, 3);
 
 				bool coconutGenerated = false;
 				while(!coconutGenerated)
@@ -631,7 +631,7 @@ namespace SOTS
 						for(int ydown = 0; ydown != -1; ydown++)
 						{
 							Tile tile = Framing.GetTileSafely(xCheck, ydown);
-							if (tile.active() && (tile.type == TileID.Sand || checks >= 1000))
+							if (tile.active() && (tile.type == TileID.Sand || tile.type == TileID.Ebonsand || tile.type == TileID.Crimsand || checks >= 1000))
 							{
 								if ((!WorldGen.UndergroundDesertLocation.Contains(new Point(xCheck, ydown + 60)) && !WorldGen.UndergroundDesertLocation.Contains(new Point(xCheck, ydown + 120))) || checks > 200)
 								{
@@ -1724,7 +1724,7 @@ namespace SOTS
 		{
 			planetarium = tileCounts[mod.TileType("DullPlatingTile")] + tileCounts[mod.TileType("AvaritianPlatingTile")];  
 			//geodeBiome = tileCounts[mod.TileType("GeodeBlock")];
-			pyramidBiome = tileCounts[mod.TileType("SarcophagusTile")];  
+			pyramidBiome = tileCounts[mod.TileType("SarcophagusTile")] + tileCounts[ModContent.TileType<ZeplineLureTile>()];  
 		}
 		public override void PostWorldGen()
 		{

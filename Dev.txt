@@ -45,6 +45,12 @@ Low Priority:
 7. Electrolyte Seperator
 8. Amogus
 
+6/9/21
+1. Worldgen changes to fix Acedia spawning + Starter house
+2. New block types
+3. Pyramid can spawn on ebonsand or crimsand
+4. Refracting Crystal block counts as Pyramid
+
 6/6/21 & 6/7/21
 1. Peanut Repeater added. Hasn't been been tested in multiplayer
 2. Snow weapon fixes

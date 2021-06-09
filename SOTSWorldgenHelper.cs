@@ -76,7 +76,7 @@ namespace SOTS
 				}
 			}
 			//i = vertical, j = horizontal
-			for (int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)    //Increase the iterations on this outermost for loop if tabletop-objects are not properly spawning
+			for (int confirmPlatforms = 0; confirmPlatforms < 3; confirmPlatforms++)    //Increase the iterations on this outermost for loop if tabletop-objects are not properly spawning
 			{
 				for (int i = 0; i < _structure.GetLength(0); i++)
 				{
@@ -157,12 +157,12 @@ namespace SOTS
 									}
 									break;
 								case 10:
-									if (confirmPlatforms == 1)
+									if (confirmPlatforms == 2)
 									{
 										tile.active(false);
 										tile.slope(0);
 										tile.halfBrick(false);
-										WorldGen.PlaceTile(k, l, (ushort)mod.TileType("AcediaGatewayTile"), true, true, -1, 0);
+										WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<AcediaGatewayTile>(), true, true, -1, 0);
 									}
 									break;
 								case 11:
@@ -3642,7 +3642,7 @@ namespace SOTS
 											tile.active(false);
 											tile.slope(0);
 											tile.halfBrick(false);
-											WorldGen.PlaceTile(k, l, TileID.FishingCrate, true, true, -1, 0);
+											WorldGen.PlaceTile(k, l, TileID.Furnaces, true, true, -1, 0);
 										}
 										break;
 									case 9:
@@ -3831,7 +3831,7 @@ namespace SOTS
 				};
 				//i = vertical, j = horizontal
 				UseStarterHouseHalfCircle(spawnX, spawnY, 0, _structure.GetLength(1) / 2, _structure.GetLength(0));
-				for (int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)    //Increase the iterations on this outermost for loop if tabletop-objects are not properly spawning
+				for (int confirmPlatforms = 0; confirmPlatforms < 3; confirmPlatforms++)    //Increase the iterations on this outermost for loop if tabletop-objects are not properly spawning
 				{
 					for (int i = 0; i < _structure.GetLength(0); i++)
 					{

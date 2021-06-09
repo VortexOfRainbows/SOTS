@@ -713,13 +713,13 @@ namespace SOTS
 			int tileBehindX = (int)(player.Center.X / 16);
 			int tileBehindY = (int)(player.Center.Y / 16);
 			Tile tile = Framing.GetTileSafely(tileBehindX, tileBehindY);
-			if (tile.wall == (ushort)mod.WallType("PyramidWallTile") || tile.wall == (ushort)mod.WallType("OvergrownPyramidWallWall"))
+			if (tile.wall == (ushort)mod.WallType("PyramidWallTile") || tile.wall == (ushort)mod.WallType("OvergrownPyramidWallWall") || tile.wall == (ushort)ModContent.WallType<CursedTumorWallTile>())
 			{
 				PyramidBiome = true;
 			}
 			else
 			{
-				PyramidBiome = (SOTSWorld.pyramidBiome > 0);
+				PyramidBiome = SOTSWorld.pyramidBiome > 0; //if there is a sarcophagus or zepline block on screen
 			}
 		}
 		public override bool CustomBiomesMatch(Player other)
