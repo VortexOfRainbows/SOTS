@@ -1,13 +1,9 @@
-using System;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.Enums;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-using Microsoft.Xna.Framework.Graphics;
  
 namespace SOTS.Items.Pyramid        
 {
@@ -19,12 +15,14 @@ namespace SOTS.Items.Pyramid
             TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
             TileObjectData.newTile.CoordinateHeights = new int[] { 16, 18 };
             TileObjectData.newTile.Origin = new Point16(0, 1);
-			ModTranslation name = CreateMapEntryName();
+            TileObjectData.newTile.StyleHorizontal = true;
+            TileObjectData.newTile.StyleWrapLimit = 4;
+            TileObjectData.addTile(Type);
+            ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Crystal Statue");		
 			AddMapEntry(new Color(175, 0, 0), name);
             soundType = 21;
             soundStyle = 2;
-            TileObjectData.addTile(Type);
 			mineResist = 2.5f;
 			dustType = 12;
         }

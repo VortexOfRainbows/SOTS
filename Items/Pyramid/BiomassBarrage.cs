@@ -1,13 +1,11 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using System;
-using Microsoft.Xna.Framework;
 
 namespace SOTS.Items.Pyramid
 {
 	public class BiomassBarrage : ModItem
-	{	int counter = 0;
+	{
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Biomass Bloom");
@@ -17,21 +15,20 @@ namespace SOTS.Items.Pyramid
 		{
             item.damage = 24; 
             item.magic = true; 
-            item.width = 30;   
-            item.height = 30;   
+            item.width = 34;   
+            item.height = 36;   
             item.useTime = 30;   
             item.useAnimation = 30;
             item.useStyle = 5;    
             item.noMelee = true;  
             item.knockBack = 3.25f;
             item.value = Item.sellPrice(0, 4, 50, 0);
-            item.rare = 6;
+            item.rare = ItemRarityID.LightPurple;
             item.UseSound = SoundID.Item8;
             item.shoot = mod.ProjectileType("AcornsOfJustice"); 
             item.shootSpeed = 17.5f;
 			item.autoReuse = true;
 			item.mana = 11;
-
 		}
 		public override void AddRecipes()
 		{

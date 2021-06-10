@@ -1,7 +1,6 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using System;
 using Microsoft.Xna.Framework;
 
 namespace SOTS.Items.Pyramid
@@ -17,14 +16,14 @@ namespace SOTS.Items.Pyramid
 		{
             item.damage = 16;
             item.magic = true; 
-            item.width = 28;    
-            item.height = 30; 
+            item.width = 30;    
+            item.height = 36; 
             item.useTime = 23; 
             item.useAnimation = 23;
             item.useStyle = 5;    
             item.knockBack = 6.5f;
             item.value = Item.sellPrice(0, 1, 20, 0);
-            item.rare = 3;
+            item.rare = ItemRarityID.Orange;
 			item.UseSound = SoundID.Item34;
             item.noMelee = true; 
             item.autoReuse = true;

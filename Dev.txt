@@ -15,8 +15,7 @@ High Priority:
 1. Advisor: Music Box
 2. Run through and redo the gores that need to be done
 3. Secret Jingle
-4. Fragment resprites
-5. Polaris: Make theme louder
+4. Polaris: Make theme louder
 
 Mid Priority:
 1. Goopwood sprite Changes

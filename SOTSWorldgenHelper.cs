@@ -444,12 +444,12 @@ namespace SOTS
 										tile.active(false);
 										tile.slope(0);
 										tile.halfBrick(false);
-										WorldGen.PlaceTile(k, l, mod.TileType("CrystalStatue"), true, true, -1, 0);
+										WorldGen.PlaceTile(k, l, mod.TileType("CrystalStatue"), true, true, -1, 1);
 
 										tile2.active(false);
 										tile2.slope(0);
 										tile2.halfBrick(false);
-										WorldGen.PlaceTile(k2 - 1, l, mod.TileType("CrystalStatue"), true, true, -1, 0);
+										WorldGen.PlaceTile(k2 - 1, l, mod.TileType("CrystalStatue"), true, true, -1, 1);
 									}
 									break;
 								case 5:

@@ -1,7 +1,6 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using System;
 using Microsoft.Xna.Framework;
 
 namespace SOTS.Items
@@ -17,8 +16,8 @@ namespace SOTS.Items
 		{
             item.damage = 44; 
             item.magic = true; 
-            item.width = 28;   
-            item.height = 30;   
+            item.width = 30;   
+            item.height = 36;   
             item.useTime = 8;   
             item.useAnimation = 24;
             item.useStyle = 5;    
@@ -48,13 +47,11 @@ namespace SOTS.Items
 			speedX /= counter;
 			speedY /= counter;
 			Projectile.NewProjectile(position.X, position.Y, speedX, speedY, type, damage, knockBack, player.whoAmI);
-
 			if(counter >= 4)
 			{
 				counter = 0;
 				Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians(30)); 
 				Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI);
-
 				perturbedSpeed = new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians(-30));
 				Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI);
 			}

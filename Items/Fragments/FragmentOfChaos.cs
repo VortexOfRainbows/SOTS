@@ -1,6 +1,6 @@
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ID;
 
 namespace SOTS.Items.Fragments
 {
@@ -13,11 +13,10 @@ namespace SOTS.Items.Fragments
 		}
 		public override void SetDefaults()
 		{
-
-			item.width = 18;
-			item.height = 34;
+			item.width = 22;
+			item.height = 36;
             item.value = Item.sellPrice(0, 0, 0, 50);
-			item.rare = 1;
+			item.rare = ItemRarityID.Blue;
 			item.maxStack = 999;
 		}
 	}
