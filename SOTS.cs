@@ -329,7 +329,7 @@ namespace SOTS
 				if (player.active && player.GetModPlayer<SOTSPlayer>().PlanetariumBiome)
 				{
 					music = GetSoundSlot(SoundType.Music, "Sounds/Music/Planetarium");
-					priority = MusicPriority.BossLow;
+					priority = MusicPriority.Environment;
 				}
 			}
 		}
