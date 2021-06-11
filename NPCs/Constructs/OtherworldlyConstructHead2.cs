@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+
 namespace SOTS.NPCs.Constructs
 {
 	public class OtherworldlyConstructHead2 : ModNPC
@@ -42,32 +43,46 @@ namespace SOTS.NPCs.Constructs
 			npc.rotation = dir + (npc.spriteDirection - 1) * 0.5f * -MathHelper.ToRadians(180);
 			if (hookTile.X < 0 || hookTile.Y < 0)
 				return true;
+			Draw(true, drawColor);
+			return true;
+		}
+		public void Draw(bool drawTexture, Color drawColor)
+		{
 			float npcRadians = npc.rotation + (npc.spriteDirection + 1) * 0.5f * MathHelper.ToRadians(180);
 			Texture2D texture = ModContent.GetTexture("SOTS/NPCs/Constructs/OtherworldVine");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			Vector2 npcPos = new Vector2(npc.Center.X, npc.Center.Y) + new Vector2(npc.width/2, 0).RotatedBy(npcRadians);
+			Vector2 npcPos = new Vector2(npc.Center.X, npc.Center.Y) + new Vector2(npc.width / 2, 0).RotatedBy(npcRadians);
 			Vector2 distanceToOwner = npcPos - hookTile;
 			Vector2 centerOfCircle = hookTile + distanceToOwner / 4;
 			float startingRadians = distanceToOwner.ToRotation();
 			float radius = distanceToOwner.Length() / 4;
-
 			Vector2 vector2_1 = new Vector2(-1, 0).RotatedBy(MathHelper.ToRadians(0.3f * ai1));
 			int max = 16;
 			for (int i = max; i > 0; i--)
 			{
 				float minDist = 40;
 				float maxDist = 150;
-				float dist = maxDist - distanceToOwner.Length()/4;
+				float dist = maxDist - distanceToOwner.Length() / 4;
 				if (dist < minDist) dist = minDist;
 				if (dist > maxDist) dist = maxDist;
-				Vector2 rotationPos = new Vector2(radius, 0).RotatedBy(MathHelper.ToRadians(180/ max * i));
+				Vector2 rotationPos = new Vector2(radius, 0).RotatedBy(MathHelper.ToRadians(180 / max * i));
 				rotationPos.Y *= dist / Math.Abs(radius); //will make the max length always dist
 				rotationPos.Y *= vector2_1.X;
 				rotationPos = rotationPos.RotatedBy(startingRadians);
 				Vector2 pos = rotationPos + centerOfCircle;
-				Vector2 dynamicAddition = new Vector2(2f, 0).RotatedBy(MathHelper.ToRadians(i * 180/ max + ai1));
+				Vector2 dynamicAddition = new Vector2(2f, 0).RotatedBy(MathHelper.ToRadians(i * 180 / max + ai1));
 				Vector2 drawPos = pos - Main.screenPosition;
-				spriteBatch.Draw(texture, drawPos + dynamicAddition, null, npc.GetAlpha(drawColor), MathHelper.ToRadians(180/ max * i - 45) + startingRadians, drawOrigin, npc.scale, SpriteEffects.None, 0f);
+				if (drawTexture)
+				{
+					Main.spriteBatch.Draw(texture, drawPos + dynamicAddition, null, npc.GetAlpha(drawColor), MathHelper.ToRadians(180 / max * i - 45) + startingRadians, drawOrigin, npc.scale, SpriteEffects.None, 0f);
+				}
+				else
+				{
+					if(Main.rand.NextBool(2))
+					{
+						Gore.NewGore(pos - Vector2.One * texture.Width / 2, npc.velocity, mod.GetGoreSlot("Gores/OtherworldVineGore"), 1f);
+					}
+				}
 			}
 			centerOfCircle += distanceToOwner / 2;
 			for (int i = max; i > 0; i--)
@@ -77,16 +92,25 @@ namespace SOTS.NPCs.Constructs
 				float dist = maxDist - distanceToOwner.Length() / 4;
 				if (dist < minDist) dist = minDist;
 				if (dist > maxDist) dist = maxDist;
-				Vector2 rotationPos = new Vector2(radius, 0).RotatedBy(MathHelper.ToRadians(180/ max * i));
+				Vector2 rotationPos = new Vector2(radius, 0).RotatedBy(MathHelper.ToRadians(180 / max * i));
 				rotationPos.Y *= dist / Math.Abs(radius); //will make the max length always dist
 				rotationPos.Y *= -vector2_1.X;
 				rotationPos = rotationPos.RotatedBy(startingRadians);
 				Vector2 pos = rotationPos + centerOfCircle;
-				Vector2 dynamicAddition = new Vector2(2f, 0).RotatedBy(MathHelper.ToRadians(i * 180/ max + ai1 + 180));
+				Vector2 dynamicAddition = new Vector2(2f, 0).RotatedBy(MathHelper.ToRadians(i * 180 / max + ai1 + 180));
 				Vector2 drawPos = pos - Main.screenPosition;
-				spriteBatch.Draw(texture, drawPos + dynamicAddition, null, npc.GetAlpha(drawColor), MathHelper.ToRadians(180/ max * i - 45) + startingRadians, drawOrigin, npc.scale, SpriteEffects.None, 0f);
+				if (drawTexture)
+				{
+					Main.spriteBatch.Draw(texture, drawPos + dynamicAddition, null, npc.GetAlpha(drawColor), MathHelper.ToRadians(180 / max * i - 45) + startingRadians, drawOrigin, npc.scale, SpriteEffects.None, 0f);
+				}
+				else
+				{
+					if (Main.rand.NextBool(2))
+					{
+						Gore.NewGore(pos - Vector2.One * texture.Width / 2, npc.velocity, mod.GetGoreSlot("Gores/OtherworldVineGore"), 1f);
+					}
+				}
 			}
-			return true;
 		}
 		bool glow = false;
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
@@ -119,13 +143,17 @@ namespace SOTS.NPCs.Constructs
 					int dust = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, mod.DustType("BigAetherDust"));
 					Main.dust[dust].velocity *= 5f;
 				}
-				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/OtherworldlyConstructGore1"), 1f);
-				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/OtherworldlyConstructGore2"), 1f);
-				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/OtherworldlyConstructGore3"), 1f);
-				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/OtherworldlyConstructGore4"), 1f);
-				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/OtherworldlyConstructGore5"), 1f);
+				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/OtherworldlyConstructs/OtherworldlyConstructGore2"), 1f);
+				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/OtherworldlyConstructs/OtherworldlyConstructGore3"), 1f);
+				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/OtherworldlyConstructs/OtherworldlyConstructGore4"), 1f);
+				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/OtherworldlyConstructs/OtherworldlyConstructGore5"), 1f);
+				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/OtherworldlyConstructs/OtherworldlyConstructGore6"), 1f);
 				for (int i = 0; i < 9; i++)
 					Gore.NewGore(npc.position, npc.velocity, Main.rand.Next(61, 64), 1f);
+				if(Main.netMode != 2)
+                {
+					Draw(false, Color.White);
+				}
 			}
 		}
 		Vector2 hookTile = new Vector2(-1, -1);

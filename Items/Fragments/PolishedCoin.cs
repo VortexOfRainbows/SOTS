@@ -1,14 +1,6 @@
-using System;
-using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.DataStructures;
-using Terraria.Enums;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.ObjectData;
-using Microsoft.Xna.Framework.Graphics;
-
 
 namespace SOTS.Items.Fragments
 {
@@ -21,8 +13,8 @@ namespace SOTS.Items.Fragments
 		}
 		public override void SetDefaults()
 		{
-            item.width = 24;     
-            item.height = 26;  
+            item.width = 28;     
+            item.height = 28;  
             item.value = Item.sellPrice(0, 2, 0, 0);
             item.rare = 5;
 			item.accessory = true;
@@ -31,12 +23,10 @@ namespace SOTS.Items.Fragments
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");	
-			
 			player.meleeCrit += 3;
 			player.rangedCrit += 3;
 			player.magicCrit += 3;
 			player.thrownCrit += 3;
-			
 			if(Main.rand.Next(2) == 0)
 			{
 				modPlayer.CritBonusDamage += 20;

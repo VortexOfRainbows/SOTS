@@ -15,7 +15,6 @@ High Priority:
 1. Advisor: Music Box
 2. Run through and redo the gores that need to be done
 3. Secret Jingle
-4. Polaris: Make theme louder
 
 Mid Priority:
 1. Goopwood sprite Changes
@@ -43,6 +42,11 @@ Low Priority:
 6. Remove negative Vregen in inventory items
 7. Electrolyte Seperator
 8. Amogus
+
+6/10/21
+1. Otherworldly Construct Gore
+2. Coin Accessory resprites
+3. Fixed framing issue on cursed dust
 
 6/9/21
 1. Worldgen changes to fix Acedia spawning + Starter house

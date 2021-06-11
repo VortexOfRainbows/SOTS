@@ -8,7 +8,7 @@ namespace SOTS.Dusts
 	{
 		public override void OnSpawn(Dust dust)
 		{
-			dust.frame = new Rectangle(1, 1 + Main.rand.Next(3) * 8, 8, 8);
+			dust.frame = new Rectangle(1, 1 + Main.rand.Next(3) * 10, 10, 10);
 			dust.velocity.Y = Main.rand.Next(-10, 11) * 0.2f;
 			dust.velocity.X = Main.rand.Next(-10, 11) * 0.2f;
 			dust.scale *= Main.rand.Next(5, 10) * 0.1f;
@@ -31,7 +31,7 @@ namespace SOTS.Dusts
 	{
 		public override void OnSpawn(Dust dust)
 		{
-			dust.frame = new Rectangle(1, 1 + Main.rand.Next(3) * 8, 8, 8);
+			dust.frame = new Rectangle(1, 1 + Main.rand.Next(3) * 10, 10, 10);
 			dust.velocity.Y = Main.rand.Next(-10, 11) * 0.2f;
 			dust.velocity.X = Main.rand.Next(-10, 11) * 0.2f;
 			dust.scale *= Main.rand.Next(9, 11) * 0.1f;
@@ -61,7 +61,7 @@ namespace SOTS.Dusts
 	{
 		public override void OnSpawn(Dust dust)
 		{
-			dust.frame = new Rectangle(1, 1 + Main.rand.Next(3) * 8, 8, 8);
+			dust.frame = new Rectangle(1, 1 + Main.rand.Next(3) * 10, 10, 10);
 			dust.velocity.Y = Main.rand.Next(-10, 11) * 0.2f;
 			dust.velocity.X = Main.rand.Next(-10, 11) * 0.2f;
 			dust.scale *= Main.rand.Next(9, 11) * 0.2f;
@@ -82,7 +82,7 @@ namespace SOTS.Dusts
 	{
 		public override void OnSpawn(Dust dust)
 		{
-			dust.frame = new Rectangle(1, 1 + Main.rand.Next(3) * 8, 8, 8);
+			dust.frame = new Rectangle(1, 1 + Main.rand.Next(3) * 10, 10, 10);
 			dust.velocity.Y = Main.rand.Next(-10, 11) * 0.2f;
 			dust.velocity.X = Main.rand.Next(-10, 11) * 0.2f;
 			dust.scale *= Main.rand.Next(9, 11) * 0.1f;

@@ -173,7 +173,7 @@ namespace SOTS.Void
 					player.lifeRegen = 0;
 				}
 				player.lifeRegenTime = 0;
-				player.lifeRegen -= 10;
+				player.lifeRegen -= 20;
 				player.lifeRegen -= player.statLifeMax2 / 20;
 				if (player.statLife <= 0 && player.whoAmI == Main.myPlayer)
 				{
