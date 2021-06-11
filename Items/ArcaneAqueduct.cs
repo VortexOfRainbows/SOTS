@@ -18,7 +18,6 @@ namespace SOTS.Items
 		}
 		public override void SetDefaults()
 		{
-	
 			item.damage = 14;
 			item.magic = true;
             item.width = 28;     
