@@ -21,7 +21,6 @@ namespace SOTS.Void
 			item.magic = false;
 			item.melee = false;
 			item.ranged = false; 
-			
 			SafeSetDefaults();
 			item.mana = 1;
 			item.thrown = false;
@@ -34,7 +33,12 @@ namespace SOTS.Void
 			item.mana = 1;
 			if(!item.summon)
 			{
-				voidManaAmount = (int)(voidMana * voidPlayer.voidCost);
+				float voidCostMult = 1f;
+				if (item.prefix == mod.GetPrefix("Famished").Type || item.prefix == mod.GetPrefix("Precarious").Type || item.prefix == mod.GetPrefix("Potent").Type || item.prefix == mod.GetPrefix("Omnipotent").Type)
+				{
+					voidCostMult = item.GetGlobalItem<PrefixItem>().voidCostMultiplier;
+				}
+				voidManaAmount = (int)(voidMana * voidPlayer.voidCost * voidCostMult);
 				if (voidManaAmount < 1 && item.type != mod.ItemType("FrigidJavelin"))
 				{
 					voidManaAmount = 1;

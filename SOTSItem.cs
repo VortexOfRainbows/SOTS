@@ -22,9 +22,134 @@ using SOTS.Items;
 using SOTS.Items.Fragments;
 using SOTS.Items.Vibrant;
 using SOTS.Items.Inferno;
+using Terraria.Utilities;
 
 namespace SOTS
 {
+	public class PrefixItem : GlobalItem
+	{
+		public override bool InstancePerEntity => true;
+		//public string originalOwner;
+		public int extraVoid;
+		public float voidCostMultiplier;
+		public PrefixItem()
+		{
+			//originalOwner = "";
+			extraVoid = 0;
+			voidCostMultiplier = 1;
+		}
+		public override GlobalItem Clone(Item item, Item itemClone)
+		{
+			PrefixItem myClone = (PrefixItem)base.Clone(item, itemClone);
+			myClone.voidCostMultiplier = voidCostMultiplier;
+			myClone.extraVoid = extraVoid;
+			return myClone;
+		}
+		public override int ChoosePrefix(Item item, UnifiedRandom rand)
+		{
+			return -1;
+		}
+		public override void UpdateAccessory(Item item, Player player, bool hideVisual)
+		{
+			if (extraVoid > 0 && (item.prefix == mod.GetPrefix("Awakened").Type || item.prefix == mod.GetPrefix("Omniscient").Type))
+			{
+				VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
+				voidPlayer.voidMeterMax2 += extraVoid;
+			}
+		}
+		public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
+		{
+			if (!item.social && item.prefix > 0)
+			{
+				int voidTooltip = extraVoid - Main.cpItem.GetGlobalItem<PrefixItem>().extraVoid;
+				if (extraVoid > 0 && (item.prefix == mod.GetPrefix("Awakened").Type || item.prefix == mod.GetPrefix("Omniscient").Type))
+				{
+					TooltipLine line = new TooltipLine(mod, "PrefixAwakened", "+" + voidTooltip + " max void")
+					{
+						isModifier = true
+					};
+					tooltips.Add(line);
+				}
+				if (item.modItem as VoidItem != null)
+				{
+					VoidItem vItem = item.modItem as VoidItem;
+					vItem.GetVoid(Main.LocalPlayer);
+					int voidAmt = VoidItem.voidMana;
+					int intMax = (int)(voidCostMultiplier * voidAmt);
+					float mult = intMax / (float)voidAmt;
+					int voidCostTooltip = (int)(100f * (mult - 1f));
+					if (voidCostTooltip != 0 && (item.prefix == mod.GetPrefix("Famished").Type || item.prefix == mod.GetPrefix("Precarious").Type || item.prefix == mod.GetPrefix("Potent").Type || item.prefix == mod.GetPrefix("Omnipotent").Type))
+					{
+						string sign = (voidCostTooltip > 0 ? "+" : "");
+						Color baseColor = (voidCostTooltip < 0 ? new Color(120, 190, 120) : new Color(190, 120, 120));
+						TooltipLine line = new TooltipLine(mod, "PrefixAwakened", sign + voidCostTooltip + "% void cost")
+						{
+                            overrideColor = baseColor
+						};
+						tooltips.Add(line);
+					}
+				}
+			}
+			/*if (originalOwner.Length > 0)
+			{
+				TooltipLine line = new TooltipLine(mod, "CraftedBy", "Crafted by: " + originalOwner)
+				{
+					overrideColor = Color.LimeGreen
+				};
+				tooltips.Add(line);
+				foreach (TooltipLine line2 in tooltips)
+				{
+					if (line2.mod == "Terraria" && line2.Name == "ItemName")
+					{
+						line2.text = originalOwner + "'s " + line2.text;
+					}
+				}
+			}*/
+			/*if (GetInstance<ExampleConfigClient>().ShowModOriginTooltip)
+			{
+				foreach (TooltipLine line3 in tooltips)
+				{
+					if (line3.mod == "Terraria" && line3.Name == "ItemName")
+					{
+						line3.text = line3.text + (item.modItem != null ? " [" + item.modItem.mod.DisplayName + "]" : "");
+					}
+				}
+			}*/
+		}
+		/*public override void Load(Item item, TagCompound tag)
+		{
+			originalOwner = tag.GetString("originalOwner");
+		}
+		public override bool NeedsSaving(Item item)
+		{
+			return originalOwner.Length > 0;
+		}
+		public override TagCompound Save(Item item)
+		{
+			return new TagCompound {
+				{"originalOwner", originalOwner},
+			};
+		}
+		public override void OnCraft(Item item, Recipe recipe)
+		{
+			if (item.maxStack == 1)
+			{
+				originalOwner = Main.LocalPlayer.name;
+			}
+		}*/
+		public override void NetSend(Item item, BinaryWriter writer)
+		{
+			//writer.Write(originalOwner);
+			writer.Write(extraVoid);
+			writer.Write(voidCostMultiplier);
+		}
+		public override void NetReceive(Item item, BinaryReader reader)
+		{
+			//originalOwner = reader.ReadString();
+			extraVoid = reader.ReadInt32();
+			voidCostMultiplier = reader.ReadSingle();
+		}
+	}
 	public class SOTSItem : GlobalItem
 	{
         public static int[] rarities1;
@@ -355,7 +480,6 @@ namespace SOTS
 		public override bool InstancePerEntity => true;
 		public override bool CloneNewInstances => true;
 	}
-
 	public class PlayerUseGlow : ModPlayer
 	{
 		public static readonly PlayerLayer ItemUseGlow = new PlayerLayer("SOTS", "ItemUseGlow", PlayerLayer.HeldItem, delegate (PlayerDrawInfo drawInfo)

@@ -13,8 +13,7 @@ The following is my development plans :D
 
 High Priority:
 1. Advisor: Music Box
-2. Run through and redo the gores that need to be done
-3. Secret Jingle
+2. Secret Jingle
 
 Mid Priority:
 1. Goopwood sprite Changes
@@ -43,8 +42,11 @@ Low Priority:
 7. Electrolyte Seperator
 8. Amogus
 
+6/12/21
+1. Added void prefixes
+
 6/10/21
-1. Otherworldly Construct Gore
+1. Otherworldly + Permafrost Construct Gore
 2. Coin Accessory resprites
 3. Fixed framing issue on cursed dust
 

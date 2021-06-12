@@ -1,0 +1,37 @@
+New Stuff:
+New Expert Drop from Icy Amalgamation (Changed to Polaris)
+New Expert Drop from Subspace Serpent, this one is pretty strong and may be nerfed later. Depends on reception.
+New Expert Drop from Pharaoh's
+A handful of new items. A TON of resprites
+New Lesser Wisp enemy in hell
+Added new Starter House variations
+
+Balancing:
+Subspace Scissors damage 180 -> 190, no longer an expert drop
+Spirit tracer is no longer an expert drop, reduced draw iterations to improve framerate
+Tidal Construct dungeon spawn rates lowered by 45%
+Calculator now only applies homing once, this should also improve framerate
+Planetarium max spawns reduced by 20%
+Goopwoop Helix damage 22 -> 20
+Assassination potion no longer works on bosses or causes critical strikes automatically
+Void Shock now lasts for ten seconds and makes you take moredamage while active.
+Void Recovery lasts slightly longer and has higher base negative life regen
+
+Misc:
+Polaris has recieved some visual changes, optimizations, and balancing changes (Courtesy of Heart Plus Up!)
+Pearlescent core removed
+Normalzied some sell values
+Door pants works better now
+Subspace Serpents cross attack is now less RNG dependent
+Terminator Acorns has reduced draw iterations when trailing to improve framerate
+Advisor is now summoned when using Planetary Analyzer (Worldgen scanner)
+
+Bug Fixes:
+Fixed bug where Advisor would launch towards the player after the tracer attack, instead of going backwards as intended.
+Putrid Pinky drops items correctly in normal mode.
+Fixed Cursed Blade hitting more than intended
+Chaos staff no longer spawns in the Strange Chest loot pool
+Void minions are now properly removed after cycling void accesories, no longer increases max void
+The Centerpiece of the Pyramid now triggers the biome consistently
+Acedia Portal properly spawns on smaller worlds
+
