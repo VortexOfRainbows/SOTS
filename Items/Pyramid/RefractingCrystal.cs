@@ -170,52 +170,9 @@ namespace SOTS.Items.Pyramid
 											Vector2 middlePos = new Vector2(i2 * 16 + 8, j2 * 16 + 8);
 											if (Main.netMode != 1)
 											{
-												int item = Item.NewItem((int)middlePos.X, (int)middlePos.Y, 0,0, mod.ItemType("PhotonGeyser"), 1);
+												Projectile.NewProjectile(middlePos, Vector2.Zero, ModContent.ProjectileType<StrangeKeystoneExplosion>(), 0, 0, Main.myPlayer);
+												int item = Item.NewItem((int)middlePos.X, (int)middlePos.Y, 0, 0, mod.ItemType("PhotonGeyser"), 1);
 												NetMessage.SendData(MessageID.SyncItem, -1, -1, null, item, 1f, 0.0f, 0.0f, 0, 0, 0);
-											}
-											Main.PlaySound(2, middlePos, 14);
-											int cc = 0;
-											for(int l = 0; l < 360; l += 3)
-											{
-												int type = cc % 7;
-												Color color = Color.White;
-												cc += 1 + Main.rand.Next(2);
-												switch (type)
-												{
-													case 0:
-														color = new Color(255, 0, 0, 0);
-														break;
-													case 1:
-														color = new Color(255, 140, 0, 0);
-														break;
-													case 2:
-														color = new Color(255, 255, 0, 0);
-														break;
-													case 3:
-														color = new Color(0, 255, 0, 0);
-														break;
-													case 4:
-														color = new Color(0, 255, 255, 0);
-														break;
-													case 5:
-														color = new Color(0, 0, 255, 0);
-														break;
-													case 6:
-														color = new Color(140, 0, 255, 0);
-														break;
-												}
-												Vector2 circular = new Vector2(16, 0).RotatedBy(MathHelper.ToRadians(l));
-												for(int u = 1; u < 3; u++)
-												{
-													Dust dust = Dust.NewDustDirect(middlePos - new Vector2(5) + circular, 0, 0, ModContent.DustType<CopyDust4>());
-													dust.fadeIn = 0.2f;
-													dust.noGravity = true;
-													dust.alpha = 50;
-													dust.color = color;
-													dust.scale *= 1.75f * u;
-													dust.velocity *= 0.5f;
-													dust.velocity += circular * 0.4f / u;
-												}
 											}
 										}
 										tile.frameX += 54;
@@ -255,6 +212,81 @@ namespace SOTS.Items.Pyramid
 			item.maxStack = 999;
 			item.value = Item.sellPrice(1, 0, 0, 0);
 			item.rare = 6;
+		}
+	}
+	public class StrangeKeystoneExplosion : ModProjectile
+	{
+		public override void SetStaticDefaults()
+		{
+			DisplayName.SetDefault("Strange Keystone Explosion");
+		}
+		public override void SetDefaults()
+		{
+			projectile.timeLeft = 5;
+			projectile.penetrate = -1;
+			projectile.width = 4;
+			projectile.height = 4;
+			projectile.alpha = 255;
+			projectile.tileCollide = false;
+			projectile.ignoreWater = false;
+			projectile.friendly = false;
+			projectile.hostile = false;
+		}
+		bool runOnce = true;
+		public override void AI()
+		{
+			if (runOnce)
+			{
+				runOnce = false;
+				if (Main.netMode != 2)
+				{
+					SOTSWorld.SecretFoundMusicTimer = 720;
+				}
+				Main.PlaySound(2, projectile.Center, 14);
+				int cc = 0;
+				for (int l = 0; l < 360; l += 3)
+				{
+					int type = cc % 7;
+					Color color = Color.White;
+					cc += 1 + Main.rand.Next(2);
+					switch (type)
+					{
+						case 0:
+							color = new Color(255, 0, 0, 0);
+							break;
+						case 1:
+							color = new Color(255, 140, 0, 0);
+							break;
+						case 2:
+							color = new Color(255, 255, 0, 0);
+							break;
+						case 3:
+							color = new Color(0, 255, 0, 0);
+							break;
+						case 4:
+							color = new Color(0, 255, 255, 0);
+							break;
+						case 5:
+							color = new Color(0, 0, 255, 0);
+							break;
+						case 6:
+							color = new Color(140, 0, 255, 0);
+							break;
+					}
+					Vector2 circular = new Vector2(16, 0).RotatedBy(MathHelper.ToRadians(l));
+					for (int u = 1; u < 3; u++)
+					{
+						Dust dust = Dust.NewDustDirect(projectile.Center - new Vector2(5) + circular, 0, 0, ModContent.DustType<CopyDust4>());
+						dust.fadeIn = 0.2f;
+						dust.noGravity = true;
+						dust.alpha = 50;
+						dust.color = color;
+						dust.scale *= 1.75f * u;
+						dust.velocity *= 0.5f;
+						dust.velocity += circular * 0.4f / u;
+					}
+				}
+			}
 		}
 	}
 }

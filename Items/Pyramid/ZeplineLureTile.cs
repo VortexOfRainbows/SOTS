@@ -26,6 +26,10 @@ namespace SOTS.Items.Pyramid
 		{
 			if (Main.netMode != 1 && fail && Main.rand.NextBool(15))
 				Projectile.NewProjectile(new Vector2(i, j) * 16 + new Vector2(8, 8), Vector2.Zero, mod.ProjectileType("ZeplineLureProjectile"), 0, 0, Main.myPlayer);
+			if(!fail && Main.netMode != 2)
+			{
+				SOTSWorld.SecretFoundMusicTimer = 720;
+			}
 			base.KillTile(i, j, ref fail, ref effectOnly, ref noItem);
         }
         public override void NumDust(int i, int j, bool fail, ref int num)
@@ -188,7 +192,7 @@ namespace SOTS.Items.Pyramid
 									dust.velocity += projectile.velocity;
 								}
 								WorldGen.KillTile(i + x, j + y, false, false, false);
-								if (!Main.tile[i, j].active() && Main.netMode != 0)
+								if (!Main.tile[i, j].active() && Main.netMode != NetmodeID.SinglePlayer)
 									NetMessage.SendData(MessageID.TileChange, -1, -1, null, 0, (float)i, (float)j, 0f, 0, 0, 0);
 							}
 						}

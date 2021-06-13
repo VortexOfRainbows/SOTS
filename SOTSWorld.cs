@@ -24,8 +24,9 @@ using Terraria.World.Generation;
 namespace SOTS
 {
     public class SOTSWorld : ModWorld
-	{	
-		public static int planetarium = 0;
+	{
+		public static int SecretFoundMusicTimer = 0;
+        public static int planetarium = 0;
 		public static int pyramidBiome = 0;
 		public static int geodeBiome = 0;
 		public static bool downedBoss2 = false;
@@ -131,7 +132,6 @@ namespace SOTS
 				{"challenge", challenge},
 			};
 		}
-
 		public override void Load(TagCompound tag) {
 			var downed = tag.GetList<string>("downed");
 			downedPinky = downed.Contains("pinky");
@@ -153,7 +153,6 @@ namespace SOTS
 			challengeGlass = challenge.Contains("glass");
 			challengeIcarus = challenge.Contains("icarus");
 		}
-
 		public override void LoadLegacy(BinaryReader reader) {
 			int loadVersion = reader.ReadInt32();
 			if (loadVersion == 0) {
@@ -180,7 +179,6 @@ namespace SOTS
 				challengeIcarus = flags2[5];
 			}
 		}
-
 		public override void NetSend(BinaryWriter writer) {
 			BitsByte flags = new BitsByte();
 			flags[0] = downedPinky;
