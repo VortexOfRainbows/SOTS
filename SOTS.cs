@@ -251,37 +251,37 @@ namespace SOTS
 			recipe.SetResult(ItemID.SlimeStaff, 1);
 			recipe.AddRecipe();
 			
-			//just in case temple gets cucked
+			/*just in case temple gets cucked
 			recipe = new ModRecipe(this);
 			recipe.AddIngredient(ItemID.TempleKey, 2);
-			recipe.AddIngredient(1293, 1); //power cell
+			recipe.AddIngredient(ItemID.LihzahrdPowerCell, 1); //power cell
 			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SetResult(1292, 1); //altar
+			recipe.SetResult(ItemID.LihzahrdAltar, 1); //altar
 			recipe.AddRecipe();
 			
 			recipe = new ModRecipe(this);
 			recipe.AddIngredient(ItemID.TempleKey, 1);
 			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SetResult(1293, 2); //power cell
+			recipe.SetResult(ItemID.LihzahrdPowerCell, 2); //power cell
 			recipe.AddRecipe();
 			
 			recipe = new ModRecipe(this);
-			recipe.AddIngredient(1101, 30); //lizahrd brick
+			recipe.AddIngredient(ItemID.LihzahrdBrick, 30); //lizahrd brick
 			recipe.AddIngredient(ItemID.FallenStar, 5); //lizahrd brick
 			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SetResult(1293, 1);
+			recipe.SetResult(ItemID.LihzahrdPowerCell, 1);
 			recipe.AddRecipe();
 			
 			recipe = new ModRecipe(this);
 			recipe.AddIngredient(ItemID.TempleKey, 1);
 			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SetResult(1101, 75);
-			recipe.AddRecipe();
+			recipe.SetResult(ItemID.LihzahrdBrick, 75);
+			recipe.AddRecipe(); */
 			
 			recipe = new ModRecipe(this);
 			recipe.AddIngredient(null, "FragmentOfChaos", 125);
 			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SetResult(1326, 1); //rod of discord
+			recipe.SetResult(ItemID.RodofDiscord, 1); //rod of discord
 			recipe.AddRecipe();
 			
 			recipe = new ModRecipe(this);
@@ -330,6 +330,16 @@ namespace SOTS
 				{
 					music = GetSoundSlot(SoundType.Music, "Sounds/Music/Planetarium");
 					priority = MusicPriority.Environment;
+				}
+			}
+			if (Main.myPlayer != -1 && !Main.gameMenu)
+			{
+				//Player player = Main.player[Main.myPlayer];
+				if (SOTSWorld.SecretFoundMusicTimer > 0)
+				{
+					SOTSWorld.SecretFoundMusicTimer--;
+					music = GetSoundSlot(SoundType.Music, "Sounds/Music/SecretFound");
+					priority = MusicPriority.BossHigh + 1;
 				}
 			}
 		}

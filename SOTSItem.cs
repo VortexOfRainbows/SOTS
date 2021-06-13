@@ -70,7 +70,7 @@ namespace SOTS
 					};
 					tooltips.Add(line);
 				}
-				if (item.modItem as VoidItem != null)
+				if (!item.summon && item.modItem as VoidItem != null)
 				{
 					VoidItem vItem = item.modItem as VoidItem;
 					vItem.GetVoid(Main.LocalPlayer);
