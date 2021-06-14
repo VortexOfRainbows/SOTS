@@ -276,7 +276,7 @@ namespace SOTS.Projectiles.Minions
 				float speed = -13.5f;
 				NPC npc = Main.npc[targetID];
 				Vector2 npcCenter = npc.Center;
-				if(!(!npc.friendly && npc.dontTakeDamage == false && npc.active && npc.CanBeChasedBy()))
+				if(!(!npc.friendly && npc.dontTakeDamage == false && npc.active && npc.CanBeChasedBy()) || Vector2.Distance(npc.Center, player.Center) > 3200)
 				{
 					targetID = -1;
 					targetType = -1;
