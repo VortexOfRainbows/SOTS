@@ -12,10 +12,9 @@ The following is my development plans :D
 10. Ghost Town to Evil Biome
 
 High Priority:
-1. Advisor: Music Box
-2. Chest slime resprites
-3. Bone Clapper
-4. Chaos spirit fix
+1. Chest slime resprites
+2. Bone Clapper
+3. Chaos spirit fix
 
 Mid Priority:
 1. Goopwood sprite Changes

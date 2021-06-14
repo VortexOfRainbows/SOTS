@@ -71,9 +71,11 @@ namespace SOTS
 			}
 			//Music Box Stuff
 			AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/PutridPinky"), ItemType("PutridPinkyMusicBox"), TileType("PutridPinkyMusicBoxTile"));
+			AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/Advisor"), ItemType("AdvisorMusicBox"), TileType("AdvisorMusicBoxTile"));
 			AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/Polaris"), ItemType("PolarisMusicBox"), TileType("PolarisMusicBoxTile"));
 			AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/SubspaceSerpent"), ItemType("SubspaceSerpentMusicBox"), TileType("SubspaceSerpentMusicBoxTile"));
 			AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/AncientPyramid"), ItemType("AncientPyramidMusicBox"), TileType("AncientPyramidMusicBoxTile"));
+			AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/Planetarium"), ItemType("PlanetariumMusicBox"), TileType("PlanetariumMusicBoxTile"));
 		}
 		public override void Unload() 
 		{
@@ -329,7 +331,7 @@ namespace SOTS
 				if (player.active && player.GetModPlayer<SOTSPlayer>().PlanetariumBiome)
 				{
 					music = GetSoundSlot(SoundType.Music, "Sounds/Music/Planetarium");
-					priority = MusicPriority.Environment;
+					priority = MusicPriority.Event;
 				}
 			}
 			if (Main.myPlayer != -1 && !Main.gameMenu)
@@ -393,7 +395,7 @@ namespace SOTS
 					"The Advisor",
 					(Func<bool>)(() => SOTSWorld.downedAdvisor),
 					ModContent.ItemType<AvaritianGateway>(),
-					new List<int>() { },
+					new List<int>() { ModContent.ItemType<AdvisorMusicBox>() },
 					new List<int>() { ModContent.ItemType<TheAdvisorBossBag>(), ModContent.ItemType<SkywareKey>(), ModContent.ItemType<StarlightAlloy>(), ModContent.ItemType<StrangeKey>(), ModContent.ItemType<HardlightAlloy>(), ModContent.ItemType<MeteoriteKey>(), ModContent.ItemType<OtherworldlyAlloy>() },
 					"Destroy the 4 tethered Otherworldly Constructs of the Planetarium",
 					"",
