@@ -6,8 +6,6 @@ using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System;
 using Terraria.ObjectData;
-using Terraria.DataStructures;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace SOTS.Items.ChestItems
 {
@@ -34,7 +32,7 @@ namespace SOTS.Items.ChestItems
 		public override void SetDefaults()
 		{
 			item.width = 30;
-			item.height = 44;
+			item.height = 18;
 			item.useTime = 12;
 			item.useAnimation = 12;
 			item.useStyle = 3;

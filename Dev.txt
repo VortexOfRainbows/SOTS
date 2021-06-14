@@ -15,7 +15,6 @@ High Priority:
 1. Advisor: Music Box
 2. Chest slime resprites
 3. Bone Clapper
-4. Chaos spirit fix
 
 Mid Priority:
 1. Goopwood sprite Changes
@@ -45,7 +44,8 @@ Low Priority:
 
 6/13/21
 1. Added 4 more starter houses
-2. 
+2. Further decreased lesser wisp spawn chance
+3. Fixed bug with Chaos Spirit Staff despawning during subspace fight by making it deaggro far away enemies.
 
 6/12/21
 1. Added void prefixes

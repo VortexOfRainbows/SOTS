@@ -1,10 +1,10 @@
 New Stuff:
-New Expert Drop from Icy Amalgamation (Changed to Polaris)
+New Expert Drop from Icy Amalgamation (Name changed to Polaris).
 New Expert Drop from Subspace Serpent, this one is pretty strong and may be nerfed later. Depends on reception.
-New Expert Drop from Pharaoh's
-A handful of new items. A TON of resprites
-New Lesser Wisp enemy in hell
-Added new Starter House variations
+New Expert Drop from Pharaoh's Curse.
+A handful of new items and a TON of resprites.
+New Lesser Wisp enemy in that spawns in groups in hell.
+Added 10 different variations of the Starter House that can be found upon world generation.
 
 Balancing:
 Subspace Scissors damage 180 -> 190, no longer an expert drop
@@ -24,14 +24,15 @@ Normalzied some sell values
 Door pants works better now
 Subspace Serpents cross attack is now less RNG dependent
 Terminator Acorns has reduced draw iterations when trailing to improve framerate
-Advisor is now summoned when using Planetary Analyzer (Worldgen scanner)
+Advisor is now summoned when using Planetary Analyzer (Worldgen scanner), which is still found in the Starter House.
+Chaos Spirit Staff now stops attacking enemies more than 200 tiles away from the player, this is meant to make it stop despawning against Subspace Serpent in particular.
 
 Bug Fixes:
 Fixed bug where Advisor would launch towards the player after the tracer attack, instead of going backwards as intended.
-Putrid Pinky drops items correctly in normal mode.
-Fixed Cursed Blade hitting more than intended
-Chaos staff no longer spawns in the Strange Chest loot pool
-Void minions are now properly removed after cycling void accesories, no longer increases max void
-The Centerpiece of the Pyramid now triggers the biome consistently
-Acedia Portal properly spawns on smaller worlds
+Putrid Pinky now drops items correctly in normal mode.
+Fixed Cursed Blade hitting more than intended.
+Chaos Spirit Staff no longer spawns in the Strange Chest loot pool, now the Otherworldly Spirit Staff spawns as intended.
+Void minions are now properly removed after cycling void accesories, and no longer increases max void
+The Centerpiece of the Pyramid now triggers the biome consistently, allowing you to fish there even if you are infront of other walls.
+Acedia Portal now properly spawns on smaller worlds (sometimes it wouldn't spawn at all).
 
