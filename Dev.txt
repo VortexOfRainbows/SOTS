@@ -12,7 +12,6 @@ The following is my development plans :D
 10. Ghost Town to Evil Biome
 
 High Priority:
-
 1. Chest slime resprites
 2. Bone Clapper
 
