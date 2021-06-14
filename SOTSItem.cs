@@ -61,7 +61,7 @@ namespace SOTS
 		{
 			if (!item.social && item.prefix > 0)
 			{
-				int voidTooltip = extraVoid - Main.cpItem.GetGlobalItem<PrefixItem>().extraVoid;
+				int voidTooltip = extraVoid;
 				if (extraVoid > 0 && (item.prefix == mod.GetPrefix("Awakened").Type || item.prefix == mod.GetPrefix("Omniscient").Type))
 				{
 					TooltipLine line = new TooltipLine(mod, "PrefixAwakened", "+" + voidTooltip + " max void")

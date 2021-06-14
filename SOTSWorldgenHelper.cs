@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using SOTS.Items.Pyramid;
 using SOTS.Items.ChestItems;
 using System;
+using SOTS.Items;
 
 namespace SOTS
 {
@@ -4625,6 +4626,1124 @@ namespace SOTS
 					}
 				}
 				UseStarterHouseHalfCircle(spawnX, spawnY, 1, _structure.GetLength(1) / 2, 8);
+			}
+			if(type == 6)
+            {
+				int[,] _structure = {
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,1,2,0,0,1,0,0,2,1,0,0,0,0,0,0,0,1,1,0,0,1,1,0,0,0,0,0,0,0},
+					{0,0,0,0,0,3,0,0,2,0,2,2,0,1,2,2,1,1,0,0,2,0,0,0,1,0,1,0,1,0,2,0,0,0,0,0,0},
+					{0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,3,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0},
+					{4,4,0,0,0,0,0,0,0,0,5,5,5,5,5,3,3,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5},
+					{4,4,0,4,4,4,0,0,0,5,5,5,5,5,5,3,3,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5},
+					{4,4,4,4,4,5,5,5,5,5,5,5,5,5,5,3,3,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5},
+					{4,4,4,6,5,5,5,5,7,7,7,5,5,5,5,3,8,5,7,7,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5},
+					{4,4,4,4,4,5,5,5,7,7,7,7,7,7,7,8,8,7,7,7,7,7,8,8,8,8,8,5,5,5,5,5,5,5,5,5,5},
+					{4,6,4,4,4,4,5,5,7,7,7,7,7,7,7,8,7,7,7,7,7,7,7,5,5,8,8,7,7,5,5,5,5,5,5,5,5},
+					{4,4,4,4,4,6,5,5,0,7,7,7,7,7,7,7,7,8,8,5,5,7,5,5,5,8,5,5,7,7,5,5,5,5,5,5,5},
+					{4,4,4,6,4,4,5,5,5,7,7,7,7,7,7,7,7,8,5,5,5,5,5,5,5,5,5,5,7,7,5,5,5,5,5,5,5},
+					{4,4,6,6,6,6,4,5,5,5,5,0,0,7,7,7,7,8,7,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5},
+					{5,4,4,4,4,4,4,5,5,5,5,5,5,5,5,5,0,7,7,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5},
+					{5,5,4,4,4,4,4,4,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,9,5},
+					{5,9,4,4,6,4,4,4,4,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5},
+					{9,9,9,4,4,4,4,4,4,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5},
+					{9,5,5,5,4,4,4,4,5,5,5,5,5,5,5,5,9,9,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5}
+				};
+				int PosX = spawnX - _structure.GetLength(1) / 2;
+				int PosY = spawnY - _structure.GetLength(0) + 16;
+				//i = vertical, j = horizontal
+				for (int i = 0; i < _structure.GetLength(0); i++)
+				{
+					for (int j = _structure.GetLength(1) - 1; j >= 0; j--)
+					{
+						int k = PosX + j;
+						int l = PosY + i;
+						if (WorldGen.InWorld(k, l, 30))
+						{
+							Tile tile = Framing.GetTileSafely(k, l);
+							switch (_structure[i, j])
+							{
+								case 0:
+									tile.wall = 0;
+									break;
+								case 1:
+									tile.wall = 5;
+									break;
+								case 2:
+									tile.wall = 16;
+									break;
+								case 3:
+									tile.wall = 1;
+									break;
+								case 4:
+									tile.wall = 63;
+									break;
+								case 5:
+									if(tile.wall == 0)
+										tile.wall = WallID.DirtUnsafe;
+									break;
+								case 6:
+									tile.wall = 65;
+									break;
+								case 7:
+									tile.wall = 66;
+									break;
+								case 8:
+									tile.wall = 68;
+									break;
+								case 9:
+									tile.wall = 59;
+									break;
+							}
+						}
+					}
+				}
+				_structure = new int[,] {
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,3,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,5,0,0,0,2,6,0,0,0,0,0},
+					{0,0,0,0,0,0,5,2,2,5,0,0,0,0,0,0,0,0,0,0,0,0,4,0,5,5,0,0,9,9,2,2,0,0,0,0,0},
+					{0,0,10,1,2,5,10,2,2,11,7,0,5,0,0,0,0,0,0,12,12,13,14,14,15,9,8,0,9,10,2,2,16,0,0,17,0},
+					{1,1,2,2,2,13,14,14,14,14,14,14,14,15,5,5,5,6,13,14,14,14,14,14,14,14,14,14,14,14,2,2,14,14,18,19,17},
+					{14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,10,10,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,20},
+					{21,21,10,10,10,10,10,14,14,10,10,10,14,14,14,5,10,14,10,10,14,14,14,14,14,14,10,14,14,10,10,10,10,10,10,10,21},
+					{21,21,21,21,10,10,10,10,10,14,14,14,14,10,10,10,5,14,10,10,14,14,10,10,10,14,14,10,10,10,10,10,10,21,21,21,21},
+					{21,21,21,21,21,21,21,20,20,20,20,21,21,21,20,5,5,20,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21},
+					{21,21,21,21,21,21,21,20,22,0,23,20,20,20,20,5,10,20,20,20,20,20,20,20,20,20,20,21,21,21,21,21,21,21,21,21,21},
+					{21,21,21,21,21,21,21,20,22,0,0,22,22,23,20,0,0,20,20,0,0,0,0,0,0,0,23,20,20,21,21,21,21,21,21,21,21},
+					{21,21,21,21,21,21,21,20,24,5,0,22,22,0,22,0,0,22,0,0,0,0,0,0,0,0,0,5,23,20,21,21,21,21,21,21,21},
+					{21,21,21,21,21,21,21,21,20,25,5,0,0,0,22,0,0,0,0,0,0,0,0,0,0,0,0,5,5,23,20,21,21,21,21,21,21},
+					{20,20,21,21,21,21,21,21,21,20,25,26,0,5,22,0,0,0,0,0,0,0,0,0,0,0,0,0,5,5,20,21,21,21,21,21,21},
+					{21,21,21,21,21,21,21,21,21,21,20,20,20,24,22,10,10,0,0,0,0,0,0,0,0,0,0,0,0,5,20,21,21,21,21,21,21},
+					{21,21,20,21,21,21,21,21,21,21,21,21,21,20,20,20,10,10,27,27,27,27,27,27,27,0,0,27,27,27,20,21,21,21,21,21,21},
+					{21,21,21,21,21,21,21,21,21,21,21,21,21,20,21,20,21,20,20,20,24,24,29,29,29,28,0,29,29,30,20,21,21,21,21,21,21},
+					{21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,20,20,20,20,20,20,20,20,20,21,21,21,21,21,21,21},
+					{21,21,21,21,20,21,21,21,21,21,21,21,21,21,21,20,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21},
+					{21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21}
+				};
+				UseStarterHouseHalfCircle(spawnX, spawnY - 1, 0, _structure.GetLength(1) / 2, _structure.GetLength(0));
+				for (int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)    //Increase the iterations on this outermost for loop if tabletop-objects are not properly spawning
+				{
+					for (int i = 0; i < _structure.GetLength(0); i++)
+					{
+						for (int j = _structure.GetLength(1) - 1; j >= 0; j--)
+						{
+							int k = PosX + j;
+							int l = PosY + i;
+							if (WorldGen.InWorld(k, l, 30))
+							{
+								Tile tile = Framing.GetTileSafely(k, l);
+								switch (_structure[i, j])
+								{
+									case 0:
+										if (confirmPlatforms == 0)
+										{
+											tile.active(false);
+											tile.halfBrick(false);
+											tile.slope(0);
+										}
+										break;
+									case 1:
+										tile.active(true);
+										tile.type = 57;
+										tile.slope(0);
+										tile.halfBrick(true);
+										break;
+									case 2:
+										tile.active(true);
+										tile.type = 57;
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+									case 3:
+										tile.active(true);
+										tile.type = 57;
+										tile.slope(2);
+										tile.halfBrick(false);
+										break;
+									case 4:
+										if (confirmPlatforms == 1)
+										{
+											tile.active(false);
+											tile.slope(0);
+											tile.halfBrick(false);
+											WorldGen.PlaceTile(k, l, 85, true, true, -1, 2);
+										}
+										break;
+									case 5:
+										tile.active(true);
+										tile.type = 51;
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+									case 6:
+										tile.active(true);
+										tile.type = 1;
+										tile.slope(0);
+										tile.halfBrick(true);
+										break;
+									case 7:
+										if (confirmPlatforms == 1)
+										{
+											tile.active(false);
+											tile.slope(0);
+											tile.halfBrick(false);
+											WorldGen.PlaceTile(k, l, 85, true, true, -1, 4);
+										}
+										break;
+									case 8:
+										if (confirmPlatforms == 1)
+										{
+											tile.active(false);
+											tile.slope(0);
+											tile.halfBrick(false);
+											WorldGen.PlaceTile(k, l, 85, true, true, -1, 1);
+										}
+										break;
+									case 9:
+										tile.active(true);
+										tile.type = 331;
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+									case 10:
+										tile.active(true);
+										tile.type = 1;
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+									case 11:
+										tile.active(true);
+										tile.type = 57;
+										tile.slope(1);
+										tile.halfBrick(false);
+										break;
+									case 12:
+										tile.active(true);
+										tile.type = 332;
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+									case 13:
+										tile.active(true);
+										tile.type = 38;
+										tile.slope(2);
+										tile.halfBrick(false);
+										break;
+									case 14:
+										tile.active(true);
+										tile.type = 38;
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+									case 15:
+										tile.active(true);
+										tile.type = 38;
+										tile.slope(1);
+										tile.halfBrick(false);
+										break;
+									case 16:
+										tile.active(true);
+										tile.type = 1;
+										tile.slope(1);
+										tile.halfBrick(false);
+										break;
+									case 17:
+										tile.active(true);
+										tile.type = 3;
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+									case 18:
+										tile.active(true);
+										tile.type = 38;
+										tile.slope(0);
+										tile.halfBrick(true);
+										break;
+									case 19:
+										if (confirmPlatforms == 0)
+											tile.active(false);
+										WorldGen.PlaceTile(k, l, 78, true, true, -1, 0);
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+									case 20:
+										tile.active(true);
+										tile.type = 2;
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+									case 21:
+										tile.active(true);
+										tile.type = 0;
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+									case 22:
+										tile.active(true);
+										tile.type = 52;
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+									case 23:
+										tile.active(true);
+										tile.type = 2;
+										tile.slope(4);
+										tile.halfBrick(false);
+										break;
+									case 24:
+										tile.active(true);
+										tile.type = 2;
+										tile.slope(0);
+										tile.halfBrick(true);
+										break;
+									case 25:
+										tile.active(true);
+										tile.type = 2;
+										tile.slope(1);
+										tile.halfBrick(false);
+										break;
+									case 26:
+										if (confirmPlatforms == 1)
+										{
+											tile.active(false);
+											tile.slope(0);
+											tile.halfBrick(false);
+											WorldGen.PlaceTile(k, l, ModContent.TileType<RuinedChestTile>(), true, true, -1, 0);
+										}
+										break;
+									case 27:
+										if (confirmPlatforms == 0)
+										{
+											tile.active(false);
+											tile.halfBrick(false);
+											tile.slope(0);
+											tile.liquid = 46;
+											tile.liquidType(0);
+										}
+										break;
+									case 28:
+										if (confirmPlatforms == 1)
+										{
+											tile.active(false);
+											tile.slope(0);
+											tile.halfBrick(false);
+											WorldGen.PlaceTile(k, l, ModContent.TileType<EnchantedSwordShrineTile>(), true, true, -1, 0);
+										}
+										break;
+									case 29:
+										if (confirmPlatforms == 0)
+										{
+											tile.active(false);
+											tile.halfBrick(false);
+											tile.slope(0);
+											tile.liquid = 255;
+											tile.liquidType(0);
+										}
+										break;
+									case 30:
+										tile.active(true);
+										tile.type = 2;
+										tile.slope(2);
+										tile.halfBrick(false);
+										break;
+								}
+							}
+						}
+					}
+				}
+			}
+			if(type == 7)
+            {
+				int[,] _structure = {
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,1,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
+					{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
+					{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
+					{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
+					{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
+					{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
+					{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
+					{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
+					{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
+					{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
+					{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
+					{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
+					{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
+					{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2}
+				};
+				int PosX = spawnX - _structure.GetLength(1) / 2;
+				int PosY = spawnY - _structure.GetLength(0) + 15;
+				//i = vertical, j = horizontal
+				for (int i = 0; i < _structure.GetLength(0); i++)
+				{
+					for (int j = _structure.GetLength(1) - 1; j >= 0; j--)
+					{
+						int k = PosX + j;
+						int l = PosY + i;
+						if (WorldGen.InWorld(k, l, 30))
+						{
+							Tile tile = Framing.GetTileSafely(k, l);
+							switch (_structure[i, j])
+							{
+								case 0:
+									tile.wall = 0;
+									break;
+								case 1:
+									tile.wall = 60;
+									break;
+								case 2:
+									if(tile.wall == 0)
+										tile.wall = 2;
+									break;
+							}
+						}
+					}
+				}
+				_structure = new int[,] {
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,2,2,1,1,1,1,1,1,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,2,2,1,1,1,1,1,1,1,1,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,2,2,1,1,1,1,1,1,1,1,1,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,1,1,1,1,1,2,2,2,2,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,1,1,1,2,2,2,1,1,2,2,1,1,2,2,2,2,1,1,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,1,1,2,2,1,1,1,1,1,2,2,2,2,1,1,2,2,2,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,2,2,2,2,1,1,1,1,1,3,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,3,1,1,1,1,1,1,2,2,1,1,0,3,0,0,3,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,3,0,4,1,1,1,4,2,2,4,4,0,3,0,0,3,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,3,0,0,4,3,4,2,2,2,4,0,0,3,0,0,3,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,3,0,0,0,3,4,2,2,4,4,0,0,3,5,0,3,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,2,2,2,2,0,0,6,6,6,6,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,7,0,0,0,0,0,0,0,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,8,8,9,0,0,0,0,2,2,2,0,0,0,0,0,0,10,2,2,0,0,0,0,0,0},
+					{11,12,12,12,12,12,8,8,13,8,8,12,12,12,2,2,2,2,14,14,12,12,2,2,12,2,2,12,12,12,12,8},
+					{8,14,14,14,14,14,14,14,14,12,12,12,14,14,2,2,2,2,2,14,12,2,2,14,14,12,12,2,14,14,13,13},
+					{13,13,12,12,14,14,14,12,12,12,12,12,12,12,2,2,2,2,2,2,2,2,12,12,12,12,12,13,13,13,13,13},
+					{8,13,13,13,13,13,13,13,13,13,13,13,12,14,2,2,2,2,13,13,13,13,13,13,13,13,13,13,13,13,13,13},
+					{13,13,13,13,13,13,13,13,13,13,13,13,13,2,2,2,2,2,14,14,14,13,13,13,13,13,13,13,13,13,13,13},
+					{13,13,13,13,13,13,8,8,8,2,2,13,2,2,2,2,2,2,2,2,14,14,13,13,13,13,13,13,13,13,13,13},
+					{13,13,13,13,13,13,8,4,8,8,13,2,2,2,13,2,2,2,13,2,2,14,13,13,13,13,13,13,13,13,13,13},
+					{13,13,13,13,13,8,8,4,4,2,2,2,4,4,13,2,2,13,2,13,2,2,8,13,13,13,13,13,13,13,13,13},
+					{13,13,13,13,8,15,0,0,0,8,8,0,0,0,2,4,2,13,2,13,0,0,8,13,13,13,13,13,13,13,13,13},
+					{13,13,13,13,8,4,0,0,0,0,0,0,0,0,2,4,2,4,4,2,0,0,2,8,13,13,13,13,13,13,13,13},
+					{13,13,13,13,8,16,0,0,0,0,0,0,0,0,0,4,2,4,0,0,0,0,0,8,13,13,13,13,13,13,13,13},
+					{13,13,13,13,13,8,0,0,0,0,0,0,0,0,0,0,4,4,0,0,17,0,18,8,13,13,13,13,13,13,13,13},
+					{13,13,13,13,13,8,16,0,0,0,0,0,0,0,0,0,0,0,19,0,8,8,8,13,13,13,13,13,13,13,13,13},
+					{13,13,13,13,13,13,8,20,0,0,0,0,0,0,21,4,4,4,8,8,8,13,13,13,13,13,13,13,13,13,13,13},
+					{13,13,13,13,13,13,8,8,8,21,0,0,20,0,8,8,4,18,8,13,13,13,13,13,13,13,13,13,13,13,13,13},
+					{13,13,13,13,13,13,13,13,8,8,8,8,8,8,8,8,8,8,13,13,14,13,13,13,8,13,13,13,13,13,13,13}
+				};
+				//i = vertical, j = horizontal
+				UseStarterHouseHalfCircle(spawnX, spawnY - 3, 0, _structure.GetLength(1) / 2, _structure.GetLength(0));
+				for (int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)    //Increase the iterations on this outermost for loop if tabletop-objects are not properly spawning
+				{
+					for (int i = 0; i < _structure.GetLength(0); i++)
+					{
+						for (int j = _structure.GetLength(1) - 1; j >= 0; j--)
+						{
+							int k = PosX + j;
+							int l = PosY + i;
+							if (WorldGen.InWorld(k, l, 30))
+							{
+								Tile tile = Framing.GetTileSafely(k, l);
+								switch (_structure[i, j])
+								{
+									case 0:
+										if (confirmPlatforms == 0)
+										{
+											tile.active(false);
+											tile.halfBrick(false);
+											tile.slope(0);
+										}
+										break;
+									case 1:
+										tile.active(true);
+										tile.type = 192;
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+									case 2:
+										tile.active(true);
+										tile.type = 191;
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+									case 3:
+										tile.active(true);
+										tile.type = 353;
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+									case 4:
+										tile.active(true);
+										tile.type = 51;
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+									case 5:
+										if (confirmPlatforms == 1)
+										{
+											tile.active(false);
+											tile.slope(0);
+											tile.halfBrick(false);
+											WorldGen.PlaceTile(k, l, ModContent.TileType<RuinedChestTile>(), true, true, -1, 0);
+										}
+										break;
+									case 6:
+										if (confirmPlatforms == 0)
+											tile.active(false);
+										WorldGen.PlaceTile(k, l, 19, true, true, -1, 23);
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+									case 7:
+										if (confirmPlatforms == 1)
+										{
+											tile.active(false);
+											tile.slope(0);
+											tile.halfBrick(false);
+											WorldGen.PlaceTile(k, l, 85, true, true, -1, 1);
+										}
+										break;
+									case 8:
+										tile.active(true);
+										tile.type = 2;
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+									case 9:
+										tile.active(true);
+										tile.type = 2;
+										tile.slope(0);
+										tile.halfBrick(true);
+										break;
+									case 10:
+										tile.active(true);
+										tile.type = 191;
+										tile.slope(0);
+										tile.halfBrick(true);
+										break;
+									case 11:
+										if (confirmPlatforms == 0)
+											tile.active(false);
+										WorldGen.PlaceTile(k, l, 227, true, true, -1, 3);
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+									case 12:
+										tile.active(true);
+										tile.type = 38;
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+									case 13:
+										tile.active(true);
+										tile.type = 0;
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+									case 14:
+										tile.active(true);
+										tile.type = 1;
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+									case 15:
+										tile.active(true);
+										tile.type = 2;
+										tile.slope(3);
+										tile.halfBrick(false);
+										break;
+									case 16:
+										tile.active(true);
+										tile.type = 2;
+										tile.slope(1);
+										tile.halfBrick(false);
+										break;
+									case 17:
+										if (confirmPlatforms == 0)
+											tile.active(false);
+										WorldGen.PlaceTile(k, l, 227, true, true, -1, 8);
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+									case 18:
+										tile.active(true);
+										tile.type = 2;
+										tile.slope(2);
+										tile.halfBrick(false);
+										break;
+									case 19:
+										if (confirmPlatforms == 0)
+											tile.active(false);
+										WorldGen.PlaceTile(k, l, 227, true, true, -1, 11);
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+									case 20:
+										if (confirmPlatforms == 0)
+											tile.active(false);
+										WorldGen.PlaceTile(k, l, 227, true, true, -1, 10);
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+									case 21:
+										if (confirmPlatforms == 0)
+											tile.active(false);
+										WorldGen.PlaceTile(k, l, 227, true, true, -1, 9);
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+								}
+							}
+						}
+					}
+				}
+			}
+			if(type == 8)
+            {
+				int[,] _structure = {
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,2,1,2,3,3,3,2,1,1,2,3,3,3,2,1,2,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,2,2,1,2,3,3,3,2,1,1,2,3,3,3,2,1,2,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,2,2,1,2,3,3,3,2,1,1,2,3,3,3,2,1,2,2,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,2,2,2,1,2,3,3,3,2,1,1,2,3,3,3,2,1,2,2,2,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,2,2,2,2,1,2,3,3,3,2,1,1,2,3,3,3,2,1,2,2,2,2,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,2,2,2,2,1,2,3,3,3,2,1,1,2,3,3,3,2,1,2,2,2,2,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,2,2,2,2,1,2,3,3,3,2,1,1,2,3,3,3,2,1,2,2,2,2,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,2,2,2,2,1,2,3,3,3,2,1,1,2,3,3,3,2,1,2,2,2,2,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,2,1,0,3,3,3,2,1,1,2,3,3,3,0,1,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,4,4,4,4,1,4,5,3,3,4,1,1,4,3,3,3,4,1,4,4,4,4,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,4,4,4,4,1,4,5,5,3,4,1,1,4,3,3,3,4,1,4,4,4,4,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,4,4,4,4,1,4,5,5,5,4,1,1,4,3,3,3,4,1,4,4,4,4,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,4,4,4,4,1,4,5,5,5,5,1,1,4,3,3,3,4,1,4,4,4,4,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,6,6,6,6,1,5,5,5,5,5,5,1,6,3,3,3,6,1,6,6,6,6,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,6,6,6,6,5,5,5,5,5,5,5,5,6,3,3,3,6,1,6,6,6,6,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,1,5,5,5,5,5,5,5,0,0,0,0,6,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}
+				};
+				int PosX = spawnX - _structure.GetLength(1) / 2;
+				int PosY = spawnY - _structure.GetLength(0) + 4;
+				//i = vertical, j = horizontal
+				for (int i = 0; i < _structure.GetLength(0); i++)
+				{
+					for (int j = _structure.GetLength(1) - 1; j >= 0; j--)
+					{
+						int k = PosX + j;
+						int l = PosY + i;
+						if (WorldGen.InWorld(k, l, 30))
+						{
+							Tile tile = Framing.GetTileSafely(k, l);
+							switch (_structure[i, j])
+							{
+								case 0:
+									tile.wall = 0;
+									break;
+								case 1:
+									tile.wall = 78;
+									break;
+								case 2:
+									tile.wall = 4;
+									break;
+								case 3:
+									tile.wall = 21;
+									break;
+								case 4:
+									tile.wall = 27;
+									break;
+								case 5:
+									tile.wall = 5;
+									break;
+								case 6:
+									tile.wall = 1;
+									break;
+							}
+						}
+					}
+				}
+				_structure = new int[,]  {
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,1,1,1,1,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,2,2,2,2,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,1,1,2,2,2,3,3,3,2,2,2,2,3,3,3,2,2,2,1,1,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,1,1,2,2,4,0,0,0,0,4,4,4,0,0,0,0,0,4,2,2,1,1,0,0,0,0,0,0,0},
+					{0,0,0,0,0,1,1,2,2,4,0,0,0,0,0,0,4,0,0,0,0,0,0,0,4,2,2,1,1,0,0,0,0,0,0},
+					{0,0,0,0,1,1,2,2,4,4,5,0,0,0,0,0,5,5,0,0,0,0,0,5,4,4,2,2,1,1,0,0,0,0,0},
+					{0,0,0,0,2,2,2,4,6,7,0,0,0,0,0,0,0,0,0,0,0,9,7,0,0,10,4,2,2,2,0,0,0,0,0},
+					{0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,8,0,0,0,0,0,0,0,0,0,0,4,1,1,0,0,0,0,0},
+					{0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0},
+					{0,0,0,0,12,3,0,0,0,0,0,0,0,0,0,0,15,10,0,0,0,0,0,0,0,0,0,0,3,12,0,0,0,0,0},
+					{0,0,0,0,16,3,0,0,11,0,13,0,0,0,14,0,17,0,0,0,0,11,0,0,0,11,0,0,3,16,0,0,0,0,0},
+					{0,0,0,0,1,1,2,2,2,2,2,2,18,5,5,5,5,5,5,5,5,5,2,2,2,2,2,2,1,1,0,0,0,0,0},
+					{0,0,0,0,2,2,2,4,4,0,0,4,0,18,0,0,0,0,0,0,0,0,19,0,4,4,4,2,2,2,0,0,0,0,0},
+					{0,0,0,0,2,2,4,4,0,0,7,15,20,0,18,0,0,0,0,0,0,0,0,0,0,20,15,4,2,2,0,0,2,2,2},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,18,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,19,23,19},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,18,0,0,0,0,0,20,6,0,0,0,0,0,0,0,0,0,23,0},
+					{0,0,0,0,0,21,0,0,0,0,0,0,0,0,0,4,4,18,0,0,0,0,0,0,0,0,0,0,22,0,0,0,0,23,0},
+					{0,0,0,0,2,2,27,0,24,0,11,0,0,11,0,17,0,0,18,0,25,0,26,0,0,11,0,27,2,2,0,0,0,23,0},
+					{0,0,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,23,0},
+					{28,28,28,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+					{29,28,28,28,28,28,1,28,28,1,1,1,28,1,1,1,1,28,1,28,28,1,1,1,1,28,1,28,28,28,28,28,28,29,29},
+					{29,29,29,29,29,29,29,29,1,1,1,28,28,28,1,1,28,28,28,28,28,28,1,1,28,1,1,1,1,29,29,29,29,29,29}
+				};
+				//i = vertical, j = horizontal
+				UseStarterHouseHalfCircle(spawnX, spawnY, 0, _structure.GetLength(1) / 2, _structure.GetLength(0));
+				for (int confirmPlatforms = 0; confirmPlatforms < 3; confirmPlatforms++)    //Increase the iterations on this outermost for loop if tabletop-objects are not properly spawning
+				{
+					for (int i = 0; i < _structure.GetLength(0); i++)
+					{
+						for (int j = _structure.GetLength(1) - 1; j >= 0; j--)
+						{
+							int k = PosX + j;
+							int l = PosY + i;
+							if (WorldGen.InWorld(k, l, 30))
+							{
+								Tile tile = Framing.GetTileSafely(k, l);
+								switch (_structure[i, j])
+								{
+									case 0:
+										if (confirmPlatforms == 0)
+										{
+											tile.active(false);
+											tile.halfBrick(false);
+											tile.slope(0);
+										}
+										break;
+									case 1:
+										tile.active(true);
+										tile.type = 38;
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+									case 2:
+										tile.active(true);
+										tile.type = 30;
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+									case 3:
+										tile.active(true);
+										tile.type = 54;
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+									case 4:
+										tile.active(true);
+										tile.type = 51;
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+									case 5:
+										if (confirmPlatforms == 0)
+											tile.active(false);
+										WorldGen.PlaceTile(k, l, 19, true, true, -1, 0);
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+									case 6:
+									case 7:
+									case 9:
+									case 15:
+									case 20:
+										if (confirmPlatforms == 2)
+											tile.active(false);
+										WorldGen.PlaceTile(k, l, TileID.Books, true, true, -1, Main.rand.Next(6));
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+									case 8:
+										if (confirmPlatforms == 1)
+										{
+											tile.active(false);
+											tile.slope(0);
+											tile.halfBrick(false);
+											WorldGen.PlaceTile(k, l, 245, true, true, -1, 3);
+										}
+										break;
+									case 10:
+										if (confirmPlatforms == 0)
+											tile.active(false);
+										WorldGen.PlaceTile(k, l, 13, true, true, -1, 0);
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+									case 11:
+										if (confirmPlatforms == 1)
+										{
+											tile.active(false);
+											tile.slope(0);
+											tile.halfBrick(false);
+											WorldGen.PlaceTile(k, l, 101, true, true, -1, 0);
+										}
+										break;
+									case 12:
+										tile.active(true);
+										tile.type = 3;
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+									case 13:
+										if (confirmPlatforms == 1)
+										{
+											tile.active(false);
+											tile.slope(0);
+											tile.halfBrick(false);
+											WorldGen.PlaceTile(k, l, ModContent.TileType<RuinedChestTile>(), true, true, -1, 0);
+										}
+										break;
+									case 14:
+										if (confirmPlatforms == 1)
+										{
+											tile.active(false);
+											tile.slope(0);
+											tile.halfBrick(false);
+											WorldGen.PlaceTile(k, l, 89, true, true, -1, 1);
+										}
+										break;
+									case 16:
+										if (confirmPlatforms == 0)
+											tile.active(false);
+										WorldGen.PlaceTile(k, l, 78, true, true, -1, 0);
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+									case 17:
+										if (confirmPlatforms == 1)
+										{
+											tile.active(false);
+											tile.slope(0);
+											tile.halfBrick(false);
+											WorldGen.PlaceTile(k, l, 18, true, true, -1, 0);
+										}
+										break;
+									case 18:
+										if (confirmPlatforms == 0)
+											tile.active(false);
+										WorldGen.PlaceTile(k, l, 19, true, true, -1, 0);
+										tile.slope(1);
+										tile.halfBrick(false);
+										break;
+									case 19:
+										if (confirmPlatforms == 1)
+										{
+											tile.active(false);
+											tile.slope(0);
+											tile.halfBrick(false);
+											WorldGen.PlaceTile(k, l, 91, true, true, -1, 0);
+										}
+										break;
+									case 21:
+										if (confirmPlatforms == 1)
+										{
+											tile.active(false);
+											tile.slope(0);
+											tile.halfBrick(false);
+											WorldGen.PlaceTile(k, l, 10, true, true, -1, 13);
+										}
+										break;
+									case 22:
+										if (confirmPlatforms == 1)
+										{
+											tile.active(false);
+											tile.slope(0);
+											tile.halfBrick(false);
+											WorldGen.PlaceTile(k, l, 10, true, true, -1, 13);
+										}
+										break;
+									case 23:
+										tile.active(true);
+										tile.type = TileID.WoodenBeam;
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+									case 24:
+										if (confirmPlatforms == 1)
+										{
+											tile.active(false);
+											tile.slope(0);
+											tile.halfBrick(false);
+											WorldGen.PlaceTile(k, l, 105, true, true, -1, 20);
+										}
+										break;
+									case 25:
+										if (confirmPlatforms == 1)
+										{
+											tile.active(false);
+											tile.slope(0);
+											tile.halfBrick(false);
+											WorldGen.PlaceTile(k, l, 15, true, true, -1, 0);
+										}
+										break;
+									case 26:
+										if (confirmPlatforms == 1)
+										{
+											tile.active(false);
+											tile.slope(0);
+											tile.halfBrick(false);
+											WorldGen.PlaceTile(k, l, 14, true, true, -1, 16);
+										}
+										break;
+									case 27:
+										tile.active(true);
+										tile.type = 30;
+										tile.slope(0);
+										tile.halfBrick(true);
+										break;
+									case 28:
+										tile.active(true);
+										tile.type = 1;
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+									case 29:
+										tile.active(true);
+										tile.type = 0;
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+								}
+							}
+						}
+					}
+				}
+				UseStarterHouseHalfCircle(spawnX, spawnY + 1, 1, _structure.GetLength(1) / 2, 8);
+
+			}
+			if(type == 9)
+			{
+				int[,] _structure = {
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,2,2,3,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,2,2,3,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,3,2,2,3,3,0,0,0,0,0,0},
+					{0,0,0,3,3,3,3,3,3,3,3,0,0,0,0,0,0,0,3,3,3,2,2,3,3,3,0,0,0,0,0},
+					{0,0,0,3,0,0,0,0,0,0,3,0,0,0,0,0,0,4,3,3,3,2,2,3,3,3,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,3,3,3,2,2,3,3,3,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,2,3,3,2,2,3,2,2,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,2,2,2,3,2,1,0,0,0,0,0},
+					{0,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,0,0,1,1,2,2,2,1,1,1,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,1,1,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}
+				};
+				int PosX = spawnX - _structure.GetLength(1) / 2;
+				int PosY = spawnY - _structure.GetLength(0) + 2;
+				//i = vertical, j = horizontal
+				for (int i = 0; i < _structure.GetLength(0); i++)
+				{
+					for (int j = _structure.GetLength(1) - 1; j >= 0; j--)
+					{
+						int k = PosX + j;
+						int l = PosY + i;
+						if (WorldGen.InWorld(k, l, 30))
+						{
+							Tile tile = Framing.GetTileSafely(k, l);
+							switch (_structure[i, j])
+							{
+								case 0:
+									tile.wall = 0;
+									break;
+								case 1:
+									tile.wall = 5;
+									break;
+								case 2:
+									tile.wall = 1;
+									break;
+								case 3:
+									tile.wall = 4;
+									break;
+								case 4:
+									tile.wall = 78;
+									break;
+								case 5:
+									tile.wall = 106;
+									break;
+							}
+						}
+					}
+				}
+				_structure = new int[,] {
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,1,1,1,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,1,1,1,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,1,1,1,1,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,2,0,1,1,1,1,1,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,3,3,2,2,0,0,3,3,1,1,1,0,0},
+					{0,0,3,3,3,3,3,3,3,3,3,3,0,0,1,1,1,3,3,3,2,0,0,0,3,3,3,1,1,1,0},
+					{0,3,3,3,3,3,3,3,3,3,3,3,3,0,1,1,3,3,3,2,2,0,0,0,2,3,3,3,1,1,0},
+					{0,3,3,3,4,2,2,2,0,4,3,3,3,0,0,0,3,3,2,0,0,0,0,0,2,2,3,3,0,0,0},
+					{0,0,5,4,0,0,0,0,0,0,4,5,0,0,0,0,0,0,0,0,0,0,0,0,0,2,3,3,0,0,0},
+					{0,0,5,0,0,0,0,0,0,0,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,2,1,3,0,0,0},
+					{0,0,5,0,0,0,0,0,0,0,0,5,0,0,0,0,6,0,0,0,8,8,7,0,8,8,1,1,0,0,0},
+					{0,0,5,0,8,8,0,0,0,0,0,5,0,0,0,0,1,1,0,0,0,0,0,0,0,8,1,1,0,0,0},
+					{0,0,5,8,8,8,11,0,0,9,0,5,10,0,0,1,1,1,1,7,0,7,0,7,0,1,1,1,1,0,0},
+					{12,12,12,12,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+					{1,12,12,1,1,1,12,1,12,12,1,12,1,1,12,1,1,12,12,12,1,12,1,12,1,12,12,1,12,13,13},
+					{13,13,13,13,13,13,13,13,13,13,13,13,13,12,12,12,1,12,12,12,12,1,1,12,12,1,1,12,13,13,13}
+				};
+				//i = vertical, j = horizontal
+				UseStarterHouseHalfCircle(spawnX, spawnY, 0, _structure.GetLength(1) / 2, _structure.GetLength(0));
+				for (int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)    //Increase the iterations on this outermost for loop if tabletop-objects are not properly spawning
+				{
+					for (int i = 0; i < _structure.GetLength(0); i++)
+					{
+						for (int j = _structure.GetLength(1) - 1; j >= 0; j--)
+						{
+							int k = PosX + j;
+							int l = PosY + i;
+							if (WorldGen.InWorld(k, l, 30))
+							{
+								Tile tile = Framing.GetTileSafely(k, l);
+								switch (_structure[i, j])
+								{
+									case 0:
+										if (confirmPlatforms == 0)
+										{
+											tile.active(false);
+											tile.halfBrick(false);
+											tile.slope(0);
+										}
+										break;
+									case 1:
+										tile.active(true);
+										tile.type = 38;
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+									case 2:
+										tile.active(true);
+										tile.type = 51;
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+									case 3:
+										tile.active(true);
+										tile.type = 30;
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+									case 4:
+										if (confirmPlatforms == 1)
+										{
+											tile.active(false);
+											tile.slope(0);
+											tile.halfBrick(false);
+											WorldGen.PlaceTile(k, l, 91, true, true, -1, 0);
+										}
+										break;
+									case 5:
+										tile.active(true);
+										tile.type = 124;
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+									case 6:
+										if (confirmPlatforms == 1)
+										{
+											tile.active(false);
+											tile.slope(0);
+											tile.halfBrick(false);
+											WorldGen.PlaceTile(k, l, 10, true, true, -1, 0);
+										}
+										break;
+									case 7:
+										if (confirmPlatforms == 1)
+										{
+											tile.active(false);
+											tile.slope(0);
+											tile.halfBrick(false);
+											WorldGen.PlaceTile(k, l, 376, true, true, -1, 0);
+										}
+										break;
+									case 8:
+										tile.active(true);
+										tile.type = 332;
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+									case 9:
+										if (confirmPlatforms == 1)
+										{
+											tile.active(false);
+											tile.slope(0);
+											tile.halfBrick(false);
+											WorldGen.PlaceTile(k, l, 17, true, true, -1, 0);
+										}
+										break;
+									case 10:
+										if (confirmPlatforms == 1)
+										{
+											tile.active(false);
+											tile.slope(0);
+											tile.halfBrick(false);
+											WorldGen.PlaceTile(k, l, ModContent.TileType<RuinedChestTile>(), true, true, -1, 0);
+										}
+										break;
+									case 11:
+										if (confirmPlatforms == 1)
+										{
+											tile.active(false);
+											tile.slope(0);
+											tile.halfBrick(false);
+											WorldGen.PlaceTile(k, l, 16, true, true, -1, 0);
+										}
+										break;
+									case 12:
+										tile.active(true);
+										tile.type = 1;
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+									case 13:
+										tile.active(true);
+										tile.type = 0;
+										tile.slope(0);
+										tile.halfBrick(false);
+										break;
+								}
+							}
+						}
+					}
+				}
+				UseStarterHouseHalfCircle(spawnX, spawnY - 1, 1, _structure.GetLength(1) / 2, 10);
 			}
 		}
     }

@@ -13,7 +13,9 @@ The following is my development plans :D
 
 High Priority:
 1. Advisor: Music Box
-2. Secret Jingle
+2. Chest slime resprites
+3. Bone Clapper
+4. Chaos spirit fix
 
 Mid Priority:
 1. Goopwood sprite Changes
@@ -26,7 +28,6 @@ Mid Priority:
 Mid Priority 2:
 1. Void Low Warning
 2. Prefixes for voids
-3. Bone Clapper
 5. Horn of Plenty: 10% more drops accessory
 8. Ethereal Tonic
 9. Void accessory reforge: increases max void...
@@ -42,9 +43,14 @@ Low Priority:
 7. Electrolyte Seperator
 8. Amogus
 
+6/13/21
+1. Added 4 more starter houses
+2. 
+
 6/12/21
 1. Added void prefixes
-2. 
+2. Secret theme
+3. 
 
 6/10/21
 1. Otherworldly + Permafrost Construct Gore
