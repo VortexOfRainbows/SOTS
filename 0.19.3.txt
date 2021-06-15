@@ -15,7 +15,7 @@ Calculator now only applies homing once, this should also improve framerate
 Planetarium max spawns reduced by 20%
 Goopwoop Helix damage 22 -> 20
 Assassination potion no longer works on bosses or causes critical strikes automatically
-Void Shock now lasts for ten seconds and makes you take moredamage while active.
+Void Shock now lasts for ten seconds and makes you take more damage while active.
 Void Recovery lasts slightly longer and has higher base negative life regen
 
 Misc:

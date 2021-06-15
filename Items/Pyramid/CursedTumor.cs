@@ -71,7 +71,7 @@ namespace SOTS.Items.Pyramid
 			drop = mod.ItemType("CursedTumorWall");
 			soundType = SoundID.NPCHit;
 			soundStyle = 1;
-			AddMapEntry(new Color(100, 30, 100));
+			AddMapEntry(new Color(50, 30, 60));
 		}
 		public override bool CanExplode(int i, int j)
 		{

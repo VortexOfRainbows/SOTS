@@ -12,7 +12,7 @@ The following is my development plans :D
 10. Ghost Town to Evil Biome
 
 High Priority:
-1. None
+1. Pyramid Rework
 
 Mid Priority:
 1. Goopwood sprite Changes
