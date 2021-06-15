@@ -12,8 +12,7 @@ The following is my development plans :D
 10. Ghost Town to Evil Biome
 
 High Priority:
-1. Chest slime resprites
-2. Bone Clapper
+1. None
 
 Mid Priority:
 1. Goopwood sprite Changes
@@ -22,6 +21,8 @@ Mid Priority:
 4. Wintry Traveler: Riptide Trident + Frigid Javelin
 5. Antigrav booties
 6. Replace Brittle flail
+7. Chest slime resprites
+8. Bone Clapper
 
 Mid Priority 2:
 1. Void Low Warning

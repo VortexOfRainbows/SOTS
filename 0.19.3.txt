@@ -5,6 +5,7 @@ New Expert Drop from Pharaoh's Curse.
 A handful of new items and a TON of resprites.
 New Lesser Wisp enemy in that spawns in groups in hell.
 Added 10 different variations of the Starter House that can be found upon world generation.
+New Music + Music Boxes
 
 Balancing:
 Subspace Scissors damage 180 -> 190, no longer an expert drop
