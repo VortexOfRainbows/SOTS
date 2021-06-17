@@ -13,6 +13,8 @@ The following is my development plans :D
 
 High Priority:
 1. Pyramid Rework
+2. Pharaoh Rework
+3. 
 
 Mid Priority:
 1. Goopwood sprite Changes
@@ -41,6 +43,14 @@ Low Priority:
 6. Remove negative Vregen in inventory items
 7. Electrolyte Seperator
 8. Amogus
+
+6/14/21 through 6/17/21
+1. Work on the pyramid and pharaoh reworks
+2. Next: Packet sending fixes, More Pharaoh
+
+
+0.19.3 Released!
+
 
 6/13/21
 1. Added 4 more starter houses

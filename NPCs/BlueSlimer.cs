@@ -11,7 +11,6 @@ namespace SOTS.NPCs
 	{	
 		public override void SetStaticDefaults()
 		{
-			
 			DisplayName.SetDefault("Blue Slimer");
 		}
 		public override void SetDefaults()

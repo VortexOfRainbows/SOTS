@@ -272,6 +272,7 @@ namespace SOTS.Void
 				int type = VoidMinions[i];
 				total += minionVoidCost(type);
 			}
+			bool flag = false;
 			for (int i = VoidMinions.Count - 1; i >= 0; i--)
 			{
 				if(total > voidMeterMax2)
@@ -282,9 +283,11 @@ namespace SOTS.Void
 					projectile.Kill();
 					total -= minionVoidCost(type);
 					VoidMinions.RemoveAt(i);
-					SendClientChanges(this);
+					flag = true;
 				}
 			}
+			if (flag)
+				SendClientChanges(this);
 			return total;
 		}
 		public int VoidMinionConsumption = 0;

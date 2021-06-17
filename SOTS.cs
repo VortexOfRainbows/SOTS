@@ -21,6 +21,7 @@ using SOTS.Items.IceStuff;
 using SOTS.Items.Celestial;
 using SOTS.Items.MusicBoxes;
 using SOTS.NPCs.Boss.Polaris;
+using SOTS.NPCs.Boss.Curse;
 
 namespace SOTS
 {
@@ -126,7 +127,7 @@ namespace SOTS
 				);
 			}
 		}
-		internal enum SOTSMessageType : byte
+		internal enum SOTSMessageType : int
 		{
 			SOTSSyncPlayer,
 			OrbitalCounterChanged,
@@ -138,10 +139,14 @@ namespace SOTS
 		}
 		public override void HandlePacket(BinaryReader reader, int whoAmI)
 		{
-			SOTSMessageType msgType = (SOTSMessageType)reader.ReadByte();
+			int msgType = reader.ReadByte();
+			if (Main.netMode == NetmodeID.Server)
+				NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("Handling Packet: " + msgType), Color.Gray);
+			else
+				Main.NewText("Handling Packet: " + msgType);
 			switch (msgType)
 			{
-				case SOTSMessageType.SOTSSyncPlayer:
+				case (int)SOTSMessageType.SOTSSyncPlayer:
 					byte playernumber = reader.ReadByte();
 					SOTSPlayer modPlayer = Main.player[playernumber].GetModPlayer<SOTSPlayer>();
 					TestWingsPlayer testPlayer = Main.player[playernumber].GetModPlayer<TestWingsPlayer>();
@@ -154,7 +159,7 @@ namespace SOTS
 					voidPlayer.lootingSouls = lootingSouls;
 					// SyncPlayer will be called automatically, so there is no need to forward this data to other clients.
 					break;
-				case SOTSMessageType.OrbitalCounterChanged:
+				case (int)SOTSMessageType.OrbitalCounterChanged:
 					playernumber = reader.ReadByte();
 					modPlayer = Main.player[playernumber].GetModPlayer<SOTSPlayer>();
 					modPlayer.orbitalCounter = reader.ReadInt32();
@@ -168,7 +173,7 @@ namespace SOTS
 						packet.Send(-1, playernumber);
 					}
 					break;
-                case SOTSMessageType.SyncCreativeFlight:
+                case (int)SOTSMessageType.SyncCreativeFlight:
 					playernumber = reader.ReadByte(); 
 					testPlayer = Main.player[playernumber].GetModPlayer<TestWingsPlayer>();
 					testPlayer.creativeFlight = reader.ReadBoolean();
@@ -182,7 +187,7 @@ namespace SOTS
 						packet.Send(-1, playernumber);
 					}
 					break;
-				case SOTSMessageType.SyncLootingSoulsAndVoidMax:
+				case (int)SOTSMessageType.SyncLootingSoulsAndVoidMax:
 					playernumber = reader.ReadByte();
 					voidPlayer = Main.player[playernumber].GetModPlayer<VoidPlayer>();
 					voidPlayer.lootingSouls = reader.ReadInt32();
@@ -202,7 +207,7 @@ namespace SOTS
 						packet.Send(-1, playernumber);
 					}
 					break;
-				case SOTSMessageType.SyncGlobalNPC:
+				case (int)SOTSMessageType.SyncGlobalNPC:
 					playernumber = reader.ReadByte();
 					int npcNumber = reader.ReadInt32();
 					DebuffNPC debuffNPC = (DebuffNPC)GetGlobalNPC("DebuffNPC");
@@ -225,7 +230,7 @@ namespace SOTS
 						packet.Send(-1, playernumber);
 					}
 					break;
-				case SOTSMessageType.SyncPlayerKnives:
+				case (int)SOTSMessageType.SyncPlayerKnives:
 					playernumber = reader.ReadByte();
 					modPlayer = Main.player[playernumber].GetModPlayer<SOTSPlayer>();
 					modPlayer.skywardBlades = reader.ReadInt32();
