@@ -65,21 +65,26 @@ namespace SOTS.Void
 			if (tag.ContainsKey("voidBarOffsetY"))
 				voidBarOffset.Y = tag.GetFloat("voidBarOffsetY");
 		}
-        public override void SendClientChanges(ModPlayer clientPlayer)
+		public bool netUpdate = false;
+		public override void SendClientChanges(ModPlayer clientPlayer)
 		{
 			// Here we would sync something like an RPG stat whenever the player changes it.
 			VoidPlayer cloneV = clientPlayer as VoidPlayer;
-			if (cloneV.lootingSouls != lootingSouls || cloneV.voidMeterMax2 != voidMeterMax2)
+			if (netUpdate)
 			{
-				// Send a Mod Packet with the changes.
-				var packet = mod.GetPacket();
-				packet.Write((byte)SOTSMessageType.SyncLootingSoulsAndVoidMax);
-				packet.Write((byte)player.whoAmI);
-				packet.Write(lootingSouls);
-				packet.Write(voidMeterMax);
-				packet.Write(voidMeterMax2);
-				packet.Write(voidMeter);
-				packet.Send();
+				if (cloneV.lootingSouls != lootingSouls || cloneV.voidMeterMax2 != voidMeterMax2)
+				{
+					// Send a Mod Packet with the changes.
+					var packet = mod.GetPacket();
+					packet.Write((byte)SOTSMessageType.SyncLootingSoulsAndVoidMax);
+					packet.Write((byte)player.whoAmI);
+					packet.Write(lootingSouls);
+					packet.Write(voidMeterMax);
+					packet.Write(voidMeterMax2);
+					packet.Write(voidMeter);
+					packet.Send();
+				}
+				netUpdate = false;
 			}
 		}
 		public float voidMeter = 100;
@@ -286,8 +291,7 @@ namespace SOTS.Void
 					flag = true;
 				}
 			}
-			if (flag)
-				SendClientChanges(this);
+			if (flag) netUpdate = true;
 			return total;
 		}
 		public int VoidMinionConsumption = 0;
@@ -369,10 +373,10 @@ namespace SOTS.Void
 					if (lootingSouls > 0)
 						lootingSouls--;
                 }
-				if(soulColorCounter % 160 == 0)
+				if(soulColorCounter % 360 == 0)
                 {
-					SendClientChanges(this);
-                }
+					netUpdate = true;
+				}
             }
 			voidShock = false;
 			voidRecovery = false;

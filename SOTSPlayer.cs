@@ -164,6 +164,7 @@ namespace SOTS
 		public bool CritFire = false; //hellfire icosahedron
 		public bool CritFrost = false; //borealis icosahedron
 		public bool CritCurseFire = false; //cursed icosahedron
+		public bool netUpdate = false;
 		public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
 		{
 			TestWingsPlayer testPlayer = player.GetModPlayer<TestWingsPlayer>();
@@ -180,24 +181,28 @@ namespace SOTS
 		{
 			// Here we would sync something like an RPG stat whenever the player changes it.
 			SOTSPlayer clone = clientPlayer as SOTSPlayer;
-			if (clone.orbitalCounter != orbitalCounter)
+			if(netUpdate)
 			{
-				// Send a Mod Packet with the changes.
-				var packet = mod.GetPacket();
-				packet.Write((byte)SOTSMessageType.OrbitalCounterChanged);
-				packet.Write((byte)player.whoAmI);
-				packet.Write(orbitalCounter);
-				packet.Send();
-			}
-			if (clone.skywardBlades != skywardBlades)
-			{
-				// Send a Mod Packet with the changes.
-				var packet = mod.GetPacket();
-				packet.Write((byte)SOTSMessageType.SyncPlayerKnives);
-				packet.Write((byte)player.whoAmI);
-				packet.Write(skywardBlades);
-				packet.Write(cursorRadians);
-				packet.Send();
+				if (clone.orbitalCounter != orbitalCounter)
+				{
+					// Send a Mod Packet with the changes.
+					var packet = mod.GetPacket();
+					packet.Write((byte)SOTSMessageType.OrbitalCounterChanged);
+					packet.Write((byte)player.whoAmI);
+					packet.Write(orbitalCounter);
+					packet.Send();
+				}
+				if (clone.skywardBlades != skywardBlades)
+				{
+					// Send a Mod Packet with the changes.
+					var packet = mod.GetPacket();
+					packet.Write((byte)SOTSMessageType.SyncPlayerKnives);
+					packet.Write((byte)player.whoAmI);
+					packet.Write(skywardBlades);
+					packet.Write(cursorRadians);
+					packet.Send();
+				}
+				netUpdate = false;
 			}
 		}
 		public int bladeAlpha = 0;
@@ -435,13 +440,13 @@ namespace SOTS
 				cursorRadians = (Main.MouseWorld - player.Center).ToRotation();
 				if(skywardBlades >= 0)
 				{
-					SendClientChanges(this);
+					netUpdate = true;
 				}
 				if(skywardBlades == 0)
                 {
 					skywardBlades = -1;
-					SendClientChanges(this);
-                }
+					netUpdate = true;
+				}
 			}
 			if (skywardBlades >= 0)
 			{
@@ -561,9 +566,9 @@ namespace SOTS
 			frigidJavelinNoCost = false;
 			brokenFrigidSword = brokenFrigidSword > 0 ? brokenFrigidSword - 1 : brokenFrigidSword;
 			orbitalCounter++;
-			if (orbitalCounter % 180 == 0)
+			if (orbitalCounter % 360 == 0)
 			{
-				SendClientChanges(this);
+				netUpdate = true;
 			}
 			shardOnHit = 0;
 			bonusShardDamage = 0;

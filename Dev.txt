@@ -46,7 +46,8 @@ Low Priority:
 
 6/14/21 through 6/17/21
 1. Work on the pyramid and pharaoh reworks
-2. Next: Packet sending fixes, More Pharaoh
+2. Fixed error where too many packets were sent in multiplayer.
+3. Next: More Pharaoh, Buff Polaris
 
 
 0.19.3 Released!

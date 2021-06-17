@@ -140,10 +140,10 @@ namespace SOTS
 		public override void HandlePacket(BinaryReader reader, int whoAmI)
 		{
 			int msgType = reader.ReadByte();
-			if (Main.netMode == NetmodeID.Server)
+			/* if (Main.netMode == NetmodeID.Server)
 				NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("Handling Packet: " + msgType), Color.Gray);
 			else
-				Main.NewText("Handling Packet: " + msgType);
+				Main.NewText("Handling Packet: " + msgType); */
 			switch (msgType)
 			{
 				case (int)SOTSMessageType.SOTSSyncPlayer:
