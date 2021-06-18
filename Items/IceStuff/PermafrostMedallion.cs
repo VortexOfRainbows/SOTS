@@ -15,8 +15,8 @@ namespace SOTS.Items.IceStuff
 		{
 			item.damage = 36;
 			item.summon = true;
-            item.width = 28;     
-            item.height = 36;   
+            item.width = 34;     
+            item.height = 38;   
             item.value = Item.sellPrice(0, 5, 50, 0);
             item.rare = 7;
 			item.accessory = true;
