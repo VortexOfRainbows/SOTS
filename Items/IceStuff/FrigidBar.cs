@@ -13,8 +13,8 @@ namespace SOTS.Items.IceStuff
 		}
 		public override void SetDefaults()
 		{
-			item.width = 22;
-			item.height = 24;
+			item.width = 24;
+			item.height = 22;
             item.value = Item.sellPrice(0, 0, 2, 50);
 			item.rare = 2;
 			item.maxStack = 99;

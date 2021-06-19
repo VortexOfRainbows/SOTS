@@ -17,8 +17,8 @@ namespace SOTS.Items.IceStuff
 		{
             item.damage = 42;  
             item.magic = true;  
-            item.width = 46;    
-            item.height = 46;
+            item.width = 38;    
+            item.height = 38;
 			item.useAnimation = 44;
 			item.useTime = 44;
 			item.useStyle = 5;    
