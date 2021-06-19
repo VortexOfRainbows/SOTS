@@ -14,8 +14,8 @@ namespace SOTS.Items.Fragments
 		public override void SetDefaults()
 		{
 
-			item.width = 22;
-			item.height = 30;
+			item.width = 26;
+			item.height = 36;
             item.value = Item.sellPrice(0, 0, 0, 50);
 			item.rare = 1;
 			item.maxStack = 999;
