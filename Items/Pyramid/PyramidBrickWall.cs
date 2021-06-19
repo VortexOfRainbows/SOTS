@@ -14,8 +14,8 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void SetDefaults()
 		{
-			item.width = 32;
-			item.height = 32;
+			item.width = 28;
+			item.height = 28;
 			item.maxStack = 999;
 			item.useTurn = true;
 			item.autoReuse = true;
