@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using SOTS.Dusts;
 using System;
 using Terraria;
 using Terraria.ID;
@@ -97,7 +98,7 @@ namespace SOTS.Projectiles.Permafrost
 			Main.PlaySound(SoundID.Item50, (int)(projectile.Center.X), (int)(projectile.Center.Y));
 			for (int i = 0; i < 10; i++)
 			{
-				int num1 = Dust.NewDust(projectile.position, projectile.width, projectile.height, 67);
+				int num1 = Dust.NewDust(projectile.position - new Vector2(5), projectile.width, projectile.height, ModContent.DustType<CopyIceDust>());
 				Main.dust[num1].noGravity = true;
 			}
 		}

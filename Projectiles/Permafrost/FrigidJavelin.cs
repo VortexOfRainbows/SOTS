@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using SOTS.Dusts;
 
 namespace SOTS.Projectiles.Permafrost
 {    
@@ -24,8 +25,8 @@ namespace SOTS.Projectiles.Permafrost
         {
 			projectile.magic = true;
 			projectile.friendly = true;
-			projectile.width = 34;
-			projectile.height = 34;
+			projectile.width = 38;
+			projectile.height = 38;
 			projectile.timeLeft = 7200;
 			projectile.extraUpdates = 1;
 			projectile.penetrate = -1;
@@ -57,12 +58,12 @@ namespace SOTS.Projectiles.Permafrost
 				startAnim = true;
 				for (int i = 0; i < 6; i++)
 				{
-					int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 34, 34, 67);
+					int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 34, 34, ModContent.DustType<CopyIceDust>());
 					Main.dust[num1].noGravity = true;
 					Main.dust[num1].velocity *= 3.4f;
 					Main.dust[num1].scale = 1f;
 
-					num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 34, 34, 67);
+					num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 34, 34, ModContent.DustType<CopyIceDust>());
 					Main.dust[num1].noGravity = true;
 					Main.dust[num1].velocity *= 2.2f;
 					Main.dust[num1].scale = 2f;
@@ -118,12 +119,12 @@ namespace SOTS.Projectiles.Permafrost
 				projectile.position += projectile.velocity;
 				if(projectile.velocity.X != 0 || projectile.velocity.Y != 0)
 				{
-					int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 34, 34, 67);
+					int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 34, 34, ModContent.DustType<CopyIceDust>());
 					Main.dust[num1].noGravity = true;
 					Main.dust[num1].velocity *= 2f;
 					Main.dust[num1].scale = 1.5f;
 
-					num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 34, 34, 67);
+					num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 34, 34, ModContent.DustType<CopyIceDust>());
 					Main.dust[num1].noGravity = true;
 					Main.dust[num1].velocity *= 0.8f;
 					Main.dust[num1].scale = 2.5f;

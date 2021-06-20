@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using SOTS.Dusts;
 
 namespace SOTS.Projectiles.Permafrost
 {    
@@ -33,28 +34,28 @@ namespace SOTS.Projectiles.Permafrost
 				if (i < 90)
 				{
 					circularLocation -= new Vector2(30, 30);
-					int num1 = Dust.NewDust(new Vector2(atLoc.X + circularLocation.X - 4, atLoc.Y + circularLocation.Y - 4), 4, 4, 67);
+					int num1 = Dust.NewDust(new Vector2(atLoc.X + circularLocation.X - 4, atLoc.Y + circularLocation.Y - 4), 4, 4, ModContent.DustType<CopyIceDust>());
 					Main.dust[num1].noGravity = true;
 					Main.dust[num1].velocity = 0.1f * -circularLocation;
 				}
 				else if (i < 180)
 				{
 					circularLocation -= new Vector2(-30, 30);
-					int num1 = Dust.NewDust(new Vector2(atLoc.X + circularLocation.X - 4, atLoc.Y + circularLocation.Y - 4), 4, 4, 67);
+					int num1 = Dust.NewDust(new Vector2(atLoc.X + circularLocation.X - 4, atLoc.Y + circularLocation.Y - 4), 4, 4, ModContent.DustType<CopyIceDust>());
 					Main.dust[num1].noGravity = true;
 					Main.dust[num1].velocity = 0.1f * -circularLocation;
 				}
 				else if (i < 270)
 				{
 					circularLocation -= new Vector2(-30, -30);
-					int num1 = Dust.NewDust(new Vector2(atLoc.X + circularLocation.X - 4, atLoc.Y + circularLocation.Y - 4), 4, 4, 67);
+					int num1 = Dust.NewDust(new Vector2(atLoc.X + circularLocation.X - 4, atLoc.Y + circularLocation.Y - 4), 4, 4, ModContent.DustType<CopyIceDust>());
 					Main.dust[num1].noGravity = true;
 					Main.dust[num1].velocity = 0.1f * -circularLocation;
 				}
 				else
 				{
 					circularLocation -= new Vector2(30, -30);
-					int num1 = Dust.NewDust(new Vector2(atLoc.X + circularLocation.X - 4, atLoc.Y + circularLocation.Y - 4), 4, 4, 67);
+					int num1 = Dust.NewDust(new Vector2(atLoc.X + circularLocation.X - 4, atLoc.Y + circularLocation.Y - 4), 4, 4, ModContent.DustType<CopyIceDust>());
 					Main.dust[num1].noGravity = true;
 					Main.dust[num1].velocity = 0.1f * -circularLocation;
 				}
@@ -72,11 +73,12 @@ namespace SOTS.Projectiles.Permafrost
 			if (projectile.frame != (int)projectile.ai[0])
 			{
 				projectile.frame = (int)projectile.ai[0];
-				Bang(2f * projectile.frame * player.direction, -2f * projectile.frame);
 				if (projectile.frame == 10)
 				{
 					projectile.Kill();
+					return false;
 				}
+				Bang(2f * projectile.frame * player.direction, -2f * projectile.frame);
 				return true;
 			}
 			if (projectile.ai[0] == 0)

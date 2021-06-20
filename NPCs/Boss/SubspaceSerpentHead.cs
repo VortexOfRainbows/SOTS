@@ -993,7 +993,7 @@ namespace SOTS.NPCs.Boss
         {
             Player player = Main.player[npc.target];
             rotate = MathHelper.ToDegrees((npc.Center - player.Center).ToRotation()) / 2.15f;
-            Main.NewText(rotate * 2.15f);
+            //Main.NewText(rotate * 2.15f);
         }
         public void CircularAttack(Vector2 newCenter, float speed = 30, int amt = 2, int distance = 640, float verticalMult = 0.8f)
         {

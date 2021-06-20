@@ -166,13 +166,13 @@ namespace SOTS.Projectiles.Celestial
 		{
 			if (storeData == -1 && projectile.owner == Main.myPlayer)
 			{
-				storeData = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, projectile.velocity.X, projectile.velocity.Y, mod.ProjectileType("PlasmaCutterTrail"), (int)(projectile.damage * 1f) + 1, projectile.knockBack * 0.5f, projectile.owner, 16, projectile.whoAmI);
+				storeData = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, projectile.velocity.X, projectile.velocity.Y, mod.ProjectileType("PlasmaCutterTrail"), (int)(projectile.damage * 1f) + 1, projectile.knockBack * 0.5f, projectile.owner, 16, projectile.identity);
 				projectile.ai[1] = storeData;
 				projectile.netUpdate = true;
 			}
 			if (storeData2 == -1 && projectile.owner == Main.myPlayer)
 			{
-				storeData2 = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, projectile.velocity.X, projectile.velocity.Y, mod.ProjectileType("PlasmaCutterTrail"), (int)(projectile.damage * 1f) + 1, projectile.knockBack * 0.5f, projectile.owner, -16, projectile.whoAmI);
+				storeData2 = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, projectile.velocity.X, projectile.velocity.Y, mod.ProjectileType("PlasmaCutterTrail"), (int)(projectile.damage * 1f) + 1, projectile.knockBack * 0.5f, projectile.owner, -16, projectile.identity);
 				projectile.ai[0] = storeData2;
 				projectile.netUpdate = true;
 			}

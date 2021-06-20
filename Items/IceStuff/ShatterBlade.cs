@@ -107,9 +107,12 @@ namespace SOTS.Items.IceStuff
 				if (counter >= 10)
 				{
 					broken = 0;
-					counter = 0;
 				}
 				Projectile.NewProjectile(position.X, position.Y, speedX, speedY, type, damage, knockBack, player.whoAmI, counter);
+				if (counter >= 10)
+				{
+					counter = 0;
+				}
 				return false;
 			}
 			Main.PlaySound(2, (int)(position.X), (int)(position.Y), 1, 1f);

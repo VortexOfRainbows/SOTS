@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using SOTS.Dusts;
 
 namespace SOTS.Projectiles.Permafrost
 {    
@@ -36,11 +37,11 @@ namespace SOTS.Projectiles.Permafrost
 			distance -= 0.525f + 0.1f * modPlayer.shardSpellExtra;
 			if(distance > 1)
 			{
-				int num1 = Dust.NewDust(new Vector2(projectile.Center.X + circularLocation.X - 4, projectile.Center.Y + circularLocation.Y - 4), 4, 4, 67);
+				int num1 = Dust.NewDust(new Vector2(projectile.Center.X + circularLocation.X - 4, projectile.Center.Y + circularLocation.Y - 4), 4, 4, ModContent.DustType< CopyIceDust>());
 				Main.dust[num1].noGravity = true;
 				Main.dust[num1].velocity *= 0.1f;
 
-				num1 = Dust.NewDust(new Vector2(projectile.Center.X - circularLocation.X - 4, projectile.Center.Y - circularLocation.Y - 4), 4, 4, 67);
+				num1 = Dust.NewDust(new Vector2(projectile.Center.X - circularLocation.X - 4, projectile.Center.Y - circularLocation.Y - 4), 4, 4, ModContent.DustType<CopyIceDust>());
 				Main.dust[num1].noGravity = true;
 				Main.dust[num1].velocity *= 0.1f;
 			}
@@ -64,35 +65,23 @@ namespace SOTS.Projectiles.Permafrost
 				if (i < 90)
 				{
 					circularLocation -= new Vector2(30 * (1 + 0.2f * size), 30 * (1 + 0.2f * size));
-					int num1 = Dust.NewDust(new Vector2(atLoc.X + circularLocation.X - 4, atLoc.Y + circularLocation.Y - 4), 4, 4, 67);
-					Main.dust[num1].noGravity = true;
-					Main.dust[num1].velocity = 0.1f * -circularLocation;
-					Main.dust[num1].scale = 1 + 0.1f * size;
 				}
 				else if (i < 180)
 				{
 					circularLocation -= new Vector2(-30 * (1 + 0.2f * size), 30 * (1 + 0.2f * size));
-					int num1 = Dust.NewDust(new Vector2(atLoc.X + circularLocation.X - 4, atLoc.Y + circularLocation.Y - 4), 4, 4, 67);
-					Main.dust[num1].noGravity = true;
-					Main.dust[num1].velocity = 0.1f * -circularLocation;
-					Main.dust[num1].scale = 1 + 0.1f * size;
 				}
 				else if (i < 270)
 				{
 					circularLocation -= new Vector2(-30 * (1 + 0.2f * size), -30 * (1 + 0.2f * size));
-					int num1 = Dust.NewDust(new Vector2(atLoc.X + circularLocation.X - 4, atLoc.Y + circularLocation.Y - 4), 4, 4, 67);
-					Main.dust[num1].noGravity = true;
-					Main.dust[num1].velocity = 0.1f * -circularLocation;
-					Main.dust[num1].scale = 1 + 0.1f * size;
 				}
 				else
 				{
 					circularLocation -= new Vector2(30 * (1 + 0.2f * size), -30 * (1 + 0.2f * size));
-					int num1 = Dust.NewDust(new Vector2(atLoc.X + circularLocation.X - 4, atLoc.Y + circularLocation.Y - 4), 4, 4, 67);
-					Main.dust[num1].noGravity = true;
-					Main.dust[num1].velocity = 0.1f * -circularLocation;
-					Main.dust[num1].scale = 1 + 0.1f * size;
 				}
+				int num1 = Dust.NewDust(new Vector2(atLoc.X + circularLocation.X - 4, atLoc.Y + circularLocation.Y - 4), 4, 4, ModContent.DustType<CopyIceDust>());
+				Main.dust[num1].noGravity = true;
+				Main.dust[num1].velocity = 0.1f * -circularLocation;
+				Main.dust[num1].scale = 1 + 0.1f * size;
 			}
 			size++;
 		}

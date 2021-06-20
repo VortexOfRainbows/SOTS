@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using SOTS.Dusts;
 
 namespace SOTS.Projectiles.Permafrost
 {    
@@ -123,7 +124,7 @@ namespace SOTS.Projectiles.Permafrost
 			for(int i = 0; i < 360; i += 20)
 			{
 				Vector2 circularLocation = new Vector2(-6, 0).RotatedBy(MathHelper.ToRadians(i));
-				int num1 = Dust.NewDust(new Vector2(projectile.Center.X + circularLocation.X - 4, projectile.Center.Y + circularLocation.Y - 4), 4, 4, 67);
+				int num1 = Dust.NewDust(new Vector2(projectile.Center.X + circularLocation.X - 4, projectile.Center.Y + circularLocation.Y - 4), 4, 4, ModContent.DustType<CopyIceDust>());
 				Main.dust[num1].noGravity = true;
 				Main.dust[num1].scale = 1f;
 				Main.dust[num1].velocity = circularLocation * 0.35f;
@@ -138,7 +139,7 @@ namespace SOTS.Projectiles.Permafrost
 				for(int i = 0; i < 360; i += 30)
 				{
 					Vector2 circularLocation = new Vector2(-7, 0).RotatedBy(MathHelper.ToRadians(i));
-					int num1 = Dust.NewDust(new Vector2(projectile.Center.X + circularLocation.X - 4, projectile.Center.Y + circularLocation.Y - 4), 4, 4, 67);
+					int num1 = Dust.NewDust(new Vector2(projectile.Center.X + circularLocation.X - 4, projectile.Center.Y + circularLocation.Y - 4), 4, 4, ModContent.DustType<CopyIceDust>());
 					Main.dust[num1].noGravity = true;
 					Main.dust[num1].scale = 1.45f;
 					circularLocation.Y *= 0.7f;
@@ -151,7 +152,7 @@ namespace SOTS.Projectiles.Permafrost
 			for(int i = 0; i < 360; i += 20)
 			{
 				Vector2 circularLocation = new Vector2(-6, 0).RotatedBy(MathHelper.ToRadians(i));
-				int num1 = Dust.NewDust(new Vector2(projectile.Center.X + circularLocation.X - 4, projectile.Center.Y + circularLocation.Y - 4), 4, 4, 67);
+				int num1 = Dust.NewDust(new Vector2(projectile.Center.X + circularLocation.X - 4, projectile.Center.Y + circularLocation.Y - 4), 4, 4, ModContent.DustType<CopyIceDust>());
 				Main.dust[num1].noGravity = true;
 				Main.dust[num1].scale = 1f;
 				Main.dust[num1].velocity = circularLocation * 0.35f;

@@ -48,7 +48,8 @@ Low Priority:
 1. Work on the pyramid and pharaoh reworks
 2. Fixed error where too many packets were sent in multiplayer.
 3. Next: More Pharaoh, Buff Polaris
-
+4. Next: Resprite Frigid Items (Dust + projectiles for Javelin), Drawcode on Music Boxes
+5. Next: celesital serpent resprites
 
 0.19.3 Released!
 
