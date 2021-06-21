@@ -31,7 +31,6 @@ namespace SOTS.Items
             item.shootSpeed = 21.5f;
 			item.useAmmo = AmmoID.Arrow;
 			item.noMelee = true;
-			item.expert = true;
 		}
 		public override void GetVoid(Player player)
 		{

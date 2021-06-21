@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Items.Pyramid;
 using SOTS.Projectiles.Pyramid;
 using Terraria;
 using Terraria.ID;
@@ -13,6 +14,7 @@ namespace SOTS.NPCs.Boss.Curse
 	[AutoloadBossHead]
 	public class PharaohsCurse : ModNPC
 	{
+		int despawn = 0;
 		private float ai1
 		{
 			get => npc.ai[0];
@@ -228,7 +230,7 @@ namespace SOTS.NPCs.Boss.Curse
 					if (style == 1 || style == 2)
                     {
 						if (style == 2)
-							scale2 = 0.75f;
+							scale2 = 1.25f;
 						else
 							scale2 = 0.55f;
 						Vector2 toCenter = spawnLocation - position;
@@ -254,22 +256,19 @@ namespace SOTS.NPCs.Boss.Curse
 		public List<CurseFoam> foamParticleList2 = new List<CurseFoam>();
 		public List<CurseFoam> foamParticleList3 = new List<CurseFoam>();
 		public List<CurseFoam> foamParticleList4 = new List<CurseFoam>();
-		float varianceCounter = 0f;
 		public override bool PreAI()
 		{
+			npc.TargetClosest();
+			Player player = Main.player[npc.target];
 			npc.rotation = npc.velocity.X * 0.05f;
 			Lighting.AddLight(npc.Center, new Vector3(110 / 255f, 36 / 255f, 20 / 255f));
-			int num = -1;
-			if (npc.velocity.X > 0)
-				num = 1;
-			varianceCounter += num + npc.velocity.X * 0.5f;
 			Texture2D texture = ModContent.GetTexture("SOTS/NPCs/Boss/Curse/FartGas");
-			SpawnPassiveDust(texture, npc.Center + new Vector2(0, 10), 0.9f, foamParticleList1, 1, 0, 42, npc.rotation);
-			SpawnPassiveDust(ModContent.GetTexture("SOTS/NPCs/Boss/Curse/FartGasInline"), npc.Center + new Vector2(0, 10), 0.9f, foamParticleList1, 1, 0, 60, npc.rotation);
+			SpawnPassiveDust(texture, npc.Center + new Vector2(0, 10), 0.9f, foamParticleList1, 1, 0, 50, npc.rotation);
+			SpawnPassiveDust(ModContent.GetTexture("SOTS/NPCs/Boss/Curse/FartGasInline"), npc.Center + new Vector2(0, 10), 0.9f, foamParticleList1, 1, 0, 150, npc.rotation);
 			SpawnPassiveDust(ModContent.GetTexture("SOTS/NPCs/Boss/Curse/FartGasBorder"), npc.Center + new Vector2(0, 10), 1.2f, foamParticleList4, 0.2f, 2, 3600, npc.rotation);
 			texture = ModContent.GetTexture("SOTS/NPCs/Boss/Curse/PharaohsCurseOutline");
-			SpawnPassiveDust(texture, npc.Center, 1.0f, foamParticleList2, 0.1f, 1, 27, npc.rotation);
-			SpawnPassiveDust(texture, npc.Center, 1.0f, foamParticleList3, 0.125f, 1, 56, npc.rotation);
+			SpawnPassiveDust(texture, npc.Center, 1.0f, foamParticleList2, 0.1f, 1, 30, npc.rotation);
+			SpawnPassiveDust(texture, npc.Center, 1.0f, foamParticleList3, 0.125f, 1, 60, npc.rotation);
 			cataloguePos();
 			ai1 += 2;
 			if (runOnce)
@@ -277,9 +276,69 @@ namespace SOTS.NPCs.Boss.Curse
 				aiPhase = 0;
 				runOnce = false;
 			}
-			if(Main.netMode != NetmodeID.MultiplayerClient)
+			bool inRange = Vector2.Distance(player.Center, npc.Center) <= 1600f;
+			if (Main.netMode != NetmodeID.MultiplayerClient)
 				npc.netUpdate = true;
-			return true;
+			if (player.dead || !SOTSPlayer.ModPlayer(player).PyramidBiome || !inRange)
+			{
+				despawn++;
+			}
+			if (despawn >= 600)
+			{
+				npc.active = false;
+			}
+			return inRange;
+		}
+		public void ResetLists()
+		{
+			foamParticleList1 = new List<CurseFoam>();
+			foamParticleList2 = new List<CurseFoam>();
+			foamParticleList3 = new List<CurseFoam>();
+			foamParticleList4 = new List<CurseFoam>();
+			return;
+			/*List<CurseFoam> temp = new List<CurseFoam>();
+			for(int i = 0; i < foamParticleList1.Count; i++)
+            {
+				temp.Add(foamParticleList1[i]);
+			}
+			foamParticleList1 = new List<CurseFoam>();
+			for (int i = 0; i < temp.Count; i++)
+			{
+				foamParticleList1.Add(temp[i]);
+			}
+
+			temp = new List<CurseFoam>();
+			for (int i = 0; i < foamParticleList2.Count; i++)
+			{
+				temp.Add(foamParticleList2[i]);
+			}
+			foamParticleList2 = new List<CurseFoam>();
+			for (int i = 0; i < temp.Count; i++)
+			{
+				foamParticleList2.Add(temp[i]);
+			}
+
+			temp = new List<CurseFoam>();
+			for (int i = 0; i < foamParticleList3.Count; i++)
+			{
+				temp.Add(foamParticleList3[i]);
+			}
+			foamParticleList3 = new List<CurseFoam>();
+			for (int i = 0; i < temp.Count; i++)
+			{
+				foamParticleList3.Add(temp[i]);
+			}
+
+			temp = new List<CurseFoam>();
+			for (int i = 0; i < foamParticleList4.Count; i++)
+			{
+				temp.Add(foamParticleList4[i]);
+			}
+			foamParticleList4 = new List<CurseFoam>();
+			for (int i = 0; i < temp.Count; i++)
+			{
+				foamParticleList4.Add(temp[i]);
+			}*/
 		}
 		public void cataloguePos()
 		{
@@ -287,49 +346,62 @@ namespace SOTS.NPCs.Boss.Curse
 			{
 				CurseFoam particle = foamParticleList1[i];
 				particle.Update();
-				particle.Update();
-				if(!particle.noMovement)
-					particle.position += npc.velocity * 0.825f;
 				if (!particle.active)
 				{
+					particle = null;
 					foamParticleList1.RemoveAt(i);
 					i--;
+				}
+				else
+				{
+					particle.Update();
+					if (!particle.active)
+					{
+						particle = null;
+						foamParticleList1.RemoveAt(i);
+						i--;
+					}
+					else if (!particle.noMovement)
+						particle.position += npc.velocity * 0.825f;
 				}
 			}
 			for (int i = 0; i < foamParticleList2.Count; i++)
 			{
 				CurseFoam particle = foamParticleList2[i];
 				particle.Update();
-				if (!particle.noMovement)
-					particle.position += npc.velocity * 0.9f;
 				if (!particle.active)
 				{
+					particle = null;
 					foamParticleList2.RemoveAt(i);
 					i--;
 				}
+				else if (!particle.noMovement)
+					particle.position += npc.velocity * 0.9f;
 			}
 			for (int i = 0; i < foamParticleList3.Count; i++)
 			{
 				CurseFoam particle = foamParticleList3[i];
 				particle.Update();
-				if (!particle.noMovement)
-					particle.position += npc.velocity;
 				if (!particle.active)
 				{
+					particle = null;
 					foamParticleList3.RemoveAt(i);
 					i--;
 				}
+				else if (!particle.noMovement)
+					particle.position += npc.velocity;
 			}
 			for (int i = 0; i < foamParticleList4.Count; i++)
 			{
 				CurseFoam particle = foamParticleList4[i];
 				particle.Update();
-				particle.velocity.Y += 0.11f;
 				if (!particle.active)
 				{
+					particle = null;
 					foamParticleList4.RemoveAt(i);
 					i--;
 				}
+				else particle.velocity.Y += 0.11f;
 			}
 		}
 		public void MoveTo(Vector2 goTo, float slowDownMult, float flatSpeed)
@@ -343,43 +415,63 @@ namespace SOTS.NPCs.Boss.Curse
 			npc.velocity *= slowDownMult;
 			npc.velocity += toDestination.SafeNormalize(Vector2.Zero) * speed * 0.75f;
 		}
+		public void MimicPolarisMovement(float speed)
+		{
+			Player player = Main.player[npc.target];
+			npc.velocity *= 0.5f;
+			Vector2 vectorToPlayer = player.Center - npc.Center;
+			float yDist = vectorToPlayer.Y * 1.15f;
+			float xDist = vectorToPlayer.X;
+			float length = (float)Math.Sqrt(xDist * xDist + yDist * yDist);
+			float speedMult = -4f + (float)Math.Pow(length, 1.055) * 0.015f;
+			if (speedMult < 0)
+			{
+				speedMult *= 0.5f;
+			}
+			npc.velocity += vectorToPlayer.SafeNormalize(Vector2.Zero) * speedMult * speed;
+		}
 		public override void AI()
 		{
 			Player player = Main.player[npc.target];
 			ai2++;
 			if(aiPhase == 0)
 			{
-				if (ai2 >= 150 && ai2 <= 700)
+				if(ai2 == -150)
+                {
+					ResetLists();
+				}
+				if (ai2 >= 150 && ai2 <= 940)
 				{
 					float mult = (300 - ai2) / 100f;
-					if (mult < 0.45f)
-						mult = 0.45f;
+					if (mult < 0.4f)
+						mult = 0.4f;
 					if (ai2 == 220)
 					{
 						if (Main.netMode != NetmodeID.MultiplayerClient)
 						{
-							float rand = Main.rand.NextFloat(360);
-							float counter = 0;
 							for (int i = 0; i < 4; i++)
 							{
-								Vector2 outWards = new Vector2(12, 0).RotatedBy(MathHelper.ToRadians(rand + counter));
+								float rand = Main.rand.NextFloat(-15, 15);
+								Vector2 outWards = new Vector2(12, 0).RotatedBy(MathHelper.ToRadians(90 * i + rand));
 								int damage = npc.damage / 2;
 								if (Main.expertMode)
 								{
 									damage = (int)(damage / Main.expertDamage);
 								}
 								Projectile.NewProjectile(npc.Center, outWards, ModContent.ProjectileType<CurseArm>(), damage, 0f, Main.myPlayer, npc.whoAmI);
-								counter += Main.rand.NextFloat(80, 100);
 							}
 						}
 					}
-					if(ai2 >= 120)
-                    {
-						mult *= 0.01f;
+					if(ai2 >= 270)
+					{
+						MimicPolarisMovement(0.2f);
 					}
-					float variant = (float)Math.Sin(MathHelper.ToRadians(ai1));
-					Vector2 goTo = player.Center + new Vector2(0, -156 + variant * 48);
-					MoveTo(goTo, 0.5f, 7f * mult);
+					else
+					{
+						if (ai2 >= 210)
+							mult *= 0.01f;
+						MimicPolarisMovement(1 * mult);
+					}
 				}
 				else
 				{
@@ -387,14 +479,26 @@ namespace SOTS.NPCs.Boss.Curse
 					Vector2 goTo = player.Center + new Vector2(0, -128 + variant * 24);
 					MoveTo(goTo, 0.2f, 7f);
 				}
-				if (ai2 >= 700)
-					ai2 = 0;
+				if (ai2 >= 940)
+                {
+					ai2 = -300;
+				}
 			}
 		}
+		bool[] ignore;
 		public override void PostAI()
 		{
 			Player player = Main.player[npc.target];
-			npc.velocity = Collision.TileCollision(npc.position, npc.velocity, npc.width, npc.height, true, true);
+			if(ignore == null)
+			{
+				ignore = new bool[Main.tileSolid.Length];
+				for (int i = 0; i < ignore.Length; i++)
+				{
+					ignore[i] = true;
+				}
+				ignore[ModContent.TileType<TrueSandstoneTile>()] = false;
+			}
+			npc.velocity = Collision.AdvancedTileCollision(ignore, npc.position, npc.velocity, npc.width, npc.height, true, true);
 		}
 	}
 	public class CurseFoam

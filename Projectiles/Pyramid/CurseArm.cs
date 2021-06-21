@@ -21,7 +21,7 @@ namespace SOTS.Projectiles.Pyramid
 			projectile.height = 24;
 			projectile.width = 24;
 			projectile.friendly = false;
-			projectile.timeLeft = 480;
+			projectile.timeLeft = 720;
 			projectile.hostile = true;
 			projectile.alpha = 255;
 			projectile.penetrate = -1;
@@ -45,7 +45,7 @@ namespace SOTS.Projectiles.Pyramid
 			projectile.velocity *= 0.0f;
             return false;
         }
-        public bool DrawLimbs(List<CurseFoam> dustList, Rectangle targetHitbox)
+        public bool DrawLimbs(List<CurseFoam> dustList, Rectangle targetHitbox, bool genProj = false)
 		{
 			int parentID = (int)projectile.ai[0];
 			if (parentID >= 0)
@@ -62,7 +62,14 @@ namespace SOTS.Projectiles.Pyramid
 					if (distanceModified < 0)
 						distanceModified = 0;
 					int max = 16 + (int)(distance / 20);
-					for (float k = 0; k < max;)
+					int start = 0;
+					int end = max;
+					if(genProj)
+                    {
+						start = Main.rand.Next(max);
+						end = start + 1;
+					}
+					for (float k = start; k < end;)
 					{
 						float percent = (float)k / max;
 						Vector2 toARM = Limb.Center - npc.Center;
@@ -81,11 +88,22 @@ namespace SOTS.Projectiles.Pyramid
 							if (hitbox.Intersects(targetHitbox))
 								return true;
                         }
+						else if(genProj)
+						{ 
+							if(Main.netMode != NetmodeID.MultiplayerClient)
+                            {
+								float degrees = 90;
+								if (Main.expertMode)
+									degrees = Main.rand.NextFloat(80f, 100f);
+								Projectile.NewProjectile(finalPosition, toARM.SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.ToRadians(degrees * side)), ModContent.ProjectileType<CurseExtension>(), projectile.damage, projectile.knockBack, Main.myPlayer, 0, parentID);
+                            }
+							return false;
+                        }
 						else
                         {
 							dustList.Add(new CurseFoam(finalPosition + rotationaPosMod.SafeNormalize(Vector2.Zero) * 2 * scale * (0.5f * (float)Math.Pow((1280.0 / distance), 0.2)), rotational, Main.rand.NextFloat(0.9f, 1.1f) * scale, true));
 						}
-						k += scale;
+						k += genProj ? 1 : 0.25f + scale;
 					}
 				}
 			}
@@ -93,24 +111,9 @@ namespace SOTS.Projectiles.Pyramid
 		}
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
 		{
-			int parentID = (int)projectile.ai[0];
-			if (parentID >= 0)
-			{
-				NPC npc = Main.npc[parentID];
-				if (npc.active && npc.type == ModContent.NPCType<PharaohsCurse>())
-				{
-					OwnerPos = npc.Center;
-					Vector2 distanceToOwner = projectile.Center - OwnerPos;
-					PharaohsCurse curse = npc.modNPC as PharaohsCurse;
-					return DrawLimbs(curse.foamParticleList1, targetHitbox);
-				}
-				else
-				{
-					OwnerPos = Vector2.Zero;
-				}
-			}
-			return false;
-        }
+			return DrawLimbs(null, targetHitbox);
+		}
+		int side = 1;
         public override bool PreAI()
 		{
 			projectile.ai[1]++; 
@@ -122,6 +125,11 @@ namespace SOTS.Projectiles.Pyramid
 				if(projectile.ai[1] == 60)
 				{
 					Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 96, 1.25f, -0.2f);
+				}
+				if (projectile.ai[1] > 80 && projectile.ai[1] % 33 == 0 && Main.netMode != NetmodeID.MultiplayerClient)
+				{
+					DrawLimbs(null, new Rectangle(0, 0, 0, 0), true);
+					side *= -1;
 				}
             }
 			if (projectile.ai[1] < 60)

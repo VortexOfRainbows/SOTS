@@ -44,18 +44,18 @@ namespace SOTS.Projectiles.Pyramid
 			Vector2 velo = projectile.velocity.SafeNormalize(Vector2.Zero);
 			if (npc.active && npc.type == ModContent.NPCType<PharaohsCurse>())
 			{
-				int maxLength = (int)(90 * scale);
+				int maxLength = (int)(75 * scale);
 				for (int i = 0; i <= maxLength; i++)
 				{
-					if (Main.rand.Next(5) <= 1)
+					if (Main.rand.Next(20) <= 6)
 					{
-						float scaleMult = 0.15f + 0.85f * ((maxLength - i) / (float)maxLength) * (0.7f + 0.3f * scale);
+						float scaleMult = 0.25f + 0.85f * ((maxLength - i) / (float)maxLength) * (0.7f + 0.3f * scale);
 						PharaohsCurse curse = npc.modNPC as PharaohsCurse;
-						Vector2 rotational = new Vector2(0, -Main.rand.NextFloat(1.25f + 2.25f * scaleMult)).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360f)));
-						curse.foamParticleList1.Add(new CurseFoam(current, rotational, 0.5f + 0.5f * scaleMult, true));
+						Vector2 rotational = new Vector2(0, -Main.rand.NextFloat(0.45f + 1.25f * scaleMult)).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360f)));
+						curse.foamParticleList1.Add(new CurseFoam(current, rotational, 0.4f + 0.6f * scaleMult, true));
 					}
 					posList.Add(current);
-					current += velo * 3f;
+					current += velo * 3.5f;
 				}
 			}
 		}
@@ -65,7 +65,21 @@ namespace SOTS.Projectiles.Pyramid
 			projectile.rotation += MathHelper.ToRadians(8);
 			if (projectile.ai[0] == 0)
 			{
-				//Main.PlaySound(SoundID.Item, (int)(projectile.Center.X), (int)(projectile.Center.Y), 15, 1f, 0.25f);
+				bool capable = false;
+				for(int i = 0; i < Main.maxPlayers; i++)
+                {
+					Player player = Main.player[i];
+					if(Vector2.Distance(player.Center, projectile.Center) <= 640)
+                    {
+						capable = true;
+						break;
+                    }
+                }
+				if(!capable)
+				{
+					projectile.Kill();
+					return;
+                }
 			}
 			int parentID = (int)projectile.ai[1];
 			NPC npc = Main.npc[parentID];
@@ -119,7 +133,6 @@ namespace SOTS.Projectiles.Pyramid
 				projectile.Kill();
 			}
 			projectile.ai[0]++;
-			Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 0.8f / 255f, (255 - projectile.alpha) * 0.8f / 255f, (255 - projectile.alpha) * 0.8f / 255f);
 		}
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
 		{
