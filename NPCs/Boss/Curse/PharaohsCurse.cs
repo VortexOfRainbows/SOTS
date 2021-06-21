@@ -35,14 +35,6 @@ namespace SOTS.NPCs.Boss.Curse
 			get => npc.ai[3];
 			set => npc.ai[3] = value;
 		}
-		public override void SendExtraAI(BinaryWriter writer)
-		{
-			writer.Write(ai1);
-		}
-		public override void ReceiveExtraAI(BinaryReader reader)
-		{
-			ai1 = reader.ReadSingle();
-		}
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Pharaoh's Curse");
@@ -262,13 +254,16 @@ namespace SOTS.NPCs.Boss.Curse
 			Player player = Main.player[npc.target];
 			npc.rotation = npc.velocity.X * 0.05f;
 			Lighting.AddLight(npc.Center, new Vector3(110 / 255f, 36 / 255f, 20 / 255f));
-			Texture2D texture = ModContent.GetTexture("SOTS/NPCs/Boss/Curse/FartGas");
-			SpawnPassiveDust(texture, npc.Center + new Vector2(0, 10), 0.9f, foamParticleList1, 1, 0, 50, npc.rotation);
-			SpawnPassiveDust(ModContent.GetTexture("SOTS/NPCs/Boss/Curse/FartGasInline"), npc.Center + new Vector2(0, 10), 0.9f, foamParticleList1, 1, 0, 200, npc.rotation);
-			SpawnPassiveDust(ModContent.GetTexture("SOTS/NPCs/Boss/Curse/FartGasBorder"), npc.Center + new Vector2(0, 10), 1.2f, foamParticleList4, 0.2f, 2, 3600, npc.rotation);
-			texture = ModContent.GetTexture("SOTS/NPCs/Boss/Curse/PharaohsCurseOutline");
-			SpawnPassiveDust(texture, npc.Center, 1.0f, foamParticleList2, 0.1f, 1, 30, npc.rotation);
-			SpawnPassiveDust(texture, npc.Center, 1.0f, foamParticleList3, 0.125f, 1, 60, npc.rotation);
+			if(Main.netMode != NetmodeID.Server)
+			{
+				Texture2D texture = ModContent.GetTexture("SOTS/NPCs/Boss/Curse/FartGas");
+				SpawnPassiveDust(texture, npc.Center + new Vector2(0, 10), 0.9f, foamParticleList1, 1, 0, 50, npc.rotation);
+				SpawnPassiveDust(ModContent.GetTexture("SOTS/NPCs/Boss/Curse/FartGasInline"), npc.Center + new Vector2(0, 10), 0.9f, foamParticleList1, 1, 0, 200, npc.rotation);
+				SpawnPassiveDust(ModContent.GetTexture("SOTS/NPCs/Boss/Curse/FartGasBorder"), npc.Center + new Vector2(0, 10), 1.2f, foamParticleList4, 0.2f, 2, 3600, npc.rotation);
+				texture = ModContent.GetTexture("SOTS/NPCs/Boss/Curse/PharaohsCurseOutline");
+				SpawnPassiveDust(texture, npc.Center, 1.0f, foamParticleList2, 0.1f, 1, 30, npc.rotation);
+				SpawnPassiveDust(texture, npc.Center, 1.0f, foamParticleList3, 0.125f, 1, 60, npc.rotation);
+			}
 			cataloguePos();
 			ai1 += 2;
 			if (runOnce)

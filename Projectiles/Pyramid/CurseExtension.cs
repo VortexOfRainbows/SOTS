@@ -69,7 +69,7 @@ namespace SOTS.Projectiles.Pyramid
 				for(int i = 0; i < Main.maxPlayers; i++)
                 {
 					Player player = Main.player[i];
-					if(Vector2.Distance(player.Center, projectile.Center) <= 640)
+					if(Vector2.Distance(player.Center, projectile.Center) <= 480)
                     {
 						capable = true;
 						break;

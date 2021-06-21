@@ -23,8 +23,8 @@ namespace SOTS.Buffs
 					NPC npc = Main.npc[king];
 					if(npc.type == mod.NPCType("PharaohsCurse"))
 					{
-					npc.position.X = player.Center.X - npc.width/2;
-					npc.position.Y = player.Center.Y - npc.height/2 - 200;
+						npc.position.X = player.Center.X - npc.width/2;
+						npc.position.Y = player.Center.Y - npc.height/2 - 200;
 					}
 				}
 			}

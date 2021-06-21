@@ -170,7 +170,7 @@ namespace SOTS.Projectiles.Pyramid
         public override void AI()
 		{
 			int parentID = (int)projectile.ai[0];
-			if(parentID >= 0)
+			if(parentID >= 0 && Main.netMode != NetmodeID.Server)
             {
 				NPC npc = Main.npc[parentID];
 				if(npc.active && npc.type == ModContent.NPCType<PharaohsCurse>())
