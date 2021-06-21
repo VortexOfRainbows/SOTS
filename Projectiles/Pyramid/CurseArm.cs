@@ -61,7 +61,7 @@ namespace SOTS.Projectiles.Pyramid
 					float distanceModified = 0.8f * (32f - (float)Math.Sqrt(distanceToOwner.Length()));
 					if (distanceModified < 0)
 						distanceModified = 0;
-					int max = 16 + (int)(distance / 20);
+					int max = 16 + (int)(distance / 21);
 					int start = 0;
 					int end = max;
 					if(genProj)
@@ -103,7 +103,7 @@ namespace SOTS.Projectiles.Pyramid
                         {
 							dustList.Add(new CurseFoam(finalPosition + rotationaPosMod.SafeNormalize(Vector2.Zero) * 2 * scale * (0.5f * (float)Math.Pow((1280.0 / distance), 0.2)), rotational, Main.rand.NextFloat(0.9f, 1.1f) * scale, true));
 						}
-						k += genProj ? 1 : 0.25f + scale;
+						k += genProj ? 1 : 0.3f + scale;
 					}
 				}
 			}
@@ -126,6 +126,10 @@ namespace SOTS.Projectiles.Pyramid
 				{
 					Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 96, 1.25f, -0.2f);
 				}
+				if(projectile.ai[1] > 90)
+                {
+					projectile.velocity *= 0f;
+                }
 				if (projectile.ai[1] > 80 && projectile.ai[1] % 33 == 0 && Main.netMode != NetmodeID.MultiplayerClient)
 				{
 					DrawLimbs(null, new Rectangle(0, 0, 0, 0), true);

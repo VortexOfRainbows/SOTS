@@ -264,7 +264,7 @@ namespace SOTS.NPCs.Boss.Curse
 			Lighting.AddLight(npc.Center, new Vector3(110 / 255f, 36 / 255f, 20 / 255f));
 			Texture2D texture = ModContent.GetTexture("SOTS/NPCs/Boss/Curse/FartGas");
 			SpawnPassiveDust(texture, npc.Center + new Vector2(0, 10), 0.9f, foamParticleList1, 1, 0, 50, npc.rotation);
-			SpawnPassiveDust(ModContent.GetTexture("SOTS/NPCs/Boss/Curse/FartGasInline"), npc.Center + new Vector2(0, 10), 0.9f, foamParticleList1, 1, 0, 150, npc.rotation);
+			SpawnPassiveDust(ModContent.GetTexture("SOTS/NPCs/Boss/Curse/FartGasInline"), npc.Center + new Vector2(0, 10), 0.9f, foamParticleList1, 1, 0, 200, npc.rotation);
 			SpawnPassiveDust(ModContent.GetTexture("SOTS/NPCs/Boss/Curse/FartGasBorder"), npc.Center + new Vector2(0, 10), 1.2f, foamParticleList4, 0.2f, 2, 3600, npc.rotation);
 			texture = ModContent.GetTexture("SOTS/NPCs/Boss/Curse/PharaohsCurseOutline");
 			SpawnPassiveDust(texture, npc.Center, 1.0f, foamParticleList2, 0.1f, 1, 30, npc.rotation);

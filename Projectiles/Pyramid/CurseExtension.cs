@@ -44,10 +44,10 @@ namespace SOTS.Projectiles.Pyramid
 			Vector2 velo = projectile.velocity.SafeNormalize(Vector2.Zero);
 			if (npc.active && npc.type == ModContent.NPCType<PharaohsCurse>())
 			{
-				int maxLength = (int)(75 * scale);
+				int maxLength = (int)(70 * scale);
 				for (int i = 0; i <= maxLength; i++)
 				{
-					if (Main.rand.Next(20) <= 6)
+					if (Main.rand.NextBool(6))
 					{
 						float scaleMult = 0.25f + 0.85f * ((maxLength - i) / (float)maxLength) * (0.7f + 0.3f * scale);
 						PharaohsCurse curse = npc.modNPC as PharaohsCurse;
@@ -55,7 +55,7 @@ namespace SOTS.Projectiles.Pyramid
 						curse.foamParticleList1.Add(new CurseFoam(current, rotational, 0.4f + 0.6f * scaleMult, true));
 					}
 					posList.Add(current);
-					current += velo * 3.5f;
+					current += velo * 3.75f;
 				}
 			}
 		}
