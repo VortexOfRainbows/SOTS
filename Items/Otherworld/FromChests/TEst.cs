@@ -5,6 +5,8 @@ using System;
 using Microsoft.Xna.Framework;
 using SOTS.Projectiles.Celestial;
 using SOTS.Projectiles.Inferno;
+using SOTS.NPCs.Boss.Curse;
+using SOTS.Projectiles.Pyramid;
 
 namespace SOTS.Items.Otherworld.FromChests
 {
@@ -22,18 +24,21 @@ namespace SOTS.Items.Otherworld.FromChests
 			item.thrown = true;
 			item.rare = 2;
 			item.autoReuse = true;            
-			item.shoot = ModContent.ProjectileType<LesserWispLaser>(); 
+			item.shoot = ModContent.ProjectileType<CurseExtension>(); 
             item.shootSpeed = 5.0f;
 			item.consumable = true;
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			int numberProjectiles = 1;
-			for (int i = 0; i < numberProjectiles; i++)
-			{
-				Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedBy(i * MathHelper.ToRadians(90));
-				Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI);
-			}
+			for(int i = 0; i < Main.maxNPCs; i++)
+            {
+				NPC npc = Main.npc[i];
+				if(npc.active && npc.type == ModContent.NPCType<PharaohsCurse>())
+				{
+					Projectile.NewProjectile(position.X, position.Y, speedX, speedY, type, damage, knockBack, player.whoAmI, 0, npc.whoAmI);
+					break;
+				}
+            }
 			return false; 
 		}
 	}

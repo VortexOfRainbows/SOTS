@@ -76,7 +76,7 @@ namespace SOTS.Projectiles.Pyramid
 						rotational += Limb.velocity * 0.1f;
 						if(targetHitbox.X != 0 || targetHitbox.Y != 0)
                         {
-							int width = (int)(12 - 6 * percent);
+							int width = (int)(18 - 9 * percent);
 							Rectangle hitbox = new Rectangle((int)(finalPosition.X - width), (int)(finalPosition.Y - width), width, width);
 							if (hitbox.Intersects(targetHitbox))
 								return true;
@@ -111,7 +111,6 @@ namespace SOTS.Projectiles.Pyramid
 			}
 			return false;
         }
-        Vector2 savedVelocity;
         public override bool PreAI()
 		{
 			projectile.ai[1]++; 
@@ -143,7 +142,7 @@ namespace SOTS.Projectiles.Pyramid
 					int x = (int)projectile.Center.X / 16;
 					int y = (int)projectile.Center.Y / 16;
 					Tile tile = Framing.GetTileSafely(x, y);
-					if (!WorldGen.InWorld(x, y, 20) || (tile.active() && !Main.tileSolidTop[tile.type] && Main.tileSolid[tile.type] && (tile.type == ModContent.TileType<TrueSandstoneTile>() || tile.wall == ModContent.WallType<TrueSandstoneWallWall>())))
+					if ((!WorldGen.InWorld(x, y, 20) || tile.active() && !Main.tileSolidTop[tile.type] && Main.tileSolid[tile.type] && tile.type == ModContent.TileType<TrueSandstoneTile>()) || tile.wall == ModContent.WallType<TrueSandstoneWallWall>())
 					{
 						projectile.velocity *= 0.0f;
 					}
