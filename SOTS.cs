@@ -22,6 +22,7 @@ using SOTS.Items.Celestial;
 using SOTS.Items.MusicBoxes;
 using SOTS.NPCs.Boss.Polaris;
 using SOTS.NPCs.Boss.Curse;
+using SOTS.NPCs.Boss.CelestialSerpent;
 
 namespace SOTS
 {
@@ -434,7 +435,7 @@ namespace SOTS
 					new List<int>() { ModContent.ItemType<CelestialBag>(), ModContent.ItemType<StarShard>(), ModContent.ItemType<StrangeFruit>() },
 					"Use a [i:" + ModContent.ItemType<CelestialTorch>() + "] during the night",
 					"",
-					"SOTS/NPCs/Boss/CelestialSerpent_Display",
+					"SOTS/NPCs/Boss/CelestialSerpent/CelestialSerpent_Display",
 					"",
 					(Func<bool>)(() => true));
 				bossChecklist.Call(

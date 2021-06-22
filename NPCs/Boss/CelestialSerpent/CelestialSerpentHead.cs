@@ -6,7 +6,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
  
-namespace SOTS.NPCs.Boss
+namespace SOTS.NPCs.Boss.CelestialSerpent
 {[AutoloadBossHead]
     public class CelestialSerpentHead : ModNPC
     {	float ai1 = 0;
@@ -19,13 +19,12 @@ namespace SOTS.NPCs.Boss
 		}
         public override void SetDefaults()
         {
-           
             npc.lifeMax = 120000;      
             npc.damage = 100;
             npc.defense = 50;    
             npc.knockBackResist = 0f;
             npc.width = 50;
-            npc.height = 50;
+            npc.height = 60;
             npc.boss = true;
             npc.lavaImmune = true;      
             npc.noGravity = true;         
@@ -286,7 +285,7 @@ namespace SOTS.NPCs.Boss
  
             return true;
         }
-        public override bool PreDraw(Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch, Color drawColor)
+        public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
         {
             Texture2D texture = Main.npcTexture[npc.type];
             Vector2 origin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
@@ -351,24 +350,17 @@ namespace SOTS.NPCs.Boss
 			if(ai1 >= 720 && ai1 <= 1440)
 			{
 				Vector2 SpinTo = new Vector2(480, 0).RotatedBy(MathHelper.ToRadians(rotate * 1.75f));
-				
-				
 				goToX = player.Center.X + SpinTo.X - npc.Center.X;
 				goToY = player.Center.Y + SpinTo.Y - npc.Center.Y;
-				
-				
 			
 				float distance = (float)System.Math.Sqrt((double)(goToX * goToX + goToY * goToY));
 				if(distance > 48)
 				{
 					distance = 5.5f / distance;
-									  
 					goToX *= distance * 5;
 					goToY *= distance * 5;
-					
 					directX = goToX;
 					directY = goToY;
-					
 				}
 				else
 				{

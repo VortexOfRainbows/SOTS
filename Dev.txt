@@ -44,13 +44,14 @@ Low Priority:
 7. Electrolyte Seperator
 8. Amogus
 
-6/14/21 through 6/20/21
+6/14/21 through 6/22/21
 1. Worked on the pyramid and pharaoh reworks
 2. Fixed error where too many packets were sent in multiplayer.
 3. Resprited frigid items, + some new blocks, also added Drawcode to certain music boxes.
-4. Next: More Pharaoh, Buff Polaris
-5. Next: celesital serpent resprites
+4. Celestial Serpent Resprited.
+5. Next: More Pharaoh, Buff Polaris
 6. Next: look into earthen construct bugs, nerf frigid armor
+
 
 0.19.3 Released!
 
