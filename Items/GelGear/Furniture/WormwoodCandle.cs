@@ -1,12 +1,9 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.DataStructures;
-using Terraria.Enums;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-
 
 namespace SOTS.Items.GelGear.Furniture
 {
@@ -17,7 +14,6 @@ namespace SOTS.Items.GelGear.Furniture
 			DisplayName.SetDefault("Goopwood Candle");
 			Tooltip.SetDefault("");
 		}
-
 		public override void SetDefaults()
 		{
 			item.width = 16;
@@ -53,20 +49,39 @@ namespace SOTS.Items.GelGear.Furniture
 	{
 		public override void SetDefaults()
 		{
-			Main.tileLighted[Type] = true;
 			Main.tileFrameImportant[Type] = true;
-			Main.tileNoAttach[Type] = true;
+			Main.tileLavaDeath[Type] = true;
+			Main.tileLighted[Type] = true;
 			TileObjectData.newTile.CopyFrom(TileObjectData.StyleOnTable1x1);
-			TileObjectData.newTile.CoordinateHeights = new int[]{18};
+			TileObjectData.newTile.CoordinateHeights = new int[]
+			{
+				18
+			};
 			TileObjectData.addTile(Type);
-			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
 			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Candle");
+			name.SetDefault("Goopwood Candle");
 			AddMapEntry(new Color(200, 100, 130), name);
+			dustType = DustID.Fire;
 			disableSmartCursor = true;
-			adjTiles = new int[]{TileID.Torches};
-			torch = true;
+			adjTiles = new int[] { TileID.Torches };
 			drop = mod.ItemType("WormwoodCandle");
+			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
+		}
+		public override void RightClick(int i, int j)
+		{
+			Main.player[Main.myPlayer].PickTile(i, j, 100);
+		}
+		public override void HitWire(int i, int j)
+		{
+			if (Main.tile[i, j].frameX >= 18)
+			{
+				Main.tile[i, j].frameX -= 18;
+			}
+			else
+			{
+				Main.tile[i, j].frameX += 18;
+			}
+			NetMessage.SendTileSquare(-1, i, j, 1);
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
 		{

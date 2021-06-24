@@ -3,7 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 
-namespace SOTS.Items.Pyramid
+namespace SOTS.Items.Pyramid.AncientGold
 {
 	public class RoyalGoldBrick : ModItem
 	{

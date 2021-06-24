@@ -18,7 +18,6 @@ namespace SOTS.Items.GelGear.Furniture
 			DisplayName.SetDefault("Goopwood Barrel");
 			Tooltip.SetDefault("");
 		}
-
 		public override void SetDefaults()
 		{
 			item.width = 24;
