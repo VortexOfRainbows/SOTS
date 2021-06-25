@@ -1,5 +1,6 @@
 using System;
 using Microsoft.Xna.Framework;
+using SOTS.NPCs.Boss.Curse;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
@@ -46,20 +47,18 @@ namespace SOTS.Items.Pyramid
 		public override bool CanKillTile(int i, int j, ref bool blockDamaged)
 		{
 			if(SOTSWorld.downedCurse)
-			return true;
-		
+				return true;
 			return false;
 		}
 		public override void RightClick(int i, int j)
-        {
-			int xlocation = i * 16 - 8;
-			int ylocation = j * 16 + 8;
+		{
+			int left = i - (Main.tile[i, j].frameX / 18);
+			int top = j - (Main.tile[i, j].frameY / 18);
 			Main.mouseRightRelease = true;
             Player player = Main.LocalPlayer;
 			if(!NPC.AnyNPCs(mod.NPCType("PharaohsCurse")))
 			{
-				//Main.NewText("Debug", 145, 145, 255); //storing spawn info as buffs to make it easy to spawn in multiplayer
-				player.AddBuff(mod.BuffType("SpawnBossCurse"), ylocation, false);
+				Projectile.NewProjectile(new Vector2(left * 16, top * 16) + new Vector2(48, 16), Vector2.Zero, mod.ProjectileType("ReleaseWallMimic"), 0, 0, Main.myPlayer, -1);
 			}
 		}  
 		public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height)
@@ -69,12 +68,7 @@ namespace SOTS.Items.Pyramid
 		public override void MouseOver(int i, int j)
 		{
 			Player player = Main.LocalPlayer;
-			Tile tile = Main.tile[i, j];
-			int left = i;
-			int top = j;
-			
 			player.showItemIcon2 = mod.ItemType("Sarcophagus");
-			//player.showItemIconText = "";
 			player.noThrow = 2;
 			player.showItemIcon = true;
 		}

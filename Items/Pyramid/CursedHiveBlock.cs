@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using SOTS.NPCs.Boss.Curse;
 
 namespace SOTS.Items.Pyramid
 {
@@ -124,55 +125,67 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void Kill(int timeLeft)
 		{
-			if (Main.netMode != 1)
+			if(projectile.ai[0] == -1)
 			{
-				int npc1 = NPC.NewNPC((int)projectile.position.X + projectile.width / 2, (int)projectile.position.Y + projectile.height, mod.NPCType("WallMimic"));
-				Main.npc[npc1].netUpdate = true;
-				Main.npc[npc1].ai[2] = 900;
-			}
-			Main.PlaySound(SoundID.Item14, (int)(projectile.Center.X), (int)(projectile.Center.Y));
-			int x2 = (int)(projectile.Center.X / 16f);
-			int y2 = (int)(projectile.Center.Y / 16f);
-			for (int i = x2 - 1; i <= x2 + 1; i++)
-			{
-				for (int j = y2 - 1; j <= y2 + 1; j++)
-				{
-					bool canKillTile = true;
-					if (Main.tile[i, j] != null && Main.tile[i, j].active())
+				if (!NPC.AnyNPCs(mod.NPCType("PharaohsCurse")))
+					if (Main.netMode != 1)
 					{
-						canKillTile = true;
-						if (Main.tileDungeon[(int)Main.tile[i, j].type] || Main.tile[i, j].type == 88 || Main.tile[i, j].type == 21 || Main.tile[i, j].type == 26 || Main.tile[i, j].type == 107 || Main.tile[i, j].type == 108 || Main.tile[i, j].type == 111 || Main.tile[i, j].type == 226 || Main.tile[i, j].type == 237 || Main.tile[i, j].type == 221 || Main.tile[i, j].type == 222 || Main.tile[i, j].type == 223 || Main.tile[i, j].type == 211 || Main.tile[i, j].type == 404)
+						int npc1 = NPC.NewNPC((int)projectile.position.X + projectile.width / 2, (int)projectile.position.Y + projectile.height, ModContent.NPCType<PharaohsCurse>());
+						Main.npc[npc1].netUpdate = true;
+					}
+			}
+			else
+            {
+				if (Main.netMode != 1)
+				{
+					int npc1 = NPC.NewNPC((int)projectile.position.X + projectile.width / 2, (int)projectile.position.Y + projectile.height, mod.NPCType("WallMimic"));
+					Main.npc[npc1].netUpdate = true;
+					Main.npc[npc1].ai[2] = 900;
+				}
+				Main.PlaySound(SoundID.Item14, (int)(projectile.Center.X), (int)(projectile.Center.Y));
+				int x2 = (int)(projectile.Center.X / 16f);
+				int y2 = (int)(projectile.Center.Y / 16f);
+				for (int i = x2 - 1; i <= x2 + 1; i++)
+				{
+					for (int j = y2 - 1; j <= y2 + 1; j++)
+					{
+						bool canKillTile = true;
+						if (Main.tile[i, j] != null && Main.tile[i, j].active())
 						{
-							canKillTile = false;
-						}
-						if (!Main.hardMode && Main.tile[i, j].type == 58)
-						{
-							canKillTile = false;
-						}
-						if (!TileLoader.CanExplode(i, j) && (Main.tile[i, j].type != (ushort)mod.TileType("PyramidSlabTile")))
-						{
-							canKillTile = false;
+							canKillTile = true;
+							if (Main.tileDungeon[(int)Main.tile[i, j].type] || Main.tile[i, j].type == 88 || Main.tile[i, j].type == 21 || Main.tile[i, j].type == 26 || Main.tile[i, j].type == 107 || Main.tile[i, j].type == 108 || Main.tile[i, j].type == 111 || Main.tile[i, j].type == 226 || Main.tile[i, j].type == 237 || Main.tile[i, j].type == 221 || Main.tile[i, j].type == 222 || Main.tile[i, j].type == 223 || Main.tile[i, j].type == 211 || Main.tile[i, j].type == 404)
+							{
+								canKillTile = false;
+							}
+							if (!Main.hardMode && Main.tile[i, j].type == 58)
+							{
+								canKillTile = false;
+							}
+							if (!TileLoader.CanExplode(i, j) && (Main.tile[i, j].type != (ushort)mod.TileType("PyramidSlabTile")))
+							{
+								canKillTile = false;
+							}
+							if (canKillTile)
+							{
+								WorldGen.KillTile(i, j, false, false, Main.tile[i, j].type == (ushort)mod.TileType("CursedHive"));
+								if (!Main.tile[i, j].active() && Main.netMode != 0)
+								{
+									NetMessage.SendData(17, -1, -1, null, 0, (float)i, (float)j, 0f, 0, 0, 0);
+								}
+							}
 						}
 						if (canKillTile)
 						{
-							WorldGen.KillTile(i, j, false, false, Main.tile[i, j].type == (ushort)mod.TileType("CursedHive"));
-							if (!Main.tile[i, j].active() && Main.netMode != 0)
+							for (int x = i - 1; x <= i + 1; x++)
 							{
-								NetMessage.SendData(17, -1, -1, null, 0, (float)i, (float)j, 0f, 0, 0, 0);
-							}
-						}
-					}
-					if (canKillTile)
-					{
-						for (int x = i - 1; x <= i + 1; x++)
-						{
-							for (int y = j - 1; y <= j + 1; y++)
-							{
-								if (Main.tile[x, y] != null && Main.tile[x, y].wall > 0)
+								for (int y = j - 1; y <= j + 1; y++)
 								{
-									if (Main.tile[x, y].wall == 0 && Main.netMode != 0)
+									if (Main.tile[x, y] != null && Main.tile[x, y].wall > 0)
 									{
-										NetMessage.SendData(17, -1, -1, null, 2, (float)x, (float)y, 0f, 0, 0, 0);
+										if (Main.tile[x, y].wall == 0 && Main.netMode != 0)
+										{
+											NetMessage.SendData(17, -1, -1, null, 2, (float)x, (float)y, 0f, 0, 0, 0);
+										}
 									}
 								}
 							}

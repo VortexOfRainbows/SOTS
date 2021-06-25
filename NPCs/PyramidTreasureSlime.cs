@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using SOTS.Items.Banners;
+using SOTS.Items.Pyramid.AncientGold;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -64,13 +65,12 @@ namespace SOTS.NPCs
 		}
 		public override void NPCLoot()
 		{
-		
-			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, (ItemID.SandBlock), Main.rand.Next(11) + 15);
-		
+			if(Main.rand.NextBool(2))
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemID.SandBlock, Main.rand.Next(11) + 15);
+			else 
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<RoyalGoldBrick>(), Main.rand.Next(6) + 10);
 			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("Snakeskin"), Main.rand.Next(2) + 3);	
-			
 			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("SoulResidue"), Main.rand.Next(2) + 3);	
-			
 			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("JuryRiggedDrill"), Main.rand.Next(7) + 1);	
 			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("ExplosiveKnife"), Main.rand.Next(10) + 5);	
 			

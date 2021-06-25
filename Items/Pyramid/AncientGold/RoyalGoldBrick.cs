@@ -33,9 +33,9 @@ namespace SOTS.Items.Pyramid.AncientGold
 		{
 			Main.tileMerge[Type][ModContent.TileType<OvergrownPyramidTile>()] = true;
 			Main.tileMerge[Type][ModContent.TileType<OvergrownPyramidTileSafe>()] = true;
-			Main.tileBrick[Type] = true;
+			Main.tileBrick[Type] = false;
 			Main.tileSolid[Type] = true;
-			Main.tileMergeDirt[Type] = true;
+			Main.tileMergeDirt[Type] = false;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
 			drop = ModContent.ItemType<RoyalGoldBrick>();
@@ -45,6 +45,12 @@ namespace SOTS.Items.Pyramid.AncientGold
 			soundType = SoundID.Tink;
 			soundStyle = 2;
 			dustType = DustID.GoldCoin;
+			TileID.Sets.GemsparkFramingTypes[Type] = Type;
+		}
+		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
+		{
+			Framing.SelfFrame8Way(i, j, Main.tile[i, j], resetFrame);
+			return false;
 		}
 	}
 }
