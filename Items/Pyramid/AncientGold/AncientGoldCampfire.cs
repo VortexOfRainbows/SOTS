@@ -59,7 +59,9 @@ namespace SOTS.Items.Pyramid.AncientGold
         public override void NearbyEffects(int i, int j, bool closer)
         {
 			if (closer)
-				Main.LocalPlayer.AddBuff(BuffID.Campfire, 3);
+			{
+				Main.LocalPlayer.AddBuff(BuffID.Campfire, 6, true);
+			}
             base.NearbyEffects(i, j, closer);
 		}
 		public override void AnimateTile(ref int frame, ref int frameCounter)

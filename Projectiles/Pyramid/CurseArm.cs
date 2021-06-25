@@ -183,6 +183,7 @@ namespace SOTS.Projectiles.Pyramid
 				}
 				else
                 {
+					projectile.Kill();
 					OwnerPos = Vector2.Zero;
                 }
             }

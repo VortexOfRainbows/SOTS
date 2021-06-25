@@ -26,11 +26,11 @@ namespace SOTS.Items.Pyramid.AncientGold
 			item.consumable = true;
 			item.createTile = TileType<AncientGoldTorchTile>();
 			item.flame = true;
-			item.useStyle = ItemUseStyleID.SwingThrow;
-			item.rare = ItemRarityID.LightRed;
+            item.useStyle = ItemUseStyleID.SwingThrow;
+            item.rare = ItemRarityID.LightRed;
 			item.value = 50;
 		}
-		/*public override void HoldItem(Player player)
+		public override void HoldItem(Player player)
 		{
 			if (Main.rand.Next(player.itemAnimation > 0 ? 40 : 80) == 0)
 			{
@@ -38,7 +38,7 @@ namespace SOTS.Items.Pyramid.AncientGold
 			}
 			Vector2 position = player.RotatedRelativePoint(new Vector2(player.itemLocation.X + 12f * player.direction + player.velocity.X, player.itemLocation.Y - 14f + player.velocity.Y), true);
 			Lighting.AddLight(position, 1.1f, 0.9f, 0.9f);
-		}*/
+		}
 		public override void PostUpdate()
 		{
 			if (!item.wet)
