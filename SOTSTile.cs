@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using SOTS.Items.Otherworld;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Items.Fragments;
+using SOTS.Items.Pyramid;
 
 namespace SOTS
 {
@@ -43,6 +44,10 @@ namespace SOTS
                     return false;
             }
             if (Main.tile[i, j - 1].type == (ushort)ModContent.TileType<PotGeneratorTile>() && !SOTSWorld.downedAdvisor)
+            {
+                return false;
+            }
+            if (Main.tile[i, j - 1].type == (ushort)ModContent.TileType<SarcophagusTile>())
             {
                 return false;
             }

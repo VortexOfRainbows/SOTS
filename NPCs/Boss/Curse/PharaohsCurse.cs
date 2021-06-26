@@ -14,6 +14,14 @@ namespace SOTS.NPCs.Boss.Curse
 	[AutoloadBossHead]
 	public class PharaohsCurse : ModNPC
 	{
+		public override void SendExtraAI(BinaryWriter writer)
+		{
+			writer.Write(direction);
+		}
+		public override void ReceiveExtraAI(BinaryReader reader)
+		{
+			direction = reader.ReadInt32();
+		}
 		int despawn = 0;
 		private float ai1
 		{
@@ -44,7 +52,7 @@ namespace SOTS.NPCs.Boss.Curse
 		{
 			npc.aiStyle = 0;
 			npc.lifeMax = 6000;
-			npc.damage = 40;
+			npc.damage = 50;
 			npc.defense = 12;
 			npc.knockBackResist = 0f;
 			npc.width = 38;
@@ -120,7 +128,7 @@ namespace SOTS.NPCs.Boss.Curse
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
 		{
 			npc.lifeMax = (int)(npc.lifeMax * bossLifeScale * 0.75f);
-			npc.damage = (int)(npc.damage * 0.8f);
+			npc.damage = (int)(npc.damage * 0.75f);
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
@@ -261,6 +269,8 @@ namespace SOTS.NPCs.Boss.Curse
 				startParticles = 0.0f;
 				aiPhase = -1;
 				runOnce = false;
+				direction = Main.rand.Next(2) * 2 - 1;
+				CenterPosition = npc.Center;
 			}
 			npc.TargetClosest();
 			Player player = Main.player[npc.target];
@@ -438,18 +448,38 @@ namespace SOTS.NPCs.Boss.Curse
 		}
 		public Vector2 CenterPosition;
 		float dustAcceleration = 0f;
+		int direction = 1;
+		int resetListTimer = 0;
+		public void BurstRings()
+		{
+			Main.PlaySound(2, (int)npc.Center.X, (int)npc.Center.Y, 14, 0.85f, 0.2f);
+			if (Main.netMode == 1)
+				return;
+			for (int i = 0; i < 6; i++)
+			{
+				Vector2 outWards = new Vector2(-2f * Main.rand.NextFloat(0.9f, 1.1f), 0).RotatedBy(MathHelper.ToRadians(i * 60 + 30));
+				int damage = npc.damage / 2;
+				if (Main.expertMode)
+				{
+					damage = (int)(damage / Main.expertDamage);
+				}
+				Projectile.NewProjectile(npc.Center, outWards, ModContent.ProjectileType<CurseRing>(), damage, 0f, Main.myPlayer, npc.whoAmI);
+			}
+		}
 		public override void AI()
 		{
+			resetListTimer--;
+			if(resetListTimer < 0)
+            {
+				resetListTimer = 1800;
+				ResetLists();
+            }
 			Player player = Main.player[npc.target];
 			ai2++;
 			if(aiPhase == -1)
             {
 				float timeToStart = 360f;
-				if(CenterPosition == null)
-                {
-					CenterPosition = npc.Center;
-                }
-				if(ai2 >= timeToStart)
+				if (ai2 >= timeToStart)
 				{
 					if(ai2 == timeToStart)
 					{
@@ -491,17 +521,20 @@ namespace SOTS.NPCs.Boss.Curse
 				{
 					startParticles = 1;
 					aiPhase = 0;
-					ai2 = 0;
+					ai2 = -30;
 					npc.alpha = 0;
 				}
             }
-			if(aiPhase == 0)
+			if (aiPhase == 0)
 			{
-				if(ai2 == -150)
-                {
-					ResetLists();
-				}
-				if (ai2 >= 150 && ai2 <= 940)
+				if(Main.expertMode)
+					DashAttacks(280, 0.9f, 4);
+				else
+					DashAttacks(280, 0.875f, 3);
+			}
+			if (aiPhase == 1)
+			{
+				if (ai2 >= 150 && ai2 <= 730)
 				{
 					float mult = (300 - ai2) / 100f;
 					if (mult < 0.4f)
@@ -531,19 +564,61 @@ namespace SOTS.NPCs.Boss.Curse
 					{
 						if (ai2 >= 210)
 							mult *= 0.01f;
-						MimicPolarisMovement(1 * mult);
+						MimicPolarisMovement(0.1f * mult);
 					}
 				}
 				else
 				{
-					float variant = (float)Math.Sin(MathHelper.ToRadians(ai1));
-					Vector2 goTo = player.Center + new Vector2(0, -128 + variant * 24);
-					MoveTo(goTo, 0.2f, 7f);
+					float speed = 3f;
+					if (ai2 < 0)
+					{
+						speed = 0.3f;
+					}
+					MoveTo(CenterPosition, 0.2f, speed);
 				}
-				if (ai2 >= 940)
+				if (ai2 >= 730)
                 {
-					ai2 = -300;
+					aiPhase = 0;
+					ai2 = 0;
 				}
+			}
+		}
+		public void DashAttacks(float distance, float speedMult, int amt = 4)
+		{
+			Player player = Main.player[npc.target];
+			if (ai2 <= 40)
+			{
+				Vector2 dashArea = player.Center + new Vector2(distance * direction, 0);
+				MoveTo(dashArea, 0.2f, 12f * speedMult);
+			}
+			else if (ai2 < 60)
+			{
+				float current = ai2 - 60;
+				float sin = (float)Math.Sin(MathHelper.ToRadians(current * 180 / 20f));
+				npc.velocity *= 0.1f;
+				npc.velocity.X += sin * -5 * direction;
+			}
+			if (ai2 == 60)
+			{
+				Main.PlaySound(2, (int)npc.Center.X, (int)npc.Center.Y, 73, 1.75f, 0.2f);
+				npc.velocity += new Vector2(-24 * direction * speedMult, 0);
+			}
+			if (ai2 > 60)
+			{
+				npc.velocity += new Vector2(-1f * speedMult * direction, 0);
+			}
+			if (ai2 > 95)
+			{
+				ai2 = 0;
+				ai3++;
+				direction *= -1;
+				BurstRings();
+			}
+			if (ai3 > 4)
+			{
+				ai2 = -10;
+				ai3 = 0;
+				aiPhase = 1;
 			}
 		}
 		bool[] ignore;

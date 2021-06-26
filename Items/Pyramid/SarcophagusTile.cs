@@ -1,10 +1,5 @@
-using System;
 using Microsoft.Xna.Framework;
-using SOTS.NPCs.Boss.Curse;
 using Terraria;
-using Terraria.DataStructures;
-using Terraria.Enums;
-using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -14,7 +9,7 @@ namespace SOTS.Items.Pyramid
 	{
 		public override void SetDefaults()
 		{
-			minPick = 110; 
+			minPick = 250; 
 			Main.tileSolid[Type] = false;
 			Main.tileFrameImportant[Type] = true;
 			Main.tileLavaDeath[Type] = false;

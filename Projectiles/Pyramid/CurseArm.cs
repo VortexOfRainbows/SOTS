@@ -21,7 +21,7 @@ namespace SOTS.Projectiles.Pyramid
 			projectile.height = 24;
 			projectile.width = 24;
 			projectile.friendly = false;
-			projectile.timeLeft = 720;
+			projectile.timeLeft = 510;
 			projectile.hostile = true;
 			projectile.alpha = 255;
 			projectile.penetrate = -1;
@@ -45,6 +45,7 @@ namespace SOTS.Projectiles.Pyramid
 			projectile.velocity *= 0.0f;
             return false;
         }
+		float percent = 0;
         public bool DrawLimbs(List<CurseFoam> dustList, Rectangle targetHitbox, bool genProj = false)
 		{
 			int parentID = (int)projectile.ai[0];
@@ -66,7 +67,7 @@ namespace SOTS.Projectiles.Pyramid
 					int end = max;
 					if(genProj)
                     {
-						start = Main.rand.Next(max);
+						start = (int)(percent * max);
 						end = start + 1;
 					}
 					for (float k = start; k < end;)
@@ -114,7 +115,8 @@ namespace SOTS.Projectiles.Pyramid
 			return DrawLimbs(null, targetHitbox);
 		}
 		int side = 1;
-        public override bool PreAI()
+		bool doAttack = true;
+		public override bool PreAI()
 		{
 			projectile.ai[1]++; 
 			if (projectile.ai[1] >= 60)
@@ -130,9 +132,22 @@ namespace SOTS.Projectiles.Pyramid
                 {
 					projectile.velocity *= 0f;
                 }
-				if (projectile.ai[1] > 80 && projectile.ai[1] % 33 == 0 && Main.netMode != NetmodeID.MultiplayerClient)
+				if (projectile.ai[1] > 90 && projectile.ai[1] % 20 == 0 && Main.netMode != NetmodeID.MultiplayerClient)
 				{
-					DrawLimbs(null, new Rectangle(0, 0, 0, 0), true);
+					if (percent == 0)
+						percent = 0.05f;
+					percent += 0.1f;
+					if (percent >= 1)
+					{
+						if(percent >= 1.05f)
+						{
+							percent = 0.2f;
+						}
+						else
+							doAttack = false;
+					}
+					if(doAttack)
+						DrawLimbs(null, new Rectangle(0, 0, 0, 0), true);
 					side *= -1;
 				}
             }

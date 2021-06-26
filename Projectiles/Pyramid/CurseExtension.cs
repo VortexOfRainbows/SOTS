@@ -20,7 +20,7 @@ namespace SOTS.Projectiles.Pyramid
 		{
 			projectile.width = 16;
 			projectile.height = 16;
-			projectile.timeLeft = 180;
+			projectile.timeLeft = 140;
 			projectile.magic = true;
 			projectile.penetrate = -1;
 			projectile.hostile = false;
@@ -44,18 +44,18 @@ namespace SOTS.Projectiles.Pyramid
 			Vector2 velo = projectile.velocity.SafeNormalize(Vector2.Zero);
 			if (npc.active && npc.type == ModContent.NPCType<PharaohsCurse>())
 			{
-				int maxLength = (int)(70 * scale);
+				int maxLength = (int)(60 * scale);
 				for (int i = 0; i <= maxLength; i++)
 				{
 					if (Main.rand.NextBool(6))
 					{
 						float scaleMult = 0.25f + 0.85f * ((maxLength - i) / (float)maxLength) * (0.7f + 0.3f * scale);
 						PharaohsCurse curse = npc.modNPC as PharaohsCurse;
-						Vector2 rotational = new Vector2(0, -Main.rand.NextFloat(0.45f + 1.25f * scaleMult)).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360f)));
+						Vector2 rotational = new Vector2(0, -Main.rand.NextFloat(0.75f + 1.75f * scaleMult)).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360f)));
 						curse.foamParticleList1.Add(new CurseFoam(current, rotational, 0.4f + 0.6f * scaleMult, true));
 					}
 					posList.Add(current);
-					current += velo * 3.75f;
+					current += velo * 4.5f;
 				}
 			}
 		}
@@ -69,7 +69,7 @@ namespace SOTS.Projectiles.Pyramid
 				for(int i = 0; i < Main.maxPlayers; i++)
                 {
 					Player player = Main.player[i];
-					if(Vector2.Distance(player.Center, projectile.Center) <= 480)
+					if(Vector2.Distance(player.Center, projectile.Center) <= 416)
                     {
 						capable = true;
 						break;
@@ -88,14 +88,14 @@ namespace SOTS.Projectiles.Pyramid
 				projectile.hostile = true;
 				if (projectile.ai[0] < 40)
 				{
-					float scale = projectile.ai[0] * 0.008f;
+					float scale = projectile.ai[0] * 0.0075f;
 					Laser(scale);
 				}
 				else if (projectile.ai[0] == 40)
 				{
 					Vector2 distanceToOwner = projectile.Center - npc.Center;
 					PharaohsCurse curse = npc.modNPC as PharaohsCurse;
-					for (int j = 0; j < 50; j++)
+					for (int j = 0; j < 40; j++)
 					{
 						Vector2 rotational = new Vector2(0, -Main.rand.NextFloat(2.75f, 3.5f)).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360f)));
 						curse.foamParticleList1.Add(new CurseFoam(projectile.Center, rotational, 1.55f, true));
@@ -136,10 +136,14 @@ namespace SOTS.Projectiles.Pyramid
 		}
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
 		{
+			int counter = posList.Count;
 			if (projectile.friendly || projectile.hostile)
 				for (int i = 0; i < posList.Count; i += 8)
 				{
-					Rectangle rect = new Rectangle((int)posList[i].X - 8, (int)posList[i].Y - 8, 16, 16);
+					counter--;
+					float scale = 0.5f + 0.5f * ((float)counter / posList.Count);
+					int width = (int)(32 * scale);
+					Rectangle rect = new Rectangle((int)posList[i].X - width/2, (int)posList[i].Y - width/2, width, width);
 					if (targetHitbox.Intersects(rect))
 					{
 						return true;
