@@ -2,23 +2,23 @@
   "version": 3,
   "targets": {
     ".NETFramework,Version=v4.5": {
-      "tModLoader.CodeAssist/0.1.1": {
+      "tModLoader.CodeAssist/0.1.2": {
         "type": "package"
       }
     }
   },
   "libraries": {
-    "tModLoader.CodeAssist/0.1.1": {
-      "sha512": "bUQ4HAiRYq8Zisms7FI9ffSf4nZHwFFZU5j8Hpc/9rFB16GOGJg2ulHV0ZDErzoAAbXBeRdO8/VbSltBwmDcpA==",
+    "tModLoader.CodeAssist/0.1.2": {
+      "sha512": "o43lkrLmnOojQxVgmhmyAhCZV7DxL3gvcCaZvL7GcG7NH6hcyzSHFTM7tntoGthmx2OmOH8BUx1hZDhNhADV8Q==",
       "type": "package",
-      "path": "tmodloader.codeassist/0.1.1",
+      "path": "tmodloader.codeassist/0.1.2",
       "hasTools": true,
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "NugetIcon.png",
         "analyzers/dotnet/cs/tModLoader.CodeAssist.dll",
-        "tmodloader.codeassist.0.1.1.nupkg.sha512",
+        "tmodloader.codeassist.0.1.2.nupkg.sha512",
         "tmodloader.codeassist.nuspec",
         "tools/install.ps1",
         "tools/uninstall.ps1"
@@ -31,19 +31,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\vorte\\.nuget\\packages\\": {}
+    "C:\\Users\\Wouter\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\vorte\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\SOTS\\SOTS.csproj",
+      "projectUniqueName": "C:\\Users\\Wouter\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\SOTS\\SOTS.csproj",
       "projectName": "SOTS",
-      "projectPath": "C:\\Users\\vorte\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\SOTS\\SOTS.csproj",
-      "packagesPath": "C:\\Users\\vorte\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\vorte\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\SOTS\\obj\\",
+      "projectPath": "C:\\Users\\Wouter\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\SOTS\\SOTS.csproj",
+      "packagesPath": "C:\\Users\\Wouter\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Wouter\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\SOTS\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\vorte\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Wouter\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -55,7 +55,6 @@
       },
       "frameworks": {
         "net45": {
-          "targetAlias": "net45",
           "projectReferences": {}
         }
       },
@@ -67,14 +66,13 @@
     },
     "frameworks": {
       "net45": {
-        "targetAlias": "net45",
         "dependencies": {
           "tModLoader.CodeAssist": {
             "target": "Package",
             "version": "[0.1.*, )"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.200\\RuntimeIdentifierGraph.json"
       }
     }
   }

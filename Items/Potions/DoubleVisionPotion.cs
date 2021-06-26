@@ -16,7 +16,7 @@ namespace SOTS.Items.Potions
 		public override void SetDefaults()
 		{
 			item.width = 20;
-			item.height = 32;
+			item.height = 28;
             item.value = Item.sellPrice(0, 0, 10, 0);
 			item.rare = 3;
 			item.maxStack = 30;
