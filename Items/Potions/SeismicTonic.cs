@@ -19,7 +19,7 @@ namespace SOTS.Items.Potions
 		{
 			Texture2D texture = mod.GetTexture("Items/Potions/SeismicTonicEffect");
 			Color color = new Color(100, 100, 100, 0);
-			for (int k = 0; k < 7; k++)
+			for (int k = 0; k < 2; k++)
 			{
 				float x = Main.rand.Next(-10, 11) * 0.15f;
 				float y = Main.rand.Next(-10, 11) * 0.15f;
@@ -33,7 +33,7 @@ namespace SOTS.Items.Potions
 			Texture2D texture = mod.GetTexture("Items/Potions/SeismicTonicEffect");
 			Color color = new Color(100, 100, 100, 0);
 			Vector2 drawOrigin = new Vector2(Main.itemTexture[item.type].Width * 0.5f, item.height * 0.5f);
-			for (int k = 0; k < 7; k++)
+			for (int k = 0; k < 2; k++)
 			{
 				float x = Main.rand.Next(-10, 11) * 0.15f;
 				float y = Main.rand.Next(-10, 11) * 0.15f;
@@ -45,7 +45,7 @@ namespace SOTS.Items.Potions
 		public override void SetDefaults()
 		{
 			item.width = 16;
-			item.height = 34;
+			item.height = 32;
             item.value = Item.sellPrice(0, 1, 0, 0);
 			item.rare = 3;
 			item.maxStack = 30;
