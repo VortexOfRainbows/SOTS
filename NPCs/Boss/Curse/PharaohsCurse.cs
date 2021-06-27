@@ -136,6 +136,30 @@ namespace SOTS.NPCs.Boss.Curse
 			{
 				//DrawLimbs(spriteBatch, false, -1);
 				DrawFoam(foamParticleList4, 3);
+				List<int> slots = new List<int>();
+				for (int i = 0; i < Main.projectile.Length; i++)
+				{
+					Projectile proj = Main.projectile[i];
+					if (proj.type == ModContent.ProjectileType<CurseWave>() && proj.active && proj.ai[0] == npc.whoAmI)
+					{
+						CurseWave ring = proj.modProjectile as CurseWave;
+						List<CurseFoam> list = ring.foamParticleList1;
+						DrawFoam(list, 2, 2);
+						slots.Add(i);
+					}
+				}
+				for (int j = 1; j >= 0; j--)
+					for (int i = 0; i < slots.Count; i++)
+					{
+						Projectile proj = Main.projectile[slots[i]];
+						if (proj.type == ModContent.ProjectileType<CurseWave>() && proj.active && proj.ai[0] == npc.whoAmI)
+						{
+							CurseWave ring = proj.modProjectile as CurseWave;
+							List<CurseFoam> list = ring.foamParticleList1;
+							DrawFoam(list, 2, j);
+							slots.Add(i);
+						}
+					}
 				DrawFoam(foamParticleList1, 2);
 				DrawFoam(foamParticleList2, 1);
 				//DrawLimbs(spriteBatch, false, 1);
@@ -150,7 +174,7 @@ namespace SOTS.NPCs.Boss.Curse
 			}
 			return false;
 		}
-		public void DrawFoam(List<CurseFoam> dustList, int startPoint = 2)
+		public void DrawFoam(List<CurseFoam> dustList, int startPoint = 2, int overrideStart = -1)
 		{
 			Texture2D texture = ModContent.GetTexture("SOTS/NPCs/Boss/Curse/CurseFoam");
 			Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height/6);
@@ -170,43 +194,67 @@ namespace SOTS.NPCs.Boss.Curse
 			}
 			else
 			{
-				if(startPoint != 2)
-					texture = ModContent.GetTexture("SOTS/NPCs/Boss/Curse/CurseFoamAlt");
-				for (int j = startPoint; j >= 0; j--)
+				if (overrideStart != -1)
 				{
 					for (int i = 0; i < dustList.Count; i++)
 					{
 						int shade = 255 - (int)(dustList[i].counter * 4f);
 						Color color = new Color(shade + dustList[i].dustColorVariation, shade - dustList[i].dustColorVariation, shade - dustList[i].dustColorVariation);
-						if (j != 2)
+						if (overrideStart != 2)
 							color = Lighting.GetColor((int)dustList[i].position.X / 16, (int)dustList[i].position.Y / 16, color);
 						else
-                        {
+						{
 							float reduction = shade / 255f;
 							Color first = new Color((int)(111 * reduction), (int)(80 * reduction), (int)(154 * reduction));
 							Color second = new Color((int)(76 * reduction), (int)(58 * reduction), (int)(101 * reduction));
 							color = Color.Lerp(first, second, 0.5f + 0.5f * (float)Math.Sin(MathHelper.ToRadians(Void.VoidPlayer.soulColorCounter * 2)));
 						}
 						Vector2 drawPos = dustList[i].position - Main.screenPosition;
-						Rectangle frame = new Rectangle(0, texture.Height / 3 * j, texture.Width, texture.Width);
-						float scale = j == 0 ? 1.5f : 2.0f;
+						Rectangle frame = new Rectangle(0, texture.Height / 3 * overrideStart, texture.Width, texture.Width);
+						float scale = overrideStart == 0 ? 1.5f : 2.0f;
 						Main.spriteBatch.Draw(texture, drawPos + new Vector2(0, 0), frame, color, dustList[i].rotation, drawOrigin, dustList[i].scale * scale, SpriteEffects.None, 0f);
 					}
-					/*texture = ModContent.GetTexture("SOTS/NPCs/Boss/Curse/CurseFoamAlt");
-					for (int i = 0; i < dustList.Count; i++)
+				}
+				else
+				{
+					if (startPoint != 2)
+						texture = ModContent.GetTexture("SOTS/NPCs/Boss/Curse/CurseFoamAlt");
+					for (int j = startPoint; j >= 0; j--)
 					{
-						if (dustList[i].alt)
+						for (int i = 0; i < dustList.Count; i++)
 						{
 							int shade = 255 - (int)(dustList[i].counter * 4f);
-							Color color = npc.GetAlpha(new Color(shade + dustList[i].dustColorVariation, shade - dustList[i].dustColorVariation, shade - dustList[i].dustColorVariation));
+							Color color = new Color(shade + dustList[i].dustColorVariation, shade - dustList[i].dustColorVariation, shade - dustList[i].dustColorVariation);
 							if (j != 2)
 								color = Lighting.GetColor((int)dustList[i].position.X / 16, (int)dustList[i].position.Y / 16, color);
+							else
+							{
+								float reduction = shade / 255f;
+								Color first = new Color((int)(111 * reduction), (int)(80 * reduction), (int)(154 * reduction));
+								Color second = new Color((int)(76 * reduction), (int)(58 * reduction), (int)(101 * reduction));
+								color = Color.Lerp(first, second, 0.5f + 0.5f * (float)Math.Sin(MathHelper.ToRadians(Void.VoidPlayer.soulColorCounter * 2)));
+							}
 							Vector2 drawPos = dustList[i].position - Main.screenPosition;
 							Rectangle frame = new Rectangle(0, texture.Height / 3 * j, texture.Width, texture.Width);
 							float scale = j == 0 ? 1.5f : 2.0f;
 							Main.spriteBatch.Draw(texture, drawPos + new Vector2(0, 0), frame, color, dustList[i].rotation, drawOrigin, dustList[i].scale * scale, SpriteEffects.None, 0f);
 						}
-					}*/
+						/*texture = ModContent.GetTexture("SOTS/NPCs/Boss/Curse/CurseFoamAlt");
+						for (int i = 0; i < dustList.Count; i++)
+						{
+							if (dustList[i].alt)
+							{
+								int shade = 255 - (int)(dustList[i].counter * 4f);
+								Color color = npc.GetAlpha(new Color(shade + dustList[i].dustColorVariation, shade - dustList[i].dustColorVariation, shade - dustList[i].dustColorVariation));
+								if (j != 2)
+									color = Lighting.GetColor((int)dustList[i].position.X / 16, (int)dustList[i].position.Y / 16, color);
+								Vector2 drawPos = dustList[i].position - Main.screenPosition;
+								Rectangle frame = new Rectangle(0, texture.Height / 3 * j, texture.Width, texture.Width);
+								float scale = j == 0 ? 1.5f : 2.0f;
+								Main.spriteBatch.Draw(texture, drawPos + new Vector2(0, 0), frame, color, dustList[i].rotation, drawOrigin, dustList[i].scale * scale, SpriteEffects.None, 0f);
+							}
+						}*/
+					}
 				}
 			}
 		}
@@ -227,10 +275,10 @@ namespace SOTS.NPCs.Boss.Curse
 					Vector2 rotational = new Vector2(0, 1.00f).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)));
 					float scale2 = 0.9f;
 					bool noMovement = false;
-					if (style == 3)
+					if (style == 3 || style == 4)
                     {
-						noMovement = true;
-						scale2 = 0.33f;
+						noMovement = style == 3;
+						scale2 = style == 3 ? 0.33f : 0.4f;
 					}
 					if (style == 1 || style == 2)
                     {
@@ -450,38 +498,56 @@ namespace SOTS.NPCs.Boss.Curse
 		float dustAcceleration = 0f;
 		int direction = 1;
 		int resetListTimer = 0;
-		public void BurstRings()
+		public void BurstRings(int style = 0)
 		{
-			Main.PlaySound(2, (int)npc.Center.X, (int)npc.Center.Y, 14, 0.85f, 0.2f);
-			if (Main.netMode == 1)
-				return;
-			for (int i = 0; i < 6; i++)
-			{
-				Vector2 outWards = new Vector2(-2f * Main.rand.NextFloat(0.9f, 1.1f), 0).RotatedBy(MathHelper.ToRadians(i * 60 + 30));
-				int damage = npc.damage / 2;
-				if (Main.expertMode)
+			if(style == 0)
+            {
+				Main.PlaySound(2, (int)npc.Center.X, (int)npc.Center.Y, 14, 0.85f, 0.2f);
+				if (Main.netMode == 1)
+					return;
+				for (int i = 0; i < 6; i++)
 				{
-					damage = (int)(damage / Main.expertDamage);
+					Vector2 outWards = new Vector2(-2f * Main.rand.NextFloat(0.9f, 1.1f), 0).RotatedBy(MathHelper.ToRadians(i * 60 + 30));
+					int damage = npc.damage / 2;
+					if (Main.expertMode)
+					{
+						damage = (int)(damage / Main.expertDamage);
+					}
+					Projectile.NewProjectile(npc.Center, outWards, ModContent.ProjectileType<CurseRing>(), damage, 0f, Main.myPlayer, npc.whoAmI);
 				}
-				Projectile.NewProjectile(npc.Center, outWards, ModContent.ProjectileType<CurseRing>(), damage, 0f, Main.myPlayer, npc.whoAmI);
+			}
+			else
+			{
+				if (Main.netMode == 1)
+					return;
+				for (int i = 0; i < 12; i++)
+				{
+					Vector2 outWards = new Vector2(-2f * Main.rand.NextFloat(0.9f, 1.1f), 0).RotatedBy(MathHelper.ToRadians(i * 30));
+					int damage = npc.damage / 2;
+					if (Main.expertMode)
+					{
+						damage = (int)(damage / Main.expertDamage);
+					}
+					Projectile.NewProjectile(npc.Center, outWards, ModContent.ProjectileType<CurseWave>(), damage, 0f, Main.myPlayer, npc.whoAmI, (i % 2 * 2 - 1));
+				}
 			}
 		}
 		public override void AI()
 		{
 			resetListTimer--;
-			if(resetListTimer < 0)
-            {
+			if (resetListTimer < 0)
+			{
 				resetListTimer = 1800;
 				ResetLists();
-            }
+			}
 			Player player = Main.player[npc.target];
 			ai2++;
-			if(aiPhase == -1)
-            {
+			if (aiPhase == -1)
+			{
 				float timeToStart = 360f;
 				if (ai2 >= timeToStart)
 				{
-					if(ai2 == timeToStart)
+					if (ai2 == timeToStart)
 					{
 						Main.NewText("Pharaoh's Curse has awoken!", 175, 75, byte.MaxValue);
 						Main.PlaySound(SoundID.Item14, (int)npc.Center.X, (int)npc.Center.Y);
@@ -524,10 +590,10 @@ namespace SOTS.NPCs.Boss.Curse
 					ai2 = -30;
 					npc.alpha = 0;
 				}
-            }
+			}
 			if (aiPhase == 0)
 			{
-				if(Main.expertMode)
+				if (Main.expertMode)
 					DashAttacks(280, 0.9f, 4);
 				else
 					DashAttacks(280, 0.875f, 3);
@@ -556,9 +622,9 @@ namespace SOTS.NPCs.Boss.Curse
 							}
 						}
 					}
-					if(ai2 >= 270)
+					if (ai2 >= 270)
 					{
-						MimicPolarisMovement(0.2f);
+						MimicPolarisMovement(0.175f);
 					}
 					else
 					{
@@ -577,11 +643,32 @@ namespace SOTS.NPCs.Boss.Curse
 					MoveTo(CenterPosition, 0.2f, speed);
 				}
 				if (ai2 >= 730)
-                {
-					aiPhase = 0;
-					ai2 = 0;
+				{
+					aiPhase = 2;
+					ai2 = -60;
 				}
 			}
+			if (aiPhase == 2)
+            {
+				if(ai2 < 60)
+                {
+					float speed = 4f;
+					if (ai2 < 0)
+					{
+						speed = 2f;
+					}
+					MoveTo(CenterPosition, 0.3f, speed);
+				}
+				if(ai2 % 120 == 0)
+                {
+					BurstRings(1);
+                }
+				if(ai2 >= 720)
+				{
+					aiPhase = 0;
+					ai2 = -30;
+				}
+            }
 		}
 		public void DashAttacks(float distance, float speedMult, int amt = 4)
 		{

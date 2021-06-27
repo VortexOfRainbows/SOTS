@@ -12,7 +12,6 @@ namespace SOTS.NPCs.Constructs
     {	
 		public override void SetStaticDefaults()
 		{
-			
 			DisplayName.SetDefault("Earthen Construct");
 		}
         public override void SetDefaults()
@@ -106,21 +105,14 @@ namespace SOTS.NPCs.Constructs
             if (npc.ai[1] < (double)Main.npc.Length)
             {
                 Vector2 npcCenter = npc.Center;
-                // Then using that center, we calculate the direction towards the 'parent NPC' of this NPC.
                 float dirX = Main.npc[(int)npc.ai[1]].position.X + (float)(Main.npc[(int)npc.ai[1]].width / 2f) - npcCenter.X;
                 float dirY = Main.npc[(int)npc.ai[1]].position.Y + (float)(Main.npc[(int)npc.ai[1]].height / 2f) - npcCenter.Y;
-                // We then use Atan2 to get a correct rotation towards that parent NPC.
                 npc.rotation = (float)Math.Atan2(dirY, dirX) + 1.57f;
-                // We also get the length of the direction vector.
                 float length = (float)Math.Sqrt(dirX * dirX + dirY * dirY);
-                // We calculate a new, correct distance.
                 float dist = (length - (float)npc.width) / length;
                 float posX = dirX * dist;
                 float posY = dirY * dist;
- 
-                // Reset the velocity of this NPC, because we don't want it to move on its own
                 npc.velocity = Vector2.Zero;
-                // And set this NPCs position accordingly to that of this NPCs parent NPC.
                 npc.position.X = npc.position.X + posX;
                 npc.position.Y = npc.position.Y + posY;
             }
