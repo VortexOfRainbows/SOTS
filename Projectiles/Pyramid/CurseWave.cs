@@ -141,7 +141,7 @@ namespace SOTS.Projectiles.Pyramid
 				Vector2 from = trailPos[0];
 				for (int i = 1; i < trailPos.Count; i++)
 				{
-					float alphaMult = 1 - counter / 300f - ((float)(i - 1) / trailPos.Count);
+					float alphaMult = 1 - (0.66f * counter / 240f) - ((float)(i - 1) / trailPos.Count);
 					Vector2 to = trailPos[i];
 					Vector2 toPos = from - to;
 					float rotation = toPos.ToRotation();

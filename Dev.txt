@@ -14,7 +14,6 @@ The following is my development plans :D
 High Priority:
 1. Pyramid Rework
 2. Pharaoh Rework
-3. 
 
 Mid Priority:
 1. Goopwood sprite Changes
@@ -44,9 +43,11 @@ Low Priority:
 7. Electrolyte Seperator
 8. Amogus
 
-6/28/21
-1. Next: More Pharaoh, Buff Polaris, Drawcode for eternal flame
-2. Next: look into earthen construct bugs, nerf frigid armor
+6/28/21 & 6/29/21
+1. Drastically lowered planetarium spawnrates for the 50th time. Spawnrate multiplier 30 -> 18, max spawns 2x -> 1.5x
+2. Ruby Keystone added
+2. Next: More Pharaoh, Buff Polaris, Drawcode for eternal flame
+3. Next: look into earthen construct bugs, nerf frigid armor
 
 6/14/21 through 6/28/21
 1. Worked on the pyramid and pharaoh reworks

@@ -260,10 +260,10 @@ namespace SOTS.NPCs
 			}
 			if (player.GetModPlayer<SOTSPlayer>().PlanetariumBiome) //spawnrates for this biome have to be very high due to how npc spawning in sky height works. I also manually despawn other sky enemies
 			{
-				spawnRate = (int)(spawnRate /= 30); //essentially setting it to 20
+				spawnRate = (int)(spawnRate /= 18); //essentially setting it to 33.3
 				if (spawnRate < 1)
 					spawnRate = 1;
-				maxSpawns = (int)(maxSpawns * 2f);
+				maxSpawns = (int)(maxSpawns * 1.5f);
 			}
 		}
 		public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)

@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -15,11 +13,10 @@ namespace SOTS.Items
 		}
 		public override void SetDefaults()
 		{
-      
             item.width = 42;     
             item.height = 36;   
             item.value = Item.sellPrice(0, 15, 0, 0);
-            item.rare = 8;
+            item.rare = ItemRarityID.Yellow;
 			item.accessory = true;
 			item.expert = false;
 		}
@@ -43,7 +40,6 @@ namespace SOTS.Items
 			player.iceSkate = true;
 			player.moveSpeed += 0.2f;
 			player.accRunSpeed = 8f;
-			
 		}
 	}
 }

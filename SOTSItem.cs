@@ -166,7 +166,7 @@ namespace SOTS
 			if(runOnce)
 			{
 				rarities1 = new int[] { ItemType<StarlightAlloy>(), ItemType<HardlightAlloy>(), ItemType<OtherworldlyAlloy>(), ItemType<PotGenerator>(), ItemType<PrecariousCluster>(), ItemType<Calculator>(), ItemType<BookOfVirtues>() };
-				rarities2 = new int[] { ItemType<RefractingCrystal>(), ItemType<CursedApple>() };
+				rarities2 = new int[] { ItemType<RefractingCrystal>(), ItemType<CursedApple>(), ItemType<RubyKeystone>() };
 				dedicatedOrange = new int[] { ItemType<TerminatorAcorns>(), ItemType<PlasmaCutterButOnAChain>(), ItemType<CoconutGun>() }; //friends
 				dedicatedBlue = new int[] { ItemType<Calculator>() }; //friends 2
 				dedicatedPurpleRed = new int[] { ItemType<CursedApple>(), ItemType<ArcStaffMk2>() }; //James
