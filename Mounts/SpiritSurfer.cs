@@ -13,8 +13,8 @@ namespace SOTS.Mounts
 			mountData.spawnDust = mod.DustType("LostSoulDust");
 			mountData.buff = mod.BuffType("SpiritSurfer");
 			mountData.heightBoost = 0;
-			mountData.runSpeed = 20f;
-			mountData.dashSpeed = 20f;
+			mountData.runSpeed = 16f;
+			mountData.dashSpeed = 16f;
 			mountData.flightTimeMax = 999999999;
 			mountData.fatigueMax = 999999999;
 			mountData.jumpHeight = 40;
@@ -43,31 +43,29 @@ namespace SOTS.Mounts
 		public override void UpdateEffects(Player player)
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-			voidPlayer.voidRegen -= 4f;
-					Vector2 curve = new Vector2(24,0).RotatedBy(MathHelper.ToRadians(variation));
-					if(player.velocity.X > 0.1)
-					{
-						variation += 4;
-						int dust = Dust.NewDust(new Vector2(player.Center.X - 30, player.Center.Y + curve.Y + 21), 4, 4, mod.DustType("LostSoulDust"));
-						Main.dust[dust].noGravity = true;
-						Main.dust[dust].velocity *= 0.1f;
-						dust = Dust.NewDust(new Vector2(player.Center.X - 30, player.Center.Y - curve.Y + 21), 4, 4, mod.DustType("LostSoulDust"));
-						Main.dust[dust].noGravity = true;
-						Main.dust[dust].velocity *= 0.1f;
-					}
-					if(player.velocity.X < -0.1)
-					{
-						variation += 4;
-						int dust = Dust.NewDust(new Vector2(player.Center.X + 20, player.Center.Y + curve.Y + 21), 4, 4, mod.DustType("LostSoulDust"));
-						Main.dust[dust].noGravity = true;
-						Main.dust[dust].velocity *= 0.1f;
-						dust = Dust.NewDust(new Vector2(player.Center.X + 20, player.Center.Y - curve.Y + 21), 4, 4, mod.DustType("LostSoulDust"));
-						Main.dust[dust].noGravity = true;
-						Main.dust[dust].velocity *= 0.1f;
-					}
-					
-					
-					player.armorEffectDrawOutlines = true;
+			voidPlayer.voidRegen -= 6f;
+			Vector2 curve = new Vector2(24,0).RotatedBy(MathHelper.ToRadians(variation));
+			if(player.velocity.X > 0.1)
+			{
+				variation += 4;
+				int dust = Dust.NewDust(new Vector2(player.Center.X - 30, player.Center.Y + curve.Y + 21), 4, 4, mod.DustType("LostSoulDust"));
+				Main.dust[dust].noGravity = true;
+				Main.dust[dust].velocity *= 0.1f;
+				dust = Dust.NewDust(new Vector2(player.Center.X - 30, player.Center.Y - curve.Y + 21), 4, 4, mod.DustType("LostSoulDust"));
+				Main.dust[dust].noGravity = true;
+				Main.dust[dust].velocity *= 0.1f;
+			}
+			if(player.velocity.X < -0.1)
+			{
+				variation += 4;
+				int dust = Dust.NewDust(new Vector2(player.Center.X + 20, player.Center.Y + curve.Y + 21), 4, 4, mod.DustType("LostSoulDust"));
+				Main.dust[dust].noGravity = true;
+				Main.dust[dust].velocity *= 0.1f;
+				dust = Dust.NewDust(new Vector2(player.Center.X + 20, player.Center.Y - curve.Y + 21), 4, 4, mod.DustType("LostSoulDust"));
+				Main.dust[dust].noGravity = true;
+				Main.dust[dust].velocity *= 0.1f;
+			}
+			player.armorEffectDrawOutlines = true;
 		}
 	}
 }

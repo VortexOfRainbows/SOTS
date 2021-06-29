@@ -123,7 +123,7 @@ namespace SOTS.Projectiles.Pyramid
                 }
 				if (runOnce)
 				{
-					Main.PlaySound(SoundID.NPCHit, (int)projectile.Center.X, (int)projectile.Center.Y, 54, 1.0f, -0.33f);
+					Main.PlaySound(2, (int)npc.Center.X, (int)npc.Center.Y, 73, 1.3f, 0.3f);
 					runOnce = false;
 					//projectile.friendly = true;
 				}

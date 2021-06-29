@@ -76,11 +76,11 @@ namespace SOTS.NPCs.Boss.Curse
 			npc.netAlways = true;
 			npc.alpha = 255;
 		}
-        public override bool CanHitPlayer(Player target, ref int cooldownSlot)
-        {
-            return npc.alpha == 0;
-        }
-        public override void HitEffect(int hitDirection, double damage)
+		public override bool CanHitPlayer(Player target, ref int cooldownSlot)
+		{
+			return npc.alpha == 0;
+		}
+		public override void HitEffect(int hitDirection, double damage)
 		{
 			if (npc.life > 0)
 			{
@@ -121,10 +121,6 @@ namespace SOTS.NPCs.Boss.Curse
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("CursedMatter"), Main.rand.Next(12, 25));
 			}
 		}
-		public override void FindFrame(int frameHeight)
-		{
-
-		}
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
 		{
 			npc.lifeMax = (int)(npc.lifeMax * bossLifeScale * 0.75f);
@@ -132,7 +128,7 @@ namespace SOTS.NPCs.Boss.Curse
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			if(!runOnce)
+			if (!runOnce)
 			{
 				//DrawLimbs(spriteBatch, false, -1);
 				DrawFoam(foamParticleList4, 3);
@@ -168,7 +164,7 @@ namespace SOTS.NPCs.Boss.Curse
 			Texture2D texture = Main.npcTexture[npc.type];
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			spriteBatch.Draw(texture, drawPos3 + new Vector2(0, 0), null, npc.GetAlpha(drawColor), npc.rotation, drawOrigin, npc.scale, SpriteEffects.None, 0f);
-			if(!runOnce)
+			if (!runOnce)
 			{
 				DrawFoam(foamParticleList3, 0);
 			}
@@ -177,7 +173,7 @@ namespace SOTS.NPCs.Boss.Curse
 		public void DrawFoam(List<CurseFoam> dustList, int startPoint = 2, int overrideStart = -1)
 		{
 			Texture2D texture = ModContent.GetTexture("SOTS/NPCs/Boss/Curse/CurseFoam");
-			Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height/6);
+			Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 6);
 			if (startPoint == 3)
 			{
 				for (int i = 0; i < dustList.Count; i++)
@@ -259,7 +255,7 @@ namespace SOTS.NPCs.Boss.Curse
 			}
 		}
 		public static void SpawnPassiveDust(Texture2D texture, Vector2 spawnLocation, float scale, List<CurseFoam> dustList, float velocityScale = 1f, int style = 0, int rate = 45, float rotation = 0)
-        {
+		{
 			int width = texture.Width;
 			int height = texture.Height;
 			Color[] data = new Color[width * height];
@@ -270,18 +266,18 @@ namespace SOTS.NPCs.Boss.Curse
 			for (int i = 0; i < width * height; i++)
 			{
 				if (data[i].A >= 255 && Main.rand.NextBool(rate))
-                {
+				{
 					position = spawnLocation + scale * (-new Vector2(texture.Width / 2, texture.Height / 2) + new Vector2(localX, localY)).RotatedBy(rotation);
 					Vector2 rotational = new Vector2(0, 1.00f).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)));
 					float scale2 = 0.9f;
 					bool noMovement = false;
 					if (style == 3 || style == 4)
-                    {
+					{
 						noMovement = style == 3;
 						scale2 = style == 3 ? 0.33f : 0.4f;
 					}
 					if (style == 1 || style == 2)
-                    {
+					{
 						if (style == 2)
 							scale2 = 1.25f;
 						else
@@ -322,13 +318,13 @@ namespace SOTS.NPCs.Boss.Curse
 			}
 			npc.TargetClosest();
 			Player player = Main.player[npc.target];
-			if(aiPhase != -1)
+			if (aiPhase != -1)
 				npc.rotation = npc.velocity.X * 0.05f;
 			Lighting.AddLight(npc.Center, new Vector3(110 / 255f, 36 / 255f, 20 / 255f));
-			if(Main.netMode != NetmodeID.Server)
+			if (Main.netMode != NetmodeID.Server)
 			{
 				Texture2D texture = ModContent.GetTexture("SOTS/NPCs/Boss/Curse/FartGas");
-				if(startParticles != 0.0f)
+				if (startParticles != 0.0f)
 				{
 					SpawnPassiveDust(texture, npc.Center + new Vector2(0, 10), 0.9f * startParticles, foamParticleList1, 1, 0, 50, npc.rotation);
 					SpawnPassiveDust(ModContent.GetTexture("SOTS/NPCs/Boss/Curse/FartGasInline"), npc.Center + new Vector2(0, 10), 0.9f * startParticles, foamParticleList1, 1, 0, 200, npc.rotation);
@@ -487,7 +483,7 @@ namespace SOTS.NPCs.Boss.Curse
 			float yDist = vectorToPlayer.Y * 1.15f;
 			float xDist = vectorToPlayer.X;
 			float length = (float)Math.Sqrt(xDist * xDist + yDist * yDist);
-			float speedMult = -4f + (float)Math.Pow(length, 1.055) * 0.015f;
+			float speedMult = -2f + (float)Math.Pow(length, 1.045) * 0.0125f;
 			if (speedMult < 0)
 			{
 				speedMult *= 0.5f;
@@ -500,9 +496,10 @@ namespace SOTS.NPCs.Boss.Curse
 		int resetListTimer = 0;
 		public void BurstRings(int style = 0)
 		{
-			if(style == 0)
-            {
-				Main.PlaySound(2, (int)npc.Center.X, (int)npc.Center.Y, 14, 0.85f, 0.2f);
+			if (style == 0)
+			{
+				Main.PlaySound(2, (int)npc.Center.X, (int)npc.Center.Y, 14, 0.85f, 0.25f);
+				ParticleExplosion(120, true);
 				if (Main.netMode == 1)
 					return;
 				for (int i = 0; i < 6; i++)
@@ -522,7 +519,7 @@ namespace SOTS.NPCs.Boss.Curse
 					return;
 				for (int i = 0; i < 12; i++)
 				{
-					Vector2 outWards = new Vector2(-2f * Main.rand.NextFloat(0.9f, 1.1f), 0).RotatedBy(MathHelper.ToRadians(i * 30));
+					Vector2 outWards = new Vector2(-2f, 0).RotatedBy(MathHelper.ToRadians(i / 2 * 60));
 					int damage = npc.damage / 2;
 					if (Main.expertMode)
 					{
@@ -530,6 +527,17 @@ namespace SOTS.NPCs.Boss.Curse
 					}
 					Projectile.NewProjectile(npc.Center, outWards, ModContent.ProjectileType<CurseWave>(), damage, 0f, Main.myPlayer, npc.whoAmI, (i % 2 * 2 - 1));
 				}
+			}
+		}
+		public void ParticleExplosion(int amt = 240, bool quiet = false)
+		{
+			if(!quiet)
+				Main.PlaySound(SoundID.Item14, (int)npc.Center.X, (int)npc.Center.Y);
+			for (int j = 0; j < amt; j++)
+			{
+				float scale = Main.rand.NextFloat(0.5f, 1.5f);
+				Vector2 rotational = new Vector2(0, -Main.rand.NextFloat(2.75f, 8.5f) / scale).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360f)));
+				foamParticleList1.Add(new CurseFoam(npc.Center, rotational, 1.75f * scale, true));
 			}
 		}
 		public override void AI()
@@ -550,13 +558,7 @@ namespace SOTS.NPCs.Boss.Curse
 					if (ai2 == timeToStart)
 					{
 						Main.NewText("Pharaoh's Curse has awoken!", 175, 75, byte.MaxValue);
-						Main.PlaySound(SoundID.Item14, (int)npc.Center.X, (int)npc.Center.Y);
-						for (int j = 0; j < 240; j++)
-						{
-							float scale = Main.rand.NextFloat(0.5f, 1.5f);
-							Vector2 rotational = new Vector2(0, -Main.rand.NextFloat(2.75f, 8.5f) / scale).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360f)));
-							foamParticleList1.Add(new CurseFoam(npc.Center, rotational, 1.75f * scale, true));
-						}
+						ParticleExplosion();
 					}
 					if (startParticles < 1)
 					{
@@ -611,7 +613,7 @@ namespace SOTS.NPCs.Boss.Curse
 						{
 							for (int i = 0; i < 4; i++)
 							{
-								float rand = Main.rand.NextFloat(-15, 15);
+								float rand = Main.rand.NextFloat(-10, 10);
 								Vector2 outWards = new Vector2(12, 0).RotatedBy(MathHelper.ToRadians(90 * i + rand));
 								int damage = npc.damage / 2;
 								if (Main.expertMode)
@@ -635,17 +637,16 @@ namespace SOTS.NPCs.Boss.Curse
 				}
 				else
 				{
-					float speed = 3f;
+					float speed = 6f;
 					if (ai2 < 0)
 					{
-						speed = 0.3f;
+						speed = 0.6f;
 					}
 					MoveTo(CenterPosition, 0.2f, speed);
 				}
 				if (ai2 >= 730)
 				{
-					aiPhase = 2;
-					ai2 = -60;
+					TransitionPhase(2);
 				}
 			}
 			if (aiPhase == 2)
@@ -659,14 +660,23 @@ namespace SOTS.NPCs.Boss.Curse
 					}
 					MoveTo(CenterPosition, 0.3f, speed);
 				}
-				if(ai2 % 120 == 0)
+				else
+				{
+					npc.velocity *= 0.1f;
+				}
+				if(ai2 % 240 == 0 && ai2 < 720)
                 {
+					ParticleExplosion();
 					BurstRings(1);
                 }
+				else if(ai2 % 240 >= 120 && ai2 < 480)
+                {
+					float mult = 120f / (ai2 % 240);
+					MimicPolarisMovement(1f * mult);
+				}
 				if(ai2 >= 720)
 				{
-					aiPhase = 0;
-					ai2 = -30;
+					TransitionPhase(0);
 				}
             }
 		}
@@ -701,11 +711,9 @@ namespace SOTS.NPCs.Boss.Curse
 				direction *= -1;
 				BurstRings();
 			}
-			if (ai3 > 4)
+			if (ai3 > amt)
 			{
-				ai2 = -10;
-				ai3 = 0;
-				aiPhase = 1;
+				TransitionPhase(1);
 			}
 		}
 		bool[] ignore;
@@ -722,6 +730,25 @@ namespace SOTS.NPCs.Boss.Curse
 				ignore[ModContent.TileType<TrueSandstoneTile>()] = false;
 			}
 			npc.velocity = Collision.AdvancedTileCollision(ignore, npc.position, npc.velocity, npc.width, npc.height, true, true);
+		}
+		public void TransitionPhase(int nextPhase)
+		{
+			if(nextPhase == 0)
+            {
+				ai2 = -90;
+				ai3 = 0;
+			}
+			if(nextPhase == 1)
+            {
+				ai2 = 60;
+				ai3 = 0;
+			}
+			if (nextPhase == 2)
+			{
+				ai2 = -80;
+				ai3 = 0;
+			}
+			aiPhase = nextPhase;
 		}
 	}
 	public class CurseFoam

@@ -25,13 +25,13 @@ namespace SOTS.Projectiles.Terra
 		{
 			Texture2D texture = Main.projectileTexture[projectile.type];
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			for (int k = 0; k < 120; k++)
+			for (int k = 0; k < 60; k++)
 			{
-				Vector2 circularPos = new Vector2(projectile.ai[0], 0).RotatedBy(MathHelper.ToRadians(k * 3) + projectile.rotation);
+				Vector2 circularPos = new Vector2(projectile.ai[0], 0).RotatedBy(MathHelper.ToRadians(k * 6) + projectile.rotation);
 				Color color = new Color(100, 100, 100, 0);
 				Vector2 drawPos = projectile.Center + circularPos - Main.screenPosition;
 				color = projectile.GetAlpha(color) * 0.1f;
-				for (int j = 0; j < 6; j++)
+				for (int j = 0; j < 5; j++)
 				{
 					float x = Main.rand.Next(-10, 11) * 0.15f;
 					float y = Main.rand.Next(-10, 11) * 0.15f;

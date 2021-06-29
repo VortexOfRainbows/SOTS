@@ -430,6 +430,7 @@ namespace SOTS.NPCs.Constructs
                 aiCounter = 0;
                 worm = true;
             }
+            npc.spriteDirection = npc.velocity.X > 0 ? 1 : -1;
             doAIExtras();
         }
         public void LaunchBeams()
@@ -460,8 +461,8 @@ namespace SOTS.NPCs.Constructs
             Vector2 origin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
             Texture2D texture2 = mod.GetTexture("NPCs/Constructs/EarthenConstruct");
             Vector2 origin2 = new Vector2(texture2.Width * 0.5f, texture2.Height * 0.5f);
-            Main.spriteBatch.Draw(texture2, npc.Center - Main.screenPosition, new Rectangle?(), drawColor, npc.rotation - MathHelper.ToRadians(npc.localAI[1]), origin2, npc.scale + 0.04f, SpriteEffects.None, 0);
-            Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition, new Rectangle?(), drawColor, npc.rotation - MathHelper.ToRadians(90), origin, npc.scale, SpriteEffects.None, 0);
+            Main.spriteBatch.Draw(texture2, npc.Center - Main.screenPosition, new Rectangle?(), drawColor, npc.rotation - MathHelper.ToRadians(npc.localAI[1]), origin2, npc.scale + 0.04f, npc.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
+            Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition, new Rectangle?(), drawColor, npc.rotation - MathHelper.ToRadians(90), origin, npc.scale, npc.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
             return false;
         }
         public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position)

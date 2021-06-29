@@ -44,15 +44,20 @@ Low Priority:
 7. Electrolyte Seperator
 8. Amogus
 
-6/14/21 through 6/26/21
+6/28/21
+1. Next: More Pharaoh, Buff Polaris, Drawcode for eternal flame
+2. Next: look into earthen construct bugs, nerf frigid armor
+
+6/14/21 through 6/28/21
 1. Worked on the pyramid and pharaoh reworks
 2. Fixed error where too many packets were sent in multiplayer.
 3. Resprited frigid items, + some new blocks, also added Drawcode to certain music boxes.
 4. Celestial Serpent Resprited.
 5. Added Ancient Gold related furniture + blocks
-6. Next: More Pharaoh, Buff Polaris, Drawcode for eternal flame
-7. Next: look into earthen construct bugs, nerf frigid armor
-
+6. Earthen Construct now flips properly and causes less lag (less draw iterations)
+7. Fixed bug with void consumables not consuming
+8. Spirit Surfer: Void Drain 40 -> 60, speed 20 -> 16. Cursed Ankh now takes 10 soul residue
+9. Heart In a jar only effects worms once.
 
 0.19.3 Released!
 

@@ -58,6 +58,7 @@ namespace SOTS.Items.Void
 		}
 		public sealed override void OnConsumeItem(Player player)
 		{
+			item.stack++;
 			Activate(player);
 		}
 		public void Activate(Player player)
@@ -65,9 +66,9 @@ namespace SOTS.Items.Void
 			//int time = 60 * GetSatiateDuration();
 			//player.AddBuff(ModContent.BuffType<Satiated>(), time + 10);
 			OnActivation(player);
-			if (!ConsumeStack())
+			if (ConsumeStack())
 			{
-				item.stack++;
+				item.stack--;
 			}
 		}
 		public virtual bool ConsumeStack()

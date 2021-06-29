@@ -34,7 +34,7 @@ namespace SOTS.Projectiles.Terra
 				Color color = new Color(100, 100, 100, 0);
 				Vector2 drawPos = projectile.oldPos[k] - Main.screenPosition + drawOrigin;
 				color = projectile.GetAlpha(color) * ((projectile.oldPos.Length - k) / (float)projectile.oldPos.Length) * 0.5f;
-				for (int j = 0; j < 7; j++)
+				for (int j = 0; j < 5; j++)
 				{
 					float x = Main.rand.Next(-10, 11) * 0.15f;
 					float y = Main.rand.Next(-10, 11) * 0.15f;
