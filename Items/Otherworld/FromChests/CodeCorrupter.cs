@@ -21,8 +21,8 @@ namespace SOTS.Items.Otherworld.FromChests
             item.magic = true;    
             item.width = 46;  
             item.height = 30;   
-            item.useTime = 30;  
-            item.useAnimation = 30;
+            item.useTime = 24;  
+            item.useAnimation = 24;
             item.useStyle = ItemUseStyleID.HoldingOut;    
             item.knockBack = 6f;
 			item.value = Item.sellPrice(0, 5, 0, 0);

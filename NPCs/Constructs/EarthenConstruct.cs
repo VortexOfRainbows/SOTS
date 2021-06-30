@@ -85,12 +85,12 @@ namespace SOTS.NPCs.Constructs
             if (npc.soundDelay == 0)
             {
                 float num1 = length / 40f;
-                if (num1 < 10.0)
-                    num1 = 10f;
-                if (num1 > 20.0)
-                    num1 = 20f;
+                if (num1 < 15.0)
+                    num1 = 15f;
+                if (num1 > 25.0)
+                    num1 = 25f;
                 npc.soundDelay = (int)num1;
-                Main.PlaySound(15, (int)npc.position.X, (int)npc.position.Y, 1);
+                Main.PlaySound(SoundLoader.customSoundType, (int)npc.Center.X, (int)npc.Center.Y, mod.GetSoundSlot(SoundType.Item, "Sounds/Enemies/Constructs/EarthenElementalDig"), 1.0f, 0f);
             }
         }
         public void DoWormAI()
@@ -203,12 +203,12 @@ namespace SOTS.NPCs.Constructs
                 if (npc.soundDelay == 0)
                 {
                     float num1 = length / 40f;
-                    if (num1 < 10.0)
-                        num1 = 10f;
-                    if (num1 > 20.0)
-                        num1 = 20f;
+                    if (num1 < 15.0)
+                        num1 = 15f;
+                    if (num1 > 25.0)
+                        num1 = 25f;
                     npc.soundDelay = (int)num1;
-                    Main.PlaySound(15, (int)npc.position.X, (int)npc.position.Y, 1);
+                    Main.PlaySound(SoundLoader.customSoundType, (int)npc.Center.X, (int)npc.Center.Y, mod.GetSoundSlot(SoundType.Item, "Sounds/Enemies/Constructs/EarthenElementalDig"), 1.0f, 0f);
                 }
                 float absDirX = Math.Abs(dirX);
                 float absDirY = Math.Abs(dirY);

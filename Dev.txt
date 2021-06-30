@@ -47,6 +47,12 @@ Low Priority:
 2. Next: look into earthen construct bugs, nerf frigid armor, buff otherworldly construct
 3. Next: Transmutation Altar: Convert key types
 
+6/30/21
+1. Code Corrupter useTime 30 -> 24
+2. Photon Geyser damage 50 -> 42
+3. Doubled Permafrost Construct spawn rate 0.01 -> 0.02
+4. 
+
 6/28/21 & 6/29/21
 1. Drastically lowered planetarium spawnrates for the 50th time. Spawnrate multiplier 30 -> 18 (Rate: 20 -> 33), max spawns 2x -> 1.5x
 2. Ruby Keystone added
