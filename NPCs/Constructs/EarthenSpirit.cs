@@ -1,7 +1,4 @@
-using System;
 using System.IO;
-using System.Linq.Expressions;
-using System.Runtime.Serialization;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -77,7 +74,7 @@ namespace SOTS.NPCs.Constructs
 			reticleAlpha = reader.ReadSingle();
 			npc.dontTakeDamage = reader.ReadBoolean();
 		}
-		private int InitiateHealth = 1000;
+		private int InitiateHealth = 900;
 		private float ExpertHealthMult = 1.5f;
 		private Vector2 reticlePos = new Vector2(-1, -1);
 		private float reticleAlpha = 0;

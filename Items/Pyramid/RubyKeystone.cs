@@ -22,7 +22,6 @@ namespace SOTS.Items.Pyramid
 			item.rare = ItemRarityID.LightRed;
 			item.maxStack = 999;
 			item.autoReuse = false;
-			item.consumable = true;
 			ItemID.Sets.ItemNoGravity[item.type] = true;
 		}
 		float positionMod = 0;

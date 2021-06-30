@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -64,6 +65,33 @@ namespace SOTS.Items.Pyramid.AncientGold
 			}
             base.NearbyEffects(i, j, closer);
 		}
+		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
+		{
+			// Flips the sprite
+			SpriteEffects effects = SpriteEffects.None;
+			Tile tile = Main.tile[i, j];
+			Texture2D texture;
+			if (Main.canDrawColorTile(i, j))
+			{
+				texture = Main.tileAltTexture[Type, (int)tile.color()];
+			}
+			else
+			{
+				texture = Main.tileTexture[Type];
+			}
+			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
+			if (Main.drawToScreen)
+			{
+				zero = Vector2.Zero;
+			}
+			int k = Main.tileFrame[Type] % 8;
+			int animate = k * 36;
+			Main.spriteBatch.Draw(texture,
+				new Vector2(i * 16 - (int)Main.screenPosition.X, j * 16 - (int)Main.screenPosition.Y) + zero,
+				new Rectangle(tile.frameX, tile.frameY + animate, 16, 16),
+				Lighting.GetColor(i, j), 0f, default(Vector2), 1f, effects, 0f);
+			return false; 
+		}
 		public override void AnimateTile(ref int frame, ref int frameCounter)
 		{
 			frameCounter++;
@@ -81,6 +109,32 @@ namespace SOTS.Items.Pyramid.AncientGold
 		{
 			int drop = mod.ItemType("AncientGoldCampfire");
 			Item.NewItem(i * 16, j * 16, 48, 32, drop);
+		}
+		public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
+		{
+			ulong randSeed = Main.TileFrameSeed ^ (ulong)((long)j << 32 | (long)((ulong)i));
+			Color color = new Color(100, 80, 80, 0);
+			int frameX = Main.tile[i, j].frameX / 18;
+			int frameY = Main.tile[i, j].frameY / 18;
+			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
+			if (Main.drawToScreen)
+			{
+				zero = Vector2.Zero;
+			}
+			Texture2D texture = mod.GetTexture("Items/Pyramid/AncientGold/AncientGoldCampfireTile_Flame");
+			int k = Main.tileFrame[Type] % 8;
+			int animate = k * 36;
+			for (k = 0; k < 7; k++)
+			{
+				float x = Utils.RandomInt(ref randSeed, -10, 11) * 0.1f;
+				float y = Utils.RandomInt(ref randSeed, -10, 11) * 0.1f;
+				if (k <= 1)
+				{
+					x = 0;
+					y = 0;
+				}
+				Main.spriteBatch.Draw(texture, new Vector2(i * 16 - Main.screenPosition.X + x, j * 16 - Main.screenPosition.Y + y) + zero, new Rectangle(frameX * 18, frameY * 18 + animate, 16, 16), color, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+			}
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
 		{
