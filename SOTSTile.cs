@@ -51,6 +51,10 @@ namespace SOTS
             {
                 return false;
             }
+            if (Main.tile[i, j - 1].type == (ushort)ModContent.TileType<RubyKeystoneTile>())
+            {
+                return false;
+            }
             return true;
         }
         public override void KillTile(int i, int j, int type, ref bool fail, ref bool effectOnly, ref bool noItem)

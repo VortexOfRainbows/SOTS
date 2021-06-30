@@ -24,9 +24,9 @@ namespace SOTS.Items.Pyramid
 		}
         public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
 		{
-			if (Main.netMode != 1 && fail && Main.rand.NextBool(15))
+			if (Main.netMode != NetmodeID.MultiplayerClient && fail && Main.rand.NextBool(15))
 				Projectile.NewProjectile(new Vector2(i, j) * 16 + new Vector2(8, 8), Vector2.Zero, mod.ProjectileType("ZeplineLureProjectile"), 0, 0, Main.myPlayer);
-			if(!fail && Main.netMode != 2)
+			if(!fail && Main.netMode != NetmodeID.Server)
 			{
 				SOTSWorld.SecretFoundMusicTimer = 720;
 			}

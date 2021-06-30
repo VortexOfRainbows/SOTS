@@ -23,6 +23,12 @@ namespace SOTS.Items.Pyramid
 			item.maxStack = 999;
 			item.autoReuse = false;
 			ItemID.Sets.ItemNoGravity[item.type] = true;
+
+			item.useAnimation = 15;
+			item.useTime = 10;
+			item.useStyle = 1;
+			item.consumable = true;
+			item.createTile = mod.TileType("RubyKeystoneTile");
 		}
 		float positionMod = 0;
 		float counter = 0;
