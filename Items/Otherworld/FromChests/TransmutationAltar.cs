@@ -204,11 +204,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		public override void MouseOver(int i, int j)
 		{
 			Player player = Main.LocalPlayer;
-			Tile tile = Main.tile[i, j];
-			int left = i;
-			int top = j;
-
-			player.showItemIcon2 = mod.ItemType("UndoArrow");
+			player.showItemIcon2 = ModContent.ItemType<UndoArrow>();
 			//player.showItemIconText = "";
 			player.noThrow = 2;
 			player.showItemIcon = true;
@@ -338,13 +334,12 @@ namespace SOTS.Items.Otherworld.FromChests
 					float scale = 0.8f;
 					if (allocatedArea < (float)Math.Sqrt(width * height))
 						scale = 0.8f * allocatedArea / (float)Math.Sqrt(width * height);
-					for (int k = 0; k < 10; k++)
+					for (int k = 0; k < 6; k++)
 					{
-						float x = Main.rand.Next(-10, 11) * 0.2f;
-						float y = Main.rand.Next(-10, 11) * 0.2f;
-						Main.spriteBatch.Draw(texture, pos + new Vector2(x, y), new Rectangle(0, 0, texture.Width, texture.Height/frame), color, 0f, origin, scale, SpriteEffects.None, 0f);
-						if (k == 9 && !alpha255Items.Contains<int>(entity.itemsArray[l]))
-							Main.spriteBatch.Draw(texture, pos, new Rectangle(0, 0, texture.Width, texture.Height / frame), new Color(255, 255, 255), 0f, origin, scale, SpriteEffects.None, 0f);
+						Vector2 augment = new Vector2(Main.rand.NextFloat(1.5f, 2.5f), 0).RotatedBy(MathHelper.ToRadians(k * 60));
+						Main.spriteBatch.Draw(texture, pos + augment, new Rectangle(0, 0, texture.Width, texture.Height/frame), color, 0f, origin, scale, SpriteEffects.None, 0f);
+						//if (k == 9 && !alpha255Items.Contains<int>(entity.itemsArray[l]))
+							//Main.spriteBatch.Draw(texture, pos, new Rectangle(0, 0, texture.Width, texture.Height / frame), new Color(255, 255, 255), 0f, origin, scale, SpriteEffects.None, 0f);
 					}
 				}
 			}
@@ -364,13 +359,12 @@ namespace SOTS.Items.Otherworld.FromChests
 				float scale = 0.8f;
 				if(allocatedArea < (float)Math.Sqrt(width * height))
 					scale = 0.8f * allocatedArea / (float)Math.Sqrt(width * height);
-				for (int n = 0; n < 10; n++)
+				for (int n = 0; n < 6; n++)
 				{
-					float x = Main.rand.Next(-10, 11) * 0.2f;
-					float y = Main.rand.Next(-10, 11) * 0.2f;
-					Main.spriteBatch.Draw(texture, pos + new Vector2(x, y), new Rectangle(0, 0, texture.Width, texture.Height / frame), color, 0f, origin, scale, SpriteEffects.None, 0f);
-					if (n == 9 && !alpha255Items.Contains<int>(entity.itemsArray[0]))
-						Main.spriteBatch.Draw(texture, pos, new Rectangle(0, 0, texture.Width, texture.Height / frame), new Color(255, 255, 255), 0f, origin, scale, SpriteEffects.None, 0f);
+					Vector2 augment = new Vector2(Main.rand.NextFloat(1.5f, 2.5f), 0).RotatedBy(MathHelper.ToRadians(n * 60));
+					Main.spriteBatch.Draw(texture, pos + augment, new Rectangle(0, 0, texture.Width, texture.Height / frame), color, 0f, origin, scale, SpriteEffects.None, 0f);
+					//if (n == 9 && !alpha255Items.Contains<int>(entity.itemsArray[0]))
+						//Main.spriteBatch.Draw(texture, pos, new Rectangle(0, 0, texture.Width, texture.Height / frame), new Color(255, 255, 255), 0f, origin, scale, SpriteEffects.None, 0f);
 				}
 			}
 			return true;

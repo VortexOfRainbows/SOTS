@@ -54,7 +54,7 @@ namespace SOTS.Items.Pyramid.AncientGold
 			AddMapEntry(new Color(255, 220, 100), name);
 			disableSmartCursor = true;
 			dustType = DustID.GoldCoin;
-			adjTiles = new int[] { TileID.WorkBenches };
+			adjTiles = new int[] { TileID.Furnaces };
 			animationFrameHeight = 36;
 		}
         public override void NearbyEffects(int i, int j, bool closer)

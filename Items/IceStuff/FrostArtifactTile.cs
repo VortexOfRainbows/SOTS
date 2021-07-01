@@ -37,29 +37,23 @@ namespace SOTS.Items.IceStuff
 				int ylocation = j * 16 + 8;
 				ylocation -= 40;
 				rotatingDecor += 10;
-					
 				Vector2 circularLocation = new Vector2(-28, 0).RotatedBy(MathHelper.ToRadians(rotatingDecor));
 				Vector2 circularLocation2 = new Vector2(28, 0).RotatedBy(MathHelper.ToRadians(rotatingDecor));
 				Vector2 circularLocation3 = new Vector2(0, -28).RotatedBy(MathHelper.ToRadians(rotatingDecor));
 				Vector2 circularLocation4 = new Vector2(0, 28).RotatedBy(MathHelper.ToRadians(rotatingDecor));
-				
 				int num1 = Dust.NewDust(new Vector2(xlocation + circularLocation.X - 4, ylocation + circularLocation.Y - 4), 4, 4, dustType);
 				Main.dust[num1].noGravity = true;
 				Main.dust[num1].velocity *= 0.1f;
-				
 				num1 = Dust.NewDust(new Vector2(xlocation + circularLocation2.X - 4, ylocation + circularLocation2.Y - 4), 4, 4, dustType);
 				Main.dust[num1].noGravity = true;
 				Main.dust[num1].velocity *= 0.1f;
-				
 				num1 = Dust.NewDust(new Vector2(xlocation + circularLocation3.X - 4, ylocation + circularLocation3.Y - 4), 4, 4, dustType);
 				Main.dust[num1].noGravity = true;
 				Main.dust[num1].velocity *= 0.1f;
-				
 				num1 = Dust.NewDust(new Vector2(xlocation + circularLocation4.X - 4, ylocation + circularLocation4.Y - 4), 4, 4, dustType);
 				Main.dust[num1].noGravity = true;
 				Main.dust[num1].velocity *= 0.1f;
 			}
-			
 		}
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
@@ -87,7 +81,7 @@ namespace SOTS.Items.IceStuff
 			int ylocation = j * 16 + 8;
 			Main.mouseRightRelease = true;
             Player player = Main.LocalPlayer;
-					//Main.NewText("Debug", 145, 145, 255);
+			//Main.NewText("Debug", 145, 145, 255);
 			for(int k = 0; k < 50; k++)
 			{
 				Item item = player.inventory[k];
@@ -109,7 +103,6 @@ namespace SOTS.Items.IceStuff
 			Tile tile = Main.tile[i, j];
 			int left = i;
 			int top = j;
-			
 			player.showItemIcon2 = mod.ItemType("FrostedKey");
 			//player.showItemIconText = "";
 			player.noThrow = 2;

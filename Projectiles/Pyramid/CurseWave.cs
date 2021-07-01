@@ -141,7 +141,7 @@ namespace SOTS.Projectiles.Pyramid
 				Vector2 from = trailPos[0];
 				for (int i = 1; i < trailPos.Count; i++)
 				{
-					float alphaMult = 1 - (0.66f * counter / 240f) - ((float)(i - 1) / trailPos.Count);
+					float alphaMult = 1 - (0.5f * counter / 240f) - ((float)(i - 1) / trailPos.Count);
 					Vector2 to = trailPos[i];
 					Vector2 toPos = from - to;
 					float rotation = toPos.ToRotation();
@@ -178,7 +178,7 @@ namespace SOTS.Projectiles.Pyramid
 							curse.foamParticleList1.Add(new CurseFoam(projectile.Center, rotational, 1.55f, true));
 						}
 					}
-					PharaohsCurse.SpawnPassiveDust(Main.projectileTexture[projectile.type], projectile.Center, 1.1f * projectile.scale, foamParticleList1, 0.2f, 4, 35, projectile.velocity.ToRotation() + MathHelper.ToRadians(90));
+					PharaohsCurse.SpawnPassiveDust(Main.projectileTexture[projectile.type], projectile.Center, 1.1f * projectile.scale, foamParticleList1, 0.2f, 4, 40, projectile.velocity.ToRotation() + MathHelper.ToRadians(90));
 				}
 				else
 				{

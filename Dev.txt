@@ -47,11 +47,14 @@ Low Priority:
 2. Next: look into earthen construct bugs, nerf frigid armor, buff otherworldly construct
 3. Next: Transmutation Altar: Convert key types
 
-6/30/21
+6/30/21 & 7/1/21
 1. Code Corrupter useTime 30 -> 24
 2. Photon Geyser damage 50 -> 42
-3. Doubled Permafrost Construct spawn rate 0.01 -> 0.02
-4. 
+3. Doubled Permafrost Construct spawn rate 0.01 -> 0.02, can spawn on non-snow/ice blocks at 0.015
+4. Begun work on Ruby Keystone tile, Ancient Gold Gate, + Pharaoh gore (Phase 2)
+5. Changed how Transmutation Altar draws, this should reduce lag
+6. Tidal Construct rates lowered: 0.0075 -> 0.005, 0.0175 -> 0.015, 0.0275 -> 0.025
+7. Otherworldly Construct maxlife, 500 (1000) -> 750 (1500)
 
 6/28/21 & 6/29/21
 1. Drastically lowered planetarium spawnrates for the 50th time. Spawnrate multiplier 30 -> 18 (Rate: 20 -> 33), max spawns 2x -> 1.5x

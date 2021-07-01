@@ -52,13 +52,12 @@ namespace SOTS.NPCs
 			npc.ai[0]++;
 			if(npc.ai[0] == 60) //jump timer
 			{
-					npc.ai[0]++;
-			float Speed = 4f;  //jump speed
-            Vector2 vector8 = new Vector2(npc.position.X + (npc.width / 2), npc.position.Y + (npc.height / 2));
-            float rotation = (float)Math.Atan2(vector8.Y - (player.position.Y + (player.height * 0.5f)), vector8.X - (player.position.X + (player.width * 0.5f)));
-            npc.velocity.X = (float)((Math.Cos(rotation) * Speed) * -1.5);
-			npc.velocity.Y = (float)((Math.Sin(rotation) * Speed) * -1) -5;
-			
+				npc.ai[0]++;
+				float Speed = 4f;  //jump speed
+				Vector2 vector8 = new Vector2(npc.position.X + (npc.width / 2), npc.position.Y + (npc.height / 2));
+				float rotation = (float)Math.Atan2(vector8.Y - (player.position.Y + (player.height * 0.5f)), vector8.X - (player.position.X + (player.width * 0.5f)));
+				npc.velocity.X = (float)((Math.Cos(rotation) * Speed) * -1.5);
+				npc.velocity.Y = (float)((Math.Sin(rotation) * Speed) * -1) -5;
 			}
 			if(npc.ai[0] >= 60 && npc.velocity.X == 0) //continue air movement
 			{
@@ -75,8 +74,7 @@ namespace SOTS.NPCs
 		}
 		public override void NPCLoot()
 		{
-			
-            Main.PlaySound(13, (int)(npc.Center.X), (int)(npc.Center.Y));
+			Main.PlaySound(13, (int)(npc.Center.X), (int)(npc.Center.Y));
 			int amount2 = 3;
 			if(Main.expertMode)
 			{

@@ -43,7 +43,20 @@ namespace SOTS.Items.Pyramid
 			left += 2;
 			top += 2;
 			if (Main.netMode != NetmodeID.MultiplayerClient && fail)
+			{
+				bool active = false;
+				for (int l = 0; l < Main.projectile.Length; l++)
+				{
+					Projectile proj = Main.projectile[l];
+					if (proj.active && proj.type == ModContent.ProjectileType<RubyKeystoneIndicator>() && Vector2.Distance(proj.Center, new Vector2(left, top) * 16 + new Vector2(8, 8)) < 16)
+					{
+						active = true;
+					}
+				}
 				Projectile.NewProjectile(new Vector2(left, top) * 16 + new Vector2(8, 8), Vector2.Zero, ModContent.ProjectileType<RubyKeystoneIndicator>(), 0, 0, Main.myPlayer);
+				if (!active)
+					Projectile.NewProjectile(new Vector2(left, top) * 16 + new Vector2(8, 8), Vector2.Zero, ModContent.ProjectileType<RubyKeystoneIndicator>(), 0, 0, Main.myPlayer);
+			}
 		}
 		public override bool CanExplode(int i, int j)
         {
@@ -141,9 +154,9 @@ namespace SOTS.Items.Pyramid
 				for (int k = 0; k < Main.projectile.Length; k++)
 				{
 					Projectile proj = Main.projectile[k];
-					if (projectile.type == proj.type && proj.active && projectile.active)
+					if (projectile.type == proj.type && proj.active && projectile.active && Vector2.Distance(proj.Center, projectile.Center) <= 64f)
 					{
-						if (proj.ai[0] == 1 && Vector2.Distance(proj.Center, projectile.Center) <= 42f && proj != projectile)
+						if ((int)proj.ai[0] == 1 && proj != projectile)
                         {
 							foundLeader = true;
 							projID = proj.whoAmI;
@@ -176,7 +189,7 @@ namespace SOTS.Items.Pyramid
 			for (int k = 0; k < Main.projectile.Length; k++)
 			{
 				Projectile proj = Main.projectile[k];
-				if (projectile.type == proj.type && proj.active && projectile.active && Vector2.Distance(proj.Center, leader.Center) <= 42f) //if close to leader
+				if (projectile.type == proj.type && proj.active && projectile.active && Vector2.Distance(proj.Center, leader.Center) <= 64f) //if close to leader
 				{
 					if (proj == projectile)
 					{
@@ -206,7 +219,7 @@ namespace SOTS.Items.Pyramid
 							{
 								WorldGen.KillTile(i + x, j + y, false, false, false);
 								if (!Main.tile[i, j].active() && Main.netMode != NetmodeID.SinglePlayer)
-									NetMessage.SendData(MessageID.TileChange, -1, -1, null, 0, (float)i, (float)j, 0f, 0, 0, 0);
+									NetMessage.SendData(MessageID.TileChange, -1, -1, null, 0, i + x, j + y, 0f, 0, 0, 0);
 							}
 						}
 					}

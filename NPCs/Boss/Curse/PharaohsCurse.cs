@@ -51,7 +51,7 @@ namespace SOTS.NPCs.Boss.Curse
 		public override void SetDefaults()
 		{
 			npc.aiStyle = 0;
-			npc.lifeMax = 6000;
+			npc.lifeMax = 4500;
 			npc.damage = 50;
 			npc.defense = 12;
 			npc.knockBackResist = 0f;
@@ -94,13 +94,12 @@ namespace SOTS.NPCs.Boss.Curse
 			}
 			else
 			{
-				if (Main.netMode != 1)
+				for (int k = 0; k < 80; k++)
 				{
-					for (int k = 0; k < 80; k++)
-					{
-						Dust.NewDust(npc.position, npc.width, npc.height, mod.DustType("CurseDust"), (float)(2 * hitDirection), -2f);
-					}
+					Dust.NewDust(npc.position, npc.width, npc.height, mod.DustType("CurseDust"), (float)(2 * hitDirection), -2f);
 				}
+				for (int k = 0; k < 7; k++)
+					Gore.NewGore(npc.position, npc.velocity * 0.1f, mod.GetGoreSlot("Gores/Curse/PharaohMask" + (1 + k)), 1f);
 			}
 		}
 		public override void BossLoot(ref string name, ref int potionType)
@@ -111,7 +110,6 @@ namespace SOTS.NPCs.Boss.Curse
 			}
 			SOTSWorld.downedCurse = true;
 			potionType = ItemID.HealingPotion;
-
 			if (Main.expertMode)
 			{
 				npc.DropBossBags();
@@ -123,7 +121,7 @@ namespace SOTS.NPCs.Boss.Curse
 		}
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
 		{
-			npc.lifeMax = (int)(npc.lifeMax * bossLifeScale * 0.75f);
+			npc.lifeMax = (int)(npc.lifeMax * bossLifeScale * 0.66667f);
 			npc.damage = (int)(npc.damage * 0.75f);
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)

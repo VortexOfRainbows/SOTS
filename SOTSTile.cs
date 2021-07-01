@@ -47,11 +47,11 @@ namespace SOTS
             {
                 return false;
             }
-            if (Main.tile[i, j - 1].type == (ushort)ModContent.TileType<SarcophagusTile>())
+            if (Main.tile[i, j - 1].type == (ushort)ModContent.TileType<SarcophagusTile>() || Main.tile[i, j - 1].type == (ushort)ModContent.TileType<RubyKeystoneTile>())
             {
                 return false;
             }
-            if (Main.tile[i, j - 1].type == (ushort)ModContent.TileType<RubyKeystoneTile>())
+            if (Main.tile[i, j - 1].type == (ushort)ModContent.TileType<AncientGoldGateTile>() && Main.tile[i, j - 1].frameY < 360)
             {
                 return false;
             }

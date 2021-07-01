@@ -16,7 +16,6 @@ namespace SOTS.Items.MusicBoxes
 		{
 			DisplayName.SetDefault("Music Box (Advisor)");
 		}
-
 		public override void SetDefaults()
 		{
 			item.useStyle = ItemUseStyleID.SwingThrow;
@@ -32,7 +31,6 @@ namespace SOTS.Items.MusicBoxes
 			item.value = 100000;
 			item.accessory = true;
 		}
-
 		/*public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
@@ -59,12 +57,10 @@ namespace SOTS.Items.MusicBoxes
 			name.SetDefault("Music Box");
 			AddMapEntry(new Color(191, 142, 111), name);
 		}
-
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
 			Item.NewItem(i * 16, j * 16, 16, 48, mod.ItemType("AdvisorMusicBox"));
 		}
-
 		public override void MouseOver(int i, int j)
 		{
 			Player player = Main.LocalPlayer;
