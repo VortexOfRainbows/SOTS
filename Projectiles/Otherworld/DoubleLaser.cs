@@ -35,7 +35,6 @@ namespace SOTS.Projectiles.Otherworld
 		{
 			projectile.ai[0] += 3;
 			Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 0.8f / 255f, (255 - projectile.alpha) * 0.8f / 255f, (255 - projectile.alpha) * 0.8f / 255f);
-			//projectile.Center = npc.Center;
 			projectile.alpha += 3;
 			if (projectile.alpha > 255) {
 				projectile.Kill();

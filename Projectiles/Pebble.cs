@@ -1,13 +1,6 @@
-using System;
-using System.IO;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
-using Terraria.ID;
 
 namespace SOTS.Projectiles 
 {    
@@ -15,7 +8,7 @@ namespace SOTS.Projectiles
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Pebble");
+			DisplayName.SetDefault("Pebble"); //It's a fucking rock what do you want from me?
 		}
         public override void SetDefaults()
         {

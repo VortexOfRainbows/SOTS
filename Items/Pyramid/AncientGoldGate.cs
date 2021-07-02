@@ -311,6 +311,11 @@ namespace SOTS.Items.Pyramid
 					NetMessage.SendData(MessageID.TileChange, -1, -1, null, 0, (float)i, (float)j, 0f, 0, 0, 0);
 				Vector2 center = projectile.Center + new Vector2(16, 40);
 				Main.PlaySound(2, (int)center.X, (int)center.Y, 14, 1.25f, -0.25f);
+				for (int k = 0; k < 12; k++)
+				{
+					int goreIndex = Gore.NewGore(center - new Vector2(32, 32) + new Vector2(Main.rand.NextFloat(-16, 16f), Main.rand.NextFloat(-16, 64f)), default(Vector2), Main.rand.Next(61, 64), 1f);
+					Main.gore[goreIndex].scale = 0.95f;
+				}
 				for (int k = -1; k <= 1; k += 2)
 				{
 					for (j = 0; j < 40 - k * 5; j++)
@@ -324,7 +329,7 @@ namespace SOTS.Items.Pyramid
 						Main.dust[num1].velocity.Y *= 1.0f;
 						Main.dust[num1].scale = 1.5f;
 
-						num1 = Dust.NewDust(center - new Vector2(12, 12), 16, 16, 198);
+						num1 = Dust.NewDust(center - new Vector2(12, 12), 16, 16, 91);
 						Main.dust[num1].noGravity = true;
 						Main.dust[num1].velocity *= 0.9f;
 						Main.dust[num1].velocity += direction;

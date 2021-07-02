@@ -1,42 +1,29 @@
-using System;
-using System.IO;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.ID;
-using Terraria.DataStructures;
 using Terraria.ModLoader;
+using Terraria.ID;
 
 namespace SOTS.Items.Secrets
-{	[AutoloadEquip(EquipType.HandsOn)]
+{	//[AutoloadEquip(EquipType.HandsOn)]
 	public class LibrasBackupBow : ModItem
-	{	int Probe = -1;
-	int timer = -1;
-	int mr = -1;
+	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Libra's Backup Bow");
-			Tooltip.SetDefault("Secret Item\nRange Locked");
+			DisplayName.SetDefault("Backup Bow");
+			Tooltip.SetDefault("Fires a homing arrow behind you when using ranged weapons\nThe arrow does 45% damage");
 		}
 		public override void SetDefaults()
 		{
-      
             item.width = 56;     
             item.height = 50;   
             item.value = 0;
-            item.rare = -12;
+            item.rare = ItemRarityID.Lime;
 			item.accessory = true;
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			player.thrownDamage -= player.thrownDamage;
-			player.rangedDamage += 0.25f;
-			player.meleeDamage -= player.meleeDamage;
-			player.magicDamage -= player.magicDamage;
-			player.minionDamage -= player.minionDamage;
-			player.AddBuff(mod.BuffType("BackupBow"), 300);
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
+			modPlayer.backUpBow = true;
 		}
 	}
-		
 }
 

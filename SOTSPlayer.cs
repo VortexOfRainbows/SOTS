@@ -12,6 +12,7 @@ using SOTS.Items.Vibrant;
 using SOTS.NPCs.Boss;
 using SOTS.Projectiles.BiomeChest;
 using SOTS.Projectiles.Celestial;
+using SOTS.Projectiles.Base;
 using SOTS.Projectiles.Otherworld;
 using SOTS.Void;
 using System;
@@ -127,7 +128,7 @@ namespace SOTS
 		public int BloodTapping = 0;
 		public int HeartSwapBonus = 0;
 		public bool chessSkip = false;
-		public int libraActive = 0;
+		public bool backUpBow = false;
 		public int doubledActive = 0;
 		public int doubledAmount = 0;
 		public bool ceres = false;
@@ -586,7 +587,7 @@ namespace SOTS
 			megHat = false;
 			ceres = false;
 			doubledActive = 0;
-			libraActive = 0;
+			backUpBow = false;
 			deoxysPet = false;
 			BloodTapping = 0;
 			HeartSwapDelay = false;
@@ -974,10 +975,10 @@ namespace SOTS
 				Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(8));
 				Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X * 1.1f, perturbedSpeed.Y * 1.1f, mod.ProjectileType("Pebble"), damage, knockBack, player.whoAmI);
 			}
-			if(libraActive == 1 && item.ranged == true && item.type != mod.ItemType("Vulcan"))
+			if(backUpBow && item.ranged == true)
 			{
-				Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(8));
-				Projectile.NewProjectile(position.X, position.Y, -(perturbedSpeed.X/4f), -(perturbedSpeed.Y/4f), mod.ProjectileType("BackupArrow"), (int)(damage/2f) + 1, knockBack, player.whoAmI);
+				Vector2 perturbedSpeed = -new Vector2(speedX, speedY);
+				Projectile.NewProjectile(position, perturbedSpeed, ModContent.ProjectileType<BackupArrow>(), (int)(damage * 0.45f) + 1, knockBack, player.whoAmI);
 			}
 			if(doubledActive == 1 && item.fishingPole > 0)
 			{

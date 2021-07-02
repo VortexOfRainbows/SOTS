@@ -1,8 +1,3 @@
-using System;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-
-using Terraria;
 using Terraria.ModLoader;
 
 namespace SOTS.Projectiles 
@@ -11,10 +6,8 @@ namespace SOTS.Projectiles
     {	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Thomas");
-			
+			DisplayName.SetDefault("Thomas the Tank Engine");
 		}
-		
         public override void SetDefaults()
         {
             projectile.width = 20;
@@ -26,11 +19,8 @@ namespace SOTS.Projectiles
             projectile.tileCollide = false;
             projectile.ignoreWater = true; 
             projectile.ranged = true; 
-            projectile.aiStyle = 0; //18 is the demon scythe style
+            projectile.aiStyle = 0; 
 			projectile.alpha = 100;
 		}
-		
-		
 	}
-	
 }
