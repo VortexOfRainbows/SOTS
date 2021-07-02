@@ -1,3 +1,4 @@
+using SOTS.Void;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -9,12 +10,11 @@ namespace SOTS.Items.IceStuff
 	{
 		public override void SetDefaults()
 		{
-
 			item.width = 30;
 			item.height = 28;
-            item.value = Item.sellPrice(0, 1, 20, 0);
+			item.value = Item.sellPrice(0, 1, 20, 0);
 			item.rare = 2;
-			item.defense = 4;
+			item.defense = 1;
 		}
 		public override void SetStaticDefaults()
 		{
@@ -28,7 +28,9 @@ namespace SOTS.Items.IceStuff
 		public override void UpdateArmorSet(Player player)
 		{
 			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
-			player.setBonus = "Frigid Javelin no longer costs void";
+			player.setBonus = "Frigid Javelin no longer costs void\nDecreases void damage by 15%";
+			VoidPlayer vPlayer = VoidPlayer.ModPlayer(player);
+			vPlayer.voidDamage -= 0.15f;
 			modPlayer.frigidJavelinNoCost = true;
 		}
 		public override void DrawHands(ref bool drawHands, ref bool drawArms)

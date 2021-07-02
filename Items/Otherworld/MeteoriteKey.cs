@@ -23,5 +23,19 @@ namespace SOTS.Items.Otherworld
 			//item.createTile = mod.TileType("LockedMeteoriteChest");
 			//item.placeStyle = 1;
 		}
+		public override void AddRecipes()
+		{
+			ModRecipe recipe = new ModRecipe(mod);
+			recipe.AddIngredient(ModContent.ItemType<SkywareKey>(), 1);
+			recipe.AddTile(mod.TileType("TransmutationAltarTile"));
+			recipe.SetResult(this, 1);
+			recipe.AddRecipe();
+
+			recipe = new ModRecipe(mod);
+			recipe.AddIngredient(ModContent.ItemType<StrangeKey>(), 1);
+			recipe.AddTile(mod.TileType("TransmutationAltarTile"));
+			recipe.SetResult(this, 1);
+			recipe.AddRecipe();
+		}
 	}
 }

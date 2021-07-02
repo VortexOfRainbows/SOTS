@@ -44,8 +44,13 @@ Low Priority:
 8. Amogus
 
 1. Next: More Pharaoh, Buff Polaris
-2. Next: look into earthen construct bugs, nerf frigid armor, buff otherworldly construct
-3. Next: Transmutation Altar: Convert key types
+2. Next: look into earthen construct bugs
+3. Next: Make sure Ancient Gold gate works in multiplayer
+
+7/2/21
+1. Transmutation altar converts key types.
+2. Frigid Robe: defense 4 -> 1, set bonus: void damage decreased by 0 -> 15%
+3. 
 
 6/30/21 & 7/1/21
 1. Code Corrupter useTime 30 -> 24
