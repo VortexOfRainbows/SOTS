@@ -23,8 +23,8 @@ namespace SOTS.Projectiles.Permafrost
 			projectile.friendly = true;
 			projectile.tileCollide = true;
 			projectile.penetrate = -1;
-			projectile.width = 58;
-			projectile.height = 46;
+			projectile.width = 46;
+			projectile.height = 42;
 			projectile.alpha = 255;
 			projectile.timeLeft = 640;
 
