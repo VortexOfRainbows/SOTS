@@ -9,6 +9,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using SOTS.Void;
+using SOTS.Dusts;
 
 namespace SOTS.Projectiles.Permafrost
 {    
@@ -27,8 +28,6 @@ namespace SOTS.Projectiles.Permafrost
 			projectile.height = 42;
 			projectile.alpha = 255;
 			projectile.timeLeft = 640;
-
-
 		}
 		bool hasHit = false;
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
@@ -54,7 +53,7 @@ namespace SOTS.Projectiles.Permafrost
         {
 			if(projectile.owner == Main.myPlayer)
 			{
-				Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("IcePulse"), projectile.damage, 0, projectile.owner);
+				Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("IcePulse"), projectile.damage, 0, projectile.owner, -1);
 			}
 		}
 		public override void AI()
@@ -73,15 +72,14 @@ namespace SOTS.Projectiles.Permafrost
 				for(int i = 0; i < 360; i += 20)
 				{
 					Vector2 circularLocation = new Vector2(20, 0).RotatedBy(MathHelper.ToRadians(i));
-					int num1 = Dust.NewDust(new Vector2(projectile.Center.X + circularLocation.X - 4, projectile.Center.Y + circularLocation.Y - 4), 4, 4, 67);
+					int num1 = Dust.NewDust(new Vector2(projectile.Center.X + circularLocation.X - 4, projectile.Center.Y + circularLocation.Y - 4), 4, 4, ModContent.DustType<ModIceDust>());
 					Main.dust[num1].noGravity = true;
-					Main.dust[num1].velocity = projectile.velocity.RotatedBy(MathHelper.ToRadians(180));
+					Main.dust[num1].velocity = projectile.velocity * -0.5f;
 				}
 			}
 			/*
 			Vector2 trailLoc = new Vector2(18, 0).RotatedBy(Math.Atan2(projectile.velocity.Y, projectile.velocity.X));
 			int num1 = Dust.NewDust(new Vector2(projectile.Center.X - trailLoc.X - 2, projectile.Center.Y - trailLoc.Y - 2), 2, 2, 235);
-			
 			Main.dust[num1].noGravity = true;
 			Main.dust[num1].velocity *= 0.1f;
 			*/

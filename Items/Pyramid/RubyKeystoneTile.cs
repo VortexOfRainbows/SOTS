@@ -36,13 +36,83 @@ namespace SOTS.Items.Pyramid
 			soundType = SoundID.NPCHit;
 			soundStyle = 1;
 		}
-		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
+        public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
+        {
+			DrawGems(i, j, spriteBatch);
+            return true;
+        }
+        public void DrawGems(int i, int j, SpriteBatch spriteBatch)
 		{
-			int left = i - Main.tile[i, j].frameX / 18; 
-			int top = j - Main.tile[i, j].frameY / 18;
+			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
+			if (Main.drawToScreen)
+			{
+				zero = Vector2.Zero;
+			}
+			Tile tile = Main.tile[i, j];
+			float counter = Main.GlobalTime * 120;
+			float mult = new Vector2(-1f, 0).RotatedBy(MathHelper.ToRadians(counter / 2f)).X;
+			Texture2D texture = mod.GetTexture("Items/Pyramid/RubyKeystoneTileGlow");
+			if (tile.frameY % 90 == 0 && tile.frameX % 90 == 0) //check for it being the top left tile
+			{
+				int currentFrame = tile.frameY / 90;
+				for (int k = 0; k < 6; k++)
+				{
+					Color color = new Color(255, 0, 0, 0);
+					switch (k)
+					{
+						case 0:
+							color = new Color(255, 0, 0, 0);
+							break;
+						case 1:
+							color = new Color(255, 50, 0, 0);
+							break;
+						case 2:
+							color = new Color(255, 100, 0, 0);
+							break;
+						case 3:
+							color = new Color(255, 150, 0, 0);
+							break;
+						case 4:
+							color = new Color(255, 200, 0, 0);
+							break;
+						case 5:
+							color = new Color(255, 250, 0, 0);
+							break;
+					}
+					Rectangle frame = new Rectangle(0, currentFrame * 80, 80, 80);
+					Vector2 rotationAround = new Vector2((2 + mult), 0).RotatedBy(MathHelper.ToRadians(60 * k + counter));
+					spriteBatch.Draw(texture, new Vector2(i * 16 - (int)Main.screenPosition.X, j * 16 - (int)Main.screenPosition.Y + 1) + zero + rotationAround,
+						frame, color, 0f, default(Vector2), 1.0f, tile.frameX > 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+				}
+			}
+		}
+		public override void RandomUpdate(int i, int j)
+		{
+			if (Main.netMode != 1)
+			{
+				Tile tile = Main.tile[i, j];
+				int left = i - (tile.frameX / 18) % 5;
+				int top = j - (tile.frameY / 18) % 5;
+				for (int x = left; x < left + 5; x++)
+				{
+					for (int y = top; y < top + 5; y++)
+					{
+						if (Main.tile[x, y].frameY < 360)
+							Main.tile[x, y].frameY += 90;
+					}
+				}
+				NetMessage.SendTileSquare(-1, left + 2, top + 2, 5);
+			}
+			base.RandomUpdate(i, j);
+        }
+        public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
+		{
+			Tile tile = Main.tile[i, j];
+			int left = i - (tile.frameX / 18) % 5;
+			int top = j - (tile.frameY / 18) % 5;
 			left += 2;
 			top += 2;
-			if (Main.netMode != NetmodeID.MultiplayerClient && fail)
+			if (Main.netMode != NetmodeID.MultiplayerClient && fail && Main.tile[left, top].frameY >= 360)
 			{
 				bool active = false;
 				for (int l = 0; l < Main.projectile.Length; l++)
@@ -77,7 +147,7 @@ namespace SOTS.Items.Pyramid
 		}
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
 		{
-			int type = Main.tile[i, j].frameX / 18 + (Main.tile[i, j].frameY / 18 * 5);
+			int type = Main.tile[i, j].frameX / 18 + (Main.tile[i, j].frameY % 90 / 18 * 5);
 			if (type != 12)
 				return;
 			r = 1.1f;
@@ -178,7 +248,7 @@ namespace SOTS.Items.Pyramid
 			int i = (int)leader.Center.X / 16;
 			int j = (int)leader.Center.Y / 16;
 			Tile current = Framing.GetTileSafely(i, j);
-			if (!current.active() || current.type != ModContent.TileType<RubyKeystoneTile>() || current.frameY > 72 || !leader.active) //making sure the projectile can exist based on leader tile position
+			if (!current.active() || current.type != ModContent.TileType<RubyKeystoneTile>() || current.frameY < 360 || !leader.active) //making sure the projectile can exist based on leader tile position
 			{
 				projectile.Kill();
 				projectile.active = false;
@@ -214,12 +284,12 @@ namespace SOTS.Items.Pyramid
 					{
 						for (int y = -range; y <= range; y++)
 						{
-							Tile tile = Framing.GetTileSafely(i + x, j + y);
-							if (tile.active() && !Main.tileContainer[tile.type])
+							if (Main.netMode != 1)
 							{
-								WorldGen.KillTile(i + x, j + y, false, false, false);
-								if (!Main.tile[i, j].active() && Main.netMode != NetmodeID.SinglePlayer)
-									NetMessage.SendData(MessageID.TileChange, -1, -1, null, 0, i + x, j + y, 0f, 0, 0, 0);
+								if (Main.tile[i + x, j + y].frameY >= 360)
+									Main.tile[i + x, j + y].frameY = (short)(Main.tile[i + x, j + y].frameY % 90);
+								if(Main.netMode == 2)
+								NetMessage.SendTileSquare(-1, i, j, 5);
 							}
 						}
 					}

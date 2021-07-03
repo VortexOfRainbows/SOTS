@@ -50,7 +50,10 @@ Low Priority:
 7/2/21
 1. Transmutation altar converts key types.
 2. Frigid Robe: defense 4 -> 1, set bonus: void damage decreased by 0 -> 15%
-3. 
+3. Cleaned up A LOT of old stuff.
+4. Icy Impale + Cluster Cannon Dust related changes
+5. Began working on Regroing Ruby Keystone
+6. 
 
 6/30/21 & 7/1/21
 1. Code Corrupter useTime 30 -> 24

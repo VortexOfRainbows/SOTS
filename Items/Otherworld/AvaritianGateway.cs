@@ -76,7 +76,8 @@ namespace SOTS.Items.Otherworld
 		}
         public override void RandomUpdate(int i, int j)
 		{
-			SpawnAdvisor(i, j, mod);
+			if (Main.netMode != 1)
+				SpawnAdvisor(i, j, mod);
 			base.RandomUpdate(i, j);
 		}
 		public static bool SpawnAdvisor(int i, int j, Mod mod)
