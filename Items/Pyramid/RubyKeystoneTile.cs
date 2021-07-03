@@ -38,10 +38,28 @@ namespace SOTS.Items.Pyramid
 		}
         public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
         {
+			DrawBack(i, j, spriteBatch);
 			DrawGems(i, j, spriteBatch);
             return true;
-        }
-        public void DrawGems(int i, int j, SpriteBatch spriteBatch)
+		}
+		public void DrawBack(int i, int j, SpriteBatch spriteBatch)
+		{
+			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
+			if (Main.drawToScreen)
+			{
+				zero = Vector2.Zero;
+			}
+			Tile tile = Main.tile[i, j];
+			Texture2D texture = mod.GetTexture("Items/Pyramid/RubyKeystoneTileBack");
+			if (tile.frameY % 90 == 0 && tile.frameX % 90 == 0) //check for it being the top left tile
+			{
+				int currentFrame = tile.frameY / 90;
+				Rectangle frame = new Rectangle(0, currentFrame * 80, 80, 80);
+				spriteBatch.Draw(texture, new Vector2(i * 16 - (int)Main.screenPosition.X, j * 16 - (int)Main.screenPosition.Y + 2) + zero,
+					frame, Lighting.GetColor(i, j), 0f, default(Vector2), 1.0f, tile.frameX > 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+			}
+		}
+		public void DrawGems(int i, int j, SpriteBatch spriteBatch)
 		{
 			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
 			if (Main.drawToScreen)
@@ -88,7 +106,7 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void RandomUpdate(int i, int j)
 		{
-			if (Main.netMode != 1)
+			if (Main.netMode != 1 && Main.rand.NextBool(20))
 			{
 				Tile tile = Main.tile[i, j];
 				int left = i - (tile.frameX / 18) % 5;
@@ -148,7 +166,7 @@ namespace SOTS.Items.Pyramid
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
 		{
 			int type = Main.tile[i, j].frameX / 18 + (Main.tile[i, j].frameY % 90 / 18 * 5);
-			if (type != 12)
+			if (type != 12 || Main.tile[i, j].frameY < 90)
 				return;
 			r = 1.1f;
 			g = 0.1f;
@@ -280,19 +298,23 @@ namespace SOTS.Items.Pyramid
 				if (total >= 10)
 				{
 					int range = 2;
-					for (int x = -range; x <= range; x++)
+					if (Main.netMode != 1)
 					{
-						for (int y = -range; y <= range; y++)
+						for (int x = -range; x <= range; x++)
 						{
-							if (Main.netMode != 1)
+							for (int y = -range; y <= range; y++)
 							{
 								if (Main.tile[i + x, j + y].frameY >= 360)
 									Main.tile[i + x, j + y].frameY = (short)(Main.tile[i + x, j + y].frameY % 90);
-								if(Main.netMode == 2)
-								NetMessage.SendTileSquare(-1, i, j, 5);
+								if (Main.netMode == 2)
+									NetMessage.SendTileSquare(-1, i, j, 5);
+
 							}
 						}
+						int item = Item.NewItem((int)projectile.position.X, (int)projectile.position.Y, projectile.width, projectile.height, ModContent.ItemType<RubyKeystone>(), 1);
+						NetMessage.SendData(MessageID.SyncItem, -1, -1, null, item, 1f, 0.0f, 0.0f, 0, 0, 0);
 					}
+					Main.PlaySound(SoundID.Shatter, (int)projectile.Center.X, (int)projectile.Center.Y, 0, 1.10f, -0.1f);
 					projectile.Kill();
 					projectile.active = false;
 				}
