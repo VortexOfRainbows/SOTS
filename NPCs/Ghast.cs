@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Items.Banners;
+using SOTS.Items.Pyramid;
 using SOTS.Projectiles.Pyramid;
 using System;
 using Terraria;
@@ -10,42 +11,42 @@ using static Terraria.ModLoader.ModContent;
 
 namespace SOTS.NPCs
 {
-	public class FlamingGhast : ModNPC
+	public class Ghast : ModNPC
 	{	float ai1 = 0;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Flaming Ghast");
+			
+			DisplayName.SetDefault("Ghast");
 		}
 		public override void SetDefaults()
 		{
-            npc.aiStyle = 0; 
-            npc.lifeMax = 185;   
-            npc.damage = 35; 
-            npc.defense = 20;  
+            npc.lifeMax = 80;   
+            npc.damage = 30; 
+            npc.defense = 10;  
             npc.knockBackResist = 0f;
-            npc.width = 48;
-            npc.height = 56;
+            npc.width = 34;
+            npc.height = 38;
 			Main.npcFrameCount[npc.type] = 4;  
-            npc.value = 4450;
+            npc.value = 1000;
             npc.npcSlots = 0.6f;
             npc.lavaImmune = true;
             npc.noGravity = true;
             npc.noTileCollide = true;
+            npc.netUpdate = true;
             npc.HitSound = SoundID.NPCHit54;
             npc.DeathSound = SoundID.NPCDeath6;
             npc.netAlways = true;
-            npc.netUpdate = true;
-			banner = npc.type;
-			bannerItem = ItemType<FlamingGhastBanner>();
+			//banner = npc.type;
+			//bannerItem = ItemType<BleedingGhastBanner>();
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
 			Texture2D texture = Main.npcTexture[npc.type];
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height / 8);
 			Vector2 drawPos = npc.Center - Main.screenPosition;
-			spriteBatch.Draw(texture, drawPos, new Rectangle(0, npc.frame.Y, 48, 56), drawColor, npc.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
-			texture = GetTexture("SOTS/NPCs/FlamingGhastGlow");
-			spriteBatch.Draw(texture, drawPos, new Rectangle(0, npc.frame.Y, 48, 56), Color.White, npc.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
+			spriteBatch.Draw(texture, drawPos, new Rectangle(0, npc.frame.Y, npc.width, npc.height), drawColor, npc.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
+			texture = GetTexture("SOTS/NPCs/GhastGlow");
+			spriteBatch.Draw(texture, drawPos, new Rectangle(0, npc.frame.Y, npc.width, npc.height), Color.White, npc.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
 			return false;
 		}
 		public override void AI()
@@ -61,16 +62,16 @@ namespace SOTS.NPCs
 				if (length > 320 && !lineOfSight)
 					speed *= 0.5f;
 				toPlayer = toPlayer.SafeNormalize(Vector2.Zero);
-				npc.velocity.Y *= 0.98f;
-				npc.velocity += toPlayer.SafeNormalize(Vector2.Zero) * 0.15f * speed;
-            }
-			npc.velocity.Y += 0.02f * (float)Math.Sin(MathHelper.ToRadians(ai1 * 6));
-			for(int i = 0; i < 2; i++)
+				npc.velocity.Y *= 0.9775f;
+				npc.velocity += toPlayer.SafeNormalize(Vector2.Zero) * 0.1475f * speed;
+			}
+			npc.velocity.Y += 0.01f * (float)Math.Sin(MathHelper.ToRadians(ai1 * 6));
+			for (int i = 0; i < 1 + Main.rand.Next(2); i++)
 			{
-				int num1 = Dust.NewDust(npc.position, npc.width - 4, 24, mod.DustType("CurseDust"));
+				int num1 = Dust.NewDust(npc.position, npc.width - 4, 12, mod.DustType("CurseDust"));
 				Main.dust[num1].noGravity = true;
 				Main.dust[num1].velocity.X = npc.velocity.X;
-				Main.dust[num1].velocity.Y = -3 + i * 1.5f;
+				Main.dust[num1].velocity.Y = -2 + i * 1.0f;
 				Main.dust[num1].scale *= 1.25f + i * 0.15f;
 			}
 			int damage2 = npc.damage / 2;
@@ -81,7 +82,7 @@ namespace SOTS.NPCs
 
 			ai1++;
 			if (ai1 >= 600)
-            {
+			{
 				ai1 = 0;
 			}
 			//Main.NewText(ai1);
@@ -99,8 +100,8 @@ namespace SOTS.NPCs
 			}*/
 			if (Main.netMode != 1 && Main.rand.NextBool(75))
 			{
-				Vector2 spawn = (npc.position + new Vector2(8, 8) + new Vector2(Main.rand.Next(npc.width - 16), Main.rand.Next(npc.height - 16)));
-				Projectile.NewProjectile(spawn, npc.velocity * Main.rand.NextFloat(-0.1f, 0.1f), ProjectileType<GhastDrop>(), damage2, 1f, Main.myPlayer, -1, -1f);
+				Vector2 spawn = (npc.position + new Vector2(4, 4) + new Vector2(Main.rand.Next(npc.width - 8), Main.rand.Next(npc.height - 8)));
+				Projectile.NewProjectile(spawn, npc.velocity * Main.rand.NextFloat(-0.1f, 0.1f), ProjectileType<GhastDrop>(), damage2, 1f, Main.myPlayer, -3, -1f);
 			}
 			npc.velocity = Collision.TileCollision(npc.position + new Vector2(8, 8), npc.velocity, npc.width - 16, npc.height - 16, true);
 		}
@@ -119,10 +120,10 @@ namespace SOTS.NPCs
 		}
 		public override void NPCLoot()
 		{
-			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("CursedMatter"), Main.rand.Next(2) + 2);	
-			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  ItemID.CursedFlame, Main.rand.Next(4) + 2);
-			if (Main.rand.NextBool(10))
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("CursedCaviar"), 1);
+			if(SOTSWorld.downedCurse && Main.rand.NextBool(5))
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("CursedMatter"), Main.rand.Next(2) + 1);	
+			else
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<SoulResidue>(), Main.rand.Next(2) + 1);
 		}
 		public override void HitEffect(int hitDirection, double damage)
         {

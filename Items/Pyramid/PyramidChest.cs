@@ -1,7 +1,4 @@
-using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Localization;
 
 namespace SOTS.Items.Pyramid
 {
@@ -12,7 +9,6 @@ namespace SOTS.Items.Pyramid
 			Tooltip.SetDefault("Pyramid Chest");
 			Tooltip.SetDefault("");
 		}
-
 		public override void SetDefaults()
 		{
 			item.width = 32;

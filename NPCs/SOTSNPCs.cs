@@ -283,8 +283,13 @@ namespace SOTS.NPCs
 					if (Main.hardMode)
 					{
 						pool.Add(NPCID.Mummy, 0.5f);
-						pool.Add(mod.NPCType("BleedingGhast"), 0.2f);
-						pool.Add(mod.NPCType("FlamingGhast"), 0.2f);
+						pool.Add(mod.NPCType("BleedingGhast"), 0.1f);
+						pool.Add(mod.NPCType("FlamingGhast"), 0.1f);
+						pool.Add(mod.NPCType("Ghast"), 0.1f);
+					}
+					else
+					{
+						pool.Add(mod.NPCType("Ghast"), 0.25f);
 					}
 				}
 			}

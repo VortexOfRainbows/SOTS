@@ -46,14 +46,22 @@ Low Priority:
 1. Next: More Pharaoh, Buff Polaris
 2. Next: look into earthen construct bugs
 3. Next: Make sure Ancient Gold gate works in multiplayer
+4. Next: Keybind for Machina Booster
 
-7/2/21
+7/4/21
+1. Pharaohs curse debuff drains up to 1 more hp per second
+	1. No longer spawns fragments
+2. Added normal ghasts + bleeding ghast, Next: server syncing
+
+
+7/2/21 & 7/3/21
 1. Transmutation altar converts key types.
 2. Frigid Robe: defense 4 -> 1, set bonus: void damage decreased by 0 -> 15%
 3. Cleaned up A LOT of old stuff.
 4. Icy Impale + Cluster Cannon Dust related changes
 5. Began working on Regroing Ruby Keystone
-6. 
+6. Ruby keystone tile now properly drops and regrows
+7. Worked on Flaming Ghast
 
 6/30/21 & 7/1/21
 1. Code Corrupter useTime 30 -> 24

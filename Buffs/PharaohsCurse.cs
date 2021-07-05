@@ -25,32 +25,13 @@ namespace SOTS.Buffs
 			}
 			if(update)
 			{
-				if(!NPC.AnyNPCs(mod.NPCType("DeadlyFragment")))
-				{
-					if(Main.rand.Next(3600) == 0)
-					{
-						if(Main.netMode != 1)
-						{
-							int npc1 = NPC.NewNPC((int)player.Center.X, (int)player.Center.Y + 1000, mod.NPCType("DeadlyFragment"));
-							Main.npc[npc1].netUpdate = true;
-						}
-					}
-				}
-				else if(Main.rand.Next(18000) == 0)
-				{
-					if(Main.netMode != 1)
-					{
-						int npc1 = NPC.NewNPC((int)player.Center.X, (int)player.Center.Y + 1000, mod.NPCType("DeadlyFragment"));
-						Main.npc[npc1].netUpdate = true;
-					}
-				}
 				if(modPlayer.weakerCurse && player.statLife > 100)
 				{
-					player.lifeRegen -= 3;
+					player.lifeRegen -= 4;
 				}
 				if(modPlayer.weakerCurse && player.statLife > 200)
 				{
-					player.lifeRegen -= 1;
+					player.lifeRegen -= 2;
 				}
 				if(!modPlayer.weakerCurse)
 				{
