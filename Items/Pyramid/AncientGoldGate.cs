@@ -200,19 +200,14 @@ namespace SOTS.Items.Pyramid
 				{
 					for (int y = top; y < top + 5; y++)
 					{
-						if (Main.tile[x, y].frameY >= 270)
-						{
-							WorldGen.KillTile(x, y, false, false, false);
-							if (!Main.tile[x, y].active() && Main.netMode != NetmodeID.SinglePlayer)
-								NetMessage.SendData(MessageID.TileChange, -1, -1, null, 0, x, y, 0f, 0, 0, 0);
-						}
-						else
+						if (Main.tile[x, y].frameY < 270)
 						{
 							Main.tile[x, y].frameY += 90;
+							//NetMessage.SendData(MessageID.TileChange, -1, -1, null, 0, x, y, 0f, 0, 0, 0);
+							NetMessage.SendTileSquare(-1, x, y, 2);
 						}
 					}
 				}
-				NetMessage.SendTileSquare(-1, left, top + 3, 4);
 			}
 			Vector2 Center = new Vector2(left * 16 + 8, top * 16 + 8);
 			bool active = false;
@@ -230,11 +225,10 @@ namespace SOTS.Items.Pyramid
 				int direction = 1;
 				if (tile.frameX >= 36)
 					direction = -1;
-				if (Main.netMode != NetmodeID.MultiplayerClient)
-					for (int h = 1; h <= 2; h++)
-						Projectile.NewProjectile(new Vector2(left, top) * 16, Vector2.Zero, ModContent.ProjectileType<AncientGoldGateGems>(), 0, 0, Main.myPlayer, direction * h);
+				for (int h = 1; h <= 2; h++)
+					Projectile.NewProjectile(new Vector2(left, top) * 16, Vector2.Zero, ModContent.ProjectileType<AncientGoldGateGems>(), 0, 0, Main.myPlayer, direction * h);
 			}
-			return base.NewRightClick(i, j);
+			return true;
         }
         public override bool CanExplode(int i, int j)
 		{

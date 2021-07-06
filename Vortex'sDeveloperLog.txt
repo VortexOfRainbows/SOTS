@@ -45,13 +45,14 @@ Low Priority:
 
 1. Next: More Pharaoh, Buff Polaris
 2. Next: look into earthen construct bugs
-3. Next: Make sure Ancient Gold gate works in multiplayer
-4. Next: Keybind for Machina Booster
+3. Next: Keybind for Machina Booster
 
-7/4/21
+7/4/21 & 7/5/21
 1. Pharaohs curse debuff drains up to 1 more hp per second
 	1. No longer spawns fragments
-2. Added normal ghasts + bleeding ghast, Next: server syncing
+2. Added normal ghasts + bleeding ghast
+3. Checked: Ancient Gold Gate and Ruby Keystone Tile both work fine enough in Multiplayer
+	1. Ghasts also work fine enough in Multiplayer
 
 
 7/2/21 & 7/3/21
