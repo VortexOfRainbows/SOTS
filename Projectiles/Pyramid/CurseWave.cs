@@ -134,7 +134,7 @@ namespace SOTS.Projectiles.Pyramid
         {
             return false;
         }
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public void DrawTelegraph(SpriteBatch spriteBatch, Color lightColor)
         {
 			if(trailPos.Count > 1)
 			{
@@ -151,7 +151,10 @@ namespace SOTS.Projectiles.Pyramid
 					from = to;
 				}
 			}
-            return base.PreDraw(spriteBatch, lightColor);
+        }
+        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        {
+            return false;
         }
         public override bool PreAI()
         {

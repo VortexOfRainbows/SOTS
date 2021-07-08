@@ -475,5 +475,11 @@ namespace SOTS
 			});
 			RecipeGroup.RegisterGroup("SOTS:SilverBar", group);
 		}
-	}
+		public static float lightingChange = 1f;
+        public override void ModifyLightingBrightness(ref float scale)
+        {
+			scale *= lightingChange;
+			lightingChange = 1;
+		}
+    }
 }
