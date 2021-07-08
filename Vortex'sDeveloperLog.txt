@@ -47,6 +47,10 @@ Low Priority:
 2. Next: look into earthen construct bugs
 3. Next: Keybind for Machina Booster
 
+7/8/21
+1. Visuals for the second phase of Pharaohs worked on!
+2. 
+
 7/4/21 & 7/5/21
 1. Pharaohs curse debuff drains up to 1 more hp per second
 	1. No longer spawns fragments

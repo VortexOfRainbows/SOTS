@@ -138,7 +138,7 @@ namespace SOTS.Projectiles.Pyramid
                 counter++;
                 lightsUpdate(true); //reset color
                 lightSpots = new List<Vector3>();
-                lightSpots.Add(new Vector3(width / 2, height / 2, 320));
+                lightSpots.Add(new Vector3(width / 2, height / 2, 380));
                 lightsUpdate(false); //now that we have lights make them transparent
             }
             Texture2D TheShadow = new Texture2D(Main.graphics.GraphicsDevice, width, height);

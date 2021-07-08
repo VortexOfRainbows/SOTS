@@ -224,7 +224,9 @@ namespace SOTS.NPCs.Boss.Curse
 				{
 					for (int i = 0; i < dustList.Count; i++)
 					{
-						int shade = 255 - (int)(dustList[i].counter * 4f);
+						int shade = 255 - (int)(dustList[i].counter * 4f) - (overrideStart != 2 ? fadeIn : 0);
+						if (shade < 0)
+							shade = 0;
 						Color color = new Color(shade + dustList[i].dustColorVariation, shade - dustList[i].dustColorVariation, shade - dustList[i].dustColorVariation);
 						if (overrideStart != 2)
 							color = Lighting.GetColor((int)dustList[i].position.X / 16, (int)dustList[i].position.Y / 16, color);
