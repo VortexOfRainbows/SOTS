@@ -153,7 +153,8 @@ namespace SOTS.NPCs.Boss.Curse
 			if (!runOnce)
 			{
 				//DrawLimbs(spriteBatch, false, -1);
-				DrawFoam(foamParticleList4, 3);
+				if(!enteredSecondPhase)
+					DrawFoam(foamParticleList4, 3);
 				List<int> slots = new List<int>();
 				for (int i = 0; i < Main.projectile.Length; i++)
 				{
@@ -165,7 +166,12 @@ namespace SOTS.NPCs.Boss.Curse
 						slots.Add(i);
 					}
 				}
-				for (int j = 2; j >= 0; j--)
+				int endPoint = 0;
+				if(enteredSecondPhase && ai1 >= 360)
+                {
+					endPoint = 1;
+                }
+				for (int j = 2; j >= endPoint; j--)
 					for (int i = 0; i < slots.Count; i++)
 					{
 						Projectile proj = Main.projectile[slots[i]];
@@ -246,6 +252,10 @@ namespace SOTS.NPCs.Boss.Curse
 				else
 				{
 					int endPoint = 0;
+					if (enteredSecondPhase && ai1 >= 360)
+					{
+						endPoint = 1;
+					}
 					if (startPoint != 2)
 						texture = ModContent.GetTexture("SOTS/NPCs/Boss/Curse/CurseFoamAlt");
 					for (int j = startPoint; j >= endPoint; j--)
