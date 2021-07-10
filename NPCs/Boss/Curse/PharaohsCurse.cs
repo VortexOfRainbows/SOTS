@@ -106,8 +106,6 @@ namespace SOTS.NPCs.Boss.Curse
 					enteredSecondPhase = true;
 					npc.lifeMax = (int)(InitiateHealth * (Main.expertMode ? ExpertHealthMult : 1));
 					npc.life = (int)(InitiateHealth * (Main.expertMode ? ExpertHealthMult : 1));
-					for (int k = 0; k < 7; k++)
-						Gore.NewGore(npc.position, npc.velocity * 0.1f, mod.GetGoreSlot("Gores/Curse/PharaohMask" + (1 + k)), 1f);
 				}
 				else //death
 				{
@@ -189,7 +187,7 @@ namespace SOTS.NPCs.Boss.Curse
 			}
 			Vector2 drawPos3 = npc.Center - Main.screenPosition;
 			Texture2D texture = Main.npcTexture[npc.type];
-			if (!enteredSecondPhase)
+			if (!enteredSecondPhase || (ai1 < 1 && ai2 < 90))
 			{
 				Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 				spriteBatch.Draw(texture, drawPos3 + new Vector2(0, 0), null, npc.GetAlpha(drawColor), npc.rotation, drawOrigin, npc.scale, SpriteEffects.None, 0f);
@@ -301,7 +299,7 @@ namespace SOTS.NPCs.Boss.Curse
 				}
 			}
 		}
-		public static void SpawnPassiveDust(Texture2D texture, Vector2 spawnLocation, float scale, List<CurseFoam> dustList, float velocityScale = 1f, int style = 0, int rate = 45, float rotation = 0)
+		public static void SpawnPassiveDust(Texture2D texture, Vector2 spawnLocation, float scale, List<CurseFoam> dustList, float velocityScale = 1f, int style = 0, int rate = 45, float rotation = 0, float lifeMult = 1f)
 		{
 			int width = texture.Width;
 			int height = texture.Height;
@@ -334,10 +332,10 @@ namespace SOTS.NPCs.Boss.Curse
 						if (style == 2)
 							speedMult = -1.5f;
 						rotational = toCenter.SafeNormalize(Vector2.Zero) * speedMult;
-						dustList.Add(new CurseFoam(position - rotational.SafeNormalize(Vector2.Zero) * 2 * scale2, rotational * velocityScale, Main.rand.NextFloat(0.9f, 1.1f) * scale2, style == 2));
+						dustList.Add(new CurseFoam(position - rotational.SafeNormalize(Vector2.Zero) * 2 * scale2, rotational * velocityScale, Main.rand.NextFloat(0.9f, 1.1f) * scale2, style == 2, lifeMult));
 					}
 					else
-						dustList.Add(new CurseFoam(position + rotational.SafeNormalize(Vector2.Zero) * 2 * scale2, rotational * velocityScale, Main.rand.NextFloat(0.9f, 1.1f) * scale2, noMovement));
+						dustList.Add(new CurseFoam(position + rotational.SafeNormalize(Vector2.Zero) * 2 * scale2, rotational * velocityScale, Main.rand.NextFloat(0.9f, 1.1f) * scale2, noMovement, lifeMult));
 				}
 				localX++;
 				if (localX > width)
@@ -377,11 +375,12 @@ namespace SOTS.NPCs.Boss.Curse
 					SpawnPassiveDust(ModContent.GetTexture("SOTS/NPCs/Boss/Curse/FartGasInline"), npc.Center + new Vector2(0, 10), 0.9f * startParticles, foamParticleList1, 1, 0, 200, npc.rotation);
 					SpawnPassiveDust(ModContent.GetTexture("SOTS/NPCs/Boss/Curse/FartGasBorder"), npc.Center + new Vector2(0, 10), 1.2f * startParticles, foamParticleList4, 0.2f, 2, 3600, npc.rotation);
 				}
-				if(!enteredSecondPhase)
+				int alphaCounter = enteredSecondPhase ? (int)(255 * ai2 / 90f) : npc.alpha;
+				if(!enteredSecondPhase || (ai1 < 1 && ai2 < 90))
 				{
 					texture = ModContent.GetTexture("SOTS/NPCs/Boss/Curse/PharaohsCurseOutline");
-					SpawnPassiveDust(texture, npc.Center, 1.0f, foamParticleList2, 0.1f, 1, (int)(30 * (1f + Math.Pow(npc.alpha, 0.5f))), npc.rotation);
-					SpawnPassiveDust(texture, npc.Center, 1.0f, foamParticleList3, 0.125f, 1, (int)(60 * (1f + Math.Pow(npc.alpha, 0.5f))), npc.rotation);
+					SpawnPassiveDust(texture, npc.Center, 1.0f, foamParticleList2, 0.1f, 1, (int)(30 * (1f + Math.Pow(alphaCounter, 0.5f))), npc.rotation);
+					SpawnPassiveDust(texture, npc.Center, 1.0f, foamParticleList3, 0.125f, 1, (int)(60 * (1f + Math.Pow(alphaCounter, 0.5f))), npc.rotation);
 				}
 			}
 			cataloguePos();
@@ -399,16 +398,18 @@ namespace SOTS.NPCs.Boss.Curse
 			return inRange;
 		}
 		public void ResetLists()
-		{
+		{	
+			/*
 			foamParticleList1 = new List<CurseFoam>();
 			foamParticleList2 = new List<CurseFoam>();
 			foamParticleList3 = new List<CurseFoam>();
 			foamParticleList4 = new List<CurseFoam>();
-			return;
-			/*List<CurseFoam> temp = new List<CurseFoam>();
+			return;*/
+			List<CurseFoam> temp = new List<CurseFoam>();
 			for(int i = 0; i < foamParticleList1.Count; i++)
             {
-				temp.Add(foamParticleList1[i]);
+				if(foamParticleList1[i].active && foamParticleList1[i] != null)
+					temp.Add(foamParticleList1[i]);
 			}
 			foamParticleList1 = new List<CurseFoam>();
 			for (int i = 0; i < temp.Count; i++)
@@ -419,7 +420,8 @@ namespace SOTS.NPCs.Boss.Curse
 			temp = new List<CurseFoam>();
 			for (int i = 0; i < foamParticleList2.Count; i++)
 			{
-				temp.Add(foamParticleList2[i]);
+				if (foamParticleList2[i].active && foamParticleList2[i] != null)
+					temp.Add(foamParticleList2[i]);
 			}
 			foamParticleList2 = new List<CurseFoam>();
 			for (int i = 0; i < temp.Count; i++)
@@ -430,7 +432,8 @@ namespace SOTS.NPCs.Boss.Curse
 			temp = new List<CurseFoam>();
 			for (int i = 0; i < foamParticleList3.Count; i++)
 			{
-				temp.Add(foamParticleList3[i]);
+				if (foamParticleList3[i].active && foamParticleList3[i] != null)
+					temp.Add(foamParticleList3[i]);
 			}
 			foamParticleList3 = new List<CurseFoam>();
 			for (int i = 0; i < temp.Count; i++)
@@ -441,13 +444,14 @@ namespace SOTS.NPCs.Boss.Curse
 			temp = new List<CurseFoam>();
 			for (int i = 0; i < foamParticleList4.Count; i++)
 			{
-				temp.Add(foamParticleList4[i]);
+				if (foamParticleList4[i].active && foamParticleList4[i] != null)
+					temp.Add(foamParticleList4[i]);
 			}
 			foamParticleList4 = new List<CurseFoam>();
 			for (int i = 0; i < temp.Count; i++)
 			{
 				foamParticleList4.Add(temp[i]);
-			}*/
+			}
 		}
 		public void cataloguePos()
 		{
@@ -599,12 +603,12 @@ namespace SOTS.NPCs.Boss.Curse
 				ResetLists();
 			}
 			Player player = Main.player[npc.target];
-			ai2++;
-			if(enteredSecondPhase && ai1 < 360)
+			if(enteredSecondPhase && ai1 < 1 && !npc.dontTakeDamage)
             {
 				npc.dontTakeDamage = true;
 				TransitionPhase(3);
-            }
+			}
+			ai2++;
 			if (aiPhase == -1)
 			{
 				float timeToStart = 360f;
@@ -732,26 +736,68 @@ namespace SOTS.NPCs.Boss.Curse
 				}
 				if(ai2 >= 720)
 				{
-					TransitionPhase(0);
+					if(enteredSecondPhase)
+						TransitionPhase(4);
+					else
+						TransitionPhase(0);
 				}
             }
 			if (aiPhase == 3) //This is the start of the second phase attacks
             {
-				if(ai1 == 0)
-                {
-					Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<Projectiles.Pyramid.PharaohShade>(), 0, 0, Main.myPlayer, npc.whoAmI, 0);
+				if(ai2 < 150)
+				{
+					npc.velocity *= 0.975f;
+					npc.position.Y -= 0.1f;
+					if(ai2 == 90 && Main.netMode != NetmodeID.Server)
+					{
+						for (int k = 0; k < 7; k++)
+							Gore.NewGore(npc.Center - new Vector2(16, 16), npc.velocity * 0.1f, mod.GetGoreSlot("Gores/Curse/PharaohMask" + (1 + k)), 1f);
+					}
 				}
-				if(ai1 < 360)
-                {
+				else if (ai1 < 360)
+				{
 					npc.velocity *= 0.95f;
 					ai1++;
-                }
+					if (ai1 == 1)
+					{
+						Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<Projectiles.Pyramid.PharaohShade>(), 0, 0, Main.myPlayer, npc.whoAmI, 0);
+					}
+				}
 				else
 				{
 					npc.dontTakeDamage = false;
+					TransitionPhase(4);
+				}
+			}
+			if (aiPhase == 4)
+			{
+				if (ai2 >= 120 && ai2 <= 1200)
+				{
+					if (ai2 == 190)
+					{
+						if (Main.netMode != NetmodeID.MultiplayerClient)
+						{
+							for (int i = 0; i < 2; i++)
+							{
+								float rand = Main.rand.NextFloat(-5, 5);
+								Vector2 outWards = new Vector2(0, 12).RotatedBy(MathHelper.ToRadians(180 * i + rand));
+								int damage = npc.damage / 2;
+								if (Main.expertMode)
+								{
+									damage = (int)(damage / Main.expertDamage);
+								}
+								Projectile.NewProjectile(npc.Center, outWards, ModContent.ProjectileType<CurseArm>(), damage, 0f, Main.myPlayer, npc.whoAmI, 180 * i + rand);
+							}
+						}
+					}
+				}
+				float speed = 3.3f;
+				MoveTo(CenterPosition, 0.3f, speed);
+				if (ai2 >= 1200)
+				{
 					TransitionPhase(0);
 				}
-            }
+			}
 		}
 		public void DashAttacks(float distance, float speedMult, int amt = 4)
 		{
@@ -786,7 +832,10 @@ namespace SOTS.NPCs.Boss.Curse
 			}
 			if (ai3 > amt)
 			{
-				TransitionPhase(1);
+				if (enteredSecondPhase)
+					TransitionPhase(2);
+				else
+					TransitionPhase(1);
 			}
 		}
 		bool[] ignore;
@@ -801,6 +850,7 @@ namespace SOTS.NPCs.Boss.Curse
 					ignore[i] = true;
 				}
 				ignore[ModContent.TileType<TrueSandstoneTile>()] = false;
+				ignore[ModContent.TileType<AncientGoldGateTile>()] = false;
 			}
 			npc.velocity = Collision.AdvancedTileCollision(ignore, npc.position, npc.velocity, npc.width, npc.height, true, true);
 		}
@@ -824,6 +874,11 @@ namespace SOTS.NPCs.Boss.Curse
 			if (nextPhase == 3)
 			{
 				ai2 = 0;
+				ai3 = 0;
+			}
+			if (nextPhase == 4)
+			{
+				ai2 = 30;
 				ai3 = 0;
 			}
 			aiPhase = nextPhase;
@@ -853,13 +908,24 @@ namespace SOTS.NPCs.Boss.Curse
 			this.noMovement = noMovement;
 			dustColorVariation = Main.rand.Next(30);
 		}
+		public CurseFoam(Vector2 position, Vector2 velocity, float scale, bool noMovement, float lifeTimeMult)
+		{
+			this.position = position;
+			this.velocity = velocity;
+			this.scale = scale;
+			mult = Main.rand.NextFloat(0.9f, 1.4f) * lifeTimeMult;
+			this.noMovement = noMovement;
+			dustColorVariation = Main.rand.Next(30);
+		}
 		public float counter = 0;
 		public float scale;
 		public bool active = true;
+		float currentExtra = 0;
 		public void Update()
 		{
 			position += velocity;
-			for (int i = 0; i < 1 + (int)(Main.rand.NextFloat(1f) * mult); i++)
+			currentExtra += mult;
+			for (; currentExtra >= 1; currentExtra--)
 			{
 				if(noMovement)
 				{

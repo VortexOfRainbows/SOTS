@@ -13,11 +13,11 @@ namespace SOTS.Items
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Doomstick");
-            Tooltip.SetDefault("Fires two shotgun blasts in quick succession\nRight click to launch a 140% damage hook that pulls in enemies\nPulls you toward bosses instead\nKilled enemies drop packs of health and mana");
+            Tooltip.SetDefault("Fires two shotgun blasts in quick succession\nRight click to launch a 250% damage hook that pulls in enemies\nPulls you toward bosses instead\nKilled enemies drop packs of health and mana");
         }
 		public override void SetDefaults()
 		{
-            item.damage = 26; 
+            item.damage = 31; 
             item.ranged = true;  
             item.width = 58;   
             item.height = 20;
@@ -57,7 +57,7 @@ namespace SOTS.Items
                 perturbedSpeed *= 24f;
                 speedX = perturbedSpeed.X;
                 speedY = perturbedSpeed.Y;
-                damage = (int)(damage * 1.4f);
+                damage = (int)(damage * 2f);
                 if(player.ownedProjectileCounts[ModContent.ProjectileType<DoomstickHoldOut>()] < 1)
                 {
                     int proj = Projectile.NewProjectile(position.X, position.Y, speedX, speedY, ModContent.ProjectileType<DoomstickHoldOut>(), damage, knockBack, player.whoAmI);
@@ -66,7 +66,7 @@ namespace SOTS.Items
                 return false;
             }
             Main.PlaySound(item.UseSound, player.Center);
-            int amt = 3 + Main.rand.Next(2);
+            int amt = 4;
             for(int i = 0; i < amt; i++)
             {
                 Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(20));

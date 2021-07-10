@@ -47,9 +47,12 @@ Low Priority:
 2. Next: look into earthen construct bugs
 3. Next: Keybind for Machina Booster
 
-7/8/21
+7/8/21 & 7/9/21
 1. Visuals for the second phase of Pharaohs worked on!
-2. 
+2. Doomstick always shoots 3-4 -> 4 bullets, damage 26 -> 31, hook damage 140% -> 250%
+3. Hyperice Cluster Cannon damage 27 -> 30, useTime 29 -> 26
+4. (may have) Fixed memory leak issue with Pharaohs, no longer has glitchy list resets
+5. Started development on new attack for Pharaohs.
 
 7/4/21 & 7/5/21
 1. Pharaohs curse debuff drains up to 1 more hp per second

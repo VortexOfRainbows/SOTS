@@ -91,6 +91,7 @@ namespace SOTS.Projectiles.Pyramid
 						ignore[i] = true;
 					}
 					ignore[ModContent.TileType<TrueSandstoneTile>()] = false;
+					ignore[ModContent.TileType<AncientGoldGateTile>()] = false;
 				}
 				originalCenter = projectile.Center;
 				originalVelocity = projectile.velocity;

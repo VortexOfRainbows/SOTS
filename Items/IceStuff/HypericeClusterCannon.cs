@@ -14,12 +14,12 @@ namespace SOTS.Items.IceStuff
 		}
 		public override void SetDefaults()
 		{
-            item.damage = 27;
+            item.damage = 30;
             item.ranged = true;
             item.width = 64;
             item.height = 24;
-            item.useTime = 29; 
-            item.useAnimation = 29;
+            item.useTime = 26; 
+            item.useAnimation = 26;
             item.useStyle = 5;    
             item.noMelee = true;
 			item.knockBack = 1f;  
