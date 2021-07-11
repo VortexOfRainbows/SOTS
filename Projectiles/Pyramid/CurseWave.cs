@@ -38,11 +38,6 @@ namespace SOTS.Projectiles.Pyramid
 			int width = (int)(36f * projectile.scale);
 			hitbox = new Rectangle((int)projectile.Center.X - width / 2, (int)projectile.Center.Y - width / 2, width, width);
 		}
-		public override bool OnTileCollide(Vector2 oldVelocity)
-		{
-			projectile.velocity = -oldVelocity;
-			return false;
-		}
 		public List<CurseFoam> foamParticleList1 = new List<CurseFoam>();
 		public void catalogueParticles()
 		{
@@ -75,13 +70,13 @@ namespace SOTS.Projectiles.Pyramid
 		Vector2 originalVelocity;
 		bool runOnce = true;
 		bool[] ignore;
-		int Direction1 = 0;
-		int Direction2 = 0;
+		float Direction1 = 0;
+		float Direction2 = 0;
 		public void runPreAI(int updates = 1)
 		{
 			if(runOnce)
 			{
-				Direction1 = (int)projectile.ai[1];
+				Direction1 = projectile.ai[1];
 				Direction2 = Direction1;
 				if (ignore == null)
 				{

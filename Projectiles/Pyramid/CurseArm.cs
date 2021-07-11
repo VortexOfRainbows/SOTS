@@ -131,7 +131,7 @@ namespace SOTS.Projectiles.Pyramid
 		{
 			if (projectile.ai[1] != 0 && !draggingType)
 			{
-				projectile.timeLeft = 1000;
+				projectile.timeLeft = 1090;
 				draggingType = true;
 			}
 			aiCounter1++; 
@@ -183,6 +183,7 @@ namespace SOTS.Projectiles.Pyramid
 				float veloLength = projectile.velocity.Length();
 				int length = (int)(veloLength / 14);
 				veloLength -= length * 14;
+				Vector2 temp = projectile.velocity;
 				projectile.position += projectile.velocity.SafeNormalize(Vector2.Zero) * veloLength;
 				for(int i = 0; i < length; i++)
 				{
@@ -195,12 +196,17 @@ namespace SOTS.Projectiles.Pyramid
 					}
 					projectile.position += projectile.velocity.SafeNormalize(Vector2.Zero) * 14;
 				}
+				if(draggingType && counter % 30 == 0 && aiCounter1 > 90)
+                {
+					Vector2 projVelo = temp.SafeNormalize(Vector2.Zero);
+					//Projectile.NewProjectile(projectile.Center - projVelo * 24, projVelo * -4, ModContent.ProjectileType<CurseWave>(), projectile.damage, 0f, Main.myPlayer, (int)projectile.ai[0], 1f);
+				}
             }
 			return base.PreAI();
         }
 		int counter = 0;
 		float currentIterator = 1f;
-		float nextIterator = -1.2f;
+		float nextIterator = -1.15f;
 		float midIterator = 1f;
 		float toNextIterator = 0f;
 		public void RotateAI()
@@ -218,7 +224,7 @@ namespace SOTS.Projectiles.Pyramid
 			{
 				projectile.Kill();
 			}
-			if(counter % 180 == 0 || (toNextIterator > 0 && toNextIterator <= 90))
+			if(counter % 300 == 0 || (toNextIterator > 0 && toNextIterator <= 120))
             {
 				TransitionIterator();
 			}
@@ -227,15 +233,15 @@ namespace SOTS.Projectiles.Pyramid
 		public void TransitionIterator()
 		{
 			float iteratorCounter = toNextIterator;
-			if (iteratorCounter > 90)
+			if (iteratorCounter >= 120)
 			{
 				toNextIterator = 0;
 				currentIterator = midIterator;
-				nextIterator = -currentIterator * 1.2f;
+				nextIterator = -currentIterator * 1.15f;
 			}
 			else
 			{
-				float mult = (float)Math.Sin(MathHelper.ToRadians(iteratorCounter));
+				float mult = (float)Math.Sin(MathHelper.ToRadians(iteratorCounter * 0.75f));
 				midIterator = currentIterator * (1 - mult) + nextIterator * mult;
 				toNextIterator++;
 			}

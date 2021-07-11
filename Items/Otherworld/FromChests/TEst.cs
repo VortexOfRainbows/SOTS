@@ -24,8 +24,8 @@ namespace SOTS.Items.Otherworld.FromChests
 			item.thrown = true;
 			item.rare = 2;
 			item.autoReuse = true;            
-			item.shoot = ModContent.ProjectileType<CurseExtension>(); 
-            item.shootSpeed = 5.0f;
+			item.shoot = ModContent.ProjectileType<ShadeSpear>(); 
+            item.shootSpeed = 1.0f;
 			item.consumable = true;
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
@@ -35,7 +35,7 @@ namespace SOTS.Items.Otherworld.FromChests
 				NPC npc = Main.npc[i];
 				if(npc.active && npc.type == ModContent.NPCType<PharaohsCurse>())
 				{
-					Projectile.NewProjectile(position.X, position.Y, speedX, speedY, type, damage, knockBack, player.whoAmI, 0, npc.whoAmI);
+					Projectile.NewProjectile(position.X, position.Y, speedX, speedY, type, damage, knockBack, player.whoAmI, npc.whoAmI, 0);
 					break;
 				}
             }

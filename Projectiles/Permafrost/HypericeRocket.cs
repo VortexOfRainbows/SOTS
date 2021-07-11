@@ -1,10 +1,5 @@
 using System;
-using System.IO;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
@@ -16,9 +11,7 @@ namespace SOTS.Projectiles.Permafrost
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Hyperice Rocket");
-			
 		}
-		
         public override void SetDefaults()
         {
 			projectile.CloneDefaults(14);
@@ -31,20 +24,18 @@ namespace SOTS.Projectiles.Permafrost
 		}
 		public override void Kill(int timeLeft)
 		{
-			for(int i = 0; i < 2; i++)
+			Main.PlaySound(SoundID.Item14, (int)projectile.Center.X, (int)projectile.Center.Y);
+			for (int i = 0; i < 2; i++)
 			{
-			int goreIndex = Gore.NewGore(new Vector2(projectile.position.X, projectile.position.Y), default(Vector2), Main.rand.Next(61,64), 1f);	
-			Main.gore[goreIndex].scale = 0.55f;
+				int goreIndex = Gore.NewGore(new Vector2(projectile.position.X, projectile.position.Y), default(Vector2), Main.rand.Next(61,64), 1f);	
+				Main.gore[goreIndex].scale = 0.55f;
 			}
-			
-            Main.PlaySound(SoundID.Item14, (int)(projectile.Center.X), (int)(projectile.Center.Y));
-			
 			if(Main.myPlayer == projectile.owner)
 			{
 				for (int i = 0; i < 4; i++)
 				{
 					Vector2 perturbedSpeed = new Vector2(projectile.velocity.X, projectile.velocity.Y).RotatedBy(MathHelper.ToRadians(15 - (10 * i)));
-					Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, perturbedSpeed.X, perturbedSpeed.Y, mod.ProjectileType("IceCluster"), (int)(projectile.damage * 1f), 0, projectile.owner);
+					Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, perturbedSpeed.X, perturbedSpeed.Y, mod.ProjectileType("IceCluster"), projectile.damage, 0, projectile.owner);
 				}
 			}
 		}
