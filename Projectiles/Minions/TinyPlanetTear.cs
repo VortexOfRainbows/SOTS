@@ -21,7 +21,8 @@ namespace SOTS.Projectiles.Minions
 			projectile.tileCollide = false;
 			projectile.melee = true;
 			projectile.hostile = false;
-			projectile.netImportant = true; 
+			projectile.netImportant = true;
+			projectile.ignoreWater = true;
 			projectile.usesLocalNPCImmunity = true;
 			projectile.localNPCHitCooldown = 20;
 		}

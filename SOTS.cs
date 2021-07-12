@@ -70,6 +70,22 @@ namespace SOTS
 				yabhb.Call("hbSetFillDecoOffset", 10);
 				yabhb.Call("hbLoopMidBar", true);
 				yabhb.Call("hbFinishSingle", ModContent.NPCType<PutridPinkyPhase2>());
+
+				yabhb.Call("hbStart");
+				yabhb.Call("hbSetTexture",
+					GetTexture("UI/SubspaceHBLeft"),
+					GetTexture("UI/SubspaceHBMid"),
+					GetTexture("UI/SubspaceHBEnd"),
+					GetTexture("UI/SubspaceHBFill"));
+				yabhb.Call("hbSetMidBarOffset", -28, 8);
+				yabhb.Call("hbSetBossHeadCentre", 32, 26);
+				yabhb.Call("hbSetFillDecoOffset", 10);
+				yabhb.Call("hbLoopMidBar", true);
+				yabhb.Call("hbSetColours",
+					new Color(155, 255, 150),
+					new Color(1f, 1f, 0f), 
+					new Color(1f, 0f, 0f));
+				yabhb.Call("hbFinishSingle", ModContent.NPCType<SubspaceSerpentHead>());
 			}
 			//Music Box Stuff
 			AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/PutridPinky"), ItemType("PutridPinkyMusicBox"), TileType("PutridPinkyMusicBoxTile"));

@@ -13,16 +13,19 @@ namespace SOTS.NPCs.Boss
 		{
 			DisplayName.SetDefault("Subspace Serpent");
         }
+        public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+        {
+            npc.lifeMax = (int)(npc.lifeMax * bossLifeScale * 0.75f);  //boss life scale in expertmode
+        }
         public override void SetDefaults()
         {
             npc.width = 48;             
             npc.height = 36;         
             npc.damage = 40;
             npc.defense = 50;
-            npc.lifeMax = 12312412;
+            npc.lifeMax = 130000;
             npc.knockBackResist = 0.0f;
             npc.noTileCollide = true;
-            npc.boss = true;
             npc.netAlways = true;
             npc.noGravity = true;
             npc.dontCountMe = true;

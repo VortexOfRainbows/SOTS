@@ -20,11 +20,10 @@ namespace SOTS.NPCs.Boss
             npc.height = 34;
             npc.damage = 70;
             npc.defense = 100;
-            npc.lifeMax = 12104310; //arbitrary
+            npc.lifeMax = 130000;
             npc.knockBackResist = 0.0f;
             npc.noTileCollide = true;
             npc.netAlways = true;
-            npc.boss = true;
             npc.noGravity = true;
             npc.dontCountMe = true;
             npc.value = 10000;
@@ -186,6 +185,7 @@ namespace SOTS.NPCs.Boss
         }
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
+            npc.lifeMax = (int)(npc.lifeMax * bossLifeScale * 0.75f);  //boss life scale in expertmode
             DPSregenRate += 0.15f * numPlayers;
             base.ScaleExpertStats(numPlayers, bossLifeScale);
         }
