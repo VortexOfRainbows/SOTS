@@ -18,7 +18,7 @@ namespace SOTS.Projectiles.Permafrost
 			projectile.width = 16;
 			projectile.ranged = true;
 			projectile.timeLeft = 1800;
-			projectile.friendly = false;
+			projectile.friendly = true;
 			projectile.hostile = false;
 		}
 		public override void AI()

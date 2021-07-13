@@ -47,6 +47,12 @@ Low Priority:
 2. Next: look into earthen construct bugs
 3. Next: Keybind for Machina Booster
 
+7/12/21
+1. Celestial serpent no longer gives confusion on its bolts and serpent projectiles
+2. Fixed bug with friendly Margrit Bolts (Permafrost armor + Metalmalgamation) not doing damage
+3. Changed tooltip of planetary analyzer.
+4. Some pharaoh's changes (eye movement)
+
 7/8/21 & 7/9/21 & 7/10/21 & 7/11/21
 1. Visuals for the second phase of Pharaohs worked on!
 2. Doomstick always shoots 3-4 -> 4 bullets, damage 26 -> 31, hook damage 140% -> 250%

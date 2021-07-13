@@ -1,13 +1,8 @@
 using System;
 using System.IO;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
-using Terraria.ID;
 
 namespace SOTS.Projectiles.Celestial
 {    
@@ -40,7 +35,7 @@ namespace SOTS.Projectiles.Celestial
         }
         public override void OnHitPlayer(Player target, int damage, bool crit) 
 		{
-			target.AddBuff(31, 90, false);
+			//target.AddBuff(31, 90, false);
 		}	
 		public override void SendExtraAI(BinaryWriter writer) 
 		{

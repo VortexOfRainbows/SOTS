@@ -85,8 +85,6 @@ namespace SOTS.NPCs.Boss.Curse
 		{
 			return npc.alpha == 0;
 		}
-		private int InitiateHealth = 3000;
-		private float ExpertHealthMult = 1.5f;
 		public override void HitEffect(int hitDirection, double damage)
 		{
 			if (npc.life > 0)
@@ -104,8 +102,9 @@ namespace SOTS.NPCs.Boss.Curse
 				if (!enteredSecondPhase) // enter second phase
 				{
 					enteredSecondPhase = true;
-					npc.lifeMax = (int)(InitiateHealth * (Main.expertMode ? ExpertHealthMult : 1));
-					npc.life = (int)(InitiateHealth * (Main.expertMode ? ExpertHealthMult : 1));
+					int temp = npc.lifeMax;
+					npc.lifeMax = (int)(temp * 0.8f);
+					npc.life = npc.lifeMax;
 				}
 				else //death
 				{
@@ -212,7 +211,7 @@ namespace SOTS.NPCs.Boss.Curse
 				spriteBatch.Draw(texture, drawPos3, null, npc.GetAlpha(Color.White) * alphaMult, npc.rotation, drawOrigin, npc.scale, SpriteEffects.None, 0f);
 				Player player = Main.player[npc.target];
 				Vector2 toPlayer = npc.Center - player.Center;
-				toPlayer = toPlayer.SafeNormalize(Vector2.Zero) * -2;
+				toPlayer = toPlayer.SafeNormalize(Vector2.Zero) * -2 * eyeOffsetMult;
 				spriteBatch.Draw(textureP, drawPos3 + toPlayer, null, npc.GetAlpha(Color.White) * alphaMult, npc.rotation, drawOrigin, npc.scale, SpriteEffects.None, 0f);
 			}
 			if (!runOnce)
@@ -230,6 +229,7 @@ namespace SOTS.NPCs.Boss.Curse
 				DrawFoam(foamParticleList3, 0);
 			}
 		}
+		float eyeOffsetMult = 1f;
 		public void DrawFoam(List<CurseFoam> dustList, int startPoint = 2, int overrideStart = -1, byte fadeIn = 0)
 		{
 			Texture2D texture = ModContent.GetTexture("SOTS/NPCs/Boss/Curse/CurseFoam");
@@ -390,6 +390,14 @@ namespace SOTS.NPCs.Boss.Curse
 				direction = Main.rand.Next(2) * 2 - 1;
 				CenterPosition = npc.Center;
 			}
+			if(eyeOffsetMult < 1)
+            {
+				eyeOffsetMult += 0.125f;
+            }
+			else
+            {
+				eyeOffsetMult = 1;
+            }
 			npc.TargetClosest();
 			if (aiPhase != -1)
 				npc.rotation = npc.velocity.X * 0.05f;
@@ -816,45 +824,46 @@ namespace SOTS.NPCs.Boss.Curse
 					{
 						if (Main.netMode != NetmodeID.MultiplayerClient)
 						{
-							for (int i = 0; i < 2; i++)
+							for (int i = 1; i < 3; i++)
 							{
-								float rand = Main.rand.NextFloat(-5, 5);
-								Vector2 outWards = new Vector2(0, 12).RotatedBy(MathHelper.ToRadians(180 * i + rand));
-								Projectile.NewProjectile(npc.Center, outWards, ModContent.ProjectileType<CurseArm>(), damage, 0f, Main.myPlayer, npc.whoAmI, 180 * i + rand);
+								Vector2 outWards = new Vector2(0, 12).RotatedBy(MathHelper.ToRadians(180 * i));
+								Projectile.NewProjectile(npc.Center, outWards, ModContent.ProjectileType<CurseArm>(), damage, 0f, Main.myPlayer, npc.whoAmI, 180 * i);
 							}
 						}
 					}
 					if(ai2 >= 360 && ai2 <= 1290)
                     {
-						Vector2 center = npc.Center + new Vector2(0, 2);
+						Vector2 center = npc.Center + new Vector2(0, 4);
 						int currentCounter = (int)(ai2 - 280) % 300;
 						if (currentCounter == 150 || currentCounter == 230 || currentCounter == 10)
 						{
+							eyeOffsetMult = -1f;
 							Main.PlaySound(2, (int)npc.Center.X, (int)npc.Center.Y, 96, 0.875f, 0.2f);
 							if (Main.netMode != NetmodeID.MultiplayerClient)
 							{
 								Vector2 toPlayer = npc.Center - player.Center;
-								toPlayer = toPlayer.SafeNormalize(Vector2.Zero) * -1.55f;
+								toPlayer = toPlayer.SafeNormalize(Vector2.Zero) * -1.25f;
 								for (int i = 0; i < 4; i++)
 								{
-									Vector2 random = new Vector2(Main.rand.NextFloat(-1, 1), Main.rand.NextFloat(-1, 1)) * 0.25f;
-									Projectile.NewProjectile(center + toPlayer * 6, toPlayer + random, ModContent.ProjectileType<ShadeSpear>(), (int)(damage * 1.25f), 0f, Main.myPlayer, npc.whoAmI, 0);
+									Vector2 random = new Vector2(Main.rand.NextFloat(-1, 1), Main.rand.NextFloat(-1, 1)) * 0.225f;
+									Projectile.NewProjectile(center + toPlayer * 8, toPlayer + random, ModContent.ProjectileType<ShadeSpear>(), (int)(damage * 1.25f), 0f, Main.myPlayer, npc.whoAmI, 0);
 								}
 							}
 						}
-						if(currentCounter % 5 == 0 && currentCounter >= 45 && currentCounter <= 60)
+						if(currentCounter % 5 == 0 && currentCounter >= 40 && currentCounter <= 60)
 						{
 							Main.PlaySound(2, (int)npc.Center.X, (int)npc.Center.Y, 96, 0.75f, 0.75f);
-							int spread = 80 - currentCounter;
+							eyeOffsetMult = -1f;
 							if (Main.netMode != NetmodeID.MultiplayerClient)
 							{
+								float spread = 90 - (currentCounter - 45) * 4f;
 								for (int i = 0; i < 2; i++)
 								{
 									int direction = i * 2 - 1;
 									Vector2 toPlayer = npc.Center - player.Center;
-									toPlayer = toPlayer.SafeNormalize(Vector2.Zero) * -1.45f;
+									toPlayer = toPlayer.SafeNormalize(Vector2.Zero) * -1.25f;
 									toPlayer = toPlayer.RotatedBy(MathHelper.ToRadians(spread * direction));
-									Projectile.NewProjectile(center + toPlayer * 6, toPlayer, ModContent.ProjectileType<ShadeSpear>(), (int)(damage * 1.0f), 0f, Main.myPlayer, npc.whoAmI, 0);
+									Projectile.NewProjectile(center + toPlayer * 8, toPlayer, ModContent.ProjectileType<ShadeSpear>(), (int)(damage * 1.0f), 0f, Main.myPlayer, npc.whoAmI, 0);
 								}
 							}
                         }

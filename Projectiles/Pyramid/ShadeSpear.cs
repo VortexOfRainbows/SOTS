@@ -15,7 +15,7 @@ namespace SOTS.Projectiles.Pyramid
 		{
             DisplayName.SetDefault("Curse");
 			Main.projFrames[projectile.type] = 2;
-			ProjectileID.Sets.TrailCacheLength[projectile.type] = 20;
+			ProjectileID.Sets.TrailCacheLength[projectile.type] = 16;
 			ProjectileID.Sets.TrailingMode[projectile.type] = 1;
 		}
         public override void SetDefaults()
@@ -36,11 +36,11 @@ namespace SOTS.Projectiles.Pyramid
         {
 			if (projHitbox.Intersects(targetHitbox))
 				return true;
-			for (int k = 0; k < projectile.oldPos.Length; k++)
+			for (int k = 0; k < projectile.oldPos.Length - 4; k++)
 			{
-				float scale = 1f - 0.6f * (k / (float)projectile.oldPos.Length);
+				float scale = 1f - 0.5f * (k / (float)projectile.oldPos.Length - 4);
 				Vector2 oldPos = projectile.oldPos[k];
-				int width = (int)(16 * scale);
+				int width = (int)(8 * scale);
 				Rectangle hitBox = new Rectangle((int)oldPos.X + projectile.width/2 - width/2, (int)oldPos.Y + projectile.height / 2 - width / 2, width, width);
 				if (hitBox.Intersects(targetHitbox))
 					return true;
@@ -70,7 +70,7 @@ namespace SOTS.Projectiles.Pyramid
         {
 			for (int i = 0; i < projectile.oldPos.Length; i++)
 			{
-				float scale = 1f - 0.8f * (i / (float)projectile.oldPos.Length);
+				float scale = 1.05f - 0.85f * (i / (float)projectile.oldPos.Length);
 				randList[i] = new Vector2(Main.rand.NextFloat(-2, 2), Main.rand.NextFloat(-2, 2)) * scale;
 			}
 		}
