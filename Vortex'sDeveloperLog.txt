@@ -43,9 +43,14 @@ Low Priority:
 7. Electrolyte Seperator
 8. Amogus
 
-1. Next: More Pharaoh, Buff Polaris
+1. Next: More Pharaoh (+ Multiplayer testing), Buff Polaris
 2. Next: look into earthen construct bugs
 3. Next: Keybind for Machina Booster
+
+7/13/21 & 7/14/21
+1. Pharaoh's Curse eye animations
+2. New attack for Pharaoh's Curse
+3. Added Cataclysm Spheres (+ needs multiplayer testing)
 
 7/12/21
 1. Celestial serpent no longer gives confusion on its bolts and serpent projectiles

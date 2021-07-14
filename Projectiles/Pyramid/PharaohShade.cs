@@ -34,9 +34,18 @@ namespace SOTS.Projectiles.Pyramid
             NPC master = Main.npc[(int)projectile.ai[0]];
             if (master.active && (master.type == ModContent.NPCType<PharaohsCurse>()))
             {
-                if ((int)projectile.ai[1] != -1)
-                    projectile.timeLeft = 257;
-                projectile.Center = master.Center;
+                PharaohsCurse curse = master.modNPC as PharaohsCurse;
+                if(curse.enteredSecondPhase)
+                {
+                    if ((int)projectile.ai[1] != -1)
+                        projectile.timeLeft = 257;
+                    projectile.Center = master.Center;
+                }
+                else
+                {
+                    if (projectile.timeLeft > 257)
+                        projectile.timeLeft = 257;
+                }
             }
             else
             {
@@ -138,7 +147,7 @@ namespace SOTS.Projectiles.Pyramid
                 counter++;
                 lightsUpdate(true); //reset color
                 lightSpots = new List<Vector3>();
-                lightSpots.Add(new Vector3(width / 2, height / 2, 380));
+                lightSpots.Add(new Vector3(width / 2, height / 2, 360));
                 lightsUpdate(false); //now that we have lights make them transparent
             }
             Texture2D TheShadow = new Texture2D(Main.graphics.GraphicsDevice, width, height);

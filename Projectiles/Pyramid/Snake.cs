@@ -1,25 +1,17 @@
 using System;
 using System.IO;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
-using Terraria.ID;
 
 namespace SOTS.Projectiles.Pyramid
 {    
     public class Snake : ModProjectile 
     {	
-		
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Snakey Boi");
-			
 		}
-		
         public override void SetDefaults()
         {
 			projectile.aiStyle = 1;
@@ -62,9 +54,7 @@ namespace SOTS.Projectiles.Pyramid
 		public override void AI()
         {
 			Player player = Main.player[projectile.owner];
-			
 			projectile.tileCollide = true;
-			
             projectile.frameCounter++;
             if (projectile.frameCounter >= 9)
             {
@@ -114,7 +104,6 @@ namespace SOTS.Projectiles.Pyramid
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-			
 			Player player = Main.player[projectile.owner];
 			projectile.friendly = false;
             target.immune[projectile.owner] = 0;
@@ -139,36 +128,36 @@ namespace SOTS.Projectiles.Pyramid
 			}
 			if(target.life <= 0)
 			{
-					enemyIndex = -1;
-					projectile.aiStyle = 1;
-					latch = false;
-					projectile.tileCollide = true;
-					projectile.friendly = true;
+				enemyIndex = -1;
+				projectile.aiStyle = 1;
+				latch = false;
+				projectile.tileCollide = true;
+				projectile.friendly = true;
 			}
         }
 		public override void Kill(int timeLeft)
         {
 			for(int i = 0; i < 15; i++)
 			{
-			int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 42, 24, 251);
-			Main.dust[num1].noGravity = true;
+				int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 42, 24, 251);
+				Main.dust[num1].noGravity = true;
 			}
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{
-				projectile.penetrate--;
-				if(projectile.penetrate < 1)
-				{
-					projectile.Kill();
-				}
-				if (projectile.velocity.X != oldVelocity.X)
-				{
-					projectile.velocity.X = -oldVelocity.X * 0.45f; 
-				}
-				if (projectile.velocity.Y != oldVelocity.Y)
-				{
-					projectile.velocity.Y = -oldVelocity.Y * 0.4f;
-				}
+			projectile.penetrate--;
+			if(projectile.penetrate < 1)
+			{
+				projectile.Kill();
+			}
+			if (projectile.velocity.X != oldVelocity.X)
+			{
+				projectile.velocity.X = -oldVelocity.X * 0.45f; 
+			}
+			if (projectile.velocity.Y != oldVelocity.Y)
+			{
+				projectile.velocity.Y = -oldVelocity.Y * 0.4f;
+			}
 			return false;
 		}
 	}

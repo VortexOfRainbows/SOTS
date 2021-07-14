@@ -57,7 +57,7 @@ namespace SOTS.NPCs.Boss.Curse
 			npc.aiStyle = 0;
 			npc.lifeMax = 4500;
 			npc.damage = 50;
-			npc.defense = 16;
+			npc.defense = 10;
 			npc.knockBackResist = 0f;
 			npc.width = 38;
 			npc.height = 44;
@@ -83,7 +83,7 @@ namespace SOTS.NPCs.Boss.Curse
 		}
 		public override bool CanHitPlayer(Player target, ref int cooldownSlot)
 		{
-			return npc.alpha == 0;
+			return npc.alpha == 0 && !npc.dontTakeDamage;
 		}
 		public override void HitEffect(int hitDirection, double damage)
 		{
@@ -171,7 +171,7 @@ namespace SOTS.NPCs.Boss.Curse
 					}
 				}
 				int endPoint = 0;
-				if(enteredSecondPhase && ai1 >= 300)
+				if(enteredSecondPhase && ai1 >= 200)
                 {
 					endPoint = 1;
                 }
@@ -191,8 +191,11 @@ namespace SOTS.NPCs.Boss.Curse
 							spear.TruePreDraw(spriteBatch, j);
 						}
 					}
-				DrawFoam(foamParticleList1, 2, -1, (byte)fadeIn);
-				DrawFoam(foamParticleList2, 1);
+				if(shadeAlpha != 0f)
+				{
+					DrawFoam(foamParticleList1, 2, -1, (byte)fadeIn);
+					DrawFoam(foamParticleList2, 1);
+				}
 				//DrawLimbs(spriteBatch, false, 1);
 			}
 			Vector2 drawPos3 = npc.Center - Main.screenPosition;
@@ -205,14 +208,17 @@ namespace SOTS.NPCs.Boss.Curse
 			else
 			{
 				texture = mod.GetTexture("NPCs/Boss/Curse/PharaohsCurseEye");
+				Rectangle frame = new Rectangle(0, 44 * eyeFrame, 64, 44);
 				Texture2D textureP = mod.GetTexture("NPCs/Boss/Curse/PharaohsCurseEyePupil");
-				float alphaMult = ai1 / 300f;
-				Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-				spriteBatch.Draw(texture, drawPos3, null, npc.GetAlpha(Color.White) * alphaMult, npc.rotation, drawOrigin, npc.scale, SpriteEffects.None, 0f);
-				Player player = Main.player[npc.target];
-				Vector2 toPlayer = npc.Center - player.Center;
-				toPlayer = toPlayer.SafeNormalize(Vector2.Zero) * -2 * eyeOffsetMult;
-				spriteBatch.Draw(textureP, drawPos3 + toPlayer, null, npc.GetAlpha(Color.White) * alphaMult, npc.rotation, drawOrigin, npc.scale, SpriteEffects.None, 0f);
+				float alphaMult = ai1 / 200f * shadeAlpha;
+				Vector2 drawOrigin = new Vector2(textureP.Width * 0.5f, textureP.Height * 0.5f);
+				spriteBatch.Draw(texture, drawPos3, frame, npc.GetAlpha(Color.White) * alphaMult, npc.rotation, drawOrigin, npc.scale, SpriteEffects.None, 0f);
+				if(eyeFrame == 2)
+				{
+					Player player = Main.player[npc.target];
+					Vector2 toLocation = EyeDirection.SafeNormalize(Vector2.Zero) * -2 * eyeOffsetMult;
+					spriteBatch.Draw(textureP, drawPos3 + toLocation, null, npc.GetAlpha(Color.White) * alphaMult, npc.rotation, drawOrigin, npc.scale, SpriteEffects.None, 0f);
+				}
 			}
 			if (!runOnce)
 			{
@@ -229,7 +235,10 @@ namespace SOTS.NPCs.Boss.Curse
 				DrawFoam(foamParticleList3, 0);
 			}
 		}
+		public Vector2 EyeDirection;
+		int eyeFrame = 0;
 		float eyeOffsetMult = 1f;
+		public float shadeAlpha = 1f;
 		public void DrawFoam(List<CurseFoam> dustList, int startPoint = 2, int overrideStart = -1, byte fadeIn = 0)
 		{
 			Texture2D texture = ModContent.GetTexture("SOTS/NPCs/Boss/Curse/CurseFoam");
@@ -266,6 +275,7 @@ namespace SOTS.NPCs.Boss.Curse
 							Color first = new Color((int)(111 * reduction), (int)(80 * reduction), (int)(154 * reduction));
 							Color second = new Color((int)(76 * reduction), (int)(58 * reduction), (int)(101 * reduction));
 							color = Color.Lerp(first, second, 0.5f + 0.5f * (float)Math.Sin(MathHelper.ToRadians(Void.VoidPlayer.soulColorCounter * 2)));
+							color = new Color((byte)(color.R * shadeAlpha), (byte)(color.G * shadeAlpha), (byte)(color.B * shadeAlpha));
 						}
 						Vector2 drawPos = dustList[i].position - Main.screenPosition;
 						Rectangle frame = new Rectangle(0, texture.Height / 3 * overrideStart, texture.Width, texture.Width);
@@ -276,7 +286,7 @@ namespace SOTS.NPCs.Boss.Curse
 				else
 				{
 					int endPoint = 0;
-					if (enteredSecondPhase && ai1 >= 300)
+					if (enteredSecondPhase && ai1 >= 200)
 					{
 						endPoint = 1;
 					}
@@ -300,6 +310,7 @@ namespace SOTS.NPCs.Boss.Curse
 								Color first = new Color((int)(111 * reduction), (int)(80 * reduction), (int)(154 * reduction));
 								Color second = new Color((int)(76 * reduction), (int)(58 * reduction), (int)(101 * reduction));
 								color = Color.Lerp(first, second, 0.5f + 0.5f * (float)Math.Sin(MathHelper.ToRadians(Void.VoidPlayer.soulColorCounter * 2)));
+								color = new Color((byte)(color.R * shadeAlpha), (byte)(color.G * shadeAlpha), (byte)(color.B * shadeAlpha));
 							}
 							Vector2 drawPos = dustList[i].position - Main.screenPosition;
 							Rectangle frame = new Rectangle(0, texture.Height / 3 * j, texture.Width, texture.Width);
@@ -583,7 +594,8 @@ namespace SOTS.NPCs.Boss.Curse
 		float dustAcceleration = 0f;
 		int direction = 1;
 		int resetListTimer = 0;
-		bool enteredSecondPhase = false;
+		public bool enteredSecondPhase = false;
+		int randNext = 0;
 		public void BurstRings(int style = 0)
 		{
 			if (style == 0)
@@ -780,11 +792,11 @@ namespace SOTS.NPCs.Boss.Curse
             }
 			if (aiPhase == 3) //This is the start of the second phase attacks
             {
-				if(ai2 < 150)
+				if (ai2 < 150)
 				{
 					npc.velocity *= 0.975f;
 					npc.position.Y -= 0.1f;
-					if(ai2 == 90 && Main.netMode != NetmodeID.Server)
+					if (ai2 == 90 && Main.netMode != NetmodeID.Server)
 					{
 						for (int k = 0; k < 7; k++)
 							Gore.NewGore(npc.Center - new Vector2(16, 16), npc.velocity * 0.1f, mod.GetGoreSlot("Gores/Curse/PharaohMask" + (1 + k)), 1f);
@@ -796,10 +808,29 @@ namespace SOTS.NPCs.Boss.Curse
 						}
 					}
 				}
-				else if (ai1 < 300)
+				else if (ai1 < 200)
 				{
 					npc.velocity *= 0.95f;
 					ai1++;
+					if (ai1 < 170)
+					{
+						eyeFrame = 0;
+					}
+					else
+                    {
+						if(ai1 < 180)
+						{
+							eyeFrame = 1;
+						}
+						else
+						{
+							eyeFrame = 2;
+						}
+						if(ai1 == 182)
+						{
+							Main.PlaySound(SoundID.Roar, (int)npc.Center.X, (int)npc.Center.Y, 0, 1.25f);
+						}
+                    }
 					if (ai1 == 1)
 					{
 						Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<Projectiles.Pyramid.PharaohShade>(), 0, 0, Main.myPlayer, npc.whoAmI, 0);
@@ -811,6 +842,7 @@ namespace SOTS.NPCs.Boss.Curse
 					TransitionPhase(4);
 				}
 			}
+			Vector2 center = npc.Center + new Vector2(0, 4);
 			if (aiPhase == 4)
 			{
 				if (ai2 >= 120 && ai2 <= 1290)
@@ -833,7 +865,6 @@ namespace SOTS.NPCs.Boss.Curse
 					}
 					if(ai2 >= 360 && ai2 <= 1290)
                     {
-						Vector2 center = npc.Center + new Vector2(0, 4);
 						int currentCounter = (int)(ai2 - 280) % 300;
 						if (currentCounter == 150 || currentCounter == 230 || currentCounter == 10)
 						{
@@ -873,10 +904,139 @@ namespace SOTS.NPCs.Boss.Curse
 				MoveTo(CenterPosition, 0.45f, speed, 15f);
 				if (ai2 >= 1290)
 				{
-					TransitionPhase(0);
+					TransitionPhase(5);
 				}
 			}
+			if (aiPhase == 5)
+			{
+				if (ai2 < 0)
+				{
+					ChangeShade(0);
+					MimicPolarisMovement(0.075f);
+				}
+				else
+				{
+					int total = 340;
+					if(ai2 > total * 3)
+                    {
+						TransitionPhase(0);
+						eyeFrame = 2;
+					}
+					else
+					{
+						int amt = Main.expertMode ? 3 : 4;
+						int cycleAI = (int)ai2 % total;
+						if (cycleAI < 280)
+						{
+							Vector2 toPlayer = npc.Center - player.Center;
+							EyeDirection = toPlayer;
+							cycleAI %= 140;
+						}
+						else if (cycleAI % amt == 0)
+						{
+							eyeOffsetMult = -1f;
+							Main.PlaySound(2, (int)npc.Center.X, (int)npc.Center.Y, 96, 0.825f, 0.3f);
+							if (Main.netMode != NetmodeID.MultiplayerClient)
+							{
+								int damage = npc.damage / 2;
+								if (Main.expertMode)
+								{
+									damage = (int)(damage / Main.expertDamage);
+								}
+								Vector2 circular = new Vector2(-1.05f * direction).RotatedBy(MathHelper.ToRadians((cycleAI - 280) * 6 + ai3));
+								EyeDirection = circular;
+								Projectile.NewProjectile(center + circular * 8, circular, ModContent.ProjectileType<ShadeSpear>(), (int)(damage * 1.1f), 0f, Main.myPlayer, npc.whoAmI, 0);
+							}
+						}
+						if (cycleAI == 139 || cycleAI == total - 1)
+						{
+							if (cycleAI == total - 1)
+								direction *= -1;
+							ai3 = Main.rand.Next(360);
+						}
+						if (cycleAI < 60)
+						{
+							ChangeShade(0, 0.05f);
+							MimicPolarisMovement(0.075f);
+							if (cycleAI < 10)
+							{
+								eyeFrame = 1;
+							}
+							else if (cycleAI < 20)
+							{
+								eyeFrame = 0;
+							}
+							if (cycleAI > 30)
+							{
+								Vector2 dashArea = player.Center + new Vector2(300, 0).RotatedBy(MathHelper.ToRadians(ai3));
+								MoveTo(dashArea, 0.2f, 20f, 6f);
+							}
+						}
+						else if (cycleAI <= 80)
+						{
+							if (cycleAI < 70)
+							{
+								Vector2 dashArea = player.Center + new Vector2(300, 0).RotatedBy(MathHelper.ToRadians(ai3));
+								MoveTo(dashArea, 0.2f, 40f, 10f);
+							}
+							if (cycleAI == 80)
+							{
+								ai3 += 180;
+								Vector2 dashArea = player.Center + new Vector2(300, 0).RotatedBy(MathHelper.ToRadians(ai3));
+								storeDashArea = dashArea;
+							}
+							if (cycleAI > 65 && cycleAI < 75)
+							{
+								eyeFrame = 1;
+							}
+							else
+							{
+								eyeFrame = 2;
+							}
+							ChangeShade(0.9f, 0.05f);
+							MimicPolarisMovement(0.5f);
+						}
+						else if (cycleAI <= 130)
+						{
+							if (cycleAI == 81)
+							{
+								Main.PlaySound(2, (int)npc.Center.X, (int)npc.Center.Y, 73, 1.75f, 0.3f);
+							}
+							MoveTo(storeDashArea, 0.0f, 16f, 4f);
+						}
+					}
+				}
+            }
+			else
+            {
+				Vector2 toPlayer = npc.Center - player.Center;
+				EyeDirection = toPlayer;
+			}
 		}
+		Vector2 storeDashArea;
+		public void ChangeShade(float target, float changingPrinciple = 0.04f)
+        {
+			if(shadeAlpha > target)
+            {
+				shadeAlpha -= changingPrinciple;
+            }
+			else if(shadeAlpha < target)
+            {
+				shadeAlpha += changingPrinciple;
+            }
+			if(Math.Abs(shadeAlpha - target) < changingPrinciple)
+            {
+				shadeAlpha = target;
+            }
+			if(shadeAlpha <= 0.65f)
+            {
+				npc.dontTakeDamage = true;
+            }
+			else
+			{
+				npc.dontTakeDamage = false;
+			}
+        }
 		public void DashAttacks(float distance, float speedMult, int amt = 4)
 		{
 			Player player = Main.player[npc.target];
@@ -958,6 +1118,11 @@ namespace SOTS.NPCs.Boss.Curse
 			{
 				ai2 = 60;
 				ai3 = 0;
+			}
+			if (nextPhase == 5)
+			{
+				ai3 = Main.rand.Next(60, 180);
+				ai2 = -50;
 			}
 			aiPhase = nextPhase;
 		}

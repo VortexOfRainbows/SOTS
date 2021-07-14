@@ -256,7 +256,7 @@ namespace SOTS.Projectiles.Pyramid
 			if(parentID >= 0 && Main.netMode != NetmodeID.Server)
             {
 				NPC npc = Main.npc[parentID];
-				if(npc.active && npc.type == ModContent.NPCType<PharaohsCurse>())
+				if(npc.active && npc.type == ModContent.NPCType<PharaohsCurse>() && (!npc.dontTakeDamage || draggingType))
                 {
 					OwnerPos = npc.Center;
 					Vector2 distanceToOwner = projectile.Center - OwnerPos;
