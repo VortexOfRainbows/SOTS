@@ -98,14 +98,10 @@ namespace SOTS.Projectiles.Pyramid
 			projectile.velocity *= 1.0225f;
 			counter++;
 			int parentID = (int)projectile.ai[0];
-			if (parentID >= 0 && Main.netMode != NetmodeID.Server)
+			if (parentID >= 0)
 			{
 				NPC npc = Main.npc[parentID];
-				if (npc.active && npc.type == ModContent.NPCType<PharaohsCurse>())
-				{
-					PharaohsCurse curse = npc.modNPC as PharaohsCurse;
-				}
-				else
+				if (!npc.active || npc.type != ModContent.NPCType<PharaohsCurse>())
 				{
 					projectile.Kill();
 				}

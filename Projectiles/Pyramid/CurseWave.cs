@@ -163,21 +163,24 @@ namespace SOTS.Projectiles.Pyramid
 		{
 			counter++;
 			int parentID = (int)projectile.ai[0];
-			if (parentID >= 0 && Main.netMode != NetmodeID.Server)
+			if (parentID >= 0)
 			{
 				NPC npc = Main.npc[parentID];
 				if (npc.active && npc.type == ModContent.NPCType<PharaohsCurse>())
 				{
-					if(projectile.timeLeft == 2)
+					if (Main.netMode != NetmodeID.Server)
 					{
-						PharaohsCurse curse = npc.modNPC as PharaohsCurse;
-						for (int j = 0; j < 40; j++)
+						if (projectile.timeLeft == 2)
 						{
-							Vector2 rotational = new Vector2(0, -Main.rand.NextFloat(1.05f, 3.5f)).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360f)));
-							curse.foamParticleList1.Add(new CurseFoam(projectile.Center, rotational, 1.55f, true));
+							PharaohsCurse curse = npc.modNPC as PharaohsCurse;
+							for (int j = 0; j < 40; j++)
+							{
+								Vector2 rotational = new Vector2(0, -Main.rand.NextFloat(1.05f, 3.5f)).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360f)));
+								curse.foamParticleList1.Add(new CurseFoam(projectile.Center, rotational, 1.55f, true));
+							}
 						}
+						PharaohsCurse.SpawnPassiveDust(Main.projectileTexture[projectile.type], projectile.Center, 1.1f * projectile.scale, foamParticleList1, 0.2f, 4, 40, projectile.velocity.ToRotation() + MathHelper.ToRadians(90));
 					}
-					PharaohsCurse.SpawnPassiveDust(Main.projectileTexture[projectile.type], projectile.Center, 1.1f * projectile.scale, foamParticleList1, 0.2f, 4, 40, projectile.velocity.ToRotation() + MathHelper.ToRadians(90));
 				}
 				else
 				{

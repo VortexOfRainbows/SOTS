@@ -253,16 +253,19 @@ namespace SOTS.Projectiles.Pyramid
         public override void AI()
 		{
 			int parentID = (int)projectile.ai[0];
-			if(parentID >= 0 && Main.netMode != NetmodeID.Server)
+			if(parentID >= 0)
             {
 				NPC npc = Main.npc[parentID];
 				if(npc.active && npc.type == ModContent.NPCType<PharaohsCurse>() && (!npc.dontTakeDamage || draggingType))
-                {
-					OwnerPos = npc.Center;
-					Vector2 distanceToOwner = projectile.Center - OwnerPos;
-					PharaohsCurse curse = npc.modNPC as PharaohsCurse;
-					DrawLimbs(curse.foamParticleList1, new Rectangle(0, 0, 0, 0));
-					PharaohsCurse.SpawnPassiveDust(ModContent.GetTexture("SOTS/NPCs/Boss/Curse/CurseHookMask"), projectile.Center, 0.75f, curse.foamParticleList1, 0.2f, 3, 25, distanceToOwner.ToRotation() + MathHelper.ToRadians(90), draggingType ? 2.5f : 1);
+				{
+					if (Main.netMode != NetmodeID.Server)
+					{
+						OwnerPos = npc.Center;
+						Vector2 distanceToOwner = projectile.Center - OwnerPos;
+						PharaohsCurse curse = npc.modNPC as PharaohsCurse;
+						DrawLimbs(curse.foamParticleList1, new Rectangle(0, 0, 0, 0));
+						PharaohsCurse.SpawnPassiveDust(ModContent.GetTexture("SOTS/NPCs/Boss/Curse/CurseHookMask"), projectile.Center, 0.75f, curse.foamParticleList1, 0.2f, 3, 25, distanceToOwner.ToRotation() + MathHelper.ToRadians(90), draggingType ? 2.5f : 1);
+					}
 				}
 				else
                 {

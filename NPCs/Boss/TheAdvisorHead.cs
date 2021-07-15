@@ -731,15 +731,13 @@ namespace SOTS.NPCs.Boss
 									int npc1 = NPC.NewNPC((int)(hookPos[i].X + npc.Center.X), (int)(hookPos[i].Y + npc.Center.Y - 20), mod.NPCType("PhaseEye"));
 									Main.npc[npc1].netUpdate = true;
 								}
+								for (int j = 0; j < 20; j++)
 								{
-									for (int j = 0; j < 20; j++)
-									{
-										int dust = Dust.NewDust(new Vector2((hookPos[i].X + npc.Center.X) - 8, (int)(hookPos[i].Y + npc.Center.Y) - 8), 4, 4, 242);
-										Main.dust[dust].velocity *= 2f;
-										Main.dust[dust].scale *= 4f;
-										Main.dust[dust].velocity += new Vector2(0, -5);
-										Main.dust[dust].noGravity = true;
-									}
+									int dust = Dust.NewDust(new Vector2((hookPos[i].X + npc.Center.X) - 8, (int)(hookPos[i].Y + npc.Center.Y) - 8), 4, 4, 242);
+									Main.dust[dust].velocity *= 2f;
+									Main.dust[dust].scale *= 4f;
+									Main.dust[dust].velocity += new Vector2(0, -5);
+									Main.dust[dust].noGravity = true;
 								}
 							}
 						moveLegsReturn = true;

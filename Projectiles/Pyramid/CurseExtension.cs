@@ -93,14 +93,17 @@ namespace SOTS.Projectiles.Pyramid
 				}
 				else if (projectile.ai[0] == 40)
 				{
-					Vector2 distanceToOwner = projectile.Center - npc.Center;
-					PharaohsCurse curse = npc.modNPC as PharaohsCurse;
-					for (int j = 0; j < 40; j++)
+					if (Main.netMode != NetmodeID.Server)
 					{
-						Vector2 rotational = new Vector2(0, -Main.rand.NextFloat(2.75f, 3.5f)).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360f)));
-						curse.foamParticleList1.Add(new CurseFoam(projectile.Center, rotational, 1.55f, true));
+						Vector2 distanceToOwner = projectile.Center - npc.Center;
+						PharaohsCurse curse = npc.modNPC as PharaohsCurse;
+						for (int j = 0; j < 40; j++)
+						{
+							Vector2 rotational = new Vector2(0, -Main.rand.NextFloat(2.75f, 3.5f)).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360f)));
+							curse.foamParticleList1.Add(new CurseFoam(projectile.Center, rotational, 1.55f, true));
+						}
+						runOnce = true;
 					}
-					runOnce = true;
 				}
 				else if (projectile.ai[0] > 40 && projectile.ai[0] <= 70)
 				{

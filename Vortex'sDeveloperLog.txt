@@ -51,6 +51,7 @@ Low Priority:
 1. Pharaoh's Curse eye animations
 2. New attack for Pharaoh's Curse
 3. Added Cataclysm Spheres (+ needs multiplayer testing)
+4. Made progress on another new attack for Pharaoh's
 
 7/12/21
 1. Celestial serpent no longer gives confusion on its bolts and serpent projectiles
