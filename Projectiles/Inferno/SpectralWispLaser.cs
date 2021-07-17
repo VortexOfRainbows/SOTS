@@ -34,7 +34,18 @@ namespace SOTS.Projectiles.Inferno
 			projectile.localNPCImmunity[target.whoAmI] = projectile.localNPCHitCooldown;
 			target.immune[projectile.owner] = 0;
 		}
-		List<Vector2> posList = new List<Vector2>();
+		bool green = false;
+        public override bool PreAI()
+        {
+			if(projectile.ai[0] == -1)
+			{
+				projectile.ai[0] = 29;
+				Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 15, 1f, 0.25f);
+				green = true;
+            }
+            return base.PreAI();
+        }
+        List<Vector2> posList = new List<Vector2>();
 		List<FireParticle> particleList = new List<FireParticle>();
 		public void cataloguePos()
 		{
@@ -136,7 +147,7 @@ namespace SOTS.Projectiles.Inferno
 			Color color;
 			for (int i = 0; i < particleList.Count; i++)
 			{
-				color = new Color(30, 60, 225, 0);
+				color = green ? new Color(104, 229, 101, 0) : new Color(30, 60, 225, 0);
 				Vector2 drawPos = particleList[i].position - Main.screenPosition;
 				color = projectile.GetAlpha(color) * (0.35f + 0.65f * particleList[i].scale);
 				for (int j = 0; j < 2; j++)
@@ -148,7 +159,7 @@ namespace SOTS.Projectiles.Inferno
 			}
 			if(projectile.ai[0] < 30)
 			{
-				Texture2D texture2 = ModContent.GetTexture("SOTS/Projectiles/Inferno/SansIndicator");
+				Texture2D texture2 = green ? ModContent.GetTexture("SOTS/Projectiles/Inferno/GreenWispIndicator") : ModContent.GetTexture("SOTS/Projectiles/Inferno/SansIndicator");
 				Vector2 drawOrigin2 = new Vector2(0, 2);
 				for(int j = 0; j < 450; j++)
 				{
@@ -157,7 +168,7 @@ namespace SOTS.Projectiles.Inferno
 					for (int i = -1; i < 2; i += 2)
 					{
 						Vector2 circular = new Vector2(0, i * 0.33f * (30 - projectile.ai[0])).RotatedBy(projectile.velocity.ToRotation());
-						Main.spriteBatch.Draw(texture2, projectile.Center + offset + circular - Main.screenPosition, new Rectangle(0, 0, 2, 4),  new Color(150, 150, 255) * (projectile.ai[0] / 30f) * alphaMult, projectile.velocity.ToRotation(), drawOrigin2, 0.5f, SpriteEffects.None, 0f);
+						Main.spriteBatch.Draw(texture2, projectile.Center + offset + circular - Main.screenPosition, new Rectangle(0, 0, 2, 4),  (green ? new Color(120, 205, 120) : new Color(150, 150, 255)) * (projectile.ai[0] / 30f) * alphaMult, projectile.velocity.ToRotation(), drawOrigin2, 0.5f, SpriteEffects.None, 0f);
 					}
 					int x = (int)(projectile.Center.X + offset.X) / 16;
 					int y = (int)(projectile.Center.Y + offset.Y) / 16;
@@ -167,16 +178,19 @@ namespace SOTS.Projectiles.Inferno
 						break;
 					}
 				}
-				texture = Main.projectileTexture[projectile.type];
-				drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
-				float scale = 1f;
-				for (int j = 0; j < 2; j++)
+				if(!green)
 				{
-					for (int i = 0; i < 4; i++)
+					texture = Main.projectileTexture[projectile.type];
+					drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
+					float scale = 1f;
+					for (int j = 0; j < 2; j++)
 					{
-						float x = Main.rand.NextFloat(-1f, 1f);
-						float y = Main.rand.NextFloat(-1f, 1f);
-						Main.spriteBatch.Draw(texture, projectile.Center + new Vector2(x, y) - Main.screenPosition, null, new Color(100, 100, 175, 0), projectile.rotation * (1 + j * 0.33f), drawOrigin, scale * (projectile.scale * 1.25f + projectile.ai[0] * 0.0125f) *  (1 - j * 0.33f), SpriteEffects.None, 0f);
+						for (int i = 0; i < 4; i++)
+						{
+							float x = Main.rand.NextFloat(-1f, 1f);
+							float y = Main.rand.NextFloat(-1f, 1f);
+							Main.spriteBatch.Draw(texture, projectile.Center + new Vector2(x, y) - Main.screenPosition, null, new Color(100, 100, 175, 0), projectile.rotation * (1 + j * 0.33f), drawOrigin, scale * (projectile.scale * 1.25f + projectile.ai[0] * 0.0125f) * (1 - j * 0.33f), SpriteEffects.None, 0f);
+						}
 					}
 				}
 			}

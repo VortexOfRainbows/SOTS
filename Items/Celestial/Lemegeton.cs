@@ -13,7 +13,7 @@ namespace SOTS.Items.Celestial
 		public override void SetStaticDefaults() 
 		{
 			DisplayName.SetDefault("Lemegeton");
-			Tooltip.SetDefault("Summons a horde of Wisps to defend you from nearby enemies\nRed wisps will attack particularly close enemies and steal life\nGreen wisps will fire short-ranged blasts at farther away enemies\nPurple wisps will");
+			Tooltip.SetDefault("Summons a horde of Wisps to defend you from nearby enemies\nRed wisps will attack particularly close enemies and steal life\nGreen wisps will fire short-ranged blasts at farther away enemies\nPurple wisps launch a cluster of homing bolts at mid-range enemies");
 			ItemID.Sets.GamepadWholeScreenUseRange[item.type] = true; 
 			ItemID.Sets.LockOnIgnoresCollision[item.type] = true;
 		}
@@ -37,10 +37,10 @@ namespace SOTS.Items.Celestial
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
 			Projectile.NewProjectile(position, new Vector2(speedX, speedY), ModContent.ProjectileType<LemegetonWispRed>(), damage, knockBack, player.whoAmI);
-			//Projectile.NewProjectile(position, new Vector2(speedX, speedY), ModContent.ProjectileType<LemegetonWispRed>(), damage, knockBack, player.whoAmI);
+			Projectile.NewProjectile(position, new Vector2(speedX, speedY), ModContent.ProjectileType<LemegetonWispGreen>(), damage, knockBack, player.whoAmI);
 			//Projectile.NewProjectile(position, new Vector2(speedX, speedY), ModContent.ProjectileType<LemegetonWispRed>(), damage, knockBack, player.whoAmI);
 			player.AddBuff(item.buffType, 2);
-			return true;
+			return false;
 		}
 	}
 }

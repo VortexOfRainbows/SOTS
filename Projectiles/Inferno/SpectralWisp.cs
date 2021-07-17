@@ -8,6 +8,7 @@ using Terraria.ID;
 using SOTS.Projectiles.Celestial;
 using System.Collections.Generic;
 using SOTS.Buffs;
+using SOTS.Projectiles.Otherworld;
 
 namespace SOTS.Projectiles.Inferno
 {
@@ -389,11 +390,22 @@ namespace SOTS.Projectiles.Inferno
 			attackCounterSpeed = 5f;
 			attackCounterCooldown = 90f;
 			midCounterMult = 0.75f;
+			enemyRange = 480f;
 		}
 		public override void SafeSetDefaults()
 		{
 			projectile.usesLocalNPCImmunity = true;
-			projectile.localNPCHitCooldown = 10;
+			projectile.localNPCHitCooldown = 15;
+		}
+		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		{
+			Player player = Main.player[projectile.owner];
+			int heal = 1;
+			if (player.whoAmI == Main.myPlayer)
+			{
+				Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("HealProj"), 0, 0, player.whoAmI, heal, 1);
+			}
+			base.OnHitNPC(target, damage, knockback, crit);
 		}
 		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
 		{
@@ -435,6 +447,160 @@ namespace SOTS.Projectiles.Inferno
 				}
 			}
 			texture = ModContent.GetTexture("SOTS/Projectiles/Inferno/LemegetonWispRedOutline");
+			drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
+			color = new Color(100, 100, 100, 0);
+			for (int k = 0; k < 12; k++)
+			{
+				Vector2 drawPos = projectile.Center - Main.screenPosition;
+				Vector2 circular = new Vector2(Main.rand.NextFloat(0, 3), 0).RotatedBy(Math.PI / 6 * k);
+				Main.spriteBatch.Draw(texture, drawPos + circular, null, color * 0.9f, projectile.rotation, drawOrigin, projectile.scale * 1.125f, SpriteEffects.None, 0f);
+			}
+			drawOrigin = new Vector2(Main.projectileTexture[projectile.type].Width * 0.5f, projectile.height * 0.5f);
+			for (int k = 0; k < projectile.oldPos.Length; k++)
+			{
+				Vector2 drawPos = projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, projectile.gfxOffY);
+				color = new Color(100, 100, 100, 0) * ((float)(projectile.oldPos.Length - k) / (float)projectile.oldPos.Length);
+				spriteBatch.Draw(Main.projectileTexture[projectile.type], drawPos, null, color, projectile.rotation, drawOrigin, projectile.scale * 0.1f + 0.70f * ((float)(projectile.oldPos.Length - k) / (float)projectile.oldPos.Length), SpriteEffects.None, 0f);
+			}
+			float modifier = (float)Math.Sin(MathHelper.ToRadians(projectile.ai[1] * 4)) * 1.5f;
+			spriteBatch.Draw(Main.projectileTexture[projectile.type], projectile.Center - Main.screenPosition + new Vector2(0, (int)modifier * 1.2f), null, new Color(255, 255, 255), projectile.rotation, drawOrigin, projectile.scale * 0.8f, SpriteEffects.None, 0f);
+			return false;
+		}
+	}
+	public class LemegetonWispGreen : WispMinion
+	{
+		public override void ActiveCheck(Player player)
+		{
+			if (player.dead || !player.active)
+			{
+				player.ClearBuff(ModContent.BuffType<InfernalDefense>());
+			}
+			if (player.HasBuff(ModContent.BuffType<InfernalDefense>()))
+			{
+				projectile.timeLeft = 6;
+			}
+		}
+		public override void SetStaticDefaults()
+		{
+			DisplayName.SetDefault("Lemegeton Wisp");
+			ProjectileID.Sets.MinionTargettingFeature[projectile.type] = false;
+			ProjectileID.Sets.TrailCacheLength[projectile.type] = 8;
+			ProjectileID.Sets.TrailingMode[projectile.type] = 0;
+			attackCounterSpeed = 3.25f;
+			attackCounterCooldown = 90f;
+			midCounterMult = 0.5f;
+			enemyRange = 960f;
+		}
+		public override void SafeSetDefaults()
+		{
+			projectile.usesLocalNPCImmunity = true;
+			projectile.localNPCHitCooldown = 30;
+		}
+		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+		{
+			damage = (int)(damage * 0.75f);
+		}
+		public override void DoAttack(Vector2 toNPC)
+		{
+			Projectile.NewProjectile(projectile.Center + toNPC.SafeNormalize(Vector2.Zero) * 24, toNPC.SafeNormalize(Vector2.Zero) * 5, ModContent.ProjectileType<SpectralWispLaser>(), projectile.damage, 1f, Main.myPlayer, -1, 0);
+		}
+		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		{
+			Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Celestial/SubspaceLingeringFlame");
+			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
+			Color color;
+			for (int i = 0; i < particleList.Count; i++)
+			{
+				color = new Color(104, 229, 101, 0);
+				Vector2 drawPos = particleList[i].position - Main.screenPosition;
+				color = projectile.GetAlpha(color) * (0.35f + 0.65f * particleList[i].scale);
+				for (int j = 0; j < 2; j++)
+				{
+					float x = Main.rand.NextFloat(-2f, 2f);
+					float y = Main.rand.NextFloat(-2f, 2f);
+					Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, particleList[i].rotation, drawOrigin, particleList[i].scale * 1.25f, SpriteEffects.None, 0f);
+				}
+			}
+			texture = ModContent.GetTexture("SOTS/Projectiles/Inferno/LemegetonWispGreenOutline");
+			drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
+			color = new Color(100, 100, 100, 0);
+			for (int k = 0; k < 12; k++)
+			{
+				Vector2 drawPos = projectile.Center - Main.screenPosition;
+				Vector2 circular = new Vector2(Main.rand.NextFloat(0, 3), 0).RotatedBy(Math.PI / 6 * k);
+				Main.spriteBatch.Draw(texture, drawPos + circular, null, color * 0.9f, projectile.rotation, drawOrigin, projectile.scale * 1.125f, SpriteEffects.None, 0f);
+			}
+			drawOrigin = new Vector2(Main.projectileTexture[projectile.type].Width * 0.5f, projectile.height * 0.5f);
+			for (int k = 0; k < projectile.oldPos.Length; k++)
+			{
+				Vector2 drawPos = projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, projectile.gfxOffY);
+				color = new Color(100, 100, 100, 0) * ((float)(projectile.oldPos.Length - k) / (float)projectile.oldPos.Length);
+				spriteBatch.Draw(Main.projectileTexture[projectile.type], drawPos, null, color, projectile.rotation, drawOrigin, projectile.scale * 0.1f + 0.70f * ((float)(projectile.oldPos.Length - k) / (float)projectile.oldPos.Length), SpriteEffects.None, 0f);
+			}
+			float modifier = (float)Math.Sin(MathHelper.ToRadians(projectile.ai[1] * 4)) * 1.5f;
+			spriteBatch.Draw(Main.projectileTexture[projectile.type], projectile.Center - Main.screenPosition + new Vector2(0, (int)modifier * 1.2f), null, new Color(255, 255, 255), projectile.rotation, drawOrigin, projectile.scale * 0.8f, SpriteEffects.None, 0f);
+			return false;
+		}
+	}
+	public class LemegetonWispPurple : WispMinion
+	{
+		public override void ActiveCheck(Player player)
+		{
+			if (player.dead || !player.active)
+			{
+				player.ClearBuff(ModContent.BuffType<InfernalDefense>());
+			}
+			if (player.HasBuff(ModContent.BuffType<InfernalDefense>()))
+			{
+				projectile.timeLeft = 6;
+			}
+		}
+		public override void SetStaticDefaults()
+		{
+			DisplayName.SetDefault("Lemegeton Wisp");
+			ProjectileID.Sets.MinionTargettingFeature[projectile.type] = false;
+			ProjectileID.Sets.TrailCacheLength[projectile.type] = 8;
+			ProjectileID.Sets.TrailingMode[projectile.type] = 0;
+			attackCounterSpeed = 2.5f;
+			attackCounterCooldown = 120f;
+			midCounterMult = 0.33f;
+			enemyRange = 720f;
+		}
+		public override void SafeSetDefaults()
+		{
+			projectile.usesLocalNPCImmunity = true;
+			projectile.localNPCHitCooldown = 30;
+		}
+		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+		{
+			damage = (int)(damage * 0.75f);
+		}
+		public override void DoAttack(Vector2 toNPC)
+		{
+			for(int i = -1; i <= 1; i++)
+			{
+				Vector2 rotateVelo = toNPC.SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.ToRadians(5 * i));
+				Projectile.NewProjectile(projectile.Center + toNPC.SafeNormalize(Vector2.Zero) * 24, rotateVelo * 4.5f, ModContent.ProjectileType<FriendlyOtherworldlyBolt>(), projectile.damage, 1f, Main.myPlayer, -1, 0);
+			}
+		}
+		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		{
+			Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Celestial/SubspaceLingeringFlame");
+			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
+			Color color;
+			for (int i = 0; i < particleList.Count; i++)
+			{
+				color = new Color(200, 119, 247, 0);
+				Vector2 drawPos = particleList[i].position - Main.screenPosition;
+				color = projectile.GetAlpha(color) * (0.35f + 0.65f * particleList[i].scale);
+				for (int j = 0; j < 2; j++)
+				{
+					float x = Main.rand.NextFloat(-2f, 2f);
+					float y = Main.rand.NextFloat(-2f, 2f);
+					Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, particleList[i].rotation, drawOrigin, particleList[i].scale * 1.25f, SpriteEffects.None, 0f);
+				}
+			}
+			texture = ModContent.GetTexture("SOTS/Projectiles/Inferno/LemegetonWispPurpleOutline");
 			drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
 			color = new Color(100, 100, 100, 0);
 			for (int k = 0; k < 12; k++)

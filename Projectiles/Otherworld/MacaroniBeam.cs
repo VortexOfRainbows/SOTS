@@ -91,10 +91,8 @@ namespace SOTS.Projectiles.Otherworld
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
 			Player player = Main.player[projectile.owner];
-			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
 			int heal = 2;
 			if (Main.rand.Next(6) == 0) heal = 3;
-
 			if (player.whoAmI == Main.myPlayer)
 			{
 				Projectile.NewProjectile(ogPos.X, ogPos.Y, 0, 0, mod.ProjectileType("HealProj"), 0, 0, player.whoAmI, heal, 8);
