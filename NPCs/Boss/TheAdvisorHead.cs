@@ -625,7 +625,6 @@ namespace SOTS.NPCs.Boss
 
 		}
 		float steepTurn = 20f;
-
 		public override void PostAI()
         {
 			Player player = Main.player[npc.target];
@@ -1168,19 +1167,19 @@ namespace SOTS.NPCs.Boss
 				int type = Main.rand.Next(3);
 				if (type  == 0)
 				{
-					if (Main.rand.Next(3) == 0)
+					if (Main.rand.NextBool(3))
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("OtherworldlyAlloy"), Main.rand.Next(10, 17));
 					else
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("MeteoriteKey"), 1);
 
-					if (Main.rand.Next(3) == 0)
+					if (Main.rand.NextBool(3))
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("StarlightAlloy"), Main.rand.Next(10, 17));
 					else
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("SkywareKey"), 1);
 
-					if (Main.rand.Next(3) == 0)
+					if (Main.rand.NextBool(3))
 					{
-						if (Main.rand.Next(3) == 0)
+						if (Main.rand.NextBool(3))
 							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("HardlightAlloy"), Main.rand.Next(10, 17));
 						else
 							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("StrangeKey"), 1);
@@ -1188,19 +1187,19 @@ namespace SOTS.NPCs.Boss
 				}
 				if (type == 1)
 				{
-					if (Main.rand.Next(3) == 0)
+					if (Main.rand.NextBool(3))
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("StarlightAlloy"), Main.rand.Next(10, 17));
 					else
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("SkywareKey"), 1);
 
-					if (Main.rand.Next(3) == 0)
+					if (Main.rand.NextBool(3))
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("HardlightAlloy"), Main.rand.Next(10, 17));
 					else
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("StrangeKey"), 1);
 
-					if (Main.rand.Next(3) == 0)
+					if (Main.rand.NextBool(3))
 					{
-						if (Main.rand.Next(3) == 0)
+						if (Main.rand.NextBool(3))
 							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("OtherworldlyAlloy"), Main.rand.Next(10, 17));
 						else
 							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("MeteoriteKey"), 1);
@@ -1208,19 +1207,19 @@ namespace SOTS.NPCs.Boss
 				}
 				if (type == 2)
 				{
-					if (Main.rand.Next(3) == 0)
+					if (Main.rand.NextBool(3))
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("OtherworldlyAlloy"), Main.rand.Next(10, 17));
 					else
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("MeteoriteKey"), 1);
 
-					if (Main.rand.Next(3) == 0)
+					if (Main.rand.NextBool(3))
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("HardlightAlloy"), Main.rand.Next(10, 17));
 					else
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("StrangeKey"), 1);
 
-					if (Main.rand.Next(3) == 0)
+					if (Main.rand.NextBool(3))
 					{
-						if (Main.rand.Next(3) == 0)
+						if (Main.rand.NextBool(3))
 							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("StarlightAlloy"), Main.rand.Next(10, 17));
 						else
 							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("SkywareKey"), 1);

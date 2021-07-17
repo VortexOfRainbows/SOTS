@@ -620,7 +620,11 @@ namespace SOTS
 			//geodeBiome = tileCounts[mod.TileType("GeodeBlock")];
 			pyramidBiome = tileCounts[mod.TileType("SarcophagusTile")] + tileCounts[ModContent.TileType<ZeplineLureTile>()];  
 		}
-		public override void PostWorldGen()
+        public override void ModifyHardmodeTasks(List<GenPass> list)
+        {
+            base.ModifyHardmodeTasks(list);
+        }
+        public override void PostWorldGen()
 		{
 			/*
 			int xPosition2 = Main.maxTilesX/2;

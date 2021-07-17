@@ -100,7 +100,11 @@ namespace SOTS.NPCs.Boss.Curse
 			catalogueParticles();
 			return base.PreAI();
 		}
-		bool[] ignore;
+        public override bool CanHitPlayer(Player target, ref int cooldownSlot)
+        {
+            return npc.ai[3] > 90;
+        }
+        bool[] ignore;
 		public override void PostAI()
 		{
 			if (ignore == null)
@@ -117,18 +121,28 @@ namespace SOTS.NPCs.Boss.Curse
 		}
 		public override void AI()
 		{
+			npc.ai[3]++;
 			Player player = Main.player[npc.target];
 			npc.ai[1]++;
-			Vector2 rotatePos = new Vector2(120, 0).RotatedBy(MathHelper.ToRadians(npc.ai[1]));
-			Vector2 toPos = rotatePos + player.Center;
-			Vector2 goToPos = npc.Center - toPos;
-			float length = goToPos.Length() + 0.1f;
-			if (length > 12)
+			if(npc.ai[1] % 720 == 630 || npc.ai[2] > 0) //do slam attack
+            {
+				npc.ai[2]++;
+				npc.velocity *= 0.1f;
+				npc.velocity.Y += 2.4f;
+            }
+			else
 			{
-				length = 12;
+				Vector2 rotatePos = new Vector2(160, 0).RotatedBy(MathHelper.ToRadians(npc.ai[1]));
+				Vector2 toPos = rotatePos + player.Center;
+				Vector2 goToPos = npc.Center - toPos;
+				float length = goToPos.Length() + 0.1f;
+				if (length > 12)
+				{
+					length = 12;
+				}
+				goToPos = goToPos.SafeNormalize(Vector2.Zero);
+				npc.velocity = goToPos * -length;
 			}
-			goToPos = goToPos.SafeNormalize(Vector2.Zero);
-			npc.velocity = goToPos * -length;
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{

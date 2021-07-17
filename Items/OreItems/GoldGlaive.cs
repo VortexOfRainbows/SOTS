@@ -45,13 +45,13 @@ namespace SOTS.Items.OreItems
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-              int numberProjectiles = 3;
-			  for (int i = 0; i < numberProjectiles; i++)
-              {
-                  Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians(160 + (i * 20)));
-                  Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, mod.ProjectileType("GoldBolt"), (int)(damage * 0.75f) + 1, knockBack, player.whoAmI);
-              }
-              return true; 
+			int numberProjectiles = 3;
+			for (int i = 0; i < numberProjectiles; i++)
+			{
+			    Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians(160 + (i * 20)));
+			    Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, mod.ProjectileType("GoldBolt"), (int)(damage * 0.75f) + 1, knockBack, player.whoAmI);
+			}
+			return true; 
 		}
 	}
 }

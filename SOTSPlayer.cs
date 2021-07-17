@@ -63,6 +63,7 @@ namespace SOTS
 			if (FluidCurseMult > 60)
 				FluidCurseMult = 60;
 		}
+		public bool CanKillNPC = false;
 		public bool CurseAura = false;
 		public bool FluidCurse = false;
 		public float FluidCurseMult = 120;
@@ -407,10 +408,19 @@ namespace SOTS
 			}
 			base.PostUpdate();
         }
+        public override bool? CanHitNPC(Item item, NPC target)
+        {
+			if(CanKillNPC)
+            {
+				return item.melee == true && target.townNPC;
+            }
+            return base.CanHitNPC(item, target);
+        }
         public override void ResetEffects()
 		{
 			TrailStuff();
-			doCurseAura();
+			doCurseAura(); 
+			CanKillNPC = false;
 			baguetteDrops = false;
 			if (baguetteLengthCounter >= 180)
 			{

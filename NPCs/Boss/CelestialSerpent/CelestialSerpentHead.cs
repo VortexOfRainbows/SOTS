@@ -55,8 +55,8 @@ namespace SOTS.NPCs.Boss.CelestialSerpent
 			else 
 			{
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("StarShard"), Main.rand.Next(16, 25)); 
-				if(Main.rand.Next(20) == 0)
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("StrangeFruit"), 1); 
+				if(Main.rand.NextBool(20))
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("StrangeFruit"), 1); 
 			}
 		}
         public override bool PreAI()

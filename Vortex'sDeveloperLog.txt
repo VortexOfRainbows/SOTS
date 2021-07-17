@@ -37,21 +37,27 @@ Low Priority:
 1. Archaelogist NPC
 2. Spaghetti Whip
 3. Mobile Fortress Generator: One for every tavernkeep armor set
-4. Buff PP slam attack projectile speed? Faster ring attack cycle (expert)
-5. Sharanga Upgrade
-6. Remove negative Vregen in inventory items
-7. Electrolyte Seperator
-8. Amogus
+4. Sharanga Upgrade
+5. Remove negative Vregen in inventory items
+6. Electrolyte Seperator
+7. Amogus
 
-1. Next: More Pharaoh (+ Multiplayer testing), Buff Polaris
+1. Next: More Pharaoh (+ Multiplayer testing), Buff Polaris, Cataclysm Spheres multiplayer testing
 2. Next: look into earthen construct bugs
 3. Next: Keybind for Machina Booster
+4. Next: Lemegeton: Summons three colored wisps at a time: red, green, purple. Red is melee, Green is ranged, Purple is magic
+	1. Red will fly into enemies, dealing good damage, but single target
+	2. Green will go up close and fire a bolt (like normal book of virtues but without buildup)
+	3. Purple will launch a cluster of homing fireballs for 50% damage each
 
-7/13/21 & 7/14/21
+7/13/21 & 7/14/21 & 7/15/21 & 7/16/21
 1. Pharaoh's Curse eye animations
 2. New attack for Pharaoh's Curse
-3. Added Cataclysm Spheres (+ needs multiplayer testing)
+3. Added Cataclysm Spheres
 4. Made progress on another new attack for Pharaoh's
+5. Added Zombie hand
+6. Began on Lemegeton Wisp framework
+7. 
 
 7/12/21
 1. Celestial serpent no longer gives confusion on its bolts and serpent projectiles

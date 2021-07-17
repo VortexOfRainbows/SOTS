@@ -1078,9 +1078,9 @@ namespace SOTS.NPCs.Boss.Curse
 						smaller = true;
 						ParticleExplosion(200, false);
 						if (Main.netMode != 1)
-   							for (int i = 2; i < 5; i++)
+   							for (int i = 2; i <= 4; i++)
 							{
-								int npc1 = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<SmallGas>(), 0, npc.whoAmI, i * 90, 0, 0);
+								int npc1 = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<SmallGas>(), 0, npc.whoAmI, i * 90, 0, 0); //summons 180, 270, and 360
 								Main.npc[npc1].netUpdate = true;
 							}
                     }
@@ -1094,18 +1094,47 @@ namespace SOTS.NPCs.Boss.Curse
 						else
                         {
 							eyeFrame = 2;
+							/*if (ai2 % 60 == 0 && ai2 > 120 && Main.expertMode)
+							{
+								Main.PlaySound(2, (int)npc.Center.X, (int)npc.Center.Y, 96, 0.875f, 0.2f);
+								eyeOffsetMult = -1;
+								if (Main.netMode != NetmodeID.MultiplayerClient)
+								{
+									int damage = npc.damage / 2;
+									if (Main.expertMode)
+									{
+										damage = (int)(damage / Main.expertDamage);
+									}
+									Vector2 toPlayer = npc.Center - player.Center;
+									toPlayer = toPlayer.SafeNormalize(Vector2.Zero) * -0.8f;
+									for (int i = -1; i <= 1; i++)
+									{
+										Vector2 velo = toPlayer.RotatedBy(MathHelper.ToRadians(i * 3.5f));
+										Projectile.NewProjectile(center + velo * 12f, velo, ModContent.ProjectileType<ShadeSpear>(), (int)(damage * 1.1f), 0f, Main.myPlayer, npc.whoAmI, 0);
+									}
+								}
+							}*/
 						}
 					}
-					Vector2 rotatePos = new Vector2(120, 0).RotatedBy(MathHelper.ToRadians(ai2));
-					Vector2 toPos = rotatePos + player.Center;
-					Vector2 goToPos = npc.Center - toPos;
-					float length = goToPos.Length() + 0.1f;
-					if (length > 12)
+					if (ai2 % 720 == 630 || ai3 > 0) //do slam attack
 					{
-						length = 12;
+						ai3++;
+						npc.velocity *= 0.1f;
+						npc.velocity.Y += 2.4f;
 					}
-					goToPos = goToPos.SafeNormalize(Vector2.Zero);
-					npc.velocity = goToPos * -length;
+					else
+					{
+						Vector2 rotatePos = new Vector2(160, 0).RotatedBy(MathHelper.ToRadians(ai2));
+						Vector2 toPos = rotatePos + player.Center;
+						Vector2 goToPos = npc.Center - toPos;
+						float length = goToPos.Length() + 0.1f;
+						if (length > 12)
+						{
+							length = 12;
+						}
+						goToPos = goToPos.SafeNormalize(Vector2.Zero);
+						npc.velocity = goToPos * -length;
+					}
 				}
 			}
 		}

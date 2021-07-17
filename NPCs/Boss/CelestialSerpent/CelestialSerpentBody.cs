@@ -41,7 +41,6 @@ namespace SOTS.NPCs.Boss.CelestialSerpent
         float maxDPS = 250;
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
-
             if (damage - (defense/2) > currentDPS)
             {
                 damage = currentDPS + (defense / 2);
