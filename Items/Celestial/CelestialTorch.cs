@@ -1,9 +1,7 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
-using System;
 
 namespace SOTS.Items.Celestial
 {
@@ -13,13 +11,12 @@ namespace SOTS.Items.Celestial
 		{
 			DisplayName.SetDefault("Celestial Torch");
 			Tooltip.SetDefault("'As you gaze into the flame, the stars in the sky become dimmer'");
-			Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(6, 8));
+			Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(4, 6));
 		}
 		public override void SetDefaults()
 		{
-
 			item.width = 36;
-			item.height = 40;
+			item.height = 38;
 			item.value = 0;
 			item.rare = 8;
 			item.maxStack = 30;
@@ -46,14 +43,9 @@ namespace SOTS.Items.Celestial
 		}
 		public override bool UseItem(Player player)
 		{
-		NPC.SpawnOnPlayer(player.whoAmI, mod.NPCType("CelestialSerpentHead"));
-		Main.PlaySound(0, (int)player.position.X, (int)player.position.Y, 0);
-		if(!NPC.AnyNPCs(mod.NPCType("CelestialSerpentHead")))
-		{
-		//		 NPC.NewNPC((int)player.Center.X, (int)player.Center.Y - 600, mod.NPCType("PutridPinky1"));	
-		}
-		return true;
-		
+			NPC.SpawnOnPlayer(player.whoAmI, mod.NPCType("CelestialSerpentHead"));
+			Main.PlaySound(0, (int)player.position.X, (int)player.position.Y, 0);
+			return true;
 		}
 	}
 }

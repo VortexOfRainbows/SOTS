@@ -216,7 +216,7 @@ namespace SOTS.Projectiles.Inferno
 				}
 				projectile.ai[0] = ofTotal;
 				storeTotal = total;
-				if ((int)projectile.ai[1] % 40 == 0)
+				if ((int)projectile.ai[1] % 30 == 0)
 					projectile.netUpdate = true;
 			}
 			ofTotal = (int)projectile.ai[0];
@@ -269,7 +269,10 @@ namespace SOTS.Projectiles.Inferno
 		public sealed override void AI()
 		{
 			Player player = Main.player[projectile.owner];
-			ActiveCheck(player);
+			if (projectile.owner == player.whoAmI)
+				ActiveCheck(player);
+			else
+				projectile.timeLeft = 6;
 			Vector2 goTo = projectile.Center;
 			Vector2 toLocation = projectile.Center;
 			FindPassivePosition(ref goTo, ref toLocation);

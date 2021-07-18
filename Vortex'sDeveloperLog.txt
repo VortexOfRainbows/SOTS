@@ -42,13 +42,14 @@ Low Priority:
 6. Electrolyte Seperator
 7. Amogus
 
-1. Next: More Pharaoh (+ Multiplayer testing), Buff Polaris, Cataclysm Spheres and Lemegeton needs multiplayer testing
+1. Next: More Pharaoh (+ Multiplayer testing), Buff Polaris
 2. Next: look into earthen construct bugs
 3. Next: Keybind for Machina Booster
-4. Next: Lemegeton: Summons three colored wisps at a time: red, green, purple. Red is melee, Green is ranged, Purple is magic
-	1. Red will fly into enemies, dealing good damage, but single target
-	2. Green will go up close and fire a bolt (like normal book of virtues but without buildup)
-	3. Purple will launch a cluster of homing fireballs for 50% damage each
+
+7/18/21
+1. Lemegeton works in multiplayer!
+2. Tested: Cataclysm Spheres work in multiplayer!
+3. 
 
 7/17/21
 1. Finished Lemegeton (still needs multiplayer testing)
