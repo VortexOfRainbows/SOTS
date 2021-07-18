@@ -14,8 +14,8 @@ namespace SOTS.Items.Celestial
 		public override void SetDefaults()
 		{
 
-			item.width = 26;
-			item.height = 26;
+			item.width = 34;
+			item.height = 38;
             item.value = Item.sellPrice(0, 0, 75, 0);
 			item.rare = 8;
 			item.maxStack = 99;
