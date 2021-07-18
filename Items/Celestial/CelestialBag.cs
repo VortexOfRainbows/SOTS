@@ -14,8 +14,8 @@ namespace SOTS.Items.Celestial
 		public override void SetDefaults()
 		{
 
-			item.width = 34;
-			item.height = 40;
+			item.width = 44;
+			item.height = 34;
 			item.value = 0;
 			item.rare = 6;
 			item.expert = true;
