@@ -25,6 +25,7 @@ namespace SOTS.Void
 		public static Color EarthColor = new Color(230, 220, 145);
 		public static Color OtherworldColor = new Color(167, 45, 225, 0);
 		public static Color VibrantColor = new Color(85, 125, 215, 0);
+		public static Color LemegetonColor = new Color(255, 82, 97, 0);
 		public static int soulColorCounter = 0;
 		public int voidMeterMax = 100;
 		public int voidAnkh = 0;
@@ -238,6 +239,25 @@ namespace SOTS.Void
 			Color color2 = new Color(64, 178, 172, 0);
 			OtherworldColor = Color.Lerp(color, color2, 0.5f + new Vector2(0.5f, 0).RotatedBy(MathHelper.ToRadians(soulColorCounter * 1.0f)).X);
 			VibrantColor = Color.Lerp(new Color(80, 120, 220, 0), new Color(180, 230, 100, 0), 0.5f + new Vector2(0.5f, 0).RotatedBy(MathHelper.ToRadians(soulColorCounter * 2.5f)).X);
+
+			Color LemegetonRed = new Color(255, 82, 97);
+			Color LemegetonGreen = new Color(104, 229, 101);
+			Color LemegetonPurple = new Color(200, 119, 247);
+			float lerpAmt = 1.5f + 3 * (new Vector2(0.5f, 0).RotatedBy(MathHelper.ToRadians(soulColorCounter * 0.33f)).X);
+			if(lerpAmt < 1)
+            {
+				LemegetonColor = Color.Lerp(LemegetonRed, LemegetonGreen, lerpAmt);
+			}
+			else if (lerpAmt < 2)
+			{
+				lerpAmt -= 1;
+				LemegetonColor = Color.Lerp(LemegetonGreen, LemegetonPurple, lerpAmt);
+			}
+			else
+			{
+				lerpAmt -= 2;
+				LemegetonColor = Color.Lerp(LemegetonPurple, LemegetonRed, lerpAmt);
+			}
 		}
 		public static Color VibrantColorAttempt(float degrees)
         {
@@ -307,6 +327,8 @@ namespace SOTS.Void
 				return 65;
 			if (type == (int)VoidMinionID.BethanySpirit)
 				return 15;
+			if (type == (int)VoidMinionID.TBethanySpirit)
+				return 20;
 			return 1;
 		}
 		public static Color minionVoidColor(int type)
@@ -321,7 +343,9 @@ namespace SOTS.Void
 				return new Color(OtherworldColor.R, OtherworldColor.G, OtherworldColor.B);
 			if (type == (int)VoidMinionID.BethanySpirit)
 				return new Color(170, 220, 255);
-				return Color.White;
+			if (type == (int)VoidMinionID.TBethanySpirit)
+				return LemegetonColor;
+			return Color.White;
 		}
 		public static bool isVoidMinion(Projectile projectile)
         {
@@ -347,6 +371,8 @@ namespace SOTS.Void
 				return (int)VoidMinionID.OtherworldSpirit;
 			if (type == ProjectileType<SpectralWisp>())
 				return (int)VoidMinionID.BethanySpirit;
+			if (type == ProjectileType<LemegetonWispGreen>() || type == ProjectileType<LemegetonWispPurple>() || type == ProjectileType<LemegetonWispRed>())
+				return (int)VoidMinionID.TBethanySpirit;
 			return -1;
 		}
 		public enum VoidMinionID
@@ -355,8 +381,9 @@ namespace SOTS.Void
 			ChaosSpirit,
 			EarthenSpirit,
 			OtherworldSpirit,
-			BethanySpirit
-        }
+			BethanySpirit,
+			TBethanySpirit
+		}
         public override void PostUpdateEquips()
         {
             base.PostUpdateEquips();

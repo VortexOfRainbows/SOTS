@@ -72,6 +72,7 @@ namespace SOTS.Projectiles.Base
 			}
 			return false;
 		}
+		bool runOnce = true;
 		int counter = 0;
 		private void genDust()
 		{
@@ -81,7 +82,7 @@ namespace SOTS.Projectiles.Base
 				Main.dust[num1].noGravity = true;
 				Main.dust[num1].velocity *= 0.1f;
 			}
-			if((int)type == 1) //crimson heal
+			if((int)type == 1 || (int)type == -1) //crimson heal
 			{
 				int num1 = Dust.NewDust(new Vector2(projectile.position.X , projectile.position.Y), projectile.width, projectile.height, 60);
 				Main.dust[num1].noGravity = true;
@@ -203,6 +204,22 @@ namespace SOTS.Projectiles.Base
 		}
 		public override void AI()
 		{
+			if(runOnce)
+            {
+				if((int)type == -1)
+				{
+					Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 14, 0.5f, 0.1f);
+					for (int i = 0; i < 40; i++)
+					{
+						Vector2 circularLocation = new Vector2(Main.rand.NextFloat(6f), 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)));
+						int dust = Dust.NewDust(new Vector2(projectile.Center.X - 4, projectile.Center.Y - 3), 0, 0, 60);
+						Main.dust[dust].velocity = circularLocation;
+						Main.dust[dust].scale *= 1.5f;
+						Main.dust[dust].noGravity = true;
+					}
+				}
+				runOnce = false;
+            }
 			Player player = Main.player[projectile.owner];
 			if(projectile.timeLeft < 720)
 			{

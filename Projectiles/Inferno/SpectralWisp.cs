@@ -9,6 +9,7 @@ using SOTS.Projectiles.Celestial;
 using System.Collections.Generic;
 using SOTS.Buffs;
 using SOTS.Projectiles.Otherworld;
+using SOTS.Projectiles.Pyramid;
 
 namespace SOTS.Projectiles.Inferno
 {
@@ -403,7 +404,7 @@ namespace SOTS.Projectiles.Inferno
 			int heal = 1;
 			if (player.whoAmI == Main.myPlayer)
 			{
-				Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("HealProj"), 0, 0, player.whoAmI, heal, 1);
+				Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("HealProj"), 0, 0, player.whoAmI, heal, -1);
 			}
 			base.OnHitNPC(target, damage, knockback, crit);
 		}
@@ -486,10 +487,24 @@ namespace SOTS.Projectiles.Inferno
 			ProjectileID.Sets.MinionTargettingFeature[projectile.type] = false;
 			ProjectileID.Sets.TrailCacheLength[projectile.type] = 8;
 			ProjectileID.Sets.TrailingMode[projectile.type] = 0;
-			attackCounterSpeed = 3.25f;
-			attackCounterCooldown = 90f;
-			midCounterMult = 0.5f;
+			attackCounterSpeed = 6f;
+			attackCounterCooldown = 30f;
+			midCounterMult = 0.8f;
 			enemyRange = 960f;
+		}
+		public override Vector2 FindAttackPosition(ref Vector2 goTo, ref Vector2 toLocation, int targetID)
+		{
+			NPC target = Main.npc[targetID];
+			Vector2 toNPC = target.Center - toLocation;
+			float length = toNPC.Length() - (float)Math.Sqrt(target.width * target.height) * 0.75f - 64;
+			Vector2 middle = toLocation + toNPC.SafeNormalize(Vector2.Zero) * length * 0.5f;
+			Vector2 rotationalPosition = new Vector2(-length * 0.5f, 0).RotatedBy(MathHelper.ToRadians(attackCounter * 2));
+			int direction2 = toNPC.X > 0 ? 1 : -1;
+			rotationalPosition.Y *= 0.2f * direction2;
+			rotationalPosition = rotationalPosition.RotatedBy(toNPC.ToRotation());
+			toLocation = middle + rotationalPosition;
+			goTo = toLocation - projectile.Center;
+			return toNPC;
 		}
 		public override void SafeSetDefaults()
 		{
@@ -498,7 +513,7 @@ namespace SOTS.Projectiles.Inferno
 		}
 		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
 		{
-			damage = (int)(damage * 0.75f);
+			damage = (int)(damage * 0.5f);
 		}
 		public override void DoAttack(Vector2 toNPC)
 		{
@@ -571,16 +586,30 @@ namespace SOTS.Projectiles.Inferno
 			projectile.usesLocalNPCImmunity = true;
 			projectile.localNPCHitCooldown = 30;
 		}
+		public override Vector2 FindAttackPosition(ref Vector2 goTo, ref Vector2 toLocation, int targetID)
+		{
+			NPC target = Main.npc[targetID];
+			Vector2 toNPC = target.Center - toLocation;
+			float length = toNPC.Length() - (float)Math.Sqrt(target.width * target.height) * 0.8f - 160;
+			Vector2 middle = toLocation + toNPC.SafeNormalize(Vector2.Zero) * length * 0.5f;
+			Vector2 rotationalPosition = new Vector2(-length * 0.5f, 0).RotatedBy(MathHelper.ToRadians(attackCounter * 2));
+			int direction2 = toNPC.X > 0 ? 1 : -1;
+			rotationalPosition.Y *= 0.2f * direction2;
+			rotationalPosition = rotationalPosition.RotatedBy(toNPC.ToRotation());
+			toLocation = middle + rotationalPosition;
+			goTo = toLocation - projectile.Center;
+			return toNPC;
+		}
 		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
 		{
-			damage = (int)(damage * 0.75f);
+			damage = (int)(damage * 0.5f);
 		}
 		public override void DoAttack(Vector2 toNPC)
 		{
 			for(int i = -1; i <= 1; i++)
 			{
-				Vector2 rotateVelo = toNPC.SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.ToRadians(5 * i));
-				Projectile.NewProjectile(projectile.Center + toNPC.SafeNormalize(Vector2.Zero) * 24, rotateVelo * 4.5f, ModContent.ProjectileType<FriendlyOtherworldlyBolt>(), projectile.damage, 1f, Main.myPlayer, -1, 0);
+				Vector2 rotateVelo = toNPC.SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.ToRadians(10 * i));
+				Projectile.NewProjectile(projectile.Center + toNPC.SafeNormalize(Vector2.Zero) * 24, rotateVelo * 4.5f, ModContent.ProjectileType<PurpleHomingBolt>(), projectile.damage, 1f, Main.myPlayer);
 			}
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
@@ -590,7 +619,7 @@ namespace SOTS.Projectiles.Inferno
 			Color color;
 			for (int i = 0; i < particleList.Count; i++)
 			{
-				color = new Color(200, 119, 247, 0);
+				color = new Color(160, 95, 198, 0);
 				Vector2 drawPos = particleList[i].position - Main.screenPosition;
 				color = projectile.GetAlpha(color) * (0.35f + 0.65f * particleList[i].scale);
 				for (int j = 0; j < 2; j++)

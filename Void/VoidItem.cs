@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using SOTS.Items.Celestial;
 using SOTS.Items.Otherworld;
 using System.Collections.Generic;
 using System.Linq;
@@ -67,6 +68,8 @@ namespace SOTS.Void
 			if(item.summon)
             {
 				voidMana = VoidPlayer.minionVoidCost(VoidPlayer.voidMinion(item.shoot));
+				if (item.type == ModContent.ItemType<Lemegeton>())
+					voidMana *= 3;
             }
 		}
 		public sealed override void ModifyTooltips(List<TooltipLine> tooltips) 
