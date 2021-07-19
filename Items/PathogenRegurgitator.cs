@@ -16,7 +16,7 @@ namespace SOTS.Items
         }
         public override void SetDefaults()
         {
-            item.damage = 40;
+            item.damage = 45;
             item.ranged = true;
             item.width = 58;
             item.height = 34;
@@ -30,7 +30,7 @@ namespace SOTS.Items
             item.UseSound = SoundID.Item34;
             item.autoReuse = true;
             item.shoot = ModContent.ProjectileType<Pathogen>();
-            item.shootSpeed = 10.5f;
+            item.shootSpeed = 15.5f;
             if (!Main.dedServ)
             {
                 item.GetGlobalItem<ItemUseGlow>().glowTexture = mod.GetTexture("Items/PathogenRegurgitator_Glow");
@@ -51,8 +51,8 @@ namespace SOTS.Items
             {
                 speed = new Vector2(speedX, speedY);
                 speed = speed.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-amt * 2, amt)));
-                speed.X += Main.rand.NextFloat(-amt, amt) * 0.5f;
-                speed.Y += Main.rand.NextFloat(-amt, amt) * 0.5f;
+                speed.X += Main.rand.NextFloat(-amt, amt) * 0.33f;
+                speed.Y += Main.rand.NextFloat(-amt, amt) * 0.33f;
                 Projectile.NewProjectile(position, speed, type, damage, knockBack, player.whoAmI);
             }
             return false;

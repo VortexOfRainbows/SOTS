@@ -42,17 +42,17 @@ Low Priority:
 6. Electrolyte Seperator
 7. Amogus
 
-1. Next: More Pharaoh (+ Multiplayer testing), Buff Polaris
-2. Next: look into earthen construct bugs
-3. Next: Keybind for Machina Booster
+1. Next: Pharaoh Multiplayer testing, Buff Polaris
+2. Next: Keybind for Machina Booster
 
 7/18/21
 1. Lemegeton works in multiplayer!
 2. Tested: Cataclysm Spheres work in multiplayer!
-3. 
+3. Pathogen Regurgitator: Reduced spread, velocity 10.5 -> 15.5, damage 40 -> 45
+4. Finished Up remaining Pharaoh's AI
 
 7/17/21
-1. Finished Lemegeton (still needs multiplayer testing)
+1. Finished Lemegeton
 
 7/13/21 & 7/14/21 & 7/15/21 & 7/16/21
 1. Pharaoh's Curse eye animations

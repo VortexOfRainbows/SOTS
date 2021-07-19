@@ -14,7 +14,7 @@ namespace SOTS.Items.Celestial
 		public override void SetStaticDefaults() 
 		{
 			DisplayName.SetDefault("Lemegeton");
-			Tooltip.SetDefault("Summons a horde of Wisps to defend you from nearby enemies\nRed wisps will attack particularly close enemies and steal life for 100% damage\nGreen wisps will fire short-ranged blasts for 200% damage\nPurple wisps launch a cluster of homing bolts for 75% damage each");
+			Tooltip.SetDefault("Summons a horde of Wisps to defend you from nearby enemies\nRed wisps will attack closer enemies and steal life for 100% damage\nGreen wisps will fire short-ranged blasts for 200% damage\nPurple wisps launch a cluster of homing bolts for 75% damage each");
 			ItemID.Sets.GamepadWholeScreenUseRange[item.type] = true; 
 			ItemID.Sets.LockOnIgnoresCollision[item.type] = true;
 		}

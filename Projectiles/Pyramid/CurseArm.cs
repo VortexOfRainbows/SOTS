@@ -215,7 +215,7 @@ namespace SOTS.Projectiles.Pyramid
 			Vector2 veloToGo = new Vector2(0, 1200).RotatedBy(MathHelper.ToRadians(projectile.ai[1]));
 			projectile.ai[1] += midIterator;
 			NPC npc = Main.npc[parentID];
-			if (npc.active && npc.type == ModContent.NPCType<PharaohsCurse>())
+			if (npc.active && npc.type == ModContent.NPCType<PharaohsCurse>() && !npc.dontTakeDamage)
 			{
 				projectile.Center = npc.Center;
 				projectile.velocity = veloToGo;
