@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -17,10 +16,9 @@ namespace SOTS.Items
 		}
 		public override void SetDefaults()
 		{
-	
 			item.damage = 30;
 			item.magic = true;
-            item.width = 30;     
+            item.width = 26;     
             item.height = 36;   
             item.value = Item.sellPrice(0, 4, 50, 0);
             item.rare = 6;

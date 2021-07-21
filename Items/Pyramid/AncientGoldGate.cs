@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.NPCs.Boss.Curse;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -32,7 +33,7 @@ namespace SOTS.Items.Pyramid
 			item.value = Item.sellPrice(0, 1, 0, 0);
 			item.consumable = true;
 			item.createTile = mod.TileType("AncientGoldGateTile");
-			item.placeStyle = 0;
+			item.placeStyle = 4;
 		}
 	}	
 	public class AncientGoldGateTile : ModTile
@@ -230,6 +231,10 @@ namespace SOTS.Items.Pyramid
 			}
 			return true;
         }
+        public override bool Slope(int i, int j)
+        {
+            return false;
+        }
         public override bool CanExplode(int i, int j)
 		{
 			Tile tile = Main.tile[i, j];
@@ -238,7 +243,14 @@ namespace SOTS.Items.Pyramid
         public override bool CanKillTile(int i, int j, ref bool blockDamaged)
 		{
 			Tile tile = Main.tile[i, j];
-			return tile.frameY >= 360;
+			int left = i - (tile.frameX / 18) % 2;
+			int top = j - (tile.frameY / 18) % 5;
+			Tile tileUp = Main.tile[left, top - 1];
+			Tile tileDown = Main.tile[left, top + 5];
+			Tile tileUp2 = Main.tile[left + 1, top - 1];
+			Tile tileDown2 = Main.tile[left + 1, top + 5];
+			bool surrounded = (tileUp.type == ModContent.TileType<TrueSandstoneTile>() && tileDown.type == ModContent.TileType<TrueSandstoneTile>()) || (tileUp2.type == ModContent.TileType<TrueSandstoneTile>() && tileDown2.type == ModContent.TileType<TrueSandstoneTile>());
+			return tile.frameY >= 360 && (!surrounded || !NPC.AnyNPCs(ModContent.NPCType<PharaohsCurse>()));
 		}
 		public override void NumDust(int i, int j, bool fail, ref int num)
 		{

@@ -1,4 +1,3 @@
-using System;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -17,8 +16,8 @@ namespace SOTS.Items.Pyramid
 		{
 			item.damage = 30;
 			item.melee = true;
-			item.width = 44;
-			item.height = 44;
+			item.width = 48;
+			item.height = 48;
 			item.useTime = 20;
 			item.useAnimation = 20;
 			item.useStyle = 5;

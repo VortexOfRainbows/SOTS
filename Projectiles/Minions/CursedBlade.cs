@@ -34,8 +34,8 @@ namespace SOTS.Projectiles.Minions
 		}
         public override void SetDefaults()
         {
-			projectile.height = 24;
-			projectile.width = 24;
+			projectile.height = 34;
+			projectile.width = 34;
 			projectile.minion = true;
 			projectile.penetrate = -1;
 			projectile.friendly = false;

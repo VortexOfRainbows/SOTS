@@ -23,8 +23,8 @@ namespace SOTS.Projectiles.Pyramid
 			projectile.aiStyle = 0;
 			projectile.melee = true;
 			projectile.friendly = true;
-			projectile.width = 56;
-			projectile.height = 30;
+			projectile.width = 44;
+			projectile.height = 28;
 			projectile.timeLeft = 70;
 			projectile.penetrate = 6;
 			projectile.tileCollide = false;

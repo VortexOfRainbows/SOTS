@@ -1,7 +1,6 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using System;
 using Microsoft.Xna.Framework;
 using SOTS.Void;
 
@@ -11,14 +10,14 @@ namespace SOTS.Items.Pyramid
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Jeweled Gauntlet");
+			DisplayName.SetDefault("Cursed Gauntlet");
 			Tooltip.SetDefault("");
 		}
 		public override void SafeSetDefaults()
 		{
 			item.melee = true;
-			item.width = 34;
-			item.height = 32;
+			item.width = 24;
+			item.height = 30;
 			item.damage = 54;
             item.useTime = 12;
             item.useAnimation = 12;

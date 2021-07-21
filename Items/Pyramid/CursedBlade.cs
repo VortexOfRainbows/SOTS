@@ -1,4 +1,3 @@
-using System;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -8,8 +7,6 @@ namespace SOTS.Items.Pyramid
 {  
     public class CursedBlade : ModItem
     {
-		
-		
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Cursed Blade");
@@ -17,12 +14,11 @@ namespace SOTS.Items.Pyramid
 		}
         public override void SetDefaults()
         {
-           
             item.damage = 28;
             item.summon = true;
             item.mana = 10;
-            item.width = 28;
-            item.height = 28;
+            item.width = 34;
+            item.height = 34;
             item.useTime = 26;
             item.useAnimation = 26;
             item.useStyle = 1;
