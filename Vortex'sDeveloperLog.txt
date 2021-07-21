@@ -45,6 +45,12 @@ Low Priority:
 1. Next: Pharaoh Multiplayer testing, Buff Polaris
 2. Next: Keybind for Machina Booster
 
+7/21/21
+1. Finished Pharaoh's Arena locking.
+2. Some framing fixes.
+3. First Phase of Pharaoh's Server syncs epicly!
+4. Second Phase syncs fine!
+
 7/18/21
 1. Lemegeton works in multiplayer!
 2. Tested: Cataclysm Spheres work in multiplayer!

@@ -437,11 +437,26 @@ namespace SOTS.NPCs.Boss.Curse
 		public List<CurseFoam> foamParticleList3 = new List<CurseFoam>();
 		public List<CurseFoam> foamParticleList4 = new List<CurseFoam>();
 		float startParticles = 1;
+		public void SpawnDoors()
+        {
+			if(Main.netMode != NetmodeID.MultiplayerClient)
+				for(int i = 0; i <= 1; i ++)
+				{
+					int xOff = -56;
+					if (i == 1)
+						xOff = 54;
+					Vector2 offset = new Vector2(xOff, 6) * 16;
+					Vector2 center = new Vector2((int)(npc.Center.X / 16), (int)(npc.Center.Y / 16)) * 16;
+					center += offset;
+					Projectile.NewProjectile(center, Vector2.Zero, ModContent.ProjectileType<SpawnGoldGate>(), 0, 0, Main.myPlayer, 0, 0);
+				}
+        }
 		public override bool PreAI()
 		{
 			Player player = Main.player[npc.target];
 			if (runOnce)
 			{
+				SpawnDoors();
 				startParticles = 0.0f;
 				aiPhase = -1;
 				runOnce = false;

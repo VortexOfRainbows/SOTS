@@ -231,6 +231,10 @@ namespace SOTS.Items.Pyramid
 			}
 			return true;
         }
+        public override bool Slope(int i, int j)
+        {
+            return false;
+        }
         public override bool CanExplode(int i, int j)
 		{
 			Tile tile = Main.tile[i, j];
