@@ -30,7 +30,9 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			for(int i = 0; i < Main.maxNPCs; i++)
+			position = Main.MouseWorld;
+			Projectile.NewProjectile(position, Vector2.Zero, ModContent.ProjectileType<SpawnGoldGate>(), damage, knockBack, player.whoAmI, player.direction, 0);
+			for (int i = 0; i < Main.maxNPCs; i++)
             {
 				NPC npc = Main.npc[i];
 				if(npc.active && npc.type == ModContent.NPCType<PharaohsCurse>())
