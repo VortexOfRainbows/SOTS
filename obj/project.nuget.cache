@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "O+943mOa+G3h9I6ZWm3a0IviaYoERMNDClXnjzhjPm7mbz+QdNOTkS8id47xImP7y0wOjbPdBucwrkwf/XFItQ==",
+  "dgSpecHash": "VgDrQlY2xDYqjx9z5qbSi2m3YOFPcDd+7u+gkil+lQRLCZToMmO0uSu8YDEMF6HsZONUMVNCHqSXqI6HjQbmGA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\vorte\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\SOTS\\SOTS.csproj",
+  "projectFilePath": "C:\\Users\\Mint\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\SOTS\\SOTS.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\vorte\\.nuget\\packages\\tmodloader.codeassist\\0.1.2\\tmodloader.codeassist.0.1.2.nupkg.sha512"
+    "C:\\Users\\Mint\\.nuget\\packages\\tmodloader.codeassist\\0.1.2\\tmodloader.codeassist.0.1.2.nupkg.sha512"
   ],
   "logs": []
 }
