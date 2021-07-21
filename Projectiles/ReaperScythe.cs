@@ -17,7 +17,7 @@ namespace SOTS.Projectiles
 			projectile.height = 28;
 			projectile.friendly = true;
 			projectile.aiStyle = -1;
-			projectile.penetrate = 4;      //this is how many enemy this projectile penetrate before disappear
+			projectile.penetrate = 5;      //this is how many enemy this projectile penetrate before disappear
 			projectile.extraUpdates = 1;
 			projectile.timeLeft = 100;
 			Main.projFrames[projectile.type] = 6;
@@ -39,25 +39,34 @@ namespace SOTS.Projectiles
             {
 				cen = projectile.DirectionTo(Main.MouseWorld) * 0.5f;
             }
-			if (projectile.ai[0] > 20 && projectile.ai[0] < 40)
+			if (projectile.ai[0] > 20 && projectile.ai[0] < 50)
             {
-				projectile.velocity += cen * 2;
+				projectile.velocity += cen * 1.8f;
             }
             else if (projectile.ai[0] < 20)
             {
 				projectile.velocity *= 0.95f;
 			}
-			else if (projectile.ai[0] > 40)
+			else if (projectile.ai[0] > 50)
             {
 				projectile.velocity *= 0.97f;
             }
 			projectile.rotation += MathHelper.ToRadians(projectile.velocity.X);
 		}
 
+        public override bool CanDamage()
+        {
+			return projectile.ai[1] != 25;
+        }
+
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
 			target.immune[0] = 1;
 			target.immune[1] = 1;
+			if (projectile.penetrate == 2)
+            {
+				projectile.ai[1] = 25;
+            }
 		}
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
