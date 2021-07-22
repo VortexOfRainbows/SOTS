@@ -448,7 +448,7 @@ namespace SOTS.NPCs.Boss.Curse
 					Vector2 offset = new Vector2(xOff, 6) * 16;
 					Vector2 center = new Vector2((int)(npc.Center.X / 16), (int)(npc.Center.Y / 16)) * 16;
 					center += offset;
-					Projectile.NewProjectile(center, Vector2.Zero, ModContent.ProjectileType<SpawnGoldGate>(), 0, 0, Main.myPlayer, 0, 0);
+					Projectile.NewProjectile(center, Vector2.Zero, ModContent.ProjectileType<SpawnGoldGate>(), 0, 0, Main.myPlayer, i * 2 - 1, 0);
 				}
         }
 		public override bool PreAI()

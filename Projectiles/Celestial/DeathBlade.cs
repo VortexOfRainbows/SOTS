@@ -41,8 +41,8 @@ namespace SOTS.Projectiles.Celestial
 			Texture2D texture = Main.projectileTexture[projectile.type];
 			Vector2 origin = new Vector2(texture.Width / 2, projectile.height / 2);
 			DrawTrail(spriteBatch, lightColor);
-			Color color = Color.Black;
-			for (int i = 0; i < 360; i += 35)
+			Color color;
+			for (int i = 0; i < 360; i += 45)
 			{
 				Vector2 circular = new Vector2(Main.rand.NextFloat(2f, 3f), 0).RotatedBy(MathHelper.ToRadians(i));
 				color = new Color(100, 255, 100, 0);

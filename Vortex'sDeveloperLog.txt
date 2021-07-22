@@ -42,7 +42,7 @@ Low Priority:
 6. Electrolyte Seperator
 7. Amogus
 
-1. Next: Pharaoh Multiplayer testing, Buff Polaris
+1. Next: Buff Polaris
 2. Next: Keybind for Machina Booster
 
 7/21/21
@@ -50,6 +50,7 @@ Low Priority:
 2. Some framing fixes.
 3. First Phase of Pharaoh's Server syncs epicly!
 4. Second Phase syncs fine!
+5. Rework tome of the reaper + multiplayer compatability.
 
 7/18/21
 1. Lemegeton works in multiplayer!

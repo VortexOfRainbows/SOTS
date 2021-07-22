@@ -22,13 +22,13 @@ Programmer, Direction, Art: Vortex#6230
 Emotional Support, Direction, Art: Coolio
 Music, Art: Heart Plus Up!
 Art: Blasfah
-Art: HugeKraken
-Music: BananaLizard
 Code, Audio Engineering: apotofkoolaid
 Testers: DreadSoul
 
 (Past Developers)
 Misc, Direction: FlameFreezer
+Art: HugeKraken
+Music: BananaLizard
 
 (Contributors)
 Art: Arcri

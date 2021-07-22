@@ -23,7 +23,7 @@ namespace SOTS.Items.Fragments
 			item.damage = 30;
 			item.knockBack = 4f;
 			item.width = 40;
-			item.height = 42;
+			item.height = 40;
 			item.useTime = 30;
 			item.useAnimation = 30;
 			item.useStyle = ItemUseStyleID.SwingThrow;
