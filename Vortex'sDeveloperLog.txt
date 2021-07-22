@@ -3,13 +3,8 @@ The following is my development plans :D
 1. Dissolving Nether => Focus Crystal, Dissolving Evil => Cursed Isocahedron
 2. Tether Cord in pyramid
 	1. Attaches a second player to you
-3. Dissolving Element Blocks			
-	1. Give off cool particles, can be used in summoning rituals
-6. Marble Fates and Granite Omega Golem
-7. Chaos Spirit Boss: "Lux"
-8. Fix PPP hook wrong spot bug when cause is found
-9. Sharanga Hardmode upgrade
-10. Ghost Town to Evil Biome
+3. Chaos Spirit Boss: "Lux"
+4. Ghost Town to Evil Biome
 
 High Priority:
 1. Pyramid Rework
@@ -20,30 +15,29 @@ Mid Priority:
 2. Riptide Trident (Launches you towards your cursor at the cost of void, deal damage while traveling, bounce off of enemies)
 3. Prismarine Necklace: Sharktooth Necklace + Heart of the Sea
 4. Wintry Traveler: Riptide Trident + Frigid Javelin
-5. Antigrav booties
+5. Tectonic Tether
 6. Replace Brittle flail
 7. Chest slime resprites
 8. Bone Clapper
 
 Mid Priority 2:
 1. Void Low Warning
-2. Prefixes for voids
-5. Horn of Plenty: 10% more drops accessory
-8. Ethereal Tonic
-9. Void accessory reforge: increases max void...
-10. Timelord's Potion: attempt using .aiStyle, otherwise would require a lot of workaround...
+2. Horn of Plenty: 10% more drops accessory
+3. Ethereal Tonic
+4. Timelord's Potion: attempt using .aiStyle, otherwise would require a lot of workaround...
 
 Low Priority:
 1. Archaelogist NPC
-2. Spaghetti Whip
-3. Mobile Fortress Generator: One for every tavernkeep armor set
-4. Sharanga Upgrade
-5. Remove negative Vregen in inventory items
-6. Electrolyte Seperator
-7. Amogus
+2. Mobile Fortress Generator: One for every tavernkeep armor set
+3. Sharanga Upgrade
+4. Remove negative Vregen in inventory items
+5. Electrolyte Seperator
 
 1. Next: Buff Polaris
 2. Next: Keybind for Machina Booster
+
+7/22/21
+1. Temp replacements for music (since BananaLizard wanted his pulled).
 
 7/21/21
 1. Finished Pharaoh's Arena locking.

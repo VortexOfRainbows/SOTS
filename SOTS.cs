@@ -343,7 +343,7 @@ namespace SOTS
 				Player player = Main.player[Main.myPlayer];
 				if (player.active && player.GetModPlayer<SOTSPlayer>().PyramidBiome)
                 {
-                    music = (SOTSPlayer.ModPlayer(player).weakerCurse || SOTSWorld.downedBoss2) ? GetSoundSlot(SoundType.Music, "Sounds/Music/AncientPyramid") : MusicID.Desert;
+					music = MusicID.Desert; // (SOTSPlayer.ModPlayer(player).weakerCurse || SOTSWorld.downedBoss2) ? GetSoundSlot(SoundType.Music, "Sounds/Music/AncientPyramid") : ;
 					priority = MusicPriority.BiomeHigh;
                 }
 			}
