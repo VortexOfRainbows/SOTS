@@ -17,7 +17,7 @@ namespace SOTS.NPCs.Boss.Polaris
 		public override void SetDefaults()
 		{
 			npc.aiStyle = 0;
-			npc.lifeMax = 1000;   
+			npc.lifeMax = 1200;   
             npc.damage = 30;
 			npc.defense = 24;
 			npc.knockBackResist = 0f;

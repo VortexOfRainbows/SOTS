@@ -16,7 +16,7 @@ namespace SOTS.Items.Fragments
 			item.damage = 11;
 			item.melee = true;
 			item.width = 46;
-			item.height = 50;
+			item.height = 52;
 			item.useTime = 30;
 			item.useAnimation = 30;
 			item.useStyle = ItemUseStyleID.SwingThrow;

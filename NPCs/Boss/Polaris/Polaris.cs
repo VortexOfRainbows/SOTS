@@ -44,7 +44,7 @@ namespace SOTS.NPCs.Boss.Polaris
 		}
 		public override void SetDefaults()
 		{
-            npc.lifeMax = 30000;
+            npc.lifeMax = 36000;
             npc.damage = 80; 
             npc.defense = 28;  
             npc.knockBackResist = 0f;
@@ -162,7 +162,7 @@ namespace SOTS.NPCs.Boss.Polaris
 		}
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
-            npc.lifeMax = (int)(npc.lifeMax * 0.70f * bossLifeScale) + 1;  //boss life scale in expertmode
+            npc.lifeMax = (int)(npc.lifeMax * 0.63889f * bossLifeScale);  //boss life scale in expertmode
             npc.damage = (int)(npc.damage * 0.75f);  //boss damage increase in expermode
         }
 		public override void BossLoot(ref string name, ref int potionType)

@@ -17,8 +17,8 @@ namespace SOTS.Items.ChestItems
 		{
 			item.damage = 12;
 			item.melee = true;
-			item.width = 50;
-			item.height = 50;
+			item.width = 52;
+			item.height = 52;
 			item.useTime = 38;
 			item.useAnimation = 38;
 			item.useStyle = ItemUseStyleID.SwingThrow;

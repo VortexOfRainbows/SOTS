@@ -33,11 +33,12 @@ Low Priority:
 4. Remove negative Vregen in inventory items
 5. Electrolyte Seperator
 
-1. Next: Buff Polaris
-2. Next: Keybind for Machina Booster
+1. Next: Keybind for Machina Booster
 
 7/22/21
 1. Temp replacements for music (since BananaLizard wanted his pulled).
+2. Polaris base HP 30000 (42000) -> 36000 (46000). This also is a slight nerf to multiplayer scaling, but should have more health in most situations.
+3. Polaris cannon HP 1000 (1500) -> 1200 (1800).
 
 7/21/21
 1. Finished Pharaoh's Arena locking.
