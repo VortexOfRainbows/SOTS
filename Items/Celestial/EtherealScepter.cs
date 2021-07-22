@@ -22,8 +22,8 @@ namespace SOTS.Items.Celestial
 			item.damage = 41;
 			item.knockBack = 4f;
 			item.mana = 24;
-			item.width = 40;
-			item.height = 42;
+			item.width = 36;
+			item.height = 36;
 			item.useTime = 36;
 			item.useAnimation = 36;
 			item.useStyle = 1;
