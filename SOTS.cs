@@ -89,10 +89,10 @@ namespace SOTS
 			}
 			//Music Box Stuff
 			AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/PutridPinky"), ItemType("PutridPinkyMusicBox"), TileType("PutridPinkyMusicBoxTile"));
-			AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/Advisor"), ItemType("AdvisorMusicBox"), TileType("AdvisorMusicBoxTile"));
+			//AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/Advisor"), ItemType("AdvisorMusicBox"), TileType("AdvisorMusicBoxTile"));
 			AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/Polaris"), ItemType("PolarisMusicBox"), TileType("PolarisMusicBoxTile"));
 			AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/SubspaceSerpent"), ItemType("SubspaceSerpentMusicBox"), TileType("SubspaceSerpentMusicBoxTile"));
-			AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/AncientPyramid"), ItemType("AncientPyramidMusicBox"), TileType("AncientPyramidMusicBoxTile"));
+			//AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/AncientPyramid"), ItemType("AncientPyramidMusicBox"), TileType("AncientPyramidMusicBoxTile"));
 			AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/Planetarium"), ItemType("PlanetariumMusicBox"), TileType("PlanetariumMusicBoxTile"));
 		}
 		public override void Unload() 

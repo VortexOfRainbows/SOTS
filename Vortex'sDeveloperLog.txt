@@ -36,6 +36,13 @@ Low Priority:
 1. Next: Keybind for Machina Booster
 
 7/22/21
+1. Tome of the Reaper damage 43 -> 48
+2. Next: test out music boxes to make sure bananalizard themes are properly pulled
+
+Beta 0.19.4.3 Released
+
+
+7/22/21
 1. Temp replacements for music (since BananaLizard wanted his pulled).
 2. Polaris base HP 30000 (42000) -> 36000 (46000). This also is a slight nerf to multiplayer scaling, but should have more health in most situations.
 3. Polaris cannon HP 1000 (1500) -> 1200 (1800).
@@ -121,6 +128,7 @@ Low Priority:
 7. Fixed bug with void consumables not consuming
 8. Spirit Surfer: Void Drain 40 -> 60, speed 20 -> 16. Cursed Ankh now takes 10 soul residue
 9. Heart In a jar only effects worms once.
+
 
 0.19.3 Released!
 
