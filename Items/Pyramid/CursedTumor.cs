@@ -37,7 +37,7 @@ namespace SOTS.Items.Pyramid
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
 			drop = mod.ItemType("CursedTumor");
-			AddMapEntry(new Color(50, 45, 90));
+			AddMapEntry(new Color(70, 60, 110));
 			mineResist = 1.5f;
 			soundType = SoundID.NPCHit;
 			soundStyle = 1;
@@ -71,7 +71,7 @@ namespace SOTS.Items.Pyramid
 			drop = mod.ItemType("CursedTumorWall");
 			soundType = SoundID.NPCHit;
 			soundStyle = 1;
-			AddMapEntry(new Color(50, 30, 60));
+			AddMapEntry(new Color(50, 45, 90));
 		}
 		public override bool CanExplode(int i, int j)
 		{

@@ -34,10 +34,13 @@ Low Priority:
 5. Electrolyte Seperator
 
 1. Next: Keybind for Machina Booster
+2. Next: Ancient GOld Gate spawn + Pyramid crystals worldgen
 
-7/22/21
+7/22/21 & 7/23/21
 1. Tome of the Reaper damage 43 -> 48
-2. Next: test out music boxes to make sure bananalizard themes are properly pulled
+2. Bananalizard's Music boxes are pulled properly
+3. Began work on Crystal room worldgen
+
 
 Beta 0.19.4.3 Released
 

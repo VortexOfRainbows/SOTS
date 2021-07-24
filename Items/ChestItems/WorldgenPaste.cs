@@ -98,10 +98,18 @@ namespace SOTS.Items.ChestItems
 			Vector2 tileLocation = mousePos / 16f;
 			SOTSWorldgenHelper.GenerateStarterHouse(mod, (int)tileLocation.X + 0, (int)tileLocation.Y, 9);
 		}
+		public void PasteCrystal()
+		{
+			Vector2 mousePos = Main.MouseWorld;
+			Vector2 tileLocation = mousePos / 16f;
+			int xOff = Main.rand.Next(20) + 30;
+			SOTSWorldgenHelper.GeneratePyramidPath(mod, (int)tileLocation.X, (int)tileLocation.Y, (int)tileLocation.X + xOff, (int)tileLocation.Y + Main.rand.Next(-30, 31));
+			//SOTSWorldgenHelper.GeneratePyramidCrystalRoom(mod, (int)tileLocation.X, (int)tileLocation.Y);
+		}
 		public override bool UseItem(Player player)
 		{
-			PasteStarter();
-            return true;
+			PasteCrystal();
+			return true;
 		}
 	}
 }

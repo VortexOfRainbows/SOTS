@@ -62,8 +62,13 @@ namespace SOTS.Projectiles.Celestial
 			projectile.tileCollide = false;
 			projectile.hostile = true;
 			projectile.alpha = 125;
+			projectile.hide = true;
 		}
-        public override bool ShouldUpdatePosition()
+		public override void DrawBehind(int index, List<int> drawCacheProjsBehindNPCsAndTiles, List<int> drawCacheProjsBehindNPCs, List<int> drawCacheProjsBehindProjectiles, List<int> drawCacheProjsOverWiresUI)
+		{
+			drawCacheProjsOverWiresUI.Add(index);
+		}
+		public override bool ShouldUpdatePosition()
         {
 			return false;
         }

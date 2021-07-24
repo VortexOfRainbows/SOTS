@@ -3001,7 +3001,6 @@ namespace SOTS
 					}
 				}
 			}
-			
 		}
 		public static void GenerateStarterHouse(Mod mod, int spawnX, int spawnY, int type)
         {
@@ -5744,6 +5743,91 @@ namespace SOTS
 					}
 				}
 				UseStarterHouseHalfCircle(spawnX, spawnY - 1, 1, _structure.GetLength(1) / 2, 10);
+			}
+		}
+		public static void GeneratePyramidCrystalRoom(Mod mod, int spawnX, int spawnY)
+        {
+			int i;
+			int j;
+			float deg = WorldGen.genRand.Next(360);
+			for(int k = 0; k < 3; k++)
+            {
+				Vector2 offset = new Vector2(k * 4 + WorldGen.genRand.Next(2 + 4 * k), 0).RotatedBy(MathHelper.ToRadians(deg));
+				offset.Y *= 0.8f;
+				i = spawnX + (int)offset.X;
+				j = spawnY + (int)offset.Y;
+				GeneratePyramidOval(mod, i, j, 12 + WorldGen.genRand.Next(10 - k * 2), 10 + WorldGen.genRand.Next(8 - k * 2));
+				deg += WorldGen.genRand.Next(120);
+			}
+        }
+		public static void GeneratePyramidPath(Mod mod, int spawnX, int spawnY, int endX, int endY, int direction = 1)
+        {
+			Vector2 start = new Vector2(spawnX, spawnY);
+			Vector2 end = new Vector2(endX, endY);
+			float lengthToEnd = Vector2.Distance(start, end) * 0.5f;
+			float rotationToEnd = (start - end).ToRotation();
+			Vector2 midPoint = (start + end) * 0.5f;
+			spawnX = (int)midPoint.X;
+			spawnY = (int)midPoint.Y;
+			float yDistMult = Main.rand.NextFloat(0.65f, 1.15f) * direction;
+			for(int i = 0; i < 18; i++)
+			{
+				Vector2 circularLocation = new Vector2(lengthToEnd, 0).RotatedBy(MathHelper.ToRadians(i * 10) + rotationToEnd);
+				circularLocation.Y *= yDistMult;
+				GeneratePyramidOval(mod, spawnX + (int)circularLocation.X, spawnY + (int)circularLocation.Y, 6, 6, 0.75f);
+			}
+			GeneratePyramidCrystalRoom(mod, endX, endY);
+        }
+		public static void GeneratePyramidOval(Mod mod, int spawnX, int spawnY, int radius = 14, int radiusY = 14, float thickMult = 1f)
+		{
+			float scale = radiusY / (float)radius;
+			float invertScale = (float)radius / radiusY;
+			for (int x = -radius; x <= radius; x++)
+			{
+				for (float y = -radius; y <= radius; y += (invertScale * 0.85f))
+				{
+					float radialMod = Main.rand.NextFloat(2.1f, 4.1f) * thickMult;
+					if (Math.Sqrt(x * x + y * y) <= radius + 0.5)
+					{
+						int xPosition6 = spawnX + x;
+						int yPosition6 = spawnY + (int)(y * scale);
+						Tile tile = Framing.GetTileSafely(xPosition6, yPosition6);
+						if (Math.Sqrt(x * x + y * y) >= radius - radialMod && tile.wall != ModContent.WallType<CursedTumorWallTile>())
+						{
+							ConvertNearbyTiles(mod, xPosition6, yPosition6);
+							tile.type = (ushort)ModContent.TileType<CursedTumorTile>();
+							tile.active(true);
+							if (Math.Sqrt(x * x + y * y) <= radius - (radialMod - 1))
+								tile.wall = (ushort)ModContent.WallType<CursedTumorWallTile>();
+						}
+						else
+						{
+							tile.wall = (ushort)ModContent.WallType<CursedTumorWallTile>();
+							tile.active(false);
+						}
+					}
+				}
+			}
+		}
+		public static void ConvertNearbyTiles(Mod mod, int spawnX, int spawnY)
+		{
+			int radius = 3;
+			for (int x = -radius; x <= radius; x++)
+			{
+				for (int y = -radius; y <= radius; y++)
+				{
+					if (Math.Sqrt(x * x + y * y) <= radius + 0.5)
+					{
+						int xPosition6 = spawnX + x;
+						int yPosition6 = spawnY + y;
+						Tile tile = Framing.GetTileSafely(xPosition6, yPosition6);
+						if (tile.active() && Main.rand.NextBool((int)Math.Sqrt(x * x + y * y) + 2) && tile.type == (ushort)ModContent.TileType<PyramidSlabTile>())
+						{
+							tile.type = (ushort)ModContent.TileType<CursedHive>();
+							tile.active(true);
+						}
+					}
+				}
 			}
 		}
     }
