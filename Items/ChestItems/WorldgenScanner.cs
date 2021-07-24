@@ -8,6 +8,7 @@ using SOTS.Items.Pyramid;
 using Microsoft.Xna.Framework;
 using Terraria.Localization;
 using SOTS.NPCs.Boss;
+using SOTS.NPCs.Boss.Advisor;
 
 namespace SOTS.Items.ChestItems
 {

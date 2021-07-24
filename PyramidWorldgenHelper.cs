@@ -423,10 +423,10 @@ namespace SOTS
 			int initialPath = 1;
 
 			if (Main.maxTilesX > 4000)
-				size = 240;
+				size = 250;
 
 			if (Main.maxTilesX > 6000)
-				size = 270;
+				size = 275;
 
 			if (Main.maxTilesX > 8000)
 				size = 300;
@@ -914,6 +914,124 @@ namespace SOTS
 					}
 				}
 			}
+			GenerateZepline(pyramidX, pyramidY + (size - 40), mod);
+
+			//rebuild outside of pyramid
+			for (int pyramidLevel = 0; pyramidLevel < size; pyramidLevel++)
+			{
+				for (int h = -pyramidLevel; h <= pyramidLevel; h++)
+				{
+					Tile tile = Framing.GetTileSafely(pyramidX + h, pyramidY + pyramidLevel);
+					if (pyramidLevel >= 20 && h < -pyramidLevel + 2 && h > pyramidLevel - 2)
+						if (!TileDungeon(tile)) //check for not dungeon!
+						{
+							SetTilePyramid(tile);
+						}
+				}
+			}
+
+			if (overgrownX != -1 && overgrownY != -1)
+			{
+				SOTSWorldgenHelper.GenerateAcediaRoom(overgrownX, overgrownY, mod, finalDirection);
+			}
+
+			for (int findTileY = pyramidY + (size - 30); findTileY > pyramidY + 30; findTileY--)
+			{
+				int width = findTileY - pyramidY;
+				for (int t = 0; t < 6; t++)
+				{
+					int findTileX = pyramidX + Main.rand.Next(-width, width + 1);
+					Tile tile = Framing.GetTileSafely(findTileX, findTileY);
+					for (int built = 0; built < 2; built++)
+					{
+						int tileX = findTileX;
+						if (tile.wall == (ushort)mod.WallType("PyramidWallTile") && (!tile.active() || Main.rand.Next(size / 3) == 0))
+						{
+							Tile tile2 = Framing.GetTileSafely(findTileX, findTileY - 3);
+							Tile tile3 = Framing.GetTileSafely(findTileX, findTileY + 3);
+							if (tile2.active() && tile2.type == (ushort)mod.TileType("PyramidSlabTile") && tile2.wall == (ushort)mod.WallType("PyramidWallTile"))
+							{
+								if (tile3.active() && tile3.type == (ushort)mod.TileType("PyramidSlabTile") && tile3.wall == (ushort)mod.WallType("PyramidWallTile"))
+								{
+									GenerateInfection(new Vector2(findTileX * 16, findTileY * 16), mod);
+									findTileX += Main.rand.Next(-20, 21);
+								}
+								else break;
+							}
+							else break;
+						}
+						else break;
+					}
+				}
+			}
+			for (int findTileY = pyramidY + (size - 30); findTileY > pyramidY + 30; findTileY--)
+			{
+				for (int findTileX = Main.maxTilesX - 100; findTileX > 100; findTileX--)
+				{
+					Tile tile = Framing.GetTileSafely(findTileX, findTileY);
+					Tile tileU = Framing.GetTileSafely(findTileX, findTileY - 1);
+					Tile tileLU = Framing.GetTileSafely(findTileX - 1, findTileY - 1);
+					Tile tileU2 = Framing.GetTileSafely(findTileX, findTileY - 2);
+					Tile tileLU2 = Framing.GetTileSafely(findTileX - 1, findTileY - 2);
+					Tile tileU3 = Framing.GetTileSafely(findTileX, findTileY - 3);
+					Tile tileLU3 = Framing.GetTileSafely(findTileX - 1, findTileY - 3);
+					if (tile.type == (ushort)mod.TileType("PyramidSlabTile") && !tileLU.active() && !tileLU2.active() && !tileU.active() && !tileU2.active())
+					{
+						if (Main.rand.Next(5) == 0)
+						{
+							WorldGen.PlaceTile(findTileX, findTileY - 1, 28, true, true, -1, 3); //pots
+						}
+						else if (Main.rand.Next(size / 2) == 0)
+						{
+							if (Main.rand.NextBool(2))
+							{
+								WorldGen.PlaceTile(findTileX, findTileY - 1, (ushort)ModContent.TileType<CrystalStatue>()); //life crystal
+							}
+							else
+							{
+								WorldGen.PlaceTile(findTileX, findTileY - 1, (ushort)ModContent.TileType<ManaStatue>()); //mana crystal
+							}
+						}
+						else if (Main.rand.Next(size / 3) == 0)
+						{
+							WorldGen.PlaceTile(findTileX, findTileY - 1, (ushort)mod.TileType("PyramidChestTile")); //Chests
+						}
+						else if (Main.rand.Next((int)(size / 3.5f)) == 0)
+						{
+							GenerateCrate(findTileX, findTileY - 1, mod);
+						}
+						else if (!tileU3.active() && !tileLU3.active() && Main.rand.Next(size / 2) == 0)
+						{
+							WorldGen.PlaceTile(findTileX, findTileY - 1, TileID.Statues, true, true, -1, Main.rand.Next(71)); //random statue
+						}
+					}
+					if (tile.wall == (ushort)mod.WallType("PyramidWallTile") && Main.rand.NextBool(500))
+					{
+						int radius7 = 3;
+						for (int x = -radius7; x <= radius7; x++)
+						{
+							for (int y = -radius7; y <= radius7; y++)
+							{
+								int xPosition6 = findTileX + x;
+								int yPosition6 = findTileY + y;
+
+								if (Math.Sqrt(x * x + y * y) <= radius7 + 0.5)
+								{
+									Tile tileRad = Framing.GetTileSafely(xPosition6, yPosition6);
+									if (!tileRad.active())
+									{
+										tileRad.type = 51; //cobweb
+										tileRad.active(true);
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		public static void GenerateZepline(int spawnX, int spawnY, Mod mod)
+        {
 			int[,] _zepline = {
 					{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
 					{3,3,3,3,3,3,3,3,3,3,3,2,3,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
@@ -1005,8 +1123,8 @@ namespace SOTS
 					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				};
 
-			int pyramidPosX = pyramidX;
-			int pyramidPosY = pyramidY + (size - 40);
+			int pyramidPosX = spawnX;
+			int pyramidPosY = spawnY;
 			pyramidPosY -= (int)(.5f * _zepline.GetLength(0)) - 10;
 
 			for (int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)
@@ -1145,120 +1263,6 @@ namespace SOTS
 								break;
 							case 4:
 								break;
-						}
-					}
-				}
-			}
-
-			//rebuild outside of pyramid
-			for (int pyramidLevel = 0; pyramidLevel < size; pyramidLevel++)
-			{
-				for (int h = -pyramidLevel; h <= pyramidLevel; h++)
-				{
-					Tile tile = Framing.GetTileSafely(pyramidX + h, pyramidY + pyramidLevel);
-					if (pyramidLevel >= 20 && h < -pyramidLevel + 2 && h > pyramidLevel - 2)
-						if (!TileDungeon(tile)) //check for not dungeon!
-						{
-							SetTilePyramid(tile);
-						}
-				}
-			}
-
-			if (overgrownX != -1 && overgrownY != -1)
-			{
-				SOTSWorldgenHelper.GenerateAcediaRoom(overgrownX, overgrownY, mod, finalDirection);
-			}
-
-			for (int findTileY = pyramidY + (size - 30); findTileY > pyramidY + 30; findTileY--)
-			{
-				int width = findTileY - pyramidY;
-				for (int t = 0; t < 6; t++)
-				{
-					int findTileX = pyramidX + Main.rand.Next(-width, width + 1);
-					Tile tile = Framing.GetTileSafely(findTileX, findTileY);
-					for (int built = 0; built < 2; built++)
-					{
-						int tileX = findTileX;
-						if (tile.wall == (ushort)mod.WallType("PyramidWallTile") && (!tile.active() || Main.rand.Next(size / 3) == 0))
-						{
-							Tile tile2 = Framing.GetTileSafely(findTileX, findTileY - 3);
-							Tile tile3 = Framing.GetTileSafely(findTileX, findTileY + 3);
-							if (tile2.active() && tile2.type == (ushort)mod.TileType("PyramidSlabTile") && tile2.wall == (ushort)mod.WallType("PyramidWallTile"))
-							{
-								if (tile3.active() && tile3.type == (ushort)mod.TileType("PyramidSlabTile") && tile3.wall == (ushort)mod.WallType("PyramidWallTile"))
-								{
-									GenerateInfection(new Vector2(findTileX * 16, findTileY * 16), mod);
-									findTileX += Main.rand.Next(-20, 21);
-								}
-								else break;
-							}
-							else break;
-						}
-						else break;
-					}
-				}
-			}
-			for (int findTileY = pyramidY + (size - 30); findTileY > pyramidY + 30; findTileY--)
-			{
-				for (int findTileX = Main.maxTilesX - 100; findTileX > 100; findTileX--)
-				{
-					Tile tile = Framing.GetTileSafely(findTileX, findTileY);
-					Tile tileU = Framing.GetTileSafely(findTileX, findTileY - 1);
-					Tile tileLU = Framing.GetTileSafely(findTileX - 1, findTileY - 1);
-					Tile tileU2 = Framing.GetTileSafely(findTileX, findTileY - 2);
-					Tile tileLU2 = Framing.GetTileSafely(findTileX - 1, findTileY - 2);
-					Tile tileU3 = Framing.GetTileSafely(findTileX, findTileY - 3);
-					Tile tileLU3 = Framing.GetTileSafely(findTileX - 1, findTileY - 3);
-					if (tile.type == (ushort)mod.TileType("PyramidSlabTile") && !tileLU.active() && !tileLU2.active() && !tileU.active() && !tileU2.active())
-					{
-						if (Main.rand.Next(5) == 0)
-						{
-							WorldGen.PlaceTile(findTileX, findTileY - 1, 28, true, true, -1, 3); //pots
-						}
-						else if (Main.rand.Next(size / 2) == 0)
-						{
-							if (Main.rand.NextBool(2))
-							{
-								WorldGen.PlaceTile(findTileX, findTileY - 1, (ushort)ModContent.TileType<CrystalStatue>()); //life crystal
-							}
-							else
-							{
-								WorldGen.PlaceTile(findTileX, findTileY - 1, (ushort)ModContent.TileType<ManaStatue>()); //mana crystal
-							}
-						}
-						else if (Main.rand.Next(size / 3) == 0)
-						{
-							WorldGen.PlaceTile(findTileX, findTileY - 1, (ushort)mod.TileType("PyramidChestTile")); //Chests
-						}
-						else if (Main.rand.Next((int)(size / 3.5f)) == 0)
-						{
-							GenerateCrate(findTileX, findTileY - 1, mod);
-						}
-						else if (!tileU3.active() && !tileLU3.active() && Main.rand.Next(size / 2) == 0)
-						{
-							WorldGen.PlaceTile(findTileX, findTileY - 1, TileID.Statues, true, true, -1, Main.rand.Next(71)); //random statue
-						}
-					}
-					if (tile.wall == (ushort)mod.WallType("PyramidWallTile") && Main.rand.NextBool(500))
-					{
-						int radius7 = 3;
-						for (int x = -radius7; x <= radius7; x++)
-						{
-							for (int y = -radius7; y <= radius7; y++)
-							{
-								int xPosition6 = findTileX + x;
-								int yPosition6 = findTileY + y;
-
-								if (Math.Sqrt(x * x + y * y) <= radius7 + 0.5)
-								{
-									Tile tileRad = Framing.GetTileSafely(xPosition6, yPosition6);
-									if (!tileRad.active())
-									{
-										tileRad.type = 51; //cobweb
-										tileRad.active(true);
-									}
-								}
-							}
 						}
 					}
 				}
@@ -6379,6 +6383,103 @@ namespace SOTS
 					}
 				}
 				i = Main.rand.Next(-30, 31) + i2;
+			}
+		}
+		public static void GeneratePyramidCrystalRoom(Mod mod, int spawnX, int spawnY)
+		{
+			int i;
+			int j;
+			float deg = WorldGen.genRand.Next(360);
+			for (int k = 0; k < 3; k++)
+			{
+				Vector2 offset = new Vector2(k * 4 + WorldGen.genRand.Next(2 + 4 * k), 0).RotatedBy(MathHelper.ToRadians(deg));
+				offset.Y *= 0.8f;
+				i = spawnX + (int)offset.X;
+				j = spawnY + (int)offset.Y;
+				GeneratePyramidOval(mod, i, j, 12 + WorldGen.genRand.Next(10 - k * 2), 10 + WorldGen.genRand.Next(8 - k * 2));
+				deg += WorldGen.genRand.Next(120);
+			}
+		}
+		public static void GeneratePyramidPath(Mod mod, int spawnX, int spawnY, int endX, int endY, int direction = 1)
+		{
+			Vector2 start = new Vector2(spawnX, spawnY);
+			Vector2 end = new Vector2(endX, endY);
+			float lengthToEnd = Vector2.Distance(start, end) * 0.5f;
+			float rotationToEnd = (start - end).ToRotation();
+			Vector2 midPoint = (start + end) * 0.5f;
+			spawnX = (int)midPoint.X;
+			spawnY = (int)midPoint.Y;
+			float yDistMult = Main.rand.NextFloat(-0.25f, 1.00f) * direction;
+			for (int i = 0; i < 18; i++)
+			{
+				Vector2 circularLocation = new Vector2(lengthToEnd, 0).RotatedBy(MathHelper.ToRadians(i * 10));
+				circularLocation.Y *= yDistMult;
+				circularLocation = circularLocation.RotatedBy(rotationToEnd);
+				GeneratePyramidOval(mod, spawnX + (int)circularLocation.X, spawnY + (int)circularLocation.Y, 6, 6, 0.75f);
+			}
+			GeneratePyramidCrystalRoom(mod, endX, endY);
+			for (int j = -3; j <= -1; j++)
+				for (int i = j; i <= -j; i++)
+				{
+					Tile tile = Framing.GetTileSafely(endX + i, endY + j + 4);
+					tile.type = (ushort)ModContent.TileType<CursedTumorTile>();
+					tile.active(true);
+				}
+			WorldGen.PlaceTile(endX, endY, ModContent.TileType<RubyKeystoneTile>(), false, true);
+		}
+		public static void GeneratePyramidOval(Mod mod, int spawnX, int spawnY, int radius = 14, int radiusY = 14, float thickMult = 1f)
+		{
+			float scale = radiusY / (float)radius;
+			float invertScale = (float)radius / radiusY;
+			for (int x = -radius; x <= radius; x++)
+			{
+				for (float y = -radius; y <= radius; y += (invertScale * 0.85f))
+				{
+					float radialMod = Main.rand.NextFloat(2.1f, 4.1f) * thickMult;
+					if (Math.Sqrt(x * x + y * y) <= radius + 0.5)
+					{
+						int xPosition6 = spawnX + x;
+						int yPosition6 = spawnY + (int)(y * scale);
+						Tile tile = Framing.GetTileSafely(xPosition6, yPosition6);
+						bool capable = true;
+						if (tile.wall == ModContent.WallType<PyramidWallTile>() && !tile.active())
+							capable = false;
+						if (Math.Sqrt(x * x + y * y) >= radius - radialMod && tile.wall != ModContent.WallType<CursedTumorWallTile>() && capable)
+						{
+							ConvertNearbyTiles(mod, xPosition6, yPosition6);
+							tile.type = (ushort)ModContent.TileType<CursedTumorTile>();
+							tile.active(true);
+							if (Math.Sqrt(x * x + y * y) <= radius - (radialMod - 1))
+								tile.wall = (ushort)ModContent.WallType<CursedTumorWallTile>();
+						}
+						else
+						{
+							tile.wall = (ushort)ModContent.WallType<CursedTumorWallTile>();
+							tile.active(false);
+						}
+					}
+				}
+			}
+		}
+		public static void ConvertNearbyTiles(Mod mod, int spawnX, int spawnY)
+		{
+			int radius = 3;
+			for (int x = -radius; x <= radius; x++)
+			{
+				for (int y = -radius; y <= radius; y++)
+				{
+					if (Math.Sqrt(x * x + y * y) <= radius + 0.5)
+					{
+						int xPosition6 = spawnX + x;
+						int yPosition6 = spawnY + y;
+						Tile tile = Framing.GetTileSafely(xPosition6, yPosition6);
+						if (tile.active() && Main.rand.NextBool((int)Math.Sqrt(x * x + y * y) + 2) && tile.type == (ushort)ModContent.TileType<PyramidSlabTile>())
+						{
+							tile.type = (ushort)ModContent.TileType<CursedHive>();
+							tile.active(true);
+						}
+					}
+				}
 			}
 		}
 	}

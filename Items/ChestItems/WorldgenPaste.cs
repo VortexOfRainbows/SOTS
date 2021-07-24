@@ -103,7 +103,7 @@ namespace SOTS.Items.ChestItems
 			Vector2 mousePos = Main.MouseWorld;
 			Vector2 tileLocation = mousePos / 16f;
 			int xOff = Main.rand.Next(20) + 30;
-			SOTSWorldgenHelper.GeneratePyramidPath(mod, (int)tileLocation.X, (int)tileLocation.Y, (int)tileLocation.X + xOff, (int)tileLocation.Y + Main.rand.Next(-30, 31));
+			PyramidWorldgenHelper.GeneratePyramidPath(mod, (int)tileLocation.X, (int)tileLocation.Y, (int)tileLocation.X + xOff, (int)tileLocation.Y + Main.rand.Next(-30, 31));
 			//SOTSWorldgenHelper.GeneratePyramidCrystalRoom(mod, (int)tileLocation.X, (int)tileLocation.Y);
 		}
 		public override bool UseItem(Player player)

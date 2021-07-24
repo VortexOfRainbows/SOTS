@@ -6,7 +6,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace SOTS.NPCs.Boss
+namespace SOTS.NPCs.Boss.Advisor
 {	[AutoloadBossHead]
 	public class TheAdvisorHead : ModNPC
 	{
@@ -87,7 +87,7 @@ namespace SOTS.NPCs.Boss
             npc.knockBackResist = 0f;
             npc.width = 78;
             npc.height = 98;
-            Main.npcFrameCount[npc.type] = 1;
+            Main.npcFrameCount[npc.type] = 2;
             npc.value = 150000;
             npc.npcSlots = 15f;
             npc.boss = false;
@@ -114,16 +114,28 @@ namespace SOTS.NPCs.Boss
 		float hookDistortionShake = 0f;
 		float laserDirection = 0f;
 		float nextLaserDirection = 0f;
-		public void DrawGlow(SpriteBatch spriteBatch, Color lightColor)
+		int highlightFrame = 0;
+        public override void FindFrame(int frameHeight)
+        {
+			npc.frameCounter++;
+			if(npc.frameCounter >= 4)
+            {
+				npc.frameCounter = 0;
+				npc.frame.Y = (npc.frame.Y + frameHeight) % (frameHeight * 2);
+				highlightFrame = (highlightFrame + 1) % 10;
+            }
+            base.FindFrame(frameHeight);
+        }
+        public void DrawGlow(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Texture2D texture = ModContent.GetTexture("SOTS/NPCs/Boss/TheAdvisorHead_Spirit");
+			Texture2D texture = ModContent.GetTexture("SOTS/NPCs/Boss/Advisor/TheAdvisorHead_Spirit");
 			Vector2 drawOrigin = new Vector2(Main.npcTexture[npc.type].Width * 0.5f, npc.height * 0.5f);
 			Vector2 drawPos = npc.Center - Main.screenPosition;
 			Color color = new Color(100, 100, 100, 0);
 			if (attackPhase2 == 0)
 			{
-				Texture2D texture2 = ModContent.GetTexture("SOTS/NPCs/Boss/AdvisorMissileAttachment");
-				Texture2D texture3 = ModContent.GetTexture("SOTS/NPCs/Boss/AdvisorMissileAttachment_Highlight");
+				Texture2D texture2 = ModContent.GetTexture("SOTS/NPCs/Boss/Advisor/AdvisorMissileAttachment");
+				Texture2D texture3 = ModContent.GetTexture("SOTS/NPCs/Boss/Advisor/AdvisorMissileAttachment_Highlight");
 				Vector2 drawOrigin2 = new Vector2(texture2.Width * 0.5f, texture2.Height * 0.5f);
 				if (attackTimer2 > 0)
 				{
@@ -161,8 +173,8 @@ namespace SOTS.NPCs.Boss
 			}
 			if (attackPhase2 == 1)
 			{
-				Texture2D texture2 = ModContent.GetTexture("SOTS/NPCs/Boss/AdvisorLaserAttachment");
-				Texture2D texture3 = ModContent.GetTexture("SOTS/NPCs/Boss/AdvisorLaserAttachment_Highlight");
+				Texture2D texture2 = ModContent.GetTexture("SOTS/NPCs/Boss/Advisor/AdvisorLaserAttachment");
+				Texture2D texture3 = ModContent.GetTexture("SOTS/NPCs/Boss/Advisor/AdvisorLaserAttachment_Highlight");
 				Vector2 drawOrigin2 = new Vector2(texture2.Width * 0.5f, texture2.Height * 0.5f);
 				if (attackTimer2 > 0)
 				{
@@ -196,8 +208,8 @@ namespace SOTS.NPCs.Boss
 			}
 			if (attackPhase2 == 2)
 			{
-				Texture2D texture2 = ModContent.GetTexture("SOTS/NPCs/Boss/AdvisorTazerAttachment");
-				Texture2D texture3 = ModContent.GetTexture("SOTS/NPCs/Boss/AdvisorTazerAttachment_Highlight");
+				Texture2D texture2 = ModContent.GetTexture("SOTS/NPCs/Boss/Advisor/AdvisorTazerAttachment");
+				Texture2D texture3 = ModContent.GetTexture("SOTS/NPCs/Boss/Advisor/AdvisorTazerAttachment_Highlight");
 				Vector2 drawOrigin2 = new Vector2(texture2.Width * 0.5f, texture2.Height * 0.5f);
 				if (attackTimer2 > 0)
 				{
@@ -234,8 +246,8 @@ namespace SOTS.NPCs.Boss
 			{
 				float x = Main.rand.Next(-10, 11) * 0.1f;
 				float y = Main.rand.Next(-10, 11) * 0.1f;
-				y += 4;
-				Main.spriteBatch.Draw(texture, new Vector2((float)(npc.Center.X - (int)Main.screenPosition.X) + x, (float)(npc.Center.Y - (int)Main.screenPosition.Y) + y), null, color, 0f, drawOrigin, 1f, SpriteEffects.None, 0f);
+				y += 5;
+				Main.spriteBatch.Draw(texture, new Vector2((float)(npc.Center.X - (int)Main.screenPosition.X) + x, (float)(npc.Center.Y - (int)Main.screenPosition.Y) + y), null, color, 0f, drawOrigin, 1.125f, SpriteEffects.None, 0f);
 			}
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
@@ -533,9 +545,9 @@ namespace SOTS.NPCs.Boss
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture = ModContent.GetTexture("SOTS/NPCs/Boss/TheAdvisorHead_Eye");
-			Texture2D texture3 = ModContent.GetTexture("SOTS/NPCs/Boss/TheAdvisorHead_EyeClosed");
-			Texture2D texture2 = ModContent.GetTexture("SOTS/NPCs/Boss/TheAdvisorHead_Highlight");
+			Texture2D texture = ModContent.GetTexture("SOTS/NPCs/Boss/Advisor/TheAdvisorHead_Eye");
+			Texture2D texture3 = ModContent.GetTexture("SOTS/NPCs/Boss/Advisor/TheAdvisorHead_EyeClosed");
+			Texture2D texture2 = ModContent.GetTexture("SOTS/NPCs/Boss/Advisor/TheAdvisorHead_Highlight");
 			Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
 			Vector2 drawPos = npc.Center - Main.screenPosition;
 
@@ -565,7 +577,8 @@ namespace SOTS.NPCs.Boss
 					float y = Main.rand.Next(-10, 11) * 0.1f;
 					spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, npc.rotation, drawOrigin, npc.scale, SpriteEffects.None, 0f);
 					y += 4;
-					Main.spriteBatch.Draw(texture2, new Vector2((float)(npc.Center.X - (int)Main.screenPosition.X) + x, (float)(npc.Center.Y - (int)Main.screenPosition.Y) + y), null, color, 0f, drawOrigin, 1f, SpriteEffects.None, 0f);
+					Rectangle frame = new Rectangle(0, texture2.Height / 10 * highlightFrame, texture2.Width, texture2.Height / 10);
+					Main.spriteBatch.Draw(texture2, new Vector2((float)(npc.Center.X - (int)Main.screenPosition.X) + x, (float)(npc.Center.Y - (int)Main.screenPosition.Y) + y), frame, color, 0f, drawOrigin, 1f, SpriteEffects.None, 0f);
 				}
 		}
 		public override void AI()

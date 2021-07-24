@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SOTS.NPCs.Boss;
+using SOTS.NPCs.Boss.Advisor;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;

@@ -16,6 +16,7 @@ using SOTS.NPCs.Constructs;
 using SOTS.Items.Celestial;
 using SOTS.NPCs.Boss.Polaris;
 using SOTS.NPCs.Inferno;
+using SOTS.NPCs.Boss.Advisor;
 
 namespace SOTS.NPCs
 {
