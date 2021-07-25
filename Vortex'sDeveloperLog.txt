@@ -42,6 +42,8 @@ Low Priority:
 3. Began work on Crystal room worldgen
 4. Pyramid size slightly increased for small and medium worlds
 5. Advisor Resprite + Animations (Heart)
+6. Worked on Pyramid worldgen
+7. Fixed bug where zombiehand prevented true melee from hitting non-town npcs
 
 
 Beta 0.19.4.3 Released

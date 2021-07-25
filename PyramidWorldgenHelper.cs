@@ -414,28 +414,24 @@ namespace SOTS
 				checks++;
 			}
 			pyramidY -= 15;
-			int direction = Main.rand.Next(2);
+			int direction = WorldGen.genRand.Next(2) * 2 - 1;
 			int finalDirection = direction;
-			int nextAmount = Main.rand.Next(6, 16);
+			int nextAmount = WorldGen.genRand.Next(6, 16);
 			int size = 300;
 			int endingTileX = -1;
 			int endingTileY = -1;
 			int initialPath = 1;
-
-			if (Main.maxTilesX > 4000)
+			if (Main.maxTilesX > 4000) //small worlds
 				size = 250;
-
-			if (Main.maxTilesX > 6000)
+			if (Main.maxTilesX > 6000) //medium worlds
 				size = 275;
-
-			if (Main.maxTilesX > 8000)
+			if (Main.maxTilesX > 8000) //big worlds
 				size = 300;
-
-			if (direction == 0)
-			{
-				direction = -1;
-			}
-
+			int thirdPoint = size / 5;
+			int twoThirdPoint = (int)(size / 2.25f);
+			int midPoint = size / 2;
+			bool hasGeneratedDivertCooridor1 = false;
+			bool hasGeneratedDivertCooridor2 = false;
 			for (int pyramidLevel = 0; pyramidLevel < size; pyramidLevel++)
 			{
 				for (int h = -pyramidLevel; h <= pyramidLevel; h++)
@@ -490,7 +486,6 @@ namespace SOTS
 								Tile tile = Framing.GetTileSafely(pyramidX + g, pyramidY + pyramidLevel);
 								if (tile.type == (ushort)mod.TileType("PyramidSlabTile"))
 									tile.active(false);
-
 							}
 							endingTileX = pyramidX + (pyramidLevel - 13);
 						}
@@ -507,8 +502,8 @@ namespace SOTS
 					}
 					endingTileY = pyramidY + pyramidLevel;
 				}
-			}
-			for (int totalAmount = 0; totalAmount < size; totalAmount += nextAmount)
+			} //generate initial entrance into the pyramid
+			for (int totalAmount = 0; totalAmount < size; totalAmount += nextAmount) //generate downwards cooridor into the pyramid
 			{
 				direction *= -1;
 				nextAmount = Main.rand.Next(6, 31);
@@ -527,33 +522,76 @@ namespace SOTS
 				}
 				for (int g = nextAmount; g > 0; g--)
 				{
-					if (direction == -1)
+					endingTileX += direction;
+					for (int h = 3; h >= -3; h--)
 					{
-						endingTileX--;
-						for (int h = 3; h >= -3; h--)
-						{
-							Tile tile = Framing.GetTileSafely(endingTileX + h, endingTileY);
-							if (tile.type == (ushort)mod.TileType("PyramidSlabTile"))
-								tile.active(false);
-
-						}
-						endingTileY++;
+						Tile tile = Framing.GetTileSafely(endingTileX + h, endingTileY);
+						if (tile.type == (ushort)mod.TileType("PyramidSlabTile"))
+							tile.active(false);
 					}
-					if (direction == 1)
+					endingTileY++;
+				}
+				if (!hasGeneratedDivertCooridor1 && totalAmount >= thirdPoint)
+				{
+					for (int cooridorX = -totalAmount / 2; cooridorX < totalAmount; cooridorX++)
 					{
-						endingTileX++;
-						for (int h = 3; h >= -3; h--)
+						int findTileX = (cooridorX * finalDirection) + endingTileX;
+						for (int y1 = 2; y1 >= -2; y1--) //top cooridor
 						{
-							Tile tile = Framing.GetTileSafely(endingTileX + h, endingTileY);
-							if (tile.type == (ushort)mod.TileType("PyramidSlabTile"))
-								tile.active(false);
-
+							bool capable = true;
+							Tile selectTile;
+							for (int check = -2; check <= 2; check++)
+							{
+								selectTile = Framing.GetTileSafely(findTileX + check, endingTileY + y1);
+								if (selectTile.type != (ushort)mod.TileType("PyramidSlabTile"))
+								{
+									capable = false;
+									break;
+								}
+							}
+							selectTile = Framing.GetTileSafely(findTileX, endingTileY + y1);
+							if (capable)
+								selectTile.active(false);
 						}
-						endingTileY++;
 					}
+					int spawnX = endingTileX + totalAmount * finalDirection - 4 * finalDirection;
+					GeneratePyramidPath(mod, spawnX, endingTileY, spawnX + Main.rand.Next(40, 61) * finalDirection, pyramidY + midPoint - 16, -finalDirection);
+					endingTileX += (int)(totalAmount * 0.66f) * finalDirection;
+					hasGeneratedDivertCooridor1 = true;
+					finalDirection *= -1;
+				}
+				else if (!hasGeneratedDivertCooridor2 && totalAmount >= twoThirdPoint)
+				{
+					int length = totalAmount + 20;
+					for (int cooridorX = -length / 2; cooridorX < length; cooridorX++)
+					{
+						int findTileX = (cooridorX * finalDirection) + endingTileX;
+						for (int y1 = 2; y1 >= -2; y1--) //top cooridor
+						{
+							bool capable = true;
+							Tile selectTile;
+							for (int check = -2; check <= 2; check++)
+							{
+								selectTile = Framing.GetTileSafely(findTileX + check, endingTileY + y1);
+								if (selectTile.type != (ushort)mod.TileType("PyramidSlabTile"))
+								{
+									capable = false;
+									break;
+								}
+							}
+							selectTile = Framing.GetTileSafely(findTileX, endingTileY + y1);
+							if (capable)
+								selectTile.active(false);
+						}
+					}
+					int spawnX = endingTileX + length * finalDirection - 5 * finalDirection;
+					GeneratePyramidPath(mod, spawnX, endingTileY, spawnX + Main.rand.Next(30, 51) * finalDirection, pyramidY + midPoint, finalDirection);
+					endingTileX += (int)(length * 0.75f) * finalDirection;
+					hasGeneratedDivertCooridor2 = true;
+					finalDirection *= -1;
 				}
 			}
-
+			return;
 			//creates cooridors
 			int overgrownX = -1;
 			int overgrownY = -1;
@@ -6435,7 +6473,7 @@ namespace SOTS
 			{
 				for (float y = -radius; y <= radius; y += (invertScale * 0.85f))
 				{
-					float radialMod = Main.rand.NextFloat(2.1f, 4.1f) * thickMult;
+					float radialMod = Main.rand.NextFloat(2.5f, 4.5f) * thickMult;
 					if (Math.Sqrt(x * x + y * y) <= radius + 0.5)
 					{
 						int xPosition6 = spawnX + x;
@@ -6449,8 +6487,6 @@ namespace SOTS
 							ConvertNearbyTiles(mod, xPosition6, yPosition6);
 							tile.type = (ushort)ModContent.TileType<CursedTumorTile>();
 							tile.active(true);
-							if (Math.Sqrt(x * x + y * y) <= radius - (radialMod - 1))
-								tile.wall = (ushort)ModContent.WallType<CursedTumorWallTile>();
 						}
 						else
 						{

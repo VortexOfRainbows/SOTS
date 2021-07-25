@@ -16,7 +16,7 @@ namespace SOTS.Items.ChestItems
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Worldgen Paste");
-			Tooltip.SetDefault("Development tool, NOT MEANT FOR GAMEPLAY\nGenerates the Coconut Island on your cursor");
+			Tooltip.SetDefault("Development tool, NOT MEANT FOR GAMEPLAY");
 		}
 		public override void SetDefaults()
 		{
