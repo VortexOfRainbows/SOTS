@@ -410,7 +410,7 @@ namespace SOTS
         }
         public override bool? CanHitNPC(Item item, NPC target)
         {
-			if(CanKillNPC && item.melee == true && target.townNPC)
+			if(CanKillNPC && item.melee && target.townNPC)
             {
 				return true;
             }

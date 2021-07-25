@@ -530,6 +530,10 @@ namespace SOTS
 							tile.active(false);
 					}
 					endingTileY++;
+					if(endingTileY - pyramidY >= size)
+                    {
+						break;
+                    }
 				}
 				if (!hasGeneratedDivertCooridor1 && totalAmount >= thirdPoint)
 				{
@@ -555,7 +559,7 @@ namespace SOTS
 						}
 					}
 					int spawnX = endingTileX + totalAmount * finalDirection - 4 * finalDirection;
-					GeneratePyramidPath(mod, spawnX, endingTileY, spawnX + Main.rand.Next(40, 61) * finalDirection, pyramidY + midPoint - 16, -finalDirection);
+					GeneratePyramidPath(mod, spawnX, endingTileY, spawnX + Main.rand.Next(40, 61) * finalDirection, pyramidY + midPoint - 16, finalDirection);
 					endingTileX += (int)(totalAmount * 0.66f) * finalDirection;
 					hasGeneratedDivertCooridor1 = true;
 					finalDirection *= -1;
@@ -585,12 +589,13 @@ namespace SOTS
 						}
 					}
 					int spawnX = endingTileX + length * finalDirection - 5 * finalDirection;
-					GeneratePyramidPath(mod, spawnX, endingTileY, spawnX + Main.rand.Next(30, 51) * finalDirection, pyramidY + midPoint, finalDirection);
+					GeneratePyramidPath(mod, spawnX, endingTileY, spawnX + Main.rand.Next(30, 51) * finalDirection, pyramidY + midPoint, -finalDirection, 24);
 					endingTileX += (int)(length * 0.75f) * finalDirection;
 					hasGeneratedDivertCooridor2 = true;
 					finalDirection *= -1;
 				}
 			}
+			GeneratePyramidPath(mod, endingTileX, pyramidY + size, pyramidX, pyramidY + size + 20, -finalDirection, 27, true);
 			return;
 			//creates cooridors
 			int overgrownX = -1;
@@ -6438,7 +6443,23 @@ namespace SOTS
 				deg += WorldGen.genRand.Next(120);
 			}
 		}
-		public static void GeneratePyramidPath(Mod mod, int spawnX, int spawnY, int endX, int endY, int direction = 1)
+		public static void GeneratePyramidSquare(Mod mod, int spawnX, int spawnY, int halfLength)
+        {
+			for(int i = -halfLength; i <= halfLength; i++)
+			{ 
+				for (int j = -halfLength; j <= halfLength; j++)
+				{
+					Tile tile = Framing.GetTileSafely(spawnX + i, spawnY + j);
+					if(tile.wall != ModContent.WallType<PyramidWallTile>())
+					{
+						if (i != halfLength && i != -halfLength && j != halfLength && j != -halfLength)
+							tile.wall = (ushort)mod.WallType("PyramidWallTile");
+						SetTilePyramid(tile);
+					}
+				}
+			}
+        }
+		public static void GeneratePyramidPath(Mod mod, int spawnX, int spawnY, int endX, int endY, int direction = 1, int max = 20, bool surround = false)
 		{
 			Vector2 start = new Vector2(spawnX, spawnY);
 			Vector2 end = new Vector2(endX, endY);
@@ -6447,10 +6468,21 @@ namespace SOTS
 			Vector2 midPoint = (start + end) * 0.5f;
 			spawnX = (int)midPoint.X;
 			spawnY = (int)midPoint.Y;
-			float yDistMult = Main.rand.NextFloat(-0.25f, 1.00f) * direction;
-			for (int i = 0; i < 18; i++)
+			float yDistMult = Main.rand.NextFloat(0.25f, 1.00f) * direction;
+			if(surround)
 			{
-				Vector2 circularLocation = new Vector2(lengthToEnd, 0).RotatedBy(MathHelper.ToRadians(i * 10));
+				for (int i = 0; i < max; i++)
+				{
+					Vector2 circularLocation = new Vector2(lengthToEnd, 0).RotatedBy(MathHelper.ToRadians(i * (180f / max)));
+					circularLocation.Y *= yDistMult;
+					circularLocation = circularLocation.RotatedBy(rotationToEnd);
+					GeneratePyramidSquare(mod, spawnX + (int)circularLocation.X, spawnY + (int)circularLocation.Y, 12);
+				}
+				GeneratePyramidSquare(mod, endX, endY, 28);
+			}
+			for (int i = 0; i < max; i++)
+			{
+				Vector2 circularLocation = new Vector2(lengthToEnd, 0).RotatedBy(MathHelper.ToRadians(i * (180f / max)));
 				circularLocation.Y *= yDistMult;
 				circularLocation = circularLocation.RotatedBy(rotationToEnd);
 				GeneratePyramidOval(mod, spawnX + (int)circularLocation.X, spawnY + (int)circularLocation.Y, 6, 6, 0.75f);
