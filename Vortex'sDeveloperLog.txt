@@ -36,6 +36,13 @@ Low Priority:
 1. Next: Keybind for Machina Booster
 2. Next: Ancient GOld Gate spawn + Pyramid crystals worldgen
 
+7/26/21
+1. More work on pyramid worldgen
+2. Pyramid Treasure rooms are more often connected by paths to normal cooridors and stairwells
+	1. 50% -> 67%
+3. Pyramid trasure rooms generally spawn more often in general, to offset the space taken up by infected passages.
+4. The Pyramid is now overtaken by infection!
+
 7/22/21 & 7/23/21 & 7/24/21
 1. Tome of the Reaper damage 43 -> 48
 2. Bananalizard's Music boxes are pulled properly
