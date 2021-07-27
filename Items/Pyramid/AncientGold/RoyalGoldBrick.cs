@@ -39,7 +39,7 @@ namespace SOTS.Items.Pyramid.AncientGold
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
 			drop = ModContent.ItemType<RoyalGoldBrick>();
-			AddMapEntry(new Color(140, 105, 25));
+			AddMapEntry(new Color(180, 150, 20));
 			mineResist = 1.0f;
 			minPick = 0;
 			soundType = SoundID.Tink;
