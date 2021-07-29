@@ -17,7 +17,7 @@ namespace SOTS.Items.ChestItems
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Planetary Analyzer");
-			Tooltip.SetDefault("Displays some worldgen info that may be useful\n\n'Calls down the protector of that palace in the sky'");
+			Tooltip.SetDefault("Displays some worldgen info that may be useful\n'Calls down the protector of that palace in the sky'");
 		}
 		public override void SetDefaults()
 		{

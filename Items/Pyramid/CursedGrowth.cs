@@ -7,6 +7,7 @@ using Terraria.ObjectData;
 
 namespace SOTS.Items.Pyramid
 {
+	/*
 	public class CursedGrowth : ModItem
 	{
 		public override void SetStaticDefaults()
@@ -29,6 +30,7 @@ namespace SOTS.Items.Pyramid
 			item.createTile = mod.TileType("CursedGrowthTile");
 		}
 	}	
+	*/
 	public class CursedGrowthTile : ModTile
 	{
 		public override void SetDefaults()

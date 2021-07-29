@@ -34,7 +34,9 @@ Low Priority:
 5. Electrolyte Seperator
 
 1. Next: Keybind for Machina Booster
-2. Next: Ancient GOld Gate spawn + Pyramid crystals worldgen
+
+7/28/21
+1. Pyramid worldgen + Cursed growths
 
 7/26/21
 1. More work on pyramid worldgen

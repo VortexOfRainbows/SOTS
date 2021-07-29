@@ -1141,10 +1141,30 @@ namespace SOTS
 				for (int findTileX = pyramidX + extraSize; findTileX > pyramidX - extraSize; findTileX--)
 				{
 					Tile tile = Framing.GetTileSafely(findTileX, findTileY);
-					if(tile.type == ModContent.TileType<CursedTumorTile>() && tile.active())
-                    {
+					if (tile.type == ModContent.TileType<CursedTumorTile>() && tile.active())
+					{
 						tile.wall = (ushort)ModContent.WallType<CursedTumorWallTile>();
-                    }
+						if (WorldGen.genRand.NextBool(2))
+						{
+							int left = findTileX - 1;
+							int top = findTileY - 2;
+							bool capable = true;
+							for (int i = left; i < left + 4; i++)
+							{
+								for (int j = top; j < top + 3; j++)
+								{
+									Tile tile2 = Framing.GetTileSafely(i, j);
+									if ((tile2.active() && j != top + 2) || (j == top + 2 && !tile2.active()))
+									{
+										capable = false;
+										break;
+									}
+								}
+							}
+							if (capable)
+								WorldGen.PlaceTile(findTileX, findTileY - 1, ModContent.TileType<CursedGrowthTile>());
+						}
+					}
 				}
 			}
 		}

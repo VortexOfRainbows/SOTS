@@ -8,6 +8,7 @@ using System;
 using Terraria.ObjectData;
 using Terraria.DataStructures;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Items.Pyramid;
 
 namespace SOTS.Items.ChestItems
 {
@@ -108,7 +109,10 @@ namespace SOTS.Items.ChestItems
 		}
 		public override bool UseItem(Player player)
 		{
-			PasteCrystal();
+			//PasteCrystal();
+			Vector2 mousePos = Main.MouseWorld;
+			Vector2 tileLocation = mousePos / 16f;
+			WorldGen.PlaceTile((int)tileLocation.X, (int)tileLocation.Y, ModContent.TileType<CursedGrowthTile>());
 			return true;
 		}
 	}
