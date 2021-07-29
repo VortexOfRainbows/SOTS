@@ -35,8 +35,9 @@ Low Priority:
 
 1. Next: Keybind for Machina Booster
 
-7/28/21
+7/27/21 & 7/28/21
 1. Pyramid worldgen + Cursed growths
+2. Golden gate spawns in the room!
 
 7/26/21
 1. More work on pyramid worldgen

@@ -9,8 +9,8 @@ namespace SOTS.Items.Pyramid
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Cursed Tumor Brick");
-			Tooltip.SetDefault("A living clump of matter residing in a broken down brick\n'It has the consistency of a tumor'");
+			DisplayName.SetDefault("Cursed Tumor Block");
+			Tooltip.SetDefault("'Baked beans'");
 		}
 		public override void SetDefaults()
 		{
