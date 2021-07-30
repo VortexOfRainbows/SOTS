@@ -15,7 +15,6 @@ namespace SOTS.NPCs
 	{	float ai1 = 0;
 		public override void SetStaticDefaults()
 		{
-			
 			DisplayName.SetDefault("Ghast");
 		}
 		public override void SetDefaults()
@@ -120,10 +119,12 @@ namespace SOTS.NPCs
 		}
 		public override void NPCLoot()
 		{
-			if(SOTSWorld.downedCurse && Main.rand.NextBool(5))
+			if(SOTSWorld.downedCurse && Main.rand.NextBool(3))
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("CursedMatter"), Main.rand.Next(2) + 1);	
 			else
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<SoulResidue>(), Main.rand.Next(2) + 1);
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<SoulResidue>(), Main.rand.Next(2) + 1);
+			if (Main.rand.NextBool(2))
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<CursedTumor>(), Main.rand.Next(3) + 4);
 		}
 		public override void HitEffect(int hitDirection, double damage)
         {

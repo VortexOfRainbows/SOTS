@@ -17,6 +17,7 @@ using SOTS.Items.Celestial;
 using SOTS.NPCs.Boss.Polaris;
 using SOTS.NPCs.Inferno;
 using SOTS.NPCs.Boss.Advisor;
+using SOTS.Items.Pyramid;
 
 namespace SOTS.NPCs
 {
@@ -285,7 +286,7 @@ namespace SOTS.NPCs
 			bool ZoneForest = !player.GetModPlayer<SOTSPlayer>().PyramidBiome && !player.ZoneDesert && !player.ZoneCorrupt && !player.ZoneDungeon && !player.ZoneDungeon && !player.ZoneHoly && !player.ZoneMeteor && !player.ZoneJungle && !player.ZoneSnow && !player.ZoneCrimson && !player.ZoneGlowshroom && !player.ZoneUndergroundDesert && (player.ZoneDirtLayerHeight || player.ZoneOverworldHeight) && !player.ZoneBeach;
 			if (spawnInfo.player.GetModPlayer<SOTSPlayer>().PyramidBiome)
 			{
-				if (spawnInfo.spawnTileType == (ushort)mod.TileType("PyramidSlabTile"))
+				if (spawnInfo.spawnTileType == ModContent.TileType<PyramidSlabTile>() || spawnInfo.spawnTileType == ModContent.TileType<PyramidBrickTile>() || spawnInfo.spawnTileType == ModContent.TileType<TrueSandstoneTile>())
 				{
 					pool[0] = 0f;
 					pool.Add(mod.NPCType("SnakePot"), 0.3f);
@@ -293,9 +294,16 @@ namespace SOTS.NPCs
 					pool.Add(mod.NPCType("LostSoul"), 0.6f);
 					pool.Add(mod.NPCType("PyramidTreasureSlime"), 0.1f);
 					pool.Add(NPCID.SandSlime, 0.35f);
+					if(Main.hardMode)
+                    {
+						pool.Add(NPCID.Mummy, 0.5f);
+					}
+				}
+				else if(spawnInfo.spawnTileType == ModContent.TileType<CursedTumorTile>())
+				{
+					pool[0] = 0f;
 					if (Main.hardMode)
 					{
-						pool.Add(NPCID.Mummy, 0.5f);
 						pool.Add(mod.NPCType("BleedingGhast"), 0.1f);
 						pool.Add(mod.NPCType("FlamingGhast"), 0.1f);
 						pool.Add(mod.NPCType("Ghast"), 0.1f);
@@ -304,6 +312,8 @@ namespace SOTS.NPCs
 					{
 						pool.Add(mod.NPCType("Ghast"), 0.25f);
 					}
+					pool.Add(mod.NPCType("LostSoul"), 0.1f);
+					pool.Add(mod.NPCType("PyramidTreasureSlime"), 0.025f);
 				}
 			}
 			else if (spawnInfo.player.GetModPlayer<SOTSPlayer>().PlanetariumBiome)

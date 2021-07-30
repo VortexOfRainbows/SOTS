@@ -18,7 +18,6 @@ Mid Priority:
 5. Tectonic Tether
 6. Replace Brittle flail
 7. Chest slime resprites
-8. Bone Clapper
 
 Mid Priority 2:
 1. Void Low Warning
@@ -34,6 +33,8 @@ Low Priority:
 5. Electrolyte Seperator
 
 1. Next: Keybind for Machina Booster
+2. Next: Curse based enemies
+3. Next: Ghast Banner + Teratoma Banner
 
 7/27/21 & 7/28/21
 1. Pyramid worldgen + Cursed growths
