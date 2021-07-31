@@ -36,8 +36,8 @@ namespace SOTS.NPCs
 			aiType = NPCID.GoblinScout;
 			npc.width = 36;
 			npc.height = 46;
-			npc.lifeMax = 80;
-			npc.damage = 30;
+			npc.lifeMax = 120;
+			npc.damage = 35;
 			npc.value = 1000;
 			npc.scale = 1.0f;
 			//animationType = //NPCID.GoblinPeon;
@@ -46,6 +46,11 @@ namespace SOTS.NPCs
 			//banner = npc.type;
 			//bannerItem = ItemType<ArcticGoblinBanner>();
 		}
+        public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+        {
+			npc.lifeMax = 180;
+            base.ScaleExpertStats(numPlayers, bossLifeScale);
+        }
         public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
 			Texture2D texture = Main.npcTexture[npc.type];
