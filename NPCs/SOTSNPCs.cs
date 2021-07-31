@@ -286,7 +286,8 @@ namespace SOTS.NPCs
 			bool ZoneForest = !player.GetModPlayer<SOTSPlayer>().PyramidBiome && !player.ZoneDesert && !player.ZoneCorrupt && !player.ZoneDungeon && !player.ZoneDungeon && !player.ZoneHoly && !player.ZoneMeteor && !player.ZoneJungle && !player.ZoneSnow && !player.ZoneCrimson && !player.ZoneGlowshroom && !player.ZoneUndergroundDesert && (player.ZoneDirtLayerHeight || player.ZoneOverworldHeight) && !player.ZoneBeach;
 			if (spawnInfo.player.GetModPlayer<SOTSPlayer>().PyramidBiome)
 			{
-				if (spawnInfo.spawnTileType == ModContent.TileType<PyramidSlabTile>() || spawnInfo.spawnTileType == ModContent.TileType<PyramidBrickTile>() || spawnInfo.spawnTileType == ModContent.TileType<TrueSandstoneTile>())
+				bool goToInfectionSpawns = Main.rand.NextBool(15); //make it a 1/15 chance to do curse spawns instead, to allow them to spawn in the non-curse areas occasionally
+				if (!goToInfectionSpawns && (spawnInfo.spawnTileType == ModContent.TileType<PyramidSlabTile>() || spawnInfo.spawnTileType == ModContent.TileType<PyramidBrickTile>() || spawnInfo.spawnTileType == ModContent.TileType<TrueSandstoneTile>()))
 				{
 					pool[0] = 0f;
 					pool.Add(mod.NPCType("SnakePot"), 0.3f);
@@ -299,7 +300,7 @@ namespace SOTS.NPCs
 						pool.Add(NPCID.Mummy, 0.5f);
 					}
 				}
-				else if(spawnInfo.spawnTileType == ModContent.TileType<CursedTumorTile>())
+				else if(spawnInfo.spawnTileType == ModContent.TileType<CursedTumorTile>() || spawnInfo.spawnTileType == ModContent.TileType<CursedHive>())
 				{
 					pool[0] = 0f;
 					if (Main.hardMode)
@@ -314,6 +315,7 @@ namespace SOTS.NPCs
 					}
 					pool.Add(mod.NPCType("LostSoul"), 0.1f);
 					pool.Add(mod.NPCType("PyramidTreasureSlime"), 0.025f);
+					pool.Add(ModContent.NPCType<Teratoma>(), 0.25f);
 				}
 			}
 			else if (spawnInfo.player.GetModPlayer<SOTSPlayer>().PlanetariumBiome)

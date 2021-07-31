@@ -20,7 +20,7 @@ namespace SOTS.NPCs
 		{
             npc.aiStyle = 0; 
             npc.lifeMax = 185;   
-            npc.damage = 35; 
+            npc.damage = 45; 
             npc.defense = 20;  
             npc.knockBackResist = 0f;
             npc.width = 48;

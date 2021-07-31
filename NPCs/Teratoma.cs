@@ -50,21 +50,32 @@ namespace SOTS.NPCs
 		{
 			Texture2D texture = Main.npcTexture[npc.type];
 			Vector2 drawOrigin = new Vector2(npc.width / 2, npc.height / 2);
-			Vector2 drawPos = npc.Center - Main.screenPosition + new Vector2(0, npc.gfxOffY + 1);
+			Vector2 drawPos = npc.Center - Main.screenPosition + new Vector2(0, npc.gfxOffY + 2);
 			if (mushForm)
 			{
 				int mushHeightSprite = 22;
 				float regenTimerC = regenTimer - 90;
 				if (regenTimerC < 0)
 					regenTimerC = 0;
-				float percent = regenTimerC / 180f;
+				float percent = regenTimerC / 50f;
+				int currentHeight2 = (int)(npc.height * percent);
+				if (percent > 1)
+					percent = 1;
 				int mushHeight = (int)(mushHeightSprite * (1f - percent));
+				int currentHeight = (int)(npc.height * percent);
 				if (regenTimer > 90)
                 {
-					for (int i = npc.height; i >= npc.height - (int)(npc.height * percent); i--)
+					for (int i = npc.height; i >= npc.height - currentHeight; i--)
 					{
+						int difference = i - npc.height + currentHeight2;
+						if (difference > 10)
+							difference = 10;
+						int direction = 1;
+						if (i % 4 <= 1)
+							direction = -1;
+						int xOffset = (10 - difference) * direction;
 						Rectangle cutoutFrame = new Rectangle(0, i, npc.width, 1);
-						spriteBatch.Draw(texture, drawPos + new Vector2(0, i - (mushHeight - 4 * (1f - percent))), cutoutFrame, drawColor, npc.rotation, drawOrigin, npc.scale, npc.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+						spriteBatch.Draw(texture, drawPos + new Vector2(xOffset, i - (mushHeight - 10 * (1f - percent))), cutoutFrame, drawColor, npc.rotation, drawOrigin, npc.scale, npc.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 					}
 				}
 				Rectangle frame = new Rectangle(0, npc.frame.Y + npc.height - mushHeightSprite, npc.width, mushHeight);
@@ -85,23 +96,23 @@ namespace SOTS.NPCs
 			//spriteBatch.Draw(texture, drawPos, frame, Color.White, npc.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
 			return false;
 		}
-		public void createDust(int dist = 48, int dir = 1, int amt = 10)
+		public void createDust(int dir = 1, int amt = 10)
 		{
 			float regenTimerC = regenTimer - 90;
 			if (regenTimerC < 0)
 				regenTimerC = 0;
-			float percent = regenTimerC / 180f;
-			float scale = 0.6f + 1.0f * percent;
+			float percent = regenTimerC / 50f;
+			float scale = 1.0f + 0.6f * percent;
 			for (int i = 0; i < amt; i++)
 			{
-				int num1 = Dust.NewDust(new Vector2(npc.position.X - dist / 2 - 2, npc.position.Y - dist / 2 - 2), npc.width + dist, npc.height + dist, mod.DustType("CurseDust"), 0, 0, 0, default, scale);
+				int num1 = Dust.NewDust(new Vector2(npc.position.X - 8, npc.position.Y + npc.height - 16), npc.width + 16, 28, mod.DustType("CurseDust"), 0, 0, 0, default, scale);
 				Main.dust[num1].noGravity = true;
 				float dusDisX = Main.dust[num1].position.X - npc.Center.X;
 				float dusDisY = Main.dust[num1].position.Y - npc.Center.Y;
 				//double dis = Math.Sqrt((double)(dusDisX * dusDisX + dusDisY * dusDisY))
 
 				dusDisX *= 0.05f * dir;
-				dusDisY *= 0.05f * dir;
+				dusDisY *= 0.175f * dir * (0.1f + 0.9f * percent);
 
 				Main.dust[num1].velocity.X = dusDisX;
 				Main.dust[num1].velocity.Y = dusDisY;
@@ -115,12 +126,12 @@ namespace SOTS.NPCs
             {
 				regenTimer++;
 				if(regenTimer > 90)
-					createDust(48, -1, 2);
-				if (regenTimer >= 270)
+					createDust(-1, 1);
+				if (regenTimer >= 153)
                 {
-					regenTimer = 0;
+					regenTimer = -30;
 					npc.frame.Y = 0;
-					npc.velocity.Y -= 5f;
+					npc.velocity.Y -= 6.6f;
 					mushForm = false;
                 }
 				npc.velocity.X *= 0.925f;

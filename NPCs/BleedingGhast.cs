@@ -14,14 +14,13 @@ namespace SOTS.NPCs
 	{	float ai1 = 0;
 		public override void SetStaticDefaults()
 		{
-			
 			DisplayName.SetDefault("Bleeding Ghast");
 		}
 		public override void SetDefaults()
 		{
             npc.lifeMax = 150;   
             npc.damage = 70; 
-            npc.defense = 24;  
+            npc.defense = 16;  
             npc.knockBackResist = 0f;
             npc.width = 48;
             npc.height = 56;

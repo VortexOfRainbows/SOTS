@@ -35,6 +35,10 @@ Low Priority:
 1. Next: Keybind for Machina Booster
 2. Next: Curse based enemies
 3. Next: Ghast Banner + Teratoma Banner
+4. Next: Pharaoh's Curse to despawn if player is out of the arena
+
+7/29/21 & 7/30/21
+1. Work on Teratoma
 
 7/27/21 & 7/28/21
 1. Pyramid worldgen + Cursed growths
