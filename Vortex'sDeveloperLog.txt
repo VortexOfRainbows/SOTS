@@ -35,8 +35,11 @@ Low Priority:
 1. Next: Keybind for Machina Booster
 2. Next: Curse based enemies
 3. Next: Ghast Banner + Teratoma Banner
-4. Next: Pharaoh's Curse to despawn if player is out of the arena
-5. Next: Flashspark boots rework
+4. Next: Flashspark boots rework
+
+8/1/21
+1. Portal plating drawcode + Strange Chest drawcode
+2. Pharaoh despawns if player is not in arena!
 
 7/29/21 & 7/30/21 & 7/31/21
 1. Work on Teratoma

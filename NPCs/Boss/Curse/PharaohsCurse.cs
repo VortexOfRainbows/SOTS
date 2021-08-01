@@ -437,6 +437,8 @@ namespace SOTS.NPCs.Boss.Curse
 		public List<CurseFoam> foamParticleList3 = new List<CurseFoam>();
 		public List<CurseFoam> foamParticleList4 = new List<CurseFoam>();
 		float startParticles = 1;
+		int playerPosCounter = 0;
+		bool playerValidPosition = true;
 		public void SpawnDoors()
         {
 			if(Main.netMode != NetmodeID.MultiplayerClient)
@@ -454,8 +456,10 @@ namespace SOTS.NPCs.Boss.Curse
 		public override bool PreAI()
 		{
 			Player player = Main.player[npc.target];
+			playerPosCounter++;
 			if (runOnce)
 			{
+				playerValidPosition = true;
 				SpawnDoors();
 				startParticles = 0.0f;
 				aiPhase = -1;
@@ -463,6 +467,10 @@ namespace SOTS.NPCs.Boss.Curse
 				direction = Main.rand.Next(2) * 2 - 1;
 				CenterPosition = npc.Center;
 			}
+			if(playerValidPosition && playerPosCounter % 60 == 0)
+            {
+				playerValidPosition = PlayerValidPosition();
+            }
 			if(aiPhase != 7)
 			{
 				if (eyeOffsetMult < 1)
@@ -506,7 +514,7 @@ namespace SOTS.NPCs.Boss.Curse
 			bool inRange = Vector2.Distance(player.Center, npc.Center) <= 1600f;
 			if (Main.netMode != NetmodeID.MultiplayerClient)
 				npc.netUpdate = true;
-			if (player.dead || !SOTSPlayer.ModPlayer(player).PyramidBiome || !inRange)
+			if (player.dead || !SOTSPlayer.ModPlayer(player).PyramidBiome || !inRange || !playerValidPosition)
 			{
 				despawn++;
 			}
@@ -1348,6 +1356,45 @@ namespace SOTS.NPCs.Boss.Curse
 			}
 			aiPhase = nextPhase;
 		}
+		public bool PlayerValidPosition()
+        {
+			Player player = Main.player[npc.target];
+			int foundTrueTiles = 0;
+			for(int checkDir = 0; checkDir < 4; checkDir++)
+            {
+				int length = 110;
+				int dirX = 0;
+				int dirY = 0;
+				if (checkDir == 0)
+					dirX = 1;
+				if (checkDir == 1)
+				{
+					dirY = 1;
+					length = 66;
+				}
+				if (checkDir == 2)
+					dirX = -1;
+				if (checkDir == 3)
+				{
+					dirY = -1;
+					length = 66;
+				}
+				for (int k = 2; k < length; k++)
+                {
+					int i = (int)player.Center.X / 16;
+					int j = (int)player.Center.Y / 16;
+					i += k * dirX;
+					j += k * dirY;
+					Tile tile = Framing.GetTileSafely(i, j);
+					if(tile.type == ModContent.TileType<TrueSandstoneTile>() || (tile.wall == ModContent.WallType<TrueSandstoneWallWall>() && dirX != 0))
+                    {
+						foundTrueTiles++;
+						break;
+                    }
+				}
+            }
+			return foundTrueTiles >= 4;
+        }
 	}
 	public class CurseFoam
 	{
