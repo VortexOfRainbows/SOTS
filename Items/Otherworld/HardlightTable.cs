@@ -148,7 +148,6 @@ namespace SOTS.Items.Otherworld
 				pos.Y -= 13 + dynamicAddition.Y;
 				if(k == 0)
 					Main.spriteBatch.Draw(texture2, pos, null, color * 0.5f, 0f, new Vector2(26, 13), 1f, SpriteEffects.None, 0f);
-
 				Main.spriteBatch.Draw(texture, pos, null, color, 0f, new Vector2(26, 13), 1f, SpriteEffects.None, 0f);
 			}
 			return true;

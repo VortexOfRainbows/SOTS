@@ -36,9 +36,13 @@ Low Priority:
 2. Next: Curse based enemies
 3. Next: Ghast Banner + Teratoma Banner
 4. Next: Pharaoh's Curse to despawn if player is out of the arena
+5. Next: Flashspark boots rework
 
-7/29/21 & 7/30/21
+7/29/21 & 7/30/21 & 7/31/21
 1. Work on Teratoma
+2. Nerfed sandstone edge, 6-11 bolts that do 50% damage -> 3-5 bolts that do 50% damage
+	3. Damage 28 -> 26
+3. Implemented Planetarium resprites
 
 7/27/21 & 7/28/21
 1. Pyramid worldgen + Cursed growths
