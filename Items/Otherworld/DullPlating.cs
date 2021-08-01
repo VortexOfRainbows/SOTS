@@ -14,8 +14,8 @@ namespace SOTS.Items.Otherworld
 		}
 		public override void SetDefaults()
 		{
-			item.width = 20;
-			item.height = 20;
+			item.width = 16;
+			item.height = 16;
 			item.maxStack = 999;
 			item.useTurn = true;
 			item.autoReuse = true;
