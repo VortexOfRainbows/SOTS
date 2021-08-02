@@ -34,31 +34,31 @@ namespace SOTS.Items.Otherworld
 	{
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
 		{
-			r = 0.10f;
-			g = 0.18f;
-			b = 0.24f;
+			r = 0.18f;
+			g = 0.20f;
+			b = 0.22f;
 			base.ModifyLight(i, j, ref r, ref g, ref b);
 		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
 		{
-			float uniquenessCounter = Main.GlobalTime * -100 + (i + j) * 5;
+			//float uniquenessCounter = Main.GlobalTime * -100 + (i + j) * 5;
 			Tile tile = Main.tile[i, j];
 			Texture2D texture = mod.GetTexture("Items/Otherworld/PortalPlatingTileGlow");
 			Rectangle frame = new Rectangle(tile.frameX, tile.frameY, 16, 16);
 			Color color;
 			color = WorldGen.paintColor((int)Main.tile[i, j].color()) * (100f / 255f);
 			color.A = 0;
-			float alphaMult = 0.85f;// + 0.45f * (float)Math.Sin(MathHelper.ToRadians(uniquenessCounter));
+			float alphaMult = 0.1f; // + 0.45f * (float)Math.Sin(MathHelper.ToRadians(uniquenessCounter));
 			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
 			if (Main.drawToScreen)
 			{
 				zero = Vector2.Zero;
 			}
-			for (int k = 0; k < 3; k++)
+			for (int k = 0; k < 2; k++)
 			{
 				Vector2 pos = new Vector2((i * 16 - (int)Main.screenPosition.X), (j * 16 - (int)Main.screenPosition.Y)) + zero;
-				Vector2 offset = new Vector2(Main.rand.NextFloat(-1, 1f), Main.rand.NextFloat(-1, 1f)) * 0.075f * k;
-				Main.spriteBatch.Draw(texture, pos + offset, frame, color * alphaMult * 0.75f, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+				Vector2 offset = new Vector2(Main.rand.NextFloat(-1, 1f), Main.rand.NextFloat(-1, 1f)) * 0.05f * k;
+				Main.spriteBatch.Draw(texture, pos + offset, frame, color * alphaMult * 1f, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
 			}
 		}
 		public override void SetDefaults()

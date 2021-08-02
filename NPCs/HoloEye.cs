@@ -67,7 +67,15 @@ namespace SOTS.NPCs
 		{
 			Texture2D texture = mod.GetTexture("NPCs/HoloEyeBase");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			Main.spriteBatch.Draw(texture, new Vector2((float)(npc.Center.X - (int)Main.screenPosition.X), (float)(npc.Center.Y - (int)Main.screenPosition.Y) + 18), null, drawColor * ((255 - npc.alpha) / 255f), 0f, drawOrigin, npc.scale, SpriteEffects.None, 0f);
+			Vector2 drawPos = new Vector2((float)(npc.Center.X - (int)Main.screenPosition.X), (float)(npc.Center.Y - (int)Main.screenPosition.Y) + 18);
+			Main.spriteBatch.Draw(texture, drawPos, null, drawColor * ((255 - npc.alpha) / 255f), 0f, drawOrigin, npc.scale, SpriteEffects.None, 0f);
+			Color color = new Color(100, 100, 100, 0); 
+			texture = mod.GetTexture("NPCs/HoloEyeBaseGlow");
+			for (int k = 0; k < 5; k++)
+			{
+				Vector2 offset = new Vector2(Main.rand.NextFloat(-1, 1f), Main.rand.NextFloat(-1, 1f)) * 0.25f * k;
+				Main.spriteBatch.Draw(texture, drawPos + offset, null, color * 0.66f, 0f, drawOrigin, npc.scale, SpriteEffects.None, 0f);
+			}
 			return false;
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)

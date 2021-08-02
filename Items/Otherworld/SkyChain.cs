@@ -67,15 +67,14 @@ namespace SOTS.Items.Otherworld
 		{
 			if(Main.tile[i,j].frameX < 18)
 			{
-				r = 1.2f;
-				g = 1.2f;
-				b = 1.2f;
+				r = 0.425f;
+				g = 0.425f;
+				b = 0.425f;
 			}
 		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
 		{
 			Texture2D texture = mod.GetTexture("Items/Otherworld/SkyChainEffect");
-			ulong randSeed = Main.TileFrameSeed ^ (ulong)((long)j << 32 | (long)((ulong)i));
 			Color color;
 			color = WorldGen.paintColor((int)Main.tile[i, j].color()) * (100f / 255f);
 			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);

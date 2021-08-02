@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -110,9 +111,31 @@ namespace SOTS.Items.Otherworld
 			if (Main.tile[i, j].frameX < 18 || Main.tile[i, j].frameX > 35 || Main.tile[i, j].frameY % 36 < 18)
 				return;
 
-			r = 0.9f;
-			g = 0.9f;
-			b = 1.1f;
+			r = 0.25f;
+			g = 0.25f;
+			b = 0.35f;
+		}
+		public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
+		{
+			float uniquenessCounter = Main.GlobalTime * -100 + (i + j) * 5;
+			Tile tile = Main.tile[i, j];
+			Texture2D texture = mod.GetTexture("Items/Otherworld/HardlightFabricatorTileGlow");
+			Rectangle frame = new Rectangle(tile.frameX, tile.frameY, 16, 16);
+			Color color;
+			color = WorldGen.paintColor((int)Main.tile[i, j].color()) * (100f / 255f);
+			color.A = 0;
+			float alphaMult = 0.55f + 0.45f * (float)Math.Sin(MathHelper.ToRadians(uniquenessCounter));
+			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
+			if (Main.drawToScreen)
+			{
+				zero = Vector2.Zero;
+			}
+			for (int k = 0; k < 5; k++)
+			{
+				Vector2 pos = new Vector2((i * 16 - (int)Main.screenPosition.X), (j * 16 - (int)Main.screenPosition.Y)) + zero;
+				Vector2 offset = new Vector2(Main.rand.NextFloat(-1, 1f), Main.rand.NextFloat(-1, 1f)) * 0.10f * k;
+				Main.spriteBatch.Draw(texture, pos + offset, frame, color * alphaMult * 0.75f, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+			}
 		}
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
 		{
