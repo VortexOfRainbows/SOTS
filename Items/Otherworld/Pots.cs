@@ -1,8 +1,9 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
+using System;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.Enums;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -10,8 +11,6 @@ using static Terraria.ModLoader.ModContent;
 
 namespace SOTS.Items.Otherworld
 {
-	// This example shows how to have a tile that is cut by weapons, like vines and grass.
-	// This example also shows how to spawn a projectile on death like Beehive and Boulder trap.
 	internal class SkyPots : ModTile
 	{
 		public override void SetDefaults()
@@ -27,6 +26,28 @@ namespace SOTS.Items.Otherworld
 			TileObjectData.newTile.LavaDeath = false;
 			TileObjectData.addTile(Type);
             dustType = DustType<AvaritianDust>();
+        }
+        public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
+        {
+            float uniquenessCounter = Main.GlobalTime * -100 + (i + j) * 5;
+            Tile tile = Main.tile[i, j];
+            Texture2D texture = mod.GetTexture("Items/Otherworld/SkyPotsGlow");
+            Rectangle frame = new Rectangle(tile.frameX, tile.frameY, 16, 16);
+            Color color;
+            color = WorldGen.paintColor((int)Main.tile[i, j].color()) * (100f / 255f);
+            color.A = 0;
+            float alphaMult = 0.55f + 0.45f * (float)Math.Sin(MathHelper.ToRadians(uniquenessCounter));
+            Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
+            if (Main.drawToScreen)
+            {
+                zero = Vector2.Zero;
+            }
+            for (int k = 0; k < 5; k++)
+            {
+                Vector2 pos = new Vector2((i * 16 - (int)Main.screenPosition.X), (j * 16 - (int)Main.screenPosition.Y)) + zero;
+                Vector2 offset = new Vector2(Main.rand.NextFloat(-1, 1f), Main.rand.NextFloat(-1, 1f)) * 0.10f * k;
+                Main.spriteBatch.Draw(texture, pos + offset, frame, color * alphaMult * 0.75f, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+            }
         }
         public override void NumDust(int i, int j, bool fail, ref int num)
         {

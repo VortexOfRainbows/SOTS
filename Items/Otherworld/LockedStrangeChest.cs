@@ -42,10 +42,23 @@ namespace SOTS.Items.Otherworld
 		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
 		{
-			float uniquenessCounter = Main.GlobalTime * -100 + (i + j) * 5;
 			Tile tile = Main.tile[i, j];
+			int left = i;
+			int top = j;
+			if (tile.frameX % 36 != 0)
+			{
+				left--;
+			}
+			if (tile.frameY != 0)
+			{
+				top--;
+			}
+			int chestI = Chest.FindChest(left, top);
+			Chest chest = Main.chest[chestI];
+			int cFrame = chest.frame;
+			float uniquenessCounter = Main.GlobalTime * -100 + (i + j) * 5;
 			Texture2D texture = mod.GetTexture("Items/Otherworld/LockedStrangeChestGlow");
-			Rectangle frame = new Rectangle(tile.frameX, tile.frameY, 16, 16);
+			Rectangle frame = new Rectangle(tile.frameX, 38 * cFrame + tile.frameY, 16, 16);
 			Color color;
 			color = WorldGen.paintColor((int)Main.tile[i, j].color()) * (100f / 255f);
 			color.A = 0;
@@ -62,7 +75,11 @@ namespace SOTS.Items.Otherworld
 				Main.spriteBatch.Draw(texture, pos + offset, frame, color * alphaMult * 0.75f, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
 			}
 		}
-		public override void SetDefaults()
+        public override void AnimateIndividualTile(int type, int i, int j, ref int frameXOffset, ref int frameYOffset)
+        {
+            base.AnimateIndividualTile(type, i, j, ref frameXOffset, ref frameYOffset);
+        }
+        public override void SetDefaults()
 		{
 			Main.tileSpelunker[Type] = true;
 			Main.tileContainer[Type] = true;

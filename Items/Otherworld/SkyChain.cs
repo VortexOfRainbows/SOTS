@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Steamworks;
+using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
@@ -74,35 +75,79 @@ namespace SOTS.Items.Otherworld
 		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
 		{
-			Texture2D texture = mod.GetTexture("Items/Otherworld/SkyChainEffect");
+			float uniquenessCounter = Main.GlobalTime * -100 + (i + j) * 5;
+			Tile tile = Main.tile[i, j];
+			Texture2D texture = mod.GetTexture("Items/Otherworld/SkyChainTileGlow");
+			Rectangle frame = new Rectangle(tile.frameX, tile.frameY, 16, 16);
 			Color color;
 			color = WorldGen.paintColor((int)Main.tile[i, j].color()) * (100f / 255f);
+			color.A = 0;
+			float alphaMult = 0.55f + 0.45f * (float)Math.Sin(MathHelper.ToRadians(uniquenessCounter));
 			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
 			if (Main.drawToScreen)
 			{
 				zero = Vector2.Zero;
 			}
-			for(int z = 0; z < 20; z ++)
+			for (int k = 0; k < 5; k++)
 			{
-				Vector2 dynamicAddition = new Vector2(z * 0.3f + 0.6f, 0).RotatedBy(MathHelper.ToRadians(z * 24 + Main.GlobalTime * 40));
-				for (int k = 0; k < 3; k++)
+				Vector2 pos = new Vector2((i * 16 - (int)Main.screenPosition.X), (j * 16 - (int)Main.screenPosition.Y)) + zero;
+				Vector2 offset = new Vector2(Main.rand.NextFloat(-1, 1f), Main.rand.NextFloat(-1, 1f)) * 0.10f * k;
+				Main.spriteBatch.Draw(texture, pos + offset, frame, color * alphaMult * 0.75f, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+			}
+		}
+		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
+        {
+			Texture2D texture = mod.GetTexture("Items/Otherworld/SkyChainHelixOutline");
+			Texture2D textureF = mod.GetTexture("Items/Otherworld/SkyChainHelixFill");
+			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
+			float height = 16;
+			float timer = Main.GlobalTime * -100 + (i + j) * 5;
+			Color color;
+			color = WorldGen.paintColor((int)Main.tile[i, j].color()) * (100f / 255f);
+			color.A = 0;
+			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
+			if (Main.drawToScreen)
+			{
+				zero = Vector2.Zero;
+			}
+			int maxLength = 20;
+			for(int j2 = 1; j2 < maxLength; j2++)
+			{
+				Tile tile2 = Framing.GetTileSafely(i, j - j2);
+				if ((tile2.active() && Main.tileSolid[tile2.type] && !Main.tileSolidTop[tile2.type]) || !WorldGen.InWorld(i, j - j2, 27))
 				{
-					Vector2 pos = new Vector2((float)(i * 16 - (int)Main.screenPosition.X) + 8, (float)(j * 16 - (int)Main.screenPosition.Y) + 8) + zero;
-					pos.Y -= z * 17 + 8;
-					pos += dynamicAddition;
-
-					int j2 = j * 16 - z * 18 - 8;
-					Tile tile2 = Framing.GetTileSafely(i, j2/16);
-					if((!tile2.active() || (!Main.tileSolid[tile2.type] || Main.tileSolidTop[tile2.type])) && WorldGen.InWorld(i, j2 / 16, 27))
-					{
-						Main.spriteBatch.Draw(texture, pos, null, color * ((20f - z) / 20f), 0f, new Vector2(8, 8), 1f, SpriteEffects.None, 0f);
-					}
-					else
-					{
-						return;
-					}
+					maxLength = j2;
+					break;
 				}
 			}
+			maxLength++;
+			Vector2 previous = new Vector2(i * 16 + 8, j * 16 + 16);
+			for (int z = 0; z < maxLength; z ++)
+			{
+				float dynamicMult = 0.52f + 0.48f * (float)Math.Cos(MathHelper.ToRadians(180f * z / maxLength));
+				Vector2 dynamicAddition = new Vector2(20f / maxLength * z * 0.4f + 0.5f, 0).RotatedBy(MathHelper.ToRadians(z * 24 + timer)) * dynamicMult;
+				Vector2 pos = new Vector2(i * 16 + 8, j * 16 + 8);
+				pos.Y -= z * 16;
+				pos += dynamicAddition;
+				Vector2 rotateTo = pos - previous;
+				float lengthTo = rotateTo.Length();
+				float stretch = (lengthTo / height) * 1.00275f;
+				if (z == 0)
+					stretch = 1f;
+				Vector2 scaleVector2 = new Vector2(0.8f, stretch);
+				if (z != 0)
+				{
+					float alphaScale = (32f - z * 1.575f) / 20f;
+					for (int k = 0; k < 5; k++)
+					{
+						if (k == 0)
+							Main.spriteBatch.Draw(textureF, previous + zero - Main.screenPosition, null, color * alphaScale * 0.575f, rotateTo.ToRotation() + MathHelper.ToRadians(90), origin, scaleVector2, SpriteEffects.None, 0f);
+						Main.spriteBatch.Draw(texture, previous + zero - Main.screenPosition, null, color * alphaScale, rotateTo.ToRotation() + MathHelper.ToRadians(90), origin, scaleVector2, SpriteEffects.None, 0f);
+					}
+				}
+				previous = pos;
+			}
+			return true;
 		}
 	}
 }
