@@ -40,7 +40,6 @@ namespace SOTS.Items.Pyramid
 			AddMapEntry(new Color(255, 255, 255));
 			soundType = SoundID.NPCHit;
 			soundStyle = 1;
-			SOTS.MergeWith(Type, mod.TileType("CursedTumorTile"));
 		}
         public override bool CanExplode(int i, int j)
 		{
