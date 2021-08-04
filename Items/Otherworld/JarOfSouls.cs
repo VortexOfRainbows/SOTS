@@ -55,7 +55,7 @@ namespace SOTS.Items.Otherworld
 		public override void SetDefaults()
 		{
 			item.width = 40;
-			item.height = 62;
+			item.height = 58;
 			item.value = Item.sellPrice(0, 1, 0, 0);
 			item.rare = 1;
 			item.maxStack = 99;

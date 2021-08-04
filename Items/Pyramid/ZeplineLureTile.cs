@@ -17,7 +17,7 @@ namespace SOTS.Items.Pyramid
 			drop = mod.ItemType("RefractingCrystal");
 			AddMapEntry(new Color(120, 90, 90));
 			mineResist = 15.5f;
-			minPick = 250;
+			minPick = 9999;
             soundType = 21;
             soundStyle = 2;
 			dustType = 32;

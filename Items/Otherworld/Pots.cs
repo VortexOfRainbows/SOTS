@@ -458,7 +458,6 @@ namespace SOTS.Items.Otherworld
 		{
 			DisplayName.SetDefault("Pots");
 		}
-
 		public override void SetDefaults()
 		{
 			item.CloneDefaults(ItemID.DartTrap);

@@ -37,9 +37,12 @@ Low Priority:
 3. Next: Ghast Banner + Teratoma Banner
 4. Next: Flashspark boots rework
 
-8/1/21
+8/1/21 & 8/2/21 & 8/3/21
 1. Portal plating drawcode + Strange Chest drawcode
 2. Pharaoh despawns if player is not in arena!
+3. Sky chain drawcode + other planetarium related drawcode
+4. Drawcode poggers for Planetarium!
+5. 
 
 7/29/21 & 7/30/21 & 7/31/21
 1. Work on Teratoma

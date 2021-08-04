@@ -2,6 +2,8 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 
 namespace SOTS.Items.Otherworld
 {
@@ -38,36 +40,96 @@ namespace SOTS.Items.Otherworld
 	}
 	public class AvaritianPlatingWallWall : ModWall
 	{
+		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
+		{
+			float uniquenessCounter = Main.GlobalTime * -100 + (i + j) * 5;
+			Tile tile = Main.tile[i, j];
+			Texture2D texture = mod.GetTexture("Items/Otherworld/AvaritianPlatingWallWallGlow");
+			int xLength = 32;
+			int xOff = 0;
+			/*if (Main.tile[i - 1, j].wall != 0)// && Main.tile[i + 1, j].wall == 0)
+			{
+				xOff += 8;
+				xLength -= 8;
+			}
+			if (Main.tile[i + 1, j].wall != 0)// && Main.tile[i - 1, j].wall == 0)
+			{
+				xLength -= 8;
+			}*/
+			Rectangle frame = new Rectangle(tile.wallFrameX() + xOff, tile.wallFrameY(), xLength, 32);
+			Color color;
+			color = WorldGen.paintColor((int)tile.wallColor()) * (100f / 255f);
+			color.A = 0;
+			float alphaMult = 0.55f + 0.45f * (float)Math.Sin(MathHelper.ToRadians(uniquenessCounter));
+			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
+			if (Main.drawToScreen)
+			{
+				zero = Vector2.Zero;
+			}
+			Vector2 pos = new Vector2((i * 16 - (int)Main.screenPosition.X), (j * 16 - (int)Main.screenPosition.Y)) + zero;
+			Main.spriteBatch.Draw(Main.wallTexture[Type], pos + new Vector2(-8 + xOff, -8), frame, Lighting.GetColor(i, j, Color.White), 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+			for (int k = 0; k < 3; k++)
+			{
+				Vector2 offset = new Vector2(Main.rand.NextFloat(-1, 1f), Main.rand.NextFloat(-1, 1f)) * 0.25f * k;
+				Main.spriteBatch.Draw(texture, pos + offset + new Vector2(-8 + xOff, -8), frame, color * alphaMult * 0.8f, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+			}
+			return false;
+		}
 		public override void SetDefaults()
 		{
-			Main.wallLargeFrames[Type] = (byte)2;
 			Main.wallHouse[Type] = true;
 			dustType = mod.DustType("AvaritianDust");
 			drop = mod.ItemType("PortalPlatingWall");
-			AddMapEntry(new Color(52, 150, 140));
+			AddMapEntry(new Color(62, 150, 140));
 		}
 	}
-	public class PortalPlatingWallWall : ModWall
+	public class PortalPlatingWallWall : ModWall //unsafe avaritian plating wall, prevents houses from forming in planetarium
 	{
-
+		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
+		{
+			float uniquenessCounter = Main.GlobalTime * -100 + (i + j) * 5;
+			Tile tile = Main.tile[i, j];
+			Texture2D texture = mod.GetTexture("Items/Otherworld/AvaritianPlatingWallWallGlow");
+			int xLength = 32;
+			int xOff = 0;
+			/*if (Main.tile[i - 1, j].wall != 0)// && Main.tile[i + 1, j].wall == 0)
+			{
+				xOff += 8;
+				xLength -= 8;
+			}
+			if (Main.tile[i + 1, j].wall != 0)// && Main.tile[i - 1, j].wall == 0)
+			{
+				xLength -= 8;
+			}*/
+			Rectangle frame = new Rectangle(tile.wallFrameX() + xOff, tile.wallFrameY(), xLength, 32);
+			Color color;
+			color = WorldGen.paintColor((int)tile.wallColor()) * (100f / 255f);
+			color.A = 0;
+			float alphaMult = 0.55f + 0.45f * (float)Math.Sin(MathHelper.ToRadians(uniquenessCounter));
+			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
+			if (Main.drawToScreen)
+			{
+				zero = Vector2.Zero;
+			}
+			Vector2 pos = new Vector2((i * 16 - (int)Main.screenPosition.X), (j * 16 - (int)Main.screenPosition.Y)) + zero;
+			Main.spriteBatch.Draw(Main.wallTexture[Type], pos + new Vector2(-8 + xOff, -8), frame, Lighting.GetColor(i, j, Color.White), 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+			for (int k = 0; k < 3; k++)
+			{
+				Vector2 offset = new Vector2(Main.rand.NextFloat(-1, 1f), Main.rand.NextFloat(-1, 1f)) * 0.25f * k;
+				Main.spriteBatch.Draw(texture, pos + offset + new Vector2(-8 + xOff, -8), frame, color * alphaMult * 0.8f, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+			}
+			return false;
+		}
 		public override void SetDefaults()
 		{
-			Main.wallLargeFrames[Type] = (byte)2;
 			Main.wallHouse[Type] = false;
 			dustType = mod.DustType("AvaritianDust");
 			drop = mod.ItemType("PortalPlatingWall");
-			AddMapEntry(new Color(52, 150, 140));
+			AddMapEntry(new Color(62, 150, 140));
 		}
 		public override bool CanExplode(int i, int j)
 		{
 			return false;
-		}
-		public override void KillWall(int i, int j, ref bool fail)
-		{
-			fail = true;
-
-			//if (SOTSWorld.downedEntity)
-				fail = false;
 		}
 	}
 }

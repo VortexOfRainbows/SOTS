@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using SOTS.Dusts;
 
 namespace SOTS.Items.Pyramid
 {
@@ -37,9 +38,11 @@ namespace SOTS.Items.Pyramid
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
 			drop = mod.ItemType("Maldite");
-			AddMapEntry(new Color(255, 255, 255));
-			soundType = SoundID.NPCHit;
-			soundStyle = 1;
+			AddMapEntry(new Color(35, 30, 45));
+			mineResist = 2.25f;
+			soundType = SoundID.Tink;
+			soundStyle = 2;
+			dustType = mod.DustType("CurseDust3");
 		}
         public override bool CanExplode(int i, int j)
 		{

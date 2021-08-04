@@ -34,9 +34,9 @@ namespace SOTS.Items.Otherworld
 	{
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
 		{
-			r = 0.18f;
-			g = 0.20f;
-			b = 0.22f;
+			r = 0.7f;
+			g = 0.8f;
+			b = 0.9f;
 			base.ModifyLight(i, j, ref r, ref g, ref b);
 		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
@@ -48,7 +48,7 @@ namespace SOTS.Items.Otherworld
 			Color color;
 			color = WorldGen.paintColor((int)Main.tile[i, j].color()) * (100f / 255f);
 			color.A = 0;
-			float alphaMult = 0.1f; // + 0.45f * (float)Math.Sin(MathHelper.ToRadians(uniquenessCounter));
+			float alphaMult = 0.125f; // + 0.45f * (float)Math.Sin(MathHelper.ToRadians(uniquenessCounter));
 			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
 			if (Main.drawToScreen)
 			{
@@ -57,7 +57,7 @@ namespace SOTS.Items.Otherworld
 			for (int k = 0; k < 2; k++)
 			{
 				Vector2 pos = new Vector2((i * 16 - (int)Main.screenPosition.X), (j * 16 - (int)Main.screenPosition.Y)) + zero;
-				Vector2 offset = new Vector2(Main.rand.NextFloat(-1, 1f), Main.rand.NextFloat(-1, 1f)) * 0.05f * k;
+				Vector2 offset = new Vector2(Main.rand.NextFloat(-1, 1f), Main.rand.NextFloat(-1, 1f)) * 0.1f * k;
 				Main.spriteBatch.Draw(texture, pos + offset, frame, color * alphaMult * 1f, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
 			}
 		}

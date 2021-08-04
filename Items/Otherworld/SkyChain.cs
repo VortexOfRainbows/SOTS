@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Steamworks;
 using System;
 using Terraria;
 using Terraria.DataStructures;
@@ -17,13 +16,12 @@ namespace SOTS.Items.Otherworld
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Sky Chain");
-			Tooltip.SetDefault("'It anchors into... somewhere'");
+			Tooltip.SetDefault("'It anchors onto... somewhere'");
 		}
-
 		public override void SetDefaults()
 		{
 			item.width = 16;
-			item.height = 10;
+			item.height = 22;
 			item.maxStack = 999;
 			item.useTurn = true;
 			item.autoReuse = true;

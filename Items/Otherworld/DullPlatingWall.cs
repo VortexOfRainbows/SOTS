@@ -40,34 +40,24 @@ namespace SOTS.Items.Otherworld
 	{
 		public override void SetDefaults()
 		{
-			Main.wallLargeFrames[Type] = (byte)2;
 			Main.wallHouse[Type] = true;
 			dustType = mod.DustType("AvaritianDust");
 			drop = mod.ItemType("DullPlatingWall");
-			AddMapEntry(new Color(52, 52, 52));
+			AddMapEntry(new Color(50, 50, 50));
 		}
 	}
 	public class DullPlatingWallWall : ModWall
 	{
-
 		public override void SetDefaults()
 		{
-			Main.wallLargeFrames[Type] = (byte)2;
 			Main.wallHouse[Type] = false;
 			dustType = mod.DustType("AvaritianDust");
 			drop = mod.ItemType("DullPlatingWall");
-			AddMapEntry(new Color(52, 52, 52));
+			AddMapEntry(new Color(50, 50, 50));
 		}
 		public override bool CanExplode(int i, int j)
 		{
 			return false;
-		}
-		public override void KillWall(int i, int j, ref bool fail)
-		{
-			fail = true;
-
-			//if (SOTSWorld.downedEntity)
-				fail = false;
 		}
 	}
 }
