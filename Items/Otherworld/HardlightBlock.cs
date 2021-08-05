@@ -88,12 +88,18 @@ namespace SOTS.Items.Otherworld
 			dustType = DustID.Electric;
 		}
         public override void NumDust(int i, int j, bool fail, ref int num)
-        {
+		{
 			num = 7;
-        }
-        public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
+		}
+		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
+		{
+			if (!Main.tile[i + 1, j].active() || Main.tile[i + 1, j].type == Type)
+				Draw(i, j, spriteBatch);
+			return false;
+		}
+        public static void Draw(int i, int j, SpriteBatch spriteBatch)
         {
-			Texture2D omega = Main.tileTexture[Type];
+			Texture2D omega = Main.tileTexture[ModContent.TileType<HardlightBlockTile>()];
 			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
 			if (Main.drawToScreen)
 			{
@@ -312,7 +318,6 @@ namespace SOTS.Items.Otherworld
 					}
 				}
 			}
-			return false;
         }
 		public static bool isHardlightBlock(Tile tile)
         {
@@ -322,7 +327,7 @@ namespace SOTS.Items.Otherworld
 		{
 			return isHardlightBlock(Main.tile[i, j]);
 		}
-		public Rectangle getTileFrame(int cellX, int cellY)
+		public static Rectangle getTileFrame(int cellX, int cellY)
         {
 			return new Rectangle(2 + 22 * cellX, 2 + 22 * cellY, 20, 20);
 		}

@@ -11,7 +11,7 @@ namespace SOTS.Items.Celestial
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Apocalypse");
-			Tooltip.SetDefault("Release green thunder towards your cursor\nGreen thunder chains off enemies for 90% damage\nFirerate increases after each use\nProvides a light source while in the inventory\n'Power straight from the underworld'");
+			Tooltip.SetDefault("Release green thunder towards your cursor\nGreen thunder chains off enemies for 90% damage\nProvides a light source while in the inventory\n'Power straight from the underworld'");
 		}
 		public override void SafeSetDefaults()
 		{
