@@ -84,7 +84,7 @@ namespace SOTS.Items.Otherworld
 			Main.wallHouse[Type] = true;
 			dustType = mod.DustType("AvaritianDust");
 			drop = mod.ItemType("PortalPlatingWall");
-			AddMapEntry(new Color(62, 150, 140));
+			AddMapEntry(new Color(0, 130, 215));
 		}
 	}
 	public class PortalPlatingWallWall : ModWall //unsafe avaritian plating wall, prevents houses from forming in planetarium
@@ -99,7 +99,7 @@ namespace SOTS.Items.Otherworld
 			Main.wallHouse[Type] = false;
 			dustType = mod.DustType("AvaritianDust");
 			drop = mod.ItemType("PortalPlatingWall");
-			AddMapEntry(new Color(62, 150, 140));
+			AddMapEntry(new Color(0, 130, 215));
 		}
 		public override bool CanExplode(int i, int j)
 		{

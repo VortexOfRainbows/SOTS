@@ -88,6 +88,12 @@ namespace SOTS.Items.Otherworld
 			soundStyle = 53;
 			dustType = DustID.Electric;
 		}
+        public override bool KillSound(int i, int j)
+		{
+			Vector2 pos = new Vector2(i * 16, j * 16) + new Vector2(8, 8);
+			Main.PlaySound(3, (int)pos.X, (int)pos.Y, 53, 0.5f, 0.5f);
+			return false;
+        }
         public override void NumDust(int i, int j, bool fail, ref int num)
 		{
 			num = 7;
