@@ -90,7 +90,7 @@ namespace SOTS.Items.Otherworld
 				{
 					Vector2 pos = new Vector2(i * 16 + 8, j * 16 + 8);
 					Player player = Main.player[k];
-					if ((player.Center - pos).Length() < 2800f)
+					if ((player.Center - pos).Length() < 2800f && player.active)
 					{
 						playerNear = true;
 						break;

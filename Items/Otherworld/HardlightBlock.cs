@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -83,8 +84,8 @@ namespace SOTS.Items.Otherworld
 			//AddMapEntry(new Color(0, 0, 0, 0));
 			mineResist = 1.5f;
 			minPick = 0;
-			soundType = 21;
-			soundStyle = 2;
+			soundType = 3;
+			soundStyle = 53;
 			dustType = DustID.Electric;
 		}
         public override void NumDust(int i, int j, bool fail, ref int num)
@@ -97,8 +98,49 @@ namespace SOTS.Items.Otherworld
 				Draw(i, j, spriteBatch);
 			return false;
 		}
+		public static int closestPlayer(int i, int j, ref float minDist)
+		{
+			int p = -1;
+			for (int k = 0; k < Main.player.Length; k++)
+			{
+				Player player = Main.player[k];
+				if(player.active && !player.dead)
+				{
+					Vector2 pos = new Vector2(i * 16 + 8, j * 16 + 8);
+					float length = (player.Center - pos).Length();
+					if (length < minDist)
+					{
+						minDist = length;
+						p = player.whoAmI;
+						if (Main.netMode == NetmodeID.SinglePlayer)
+							break;
+					}
+				}
+			}
+			return p;
+		}
+        public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
+		{
+			float currentDistanceAway = 128;
+			int playerN = closestPlayer(i, j, ref currentDistanceAway);
+			if (playerN == -1)
+				return;
+			float alphaScale = (float)Math.Pow(1.0f - currentDistanceAway / 128f, 0.725f);
+			if (alphaScale <= 0.00001f)
+				return;
+			r = 0.8f * alphaScale;
+			g = 0.9f * alphaScale;
+			b = 1.8f * alphaScale;
+		}
         public static void Draw(int i, int j, SpriteBatch spriteBatch)
         {
+			float currentDistanceAway = 128;
+			int playerN = closestPlayer(i, j, ref currentDistanceAway);
+			if (playerN == -1)
+				return;
+			float alphaScale = (float)Math.Pow(1.0f - currentDistanceAway / 128f, 0.725f);
+			if (alphaScale <= 0.00001f)
+				return;
 			Texture2D omega = Main.tileTexture[ModContent.TileType<HardlightBlockTile>()];
 			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
 			if (Main.drawToScreen)
@@ -108,13 +150,13 @@ namespace SOTS.Items.Otherworld
 			Vector2 origin = new Vector2(2, 2);
 			Vector2 pos = new Vector2(i * 16, j * 16) + zero - Main.screenPosition;
 			bool blockBelow = isHardlightBlock(i, j + 1);
-			for (int k = 0; k < 6; k++)
+			for (int k = 0; k < 3 + 3 * alphaScale; k++)
 			{
-				Color color = WorldGen.paintColor((int)Main.tile[i, j].color()) * (100f / 255f);
+				Color color = WorldGen.paintColor((int)Main.tile[i, j].color()) * (160f * alphaScale / 255f);
 				color.A = 0;
 				if (k == 0) //sets up the middle part
 				{
-					color *= 0.75f;
+					color *= 0.3125f;
 					Rectangle midFrame = getTileFrame(2, 3);
 					int left = 0;
 					int right = 0;
@@ -187,7 +229,7 @@ namespace SOTS.Items.Otherworld
 				}
 				else
                 {
-					Vector2 offset = new Vector2(Main.rand.NextFloat(-1, 1f), Main.rand.NextFloat(-1, 1f)) * 0.15f * (k - 1);
+					Vector2 offset = new Vector2(Main.rand.NextFloat(-1, 1f), Main.rand.NextFloat(-1, 1f)) * 0.2f * (k - 1);
 					for(int xMod = -1; xMod <= 1; xMod += 2) //does both left and right borders
 					{
 						if (!isHardlightBlock(i + xMod, j))
