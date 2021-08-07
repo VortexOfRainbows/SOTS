@@ -56,7 +56,7 @@ namespace SOTS.Items.Otherworld
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
 			drop = mod.ItemType("DullPlating");
-			AddMapEntry(new Color(39, 39, 39));
+			AddMapEntry(new Color(30, 30, 30));
 			mineResist = 2f;
 			minPick = 80;
 			soundType = 21;

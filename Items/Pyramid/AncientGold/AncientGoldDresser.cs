@@ -159,7 +159,6 @@ namespace SOTS.Items.Pyramid.AncientGold
                 Main.OpenClothesWindow();
             }
         }
-
         public override void MouseOverFar(int i, int j)
         {
             Player player = Main.LocalPlayer;
@@ -201,7 +200,6 @@ namespace SOTS.Items.Pyramid.AncientGold
                 player.showItemIcon2 = 0;
             }
         }
-
         public override void MouseOver(int i, int j)
         {
             Player player = Main.LocalPlayer;
@@ -242,12 +240,10 @@ namespace SOTS.Items.Pyramid.AncientGold
                 player.showItemIcon2 = ItemID.FamiliarShirt;
             }
         }
-
         public override void NumDust(int i, int j, bool fail, ref int num)
         {
             num = fail ? 1 : 3;
         }
-
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
             Item.NewItem(i * 16, j * 16, 48, 32, dresserDrop);

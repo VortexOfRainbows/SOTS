@@ -43,7 +43,7 @@ namespace SOTS.Items.Otherworld
 			Main.wallHouse[Type] = true;
 			dustType = mod.DustType("AvaritianDust");
 			drop = mod.ItemType("DullPlatingWall");
-			AddMapEntry(new Color(50, 50, 50));
+			AddMapEntry(new Color(44, 44, 44));
 		}
 	}
 	public class DullPlatingWallWall : ModWall
@@ -53,7 +53,7 @@ namespace SOTS.Items.Otherworld
 			Main.wallHouse[Type] = false;
 			dustType = mod.DustType("AvaritianDust");
 			drop = mod.ItemType("DullPlatingWall");
-			AddMapEntry(new Color(50, 50, 50));
+			AddMapEntry(new Color(44, 44, 44));
 		}
 		public override bool CanExplode(int i, int j)
 		{

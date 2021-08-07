@@ -61,8 +61,8 @@ namespace SOTS.NPCs.Boss.Curse
 			npc.damage = 45;
 			npc.defense = 10;
 			npc.knockBackResist = 0f;
-			npc.width = 38;
-			npc.height = 44;
+			npc.width = 42;
+			npc.height = 54;
 			npc.npcSlots = 20f;
 			npc.boss = true;
 			npc.lavaImmune = true;
@@ -878,8 +878,8 @@ namespace SOTS.NPCs.Boss.Curse
 					npc.position.Y -= 0.1f;
 					if (ai2 == 90 && Main.netMode != NetmodeID.Server)
 					{
-						for (int k = 0; k < 7; k++)
-							Gore.NewGore(npc.Center - new Vector2(16, 16), npc.velocity * 0.1f, mod.GetGoreSlot("Gores/Curse/PharaohMask" + (1 + k)), 1f);
+						for (int k = 0; k < 6; k++)
+							Gore.NewGore(npc.Center - new Vector2(16, 16), npc.velocity * 0.1f, mod.GetGoreSlot("Gores/Curse/PharaohsMask" + (1 + k)), 1f);
 						ParticleExplosion();
 						for (int i = 0; i < 3; i++)
 						{
