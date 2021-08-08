@@ -100,7 +100,7 @@ namespace SOTS.Items.Otherworld
 		}
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
 		{
-			if (!Main.tile[i + 1, j].active() || Main.tile[i + 1, j].type == Type)
+			if (!Main.tile[i + 1, j].active() || Main.tile[i + 1, j].type == Type || !Main.tileSolid[Main.tile[i + 1, j].type])
 				Draw(i, j, spriteBatch);
 			return false;
 		}
@@ -116,7 +116,7 @@ namespace SOTS.Items.Otherworld
 					float length = (player.Center - pos).Length();
 					if (length < minDist)
 					{
-						minDist = length;
+						minDist = length;	
 						p = player.whoAmI;
 						if (Main.netMode == NetmodeID.SinglePlayer)
 							break;

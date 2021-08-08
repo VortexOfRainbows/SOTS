@@ -78,7 +78,7 @@ namespace SOTS
         }
         public override void PostDraw(int i, int j, int type, SpriteBatch spriteBatch)
         {
-            if (Main.tile[i - 1, j].active() && Main.tile[i - 1, j].type == ModContent.TileType<HardlightBlockTile>() && type != ModContent.TileType<HardlightBlockTile>())
+            if (Main.tile[i - 1, j].active() && Main.tile[i - 1, j].type == ModContent.TileType<HardlightBlockTile>() && type != ModContent.TileType<HardlightBlockTile>() && Main.tileSolid[type])
                 HardlightBlockTile.Draw(i - 1, j, spriteBatch);
             base.PostDraw(i, j, type, spriteBatch);
         }

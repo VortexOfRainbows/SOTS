@@ -58,6 +58,7 @@ namespace SOTS.Items.Pyramid.AncientGold
             TileObjectData.addTile(Type);
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Ancient Gold Sofa");
+            AddToArray(ref TileID.Sets.RoomNeeds.CountsAsChair);
             AddMapEntry(new Color(220, 180, 25), name);
             dustType = DustID.GoldCoin;
         }
