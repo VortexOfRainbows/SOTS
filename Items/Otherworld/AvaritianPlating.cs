@@ -104,7 +104,7 @@ namespace SOTS.Items.Otherworld
 		}
 		public override bool Slope(int i, int j)
 		{
-			return true;
+			return false;
 		}
 	}
 }

@@ -37,6 +37,8 @@ Low Priority:
 3. Next: Ghast Banner + Teratoma Banner
 4. Next: Flashspark boots rework
 5. Next: Buff Vibrant Armor
+6. Next: Royal Ruby uses + Worldgen/Spawning
+7. Next: Portal-based Spawning of enemies in planetarium and crystal waves
 
 8/7/21
 1. Pharaoh's Curse small resprite
