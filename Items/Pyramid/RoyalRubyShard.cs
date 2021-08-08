@@ -10,7 +10,7 @@ namespace SOTS.Items.Pyramid
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Royal Ruby Shard");
+			DisplayName.SetDefault("Keystone Shard");
 			Tooltip.SetDefault("");
 		}
 		public override void SetDefaults()
@@ -20,6 +20,7 @@ namespace SOTS.Items.Pyramid
 			item.maxStack = 999;
 			item.useTurn = true;
 			item.autoReuse = true;
+			item.value = Item.sellPrice(0, 0, 22, 50);
 			item.useAnimation = 15;
 			item.useTime = 10;
 			item.useStyle = 1;
@@ -106,6 +107,56 @@ namespace SOTS.Items.Pyramid
 			Main.spriteBatch.Draw(texture2, item.Center - Main.screenPosition + new Vector2(0, 2), null, lightColor, rotation, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
 			return false;
 		}
+		public override void AddRecipes()
+		{
+			ModRecipe recipe = new ModRecipe(mod);
+			recipe.AddIngredient(this, 1);
+			recipe.AddTile(TileID.Anvils);
+			recipe.SetResult(ItemID.Ruby, 1);
+			recipe.AddRecipe();
+
+			recipe = new ModRecipe(mod);
+			recipe.AddIngredient(this, 3);
+			recipe.AddIngredient(ModContent.ItemType<Fragments.FragmentOfNature>(), 1);
+			recipe.AddTile(TileID.Anvils);
+			recipe.SetResult(ItemID.Emerald, 3);
+			recipe.AddRecipe();
+
+			recipe = new ModRecipe(mod);
+			recipe.AddIngredient(this, 3);
+			recipe.AddIngredient(ModContent.ItemType<Fragments.FragmentOfEarth>(), 1);
+			recipe.AddTile(TileID.Anvils);
+			recipe.SetResult(ItemID.Topaz, 3);
+			recipe.AddRecipe();
+
+			recipe = new ModRecipe(mod);
+			recipe.AddIngredient(this, 3);
+			recipe.AddIngredient(ModContent.ItemType<Fragments.FragmentOfPermafrost>(), 1);
+			recipe.AddTile(TileID.Anvils);
+			recipe.SetResult(ItemID.Diamond, 3);
+			recipe.AddRecipe();
+
+			recipe = new ModRecipe(mod);
+			recipe.AddIngredient(this, 3);
+			recipe.AddIngredient(ModContent.ItemType<Fragments.FragmentOfOtherworld>(), 1);
+			recipe.AddTile(TileID.Anvils);
+			recipe.SetResult(ItemID.Amethyst, 3);
+			recipe.AddRecipe();
+
+			recipe = new ModRecipe(mod);
+			recipe.AddIngredient(this, 3);
+			recipe.AddIngredient(ModContent.ItemType<Fragments.FragmentOfTide>(), 1);
+			recipe.AddTile(TileID.Anvils);
+			recipe.SetResult(ItemID.Sapphire, 3);
+			recipe.AddRecipe();
+
+			recipe = new ModRecipe(mod);
+			recipe.AddIngredient(this, 3);
+			recipe.AddIngredient(ModContent.ItemType<Fragments.FragmentOfInferno>(), 1);
+			recipe.AddTile(TileID.Anvils);
+			recipe.SetResult(ItemID.Amber, 3);
+			recipe.AddRecipe();
+		}
 	}
 	public class RoyalRubyShardTile : ModTile
 	{
@@ -116,8 +167,9 @@ namespace SOTS.Items.Pyramid
 			Main.tileFrameImportant[Type] = true;
 			Main.tileObsidianKill[Type] = true;
 			drop = mod.ItemType("RoyalRubyShard");
+			
 			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Royal Ruby Shard");
+			name.SetDefault("Keystone Shard");
 			AddMapEntry(new Color(211, 69, 74), name);
 			soundType = 2;
 			soundStyle = 27;
@@ -206,7 +258,7 @@ namespace SOTS.Items.Pyramid
 		}
 		private bool TileIsCapable(Tile tile)
         {
-			return tile.active() && Main.tileSolid[tile.type] && tile.slope() == 0 && !tile.halfBrick();
+			return tile.active() && Main.tileSolid[tile.type] && tile.slope() == 0 && !tile.halfBrick() && !tile.inActive();
 		}
 		private bool TileIsCapable(int i, int j)
         {
@@ -236,7 +288,12 @@ namespace SOTS.Items.Pyramid
 				flag = false;
 			}
 			if(flag && randomize)
+			{
 				Main.tile[i, j].frameX = (short)(WorldGen.genRand.Next(18) * 18);
+				WorldGen.SquareTileFrame(i, j, true);
+				NetMessage.SendTileSquare(-1, i, j, 2, TileChangeType.None);
+				//NetMessage.SendData(17, -1, -1, null, 1, i, j, Type);
+			}
 			return flag;
 		}
 		public override void PlaceInWorld(int i, int j, Item item)

@@ -90,7 +90,7 @@ namespace SOTS.Items.Pyramid
 						Main.tile[num47, num48].active(true);
 						Main.tile[num47, num48].color(Main.tile[i, j].color());
 						WorldGen.SquareTileFrame(num47, num48, true);
-						if (Main.netMode == 2)
+						if (Main.netMode == NetmodeID.Server)
 						{
 							NetMessage.SendTileSquare(-1, num47, num48, 3, TileChangeType.None);
 						}
