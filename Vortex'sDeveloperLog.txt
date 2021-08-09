@@ -35,13 +35,13 @@ Low Priority:
 1. Next: Keybind for Machina Booster
 2. Next: Curse based enemies
 3. Next: Ghast Banner + Teratoma Banner
-4. Next: Flashspark boots rework
-5. Next: Buff Vibrant Armor
-6. Next: Portal-based Spawning of enemies in planetarium and crystal waves
+4. Next: Buff Vibrant Armor
+5. Next: Portal-based Spawning of enemies in planetarium and crystal waves
 
 8/8/21
 1. Checked: Royal Ruby breaks properly in multiplayer too
 2. Royal ruby can now craft into gems, spawns naturally on curse tumor and maldite, and server syncs entirely.
+3. Begun working on flashspark boots
 
 8/7/21
 1. Pharaoh's Curse small resprite
