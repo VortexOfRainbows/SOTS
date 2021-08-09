@@ -11,7 +11,7 @@ namespace SOTS.Items
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Flashspark Boots");
-			Tooltip.SetDefault("Provides tremendous acceleration when running\nAlso provides flight and extra mobility on ice\nIncreases movement speed greatly\nProvides the ability to walk on water and lava\nGrants immunity to fire blocks and 10 seconds of immunity to lava");
+			Tooltip.SetDefault("Provides tremendous acceleration while running\nAlso provides flight and extra mobility on ice\nIncreases movement speed greatly\nProvides the ability to walk on water and lava\nGrants immunity to fire blocks and 10 seconds of immunity to lava");
 		}
 		public override void SetDefaults()
 		{
