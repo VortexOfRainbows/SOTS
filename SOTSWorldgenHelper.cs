@@ -4031,7 +4031,7 @@ namespace SOTS
 											tile.active(false);
 											tile.slope(0);
 											tile.halfBrick(false);
-											WorldGen.PlaceTile(k, l, 494, true, true, -1, 0);
+											WorldGen.PlaceTile(k, l, ModContent.TileType<RuinedChestTile>(), true, true, -1, 0);
 										}
 										break;
 									case 27:
