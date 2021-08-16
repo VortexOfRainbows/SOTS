@@ -66,8 +66,8 @@ namespace SOTS.Projectiles.Minions
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
 			Texture2D texture = mod.GetTexture("Projectiles/Minions/HoloEye");
-			Texture2D texture3 = mod.GetTexture("Projectiles/Minions/HoloEyePupil");
-			Texture2D texture4 = mod.GetTexture("Projectiles/Minions/HoloEyeFill");
+			Texture2D texture3 = mod.GetTexture("NPCs/HoloEyePupil");
+			Texture2D texture4 = mod.GetTexture("NPCs/HoloEyeFill");
 			Color color = new Color(110, 110, 110, 0);
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Vector2 drawOrigin3 = new Vector2(texture3.Width * 0.5f, texture3.Height * 0.5f);
@@ -85,9 +85,7 @@ namespace SOTS.Projectiles.Minions
 
 				if (k == 0)
 					Main.spriteBatch.Draw(texture4, new Vector2((float)(projectile.Center.X - (int)Main.screenPosition.X), (float)(projectile.Center.Y - (int)Main.screenPosition.Y)), null, color * 0.5f * ((255 - projectile.alpha) / 255f), 0f, drawOrigin, projectile.scale, SpriteEffects.None, 0f);
-
 				Main.spriteBatch.Draw(texture, new Vector2((float)(projectile.Center.X - (int)Main.screenPosition.X), (float)(projectile.Center.Y - (int)Main.screenPosition.Y)), null, color * ((255 - projectile.alpha) / 255f), 0f, drawOrigin, projectile.scale, SpriteEffects.None, 0f);
-
 				Main.spriteBatch.Draw(texture3, new Vector2((float)(projectile.Center.X - (int)Main.screenPosition.X), (float)(projectile.Center.Y - (int)Main.screenPosition.Y)) + between * (6 * eyeReset), null, color * ((255 - projectile.alpha) / 255f), 0f, drawOrigin3, 0.5f + projectile.scale - (eyeReset * 0.3f), SpriteEffects.None, 0f);
 			}
 			Player player = Main.player[projectile.owner];

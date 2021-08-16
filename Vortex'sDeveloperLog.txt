@@ -32,15 +32,16 @@ Low Priority:
 4. Remove negative Vregen in inventory items
 5. Electrolyte Seperator
 
-1. Next: Keybind for Machina Booster
-2. Next: Curse based enemies
-3. Next: Ghast Banner + Teratoma Banner
-4. Next: Buff Vibrant Armor
-5. Next: Portal-based Spawning of enemies in planetarium and crystal waves
+1. Next: Curse based enemies
+2. Next: Ghast Banner + Teratoma Banner
+3. Next: Buff Vibrant Armor
+4. Next: Portal-based Spawning of enemies in planetarium and crystal waves
 
 8/11/21 to 8/15/21
 1. Bug fix world gen spawning not ruined chest
 2. Flashspark boooots drip
+3. Adjusted Marble Defender spritesheet, Holoeye Pallets...
+4. Machina Booster Keybind 
 
 8/8/21
 1. Checked: Royal Ruby breaks properly in multiplayer too

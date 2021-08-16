@@ -31,6 +31,7 @@ namespace SOTS
 	{
 		public static ModHotKey BlinkHotKey;
 		public static ModHotKey ArmorSetHotKey;
+		public static ModHotKey MachinaBoosterHotKey;
 		internal static SOTS Instance;
 		public SOTS()
 		{
@@ -49,6 +50,7 @@ namespace SOTS
 			Instance = ModContent.GetInstance<SOTS>();
 			BlinkHotKey = RegisterHotKey("Blink", "V");
 			ArmorSetHotKey = RegisterHotKey("Armor Set", "F");
+			MachinaBoosterHotKey = RegisterHotKey("Modify Flight Mode", "C");
 
 			if (!Main.dedServ)
             {
@@ -108,6 +110,7 @@ namespace SOTS
 			VoidUI.voidUI = null;
 			BlinkHotKey = null;
 			ArmorSetHotKey = null;
+			MachinaBoosterHotKey = null;
 		}
 		public override void UpdateUI(GameTime gameTime) 
 		{

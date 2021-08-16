@@ -64,6 +64,7 @@ namespace SOTS
 				FluidCurseMult = 60;
 		}
 		public bool CanKillNPC = false;
+		public bool CreativeFlightButtonPressed = false;
 		public bool CurseAura = false;
 		public bool FluidCurse = false;
 		public float FluidCurseMult = 120;
@@ -280,6 +281,14 @@ namespace SOTS
 			else
 			{
 				HoloEyeAttack = false;
+			}
+			if (SOTS.MachinaBoosterHotKey.JustPressed)
+			{
+				CreativeFlightButtonPressed = true;
+			}
+			else
+			{
+				CreativeFlightButtonPressed = false;
 			}
 		}
 		int Probe = -1;
