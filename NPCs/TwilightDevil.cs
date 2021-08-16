@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using SOTS.Items.Banners;
 using System;
 using System.Security.AccessControl;
@@ -53,8 +54,8 @@ namespace SOTS.NPCs
             npc.damage = 40; 
             npc.defense = 10;  
             npc.knockBackResist = 0f;
-            npc.width = 28;
-            npc.height = 44;
+            npc.width = 50;
+            npc.height = 52;
 			Main.npcFrameCount[npc.type] = 4;  
             npc.value = 10000;
             npc.npcSlots = 5f;
@@ -114,7 +115,6 @@ namespace SOTS.NPCs
 				if(npc.ai[0] % 6 == 0)
 					npc.life++;
 			}
-			npc.frameCounter++;
 			npc.ai[0]++;
 			if (npc.ai[0] <= 390 && npc.ai[1] == 0)
 				MoveCursorToPlayer();
@@ -205,12 +205,13 @@ namespace SOTS.NPCs
 			return flag;
 		}
 		int frame = 0;
-		public override void FindFrame(int frameHeight) 
+		public override void FindFrame(int frameHeight)
 		{
+			npc.frameCounter++;
 			frame = frameHeight;
-			if (npc.frameCounter >= 5f) 
+			if (npc.frameCounter >= 8f) 
 			{
-				npc.frameCounter -= 5f;
+				npc.frameCounter -= 8f;
 				npc.frame.Y += frame;
 				if(npc.frame.Y >= 4 * frame)
 				{
@@ -222,7 +223,7 @@ namespace SOTS.NPCs
 		{
 			return 0;
 			//spawnrates manually added in SOTSNPCs.EditSpawnPool in order to avoid conflicts in hardmode
-			Player player = spawnInfo.player;
+			/*Player player = spawnInfo.player;
 			SOTSPlayer modPlayer = player.GetModPlayer<SOTSPlayer>();
 			bool correctBlock = spawnInfo.spawnTileType == mod.TileType("DullPlatingTile") || spawnInfo.spawnTileType == mod.TileType("PortalPlatingTile") || spawnInfo.spawnTileType == mod.TileType("AvaritianPlatingTile");
 			if (modPlayer.PlanetariumBiome && correctBlock)
@@ -231,11 +232,11 @@ namespace SOTS.NPCs
 					return 0.04f;
 				return 0.06f;
 			}
-			return 0;
+			return 0;*/
 		}
 		public override void NPCLoot()
 		{
-			if (Main.rand.Next(3) == 0 && SOTSWorld.downedAdvisor) Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("TwilightShard"), 1);
+			if (Main.rand.NextBool(3) && SOTSWorld.downedAdvisor) Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("TwilightShard"), 1);
 
 			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("TwilightGel"), Main.rand.Next(2) + 1);
 			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("JarOfSouls"), 1);
@@ -261,7 +262,17 @@ namespace SOTS.NPCs
 						Dust.NewDust(npc.position, npc.width, npc.height, DustID.Electric, (float)(2 * hitDirection), -2f, 0, default, 1f);
 					Dust.NewDust(npc.position, npc.width, npc.height, mod.DustType("AvaritianDust"), (float)(2 * hitDirection), -2f, 0, new Color(100, 100, 100, 250), 1f);
 				}
-			}		
+			}
+		}
+		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
+		{
+			Texture2D texture = Main.npcTexture[npc.type];
+			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height / 8);
+			Vector2 drawPos = npc.Center - Main.screenPosition;
+			spriteBatch.Draw(texture, drawPos, new Rectangle(0, npc.frame.Y, npc.width, npc.height), drawColor, npc.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
+			texture = GetTexture("SOTS/NPCs/TwilightDevilGlow");
+			spriteBatch.Draw(texture, drawPos, new Rectangle(0, npc.frame.Y, npc.width, npc.height), Color.White, npc.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
+			return false;
 		}
 	}
 }

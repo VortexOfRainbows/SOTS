@@ -125,7 +125,7 @@ namespace SOTS.Projectiles.Celestial
 			projectile.velocity *= 0.8f;
 			
 			if(projectile.owner == Main.myPlayer)
-			Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("StellarHitbox"), projectile.damage, projectile.knockBack * 1.5f, player.whoAmI, projectile.ai[1]);
+				Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("StellarHitbox"), projectile.damage, projectile.knockBack * 1.5f, player.whoAmI, projectile.ai[1]);
 		
 			projectile.timeLeft = 40;
 			projectile.friendly = false;

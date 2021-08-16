@@ -58,7 +58,7 @@ namespace SOTS.Items.Otherworld
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
 			drop = mod.ItemType("AvaritianPlating");
-			AddMapEntry(new Color(32, 90, 85));
+			AddMapEntry(new Color(0, 75, 140));
 			mineResist = 2f;
 			minPick = 80;
 			soundType = 21;
@@ -104,7 +104,7 @@ namespace SOTS.Items.Otherworld
 		}
 		public override bool Slope(int i, int j)
 		{
-			return true;
+			return false;
 		}
 	}
 }

@@ -1,6 +1,4 @@
-using System;
 using Microsoft.Xna.Framework;
-
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -18,8 +16,8 @@ namespace SOTS.Items.Fragments
 		{
             item.damage = 25; 
             item.ranged = true;  
-            item.width = 26;   
-            item.height = 50; 
+            item.width = 36;   
+            item.height = 54; 
             item.useTime = 25; 
             item.useAnimation = 25;
             item.useStyle = 5;    
@@ -33,7 +31,11 @@ namespace SOTS.Items.Fragments
             item.shootSpeed = 21.5f;
 			item.useAmmo = ItemID.WoodenArrow;
 		}
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override Vector2? HoldoutOffset()
+        {
+            return new Vector2(-1, 0);
+        }
+        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
 			Projectile.NewProjectile(position.X, position.Y, speedX, speedY, mod.ProjectileType("SharangaBolt"), damage, knockBack, player.whoAmI);
 			return false;

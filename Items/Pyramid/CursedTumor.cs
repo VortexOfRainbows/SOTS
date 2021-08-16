@@ -29,7 +29,7 @@ namespace SOTS.Items.Pyramid
 	}
 	public class CursedTumorTile : ModTile
 	{
-		public override void SetDefaults()
+        public override void SetDefaults()
 		{
 			Main.tileBrick[Type] = true;
 			Main.tileSolid[Type] = true;

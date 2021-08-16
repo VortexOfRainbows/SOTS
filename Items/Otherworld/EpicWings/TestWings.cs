@@ -1,11 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SOTS.Dusts;
 using SOTS.Void;
-using Steamworks;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics.Eventing.Reader;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Graphics.Shaders;
@@ -21,7 +17,30 @@ namespace SOTS.Items.Otherworld.EpicWings
 		public override void SetStaticDefaults()
 		{	
 			DisplayName.SetDefault("Machina Booster");
-			Tooltip.SetDefault("Allows flight and slow fall\nIncreases void regen by 1\nDouble tap spacebar to gain fast, multidirectional flight\nDecreases void regen by 40 while active");
+			Tooltip.SetDefault("temp");
+		}
+		public override void ModifyTooltips(List<TooltipLine> tooltips)
+		{
+			foreach (string key in SOTS.MachinaBoosterHotKey.GetAssignedKeys()) //gets the key configured to this hotkey
+			{
+				foreach (TooltipLine line in tooltips) //goes through each tooltip line
+				{
+					if (line.mod == "Terraria" && line.Name == "Tooltip0") //checks the name of the tootip line
+					{
+						line.text = "Allows flight and slow fall\nIncreases void regen by 1\nPress the " + "'" + key + "' key to gain fast, multidirectional flight at the cost of 5 void\nDecreases void regen by 36 while active";
+						return;
+					}
+				}
+			}
+			foreach (TooltipLine line in tooltips) //goes through each tooltip line
+			{
+				if (line.mod == "Terraria" && line.Name == "Tooltip0")
+				{
+					string key = "Unbound";
+					line.text = "Allows flight and slow fall\nIncreases void regen by 1\nPress the " + "'" + key + "' key to gain fast, multidirectional flight at the cost of 5 void\nDecreases void regen by 36 while active";
+				}
+			}
+			base.ModifyTooltips(tooltips);
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
@@ -147,12 +166,10 @@ namespace SOTS.Items.Otherworld.EpicWings
 		}
 		public bool canCreativeFlight = false;
 		public bool creativeFlight = false;
-		int timer = 0;
-		bool release = false;
 		public float wingSpeed = 7f;
 		public float wingSpeedMax = 7f;
 		public int epicWingType = 0;
-		public float voidDrain = 4;
+		public float voidDrain = 3.6f;
 		public bool gyro = false;
 		public enum EpicWingType : int
 		{
@@ -190,19 +207,17 @@ namespace SOTS.Items.Otherworld.EpicWings
 		}
 		public void flightStart()
 		{
-			timer--;
-			if (timer > 0 && !release && player.controlJump && player.velocity.Y != 0f)
+			if (SOTSPlayer.ModPlayer(player).CreativeFlightButtonPressed)
 			{
-				timer = 0;
+				if (!creativeFlight)
+				{
+					if (player.velocity.Y == 0)
+						player.velocity.Y -= 12f;
+					VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
+					voidPlayer.voidMeter -= 5 * voidPlayer.voidCost;
+				}
 				creativeFlight = !creativeFlight;
 				SendClientChanges(this);
-			}
-			if (!player.controlJump)
-				release = false;
-			if (player.controlJump && !release)
-			{
-				release = true;
-				timer = 15;
 			}
 		}
 		bool movingHori = false;
@@ -357,7 +372,7 @@ namespace SOTS.Items.Otherworld.EpicWings
 			}
 			if (TilesBelow())
 			{
-				if (!player.controlDown && !player.controlUp && !player.controlLeft && !player.controlRight && !player.controlJump)
+				if (!player.controlDown && !player.controlUp && !player.controlLeft && !player.controlRight && !player.controlJump && player.velocity.Y > -2)
 					creativeFlight = false;
 				if (player.controlDown)
 					player.gravity = Player.defaultGravity + 0.2f;

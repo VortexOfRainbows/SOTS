@@ -1,5 +1,4 @@
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace SOTS.Items
@@ -13,7 +12,6 @@ namespace SOTS.Items
 		}
 		public override void SetDefaults()
 		{
-
 			item.width = 30;
 			item.height = 24;
             item.value = Item.sellPrice(0, 0, 1, 0);

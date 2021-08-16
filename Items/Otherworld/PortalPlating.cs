@@ -70,7 +70,7 @@ namespace SOTS.Items.Otherworld
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
 			drop = mod.ItemType("PortalPlating");
-			AddMapEntry(new Color(64, 180, 170));
+			AddMapEntry(new Color(122, 243, 255));
 			mineResist = 2f;
 			minPick = 250;
 			soundType = 21;
