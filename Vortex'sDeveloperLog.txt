@@ -8,7 +8,6 @@ The following is my development plans :D
 
 High Priority:
 1. Pyramid Rework
-2. Pharaoh Rework
 
 Mid Priority:
 1. Goopwood sprite Changes
@@ -40,8 +39,9 @@ Low Priority:
 8/11/21 to 8/15/21
 1. Bug fix world gen spawning not ruined chest
 2. Flashspark boooots drip
-3. Adjusted Marble Defender spritesheet, Holoeye Pallets...
+3. Adjusted Marble Defender spritesheet, Holo pallets adjustments
 4. Machina Booster Keybind 
+5. Reworked Spore Sprayer
 
 8/8/21
 1. Checked: Royal Ruby breaks properly in multiplayer too
