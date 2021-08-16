@@ -16,8 +16,8 @@ namespace SOTS.Items.SpecialDrops
         {
             item.damage = 5;
             item.ranged = true;
-            item.width = 34;
-            item.height = 52;
+            item.width = 30;
+            item.height = 60;
             item.useTime = 13;
             item.useAnimation = 13;
             item.useStyle = 5;
