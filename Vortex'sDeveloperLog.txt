@@ -36,6 +36,10 @@ Low Priority:
 3. Next: Buff Vibrant Armor
 4. Next: Portal-based Spawning of enemies in planetarium and crystal waves
 
+8/16/21
+1. More Holo-related pallet changes + finishing other stuff
+2. Made Hardlight block work with actuators
+
 8/11/21 to 8/15/21
 1. Bug fix world gen spawning not ruined chest
 2. Flashspark boooots drip
