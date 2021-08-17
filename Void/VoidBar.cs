@@ -75,9 +75,7 @@ namespace SOTS.Void
 			barBackground.Append(barAmount3);
 			barBackground.Append(barDivider);
 			barBackground.Append(outline);
-
 			barBackground.Append(text);
-			
 			base.Append(barBackground);
 		}
 		public override void Draw(SpriteBatch spriteBatch)
@@ -149,9 +147,9 @@ namespace SOTS.Void
 			float prevRight = quotient * 188;
 			float length = 40;
 			int height = 18;
-			Texture2D fill2 = ModContent.GetTexture("SOTS/Void/VoidBarSprite");
+			Texture2D fill2 = ModContent.GetTexture("SOTS/Void/VoidBarBorder");
 			Texture2D divider2 = ModContent.GetTexture("SOTS/Void/VoidBarDivider");
-			spriteBatch.Draw(fill2, new Rectangle((int)(VoidPlayer.voidBarOffset.X + padding.X), (int)(VoidPlayer.voidBarOffset.Y + padding.Y), 188, 18), new Color(164, 55, 65));
+			spriteBatch.Draw(fill2, new Rectangle((int)(VoidPlayer.voidBarOffset.X), (int)(VoidPlayer.voidBarOffset.Y), 200, 30), Color.White);
 			List<Rectangle> rectangles = new List<Rectangle>();
 			List<Color> colors = new List<Color>();
 			for (int i = 0; i < voidPlayer.VoidMinions.Count; i++)
@@ -183,7 +181,7 @@ namespace SOTS.Void
 			{
 				if(i == 0)
 				{
-					spriteBatch.Draw(divider2, rectangles[i], Color.Gray);
+					spriteBatch.Draw(divider2, rectangles[i], Color.White);
 				}
 				else
 				{

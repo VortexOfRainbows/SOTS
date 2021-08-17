@@ -8,7 +8,7 @@ namespace SOTS.Void
 {
     class SoulBar : UIElement
     {
-        public Color backgroundColor = Color.Gray;
+        public Color backgroundColor = Color.White;
         internal static Texture2D _backgroundTexture;
 
         public SoulBar()
@@ -29,7 +29,7 @@ namespace SOTS.Void
     }
     class BarDivider : UIElement
     {
-        public Color backgroundColor = Color.Gray;
+        public Color backgroundColor = Color.White;
         internal static Texture2D _backgroundTexture;
 
         public BarDivider()
@@ -50,7 +50,7 @@ namespace SOTS.Void
     }
     class VoidBarBorder2 : UIElement
     {
-        public Color backgroundColor = Color.Gray;
+        public Color backgroundColor = Color.White;
         internal static Texture2D _backgroundTexture;
 
         public VoidBarBorder2()

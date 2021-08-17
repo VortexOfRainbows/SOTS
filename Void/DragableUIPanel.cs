@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
 using Terraria.UI;
@@ -10,8 +11,11 @@ namespace SOTS.Void
 		public Vector2 offset;
 		public bool dragging;
 		public int type = -1;
-
-		public override void MouseDown(UIMouseEvent evt) {
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            base.Draw(spriteBatch);
+        }
+        public override void MouseDown(UIMouseEvent evt) {
 			base.MouseDown(evt);
 			DragStart(evt);
 		}
