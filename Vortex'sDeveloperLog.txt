@@ -36,6 +36,11 @@ Low Priority:
 3. Next: Buff Vibrant Armor
 4. Next: Portal-based Spawning of enemies in planetarium and crystal waves
 
+8/17/21
+1. Earthen construct glowmask
+2. Nerfed Soul Jar drop rate 100% -> 25%
+	1. Now drops Avaritian Plating when killed otherwise
+
 8/16/21
 1. More Holo-related pallet changes + finishing other stuff
 2. Made Hardlight block work with actuators

@@ -40,6 +40,7 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
+			Texture2D textureG = ModContent.GetTexture("SOTS/NPCs/Constructs/PermafrostConstructHeadGlow");
 			Texture2D texture = ModContent.GetTexture("SOTS/NPCs/Constructs/PermafrostConstructHead");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Vector2 drawPos = npc.Center - Main.screenPosition + new Vector2(0f, npc.gfxOffY);
@@ -55,6 +56,7 @@ namespace SOTS.NPCs.Constructs
 				null, color * (1f - (npc.alpha / 255f)), npc.rotation, drawOrigin2, npc.scale, SpriteEffects.None, 0f);
 			}
 			spriteBatch.Draw(texture, drawPos, null, drawColor, dir, drawOrigin, 1f, SpriteEffects.None, 0f);
+			spriteBatch.Draw(textureG, drawPos, null, Color.White, dir, drawOrigin, 1f, SpriteEffects.None, 0f);
 			return false;
 		}
 		public override void HitEffect(int hitDirection, double damage)
