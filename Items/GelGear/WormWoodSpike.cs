@@ -14,8 +14,8 @@ namespace SOTS.Items.GelGear
         public override void SetDefaults()
         {
             item.damage = 32;
-            item.width = 36;
-            item.height = 28;
+            item.width = 34;
+            item.height = 34;
             item.value = Item.sellPrice(0, 2, 0, 0);
             item.rare = 4;
             item.noMelee = true;

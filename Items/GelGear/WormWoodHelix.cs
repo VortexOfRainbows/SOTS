@@ -1,6 +1,4 @@
-using System;
 using Microsoft.Xna.Framework;
-
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -18,8 +16,8 @@ namespace SOTS.Items.GelGear
 		{
             item.damage = 20;  
             item.ranged = true;    
-            item.width = 40;  
-            item.height = 24;   
+            item.width = 60;  
+            item.height = 28;   
             item.useTime = 24;  
             item.useAnimation = 24;
             item.useStyle = 5;    
@@ -35,7 +33,7 @@ namespace SOTS.Items.GelGear
 		}
         public override Vector2? HoldoutOffset()
         {
-            return new Vector2(-0.5f, 0);
+            return new Vector2(-2f, 0.5f);
         }
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
@@ -45,8 +43,8 @@ namespace SOTS.Items.GelGear
 				speedY *= 0.65f;
 				Vector2 projVelocity1 = new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians(45));
 				Vector2 projVelocity2 = new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians(315));
-				Projectile.NewProjectile(position.X + speedX * 3, position.Y + speedY * 3, projVelocity1.X * 0.325f, projVelocity1.Y * 0.325f, mod.ProjectileType("Fusion1"), damage, knockBack, Main.myPlayer);
-				Projectile.NewProjectile(position.X + speedX * 3, position.Y + speedY * 3, projVelocity2.X * 0.325f, projVelocity2.Y * 0.325f, mod.ProjectileType("Fusion2"), damage, knockBack, Main.myPlayer);
+				Projectile.NewProjectile(position.X + speedX * 4, position.Y + speedY * 4, projVelocity1.X * 0.325f, projVelocity1.Y * 0.325f, mod.ProjectileType("Fusion1"), damage, knockBack, Main.myPlayer);
+				Projectile.NewProjectile(position.X + speedX * 4, position.Y + speedY * 4, projVelocity2.X * 0.325f, projVelocity2.Y * 0.325f, mod.ProjectileType("Fusion2"), damage, knockBack, Main.myPlayer);
 			}
 			else
 			{

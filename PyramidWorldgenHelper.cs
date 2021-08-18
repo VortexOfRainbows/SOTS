@@ -1111,7 +1111,7 @@ namespace SOTS
 							WorldGen.PlaceTile(findTileX, findTileY - 1, TileID.Statues, true, true, -1, Main.rand.Next(71)); //random statue
 						}
 					}
-					if (tile.wall == (ushort)mod.WallType("PyramidWallTile") && Main.rand.NextBool(500))
+					if (tile.wall == (ushort)mod.WallType("PyramidWallTile") && Main.rand.NextBool(500) && tile.type != ModContent.TileType<CursedTumorTile>())
 					{
 						int radius7 = 3;
 						for (int x = -radius7; x <= radius7; x++)
@@ -1124,7 +1124,7 @@ namespace SOTS
 								if (Math.Sqrt(x * x + y * y) <= radius7 + 0.5)
 								{
 									Tile tileRad = Framing.GetTileSafely(xPosition6, yPosition6);
-									if (!tileRad.active())
+									if (!tileRad.active() && tileRad.wall != ModContent.WallType<CursedTumorWallTile>())
 									{
 										tileRad.type = 51; //cobweb
 										tileRad.active(true);
@@ -1135,6 +1135,7 @@ namespace SOTS
 					}
 				}
 			}
+			int malditeNum = 0;
 			int extraSize = size + 50;
 			for (int findTileY = pyramidY + extraSize; findTileY > pyramidY - 50; findTileY--)
 			{
@@ -1163,6 +1164,37 @@ namespace SOTS
 							}
 							if (capable)
 								WorldGen.PlaceTile(findTileX, findTileY - 1, ModContent.TileType<CursedGrowthTile>());
+						}
+						if(WorldGen.genRand.NextBool(50 + malditeNum * malditeNum * 15))
+						{
+							for(int rep = 0; rep < 3; rep++)
+                            {
+								int tileX = findTileX + Main.rand.Next(6 * rep);
+								int tileY = findTileY + Main.rand.Next(6 * rep);
+								int radiusMaldite = 8 + Main.rand.Next(5) - rep * 2;
+								for (int x = -radiusMaldite; x <= radiusMaldite; x++)
+								{
+									for (int y = -radiusMaldite; y <= radiusMaldite; y++)
+									{
+										int malditePosX = tileX + x;
+										int malditePosY = tileY + y;
+										float distFromCenter = (float)Math.Sqrt(x * x + y * y);
+										int distRand = (int)distFromCenter;
+										if (distFromCenter <= radiusMaldite + 0.5f && Main.rand.Next(100) > 4 + distRand * 5)
+										{
+											Tile tileRad = Framing.GetTileSafely(malditePosX, malditePosY);
+											bool capable = tileRad.type == ModContent.TileType<CursedTumorTile>() || (tileRad.type == ModContent.TileType<CursedHive>() && Main.rand.NextBool(8 + rep));
+											if (tileRad.active() && capable)
+											{
+												tileRad.type = (ushort)ModContent.TileType<MalditeTile>();
+												tileRad.wall = (ushort)ModContent.WallType<CursedTumorWallTile>();
+												tileRad.active(true);
+											}
+										}
+									}
+								}
+							}
+							malditeNum++;
 						}
 					}
 				}

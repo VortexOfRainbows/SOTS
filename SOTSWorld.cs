@@ -611,17 +611,21 @@ namespace SOTS
 			tasks.Insert(genIndexEnd + 3, new PassLegacy("genIndexModPyramid", delegate (GenerationProgress progress)
 			{
 				progress.Message = "Generating A Pyramid";
-				PyramidWorldgenHelper.GenerateSOTSPyramid(mod); 
-				for (int k = 0; k < (int)(Main.maxTilesX * Main.maxTilesY * 0.01f); k++)
+				PyramidWorldgenHelper.GenerateSOTSPyramid(mod);
+				/*
+				int minimumMet = 0;
+				int min = 5;
+				for (int k = 0; k < (int)(Main.maxTilesX * Main.maxTilesY * 0.005f) || minimumMet < min; k++)
 				{
-					int x = WorldGen.genRand.Next(0, Main.maxTilesX);
-					int y = WorldGen.genRand.Next((int)WorldGen.worldSurfaceLow - 40, Main.maxTilesY);
+					int x = WorldGen.genRand.Next(100, Main.maxTilesX - 100);
+					int y = WorldGen.genRand.Next((int)WorldGen.worldSurfaceLow - 40, Main.maxTilesY - 40);
 					Tile tile = Framing.GetTileSafely(x, y);
 					if (tile.active() && tile.type == ModContent.TileType<CursedTumorTile>())
-					{	
-						WorldGen.TileRunner(x, y, WorldGen.genRand.Next(4, 6), WorldGen.genRand.Next(4, 6), ModContent.TileType<MalditeTile>(), true);
+					{
+						minimumMet++;
+						WorldGen.TileRunner(x, y, WorldGen.genRand.Next(12, 16), WorldGen.genRand.Next(2, 4), ModContent.TileType<MalditeTile>());
 					}
-				}
+				}*/
 			}));
 		}
 		public override void TileCountsAvailable(int[] tileCounts)
