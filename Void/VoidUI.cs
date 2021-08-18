@@ -1,5 +1,4 @@
 using Terraria.UI;
-using Terraria.GameContent.UI.Elements;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -17,7 +16,8 @@ namespace SOTS.Void
 			voidUI.Left.Set(VoidPlayer.voidBarOffset.X, 0f);
 			voidUI.Top.Set(VoidPlayer.voidBarOffset.Y, 0f);
 			voidUI.type = 0;
-			voidUI.BackgroundColor = new Color(255, 255, 255, 255);
+			voidUI.BackgroundColor = new Color(0, 0, 0, 0);
+			voidUI.BorderColor = new Color(0, 0, 0, 0);
 			voidUI.SetPadding(0);
 
 			VoidBar voidAmount = new VoidBar(VoidBarMode.voidAmount, 280, 25);
@@ -32,7 +32,6 @@ namespace SOTS.Void
 		{
 			Recalculate();
 		}
-		bool runOnce = true;
 		public override void Update(GameTime gameTime)
 		{
 			voidUI.Left.Set(VoidPlayer.voidBarOffset.X, 0f);

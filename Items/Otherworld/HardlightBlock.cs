@@ -147,6 +147,10 @@ namespace SOTS.Items.Otherworld
 			float alphaScale = (float)Math.Pow(1.0f - currentDistanceAway / 128f, 0.725f);
 			if (alphaScale <= 0.00001f)
 				return;
+			if(!Main.tile[i, j].nactive())
+            {
+				alphaScale *= 0.45f;
+            }
 			Texture2D omega = Main.tileTexture[ModContent.TileType<HardlightBlockTile>()];
 			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
 			if (Main.drawToScreen)
@@ -158,7 +162,7 @@ namespace SOTS.Items.Otherworld
 			bool blockBelow = isHardlightBlock(i, j + 1);
 			for (int k = 0; k < 3 + 3 * alphaScale; k++)
 			{
-				Color color = WorldGen.paintColor((int)Main.tile[i, j].color()) * (160f * alphaScale / 255f);
+				Color color = WorldGen.paintColor(Main.tile[i, j].color()) * (160f * alphaScale / 255f);
 				color.A = 0;
 				if (k == 0) //sets up the middle part
 				{

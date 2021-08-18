@@ -8,7 +8,7 @@ namespace SOTS.Void
 {
     class VoidBarSprite : UIElement
     {
-        public Color backgroundColor = Color.Gray;
+        public Color backgroundColor = Color.White;
         internal static Texture2D _backgroundTexture;
 
         public VoidBarSprite()

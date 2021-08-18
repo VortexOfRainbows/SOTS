@@ -460,9 +460,11 @@ namespace SOTS.NPCs.Constructs
             Texture2D texture = mod.GetTexture("NPCs/Constructs/EarthenConstructHead");
             Vector2 origin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
             Texture2D texture2 = mod.GetTexture("NPCs/Constructs/EarthenConstruct");
+            Texture2D texture3 = mod.GetTexture("NPCs/Constructs/EarthenConstructHeadGlow");
             Vector2 origin2 = new Vector2(texture2.Width * 0.5f, texture2.Height * 0.5f);
             Main.spriteBatch.Draw(texture2, npc.Center - Main.screenPosition, new Rectangle?(), drawColor, npc.rotation - MathHelper.ToRadians(npc.localAI[1]), origin2, npc.scale + 0.04f, npc.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
-            Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition, new Rectangle?(), drawColor, npc.rotation - MathHelper.ToRadians(90), origin, npc.scale, npc.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
+            Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition, null, drawColor, npc.rotation - MathHelper.ToRadians(90), origin, npc.scale, npc.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
+            Main.spriteBatch.Draw(texture3, npc.Center - Main.screenPosition, null, Color.White, npc.rotation - MathHelper.ToRadians(90), origin, npc.scale, npc.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
             return false;
         }
         public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position)

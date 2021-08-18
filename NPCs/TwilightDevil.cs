@@ -1,6 +1,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Items.Banners;
+using SOTS.Items.Otherworld;
+using SOTS.Items.Pyramid;
 using System;
 using System.Security.AccessControl;
 using Terraria;
@@ -239,8 +241,13 @@ namespace SOTS.NPCs
 			if (Main.rand.NextBool(3) && SOTSWorld.downedAdvisor) Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("TwilightShard"), 1);
 
 			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("TwilightGel"), Main.rand.Next(2) + 1);
-			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("JarOfSouls"), 1);
-			if(Main.rand.Next(20) == 0)
+			if(Main.rand.NextBool(4))
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("JarOfSouls"), 1);
+			else
+			{
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<AvaritianPlating>(), Main.rand.Next(5) + 4);
+			}
+			if (Main.rand.NextBool(20))
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("TwilightBeads"), 1);
 		}
 		public override void HitEffect(int hitDirection, double damage)
