@@ -500,13 +500,12 @@ namespace SOTS
 				PetPinky();
 			if(rippleEffect)
 			{
-				rippleTimer++;
 				float healthPercent = (float)player.statLife / (float)player.statLifeMax2;
-				int timerMax = (int)(75 * healthPercent) + 15;
+				int timerMax = (int)(70 * healthPercent) + 20;
 				if(rippleTimer > timerMax)
 				{
 					if (Main.myPlayer == player.whoAmI)
-						Projectile.NewProjectile(player.Center, new Vector2(8, 0).RotatedBy(MathHelper.ToRadians(Main.rand.Next(360))), ModContent.ProjectileType<Projectiles.Tide.RippleWave>(), 10 + rippleBonusDamage, 0f, player.whoAmI, 1, 0);
+						Projectile.NewProjectile(player.Center, new Vector2(8, 0).RotatedBy(MathHelper.ToRadians(Main.rand.Next(360))), ModContent.ProjectileType<Projectiles.Tide.RippleWave>(), 20 + rippleBonusDamage, 0f, player.whoAmI, 1, 0);
 					rippleTimer -= timerMax;
                 }
 			}

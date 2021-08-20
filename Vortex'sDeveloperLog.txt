@@ -12,11 +12,10 @@ High Priority:
 Mid Priority:
 1. Goopwood sprite Changes
 2. Riptide Trident (Launches you towards your cursor at the cost of void, deal damage while traveling, bounce off of enemies)
-3. Prismarine Necklace: Sharktooth Necklace + Heart of the Sea
-4. Wintry Traveler: Riptide Trident + Frigid Javelin
-5. Tectonic Tether
-6. Replace Brittle flail
-7. Chest slime resprites
+3. Wintry Traveler: Riptide Trident + Frigid Javelin
+4. Tectonic Tether
+5. Replace Brittle flail
+6. Chest slime resprites and reworks
 
 Mid Priority 2:
 1. Void Low Warning
@@ -30,16 +29,37 @@ Low Priority:
 3. Sharanga Upgrade
 4. Remove negative Vregen in inventory items
 5. Electrolyte Seperator
+6. Skypot gore
 
-1. Next: Curse based enemies, + Maldite Gen
+1. Next: Curse based enemies
 2. Next: Ghast Banner + Teratoma Banner
 3. Next: Buff Vibrant Armor
 4. Next: Portal-based Spawning of enemies in planetarium and crystal waves
 
+8/19/21
+1. Rate changes to Maldite Generation
+2. Pyramid spawns adjusted; should no longer spawn non-pyramid enemies
+3. Pyramid spawns decreased, 60 -> 105, but now scales more directly with other forms of spawn increasing
+	1. Also lowered max spawns
+	2. 600 is default spawn rate for reference
+4. The window of leniency regarding planetarium spawnrates has been increased from 3 blocks below to 5 blocks below
+	1. The system of determining leniency was also changed, making it easier for enemy spawn points to be selected in general
+5. Planetarium spawns decreased majorly, 33 -> 120, max spawns decreased slightly 1.5x -> 1.4x
+	1. These combined should make the spawns feel less chaotic and more consistent, but still oppressive
+6. Fixed bug where twilight devil transparency didn't change
+7. HoloEye tracer now rotates slightly, giving it a more dynamic look
+8. Added Prismarine Necklace. Lowered Heart of the Sea crafting cost
+	(All ripple effects can be stacked)
+	1. Nerfed bonus damage (ripple, heart) (10, 16) -> (2, 2), but base damage increased 10 -> 20
+		1. Prismarine Necklace receives a 4 bonus damage 
+	2. This results in a slight nerf overall to the heart, and a slight buff to the potion
+	3. Lowered speed scaling when at low health slightly. Now caps at 15 -> 20 (3 per second)
+
 8/17/21
-1. Earthen construct glowmask
+1. Earthen construct + Permafrost construct glowmask
 2. Nerfed Soul Jar drop rate 100% -> 25%
 	1. Now drops Avaritian Plating when killed otherwise
+3. Maldite gen WIP
 
 8/16/21
 1. More Holo-related pallet changes + finishing other stuff

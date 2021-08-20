@@ -1165,7 +1165,7 @@ namespace SOTS
 							if (capable)
 								WorldGen.PlaceTile(findTileX, findTileY - 1, ModContent.TileType<CursedGrowthTile>());
 						}
-						if(WorldGen.genRand.NextBool(50 + malditeNum * malditeNum * 15))
+						if(WorldGen.genRand.NextBool(40 + malditeNum * malditeNum * 12))
 						{
 							for(int rep = 0; rep < 3; rep++)
                             {

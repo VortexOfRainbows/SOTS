@@ -18,6 +18,7 @@ using SOTS.NPCs.Boss.Polaris;
 using SOTS.NPCs.Inferno;
 using SOTS.NPCs.Boss.Advisor;
 using SOTS.Items.Pyramid;
+using SOTS.Items.Otherworld;
 
 namespace SOTS.NPCs
 {
@@ -266,19 +267,31 @@ namespace SOTS.NPCs
 		{
 			if(player.GetModPlayer<SOTSPlayer>().PyramidBiome)
 			{
-				if(spawnRate > 60)
-				{
-					spawnRate = 60;
-					maxSpawns = (int)(maxSpawns * 2f);
-				}
+				spawnRate = (int)(spawnRate * 0.175f); //basically setting to 105
+				maxSpawns = (int)(maxSpawns * 1.5f);
 			}
 			if (player.GetModPlayer<SOTSPlayer>().PlanetariumBiome) //spawnrates for this biome have to be very high due to how npc spawning in sky height works. I also manually despawn other sky enemies
 			{
-				spawnRate = (int)(spawnRate /= 18); //essentially setting it to 33.3
-				if (spawnRate < 1)
-					spawnRate = 1;
-				maxSpawns = (int)(maxSpawns * 1.5f);
+				spawnRate = (int)(spawnRate * 0.2f); //essentially setting it to 60
+				maxSpawns = (int)(maxSpawns * 1.4f);
 			}
+			if (spawnRate < 1)
+				spawnRate = 1;
+		}
+		public static bool CorrectBlockBelowPlanetarium(int i, int j, int dist)
+		{
+			bool flag = false;
+			for (int k = 0; k < dist; k++)
+			{
+				Tile tile = Framing.GetTileSafely(i, j + k);
+				bool correctType = tile.type == ModContent.TileType<DullPlatingTile>() || tile.type == ModContent.TileType<AvaritianPlatingTile>() || tile.type == ModContent.TileType<PortalPlatingTile>();
+				if (tile.active() && Main.tileSolid[tile.type] && correctType && tile.nactive())
+				{
+					flag = true;
+					break;
+				}
+			}
+			return flag;
 		}
 		public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
 		{
@@ -286,7 +299,11 @@ namespace SOTS.NPCs
 			bool ZoneForest = !player.GetModPlayer<SOTSPlayer>().PyramidBiome && !player.ZoneDesert && !player.ZoneCorrupt && !player.ZoneDungeon && !player.ZoneDungeon && !player.ZoneHoly && !player.ZoneMeteor && !player.ZoneJungle && !player.ZoneSnow && !player.ZoneCrimson && !player.ZoneGlowshroom && !player.ZoneUndergroundDesert && (player.ZoneDirtLayerHeight || player.ZoneOverworldHeight) && !player.ZoneBeach;
 			if (spawnInfo.player.GetModPlayer<SOTSPlayer>().PyramidBiome)
 			{
-				if (spawnInfo.spawnTileType == ModContent.TileType<PyramidSlabTile>() || spawnInfo.spawnTileType == ModContent.TileType<PyramidBrickTile>() || spawnInfo.spawnTileType == ModContent.TileType<TrueSandstoneTile>())
+				int tileWall = Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY - 1].wall;
+				bool isValidTile = spawnInfo.spawnTileType == ModContent.TileType<PyramidSlabTile>() || spawnInfo.spawnTileType == ModContent.TileType<PyramidBrickTile>() || spawnInfo.spawnTileType == ModContent.TileType<TrueSandstoneTile>();
+				bool isValidWall = tileWall == ModContent.WallType<PyramidWallTile>() || tileWall == ModContent.WallType<TrueSandstoneWallWall>();
+				bool isCurseValid = spawnInfo.spawnTileType == ModContent.TileType<CursedTumorTile>() || spawnInfo.spawnTileType == ModContent.TileType<CursedHive>() || spawnInfo.spawnTileType == ModContent.TileType<MalditeTile>() || tileWall == ModContent.WallType<CursedTumorWallTile>();
+				if (isValidTile || (isValidWall && !isCurseValid))
 				{
 					pool[0] = 0f;
 					pool.Add(mod.NPCType("SnakePot"), 0.3f);
@@ -299,7 +316,7 @@ namespace SOTS.NPCs
 						pool.Add(NPCID.Mummy, 0.5f);
 					}
 				}
-				else if(spawnInfo.spawnTileType == ModContent.TileType<CursedTumorTile>() || spawnInfo.spawnTileType == ModContent.TileType<CursedHive>())
+				else if(isCurseValid)
 				{
 					pool[0] = 0f;
 					if (Main.hardMode)
@@ -319,7 +336,7 @@ namespace SOTS.NPCs
 			}
 			else if (spawnInfo.player.GetModPlayer<SOTSPlayer>().PlanetariumBiome)
 			{
-				bool correctBlock = (Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY + 3].type == mod.TileType("DullPlatingTile") || Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY + 3].type == mod.TileType("PortalPlatingTile") || Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY + 3].type == mod.TileType("AvaritianPlatingTile")) && Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY + 3].nactive();
+				bool correctBlock = CorrectBlockBelowPlanetarium(spawnInfo.spawnTileX, spawnInfo.spawnTileY, 5);
 				for (int i = 0; i < pool.Count; i++)
 					pool[i] = 0f;
 				if (correctBlock)

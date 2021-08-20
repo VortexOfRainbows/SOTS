@@ -276,9 +276,9 @@ namespace SOTS.NPCs
 			Texture2D texture = Main.npcTexture[npc.type];
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height / 8);
 			Vector2 drawPos = npc.Center - Main.screenPosition;
-			spriteBatch.Draw(texture, drawPos, new Rectangle(0, npc.frame.Y, npc.width, npc.height), drawColor, npc.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
+			spriteBatch.Draw(texture, drawPos, new Rectangle(0, npc.frame.Y, npc.width, npc.height), npc.GetAlpha(drawColor), npc.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
 			texture = GetTexture("SOTS/NPCs/TwilightDevilGlow");
-			spriteBatch.Draw(texture, drawPos, new Rectangle(0, npc.frame.Y, npc.width, npc.height), Color.White, npc.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
+			spriteBatch.Draw(texture, drawPos, new Rectangle(0, npc.frame.Y, npc.width, npc.height), npc.GetAlpha(Color.White), npc.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
 			return false;
 		}
 	}

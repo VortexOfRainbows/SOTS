@@ -1,18 +1,16 @@
-using Microsoft.Xna.Framework;
-using SOTS.Buffs;
 using SOTS.Items.Fragments;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace SOTS.Items
+namespace SOTS.Items.Tide
 {	
 	public class HeartOfTheSea : ModItem
 	{	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Heart Of The Sea");
-			Tooltip.SetDefault("Release waves of damage periodically\nRelease more waves at lower health\nWaves ignore up to 8 defense\nIncreases max life by 20\nProjectiles disabled when hidden");
+			DisplayName.SetDefault("Heart of the Sea");
+			Tooltip.SetDefault("Release waves of damage periodically\nRelease more waves at lower health\nWaves ignore up to 8 defense\nIncreases max life by 20\nWaves disabled when hidden\n'Death by heartbeat'");
 		}
 		public override void SetDefaults()
 		{
@@ -25,21 +23,18 @@ namespace SOTS.Items
         public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
-			modPlayer.rippleBonusDamage += 16;
+			modPlayer.rippleBonusDamage += 2;
 			if(!hideVisual)
 				modPlayer.rippleEffect = true;
 			player.statLifeMax2 += 20;
-			if(player.HasBuff(ModContent.BuffType<RippleBuff>()))
-			{
-				modPlayer.rippleTimer++;
-			}
+			modPlayer.rippleTimer++;
 		}
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.LifeCrystal, 1);
 			recipe.AddIngredient(ModContent.ItemType<DissolvingDeluge>(), 1);
-			recipe.AddIngredient(null, "RipplePotion", 8);
+			recipe.AddIngredient(null, "RipplePotion", 5);
 			recipe.AddTile(TileID.TinkerersWorkbench);
 			recipe.SetResult(this, 1);
 			recipe.AddRecipe();

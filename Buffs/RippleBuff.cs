@@ -16,8 +16,9 @@ namespace SOTS.Buffs
 		public override void Update(Player player, ref int buffIndex)
         {
             SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
-            modPlayer.rippleBonusDamage += 10;
+            modPlayer.rippleBonusDamage += 2;
             modPlayer.rippleEffect = true;
+            modPlayer.rippleTimer++;
         }
     }
 }

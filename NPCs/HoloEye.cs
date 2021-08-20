@@ -109,15 +109,15 @@ namespace SOTS.NPCs
 
 				float scaleFactor = counter / 180f;
 				scaleFactor = scaleFactor > 1 ? 1 : scaleFactor;
-
 				if (lookAtPos.X != -1 && lookAtPos.Y != -1)
 				{
 					Main.spriteBatch.Draw(texture3, new Vector2((float)(npc.Center.X - (int)Main.screenPosition.X) + x, (float)(npc.Center.Y - (int)Main.screenPosition.Y) + y - 4) + between * (6 + -14 * npc.ai[1]), null, color * ((255 - npc.alpha) / 255f), 0f, drawOrigin3, 0.5f + npc.scale - npc.ai[1], SpriteEffects.None, 0f);
-					Main.spriteBatch.Draw(texture2, new Vector2((float)(tracerPosX - (int)Main.screenPosition.X) + x, (float)(tracerPosY - (int)Main.screenPosition.Y) + y), null, color * scaleFactor, 0f, drawOrigin2, scaleFactor, SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture2, new Vector2((float)(tracerPosX - (int)Main.screenPosition.X) + x, (float)(tracerPosY - (int)Main.screenPosition.Y) + y), null, color * scaleFactor, tracerXVelo * 0.04f, drawOrigin2, scaleFactor, SpriteEffects.None, 0f);
 				}
 			}
 			base.PostDraw(spriteBatch, drawColor);
 		}
+		float tracerXVelo = 0;
 		public void MoveCursorToPlayer()
 		{
 			float scaleFactor = counter / 360f;
@@ -195,6 +195,7 @@ namespace SOTS.NPCs
 			{
 				rotateCursor -= MathHelper.ToRadians(360);
 			}
+			tracerXVelo = tracerPosX;
 			counter++;
 			if (npc.ai[0] <= 180)
 			{
@@ -207,7 +208,8 @@ namespace SOTS.NPCs
 				MoveCursorToPlayer();
 				MoveEyesToCursor();
 			}
-			if(npc.ai[0] == 180)
+			tracerXVelo = tracerPosX - tracerXVelo;
+			if (npc.ai[0] == 180)
 			{
 				Vector2 between = lookAtPos - npc.Center;
 				rotateCursor = between.ToRotation();
