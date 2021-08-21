@@ -154,6 +154,7 @@ namespace SOTS
 	{
         public static int[] rarities1;
 		public static int[] rarities2;
+		public static int[] rarities3;
 		public static int[] dedicatedOrange;
 		public static int[] dedicatedBlue;
 		public static int[] dedicatedPurpleRed;
@@ -167,6 +168,7 @@ namespace SOTS
 			{
 				rarities1 = new int[] { ItemType<StarlightAlloy>(), ItemType<HardlightAlloy>(), ItemType<OtherworldlyAlloy>(), ItemType<PotGenerator>(), ItemType<PrecariousCluster>(), ItemType<Calculator>(), ItemType<BookOfVirtues>() };
 				rarities2 = new int[] { ItemType<RefractingCrystal>(), ItemType<CursedApple>(), ItemType<RubyKeystone>() };
+				rarities3 = new int[] { ItemType<TaintedKeystoneShard>() };
 				dedicatedOrange = new int[] { ItemType<TerminatorAcorns>(), ItemType<PlasmaCutterButOnAChain>(), ItemType<CoconutGun>() }; //friends
 				dedicatedBlue = new int[] { ItemType<Calculator>() }; //friends 2
 				dedicatedPurpleRed = new int[] { ItemType<CursedApple>(), ItemType<ArcStaffMk2>() }; //James
@@ -192,6 +194,16 @@ namespace SOTS
 					if (line2.mod == "Terraria" && line2.Name == "ItemName")
 					{
 						line2.overrideColor = new Color(210, 0, 0);
+					}
+				}
+			}
+			if (rarities3.Contains(item.type))
+			{
+				foreach (TooltipLine line2 in tooltips)
+				{
+					if (line2.mod == "Terraria" && line2.Name == "ItemName")
+					{
+						line2.overrideColor = new Color(50, 50, 50);
 					}
 				}
 			}

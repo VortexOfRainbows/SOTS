@@ -395,6 +395,8 @@ namespace SOTS.Items.Banners
 		public override void SafeSetDefaults()
 		{
 			item.createTile = TileType<HoloEyeBannerTile>();
+			item.width = 20;
+			item.height = 30;
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{

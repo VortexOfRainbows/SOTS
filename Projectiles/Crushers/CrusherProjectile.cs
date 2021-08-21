@@ -45,7 +45,7 @@ namespace SOTS.Projectiles.Crushers
 		public float explosiveRange = 48; //distance between each explosion
 		public float releaseTime = 120; //how long in frames until auto-release
 		public float armDist = 15;
-		public float finalDist = 170;
+		public float finalDist = 165;
 		public float exponentReduction = 0.5f;
 		public float minDamage = 0f;
 		///Make sure to change the released projectile down near the bottom

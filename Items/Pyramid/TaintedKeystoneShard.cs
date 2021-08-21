@@ -6,11 +6,11 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace SOTS.Items.Pyramid
 {
-	public class RoyalRubyShard : ModItem
+	public class TaintedKeystoneShard : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Keystone Shard");
+			DisplayName.SetDefault("Tainted Keystone Shard");
 			Tooltip.SetDefault("");
 		}
 		public override void SetDefaults()
@@ -20,17 +20,17 @@ namespace SOTS.Items.Pyramid
 			item.maxStack = 999;
 			item.useTurn = true;
 			item.autoReuse = true;
-			item.value = Item.sellPrice(0, 0, 22, 50);
+			item.value = Item.sellPrice(0, 0, 60, 0);
 			item.useAnimation = 15;
 			item.useTime = 10;
 			item.useStyle = 1;
 			item.rare = ItemRarityID.LightRed;
 			item.consumable = true;
-			item.createTile = mod.TileType("RoyalRubyShardTile");
+			item.createTile = mod.TileType("TaintedKeystoneShardTile");
 		}
 		public override void PostUpdate()
 		{
-			Lighting.AddLight(item.Center, 60 / 255f, 7 / 255f, 20 / 255f);
+			Lighting.AddLight(item.Center, 10 / 255f, 10 / 255f, 10 / 255f);
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frameNotUsed, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
@@ -45,29 +45,29 @@ namespace SOTS.Items.Pyramid
 				switch (i)
 				{
 					case 0:
-						color = new Color(255, 0, 0, 0);
+						color = new Color(50, 255, 255, 0);
 						break;
 					case 1:
-						color = new Color(255, 50, 0, 0);
+						color = new Color(255, 50, 255, 0);
 						break;
 					case 2:
-						color = new Color(255, 100, 0, 0);
+						color = new Color(255, 255, 50, 0);
 						break;
 					case 3:
-						color = new Color(255, 150, 0, 0);
+						color = new Color(100, 255, 255, 0);
 						break;
 					case 4:
-						color = new Color(255, 200, 0, 0);
+						color = new Color(255, 100, 255, 0);
 						break;
 					case 5:
-						color = new Color(255, 250, 0, 0);
+						color = new Color(255, 255, 100, 0);
 						break;
 				}
 				Vector2 rotationAround = new Vector2((3 + mult) * scale, 0).RotatedBy(MathHelper.ToRadians(60 * i + counter));
 				Main.spriteBatch.Draw(texture, new Vector2(position.X, position.Y) + rotationAround, null, color, 0f, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
 			}
-			texture = mod.GetTexture("Items/Pyramid/RoyalRubyShard");
-			Main.spriteBatch.Draw(texture, new Vector2(position.X, position.Y), null, drawColor, 0f, drawOrigin, scale * 1.0f, SpriteEffects.None, 0f);
+			texture = mod.GetTexture("Items/Pyramid/TaintedKeystoneShard");
+			Main.spriteBatch.Draw(texture, new Vector2(position.X, position.Y), null, Color.Lerp(drawColor, Color.Black, 0.7f), 0f, drawOrigin, scale * 1.0f, SpriteEffects.None, 0f);
 			return false;
 		}
 		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
@@ -82,83 +82,43 @@ namespace SOTS.Items.Pyramid
 				switch (i)
 				{
 					case 0:
-						color = new Color(255, 0, 0, 0);
+						color = new Color(50, 255, 255, 0);
 						break;
 					case 1:
-						color = new Color(255, 40, 0, 0);
+						color = new Color(255, 50, 255, 0);
 						break;
 					case 2:
-						color = new Color(255, 80, 0, 0);
+						color = new Color(255, 255, 50, 0);
 						break;
 					case 3:
-						color = new Color(255, 120, 0, 0);
+						color = new Color(100, 255, 255, 0);
 						break;
 					case 4:
-						color = new Color(255, 160, 0, 0);
+						color = new Color(255, 100, 255, 0);
 						break;
 					case 5:
-						color = new Color(255, 200, 0, 0);
+						color = new Color(255, 255, 100, 0);
 						break;
 				}
 				Vector2 rotationAround2 = 0.5f * new Vector2((6 + mult) * scale, 0).RotatedBy(MathHelper.ToRadians(60 * i + counter));
 				Main.spriteBatch.Draw(texture2, rotationAround2 + item.Center - Main.screenPosition + new Vector2(0, 2), null, color, rotation, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
 			}
-			texture2 = mod.GetTexture("Items/Pyramid/RoyalRubyShard");
-			Main.spriteBatch.Draw(texture2, item.Center - Main.screenPosition + new Vector2(0, 2), null, lightColor, rotation, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
+			texture2 = mod.GetTexture("Items/Pyramid/TaintedKeystoneShard");
+			Main.spriteBatch.Draw(texture2, item.Center - Main.screenPosition + new Vector2(0, 2), null, Color.Lerp(lightColor, Color.Black, 0.7f), rotation, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
 			return false;
 		}
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(this, 1);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(ItemID.Ruby, 1);
-			recipe.AddRecipe();
-
-			recipe = new ModRecipe(mod);
-			recipe.AddIngredient(this, 3);
-			recipe.AddIngredient(ModContent.ItemType<Fragments.FragmentOfNature>(), 1);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(ItemID.Emerald, 3);
-			recipe.AddRecipe();
-
-			recipe = new ModRecipe(mod);
-			recipe.AddIngredient(this, 3);
-			recipe.AddIngredient(ModContent.ItemType<Fragments.FragmentOfEarth>(), 1);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(ItemID.Topaz, 3);
-			recipe.AddRecipe();
-
-			recipe = new ModRecipe(mod);
-			recipe.AddIngredient(this, 3);
-			recipe.AddIngredient(ModContent.ItemType<Fragments.FragmentOfPermafrost>(), 1);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(ItemID.Diamond, 3);
-			recipe.AddRecipe();
-
-			recipe = new ModRecipe(mod);
-			recipe.AddIngredient(this, 3);
-			recipe.AddIngredient(ModContent.ItemType<Fragments.FragmentOfOtherworld>(), 1);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(ItemID.Amethyst, 3);
-			recipe.AddRecipe();
-
-			recipe = new ModRecipe(mod);
-			recipe.AddIngredient(this, 3);
-			recipe.AddIngredient(ModContent.ItemType<Fragments.FragmentOfTide>(), 1);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(ItemID.Sapphire, 3);
-			recipe.AddRecipe();
-
-			recipe = new ModRecipe(mod);
-			recipe.AddIngredient(this, 3);
-			recipe.AddIngredient(ModContent.ItemType<Fragments.FragmentOfInferno>(), 1);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(ItemID.Amber, 3);
+			recipe.AddIngredient(ItemID.SoulofLight, 1);
+			recipe.AddIngredient(ItemID.SoulofNight, 1);
+			recipe.AddTile(TileID.DemonAltar);
+			recipe.SetResult(ModContent.ItemType<RoyalRubyShard>(), 1);
 			recipe.AddRecipe();
 		}
 	}
-	public class RoyalRubyShardTile : ModTile
+	public class TaintedKeystoneShardTile : ModTile
 	{
 		public override void SetDefaults()
 		{
@@ -166,13 +126,13 @@ namespace SOTS.Items.Pyramid
 			Main.tileNoFail[Type] = true;
 			Main.tileFrameImportant[Type] = true;
 			Main.tileObsidianKill[Type] = true;
-			drop = mod.ItemType("RoyalRubyShard");
+			drop = mod.ItemType("TaintedKeystoneShard");
 			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Keystone Shard");
-			AddMapEntry(new Color(211, 69, 74), name);
+			name.SetDefault("Tainted Keystone Shard");
+			AddMapEntry(new Color(24, 24, 24), name);
 			soundType = 2;
 			soundStyle = 27;
-			dustType = 12;
+			dustType = 195;
 		}
         public override bool CanExplode(int i, int j)
 		{
@@ -217,7 +177,6 @@ namespace SOTS.Items.Pyramid
 				drawOffSet.X -= 2;
 			Vector2 location = new Vector2(i * 16, j * 16) + drawOffSet;
 			Color color2 = Lighting.GetColor(i, j, WorldGen.paintColor(tile.color()));
-			Texture2D texture2 = mod.GetTexture("Items/Pyramid/TaintedKeystoneShardTile");
 			float counter = Main.GlobalTime * 160;
 			float mult = new Vector2(-1f, 0).RotatedBy(MathHelper.ToRadians(counter)).X;
 			Rectangle frame = new Rectangle(tile.frameX, tile.frameY, 16, 16);
@@ -227,28 +186,28 @@ namespace SOTS.Items.Pyramid
 				switch (k)
 				{
 					case 0:
-						color = new Color(255, 0, 0, 0);
+						color = new Color(50, 255, 255, 0);
 						break;
 					case 1:
-						color = new Color(255, 40, 0, 0);
+						color = new Color(255, 50, 255, 0);
 						break;
 					case 2:
-						color = new Color(255, 80, 0, 0);
+						color = new Color(255, 255, 50, 0);
 						break;
 					case 3:
-						color = new Color(255, 120, 0, 0);
+						color = new Color(100, 255, 255, 0);
 						break;
 					case 4:
-						color = new Color(255, 160, 0, 0);
+						color = new Color(255, 100, 255, 0);
 						break;
 					case 5:
-						color = new Color(255, 200, 0, 0);
+						color = new Color(255, 255, 100, 0);
 						break;
 				}
 				Vector2 rotationAround2 = new Vector2(2 + mult, 0).RotatedBy(MathHelper.ToRadians(60 * k + counter));
-				Main.spriteBatch.Draw(texture2, location + zero - Main.screenPosition + rotationAround2, frame, color, 0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, location + zero - Main.screenPosition + rotationAround2, frame, color, 0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0f);
 			}
-			spriteBatch.Draw(texture, location + zero - Main.screenPosition, frame, color2, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+			spriteBatch.Draw(texture, location + zero - Main.screenPosition, frame, Color.Lerp(color2, Color.Black, 0.7f), 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
 			return false;
 		}
 		public override bool CanPlace(int i, int j)

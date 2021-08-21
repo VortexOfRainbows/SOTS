@@ -108,7 +108,7 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void RandomUpdate(int i, int j)
 		{
-			if (Main.netMode != 1) //&& Main.rand.NextBool(20))
+			if (Main.netMode != 1 && Main.rand.NextBool(20))
 			{
 				Tile tile = Main.tile[i, j];
 				int left = i - (tile.frameX / 18) % 5;

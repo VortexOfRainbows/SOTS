@@ -785,31 +785,43 @@ namespace SOTS
 							if (counterSpike >= 40)
 							{
 								counterSpike = 0;
-								for (int sizeSpike = 0; sizeSpike < Main.rand.Next(4, 20); sizeSpike++)
+								int spikeSize = Main.rand.Next(4, 17);
+								int secondSize = Main.rand.Next(4, 17);
+								if (spikeSize > secondSize)
+									spikeSize = secondSize;
+								for (int sizeSpike = 0; sizeSpike < spikeSize; sizeSpike++)
 								{
 									Tile tileSpikeR = Framing.GetTileSafely(findTileX + sizeSpike, findTileY);
+									Tile tileSpikeRR = Framing.GetTileSafely(findTileX + sizeSpike + 1, findTileY);
 									Tile tileSpikeRU = Framing.GetTileSafely(findTileX + sizeSpike, findTileY - 1);
 									Tile tileSpikeRD = Framing.GetTileSafely(findTileX + sizeSpike, findTileY + 1);
 									Tile tileSpikeL = Framing.GetTileSafely(findTileX - sizeSpike, findTileY);
+									Tile tileSpikeLL = Framing.GetTileSafely(findTileX - sizeSpike - 1, findTileY);
 									Tile tileSpikeLU = Framing.GetTileSafely(findTileX - sizeSpike, findTileY - 1);
 									Tile tileSpikeLD = Framing.GetTileSafely(findTileX - sizeSpike, findTileY + 1);
 									if (tileSpikeR.active() && tileSpikeR.type == (ushort)mod.TileType("PyramidSlabTile") && tileSpikeL.active() && tileSpikeL.type == (ushort)mod.TileType("PyramidSlabTile"))
 									{
+										bool ending = sizeSpike == spikeSize - 1 || !tileSpikeRR.active() || !tileSpikeLL.active();
+										ushort type = ending ? (ushort)ModContent.TileType<RoyalGoldBrickTile>() : (ushort)ModContent.TileType<AncientGoldSpikeTile>();
 										if (tileSpikeLU.active() == false && tileSpikeLD.active() == true)
 										{
-											tileSpikeL.type = 232; //wooden spike
+											tileSpikeL.type = type; 
+											tileSpikeLD.type = (ushort)ModContent.TileType<RoyalGoldBrickTile>();
 										}
 										if (tileSpikeRU.active() == false && tileSpikeRD.active() == true)
 										{
-											tileSpikeR.type = 232; //wooden spike
+											tileSpikeR.type = type;
+											tileSpikeRD.type = (ushort)ModContent.TileType<RoyalGoldBrickTile>();
 										}
 										if (tileSpikeLU.active() == true && tileSpikeLD.active() == false)
 										{
-											tileSpikeL.type = 232; //wooden spike
+											tileSpikeL.type = type;
+											tileSpikeLU.type = (ushort)ModContent.TileType<RoyalGoldBrickTile>();
 										}
 										if (tileSpikeRU.active() == true && tileSpikeRD.active() == false)
 										{
-											tileSpikeR.type = 232; //wooden spike
+											tileSpikeR.type = type;
+											tileSpikeRU.type = (ushort)ModContent.TileType<RoyalGoldBrickTile>();
 										}
 									}
 									else
@@ -1832,7 +1844,7 @@ namespace SOTS
 												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
 												break;
 											case 7:
-												tile.type = 232; //woodenspike
+												tile.type = (ushort)ModContent.TileType<AncientGoldSpikeTile>(); //woodenspike
 												tile.active(true);
 												break;
 											case 8:
@@ -1924,7 +1936,7 @@ namespace SOTS
 												WorldGen.PlaceTile(k, l, 302); //glass kiln
 												break;
 											case 7:
-												tile.type = 232; //woodenspike
+												tile.type = (ushort)ModContent.TileType<AncientGoldSpikeTile>(); //woodenspike
 												tile.active(true);
 												break;
 											case 8:
@@ -2192,7 +2204,7 @@ namespace SOTS
 												GenerateCrate(k, l, mod); //crates
 												break;
 											case 6:
-												tile.type = 232; //wooden spike
+												tile.type = (ushort)ModContent.TileType<AncientGoldSpikeTile>(); //wooden spike
 												tile.active(true);
 												break;
 											case 7:
@@ -2281,7 +2293,7 @@ namespace SOTS
 												WorldGen.PlaceTile(k, l, 219); //extractinator
 												break;
 											case 5:
-												tile.type = 232; //spike
+												tile.type = (ushort)ModContent.TileType<AncientGoldSpikeTile>(); //spike
 												tile.active(true);
 												break;
 											case 6:
@@ -2466,7 +2478,7 @@ namespace SOTS
 												tile.active(true);
 												break;
 											case 5:
-												tile.type = 232; //wooden spike
+												tile.type = (ushort)ModContent.TileType<AncientGoldSpikeTile>(); //wooden spike
 												tile.active(true);
 												break;
 											case 6:
@@ -2640,7 +2652,7 @@ namespace SOTS
 												break;
 											case 2:
 												tile.active(true);
-												tile.type = 232;
+												tile.type = (ushort)ModContent.TileType<AncientGoldSpikeTile>();
 												tile.slope(0);
 												tile.halfBrick(false);
 												break;
@@ -3378,7 +3390,7 @@ namespace SOTS
 												GenerateCrate(k, l, mod); //crates
 												break;
 											case 6:
-												tile.type = 232; //wooden spike
+												tile.type = (ushort)ModContent.TileType<AncientGoldSpikeTile>(); //wooden spike
 												tile.active(true);
 												break;
 											case 7:
@@ -3467,7 +3479,7 @@ namespace SOTS
 												WorldGen.PlaceTile(k, l, 219); //extractinator
 												break;
 											case 5:
-												tile.type = 232; //spike
+												tile.type = (ushort)ModContent.TileType<AncientGoldSpikeTile>(); //spike
 												tile.active(true);
 												break;
 											case 6:
@@ -3568,7 +3580,7 @@ namespace SOTS
 												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
 												break;
 											case 7:
-												tile.type = 232; //spike
+												tile.type = (ushort)ModContent.TileType<AncientGoldSpikeTile>(); //spike
 												tile.active(true);
 												break;
 											case 8:
@@ -3661,7 +3673,7 @@ namespace SOTS
 												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
 												break;
 											case 7:
-												tile.type = 232; //wooden spike
+												tile.type = (ushort)ModContent.TileType<AncientGoldSpikeTile>(); //wooden spike
 												tile.active(true);
 												break;
 											case 8:
@@ -4222,7 +4234,7 @@ namespace SOTS
 												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
 												break;
 											case 7:
-												tile.type = 232; //wooden spike
+												tile.type = (ushort)ModContent.TileType<AncientGoldSpikeTile>(); //wooden spike
 												tile.active(true);
 												break;
 											case 8:
@@ -4312,7 +4324,7 @@ namespace SOTS
 												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
 												break;
 											case 7:
-												tile.type = 232; //wooden spike
+												tile.type = (ushort)ModContent.TileType<AncientGoldSpikeTile>(); //wooden spike
 												tile.active(true);
 												break;
 											case 8:
@@ -4583,7 +4595,7 @@ namespace SOTS
 												tile.active(true);
 												break;
 											case 5:
-												tile.type = 232; //spike
+												tile.type = (ushort)ModContent.TileType<AncientGoldSpikeTile>(); //spike
 												tile.active(true);
 												break;
 											case 6:
@@ -4675,7 +4687,7 @@ namespace SOTS
 												WorldGen.PlaceTile(k, l, 219); //extractinator
 												break;
 											case 5:
-												tile.type = 232; //spike
+												tile.type = (ushort)ModContent.TileType<AncientGoldSpikeTile>(); //spike
 												tile.active(true);
 												break;
 											case 6:
@@ -4869,7 +4881,7 @@ namespace SOTS
 												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
 												break;
 											case 7:
-												tile.type = 232; //wooden spike
+												tile.type = (ushort)ModContent.TileType<AncientGoldSpikeTile>(); //wooden spike
 												tile.active(true);
 												break;
 											case 8:
@@ -4961,7 +4973,7 @@ namespace SOTS
 												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
 												break;
 											case 7:
-												tile.type = 232; //wooden spike
+												tile.type = (ushort)ModContent.TileType<AncientGoldSpikeTile>(); //wooden spike
 												tile.active(true);
 												break;
 											case 8:
@@ -5046,7 +5058,7 @@ namespace SOTS
 												break;
 											case 3:
 												tile.active(true);
-												tile.type = 232;
+												tile.type = (ushort)ModContent.TileType<AncientGoldSpikeTile>();
 												tile.slope(0);
 												tile.halfBrick(false);
 												break;
@@ -5142,7 +5154,7 @@ namespace SOTS
 												break;
 											case 2:
 												tile.active(true);
-												tile.type = 232;
+												tile.type = (ushort)ModContent.TileType<AncientGoldSpikeTile>();
 												tile.slope(0);
 												tile.halfBrick(false);
 												break;
@@ -5266,7 +5278,7 @@ namespace SOTS
 												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
 												break;
 											case 7:
-												tile.type = 232; //wooden spike
+												tile.type = (ushort)ModContent.TileType<AncientGoldSpikeTile>(); //wooden spike
 												tile.active(true);
 												break;
 											case 8:
@@ -5359,7 +5371,7 @@ namespace SOTS
 												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
 												break;
 											case 7:
-												tile.type = 232; //wooden spike
+												tile.type = (ushort)ModContent.TileType<AncientGoldSpikeTile>(); //wooden spike
 												tile.active(true);
 												break;
 											case 8:
@@ -5447,7 +5459,7 @@ namespace SOTS
 												WorldGen.PlaceTile(k, l, (ushort)mod.TileType("PyramidChestTile")); //chest
 												break;
 											case 7:
-												tile.type = 232; //wooden spike
+												tile.type = (ushort)ModContent.TileType<AncientGoldSpikeTile>(); //wooden spike
 												tile.active(true);
 												break;
 											case 8:
@@ -5710,7 +5722,7 @@ namespace SOTS
 												tile.active(true);
 												break;
 											case 5:
-												tile.type = 232; //spike
+												tile.type = (ushort)ModContent.TileType<AncientGoldSpikeTile>(); //spike
 												tile.active(true);
 												break;
 											case 6:
@@ -5803,7 +5815,7 @@ namespace SOTS
 												WorldGen.PlaceTile(k, l, 219); //extractinator
 												break;
 											case 5:
-												tile.type = 232; //spike
+												tile.type = (ushort)ModContent.TileType<AncientGoldSpikeTile>(); //spike
 												tile.active(true);
 												break;
 											case 6:
@@ -6643,7 +6655,7 @@ namespace SOTS
 						{
 							ConvertNearbyTiles(mod, xPosition6, yPosition6, radiusConversion);
 							bool valid = !extraRestriction || (tile.type == ModContent.TileType<PyramidBrickTile>() || tile.type == ModContent.TileType<PyramidSlabTile>() 
-								|| tile.type == ModContent.TileType<CursedHive>() || tile.type == TileID.WoodenSpikes);
+								|| tile.type == ModContent.TileType<CursedHive>() || tile.type == (ushort)ModContent.TileType<AncientGoldSpikeTile>());
 							if(valid && !(tile.active() && tile.type == ModContent.TileType<TrueSandstoneTile>()) && tile.wall != ModContent.WallType<TrueSandstoneWallWall>())
 							{
 								tile.type = (ushort)ModContent.TileType<CursedTumorTile>();

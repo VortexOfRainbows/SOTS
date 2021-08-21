@@ -17,7 +17,7 @@ namespace SOTS.Void
 {
 	public class VoidPlayer : ModPlayer
 	{
-		public static Vector2 voidBarOffset = new Vector2(500, 30);
+		public static Vector2 voidBarOffset = new Vector2(810, 30);
 		public static Color soulLootingColor = new Color(66, 56, 111);
 		public static Color destabilizeColor = new Color(80, 190, 80);
 		public static Color pastelRainbow = Color.White;

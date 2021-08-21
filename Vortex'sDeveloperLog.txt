@@ -10,12 +10,11 @@ High Priority:
 1. Pyramid Rework
 
 Mid Priority:
-1. Goopwood sprite Changes
-2. Riptide Trident (Launches you towards your cursor at the cost of void, deal damage while traveling, bounce off of enemies)
-3. Wintry Traveler: Riptide Trident + Frigid Javelin
-4. Tectonic Tether
-5. Replace Brittle flail
-6. Chest slime resprites and reworks
+1. Riptide Trident (Launches you towards your cursor at the cost of void, deal damage while traveling, bounce off of enemies)
+2. Wintry Traveler: Riptide Trident + Frigid Javelin
+3. Tectonic Tether
+4. Replace Brittle flail
+5. Chest slime resprites and reworks
 
 Mid Priority 2:
 1. Void Low Warning
@@ -31,7 +30,7 @@ Low Priority:
 5. Electrolyte Seperator
 6. Skypot gore
 
-1. Next: Curse based enemies
+1. Next: Maligmar
 2. Next: Ghast Banner + Teratoma Banner
 
 8/20/21
@@ -41,6 +40,10 @@ Low Priority:
 	1. Gives all players debuff in world. Intentional ;)
 4. Vibrant Armor Defense Buff, (Helmet, Chestplate, Leggings), (3, 4, 3) -> (4, 5, 4)
 5. Finished some more holo-pallet consistency stuff
+6. Advisor Tazer color changes
+7. Tainted Keystone Shard added
+8. Void bar centering
+9. Ancient Gold spikes added to Pyramid Worldgen (60 -> 50 damage (from wooden))
 
 8/19/21
 1. Rate changes to Maldite Generation

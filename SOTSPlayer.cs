@@ -26,6 +26,7 @@ using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static SOTS.SOTS;
+using SOTS.Items.Pyramid.AncientGold;
 
 namespace SOTS
 {
@@ -391,7 +392,17 @@ namespace SOTS
 					}
 				}
         }
-		public override void PostUpdate()
+        public override void PostUpdateMiscEffects()
+		{
+			Vector2 detect = AncientGoldSpikeTile.HurtTiles(player.position, player.width, player.height);
+			if(detect.Y != 0f)
+			{
+				int damage3 = Main.DamageVar(50);
+				player.Hurt(PlayerDeathReason.ByOther(3), damage3, 0, false, false, false, 0);
+			}
+			base.PostUpdateMiscEffects();
+        }
+        public override void PostUpdate()
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			maxCritVoidStealPerSecond = voidPlayer.voidRegen * 20; //max stored voidsteal is 20x the voidRegen speed
