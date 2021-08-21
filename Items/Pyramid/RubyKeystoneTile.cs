@@ -1,6 +1,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Buffs;
 using SOTS.Dusts;
+using SOTS.Projectiles.Pyramid;
 using System;
 using Terraria;
 using Terraria.DataStructures;
@@ -106,7 +108,7 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void RandomUpdate(int i, int j)
 		{
-			if (Main.netMode != 1 && Main.rand.NextBool(20))
+			if (Main.netMode != 1) //&& Main.rand.NextBool(20))
 			{
 				Tile tile = Main.tile[i, j];
 				int left = i - (tile.frameX / 18) % 5;
@@ -130,20 +132,24 @@ namespace SOTS.Items.Pyramid
 			int top = j - (tile.frameY / 18) % 5;
 			left += 2;
 			top += 2;
-			if (Main.netMode != NetmodeID.MultiplayerClient && fail && Main.tile[left, top].frameY >= 360)
+			if(Main.tile[left, top].frameY >= 360)
 			{
-				bool active = false;
-				for (int l = 0; l < Main.projectile.Length; l++)
+				Main.LocalPlayer.AddBuff(ModContent.BuffType<CreativeShock2>(), 360);
+				if (Main.netMode != NetmodeID.MultiplayerClient && fail)
 				{
-					Projectile proj = Main.projectile[l];
-					if (proj.active && proj.type == ModContent.ProjectileType<RubyKeystoneIndicator>() && Vector2.Distance(proj.Center, new Vector2(left, top) * 16 + new Vector2(8, 8)) < 16)
+					bool active = false;
+					for (int l = 0; l < Main.projectile.Length; l++)
 					{
-						active = true;
+						Projectile proj = Main.projectile[l];
+						if (proj.active && proj.type == ModContent.ProjectileType<RubyKeystoneIndicator>() && Vector2.Distance(proj.Center, new Vector2(left, top) * 16 + new Vector2(8, 8)) < 16)
+						{
+							active = true;
+						}
 					}
-				}
-				Projectile.NewProjectile(new Vector2(left, top) * 16 + new Vector2(8, 8), Vector2.Zero, ModContent.ProjectileType<RubyKeystoneIndicator>(), 0, 0, Main.myPlayer);
-				if (!active)
 					Projectile.NewProjectile(new Vector2(left, top) * 16 + new Vector2(8, 8), Vector2.Zero, ModContent.ProjectileType<RubyKeystoneIndicator>(), 0, 0, Main.myPlayer);
+					if (!active)
+						Projectile.NewProjectile(new Vector2(left, top) * 16 + new Vector2(8, 8), Vector2.Zero, ModContent.ProjectileType<RubyKeystoneIndicator>(), 0, 0, Main.myPlayer);
+				}
 			}
 		}
 		public override bool CanExplode(int i, int j)
@@ -234,6 +240,7 @@ namespace SOTS.Items.Pyramid
 		}
 		int projID = -1;
 		bool runOnce = true;
+		bool runOnce2 = true;
 		public override void AI()
 		{
 			if (runOnce)
@@ -248,6 +255,7 @@ namespace SOTS.Items.Pyramid
                         {
 							foundLeader = true;
 							projID = proj.whoAmI;
+							break;
 						}
 					}
 				}
@@ -289,13 +297,25 @@ namespace SOTS.Items.Pyramid
 						total++;
 				}
 			}
+			if (projectile.ai[0] != 1) //if not leader
+				if (Main.netMode != NetmodeID.MultiplayerClient && runOnce2)
+				{
+					int totalSpawns = total;
+					if (!Main.expertMode)
+						totalSpawns--;
+					runOnce2 = false;
+					for(int amt = totalSpawns; amt >= 0; amt--)
+					{
+						Projectile.NewProjectile(new Vector2(i, j) * 16 + new Vector2(8, 8), Vector2.Zero, ModContent.ProjectileType<RubySpawnerFinder>(), 0, 0, Main.myPlayer);
+					}
+				}
 			projectile.timeLeft = 7200;
 			if (leader == projectile) //if this projectile is the leader
 			{
 				projectile.ai[0] = 1;
 				projectile.alpha = 255;
 				projectile.ai[1]++;
-				if (total >= 10)
+				if (total >= 6)
 				{
 					int range = 2;
 					if (Main.netMode != 1)

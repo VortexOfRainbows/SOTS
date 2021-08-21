@@ -38,7 +38,7 @@ namespace SOTS.NPCs
 			npc.height = 46;
 			npc.lifeMax = 120;
 			npc.damage = 35;
-			npc.value = 1000;
+			npc.value = 600;
 			npc.scale = 1.0f;
 			//animationType = //NPCID.GoblinPeon;
 			Main.npcFrameCount[npc.type] = 7;

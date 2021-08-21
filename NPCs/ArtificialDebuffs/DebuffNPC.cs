@@ -26,6 +26,12 @@ namespace SOTS.NPCs.ArtificialDebuffs
         public int HarvestCurse = 0;
         public int DestableCurse = 0;
         public int BleedingCurse = 0;
+        //public bool hasJustSpawned = true;
+        public override bool PreAI(NPC npc)
+        {
+            //hasJustSpawned = false;
+            return base.PreAI(npc);
+        }
         public void SendClientChanges(Player player, NPC npc)
         {
             // Send a Mod Packet with the changes.

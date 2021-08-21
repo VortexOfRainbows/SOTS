@@ -33,12 +33,14 @@ Low Priority:
 
 1. Next: Curse based enemies
 2. Next: Ghast Banner + Teratoma Banner
-3. Next: Buff Vibrant Armor
-4. Next: Portal-based Spawning of enemies in planetarium and crystal waves
 
 8/20/21
-1. Ruby Spawner WIP
-2. 
+1. Ruby Spawner
+2. Checked: Teratoma Works in Multiplayer
+3. Ruby Keystone Waves! SERVER SYNCS
+	1. Gives all players debuff in world. Intentional ;)
+4. Vibrant Armor Defense Buff, (Helmet, Chestplate, Leggings), (3, 4, 3) -> (4, 5, 4)
+5. Finished some more holo-pallet consistency stuff
 
 8/19/21
 1. Rate changes to Maldite Generation
