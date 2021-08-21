@@ -36,6 +36,10 @@ Low Priority:
 3. Next: Buff Vibrant Armor
 4. Next: Portal-based Spawning of enemies in planetarium and crystal waves
 
+8/20/21
+1. Ruby Spawner WIP
+2. 
+
 8/19/21
 1. Rate changes to Maldite Generation
 2. Pyramid spawns adjusted; should no longer spawn non-pyramid enemies

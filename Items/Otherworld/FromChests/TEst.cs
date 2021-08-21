@@ -31,16 +31,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
 			position = Main.MouseWorld;
-			Projectile.NewProjectile(position, Vector2.Zero, ModContent.ProjectileType<SpawnGoldGate>(), damage, knockBack, player.whoAmI, player.direction, 0);
-			for (int i = 0; i < Main.maxNPCs; i++)
-            {
-				NPC npc = Main.npc[i];
-				if(npc.active && npc.type == ModContent.NPCType<PharaohsCurse>())
-				{
-					Projectile.NewProjectile(position.X, position.Y, speedX, speedY, type, damage, knockBack, player.whoAmI, npc.whoAmI, 0);
-					break;
-				}
-            }
+			Projectile.NewProjectile(position, Vector2.Zero, ModContent.ProjectileType<RubySpawner>(), damage, knockBack, player.whoAmI, 0, 0);
 			return false; 
 		}
 	}

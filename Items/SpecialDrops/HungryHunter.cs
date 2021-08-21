@@ -1,10 +1,5 @@
-using System;
-using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.Graphics.Effects;
-using Terraria.Graphics.Shaders;
 using Terraria.ID;
-using Terraria.ModLoader;
 using SOTS.Void;
  
 namespace SOTS.Items.SpecialDrops
@@ -18,8 +13,8 @@ namespace SOTS.Items.SpecialDrops
 		}
         public override void SafeSetDefaults()
         {
-            item.width = 40;
-            item.height = 32;
+            item.width = 32;
+            item.height = 34;
             item.value = Item.sellPrice(0, 1, 20, 0);
             item.rare = 5;
             item.noMelee = true;
