@@ -251,6 +251,29 @@ namespace SOTS
 				}
 			}
 		}
+		public static bool Full(int x, int y, int lengthX, int lengthY)
+		{
+			int counting = 0;
+			for (int i = 0; i < lengthY; i++)
+			{
+				for (int j = 0; j < lengthX; j++)
+				{
+					int k = x + j;
+					int l = y + i;
+					if (WorldGen.InWorld(k, l, 30))
+					{
+						Tile tile = Framing.GetTileSafely(k, l);
+						if (tile.active())
+						{
+							counting++;
+						}
+					}
+				}
+			}
+			if (counting >= lengthX * lengthY)
+				return true;
+			return false;
+		}
 		public static bool Empty(int x, int y, int lengthX, int lengthY, int max = 1)
 		{
 			max = 1;

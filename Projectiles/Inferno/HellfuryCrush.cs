@@ -12,15 +12,11 @@ using Terraria.ID;
 namespace SOTS.Projectiles.Inferno
 {    
     public class HellfuryCrush : ModProjectile 
-    {	int expand = -1;
-		            
-		
+    {
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Hellfury Crush");
-			
 		}
-		
         public override void SetDefaults()
         {
 			projectile.height = 70;
@@ -47,7 +43,6 @@ namespace SOTS.Projectiles.Inferno
 				runOnce = false;
             }
 			Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 1.5f / 255f, (255 - projectile.alpha) * 1.5f / 255f, (255 - projectile.alpha) * 1.5f / 255f);
-			projectile.knockBack = 3.5f;
             projectile.frameCounter++;
             if (projectile.frameCounter >= 5)
             {
@@ -58,7 +53,6 @@ namespace SOTS.Projectiles.Inferno
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-			Player player = Main.player[projectile.owner];
             target.immune[projectile.owner] = 10;
 			target.AddBuff(BuffID.OnFire, 180, false);
         }

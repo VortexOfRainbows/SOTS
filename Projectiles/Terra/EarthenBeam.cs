@@ -81,7 +81,7 @@ namespace SOTS.Projectiles.Terra
 					projectile.Kill();
 				}
 			}
-			if(projectile.Center.Y > Main.player[projectile.owner].Center.Y - 32)
+			if(projectile.Center.Y > projectile.ai[1])
 			{
 				projectile.tileCollide = true;
 			}

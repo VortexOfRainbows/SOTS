@@ -4,7 +4,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace SOTS.Items.Fragments
+namespace SOTS.Items.Inferno
 {
 	public class ObsidianEruption : ModItem
 	{
@@ -15,7 +15,6 @@ namespace SOTS.Items.Fragments
 		}
 		public override void SetDefaults()
 		{
-
 			item.damage = 24;
 			item.melee = true;
 			item.width = 34;
@@ -30,8 +29,6 @@ namespace SOTS.Items.Fragments
 			item.autoReuse = false;            
 			item.shoot = mod.ProjectileType("ObsidianStar"); 
             item.shootSpeed = 26.5f;
-
-
 		}
 		public override void AddRecipes()
 		{

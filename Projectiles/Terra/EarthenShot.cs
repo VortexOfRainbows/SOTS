@@ -58,17 +58,13 @@ namespace SOTS.Projectiles.Terra
 				if (projectile.ai[0] != 1)
 					Main.spriteBatch.Draw(texture, new Vector2((float)(projectile.Center.X - (int)Main.screenPosition.X) + x, (float)(projectile.Center.Y - (int)Main.screenPosition.Y) + y), null, color * (1f - (projectile.alpha / 255f)), projectile.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
 			}
-			base.PostDraw(spriteBatch, drawColor);
 		}
-		int inititate = 0;
 		public override void AI()
 		{
-			Player player = Main.player[projectile.owner];
 			Lighting.AddLight(projectile.Center, 2.55f, 1.90f, 0);
 			if (!projectile.velocity.Equals(new Vector2(0, 0)))
 				projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(45);
 			projectile.velocity.Y += 0.03f;
-
 			if(projectile.velocity.Y >= 1)
 			{
 				triggerUpdate();
@@ -78,7 +74,7 @@ namespace SOTS.Projectiles.Terra
 		{
 			if (Main.netMode != NetmodeID.MultiplayerClient)
 			{
-				Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, projectile.velocity.X * 2, projectile.velocity.Y * 2, mod.ProjectileType("EarthenBeam"), projectile.damage, 0, Main.myPlayer);
+				Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, projectile.velocity.X * 2, projectile.velocity.Y * 2, mod.ProjectileType("EarthenBeam"), projectile.damage, 0, Main.myPlayer, 0, projectile.ai[1]);
 			}
 			projectile.Kill();
 		}

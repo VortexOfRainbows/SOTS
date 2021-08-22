@@ -44,8 +44,7 @@ namespace SOTS.Items.Fragments
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(null, "DissolvingNature", 1);
 			recipe.AddRecipeGroup("SOTS:SilverBar", 12);
-			recipe.AddIngredient(ItemID.JungleSpores, 12);
-			recipe.AddIngredient(ItemID.Stinger, 4);
+			recipe.AddIngredient(ItemID.JungleSpores, 4);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this);
 			recipe.AddRecipe();

@@ -134,7 +134,7 @@ namespace SOTS.Items.Pyramid
 			top += 2;
 			if(Main.tile[left, top].frameY >= 360)
 			{
-				Main.LocalPlayer.AddBuff(ModContent.BuffType<CreativeShock2>(), 360);
+				Main.LocalPlayer.AddBuff(ModContent.BuffType<CreativeShock2>(), 480);
 				if (Main.netMode != NetmodeID.MultiplayerClient && fail)
 				{
 					bool active = false;
