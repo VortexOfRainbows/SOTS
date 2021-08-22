@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.ModLoader;
 using SOTS.Projectiles.Celestial;
 using System.Collections.Generic;
+using System;
 
 namespace SOTS.Projectiles.Minions
 {
@@ -109,27 +110,41 @@ namespace SOTS.Projectiles.Minions
 		public void DrawChain(int i, int j, SpriteBatch spriteBatch)
 		{
 			Texture2D texture = mod.GetTexture("Projectiles/Minions/VoidspaceAuraChain");
+			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
 			Color color = new Color(255, 255, 255) * 0.5f;
-			for (int z = 0; z < 12; z++)
+			float height = 16;
+			float timer = Main.GlobalTime * 40;
+			int maxLength = 20;
+			for (int j2 = 1; j2 < maxLength; j2++)
 			{
-				Vector2 dynamicAddition = new Vector2(z * 0.3f + 0.6f, 0).RotatedBy(MathHelper.ToRadians(z * 24 + Main.GlobalTime * 40));
-				for (int k = 0; k < 3; k++)
+				Tile tile2 = Framing.GetTileSafely(i, j - j2);
+				if ((tile2.active() && Main.tileSolid[tile2.type] && !Main.tileSolidTop[tile2.type]) || !WorldGen.InWorld(i, j - j2, 27))
 				{
-					Vector2 pos = new Vector2(projectile.Center.X, projectile.Center.Y - 16) - Main.screenPosition;
-					pos.Y -= z * 17 + 8;
-					pos += dynamicAddition;
-
-					int j2 = j * 16 - z * 18 - 8;
-					Tile tile2 = Framing.GetTileSafely(i, j2 / 16);
-					if ((!tile2.active() || (!Main.tileSolid[tile2.type] || Main.tileSolidTop[tile2.type])) && WorldGen.InWorld(i, j2 / 16, 27))
-					{
-						Main.spriteBatch.Draw(texture, pos, null, color * ((12f - z) / 12f), 0f, new Vector2(texture.Width/2, texture.Height/2), 1f, SpriteEffects.None, 0f);
-					}
-					else
-					{
-						return;
-					}
+					maxLength = j2;
+					break;
 				}
+			}
+			maxLength++;
+			Vector2 previous = projectile.Center;
+			for (int z = 0; z < maxLength; z++)
+			{
+				float dynamicMult = 0.52f + 0.48f * (float)Math.Cos(MathHelper.ToRadians(180f * z / maxLength));
+				Vector2 dynamicAddition = new Vector2(20f / maxLength * z * 0.4f + 0.5f, 0).RotatedBy(MathHelper.ToRadians(z * 24 + timer)) * dynamicMult;
+				Vector2 pos = projectile.Center;
+				pos.Y -= z * 16;
+				pos += dynamicAddition;
+				Vector2 rotateTo = pos - previous;
+				float lengthTo = rotateTo.Length();
+				float stretch = (lengthTo / height) * 1.00275f;
+				if (z == 0)
+					stretch = 1f;
+				Vector2 scaleVector2 = new Vector2(0.8f, stretch);
+				if (z != 0)
+				{
+					float alphaScale = (32f - z * 1.575f) / 20f;
+					Main.spriteBatch.Draw(texture, previous - Main.screenPosition, null, color * alphaScale, rotateTo.ToRotation() + MathHelper.ToRadians(90), origin, scaleVector2, SpriteEffects.None, 0f);
+				}
+				previous = pos;
 			}
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor) 

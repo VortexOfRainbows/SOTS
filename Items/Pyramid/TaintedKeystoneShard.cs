@@ -216,7 +216,7 @@ namespace SOTS.Items.Pyramid
 		}
 		private bool TileIsCapable(Tile tile)
         {
-			return tile.active() && Main.tileSolid[tile.type] && tile.slope() == 0 && !tile.halfBrick() && !tile.inActive();
+			return tile.active() && Main.tileSolid[tile.type] && !Main.tileSolidTop[tile.type] && tile.slope() == 0 && !tile.halfBrick() && !tile.inActive();
 		}
 		private bool TileIsCapable(int i, int j)
         {

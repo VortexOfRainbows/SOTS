@@ -259,10 +259,10 @@ namespace SOTS.Items.Pyramid
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
 			Tile tile = Main.tile[i, j];
-			if (tile.frameY < 360)
-            {
-
-            }
+			if (frameY < 360)
+			{
+				Item.NewItem(i * 16, j * 16, 32, 80, ModContent.ItemType<TaintedKeystoneShard>(), 3);
+			}
 			Item.NewItem(i * 16, j * 16, 32, 80, ModContent.ItemType<AncientGoldGate>());
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)

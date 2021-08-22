@@ -1,4 +1,6 @@
 using Microsoft.Xna.Framework.Graphics;
+using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace SOTS.Projectiles.Crushers
@@ -23,6 +25,7 @@ namespace SOTS.Projectiles.Crushers
 			initialExplosiveRange = 56;
 			exponentReduction = 0.6f;
 			minDamage = 0.3f;
+			finalDist = 150;
 		}
 		public override int ExplosionType()
 		{
@@ -32,6 +35,11 @@ namespace SOTS.Projectiles.Crushers
 		{
 			return mod.GetTexture("Projectiles/Crushers/EclipseArm");
 		}
-	}
+        public override void ExplosionSound()
+		{
+			Main.PlaySound(SoundID.NPCKilled, (int)projectile.Center.X, (int)projectile.Center.Y, 13, 1.1f, -0.25f);
+			base.ExplosionSound();
+		}
+    }
 }
 		

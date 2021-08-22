@@ -26,8 +26,8 @@ namespace SOTS.Projectiles.Crushers
 		bool runOnce = true;
 		public override void AI()
         {
-			projectile.alpha += 8;
-			Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 1.5f / 255f, (255 - projectile.alpha) * 1.5f / 255f, (255 - projectile.alpha) * 1.5f / 255f);
+			projectile.alpha += 3;
+			Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 1.0f / 255f, (255 - projectile.alpha) * 0.4f / 255f, (255 - projectile.alpha) * 1.8f / 255f);
 			if(runOnce && projectile.owner == Main.myPlayer)
 			{
 				runOnce = false;

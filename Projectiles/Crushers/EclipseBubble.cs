@@ -1,3 +1,4 @@
+using System;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -26,7 +27,10 @@ namespace SOTS.Projectiles.Crushers
 		}
 		public override void AI()
 		{
-			projectile.alpha = 260 - projectile.timeLeft;
+			int alpha = 260 - (int)Math.Pow(projectile.timeLeft, 1.5f);
+			if (alpha < 0)
+				alpha = 0;
+			projectile.alpha = alpha;
 		}
 	}
 }

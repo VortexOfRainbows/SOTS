@@ -39,6 +39,7 @@ namespace SOTS.Projectiles.Pyramid
 				return false;
 			SpriteEffects effects1 = SpriteEffects.None;
 			Texture2D texture1 = Main.projectileTexture[projectile.type];
+			Texture2D texture2 = mod.GetTexture("Projectiles/Pyramid/RubyBackground");
 			Vector2 origin = new Vector2(texture1.Width/2, texture1.Height/2);
 			Color alpha = Color.White;
 			Color color1 = alpha * 0.8f;
@@ -48,9 +49,9 @@ namespace SOTS.Projectiles.Pyramid
 			float num1 =  0.95f + (projectile.rotation * 0.75f).ToRotationVector2().Y * 0.1f;
 			Color color4 = color2 * num1;
 			float scale = 0.4f + projectile.scale * 0.8f * num1;
-			Main.spriteBatch.Draw(Main.extraTexture[50], projectile.Center - Main.screenPosition, null, color4, -projectile.rotation + 0.35f, origin, scale, effects1 ^ SpriteEffects.FlipHorizontally, 0.0f);
-			Main.spriteBatch.Draw(Main.extraTexture[50], projectile.Center - Main.screenPosition, null, alpha, -projectile.rotation, origin, projectile.scale, effects1 ^ SpriteEffects.FlipHorizontally, 0.0f);
-			Main.spriteBatch.Draw(Main.extraTexture[50], projectile.Center - Main.screenPosition, null, alpha * 0.8f, projectile.rotation * 0.5f, origin, projectile.scale * 0.9f, effects1, 0.0f);
+			Main.spriteBatch.Draw(texture2, projectile.Center - Main.screenPosition, null, color4, -projectile.rotation + 0.35f, origin, scale, effects1 ^ SpriteEffects.FlipHorizontally, 0.0f);
+			Main.spriteBatch.Draw(texture2, projectile.Center - Main.screenPosition, null, alpha, -projectile.rotation, origin, projectile.scale, effects1 ^ SpriteEffects.FlipHorizontally, 0.0f);
+			Main.spriteBatch.Draw(texture2, projectile.Center - Main.screenPosition, null, alpha * 0.8f, projectile.rotation * 0.5f, origin, projectile.scale * 0.9f, effects1, 0.0f);
 			color1.A = 0;
 			for (int i = 0; i < 2; i++)
 			{

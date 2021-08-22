@@ -30,15 +30,17 @@ Low Priority:
 5. Electrolyte Seperator
 6. Skypot gore
 
-1. Next: Maligmar, Tainted Keystone Shard to drop properly
+1. Next: Maligmar
 2. Next: Ghast Banner + Teratoma Banner
-3. Next: Voidspace Aura Chain Improvement
 
 8/21/21
 1. Nature Spirit Staff is cheaper to craft
 2. Creative Shock duration increased (Keystone)
 3. Obsidian Eruption no longer deals KB with explosion
 4. Earthen Construct should no longer crash your game upon dying (FINALLY, HOPEFULLY).
+5. Some resprites + Modify Eclipse (Crusher) visuals to make them darker + burp sound
+6. Voidspace Aura matches chain effects with Sky Chain
+7. Tainted Keystone drops from gold gate
 
 8/20/21
 1. Ruby Spawner
