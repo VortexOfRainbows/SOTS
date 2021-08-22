@@ -10,17 +10,15 @@ High Priority:
 1. Pyramid Rework
 
 Mid Priority:
-1. Riptide Trident (Launches you towards your cursor at the cost of void, deal damage while traveling, bounce off of enemies)
-2. Wintry Traveler: Riptide Trident + Frigid Javelin
-3. Tectonic Tether
-4. Replace Brittle flail
-5. Chest slime resprites and reworks
+1. Tectonic Tether
+2. Chest slime resprites and reworks
 
 Mid Priority 2:
 1. Void Low Warning
 2. Horn of Plenty: 10% more drops accessory
 3. Ethereal Tonic
 4. Timelord's Potion: attempt using .aiStyle, otherwise would require a lot of workaround...
+5. Replace Brittle flail
 
 Low Priority:
 1. Archaelogist NPC
@@ -29,6 +27,7 @@ Low Priority:
 4. Remove negative Vregen in inventory items
 5. Electrolyte Seperator
 6. Skypot gore
+7. Wintry Traveler: Riptide Trident + Frigid Javelin
 
 1. Next: Maligmar
 2. Next: Ghast Banner + Teratoma Banner
