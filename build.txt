@@ -1,7 +1,7 @@
 
 author = Vortex Of Rainbows
 version = 0.19.4
-displayName = Secrets Of The Shadows
+displayName = [c/c694e8:Secrets Of The Shadows]
 hideCode = true
 hideResources = false
 includeSource = true

@@ -1,10 +1,10 @@
-A mod which has nothing to do with secrets or shadows... yet.
+A mod which may have something to do with secrets and shadows.
 This mod's main plan is to add generated structures to the world, some are sort-of like roguelike dungeons.
 !! This mod is early in development !!
 !! A large world is recommended in order for the generated structures to spawn without overriding vanilla structures !!
 
 Bosses -> Currently 6, mostly bullet hells
-Items -> Nearly 400, unique gimmicks all around!
+Items -> Nearly 440, unique gimmicks all around!
 
 New Subclass (void)
 -A new resource similar to mana
@@ -22,7 +22,6 @@ Programmer, Direction, Art: Vortex#6230
 Emotional Support, Direction, Art: Coolio
 Music, Art: Heart Plus Up!
 Code, Audio Engineering: apotofkoolaid
-Testers: DreadSoul
 
 (Past Developers)
 Misc, Direction: FlameFreezer
@@ -31,10 +30,8 @@ Music: BananaLizard
 
 (Contributors)
 Art: Arcri
-Testers: Crimsonkeep
+Testers: DreadSoul, Crimsonkeep 
 Code: ENNWAY
-
-(Other Contributions)
 Item glowmask code: Qwerty3.14
 Minor Art Contributions: Naka, DeJuiceTD
 
@@ -45,8 +42,7 @@ Update 0.19.4
 -Pharaoh's Curse has been completely reworked
 -Several items have recieved reworks
 -A handful of new items have been added
--Countless balance changes
--Bug fixes and QoL additions
+-Many balance changes, bug fixes, and QoL additions
 
 Update 0.19.3
 -New Expert drops for Icy Amalgamation, Subspace Serpent, and Pharaoh's

@@ -32,6 +32,10 @@ Low Priority:
 1. Next: Maligmar
 2. Next: Ghast Banner + Teratoma Banner
 
+8/22/21
+1. Added Riptide, should work in Multiplayer
+2. 
+
 8/21/21
 1. Nature Spirit Staff is cheaper to craft
 2. Creative Shock duration increased (Keystone)
