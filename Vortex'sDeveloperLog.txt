@@ -32,6 +32,9 @@ Low Priority:
 1. Next: Maligmar, Lava Platform Fix, Snake Pot Sound fix
 2. Next: Ghast Banner + Teratoma Banner + Maligmar Banner
 3. Fix Gold spike not being overridden by pyramid tunnels
+4. Binary death effects on holo enemies
+5. Coconut gun rebalancing
+6. Safety switch item
 
 8/22/21
 1. Added Riptide, should work in Multiplayer

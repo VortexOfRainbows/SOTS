@@ -30,7 +30,7 @@ namespace SOTS.Projectiles.Otherworld
 			projectile.alpha = 0;
 			projectile.hide = true;
 			projectile.usesLocalNPCImmunity = true;
-			projectile.localNPCHitCooldown = 10;
+			projectile.localNPCHitCooldown = 5;
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
@@ -89,7 +89,12 @@ namespace SOTS.Projectiles.Otherworld
 
 			int direction = 1;
 			if (toCursor.X < 0)
+			{
 				direction = -1;
+				direction *= -(int)projectile.ai[0];
+			}
+			else
+				direction *= (int)projectile.ai[0];
 			float rotation = toProjectile.ToRotation() + MathHelper.ToRadians(direction == -1 ? -215 : 45);
 			for(int i = 0; i < length + 1; i++)
 			{
@@ -165,10 +170,10 @@ namespace SOTS.Projectiles.Otherworld
 					distance = Vector2.Distance(player.Center, cursorArea) * randMod;
 					if (distance < 120)
 						distance = 120;
-					if (distance > 400)
-						distance = 400;
+					if (distance > 320)
+						distance = 320;
 					toCursor = cursorArea - player.Center;
-					spinSpeed = (2.5f + (100f / (float)Math.Pow(distance, 0.5))) * randMod * 1.5f * (1 + SOTSPlayer.ModPlayer(player).attackSpeedMod) / player.meleeSpeed;
+					spinSpeed = (2.0f + (3f / (float)Math.Pow(distance / 100f, 1.33f))) * randMod * 5f * (1 + SOTSPlayer.ModPlayer(player).attackSpeedMod) / player.meleeSpeed;
 				}
 				counterOffset = 205 + 45f / randMod;
 				float slashOffset = counterOffset * projectile.ai[0];
@@ -201,7 +206,7 @@ namespace SOTS.Projectiles.Otherworld
 			float iterator2 = (float)Math.Abs(spinSpeed * projectile.ai[0] / randMod);
 			timeLeftCounter += iterator2;
 			counter += spinSpeed * projectile.ai[0] / randMod;
-			if(timeLeftCounter > (237.5f + (4800f / distance)) / randMod)
+			if(timeLeftCounter > (235.0f + (4000f / distance)) / randMod)
             {
 				projectile.hide = true;
 				projectile.Kill();

@@ -25,7 +25,7 @@ namespace SOTS.Projectiles.Otherworld
 			projectile.alpha = 255;
 			projectile.ai[1] = -1;
 			projectile.usesIDStaticNPCImmunity = true;
-			projectile.idStaticNPCHitCooldown = 20;
+			projectile.idStaticNPCHitCooldown = 10;
 			projectile.hide = true;
 		}
 		public override bool? CanHitNPC(NPC target)
@@ -58,14 +58,18 @@ namespace SOTS.Projectiles.Otherworld
 			cataloguePos();
 		}
 		Vector2[] trailPos = new Vector2[22];
+		Vector2 toOwner = Vector2.Zero;
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
+			Player player = Main.player[projectile.owner];
 			if (runOnce)
 				return true;
 			Texture2D texture = Main.projectileTexture[projectile.type];
 			bool black = projectile.ai[0] < 0;
 			if (black)
-				texture = ModContent.GetTexture("SOTS/Projectiles/Otherworld/DigitalTrailBlack");
+			{
+				texture = mod.GetTexture("Projectiles/Otherworld/DigitalTrailBlack");
+			}
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Vector2 previousPosition = trailPos[0];
 			if (previousPosition == Vector2.Zero)
@@ -89,9 +93,9 @@ namespace SOTS.Projectiles.Otherworld
 				float mult = 0.1f + (0.25f + 0.65f * availableTrails2 / trailPos.Length) * (float)Math.Sin(MathHelper.ToRadians(180 * ((availableTrails - k) / ((float)availableTrails))));
 				float scale = projectile.scale * mult;
 				if (black)
-					scale *= 2f;
+					scale *= 3f;
 				else
-					scale *= 1.35f;
+					scale *= 1.75f;
 				if (trailPos[k] == Vector2.Zero)
 				{
 					return true;
@@ -99,11 +103,14 @@ namespace SOTS.Projectiles.Otherworld
 				Vector2 drawPos = trailPos[k] - Main.screenPosition;
 				Vector2 currentPos = trailPos[k];
 				Vector2 betweenPositions = previousPosition - currentPos;
-				float max = betweenPositions.Length() / (5f * scale);
+				float length = 5f;
+				if (black)
+					length = 2.5f;
+				float max = betweenPositions.Length() / (length * scale);
 				if (trailPos[k] != projectile.Center)
 					for (int i = 0; i < max; i++)
 					{
-						Color color = Color.White * mult;
+						Color color = Color.Black * mult;
 						if (!black)
 							color = new Color(110, 135, 140, 0) * mult;
 						drawPos = previousPosition + -betweenPositions * (i / max) - Main.screenPosition;
@@ -116,7 +123,8 @@ namespace SOTS.Projectiles.Otherworld
 								x = 0;
 								y = 0;
 							}
-							Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, betweenPositions.ToRotation(), drawOrigin, scale, SpriteEffects.None, 0f);
+							float rotation = betweenPositions.ToRotation();
+							Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, rotation, drawOrigin, new Vector2(black ? 0.5f : 1f, 1f) * scale, SpriteEffects.None, 0f);
 						}
 					}
 				previousPosition = currentPos;

@@ -7,7 +7,7 @@ using Terraria.DataStructures;
 
 namespace SOTS.Items
 {
-	public class DigitalDaito : VoidItem
+	public class DigitalDaito : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -15,7 +15,7 @@ namespace SOTS.Items
 			Tooltip.SetDefault("WIP ITEM");
 			Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(2, 15));
 		}
-		public override void SafeSetDefaults()
+		public override void SetDefaults()
 		{
             item.damage = 50;
             item.melee = true;  
@@ -42,9 +42,9 @@ namespace SOTS.Items
 			Projectile.NewProjectile(position, new Vector2(speedX, speedY), type, damage, knockBack, player.whoAmI, i % 2 * 2 -1, Main.rand.NextFloat(0.875f, 1.125f));
 			return false;
 		}
-		public override void GetVoid(Player player)
+		/*public override void GetVoid(Player player)
 		{
 			voidMana = 3;
-		}
+		}*/
 	}
 }
