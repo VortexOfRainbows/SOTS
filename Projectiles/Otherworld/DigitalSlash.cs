@@ -173,7 +173,7 @@ namespace SOTS.Projectiles.Otherworld
 					if (distance > 320)
 						distance = 320;
 					toCursor = cursorArea - player.Center;
-					spinSpeed = (2.0f + (3f / (float)Math.Pow(distance / 100f, 1.33f))) * randMod * 5f * (1 + SOTSPlayer.ModPlayer(player).attackSpeedMod) / player.meleeSpeed;
+					spinSpeed = (1.0f + (4.5f / (float)Math.Pow(distance / 100f, 2f))) * randMod * 5f * (1 + SOTSPlayer.ModPlayer(player).attackSpeedMod) / player.meleeSpeed;
 				}
 				counterOffset = 205 + 45f / randMod;
 				float slashOffset = counterOffset * projectile.ai[0];

@@ -35,6 +35,7 @@ Low Priority:
 4. Binary death effects on holo enemies
 5. Coconut gun rebalancing
 6. Safety switch item
+7. Miner Sword critical stricks
 
 8/22/21
 1. Added Riptide, should work in Multiplayer
