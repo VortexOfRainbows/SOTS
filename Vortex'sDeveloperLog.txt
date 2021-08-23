@@ -29,12 +29,13 @@ Low Priority:
 6. Skypot gore
 7. Wintry Traveler: Riptide Trident + Frigid Javelin
 
-1. Next: Maligmar
-2. Next: Ghast Banner + Teratoma Banner
+1. Next: Maligmar, Lava Platform Fix, Snake Pot Sound fix
+2. Next: Ghast Banner + Teratoma Banner + Maligmar Banner
+3. Fix Gold spike not being overridden by pyramid tunnels
 
 8/22/21
 1. Added Riptide, should work in Multiplayer
-2. 
+2. Added Digital Daito, WORKS IN MULTIPLAYER I AM A FUCKING GOD
 
 8/21/21
 1. Nature Spirit Staff is cheaper to craft

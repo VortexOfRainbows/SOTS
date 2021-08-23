@@ -21,13 +21,13 @@ namespace SOTS.Items
             item.melee = true;  
             item.width = 62;
             item.height = 64;  
-            item.useTime = 10; 
-            item.useAnimation = 10;
+            item.useTime = 11; 
+            item.useAnimation = 11;
             item.useStyle = 5;		
             item.knockBack = 8f;
             item.value = Item.sellPrice(0, 10, 0, 0);
             item.rare = ItemRarityID.Cyan;
-            item.UseSound = SoundID.Item22;
+            item.UseSound = null;
             item.autoReuse = true;
             item.shoot = mod.ProjectileType("DigitalSlash"); 
             item.shootSpeed = 18f;
@@ -35,13 +35,16 @@ namespace SOTS.Items
             item.noUseGraphic = true; 
             item.noMelee = true;
 		}
+		int i = 0;
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-			return true;
+			i++;
+			Projectile.NewProjectile(position, new Vector2(speedX, speedY), type, damage, knockBack, player.whoAmI, i % 2 * 2 -1, Main.rand.NextFloat(0.875f, 1.125f));
+			return false;
 		}
 		public override void GetVoid(Player player)
 		{
-			voidMana = 5;
+			voidMana = 3;
 		}
 	}
 }

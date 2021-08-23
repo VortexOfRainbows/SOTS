@@ -60,7 +60,7 @@ namespace SOTS.Projectiles
             projectile.hostile = false; 
             projectile.tileCollide = true;
             projectile.ignoreWater = true; 
-            projectile.ranged = true; 
+            projectile.melee = true; 
             projectile.aiStyle = 3; 
 			projectile.alpha = 0;
             projectile.extraUpdates = 2;

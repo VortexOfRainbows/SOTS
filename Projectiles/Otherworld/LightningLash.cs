@@ -141,7 +141,6 @@ namespace SOTS.Projectiles.Otherworld
             Vector2 previousPosition = projectile.Center;
             float scale = projectile.scale * 1f;
             Vector2 currentPos = center;
-
 			if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), previousPosition, currentPos, 10f * scale, ref point))
             {
                 return true;
