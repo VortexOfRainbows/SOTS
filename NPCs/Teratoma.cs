@@ -34,12 +34,14 @@ namespace SOTS.NPCs
 		{
 			npc.CloneDefaults(NPCID.GoblinPeon);
 			aiType = NPCID.GoblinScout;
-			npc.width = 36;
-			npc.height = 46;
-			npc.lifeMax = 120;
-			npc.damage = 35;
+			npc.width = 52;
+			npc.height = 62;
+			npc.lifeMax = 130;
+			npc.damage = 34;
 			npc.value = 600;
 			npc.scale = 1.0f;
+			npc.defense = 12;
+			npc.knockBackResist = 0.15f;
 			//animationType = //NPCID.GoblinPeon;
 			Main.npcFrameCount[npc.type] = 7;
 			npc.DeathSound = SoundID.NPCDeath1;
@@ -48,17 +50,18 @@ namespace SOTS.NPCs
 		}
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
-			npc.lifeMax = 180;
+			npc.lifeMax = 200;
             base.ScaleExpertStats(numPlayers, bossLifeScale);
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
 			Texture2D texture = Main.npcTexture[npc.type];
+			Texture2D texture2 = ModContent.GetTexture("SOTS/NPCs/TeratomaEyes");
 			Vector2 drawOrigin = new Vector2(npc.width / 2, npc.height / 2);
 			Vector2 drawPos = npc.Center - Main.screenPosition + new Vector2(0, npc.gfxOffY + 2);
 			if (mushForm)
 			{
-				int mushHeightSprite = 22;
+				int mushHeightSprite = 27;
 				float regenTimerC = regenTimer - 90;
 				if (regenTimerC < 0)
 					regenTimerC = 0;
@@ -80,11 +83,13 @@ namespace SOTS.NPCs
 							direction = -1;
 						int xOffset = (10 - difference) * direction;
 						Rectangle cutoutFrame = new Rectangle(0, i, npc.width, 1);
-						spriteBatch.Draw(texture, drawPos + new Vector2(xOffset, i - (mushHeight - 10 * (1f - percent))), cutoutFrame, drawColor, npc.rotation, drawOrigin, npc.scale, npc.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+						spriteBatch.Draw(texture, drawPos + new Vector2(xOffset, i - (mushHeight - 12 * (1f - percent))), cutoutFrame, drawColor, npc.rotation, drawOrigin, npc.scale, npc.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+						spriteBatch.Draw(texture2, drawPos + new Vector2(xOffset, i - (mushHeight - 12 * (1f - percent))), cutoutFrame, Color.White, npc.rotation, drawOrigin, npc.scale, npc.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 					}
 				}
 				Rectangle frame = new Rectangle(0, npc.frame.Y + npc.height - mushHeightSprite, npc.width, mushHeight);
-				spriteBatch.Draw(texture, drawPos + new Vector2(0, 46 - mushHeight), frame, drawColor, npc.rotation, drawOrigin, npc.scale, npc.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+				spriteBatch.Draw(texture, drawPos + new Vector2(0, npc.height - mushHeight), frame, drawColor, npc.rotation, drawOrigin, npc.scale, npc.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+				spriteBatch.Draw(texture2, drawPos + new Vector2(0, npc.height - mushHeight), frame, Color.White, npc.rotation, drawOrigin, npc.scale, npc.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 				/*if(mushHeight >= 2)
 				{
 					mushHeight = 2;
@@ -96,6 +101,7 @@ namespace SOTS.NPCs
 			{
 				Rectangle frame = new Rectangle(0, npc.frame.Y + 1, npc.width, npc.height - 1);
 				spriteBatch.Draw(texture, drawPos, frame, drawColor, npc.rotation, drawOrigin, npc.scale, npc.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+				spriteBatch.Draw(texture2, drawPos, frame, Color.White, npc.rotation, drawOrigin, npc.scale, npc.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			//texture = GetTexture("SOTS/NPCs/TeratomaGlow");
 			//spriteBatch.Draw(texture, drawPos, frame, Color.White, npc.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
@@ -110,7 +116,7 @@ namespace SOTS.NPCs
 			float scale = 1.0f + 0.6f * percent;
 			for (int i = 0; i < amt; i++)
 			{
-				int num1 = Dust.NewDust(new Vector2(npc.position.X - 8, npc.position.Y + npc.height - 16), npc.width + 16, 28, mod.DustType("CurseDust"), 0, 0, 0, default, scale);
+				int num1 = Dust.NewDust(new Vector2(npc.position.X + 8, npc.position.Y + npc.height - 16), npc.width - 16, 28, mod.DustType("CurseDust"), 0, 0, 0, default, scale);
 				Main.dust[num1].noGravity = true;
 				float dusDisX = Main.dust[num1].position.X - npc.Center.X;
 				float dusDisY = Main.dust[num1].position.Y - npc.Center.Y;
@@ -135,8 +141,8 @@ namespace SOTS.NPCs
 				if (regenTimer >= 153)
                 {
 					regenTimer = -30;
-					npc.frame.Y = 0;
-					npc.velocity.Y -= 6.6f;
+					npc.frame.Y = 6 * 62;
+					npc.velocity.Y -= 6.0f;
 					mushForm = false;
                 }
 				npc.velocity.X *= 0.925f;
@@ -146,10 +152,10 @@ namespace SOTS.NPCs
         }
         public override void AI()
 		{
-			npc.velocity.X *= 0.9875f;
+			npc.velocity.X *= 0.9725f;
 			if (npc.velocity.Y == 0 && Math.Abs(npc.velocity.X) > 0.5f && !Main.rand.NextBool(3))
 			{
-				Dust dust = Dust.NewDustDirect(npc.position + new Vector2(0, (npc.height - 2) * npc.scale) - new Vector2(5), (int)(npc.width * npc.scale), 4, mod.DustType("CurseDust3"), 0, 0, 0, default, 1.6f);
+				Dust dust = Dust.NewDustDirect(npc.position + new Vector2(0, (npc.height - 2) * npc.scale) - new Vector2(5), (int)(npc.width * npc.scale), 4, mod.DustType("CurseDust3"), 0, 0, 0, default, 0.8f);
 				dust.velocity *= 0.1f;
 				dust.noGravity = true;
 			}
@@ -164,18 +170,18 @@ namespace SOTS.NPCs
 			}
 			else if (npc.velocity.Y != 0)
 			{
-				//jumping frame here
+				npc.frame.Y = 0;
 			}
 			else
 			{
 				npc.frameCounter++;
-				if (npc.frameCounter >= 5f)
+				if (npc.frameCounter >= 6f)
 				{
-					npc.frameCounter -= 5f;
+					npc.frameCounter -= 6f;
 					npc.frame.Y += frameHeight;
 					if (npc.frame.Y >= 6 * frameHeight)
 					{
-						npc.frame.Y = 0;
+						npc.frame.Y = 1 * frameHeight;
 					}
 				}
 			}
@@ -221,7 +227,12 @@ namespace SOTS.NPCs
 			else
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<SoulResidue>(), Main.rand.Next(2) + 1);
 			if(Main.rand.NextBool(2))
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<CursedTumor>(), Main.rand.Next(3) + 4);
+			{
+				int type = ItemType<CursedTumor>();
+				if (Main.rand.NextBool(10))
+					type = ItemType<Maldite>();
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, type, Main.rand.Next(3) + 4);
+			}
 		}
 	}
 }

@@ -48,6 +48,9 @@ Low Priority:
 7. Miner Sword crit chance 10% -> 4%, now crits while falling
 8. Holo Enemies release binary dust
 9. Obsidian Platform bug fix
+10. Teratoma resprite
+	1. Increased kb resist, Increased hp (120, 180) -> (140, 200)
+	2. Increased Defense 0 -> 10,  Decreased speed, can drop maldite
 
 8/21/21
 1. Nature Spirit Staff is cheaper to craft
