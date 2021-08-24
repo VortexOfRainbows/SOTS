@@ -222,7 +222,7 @@ namespace SOTS
 										tile.active(false);
 										tile.slope(0);
 										tile.halfBrick(false);
-										WorldGen.PlaceTile(k, l, 93, true, true, -1, 15);
+										WorldGen.PlaceTile(k, l, TileID.Lamps, true, true, -1, 15);
 									}
 									break;
 								case 7:
@@ -285,7 +285,7 @@ namespace SOTS
 										tile.active(false);
 										tile.slope(0);
 										tile.halfBrick(false);
-										WorldGen.PlaceTile(k, l, 102, true, true, -1, 0);
+										WorldGen.PlaceTile(k, l, ModContent.TileType<AncientGoldThroneTile>(), true, true, -1, 0);
 									}
 									break;
 								case 14:
@@ -293,7 +293,7 @@ namespace SOTS
 									{
 										if (!tile.active())
 										{
-											WorldGen.PlaceTile(k, l, TileID.Candelabras, true, true, -1, 15);
+											WorldGen.PlaceTile(k, l, ModContent.TileType<AncientGoldCandelabraTile>(), true, true, -1, 0);
 										}
 									}
 									else
@@ -309,7 +309,7 @@ namespace SOTS
 										tile.active(false);
 										tile.slope(0);
 										tile.halfBrick(false);
-										WorldGen.PlaceTile(k, l, 18, true, true, -1, 32);
+										WorldGen.PlaceTile(k, l, ModContent.TileType<AncientGoldWorkbenchTile>(), true, true, -1, 0);
 									}
 									break;
 								case 16:
@@ -349,7 +349,7 @@ namespace SOTS
 										tile.active(false);
 										tile.slope(0);
 										tile.halfBrick(false);
-										WorldGen.PlaceTile(k, l, 14, true, true, -1, 18);
+										WorldGen.PlaceTile(k, l, ModContent.TileType<AncientGoldTableTile>(), true, true, -1, 0);
 									}
 									break;
 								case 20:
@@ -358,7 +358,7 @@ namespace SOTS
 										tile.active(false);
 										tile.slope(0);
 										tile.halfBrick(false);
-										WorldGen.PlaceTile(k, l, 88, true, true, -1, 8);
+										WorldGen.PlaceTile(k, l, ModContent.TileType<AncientGoldDresserTile>(), true, true, -1, 0);
 									}
 									break;
 								case 21:
@@ -708,7 +708,7 @@ namespace SOTS
 						selectTile.type = 274;
 					}
 				}
-				for (int findTileY = pyramidY + (size - 55); findTileY > pyramidY + 12; findTileY--)
+				for (int findTileY = pyramidY + (size - 55); findTileY > pyramidY + 15; findTileY--)
 				{
 					int max = Math.Abs((int)((findTileY - pyramidY) * 0.8f));
 					int min = Math.Abs((int)((findTileY - pyramidY) * 0.5f));
@@ -782,7 +782,7 @@ namespace SOTS
 						if (tile.type == (ushort)mod.TileType("PyramidSlabTile") && tile.active() && tileLeft.type == (ushort)mod.TileType("PyramidSlabTile") && tileLeft.active() && tileRight.type == (ushort)mod.TileType("PyramidSlabTile") && tileRight.active() && (!tileUp.active() || !tileDown.active()))
 						{
 							counterSpike++;
-							if (counterSpike >= 40)
+							if (counterSpike >= 44)
 							{
 								counterSpike = 0;
 								int spikeSize = Main.rand.Next(4, 17);
@@ -1095,13 +1095,13 @@ namespace SOTS
 					Tile tileLU3 = Framing.GetTileSafely(findTileX - 1, findTileY - 3);
 					if (tile.type == (ushort)mod.TileType("PyramidSlabTile") && !tileLU.active() && !tileLU2.active() && !tileU.active() && !tileU2.active())
 					{
-						if (Main.rand.Next(5) == 0)
+						if (WorldGen.genRand.NextBool(5))
 						{
 							WorldGen.PlaceTile(findTileX, findTileY - 1, 28, true, true, -1, 3); //pots
 						}
 						else if (Main.rand.Next(size / 2) == 0)
 						{
-							if (Main.rand.NextBool(2))
+							if (WorldGen.genRand.NextBool(2))
 							{
 								WorldGen.PlaceTile(findTileX, findTileY - 1, (ushort)ModContent.TileType<CrystalStatue>()); //life crystal
 							}
@@ -1110,33 +1110,34 @@ namespace SOTS
 								WorldGen.PlaceTile(findTileX, findTileY - 1, (ushort)ModContent.TileType<ManaStatue>()); //mana crystal
 							}
 						}
-						else if (Main.rand.Next(size / 3) == 0)
+						else if (WorldGen.genRand.NextBool(size / 3))
 						{
 							WorldGen.PlaceTile(findTileX, findTileY - 1, (ushort)mod.TileType("PyramidChestTile")); //Chests
 						}
-						else if (Main.rand.Next((int)(size / 3.5f)) == 0)
+						else if (WorldGen.genRand.NextBool((int)(size / 3.5f)))
 						{
 							GenerateCrate(findTileX, findTileY - 1, mod);
 						}
-						else if (!tileU3.active() && !tileLU3.active() && Main.rand.Next(size / 2) == 0)
+						else if (!tileU3.active() && !tileLU3.active() && WorldGen.genRand.NextBool(size / 2))
 						{
 							WorldGen.PlaceTile(findTileX, findTileY - 1, TileID.Statues, true, true, -1, Main.rand.Next(71)); //random statue
 						}
 					}
-					if (tile.wall == (ushort)mod.WallType("PyramidWallTile") && Main.rand.NextBool(500) && tile.type != ModContent.TileType<CursedTumorTile>())
+					if (tile.wall == (ushort)mod.WallType("PyramidWallTile") && WorldGen.genRand.NextBool(500) && tile.type != ModContent.TileType<CursedTumorTile>() && tile.active())
 					{
-						int radius7 = 3;
+						int radius7 = 6;
 						for (int x = -radius7; x <= radius7; x++)
 						{
 							for (int y = -radius7; y <= radius7; y++)
 							{
 								int xPosition6 = findTileX + x;
 								int yPosition6 = findTileY + y;
-
 								if (Math.Sqrt(x * x + y * y) <= radius7 + 0.5)
 								{
+									float distFromCenter = (float)Math.Sqrt(x * x + y * y);
+									int distRand = (int)distFromCenter; 
 									Tile tileRad = Framing.GetTileSafely(xPosition6, yPosition6);
-									if (!tileRad.active() && tileRad.wall != ModContent.WallType<CursedTumorWallTile>())
+									if (!tileRad.active() && tileRad.wall != ModContent.WallType<CursedTumorWallTile>() && Main.rand.Next(100) > 4 + distRand * 5)
 									{
 										tileRad.type = 51; //cobweb
 										tileRad.active(true);
@@ -1149,12 +1150,12 @@ namespace SOTS
 			}
 			int malditeNum = 0;
 			int extraSize = size + 50;
-			for (int findTileY = pyramidY + extraSize; findTileY > pyramidY - 50; findTileY--)
+			for (int findTileY = pyramidY - 50; findTileY < pyramidY + extraSize; findTileY++)
 			{
 				for (int findTileX = pyramidX + extraSize; findTileX > pyramidX - extraSize; findTileX--)
 				{
 					Tile tile = Framing.GetTileSafely(findTileX, findTileY);
-					if (tile.type == ModContent.TileType<CursedTumorTile>() && tile.active())
+					if (tile.type == ModContent.TileType<CursedTumorTile>() && (tile.active() || tile.wall == (ushort)ModContent.WallType<CursedTumorWallTile>()))
 					{
 						tile.wall = (ushort)ModContent.WallType<CursedTumorWallTile>();
 						if (WorldGen.genRand.NextBool(2))
@@ -1177,13 +1178,14 @@ namespace SOTS
 							if (capable)
 								WorldGen.PlaceTile(findTileX, findTileY - 1, ModContent.TileType<CursedGrowthTile>());
 						}
-						if(WorldGen.genRand.NextBool(40 + malditeNum * malditeNum * 12))
+						if(WorldGen.genRand.NextBool(40 + malditeNum * malditeNum * 15))
 						{
-							for(int rep = 0; rep < 3; rep++)
+							int rand = Main.rand.Next(2) + 2;
+							for (int rep = 0; rep < rand; rep++)
                             {
 								int tileX = findTileX + Main.rand.Next(6 * rep);
 								int tileY = findTileY + Main.rand.Next(6 * rep);
-								int radiusMaldite = 8 + Main.rand.Next(5) - rep * 2;
+								int radiusMaldite = 10 + Main.rand.Next(5) - rep * 3;
 								for (int x = -radiusMaldite; x <= radiusMaldite; x++)
 								{
 									for (int y = -radiusMaldite; y <= radiusMaldite; y++)
@@ -1192,15 +1194,19 @@ namespace SOTS
 										int malditePosY = tileY + y;
 										float distFromCenter = (float)Math.Sqrt(x * x + y * y);
 										int distRand = (int)distFromCenter;
-										if (distFromCenter <= radiusMaldite + 0.5f && Main.rand.Next(100) > 4 + distRand * 5)
+										if (distFromCenter <= radiusMaldite + 0.5f && Main.rand.Next(100) > 4 + distRand * 4)
 										{
 											Tile tileRad = Framing.GetTileSafely(malditePosX, malditePosY);
 											bool capable = tileRad.type == ModContent.TileType<CursedTumorTile>() || (tileRad.type == ModContent.TileType<CursedHive>() && Main.rand.NextBool(8 + rep));
 											if (tileRad.active() && capable)
 											{
 												tileRad.type = (ushort)ModContent.TileType<MalditeTile>();
-												tileRad.wall = (ushort)ModContent.WallType<CursedTumorWallTile>();
+												tileRad.wall = (ushort)ModContent.WallType<MalditeWallTile>();
 												tileRad.active(true);
+											}
+											else if (tileRad.wall == ModContent.WallType<CursedTumorWallTile>())
+											{
+												tileRad.wall = (ushort)ModContent.WallType<MalditeWallTile>();
 											}
 										}
 									}
@@ -1629,7 +1635,8 @@ namespace SOTS
         {
 			return !tile.active() ||
 				tile.wall != (ushort)ModContent.WallType<PyramidWallTile>() ||
-				(tile.type != (ushort)ModContent.TileType<PyramidSlabTile>() && tile.type != TileID.SandStoneSlab && tile.type != (ushort)ModContent.TileType<PyramidBrickTile>());
+				(tile.type != (ushort)ModContent.TileType<PyramidSlabTile>() && tile.type != TileID.SandStoneSlab && tile.type != (ushort)ModContent.TileType<PyramidBrickTile>()
+				&& tile.type != (ushort)ModContent.TileType<RoyalGoldBrickTile>() && tile.type != (ushort)ModContent.TileType<AncientGoldSpikeTile>());
 		}
 		public static bool StopTunnelTile(Tile tile)
 		{
@@ -6654,15 +6661,17 @@ namespace SOTS
 						if (Math.Sqrt(x * x + y * y) >= radius - radialMod && tile.wall != ModContent.WallType<CursedTumorWallTile>() && capable)
 						{
 							ConvertNearbyTiles(mod, xPosition6, yPosition6, radiusConversion);
-							bool valid = !extraRestriction || (tile.type == ModContent.TileType<PyramidBrickTile>() || tile.type == ModContent.TileType<PyramidSlabTile>() 
+							bool valid = !extraRestriction || (tile.type == ModContent.TileType<PyramidBrickTile>() || tile.type == ModContent.TileType<PyramidSlabTile>()
 								|| tile.type == ModContent.TileType<CursedHive>() || tile.type == (ushort)ModContent.TileType<AncientGoldSpikeTile>());
-							if(valid && !(tile.active() && tile.type == ModContent.TileType<TrueSandstoneTile>()) && tile.wall != ModContent.WallType<TrueSandstoneWallWall>())
+							if (tile.type == ModContent.TileType<TrueSandstoneTile>() || tile.wall == ModContent.WallType<TrueSandstoneWallWall>() || tile.type == ModContent.TileType<AncientGoldGateTile>())
+								valid = false;
+							if (valid && (tile.active() || (tile.wall != ModContent.WallType<TrueSandstoneWallWall>() && tile.wall != ModContent.WallType<PyramidWallTile>())) && Main.tileSolid[tile.type])
 							{
 								tile.type = (ushort)ModContent.TileType<CursedTumorTile>();
 								tile.active(true);
 							}
 						}
-						else
+						else if(tile.wall != ModContent.WallType<TrueSandstoneWallWall>())
 						{
 							tile.wall = (ushort)ModContent.WallType<CursedTumorWallTile>();
 							tile.active(false);

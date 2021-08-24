@@ -302,7 +302,8 @@ namespace SOTS.NPCs
 				int tileWall = Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY - 1].wall;
 				bool isValidTile = spawnInfo.spawnTileType == ModContent.TileType<PyramidSlabTile>() || spawnInfo.spawnTileType == ModContent.TileType<PyramidBrickTile>() || spawnInfo.spawnTileType == ModContent.TileType<TrueSandstoneTile>();
 				bool isValidWall = tileWall == ModContent.WallType<PyramidWallTile>() || tileWall == ModContent.WallType<TrueSandstoneWallWall>();
-				bool isCurseValid = spawnInfo.spawnTileType == ModContent.TileType<CursedTumorTile>() || spawnInfo.spawnTileType == ModContent.TileType<CursedHive>() || spawnInfo.spawnTileType == ModContent.TileType<MalditeTile>() || tileWall == ModContent.WallType<CursedTumorWallTile>();
+				bool isCurseValid = spawnInfo.spawnTileType == ModContent.TileType<CursedTumorTile>() || spawnInfo.spawnTileType == ModContent.TileType<CursedHive>() 
+					|| spawnInfo.spawnTileType == ModContent.TileType<MalditeTile>() || tileWall == ModContent.WallType<CursedTumorWallTile>() || tileWall == ModContent.WallType<MalditeWallTile>();
 				if (isValidTile || (isValidWall && !isCurseValid))
 				{
 					pool[0] = 0f;

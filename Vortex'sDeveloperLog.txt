@@ -12,6 +12,7 @@ High Priority:
 Mid Priority:
 1. Tectonic Tether
 2. Chest slime resprites and reworks
+3. Safety switch item
 
 Mid Priority 2:
 1. Void Low Warning
@@ -29,17 +30,24 @@ Low Priority:
 6. Skypot gore
 7. Wintry Traveler: Riptide Trident + Frigid Javelin
 
-1. Next: Maligmar, Lava Platform Fix, Snake Pot Sound fix
+1. Next: Maligmar, Snake Pot Sound fix
 2. Next: Ghast Banner + Teratoma Banner + Maligmar Banner
-3. Fix Gold spike not being overridden by pyramid tunnels
-4. Binary death effects on holo enemies
-5. Coconut gun rebalancing
-6. Safety switch item
-7. Miner Sword critical stricks
 
-8/22/21
+8/22/21 & 8/23/21
 1. Added Riptide, should work in Multiplayer
 2. Added Digital Daito, WORKS IN MULTIPLAYER I AM A FUCKING GOD
+3. Pyramid path tunnels through Ancient Gold Brick + Spike
+	1. Pyramid Cobwebs appear less often but bigger
+	2. No longer attach to walls, instead to blocks
+	3. Decreased Spike Rate
+4. Pyramid room generates with ancient gold furniture
+5. Maldite wall added. Generates in Pyramid
+6. Coconut Gun damage 23 -> 17, void cost 40 -> 24
+	1. Decrease to shredding potential
+	2. Increase in usability
+7. Miner Sword crit chance 10% -> 4%, now crits while falling
+8. Holo Enemies release binary dust
+9. Obsidian Platform bug fix
 
 8/21/21
 1. Nature Spirit Staff is cheaper to craft
