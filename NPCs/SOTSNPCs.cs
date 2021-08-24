@@ -307,7 +307,7 @@ namespace SOTS.NPCs
 				if (isValidTile || (isValidWall && !isCurseValid))
 				{
 					pool[0] = 0f;
-					pool.Add(mod.NPCType("SnakePot"), 0.3f);
+					pool.Add(mod.NPCType("SnakePot"), 0.35f);
 					pool.Add(mod.NPCType("Snake"), 1f);
 					pool.Add(mod.NPCType("LostSoul"), 0.6f);
 					pool.Add(mod.NPCType("PyramidTreasureSlime"), 0.1f);
