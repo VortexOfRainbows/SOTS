@@ -86,8 +86,8 @@ namespace SOTS.NPCs
 			for(int amount = amount2; amount > 0; amount--)
 			{
 				int npcSpawn = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, mod.NPCType("Snake"));	
-				Main.npc[npcSpawn].velocity.X += Main.rand.NextFloat(-2.4f,2.4f);
-				Main.npc[npcSpawn].velocity.Y -= Main.rand.NextFloat(5.5f,9f);
+				Main.npc[npcSpawn].velocity.X += Main.rand.NextFloat(-1.6f,1.6f);
+				Main.npc[npcSpawn].velocity.Y -= Main.rand.NextFloat(5.25f,7.5f);
 				Main.npc[npcSpawn].netUpdate = true;
 			}
 		}	
@@ -109,14 +109,13 @@ namespace SOTS.NPCs
 		}
 		public override void SetDefaults()
 		{
-			npc.CloneDefaults(NPCID.GoblinPeon);
-			aiType = NPCID.GoblinScout;
+			npc.aiStyle = 3;
 			npc.lifeMax = 40;  
 			npc.damage = 35; 
 			npc.defense = 4;  
 			npc.knockBackResist = 0.5f;
-			npc.width = 42;
-			npc.height = 36;
+			npc.width = 32;
+			npc.height = 32;
 			Main.npcFrameCount[npc.type] = 5;  
 			npc.value = 60;
 			npc.npcSlots = .2f;
@@ -207,9 +206,9 @@ namespace SOTS.NPCs
 			if(runOnce && randMod != 1)
             {
 				runOnce = false;
-				npc.lifeMax = (int)(randMod * npc.lifeMax + 1);
+				npc.lifeMax = (int)(randMod * npc.lifeMax + 0.5f);
 				npc.life = npc.lifeMax;
-				npc.scale *= 0.6f + 0.4f * randMod;
+				npc.scale *= 0.55f + 0.45f * randMod;
 				Vector2 temp = npc.Center;
 				npc.width = (int)(npc.width * npc.scale);
 				npc.height = (int)(npc.height * npc.scale);
@@ -222,17 +221,25 @@ namespace SOTS.NPCs
         public override void AI()
         {
 			if (Math.Abs(npc.velocity.Y) >= 0.2f)
-				npc.velocity.X *= 0.987f;
+            {
+				if(npc.dontTakeDamage)
+					npc.velocity.X *= 0.985f;
+				else
+					npc.velocity.X *= 0.987f;
+			}
 			else if (npc.velocity.Y == 0)
 				npc.dontTakeDamage = false;
-			float speed = 1.66f / randMod;
+			float speed = 2.3f / randMod;
 			npc.position.X -= npc.velocity.X;
-			npc.position.X += npc.velocity.X * speed;
+			Vector2 trueVelo = new Vector2(npc.velocity.X * speed, npc.velocity.Y);
+			trueVelo = Collision.TileCollision(npc.position, trueVelo, npc.width, npc.height, true);
+			npc.position.X += trueVelo.X;
+			npc.velocity.X = trueVelo.X / speed;
         }
         public override void NPCLoot()
 		{
 			if(Main.rand.NextBool(4))
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("Snakeskin"), Main.rand.Next(2) + 1);	
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("Snakeskin"), Main.rand.Next(2) + 1);	
 		}	
 	}
 }
