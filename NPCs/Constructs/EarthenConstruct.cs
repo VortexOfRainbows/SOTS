@@ -207,7 +207,7 @@ namespace SOTS.NPCs.Constructs
                     if (num1 > 25.0)
                         num1 = 25f;
                     npc.soundDelay = (int)num1;
-                    Main.PlaySound(SoundLoader.customSoundType, (int)npc.Center.X, (int)npc.Center.Y, mod.GetSoundSlot(SoundType.Item, "Sounds/Enemies/Constructs/EarthenElementalDig"), 1.0f, 0f);
+                    Main.PlaySound(SoundLoader.customSoundType, (int)npc.Center.X, (int)npc.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Enemies/EarthenElementalDig"), 1.0f, 0f);
                 }
                 float absDirX = Math.Abs(dirX);
                 float absDirY = Math.Abs(dirY);
