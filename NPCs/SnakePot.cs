@@ -72,7 +72,7 @@ namespace SOTS.NPCs
 			{
 				npc.velocity.X *= 1.05f;
 				npc.ai[0] = -Main.rand.Next(31);
-				Main.PlaySound(SoundLoader.customSoundType, (int)npc.Center.X, (int)npc.Center.Y, mod.GetSoundSlot(SoundType.Item, "Sounds/Enemies/PotSnake"), 1.5f, -0.1f);
+				Main.PlaySound(SoundLoader.customSoundType, (int)npc.Center.X, (int)npc.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Enemies/PotSnake"), 1.5f, -0.1f);
 			}
 		}
 		public override void NPCLoot()
