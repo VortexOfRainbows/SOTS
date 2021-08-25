@@ -32,8 +32,8 @@ Low Priority:
 
 1. Next: Maligmar
 2. Next: Ghast Banner + Teratoma Banner + Maligmar Banner
-3. Fix snake going through walls
-4. 
+3. Occasional big hallways in pyramid
+4. Fix Advisor stank leg
 
 8/24/21
 1. Teratoma life (130, 180) -> (160, 220), defense 12 -> 16
@@ -41,6 +41,8 @@ Low Priority:
 	2. Hitbox is now smaller to allow more proper tile colliding
 2. Fixed snakes dropping through the floor and walls
 	1. Speed changes
+3. Fixed some sound errors
+4. Started on Maligmar
 
 8/22/21 & 8/23/21
 1. Added Riptide, should work in Multiplayer
