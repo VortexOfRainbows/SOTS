@@ -722,12 +722,13 @@ namespace SOTS
 							//generate cooridor to the left
 							int randDistance = Main.rand.Next(min, max);
 							counterL++;
+							int height = 2;
 							if (WorldGen.genRand.NextBool(3) && counterL >= 40)
 							{
 								int coorXPos = findTileX + 2;
 								for (int dis = randDistance; dis > 0; dis--)
 								{
-									for (int y1 = 2; y1 >= -2; y1--)
+									for (int y1 = height; y1 >= -height; y1--)
 									{
 										Tile selectTile = Framing.GetTileSafely(coorXPos, findTileY + y1);
 										Tile selectTileLeft = Framing.GetTileSafely(coorXPos - 1, findTileY + y1);
@@ -752,12 +753,13 @@ namespace SOTS
 							//generate cooridor to the right
 							int randDistance = Main.rand.Next(min, max);
 							counterR++;
+							int height = 2;
 							if (WorldGen.genRand.NextBool(3) && counterR >= 40)
 							{
 								int coorXPos = findTileX - 2;
 								for (int dis = randDistance; dis > 0; dis--)
 								{
-									for (int y1 = 2; y1 >= -2; y1--)
+									for (int y1 = height; y1 >= -height; y1--)
 									{
 										Tile selectTile = Framing.GetTileSafely(coorXPos, findTileY + y1);
 										Tile selectTileRight = Framing.GetTileSafely(coorXPos + 1, findTileY + y1);

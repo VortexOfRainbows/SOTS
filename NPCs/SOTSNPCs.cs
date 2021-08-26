@@ -333,6 +333,7 @@ namespace SOTS.NPCs
 					pool.Add(mod.NPCType("LostSoul"), 0.1f);
 					pool.Add(mod.NPCType("PyramidTreasureSlime"), 0.025f);
 					pool.Add(ModContent.NPCType<Teratoma>(), 0.25f);
+					pool.Add(ModContent.NPCType<Maligmor>(), 0.15f);
 				}
 			}
 			else if (spawnInfo.player.GetModPlayer<SOTSPlayer>().PlanetariumBiome)

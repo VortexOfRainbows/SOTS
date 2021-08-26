@@ -97,8 +97,9 @@ namespace SOTS.Projectiles.Pyramid
 		}
 		public void SpawnEnemy()
         {
+			int rand = Main.rand.Next(5);
 			int type = ModContent.NPCType<Teratoma>();
-			if(!Main.rand.NextBool(3))
+			if(rand == 1 || rand == 2)
 			{
 				type = ModContent.NPCType<Ghast>();
 				if(Main.hardMode && !Main.rand.NextBool(3))
@@ -110,6 +111,10 @@ namespace SOTS.Projectiles.Pyramid
 					else
 						type = ModContent.NPCType<FlamingGhast>();
 				}
+			}
+			else if(rand == 0)
+            {
+				type = ModContent.NPCType<Maligmor>();
 			}
 			NPC newNPC = Main.npc[NPC.NewNPC((int)projectile.Center.X, (int)projectile.Center.Y, type)];
 			newNPC.position.Y += newNPC.height * 0.5f;

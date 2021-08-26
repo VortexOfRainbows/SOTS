@@ -30,10 +30,15 @@ Low Priority:
 6. Skypot gore
 7. Wintry Traveler: Riptide Trident + Frigid Javelin
 
-1. Next: Maligmar
-2. Next: Ghast Banner + Teratoma Banner + Maligmar Banner
-3. Occasional big hallways in pyramid
-4. Fix Advisor stank leg
+1. Next: Ghast Banner + Teratoma Banner + Maligmar Banner
+2. Shardstorm spell visual polish + rework
+
+8/25/21
+1. Advisor spawns higher on the portal + portal resprite
+2. Otherworldly constructs spawn more evenly (fixing stank leg)
+3. Maligmar finished, Server syncs fine enough
+4. Fixed ear piercing sound with Storm Spell
+5. Pyramid music returns, WIP
 
 8/24/21
 1. Teratoma life (130, 180) -> (160, 220), defense 12 -> 16

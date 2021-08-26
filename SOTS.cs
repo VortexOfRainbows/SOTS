@@ -95,7 +95,7 @@ namespace SOTS
 			//AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/Advisor"), ItemType("AdvisorMusicBox"), TileType("AdvisorMusicBoxTile"));
 			AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/Polaris"), ItemType("PolarisMusicBox"), TileType("PolarisMusicBoxTile"));
 			AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/SubspaceSerpent"), ItemType("SubspaceSerpentMusicBox"), TileType("SubspaceSerpentMusicBoxTile"));
-			//AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/AncientPyramid"), ItemType("AncientPyramidMusicBox"), TileType("AncientPyramidMusicBoxTile"));
+			AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/CursedPyramid"), ItemType("AncientPyramidMusicBox"), TileType("AncientPyramidMusicBoxTile"));
 			AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/Planetarium"), ItemType("PlanetariumMusicBox"), TileType("PlanetariumMusicBoxTile"));
 		}
 		public override void Unload() 
@@ -346,8 +346,8 @@ namespace SOTS
 			{
 				Player player = Main.player[Main.myPlayer];
 				if (player.active && player.GetModPlayer<SOTSPlayer>().PyramidBiome)
-                {
-					music = MusicID.Desert; // (SOTSPlayer.ModPlayer(player).weakerCurse || SOTSWorld.downedBoss2) ? GetSoundSlot(SoundType.Music, "Sounds/Music/AncientPyramid") : ;
+				{
+					music = GetSoundSlot(SoundType.Music, "Sounds/Music/CursedPyramid");
 					priority = MusicPriority.BiomeHigh;
                 }
 			}

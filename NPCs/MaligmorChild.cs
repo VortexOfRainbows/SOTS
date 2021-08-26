@@ -41,12 +41,12 @@ namespace SOTS.NPCs
 		}
 		public override void SetDefaults()
 		{
-            npc.lifeMax = 70;  
-            npc.damage = 10; 
-            npc.defense = 0;  
-            npc.knockBackResist = 0.5f;
-            npc.width = 26;
-            npc.height = 26;
+            npc.lifeMax = 32;  
+            npc.damage = 24; 
+            npc.defense = 4;  
+            npc.knockBackResist = 0.6f;
+            npc.width = 16;
+            npc.height = 16;
 			Main.npcFrameCount[npc.type] = 3;  
             npc.value = 0;
             npc.npcSlots = 0f;
@@ -56,9 +56,13 @@ namespace SOTS.NPCs
 			npc.DeathSound = SoundID.NPCDeath1;
 			//banner = npc.type;
 		}
+        public override bool CanHitPlayer(Player target, ref int cooldownSlot)
+        {
+            return !fallen;
+        }
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
-			npc.lifeMax = 100;
+			npc.lifeMax = 48;
             base.ScaleExpertStats(numPlayers, bossLifeScale);
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
@@ -72,14 +76,14 @@ namespace SOTS.NPCs
 			return false;
 		}
 		bool runOnce = true;
+		bool fallen = false;
 		public override bool PreAI()
 		{
 			if(runOnce && Main.netMode != 1)
             {
-				npc.frame.Y = Main.rand.Next(3) * npc.height;
+				npc.frame.Y = Main.rand.Next(3) * 26;
 				npc.netUpdate = true;
-				runOnce = false;
-            }
+			}
 			npc.TargetClosest(true);
 			return true;
 		}
@@ -89,23 +93,69 @@ namespace SOTS.NPCs
 			NPC owner = Main.npc[(int)ownerID];
 			aiCounter2++;
 			aiCounter++;
-			if (owner.type != mod.NPCType("Maligmor") || !owner.active)
+			if(!fallen)
 			{
-				npc.active = false;
+				if (owner.type != mod.NPCType("Maligmor") || !owner.active)
+				{
+					fallen = true;
+					npc.velocity.X += Main.rand.NextFloat(-4f, 4f);
+					npc.velocity.Y += Main.rand.NextFloat(-4f, 4f);
+					runOnce = false;
+					return;
+				}
+				float bonusSpeedMult = 1.0f + ((npc.whoAmI % 11 - 5) * 0.05f);
+				Vector2 circular = owner.Center + new Vector2(36 + npc.ai[3] + (float)Math.Sin(MathHelper.ToRadians(aiCounter)) * 4f, 0).RotatedBy(MathHelper.ToRadians(aiCounter2 * bonusSpeedMult));
+				Vector2 goTo = circular - npc.Center;
+				float length = goTo.Length();
+				float speed = 4f + length * 0.0005f;
+				if (speed > length)
+					speed = length;
+				npc.velocity *= 0.75f;
+				npc.velocity += goTo.SafeNormalize(Vector2.Zero) * speed;
+				npc.rotation = circular.Y * 0.06f;
+				if (runOnce)
+				{
+					for (int k = 0; k < 20; k++)
+					{
+						Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, mod.DustType("CurseDust"), 0, 0, 0, default, 1.0f);
+						dust.scale *= 1.2f;
+						dust.velocity *= 0.6f;
+						dust.velocity += npc.velocity * 1.5f;
+						dust.noGravity = true;
+					}
+					runOnce = false;
+				}
+				if (npc.ai[3] > 0)
+					npc.ai[3] *= 0.993f;
+				else
+					npc.ai[3] = 0;
 			}
-			float bonusSpeedMult = 1.0f + ((npc.whoAmI % 11 - 5) * 0.05f);
-			Vector2 circular = owner.Center + new Vector2(32 + (float)Math.Sin(MathHelper.ToRadians(aiCounter)) * 3.5f, 0).RotatedBy(MathHelper.ToRadians(aiCounter2 * bonusSpeedMult));
-			Vector2 goTo = circular - npc.Center;
-			float length = goTo.Length();
-			float speed = 5f + length * 0.0007f;
-			if (speed > length)
-				speed = length;
-			npc.velocity *= 0.75f;
-			npc.velocity += goTo.SafeNormalize(Vector2.Zero) * speed;
+			else
+            {
+				npc.velocity.X *= 1f;
+				npc.velocity.Y += 0.11f;
+				npc.rotation += npc.velocity.X * 0.0006f;
+				//npc.noTileCollide = false;
+            }
 		}
 		public override void HitEffect(int hitDirection, double damage)
 		{
-
+			if (npc.life > 0)
+			{
+				int num = 0;
+				while (num < damage / npc.lifeMax * 30.0)
+				{
+					Dust.NewDust(npc.position, npc.width, npc.height, mod.DustType("CurseDust"), (float)(2 * hitDirection), -2f, 0, default, 1.2f);
+					num++;
+				}
+			}
+			else
+			{
+				for (int k = 0; k < 30; k++)
+				{
+					Dust.NewDust(npc.position, npc.width, npc.height, mod.DustType("CurseDust"), (float)(2 * hitDirection), -2f, 0, default, 1.2f);
+				}
+			}
 		}
 		public override bool PreNPCLoot()
 		{

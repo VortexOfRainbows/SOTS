@@ -19,7 +19,7 @@ namespace SOTS.NPCs
 		}
 		public override void SetDefaults()
 		{
-            npc.lifeMax = 200;   
+            npc.lifeMax = 160;   
             npc.damage = 40; 
             npc.defense = 10;  
             npc.knockBackResist = 0f;
@@ -33,14 +33,14 @@ namespace SOTS.NPCs
             npc.noTileCollide = true;
             npc.netUpdate = true;
             npc.HitSound = SoundID.NPCHit19;
-            npc.DeathSound = SoundID.NPCDeath6;
-            npc.netAlways = true;
+			npc.DeathSound = SoundID.NPCDeath1;
+			npc.netAlways = true;
 			//banner = npc.type;
 			//bannerItem = ItemType<BleedingGhastBanner>();
 		}
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
-			npc.lifeMax = 300;
+			npc.lifeMax = 240;
 			npc.damage = 70;
             base.ScaleExpertStats(numPlayers, bossLifeScale);
         }
@@ -86,7 +86,7 @@ namespace SOTS.NPCs
 			toPlayer = player.Center - npc.Center;
 			float length = toPlayer.Length();
 			npc.ai[0]++;
-			float dashPatternEnd = 120f;
+			float dashPatternEnd = 100f;
 			if (npc.ai[0] >= dashPatternEnd || npc.ai[2] == -2)
 			{
 				npc.ai[0] = 0;
@@ -94,13 +94,13 @@ namespace SOTS.NPCs
 				if(npc.ai[2] < 0)
                 {
 					npc.ai[2] = 0;
-					npc.ai[0] -= 30f;
+					npc.ai[0] -= 50f;
                 }
 			}
-			else
+			else if(length <= 640)
 			{
-				float speed = 1.5f;
-				float firstInterval = 80;
+				float speed = 2f;
+				float firstInterval = 60;
 				float intervalLength = 16;
 				float finalInt = firstInterval + intervalLength;
 				float speedMult = 0.0f;
@@ -109,7 +109,7 @@ namespace SOTS.NPCs
 					toPlayerTrue = toPlayer.SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(15f, 25f) * npc.ai[1]));
 					if (Main.netMode != 1)
 					{
-						if ((Main.rand.NextBool(2) && length <= 640) || (!lineOfSight && length <= 960))
+						if ((Main.rand.Next(5) <= 1 && length <= 640) || (!lineOfSight && length <= 480))
 						{
 							npc.ai[2] = -1;
 							npc.netUpdate = true;
@@ -125,6 +125,7 @@ namespace SOTS.NPCs
 				{
 					if (npc.ai[2] == -1)
 					{
+						Main.PlaySound(4, (int)npc.Center.X, (int)npc.Center.Y, 1, 0.9f, -0.25f);
 						if(Main.netMode != 1)
 						{
 							int total = 0;
@@ -135,14 +136,26 @@ namespace SOTS.NPCs
 								{
 									total++;
 								}
+								pet.ai[3] += 44;
+								pet.netUpdate = true;
 							}
-							int amt = 8 - total;
+							int amt = 9 - total;
+							if (Main.expertMode)
+								amt += 3;
 							if (amt >= 3)
-								amt = 2 + Main.rand.Next(2);
-							for (int i = 0; i < amt; i++)
+								amt = 1 + Main.rand.Next(2) + Main.rand.Next(2);
+							if(amt > 0)
+								for (int i = 0; i < amt; i++)
+								{
+									int npc1 = NPC.NewNPC((int)npc.position.X + npc.width / 2, (int)npc.position.Y + npc.height, mod.NPCType("MaligmorChild"), 0, npc.whoAmI, Main.rand.NextFloat(30), i * 120 + Main.rand.Next(120));
+									Main.npc[npc1].netUpdate = true;
+								}
+							for (int k = 0; k < 54; k++)
 							{
-								int npc1 = NPC.NewNPC((int)npc.position.X + npc.width / 2, (int)npc.position.Y + npc.height, mod.NPCType("MaligmorChild"), 0, npc.whoAmI, Main.rand.NextFloat(30), i * 120 + Main.rand.Next(120));
-								Main.npc[npc1].netUpdate = true;
+								Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, mod.DustType("CurseDust"), 0, 0, 0, default, 1.0f);
+								dust.scale *= 1.3f;
+								dust.velocity *= 1.4f;
+								dust.noGravity = true;
 							}
 						}
 						npc.ai[2] = -2;
@@ -170,12 +183,8 @@ namespace SOTS.NPCs
 				Main.dust[num1].velocity.Y = -2 + i * 1.0f;
 				Main.dust[num1].scale *= 1.25f + i * 0.15f;
 			}
-			int damage2 = npc.damage / 2;
-			if (Main.expertMode)
-			{
-				damage2 = (int)(damage2 / Main.expertDamage);
-			}
 			npc.velocity = Collision.TileCollision(npc.position + new Vector2(8, 8), npc.velocity, npc.width - 16, npc.height - 16, true);
+			npc.rotation = npc.velocity.X * 0.036f;
 		}
 		public override void FindFrame(int frameHeight) 
 		{
@@ -210,15 +219,45 @@ namespace SOTS.NPCs
 				int num = 0;
 				while (num < damage / npc.lifeMax * 50.0)
 				{
-					Dust.NewDust(npc.position, npc.width, npc.height, mod.DustType("CurseDust"), (float)(2 * hitDirection), -2f);
+					Dust.NewDust(npc.position, npc.width, npc.height, mod.DustType("CurseDust"), (float)(2 * hitDirection), -2f, 0, default, 1.5f);
 					num++;
 				}
 			}
             else
 			{
+				for(int i = 0; i < 8; i++)
+				{
+					Vector2 circular = new Vector2(-28, 0).RotatedBy(MathHelper.ToRadians(-i * 45)) - new Vector2(9, 9);
+					Gore.NewGore(npc.Center + circular, circular * 0.15f, mod.GetGoreSlot("Gores/Maligmor/MaligmorGore" + i), 1f);
+				}
+				for (int i = 0; i < 72; i++)
+				{
+					Vector2 circular = new Vector2(12, 0).RotatedBy(MathHelper.ToRadians(i * 5));
+					Dust dust = Dust.NewDustDirect(npc.Center - new Vector2(5), 0, 0, 231, 0, 0, npc.alpha, default, 1f);
+					dust.velocity *= 0.5f;
+					dust.velocity += circular * 0.75f;
+					dust.scale = 2.5f;
+					dust.noGravity = true;
+					dust = Dust.NewDustDirect(npc.Center - new Vector2(5), 0, 0, 231, 0, 0, npc.alpha, default, 1f);
+					dust.velocity *= 0.5f;
+					dust.velocity += circular * 0.25f;
+					dust.scale = 1.25f;
+					dust.noGravity = true;
+					if(i == 36 || i == 0)
+					{
+						for(int l = 0; l < 10; l++)
+						{
+							dust = Dust.NewDustDirect(npc.Center - new Vector2(5), 0, 0, 231, 0, 0, npc.alpha, default, 1f);
+							dust.velocity *= 0.5f;
+							dust.velocity += circular * (0.25f + l * 0.05f);
+							dust.scale = 1.25f + (1.25f * l * 0.1f);
+							dust.noGravity = true;
+						}
+					}
+				}
 				for (int k = 0; k < 50; k++)
 				{
-					Dust.NewDust(npc.position, npc.width, npc.height, mod.DustType("CurseDust"), (float)(2 * hitDirection), -2f);
+					Dust.NewDust(npc.position, npc.width, npc.height, mod.DustType("CurseDust"), (float)(2 * hitDirection), -2f, 0, default, 1.5f);
 				}
 			}		
 		}

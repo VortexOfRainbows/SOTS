@@ -82,7 +82,7 @@ namespace SOTS.Items.Otherworld
 			Main.tileLighted[Type] = true;
 			drop = ModContent.ItemType<HardlightBlock>();
 			//AddMapEntry(new Color(0, 0, 0, 0));
-			mineResist = 1.5f;
+			mineResist = 1.0f;
 			minPick = 0;
 			soundType = 3;
 			soundStyle = 53;
