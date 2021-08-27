@@ -13,9 +13,8 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void SetDefaults()
 		{
-
-			item.width = 16;
-			item.height = 22;
+			item.width = 30;
+			item.height = 30;
 			item.value = Item.sellPrice(0, 0, 1, 50);
 			item.rare = 4;
 			item.maxStack = 999;
