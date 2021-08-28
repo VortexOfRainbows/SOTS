@@ -10,9 +10,7 @@ namespace SOTS.Projectiles.Inferno
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Hellfury Star");
-			
 		}
-		
         public override void SetDefaults()
         {
 			projectile.CloneDefaults(3);
@@ -20,7 +18,6 @@ namespace SOTS.Projectiles.Inferno
 			projectile.width = 32;
 			projectile.height = 32;
 			projectile.penetrate = 1;
-			
 			projectile.tileCollide = false;
 		}
 		bool runOnce = true;
@@ -33,7 +30,6 @@ namespace SOTS.Projectiles.Inferno
             }
 			//projectile.rotation += 1f;
 			Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 32, 32, 6);
-			
 			if(projectile.Center.Y < projectile.ai[1])
 			{
 				projectile.tileCollide = true;
@@ -48,7 +44,6 @@ namespace SOTS.Projectiles.Inferno
 			for(int i = 0; i < 360; i += 8)
 			{
 				Vector2 circularLocation = new Vector2(-20, 0).RotatedBy(MathHelper.ToRadians(i));
-				
 				int num1 = Dust.NewDust(new Vector2(projectile.Center.X + circularLocation.X - 4, projectile.Center.Y + circularLocation.Y - 4), 4, 4, 6);
 				Main.dust[num1].noGravity = true;
 				Main.dust[num1].scale = 2.25f;

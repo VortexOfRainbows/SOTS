@@ -45,8 +45,8 @@ namespace SOTS.NPCs
 			npc.DeathSound = SoundID.NPCDeath1;
 			Main.npcFrameCount[npc.type] = 7;
 			npc.noTileCollide = false;
-			//banner = npc.type;
-			//bannerItem = ItemType<ArcticGoblinBanner>();
+			banner = npc.type;
+			bannerItem = ItemType<TeratomaBanner>();
 		}
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {

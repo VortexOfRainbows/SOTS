@@ -17,7 +17,6 @@ namespace SOTS.Items.GelGear
 		}
 		public override void SetDefaults()
 		{
-
 			item.width = 20;
 			item.height = 26;
 			item.value = 0;
@@ -27,7 +26,6 @@ namespace SOTS.Items.GelGear
 			item.useTime = 30;
 			item.useStyle = 4;
 			item.consumable = true;
-			
 		}
 		public override void AddRecipes()
 		{
@@ -37,7 +35,6 @@ namespace SOTS.Items.GelGear
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this);
 			recipe.AddRecipe();
-			
 		}
 		public override bool CanUseItem(Player player)
 		{

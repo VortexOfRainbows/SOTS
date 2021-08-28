@@ -35,8 +35,8 @@ namespace SOTS.NPCs
             npc.HitSound = SoundID.NPCHit19;
 			npc.DeathSound = SoundID.NPCDeath1;
 			npc.netAlways = true;
-			//banner = npc.type;
-			//bannerItem = ItemType<BleedingGhastBanner>();
+			banner = npc.type;
+			bannerItem = ItemType<MaligmorBanner>();
 		}
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
@@ -135,9 +135,9 @@ namespace SOTS.NPCs
 								if (pet.type == mod.NPCType("MaligmorChild") && (int)pet.ai[0] == npc.whoAmI && pet.active)
 								{
 									total++;
+									pet.ai[3] += 44;
+									pet.netUpdate = true;
 								}
-								pet.ai[3] += 44;
-								pet.netUpdate = true;
 							}
 							int amt = 9 - total;
 							if (Main.expertMode)

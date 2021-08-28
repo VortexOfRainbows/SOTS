@@ -30,8 +30,10 @@ Low Priority:
 6. Skypot gore
 7. Wintry Traveler: Riptide Trident + Frigid Javelin
 
-1. Next: Ghast Banner + Teratoma Banner + Maligmar Banner
-2. Shardstorm spell visual polish + rework
+1. Shardstorm spell visual polish + rework
+
+8/27/21
+1. Added banners myself cause Heart has a personal record to settle with banners.
 
 8/25/21
 1. Advisor spawns higher on the portal + portal resprite
