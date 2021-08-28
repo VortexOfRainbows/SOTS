@@ -27,10 +27,13 @@ Low Priority:
 3. Sharanga Upgrade
 4. Remove negative Vregen in inventory items
 5. Electrolyte Seperator
-6. Skypot gore
-7. Wintry Traveler: Riptide Trident + Frigid Javelin
+6. Wintry Traveler: Riptide Trident + Frigid Javelin
 
 1. Shardstorm spell visual polish + rework
+
+8/28/21
+1. Sky Pot gores resprited
+2. 
 
 8/27/21
 1. Added banners myself cause Heart has a personal record to settle with banners.
