@@ -6,20 +6,16 @@ The following is my development plans :D
 3. Chaos Spirit Boss: "Lux"
 4. Ghost Town to Evil Biome
 
-High Priority:
-1. Pyramid Rework
-
 Mid Priority:
 1. Tectonic Tether
 2. Chest slime resprites and reworks
 3. Safety switch item
 
 Mid Priority 2:
-1. Void Low Warning
-2. Horn of Plenty: 10% more drops accessory
-3. Ethereal Tonic
-4. Timelord's Potion: attempt using .aiStyle, otherwise would require a lot of workaround...
-5. Replace Brittle flail
+1. Horn of Plenty: 10% more drops accessory
+2. Ethereal Tonic
+3. Timelord's Potion: attempt using .aiStyle, otherwise would require a lot of workaround...
+4. Replace Brittle flail
 
 Low Priority:
 1. Archaelogist NPC
@@ -30,10 +26,17 @@ Low Priority:
 6. Wintry Traveler: Riptide Trident + Frigid Javelin
 
 1. Shardstorm spell visual polish + rework
+2. Curse Base Armor Set
+3. Cursed Blade to Void Summon
 
-8/28/21
+8/28/21 & 8/29/21
 1. Sky Pot gores resprited
-2. 
+2. Sheeted Frigid Armor + Shoe Ice
+3. Hungry Hunter No Longer gives max void, Damage 19 -> 21
+4. Pharaoh's Cane kb 1.8 -> 2.5, damage 6 -> 11, now inflicts midas
+5. Reworked Curseball Tome -> Curse Spear Storm, works in Multiplayer
+6. Nature Construct has received a telegraph along with a better wind up visual, Works in Multiplayer
+7. Maligmor Rebuffed (HP increased)
 
 8/27/21
 1. Added banners myself cause Heart has a personal record to settle with banners.

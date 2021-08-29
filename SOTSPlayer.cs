@@ -27,6 +27,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using static SOTS.SOTS;
 using SOTS.Items.Pyramid.AncientGold;
+using SOTS.NPCs.Boss.Curse;
+using SOTS.Projectiles.Pyramid;
 
 namespace SOTS
 {
@@ -209,6 +211,54 @@ namespace SOTS
 				netUpdate = false;
 			}
 		}
+		int foamParticleCounter = 0;
+		public List<CurseFoam> foamParticleList1 = new List<CurseFoam>();
+		public void FoamStuff()
+		{
+			for (int i = 0; i < foamParticleList1.Count; i++)
+			{
+				CurseFoam particle = foamParticleList1[i];
+				particle.Update();
+				if (!particle.active)
+				{
+					particle = null;
+					foamParticleList1.RemoveAt(i);
+					i--;
+				}
+				else
+				{
+					particle.Update();
+					if (!particle.active)
+					{
+						particle = null;
+						foamParticleList1.RemoveAt(i);
+						i--;
+					}
+					else if (!particle.noMovement)
+						particle.position += player.velocity * 0.85f;
+				}
+			}
+			foamParticleCounter++;
+			if (foamParticleCounter >= 1200)
+			{
+				foamParticleCounter = 0;
+				ResetFoamLists();
+			}
+		}
+		public void ResetFoamLists()
+		{
+			List<CurseFoam> temp = new List<CurseFoam>();
+			for (int i = 0; i < foamParticleList1.Count; i++)
+			{
+				if (foamParticleList1[i].active && foamParticleList1[i] != null)
+					temp.Add(foamParticleList1[i]);
+			}
+			foamParticleList1 = new List<CurseFoam>();
+			for (int i = 0; i < temp.Count; i++)
+			{
+				foamParticleList1.Add(temp[i]);
+			}
+		}
 		public int bladeAlpha = 0;
 		public static readonly PlayerLayer BladeEffectBack = new PlayerLayer("SOTS", "BladeEffectBack", PlayerLayer.MiscEffectsBack, delegate (PlayerDrawInfo drawInfo) 
 		{
@@ -260,9 +310,80 @@ namespace SOTS
 				}
 			}
 		});
+		public static readonly PlayerLayer CurseDustPlayer = new PlayerLayer("SOTS", "CurseDustPlayer", PlayerLayer.MiscEffectsBack, delegate (PlayerDrawInfo drawInfo)
+		{
+			Player drawPlayer = drawInfo.drawPlayer;
+			SOTSPlayer modPlayer = drawPlayer.GetModPlayer<SOTSPlayer>();
+			List<CurseFoam> foamList = modPlayer.foamParticleList1;
+			List<int> slots = new List<int>();
+			for (int i = 0; i < Main.projectile.Length; i++)
+			{
+				Projectile proj = Main.projectile[i];
+				if (proj.type == ModContent.ProjectileType<GasBlast>() && proj.active && proj.owner == drawPlayer.whoAmI)
+				{
+					slots.Add(i);
+					GasBlast ring = proj.modProjectile as GasBlast;
+					List<CurseFoam> list = ring.foamParticleList1;
+					modPlayer.DrawFoam(list, 2);
+				}
+			}
+			modPlayer.DrawFoam(foamList, 2);
+			for (int i = 0; i < slots.Count; i++)
+			{
+				Projectile proj = Main.projectile[slots[i]];
+				if (proj.type == ModContent.ProjectileType<GasBlast>() && proj.active && proj.owner == drawPlayer.whoAmI)
+				{
+					GasBlast ring = proj.modProjectile as GasBlast;
+					List<CurseFoam> list = ring.foamParticleList1;
+					modPlayer.DrawFoam(list, 1);
+				}
+			}
+			modPlayer.DrawFoam(foamList, 1);
+			for (int i = 0; i < slots.Count; i++)
+			{
+				Projectile proj = Main.projectile[slots[i]];
+				if (proj.type == ModContent.ProjectileType<GasBlast>() && proj.active && proj.owner == drawPlayer.whoAmI)
+				{
+					GasBlast ring = proj.modProjectile as GasBlast;
+					List<CurseFoam> list = ring.foamParticleList1;
+					modPlayer.DrawFoam(list, 0);
+				}
+			}
+			modPlayer.DrawFoam(foamList, 0);
+			//Mod mod = ModLoader.GetMod("SOTS");
+			if (drawInfo.shadow != 0)
+				return;
+		});
+		public void DrawFoam(List<CurseFoam> dustList, int layer)
+		{
+			Texture2D texture = ModContent.GetTexture("SOTS/Assets/PlayerCurseFoam");
+			Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 6);
+			for (int i = 0; i < dustList.Count; i++)
+			{
+				int shade = 255 - (int)(dustList[i].counter * 4f);
+				if (shade < 0)
+					shade = 0;
+				Color color = new Color(shade + dustList[i].dustColorVariation, shade - dustList[i].dustColorVariation, shade - dustList[i].dustColorVariation);
+				color = Lighting.GetColor((int)dustList[i].position.X / 16, (int)dustList[i].position.Y / 16, color);
+				float reduction = shade / 255f;
+				if(layer == 2)
+				{
+					Color first = new Color((int)(111 * reduction), (int)(80 * reduction), (int)(154 * reduction));
+					Color second = new Color((int)(76 * reduction), (int)(58 * reduction), (int)(101 * reduction));
+					color = Color.Lerp(first, second, 0.5f + 0.5f * (float)Math.Sin(MathHelper.ToRadians(VoidPlayer.soulColorCounter * 2)));
+				}
+				Vector2 drawPos = dustList[i].position - Main.screenPosition;
+				Rectangle frame = new Rectangle(0, texture.Height / 3 * layer, texture.Width, texture.Width);
+				float scale = layer == 0 ? 1.5f : 2.0f;
+				DrawData data = new DrawData(texture, drawPos + new Vector2(0, 0), frame, color, dustList[i].rotation, drawOrigin, dustList[i].scale * scale, SpriteEffects.None, 0);
+				Main.playerDrawData.Add(data);
+			}
+		}
 		public override void ModifyDrawLayers(List<PlayerLayer> layers)
 		{
 			BladeEffectBack.visible = true;
+			layers.Insert(0, CurseDustPlayer);
+			CurseDustPlayer.visible = true;
 			layers.Insert(0, BladeEffectBack);
 		}
 		public override void ProcessTriggers(TriggersSet triggersSet)
@@ -436,6 +557,11 @@ namespace SOTS
             }
             return base.CanHitNPC(item, target);
         }
+        public override void PreUpdate()
+		{
+			FoamStuff();
+			base.PreUpdate();
+        }
         public override void ResetEffects()
 		{
 			TrailStuff();
@@ -483,17 +609,17 @@ namespace SOTS
 			{
 				if (player.HeldItem.type == mod.ItemType("SkywardBlades"))
 				{
-					if (this.bladeAlpha > 0)
-						this.bladeAlpha -= 5;
+					if (bladeAlpha > 0)
+						bladeAlpha -= 5;
 					else
-						this.bladeAlpha = 0;
+						bladeAlpha = 0;
 				}
 				else
 				{
-					if (this.bladeAlpha < 255)
-						this.bladeAlpha += 5;
+					if (bladeAlpha < 255)
+						bladeAlpha += 5;
 					else
-						this.bladeAlpha = 255;
+						bladeAlpha = 255;
 				}
 			}
 			additionalHeal = 0;
@@ -850,8 +976,6 @@ namespace SOTS
 
 					if (target2.Center.Y <= target.Center.Y)
 						shootFromY -= target.height;
-
-
 
 					float shootToX = target2.position.X + target2.width * 0.5f - shootFromX;
 					float shootToY = target2.position.Y + target2.height * 0.5f - shootFromY;

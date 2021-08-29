@@ -385,6 +385,8 @@ namespace SOTS.NPCs.Boss.Curse
 		}
 		public static void SpawnPassiveDust(Texture2D texture, Vector2 spawnLocation, float scale, List<CurseFoam> dustList, float velocityScale = 1f, int style = 0, int rate = 45, float rotation = 0, float lifeMult = 1f)
 		{
+			if (dustList == null)
+				return;
 			int width = texture.Width;
 			int height = texture.Height;
 			Color[] data = new Color[width * height];

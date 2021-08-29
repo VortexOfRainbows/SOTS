@@ -13,9 +13,8 @@ namespace SOTS.Items.SpecialDrops
 		}
 		public override void SetDefaults()
 		{
-
-			item.width = 24;
-			item.height = 26;
+			item.width = 28;
+			item.height = 28;
             item.value = Item.sellPrice(0, 0, 5, 75);
 			item.rare = 1;
 			item.maxStack = 99;

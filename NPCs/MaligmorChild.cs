@@ -41,7 +41,7 @@ namespace SOTS.NPCs
 		}
 		public override void SetDefaults()
 		{
-            npc.lifeMax = 32;  
+            npc.lifeMax = 40;  
             npc.damage = 24; 
             npc.defense = 4;  
             npc.knockBackResist = 0.6f;
@@ -62,7 +62,7 @@ namespace SOTS.NPCs
         }
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
-			npc.lifeMax = 48;
+			npc.lifeMax = 60;
             base.ScaleExpertStats(numPlayers, bossLifeScale);
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)

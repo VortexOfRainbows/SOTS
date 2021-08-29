@@ -35,7 +35,7 @@ namespace SOTS.Items.Pyramid
 			Main.wallHouse[Type] = false;
 			dustType = DustID.Grass;
 			drop = mod.ItemType("OvergrownPyramidWall");
-			AddMapEntry(new Color(20, 90, 60));
+			AddMapEntry(new Color(50, 85, 45));
 		}
 		public override bool CanExplode(int i, int j)
 		{
