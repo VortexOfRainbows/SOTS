@@ -24,10 +24,20 @@ Low Priority:
 4. Remove negative Vregen in inventory items
 5. Electrolyte Seperator
 6. Wintry Traveler: Riptide Trident + Frigid Javelin
+7. Custom Shaders! Tainted Prism Dye
 
 1. Shardstorm spell visual polish + rework
 2. Curse Base Armor Set
 3. Cursed Blade to Void Summon
+4. Add Alt tiles to Pyramid
+5. Hologlass Tile
+
+8/29/21
+1. Frost Artifact armor rebalancing + Resprited
+	1. Helmet defense 11 -> 16, damage buff 15% -> 14%
+	2. Chestplate crit buff 10 -> 16
+	3. Leggings defense 14 -> 16
+2. 
 
 8/28/21 & 8/29/21
 1. Sky Pot gores resprited
@@ -37,6 +47,7 @@ Low Priority:
 5. Reworked Curseball Tome -> Curse Spear Storm, works in Multiplayer
 6. Nature Construct has received a telegraph along with a better wind up visual, Works in Multiplayer
 7. Maligmor Rebuffed (HP increased)
+8. Some map color changes
 
 8/27/21
 1. Added banners myself cause Heart has a personal record to settle with banners.
