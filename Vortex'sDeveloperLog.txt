@@ -29,15 +29,18 @@ Low Priority:
 1. Shardstorm spell visual polish + rework
 2. Curse Base Armor Set
 3. Cursed Blade to Void Summon
-4. Add Alt tiles to Pyramid
-5. Hologlass Tile
+4. Add Alt tiles to Pyramid + Hardlight Glass to Planetarium
+5. Frost Artifact Armor set bonus
+6. Pyramid Pots
+7. Boss checklist Pharaohs
 
 8/29/21
 1. Frost Artifact armor rebalancing + Resprited
 	1. Helmet defense 11 -> 16, damage buff 15% -> 14%
 	2. Chestplate crit buff 10 -> 16
 	3. Leggings defense 14 -> 16
-2. 
+2. Added Hardlight Wall! Looks actually good I can't believe it wtf.
+3. Checked: Hardlight BLOCKS works in Multiplayer
 
 8/28/21 & 8/29/21
 1. Sky Pot gores resprited
