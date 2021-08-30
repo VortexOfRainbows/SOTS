@@ -23,7 +23,7 @@ namespace SOTS.NPCs
             npc.damage = 30; 
             npc.defense = 20; 
             npc.knockBackResist = 0.06f;
-            npc.width = 24;
+            npc.width = 28;
             npc.height = 42;
 			Main.npcFrameCount[npc.type] = 1;  
             npc.value = 500;
