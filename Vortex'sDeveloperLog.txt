@@ -21,10 +21,9 @@ Low Priority:
 1. Archaelogist NPC
 2. Mobile Fortress Generator: One for every tavernkeep armor set
 3. Sharanga Upgrade
-4. Remove negative Vregen in inventory items
-5. Electrolyte Seperator
-6. Wintry Traveler: Riptide Trident + Frigid Javelin
-7. Custom Shaders! Tainted Prism Dye
+4. Electrolyte Seperator
+5. Wintry Traveler: Riptide Trident + Frigid Javelin
+6. Custom Shaders! Tainted Prism Dye
 
 1. Shardstorm spell visual polish + rework
 2. Curse Base Armor Set
@@ -32,7 +31,12 @@ Low Priority:
 4. Add Alt tiles to Pyramid + Hardlight Glass to Planetarium
 5. Frost Artifact Armor set bonus
 6. Pyramid Pots
-7. Boss checklist Pharaohs
+
+8/30/21
+1. Removed the negative void-regen property off of several items
+2. Small Hardlight Glass fix
+3. Update Boss Checklist portraits
+4. Small fixes to Nature Construct + Spirit
 
 8/29/21
 1. Frost Artifact armor rebalancing + Resprited

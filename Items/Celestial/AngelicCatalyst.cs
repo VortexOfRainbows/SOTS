@@ -10,10 +10,10 @@ namespace SOTS.Items.Celestial
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Angelic Catalyst");
-			Tooltip.SetDefault("Provides access to an infinite supply of celestial arrows\nDecreases void regen by 2.25 while in the inventory");
+			Tooltip.SetDefault("Provides access to an infinite supply of celestial arrows");
 		}public override void SafeSetDefaults()
 		{
-			item.damage = 3;
+			item.damage = 1;
 			item.ranged = true;
 			item.width = 34;
 			item.height = 40;
@@ -26,13 +26,6 @@ namespace SOTS.Items.Celestial
 			item.shootSpeed = 0.3f;                 
 			item.ammo = AmmoID.Arrow;   
 			item.expert = true;
-		}
-		public override void UpdateInventory(Player player)
-		{
-				VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-				SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");	
-				
-				voidPlayer.voidRegen -= 0.225f;
 		}
 		public override bool BeforeConsumeAmmo(Player p)
 		{

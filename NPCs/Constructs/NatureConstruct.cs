@@ -134,6 +134,18 @@ namespace SOTS.NPCs.Constructs
 				float sinPercent = (float)Math.Sin(MathHelper.ToRadians(shootingAI));
 				if(shootingAI == 90)
 				{
+					Vector2 circular2 = new Vector2(40, 0).RotatedBy(dir);
+					for (int i = 0; i < 20; i++)
+					{
+						int dust3 = Dust.NewDust(npc.Center + circular2 * 0.6f, 0, 0, 267);
+						Dust dust4 = Main.dust[dust3];
+						dust4.velocity *= 1.2f;
+						dust4.velocity += circular2 * Main.rand.NextFloat(0.1f, 0.2f);
+						dust4.color = new Color(64, 178, 77);
+						dust4.noGravity = true;
+						dust4.fadeIn = 0.1f;
+						dust4.scale *= 2.0f;
+					}
 					if (Main.netMode != 1)
 					{
 						int damage = npc.damage / 2;
@@ -141,7 +153,6 @@ namespace SOTS.NPCs.Constructs
 						{
 							damage = (int)(damage / Main.expertDamage);
 						}
-						Vector2 circular2 = new Vector2(40, 0).RotatedBy(dir);
 						for (int i = 0; i < 5; i++)
 						{
 							Vector2 circular = new Vector2(12, 0).RotatedBy(dir + MathHelper.ToRadians((i - 2) * 12.5f));

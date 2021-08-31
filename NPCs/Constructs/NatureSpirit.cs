@@ -69,7 +69,7 @@ namespace SOTS.NPCs.Constructs
 				}
 				Projectile.NewProjectile(npc.Center.X, npc.Center.Y, Main.rand.NextFloat(-5f, 5f), Main.rand.NextFloat(-5f, 5f), mod.ProjectileType("NatureBolt"), damage, 0, Main.myPlayer, Main.rand.NextFloat(15f, 25f), npc.target);
 			}
-			//Main.PlaySound(SoundID.Item92, (int)(npc.Center.X), (int)(npc.Center.Y));
+			Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 92, 0.55f, 0.4f);
 		}
 		public override void AI()
 		{	

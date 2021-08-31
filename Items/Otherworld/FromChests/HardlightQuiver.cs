@@ -10,8 +10,9 @@ namespace SOTS.Items.Otherworld.FromChests
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Hardlight Quiver");
-			Tooltip.SetDefault("Grants access to infinite hardlight arrows\nHardlight arrows travel faster and are not affected by gravity\nWhen above 50% void, arrows will be supercharged at the cost of some void\nSupercharged arrows travel instantly, and gain slight homing at longer ranges\nDecreases void regen by 1 while in the inventory");
-		}public override void SafeSetDefaults()
+			Tooltip.SetDefault("Grants access to infinite hardlight arrows\nHardlight arrows travel faster and are not affected by gravity\nWhen above 50% void, arrows will be supercharged at the cost of some void\nSupercharged arrows travel instantly, and gain slight homing at longer ranges");
+		}
+		public override void SafeSetDefaults()
 		{
 			item.damage = 6;
 			item.ranged = true;
@@ -37,11 +38,6 @@ namespace SOTS.Items.Otherworld.FromChests
 			{
 				item.shoot = mod.ProjectileType("HardlightArrow");
 			}
-		}
-		public override void UpdateInventory(Player player)
-		{
-			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-			voidPlayer.voidRegen -= 0.1f;
 		}
 		public override bool BeforeConsumeAmmo(Player player)
 		{

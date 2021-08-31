@@ -410,7 +410,7 @@ namespace SOTS
 					new List<int>() { ModContent.ItemType<CurseBag>(), ModContent.ItemType<CursedMatter>() },
 					"Activate the [i:" + ModContent.ItemType<Sarcophagus>() + "] in the pyramid",
 					"",
-					"SOTS/BossCL/Depression",
+					"SOTS/BossCL/PharaohPortrait",
 					"",
 					(Func<bool>)(() => true));
 				bossChecklist.Call(
