@@ -25,12 +25,17 @@ Low Priority:
 5. Wintry Traveler: Riptide Trident + Frigid Javelin
 6. Custom Shaders! Tainted Prism Dye
 
-1. Shardstorm spell visual polish + rework
-2. Curse Base Armor Set
-3. Cursed Blade to Void Summon
-4. Add Alt tiles to Pyramid + Hardlight Glass to Planetarium
-5. Frost Artifact Armor set bonus
-6. Pyramid Pots
+1. Curse Base Armor Set
+2. Cursed Blade to Void Summon
+3. Add Alt tiles to Pyramid + Hardlight Glass to Planetarium
+4. Frost Artifact Armor set bonus
+5. Pyramid Pots
+
+9/1/21
+1. Shardstorm Spell reworked, mana cost 29 -> 20
+	1. Now a bit weaker in general, but has a more generous hitbox and area damage over piercing
+	2. Stronger single target
+	3. Works well enough in multiplayer
 
 8/30/21
 1. Removed the negative void-regen property off of several items
