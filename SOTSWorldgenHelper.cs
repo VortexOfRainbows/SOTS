@@ -8,6 +8,7 @@ using SOTS.Items.Pyramid;
 using SOTS.Items.ChestItems;
 using System;
 using SOTS.Items;
+using SOTS.Items.Pyramid.AncientGold;
 
 namespace SOTS
 {
@@ -235,7 +236,7 @@ namespace SOTS
 								tile.wall = (ushort)mod.WallType("PyramidWallTile");
 								break;
 							case 3:
-								tile.wall = 10;
+								tile.wall = (ushort)ModContent.WallType<AncientGoldBrickWallTile>();
 								break;
 							case 4:
 								tile.wall = (ushort)mod.WallType("AcediaPlatingWallWall");

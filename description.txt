@@ -19,11 +19,11 @@ Major Stuctures:
 Credits:
 (Current Developers)
 Programmer, Direction, Art: Vortex#6230
-Emotional Support, Direction, Art: Coolio
 Music, Art: Heart Plus Up!
 Code, Audio Engineering: apotofkoolaid
 
 (Past Developers)
+Emotional Support, Direction, Art: Coolio
 Misc, Direction: FlameFreezer
 Art: HugeKraken, Blasfah
 Music: BananaLizard
@@ -35,12 +35,12 @@ Code: ENNWAY
 Item glowmask code: Qwerty3.14
 Minor Art Contributions: Naka, DeJuiceTD
 
-Update 0.19.4
--The Pyramid worldgen overhauled/improved
--The Planetarium now features a vastly improved set of visuals
--Other places have also recieved visual improvements
+Update 0.20.0
+-The Pyramid worldgen overhauled/improved. Added new enemies and a wave event.
+-The Planetarium now features a vastly improved set of visuals.
+-Other places have also recieved visual improvements, such as buff icons, enemies, armor, and weapons.
 -Pharaoh's Curse has been completely reworked
--Several items have recieved reworks
+-Several items have recieved visual and functional reworks
 -A handful of new items have been added
 -Many balance changes, bug fixes, and QoL additions
 

@@ -4,170 +4,215 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using System.Collections.Generic;
+
 namespace SOTS.Projectiles.Minions
 {    
     public class CursedBlade : ModProjectile 
     {
-		int initiate = -1;
-		double startingRotation;
-		float rotationAreaX;
-		float rotationAreaY;
-		float goToCursorX;
-		float goToCursorY;
-		float cursorDistance;
-		float eternalBetweenPlayer = 196;
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Cursed Blade");
+			//ProjectileID.Sets.MinionTargettingFeature[projectile.type] = true;
+			//ProjectileID.Sets.TrailCacheLength[projectile.type] = 8;
+			//ProjectileID.Sets.TrailingMode[projectile.type] = 0;
 		}
-		public override void SendExtraAI(BinaryWriter writer) 
+		public sealed override void SetDefaults()
 		{
-			writer.Write(projectile.rotation);
-			writer.Write(projectile.spriteDirection);
-			writer.Write(initiate);
+			projectile.width = 34;
+			projectile.height = 34;
+			projectile.tileCollide = false;
+			projectile.friendly = true;
+			//projectile.minion = true;
+			//projectile.minionSlots = 0f;
+			projectile.penetrate = -1;
+			projectile.usesLocalNPCImmunity = true;
+			projectile.ignoreWater = true;
+			projectile.localNPCHitCooldown = 10;
+		}
+		private const int attackTimerMax = 150;
+        public override bool? CanHitNPC(NPC target)
+        {
+            return projectile.ai[0] >= attackTimerMax;
+        }
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		{
+			projectile.localNPCImmunity[target.whoAmI] = projectile.localNPCHitCooldown;
+			target.immune[projectile.owner] = 0;
+			canAttack = false;
+		}
+		public override void SendExtraAI(BinaryWriter writer)
+		{
+			writer.Write(projectile.alpha);
+			writer.Write(canAttack);
+			base.SendExtraAI(writer);
 		}
 		public override void ReceiveExtraAI(BinaryReader reader)
-		{	
-			projectile.rotation = reader.ReadSingle();
-			projectile.spriteDirection = reader.ReadInt32();
-			initiate = reader.ReadInt32();
+		{
+			projectile.alpha = reader.ReadInt32();
+			canAttack = reader.ReadBoolean();
+			base.ReceiveExtraAI(reader);
 		}
-        public override void SetDefaults()
-        {
-			projectile.height = 34;
-			projectile.width = 34;
-			projectile.minion = true;
-			projectile.penetrate = -1;
-			projectile.friendly = false;
-            Main.projFrames[projectile.type] = 1;
-			projectile.timeLeft = 10000;
-			projectile.tileCollide = false;
-			projectile.hostile = false;
-			projectile.netImportant = true;
+		public override bool? CanCutTiles()
+		{
+			return false;
 		}
+		public override bool MinionContactDamage()
+		{
+			return true;
+		}
+		public void Idle()
+		{
+			Player player = Main.player[projectile.owner];
+			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
+			bool found = false;
+			int ofTotal = 0;
+			int total = 0;
+			for (int i = 0; i < Main.projectile.Length; i++)
+			{
+				Projectile proj = Main.projectile[i];
+				if (projectile.type == proj.type && proj.active && projectile.active && proj.owner == projectile.owner)
+				{
+					if (proj == projectile)
+					{
+						found = true;
+					}
+					if (!found)
+						ofTotal++;
+					total++;
+				}
+			}
+			if (Main.myPlayer == player.whoAmI)
+				projectile.ai[1] = ofTotal;
+			Vector2 toLocation;
+			projectile.velocity *= 0.1f;
+			toLocation.X = player.Center.X;
+			toLocation.Y = player.Center.Y - 64 + Main.player[projectile.owner].gfxOffY;
+			float rotation = modPlayer.orbitalCounter + projectile.ai[1] / total * 360f;
+			Vector2 circular = new Vector2(48, 0).RotatedBy(MathHelper.ToRadians(rotation));
+			circular.Y *= 0.2f;
+			Vector2 goTo = toLocation + circular;
+			goTo -= projectile.Center;
+			Vector2 newGoTo = goTo.SafeNormalize(Vector2.Zero);
+			float dist = 9f + goTo.Length() * 0.02f;
+			if (dist > goTo.Length())
+				dist = goTo.Length();
+			projectile.velocity = newGoTo * dist;
+			projectile.rotation = projectile.velocity.X * 0.04f + MathHelper.ToRadians(135);
+		}
+		bool foundTarget = false;
+		int targetWhoAmI = -1;
+		bool canAttack = true;
 		public override void AI()
 		{
-			Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 2.2f / 255f, (255 - projectile.alpha) * 0.75f / 255f, (255 - projectile.alpha) * 2.45f / 255f);
-			if(initiate == -1)
+			Player player = Main.player[projectile.owner];
+			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
+
+			#region Active check
+			if (player.dead || !player.active)
 			{
-				startingRotation = Main.rand.Next(360);
-				initiate = 1;
+				player.ClearBuff(ModContent.BuffType<Buffs.CursedBlade>());
 			}
-			projectile.alpha = 0;
-			Player player  = Main.player[projectile.owner];
-			if(player.whoAmI == Main.myPlayer)
+			if (player.HasBuff(ModContent.BuffType<Buffs.CursedBlade>()))
+			{
+				projectile.timeLeft = 6;
+			}
+			#endregion
+			#region Find target
+			float distanceFromTarget = 400f;
+
+			// This code is required if your minion weapon has the targeting feature
+			if (player.HasMinionAttackTargetNPC)
+			{
+				NPC npc = Main.npc[player.MinionAttackTargetNPC];
+				float between = Vector2.Distance(npc.Center, projectile.Center);
+				float between2 = Vector2.Distance(npc.Center, player.Center);
+				if (between2 < distanceFromTarget + 240)
+				{
+					distanceFromTarget = between;
+					foundTarget = true;
+					targetWhoAmI = player.MinionAttackTargetNPC;
+				}
+			}
+			if (!foundTarget)
+			{
+				for (int i = 0; i < Main.maxNPCs; i++)
+				{
+					NPC npc = Main.npc[i];
+					if (npc.CanBeChasedBy())
+					{
+						float between = Vector2.Distance(npc.Center, projectile.Center);
+						float between2 = Vector2.Distance(npc.Center, player.Center);
+						bool inRange = between < distanceFromTarget;
+						if (inRange && between2 < distanceFromTarget * 2f)
+						{
+							distanceFromTarget = between;
+							foundTarget = true;
+							targetWhoAmI = i;
+						}
+					}
+				}
+			}
+			#endregion
+
+			#region Movement
+			Vector2 idlePosition = player.Center;
+			idlePosition.Y -= 96f;
+			float speed = 5f;
+			if (foundTarget && canAttack && targetWhoAmI != -1 && Main.npc[targetWhoAmI].CanBeChasedBy())
+			{
+				NPC npc = Main.npc[targetWhoAmI];
+				float Twidth = (float)Math.Sqrt(npc.height * npc.width);
+				Vector2 goTo = npc.Center - projectile.Center;
+				float sinM = (float)Math.Sin(MathHelper.ToRadians(projectile.ai[0] - 35)) * 32;
+				if (projectile.ai[0] > attackTimerMax + 30)
+                {
+					sinM = -(72 + Twidth);
+					speed *= 4;
+				}
+				float distance = goTo.Length() - (72 + Twidth + sinM);
+				if (distance < 4 || projectile.ai[0] > 15)
+				{
+					projectile.ai[0] += 9;
+				}
+				goTo = goTo.SafeNormalize(Vector2.Zero);
+				if (speed > distance)
+				{
+					speed = distance;
+				}
+				goTo *= speed;
+				projectile.velocity = goTo;
+				projectile.rotation = goTo.ToRotation() + MathHelper.Pi/4;
+			}
+			else
+			{
+				projectile.hide = false;
+				targetWhoAmI = -1;
+				foundTarget = false;
+				if (projectile.ai[0] > 0)
+                {
+					projectile.ai[0]--;
+                }
+				else
+                {
+					canAttack = true;
+				}
+				Idle();
+				if (Main.myPlayer == player.whoAmI && (idlePosition - projectile.Center).Length() > 1200f)
+				{
+					projectile.position = idlePosition;
+					projectile.velocity *= 0.1f;
+					projectile.netUpdate = true;
+				}
+			}
+			#endregion
+			Lighting.AddLight(projectile.Center, 2.4f * 0.5f * ((255 - projectile.alpha) / 255f), 2.2f * 0.5f * ((255 - projectile.alpha) / 255f), 1.4f * 0.5f * ((255 - projectile.alpha) / 255f));
+
+			if (Main.myPlayer == player.whoAmI)
 			{
 				projectile.netUpdate = true;
-				if(player.FindBuffIndex(mod.BuffType("CursedBlade")) > -1)
-				{
-					projectile.timeLeft = 6;
-				}
-					
-				double deg = (double)startingRotation; 
-				double rad = deg * (Math.PI / 180);
-				double dist = eternalBetweenPlayer;
-				rotationAreaX = player.Center.X - (int)(Math.Cos(rad) * dist);
-				rotationAreaY = player.Center.Y - (int)(Math.Sin(rad) * dist);
-				
-				
-			
-				projectile.friendly = false;
-				projectile.ai[0]++;
-				
-				Vector2 cursorArea = Main.MouseWorld;
-				
-				goToCursorX = cursorArea.X - projectile.Center.X;
-				goToCursorY = cursorArea.Y - projectile.Center.Y;
-				cursorDistance = (float)System.Math.Sqrt((double)(goToCursorX * goToCursorX + goToCursorY * goToCursorY));
-
-				float cursorDistance2 = 2.45f / cursorDistance;
-			   
-				goToCursorX *= cursorDistance2 * 5;
-				goToCursorY *= cursorDistance2 * 5;
-						   
-				double startingDirection = Math.Atan2((double)-goToCursorY, (double)-goToCursorX);
-				startingDirection *= 180/Math.PI;
-				
-				
-				
-				projectile.ai[1] = (float)startingDirection;
-			
-				projectile.rotation = MathHelper.ToRadians(projectile.ai[1] + 225);
-			
-				startingRotation += 1.2f;
-				if(projectile.ai[0] <= 150 )
-				{
-					float shootToX = rotationAreaX - projectile.Center.X;
-					float shootToY = rotationAreaY - projectile.Center.Y;
-					float distance = (float)System.Math.Sqrt((double)(shootToX * shootToX + shootToY * shootToY));
-				   
-					distance = .75f / distance;
-				
-					shootToX *= distance * 5;
-					shootToY *= distance * 5;
-				   
-					projectile.velocity.X = shootToX;
-					projectile.velocity.Y = shootToY; 
-				}
-				if(projectile.ai[0] == 151 && cursorDistance > 90f)
-				{
-					projectile.velocity.X = goToCursorX;
-					projectile.velocity.Y = goToCursorY;
-					projectile.ai[0] = 150;			   
-				}
-				if(projectile.ai[0] >= 152 && projectile.ai[0] <= 155)
-				{
-					projectile.velocity.X *= 0.5f;
-					projectile.velocity.Y *= 0.5f;
-				}
-				if(projectile.ai[0] >= 155 && projectile.ai[0] < 160)
-				{
-					projectile.velocity.X *= 0.94f;
-					projectile.velocity.Y *= 0.94f;
-					float newRotation = MathHelper.ToRadians((projectile.ai[0] - 174) * 60);
-					newRotation -= MathHelper.ToRadians(50);
-					projectile.rotation = MathHelper.ToRadians(projectile.ai[1] + 225) + newRotation;
-					
-					Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, projectile.velocity.X, projectile.velocity.Y, mod.ProjectileType("CurseExplosion"), projectile.damage, 2, Main.myPlayer, 0f, 0f);
-					Main.PlaySound(SoundID.Item1, (int)(projectile.Center.X), (int)(projectile.Center.Y));
-				}
-				if(projectile.ai[0] >= 160 && projectile.ai[0] < 165)
-				{
-					projectile.velocity.X *= 1.3f;
-					projectile.velocity.Y *= 1.3f;
-					projectile.rotation = MathHelper.ToRadians(projectile.ai[1] + 225 + Main.rand.Next(360));
-					
-					Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, projectile.velocity.X, projectile.velocity.Y, mod.ProjectileType("CurseExplosion"), projectile.damage, 2, Main.myPlayer, 0f, 0f);
-					Main.PlaySound(SoundID.Item1, (int)(projectile.Center.X), (int)(projectile.Center.Y));
-				}
-				if(projectile.ai[0] >= 165 && projectile.ai[0] < 170)
-				{
-					projectile.velocity.X *= 0.94f;
-					projectile.velocity.Y *= 0.94f;
-					projectile.rotation = MathHelper.ToRadians(projectile.ai[1] + 225 + Main.rand.Next(360));
-					
-					Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, projectile.velocity.X, projectile.velocity.Y, mod.ProjectileType("CurseExplosion"), projectile.damage, 2, Main.myPlayer, 0f, 0f);
-					Main.PlaySound(SoundID.Item1, (int)(projectile.Center.X), (int)(projectile.Center.Y));
-				}
-				if(projectile.ai[0] >= 170 && projectile.ai[0] < 175)
-				{
-					projectile.velocity.X *= 1.3f;
-					projectile.velocity.Y *= 1.3f;
-					projectile.rotation = MathHelper.ToRadians(projectile.ai[1] + 225 + Main.rand.Next(360));
-					
-					Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, projectile.velocity.X, projectile.velocity.Y, mod.ProjectileType("CurseExplosion"), projectile.damage, 2, Main.myPlayer, 0f, 0f);
-					Main.PlaySound(SoundID.Item1, (int)(projectile.Center.X), (int)(projectile.Center.Y));
-				}
-				if(projectile.ai[0] >= 200)
-				{
-					projectile.ai[0] = -30;
-				}
 			}
 		}
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
-        {
-            //target.immune[projectile.owner] = 15;
-        }
 	}
 }
 		

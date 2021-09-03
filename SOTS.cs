@@ -24,6 +24,7 @@ using SOTS.NPCs.Boss.Polaris;
 using SOTS.NPCs.Boss.Curse;
 using SOTS.NPCs.Boss.CelestialSerpent;
 using SOTS.NPCs.Boss.Advisor;
+using SOTS.Items.Banners;
 
 namespace SOTS
 {
@@ -391,7 +392,7 @@ namespace SOTS
 					"Putrid Pinky",
 					(Func<bool>)(() => SOTSWorld.downedPinky),
 					ModContent.ItemType<JarOfPeanuts>(),
-					new List<int>() { ModContent.ItemType<PutridPinkyMusicBox>() },
+					new List<int>() { ModContent.ItemType<PutridPinkyMusicBox>(), ModContent.ItemType<PutridPinkyTrophy>() },
 					new List<int>() { ModContent.ItemType<PinkyBag>(), ModContent.ItemType<VialofAcid>(), ModContent.ItemType<Wormwood>(), ItemID.PinkGel },
 					"Summon in any biome at any time using a [i:" + ModContent.ItemType<JarOfPeanuts>() + "]",
 					"{0} has robbed everyone of their peanuts!",

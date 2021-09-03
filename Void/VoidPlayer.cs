@@ -329,6 +329,8 @@ namespace SOTS.Void
 				return 15;
 			if (type == (int)VoidMinionID.TBethanySpirit)
 				return 20;
+			if (type == (int)VoidMinionID.CursedBlade)
+				return 100;
 			return 1;
 		}
 		public static Color minionVoidColor(int type)
@@ -345,6 +347,8 @@ namespace SOTS.Void
 				return new Color(170, 220, 255);
 			if (type == (int)VoidMinionID.TBethanySpirit)
 				return LemegetonColor;
+			if (type == (int)VoidMinionID.CursedBlade)
+				return new Color(76, 58, 101);
 			return Color.White;
 		}
 		public static bool isVoidMinion(Projectile projectile)
@@ -373,6 +377,8 @@ namespace SOTS.Void
 				return (int)VoidMinionID.BethanySpirit;
 			if (type == ProjectileType<LemegetonWispGreen>() || type == ProjectileType<LemegetonWispPurple>() || type == ProjectileType<LemegetonWispRed>())
 				return (int)VoidMinionID.TBethanySpirit;
+			if (type == ProjectileType<Projectiles.Minions.CursedBlade>())
+				return (int)VoidMinionID.CursedBlade;
 			return -1;
 		}
 		public enum VoidMinionID
@@ -382,7 +388,8 @@ namespace SOTS.Void
 			EarthenSpirit,
 			OtherworldSpirit,
 			BethanySpirit,
-			TBethanySpirit
+			TBethanySpirit,
+			CursedBlade
 		}
         public override void PostUpdateEquips()
         {

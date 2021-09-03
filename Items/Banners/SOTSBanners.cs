@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SOTS.NPCs;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
@@ -31,7 +30,6 @@ namespace SOTS.Items.Banners
 			name.SetDefault("Banner");
 			AddMapEntry(new Color(13, 88, 130), name);
 		}
-
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
 			int style = frameX / 18;

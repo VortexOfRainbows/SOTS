@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Items.Banners;
 using SOTS.Items.GelGear;
 using SOTS.Projectiles;
 using Terraria;
@@ -691,6 +692,10 @@ namespace SOTS.NPCs.Boss
 		{ 
 			SOTSWorld.downedPinky = true;
 			potionType = ItemID.HealingPotion;
+            if (Main.rand.NextBool(10))
+			{
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<PutridPinkyTrophy>(), 1);
+			}
 			if(Main.expertMode)
 			{ 
 				npc.DropBossBags();
