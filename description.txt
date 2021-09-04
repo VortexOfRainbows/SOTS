@@ -43,6 +43,7 @@ Update 0.20.0
 -Several items have recieved visual and functional reworks
 -A handful of new items have been added
 -Many balance changes, bug fixes, and QoL additions
+-Many internal code optimizations and fixes
 
 Update 0.19.3
 -New Expert drops for Icy Amalgamation, Subspace Serpent, and Pharaoh's

@@ -19,6 +19,7 @@ using SOTS.NPCs.Inferno;
 using SOTS.NPCs.Boss.Advisor;
 using SOTS.Items.Pyramid;
 using SOTS.Items.Otherworld;
+using SOTS.Items.Pyramid.PyramidWalls;
 
 namespace SOTS.NPCs
 {
@@ -293,6 +294,14 @@ namespace SOTS.NPCs
 			}
 			return flag;
 		}
+		public static int WallType(int type)
+        {
+			if (type == ModContent.WallType<UnsafePyramidWallWall>() || type == ModContent.WallType<UnsafePyramidBrickWallWall>() || type == ModContent.WallType<TrueSandstoneWallWall>())
+				return 1;
+			if (type == ModContent.WallType<UnsafeCursedTumorWallWall>() || type == ModContent.WallType<UnsafeMalditeWallWall>())
+				return 2;
+			return -1;
+        }
 		public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
 		{
 			Player player = spawnInfo.player;
@@ -301,9 +310,9 @@ namespace SOTS.NPCs
 			{
 				int tileWall = Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY - 1].wall;
 				bool isValidTile = spawnInfo.spawnTileType == ModContent.TileType<PyramidSlabTile>() || spawnInfo.spawnTileType == ModContent.TileType<PyramidBrickTile>() || spawnInfo.spawnTileType == ModContent.TileType<TrueSandstoneTile>();
-				bool isValidWall = tileWall == ModContent.WallType<PyramidWallTile>() || tileWall == ModContent.WallType<TrueSandstoneWallWall>();
-				bool isCurseValid = spawnInfo.spawnTileType == ModContent.TileType<CursedTumorTile>() || spawnInfo.spawnTileType == ModContent.TileType<CursedHive>() 
-					|| spawnInfo.spawnTileType == ModContent.TileType<MalditeTile>() || tileWall == ModContent.WallType<CursedTumorWallTile>() || tileWall == ModContent.WallType<MalditeWallTile>();
+				bool isValidWall = WallType(tileWall) == 1;
+				bool isCurseValid = spawnInfo.spawnTileType == ModContent.TileType<CursedTumorTile>() || spawnInfo.spawnTileType == ModContent.TileType<CursedHive>() || spawnInfo.spawnTileType == ModContent.TileType<MalditeTile>()
+					|| WallType(tileWall) == 2;
 				if (isValidTile || (isValidWall && !isCurseValid))
 				{
 					pool[0] = 0f;

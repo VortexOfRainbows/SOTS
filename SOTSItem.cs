@@ -23,6 +23,8 @@ using SOTS.Items.Fragments;
 using SOTS.Items.Vibrant;
 using SOTS.Items.Inferno;
 using Terraria.Utilities;
+using SOTS.Items.Pyramid.PyramidWalls;
+using SOTS.Projectiles.Celestial;
 
 namespace SOTS
 {
@@ -162,23 +164,75 @@ namespace SOTS
 		public static int[] dedicatedRainbow;
 		public static int[] dedicatedBlasfah;
 		public static int[] dedicatedHeartPlus;
-		static bool runOnce = true;
-		public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
+		public static Texture2D[] unsafeWallItemRedTextures;
+		public static int[] unsafeWallItem;
+		public static bool hasSetupRed = false;
+		public static void LoadArrays() //called in SOTS.Load()
 		{
-			if(runOnce)
+			rarities1 = new int[] { ItemType<StarlightAlloy>(), ItemType<HardlightAlloy>(), ItemType<OtherworldlyAlloy>(), ItemType<PotGenerator>(), ItemType<PrecariousCluster>(), ItemType<Calculator>(), ItemType<BookOfVirtues>() };
+			rarities2 = new int[] { ItemType<RefractingCrystal>(), ItemType<CursedApple>(), ItemType<RubyKeystone>() };
+			rarities3 = new int[] { ItemType<TaintedKeystoneShard>() };
+			dedicatedOrange = new int[] { ItemType<TerminatorAcorns>(), ItemType<PlasmaCutterButOnAChain>(), ItemType<CoconutGun>() }; //friends
+			dedicatedBlue = new int[] { ItemType<Calculator>() }; //friends 2
+			dedicatedPurpleRed = new int[] { ItemType<CursedApple>(), ItemType<ArcStaffMk2>() }; //James
+			dedicatedPastelPink = new int[] { ItemType<StrangeFruit>() }; //Tris
+			dedicatedRainbow = new int[] { ItemType<Traingun>(), ItemType<SubspaceLocket>() /*ItemType<PhotonGeyser>()*/ }; //Vortex
+			dedicatedBlasfah = new int[] { ItemType<Doomstick>(), ItemType<BookOfVirtues>() }; //Blasfah
+			dedicatedHeartPlus = new int[] { ItemType<DigitalDaito>() }; //Heart Plus Up
+			unsafeWallItem = new int[] { ItemType<UnsafeLihzahrdBrickWall>(), ItemType<UnsafeCursedTumorWall>(), ItemType<UnsafePyramidWall>(), ItemType<UnsafePyramidBrickWall>(), ItemType<UnsafeOvergrownPyramidWall>(), ItemType<UnsafeMalditeWall>() }; //Unsafe wall items
+			unsafeWallItemRedTextures = new Texture2D[unsafeWallItem.Length];
+		}
+		public static void setUpRedTextures()
+        {
+			for(int i = 0; i < unsafeWallItem.Length; i++)
 			{
-				rarities1 = new int[] { ItemType<StarlightAlloy>(), ItemType<HardlightAlloy>(), ItemType<OtherworldlyAlloy>(), ItemType<PotGenerator>(), ItemType<PrecariousCluster>(), ItemType<Calculator>(), ItemType<BookOfVirtues>() };
-				rarities2 = new int[] { ItemType<RefractingCrystal>(), ItemType<CursedApple>(), ItemType<RubyKeystone>() };
-				rarities3 = new int[] { ItemType<TaintedKeystoneShard>() };
-				dedicatedOrange = new int[] { ItemType<TerminatorAcorns>(), ItemType<PlasmaCutterButOnAChain>(), ItemType<CoconutGun>() }; //friends
-				dedicatedBlue = new int[] { ItemType<Calculator>() }; //friends 2
-				dedicatedPurpleRed = new int[] { ItemType<CursedApple>(), ItemType<ArcStaffMk2>() }; //James
-				dedicatedPastelPink = new int[] { ItemType<StrangeFruit>() }; //Tris
-				dedicatedRainbow = new int[] { ItemType<Traingun>(), ItemType<SubspaceLocket>() /*ItemType<PhotonGeyser>()*/ }; //Vortex
-				dedicatedBlasfah = new int[] { ItemType<Doomstick>(), ItemType<BookOfVirtues>() }; //Blasfah
-				dedicatedHeartPlus = new int[] { ItemType<DigitalDaito>() }; //Heart Plus Up
-				runOnce = false;
-            }
+				Texture2D texture = Main.itemTexture[unsafeWallItem[i]];
+				Texture2D textureOutline;
+				textureOutline = new Texture2D(Main.graphics.GraphicsDevice, texture.Width, texture.Height);
+				textureOutline.SetData(0, null, SubspaceServant.Greenify(texture, new Color(255, 0, 0)), 0, texture.Width * texture.Height);
+				unsafeWallItemRedTextures[i] = textureOutline;
+			}
+			hasSetupRed = true;
+		}
+        public override bool PreDrawInInventory(Item item, SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
+		{
+			if (!hasSetupRed)
+				setUpRedTextures();
+			if (unsafeWallItem.Contains(item.type))
+			{
+				List<int> items = unsafeWallItem.ToList();
+				int id = items.IndexOf(item.type);
+				items = null;
+				Texture2D texture = unsafeWallItemRedTextures[id];
+				for (int i = 0; i < 4; i++)
+				{
+					Vector2 circular = new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(90 * i));
+					spriteBatch.Draw(texture, position + circular, frame, Color.Red, 0f, origin, scale, SpriteEffects.None, 0f);
+				}
+			}
+			return base.PreDrawInInventory(item, spriteBatch, position, frame, drawColor, itemColor, origin, scale);
+        }
+        public override bool PreDrawInWorld(Item item, SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
+		{
+			if (!hasSetupRed)
+				setUpRedTextures();
+			if (unsafeWallItem.Contains(item.type))
+			{
+				List<int> items = unsafeWallItem.ToList();
+				int id = items.IndexOf(item.type);
+				items = null;
+				Texture2D texture = unsafeWallItemRedTextures[id];
+				Vector2 origin = new Vector2(texture.Width/2, texture.Height/2);
+				for (int i = 0; i < 4; i++)
+				{
+					Vector2 circular = new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(90 * i));
+					spriteBatch.Draw(texture, item.Center + circular - Main.screenPosition + new Vector2(0, 2), null, Color.Red, rotation, origin, scale, SpriteEffects.None, 0f);
+				}
+			}
+			return base.PreDrawInWorld(item, spriteBatch, lightColor, alphaColor, ref rotation, ref scale, whoAmI);
+        }
+        public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
+		{
 			if (rarities1.Contains(item.type))
 			{
 				foreach (TooltipLine line2 in tooltips)

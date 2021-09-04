@@ -82,7 +82,7 @@ namespace SOTS.NPCs
 		{
 			npc.TargetClosest(true);
 			Player player = Main.player[npc.target];
-			bool lineOfSight = Collision.CanHitLine(player.position, player.width, player.height, npc.position, npc.width, npc.height);
+			bool lineOfSight = Collision.CanHitLine(player.position, player.width, player.height, npc.Center - new Vector2(16, 16), 32, 32);
 			toPlayer = player.Center - npc.Center;
 			float length = toPlayer.Length();
 			npc.ai[0]++;

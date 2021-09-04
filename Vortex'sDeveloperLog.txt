@@ -29,12 +29,16 @@ Low Priority:
 3. Add Alt tiles to Pyramid + Hardlight Glass to Planetarium
 4. Frost Artifact Armor set bonus
 5. Pyramid Pots
-6. Hostile Pyramid Brick Wall
-7. Safety switch item
+6. Safety switch item
+7. Acedia Gateway + Acedia Plating
+8. Pyramid Door
 
-9/2/21
+9/2/21 & 9/3/21
 1. Added Putrid Pinky trophy + trophy framework
-2. 
+2. Avaritia Gateway sprite update
+3. Internal code optimizations
+4. Organized pyramid walls + added safe/unsafe wall variants in pyramid
+	1. Pyramid Brick Wall (unsafe) generates in pyramid
 
 9/1/21
 1. Shardstorm Spell reworked, mana cost 29 -> 20

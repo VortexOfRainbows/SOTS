@@ -9,6 +9,7 @@ using SOTS.Items.ChestItems;
 using System;
 using SOTS.Items;
 using SOTS.Items.Pyramid.AncientGold;
+using SOTS.Items.Pyramid.PyramidWalls;
 
 namespace SOTS
 {
@@ -85,16 +86,16 @@ namespace SOTS
 						{
 							case 0:
 								if(tile.wall == 0)
-									tile.wall = (ushort)ModContent.WallType<PyramidWallTile>();
+									tile.wall = (ushort)ModContent.WallType<UnsafePyramidWallWall>();
 								break;
 							case 1:
 								tile.wall = 197;
 								break;
 							case 2:
-								tile.wall = (ushort)ModContent.WallType<CursedTumorWallTile>();
+								tile.wall = (ushort)ModContent.WallType<UnsafeCursedTumorWallWall>();
 								break;
 							case 3:
-								tile.wall = (ushort)ModContent.WallType<PyramidWallTile>();
+								tile.wall = (ushort)ModContent.WallType<UnsafePyramidWallWall>();
 								break;
 							case 4:
 								tile.wall = (ushort)ModContent.WallType<AncientGoldBrickWallTile>();
@@ -480,7 +481,7 @@ namespace SOTS
 					Tile tile = Framing.GetTileSafely(pyramidX + h, pyramidY + pyramidLevel);
 					if (!TileDungeon(tile)) //check for not dungeon!
 					{
-						tile.wall = (ushort)mod.WallType("PyramidWallTile");
+						tile.wall = (ushort)ModContent.WallType<UnsafePyramidWallWall>();
 					}
 				}
 				if (pyramidLevel >= 10 && pyramidLevel <= 15)
@@ -490,7 +491,7 @@ namespace SOTS
 						for (int g = -pyramidLevel; g <= pyramidLevel - 10; g++)
 						{
 							Tile tile = Framing.GetTileSafely(pyramidX + g, pyramidY + pyramidLevel);
-							if (tile.type == (ushort)mod.TileType("PyramidSlabTile"))
+							if (tile.type == (ushort)ModContent.TileType<PyramidSlabTile>())
 								tile.active(false);
 						}
 					}
@@ -499,7 +500,7 @@ namespace SOTS
 						for (int g = pyramidLevel; g >= -pyramidLevel + 10; g--)
 						{
 							Tile tile = Framing.GetTileSafely(pyramidX + g, pyramidY + pyramidLevel);
-							if (tile.type == (ushort)mod.TileType("PyramidSlabTile"))
+							if (tile.type == (ushort)ModContent.TileType<PyramidSlabTile>())
 								tile.active(false);
 						}
 					}
@@ -517,7 +518,7 @@ namespace SOTS
 							for (int g = pyramidLevel - 16; g <= pyramidLevel - 10; g++)
 							{
 								Tile tile = Framing.GetTileSafely(pyramidX + g, pyramidY + pyramidLevel);
-								if (tile.type == (ushort)mod.TileType("PyramidSlabTile"))
+								if (tile.type == (ushort)ModContent.TileType<PyramidSlabTile>())
 									tile.active(false);
 							}
 							endingTileX = pyramidX + (pyramidLevel - 13);
@@ -527,7 +528,7 @@ namespace SOTS
 							for (int g = -pyramidLevel + 16; g >= -pyramidLevel + 10; g--)
 							{
 								Tile tile = Framing.GetTileSafely(pyramidX + g, pyramidY + pyramidLevel);
-								if (tile.type == (ushort)mod.TileType("PyramidSlabTile"))
+								if (tile.type == (ushort)ModContent.TileType<PyramidSlabTile>())
 									tile.active(false);
 							}
 							endingTileX = pyramidX + (-pyramidLevel + 13);
@@ -559,7 +560,7 @@ namespace SOTS
 					for (int h = 3; h >= -3; h--)
 					{
 						Tile tile = Framing.GetTileSafely(endingTileX + h, endingTileY);
-						if (tile.type == (ushort)mod.TileType("PyramidSlabTile"))
+						if (tile.type == (ushort)ModContent.TileType<PyramidSlabTile>())
 							tile.active(false);
 					}
 					endingTileY++;
@@ -580,7 +581,7 @@ namespace SOTS
 							for (int check = -2; check <= 2; check++)
 							{
 								selectTile = Framing.GetTileSafely(findTileX + check, endingTileY + y1);
-								if (selectTile.type != (ushort)mod.TileType("PyramidSlabTile"))
+								if (selectTile.type != (ushort)ModContent.TileType<PyramidSlabTile>())
 								{
 									capable = false;
 									break;
@@ -610,7 +611,7 @@ namespace SOTS
 							for (int check = -2; check <= 2; check++)
 							{
 								selectTile = Framing.GetTileSafely(findTileX + check, endingTileY + y1);
-								if (selectTile.type != (ushort)mod.TileType("PyramidSlabTile"))
+								if (selectTile.type != (ushort)ModContent.TileType<PyramidSlabTile>())
 								{
 									capable = false;
 									break;
@@ -648,7 +649,7 @@ namespace SOTS
 					for (int check = -2; check <= 2; check++)
 					{
 						selectTile = Framing.GetTileSafely(findTileX + check, higherUpY + y1);
-						if (selectTile.type != (ushort)mod.TileType("PyramidSlabTile"))
+						if (selectTile.type != (ushort)ModContent.TileType<PyramidSlabTile>())
 						{
 							capable = false;
 							break;
@@ -676,7 +677,7 @@ namespace SOTS
 					for (int check = -2; check <= 2; check++)
 					{
 						selectTile = Framing.GetTileSafely(findTileX + check, higherUpY + y1);
-						if (selectTile.type != (ushort)mod.TileType("PyramidSlabTile"))
+						if (selectTile.type != (ushort)ModContent.TileType<PyramidSlabTile>())
 						{
 							capable = false;
 							break;
@@ -689,7 +690,7 @@ namespace SOTS
 					for (int check = -1; check <= 1; check++)
 					{
 						selectTile = Framing.GetTileSafely(findTileX + check, higherUpY + y1);
-						if (!selectTile.active() && selectTile.wall == (ushort)mod.WallType("PyramidWallTile")) //end the cooridor upon reaching the stairwell
+						if (!selectTile.active() && selectTile.wall == (ushort)ModContent.WallType<UnsafePyramidWallWall>()) //end the cooridor upon reaching the stairwell
 						{
 							failureC++;
 						}
@@ -703,7 +704,7 @@ namespace SOTS
 				{
 					int higherUpY = pyramidY + (size - 12);
 					Tile selectTile = Framing.GetTileSafely(findTileX, higherUpY + y1);
-					if (selectTile.type == (ushort)mod.TileType("PyramidSlabTile") && selectTile.active())
+					if (selectTile.type == (ushort)ModContent.TileType<PyramidSlabTile>() && selectTile.active())
 					{
 						selectTile.type = 274;
 					}
@@ -715,9 +716,9 @@ namespace SOTS
 					Tile tile = Framing.GetTileSafely(findTileX, findTileY);
 					Tile tileLeft = Framing.GetTileSafely(findTileX - 1, findTileY);
 					Tile tileRight = Framing.GetTileSafely(findTileX + 1, findTileY);
-					if (tile.type == (ushort)mod.TileType("PyramidSlabTile"))
+					if (tile.type == (ushort)ModContent.TileType<PyramidSlabTile>())
 					{
-						if (!(findTileY > pyramidY + (size - 70) && finalDirection == 1) && tileLeft.active() && tile.active() && !tileRight.active() && tileRight.wall == (ushort)mod.WallType("PyramidWallTile"))
+						if (!(findTileY > pyramidY + (size - 70) && finalDirection == 1) && tileLeft.active() && tile.active() && !tileRight.active() && tileRight.wall == (ushort)ModContent.WallType<UnsafePyramidWallWall>())
 						{
 							//generate cooridor to the left
 							int randDistance = Main.rand.Next(min, max);
@@ -734,10 +735,10 @@ namespace SOTS
 										Tile selectTileLeft = Framing.GetTileSafely(coorXPos - 1, findTileY + y1);
 										Tile selectTileLeft2 = Framing.GetTileSafely(coorXPos - 2, findTileY + y1);
 										Tile selectTileLeft3 = Framing.GetTileSafely(coorXPos - 3, findTileY + y1);
-										if (selectTile.type == (ushort)mod.TileType("PyramidSlabTile"))
+										if (selectTile.type == (ushort)ModContent.TileType<PyramidSlabTile>())
 										{
 											bool tile3isCursed = selectTileLeft3.type == ModContent.TileType<CursedTumorTile>() || selectTileLeft3.type == ModContent.TileType<CursedHive>() || selectTileLeft2.type == ModContent.TileType<CursedHive>() || selectTileLeft.type == ModContent.TileType<CursedHive>();
-											if (tile3isCursed || (selectTileLeft.type == (ushort)mod.TileType("PyramidSlabTile") && selectTileLeft2.type == (ushort)mod.TileType("PyramidSlabTile")))
+											if (tile3isCursed || (selectTileLeft.type == (ushort)ModContent.TileType<PyramidSlabTile>() && selectTileLeft2.type == (ushort)ModContent.TileType<PyramidSlabTile>()))
 											{
 												selectTile.active(false);
 											}
@@ -748,7 +749,7 @@ namespace SOTS
 								}
 							}
 						}
-						if (!(findTileY > pyramidY + (size - 70) && finalDirection == -1) && tileRight.active() && tile.active() && !tileLeft.active() && tileLeft.wall == (ushort)mod.WallType("PyramidWallTile"))
+						if (!(findTileY > pyramidY + (size - 70) && finalDirection == -1) && tileRight.active() && tile.active() && !tileLeft.active() && tileLeft.wall == (ushort)ModContent.WallType<UnsafePyramidWallWall>())
 						{
 							//generate cooridor to the right
 							int randDistance = Main.rand.Next(min, max);
@@ -765,10 +766,10 @@ namespace SOTS
 										Tile selectTileRight = Framing.GetTileSafely(coorXPos + 1, findTileY + y1);
 										Tile selectTileRight2 = Framing.GetTileSafely(coorXPos + 2, findTileY + y1);
 										Tile selectTileRight3 = Framing.GetTileSafely(coorXPos + 3, findTileY + y1);
-										if(selectTile.type == (ushort)mod.TileType("PyramidSlabTile"))
+										if(selectTile.type == (ushort)ModContent.TileType<PyramidSlabTile>())
 										{
 											bool tile3isCursed = selectTileRight3.type == ModContent.TileType<CursedTumorTile>() || selectTileRight3.type == ModContent.TileType<CursedHive>() || selectTileRight2.type == ModContent.TileType<CursedHive>() || selectTileRight.type == ModContent.TileType<CursedHive>();
-											if (tile3isCursed || (selectTileRight.type == (ushort)mod.TileType("PyramidSlabTile") && selectTileRight2.type == (ushort)mod.TileType("PyramidSlabTile")))
+											if (tile3isCursed || (selectTileRight.type == (ushort)ModContent.TileType<PyramidSlabTile>() && selectTileRight2.type == (ushort)ModContent.TileType<PyramidSlabTile>()))
 											{
 												selectTile.active(false);
 											}
@@ -781,7 +782,7 @@ namespace SOTS
 						}
 						Tile tileUp = Framing.GetTileSafely(findTileX, findTileY - 1);
 						Tile tileDown = Framing.GetTileSafely(findTileX, findTileY + 1);
-						if (tile.type == (ushort)mod.TileType("PyramidSlabTile") && tile.active() && tileLeft.type == (ushort)mod.TileType("PyramidSlabTile") && tileLeft.active() && tileRight.type == (ushort)mod.TileType("PyramidSlabTile") && tileRight.active() && (!tileUp.active() || !tileDown.active()))
+						if (tile.type == (ushort)ModContent.TileType<PyramidSlabTile>() && tile.active() && tileLeft.type == (ushort)ModContent.TileType<PyramidSlabTile>() && tileLeft.active() && tileRight.type == (ushort)ModContent.TileType<PyramidSlabTile>() && tileRight.active() && (!tileUp.active() || !tileDown.active()))
 						{
 							counterSpike++;
 							if (counterSpike >= 44)
@@ -801,7 +802,7 @@ namespace SOTS
 									Tile tileSpikeLL = Framing.GetTileSafely(findTileX - sizeSpike - 1, findTileY);
 									Tile tileSpikeLU = Framing.GetTileSafely(findTileX - sizeSpike, findTileY - 1);
 									Tile tileSpikeLD = Framing.GetTileSafely(findTileX - sizeSpike, findTileY + 1);
-									if (tileSpikeR.active() && tileSpikeR.type == (ushort)mod.TileType("PyramidSlabTile") && tileSpikeL.active() && tileSpikeL.type == (ushort)mod.TileType("PyramidSlabTile"))
+									if (tileSpikeR.active() && tileSpikeR.type == (ushort)ModContent.TileType<PyramidSlabTile>() && tileSpikeL.active() && tileSpikeL.type == (ushort)ModContent.TileType<PyramidSlabTile>())
 									{
 										bool ending = sizeSpike == spikeSize - 1 || !tileSpikeRR.active() || !tileSpikeLL.active();
 										ushort type = ending ? (ushort)ModContent.TileType<RoyalGoldBrickTile>() : (ushort)ModContent.TileType<AncientGoldSpikeTile>();
@@ -858,7 +859,7 @@ namespace SOTS
 					for (int j = 0; j < structureHeight; j++)
 					{
 						Tile tile = Framing.GetTileSafely(findTileX + i, findTileY + j);
-						if (tile.active() && tile.wall == (ushort)mod.WallType("PyramidWallTile") && tile.type == (ushort)mod.TileType("PyramidSlabTile"))
+						if (tile.active() && tile.wall == (ushort)ModContent.WallType<UnsafePyramidWallWall>() && tile.type == (ushort)ModContent.TileType<PyramidSlabTile>())
 						{
 							count++;
 						}
@@ -884,7 +885,7 @@ namespace SOTS
 					for (int j = 0; j < structureHeight; j++)
 					{
 						Tile tile = Framing.GetTileSafely(findTileX + i, findTileY + j);
-						if (tile.active() && tile.wall == (ushort)mod.WallType("PyramidWallTile") && tile.type == (ushort)mod.TileType("PyramidSlabTile"))
+						if (tile.active() && tile.wall == (ushort)ModContent.WallType<UnsafePyramidWallWall>() && tile.type == (ushort)ModContent.TileType<PyramidSlabTile>())
 						{
 							count++;
 						}
@@ -907,7 +908,7 @@ namespace SOTS
 					{
 						int findTileX = pyramidX + WorldGen.genRand.Next(-width, width + 1);
 						Tile tile = Framing.GetTileSafely(findTileX, findTileY);
-						if (tile.active() && tile.wall == (ushort)mod.WallType("PyramidWallTile") && tile.type == (ushort)mod.TileType("PyramidSlabTile"))
+						if (tile.active() && tile.wall == (ushort)ModContent.WallType<UnsafePyramidWallWall>() && tile.type == (ushort)ModContent.TileType<PyramidSlabTile>())
 						{
 							counterRoom--;
 							bool canBeLeft = false;
@@ -922,12 +923,12 @@ namespace SOTS
 							for (int checkLeft = 0; checkLeft < 80; checkLeft++)
 							{
 								Tile tileCheck = Framing.GetTileSafely(findTileX - checkLeft, findTileY);
-								if (tileCheck.active() == false && tileCheck.wall == (ushort)mod.WallType("PyramidWallTile"))
+								if (!tileCheck.active() && tileCheck.wall == (ushort)ModContent.WallType<UnsafePyramidWallWall>())
 								{
 									tilesLeft = checkLeft;
 									break;
 								}
-								if (tileCheck.active() == true && tileCheck.wall == (ushort)mod.WallType("PyramidWallTile") && tileCheck.type == (ushort)ModContent.TileType<PyramidBrickTile>())
+								if (tileCheck.active() && (tileCheck.wall == (ushort)ModContent.WallType<UnsafePyramidWallWall>() || tileCheck.wall == (ushort)ModContent.WallType<UnsafePyramidBrickWallWall>()) && tileCheck.type == (ushort)ModContent.TileType<PyramidBrickTile>())
 								{
 									tilesLeft = -1;
 									break;
@@ -936,12 +937,12 @@ namespace SOTS
 							for (int checkRight = 0; checkRight < 80; checkRight++)
 							{
 								Tile tileCheck = Framing.GetTileSafely(findTileX + checkRight, findTileY);
-								if (tileCheck.active() == false && tileCheck.wall == (ushort)mod.WallType("PyramidWallTile"))
+								if (!tileCheck.active() && tileCheck.wall == (ushort)ModContent.WallType<UnsafePyramidWallWall>())
 								{
 									tilesRight = checkRight;
 									break;
 								}
-								if (tileCheck.active() == true && tileCheck.wall == (ushort)mod.WallType("PyramidWallTile") && tileCheck.type == (ushort)ModContent.TileType<PyramidBrickTile>())
+								if (tileCheck.active() && (tileCheck.wall == (ushort)ModContent.WallType<UnsafePyramidWallWall>() || tileCheck.wall == (ushort)ModContent.WallType<UnsafePyramidBrickWallWall>()) && tileCheck.type == (ushort)ModContent.TileType<PyramidBrickTile>())
 								{
 									tilesRight = -1;
 									break;
@@ -950,12 +951,12 @@ namespace SOTS
 							for (int checkUp = 0; checkUp < 40; checkUp++)
 							{
 								Tile tileCheck = Framing.GetTileSafely(findTileX, findTileY - checkUp);
-								if (tileCheck.active() == false && tileCheck.wall == (ushort)mod.WallType("PyramidWallTile"))
+								if (!tileCheck.active() && tileCheck.wall == (ushort)ModContent.WallType<UnsafePyramidWallWall>())
 								{
 									tilesUp = checkUp;
 									break;
 								}
-								if (tileCheck.active() == true && tileCheck.wall == (ushort)mod.WallType("PyramidWallTile") && tileCheck.type == (ushort)ModContent.TileType<PyramidBrickTile>())
+								if (tileCheck.active() && (tileCheck.wall == (ushort)ModContent.WallType<UnsafePyramidWallWall>() || tileCheck.wall == (ushort)ModContent.WallType<UnsafePyramidBrickWallWall>()) && tileCheck.type == (ushort)ModContent.TileType<PyramidBrickTile>())
 								{
 									tilesUp = -1;
 									break;
@@ -964,12 +965,12 @@ namespace SOTS
 							for (int checkDown = 0; checkDown < 80; checkDown++)
 							{
 								Tile tileCheck = Framing.GetTileSafely(findTileX, findTileY + checkDown);
-								if (tileCheck.active() == false && tileCheck.wall == (ushort)mod.WallType("PyramidWallTile"))
+								if (!tileCheck.active() && tileCheck.wall == (ushort)ModContent.WallType<UnsafePyramidWallWall>())
 								{
 									tilesDown = checkDown;
 									break;
 								}
-								if (tileCheck.active() == true && tileCheck.wall == (ushort)mod.WallType("PyramidWallTile") && tileCheck.type == (ushort)ModContent.TileType<PyramidBrickTile>())
+								if (tileCheck.active() && (tileCheck.wall == (ushort)ModContent.WallType<UnsafePyramidWallWall>() || tileCheck.wall == (ushort)ModContent.WallType<UnsafePyramidBrickWallWall>()) && tileCheck.type == (ushort)ModContent.TileType<PyramidBrickTile>())
 								{
 									tilesDown = -1;
 									break;
@@ -980,10 +981,9 @@ namespace SOTS
 								for (int checkSquareY = -12; checkSquareY <= 12; checkSquareY++)
 								{
 									Tile tileCheck = Framing.GetTileSafely(findTileX + checkSquareX, findTileY + checkSquareY);
-									if (tileCheck.type == (ushort)mod.TileType("PyramidSlabTile") && tileCheck.active() && tileCheck.wall == (ushort)mod.WallType("PyramidWallTile"))
+									if (tileCheck.type == (ushort)ModContent.TileType<PyramidSlabTile>() && tileCheck.active() && tileCheck.wall == (ushort)ModContent.WallType<UnsafePyramidWallWall>())
 									{
 										squareCount++;
-
 									}
 								}
 							}
@@ -1056,12 +1056,12 @@ namespace SOTS
 					Tile tile = Framing.GetTileSafely(findTileX, findTileY);
 					for (int built = 0; built < 2; built++)
 					{
-						if (tile.wall == (ushort)mod.WallType("PyramidWallTile") && (!tile.active() || WorldGen.genRand.NextBool((int)(size / 2.66f))))
+						if (tile.wall == (ushort)ModContent.WallType<UnsafePyramidWallWall>() && (!tile.active() || WorldGen.genRand.NextBool((int)(size / 2.66f))))
 						{
 							Tile tile2 = Framing.GetTileSafely(findTileX, findTileY - 3);
 							Tile tile3 = Framing.GetTileSafely(findTileX, findTileY + 3);
-							bool tile2Valid = tile2.active() && tile2.type == (ushort)mod.TileType("PyramidSlabTile") && tile2.wall == (ushort)mod.WallType("PyramidWallTile");
-							bool tile3Valid = tile3.active() && tile3.type == (ushort)mod.TileType("PyramidSlabTile") && tile3.wall == (ushort)mod.WallType("PyramidWallTile");
+							bool tile2Valid = tile2.active() && tile2.type == (ushort)ModContent.TileType<PyramidSlabTile>() && tile2.wall == (ushort)ModContent.WallType<UnsafePyramidWallWall>();
+							bool tile3Valid = tile3.active() && tile3.type == (ushort)ModContent.TileType<PyramidSlabTile>() && tile3.wall == (ushort)ModContent.WallType<UnsafePyramidWallWall>();
 							if (tile2Valid && tile3Valid)
 							{
 								if (!WorldGen.genRand.NextBool(4))
@@ -1095,7 +1095,7 @@ namespace SOTS
 					Tile tileLU2 = Framing.GetTileSafely(findTileX - 1, findTileY - 2);
 					Tile tileU3 = Framing.GetTileSafely(findTileX, findTileY - 3);
 					Tile tileLU3 = Framing.GetTileSafely(findTileX - 1, findTileY - 3);
-					if (tile.type == (ushort)mod.TileType("PyramidSlabTile") && !tileLU.active() && !tileLU2.active() && !tileU.active() && !tileU2.active())
+					if (tile.type == (ushort)ModContent.TileType<PyramidSlabTile>() && !tileLU.active() && !tileLU2.active() && !tileU.active() && !tileU2.active())
 					{
 						if (WorldGen.genRand.NextBool(5))
 						{
@@ -1125,7 +1125,7 @@ namespace SOTS
 							WorldGen.PlaceTile(findTileX, findTileY - 1, TileID.Statues, true, true, -1, Main.rand.Next(71)); //random statue
 						}
 					}
-					if (tile.wall == (ushort)mod.WallType("PyramidWallTile") && WorldGen.genRand.NextBool(500) && tile.type != ModContent.TileType<CursedTumorTile>() && tile.active())
+					if (tile.wall == (ushort)ModContent.WallType<UnsafePyramidWallWall>() && WorldGen.genRand.NextBool(500) && tile.type != ModContent.TileType<CursedTumorTile>() && tile.active())
 					{
 						int radius7 = 6;
 						for (int x = -radius7; x <= radius7; x++)
@@ -1139,7 +1139,7 @@ namespace SOTS
 									float distFromCenter = (float)Math.Sqrt(x * x + y * y);
 									int distRand = (int)distFromCenter; 
 									Tile tileRad = Framing.GetTileSafely(xPosition6, yPosition6);
-									if (!tileRad.active() && tileRad.wall != ModContent.WallType<CursedTumorWallTile>() && Main.rand.Next(100) > 4 + distRand * 5)
+									if (!tileRad.active() && tileRad.wall != ModContent.WallType<UnsafeCursedTumorWallWall>() && Main.rand.Next(100) > 4 + distRand * 5)
 									{
 										tileRad.type = 51; //cobweb
 										tileRad.active(true);
@@ -1157,9 +1157,9 @@ namespace SOTS
 				for (int findTileX = pyramidX + extraSize; findTileX > pyramidX - extraSize; findTileX--)
 				{
 					Tile tile = Framing.GetTileSafely(findTileX, findTileY);
-					if (tile.type == ModContent.TileType<CursedTumorTile>() && (tile.active() || tile.wall == (ushort)ModContent.WallType<CursedTumorWallTile>()))
+					if (tile.type == ModContent.TileType<CursedTumorTile>() && (tile.active() || tile.wall == (ushort)ModContent.WallType<UnsafeCursedTumorWallWall>()))
 					{
-						tile.wall = (ushort)ModContent.WallType<CursedTumorWallTile>();
+						tile.wall = (ushort)ModContent.WallType<UnsafeCursedTumorWallWall>();
 						if (WorldGen.genRand.NextBool(2))
 						{
 							int left = findTileX - 1;
@@ -1203,12 +1203,12 @@ namespace SOTS
 											if (tileRad.active() && capable)
 											{
 												tileRad.type = (ushort)ModContent.TileType<MalditeTile>();
-												tileRad.wall = (ushort)ModContent.WallType<MalditeWallTile>();
+												tileRad.wall = (ushort)ModContent.WallType<UnsafeMalditeWallWall>();
 												tileRad.active(true);
 											}
-											else if (tileRad.wall == ModContent.WallType<CursedTumorWallTile>())
+											else if (tileRad.wall == ModContent.WallType<UnsafeCursedTumorWallWall>())
 											{
-												tileRad.wall = (ushort)ModContent.WallType<MalditeWallTile>();
+												tileRad.wall = (ushort)ModContent.WallType<UnsafeMalditeWallWall>();
 											}
 										}
 									}
@@ -1333,10 +1333,10 @@ namespace SOTS
 							switch (_zepline[y, x])
 							{
 								case 0:
-									if (tile.type == (ushort)mod.TileType("PyramidSlabTile"))
+									if (tile.type == (ushort)ModContent.TileType<PyramidSlabTile>())
 										tile.active(false);
 
-									if (tile2.type == (ushort)mod.TileType("PyramidSlabTile"))
+									if (tile2.type == (ushort)ModContent.TileType<PyramidSlabTile>())
 										tile2.active(false);
 									break;
 								case 1:
@@ -1348,11 +1348,11 @@ namespace SOTS
 									tile2.slope(3);
 									break;
 								case 2:
-									tile.type = (ushort)mod.TileType("PyramidSlabTile");
+									tile.type = (ushort)ModContent.TileType<PyramidSlabTile>();
 									tile.active(true);
 									tile.slope(0);
 									tile.halfBrick(false);
-									tile2.type = (ushort)mod.TileType("PyramidSlabTile");
+									tile2.type = (ushort)ModContent.TileType<PyramidSlabTile>();
 									tile2.active(true);
 									tile2.slope(0);
 									tile2.halfBrick(false);
@@ -1438,8 +1438,8 @@ namespace SOTS
 						switch (_zeplineWalls[y, x])
 						{
 							case 0:
-								tile.wall = (ushort)mod.WallType("PyramidWallTile");  //sandbrick
-								tile2.wall = (ushort)mod.WallType("PyramidWallTile");
+								tile.wall = (ushort)ModContent.WallType<UnsafePyramidWallWall>();  //sandbrick
+								tile2.wall = (ushort)ModContent.WallType<UnsafePyramidWallWall>();
 								break;
 							case 1:
 								tile.wall = 226; //sandfall 
@@ -1506,7 +1506,7 @@ namespace SOTS
 							{
 								case 0:
 									tile.active(true);
-									tile.type = (ushort)mod.TileType("PyramidSlabTile");
+									tile.type = (ushort)ModContent.TileType<PyramidSlabTile>();
 									tile.slope(0);
 									tile.halfBrick(false);
 									break;
@@ -1605,7 +1605,7 @@ namespace SOTS
 											Tile tile3 = Framing.GetTileSafely(k, l - h - 1);
 											Tile tile4 = Framing.GetTileSafely(k, l - h - 2);
 											Tile tile5 = Framing.GetTileSafely(k, l - h - 3);
-											if (tile2.type == mod.TileType("PyramidSlabTile") && tile2.active() && tile3.type == mod.TileType("PyramidSlabTile") && tile3.active() && tile4.type == mod.TileType("PyramidSlabTile") && tile4.active() && tile5.type == mod.TileType("PyramidSlabTile") && tile5.active())
+											if (tile2.type == ModContent.TileType<PyramidSlabTile>() && tile2.active() && tile3.type == ModContent.TileType<PyramidSlabTile>() && tile3.active() && tile4.type == ModContent.TileType<PyramidSlabTile>() && tile4.active() && tile5.type == ModContent.TileType<PyramidSlabTile>() && tile5.active())
 											{
 												if (Main.rand.Next(h) <= Main.rand.Next(50))
 												{
@@ -1635,10 +1635,8 @@ namespace SOTS
 		}
 		public static bool CanTunnelTile(Tile tile)
         {
-			return !tile.active() ||
-				tile.wall != (ushort)ModContent.WallType<PyramidWallTile>() ||
-				(tile.type != (ushort)ModContent.TileType<PyramidSlabTile>() && tile.type != TileID.SandStoneSlab && tile.type != (ushort)ModContent.TileType<PyramidBrickTile>()
-				&& tile.type != (ushort)ModContent.TileType<RoyalGoldBrickTile>() && tile.type != (ushort)ModContent.TileType<AncientGoldSpikeTile>());
+			return tile.active() && (tile.wall == (ushort)ModContent.WallType<UnsafePyramidWallWall>() || tile.wall == (ushort)ModContent.WallType<UnsafePyramidBrickWallWall>()) 
+				&& (tile.type == (ushort)ModContent.TileType<PyramidSlabTile>() || tile.type == TileID.SandStoneSlab || tile.type == (ushort)ModContent.TileType<PyramidBrickTile>() || tile.type == (ushort)ModContent.TileType<RoyalGoldBrickTile>() || tile.type == (ushort)ModContent.TileType<AncientGoldSpikeTile>());
 		}
 		public static bool StopTunnelTile(Tile tile)
 		{
@@ -1662,6 +1660,7 @@ namespace SOTS
 						{
 							tileCheck.type = (ushort)ModContent.TileType<PyramidBrickTile>(); //sandstoneBrick
 						}
+						tileCheck.wall = (ushort)ModContent.WallType<UnsafePyramidBrickWallWall>();
 					}
 				}
 				Tile initialTile = Framing.GetTileSafely(x, y);
@@ -1677,7 +1676,7 @@ namespace SOTS
 							for (int h = 2; h >= -2; h--)
 							{
 								Tile checkTile = Framing.GetTileSafely(x - checkLeft, y + h);
-								if (CanTunnelTile(checkTile))
+								if (!CanTunnelTile(checkTile))
 								{
 									check5++;
 								}
@@ -1742,7 +1741,7 @@ namespace SOTS
 												tile.active(true);
 												break;
 											case 2:
-												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
 												tile.active(true);
 												break;
 											case 3:
@@ -1832,7 +1831,7 @@ namespace SOTS
 												tile.active(true);
 												break;
 											case 2:
-												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
 												tile.active(true);
 												break;
 											case 3:
@@ -1924,7 +1923,7 @@ namespace SOTS
 												tile.active(true);
 												break;
 											case 2:
-												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
 												tile.active(true);
 												break;
 											case 3:
@@ -2015,7 +2014,7 @@ namespace SOTS
 												tile.active(true);
 												break;
 											case 2:
-												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
 												tile.active(true);
 												break;
 											case 3:
@@ -2105,7 +2104,7 @@ namespace SOTS
 												tile.active(true);
 												break;
 											case 2:
-												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
 												tile.active(true);
 												break;
 											case 3:
@@ -2197,7 +2196,7 @@ namespace SOTS
 												tile.active(true);
 												break;
 											case 2:
-												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
 												tile.active(true);
 												break;
 											case 3:
@@ -2290,7 +2289,7 @@ namespace SOTS
 												tile.active(true);
 												break;
 											case 2:
-												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
 												tile.active(true);
 												break;
 											case 3:
@@ -2383,7 +2382,7 @@ namespace SOTS
 												tile.active(true);
 												break;
 											case 2:
-												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
 												tile.active(true);
 												break;
 											case 3:
@@ -2475,7 +2474,7 @@ namespace SOTS
 												tile.active(true);
 												break;
 											case 2:
-												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
 												tile.active(true);
 												break;
 											case 3:
@@ -2565,7 +2564,7 @@ namespace SOTS
 												tile.active(true);
 												break;
 											case 2:
-												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
 												tile.active(true);
 												break;
 											case 3:
@@ -2667,7 +2666,7 @@ namespace SOTS
 												break;
 											case 3:
 												tile.active(true);
-												tile.type = (ushort)mod.TileType("PyramidSlabTile");
+												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>();
 												tile.slope(0);
 												tile.halfBrick(false);
 												break;
@@ -2817,7 +2816,7 @@ namespace SOTS
 												break;
 											case 1:
 												tile.active(true);
-												tile.type = (ushort)mod.TileType("PyramidSlabTile");
+												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>();
 												tile.slope(0);
 												tile.halfBrick(false);
 												break;
@@ -2856,7 +2855,7 @@ namespace SOTS
 							for (int h = 2; h >= -2; h--)
 							{
 								Tile checkTile = Framing.GetTileSafely(x + checkRight, y + h);
-								if (CanTunnelTile(checkTile))
+								if (!CanTunnelTile(checkTile))
 								{
 									check5++;
 								}
@@ -2921,7 +2920,7 @@ namespace SOTS
 												tile.active(true);
 												break;
 											case 2:
-												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
 												tile.active(true);
 												break;
 											case 3:
@@ -3013,7 +3012,7 @@ namespace SOTS
 												tile.active(true);
 												break;
 											case 2:
-												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
 												tile.active(true);
 												break;
 											case 3:
@@ -3105,7 +3104,7 @@ namespace SOTS
 												tile.active(true);
 												break;
 											case 2:
-												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
 												tile.active(true);
 												break;
 											case 3:
@@ -3198,7 +3197,7 @@ namespace SOTS
 												tile.active(true);
 												break;
 											case 2:
-												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
 												tile.active(true);
 												break;
 											case 3:
@@ -3291,7 +3290,7 @@ namespace SOTS
 												tile.active(true);
 												break;
 											case 2:
-												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
 												tile.active(true);
 												break;
 											case 3:
@@ -3383,7 +3382,7 @@ namespace SOTS
 												tile.active(true);
 												break;
 											case 2:
-												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
 												tile.active(true);
 												break;
 											case 3:
@@ -3476,7 +3475,7 @@ namespace SOTS
 												tile.active(true);
 												break;
 											case 2:
-												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
 												tile.active(true);
 												break;
 											case 3:
@@ -3569,7 +3568,7 @@ namespace SOTS
 												tile.active(true);
 												break;
 											case 2:
-												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
 												tile.active(true);
 												break;
 											case 3:
@@ -3662,7 +3661,7 @@ namespace SOTS
 												tile.active(true);
 												break;
 											case 2:
-												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
 												tile.active(true);
 												break;
 											case 3:
@@ -3755,7 +3754,7 @@ namespace SOTS
 												tile.active(true);
 												break;
 											case 2:
-												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
 												tile.active(true);
 												break;
 											case 3:
@@ -4065,7 +4064,7 @@ namespace SOTS
 							for (int h = 2; h >= -2; h--)
 							{
 								Tile checkTile = Framing.GetTileSafely(x + h, y - checkUp);
-								if (CanTunnelTile(checkTile))
+								if (!CanTunnelTile(checkTile))
 								{
 									check5++;
 								}
@@ -4130,7 +4129,7 @@ namespace SOTS
 												tile.active(true);
 												break;
 											case 2:
-												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
 												tile.active(true);
 												break;
 											case 3:
@@ -4223,7 +4222,7 @@ namespace SOTS
 												tile.active(true);
 												break;
 											case 2:
-												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
 												tile.active(true);
 												break;
 											case 3:
@@ -4313,7 +4312,7 @@ namespace SOTS
 												tile.active(true);
 												break;
 											case 2:
-												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
 												tile.active(true);
 												break;
 											case 3:
@@ -4405,7 +4404,7 @@ namespace SOTS
 												tile.active(true);
 												break;
 											case 2:
-												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
 												tile.active(true);
 												break;
 											case 3:
@@ -4498,7 +4497,7 @@ namespace SOTS
 												tile.active(true);
 												break;
 											case 2:
-												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
 												tile.active(true);
 												break;
 											case 3:
@@ -4592,7 +4591,7 @@ namespace SOTS
 												tile.active(true);
 												break;
 											case 2:
-												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
 												tile.active(true);
 												break;
 											case 3:
@@ -4684,7 +4683,7 @@ namespace SOTS
 												tile.active(true);
 												break;
 											case 2:
-												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
 												tile.active(true);
 												break;
 											case 3:
@@ -4777,7 +4776,7 @@ namespace SOTS
 												tile.active(true);
 												break;
 											case 2:
-												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
 												tile.active(true);
 												break;
 											case 3:
@@ -4870,7 +4869,7 @@ namespace SOTS
 												tile.active(true);
 												break;
 											case 2:
-												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
 												tile.active(true);
 												break;
 											case 3:
@@ -4962,7 +4961,7 @@ namespace SOTS
 												tile.active(true);
 												break;
 											case 2:
-												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
 												tile.active(true);
 												break;
 											case 3:
@@ -5202,7 +5201,7 @@ namespace SOTS
 							for (int h = 2; h >= -2; h--)
 							{
 								Tile checkTile = Framing.GetTileSafely(x + h, y + checkDown);
-								if (CanTunnelTile(checkTile))
+								if (!CanTunnelTile(checkTile))
 								{
 									check5++;
 								}
@@ -5267,7 +5266,7 @@ namespace SOTS
 												tile.active(true);
 												break;
 											case 2:
-												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
 												tile.active(true);
 												break;
 											case 3:
@@ -5360,7 +5359,7 @@ namespace SOTS
 												tile.active(true);
 												break;
 											case 2:
-												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
 												tile.active(true);
 												break;
 											case 3:
@@ -5448,7 +5447,7 @@ namespace SOTS
 												tile.active(true);
 												break;
 											case 2:
-												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
 												tile.active(true);
 												break;
 											case 3:
@@ -5534,7 +5533,7 @@ namespace SOTS
 												tile.active(true);
 												break;
 											case 2:
-												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
 												tile.active(true);
 												break;
 											case 3:
@@ -5626,7 +5625,7 @@ namespace SOTS
 												tile.active(true);
 												break;
 											case 2:
-												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
 												tile.active(true);
 												break;
 											case 3:
@@ -5719,7 +5718,7 @@ namespace SOTS
 												tile.active(true);
 												break;
 											case 2:
-												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
 												tile.active(true);
 												break;
 											case 3:
@@ -5812,7 +5811,7 @@ namespace SOTS
 												tile.active(true);
 												break;
 											case 2:
-												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
 												tile.active(true);
 												break;
 											case 3:
@@ -5905,7 +5904,7 @@ namespace SOTS
 												tile.active(true);
 												break;
 											case 2:
-												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
 												tile.active(true);
 												break;
 											case 3:
@@ -5998,7 +5997,7 @@ namespace SOTS
 												tile.active(true);
 												break;
 											case 2:
-												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
 												tile.active(true);
 												break;
 											case 3:
@@ -6090,7 +6089,7 @@ namespace SOTS
 												tile.active(true);
 												break;
 											case 2:
-												tile.type = (ushort)mod.TileType("PyramidSlabTile"); //pyramid slab
+												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>(); //pyramid slab
 												tile.active(true);
 												break;
 											case 3:
@@ -6182,7 +6181,7 @@ namespace SOTS
 												break;
 											case 1:
 												tile.active(true);
-												tile.type = (ushort)mod.TileType("PyramidSlabTile");
+												tile.type = (ushort)ModContent.TileType<PyramidSlabTile>();
 												tile.slope(0);
 												tile.halfBrick(false);
 												break;
@@ -6456,7 +6455,7 @@ namespace SOTS
 				sumRolls = new int[11];
 				sumRolls2 = new int[9];
 				Tile tileCenter = Framing.GetTileSafely(i, j - 3);
-				if (tileCenter.type == mod.TileType("PyramidSlabTile") || item)
+				if (tileCenter.type == ModContent.TileType<PyramidSlabTile>() || item)
 				{
 					for (int k2 = 0; k2 < 30; k2++)
 					{
@@ -6476,7 +6475,7 @@ namespace SOTS
 						for (int k3 = 0; k3 < sumRolls[k2] + 1; k3++)
 						{
 							Tile tile = Framing.GetTileSafely(i + k2 - 5, j - k3 - 3);
-							if (Main.rand.Next(40) != 0 && (tile.type == mod.TileType("PyramidSlabTile") || !tile.active()))
+							if (Main.rand.Next(40) != 0 && (tile.type == ModContent.TileType<PyramidSlabTile>() || !tile.active()))
 							{
 								if (item)
 									WorldGen.PlaceTile(i + k2 - 5, j - k3 - 3, (ushort)mod.TileType("CursedHive"));
@@ -6502,7 +6501,7 @@ namespace SOTS
 						for (int k3 = 0; k3 < sumRolls2[k2]; k3++)
 						{
 							Tile tile = Framing.GetTileSafely(i + k2 - 4, j + k3 - 2);
-							if (Main.rand.Next(20) != 0 && (tile.type == mod.TileType("PyramidSlabTile") || !tile.active()))
+							if (Main.rand.Next(20) != 0 && (tile.type == ModContent.TileType<PyramidSlabTile>() || !tile.active()))
 							{
 								if (item)
 									WorldGen.PlaceTile(i + k2 - 4, j + k3 - 2, (ushort)mod.TileType("CursedHive"));
@@ -6515,7 +6514,7 @@ namespace SOTS
 				sumRolls = new int[11];
 				sumRolls2 = new int[9];
 				tileCenter = Framing.GetTileSafely(i, j + 3);
-				if (tileCenter.type == mod.TileType("PyramidSlabTile") || item)
+				if (tileCenter.type == ModContent.TileType<PyramidSlabTile>() || item)
 				{
 					for (int k2 = 0; k2 < 30; k2++)
 					{
@@ -6535,7 +6534,7 @@ namespace SOTS
 						for (int k3 = 0; k3 < sumRolls[k2] + 1; k3++)
 						{
 							Tile tile = Framing.GetTileSafely(i + k2 - 5, j + k3 + 3);
-							if (Main.rand.Next(40) != 0 && (tile.type == mod.TileType("PyramidSlabTile") || !tile.active()))
+							if (Main.rand.Next(40) != 0 && (tile.type == ModContent.TileType<PyramidSlabTile>() || !tile.active()))
 							{
 								if (item)
 									WorldGen.PlaceTile(i + k2 - 5, j + k3 + 3, (ushort)mod.TileType("CursedHive"));
@@ -6561,7 +6560,7 @@ namespace SOTS
 						for (int k3 = 0; k3 < sumRolls2[k2]; k3++)
 						{
 							Tile tile = Framing.GetTileSafely(i + k2 - 4, j - k3 + 2);
-							if (Main.rand.Next(20) != 0 && (tile.type == mod.TileType("PyramidSlabTile") || !tile.active()))
+							if (Main.rand.Next(20) != 0 && (tile.type == ModContent.TileType<PyramidSlabTile>() || !tile.active()))
 							{
 								if (item)
 									WorldGen.PlaceTile(i + k2 - 4, j - k3 + 2, (ushort)mod.TileType("CursedHive"));
@@ -6596,10 +6595,10 @@ namespace SOTS
 				for (int j = -halfLength; j <= halfLength; j++)
 				{
 					Tile tile = Framing.GetTileSafely(spawnX + i, spawnY + j);
-					if(tile.wall != ModContent.WallType<PyramidWallTile>() && tile.wall != ModContent.WallType<CursedTumorWallTile>() && tile.type != ModContent.TileType<CursedTumorTile>() && tile.type != ModContent.TileType<CursedHive>())
+					if(tile.wall != ModContent.WallType<UnsafePyramidWallWall>() && tile.wall != ModContent.WallType<UnsafeCursedTumorWallWall>() && tile.type != ModContent.TileType<CursedTumorTile>() && tile.type != ModContent.TileType<CursedHive>())
 					{
 						if (i != halfLength && i != -halfLength && j != halfLength && j != -halfLength)
-							tile.wall = (ushort)mod.WallType("PyramidWallTile");
+							tile.wall = (ushort)ModContent.WallType<UnsafePyramidWallWall>();
 						SetTilePyramid(tile);
 					}
 				}
@@ -6658,24 +6657,24 @@ namespace SOTS
 						int yPosition6 = spawnY + (int)(y * scale);
 						Tile tile = Framing.GetTileSafely(xPosition6, yPosition6);
 						bool capable = true;
-						if (tile.wall == ModContent.WallType<PyramidWallTile>() && !tile.active())
+						if (tile.wall == ModContent.WallType<UnsafePyramidWallWall>() && !tile.active())
 							capable = false;
-						if (Math.Sqrt(x * x + y * y) >= radius - radialMod && tile.wall != ModContent.WallType<CursedTumorWallTile>() && capable)
+						bool valid = !extraRestriction || (tile.type == ModContent.TileType<PyramidBrickTile>() || tile.type == ModContent.TileType<PyramidSlabTile>()
+							|| tile.type == ModContent.TileType<CursedHive>() || tile.type == (ushort)ModContent.TileType<AncientGoldSpikeTile>() || tile.type == (ushort)ModContent.TileType<RoyalGoldBrickTile>());
+						if (Math.Sqrt(x * x + y * y) >= radius - radialMod && tile.wall != ModContent.WallType<UnsafeCursedTumorWallWall>() && capable)
 						{
 							ConvertNearbyTiles(mod, xPosition6, yPosition6, radiusConversion);
-							bool valid = !extraRestriction || (tile.type == ModContent.TileType<PyramidBrickTile>() || tile.type == ModContent.TileType<PyramidSlabTile>()
-								|| tile.type == ModContent.TileType<CursedHive>() || tile.type == (ushort)ModContent.TileType<AncientGoldSpikeTile>());
 							if (tile.type == ModContent.TileType<TrueSandstoneTile>() || tile.wall == ModContent.WallType<TrueSandstoneWallWall>() || tile.type == ModContent.TileType<AncientGoldGateTile>())
 								valid = false;
-							if (valid && (tile.active() || (tile.wall != ModContent.WallType<TrueSandstoneWallWall>() && tile.wall != ModContent.WallType<PyramidWallTile>())) && Main.tileSolid[tile.type])
+							if (valid && (tile.active() || (tile.wall != ModContent.WallType<TrueSandstoneWallWall>() && tile.wall != ModContent.WallType<UnsafePyramidWallWall>())) && Main.tileSolid[tile.type])
 							{
 								tile.type = (ushort)ModContent.TileType<CursedTumorTile>();
 								tile.active(true);
 							}
 						}
-						else if(tile.wall != ModContent.WallType<TrueSandstoneWallWall>())
+						else if(tile.wall != ModContent.WallType<TrueSandstoneWallWall>() && (valid || !tile.active()))
 						{
-							tile.wall = (ushort)ModContent.WallType<CursedTumorWallTile>();
+							tile.wall = (ushort)ModContent.WallType<UnsafeCursedTumorWallWall>();
 							tile.active(false);
 						}
 					}

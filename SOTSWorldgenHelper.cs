@@ -9,6 +9,7 @@ using SOTS.Items.ChestItems;
 using System;
 using SOTS.Items;
 using SOTS.Items.Pyramid.AncientGold;
+using SOTS.Items.Pyramid.PyramidWalls;
 
 namespace SOTS
 {
@@ -227,25 +228,25 @@ namespace SOTS
 						switch (_structure[i, j])
 						{
 							case 0:
-								tile.wall = 0;
+								tile.wall = (ushort)ModContent.WallType<UnsafePyramidWallWall>();
 								break;
 							case 1:
-								tile.wall = (ushort)mod.WallType("OvergrownPyramidWallWall");
+								tile.wall = (ushort)ModContent.WallType<UnsafeOvergrownPyramidWallWall>();
 								break;
 							case 2:
-								tile.wall = (ushort)mod.WallType("PyramidWallTile");
+								tile.wall = (ushort)ModContent.WallType<UnsafePyramidBrickWallWall>();
 								break;
 							case 3:
 								tile.wall = (ushort)ModContent.WallType<AncientGoldBrickWallTile>();
 								break;
 							case 4:
-								tile.wall = (ushort)mod.WallType("AcediaPlatingWallWall");
+								tile.wall = (ushort)ModContent.WallType<UnsafeAcediaWallWall>();
 								break;
 							case 5:
-								tile.wall = (ushort)mod.WallType("DullPlatingWallWall");
+								tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
 								break;
 							case 6:
-								tile.wall = (ushort)mod.WallType("AcediaPlatingWallWall");
+								tile.wall = (ushort)ModContent.WallType<UnsafeAcediaWallWall>();
 								break;
 						}
 					}
@@ -441,13 +442,13 @@ namespace SOTS
 									break;
 								case 2:
 									tile.active(true);
-									tile.wall = (ushort)mod.WallType("DullPlatingWallWall");
+									tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
 									tile.type = (ushort)mod.TileType("DullPlatingTile");
 									tile.slope(0);
 									tile.halfBrick(false);
 
 									tile2.active(true);
-									tile2.wall = (ushort)mod.WallType("DullPlatingWallWall");
+									tile2.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
 									tile2.type = (ushort)mod.TileType("DullPlatingTile");
 									tile2.slope(0);
 									tile2.halfBrick(false);
@@ -668,8 +669,8 @@ namespace SOTS
 								tile2.wall = (ushort)mod.WallType("PortalPlatingWallWall");
 								break;
 							case 2:
-								tile.wall = (ushort)mod.WallType("DullPlatingWallWall");
-								tile2.wall = (ushort)mod.WallType("DullPlatingWallWall");
+								tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
+								tile2.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
 								break;
 							case 3:
 								tile.wall = 21;
@@ -741,7 +742,7 @@ namespace SOTS
 									case 4:
 										tile.active(true);
 										tile.type = (ushort)mod.TileType("DullPlatingTile");
-										tile.wall = (ushort)mod.WallType("DullPlatingWallWall");
+										tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
@@ -811,7 +812,7 @@ namespace SOTS
 									case 2:
 										tile.active(true);
 										tile.type = (ushort)mod.TileType("DullPlatingTile");
-										tile.wall = (ushort)mod.WallType("DullPlatingWallWall");
+										tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
@@ -926,7 +927,7 @@ namespace SOTS
 									case 2:
 										tile.active(true);
 										tile.type = (ushort)mod.TileType("DullPlatingTile");
-										tile.wall = (ushort)mod.WallType("DullPlatingWallWall");
+										tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
@@ -983,7 +984,7 @@ namespace SOTS
 									tile.wall = (ushort)mod.WallType("PortalPlatingWallWall");
 									break;
 								case 2:
-									tile.wall = (ushort)mod.WallType("DullPlatingWallWall");
+									tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
 									break;
 								case 3:
 									tile.wall = 21;
@@ -1049,7 +1050,7 @@ namespace SOTS
 									case 4:
 										tile.active(true);
 										tile.type = (ushort)mod.TileType("DullPlatingTile");
-										tile.wall = (ushort)mod.WallType("DullPlatingWallWall");
+										tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
@@ -1106,7 +1107,7 @@ namespace SOTS
 									case 1:
 										tile.active(true);
 										tile.type = (ushort)mod.TileType("DullPlatingTile");
-										tile.wall = (ushort)mod.WallType("DullPlatingWallWall");
+										tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
@@ -1165,7 +1166,7 @@ namespace SOTS
 									tile.wall = (ushort)mod.WallType("PortalPlatingWallWall");
 									break;
 								case 2:
-									tile.wall = (ushort)mod.WallType("DullPlatingWallWall");
+									tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
 									break;
 							}
 						}
@@ -1216,7 +1217,7 @@ namespace SOTS
 									case 1:
 										tile.active(true);
 										tile.type = (ushort)mod.TileType("DullPlatingTile");
-										tile.wall = (ushort)mod.WallType("DullPlatingWallWall");
+										tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
@@ -1266,7 +1267,7 @@ namespace SOTS
 									tile.wall = (ushort)mod.WallType("PortalPlatingWallWall");
 									break;
 								case 2:
-									tile.wall = (ushort)mod.WallType("DullPlatingWallWall");
+									tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
 									break;
 								case 3:
 									tile.wall = 21;
@@ -1334,7 +1335,7 @@ namespace SOTS
 									case 4:
 										tile.active(true);
 										tile.type = (ushort)mod.TileType("DullPlatingTile");
-										tile.wall = (ushort)mod.WallType("DullPlatingWallWall");
+										tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
@@ -1402,7 +1403,7 @@ namespace SOTS
 									case 4:
 										tile.active(true);
 										tile.type = (ushort)mod.TileType("DullPlatingTile");
-										tile.wall = (ushort)mod.WallType("DullPlatingWallWall");
+										tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
@@ -1518,7 +1519,7 @@ namespace SOTS
 									case 3:
 										tile.active(true);
 										tile.type = (ushort)mod.TileType("DullPlatingTile");
-										tile.wall = (ushort)mod.WallType("DullPlatingWallWall");
+										tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
@@ -1578,7 +1579,7 @@ namespace SOTS
 									tile.wall = (ushort)mod.WallType("PortalPlatingWallWall");
 									break;
 								case 2:
-									tile.wall = (ushort)mod.WallType("DullPlatingWallWall");
+									tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
 									break;
 								case 3:
 									tile.wall = 21;
@@ -1641,7 +1642,7 @@ namespace SOTS
 									case 3:
 										tile.active(true);
 										tile.type = (ushort)mod.TileType("DullPlatingTile");
-										tile.wall = (ushort)mod.WallType("DullPlatingWallWall");
+										tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
 										tile.slope(0);
 										tile.halfBrick(false);
 										break;
@@ -1683,7 +1684,7 @@ namespace SOTS
 									tile.wall = (ushort)mod.WallType("PortalPlatingWallWall");
 									break;
 								case 2:
-									tile.wall = (ushort)mod.WallType("DullPlatingWallWall");
+									tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
 									break;
 								case 3:
 									tile.wall = 21;
@@ -2643,8 +2644,8 @@ namespace SOTS
 						ModTileEntity modTileEntity = ModTileEntity.GetTileEntity(mod.TileEntityType("PotTimer"));
 						WorldGen.PlaceTile(i, j, (ushort)mod.TileType("PotGeneratorTile"), true, true, -1, 0);
 						modTileEntity.Place(i, j);
-						tile.wall = (ushort)mod.WallType("DullPlatingWallWall");
-						tile2.wall = (ushort)mod.WallType("DullPlatingWallWall");
+						tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
+						tile2.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
 						totalPotGens++;
 					}
 				}
