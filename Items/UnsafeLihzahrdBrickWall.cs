@@ -12,17 +12,10 @@ namespace SOTS.Items
 		}
 		public override void SetDefaults()
 		{
+			item.CloneDefaults(ItemID.StoneWall);
 			item.width = 24;
 			item.height = 24;
-			item.maxStack = 999;
-			item.useTurn = true;
-			item.autoReuse = true;
-			item.useAnimation = 15;
-			item.useTime = 7;
-			item.useStyle = 1;
-			item.rare = 0;
-			item.value = 0;
-			item.consumable = true;
+			item.rare = 9;
 			item.createWall = WallID.LihzahrdBrickUnsafe;
 		}
 		public override void AddRecipes()

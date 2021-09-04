@@ -15,13 +15,11 @@ namespace SOTS.Buffs
 			Main.debuff[Type] = false;
 		
         }
- 
 		public override void Update(Player player, ref int buffIndex)
 		{
 			player.endurance += 0.15f;
 			player.moveSpeed += 0.15f;
 			player.statDefense += 15;
 		}
-
     }
 }

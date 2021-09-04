@@ -24,6 +24,7 @@ Low Priority:
 5. Wintry Traveler: Riptide Trident + Frigid Javelin
 6. Custom Shaders! Tainted Prism Dye
 
+Currently Working On:
 1. Curse Base Armor Set
 2. Cursed Blade to Void Summon
 3. Add Alt tiles to Pyramid + Hardlight Glass to Planetarium
@@ -32,6 +33,7 @@ Low Priority:
 6. Safety switch item
 7. Acedia Gateway + Acedia Plating
 8. Pyramid Door
+9. Ambient Pyramid BG
 
 9/2/21 & 9/3/21
 1. Added Putrid Pinky trophy + trophy framework
