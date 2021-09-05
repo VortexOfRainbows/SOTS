@@ -1,0 +1,20 @@
+Music To Do:
+Construct Theme: No Progress
+Pyramid Theme: 90% Done
+Pyramid Battle Theme: 40% Done
+Pharaohs Curse Theme: No Progress
+Planetarium Theme: Done
+Advisor's Theme: 50% Done
+Polaris Theme: Done
+Celestal Serpent: https://www.youtube.com/watch?v=jxo_K7JLZxQ
+Subspace Serpent: Done
+
+Sprites To Do:
+
+1. Flashspark Boots Spritesheet
+2. Pharaoh Head Icon
+3. Vined Portal + Portal Item Sprites
+4. Pinky Projectiles
+5. Trophes For Advisor, Pharaoh, Polaris, and Subspace
+6. Heartsheild Spritesheet
+7.
