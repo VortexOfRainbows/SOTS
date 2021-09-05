@@ -15,7 +15,7 @@ namespace SOTS.Items
 			item.CloneDefaults(ItemID.StoneWall);
 			item.width = 24;
 			item.height = 24;
-			item.rare = 9;
+			item.rare = ItemRarityID.Red;
 			item.createWall = WallID.LihzahrdBrickUnsafe;
 		}
 		public override void AddRecipes()

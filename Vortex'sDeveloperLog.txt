@@ -27,13 +27,20 @@ Low Priority:
 Currently Working On:
 1. Curse Base Armor Set
 2. Cursed Blade to Void Summon
-3. Add Alt tiles to Pyramid + Hardlight Glass to Planetarium
-4. Frost Artifact Armor set bonus
-5. Pyramid Pots
-6. Safety switch item
-7. Acedia Gateway + Acedia Plating
-8. Pyramid Door
-9. Ambient Pyramid BG
+3. Frost Artifact Armor set bonus
+4. Pyramid Pots
+5. Safety switch item
+6. Acedia Gateway + Acedia Plating
+7. Pyramid Door + Make none of the pyramid blocks breakable until after Evil Bosses
+8. Ambient Pyramid BG Tiles 
+
+9/4/21
+1. Hardlight Wall now spawns in planetarium
+2. Added alt tiles to pyramid worldgen
+3. Planetarium now spawns slightly higher up on small and medium worlds.
+	1. This cramps the planetarium but makes it less likely to just spawn on surface level
+	2. Still player's fault for choosing small worlds like loser
+4. Added some more leniency to Digital Daito's hitbox for hitting through tiles
 
 9/2/21 & 9/3/21
 1. Added Putrid Pinky trophy + trophy framework
@@ -41,7 +48,7 @@ Currently Working On:
 3. Internal code optimizations
 4. Organized pyramid walls + added safe/unsafe wall variants in pyramid
 	1. Pyramid Brick Wall (unsafe) generates in pyramid
-
+	
 9/1/21
 1. Shardstorm Spell reworked, mana cost 29 -> 20
 	1. Now a bit weaker in general, but has a more generous hitbox and area damage over piercing

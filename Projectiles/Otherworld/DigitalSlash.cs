@@ -54,8 +54,8 @@ namespace SOTS.Projectiles.Otherworld
 		{
 			Player player = Main.player[projectile.owner];
 			Vector2 center = player.Center;
-			bool hitThroughWall = Collision.CanHitLine(center - new Vector2(5, 5), 10, 10, target.Hitbox.TopLeft(), target.Hitbox.Width, target.Hitbox.Height) && !target.friendly;
-			return hitThroughWall || target.behindTiles;
+			bool hitThroughWall = Collision.CanHitLine(center - new Vector2(5, 5), 10, 10, target.Hitbox.Center() - new Vector2(target.Hitbox.Width / 4f, target.Hitbox.Height / 4f), target.Hitbox.Width / 2, target.Hitbox.Height / 2) && !target.friendly;
+			return hitThroughWall;
 		}
 		public override bool ShouldUpdatePosition()
         {

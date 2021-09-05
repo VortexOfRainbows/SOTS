@@ -673,8 +673,8 @@ namespace SOTS
 								tile2.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
 								break;
 							case 3:
-								tile.wall = 21;
-								tile2.wall = 21;
+								tile.wall = (ushort)ModContent.WallType<HologlassWallWall>();
+								tile2.wall = (ushort)ModContent.WallType<HologlassWallWall>();
 								break;
 						}
 					}
@@ -987,7 +987,7 @@ namespace SOTS
 									tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
 									break;
 								case 3:
-									tile.wall = 21;
+									tile.wall = (ushort)ModContent.WallType<HologlassWallWall>();
 									break;
 							}
 						}
@@ -1270,7 +1270,7 @@ namespace SOTS
 									tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
 									break;
 								case 3:
-									tile.wall = 21;
+									tile.wall = (ushort)ModContent.WallType<HologlassWallWall>();
 									break;
 							}
 						}
@@ -1465,9 +1465,9 @@ namespace SOTS
 				{0,0,3,3,0,0,0,0,0,0,0,0,0,0,0,0,0,3,3,0,0},
 				{0,0,3,3,0,0,0,0,0,0,0,0,0,0,0,0,0,3,3,0,0},
 				{0,0,3,3,0,0,0,0,0,0,0,0,0,0,0,0,0,3,3,0,0},
-				{0,0,3,3,0,0,0,0,0,0,0,0,0,0,0,0,0,3,3,0,0},
-				{0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0},
-				{0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0},
+				{0,0,3,3,3,0,0,0,0,0,0,0,0,0,0,0,3,3,3,0,0},
+				{0,0,0,3,3,0,0,0,0,0,0,0,0,0,0,0,3,3,0,0,0},
+				{0,0,0,3,3,3,0,0,0,0,0,0,0,0,0,3,3,3,0,0,0},
 				{0,0,0,3,3,3,3,1,1,1,1,1,1,1,3,3,3,3,0,0,0},
 				{0,0,0,0,3,3,3,3,3,3,3,3,3,3,3,3,3,0,0,0,0},
 				{0,0,0,0,3,3,3,3,3,3,3,3,3,3,3,3,3,0,0,0,0},
@@ -1582,7 +1582,7 @@ namespace SOTS
 									tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
 									break;
 								case 3:
-									tile.wall = 21;
+									tile.wall = (ushort)ModContent.WallType<HologlassWallWall>();
 									break;
 							}
 						}
@@ -1687,7 +1687,7 @@ namespace SOTS
 									tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
 									break;
 								case 3:
-									tile.wall = 21;
+									tile.wall = (ushort)ModContent.WallType<HologlassWallWall>();
 									break;
 							}
 						}

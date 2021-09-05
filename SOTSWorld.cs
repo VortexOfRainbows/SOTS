@@ -515,7 +515,20 @@ namespace SOTS
 							{
 								force = true;
 							}
-							if (SOTSWorldgenHelper.GeneratePlanetariumFull(mod, pX, 140, force))
+							int yLocation = 140;
+							if (Main.maxTilesX > 4000) //small worlds
+							{
+								yLocation = 120;
+							}
+							if (Main.maxTilesX > 6000) //medium worlds
+							{
+								yLocation = 130;
+							}
+							if (Main.maxTilesX > 8000) //big worlds
+							{
+								yLocation = 140;
+							}
+							if (SOTSWorldgenHelper.GeneratePlanetariumFull(mod, pX, yLocation, force))
 							{
 								break;
 							}

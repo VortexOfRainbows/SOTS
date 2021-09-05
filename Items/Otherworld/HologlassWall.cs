@@ -42,21 +42,15 @@ namespace SOTS.Items.Otherworld
 		}
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Hardlight Glass");
+			DisplayName.SetDefault("Hardlight Wall");
 			Tooltip.SetDefault("");
 		}
 		public override void SetDefaults()
 		{
+			item.CloneDefaults(ItemID.StoneWall);
 			item.width = 28;
 			item.height = 28;
-			item.maxStack = 999;
-			item.useTurn = true;
-			item.autoReuse = true;
-			item.useAnimation = 15;
-			item.useTime = 7;
-			item.useStyle = 1;
-			item.rare = 9;
-			item.consumable = true;
+			item.rare = ItemRarityID.Cyan;
 			item.createWall = mod.WallType("HologlassWallWall");
 		}
 		public override void AddRecipes()
@@ -134,6 +128,7 @@ namespace SOTS.Items.Otherworld
 		public override void SetDefaults()
 		{
 			Main.wallHouse[Type] = true;
+			Main.wallLight[Type] = true;
 			dustType = DustID.Electric;
 			drop = mod.ItemType("HologlassWall");
 			AddMapEntry(new Color(25, 120, 170));
