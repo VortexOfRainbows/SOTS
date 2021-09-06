@@ -32,6 +32,10 @@ Currently Working On:
 5. Pyramid Door + Make none of the pyramid blocks breakable until after Evil Bosses
 6. Ambient Pyramid BG Tiles 
 
+9/6/21
+1. Putrid Pinky Mask added, drops from pinky.
+2. Small bug fix for safety switch visuals.
+
 9/5/21
 1. Slightly decreases Pharaoh's Phase 2 Arm acceleration, 1.1x speed per flip -> 1.08x speed per flip
 2. Cursed Blade rework complete! Works in Multiplayer!

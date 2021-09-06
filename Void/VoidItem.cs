@@ -143,7 +143,7 @@ namespace SOTS.Void
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			bool canUse = BeforeUseItem(player);
 			int currentVoid = voidPlayer.voidMeterMax2 - voidPlayer.lootingSouls - voidPlayer.VoidMinionConsumption;
-			if (voidPlayer.safetySwitch && voidPlayer.voidMeter < voidMana && !item.summon)
+			if (voidPlayer.safetySwitch && voidPlayer.voidMeter < voidMana && !item.summon && !voidPlayer.frozenVoid)
 			{
 				return false;
 			}

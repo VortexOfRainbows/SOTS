@@ -203,7 +203,7 @@ namespace SOTS.Void
 			}
 			Recalculate();
 			base.Draw(spriteBatch);
-			if (voidPlayer.safetySwitch)
+			if (voidPlayer.safetySwitchVisual)
 				DrawLock(spriteBatch);
 			DrawIce(spriteBatch, false);
 		}
@@ -232,7 +232,8 @@ namespace SOTS.Void
 					spriteBatch.Draw(fill, frame, new Color(255, 255, 255) * 0.1f);
 					spriteBatch.Draw(frozenBarBorder, new Vector2(VoidPlayer.voidBarOffset.X, VoidPlayer.voidBarOffset.Y) + padding, new Rectangle(0, 0, frozenBarBorder.Width, frozenBarBorder.Height), new Color(255, 255, 255));
 					spriteBatch.Draw(frozenBar, new Vector2(VoidPlayer.voidBarOffset.X, VoidPlayer.voidBarOffset.Y) + padding, new Rectangle(0, 0, (int)(frozenBar.Width * frozenPercent2), frozenBar.Height), new Color(255, 255, 255));
-					spriteBatch.Draw(LockFrozen, new Vector2(VoidPlayer.voidBarOffset.X, VoidPlayer.voidBarOffset.Y) + padding, new Rectangle(0, 0, LockFrozen.Width, LockFrozen.Height), new Color(255, 255, 255));
+					if(voidPlayer.safetySwitchVisual)
+						spriteBatch.Draw(LockFrozen, new Vector2(VoidPlayer.voidBarOffset.X, VoidPlayer.voidBarOffset.Y) + padding, new Rectangle(0, 0, LockFrozen.Width, LockFrozen.Height), new Color(255, 255, 255));
 				}
 				else if (shadow && voidPlayer.frozenDuration < 30)
 					for (int i = 0; i < 6; i++)
@@ -251,7 +252,8 @@ namespace SOTS.Void
 					float frozenPercent = (float)voidPlayer.frozenCounter / (float)voidPlayer.frozenMinTimer;
 					frame = new Rectangle(0, 0, (int)(frozenBarBorder.Width * frozenPercent), frozenBarBorder.Height);
 					spriteBatch.Draw(frozenBarBorder, new Vector2(VoidPlayer.voidBarOffset.X, VoidPlayer.voidBarOffset.Y) + padding, frame, new Color(255, 255, 255));
-					spriteBatch.Draw(LockFrozen, new Vector2(VoidPlayer.voidBarOffset.X, VoidPlayer.voidBarOffset.Y) + padding, frame, new Color(255, 255, 255));
+					if (voidPlayer.safetySwitchVisual)
+						spriteBatch.Draw(LockFrozen, new Vector2(VoidPlayer.voidBarOffset.X, VoidPlayer.voidBarOffset.Y) + padding, frame, new Color(255, 255, 255));
 				}
 				else if (voidPlayer.frozenCounter > voidPlayer.frozenMinTimer - 30)
 					for (int i = 0; i < 6; i++)

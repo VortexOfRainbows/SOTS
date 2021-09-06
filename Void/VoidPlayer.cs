@@ -40,6 +40,7 @@ namespace SOTS.Void
 		public int frozenMinTimer = 3600;
 		public float frozenVoidCount = 0;
 		public bool safetySwitch = false;
+		public bool safetySwitchVisual = false;
 		public override TagCompound Save() {
 
 			return new TagCompound {
@@ -533,7 +534,8 @@ namespace SOTS.Void
 			{
 				VoidUI.visible = true;
 			}
-			safetySwitch = false;
+			safetySwitch = false; 
+			safetySwitchVisual = false;
 		}
 		public override float UseTimeMultiplier(Item item)
 		{

@@ -696,7 +696,11 @@ namespace SOTS.NPCs.Boss
 			{
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<PutridPinkyTrophy>(), 1);
 			}
-			if(Main.expertMode)
+			if (Main.rand.NextBool(7))
+			{
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<PutridPinkyMask>(), 1);
+			}
+			if (Main.expertMode)
 			{ 
 				npc.DropBossBags();
 			} 

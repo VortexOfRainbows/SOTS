@@ -25,6 +25,7 @@ namespace SOTS.Items.SoldStuff
 		{
 			VoidPlayer vPlayer = VoidPlayer.ModPlayer(player);
 			vPlayer.safetySwitch = true;
+			vPlayer.safetySwitchVisual = !hideVisual;
 		}
 	}
 }
