@@ -26,13 +26,24 @@ Low Priority:
 
 Currently Working On:
 1. Curse Base Armor Set
-2. Cursed Blade to Void Summon
-3. Frost Artifact Armor set bonus
-4. Pyramid Pots
-5. Safety switch item
-6. Acedia Gateway + Acedia Plating
-7. Pyramid Door + Make none of the pyramid blocks breakable until after Evil Bosses
-8. Ambient Pyramid BG Tiles 
+2. Frost Artifact Armor set bonus
+3. Pyramid Pots
+4. Acedia Gateway + Acedia Plating
+5. Pyramid Door + Make none of the pyramid blocks breakable until after Evil Bosses
+6. Ambient Pyramid BG Tiles 
+
+9/5/21
+1. Slightly decreases Pharaoh's Phase 2 Arm acceleration, 1.1x speed per flip -> 1.08x speed per flip
+2. Cursed Blade rework complete! Works in Multiplayer!
+3. Fixed bug where void minions weren't properly appearing in multiplayer in some cases. 
+	1. May cacade into other issues or fix some other issues, idk yet
+4. Void consumables now activate when void is below zero instead of below 10%.
+	1. Also clarified void minion interactions. Only consumes if it will not waste part of the consumption.
+5. Small Void Bar UI changes for consistency
+6. Safety Switch added! Sold by Traveling Merchant, 20% chance
+7. Pharaoh's Sound Effects changed
+8. Nature Construct spawns cut in half during blood moon
+9. Suprem now spawns from traveling merchant 0.2% of the time (down from 33%)
 
 9/4/21
 1. Hardlight Wall now spawns in planetarium

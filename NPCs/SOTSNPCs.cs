@@ -373,7 +373,12 @@ namespace SOTS.NPCs
 				pool.Add(mod.NPCType("BlueSlimer"), SpawnCondition.OverworldDaySlime.Chance * 0.1f);
 				pool.Add(mod.NPCType("TreasureSlime"), SpawnCondition.OverworldDaySlime.Chance * 0.1f);
 				if (player.statLifeMax2 >= 120)
-					pool.Add(ModContent.NPCType<NatureConstruct>(), SpawnCondition.Overworld.Chance * 0.01f);
+				{
+					float overworldChance = 0.01f;
+					if (Main.bloodMoon)
+						overworldChance = 0.005f;
+					pool.Add(ModContent.NPCType<NatureConstruct>(), SpawnCondition.Overworld.Chance * overworldChance);
+				}
 			}
 			else if (player.ZoneCorrupt || player.ZoneCrimson)
 			{

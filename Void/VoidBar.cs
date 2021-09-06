@@ -203,7 +203,16 @@ namespace SOTS.Void
 			}
 			Recalculate();
 			base.Draw(spriteBatch);
+			if (voidPlayer.safetySwitch)
+				DrawLock(spriteBatch);
 			DrawIce(spriteBatch, false);
+		}
+		public void DrawLock(SpriteBatch spriteBatch)
+		{
+			Player player = Main.player[Main.myPlayer];
+			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
+			Texture2D Lock = ModContent.GetTexture("SOTS/Void/VoidBarLock");
+			spriteBatch.Draw(Lock, new Vector2(VoidPlayer.voidBarOffset.X, VoidPlayer.voidBarOffset.Y), new Rectangle(0, 0, Lock.Width, Lock.Height), new Color(255, 255, 255));
 		}
 		public void DrawIce(SpriteBatch spriteBatch, bool shadow = false)
 		{
@@ -212,6 +221,7 @@ namespace SOTS.Void
 			Texture2D frozenBar = ModContent.GetTexture("SOTS/Void/FrozenVoidBar");
 			Texture2D fill = ModContent.GetTexture("SOTS/Void/FrozenVoidBarFill");
 			Texture2D frozenBarBorder = ModContent.GetTexture("SOTS/Void/FrozenVoidBarBorder");
+			Texture2D LockFrozen = ModContent.GetTexture("SOTS/Void/FrozenVoidBarLock");
 			Vector2 padding = new Vector2(-2, 0);
 			Rectangle frame = new Rectangle((int)(VoidPlayer.voidBarOffset.X + padding.X), (int)(VoidPlayer.voidBarOffset.Y + padding.Y), frozenBar.Width, frozenBar.Height);
 			if (voidPlayer.frozenVoid)
@@ -222,6 +232,7 @@ namespace SOTS.Void
 					spriteBatch.Draw(fill, frame, new Color(255, 255, 255) * 0.1f);
 					spriteBatch.Draw(frozenBarBorder, new Vector2(VoidPlayer.voidBarOffset.X, VoidPlayer.voidBarOffset.Y) + padding, new Rectangle(0, 0, frozenBarBorder.Width, frozenBarBorder.Height), new Color(255, 255, 255));
 					spriteBatch.Draw(frozenBar, new Vector2(VoidPlayer.voidBarOffset.X, VoidPlayer.voidBarOffset.Y) + padding, new Rectangle(0, 0, (int)(frozenBar.Width * frozenPercent2), frozenBar.Height), new Color(255, 255, 255));
+					spriteBatch.Draw(LockFrozen, new Vector2(VoidPlayer.voidBarOffset.X, VoidPlayer.voidBarOffset.Y) + padding, new Rectangle(0, 0, LockFrozen.Width, LockFrozen.Height), new Color(255, 255, 255));
 				}
 				else if (shadow && voidPlayer.frozenDuration < 30)
 					for (int i = 0; i < 6; i++)
@@ -240,6 +251,7 @@ namespace SOTS.Void
 					float frozenPercent = (float)voidPlayer.frozenCounter / (float)voidPlayer.frozenMinTimer;
 					frame = new Rectangle(0, 0, (int)(frozenBarBorder.Width * frozenPercent), frozenBarBorder.Height);
 					spriteBatch.Draw(frozenBarBorder, new Vector2(VoidPlayer.voidBarOffset.X, VoidPlayer.voidBarOffset.Y) + padding, frame, new Color(255, 255, 255));
+					spriteBatch.Draw(LockFrozen, new Vector2(VoidPlayer.voidBarOffset.X, VoidPlayer.voidBarOffset.Y) + padding, frame, new Color(255, 255, 255));
 				}
 				else if (voidPlayer.frozenCounter > voidPlayer.frozenMinTimer - 30)
 					for (int i = 0; i < 6; i++)

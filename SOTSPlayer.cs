@@ -319,11 +319,11 @@ namespace SOTS
 			for (int i = 0; i < Main.projectile.Length; i++)
 			{
 				Projectile proj = Main.projectile[i];
-				if (proj.type == ModContent.ProjectileType<GasBlast>() && proj.active && proj.owner == drawPlayer.whoAmI)
+				bool validType = proj.type == ModContent.ProjectileType<GasBlast>() || proj.type == ModContent.ProjectileType<Projectiles.Minions.CursedBlade>();
+				if (validType && proj.active && proj.owner == drawPlayer.whoAmI)
 				{
 					slots.Add(i);
-					GasBlast ring = proj.modProjectile as GasBlast;
-					List<CurseFoam> list = ring.foamParticleList1;
+					List<CurseFoam> list = getFoamList(drawPlayer, proj);
 					modPlayer.DrawFoam(list, 2);
 				}
 			}
@@ -331,29 +331,35 @@ namespace SOTS
 			for (int i = 0; i < slots.Count; i++)
 			{
 				Projectile proj = Main.projectile[slots[i]];
-				if (proj.type == ModContent.ProjectileType<GasBlast>() && proj.active && proj.owner == drawPlayer.whoAmI)
-				{
-					GasBlast ring = proj.modProjectile as GasBlast;
-					List<CurseFoam> list = ring.foamParticleList1;
-					modPlayer.DrawFoam(list, 1);
-				}
+				List<CurseFoam> list = getFoamList(drawPlayer, proj);
+				modPlayer.DrawFoam(list, 1);
 			}
 			modPlayer.DrawFoam(foamList, 1);
 			for (int i = 0; i < slots.Count; i++)
 			{
 				Projectile proj = Main.projectile[slots[i]];
-				if (proj.type == ModContent.ProjectileType<GasBlast>() && proj.active && proj.owner == drawPlayer.whoAmI)
-				{
-					GasBlast ring = proj.modProjectile as GasBlast;
-					List<CurseFoam> list = ring.foamParticleList1;
-					modPlayer.DrawFoam(list, 0);
-				}
+				List<CurseFoam> list = getFoamList(drawPlayer, proj);
+				modPlayer.DrawFoam(list, 0);
 			}
 			modPlayer.DrawFoam(foamList, 0);
 			//Mod mod = ModLoader.GetMod("SOTS");
 			if (drawInfo.shadow != 0)
 				return;
 		});
+		public static List<CurseFoam> getFoamList(Player player, Projectile proj)
+		{
+			if (proj.type == ModContent.ProjectileType<GasBlast>() && proj.active && proj.owner == player.whoAmI)
+			{
+				GasBlast ring = proj.modProjectile as GasBlast;
+				return ring.foamParticleList1;
+			}
+			if (proj.type == ModContent.ProjectileType<Projectiles.Minions.CursedBlade>() && proj.active && proj.owner == player.whoAmI)
+			{
+				Projectiles.Minions.CursedBlade ring = proj.modProjectile as Projectiles.Minions.CursedBlade;
+				return ring.foamParticleList1;
+			}
+			return null;
+		}
 		public void DrawFoam(List<CurseFoam> dustList, int layer)
 		{
 			Texture2D texture = ModContent.GetTexture("SOTS/Assets/PlayerCurseFoam");

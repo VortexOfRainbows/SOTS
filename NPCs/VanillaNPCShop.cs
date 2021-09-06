@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using SOTS.Items.SoldStuff;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -9,9 +10,14 @@ namespace SOTS.NPCs
     {
         public override void SetupTravelShop(int[] shop, ref int nextSlot)
         {
-			if(Main.rand.Next(3) == 0)
+			if (Main.rand.NextBool(5))
 			{
-				shop[nextSlot] = mod.ItemType("SupremSticker");  
+				shop[nextSlot] = ModContent.ItemType<SafetySwitch>();
+				nextSlot++;
+			}
+			else if(Main.rand.NextBool(500))
+			{
+				shop[nextSlot] = ModContent.ItemType<SupremSticker>();
 				nextSlot++;
 			}
 		}
@@ -22,7 +28,7 @@ namespace SOTS.NPCs
                 case NPCID.Merchant: 
 					if (Main.LocalPlayer.HasItem(mod.ItemType("FlareDetonator")))
 					{
-						shop.item[nextSlot].SetDefaults(mod.ItemType("BlackFlare"));
+						shop.item[nextSlot].SetDefaults(ModContent.ItemType<BlackFlare>());
 						nextSlot++;
 					}
                     break;

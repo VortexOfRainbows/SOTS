@@ -5,6 +5,9 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using System.Collections.Generic;
+using SOTS.Projectiles.Pyramid;
+using Microsoft.Xna.Framework.Graphics;
+using SOTS.NPCs.Boss.Curse;
 
 namespace SOTS.Projectiles.Minions
 {    
@@ -13,14 +16,12 @@ namespace SOTS.Projectiles.Minions
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Cursed Blade");
-			//ProjectileID.Sets.MinionTargettingFeature[projectile.type] = true;
-			//ProjectileID.Sets.TrailCacheLength[projectile.type] = 8;
-			//ProjectileID.Sets.TrailingMode[projectile.type] = 0;
+			ProjectileID.Sets.MinionTargettingFeature[projectile.type] = true;
 		}
 		public sealed override void SetDefaults()
 		{
-			projectile.width = 34;
-			projectile.height = 34;
+			projectile.width = 22;
+			projectile.height = 22;
 			projectile.tileCollide = false;
 			projectile.friendly = true;
 			//projectile.minion = true;
@@ -30,27 +31,67 @@ namespace SOTS.Projectiles.Minions
 			projectile.ignoreWater = true;
 			projectile.localNPCHitCooldown = 10;
 		}
-		private const int attackTimerMax = 150;
+        public override bool CanHitPlayer(Player target)
+        {
+            return false;
+        }
+        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		{
+			Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Minions/CursedBladeHilt");
+			Texture2D texture2 = ModContent.GetTexture("SOTS/Projectiles/Minions/CursedBladePart");
+			Texture2D texture3 = ModContent.GetTexture("SOTS/Projectiles/Minions/CursedBladeEnd");
+			Vector2 drawPos = projectile.Center- Main.screenPosition;
+			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
+			int length = (int)(11f * (1 - projectile.ai[0] / attackTimerMax));
+			float rotation = projectile.rotation;
+			for (int i = 0; i < length + 1; i++)
+			{
+				Color color1 = lightColor;
+				if(i != length)
+				{
+					Vector2 toProj2 = new Vector2(6 + i * 2, 0).RotatedBy(rotation);
+					spriteBatch.Draw(texture2, projectile.Center + toProj2 - Main.screenPosition, null, color1, rotation + MathHelper.Pi / 4, new Vector2(4, 4), projectile.scale, SpriteEffects.None, 0f);
+				}
+				else
+				{
+					Vector2 toProj2 = new Vector2(7 + i * 2, 0).RotatedBy(rotation);
+					spriteBatch.Draw(texture3, projectile.Center + toProj2 - Main.screenPosition, null, color1, rotation + MathHelper.Pi / 4, new Vector2(6, 6), projectile.scale, SpriteEffects.None, 0f);
+				}
+			}
+			spriteBatch.Draw(texture, drawPos, null, lightColor, rotation + MathHelper.Pi / 4, origin, projectile.scale * 1.0f, SpriteEffects.None, 0f);
+			return false;
+		}
+		private const int attackTimerMax = 180;
+        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
+        {
+            return projectile.ai[0] >= attackTimerMax + 10 || projHitbox.Intersects(targetHitbox);
+        }
         public override bool? CanHitNPC(NPC target)
         {
-            return projectile.ai[0] >= attackTimerMax;
+            return projectile.ai[0] >= attackTimerMax && target.whoAmI == targetWhoAmI;
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
 			projectile.localNPCImmunity[target.whoAmI] = projectile.localNPCHitCooldown;
 			target.immune[projectile.owner] = 0;
 			canAttack = false;
+			projectile.netUpdate = true;
+			Projectile.NewProjectile(target.Center, Vector2.Zero, ModContent.ProjectileType<CursedStab>(), projectile.damage, 0, Main.myPlayer, 0, target.whoAmI);
 		}
 		public override void SendExtraAI(BinaryWriter writer)
 		{
 			writer.Write(projectile.alpha);
 			writer.Write(canAttack);
+			writer.Write(foundTarget);
+			writer.Write(targetWhoAmI);
 			base.SendExtraAI(writer);
 		}
 		public override void ReceiveExtraAI(BinaryReader reader)
 		{
 			projectile.alpha = reader.ReadInt32();
 			canAttack = reader.ReadBoolean();
+			foundTarget = reader.ReadBoolean();
+			targetWhoAmI = reader.ReadInt32();
 			base.ReceiveExtraAI(reader);
 		}
 		public override bool? CanCutTiles()
@@ -98,11 +139,47 @@ namespace SOTS.Projectiles.Minions
 			if (dist > goTo.Length())
 				dist = goTo.Length();
 			projectile.velocity = newGoTo * dist;
-			projectile.rotation = projectile.velocity.X * 0.04f + MathHelper.ToRadians(135);
+			projectile.rotation = projectile.velocity.X * 0.04f + MathHelper.Pi/2;
 		}
 		bool foundTarget = false;
 		int targetWhoAmI = -1;
 		bool canAttack = true;
+		bool canDoDashSounds = true;
+		int counter = 0;
+		public void DoDusts()
+		{
+			float dustMult = (projectile.ai[0] / (attackTimerMax - 30));
+			if (dustMult > 1)
+				dustMult = 1;
+			if (dustMult > 0)
+            {
+				float length = 38 * dustMult;
+				for(float i = 0; i < length; i++)
+                {
+					for(int j = -1; j <= 1; j++)
+					{
+						if (Main.rand.NextBool(3))
+						{
+							float scaleMult = 0.64f + 0.36f * (1 - (i / length));
+							if (j != 0)
+							{
+								if(i % 2 == 0)
+								{
+									scaleMult *= 0.8f;
+									Vector2 away = new Vector2(10, (10 + i * 1.0f) * 0.4f * j).RotatedBy(projectile.rotation);
+									foamParticleList1.Add(new CurseFoam(projectile.Center + away, new Vector2(Main.rand.NextFloat(-0.1f, 0.1f), Main.rand.NextFloat(-0.1f, 0.1f)) + away * 0.1f, (0.65f + Main.rand.NextFloat(-0.1f, 0.1f)) * scaleMult, false));
+								}
+							}
+							else
+							{
+								Vector2 away = new Vector2(10 + i * 1.0f, 0).RotatedBy(projectile.rotation);
+								foamParticleList1.Add(new CurseFoam(projectile.Center + away, new Vector2(Main.rand.NextFloat(-0.1f, 0.1f), Main.rand.NextFloat(-0.1f, 0.1f)) + away * 0.1f, (0.65f + Main.rand.NextFloat(-0.1f, 0.1f)) * scaleMult, false));
+							}
+						}
+					}
+				}
+			}
+        }
 		public override void AI()
 		{
 			Player player = Main.player[projectile.owner];
@@ -158,22 +235,31 @@ namespace SOTS.Projectiles.Minions
 			#region Movement
 			Vector2 idlePosition = player.Center;
 			idlePosition.Y -= 96f;
-			float speed = 5f;
+			float speed = 9f;
 			if (foundTarget && canAttack && targetWhoAmI != -1 && Main.npc[targetWhoAmI].CanBeChasedBy())
 			{
 				NPC npc = Main.npc[targetWhoAmI];
 				float Twidth = (float)Math.Sqrt(npc.height * npc.width);
 				Vector2 goTo = npc.Center - projectile.Center;
-				float sinM = (float)Math.Sin(MathHelper.ToRadians(projectile.ai[0] - 35)) * 32;
-				if (projectile.ai[0] > attackTimerMax + 30)
-                {
-					sinM = -(72 + Twidth);
-					speed *= 4;
-				}
-				float distance = goTo.Length() - (72 + Twidth + sinM);
-				if (distance < 4 || projectile.ai[0] > 15)
+				speed += goTo.Length() * 0.004f;
+				float sinM = (float)Math.Sin(MathHelper.ToRadians(projectile.ai[0] - 35)) * 64;
+				if (projectile.ai[0] > attackTimerMax)
 				{
-					projectile.ai[0] += 9;
+					sinM = -(72 + Twidth);
+					speed *= 3;
+				}
+				else if (projectile.ai[0] > attackTimerMax - 10)
+				{
+					if (canDoDashSounds)
+					{
+						Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 92, 0.7f, 0.25f);
+					}
+					canDoDashSounds = false;
+				}
+				float distance = goTo.Length() - (90 + Twidth + sinM);
+				if (distance < 4 || projectile.ai[0] > 10)
+				{
+					projectile.ai[0] += 5;
 				}
 				goTo = goTo.SafeNormalize(Vector2.Zero);
 				if (speed > distance)
@@ -182,22 +268,34 @@ namespace SOTS.Projectiles.Minions
 				}
 				goTo *= speed;
 				projectile.velocity = goTo;
-				projectile.rotation = goTo.ToRotation() + MathHelper.Pi/4;
+				projectile.rotation = (npc.Center - projectile.Center).ToRotation();
+				if(projectile.ai[0] > attackTimerMax + 10)
+                {
+					projectile.ai[0] = attackTimerMax + 10;
+				}
 			}
 			else
 			{
+				canDoDashSounds = true;
 				projectile.hide = false;
 				targetWhoAmI = -1;
 				foundTarget = false;
-				if (projectile.ai[0] > 0)
+				if (!canAttack && projectile.ai[0] > 0)
                 {
-					projectile.ai[0]--;
-                }
+					if(projectile.ai[0] > attackTimerMax - 10)
+						projectile.ai[0]--;
+					else
+						projectile.ai[0] -= 0.6f;
+				}
 				else
                 {
+					projectile.ai[0] = 0;
 					canAttack = true;
 				}
-				Idle();
+				if(projectile.ai[0] < attackTimerMax - 5)
+					Idle();
+				else
+					projectile.velocity *= 0.985f;
 				if (Main.myPlayer == player.whoAmI && (idlePosition - projectile.Center).Length() > 1200f)
 				{
 					projectile.position = idlePosition;
@@ -206,11 +304,43 @@ namespace SOTS.Projectiles.Minions
 				}
 			}
 			#endregion
-			Lighting.AddLight(projectile.Center, 2.4f * 0.5f * ((255 - projectile.alpha) / 255f), 2.2f * 0.5f * ((255 - projectile.alpha) / 255f), 1.4f * 0.5f * ((255 - projectile.alpha) / 255f));
+			if (canAttack || projectile.ai[0] >= attackTimerMax - 5)
+				DoDusts();
+			Lighting.AddLight(projectile.Center, 0.55f * ((255 - projectile.alpha) / 255f), 0.1f * ((255 - projectile.alpha) / 255f), 0.25f * ((255 - projectile.alpha) / 255f));
 
 			if (Main.myPlayer == player.whoAmI)
 			{
-				projectile.netUpdate = true;
+				counter++;
+				if(counter % 30 == 0)
+					projectile.netUpdate = true;
+			}
+			catalogueParticles();
+		}
+		public List<CurseFoam> foamParticleList1 = new List<CurseFoam>();
+		public void catalogueParticles()
+		{
+			for (int i = 0; i < foamParticleList1.Count; i++)
+			{
+				CurseFoam particle = foamParticleList1[i];
+				particle.Update();
+				if (!particle.active)
+				{
+					particle = null;
+					foamParticleList1.RemoveAt(i);
+					i--;
+				}
+				else
+				{
+					particle.Update();
+					if (!particle.active)
+					{
+						particle = null;
+						foamParticleList1.RemoveAt(i);
+						i--;
+					}
+					else if (!particle.noMovement)
+						particle.position += projectile.velocity * 0.975f;
+				}
 			}
 		}
 	}

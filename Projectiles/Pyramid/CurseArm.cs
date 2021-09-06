@@ -206,7 +206,7 @@ namespace SOTS.Projectiles.Pyramid
         }
 		int counter = 0;
 		float currentIterator = 1f;
-		float nextIterator = -1.1f;
+		float nextIterator = -1.08f;
 		float midIterator = 1f;
 		float toNextIterator = 0f;
 		public void RotateAI()
@@ -237,7 +237,7 @@ namespace SOTS.Projectiles.Pyramid
 			{
 				toNextIterator = 0;
 				currentIterator = midIterator;
-				nextIterator = -currentIterator * 1.1f;
+				nextIterator = -currentIterator * 1.08f;
 			}
 			else
 			{

@@ -11,11 +11,11 @@ namespace SOTS.Items.Pyramid
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Cursed Blade");
-			Tooltip.SetDefault("Summons a Cursed Blade to assist in combat");
+			Tooltip.SetDefault("Summons a Cursed Blade to assist in combat\nHit enemies receive a storm of sword strikes, dealing 50% damage each, and ending in an explosion\nThe explosion deals 100% damage and always critical strikes");
 		}
         public override void SafeSetDefaults()
         {
-            item.damage = 28;
+            item.damage = 24;
             item.summon = true;
             item.width = 34;
             item.height = 34;

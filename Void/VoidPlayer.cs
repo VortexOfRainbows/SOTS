@@ -12,6 +12,7 @@ using SOTS.Projectiles.Minions;
 using SOTS.Buffs;
 using Terraria.ID;
 using SOTS.Projectiles.Inferno;
+using SOTS.Items.Void;
 
 namespace SOTS.Void
 {
@@ -38,6 +39,7 @@ namespace SOTS.Void
 		public int frozenMaxDuration = 0;
 		public int frozenMinTimer = 3600;
 		public float frozenVoidCount = 0;
+		public bool safetySwitch = false;
 		public override TagCompound Save() {
 
 			return new TagCompound {
@@ -73,7 +75,7 @@ namespace SOTS.Void
 			VoidPlayer cloneV = clientPlayer as VoidPlayer;
 			if (netUpdate)
 			{
-				if (cloneV.lootingSouls != lootingSouls || cloneV.voidMeterMax2 != voidMeterMax2)
+				if (cloneV.lootingSouls != lootingSouls || cloneV.voidMeterMax != voidMeterMax || cloneV.voidMeterMax2 != voidMeterMax2)
 				{
 					// Send a Mod Packet with the changes.
 					var packet = mod.GetPacket();
@@ -304,10 +306,14 @@ namespace SOTS.Void
 				{
 					int type = VoidMinions[i];
 					Projectile projectile = Main.projectile[whoAmI[i]];
-					projectile.active = false;
-					projectile.Kill();
+					if (projectile.owner == player.whoAmI)
+					{
+						projectile.active = false;
+						projectile.Kill();
+					}
 					total -= minionVoidCost(type);
-					VoidMinions.RemoveAt(i);
+					if (projectile.owner == player.whoAmI)
+						VoidMinions.RemoveAt(i);
 					flag = true;
 				}
 			}
@@ -393,7 +399,36 @@ namespace SOTS.Void
 		}
         public override void PostUpdateEquips()
         {
-            base.PostUpdateEquips();
+			for(int i = 0; i < player.inventory.Length; i++)
+            {
+				Item item = player.inventory[i];
+				if(item.modItem as VoidConsumable != null)
+                {
+					VoidConsumable vCon = item.modItem as VoidConsumable;
+					vCon.SealedUpdateInventory(player);
+				}
+			}
+			if (voidMeter < 0)
+			{
+				if (!voidShock && !voidRecovery)
+				{
+					int time = 600;
+					player.AddBuff(mod.BuffType("VoidShock"), time);
+					//if(time < 120) time = 120;
+				}
+				player.lifeRegen += (int)(voidMeter * 0.2f);
+				if (voidMeter <= -150)
+				{
+					voidMeter = -150;
+				}
+			}
+			if (player.HasBuff(ModContent.BuffType<SulfurBurn>()))
+			{
+				if (voidRegen > 0)
+					voidRegen *= 0.5f;
+				voidRegen -= 100f;
+			}
+			base.PostUpdateEquips();
         }
         private void ResetVariables() 
 		{
@@ -498,29 +533,7 @@ namespace SOTS.Void
 			{
 				VoidUI.visible = true;
 			}
-		}
-		public override void PostUpdateBuffs()
-		{
-			if (voidMeter < 0)
-			{
-				if(!voidShock && !voidRecovery)
-				{
-					int time = 600;
-					player.AddBuff(mod.BuffType("VoidShock"), time);
-					//if(time < 120) time = 120;
-				}
-				player.lifeRegen += (int)(voidMeter * 0.2f);
-				if(voidMeter <= -150)
-				{
-					voidMeter = -150;
-				}
-			}
-			if (player.HasBuff(ModContent.BuffType<SulfurBurn>()))
-			{
-				if(voidRegen > 0)
-					voidRegen *= 0.5f;
-				voidRegen -= 100f;
-			}
+			safetySwitch = false;
 		}
 		public override float UseTimeMultiplier(Item item)
 		{

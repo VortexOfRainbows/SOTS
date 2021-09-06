@@ -142,7 +142,12 @@ namespace SOTS.Void
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			bool canUse = BeforeUseItem(player);
-			if(!canUse || player.FindBuffIndex(mod.BuffType("VoidRecovery")) > -1 || item.useAnimation < 2 || (player.altFunctionUse != 2 && item.summon && (voidPlayer.voidMeterMax2 - voidPlayer.lootingSouls - voidPlayer.VoidMinionConsumption) < voidMana))
+			int currentVoid = voidPlayer.voidMeterMax2 - voidPlayer.lootingSouls - voidPlayer.VoidMinionConsumption;
+			if (voidPlayer.safetySwitch && voidPlayer.voidMeter < voidMana && !item.summon)
+			{
+				return false;
+			}
+			if(!canUse || player.FindBuffIndex(mod.BuffType("VoidRecovery")) > -1 || item.useAnimation < 2 || (player.altFunctionUse != 2 && item.summon && currentVoid < voidMana))
 			{
 				return false;
 			}

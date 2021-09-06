@@ -145,7 +145,7 @@ namespace SOTS.NPCs.Boss.Curse
 				}
 			}
 			if (!quiet)
-				Main.PlaySound(SoundID.Item14, (int)npc.Center.X, (int)npc.Center.Y);
+				Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 62, 1f, 0.2f);
 		}
 		public override void AI()
 		{

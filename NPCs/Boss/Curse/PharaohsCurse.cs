@@ -682,7 +682,7 @@ namespace SOTS.NPCs.Boss.Curse
 		{
 			if (style == 0)
 			{
-				Main.PlaySound(2, (int)npc.Center.X, (int)npc.Center.Y, 14, 0.85f, 0.25f);
+				Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 62, 1f, 0.2f);
 				ParticleExplosion(120, true);
 				if (Main.netMode == 1)
 					return;
@@ -716,7 +716,7 @@ namespace SOTS.NPCs.Boss.Curse
 		public void ParticleExplosion(int amt = 240, bool quiet = false)
 		{
 			if(!quiet)
-				Main.PlaySound(SoundID.Item14, (int)npc.Center.X, (int)npc.Center.Y);
+				Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 62, 1f, 0.2f);
 			for (int j = 0; j < amt; j++)
 			{
 				float scale = Main.rand.NextFloat(0.5f, 1.5f);
