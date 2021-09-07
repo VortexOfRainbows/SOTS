@@ -15,7 +15,7 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void SetDefaults()
 		{
-            item.damage = 17; 
+            item.damage = 20; 
             item.magic = true; 
             item.width = 32;   
             item.height = 34;   

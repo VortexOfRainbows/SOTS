@@ -27,14 +27,19 @@ Low Priority:
 Currently Working On:
 1. Curse Base Armor Set
 2. Frost Artifact Armor set bonus
-3. Pyramid Pots
-4. Acedia Gateway + Acedia Plating
-5. Pyramid Door + Make none of the pyramid blocks breakable until after Evil Bosses
-6. Ambient Pyramid BG Tiles 
+3. Acedia Gateway + Acedia Plating
+4. Pyramid Door + Make none of the pyramid blocks breakable until after Evil Bosses
+5. Ambient Pyramid BG Tiles 
+6. Custom Water color in pyramid
 
 9/6/21
 1. Putrid Pinky Mask added, drops from pinky.
 2. Small bug fix for safety switch visuals.
+3. Pyramid Pots added. They work and spawn correctly
+	1. Added pots to the map (weren't before for some reason)
+4. Buff Cursed Spear Storm damage 17 -> 20 and gave sound effect
+5. Pyramid Worldgen no longer spawns Sandstone Slab -> Ruined Pyramid Brick
+	1. Zepline room now uses pyramid brick
 
 9/5/21
 1. Slightly decreases Pharaoh's Phase 2 Arm acceleration, 1.1x speed per flip -> 1.08x speed per flip

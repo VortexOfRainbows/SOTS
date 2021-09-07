@@ -1,14 +1,10 @@
 using Terraria.ModLoader;
+using Terraria.ID;
 
 namespace SOTS.Items.Pyramid
 {
 	public class PyramidChest : ModItem
 	{
-		public override void SetStaticDefaults()
-		{
-			Tooltip.SetDefault("Pyramid Chest");
-			Tooltip.SetDefault("");
-		}
 		public override void SetDefaults()
 		{
 			item.width = 32;
@@ -19,9 +15,9 @@ namespace SOTS.Items.Pyramid
 			item.useAnimation = 15;
 			item.useTime = 15;
 			item.useStyle = 1;
-			item.rare = 1;
+			item.rare = ItemRarityID.Blue;
 			item.consumable = true;
-			item.createTile = mod.TileType("PyramidChestTile");
+			item.createTile = ModContent.TileType<PyramidChestTile>();
 		}
 	}
 }
