@@ -18,4 +18,4 @@ Sprites To Do:
 5. Trophes For Advisor, Pharaoh, Polaris, and Subspace
 6. Heartsheild Spritesheet
 7. Sarcophagus Item Resprite
-8. Snake Banners
+8. Snake Banners + Snake Projectiles

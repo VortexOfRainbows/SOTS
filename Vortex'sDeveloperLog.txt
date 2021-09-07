@@ -30,7 +30,6 @@ Currently Working On:
 3. Acedia Gateway + Acedia Plating
 4. Pyramid Door + Make none of the pyramid blocks breakable until after Evil Bosses
 5. Ambient Pyramid BG Tiles 
-6. Custom Water color in pyramid
 
 9/6/21
 1. Putrid Pinky Mask added, drops from pinky.
