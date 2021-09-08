@@ -29,6 +29,8 @@ using static SOTS.SOTS;
 using SOTS.Items.Pyramid.AncientGold;
 using SOTS.NPCs.Boss.Curse;
 using SOTS.Projectiles.Pyramid;
+using SOTS.Projectiles.Minions;
+using SOTS.Projectiles.Permafrost;
 
 namespace SOTS
 {
@@ -114,6 +116,7 @@ namespace SOTS
 		public float assassinateNum = 1;
 		public int assassinateFlat = 0;
 		public bool assassinate = false;
+		public int polarCannons = 0;
 
 		public Vector2 starCen;
 		private const int saveVersion = 0;
@@ -772,7 +775,8 @@ namespace SOTS
 			CritCurseFire = false;
 			CurseAura = false;
 			if (PyramidBiome)
-				player.AddBuff(mod.BuffType("PharaohsCurse"), 16, false);
+				player.AddBuff(mod.BuffType("PharaohsCurse"), 16, false); 
+			polarCannons = 0;
 		}
 		public override void CatchFish(Item fishingRod, Item bait, int power, int liquidType, int poolSize, int worldLayer, int questFish, ref int caughtType, ref bool junk)
 		{
@@ -1114,27 +1118,22 @@ namespace SOTS
 				  Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, mod.ProjectileType("PurpleBobber"), damage, type, player.whoAmI);
 				  //return false;
 			}
-			if(pearlescentMagic && item.magic && item.damage > 3 && shotCounter % 6 == 0)
-			{
-				for(int i = 0; i < 1000; i++)
-				{
-					Projectile proj = Main.projectile[i];
-					if(proj.owner == player.whoAmI && proj.type == mod.ProjectileType("PearlescentCore"))
-					{
-						float shootCursorX2 = proj.Center.X - cursorPos.X;
-						float shootCursorY2 = proj.Center.Y - cursorPos.Y;
-						Vector2 toCursor2 = new Vector2(-1, 0).RotatedBy(Math.Atan2(shootCursorY2, shootCursorX2));
-						Projectile.NewProjectile(proj.Center.X, proj.Center.Y, toCursor2.X * 9.25f, toCursor2.Y * 9.25f, mod.ProjectileType("PearlescentShot"), (int)(damage * 1.2f) + 3, knockBack, player.whoAmI);
-						break;
-					}
-				}
-			}
 			if(snakeSling && item.ranged && item.damage > 3 && shotCounter % 5 == 0)
 			{
 				Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(8));
 				Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X * 1.1f, perturbedSpeed.Y * 1.1f, mod.ProjectileType("Pebble"), damage, knockBack, player.whoAmI);
 			}
-			if(backUpBow && item.ranged == true)
+			if((item.ranged || item.melee) && polarCannons > 0 && (!item.autoReuse || player.ownedProjectileCounts[ModContent.ProjectileType<MiniPolarisCannon>()] <= 0))
+			{ 
+				int time = item.useTime;
+				if (item.autoReuse || item.channel)
+					time = -2;
+				for(int i = 0; i < polarCannons; i++)
+				{
+					Projectile.NewProjectile(position, Vector2.Zero, ModContent.ProjectileType<MiniPolarisCannon>(), damage, knockBack, player.whoAmI, time, item.useTime);
+				}
+            }
+			if(backUpBow && item.ranged)
 			{
 				Vector2 perturbedSpeed = -new Vector2(speedX, speedY);
 				Projectile.NewProjectile(position, perturbedSpeed, ModContent.ProjectileType<BackupArrow>(), (int)(damage * 0.45f) + 1, knockBack, player.whoAmI);
@@ -1143,20 +1142,10 @@ namespace SOTS
 			{
 				for(int i = doubledAmount; i > 0; i--)
 				{
-				  Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians(i % 2 == 0 ? i * 6 : i * -6));
-				  Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI);
+					Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians(i % 2 == 0 ? i * 6 : i * -6));
+					Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI);
 				}
 			}
-			
-			if(megHat == true && item.magic == true && item.type != mod.ItemType("TheMelter"))
-			{
-				float numberProjectiles = 1;
-				for (int i = 0; i < numberProjectiles; i++)
-				{
-				  Projectile.NewProjectile(position.X, position.Y, speedX * 0.5f, speedY * 0.5f, type, damage, knockBack, player.whoAmI);
-				}
-			}
-				
 			return true;
 		}
 		public override void OnRespawn(Player player)
@@ -1313,14 +1302,14 @@ namespace SOTS
 		{
 			locketBlacklist = new List<int>() { ItemID.BookStaff, ModContent.ItemType<LashesOfLightning>(), ModContent.ItemType<SkywardBlades>(), ItemID.GolemFist, ItemID.Flairon, 
 				ModContent.ItemType<PhaseCannon>(), ModContent.ItemType<Items.Otherworld.FromChests.HardlightGlaive>(), ModContent.ItemType<StarcoreAssaultRifle>(), ModContent.ItemType<VibrantPistol>(),
-				ModContent.ItemType<Items.Otherworld.FromChests.SupernovaHammer>(), ItemID.MonkStaffT1, ModContent.ItemType<FrigidJavelin>() };
+				ModContent.ItemType<Items.Otherworld.FromChests.SupernovaHammer>(), ItemID.MonkStaffT1, ModContent.ItemType<Items.IceStuff.FrigidJavelin>() };
 
-			SOTSPlayer.typhonBlacklist.Add(ModContent.ProjectileType<ArcColumn>());
-			SOTSPlayer.typhonBlacklist.Add(ModContent.ProjectileType<PhaseColumn>());
-			SOTSPlayer.typhonBlacklist.Add(ModContent.ProjectileType<MacaroniBeam>());
-			SOTSPlayer.typhonBlacklist.Add(ModContent.ProjectileType<GenesisArc>());
-			SOTSPlayer.typhonBlacklist.Add(ModContent.ProjectileType<GenesisCore>());
-			SOTSPlayer.typhonWhitelist.Add(ModContent.ProjectileType<HardlightArrow>());
+			typhonBlacklist.Add(ModContent.ProjectileType<ArcColumn>());
+			typhonBlacklist.Add(ModContent.ProjectileType<PhaseColumn>());
+			typhonBlacklist.Add(ModContent.ProjectileType<MacaroniBeam>());
+			typhonBlacklist.Add(ModContent.ProjectileType<GenesisArc>());
+			typhonBlacklist.Add(ModContent.ProjectileType<GenesisCore>());
+			typhonWhitelist.Add(ModContent.ProjectileType<HardlightArrow>());
 			base.Initialize();
         }
         public override bool PreItemCheck()

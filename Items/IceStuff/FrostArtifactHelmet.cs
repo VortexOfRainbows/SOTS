@@ -20,7 +20,7 @@ namespace SOTS.Items.IceStuff
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Frost Artifact Helmet");
-			Tooltip.SetDefault("14% increased melee and ranged damage\nA Frost Storm surrounds you, frostburning nearby enemies");
+			Tooltip.SetDefault("14% increased melee and ranged damage");
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs)
         {
@@ -28,7 +28,9 @@ namespace SOTS.Items.IceStuff
         }
         public override void UpdateArmorSet(Player player)
         {	
-			player.setBonus = "Nearby enemies and projectiles will have their velocities slowed";
+			player.setBonus = "Most melee and ranged attacks summon a handful of Polar Cannons that each deal 25% damage";
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
+			modPlayer.polarCannons += 3;
 		}
 		public override void UpdateEquip(Player player)
 		{

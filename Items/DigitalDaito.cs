@@ -12,7 +12,7 @@ namespace SOTS.Items
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Digital Daito");
-			Tooltip.SetDefault("WIP ITEM");
+			Tooltip.SetDefault("");
 			Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(2, 15));
 		}
 		public override void SetDefaults()
@@ -21,8 +21,8 @@ namespace SOTS.Items
             item.melee = true;  
             item.width = 62;
             item.height = 64;  
-            item.useTime = 11; 
-            item.useAnimation = 11;
+            item.useTime = 20; 
+            item.useAnimation = 20;
             item.useStyle = 5;		
             item.knockBack = 8f;
             item.value = Item.sellPrice(0, 10, 0, 0);
@@ -31,7 +31,6 @@ namespace SOTS.Items
             item.autoReuse = true;
             item.shoot = mod.ProjectileType("DigitalSlash"); 
             item.shootSpeed = 18f;
-			item.autoReuse = true;
             item.noUseGraphic = true; 
             item.noMelee = true;
 		}

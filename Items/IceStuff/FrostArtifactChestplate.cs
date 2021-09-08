@@ -18,7 +18,7 @@ namespace SOTS.Items.IceStuff
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Frost Artifact Breastplate");
-			Tooltip.SetDefault("16% increased melee and ranged critical strike chance\nA Frost Spike rotates around you");
+			Tooltip.SetDefault("16% increased melee and ranged critical strike chance");
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs)
         {

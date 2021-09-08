@@ -26,10 +26,17 @@ Low Priority:
 
 Currently Working On:
 1. Curse Base Armor Set
-2. Frost Artifact Armor set bonus
+2. Frost Artifact Armor set bonus server compatability
 3. Acedia Gateway + Acedia Plating
 4. Pyramid Door + Make none of the pyramid blocks breakable until after Evil Bosses
 5. Ambient Pyramid BG Tiles 
+
+9/7/21
+1. Metalmalgamation now fires faster and farther, but damage nerf 50 -> 45, 65% -> 50%
+	1. Max range 225 -> 196
+	2. Top speed 11 -> 12
+	3. Life time mult 11 -> 10
+2. Added Frost Artifact Armor set bonus. Have yet to check server compatability.
 
 9/6/21
 1. Putrid Pinky Mask added, drops from pinky.
