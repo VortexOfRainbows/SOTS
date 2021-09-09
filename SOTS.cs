@@ -99,6 +99,7 @@ namespace SOTS
 			AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/CursedPyramid"), ItemType("AncientPyramidMusicBox"), TileType("AncientPyramidMusicBoxTile"));
 			AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/Planetarium"), ItemType("PlanetariumMusicBox"), TileType("PlanetariumMusicBoxTile"));
 			SOTSItem.LoadArrays();
+			SOTSTile.LoadArrays();
 			SOTSWall.LoadArrays();
 		}
 		public override void Unload() 

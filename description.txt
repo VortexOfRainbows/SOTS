@@ -1,10 +1,11 @@
 A mod which may have something to do with secrets and shadows.
 This mod's main plan is to add generated structures to the world, some are sort-of like roguelike dungeons.
+
 !! This mod is early in development !!
 !! A large world is recommended in order for the generated structures to spawn without overriding vanilla structures !!
 
 Bosses -> Currently 6, mostly bullet hells
-Items -> Nearly 440, unique gimmicks all around!
+Items -> Nearly 450, unique gimmicks all around!
 
 New Subclass (void)
 -A new resource similar to mana
