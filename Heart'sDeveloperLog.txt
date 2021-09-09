@@ -19,3 +19,4 @@ Sprites To Do:
 6. Heartsheild Spritesheet
 7. Sarcophagus Item Resprite
 8. Snake Banners + Snake Projectiles
+9. Advisor Baby resprite

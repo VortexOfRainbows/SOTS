@@ -146,7 +146,7 @@ namespace SOTS.Projectiles.Permafrost
 			{
 				triggerStop();
 			}
-			if ((counter > 8 || projectile.ai[0] == -3) && endHow == 0)
+			if ((counter > 10 || projectile.ai[0] == -3) && endHow == 0)
 			{
 				Vector2 temp = projectile.velocity * acceleration;
 				temp = Collision.TileCollision(projectile.Center - new Vector2(10, 10), projectile.velocity * acceleration, 20, 20, true);

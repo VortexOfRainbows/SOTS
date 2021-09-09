@@ -9,11 +9,10 @@ namespace SOTS.Items.Celestial
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Treasure Bag");
-			Tooltip.SetDefault("Right Click to open");
+			Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
 		}
 		public override void SetDefaults()
 		{
-
 			item.width = 44;
 			item.height = 34;
 			item.value = 0;
@@ -21,7 +20,6 @@ namespace SOTS.Items.Celestial
 			item.expert = true;
 			item.maxStack = 99;
 			item.consumable = true;
-			//bossBagNPC = mod.NPCType("PutridPinky2Head");
 		}
 		public override int BossBagNPC => mod.NPCType("CelestialSerpentHead");
 		public override bool CanRightClick()

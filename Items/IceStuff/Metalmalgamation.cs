@@ -9,7 +9,7 @@ namespace SOTS.Items.IceStuff
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Metalmalgamation");
-			Tooltip.SetDefault("Rapidly sprays out long ranged bullets in a radius around it that deal 35% damage\n'Guns on MY children's toy!?'");
+			Tooltip.SetDefault("Rapidly sprays out bullets in a radius around it that deal 35% damage\n'Guns on MY children's toy!?'");
 		}
         public override void SetDefaults()
         {
