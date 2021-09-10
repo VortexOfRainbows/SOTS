@@ -51,7 +51,9 @@ namespace SOTS.Items.Pyramid
 			TileObjectData.newTile.Height = 1;
 			TileObjectData.newTile.Width = 5;
 			TileObjectData.newTile.DrawYOffset = 0;
-			TileObjectData.newTile.Origin = new Point16(2, 0);
+			TileObjectData.newTile.Origin = new Point16(2, 0); 
+			TileObjectData.newTile.AnchorLeft = new AnchorData(AnchorType.SolidTile | AnchorType.SolidSide, 1, 0);
+			TileObjectData.newTile.AnchorRight = new AnchorData(AnchorType.SolidTile | AnchorType.SolidSide, 1, 0);
 			TileObjectData.newTile.AnchorBottom = AnchorData.Empty;
 			TileObjectData.addTile(Type);
 			ModTranslation name = CreateMapEntryName();
@@ -121,7 +123,7 @@ namespace SOTS.Items.Pyramid
         }
 		public override void NumDust(int i, int j, bool fail, ref int num)
 		{
-			num = 8;
+			num = 9;
 		}
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
@@ -168,21 +170,42 @@ namespace SOTS.Items.Pyramid
 			if (!Main.tile[i, j].active() && Main.netMode != NetmodeID.SinglePlayer)
 				NetMessage.SendData(MessageID.TileChange, -1, -1, null, 0, (float)i, (float)j, 0f, 0, 0, 0);
 			Vector2 center = projectile.Center + new Vector2(0, -16);
-			Main.PlaySound(2, (int)center.X, (int)center.Y, 14, 1.25f, -0.25f);
-			for (int k = 0; k < 10; k++)
+			Main.PlaySound(2, (int)center.X, (int)center.Y, 62, 1.25f, -0.5f);
+			if(Main.netMode != NetmodeID.Server)
 			{
-				int goreIndex = Gore.NewGore(center - new Vector2(32, 32) + new Vector2(Main.rand.NextFloat(-16, 16f), Main.rand.NextFloat(-16, 64f)), default(Vector2), Main.rand.Next(61, 64), 1f);
-				Main.gore[goreIndex].scale = 0.8f;
+				for (int k = 0; k < 16; k++)
+				{
+					int goreIndex2 = Gore.NewGore(center - new Vector2(16, 40) + new Vector2(Main.rand.NextFloat(-16, 16f), Main.rand.NextFloat(-16, 64f)), default(Vector2), Main.rand.Next(61, 64), 1f);
+					Main.gore[goreIndex2].scale = 0.9f;
+				}
+				int goreIndex = Gore.NewGore(new Vector2(i * 16, j * 16), Vector2.Zero, mod.GetGoreSlot("Gores/Tiles/PyramidGateGore1"), 1f);
+				Main.gore[goreIndex].velocity *= 0.2f;
+				goreIndex = Gore.NewGore(new Vector2(i * 16 - 16, j * 16), Vector2.Zero, mod.GetGoreSlot("Gores/Tiles/PyramidGateGore2"), 1f);
+				Main.gore[goreIndex].velocity *= 0.2f;
+				goreIndex = Gore.NewGore(new Vector2(i * 16 + 16, j * 16), Vector2.Zero, mod.GetGoreSlot("Gores/Tiles/PyramidGateGore3"), 1f);
+				Main.gore[goreIndex].velocity *= 0.2f;
+				goreIndex = Gore.NewGore(new Vector2(i * 16 + 32, j * 16), Vector2.Zero, mod.GetGoreSlot("Gores/Tiles/PyramidGateGore4"), 1f);
+				Main.gore[goreIndex].velocity *= 0.2f;
+				goreIndex = Gore.NewGore(new Vector2(i * 16 - 32, j * 16), Vector2.Zero, mod.GetGoreSlot("Gores/Tiles/PyramidGateGore5"), 1f);
+				Main.gore[goreIndex].velocity *= 0.2f;
 			}
 			for (j = 0; j < 30; j++)
 			{
 				Vector2 direction = new Vector2(0, -2).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-45, 45)));
-				int num1 = Dust.NewDust(center - new Vector2(12, 12), 16, 16, 198);
+				int num1 = Dust.NewDust(center - new Vector2(12, 12), 16, 16, DustID.GoldCoin);
+				Main.dust[num1].noGravity = true;
+				Main.dust[num1].velocity *= 1.15f;
+				Main.dust[num1].velocity += direction;
+				Main.dust[num1].velocity.Y *= 3;
+				Main.dust[num1].velocity.X *= 1.5f;
+				Main.dust[num1].scale = 1.15f; 
+
+				num1 = Dust.NewDust(center - new Vector2(12, 12), 16, 16, 198);
 				Main.dust[num1].noGravity = true;
 				Main.dust[num1].velocity *= 1.15f;
 				Main.dust[num1].velocity += direction;
 				Main.dust[num1].velocity.Y *= 4;
-				Main.dust[num1].velocity.X *= 1.0f;
+				Main.dust[num1].velocity.X *= 2.0f;
 				Main.dust[num1].scale = 1.2f;
 
 				num1 = Dust.NewDust(center - new Vector2(12, 12), 16, 16, 91);
@@ -190,7 +213,7 @@ namespace SOTS.Items.Pyramid
 				Main.dust[num1].velocity *= 0.9f;
 				Main.dust[num1].velocity += direction;
 				Main.dust[num1].velocity.Y *= 3f;
-				Main.dust[num1].velocity.X *= 0.75f;
+				Main.dust[num1].velocity.X *= 1.5f;
 				Main.dust[num1].scale = 1.65f;
 
 				num1 = Dust.NewDust(center - new Vector2(12, 12), 16, 16, 198);
@@ -198,7 +221,7 @@ namespace SOTS.Items.Pyramid
 				Main.dust[num1].velocity *= 0.75f;
 				Main.dust[num1].velocity += direction;
 				Main.dust[num1].velocity.Y *= 2f;
-				Main.dust[num1].velocity.X *= 0.5f;
+				Main.dust[num1].velocity.X *= 1f;
 				Main.dust[num1].scale = 2f;
 			}
 		}

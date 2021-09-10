@@ -94,7 +94,7 @@ namespace SOTS.Projectiles.Permafrost
 			Vector2 toLocation = player.Center;
 			projectile.velocity *= 0.05f;
 			toLocation.Y += Main.player[projectile.owner].gfxOffY;
-			float rotation = modPlayer.orbitalCounter * 0.8f + (float)ofTotalId / total * 360f;
+			float rotation = modPlayer.orbitalCounter * 1.5f + (float)ofTotalId / total * 360f;
 			Vector2 circular = new Vector2(40, 0).RotatedBy(MathHelper.ToRadians(rotation));
 			circular.Y *= 1.1f;
 			Vector2 goTo = toLocation + circular;
@@ -129,8 +129,12 @@ namespace SOTS.Projectiles.Permafrost
                         }
 					}
 				}
-				projectile.timeLeft = 10;
+				projectile.timeLeft = 11;
 			}
+			if(projectile.timeLeft < 11)
+            {
+				projectile.alpha += 25;
+            }
 			if (projectile.owner == Main.myPlayer)
 			{
 				Vector2 center = new Vector2(projectile.Center.X, projectile.Center.Y + 4);
@@ -153,7 +157,7 @@ namespace SOTS.Projectiles.Permafrost
 		{
 			Texture2D texture = Main.projectileTexture[projectile.type];
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
-			spriteBatch.Draw(texture, projectile.Center + offset - Main.screenPosition, null, lightColor, projectile.rotation, origin, projectile.scale, projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0.0f);
+			spriteBatch.Draw(texture, projectile.Center + offset - Main.screenPosition, null, projectile.GetAlpha(lightColor), projectile.rotation, origin, projectile.scale, projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0.0f);
 			return false;
         }
         public void FireBullet()

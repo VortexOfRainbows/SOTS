@@ -27,13 +27,19 @@ Low Priority:
 Currently Working On:
 1. Curse Base Armor Set
 2. Acedia Gateway + Acedia Plating
-3. Pyramid Door
+3. Fix Pharaoh's Curse (debuff), make Pyramid Key obtainable
 4. Ambient Pyramid BG Tiles 
+
+9/9/21
+1. Pyramid Gate now generates in pyramid entrance (should work in Multiplayer)
+2. Added Snake Resprite
+3. Polish to Polaris armor
 
 9/8/21
 1. Checked: Frost Artifact set bonus works in multiplayer
 2. Some small rebalances
 3. No longer possible to break pyramid blocks before evil boss
+4. Work on Pyramid Door
 
 9/7/21
 1. Metalmalgamation now fires faster and farther, but damage nerf 50 -> 45, 65% -> 35%

@@ -482,7 +482,16 @@ namespace SOTS
 					Tile tile = Framing.GetTileSafely(pyramidX + h, pyramidY + pyramidLevel);
 					if (!TileDungeon(tile)) //check for not dungeon!
 					{
-						tile.wall = (ushort)ModContent.WallType<UnsafePyramidWallWall>();
+						if (pyramidLevel <= 15)
+							tile.wall = (ushort)ModContent.WallType<PyramidWallWall>();
+						else if(pyramidLevel == 16)
+						{
+							tile.wall = (ushort)ModContent.WallType<PyramidBrickWallWall>();
+						}
+						else
+						{
+							tile.wall = (ushort)ModContent.WallType<UnsafePyramidWallWall>();
+						}
 					}
 				}
 				if (pyramidLevel >= 10 && pyramidLevel <= 15)
@@ -506,6 +515,7 @@ namespace SOTS
 						}
 					}
 				}
+
 				if (pyramidLevel >= 15 && initialPath == 1)
 				{
 					if (15 + nextAmount <= pyramidLevel)
@@ -534,6 +544,16 @@ namespace SOTS
 							}
 							endingTileX = pyramidX + (-pyramidLevel + 13);
 						}
+					}
+					if(pyramidLevel == 16)
+					{
+						Tile tile = Framing.GetTileSafely(pyramidX + (pyramidLevel - 16) * -direction, pyramidY + pyramidLevel);
+						SetTilePyramid(tile);
+						tile.type = (ushort)ModContent.TileType<RoyalGoldBrickTile>();
+						tile = Framing.GetTileSafely(pyramidX + (pyramidLevel - 10) * -direction, pyramidY + pyramidLevel);
+						SetTilePyramid(tile);
+						tile.type = (ushort)ModContent.TileType<RoyalGoldBrickTile>();
+						WorldGen.PlaceTile(pyramidX + (pyramidLevel - 13) * -direction, pyramidY + pyramidLevel, ModContent.TileType<PyramidGateTile>(), true, true);
 					}
 					endingTileY = pyramidY + pyramidLevel;
 				}
@@ -710,7 +730,7 @@ namespace SOTS
 						selectTile.type = (ushort)ModContent.TileType<RuinedPyramidBrickTile>(); //274;
 					}
 				}
-				for (int findTileY = pyramidY + (size - 55); findTileY > pyramidY + 15; findTileY--)
+				for (int findTileY = pyramidY + (size - 55); findTileY > pyramidY + 20; findTileY--) //generating spikes
 				{
 					int max = Math.Abs((int)((findTileY - pyramidY) * 0.8f));
 					int min = Math.Abs((int)((findTileY - pyramidY) * 0.5f));
