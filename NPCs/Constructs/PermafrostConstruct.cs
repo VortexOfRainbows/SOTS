@@ -51,9 +51,7 @@ namespace SOTS.NPCs.Constructs
 			{
 				float x = Main.rand.Next(-10, 11) * 0.25f;
 				float y = Main.rand.Next(-10, 11) * 0.25f;
-				Main.spriteBatch.Draw(texture2,
-				new Vector2((float)(npc.Center.X - (int)Main.screenPosition.X) + x, (float)(npc.Center.Y - (int)Main.screenPosition.Y) + y),
-				null, color * (1f - (npc.alpha / 255f)), npc.rotation, drawOrigin2, npc.scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture2, drawPos + new Vector2(x, y), null, color * (1f - (npc.alpha / 255f)), npc.rotation, drawOrigin2, npc.scale, SpriteEffects.None, 0f);
 			}
 			spriteBatch.Draw(texture, drawPos, null, drawColor, dir, drawOrigin, 1f, SpriteEffects.None, 0f);
 			spriteBatch.Draw(textureG, drawPos, null, Color.White, dir, drawOrigin, 1f, SpriteEffects.None, 0f);

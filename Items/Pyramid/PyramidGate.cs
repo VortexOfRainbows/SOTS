@@ -103,7 +103,7 @@ namespace SOTS.Items.Pyramid
 			int top = j - tile.frameY / 18;
 			Main.mouseRightRelease = false;
 			int key = ModContent.ItemType<PyramidKey>();
-			if (player.ConsumeItem(key))
+			if (SOTSWorld.downedBoss2 && player.ConsumeItem(key))
 			{
 				Projectile.NewProjectile(new Vector2(left, top) * 16 + new Vector2(40, 8), Vector2.Zero, ModContent.ProjectileType<PyramidGateProj>(), 0, 0, Main.myPlayer);
 			}

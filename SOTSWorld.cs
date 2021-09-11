@@ -233,7 +233,7 @@ namespace SOTS
 			if(NPC.downedBoss2 && !downedBoss2)
 			{
 				downedBoss2 = true;
-				Main.NewText("The pyramid's curse weakens", 155, 115, 0);
+				//Main.NewText("The pyramid's curse weakens", 155, 115, 0);
 			}
 		}
 		public override void ModifyWorldGenTasks(List<GenPass> tasks, ref float totalWeight)

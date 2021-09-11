@@ -25,6 +25,7 @@ using SOTS.Items.Inferno;
 using Terraria.Utilities;
 using SOTS.Items.Pyramid.PyramidWalls;
 using SOTS.Projectiles.Celestial;
+using SOTS.Projectiles.Permafrost;
 
 namespace SOTS
 {
@@ -424,6 +425,37 @@ namespace SOTS
 				}
 			}
 		}
+        public override bool CanUseItem(Item item, Player player)
+		{
+			if(player.HasAmmo(item, true))
+			{
+				int polarCannons = SOTSPlayer.ModPlayer(player).polarCannons;
+				if ((item.ranged || item.melee) && polarCannons > 0 && (!item.autoReuse || player.ownedProjectileCounts[ModContent.ProjectileType<MiniPolarisCannon>()] <= 0))
+				{
+					int time = item.useTime;
+					if (item.shoot == 0)
+						time = item.useAnimation;
+					if (item.autoReuse || item.channel)
+						time = -2;
+					for (int i = 0; i < polarCannons; i++)
+					{
+						Projectile.NewProjectile(player.Center, Vector2.Zero, ModContent.ProjectileType<MiniPolarisCannon>(), item.damage, item.knockBack, player.whoAmI, time, item.shoot != 0 ? item.useTime : item.useAnimation);
+					}
+				}
+			}
+			return base.CanUseItem(item, player);
+        }
+        public override bool UseItem(Item item, Player player)
+		{
+			return base.UseItem(item, player);
+        }
+        public override void OpenVanillaBag(string context, Player player, int arg)
+        {
+			if (context == "bossBag" && (arg == ItemID.EaterOfWorldsBossBag || arg == ItemID.BrainOfCthulhuBossBag))
+			{
+				player.QuickSpawnItem(ItemType<PyramidKey>(), 1);
+			}
+        }
     }
 	public class DataTransferProj : ModProjectile
 	{

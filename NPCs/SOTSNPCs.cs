@@ -262,6 +262,10 @@ namespace SOTS.NPCs
 				}
 				if(Zombies.Contains(npc.type) && Main.rand.NextBool(80))
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<ZombieHand>(), 1);
+				if(npc.boss && !Main.expertMode && (npc.type == NPCID.BrainofCthulhu || npc.type == NPCID.EaterofWorldsHead || npc.type == NPCID.EaterofWorldsBody || npc.type == NPCID.EaterofWorldsTail))
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<PyramidKey>(), 1);
+				}
 			}
 		}
 		public override void EditSpawnRate(Player player, ref int spawnRate, ref int maxSpawns) 

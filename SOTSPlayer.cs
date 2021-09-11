@@ -1123,16 +1123,6 @@ namespace SOTS
 				Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(8));
 				Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X * 1.1f, perturbedSpeed.Y * 1.1f, mod.ProjectileType("Pebble"), damage, knockBack, player.whoAmI);
 			}
-			if((item.ranged || item.melee) && polarCannons > 0 && (!item.autoReuse || player.ownedProjectileCounts[ModContent.ProjectileType<MiniPolarisCannon>()] <= 0))
-			{ 
-				int time = item.useTime;
-				if (item.autoReuse || item.channel)
-					time = -2;
-				for(int i = 0; i < polarCannons; i++)
-				{
-					Projectile.NewProjectile(position, Vector2.Zero, ModContent.ProjectileType<MiniPolarisCannon>(), damage, knockBack, player.whoAmI, time, item.useTime);
-				}
-            }
 			if(backUpBow && item.ranged)
 			{
 				Vector2 perturbedSpeed = -new Vector2(speedX, speedY);

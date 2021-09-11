@@ -73,7 +73,7 @@ namespace SOTS.Items.Otherworld
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
 			int drop = mod.ItemType("AvaritianGateway");
-			Item.NewItem(i * 16, j * 16, 128, 144, drop);
+			Item.NewItem(i * 16, j * 16, 144, 144, drop);
 		}
         public override void RandomUpdate(int i, int j)
 		{

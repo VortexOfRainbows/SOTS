@@ -26,9 +26,14 @@ Low Priority:
 
 Currently Working On:
 1. Curse Base Armor Set
-2. Acedia Gateway + Acedia Plating
-3. Fix Pharaoh's Curse (debuff), make Pyramid Key obtainable
-4. Ambient Pyramid BG Tiles 
+2. Acedia Gateway Vines!
+3. Ambient Pyramid BG Tiles 
+4. Subspace Death Animation
+
+9/10/21
+1. Polaris Armor set bonus added more consistency. Works with all melee ranged items
+2. Pyramid Key drops properly (from bags and normal), also Pharaoh's Curse debuff basically removed
+3. Added Acedia Gateway (WIP sprite, need vine)
 
 9/9/21
 1. Pyramid Gate now generates in pyramid entrance (should work in Multiplayer)
