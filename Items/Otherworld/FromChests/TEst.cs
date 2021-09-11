@@ -31,9 +31,8 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			player.AddBuff(ModContent.BuffType<CreativeShock2>(), 360);
 			position = Main.MouseWorld;
-			Projectile.NewProjectile(position, Vector2.Zero, ModContent.ProjectileType<RubySpawnerFinder>(), damage, knockBack, player.whoAmI, 0, 0);
+			Projectile.NewProjectile(position, new Vector2(0, -1.5f), ModContent.ProjectileType<SubspaceDeathAnimation>(), damage, knockBack, player.whoAmI, 0, 0);
 			return false; 
 		}
 	}

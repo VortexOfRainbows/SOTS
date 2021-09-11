@@ -34,6 +34,7 @@ Currently Working On:
 1. Polaris Armor set bonus added more consistency. Works with all melee ranged items
 2. Pyramid Key drops properly (from bags and normal), also Pharaoh's Curse debuff basically removed
 3. Added Acedia Gateway (WIP sprite, need vine)
+4. Subspace death anim practice
 
 9/9/21
 1. Pyramid Gate now generates in pyramid entrance (should work in Multiplayer)
