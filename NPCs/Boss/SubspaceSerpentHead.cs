@@ -73,7 +73,7 @@ namespace SOTS.NPCs.Boss
             if (!hasSpawnedProjectile)
             {
                 if(Main.netMode != 1)
-                    Projectile.NewProjectileDirect(npc.Center, npc.velocity, ModContent.ProjectileType<SubspaceDeathAnimation>(), 0, 0, Main.myPlayer, 0, npc.whoAmI);
+                    Projectile.NewProjectileDirect(npc.Center, npc.velocity * 0.4f, ModContent.ProjectileType<SubspaceDeathAnimation>(), 0, 0, Main.myPlayer, 0, npc.whoAmI);
                 npc.ai[3] = 1f;
                 npc.damage = 0;
                 npc.life = npc.lifeMax;
@@ -119,12 +119,14 @@ namespace SOTS.NPCs.Boss
             if (hasSpawnedProjectile)
             {
                 hasSpawnedProjcounter++;
-                if(hasSpawnedProjcounter > 2)
+                if(hasSpawnedProjcounter > 6)
                 {
                     npc.life = 0;
                     npc.HitEffect(0, 0);
                     npc.checkDead();
                 }
+                npc.velocity *= 0f;
+                directVelo *= 0f;
                 return false;
             }
             if (Main.netMode != NetmodeID.MultiplayerClient)

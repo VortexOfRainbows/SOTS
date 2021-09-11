@@ -10,6 +10,7 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using SOTS.NPCs.Boss;
 using SOTS.Dusts;
+using SOTS.Projectiles.Lightning;
 
 namespace SOTS.Projectiles.Celestial
 {    
@@ -28,21 +29,24 @@ namespace SOTS.Projectiles.Celestial
 			projectile.width = 40;
 			projectile.height = 40;
 			projectile.friendly = false;
-			projectile.timeLeft = 1000;
+			projectile.timeLeft = 1200;
 			projectile.penetrate = -1;
 			projectile.tileCollide = false;
 			projectile.hostile = false;
 			projectile.alpha = 0;
 			projectile.hide = true;
-			projectile.extraUpdates = 1;
 		}
         public override void DrawBehind(int index, List<int> drawCacheProjsBehindNPCsAndTiles, List<int> drawCacheProjsBehindNPCs, List<int> drawCacheProjsBehindProjectiles, List<int> drawCacheProjsOverWiresUI)
         {
 			drawCacheProjsBehindNPCs.Add(index);
         }
+        public override bool ShouldUpdatePosition()
+        {
+            return !(runOnce || projectile.timeLeft > 1196);
+        }
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
-			if (runOnce)
+			if (runOnce || projectile.timeLeft > 1196)
 				return false;
 			DrawWorm(spriteBatch, lightColor);
 			return false;
@@ -50,33 +54,31 @@ namespace SOTS.Projectiles.Celestial
 		int counter = 0;
 		public void DrawWorm(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Color color = lightColor; 
+			Texture2D texture3 = mod.GetTexture("NPCs/Boss/SubspaceSerpentHeadFill");
 			Texture2D texture2 = mod.GetTexture("NPCs/Boss/SubspaceSerpentHeadGlow");
 			Texture2D texture = mod.GetTexture("NPCs/Boss/SubspaceSerpentHead");
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 16);
 			Vector2 first = projectile.Center;
+			Color color = Lighting.GetColor((int)first.X / 16, (int)first.Y / 16, Color.White);
 			Rectangle frame = new Rectangle(0, projectile.frame * texture.Height / 8, texture.Width, texture.Height / 8);
 			counter++;
 			if (counter > 12)
 				counter = 0;
 			if (segmentsDead <= 0)
 			{
-				Vector2 forward = new Vector2(0, (float)Math.Pow(deathCounter, 1.7) * -1).RotatedBy(projectile.rotation);
-				if (segmentsDead != 0)
-					forward *= 0;
-				else
+				for (int i = 0; i < 3; i++)
 				{
-					for(int i = -1; i < 2; i+= 2)
-						DrawLightningBetween(spriteBatch, segments[0], first + forward, i);
+					Vector2 toTheSide = new Vector2(2, 0).RotatedBy(projectile.rotation + MathHelper.ToRadians(i * -90));
+					spriteBatch.Draw(texture3, first - Main.screenPosition + toTheSide, frame, new Color(0, 255, 0), projectile.rotation, origin, 1f, SpriteEffects.None, 0);
 				}
-				spriteBatch.Draw(texture, first + forward - Main.screenPosition, frame, color, projectile.rotation, origin, 1.00f, SpriteEffects.None, 1f);
-				spriteBatch.Draw(texture2, first + forward - Main.screenPosition, frame, Color.White, projectile.rotation, origin, 1.00f, SpriteEffects.None, 0);
+				spriteBatch.Draw(texture, first - Main.screenPosition, frame, color, projectile.rotation, origin, 1.00f, SpriteEffects.None, 1f);
+				spriteBatch.Draw(texture2, first - Main.screenPosition, frame, Color.White, projectile.rotation, origin, 1.00f, SpriteEffects.None, 0);
 				for (int j = 0; j < 2; j++)
 				{
 					float bonusAlphaMult = 1 - 1 * (counter / 12f);
 					float dir = j * 2 - 1;
 					Vector2 offset = new Vector2(counter * 0.8f * dir, 0).RotatedBy(projectile.rotation);
-					Main.spriteBatch.Draw(texture2, first + forward - Main.screenPosition + offset, frame, new Color(100, 100, 100, 0) * bonusAlphaMult, projectile.rotation, origin, 1.00f, SpriteEffects.None, 0.0f);
+					Main.spriteBatch.Draw(texture2, first - Main.screenPosition + offset, frame, new Color(100, 100, 100, 0) * bonusAlphaMult, projectile.rotation, origin, 1.00f, SpriteEffects.None, 0.0f);
 				}
 			}
 			for (int i = 0; i < segments.Count; i++)
@@ -84,83 +86,39 @@ namespace SOTS.Projectiles.Celestial
 				color = Lighting.GetColor((int)segments[i].X / 16, (int)segments[i].Y / 16, Color.White);
 				if (i != segments.Count - 1)
 				{
+					texture3 = mod.GetTexture("NPCs/Boss/SubspaceSerpentBodyFill");
 					texture2 = mod.GetTexture("NPCs/Boss/SubspaceSerpentBodyGlow");
 					texture = mod.GetTexture("NPCs/Boss/SubspaceSerpentBody");
 				}
 				else
 				{
+					texture3 = mod.GetTexture("NPCs/Boss/SubspaceSerpentTailFill");
 					texture2 = mod.GetTexture("NPCs/Boss/SubspaceSerpentTailGlow");
 					texture = mod.GetTexture("NPCs/Boss/SubspaceSerpentTail");
 				}
 				origin = new Vector2(texture.Width / 2, texture.Height / 16);
 				frame = new Rectangle(0, texture.Height / 8 * segmentFrame[i], texture.Width, texture.Height / 8);
 				float rotation = segmentsRotation[i];
-				Vector2 forward = new Vector2(0, (float)Math.Pow(deathCounter, 1.7) * -1).RotatedBy(rotation);
-				if (segmentsDead != i + 1)
-					forward *= 0;
-				else if(i != segments.Count - 1)
-				{
-					for (int k = -1; k < 2; k += 2)
-						DrawLightningBetween(spriteBatch, segments[i + 1] + projectile.velocity, segments[i] + projectile.velocity + forward, k);
-                }
 				if (segmentsDead <= i + 1)
 				{
-					spriteBatch.Draw(texture, segments[i] + forward + projectile.velocity - Main.screenPosition, frame, color, rotation, origin, 1.00f, SpriteEffects.None, 1f);
-					#region glow stuff
-					spriteBatch.Draw(texture2, segments[i] + forward + projectile.velocity - Main.screenPosition, frame, Color.White, rotation, origin, 1.00f, SpriteEffects.None, 0);
+					for (int a = 0; a < 3; a++)
+					{
+						if(a != 1 || i == segments.Count - 1)
+						{
+							Vector2 toTheSide = new Vector2(2, 0).RotatedBy(rotation + MathHelper.ToRadians(a * 90));
+							spriteBatch.Draw(texture3, segments[i] + projectile.velocity - Main.screenPosition + toTheSide, frame, new Color(0, 255, 0), rotation, origin, 1f, SpriteEffects.None, 0);
+						}
+					}
+					spriteBatch.Draw(texture, segments[i] + projectile.velocity - Main.screenPosition, frame, color, rotation, origin, 1.00f, SpriteEffects.None, 1f);
+					spriteBatch.Draw(texture2, segments[i] + projectile.velocity - Main.screenPosition, frame, Color.White, rotation, origin, 1.00f, SpriteEffects.None, 0);
 					for (int j = 0; j < 2; j++)
 					{
 						float bonusAlphaMult = 1 - 1 * (counter / 12f);
 						float dir = j * 2 - 1;
 						Vector2 offset = new Vector2(counter * 0.8f * dir, 0).RotatedBy(rotation);
-						spriteBatch.Draw(texture2, segments[i] + forward + projectile.velocity - Main.screenPosition + offset, frame, new Color(100, 100, 100, 0) * bonusAlphaMult, rotation, origin, 1.00f, SpriteEffects.None, 0.0f);
+						spriteBatch.Draw(texture2, segments[i] + projectile.velocity - Main.screenPosition + offset, frame, new Color(100, 100, 100, 0) * bonusAlphaMult, rotation, origin, 1.00f, SpriteEffects.None, 0.0f);
 					}
 				}
-				#endregion
-			}
-		}
-		public void DrawLightningBetween(SpriteBatch spriteBatch, Vector2 from, Vector2 to, int direction = -1)
-        {
-			List<Vector2> drawAreas = new List<Vector2>();
-			Vector2 goTo = to - from;
-			goTo *= 0.1f;
-			for(int i = 0; i < 10; i++)
-			{
-				from += goTo;
-				Vector2 temp = from;
-				float mult = (float)Math.Sin(i * 18 * MathHelper.Pi / 180f);
-				temp += new Vector2(0, 12 * direction * mult).RotatedBy(goTo.ToRotation());
-				temp += new Vector2(Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-3, 3)) * mult;
-				drawAreas.Add(temp);
-			}
-			Texture2D texture = mod.GetTexture("Projectiles/Lightning/CataclysmLightning");
-			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			Vector2 previousPosition = from;
-			Color color = new Color(140, 170, 140, 0) * ((255 - projectile.alpha) / 255f);
-			for (int k = 0; k < drawAreas.Count; k++)
-			{
-				float scale = 0.6f;
-				scale *= 0.5f + 0.5f * (float)Math.Sin(k * 18 * MathHelper.Pi/180f);
-				Vector2 drawPos = drawAreas[k] - Main.screenPosition;
-				Vector2 currentPos = drawAreas[k];
-				Vector2 betweenPositions = previousPosition - currentPos;
-				float max = betweenPositions.Length() / (texture.Width * scale * 0.5f);
-				for (int i = 0; i < max; i++)
-				{
-					drawPos = previousPosition + -betweenPositions * (i / max) - Main.screenPosition;
-					for (int j = 0; j < 3; j++)
-					{
-						float x = Main.rand.Next(-10, 11) * 0.2f * scale;
-						float y = Main.rand.Next(-10, 11) * 0.2f * scale;
-						if (j < 2)
-						{
-							x = 0;
-							y = 0;
-						}
-						spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, betweenPositions.ToRotation() + MathHelper.ToRadians(90), drawOrigin, scale, SpriteEffects.None, 0f);
-					}
-				}
-				previousPosition = currentPos;
 			}
 		}
 		public void BodyTailMovement(ref Vector2 position, Vector2 prevPosition, ref float segmentsRotation, float segmentsRotation2, int i)
@@ -212,9 +170,9 @@ namespace SOTS.Projectiles.Celestial
 						if (npc4.active && npc4.realLife == master.whoAmI && npc4.ai[1] == latest)
 						{
 							latest = npc4.whoAmI;
-							segments.Add(npc4.Center);
+							segments.Add(npc4.Center);	
 							segmentsRotation.Add(npc4.rotation);
-							segmentFrame.Add(npc4.frame.Y / npc4.height);
+							segmentFrame.Add((npc4.frame.Y / npc4.height) % 8);
 							break;
 						}
 					}
@@ -224,7 +182,7 @@ namespace SOTS.Projectiles.Celestial
 				projectile.Kill();
 		}
 		int deathCounter = 0;
-		int segmentsDead = -6;
+		int segmentsDead = -8;
 		public override bool PreAI()
 		{
 			if (runOnce)
@@ -234,6 +192,7 @@ namespace SOTS.Projectiles.Celestial
 				projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
 			}
 			Vector2 first = projectile.Center;
+			Lighting.AddLight(first, 2.5f, 1.6f, 2.4f);
 			float firstRot = projectile.rotation;
 			for (int i = 0; i < segments.Count; i++)
 			{
@@ -261,32 +220,30 @@ namespace SOTS.Projectiles.Celestial
 				firstRot = segmentsRotation[i];
 				Lighting.AddLight(segments[i], 2.5f, 1.6f, 2.4f);
 			}
-			projectile.velocity *= 0.9765f;
+			projectile.velocity *= 0.985f;
 			deathCounter++;
-			if (deathCounter >= 10)
+			if (deathCounter >= 5)
             {
 				deathCounter = 0;
-				if(segmentsDead <= segments.Count)
+				if(segmentsDead <= segments.Count && segmentsDead >= 0)
 				{
 					Vector2 atLoc = projectile.Center;
 					if (segmentsDead >= 1)
 					{
 						atLoc = segments[segmentsDead - 1];
 					}
-					Vector2 cVelo = new Vector2(0, -4).RotatedBy(projectile.rotation);
-					if (segmentsDead >= 1)
-						cVelo = new Vector2(0, -4).RotatedBy(segmentsRotation[segmentsDead - 1]);
-					for (int i = 0; i < 360; i += 6)
+					for (int i = 0; i < 360; i += 5)
 					{
-						if (Main.rand.NextBool(4))
+						float rand = Main.rand.NextFloat(24f);
+						if (Main.rand.NextBool(3))
 						{
-							Vector2 circularLocation = new Vector2(-4, 0).RotatedBy(MathHelper.ToRadians(i));
+							Vector2 circularLocation = new Vector2(4 + rand, 0).RotatedBy(MathHelper.ToRadians(i));
 							circularLocation.Y *= 1.25f;
 							Dust dust = Dust.NewDustDirect(new Vector2(atLoc.X - 4, atLoc.Y - 4), 4, 4, ModContent.DustType<CopyDust4>());
 							dust.noGravity = true;
 							dust.velocity *= 0.8f;
-							dust.velocity += circularLocation + cVelo;
-							dust.scale *= 2.25f;
+							dust.velocity += circularLocation;
+							dust.scale *= 2.75f - (1f * rand / 24f);
 							dust.fadeIn = 0.1f;
 							dust.color = new Color(50, 150, 50);
 						}
@@ -300,15 +257,35 @@ namespace SOTS.Projectiles.Celestial
 					{
 						gore = mod.GetGoreSlot("Gores/Subspace/SubspaceSerpentTailGore");
 					}
-					Main.PlaySound(2, (int)atLoc.X, (int)atLoc.Y, 62, 1.25f, -0.3f);
-					Gore gore2 = Main.gore[Gore.NewGore(atLoc + cVelo * 18 - new Vector2(18, 18), default(Vector2), gore, 1.0f)];
-					gore2.velocity += cVelo;
+					Gore gore2 = Main.gore[Gore.NewGore(atLoc - new Vector2(18, 18), default(Vector2), gore, 1.0f)];
+					gore2.velocity *= 0.2f;
+					if(segmentsDead % 4 == 0)
+						Main.PlaySound(SoundID.NPCKilled, (int)atLoc.X, (int)atLoc.Y, 39, 0.95f, -0.3f);
+					else
+						Main.PlaySound(2, (int)atLoc.X, (int)atLoc.Y, 62, 1.25f, -0.3f);
+					if (Main.netMode != 1)
+                    {
+						Projectile.NewProjectile(atLoc, new Vector2(0, -1), ModContent.ProjectileType<GreenLightning2>(), 0, 0, Main.myPlayer);
+						Vector2 circular = new Vector2(Main.rand.NextFloat(6f, 8f), 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)));
+						if (segmentsDead % 4 == 0)
+							Projectile.NewProjectile(atLoc, circular, ModContent.ProjectileType<PurgatoryGhost>(), 0, projectile.knockBack, Main.myPlayer, 0, Main.rand.Next(2) * 2 - 1);
+						for(int j = 0; j < 2; j++)
+						{
+							if(Main.rand.NextBool(3))
+							{
+								Vector2 perturbedSpeed = (circular.SafeNormalize(Vector2.Zero) * 5.5f * Main.rand.NextFloat(0.75f, 1.25f)).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(180f) + j * 180));
+								Projectile.NewProjectile(atLoc, perturbedSpeed, ModContent.ProjectileType<PurgatoryLightning>(), 0, 1f, Main.myPlayer, Main.rand.Next(2));
+							}
+						}
+					}
+					SOTSPlayer sOTSPlayer = SOTSPlayer.ModPlayer(Main.player[Main.myPlayer]);
+					sOTSPlayer.screenShakeMultiplier += 7;
 					if (segmentsDead == segments.Count)
 					{
 						projectile.Kill();
 					}
-					segmentsDead++; 
 				}
+				segmentsDead++;
 			}
 			return true;
 		}

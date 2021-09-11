@@ -1306,6 +1306,7 @@ namespace SOTS
 		{
 			return base.PreItemCheck();
         }
+		public float screenShakeMultiplier = 0f;
         public override void ModifyScreenPosition()
         {
 			Vector2 screenDimensions = new Vector2(Main.screenWidth, Main.screenHeight);
@@ -1346,7 +1347,18 @@ namespace SOTS
 					}
 				}
             }
-            base.ModifyScreenPosition();
+			if(screenShakeMultiplier > 0)
+			{
+				Vector2 offset = new Vector2(0, Main.rand.NextFloat(1f) * screenShakeMultiplier).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360f)));
+				Main.screenPosition += offset;
+				screenShakeMultiplier -= 0.75f;
+				screenShakeMultiplier *= 0.95f;
+			}
+			else
+            {
+				screenShakeMultiplier = 0;
+            }
+			base.ModifyScreenPosition();
         }
         public override void UpdateBadLifeRegen()
 		{

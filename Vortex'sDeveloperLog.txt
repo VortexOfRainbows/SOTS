@@ -27,8 +27,12 @@ Low Priority:
 Currently Working On:
 1. Curse Base Armor Set
 2. Acedia Gateway Vines!
-3. Ambient Pyramid BG Tiles 
-4. Subspace Death Animation
+3. Ambient Pyramid BG Tiles
+
+9/11/21
+1. More subspace death animation work, WORKS WELL ENOUGH IN MULTIPLAYER
+2. Nerfed Plasma Cutter draw iterations to prevent some lag
+3. 
 
 9/10/21
 1. Polaris Armor set bonus added more consistency. Works with all melee ranged items

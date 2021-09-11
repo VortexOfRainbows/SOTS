@@ -75,7 +75,7 @@ namespace SOTS.Projectiles.Celestial
 					drawPos = previousPosition + -betweenPositions * (i / max) - Main.screenPosition;
 					if (i == 0)
 						color *= 0.5f;
-					for (int j = 0; j < 5; j++)
+					for (int j = 0; j < 3; j++)
 					{
 						float x = Main.rand.Next(-10, 11) * 0.1f * scale;
 						float y = Main.rand.Next(-10, 11) * 0.1f * scale;
