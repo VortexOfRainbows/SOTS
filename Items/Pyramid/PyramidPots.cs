@@ -348,7 +348,7 @@ namespace SOTS.Items.Pyramid
                     }
                 }
             }
-            if(snakePot && Main.rand.NextBool(5))
+            if(snakePot && Main.rand.NextBool(4))
             {
                 if(Main.netMode != NetmodeID.MultiplayerClient)
                 {

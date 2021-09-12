@@ -39,7 +39,7 @@ Minor Art Contributions: Naka, DeJuiceTD
 Update 0.20.0
 -The Pyramid worldgen overhauled/improved. Added new enemies and a wave event.
 -The Planetarium now features a vastly improved set of visuals.
--Other places have also recieved visual improvements, such as buff icons, enemies, armor, and weapons.
+-Other places have also recieved visual improvements, such as buff icons, bosses, enemies, armor, and weapons.
 -Pharaoh's Curse has been completely reworked
 -Several items have recieved visual and functional reworks
 -A handful of new items have been added

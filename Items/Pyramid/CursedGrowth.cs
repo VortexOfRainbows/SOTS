@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Dusts;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -35,6 +36,7 @@ namespace SOTS.Items.Pyramid
 	{
 		public override void SetDefaults()
 		{
+			Main.tileNoFail[Type] = true;
 			Main.tileLighted[Type] = true;
 			Main.tileFrameImportant[Type] = true;
 			Main.tileNoAttach[Type] = true;
@@ -50,7 +52,7 @@ namespace SOTS.Items.Pyramid
 			disableSmartCursor = true;
 			dustType = DustID.GoldCoin;
 			animationFrameHeight = 36;
-			dustType = mod.DustType("CurseDust3");
+			dustType = ModContent.DustType<CurseDust3>();
 			soundType = SoundID.NPCHit;
 			soundStyle = 1;
 			mineResist = 0.1f;

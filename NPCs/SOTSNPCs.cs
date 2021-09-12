@@ -275,23 +275,24 @@ namespace SOTS.NPCs
 				spawnRate = (int)(spawnRate * 0.175f); //basically setting to 105
 				maxSpawns = (int)(maxSpawns * 1.5f);
 			}
-			if (player.GetModPlayer<SOTSPlayer>().PlanetariumBiome) //spawnrates for this biome have to be very high due to how npc spawning in sky height works. I also manually despawn other sky enemies
+			if (player.GetModPlayer<SOTSPlayer>().PlanetariumBiome) //spawnrates for this biome have to be very high due to how npc spawning in sky height works.
 			{
-				spawnRate = (int)(spawnRate * 0.2f); //essentially setting it to 60
-				maxSpawns = (int)(maxSpawns * 1.4f);
+				spawnRate = (int)(spawnRate * 0.05f); //essentially setting it to 30
+				maxSpawns = (int)(maxSpawns * 1.5f);
 			}
 			if (spawnRate < 1)
 				spawnRate = 1;
 		}
-		public static bool CorrectBlockBelowPlanetarium(int i, int j, int dist)
+		public static bool CorrectBlockBelowPlanetarium(int i, int j, ref int dist)
 		{
 			bool flag = false;
-			for (int k = 0; k < dist; k++)
+			for (int k = 0; k <= dist; k++)
 			{
 				Tile tile = Framing.GetTileSafely(i, j + k);
 				bool correctType = tile.type == ModContent.TileType<DullPlatingTile>() || tile.type == ModContent.TileType<AvaritianPlatingTile>() || tile.type == ModContent.TileType<PortalPlatingTile>();
-				if (tile.active() && Main.tileSolid[tile.type] && correctType && tile.nactive())
+				if (tile.active() && (Main.tileSolid[tile.type] || correctType) && tile.nactive())
 				{
+					dist = k;
 					flag = true;
 					break;
 				}
@@ -319,7 +320,7 @@ namespace SOTS.NPCs
 					|| WallType(tileWall) == 2;
 				if (isValidTile || (isValidWall && !isCurseValid))
 				{
-					pool[0] = 0f;
+					pool.Clear();
 					pool.Add(mod.NPCType("SnakePot"), 0.35f);
 					pool.Add(mod.NPCType("Snake"), 1f);
 					pool.Add(mod.NPCType("LostSoul"), 0.6f);
@@ -332,7 +333,7 @@ namespace SOTS.NPCs
 				}
 				else if(isCurseValid)
 				{
-					pool[0] = 0f;
+					pool.Clear();
 					if (Main.hardMode)
 					{
 						pool.Add(mod.NPCType("BleedingGhast"), 0.1f);
@@ -351,9 +352,9 @@ namespace SOTS.NPCs
 			}
 			else if (spawnInfo.player.GetModPlayer<SOTSPlayer>().PlanetariumBiome)
 			{
-				bool correctBlock = CorrectBlockBelowPlanetarium(spawnInfo.spawnTileX, spawnInfo.spawnTileY, 5);
-				for (int i = 0; i < pool.Count; i++)
-					pool[i] = 0f;
+				pool.Clear();
+				int distanceDown = 6;
+				bool correctBlock = CorrectBlockBelowPlanetarium(spawnInfo.spawnTileX, spawnInfo.spawnTileY, ref distanceDown);
 				if (correctBlock)
 				{
 					pool.Add(mod.NPCType("HoloSlime"), 0.4f);
