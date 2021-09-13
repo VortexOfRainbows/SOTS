@@ -4,7 +4,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
  
-namespace SOTS.NPCs
+namespace SOTS.NPCs.SoldStuff
 {
     public class VanillaNPCShop : GlobalNPC
     {
@@ -13,6 +13,11 @@ namespace SOTS.NPCs
 			if (Main.rand.NextBool(5))
 			{
 				shop[nextSlot] = ModContent.ItemType<SafetySwitch>();
+				nextSlot++;
+			}
+			if (Main.rand.NextBool(10) && NPC.downedPlantBoss)
+			{
+				shop[nextSlot] = ModContent.ItemType<Traingun>();
 				nextSlot++;
 			}
 			else if(Main.rand.NextBool(500))

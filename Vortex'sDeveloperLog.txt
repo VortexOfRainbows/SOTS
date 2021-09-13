@@ -27,12 +27,14 @@ Low Priority:
 Currently Working On:
 1. Curse Base Armor Set
 2. Acedia Gateway Vines!
+3. Banner cleanup!
 
 9/12/21
 1. Spawnrating and pool changes to planetarium. Constructs and Twilight Devil are now more common.
 	1. Spawnrate 30 -> 48
 2. Increased spawnrate of pots in pyramid 20% -> 25%
 3. Ambient Pyramid tiles spawn in pyramid properly now
+4. Traingun rework
 
 9/11/21
 1. More subspace death animation work, WORKS WELL ENOUGH IN MULTIPLAYER

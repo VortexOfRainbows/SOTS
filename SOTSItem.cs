@@ -177,7 +177,7 @@ namespace SOTS
 			dedicatedBlue = new int[] { ItemType<Calculator>() }; //friends 2
 			dedicatedPurpleRed = new int[] { ItemType<CursedApple>(), ItemType<ArcStaffMk2>() }; //James
 			dedicatedPastelPink = new int[] { ItemType<StrangeFruit>() }; //Tris
-			dedicatedRainbow = new int[] { ItemType<Traingun>(), ItemType<SubspaceLocket>() /*ItemType<PhotonGeyser>()*/ }; //Vortex
+			dedicatedRainbow = new int[] { ItemType<SubspaceLocket>() /*ItemType<PhotonGeyser>(), ItemType<Traingun>()*/ }; //Vortex
 			dedicatedBlasfah = new int[] { ItemType<Doomstick>(), ItemType<BookOfVirtues>() }; //Blasfah
 			dedicatedHeartPlus = new int[] { ItemType<DigitalDaito>() }; //Heart Plus Up
 			unsafeWallItem = new int[] { ItemType<UnsafeLihzahrdBrickWall>(), ItemType<UnsafeCursedTumorWall>(), ItemType<UnsafePyramidWall>(), ItemType<UnsafePyramidBrickWall>(), ItemType<UnsafeOvergrownPyramidWall>(), ItemType<UnsafeMalditeWall>() }; //Unsafe wall items

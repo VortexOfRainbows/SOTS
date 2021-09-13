@@ -1357,7 +1357,7 @@ namespace SOTS
 							}
 						}
 					}
-					if (WorldGen.genRand.NextBool(2))
+					if (WorldGen.genRand.NextBool(3))
 						if (tile.wall != 0 && tile.active() && (tile.type == ModContent.TileType<PyramidBrickTile>() || tile.type == ModContent.TileType<PyramidSlabTile>() || tile.type == ModContent.TileType<RuinedPyramidBrickTile>() || tile.type == ModContent.TileType<PyramidRubbleTile>() || tile.wall == (ushort)ModContent.WallType<PyramidWallWall>()))
 						{
 							int randType = Main.rand.Next(3);
