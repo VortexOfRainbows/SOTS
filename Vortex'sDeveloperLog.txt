@@ -27,7 +27,12 @@ Low Priority:
 Currently Working On:
 1. Curse Base Armor Set
 2. Acedia Gateway Vines!
-3. Ambient Pyramid BG Tiles
+
+9/12/21
+1. Spawnrating and pool changes to planetarium. Constructs and Twilight Devil are now more common.
+	1. Spawnrate 30 -> 48
+2. Increased spawnrate of pots in pyramid 20% -> 25%
+3. Ambient Pyramid tiles spawn in pyramid properly now
 
 9/11/21
 1. More subspace death animation work, WORKS WELL ENOUGH IN MULTIPLAYER
@@ -35,6 +40,7 @@ Currently Working On:
 3. Increased pyramid pot snake spawnrates 20% -> 25%, works in Multiplayer
 4. Properly clearing spawnpools to allow enemies to spawn correctly when playing with other mods
 5. Increased spawnrates for plentarium by 4x, since spawns didn't seem to be working (?)
+	1. 120 -> 30
 6. Added in Pyramid BG Tiles, they don't spawn yet, though
 
 9/10/21

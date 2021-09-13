@@ -277,7 +277,7 @@ namespace SOTS.NPCs
 			}
 			if (player.GetModPlayer<SOTSPlayer>().PlanetariumBiome) //spawnrates for this biome have to be very high due to how npc spawning in sky height works.
 			{
-				spawnRate = (int)(spawnRate * 0.05f); //essentially setting it to 30
+				spawnRate = (int)(spawnRate * 0.08f); //essentially setting it to 48
 				maxSpawns = (int)(maxSpawns * 1.5f);
 			}
 			if (spawnRate < 1)
@@ -357,11 +357,11 @@ namespace SOTS.NPCs
 				bool correctBlock = CorrectBlockBelowPlanetarium(spawnInfo.spawnTileX, spawnInfo.spawnTileY, ref distanceDown);
 				if (correctBlock)
 				{
-					pool.Add(mod.NPCType("HoloSlime"), 0.4f);
-					pool.Add(mod.NPCType("HoloEye"), 0.1f);
-					pool.Add(mod.NPCType("HoloBlade"), 0.175f);
-					pool.Add(mod.NPCType("TwilightDevil"), 0.03f);
-					pool.Add(mod.NPCType("OtherworldlyConstructHead"), 0.015f);
+					pool.Add(ModContent.NPCType<HoloSlime>(), 0.4f);
+					pool.Add(ModContent.NPCType<HoloEye>(), 0.1f);
+					pool.Add(ModContent.NPCType<HoloBlade>(), 0.175f);
+					pool.Add(ModContent.NPCType<TwilightDevil>(), 0.04f);
+					pool.Add(ModContent.NPCType<OtherworldlyConstructHead>(), 0.02f);
 				}
 			}
 			else if (ZoneForest)

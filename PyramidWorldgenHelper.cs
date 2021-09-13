@@ -1135,7 +1135,7 @@ namespace SOTS
 					bool validType = tile.type == (ushort)ModContent.TileType<PyramidSlabTile>() || tile.type == (ushort)ModContent.TileType<PyramidBrickTile>() || tile.type == (ushort)ModContent.TileType<RuinedPyramidBrickTile>() || tile.type == (ushort)ModContent.TileType<PyramidRubbleTile>();
 					if (validType && !tileLU.active() && !tileLU2.active() && !tileU.active() && !tileU2.active())
 					{
-						if (WorldGen.genRand.NextBool(5))
+						if (WorldGen.genRand.NextBool(4))
 						{
 							WorldGen.PlaceTile(findTileX, findTileY - 1, ModContent.TileType<PyramidPots>(), true, true, -1, Main.rand.Next(9)); //pots
 						}
@@ -1199,26 +1199,6 @@ namespace SOTS
 					if (tile.type == ModContent.TileType<CursedTumorTile>() && (tile.active() || tile.wall == (ushort)ModContent.WallType<UnsafeCursedTumorWallWall>()))
 					{
 						tile.wall = (ushort)ModContent.WallType<UnsafeCursedTumorWallWall>();
-						if (WorldGen.genRand.NextBool(2))
-						{
-							int left = findTileX - 1;
-							int top = findTileY - 2;
-							bool capable = true;
-							for (int i = left; i < left + 4; i++)
-							{
-								for (int j = top; j < top + 3; j++)
-								{
-									Tile tile2 = Framing.GetTileSafely(i, j);
-									if ((tile2.active() && j != top + 2) || (j == top + 2 && !tile2.active()))
-									{
-										capable = false;
-										break;
-									}
-								}
-							}
-							if (capable)
-								WorldGen.PlaceTile(findTileX, findTileY - 1, ModContent.TileType<CursedGrowthTile>());
-						}
 						if (WorldGen.genRand.NextBool(54 + malditeNum * malditeNum * 10))
 						{
 							DoMalditeGeneration(findTileX, findTileY);
@@ -1230,6 +1210,207 @@ namespace SOTS
 						int extraWidth = width / 50;
 						DoAltBlocksGeneration(findTileX, findTileY, 5 + extraWidth + WorldGen.genRand.Next(10 - worldSizeModifier), true);
 					}
+					if(!WorldGen.genRand.NextBool(5))
+					{
+						if (tile.active() && (tile.type == ModContent.TileType<CursedTumorTile>() || tile.wall == (ushort)ModContent.WallType<UnsafeCursedTumorWallWall>()))
+						{
+							int randType = Main.rand.Next(6);
+							if (randType == 0)
+							{
+								int left = findTileX;
+								int top = findTileY - 1;
+								Tile tile2 = Framing.GetTileSafely(left, top);
+								if (!tile2.active())
+									WorldGen.PlaceTile(findTileX, findTileY - 1, ModContent.TileType<PyramidAmbientTile1x1Curse>(), false, false, -1, 0);
+							}
+							else if (randType == 1)
+							{
+								int left = findTileX;
+								int top = findTileY - 1;
+								bool capable = true;
+								for (int i = left; i < left + 2; i++)
+								{
+									for (int j = top; j < top + 2; j++)
+									{
+										Tile tile2 = Framing.GetTileSafely(i, j);
+										if ((tile2.active() && j != findTileY) || (j == findTileY && !tile2.active()))
+										{
+											capable = false;
+											break;
+										}
+									}
+								}
+								if (capable)
+									WorldGen.PlaceTile(findTileX, findTileY - 1, ModContent.TileType<PyramidAmbientTile2x1Curse>(), false, false, -1, Main.rand.Next(2));
+							}
+							else if (randType == 2)
+							{
+								int left = findTileX;
+								int top = findTileY - 1;
+								bool capable = true;
+								for (int i = left; i < left + 3; i++)
+								{
+									for (int j = top; j < top + 2; j++)
+									{
+										Tile tile2 = Framing.GetTileSafely(i, j);
+										if ((tile2.active() && j != findTileY) || (j == findTileY && !tile2.active()))
+										{
+											capable = false;
+											break;
+										}
+									}
+								}
+								if (capable)
+									WorldGen.PlaceTile(findTileX, findTileY - 1, ModContent.TileType<PyramidAmbientTile3x1Curse>(), false, false, -1, 0);
+							}
+							else if (randType == 3 || randType == 5)
+							{
+								int left = findTileX;
+								int top = findTileY - 2;
+								bool capable = true;
+								for (int i = left; i < left + 3; i++)
+								{
+									for (int j = top; j < top + 3; j++)
+									{
+										Tile tile2 = Framing.GetTileSafely(i, j);
+										if ((tile2.active() && j != findTileY) || (j == findTileY && !tile2.active()))
+										{
+											capable = false;
+											break;
+										}
+									}
+								}
+								if (capable)
+									WorldGen.PlaceTile(findTileX, findTileY - 1, ModContent.TileType<PyramidAmbientTile3x2Curse>(), false, false, -1, Main.rand.Next(3));
+							}
+							else if (randType == 4)
+							{
+								int left = findTileX - 1;
+								int top = findTileY - 2;
+								bool capable = true;
+								for (int i = left; i < left + 4; i++)
+								{
+									for (int j = top; j < top + 3; j++)
+									{
+										Tile tile2 = Framing.GetTileSafely(i, j);
+										if ((tile2.active() && j != findTileY) || (j == findTileY && !tile2.active()))
+										{
+											capable = false;
+											break;
+										}
+									}
+								}
+								if (capable)
+									WorldGen.PlaceTile(findTileX, findTileY - 1, ModContent.TileType<CursedGrowthTile>());
+							}
+						}
+						if (tile.active() && (tile.type == ModContent.TileType<MalditeTile>() || tile.wall == (ushort)ModContent.WallType<UnsafeMalditeWallWall>()))
+						{
+							int randType = Main.rand.Next(3);
+							if (randType == 0)
+							{
+								int left = findTileX;
+								int top = findTileY - 1;
+								Tile tile2 = Framing.GetTileSafely(left, top);
+								if (!tile2.active())
+									WorldGen.PlaceTile(findTileX, findTileY - 1, ModContent.TileType<PyramidAmbientTile1x1Curse>(), false, false, -1, 1 + Main.rand.Next(2));
+							}
+							else if (randType == 1)
+							{
+								int left = findTileX;
+								int top = findTileY - 1;
+								bool capable = true;
+								for (int i = left; i < left + 2; i++)
+								{
+									for (int j = top; j < top + 2; j++)
+									{
+										Tile tile2 = Framing.GetTileSafely(i, j);
+										if ((tile2.active() && j != findTileY) || (j == findTileY && !tile2.active()))
+										{
+											capable = false;
+											break;
+										}
+									}
+								}
+								if (capable)
+									WorldGen.PlaceTile(findTileX, findTileY - 1, ModContent.TileType<PyramidAmbientTile2x1Curse>(), false, false, -1, 2);
+							}
+							else if (randType == 2)
+							{
+								int left = findTileX;
+								int top = findTileY - 2;
+								bool capable = true;
+								for (int i = left; i < left + 3; i++)
+								{
+									for (int j = top; j < top + 3; j++)
+									{
+										Tile tile2 = Framing.GetTileSafely(i, j);
+										if ((tile2.active() && j != findTileY) || (j == findTileY && !tile2.active()))
+										{
+											capable = false;
+											break;
+										}
+									}
+								}
+								if (capable)
+									WorldGen.PlaceTile(findTileX, findTileY - 1, ModContent.TileType<PyramidAmbientTile3x2Curse>(), false, false, -1, 0);
+							}
+						}
+					}
+					if (WorldGen.genRand.NextBool(2))
+						if (tile.wall != 0 && tile.active() && (tile.type == ModContent.TileType<PyramidBrickTile>() || tile.type == ModContent.TileType<PyramidSlabTile>() || tile.type == ModContent.TileType<RuinedPyramidBrickTile>() || tile.type == ModContent.TileType<PyramidRubbleTile>() || tile.wall == (ushort)ModContent.WallType<PyramidWallWall>()))
+						{
+							int randType = Main.rand.Next(3);
+							if (randType == 0)
+							{
+								int left = findTileX;
+								int top = findTileY - 1;
+								Tile tile2 = Framing.GetTileSafely(left, top);
+								if (!tile2.active())
+									WorldGen.PlaceTile(findTileX, findTileY - 1, ModContent.TileType<PyramidAmbientTile1x1>(), false, false, -1, Main.rand.Next(2));
+							}
+							else if (randType == 1)
+							{
+								int left = findTileX;
+								int top = findTileY - 1;
+								bool capable = true;
+								for (int i = left; i < left + 2; i++)
+								{
+									for (int j = top; j < top + 2; j++)
+									{
+										Tile tile2 = Framing.GetTileSafely(i, j);
+										if ((tile2.active() && j != findTileY) || (j == findTileY && !tile2.active()))
+										{
+											capable = false;
+											break;
+										}
+									}
+								}
+								if (capable)
+									WorldGen.PlaceTile(findTileX, findTileY - 1, ModContent.TileType<PyramidAmbientTile2x1>(), false, false, -1, Main.rand.Next(3));
+							}
+							else if (randType == 2)
+							{
+								int left = findTileX;
+								int top = findTileY - 2;
+								bool capable = true;
+								for (int i = left; i < left + 2; i++)
+								{
+									for (int j = top; j < top + 3; j++)
+									{
+										Tile tile2 = Framing.GetTileSafely(i, j);
+										if ((tile2.active() && j != findTileY) || (j == findTileY && !tile2.active()))
+										{
+											capable = false;
+											break;
+										}
+									}
+								}
+								if (capable)
+									WorldGen.PlaceTile(findTileX, findTileY - 1, ModContent.TileType<PyramidAmbientTile2x2>(), false, false, -1, 0);
+							}
+						}
+					
 				}
 			}
 		}

@@ -278,8 +278,6 @@ namespace SOTS
 		}
 		public static bool Empty(int x, int y, int lengthX, int lengthY, int max = 1)
 		{
-			max = 1;
-			int counting = 0;
 			for (int i = 0; i < lengthY; i++)
 			{
 				for (int j = 0; j < lengthX; j++)
