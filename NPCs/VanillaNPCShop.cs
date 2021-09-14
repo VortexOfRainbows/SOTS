@@ -20,7 +20,7 @@ namespace SOTS.NPCs.SoldStuff
 				shop[nextSlot] = ModContent.ItemType<Traingun>();
 				nextSlot++;
 			}
-			else if(Main.rand.NextBool(500))
+			if(Main.rand.NextBool(500))
 			{
 				shop[nextSlot] = ModContent.ItemType<SupremSticker>();
 				nextSlot++;
