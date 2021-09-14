@@ -27,7 +27,10 @@ Low Priority:
 Currently Working On:
 1. Curse Base Armor Set
 2. Acedia Gateway Vines!
-3. Banner cleanup!
+
+9/13/21
+1. Resprited some banners
+2. 
 
 9/12/21
 1. Spawnrating and pool changes to planetarium. Constructs and Twilight Devil are now more common.
