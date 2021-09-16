@@ -22,15 +22,19 @@ Low Priority:
 3. Sharanga Upgrade
 4. Electrolyte Seperator
 5. Wintry Traveler: Riptide Trident + Frigid Javelin
-6. Custom Shaders! Tainted Prism Dye
 
 Currently Working On:
 1. Curse Base Armor Set
 2. Acedia Gateway Vines!
+3. Subspace Locket to work with dyes
+
+9/15/21
+1. Added Tainted Prism Shaders
+2. 
 
 9/13/21
 1. Resprited some banners
-2. 
+2. Experimented with shaders. Still need a lot of practice/work
 
 9/12/21
 1. Spawnrating and pool changes to planetarium. Constructs and Twilight Devil are now more common.

@@ -25,6 +25,8 @@ using SOTS.NPCs.Boss.Curse;
 using SOTS.NPCs.Boss.CelestialSerpent;
 using SOTS.NPCs.Boss.Advisor;
 using SOTS.Items.Banners;
+using Terraria.Graphics.Shaders;
+using SOTS.Items.Dyes;
 
 namespace SOTS
 {
@@ -52,7 +54,6 @@ namespace SOTS
 			BlinkHotKey = RegisterHotKey("Blink", "V");
 			ArmorSetHotKey = RegisterHotKey("Armor Set", "F");
 			MachinaBoosterHotKey = RegisterHotKey("Modify Flight Mode", "C");
-
 			if (!Main.dedServ)
             {
                 VoidUI = new VoidUI();
@@ -101,6 +102,11 @@ namespace SOTS
 			SOTSItem.LoadArrays();
 			SOTSTile.LoadArrays();
 			SOTSWall.LoadArrays();
+			if(Main.netMode != NetmodeID.Server)
+			{
+				Ref<Effect> TPrismdyeRef = new Ref<Effect>(GetEffect("Effects/TPrismEffect"));
+				GameShaders.Armor.BindShader(ModContent.ItemType<TaintedPrismDye>(), new ArmorShaderData(TPrismdyeRef, "TPrismDyePass")).UseColor(0.3f, 0.4f, 0.4f);
+			}
 		}
 		public override void Unload() 
 		{
