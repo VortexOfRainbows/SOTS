@@ -23,17 +23,17 @@ float4 TPrismEffect(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : CO
     //tex2D(uImage0, coords + float2(0, pixH)).w != 0
     if (!(coords.y + pixH > 1 || coords.y - pixH < 0 || coords.x - pixW < 0 || coords.x + pixW > 1) && tex2D(uImage0, coords - float2(0, pixH)).w != 0 && tex2D(uImage0, coords - float2(pixW, 0)).w != 0 && tex2D(uImage0, coords + float2(pixW, 0)).w != 0)
     {
-        float luminosity = (color.r + color.g + color.b) / 15; 
-        color.rgb = float3(luminosity, luminosity, luminosity);
+        float luminosity = (color.r + color.g + color.b) / 12; 
+        color.rgb = float3(luminosity, luminosity, luminosity + 0.1);
     }
     else if (color.w != 0)
     {
         float time = uTime * 2.1;
-        float red = 0.15 + 0.4 * (sin(time + coords.x * 1.5) + 1) / 2;
-        float grn = 0.15 + 0.4 * (sin(time + 1.047) + 1) / 2;
-        float blu = 0.4 + 0.5 * (sin(time + 2.09) + 1) / 2;
-        color.rgb *= 0.4;
-        color.rgba += float4(red, grn, blu, 0.4);
+        float red = 0.3 + 0.35 * (sin(time) + 1) / 2;
+        float grn = 0.3 + 0.35 * (sin(time + 1.047) + 1) / 2;
+        float blu = 0.3 + 0.7 * (sin(time + 2.09 + coords.x * 2) + 1) / 2;
+        color.rgb *= 0.3;
+        color.rgba += float4(red, grn, blu, 0.5);
     }
 	return color * sampleColor;
 }
