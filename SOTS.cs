@@ -9,6 +9,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI;
+using SOTS.Prim;
 using SOTS.Void;
 using SOTS.Items.Pyramid;
 using SOTS.Items.Otherworld.EpicWings;
@@ -32,10 +33,16 @@ namespace SOTS
 {
 	public class SOTS : Mod
 	{
+		private Vector2 _lastScreenSize;
+		private Vector2 _lastViewSize;
+		public static PrimTrailManager primitives;
+
 		public static ModHotKey BlinkHotKey;
 		public static ModHotKey ArmorSetHotKey;
 		public static ModHotKey MachinaBoosterHotKey;
 		internal static SOTS Instance;
+
+		public static Effect AtenTrail;
 		public SOTS()
 		{
 			Properties = new ModProperties()
@@ -60,6 +67,9 @@ namespace SOTS
                 VoidUI.Activate();
                 _VoidUserInterface = new UserInterface();
                 _VoidUserInterface.SetState(VoidUI);
+
+				_lastScreenSize = new Vector2(Main.screenWidth, Main.screenHeight);
+				_lastViewSize = Main.ViewSize;
 			}
 			Mod yabhb = ModLoader.GetMod("FKBossHealthBar");
 			if (yabhb != null)
@@ -107,9 +117,18 @@ namespace SOTS
 				Ref<Effect> TPrismdyeRef = new Ref<Effect>(GetEffect("Effects/TPrismEffect"));
 				GameShaders.Armor.BindShader(ModContent.ItemType<TaintedPrismDye>(), new ArmorShaderData(TPrismdyeRef, "TPrismDyePass")).UseColor(0.3f, 0.4f, 0.4f);
 			}
+
+			AtenTrail = Instance.GetEffect("Effects/AtenTrail");
+
+			SOTSDetours.Initialize();
+
+			primitives = new PrimTrailManager();
+			primitives.LoadContent(Main.graphics.GraphicsDevice);
 		}
 		public override void Unload() 
 		{
+
+			AtenTrail = null;
 			//SOTSGlowmasks.UnloadGlowmasks();
 			Instance = null;
 			VoidBarSprite._backgroundTexture = null;
@@ -121,6 +140,27 @@ namespace SOTS
 			BlinkHotKey = null;
 			ArmorSetHotKey = null;
 			MachinaBoosterHotKey = null;
+
+			SOTSDetours.Unload();
+		}
+
+		public override void PreUpdateEntities()
+		{
+			if (!Main.dedServ)
+			{
+				if (_lastScreenSize != new Vector2(Main.screenWidth, Main.screenHeight) && primitives != null)
+					primitives.LoadContent(Main.graphics.GraphicsDevice);
+
+				_lastScreenSize = new Vector2(Main.screenWidth, Main.screenHeight);
+				_lastViewSize = Main.ViewSize;
+			}
+		}
+		public override void MidUpdateProjectileItem()
+		{
+			if (Main.netMode != NetmodeID.Server)
+			{
+				primitives.UpdateTrails();
+			}
 		}
 		public override void UpdateUI(GameTime gameTime) 
 		{
