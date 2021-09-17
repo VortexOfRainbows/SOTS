@@ -16,7 +16,7 @@ namespace SOTS.Items.Pyramid.Aten
 			EntityType = projectile.type;
 			DrawType = PrimTrailManager.DrawProjectile;
 			Color = new Color(255, 230, 138);
-			Width = 30;
+			Width = 20;
 			Cap = 20;
 			Pixellated = false;
 		}

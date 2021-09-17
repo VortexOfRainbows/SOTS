@@ -100,7 +100,6 @@ namespace SOTS.BaseWeapons
 				Owner.itemRotation = 0;
 				projectile.velocity = Vector2.Zero;
 				projectile.tileCollide = false;
-				projectile.rotation = projectile.AngleFrom(Owner.MountedCenter) - 1.57f;
 				if (++Timer % 20 == 0)
 					Main.PlaySound(new LegacySoundStyle(SoundID.Item, 19).WithPitchVariance(0.1f).WithVolume(0.5f), projectile.Center);
 
@@ -112,6 +111,7 @@ namespace SOTS.BaseWeapons
 				projectile.Center = Owner.MountedCenter + spinningoffset;
 				if (Owner.whoAmI == Main.myPlayer)
 					Owner.ChangeDir(Math.Sign(Main.MouseWorld.X - Owner.Center.X));
+				projectile.rotation = projectile.AngleFrom(Owner.MountedCenter) - 1.57f; //update rotation last so it is most accurate
 
 				SpinExtras(Owner);
 			}

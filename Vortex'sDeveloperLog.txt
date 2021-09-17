@@ -9,6 +9,7 @@ The following is my development plans :D
 Mid Priority:
 1. Tectonic Tether
 2. Chest slime resprites and reworks
+3. Curse Base Armor Set
 
 Mid Priority 2:
 1. Horn of Plenty: 10% more drops accessory
@@ -24,7 +25,9 @@ Low Priority:
 5. Wintry Traveler: Riptide Trident + Frigid Javelin
 
 Currently Working On:
-1. Curse Base Armor Set
+1. Misc
+2. Aten to work in Multiplayer
+3. Fix Multiplayer in general lol
 
 9/15/21 & 9/16/21
 1. Added Tainted Prism Shaders

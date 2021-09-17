@@ -9,7 +9,6 @@ using Terraria.ModLoader;
 using SOTS.Void;
 using SOTS.BaseWeapons;
 using SOTS.Utilities;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace SOTS.Items.Pyramid.Aten
 {
@@ -18,14 +17,14 @@ namespace SOTS.Items.Pyramid.Aten
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Aten");
-            Tooltip.SetDefault("'The defunct god... now in flail form'");
+            Tooltip.SetDefault("Conjures stars while charging\n'The defunct god... now in flail form'");
         }
         public override void SafeSetDefaults()
         {
             item.Size = new Vector2(34, 30);
             item.damage = 20;
             item.value = Item.sellPrice(0, 1, 50, 0);
-            item.rare = 4;
+            item.rare = ItemRarityID.LightRed;
             item.useTime = 30;
             item.useAnimation = 30;
             item.shoot = ModContent.ProjectileType<AtenProj>();
@@ -36,9 +35,16 @@ namespace SOTS.Items.Pyramid.Aten
     public class AtenProj : BaseFlailProj
     {
         public AtenProj() : base(new Vector2(0.7f, 1.3f), new Vector2(0.5f, 2f), 2, 70, 8) { }
-
+        public override void ModifyDamageHitbox(ref Rectangle hitbox)
+        {
+            int width = 48;
+            hitbox = new Rectangle((int)projectile.Center.X - width/2, (int)projectile.Center.Y - width / 2, width, width);
+        }
         public override void SetStaticDefaults() => DisplayName.SetDefault("Aten");
-
+        public override void SetDefaults()
+        {
+            projectile.Size = new Vector2(26, 32);
+        }
         public override void SpinExtras(Player player)
         {
             if (projectile.localAI[0] == 0)
@@ -56,24 +62,24 @@ namespace SOTS.Items.Pyramid.Aten
             }
             Lighting.AddLight(projectile.Center, new Color(255, 230, 138).ToVector3());
         }
-
         public override void NotSpinningExtras(Player player)
         {
             Lighting.AddLight(projectile.Center, new Color(255, 230, 138).ToVector3());
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
-            Vector2 drawPos = projectile.Center - Main.screenPosition;
+            Vector2 drawPos = projectile.Center - Main.screenPosition + new Vector2(0, projectile.gfxOffY);
             Color color = new Color(255, 230, 138, 0);
             Texture2D tex = mod.GetTexture("Items/Pyramid/Aten/FlailBloom");
-            spriteBatch.Draw(tex, drawPos, null, color, 0, new Vector2(tex.Width, tex.Height) / 2, projectile.scale * 1.5f, SpriteEffects.None, 0f);
-            return true;
+            spriteBatch.Draw(tex, drawPos, null, color, 0, new Vector2(tex.Width, tex.Height) / 2, projectile.scale * 1.50f, SpriteEffects.None, 0f);
+            tex = Main.projectileTexture[projectile.type];
+            spriteBatch.Draw(tex, drawPos, null, lightColor, projectile.rotation, new Vector2(tex.Width / 2, 10), projectile.scale * 1.25f, SpriteEffects.None, 0f); //putting origin on center of ball instead of on spike + ball
+            return false;
         }
     }
 
     public class AtenStar : ModProjectile, IOrbitingProj
     {
-
         public bool inFront
         {
             get
@@ -86,9 +92,7 @@ namespace SOTS.Items.Pyramid.Aten
             }
         }
         private Player Player => Main.player[projectile.owner];
-
         private Projectile Parent => Main.projectile[(int)projectile.ai[1]];
-
         private float Angle => Parent.localAI[0] * 0.01f + projectile.ai[0];
 
         bool released = false;
@@ -143,7 +147,6 @@ namespace SOTS.Items.Pyramid.Aten
                         projectile.velocity = Vector2.Lerp(projectile.velocity, direction * 15, 0.06f);
                     }
                 }
-
             }
             else
             {
@@ -166,8 +169,7 @@ namespace SOTS.Items.Pyramid.Aten
         }
         public void Draw(SpriteBatch spriteBatch, Color lightColor)
         {
-            spriteBatch.Draw(Main.projectileTexture[projectile.type], projectile.Center - Main.screenPosition + new Vector2(0, projectile.gfxOffY), null,
-                             lightColor, projectile.rotation, Main.projectileTexture[projectile.type].Size() / 2, projectile.scale, SpriteEffects.None, 0);
+            spriteBatch.Draw(Main.projectileTexture[projectile.type], projectile.Center - Main.screenPosition + new Vector2(0, projectile.gfxOffY), null, lightColor, projectile.rotation, Main.projectileTexture[projectile.type].Size() / 2, projectile.scale, SpriteEffects.None, 0);
         }
     }
 }
