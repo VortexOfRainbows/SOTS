@@ -14,8 +14,8 @@ namespace SOTS.Projectiles.Pyramid
 		}
         public override void SetDefaults()
         {
-			projectile.width = 42;
-			projectile.height = 32;
+			projectile.width = 50;
+			projectile.height = 26;
             Main.projFrames[projectile.type] = 4;
 			projectile.penetrate = -1;
 			projectile.friendly = true;
@@ -27,6 +27,12 @@ namespace SOTS.Projectiles.Pyramid
             projectile.minionSlots = 0f;
 			projectile.usesLocalNPCImmunity = true;
 			projectile.localNPCHitCooldown = 40;
+		}
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+		{
+			width = 16;
+			height = 16;
+			return base.TileCollideStyle(ref width, ref height, ref fallThrough);
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{

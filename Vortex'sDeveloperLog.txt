@@ -25,12 +25,11 @@ Low Priority:
 
 Currently Working On:
 1. Curse Base Armor Set
-2. Acedia Gateway Vines!
-3. Subspace Locket to work with dyes
 
-9/15/21
+9/15/21 & 9/16/21
 1. Added Tainted Prism Shaders
-2. 
+2. Acedia Gateway sprite inputted
+3. Resprited Flying Snake
 
 9/13/21
 1. Resprited some banners

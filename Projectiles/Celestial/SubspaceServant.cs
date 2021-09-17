@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using SOTS.Items.Otherworld.FromChests;
 using SOTS.Items.Vibrant;
 using SOTS.Items.Otherworld;
+using Terraria.Graphics.Shaders;
 
 namespace SOTS.Projectiles.Celestial
 {
@@ -337,6 +338,14 @@ namespace SOTS.Projectiles.Celestial
 		}
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
+			//Player player = Main.player[projectile.owner];
+			//SubspacePlayer subspacePlayer = SubspacePlayer.ModPlayer(player);
+			//if (subspacePlayer.subspaceServantShader != 0)
+			//{
+			//	Main.spriteBatch.End();
+			//	Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
+			//	GameShaders.Armor.GetSecondaryShader(subspacePlayer.subspaceServantShader, player).Apply(null);
+			//}
 			Texture2D texture = mod.GetTexture("Projectiles/Celestial/SubspaceServantBody");
 			Texture2D textureOutline = mod.GetTexture("Projectiles/Celestial/SubspaceServantBodyOutline");
 			Vector2 drawPos = projectile.Center - Main.screenPosition + new Vector2(0, -4);
@@ -354,12 +363,19 @@ namespace SOTS.Projectiles.Celestial
 			return false;
         }
         public override void PostDraw(SpriteBatch spriteBatch, Color lightColor)
-        {
+		{
+			Player player = Main.player[projectile.owner];
+			SubspacePlayer subspacePlayer = SubspacePlayer.ModPlayer(player);
 			DrawItemAnimation(spriteBatch, false);
 			Texture2D texture = mod.GetTexture("Projectiles/Celestial/SubspaceServantArms");
 			Vector2 drawPos = projectile.Center - Main.screenPosition + new Vector2(0, -4);
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 6 / 2);
 			spriteBatch.Draw(texture, drawPos, new Rectangle(0, frame * texture.Height / 6, texture.Width, texture.Height / 6), Color.White, projectile.rotation, origin, projectile.scale, direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+			//if (subspacePlayer.subspaceServantShader != 0)
+			//{
+			//	Main.spriteBatch.End();
+			//	Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.Transform);
+			//}
 		}
 		public void DrawTail(SpriteBatch spriteBatch, bool outLine = false)
 		{

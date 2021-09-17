@@ -31,6 +31,7 @@ using SOTS.NPCs.Boss.Curse;
 using SOTS.Projectiles.Pyramid;
 using SOTS.Projectiles.Minions;
 using SOTS.Projectiles.Permafrost;
+using SOTS.Items.Celestial;
 
 namespace SOTS
 {
@@ -701,6 +702,10 @@ namespace SOTS
 						testWingsPlayer.HaloDust();
 					}
 				}
+				if (item.type == ModContent.ItemType<SubspaceLocket>())
+				{
+					SubspacePlayer.ModPlayer(player).subspaceServantShader = GameShaders.Armor.GetShaderIdFromItemId(player.dye[i].type);
+				}
 			}
 			for (int i = 0; i < 10; i++) //iterating through armor + accessories
 			{
@@ -708,6 +713,10 @@ namespace SOTS
 				if (item.type == ModContent.ItemType<TheDarkEye>())
 				{
 					darkEyeShader = GameShaders.Armor.GetShaderIdFromItemId(player.dye[i].type);
+				}
+				if (item.type == ModContent.ItemType<SubspaceLocket>())
+				{
+					SubspacePlayer.ModPlayer(player).subspaceServantShader = GameShaders.Armor.GetShaderIdFromItemId(player.dye[i].type);
 				}
 			}
 			for (int i = 0; i < player.inventory.Length; i++)

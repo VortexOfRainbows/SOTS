@@ -148,7 +148,6 @@ namespace SOTS.Projectiles.Pyramid
 			width = 12;
 			height = 12;
 			return base.TileCollideStyle(ref width, ref height, ref fallThrough);
-
 		}
         public override bool OnTileCollide(Vector2 oldVelocity)
 		{
