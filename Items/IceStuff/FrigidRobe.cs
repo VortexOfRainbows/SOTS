@@ -13,7 +13,7 @@ namespace SOTS.Items.IceStuff
 			item.width = 28;
 			item.height = 28;
 			item.value = Item.sellPrice(0, 1, 20, 0);
-			item.rare = 2;
+			item.rare = ItemRarityID.Green;
 			item.defense = 1;
 		}
 		public override void SetStaticDefaults()

@@ -1,0 +1,47 @@
+New Stuff:
+Pyramid and Pharaoh's have been reworked
+Planetarium has recieved visual reworks
+New Enemies in the Pyramid
+New furniture set in Pyramid
+Added new items in various places, such as a new Subspace drop, new enemy drops, and Traveling Merchant items
+Pharaoh's Curse (debuff), and the method of entering the Pyramid has been changed
+
+Balancing:
+Suprem nerf; is now much harder to obtain, making it less overpowered
+Spirit surfer nerf; void drain 40 -> 60, now moves slower 20 -> 16
+
+Frigid Robe nerf; defense 4 -> 1, now reduces void damage by 15% as part of set bonus
+Vibrant Armor buff; defense increased by 1 on all pieces
+
+Code Corrupter buff; use time 30 -> 24
+Photon Geyser nerf; damage 50 -> 42
+Doomstick buff; damage 26 -> 31, 140% -> 250%, now always shoots 4 bullets instead of 3-4
+Hyperice Cluster Cannon buff; damage 27 -> 30, usetime 29 -> 26
+Pathogen Regurgitator buff; increased velocity and accuracy, damage 40 -> 45
+Sandstone Edge sidegrade; fires less bolts overall, damage 28 -> 30, crit chance 4% -> 14%
+Ripple Potion effect sidegrade; now scales worse when stacked with accessories but has better base damage
+Coconut Gun sidegrade; damage 23 -> 17, void cost 40 -> 24
+Miner Sword sidegrade; crit chance 10% -> 4%, always crits while falling
+Pharaoh's Cane buff; increased knockback, damage 6 -> 11, inflicts midas
+Hungry Hunter sidegrade; damage 19 -> 21, doesn't increase max void anymore
+
+Earthen Spirit nerf; max life 1000 (1500) -> 900 (1350)
+Otherworldly Construct buff; max life 500 (1000) -> 750 (1500)
+Polaris buff; max life 30000 (42000) -> 36000 (46000), cannons max life 1000 (1500) -> 1200 (1800)
+
+Misc:
+Added visual improvements, reworks, and resprites in many areas
+Other internal improvements
+Many items and enemies have also recieved functional reworks
+Added QoL changes, such as a keybind to Machina Booster
+Planetary Analyzer's tooltip now hints towards summoning Advisor better
+Modified and added new crafting recipes for various items
+Changes some item droprates from enemies
+Modified Pyramid and Planetarium spawnrates
+Lowered tidal construct spawnrates
+Increased Permafrost construct spawnrates
+
+Bug Fixes:
+Fixed some multiplayer packet issues
+Fixed a certain starter house variant not spawning a chest
+Earthen construct should no longer crash your game (for real this time)

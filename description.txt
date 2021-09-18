@@ -27,13 +27,13 @@ Code, Audio Engineering: apotofkoolaid
 (Past Developers)
 Emotional Support, Direction, Art: Coolio
 Misc, Direction: FlameFreezer
-Art: HugeKraken, Blasfah
+Art: Blasfah
 Music: BananaLizard
 
-(Contributors)
-Art: Arcri
+(Contributors and Other Credits)
+Art: HugeKraken, Arcri
 Testers: DreadSoul, Crimsonkeep 
-Code: ENNWAY, Qwerty3.14
+Code: ENNWAY, Qwerty3.14, OS
 Minor Art: Naka, DeJuiceTD, Nomis
 
 Update 0.20.0

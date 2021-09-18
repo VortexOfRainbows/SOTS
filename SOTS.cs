@@ -124,7 +124,6 @@ namespace SOTS
 		}
 		public override void Unload() 
 		{
-
 			AtenTrail = null;
 			//SOTSGlowmasks.UnloadGlowmasks();
 			Instance = null;

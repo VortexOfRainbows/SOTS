@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 namespace SOTS.Projectiles
 {    
     public class FrostSpike : ModProjectile 
-    {	int wait = 0;
+    {
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("FrostSpike");
@@ -31,16 +31,14 @@ namespace SOTS.Projectiles
 			{
 				projectile.timeLeft = 300;
 			}
-
 			Player player  = Main.player[projectile.owner];
 			projectile.rotation += 0.25f;
-			double deg = (double) projectile.ai[1]; 
+			double deg = projectile.ai[1]; 
 			double rad = deg * (Math.PI / 180);
 			double dist = 96;
 			projectile.position.X = player.Center.X - (int)(Math.Cos(rad) * dist) - projectile.width/2;
 			projectile.position.Y = player.Center.Y - (int)(Math.Sin(rad) * dist) - projectile.height/2;
 			projectile.ai[1] += 2f;
-			
 		}
 	}
 }

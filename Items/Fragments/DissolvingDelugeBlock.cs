@@ -12,7 +12,6 @@ namespace SOTS.Items.Fragments
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Deluge Block");
-			Tooltip.SetDefault("");
 		}
 
 		public override void SetDefaults()
@@ -24,15 +23,15 @@ namespace SOTS.Items.Fragments
 			item.autoReuse = true;
 			item.useAnimation = 15;
 			item.useTime = 10;
-			item.useStyle = 1;
+			item.useStyle = ItemUseStyleID.SwingThrow;
 			item.rare = ItemRarityID.Orange;
 			item.consumable = true;
-			item.createTile = mod.TileType("DissolvingDelugeTile");
+			item.createTile = ModContent.TileType<DissolvingDelugeTile>();
 		}
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "DissolvingDeluge", 1);
+			recipe.AddIngredient(ModContent.ItemType<DissolvingDeluge>(), 1);
 			recipe.SetResult(this, 20);
 			recipe.AddRecipe();
 		}
@@ -45,7 +44,7 @@ namespace SOTS.Items.Fragments
 			Main.tileSolid[Type] = true;
 			Main.tileShine2[Type] = true;
 			Main.tileLighted[Type] = true;
-			drop = mod.ItemType("DissolvingDelugeBlock");
+			drop = ModContent.ItemType<DissolvingDelugeBlock>();
 			AddMapEntry(color);
 			mineResist = 0.2f;
 			TileID.Sets.GemsparkFramingTypes[Type] = Type;
@@ -56,7 +55,7 @@ namespace SOTS.Items.Fragments
         }
         public override bool CreateDust(int i, int j, ref int type)
 		{
-			Dust dust = Dust.NewDustDirect(new Vector2(i * 16, j * 16) - new Vector2(5), 16, 16, 267);
+			Dust dust = Dust.NewDustDirect(new Vector2(i * 16, j * 16) - new Vector2(5), 16, 16, DustID.RainbowMk2);
 			dust.color = color;
 			dust.noGravity = true;
 			dust.fadeIn = 0.1f;
@@ -171,11 +170,10 @@ namespace SOTS.Items.Fragments
 						Vector2 drawPos = location + toLocation - Main.screenPosition;
 
 						color *= (float)(14f / 14f);
-						ulong randSeed = Main.TileFrameSeed ^ (ulong)((long)j << 32 | (long)((ulong)i));
 						for (int l = 0; l < 3; l++)
 						{
-							float x = (float)Utils.RandomInt(ref randSeed, -16, 17) * 0.05f;
-							float y = (float)Utils.RandomInt(ref randSeed, -16, 17) * 0.05f;
+							float x = Main.rand.Next(-16, 17) * 0.05f;
+							float y = Main.rand.Next(-16, 17) * 0.05f;
 							Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y) + zero, null, color * 0.825f, MathHelper.ToRadians(timer), new Vector2(3, 2), 0.75f, SpriteEffects.None, 0f);
 						}
 					}
@@ -188,11 +186,10 @@ namespace SOTS.Items.Fragments
 				if (wall && Main.tile[i, j].wallColor() != 0)
 					color = WorldGen.paintColor((int)Main.tile[i, j].wallColor());
 				color = new Color(color.R, color.G, color.B, 0);
-				ulong randSeed2 = Main.TileFrameSeed ^ (ulong)((long)j << 32 | (long)((ulong)i));
 				for (int l = 0; l < 7 - (Main.tile[i, j].inActive() ? 1 : 0); l++)
 				{
-					float x = (float)Utils.RandomInt(ref randSeed2, -16, 17) * 0.1f;
-					float y = (float)Utils.RandomInt(ref randSeed2, -16, 17) * 0.1f;
+					float x = Main.rand.Next(-16, 17) * 0.1f;
+					float y = Main.rand.Next(-16, 17) * 0.1f;
 					if (Main.tile[i, j].inActive() && l < 4)
 					{
 						x = 0;

@@ -27,8 +27,8 @@ namespace SOTS.Items.GelGear.Furniture
 			item.autoReuse = true;
 			item.useAnimation = 15;
 			item.useTime = 10;
-			item.useStyle = 1;
-			item.rare = 1;
+			item.useStyle = ItemUseStyleID.SwingThrow;
+			item.rare = ItemRarityID.Blue;
 			item.value = 0;
 			item.consumable = true;
 			item.createTile = mod.TileType("WormwoodChandelierTile");
@@ -80,7 +80,6 @@ namespace SOTS.Items.GelGear.Furniture
 		
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
 		{
-			ulong randSeed = Main.TileFrameSeed ^ (ulong)((long)j << 32 | (long)((ulong)i));
 			Color color = new Color(100, 100, 100, 0);
 			int frameX = Main.tile[i, j].frameX;
 			int frameY = Main.tile[i, j].frameY;
@@ -91,8 +90,8 @@ namespace SOTS.Items.GelGear.Furniture
 			}
 			for (int k = 0; k < 7; k++)
 			{
-				float x = (float)Utils.RandomInt(ref randSeed, -10, 11) * 0.15f;
-				float y = (float)Utils.RandomInt(ref randSeed, -10, 11) * 0.15f;
+				float x = Main.rand.Next(-10, 11) * 0.15f;
+				float y = Main.rand.Next(-10, 11) * 0.15f;
 				Main.spriteBatch.Draw(mod.GetTexture("Items/GelGear/Furniture/WormwoodChandelierTileFlame"), 
 				new Vector2((float)(i * 16 - (int)Main.screenPosition.X) + x, (float)(j * 16 - (int)Main.screenPosition.Y - 4) + y) + zero, 
 				new Rectangle(frameX, frameY, 16, 16), color, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);

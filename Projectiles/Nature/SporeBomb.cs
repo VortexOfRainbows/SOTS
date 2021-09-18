@@ -6,7 +6,7 @@ using Terraria.ID;
 namespace SOTS.Projectiles.Nature
 {    
     public class SporeBomb : ModProjectile 
-    {	int wait = 0;
+    {
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Spore Bomb");
@@ -46,11 +46,8 @@ namespace SOTS.Projectiles.Nature
 			{
 				for(int i = 0; i < Main.rand.Next(2) + 2; i++)
 				{ 
-					int proj = Projectile.NewProjectile((projectile.Center.X), projectile.Center.Y, Main.rand.Next(-100, 101) * 0.02f, Main.rand.Next(-100, 101) * 0.02f, ProjectileID.SporeCloud, (int)(projectile.damage * 0.50f) + 1, 0, projectile.owner); //Spore Cloud (chlorophyte saber)
-					Main.projectile[proj].friendly = true;
-					Main.projectile[proj].hostile = false;
-					Main.projectile[proj].alpha += 70;
-					Main.projectile[proj].timeLeft = Main.rand.Next(16, 35);
+					Projectile proj = Projectile.NewProjectileDirect(projectile.Center, Main.rand.NextVector2Circular(2, 2), ProjectileID.SporeCloud, (int)(projectile.damage * 0.50f) + 1, 0, projectile.owner);
+					proj.timeLeft = Main.rand.Next(16, 35);
 				}
 			}
 		}

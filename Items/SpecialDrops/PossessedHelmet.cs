@@ -6,30 +6,25 @@ using SOTS.Void;
 namespace SOTS.Items.SpecialDrops
 {
 	[AutoloadEquip(EquipType.Head)]
-	
 	public class PossessedHelmet : ModItem
-	{	int Probe = -1;
+	{
 		public override void SetDefaults()
 		{
-
 			item.width = 22;
 			item.height = 20;
             item.value = Item.sellPrice(0, 2, 75, 0);
-			item.rare = 6;
+			item.rare = ItemRarityID.LightPurple;
 			item.defense = 9;
 		}
-
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Possessed Helmet");
 			Tooltip.SetDefault("Increases max void by 100\n10% increased ranged crit chance");
-			
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs)
         {
             return body.type == mod.ItemType("PossessedChainmail") && legs.type == mod.ItemType("PossessedGreaves");
         }
-
         public override void UpdateArmorSet(Player player)
         {	
 			player.setBonus = "Increases void regen by 5";
@@ -58,6 +53,5 @@ namespace SOTS.Items.SpecialDrops
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.AddRecipe();
 		}
-
 	}
 }

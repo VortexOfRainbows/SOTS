@@ -2426,8 +2426,6 @@ namespace SOTS
 												tile.active(false);
 												WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform //platform
 												break;
-												break;
-
 										}
 									}
 								}
@@ -2519,8 +2517,6 @@ namespace SOTS
 												tile.active(false);
 												WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform //platform
 												break;
-												break;
-
 										}
 									}
 								}
@@ -2611,8 +2607,6 @@ namespace SOTS
 											case 9:
 												tile.active(true);
 												break;
-												break;
-
 										}
 									}
 								}
@@ -3150,8 +3144,6 @@ namespace SOTS
 												if (confirmPlatforms == 0)
 													tile.active(false);
 												break;
-												break;
-
 										}
 									}
 								}
@@ -3242,8 +3234,6 @@ namespace SOTS
 												if (confirmPlatforms == 0)
 													tile.active(false);
 												break;
-												break;
-
 										}
 									}
 								}
@@ -3334,8 +3324,6 @@ namespace SOTS
 												if (confirmPlatforms == 0)
 													tile.active(false);
 												break;
-												break;
-
 										}
 									}
 								}
@@ -3427,8 +3415,6 @@ namespace SOTS
 												tile.active(false);
 												WorldGen.PlaceTile(k, l, 102, true, true, -1); //throne
 												break;
-												break;
-
 										}
 									}
 								}
@@ -3519,8 +3505,6 @@ namespace SOTS
 											case 9:
 												tile.active(true);
 												break;
-												break;
-
 										}
 									}
 								}
@@ -3612,8 +3596,6 @@ namespace SOTS
 												tile.active(false);
 												WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform //platform
 												break;
-												break;
-
 										}
 									}
 								}
@@ -3705,8 +3687,6 @@ namespace SOTS
 												tile.active(false);
 												WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform //platform
 												break;
-												break;
-
 										}
 									}
 								}
@@ -3798,8 +3778,6 @@ namespace SOTS
 												tile.active(false);
 												WorldGen.PlaceTile(k, l, 240, true, true, -1, Main.rand.Next(16, 18)); //hanging skeleton
 												break;
-												break;
-
 										}
 									}
 								}
@@ -3891,8 +3869,6 @@ namespace SOTS
 												tile.active(false);
 												WorldGen.PlaceTile(k, l, 240, true, true, -1, Main.rand.Next(16, 18)); //hanging skeleton
 												break;
-												break;
-
 										}
 									}
 								}
@@ -3984,8 +3960,6 @@ namespace SOTS
 												tile.type = 51; //cobweb
 												tile.active(true);
 												break;
-												break;
-
 										}
 									}
 								}
@@ -4359,8 +4333,6 @@ namespace SOTS
 												if (confirmPlatforms == 0)
 													tile.active(false);
 												break;
-												break;
-
 										}
 									}
 								}
@@ -4634,8 +4606,6 @@ namespace SOTS
 												tile.active(false);
 												WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform //platform
 												break;
-												break;
-
 										}
 									}
 								}
@@ -4728,8 +4698,6 @@ namespace SOTS
 												tile.active(false);
 												WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform //platform
 												break;
-												break;
-
 										}
 									}
 								}
@@ -4913,8 +4881,6 @@ namespace SOTS
 												tile.active(false);
 												WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform //platform
 												break;
-												break;
-
 										}
 									}
 								}
@@ -5006,8 +4972,6 @@ namespace SOTS
 												tile.active(false);
 												WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform //platform
 												break;
-												break;
-
 										}
 									}
 								}
@@ -5191,8 +5155,6 @@ namespace SOTS
 												tile.active(false);
 												WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform //platform
 												break;
-												break;
-
 										}
 									}
 								}
@@ -5496,8 +5458,6 @@ namespace SOTS
 												if (confirmPlatforms == 0)
 													tile.active(false);
 												break;
-												break;
-
 										}
 									}
 								}
@@ -5584,8 +5544,6 @@ namespace SOTS
 												tile.active(false);
 												WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform
 												break;
-												break;
-
 										}
 									}
 								}
@@ -5855,8 +5813,6 @@ namespace SOTS
 												tile.active(false);
 												WorldGen.PlaceTile(k, l, 354); //bewitching table
 												break;
-												break;
-
 										}
 									}
 								}
@@ -5948,8 +5904,6 @@ namespace SOTS
 												tile.active(false);
 												WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform //platform
 												break;
-												break;
-
 										}
 									}
 								}
@@ -6041,8 +5995,6 @@ namespace SOTS
 												tile.active(false);
 												WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform //platform
 												break;
-												break;
-
 										}
 									}
 								}
@@ -6134,8 +6086,6 @@ namespace SOTS
 												tile.active(false);
 												WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 0); //platform //platform
 												break;
-												break;
-
 										}
 									}
 								}

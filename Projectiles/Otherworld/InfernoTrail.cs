@@ -1,13 +1,7 @@
-using System;
-using System.IO;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
-using Terraria.ID;
 
 namespace SOTS.Projectiles.Otherworld
 {    
@@ -123,7 +117,6 @@ namespace SOTS.Projectiles.Otherworld
 			if (iterator >= trailPos.Length)
 				projectile.Kill();
 		}
-		int endHow = 0;
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
 		{
 			float point = 0f;

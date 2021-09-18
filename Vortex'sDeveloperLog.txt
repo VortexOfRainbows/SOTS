@@ -57,7 +57,7 @@ Currently Working On:
 2. Nerfed Plasma Cutter draw iterations to prevent some lag
 3. Increased pyramid pot snake spawnrates 20% -> 25%, works in Multiplayer
 4. Properly clearing spawnpools to allow enemies to spawn correctly when playing with other mods
-5. Increased spawnrates for plentarium by 4x, since spawns didn't seem to be working (?)
+5. Increased spawnrates for plantarium by 4x, since spawns didn't seem to be working (?)
 	1. 120 -> 30
 6. Added in Pyramid BG Tiles, they don't spawn yet, though
 

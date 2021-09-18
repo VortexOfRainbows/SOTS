@@ -7,7 +7,6 @@ namespace SOTS.Projectiles.Otherworld
 {    
     public class LightningLashTrail : ModProjectile 
     {
-		
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Lightning Trail");
@@ -117,7 +116,6 @@ namespace SOTS.Projectiles.Otherworld
 			//if (iterator >= trailPos.Length)
 			//	projectile.Kill();
 		}
-		int endHow = 0;
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
 		{
 			Player player = Main.player[projectile.owner];

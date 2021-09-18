@@ -8,7 +8,7 @@ using Terraria.ModLoader;
 namespace SOTS.Projectiles.Minions
 {    
     public class FrostProbe : ModProjectile 
-    {	int wait = 0;
+    {
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Frost Probe");

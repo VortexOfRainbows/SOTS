@@ -1,13 +1,7 @@
-using System;
-using System.IO;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
-using Terraria.ID;
 
 namespace SOTS.Projectiles.Pyramid
 {    
@@ -105,7 +99,6 @@ namespace SOTS.Projectiles.Pyramid
 		bool runOnce = true;
 		public void cataloguePos()
 		{
-			Player player = Main.player[projectile.owner];
 			Vector2 current = projectile.Center;
 			for (int i = 0; i < trailPos.Length; i++)
 			{
@@ -129,7 +122,6 @@ namespace SOTS.Projectiles.Pyramid
 			//if (iterator >= trailPos.Length)
 			//	projectile.Kill();
 		}
-		int endHow = 0;
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
 		{
 			float point = 0f;
