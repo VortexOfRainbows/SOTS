@@ -150,6 +150,18 @@ namespace SOTS.Projectiles.Pyramid.Aten
             return Color.White;
         }
         bool runOnce = true;
+        public void DelayEnd() //so that trails can disappear properly
+        {
+            if (Main.myPlayer == projectile.owner)
+            {
+                Projectile.NewProjectileDirect(projectile.Center, Vector2.Zero, ModContent.ProjectileType<AtenStarExplosion>(), projectile.damage * 3, 0, projectile.owner, projectile.scale);
+            }
+            if (projectile.timeLeft > 30)
+                projectile.timeLeft = 30;
+            projectile.velocity *= 0f;
+            orbitalDistance = -1;
+            projectile.netUpdate = true;
+        }
         public override bool PreAI()
         {
             if (runOnce)
@@ -158,7 +170,9 @@ namespace SOTS.Projectiles.Pyramid.Aten
                 projectile.netUpdate = true;
                 runOnce = false;
             }
-            return base.PreAI();
+            if(orbitalDistance == -1)
+                projectile.velocity *= 0f;
+            return orbitalDistance != -1;
         }
         float additionalCounter = 0;
         public override void AI()
@@ -178,7 +192,8 @@ namespace SOTS.Projectiles.Pyramid.Aten
                     toCenter = Parent().Center;
                     if (!Parent().tileCollide)
                     {
-                        projectile.Kill();
+                        DelayEnd();
+                        return;
                     }
                 }
                 else
@@ -202,7 +217,7 @@ namespace SOTS.Projectiles.Pyramid.Aten
                 projectile.velocity = speed * goToPos.SafeNormalize(Vector2.Zero);
             }
             else
-                projectile.Kill();
+                DelayEnd();
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
@@ -219,20 +234,17 @@ namespace SOTS.Projectiles.Pyramid.Aten
                 float scale = projectile.scale * (0.2f + 0.8f * (projectile.oldPos.Length - k) / projectile.oldPos.Length);
                 if (k != 0) scale *= 0.3f;
                 else scale *= 0.4f;
-                Vector2 drawPos = projectile.oldPos[k] - Main.screenPosition + Main.projectileTexture[projectile.type].Size() / 3f + new Vector2(0, projectile.gfxOffY + 2);
-                float lerpPercent = (float)k / projectile.oldPos.Length;
-                Color colorMan = Color.Lerp(new Color(255, 230, 140), new Color(180, 90, 20), lerpPercent);
-                Color color = colorMan * ((projectile.oldPos.Length - k) / (float)projectile.oldPos.Length) * scale;
-                spriteBatch.Draw(texture, drawPos, null, color, projectile.rotation, origin, scale, SpriteEffects.None, 0f);
+                if(projectile.oldPos[k] != projectile.Center)
+                {
+                    Vector2 drawPos = projectile.oldPos[k] - Main.screenPosition + Main.projectileTexture[projectile.type].Size() / 3f + new Vector2(0, projectile.gfxOffY + 2);
+                    float lerpPercent = (float)k / projectile.oldPos.Length;
+                    Color colorMan = Color.Lerp(new Color(255, 230, 140), new Color(180, 90, 20), lerpPercent);
+                    Color color = colorMan * ((projectile.oldPos.Length - k) / (float)projectile.oldPos.Length) * scale;
+                    spriteBatch.Draw(texture, drawPos, null, color, projectile.rotation, origin, scale, SpriteEffects.None, 0f);
+                }
             }
-            spriteBatch.Draw(Main.projectileTexture[projectile.type], projectile.Center - Main.screenPosition + new Vector2(0, projectile.gfxOffY), null, new Color(255, 255, 255, 100), projectile.rotation, Main.projectileTexture[projectile.type].Size() / 2, projectile.scale * 0.9f, SpriteEffects.None, 0);
-        }
-        public override void Kill(int timeLeft)
-        {
-            if (Main.myPlayer == projectile.owner)
-            {
-                Projectile.NewProjectileDirect(projectile.Center, Vector2.Zero, ModContent.ProjectileType<AtenStarExplosion>(), projectile.damage * 3, 0, projectile.owner, projectile.scale);
-            }
+            if(orbitalDistance != -1)
+                spriteBatch.Draw(Main.projectileTexture[projectile.type], projectile.Center - Main.screenPosition + new Vector2(0, projectile.gfxOffY), null, new Color(255, 255, 255, 100), projectile.rotation, Main.projectileTexture[projectile.type].Size() / 2, projectile.scale * 0.9f, SpriteEffects.None, 0);
         }
     }
 }
