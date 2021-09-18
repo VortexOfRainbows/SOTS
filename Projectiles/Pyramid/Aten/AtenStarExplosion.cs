@@ -3,6 +3,7 @@ using SOTS.Dusts;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using SOTS.Utilities;
 
 namespace SOTS.Projectiles.Pyramid.Aten
 {    
@@ -41,7 +42,8 @@ namespace SOTS.Projectiles.Pyramid.Aten
         {
             Vector2 atLoc = projectile.Center;
             Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 105, 0.8f, -0.15f);
-            for (int i = 0; i < 360; i += 10)
+            DustHelper.DrawStar(atLoc, 244, 4, 1, 2, 1);
+            /*for (int i = 0; i < 360; i += 10)
             {
                 Vector2 circularLocation = new Vector2(24, 0).RotatedBy(MathHelper.ToRadians(-i));
                 Vector2 ogCL = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(-i));
@@ -103,7 +105,7 @@ namespace SOTS.Projectiles.Pyramid.Aten
                         dust.alpha = 100;
                     }
                 }
-            }
+            }*/
             runOnce = false;
         }
 	}

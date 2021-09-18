@@ -39,7 +39,7 @@ namespace SOTS
 
 		private static void Main_OnPreDraw(GameTime obj)
 		{
-			if (Main.spriteBatch != null && SOTS.primitives != null) 
+			if (Main.spriteBatch != null && SOTS.primitives != null && !Main.dedServ) 
 			{
 				SOTS.primitives.DrawTrailsProj(Main.spriteBatch, Main.graphics.GraphicsDevice);
 				SOTS.primitives.DrawTrailsNPC(Main.spriteBatch, Main.graphics.GraphicsDevice);
@@ -71,16 +71,19 @@ namespace SOTS
 
 		private static void PostDrawPlayers()
         {
-			Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
-			for (int i = 0; i < Main.projectile.Length; i++)
-            {
-				Projectile proj = Main.projectile[i];
-				if (proj.active && proj.modProjectile is IOrbitingProj modProj && modProj.inFront)
-                {
-					modProj.Draw(Main.spriteBatch, Color.White); //change later
-                }
-            }
-			Main.spriteBatch.End();
+			if (!Main.dedServ)
+			{
+				Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
+				for (int i = 0; i < Main.projectile.Length; i++)
+				{
+					Projectile proj = Main.projectile[i];
+					if (proj.active && proj.modProjectile is IOrbitingProj modProj && modProj.inFront)
+					{
+						modProj.Draw(Main.spriteBatch, Color.White); //change later
+					}
+				}
+				Main.spriteBatch.End();
+			}
         }
 	}
 }

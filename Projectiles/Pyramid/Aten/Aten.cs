@@ -155,6 +155,7 @@ namespace SOTS.Projectiles.Pyramid.Aten
             if (Main.myPlayer == projectile.owner)
             {
                 Projectile.NewProjectileDirect(projectile.Center, Vector2.Zero, ModContent.ProjectileType<AtenStarExplosion>(), projectile.damage * 3, 0, projectile.owner, projectile.scale);
+
             }
             if (projectile.timeLeft > 30)
                 projectile.timeLeft = 30;
@@ -192,6 +193,8 @@ namespace SOTS.Projectiles.Pyramid.Aten
             {
                 if (released)
                 {
+                    if (Main.rand.Next(10) == 1)
+                        Dust.NewDustPerfect(projectile.Center, 244, Main.rand.NextVector2Circular(0.5f, 0.5f));
                     additionalCounter++;
                     toCenter = Parent().Center;
                     if (!Parent().tileCollide)
