@@ -29,6 +29,12 @@ Currently Working On:
 2. Aten to work in Multiplayer
 3. Fix Multiplayer in general lol
 
+9/17/21
+1. Aten Rework (Graydee + Vortex)
+2. Sandstone Edge buff (since other pyramid melee outclass it)
+	1. Damage 26 -> 30, 45% -> 50%, crit 4 -> 14
+
+
 9/15/21 & 9/16/21
 1. Added Tainted Prism Shaders
 2. Acedia Gateway sprite inputted

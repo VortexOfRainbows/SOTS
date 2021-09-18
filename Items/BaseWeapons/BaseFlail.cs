@@ -7,7 +7,7 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace SOTS.BaseWeapons
+namespace SOTS.Items.BaseWeapons
 {
 	public abstract class BaseFlailItem : ModItem
 	{
@@ -150,12 +150,12 @@ namespace SOTS.BaseWeapons
 				else
 					LaunchExtras(Owner);
 
-				if (Owner.controlUseItem)
-				{
-					projectile.netUpdate = true;
-					falling = true;
-					Timer = 0;
-				}
+				//if (Owner.controlUseItem)
+				//{
+				//	projectile.netUpdate = true;
+				//	falling = true;
+				//	Timer = 0;
+				//}
 			}
 
 			if(falling) //falling towards ground, returns after hitting ground
@@ -174,11 +174,14 @@ namespace SOTS.BaseWeapons
 				}
 			}
 		}
-
+		public bool returned = false;
+		private float returnSpeedUp = 0.01f;
 		private void Return(float launchspeed, Player Owner)
 		{
 			projectile.tileCollide = false;
-			projectile.velocity = Vector2.Lerp(projectile.velocity, projectile.DirectionTo(Owner.Center) * launchspeed * 1.5f, 0.07f);
+			projectile.velocity = Vector2.Lerp(projectile.velocity, projectile.DirectionTo(Owner.Center) * launchspeed * 1.5f, 0.05f + returnSpeedUp);
+			if (returnSpeedUp < 1)
+				returnSpeedUp += 0.005f;
 			if (projectile.Hitbox.Intersects(Owner.Hitbox))
 				projectile.Kill();
 			ReturnExtras(Owner);

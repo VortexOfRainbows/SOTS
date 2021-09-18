@@ -10,11 +10,12 @@ namespace SOTS.Items.Pyramid
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Sandstone Edge");
-			Tooltip.SetDefault("Critical hits release a torrent of homing emerald bolts that do 45% damage");
+			Tooltip.SetDefault("Critical hits release a torrent of homing emerald bolts that do 50% damage");
 		}
 		public override void SetDefaults()
 		{
-			item.damage = 26;
+			item.crit = 10;
+			item.damage = 30;
 			item.melee = true;
 			item.width = 54;
 			item.height = 54;
@@ -34,7 +35,7 @@ namespace SOTS.Items.Pyramid
 				for (int i = 0; i < 3 + Main.rand.Next(3); i++)
 				{
 					Vector2 circularSpeed = new Vector2(2.5f, 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(120) + 30));
-					Projectile.NewProjectile(player.Center.X, player.Center.Y, -circularSpeed.X, -circularSpeed.Y, mod.ProjectileType("EmeraldBoltHoming"), (int)(damage * 0.45f) + 1, 3f, player.whoAmI);
+					Projectile.NewProjectile(player.Center.X, player.Center.Y, -circularSpeed.X, -circularSpeed.Y, mod.ProjectileType("EmeraldBoltHoming"), (int)(damage * 0.5f) + 1, 3f, player.whoAmI);
 				}
 			}
 		}

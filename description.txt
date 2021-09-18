@@ -31,7 +31,7 @@ Art: HugeKraken, Blasfah
 Music: BananaLizard
 
 (Contributors)
-Art: Arcri
+Art: Arcri, Nomis
 Testers: DreadSoul, Crimsonkeep 
 Code: ENNWAY
 Item glowmask code: Qwerty3.14
