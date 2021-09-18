@@ -161,6 +161,7 @@ namespace SOTS.Projectiles.Pyramid.Aten
             projectile.velocity *= 0f;
             orbitalDistance = -1;
             projectile.netUpdate = true;
+            projectile.friendly = false;
         }
         public override bool PreAI()
         {
@@ -171,7 +172,10 @@ namespace SOTS.Projectiles.Pyramid.Aten
                 runOnce = false;
             }
             if(orbitalDistance == -1)
+            {
                 projectile.velocity *= 0f;
+                projectile.friendly = false;
+            }
             return orbitalDistance != -1;
         }
         float additionalCounter = 0;
