@@ -26,8 +26,10 @@ Low Priority:
 
 Currently Working On:
 1. Misc
-2. Aten to work in Multiplayer
-3. Fix Multiplayer in general lol
+
+9/18/21
+1. Multiplayer fixed!
+2. Aten works in Multiplayer!
 
 9/17/21
 1. Aten Rework (Graydee + Vortex)

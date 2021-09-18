@@ -116,14 +116,11 @@ namespace SOTS
 			{
 				Ref<Effect> TPrismdyeRef = new Ref<Effect>(GetEffect("Effects/TPrismEffect"));
 				GameShaders.Armor.BindShader(ModContent.ItemType<TaintedPrismDye>(), new ArmorShaderData(TPrismdyeRef, "TPrismDyePass")).UseColor(0.3f, 0.4f, 0.4f);
+				AtenTrail = Instance.GetEffect("Effects/AtenTrail");
+				primitives = new PrimTrailManager();
+				primitives.LoadContent(Main.graphics.GraphicsDevice);
 			}
-
-			AtenTrail = Instance.GetEffect("Effects/AtenTrail");
-
 			SOTSDetours.Initialize();
-
-			primitives = new PrimTrailManager();
-			primitives.LoadContent(Main.graphics.GraphicsDevice);
 		}
 		public override void Unload() 
 		{
@@ -140,7 +137,6 @@ namespace SOTS
 			BlinkHotKey = null;
 			ArmorSetHotKey = null;
 			MachinaBoosterHotKey = null;
-
 			SOTSDetours.Unload();
 		}
 
