@@ -94,7 +94,7 @@ namespace SOTS.Projectiles.Pyramid.Aten
         private Projectile Parent()
         {
             Projectile parent = pastParent;
-            if (parent != null && parent.active && parent.owner == projectile.owner && parent.type == ModContent.ProjectileType<AtenProj>() && parent.identity == (int)projectile.ai[1]) //this is to prevent it from iterating the loop over and over
+            if (parent != null && parent.active && parent.owner == projectile.owner && parent.type == ModContent.ProjectileType<AtenProj>() && parent.identity == (int)(projectile.ai[1] + 0.5f)) //this is to prevent it from iterating the loop over and over
             {
                 return parent;
             }
@@ -103,12 +103,13 @@ namespace SOTS.Projectiles.Pyramid.Aten
             for (short i = 0; i < Main.maxProjectiles; i++)
             {
                 Projectile proj = Main.projectile[i];
-                if (proj.active && proj.owner == projectile.owner && proj.type == ModContent.ProjectileType<AtenProj>() && proj.identity == (int)projectile.ai[1]) //use identity since it aids with server syncing (.whoAmI is client dependent)
+                if (proj.active && proj.owner == projectile.owner && proj.type == ModContent.ProjectileType<AtenProj>() && proj.identity == (int)(projectile.ai[1] + 0.5f)) //use identity since it aids with server syncing (.whoAmI is client dependent)
                 {
                     parent = proj;
                     break;
                 }
             }
+            pastParent = parent;
             return parent;
         }
         private float Angle => Parent().localAI[0] * 0.02f + additionalCounter * 0.01f;
@@ -182,7 +183,7 @@ namespace SOTS.Projectiles.Pyramid.Aten
         float additionalCounter = 0;
         public override void AI()
         {
-            if (Parent() == null || !Parent().active)
+            if (Parent() == null)
                 parentActive = false;
             else if (!Player.channel && !released)
             {
@@ -193,11 +194,11 @@ namespace SOTS.Projectiles.Pyramid.Aten
             {
                 if (released)
                 {
-                    if (Main.rand.Next(10) == 1)
+                    if (Main.rand.NextBool(10))
                         Dust.NewDustPerfect(projectile.Center, 244, Main.rand.NextVector2Circular(0.5f, 0.5f));
                     additionalCounter++;
                     toCenter = Parent().Center;
-                    if (!Parent().tileCollide)
+                    if (!Parent().tileCollide && additionalCounter > 4) //added counter here to counteract pre-emptive exploding due to place in projectile array
                     {
                         DelayEnd();
                         return;
@@ -236,19 +237,22 @@ namespace SOTS.Projectiles.Pyramid.Aten
         {
             Texture2D texture = ModContent.GetTexture("SOTS/Assets/Glow");
             Vector2 origin = texture.Size() / 2;
-            for (int k = 0; k < projectile.oldPos.Length; k++)
+            int length = projectile.oldPos.Length;
+            int end = 0;
+            if(length > projectile.timeLeft)
+            {
+                end = length - projectile.timeLeft;
+            }
+            for (int k = length - 1; k >= end; k--)
             {
                 float scale = projectile.scale * (0.2f + 0.8f * (projectile.oldPos.Length - k) / projectile.oldPos.Length);
                 if (k != 0) scale *= 0.3f;
                 else scale *= 0.4f;
-                if(projectile.oldPos[k] != projectile.Center)
-                {
-                    Vector2 drawPos = projectile.oldPos[k] - Main.screenPosition + Main.projectileTexture[projectile.type].Size() / 3f + new Vector2(0, projectile.gfxOffY + 2);
-                    float lerpPercent = (float)k / projectile.oldPos.Length;
-                    Color colorMan = Color.Lerp(new Color(255, 230, 140), new Color(180, 90, 20), lerpPercent);
-                    Color color = colorMan * ((projectile.oldPos.Length - k) / (float)projectile.oldPos.Length) * scale;
-                    spriteBatch.Draw(texture, drawPos, null, color, projectile.rotation, origin, scale, SpriteEffects.None, 0f);
-                }
+                Vector2 drawPos = projectile.oldPos[k] - Main.screenPosition + Main.projectileTexture[projectile.type].Size() / 3f + new Vector2(0, projectile.gfxOffY + 2);
+                float lerpPercent = (float)k / projectile.oldPos.Length;
+                Color colorMan = Color.Lerp(new Color(255, 230, 140), new Color(180, 90, 20), lerpPercent);
+                Color color = colorMan * ((projectile.oldPos.Length - k) / (float)projectile.oldPos.Length) * scale;
+                spriteBatch.Draw(texture, drawPos, null, color, projectile.rotation, origin, scale, SpriteEffects.None, 0f);
             }
             if(orbitalDistance != -1)
                 spriteBatch.Draw(Main.projectileTexture[projectile.type], projectile.Center - Main.screenPosition + new Vector2(0, projectile.gfxOffY), null, new Color(255, 255, 255, 100), projectile.rotation, Main.projectileTexture[projectile.type].Size() / 2, projectile.scale * 0.9f, SpriteEffects.None, 0);

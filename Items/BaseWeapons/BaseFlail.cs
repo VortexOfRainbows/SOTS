@@ -207,8 +207,10 @@ namespace SOTS.Items.BaseWeapons
 
 		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
 		{
-			if(ChargeTime > 0)
+			Player Owner = Main.player[projectile.owner];
+			if (ChargeTime > 0)
 				damage = (int)(damage * MathHelper.Lerp(DamageMult.X, DamageMult.Y, ChargeTime / MaxChargeTime));
+			hitDirection = Owner.direction;
 		}
 
 		public override bool OnTileCollide(Vector2 oldVelocity)

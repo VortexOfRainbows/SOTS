@@ -4,13 +4,13 @@ This mod's main plan is to add generated structures to the world, some are sort-
 !! This mod is early in development !!
 !! A large world is recommended in order for the generated structures to spawn without overriding vanilla structures !!
 
-Bosses -> Currently 6, mostly bullet hells
+Bosses -> Currently 6, all with original AI!
 Items -> Nearly 450, unique gimmicks all around!
 
 New Subclass (void)
 -A new resource similar to mana
 -Unleash very powerful attacks
--Exists on melee, ranged, magic, and summon items
+-Has melee, ranged, magic, and summon items
 
 Major Stuctures:
 -Pyramid Dungeon Worldgen
