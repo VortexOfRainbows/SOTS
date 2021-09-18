@@ -11,7 +11,6 @@ namespace SOTS.Utilities
 	public interface IOrbitingProj
     {
         bool inFront { get; set; }
-
         void Draw(SpriteBatch spriteBatch, Color lightColor);
     }
 }

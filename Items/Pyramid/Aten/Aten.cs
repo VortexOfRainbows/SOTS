@@ -28,13 +28,13 @@ namespace SOTS.Items.Pyramid.Aten
             item.useTime = 30;
             item.useAnimation = 30;
             item.shoot = ModContent.ProjectileType<AtenProj>();
-            item.shootSpeed = 16;
+            item.shootSpeed = 14;
             item.knockBack = 4;
         }
     }
     public class AtenProj : BaseFlailProj
     {
-        public AtenProj() : base(new Vector2(0.7f, 1.3f), new Vector2(0.5f, 2f), 2, 70, 8) { }
+        public AtenProj() : base(new Vector2(0.5f, 1.4f), new Vector2(0.5f, 1f), 1.5f, 60, 10) { }
         public override void ModifyDamageHitbox(ref Rectangle hitbox)
         {
             int width = 48;
@@ -44,6 +44,9 @@ namespace SOTS.Items.Pyramid.Aten
         public override void SetDefaults()
         {
             projectile.Size = new Vector2(26, 32);
+            projectile.friendly = true;
+            projectile.melee = true;
+            projectile.penetrate = -1;
         }
         public override void SpinExtras(Player player)
         {
@@ -82,13 +85,10 @@ namespace SOTS.Items.Pyramid.Aten
     {
         public bool inFront
         {
-            get
-            {
-                return projectile.scale > 1;
-            }
+            get => projectile.scale > 1;
             set
             {
-            
+
             }
         }
         private Player Player => Main.player[projectile.owner];
@@ -106,7 +106,11 @@ namespace SOTS.Items.Pyramid.Aten
         public int orbitDistance;
 
         private float distToFlail;
-
+        public override void SetStaticDefaults()
+        {
+            ProjectileID.Sets.TrailCacheLength[projectile.type] = 30;
+            ProjectileID.Sets.TrailingMode[projectile.type] = 0;
+        }
         public override void SetDefaults()
         {
             projectile.friendly = true;
@@ -115,6 +119,7 @@ namespace SOTS.Items.Pyramid.Aten
             projectile.tileCollide = false;
             projectile.timeLeft = 180;
             projectile.penetrate = 1;
+            projectile.extraUpdates = 1;
         }
         public override Color? GetAlpha(Color lightColor)
         {
@@ -123,7 +128,9 @@ namespace SOTS.Items.Pyramid.Aten
 
         public override void AI()
         {
-            Dust.NewDustPerfect(projectile.Center, 244, Main.rand.NextVector2Circular(0.5f,0.5f));
+            //Dust dust = Dust.NewDustPerfect(projectile.Center, 244, Main.rand.NextVector2Circular(0.5f,0.5f));
+            //dust.velocity *= 0.1f;
+            //dust.alpha = 100;
             if (!Parent.active)
                 parentActive = false;
             if (!Player.channel && !released)
@@ -134,33 +141,43 @@ namespace SOTS.Items.Pyramid.Aten
                 projectile.velocity = direction * 15;
 
             }
+            //if (released)
+            //{
+            //    projectile.scale = MathHelper.Lerp(projectile.scale, 1, 0.08f);
+            //    if (parentActive)
+            //    {
+            //        Vector2 direction = Parent.Center - projectile.Center;
+            //        if (direction.Length() > distToFlail)
+            //        {
+            //            distToFlail = direction.Length();
+            //            direction.Normalize();
+            //            projectile.velocity = Vector2.Lerp(projectile.velocity, direction * 15, 0.06f);
+            //        }
+            //    }
+            //}
+            Vector2 toCenter = Player.Center;
             if (released)
-            {
-                projectile.scale = MathHelper.Lerp(projectile.scale, 1, 0.08f);
-                if (parentActive)
-                {
-                    Vector2 direction = Parent.Center - projectile.Center;
-                    if (direction.Length() > distToFlail)
-                    {
-                        distToFlail = direction.Length();
-                        direction.Normalize();
-                        projectile.velocity = Vector2.Lerp(projectile.velocity, direction * 15, 0.06f);
-                    }
-                }
-            }
+                toCenter = Parent.Center;
             else
             {
                 projectile.timeLeft = 180;
-                angleProgression += orbitSpeed;
-                angleProgression %= 6.28f;
-                Vector2 offset = Vector2.UnitX.RotatedBy(Angle) * (float)Math.Sin(angleProgression) * orbitDistance;
-                projectile.scale = 1 + ((float)Math.Cos(angleProgression) / 2f);
-                if (projectile.scale < 1)
-                    projectile.scale = (projectile.scale + 1) / 2;
-                projectile.Center = Player.Center + offset;
             }
+            angleProgression += orbitSpeed * 0.5f;
+            angleProgression %= 6.28f;
+            Vector2 offset = Vector2.UnitX.RotatedBy(Angle) * (float)Math.Sin(angleProgression) * orbitDistance;
+            projectile.scale = 1 + ((float)Math.Cos(angleProgression) / 2f);
+            if (projectile.scale < 1)
+                projectile.scale = (projectile.scale + 1) / 2;
+            Vector2 goToPos = toCenter + offset;
+            goToPos -= projectile.Center;
+            float speed = projectile.velocity.Length() + 1.0f;
+            float dist = goToPos.Length();
+            if (speed > dist)
+            {
+                speed = dist;
+            }
+            projectile.velocity = speed * goToPos.SafeNormalize(Vector2.Zero);
         }
-
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
             if (!inFront)
@@ -169,6 +186,19 @@ namespace SOTS.Items.Pyramid.Aten
         }
         public void Draw(SpriteBatch spriteBatch, Color lightColor)
         {
+            Texture2D texture = ModContent.GetTexture("SOTS/Assets/Glow");
+            Vector2 origin = texture.Size() / 2;
+            for (int k = 0; k < projectile.oldPos.Length; k++)
+            {
+                float scale = projectile.scale * (0.2f + 0.8f * (projectile.oldPos.Length - k) / projectile.oldPos.Length);
+                if (k != 0) scale *= 0.3f;
+                else scale *= 0.4f;
+                Vector2 drawPos = projectile.oldPos[k] - Main.screenPosition + Main.projectileTexture[projectile.type].Size() / 3f + new Vector2(0, projectile.gfxOffY + 2);
+                float lerpPercent = (float)k / projectile.oldPos.Length;
+                Color colorMan = Color.Lerp(new Color(255, 230, 140), new Color(180, 90, 20), lerpPercent);
+                Color color = colorMan * ((projectile.oldPos.Length - k) / (float)projectile.oldPos.Length) * scale;
+                spriteBatch.Draw(texture, drawPos, null, color, projectile.rotation, origin, scale, SpriteEffects.None, 0f);
+            }
             spriteBatch.Draw(Main.projectileTexture[projectile.type], projectile.Center - Main.screenPosition + new Vector2(0, projectile.gfxOffY), null, lightColor, projectile.rotation, Main.projectileTexture[projectile.type].Size() / 2, projectile.scale, SpriteEffects.None, 0);
         }
     }

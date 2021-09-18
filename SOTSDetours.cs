@@ -71,7 +71,7 @@ namespace SOTS
 
 		private static void PostDrawPlayers()
         {
-			Main.spriteBatch.Begin();
+			Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
 			for (int i = 0; i < Main.projectile.Length; i++)
             {
 				Projectile proj = Main.projectile[i];

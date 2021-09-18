@@ -81,7 +81,8 @@ namespace SOTS.BaseWeapons
 			falling = reader.ReadBoolean();
 			strucktile = reader.ReadBoolean();
 		}
-
+		float soundTimer = 0;
+		int Timer2 = 0;
 		public override void AI()
 		{
 			Player Owner = Main.player[projectile.owner];
@@ -100,13 +101,20 @@ namespace SOTS.BaseWeapons
 				Owner.itemRotation = 0;
 				projectile.velocity = Vector2.Zero;
 				projectile.tileCollide = false;
-				if (++Timer % 20 == 0)
+				Timer2 += 1 * Owner.direction; //spin in direction of player
+				Timer++;
+				soundTimer += 1f + ChargeTime / MaxChargeTime;
+				if (soundTimer >= 30)
+				{
 					Main.PlaySound(new LegacySoundStyle(SoundID.Item, 19).WithPitchVariance(0.1f).WithVolume(0.5f), projectile.Center);
+					soundTimer -= 30;
+				}
 
+				float exitPercent = MathHelper.Clamp(Timer / 30f, 0, 1f);
 				ChargeTime = MathHelper.Clamp(Timer / 60, MaxChargeTime / 6, MaxChargeTime);
 
-				float radians = MathHelper.ToRadians(degreespertick * Timer * (1 + ChargeTime/MaxChargeTime)) * Owner.direction;
-				float distfromplayer = spinningdistance * ((float)Math.Abs(Math.Cos(radians) / 5) + 0.8f); //use a cosine function based on the amount of rotation the flail has gone through to create an ellipse-like pattern
+				float radians = MathHelper.ToRadians(degreespertick * Timer2 * (1 + ChargeTime/MaxChargeTime)) ;
+				float distfromplayer = exitPercent * spinningdistance * ((float)Math.Abs(Math.Cos(radians) / 5) + 0.8f); //use a cosine function based on the amount of rotation the flail has gone through to create an ellipse-like pattern
 				Vector2 spinningoffset = new Vector2(distfromplayer, 0).RotatedBy(radians);
 				projectile.Center = Owner.MountedCenter + spinningoffset;
 				if (Owner.whoAmI == Main.myPlayer)
@@ -129,7 +137,8 @@ namespace SOTS.BaseWeapons
 				projectile.tileCollide = true;
 				if(++Timer == 1 && Owner.whoAmI == Main.myPlayer)
 				{
-					Main.PlaySound(SoundID.Item19, projectile.Center);
+					if(Timer > 8)
+						Main.PlaySound(SoundID.Item19, projectile.Center);
 					projectile.Center = Owner.MountedCenter;
 					projectile.velocity = Owner.DirectionTo(Main.MouseWorld) * launchspeed;
 					OnLaunch(Owner);
