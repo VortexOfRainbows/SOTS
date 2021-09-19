@@ -38,12 +38,11 @@ VertexShaderOutput MainVS(in VertexShaderInput input)
 
 float4 White(VertexShaderOutput input) : COLOR0
 {
-    float x = (input.TextureCoordinates.x + sin(progress)) % 1;
-    float2 noisecoords = float2(x, input.TextureCoordinates.y);
-    float brightness = tex2D(tent,noisecoords).r;
-    float4 color = lerp(ColorOne, ColorTwo, pow(brightness, 4));
-    color *= sqrt(brightness);
-    return color * sqrt(input.TextureCoordinates.x);
+    float2 coords = float2(input.TextureCoordinates.x * 3, 0.25 + input.TextureCoordinates.y * 0.5);
+    float3 color = tex2D(tent, coords + float2(progress, 0)).xyz;
+    float3 color2 = tex2D(tent, coords + float2(-progress, 0)).xyz * 0.5;
+
+    return float4((color + color2) * ColorOne * (1.0 + color.x * 2.0), color.x * ColorOne.w);
 }
 
 technique BasicColorDrawing
