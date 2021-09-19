@@ -26,7 +26,7 @@ namespace SOTS.Projectiles.Pyramid.Aten
         public override void SetStaticDefaults() => DisplayName.SetDefault("Aten");
         public override void SetDefaults()
         {
-            projectile.Size = new Vector2(26, 32);
+            projectile.Size = new Vector2(34, 34);
             projectile.friendly = true;
             projectile.melee = true;
             projectile.penetrate = -1;
@@ -67,7 +67,7 @@ namespace SOTS.Projectiles.Pyramid.Aten
             Texture2D tex = mod.GetTexture("Assets/FlailBloom");
             spriteBatch.Draw(tex, drawPos, null, color, 0, new Vector2(tex.Width, tex.Height) / 2, projectile.scale * 1.50f, SpriteEffects.None, 0f);
             tex = Main.projectileTexture[projectile.type];
-            spriteBatch.Draw(tex, drawPos, null, lightColor, projectile.rotation, new Vector2(tex.Width / 2, 10), projectile.scale * 1.25f, SpriteEffects.None, 0f); //putting origin on center of ball instead of on spike + ball
+            spriteBatch.Draw(tex, drawPos, null, lightColor, projectile.rotation, new Vector2(tex.Width, tex.Height) / 2, projectile.scale * 1.25f, SpriteEffects.None, 0f); //putting origin on center of ball instead of on spike + ball
             return false;
         }
     }

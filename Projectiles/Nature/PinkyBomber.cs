@@ -20,7 +20,7 @@ namespace SOTS.Projectiles.Nature
 		{
 			projectile.width = 46;
 			projectile.height = 32;
-			projectile.friendly = false;
+			projectile.friendly = true;
 			projectile.ranged = true;
 			projectile.timeLeft = 6000;
 			projectile.tileCollide = false;

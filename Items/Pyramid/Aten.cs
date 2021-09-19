@@ -16,7 +16,7 @@ namespace SOTS.Items.Pyramid
         }
         public override void SafeSetDefaults()
         {
-            item.Size = new Vector2(34, 30);
+            item.Size = new Vector2(44, 46);
             item.damage = 21;
             item.value = Item.sellPrice(0, 1, 50, 0);
             item.rare = ItemRarityID.LightRed;

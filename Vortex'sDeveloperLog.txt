@@ -27,6 +27,8 @@ Currently Working On:
 9/19/21
 1. North Star added, replaces Brittle Flail. Server Syncs FINE enough
 2. Metalmalgamation resprite. Damage 45 -> 40, shoots more bullets 2 -> 4
+3. Adjustments to Aten sprite
+4. Peanut Repeater airplanes now do damage
 
 9/18/21
 1. Multiplayer fixed!
