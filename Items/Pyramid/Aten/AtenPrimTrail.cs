@@ -18,7 +18,7 @@ namespace SOTS.Items.Pyramid.Aten
 			Color = new Color(255, 230, 138);
 			Width = 20;
 			Cap = 20;
-			Pixellated = false;
+			Pixellated = true;
 		}
 
 		public override void SetDefaults() => AlphaValue = 1f;
