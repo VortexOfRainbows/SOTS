@@ -71,7 +71,7 @@ namespace SOTS.Items.Pyramid.Aten
 			effect.Parameters["TrailTexture"].SetValue(ModContent.GetInstance<SOTS>().GetTexture("TrailTextures/Trail_3"));
 			effect.Parameters["ColorOne"].SetValue(Color.ToVector4());
 			effect.Parameters["ColorTwo"].SetValue(Color.ToVector4());
-			PrepareShader(effect, "MainPS", Counter / 24f);
+			PrepareShader(effect, "MainPS", 0.5f);
 		}
 
 		public override void OnUpdate()

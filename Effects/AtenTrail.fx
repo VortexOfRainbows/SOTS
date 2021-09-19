@@ -38,7 +38,7 @@ VertexShaderOutput MainVS(in VertexShaderInput input)
 
 float4 White(VertexShaderOutput input) : COLOR0
 {
-    float2 coords = float2(input.TextureCoordinates.x * 3, 0.25 + input.TextureCoordinates.y * 0.5);
+    float2 coords = float2((input.TextureCoordinates.x * 3) % 1, 0.25 + input.TextureCoordinates.y * 0.5);
     float3 color = tex2D(tent, coords + float2(progress, 0)).xyz;
     float3 color2 = tex2D(tent, coords + float2(-progress, 0)).xyz * 0.5;
 
