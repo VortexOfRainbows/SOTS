@@ -13,7 +13,8 @@ namespace SOTS.Items.IceStuff
 		}
         public override void SetDefaults()
         {
-            item.damage = 45;
+            item.Size = new Microsoft.Xna.Framework.Vector2(34, 30);
+            item.damage = 40;
             item.melee = true; 
             item.useTime = 22;  
             item.useAnimation = 22;   

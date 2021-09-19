@@ -21,10 +21,10 @@ namespace SOTS.Items.Pyramid
 			item.height = 54;
 			item.useTime = 22;
 			item.useAnimation = 22;
-			item.useStyle = 1;
+			item.useStyle = ItemUseStyleID.SwingThrow;
 			item.knockBack = 3.5f;
 			item.value = Item.sellPrice(0, 1, 20, 0);
-			item.rare = 3;
+			item.rare = ItemRarityID.Orange;
 			item.UseSound = SoundID.Item1;
 			item.autoReuse = true;
 		}

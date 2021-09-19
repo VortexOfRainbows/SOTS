@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 using SOTS.Items.BaseWeapons;
 using SOTS.Projectiles.Pyramid.Aten;
 
-namespace SOTS.Items.Pyramid.Aten
+namespace SOTS.Items.Pyramid
 {
     public class Aten : BaseFlailItem
     {

@@ -1,32 +1,34 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Dusts;
 using SOTS.Items.BaseWeapons;
 using SOTS.Prim.Trails;
 using SOTS.Utilities;
+using SOTS.Void;
 using System;
 using System.IO;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace SOTS.Projectiles.Pyramid.Aten
+namespace SOTS.Projectiles.Permafrost.NorthStar
 {
-    public class AtenProj : BaseFlailProj
+    public class NorthStar : BaseFlailProj
     {
-        public AtenProj() : base(new Vector2(0.5f, 1.5f), new Vector2(1f, 1f), 1.5f, 60, 10) { }
+        public NorthStar() : base(new Vector2(0.2f, 2.1f), new Vector2(1f, 1f), 2f, 80, 12) { }
         public override void ModifyDamageHitbox(ref Rectangle hitbox)
         {
-            int width = 48;
+            int width = 64;
             hitbox = new Rectangle((int)projectile.Center.X - width / 2, (int)projectile.Center.Y - width / 2, width, width);
         }
         public override void OnLaunch(Player player)
         {
             projectile.velocity *= 0.85f;
         }
-        public override void SetStaticDefaults() => DisplayName.SetDefault("Aten");
+        public override void SetStaticDefaults() => DisplayName.SetDefault("North Star");
         public override void SetDefaults()
         {
-            projectile.Size = new Vector2(26, 32);
+            projectile.Size = new Vector2(50, 68);
             projectile.friendly = true;
             projectile.melee = true;
             projectile.penetrate = -1;
@@ -42,44 +44,49 @@ namespace SOTS.Projectiles.Pyramid.Aten
         {
             if (projectile.localAI[0] == 0)
             {
-                SOTS.primitives.CreateTrail(new AtenPrimTrail(projectile));
+                SOTS.primitives.CreateTrail(new NorthStarTrail(projectile));
             }
-            if (projectile.localAI[0] % 24 == 0 && summonedNum < 9) //prevent spawning more in multiplayer with Main.myPlayer == projectile.owner
+            if (projectile.localAI[0] % 18 == 0 && summonedNum < 8) //prevent spawning more in multiplayer with Main.myPlayer == projectile.owner
             {
                 Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 30, 0.8f, -0.15f);
                 if (Main.myPlayer == projectile.owner)
                 {
-                    Projectile.NewProjectileDirect(player.Center, Vector2.Zero, ModContent.ProjectileType<AtenStar>(), (int)(projectile.damage * 0.7f) + 1, 0, projectile.owner, summonedNum, projectile.identity); //use identity since it aids with server syncing (.whoAmI is client dependent)
+                    for(int i = 0; i <= 1; i++)
+                    {
+                        Projectile.NewProjectileDirect(player.Center, Vector2.Zero, ModContent.ProjectileType<NorthStarStar>(), (int)(projectile.damage * 0.7f) + 1, 0, projectile.owner, summonedNum + i * 8, projectile.identity); //use identity since it aids with server syncing (.whoAmI is client dependent)
+                    }
                 }
                 summonedNum++;
             }
             projectile.localAI[0]++;
-            Lighting.AddLight(projectile.Center, new Color(255, 230, 138).ToVector3());
+            Lighting.AddLight(projectile.Center, new Color(150, 180, 240).ToVector3());
         }
         public override void NotSpinningExtras(Player player)
         {
-            Lighting.AddLight(projectile.Center, new Color(255, 230, 138).ToVector3());
+            Lighting.AddLight(projectile.Center, new Color(150, 180, 240).ToVector3());
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
             Vector2 drawPos = projectile.Center - Main.screenPosition + new Vector2(0, projectile.gfxOffY);
-            Color color = new Color(255, 230, 138, 0);
+            Color color = new Color(150, 180, 240, 0) * 0.5f;
             Texture2D tex = mod.GetTexture("Assets/FlailBloom");
-            spriteBatch.Draw(tex, drawPos, null, color, 0, new Vector2(tex.Width, tex.Height) / 2, projectile.scale * 1.50f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(tex, drawPos, null, color, 0, new Vector2(tex.Width, tex.Height) / 2, projectile.scale * 2.0f, SpriteEffects.None, 0f);
             tex = Main.projectileTexture[projectile.type];
-            spriteBatch.Draw(tex, drawPos, null, lightColor, projectile.rotation, new Vector2(tex.Width / 2, 10), projectile.scale * 1.25f, SpriteEffects.None, 0f); //putting origin on center of ball instead of on spike + ball
+            spriteBatch.Draw(tex, drawPos, null, Color.White, projectile.rotation, new Vector2(tex.Width / 2, tex.Height / 2), projectile.scale * 0.9f, SpriteEffects.FlipVertically, 0f); //putting origin on center of ball instead of on spike + ball
             return false;
         }
     }
-    public class AtenStar : ModProjectile, IOrbitingProj
+    public class NorthStarStar : ModProjectile, IOrbitingProj
     {
         public override void SendExtraAI(BinaryWriter writer)
         {
             writer.Write(orbitalSpeed);
+            writer.Write(orbitalDistance);
         }
         public override void ReceiveExtraAI(BinaryReader reader)
         {
             orbitalSpeed = reader.ReadSingle();
+            orbitalDistance = reader.ReadSingle();
         }
         public bool inFront
         {
@@ -94,7 +101,7 @@ namespace SOTS.Projectiles.Pyramid.Aten
         private Projectile Parent()
         {
             Projectile parent = pastParent;
-            if (parent != null && parent.active && parent.owner == projectile.owner && parent.type == ModContent.ProjectileType<AtenProj>() && parent.identity == (int)(projectile.ai[1] + 0.5f)) //this is to prevent it from iterating the loop over and over
+            if (parent != null && parent.active && parent.owner == projectile.owner && parent.type == ModContent.ProjectileType<NorthStar>() && parent.identity == (int)(projectile.ai[1] + 0.5f)) //this is to prevent it from iterating the loop over and over
             {
                 return parent;
             }
@@ -103,7 +110,7 @@ namespace SOTS.Projectiles.Pyramid.Aten
             for (short i = 0; i < Main.maxProjectiles; i++)
             {
                 Projectile proj = Main.projectile[i];
-                if (proj.active && proj.owner == projectile.owner && proj.type == ModContent.ProjectileType<AtenProj>() && proj.identity == (int)(projectile.ai[1] + 0.5f)) //use identity since it aids with server syncing (.whoAmI is client dependent)
+                if (proj.active && proj.owner == projectile.owner && proj.type == ModContent.ProjectileType<NorthStar>() && proj.identity == (int)(projectile.ai[1] + 0.5f)) //use identity since it aids with server syncing (.whoAmI is client dependent)
                 {
                     parent = proj;
                     break;
@@ -127,24 +134,28 @@ namespace SOTS.Projectiles.Pyramid.Aten
         }
         public override void SetStaticDefaults()
         {
-            ProjectileID.Sets.TrailCacheLength[projectile.type] = 30;
+            ProjectileID.Sets.TrailCacheLength[projectile.type] = 36;
             ProjectileID.Sets.TrailingMode[projectile.type] = 0;
         }
         public override void SetDefaults()
         {
             projectile.friendly = true;
             projectile.melee = true;
-            projectile.Size = new Vector2(12, 12);
+            projectile.Size = new Vector2(20, 20);
             projectile.tileCollide = false;
             projectile.timeLeft = 180;
             projectile.penetrate = -1;
             projectile.extraUpdates = 1;
-            projectile.idStaticNPCHitCooldown = 30;
-            projectile.usesIDStaticNPCImmunity = true;
+            projectile.localNPCHitCooldown = 100; //actually 50 because of extraupdates
+            projectile.usesLocalNPCImmunity = true;
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             target.immune[projectile.owner] = 0;
+            if(released)
+            {
+                DelayEnd();
+            }
         }
         public override Color? GetAlpha(Color lightColor)
         {
@@ -155,26 +166,27 @@ namespace SOTS.Projectiles.Pyramid.Aten
         {
             if (Main.myPlayer == projectile.owner)
             {
-                Projectile.NewProjectileDirect(projectile.Center, Vector2.Zero, ModContent.ProjectileType<AtenStarExplosion>(), projectile.damage * 3, 0, projectile.owner, projectile.scale);
+                Projectile.NewProjectileDirect(projectile.Center, Vector2.Zero, ModContent.ProjectileType<NorthStarExplosion>(), projectile.damage * 3, 0, projectile.owner, projectile.scale);
 
             }
-            if (projectile.timeLeft > 30)
-                projectile.timeLeft = 30;
+            if (projectile.timeLeft > 36)
+                projectile.timeLeft = 36;
             projectile.velocity *= 0f;
             orbitalDistance = -1;
-            projectile.netUpdate = true;
             projectile.friendly = false;
+            projectile.netUpdate = true;
         }
         public override bool PreAI()
         {
             if (runOnce)
             {
-                orbitalDistance = Main.rand.NextFloat(70, 90);
+                orbitalDistance = Main.rand.NextFloat(120, 160);
                 projectile.netUpdate = true;
                 runOnce = false;
             }
             if(orbitalDistance == -1)
             {
+                parentActive = false;
                 projectile.velocity *= 0f;
                 projectile.friendly = false;
             }
@@ -194,8 +206,16 @@ namespace SOTS.Projectiles.Pyramid.Aten
             {
                 if (released)
                 {
-                    if (Main.rand.NextBool(10))
-                        Dust.NewDustPerfect(projectile.Center, 244, Main.rand.NextVector2Circular(0.5f, 0.5f));
+                    if (Main.rand.NextBool(9))
+                    {
+                        Color colorMan = Color.Lerp(new Color(240, 250, 255, 100), new Color(200, 250, 255, 100), Main.rand.NextFloat(1));
+                        Dust dust = Dust.NewDustPerfect(projectile.Center, ModContent.DustType<CopyDust4>(), Main.rand.NextVector2Circular(0.5f, 0.5f));
+                        dust.color = colorMan;
+                        dust.noGravity = true;
+                        dust.fadeIn = 0.1f;
+                        dust.scale *= 1.1f;
+                        dust.alpha = 180;
+                    }
                     additionalCounter++;
                     toCenter = Parent().Center;
                     if (!Parent().tileCollide && additionalCounter > 4) //added counter here to counteract pre-emptive exploding due to place in projectile array
@@ -209,8 +229,8 @@ namespace SOTS.Projectiles.Pyramid.Aten
                     projectile.timeLeft = 180;
                 }
                 float endSin = (float)Math.Sin(1.5f * additionalCounter * MathHelper.Pi / 180);
-                angleProgression = MathHelper.ToRadians((SOTSPlayer.ModPlayer(Player).orbitalCounter + additionalCounter * 1.5f) * 2.5f + (orbitNum % 3) * 120 + (int)(orbitNum / 3) * 30);
-                Vector2 offset = Vector2.UnitX.RotatedBy(Angle + MathHelper.ToRadians((int)(orbitNum / 3) * 120)) * (float)Math.Sin(angleProgression) * (orbitalDistance + additionalCounter * 1.25f * endSin);
+                angleProgression = MathHelper.ToRadians((SOTSPlayer.ModPlayer(Player).orbitalCounter + additionalCounter * 1.5f) * 1.75f + (orbitNum % 4) * 90 + (int)(orbitNum / 4) * 22.5f);
+                Vector2 offset = Vector2.UnitX.RotatedBy(Angle + MathHelper.ToRadians((int)(orbitNum / 4) * 45)) * (float)Math.Sin(angleProgression) * (orbitalDistance + additionalCounter * 1.25f * endSin);
                 projectile.scale = 1 + ((float)Math.Cos(angleProgression) / 2f);
                 if (projectile.scale < 1)
                     projectile.scale = (projectile.scale + 1) / 2;
@@ -245,17 +265,25 @@ namespace SOTS.Projectiles.Pyramid.Aten
             }
             for (int k = length - 1; k >= end; k--)
             {
-                float scale = projectile.scale * (0.2f + 0.8f * (projectile.oldPos.Length - k) / projectile.oldPos.Length);
+                //Color colorR = VoidPlayer.pastelAttempt(MathHelper.ToRadians((float)(projectile.oldPos.Length - k) / projectile.oldPos.Length * 300f + VoidPlayer.soulColorCounter * 2)) * 1f;
+                float scale = projectile.scale * (0.25f + 0.75f * (projectile.oldPos.Length - k) / projectile.oldPos.Length);
                 if (k != 0) scale *= 0.3f;
                 else scale *= 0.4f;
                 Vector2 drawPos = projectile.oldPos[k] - Main.screenPosition + projectile.Size / 2f + new Vector2(0, projectile.gfxOffY);
-                float lerpPercent = (float)k / projectile.oldPos.Length;
-                Color colorMan = Color.Lerp(new Color(255, 230, 140), new Color(180, 90, 20), lerpPercent);
+                float lerpPercent = (float)Math.Sin(MathHelper.ToRadians((float)k / projectile.oldPos.Length * 300f + VoidPlayer.soulColorCounter * 1.5f));
+                Color colorMan = Color.Lerp(new Color(150, 180, 240), new Color(190, 10, 75), lerpPercent);
                 Color color = colorMan * ((projectile.oldPos.Length - k) / (float)projectile.oldPos.Length) * scale;
                 spriteBatch.Draw(texture, drawPos, null, color, projectile.rotation, origin, scale, SpriteEffects.None, 0f);
             }
             if(orbitalDistance != -1)
-                spriteBatch.Draw(Main.projectileTexture[projectile.type], projectile.Center - Main.screenPosition + new Vector2(0, projectile.gfxOffY), null, new Color(255, 255, 255, 100), projectile.rotation, Main.projectileTexture[projectile.type].Size() / 2, projectile.scale * 0.9f, SpriteEffects.None, 0);
+            {
+                for(int i = 0; i < 6; i++)
+                {
+                    Color color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(i * 60));
+                    Vector2 drawPos = projectile.Center - Main.screenPosition + new Vector2(0, projectile.gfxOffY) + Main.rand.NextVector2Circular(0.5f, 0.5f) + Vector2.UnitX.RotatedBy(MathHelper.ToRadians(i * 60)) * 2;
+                    spriteBatch.Draw(Main.projectileTexture[projectile.type], drawPos, null, new Color(color.R, color.G, color.B, 0) * 0.3f, projectile.rotation, Main.projectileTexture[projectile.type].Size() / 2, projectile.scale * 0.75f, SpriteEffects.None, 0);
+                }
+            }
         }
     }
 }

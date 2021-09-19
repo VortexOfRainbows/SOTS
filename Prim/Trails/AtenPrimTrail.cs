@@ -4,9 +4,8 @@ using System.Linq;
 using Terraria;
 using Terraria.ModLoader;
 using System;
-using SOTS.Prim;
 
-namespace SOTS.Items.Pyramid.Aten
+namespace SOTS.Prim.Trails
 {
 	class AtenPrimTrail : PrimTrail
 	{
@@ -18,7 +17,7 @@ namespace SOTS.Items.Pyramid.Aten
 			Color = new Color(255, 230, 138);
 			Width = 20;
 			Cap = 20;
-			Pixellated = true;
+			Pixellated = false;
 		}
 
 		public override void SetDefaults() => AlphaValue = 1f;
@@ -71,7 +70,7 @@ namespace SOTS.Items.Pyramid.Aten
 			effect.Parameters["TrailTexture"].SetValue(ModContent.GetInstance<SOTS>().GetTexture("TrailTextures/Trail_3"));
 			effect.Parameters["ColorOne"].SetValue(Color.ToVector4());
 			effect.Parameters["ColorTwo"].SetValue(Color.ToVector4());
-			PrepareShader(effect, "MainPS", 0.5f);
+			PrepareShader(effect, "MainPS", Counter / 24f);
 		}
 
 		public override void OnUpdate()

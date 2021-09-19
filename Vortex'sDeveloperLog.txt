@@ -10,12 +10,9 @@ Mid Priority:
 1. Tectonic Tether
 2. Chest slime resprites and reworks
 3. Curse Base Armor Set
-
-Mid Priority 2:
-1. Horn of Plenty: 10% more drops accessory
-2. Ethereal Tonic
-3. Timelord's Potion: attempt using .aiStyle, otherwise would require a lot of workaround...
-4. Replace Brittle flail
+4. Horn of Plenty: 10% more drops accessory
+5. Ethereal Tonic
+6. Timelord's Potion: attempt using .aiStyle, otherwise would require a lot of workaround...
 
 Low Priority:
 1. Archaelogist NPC
@@ -27,9 +24,14 @@ Low Priority:
 Currently Working On:
 1. Misc
 
+9/19/21
+1. North Star added, replaces Brittle Flail. Server Syncs FINE enough
+2. Metalmalgamation resprite. Damage 45 -> 40, shoots more bullets 2 -> 4
+
 9/18/21
 1. Multiplayer fixed!
 2. Aten works in Multiplayer!
+3. Some internal optimizations
 
 9/17/21
 1. Aten Rework (Graydee + Vortex)
