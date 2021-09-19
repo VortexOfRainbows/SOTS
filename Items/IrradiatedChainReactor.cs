@@ -17,8 +17,8 @@ namespace SOTS.Items
 		{
             item.damage = 15;
             item.melee = true;  
-            item.width = 50;
-            item.height = 50;  
+            item.width = 54;
+            item.height = 54;  
             item.useTime = 32; 
             item.useAnimation = 32;
             item.useStyle = 5;    
