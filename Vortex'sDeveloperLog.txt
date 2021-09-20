@@ -13,6 +13,7 @@ Mid Priority:
 4. Horn of Plenty: 10% more drops accessory
 5. Ethereal Tonic
 6. Timelord's Potion: attempt using .aiStyle, otherwise would require a lot of workaround...
+7. Crusher based armor and accessories
 
 Low Priority:
 1. Archaelogist NPC

@@ -12,7 +12,6 @@ namespace SOTS.NPCs
 	{
 		public override void SetStaticDefaults()
 		{
-			
 			DisplayName.SetDefault("Knuckles");
 		}
 		public override void SetDefaults()
@@ -33,6 +32,8 @@ namespace SOTS.NPCs
             npc.HitSound = SoundID.NPCHit4;
             npc.DeathSound = SoundID.NPCDeath6;
             npc.netAlways = true;
+			music = mod.GetSoundSlot(SoundType.Music, "Sounds/Music/KnucklesTheme");
+			musicPriority = MusicPriority.BossHigh;
 		}
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
