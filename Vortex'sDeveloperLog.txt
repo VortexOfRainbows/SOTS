@@ -29,6 +29,7 @@ Currently Working On:
 2. Metalmalgamation resprite. Damage 45 -> 40, shoots more bullets 2 -> 4
 3. Adjustments to Aten sprite
 4. Peanut Repeater airplanes now do damage
+5. Added Irradiated Chain reactor, is now obtainable as a Chlorophyte Weapon
 
 9/18/21
 1. Multiplayer fixed!

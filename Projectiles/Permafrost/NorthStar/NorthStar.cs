@@ -21,6 +21,12 @@ namespace SOTS.Projectiles.Permafrost.NorthStar
             int width = 64;
             hitbox = new Rectangle((int)projectile.Center.X - width / 2, (int)projectile.Center.Y - width / 2, width, width);
         }
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+        {
+            width = 32;
+            height = 32;
+            return base.TileCollideStyle(ref width, ref height, ref fallThrough);
+        }
         public override void OnLaunch(Player player)
         {
             projectile.velocity *= 0.85f;

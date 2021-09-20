@@ -26,6 +26,7 @@ using Terraria.Utilities;
 using SOTS.Items.Pyramid.PyramidWalls;
 using SOTS.Projectiles.Celestial;
 using SOTS.Projectiles.Permafrost;
+using SOTS.Items.DoorItems;
 
 namespace SOTS
 {
@@ -162,6 +163,7 @@ namespace SOTS
 		public static int[] dedicatedBlue;
 		public static int[] dedicatedPurpleRed;
 		public static int[] dedicatedPastelPink;
+		public static int[] dedicatedMinez;
 		public static int[] dedicatedRainbow;
 		public static int[] dedicatedBlasfah;
 		public static int[] dedicatedHeartPlus;
@@ -177,6 +179,7 @@ namespace SOTS
 			dedicatedBlue = new int[] { ItemType<Calculator>() }; //friends 2
 			dedicatedPurpleRed = new int[] { ItemType<CursedApple>(), ItemType<ArcStaffMk2>() }; //James
 			dedicatedPastelPink = new int[] { ItemType<StrangeFruit>() }; //Tris
+			dedicatedMinez = new int[] { ItemType<DoorPants>(), ItemType<BandOfDoor>() }; //Minez
 			dedicatedRainbow = new int[] { ItemType<SubspaceLocket>() /*ItemType<PhotonGeyser>(), ItemType<Traingun>()*/ }; //Vortex
 			dedicatedBlasfah = new int[] { ItemType<Doomstick>(), ItemType<BookOfVirtues>() }; //Blasfah
 			dedicatedHeartPlus = new int[] { ItemType<DigitalDaito>() }; //Heart Plus Up
@@ -297,6 +300,11 @@ namespace SOTS
 					}
 				}
 				dedicatedColor = new Color(255, 158, 235);
+				dedicated = true;
+			}
+			if (dedicatedMinez.Contains(item.type))
+			{
+				dedicatedColor = new Color(255, 153, 51);
 				dedicated = true;
 			}
 			if (dedicatedBlasfah.Contains(item.type))
