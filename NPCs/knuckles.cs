@@ -32,8 +32,8 @@ namespace SOTS.NPCs
             npc.HitSound = SoundID.NPCHit4;
             npc.DeathSound = SoundID.NPCDeath6;
             npc.netAlways = true;
-			music = mod.GetSoundSlot(SoundType.Music, "Sounds/Music/KnucklesTheme");
-			musicPriority = MusicPriority.BossHigh;
+			//music = mod.GetSoundSlot(SoundType.Music, "Sounds/Music/KnucklesTheme");
+			//musicPriority = MusicPriority.BossHigh;
 		}
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {

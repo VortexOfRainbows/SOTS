@@ -109,6 +109,7 @@ namespace SOTS
 			AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/SubspaceSerpent"), ItemType("SubspaceSerpentMusicBox"), TileType("SubspaceSerpentMusicBoxTile"));
 			AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/CursedPyramid"), ItemType("AncientPyramidMusicBox"), TileType("AncientPyramidMusicBoxTile"));
 			AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/Planetarium"), ItemType("PlanetariumMusicBox"), TileType("PlanetariumMusicBoxTile"));
+			AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/KnucklesTheme"), ItemType("KnucklesMusicBox"), TileType("KnucklesMusicBoxTile"));
 			SOTSItem.LoadArrays();
 			SOTSTile.LoadArrays();
 			SOTSWall.LoadArrays();
@@ -413,6 +414,15 @@ namespace SOTS
 					SOTSWorld.SecretFoundMusicTimer--;
 					music = GetSoundSlot(SoundType.Music, "Sounds/Music/SecretFound");
 					priority = MusicPriority.BossHigh + 1;
+				}
+			}
+			if (Main.myPlayer != -1 && !Main.gameMenu)
+			{
+				Player player = Main.player[Main.myPlayer];
+				if (NPC.AnyNPCs(ModContent.NPCType<NPCs.knuckles>()) && Main.npc[NPC.FindFirstNPC(ModContent.NPCType<NPCs.knuckles>())].Distance(player.Center) <= 7000f)
+				{
+					music = GetSoundSlot(SoundType.Music, "Sounds/Music/KnucklesTheme");
+					priority = MusicPriority.BossHigh;
 				}
 			}
 		}
