@@ -23,6 +23,7 @@ namespace SOTS.Void
 		public static Color destabilizeColor = new Color(80, 190, 80);
 		public static Color pastelRainbow = Color.White;
 		public static Color natureColor = new Color(180, 240, 180);
+		public static Color TideColor = new Color(64, 72, 178);
 		public static Color EarthColor = new Color(230, 220, 145);
 		public static Color OtherworldColor = new Color(167, 45, 225, 0);
 		public static Color VibrantColor = new Color(85, 125, 215, 0);
@@ -226,8 +227,8 @@ namespace SOTS.Void
 		public void ColorUpdate()
 		{
 			soulColorCounter++;
-			destabilizeColor = Color.Lerp(new Color(80, 190, 80), new Color(64, 178, 172), 0.5f + new Vector2(0.5f, 0).RotatedBy(MathHelper.ToRadians(soulColorCounter * 1.25f)).X);
-			soulLootingColor = Color.Lerp(new Color(66, 56, 111), new Color(171, 3, 35), 0.5f + new Vector2(0.5f, 0).RotatedBy(MathHelper.ToRadians(soulColorCounter * 1.5f)).X);
+			destabilizeColor = Color.Lerp(new Color(80, 190, 80), new Color(64, 178, 172), 0.5f + (float)Math.Sin(MathHelper.ToRadians(soulColorCounter * 1.25f)) * 0.5f);
+			soulLootingColor = Color.Lerp(new Color(66, 56, 111), new Color(171, 3, 35), 0.5f + (float)Math.Sin(MathHelper.ToRadians(soulColorCounter * 1.5f)) * 0.5f);
 			float newAi = soulColorCounter * 3 / 13f;
 			double frequency = 0.3;
 			double center = 200;
@@ -236,17 +237,18 @@ namespace SOTS.Void
 			double grn = Math.Sin(frequency * newAi + 2.0) * width + center;
 			double blu = Math.Sin(frequency * newAi + 4.0) * width + center;
 			pastelRainbow = new Color((int)red, (int)grn, (int)blu);
-			natureColor = Color.Lerp(new Color(65, 180, 80), new Color(180, 240, 180), 0.5f + new Vector2(0.5f, 0).RotatedBy(MathHelper.ToRadians(soulColorCounter * 1.0f)).X);
-			EarthColor = Color.Lerp(new Color(230, 220, 145), new Color(255, 190, 0), 0.5f + new Vector2(0.5f, 0).RotatedBy(MathHelper.ToRadians(soulColorCounter * 1.2f)).X);
+			natureColor = Color.Lerp(new Color(65, 180, 80), new Color(180, 240, 180), 0.5f + (float)Math.Sin(MathHelper.ToRadians(soulColorCounter * 1.0f)) * 0.5f);
+			EarthColor = Color.Lerp(new Color(230, 220, 145), new Color(255, 190, 0), 0.5f + (float)Math.Sin(MathHelper.ToRadians(soulColorCounter * 2.5f)) * 1.2f);
+			TideColor = Color.Lerp(new Color(64, 72, 178), new Color(75, 100, 255), 0.5f + (float)Math.Sin(MathHelper.ToRadians(soulColorCounter * 0.5f)) * 0.5f);
 			Color color = new Color(167, 45, 225, 0);
 			Color color2 = new Color(64, 178, 172, 0);
-			OtherworldColor = Color.Lerp(color, color2, 0.5f + new Vector2(0.5f, 0).RotatedBy(MathHelper.ToRadians(soulColorCounter * 1.0f)).X);
-			VibrantColor = Color.Lerp(new Color(80, 120, 220, 0), new Color(180, 230, 100, 0), 0.5f + new Vector2(0.5f, 0).RotatedBy(MathHelper.ToRadians(soulColorCounter * 2.5f)).X);
+			OtherworldColor = Color.Lerp(color, color2, 0.5f + (float)Math.Sin(MathHelper.ToRadians(soulColorCounter * 1.0f)) * 0.5f);
+			VibrantColor = Color.Lerp(new Color(80, 120, 220, 0), new Color(180, 230, 100, 0), 0.5f + (float)Math.Sin(MathHelper.ToRadians(soulColorCounter * 2.5f)) * 0.5f);
 
 			Color LemegetonRed = new Color(255, 82, 97);
 			Color LemegetonGreen = new Color(104, 229, 101);
 			Color LemegetonPurple = new Color(200, 119, 247);
-			float lerpAmt = 1.5f + 3 * (new Vector2(0.5f, 0).RotatedBy(MathHelper.ToRadians(soulColorCounter * 0.33f)).X);
+			float lerpAmt = 1.5f + 3 * (float)Math.Sin(MathHelper.ToRadians(soulColorCounter * 0.33f)) * 0.5f;
 			if(lerpAmt < 1)
             {
 				LemegetonColor = Color.Lerp(LemegetonRed, LemegetonGreen, lerpAmt);
@@ -324,7 +326,7 @@ namespace SOTS.Void
 		public int VoidMinionConsumption = 0;
 		public static int minionVoidCost(int type)
 		{
-			if (type == (int)VoidMinionID.NatureSpirit)
+			if (type == (int)VoidMinionID.NatureSpirit || type == (int)VoidMinionID.TidalSpirit)
 				return 40;
 			if (type == (int)VoidMinionID.ChaosSpirit)
 				return 150;
@@ -343,11 +345,11 @@ namespace SOTS.Void
 		public static Color minionVoidColor(int type)
 		{
 			if (type == (int)VoidMinionID.NatureSpirit)
-				return VoidPlayer.natureColor;
+				return natureColor;
 			if (type == (int)VoidMinionID.ChaosSpirit)
-				return VoidPlayer.pastelRainbow;
+				return pastelRainbow;
 			if (type == (int)VoidMinionID.EarthenSpirit)
-				return VoidPlayer.EarthColor;
+				return EarthColor;
 			if (type == (int)VoidMinionID.OtherworldSpirit)
 				return new Color(OtherworldColor.R, OtherworldColor.G, OtherworldColor.B);
 			if (type == (int)VoidMinionID.BethanySpirit)
@@ -356,6 +358,8 @@ namespace SOTS.Void
 				return LemegetonColor;
 			if (type == (int)VoidMinionID.CursedBlade)
 				return new Color(76, 58, 101);
+			if (type == (int)VoidMinionID.TidalSpirit)
+				return TideColor;
 			return Color.White;
 		}
 		public static bool isVoidMinion(Projectile projectile)
@@ -386,6 +390,8 @@ namespace SOTS.Void
 				return (int)VoidMinionID.TBethanySpirit;
 			if (type == ProjectileType<Projectiles.Minions.CursedBlade>())
 				return (int)VoidMinionID.CursedBlade;
+			if (type == ProjectileType<TidalSpirit>())
+				return (int)VoidMinionID.TidalSpirit;
 			return -1;
 		}
 		public enum VoidMinionID
@@ -396,7 +402,8 @@ namespace SOTS.Void
 			OtherworldSpirit,
 			BethanySpirit,
 			TBethanySpirit,
-			CursedBlade
+			CursedBlade,
+			TidalSpirit
 		}
         public override void PostUpdateEquips()
         {

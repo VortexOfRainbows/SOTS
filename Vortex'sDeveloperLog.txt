@@ -14,6 +14,7 @@ Mid Priority:
 5. Ethereal Tonic
 6. Timelord's Potion: attempt using .aiStyle, otherwise would require a lot of workaround...
 7. Crusher based armor and accessories
+8. Extend duration of Spirit Phase 1
 
 Low Priority:
 1. Archaelogist NPC
@@ -22,8 +23,11 @@ Low Priority:
 4. Electrolyte Seperator
 5. Wintry Traveler: Riptide Trident + Frigid Javelin
 
-Currently Working On:
-1. Misc
+9/21/21
+1. Tidal Spirit Staff
+	1. Ripple no longer destroys pots 
+
+--- Released 0.20.0 --- :O
 
 9/19/21
 1. North Star added, replaces Brittle Flail. Server Syncs FINE enough

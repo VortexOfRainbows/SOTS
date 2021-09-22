@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using SOTS.Items;
 using SOTS.Items.ChestItems;
 using SOTS.Items.Fragments;
+using SOTS.Items.Fragments.SpiritStaves;
 using SOTS.Items.Otherworld;
 using SOTS.Items.Otherworld.FromChests;
 using SOTS.Items.Potions;

@@ -1,37 +1,37 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+using SOTS.Buffs;
+using SOTS.Projectiles.Minions;
 using SOTS.Void;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace SOTS.Items.Fragments
+namespace SOTS.Items.Fragments.SpiritStaves
 {
-	public class NatureSpiritStaff : VoidItem
+	public class EarthenSpiritStaff : VoidItem
 	{
 		public override void SetStaticDefaults() 
 		{
-			DisplayName.SetDefault("Nature Spirit Staff");
-			Tooltip.SetDefault("Summons an Nature Spirit to fight for you\nAttacks the closest enemy visible to you\nHeals health upon dealing damage");
+			Tooltip.SetDefault("Summons an Earthen Spirit to fight for you");
 			ItemID.Sets.GamepadWholeScreenUseRange[item.type] = true; 
 			ItemID.Sets.LockOnIgnoresCollision[item.type] = true;
 		}
 		public override void SafeSetDefaults() 
 		{
-			item.damage = 9;
+			item.damage = 16;
 			item.knockBack = 4f;
-			item.width = 42;
-			item.height = 50;
-			item.useTime = 36;
-			item.useAnimation = 36;
-			item.useStyle = 1;
-			item.value = Item.sellPrice(0, 1, 50, 0);
-			item.rare = ItemRarityID.Green;
+			item.width = 38;
+			item.height = 36;
+			item.useTime = 20;
+			item.useAnimation = 20;
+			item.useStyle = ItemUseStyleID.SwingThrow;
+			item.value = Item.sellPrice(0, 3, 0, 0);
+			item.rare = ItemRarityID.Orange;
 			item.UseSound = SoundID.Item44;
 			item.noMelee = true;
 			item.summon = true;
-			item.buffType = mod.BuffType("NatureSpiritAid");
-			item.shoot = mod.ProjectileType("NatureSpirit");
+			item.buffType = ModContent.BuffType<SpiritAid>();
+			item.shoot = ModContent.ProjectileType<EarthenSpirit>();
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) 
 		{
@@ -42,9 +42,8 @@ namespace SOTS.Items.Fragments
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "DissolvingNature", 1);
-			recipe.AddRecipeGroup("SOTS:SilverBar", 12);
-			recipe.AddIngredient(ItemID.JungleSpores, 4);
+			recipe.AddIngredient(ModContent.ItemType<DissolvingEarth>(), 1);
+			recipe.AddIngredient(ItemID.MeteoriteBar, 20);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this);
 			recipe.AddRecipe();
