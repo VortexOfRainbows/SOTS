@@ -20,8 +20,8 @@ namespace SOTS.Items.GelGear
 		{
             item.damage = 34;
             item.melee = true;  
-            item.width = 44;
-            item.height = 44;  
+            item.width = 42;
+            item.height = 42;  
             item.useTime = 30; 
             item.useAnimation = 30;
             item.useStyle = 5;    

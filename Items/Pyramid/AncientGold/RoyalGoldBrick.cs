@@ -31,8 +31,7 @@ namespace SOTS.Items.Pyramid.AncientGold
 	{
 		public override void SetDefaults()
 		{
-			Main.tileMerge[Type][ModContent.TileType<OvergrownPyramidTile>()] = true;
-			Main.tileMerge[Type][ModContent.TileType<OvergrownPyramidTileSafe>()] = true;
+			TileID.Sets.DrawsWalls[Type] = true;
 			Main.tileBrick[Type] = false;
 			Main.tileSolid[Type] = true;
 			Main.tileMergeDirt[Type] = false;

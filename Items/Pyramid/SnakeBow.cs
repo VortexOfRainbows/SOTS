@@ -15,11 +15,10 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void SetDefaults()
 		{
-
 			item.damage = 19;
 			item.ranged = true;
-			item.width = 16;
-			item.height = 40;
+			item.width = 30;
+			item.height = 48;
 			item.useTime = 22;
 			item.useAnimation = 22;
 			item.useStyle = 5;
@@ -35,7 +34,7 @@ namespace SOTS.Items.Pyramid
 		}
 		public override Vector2? HoldoutOffset()
 		{
-			return new Vector2(4, 0);
+			return new Vector2(-2, 0);
 		}
 		public override void AddRecipes()
 		{

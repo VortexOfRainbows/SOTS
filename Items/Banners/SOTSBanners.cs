@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SOTS.NPCs;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
@@ -31,7 +30,6 @@ namespace SOTS.Items.Banners
 			name.SetDefault("Banner");
 			AddMapEntry(new Color(13, 88, 130), name);
 		}
-
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
 			int style = frameX / 18;
@@ -395,6 +393,8 @@ namespace SOTS.Items.Banners
 		public override void SafeSetDefaults()
 		{
 			item.createTile = TileType<HoloEyeBannerTile>();
+			item.width = 20;
+			item.height = 30;
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
@@ -719,6 +719,15 @@ namespace SOTS.Items.Banners
 				case 2:
 					item = "LesserWispBanner";
 					break;
+				case 3:
+					item = "GhastBanner";
+					break;
+				case 4:
+					item = "MaligmorBanner";
+					break;
+				case 5:
+					item = "TeratomaBanner";
+					break;
 				default:
 					return;
 			}
@@ -742,6 +751,15 @@ namespace SOTS.Items.Banners
 						break;
 					case 2:
 						type = "LesserWisp";
+						break;
+					case 3:
+						type = "Ghast";
+						break;
+					case 4:
+						type = "Maligmor";
+						break;
+					case 5:
+						type = "Teratoma";
 						break;
 					default:
 						return;
@@ -781,6 +799,30 @@ namespace SOTS.Items.Banners
 		{
 			item.createTile = TileType<SOTSBanners2>();
 			item.placeStyle = 2;
+		}
+	}
+	public class GhastBanner : ModBanner
+	{
+		public override void SafeSetDefaults()
+		{
+			item.createTile = TileType<SOTSBanners2>();
+			item.placeStyle = 3;
+		}
+	}
+	public class MaligmorBanner : ModBanner
+	{
+		public override void SafeSetDefaults()
+		{
+			item.createTile = TileType<SOTSBanners2>();
+			item.placeStyle = 4;
+		}
+	}
+	public class TeratomaBanner : ModBanner
+	{
+		public override void SafeSetDefaults()
+		{
+			item.createTile = TileType<SOTSBanners2>();
+			item.placeStyle = 5;
 		}
 	}
 }

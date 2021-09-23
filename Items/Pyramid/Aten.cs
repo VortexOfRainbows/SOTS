@@ -1,39 +1,30 @@
-using System;
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.Graphics.Effects;
-using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
-using SOTS.Void;
- 
+using SOTS.Items.BaseWeapons;
+using SOTS.Projectiles.Pyramid.Aten;
+
 namespace SOTS.Items.Pyramid
 {
-    public class Aten : ModItem
+    public class Aten : BaseFlailItem
     {
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Aten");
-			Tooltip.SetDefault("'The defunct god... now in flail form'");
-		}
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
-            item.damage = 19;
-            item.width = 34;
-            item.height = 34;
+            DisplayName.SetDefault("Aten");
+            Tooltip.SetDefault("Conjures stars that do 70% damage and explode for 210% damage\n'The defunct god... now in flail form'");
+        }
+        public override void SafeSetDefaults()
+        {
+            item.Size = new Vector2(44, 46);
+            item.damage = 21;
             item.value = Item.sellPrice(0, 1, 50, 0);
-            item.rare = 4;
-            item.noMelee = true;
-            item.useStyle = 5;
-            item.useAnimation = 60;
-            item.useTime = 60;
-            item.knockBack = 4.5f;
-            item.noUseGraphic = true; 
-            item.shoot = mod.ProjectileType("AtenProj");
-            item.shootSpeed = 14.5f;
-            item.UseSound = SoundID.Item1;
-            item.melee = true; 
-            item.channel = true;
+            item.rare = ItemRarityID.LightRed;
+            item.useTime = 30;
+            item.useAnimation = 30;
+            item.shoot = ModContent.ProjectileType<AtenProj>();
+            item.shootSpeed = 14;
+            item.knockBack = 4;
         }
     }
 }

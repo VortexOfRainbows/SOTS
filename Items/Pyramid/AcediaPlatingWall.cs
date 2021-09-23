@@ -25,7 +25,7 @@ namespace SOTS.Items.Pyramid
 			item.useStyle = 1;
 			item.rare = 9;
 			item.consumable = true;
-			item.createWall = mod.WallType("AcediaPlatingWallWall");
+			item.createWall = ModContent.WallType<UnsafeAcediaWallWall>();
 		}
 		public override void AddRecipes()
 		{
@@ -56,14 +56,6 @@ namespace SOTS.Items.Pyramid
 			dustType = mod.DustType("AcedianDust");
 			drop = mod.ItemType("AcediaPlatingWall");
 			AddMapEntry(new Color(180, 64, 170));
-		}
-		public override bool CanExplode(int i, int j)
-		{
-			return false;
-		}
-		public override void KillWall(int i, int j, ref bool fail)
-		{
-			fail = true;
 		}
 	}
 }

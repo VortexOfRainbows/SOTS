@@ -34,7 +34,7 @@ namespace SOTS.Items.Pyramid
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frameNotUsed, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
-			Texture2D texture = mod.GetTexture("Items/Pyramid/RoyalRubyShardGlow");
+			Texture2D texture = mod.GetTexture("Items/Pyramid/TaintedKeystoneShard");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			position += drawOrigin * scale;
 			float counter = Main.GlobalTime * 160;
@@ -72,7 +72,7 @@ namespace SOTS.Items.Pyramid
 		}
 		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
 		{
-			Texture2D texture2 = mod.GetTexture("Items/Pyramid/RoyalRubyShardGlow");
+			Texture2D texture2 = mod.GetTexture("Items/Pyramid/TaintedKeystoneShard");
 			Vector2 drawOrigin = new Vector2(texture2.Width * 0.5f, texture2.Height * 0.5f);
 			float counter = Main.GlobalTime * 160;
 			float mult = new Vector2(-2.5f, 0).RotatedBy(MathHelper.ToRadians(counter)).X;
@@ -167,7 +167,6 @@ namespace SOTS.Items.Pyramid
 			Main.tileFrameImportant[Type] = true;
 			Main.tileObsidianKill[Type] = true;
 			drop = mod.ItemType("RoyalRubyShard");
-			
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Keystone Shard");
 			AddMapEntry(new Color(211, 69, 74), name);
@@ -218,7 +217,7 @@ namespace SOTS.Items.Pyramid
 				drawOffSet.X -= 2;
 			Vector2 location = new Vector2(i * 16, j * 16) + drawOffSet;
 			Color color2 = Lighting.GetColor(i, j, WorldGen.paintColor(tile.color()));
-			Texture2D texture2 = mod.GetTexture("Items/Pyramid/RoyalRubyShardTileGlow");
+			Texture2D texture2 = mod.GetTexture("Items/Pyramid/TaintedKeystoneShardTile");
 			float counter = Main.GlobalTime * 160;
 			float mult = new Vector2(-1f, 0).RotatedBy(MathHelper.ToRadians(counter)).X;
 			Rectangle frame = new Rectangle(tile.frameX, tile.frameY, 16, 16);
@@ -257,8 +256,8 @@ namespace SOTS.Items.Pyramid
 			return TileIsCapable(i, j + 1) || TileIsCapable(i, j - 1) || TileIsCapable(i + 1, j) || TileIsCapable(i - 1, j);
 		}
 		private bool TileIsCapable(Tile tile)
-        {
-			return tile.active() && Main.tileSolid[tile.type] && tile.slope() == 0 && !tile.halfBrick() && !tile.inActive();
+		{
+			return tile.active() && Main.tileSolid[tile.type] && !Main.tileSolidTop[tile.type] && tile.slope() == 0 && !tile.halfBrick() && !tile.inActive();
 		}
 		private bool TileIsCapable(int i, int j)
         {

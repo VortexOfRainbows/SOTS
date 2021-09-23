@@ -15,9 +15,9 @@ namespace SOTS.Projectiles.Pyramid
         public override void SetDefaults()
         {
 			projectile.aiStyle = 1;
-			projectile.height = 24;
-			projectile.width = 42;
-            Main.projFrames[projectile.type] = 4;
+			projectile.width = 50;
+			projectile.height = 18;
+			Main.projFrames[projectile.type] = 4;
 			projectile.penetrate = 10;
 			projectile.friendly = true;
 			projectile.timeLeft = 3600;
@@ -56,7 +56,7 @@ namespace SOTS.Projectiles.Pyramid
 			Player player = Main.player[projectile.owner];
 			projectile.tileCollide = true;
             projectile.frameCounter++;
-            if (projectile.frameCounter >= 9)
+            if (projectile.frameCounter >= 6)
             {
                 projectile.frameCounter = 0;
                 projectile.frame = (projectile.frame + 1) % 4;
@@ -143,7 +143,13 @@ namespace SOTS.Projectiles.Pyramid
 				Main.dust[num1].noGravity = true;
 			}
 		}
-		public override bool OnTileCollide(Vector2 oldVelocity)
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+        {
+			width = 12;
+			height = 12;
+			return base.TileCollideStyle(ref width, ref height, ref fallThrough);
+		}
+        public override bool OnTileCollide(Vector2 oldVelocity)
 		{
 			projectile.penetrate--;
 			if(projectile.penetrate < 1)

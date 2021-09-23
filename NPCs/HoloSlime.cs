@@ -258,7 +258,14 @@ namespace SOTS.NPCs
 				int num = 0;
 				while ((double)num < damage / (double)npc.lifeMax * 70.0)
 				{
-					Dust.NewDust(npc.position, npc.width, npc.height, DustID.Electric, (float)hitDirection, -1f, npc.alpha, default, 0.65f);
+					float scale = 1f;
+					int type = DustID.Electric;
+					if (Main.rand.NextBool(3))
+					{
+						type = ModContent.DustType<Dusts.CodeDust2>();
+						scale = 2f;
+					}
+					Dust.NewDust(npc.position, npc.width, npc.height, type, (float)(2 * hitDirection), -2f, 0, default, 0.65f * scale);
 					num++;
 				}
 			}
@@ -266,7 +273,14 @@ namespace SOTS.NPCs
 			{
 				for (int k = 0; k < 36; k++)
 				{
-					Dust.NewDust(npc.position, npc.width, npc.height, DustID.Electric, (float)(2 * hitDirection), -2f, npc.alpha, default, 1f);
+					float scale = 1f;
+					int type = DustID.Electric;
+					if (Main.rand.NextBool(3))
+					{
+						type = ModContent.DustType<Dusts.CodeDust2>();
+						scale = 2f;
+					}
+					Dust.NewDust(npc.position, npc.width, npc.height, type, (float)(2 * hitDirection), -2f, 0, default, scale);
 				}
 			}
 		}

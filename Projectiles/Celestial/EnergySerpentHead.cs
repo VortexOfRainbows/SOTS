@@ -19,9 +19,6 @@ namespace SOTS.Projectiles.Celestial
 		{
 			DisplayName.SetDefault("Energy Serpent");
 		}
-		List<Vector2> segments = new List<Vector2>();
-		List<float> segmentsRotation = new List<float>();
-		bool runOnce = true;
 		public override void SetDefaults()
         {
 			projectile.width = 40;
@@ -34,7 +31,10 @@ namespace SOTS.Projectiles.Celestial
 			projectile.alpha = 0;
 			projectile.hide = true;
 		}
-        public override void DrawBehind(int index, List<int> drawCacheProjsBehindNPCsAndTiles, List<int> drawCacheProjsBehindNPCs, List<int> drawCacheProjsBehindProjectiles, List<int> drawCacheProjsOverWiresUI)
+		List<Vector2> segments = new List<Vector2>();
+		List<float> segmentsRotation = new List<float>();
+		bool runOnce = true;
+		public override void DrawBehind(int index, List<int> drawCacheProjsBehindNPCsAndTiles, List<int> drawCacheProjsBehindNPCs, List<int> drawCacheProjsBehindProjectiles, List<int> drawCacheProjsOverWiresUI)
         {
 			drawCacheProjsBehindNPCs.Add(index);
         }

@@ -12,15 +12,8 @@ using Terraria.ID;
 namespace SOTS.Projectiles.Crushers
 {    
     public class IrradiatedCrush : ModProjectile 
-    {	int expand = -1;
-		            
-		
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Rad Crush");
-			
-		}
-		
+    {
+		bool runOnce = true;
         public override void SetDefaults()
         {
 			projectile.height = 70;
@@ -34,22 +27,22 @@ namespace SOTS.Projectiles.Crushers
 			projectile.hostile = false;
 			projectile.alpha = 0;
 		}
+		public override bool ShouldUpdatePosition()
+		{
+			return false;
+		}
 		public override void AI()
         {
-			Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 1.5f / 255f, (255 - projectile.alpha) * 1.5f / 255f, (255 - projectile.alpha) * 1.5f / 255f);
-			if(expand == -1 && projectile.owner == Main.myPlayer)
+			Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 0.5f / 255f, (255 - projectile.alpha) * 1.5f / 255f, (255 - projectile.alpha) * 0.7f / 255f);
+			if(runOnce && projectile.owner == Main.myPlayer)
 			{
-				expand = 0;
-				if(projectile.knockBack > 1)
+				runOnce = false;
+				for (int i = 0; i < 2; i++)
 				{
-					for(int i = 0; i < projectile.damage; i += (int)(projectile.knockBack * 7f))
-					{ 
-						int proj = Projectile.NewProjectile((projectile.Center.X), projectile.Center.Y, Main.rand.Next(-100, 101) * 0.02f, Main.rand.Next(-100, 101) * 0.02f, 95, (int)(projectile.damage * 0.5f), 0, projectile.owner);
-						Main.projectile[proj].timeLeft = Main.rand.Next(24, 60);
-					}
+					Projectile proj = Projectile.NewProjectileDirect(projectile.Center, Main.rand.NextVector2Circular(3, 3), ProjectileID.SporeCloud, (int)(projectile.damage * 0.50f) + 1, 0, projectile.owner);
+					proj.timeLeft = Main.rand.Next(16, 35);
 				}
 			}
-			projectile.knockBack = 3.5f;
             projectile.frameCounter++;
             if (projectile.frameCounter >= 5)
             {
@@ -60,7 +53,6 @@ namespace SOTS.Projectiles.Crushers
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-			Player player = Main.player[projectile.owner];
             target.immune[projectile.owner] = 10;
         }
 	}

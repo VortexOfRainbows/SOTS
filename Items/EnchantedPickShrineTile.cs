@@ -11,7 +11,8 @@ namespace SOTS.Items
         {
 		    mineResist = 0.01f;
 		    minPick = 0;
-		    Main.tileSolid[Type] = false;
+            Main.tileNoFail[Type] = true;
+            Main.tileSolid[Type] = false;
             Main.tileFrameImportant[Type] = true;
             Main.tileLavaDeath[Type] = false;
             TileObjectData.newTile.CopyFrom(TileObjectData.Style3x2);

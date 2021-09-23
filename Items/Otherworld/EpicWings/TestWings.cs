@@ -403,6 +403,12 @@ namespace SOTS.Items.Otherworld.EpicWings
 					{
 						boost = 300;
 					}
+					if (player.velocity.Y != 0 && boost > 40)
+					{
+						Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.Electric, 0, -1);
+						dust.velocity *= 0.2f;
+						dust.noGravity = true;
+					}
 				}
 				else
 				{

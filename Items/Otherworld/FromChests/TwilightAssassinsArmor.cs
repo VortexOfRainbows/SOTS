@@ -13,7 +13,6 @@ namespace SOTS.Items.Otherworld.FromChests
 	[AutoloadEquip(EquipType.Head)]
 	public class TwilightAssassinsCirclet : ModItem
 	{	
-		int Probe = -1;
 		public override void SetDefaults()
 		{
 			item.width = 30;

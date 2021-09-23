@@ -1,6 +1,7 @@
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
+using Terraria.ID;
 
 namespace SOTS.Items.Pyramid
 {
@@ -9,15 +10,14 @@ namespace SOTS.Items.Pyramid
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Treasure Bag");
-			Tooltip.SetDefault("Right Click to open");
-			Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(5, 7));
+			Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
 		}
 		public override void SetDefaults()
 		{
-			item.width = 36;
-			item.height = 34;
+			item.width = 32;
+			item.height = 32;
 			item.value = 0;
-			item.rare = 6;
+			item.rare = ItemRarityID.LightPurple;
 			item.expert = true;
 			item.maxStack = 99;
 			item.consumable = true;

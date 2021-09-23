@@ -10,15 +10,15 @@ namespace SOTS.Items.Pyramid
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Aquatic Eclipse");
+			DisplayName.SetDefault("Eclipse");
 			Tooltip.SetDefault("Charge to increase damage up to 700%\nTakes 3 seconds to reach max charge\nCan strike through walls\nReleases bubbles that do 10% damage");
 		}
 		public override void SafeSetDefaults()
 		{
             item.damage = 92;
             item.melee = true;  
-            item.width = 60;
-            item.height = 60;  
+            item.width = 56;
+            item.height = 56;  
             item.useTime = 30; 
             item.useAnimation = 30;
             item.useStyle = 5;    

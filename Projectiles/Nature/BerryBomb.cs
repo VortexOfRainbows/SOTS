@@ -12,7 +12,7 @@ using Terraria.ID;
 namespace SOTS.Projectiles.Nature
 {    
     public class BerryBomb : ModProjectile 
-    {	int wait = 0;
+    {
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Berry Bomb");
@@ -63,10 +63,8 @@ namespace SOTS.Projectiles.Nature
 			{
 				for(int i = 0; i < 3; i++)
 				{ 
-					int proj = Projectile.NewProjectile((projectile.Center.X), projectile.Center.Y, Main.rand.Next(-100, 101) * 0.03f, Main.rand.Next(-100, 101) * 0.03f, ProjectileID.SlimeGun, (int)(projectile.damage * 0.7f) + 1, 0, projectile.owner); //slime gun
-					Main.projectile[proj].friendly = true;
-					Main.projectile[proj].hostile = false;
-					Main.projectile[proj].timeLeft = Main.rand.Next(12, 24);
+					Projectile proj = Projectile.NewProjectileDirect(projectile.Center, Main.rand.NextVector2Circular(3, 3), ProjectileID.SlimeGun, 0, projectile.owner);
+					proj.timeLeft = Main.rand.Next(12, 24);
 				}
 			}
 		}

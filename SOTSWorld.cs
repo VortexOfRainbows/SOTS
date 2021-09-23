@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using SOTS.Items;
 using SOTS.Items.ChestItems;
 using SOTS.Items.Fragments;
+using SOTS.Items.Fragments.SpiritStaves;
 using SOTS.Items.Otherworld;
 using SOTS.Items.Otherworld.FromChests;
 using SOTS.Items.Potions;
@@ -233,7 +234,7 @@ namespace SOTS
 			if(NPC.downedBoss2 && !downedBoss2)
 			{
 				downedBoss2 = true;
-				Main.NewText("The pyramid's curse weakens", 155, 115, 0);
+				//Main.NewText("The pyramid's curse weakens", 155, 115, 0);
 			}
 		}
 		public override void ModifyWorldGenTasks(List<GenPass> tasks, ref float totalWeight)
@@ -454,11 +455,15 @@ namespace SOTS
 					}
 				}
 
-
+				int dungeonSide = -1; // -1 = dungeon on left, 1 = dungeon on right
+				if (Main.dungeonX > (int)(Main.maxTilesX / 2))
+				{
+					dungeonSide = 1;
+				}
 				bool coconutGenerated = false;
 				while(!coconutGenerated)
 				{
-					int direction = Main.rand.NextBool(2) ? -1 : 1;
+					int direction = dungeonSide;
 					int fromBorder = 70 + Main.rand.Next(20);
 					if(direction == -1)
                     {
@@ -479,12 +484,12 @@ namespace SOTS
 			tasks.Insert(genIndexEnd + 2, new PassLegacy("genIndexModPlanetarium", delegate (GenerationProgress progress)
 			{
 				progress.Message = "Generating Sky Artifacts";
-				int dungeonSide = -1;
+				int dungeonSide = -1; // -1 = dungeon on left, 1 = dungeon on right
 				if (Main.dungeonX > (int)(Main.maxTilesX / 2))
 				{
 					dungeonSide = 1;
 				}
-				// -1 = dungeon on left, 1 = dungeon on right
+				
 				int pX = -1;
 				int checks = 0;
 				if (dungeonSide == -1)
@@ -515,7 +520,20 @@ namespace SOTS
 							{
 								force = true;
 							}
-							if (SOTSWorldgenHelper.GeneratePlanetariumFull(mod, pX, 140, force))
+							int yLocation = 140;
+							if (Main.maxTilesX > 4000) //small worlds
+							{
+								yLocation = 120;
+							}
+							if (Main.maxTilesX > 6000) //medium worlds
+							{
+								yLocation = 130;
+							}
+							if (Main.maxTilesX > 8000) //big worlds
+							{
+								yLocation = 140;
+							}
+							if (SOTSWorldgenHelper.GeneratePlanetariumFull(mod, pX, yLocation, force))
 							{
 								break;
 							}

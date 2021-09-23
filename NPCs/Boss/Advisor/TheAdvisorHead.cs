@@ -531,7 +531,7 @@ namespace SOTS.NPCs.Boss.Advisor
 				}
 				if(dormantCounter > 90)
 				{
-					Main.PlaySound(15, (int)(npc.Center.X), (int)(npc.Center.Y), 0, 1.25f);
+					Main.PlaySound(SoundID.Roar, (int)(npc.Center.X), (int)(npc.Center.Y), 0, 1.25f);
 					Main.NewText("The Advisor has awoken!", 175, 75, byte.MaxValue);
 					dormant = false;
 					npc.dontTakeDamage = false;
@@ -590,7 +590,7 @@ namespace SOTS.NPCs.Boss.Advisor
 			bool phase2 = npc.life < npc.lifeMax * (0.45f + (Main.expertMode ? 0.2f : 0));
 			if(attackPhase1 == -1 && (attackPhase2 == -1 || phase2))
             {	
-				if(Main.netMode != 1)
+				if(Main.netMode != NetmodeID.MultiplayerClient)
 				{
 					while (attackPhase1 == lastAttackPhase1 || attackPhase1 < 0)
 					{
@@ -603,7 +603,7 @@ namespace SOTS.NPCs.Boss.Advisor
 			}
 			if(attackPhase2 == -1 && (attackPhase1 == -2 || phase2))
 			{
-				if (Main.netMode != 1)
+				if (Main.netMode != NetmodeID.MultiplayerClient)
 				{
 					while(attackPhase2 == lastAttackPhase2 || attackPhase2 < 0)
 					{
@@ -672,15 +672,15 @@ namespace SOTS.NPCs.Boss.Advisor
 					circularAddition.Y -= (attackTimer1 - 360) * 1f;
 					glow = true;
 					if(attackTimer1 == 390)
-						Main.PlaySound(2, (int)npc.Center.X, (int)npc.Center.Y, 15, 0.7f);
+						Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 15, 0.7f);
 					if (attackTimer1 == 420)
-						Main.PlaySound(2, (int)npc.Center.X, (int)npc.Center.Y, 15, 1f);
+						Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 15, 1f);
 					if(attackTimer1 == 450)
-						Main.PlaySound(2, (int)npc.Center.X, (int)npc.Center.Y, 15, 1.3f);
+						Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 15, 1.3f);
 					if (attackTimer1 >= 480)
 					{
 						if (attackTimer1 == 480)
-							Main.PlaySound(2, (int)npc.Center.X, (int)npc.Center.Y, 96, 1.4f);
+							Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 96, 1.4f);
 						if (attackTimer1 < 510)
 						{
 							hookDistortion += 8.5f;
@@ -707,7 +707,7 @@ namespace SOTS.NPCs.Boss.Advisor
 								{
 									Vector2 downStrike = new Vector2(0, 8).RotatedBy(MathHelper.ToRadians(extraDeg));
 									if (attackTimer1 == 480 && j == 0)
-										if (Main.netMode != 1)
+										if (Main.netMode != NetmodeID.MultiplayerClient)
 										{
 											int damage2 = npc.damage / 2;
 											if (Main.expertMode)
@@ -991,7 +991,7 @@ namespace SOTS.NPCs.Boss.Advisor
 							damage2 = (int)(damage2 * 0.8f);
 							Projectile.NewProjectile(npc.Center.X - 54, npc.Center.Y + 20, Main.rand.Next(-10, 11) * 0.5f, Main.rand.Next(-10, 11) * 0.5f, mod.ProjectileType("HoloMissile"), damage2, 0, Main.myPlayer, 0, npc.target);
 						}
-						Main.PlaySound(2, (int)npc.Center.X - 54, (int)npc.Center.Y + 20, 61, 1f);
+						Main.PlaySound(SoundID.Item, (int)npc.Center.X - 54, (int)npc.Center.Y + 20, 61, 1f);
 						for (int i = 0; i < 15; i++)
 						{
 							int dust = Dust.NewDust(npc.Center + new Vector2(-54 - 8, 20 - 8), 8, 8, DustID.Electric, 0, 0, 0, default, 1.25f);
@@ -1001,7 +1001,7 @@ namespace SOTS.NPCs.Boss.Advisor
 					}
 					if (attackTimer2 % (int)(60 / FasterRate) == (int)(30 / FasterRate))
 					{
-						if (Main.netMode != 1)
+						if (Main.netMode != NetmodeID.MultiplayerClient)
 						{
 							int damage2 = npc.damage / 2;
 							if (Main.expertMode)
@@ -1061,7 +1061,7 @@ namespace SOTS.NPCs.Boss.Advisor
 						{
 							Vector2 shift = new Vector2(16, 0).RotatedBy(MathHelper.ToRadians(laserDirection));
 							Vector2 velo = new Vector2(80 * direction, 0).RotatedBy(MathHelper.ToRadians(laserDirection));
-							if (Main.netMode != 1)
+							if (Main.netMode != NetmodeID.MultiplayerClient)
 							{
 								int damage2 = npc.damage / 2;
 								if (Main.expertMode)

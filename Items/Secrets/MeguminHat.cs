@@ -5,15 +5,14 @@ using Terraria.ModLoader;
 namespace SOTS.Items.Secrets
 {
 	[AutoloadEquip(EquipType.Head)]
-	
 	public class MeguminHat : ModItem
-	{	int Probe = -1;
+	{
 		public override void SetDefaults()
 		{
 			item.width = 38;
 			item.height = 22;
 			item.value = 125000;
-			item.rare = 10;
+			item.rare = ItemRarityID.Red;
 			item.defense = 1;
 		}
 		public override void DrawHair(ref bool drawHair, ref bool drawAltHair)
@@ -33,7 +32,6 @@ namespace SOTS.Items.Secrets
         public override void UpdateArmorSet(Player player)
         {	
 			player.setBonus = "Fatal hits will now return your health to your current mana\nEach time this happens, your max mana will be cut down depending on how much damage you take\nIf you take more damage than your max mana can handle, the fatal hit will not be cancelled\nYour max mana will return to normal after death or 5 minutes";
-			
             SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");	
             modPlayer.megSet = true;
 		}

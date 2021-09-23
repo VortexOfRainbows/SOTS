@@ -58,7 +58,6 @@ namespace SOTS.Items.Pyramid.AncientGold
 			TileObjectData.newTile.StyleMultiplier = 27;
 			TileObjectData.newTile.StyleWrapLimit = 27;
 			TileObjectData.newTile.UsesCustomCanPlace = false;
-			TileObjectData.newTile.LavaDeath = true;
 			TileObjectData.addTile(19);
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
 			AddMapEntry(new Color(220, 180, 25));

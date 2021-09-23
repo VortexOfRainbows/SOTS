@@ -23,6 +23,10 @@ using SOTS.Items.Fragments;
 using SOTS.Items.Vibrant;
 using SOTS.Items.Inferno;
 using Terraria.Utilities;
+using SOTS.Items.Pyramid.PyramidWalls;
+using SOTS.Projectiles.Celestial;
+using SOTS.Projectiles.Permafrost;
+using SOTS.Items.DoorItems;
 
 namespace SOTS
 {
@@ -154,27 +158,85 @@ namespace SOTS
 	{
         public static int[] rarities1;
 		public static int[] rarities2;
+		public static int[] rarities3;
 		public static int[] dedicatedOrange;
 		public static int[] dedicatedBlue;
 		public static int[] dedicatedPurpleRed;
 		public static int[] dedicatedPastelPink;
+		public static int[] dedicatedMinez;
 		public static int[] dedicatedRainbow;
 		public static int[] dedicatedBlasfah;
-		static bool runOnce = true;
-		public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
+		public static int[] dedicatedHeartPlus;
+		public static Texture2D[] unsafeWallItemRedTextures;
+		public static int[] unsafeWallItem;
+		public static bool hasSetupRed = false;
+		public static void LoadArrays() //called in SOTS.Load()
 		{
-			if(runOnce)
+			rarities1 = new int[] { ItemType<StarlightAlloy>(), ItemType<HardlightAlloy>(), ItemType<OtherworldlyAlloy>(), ItemType<PotGenerator>(), ItemType<PrecariousCluster>(), ItemType<Calculator>(), ItemType<BookOfVirtues>() };
+			rarities2 = new int[] { ItemType<RefractingCrystal>(), ItemType<CursedApple>(), ItemType<RubyKeystone>() };
+			rarities3 = new int[] { ItemType<TaintedKeystoneShard>() };
+			dedicatedOrange = new int[] { ItemType<TerminatorAcorns>(), ItemType<PlasmaCutterButOnAChain>(), ItemType<CoconutGun>() }; //friends
+			dedicatedBlue = new int[] { ItemType<Calculator>() }; //friends 2
+			dedicatedPurpleRed = new int[] { ItemType<CursedApple>(), ItemType<ArcStaffMk2>() }; //James
+			dedicatedPastelPink = new int[] { ItemType<StrangeFruit>() }; //Tris
+			dedicatedMinez = new int[] { ItemType<DoorPants>(), ItemType<BandOfDoor>() }; //Minez
+			dedicatedRainbow = new int[] { ItemType<SubspaceLocket>() /*ItemType<PhotonGeyser>(), ItemType<Traingun>()*/ }; //Vortex
+			dedicatedBlasfah = new int[] { ItemType<Doomstick>(), ItemType<BookOfVirtues>() }; //Blasfah
+			dedicatedHeartPlus = new int[] { ItemType<DigitalDaito>() }; //Heart Plus Up
+			unsafeWallItem = new int[] { ItemType<UnsafeLihzahrdBrickWall>(), ItemType<UnsafeCursedTumorWall>(), ItemType<UnsafePyramidWall>(), ItemType<UnsafePyramidBrickWall>(), ItemType<UnsafeOvergrownPyramidWall>(), ItemType<UnsafeMalditeWall>() }; //Unsafe wall items
+			unsafeWallItemRedTextures = new Texture2D[unsafeWallItem.Length];
+		}
+		public static void setUpRedTextures()
+        {
+			for(int i = 0; i < unsafeWallItem.Length; i++)
 			{
-				rarities1 = new int[] { ItemType<StarlightAlloy>(), ItemType<HardlightAlloy>(), ItemType<OtherworldlyAlloy>(), ItemType<PotGenerator>(), ItemType<PrecariousCluster>(), ItemType<Calculator>(), ItemType<BookOfVirtues>() };
-				rarities2 = new int[] { ItemType<RefractingCrystal>(), ItemType<CursedApple>(), ItemType<RubyKeystone>() };
-				dedicatedOrange = new int[] { ItemType<TerminatorAcorns>(), ItemType<PlasmaCutterButOnAChain>(), ItemType<CoconutGun>() }; //friends
-				dedicatedBlue = new int[] { ItemType<Calculator>() }; //friends 2
-				dedicatedPurpleRed = new int[] { ItemType<CursedApple>(), ItemType<ArcStaffMk2>() }; //James
-				dedicatedPastelPink = new int[] { ItemType<StrangeFruit>() }; //Tris
-				dedicatedRainbow = new int[] { ItemType<Traingun>(), ItemType<SubspaceLocket>() /*ItemType<PhotonGeyser>()*/ }; //Vortex
-				dedicatedBlasfah = new int[] { ItemType<Doomstick>(), ItemType<BookOfVirtues>() }; //Blasfah
-				runOnce = false;
-            }
+				Texture2D texture = Main.itemTexture[unsafeWallItem[i]];
+				Texture2D textureOutline;
+				textureOutline = new Texture2D(Main.graphics.GraphicsDevice, texture.Width, texture.Height);
+				textureOutline.SetData(0, null, SubspaceServant.Greenify(texture, new Color(255, 0, 0)), 0, texture.Width * texture.Height);
+				unsafeWallItemRedTextures[i] = textureOutline;
+			}
+			hasSetupRed = true;
+		}
+        public override bool PreDrawInInventory(Item item, SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
+		{
+			if (!hasSetupRed)
+				setUpRedTextures();
+			if (unsafeWallItem.Contains(item.type))
+			{
+				List<int> items = unsafeWallItem.ToList();
+				int id = items.IndexOf(item.type);
+				items = null;
+				Texture2D texture = unsafeWallItemRedTextures[id];
+				for (int i = 0; i < 4; i++)
+				{
+					Vector2 circular = new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(90 * i));
+					spriteBatch.Draw(texture, position + circular, frame, Color.Red, 0f, origin, scale, SpriteEffects.None, 0f);
+				}
+			}
+			return base.PreDrawInInventory(item, spriteBatch, position, frame, drawColor, itemColor, origin, scale);
+        }
+        public override bool PreDrawInWorld(Item item, SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
+		{
+			if (!hasSetupRed)
+				setUpRedTextures();
+			if (unsafeWallItem.Contains(item.type))
+			{
+				List<int> items = unsafeWallItem.ToList();
+				int id = items.IndexOf(item.type);
+				items = null;
+				Texture2D texture = unsafeWallItemRedTextures[id];
+				Vector2 origin = new Vector2(texture.Width/2, texture.Height/2);
+				for (int i = 0; i < 4; i++)
+				{
+					Vector2 circular = new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(90 * i));
+					spriteBatch.Draw(texture, item.Center + circular - Main.screenPosition + new Vector2(0, 2), null, Color.Red, rotation, origin, scale, SpriteEffects.None, 0f);
+				}
+			}
+			return base.PreDrawInWorld(item, spriteBatch, lightColor, alphaColor, ref rotation, ref scale, whoAmI);
+        }
+        public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
+		{
 			if (rarities1.Contains(item.type))
 			{
 				foreach (TooltipLine line2 in tooltips)
@@ -192,6 +254,16 @@ namespace SOTS
 					if (line2.mod == "Terraria" && line2.Name == "ItemName")
 					{
 						line2.overrideColor = new Color(210, 0, 0);
+					}
+				}
+			}
+			if (rarities3.Contains(item.type))
+			{
+				foreach (TooltipLine line2 in tooltips)
+				{
+					if (line2.mod == "Terraria" && line2.Name == "ItemName")
+					{
+						line2.overrideColor = new Color(50, 50, 50);
 					}
 				}
 			}
@@ -230,9 +302,19 @@ namespace SOTS
 				dedicatedColor = new Color(255, 158, 235);
 				dedicated = true;
 			}
+			if (dedicatedMinez.Contains(item.type))
+			{
+				dedicatedColor = new Color(255, 153, 51);
+				dedicated = true;
+			}
 			if (dedicatedBlasfah.Contains(item.type))
 			{
 				dedicatedColor = new Color(90, 12, 240);
+				dedicated = true;
+			}
+			if (dedicatedHeartPlus.Contains(item.type))
+			{
+				dedicatedColor = new Color(255, 123, 123);
 				dedicated = true;
 			}
 			if (dedicated)
@@ -351,6 +433,37 @@ namespace SOTS
 				}
 			}
 		}
+        public override bool CanUseItem(Item item, Player player)
+		{
+			if(player.HasAmmo(item, true))
+			{
+				int polarCannons = SOTSPlayer.ModPlayer(player).polarCannons;
+				if ((item.ranged || item.melee) && polarCannons > 0 && (!item.autoReuse || player.ownedProjectileCounts[ModContent.ProjectileType<MiniPolarisCannon>()] <= 0))
+				{
+					int time = item.useTime;
+					if (item.shoot == 0)
+						time = item.useAnimation;
+					if (item.autoReuse || item.channel)
+						time = -2;
+					for (int i = 0; i < polarCannons; i++)
+					{
+						Projectile.NewProjectile(player.Center, Vector2.Zero, ModContent.ProjectileType<MiniPolarisCannon>(), item.damage, item.knockBack, player.whoAmI, time, item.shoot != 0 ? item.useTime : item.useAnimation);
+					}
+				}
+			}
+			return base.CanUseItem(item, player);
+        }
+        public override bool UseItem(Item item, Player player)
+		{
+			return base.UseItem(item, player);
+        }
+        public override void OpenVanillaBag(string context, Player player, int arg)
+        {
+			if (context == "bossBag" && (arg == ItemID.EaterOfWorldsBossBag || arg == ItemID.BrainOfCthulhuBossBag))
+			{
+				player.QuickSpawnItem(ItemType<PyramidKey>(), 1);
+			}
+        }
     }
 	public class DataTransferProj : ModProjectile
 	{

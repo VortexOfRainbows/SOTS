@@ -18,8 +18,8 @@ namespace SOTS.Items.Celestial
 		{
             item.damage = 60;
 			item.magic = true;
-            item.width = 28;    
-            item.height = 30; 
+            item.width = 38;    
+            item.height = 36; 
             item.useTime = 10; 
             item.useAnimation = 10;
             item.useStyle = 5;    

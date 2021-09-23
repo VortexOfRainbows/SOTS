@@ -2,29 +2,25 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
+using SOTS.Projectiles.Pyramid;
 
 namespace SOTS.Items.Pyramid
 {
 	public class CurseballTome : ModItem
-	{	int index1 = -1;
-		int index2 = -1;
-		int index3 = -1;
-		int index4 = -1;
-		int rot = 0;
-		bool inInventory = false;
+	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Curseball Tome");
-			Tooltip.SetDefault("Surrounds you with curseballs");
+			DisplayName.SetDefault("Cursed Spear Storm");
+			Tooltip.SetDefault("Unleashes a flurry of highly potent but inaccurate Cursed Spears");
 		}
 		public override void SetDefaults()
 		{
-            item.damage = 18; 
+            item.damage = 20; 
             item.magic = true; 
             item.width = 32;   
             item.height = 34;   
-            item.useTime = 25;   
-            item.useAnimation = 25;
+            item.useTime = 6;   
+            item.useAnimation = 28;
             item.useStyle = 5;    
             item.noMelee = true;  
             item.knockBack = 2.5f;
@@ -32,12 +28,37 @@ namespace SOTS.Items.Pyramid
             item.rare = 5;
             item.UseSound = SoundID.Item8;
             item.autoReuse = true;
-            item.shoot = mod.ProjectileType("FriendlyCurseBall"); 
-            item.shootSpeed = 9.5f;
-			item.mana = 16;
-			item.reuseDelay = 20;
+            item.shoot = ModContent.ProjectileType<GasBlast>(); 
+            item.shootSpeed = 7f;
+			item.mana = 17;
+			item.reuseDelay = 22;
 		}
-        public override bool CanUseItem(Player player)
+		int counter = 0;
+		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+		{
+			counter++;
+			int modN = counter % 5 - 2;
+			float scaleOff = 0.25f * modN;
+			Projectile.NewProjectile(position.X, position.Y, speedX + Main.rand.NextFloat(-1f, 1f), speedY + Main.rand.NextFloat(-1f, 1f), type, damage, knockBack, player.whoAmI, 0, scaleOff + Main.rand.NextFloat(-0.15f, 0.15f));
+			return false;
+		}
+		public override void AddRecipes()
+		{
+			ModRecipe recipe = new ModRecipe(mod);
+			recipe.AddIngredient(null, "CursedMatter", 6);
+			recipe.AddIngredient(ItemID.Ruby, 1);
+			recipe.AddTile(TileID.Anvils);
+			recipe.SetResult(this);
+			recipe.AddRecipe();
+		}
+		/*
+		int index1 = -1;
+		int index2 = -1;
+		int index3 = -1;
+		int index4 = -1;
+		int rot = 0;
+		bool inInventory = false;
+		public override bool CanUseItem(Player player)
 		{
 			if(inInventory)
 				return true;
@@ -88,15 +109,6 @@ namespace SOTS.Items.Pyramid
 				}
 			}
 		}
-		public override void AddRecipes()
-		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "CursedMatter", 6);
-			recipe.AddIngredient(ItemID.Ruby, 1);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
-		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
 			inInventory = false;
@@ -121,5 +133,6 @@ namespace SOTS.Items.Pyramid
 				index4 = Projectile.NewProjectile(position.X, position.Y, 0, 0, type, damage, knockBack, player.whoAmI);
 			return false; 
 		}
+		*/
 	}
 }

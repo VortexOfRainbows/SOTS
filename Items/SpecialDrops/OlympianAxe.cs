@@ -27,7 +27,6 @@ namespace SOTS.Items.SpecialDrops
             item.rare = ItemRarityID.Blue;
             item.UseSound = SoundID.Item1;
             item.autoReuse = true;
-            item.useTurn = true;
             item.axe = 16;
             item.channel = true;
             item.shoot = ModContent.ProjectileType<Projectiles.OlympianAxe>();

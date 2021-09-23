@@ -8,7 +8,7 @@ using Terraria.ModLoader;
 namespace SOTS.Projectiles
 {
     public class PinkyHook : ModProjectile
-    {	bool pull = false;
+    {
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Wormwood Hook");
@@ -36,13 +36,13 @@ namespace SOTS.Projectiles
         {
             speed = 24f;
         }
-        public override void PostDraw(Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch, Color lightColor)
+        public override void PostDraw(SpriteBatch spriteBatch, Color lightColor)
         {
             Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/PinkyHook_Chain");    //this where the chain of grappling hook is drawn
                                                       //change YourModName with ur mod name/ and CustomHookPr_Chain with the name of ur one
             Vector2 position = projectile.Center;
             Vector2 mountedCenter = Main.player[projectile.owner].MountedCenter;
-            Microsoft.Xna.Framework.Rectangle? sourceRectangle = new Microsoft.Xna.Framework.Rectangle?();
+            Rectangle? sourceRectangle = new Microsoft.Xna.Framework.Rectangle?();
             Vector2 origin = new Vector2((float)texture.Width * 0.5f, (float)texture.Height * 0.5f);
             float num1 = (float)texture.Height;
             Vector2 vector2_4 = mountedCenter - position;
@@ -64,7 +64,7 @@ namespace SOTS.Projectiles
                     vector2_1.Normalize();
                     position += vector2_1 * num1;
                     vector2_4 = mountedCenter - position;
-                    Microsoft.Xna.Framework.Color color2 = Lighting.GetColor((int)position.X / 16, (int)((double)position.Y / 16.0));
+                    Color color2 = Lighting.GetColor((int)position.X / 16, (int)((double)position.Y / 16.0));
                     color2 = projectile.GetAlpha(color2);
                     Main.spriteBatch.Draw(texture, position - Main.screenPosition, sourceRectangle, color2, rotation, origin, 1f, SpriteEffects.None, 0.0f);
                 }

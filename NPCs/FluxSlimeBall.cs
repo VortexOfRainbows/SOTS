@@ -124,7 +124,7 @@ namespace SOTS.NPCs
 			if (runOnce)
 			{
 				randMult = Main.rand.NextFloat(0.8f, 1.2f) * (Main.rand.Next(2) * 2 - 1);
-				if (Main.netMode != 1)
+				if (Main.netMode != NetmodeID.MultiplayerClient)
 					npc.netUpdate = true;
 				for (int i = 0; i < counterArr.Length; i++)
 				{
@@ -136,7 +136,6 @@ namespace SOTS.NPCs
 			npc.TargetClosest(true);
 			return true;
 		}
-		int frame = 0;
 		Vector2 baseVelo = Vector2.Zero;
 		Vector2 rotateVector = new Vector2(12, 0);
 		Vector2 ownerCenter = Vector2.Zero;

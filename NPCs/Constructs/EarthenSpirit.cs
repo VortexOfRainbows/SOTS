@@ -281,7 +281,7 @@ namespace SOTS.NPCs.Constructs
 			{
 				counter++;
 			}
-			if(counter >= 1050)
+			if(counter >= 1200)
 			{
 				if (Main.netMode != 1)
 				{

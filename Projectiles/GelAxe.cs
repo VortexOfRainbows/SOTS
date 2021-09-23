@@ -6,18 +6,15 @@ using Terraria;
 namespace SOTS.Projectiles 
 {    
     public class GelAxe : ModProjectile 
-    {	int wait = 0;
-		float rotate = 0;
+    {
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Gel Axe");
-			
 		}
-		
         public override void SetDefaults()
         {
 			projectile.CloneDefaults(3);
-            aiType = 3; //18 is the demon scythe style
+            aiType = 3;
 			projectile.penetrate = 3;
 			projectile.alpha = 25;
 			projectile.width = 32;
@@ -36,7 +33,6 @@ namespace SOTS.Projectiles
 			projectile.velocity.X *= 0.3f;
 			projectile.velocity.Y *= 0.3f;
 			projectile.aiStyle = 0;
-			wait = 1;
 			return false;
 		}
         public override void Kill(int timeLeft)
@@ -51,7 +47,7 @@ namespace SOTS.Projectiles
         }
         public override void AI()
 		{
-			if(wait == 1)
+			if(!projectile.tileCollide)
 			{
 				projectile.velocity.X *= 0.9f;
 				projectile.velocity.Y *= 0.9f;

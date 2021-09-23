@@ -8,7 +8,6 @@ namespace SOTS.Projectiles.Tide
 {    
     public class TidalConstructTrail : ModProjectile 
     {
-		
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Hardlight Trail");
@@ -102,7 +101,6 @@ namespace SOTS.Projectiles.Tide
 		bool runOnce = true;
 		public void cataloguePos()
 		{
-			Player player = Main.player[projectile.owner];
 			Vector2 current = projectile.Center;
 			for (int i = 0; i < trailPos.Length; i++)
 			{
@@ -126,7 +124,6 @@ namespace SOTS.Projectiles.Tide
 			//if (iterator >= trailPos.Length)
 			//	projectile.Kill();
 		}
-		int endHow = 0;
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
 		{
 			return false;

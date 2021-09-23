@@ -9,25 +9,21 @@ using Terraria.ModLoader;
 namespace SOTS.NPCs
 {[AutoloadBossHead]
 	public class knuckles : ModNPC
-	{	int restrictor = 0;
+	{
 		public override void SetStaticDefaults()
 		{
-			
 			DisplayName.SetDefault("Knuckles");
 		}
 		public override void SetDefaults()
 		{
-			
-            npc.aiStyle = 14;  //5 is the flying AI
-            npc.lifeMax = 1000000000;   //boss life
-            npc.damage = 420;  //boss damage
-            npc.defense = 420;    //boss defense
+            npc.aiStyle = 14;  
+            npc.lifeMax = 69696969;
+            npc.damage = 4200;
+            npc.defense = 420;
             npc.knockBackResist = 0f;
             npc.width = 156;
             npc.height = 102;
-            animationType = NPCID.SkeletronHead;   //this boss will behavior like the DemonEye
-            Main.npcFrameCount[npc.type] = 1;    //boss frame/animation
-            npc.value = 1000000000000000;
+            npc.value = 420;
             npc.npcSlots = 1f;
             npc.boss = true;
             npc.lavaImmune = true;
@@ -36,49 +32,40 @@ namespace SOTS.NPCs
             npc.HitSound = SoundID.NPCHit4;
             npc.DeathSound = SoundID.NPCDeath6;
             npc.netAlways = true;
+			//music = mod.GetSoundSlot(SoundType.Music, "Sounds/Music/KnucklesTheme");
+			//musicPriority = MusicPriority.BossHigh;
 		}
-		
-		
-		public override void AI()
+        public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+        {
+			npc.lifeMax = 420420420;
+			npc.damage = 6969;
+            base.ScaleExpertStats(numPlayers, bossLifeScale);
+        }
+        public override void AI()
 		{	
-		
-		npc.position.Y += Main.rand.Next(-1, 2);
-		npc.position.X += Main.rand.Next(-1, 2);
-		
+			npc.position.Y += Main.rand.Next(-5, 6);
+			npc.position.X += Main.rand.Next(-5, 6);
+			npc.velocity += Main.rand.NextVector2Circular(0.1f, 0.1f);
+
 			npc.ai[0]++;
-			
+			if (npc.ai[0] == 60)
+				Main.NewText("WHY ARE YOU RUNNING????", 0, 255, 0);
 			if(npc.ai[0] == 120)
-					Main.NewText("WHY ARE YOU RUNNING????", 0, 255, 0);
-			
+				Main.NewText("DO YOU KNOW DA WAE???", 0, 255, 0);
 			if(npc.ai[0] == 180)
-					Main.NewText("DO YOU KNOW DA WAE???", 0, 255, 0);
-				
-			if(npc.ai[0] == 240)
-					Main.NewText("YOU DO NOT KNOW DA WAE!", 0, 255, 0);
-				
-			if(npc.ai[0] == 320)
+				Main.NewText("YOU DO NOT KNOW DA WAE!", 0, 255, 0);
+			if(npc.ai[0] >= 240)
 			{
-					Main.NewText("LET US SHOW YOU DA WAE!!!!!!!!!!!!!!!!!!!!!!", 0, 255, 0);
-					
-		NPC.SpawnOnPlayer(0, mod.NPCType("knuckles"));
-					
-			}
-			if(npc.ai[0] == 1000)
-			{
+				Main.NewText("LET US SHOW YOU DA WAE!!!!!!!!!!!!!!!!!!!!!!", 0, 255, 0);
+				NPC.SpawnOnPlayer(0, npc.type);
 				npc.ai[0] = 0;
-				
 			}
-			
-			
-			
-			
-		npc.rotation += 0.3f;
-		   if (Main.player[npc.target].dead)
-		   {
+			npc.rotation += Main.rand.NextFloat(-100, 100);
+			if (Main.player[npc.target].dead)
+			{
 			   npc.timeLeft = 0;
-			   npc.position.Y += 100000;
-		   }
-		   else
+			}
+			else
 			   npc.timeLeft = 10000;
 		}
 	

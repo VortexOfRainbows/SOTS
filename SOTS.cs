@@ -9,6 +9,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI;
+using SOTS.Prim;
 using SOTS.Void;
 using SOTS.Items.Pyramid;
 using SOTS.Items.Otherworld.EpicWings;
@@ -24,15 +25,24 @@ using SOTS.NPCs.Boss.Polaris;
 using SOTS.NPCs.Boss.Curse;
 using SOTS.NPCs.Boss.CelestialSerpent;
 using SOTS.NPCs.Boss.Advisor;
+using SOTS.Items.Banners;
+using Terraria.Graphics.Shaders;
+using SOTS.Items.Dyes;
 
 namespace SOTS
 {
 	public class SOTS : Mod
 	{
+		private Vector2 _lastScreenSize;
+		private Vector2 _lastViewSize;
+		public static PrimTrailManager primitives;
+
 		public static ModHotKey BlinkHotKey;
 		public static ModHotKey ArmorSetHotKey;
 		public static ModHotKey MachinaBoosterHotKey;
 		internal static SOTS Instance;
+
+		public static Effect AtenTrail;
 		public SOTS()
 		{
 			Properties = new ModProperties()
@@ -51,13 +61,15 @@ namespace SOTS
 			BlinkHotKey = RegisterHotKey("Blink", "V");
 			ArmorSetHotKey = RegisterHotKey("Armor Set", "F");
 			MachinaBoosterHotKey = RegisterHotKey("Modify Flight Mode", "C");
-
 			if (!Main.dedServ)
             {
                 VoidUI = new VoidUI();
                 VoidUI.Activate();
                 _VoidUserInterface = new UserInterface();
                 _VoidUserInterface.SetState(VoidUI);
+
+				_lastScreenSize = new Vector2(Main.screenWidth, Main.screenHeight);
+				_lastViewSize = Main.ViewSize;
 			}
 			Mod yabhb = ModLoader.GetMod("FKBossHealthBar");
 			if (yabhb != null)
@@ -95,11 +107,25 @@ namespace SOTS
 			//AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/Advisor"), ItemType("AdvisorMusicBox"), TileType("AdvisorMusicBoxTile"));
 			AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/Polaris"), ItemType("PolarisMusicBox"), TileType("PolarisMusicBoxTile"));
 			AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/SubspaceSerpent"), ItemType("SubspaceSerpentMusicBox"), TileType("SubspaceSerpentMusicBoxTile"));
-			//AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/AncientPyramid"), ItemType("AncientPyramidMusicBox"), TileType("AncientPyramidMusicBoxTile"));
+			AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/CursedPyramid"), ItemType("AncientPyramidMusicBox"), TileType("AncientPyramidMusicBoxTile"));
 			AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/Planetarium"), ItemType("PlanetariumMusicBox"), TileType("PlanetariumMusicBoxTile"));
+			AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/KnucklesTheme"), ItemType("KnucklesMusicBox"), TileType("KnucklesMusicBoxTile"));
+			SOTSItem.LoadArrays();
+			SOTSTile.LoadArrays();
+			SOTSWall.LoadArrays();
+			if(Main.netMode != NetmodeID.Server)
+			{
+				Ref<Effect> TPrismdyeRef = new Ref<Effect>(GetEffect("Effects/TPrismEffect"));
+				GameShaders.Armor.BindShader(ModContent.ItemType<TaintedPrismDye>(), new ArmorShaderData(TPrismdyeRef, "TPrismDyePass")).UseColor(0.3f, 0.4f, 0.4f);
+				AtenTrail = Instance.GetEffect("Effects/AtenTrail");
+				primitives = new PrimTrailManager();
+				primitives.LoadContent(Main.graphics.GraphicsDevice);
+			}
+			SOTSDetours.Initialize();
 		}
 		public override void Unload() 
 		{
+			AtenTrail = null;
 			//SOTSGlowmasks.UnloadGlowmasks();
 			Instance = null;
 			VoidBarSprite._backgroundTexture = null;
@@ -111,6 +137,26 @@ namespace SOTS
 			BlinkHotKey = null;
 			ArmorSetHotKey = null;
 			MachinaBoosterHotKey = null;
+			SOTSDetours.Unload();
+		}
+
+		public override void PreUpdateEntities()
+		{
+			if (!Main.dedServ)
+			{
+				if (_lastScreenSize != new Vector2(Main.screenWidth, Main.screenHeight) && primitives != null)
+					primitives.LoadContent(Main.graphics.GraphicsDevice);
+
+				_lastScreenSize = new Vector2(Main.screenWidth, Main.screenHeight);
+				_lastViewSize = Main.ViewSize;
+			}
+		}
+		public override void MidUpdateProjectileItem()
+		{
+			if (Main.netMode != NetmodeID.Server)
+			{
+				primitives.UpdateTrails();
+			}
 		}
 		public override void UpdateUI(GameTime gameTime) 
 		{
@@ -346,8 +392,8 @@ namespace SOTS
 			{
 				Player player = Main.player[Main.myPlayer];
 				if (player.active && player.GetModPlayer<SOTSPlayer>().PyramidBiome)
-                {
-					music = MusicID.Desert; // (SOTSPlayer.ModPlayer(player).weakerCurse || SOTSWorld.downedBoss2) ? GetSoundSlot(SoundType.Music, "Sounds/Music/AncientPyramid") : ;
+				{
+					music = GetSoundSlot(SoundType.Music, "Sounds/Music/CursedPyramid");
 					priority = MusicPriority.BiomeHigh;
                 }
 			}
@@ -368,6 +414,15 @@ namespace SOTS
 					SOTSWorld.SecretFoundMusicTimer--;
 					music = GetSoundSlot(SoundType.Music, "Sounds/Music/SecretFound");
 					priority = MusicPriority.BossHigh + 1;
+				}
+			}
+			if (Main.myPlayer != -1 && !Main.gameMenu)
+			{
+				Player player = Main.player[Main.myPlayer];
+				if (NPC.AnyNPCs(ModContent.NPCType<NPCs.knuckles>()) && Main.npc[NPC.FindFirstNPC(ModContent.NPCType<NPCs.knuckles>())].Distance(player.Center) <= 7000f)
+				{
+					music = GetSoundSlot(SoundType.Music, "Sounds/Music/KnucklesTheme");
+					priority = MusicPriority.BossHigh;
 				}
 			}
 		}
@@ -391,7 +446,7 @@ namespace SOTS
 					"Putrid Pinky",
 					(Func<bool>)(() => SOTSWorld.downedPinky),
 					ModContent.ItemType<JarOfPeanuts>(),
-					new List<int>() { ModContent.ItemType<PutridPinkyMusicBox>() },
+					new List<int>() { ModContent.ItemType<PutridPinkyMusicBox>(), ModContent.ItemType<PutridPinkyTrophy>() },
 					new List<int>() { ModContent.ItemType<PinkyBag>(), ModContent.ItemType<VialofAcid>(), ModContent.ItemType<Wormwood>(), ItemID.PinkGel },
 					"Summon in any biome at any time using a [i:" + ModContent.ItemType<JarOfPeanuts>() + "]",
 					"{0} has robbed everyone of their peanuts!",
@@ -410,7 +465,7 @@ namespace SOTS
 					new List<int>() { ModContent.ItemType<CurseBag>(), ModContent.ItemType<CursedMatter>() },
 					"Activate the [i:" + ModContent.ItemType<Sarcophagus>() + "] in the pyramid",
 					"",
-					"SOTS/BossCL/Depression",
+					"SOTS/BossCL/PharaohPortrait",
 					"",
 					(Func<bool>)(() => true));
 				bossChecklist.Call(

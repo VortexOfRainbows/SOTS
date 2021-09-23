@@ -42,7 +42,7 @@ namespace SOTS.Items.Pyramid
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
 			drop = mod.ItemType("OvergrownPyramidBlock");
-			AddMapEntry(new Color(40, 160, 100));
+			AddMapEntry(new Color(50, 130, 30));
 			mineResist = 1.5f;
 			soundType = 21;
 			soundStyle = 2;
@@ -122,7 +122,7 @@ namespace SOTS.Items.Pyramid
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
 			drop = mod.ItemType("OvergrownPyramidBlock");
-			AddMapEntry(new Color(40, 160, 100));
+			AddMapEntry(new Color(50, 130, 30));
 			mineResist = 1.5f;
 			minPick = 180;
 			soundType = 21;
@@ -201,7 +201,7 @@ namespace SOTS.Items.Pyramid
 			Main.tileSolid[Type] = false;
 			Main.tileBlockLight[Type] = false;
 			Main.tileLighted[Type] = false;
-			AddMapEntry(new Color(40, 180, 120));
+			AddMapEntry(new Color(72, 188, 44));
 			soundType = SoundID.Grass;
 			soundStyle = 2;
 			dustType = DustID.Grass;
@@ -228,7 +228,7 @@ namespace SOTS.Items.Pyramid
 			Main.tileSolid[Type] = false;
 			Main.tileBlockLight[Type] = false;
 			Main.tileLighted[Type] = false;
-			AddMapEntry(new Color(40, 180, 120));
+			AddMapEntry(new Color(72, 188, 44));
 			soundType = SoundID.Grass;
 			soundStyle = 2;
 			dustType = DustID.Grass;

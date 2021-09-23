@@ -7,11 +7,6 @@ namespace SOTS.Projectiles.Otherworld
 {    
     public class HardlightTrail : ModProjectile 
     {
-		
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Hardlight Trail");
-		}
         public override void SetDefaults()
         {
 			projectile.width = 32;
@@ -123,7 +118,6 @@ namespace SOTS.Projectiles.Otherworld
 			//if (iterator >= trailPos.Length)
 			//	projectile.Kill();
 		}
-		int endHow = 0;
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
 		{
 			float point = 0f;

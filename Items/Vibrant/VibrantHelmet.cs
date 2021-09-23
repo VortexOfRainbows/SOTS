@@ -14,7 +14,7 @@ namespace SOTS.Items.Vibrant
 			item.height = 22;
             item.value = Item.sellPrice(0, 0, 80, 0);
 			item.rare = 1;
-			item.defense = 3;
+			item.defense = 4;
 		}
 		public override void SetStaticDefaults()
 		{

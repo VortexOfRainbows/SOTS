@@ -1,10 +1,5 @@
-using System;
-using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.Graphics.Effects;
-using Terraria.Graphics.Shaders;
 using Terraria.ID;
-using Terraria.ModLoader;
 using SOTS.Void;
  
 namespace SOTS.Items.SpecialDrops
@@ -14,12 +9,13 @@ namespace SOTS.Items.SpecialDrops
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Hungry Hunter");
-			Tooltip.SetDefault("Latches onto enemies and regenerates void upon hit\nIncreases max void by 10 while in the inventory");
+			Tooltip.SetDefault("Latches onto enemies and regenerates void upon hit");
 		}
         public override void SafeSetDefaults()
         {
-            item.width = 40;
-            item.height = 32;
+            item.damage = 21;
+            item.width = 32;
+            item.height = 34;
             item.value = Item.sellPrice(0, 1, 20, 0);
             item.rare = 5;
             item.noMelee = true;
@@ -27,7 +23,6 @@ namespace SOTS.Items.SpecialDrops
             item.useAnimation = 40;
             item.useTime = 40;
             item.knockBack = 4.5f;
-            item.damage = 19;
             item.noUseGraphic = true; 
             item.shoot = mod.ProjectileType("HungryHunter");
             item.shootSpeed = 21.5f;

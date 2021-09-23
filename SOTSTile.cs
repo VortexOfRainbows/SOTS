@@ -7,11 +7,19 @@ using Microsoft.Xna.Framework.Graphics;
 using SOTS.Items.Fragments;
 using SOTS.Items.Pyramid;
 using Microsoft.Xna.Framework;
+using static Terraria.ModLoader.ModContent;
+using SOTS.Items.Pyramid.AltPyramidBlocks;
+using System.Linq;
 
 namespace SOTS
 {
     public class SOTSTile : GlobalTile
     {
+        public static int[] pyramidTiles;
+        public static void LoadArrays() //called in SOTS.Load()
+        {
+            pyramidTiles = new int[] { TileType<CursedHive>(), TileType<PyramidBrickTile>(), TileType<PyramidSlabTile>(), TileType<OvergrownPyramidTile>(), TileType<MalditeTile>(), TileType <CursedTumorTile>(), TileType<RuinedPyramidBrickTile>(), TileType<PyramidRubbleTile>() };
+        }
         public override void RandomUpdate(int i, int j, int type)
         {
             if(type == ModContent.TileType<CursedTumorTile>() || type == ModContent.TileType<MalditeTile>())
@@ -68,6 +76,10 @@ namespace SOTS
             {
                 return false;
             }
+            if(pyramidTiles.Contains(type) && !NPC.downedBoss2)
+            {
+                return false;
+            }
             return base.CanKillTile(i, j, type, ref blockDamaged);
         }
         public override bool CanExplode(int i, int j, int type)
@@ -103,6 +115,10 @@ namespace SOTS
                 return false;
             }
             if (Main.tile[i, j - 1].type == (ushort)ModContent.TileType<AncientGoldGateTile>() && Main.tile[i, j - 1].frameY < 360)
+            {
+                return false;
+            }
+            if(Main.tile[i - 1, j].type == (ushort)TileType<PyramidGateTile>() || Main.tile[i + 1, j].type == (ushort)TileType<PyramidGateTile>())
             {
                 return false;
             }

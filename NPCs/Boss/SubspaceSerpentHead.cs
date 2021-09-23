@@ -66,12 +66,27 @@ namespace SOTS.NPCs.Boss
             bossBag = mod.ItemType("SubspaceBag");
             Main.npcFrameCount[npc.type] = 8;
         }
-        public override void HitEffect(int hitDirection, double damage)
+        bool hasSpawnedProjectile = false;
+        int hasSpawnedProjcounter = 0;
+        public override bool CheckDead()
         {
-            if (npc.life <= 0)
+            if (!hasSpawnedProjectile)
             {
-                Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/Subspace/SubspaceSerpentHeadGore"), 1f);
+                if(Main.netMode != 1)
+                    Projectile.NewProjectileDirect(npc.Center, npc.velocity * 0.4f, ModContent.ProjectileType<SubspaceDeathAnimation>(), 0, 0, Main.myPlayer, 0, npc.whoAmI);
+                npc.ai[3] = 1f;
+                npc.damage = 0;
+                npc.life = npc.lifeMax;
+                npc.dontTakeDamage = true;
+                npc.netUpdate = true;
+                hasSpawnedProjectile = true;
+                return false;
             }
+            return true;
+        }
+        public override bool PreNPCLoot()
+        {
+            return true;
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
@@ -101,6 +116,19 @@ namespace SOTS.NPCs.Boss
         }
         public override bool PreAI()
         {
+            if (hasSpawnedProjectile)
+            {
+                hasSpawnedProjcounter++;
+                if(hasSpawnedProjcounter > 6)
+                {
+                    npc.life = 0;
+                    npc.HitEffect(0, 0);
+                    npc.checkDead();
+                }
+                npc.velocity *= 0f;
+                directVelo *= 0f;
+                return false;
+            }
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 if (npc.ai[0] == 0)

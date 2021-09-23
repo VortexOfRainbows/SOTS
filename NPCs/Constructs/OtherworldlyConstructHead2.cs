@@ -13,7 +13,6 @@ namespace SOTS.NPCs.Constructs
 		float dir = 0f;
 		public override void SetStaticDefaults()
 		{
-			
 			DisplayName.SetDefault("Otherworldly Construct");
 		}
 		public override void SetDefaults()
@@ -224,13 +223,16 @@ namespace SOTS.NPCs.Constructs
 			if((aimTo.X == -1 && aimTo.Y == -1) || (hookTile.X == -1 && hookTile.Y == -1))
 			{
 				aimTo = npc.Center;
-				if((hookTile.X == -1 && hookTile.Y == -1))
+				if(hookTile.X == -1 && hookTile.Y == -1)
 					hookTile = findClosestTile();
 				return false;
 			}
 			aimTo = player.Center;
-			npc.ai[2] = hookTile.X;
-			npc.ai[3] = hookTile.Y;
+			if(npc.ai[2] <= 0 && npc.ai[3] <= 0)
+			{
+				npc.ai[2] = hookTile.X;
+				npc.ai[3] = hookTile.Y;
+			}
 			return true;
 		}
 		bool flag = false;

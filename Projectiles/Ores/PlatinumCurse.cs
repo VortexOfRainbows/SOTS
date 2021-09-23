@@ -1,24 +1,15 @@
-using System;
-using System.IO;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
-using Terraria.ID;
 
 namespace SOTS.Projectiles.Ores
 {    
     public class PlatinumCurse : ModProjectile 
-    {	int wait = 0;
+    {
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Platinum Curse");
-			
 		}
-		
         public override void SetDefaults()
         {
             projectile.width = 18;
@@ -82,12 +73,9 @@ namespace SOTS.Projectiles.Ores
 		}
 		public void LaunchLaser(Vector2 area)
 		{
-			Player player  = Main.player[projectile.owner];
-			int Probe = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("BrightRedLaser"), (int)(projectile.damage * 1f), 0, projectile.owner);
-			Main.projectile[Probe].melee = true;
-			Main.projectile[Probe].minion = false;
-			Main.projectile[Probe].ai[0] = area.X;
-			Main.projectile[Probe].ai[1] = area.Y;
+			Projectile proj = Projectile.NewProjectileDirect(projectile.Center, Vector2.Zero, mod.ProjectileType("BrightRedLaser"), (int)(projectile.damage * 1f), 0, projectile.owner, area.X, area.Y);
+			proj.melee = true;
+			proj.minion = false;
 		}
 	}
 }

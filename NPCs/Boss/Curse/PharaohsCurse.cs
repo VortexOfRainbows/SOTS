@@ -385,6 +385,8 @@ namespace SOTS.NPCs.Boss.Curse
 		}
 		public static void SpawnPassiveDust(Texture2D texture, Vector2 spawnLocation, float scale, List<CurseFoam> dustList, float velocityScale = 1f, int style = 0, int rate = 45, float rotation = 0, float lifeMult = 1f)
 		{
+			if (dustList == null)
+				return;
 			int width = texture.Width;
 			int height = texture.Height;
 			Color[] data = new Color[width * height];
@@ -680,7 +682,7 @@ namespace SOTS.NPCs.Boss.Curse
 		{
 			if (style == 0)
 			{
-				Main.PlaySound(2, (int)npc.Center.X, (int)npc.Center.Y, 14, 0.85f, 0.25f);
+				Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 62, 1f, 0.2f);
 				ParticleExplosion(120, true);
 				if (Main.netMode == 1)
 					return;
@@ -714,7 +716,7 @@ namespace SOTS.NPCs.Boss.Curse
 		public void ParticleExplosion(int amt = 240, bool quiet = false)
 		{
 			if(!quiet)
-				Main.PlaySound(SoundID.Item14, (int)npc.Center.X, (int)npc.Center.Y);
+				Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 62, 1f, 0.2f);
 			for (int j = 0; j < amt; j++)
 			{
 				float scale = Main.rand.NextFloat(0.5f, 1.5f);

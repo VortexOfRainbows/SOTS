@@ -1,13 +1,9 @@
 using System;
 using System.IO;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
-using Terraria.ID;
 using SOTS.Void;
  
 namespace SOTS.Projectiles
@@ -18,12 +14,11 @@ namespace SOTS.Projectiles
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Hungry Hunter");
-			
 		}
         public override void SetDefaults()
 		{
 			projectile.width = 28;
-			projectile.height = 32;
+			projectile.height = 30;
 			projectile.penetrate = -1;
 			projectile.timeLeft = 3000;
 			projectile.friendly = true;
@@ -48,7 +43,7 @@ namespace SOTS.Projectiles
 			latch = reader.ReadBoolean();
 			enemyIndex = reader.ReadInt32();
 		}
-        public override bool PreDraw(Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch, Color lightColor)
+        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
             Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Hungry_Chain");    //this where the chain of grappling hook is drawn
                                                       //change YourModName with ur mod name/ and CustomHookPr_Chain with the name of ur one

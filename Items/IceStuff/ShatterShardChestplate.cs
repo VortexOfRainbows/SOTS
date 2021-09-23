@@ -24,7 +24,11 @@ namespace SOTS.Items.IceStuff
         {
             return head.type == mod.ItemType("FrigidCrown") && legs.type == mod.ItemType("FrigidGreaves");
 		}
-		public override void UpdateArmorSet(Player player)
+        public override void DrawHands(ref bool drawHands, ref bool drawArms)
+        {
+			drawHands = true;
+		}
+        public override void UpdateArmorSet(Player player)
 		{
 			player.setBonus = "Increases life regen by 2\nImmunity to Chilled, Frozen, and Frostburn";
 			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");

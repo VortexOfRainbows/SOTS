@@ -26,6 +26,12 @@ using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static SOTS.SOTS;
+using SOTS.Items.Pyramid.AncientGold;
+using SOTS.NPCs.Boss.Curse;
+using SOTS.Projectiles.Pyramid;
+using SOTS.Projectiles.Minions;
+using SOTS.Projectiles.Permafrost;
+using SOTS.Items.Celestial;
 
 namespace SOTS
 {
@@ -111,6 +117,7 @@ namespace SOTS
 		public float assassinateNum = 1;
 		public int assassinateFlat = 0;
 		public bool assassinate = false;
+		public int polarCannons = 0;
 
 		public Vector2 starCen;
 		private const int saveVersion = 0;
@@ -208,6 +215,54 @@ namespace SOTS
 				netUpdate = false;
 			}
 		}
+		int foamParticleCounter = 0;
+		public List<CurseFoam> foamParticleList1 = new List<CurseFoam>();
+		public void FoamStuff()
+		{
+			for (int i = 0; i < foamParticleList1.Count; i++)
+			{
+				CurseFoam particle = foamParticleList1[i];
+				particle.Update();
+				if (!particle.active)
+				{
+					particle = null;
+					foamParticleList1.RemoveAt(i);
+					i--;
+				}
+				else
+				{
+					particle.Update();
+					if (!particle.active)
+					{
+						particle = null;
+						foamParticleList1.RemoveAt(i);
+						i--;
+					}
+					else if (!particle.noMovement)
+						particle.position += player.velocity * 0.85f;
+				}
+			}
+			foamParticleCounter++;
+			if (foamParticleCounter >= 1200)
+			{
+				foamParticleCounter = 0;
+				ResetFoamLists();
+			}
+		}
+		public void ResetFoamLists()
+		{
+			List<CurseFoam> temp = new List<CurseFoam>();
+			for (int i = 0; i < foamParticleList1.Count; i++)
+			{
+				if (foamParticleList1[i].active && foamParticleList1[i] != null)
+					temp.Add(foamParticleList1[i]);
+			}
+			foamParticleList1 = new List<CurseFoam>();
+			for (int i = 0; i < temp.Count; i++)
+			{
+				foamParticleList1.Add(temp[i]);
+			}
+		}
 		public int bladeAlpha = 0;
 		public static readonly PlayerLayer BladeEffectBack = new PlayerLayer("SOTS", "BladeEffectBack", PlayerLayer.MiscEffectsBack, delegate (PlayerDrawInfo drawInfo) 
 		{
@@ -259,9 +314,86 @@ namespace SOTS
 				}
 			}
 		});
+		public static readonly PlayerLayer CurseDustPlayer = new PlayerLayer("SOTS", "CurseDustPlayer", PlayerLayer.MiscEffectsBack, delegate (PlayerDrawInfo drawInfo)
+		{
+			Player drawPlayer = drawInfo.drawPlayer;
+			SOTSPlayer modPlayer = drawPlayer.GetModPlayer<SOTSPlayer>();
+			List<CurseFoam> foamList = modPlayer.foamParticleList1;
+			List<int> slots = new List<int>();
+			for (int i = 0; i < Main.projectile.Length; i++)
+			{
+				Projectile proj = Main.projectile[i];
+				bool validType = proj.type == ModContent.ProjectileType<GasBlast>() || proj.type == ModContent.ProjectileType<Projectiles.Minions.CursedBlade>();
+				if (validType && proj.active && proj.owner == drawPlayer.whoAmI)
+				{
+					slots.Add(i);
+					List<CurseFoam> list = getFoamList(drawPlayer, proj);
+					modPlayer.DrawFoam(list, 2);
+				}
+			}
+			modPlayer.DrawFoam(foamList, 2);
+			for (int i = 0; i < slots.Count; i++)
+			{
+				Projectile proj = Main.projectile[slots[i]];
+				List<CurseFoam> list = getFoamList(drawPlayer, proj);
+				modPlayer.DrawFoam(list, 1);
+			}
+			modPlayer.DrawFoam(foamList, 1);
+			for (int i = 0; i < slots.Count; i++)
+			{
+				Projectile proj = Main.projectile[slots[i]];
+				List<CurseFoam> list = getFoamList(drawPlayer, proj);
+				modPlayer.DrawFoam(list, 0);
+			}
+			modPlayer.DrawFoam(foamList, 0);
+			//Mod mod = ModLoader.GetMod("SOTS");
+			if (drawInfo.shadow != 0)
+				return;
+		});
+		public static List<CurseFoam> getFoamList(Player player, Projectile proj)
+		{
+			if (proj.type == ModContent.ProjectileType<GasBlast>() && proj.active && proj.owner == player.whoAmI)
+			{
+				GasBlast ring = proj.modProjectile as GasBlast;
+				return ring.foamParticleList1;
+			}
+			if (proj.type == ModContent.ProjectileType<Projectiles.Minions.CursedBlade>() && proj.active && proj.owner == player.whoAmI)
+			{
+				Projectiles.Minions.CursedBlade ring = proj.modProjectile as Projectiles.Minions.CursedBlade;
+				return ring.foamParticleList1;
+			}
+			return null;
+		}
+		public void DrawFoam(List<CurseFoam> dustList, int layer)
+		{
+			Texture2D texture = ModContent.GetTexture("SOTS/Assets/PlayerCurseFoam");
+			Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 6);
+			for (int i = 0; i < dustList.Count; i++)
+			{
+				int shade = 255 - (int)(dustList[i].counter * 4f);
+				if (shade < 0)
+					shade = 0;
+				Color color = new Color(shade + dustList[i].dustColorVariation, shade - dustList[i].dustColorVariation, shade - dustList[i].dustColorVariation);
+				color = Lighting.GetColor((int)dustList[i].position.X / 16, (int)dustList[i].position.Y / 16, color);
+				float reduction = shade / 255f;
+				if(layer == 2)
+				{
+					Color first = new Color((int)(111 * reduction), (int)(80 * reduction), (int)(154 * reduction));
+					Color second = new Color((int)(76 * reduction), (int)(58 * reduction), (int)(101 * reduction));
+					color = Color.Lerp(first, second, 0.5f + 0.5f * (float)Math.Sin(MathHelper.ToRadians(VoidPlayer.soulColorCounter * 2)));
+				}
+				Vector2 drawPos = dustList[i].position - Main.screenPosition;
+				Rectangle frame = new Rectangle(0, texture.Height / 3 * layer, texture.Width, texture.Width);
+				float scale = layer == 0 ? 1.5f : 2.0f;
+				DrawData data = new DrawData(texture, drawPos + new Vector2(0, 0), frame, color, dustList[i].rotation, drawOrigin, dustList[i].scale * scale, SpriteEffects.None, 0);
+				Main.playerDrawData.Add(data);
+			}
+		}
 		public override void ModifyDrawLayers(List<PlayerLayer> layers)
 		{
 			BladeEffectBack.visible = true;
+			layers.Insert(0, CurseDustPlayer);
+			CurseDustPlayer.visible = true;
 			layers.Insert(0, BladeEffectBack);
 		}
 		public override void ProcessTriggers(TriggersSet triggersSet)
@@ -391,7 +523,17 @@ namespace SOTS
 					}
 				}
         }
-		public override void PostUpdate()
+        public override void PostUpdateMiscEffects()
+		{
+			Vector2 detect = AncientGoldSpikeTile.HurtTiles(player.position, player.width, player.height);
+			if(detect.Y != 0f)
+			{
+				int damage3 = Main.DamageVar(50);
+				player.Hurt(PlayerDeathReason.ByOther(3), damage3, 0, false, false, false, 0);
+			}
+			base.PostUpdateMiscEffects();
+        }
+        public override void PostUpdate()
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			maxCritVoidStealPerSecond = voidPlayer.voidRegen * 20; //max stored voidsteal is 20x the voidRegen speed
@@ -424,6 +566,11 @@ namespace SOTS
 				return true;
             }
             return base.CanHitNPC(item, target);
+        }
+        public override void PreUpdate()
+		{
+			FoamStuff();
+			base.PreUpdate();
         }
         public override void ResetEffects()
 		{
@@ -472,17 +619,17 @@ namespace SOTS
 			{
 				if (player.HeldItem.type == mod.ItemType("SkywardBlades"))
 				{
-					if (this.bladeAlpha > 0)
-						this.bladeAlpha -= 5;
+					if (bladeAlpha > 0)
+						bladeAlpha -= 5;
 					else
-						this.bladeAlpha = 0;
+						bladeAlpha = 0;
 				}
 				else
 				{
-					if (this.bladeAlpha < 255)
-						this.bladeAlpha += 5;
+					if (bladeAlpha < 255)
+						bladeAlpha += 5;
 					else
-						this.bladeAlpha = 255;
+						bladeAlpha = 255;
 				}
 			}
 			additionalHeal = 0;
@@ -555,6 +702,10 @@ namespace SOTS
 						testWingsPlayer.HaloDust();
 					}
 				}
+				if (item.type == ModContent.ItemType<SubspaceLocket>())
+				{
+					SubspacePlayer.ModPlayer(player).subspaceServantShader = GameShaders.Armor.GetShaderIdFromItemId(player.dye[i].type);
+				}
 			}
 			for (int i = 0; i < 10; i++) //iterating through armor + accessories
 			{
@@ -562,6 +713,10 @@ namespace SOTS
 				if (item.type == ModContent.ItemType<TheDarkEye>())
 				{
 					darkEyeShader = GameShaders.Armor.GetShaderIdFromItemId(player.dye[i].type);
+				}
+				if (item.type == ModContent.ItemType<SubspaceLocket>())
+				{
+					SubspacePlayer.ModPlayer(player).subspaceServantShader = GameShaders.Armor.GetShaderIdFromItemId(player.dye[i].type);
 				}
 			}
 			for (int i = 0; i < player.inventory.Length; i++)
@@ -629,7 +784,8 @@ namespace SOTS
 			CritCurseFire = false;
 			CurseAura = false;
 			if (PyramidBiome)
-				player.AddBuff(mod.BuffType("PharaohsCurse"), 16, false);
+				player.AddBuff(mod.BuffType("PharaohsCurse"), 16, false); 
+			polarCannons = 0;
 		}
 		public override void CatchFish(Item fishingRod, Item bait, int power, int liquidType, int poolSize, int worldLayer, int questFish, ref int caughtType, ref bool junk)
 		{
@@ -737,7 +893,7 @@ namespace SOTS
 			int tileBehindX = (int)(player.Center.X / 16);
 			int tileBehindY = (int)(player.Center.Y / 16);
 			Tile tile = Framing.GetTileSafely(tileBehindX, tileBehindY);
-			if (tile.wall == (ushort)mod.WallType("PyramidWallTile") || tile.wall == (ushort)mod.WallType("OvergrownPyramidWallWall") || tile.wall == (ushort)ModContent.WallType<CursedTumorWallTile>() || tile.wall == (ushort)ModContent.WallType<TrueSandstoneWallWall>())
+			if (SOTSWall.unsafePyramidWall.Contains(tile.wall) || tile.wall == (ushort)ModContent.WallType<TrueSandstoneWallWall>())
 			{
 				PyramidBiome = true;
 			}
@@ -839,8 +995,6 @@ namespace SOTS
 
 					if (target2.Center.Y <= target.Center.Y)
 						shootFromY -= target.height;
-
-
 
 					float shootToX = target2.position.X + target2.width * 0.5f - shootFromX;
 					float shootToY = target2.position.Y + target2.height * 0.5f - shootFromY;
@@ -973,27 +1127,12 @@ namespace SOTS
 				  Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, mod.ProjectileType("PurpleBobber"), damage, type, player.whoAmI);
 				  //return false;
 			}
-			if(pearlescentMagic && item.magic && item.damage > 3 && shotCounter % 6 == 0)
-			{
-				for(int i = 0; i < 1000; i++)
-				{
-					Projectile proj = Main.projectile[i];
-					if(proj.owner == player.whoAmI && proj.type == mod.ProjectileType("PearlescentCore"))
-					{
-						float shootCursorX2 = proj.Center.X - cursorPos.X;
-						float shootCursorY2 = proj.Center.Y - cursorPos.Y;
-						Vector2 toCursor2 = new Vector2(-1, 0).RotatedBy(Math.Atan2(shootCursorY2, shootCursorX2));
-						Projectile.NewProjectile(proj.Center.X, proj.Center.Y, toCursor2.X * 9.25f, toCursor2.Y * 9.25f, mod.ProjectileType("PearlescentShot"), (int)(damage * 1.2f) + 3, knockBack, player.whoAmI);
-						break;
-					}
-				}
-			}
 			if(snakeSling && item.ranged && item.damage > 3 && shotCounter % 5 == 0)
 			{
 				Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(8));
 				Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X * 1.1f, perturbedSpeed.Y * 1.1f, mod.ProjectileType("Pebble"), damage, knockBack, player.whoAmI);
 			}
-			if(backUpBow && item.ranged == true)
+			if(backUpBow && item.ranged)
 			{
 				Vector2 perturbedSpeed = -new Vector2(speedX, speedY);
 				Projectile.NewProjectile(position, perturbedSpeed, ModContent.ProjectileType<BackupArrow>(), (int)(damage * 0.45f) + 1, knockBack, player.whoAmI);
@@ -1002,20 +1141,10 @@ namespace SOTS
 			{
 				for(int i = doubledAmount; i > 0; i--)
 				{
-				  Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians(i % 2 == 0 ? i * 6 : i * -6));
-				  Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI);
+					Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians(i % 2 == 0 ? i * 6 : i * -6));
+					Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI);
 				}
 			}
-			
-			if(megHat == true && item.magic == true && item.type != mod.ItemType("TheMelter"))
-			{
-				float numberProjectiles = 1;
-				for (int i = 0; i < numberProjectiles; i++)
-				{
-				  Projectile.NewProjectile(position.X, position.Y, speedX * 0.5f, speedY * 0.5f, type, damage, knockBack, player.whoAmI);
-				}
-			}
-				
 			return true;
 		}
 		public override void OnRespawn(Player player)
@@ -1172,20 +1301,21 @@ namespace SOTS
 		{
 			locketBlacklist = new List<int>() { ItemID.BookStaff, ModContent.ItemType<LashesOfLightning>(), ModContent.ItemType<SkywardBlades>(), ItemID.GolemFist, ItemID.Flairon, 
 				ModContent.ItemType<PhaseCannon>(), ModContent.ItemType<Items.Otherworld.FromChests.HardlightGlaive>(), ModContent.ItemType<StarcoreAssaultRifle>(), ModContent.ItemType<VibrantPistol>(),
-				ModContent.ItemType<Items.Otherworld.FromChests.SupernovaHammer>(), ItemID.MonkStaffT1, ModContent.ItemType<FrigidJavelin>() };
+				ModContent.ItemType<Items.Otherworld.FromChests.SupernovaHammer>(), ItemID.MonkStaffT1, ModContent.ItemType<Items.IceStuff.FrigidJavelin>(), ModContent.ItemType<Items.DigitalDaito>() };
 
-			SOTSPlayer.typhonBlacklist.Add(ModContent.ProjectileType<ArcColumn>());
-			SOTSPlayer.typhonBlacklist.Add(ModContent.ProjectileType<PhaseColumn>());
-			SOTSPlayer.typhonBlacklist.Add(ModContent.ProjectileType<MacaroniBeam>());
-			SOTSPlayer.typhonBlacklist.Add(ModContent.ProjectileType<GenesisArc>());
-			SOTSPlayer.typhonBlacklist.Add(ModContent.ProjectileType<GenesisCore>());
-			SOTSPlayer.typhonWhitelist.Add(ModContent.ProjectileType<HardlightArrow>());
+			typhonBlacklist.Add(ModContent.ProjectileType<ArcColumn>());
+			typhonBlacklist.Add(ModContent.ProjectileType<PhaseColumn>());
+			typhonBlacklist.Add(ModContent.ProjectileType<MacaroniBeam>());
+			typhonBlacklist.Add(ModContent.ProjectileType<GenesisArc>());
+			typhonBlacklist.Add(ModContent.ProjectileType<GenesisCore>());
+			typhonWhitelist.Add(ModContent.ProjectileType<HardlightArrow>());
 			base.Initialize();
         }
         public override bool PreItemCheck()
 		{
 			return base.PreItemCheck();
         }
+		public float screenShakeMultiplier = 0f;
         public override void ModifyScreenPosition()
         {
 			Vector2 screenDimensions = new Vector2(Main.screenWidth, Main.screenHeight);
@@ -1226,7 +1356,18 @@ namespace SOTS
 					}
 				}
             }
-            base.ModifyScreenPosition();
+			if(screenShakeMultiplier > 0)
+			{
+				Vector2 offset = new Vector2(0, Main.rand.NextFloat(1f) * screenShakeMultiplier).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360f)));
+				Main.screenPosition += offset;
+				screenShakeMultiplier -= 0.75f;
+				screenShakeMultiplier *= 0.95f;
+			}
+			else
+            {
+				screenShakeMultiplier = 0;
+            }
+			base.ModifyScreenPosition();
         }
         public override void UpdateBadLifeRegen()
 		{

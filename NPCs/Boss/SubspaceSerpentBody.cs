@@ -39,13 +39,6 @@ namespace SOTS.NPCs.Boss
         float currentDPS = -1;
         private float DPSregenRate = 0.1f;
         float maxDPS = 250;
-        public override void HitEffect(int hitDirection, double damage)
-        {
-            if (npc.life <= 0)
-            {
-                Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/Subspace/SubspaceSerpentBodyGore"), 1f);
-            }
-        }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
             return !npc.dontTakeDamage;

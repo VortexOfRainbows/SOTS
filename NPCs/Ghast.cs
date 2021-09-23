@@ -35,8 +35,8 @@ namespace SOTS.NPCs
             npc.HitSound = SoundID.NPCHit54;
             npc.DeathSound = SoundID.NPCDeath6;
             npc.netAlways = true;
-			//banner = npc.type;
-			//bannerItem = ItemType<BleedingGhastBanner>();
+			banner = npc.type;
+			bannerItem = ItemType<GhastBanner>();
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{

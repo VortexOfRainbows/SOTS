@@ -142,15 +142,15 @@ namespace SOTS.Projectiles.Celestial
 		int counter2 = 0;
 		Vector2 originalVelo = Vector2.Zero;
 		Vector2 originalPos = Vector2.Zero;
-        public override void AI()
+		public override void AI()
 		{
-			if(projectile.timeLeft < 220)
+			if (projectile.timeLeft < 220)
 			{
 				endHow = 2;
 				projectile.tileCollide = false;
 				projectile.velocity *= 0f;
 			}
-			if(runOnce)
+			if (runOnce)
 			{
 				originalVelo = projectile.velocity;
 				for (int i = 0; i < trailPos.Length; i++)
@@ -163,9 +163,9 @@ namespace SOTS.Projectiles.Celestial
 			originalPos += originalVelo * 1.4f;
 			checkPos();
 			Player player = Main.player[projectile.owner];
-			if(projectile.ai[0] > 0 && counter2 > 80 - projectile.ai[0] * 10)
-            {
-				for(int i = 0; i < 3; i += 2)
+			if (projectile.ai[0] > 0 && counter2 > 80 - projectile.ai[0] * 10)
+			{
+				for (int i = 0; i < 3; i += 2)
 				{
 					if (Main.myPlayer == projectile.owner)
 					{
@@ -179,22 +179,25 @@ namespace SOTS.Projectiles.Celestial
 			}
 			counter++;
 			counter2++;
-			if(counter >= 0)
+			if (counter >= 0)
 			{
 				cataloguePos();
 				counter = -14;
-				if (Main.netMode != 1)
+				if (projectile.velocity.Length() != 0f)
 				{
-					if (projectile.velocity.Length() != 0f)
-					{
-						Vector2 toPos = originalPos - projectile.Center;
-						projectile.velocity = new Vector2(originalVelo.Length(), 0).RotatedBy(toPos.ToRotation() + MathHelper.ToRadians(projectile.ai[1]));
-						projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
-					}
+					Vector2 toPos = originalPos - projectile.Center;
+					projectile.velocity = new Vector2(originalVelo.Length(), 0).RotatedBy(toPos.ToRotation() + MathHelper.ToRadians(projectile.ai[1]));
+					projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
+				}
+			}
+			else if (counter >= -2)
+			{
+				if (Main.netMode != 1 || Main.myPlayer == projectile.owner)
+				{
 					projectile.ai[1] = Main.rand.Next(-45, 46);
 					projectile.netUpdate = true;
 				}
-            }
+			}
 		}
 	}
 }

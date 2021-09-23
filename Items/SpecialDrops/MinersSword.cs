@@ -9,7 +9,7 @@ namespace SOTS.Items.SpecialDrops
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Miner's Sword");
-            Tooltip.SetDefault("");
+            Tooltip.SetDefault("Critically strikes while falling");
         }
 		public override void SetDefaults()
 		{
@@ -26,7 +26,12 @@ namespace SOTS.Items.SpecialDrops
             item.UseSound = SoundID.Item1;
             item.autoReuse = false;
             item.useTurn = true;
-			item.crit = 6;
 		}
-	}
+        public override void ModifyHitNPC(Player player, NPC target, ref int damage, ref float knockBack, ref bool crit)
+        {
+            if (player.velocity.Y > 0)
+                crit = true;
+            base.ModifyHitNPC(player, target, ref damage, ref knockBack, ref crit);
+        }
+    }
 }

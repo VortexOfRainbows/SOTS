@@ -13,7 +13,7 @@ namespace SOTS.Items.Void
 	{
         public override void ModifyTooltips(List<TooltipLine> tooltips)
 		{
-			TooltipLine line = new TooltipLine(mod, "VoidConsumable", "Automatically consumed when void is low");
+			TooltipLine line = new TooltipLine(mod, "VoidConsumable", "Automatically consumed when void drops below zero");
 			tooltips.Add(line);
 			//line = new TooltipLine(mod, "VoidDelay", GetSatiateDuration() + " second cooldown");
 			//tooltips.Add(line);
@@ -87,10 +87,13 @@ namespace SOTS.Items.Void
 		{
 			RefillEffect(player, GetVoidAmt());
 		}
-		public sealed override void UpdateInventory(Player player)
+		public void SealedUpdateInventory(Player player)
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-			while (voidPlayer.voidMeter < (voidPlayer.voidMeterMax2 - voidPlayer.lootingSouls - voidPlayer.VoidMinionConsumption) / 10 && voidPlayer.voidMeterMax2 - voidPlayer.lootingSouls - voidPlayer.VoidMinionConsumption > GetVoidAmt() && item.stack > 0 && CanUseItem(player))
+			int consumeAt = 0;
+			int currentMax = voidPlayer.voidMeterMax2 - voidPlayer.lootingSouls - voidPlayer.VoidMinionConsumption;
+			int leniency = currentMax - GetVoidAmt();
+			while (voidPlayer.voidMeter <= consumeAt && leniency >= 0 && item.stack > 0 && CanUseItem(player))
 			{
 				Activate(player);
 			}

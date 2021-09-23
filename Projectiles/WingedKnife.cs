@@ -42,7 +42,7 @@ namespace SOTS.Projectiles
 			float speed = 0.4f;
 			if(projectile.friendly == true && projectile.hostile == false)
 			{
-				for(int i = 0; i < Main.npc.Length - 1; i++)
+				for(int i = 0; i < Main.npc.Length; i++)
 				{
 					NPC target = Main.npc[i];
 					if(!target.friendly && target.dontTakeDamage == false && target.lifeMax > 5 && target.CanBeChasedBy())
@@ -57,7 +57,6 @@ namespace SOTS.Projectiles
 						}
 					}
 				}
-				
 				if(target2 != -1)
 				{
 					NPC toHit = Main.npc[target2];

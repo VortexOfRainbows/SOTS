@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Items.Banners;
 using System;
+using System.Linq;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -116,7 +117,7 @@ namespace SOTS.NPCs
 			int j = (int)npc.Center.Y / 16;
 			Tile tile = Framing.GetTileSafely(i, j);
 			bool skyAbove = false;
-			if(tile.wall != mod.WallType("PyramidWallTile"))
+			if(!SOTSWall.unsafePyramidWall.Contains(tile.wall))
 			{
 				for (int k = 0; k < 300; k++)
 				{
@@ -135,7 +136,7 @@ namespace SOTS.NPCs
 					skyAbove = true;
 				}
 			}
-			if (tile.wall != mod.WallType("PyramidWallTile") && skyAbove)
+			if (!SOTSWall.unsafePyramidWall.Contains(tile.wall) && skyAbove)
 			{
 				dropSpecial = true;
 			}

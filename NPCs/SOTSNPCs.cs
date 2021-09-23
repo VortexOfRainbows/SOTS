@@ -19,6 +19,7 @@ using SOTS.NPCs.Inferno;
 using SOTS.NPCs.Boss.Advisor;
 using SOTS.Items.Pyramid;
 using SOTS.Items.Otherworld;
+using SOTS.Items.Pyramid.PyramidWalls;
 
 namespace SOTS.NPCs
 {
@@ -261,6 +262,10 @@ namespace SOTS.NPCs
 				}
 				if(Zombies.Contains(npc.type) && Main.rand.NextBool(80))
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<ZombieHand>(), 1);
+				if(npc.boss && !Main.expertMode && (npc.type == NPCID.BrainofCthulhu || npc.type == NPCID.EaterofWorldsHead || npc.type == NPCID.EaterofWorldsBody || npc.type == NPCID.EaterofWorldsTail))
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<PyramidKey>(), 1);
+				}
 			}
 		}
 		public override void EditSpawnRate(Player player, ref int spawnRate, ref int maxSpawns) 
@@ -270,29 +275,38 @@ namespace SOTS.NPCs
 				spawnRate = (int)(spawnRate * 0.175f); //basically setting to 105
 				maxSpawns = (int)(maxSpawns * 1.5f);
 			}
-			if (player.GetModPlayer<SOTSPlayer>().PlanetariumBiome) //spawnrates for this biome have to be very high due to how npc spawning in sky height works. I also manually despawn other sky enemies
+			if (player.GetModPlayer<SOTSPlayer>().PlanetariumBiome) //spawnrates for this biome have to be very high due to how npc spawning in sky height works.
 			{
-				spawnRate = (int)(spawnRate * 0.2f); //essentially setting it to 60
-				maxSpawns = (int)(maxSpawns * 1.4f);
+				spawnRate = (int)(spawnRate * 0.08f); //essentially setting it to 48
+				maxSpawns = (int)(maxSpawns * 1.5f);
 			}
 			if (spawnRate < 1)
 				spawnRate = 1;
 		}
-		public static bool CorrectBlockBelowPlanetarium(int i, int j, int dist)
+		public static bool CorrectBlockBelowPlanetarium(int i, int j, ref int dist)
 		{
 			bool flag = false;
-			for (int k = 0; k < dist; k++)
+			for (int k = 0; k <= dist; k++)
 			{
 				Tile tile = Framing.GetTileSafely(i, j + k);
 				bool correctType = tile.type == ModContent.TileType<DullPlatingTile>() || tile.type == ModContent.TileType<AvaritianPlatingTile>() || tile.type == ModContent.TileType<PortalPlatingTile>();
-				if (tile.active() && Main.tileSolid[tile.type] && correctType && tile.nactive())
+				if (tile.active() && (Main.tileSolid[tile.type] || correctType) && tile.nactive())
 				{
+					dist = k;
 					flag = true;
 					break;
 				}
 			}
 			return flag;
 		}
+		public static int WallType(int type)
+        {
+			if (type == ModContent.WallType<UnsafePyramidWallWall>() || type == ModContent.WallType<UnsafePyramidBrickWallWall>() || type == ModContent.WallType<TrueSandstoneWallWall>())
+				return 1;
+			if (type == ModContent.WallType<UnsafeCursedTumorWallWall>() || type == ModContent.WallType<UnsafeMalditeWallWall>())
+				return 2;
+			return -1;
+        }
 		public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
 		{
 			Player player = spawnInfo.player;
@@ -301,12 +315,13 @@ namespace SOTS.NPCs
 			{
 				int tileWall = Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY - 1].wall;
 				bool isValidTile = spawnInfo.spawnTileType == ModContent.TileType<PyramidSlabTile>() || spawnInfo.spawnTileType == ModContent.TileType<PyramidBrickTile>() || spawnInfo.spawnTileType == ModContent.TileType<TrueSandstoneTile>();
-				bool isValidWall = tileWall == ModContent.WallType<PyramidWallTile>() || tileWall == ModContent.WallType<TrueSandstoneWallWall>();
-				bool isCurseValid = spawnInfo.spawnTileType == ModContent.TileType<CursedTumorTile>() || spawnInfo.spawnTileType == ModContent.TileType<CursedHive>() || spawnInfo.spawnTileType == ModContent.TileType<MalditeTile>() || tileWall == ModContent.WallType<CursedTumorWallTile>();
+				bool isValidWall = WallType(tileWall) == 1;
+				bool isCurseValid = spawnInfo.spawnTileType == ModContent.TileType<CursedTumorTile>() || spawnInfo.spawnTileType == ModContent.TileType<CursedHive>() || spawnInfo.spawnTileType == ModContent.TileType<MalditeTile>()
+					|| WallType(tileWall) == 2;
 				if (isValidTile || (isValidWall && !isCurseValid))
 				{
-					pool[0] = 0f;
-					pool.Add(mod.NPCType("SnakePot"), 0.3f);
+					pool.Clear();
+					pool.Add(mod.NPCType("SnakePot"), 0.35f);
 					pool.Add(mod.NPCType("Snake"), 1f);
 					pool.Add(mod.NPCType("LostSoul"), 0.6f);
 					pool.Add(mod.NPCType("PyramidTreasureSlime"), 0.1f);
@@ -318,7 +333,7 @@ namespace SOTS.NPCs
 				}
 				else if(isCurseValid)
 				{
-					pool[0] = 0f;
+					pool.Clear();
 					if (Main.hardMode)
 					{
 						pool.Add(mod.NPCType("BleedingGhast"), 0.1f);
@@ -332,20 +347,21 @@ namespace SOTS.NPCs
 					pool.Add(mod.NPCType("LostSoul"), 0.1f);
 					pool.Add(mod.NPCType("PyramidTreasureSlime"), 0.025f);
 					pool.Add(ModContent.NPCType<Teratoma>(), 0.25f);
+					pool.Add(ModContent.NPCType<Maligmor>(), 0.15f);
 				}
 			}
 			else if (spawnInfo.player.GetModPlayer<SOTSPlayer>().PlanetariumBiome)
 			{
-				bool correctBlock = CorrectBlockBelowPlanetarium(spawnInfo.spawnTileX, spawnInfo.spawnTileY, 5);
-				for (int i = 0; i < pool.Count; i++)
-					pool[i] = 0f;
+				pool.Clear();
+				int distanceDown = 6;
+				bool correctBlock = CorrectBlockBelowPlanetarium(spawnInfo.spawnTileX, spawnInfo.spawnTileY, ref distanceDown);
 				if (correctBlock)
 				{
-					pool.Add(mod.NPCType("HoloSlime"), 0.4f);
-					pool.Add(mod.NPCType("HoloEye"), 0.1f);
-					pool.Add(mod.NPCType("HoloBlade"), 0.175f);
-					pool.Add(mod.NPCType("TwilightDevil"), 0.03f);
-					pool.Add(mod.NPCType("OtherworldlyConstructHead"), 0.015f);
+					pool.Add(ModContent.NPCType<HoloSlime>(), 0.4f);
+					pool.Add(ModContent.NPCType<HoloEye>(), 0.1f);
+					pool.Add(ModContent.NPCType<HoloBlade>(), 0.175f);
+					pool.Add(ModContent.NPCType<TwilightDevil>(), 0.04f);
+					pool.Add(ModContent.NPCType<OtherworldlyConstructHead>(), 0.02f);
 				}
 			}
 			else if (ZoneForest)
@@ -362,7 +378,12 @@ namespace SOTS.NPCs
 				pool.Add(mod.NPCType("BlueSlimer"), SpawnCondition.OverworldDaySlime.Chance * 0.1f);
 				pool.Add(mod.NPCType("TreasureSlime"), SpawnCondition.OverworldDaySlime.Chance * 0.1f);
 				if (player.statLifeMax2 >= 120)
-					pool.Add(ModContent.NPCType<NatureConstruct>(), SpawnCondition.Overworld.Chance * 0.01f);
+				{
+					float overworldChance = 0.01f;
+					if (Main.bloodMoon)
+						overworldChance = 0.005f;
+					pool.Add(ModContent.NPCType<NatureConstruct>(), SpawnCondition.Overworld.Chance * overworldChance);
+				}
 			}
 			else if (player.ZoneCorrupt || player.ZoneCrimson)
 			{

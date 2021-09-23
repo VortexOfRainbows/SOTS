@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Items.Pyramid.PyramidWalls;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -173,7 +174,7 @@ namespace SOTS.Items.Pyramid
 						for (int y = -range; y <= range; y++)
 						{
 							Tile tile = Framing.GetTileSafely(i + x, j + y);
-							if (tile.wall == mod.WallType("OvergrownPyramidWallWall"))
+							if (tile.wall == ModContent.WallType<UnsafeOvergrownPyramidWallWall>())
 							{
 								count++;
 							}

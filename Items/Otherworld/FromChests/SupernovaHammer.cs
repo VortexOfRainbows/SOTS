@@ -25,8 +25,8 @@ namespace SOTS.Items.Otherworld.FromChests
 		{
 			item.damage = 27;
 			item.melee = true;
-			item.width = 52;
-			item.height = 52;
+			item.width = 50;
+			item.height = 50;
 			item.useTime = 30;
 			item.useAnimation = 30;
 			item.useStyle = 5;

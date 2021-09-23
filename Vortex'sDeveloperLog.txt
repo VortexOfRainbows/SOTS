@@ -6,35 +6,230 @@ The following is my development plans :D
 3. Chaos Spirit Boss: "Lux"
 4. Ghost Town to Evil Biome
 
-High Priority:
-1. Pyramid Rework
-
 Mid Priority:
-1. Goopwood sprite Changes
-2. Riptide Trident (Launches you towards your cursor at the cost of void, deal damage while traveling, bounce off of enemies)
-3. Wintry Traveler: Riptide Trident + Frigid Javelin
-4. Tectonic Tether
-5. Replace Brittle flail
-6. Chest slime resprites and reworks
-
-Mid Priority 2:
-1. Void Low Warning
-2. Horn of Plenty: 10% more drops accessory
-3. Ethereal Tonic
-4. Timelord's Potion: attempt using .aiStyle, otherwise would require a lot of workaround...
+1. Tectonic Tether
+2. Chest slime resprites and reworks
+3. Curse Base Armor Set
+4. Horn of Plenty: 10% more drops accessory
+5. Ethereal Tonic
+6. Timelord's Potion: attempt using .aiStyle, otherwise would require a lot of workaround...
+7. Crusher based armor and accessories
+	1. Crushing Capacitor
 
 Low Priority:
 1. Archaelogist NPC
 2. Mobile Fortress Generator: One for every tavernkeep armor set
 3. Sharanga Upgrade
-4. Remove negative Vregen in inventory items
-5. Electrolyte Seperator
-6. Skypot gore
+4. Electrolyte Seperator
+5. Wintry Traveler: Riptide Trident + Frigid Javelin
 
-1. Next: Curse based enemies
-2. Next: Ghast Banner + Teratoma Banner
-3. Next: Buff Vibrant Armor
-4. Next: Portal-based Spawning of enemies in planetarium and crystal waves
+9/22/21
+1. Increased duration until runaway for all spirit phase 1 by 2 seconds (slightly more for earthen)
+2. Coconut biome always spawns opposite the dungeon
+3. Daito blacklisted from Locket
+4. Added small dust visuals to Twilight Gyroscope when falling
+
+9/21/21
+1. Tidal Spirit Staff complete! (Works in Multiplayer)
+	1. Ripple no longer destroys pots 
+
+--- Released 0.20.0 --- :O
+
+9/19/21
+1. North Star added, replaces Brittle Flail. Server Syncs FINE enough
+2. Metalmalgamation resprite. Damage 45 -> 40, shoots more bullets 2 -> 4
+3. Adjustments to Aten sprite
+4. Peanut Repeater airplanes now do damage
+5. Added Irradiated Chain reactor, is now obtainable as a Chlorophyte Weapon
+
+9/18/21
+1. Multiplayer fixed!
+2. Aten works in Multiplayer!
+3. Some internal optimizations
+
+9/17/21
+1. Aten Rework (Graydee + Vortex)
+2. Sandstone Edge buff (since other pyramid melee outclass it)
+	1. Damage 26 -> 30, 45% -> 50%, crit 4 -> 14
+
+9/15/21 & 9/16/21
+1. Added Tainted Prism Shaders
+2. Acedia Gateway sprite inputted
+3. Resprited Flying Snake
+
+9/13/21
+1. Resprited some banners
+2. Experimented with shaders. Still need a lot of practice/work
+
+9/12/21
+1. Spawnrating and pool changes to planetarium. Constructs and Twilight Devil are now more common.
+	1. Spawnrate 30 -> 48
+2. Increased spawnrate of pots in pyramid 20% -> 25%
+3. Ambient Pyramid tiles spawn in pyramid properly now
+4. Traingun rework
+
+9/11/21
+1. More subspace death animation work, WORKS WELL ENOUGH IN MULTIPLAYER
+2. Nerfed Plasma Cutter draw iterations to prevent some lag
+3. Increased pyramid pot snake spawnrates 20% -> 25%, works in Multiplayer
+4. Properly clearing spawnpools to allow enemies to spawn correctly when playing with other mods
+5. Increased spawnrates for plantarium by 4x, since spawns didn't seem to be working (?)
+	1. 120 -> 30
+6. Added in Pyramid BG Tiles, they don't spawn yet, though
+
+9/10/21
+1. Polaris Armor set bonus added more consistency. Works with all melee ranged items
+2. Pyramid Key drops properly (from bags and normal), also Pharaoh's Curse debuff basically removed
+3. Added Acedia Gateway (WIP sprite, need vine)
+4. Subspace death anim practice
+
+9/9/21
+1. Pyramid Gate now generates in pyramid entrance (should work in Multiplayer)
+2. Added Snake Resprite
+3. Polish to Polaris armor
+
+9/8/21
+1. Checked: Frost Artifact set bonus works in multiplayer
+2. Some small rebalances
+3. No longer possible to break pyramid blocks before evil boss
+4. Work on Pyramid Door
+
+9/7/21
+1. Metalmalgamation now fires faster and farther, but damage nerf 50 -> 45, 65% -> 35%
+	1. Max range 225 -> 196
+	2. Top speed 11 -> 12
+	3. Life time mult 11 -> 10
+2. Added Frost Artifact Armor set bonus. Have yet to check server compatability.
+
+9/6/21
+1. Putrid Pinky Mask added, drops from pinky.
+2. Small bug fix for safety switch visuals.
+3. Pyramid Pots added. They work and spawn correctly
+	1. Added pots to the map (weren't before for some reason)
+4. Buff Cursed Spear Storm damage 17 -> 20 and gave sound effect
+5. Pyramid Worldgen no longer spawns Sandstone Slab -> Ruined Pyramid Brick
+	1. Zepline room now uses pyramid brick
+
+9/5/21
+1. Slightly decreases Pharaoh's Phase 2 Arm acceleration, 1.1x speed per flip -> 1.08x speed per flip
+2. Cursed Blade rework complete! Works in Multiplayer!
+3. Fixed bug where void minions weren't properly appearing in multiplayer in some cases. 
+	1. May cacade into other issues or fix some other issues, idk yet
+4. Void consumables now activate when void is below zero instead of below 10%.
+	1. Also clarified void minion interactions. Only consumes if it will not waste part of the consumption.
+5. Small Void Bar UI changes for consistency
+6. Safety Switch added! Sold by Traveling Merchant, 20% chance
+7. Pharaoh's Sound Effects changed
+8. Nature Construct spawns cut in half during blood moon
+9. Suprem now spawns from traveling merchant 0.2% of the time (down from 33%)
+
+9/4/21
+1. Hardlight Wall now spawns in planetarium
+2. Added alt tiles to pyramid worldgen
+3. Planetarium now spawns slightly higher up on small and medium worlds.
+	1. This cramps the planetarium but makes it less likely to just spawn on surface level
+	2. Still player's fault for choosing small worlds like loser
+4. Added some more leniency to Digital Daito's hitbox for hitting through tiles
+
+9/2/21 & 9/3/21
+1. Added Putrid Pinky trophy + trophy framework
+2. Avaritia Gateway sprite update
+3. Internal code optimizations
+4. Organized pyramid walls + added safe/unsafe wall variants in pyramid
+	1. Pyramid Brick Wall (unsafe) generates in pyramid
+	
+9/1/21
+1. Shardstorm Spell reworked, mana cost 29 -> 20
+	1. Now a bit weaker in general, but has a more generous hitbox and area damage over piercing
+	2. Stronger single target
+	3. Works well enough in multiplayer
+2. Began Cursed Blade rework
+
+8/30/21
+1. Removed the negative void-regen property off of several items
+2. Small Hardlight Glass fix
+3. Update Boss Checklist portraits
+4. Small fixes to Nature Construct + Spirit
+
+8/29/21
+1. Frost Artifact armor rebalancing + Resprited
+	1. Helmet defense 11 -> 16, damage buff 15% -> 14%
+	2. Chestplate crit buff 10 -> 16
+	3. Leggings defense 14 -> 16
+2. Added Hardlight Wall! Looks actually good I can't believe it wtf.
+3. Checked: Hardlight BLOCKS works in Multiplayer
+
+8/28/21 & 8/29/21
+1. Sky Pot gores resprited
+2. Sheeted Frigid Armor + Shoe Ice
+3. Hungry Hunter No Longer gives max void, Damage 19 -> 21
+4. Pharaoh's Cane kb 1.8 -> 2.5, damage 6 -> 11, now inflicts midas
+5. Reworked Curseball Tome -> Curse Spear Storm, works in Multiplayer
+6. Nature Construct has received a telegraph along with a better wind up visual, Works in Multiplayer
+7. Maligmor Rebuffed (HP increased)
+8. Some map color changes
+
+8/27/21
+1. Added banners myself cause Heart has a personal record to settle with banners.
+
+8/25/21
+1. Advisor spawns higher on the portal + portal resprite
+2. Otherworldly constructs spawn more evenly (fixing stank leg)
+3. Maligmar finished, Server syncs fine enough
+4. Fixed ear piercing sound with Storm Spell
+5. Pyramid music returns, WIP
+
+8/24/21
+1. Teratoma life (130, 180) -> (160, 220), defense 12 -> 16
+	1. Slightly slower
+	2. Hitbox is now smaller to allow more proper tile colliding
+2. Fixed snakes dropping through the floor and walls
+	1. Speed changes
+3. Fixed some sound errors
+4. Started on Maligmar
+
+8/22/21 & 8/23/21
+1. Added Riptide, should work in Multiplayer
+2. Added Digital Daito, WORKS IN MULTIPLAYER I AM A FUCKING GOD
+3. Pyramid path tunnels through Ancient Gold Brick + Spike
+	1. Pyramid Cobwebs appear less often but bigger
+	2. No longer attach to walls, instead to blocks
+	3. Decreased Spike Rate
+4. Pyramid room generates with ancient gold furniture
+5. Maldite wall added. Generates in Pyramid
+6. Coconut Gun damage 23 -> 17, void cost 40 -> 24
+	1. Decrease to shredding potential
+	2. Increase in usability
+7. Miner Sword crit chance 10% -> 4%, now crits while falling
+8. Holo Enemies release binary dust
+9. Obsidian Platform bug fix
+10. Teratoma resprite
+	1. Increased kb resist, Increased hp (120, 180) -> (140, 200)
+	2. Increased Defense 0 -> 10,  Decreased speed, can drop maldite
+11. Snakes resprite, Snake pot jumps farther, new sound
+	1. Snakes have randomized sizes which modify health, size, and speed
+	2. SYNCS IN MULTIPLAYER. Slightly boosted snake pot spawn rate
+
+8/21/21
+1. Nature Spirit Staff is cheaper to craft
+2. Creative Shock duration increased (Keystone)
+3. Obsidian Eruption no longer deals KB with explosion
+4. Earthen Construct should no longer crash your game upon dying (FINALLY, HOPEFULLY).
+5. Some resprites + Modify Eclipse (Crusher) visuals to make them darker + burp sound
+6. Voidspace Aura matches chain effects with Sky Chain
+7. Tainted Keystone drops from gold gate
+
+8/20/21
+1. Ruby Spawner
+2. Checked: Teratoma Works in Multiplayer
+3. Ruby Keystone Waves! SERVER SYNCS GOOD!
+	1. Gives all players debuff in world. Intentional ;)
+4. Vibrant Armor Defense Buff, (Helmet, Chestplate, Leggings), (3, 4, 3) -> (4, 5, 4)
+5. Finished some more holo-pallet consistency stuff
+6. Advisor Tazer color changes
+7. Tainted Keystone Shard added
+8. Void bar centering
+9. Ancient Gold spikes added to Pyramid Worldgen (60 -> 50 damage (from wooden))
 
 8/19/21
 1. Rate changes to Maldite Generation

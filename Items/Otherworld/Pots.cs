@@ -25,6 +25,9 @@ namespace SOTS.Items.Otherworld
 			TileObjectData.newTile.RandomStyleRange = 9;
 			TileObjectData.newTile.LavaDeath = false;
 			TileObjectData.addTile(Type);
+            ModTranslation name = CreateMapEntryName();
+            name.SetDefault("Pot");
+            AddMapEntry(new Color(66, 77, 93), name);
             dustType = DustType<AvaritianDust>();
         }
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
@@ -67,8 +70,8 @@ namespace SOTS.Items.Otherworld
         public void PotDrops(int i, int j, int frameX, int frameY)
         {
             Main.PlaySound(SoundID.Shatter, i * 16, j * 16, 1, 1f, 0.0f);
-            Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/SkyPotGore1"), 1f);
-            Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/SkyPotGore2"), 1f);
+            Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/Pots/SkyPotGore1"), 1f);
+            Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/Pots/SkyPotGore2"), 1f);
             int num = 0;
             if(frameY < 36)
             {
@@ -94,65 +97,65 @@ namespace SOTS.Items.Otherworld
             {
                 if(Main.rand.NextBool(2))
                    Item.NewItem(i * 16, j * 16, 16, 16, ItemID.Star, 1, false, 0, false, false);
-                Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/SkyPotGore6"), 1f);
+                Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/Pots/SkyPotGore6"), 1f);
                 if (Main.rand.NextBool(2))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/SkyPotGore3"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/Pots/SkyPotGore3"), 1f);
                 if (Main.rand.NextBool(2))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/SkyPotGore4"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/Pots/SkyPotGore4"), 1f);
                 if (Main.rand.NextBool(2))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/SkyPotGore5"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/Pots/SkyPotGore5"), 1f);
             }
             if (num == 2) //heart pot
             {
                 if (Main.rand.NextBool(2))
                     Item.NewItem(i * 16, j * 16, 16, 16, ItemID.Heart, 1, false, 0, false, false);
-                Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/SkyPotGore7"), 1f);
+                Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/Pots/SkyPotGore7"), 1f);
                 if (Main.rand.NextBool(2))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/SkyPotGore3"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/Pots/SkyPotGore3"), 1f);
                 if (Main.rand.NextBool(2))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/SkyPotGore4"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/Pots/SkyPotGore4"), 1f);
                 if (Main.rand.NextBool(2))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/SkyPotGore5"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/Pots/SkyPotGore5"), 1f);
             }
             if (num == 3) //void pot?
             {
-                Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/SkyPotGore8"), 1f);
+                Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/Pots/SkyPotGore8"), 1f);
                 if (Main.rand.NextBool(2))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/SkyPotGore3"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/Pots/SkyPotGore3"), 1f);
                 if (Main.rand.NextBool(2))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/SkyPotGore4"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/Pots/SkyPotGore4"), 1f);
                 if (Main.rand.NextBool(2))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/SkyPotGore5"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/Pots/SkyPotGore5"), 1f);
             }
             if (num == 4)
             {
                 if (Main.rand.NextBool(2))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/SkyPotGore9"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/Pots/SkyPotGore9"), 1f);
                 if (Main.rand.NextBool(2))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/SkyPotGore10"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/Pots/SkyPotGore10"), 1f);
                 if (Main.rand.NextBool(2))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/SkyPotGore11"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/Pots/SkyPotGore11"), 1f);
                 if (Main.rand.NextBool(4))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/SkyPotGore3"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/Pots/SkyPotGore3"), 1f);
                 if (Main.rand.NextBool(4))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/SkyPotGore4"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/Pots/SkyPotGore4"), 1f);
                 if (Main.rand.NextBool(4))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/SkyPotGore5"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/Pots/SkyPotGore5"), 1f);
             }
             if (num == 5)
             {
                 if (Main.rand.NextBool(2))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/SkyPotGore12"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/Pots/SkyPotGore12"), 1f);
                 if (Main.rand.NextBool(2))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/SkyPotGore13"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/Pots/SkyPotGore13"), 1f);
                 if (Main.rand.NextBool(2))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/SkyPotGore14"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/Pots/SkyPotGore14"), 1f);
                 if (Main.rand.NextBool(4))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/SkyPotGore3"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/Pots/SkyPotGore3"), 1f);
                 if (Main.rand.NextBool(4))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/SkyPotGore4"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/Pots/SkyPotGore4"), 1f);
                 if (Main.rand.NextBool(4))
-                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/SkyPotGore5"), 1f);
+                    Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/Pots/SkyPotGore5"), 1f);
             }
 
 
@@ -172,111 +175,111 @@ namespace SOTS.Items.Otherworld
                 {
                     int num8 = WorldGen.genRand.Next(10);
                     if (num8 == 0)
-                        Item.NewItem(i * 16, j * 16, 16, 16, 292, 1, false, 0, false, false);
+                        Item.NewItem(i * 16, j * 16, 16, 16, ItemID.IronskinPotion, 1, false, 0, false, false);
                     if (num8 == 1)
-                        Item.NewItem(i * 16, j * 16, 16, 16, 298, 1, false, 0, false, false);
+                        Item.NewItem(i * 16, j * 16, 16, 16, ItemID.ShinePotion, 1, false, 0, false, false);
                     if (num8 == 2)
-                        Item.NewItem(i * 16, j * 16, 16, 16, 299, 1, false, 0, false, false);
+                        Item.NewItem(i * 16, j * 16, 16, 16, ItemID.NightOwlPotion, 1, false, 0, false, false);
                     if (num8 == 3)
-                        Item.NewItem(i * 16, j * 16, 16, 16, 290, 1, false, 0, false, false);
+                        Item.NewItem(i * 16, j * 16, 16, 16, ItemID.SwiftnessPotion, 1, false, 0, false, false);
                     if (num8 == 4)
-                        Item.NewItem(i * 16, j * 16, 16, 16, 2322, 1, false, 0, false, false);
+                        Item.NewItem(i * 16, j * 16, 16, 16, ItemID.MiningPotion, 1, false, 0, false, false);
                     if (num8 == 5)
-                        Item.NewItem(i * 16, j * 16, 16, 16, 2324, 1, false, 0, false, false);
+                        Item.NewItem(i * 16, j * 16, 16, 16, ItemID.CalmingPotion, 1, false, 0, false, false);
                     if (num8 == 6)
-                        Item.NewItem(i * 16, j * 16, 16, 16, 2325, 1, false, 0, false, false);
+                        Item.NewItem(i * 16, j * 16, 16, 16, ItemID.BuilderPotion, 1, false, 0, false, false);
                     if (num8 >= 7)
-                        Item.NewItem(i * 16, j * 16, 16, 16, 2350, 1, false, 0, false, false);
+                        Item.NewItem(i * 16, j * 16, 16, 16, ItemID.RecallPotion, 1, false, 0, false, false);
                 }
                 else if (type == 1)
                 {
                     int num8 = WorldGen.genRand.Next(11);
                     if (num8 == 0)
-                        Item.NewItem(i * 16, j * 16, 16, 16, 289, 1, false, 0, false, false);
+                        Item.NewItem(i * 16, j * 16, 16, 16, ItemID.RegenerationPotion, 1, false, 0, false, false);
                     if (num8 == 1)
-                        Item.NewItem(i * 16, j * 16, 16, 16, 298, 1, false, 0, false, false);
+                        Item.NewItem(i * 16, j * 16, 16, 16, ItemID.ShinePotion, 1, false, 0, false, false);
                     if (num8 == 2)
-                        Item.NewItem(i * 16, j * 16, 16, 16, 299, 1, false, 0, false, false);
+                        Item.NewItem(i * 16, j * 16, 16, 16, ItemID.NightOwlPotion, 1, false, 0, false, false);
                     if (num8 == 3)
-                        Item.NewItem(i * 16, j * 16, 16, 16, 290, 1, false, 0, false, false);
+                        Item.NewItem(i * 16, j * 16, 16, 16, ItemID.SwiftnessPotion, 1, false, 0, false, false);
                     if (num8 == 4)
-                        Item.NewItem(i * 16, j * 16, 16, 16, 303, 1, false, 0, false, false);
+                        Item.NewItem(i * 16, j * 16, 16, 16, ItemID.ArcheryPotion, 1, false, 0, false, false);
                     if (num8 == 5)
-                        Item.NewItem(i * 16, j * 16, 16, 16, 291, 1, false, 0, false, false);
+                        Item.NewItem(i * 16, j * 16, 16, 16, ItemID.GillsPotion, 1, false, 0, false, false);
                     if (num8 == 6)
-                        Item.NewItem(i * 16, j * 16, 16, 16, 304, 1, false, 0, false, false);
+                        Item.NewItem(i * 16, j * 16, 16, 16, ItemID.HunterPotion, 1, false, 0, false, false);
                     if (num8 == 7)
-                        Item.NewItem(i * 16, j * 16, 16, 16, 2322, 1, false, 0, false, false);
+                        Item.NewItem(i * 16, j * 16, 16, 16, ItemID.MiningPotion, 1, false, 0, false, false);
                     if (num8 == 8)
-                        Item.NewItem(i * 16, j * 16, 16, 16, 2329, 1, false, 0, false, false);
+                        Item.NewItem(i * 16, j * 16, 16, 16, ItemID.TrapsightPotion, 1, false, 0, false, false);
                     if (num8 >= 9)
-                        Item.NewItem(i * 16, j * 16, 16, 16, 2350, 1, false, 0, false, false);
+                        Item.NewItem(i * 16, j * 16, 16, 16, ItemID.RecallPotion, 1, false, 0, false, false);
                 }
                 else if (type == 2)
                 {
                     int num8 = WorldGen.genRand.Next(15);
                     if (num8 == 0)
-                        Item.NewItem(i * 16, j * 16, 16, 16, 296, 1, false, 0, false, false);
+                        Item.NewItem(i * 16, j * 16, 16, 16, ItemID.SpelunkerPotion, 1, false, 0, false, false);
                     if (num8 == 1)
-                        Item.NewItem(i * 16, j * 16, 16, 16, 295, 1, false, 0, false, false);
+                        Item.NewItem(i * 16, j * 16, 16, 16, ItemID.FeatherfallPotion, 1, false, 0, false, false);
                     if (num8 == 2)
-                        Item.NewItem(i * 16, j * 16, 16, 16, 299, 1, false, 0, false, false);
+                        Item.NewItem(i * 16, j * 16, 16, 16, ItemID.NightOwlPotion, 1, false, 0, false, false);
                     if (num8 == 3)
-                        Item.NewItem(i * 16, j * 16, 16, 16, 302, 1, false, 0, false, false);
+                        Item.NewItem(i * 16, j * 16, 16, 16, ItemID.WaterWalkingPotion, 1, false, 0, false, false);
                     if (num8 == 4)
-                        Item.NewItem(i * 16, j * 16, 16, 16, 303, 1, false, 0, false, false);
+                        Item.NewItem(i * 16, j * 16, 16, 16, ItemID.ArcheryPotion, 1, false, 0, false, false);
                     if (num8 == 5)
-                        Item.NewItem(i * 16, j * 16, 16, 16, 305, 1, false, 0, false, false);
+                        Item.NewItem(i * 16, j * 16, 16, 16, ItemID.GravitationPotion, 1, false, 0, false, false);
                     if (num8 == 6)
-                        Item.NewItem(i * 16, j * 16, 16, 16, 301, 1, false, 0, false, false);
+                        Item.NewItem(i * 16, j * 16, 16, 16, ItemID.ThornsPotion, 1, false, 0, false, false);
                     if (num8 == 7)
-                        Item.NewItem(i * 16, j * 16, 16, 16, 302, 1, false, 0, false, false);
+                        Item.NewItem(i * 16, j * 16, 16, 16, ItemID.WaterWalkingPotion, 1, false, 0, false, false);
                     if (num8 == 8)
-                        Item.NewItem(i * 16, j * 16, 16, 16, 297, 1, false, 0, false, false);
+                        Item.NewItem(i * 16, j * 16, 16, 16, ItemID.InvisibilityPotion, 1, false, 0, false, false);
                     if (num8 == 9)
-                        Item.NewItem(i * 16, j * 16, 16, 16, 304, 1, false, 0, false, false);
+                        Item.NewItem(i * 16, j * 16, 16, 16, ItemID.HunterPotion, 1, false, 0, false, false);
                     if (num8 == 10)
-                        Item.NewItem(i * 16, j * 16, 16, 16, 2322, 1, false, 0, false, false);
+                        Item.NewItem(i * 16, j * 16, 16, 16, ItemID.MiningPotion, 1, false, 0, false, false);
                     if (num8 == 11)
-                        Item.NewItem(i * 16, j * 16, 16, 16, 2323, 1, false, 0, false, false);
+                        Item.NewItem(i * 16, j * 16, 16, 16, ItemID.HeartreachPotion, 1, false, 0, false, false);
                     if (num8 == 12)
-                        Item.NewItem(i * 16, j * 16, 16, 16, 2327, 1, false, 0, false, false);
+                        Item.NewItem(i * 16, j * 16, 16, 16, ItemID.FlipperPotion, 1, false, 0, false, false);
                     if (num8 == 13)
-                        Item.NewItem(i * 16, j * 16, 16, 16, 2329, 1, false, 0, false, false);
+                        Item.NewItem(i * 16, j * 16, 16, 16, ItemID.TrapsightPotion, 1, false, 0, false, false);
                     if (num8 == 14)
-                        Item.NewItem(i * 16, j * 16, 16, 16, 2350, 1, false, 0, false, false);
+                        Item.NewItem(i * 16, j * 16, 16, 16, ItemID.RecallPotion, 1, false, 0, false, false);
                 }
                 else
                 {
                     int num8 = WorldGen.genRand.Next(14);
                     if (num8 == 0)
-                        Item.NewItem(i * 16, j * 16, 16, 16, 296, 1, false, 0, false, false);
+                        Item.NewItem(i * 16, j * 16, 16, 16, ItemID.SpelunkerPotion, 1, false, 0, false, false);
                     if (num8 == 1)
-                        Item.NewItem(i * 16, j * 16, 16, 16, 295, 1, false, 0, false, false);
+                        Item.NewItem(i * 16, j * 16, 16, 16, ItemID.FeatherfallPotion, 1, false, 0, false, false);
                     if (num8 == 2)
-                        Item.NewItem(i * 16, j * 16, 16, 16, 293, 1, false, 0, false, false);
+                        Item.NewItem(i * 16, j * 16, 16, 16, ItemID.ManaRegenerationPotion, 1, false, 0, false, false);
                     if (num8 == 3)
-                        Item.NewItem(i * 16, j * 16, 16, 16, 288, 1, false, 0, false, false);
+                        Item.NewItem(i * 16, j * 16, 16, 16, ItemID.ObsidianSkinPotion, 1, false, 0, false, false);
                     if (num8 == 4)
-                        Item.NewItem(i * 16, j * 16, 16, 16, 294, 1, false, 0, false, false);
+                        Item.NewItem(i * 16, j * 16, 16, 16, ItemID.MagicPowerPotion, 1, false, 0, false, false);
                     if (num8 == 5)
-                        Item.NewItem(i * 16, j * 16, 16, 16, 297, 1, false, 0, false, false);
+                        Item.NewItem(i * 16, j * 16, 16, 16, ItemID.InvisibilityPotion, 1, false, 0, false, false);
                     if (num8 == 6)
-                        Item.NewItem(i * 16, j * 16, 16, 16, 304, 1, false, 0, false, false);
+                        Item.NewItem(i * 16, j * 16, 16, 16, ItemID.HunterPotion, 1, false, 0, false, false);
                     if (num8 == 7)
-                        Item.NewItem(i * 16, j * 16, 16, 16, 305, 1, false, 0, false, false);
+                        Item.NewItem(i * 16, j * 16, 16, 16, ItemID.GravitationPotion, 1, false, 0, false, false);
                     if (num8 == 8)
-                        Item.NewItem(i * 16, j * 16, 16, 16, 301, 1, false, 0, false, false);
+                        Item.NewItem(i * 16, j * 16, 16, 16, ItemID.ThornsPotion, 1, false, 0, false, false);
                     if (num8 == 9)
-                        Item.NewItem(i * 16, j * 16, 16, 16, 302, 1, false, 0, false, false);
+                        Item.NewItem(i * 16, j * 16, 16, 16, ItemID.WaterWalkingPotion, 1, false, 0, false, false);
                     if (num8 == 10)
-                        Item.NewItem(i * 16, j * 16, 16, 16, 288, 1, false, 0, false, false);
+                        Item.NewItem(i * 16, j * 16, 16, 16, ItemID.ObsidianSkinPotion, 1, false, 0, false, false);
                     if (num8 == 11)
-                        Item.NewItem(i * 16, j * 16, 16, 16, 300, 1, false, 0, false, false);
+                        Item.NewItem(i * 16, j * 16, 16, 16, ItemID.BattlePotion, 1, false, 0, false, false);
                     if (num8 == 12)
-                        Item.NewItem(i * 16, j * 16, 16, 16, 2323, 1, false, 0, false, false);
+                        Item.NewItem(i * 16, j * 16, 16, 16, ItemID.HeartreachPotion, 1, false, 0, false, false);
                     if (num8 == 13)
-                        Item.NewItem(i * 16, j * 16, 16, 16, 2326, 1, false, 0, false, false);
+                        Item.NewItem(i * 16, j * 16, 16, 16, ItemID.TitanPotion, 1, false, 0, false, false);
                 }
             }
             else if (Main.netMode == 2 && Main.rand.Next(30) == 0)
@@ -456,7 +459,7 @@ namespace SOTS.Items.Otherworld
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Pots");
+			DisplayName.SetDefault("Sky Pot");
 		}
 		public override void SetDefaults()
 		{

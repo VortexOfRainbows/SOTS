@@ -17,26 +17,13 @@ namespace SOTS.Buffs
 		{
 			bool update = true;
 			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
-			if (SOTSWorld.downedBoss2)
-				modPlayer.weakerCurse = true;
-			if (SOTSWorld.downedCurse || NPC.AnyNPCs(ModContent.NPCType<NPCs.Boss.Curse.PharaohsCurse>()))
+			if (SOTSWorld.downedBoss2 || modPlayer.weakerCurse)
 			{
 				update = false;	
 			}
 			if(update)
 			{
-				if(modPlayer.weakerCurse && player.statLife > 100)
-				{
-					player.lifeRegen -= 4;
-				}
-				if(modPlayer.weakerCurse && player.statLife > 200)
-				{
-					player.lifeRegen -= 2;
-				}
-				if(!modPlayer.weakerCurse)
-				{
-					player.lifeRegen -= 50;
-				}
+				player.lifeRegen -= 100;
 			}
 			modPlayer.weakerCurse = false;
 		}

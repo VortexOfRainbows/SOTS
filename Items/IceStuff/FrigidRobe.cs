@@ -10,10 +10,10 @@ namespace SOTS.Items.IceStuff
 	{
 		public override void SetDefaults()
 		{
-			item.width = 30;
+			item.width = 28;
 			item.height = 28;
 			item.value = Item.sellPrice(0, 1, 20, 0);
-			item.rare = 2;
+			item.rare = ItemRarityID.Green;
 			item.defense = 1;
 		}
 		public override void SetStaticDefaults()

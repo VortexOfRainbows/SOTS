@@ -10,7 +10,7 @@ namespace SOTS.Items.IceStuff
 	{	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Shardstorm Spell");
+			DisplayName.SetDefault("Azure Bombardment");
 			Tooltip.SetDefault("Create an area of arctic obliteration targeted on your cursor");
 		}
 		public override void SetDefaults()
@@ -30,8 +30,7 @@ namespace SOTS.Items.IceStuff
             item.autoReuse = true;
             item.shootSpeed = 18f; //arbitrary 
 			item.shoot = mod.ProjectileType("Shardstorm");
-			item.mana = 29;
-
+			item.mana = 20;
 		}
 		public override void AddRecipes()
 		{

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -120,8 +121,10 @@ namespace SOTS.Items.Celestial
             DrawServant.visible = true;
             layers.Insert(0, DrawServant);
         }
+        public int subspaceServantShader = 0;
         public override void ResetEffects()
         {
+            subspaceServantShader = 0;
             servantIsVanity = false;
             for (int i = 9 + player.extraAccessorySlots; i < player.armor.Length; i++) //checking vanity slots
             {
@@ -131,7 +134,19 @@ namespace SOTS.Items.Celestial
                     servantActive = true;
                     servantIsVanity = true;
                 }
+                //if (item.type == ModContent.ItemType<SubspaceLocket>())
+                //{
+                //    SubspacePlayer.ModPlayer(player).subspaceServantShader = GameShaders.Armor.GetShaderIdFromItemId(player.dye[i].type);
+                //}
             }
+            //for (int i = 0; i < 10; i++) //iterating through armor + accessories
+            //{
+            //    Item item = player.armor[i];
+            //    if (item.type == ModContent.ItemType<SubspaceLocket>())
+            //    {
+            //        SubspacePlayer.ModPlayer(player).subspaceServantShader = GameShaders.Armor.GetShaderIdFromItemId(player.dye[i].type);
+            //    }
+            //}
             if (servantActive)
 				Summon();
 			servantActive = false;

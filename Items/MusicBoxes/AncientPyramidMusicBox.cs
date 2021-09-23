@@ -13,7 +13,7 @@ namespace SOTS.Items.MusicBoxes
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Music Box (Ancient Pyramid)");
+			DisplayName.SetDefault("Music Box (Cursed Pyramid)");
 		}
 
 		public override void SetDefaults()
