@@ -14,7 +14,7 @@ Mid Priority:
 5. Ethereal Tonic
 6. Timelord's Potion: attempt using .aiStyle, otherwise would require a lot of workaround...
 7. Crusher based armor and accessories
-8. Extend duration of Spirit Phase 1
+	1. Crushing Capacitor
 
 Low Priority:
 1. Archaelogist NPC
@@ -23,8 +23,14 @@ Low Priority:
 4. Electrolyte Seperator
 5. Wintry Traveler: Riptide Trident + Frigid Javelin
 
+9/22/21
+1. Increased duration until runaway for all spirit phase 1 by 2 seconds (slightly more for earthen)
+2. Coconut biome always spawns opposite the dungeon
+3. Daito blacklisted from Locket
+4. Added small dust visuals to Twilight Gyroscope when falling
+
 9/21/21
-1. Tidal Spirit Staff
+1. Tidal Spirit Staff complete! (Works in Multiplayer)
 	1. Ripple no longer destroys pots 
 
 --- Released 0.20.0 --- :O

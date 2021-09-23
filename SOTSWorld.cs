@@ -455,11 +455,15 @@ namespace SOTS
 					}
 				}
 
-
+				int dungeonSide = -1; // -1 = dungeon on left, 1 = dungeon on right
+				if (Main.dungeonX > (int)(Main.maxTilesX / 2))
+				{
+					dungeonSide = 1;
+				}
 				bool coconutGenerated = false;
 				while(!coconutGenerated)
 				{
-					int direction = Main.rand.NextBool(2) ? -1 : 1;
+					int direction = dungeonSide;
 					int fromBorder = 70 + Main.rand.Next(20);
 					if(direction == -1)
                     {
@@ -480,12 +484,12 @@ namespace SOTS
 			tasks.Insert(genIndexEnd + 2, new PassLegacy("genIndexModPlanetarium", delegate (GenerationProgress progress)
 			{
 				progress.Message = "Generating Sky Artifacts";
-				int dungeonSide = -1;
+				int dungeonSide = -1; // -1 = dungeon on left, 1 = dungeon on right
 				if (Main.dungeonX > (int)(Main.maxTilesX / 2))
 				{
 					dungeonSide = 1;
 				}
-				// -1 = dungeon on left, 1 = dungeon on right
+				
 				int pX = -1;
 				int checks = 0;
 				if (dungeonSide == -1)
