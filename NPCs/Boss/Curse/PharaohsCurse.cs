@@ -64,6 +64,7 @@ namespace SOTS.NPCs.Boss.Curse
 			npc.width = 42;
 			npc.height = 54;
 			npc.npcSlots = 20f;
+			npc.value = Item.buyPrice(0, 7, 0, 0);
 			npc.boss = true;
 			npc.lavaImmune = true;
 			npc.noGravity = true;

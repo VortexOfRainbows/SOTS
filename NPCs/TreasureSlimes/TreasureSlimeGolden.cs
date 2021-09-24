@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace SOTS.NPCs.TreasureSlimes
 {
-	public class TreasureSlimeGolden : TreasureSlime
+	public class GoldTreasureSlime : TreasureSlime
 	{
         public override void SetStaticDefaults()
 		{
@@ -22,7 +22,15 @@ namespace SOTS.NPCs.TreasureSlimes
 		public override void SetDefaults()
 		{
 			base.SetDefaults();
+			npc.lifeMax = 100;
+			npc.damage = 20;
+			npc.defense = 16;
+			npc.knockBackResist = 0.4f;
+			npc.value = Item.buyPrice(0, 4, 0, 0);
 			npc.Size = new Vector2(32, 36);
+			npc.npcSlots = 1f;
+			banner = npc.type;
+			bannerItem = ItemType<TreasureSlimeBanner>();
 			items = new List<TreasureSlimeItem>()
 			{
 				new TreasureSlimeItem(ItemID.GoldBar, 10, 20),
@@ -35,5 +43,9 @@ namespace SOTS.NPCs.TreasureSlimes
 				new TreasureSlimeItem(ItemID.Extractinator, 1, 1)
 			};
 		}
-	}
+        public override void AdditionalLoot()
+        {
+            base.AdditionalLoot();
+        }
+    }
 }

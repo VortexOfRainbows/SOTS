@@ -31,6 +31,7 @@ Low Priority:
 9/23/21
 1. Supernova Hammer dammer 27 -> 30, size increased
 2. Treasure Slimes server syncing plus base
+3. Pharaoh's Curse drops 7 gold
 
 9/22/21
 1. Increased duration until runaway for all spirit phase 1 by 2 seconds (slightly more for earthen)

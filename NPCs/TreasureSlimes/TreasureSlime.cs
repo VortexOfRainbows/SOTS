@@ -10,14 +10,29 @@ using static Terraria.ModLoader.ModContent;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 using Terraria.Graphics.Shaders;
+using SOTS.Items.GelGear;
 
 namespace SOTS.NPCs.TreasureSlimes
 {
 	public abstract class TreasureSlime : ModNPC
 	{
+		public struct TreasureSlimeItem
+		{
+			public TreasureSlimeItem(int item, int amount, int amountCap, float failChance = 1f)
+			{
+				Type = item;
+				Amount = amount;
+				AmountCap = amountCap;
+				FailChance = failChance;
+			}
+			public float FailChance { get; }
+			public int Type { get; }
+			public int Amount { get; }
+			public int AmountCap { get; }
+		}
 		public int treasure = 0;
 		public int LootAmt = 3;
-		public Color gelColor = new Color(255, 200, 100);
+		public Color gelColor = new Color(255, 255, 133, 100);
         public override void SendExtraAI(BinaryWriter writer)
 		{
 			writer.Write(timeToUpdate);
@@ -42,19 +57,6 @@ namespace SOTS.NPCs.TreasureSlimes
 			indexes[6] = reader.ReadInt32();
 			indexes[7] = reader.ReadInt32();
 		}
-		public struct TreasureSlimeItem
-		{
-			public TreasureSlimeItem(int item, int amount, int amountCap)
-			{
-				Type = item;
-				Amount = amount;
-				AmountCap = amountCap;
-			}
-
-			public int Type { get; }
-			public int Amount { get; }
-			public int AmountCap { get; }
-		}
 		bool runOnce = true;
 		public bool timeToUpdate = false;
 		public List<TreasureSlimeItem> items = new List<TreasureSlimeItem>() { new TreasureSlimeItem(ItemID.Torch, 10, 19),
@@ -72,8 +74,13 @@ namespace SOTS.NPCs.TreasureSlimes
 				for (int i = 0; i < LootAmt; i++)
 				{
 					int rand = Main.rand.Next(items.Count);
-					possibleItems.Add(items[rand]);
-					indexes[i] = rand;
+					if (Main.rand.NextFloat(1) <= items[rand].FailChance)
+					{
+						possibleItems.Add(items[rand]);
+						indexes[i] = rand;
+					}
+					else
+						i--;
 					items.RemoveAt(rand);
 				}
 				timeToUpdate = true;
@@ -108,7 +115,7 @@ namespace SOTS.NPCs.TreasureSlimes
 		{
 			DisplayName.SetDefault("Treasure Slime");
 			NPCID.Sets.TrailCacheLength[npc.type] = 6;
-			NPCID.Sets.TrailingMode[npc.type] = 1;
+			NPCID.Sets.TrailingMode[npc.type] = 2;
 		}
         public override Color? GetAlpha(Color drawColor)
         {
@@ -160,6 +167,7 @@ namespace SOTS.NPCs.TreasureSlimes
 		}
 		public override void HitEffect(int hitDirection, double damage)
 		{
+			Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 50, 0.75f, 0.1f);
 			if (npc.life > 0)
 			{
 				int num = 0;
@@ -221,6 +229,8 @@ namespace SOTS.NPCs.TreasureSlimes
 		{
 			TreasureSlimeItem item = possibleItems[(int)treasure];
 			Item.NewItem(npc.Hitbox, item.Type, Main.rand.Next(item.Amount, item.AmountCap));
+			Item.NewItem(npc.Hitbox, ItemType<Peanut>(), 5 + Main.rand.Next(6));
+			Item.NewItem(npc.Hitbox, ItemID.Gel, 5 + Main.rand.Next(6));
 			AdditionalLoot();
 		}
 		public virtual void AdditionalLoot()
