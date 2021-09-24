@@ -22,6 +22,7 @@ namespace SOTS.NPCs.TreasureSlimes
 		public override void SetDefaults()
 		{
 			base.SetDefaults();
+			npc.Size = new Vector2(32, 36);
 			items = new List<TreasureSlimeItem>()
 			{
 				new TreasureSlimeItem(ItemID.GoldBar, 10, 20),

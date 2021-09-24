@@ -324,7 +324,7 @@ namespace SOTS.NPCs
 					pool.Add(mod.NPCType("SnakePot"), 0.35f);
 					pool.Add(mod.NPCType("Snake"), 1f);
 					pool.Add(mod.NPCType("LostSoul"), 0.6f);
-					pool.Add(mod.NPCType("PyramidTreasureSlime"), 0.1f);
+					//pool.Add(mod.NPCType("PyramidTreasureSlime"), 0.1f);
 					pool.Add(NPCID.SandSlime, 0.35f);
 					if(Main.hardMode)
                     {
@@ -345,7 +345,7 @@ namespace SOTS.NPCs
 						pool.Add(mod.NPCType("Ghast"), 0.25f);
 					}
 					pool.Add(mod.NPCType("LostSoul"), 0.1f);
-					pool.Add(mod.NPCType("PyramidTreasureSlime"), 0.025f);
+					//pool.Add(mod.NPCType("PyramidTreasureSlime"), 0.025f);
 					pool.Add(ModContent.NPCType<Teratoma>(), 0.25f);
 					pool.Add(ModContent.NPCType<Maligmor>(), 0.15f);
 				}
@@ -376,7 +376,7 @@ namespace SOTS.NPCs
 					pool.Add(mod.NPCType("NatureSlime"), SpawnCondition.OverworldDaySlime.Chance * 0.15f);
 				}
 				pool.Add(mod.NPCType("BlueSlimer"), SpawnCondition.OverworldDaySlime.Chance * 0.1f);
-				pool.Add(mod.NPCType("TreasureSlime"), SpawnCondition.OverworldDaySlime.Chance * 0.1f);
+				//pool.Add(mod.NPCType("TreasureSlime"), SpawnCondition.OverworldDaySlime.Chance * 0.1f);
 				if (player.statLifeMax2 >= 120)
 				{
 					float overworldChance = 0.01f;

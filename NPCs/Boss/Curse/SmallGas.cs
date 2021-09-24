@@ -154,6 +154,7 @@ namespace SOTS.NPCs.Boss.Curse
 			npc.ai[1]++;
 			if(npc.ai[1] % 720 == 630 || npc.ai[2] > 0) //do slam attack
 			{
+				npc.velocity.X *= 0.5f;
 				npc.ai[2]++;
 				if (npc.ai[2] < 60)
 				{

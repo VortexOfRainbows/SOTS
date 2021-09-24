@@ -23,7 +23,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override void SetDefaults()
 		{
-			item.damage = 27;
+			item.damage = 30;
 			item.melee = true;
 			item.width = 50;
 			item.height = 50;

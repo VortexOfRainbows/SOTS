@@ -6,6 +6,11 @@ The following is my development plans :D
 3. Chaos Spirit Boss: "Lux"
 4. Ghost Town to Evil Biome
 
+High Priority:
+1. Treasure Slimes
+2. Permafrost Spirit Staff
+3. Change method of drawing player Pharaoh dust particles. Optimize Pharaoh Particles
+
 Mid Priority:
 1. Tectonic Tether
 2. Chest slime resprites and reworks
@@ -22,6 +27,10 @@ Low Priority:
 3. Sharanga Upgrade
 4. Electrolyte Seperator
 5. Wintry Traveler: Riptide Trident + Frigid Javelin
+
+9/23/21
+1. Supernova Hammer dammer 27 -> 30, size increased
+2. Treasure Slimes server syncing plus base
 
 9/22/21
 1. Increased duration until runaway for all spirit phase 1 by 2 seconds (slightly more for earthen)
