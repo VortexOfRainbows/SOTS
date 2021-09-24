@@ -1,5 +1,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.NPCs;
+using SOTS.NPCs.Inferno;
+using SOTS.NPCs.TreasureSlimes;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
@@ -93,58 +96,58 @@ namespace SOTS.Items.Banners
 			{
 				Player player = Main.LocalPlayer;
 				int style = Main.tile[i, j].frameX / 18;
-				string type;
+				int type;
 				switch (style)
 				{
 					case 0:
-						type = "BlueSlimer";
+						type = NPCType<BlueSlimer>();
 						break;
 					case 1:
-						type = "TreasureSlime";
+						type = NPCType<BasicTreasureSlime>();
 						break;
 					case 2:
-						type = "GoldenTreasureSlime";
+						type = NPCType<GoldenTreasureSlime>();
 						break;
 					case 3:
-						type = "FrozenTreasureSlime";
+						type = NPCType<IceTreasureSlime>();
 						break;
 					case 4:
-						type = "ShadowTreasureSlime";
+						type = NPCType<ShadowTreasureSlime>();
 						break;
 					case 5:
-						type = "PyramidTreasureSlime";
+						type = NPCType<PyramidTreasureSlime>();
 						break;
 					case 6:
-						type = "NatureSlime";
+						type = NPCType<NatureSlime>();
 						break;
 					case 7:
-						type = "FlamingGhast";
+						type = NPCType<FlamingGhast>();
 						break;
 					case 8:
-						type = "BleedingGhast";
+						type = NPCType<BleedingGhast>();
 						break;
 					case 9:
-						type = "ArcticGoblin";
+						type = NPCType<ArcticGoblin>();
 						break;
 					case 10:
-						type = "LostSoul";
+						type = NPCType<LostSoul>();
 						break;
 					case 11:
-						type = "Snake";
+						type = NPCType<Snake>();
 						break;
 					case 12:
-						type = "SnakePot";
+						type = NPCType<SnakePot>();
 						break;
 					case 13:
-						type = "SittingMushroom";
+						type = NPCType<SittingMushroom>();
 						break;
 					case 14:
-						type = "WallMimic";
+						type = NPCType<WallMimic>();
 						break;
 					default:
 						return;
 				}
-				player.NPCBannerBuff[mod.NPCType(type)] = true;
+				player.NPCBannerBuff[type] = true;
 				player.hasBanner = true;
 			}
 		}
@@ -740,31 +743,31 @@ namespace SOTS.Items.Banners
 			{
 				Player player = Main.LocalPlayer;
 				int style = Main.tile[i, j].frameX / 18;
-				string type;
+				int type;
 				switch (style)
 				{
 					case 0:
-						type = "TwilightDevil";
+						type = NPCType<TwilightDevil>();
 						break;
 					case 1:
-						type = "FluxSlime";
+						type = NPCType<FluxSlime>();
 						break;
 					case 2:
-						type = "LesserWisp";
+						type = NPCType<LesserWisp>();
 						break;
 					case 3:
-						type = "Ghast";
+						type = NPCType<Ghast>();
 						break;
 					case 4:
-						type = "Maligmor";
+						type = NPCType<Maligmor>();
 						break;
 					case 5:
-						type = "Teratoma";
+						type = NPCType<Teratoma>();
 						break;
 					default:
 						return;
 				}
-				player.NPCBannerBuff[mod.NPCType(type)] = true;
+				player.NPCBannerBuff[type] = true;
 				player.hasBanner = true;
 			}
 		}

@@ -20,6 +20,7 @@ using SOTS.NPCs.Boss.Advisor;
 using SOTS.Items.Pyramid;
 using SOTS.Items.Otherworld;
 using SOTS.Items.Pyramid.PyramidWalls;
+using SOTS.NPCs.TreasureSlimes;
 
 namespace SOTS.NPCs
 {
@@ -324,7 +325,7 @@ namespace SOTS.NPCs
 					pool.Add(mod.NPCType("SnakePot"), 0.35f);
 					pool.Add(mod.NPCType("Snake"), 1f);
 					pool.Add(mod.NPCType("LostSoul"), 0.6f);
-					//pool.Add(mod.NPCType("PyramidTreasureSlime"), 0.1f);
+					pool.Add(ModContent.NPCType<PyramidTreasureSlime>(), 0.02f);
 					pool.Add(NPCID.SandSlime, 0.35f);
 					if(Main.hardMode)
                     {
@@ -345,7 +346,7 @@ namespace SOTS.NPCs
 						pool.Add(mod.NPCType("Ghast"), 0.25f);
 					}
 					pool.Add(mod.NPCType("LostSoul"), 0.1f);
-					//pool.Add(mod.NPCType("PyramidTreasureSlime"), 0.025f);
+					pool.Add(ModContent.NPCType<PyramidTreasureSlime>(), 0.02f);
 					pool.Add(ModContent.NPCType<Teratoma>(), 0.25f);
 					pool.Add(ModContent.NPCType<Maligmor>(), 0.15f);
 				}
@@ -375,8 +376,8 @@ namespace SOTS.NPCs
 				{
 					pool.Add(mod.NPCType("NatureSlime"), SpawnCondition.OverworldDaySlime.Chance * 0.15f);
 				}
-				pool.Add(mod.NPCType("BlueSlimer"), SpawnCondition.OverworldDaySlime.Chance * 0.1f);
-				//pool.Add(mod.NPCType("TreasureSlime"), SpawnCondition.OverworldDaySlime.Chance * 0.1f);
+				pool.Add(ModContent.NPCType <BlueSlimer>(), SpawnCondition.OverworldDaySlime.Chance * 0.1f);
+				pool.Add(ModContent.NPCType<BasicTreasureSlime>(), SpawnCondition.OverworldDaySlime.Chance * 0.03f);
 				if (player.statLifeMax2 >= 120)
 				{
 					float overworldChance = 0.01f;
@@ -441,6 +442,14 @@ namespace SOTS.NPCs
 					pool.Add(ModContent.NPCType<ArcticGoblin>(), SpawnCondition.Overworld.Chance * 0.1f);
 				if (player.statLifeMax2 >= 120)
 					pool.Add(ModContent.NPCType<PermafrostConstruct>(), spawnInfo.spawnTileType == TileID.IceBlock || spawnInfo.spawnTileType == TileID.SnowBlock ? 0.02f : 0.015f);
+				if (spawnInfo.spawnTileY <= Main.rockLayer && spawnInfo.spawnTileY >= Main.worldSurface)
+				{
+					pool.Add(ModContent.NPCType<IceTreasureSlime>(), spawnInfo.spawnTileType == TileID.IceBlock || spawnInfo.spawnTileType == TileID.SnowBlock ? 0.03f : 0.01f);
+				}
+				else if (spawnInfo.spawnTileY <= Main.maxTilesY - 200 && spawnInfo.spawnTileY >= Main.rockLayer)
+				{
+					pool.Add(ModContent.NPCType<IceTreasureSlime>(), spawnInfo.spawnTileType == TileID.IceBlock || spawnInfo.spawnTileType == TileID.SnowBlock ? 0.03f : 0.01f);
+				}
 			}
 			else if(Main.invasionType == InvasionID.GoblinArmy && spawnInfo.player.ZoneOverworldHeight && spawnInfo.player.ZoneSnow && !spawnInfo.player.ZoneCorrupt && !spawnInfo.player.ZoneCrimson)
 			{
@@ -451,9 +460,19 @@ namespace SOTS.NPCs
 				if (player.statLifeMax2 >= 120)
 					pool.Add(ModContent.NPCType<NatureConstruct>(), (SpawnCondition.SurfaceJungle.Chance * 0.025f) + (SpawnCondition.UndergroundJungle.Chance * 0.0075f));
 			}
-			if(spawnInfo.player.ZoneUnderworldHeight)
+			if (spawnInfo.player.ZoneUnderworldHeight)
 			{
 				pool.Add(ModContent.NPCType<LesserWisp>(), SpawnCondition.Underworld.Chance * 0.12f);
+				if(NPC.downedBoss3)
+					pool.Add(ModContent.NPCType<ShadowTreasureSlime>(), SpawnCondition.Underworld.Chance * 0.03f);
+			}
+			if (spawnInfo.spawnTileY <= Main.rockLayer)
+			{
+				pool.Add(ModContent.NPCType<GoldenTreasureSlime>(), SpawnCondition.Underground.Chance * 0.02f);
+			}
+			else if (spawnInfo.spawnTileY <= Main.maxTilesY - 200)
+			{
+				pool.Add(ModContent.NPCType<GoldenTreasureSlime>(), SpawnCondition.Underground.Chance * 0.03f);
 			}
 		}
 	}

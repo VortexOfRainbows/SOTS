@@ -129,6 +129,7 @@ namespace SOTS.NPCs.TreasureSlimes
 			animationType = NPCID.BlueSlime;
 			npc.alpha = 50;
 			npc.color = temp;
+			npc.rarity = 1;
 			Main.npcFrameCount[npc.type] = 2;
 		}
         public sealed override bool PreAI()
@@ -142,7 +143,7 @@ namespace SOTS.NPCs.TreasureSlimes
 			npc.TargetClosest(true);
 			return true;
         }
-		public int treasureSpeed = 30;
+		public int treasureSpeed = 38;
 		float treasureCounter = 0;
 		public void doTreasureTimer()
 		{
@@ -167,7 +168,8 @@ namespace SOTS.NPCs.TreasureSlimes
 		}
 		public override void HitEffect(int hitDirection, double damage)
 		{
-			Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 50, 0.75f, 0.1f);
+			if(Main.rand.NextBool(2))
+				Main.PlaySound(SoundID.NPCHit, (int)npc.Center.X, (int)npc.Center.Y, 4, 0.6f, 0.2f);
 			if (npc.life > 0)
 			{
 				int num = 0;
@@ -201,18 +203,22 @@ namespace SOTS.NPCs.TreasureSlimes
 			float secondAlpha = 0;
 			if (treasureCounter % treasureSpeed <= 7)
             {
-				secondAlpha = 1 - treasureCounter % treasureSpeed / 7f;
+				secondAlpha = 1 - ((treasureCounter % treasureSpeed) + 1) / 8f;
 				firstAlpha -= secondAlpha;
 			}
 			Vector2 drawPos = npc.oldPos[3] + new Vector2(0, -20 + (float)(Math.Cos((float)treasureCounter / treasureSpeed) * 2) + npc.gfxOffY) + (npc.Size / 2) - Main.screenPosition;
 			Texture2D texture = Main.itemTexture[item.Type];
+			float scale = 1.2f * npc.scale / (float)Math.Sqrt(texture.Width * texture.Width + texture.Height * texture.Height) * npc.width;
+			scale = MathHelper.Clamp(scale, 0.4f, 1.1f);
 			//Texture2D textureGlow = ModContent.GetTexture("SOTS/Assets/TreasureSlimeBloom");
 			Rectangle frame = new Rectangle(0, 0, texture.Width, texture.Height);
 			//spriteBatch.Draw(textureGlow, new Vector2(npc.Center.X, npc.position.Y + npc.gfxOffY + 12) - Main.screenPosition, null, new Color(glowColor.R, glowColor.G, glowColor.B, 0), 0, new Vector2(textureGlow.Width/2, textureGlow.Height), 2f / (float)Math.Sqrt(textureGlow.Width * textureGlow.Width + textureGlow.Height * textureGlow.Height) * npc.width, SpriteEffects.None, 0f);
-			spriteBatch.Draw(texture, drawPos, frame, drawColor * firstAlpha, MathHelper.ToRadians(npc.velocity.X * 1.2f), texture.Size() / 2, 1.2f * npc.scale / (float)Math.Sqrt(texture.Width * texture.Width + texture.Height * texture.Height) * npc.width, SpriteEffects.None, 0f);
+			spriteBatch.Draw(texture, drawPos, frame, drawColor * firstAlpha, MathHelper.ToRadians(npc.velocity.X * 1.2f), texture.Size() / 2, scale, SpriteEffects.None, 0f);
 			texture = Main.itemTexture[item2.Type];
 			frame = new Rectangle(0, 0, texture.Width, texture.Height);
-			spriteBatch.Draw(texture, drawPos, frame, drawColor * secondAlpha, MathHelper.ToRadians(npc.velocity.X * 1.2f), texture.Size() / 2, 1.2f * npc.scale / (float)Math.Sqrt(texture.Width * texture.Width + texture.Height * texture.Height) * npc.width, SpriteEffects.None, 0f);
+			scale = 1.2f * npc.scale / (float)Math.Sqrt(texture.Width * texture.Width + texture.Height * texture.Height) * npc.width;
+			scale = MathHelper.Clamp(scale, 0.4f, 1.1f);
+			spriteBatch.Draw(texture, drawPos, frame, drawColor * secondAlpha, MathHelper.ToRadians(npc.velocity.X * 1.2f), texture.Size() / 2, scale, SpriteEffects.None, 0f);
 			DrawSlime(spriteBatch, drawColor);
 			return false;
 		}
@@ -228,7 +234,7 @@ namespace SOTS.NPCs.TreasureSlimes
 		public sealed override void NPCLoot()
 		{
 			TreasureSlimeItem item = possibleItems[(int)treasure];
-			Item.NewItem(npc.Hitbox, item.Type, Main.rand.Next(item.Amount, item.AmountCap));
+			Item.NewItem(npc.Hitbox, item.Type, Main.rand.Next(item.Amount, item.AmountCap + 1));
 			Item.NewItem(npc.Hitbox, ItemType<Peanut>(), 5 + Main.rand.Next(6));
 			Item.NewItem(npc.Hitbox, ItemID.Gel, 5 + Main.rand.Next(6));
 			AdditionalLoot();
