@@ -42,19 +42,19 @@ namespace SOTS.Projectiles.Minions
 			Texture2D texture3 = ModContent.GetTexture("SOTS/Projectiles/Minions/CursedBladeEnd");
 			Vector2 drawPos = projectile.Center- Main.screenPosition;
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
-			int length = (int)(11f * (1 - projectile.ai[0] / attackTimerMax));
+			int length = (int)(13f * (1 - projectile.ai[0] / attackTimerMax));
 			float rotation = projectile.rotation;
 			for (int i = 0; i < length + 1; i++)
 			{
 				Color color1 = lightColor;
 				if(i != length)
 				{
-					Vector2 toProj2 = new Vector2(6 + i * 2, 0).RotatedBy(rotation);
+					Vector2 toProj2 = new Vector2(4 + i * 2, 0).RotatedBy(rotation);
 					spriteBatch.Draw(texture2, projectile.Center + toProj2 - Main.screenPosition, null, color1, rotation + MathHelper.Pi / 4, new Vector2(4, 4), projectile.scale, SpriteEffects.None, 0f);
 				}
 				else
 				{
-					Vector2 toProj2 = new Vector2(7 + i * 2, 0).RotatedBy(rotation);
+					Vector2 toProj2 = new Vector2(5 + i * 2, 0).RotatedBy(rotation);
 					spriteBatch.Draw(texture3, projectile.Center + toProj2 - Main.screenPosition, null, color1, rotation + MathHelper.Pi / 4, new Vector2(6, 6), projectile.scale, SpriteEffects.None, 0f);
 				}
 			}

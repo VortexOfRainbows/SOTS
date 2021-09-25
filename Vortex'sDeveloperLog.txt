@@ -9,7 +9,7 @@ The following is my development plans :D
 High Priority:
 1. Treasure Slimes
 2. Permafrost Spirit Staff
-3. Change method of drawing player Pharaoh dust particles. Optimize Pharaoh Particles
+3. Make sure pyramid key is drop from bosses
 
 Mid Priority:
 1. Tectonic Tether
@@ -27,6 +27,10 @@ Low Priority:
 3. Sharanga Upgrade
 4. Electrolyte Seperator
 5. Wintry Traveler: Riptide Trident + Frigid Javelin
+
+9/24/21
+1. Curse dust particles from projectiles and player now draw using Detours.
+2. 
 
 9/23/21
 1. Supernova Hammer dammer 27 -> 30, size increased

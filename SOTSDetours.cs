@@ -65,10 +65,26 @@ namespace SOTS
 
 		private static void Main_DrawPlayers(On.Terraria.Main.orig_DrawPlayers orig, Main self)
 		{
+			PreDrawPlayers();
 			orig(self);
 			PostDrawPlayers();
 		}
-
+		private static void PreDrawPlayers()
+		{
+			if (!Main.dedServ)
+			{
+				Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
+				for (int i = 0; i < Main.player.Length; i++)
+				{
+					Player player = Main.player[i];
+					if (player.active)
+					{
+						CurseHelper.DrawPlayerFoam(Main.spriteBatch, player);
+					}
+				}
+				Main.spriteBatch.End();
+			}
+		}
 		private static void PostDrawPlayers()
         {
 			if (!Main.dedServ)

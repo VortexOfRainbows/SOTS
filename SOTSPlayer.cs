@@ -314,86 +314,9 @@ namespace SOTS
 				}
 			}
 		});
-		public static readonly PlayerLayer CurseDustPlayer = new PlayerLayer("SOTS", "CurseDustPlayer", PlayerLayer.MiscEffectsBack, delegate (PlayerDrawInfo drawInfo)
-		{
-			Player drawPlayer = drawInfo.drawPlayer;
-			SOTSPlayer modPlayer = drawPlayer.GetModPlayer<SOTSPlayer>();
-			List<CurseFoam> foamList = modPlayer.foamParticleList1;
-			List<int> slots = new List<int>();
-			for (int i = 0; i < Main.projectile.Length; i++)
-			{
-				Projectile proj = Main.projectile[i];
-				bool validType = proj.type == ModContent.ProjectileType<GasBlast>() || proj.type == ModContent.ProjectileType<Projectiles.Minions.CursedBlade>();
-				if (validType && proj.active && proj.owner == drawPlayer.whoAmI)
-				{
-					slots.Add(i);
-					List<CurseFoam> list = getFoamList(drawPlayer, proj);
-					modPlayer.DrawFoam(list, 2);
-				}
-			}
-			modPlayer.DrawFoam(foamList, 2);
-			for (int i = 0; i < slots.Count; i++)
-			{
-				Projectile proj = Main.projectile[slots[i]];
-				List<CurseFoam> list = getFoamList(drawPlayer, proj);
-				modPlayer.DrawFoam(list, 1);
-			}
-			modPlayer.DrawFoam(foamList, 1);
-			for (int i = 0; i < slots.Count; i++)
-			{
-				Projectile proj = Main.projectile[slots[i]];
-				List<CurseFoam> list = getFoamList(drawPlayer, proj);
-				modPlayer.DrawFoam(list, 0);
-			}
-			modPlayer.DrawFoam(foamList, 0);
-			//Mod mod = ModLoader.GetMod("SOTS");
-			if (drawInfo.shadow != 0)
-				return;
-		});
-		public static List<CurseFoam> getFoamList(Player player, Projectile proj)
-		{
-			if (proj.type == ModContent.ProjectileType<GasBlast>() && proj.active && proj.owner == player.whoAmI)
-			{
-				GasBlast ring = proj.modProjectile as GasBlast;
-				return ring.foamParticleList1;
-			}
-			if (proj.type == ModContent.ProjectileType<Projectiles.Minions.CursedBlade>() && proj.active && proj.owner == player.whoAmI)
-			{
-				Projectiles.Minions.CursedBlade ring = proj.modProjectile as Projectiles.Minions.CursedBlade;
-				return ring.foamParticleList1;
-			}
-			return null;
-		}
-		public void DrawFoam(List<CurseFoam> dustList, int layer)
-		{
-			Texture2D texture = ModContent.GetTexture("SOTS/Assets/PlayerCurseFoam");
-			Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 6);
-			for (int i = 0; i < dustList.Count; i++)
-			{
-				int shade = 255 - (int)(dustList[i].counter * 4f);
-				if (shade < 0)
-					shade = 0;
-				Color color = new Color(shade + dustList[i].dustColorVariation, shade - dustList[i].dustColorVariation, shade - dustList[i].dustColorVariation);
-				color = Lighting.GetColor((int)dustList[i].position.X / 16, (int)dustList[i].position.Y / 16, color);
-				float reduction = shade / 255f;
-				if(layer == 2)
-				{
-					Color first = new Color((int)(111 * reduction), (int)(80 * reduction), (int)(154 * reduction));
-					Color second = new Color((int)(76 * reduction), (int)(58 * reduction), (int)(101 * reduction));
-					color = Color.Lerp(first, second, 0.5f + 0.5f * (float)Math.Sin(MathHelper.ToRadians(VoidPlayer.soulColorCounter * 2)));
-				}
-				Vector2 drawPos = dustList[i].position - Main.screenPosition;
-				Rectangle frame = new Rectangle(0, texture.Height / 3 * layer, texture.Width, texture.Width);
-				float scale = layer == 0 ? 1.5f : 2.0f;
-				DrawData data = new DrawData(texture, drawPos + new Vector2(0, 0), frame, color, dustList[i].rotation, drawOrigin, dustList[i].scale * scale, SpriteEffects.None, 0);
-				Main.playerDrawData.Add(data);
-			}
-		}
 		public override void ModifyDrawLayers(List<PlayerLayer> layers)
 		{
 			BladeEffectBack.visible = true;
-			layers.Insert(0, CurseDustPlayer);
-			CurseDustPlayer.visible = true;
 			layers.Insert(0, BladeEffectBack);
 		}
 		public override void ProcessTriggers(TriggersSet triggersSet)
@@ -939,8 +862,6 @@ namespace SOTS
 			{
 				HeartSwapBonus = 0;
 			}
-
-
 			if (PushBack)
 			{
 				float dX = npc.Center.X - player.Center.X;
