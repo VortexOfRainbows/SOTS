@@ -13,9 +13,8 @@ namespace SOTS.Items.OreItems
 		}
 		public override void SetDefaults()
 		{
-
 			item.width = 18;
-			item.height = 34;
+			item.height = 30;
             item.value = Item.sellPrice(0, 0, 35, 0);
 			item.rare = 1;
 			item.maxStack = 1;

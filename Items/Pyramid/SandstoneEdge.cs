@@ -16,9 +16,11 @@ namespace SOTS.Items.Pyramid
 		{
 			item.crit = 10;
 			item.damage = 30;
+			item.scale = 1.2f;
 			item.melee = true;
-			item.width = 54;
-			item.height = 54;
+			item.useTurn = true;
+			item.width = 46;
+			item.height = 52;
 			item.useTime = 22;
 			item.useAnimation = 22;
 			item.useStyle = ItemUseStyleID.SwingThrow;

@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 using Terraria.Graphics.Shaders;
 using SOTS.Items.GelGear;
+using SOTS.Projectiles.Slime;
 
 namespace SOTS.NPCs.TreasureSlimes
 {
@@ -132,6 +133,9 @@ namespace SOTS.NPCs.TreasureSlimes
 			npc.rarity = 1;
 			Main.npcFrameCount[npc.type] = 2;
 		}
+		public float runAwayCounter = 0;
+		public float runAwayDelay = 0;
+		public int runAwayTime = 480;
         public sealed override bool PreAI()
         {
 			if(runOnce)
@@ -140,7 +144,64 @@ namespace SOTS.NPCs.TreasureSlimes
 			}
 			if (possibleItems.Count != 0)
 				doTreasureTimer();
-			npc.TargetClosest(true);
+			if (npc.life < npc.lifeMax / 2)
+			{
+				npc.TargetClosest(true);
+				Player player = Main.player[npc.target];
+				if (player.Center.X > npc.Center.X)
+				{
+					npc.direction = -1;
+				}
+				else
+					npc.direction = 1;
+				npc.ai[2] = -1;
+				npc.ai[0] += 2.5f;
+				/*if(npc.velocity.Y < 0)
+				{
+					npc.position.Y += npc.velocity.Y * 0.05f;
+				}
+				npc.position.X += npc.velocity.X * 0.05f;*/
+				//Main.NewText(runAwayCounter + " : " + runAwayDelay);
+				bool returnV = true;
+				if (runAwayCounter >= runAwayTime)
+                {
+					float percent = (runAwayCounter - runAwayTime) / 100f;
+					if (percent > 1)
+						percent = 1;
+					npc.velocity.Y -= 0.5f;
+					npc.velocity.X *= 1f - percent;
+					npc.velocity.Y *= 1f - percent;
+					npc.noGravity = true;
+					returnV = false;
+				}
+				if (runAwayCounter >= (runAwayTime + 100))
+                {	
+					if (Main.netMode != NetmodeID.MultiplayerClient && (int)runAwayDelay == 0)
+                    {
+						int type = 0;
+						if (npc.type == NPCType<BasicTreasureSlime>())
+							type = 0;   
+						if (npc.type == NPCType<GoldenTreasureSlime>())
+							type = 1;   
+						if (npc.type == NPCType<IceTreasureSlime>())
+							type = 2;   
+						if (npc.type == NPCType<PyramidTreasureSlime>())
+							type = 3;   
+						if (npc.type == NPCType<ShadowTreasureSlime>())
+							type = 4;
+						Projectile.NewProjectile(npc.Center + new Vector2(0, 4), Vector2.Zero, ProjectileType<TreasureStarPortal>(), 0, 0, Main.myPlayer, 0, type);
+					}
+					runAwayDelay++;
+					if(runAwayDelay >= 70)
+                    {
+						npc.active = false;
+						return false;
+                    }
+                }
+				else
+					runAwayCounter += 1 + 0.5f * (1 - (float)npc.life / (npc.lifeMax / 2));
+				return returnV;
+			}
 			return true;
         }
 		public int treasureSpeed = 38;
@@ -162,10 +223,6 @@ namespace SOTS.NPCs.TreasureSlimes
 				treasure = 0;
 			}
 		}
-        public override void AI()
-		{
-
-		}
 		public override void HitEffect(int hitDirection, double damage)
 		{
 			if(Main.rand.NextBool(2))
@@ -173,7 +230,7 @@ namespace SOTS.NPCs.TreasureSlimes
 			if (npc.life > 0)
 			{
 				int num = 0;
-				while ((double)num < damage / (double)npc.lifeMax * 100.0)
+				while (num < damage / npc.lifeMax * 100.0)
 				{
 					Dust.NewDust(npc.position, npc.width, npc.height, 4, (float)hitDirection, -1f, npc.alpha, gelColor, 1f);
 					num++;

@@ -27,14 +27,15 @@ namespace SOTS.NPCs.TreasureSlimes
 			base.SetDefaults();
 			npc.lifeMax = 150;
 			npc.damage = 20;
-			npc.defense = 16;
+			npc.defense = 12;
 			npc.knockBackResist = 0.4f;
 			npc.value = Item.buyPrice(0, 3, 0, 0);
-			npc.Size = new Vector2(32, 36);
+			npc.Size = new Vector2(32, 38);
 			npc.npcSlots = 1f;
 			banner = npc.type;
 			bannerItem = ItemType<GoldenTreasureSlimeBanner>();
-			LootAmt = 4;
+			LootAmt = 4; 
+			gelColor = new Color(255, 255, 133, 100);
 			items = new List<TreasureSlimeItem>()
 			{
 				new TreasureSlimeItem(ItemID.SilverOre, 30, 72, 0.25f),

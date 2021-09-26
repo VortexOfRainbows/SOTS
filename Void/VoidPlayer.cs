@@ -24,6 +24,7 @@ namespace SOTS.Void
 		public static Color pastelRainbow = Color.White;
 		public static Color natureColor = new Color(180, 240, 180);
 		public static Color TideColor = new Color(64, 72, 178);
+		public static Color PermafrostColor = new Color(200, 250, 250);
 		public static Color EarthColor = new Color(230, 220, 145);
 		public static Color OtherworldColor = new Color(167, 45, 225, 0);
 		public static Color VibrantColor = new Color(85, 125, 215, 0);
@@ -240,6 +241,7 @@ namespace SOTS.Void
 			natureColor = Color.Lerp(new Color(65, 180, 80), new Color(180, 240, 180), 0.5f + (float)Math.Sin(MathHelper.ToRadians(soulColorCounter * 1.0f)) * 0.5f);
 			EarthColor = Color.Lerp(new Color(230, 220, 145), new Color(255, 190, 0), 0.5f + (float)Math.Sin(MathHelper.ToRadians(soulColorCounter * 2.5f)) * 1.2f);
 			TideColor = Color.Lerp(new Color(64, 72, 178), new Color(75, 100, 255), 0.5f + (float)Math.Sin(MathHelper.ToRadians(soulColorCounter * 0.5f)) * 0.5f);
+			PermafrostColor = Color.Lerp(new Color(200, 250, 250), new Color(150, 180, 240), 0.5f + (float)Math.Sin(MathHelper.ToRadians(soulColorCounter * 0.5f)) * 0.5f);
 			Color color = new Color(167, 45, 225, 0);
 			Color color2 = new Color(64, 178, 172, 0);
 			OtherworldColor = Color.Lerp(color, color2, 0.5f + (float)Math.Sin(MathHelper.ToRadians(soulColorCounter * 1.0f)) * 0.5f);
@@ -340,6 +342,8 @@ namespace SOTS.Void
 				return 20;
 			if (type == (int)VoidMinionID.CursedBlade)
 				return 100;
+			if (type == (int)VoidMinionID.PermafrostSpirit)
+				return 54;
 			return 1;
 		}
 		public static Color minionVoidColor(int type)
@@ -360,6 +364,8 @@ namespace SOTS.Void
 				return new Color(76, 58, 101);
 			if (type == (int)VoidMinionID.TidalSpirit)
 				return TideColor;
+			if (type == (int)VoidMinionID.PermafrostSpirit)
+				return PermafrostColor;
 			return Color.White;
 		}
 		public static bool isVoidMinion(Projectile projectile)
@@ -392,6 +398,8 @@ namespace SOTS.Void
 				return (int)VoidMinionID.CursedBlade;
 			if (type == ProjectileType<TidalSpirit>())
 				return (int)VoidMinionID.TidalSpirit;
+			if (type == ProjectileType<PermafrostSpirit>())
+				return (int)VoidMinionID.PermafrostSpirit;
 			return -1;
 		}
 		public enum VoidMinionID
@@ -403,7 +411,8 @@ namespace SOTS.Void
 			BethanySpirit,
 			TBethanySpirit,
 			CursedBlade,
-			TidalSpirit
+			TidalSpirit,
+			PermafrostSpirit
 		}
         public override void PostUpdateEquips()
         {
