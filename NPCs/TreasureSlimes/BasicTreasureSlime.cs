@@ -44,7 +44,7 @@ namespace SOTS.NPCs.TreasureSlimes
 				new TreasureSlimeItem(ItemID.TinOre, 30, 72, 0.25f),
 				new TreasureSlimeItem(ItemID.LeadOre, 30, 72, 0.25f),
 				new TreasureSlimeItem(ItemID.IronOre, 30, 72, 0.25f),
-				new TreasureSlimeItem(ItemID.Leather, 1, 3, 1),
+				new TreasureSlimeItem(ItemID.Leather, 5, 5, 1),
 				new TreasureSlimeItem(ItemID.StoneBlock, 30, 60, 1),
 
 				new TreasureSlimeItem(ItemID.Spear, 1, 1, 0.5f),

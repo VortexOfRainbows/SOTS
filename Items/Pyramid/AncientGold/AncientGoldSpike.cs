@@ -45,6 +45,10 @@ namespace SOTS.Items.Pyramid.AncientGold
 			soundStyle = 2;
 			dustType = DustID.GoldCoin;
         }
+        public override bool Dangersense(int i, int j, Player player)
+        {
+            return true;
+        }
         public override bool Slope(int i, int j)
         {
             return false;

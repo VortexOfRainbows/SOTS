@@ -32,15 +32,7 @@ namespace SOTS.Items.Pyramid
 		{
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(null, "Snakeskin", 20);
-			recipe.AddIngredient(ItemID.ShadowScale, 6);
-			recipe.AddIngredient(ItemID.Leather, 6);
-			recipe.SetResult(this);
-			recipe.AddTile(TileID.Anvils);
-			recipe.AddRecipe();
-			
-			recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "Snakeskin", 20);
-			recipe.AddIngredient(ItemID.TissueSample, 6);
+			recipe.AddRecipeGroup("SOTS:EvilMaterial", 6);
 			recipe.AddIngredient(ItemID.Leather, 6);
 			recipe.SetResult(this);
 			recipe.AddTile(TileID.Anvils);

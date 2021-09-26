@@ -549,6 +549,18 @@ namespace SOTS
 				ItemID.TungstenBar
 			});
 			RecipeGroup.RegisterGroup("SOTS:SilverBar", group);
+			group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Evil Material", new int[]
+			{
+				ItemID.TissueSample,
+				ItemID.ShadowScale
+			});
+			RecipeGroup.RegisterGroup("SOTS:EvilMaterial", group);
+			group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Gold Bar", new int[]
+			{
+				ItemID.GoldBar,
+				ItemID.PlatinumBar
+			});
+			RecipeGroup.RegisterGroup("SOTS:GoldBar", group);
 		}
 		public static float lightingChange = 1f;
         public override void ModifyLightingBrightness(ref float scale)

@@ -42,15 +42,7 @@ namespace SOTS.Items.Pyramid
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(null, "SoulResidue", 32);
 			recipe.AddIngredient(ItemID.Emerald, 1);
-			recipe.AddIngredient(ItemID.GoldBar, 8);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
-			
-			recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "SoulResidue", 32);
-			recipe.AddIngredient(ItemID.Emerald, 1);
-			recipe.AddIngredient(ItemID.PlatinumBar, 8);
+			recipe.AddRecipeGroup("SOTS:GoldBar", 8);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this);
 			recipe.AddRecipe();

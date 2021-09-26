@@ -9,7 +9,6 @@ The following is my development plans :D
 High Priority:
 1. Treasure Slimes
 2. Permafrost Spirit Staff
-3. Make sure pyramid key is drop from bosses
 
 Mid Priority:
 1. Tectonic Tether
@@ -20,6 +19,11 @@ Mid Priority:
 6. Timelord's Potion: attempt using .aiStyle, otherwise would require a lot of workaround...
 7. Crusher based armor and accessories
 	1. Crushing Capacitor
+8. Lux Drops:
+	1. Rose Bow
+	2. Voidmage Incubator
+	3. Phase Ore!?
+
 
 Low Priority:
 1. Archaelogist NPC
@@ -28,9 +32,11 @@ Low Priority:
 4. Electrolyte Seperator
 5. Wintry Traveler: Riptide Trident + Frigid Javelin
 
-9/24/21
+9/24/21 & 9/25/21
 1. Curse dust particles from projectiles and player now draw using Detours.
-2. 
+2. Added Astrobit and Mushnib~ starter house winners!
+3. Pyramid Key is now craftable with Post-EOW materials. Added a few recipe groups.
+4. Ancient Gold Spike dangersense works now.
 
 9/23/21
 1. Supernova Hammer dammer 27 -> 30, size increased
