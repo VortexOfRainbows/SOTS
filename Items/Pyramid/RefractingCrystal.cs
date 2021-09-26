@@ -22,7 +22,7 @@ namespace SOTS.Items.Pyramid
 		{
 			Texture2D texture = mod.GetTexture("Items/Pyramid/RefractingCrystal");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			position += new Vector2(10 * scale, 9 * scale);
+			position += new Vector2(13 * scale, 11 * scale);
 			float counter = Main.GlobalTime * 160;
 			//int bonus = (int)(counter / 360f);
 			float mult = new Vector2(-1f, 0).RotatedBy(MathHelper.ToRadians(counter)).X;

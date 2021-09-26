@@ -35,7 +35,7 @@ namespace SOTS.Items.Pyramid
 		}
         public override Vector2? HoldoutOffset()
         {
-            return new Vector2(-1, 0);
+            return new Vector2(2, 0);
         }
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
