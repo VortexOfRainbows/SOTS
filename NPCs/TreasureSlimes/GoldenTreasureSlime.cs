@@ -34,7 +34,8 @@ namespace SOTS.NPCs.TreasureSlimes
 			npc.npcSlots = 1f;
 			banner = npc.type;
 			bannerItem = ItemType<GoldenTreasureSlimeBanner>();
-			LootAmt = 4;
+			LootAmt = 4; 
+			gelColor = new Color(255, 255, 133, 100);
 			items = new List<TreasureSlimeItem>()
 			{
 				new TreasureSlimeItem(ItemID.SilverOre, 30, 72, 0.25f),

@@ -8,6 +8,7 @@ using SOTS.Projectiles.Inferno;
 using SOTS.NPCs.Boss.Curse;
 using SOTS.Projectiles.Pyramid;
 using SOTS.Buffs;
+using SOTS.Projectiles.Slime;
 
 namespace SOTS.Items.Otherworld.FromChests
 {
@@ -20,19 +21,21 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(279);
+			item.CloneDefaults(ItemID.ThrowingKnife);
 			item.damage = 17;
 			item.thrown = true;
-			item.rare = 2;
+			item.rare = ItemRarityID.Green;
 			item.autoReuse = true;            
 			item.shoot = ModContent.ProjectileType<ShadeSpear>(); 
             item.shootSpeed = 1.0f;
 			item.consumable = true;
 		}
+		int counter = 0;
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
+			counter++;
 			position = Main.MouseWorld;
-			Projectile.NewProjectile(position, new Vector2(0, -1.5f), ModContent.ProjectileType<SubspaceDeathAnimation>(), damage, knockBack, player.whoAmI, 0, 0);
+			Projectile.NewProjectile(position, Vector2.Zero, ModContent.ProjectileType<TreasureStarPortal>(), damage, knockBack, player.whoAmI, 0, counter % 5);
 			return false; 
 		}
 	}

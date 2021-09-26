@@ -46,8 +46,7 @@ namespace SOTS.Items.Fragments
 			recipe.AddIngredient(null, "CloverCharm", 1);
 			recipe.AddIngredient(null, "VoidCharm", 1);
 			recipe.AddIngredient(null, "Starbelt", 1);
-			recipe.AddIngredient(ItemID.Ectoplasm, 10); 
-			//recipe.AddIngredient(ItemID.Ectoplasm, 1); //To be replaced later (dissolving tide)
+			recipe.AddIngredient(ModContent.ItemType<DissolvingDeluge>(), 1); 
 			recipe.AddTile(TileID.TinkerersWorkbench);
 			recipe.SetResult(this);
 			recipe.AddRecipe();

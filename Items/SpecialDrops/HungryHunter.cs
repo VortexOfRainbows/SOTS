@@ -30,11 +30,6 @@ namespace SOTS.Items.SpecialDrops
             item.melee = true; 
             item.channel = true;
         }
-		public override void UpdateInventory(Player player)
-		{
-			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-			voidPlayer.voidMeterMax2 += 10;
-		}
 		public override void GetVoid(Player player)
 		{
 			voidMana = 10;

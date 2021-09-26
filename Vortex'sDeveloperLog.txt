@@ -24,13 +24,13 @@ Mid Priority:
 	2. Voidmage Incubator
 	3. Phase Ore!?
 
-
 Low Priority:
 1. Archaelogist NPC
 2. Mobile Fortress Generator: One for every tavernkeep armor set
 3. Sharanga Upgrade
 4. Electrolyte Seperator
 5. Wintry Traveler: Riptide Trident + Frigid Javelin
+
 
 9/24/21 & 9/25/21
 1. Curse dust particles from projectiles and player now draw using Detours.
