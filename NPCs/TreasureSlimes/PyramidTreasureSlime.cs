@@ -31,10 +31,10 @@ namespace SOTS.NPCs.TreasureSlimes
 			base.SetDefaults();
 			npc.lifeMax = 200;
 			npc.damage = 35;
-			npc.defense = 20;
+			npc.defense = 18;
 			npc.knockBackResist = 0.1f;
 			npc.value = Item.buyPrice(0, 4, 0, 0);
-			npc.Size = new Vector2(32, 34);
+			npc.Size = new Vector2(32, 38);
 			npc.npcSlots = 1f;
 			banner = npc.type;
 			bannerItem = ItemType<PyramidTreasureSlimeBanner>();

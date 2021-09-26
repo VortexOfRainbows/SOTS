@@ -35,7 +35,7 @@ namespace SOTS.NPCs.TreasureSlimes
 			npc.defense = 20;
 			npc.knockBackResist = 0.1f;
 			npc.value = Item.buyPrice(0, 5, 0, 0);
-			npc.Size = new Vector2(32, 34);
+			npc.Size = new Vector2(32, 38);
 			npc.npcSlots = 1f;
 			banner = npc.type;
 			bannerItem = ItemType<ShadowTreasureSlimeBanner>();

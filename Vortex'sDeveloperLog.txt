@@ -7,8 +7,7 @@ The following is my development plans :D
 4. Ghost Town to Evil Biome
 
 High Priority:
-1. Treasure Slimes
-2. Permafrost Spirit Staff
+1. Permafrost Spirit Staff
 
 Mid Priority:
 1. Tectonic Tether
@@ -31,6 +30,9 @@ Low Priority:
 4. Electrolyte Seperator
 5. Wintry Traveler: Riptide Trident + Frigid Javelin
 
+9/26/21
+1. Treasure slimes now flee when below half health (Works in multiplayer)
+2. Treasure slime spritesheet fixes
 
 9/24/21 & 9/25/21
 1. Curse dust particles from projectiles and player now draw using Detours.

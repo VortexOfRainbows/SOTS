@@ -19,7 +19,7 @@ namespace SOTS.NPCs.TreasureSlimes
 	{
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Ice Treasure Slime");
+			DisplayName.SetDefault("Frozen Treasure Slime");
 			NPCID.Sets.TrailCacheLength[npc.type] = 6;
 			NPCID.Sets.TrailingMode[npc.type] = 2;
 		}
@@ -31,7 +31,7 @@ namespace SOTS.NPCs.TreasureSlimes
 			npc.defense = 10;
 			npc.knockBackResist = 0.5f;
 			npc.value = Item.buyPrice(0, 2, 0, 0);
-			npc.Size = new Vector2(32, 30);
+			npc.Size = new Vector2(32, 34);
 			npc.npcSlots = 1f;
 			banner = npc.type;
 			bannerItem = ItemType<FrozenTreasureSlimeBanner>();
