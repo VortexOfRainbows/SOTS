@@ -22,20 +22,20 @@ namespace SOTS.Items.Pyramid
 			item.height = 62;
 			item.useTime = 24;
 			item.useAnimation = 24;
-			item.useStyle = 5;
+			item.useStyle = ItemUseStyleID.HoldingOut;
 			item.knockBack = 2.5f;
 			item.value = Item.sellPrice(0, 1, 20, 0);
-			item.rare = 3;
+			item.rare = ItemRarityID.Orange;
 			item.noMelee = true;
 			item.UseSound = SoundID.Item5;
 			item.autoReuse = false;            
-			item.shoot = 1; 
+			item.shoot = ProjectileID.WoodenArrowFriendly; 
             item.shootSpeed = 20;
 			item.useAmmo = AmmoID.Arrow;
 		}
         public override Vector2? HoldoutOffset()
         {
-            return new Vector2(2, 0);
+            return new Vector2(-0.5f, 0);
         }
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {

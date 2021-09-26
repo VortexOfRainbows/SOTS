@@ -19,10 +19,10 @@ namespace SOTS.Items.Pyramid
 			item.scale = 1.2f;
 			item.melee = true;
 			item.useTurn = true;
-			item.width = 54;
-			item.height = 54;
-			item.useTime = 20;
-			item.useAnimation = 20;
+			item.width = 46;
+			item.height = 52;
+			item.useTime = 22;
+			item.useAnimation = 22;
 			item.useStyle = ItemUseStyleID.SwingThrow;
 			item.knockBack = 3.5f;
 			item.value = Item.sellPrice(0, 1, 20, 0);

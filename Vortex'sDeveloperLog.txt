@@ -6,9 +6,6 @@ The following is my development plans :D
 3. Chaos Spirit Boss: "Lux"
 4. Ghost Town to Evil Biome
 
-High Priority:
-1. Permafrost Spirit Staff
-
 Mid Priority:
 1. Tectonic Tether
 2. Chest slime resprites and reworks
@@ -33,6 +30,7 @@ Low Priority:
 9/26/21
 1. Treasure slimes now flee when below half health (Works in multiplayer)
 2. Treasure slime spritesheet fixes
+3. Added Permafrost Spirit staff, works in multiplayer
 
 9/24/21 & 9/25/21
 1. Curse dust particles from projectiles and player now draw using Detours.
