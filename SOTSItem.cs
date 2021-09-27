@@ -167,6 +167,7 @@ namespace SOTS
 		public static int[] dedicatedRainbow;
 		public static int[] dedicatedBlasfah;
 		public static int[] dedicatedHeartPlus;
+		public static int[] dedicatedCoolio;
 		public static Texture2D[] unsafeWallItemRedTextures;
 		public static int[] unsafeWallItem;
 		public static bool hasSetupRed = false;
@@ -183,6 +184,7 @@ namespace SOTS
 			dedicatedRainbow = new int[] { ItemType<SubspaceLocket>() /*ItemType<PhotonGeyser>(), ItemType<Traingun>()*/ }; //Vortex
 			dedicatedBlasfah = new int[] { ItemType<Doomstick>(), ItemType<BookOfVirtues>() }; //Blasfah
 			dedicatedHeartPlus = new int[] { ItemType<DigitalDaito>() }; //Heart Plus Up
+			dedicatedCoolio = new int[] { ItemType<Baguette>() }; //Coolio/Taco
 			unsafeWallItem = new int[] { ItemType<UnsafeLihzahrdBrickWall>(), ItemType<UnsafeCursedTumorWall>(), ItemType<UnsafePyramidWall>(), ItemType<UnsafePyramidBrickWall>(), ItemType<UnsafeOvergrownPyramidWall>(), ItemType<UnsafeMalditeWall>() }; //Unsafe wall items
 			unsafeWallItemRedTextures = new Texture2D[unsafeWallItem.Length];
 		}
@@ -315,6 +317,11 @@ namespace SOTS
 			if (dedicatedHeartPlus.Contains(item.type))
 			{
 				dedicatedColor = new Color(255, 123, 123);
+				dedicated = true;
+			}
+			if (dedicatedCoolio.Contains(item.type))
+			{
+				dedicatedColor = new Color(252, 254, 56);
 				dedicated = true;
 			}
 			if (dedicated)
