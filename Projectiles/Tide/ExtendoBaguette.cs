@@ -16,8 +16,8 @@ namespace SOTS.Projectiles.Tide
         }
         public override void SetDefaults()
         {
-            projectile.width = 14;
-            projectile.height = 14;
+            projectile.width = 18;
+            projectile.height = 18;
             projectile.aiStyle = 20;
             projectile.friendly = true;
             projectile.penetrate = -1;
@@ -28,6 +28,7 @@ namespace SOTS.Projectiles.Tide
             projectile.alpha = 255;
             projectile.ownerHitCheck = true;
         }
+        float segmentDist = 11f;
         int length = 4;
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
@@ -59,7 +60,7 @@ namespace SOTS.Projectiles.Tide
                     width = projectile.width;
                 }
                 Vector2 drawPos = projectile.Center;
-                drawPos += new Vector2(i * 8.4f, 0).RotatedBy(projectile.rotation);
+                drawPos += new Vector2(i * segmentDist, 0).RotatedBy(projectile.rotation);
                 projHitbox = new Rectangle((int)drawPos.X - width / 2, (int)drawPos.Y - width / 2, width, width);
                 if(projHitbox.Intersects(targetHitbox))
                 {
@@ -72,7 +73,7 @@ namespace SOTS.Projectiles.Tide
         public void cataloguePos()
         {
             Vector2 current = projectile.Center;
-            current += new Vector2(length * 8.4f - 4, 0).RotatedBy(projectile.rotation);
+            current += new Vector2(length * segmentDist - 4, 0).RotatedBy(projectile.rotation);
             float currentR = projectile.rotation;
             for (int i = 0; i < trailPos.Length; i++)
             {
@@ -88,7 +89,7 @@ namespace SOTS.Projectiles.Tide
         {
             float iterator = 0f;
             Vector2 current = projectile.Center;
-            current += new Vector2(length * 8.4f - 4, 0).RotatedBy(projectile.rotation);
+            current += new Vector2(length * segmentDist - 4, 0).RotatedBy(projectile.rotation);
             for (int i = 0; i < trailPos.Length; i++)
             {
                 Vector2 previousPosition = trailPos[i];
@@ -107,7 +108,7 @@ namespace SOTS.Projectiles.Tide
             Player player = Main.player[projectile.owner];
             SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
             Texture2D texture2 = mod.GetTexture("Projectiles/Tide/GradientScale");
-            Vector2 previousPosition = projectile.Center + new Vector2(length * 8.4f - 4, 0).RotatedBy(projectile.rotation);
+            Vector2 previousPosition = projectile.Center + new Vector2(length * segmentDist - 4, 0).RotatedBy(projectile.rotation);
             for (int k = 1; k < trailPos.Length; k++)
             {
                 float scale = projectile.scale * (trailPos.Length - k) / (float)trailPos.Length;
@@ -135,18 +136,18 @@ namespace SOTS.Projectiles.Tide
             Texture2D texture = Main.projectileTexture[projectile.type];
             for (int i = 0; i < length; i++)
             {
-                Rectangle frame = new Rectangle(0, projectile.height * 2, projectile.width, projectile.height);
+                Rectangle frame = new Rectangle(0, projectile.height, projectile.width, projectile.height);
                 if(i == 0)
                 {
-                    frame = new Rectangle(0, projectile.height, projectile.width, projectile.height);
+                    frame = new Rectangle(0, projectile.height * 2, projectile.width, projectile.height);
                 }
                 else if(i >= length - 1)
                 {
                     frame = new Rectangle(0, 0, projectile.width, projectile.height);
                 }
                 Vector2 drawPos = projectile.Center;
-                drawPos += new Vector2(i * 8.4f, 0).RotatedBy(projectile.rotation);
-                spriteBatch.Draw(texture, drawPos - Main.screenPosition, frame, lightColor, projectile.rotation + MathHelper.ToRadians(45), new Vector2(texture.Width / 2, projectile.height / 2), 1f, SpriteEffects.None, 0.0f);
+                drawPos += new Vector2(i * segmentDist, 0).RotatedBy(projectile.rotation);
+                spriteBatch.Draw(texture, drawPos - Main.screenPosition, frame, lightColor, projectile.rotation + MathHelper.ToRadians(player.direction != 1 ? -45 : 45), new Vector2(texture.Width / 2, projectile.height / 2), 1f, player.direction != 1 ? SpriteEffects.FlipVertically : SpriteEffects.None, 0.0f);
             }
             return false;
         }

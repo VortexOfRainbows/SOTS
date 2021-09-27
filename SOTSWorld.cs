@@ -249,7 +249,7 @@ namespace SOTS
 			tasks.Insert(genIndexGems, new PassLegacy("ModdedSOTSStructures", delegate (GenerationProgress progress)
 			{
 				progress.Message = "Generating Surface Structures";
-				SOTSWorldgenHelper.GenerateStarterHouseFull(mod, Main.rand.Next(10));
+				SOTSWorldgenHelper.GenerateStarterHouseFull(mod, Main.rand.Next(12));
 
 				int iceY = -1;
 				int iceX = -1;

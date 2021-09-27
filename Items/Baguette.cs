@@ -20,8 +20,8 @@ namespace SOTS.Items
 		{
 			item.damage = 20;
 			item.melee = true;
-			item.width = 32;
-			item.height = 32;
+			item.width = 30;
+			item.height = 30;
 			item.useTime = 14;
 			item.useAnimation = 14;
 			item.useStyle = 5;
@@ -31,7 +31,7 @@ namespace SOTS.Items
 			item.UseSound = SoundID.Item1;
 			//item.autoReuse = true;            
 			item.shoot = ModContent.ProjectileType<ExtendoBaguette>(); 
-            item.shootSpeed = 9f;
+            item.shootSpeed = 4f;
 			item.noUseGraphic = true;
 			item.channel = true;
 			item.noMelee = true;
