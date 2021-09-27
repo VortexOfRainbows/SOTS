@@ -7,7 +7,7 @@ namespace SOTS.Buffs
     {
 		public override void SetDefaults()
 		{
-			DisplayName.SetDefault("Tidal Spirit Aid");
+			DisplayName.SetDefault("Spirit Aid");
 			Description.SetDefault("Tidal Spirits assist you in combat");
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;

@@ -21,8 +21,8 @@ namespace SOTS.Items.Fragments.SpiritStaves
 		{
 			item.damage = 19;
 			item.knockBack = 4f;
-			item.width = 42;
-			item.height = 42;
+			item.width = 46;
+			item.height = 46;
 			item.useTime = 20;
 			item.useAnimation = 20;
 			item.useStyle = ItemUseStyleID.SwingThrow;
