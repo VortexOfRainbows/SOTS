@@ -1,7 +1,10 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Items.Fragments;
+using SOTS.Items.Otherworld.FromChests;
 using System;
 using System.IO;
+using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
@@ -73,19 +76,19 @@ namespace SOTS.Items.Otherworld
 			item.autoReuse = true;
 			item.useAnimation = 15;
 			item.useTime = 10;
-			item.useStyle = 1;
-			item.rare = 9;
+			item.useStyle = ItemUseStyleID.SwingThrow;
+			item.rare = ItemRarityID.Cyan;
 			item.value = Item.sellPrice(0, 5, 0, 0);
 			item.consumable = true;
-			item.createTile = mod.TileType("PotGeneratorTile");
+			item.createTile = TileType<PotGeneratorTile>();
 		}
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "DissolvingAether", 1);
-			recipe.AddIngredient(null, "TwilightShard", 5);
-			recipe.AddIngredient(null, "TwilightGel", 30);
-			recipe.AddTile(mod.TileType("HardlightFabricatorTile"));
+			recipe.AddIngredient(ItemType<DissolvingAether>(), 1);
+			recipe.AddIngredient(ItemType<TwilightShard>(), 5);
+			recipe.AddIngredient(ItemType<TwilightGel>(), 30);
+			recipe.AddTile(TileType<HardlightFabricatorTile>());
 			recipe.SetResult(this, 1);
 			recipe.AddRecipe();
 		}
@@ -143,14 +146,14 @@ namespace SOTS.Items.Otherworld
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			int drop = mod.ItemType("PotGenerator");
+			int drop = ItemType<PotGenerator>();
 			Item.NewItem(i * 16, j * 16, 32, 16, drop);
 			GetInstance<PotTimer>().Kill(i, j);
 		}
 		public override void MouseOver(int i, int j)
 		{
 			Player player = Main.LocalPlayer;
-			player.showItemIcon2 = mod.ItemType("PotGenerator");
+			player.showItemIcon2 = ItemType<PotGenerator>();
 			//player.showItemIconText = "";
 			player.noThrow = 2;
 			player.showItemIcon = true;
@@ -200,7 +203,21 @@ namespace SOTS.Items.Otherworld
 		{
 			return false;
 		}
-		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
+        public override void NearbyEffects(int i, int j, bool closer)
+		{
+			Tile tile = Framing.GetTileSafely(i, j);
+			int left = i - tile.frameX / 18;
+			int top = j - tile.frameY / 18;
+			closer = true;
+			int index = GetInstance<PotTimer>().Find(left, top);
+			if (index == -1)
+			{
+				return;
+			}
+			PotTimer entity = (PotTimer)TileEntity.ByID[index];
+			base.NearbyEffects(i, j, closer);
+        }
+        public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
 		{
 			if (Main.tile[i, j].frameX < 18 || Main.tile[i, j].frameX > 35 || Main.tile[i, j].frameY % 36 < 18)
 				return;
@@ -228,7 +245,6 @@ namespace SOTS.Items.Otherworld
 				return true;
 			Texture2D texture = mod.GetTexture("Items/Otherworld/SkyPotsGlowOutline");
 			Texture2D texture2 = mod.GetTexture("Items/Otherworld/SkyPotsGlowFill");
-			ulong randSeed = Main.TileFrameSeed ^ (ulong)((long)j << 32 | (long)((ulong)i));
 			Color color;
 			color = WorldGen.paintColor((int)Main.tile[i, j].color()) * (100f / 255f);
 			color.A = 0;
@@ -244,7 +260,6 @@ namespace SOTS.Items.Otherworld
 				pos.Y -= 18 + dynamicAddition.Y;
 				if(k == 0)
 					Main.spriteBatch.Draw(texture2, pos, new Rectangle(0, 34 * style, 32, 32), color * 0.5f * ofMax, 0f, new Vector2(16, 16), ofMax, SpriteEffects.None, 0f);
-
 				Main.spriteBatch.Draw(texture, pos, new Rectangle(0, 34 * style, 32, 32), color * ofMax, 0f, new Vector2(16, 16), ofMax, SpriteEffects.None, 0f);
 			}
 			return true;
@@ -270,6 +285,7 @@ namespace SOTS.Items.Otherworld
 					break;
 				}
 			}
+			bool playerNear = true;
 			for(; amt > 0; amt--)
 			{
 				if (timer >= 0)
@@ -282,7 +298,17 @@ namespace SOTS.Items.Otherworld
 				{
 					Vector2 position = new Vector2(whereX * 16 + 16, whereY * 16);
 					if (Main.rand.Next(amt) == 0)
-						Projectile.NewProjectile(position, Vector2.Zero, mod.ProjectileType("PotProjectile"), 0, 0, Main.myPlayer, 1, style);
+					{
+						if(playerNear)
+						{
+							if (Main.player.Count(x => x.Distance(position) < 1600f) <= 0)
+							{
+								playerNear = false;
+							}
+							else
+								Projectile.NewProjectile(position, Vector2.Zero, ProjectileType<PotProjectile>(), 0, 0, Main.myPlayer, 1, style);
+						}
+					}
 					// Sending 86 aka, TileEntitySharing, triggers NetSend. Think of it like manually calling sync.;
 				}
 				if (timer >= 3600)
@@ -296,7 +322,7 @@ namespace SOTS.Items.Otherworld
 
 					//WorldGen.PlaceTile(whereX, whereY, mod.TileType("SkyPots"), false, false, -1, style);
 					Vector2 position = new Vector2(whereX * 16 + 16, whereY * 16);
-					Projectile.NewProjectile(position, Vector2.Zero, mod.ProjectileType("PotProjectile"), 0, 0, Main.myPlayer, 0, style);
+					Projectile.NewProjectile(position, Vector2.Zero, ProjectileType<PotProjectile>(), 0, 0, Main.myPlayer, 0, style);
 					NetMessage.SendData(MessageID.TileEntitySharing, -1, -1, null, ID, Position.X, Position.Y);
 				}
 				if (timer == -2 && !Main.tile[whereX, whereY].active() && !Main.tile[whereX + 1, whereY].active() && !Main.tile[whereX, whereY - 1].active() && !Main.tile[whereX + 1, whereY - 1].active())

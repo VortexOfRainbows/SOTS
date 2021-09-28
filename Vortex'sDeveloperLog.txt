@@ -5,20 +5,25 @@ The following is my development plans :D
 	1. Attaches a second player to you
 3. Chaos Spirit Boss: "Lux"
 4. Ghost Town to Evil Biome
+5. Hunt down bugs (lag and memory leaks)
 
 Mid Priority:
 1. Tectonic Tether
-2. Chest slime resprites and reworks
-3. Curse Base Armor Set
-4. Horn of Plenty: 10% more drops accessory
-5. Ethereal Tonic
-6. Timelord's Potion: attempt using .aiStyle, otherwise would require a lot of workaround...
-7. Crusher based armor and accessories
-	1. Crushing Capacitor
-8. Lux Drops:
+2. Curse Base Armor Set
+3. Horn of Plenty: 10% more drops accessory
+4. Ethereal Tonic
+5. Timelord's Potion: attempt using .aiStyle, otherwise would require a lot of workaround...
+6. Crusher based armor and accessories
+	1. Crushing Capacitor: Fourth crusher charge doesn't cost void
+	2. Crushing Transformer: Increases crusher speed by 20%
+	3. Crushing Resistor: Dereases void cost of crushers by 20%
+	4. Crushing Amplifier: Extended crushing range by 1
+	5. Circuit Board: Combination of above
+7. Lux Drops:
 	1. Rose Bow
 	2. Voidmage Incubator
 	3. Phase Ore!?
+	4. True Phaseblade -> Starward Sword
 
 Low Priority:
 1. Archaelogist NPC
@@ -32,6 +37,7 @@ Low Priority:
 2. Treasure slime spritesheet fixes
 3. Added Permafrost Spirit staff, works in multiplayer
 4. Baguette resprite + buff (since it's technically bigger now)
+5. Treasure slime banners resprited
 
 9/24/21 & 9/25/21
 1. Curse dust particles from projectiles and player now draw using Detours.
