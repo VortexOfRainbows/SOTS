@@ -1,0 +1,17 @@
+New Stuff: 
+1. Implemented Tidal Spirit and Permafrost Spirit Staff
+2. Implemented 2 new starter house variants (courtesy of Astrobit and Mushnib~)
+3. Treasure Slimes have been reworked
+
+Balancing:
+1. Because baguette won the vote for the unanimously most underpower weapon in SOTS, it has now become bigger
+2. Supernova hammer is bigger and has increased damage: 27 -> 30
+3. Spirits now run away 2 seconds slower
+
+Misc:
+1. Small optimizations to Curse Dust particle drawing and potentially to Pot Generator (which should help alleviate lag in general)
+2. Added a few more crafting recipes, along with changing some recipes to use recipe groups, making them easier to work with
+3. Ancient Gold Spike works with trapsight/dangersense
+4. A few other bug fixes
+5. Pharaoh's Curse drops money when dying
+6. Coconut Island no longer spawns on a random world side

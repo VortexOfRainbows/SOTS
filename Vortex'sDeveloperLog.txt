@@ -32,6 +32,9 @@ Low Priority:
 4. Electrolyte Seperator
 5. Wintry Traveler: Riptide Trident + Frigid Javelin
 
+9/27/21
+1. Pot generator lag fix attempt?
+
 9/26/21
 1. Treasure slimes now flee when below half health (Works in multiplayer)
 2. Treasure slime spritesheet fixes
