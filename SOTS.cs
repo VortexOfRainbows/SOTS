@@ -144,8 +144,13 @@ namespace SOTS
 		{
 			if (!Main.dedServ)
 			{
-				if (_lastScreenSize != new Vector2(Main.screenWidth, Main.screenHeight) && primitives != null)
-					primitives.LoadContent(Main.graphics.GraphicsDevice);
+				if (_lastScreenSize != new Vector2(Main.screenWidth, Main.screenHeight))
+				{
+					if (primitives != null)
+						primitives.LoadContent(Main.graphics.GraphicsDevice);
+					if (SOTSDetours.TargetProj != null)
+						SOTSDetours.ResizeTargets();
+				}
 
 				_lastScreenSize = new Vector2(Main.screenWidth, Main.screenHeight);
 				_lastViewSize = Main.ViewSize;

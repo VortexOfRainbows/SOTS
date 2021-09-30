@@ -5,10 +5,11 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using System.IO;
+using SOTS.Utilities;
 
 namespace SOTS.Projectiles.Otherworld
 {    
-    public class DigitalSlash : ModProjectile 
+    public class DigitalSlash : ModProjectile, IPixellated
     {
 		public override void SetStaticDefaults()
 		{
@@ -76,7 +77,11 @@ namespace SOTS.Projectiles.Otherworld
 			return velo;
 		}
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
-		{
+		{ 
+			return false;
+		}
+		public void Draw(SpriteBatch spriteBatch, Color lightColor)
+        {
 			Player player = Main.player[projectile.owner];
 			Texture2D texture = Main.projectileTexture[projectile.type];
 			Texture2D texture2 = ModContent.GetTexture("SOTS/Projectiles/Otherworld/DigitalSlashBlade");
@@ -96,19 +101,18 @@ namespace SOTS.Projectiles.Otherworld
 			else
 				direction *= (int)projectile.ai[0];
 			float rotation = toProjectile.ToRotation() + MathHelper.ToRadians(direction == -1 ? -215 : 45);
-			for(int i = 0; i < length + 1; i++)
+			for (int i = 0; i < length + 1; i++)
 			{
 				Color color1 = Color.Lerp(new Color(0, 110, 170), new Color(122, 243, 255), 1f - (float)i / length);
 				color1 = color1.MultiplyRGBA(new Color(70, 70, 80, 0));
 				Vector2 toProj2 = rotateToPosition + rotateToPosition.SafeNormalize(Vector2.Zero) * (i * 2);
-				for(int l = 0; l < 3; l++)
-					spriteBatch.Draw(texture3, player.Center + toProj2 - Main.screenPosition + new Vector2(0, Main.rand.NextFloat(0.25f, 1f) * l * 0.5f).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360))), null, color1, rotation, origin + new Vector2(0, 3), projectile.scale, direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
-				if(i < length && i % 4 != 3)
-					spriteBatch.Draw(texture2, player.Center + toProj2 - Main.screenPosition, null, Color.Black, rotation, origin + new Vector2(0, 1), 1.05f, direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+				for (int l = 0; l < 3; l++)
+					spriteBatch.Draw(texture3, (player.Center + toProj2 - Main.screenPosition + new Vector2(0, Main.rand.NextFloat(0.25f, 1f) * l * 0.5f).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)))) / 2, null, color1, rotation, origin + new Vector2(0, 3), projectile.scale * 0.5f, direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+				if (i < length && i % 4 != 3)
+					spriteBatch.Draw(texture2, (player.Center + toProj2 - Main.screenPosition) / 2, null, Color.Black, rotation, origin + new Vector2(0, 1), 1.05f * 0.5f, direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 			}
-			
-			spriteBatch.Draw(texture, drawPos, null, Color.White, rotation, origin, projectile.scale * 1.2f, direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
-			return false;
+
+			spriteBatch.Draw(texture, (drawPos) / 2, null, Color.White, rotation, origin, projectile.scale * 1.2f * 0.5f, direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 		}
 		float counter = 225;
 		float spinSpeed = 0;

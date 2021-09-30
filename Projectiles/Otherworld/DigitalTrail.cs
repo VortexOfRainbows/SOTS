@@ -4,11 +4,12 @@ using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader;
+using SOTS.Utilities;
 
 namespace SOTS.Projectiles.Otherworld
 {    
-    public class DigitalTrail : ModProjectile 
-    {
+    public class DigitalTrail : ModProjectile, IPixellated
+	{
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Digital Trail");
@@ -61,9 +62,14 @@ namespace SOTS.Projectiles.Otherworld
 		Vector2 toOwner = Vector2.Zero;
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
+			return true;
+		}
+
+		public void Draw(SpriteBatch spriteBatch, Color lightColor)
+		{
 			Player player = Main.player[projectile.owner];
 			if (runOnce)
-				return true;
+				return;
 			Texture2D texture = Main.projectileTexture[projectile.type];
 			bool black = projectile.ai[0] < 0;
 			if (black)
@@ -74,7 +80,7 @@ namespace SOTS.Projectiles.Otherworld
 			Vector2 previousPosition = trailPos[0];
 			if (previousPosition == Vector2.Zero)
 			{
-				return true;
+				return;
 			}
 			int availableTrails = 0;
 			int availableTrails2 = 0;
@@ -98,7 +104,7 @@ namespace SOTS.Projectiles.Otherworld
 					scale *= 1.75f;
 				if (trailPos[k] == Vector2.Zero)
 				{
-					return true;
+					return;
 				}
 				Vector2 drawPos = trailPos[k] - Main.screenPosition;
 				Vector2 currentPos = trailPos[k];
@@ -124,14 +130,13 @@ namespace SOTS.Projectiles.Otherworld
 								y = 0;
 							}
 							float rotation = betweenPositions.ToRotation();
-							Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, rotation, drawOrigin, new Vector2(black ? 0.5f : 1f, 1f) * scale, SpriteEffects.None, 0f);
+							Main.spriteBatch.Draw(texture, (drawPos + new Vector2(x, y)) / 2, null, color, rotation, drawOrigin, new Vector2(black ? 0.5f : 1f, 1f) * scale * 0.5f, SpriteEffects.None, 0f);
 						}
 					}
 				previousPosition = currentPos;
 			}
-			return true;
 		}
-		bool runOnce = true;
+			bool runOnce = true;
 		public void cataloguePos()
 		{
 			Vector2 current = projectile.Center;
