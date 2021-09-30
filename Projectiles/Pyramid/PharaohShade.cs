@@ -122,11 +122,15 @@ namespace SOTS.Projectiles.Pyramid
                 }
             }
         }
+        Vector2 oldPos;
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
             if (!projectile.active || Main.LocalPlayer.whoAmI != projectile.owner)
                 return false;
-            Player drawPlayer = Main.LocalPlayer;
+            if(oldPos == null)
+            {
+                oldPos = Main.LocalPlayer.Center - Main.screenPosition;
+            }
             if (Main.screenWidth != screenWidthOld || Main.screenHeight != screenHeightOld)
             {
                 height = (int)(Main.screenHeight / scale);
@@ -141,13 +145,25 @@ namespace SOTS.Projectiles.Pyramid
                     }
                 }
             }
-
-            if (counter < 5)
+            Vector2 playerPos = Main.LocalPlayer.Center - Main.screenPosition;
+            playerPos = new Vector2((int)(playerPos.X + 0.5f) / 2, (int)(playerPos.Y + 1.0f) / 2);
+            bool outRange = Vector2.Distance(playerPos / 2, oldPos) > 1;
+            /*if (outRange)
+            {
+                Main.NewText("out");
+                Main.NewText(playerPos.X + " : " + playerPos.Y);
+                Main.NewText(width + " : " + height);
+            }*/
+            if (counter < 5 || outRange)
             {
                 counter++;
                 lightsUpdate(true); //reset color
                 lightSpots = new List<Vector3>();
-                lightSpots.Add(new Vector3(width / 2, height / 2, 360));
+                if (outRange)
+                    oldPos = playerPos / 2;
+                else
+                    oldPos = new Vector2(width / 2, height / 2);
+                lightSpots.Add(new Vector3(oldPos.X, oldPos.Y, 360f));
                 lightsUpdate(false); //now that we have lights make them transparent
             }
             Texture2D TheShadow = new Texture2D(Main.graphics.GraphicsDevice, width, height);

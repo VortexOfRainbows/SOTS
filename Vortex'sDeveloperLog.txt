@@ -5,7 +5,15 @@ The following is my development plans :D
 	1. Attaches a second player to you
 3. Chaos Spirit Boss: "Lux"
 4. Ghost Town to Evil Biome
-5. Hunt down bugs (lag and memory leaks)
+
+Known Bugs:
+1. Frigid Javelin integer limit (dividing by 0?)
+
+High Priority:
+1. Inferno Construct
+2. Starmap
+3. Digital Daito Obtaining
+4. Dungeon Arkahlis Room
 
 Mid Priority:
 1. Tectonic Tether
@@ -31,6 +39,11 @@ Low Priority:
 3. Sharanga Upgrade
 4. Electrolyte Seperator
 5. Wintry Traveler: Riptide Trident + Frigid Javelin
+
+9/29/21
+1. Small fix for Mothman regarding Pharaoh's Curse camera
+
+-- Update 0.20.1 --
 
 9/27/21
 1. Pot generator lag fix attempt?

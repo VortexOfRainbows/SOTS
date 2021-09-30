@@ -12,20 +12,17 @@ using Terraria.ID;
 namespace SOTS.Projectiles
 {    
     public class PinkBullet : ModProjectile 
-    {	int bounce = 24;
-		int wait = 1;         
-				float oldVelocityY = 0;	
-				float oldVelocityX = 0;
-		
-		
+    {	       
+		float oldVelocityY = 0;	
+		float oldVelocityX = 0;
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Putrid Bullet");
 		}
         public override void SetDefaults()
         {
-			projectile.height = 20;
-			projectile.width = 20;
+			projectile.height = 22;
+			projectile.width = 22;
 			projectile.friendly = false;
 			projectile.penetrate = -1;
 			projectile.timeLeft = 330;
@@ -46,11 +43,12 @@ namespace SOTS.Projectiles
 				Main.dust[num1].velocity = circularLocation * 0.45f;
 			}
 		}
+		bool runOnce = true;
 		public override void AI()
 		{
-			if(wait == 1)
+			if(runOnce)
 			{
-				wait++;
+				runOnce = false;
 				oldVelocityY = projectile.velocity.Y;	
 				oldVelocityX = projectile.velocity.X;
 			}
