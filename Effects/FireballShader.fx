@@ -10,6 +10,12 @@ sampler tent = sampler_state
     Texture = (noise);
 };
 
+texture pallette;
+sampler palletteSampler = sampler_state
+{
+    Texture = (pallette);
+};
+
 float4 Fireball(float2 coords : TEXCOORD0, float4 origcolor : COLOR0) : COLOR0
 {
     float4 color = tex2D(uImage0, coords);
@@ -20,7 +26,9 @@ float4 Fireball(float2 coords : TEXCOORD0, float4 origcolor : COLOR0) : COLOR0
     color = lerp(float4(0, 0, 0, 0), colorMod, color.r * noiseR * colorDist);
     color = lerp(color, float4(1, 1, 1, 1), pow(clamp(sqrt(sqrt(color.a)) / 2, 0, 1), 2));
     color /= 2;
-    return floor(origcolor * color * 4) / 4;
+    float4 colorpallette = tex2D(palletteSampler, float2(0.5f, 1 -color.r));
+    colorpallette.a = 0;
+    return colorpallette;
 }
 
 technique BasicColorDrawing

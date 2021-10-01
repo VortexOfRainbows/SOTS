@@ -19,7 +19,8 @@ namespace SOTS.Projectiles
         }
         public override void SetDefaults()
         {
-            projectile.width = 32;
+            projectile.damage = 15;
+            projectile.width = 33;
             projectile.height = 32;
             projectile.aiStyle = 0;
             projectile.scale = 1f;
@@ -29,7 +30,6 @@ namespace SOTS.Projectiles
             projectile.timeLeft = 270;
             projectile.friendly = true;
             projectile.melee = true;
-            projectile.damage = 15;
         }
         public override void AI()
         {
@@ -42,15 +42,16 @@ namespace SOTS.Projectiles
             #region shader
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
-            Color color = Color.Cyan;
+            Color color = Color.White;
             color.A = 0;
             Vector4 colorMod = color.ToVector4();
             SOTS.FireballShader.Parameters["colorMod"].SetValue(colorMod);
             SOTS.FireballShader.Parameters["noise"].SetValue(mod.GetTexture("TrailTextures/vnoise"));
+            SOTS.FireballShader.Parameters["pallette"].SetValue(mod.GetTexture("TrailTextures/Pallette1"));
             SOTS.FireballShader.Parameters["opacity2"].SetValue(0.25f);
             SOTS.FireballShader.Parameters["counter"].SetValue(projectile.ai[0]);
             SOTS.FireballShader.CurrentTechnique.Passes[0].Apply();
-            Main.spriteBatch.Draw(mod.GetTexture("Effects/Masks/Extra_49"), (projectile.Center - Main.screenPosition) / 2, null, Color.Cyan * projectile.Opacity, projectile.rotation, new Vector2(50, 50), (projectile.scale * new Vector2(4f, 1) / 2) / 2, SpriteEffects.None, 0f);
+            Main.spriteBatch.Draw(mod.GetTexture("Effects/Masks/Extra_49"), (projectile.Center - Main.screenPosition) / 2, null, Color.Pink * projectile.Opacity, projectile.rotation, new Vector2(50, 50), (projectile.scale * new Vector2(4f, 1) / 2) / 2, SpriteEffects.None, 0f);
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, Main.GameViewMatrix.TransformationMatrix);
             #endregion
