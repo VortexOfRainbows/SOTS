@@ -44,6 +44,7 @@ namespace SOTS
 
 		public static Effect AtenTrail;
 		public static Effect FireballShader;
+		public static Effect GodrayShader;
 		public SOTS()
 		{
 			Properties = new ModProperties()
@@ -120,6 +121,7 @@ namespace SOTS
 				GameShaders.Armor.BindShader(ModContent.ItemType<TaintedPrismDye>(), new ArmorShaderData(TPrismdyeRef, "TPrismDyePass")).UseColor(0.3f, 0.4f, 0.4f);
 				AtenTrail = Instance.GetEffect("Effects/AtenTrail");
 				FireballShader = Instance.GetEffect("Effects/FireballShader");
+				GodrayShader = Instance.GetEffect("Effects/GodrayShader");
 				primitives = new PrimTrailManager();
 				primitives.LoadContent(Main.graphics.GraphicsDevice);
 			}
@@ -129,6 +131,7 @@ namespace SOTS
 		{
 			AtenTrail = null;
 			FireballShader = null;
+			GodrayShader = null;
 			//SOTSGlowmasks.UnloadGlowmasks();
 			Instance = null;
 			VoidBarSprite._backgroundTexture = null;
