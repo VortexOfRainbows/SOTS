@@ -7,7 +7,7 @@ The following is my development plans :D
 4. Ghost Town to Evil Biome
 
 Known Bugs:
-1. Frigid Javelin integer limit (dividing by 0?)
+1. none currently
 
 High Priority:
 1. Inferno Construct
@@ -45,8 +45,9 @@ Low Priority:
 
 -- Update 0.20.1 --
 
-9/27/21
+9/27/21 & 9/30/21
 1. Pot generator lag fix attempt?
+2. Frigid javelin integer limit fix.
 
 9/26/21
 1. Treasure slimes now flee when below half health (Works in multiplayer)

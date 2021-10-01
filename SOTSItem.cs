@@ -79,18 +79,21 @@ namespace SOTS
 					VoidItem vItem = item.modItem as VoidItem;
 					vItem.GetVoid(Main.LocalPlayer);
 					int voidAmt = VoidItem.voidMana;
-					int intMax = (int)(voidCostMultiplier * voidAmt);
-					float mult = intMax / (float)voidAmt;
-					int voidCostTooltip = (int)(100f * (mult - 1f));
-					if (voidCostTooltip != 0 && (item.prefix == mod.GetPrefix("Famished").Type || item.prefix == mod.GetPrefix("Precarious").Type || item.prefix == mod.GetPrefix("Potent").Type || item.prefix == mod.GetPrefix("Omnipotent").Type))
-					{
-						string sign = (voidCostTooltip > 0 ? "+" : "");
-						Color baseColor = (voidCostTooltip < 0 ? new Color(120, 190, 120) : new Color(190, 120, 120));
-						TooltipLine line = new TooltipLine(mod, "PrefixAwakened", sign + voidCostTooltip + "% void cost")
+					if(voidAmt != 0)
+                    {
+						int intMax = (int)(voidCostMultiplier * voidAmt);
+						float mult = intMax / (float)voidAmt;
+						int voidCostTooltip = (int)(100f * (mult - 1f));
+						if (voidCostTooltip != 0 && (item.prefix == mod.GetPrefix("Famished").Type || item.prefix == mod.GetPrefix("Precarious").Type || item.prefix == mod.GetPrefix("Potent").Type || item.prefix == mod.GetPrefix("Omnipotent").Type))
 						{
-                            overrideColor = baseColor
-						};
-						tooltips.Add(line);
+							string sign = (voidCostTooltip > 0 ? "+" : "");
+							Color baseColor = (voidCostTooltip < 0 ? new Color(120, 190, 120) : new Color(190, 120, 120));
+							TooltipLine line = new TooltipLine(mod, "PrefixAwakened", sign + voidCostTooltip + "% void cost")
+							{
+								overrideColor = baseColor
+							};
+							tooltips.Add(line);
+						}
 					}
 				}
 			}

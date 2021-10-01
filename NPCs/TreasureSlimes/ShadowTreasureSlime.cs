@@ -11,10 +11,6 @@ using Microsoft.Xna.Framework.Graphics;
 using SOTS.Items.SpecialDrops;
 using SOTS.Items.ChestItems;
 using SOTS.Items.Fragments;
-using SOTS.Items.Void;
-using SOTS.Items.Pyramid;
-using SOTS.Items;
-using SOTS.Items.Pyramid.AncientGold;
 using SOTS.Items.Inferno;
 
 namespace SOTS.NPCs.TreasureSlimes
