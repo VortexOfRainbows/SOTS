@@ -23,7 +23,7 @@ namespace SOTS.Items.Fragments
 			item.thrown = false;
 			item.value = Item.sellPrice(0, 0, 20, 0);
 			item.rare = 1;
-			item.width = 32;
+			item.width = 36;
 			item.height = 36;
 			item.maxStack = 1;
 			item.autoReuse = false;            

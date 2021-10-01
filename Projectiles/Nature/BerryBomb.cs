@@ -26,7 +26,7 @@ namespace SOTS.Projectiles.Nature
 			projectile.magic = false;
 			projectile.melee = false;
 			projectile.ranged = true;
-			projectile.width = 20;
+			projectile.width = 22;
 			projectile.height = 26;
 			projectile.penetrate = 1;
 			projectile.timeLeft = 900;
