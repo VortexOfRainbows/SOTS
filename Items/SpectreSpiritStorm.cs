@@ -3,6 +3,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using SOTS.Void;
+using SOTS.Items.Pyramid;
+using SOTS.Items.Fragments;
 
 namespace SOTS.Items
 {
@@ -48,10 +50,10 @@ namespace SOTS.Items
 		public override void AddRecipes()	
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "SpiritTracer", 1);
+			recipe.AddIngredient(ModContent.ItemType<SpiritTracer>(), 1);
 			recipe.AddIngredient(ItemID.DaedalusStormbow, 1);
 			recipe.AddIngredient(ItemID.SpectreBar, 10);
-			recipe.AddIngredient(null, "DissolvingDeluge", 1);
+			recipe.AddIngredient(ModContent.ItemType<DissolvingDeluge>(), 1);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.SetResult(this);
 			recipe.AddRecipe();
