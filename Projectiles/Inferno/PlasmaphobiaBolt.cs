@@ -66,6 +66,7 @@ namespace SOTS.Projectiles.Inferno
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
             Collide();
+            projectile.velocity = oldVelocity;
             return false;
         }
         bool runOnce = true;

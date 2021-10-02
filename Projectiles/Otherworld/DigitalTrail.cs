@@ -8,7 +8,7 @@ using SOTS.Utilities;
 
 namespace SOTS.Projectiles.Otherworld
 {    
-    public class DigitalTrail : ModProjectile, IPixellated
+    public class DigitalTrail : ModProjectile //, IPixellated
 	{
 		public override void SetStaticDefaults()
 		{
@@ -62,6 +62,7 @@ namespace SOTS.Projectiles.Otherworld
 		Vector2 toOwner = Vector2.Zero;
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
+			Draw(spriteBatch, lightColor);
 			return true;
 		}
 
@@ -130,13 +131,13 @@ namespace SOTS.Projectiles.Otherworld
 								y = 0;
 							}
 							float rotation = betweenPositions.ToRotation();
-							Main.spriteBatch.Draw(texture, (drawPos + new Vector2(x, y)) / 2, null, color, rotation, drawOrigin, new Vector2(black ? 0.5f : 1f, 1f) * scale * 0.5f, SpriteEffects.None, 0f);
+							Main.spriteBatch.Draw(texture, (drawPos + new Vector2(x, y)), null, color, rotation, drawOrigin, new Vector2(black ? 0.5f : 1f, 1f) * scale, SpriteEffects.None, 0f);
 						}
 					}
 				previousPosition = currentPos;
 			}
 		}
-			bool runOnce = true;
+		bool runOnce = true;
 		public void cataloguePos()
 		{
 			Vector2 current = projectile.Center;

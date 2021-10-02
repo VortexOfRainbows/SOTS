@@ -40,7 +40,7 @@ Low Priority:
 4. Wintry Traveler: Riptide Trident + Frigid Javelin
 
 10/1/21
-1. Added Sharanga ugrade: Plasma Accelerator. Needs mult testing
+1. Added Sharanga ugrade: Plasma Accelerator. Works in Multiplayer
 
 9/29/21
 1. Small fix for Mothman regarding Pharaoh's Curse camera
