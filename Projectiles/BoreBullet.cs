@@ -22,8 +22,8 @@ namespace SOTS.Projectiles
 			projectile.CloneDefaults(14);
             aiType = 14; 
 			projectile.penetrate = 20;
-			projectile.width = 18;
-			projectile.height = 26;
+			projectile.width = 14;
+			projectile.height = 30;
 			projectile.alpha = 255;
 		}
 		public override void OnHitNPC(NPC n, int damage, float knockback, bool crit)
@@ -33,9 +33,10 @@ namespace SOTS.Projectiles
 		}
 		public override void AI()
 		{
-			int num1 = Dust.NewDust(new Vector2(projectile.Center.X - 4, projectile.Center.Y - 4), 2, 2, 1);
+			/*int num1 = Dust.NewDust(new Vector2(projectile.Center.X - 4, projectile.Center.Y - 4), 2, 2, 1);
 			Main.dust[num1].noGravity = true;
-			Main.dust[num1].velocity *= 0.1f;
+			Main.dust[num1].velocity *= 0.1f;*/
+			//amogus :)
 		}
 	}
 }
