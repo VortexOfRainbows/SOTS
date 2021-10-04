@@ -16,6 +16,9 @@ using SOTS.Items;
 using SOTS.Dusts;
 using SOTS.Projectiles.Celestial;
 using SOTS.Projectiles.Pyramid;
+using SOTS.Projectiles.Otherworld;
+using SOTS.Items.OreItems;
+using SOTS.Items.Otherworld.FromChests;
 
 namespace SOTS.NPCs.ArtificialDebuffs
 {
@@ -220,7 +223,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
         }
         public override void OnHitByProjectile(NPC npc, Projectile projectile, int damage, float knockback, bool crit)
         {
-            if (projectile.type == mod.ProjectileType("HarvestLock"))
+            if (projectile.type == ModContent.ProjectileType<HarvestLock>())
             {
                 Player player = Main.player[projectile.owner];
                 VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
@@ -228,14 +231,14 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 if (!npc.immortal)
                 {
                     var index = CombatText.NewText(npc.Hitbox, VoidPlayer.soulLootingColor.MultiplyRGB(Color.White), -amt);
-                    if (Main.netMode == 2 && index != 100)
+                    if (Main.netMode == NetmodeID.Server && index != 100)
                     {
                         var combatText = Main.combatText[index];
-                        NetMessage.SendData(81, -1, -1, null, (int)combatText.color.PackedValue, combatText.position.X, combatText.position.Y, (float)-amt, 0, 0, 0);
+                        NetMessage.SendData(MessageID.CombatTextInt, -1, -1, null, (int)combatText.color.PackedValue, combatText.position.X, combatText.position.Y, (float)-amt, 0, 0, 0);
                     }
                     HarvestCurse++;
                     voidPlayer.lootingSouls -= amt;
-                    if (Main.myPlayer == player.whoAmI && Main.netMode == 1)
+                    if (Main.myPlayer == player.whoAmI && Main.netMode == NetmodeID.MultiplayerClient)
                         SendClientChanges(player, npc);
                 }
             }
@@ -255,36 +258,36 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 else
                     damage *= 2;
             }
-            if (projectile.type == mod.ProjectileType("CodeVolley") || projectile.type == mod.ProjectileType("CodeBurst"))
+            if (projectile.type == ModContent.ProjectileType<CodeVolley>() || projectile.type == ModContent.ProjectileType<CodeBurst>())
             {
-                if(projectile.type == mod.ProjectileType("CodeVolley"))
+                if(projectile.type == ModContent.ProjectileType<CodeVolley>())
                 {
                     if (Main.rand.NextFloat(100f) < 100 * Math.Pow(0.7f, 1 + DestableCurse * 0.45f) && DestableCurse < 20)
                         DestableCurse++;
-                    if (Main.myPlayer == player.whoAmI && Main.netMode == 1)
+                    if (Main.myPlayer == player.whoAmI && Main.netMode == NetmodeID.MultiplayerClient)
                         SendClientChanges(player, npc);
                 }
-                if (projectile.type == mod.ProjectileType("CodeBurst") && projectile.ai[1] != -1)
+                if (projectile.type == ModContent.ProjectileType<CodeBurst>() && projectile.ai[1] != -1)
                 {
                     if (Main.rand.NextFloat(100f) < 100 * Math.Pow(0.3f, 1 + DestableCurse * 0.45f) && DestableCurse < 20)
                         DestableCurse++;
-                    if (Main.myPlayer == player.whoAmI && Main.netMode == 1)
+                    if (Main.myPlayer == player.whoAmI && Main.netMode == NetmodeID.MultiplayerClient)
                         SendClientChanges(player, npc);
                 }
 
-                if (projectile.type == mod.ProjectileType("CodeBurst") && projectile.ai[1] == -1)
+                if (projectile.type == ModContent.ProjectileType<CodeBurst>() && projectile.ai[1] == -1)
                 {
                     if (Main.rand.NextFloat(100f) < 100 * Math.Pow(0.25f, 1 + DestableCurse * 0.5f) && DestableCurse < 20)
                         DestableCurse++;
-                    if (Main.myPlayer == player.whoAmI && Main.netMode == 1)
+                    if (Main.myPlayer == player.whoAmI && Main.netMode == NetmodeID.MultiplayerClient)
                         SendClientChanges(player, npc);
                 }
             }
-            if (projectile.type == mod.ProjectileType("DestabilizingBeam") && !hitByRay)
+            if (projectile.type == ModContent.ProjectileType<DestabilizingBeam>() && !hitByRay)
             {
                 hitByRay = true;
                 DestableCurse += 4;
-                if (Main.myPlayer == player.whoAmI && Main.netMode == 1)
+                if (Main.myPlayer == player.whoAmI && Main.netMode == NetmodeID.MultiplayerClient)
                     SendClientChanges(player, npc);
             }
             base.ModifyHitByProjectile(npc, projectile, ref damage, ref knockback, ref crit, ref hitDirection);
@@ -302,11 +305,11 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 else
                     damage *= 2;
             }
-            if (item.type == mod.ItemType("PlatinumScythe") || item.type == mod.ItemType("SectionChiefsScythe"))
+            if (item.type == ModContent.ItemType<PlatinumScythe>() || item.type == ModContent.ItemType<SectionChiefsScythe>())
             {
                 if (PlatinumCurse < 10)
                     PlatinumCurse++;
-                if (Main.myPlayer == player.whoAmI && Main.netMode == 1)
+                if (Main.myPlayer == player.whoAmI && Main.netMode == NetmodeID.MultiplayerClient)
                     SendClientChanges(player, npc);
             }
             base.ModifyHitByItem(npc, player, item, ref damage, ref knockback, ref crit);
@@ -425,11 +428,11 @@ namespace SOTS.NPCs.ArtificialDebuffs
                         }
                     }
                 }
-                if (!proj.friendly && proj.active && proj.type == mod.ProjectileType("PlatinumDart") && (int)proj.ai[1] == npc.whoAmI && proj.timeLeft < 8998)
+                if (!proj.friendly && proj.active && proj.type == ModContent.ProjectileType<Projectiles.Ores.PlatinumDart>() && (int)proj.ai[1] == npc.whoAmI && proj.timeLeft < 8998)
                 {
                     impaledDarts++;
                 }
-                if (!proj.friendly && proj.active && proj.type == mod.ProjectileType("Rebar") && (int)proj.ai[1] == npc.whoAmI && proj.timeLeft < 8998)
+                if (!proj.friendly && proj.active && proj.type == ModContent.ProjectileType<Rebar>() && (int)proj.ai[1] == npc.whoAmI && proj.timeLeft < 8998)
                 {
                     if (Main.rand.NextBool(3))
                     {
@@ -442,13 +445,13 @@ namespace SOTS.NPCs.ArtificialDebuffs
                     if ((int)proj.ai[0] == npc.whoAmI)
                     {
                         Player player = Main.player[proj.owner];
-                        if (Main.myPlayer == player.whoAmI && Main.netMode == 1)
+                        if (Main.myPlayer == player.whoAmI && Main.netMode == NetmodeID.MultiplayerClient)
                             SendClientChanges(player, npc);
                         BleedingCurse++;
                         proj.ai[0] = -1;
                     }
                 }
-                if (!proj.friendly && proj.active && proj.type == mod.ProjectileType("FloweringBud") && proj.timeLeft < 8998)
+                if (!proj.friendly && proj.active && proj.type == ModContent.ProjectileType<FloweringBud>() && proj.timeLeft < 8998)
                 {
                     FloweringBud flower = (FloweringBud)proj.modProjectile;
                     if(flower.effected[npc.whoAmI] && !npc.immortal && npc.type != ModContent.NPCType<BloomingHook>() && npc.realLife == -1)
@@ -624,19 +627,19 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 int index = npc.FindBuffIndex(ModContent.BuffType<Infected>());
                 int time = npc.buffTime[index];
                 int damage = time / 60;
-                Main.PlaySound(2, (int)npc.Center.X, (int)npc.Center.Y, 14, 0.6f);
-                if (Main.netMode != 1)
+                Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 14, 0.6f);
+                if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     for (int i = 0; i < 3; i++)
                     {
                         Vector2 circular = new Vector2(3, 0).RotatedBy(MathHelper.ToRadians(Main.rand.Next(360)));
-                        Projectile.NewProjectile(npc.Center.X, npc.Center.Y, circular.X, circular.Y, mod.ProjectileType("Pathogen"), damage, 0, Main.myPlayer, -1);
+                        Projectile.NewProjectile(npc.Center.X, npc.Center.Y, circular.X, circular.Y, ModContent.ProjectileType<Pathogen>(), damage, 0, Main.myPlayer, -1);
                     }
                 }
             }
             if (npc.HasBuff(ModContent.BuffType<PharaohsCurse>()) && npc.life <= 0)
             {
-                if (Main.netMode != 1)
+                if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     Vector2 circular = new Vector2(4.5f, 0).RotatedBy(MathHelper.ToRadians(Main.rand.Next(360)));
                     Projectile.NewProjectile(npc.Center.X, npc.Center.Y, circular.X, circular.Y, ModContent.ProjectileType<CurseGhost>(), (int)(npc.lifeMax * 0.1f) + 10, 0, Main.myPlayer, -1);

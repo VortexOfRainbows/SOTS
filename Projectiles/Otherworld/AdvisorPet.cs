@@ -1,7 +1,9 @@
 using System;
 using System.IO;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Dusts;
 using Terraria;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
@@ -51,7 +53,7 @@ namespace SOTS.Projectiles.Otherworld
 		public override bool PreAI()
 		{
 			Player player = Main.player[projectile.owner];
-			player.hornet = false; // Relic from aiType
+			player.hornet = false;  
 			if (Main.myPlayer != projectile.owner)
 				projectile.timeLeft = 20;
 			if (eyeReset < 2.5f)
@@ -133,12 +135,9 @@ namespace SOTS.Projectiles.Otherworld
 			Vector2 drawOrigin = new Vector2(Main.projectileTexture[projectile.type].Width * 0.5f, projectile.height * 0.5f);
 			Vector2 drawPos = projectile.Center - Main.screenPosition;
 			Color color = new Color(100, 100, 100, 0);
-
 			for (int k = 0; k < 7; k++)
 			{
-				float x = Main.rand.Next(-10, 11) * 0.1f;
-				float y = Main.rand.Next(-10, 11) * 0.1f;
-				Main.spriteBatch.Draw(texture, new Vector2((float)(projectile.Center.X - (int)Main.screenPosition.X) + x, (float)(projectile.Center.Y - (int)Main.screenPosition.Y) + y), null, color, 0f, drawOrigin, 1f, SpriteEffects.None, 0f);
+				spriteBatch.Draw(texture, drawPos + Main.rand.NextVector2Circular(1, 1), null, color, 0f, drawOrigin, 1f, SpriteEffects.None, 0f);
 			}
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
@@ -298,18 +297,20 @@ namespace SOTS.Projectiles.Otherworld
 	public class HomingProjectile : GlobalProjectile
     {
 		public override bool InstancePerEntity => true;
-		bool hasHitYet = false;
-		bool effect = true;
-		int counter = 0;
-		int petAdvisorID = -1;
+		public bool hasHitYet = false;
+		public bool effect = true;
+		public int counter = 0;
+		public int petAdvisorID = -1;
 		public override void PostAI(Projectile projectile)
 		{
+			if (hasHitYet || !projectile.active || projectile.damage <= 0 || counter > 900f || SOTSPlayer.typhonBlacklist.Contains(projectile.type))
+				return;
 			Player player = Main.player[projectile.owner];
 			float distP = Vector2.Distance(player.Center, projectile.Center);
-			if (!projectile.active || !player.active || projectile.damage == 0 || distP > 2000f || counter > 900f || SOTSPlayer.typhonBlacklist.Contains(projectile.type))
+			if (!player.active || distP > 2000f)
 				return;
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-			if(modPlayer.petAdvisor && !hasHitYet && counter >= 5 && modPlayer.typhonRange > 0)
+			if(modPlayer.petAdvisor && counter >= 5 && modPlayer.typhonRange > 0)
 			{
 				if (petAdvisorID == -1)
 				{
@@ -317,7 +318,7 @@ namespace SOTS.Projectiles.Otherworld
 					for (int i = 0; i < Main.projectile.Length; i++)
 					{
 						Projectile proj = Main.projectile[i];
-						if (proj.active && proj.owner == projectile.owner && proj.type == mod.ProjectileType("AdvisorPet"))
+						if (proj.active && proj.owner == projectile.owner && proj.type == ModContent.ProjectileType<AdvisorPet>())
 						{
 							petAdvisorID = i;
 							break;
@@ -327,14 +328,14 @@ namespace SOTS.Projectiles.Otherworld
 				else
 				{
 					Projectile proj = Main.projectile[petAdvisorID];
-					if (!(proj.active && proj.owner == projectile.owner && proj.type == mod.ProjectileType("AdvisorPet")))
+					if (!(proj.active && proj.owner == projectile.owner && proj.type == ModContent.ProjectileType<AdvisorPet>()))
 					{
 						petAdvisorID = -1;
 					}
 				}
 			}
 			counter++;
-			if (!hasHitYet && counter >= 5)
+			if (counter >= 5)
 			{
 				if (modPlayer.typhonRange > 0)
 				{
@@ -368,7 +369,7 @@ namespace SOTS.Projectiles.Otherworld
 						if (target2 != -1)
 						{
 							NPC toHit = Main.npc[target2];
-							if (toHit.active == true)
+							if (toHit.active)
 							{
 								Vector2 goTo = (toHit.Center - projectile.Center).SafeNormalize(Vector2.Zero) * speed;
 								Vector2 velocity1 = projectile.velocity.SafeNormalize(Vector2.Zero);
@@ -388,14 +389,11 @@ namespace SOTS.Projectiles.Otherworld
 										pet.fireToX = projectile.Center.X;
 										pet.fireToY = projectile.Center.Y;
 										pet.glow = 11.5f + 3.5f * recalc;
-										Main.PlaySound(2, (int)proj.Center.X, (int)proj.Center.Y, 8, 1.35f * (0.75f + 0.5f * recalc));
+										Main.PlaySound(SoundID.Item, (int)proj.Center.X, (int)proj.Center.Y, 8, 1.35f * (0.75f + 0.5f * recalc));
 									}
 									effect = false;
 								}
-								//if(projectile.Hitbox.Intersects(toHit.Hitbox))
-                                {
-									hasHitYet = true;
-                                }
+								hasHitYet = true;
 							}
 						}
 					}
@@ -421,7 +419,7 @@ namespace SOTS.Projectiles.Otherworld
 				remaining--;
 				interator++;
 				currentPos += newtoProjectile;
-				int num1 = Dust.NewDust(new Vector2(currentPos.X - 4, currentPos.Y - 4), 0, 0, mod.DustType("CopyDust4"), 0, 0, alpha);
+				int num1 = Dust.NewDust(new Vector2(currentPos.X - 4, currentPos.Y - 4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, alpha);
 				Dust dust = Main.dust[num1];
 				dust.velocity *= 0.2f;
 				dust.noGravity = true;
@@ -438,7 +436,7 @@ namespace SOTS.Projectiles.Otherworld
 						currentFromProjectile = currentFromProjectile.RotatedBy(MathHelper.ToRadians(i));
 						currentFromProjectile += projectile.Center;
 						interator++;
-						num1 = Dust.NewDust(new Vector2(currentFromProjectile.X - 4, currentFromProjectile.Y - 4), 0, 0, mod.DustType("CopyDust4"), 0, 0, alpha);
+						num1 = Dust.NewDust(new Vector2(currentFromProjectile.X - 4, currentFromProjectile.Y - 4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, alpha);
 						dust = Main.dust[num1];
 						dust.velocity *= 0.2f;
 						dust.noGravity = true;
@@ -462,7 +460,7 @@ namespace SOTS.Projectiles.Otherworld
 				newtoProjectile = projectile.velocity.RotatedBy(MathHelper.ToRadians(-160)).SafeNormalize(Vector2.Zero) * 3;
 				currentPos += newtoProjectile;
 				interator++;
-				int num1 = Dust.NewDust(new Vector2(currentPos.X - 4, currentPos.Y - 4), 0, 0, mod.DustType("CopyDust4"), 0, 0, alpha);
+				int num1 = Dust.NewDust(new Vector2(currentPos.X - 4, currentPos.Y - 4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, alpha);
 				Dust dust = Main.dust[num1];
 				dust.velocity *= 0.2f;
 				dust.noGravity = true;
@@ -477,7 +475,7 @@ namespace SOTS.Projectiles.Otherworld
 				newtoProjectile = projectile.velocity.RotatedBy(MathHelper.ToRadians(160)).SafeNormalize(Vector2.Zero) * 3;
 				currentPos += newtoProjectile;
 				interator++;
-				int num1 = Dust.NewDust(new Vector2(currentPos.X - 4, currentPos.Y - 4), 0, 0, mod.DustType("CopyDust4"), 0, 0, alpha);
+				int num1 = Dust.NewDust(new Vector2(currentPos.X - 4, currentPos.Y - 4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, alpha);
 				Dust dust = Main.dust[num1];
 				dust.velocity *= 0.2f;
 				dust.noGravity = true;
@@ -486,10 +484,6 @@ namespace SOTS.Projectiles.Otherworld
 				dust.scale *= 1.25f;
 				dust.shader = GameShaders.Armor.GetShaderFromItemId(player.miscDyes[1].type);
 			}
-		}
-		public override void OnHitNPC(Projectile projectile, NPC target, int damage, float knockback, bool crit)
-		{
-			hasHitYet = true;
 		}
     }
 }

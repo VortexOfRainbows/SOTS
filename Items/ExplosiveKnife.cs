@@ -14,33 +14,27 @@ namespace SOTS.Items
 		}
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(279);
+			item.CloneDefaults(ItemID.ThrowingKnife);
 			item.damage = 15;
 			item.useTime = 17;
 			item.useAnimation = 17;
 			item.thrown = true;
-			item.rare = 2;
+			item.rare = ItemRarityID.Green;
 			item.autoReuse = true;            
-			item.shoot = mod.ProjectileType("ExplosiveKnife"); 
+			item.shoot = ModContent.ProjectileType<Projectiles.ExplosiveKnife>(); 
             item.shootSpeed = 12f;
 			item.consumable = true;
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-          {
-              int numberProjectiles = 1;
-              for (int i = 0; i < numberProjectiles; i++)
-              {
-                  Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(1)); // This defines the projectiles random spread . 30 degree spread.
-                  Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI);
-              }
-              return false; 
+        {
+			return true; 
 		}
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(279, 15);
-			recipe.AddIngredient(168, 15);
-			recipe.AddIngredient(null, "Goblinsteel", 1);
+			recipe.AddIngredient(ItemID.ThrowingKnife, 15);
+			recipe.AddIngredient(ItemID.Grenade, 15);
+			recipe.AddIngredient(ModContent.ItemType<Goblinsteel>(), 1);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this, 15);
 			recipe.AddRecipe();

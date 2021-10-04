@@ -32,11 +32,24 @@ using SOTS.Projectiles.Pyramid;
 using SOTS.Projectiles.Minions;
 using SOTS.Projectiles.Permafrost;
 using SOTS.Items.Celestial;
+using SOTS.Items.Fragments;
+using SOTS.Projectiles.Inferno;
 
 namespace SOTS
 {
 	public class SOTSPlayer : ModPlayer
 	{
+		public static int[] locketBlacklist;
+		public static int[] typhonBlacklist;
+		public static int[] typhonWhitelist;
+		public static void LoadArrays()
+		{
+			locketBlacklist = new int[] { ItemID.BookStaff, ModContent.ItemType<LashesOfLightning>(), ModContent.ItemType<SkywardBlades>(), ItemID.GolemFist, ItemID.Flairon,
+				ModContent.ItemType<PhaseCannon>(), ModContent.ItemType<Items.Otherworld.FromChests.HardlightGlaive>(), ModContent.ItemType<StarcoreAssaultRifle>(), ModContent.ItemType<VibrantPistol>(),
+				ModContent.ItemType<Items.Otherworld.FromChests.SupernovaHammer>(), ItemID.MonkStaffT1, ModContent.ItemType<Items.IceStuff.FrigidJavelin>(), ModContent.ItemType<Items.DigitalDaito>() };
+			typhonBlacklist = new int[] { ModContent.ProjectileType<ArcColumn>(), ModContent.ProjectileType<PhaseColumn>(), ModContent.ProjectileType<MacaroniBeam>(), ModContent.ProjectileType<GenesisArc>(), ModContent.ProjectileType<GenesisCore>() };
+			typhonWhitelist = new int[] { ModContent.ProjectileType<HardlightArrow>() };
+		}
 		/*
 		public override TagCompound Save() {
 			return new TagCompound {
@@ -100,9 +113,6 @@ namespace SOTS
 		public float BlinkedAmount = 0;
 		public int BlinkType = 0;
 		public int BlinkDamage = 0;
-		public static List<int> locketBlacklist = new List<int>();
-		public static List<int> typhonBlacklist = new List<int>();
-		public static List<int> typhonWhitelist = new List<int>();
 		public int typhonRange = 0;
 		public bool weakerCurse = false;
 		public bool vibrantArmor = false;
@@ -133,9 +143,6 @@ namespace SOTS
 		public bool PlanetariumBiome = false;
 		//public bool GeodeBiome = false;
 		public bool PyramidBiome = false;
-		public bool HeartSwapDelay = false;
-		public int BloodTapping = 0;
-		public int HeartSwapBonus = 0;
 		public bool chessSkip = false;
 		public bool backUpBow = false;
 		public int doubledActive = 0;
@@ -685,8 +692,6 @@ namespace SOTS
 			doubledActive = 0;
 			backUpBow = false;
 			deoxysPet = false;
-			BloodTapping = 0;
-			HeartSwapDelay = false;
 			DapperChu = false;
 			TurtleTem = false;
 			chessSkip = false;
@@ -707,15 +712,15 @@ namespace SOTS
 			CritCurseFire = false;
 			CurseAura = false;
 			if (PyramidBiome)
-				player.AddBuff(mod.BuffType("PharaohsCurse"), 16, false); 
+				player.AddBuff(ModContent.BuffType<Buffs.PharaohsCurse>(), 16, false); 
 			polarCannons = 0;
 		}
 		public override void CatchFish(Item fishingRod, Item bait, int power, int liquidType, int poolSize, int worldLayer, int questFish, ref int caughtType, ref bool junk)
 		{
 			//Fish Set 1
 
-			if (Main.rand.Next(24) == 1 && player.ZoneSkyHeight) {
-				caughtType = mod.ItemType("TinyPlanetFish"); }
+			if (Main.rand.NextBool(24) && player.ZoneSkyHeight) 
+				caughtType = ModContent.ItemType<TinyPlanetFish>(); 
 
 			//if (Main.rand.Next(200) == 0 && ZeplineBiome) {
 			//caughtType = mod.ItemType("ZephyriousZepline"); }
@@ -724,43 +729,43 @@ namespace SOTS
 
 			//Fish Set 2
 
-			if (player.ZoneBeach && liquidType == 0 && Main.rand.Next(175) == 1) {
-				caughtType = mod.ItemType("SpikyPufferfish"); }
-			if (player.ZoneBeach && liquidType == 0 && Main.rand.Next(225) == 0) {
-				caughtType = mod.ItemType("CrabClaw"); }
+			if (player.ZoneBeach && liquidType == 0 && Main.rand.NextBool(175)) 
+				caughtType = ModContent.ItemType<SpikyPufferfish>(); 
+			if (player.ZoneBeach && liquidType == 0 && Main.rand.NextBool(225)) 
+				caughtType = ModContent.ItemType<CrabClaw>(); 
 
 
-			if (ScaleCatch2(power, 0, 90, 150, 750) && player.ZoneBeach && liquidType == 0) {
-				caughtType = mod.ItemType("PinkJellyfishStaff"); }
-			else if (ScaleCatch2(power, 0, 70, 30, 150) && player.ZoneBeach && liquidType == 0 && bait.type == 2438) { //Checks for pink jellyfish bait
-				caughtType = mod.ItemType("PinkJellyfishStaff"); }
+			if (ScaleCatch2(power, 0, 90, 150, 750) && player.ZoneBeach && liquidType == 0) 
+				caughtType = ModContent.ItemType<PinkJellyfishStaff>(); 
+			else if (ScaleCatch2(power, 0, 70, 30, 150) && player.ZoneBeach && liquidType == 0 && bait.type == ItemID.PinkJellyfish) //Checks for pink jellyfish bait
+				caughtType = ModContent.ItemType<PinkJellyfishStaff>();
 
-			if (ScaleCatch2(power, 0, 90, 150, 750) && player.ZoneRockLayerHeight && liquidType == 0) {
-				caughtType = mod.ItemType("BlueJellyfishStaff"); }
-			else if (ScaleCatch2(power, 0, 70, 30, 150) && player.ZoneRockLayerHeight && liquidType == 0 && bait.type == 2436) { //Checks blue jellyfish bait
-				caughtType = mod.ItemType("BlueJellyfishStaff"); }
-			else if (ScaleCatch2(power, 0, 70, 30, 150) && player.ZoneRockLayerHeight && liquidType == 0 && bait.type == 2437) { //Checks green jellyfish bait
-				caughtType = mod.ItemType("BlueJellyfishStaff"); }
+			if (ScaleCatch2(power, 0, 90, 150, 750) && player.ZoneRockLayerHeight && liquidType == 0)
+				caughtType = ModContent.ItemType<BlueJellyfishStaff>();
+			else if (ScaleCatch2(power, 0, 70, 30, 150) && player.ZoneRockLayerHeight && liquidType == 0 && bait.type == ItemID.BlueJellyfish) //Checks blue jellyfish bait
+				caughtType = ModContent.ItemType<BlueJellyfishStaff>();
+			else if (ScaleCatch2(power, 0, 70, 30, 150) && player.ZoneRockLayerHeight && liquidType == 0 && bait.type == ItemID.GreenJellyfish) //Checks green jellyfish bait
+				caughtType = ModContent.ItemType<BlueJellyfishStaff>();
 
-			if (ScaleCatch2(power, 0, 30, 5, 10) && PyramidBiome && liquidType == 0) {
-				caughtType = mod.ItemType("SeaSnake"); }
-			else if (ScaleCatch2(power, 0, 40, 7, 11) && PyramidBiome && liquidType == 0) {
-				caughtType = mod.ItemType("PhantomFish"); }
-			else if (ScaleCatch2(power, 20, 80, 7, 20) && PyramidBiome && liquidType == 0) { //gains the same rarity as Phantom Fish when at 80, fails to catch below 20 power
-				caughtType = mod.ItemType("Curgeon"); }
-			else if (ScaleCatch2(power, 0, 200, 100, 300) && PyramidBiome && liquidType == 0) { //1/300 at 0, 1/200 at 100, 1/100 at 200, etc
-				caughtType = mod.ItemType("ZephyrousZeppelin"); }
-			else if (ScaleCatch2(power, 0, 200, 100, 300) && PyramidBiome && liquidType == 0) { //1/300 at 0, 1/200 at 100, 1/100 at 200, etc
-				caughtType = ItemID.ZephyrFish; }
+			if (ScaleCatch2(power, 0, 30, 5, 10) && PyramidBiome && liquidType == 0) 
+				caughtType = ModContent.ItemType<SeaSnake>(); 
+			else if (ScaleCatch2(power, 0, 40, 7, 11) && PyramidBiome && liquidType == 0) 
+				caughtType = ModContent.ItemType<PhantomFish>(); 
+			else if (ScaleCatch2(power, 20, 80, 7, 20) && PyramidBiome && liquidType == 0) //gains the same rarity as Phantom Fish when at 80, fails to catch below 20 power
+				caughtType = ModContent.ItemType<Curgeon>(); 
+			else if (ScaleCatch2(power, 0, 200, 100, 300) && PyramidBiome && liquidType == 0) //1/300 at 0, 1/200 at 100, 1/100 at 200, etc
+				caughtType = ModContent.ItemType<ZephyrousZeppelin>(); 
+			else if (ScaleCatch2(power, 0, 200, 100, 300) && PyramidBiome && liquidType == 0) //1/300 at 0, 1/200 at 100, 1/100 at 200, etc
+				caughtType = ItemID.ZephyrFish; 
 			else if (!player.HasBuff(BuffID.Crate))
 			{
-				if (ScaleCatch2(power, 0, 200, 20, 200) && PyramidBiome && liquidType == 0) {
-					caughtType = mod.ItemType("PyramidCrate"); }
+				if (ScaleCatch2(power, 0, 200, 20, 200) && PyramidBiome && liquidType == 0) 
+					caughtType = ModContent.ItemType<PyramidCrate>(); 
 			}
 			else
 			{
-				if (ScaleCatch2(power, 0, 200, 10, 100) && PyramidBiome && liquidType == 0) {
-					caughtType = mod.ItemType("PyramidCrate"); }
+				if (ScaleCatch2(power, 0, 200, 10, 100) && PyramidBiome && liquidType == 0) 
+					caughtType = ModContent.ItemType<PyramidCrate>(); 
 			}
 
 		}
@@ -771,7 +776,7 @@ namespace SOTS
 		*	pre condition: minPower < maxPower, minRate < maxRate
 		*	post condition: returns true at a specific chance.
 		*/
-		public bool ScaleCatch2(int power, int minPower, int maxPower, int minRate, int maxRate)
+		public static bool ScaleCatch2(int power, int minPower, int maxPower, int minRate, int maxRate)
 		{
 			if (power < minPower)
 			{
@@ -857,11 +862,6 @@ namespace SOTS
 		{
 			onhitdamage = damage;
 			onhit = 2;
-			HeartSwapBonus -= damage;
-			if (HeartSwapBonus < 0)
-			{
-				HeartSwapBonus = 0;
-			}
 			if (PushBack)
 			{
 				float dX = npc.Center.X - player.Center.X;
@@ -872,7 +872,7 @@ namespace SOTS
 				dY *= speed;
 				if(Main.myPlayer == player.whoAmI)
 				{
-					int Proj = Projectile.NewProjectile(npc.Center.X - dX * 5, npc.Center.Y - dY * 5, dX, dY, 507, 12, 25f, player.whoAmI);
+					int Proj = Projectile.NewProjectile(npc.Center.X - dX * 5, npc.Center.Y - dY * 5, dX, dY, ProjectileID.JavelinFriendly, 12, 25f, player.whoAmI);
 					Main.projectile[Proj].timeLeft = 15;
 					Main.projectile[Proj].netUpdate = true;
 				}
@@ -882,12 +882,6 @@ namespace SOTS
 		{
 			onhitdamage = damage;
 			onhit = 2;
-			HeartSwapBonus -= damage;
-			if (HeartSwapBonus < 0)
-			{
-				HeartSwapBonus = 0;
-			}
-
 		}
 		public override void OnHitNPCWithProj(Projectile proj, NPC target, int damage, float knockback, bool crit)
 		{
@@ -941,16 +935,6 @@ namespace SOTS
 					}
 				}
 			}
-
-			if (BloodTapping == 1)
-			{
-				if (Main.rand.Next(10) == 0 && BloodTapping * damage > 20)
-				{
-					player.statLife += (int)(BloodTapping * damage / 20);
-					player.HealEffect((int)(BloodTapping * damage / 20));
-				}
-			}
-
 			if (megShirt == true)
 			{
 				if (Main.rand.Next(35) == 0)
@@ -976,12 +960,6 @@ namespace SOTS
 				vector14.Y = Main.screenPosition.Y + (float)Main.screenHeight - (float)Main.mouseY;
 			}
 			vector14.X = (float)Main.mouseX + Main.screenPosition.X;
-
-			if (BloodTapping * damage > 10)
-			{
-				player.statLife += (int)(BloodTapping * damage / 10);
-				player.HealEffect((int)(BloodTapping * damage / 10));
-			}
 			if (megShirt == true)
 			{
 				if (Main.rand.Next(35) == 0)
@@ -1089,31 +1067,39 @@ namespace SOTS
 		}
 		public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
 		{
-			if(crit)
+			ModifyHitNPCGeneral(target, proj, null, ref damage, ref knockback, ref crit);
+		}
+		public override void ModifyHitNPC(Item item, NPC target, ref int damage, ref float knockback, ref bool crit) 
+		{
+			ModifyHitNPCGeneral(target, null, item, ref damage, ref knockback, ref crit);
+		}
+		public void ModifyHitNPCGeneral(NPC target, Projectile projectile, Item item, ref int damage, ref float knockback, ref bool crit)
+        {
+			if (crit)
 			{
 				if (CritManasteal > 0 && maxCritManastealPerSecondTimer > 0)
 				{
 					maxCritManastealPerSecondTimer -= CritManasteal;
 					if (Main.myPlayer == player.whoAmI)
-						Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, mod.ProjectileType("HealProj"), 1, 0, player.whoAmI, CritManasteal, 3);
+						Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, ModContent.ProjectileType<HealProj>(), 1, 0, player.whoAmI, CritManasteal, 3);
 				}
 				if (CritLifesteal > 0 && maxCritLifestealPerSecondTimer > 0)
 				{
 					maxCritLifestealPerSecondTimer -= CritLifesteal;
 					if (Main.myPlayer == player.whoAmI)
-						Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, mod.ProjectileType("HealProj"), 0, 0, player.whoAmI, CritLifesteal, 6);
+						Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, ModContent.ProjectileType<HealProj>(), 0, 0, player.whoAmI, CritLifesteal, 6);
 				}
-				if(CritVoidsteal > 0 && maxCritVoidStealPerSecondTimer > 0)
+				if (CritVoidsteal > 0 && maxCritVoidStealPerSecondTimer > 0)
 				{
 					maxCritVoidStealPerSecondTimer -= CritVoidsteal;
 					if (Main.myPlayer == player.whoAmI)
-						Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, mod.ProjectileType("HealProj"), 2, 0, player.whoAmI, CritVoidsteal, 5);
+						Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, ModContent.ProjectileType<HealProj>(), 2, 0, player.whoAmI, CritVoidsteal, 5);
 				}
 				damage += CritBonusDamage;
 				int randBuff = Main.rand.Next(3);
 				if (randBuff == 2 && CritCurseFire)
 				{
-					Main.PlaySound(2, (int)target.Center.X, (int)target.Center.Y, 93, 0.9f);
+					Main.PlaySound(SoundID.Item, (int)target.Center.X, (int)target.Center.Y, 93, 0.9f);
 					target.AddBuff(BuffID.CursedInferno, 900, false);
 					int numberProjectiles = 4;
 					int rand = Main.rand.Next(360);
@@ -1121,7 +1107,7 @@ namespace SOTS
 					{
 						Vector2 perturbedSpeed = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(i * 90 + rand));
 						if (Main.myPlayer == player.whoAmI)
-							Projectile.NewProjectile(target.Center.X, target.Center.Y, perturbedSpeed.X, perturbedSpeed.Y, mod.ProjectileType("CursedThunder"), damage, 1f, player.whoAmI, 2);
+							Projectile.NewProjectile(target.Center.X, target.Center.Y, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<CursedThunder>(), damage, 1f, player.whoAmI, 2);
 					}
 				}
 				else if (randBuff == 1 && (CritFrost || CritCurseFire))
@@ -1130,9 +1116,9 @@ namespace SOTS
 					if (Main.myPlayer == player.whoAmI)
 					{
 						if (CritFrost)
-							Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, mod.ProjectileType("IcePulseSummon"), damage * 2, 1f, player.whoAmI, 3);
+							Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, ModContent.ProjectileType<IcePulseSummon>(), damage * 2, 1f, player.whoAmI, 3);
 						else
-							Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, mod.ProjectileType("IcePulseSummon"), damage, 1f, player.whoAmI, 3);
+							Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, ModContent.ProjectileType<IcePulseSummon>(), damage, 1f, player.whoAmI, 3);
 					}
 				}
 				else if (randBuff == 0 && (CritFire || CritCurseFire))
@@ -1142,95 +1128,18 @@ namespace SOTS
 					{
 						if (CritCurseFire && CritFire)
 						{
-							Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, mod.ProjectileType("SharangaBlastSummon"), damage * 2, 1f, player.whoAmI, 3);
+							Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, ModContent.ProjectileType<SharangaBlastSummon>(), damage * 2, 1f, player.whoAmI, 3);
 						}
 						else
-							Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, mod.ProjectileType("SharangaBlastSummon"), damage, 1f, player.whoAmI, 3);
+							Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, ModContent.ProjectileType<SharangaBlastSummon>(), damage, 1f, player.whoAmI, 3);
 					}
 				}
 			}
 		}
-		public override void ModifyHitNPC(Item item, NPC target, ref int damage, ref float knockback, ref bool crit) 
-		{
-			if(crit)
-			{ 
-				if (CritManasteal > 0 && maxCritManastealPerSecondTimer > 0)
-				{
-					maxCritManastealPerSecondTimer -= CritManasteal;
-					if (Main.myPlayer == player.whoAmI)
-						Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, mod.ProjectileType("HealProj"), 1, 0, player.whoAmI, CritManasteal, 3);
-				}
-				if (CritLifesteal > 0 && maxCritLifestealPerSecondTimer > 0)
-				{
-					maxCritLifestealPerSecondTimer -= CritLifesteal;
-					if (Main.myPlayer == player.whoAmI)
-						Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, mod.ProjectileType("HealProj"), 0, 0, player.whoAmI, CritLifesteal, 6);
-				}
-				if(CritVoidsteal > 0 && maxCritVoidStealPerSecondTimer > 0)
-				{
-					maxCritVoidStealPerSecondTimer -= CritVoidsteal;
-					if (Main.myPlayer == player.whoAmI)
-						Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, mod.ProjectileType("HealProj"), 2, 0, player.whoAmI, CritVoidsteal, 5);
-				}
-				damage += CritBonusDamage;
-				int randBuff = Main.rand.Next(3);
-				if (randBuff == 2 && CritCurseFire)
-				{
-					Main.PlaySound(2, (int)target.Center.X, (int)target.Center.Y, 93, 0.9f);
-					target.AddBuff(BuffID.CursedInferno, 900, false);
-					int numberProjectiles = 4;
-					int rand = Main.rand.Next(360);
-					for (int i = 0; i < numberProjectiles; i++)
-					{
-						Vector2 perturbedSpeed = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(i * 90 + rand));
-						if (Main.myPlayer == player.whoAmI)
-							Projectile.NewProjectile(target.Center.X, target.Center.Y, perturbedSpeed.X, perturbedSpeed.Y, mod.ProjectileType("CursedThunder"), damage, 1f, player.whoAmI, 2);
-					}
-				}
-				else if (randBuff == 1 && (CritFrost || CritCurseFire))
-				{
-					target.AddBuff(BuffID.Frostburn, 900, false);
-					if (Main.myPlayer == player.whoAmI)
-					{
-						if(CritFrost)
-							Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, mod.ProjectileType("IcePulseSummon"), damage * 2, 1f, player.whoAmI, 3);
-						else
-							Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, mod.ProjectileType("IcePulseSummon"), damage, 1f, player.whoAmI, 3);
-					}
-				}
-				else if(randBuff == 0 && (CritFire || CritCurseFire))
-				{
-					target.AddBuff(BuffID.OnFire, 900, false);
-					if (Main.myPlayer == player.whoAmI)
-                    {
-						if (CritCurseFire && CritFire)
-						{
-							Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, mod.ProjectileType("SharangaBlastSummon"), damage * 2, 1f, player.whoAmI, 3);
-						}
-						else
-							Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, mod.ProjectileType("SharangaBlastSummon"), damage, 1f, player.whoAmI, 3);
-					}
-				}
-			}
-		}
-        public override void GetHealLife(Item item, bool quickHeal, ref int healValue)
+		public override void GetHealLife(Item item, bool quickHeal, ref int healValue)
         {
 			healValue += additionalHeal;
             base.GetHealLife(item, quickHeal, ref healValue);
-        }
-        public override void Initialize()
-		{
-			locketBlacklist = new List<int>() { ItemID.BookStaff, ModContent.ItemType<LashesOfLightning>(), ModContent.ItemType<SkywardBlades>(), ItemID.GolemFist, ItemID.Flairon, 
-				ModContent.ItemType<PhaseCannon>(), ModContent.ItemType<Items.Otherworld.FromChests.HardlightGlaive>(), ModContent.ItemType<StarcoreAssaultRifle>(), ModContent.ItemType<VibrantPistol>(),
-				ModContent.ItemType<Items.Otherworld.FromChests.SupernovaHammer>(), ItemID.MonkStaffT1, ModContent.ItemType<Items.IceStuff.FrigidJavelin>(), ModContent.ItemType<Items.DigitalDaito>() };
-
-			typhonBlacklist.Add(ModContent.ProjectileType<ArcColumn>());
-			typhonBlacklist.Add(ModContent.ProjectileType<PhaseColumn>());
-			typhonBlacklist.Add(ModContent.ProjectileType<MacaroniBeam>());
-			typhonBlacklist.Add(ModContent.ProjectileType<GenesisArc>());
-			typhonBlacklist.Add(ModContent.ProjectileType<GenesisCore>());
-			typhonWhitelist.Add(ModContent.ProjectileType<HardlightArrow>());
-			base.Initialize();
         }
         public override bool PreItemCheck()
 		{

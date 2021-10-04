@@ -1,12 +1,13 @@
 using Microsoft.Xna.Framework;
+using SOTS.Items.Otherworld.FromChests;
 using SOTS.Items.SoldStuff;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
  
-namespace SOTS.NPCs.SoldStuff
+namespace SOTS.NPCs
 {
-    public class VanillaNPCShop : GlobalNPC
+    public class SOTSNPCShop : GlobalNPC
     {
         public override void SetupTravelShop(int[] shop, ref int nextSlot)
         {
@@ -15,7 +16,8 @@ namespace SOTS.NPCs.SoldStuff
 				shop[nextSlot] = ModContent.ItemType<SafetySwitch>();
 				nextSlot++;
 			}
-			if (Main.rand.NextBool(3) && Main.hardMode)
+			int chance = NPC.downedBoss1 ? 4 : 8;
+			if (Main.rand.NextBool(chance))
 			{
 				shop[nextSlot] = ModContent.ItemType<BoreBullet>();
 				nextSlot++;
@@ -36,7 +38,7 @@ namespace SOTS.NPCs.SoldStuff
             switch (type)
             {
                 case NPCID.Merchant: 
-					if (Main.LocalPlayer.HasItem(mod.ItemType("FlareDetonator")))
+					if (Main.LocalPlayer.HasItem(ModContent.ItemType<FlareDetonator>()))
 					{
 						shop.item[nextSlot].SetDefaults(ModContent.ItemType<BlackFlare>());
 						nextSlot++;

@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Dusts;
 using SOTS.Items.Fragments;
 using SOTS.Items.Otherworld.FromChests;
 using System;
@@ -69,17 +70,11 @@ namespace SOTS.Items.Otherworld
 		}
 		public override void SetDefaults()
 		{
+			item.CloneDefaults(ItemID.StoneBlock);
 			item.width = 26;
 			item.height = 36;
-			item.maxStack = 999;
-			item.useTurn = true;
-			item.autoReuse = true;
-			item.useAnimation = 15;
-			item.useTime = 10;
-			item.useStyle = ItemUseStyleID.SwingThrow;
 			item.rare = ItemRarityID.Cyan;
 			item.value = Item.sellPrice(0, 5, 0, 0);
-			item.consumable = true;
 			item.createTile = TileType<PotGeneratorTile>();
 		}
 		public override void AddRecipes()
@@ -135,10 +130,10 @@ namespace SOTS.Items.Otherworld
 			TileObjectData.addTile(Type);
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
 			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Digital Display");
+			name.SetDefault("Pot Generator");
 			AddMapEntry(new Color(180, 245, 240), name);
 			disableSmartCursor = true;
-			dustType = mod.DustType("AvaritianDust");
+			dustType = DustType<AvaritianDust>();
 		}
         public override bool CanKillTile(int i, int j, ref bool blockDamaged)
         {
@@ -172,7 +167,6 @@ namespace SOTS.Items.Otherworld
 		{
 			Main.mouseRightRelease = true;
 			Player player = Main.LocalPlayer;
-
 			Tile tile = Main.tile[i, j];
 			int left = i - tile.frameX / 18;
 			int top = j - tile.frameY / 18;
@@ -269,74 +263,85 @@ namespace SOTS.Items.Otherworld
 	{
 		internal int timer = -2;
 		internal int style = 0;
+		internal int updateTimer = 0;
 		public override void Update()
 		{
+			bool netUpdate = false;
+			bool forceUpdate = false;
 			int whereX = Position.X;
 			int whereY = Position.Y - 1;
 			int amt = 1;
-			for (int i = 0; i < 3600; i++)
+			bool tilesAbove = !WorldGen.InWorld(whereX, whereY, 20)|| Main.tile[whereX, whereY].active() || Main.tile[whereX + 1, whereY].active() || Main.tile[whereX, whereY - 1].active() || Main.tile[whereX + 1, whereY - 1].active();
+			if (tilesAbove && timer != -2)
 			{
-				if (WorldGen.InWorld(whereX, Position.Y + i, 10) && Main.tile[whereX, Position.Y + i].active() && Main.tile[whereX + 1, Position.Y + i].active() && Main.tile[whereX, Position.Y + i].type == mod.TileType("PotGeneratorTile") && Main.tile[whereX + 1, Position.Y + i].type == mod.TileType("PotGeneratorTile"))
-				{
-					amt++;
-				}
-				else
-				{
-					break;
-				}
+				timer = -2;
+				netUpdate = true;
+				forceUpdate = true;
 			}
-			bool playerNear = true;
-			for(; amt > 0; amt--)
-			{
-				if (timer >= 0)
+			else
+            {
+				for (int i = 0; i < 3600; i++)
 				{
-					timer++;
-					if (amt == 1)
-						NetMessage.SendData(MessageID.TileEntitySharing, -1, -1, null, ID, Position.X, Position.Y);
-				}
-				if (timer % 20 == 0)
-				{
-					Vector2 position = new Vector2(whereX * 16 + 16, whereY * 16);
-					if (Main.rand.Next(amt) == 0)
+					if (WorldGen.InWorld(whereX, Position.Y + i, 10) && Main.tile[whereX, Position.Y + i].active() && Main.tile[whereX + 1, Position.Y + i].active() && Main.tile[whereX, Position.Y + i].type == TileType<PotGeneratorTile>() && Main.tile[whereX + 1, Position.Y + i].type == TileType<PotGeneratorTile>())
 					{
-						if(playerNear)
-						{
-							if (Main.player.Count(x => x.Distance(position) < 1600f) <= 0)
-							{
-								playerNear = false;
-							}
-							else
-								Projectile.NewProjectile(position, Vector2.Zero, ProjectileType<PotProjectile>(), 0, 0, Main.myPlayer, 1, style);
-						}
+						amt++;
 					}
-					// Sending 86 aka, TileEntitySharing, triggers NetSend. Think of it like manually calling sync.;
+					else
+					{
+						break;
+					}
 				}
-				if (timer >= 3600)
+				Vector2 position = new Vector2(whereX * 16 + 16, whereY * 16);
+				bool playerNear = true;
+				if (Main.player.Count(x => x.Distance(position) < 1280f) <= 0)
 				{
-					timer = -1;
+					playerNear = false;
+				}
+				for (; amt > 0; amt--)
+				{
+					if (timer >= 0)
+					{
+						timer++;
+						netUpdate = true;
+					}
+					if (timer % 20 == 0)
+					{
+						if (playerNear)
+						{
+							if (Main.rand.NextBool(amt * 2))
+							{
+								Projectile.NewProjectile(position, Vector2.Zero, ProjectileType<PotProjectile>(), 0, 0, Main.myPlayer, 1, style);
+							}
+						}
+						// Sending 86 aka, TileEntitySharing, triggers NetSend. Think of it like manually calling sync.;
+					}
+					if (timer >= 3600)
+					{
+						timer = -1;
+						netUpdate = true;
+					}
+					if (timer == -1)
+					{
+						timer = -2;
+						//WorldGen.PlaceTile(whereX, whereY, mod.TileType("SkyPots"), false, false, -1, style);
+						Projectile.NewProjectile(position, Vector2.Zero, ProjectileType<PotProjectile>(), 0, 0, Main.myPlayer, 0, style);
+						netUpdate = true;
+					}
+					if (timer == -2 && !Main.tile[whereX, whereY].active() && !Main.tile[whereX + 1, whereY].active() && !Main.tile[whereX, whereY - 1].active() && !Main.tile[whereX + 1, whereY - 1].active())
+					{
+						timer = 0;
+						style = Main.rand.Next(9);
+						netUpdate = true;
+					}
+				}
+				if (!playerNear)
+					netUpdate = false;
+			}
+			if(netUpdate)
+            {
+				updateTimer++;
+				if(updateTimer % 10 == 0 || forceUpdate)
 					NetMessage.SendData(MessageID.TileEntitySharing, -1, -1, null, ID, Position.X, Position.Y);
-				}
-				if (timer == -1)
-				{
-					timer = -2;
-
-					//WorldGen.PlaceTile(whereX, whereY, mod.TileType("SkyPots"), false, false, -1, style);
-					Vector2 position = new Vector2(whereX * 16 + 16, whereY * 16);
-					Projectile.NewProjectile(position, Vector2.Zero, ProjectileType<PotProjectile>(), 0, 0, Main.myPlayer, 0, style);
-					NetMessage.SendData(MessageID.TileEntitySharing, -1, -1, null, ID, Position.X, Position.Y);
-				}
-				if (timer == -2 && !Main.tile[whereX, whereY].active() && !Main.tile[whereX + 1, whereY].active() && !Main.tile[whereX, whereY - 1].active() && !Main.tile[whereX + 1, whereY - 1].active())
-				{
-					timer = 0;
-					style = Main.rand.Next(9);
-					NetMessage.SendData(MessageID.TileEntitySharing, -1, -1, null, ID, Position.X, Position.Y);
-				}
-				if (Main.tile[whereX, whereY].active() || Main.tile[whereX + 1, whereY].active() || Main.tile[whereX, whereY - 1].active() || Main.tile[whereX + 1, whereY - 1].active())
-				{
-					timer = -2;
-					if (amt == 1)
-						NetMessage.SendData(MessageID.TileEntitySharing, -1, -1, null, ID, Position.X, Position.Y);
-				}
 			}
 		}
 
@@ -370,7 +375,7 @@ namespace SOTS.Items.Otherworld
 		public override bool ValidTile(int i, int j)
 		{
 			Tile tile = Main.tile[i, j];
-			return tile.active() && tile.type == (ushort)mod.TileType("PotGeneratorTile") && tile.frameX == 0 && tile.frameY == 0;
+			return tile.active() && tile.type == (ushort)ModContent.TileType<PotGeneratorTile>() && tile.frameX == 0 && tile.frameY == 0;
 		}
 
 		public override int Hook_AfterPlacement(int i, int j, int type, int style, int direction)
@@ -387,11 +392,7 @@ namespace SOTS.Items.Otherworld
 	}
 	public class PotProjectile : ModProjectile
 	{
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Pot Projectile"); //Do you enjoy how all my net sycning is done via projectiles?
-		}
-		public override void SetDefaults()
+		public override void SetDefaults() //Do you enjoy how all my net sycning is done via projectiles?
 		{
 			projectile.alpha = 255;
 			projectile.timeLeft = 24;
@@ -422,8 +423,8 @@ namespace SOTS.Items.Otherworld
 			color.A = 0;
 			if (projectile.ai[0] == 0)
 			{
-				WorldGen.PlaceTile(i, j, mod.TileType("SkyPots"), false, false, -1, (int)projectile.ai[1]);
-				if(Main.netMode != 1)
+				WorldGen.PlaceTile(i, j, TileType<SkyPots>(), false, false, -1, (int)projectile.ai[1]);
+				if(Main.netMode != NetmodeID.MultiplayerClient)
 					NetMessage.SendTileSquare(Main.myPlayer, i, j, 3);
 				Main.PlaySound(SoundID.Item4, projectile.Center);
 				Vector2 position = projectile.Center;
@@ -451,7 +452,7 @@ namespace SOTS.Items.Otherworld
 					int type2 = 132;
 					if (white != color)
 						type = type2;
-					if (Main.rand.Next(30) == 0)
+					if (Main.rand.NextBool(30))
 					{
 						int num1 = Dust.NewDust(new Vector2(position.X + circularLocation.X - 4, position.Y + circularLocation.Y - 4), 4, 4, type, 0, 0, 0, color);
 						Main.dust[num1].noGravity = true;

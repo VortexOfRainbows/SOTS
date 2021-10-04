@@ -1,5 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Dusts;
+using SOTS.Items.Fragments;
 using System;
 using System.IO;
 using System.Linq;
@@ -26,28 +28,22 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override void SetDefaults()
 		{
+			item.CloneDefaults(ItemID.StoneBlock);
 			item.width = 36;
 			item.height = 40;
-			item.maxStack = 999;
-			item.useTurn = true;
-			item.autoReuse = true;
-			item.useAnimation = 15;
-			item.useTime = 10;
-			item.useStyle = 1;
-			item.rare = 9;
+			item.rare = ItemRarityID.Cyan;
 			item.value = Item.sellPrice(0, 20, 0, 0);
-			item.consumable = true;
-			item.createTile = mod.TileType("TransmutationAltarTile");
+			item.createTile = TileType<TransmutationAltarTile>();
 		}
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "PrecariousCluster", 1);
-			recipe.AddIngredient(null, "TwilightShard", 20);
-			recipe.AddIngredient(null, "OtherworldlyAlloy", 20);
-			recipe.AddIngredient(null, "HardlightAlloy", 10);
-			recipe.AddIngredient(null, "StarlightAlloy", 10);
-			recipe.AddTile(mod.TileType("HardlightFabricatorTile"));
+			recipe.AddIngredient(ItemType<PrecariousCluster>(), 1);
+			recipe.AddIngredient(ItemType<TwilightShard>(), 20);
+			recipe.AddIngredient(ItemType<OtherworldlyAlloy>(), 20);
+			recipe.AddIngredient(ItemType<HardlightAlloy>(), 10);
+			recipe.AddIngredient(ItemType<StarlightAlloy>(), 10);
+			recipe.AddTile(TileType<HardlightFabricatorTile>());
 			recipe.SetResult(this, 1);
 			recipe.AddRecipe();
 		}
@@ -55,97 +51,97 @@ namespace SOTS.Items.Otherworld.FromChests
         {
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.TinBar, 1);
-			recipe.AddTile(mod.TileType("TransmutationAltarTile"));
+			recipe.AddTile(TileType<TransmutationAltarTile>());
 			recipe.SetResult(ItemID.CopperBar, 1);
 			recipe.AddRecipe();
 
 			recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.CopperBar, 1);
-			recipe.AddTile(mod.TileType("TransmutationAltarTile"));
+			recipe.AddTile(TileType<TransmutationAltarTile>());
 			recipe.SetResult(ItemID.TinBar, 1);
 			recipe.AddRecipe();
 
 			recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.IronBar, 1);
-			recipe.AddTile(mod.TileType("TransmutationAltarTile"));
+			recipe.AddTile(TileType<TransmutationAltarTile>());
 			recipe.SetResult(ItemID.LeadBar, 1);
 			recipe.AddRecipe();
 
 			recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.LeadBar, 1);
-			recipe.AddTile(mod.TileType("TransmutationAltarTile"));
+			recipe.AddTile(TileType<TransmutationAltarTile>());
 			recipe.SetResult(ItemID.IronBar, 1);
 			recipe.AddRecipe();
 
 			recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.SilverBar, 1);
-			recipe.AddTile(mod.TileType("TransmutationAltarTile"));
+			recipe.AddTile(TileType<TransmutationAltarTile>());
 			recipe.SetResult(ItemID.TungstenBar, 1);
 			recipe.AddRecipe();
 
 			recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.TungstenBar, 1);
-			recipe.AddTile(mod.TileType("TransmutationAltarTile"));
+			recipe.AddTile(TileType<TransmutationAltarTile>());
 			recipe.SetResult(ItemID.SilverBar, 1);
 			recipe.AddRecipe();
 
 			recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.GoldBar, 1);
-			recipe.AddTile(mod.TileType("TransmutationAltarTile"));
+			recipe.AddTile(TileType<TransmutationAltarTile>());
 			recipe.SetResult(ItemID.PlatinumBar, 1);
 			recipe.AddRecipe();
 
 			recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.PlatinumBar, 1);
-			recipe.AddTile(mod.TileType("TransmutationAltarTile"));
+			recipe.AddTile(TileType<TransmutationAltarTile>());
 			recipe.SetResult(ItemID.GoldBar, 1);
 			recipe.AddRecipe();
 
 			recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.CopperOre, 3);
-			recipe.AddTile(mod.TileType("TransmutationAltarTile"));
+			recipe.AddTile(TileType<TransmutationAltarTile>());
 			recipe.SetResult(ItemID.IronOre, 1);
 			recipe.AddRecipe();
 
 			recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.IronOre, 3);
-			recipe.AddTile(mod.TileType("TransmutationAltarTile"));
+			recipe.AddTile(TileType<TransmutationAltarTile>());
 			recipe.SetResult(ItemID.SilverOre, 1);
 			recipe.AddRecipe();
 
 			recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.SilverOre, 3);
-			recipe.AddTile(mod.TileType("TransmutationAltarTile"));
+			recipe.AddTile(TileType<TransmutationAltarTile>());
 			recipe.SetResult(ItemID.GoldOre, 1);
 			recipe.AddRecipe();
 
 			recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.TinOre, 3);
-			recipe.AddTile(mod.TileType("TransmutationAltarTile"));
+			recipe.AddTile(TileType<TransmutationAltarTile>());
 			recipe.SetResult(ItemID.LeadOre, 1);
 			recipe.AddRecipe();
 
 			recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.LeadOre, 3);
-			recipe.AddTile(mod.TileType("TransmutationAltarTile"));
+			recipe.AddTile(TileType<TransmutationAltarTile>());
 			recipe.SetResult(ItemID.TungstenOre, 1);
 			recipe.AddRecipe();
 
 			recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.TungstenOre, 3);
-			recipe.AddTile(mod.TileType("TransmutationAltarTile"));
+			recipe.AddTile(TileType<TransmutationAltarTile>());
 			recipe.SetResult(ItemID.PlatinumOre, 1);
 			recipe.AddRecipe();
 
 			recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.DemoniteBar, 1);
-			recipe.AddTile(mod.TileType("TransmutationAltarTile"));
+			recipe.AddTile(TileType<TransmutationAltarTile>());
 			recipe.SetResult(ItemID.CrimtaneBar, 1);
 			recipe.AddRecipe();
 
 			recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.CrimtaneBar, 1);
-			recipe.AddTile(mod.TileType("TransmutationAltarTile"));
+			recipe.AddTile(TileType<TransmutationAltarTile>());
 			recipe.SetResult(ItemID.DemoniteBar, 1);
 			recipe.AddRecipe();
 		}
@@ -166,12 +162,12 @@ namespace SOTS.Items.Otherworld.FromChests
 			name.SetDefault("Transmutation Altar");
 			AddMapEntry(new Color(125, 55, 55), name);
 			disableSmartCursor = true;
-			dustType = mod.DustType("AvaritianDust");
+			dustType = DustType<AvaritianDust>();
 			adjTiles = new int[] { TileID.DemonAltar };
 		}
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			int drop = mod.ItemType("TransmutationAltar");
+			int drop = ItemType<TransmutationAltar>();
 			Item.NewItem(i * 16, j * 16, 48, 32, drop);
 			ModContent.GetInstance<TransmutationAltarStorage>().Kill(i, j);
 		}
@@ -272,7 +268,7 @@ namespace SOTS.Items.Otherworld.FromChests
 				}
 				if (Main.myPlayer == player.whoAmI)
 				{
-					Projectile.NewProjectile(pos, Vector2.Zero, mod.ProjectileType("UndoParticles"), 0, 0, Main.myPlayer, i, j);
+					Projectile.NewProjectile(pos, Vector2.Zero, ModContent.ProjectileType<UndoParticles>(), 0, 0, Main.myPlayer, i, j);
 				}
 			}
 
@@ -314,7 +310,7 @@ namespace SOTS.Items.Otherworld.FromChests
 			}
 			Texture2D texture;
 			float counter = Main.GlobalTime * (40f / (1 + 0.1f * (totalItems +  entity.itemAmountsArray[0])));
-			int[] alpha255Items = new int[] {mod.ItemType("DissolvingAether"), mod.ItemType("DissolvingNature") , mod.ItemType("DissolvingAurora") , mod.ItemType("DissolvingEarth"), mod.ItemType("PrecariousCluster") };
+			//int[] alpha255Items = new int[] {mod.ItemType("DissolvingAether"), mod.ItemType("DissolvingNature") , mod.ItemType("DissolvingAurora") , mod.ItemType("DissolvingEarth"), mod.ItemType("PrecariousCluster") };
 			int currentItem = 0;
 			for (int l = 1; l < amountOfUniqueItems; l++)
 			{
@@ -412,7 +408,7 @@ namespace SOTS.Items.Otherworld.FromChests
 					Vector2 circularLocation = new Vector2(-Main.rand.Next(10), 0).RotatedBy(MathHelper.ToRadians(k));
 					circularLocation += new Vector2(-Main.rand.Next(-1, 2), Main.rand.Next(-1, 2));
 
-					int num1 = Dust.NewDust(new Vector2(position.X + circularLocation.X - 4, position.Y + circularLocation.Y - 4), 4, 4, mod.DustType("CopyDust4"), 0, 0, 0, color);
+					int num1 = Dust.NewDust(new Vector2(position.X + circularLocation.X - 4, position.Y + circularLocation.Y - 4), 4, 4, DustType<CopyDust4>(), 0, 0, 0, color);
 					Main.dust[num1].velocity = circularLocation;
 					Main.dust[num1].noGravity = true;
 					Main.dust[num1].fadeIn = 0.4f;
@@ -424,7 +420,7 @@ namespace SOTS.Items.Otherworld.FromChests
 					Vector2 circularLocation = new Vector2(-Main.rand.Next(1, 5), 0).RotatedBy(MathHelper.ToRadians(k));
 					circularLocation += new Vector2(-Main.rand.Next(-1, 2), Main.rand.Next(-1, 2));
 
-					int num1 = Dust.NewDust(new Vector2(position.X + circularLocation.X - 4, position.Y + circularLocation.Y - 4), 4, 4, mod.DustType("CopyDust4"), 0, 0, 0, color);
+					int num1 = Dust.NewDust(new Vector2(position.X + circularLocation.X - 4, position.Y + circularLocation.Y - 4), 4, 4, DustType<CopyDust4>(), 0, 0, 0, color);
 					Main.dust[num1].velocity = circularLocation * 0.7f;
 					Main.dust[num1].noGravity = true;
 					Main.dust[num1].fadeIn = 0.4f;
@@ -441,7 +437,7 @@ namespace SOTS.Items.Otherworld.FromChests
 					Vector2 circularLocation = new Vector2(-Main.rand.Next(10), 0).RotatedBy(MathHelper.ToRadians(k));
 					circularLocation += new Vector2(-Main.rand.Next(-1, 2), Main.rand.Next(-1, 2));
 
-					int num1 = Dust.NewDust(new Vector2(position.X + circularLocation.X - 4, position.Y + circularLocation.Y - 4), 4, 4, mod.DustType("CopyDust4"), 0, 0, 0, color);
+					int num1 = Dust.NewDust(new Vector2(position.X + circularLocation.X - 4, position.Y + circularLocation.Y - 4), 4, 4, DustType<CopyDust4>(), 0, 0, 0, color);
 					Main.dust[num1].velocity = circularLocation;
 					Main.dust[num1].noGravity = true;
 					Main.dust[num1].fadeIn = 0.4f;
@@ -452,7 +448,7 @@ namespace SOTS.Items.Otherworld.FromChests
 					Vector2 circularLocation = new Vector2(-Main.rand.Next(1, 5), 0).RotatedBy(MathHelper.ToRadians(k));
 					circularLocation += new Vector2(-Main.rand.Next(-1, 2), Main.rand.Next(-1, 2));
 
-					int num1 = Dust.NewDust(new Vector2(position.X + circularLocation.X - 4, position.Y + circularLocation.Y - 4), 4, 4, mod.DustType("CopyDust4"), 0, 0, 0, color);
+					int num1 = Dust.NewDust(new Vector2(position.X + circularLocation.X - 4, position.Y + circularLocation.Y - 4), 4, 4, DustType<CopyDust4>(), 0, 0, 0, color);
 					Main.dust[num1].velocity = circularLocation * 0.7f;
 					Main.dust[num1].noGravity = true;
 					Main.dust[num1].fadeIn = 0.4f;
@@ -473,13 +469,13 @@ namespace SOTS.Items.Otherworld.FromChests
 		{
 			if(timer == -2)
 			{
-				itemsArray[1] = mod.ItemType("HardlightAlloy");
+				itemsArray[1] = ItemType<HardlightAlloy>();
 				itemAmountsArray[1] = 1;
 				itemFrames[1] = 1;
-				itemsArray[2] = mod.ItemType("StarlightAlloy");
+				itemsArray[2] = ItemType<StarlightAlloy>();
 				itemAmountsArray[2] = 1;
 				itemFrames[2] = 1;
-				itemsArray[3] = mod.ItemType("OtherworldlyAlloy");
+				itemsArray[3] = ItemType<OtherworldlyAlloy>();
 				itemAmountsArray[3] = 1;
 				itemFrames[3] = 1;
 				timer = -1;
@@ -559,7 +555,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		public override bool ValidTile(int i, int j)
 		{
 			Tile tile = Main.tile[i, j];
-			return tile.active() && tile.type == (ushort)mod.TileType("TransmutationAltarTile") && tile.frameX == 0 && tile.frameY == 0;
+			return tile.active() && tile.type == (ushort)TileType<TransmutationAltarTile>() && tile.frameX == 0 && tile.frameY == 0;
 		}
 
 		public override int Hook_AfterPlacement(int i, int j, int type, int style, int direction)

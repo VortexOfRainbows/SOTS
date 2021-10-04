@@ -25,7 +25,7 @@ namespace SOTS.Projectiles
 				Color color = projectile.GetAlpha(lightColor) * ((float)(projectile.oldPos.Length - k) / (float)projectile.oldPos.Length);
 				color.A = 190;
 				float lengthTowards = Vector2.Distance(lastPosition, drawPos) / texture.Height / scale;
-				spriteBatch.Draw(texture, drawPos - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), null, color * scale * 0.8f, projectile.rotation, drawOrigin, new Vector2(1, lengthTowards) * scale, SpriteEffects.None, 0f);
+				spriteBatch.Draw(texture, drawPos - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), null, color * scale * 0.8f, projectile.rotation, drawOrigin, new Vector2(1, lengthTowards) * scale, projectile.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 				lastPosition = drawPos;
 			}
 			return true;
@@ -33,6 +33,7 @@ namespace SOTS.Projectiles
 		public override void SetDefaults()
         {
 			projectile.CloneDefaults(ProjectileID.Bullet);
+			projectile.light *= 0.5f;
 			projectile.aiStyle = -1;
 			projectile.penetrate = 6;
 			projectile.width = 10;
@@ -93,6 +94,7 @@ namespace SOTS.Projectiles
         bool runOnce = true;
         public override void AI()
 		{
+			projectile.spriteDirection = projectile.direction;
 			projectile.rotation = projectile.velocity.ToRotation() + 1.57f;
 			if (projectile.alpha > 0)
 				projectile.alpha -= 20;

@@ -28,6 +28,7 @@ using SOTS.NPCs.Boss.Advisor;
 using SOTS.Items.Banners;
 using Terraria.Graphics.Shaders;
 using SOTS.Items.Dyes;
+using SOTS.Items.Fragments;
 
 namespace SOTS
 {
@@ -105,16 +106,17 @@ namespace SOTS
 				yabhb.Call("hbFinishSingle", ModContent.NPCType<SubspaceSerpentHead>());
 			}
 			//Music Box Stuff
-			AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/PutridPinky"), ItemType("PutridPinkyMusicBox"), TileType("PutridPinkyMusicBoxTile"));
+			AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/PutridPinky"), ModContent.ItemType<PutridPinkyMusicBox>(), ModContent.TileType<PutridPinkyMusicBoxTile>());
 			//AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/Advisor"), ItemType("AdvisorMusicBox"), TileType("AdvisorMusicBoxTile"));
-			AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/Polaris"), ItemType("PolarisMusicBox"), TileType("PolarisMusicBoxTile"));
-			AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/SubspaceSerpent"), ItemType("SubspaceSerpentMusicBox"), TileType("SubspaceSerpentMusicBoxTile"));
-			AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/CursedPyramid"), ItemType("AncientPyramidMusicBox"), TileType("AncientPyramidMusicBoxTile"));
-			AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/Planetarium"), ItemType("PlanetariumMusicBox"), TileType("PlanetariumMusicBoxTile"));
-			AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/KnucklesTheme"), ItemType("KnucklesMusicBox"), TileType("KnucklesMusicBoxTile"));
+			AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/Polaris"), ModContent.ItemType<PolarisMusicBox>(), ModContent.TileType<PolarisMusicBoxTile>());
+			AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/SubspaceSerpent"), ModContent.ItemType<SubspaceSerpentMusicBox>(), ModContent.TileType<SubspaceSerpentMusicBoxTile>());
+			AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/CursedPyramid"), ModContent.ItemType<AncientPyramidMusicBox>(), ModContent.TileType<AncientPyramidMusicBoxTile>());
+			AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/Planetarium"), ModContent.ItemType<PlanetariumMusicBox>(), ModContent.TileType<PlanetariumMusicBoxTile>());
+			AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/KnucklesTheme"), ModContent.ItemType<KnucklesMusicBox>(), ModContent.TileType<KnucklesMusicBoxTile>()); //WHY THE FUCK
 			SOTSItem.LoadArrays();
 			SOTSTile.LoadArrays();
 			SOTSWall.LoadArrays();
+			SOTSPlayer.LoadArrays();
 			if(Main.netMode != NetmodeID.Server)
 			{
 				Ref<Effect> TPrismdyeRef = new Ref<Effect>(GetEffect("Effects/TPrismEffect"));
@@ -331,7 +333,7 @@ namespace SOTS
 			TransmutationAltar.AddTransmutationRecipes(this);
 
 			ModRecipe recipe = new ModRecipe(this);
-			recipe.AddIngredient(null, "Wormwood", 30);
+			recipe.AddIngredient(ModContent.ItemType<Wormwood>(), 30);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(ItemID.SlimeStaff, 1);
 			recipe.AddRecipe();
@@ -364,13 +366,13 @@ namespace SOTS
 			recipe.AddRecipe(); */
 			
 			recipe = new ModRecipe(this);
-			recipe.AddIngredient(null, "FragmentOfChaos", 125);
+			recipe.AddIngredient(ModContent.ItemType<FragmentOfChaos>(), 125);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.SetResult(ItemID.RodofDiscord, 1); //rod of discord
 			recipe.AddRecipe();
 			
 			recipe = new ModRecipe(this);
-			recipe.AddIngredient(null, "FragmentOfNature", 25);
+			recipe.AddIngredient(ModContent.ItemType<FragmentOfNature>(), 25);
 			recipe.AddIngredient(ItemID.HermesBoots, 1);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(ItemID.FlowerBoots, 1);

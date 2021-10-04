@@ -12,6 +12,7 @@ using SOTS.Items.Otherworld.FromChests;
 using SOTS.Items.Vibrant;
 using SOTS.Items.Otherworld;
 using Terraria.Graphics.Shaders;
+using System.Linq;
 
 namespace SOTS.Projectiles.Celestial
 {
@@ -187,7 +188,7 @@ namespace SOTS.Projectiles.Celestial
 			}
 			proj.active = false;
 			proj.Kill();
-			if (!capable && lastItem == item.type && item.active && !item.IsAir && !item.summon && !item.thrown && !item.channel && !SOTSPlayer.locketBlacklist.Contains(type) && (item.useStyle == 1 || item.useStyle == 5) && !subPlayer.servantIsVanity && !item.consumable)
+			if (!capable && lastItem == item.type && item.active && !item.IsAir && !item.summon && !item.thrown && !item.channel && !SOTSPlayer.locketBlacklist.Contains(type) && (item.useStyle == ItemUseStyleID.SwingThrow || item.useStyle == ItemUseStyleID.HoldingOut) && !subPlayer.servantIsVanity && !item.consumable)
 			{
 				subPlayer.foundItem = true;
 				float allSpeed = ItemLoader.UseTimeMultiplier(item, player) * PlayerHooks.UseTimeMultiplier(player, item);
@@ -198,7 +199,7 @@ namespace SOTS.Projectiles.Celestial
 					fireRate = FullUseTime;
 				}
 				int extraSpeed = 1;
-				if (item.useStyle == 1)
+				if (item.useStyle == ItemUseStyleID.SwingThrow)
 					extraSpeed++;
 				if (UseTime <= -item.reuseDelay + extraSpeed || UseTime > FullUseTime + 1)
 				{
@@ -226,9 +227,9 @@ namespace SOTS.Projectiles.Celestial
 							var flag2 = false;
 							if (sItem.type == ItemID.LaserMachinegun)
 								flag2 = true;
-							if (sItem.shoot > 0 && ProjectileID.Sets.TurretFeature[sItem.shoot] && player.altFunctionUse == 2)
+							if (sItem.shoot > ProjectileID.None && ProjectileID.Sets.TurretFeature[sItem.shoot] && player.altFunctionUse == 2)
 								flag2 = true;
-							if (sItem.shoot > 0 && ProjectileID.Sets.MinionTargettingFeature[sItem.shoot] && player.altFunctionUse == 2)
+							if (sItem.shoot > ProjectileID.None && ProjectileID.Sets.MinionTargettingFeature[sItem.shoot] && player.altFunctionUse == 2)
 								flag2 = true;
 							if (sItem.type != sbyte.MaxValue || !player.spaceGun)
 							{
@@ -468,7 +469,7 @@ namespace SOTS.Projectiles.Celestial
 				if (itemLocation != null && texture != null && UseTime != -1000 && UseTime <= FullUseTime && (!item.noUseGraphic || item.type == ModContent.ItemType<VibrantPistol>() || item.type == ModContent.ItemType<StarcoreAssaultRifle>()))
 				{
 					Vector2 location = itemLocation;
-					if (item.useStyle == 5)
+					if (item.useStyle == ItemUseStyleID.HoldingOut)
 					{
 						if (Item.staff[item.type])
 						{

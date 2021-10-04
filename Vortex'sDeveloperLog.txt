@@ -7,7 +7,8 @@ The following is my development plans :D
 4. Ghost Town to Evil Biome
 
 Known Bugs:
-1. Lag generates in multiplayer after a while of playing
+1. Lag generates in multiplayer after a while of playing. 
+	1. Seem to generate client-side not server side..?
 2. Not calling end/begin; mod compatability prims crash
 
 High Priority:
@@ -39,6 +40,20 @@ Low Priority:
 2. Mobile Fortress Generator: One for every tavernkeep armor set
 3. Electrolyte Seperator
 4. Wintry Traveler: Riptide Trident + Frigid Javelin
+
+10/4/21
+1. Various internal optimizations
+2. Bore bullets optain method changes
+3. Pot generator has now been significantly changed on how it functions in regards to performance.
+	1. No longer sends packets or spawn syncing projectiles while player is far away
+		1. Dust syncing projectile now spawn half as often, meaning less projectiles syncing packets
+	2. This means that it is overall less laggy, even in singleplayer
+	3. No longer sends packets when a block is above it
+		1. This fixes it from sending packets while the pot is finished too, which was unnecessary. 
+	4. Only sends 6 packets per second now instead of 60 packets per second
+		1. This makes it overall choppier but should be a worthwhile packet cut
+	5. Also fixed a bug that could cause it to send the same packet multiple times per frame
+		1. Which could previously results in over 100 packets per second per pot generator. Yikes
 
 10/3/21
 1. Rework bore bullets. Now sold from TM + has different effect
