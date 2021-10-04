@@ -35,7 +35,7 @@ namespace SOTS.Void
 		public override void Apply(Item item) => item.GetGlobalItem<PrefixItem>().extraVoid = _power;
         public override void ModifyValue(ref float valueMult)
 		{
-			float multiplier = 1.2f + _power / 10f;
+			float multiplier = 1.0f + _power / 50f;
 			valueMult *= multiplier;
 		}
 	}
@@ -70,7 +70,7 @@ namespace SOTS.Void
         }
         public override void ModifyValue(ref float valueMult)
 		{
-			float multiplier = 0.5f;
+			float multiplier = 0.9f;
 			valueMult *= multiplier;
 		}
 	}
@@ -106,7 +106,7 @@ namespace SOTS.Void
 		}
 		public override void ModifyValue(ref float valueMult)
 		{
-			float multiplier = 1.35f;
+			float multiplier = 1.03f;
 			valueMult *= multiplier;
 		}
 	}
@@ -141,7 +141,7 @@ namespace SOTS.Void
 		}
 		public override void ModifyValue(ref float valueMult)
 		{
-			float multiplier = 1.75f;
+			float multiplier = 1.07f;
 			valueMult *= multiplier;
 		}
 	}
@@ -178,7 +178,7 @@ namespace SOTS.Void
 		}
 		public override void ModifyValue(ref float valueMult)
 		{
-			float multiplier = 3.05f;
+			float multiplier = 1.16f;
 			valueMult *= multiplier;
 		}
 	}

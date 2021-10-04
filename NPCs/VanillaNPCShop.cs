@@ -15,6 +15,11 @@ namespace SOTS.NPCs.SoldStuff
 				shop[nextSlot] = ModContent.ItemType<SafetySwitch>();
 				nextSlot++;
 			}
+			if (Main.rand.NextBool(3) && Main.hardMode)
+			{
+				shop[nextSlot] = ModContent.ItemType<BoreBullet>();
+				nextSlot++;
+			}
 			if (Main.rand.NextBool(10) && NPC.downedPlantBoss)
 			{
 				shop[nextSlot] = ModContent.ItemType<Traingun>();
