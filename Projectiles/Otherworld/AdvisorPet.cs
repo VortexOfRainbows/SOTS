@@ -306,10 +306,10 @@ namespace SOTS.Projectiles.Otherworld
 			if (hasHitYet || !projectile.active || projectile.damage <= 0 || counter > 900f || SOTSPlayer.typhonBlacklist.Contains(projectile.type))
 				return;
 			Player player = Main.player[projectile.owner];
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			float distP = Vector2.Distance(player.Center, projectile.Center);
 			if (!player.active || distP > 2000f)
 				return;
-			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			if(modPlayer.petAdvisor && counter >= 5 && modPlayer.typhonRange > 0)
 			{
 				if (petAdvisorID == -1)
@@ -400,7 +400,7 @@ namespace SOTS.Projectiles.Otherworld
 				}
             }
         }
-		public void LaserTo(int advisorId, Projectile projectile, int extraAlpha)
+		public static void LaserTo(int advisorId, Projectile projectile, int extraAlpha)
         {
 			Player player = Main.player[projectile.owner];
 			int alpha = (int)(extraAlpha * 2.5 + 40);

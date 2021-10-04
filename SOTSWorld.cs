@@ -691,13 +691,13 @@ namespace SOTS
 			{
 				// Get a chest
 				var tile = Main.tile[chest.x, chest.y]; // the chest tile 
-				if (tile.type == mod.TileType("LockedStrangeChest") || tile.type == mod.TileType("LockedSkywareChest") || tile.type == mod.TileType("LockedMeteoriteChest"))
+				if (tile.type == ModContent.TileType<LockedStrangeChest>() || tile.type == ModContent.TileType<LockedSkywareChest>() || tile.type == ModContent.TileType<LockedMeteoriteChest>())
 				{
-					int type = tile.type == mod.TileType("LockedStrangeChest") ? 0 : tile.type == mod.TileType("LockedSkywareChest") ? 1 : 2;
+					int type = tile.type == ModContent.TileType<LockedStrangeChest>() ? 0 : tile.type == ModContent.TileType<LockedSkywareChest>() ? 1 : 2;
 					int slot = 39;
 					for (int i = 0; i < 39; i++)
 					{
-						if (chest.item[i].type == 0 && i < slot)
+						if (chest.item[i].type == ItemID.None && i < slot)
 						{
 							slot = i;
 						}
@@ -857,15 +857,15 @@ namespace SOTS
 				if (tile.type == ModContent.TileType<RuinedChestTile>())
 				{
 					int slot = 0;
-					chest.item[slot].SetDefaults(mod.ItemType("WorldgenScanner"));
+					chest.item[slot].SetDefaults(ModContent.ItemType<WorldgenScanner>());
 					slot++;
 				}
-				if (tile.type == mod.TileType("PyramidChestTile"))
+				if (tile.type == ModContent.TileType<PyramidChestTile>())
 				{
 					int slot = 39;
 					for(int i = 0; i < 39; i++)
 					{
-						if(chest.item[i].type == 0 && i < slot)
+						if(chest.item[i].type == ItemID.None && i < slot)
 						{
 							slot = i;
 						}
@@ -874,52 +874,52 @@ namespace SOTS
 					int rand = WorldGen.genRand.Next(12);
 					if(rand == 0)
 					{
-						chest.item[slot].SetDefaults(mod.ItemType("Aten"));
+						chest.item[slot].SetDefaults(ModContent.ItemType<Aten>());
 						slot++;
 					}
 					if(rand == 1)
 					{
-						chest.item[slot].SetDefaults(mod.ItemType("EmeraldBracelet"));
+						chest.item[slot].SetDefaults(ModContent.ItemType<EmeraldBracelet>());
 						slot++;
 					}
 					if(rand == 2)
 					{
-						chest.item[slot].SetDefaults(mod.ItemType("ImperialPike"));
+						chest.item[slot].SetDefaults(ModContent.ItemType<ImperialPike>());
 						slot++;
 					}
 					if(rand == 3)
 					{
-						chest.item[slot].SetDefaults(mod.ItemType("PharaohsCane"));
+						chest.item[slot].SetDefaults(ModContent.ItemType<PharaohsCane>());
 						slot++;
 					}
 					if(rand == 4)
 					{
-						chest.item[slot].SetDefaults(mod.ItemType("PitatiLongbow"));
+						chest.item[slot].SetDefaults(ModContent.ItemType<PitatiLongbow>());
 						slot++;
 					}
 					if(rand == 5)
 					{
-						chest.item[slot].SetDefaults(mod.ItemType("RoyalMagnum"));
+						chest.item[slot].SetDefaults(ModContent.ItemType<RoyalMagnum>());
 						slot++;
 					}
 					if(rand == 6)
 					{
-						chest.item[slot].SetDefaults(mod.ItemType("SandstoneEdge"));
+						chest.item[slot].SetDefaults(ModContent.ItemType<SandstoneEdge>());
 						slot++;
 					}
 					if(rand == 7)
 					{
-						chest.item[slot].SetDefaults(mod.ItemType("SandstoneWarhammer"));
+						chest.item[slot].SetDefaults(ModContent.ItemType<SandstoneWarhammer>());
 						slot++;
 					}
 					if(rand == 8)
 					{
-						chest.item[slot].SetDefaults(mod.ItemType("ShiftingSands"));
+						chest.item[slot].SetDefaults(ModContent.ItemType<ShiftingSands>());
 						slot++;
 					}
 					if(rand == 9)
 					{
-						chest.item[slot].SetDefaults(mod.ItemType("SunlightAmulet"));
+						chest.item[slot].SetDefaults(ModContent.ItemType<SunlightAmulet>());
 						slot++;
 					}
 					if(rand == 10)

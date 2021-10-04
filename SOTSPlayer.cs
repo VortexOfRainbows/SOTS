@@ -333,7 +333,7 @@ namespace SOTS
 				if (BlinkType == 1 && !player.HasBuff(BuffID.ChaosState) && !player.mount.Active && !(player.grappling[0] >= 0) && !player.frozen)
 				{
 					Vector2 toCursor = Main.MouseWorld - player.Center;
-					Projectile.NewProjectile(player.Center, toCursor.SafeNormalize(Vector2.Zero), mod.ProjectileType("Blink1"), 0, 0, player.whoAmI);
+					Projectile.NewProjectile(player.Center, toCursor.SafeNormalize(Vector2.Zero), ModContent.ProjectileType<Blink1>(), 0, 0, player.whoAmI);
 				}
 			}
 			if (SOTS.ArmorSetHotKey.JustPressed)

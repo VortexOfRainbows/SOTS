@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
+using SOTS.Items.Void;
 using System;
 using Terraria;
 using Terraria.DataStructures;
@@ -282,13 +283,13 @@ namespace SOTS.Items.Otherworld
                         Item.NewItem(i * 16, j * 16, 16, 16, ItemID.TitanPotion, 1, false, 0, false, false);
                 }
             }
-            else if (Main.netMode == 2 && Main.rand.Next(30) == 0)
+            else if (Main.netMode == NetmodeID.Server && Main.rand.Next(30) == 0)
             {
                 Item.NewItem(i * 16, j * 16, 16, 16, 2997, 1, false, 0, false, false);
             }
             else if(Main.rand.Next(50) == 0 || (num == 3 && Main.rand.Next(10) == 0))
             {
-                Item.NewItem(i * 16, j * 16, 16, 16, mod.ItemType("DigitalCornSyrup"), 1, false, 0, false, false);
+                Item.NewItem(i * 16, j * 16, 16, 16, ItemType<DigitalCornSyrup>(), 1, false, 0, false, false);
             }
             else
             {
