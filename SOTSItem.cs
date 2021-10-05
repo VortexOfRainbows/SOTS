@@ -602,7 +602,14 @@ namespace SOTS
 		public int glowOffsetX = 0;
 		public override bool InstancePerEntity => true;
 		public override bool CloneNewInstances => true;
-	}
+        /*public override GlobalItem Clone(Item item, Item itemClone)
+		{
+			ItemUseGlow myClone = (ItemUseGlow)base.Clone(item, itemClone);
+			myClone.glowOffsetY = glowOffsetY;
+			myClone.glowOffsetX = glowOffsetX;
+			return myClone;
+        }*/
+    }
 	public class PlayerUseGlow : ModPlayer
 	{
 		public static readonly PlayerLayer ItemUseGlow = new PlayerLayer("SOTS", "ItemUseGlow", PlayerLayer.HeldItem, delegate (PlayerDrawInfo drawInfo)
@@ -621,7 +628,7 @@ namespace SOTS
 				if (texture != null && (drawPlayer.itemAnimation > 0 || isTwilightPole))
 				{
 					Vector2 location = drawInfo.itemLocation;
-					if (item.useStyle == 5)
+					if (item.useStyle == ItemUseStyleID.HoldingOut)
 					{
 						if (Item.staff[item.type])
 						{

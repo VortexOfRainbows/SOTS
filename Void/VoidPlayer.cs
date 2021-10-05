@@ -13,6 +13,7 @@ using SOTS.Buffs;
 using Terraria.ID;
 using SOTS.Projectiles.Inferno;
 using SOTS.Items.Void;
+using SOTS.Projectiles.Pyramid;
 
 namespace SOTS.Void
 {
@@ -219,17 +220,18 @@ namespace SOTS.Void
 		}
 		public void UseSouls()
 		{
-			if (Main.mouseRight && Main.mouseRightRelease && player.ownedProjectileCounts[mod.ProjectileType("HarvestingStrike")] < 1)
+			if (Main.mouseRight && Main.mouseRightRelease && player.ownedProjectileCounts[ProjectileType<HarvestingStrike>()] < 1)
 			{
 				if (Main.myPlayer == player.whoAmI)
-					Projectile.NewProjectile(Main.MouseWorld, Vector2.Zero, mod.ProjectileType("HarvestingStrike"), 1, 0, player.whoAmI);
+					Projectile.NewProjectile(Main.MouseWorld, Vector2.Zero, ProjectileType<HarvestingStrike>(), 1, 0, player.whoAmI);
 			}
 		}
 		public void ColorUpdate()
 		{
 			soulColorCounter++;
-			destabilizeColor = Color.Lerp(new Color(80, 190, 80), new Color(64, 178, 172), 0.5f + (float)Math.Sin(MathHelper.ToRadians(soulColorCounter * 1.25f)) * 0.5f);
-			soulLootingColor = Color.Lerp(new Color(66, 56, 111), new Color(171, 3, 35), 0.5f + (float)Math.Sin(MathHelper.ToRadians(soulColorCounter * 1.5f)) * 0.5f);
+			float toRadians = MathHelper.ToRadians(soulColorCounter);
+			destabilizeColor = Color.Lerp(new Color(80, 190, 80), new Color(64, 178, 172), 0.5f + (float)Math.Sin(toRadians * 1.25f) * 0.5f);
+			soulLootingColor = Color.Lerp(new Color(66, 56, 111), new Color(171, 3, 35), 0.5f + (float)Math.Sin(toRadians * 1.5f) * 0.5f);
 			float newAi = soulColorCounter * 3 / 13f;
 			double frequency = 0.3;
 			double center = 200;
@@ -238,14 +240,14 @@ namespace SOTS.Void
 			double grn = Math.Sin(frequency * newAi + 2.0) * width + center;
 			double blu = Math.Sin(frequency * newAi + 4.0) * width + center;
 			pastelRainbow = new Color((int)red, (int)grn, (int)blu);
-			natureColor = Color.Lerp(new Color(65, 180, 80), new Color(180, 240, 180), 0.5f + (float)Math.Sin(MathHelper.ToRadians(soulColorCounter * 1.0f)) * 0.5f);
-			EarthColor = Color.Lerp(new Color(230, 220, 145), new Color(255, 190, 0), 0.5f + (float)Math.Sin(MathHelper.ToRadians(soulColorCounter * 2.5f)) * 1.2f);
-			TideColor = Color.Lerp(new Color(64, 72, 178), new Color(75, 100, 255), 0.5f + (float)Math.Sin(MathHelper.ToRadians(soulColorCounter * 0.5f)) * 0.5f);
-			PermafrostColor = Color.Lerp(new Color(200, 250, 250), new Color(150, 180, 240), 0.5f + (float)Math.Sin(MathHelper.ToRadians(soulColorCounter * 0.5f)) * 0.5f);
+			natureColor = Color.Lerp(new Color(65, 180, 80), new Color(180, 240, 180), 0.5f + (float)Math.Sin(toRadians) * 0.5f);
+			EarthColor = Color.Lerp(new Color(230, 220, 145), new Color(255, 190, 0), 0.5f + (float)Math.Sin(toRadians * 2.5f) * 1.2f);
+			TideColor = Color.Lerp(new Color(64, 72, 178), new Color(75, 100, 255), 0.5f + (float)Math.Sin(toRadians * 0.5f) * 0.5f);
+			PermafrostColor = Color.Lerp(new Color(200, 250, 250), new Color(150, 180, 240), 0.5f + (float)Math.Sin(toRadians * 0.5f) * 0.5f);
 			Color color = new Color(167, 45, 225, 0);
 			Color color2 = new Color(64, 178, 172, 0);
-			OtherworldColor = Color.Lerp(color, color2, 0.5f + (float)Math.Sin(MathHelper.ToRadians(soulColorCounter * 1.0f)) * 0.5f);
-			VibrantColor = Color.Lerp(new Color(80, 120, 220, 0), new Color(180, 230, 100, 0), 0.5f + (float)Math.Sin(MathHelper.ToRadians(soulColorCounter * 2.5f)) * 0.5f);
+			OtherworldColor = Color.Lerp(color, color2, 0.5f + (float)Math.Sin(toRadians * 0.5f));
+			VibrantColor = Color.Lerp(new Color(80, 120, 220, 0), new Color(180, 230, 100, 0), 0.5f + (float)Math.Sin(toRadians * 2.5f) * 0.5f);
 
 			Color LemegetonRed = new Color(255, 82, 97);
 			Color LemegetonGreen = new Color(104, 229, 101);
