@@ -123,11 +123,6 @@ namespace SOTS.Projectiles.BiomeChest
 					}
 					triggerAnim();
 				}
-				if (projectile.owner == Main.myPlayer)
-				{
-					if(counter % 10 == 0)
-						projectile.netUpdate = true;
-				}
 				if ((int)projectile.ai[1] != -1)
 				{
 					NPC target = Main.npc[(int)projectile.ai[1]];

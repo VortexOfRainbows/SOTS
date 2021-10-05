@@ -19,11 +19,17 @@ using SOTS.Projectiles.Pyramid;
 using SOTS.Projectiles.Otherworld;
 using SOTS.Items.OreItems;
 using SOTS.Items.Otherworld.FromChests;
+using System.Linq;
 
 namespace SOTS.NPCs.ArtificialDebuffs
 {
     public class DebuffNPC : GlobalNPC
     {
+        public static int[] miniBosses;
+        public static void LoadArrays()
+        {
+            miniBosses = new int[] { NPCID.Mothron, NPCID.IceQueen, NPCID.SantaNK1, NPCID.Everscream, NPCID.MourningWood, NPCID.Pumpking, NPCID.GoblinSummoner, NPCID.MartianSaucerCore, NPCID.LunarTowerSolar, NPCID.LunarTowerNebula, NPCID.LunarTowerStardust, NPCID.LunarTowerVortex };
+        }
         public override bool InstancePerEntity => true;
         public int PlatinumCurse = 0;
         public int HarvestCurse = 0;
@@ -329,8 +335,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 amt += 10;
             if (npc.rarity == 5)
                 amt += 10;
-            List<int> minibosses = new List<int>() { NPCID.Mothron , NPCID.IceQueen , NPCID.SantaNK1 , NPCID.Everscream, NPCID.MourningWood, NPCID.Pumpking, NPCID.GoblinSummoner, NPCID.MartianSaucerCore, NPCID.LunarTowerSolar, NPCID.LunarTowerNebula, NPCID.LunarTowerStardust , NPCID.LunarTowerVortex };
-            if (minibosses.Contains(npc.type))
+            if (miniBosses.Contains(npc.type))
             {
                 amt += 50;
             }

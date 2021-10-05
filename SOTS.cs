@@ -117,6 +117,7 @@ namespace SOTS
 			SOTSTile.LoadArrays();
 			SOTSWall.LoadArrays();
 			SOTSPlayer.LoadArrays();
+			DebuffNPC.LoadArrays();
 			if(Main.netMode != NetmodeID.Server)
 			{
 				Ref<Effect> TPrismdyeRef = new Ref<Effect>(GetEffect("Effects/TPrismEffect"));
