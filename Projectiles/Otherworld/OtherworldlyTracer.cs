@@ -9,10 +9,6 @@ namespace SOTS.Projectiles.Otherworld
 {
 	public class OtherworldlyTracer : ModProjectile
 	{
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Otherworldly Tracer");
-		}
 		public override void SetDefaults()
 		{
 			projectile.width = 58;
@@ -26,7 +22,11 @@ namespace SOTS.Projectiles.Otherworld
 			projectile.ranged = true;
 			projectile.ignoreWater = true;
 		}
-		public override void SendExtraAI(BinaryWriter writer)
+        public override bool CanHitPlayer(Player target)
+        {
+            return false;
+        }
+        public override void SendExtraAI(BinaryWriter writer)
 		{
 			writer.Write(projectile.alpha);
 			writer.Write(projectile.timeLeft);

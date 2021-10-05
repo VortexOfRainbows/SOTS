@@ -55,6 +55,7 @@ Low Priority:
 		1. This makes it overall choppier but should be a worthwhile packet cut
 	5. Also fixed a bug that could cause it to send the same packet multiple times per frame
 		1. Which could previously results in over 100 packets per second per pot generator. Yikes
+4. Projectiles that stick to enemies are more better at netsyncing
 
 10/3/21
 1. Rework bore bullets. Now sold from TM + has different effect

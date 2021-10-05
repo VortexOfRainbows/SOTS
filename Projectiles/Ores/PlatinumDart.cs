@@ -65,7 +65,6 @@ namespace SOTS.Projectiles.Ores
 			{
 				NPC target = Main.npc[(int)projectile.ai[1]];
 				projectile.alpha += projectile.timeLeft % 10 == 0 ? 1 : 0;
-				projectile.netUpdate = true;
 				if (projectile.alpha >= 200)
 				{
 					projectile.Kill();
@@ -114,7 +113,8 @@ namespace SOTS.Projectiles.Ores
 			{
 				projectile.Kill();
 			}
-        }
+			projectile.netUpdate = true;
+		}
 		public override void Kill(int timeLeft)
         {
 			if(timeLeft > 1)

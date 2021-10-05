@@ -69,7 +69,6 @@ namespace SOTS.Projectiles
 			}
 			if(latch && enemyIndex != -1)
 			{
-				projectile.netUpdate = true;
 				NPC target = Main.npc[enemyIndex];
 				if(target.active && !target.friendly)
 				{
@@ -159,6 +158,7 @@ namespace SOTS.Projectiles
 				latch = false;
 				projectile.tileCollide = true;
 			}
+			projectile.netUpdate = true;
         }
 		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough) 
 		{
