@@ -331,7 +331,7 @@ namespace SOTS.Items.Pyramid
 
 							}
 						}
-						int item = Item.NewItem((int)projectile.position.X, (int)projectile.position.Y, projectile.width, projectile.height, ModContent.ItemType<RubyKeystone>(), 1);
+						int item = Item.NewItem((int)projectile.position.X, (int)projectile.position.Y, projectile.width, projectile.height, ModContent.ItemType<RubyKeystone>(), 1, false, 0, true);
 						NetMessage.SendData(MessageID.SyncItem, -1, -1, null, item, 1f, 0.0f, 0.0f, 0, 0, 0);
 					}
 					Main.PlaySound(SoundID.Shatter, (int)projectile.Center.X, (int)projectile.Center.Y, 0, 1.10f, -0.1f);

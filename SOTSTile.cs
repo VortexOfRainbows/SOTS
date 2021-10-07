@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework;
 using static Terraria.ModLoader.ModContent;
 using SOTS.Items.Pyramid.AltPyramidBlocks;
 using System.Linq;
+using SOTS.Items.Tide;
 
 namespace SOTS
 {
@@ -100,25 +101,29 @@ namespace SOTS
         }
         public bool IsValidTileAbove(int i, int j, int type)
         {
-            if (Main.tile[i, j - 1].type == (ushort)mod.TileType("AvaritianGatewayTile") || Main.tile[i, j - 1].type == (ushort)mod.TileType("AcediaGatewayTile"))
+            if (Main.tile[i, j - 1].type == (ushort)TileType<AvaritianGatewayTile>() || Main.tile[i, j - 1].type == (ushort)TileType<AcediaGatewayTile>())
             {
                 int frame = Main.tile[i, j - 1].frameX / 18 + (Main.tile[i, j - 1].frameY / 18 * 9);
                 if (frame >= 65 && frame <= 69)
                     return false;
             }
-            if (Main.tile[i, j - 1].type == (ushort)ModContent.TileType<PotGeneratorTile>() && !SOTSWorld.downedAdvisor)
+            if (Main.tile[i, j - 1].type == (ushort)TileType<PotGeneratorTile>() && !SOTSWorld.downedAdvisor)
             {
                 return false;
             }
-            if (Main.tile[i, j - 1].type == (ushort)ModContent.TileType<SarcophagusTile>() || Main.tile[i, j - 1].type == (ushort)ModContent.TileType<RubyKeystoneTile>())
+            if (Main.tile[i, j - 1].type == (ushort)TileType<SarcophagusTile>() || Main.tile[i, j - 1].type == (ushort)TileType<RubyKeystoneTile>())
             {
                 return false;
             }
-            if (Main.tile[i, j - 1].type == (ushort)ModContent.TileType<AncientGoldGateTile>() && Main.tile[i, j - 1].frameY < 360)
+            if (Main.tile[i, j - 1].type == (ushort)TileType<AncientGoldGateTile>() && Main.tile[i, j - 1].frameY < 360)
             {
                 return false;
             }
-            if(Main.tile[i - 1, j].type == (ushort)TileType<PyramidGateTile>() || Main.tile[i + 1, j].type == (ushort)TileType<PyramidGateTile>())
+            if (Main.tile[i, j + 1].type == (ushort)TileType<ArkhalisChainTile>() && Main.tile[i, j + 1].frameX >= 18)
+            {
+                return false;
+            }
+            if (Main.tile[i - 1, j].type == (ushort)TileType<PyramidGateTile>() || Main.tile[i + 1, j].type == (ushort)TileType<PyramidGateTile>())
             {
                 return false;
             }

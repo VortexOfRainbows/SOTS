@@ -1,3 +1,10 @@
+0.20.2:
+1. New weapon: Plasma Accelerator
+2. Reworked Bore Bullets
+3. A handful of internal optimizations that should hopefully help out with relieving multiplayer lag. 
+(Still unsure if this will actual work, but we were unable to replicate the lag on our side when testing)
+
+0.20.1:
 New Stuff: 
 1. Implemented Tidal Spirit and Permafrost Spirit Staff
 2. Implemented 2 new starter house variants (courtesy of Astrobit and Mushnib~)

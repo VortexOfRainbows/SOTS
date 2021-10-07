@@ -42,6 +42,14 @@ Low Priority:
 3. Electrolyte Seperator
 4. Wintry Traveler: Riptide Trident + Frigid Javelin
 
+10/6/21
+1. Added "Lost Chain" item and tile. Should work in Multiplayer
+2. 
+
+
+-- Hotfix 0.20.2 --
+
+
 10/4/21
 1. Various internal optimizations
 2. Bore bullets optain method changes
@@ -56,6 +64,7 @@ Low Priority:
 	5. Also fixed a bug that could cause it to send the same packet multiple times per frame
 		1. Which could previously results in over 100 packets per second per pot generator. Yikes
 4. Projectiles that stick to enemies are more better at netsyncing
+
 
 10/3/21
 1. Rework bore bullets. Now sold from TM + has different effect

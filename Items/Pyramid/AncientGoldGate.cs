@@ -32,7 +32,7 @@ namespace SOTS.Items.Pyramid
 			item.rare = ItemRarityID.LightRed;
 			item.value = Item.sellPrice(0, 1, 0, 0);
 			item.consumable = true;
-			item.createTile = mod.TileType("AncientGoldGateTile");
+			item.createTile = ModContent.TileType<AncientGoldGateTile>();
 			item.placeStyle = 4;
 		}
 	}	
