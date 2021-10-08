@@ -11,7 +11,7 @@ namespace SOTS.Projectiles.Pyramid
 		public override void SetDefaults() 
 		{
 			projectile.width = 20;
-			projectile.height = 32;
+			projectile.height = 42;
 			projectile.aiStyle = 20;
 			projectile.friendly = true;
 			projectile.penetrate = -1;
