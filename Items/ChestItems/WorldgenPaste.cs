@@ -112,7 +112,7 @@ namespace SOTS.Items.ChestItems
 			//PasteCrystal();
 			Vector2 mousePos = Main.MouseWorld;
 			Vector2 tileLocation = mousePos / 16f;
-			WorldGen.PlaceTile((int)tileLocation.X, (int)tileLocation.Y, ModContent.TileType<CursedGrowthTile>());
+			SOTSWorldgenHelper.GenerateDamocles((int)tileLocation.X, (int)tileLocation.Y, Main.rand.Next(3));
 			return true;
 		}
 	}

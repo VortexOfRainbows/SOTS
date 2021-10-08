@@ -8,6 +8,7 @@ using SOTS.Items;
 using SOTS.Items.ChestItems;
 using SOTS.Items.Fragments;
 using SOTS.Items.Fragments.SpiritStaves;
+using SOTS.Items.IceStuff;
 using SOTS.Items.Otherworld;
 using SOTS.Items.Otherworld.FromChests;
 using SOTS.Items.Potions;
@@ -253,114 +254,114 @@ namespace SOTS
 
 				int iceY = -1;
 				int iceX = -1;
-				for(int xCheck = Main.rand.Next(Main.maxTilesX); xCheck != -1; xCheck = Main.rand.Next(Main.maxTilesX))
+				for (int xCheck = Main.rand.Next(Main.maxTilesX); xCheck != -1; xCheck = Main.rand.Next(Main.maxTilesX))
 				{
-					for(int ydown = 0; ydown != -1; ydown++)
+					for (int ydown = 0; ydown != -1; ydown++)
 					{
 						Tile tile = Framing.GetTileSafely(xCheck, ydown);
-						if(tile.active() && tile.type == TileID.SnowBlock)
+						if (tile.active() && tile.type == TileID.SnowBlock)
 						{
 							iceY = ydown;
 							break;
 						}
-						else if(tile.active())
+						else if (tile.active())
 						{
 							break;
 						}
 					}
-					if(iceY != -1)
+					if (iceY != -1)
 					{
 						iceX = xCheck;
 						break;
 					}
 				}
-					 
+
 				int radius9 = 12;
 				for (int x = -radius9; x <= radius9; x++)
 				{
 					for (int y = -radius9; y <= radius9; y++)
 					{
 						int xPosition6 = iceX + x;
-						int yPosition6 = iceY + -Math.Abs(y); 
-		 
-						if (Math.Sqrt(x * x + y * y) <= radius9 + 0.5)   
+						int yPosition6 = iceY + -Math.Abs(y);
+
+						if (Math.Sqrt(x * x + y * y) <= radius9 + 0.5)
 						{
-							WorldGen.KillTile(xPosition6 , yPosition6 , false, false, false);
+							WorldGen.KillTile(xPosition6, yPosition6, false, false, false);
 						}
 					}
 				}
 				int[,] _iceArtifact = {
-					{0,0,0,0,0,0,1,2,3,0,0,0,0,0,0},
-					{0,0,0,0,0,1,2,4,2,3,0,0,0,0,0},
-					{0,0,0,0,1,2,4,4,4,2,3,0,0,0,0},
-					{0,0,0,1,2,4,4,4,4,4,2,3,0,0,0},
-					{0,0,1,2,4,4,4,5,4,4,4,2,3,0,0},
-					{0,1,2,4,4,4,5,0,5,4,4,4,2,3,0},
-					{0,0,5,4,4,5,0,0,0,5,4,4,5,0,0},
-					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-					{0,0,0,0,0,0,9,9,9,0,0,0,0,0,0},
-					{0,0,0,0,0,0,9,6,9,0,0,0,0,0,0},
-					{0,0,4,4,4,4,7,7,7,4,4,4,4,0,0},
-					{0,0,0,5,5,4,7,7,7,4,5,5,0,0,0},
-					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-					{4,4,4,4,4,4,5,5,5,4,4,4,4,4,4},
-					{0,0,5,5,2,0,0,0,0,0,2,5,5,0,0},
-					{0,0,0,4,4,4,5,5,5,4,4,4,0,0,0},
-					{0,0,5,5,2,0,0,0,0,0,2,5,5,0,0},
-					{0,0,0,4,4,4,5,5,5,4,4,4,0,0,0},
-					{0,0,0,0,2,0,0,0,0,0,2,0,0,0,0},
-					{0,0,0,0,2,0,0,0,0,0,2,0,0,0,0},
-					{0,0,0,0,2,0,0,0,0,0,2,0,0,0,0},
-					{0,0,2,2,2,2,0,0,0,2,2,2,2,0,0},
-					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-					{0,0,2,2,2,2,2,2,2,2,2,2,2,0,0},
-					{8,8,2,2,2,2,2,2,2,2,2,2,2,8,8}
-				};	
-				int[,] _iceArtifactWalls = {
-					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-					{0,0,0,0,0,0,0,3,0,0,0,0,0,0,0},
-					{0,0,0,0,0,0,3,1,3,0,0,0,0,0,0},
-					{0,0,0,0,3,3,1,1,1,3,3,0,0,0,0},
-					{0,0,0,0,3,2,1,1,1,2,3,0,0,0,0},
-					{0,0,0,0,3,2,1,1,1,2,3,0,0,0,0},
-					{0,0,0,0,3,2,1,1,1,2,3,0,0,0,0},
-					{0,0,0,0,3,2,1,1,1,2,3,0,0,0,0},
-					{0,0,0,0,3,2,1,1,1,2,3,0,0,0,0},
-					{0,0,0,0,3,2,1,1,1,2,3,0,0,0,0},
-					{0,0,0,0,0,3,1,1,1,3,0,0,0,0,0},
-					{0,0,0,0,0,3,2,1,2,3,0,0,0,0,0},
-					{0,0,0,0,0,3,2,1,2,3,0,0,0,0,0},
-					{0,3,3,3,3,3,2,1,2,3,3,3,3,3,0},
-					{0,0,0,0,0,3,3,3,3,3,0,0,0,0,0},
-					{0,0,0,0,0,3,2,1,2,3,0,0,0,0,0},
-					{0,0,0,0,0,2,3,3,3,2,0,0,0,0,0},
-					{0,0,0,0,0,3,2,1,2,3,0,0,0,0,0},
-					{0,0,0,0,0,2,3,3,3,2,0,0,0,0,0},
-					{0,0,0,0,0,3,2,1,2,3,0,0,0,0,0},
-					{0,0,0,0,0,2,2,1,2,2,0,0,0,0,0},
-					{0,0,0,0,0,2,2,1,2,2,0,0,0,0,0},
-					{0,0,0,0,0,2,2,1,2,2,0,0,0,0,0},
-					{0,0,0,1,2,1,2,1,2,1,2,1,0,0,0},
-					{0,0,0,1,2,1,2,1,2,1,2,1,0,0,0},
-					{0,0,0,1,2,1,2,1,2,1,2,1,0,0,0},
-					{0,0,0,1,2,1,2,1,2,1,2,1,0,0,0},
-					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}
+					{ 0, 0, 0, 0, 0, 0, 1, 2, 3, 0, 0, 0, 0, 0, 0 },
+					{ 0, 0, 0, 0, 0, 1, 2, 4, 2, 3, 0, 0, 0, 0, 0 },
+					{ 0, 0, 0, 0, 1, 2, 4, 4, 4, 2, 3, 0, 0, 0, 0 },
+					{ 0, 0, 0, 1, 2, 4, 4, 4, 4, 4, 2, 3, 0, 0, 0 },
+					{ 0, 0, 1, 2, 4, 4, 4, 5, 4, 4, 4, 2, 3, 0, 0 },
+					{ 0, 1, 2, 4, 4, 4, 5, 0, 5, 4, 4, 4, 2, 3, 0 },
+					{ 0, 0, 5, 4, 4, 5, 0, 0, 0, 5, 4, 4, 5, 0, 0 },
+					{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+					{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+					{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+					{ 0, 0, 0, 0, 0, 0, 9, 9, 9, 0, 0, 0, 0, 0, 0 },
+					{ 0, 0, 0, 0, 0, 0, 9, 6, 9, 0, 0, 0, 0, 0, 0 },
+					{ 0, 0, 4, 4, 4, 4, 7, 7, 7, 4, 4, 4, 4, 0, 0 },
+					{ 0, 0, 0, 5, 5, 4, 7, 7, 7, 4, 5, 5, 0, 0, 0 },
+					{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+					{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+					{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+					{ 4, 4, 4, 4, 4, 4, 5, 5, 5, 4, 4, 4, 4, 4, 4 },
+					{ 0, 0, 5, 5, 2, 0, 0, 0, 0, 0, 2, 5, 5, 0, 0 },
+					{ 0, 0, 0, 4, 4, 4, 5, 5, 5, 4, 4, 4, 0, 0, 0 },
+					{ 0, 0, 5, 5, 2, 0, 0, 0, 0, 0, 2, 5, 5, 0, 0 },
+					{ 0, 0, 0, 4, 4, 4, 5, 5, 5, 4, 4, 4, 0, 0, 0 },
+					{ 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0 },
+					{ 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0 },
+					{ 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0 },
+					{ 0, 0, 2, 2, 2, 2, 0, 0, 0, 2, 2, 2, 2, 0, 0 },
+					{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+					{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+					{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+					{ 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0 },
+					{ 8, 8, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 8, 8 }
 				};
-				
+				int[,] _iceArtifactWalls = {
+					{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+					{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+					{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+					{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+					{ 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0 },
+					{ 0, 0, 0, 0, 0, 0, 3, 1, 3, 0, 0, 0, 0, 0, 0 },
+					{ 0, 0, 0, 0, 3, 3, 1, 1, 1, 3, 3, 0, 0, 0, 0 },
+					{ 0, 0, 0, 0, 3, 2, 1, 1, 1, 2, 3, 0, 0, 0, 0 },
+					{ 0, 0, 0, 0, 3, 2, 1, 1, 1, 2, 3, 0, 0, 0, 0 },
+					{ 0, 0, 0, 0, 3, 2, 1, 1, 1, 2, 3, 0, 0, 0, 0 },
+					{ 0, 0, 0, 0, 3, 2, 1, 1, 1, 2, 3, 0, 0, 0, 0 },
+					{ 0, 0, 0, 0, 3, 2, 1, 1, 1, 2, 3, 0, 0, 0, 0 },
+					{ 0, 0, 0, 0, 3, 2, 1, 1, 1, 2, 3, 0, 0, 0, 0 },
+					{ 0, 0, 0, 0, 0, 3, 1, 1, 1, 3, 0, 0, 0, 0, 0 },
+					{ 0, 0, 0, 0, 0, 3, 2, 1, 2, 3, 0, 0, 0, 0, 0 },
+					{ 0, 0, 0, 0, 0, 3, 2, 1, 2, 3, 0, 0, 0, 0, 0 },
+					{ 0, 3, 3, 3, 3, 3, 2, 1, 2, 3, 3, 3, 3, 3, 0 },
+					{ 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0 },
+					{ 0, 0, 0, 0, 0, 3, 2, 1, 2, 3, 0, 0, 0, 0, 0 },
+					{ 0, 0, 0, 0, 0, 2, 3, 3, 3, 2, 0, 0, 0, 0, 0 },
+					{ 0, 0, 0, 0, 0, 3, 2, 1, 2, 3, 0, 0, 0, 0, 0 },
+					{ 0, 0, 0, 0, 0, 2, 3, 3, 3, 2, 0, 0, 0, 0, 0 },
+					{ 0, 0, 0, 0, 0, 3, 2, 1, 2, 3, 0, 0, 0, 0, 0 },
+					{ 0, 0, 0, 0, 0, 2, 2, 1, 2, 2, 0, 0, 0, 0, 0 },
+					{ 0, 0, 0, 0, 0, 2, 2, 1, 2, 2, 0, 0, 0, 0, 0 },
+					{ 0, 0, 0, 0, 0, 2, 2, 1, 2, 2, 0, 0, 0, 0, 0 },
+					{ 0, 0, 0, 1, 2, 1, 2, 1, 2, 1, 2, 1, 0, 0, 0 },
+					{ 0, 0, 0, 1, 2, 1, 2, 1, 2, 1, 2, 1, 0, 0, 0 },
+					{ 0, 0, 0, 1, 2, 1, 2, 1, 2, 1, 2, 1, 0, 0, 0 },
+					{ 0, 0, 0, 1, 2, 1, 2, 1, 2, 1, 2, 1, 0, 0, 0 },
+					{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
+				};
+
 				int iceArtifactPositionX = iceX;
 				int iceArtifactPositionY = iceY - _iceArtifact.GetLength(0);
 				iceArtifactPositionX -= (int)(.5f * _iceArtifact.GetLength(1));
 				//iceArtifactPositionY -= (int)(.5f * _iceArtifact.GetLength(0));
-				for(int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)
+				for (int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)
 				{
 					for (int y = 0; y < _iceArtifact.GetLength(0); y++) {
 						for (int x = 0; x < _iceArtifact.GetLength(1); x++) {
@@ -396,10 +397,10 @@ namespace SOTS
 										WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 19); //boreal platform
 										break;
 									case 6:
-										WorldGen.PlaceTile(k, l, (ushort)mod.TileType("FrostArtifactTile"));
+										WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<FrostArtifactTile>());
 										break;
 									case 7:
-										tile.type = (ushort)mod.TileType("HardIceBrickTile"); //ice
+										tile.type = (ushort)ModContent.TileType<HardIceBrickTile>(); //ice
 										tile.active(true);
 										tile.slope(0);
 										break;
@@ -410,7 +411,7 @@ namespace SOTS
 										break;
 									case 9:
 										break;
-									
+
 								}
 							}
 						}
@@ -444,9 +445,9 @@ namespace SOTS
 					for (int y = -radius6; y <= radius6; y++)
 					{
 						int xPosition6 = iceX + x;
-						int yPosition6 = iceY + Math.Abs(y); 
-		 
-						if (Math.Sqrt(x * x + y * y) <= radius6 + 0.5)   
+						int yPosition6 = iceY + Math.Abs(y);
+
+						if (Math.Sqrt(x * x + y * y) <= radius6 + 0.5)
 						{
 							WorldGen.PlaceTile(xPosition6, yPosition6, TileID.SnowBlock);
 							Tile tile = Framing.GetTileSafely(xPosition6, yPosition6);
@@ -461,25 +462,26 @@ namespace SOTS
 					dungeonSide = 1;
 				}
 				bool coconutGenerated = false;
-				while(!coconutGenerated)
+				while (!coconutGenerated)
 				{
 					int direction = dungeonSide;
 					int fromBorder = 70 + Main.rand.Next(20);
-					if(direction == -1)
-                    {
+					if (direction == -1)
+					{
 						fromBorder = Main.maxTilesX - fromBorder;
-                    }
+					}
 					for (int j = 0; j < Main.maxTilesY; j++)
 					{
 						Tile tile = Framing.GetTileSafely(fromBorder, j);
-						if(tile.liquidType() == 0 && tile.liquid > 1)
-                        {
+						if (tile.liquidType() == 0 && tile.liquid > 1)
+						{
 							SOTSWorldgenHelper.GenerateCoconutIsland(mod, fromBorder, j, direction);
 							coconutGenerated = true;
 							break;
-                        }
+						}
 					}
-                }
+				}
+
 			}));
 			tasks.Insert(genIndexEnd + 2, new PassLegacy("genIndexModPlanetarium", delegate (GenerationProgress progress)
 			{
@@ -489,7 +491,7 @@ namespace SOTS
 				{
 					dungeonSide = 1;
 				}
-				
+				SOTSWorldgenHelper.FindAndGenerateDamocles(dungeonSide);
 				int pX = -1;
 				int checks = 0;
 				if (dungeonSide == -1)
@@ -624,33 +626,18 @@ namespace SOTS
 						}
 					}
 				}
-
 			}));
 			tasks.Insert(genIndexEnd + 3, new PassLegacy("genIndexModPyramid", delegate (GenerationProgress progress)
 			{
 				progress.Message = "Generating A Pyramid";
 				PyramidWorldgenHelper.GenerateSOTSPyramid(mod);
-				/*
-				int minimumMet = 0;
-				int min = 5;
-				for (int k = 0; k < (int)(Main.maxTilesX * Main.maxTilesY * 0.005f) || minimumMet < min; k++)
-				{
-					int x = WorldGen.genRand.Next(100, Main.maxTilesX - 100);
-					int y = WorldGen.genRand.Next((int)WorldGen.worldSurfaceLow - 40, Main.maxTilesY - 40);
-					Tile tile = Framing.GetTileSafely(x, y);
-					if (tile.active() && tile.type == ModContent.TileType<CursedTumorTile>())
-					{
-						minimumMet++;
-						WorldGen.TileRunner(x, y, WorldGen.genRand.Next(12, 16), WorldGen.genRand.Next(2, 4), ModContent.TileType<MalditeTile>());
-					}
-				}*/
 			}));
 		}
 		public override void TileCountsAvailable(int[] tileCounts)
 		{
-			planetarium = tileCounts[mod.TileType("DullPlatingTile")] + tileCounts[mod.TileType("AvaritianPlatingTile")];  
+			planetarium = tileCounts[ModContent.TileType<DullPlatingTile>()] + tileCounts[ModContent.TileType<AvaritianPlatingTile>()];  
 			//geodeBiome = tileCounts[mod.TileType("GeodeBlock")];
-			pyramidBiome = tileCounts[mod.TileType("SarcophagusTile")] + tileCounts[ModContent.TileType<ZeplineLureTile>()];  
+			pyramidBiome = tileCounts[ModContent.TileType<SarcophagusTile>()] + tileCounts[ModContent.TileType<ZeplineLureTile>()];  
 		}
         public override void ModifyHardmodeTasks(List<GenPass> list)
         {
@@ -658,27 +645,6 @@ namespace SOTS
         }
         public override void PostWorldGen()
 		{
-			/*
-			int xPosition2 = Main.maxTilesX/2;
-			int yPosition2 = Main.maxTilesY - 55;
-            int radius = 6;    	
-			for (int x = -radius; x <= radius; x++)
-			{
-				for (int y = -radius; y <= radius; y++)
-				{
-					int xPosition = (int)(x + xPosition2);
-					int yPosition = (int)(y + yPosition2);
-	 
-					if (Math.Sqrt(x * x + y * y) <= radius + 0.5) 	
-					{
-						WorldGen.KillTile(xPosition, yPosition, false, false, false); 	
-						WorldGen.PlaceTile(xPosition, yPosition, mod.TileType("IceCreamBrickTile"));
-					}
-				}
-			}
-            WorldGen.KillTile(xPosition2, yPosition2, false, false, false);	  
-			WorldGen.PlaceTile(xPosition2, yPosition2, mod.TileType("IceCreamBottleTile"));
-			*/
 			// Iterate chests
 			List<int> starItemPool2 = new List<int>() { ModContent.ItemType<SkywareBattery>(), ModContent.ItemType<Poyoyo>(), ModContent.ItemType<SupernovaHammer>(), ModContent.ItemType<StarshotCrossbow>(), ModContent.ItemType<LashesOfLightning>(), ModContent.ItemType<Starbelt>(), ModContent.ItemType<TwilightAssassinsCirclet>() };
 			List<int> lightItemPool2 = new List<int>() { ModContent.ItemType<HardlightQuiver>(), ModContent.ItemType<CodeCorrupter>(), ModContent.ItemType<PlatformGenerator>(), ModContent.ItemType<Calculator>(), ModContent.ItemType<TwilightAssassinsLeggings>(), ModContent.ItemType<TwilightFishingPole>(), ModContent.ItemType<ChainedPlasma>(), ModContent.ItemType<OtherworldlySpiritStaff>() };
@@ -943,12 +909,12 @@ namespace SOTS
 					}
 					if(second == 1)
 					{
-						chest.item[slot].SetDefaults(mod.ItemType("AnubisHat"));
+						chest.item[slot].SetDefaults(ModContent.ItemType<AnubisHat>());
 						slot++;
 					}
 					if(second > 1)
 					{
-						chest.item[slot].SetDefaults(mod.ItemType("JuryRiggedDrill"));
+						chest.item[slot].SetDefaults(ModContent.ItemType<JuryRiggedDrill>());
 						chest.item[slot].stack = WorldGen.genRand.Next(35) + 11;
 						slot++;
 					}
@@ -1065,7 +1031,7 @@ namespace SOTS
 					int thirdLast = WorldGen.genRand.Next(4);
 					if(thirdLast == 0)
 					{
-						chest.item[slot].SetDefaults(mod.ItemType("ExplosiveKnife"));
+						chest.item[slot].SetDefaults(ModContent.ItemType<ExplosiveKnife>());
 						chest.item[slot].stack = WorldGen.genRand.Next(41) + 20;
 						slot++;
 					}
@@ -1109,7 +1075,7 @@ namespace SOTS
 					int slot = 39;
 					for(int i = 0; i < 39; i++)
 					{
-						if(chest.item[i].type == 0 && i < slot)
+						if(chest.item[i].type == ItemID.None && i < slot)
 						{
 							slot = i;
 						}
@@ -1134,7 +1100,22 @@ namespace SOTS
 						chest.item[slot].stack = Main.rand.Next(3) + 3; // 3 to 5
 						slot++;
 					}
-					if(style >= 23 && style <= 27 && (tile3.type == ModContent.TileType<DullPlatingTile>() || tile3.type == ModContent.TileType<AvaritianPlatingTile>()))
+					if (style == 17 && tile2.type == (ushort)ModContent.TileType<DullPlatingTile>()) //Damocles Chest
+					{
+						chest.item[slot].SetDefaults(ModContent.ItemType<DissolvingDeluge>());
+						slot++;
+						chest.item[slot].SetDefaults(ModContent.ItemType<CoconutMilk>());
+						chest.item[slot].stack = 10; // 3 to 5
+						slot++;
+						chest.item[slot].SetDefaults(ItemID.LifeCrystal);
+						slot++;
+						chest.item[slot].SetDefaults(ItemID.ManaCrystal);
+						slot++;
+						chest.item[slot].SetDefaults(ItemID.GoldCoin);
+						chest.item[slot].stack = Main.rand.Next(3) + 3; // 3 to 5
+						slot++;
+					}
+					if (style >= 23 && style <= 27 && (tile3.type == ModContent.TileType<DullPlatingTile>() || tile3.type == ModContent.TileType<AvaritianPlatingTile>()))
                     {
 						int importantItem = 0;
 						int importantItem2 = 0;
@@ -1241,11 +1222,11 @@ namespace SOTS
 					{
 						if(WorldGen.genRand.NextBool(2))
 						{
-							chest.item[slot].SetDefaults(mod.ItemType("ShieldofDesecar"));
+							chest.item[slot].SetDefaults(ModContent.ItemType<ShieldofDesecar>());
 						}
 						else
 						{
-							chest.item[slot].SetDefaults(mod.ItemType("ShieldofStekpla"));
+							chest.item[slot].SetDefaults(ModContent.ItemType<ShieldofStekpla>());
 						}
 						slot++;
 					}
@@ -1256,12 +1237,12 @@ namespace SOTS
 					}
 					if(WorldGen.genRand.NextBool(7) && chest.item[0].type == ItemID.HermesBoots)
 					{
-						chest.item[slot].SetDefaults(mod.ItemType("WingedKnife"));
+						chest.item[slot].SetDefaults(ModContent.ItemType<WingedKnife>());
 						slot++;
 					}
 					if(WorldGen.genRand.NextBool(2) && (chest.item[0].type == ItemID.Starfury || chest.item[0].type == ItemID.ShinyRedBalloon || chest.item[0].type == ItemID.LuckyHorseshoe))
 					{
-						chest.item[slot].SetDefaults(mod.ItemType("TinyPlanet"));
+						chest.item[slot].SetDefaults(ModContent.ItemType<TinyPlanet>());
 						slot++;
 					}
 				}

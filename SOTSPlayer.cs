@@ -632,10 +632,10 @@ namespace SOTS
 						testWingsPlayer.HaloDust();
 					}
 				}
-				if (item.type == ModContent.ItemType<SubspaceLocket>())
+				/*if (item.type == ModContent.ItemType<SubspaceLocket>())
 				{
 					SubspacePlayer.ModPlayer(player).subspaceServantShader = GameShaders.Armor.GetShaderIdFromItemId(player.dye[i].type);
-				}
+				}*/
 			}
 			for (int i = 0; i < 10; i++) //iterating through armor + accessories
 			{
@@ -644,10 +644,10 @@ namespace SOTS
 				{
 					darkEyeShader = GameShaders.Armor.GetShaderIdFromItemId(player.dye[i].type);
 				}
-				if (item.type == ModContent.ItemType<SubspaceLocket>())
+				/*if (item.type == ModContent.ItemType<SubspaceLocket>())
 				{
 					SubspacePlayer.ModPlayer(player).subspaceServantShader = GameShaders.Armor.GetShaderIdFromItemId(player.dye[i].type);
-				}
+				}*/
 			}
 			for (int i = 0; i < player.inventory.Length; i++)
 			{
