@@ -21,6 +21,9 @@ using SOTS.Items.Pyramid;
 using SOTS.Items.Otherworld;
 using SOTS.Items.Pyramid.PyramidWalls;
 using SOTS.NPCs.TreasureSlimes;
+using SOTS.Items.Fragments;
+using SOTS.Dusts;
+using SOTS.Items.Crushers;
 
 namespace SOTS.NPCs
 {
@@ -59,7 +62,7 @@ namespace SOTS.NPCs
 					}
 					for (int i = 0; i < 15; i++)
 					{
-						int num1 = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y) - new Vector2(5), npc.width, npc.height, mod.DustType("CopyDust4"));
+						int num1 = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y) - new Vector2(5), npc.width, npc.height, ModContent.DustType<CopyDust4>());
 						Dust dust = Main.dust[num1];
 						dust.velocity *= 2f;
 						dust.velocity += npc.velocity * 0.2f;
@@ -103,7 +106,7 @@ namespace SOTS.NPCs
         }
 		public void hitBy(NPC npc, Player player, Projectile projectile, Item item, ref int damage, ref float knockback, ref bool crit)
 		{
-			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			if (modPlayer.assassinate && !npc.boss)
 			{
@@ -133,31 +136,31 @@ namespace SOTS.NPCs
 			{
 				player = Main.player[npc.target];
 			}
-            SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");	
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);	
 			bool ZoneForest = !player.GetModPlayer<SOTSPlayer>().PyramidBiome && !player.ZoneDesert && !player.ZoneCorrupt && !player.ZoneDungeon && !player.ZoneDungeon && !player.ZoneHoly && !player.ZoneMeteor && !player.ZoneJungle && !player.ZoneSnow && !player.ZoneCrimson && !player.ZoneGlowshroom && !player.ZoneUndergroundDesert && (player.ZoneDirtLayerHeight || player.ZoneOverworldHeight) && !player.ZoneBeach;
 
 			if (npc.lifeMax > 5 && !npc.SpawnedFromStatue)
 			{
 				if ((Main.rand.Next(90) == 0 && Main.expertMode) || (Main.rand.Next(100) == 0 && !Main.expertMode) || (npc.type == NPCID.PigronCorruption || npc.type == NPCID.PigronHallow || npc.type == NPCID.PigronCrimson))
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("AlmondMilk"), 1);
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<AlmondMilk>(), 1);
 
 				if (Main.rand.NextBool(35))
 				{
 					//priorities: otherworld > tide > nature > permafrost > earth >  inferno
 					//additional: evil & chaos (will not spawn in addition to forest)
 					if (player.ZoneSkyHeight || player.ZoneMeteor)
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FragmentOfOtherworld"), Main.rand.Next(2) + 1);
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<FragmentOfOtherworld>(), Main.rand.Next(2) + 1);
 					else if (player.ZoneBeach || player.ZoneDungeon)
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FragmentOfTide"), Main.rand.Next(2) + 1);
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<FragmentOfTide>(), Main.rand.Next(2) + 1);
 					else if (ZoneForest || player.ZoneJungle)
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FragmentOfNature"), Main.rand.Next(2) + 1);
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<FragmentOfNature>(), Main.rand.Next(2) + 1);
 					else if (player.ZoneSnow)
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FragmentOfPermafrost"), Main.rand.Next(2) + 1);
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<FragmentOfPermafrost>(), Main.rand.Next(2) + 1);
 					else if (player.ZoneUndergroundDesert || player.ZoneDesert || player.GetModPlayer<SOTSPlayer>().PyramidBiome || player.ZoneRockLayerHeight)
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FragmentOfEarth"), Main.rand.Next(2) + 1);
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<FragmentOfEarth>(), Main.rand.Next(2) + 1);
 					else if (player.ZoneUnderworldHeight)
 					{
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FragmentOfInferno"), Main.rand.Next(2) + 1);
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<FragmentOfInferno>(), Main.rand.Next(2) + 1);
 						if(SOTSWorld.downedSubspace)
 							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<SanguiteBar>(), Main.rand.Next(2) + 4);
 
@@ -166,40 +169,40 @@ namespace SOTS.NPCs
 				else if (Main.rand.NextBool(34))
 				{
 					if (player.ZoneCorrupt || player.ZoneCrimson)
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FragmentOfEvil"), Main.rand.Next(2) + 1);
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<FragmentOfEvil>(), Main.rand.Next(2) + 1);
 					if (player.ZoneHoly)
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FragmentOfChaos"), Main.rand.Next(2) + 1);
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<FragmentOfChaos>(), Main.rand.Next(2) + 1);
 				}
 
 				if (player.ZoneSnow && ((Main.rand.NextBool(90) && Main.expertMode) || (Main.rand.NextBool(100) && !Main.expertMode)))
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("StrawberryIcecream"), 1);
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<StrawberryIcecream>(), 1);
 				if (player.ZoneBeach && ((Main.rand.NextBool(120) && Main.expertMode) || (Main.rand.NextBool(150) && !Main.expertMode)))
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<CoconutMilk>(), 1);
 
 				if (npc.type == NPCID.ZombieMushroom || npc.type == NPCID.ZombieMushroomHat || npc.type == NPCID.MushiLadybug || npc.type == NPCID.AnomuraFungus || npc.type == NPCID.FungiBulb || npc.type == NPCID.FungoFish || npc.type == NPCID.GiantFungiBulb)
 					if ((Main.rand.NextBool(10) && !Main.expertMode) || (Main.rand.NextBool(9) && Main.expertMode))
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("CookedMushroom"), 1);
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<CookedMushroom>(), 1);
 
 				if (modPlayer.PlanetariumBiome)
 					if ((Main.rand.NextBool(90) && Main.expertMode) || (Main.rand.NextBool(100) && !Main.expertMode))
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("DigitalCornSyrup"), 1);
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<DigitalCornSyrup>(), 1);
 
-				if ((npc.type == mod.NPCType("OtherworldlyConstructHead") || npc.type == mod.NPCType("OtherworldlyConstructHead2")) && Main.rand.NextBool(100))
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("PhaseCannon"), 1);
+				if ((npc.type == ModContent.NPCType<OtherworldlyConstructHead>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead2>()) && Main.rand.NextBool(100))
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<PhaseCannon>(), 1);
 
 				if (npc.type == NPCID.WallofFlesh)
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("HungryHunter"), 1);
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<HungryHunter>(), 1);
 
 				if (npc.type == NPCID.WyvernHead)
 				{
 					if (Main.rand.NextBool(5))
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemID.GiantHarpyFeather, 1);
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FragmentOfOtherworld"), Main.rand.Next(2) + 1);
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<FragmentOfOtherworld>(), Main.rand.Next(2) + 1);
 				}
 				if(npc.type == NPCID.VoodooDemon || npc.type == NPCID.BoneSerpentHead)
 				{
 					if(Main.rand.NextBool(2) || Main.expertMode)
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FragmentOfInferno"), Main.rand.Next(2) + 1);
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<FragmentOfInferno>(), Main.rand.Next(2) + 1);
 				}
 
 				if (npc.type == NPCID.GoblinPeon || npc.type == NPCID.GoblinArcher || npc.type == NPCID.GoblinWarrior || npc.type == NPCID.GoblinSorcerer)
@@ -213,35 +216,35 @@ namespace SOTS.NPCs
 				if (npc.type == NPCID.PirateCaptain || npc.type == NPCID.PirateCorsair || npc.type == NPCID.PirateCrossbower || npc.type == NPCID.PirateDeadeye || npc.type == NPCID.Parrot)
 				{
 					if (Main.rand.NextBool(10))
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("Chocolate"), 1);
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<Chocolate>(), 1);
 				}
 
 				if (npc.type == NPCID.ElfCopter && Main.rand.NextBool(12))
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("HelicopterParts"), 1);
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<HelicopterParts>(), 1);
 
 				if (npc.type == NPCID.UndeadMiner && Main.rand.NextBool(50))
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<ManicMiner>(), 1);
 
 				if (npc.type == NPCID.BlueSlime && Main.rand.NextBool(240))
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FireSpitter"), 1);
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<FireSpitter>(), 1);
 
 				if (npc.type == NPCID.Crab && Main.rand.NextBool(18))
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("CrabClaw"), 1);
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<CrabClaw>(), 1);
 
 				if (npc.type == NPCID.Mothron && NPC.downedPlantBoss && ((Main.rand.NextBool(5) && !Main.expertMode) || (Main.rand.NextBool(4) && Main.expertMode)))
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("BrokenVillainSword"), 1);
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<BrokenVillainSword>(), 1);
 
 				if (npc.type == NPCID.PossessedArmor && Main.rand.NextBool(90))
 				{
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("PossessedHelmet"), 1);
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("PossessedChainmail"), 1);
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("PossessedGreaves"), 1);
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<PossessedHelmet>(), 1);
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<PossessedChainmail>(), 1);
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<PossessedGreaves>(), 1);
 				}
 
 				if (npc.type == NPCID.PinkJellyfish && Main.rand.NextBool(60))
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("PinkJellyfishStaff"), 1);
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<PinkJellyfishStaff>(), 1);
 				if ((npc.type == NPCID.BlueJellyfish || npc.type == NPCID.GreenJellyfish) && Main.rand.NextBool(50))
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("BlueJellyfishStaff"), 1);
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<BlueJellyfishStaff>(), 1);
 
 				if(npc.type == NPCID.QueenBee && (!NPC.downedBoss1 || Main.rand.NextBool(20)))
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<RoyalJelly>(), 1);
@@ -266,6 +269,11 @@ namespace SOTS.NPCs
 				if(npc.boss && !Main.expertMode && (npc.type == NPCID.BrainofCthulhu || npc.type == NPCID.EaterofWorldsHead || npc.type == NPCID.EaterofWorldsBody || npc.type == NPCID.EaterofWorldsTail))
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<PyramidKey>(), 1);
+				}
+				if(npc.type == ModContent.NPCType<NatureConstruct>() || npc.type == ModContent.NPCType<EarthenConstruct>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead2>() || npc.type == ModContent.NPCType<PermafrostConstruct>() || npc.type == ModContent.NPCType<TidalConstruct>())
+				{
+					if(Main.rand.NextBool(50))
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<CrushingResistor>(), 1);
 				}
 			}
 		}
@@ -322,9 +330,9 @@ namespace SOTS.NPCs
 				if (isValidTile || (isValidWall && !isCurseValid))
 				{
 					pool.Clear();
-					pool.Add(mod.NPCType("SnakePot"), 0.35f);
-					pool.Add(mod.NPCType("Snake"), 1f);
-					pool.Add(mod.NPCType("LostSoul"), 0.6f);
+					pool.Add(ModContent.NPCType<SnakePot>(), 0.35f);
+					pool.Add(ModContent.NPCType<Snake>(), 1f);
+					pool.Add(ModContent.NPCType<LostSoul>(), 0.6f);
 					pool.Add(ModContent.NPCType<PyramidTreasureSlime>(), 0.02f);
 					pool.Add(NPCID.SandSlime, 0.35f);
 					if(Main.hardMode)
@@ -337,15 +345,15 @@ namespace SOTS.NPCs
 					pool.Clear();
 					if (Main.hardMode)
 					{
-						pool.Add(mod.NPCType("BleedingGhast"), 0.1f);
-						pool.Add(mod.NPCType("FlamingGhast"), 0.1f);
-						pool.Add(mod.NPCType("Ghast"), 0.1f);
+						pool.Add(ModContent.NPCType<BleedingGhast>(), 0.1f);
+						pool.Add(ModContent.NPCType<FlamingGhast>(), 0.1f);
+						pool.Add(ModContent.NPCType<Ghast>(), 0.1f);
 					}
 					else
 					{
-						pool.Add(mod.NPCType("Ghast"), 0.25f);
+						pool.Add(ModContent.NPCType<Ghast>(), 0.25f);
 					}
-					pool.Add(mod.NPCType("LostSoul"), 0.1f);
+					pool.Add(ModContent.NPCType<LostSoul>(), 0.1f);
 					pool.Add(ModContent.NPCType<PyramidTreasureSlime>(), 0.02f);
 					pool.Add(ModContent.NPCType<Teratoma>(), 0.25f);
 					pool.Add(ModContent.NPCType<Maligmor>(), 0.15f);
@@ -370,11 +378,11 @@ namespace SOTS.NPCs
 				if (SOTSWorld.downedPinky)
 				{
 					pool.Add(ModContent.NPCType<FluxSlime>(), SpawnCondition.OverworldDaySlime.Chance * 0.05f);
-					pool.Add(mod.NPCType("NatureSlime"), SpawnCondition.OverworldDaySlime.Chance * 0.10f);
+					pool.Add(ModContent.NPCType<NatureSlime>(), SpawnCondition.OverworldDaySlime.Chance * 0.10f);
 				}
 				else
 				{
-					pool.Add(mod.NPCType("NatureSlime"), SpawnCondition.OverworldDaySlime.Chance * 0.15f);
+					pool.Add(ModContent.NPCType<NatureSlime>(), SpawnCondition.OverworldDaySlime.Chance * 0.15f);
 				}
 				pool.Add(ModContent.NPCType <BlueSlimer>(), SpawnCondition.OverworldDaySlime.Chance * 0.1f);
 				pool.Add(ModContent.NPCType<BasicTreasureSlime>(), SpawnCondition.OverworldDaySlime.Chance * 0.03f);

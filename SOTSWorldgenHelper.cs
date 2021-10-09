@@ -6617,7 +6617,7 @@ namespace SOTS
 					int tunnelY = spawnY - j;
 					Tile tile = Framing.GetTileSafely(tunnel, tunnelY);
 					Tile tileAbove = Framing.GetTileSafely(tunnel, tunnelY - 1);
-					if (Main.tileDungeon[tile.type] && tile.active())
+					if ((Main.tileDungeon[tile.type] || TileID.Spikes == tile.type) && tile.active())
                     {
 						if(Main.tileSolid[tileAbove.type] && !Main.tileSolidTop[tileAbove.type] && tileAbove.active())
 							tile.active(false);
@@ -6643,12 +6643,14 @@ namespace SOTS
 			int WallType2 = WallID.PinkDungeonTileUnsafe;
 			int WallType3 = WallID.PurpleStainedGlass;
 			int TileType1 = TileID.PinkDungeonBrick;
-			if(type == 1)
+			int PlatformStyle = 7;
+			if (type == 1)
 			{
 				WallType1 = WallID.GreenDungeonUnsafe;
 				WallType2 = WallID.GreenDungeonTileUnsafe;
 				WallType3 = WallID.GreenStainedGlass;
 				TileType1 = TileID.GreenDungeonBrick;
+				PlatformStyle = 8;
 			}
 			if(type == 2)
 			{
@@ -6656,6 +6658,7 @@ namespace SOTS
 				WallType2 = WallID.BlueDungeonTileUnsafe;
 				WallType3 = WallID.BlueStainedGlass;
 				TileType1 = TileID.BlueDungeonBrick;
+				PlatformStyle = 6;
 			}
 			int[,] _structure = {
 				{0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0},
@@ -6847,7 +6850,7 @@ namespace SOTS
 								case 9:
 									if (confirmPlatforms == 0)
 										tile.active(false);
-									WorldGen.PlaceTile(k, l, 19, true, true, -1, 7);
+									WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, PlatformStyle);
 									tile.slope(0);
 									tile.halfBrick(false);
 									break;

@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using SOTS.Items.Crushers;
 using SOTS.Items.Otherworld.FromChests;
 using SOTS.Items.SoldStuff;
 using Terraria;
@@ -14,6 +15,11 @@ namespace SOTS.NPCs
 			if (Main.rand.NextBool(5))
 			{
 				shop[nextSlot] = ModContent.ItemType<SafetySwitch>();
+				nextSlot++;
+			}
+			if (Main.rand.NextBool(4))
+			{
+				shop[nextSlot] = ModContent.ItemType<CrushingCapacitor>();
 				nextSlot++;
 			}
 			int chance = NPC.downedBoss1 ? 4 : 8;
@@ -44,7 +50,11 @@ namespace SOTS.NPCs
 						nextSlot++;
 					}
                     break;
-            }
+				case NPCID.Mechanic:
+					shop.item[nextSlot].SetDefaults(ModContent.ItemType<CrushingTransformer>());
+					nextSlot++;
+					break;
+			}
 		}
     }
 }

@@ -44,6 +44,11 @@ namespace SOTS.Void
 		public float frozenVoidCount = 0;
 		public bool safetySwitch = false;
 		public bool safetySwitchVisual = false;
+		public bool CrushCapacitor = false;
+		public bool CrushResistor = false;
+		public float CrushTransformer = 1f;
+		public int BonusCrushRangeMin = 0;
+		public int BonusCrushRangeMax = 0;
 		public override TagCompound Save() {
 
 			return new TagCompound {
@@ -554,6 +559,11 @@ namespace SOTS.Void
 			}
 			safetySwitch = false; 
 			safetySwitchVisual = false;
+			CrushCapacitor = false;
+			CrushResistor = false;
+			CrushTransformer = 1f;
+			BonusCrushRangeMax = 0;
+			BonusCrushRangeMin = 0;
 		}
 		public override float UseTimeMultiplier(Item item)
 		{

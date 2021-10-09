@@ -24,13 +24,7 @@ Mid Priority:
 3. Horn of Plenty: 10% more drops accessory
 4. Ethereal Tonic
 5. Timelord's Potion: attempt using .aiStyle, otherwise would require a lot of workaround...
-6. Crusher based armor and accessories
-	1. Crushing Capacitor: Fourth crusher charge doesn't cost void
-	2. Crushing Transformer: Increases crusher speed by 20%
-	3. Crushing Resistor: Dereases void cost of crushers by 20%
-	4. Crushing Amplifier: Extended crushing range by 1
-	5. Circuit Board: Combination of above
-7. Lux Drops:
+6. Lux Drops:
 	1. Rose Bow
 	2. Voidmage Incubator
 	3. Phase Ore!?
@@ -42,9 +36,16 @@ Low Priority:
 3. Electrolyte Seperator
 4. Wintry Traveler: Riptide Trident + Frigid Javelin
 
-10/6/21
+10/9/21
+1. Added crushing accessories
+	1. Crushing Capacitor from Traveling Merchant
+	2. Ampifier from Golden chests and Treasure Slime
+	3. Resistor drops from Constructs
+	4. Transformer is sold by the Mechanic
+
+10/6/21 & 10/7/21
 1. Added "Lost Chain" item and tile. Should work in Multiplayer
-2. 
+2. Setup worldgen method for Damocles
 
 
 -- Hotfix 0.20.2 --

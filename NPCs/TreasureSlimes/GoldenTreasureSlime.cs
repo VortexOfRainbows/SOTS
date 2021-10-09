@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SOTS.Items.SpecialDrops;
 using SOTS.Items.ChestItems;
 using SOTS.Items.Fragments;
+using SOTS.Items.Crushers;
 
 namespace SOTS.NPCs.TreasureSlimes
 {
@@ -62,6 +63,7 @@ namespace SOTS.NPCs.TreasureSlimes
 				new TreasureSlimeItem(ItemID.SpelunkerPotion, 1, 4, 0.75f),
 				new TreasureSlimeItem(ItemType<ManicMiner>(), 1, 1, 0.1f),
 				new TreasureSlimeItem(ItemType<MinersSword>(), 1, 1, 0.5f),
+				new TreasureSlimeItem(ItemType<CrushingAmplifier>(), 1, 1, 0.5f),
 				new TreasureSlimeItem(ItemType<ShieldofDesecar>(), 1, 1, 0.2f),
 				new TreasureSlimeItem(ItemType<ShieldofStekpla>(), 1, 1, 0.2f),
 				new TreasureSlimeItem(ItemType<FragmentOfEarth>(), 3, 6, 1f)

@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 using SOTS.Items;
 using SOTS.Items.ChestItems;
+using SOTS.Items.Crushers;
 using SOTS.Items.Fragments;
 using SOTS.Items.Fragments.SpiritStaves;
 using SOTS.Items.IceStuff;
@@ -1215,6 +1216,15 @@ namespace SOTS
 							int sixthType = ItemID.Torch;
 							chest.item[slot].SetDefaults(sixthType);
 							chest.item[slot].stack = amt;
+							slot++;
+						}
+					}
+					int firstType = chest.item[0].type;
+					if (style == 1 || firstType == ItemID.ShoeSpikes || firstType == ItemID.LavaCharm || firstType == ItemID.HermesBoots || firstType == ItemID.CloudinaBottle || firstType == ItemID.BandofRegeneration || firstType == ItemID.Extractinator || firstType == ItemID.FlareGun || firstType == ItemID.MagicMirror || firstType == ItemID.EnchantedBoomerang) //gold chest
+					{
+						if (WorldGen.genRand.NextBool(16))
+						{
+							chest.item[slot].SetDefaults(ModContent.ItemType<CrushingAmplifier>());
 							slot++;
 						}
 					}

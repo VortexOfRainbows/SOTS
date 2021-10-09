@@ -67,10 +67,12 @@ namespace SOTS.Projectiles.Crushers
 		public virtual void VoidConsumption(float charge, ref int consumedAmt)
 		{
 			Player player = Main.player[projectile.owner];
+			VoidPlayer vPlayer = VoidPlayer.ModPlayer(player);
 			if (charge >= 0.25f && consumedAmt == 0)
 			{
 				consumedAmt++;
-				VoidItem.DrainMana(player);
+				if (!(vPlayer.CrushResistor && Main.rand.NextBool(3)))
+					VoidItem.DrainMana(player);
 			}
 			if (charge >= 0.50f && consumedAmt == 1)
 			{
@@ -80,7 +82,8 @@ namespace SOTS.Projectiles.Crushers
 			if (charge >= 0.75f && consumedAmt == 2)
 			{
 				consumedAmt++;
-				VoidItem.DrainMana(player);
+				if(!vPlayer.CrushCapacitor)
+					VoidItem.DrainMana(player);
 			}
 		}
 		public virtual bool CanCharge()
@@ -90,7 +93,7 @@ namespace SOTS.Projectiles.Crushers
 		public sealed override bool PreAI()
 		{
 			Player player = Main.player[projectile.owner];
-			VoidPlayer modPlayer = VoidPlayer.ModPlayer(player);
+			VoidPlayer vPlayer = VoidPlayer.ModPlayer(player);
 			if (runOnce)
 			{
 				//if(trailLength > 0)
@@ -125,12 +128,13 @@ namespace SOTS.Projectiles.Crushers
 			{
 				if(CanCharge())
 				{
-					currentCharge += 1 * (1f / player.meleeSpeed + modPlayer.voidSpeed - 1);
+					float chargeSpeedMult = (1f / player.meleeSpeed + vPlayer.voidSpeed - 1) * vPlayer.CrushTransformer;
+					currentCharge += 1 * chargeSpeedMult;
 					float chargePercentage = currentCharge / chargeTime;
 					chargePercentage = (float)Math.Pow(chargePercentage, exponentReduction);
 					if (chargePercentage > 1)
 					{
-						initiateTimer += 1 * (1f / Main.player[projectile.owner].meleeSpeed + modPlayer.voidSpeed - 1);
+						initiateTimer += 1 * chargeSpeedMult;
 						chargePercentage = 1;
 					}
 					int prev = consumedVoid;
@@ -139,11 +143,12 @@ namespace SOTS.Projectiles.Crushers
 					{
 						Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 15, 1.0f + 0.1f * consumedVoid);
 					}
-
-					float explosiveCount = maxExplosions - minExplosions;
+					int trueMaxExplosions = maxExplosions + vPlayer.BonusCrushRangeMax;
+					int trueMinExplosions = minExplosions + vPlayer.BonusCrushRangeMin;
+					float explosiveCount = trueMaxExplosions - trueMinExplosions;
 					explosiveCount *= chargePercentage;
 					explosiveCount += 0.3f;
-					explosive = (int)explosiveCount + minExplosions;
+					explosive = (int)explosiveCount + trueMinExplosions;
 
 					rotationTimer = chargePercentage * finalDist; //making the rotation timer proportional to the charge time completed
 					float increaseDamage = minDamage + ((maxDamage - minDamage) * chargePercentage);
@@ -151,7 +156,6 @@ namespace SOTS.Projectiles.Crushers
 						projectile.damage = (int)(initialDamage * increaseDamage);
 				}
 			}
-
 			Vector2 goToArea = new Vector2(projectile.ai[0], projectile.ai[1]) - player.Center;
 			Vector2 normalized = goToArea.SafeNormalize(new Vector2(1, 0));
 			normalized *= projectile.velocity.Length();
@@ -167,7 +171,7 @@ namespace SOTS.Projectiles.Crushers
         }
         public virtual int ExplosionType()
         {
-			return mod.ProjectileType("PinkCrush");
+			return ModContent.ProjectileType<PinkCrush>();
         }
 		public virtual bool UseCustomExplosionEffect(float x, float y, float dist, float rotation, float chargePercent = 1f)
         {
