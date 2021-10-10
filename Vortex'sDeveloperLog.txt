@@ -16,7 +16,9 @@ High Priority:
 1. Inferno Construct
 2. Starmap
 3. Digital Daito Obtaining
-4. Dungeon Arkahlis Room
+4. Early game minion accessory
+	1. Botanical Symbiote: Grants a flower hook to all active minions that does 9 damage
+	2. maybe only non-void minions
 
 Mid Priority:
 1. Tectonic Tether
@@ -44,6 +46,7 @@ Low Priority:
 	4. Transformer is sold by the Mechanic
 2. Added Avocado soup
 	1. Increased drop rate of coconut milk in the beach biome
+3. Earthen Construct doesn't spawn underground until above 160 hp
 
 10/6/21 & 10/7/21
 1. Added "Lost Chain" item and tile. Should work in Multiplayer
