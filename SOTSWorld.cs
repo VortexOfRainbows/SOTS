@@ -1105,7 +1105,7 @@ namespace SOTS
 					{
 						chest.item[slot].SetDefaults(ModContent.ItemType<DissolvingDeluge>());
 						slot++;
-						chest.item[slot].SetDefaults(ModContent.ItemType<CoconutMilk>());
+						chest.item[slot].SetDefaults(ModContent.ItemType<AvocadoSoup>());
 						chest.item[slot].stack = 10; // 3 to 5
 						slot++;
 						chest.item[slot].SetDefaults(ItemID.LifeCrystal);

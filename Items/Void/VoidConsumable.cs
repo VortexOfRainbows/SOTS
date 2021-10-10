@@ -24,7 +24,7 @@ namespace SOTS.Items.Void
 			item.width = 32;
 			item.height = 32;
 			item.value = Item.sellPrice(0, 0, 0, 0);
-			item.rare = 1;
+			item.rare = ItemRarityID.Blue;
 			item.maxStack = 999;
 			item.useStyle = 2;
 			item.useTime = 15;
@@ -111,7 +111,7 @@ namespace SOTS.Items.Void
 			item.width = 28;
 			item.height = 30;
 			item.value = Item.sellPrice(0, 0, 20, 0);
-			item.rare = 1;
+			item.rare = ItemRarityID.Blue;
 			item.UseSound = SoundID.Item3;
 		}
         public override int GetSatiateDuration()
@@ -157,7 +157,7 @@ namespace SOTS.Items.Void
 			item.width = 22;
 			item.height = 22;
 			item.value = Item.sellPrice(0, 0, 12, 50);
-			item.rare = 1;
+			item.rare = ItemRarityID.Blue;
 			item.UseSound = SoundID.Item2;
 		}
         public override int GetVoidAmt()
@@ -186,7 +186,7 @@ namespace SOTS.Items.Void
 			item.width = 28;
 			item.height = 40;
 			item.value = Item.sellPrice(0, 0, 5, 0);
-			item.rare = 1;
+			item.rare = ItemRarityID.Blue;
 			item.UseSound = SoundID.Item3;
 		}
         public override int GetVoidAmt()
@@ -210,7 +210,7 @@ namespace SOTS.Items.Void
 			item.width = 26;
 			item.height = 32;
 			item.value = Item.sellPrice(0, 0, 2, 0);
-			item.rare = 1;
+			item.rare = ItemRarityID.Blue;
 			item.UseSound = SoundID.Item2;
 		}
 		public override int GetVoidAmt()
@@ -234,7 +234,7 @@ namespace SOTS.Items.Void
 			item.width = 28;
 			item.height = 22;
 			item.value = Item.sellPrice(0, 0, 12, 50);
-			item.rare = 1;
+			item.rare = ItemRarityID.Blue;
 			item.UseSound = SoundID.Item2;
 		}
         public override void OnActivation(Player player)
@@ -281,7 +281,7 @@ namespace SOTS.Items.Void
 			item.width = 30;
 			item.height = 18;
 			item.value = Item.sellPrice(0, 0, 0, 50);
-			item.rare = 1;
+			item.rare = ItemRarityID.Blue;
 			item.UseSound = SoundID.Item2;
 		}
 		public override int GetVoidAmt()
@@ -305,7 +305,7 @@ namespace SOTS.Items.Void
 			item.width = 22;
 			item.height = 30;
 			item.value = Item.sellPrice(0, 0, 7, 50);
-			item.rare = 1;
+			item.rare = ItemRarityID.Blue;
 			item.UseSound = SoundID.Item2;
 		}
         public override int GetVoidAmt()
@@ -340,6 +340,30 @@ namespace SOTS.Items.Void
 					Projectile.NewProjectile(player.Center.X, player.Center.Y, circularSpeed.X, circularSpeed.Y, mod.ProjectileType("ShatterShard"), calc, 3f, player.whoAmI);
 				}
 			}
+		}
+	}
+	public class AvocadoSoup : VoidConsumable
+	{
+		public override void SetStaticDefaults()
+		{
+			Tooltip.SetDefault("Refills 24 void and recieve Regeneration for 60 seconds\n'Finally some good soup!'");
+		}
+		public override void SafeSetDefaults()
+		{
+			item.width = 32;
+			item.height = 26;
+			item.value = Item.sellPrice(0, 0, 25, 0);
+			item.rare = ItemRarityID.Blue;
+			item.UseSound = SoundID.Item3;
+		}
+		public override void OnActivation(Player player)
+		{
+			RefillEffect(player, 24);
+			player.AddBuff(BuffID.Regeneration, 3600, true);
+		}
+		public override int GetSatiateDuration()
+		{
+			return 5;
 		}
 	}
 }

@@ -141,7 +141,7 @@ namespace SOTS.NPCs
 
 			if (npc.lifeMax > 5 && !npc.SpawnedFromStatue)
 			{
-				if ((Main.rand.Next(90) == 0 && Main.expertMode) || (Main.rand.Next(100) == 0 && !Main.expertMode) || (npc.type == NPCID.PigronCorruption || npc.type == NPCID.PigronHallow || npc.type == NPCID.PigronCrimson))
+				if ((Main.rand.NextBool(90) && Main.expertMode) || (Main.rand.NextBool(100) && !Main.expertMode) || (npc.type == NPCID.PigronCorruption || npc.type == NPCID.PigronHallow || npc.type == NPCID.PigronCrimson))
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<AlmondMilk>(), 1);
 
 				if (Main.rand.NextBool(35))
@@ -163,7 +163,6 @@ namespace SOTS.NPCs
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<FragmentOfInferno>(), Main.rand.Next(2) + 1);
 						if(SOTSWorld.downedSubspace)
 							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<SanguiteBar>(), Main.rand.Next(2) + 4);
-
 					}
 				}
 				else if (Main.rand.NextBool(34))
@@ -176,8 +175,10 @@ namespace SOTS.NPCs
 
 				if (player.ZoneSnow && ((Main.rand.NextBool(90) && Main.expertMode) || (Main.rand.NextBool(100) && !Main.expertMode)))
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<StrawberryIcecream>(), 1);
-				if (player.ZoneBeach && ((Main.rand.NextBool(120) && Main.expertMode) || (Main.rand.NextBool(150) && !Main.expertMode)))
+				if (player.ZoneBeach && ((Main.rand.NextBool(100) && Main.expertMode) || (Main.rand.NextBool(120) && !Main.expertMode)))
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<CoconutMilk>(), 1);
+				if (player.ZoneDungeon && Main.rand.NextBool(120))
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<AvocadoSoup>(), 1);
 
 				if (npc.type == NPCID.ZombieMushroom || npc.type == NPCID.ZombieMushroomHat || npc.type == NPCID.MushiLadybug || npc.type == NPCID.AnomuraFungus || npc.type == NPCID.FungiBulb || npc.type == NPCID.FungoFish || npc.type == NPCID.GiantFungiBulb)
 					if ((Main.rand.NextBool(10) && !Main.expertMode) || (Main.rand.NextBool(9) && Main.expertMode))

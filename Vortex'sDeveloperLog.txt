@@ -42,6 +42,8 @@ Low Priority:
 	2. Ampifier from Golden chests and Treasure Slime
 	3. Resistor drops from Constructs
 	4. Transformer is sold by the Mechanic
+2. Added Avocado soup
+	1. Increased drop rate of coconut milk in the beach biome
 
 10/6/21 & 10/7/21
 1. Added "Lost Chain" item and tile. Should work in Multiplayer
