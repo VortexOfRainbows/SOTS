@@ -463,7 +463,7 @@ namespace SOTS
 					new List<int>() { ModContent.ItemType<PutridPinkyMusicBox>(), ModContent.ItemType<PutridPinkyTrophy>() },
 					new List<int>() { ModContent.ItemType<PinkyBag>(), ModContent.ItemType<VialofAcid>(), ModContent.ItemType<Wormwood>(), ItemID.PinkGel },
 					"Summon in any biome at any time using a [i:" + ModContent.ItemType<JarOfPeanuts>() + "]",
-					"{0} has robbed everyone of their peanuts!",
+					"Putrid Pinky has robbed everyone of their peanuts!",
 					"SOTS/NPCs/Boss/PutridPinky1_Display",
 					"SOTS/NPCs/Boss/PutridPinky1_Head_Boss",
 					(Func<bool>)(() => true));
