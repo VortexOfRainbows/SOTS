@@ -4,7 +4,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using SOTS.Void;
 
-namespace SOTS.Items
+namespace SOTS.Items.Crushers
 {
 	public class SpiderCrusher : VoidItem
 	{

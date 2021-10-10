@@ -1103,17 +1103,17 @@ namespace SOTS
 					}
 					if (style == 17 && tile2.type == (ushort)ModContent.TileType<DullPlatingTile>()) //Damocles Chest
 					{
-						chest.item[slot].SetDefaults(ModContent.ItemType<DissolvingDeluge>());
+						chest.item[slot].SetDefaults(ModContent.ItemType<BoneClapper>());
 						slot++;
 						chest.item[slot].SetDefaults(ModContent.ItemType<AvocadoSoup>());
-						chest.item[slot].stack = 10; // 3 to 5
+						chest.item[slot].stack = 10;
 						slot++;
 						chest.item[slot].SetDefaults(ItemID.LifeCrystal);
 						slot++;
 						chest.item[slot].SetDefaults(ItemID.ManaCrystal);
 						slot++;
 						chest.item[slot].SetDefaults(ItemID.GoldCoin);
-						chest.item[slot].stack = Main.rand.Next(3) + 3; // 3 to 5
+						chest.item[slot].stack = Main.rand.Next(5) + 6; // 6 to 10
 						slot++;
 					}
 					if (style >= 23 && style <= 27 && (tile3.type == ModContent.TileType<DullPlatingTile>() || tile3.type == ModContent.TileType<AvaritianPlatingTile>()))

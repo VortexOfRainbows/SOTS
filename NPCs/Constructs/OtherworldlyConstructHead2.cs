@@ -1,6 +1,8 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Items.Fragments;
+using SOTS.Items.Otherworld.FromChests;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -376,13 +378,13 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override void NPCLoot()
 		{
-			int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, mod.NPCType("OtherworldlySpirit"));	
+			int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<OtherworldlySpirit>());	
 			Main.npc[n].velocity.Y = -10f;
 			Main.npc[n].localAI[1] = -1;
-			if (Main.netMode != 1)
+			if (Main.netMode != NetmodeID.MultiplayerClient)
 				Main.npc[n].netUpdate = true;
-			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("FragmentOfOtherworld"), Main.rand.Next(2) + 3);
-			if ((Main.expertMode || Main.rand.Next(2) == 0) && SOTSWorld.downedAdvisor) Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("TwilightShard"), 1);
+			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<FragmentOfOtherworld>(), Main.rand.Next(2) + 3);
+			if ((Main.expertMode || Main.rand.Next(2) == 0) && SOTSWorld.downedAdvisor) Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<TwilightShard>(), 1);
 		}	
 	}
 }

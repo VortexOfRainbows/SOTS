@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Items.Fragments;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -184,7 +185,7 @@ namespace SOTS.NPCs.Constructs
 					dust4.fadeIn = 0.1f;
 					dust4.scale *= 2.5f;
 				}
-				if(phase == 1)
+				if(phase == 1 && npc.localAI[1] != -1)
 				{
 					phase = 2;
 					npc.lifeMax = (int)(InitiateHealth * (Main.expertMode ? ExpertHealthMult : 1));
@@ -211,7 +212,8 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override void NPCLoot()
 		{
-			//Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("DissolvingAether"), 1);	
+			if (npc.localAI[1] == -1)
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<DissolvingAether>(), 1);	
 		}	
 	}
 }

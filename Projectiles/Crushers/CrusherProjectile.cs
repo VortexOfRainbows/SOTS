@@ -48,6 +48,9 @@ namespace SOTS.Projectiles.Crushers
 		public float finalDist = 165;
 		public float exponentReduction = 0.5f;
 		public float minDamage = 0f;
+		public int minExplosionSpread = 1;
+		public int maxExplosionSpread = 1;
+		public float spreadDeg = 15f;
 		///Make sure to change the released projectile down near the bottom
 
 		public float minTimeBeforeRelease = 5;
@@ -58,6 +61,7 @@ namespace SOTS.Projectiles.Crushers
 		bool released = false;
 		float rotationTimer = 0; //assume finalDist is full rotation, 0 has not been rotated
 		int explosive = 1;
+		int explosiveShotgun = 1;
 		float currentCharge = 0; //how close are we to chargeTime?
 		float initiateTimer = 0; //how close are we to releaseTime?
 		float accelerateAmount = 0;
@@ -150,6 +154,10 @@ namespace SOTS.Projectiles.Crushers
 					explosiveCount += 0.3f;
 					explosive = (int)explosiveCount + trueMinExplosions;
 
+					float spreadCount = maxExplosionSpread - minExplosionSpread;
+					spreadCount *= chargePercentage;
+					spreadCount += 0.3f;
+					explosiveShotgun = (int)spreadCount + minExplosionSpread;
 					rotationTimer = chargePercentage * finalDist; //making the rotation timer proportional to the charge time completed
 					float increaseDamage = minDamage + ((maxDamage - minDamage) * chargePercentage);
 					if(ModContent.ProjectileType<SubspaceCrusher>() != projectile.type)
@@ -244,19 +252,23 @@ namespace SOTS.Projectiles.Crushers
 					if (charge <= 0 && setsActive[j]) //collision
 					{
 						setsActive[j] = false;
-						double rad1 = direction;
 						if (projectile.owner == Main.myPlayer)
 						{
-							for (int i = 0; i < explosive; i++)
+							int shotGun = explosiveShotgun - 1;
+							for(int k = -shotGun; k <= shotGun; k++)
 							{
-								double distance = (explosiveRange * i) + initialExplosiveRange;
-								float positionX = player.Center.X - (int)(Math.Cos(rad1) * distance);
-								float positionY = player.Center.Y - (int)(Math.Sin(rad1) * distance);
-								float charge2 = currentCharge / finalDist;
-								if (charge2 > 1)
-									charge2 = 1f;
-								if (!UseCustomExplosionEffect(positionX, positionY, (float)distance, (float)rad1, charge2))
-									Projectile.NewProjectile(positionX, positionY, projectile.velocity.X, projectile.velocity.Y, ExplosionType(), projectile.damage, projectile.knockBack, Main.myPlayer, initialDamage, 0f);
+								double rad1 = direction + MathHelper.ToRadians(spreadDeg * k);
+								for (int i = 0; i < explosive; i++)
+								{
+									double distance = (explosiveRange * i) + initialExplosiveRange;
+									float positionX = player.Center.X - (int)(Math.Cos(rad1) * distance);
+									float positionY = player.Center.Y - (int)(Math.Sin(rad1) * distance);
+									float charge2 = currentCharge / finalDist;
+									if (charge2 > 1)
+										charge2 = 1f;
+									if (!UseCustomExplosionEffect(positionX, positionY, (float)distance, (float)rad1, charge2))
+										Projectile.NewProjectile(positionX, positionY, projectile.velocity.X, projectile.velocity.Y, ExplosionType(), projectile.damage, projectile.knockBack, Main.myPlayer, initialDamage, 0f);
+								}
 							}
 						}
 						ExplosionSound();
