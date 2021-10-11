@@ -16,9 +16,6 @@ High Priority:
 1. Inferno Construct
 2. Starmap
 3. Digital Daito Obtaining
-4. Early game minion accessory
-	1. Botanical Symbiote: Grants a flower hook to all active minions that does 9 damage
-	2. maybe only non-void minions
 
 Mid Priority:
 1. Tectonic Tether
@@ -41,6 +38,7 @@ Low Priority:
 10/10/21
 1. Added Bone Clapper, should work in Multiplayer
 2. Killing otherworldly spirits that spawn from Constructs now drops one dissolving Aether instead of playing the animation for Advisor's death.
+3. Added Botanical Symbiote, needs multiplayer testing still
 
 10/9/21
 1. Added crushing accessories

@@ -17,8 +17,6 @@ namespace SOTS.Projectiles.Nature
 			projectile.tileCollide = true;
 			projectile.hostile = false;
 			projectile.friendly = true;
-			projectile.minion = true;
-			projectile.minionSlots = 0f;
 			projectile.alpha = 255;
 			projectile.timeLeft = 700;
 			projectile.usesLocalNPCImmunity = true;

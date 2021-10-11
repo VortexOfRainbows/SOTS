@@ -1,5 +1,7 @@
 using Microsoft.Xna.Framework;
 using SOTS.Items.Banners;
+using SOTS.Items.Fragments;
+using SOTS.Items.Void;
 using System.IO;
 using Terraria;
 using Terraria.ID;
@@ -62,7 +64,7 @@ namespace SOTS.NPCs
 			for(int i = 0; i < Main.maxNPCs; i++)
 			{
 				NPC pet = Main.npc[i];
-				if (pet.type == mod.NPCType("BloomingHook") && (int)pet.ai[0] == npc.whoAmI && pet.active)
+				if (pet.type == NPCType<BloomingHook>() && (int)pet.ai[0] == npc.whoAmI && pet.active)
 				{
 					total++;
 				}
@@ -72,7 +74,7 @@ namespace SOTS.NPCs
 				counter = 0;
 				if (total < 3)
 				{
-					int npc1 = NPC.NewNPC((int)npc.position.X + npc.width / 2, (int)npc.position.Y + npc.height, mod.NPCType("BloomingHook"));
+					int npc1 = NPC.NewNPC((int)npc.position.X + npc.width / 2, (int)npc.position.Y + npc.height, NPCType<BloomingHook>());
 					Main.npc[npc1].netUpdate = true;
 					Main.npc[npc1].ai[0] = npc.whoAmI;
 				}
@@ -105,10 +107,10 @@ namespace SOTS.NPCs
 		{
 			if (Main.rand.Next(10) == 0)
 			{
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FoulConcoction"), Main.rand.Next(2) + 1);
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<FoulConcoction>(), Main.rand.Next(2) + 1);
 			}
-			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, (ItemID.Gel), Main.rand.Next(1, 3));
-			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FragmentOfNature"), 1);
+			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemID.Gel, Main.rand.Next(1, 3));
+			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<FragmentOfNature>(), 1);
 		}
 	}
 }

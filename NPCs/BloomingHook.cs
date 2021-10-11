@@ -54,7 +54,7 @@ namespace SOTS.NPCs
 			Texture2D texture = ModContent.GetTexture("SOTS/NPCs/BloomingVine");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			NPC owner = Main.npc[(int)ownerID];
-			if (owner.type == mod.NPCType("NatureSlime") && owner.active)
+			if (owner.type == ModContent.NPCType<NatureSlime>() && owner.active)
 			{
 				Vector2 distanceToOwner = npc.Center - owner.Center;
 				float radius = distanceToOwner.Length() / 2;

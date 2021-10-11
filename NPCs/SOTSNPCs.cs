@@ -24,6 +24,7 @@ using SOTS.NPCs.TreasureSlimes;
 using SOTS.Items.Fragments;
 using SOTS.Dusts;
 using SOTS.Items.Crushers;
+using SOTS.Items.Nature;
 
 namespace SOTS.NPCs
 {
@@ -275,6 +276,11 @@ namespace SOTS.NPCs
 				{
 					if(Main.rand.NextBool(50))
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<CrushingResistor>(), 1);
+				}
+				if(npc.type == ModContent.NPCType<NatureSlime>())
+				{
+					if (Main.rand.NextBool(50))
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<BotanicalSymbiote>(), 1);
 				}
 			}
 		}

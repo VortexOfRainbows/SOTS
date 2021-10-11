@@ -34,6 +34,7 @@ using SOTS.Projectiles.Permafrost;
 using SOTS.Items.Celestial;
 using SOTS.Items.Fragments;
 using SOTS.Projectiles.Inferno;
+using SOTS.Projectiles.Nature;
 
 namespace SOTS
 {
@@ -42,12 +43,14 @@ namespace SOTS
 		public static int[] locketBlacklist;
 		public static int[] typhonBlacklist;
 		public static int[] typhonWhitelist;
+		public static int[] symbioteBlacklist;
 		public static void LoadArrays()
 		{
 			locketBlacklist = new int[] { ItemID.BookStaff, ModContent.ItemType<LashesOfLightning>(), ModContent.ItemType<SkywardBlades>(), ItemID.GolemFist, ItemID.Flairon,
 				ModContent.ItemType<PhaseCannon>(), ModContent.ItemType<Items.Otherworld.FromChests.HardlightGlaive>(), ModContent.ItemType<StarcoreAssaultRifle>(), ModContent.ItemType<VibrantPistol>(),
 				ModContent.ItemType<Items.Otherworld.FromChests.SupernovaHammer>(), ItemID.MonkStaffT1, ModContent.ItemType<Items.IceStuff.FrigidJavelin>(), ModContent.ItemType<Items.DigitalDaito>() };
 			typhonBlacklist = new int[] { ModContent.ProjectileType<ArcColumn>(), ModContent.ProjectileType<PhaseColumn>(), ModContent.ProjectileType<MacaroniBeam>(), ModContent.ProjectileType<GenesisArc>(), ModContent.ProjectileType<GenesisCore>() };
+			symbioteBlacklist = new int[] { ModContent.ProjectileType<BloomingHook>(), ModContent.ProjectileType<BloomingHookMinion>() };
 			typhonWhitelist = new int[] { ModContent.ProjectileType<HardlightArrow>() };
 		}
 		/*
@@ -90,6 +93,7 @@ namespace SOTS
 		public bool petPepper = false;
 		public bool petAdvisor = false;
 		public int petPinky = -1;
+		public int symbioteDamage = -1;
 		public bool rippleEffect = false;
 		public int rippleTimer = 0;
 		public int rippleBonusDamage = 0;
@@ -380,11 +384,11 @@ namespace SOTS
 			{
 				if (Probe2 == -1)
 				{
-					Probe2 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, mod.ProjectileType("GhostPepper"), 0, 0, player.whoAmI, 0);
+					Probe2 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, ModContent.ProjectileType<GhostPepper>(), 0, 0, player.whoAmI, 0);
 				}
-				if (!Main.projectile[Probe2].active || Main.projectile[Probe2].type != mod.ProjectileType("GhostPepper") || Main.projectile[Probe2].owner != player.whoAmI)
+				if (!Main.projectile[Probe2].active || Main.projectile[Probe2].type != ModContent.ProjectileType<GhostPepper>() || Main.projectile[Probe2].owner != player.whoAmI)
 				{
-					Probe2 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, mod.ProjectileType("GhostPepper"), 0, 0, player.whoAmI, 0);
+					Probe2 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, ModContent.ProjectileType<GhostPepper>(), 0, 0, player.whoAmI, 0);
 				}
 				Main.projectile[Probe2].timeLeft = 6;
 			}
@@ -395,11 +399,11 @@ namespace SOTS
 			{
 				if (Probe3 == -1)
 				{
-					Probe3 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, mod.ProjectileType("HoloEye"), 1 + HoloEyeDamage, 0, player.whoAmI, 0);
+					Probe3 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, ModContent.ProjectileType<HoloEye>(), 1 + HoloEyeDamage, 0, player.whoAmI, 0);
 				}
-				if (!Main.projectile[Probe3].active || Main.projectile[Probe3].type != mod.ProjectileType("HoloEye") || Main.projectile[Probe3].owner != player.whoAmI)
+				if (!Main.projectile[Probe3].active || Main.projectile[Probe3].type != ModContent.ProjectileType<HoloEye>() || Main.projectile[Probe3].owner != player.whoAmI)
 				{
-					Probe3 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, mod.ProjectileType("HoloEye"), 1 + HoloEyeDamage, 0, player.whoAmI, 0);
+					Probe3 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, ModContent.ProjectileType<HoloEye>(), 1 + HoloEyeDamage, 0, player.whoAmI, 0);
 				}
 				Main.projectile[Probe3].timeLeft = 6;
 			}
@@ -410,11 +414,11 @@ namespace SOTS
 			{
 				if (Probe4 == -1)
 				{
-					Probe4 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, mod.ProjectileType("PetPutridPinkyCrystal"), petPinky, 0, player.whoAmI, 0);
+					Probe4 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, ModContent.ProjectileType<PetPutridPinkyCrystal>(), petPinky, 0, player.whoAmI, 0);
 				}
-				if (!Main.projectile[Probe4].active || Main.projectile[Probe4].type != mod.ProjectileType("PetPutridPinkyCrystal") || Main.projectile[Probe4].owner != player.whoAmI)
+				if (!Main.projectile[Probe4].active || Main.projectile[Probe4].type != ModContent.ProjectileType<PetPutridPinkyCrystal>() || Main.projectile[Probe4].owner != player.whoAmI)
 				{
-					Probe4 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, mod.ProjectileType("PetPutridPinkyCrystal"), petPinky, 0, player.whoAmI, 0);
+					Probe4 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, ModContent.ProjectileType<PetPutridPinkyCrystal>(), petPinky, 0, player.whoAmI, 0);
 				}
 				Main.projectile[Probe4].timeLeft = 6;
 			}
@@ -592,6 +596,7 @@ namespace SOTS
             }
 			rippleEffect = false;
 			rippleBonusDamage = 0;
+			symbioteDamage = -1;
 			petPinky = -1;
 			petPepper = false;
 			petAdvisor = false; 

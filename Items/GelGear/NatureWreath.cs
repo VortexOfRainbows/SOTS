@@ -1,3 +1,5 @@
+using SOTS.Items.Fragments;
+using SOTS.Projectiles.Nature;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -28,7 +30,7 @@ namespace SOTS.Items.GelGear
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs)
         {
-            return body.type == mod.ItemType("NatureShirt") && legs.type == mod.ItemType("NatureLeggings");
+            return body.type == ModContent.ItemType<NatureShirt>() && legs.type == ModContent.ItemType<NatureLeggings>();
         }
         public override void UpdateArmorSet(Player player)
         {	
@@ -37,29 +39,29 @@ namespace SOTS.Items.GelGear
 			{
 				if (Probe == -1)
 				{
-					Probe = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, mod.ProjectileType("BloomingHook"), (int)(11 * (1f + (player.minionDamage - 1f) + (player.allDamage - 1f))), 0.4f, player.whoAmI);
+					Probe = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, ModContent.ProjectileType<BloomingHook>(), (int)(11 * (1f + (player.minionDamage - 1f) + (player.allDamage - 1f))), 0.4f, player.whoAmI);
 				}
-				if (!Main.projectile[Probe].active || Main.projectile[Probe].type != mod.ProjectileType("BloomingHook"))
+				if (!Main.projectile[Probe].active || Main.projectile[Probe].type != ModContent.ProjectileType<BloomingHook>())
 				{
-					Probe = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, mod.ProjectileType("BloomingHook"), (int)(11 * (1f + (player.minionDamage - 1f) + (player.allDamage - 1f))), 0.4f, player.whoAmI);
+					Probe = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, ModContent.ProjectileType<BloomingHook>(), (int)(11 * (1f + (player.minionDamage - 1f) + (player.allDamage - 1f))), 0.4f, player.whoAmI);
 				}
 				Main.projectile[Probe].timeLeft = 6;
 				if (Probe2 == -1)
 				{
-					Probe2 = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, mod.ProjectileType("BloomingHook"), (int)(11 * (1f + (player.minionDamage - 1f) + (player.allDamage - 1f))), 0.4f, player.whoAmI);
+					Probe2 = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, ModContent.ProjectileType<BloomingHook>(), (int)(11 * (1f + (player.minionDamage - 1f) + (player.allDamage - 1f))), 0.4f, player.whoAmI);
 				}
-				if (!Main.projectile[Probe2].active || Main.projectile[Probe2].type != mod.ProjectileType("BloomingHook"))
+				if (!Main.projectile[Probe2].active || Main.projectile[Probe2].type != ModContent.ProjectileType<BloomingHook>())
 				{
-					Probe2 = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, mod.ProjectileType("BloomingHook"), (int)(11 * (1f + (player.minionDamage - 1f) + (player.allDamage - 1f))), 0.4f, player.whoAmI);
+					Probe2 = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, ModContent.ProjectileType<BloomingHook>(), (int)(11 * (1f + (player.minionDamage - 1f) + (player.allDamage - 1f))), 0.4f, player.whoAmI);
 				}
 				Main.projectile[Probe2].timeLeft = 6;
 				if (Probe3 == -1)
 				{
-					Probe3 = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, mod.ProjectileType("BloomingHook"), (int)(11 * (1f + (player.minionDamage - 1f) + (player.allDamage - 1f))), 0.4f, player.whoAmI);
+					Probe3 = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, ModContent.ProjectileType<BloomingHook>(), (int)(11 * (1f + (player.minionDamage - 1f) + (player.allDamage - 1f))), 0.4f, player.whoAmI);
 				}
-				if (!Main.projectile[Probe3].active || Main.projectile[Probe3].type != mod.ProjectileType("BloomingHook"))
+				if (!Main.projectile[Probe3].active || Main.projectile[Probe3].type != ModContent.ProjectileType<BloomingHook>())
 				{
-					Probe3 = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, mod.ProjectileType("BloomingHook"), (int)(11 * (1f + (player.minionDamage - 1f) + (player.allDamage - 1f))), 0.4f, player.whoAmI);
+					Probe3 = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, ModContent.ProjectileType<BloomingHook>(), (int)(11 * (1f + (player.minionDamage - 1f) + (player.allDamage - 1f))), 0.4f, player.whoAmI);
 				}
 				Main.projectile[Probe3].timeLeft = 6;
 			}
@@ -71,8 +73,8 @@ namespace SOTS.Items.GelGear
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "Wormwood", 20);
-			recipe.AddIngredient(null, "FragmentOfNature", 5);
+			recipe.AddIngredient(ModContent.ItemType<Wormwood>(), 20);
+			recipe.AddIngredient(ModContent.ItemType<FragmentOfNature>(), 5);
 			recipe.SetResult(this);
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.AddRecipe();
