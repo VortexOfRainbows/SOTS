@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Projectiles.Nature;
 using System;
 using System.ComponentModel;
 using Terraria;
@@ -90,7 +91,7 @@ namespace SOTS.NPCs
 			Player player = Main.player[npc.target];
 			NPC owner = Main.npc[(int)ownerID];
 			aiCounter++;
-			if (owner.type != mod.NPCType("NatureSlime") || !owner.active)
+			if (owner.type != ModContent.NPCType<NatureSlime>() || !owner.active)
 			{
 				npc.active = false;
 			}
@@ -150,14 +151,15 @@ namespace SOTS.NPCs
 					frame++;
 					if (frame == 7)
 					{
-						if (Main.netMode != 1)
+						Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 30, 0.7f, -0.4f);
+						if (Main.netMode != NetmodeID.MultiplayerClient)
 						{
 							int damage = npc.damage / 2;
 							if (Main.expertMode)
 							{
 								damage = (int)(damage / Main.expertDamage);
 							}
-							Projectile.NewProjectile(npc.Center, rotateVector * 0.4f, mod.ProjectileType("FlowerBolt"), damage, 0, Main.myPlayer);
+							Projectile.NewProjectile(npc.Center, rotateVector * 0.4f, ModContent.ProjectileType<FlowerBolt>(), damage, 0, Main.myPlayer);
 							npc.netUpdate = true;
 						}
 					}

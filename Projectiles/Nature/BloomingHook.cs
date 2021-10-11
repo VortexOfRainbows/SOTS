@@ -178,9 +178,10 @@ namespace SOTS.Projectiles.Nature
 					frame++;
 					if (frame == 7)
 					{
+						Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 30, 0.7f, -0.4f);
 						if (Main.myPlayer == projectile.owner)
 						{
-							Projectile.NewProjectile(projectile.Center, rotateVector * 5.5f, mod.ProjectileType("FriendlyFlowerBolt"), projectile.damage, 1f, owner.whoAmI);
+							Projectile.NewProjectile(projectile.Center, rotateVector * 1f, ModContent.ProjectileType<FriendlyFlowerBolt>(), projectile.damage, 1f, owner.whoAmI);
 							projectile.netUpdate = true;
 						}
 					}
