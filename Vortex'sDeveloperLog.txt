@@ -17,6 +17,7 @@ High Priority:
 2. Starmap
 3. Digital Daito Obtaining
 4. Rare construct weapon drops
+	1. Mantis Grip: does the same visuals as the nature construct, has similar visuals to hellcrusher handle
 
 Mid Priority:
 1. Tectonic Tether
@@ -35,6 +36,10 @@ Low Priority:
 2. Mobile Fortress Generator: One for every tavernkeep armor set
 3. Electrolyte Seperator
 4. Wintry Traveler: Riptide Trident + Frigid Javelin
+
+10/12/21
+1. Added Mantis Grip
+	1. Server syncing testing needed
 
 10/10/21
 1. Added Bone Clapper, should work in Multiplayer

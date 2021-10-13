@@ -1,15 +1,14 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Dusts;
 using SOTS.Void;
 using System.IO;
 using Terraria;
 using Terraria.ModLoader;
-using Terraria.ID;
-using SOTS.Dusts;
 
 namespace SOTS.Projectiles.Nature
 {    
-    public class NatureBolt : ModProjectile 
+    public class NatureBoltFriendly : ModProjectile 
     {
         public override void SendExtraAI(BinaryWriter writer)
         {
@@ -39,10 +38,10 @@ namespace SOTS.Projectiles.Nature
 		bool reachDestination = false;
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			if(reachDestination)
+			Player player = Main.player[projectile.owner];
+			if (reachDestination)
 			{
 				Color color = new Color(100, 120, 100, 0);
-				Player player = Main.player[(int)projectile.ai[1]];
 				projectile.position = player.Center;
 				Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Nature/NatureReticle");
 				Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
@@ -89,17 +88,11 @@ namespace SOTS.Projectiles.Nature
 		}
 		public override void AI()
 		{
+			//Player player = Main.player[projectile.owner];
 			projectile.velocity *= 0.97f;
 			projectile.rotation += 0.3f;
-			Player player = Main.player[(int)projectile.ai[1]];
-			if(projectile.ai[0] > 0 && Main.netMode != 1)
-			{
-				Vector2 targetPos = new Vector2(projectile.ai[0], 0).RotatedBy(MathHelper.ToRadians(Main.rand.Next(360)));
-				projectile.ai[0] = 0;
-				trueTarget = player.Center + targetPos;
-				projectile.netUpdate = true;
-				return;
-			}
+			if(!reachDestination)
+				trueTarget = new Vector2(projectile.ai[0], projectile.ai[1]);
 			if (trueTarget != Vector2.Zero && !reachDestination)
 			{
 				for (int i = 0; i < 4; i++)
@@ -109,6 +102,8 @@ namespace SOTS.Projectiles.Nature
 			}
 			if(reachDestination)
             {
+				if (projectile.timeLeft > 25)
+					projectile.timeLeft = 25;
 				projectile.ai[0] = -((110 - projectile.timeLeft) / 110f) * 0.5f;
             }
 		}
@@ -118,9 +113,9 @@ namespace SOTS.Projectiles.Nature
         }
         public override void Kill(int timeLeft)
 		{
-			if(Main.netMode != NetmodeID.MultiplayerClient)
-				Projectile.NewProjectile(trueTarget.X, trueTarget.Y, 0, 0, ModContent.ProjectileType<NatureBeat>(), projectile.damage, 0, Main.myPlayer);
-			Main.PlaySound(SoundID.Item, (int)trueTarget.X, (int)trueTarget.Y, 93, 0.35f);
+			if(projectile.owner == Main.myPlayer)
+				Projectile.NewProjectile(trueTarget.X, trueTarget.Y, 0, 0, ModContent.ProjectileType<NatureBeatFriendly>(), projectile.damage, 0, Main.myPlayer);
+			Main.PlaySound(2, (int)trueTarget.X, (int)trueTarget.Y, 93, 0.35f);
 		}
 	}
 }

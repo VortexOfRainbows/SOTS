@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Projectiles.Nature;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -31,7 +32,6 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override void SetStaticDefaults()
 		{
-			
 			DisplayName.SetDefault("Nature Construct");
 		}
 		public override void SetDefaults()
@@ -156,7 +156,7 @@ namespace SOTS.NPCs.Constructs
 						for (int i = 0; i < 5; i++)
 						{
 							Vector2 circular = new Vector2(12, 0).RotatedBy(dir + MathHelper.ToRadians((i - 2) * 12.5f));
-							Projectile.NewProjectile(npc.Center + circular2, circular, mod.ProjectileType("NatureBolt"), damage, 0, Main.myPlayer, Main.rand.NextFloat(30f + i * 15f, 40f + i * 20f), npc.target);
+							Projectile.NewProjectile(npc.Center + circular2, circular, ModContent.ProjectileType<NatureBolt>(), damage, 0, Main.myPlayer, Main.rand.NextFloat(30f + i * 15f, 40f + i * 20f), npc.target);
 						}
 					}
 					npc.velocity.Y -= 2.0f;
@@ -166,7 +166,7 @@ namespace SOTS.NPCs.Constructs
                 {
 					shootingAI = 0;
 					canSpell = false;
-					if (Main.netMode != 1)
+					if (Main.netMode != NetmodeID.MultiplayerClient)
 						npc.netUpdate = true;
 				}
 				Vector2 playerLocation = player.Center * (1 - sinPercent) + new Vector2(npc.Center.X, npc.Center.Y - 128) * sinPercent;

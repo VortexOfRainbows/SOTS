@@ -35,6 +35,7 @@ using SOTS.Items.Celestial;
 using SOTS.Items.Fragments;
 using SOTS.Projectiles.Inferno;
 using SOTS.Projectiles.Nature;
+using SOTS.Items.Crushers;
 
 namespace SOTS
 {

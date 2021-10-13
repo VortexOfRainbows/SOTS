@@ -51,6 +51,7 @@ namespace SOTS.Projectiles.Crushers
 		public int minExplosionSpread = 1;
 		public int maxExplosionSpread = 1;
 		public float spreadDeg = 15f;
+		public float armAngle = 45f;
 		///Make sure to change the released projectile down near the bottom
 
 		public float minTimeBeforeRelease = 5;
@@ -181,7 +182,7 @@ namespace SOTS.Projectiles.Crushers
         {
 			return ModContent.ProjectileType<PinkCrush>();
         }
-		public virtual bool UseCustomExplosionEffect(float x, float y, float dist, float rotation, float chargePercent = 1f)
+		public virtual bool UseCustomExplosionEffect(float x, float y, float dist, float rotation, float chargePercent, int indexNumber)
         {
 			return false;
         }
@@ -266,7 +267,7 @@ namespace SOTS.Projectiles.Crushers
 									float charge2 = currentCharge / finalDist;
 									if (charge2 > 1)
 										charge2 = 1f;
-									if (!UseCustomExplosionEffect(positionX, positionY, (float)distance, (float)rad1, charge2))
+									if (!UseCustomExplosionEffect(positionX, positionY, (float)distance, (float)rad1, charge2, i))
 										Projectile.NewProjectile(positionX, positionY, projectile.velocity.X, projectile.velocity.Y, ExplosionType(), projectile.damage, projectile.knockBack, Main.myPlayer, initialDamage, 0f);
 								}
 							}
@@ -328,7 +329,7 @@ namespace SOTS.Projectiles.Crushers
 				{
 					deg = -charge - 5 + (float)degDirection; //subtract rotate
 				}
-				rotation = MathHelper.ToRadians(deg + (flip ? 315 : 225));
+				rotation = MathHelper.ToRadians(deg + (flip ? (360 - armAngle) : (180 + armAngle)));
 				if (setsActive[set] && charge > 0 && pos != projectile.Center)
 				{
 					List<Vector2> trail = stored[i];

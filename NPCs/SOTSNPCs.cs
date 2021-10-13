@@ -276,6 +276,8 @@ namespace SOTS.NPCs
 				{
 					if(Main.rand.NextBool(50))
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<CrushingResistor>(), 1);
+					if(npc.type == ModContent.NPCType<NatureConstruct>() && Main.rand.NextBool(30))
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<MantisGrip>(), 1);
 				}
 				if(npc.type == ModContent.NPCType<NatureSlime>())
 				{
