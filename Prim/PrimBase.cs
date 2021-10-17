@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using System.Linq;
-using System.Reflection;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -29,10 +28,6 @@ namespace SOTS.Prim
 
 			gD.SetRenderTarget(primTargetNPC);
 			gD.Clear(Color.Transparent);
-
-			if ((bool)typeof(SpriteBatch).GetField("beginCalled", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(spriteBatch))
-				spriteBatch.End();
-
 			spriteBatch.Begin();
 			foreach (PrimTrail trail in _trails.ToArray().Where(x => x.DrawType == DrawNPC)) {
 				if (trail.Pixellated && !trail.Disabled)
@@ -56,10 +51,6 @@ namespace SOTS.Prim
 
 			gD.SetRenderTarget(primTargetProjectile);
 			gD.Clear(Color.Transparent);
-
-			if ((bool)typeof(SpriteBatch).GetField("beginCalled", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(spriteBatch))
-				spriteBatch.End();
-
 			spriteBatch.Begin();
 			foreach (PrimTrail trail in _trails.ToArray().Where(x => x.DrawType == DrawProjectile)) {
 				if (trail.Pixellated && !trail.Disabled)
