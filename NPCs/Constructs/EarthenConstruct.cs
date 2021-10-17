@@ -513,7 +513,7 @@ namespace SOTS.NPCs.Constructs
         }
         public override void HitEffect(int hitDirection, double damage)
         {
-            if (npc.life <= 0)
+            if (npc.life <= 0 && Main.netMode != NetmodeID.Server)
             {
                 if (!gennedGore) genGore(hitDirection);
             }

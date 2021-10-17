@@ -11,19 +11,22 @@ Known Bugs:
 	1. Seem to generate client-side not server side..?
 	2. No memory leak on single player, or client side when testing..?
 2. Not calling end/begin; mod compatability prims crash
+3. Earthen Construct causing crashes occassionally
+	1. Try disabling its vanilla aiStyle, see if this causes conflicts
+	2. Pray to god that this works
 
 High Priority:
 1. Inferno Construct
 2. Starmap
 3. Digital Daito Obtaining
+4. Curse Base Armor Set
 
 Mid Priority:
 1. Tectonic Tether
-2. Curse Base Armor Set
-3. Horn of Plenty: 10% more drops accessory
-4. Ethereal Tonic
-5. Timelord's Potion: attempt using .aiStyle, otherwise would require a lot of workaround...
-6. Lux Drops:
+2. Horn of Plenty: 10% more drops accessory
+3. Ethereal Tonic
+4. Timelord's Potion: attempt using .aiStyle, otherwise would require a lot of workaround...
+5. Lux Drops:
 	1. Rose Bow
 	2. Voidmage Incubator
 	3. Phase Ore!?
@@ -40,7 +43,7 @@ Low Priority:
 2. Added Fidelity Config which reduces visuals for certain boss fights, making them less laggy.
 	1. Currently only effects Pharaoh's Curse and Subspace Serpent
 	2. Will effect more things later as we recieve feedback
-3. Increased Peanut drop rates (5-10) -> (10-20)
+3. Increased Peanut drop rates from all treasure slimes (5-10) -> (10-20)
 4. Added Earthshaker, still needs multiplayer testing and maybe some polish
 
 10/13/21
