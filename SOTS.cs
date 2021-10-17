@@ -46,6 +46,10 @@ namespace SOTS
 		public static Effect AtenTrail;
 		public static Effect FireballShader;
 		public static Effect GodrayShader;
+		public static SOTSConfig Config
+        {
+			get => ModContent.GetInstance<SOTSConfig>();
+        }
 		public SOTS()
 		{
 			Properties = new ModProperties()

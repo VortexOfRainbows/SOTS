@@ -17,6 +17,9 @@ namespace SOTS
 			SOTSPlayer modPlayer = player.GetModPlayer<SOTSPlayer>();
 			List<CurseFoam> foamList = modPlayer.foamParticleList1;
 			List<int> slots = new List<int>();
+			int startAt = 2;
+			if (SOTS.Config.lowFidelityMode)
+				startAt = 1;
 			for (int i = 0; i < Main.projectile.Length; i++)
 			{
 				Projectile proj = Main.projectile[i];
@@ -25,24 +28,29 @@ namespace SOTS
 				{
 					slots.Add(i);
 					List<CurseFoam> list = getFoamList(player, proj);
-					DrawFoam(list, 2, spriteBatch);
+					DrawFoam(list, startAt, spriteBatch);
 				}
 			}
-			DrawFoam(foamList, 2, spriteBatch);
+			DrawFoam(foamList, startAt, spriteBatch);
+			startAt--;
 			for (int i = 0; i < slots.Count; i++)
 			{
 				Projectile proj = Main.projectile[slots[i]];
 				List<CurseFoam> list = getFoamList(player, proj);
-				DrawFoam(list, 1, spriteBatch);
+				DrawFoam(list, startAt, spriteBatch);
 			}
-			DrawFoam(foamList, 1, spriteBatch);
-			for (int i = 0; i < slots.Count; i++)
+			DrawFoam(foamList, startAt, spriteBatch);
+			startAt--;
+			if (startAt >= 0)
 			{
-				Projectile proj = Main.projectile[slots[i]];
-				List<CurseFoam> list = getFoamList(player, proj);
-				DrawFoam(list, 0, spriteBatch);
+				for (int i = 0; i < slots.Count; i++)
+				{
+					Projectile proj = Main.projectile[slots[i]];
+					List<CurseFoam> list = getFoamList(player, proj);
+					DrawFoam(list, startAt, spriteBatch);
+				}
+				DrawFoam(foamList, startAt, spriteBatch);
 			}
-			DrawFoam(foamList, 0, spriteBatch);
 		}
 		public static List<CurseFoam> getFoamList(Player player, Projectile proj)
 		{
@@ -68,7 +76,8 @@ namespace SOTS
 				if (shade < 0)
 					shade = 0;
 				Color color = new Color(shade + dustList[i].dustColorVariation, shade - dustList[i].dustColorVariation, shade - dustList[i].dustColorVariation);
-				color = Lighting.GetColor((int)dustList[i].position.X / 16, (int)dustList[i].position.Y / 16, color);
+				if (layer != 1 || !SOTS.Config.lowFidelityMode)
+					color = Lighting.GetColor((int)dustList[i].position.X / 16, (int)dustList[i].position.Y / 16, color);
 				float reduction = shade / 255f;
 				if (layer == 2)
 				{

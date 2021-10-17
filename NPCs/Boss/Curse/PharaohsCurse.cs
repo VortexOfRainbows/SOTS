@@ -309,6 +309,8 @@ namespace SOTS.NPCs.Boss.Curse
 			{
 				if (overrideStart != -1)
 				{
+					if (SOTS.Config.lowFidelityMode && overrideStart == 2)
+						overrideStart = 1;
 					for (int i = 0; i < dustList.Count; i++)
 					{
 						int shade = 255 - (int)(dustList[i].counter * 4f) - (overrideStart != 2 ? fadeIn : 0);
@@ -316,7 +318,10 @@ namespace SOTS.NPCs.Boss.Curse
 							shade = 0;
 						Color color = new Color(shade + dustList[i].dustColorVariation, shade - dustList[i].dustColorVariation, shade - dustList[i].dustColorVariation);
 						if (overrideStart != 2)
-							color = Lighting.GetColor((int)dustList[i].position.X / 16, (int)dustList[i].position.Y / 16, color);
+                        {
+							if(overrideStart != 1 || !SOTS.Config.lowFidelityMode)
+								color = Lighting.GetColor((int)dustList[i].position.X / 16, (int)dustList[i].position.Y / 16, color);
+						}
 						else
 						{
 							float reduction = shade / 255f;
@@ -340,6 +345,8 @@ namespace SOTS.NPCs.Boss.Curse
 					}
 					if (startPoint != 2)
 						texture = ModContent.GetTexture("SOTS/NPCs/Boss/Curse/CurseFoamAlt");
+					if (SOTS.Config.lowFidelityMode && startPoint == 2)
+						startPoint = 1;
 					for (int j = startPoint; j >= endPoint; j--)
 					{
 						for (int i = 0; i < dustList.Count; i++)
@@ -350,7 +357,8 @@ namespace SOTS.NPCs.Boss.Curse
 							Color color = new Color(shade + dustList[i].dustColorVariation, shade - dustList[i].dustColorVariation, shade - dustList[i].dustColorVariation);
 							if (j != 2)
 							{
-								color = Lighting.GetColor((int)dustList[i].position.X / 16, (int)dustList[i].position.Y / 16, color);
+								if (startPoint != 1 || !SOTS.Config.lowFidelityMode)
+									color = Lighting.GetColor((int)dustList[i].position.X / 16, (int)dustList[i].position.Y / 16, color);
 							}
 							else
 							{

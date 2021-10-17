@@ -23,28 +23,35 @@ namespace SOTS.Projectiles.Celestial
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
 			Vector2 drawOrigin = new Vector2(Main.projectileTexture[projectile.type].Width * 0.5f, projectile.height * 0.5f);
-			if ((int)projectile.ai[0] == 1)
-				for (int k = 0; k < projectile.oldPos.Length; k++)
-				{
-					Vector2 drawPos = projectile.oldPos[k] + drawOrigin + new Vector2(0f, projectile.gfxOffY);
-					float trailMult = ((float)(projectile.oldPos.Length - k) / (float)projectile.oldPos.Length);
-					Draw(spriteBatch, trailMult, drawPos);
-				}
-			Draw(spriteBatch, 1f, projectile.Center);
+			if (!SOTS.Config.lowFidelityMode)
+			{
+				if ((int)projectile.ai[0] == 1)
+					for (int k = 0; k < projectile.oldPos.Length; k++)
+					{
+						Vector2 drawPos = projectile.oldPos[k] + drawOrigin + new Vector2(0f, projectile.gfxOffY);
+						float trailMult = ((float)(projectile.oldPos.Length - k) / (float)projectile.oldPos.Length);
+						Draw(spriteBatch, trailMult, drawPos, !SOTS.Config.lowFidelityMode);
+					}
+			}
+			Draw(spriteBatch, 1f, projectile.Center, true);
 			return false;
 		}
-		public void Draw(SpriteBatch spriteBatch, float alphaMult, Vector2 pos)
+		public void Draw(SpriteBatch spriteBatch, float alphaMult, Vector2 pos, bool outLine = true)
 		{
 			Texture2D texture = Main.projectileTexture[projectile.type];
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
 			Color color = new Color(100, 255, 100, 0);
 			if ((int)projectile.ai[0] == 1)
 				color = new Color(255, 100, 100, 0);
-			for (int i = 0; i < 360; i += 60)
-			{
-				Vector2 circular = new Vector2(Main.rand.NextFloat(3.5f, 5), 0).RotatedBy(MathHelper.ToRadians(i));
-				Main.spriteBatch.Draw(texture, pos + circular - Main.screenPosition, null, color * ((255f - projectile.alpha) / 255f) * alphaMult, projectile.rotation, origin, projectile.scale * alphaMult, SpriteEffects.None, 0.0f);
-			}
+			int amt = 60;
+			if (SOTS.Config.lowFidelityMode)
+				amt = 90;
+			if (outLine)
+				for (int i = 0; i < 360; i += amt)
+				{
+					Vector2 circular = new Vector2(Main.rand.NextFloat(3.5f, 5), 0).RotatedBy(MathHelper.ToRadians(i));
+					Main.spriteBatch.Draw(texture, pos + circular - Main.screenPosition, null, color * ((255f - projectile.alpha) / 255f) * alphaMult, projectile.rotation, origin, projectile.scale * alphaMult, SpriteEffects.None, 0.0f);
+				}
 			color = new Color(50, 122, 50);
 			if ((int)projectile.ai[0] == 1)
 				color = new Color(122, 50, 50);

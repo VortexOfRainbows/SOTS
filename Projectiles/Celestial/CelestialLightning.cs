@@ -59,15 +59,20 @@ namespace SOTS.Projectiles.Celestial
 				Vector2 drawPos = trailPos[k] - Main.screenPosition;
 				Vector2 currentPos = trailPos[k];
 				Vector2 betweenPositions = previousPosition - currentPos;
-				float max = betweenPositions.Length() / (texture.Width * scale * 0.65f);
+				float distanceBetweenDrawMult = 0.65f;
+				if (SOTS.Config.lowFidelityMode)
+					distanceBetweenDrawMult = 1f;
+				float max = betweenPositions.Length() / (texture.Width * scale * distanceBetweenDrawMult);
 				for (int i = 0; i < max; i++)
 				{
 					drawPos = previousPosition + -betweenPositions * (i / max) - Main.screenPosition;
-					int amt = Main.rand.Next(2) + 2;
+					int amt = 2;
+					if (!SOTS.Config.lowFidelityMode)
+						amt += Main.rand.Next(2);
 					for (int j = 0; j < amt; j++)
 					{
-						float x = Main.rand.Next(-10, 11) * 0.2f * scale;
-						float y = Main.rand.Next(-10, 11) * 0.2f * scale;
+						float x = Main.rand.NextFloat(-2f, 2f) * scale;
+						float y = Main.rand.NextFloat(-2f, 2f) * scale;
 						if (j < 1)
 						{
 							x = 0;

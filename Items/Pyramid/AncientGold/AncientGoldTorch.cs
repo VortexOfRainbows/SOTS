@@ -95,7 +95,11 @@ namespace SOTS.Items.Pyramid.AncientGold
 			adjTiles = new int[] { TileID.Torches };
 			torch = true;
 		}
-		public override void NumDust(int i, int j, bool fail, ref int num)
+        public override bool CanPlace(int i, int j)
+        {
+			return Main.tile[i, j].liquid == 0;
+        }
+        public override void NumDust(int i, int j, bool fail, ref int num)
 		{
 			num = Main.rand.Next(1, 3);
 		}

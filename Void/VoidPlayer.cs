@@ -153,14 +153,14 @@ namespace SOTS.Void
 			if (voidShock)
 			{
 				genGore = false; //apparently, genGore false doesn't remove almost anygore what-so-ever
-				damageSource = PlayerDeathReason.ByCustomReason(Main.LocalPlayer.name + voidDeathMessages[0]);
+				damageSource = PlayerDeathReason.ByCustomReason(player.name + voidDeathMessages[0]);
 				Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, ProjectileType<VoidDeath>(), 0, 0, player.whoAmI);
 				return true;
 			}
 			if (damage == 10.0 && voidRecovery)
 			{
 				genGore = false;
-				damageSource = PlayerDeathReason.ByCustomReason(Main.LocalPlayer.name + voidDeathMessages[Main.rand.Next(voidDeathMessages.Length)]);
+				damageSource = PlayerDeathReason.ByCustomReason(player.name + voidDeathMessages[Main.rand.Next(voidDeathMessages.Length)]);
 				Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, ProjectileType<VoidDeath>(), 0, 0, player.whoAmI);
 				return true;
 			}

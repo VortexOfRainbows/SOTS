@@ -16,8 +16,6 @@ High Priority:
 1. Inferno Construct
 2. Starmap
 3. Digital Daito Obtaining
-4. Rare construct weapon drops
-	1. Mantis Grip: does the same visuals as the nature construct, has similar visuals to hellcrusher handle
 
 Mid Priority:
 1. Tectonic Tether
@@ -36,6 +34,16 @@ Low Priority:
 2. Mobile Fortress Generator: One for every tavernkeep armor set
 3. Electrolyte Seperator
 4. Wintry Traveler: Riptide Trident + Frigid Javelin
+
+10/16/21
+1. Fixed bug with duplicating Ancient Gold torch
+2. Added Fidelity Config which reduces visuals for certain boss fights, making them less laggy.
+	1. Currently only effects Pharaoh's Curse and Subspace Serpent
+	2. Will effect more things later as we recieve feedback
+
+10/13/21
+1. Mantis grip tested; Works in mult
+2. Minor bug fix regarding void death names in multiplayer
 
 10/12/21
 1. Added Mantis Grip
