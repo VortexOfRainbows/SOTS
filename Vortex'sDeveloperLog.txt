@@ -40,6 +40,8 @@ Low Priority:
 2. Added Fidelity Config which reduces visuals for certain boss fights, making them less laggy.
 	1. Currently only effects Pharaoh's Curse and Subspace Serpent
 	2. Will effect more things later as we recieve feedback
+3. Increased Peanut drop rates (5-10) -> (10-20)
+4. Added Earthshaker, still needs multiplayer testing and maybe some polish
 
 10/13/21
 1. Mantis grip tested; Works in mult

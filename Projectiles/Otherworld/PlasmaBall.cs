@@ -136,7 +136,6 @@ namespace SOTS.Projectiles.Otherworld
             player.heldProj = projectile.whoAmI;
             player.itemTime = 2;
             player.itemAnimation = 2;
-            player.itemRotation = MathHelper.WrapAngle((float)Math.Atan2(projectile.Center.Y - player.Center.Y, projectile.Center.X - player.Center.X) + MathHelper.ToRadians(projectile.direction == -1 ? 180 : 0));
             if (!player.channel || hasStopped)
             {
                 if (Main.myPlayer == projectile.owner)

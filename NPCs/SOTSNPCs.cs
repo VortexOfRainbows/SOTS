@@ -189,9 +189,6 @@ namespace SOTS.NPCs
 					if ((Main.rand.NextBool(90) && Main.expertMode) || (Main.rand.NextBool(100) && !Main.expertMode))
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<DigitalCornSyrup>(), 1);
 
-				if ((npc.type == ModContent.NPCType<OtherworldlyConstructHead>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead2>()) && Main.rand.NextBool(100))
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<PhaseCannon>(), 1);
-
 				if (npc.type == NPCID.WallofFlesh)
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<HungryHunter>(), 1);
 
@@ -276,8 +273,15 @@ namespace SOTS.NPCs
 				{
 					if(Main.rand.NextBool(50))
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<CrushingResistor>(), 1);
-					if(npc.type == ModContent.NPCType<NatureConstruct>() && Main.rand.NextBool(30))
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<MantisGrip>(), 1);
+					if(Main.rand.NextBool(30))
+					{
+						if(npc.type == ModContent.NPCType<NatureConstruct>())
+							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<MantisGrip>(), 1);
+						if (npc.type == ModContent.NPCType<EarthenConstruct>())
+							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<Earthshaker>(), 1);
+					}
+					if ((npc.type == ModContent.NPCType<OtherworldlyConstructHead>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead2>()) && Main.rand.NextBool(100))
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<PhaseCannon>(), 1);
 				}
 				if(npc.type == ModContent.NPCType<NatureSlime>())
 				{

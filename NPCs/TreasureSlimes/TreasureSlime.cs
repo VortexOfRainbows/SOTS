@@ -292,7 +292,7 @@ namespace SOTS.NPCs.TreasureSlimes
 		{
 			TreasureSlimeItem item = possibleItems[(int)treasure];
 			Item.NewItem(npc.Hitbox, item.Type, Main.rand.Next(item.Amount, item.AmountCap + 1));
-			Item.NewItem(npc.Hitbox, ItemType<Peanut>(), 5 + Main.rand.Next(6));
+			Item.NewItem(npc.Hitbox, ItemType<Peanut>(), 10 + Main.rand.Next(11));
 			Item.NewItem(npc.Hitbox, ItemID.Gel, 5 + Main.rand.Next(6));
 			AdditionalLoot();
 		}
