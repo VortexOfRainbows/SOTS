@@ -45,7 +45,7 @@ namespace SOTS.Projectiles.Terra
             {
                 for (int l = j - 1; l <= j + 1; l++)
                 {
-                    player.PickTile(k, l, 24);
+                    player.PickTile(k, l, 18);
                 }
             }
         }
@@ -103,9 +103,9 @@ namespace SOTS.Projectiles.Terra
                 }
             };
             counter++;
-            if(counter % 5 == 0)
+            if(counter % 6 == 0)
             {
-                if(counter > 24)
+                if(counter > 24 && Main.myPlayer == projectile.owner)
                     HitTiles();
             }
             return false;

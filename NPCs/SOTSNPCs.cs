@@ -441,23 +441,26 @@ namespace SOTS.NPCs
                     {
 						if (player.ZoneCorrupt || player.ZoneHoly || player.ZoneCrimson)
 						{
-							if (player.statLifeMax2 >= 160)
-								pool.Add(ModContent.NPCType<EarthenConstruct>(), 0.0025f);
+							if (player.statLifeMax2 >= 140)
+								pool.Add(ModContent.NPCType<EarthenConstruct>(), 0.00125f);
 						}
 						else if (player.ZoneRockLayerHeight && !player.ZoneUndergroundDesert)
 						{
-							if(player.statLifeMax2 >= 160)
-								pool.Add(ModContent.NPCType<EarthenConstruct>(), 0.005f);
+							if(player.statLifeMax2 >= 140)
+								pool.Add(ModContent.NPCType<EarthenConstruct>(), 0.0025f);
 						}
-						else
+						else if(player.ZoneDesert && !player.ZoneUndergroundDesert)
 							pool.Add(ModContent.NPCType<EarthenConstruct>(), 0.01f); //this is desert spawn so it shouldn't require additional healthgating
+						else if(player.ZoneUndergroundDesert)
+							pool.Add(ModContent.NPCType<EarthenConstruct>(), 0.005f);
+
 					}
 				}
 			}
 			if (player.ZoneDungeon)
 			{
 				if (player.statLifeMax2 >= 120)
-					pool.Add(ModContent.NPCType<TidalConstruct>(), SpawnCondition.DungeonNormal.Chance * 0.0075f);
+					pool.Add(ModContent.NPCType<TidalConstruct>(), SpawnCondition.DungeonNormal.Chance * 0.00375f);
 			}
 			if (spawnInfo.player.ZoneSnow)
 			{

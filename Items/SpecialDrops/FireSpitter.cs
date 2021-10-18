@@ -10,6 +10,7 @@ namespace SOTS.Items.SpecialDrops
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Fire Spitter");
+            Tooltip.SetDefault("Uses gel for ammo");
         }
         public override void SetDefaults()
         {

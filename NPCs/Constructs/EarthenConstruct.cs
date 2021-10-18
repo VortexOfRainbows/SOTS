@@ -31,7 +31,7 @@ namespace SOTS.NPCs.Constructs
             npc.value = 5050;
             npc.npcSlots = 3f;
             npc.behindTiles = true;
-			npc.aiStyle = 6;
+			npc.aiStyle = -1;
             npc.rarity = 5;
         }
         public void DoSound()

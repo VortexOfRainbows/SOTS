@@ -11,9 +11,8 @@ Known Bugs:
 	1. Seem to generate client-side not server side..?
 	2. No memory leak on single player, or client side when testing..?
 2. Not calling end/begin; mod compatability prims crash
-3. Earthen Construct causing crashes occassionally
-	1. Try disabling its vanilla aiStyle, see if this causes conflicts
-	2. Pray to god that this works
+3. Earthen Construct causing freezes occassionally
+	1. Less frequent than before 0.20, but still happens? Conditions unknown.
 
 High Priority:
 1. Inferno Construct
@@ -37,6 +36,12 @@ Low Priority:
 2. Mobile Fortress Generator: One for every tavernkeep armor set
 3. Electrolyte Seperator
 4. Wintry Traveler: Riptide Trident + Frigid Javelin
+
+10/17/21
+1. Earthen Construct spawnrates cut in HALF (rarer) for underground and underground desert. Now requires 140 life instead of 120 or 160
+	1. Also changes .aiStyle in hopes that it fixes crashing problem
+2. Earthshaker now works in Multiplayer. Mines a slower, because this gives us more opportunities for upgrades in the future
+3. Lowered tidal construct spawn rates by cutting in half too (dungeon only)
 
 10/16/21
 1. Fixed bug with duplicating Ancient Gold torch

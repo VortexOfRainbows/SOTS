@@ -36,6 +36,10 @@ Testers: DreadSoul, Crimsonkeep
 Code: ENNWAY, Qwerty3.14, OS
 Minor Art: Naka, DeJuiceTD, Nomis
 
+Update 0.20.3
+-New worldgen structure in the Dungeon
+-New items, enemies, and secrets
+
 Update 0.20.2
 -A new item, Plasma Accelerator, and reworked Bore Bullets
 -A few bug fixes and internal optimizations that should hopefully make the mod less laggy
