@@ -15,10 +15,11 @@ Known Bugs:
 	1. Less frequent than before 0.20, but still happens? Conditions unknown.
 
 High Priority:
-1. Inferno Construct
+1. Inferno Construct and Evil Construct
 2. Starmap
 3. Digital Daito Obtaining
 4. Curse Base Armor Set
+5. Nerf Aten
 
 Mid Priority:
 1. Tectonic Tether

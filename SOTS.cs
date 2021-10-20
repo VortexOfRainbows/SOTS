@@ -68,6 +68,7 @@ namespace SOTS
 			BlinkHotKey = RegisterHotKey("Blink", "V");
 			ArmorSetHotKey = RegisterHotKey("Armor Set", "F");
 			MachinaBoosterHotKey = RegisterHotKey("Modify Flight Mode", "C");
+			Instance.AddEquipTexture(null, EquipType.Legs, "CursedRobe_Legs", "SOTS/Items/Pyramid/CursedRobe_Legs");
 			if (!Main.dedServ)
             {
                 VoidUI = new VoidUI();
@@ -579,6 +580,16 @@ namespace SOTS
 				ItemID.PlatinumBar
 			});
 			RecipeGroup.RegisterGroup("SOTS:GoldBar", group);
+			group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Gem Robe", new int[]
+			{
+				ItemID.RubyRobe,
+				ItemID.AmethystRobe,
+				ItemID.TopazRobe,
+				ItemID.SapphireRobe,
+				ItemID.EmeraldRobe,
+				ItemID.DiamondRobe
+			});
+			RecipeGroup.RegisterGroup("SOTS:GemRobes", group);
 		}
 		public static float lightingChange = 1f;
         public override void ModifyLightingBrightness(ref float scale)
