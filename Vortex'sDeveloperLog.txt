@@ -38,6 +38,10 @@ Low Priority:
 3. Electrolyte Seperator
 4. Wintry Traveler: Riptide Trident + Frigid Javelin
 
+10/19/21
+1. Started on Cursed Armor
+	1. Still needs unique effects + glowmask (hood) and lighting (robe)
+
 10/17/21
 1. Earthen Construct spawnrates cut in HALF (rarer) for underground and underground desert. Now requires 140 life instead of 120 or 160
 	1. Also changes .aiStyle in hopes that it fixes crashing problem
