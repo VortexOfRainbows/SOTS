@@ -18,8 +18,8 @@ High Priority:
 1. Inferno Construct and Evil Construct
 2. Starmap
 3. Digital Daito Obtaining
-4. Curse Base Armor Set
-5. Nerf Aten
+4. Relocate Void weapon consumption to a different method in order to make Curse debuff not work (or just hardcoded it out)
+5. Advisor Fidelity mode changes
 
 Mid Priority:
 1. Tectonic Tether
@@ -38,9 +38,14 @@ Low Priority:
 3. Electrolyte Seperator
 4. Wintry Traveler: Riptide Trident + Frigid Javelin
 
-10/19/21
-1. Started on Cursed Armor
-	1. Still needs unique effects + glowmask (hood) and lighting (robe)
+10/19/21 & 10/20/21
+1. Finished (?) Cursed Armor. Needs Resprites, balancing feedback, + server syncing
+2. Planetarium Biome detection starts higher up. You should be able to build with the blocks a closer to the sky now.
+3. Photon geyser less laggy in low fidel
+4. In response to outcry, Aten's damage scaling on explosions has been taken down a notch... 210% -> 140%
+5. Falling into void shock disables all positive void regen.
+	1. This makes it impossible to exit once you have entered
+	2. This mainly nerfs Soul Access potions
 
 10/17/21
 1. Earthen Construct spawnrates cut in HALF (rarer) for underground and underground desert. Now requires 140 life instead of 120 or 160

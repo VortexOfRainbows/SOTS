@@ -9,6 +9,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using SOTS.NPCs;
+using SOTS.Dusts;
 
 namespace SOTS.Projectiles.Pyramid
 {    
@@ -144,7 +145,7 @@ namespace SOTS.Projectiles.Pyramid
 				{
 					for (int i = 0; i < 50; i++)
 					{
-						int num2 = Dust.NewDust(new Vector2(projectile.Center.X, projectile.Center.Y) - new Vector2(5), 0, 0, mod.DustType("CopyDust4"));
+						int num2 = Dust.NewDust(new Vector2(projectile.Center.X, projectile.Center.Y) - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
 						Dust dust = Main.dust[num2];
 						dust.color = new Color(127, 80, 80, 40);
 						dust.noGravity = true;
@@ -173,7 +174,7 @@ namespace SOTS.Projectiles.Pyramid
 		{
 			for (int i = 0; i < 10; i++)
 			{
-				int num2 = Dust.NewDust(new Vector2(projectile.Center.X, projectile.Center.Y) - new Vector2(5), 0, 0, mod.DustType("CopyDust4"));
+				int num2 = Dust.NewDust(new Vector2(projectile.Center.X, projectile.Center.Y) - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
 				Dust dust = Main.dust[num2];
 				dust.color = new Color(127, 80, 80, 40);
 				dust.noGravity = true;

@@ -437,9 +437,13 @@ namespace SOTS.Void
 				if (!voidShock && !voidRecovery)
 				{
 					int time = 600;
-					player.AddBuff(mod.BuffType("VoidShock"), time);
+					player.AddBuff(ModContent.BuffType<VoidShock>(), time);
 					//if(time < 120) time = 120;
 				}
+				if(voidRegen > -1 && player.HasBuff(BuffType<VoidShock>()))
+                {
+					voidRegen = -1;
+                }
 				player.lifeRegen += (int)(voidMeter * 0.2f);
 				if (voidMeter <= -150)
 				{

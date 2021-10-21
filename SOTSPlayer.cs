@@ -36,6 +36,7 @@ using SOTS.Items.Fragments;
 using SOTS.Projectiles.Inferno;
 using SOTS.Projectiles.Nature;
 using SOTS.Items.Crushers;
+using SOTS.Dusts;
 
 namespace SOTS
 {
@@ -172,6 +173,11 @@ namespace SOTS
 		public bool pearlescentMagic = false; //pearlescent core effect
 		public bool bloodstainedJewel = false; //bloodstained jewel effect
 		public bool snakeSling = false; //snakeskin sling effect
+		public bool CurseVision = false;
+		public float curseVisionCounter = 0;
+		public bool RubyMonolith = false;
+		public bool CanCurseSwap = false;
+		public bool CurseSwap = false;
 
 		public int CritLifesteal = 0; //crit clover
 		public float maxCritLifestealPerSecond = 0;
@@ -344,10 +350,13 @@ namespace SOTS
 			if (SOTS.ArmorSetHotKey.JustPressed)
 			{
 				HoloEyeAttack = true;
+				if (CanCurseSwap)
+					CurseSwap = true;
 			}
 			else
 			{
 				HoloEyeAttack = false;
+				CurseSwap = false;
 			}
 			if (SOTS.MachinaBoosterHotKey.JustPressed)
 			{
@@ -364,34 +373,20 @@ namespace SOTS
 		int Probe4 = -1;
 		int Probe5 = -1;
 		int Probe6 = -1;
-		public void PetAdvisor()
-        {
+		int Probe7 = -1;
+		public void runPets(ref int Probe, int type)
+		{
 			if (Main.myPlayer == player.whoAmI)
 			{
 				if (Probe == -1)
 				{
-					Probe = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, mod.ProjectileType("AdvisorPet"), 0, 0, player.whoAmI, 0);
+					Probe = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, type, 0, 0, player.whoAmI, 0);
 				}
-				if (!Main.projectile[Probe].active || Main.projectile[Probe].type != mod.ProjectileType("AdvisorPet") || Main.projectile[Probe].owner != player.whoAmI)
+				if (!Main.projectile[Probe].active || Main.projectile[Probe].type != type || Main.projectile[Probe].owner != player.whoAmI)
 				{
-					Probe = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, mod.ProjectileType("AdvisorPet"), 0, 0, player.whoAmI, 0);
+					Probe = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, type, 0, 0, player.whoAmI, 0);
 				}
 				Main.projectile[Probe].timeLeft = 6;
-			}
-		}
-		public void PetPepper()
-		{
-			if (Main.myPlayer == player.whoAmI)
-			{
-				if (Probe2 == -1)
-				{
-					Probe2 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, ModContent.ProjectileType<GhostPepper>(), 0, 0, player.whoAmI, 0);
-				}
-				if (!Main.projectile[Probe2].active || Main.projectile[Probe2].type != ModContent.ProjectileType<GhostPepper>() || Main.projectile[Probe2].owner != player.whoAmI)
-				{
-					Probe2 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, ModContent.ProjectileType<GhostPepper>(), 0, 0, player.whoAmI, 0);
-				}
-				Main.projectile[Probe2].timeLeft = 6;
 			}
 		}
 		public void PetHoloEye()
@@ -430,11 +425,11 @@ namespace SOTS
 			{
 				if (Probe5 == -1)
 				{
-					Probe5 = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, mod.ProjectileType("FluidFollower"), 0, 0, player.whoAmI);
+					Probe5 = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, ModContent.ProjectileType<FluidFollower>(), 0, 0, player.whoAmI);
 				}
-				if (!Main.projectile[Probe5].active || Main.projectile[Probe5].type != mod.ProjectileType("FluidFollower") || Main.projectile[Probe5].owner != player.whoAmI)
+				if (!Main.projectile[Probe5].active || Main.projectile[Probe5].type != ModContent.ProjectileType<FluidFollower>() || Main.projectile[Probe5].owner != player.whoAmI)
 				{
-					Probe5 = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, mod.ProjectileType("FluidFollower"), 0, 0, player.whoAmI);
+					Probe5 = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, ModContent.ProjectileType<FluidFollower>(), 0, 0, player.whoAmI);
 				}
 				if (Probe6 == -1)
 				{
@@ -448,15 +443,64 @@ namespace SOTS
 		}
 		public void doCurseAura()
         {
-			if(CurseAura)
-				for(int i = 0; i < Main.maxNPCs; i++)
+			if(CurseAura || CurseVision)
+			{
+				int idClosest = -1;
+				float visionDist = 1600;
+				float auraDist = 270;
+				float bestDist = visionDist;
+				for (int i = 0; i < Main.maxNPCs; i++)
 				{
 					NPC npc = Main.npc[i];
-					if(npc.active && !npc.friendly && npc.lifeMax > 5 && !npc.dontTakeDamage && Vector2.Distance(npc.Center, player.Center) <= 270 && npc.realLife == -1)
+					float distance = Vector2.Distance(npc.Center, player.Center);
+					if (npc.CanBeChasedBy() && distance <= visionDist && npc.realLife == -1)
 					{
-						npc.AddBuff(ModContent.BuffType<Buffs.PharaohsCurse>(), 120);
+						if(distance < bestDist && !npc.buffImmune[ModContent.BuffType<CurseVision>()])
+						{
+							idClosest = i;
+							bestDist = distance;
+						}
+						if (CurseAura && distance <= auraDist)
+							npc.AddBuff(ModContent.BuffType<Buffs.PharaohsCurse>(), 120);
 					}
 				}
+				float mult = (1 - 1f * curseVisionCounter / 60f);
+				if (mult < 0) 
+					mult = 0;
+				if (idClosest >= 0)
+				{
+					NPC npc = Main.npc[idClosest];
+					npc.AddBuff(ModContent.BuffType<CurseVision>(), 3);
+					if(Main.myPlayer == player.whoAmI)
+					{
+						Vector2 spawnLoc = new Vector2(npc.Center.X, npc.position.Y - 32);
+						float hypo = (float)Math.Sqrt(npc.width * npc.width + npc.height * npc.height);
+						hypo += 12f;
+						for (int i = -1; i <= 1; i++)
+						{
+							Vector2 circular = new Vector2(hypo / 2f * i, 0).RotatedBy(MathHelper.ToRadians(orbitalCounter * 3f + curseVisionCounter * 1.7f));
+							circular.X *= 0.8f;
+							circular.Y *= 0.3f;
+							Dust dust = Dust.NewDustPerfect(spawnLoc + circular, ModContent.DustType<CopyDust4>());
+							dust.noGravity = true;
+							dust.color = new Color(220, 80, 80, 40);
+							dust.velocity += circular * 0.01f;
+							dust.fadeIn = 0.1f;
+							dust.alpha = (int)(255f * mult);
+							if (i == 0)
+							{
+								dust.velocity *= 0.3f;
+								dust.scale = 1.0f;
+							}
+							else
+							{
+								dust.velocity *= 0.1f;
+								dust.scale = 0.8f;
+							}
+						}
+					}
+				}
+			}
         }
         public override void PostUpdateMiscEffects()
 		{
@@ -572,10 +616,12 @@ namespace SOTS
 			blinkPackMult = 1f;
 			BlinkDamage = 0;
 			BlinkType = 0;
+			if (RubyMonolith)
+				runPets(ref Probe7, ModContent.ProjectileType<RubyMonolith>());
 			if (petAdvisor)
-				PetAdvisor();
+				runPets(ref Probe, ModContent.ProjectileType<AdvisorPet>());
 			if (petPepper)
-				PetPepper();
+				runPets(ref Probe2, ModContent.ProjectileType<GhostPepper>());
 			if (HoloEye)
 				PetHoloEye();
 			if (petPinky >= 0)
@@ -706,9 +752,27 @@ namespace SOTS
 			ItemDivision = false;
 			//projectileSize = 1;
 			PushBack = false;
+
 			pearlescentMagic = false;
 			bloodstainedJewel = false;
 			snakeSling = false;
+			if (CurseVision)
+			{
+				if (curseVisionCounter < 60)
+				{
+					curseVisionCounter++;
+					if(player.HasBuff(ModContent.BuffType<RubyMonolithAttack>()))
+					{
+						curseVisionCounter += 4;
+					}
+				}
+				if (curseVisionCounter > 60)
+					curseVisionCounter = 60;
+			}
+			else
+				curseVisionCounter = -60;
+			CurseVision = false;
+
 			CritLifesteal = 0;
 			CritVoidsteal = 0f;
 			CritManasteal = 0f;
@@ -717,6 +781,8 @@ namespace SOTS
 			CritFrost = false;
 			CritCurseFire = false;
 			CurseAura = false;
+			RubyMonolith = false;
+			CanCurseSwap = false;
 			if (PyramidBiome)
 				player.AddBuff(ModContent.BuffType<Buffs.PharaohsCurse>(), 16, false); 
 			polarCannons = 0;
@@ -799,28 +865,9 @@ namespace SOTS
 			}
 			return Main.rand.Next(rate) == 0;
 		}
-		/*
-		public int scaleCatch(int power, int minPower, int maxPower, int minRate, int maxRate)
-		{
-			int fixRate = maxRate - minRate;
-			power -= minPower;
-			maxPower -= minPower;
-			float powerRate = (float)power / maxPower;
-			int rate = maxRate - (int)(fixRate * powerRate);
-			if(rate > maxRate)
-			{
-				rate = maxRate;
-			}
-			if(rate < minRate)
-			{
-				rate = minRate;
-			}
-			return rate;
-		}
-		*/
 		public override void UpdateBiomes()
 		{
-			PlanetariumBiome = (SOTSWorld.planetarium > 100) && player.Center.Y < Main.worldSurface * 16 * 0.6f;
+			PlanetariumBiome = (SOTSWorld.planetarium > 100) && player.Center.Y < Main.worldSurface * 16 * 0.5f;
 			//GeodeBiome = (SOTSWorld.geodeBiome > 300);
 
 			//checking for background walls
@@ -853,10 +900,6 @@ namespace SOTS
 			flags[0] = PyramidBiome;
 			flags[1] = PlanetariumBiome;
 			writer.Write(flags);
-		}
-		public override void ModifyHitByNPC(NPC npc, ref int damage, ref bool crit)
-		{
-			base.ModifyHitByNPC(npc, ref damage, ref crit);
 		}
 		public override void ReceiveCustomBiomes(BinaryReader reader)
 		{
@@ -891,100 +934,11 @@ namespace SOTS
 		}
 		public override void OnHitNPCWithProj(Projectile proj, NPC target, int damage, float knockback, bool crit)
 		{
-			if (orion == true)
-			{
-				float amount = 0;
-				for (int j = Main.rand.Next(2); j == 0; j = Main.rand.Next((int)(1 + amount)))
-				{
-					amount++;
-				}
-				for (int i = Main.rand.Next(200); amount > 0; i = Main.rand.Next(200))
-				{
-					NPC target2 = Main.npc[i];
-
-					float shootFromX = target.Center.X;
-					float shootFromY = target.Center.Y;
-
-					if (target2.Center.X >= target.Center.X)
-						shootFromX += target.width;
-
-					if (target2.Center.X <= target.Center.X)
-						shootFromX -= target.width;
-
-					if (target2.Center.Y >= target.Center.Y)
-						shootFromY += target.height;
-
-					if (target2.Center.Y <= target.Center.Y)
-						shootFromY -= target.height;
-
-					float shootToX = target2.position.X + target2.width * 0.5f - shootFromX;
-					float shootToY = target2.position.Y + target2.height * 0.5f - shootFromY;
-					float distance = (float)Math.Sqrt((shootToX * shootToX + shootToY * shootToY));
-
-					if (distance < 320f && !target2.friendly && target2.active)
-					{
-						if (amount > 0)
-						{
-							amount--;
-
-							distance = 0.2f / distance;
-
-							shootToX *= distance * 5;
-							shootToY *= distance * 5;
-
-							Projectile.NewProjectile(shootFromX, shootFromY, shootToX, shootToY, mod.ProjectileType("OrionChain"), (int)(proj.damage * 0.75f), 0, Main.myPlayer, 0f, 0f); //Spawning a projectile
-						}
-					}
-					else
-					{
-						amount -= 0.01f;
-					}
-				}
-			}
-			if (megShirt == true)
-			{
-				if (Main.rand.Next(35) == 0)
-				{
-					Item.NewItem((int)target.position.X, (int)target.position.Y, target.width, target.height, ItemID.Heart);
-				}
-				if (Main.rand.Next(35) == 0)
-				{
-					Item.NewItem((int)target.position.X, (int)target.position.Y, target.width, target.height, ItemID.Star);
-				}
-			}
+			ModifyHitNPCGeneral(target, proj, null, ref damage, ref knockback, ref crit, false);
 		}
-		public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit)
 		{
-			Vector2 vector14;
-
-			if (player.gravDir == 1f)
-			{
-				vector14.Y = (float)Main.mouseY + Main.screenPosition.Y;
-			}
-			else
-			{
-				vector14.Y = Main.screenPosition.Y + (float)Main.screenHeight - (float)Main.mouseY;
-			}
-			vector14.X = (float)Main.mouseX + Main.screenPosition.X;
-			if (megShirt == true)
-			{
-				if (Main.rand.Next(35) == 0)
-				{
-					Item.NewItem((int)target.position.X, (int)target.position.Y, target.width, target.height, ItemID.Heart);
-				}
-				if (Main.rand.Next(35) == 0)
-				{
-					Item.NewItem((int)target.position.X, (int)target.position.Y, target.width, target.height, ItemID.Star);
-				}
-			}
-		}
-		public override void SetupStartInventory(IList<Item> items, bool mediumcoreDeath)
-		{
-			/*
-			Item item = new Item();
-			item.SetDefaults(mod.ItemType("ImitationCrate"));
-			item.stack = 1;        
-			items.Add(item); */
+			ModifyHitNPCGeneral(target, null, item, ref damage, ref knockback, ref crit, false);
 		}
 		public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
 		{
@@ -1073,71 +1027,83 @@ namespace SOTS
 		}
 		public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
 		{
-			ModifyHitNPCGeneral(target, proj, null, ref damage, ref knockback, ref crit);
+			ModifyHitNPCGeneral(target, proj, null, ref damage, ref knockback, ref crit, true);
 		}
 		public override void ModifyHitNPC(Item item, NPC target, ref int damage, ref float knockback, ref bool crit) 
 		{
-			ModifyHitNPCGeneral(target, null, item, ref damage, ref knockback, ref crit);
+			ModifyHitNPCGeneral(target, null, item, ref damage, ref knockback, ref crit, true);
 		}
-		public void ModifyHitNPCGeneral(NPC target, Projectile projectile, Item item, ref int damage, ref float knockback, ref bool crit)
+		public void ModifyHitNPCGeneral(NPC target, Projectile projectile, Item item, ref int damage, ref float knockback, ref bool crit, bool isModify = false)
         {
-			if (crit)
+			if(isModify)
 			{
-				if (CritManasteal > 0 && maxCritManastealPerSecondTimer > 0)
+				if (curseVisionCounter >= 60)
 				{
-					maxCritManastealPerSecondTimer -= CritManasteal;
-					if (Main.myPlayer == player.whoAmI)
-						Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, ModContent.ProjectileType<HealProj>(), 1, 0, player.whoAmI, CritManasteal, 3);
-				}
-				if (CritLifesteal > 0 && maxCritLifestealPerSecondTimer > 0)
-				{
-					maxCritLifestealPerSecondTimer -= CritLifesteal;
-					if (Main.myPlayer == player.whoAmI)
-						Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, ModContent.ProjectileType<HealProj>(), 0, 0, player.whoAmI, CritLifesteal, 6);
-				}
-				if (CritVoidsteal > 0 && maxCritVoidStealPerSecondTimer > 0)
-				{
-					maxCritVoidStealPerSecondTimer -= CritVoidsteal;
-					if (Main.myPlayer == player.whoAmI)
-						Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, ModContent.ProjectileType<HealProj>(), 2, 0, player.whoAmI, CritVoidsteal, 5);
-				}
-				damage += CritBonusDamage;
-				int randBuff = Main.rand.Next(3);
-				if (randBuff == 2 && CritCurseFire)
-				{
-					Main.PlaySound(SoundID.Item, (int)target.Center.X, (int)target.Center.Y, 93, 0.9f);
-					target.AddBuff(BuffID.CursedInferno, 900, false);
-					int numberProjectiles = 4;
-					int rand = Main.rand.Next(360);
-					for (int i = 0; i < numberProjectiles; i++)
+					if (target.HasBuff(ModContent.BuffType<CurseVision>()))
 					{
-						Vector2 perturbedSpeed = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(i * 90 + rand));
+						curseVisionCounter = -60;
 						if (Main.myPlayer == player.whoAmI)
-							Projectile.NewProjectile(target.Center.X, target.Center.Y, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<CursedThunder>(), damage, 1f, player.whoAmI, 2);
+							Projectile.NewProjectile(target.Center, Vector2.Zero, ModContent.ProjectileType<VisionFlare>(), (int)(damage * 1.4f), 0, player.whoAmI);
 					}
 				}
-				else if (randBuff == 1 && (CritFrost || CritCurseFire))
+				if (crit)
 				{
-					target.AddBuff(BuffID.Frostburn, 900, false);
-					if (Main.myPlayer == player.whoAmI)
+					if (CritManasteal > 0 && maxCritManastealPerSecondTimer > 0)
 					{
-						if (CritFrost)
-							Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, ModContent.ProjectileType<IcePulseSummon>(), damage * 2, 1f, player.whoAmI, 3);
-						else
-							Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, ModContent.ProjectileType<IcePulseSummon>(), damage, 1f, player.whoAmI, 3);
+						maxCritManastealPerSecondTimer -= CritManasteal;
+						if (Main.myPlayer == player.whoAmI)
+							Projectile.NewProjectile(target.Center, Vector2.Zero, ModContent.ProjectileType<HealProj>(), 1, 0, player.whoAmI, CritManasteal, 3);
 					}
-				}
-				else if (randBuff == 0 && (CritFire || CritCurseFire))
-				{
-					target.AddBuff(BuffID.OnFire, 900, false);
-					if (Main.myPlayer == player.whoAmI)
+					if (CritLifesteal > 0 && maxCritLifestealPerSecondTimer > 0)
 					{
-						if (CritCurseFire && CritFire)
+						maxCritLifestealPerSecondTimer -= CritLifesteal;
+						if (Main.myPlayer == player.whoAmI)
+							Projectile.NewProjectile(target.Center, Vector2.Zero, ModContent.ProjectileType<HealProj>(), 0, 0, player.whoAmI, CritLifesteal, 6);
+					}
+					if (CritVoidsteal > 0 && maxCritVoidStealPerSecondTimer > 0)
+					{
+						maxCritVoidStealPerSecondTimer -= CritVoidsteal;
+						if (Main.myPlayer == player.whoAmI)
+							Projectile.NewProjectile(target.Center, Vector2.Zero, ModContent.ProjectileType<HealProj>(), 2, 0, player.whoAmI, CritVoidsteal, 5);
+					}
+					damage += CritBonusDamage;
+					int randBuff = Main.rand.Next(3);
+					if (randBuff == 2 && CritCurseFire)
+					{
+						Main.PlaySound(SoundID.Item, (int)target.Center.X, (int)target.Center.Y, 93, 0.9f);
+						target.AddBuff(BuffID.CursedInferno, 900, false);
+						int numberProjectiles = 4;
+						int rand = Main.rand.Next(360);
+						for (int i = 0; i < numberProjectiles; i++)
 						{
-							Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, ModContent.ProjectileType<SharangaBlastSummon>(), damage * 2, 1f, player.whoAmI, 3);
+							Vector2 perturbedSpeed = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(i * 90 + rand));
+							if (Main.myPlayer == player.whoAmI)
+								Projectile.NewProjectile(target.Center.X, target.Center.Y, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<CursedThunder>(), damage, 1f, player.whoAmI, 2);
 						}
-						else
-							Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, ModContent.ProjectileType<SharangaBlastSummon>(), damage, 1f, player.whoAmI, 3);
+					}
+					else if (randBuff == 1 && (CritFrost || CritCurseFire))
+					{
+						target.AddBuff(BuffID.Frostburn, 900, false);
+						if (Main.myPlayer == player.whoAmI)
+						{
+							if (CritFrost)
+								Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, ModContent.ProjectileType<IcePulseSummon>(), damage * 2, 1f, player.whoAmI, 3);
+							else
+								Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, ModContent.ProjectileType<IcePulseSummon>(), damage, 1f, player.whoAmI, 3);
+						}
+					}
+					else if (randBuff == 0 && (CritFire || CritCurseFire))
+					{
+						target.AddBuff(BuffID.OnFire, 900, false);
+						if (Main.myPlayer == player.whoAmI)
+						{
+							if (CritCurseFire && CritFire)
+							{
+								Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, ModContent.ProjectileType<SharangaBlastSummon>(), damage * 2, 1f, player.whoAmI, 3);
+							}
+							else
+								Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, ModContent.ProjectileType<SharangaBlastSummon>(), damage, 1f, player.whoAmI, 3);
+						}
 					}
 				}
 			}

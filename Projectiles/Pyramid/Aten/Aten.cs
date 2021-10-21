@@ -161,8 +161,7 @@ namespace SOTS.Projectiles.Pyramid.Aten
         {
             if (Main.myPlayer == projectile.owner)
             {
-                Projectile.NewProjectileDirect(projectile.Center, Vector2.Zero, ModContent.ProjectileType<AtenStarExplosion>(), projectile.damage * 3, 0, projectile.owner, projectile.scale);
-
+                Projectile.NewProjectileDirect(projectile.Center, Vector2.Zero, ModContent.ProjectileType<AtenStarExplosion>(), (int)(projectile.damage * 2), 0, projectile.owner, projectile.scale);
             }
             if (projectile.timeLeft > 30)
                 projectile.timeLeft = 30;

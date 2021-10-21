@@ -293,11 +293,11 @@ namespace SOTS.NPCs.Inferno
 		public override void NPCLoot()
 		{ 
 			if(sans)
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<BookOfVirtues>(), 1);
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<BookOfVirtues>(), 1);
 			if (Main.rand.NextBool(15))
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, sans ? ItemID.LivingUltrabrightFireBlock : ItemID.LivingFireBlock, Main.rand.Next(10, 21));
 			else if (Main.rand.NextBool(25))
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, sans ? ModContent.ItemType<FragmentOfChaos>() : ModContent.ItemType<FragmentOfInferno>(), 1);
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, sans ? ItemType<FragmentOfChaos>() : ItemType<FragmentOfInferno>(), 1);
 		}
 		public override void HitEffect(int hitDirection, double damage)
 		{
@@ -319,7 +319,7 @@ namespace SOTS.NPCs.Inferno
 					if (sans)
 						color = new Color(80, 150, 200, 0);
 					FireParticle particle = particleList[i];
-					Dust dust = Dust.NewDustDirect(new Vector2(particle.position.X - 4, particle.position.Y - 4), 4, 4, ModContent.DustType<CopyDust4>());
+					Dust dust = Dust.NewDustDirect(new Vector2(particle.position.X - 4, particle.position.Y - 4), 4, 4, DustType<CopyDust4>());
 					dust.noGravity = true;
 					dust.velocity *= 1.35f;
 					dust.scale = particleList[i].scale * 1.25f + 0.25f;

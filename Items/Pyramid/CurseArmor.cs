@@ -1,5 +1,11 @@
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using SOTS.Items.Otherworld.EpicWings;
 using SOTS.Void;
+using System;
+using System.Collections.Generic;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -14,7 +20,7 @@ namespace SOTS.Items.Pyramid
 			item.height = 36;
 			item.value = Item.sellPrice(0, 2, 0, 0);
 			item.rare = ItemRarityID.Pink;
-			item.defense = 8;
+			item.defense = 6;
 		}
 		public override void SetStaticDefaults()
 		{
@@ -33,11 +39,13 @@ namespace SOTS.Items.Pyramid
 
 		public override void UpdateEquip(Player player)
 		{
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			VoidPlayer vPlayer = VoidPlayer.ModPlayer(player);
 			vPlayer.voidMeterMax2 += 80;
 			player.statManaMax2 += 80;
 			vPlayer.voidCost -= 0.15f;
 			player.manaCost -= 0.15f;
+			modPlayer.RubyMonolith = true;
 		}
 		public override void AddRecipes()
 		{
@@ -64,55 +72,18 @@ namespace SOTS.Items.Pyramid
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Cursed Hood");
-			Tooltip.SetDefault("Increases magic damage and void damage by 8%\nAlso increases magic crit chance and void crit chance by 5%\nThe closest enemy to you is afflicted with a curse\nUpon taking damage, cursed enemies will flare, doing 5 plus 10% additional damage to it and other nearby enemies");
+			Tooltip.SetDefault("Increases magic damage and void damage by 8%\nAlso increases magic crit chance and void crit chance by 5%\nThe closest enemy to you is afflicted with a curse\nUpon taking damage, cursed enemies will Flare, dealing 140% additional damage to it and other nearby enemies\nThis effect has a 2 second cooldown");
 		}
 		public override void UpdateEquip(Player player)
 		{
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			VoidPlayer vPlayer = VoidPlayer.ModPlayer(player);
+			modPlayer.CurseVision = true;
 			vPlayer.voidDamage += 0.08f;
 			player.magicDamage += 0.08f;
 			vPlayer.voidCrit += 5;
 			player.magicCrit += 5;
 		}
-		/*public override void ModifyTooltips(List<TooltipLine> tooltips)
-		{
-			foreach (string key in SOTS.ArmorSetHotKey.GetAssignedKeys()) //gets the key configured to this hotkey
-			{
-				foreach (TooltipLine line in tooltips) //goes through each tooltip line
-				{
-					if (line.mod == "Terraria" && line.Name == "Tooltip0")
-					{
-						line.text = "Increases your max number of minions and sentries by 1" +
-							"\nIncreases minion and melee damage by 7%" +
-							"\nIncreased max void by 50" +
-							"\nProvides a Holo Eye minion to assist in combat" +
-							"\nPress the " + "'" + key + "' key to make it launch a destabilizing beam that applies 4 levels of destabilized, but only once per enemy" +
-							"\nDestabilized enemies gain a 5% flat chance to be critically striked" +
-							"\nThis is calculated after normal crits, allowing some attacks to double crit" +
-							"\nCosts 6 void to launch" +
-							"\nHolo Eye remains active in the inventory when favorited or while worn in vanity slots";
-						return;
-					}
-				}
-			}
-			foreach (TooltipLine line in tooltips) //goes through each tooltip line
-			{
-				if (line.mod == "Terraria" && line.Name == "Tooltip0")
-				{
-					string key = "Unbound";
-					line.text = "Increases your max number of minions and sentries by 1" +
-						"\nIncreases minion and melee damage by 7%" +
-						"\nIncreased max void by 50" +
-						"\nProvides a Holo Eye minion to assist in combat" +
-						"\nPress the " + "'" + key + "' key to make it launch a destabilizing beam that applies 4 levels of destabilized, but only once per enemy" +
-						"\nDestabilized enemies gain a 5% flat chance to be critically striked" +
-						"\nThis is calculated after normal crits, allowing some attacks to double crit" +
-						"\nCosts 6 void to launch" +
-						"\nHolo Eye remains active in the inventory when favorited or while worn in vanity slots";
-				}
-			}
-			base.ModifyTooltips(tooltips);
-		}*/
 		public override bool IsArmorSet(Item head, Item body, Item legs)
 		{
 			return body.type == ModContent.ItemType<CursedRobe>();
@@ -120,8 +91,13 @@ namespace SOTS.Items.Pyramid
 		public override void UpdateArmorSet(Player player)
 		{
 			SOTSPlayer modPlayer = player.GetModPlayer<SOTSPlayer>();
-			player.setBonus = "Use armor set key 2 launch ruby monolith at enemy. This will do the big epic damage. takes 1 minute to repair, where no longer give void regen boost\nUses all void available up to 100 void to launch, dealing that much damage (more because of proj effects)";
-			modPlayer.HoloEyeAutoAttack = true;
+			modPlayer.CanCurseSwap = true;
+			string theKey = "Unbound";
+			foreach (string key in SOTS.ArmorSetHotKey.GetAssignedKeys())
+			{
+				theKey = key;
+			}
+			player.setBonus = "Press the '" + theKey + "' key to change the Ruby Monolith into an offensive stance\nWhile in offensive stance, decreases the cooldown of Curse Flaring by 80%\nHowever, decreases void regen by 60 instead of increasing it by 4";
 		}
 		public override void AddRecipes()
 		{
@@ -132,5 +108,44 @@ namespace SOTS.Items.Pyramid
 			recipe.AddTile(TileID.Anvils);
 			recipe.AddRecipe();
 		}
+	}
+	public class CurseHoodPlayer : ModPlayer
+	{
+		public override void ModifyDrawLayers(List<PlayerLayer> layers)
+		{
+			int bodyLayer = layers.FindIndex(l => l == PlayerLayer.Head);
+			if (bodyLayer > -1)
+			{
+				layers.Insert(bodyLayer + 1, CurseHoodGlow);
+			}
+		}
+		public static readonly PlayerLayer CurseHoodGlow = new PlayerLayer("SOTS", "CurseHoodGlow", PlayerLayer.Head, delegate (PlayerDrawInfo drawInfo) {
+
+			// We don't want the glowmask to draw if the player is cloaked or dead
+			if (drawInfo.drawPlayer.dead)
+			{
+				return;
+			}
+			float alpha = 1 - drawInfo.shadow;
+			Player drawPlayer = drawInfo.drawPlayer;
+			Mod mod = ModLoader.GetMod("SOTS");
+			if (drawPlayer.head != mod.GetEquipSlot("CursedHood", EquipType.Head))
+			{
+				return;
+			}
+			Texture2D texture = mod.GetTexture("Items/Pyramid/CursedHood_HeadGlow");
+			float drawX = (int)drawInfo.position.X + drawPlayer.width / 2;
+			float drawY = (int)drawInfo.position.Y + drawPlayer.height - drawPlayer.bodyFrame.Height / 2 + 4f;
+			Vector2 origin = drawInfo.bodyOrigin;
+			Vector2 position = new Vector2(drawX, drawY) + drawPlayer.bodyPosition - Main.screenPosition;
+			alpha *= (255 - drawPlayer.immuneAlpha) / 255f;
+			Color color = TestWingsPlayer.changeColorBasedOnStealth(Color.White, drawPlayer);
+			Rectangle frame = drawPlayer.bodyFrame;
+			float rotation = drawPlayer.bodyRotation;
+			SpriteEffects spriteEffects = drawInfo.spriteEffects;
+			DrawData drawData = new DrawData(texture, position, frame, color * alpha, rotation, origin, 1f, spriteEffects, 0);
+			drawData.shader = drawInfo.headArmorShader;
+			Main.playerDrawData.Add(drawData);
+		});
 	}
 }

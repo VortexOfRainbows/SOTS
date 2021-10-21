@@ -19,7 +19,6 @@ namespace SOTS.Buffs
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			voidPlayer.voidShock = true;
-			voidPlayer.voidRegen *= 0.01f;
 			if (player.endurance > 0)
 				player.endurance = 0;
 			player.endurance -= 2f;

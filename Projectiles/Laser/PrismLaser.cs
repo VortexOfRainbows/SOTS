@@ -159,7 +159,10 @@ namespace SOTS.Projectiles.Laser
 				}
 				if (runOnce2)
 				{
-					for (int a = 0; a < 2; a++)
+					int amt = 2;
+					if (SOTS.Config.lowFidelityMode)
+						amt = 1;
+					for (int a = 0; a < amt; a++)
 					{
 						Dust dust = Dust.NewDustDirect(posList2[k] - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
 						dust.fadeIn = 0.2f;

@@ -1,6 +1,9 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Items.Banners;
+using SOTS.Items.Fragments;
+using SOTS.Items.Pyramid;
+using SOTS.Items.Void;
 using System;
 using System.Linq;
 using Terraria;
@@ -293,13 +296,13 @@ namespace SOTS.NPCs
 		}
 		public override void NPCLoot()
 		{
-			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FragmentOfEarth"), Main.rand.Next(2) + 1);
-			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("SoulResidue"), Main.rand.Next(2) + 1);
-			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("CursedHiveBlock"), Main.rand.Next(7) + 3);
-			if(dropSpecial || Main.rand.NextBool(200))
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("TheDarkEye"), 1);
+			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<FragmentOfEarth>(), Main.rand.Next(2) + 1);
+			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<SoulResidue>(), Main.rand.Next(2) + 1);
+			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<CursedHiveBlock>(), Main.rand.Next(7) + 3);
+			if (dropSpecial || Main.rand.NextBool(200))
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<TheDarkEye>(), 1);
 			if(Main.rand.Next(20) == 0)
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("CursedCaviar"), 1);
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<CursedCaviar>(), 1);
 		}
 		public override void HitEffect(int hitDirection, double damage)
 		{
