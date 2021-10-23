@@ -29,8 +29,6 @@ namespace SOTS.Projectiles.Inferno
 		public override void AI()
         {
 			Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 1.5f / 255f, (255 - projectile.alpha) * 1.5f / 255f, (255 - projectile.alpha) * 1.5f / 255f);
-
-
 			projectile.frameCounter++;
 			if (projectile.frameCounter >= 2)
 			{
@@ -62,7 +60,6 @@ namespace SOTS.Projectiles.Inferno
 		}
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-			Player player = Main.player[projectile.owner];
             target.immune[projectile.owner] = 5;
 			target.AddBuff(BuffID.OnFire, 1200, false);
         }

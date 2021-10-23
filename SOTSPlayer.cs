@@ -512,8 +512,23 @@ namespace SOTS
 			}
 			base.PostUpdateMiscEffects();
         }
+		int fireIcoCD = 0;
+		int iceIcoCD = 0;
+		int cursedIcoCD = 0;
         public override void PostUpdate()
 		{
+			if (fireIcoCD > 0)
+				fireIcoCD--;
+			else
+				fireIcoCD = 0;
+			if (iceIcoCD > 0)
+				iceIcoCD--;
+			else
+				iceIcoCD = 0;
+			if (cursedIcoCD > 0)
+				cursedIcoCD--;
+			else
+				cursedIcoCD = 0;
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			maxCritVoidStealPerSecond = voidPlayer.voidRegen * 20; //max stored voidsteal is 20x the voidRegen speed
 			maxCritVoidStealPerSecondTimer += (voidPlayer.voidRegen + CritVoidsteal / 10f) / 30f; //max stored voidsteal regenerates at the twice rate as normal voidRegen (basically, stores 20 seconds of regen) 
@@ -1070,39 +1085,56 @@ namespace SOTS
 					int randBuff = Main.rand.Next(3);
 					if (randBuff == 2 && CritCurseFire)
 					{
-						Main.PlaySound(SoundID.Item, (int)target.Center.X, (int)target.Center.Y, 93, 0.9f);
-						target.AddBuff(BuffID.CursedInferno, 900, false);
-						int numberProjectiles = 4;
-						int rand = Main.rand.Next(360);
-						for (int i = 0; i < numberProjectiles; i++)
+						bool canTrigger = Main.rand.NextFloat(1) >= 1 * (cursedIcoCD / 120f);
+						if(canTrigger)
 						{
-							Vector2 perturbedSpeed = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(i * 90 + rand));
+							cursedIcoCD = 180;
+							Main.PlaySound(SoundID.Item, (int)target.Center.X, (int)target.Center.Y, 93, 0.9f);
+							target.AddBuff(BuffID.CursedInferno, 900, false);
+							int numberProjectiles = 4;
+							int rand = Main.rand.Next(360);
 							if (Main.myPlayer == player.whoAmI)
-								Projectile.NewProjectile(target.Center.X, target.Center.Y, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<CursedThunder>(), damage, 1f, player.whoAmI, 2);
+							{
+								for (int i = 0; i < numberProjectiles; i++)
+								{
+									Vector2 perturbedSpeed = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(i * 90 + rand));
+									Projectile.NewProjectile(target.Center.X, target.Center.Y, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<CursedThunder>(), damage, 0, player.whoAmI, 2);
+								}
+							}
 						}
 					}
 					else if (randBuff == 1 && (CritFrost || CritCurseFire))
 					{
-						target.AddBuff(BuffID.Frostburn, 900, false);
-						if (Main.myPlayer == player.whoAmI)
+						bool canTrigger = Main.rand.NextFloat(1) >= 1 * (iceIcoCD / 120f);
+						if (canTrigger)
 						{
-							if (CritFrost)
-								Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, ModContent.ProjectileType<IcePulseSummon>(), damage * 2, 1f, player.whoAmI, 3);
-							else
-								Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, ModContent.ProjectileType<IcePulseSummon>(), damage, 1f, player.whoAmI, 3);
+							iceIcoCD = 180;
+							target.AddBuff(BuffID.Frostburn, 900, false);
+							if (Main.myPlayer == player.whoAmI)
+							{
+								if (CritFrost)
+									Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, ModContent.ProjectileType<IcePulseSummon>(), damage * 2, 0, player.whoAmI, 3);
+								else
+									Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, ModContent.ProjectileType<IcePulseSummon>(), damage, 0, player.whoAmI, 3);
+							}
 						}
 					}
 					else if (randBuff == 0 && (CritFire || CritCurseFire))
 					{
-						target.AddBuff(BuffID.OnFire, 900, false);
-						if (Main.myPlayer == player.whoAmI)
+						bool canTrigger = Main.rand.NextFloat(1) >= 1 * (fireIcoCD / 120f);
+						if (canTrigger)
 						{
-							if (CritCurseFire && CritFire)
+							fireIcoCD = 180;
+							target.AddBuff(BuffID.OnFire, 900, false);
+							if (Main.myPlayer == player.whoAmI)
 							{
-								Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, ModContent.ProjectileType<SharangaBlastSummon>(), damage * 2, 1f, player.whoAmI, 3);
+								if (CritCurseFire && CritFire)
+								{
+									Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, ModContent.ProjectileType<SharangaBlastSummon>(), damage * 2, 0, player.whoAmI, 3);
+								}
+								else
+									Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, ModContent.ProjectileType<SharangaBlastSummon>(), damage, 0, player.whoAmI, 3);
 							}
-							else
-								Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, ModContent.ProjectileType<SharangaBlastSummon>(), damage, 1f, player.whoAmI, 3);
 						}
 					}
 				}

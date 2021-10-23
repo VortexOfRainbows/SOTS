@@ -1,9 +1,11 @@
 using Microsoft.Xna.Framework;
+using SOTS.Buffs;
 using SOTS.Items.Celestial;
 using SOTS.Items.Otherworld;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace SOTS.Void
@@ -142,12 +144,15 @@ namespace SOTS.Void
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			bool canUse = BeforeUseItem(player);
+			bool cursed = player.HasBuff(BuffID.Cursed) || (player.HasBuff(BuffID.Silenced) && item.magic);
+			if (cursed)
+				return false;
 			int currentVoid = voidPlayer.voidMeterMax2 - voidPlayer.lootingSouls - voidPlayer.VoidMinionConsumption;
 			if (voidPlayer.safetySwitch && voidPlayer.voidMeter < voidMana && !item.summon && !voidPlayer.frozenVoid)
 			{
 				return false;
 			}
-			if(!canUse || player.FindBuffIndex(mod.BuffType("VoidRecovery")) > -1 || item.useAnimation < 2 || (player.altFunctionUse != 2 && item.summon && currentVoid < voidMana))
+			if(!canUse || player.FindBuffIndex(ModContent.BuffType<VoidRecovery>()) > -1 || item.useAnimation < 2 || (player.altFunctionUse != 2 && item.summon && currentVoid < voidMana))
 			{
 				return false;
 			}

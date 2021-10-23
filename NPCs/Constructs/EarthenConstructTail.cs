@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Dusts;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -52,7 +53,7 @@ namespace SOTS.NPCs.Constructs
                 }
                 for (int i = 0; i < 5; i++)
                 {
-                    int dust = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, mod.DustType("BigEarthDust"));
+                    int dust = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, ModContent.DustType<BigEarthDust>());
                     Main.dust[dust].velocity *= 5f;
                 }
                 if(Main.rand.NextBool(3))

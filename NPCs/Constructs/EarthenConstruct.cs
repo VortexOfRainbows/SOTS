@@ -1,5 +1,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Dusts;
+using SOTS.Items.Fragments;
+using SOTS.Projectiles.Terra;
 using System;
 using System.IO;
 using Terraria;
@@ -301,7 +304,7 @@ namespace SOTS.NPCs.Constructs
                     int WormLength = 4;
                     for (int i = 0; i < WormLength; i++)
                     {
-                        latestNPC = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, mod.NPCType("EarthenConstructTail"), npc.whoAmI, 0, latestNPC);
+                        latestNPC = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<EarthenConstructTail>(), npc.whoAmI, 0, latestNPC);
                         Main.npc[latestNPC].realLife = npc.whoAmI;
                         Main.npc[latestNPC].ai[3] = npc.whoAmI;
                         Main.npc[latestNPC].ai[2] = i + 1;
@@ -425,7 +428,7 @@ namespace SOTS.NPCs.Constructs
                             if (segments[x] != -1)
                             {
                                 NPC segment = Main.npc[segments[x]];
-                                if (segment.active && segment.type == mod.NPCType("EarthenConstructTail") && (int)segment.ai[1] == npc.whoAmI)
+                                if (segment.active && segment.type == ModContent.NPCType<EarthenConstructTail>() && (int)segment.ai[1] == npc.whoAmI)
                                 {
                                     segment.position.Y += 30;
                                     segment.netUpdate = true;
@@ -441,7 +444,7 @@ namespace SOTS.NPCs.Constructs
                 aiCounter = 0;
                 worm = true;
             }
-            if (Main.netMode != NetmodeID.MultiplayerClient)
+            if (Main.netMode != NetmodeID.MultiplayerClient && eternalCounter % 30 == 0)
             {
                 npc.netUpdate = true;
             }
@@ -465,7 +468,7 @@ namespace SOTS.NPCs.Constructs
                 for(int i = 0; i < count; i++)
                 {
                     Vector2 circularLocation = new Vector2(0, -4).RotatedByRandom(MathHelper.ToRadians(17 + count));
-                    Projectile.NewProjectile(npc.Center.X, npc.Center.Y, circularLocation.X, circularLocation.Y, mod.ProjectileType("EarthenShot"), damage, 0, Main.myPlayer, 0, Main.player[npc.target].Center.Y - 32);
+                    Projectile.NewProjectile(npc.Center.X, npc.Center.Y, circularLocation.X, circularLocation.Y, ModContent.ProjectileType<EarthenShot>(), damage, 0, Main.myPlayer, 0, Main.player[npc.target].Center.Y - 32);
                 }
             }
             Main.PlaySound(SoundID.Item92, (int)(npc.Center.X), (int)(npc.Center.Y));
@@ -499,7 +502,7 @@ namespace SOTS.NPCs.Constructs
             }
             for (int i = 0; i < 30; i++)
             {
-                int dust = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, mod.DustType("BigEarthDust"));
+                int dust = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, ModContent.DustType<BigEarthDust>());
                 Main.dust[dust].velocity *= 5f;
             }
             Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/EarthenConstructGore1"), 1f);
@@ -524,27 +527,28 @@ namespace SOTS.NPCs.Constructs
 
             if(Main.netMode != NetmodeID.MultiplayerClient)
             {
-                int j = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, mod.NPCType("EarthenSpirit"), 0, 0, 0);
+                int type = ModContent.NPCType<EarthenSpirit>();
+                int j = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, type, 0, 0, 0);
                 Main.npc[j].velocity.Y = -10f;
                 Main.npc[j].netUpdate = true;
 
-                int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, mod.NPCType("EarthenSpirit"), 0, 0, 1, j);
+                int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, type, 0, 0, 1, j);
                 Main.npc[n].velocity = new Vector2(1, -9f);
                 Main.npc[n].netUpdate = true;
 
-                n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, mod.NPCType("EarthenSpirit"), 0, 0, 2, j);
+                n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, type, 0, 0, 2, j);
                 Main.npc[n].velocity = new Vector2(-1, -9f);
                 Main.npc[n].netUpdate = true;
 
-                n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, mod.NPCType("EarthenSpirit"), 0, 0, 3, j);
+                n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, type, 0, 0, 3, j);
                 Main.npc[n].velocity = new Vector2(2, -8f);
                 Main.npc[n].netUpdate = true;
 
-                n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, mod.NPCType("EarthenSpirit"), 0, 0, 4, j);
+                n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, type, 0, 0, 4, j);
                 Main.npc[n].velocity = new Vector2(-2, -8f);
                 Main.npc[n].netUpdate = true;
             }
-            Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FragmentOfEarth"), Main.rand.Next(4) + 4);
+            Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<FragmentOfEarth>(), Main.rand.Next(4) + 4);
         }
         public void doAIExtras()
         {

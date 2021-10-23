@@ -142,7 +142,7 @@ namespace SOTS.NPCs
 
 			if (npc.lifeMax > 5 && !npc.SpawnedFromStatue)
 			{
-				if ((Main.rand.NextBool(90) && Main.expertMode) || (Main.rand.NextBool(100) && !Main.expertMode) || (npc.type == NPCID.PigronCorruption || npc.type == NPCID.PigronHallow || npc.type == NPCID.PigronCrimson))
+				if (Main.rand.NextBool(100) || (npc.type == NPCID.PigronCorruption || npc.type == NPCID.PigronHallow || npc.type == NPCID.PigronCrimson))
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<AlmondMilk>(), 1);
 
 				if (Main.rand.NextBool(35))
@@ -174,19 +174,19 @@ namespace SOTS.NPCs
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<FragmentOfChaos>(), Main.rand.Next(2) + 1);
 				}
 
-				if (player.ZoneSnow && ((Main.rand.NextBool(90) && Main.expertMode) || (Main.rand.NextBool(100) && !Main.expertMode)))
+				if (player.ZoneSnow && Main.rand.NextBool(100))
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<StrawberryIcecream>(), 1);
-				if (player.ZoneBeach && ((Main.rand.NextBool(100) && Main.expertMode) || (Main.rand.NextBool(120) && !Main.expertMode)))
+				if (player.ZoneBeach && Main.rand.NextBool(100))
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<CoconutMilk>(), 1);
 				if (player.ZoneDungeon && Main.rand.NextBool(120))
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<AvocadoSoup>(), 1);
 
 				if (npc.type == NPCID.ZombieMushroom || npc.type == NPCID.ZombieMushroomHat || npc.type == NPCID.MushiLadybug || npc.type == NPCID.AnomuraFungus || npc.type == NPCID.FungiBulb || npc.type == NPCID.FungoFish || npc.type == NPCID.GiantFungiBulb)
-					if ((Main.rand.NextBool(10) && !Main.expertMode) || (Main.rand.NextBool(9) && Main.expertMode))
+					if (Main.rand.NextBool(10))
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<CookedMushroom>(), 1);
 
 				if (modPlayer.PlanetariumBiome)
-					if ((Main.rand.NextBool(90) && Main.expertMode) || (Main.rand.NextBool(100) && !Main.expertMode))
+					if (Main.rand.NextBool(100))
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<DigitalCornSyrup>(), 1);
 
 				if (npc.type == NPCID.WallofFlesh)

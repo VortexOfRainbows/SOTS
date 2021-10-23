@@ -18,8 +18,7 @@ High Priority:
 1. Inferno Construct and Evil Construct
 2. Starmap
 3. Digital Daito Obtaining
-4. Relocate Void weapon consumption to a different method in order to make Curse debuff not work (or just hardcoded it out)
-5. Advisor Fidelity mode changes
+4. Advisor Fidelity mode changes
 
 Mid Priority:
 1. Tectonic Tether
@@ -37,6 +36,14 @@ Low Priority:
 2. Mobile Fortress Generator: One for every tavernkeep armor set
 3. Electrolyte Seperator
 4. Wintry Traveler: Riptide Trident + Frigid Javelin
+
+10/22/21
+1. Spirit scissors no longer scales with Crusher Range
+2. Lashes of Lightning mana cost 18 -> 20, damage 30 -> 26
+3. A few lag fixes for Earthen Construct in multiplayer and some minor optimization
+4. Void foods drop rate normalization (no longer expert mode bonuses)
+5. No longer consume void when cursed or silenced
+6. Icosahedron Explosions now have a 1 second hard cooldown, and retain diminished chances of procing for up to 2 seconds after.
 
 10/19/21 & 10/20/21
 1. Finished (?) Cursed Armor. Needs Resprites, balancing feedback, + server syncing

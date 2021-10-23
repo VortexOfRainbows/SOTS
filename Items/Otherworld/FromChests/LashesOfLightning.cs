@@ -4,6 +4,8 @@ using Terraria.ModLoader;
 using SOTS.Void;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Projectiles.Otherworld;
+using SOTS.Dusts;
 
 namespace SOTS.Items.Otherworld.FromChests
 {
@@ -16,7 +18,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override void SetDefaults()
 		{
-            item.damage = 30;  
+            item.damage = 26;  
             item.magic = true; 
             item.width = 30;    
             item.height = 46;  
@@ -33,10 +35,10 @@ namespace SOTS.Items.Otherworld.FromChests
 				item.GetGlobalItem<ItemUseGlow>().glowTexture = mod.GetTexture("Items/Otherworld/FromChests/LashesOfLightningGlow");
 			}
 
-			item.shoot = mod.ProjectileType("LightningLash");
+			item.shoot = ModContent.ProjectileType<LightningLash>();
 			item.shootSpeed = 15f;
 			item.noMelee = true;
-			item.mana = 18;
+			item.mana = 20;
 		}
 		public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
 		{
@@ -49,7 +51,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		{
 			if (Main.rand.NextBool(10))
 			{
-				Dust dust = Dust.NewDustDirect(hitbox.Location.ToVector2() - new Vector2(5f), hitbox.Width, hitbox.Height, mod.DustType("CopyDust4"), 0, -2, 200, new Color(), 1f);
+				Dust dust = Dust.NewDustDirect(hitbox.Location.ToVector2() - new Vector2(5f), hitbox.Width, hitbox.Height, ModContent.DustType<CopyDust4>(), 0, -2, 200, new Color(), 1f);
 				dust.velocity *= 0.4f;
 				dust.color = new Color(100, 100, 255, 120);
 				dust.noGravity = true;
@@ -65,8 +67,8 @@ namespace SOTS.Items.Otherworld.FromChests
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "StarlightAlloy", 16);
-			recipe.AddTile(mod.TileType("HardlightFabricatorTile"));
+			recipe.AddIngredient(ModContent.ItemType<StarlightAlloy>(), 16);
+			recipe.AddTile(ModContent.TileType<HardlightFabricatorTile>());
 			recipe.SetResult(this);
 			recipe.AddRecipe();
 		}

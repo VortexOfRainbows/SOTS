@@ -33,6 +33,8 @@ namespace SOTS.Projectiles.Crushers
 		}
         public override bool UseCustomExplosionEffect(float x, float y, float dist, float rotation, float chargePercent, int index)
         {
+			if (index != 0)
+				return true;
 			int first = 0;
 			for(int i = 1; i < storage.Count; i++)
 			{
@@ -92,7 +94,7 @@ namespace SOTS.Projectiles.Crushers
         }
         public override int ExplosionType()
         {
-            return ModContent.ProjectileType<Webbing>();
+            return ModContent.ProjectileType<PlasmaCrush>();
         }
         public override Texture2D ArmTexture(int handNum, int direction)
         {
