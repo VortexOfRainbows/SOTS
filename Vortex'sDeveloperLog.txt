@@ -23,9 +23,12 @@ High Priority:
 Mid Priority:
 1. Tectonic Tether
 2. Horn of Plenty: 10% more drops accessory
-3. Ethereal Tonic
-4. Timelord's Potion: attempt using .aiStyle, otherwise would require a lot of workaround...
-5. Lux Drops:
+3. Ethereal Tonic, Heretic Tonic, Blazing Tonic
+	1. Dissolving Brilliance, Dissolving Nether 
+	2. Other Potions: (Evil) Nightmare Potion: Critical strikes cause nightmare arms to chain between enemies
+	 (Inferno) Bluefire Potion: Killed enemies explode into a blue fire aura. The aura burns enemies inside of it (bluefire debuff), while player is buffed with increased regen (also bluefire debuff)
+	 (Chaos) Harmony Potion: Prevents other buff potion effects from decaying while active
+4. Lux Drops:
 	1. Rose Bow
 	2. Voidmage Incubator
 	3. Phase Ore!?
@@ -37,6 +40,9 @@ Low Priority:
 3. Electrolyte Seperator
 4. Wintry Traveler: Riptide Trident + Frigid Javelin
 
+10/23/21
+1. Dissolving Umbra
+
 10/22/21
 1. Spirit scissors no longer scales with Crusher Range
 2. Lashes of Lightning mana cost 18 -> 20, damage 30 -> 26
@@ -44,6 +50,7 @@ Low Priority:
 4. Void foods drop rate normalization (no longer expert mode bonuses)
 5. No longer consume void when cursed or silenced
 6. Icosahedron Explosions now have a 1 second hard cooldown, and retain diminished chances of procing for up to 2 seconds after.
+7. HoloEye destablization beam goes through actuated blocks
 
 10/19/21 & 10/20/21
 1. Finished (?) Cursed Armor. Needs Resprites, balancing feedback, + server syncing

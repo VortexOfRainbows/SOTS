@@ -64,7 +64,7 @@ namespace SOTS.Projectiles.Otherworld
 				Vector2 position = currentPos;
 				int i = (int)(position.X / 16);
 				int j = (int)(position.Y / 16);
-				if (!WorldGen.InWorld(i, j, 20) || (Main.tile[i, j].active() && Main.tileSolidTop[Main.tile[i, j].type] == false && Main.tileSolid[Main.tile[i, j].type] == true && Distance < 119))
+					if (!WorldGen.InWorld(i, j, 20) || (Main.tile[i, j].active() && Main.tileSolidTop[Main.tile[i, j].type] == false && Main.tileSolid[Main.tile[i, j].type] == true && Main.tile[i, j].nactive() && Distance < 119))
 				{
 					previousDistance = Distance;
 					Distance = 119;
@@ -111,7 +111,7 @@ namespace SOTS.Projectiles.Otherworld
 				rotate += 6;
 				Vector2 laserVelo = new Vector2((14f) * size, 0f).RotatedBy(radianDir) + rotateVector;
 
-				if (!WorldGen.InWorld(i, j, 20) || (Main.tile[i, j].active() && Main.tileSolidTop[Main.tile[i, j].type] == false && Main.tileSolid[Main.tile[i, j].type] == true && Distance < 119))
+				if (!WorldGen.InWorld(i, j, 20) || (Main.tile[i, j].active() && Main.tileSolidTop[Main.tile[i, j].type] == false && Main.tileSolid[Main.tile[i, j].type] == true && Main.tile[i, j].nactive() && Distance < 119))
 				{
 					position -= laserVelo;
 					Vector2 velo = new Vector2(0, Main.rand.Next(-7, 8) * size).RotatedBy(laserVelo.ToRotation());

@@ -39,6 +39,7 @@ Minor Art: Naka, DeJuiceTD, Nomis
 Update 0.20.3
 -New worldgen structure in the Dungeon
 -New items, enemies, and secrets
+-Various balance changes and bug fixes
 
 Update 0.20.2
 -A new item, Plasma Accelerator, and reworked Bore Bullets

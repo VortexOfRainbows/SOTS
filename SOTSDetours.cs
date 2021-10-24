@@ -1,21 +1,7 @@
-﻿using log4net;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Mono.Cecil.Cil;
-using MonoMod.Cil;
-using SOTS.Prim;
 using SOTS.Utilities;
-using System;
-using System.Linq;
-using ReLogic.Graphics;
 using Terraria;
-using Terraria.DataStructures;
-using Terraria.GameInput;
-using Terraria.ID;
-using Terraria.ModLoader;
-using Terraria.UI.Chat;
-using System.Collections.Generic;
-using Terraria.Localization;
 
 namespace SOTS
 {
@@ -54,7 +40,6 @@ namespace SOTS
 					SOTS.primitives.DrawTrailsProj(Main.spriteBatch, Main.graphics.GraphicsDevice);
 					SOTS.primitives.DrawTrailsNPC(Main.spriteBatch, Main.graphics.GraphicsDevice);
 				}
-				DrawProjToTarget();
 			}
 		}
 		private static void Main_DrawProjectiles(On.Terraria.Main.orig_DrawProjectiles orig, Main self)
@@ -64,8 +49,6 @@ namespace SOTS
 				SOTS.primitives.DrawTargetProj(Main.spriteBatch);
 			}
 			orig(self);
-			if (!Main.dedServ)
-				DrawProjTarget();
 		}
 
 		private static void Main_DrawNPCs(On.Terraria.Main.orig_DrawNPCs orig, Main self, bool behindTiles)
@@ -114,39 +97,6 @@ namespace SOTS
 				}
 				Main.spriteBatch.End();
 			}
-		}
-		public static void DrawProjToTarget()
-		{
-			GraphicsDevice gD = Main.instance.GraphicsDevice;
-			SpriteBatch spriteBatch = Main.spriteBatch;
-			if (TargetProj == null || gD == null || Main.dedServ || spriteBatch == null)
-				return;
-
-			RenderTargetBinding[] bindings = gD.GetRenderTargets();
-			gD.SetRenderTarget(TargetProj);
-			gD.Clear(Color.Transparent);
-			Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
-			for (int i = 0; i < Main.projectile.Length; i++)
-            {
-				Projectile proj = Main.projectile[i];
-				if (proj.active && proj.modProjectile is IPixellated modProj)
-                {
-					modProj.Draw(spriteBatch, proj.GetAlpha(Color.White));
-                }
-            }
-			spriteBatch.End();
-			gD.SetRenderTargets(bindings);
-		}
-		public static void DrawProjTarget()
-        {
-			GraphicsDevice gD = Main.instance.GraphicsDevice;
-			SpriteBatch spriteBatch = Main.spriteBatch;
-			if (TargetProj == null || gD == null || Main.dedServ || spriteBatch == null)
-				return;
-
-			spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, null, null);
-			spriteBatch.Draw(TargetProj, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Color.White);
-			spriteBatch.End();
 		}
 	}
 }

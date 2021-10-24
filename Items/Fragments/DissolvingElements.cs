@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Void;
 
 namespace SOTS.Items.Fragments
 {
@@ -366,9 +367,7 @@ namespace SOTS.Items.Fragments
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
 			Texture2D texture = Main.itemTexture[item.type];
-			Color color = new Color(167, 45, 225, 0);
-			Color color2 = new Color(64, 178, 172, 0);
-			color = Color.Lerp(color, color2, 0.5f + new Vector2(-0.5f, 0).RotatedBy(MathHelper.ToRadians((float)Main.GlobalTime * 50)).X);
+			Color color = VoidPlayer.OtherworldColor;
 			for (int k = 0; k < 7; k++)
 			{
 				float x = Main.rand.Next(-10, 11) * 0.15f;
@@ -391,11 +390,8 @@ namespace SOTS.Items.Fragments
 			{
 				frame = 0;
 			}
-
 			Texture2D texture = Main.itemTexture[item.type];
-			Color color = new Color(167, 45, 225, 0);
-			Color color2 = new Color(64, 178, 172, 0);
-			color = Color.Lerp(color, color2, 0.5f + new Vector2(-0.5f, 0).RotatedBy(MathHelper.ToRadians((float)Main.GlobalTime * 50)).X);
+			Color color = VoidPlayer.OtherworldColor;
 			Vector2 drawOrigin = new Vector2(Main.itemTexture[item.type].Width * 0.5f, item.height * 0.5f);
 			for (int k = 0; k < 7; k++)
 			{
@@ -421,6 +417,87 @@ namespace SOTS.Items.Fragments
 			}
 			AetherPlayer aetherPlayer = (AetherPlayer)player.GetModPlayer(mod, "AetherPlayer");
 			aetherPlayer.aetherNum += item.stack;
+		}
+	}
+	public class DissolvingUmbra : ModItem
+	{
+		int frameCounter = 0;
+		int frame = 0;
+		public override void SetStaticDefaults()
+		{
+			DisplayName.SetDefault("Dissolving Umbra");
+			Tooltip.SetDefault("Reduces max void by 20 while in the inventory");
+			Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(5, 12));
+		}
+		public override void SetDefaults()
+		{
+			item.width = 30;
+			item.height = 44;
+			item.value = Item.sellPrice(0, 1, 0, 0);
+			item.rare = ItemRarityID.Orange;
+			item.maxStack = 999;
+			ItemID.Sets.ItemNoGravity[item.type] = true;
+		}
+		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
+		{
+			Texture2D texture = Main.itemTexture[item.type];
+			Color color = VoidPlayer.EvilColor;
+			for (int k = 0; k < 7; k++)
+			{
+				Main.spriteBatch.Draw(texture,
+				position + Main.rand.NextVector2Circular(1.5f, 1.5f),
+				new Rectangle(0, 44 * this.frame, 30, 44), color * 1.2f * (1f - (item.alpha / 255f)), 0f, origin, scale, SpriteEffects.None, 0f);
+			}
+			return false;
+		}
+		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
+		{
+			frameCounter++;
+			if (frameCounter >= 5)
+			{
+				frameCounter = 0;
+				frame++;
+			}
+			if (frame >= 12)
+			{
+				frame = 0;
+			}
+			Texture2D texture = Main.itemTexture[item.type];
+			Color color = VoidPlayer.EvilColor;
+			Vector2 drawOrigin = new Vector2(Main.itemTexture[item.type].Width * 0.5f, item.height * 0.5f);
+			for (int k = 0; k < 7; k++)
+			{
+				Main.spriteBatch.Draw(texture,
+				item.Center - Main.screenPosition + Main.rand.NextVector2Circular(1.5f, 1.5f),
+				new Rectangle(0, 44 * frame, 30, 44), color * 1.2f * (1f - (item.alpha / 255f)), rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+			}
+			return false;
+		}
+		public override void UpdateInventory(Player player)
+		{
+			VoidPlayer vPlayer = VoidPlayer.ModPlayer(player);
+			frameCounter++;
+			if (frameCounter >= 5)
+			{
+				frameCounter = 0;
+				frame++;
+			}
+			if (frame >= 12)
+			{
+				frame = 0;
+			}
+			for (int i = 0; i < item.stack; i++)
+			{
+				if (vPlayer.voidMeterMax2 > 20)
+				{
+					vPlayer.voidMeterMax2 -= 20;
+				}
+				if(vPlayer.voidMeterMax2 < 20)
+                {
+					vPlayer.voidMeterMax2 = 20;
+					break;
+				}
+			}
 		}
 	}
 	public class AetherPlayer : ModPlayer
