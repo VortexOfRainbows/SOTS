@@ -92,7 +92,9 @@ namespace SOTS.Projectiles.Pyramid
 			Player player = Main.player[projectile.owner];
 			SOTSPlayer modPlayer = player.GetModPlayer<SOTSPlayer>();
 			shader = player.cHead;
-			if(modPlayer.CanCurseSwap)
+			if (Main.myPlayer != projectile.owner)
+				projectile.timeLeft = 20;
+			if (modPlayer.CanCurseSwap)
 			{
 				if (modPlayer.CurseSwap)
 				{

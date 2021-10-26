@@ -20,6 +20,7 @@ using SOTS.Projectiles.Otherworld;
 using SOTS.Items.OreItems;
 using SOTS.Items.Otherworld.FromChests;
 using System.Linq;
+using SOTS.NPCs.Constructs;
 
 namespace SOTS.NPCs.ArtificialDebuffs
 {
@@ -333,7 +334,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 amt += 20;
             if (npc.rarity == 4)
                 amt += 10;
-            if (npc.rarity == 5)
+            if (npc.rarity == 5 || npc.type == ModContent.NPCType<OtherworldlyConstructHead2>())
                 amt += 10;
             if (miniBosses.Contains(npc.type))
             {

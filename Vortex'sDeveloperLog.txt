@@ -40,8 +40,12 @@ Low Priority:
 3. Electrolyte Seperator
 4. Wintry Traveler: Riptide Trident + Frigid Javelin
 
-10/23/21
+10/23/21 through 10/25/21
 1. Dissolving Umbra
+2. Cursed Armor syncs properly in multiplayer now.
+	1. Needs Resprites still
+3. Started work on Evil Spirit, just some visuals and framework for now
+4. Otherworldly Construct (Advisor ver.) doesn't count as rare enemy.
 
 10/22/21
 1. Spirit scissors no longer scales with Crusher Range
@@ -53,7 +57,7 @@ Low Priority:
 7. HoloEye destablization beam goes through actuated blocks
 
 10/19/21 & 10/20/21
-1. Finished (?) Cursed Armor. Needs Resprites, balancing feedback, + server syncing
+1. Finished (?) Cursed Armor. 
 2. Planetarium Biome detection starts higher up. You should be able to build with the blocks a closer to the sky now.
 3. Photon geyser less laggy in low fidel
 4. In response to outcry, Aten's damage scaling on explosions has been taken down a notch... 210% -> 140%
