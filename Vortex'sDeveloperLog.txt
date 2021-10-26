@@ -26,7 +26,7 @@ Mid Priority:
 3. Ethereal Tonic, Heretic Tonic, Blazing Tonic
 	1. Dissolving Brilliance, Dissolving Nether 
 	2. Other Potions: (Evil) Nightmare Potion: Critical strikes cause nightmare arms to chain between enemies
-	 (Inferno) Bluefire Potion: Killed enemies explode into a blue fire aura. The aura burns enemies inside of it (bluefire debuff), while player is buffed with increased regen (also bluefire debuff)
+	 (Inferno) Bluefire Potion: Killed enemies spawn stationary wisps that last for 10 seconds, fires at enemies like virtues but different charge time, color, etc.
 	 (Chaos) Harmony Potion: Prevents other buff potion effects from decaying while active
 4. Lux Drops:
 	1. Rose Bow
@@ -39,6 +39,9 @@ Low Priority:
 2. Mobile Fortress Generator: One for every tavernkeep armor set
 3. Electrolyte Seperator
 4. Wintry Traveler: Riptide Trident + Frigid Javelin
+
+10/25/21
+1. Worked on Evil Spirit. Still needs more.
 
 10/23/21 through 10/25/21
 1. Dissolving Umbra

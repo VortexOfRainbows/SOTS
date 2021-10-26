@@ -2,6 +2,8 @@ using System;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Items.Fragments;
+using SOTS.Projectiles.Permafrost;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -62,23 +64,27 @@ namespace SOTS.NPCs.Constructs
 		{
 			if(npc.ai[3] <= 0)
 			{
-				int damage = npc.damage / 2;
-				if (Main.expertMode) 
+				if (Main.netMode != NetmodeID.MultiplayerClient)
 				{
-					damage = (int)(damage / Main.expertDamage);
+					int damage = npc.damage / 2;
+					if (Main.expertMode)
+					{
+						damage = (int)(damage / Main.expertDamage);
+					}
+					Projectile.NewProjectile(npc.Center, velocity, ModContent.ProjectileType<PermafrostSpike>(), damage, 0, Main.myPlayer, 180 - npc.ai[1]);
 				}
-				if(Main.netMode != 1)
-				Projectile.NewProjectile(npc.Center.X, npc.Center.Y, velocity.X, velocity.Y,  mod.ProjectileType("PermafrostSpike"), damage, 0, Main.myPlayer, 180 - npc.ai[1]);
 			}
 			else
 			{
-				int damage = (int)npc.ai[3] / 2;
-				if (Main.expertMode) 
-				{
-					damage = (int)(damage / Main.expertDamage);
+				if (Main.netMode != NetmodeID.MultiplayerClient)
+                {
+					int damage = (int)npc.ai[3] / 2;
+					if (Main.expertMode)
+					{
+						damage = (int)(damage / Main.expertDamage);
+					}
+					Projectile.NewProjectile(npc.Center, velocity, ModContent.ProjectileType<PermafrostSpike>(), damage, 0, Main.myPlayer, 180 - npc.ai[1]);
 				}
-				if(Main.netMode != 1)
-				Projectile.NewProjectile(npc.Center.X, npc.Center.Y, velocity.X, velocity.Y,  mod.ProjectileType("PermafrostSpike"), damage, 0, Main.myPlayer, 180 - npc.ai[1]);
 			}
 			//Main.PlaySound(SoundID.Item92, (int)(npc.Center.X), (int)(npc.Center.Y));
 		}
@@ -216,7 +222,7 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override void NPCLoot()
 		{
-			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("DissolvingAurora"), 1);	
+			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  ModContent.ItemType<DissolvingAurora>(), 1);	
 		}	
 	}
 }
