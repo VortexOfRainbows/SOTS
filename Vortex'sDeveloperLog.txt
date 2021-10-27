@@ -1,6 +1,6 @@
 The following is my development plans :D
 
-1. Dissolving Nether => Focus Crystal, Dissolving Evil => Cursed Isocahedron
+1. Dissolving Nether => Focus Crystal
 2. Tether Cord in pyramid
 	1. Attaches a second player to you
 3. Chaos Spirit Boss: "Lux"
@@ -40,8 +40,12 @@ Low Priority:
 3. Electrolyte Seperator
 4. Wintry Traveler: Riptide Trident + Frigid Javelin
 
-10/25/21
-1. Worked on Evil Spirit. Still needs more.
+10/25/21 & 10/26/21
+1. Finished (?) Evil Spirit, Works in Multiplayer. May need some balancing changes
+2. Some improvements to how lightning attacks sync in multiplayer. Arclight Orbs no longer syncs lightning randomization. 
+	1. This will make the visuals choppier in multiplayer, but will greatly reduce lag.
+3. Cursed Icosahedron takes dissolving Umbra in the recipe now, instead of Starshard
+	1. This makes it obtainable earlier, which can be consider slight compensation for the nerf
 
 10/23/21 through 10/25/21
 1. Dissolving Umbra
@@ -60,7 +64,7 @@ Low Priority:
 7. HoloEye destablization beam goes through actuated blocks
 
 10/19/21 & 10/20/21
-1. Finished (?) Cursed Armor. 
+1. Finished Cursed Armor. 
 2. Planetarium Biome detection starts higher up. You should be able to build with the blocks a closer to the sky now.
 3. Photon geyser less laggy in low fidel
 4. In response to outcry, Aten's damage scaling on explosions has been taken down a notch... 210% -> 140%

@@ -28,7 +28,7 @@ namespace SOTS.Projectiles.Evil
 		}
         public override void ModifyDamageHitbox(ref Rectangle hitbox)
         {
-			int width = 24;
+			int width = 20;
 			hitbox = new Rectangle((int)projectile.Center.X - width/2, (int)projectile.Center.Y - width/2, width, width);
             base.ModifyDamageHitbox(ref hitbox);
         }
@@ -60,7 +60,7 @@ namespace SOTS.Projectiles.Evil
 				projectile.alpha += 6;
 			}
 			projectile.rotation = projectile.velocity.ToRotation() + 1.57f;
-			projectile.velocity += projectile.velocity.SafeNormalize(Vector2.Zero) * 0.125f;
+			projectile.velocity += projectile.velocity.SafeNormalize(Vector2.Zero) * projectile.ai[0];
 			if(Main.rand.NextBool(8))
 			{
 				Dust dust = Dust.NewDustPerfect(projectile.Center, DustID.RainbowMk2, Main.rand.NextVector2Circular(1, 1));

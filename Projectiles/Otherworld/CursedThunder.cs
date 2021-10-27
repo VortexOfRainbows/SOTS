@@ -159,16 +159,19 @@ namespace SOTS.Projectiles.Otherworld
 			}
 			counter++;
 			counter2++;
-			if(counter >= 0)
+			if (counter >= 0)
 			{
-				counter = -10;
-				if (projectile.velocity.Length() != 0f)
+				counter = -16;
+				if(endHow == 0)
 				{
-					Vector2 toPos = originalPos - projectile.Center;
-					projectile.velocity = new Vector2(originalVelo.Length(), 0).RotatedBy(toPos.ToRotation() + MathHelper.ToRadians(projectile.ai[1]));
-					projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
+					if (projectile.velocity.Length() != 0f)
+					{
+						Vector2 toPos = originalPos - projectile.Center;
+						projectile.velocity = new Vector2(originalVelo.Length(), 0).RotatedBy(toPos.ToRotation() + MathHelper.ToRadians(projectile.ai[1]));
+						projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
+					}
+					projectile.ai[1] = Main.rand.Next(-45, 46);
 				}
-				projectile.ai[1] = Main.rand.Next(-45, 46);
 				cataloguePos();
 			}
 		}

@@ -5,6 +5,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using System.IO;
 using System;
+using SOTS.Dusts;
 
 namespace SOTS.Projectiles.Otherworld
 {
@@ -103,7 +104,7 @@ namespace SOTS.Projectiles.Otherworld
 			}
 			if(endHow == 1 && endHow != 2 && Main.rand.NextBool(18))
 			{
-				int dust1 = Dust.NewDust(projectile.position - new Vector2(5), projectile.width, projectile.height, mod.DustType("CopyDust4"), 0, 0, 100, default, 1.6f);
+				int dust1 = Dust.NewDust(projectile.position - new Vector2(5), projectile.width, projectile.height, ModContent.DustType<CopyDust4>(), 0, 0, 100, default, 1.6f);
 				Dust dust = Main.dust[dust1];
 				dust.scale *= 1f * (10f - iterator)/10f;
 				dust.velocity += projectile.velocity * 0.3f;
@@ -159,7 +160,7 @@ namespace SOTS.Projectiles.Otherworld
 						if (projectile.owner == Main.myPlayer)
 						{
 							Vector2 perturbedSpeed = new Vector2(originalVelo.X, originalVelo.Y).RotatedBy(MathHelper.ToRadians((i - 1) * 45f));
-							Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, perturbedSpeed.X, perturbedSpeed.Y, mod.ProjectileType("ArcColumn"), projectile.damage, 1f, Main.myPlayer, projectile.ai[0] - 1);
+							Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<ArcColumn>(), projectile.damage, 1f, Main.myPlayer, projectile.ai[0] - 1);
 						}
 					}
 				}
@@ -174,7 +175,7 @@ namespace SOTS.Projectiles.Otherworld
 			{
 				cataloguePos();
 				counter = -10;
-				if (Main.myPlayer == projectile.owner)
+				if (endHow == 0)
 				{
 					if (projectile.velocity.Length() != 0f)
 					{
@@ -183,8 +184,6 @@ namespace SOTS.Projectiles.Otherworld
 						projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
 					}
 					projectile.ai[1] = Main.rand.Next(-45, 46);
-					if (projectile.owner == Main.myPlayer)
-						projectile.netUpdate = true;
 				}
 			}
 		}

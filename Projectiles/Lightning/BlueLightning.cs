@@ -141,7 +141,7 @@ namespace SOTS.Projectiles.Lightning
 			{
 				cataloguePos();
 				counter = -12;
-				if (projectile.owner == Main.myPlayer)
+				if (projectile.owner == Main.myPlayer && endHow == 0)
 				{
 					if (projectile.velocity.Length() != 0f)
 					{

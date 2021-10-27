@@ -16,7 +16,7 @@ namespace SOTS.Items.Fragments
 			item.width = 24;
 			item.height = 28;
 			item.value = Item.sellPrice(0, 5, 50, 0);
-            item.rare = 8;
+            item.rare = ItemRarityID.Yellow;
 			item.accessory = true;
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
@@ -31,9 +31,9 @@ namespace SOTS.Items.Fragments
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "BorealisIcosahedron", 1);
-			recipe.AddIngredient(null, "HellfireIcosahedron", 1);
-			recipe.AddIngredient(null, "StarShard", 5); //To be replaced later (dissolving evil)
+			recipe.AddIngredient(ModContent.ItemType<BorealisIcosahedron>(), 1);
+			recipe.AddIngredient(ModContent.ItemType<HellfireIcosahedron>(), 1);
+			recipe.AddIngredient(ModContent.ItemType<DissolvingUmbra>(), 1); 
 			recipe.AddIngredient(ItemID.CursedFlame, 10); 
 			recipe.AddTile(TileID.TinkerersWorkbench);
 			recipe.SetResult(this);
