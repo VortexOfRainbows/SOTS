@@ -138,14 +138,17 @@ namespace SOTS.NPCs.Inferno
 				npc.HitSound = SoundID.NPCHit30;
 				npc.DeathSound = SoundID.NPCDeath6;
 			}
-			for(int i = 0; i < 1 + Main.rand.Next(2); i++)
+			if(Main.netMode != NetmodeID.Server)
 			{
-				Vector2 rotational = new Vector2(0, -4.4f).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-20f, 20f)));
-				rotational.X *= 0.5f;
-				rotational.Y *= 1f;
-				particleList.Add(new FireParticle(npc.Center, rotational, Main.rand.NextFloat(-3f, 3f), Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(1.2f, 1.6f)));
+				for (int i = 0; i < (SOTS.Config.lowFidelityMode ? 1 : 1 + Main.rand.Next(2)); i++)
+				{
+					Vector2 rotational = new Vector2(0, -4.4f).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-20f, 20f)));
+					rotational.X *= 0.5f;
+					rotational.Y *= 1f;
+					particleList.Add(new FireParticle(npc.Center, rotational, Main.rand.NextFloat(-3f, 3f), Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(1.2f, 1.6f)));
+				}
+				cataloguePos();
 			}
-			cataloguePos();
 			if (Main.rand.NextBool(20))
 			{
 				Color color = new Color(155, 69, 0, 0);

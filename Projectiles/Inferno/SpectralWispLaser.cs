@@ -69,10 +69,13 @@ namespace SOTS.Projectiles.Inferno
 				float scaleMult = 0.4f + 0.9f * ((360 - i) / 360f);
 				current += velo * 1.25f;
 				posList.Add(current);
-				for (int j = 0; j < 1 + Main.rand.Next(2); j++)
+				if(Main.netMode != NetmodeID.Server)
 				{
-					Vector2 rotational = new Vector2(0, -Main.rand.NextFloat(0.5f + j * 1.75f + 0.5f * scaleMult)).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360f)));
-					particleList.Add(new FireParticle(current, rotational, Main.rand.NextFloat(-3f, 3f), Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(0.8f, 1.3f) * (1f - j * 0.25f) * scaleMult));
+					for (int j = 0; j < (SOTS.Config.lowFidelityMode ? 1 : 1 + Main.rand.Next(2)); j++)
+					{
+						Vector2 rotational = new Vector2(0, -Main.rand.NextFloat(0.5f + j * 1.75f + 0.5f * scaleMult)).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360f)));
+						particleList.Add(new FireParticle(current, rotational, Main.rand.NextFloat(-3f, 3f), Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(0.8f, 1.3f) * (1f - j * 0.25f) * scaleMult));
+					}
 				}
 				int x = (int)current.X / 16;
 				int y = (int)current.Y / 16;
@@ -94,10 +97,13 @@ namespace SOTS.Projectiles.Inferno
 			}
 			if(projectile.ai[0] == 29)
 			{
-				for (int j = 0; j < 36; j++)
+				if (Main.netMode != NetmodeID.Server)
 				{
-					Vector2 rotational = new Vector2(0, -Main.rand.NextFloat(1.5f, 4)).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360f)));
-					particleList.Add(new FireParticle(projectile.Center, rotational, Main.rand.NextFloat(-3f, 3f), Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(1f, 1.5f)));
+					for (int j = 0; j < (SOTS.Config.lowFidelityMode ? 24 : 36); j++)
+					{
+						Vector2 rotational = new Vector2(0, -Main.rand.NextFloat(1.5f, 4)).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360f)));
+						particleList.Add(new FireParticle(projectile.Center, rotational, Main.rand.NextFloat(-3f, 3f), Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(1f, 1.5f)));
+					}
 				}
 				runOnce = true;
 			}
@@ -119,7 +125,8 @@ namespace SOTS.Projectiles.Inferno
 				projectile.friendly = false;
 			}
 			Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 0.8f / 255f, (255 - projectile.alpha) * 0.8f / 255f, (255 - projectile.alpha) * 0.8f / 255f);
-			cataloguePos();
+			if (Main.netMode != NetmodeID.Server)
+				cataloguePos();
 		}
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) 
 		{

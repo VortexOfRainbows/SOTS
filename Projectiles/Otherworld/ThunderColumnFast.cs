@@ -55,6 +55,8 @@ namespace SOTS.Projectiles.Otherworld
 					return false;
                 }
 				Color color = new Color(150, 150, 150, 0);
+				if (SOTS.Config.lowFidelityMode)
+					color = new Color(200, 200, 200, 0);
 				Vector2 drawPos = trailPos[k] - Main.screenPosition;
 				Vector2 currentPos = trailPos[k];
 				Vector2 betweenPositions = previousPosition - currentPos;
@@ -63,7 +65,7 @@ namespace SOTS.Projectiles.Otherworld
 				for (int i = 0; i < max; i++)
 				{
 					drawPos = previousPosition + -betweenPositions * (i / max) - Main.screenPosition;
-					for (int j = 0; j < 5; j++)
+					for (int j = 0; j < (SOTS.Config.lowFidelityMode ? 2 : 5); j++)
 					{
 						float x = Main.rand.Next(-10, 11) * 0.2f * scale;
 						float y = Main.rand.Next(-10, 11) * 0.2f * scale;

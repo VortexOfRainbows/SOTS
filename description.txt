@@ -21,7 +21,6 @@ Credits:
 (Current Developers)
 Code, Direction, Art: Vortex#6230
 Music, Art: Heart Plus Up!
-Code: Graydee
 Code, Audio Engineering: apotofkoolaid
 Art: Blasfah
 
@@ -33,13 +32,14 @@ Music: BananaLizard
 (Contributors and Other Credits)
 Art: HugeKraken, Arcri
 Testers: DreadSoul, Crimsonkeep 
-Code: ENNWAY, Qwerty3.14, OS
+Code: Graydee, ENNWAY, Qwerty3.14, OS
 Minor Art: Naka, DeJuiceTD, Nomis
 
 Update 0.20.3
 -New worldgen structure in the Dungeon
 -New items, enemies, and secrets
 -Various balance changes and bug fixes
+-Added a config option to lower the intesity of visuals and help with performance
 
 Update 0.20.2
 -A new item, Plasma Accelerator, and reworked Bore Bullets

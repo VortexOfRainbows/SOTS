@@ -18,7 +18,6 @@ High Priority:
 1. Inferno Construct and Evil Construct
 2. Starmap
 3. Digital Daito Obtaining
-4. Advisor Fidelity mode changes
 
 Mid Priority:
 1. Tectonic Tether
@@ -39,6 +38,13 @@ Low Priority:
 2. Mobile Fortress Generator: One for every tavernkeep armor set
 3. Electrolyte Seperator
 4. Wintry Traveler: Riptide Trident + Frigid Javelin
+
+10/31/21
+1. Advisor lightning attacks have lowered draw iterations in low fidel mode
+2. Various wisp visuals spawn less particles in low fidel mode
+
+10/30/21
+1. Earthen Construct despawns immediately upon player death.
 
 10/25/21 & 10/26/21
 1. Finished (?) Evil Spirit, Works in Multiplayer. May need some balancing changes

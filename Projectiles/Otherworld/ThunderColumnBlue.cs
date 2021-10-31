@@ -62,7 +62,7 @@ namespace SOTS.Projectiles.Otherworld
 				for (int i = 0; i < max; i++)
 				{
 					drawPos = previousPosition + -betweenPositions * (i / max) - Main.screenPosition;
-					for (int j = 0; j < 6; j++)
+					for (int j = 0; j < (SOTS.Config.lowFidelityMode ? 4 : 6); j++)
 					{
 						float x = Main.rand.Next(-10, 11) * 0.2f * scale;
 						float y = Main.rand.Next(-10, 11) * 0.2f * scale;

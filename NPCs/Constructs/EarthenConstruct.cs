@@ -554,13 +554,10 @@ namespace SOTS.NPCs.Constructs
         {
             npc.localAI[1] += 3;
             if (Main.player[npc.target].dead)
-			{
-			    despawn++;
-			}
-			if(despawn >= 300)
-			{
-		    	npc.active = false;
-			}
+            {
+                npc.active = false;
+                return;
+            }
 			npc.timeLeft = 100;
 		}
     }

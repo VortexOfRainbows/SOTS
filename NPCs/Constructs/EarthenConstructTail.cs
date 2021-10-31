@@ -70,9 +70,6 @@ namespace SOTS.NPCs.Constructs
         }
         public override bool PreAI()
         {
-            if (npc.ai[3] > 0)
-                npc.realLife = (int)npc.ai[3];
- 
             if (Main.netMode != 1)
             {
                 if (!Main.npc[(int)npc.ai[1]].active)
@@ -84,7 +81,9 @@ namespace SOTS.NPCs.Constructs
                     return false;
                 }
             }
-            if(npc.ai[2] >= 0)
+            if (npc.ai[3] > 0)
+                npc.realLife = (int)npc.ai[3];
+            if (npc.ai[2] >= 0)
             {
                 npc.scale = 5f / (npc.ai[2] + 6);
                 npc.width = (int)(npc.width * npc.scale);

@@ -10,7 +10,7 @@ namespace SOTS.Items.SoldStuff
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Bore Bullet");
-			Tooltip.SetDefault("20% of damage done ignores defense completely\nIn addition, a flat 10 damage will also completely ignore defense");
+			Tooltip.SetDefault("20% of damage done ignores defense completely\nIn addition, a flat 10 damage will also completely ignore defense"); //\nCan also drill through blocks");
 		}
 		public override void SetDefaults()
 		{

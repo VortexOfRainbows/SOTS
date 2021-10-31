@@ -155,14 +155,17 @@ namespace SOTS.Projectiles.Inferno
 		public float attackCounter = 0;
         public override bool PreAI()
 		{
-			for (int i = 0; i < 1 + Main.rand.Next(2); i++)
+			if(Main.netMode != NetmodeID.Server)
 			{
-				Vector2 rotational = new Vector2(0, -3.6f).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-40f, 40f)));
-				rotational.X *= 0.25f;
-				rotational.Y *= 1f;
-				particleList.Add(new FireParticle(projectile.Center - rotational * 1.2f, rotational, Main.rand.NextFloat(-3f, 3f), Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(0.75f, 1.0f)));
+				for (int i = 0; i < (SOTS.Config.lowFidelityMode ? 1 : 1 + Main.rand.Next(2)); i++)
+				{
+					Vector2 rotational = new Vector2(0, -3.6f).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-40f, 40f)));
+					rotational.X *= 0.25f;
+					rotational.Y *= 1f;
+					particleList.Add(new FireParticle(projectile.Center - rotational * 1.2f, rotational, Main.rand.NextFloat(-3f, 3f), Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(0.75f, 1.0f)));
+				}
+				cataloguePos();
 			}
-			cataloguePos();
 			return base.PreAI();
 		}
 		public List<FireParticle> particleList = new List<FireParticle>();
