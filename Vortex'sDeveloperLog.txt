@@ -42,6 +42,7 @@ Low Priority:
 10/31/21
 1. Advisor lightning attacks have lowered draw iterations in low fidel mode
 2. Various wisp visuals spawn less particles in low fidel mode
+3. Some frameworking for Evil Construct
 
 10/30/21
 1. Earthen Construct despawns immediately upon player death.

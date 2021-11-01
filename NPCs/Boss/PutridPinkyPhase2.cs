@@ -91,14 +91,14 @@ namespace SOTS.NPCs.Boss
         { 
 			for(int i = 0; i < Main.npc.Length; i++)
 			{
-				if(Main.npc[i].type == mod.NPCType("PutridHook") && Main.npc[i].active && (int)Main.npc[i].localAI[0] == npc.whoAmI)
+				if(Main.npc[i].type == ModContent.NPCType<PutridHook>() && Main.npc[i].active && (int)Main.npc[i].localAI[0] == npc.whoAmI)
 				{
 					Draw(Main.npc[i].Center);
 				}
 			}
 			for (int i = 0; i < Main.projectile.Length; i++)
 			{
-				if (Main.projectile[i].type == mod.ProjectileType("RecollectHook") && Main.projectile[i].active && (int)Main.projectile[i].ai[0] == npc.whoAmI)
+				if (Main.projectile[i].type == ModContent.ProjectileType<RecollectHook>() && Main.projectile[i].active && (int)Main.projectile[i].ai[0] == npc.whoAmI)
 				{
 					Draw(Main.projectile[i].Center);
 				}

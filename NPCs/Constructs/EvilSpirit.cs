@@ -37,7 +37,7 @@ namespace SOTS.NPCs.Constructs
 		public override void SetDefaults()
 		{
 			npc.aiStyle = 10;
-            npc.lifeMax = 2500; 
+            npc.lifeMax = 3000; 
             npc.damage = 80; 
             npc.defense = 0;   
             npc.knockBackResist = 0f;
@@ -57,11 +57,11 @@ namespace SOTS.NPCs.Constructs
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
 		{
 			npc.damage = 135;
-			npc.lifeMax = 4000;
+			npc.lifeMax = 5000;
 		}
 		List<EvilEye> eyes = new List<EvilEye>();
-		private int InitiateHealth = 8000;
-		private float ExpertHealthMult = 1.5f;
+		private int InitiateHealth = 10000;
+		private float ExpertHealthMult = 1.35f;
 		int phase = 1;
 		int counter = 0;
 		int counter2 = 0;
@@ -316,7 +316,7 @@ namespace SOTS.NPCs.Constructs
 			for (int k = 0; k < npc.oldPos.Length; k++) {
 				Vector2 drawPos = npc.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, npc.gfxOffY);
 				Color color = npc.GetAlpha(Color.Black) * ((float)(npc.oldPos.Length - k) / (float)npc.oldPos.Length);
-				spriteBatch.Draw(texture, drawPos, null, color * 0.5f, npc.rotation, drawOrigin, npc.scale, SpriteEffects.None, 0f);
+				spriteBatch.Draw(texture, drawPos, null, color * 0.5f, npc.rotation, drawOrigin, npc.scale * 1.1f, SpriteEffects.None, 0f);
 			}
 			return false;
 		}	
@@ -348,9 +348,7 @@ namespace SOTS.NPCs.Constructs
 			Vector2 drawOrigin = new Vector2(Main.npcTexture[npc.type].Width * 0.5f, npc.height * 0.5f);
 			for (int k = 0; k < 7; k++)
 			{
-				Main.spriteBatch.Draw(texture,
-				npc.Center + Main.rand.NextVector2Circular(4f, 4f) - Main.screenPosition,
-				null, color, 0f, drawOrigin, 1f, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, npc.Center + Main.rand.NextVector2Circular(4f, 4f) - Main.screenPosition, null, color, 0f, drawOrigin, npc.scale * 1.1f, SpriteEffects.None, 0f);
 			}
 			float mult = (100 + npc.ai[2]) / 100f;
 			if (Main.netMode != NetmodeID.Server) //pretty sure drawcode doesn't run in multiplayer anyways but may as well
