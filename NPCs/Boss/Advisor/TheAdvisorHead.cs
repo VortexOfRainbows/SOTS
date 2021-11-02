@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Projectiles.Otherworld;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -714,7 +715,7 @@ namespace SOTS.NPCs.Boss.Advisor
 											{
 												damage2 = (int)(damage2 / Main.expertDamage);
 											}
-											Projectile.NewProjectile(hookPos[i].X + npc.Center.X - downStrike.X, hookPos[i].Y + npc.Center.Y - downStrike.Y, downStrike.X * 1f, downStrike.Y * 1f, mod.ProjectileType("PhaseSpear"), damage2, 0, Main.myPlayer);
+											Projectile.NewProjectile(hookPos[i].X + npc.Center.X - downStrike.X, hookPos[i].Y + npc.Center.Y - downStrike.Y, downStrike.X * 1f, downStrike.Y * 1f, ModContent.ProjectileType<PhaseSpear>(), damage2, 0, Main.myPlayer);
 										}
 									hookPos[i] += downStrike;
 

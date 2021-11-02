@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Items.Fragments;
@@ -44,14 +45,15 @@ namespace SOTS.NPCs.Constructs
 				if (proj.type == ModContent.ProjectileType<EvilArm>() && proj.active && (int)proj.ai[0] == npc.whoAmI)
 				{
 					Vector2 toNPC = npc.Center - proj.Center;
-					Draw(proj.Center + toNPC.SafeNormalize * 16);
+					Draw(proj.Center - toNPC.SafeNormalize(Vector2.Zero) * 16);
 				}
 			}
 			float dir = (float)Math.Atan2(aimTo.Y - npc.Center.Y, aimTo.X - npc.Center.X);
-			npc.rotation = dir + (npc.spriteDirection - 1) * 0.5f * MathHelper.ToRadians(180);
+			npc.rotation = dir;
+			float rotation = dir + (npc.spriteDirection - 1) * 0.5f * MathHelper.ToRadians(180);
 			Texture2D texture = Main.npcTexture[npc.type];
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition + new Vector2(0, npc.gfxOffY), new Rectangle(0, npc.frame.Y, npc.width, npc.height), lightColor * ((255 - npc.alpha) / 255f), npc.rotation, drawOrigin, npc.scale * 0.95f, npc.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition + new Vector2(0, npc.gfxOffY), new Rectangle(0, npc.frame.Y, npc.width, npc.height), lightColor * ((255 - npc.alpha) / 255f), rotation, drawOrigin, npc.scale * 0.95f, npc.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 			return false;
 		}
 		public void Draw(Vector2 to, bool gore = false)
@@ -116,7 +118,9 @@ namespace SOTS.NPCs.Constructs
 			Texture2D texture = mod.GetTexture("NPCs/Constructs/EvilConstructGlow");
 			Color color = Color.White;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition + new Vector2(0, npc.gfxOffY), new Rectangle(0, npc.frame.Y, npc.width, npc.height), color * ((255 - npc.alpha) / 255f), npc.rotation, drawOrigin, npc.scale * 0.95f, npc.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+			float dir = (float)Math.Atan2(aimTo.Y - npc.Center.Y, aimTo.X - npc.Center.X);
+			float rotation = dir + (npc.spriteDirection - 1) * 0.5f * MathHelper.ToRadians(180);
+			Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition + new Vector2(0, npc.gfxOffY), new Rectangle(0, npc.frame.Y, npc.width, npc.height), color * ((255 - npc.alpha) / 255f), rotation, drawOrigin, npc.scale * 0.95f, npc.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 		}
 		public override void HitEffect(int hitDirection, double damage)
 		{
@@ -175,6 +179,7 @@ namespace SOTS.NPCs.Constructs
 			}
 			Vector2 targetPosition = npc.Center;
 			int count = 1;
+			int numStuck = 0;
 			for (int i = 0; i < Main.projectile.Length; i++)
 			{
 				Projectile proj = Main.projectile[i];
@@ -183,20 +188,64 @@ namespace SOTS.NPCs.Constructs
 					EvilArm arm = proj.modProjectile as EvilArm;
 					if (arm.stuck)
 					{
+						numStuck++;
 						targetPosition += proj.Center;
+						if(!arm.launch)
+						{
+							if (arm.stabbyCounter > 120)
+								arm.stabbyCounter = -120;
+							else if (arm.stabbyCounter < 0)
+								arm.stabbyCounter++;
+							else arm.stabbyCounter = 0;
+						}
+						proj.velocity *= 0;
+					}
+					else if(proj.ai[1] != -1)
+					{
+						Vector2 circular = new Vector2(14, 0).RotatedBy(MathHelper.ToRadians(22.5f + i * 360f / amt) + npc.rotation);
+						arm.MoveTowards(npc.Center + circular * 5, 4f);
+						Vector2 target = proj.Center * 2 - npc.Center;
+						targetPosition += target;
+						if (!arm.launch)
+						{
+							if (arm.stabbyCounter > 120)
+								arm.stabbyCounter = -120;
+							else if (arm.stabbyCounter < 0)
+								arm.stabbyCounter++;
+							else arm.stabbyCounter = 0;
+						}
 					}
 					else
 					{
-						Vector2 circular = new Vector2(14, 0).RotatedBy(MathHelper.ToRadians(22.5f + i * 360f / amt));
-						arm.MoveTowards(npc.Center + circular * 5, 7f);
-						Vector2 target = proj.Center * 2 - npc.Center;
-						targetPosition += target;
+						int counter = arm.stabbyCounter;
+						if (counter < 30)
+						{
+							Vector2 safeToPlayer = toPlayer.SafeNormalize(Vector2.Zero);
+							Vector2 target = npc.Center + safeToPlayer * 96;
+							arm.MoveTowards(target, 4f);
+						}
+						else if(counter < 90)
+						{
+							if (counter == 30 || counter == 60)
+								Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 15, 1f, -0.05f);
+							float degrees = (counter - 30) * 6f;
+							float sin = (float)Math.Sin(degrees * Math.PI / 180f);
+							Vector2 safeToPlayer = toPlayer.SafeNormalize(Vector2.Zero);
+							Vector2 target = npc.Center + safeToPlayer * (96 + sin * 48);
+							arm.MoveTowards(target, 4f);
+						}
+						else
+						{
+							Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 96, 1.3f, 0.1f);
+							arm.Launch(player.Center, 24f);
+						}
+						targetPosition += proj.Center;
 					}
 					arm.Update(npc.Center);
 					count++;
 				}
 			}
-			if(toPlayer.Length() < 1000)
+			if(toPlayer.Length() < 800 && toPlayer.Length() > 240 && numStuck >= 2)
             {
 				targetPosition += player.Center;
 				count++;
@@ -205,11 +254,17 @@ namespace SOTS.NPCs.Constructs
 			npc.Center = Vector2.Lerp(npc.Center, targetPosition, 0.08f);
 			npc.TargetClosest(true);
 			aimTo = player.Center;
+			npc.ai[3]++;
+			if(npc.ai[3] >= 70)
+            {
+				if(Main.netMode != NetmodeID.MultiplayerClient)
+					LaunchFarArm();
+				npc.ai[3] = 0;
+            }
 			return true;
 		}
 		public override void AI()
 		{
-			Player player = Main.player[npc.target];
 			Lighting.AddLight(npc.Center, (255 - npc.alpha) * 0.4f / 155f, (255 - npc.alpha) * 0.1f / 155f, (255 - npc.alpha) * 0.1f / 155f);
 			if(npc.ai[0] < 0)
 			{
@@ -217,9 +272,46 @@ namespace SOTS.NPCs.Constructs
 				return;
 			}
 		}
-		public override void PostAI()
+		public void LaunchFarArm()
 		{
-
+			Player player = Main.player[npc.target];
+			bool notUseStuck = false;
+			EvilArm trueArm = null;
+			float dist = 0;
+			for (int i = 0; i < Main.projectile.Length; i++)
+			{
+				Projectile proj = Main.projectile[i];
+				if (proj.type == ModContent.ProjectileType<EvilArm>() && proj.active && (int)proj.ai[0] == npc.whoAmI)
+				{
+					EvilArm arm = proj.modProjectile as EvilArm;
+					if(!arm.launch && proj.ai[1] != -1 && arm.stabbyCounter == 0)
+					{
+						float num = Vector2.Distance(proj.Center, player.Center);
+						if (!arm.stuck)
+						{
+							if (!notUseStuck)
+							{
+								dist = 2000;
+								notUseStuck = true;
+							}
+							if (num < dist)
+							{
+								dist = num;
+								trueArm = arm;
+							}
+						}
+						else if (num > dist && !notUseStuck)
+						{
+							dist = num;
+							trueArm = arm;
+						}
+					}
+				}
+			}
+			if(trueArm != null)
+            {
+				trueArm.Launch();
+            }
 		}
 		public override void NPCLoot()
 		{
@@ -233,7 +325,17 @@ namespace SOTS.NPCs.Constructs
 	}
 	public class EvilArm : ModProjectile
     {
-		public override string Texture => "SOTS/NPCs/Constructs/EvilDrillArm";
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+			writer.Write(stuck);
+			writer.Write(stabbyCounter);
+		}
+        public override void ReceiveExtraAI(BinaryReader reader)
+		{
+			stuck = reader.ReadBoolean();
+			stabbyCounter = reader.ReadInt32();
+        }
+        public override string Texture => "SOTS/NPCs/Constructs/EvilDrillArm";
         public override void SetDefaults()
         {
 			projectile.aiStyle = -1;
@@ -243,26 +345,47 @@ namespace SOTS.NPCs.Constructs
 			projectile.friendly = false;
 			projectile.tileCollide = false;
 			projectile.ignoreWater = true;
+			projectile.netImportant = true;
 			projectile.hide = true;
 			projectile.penetrate = -1;
 			projectile.timeLeft = 120;
+        }
+        public override bool ShouldUpdatePosition()
+        {
+            return false; 
         }
         public override void SetStaticDefaults()
         {
 			DisplayName.SetDefault("Evil Construct Arm");
 		}
 		public bool stuck = false;
+		public int stabbyCounter = 0;
+		public bool launch = false;
+		public void Launch(Vector2 goTo, float speed)
+		{
+			projectile.ai[1] = 0;
+			launch = true;
+			if (Main.netMode == NetmodeID.Server)
+				projectile.netUpdate = true;
+			Vector2 dirVector = goTo - projectile.Center;
+			projectile.velocity = dirVector.SafeNormalize(Vector2.Zero) * speed;
+		}
 		public void MoveTowards(Vector2 goTo, float speed)
 		{
-			projectile.velocity *= 0.9f;
+			if (launch)
+				return;
+			projectile.velocity *= 0.89f;
 			Vector2 dirVector = goTo - projectile.Center;
 			float length = dirVector.Length();
+			speed += length * 0.00025f;
 			if (length < speed)
 			{
 				projectile.velocity *= 0.5f;
 				speed = length;
 			}
-			projectile.velocity += dirVector.SafeNormalize(Vector2.Zero) * speed;
+			if(length < 24 && projectile.ai[1] == -1)
+				stabbyCounter++;
+			projectile.velocity += dirVector.SafeNormalize(Vector2.Zero) * speed * 0.5f;
         }
 		public void Update(Vector2 center)
         {
@@ -270,23 +393,50 @@ namespace SOTS.NPCs.Constructs
 			if (runOnce)
 				return;
 			Vector2 fromNPC = center - projectile.Center;
-			projectile.velocity *= 0.97f;
+			if(fromNPC.Length() < 64)
+            {
+				float npcLength = 64 - fromNPC.Length();
+				projectile.Center -= fromNPC.SafeNormalize(Vector2.Zero) * npcLength;
+            }
+			if(!launch)
+				projectile.velocity *= 0.97f;
 			projectile.Center += projectile.velocity;
         }
 		bool runOnce = true;
         public override bool PreAI()
         {
-			if(runOnce)
+			if(runOnce || launch)
             {
 				int i = (int)projectile.Center.X / 16;
 				int j = (int)projectile.Center.Y / 16;
 				if (SOTSWorldgenHelper.TrueTileSolid(i, j))
                 {
+					launch = false;
 					stuck = true;
-                }
+					if(Main.netMode == NetmodeID.Server)
+						projectile.netUpdate = true;
+				}
 				runOnce = false;
             }
+			if(launch)
+            {
+				stabbyCounter++;
+				if(stabbyCounter > 120)
+                {
+					projectile.velocity *= 0.985f;
+					if(stabbyCounter > 180)
+						launch = false;
+                }
+				else
+					projectile.velocity *= 0.995f;
+			}
             return base.PreAI();
+        }
+		public void Launch()
+        {
+			projectile.ai[1] = -1;
+			stuck = false;
+			projectile.netUpdate = true;
         }
         public override void AI()
         {
