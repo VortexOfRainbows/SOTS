@@ -39,7 +39,11 @@ Low Priority:
 3. Electrolyte Seperator
 4. Wintry Traveler: Riptide Trident + Frigid Javelin
 
-10/31/21
+11/3/21
+1. Spike club no longer shoots two projectiles stacked on top of each other 
+	1. It was shooting two at once without accessories
+
+10/31/21 & 11/1/21
 1. Advisor lightning attacks have lowered draw iterations in low fidel mode
 2. Various wisp visuals spawn less particles in low fidel mode
 3. Some frameworking for Evil Construct

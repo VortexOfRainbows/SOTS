@@ -32,7 +32,6 @@ namespace SOTS.Items.ChestItems
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			Projectile.NewProjectile(position.X, position.Y, speedX, speedY, type, damage, knockBack, player.whoAmI);
 			for(int i = 0; i < player.spikedBoots; i++)
 			{
 				float speedMult = 1.25f + i * 0.25f;

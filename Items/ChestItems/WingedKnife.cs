@@ -12,7 +12,6 @@ namespace SOTS.Items.ChestItems
 		}
 		public override void SetDefaults()
 		{
-			
 			item.CloneDefaults(ItemID.ThrowingKnife);
 			item.damage = 12;
 			item.thrown = true;
@@ -27,7 +26,6 @@ namespace SOTS.Items.ChestItems
             item.shootSpeed = 12f;
 			item.consumable = false;
 			item.knockBack = 1.5f;
-			
 		}
 	}
 }

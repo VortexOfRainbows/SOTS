@@ -46,6 +46,7 @@ namespace SOTS
 		public static int[] typhonBlacklist;
 		public static int[] typhonWhitelist;
 		public static int[] symbioteBlacklist;
+		public static int[] harmonyWhitelist;
 		public static void LoadArrays()
 		{
 			locketBlacklist = new int[] { ItemID.BookStaff, ModContent.ItemType<LashesOfLightning>(), ModContent.ItemType<SkywardBlades>(), ItemID.GolemFist, ItemID.Flairon,
@@ -54,6 +55,7 @@ namespace SOTS
 			typhonBlacklist = new int[] { ModContent.ProjectileType<ArcColumn>(), ModContent.ProjectileType<PhaseColumn>(), ModContent.ProjectileType<MacaroniBeam>(), ModContent.ProjectileType<GenesisArc>(), ModContent.ProjectileType<GenesisCore>() };
 			symbioteBlacklist = new int[] { ModContent.ProjectileType<BloomingHook>(), ModContent.ProjectileType<BloomingHookMinion>() };
 			typhonWhitelist = new int[] { ModContent.ProjectileType<HardlightArrow>() };
+			harmonyWhitelist = new int[] { BuffID.Honey, ModContent.BuffType<Frenzy>(), BuffID.Panic, BuffID.ParryDamageBuff, BuffID.ShadowDodge };
 		}
 		/*
 		public override TagCompound Save() {
@@ -1213,6 +1215,20 @@ namespace SOTS
 				player.lifeRegen -= 60;
             }
 			base.UpdateBadLifeRegen();
+        }
+        public override void PreUpdateBuffs()
+        {
+            if(player.HasBuff(ModContent.BuffType<Harmony>()))
+            {
+				for(int i = 0; i < player.buffTime.Length; i++)
+				{
+					int type = player.buffType[i];
+					if (!Main.debuff[type] && (player.buffTime[i] > 1800 || harmonyWhitelist.Contains(type)) && type != ModContent.BuffType<Harmony>())
+					{
+						player.buffTime[i]++;
+					}
+				}
+            }
         }
     }
 }
