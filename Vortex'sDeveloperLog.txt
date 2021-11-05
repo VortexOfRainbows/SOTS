@@ -26,7 +26,6 @@ Mid Priority:
 	1. Dissolving Brilliance, Dissolving Nether 
 	2. Other Potions: (Evil) Nightmare Potion: Critical strikes cause nightmare arms to chain between enemies
 	 (Inferno) Bluefire Potion: Killed enemies spawn stationary wisps that last for 10 seconds, fires at enemies like virtues but different charge time, color, etc.
-	 (Chaos) Harmony Potion: Prevents other buff potion effects from decaying while active
 4. Lux Drops:
 	1. Rose Bow
 	2. Voidmage Incubator
@@ -39,14 +38,16 @@ Low Priority:
 3. Electrolyte Seperator
 4. Wintry Traveler: Riptide Trident + Frigid Javelin
 
-11/3/21
+11/3/21 & 11/4/21
 1. Spike club no longer shoots two projectiles stacked on top of each other 
 	1. It was shooting two at once without accessories
+2. Added Harmony Potion
+3. Progress on Evil Construct
 
 10/31/21 & 11/1/21
 1. Advisor lightning attacks have lowered draw iterations in low fidel mode
 2. Various wisp visuals spawn less particles in low fidel mode
-3. Some frameworking for Evil Construct
+3. Some frameworking for Evil Construct, still no Multiplayer tests though...
 
 10/30/21
 1. Earthen Construct despawns immediately upon player death.

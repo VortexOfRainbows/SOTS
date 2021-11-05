@@ -4,6 +4,8 @@ using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Items.Fragments;
+using SOTS.Projectiles.Evil;
+using SOTS.Void;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -19,9 +21,9 @@ namespace SOTS.NPCs.Constructs
 		public override void SetDefaults()
 		{
 			npc.aiStyle = 0;
-			npc.lifeMax = 3000;  
-			npc.damage = 40; 
-			npc.defense = 14;  
+			npc.lifeMax = 3500;  
+			npc.damage = 60; 
+			npc.defense = 20;  
 			npc.knockBackResist = 0.1f;
 			npc.width = 86;
 			npc.height = 82;
@@ -30,12 +32,17 @@ namespace SOTS.NPCs.Constructs
 			npc.npcSlots = 4f;
 			npc.lavaImmune = true;
 			npc.noGravity = true;
-			npc.noTileCollide = false;
+			npc.noTileCollide = true;
 			npc.netAlways = true;
 			npc.alpha = 0;
 			npc.HitSound = SoundID.NPCHit4;
 			npc.DeathSound = SoundID.NPCDeath14;
 			npc.rarity = 5;
+		}
+		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+		{
+			npc.damage = 100;
+			npc.lifeMax = 6000;
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
@@ -113,14 +120,28 @@ namespace SOTS.NPCs.Constructs
 				}
 			}
 		}
+		float glowTimer = 0;
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
 			Texture2D texture = mod.GetTexture("NPCs/Constructs/EvilConstructGlow");
+			Texture2D texture2 = mod.GetTexture("NPCs/Constructs/EvilConstructGlow2");
 			Color color = Color.White;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			float dir = (float)Math.Atan2(aimTo.Y - npc.Center.Y, aimTo.X - npc.Center.X);
 			float rotation = dir + (npc.spriteDirection - 1) * 0.5f * MathHelper.ToRadians(180);
 			Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition + new Vector2(0, npc.gfxOffY), new Rectangle(0, npc.frame.Y, npc.width, npc.height), color * ((255 - npc.alpha) / 255f), rotation, drawOrigin, npc.scale * 0.95f, npc.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+			if(glowTimer > 0)
+            {
+				color = new Color(100, 100, 100, 0);
+				float percent = glowTimer / 60f;
+				if (percent > 1)
+					percent = 1;
+				int amt = (int)(1 + 6 * percent);
+				for(int i = 0; i < amt; i++)
+				{
+					Main.spriteBatch.Draw(texture2, npc.Center - Main.screenPosition + new Vector2(0, npc.gfxOffY) + Main.rand.NextVector2Circular(2, 2), new Rectangle(0, npc.frame.Y, npc.width, npc.height), color * ((255 - npc.alpha) / 255f) * 0.6f, rotation, drawOrigin, npc.scale * 0.95f, npc.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+				}
+            }
 		}
 		public override void HitEffect(int hitDirection, double damage)
 		{
@@ -141,6 +162,7 @@ namespace SOTS.NPCs.Constructs
 		}
 		Vector2 aimTo = new Vector2(-1, -1);
 		bool runOnce = true;
+		int currentArmID = -1;
 		public override bool PreAI()
 		{
 			Player player = Main.player[npc.target];
@@ -150,8 +172,8 @@ namespace SOTS.NPCs.Constructs
 				dmg2 /= 2;
 			int amt = 8;
 			if (runOnce)
-            {
-				if(Main.netMode != NetmodeID.MultiplayerClient)
+			{
+				if (Main.netMode != NetmodeID.MultiplayerClient)
 				{
 					for (int i = 0; i < amt; i++)
 					{
@@ -178,19 +200,56 @@ namespace SOTS.NPCs.Constructs
 				return false;
 			}
 			Vector2 targetPosition = npc.Center;
+			bool alreadyHasArmOut = false;
 			int count = 1;
 			int numStuck = 0;
+			if (npc.ai[1] > 0 && currentArmID >= 0)
+			{
+				npc.ai[1]++;
+				float percent = npc.ai[1] / 120f;
+				if(npc.ai[1] > 120)
+                {
+					npc.ai[1] = 0;
+					glowTimer = 60f;
+                }
+                else
+				{
+					Projectile proj = Main.projectile[currentArmID];
+					Dust dust = Dust.NewDustPerfect(Vector2.Lerp(proj.Center, npc.Center, percent), DustID.RainbowMk2, Main.rand.NextVector2Circular(1, 1));
+					dust.velocity *= 0.5f;
+					dust.color = VoidPlayer.EvilColor;
+					dust.color.A = 160;
+					dust.noGravity = true;
+					dust.fadeIn = 0.1f;
+					dust.scale *= 1.35f;
+				}
+			}
 			for (int i = 0; i < Main.projectile.Length; i++)
 			{
 				Projectile proj = Main.projectile[i];
 				if (proj.type == ModContent.ProjectileType<EvilArm>() && proj.active && (int)proj.ai[0] == npc.whoAmI)
 				{
 					EvilArm arm = proj.modProjectile as EvilArm;
+					float speed = 4f;
+					if(arm.startAnim)
+                    {
+						npc.ai[1]++;
+						currentArmID = i; //not syncing this because unsure if whoAmI syncs correctly here.
+						arm.startAnim = false;
+						if(Main.netMode == NetmodeID.Server)
+							npc.netUpdate = true;
+					}
+					if (arm.stabbyCounter != 0)
+					{
+						speed = 7f;
+						if (arm.stabbyCounter >= 0)
+							alreadyHasArmOut = true;
+					}
 					if (arm.stuck)
 					{
 						numStuck++;
 						targetPosition += proj.Center;
-						if(!arm.launch)
+						if (!arm.launch)
 						{
 							if (arm.stabbyCounter > 120)
 								arm.stabbyCounter = -120;
@@ -200,10 +259,10 @@ namespace SOTS.NPCs.Constructs
 						}
 						proj.velocity *= 0;
 					}
-					else if(proj.ai[1] != -1)
+					else if (proj.ai[1] != -1)
 					{
 						Vector2 circular = new Vector2(14, 0).RotatedBy(MathHelper.ToRadians(22.5f + i * 360f / amt) + npc.rotation);
-						arm.MoveTowards(npc.Center + circular * 5, 4f);
+						arm.MoveTowards(npc.Center + circular * 5, speed);
 						Vector2 target = proj.Center * 2 - npc.Center;
 						targetPosition += target;
 						if (!arm.launch)
@@ -217,6 +276,7 @@ namespace SOTS.NPCs.Constructs
 					}
 					else
 					{
+						alreadyHasArmOut = true;
 						int counter = arm.stabbyCounter;
 						if (counter < 30)
 						{
@@ -224,7 +284,7 @@ namespace SOTS.NPCs.Constructs
 							Vector2 target = npc.Center + safeToPlayer * 96;
 							arm.MoveTowards(target, 4f);
 						}
-						else if(counter < 90)
+						else if (counter < 90)
 						{
 							if (counter == 30 || counter == 60)
 								Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 15, 1f, -0.05f);
@@ -237,7 +297,7 @@ namespace SOTS.NPCs.Constructs
 						else
 						{
 							Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 96, 1.3f, 0.1f);
-							arm.Launch(player.Center, 24f);
+							arm.Launch(player.Center, 25.5f);
 						}
 						targetPosition += proj.Center;
 					}
@@ -245,32 +305,90 @@ namespace SOTS.NPCs.Constructs
 					count++;
 				}
 			}
-			if(toPlayer.Length() < 800 && toPlayer.Length() > 240 && numStuck >= 2)
-            {
+			float distanceToPlayer = toPlayer.Length();
+			if (distanceToPlayer < 800 && distanceToPlayer > 240 && numStuck >= 2)
+			{
 				targetPosition += player.Center;
 				count++;
-            }
-			targetPosition /= (float)(count);
-			npc.Center = Vector2.Lerp(npc.Center, targetPosition, 0.08f);
+			}
+			targetPosition /= (float)count;
+			Vector2 toPos = Vector2.Lerp(npc.Center, targetPosition, 0.08f);
+			Vector2 goToPos = toPos - npc.Center;
+			float reduction = 1f;
+			if (npc.ai[3] > 50)
+			{
+				reduction -= (npc.ai[3] - 50) * 0.015f;
+			}
+			npc.velocity = npc.velocity * 0.1f + goToPos * reduction;
 			npc.TargetClosest(true);
 			aimTo = player.Center;
-			npc.ai[3]++;
-			if(npc.ai[3] >= 70)
-            {
-				if(Main.netMode != NetmodeID.MultiplayerClient)
-					LaunchFarArm();
-				npc.ai[3] = 0;
-            }
+			int typeAttack = (int)npc.ai[2] % 2;
+			bool canSee = Collision.CanHitLine(npc.Center - new Vector2(5, 5), 10, 10, player.position, player.width, player.height);
+			if (npc.ai[3] > 0 || (!alreadyHasArmOut && canSee))
+			{
+				npc.ai[3]++;
+			}
+			if (typeAttack == 1 || (!canSee && distanceToPlayer < 480))
+			{
+				if (glowTimer < 60f && npc.ai[3] > 0)
+					glowTimer++;
+				if (npc.ai[3] >= 38)
+				{
+					if ((int)npc.ai[3] % 8 == 0)
+					{
+						int num = ((int)npc.ai[3] - 38) / 8;
+						int trueNum = 0;
+						if (num >= 4)
+						{
+							Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 92, 1.3f, 0.1f);
+							trueNum = 3;
+						}
+						else
+						{
+							Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 98, 1.1f + 0.1f * num, 0.2f - 0.05f * num);
+						}
+						if (Main.netMode != NetmodeID.MultiplayerClient)
+						{
+							for (int i = -trueNum; i <= trueNum; i++)
+							{
+								float spread = i * 15f;
+								Vector2 fireSpread = new Vector2(4, 0).RotatedBy(MathHelper.ToRadians(spread) + toPlayer.ToRotation());
+								Projectile.NewProjectile(npc.Center + fireSpread * 20, fireSpread, ModContent.ProjectileType<EvilWave>(), dmg2, 0, Main.myPlayer, 0.15f + 0.04f * num);
+							}
+						}
+						npc.velocity = npc.velocity * 0.5f + toPlayer.SafeNormalize(Vector2.Zero) * -(3 + num);
+					}
+					else if ((int)npc.ai[3] >= 78f)
+					{
+						npc.ai[3] = 0;
+						npc.ai[2]++;
+					}
+				}
+			}
+			else if (typeAttack == 0)
+			{
+				if (glowTimer > 0)
+					glowTimer -= 3;
+				else
+					glowTimer = 0;
+				if (npc.ai[3] >= 36)
+				{
+					if (Main.netMode != NetmodeID.MultiplayerClient)
+						LaunchFarArm();
+					npc.ai[3] = 0;
+					npc.ai[2]++;
+				}
+			} 
 			return true;
+		}
+		public override void PostAI()
+		{
+			Player player = Main.player[npc.target]; 
+			npc.velocity = Collision.TileCollision(npc.position, npc.velocity, npc.width, npc.height, true, true);
 		}
 		public override void AI()
 		{
 			Lighting.AddLight(npc.Center, (255 - npc.alpha) * 0.4f / 155f, (255 - npc.alpha) * 0.1f / 155f, (255 - npc.alpha) * 0.1f / 155f);
-			if(npc.ai[0] < 0)
-			{
-				npc.velocity *= 0.98f;
-				return;
-			}
 		}
 		public void LaunchFarArm()
 		{
@@ -329,12 +447,14 @@ namespace SOTS.NPCs.Constructs
         {
 			writer.Write(stuck);
 			writer.Write(stabbyCounter);
+			writer.Write(startAnim);
 		}
         public override void ReceiveExtraAI(BinaryReader reader)
 		{
 			stuck = reader.ReadBoolean();
 			stabbyCounter = reader.ReadInt32();
-        }
+			startAnim = reader.ReadBoolean();
+		}
         public override string Texture => "SOTS/NPCs/Constructs/EvilDrillArm";
         public override void SetDefaults()
         {
@@ -361,6 +481,7 @@ namespace SOTS.NPCs.Constructs
 		public bool stuck = false;
 		public int stabbyCounter = 0;
 		public bool launch = false;
+		public bool startAnim = false;
 		public void Launch(Vector2 goTo, float speed)
 		{
 			projectile.ai[1] = 0;
@@ -377,7 +498,7 @@ namespace SOTS.NPCs.Constructs
 			projectile.velocity *= 0.89f;
 			Vector2 dirVector = goTo - projectile.Center;
 			float length = dirVector.Length();
-			speed += length * 0.00025f;
+			speed += length * 0.001f;
 			if (length < speed)
 			{
 				projectile.velocity *= 0.5f;
@@ -413,18 +534,20 @@ namespace SOTS.NPCs.Constructs
                 {
 					launch = false;
 					stuck = true;
-					if(Main.netMode == NetmodeID.Server)
+					startAnim = true;
+					if (NetmodeID.Server == Main.netMode)
 						projectile.netUpdate = true;
+					Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 22, 1f, -0.1f);
 				}
 				runOnce = false;
             }
 			if(launch)
             {
 				stabbyCounter++;
-				if(stabbyCounter > 120)
+				if(stabbyCounter > 110)
                 {
-					projectile.velocity *= 0.985f;
-					if(stabbyCounter > 180)
+					projectile.velocity *= 0.982f;
+					if(stabbyCounter > 160)
 						launch = false;
                 }
 				else

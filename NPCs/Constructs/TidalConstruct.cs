@@ -319,7 +319,7 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override void NPCLoot()
 		{
-			int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, mod.NPCType("TidalSpirit"));	
+			int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<TidalSpirit>());	
 			Main.npc[n].velocity.Y = -10f;
 			Main.npc[n].localAI[1] = -1;
 			if (Main.netMode != 1)
