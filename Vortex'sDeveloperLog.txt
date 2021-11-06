@@ -31,12 +31,17 @@ Mid Priority:
 	2. Voidmage Incubator
 	3. Phase Ore!?
 	4. True Phaseblade -> Starward Sword
+5. Starcaller Staff
+	1. Summons small celestial  serpent bud to assist in combat (would be nice to have a smaller celestial serpent sprite)
 
 Low Priority:
 1. Archaelogist NPC
 2. Mobile Fortress Generator: One for every tavernkeep armor set
 3. Electrolyte Seperator
 4. Wintry Traveler: Riptide Trident + Frigid Javelin
+
+11/5/21
+1. Evil Construct finished. Works in Multiplayer. NEEDS GORE!!!
 
 11/3/21 & 11/4/21
 1. Spike club no longer shoots two projectiles stacked on top of each other 

@@ -457,6 +457,10 @@ namespace SOTS.NPCs
 					}
 				}
 			}
+			if((player.ZoneCrimson || player.ZoneCorrupt) && (player.ZoneRockLayerHeight || player.ZoneDirtLayerHeight) && Main.hardMode)
+			{
+				pool.Add(ModContent.NPCType<EvilConstruct>(), 0.005f);
+			}
 			if (player.ZoneDungeon)
 			{
 				if (player.statLifeMax2 >= 120)
