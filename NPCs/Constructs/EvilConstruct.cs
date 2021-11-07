@@ -150,9 +150,9 @@ namespace SOTS.NPCs.Constructs
 						}
 						first = false;
 					}
-					else
+					else if(!Main.rand.NextBool(3))
 					{
-						Gore.NewGore(position, Vector2.Zero, mod.GetGoreSlot("Gores/EvilConstruct/EvilDrillArmGore" + Main.rand.Next(1, 3)), 1f);
+						Gore.NewGore(position, Vector2.Zero, mod.GetGoreSlot("Gores/EvilConstruct/EvilDrillArmGore" + (1 + Main.rand.Next(2))), 1f);
 					}
 					flag2 = true;
 				}
@@ -183,19 +183,25 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override void HitEffect(int hitDirection, double damage)
 		{
-			if (npc.life <= 0)
+			if (npc.life <= 0 && Main.netMode != NetmodeID.Server)
 			{
 				for (int k = 0; k < 20; k++)
 				{
 					Dust.NewDust(npc.position, npc.width, npc.height, DustID.Lead, 2.5f * (float)hitDirection, -2.5f, 0, default(Color), 0.7f);
 				}
-				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/OtherworldlyConstructs/OtherworldlyConstructGore1"), 1f);
-				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/OtherworldlyConstructs/OtherworldlyConstructGore3"), 1f);
-				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/OtherworldlyConstructs/OtherworldlyConstructGore4"), 1f);
-				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/OtherworldlyConstructs/OtherworldlyConstructGore5"), 1f);
-				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/OtherworldlyConstructs/OtherworldlyConstructGore6"), 1f);
+				for(int i = 1; i <= 5; i++)
+					Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/EvilConstruct/EvilConstructGore" + i), 1f);
 				for (int i = 0; i < 9; i++)
 					Gore.NewGore(npc.position, npc.velocity, Main.rand.Next(61, 64), 1f);
+				for (int i = 0; i < Main.projectile.Length; i++)
+				{
+					Projectile proj = Main.projectile[i];
+					if (proj.type == ModContent.ProjectileType<EvilArm>() && proj.active && (int)proj.ai[0] == npc.whoAmI)
+					{
+						Vector2 toNPC = npc.Center - proj.Center;
+						Draw(proj.Center - toNPC.SafeNormalize(Vector2.Zero) * 16, true);
+					}
+				}
 			}
 		}
 		Vector2 aimTo = new Vector2(-1, -1);

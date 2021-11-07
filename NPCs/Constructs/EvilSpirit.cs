@@ -67,9 +67,11 @@ namespace SOTS.NPCs.Constructs
 		int counter2 = 0;
 		public int startEyes = 0;
 		public const int range = 96;
+		float lastDistMult = 1f;
 		public void UpdateEyes(bool draw = false, int ring = -2, float distMult = 1f)
 		{
 			Player player = Main.player[npc.target];
+			lastDistMult = distMult;
 			for (int i = 0; i < eyes.Count; i++)
             {
 				EvilEye eye = eyes[i];
@@ -339,6 +341,17 @@ namespace SOTS.NPCs.Constructs
 					npc.lifeMax = (int)(InitiateHealth * (Main.expertMode ? ExpertHealthMult : 1));
 					npc.life = (int)(InitiateHealth * (Main.expertMode ? ExpertHealthMult : 1));
 				}
+				if(Main.netMode != NetmodeID.Server)
+                {
+					for (int i = 0; i < eyes.Count; i++)
+					{
+						EvilEye eye = eyes[i];
+						float mult = 256f / (eye.offset.Length() + 24);
+						int direction = (((int)(eye.offset.Length() + 0.5f) % (2 * range)) / range) % 2 == 0 ? -1 : 1;
+						float rotation = (npc.rotation + MathHelper.ToRadians(counter2 * direction)) * mult;
+						eye.Update(npc.Center, rotation, lastDistMult, true);
+					}
+				}
 			}
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
@@ -382,39 +395,54 @@ namespace SOTS.NPCs.Constructs
 			fireTo = fireAt;
 			firing = true;
         }
-		public void Update(Vector2 center, float rotation, float distMult)
+		public void Update(Vector2 center, float rotation, float distMult, bool dust2 = false)
         {
 			Vector2 trueOffset = offset.RotatedBy(rotation) * distMult;
-			if (firing)
+			if(!dust2)
 			{
-				shootCounter++;
-				if (shootCounter >= 40)
+				if (firing)
 				{
-					if(Main.netMode != NetmodeID.MultiplayerClient)
-                    {
-						Vector2 toPosition = fireTo - trueOffset - center;
-						Projectile.NewProjectile(center + trueOffset, toPosition.SafeNormalize(Vector2.Zero) * 1f, ModContent.ProjectileType<EvilBolt>(), damage, 0, Main.myPlayer, 0.1f);
-                    }
-					firing = false;
+					shootCounter++;
+					if (shootCounter >= 40)
+					{
+						if (Main.netMode != NetmodeID.MultiplayerClient)
+						{
+							Vector2 toPosition = fireTo - trueOffset - center;
+							Projectile.NewProjectile(center + trueOffset, toPosition.SafeNormalize(Vector2.Zero) * 1f, ModContent.ProjectileType<EvilBolt>(), damage, 0, Main.myPlayer, 0.1f);
+						}
+						firing = false;
+					}
 				}
+				else if (shootCounter > 0)
+					shootCounter--;
+				if (counter == 0)
+				{
+					for (int i = 0; i < 3; i++)
+					{
+						Dust dust = Dust.NewDustDirect(center + trueOffset - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
+						dust.color = new Color(VoidPlayer.EvilColor.R, VoidPlayer.EvilColor.G, VoidPlayer.EvilColor.B, 100);
+						dust.alpha = 100;
+						dust.noGravity = true;
+						dust.fadeIn = 0.1f;
+						dust.velocity *= 0.9f;
+						dust.scale *= 1.5f;
+					}
+				}
+				if (counter < 40)
+					counter++;
 			}
-			else if (shootCounter > 0)
-				shootCounter--;
-			if(counter == 0)
+			else
 			{
-				for(int i = 0; i < 3; i++)
-                {
+				for (int i = 0; i < 5; i++)
+				{
 					Dust dust = Dust.NewDustDirect(center + trueOffset - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
-					dust.color = new Color(VoidPlayer.EvilColor.R, VoidPlayer.EvilColor.G, VoidPlayer.EvilColor.B, 100);
-					dust.alpha = 100;
+					dust.color = new Color(VoidPlayer.EvilColor.R, VoidPlayer.EvilColor.G, VoidPlayer.EvilColor.B);
 					dust.noGravity = true;
 					dust.fadeIn = 0.1f;
 					dust.velocity *= 0.9f;
 					dust.scale *= 1.5f;
 				}
 			}
-			if(counter < 40)
-				counter++;
         }
 		public void Draw(Vector2 center, float rotation, float distMult)
 		{

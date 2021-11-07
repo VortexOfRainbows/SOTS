@@ -15,7 +15,7 @@ Known Bugs:
 	1. Less frequent than before 0.20, but still happens? Conditions unknown.
 
 High Priority:
-1. Inferno Construct and Evil Construct
+1. Inferno Construct
 2. Starmap
 3. Digital Daito Obtaining
 
@@ -31,8 +31,12 @@ Mid Priority:
 	2. Voidmage Incubator
 	3. Phase Ore!?
 	4. True Phaseblade -> Starward Sword
-5. Starcaller Staff
+5. Starcaller Staff: hallowed Chest Item
 	1. Summons small celestial  serpent bud to assist in combat (would be nice to have a smaller celestial serpent sprite)
+6. Construct Items:
+	1. Glaze Repeater (permafrost construct)
+	2. (evil construct one)
+	3. (tidal construct one)
 
 Low Priority:
 1. Archaelogist NPC
@@ -40,8 +44,8 @@ Low Priority:
 3. Electrolyte Seperator
 4. Wintry Traveler: Riptide Trident + Frigid Javelin
 
-11/5/21
-1. Evil Construct finished. Works in Multiplayer. NEEDS GORE!!!
+11/5/21 & 11/6/21
+1. Evil Construct finished. Works in Multiplayer. Finished Gore
 
 11/3/21 & 11/4/21
 1. Spike club no longer shoots two projectiles stacked on top of each other 
