@@ -23,7 +23,7 @@ namespace SOTS
         }
         public override void RandomUpdate(int i, int j, int type)
         {
-            if(type == ModContent.TileType<CursedTumorTile>() || type == ModContent.TileType<MalditeTile>())
+            if(type == TileType<CursedTumorTile>() || type == TileType<MalditeTile>())
             {
                 if (WorldGen.genRand.NextBool(60))
                 {
@@ -53,7 +53,7 @@ namespace SOTS
                         {
                             for (var m = j - nearbyRadius; m <= j + nearbyRadius; m++)
                             {
-                                if (Main.tile[l, m].active() && Main.tile[l, m].type == ModContent.TileType<RoyalRubyShardTile>())
+                                if (Main.tile[l, m].active() && Main.tile[l, m].type == TileType<RoyalRubyShardTile>())
                                 {
                                     amt++;
                                 }
@@ -62,7 +62,7 @@ namespace SOTS
 
                         if (amt < 2)
                         {
-                            WorldGen.PlaceTile(i + x, j + y, ModContent.TileType<RoyalRubyShardTile>(), true, false, -1, 0);
+                            WorldGen.PlaceTile(i + x, j + y, TileType<RoyalRubyShardTile>(), true, false, -1, 0);
                             Main.tile[i + x, j + y].frameX = (short)(WorldGen.genRand.Next(18) * 18);
                             NetMessage.SendTileSquare(-1, i + x, j + y, 1, TileChangeType.None);
                         }
@@ -136,21 +136,23 @@ namespace SOTS
         public override bool PreDraw(int i, int j, int type, SpriteBatch spriteBatch)
         {
             Tile tile = Framing.GetTileSafely(i, j);
-            if (tile.wall == ModContent.WallType<NatureWallWall>() && tile.type != (ushort)ModContent.TileType<DissolvingNatureTile>())
+            if (tile.wall == WallType<NatureWallWall>() && tile.type != (ushort)TileType<DissolvingNatureTile>())
                 DissolvingNatureTile.DrawEffects(i, j, spriteBatch, mod, true);
-            if (tile.wall == ModContent.WallType<EarthWallWall>() && tile.type != (ushort)ModContent.TileType<DissolvingEarthTile>())
+            if (tile.wall == WallType<EarthWallWall>() && tile.type != (ushort)TileType<DissolvingEarthTile>())
                 DissolvingEarthTile.DrawEffects(i, j, spriteBatch, mod, true);
-            if (tile.wall == ModContent.WallType<AuroraWallWall>() && tile.type != (ushort)ModContent.TileType<DissolvingAuroraTile>())
+            if (tile.wall == WallType<AuroraWallWall>() && tile.type != (ushort)TileType<DissolvingAuroraTile>())
                 DissolvingAuroraTile.DrawEffects(i, j, spriteBatch, mod, true);
-            if (tile.wall == ModContent.WallType<AetherWallWall>() && tile.type != (ushort)ModContent.TileType<DissolvingAetherTile>())
+            if (tile.wall == WallType<AetherWallWall>() && tile.type != (ushort)TileType<DissolvingAetherTile>())
                 DissolvingAetherTile.DrawEffects(i, j, spriteBatch, mod, true);
-            if (tile.wall == ModContent.WallType<DelugeWallWall>() && tile.type != (ushort)ModContent.TileType<DissolvingDelugeTile>())
+            if (tile.wall == WallType<DelugeWallWall>() && tile.type != (ushort)TileType<DissolvingDelugeTile>())
                 DissolvingDelugeTile.DrawEffects(i, j, spriteBatch, mod, true);
+            if (tile.wall == WallType<UmbraWallWall>() && tile.type != (ushort)TileType<DissolvingUmbraTile>())
+                DissolvingUmbraTile.DrawEffects(i, j, spriteBatch, mod, true);
             return base.PreDraw(i, j, type, spriteBatch);
         }
         public override void PostDraw(int i, int j, int type, SpriteBatch spriteBatch)
         {
-            if (Main.tile[i - 1, j].active() && Main.tile[i - 1, j].type == ModContent.TileType<HardlightBlockTile>() && type != ModContent.TileType<HardlightBlockTile>() && Main.tileSolid[type])
+            if (Main.tile[i - 1, j].active() && Main.tile[i - 1, j].type == TileType<HardlightBlockTile>() && type != TileType<HardlightBlockTile>() && Main.tileSolid[type])
                 HardlightBlockTile.Draw(i - 1, j, spriteBatch);
             base.PostDraw(i, j, type, spriteBatch);
         }

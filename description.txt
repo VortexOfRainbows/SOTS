@@ -34,6 +34,7 @@ Art: HugeKraken, Arcri
 Testers: DreadSoul, Crimsonkeep 
 Code: Graydee, ENNWAY, Qwerty3.14, OS
 Minor Art: Naka, DeJuiceTD, Nomis
+Other: Mushnib~, Astrobit
 
 Update 0.20.3
 -New worldgen structure in the Dungeon

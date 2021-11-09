@@ -24,7 +24,9 @@ Mid Priority:
 2. Horn of Plenty: 10% more drops accessory
 3. Ethereal Tonic, Heretic Tonic, Blazing Tonic
 	1. Dissolving Brilliance, Dissolving Nether 
-	2. Other Potions: (Evil) Nightmare Potion: Critical strikes cause nightmare arms to chain between enemies
+	2. Other Potions: 
+	 (Evil) Nightmare Potion: Critical strikes cause nightmare arms to chain between enemies
+		-> Witch's Heart accessory; in similar vein to Heart of the Sea, where it is an accessory variant of the potion
 	 (Inferno) Bluefire Potion: Killed enemies spawn stationary wisps that last for 10 seconds, fires at enemies like virtues but different charge time, color, etc.
 4. Lux Drops:
 	1. Rose Bow
@@ -37,12 +39,18 @@ Mid Priority:
 	1. Glaze Repeater (permafrost construct)
 	2. (evil construct one)
 	3. (tidal construct one)
+7. Recursive Bow (Pun on Recurve Bow), probably sold from Traveling Merchant
+	1. Fires an arrow. 50% chance to fire an additional arrow. For every additional arrow fired, has a 50% chance to fire yet another additional arrow
 
 Low Priority:
 1. Archaelogist NPC
 2. Mobile Fortress Generator: One for every tavernkeep armor set
 3. Electrolyte Seperator
 4. Wintry Traveler: Riptide Trident + Frigid Javelin
+
+11/8/21
+1. Dissolving Umbra block and Wall finished. Kinda works like Sky Chain / Lost Chain.
+2. 
 
 11/5/21 & 11/6/21
 1. Evil Construct finished. Works in Multiplayer. Finished Gore
