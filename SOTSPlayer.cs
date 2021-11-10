@@ -37,6 +37,7 @@ using SOTS.Projectiles.Inferno;
 using SOTS.Projectiles.Nature;
 using SOTS.Items.Crushers;
 using SOTS.Dusts;
+using SOTS.Projectiles.Evil;
 
 namespace SOTS
 {
@@ -194,6 +195,7 @@ namespace SOTS
 		public bool CritFire = false; //hellfire icosahedron
 		public bool CritFrost = false; //borealis icosahedron
 		public bool CritCurseFire = false; //cursed icosahedron
+		public bool CritNightmare = false;
 		public bool netUpdate = false;
 		public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
 		{
@@ -517,20 +519,20 @@ namespace SOTS
 		int fireIcoCD = 0;
 		int iceIcoCD = 0;
 		int cursedIcoCD = 0;
+		int nightmareArmCD = 0;
+		public void decrement(ref int number)
+		{
+			if (number > 0)
+				number--;
+			else
+				number = 0;
+		}
         public override void PostUpdate()
 		{
-			if (fireIcoCD > 0)
-				fireIcoCD--;
-			else
-				fireIcoCD = 0;
-			if (iceIcoCD > 0)
-				iceIcoCD--;
-			else
-				iceIcoCD = 0;
-			if (cursedIcoCD > 0)
-				cursedIcoCD--;
-			else
-				cursedIcoCD = 0;
+			decrement(ref nightmareArmCD);
+			decrement(ref fireIcoCD);
+			decrement(ref iceIcoCD);
+			decrement(ref cursedIcoCD);
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			maxCritVoidStealPerSecond = voidPlayer.voidRegen * 20; //max stored voidsteal is 20x the voidRegen speed
 			maxCritVoidStealPerSecondTimer += (voidPlayer.voidRegen + CritVoidsteal / 10f) / 30f; //max stored voidsteal regenerates at the twice rate as normal voidRegen (basically, stores 20 seconds of regen) 
@@ -797,6 +799,7 @@ namespace SOTS
 			CritFire = false;
 			CritFrost = false;
 			CritCurseFire = false;
+			CritNightmare = false;
 			CurseAura = false;
 			RubyMonolith = false;
 			CanCurseSwap = false;
@@ -808,7 +811,7 @@ namespace SOTS
 		{
 			//Fish Set 1
 
-			if (Main.rand.NextBool(24) && player.ZoneSkyHeight) 
+			if (ScaleCatch2(power, 0, 100, 9, 29) && (player.ZoneSkyHeight || player.Center.Y < Main.worldSurface * 16 * 0.5f)) 
 				caughtType = ModContent.ItemType<TinyPlanetFish>(); 
 
 			//if (Main.rand.Next(200) == 0 && ZeplineBiome) {
@@ -1136,6 +1139,17 @@ namespace SOTS
 								}
 								else
 									Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, ModContent.ProjectileType<SharangaBlastSummon>(), damage, 0, player.whoAmI, 3);
+							}
+						}
+					}
+					if (CritNightmare && projectile.type != ModContent.ProjectileType<EvilGrowth>() && projectile.type != ModContent.ProjectileType<EvilStrike>())
+					{
+						if (nightmareArmCD <= 0)
+						{
+							nightmareArmCD = 360;
+							if (Main.myPlayer == player.whoAmI)
+							{
+								Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, ModContent.ProjectileType<EvilGrowth>(), (int)(damage * 0.1f), 0, player.whoAmI, 0, target.whoAmI);
 							}
 						}
 					}

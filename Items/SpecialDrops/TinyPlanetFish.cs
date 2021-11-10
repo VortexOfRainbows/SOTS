@@ -9,17 +9,14 @@ namespace SOTS.Items.SpecialDrops
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Planet Fish");
-			Tooltip.SetDefault("Caught in sky lakes");
 		}
 		public override void SetDefaults()
 		{
-
 			item.width = 34;
 			item.height = 34;
-            item.value = Item.sellPrice(0, 0, 10, 0);
-			item.rare = 1;
+            item.value = Item.sellPrice(0, 0, 20, 0);
+			item.rare = ItemRarityID.Blue;
 			item.maxStack = 99;
-			item.bait = 5;
 		}
 	}
 }

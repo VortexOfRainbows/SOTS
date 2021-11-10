@@ -87,7 +87,6 @@ namespace SOTS.Projectiles.BiomeChest
 		bool bloom = false;
 		bool runOnce2 = true;
 		float saveRotation = 0;
-		float scaleCounter = 0;
 		public override void AI()
         {
 			Player player = Main.player[projectile.owner];

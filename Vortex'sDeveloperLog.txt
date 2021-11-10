@@ -25,8 +25,6 @@ Mid Priority:
 3. Ethereal Tonic, Heretic Tonic, Blazing Tonic
 	1. Dissolving Brilliance, Dissolving Nether 
 	2. Other Potions: 
-	 (Evil) Nightmare Potion: Critical strikes cause nightmare arms to chain between enemies
-		-> Witch's Heart accessory; in similar vein to Heart of the Sea, where it is an accessory variant of the potion
 	 (Inferno) Bluefire Potion: Killed enemies spawn stationary wisps that last for 10 seconds, fires at enemies like virtues but different charge time, color, etc.
 4. Lux Drops:
 	1. Rose Bow
@@ -41,6 +39,7 @@ Mid Priority:
 	3. (tidal construct one)
 7. Recursive Bow (Pun on Recurve Bow), probably sold from Traveling Merchant
 	1. Fires an arrow. 50% chance to fire an additional arrow. For every additional arrow fired, has a 50% chance to fire yet another additional arrow
+8. Witch's Heart accessory; in similar vein to Heart of the Sea, where it is an accessory variant of the potion
 
 Low Priority:
 1. Archaelogist NPC
@@ -48,9 +47,11 @@ Low Priority:
 3. Electrolyte Seperator
 4. Wintry Traveler: Riptide Trident + Frigid Javelin
 
-11/8/21
+11/8/21 & 11/9/21
 1. Dissolving Umbra block and Wall finished. Kinda works like Sky Chain / Lost Chain.
-2. 
+2. Added Nightmare Potion. Needs multiplayer testing and balancing feedback
+3. Tiny Planet fish is easier to catch at higher fishing power.
+4. Fragment of Earth is now required to craft roughskin potion.
 
 11/5/21 & 11/6/21
 1. Evil Construct finished. Works in Multiplayer. Finished Gore
