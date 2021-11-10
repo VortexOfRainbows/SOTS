@@ -1,26 +1,27 @@
 using SOTS.Buffs;
 using SOTS.Items.Fragments;
+using SOTS.Items.SpecialDrops;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace SOTS.Items.Potions
 {
-	public class HarmonyPotion : ModItem
+	public class NightmarePotion : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Harmony Potion");
-			Tooltip.SetDefault("Prevents other buffs from decaying while active\nDoesn't work on most buffs with below 30 seconds remaining");
+			DisplayName.SetDefault("Nightmare Potion");
+			Tooltip.SetDefault("Critical strikes unleash Nightmare Arms that do 10% damage and pull enemies together\nHas a 6 second cooldown");
 		}
 		public override void SetDefaults()
 		{
-			item.width = 20;
-			item.height = 30;
+			item.width = 22;
+			item.height = 32;
             item.value = Item.sellPrice(0, 0, 2, 0);
 			item.rare = ItemRarityID.Blue;
 			item.maxStack = 30;
-            item.buffType = ModContent.BuffType<Harmony>();   
+            item.buffType = ModContent.BuffType<Nightmare>();   
             item.buffTime = 21900;  
             item.UseSound = SoundID.Item3;            
             item.useStyle = ItemUseStyleID.EatingUsing;        
@@ -33,11 +34,10 @@ namespace SOTS.Items.Potions
 		{
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.BottledWater, 1);
-			recipe.AddIngredient(ModContent.ItemType<FragmentOfChaos>(), 1);
-			recipe.AddIngredient(ItemID.PrincessFish, 1);
-			recipe.AddIngredient(ItemID.SoulofLight, 1);
-			recipe.AddIngredient(ItemID.UnicornHorn, 1);
-			recipe.AddIngredient(ItemID.Daybloom, 1);
+			recipe.AddIngredient(ModContent.ItemType<FragmentOfEvil>(), 1);
+			recipe.AddIngredient(ModContent.ItemType<TinyPlanetFish>(), 1);
+			recipe.AddIngredient(ItemID.SoulofNight, 1);
+			recipe.AddIngredient(ItemID.Deathweed, 1);
 			recipe.AddTile(TileID.Bottles);
 			recipe.SetResult(this, 1);
 			recipe.AddRecipe();

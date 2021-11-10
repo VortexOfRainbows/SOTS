@@ -21,6 +21,7 @@ using SOTS.Items.OreItems;
 using SOTS.Items.Otherworld.FromChests;
 using System.Linq;
 using SOTS.NPCs.Constructs;
+using SOTS.Projectiles.Evil;
 
 namespace SOTS.NPCs.ArtificialDebuffs
 {
@@ -375,6 +376,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
             float flowered = 0;
             pinkied = false;
             bool hooked = false;
+            bool darkArmed = false;
             for (int i = 0; i < Main.projectile.Length; i++)
             {
                 Projectile proj = Main.projectile[i];
@@ -457,12 +459,33 @@ namespace SOTS.NPCs.ArtificialDebuffs
                         proj.ai[0] = -1;
                     }
                 }
-                if (!proj.friendly && proj.active && proj.type == ModContent.ProjectileType<FloweringBud>() && proj.timeLeft < 8998)
+                if (!proj.friendly && proj.active && (proj.type == ModContent.ProjectileType<FloweringBud>() || proj.type == ModContent.ProjectileType<EvilGrowth>()) && proj.timeLeft < 8998)
                 {
-                    FloweringBud flower = (FloweringBud)proj.modProjectile;
-                    if(flower.effected[npc.whoAmI] && !npc.immortal && npc.type != ModContent.NPCType<BloomingHook>() && npc.realLife == -1)
+                    bool contains = false;
+                    int index = -1;
+                    bool isFlower = false;
+                    if (proj.type == ModContent.ProjectileType<FloweringBud>())
                     {
-                        flowered++;
+                        FloweringBud flower = proj.modProjectile as FloweringBud;
+                        if (flower.effected[npc.whoAmI])
+                            contains = true;
+                        index = flower.enemyIndex;
+                        isFlower = true;
+                    }
+                    if (proj.type == ModContent.ProjectileType<EvilGrowth>())
+                    {
+                        EvilGrowth evil = proj.modProjectile as EvilGrowth;
+                        if (evil.effected[npc.whoAmI])
+                            contains = true;
+                    }
+                    if(contains && !npc.immortal && npc.type != ModContent.NPCType<BloomingHook>() && npc.realLife == -1)
+                    {
+                        if(isFlower)
+                        {
+                            flowered++;
+                        }
+                        else
+                            darkArmed = true;
                         if (flowered <= 1)
                         {
                             Player player = Main.player[proj.owner];
@@ -473,17 +496,24 @@ namespace SOTS.NPCs.ArtificialDebuffs
                             if (npc.boss)
                                 modPlayer.halfLifeRegen++;
                         }
-                        if (flower.enemyIndex == npc.whoAmI)
+                        if (index == npc.whoAmI)
                         {
-                            flowered++;
+                            if (isFlower)
+                                flowered++;
                         }
                         else
                         {
+                            float pullRate = 0.5f;
+                            float distMult = 0.025f;
+                            if (!isFlower && !npc.boss)
+                                distMult = 0.04f;
                             Vector2 toFlower = new Vector2(proj.Center.X, proj.position.Y - 8) - new Vector2(npc.Center.X, npc.position.Y + npc.height);
                             float dist = toFlower.Length();
                             toFlower = toFlower.SafeNormalize(Vector2.Zero);
-                            float mult = (dist * 0.025f) * (npc.boss ? 0.01f : 1);
-                            toFlower *= 0.5f + mult;
+                            float mult = (dist * distMult) * (npc.boss ? 0.01f : 1);
+                            if (!isFlower)
+                                pullRate = 0.65f;
+                            toFlower *= pullRate + mult;
                             npc.position += toFlower;
                         }
                     }
@@ -508,7 +538,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
             float dartVeloMult = 1 / (1 + dartMult * impaledDarts);
             float flowerVeloMult = 1 / (1 + flowerMult * flowered);
             float finalSlowdown = 1f;
-            if(npc.HasBuff(ModContent.BuffType<WebbedNPC>()))
+            if(npc.HasBuff(ModContent.BuffType<WebbedNPC>()) || darkArmed)
             {
                 if(!npc.boss)
                     finalSlowdown *= 0.2f;
@@ -581,22 +611,52 @@ namespace SOTS.NPCs.ArtificialDebuffs
             for (int i = 0; i < Main.maxNPCs; i++)
             {
                 Projectile proj = Main.projectile[i];
-                if (!proj.friendly && proj.active && proj.type == mod.ProjectileType("FloweringBud") && proj.timeLeft < 8998)
+                if (!proj.friendly && proj.active && (proj.type == ModContent.ProjectileType<FloweringBud>() || proj.type == ModContent.ProjectileType<EvilGrowth>()) && proj.timeLeft < 8998)
                 {
-                    FloweringBud flower = (FloweringBud)proj.modProjectile;
-                    if (flower.effected[npc.whoAmI] && npc.type != ModContent.NPCType<BloomingHook>() && npc.realLife == -1)
+                    bool contains = false;
+                    if(proj.type == ModContent.ProjectileType<FloweringBud>())
+                    {
+                        FloweringBud flower = proj.modProjectile as FloweringBud;
+                        if (flower.effected[npc.whoAmI])
+                            contains = true;
+                    }
+                    if(proj.type == ModContent.ProjectileType<EvilGrowth>())
+                    {
+                        EvilGrowth evil = proj.modProjectile as EvilGrowth;
+                        if (evil.effected[npc.whoAmI])
+                            contains = true;
+                    }
+                    if (contains && npc.type != ModContent.NPCType<BloomingHook>() && npc.realLife == -1)
                     {
                         Texture2D texture2 = mod.GetTexture("Projectiles/BiomeChest/TangleGrowthVine");
+                        Color color = Color.White;
+                        if (proj.type == ModContent.ProjectileType<EvilGrowth>())
+                        {
+                            color = new Color(VoidPlayer.EvilColor.R, VoidPlayer.EvilColor.G, VoidPlayer.EvilColor.B);
+                            texture2 = mod.GetTexture("Projectiles/Evil/EvilArm");
+                        }
                         float scale = proj.scale;
-                        scale *= 0.7f;
+                        if (proj.type == ModContent.ProjectileType<FloweringBud>())
+                            scale *= 0.7f;
+                        else
+                        {
+                            scale *= (proj.timeLeft / (float)EvilGrowth.MaxTimeLeft);
+                        }
                         Vector2 drawPos;
                         Vector2 betweenPositions = npc.Center - proj.Center;
-                        Color color = Color.White;
                         float max = betweenPositions.Length() / (texture2.Width * scale);
                         for (int k = 0; k < max; k++)
                         {
                             drawPos = npc.Center + -betweenPositions * (k / max) - Main.screenPosition;
-                            Main.spriteBatch.Draw(texture2, drawPos, null, color, betweenPositions.ToRotation(), new Vector2(texture2.Width / 2, texture2.Height / 2), scale, SpriteEffects.None, 0f);
+                            if (k == 0 && proj.type == ModContent.ProjectileType<EvilGrowth>())
+                            {
+                                Texture2D texture3 = mod.GetTexture("Projectiles/Evil/EvilHand");
+                                Main.spriteBatch.Draw(texture3, drawPos, null, color, betweenPositions.ToRotation() + MathHelper.Pi/2, new Vector2(texture3.Width / 2, texture3.Height / 2), scale * 1.4f, SpriteEffects.None, 0f);
+                            }
+                            else
+                            {
+                                Main.spriteBatch.Draw(texture2, drawPos, null, color, betweenPositions.ToRotation(), new Vector2(texture2.Width / 2, texture2.Height / 2), scale, SpriteEffects.None, 0f);
+                            }
                         }
                     }
                 }
