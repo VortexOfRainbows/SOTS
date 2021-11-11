@@ -1,4 +1,3 @@
-
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -6,7 +5,7 @@ using Terraria.ModLoader;
 
 namespace SOTS.Items.IceStuff
 {
-	public class HardIceBrickTile : ModTile
+	public class FrigidIceTile : ModTile
 	{
 		public override void SetDefaults()
 		{
@@ -16,14 +15,14 @@ namespace SOTS.Items.IceStuff
 			Main.tileLighted[Type] = false;
 			minPick = 210;
 			dustType = 34;
-			drop = mod.ItemType("HardIceBrick");
+			drop = mod.ItemType("FrigidIceItem");
 			AddMapEntry(new Color(198, 249, 251));
 			soundType = 21;
 			soundStyle = 2;
 		}
 		public override bool CanExplode(int i, int j)
 		{
-			if (Main.tile[i, j].type == mod.TileType("HardIceBrickTile"))
+			if (Main.tile[i, j].type == mod.TileType("FrigidIce"))
 			{
 				return false;
 			}
@@ -34,26 +33,12 @@ namespace SOTS.Items.IceStuff
 			return false;
 		}
 	}
-	public class HardIceBrickWall : ModWall
+	public class FrigidIce : ModItem
 	{
 		public override void SetDefaults()
 		{
-			Main.wallHouse[Type] = false;
-			AddMapEntry(new Color(144, 181, 181));
-			dustType = 34;
-		}
-	}
-	public class HardIceBrickWallItem : ModItem
-	{
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Hard Ice Wall Wall");
-		}
-
-		public override void SetDefaults()
-		{
-			item.CloneDefaults(ItemID.StoneWall);
-			item.createWall = ModContent.WallType<HardIceBrickWall>();
+			item.CloneDefaults(ItemID.StoneBlock);
+			item.createTile = ModContent.TileType<FrigidIceTile>();
 		}
 	}
 }
