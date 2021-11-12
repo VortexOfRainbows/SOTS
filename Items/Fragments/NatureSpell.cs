@@ -16,8 +16,8 @@ namespace SOTS.Items.Fragments
 		{
             item.damage = 5; 
             item.magic = true; 
-            item.width = 30;   
-            item.height = 36;   
+            item.width = 24;   
+            item.height = 28;   
             item.useTime = 30;   
             item.useAnimation = 30;
             item.useStyle = ItemUseStyleID.HoldingOut;    
