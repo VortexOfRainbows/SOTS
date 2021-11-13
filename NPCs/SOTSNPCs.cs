@@ -139,7 +139,10 @@ namespace SOTS.NPCs
 			}
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);	
 			bool ZoneForest = !player.GetModPlayer<SOTSPlayer>().PyramidBiome && !player.ZoneDesert && !player.ZoneCorrupt && !player.ZoneDungeon && !player.ZoneDungeon && !player.ZoneHoly && !player.ZoneMeteor && !player.ZoneJungle && !player.ZoneSnow && !player.ZoneCrimson && !player.ZoneGlowshroom && !player.ZoneUndergroundDesert && (player.ZoneDirtLayerHeight || player.ZoneOverworldHeight) && !player.ZoneBeach;
-
+			if(NPCID.Sets.BelongsToInvasionOldOnesArmy[npc.type])
+			{
+				return;
+			}
 			if (npc.lifeMax > 5 && !npc.SpawnedFromStatue)
 			{
 				if (Main.rand.NextBool(100) || (npc.type == NPCID.PigronCorruption || npc.type == NPCID.PigronHallow || npc.type == NPCID.PigronCrimson))

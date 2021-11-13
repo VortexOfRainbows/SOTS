@@ -34,15 +34,16 @@ namespace SOTS.Items.IceStuff
 				int xlocation = i * 16 + 8;
 				int ylocation = j * 16 + 8;
 				ylocation -= 40;
-				for(int k = 0; k < 3; k++)
+				for(int k = 0; k < 5; k++)
 				{
-					float counter = VoidPlayer.soulColorCounter * 3f + k;
+					float counter = VoidPlayer.soulColorCounter * 2f + k;
 					for (int a = 0; a < 4; a++)
 					{
 						Vector2 circularLocation = new Vector2(-28, 0).RotatedBy(MathHelper.ToRadians(counter + a * 90));
-						int num1 = Dust.NewDust(new Vector2(xlocation + circularLocation.X - 4, ylocation + circularLocation.Y - 4), 4, 4, 135); //ice torch
-						Main.dust[num1].noGravity = true;
-						Main.dust[num1].velocity *= 0.1f;
+						Dust dust = Dust.NewDustDirect(new Vector2(xlocation + circularLocation.X - 4, ylocation + circularLocation.Y - 4), 4, 4, 135); //ice torch
+						dust.noGravity = true;
+						dust.velocity *= 0.1f;
+						dust.scale = dust.scale * 0.3f + 1.2f;
 					}
 				}
 			}

@@ -43,12 +43,11 @@ Mid Priority:
 
 Low Priority:
 1. Archaelogist NPC
-2. Electrolyte Seperator
-3. Wintry Traveler: Riptide Trident + Frigid Javelin
 
 11/12/21
 1. Fixed various ice tile things and optimized some code.
 2. Tested. Nightmare Potion works in multiplayer.
+3. Modded items no longer drop from Old Ones Army
 
 11/8/21 & 11/9/21
 1. Dissolving Umbra block and Wall finished. Kinda works like Sky Chain / Lost Chain.
