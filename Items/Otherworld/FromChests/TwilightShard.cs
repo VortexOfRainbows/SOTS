@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Items.Fragments;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -34,42 +35,42 @@ namespace SOTS.Items.Otherworld.FromChests
 		public override void SetDefaults()
 		{
 			item.maxStack = 999;
-			item.width = 24;
-			item.height = 28;
+			item.width = 30;
+			item.height = 22;
 			item.value = Item.sellPrice(0, 0, 45, 0);
-			item.rare = 9;
+			item.rare = ItemRarityID.Cyan;
 		}
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.FallenStar, 1);
-			recipe.AddIngredient(null, "FragmentOfOtherworld", 1);
-			recipe.AddIngredient(null, "TwilightShard", 1);
-			recipe.AddTile(mod.TileType("HardlightFabricatorTile"));
+			recipe.AddIngredient(ModContent.ItemType<FragmentOfOtherworld>(), 1);
+			recipe.AddIngredient(ModContent.ItemType<TwilightShard>(), 1);
+			recipe.AddTile(ModContent.TileType<HardlightFabricatorTile>());
 			recipe.SetResult(this, 1);
 			recipe.AddRecipe();
 
 			recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "HardlightAlloy", 1);
-			recipe.AddTile(mod.TileType("TransmutationAltarTile"));
+			recipe.AddIngredient(ModContent.ItemType<HardlightAlloy>(), 1);
+			recipe.AddTile(ModContent.TileType<TransmutationAltarTile>());
 			recipe.SetResult(this, 1);
 			recipe.AddRecipe();
 
 			recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "OtherworldlyAlloy", 1);
-			recipe.AddTile(mod.TileType("TransmutationAltarTile"));
+			recipe.AddIngredient(ModContent.ItemType<OtherworldlyAlloy>(), 1);
+			recipe.AddTile(ModContent.TileType<TransmutationAltarTile>());
 			recipe.SetResult(this, 1);
 			recipe.AddRecipe();
 
 			recipe = new ModRecipe(mod);
-			recipe.AddIngredient(mod.ItemType("TwilightGel"), 20);
-			recipe.AddTile(mod.TileType("TransmutationAltarTile"));
+			recipe.AddIngredient(ModContent.ItemType<TwilightGel>(), 20);
+			recipe.AddTile(ModContent.TileType<TransmutationAltarTile>());
 			recipe.SetResult(ItemID.FallenStar, 1);
 			recipe.AddRecipe();
 
 			recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.MeteoriteBar, 1);
-			recipe.AddTile(mod.TileType("TransmutationAltarTile"));
+			recipe.AddTile(ModContent.TileType<TransmutationAltarTile>());
 			recipe.SetResult(ItemID.FallenStar, 1);
 			recipe.AddRecipe();
 		}
@@ -79,43 +80,43 @@ namespace SOTS.Items.Otherworld.FromChests
 		public override void SetDefaults()
 		{
 			item.maxStack = 999;
-			item.width = 24;
-			item.height = 28;
+			item.width = 30;
+			item.height = 22;
 			item.value = Item.sellPrice(0, 0, 45, 0);
-			item.rare = 9;
+			item.rare = ItemRarityID.Cyan;
 		}
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "TwilightGel", 20);
-			recipe.AddIngredient(null, "FragmentOfOtherworld", 1);
-			recipe.AddIngredient(null, "TwilightShard", 1);
-			recipe.AddTile(mod.TileType("HardlightFabricatorTile"));
+			recipe.AddIngredient(ModContent.ItemType<TwilightGel>(), 20);
+			recipe.AddIngredient(ModContent.ItemType<FragmentOfOtherworld>(), 1);
+			recipe.AddIngredient(ModContent.ItemType<TwilightShard>(), 1);
+			recipe.AddTile(ModContent.TileType<HardlightFabricatorTile>());
 			recipe.SetResult(this, 1);
 			recipe.AddRecipe();
 
 			recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "StarlightAlloy", 1);
-			recipe.AddTile(mod.TileType("TransmutationAltarTile"));
+			recipe.AddIngredient(ModContent.ItemType<StarlightAlloy>(), 1);
+			recipe.AddTile(ModContent.TileType<TransmutationAltarTile>());
 			recipe.SetResult(this, 1);
 			recipe.AddRecipe();
 
 			recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "OtherworldlyAlloy", 1);
-			recipe.AddTile(mod.TileType("TransmutationAltarTile"));
+			recipe.AddIngredient(ModContent.ItemType<OtherworldlyAlloy>(), 1);
+			recipe.AddTile(ModContent.TileType<TransmutationAltarTile>());
 			recipe.SetResult(this, 1);
 			recipe.AddRecipe();
 
 			recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.FallenStar, 1);
-			recipe.AddTile(mod.TileType("TransmutationAltarTile"));
-			recipe.SetResult(mod.ItemType("TwilightGel"), 20);
+			recipe.AddTile(ModContent.TileType<TransmutationAltarTile>());
+			recipe.SetResult(ModContent.ItemType<TwilightGel>(), 20);
 			recipe.AddRecipe();
 
 			recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.MeteoriteBar, 1);
-			recipe.AddTile(mod.TileType("TransmutationAltarTile"));
-			recipe.SetResult(mod.ItemType("TwilightGel"), 20);
+			recipe.AddTile(ModContent.TileType<TransmutationAltarTile>());
+			recipe.SetResult(ModContent.ItemType<TwilightGel>(), 20);
 			recipe.AddRecipe();
 		}
 	}
@@ -124,42 +125,42 @@ namespace SOTS.Items.Otherworld.FromChests
 		public override void SetDefaults()
 		{
 			item.maxStack = 999;
-			item.width = 24;
-			item.height = 28;
+			item.width = 30;
+			item.height = 22;
 			item.value = Item.sellPrice(0, 0, 45, 0);
-			item.rare = 9;
+			item.rare = ItemRarityID.Cyan;
 		}
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.MeteoriteBar, 1);
-			recipe.AddIngredient(null, "FragmentOfOtherworld", 1);
-			recipe.AddIngredient(null, "TwilightShard", 1);
-			recipe.AddTile(mod.TileType("HardlightFabricatorTile"));
+			recipe.AddIngredient(ModContent.ItemType<FragmentOfOtherworld>(), 1);
+			recipe.AddIngredient(ModContent.ItemType<TwilightShard>(), 1);
+			recipe.AddTile(ModContent.TileType<HardlightFabricatorTile>());
 			recipe.SetResult(this, 1);
 			recipe.AddRecipe();
 
 			recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "HardlightAlloy", 1);
-			recipe.AddTile(mod.TileType("TransmutationAltarTile"));
+			recipe.AddIngredient(ModContent.ItemType<HardlightAlloy>(), 1);
+			recipe.AddTile(ModContent.TileType<TransmutationAltarTile>());
 			recipe.SetResult(this, 1);
 			recipe.AddRecipe();
 
 			recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "StarlightAlloy", 1);
-			recipe.AddTile(mod.TileType("TransmutationAltarTile"));
+			recipe.AddIngredient(ModContent.ItemType<StarlightAlloy>(), 1);
+			recipe.AddTile(ModContent.TileType<TransmutationAltarTile>());
 			recipe.SetResult(this, 1);
 			recipe.AddRecipe();
 
 			recipe = new ModRecipe(mod);
-			recipe.AddIngredient(mod.ItemType("TwilightGel"), 20);
-			recipe.AddTile(mod.TileType("TransmutationAltarTile"));
+			recipe.AddIngredient(ModContent.ItemType<TwilightGel>(), 20);
+			recipe.AddTile(ModContent.TileType<TransmutationAltarTile>());
 			recipe.SetResult(ItemID.MeteoriteBar, 1);
 			recipe.AddRecipe();
 
 			recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.FallenStar, 1);
-			recipe.AddTile(mod.TileType("TransmutationAltarTile"));
+			recipe.AddTile(ModContent.TileType<TransmutationAltarTile>());
 			recipe.SetResult(ItemID.MeteoriteBar, 1);
 			recipe.AddRecipe();
 		}

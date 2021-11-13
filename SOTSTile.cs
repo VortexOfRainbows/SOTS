@@ -11,6 +11,7 @@ using static Terraria.ModLoader.ModContent;
 using SOTS.Items.Pyramid.AltPyramidBlocks;
 using System.Linq;
 using SOTS.Items.Tide;
+using SOTS.Items.IceStuff;
 
 namespace SOTS
 {
@@ -124,6 +125,10 @@ namespace SOTS
                 return false;
             }
             if (Main.tile[i - 1, j].type == (ushort)TileType<PyramidGateTile>() || Main.tile[i + 1, j].type == (ushort)TileType<PyramidGateTile>())
+            {
+                return false;
+            }
+            if (Main.tile[i, j - 1].type == (ushort)TileType<FrostArtifactTile>() && !SOTSWorld.downedAmalgamation)
             {
                 return false;
             }

@@ -553,7 +553,7 @@ namespace SOTS.NPCs.Constructs
         public void doAIExtras()
         {
             npc.localAI[1] += 3;
-            if (Main.player[npc.target].dead)
+            if (Main.player[npc.target].dead || Vector2.Distance(Main.player[npc.target].Center, npc.Center) > 4800)
             {
                 npc.active = false;
                 return;

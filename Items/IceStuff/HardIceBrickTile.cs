@@ -14,46 +14,53 @@ namespace SOTS.Items.IceStuff
 			Main.tileMergeDirt[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = false;
-			minPick = 210;
-			dustType = 34;
-			drop = mod.ItemType("HardIceBrick");
+			minPick = 100;
+			mineResist = 2.0f;
+			dustType = DustID.Ice;
+			drop = ModContent.ItemType<HardIceBrick>();
 			AddMapEntry(new Color(198, 249, 251));
-			soundType = 21;
+			soundType = SoundID.Tink;
 			soundStyle = 2;
 		}
-		public override bool CanExplode(int i, int j)
+        public override bool CanKillTile(int i, int j, ref bool blockDamaged)
+        {
+            return SOTSWorld.downedAmalgamation;
+        }
+        public override bool CanExplode(int i, int j)
 		{
-			if (Main.tile[i, j].type == mod.TileType("HardIceBrickTile"))
-			{
-				return false;
-			}
-			return false;
+			return SOTSWorld.downedAmalgamation;
 		}
 		public override bool Slope(int i, int j)
 		{
-			return false;
+			return SOTSWorld.downedAmalgamation;
 		}
 	}
-	public class HardIceBrickWall : ModWall
+	public class HardIceBrickWallWall : ModWall
 	{
 		public override void SetDefaults()
 		{
 			Main.wallHouse[Type] = false;
 			AddMapEntry(new Color(144, 181, 181));
-			dustType = 34;
+			dustType = DustID.Ice;
 		}
-	}
-	public class HardIceBrickWallItem : ModItem
+        public override void KillWall(int i, int j, ref bool fail)
+        {
+			if(!SOTSWorld.downedAmalgamation)
+            {
+				fail = true;
+            }
+        }
+    }
+	public class HardIceBrickWall : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Hard Ice Wall Wall");
+			DisplayName.SetDefault("Hard Ice Brick Wall");
 		}
-
 		public override void SetDefaults()
 		{
 			item.CloneDefaults(ItemID.StoneWall);
-			item.createWall = ModContent.WallType<HardIceBrickWall>();
+			item.createWall = ModContent.WallType<HardIceBrickWallWall>();
 		}
 	}
 }

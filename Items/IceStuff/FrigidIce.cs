@@ -13,24 +13,12 @@ namespace SOTS.Items.IceStuff
 			Main.tileMergeDirt[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = false;
-			minPick = 210;
-			dustType = 34;
-			drop = mod.ItemType("FrigidIceItem");
+			mineResist = 0.5f;
+			dustType = DustID.Ice;
+			drop = ModContent.ItemType<FrigidIce>();
 			AddMapEntry(new Color(198, 249, 251));
-			soundType = 21;
+			soundType = SoundID.Tink;
 			soundStyle = 2;
-		}
-		public override bool CanExplode(int i, int j)
-		{
-			if (Main.tile[i, j].type == mod.TileType("FrigidIce"))
-			{
-				return false;
-			}
-			return false;
-		}
-		public override bool Slope(int i, int j)
-		{
-			return false;
 		}
 	}
 	public class FrigidIce : ModItem

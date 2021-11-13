@@ -1,18 +1,16 @@
 The following is my development plans :D
 
 1. Dissolving Nether => Focus Crystal
-2. Tether Cord in pyramid
-	1. Attaches a second player to you
-3. Chaos Spirit Boss: "Lux"
-4. Ghost Town to Evil Biome
+2. Chaos Spirit Boss: "Lux"
+3. Ghost Town to Evil Biome
 
 Known Bugs:
-1. Lag generates in multiplayer after a while of playing. 
+1. Lag generates in multiplayer after a while of playing.  Conditions unknown.
 	1. Seem to generate client-side not server side..?
 	2. No memory leak on single player, or client side when testing..?
-2. Not calling end/begin; mod compatability prims crash
-3. Earthen Construct causing freezes occassionally
-	1. Less frequent than before 0.20, but still happens? Conditions unknown.
+2. Not calling end/begin; mod compatability prims crash. Conditions unknown.
+3. Earthen Construct causing freezes occassionally. Conditions unknown (usually after it goes of screen).
+	1. Less frequent than before 0.20, but still happens? 
 
 High Priority:
 1. Inferno Construct
@@ -20,36 +18,41 @@ High Priority:
 3. Digital Daito Obtaining
 
 Mid Priority:
-1. Tectonic Tether
-2. Horn of Plenty: 10% more drops accessory
-3. Ethereal Tonic, Heretic Tonic, Blazing Tonic
+1. Ethereal Tonic, Heretic Tonic, Blazing Tonic
 	1. Dissolving Brilliance, Dissolving Nether 
 	2. Other Potions: 
 	 (Inferno) Bluefire Potion: Killed enemies spawn stationary wisps that last for 10 seconds, fires at enemies like virtues but different charge time, color, etc.
-4. Lux Drops:
+2. Lux Drops:
 	1. Rose Bow
 	2. Voidmage Incubator
 	3. Phase Ore!?
 	4. True Phaseblade -> Starward Sword
-5. Starcaller Staff: hallowed Chest Item
-	1. Summons small celestial  serpent bud to assist in combat (would be nice to have a smaller celestial serpent sprite)
-6. Construct Items:
+3. Starcaller Staff: hallowed Chest Item
+	1. Summons small celestial serpent bud to assist in combat. It grows in length and chunkyness as it gains segments
+4. Construct Items:
 	1. Glaze Repeater (permafrost construct)
-	2. (evil construct one)
+	2. Drill Chain Cluster (temp name, evil construct one)
+		1. 8 direction solar eruption
 	3. (tidal construct one)
-7. Recursive Bow (Pun on Recurve Bow), probably sold from Traveling Merchant
+	4. Tectonic Tether (Earthen Construct too)
+5. Recursive Bow (Pun on Recurve Bow), probably sold from Traveling Merchant
 	1. Fires an arrow. 50% chance to fire an additional arrow. For every additional arrow fired, has a 50% chance to fire yet another additional arrow
-8. Witch's Heart accessory; in similar vein to Heart of the Sea, where it is an accessory variant of the potion
+6. Witch's Heart accessory; in similar vein to Heart of the Sea, where it is an accessory variant of the nightmare potion
+7. Make unique effect for frigid ice breaking
+8. Mobile Fortress Generator: upgrade to platform generator. Two tiers of upgrades, can be visually whatever but it is obtained from Old One's army stuff
 
 Low Priority:
 1. Archaelogist NPC
-2. Mobile Fortress Generator: One for every tavernkeep armor set
-3. Electrolyte Seperator
-4. Wintry Traveler: Riptide Trident + Frigid Javelin
+2. Electrolyte Seperator
+3. Wintry Traveler: Riptide Trident + Frigid Javelin
+
+11/12/21
+1. Fixed various ice tile things and optimized some code.
+2. Tested. Nightmare Potion works in multiplayer.
 
 11/8/21 & 11/9/21
 1. Dissolving Umbra block and Wall finished. Kinda works like Sky Chain / Lost Chain.
-2. Added Nightmare Potion. Needs multiplayer testing and balancing feedback
+2. Added Nightmare Potion
 3. Tiny Planet fish is easier to catch at higher fishing power.
 4. Fragment of Earth is now required to craft roughskin potion.
 

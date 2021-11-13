@@ -13,26 +13,19 @@ namespace SOTS.Items.IceStuff
 			Tooltip.SetDefault("Frost Artifact");
 			Tooltip.SetDefault("Has a slot for a key");
 		}
-
 		public override void SetDefaults()
 		{
+			item.CloneDefaults(ItemID.StoneBlock);
 			item.width = 44;
 			item.height = 26;
-			item.maxStack = 999;
-			item.useTurn = true;
-			item.autoReuse = true;
-			item.useAnimation = 15;
-			item.useTime = 10;
-			item.useStyle = 1;
-			item.rare = 9;
 			item.consumable = true;
-			item.createTile = mod.TileType("FrostArtifactTile");
+			item.createTile = ModContent.TileType<FrostArtifactTile>();
 		}
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "HardIceBrick", 25);
-			recipe.AddIngredient(null, "FrostedKey", 1);
+			recipe.AddIngredient(ModContent.ItemType<HardIceBrick>(), 100);
+			recipe.AddIngredient(ModContent.ItemType<FrostedKey>(), 1);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.SetResult(this, 1);
 			recipe.AddRecipe();
