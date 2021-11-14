@@ -152,7 +152,6 @@ namespace SOTS
 		public bool PlanetariumBiome = false;
 		//public bool GeodeBiome = false;
 		public bool PyramidBiome = false;
-		public bool chessSkip = false;
 		public bool backUpBow = false;
 		public int doubledActive = 0;
 		public int doubledAmount = 0;
@@ -196,6 +195,7 @@ namespace SOTS
 		public bool CritFrost = false; //borealis icosahedron
 		public bool CritCurseFire = false; //cursed icosahedron
 		public bool CritNightmare = false;
+		public bool BlueFire = false;
 		public bool netUpdate = false;
 		public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
 		{
@@ -765,7 +765,6 @@ namespace SOTS
 			deoxysPet = false;
 			DapperChu = false;
 			TurtleTem = false;
-			chessSkip = false;
 			//DevilSpawn = false;	
 			PurpleBalloon = false;
 			ItemDivision = false;
@@ -803,6 +802,7 @@ namespace SOTS
 			CurseAura = false;
 			RubyMonolith = false;
 			CanCurseSwap = false;
+			BlueFire = false;
 			if (PyramidBiome)
 				player.AddBuff(ModContent.BuffType<Buffs.PharaohsCurse>(), 16, false); 
 			polarCannons = 0;
@@ -1155,6 +1155,19 @@ namespace SOTS
 					}
 				}
 			}
+			else
+            {
+				if(target.life <= 0)
+                {
+					if(BlueFire)
+                    {
+						if (Main.myPlayer == player.whoAmI)
+						{
+							Projectile.NewProjectile(target.Center, Vector2.Zero, ModContent.ProjectileType<BluefireCrush>(), (int)(damage * 0.4f), 0, Main.myPlayer);
+						}
+					}
+                }
+            }
 		}
 		public override void GetHealLife(Item item, bool quickHeal, ref int healValue)
         {

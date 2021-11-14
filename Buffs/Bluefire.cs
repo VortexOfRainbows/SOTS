@@ -4,12 +4,12 @@ using Terraria.ModLoader;
  
 namespace SOTS.Buffs
 {
-    public class Nightmare : ModBuff
+    public class Bluefire : ModBuff
     {
         public override void SetDefaults()
         {
-            DisplayName.SetDefault("Nightmare");
-			Description.SetDefault("Compress enemies together with critical strikes");   
+            DisplayName.SetDefault("Bluefire");
+			Description.SetDefault("Killed enemies explode into flames");   
             Main.buffNoSave[Type] = false;
             Main.buffNoTimeDisplay[Type] = false;
 			Main.debuff[Type] = false;
@@ -17,7 +17,7 @@ namespace SOTS.Buffs
         public override void Update(Player player, ref int buffIndex)
         {
             SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-            modPlayer.CritNightmare = true;
+            modPlayer.BlueFire = true;
         }
     }
 }

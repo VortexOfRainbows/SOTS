@@ -29,6 +29,19 @@ namespace SOTS.Projectiles.Minions
 			projectile.sentry = true;
 		}
 		List<FireParticle> particleList = new List<FireParticle>();
+		public void cataloguePos()
+		{
+			for (int i = 0; i < particleList.Count; i++)
+			{
+				FireParticle particle = particleList[i];
+				particle.Update();
+				if (!particle.active)
+				{
+					particleList.RemoveAt(i);
+					i--;
+				}
+			}
+		}
 		float sphereRadius = 215f;
 		float counter = 0;
 		public override bool PreAI()
@@ -74,19 +87,6 @@ namespace SOTS.Projectiles.Minions
 				}
 			}
 			return base.PreAI();
-		}
-		public void cataloguePos()
-		{
-			for (int i = 0; i < particleList.Count; i++)
-			{
-				FireParticle particle = particleList[i];
-				particle.Update();
-				if (!particle.active)
-				{
-					particleList.RemoveAt(i);
-					i--;
-				}
-			}
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
