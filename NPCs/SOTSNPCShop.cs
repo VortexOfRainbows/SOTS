@@ -33,7 +33,12 @@ namespace SOTS.NPCs
 				shop[nextSlot] = ModContent.ItemType<Traingun>();
 				nextSlot++;
 			}
-			if(Main.rand.NextBool(500))
+			if (Main.rand.NextBool(10))
+			{
+				shop[nextSlot] = ModContent.ItemType<RecursiveBow>();
+				nextSlot++;
+			}
+			if (Main.rand.NextBool(500))
 			{
 				shop[nextSlot] = ModContent.ItemType<SupremSticker>();
 				nextSlot++;

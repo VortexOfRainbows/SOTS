@@ -33,17 +33,16 @@ Mid Priority:
 		1. 8 direction solar eruption
 	3. (tidal construct one)
 	4. Tectonic Tether (Earthen Construct too)
-5. Recursive Bow (Pun on Recurve Bow), probably sold from Traveling Merchant
-	1. Fires an arrow. 50% chance to fire an additional arrow. For every additional arrow fired, has a 50% chance to fire yet another additional arrow
-6. Witch's Heart accessory; in similar vein to Heart of the Sea, where it is an accessory variant of the nightmare potion
-7. Make unique effect for frigid ice breaking + new Polaris structure spawn.
-8. Mobile Fortress Generator: upgrade to platform generator. Two tiers of upgrades (this + another earlier one), can be visually whatever but it is obtained from Old One's army stuff
+5. Witch's Heart accessory; in similar vein to Heart of the Sea, where it is an accessory variant of the nightmare potion
+6. Make unique effect for frigid ice breaking + new Polaris structure spawn.
+7. Mobile Fortress Generator: upgrade to platform generator. Two tiers of upgrades (this + another earlier one), can be visually whatever but it is obtained from Old One's army stuff
 
 Low Priority:
 1. Archaelogist NPC
 
 11/13/21
 1. Added Bluefire Potion (HM fragment of inferno potion). Works in multiplayer.
+2. Added Recursive Bow, replaces Bow Son of Bow. May need multiplayer testing (text pop up).
 
 11/12/21
 1. Fixed various ice tile things and optimized some code.
