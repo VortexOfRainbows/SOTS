@@ -16,8 +16,8 @@ namespace SOTS.Items.Pyramid
 		{
             item.damage = 16;
             item.magic = true; 
-            item.width = 30;    
-            item.height = 36; 
+            item.width = 34;    
+            item.height = 34; 
             item.useTime = 23; 
             item.useAnimation = 23;
             item.useStyle = 5;    
