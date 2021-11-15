@@ -15,8 +15,8 @@ namespace SOTS.Items
 		{
             item.damage = 13; 
             item.magic = true; 
-            item.width = 30;   
-            item.height = 30;   
+            item.width = 48;   
+            item.height = 46;   
             item.useTime = 39;   
             item.useAnimation = 39;
             item.useStyle = ItemUseStyleID.HoldingOut;    
