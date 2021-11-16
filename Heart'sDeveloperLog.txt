@@ -14,7 +14,6 @@ Sprites To Do:
 Current:
 1. Buffs icons for various new items
 2. Tiny Planet Fish
-3. Ruby Monolith Shield and Sword
 
 Others:
 1. Flashspark Boots Spritesheet
