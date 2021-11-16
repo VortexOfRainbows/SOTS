@@ -1,7 +1,5 @@
 using System;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-
 using Terraria;
 using Terraria.ModLoader;
 
@@ -9,12 +7,6 @@ namespace SOTS.Projectiles.Nature
 {    
     public class AcornOfJustice : ModProjectile 
     {	
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Acorn Of Justice");
-			
-		}
-		
         public override void SetDefaults()
         {
 			projectile.aiStyle = 1;
@@ -36,8 +28,7 @@ namespace SOTS.Projectiles.Nature
 			Player player = Main.player[projectile.owner];
 			if(projectile.owner == Main.myPlayer)
 			{
-				int Probe = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("GrowTree"), projectile.damage, projectile.knockBack, player.whoAmI);
-				Main.projectile[Probe].ai[0] = 1;
+				int Probe = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, ModContent.ProjectileType<GrowTree>(), projectile.damage, projectile.knockBack, player.whoAmI, 1);
 				Main.projectile[Probe].rotation = (float)Math.Atan2((double)oldVelocity.Y, (double)oldVelocity.X) + MathHelper.ToRadians(90);
 				Main.projectile[Probe].spriteDirection = 1;
 				Main.projectile[Probe].frame = 3;
@@ -49,9 +40,7 @@ namespace SOTS.Projectiles.Nature
 			Player player = Main.player[projectile.owner];
 			if(projectile.owner == Main.myPlayer)
 			{
-				
-				int Probe = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("GrowTree"), projectile.damage, projectile.knockBack, player.whoAmI);
-				Main.projectile[Probe].ai[0] = 1;
+				int Probe = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, ModContent.ProjectileType<GrowTree>(), projectile.damage, projectile.knockBack, player.whoAmI, 1);
 				Main.projectile[Probe].rotation = (float)Math.Atan2((double)projectile.velocity.Y, (double)projectile.velocity.X) + MathHelper.ToRadians(90);
 				Main.projectile[Probe].spriteDirection = 1;
 				Main.projectile[Probe].frame = 3;
@@ -61,8 +50,8 @@ namespace SOTS.Projectiles.Nature
         {
 			for(int i = 0; i < 15; i++)
 			{
-			int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 2);
-			Main.dust[num1].noGravity = true;
+				int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 2);
+				Main.dust[num1].noGravity = true;
 			}
 		}
 	}

@@ -99,7 +99,7 @@ namespace SOTS.Projectiles
 				if(damageCounter >= 300 && damageCounter < 315)
 				{
 					if(damageCounter == 301)
-					projectile.frame = 1;
+						projectile.frame = 1;
 					projectile.scale += 0.035f;
 					projectile.rotation += MathHelper.ToRadians(12);
 				}

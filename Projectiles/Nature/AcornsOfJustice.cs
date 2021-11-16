@@ -12,9 +12,7 @@ namespace SOTS.Projectiles.Nature
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Acorns Of Justice");
-			
 		}
-		
         public override void SetDefaults()
         {
 			projectile.aiStyle = 1;
@@ -36,13 +34,12 @@ namespace SOTS.Projectiles.Nature
 			Player player = Main.player[projectile.owner];
 			if(projectile.owner == Main.myPlayer)
 			{
-				for(int i = 0; i < 5; i++)
+				for (int i = -2; i <= 2; i++)
 				{
-				int Probe = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("GrowTree"), projectile.damage, projectile.knockBack, player.whoAmI, 0, 12);
-				Main.projectile[Probe].ai[0] = 1;
-				Main.projectile[Probe].rotation = (float)Math.Atan2((double)oldVelocity.Y, (double)oldVelocity.X) + MathHelper.ToRadians(72 * i);
-				Main.projectile[Probe].spriteDirection = 1;
-				Main.projectile[Probe].frame = 3;
+					int Probe = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, ModContent.ProjectileType<GrowTree>(), projectile.damage, projectile.knockBack, player.whoAmI, 1, MathHelper.ToRadians(i * 4.4f));
+					Main.projectile[Probe].rotation = oldVelocity.ToRotation() + MathHelper.ToRadians(90 - i * 8f);
+					Main.projectile[Probe].spriteDirection = 1;
+					Main.projectile[Probe].frame = 3;
 				}
 			}
 			return true;
@@ -52,22 +49,21 @@ namespace SOTS.Projectiles.Nature
 			Player player = Main.player[projectile.owner];
 			if(projectile.owner == Main.myPlayer)
 			{
-				for(int i = 0; i < 5; i++)
+				for (int i = -2; i <= 2; i++)
 				{
-				int Probe = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("GrowTree"), projectile.damage, projectile.knockBack, player.whoAmI, 0, 12);
-				Main.projectile[Probe].ai[0] = 1;
-				Main.projectile[Probe].rotation = (float)Math.Atan2((double)projectile.velocity.Y, (double)projectile.velocity.X) + MathHelper.ToRadians(72 * i);
-				Main.projectile[Probe].spriteDirection = 1;
-				Main.projectile[Probe].frame = 3;
+					int Probe = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, ModContent.ProjectileType<GrowTree>(), projectile.damage, projectile.knockBack, player.whoAmI, 1, MathHelper.ToRadians(i * 4.4f));
+					Main.projectile[Probe].rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(90 - i * 8f);
+					Main.projectile[Probe].spriteDirection = 1;
+					Main.projectile[Probe].frame = 3;
 				}
-            }
+			}
 		}
 		public override void Kill(int timeLeft)
         {
 			for(int i = 0; i < 24; i++)
 			{
-			int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 2);
-			Main.dust[num1].noGravity = true;
+				int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 2);
+				Main.dust[num1].noGravity = true;
 			}
 		}
 	}

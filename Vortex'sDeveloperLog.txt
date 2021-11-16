@@ -43,6 +43,8 @@ Low Priority:
 
 11/15/21
 1. Blue Slimers to post-king slime
+2. Scatterseed minor rework, now fires like shotgun, different stats
+3. Biomass Bloom is an actual upgrade now, with an improved overall trajectory
 
 11/13/21
 1. Added Bluefire Potion (HM fragment of inferno potion). Works in multiplayer.
