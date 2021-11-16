@@ -122,6 +122,10 @@ namespace SOTS.Items.Otherworld.FromChests
 	}
 	public class OtherworldlyAlloy : ModItem
 	{
+		public override void SetStaticDefaults()
+		{
+			DisplayName.SetDefault("Twilight Bar");
+		}
 		public override void SetDefaults()
 		{
 			item.maxStack = 999;
