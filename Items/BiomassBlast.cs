@@ -1,3 +1,7 @@
+using Microsoft.Xna.Framework;
+using SOTS.Items.Fragments;
+using SOTS.Items.Pyramid;
+using SOTS.Projectiles.Nature;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -25,16 +29,20 @@ namespace SOTS.Items
             item.value = Item.sellPrice(0, 2, 0, 0);
             item.rare = ItemRarityID.Pink;
             item.UseSound = SoundID.Item8;
-            item.shoot = mod.ProjectileType("AcornOfJustice"); 
+            item.shoot = ModContent.ProjectileType<AcornOfJustice>(); 
             item.shootSpeed = 15.5f;
 			item.mana = 15;
 		}
-		public override void AddRecipes()
+        public override Vector2? HoldoutOffset()
+        {
+            return new Vector2(-0.5f, 0);
+        }
+        public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "Scatterseed", 1);
-			recipe.AddIngredient(null, "Snakeskin", 12);
-			recipe.AddIngredient(null, "DissolvingNature", 1);
+			recipe.AddIngredient(ModContent.ItemType<Scatterseed>(), 1);
+			recipe.AddIngredient(ModContent.ItemType<Snakeskin>(), 12);
+			recipe.AddIngredient(ModContent.ItemType<DissolvingNature>(), 1);
 			recipe.AddIngredient(ItemID.Vilethorn, 1);
 			recipe.AddIngredient(ItemID.Acorn, 20);
 			recipe.AddTile(TileID.Anvils);
@@ -42,9 +50,9 @@ namespace SOTS.Items
 			recipe.AddRecipe();
 			
 			recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "Scatterseed", 1);
-			recipe.AddIngredient(null, "Snakeskin", 12);
-			recipe.AddIngredient(null, "DissolvingNature", 1);
+			recipe.AddIngredient(ModContent.ItemType<Scatterseed>(), 1);
+			recipe.AddIngredient(ModContent.ItemType<Snakeskin>(), 12);
+			recipe.AddIngredient(ModContent.ItemType<DissolvingNature>(), 1);
 			recipe.AddIngredient(ItemID.CrimsonRod, 1);
 			recipe.AddIngredient(ItemID.Acorn, 20);
 			recipe.AddTile(TileID.Anvils);

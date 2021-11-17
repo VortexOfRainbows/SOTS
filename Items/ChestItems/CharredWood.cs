@@ -25,7 +25,7 @@ namespace SOTS.Items.ChestItems
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Charred Wood");
-			Tooltip.SetDefault("Too burnt to be used");
+			Tooltip.SetDefault("'Too burnt to be used'");
 		}
 		public override void SetDefaults()
 		{

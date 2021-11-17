@@ -20,7 +20,7 @@ namespace SOTS.Items.Otherworld.FromChests
             item.width = 14;     
             item.height = 34;
             item.value = Item.sellPrice(0, 0, 4, 0);
-            item.rare = 9;
+            item.rare = ItemRarityID.Cyan;
 		}
 	}
 	public class StarlightAlloy : ModItem
@@ -34,11 +34,13 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override void SetDefaults()
 		{
-			item.maxStack = 999;
+			item.CloneDefaults(ItemID.IronBar);
 			item.width = 30;
 			item.height = 22;
 			item.value = Item.sellPrice(0, 0, 45, 0);
 			item.rare = ItemRarityID.Cyan;
+			item.placeStyle = 3;
+			item.createTile = ModContent.TileType<TheBars>();
 		}
 		public override void AddRecipes()
 		{
@@ -79,11 +81,13 @@ namespace SOTS.Items.Otherworld.FromChests
 	{
 		public override void SetDefaults()
 		{
-			item.maxStack = 999;
+			item.CloneDefaults(ItemID.IronBar);
 			item.width = 30;
 			item.height = 22;
 			item.value = Item.sellPrice(0, 0, 45, 0);
 			item.rare = ItemRarityID.Cyan;
+			item.placeStyle = 1;
+			item.createTile = ModContent.TileType<TheBars>();
 		}
 		public override void AddRecipes()
 		{
@@ -124,15 +128,17 @@ namespace SOTS.Items.Otherworld.FromChests
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Twilight Bar");
+			DisplayName.SetDefault("Twilight Alloy");
 		}
 		public override void SetDefaults()
 		{
-			item.maxStack = 999;
+			item.CloneDefaults(ItemID.IronBar);
 			item.width = 30;
 			item.height = 22;
 			item.value = Item.sellPrice(0, 0, 45, 0);
 			item.rare = ItemRarityID.Cyan;
+			item.placeStyle = 5;
+			item.createTile = ModContent.TileType<TheBars>();
 		}
 		public override void AddRecipes()
 		{

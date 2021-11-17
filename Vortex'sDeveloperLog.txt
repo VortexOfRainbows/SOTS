@@ -20,9 +20,9 @@ High Priority:
 Mid Priority:
 1. Ethereal Tonic, Heretic Tonic, Blazing Tonic
 	1. Dissolving Brilliance, Dissolving Nether 
-2. Lux Drops:
+2. Lux Drops (ask me before you go about spriting these ones):
 	1. Rose Bow
-	2. Voidmage Incubator
+	2. Voidmage Incubator 
 	3. Phase Ore!?
 	4. True Phaseblade -> Starward Sword
 3. Starcaller Staff: hallowed Chest Item
@@ -32,14 +32,19 @@ Mid Priority:
 	2. Drill Chain Cluster (temp name, evil construct one)
 		1. 8 direction solar eruption
 	3. (tidal construct one)
-5. Witch's Heart accessory; in similar vein to Heart of the Sea, where it is an accessory variant of the nightmare potion
+5. Witch's Heart accessory; in similar vein to Heart of the Sea, where it is an accessory variant of the Nightmare potion
+	1. Wisp in a Jar; it is an accessory variant of the Bluefire potion
 6. Make unique effect for frigid ice breaking + new Polaris structure spawn.
 7. Mobile Fortress Generator: upgrade to platform generator. Two tiers of upgrades (this + another earlier one), can be visually whatever but it is obtained from Old One's army stuff
 8. Twilight Scouter, drops Gravity Normalizer. Spawns in Space and Planetarium.
-9. Make bars placeable
 
 Low Priority:
 1. Archaelogist NPC
+
+11/16/21
+1. Added placeable forms for all the bars
+	1. Map color is different from vanilla (which is all gold bar color on map); its bright gray
+2. Pallet modification for Avaritian dust
 
 11/15/21
 1. Blue Slimers to post-king slime

@@ -1,3 +1,4 @@
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -19,7 +20,7 @@ namespace SOTS.Items.Pyramid
             item.height = 60;   
             item.useTime = 30;   
             item.useAnimation = 30;
-            item.useStyle = 5;    
+            item.useStyle = ItemUseStyleID.HoldingOut;    
             item.noMelee = true;  
             item.knockBack = 3.25f;
             item.value = Item.sellPrice(0, 4, 50, 0);
@@ -30,11 +31,15 @@ namespace SOTS.Items.Pyramid
 			item.autoReuse = true;
 			item.mana = 11;
 		}
+		public override Vector2? HoldoutOffset()
+		{
+			return new Vector2(-1f, 0);
+		}
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "BiomassBlast", 1);
-			recipe.AddIngredient(null, "CursedMatter", 3);
+			recipe.AddIngredient(ModContent.ItemType<BiomassBlast>(), 1);
+			recipe.AddIngredient(ModContent.ItemType <CursedMatter>(), 3);
 			recipe.AddIngredient(ItemID.OrichalcumBar, 12);
 			recipe.AddIngredient(ItemID.SoulofLight, 12);
 			recipe.AddIngredient(ItemID.SoulofNight, 12);
@@ -44,8 +49,8 @@ namespace SOTS.Items.Pyramid
 			recipe.AddRecipe();
 			
 			recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "BiomassBlast", 1);
-			recipe.AddIngredient(null, "CursedMatter", 3);
+			recipe.AddIngredient(ModContent.ItemType<BiomassBlast>(), 1);
+			recipe.AddIngredient(ModContent.ItemType<CursedMatter>(), 3);
 			recipe.AddIngredient(ItemID.MythrilBar, 12);
 			recipe.AddIngredient(ItemID.SoulofLight, 12);
 			recipe.AddIngredient(ItemID.SoulofNight, 12);
