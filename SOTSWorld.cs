@@ -255,11 +255,13 @@ namespace SOTS
 
 				int iceY = -1;
 				int iceX = -1;
+				int totalChecks = 0;
 				for (int xCheck = Main.rand.Next(Main.maxTilesX); xCheck != -1; xCheck = Main.rand.Next(Main.maxTilesX))
 				{
 					for (int ydown = 0; ydown != -1; ydown++)
 					{
 						Tile tile = Framing.GetTileSafely(xCheck, ydown);
+						bool allValid = totalChecks > 100 || (SOTSWorldgenHelper.TrueTileSolid(xCheck + 1, ydown) && SOTSWorldgenHelper.TrueTileSolid(xCheck + 2, ydown) && SOTSWorldgenHelper.TrueTileSolid(xCheck - 1, ydown) && SOTSWorldgenHelper.TrueTileSolid(xCheck - 2, ydown));
 						if (tile.active() && tile.type == TileID.SnowBlock)
 						{
 							iceY = ydown;
@@ -275,187 +277,11 @@ namespace SOTS
 						iceX = xCheck;
 						break;
 					}
+					totalChecks++;
 				}
-
-				int radius9 = 12;
-				for (int x = -radius9; x <= radius9; x++)
-				{
-					for (int y = -radius9; y <= radius9; y++)
-					{
-						int xPosition6 = iceX + x;
-						int yPosition6 = iceY + -Math.Abs(y);
-
-						if (Math.Sqrt(x * x + y * y) <= radius9 + 0.5)
-						{
-							WorldGen.KillTile(xPosition6, yPosition6, false, false, false);
-						}
-					}
-				}
-				int[,] _iceArtifact = {
-					{ 0, 0, 0, 0, 0, 0, 1, 2, 3, 0, 0, 0, 0, 0, 0 },
-					{ 0, 0, 0, 0, 0, 1, 2, 4, 2, 3, 0, 0, 0, 0, 0 },
-					{ 0, 0, 0, 0, 1, 2, 4, 4, 4, 2, 3, 0, 0, 0, 0 },
-					{ 0, 0, 0, 1, 2, 4, 4, 4, 4, 4, 2, 3, 0, 0, 0 },
-					{ 0, 0, 1, 2, 4, 4, 4, 5, 4, 4, 4, 2, 3, 0, 0 },
-					{ 0, 1, 2, 4, 4, 4, 5, 0, 5, 4, 4, 4, 2, 3, 0 },
-					{ 0, 0, 5, 4, 4, 5, 0, 0, 0, 5, 4, 4, 5, 0, 0 },
-					{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-					{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-					{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-					{ 0, 0, 0, 0, 0, 0, 9, 9, 9, 0, 0, 0, 0, 0, 0 },
-					{ 0, 0, 0, 0, 0, 0, 9, 6, 9, 0, 0, 0, 0, 0, 0 },
-					{ 0, 0, 4, 4, 4, 4, 7, 7, 7, 4, 4, 4, 4, 0, 0 },
-					{ 0, 0, 0, 5, 5, 4, 7, 7, 7, 4, 5, 5, 0, 0, 0 },
-					{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-					{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-					{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-					{ 4, 4, 4, 4, 4, 4, 5, 5, 5, 4, 4, 4, 4, 4, 4 },
-					{ 0, 0, 5, 5, 2, 0, 0, 0, 0, 0, 2, 5, 5, 0, 0 },
-					{ 0, 0, 0, 4, 4, 4, 5, 5, 5, 4, 4, 4, 0, 0, 0 },
-					{ 0, 0, 5, 5, 2, 0, 0, 0, 0, 0, 2, 5, 5, 0, 0 },
-					{ 0, 0, 0, 4, 4, 4, 5, 5, 5, 4, 4, 4, 0, 0, 0 },
-					{ 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0 },
-					{ 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0 },
-					{ 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0 },
-					{ 0, 0, 2, 2, 2, 2, 0, 0, 0, 2, 2, 2, 2, 0, 0 },
-					{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-					{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-					{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-					{ 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0 },
-					{ 8, 8, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 8, 8 }
-				};
-				int[,] _iceArtifactWalls = {
-					{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-					{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-					{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-					{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-					{ 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0 },
-					{ 0, 0, 0, 0, 0, 0, 3, 1, 3, 0, 0, 0, 0, 0, 0 },
-					{ 0, 0, 0, 0, 3, 3, 1, 1, 1, 3, 3, 0, 0, 0, 0 },
-					{ 0, 0, 0, 0, 3, 2, 1, 1, 1, 2, 3, 0, 0, 0, 0 },
-					{ 0, 0, 0, 0, 3, 2, 1, 1, 1, 2, 3, 0, 0, 0, 0 },
-					{ 0, 0, 0, 0, 3, 2, 1, 1, 1, 2, 3, 0, 0, 0, 0 },
-					{ 0, 0, 0, 0, 3, 2, 1, 1, 1, 2, 3, 0, 0, 0, 0 },
-					{ 0, 0, 0, 0, 3, 2, 1, 1, 1, 2, 3, 0, 0, 0, 0 },
-					{ 0, 0, 0, 0, 3, 2, 1, 1, 1, 2, 3, 0, 0, 0, 0 },
-					{ 0, 0, 0, 0, 0, 3, 1, 1, 1, 3, 0, 0, 0, 0, 0 },
-					{ 0, 0, 0, 0, 0, 3, 2, 1, 2, 3, 0, 0, 0, 0, 0 },
-					{ 0, 0, 0, 0, 0, 3, 2, 1, 2, 3, 0, 0, 0, 0, 0 },
-					{ 0, 3, 3, 3, 3, 3, 2, 1, 2, 3, 3, 3, 3, 3, 0 },
-					{ 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0 },
-					{ 0, 0, 0, 0, 0, 3, 2, 1, 2, 3, 0, 0, 0, 0, 0 },
-					{ 0, 0, 0, 0, 0, 2, 3, 3, 3, 2, 0, 0, 0, 0, 0 },
-					{ 0, 0, 0, 0, 0, 3, 2, 1, 2, 3, 0, 0, 0, 0, 0 },
-					{ 0, 0, 0, 0, 0, 2, 3, 3, 3, 2, 0, 0, 0, 0, 0 },
-					{ 0, 0, 0, 0, 0, 3, 2, 1, 2, 3, 0, 0, 0, 0, 0 },
-					{ 0, 0, 0, 0, 0, 2, 2, 1, 2, 2, 0, 0, 0, 0, 0 },
-					{ 0, 0, 0, 0, 0, 2, 2, 1, 2, 2, 0, 0, 0, 0, 0 },
-					{ 0, 0, 0, 0, 0, 2, 2, 1, 2, 2, 0, 0, 0, 0, 0 },
-					{ 0, 0, 0, 1, 2, 1, 2, 1, 2, 1, 2, 1, 0, 0, 0 },
-					{ 0, 0, 0, 1, 2, 1, 2, 1, 2, 1, 2, 1, 0, 0, 0 },
-					{ 0, 0, 0, 1, 2, 1, 2, 1, 2, 1, 2, 1, 0, 0, 0 },
-					{ 0, 0, 0, 1, 2, 1, 2, 1, 2, 1, 2, 1, 0, 0, 0 },
-					{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
-				};
-
 				int iceArtifactPositionX = iceX;
-				int iceArtifactPositionY = iceY - _iceArtifact.GetLength(0);
-				iceArtifactPositionX -= (int)(.5f * _iceArtifact.GetLength(1));
-				//iceArtifactPositionY -= (int)(.5f * _iceArtifact.GetLength(0));
-				for (int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)
-				{
-					for (int y = 0; y < _iceArtifact.GetLength(0); y++) {
-						for (int x = 0; x < _iceArtifact.GetLength(1); x++) {
-							int k = iceArtifactPositionX + x;
-							int l = iceArtifactPositionY + y;
-							if (WorldGen.InWorld(k, l, 30)) {
-								Tile tile = Framing.GetTileSafely(k, l);
-								switch (_iceArtifact[y, x]) {
-									case 0:
-										tile.active(false);
-										break;
-									case 1:
-										tile.type = 148; //snowbrick
-										tile.slope(2);
-										tile.active(true);
-										break;
-									case 2:
-										tile.type = 148; //snowbrick
-										tile.active(true);
-										tile.slope(0);
-										break;
-									case 3:
-										tile.type = 148; //snowbrick
-										tile.active(true);
-										tile.slope(1);
-										break;
-									case 4:
-										tile.type = 321; //boreal
-										tile.active(true);
-										tile.slope(0);
-										break;
-									case 5:
-										WorldGen.PlaceTile(k, l, TileID.Platforms, true, true, -1, 19); //boreal platform
-										break;
-									case 6:
-										WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<FrostArtifactTile>());
-										break;
-									case 7:
-										tile.type = (ushort)ModContent.TileType<HardIceBrickTile>(); //ice
-										tile.active(true);
-										tile.slope(0);
-										break;
-									case 8:
-										tile.type = TileID.SnowBlock;
-										tile.active(true);
-										tile.slope(0);
-										break;
-									case 9:
-										break;
-
-								}
-							}
-						}
-					}
-				}
-				for (int y = 0; y < _iceArtifactWalls.GetLength(0); y++) {
-					for (int x = 0; x < _iceArtifactWalls.GetLength(1); x++) {
-						int k = iceArtifactPositionX + x;
-						int l = iceArtifactPositionY + y;
-						if (WorldGen.InWorld(k, l, 30)) {
-							Tile tile = Framing.GetTileSafely(k, l);
-							switch (_iceArtifactWalls[y, x]) {
-								case 0:
-									break;
-								case 1:
-									tile.wall = (ushort)WallID.SnowflakeWallpaper; //snowflake wall
-									break;
-								case 2:
-									tile.wall = 31; //snowbrick wall
-									break;
-								case 3:
-									tile.wall = 149; //boreal wall
-									break;
-							}
-						}
-					}
-				}
-				int radius6 = 10;
-				for (int x = -radius6; x <= radius6; x++)
-				{
-					for (int y = -radius6; y <= radius6; y++)
-					{
-						int xPosition6 = iceX + x;
-						int yPosition6 = iceY + Math.Abs(y);
-
-						if (Math.Sqrt(x * x + y * y) <= radius6 + 0.5)
-						{
-							WorldGen.PlaceTile(xPosition6, yPosition6, TileID.SnowBlock);
-							Tile tile = Framing.GetTileSafely(xPosition6, yPosition6);
-							tile.slope(0);
-						}
-					}
-				}
+				int iceArtifactPositionY = iceY;
+				SOTSWorldgenHelper.GenerateIceRuin(iceX, iceY);
 
 				int dungeonSide = -1; // -1 = dungeon on left, 1 = dungeon on right
 				if (Main.dungeonX > (int)(Main.maxTilesX / 2))
@@ -824,8 +650,27 @@ namespace SOTS
 				if (tile.type == ModContent.TileType<RuinedChestTile>())
 				{
 					int slot = 0;
-					chest.item[slot].SetDefaults(ModContent.ItemType<WorldgenScanner>());
-					slot++;
+					Tile tile2 = Main.tile[chest.x, chest.y + 2];
+					if (tile2.type == TileID.BorealWood && tile.wall == ModContent.WallType<HardIceBrickWallWall>())
+					{
+						chest.item[slot].SetDefaults(ModContent.ItemType<IceDeployer>()); //Will be replaced with Glaze Repeater
+						slot++;
+						chest.item[slot].SetDefaults(ModContent.ItemType<StrawberryIcecream>());
+						chest.item[slot].stack = 10;
+						slot++;
+						chest.item[slot].SetDefaults(ItemID.LifeCrystal);
+						slot++;
+						chest.item[slot].SetDefaults(ItemID.ManaCrystal);
+						slot++;
+						chest.item[slot].SetDefaults(ItemID.GoldCoin);
+						chest.item[slot].stack = Main.rand.Next(3) + 1; // 1 to 3
+						slot++;
+					}
+					else
+                    {
+						chest.item[slot].SetDefaults(ModContent.ItemType<WorldgenScanner>());
+						slot++;
+					}
 				}
 				if (tile.type == ModContent.TileType<PyramidChestTile>())
 				{

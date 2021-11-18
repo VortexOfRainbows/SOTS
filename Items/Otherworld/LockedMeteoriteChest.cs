@@ -47,19 +47,14 @@ namespace SOTS.Items.Otherworld
 			chest = "Meteorite Chest";
 			chestDrop = ItemID.MeteoriteChest;
 		}
-
 		public override ushort GetMapOption(int i, int j) => (ushort)(Main.tile[i, j].frameX / 36);
-
 		public override bool HasSmartInteract() => true;
-
 		public override bool IsLockedChest(int i, int j) => Main.tile[i, j].frameX / 36 == 1;
-
 		public override bool UnlockChest(int i, int j, ref short frameXAdjustment, ref int dustType, ref bool manual)
 		{
 			dustType = 1;
 			return true;
 		}
-
 		public string MapChestName(string name, int i, int j)
 		{
 			int left = i;
@@ -87,18 +82,15 @@ namespace SOTS.Items.Otherworld
 				return name + ": " + Main.chest[chest].name;
 			}
 		}
-
 		public override void NumDust(int i, int j, bool fail, ref int num)
 		{
 			num = 10;
 		}
-
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
 			Item.NewItem(i * 16, j * 16, 32, 32, chestDrop);
 			Chest.DestroyChest(i, j);
 		}
-
 		public override bool NewRightClick(int i, int j)
 		{
 			Player player = Main.LocalPlayer;
@@ -186,7 +178,6 @@ namespace SOTS.Items.Otherworld
 			}
 			return true;
 		}
-
 		public override void MouseOver(int i, int j)
 		{
 			Player player = Main.LocalPlayer;
@@ -221,7 +212,6 @@ namespace SOTS.Items.Otherworld
 			player.noThrow = 2;
 			player.showItemIcon = true;
 		}
-
 		public override void MouseOverFar(int i, int j)
 		{
 			MouseOver(i, j);

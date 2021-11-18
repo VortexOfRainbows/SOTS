@@ -15,11 +15,10 @@ namespace SOTS.Items.Fragments
 		}
 		public override void SetDefaults()
 		{
-
-			item.width = 22;
-			item.height = 28;
+			item.width = 24;
+			item.height = 26;
 			item.value = Item.sellPrice(0, 0, 0, 50);
-			item.rare = 1;
+			item.rare = ItemRarityID.Blue;
 			item.maxStack = 999;
 		}
 	}
@@ -32,8 +31,8 @@ namespace SOTS.Items.Fragments
 		}
 		public override void SetDefaults()
 		{
-			item.width = 28;
-			item.height = 28;
+			item.width = 22;
+			item.height = 24;
 			item.value = Item.sellPrice(0, 0, 0, 50);
 			item.rare = ItemRarityID.Blue;
 			item.maxStack = 999;
@@ -48,7 +47,7 @@ namespace SOTS.Items.Fragments
 		}
 		public override void SetDefaults()
 		{
-			item.width = 30;
+			item.width = 18;
 			item.height = 30;
 			item.value = Item.sellPrice(0, 0, 0, 50);
 			item.rare = ItemRarityID.Blue;
@@ -80,8 +79,8 @@ namespace SOTS.Items.Fragments
 		}
 		public override void SetDefaults()
 		{
-			item.width = 26;
-			item.height = 26;
+			item.width = 28;
+			item.height = 30;
 			item.value = Item.sellPrice(0, 0, 0, 50);
 			item.rare = ItemRarityID.Blue;
 			item.maxStack = 999;

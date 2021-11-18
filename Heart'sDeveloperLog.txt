@@ -17,7 +17,7 @@ Current:
 
 Others:
 1. Flashspark Boots Spritesheet
-2. Portal Item Sprites
+2. Portal (Gateway) Item Sprites
 3. Pinky Projectiles
 4. Trophes For Advisor, Pharaoh, Polaris, and Subspace
 5. Heartsheild Spritesheet

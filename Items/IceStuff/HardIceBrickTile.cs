@@ -1,5 +1,6 @@
 
 using Microsoft.Xna.Framework;
+using SOTS.Dusts;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -16,7 +17,7 @@ namespace SOTS.Items.IceStuff
 			Main.tileLighted[Type] = false;
 			minPick = 100;
 			mineResist = 2.0f;
-			dustType = DustID.Ice;
+			dustType = ModContent.DustType<ModIceDust>();
 			drop = ModContent.ItemType<HardIceBrick>();
 			AddMapEntry(new Color(198, 249, 251));
 			soundType = SoundID.Tink;
@@ -41,7 +42,8 @@ namespace SOTS.Items.IceStuff
 		{
 			Main.wallHouse[Type] = false;
 			AddMapEntry(new Color(144, 181, 181));
-			dustType = DustID.Ice;
+			dustType = ModContent.DustType<ModIceDust>();
+			drop = ModContent.ItemType<HardIceBrickWall>();
 		}
         public override void KillWall(int i, int j, ref bool fail)
         {

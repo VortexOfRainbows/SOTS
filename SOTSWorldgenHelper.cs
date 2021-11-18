@@ -11,13 +11,14 @@ using SOTS.Items;
 using SOTS.Items.Pyramid.AncientGold;
 using SOTS.Items.Pyramid.PyramidWalls;
 using SOTS.Items.Tide;
+using SOTS.Items.IceStuff;
 
 namespace SOTS
 {
 	public class SOTSWorldgenHelper
 	{
 		public static bool TrueTileSolid(int i, int j)
-        {
+		{
 			return (!WorldGen.InWorld(i, j, 20) || Main.tile[i, j].active() && Main.tileSolidTop[Main.tile[i, j].type] == false && Main.tileSolid[Main.tile[i, j].type] == true && Main.tile[i, j].nactive());
 		}
 		public static void GenerateAcediaRoom(int x, int y, Mod mod, int direction = 1)
@@ -298,9 +299,9 @@ namespace SOTS
 						}
 					}
 					else
-                    {
+					{
 						return false;
-                    }
+					}
 				}
 			}
 			return true;
@@ -1701,13 +1702,13 @@ namespace SOTS
 			return true;
 		}
 		public static bool GenerateBiomeChestIslands(int x, int y, int type, Mod mod, bool residual = false)
-        {
+		{
 			if (residual == true)
-            {
+			{
 				ushort firstUniqueTile = 0;
 				ushort secondUniqueTile = 0;
-				if(type == 0)
-                {
+				if (type == 0)
+				{
 					firstUniqueTile = TileID.CrimtaneBrick;
 					secondUniqueTile = (ushort)ModContent.TileType<DullPlatingTile>();
 				}
@@ -1808,9 +1809,9 @@ namespace SOTS
 					}
 				}
 				return true;
-            }
-			if(type == 0)
-            {
+			}
+			if (type == 0)
+			{
 				int[,] _structure = {
 				{0,0,0,1,1,1,1,1,1,1,1,0,0,0},
 				{0,0,1,2,2,2,2,2,2,2,2,1,0,0},
@@ -1939,8 +1940,8 @@ namespace SOTS
 					}
 				}
 			}
-			if(type == 1)
-            {
+			if (type == 1)
+			{
 				int[,] _structure = {
 					{0,0,0,1,1,1,1,1,1,1,1,0,0,0},
 					{0,0,1,2,2,2,2,2,2,2,2,1,0,0},
@@ -2074,8 +2075,8 @@ namespace SOTS
 					}
 				}
 			}
-			if(type == 2)
-            {
+			if (type == 2)
+			{
 				int[,] _structure = {
 					{0,0,0,1,1,1,1,1,1,1,1,0,0,0},
 					{0,0,1,2,2,2,2,2,2,2,2,1,0,0},
@@ -2218,8 +2219,8 @@ namespace SOTS
 					}
 				}
 			}
-			if(type == 3)
-            {
+			if (type == 3)
+			{
 				int[,] _structure = {
 					{0,0,0,1,1,1,1,1,1,1,1,0,0,0},
 					{0,0,1,1,2,2,2,2,2,2,1,1,0,0},
@@ -2360,8 +2361,8 @@ namespace SOTS
 				}
 
 			}
-			if(type == 4)
-            {
+			if (type == 4)
+			{
 				int[,] _structure = {
 					{0,0,0,1,1,1,1,1,1,1,1,0,0,0},
 					{0,0,1,2,2,2,2,2,2,2,2,1,0,0},
@@ -2495,7 +2496,7 @@ namespace SOTS
 					}
 				}
 			}
-			if(!residual)
+			if (!residual)
 			{
 				int direction = Main.rand.Next(2) * 2 - 1;
 				int directionV = Main.rand.Next(2) * 2 - 1;
@@ -2522,7 +2523,7 @@ namespace SOTS
 				}
 			}
 			return true;
-        }
+		}
 		public static bool SkytileValid(Tile tile, Mod mod)
 		{
 			return tile.active() && (tile.type == (ushort)mod.TileType("DullPlatingTile") || tile.type == (ushort)mod.TileType("AvaritianPlatingTile"));
@@ -2734,10 +2735,10 @@ namespace SOTS
 		}
 		public static void GenerateCoconutIsland(Mod mod, int x, int y, int direction = 1)
 		{
-			if(direction != 1 && direction != -1)
-            {
+			if (direction != 1 && direction != -1)
+			{
 				return;
-            }
+			}
 			int[,] _structure = {
 				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,2,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,2,2,2,2,2,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -2968,15 +2969,15 @@ namespace SOTS
 			}
 		}
 		public static void GenerateStarterHouseFull(Mod mod, int type)
-        {
+		{
 			int spawnX = -1;
 			int spawnY = -1;
 			int randomOne = Main.rand.Next(2) * 2 - 1;
 			int randAttempt = randomOne * Main.rand.Next(40, 81);
-			for (int xCheck = Main.maxTilesX / 2 + randAttempt;; xCheck = Main.maxTilesX / 2 + randAttempt)
+			for (int xCheck = Main.maxTilesX / 2 + randAttempt; ; xCheck = Main.maxTilesX / 2 + randAttempt)
 			{
 				randAttempt = randomOne * Main.rand.Next(40, 81);
-				for (int ydown = 0;; ydown++)
+				for (int ydown = 0; ; ydown++)
 				{
 					Tile tile = Framing.GetTileSafely(xCheck, ydown);
 					if (tile.active() && Main.tileSolid[tile.type])
@@ -3047,14 +3048,14 @@ namespace SOTS
 			{
 				waterbolt = true;
 				type = 10;
-			}				
+			}
 			if (Main.worldName.Contains("Mush") || Main.worldName.Contains("mush"))
 			{
 				waterbolt = true;
 				type = 11;
 			}
 			if (type == 0)
-            {
+			{
 				int[,] _structure = new int[,] {
 					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -3346,7 +3347,7 @@ namespace SOTS
 				}
 				UseStarterHouseHalfCircle(spawnX, spawnY, 1, _structure.GetLength(1) / 2, 8);
 			}
-			if(type == 1)
+			if (type == 1)
 			{
 				int[,] _structure = {
 					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -3514,8 +3515,8 @@ namespace SOTS
 				}
 				UseStarterHouseHalfCircle(spawnX, spawnY, 1, _structure.GetLength(1) / 2, 5);
 			}
-			if(type == 2)
-            {
+			if (type == 2)
+			{
 				int[,] _structure = {
 					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -3745,8 +3746,8 @@ namespace SOTS
 				}
 				UseStarterHouseHalfCircle(spawnX, spawnY, 1, _structure.GetLength(1) / 2, 7);
 			}
-			if(type == 3)
-            {
+			if (type == 3)
+			{
 				int[,] _structure = {
 					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -4227,8 +4228,8 @@ namespace SOTS
 				}
 				UseStarterHouseHalfCircle(spawnX, spawnY, 1, _structure.GetLength(1) / 2, 9);
 			}
-			if(type == 4)
-            {
+			if (type == 4)
+			{
 				int[,] _structure = {
 					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -4319,7 +4320,7 @@ namespace SOTS
 								Tile tile = Framing.GetTileSafely(k, l);
 								switch (_structure[i, j])
 								{
-                                    case -2:
+									case -2:
 										tile.active(true);
 										tile.type = TileID.Cobweb;
 										tile.slope(0);
@@ -4357,7 +4358,7 @@ namespace SOTS
 									case 4:
 										if (confirmPlatforms == 0)
 											tile.active(false);
-										else if(!tile.active())
+										else if (!tile.active())
 										{
 											WorldGen.PlaceTile(k, l, TileID.MetalBars, true, true, -1, WorldGen.IronTierOre == 6 ? 2 : 3);
 											tile.slope(0);
@@ -4455,8 +4456,8 @@ namespace SOTS
 				}
 				//UseStarterHouseHalfCircle(spawnX, spawnY, 1, _structure.GetLength(1) / 2, 15);
 			}
-			if(type == 5)
-            {
+			if (type == 5)
+			{
 				int[,] _structure = {
 					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -4675,8 +4676,8 @@ namespace SOTS
 				}
 				UseStarterHouseHalfCircle(spawnX, spawnY, 1, _structure.GetLength(1) / 2, 8);
 			}
-			if(type == 6)
-            {
+			if (type == 6)
+			{
 				int[,] _structure = {
 					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 					{0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -4731,7 +4732,7 @@ namespace SOTS
 									tile.wall = 63;
 									break;
 								case 5:
-									if(tile.wall == 0)
+									if (tile.wall == 0)
 										tile.wall = WallID.DirtUnsafe;
 									break;
 								case 6:
@@ -5006,8 +5007,8 @@ namespace SOTS
 					}
 				}
 			}
-			if(type == 7)
-            {
+			if (type == 7)
+			{
 				int[,] _structure = {
 					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -5067,7 +5068,7 @@ namespace SOTS
 									tile.wall = 60;
 									break;
 								case 2:
-									if(tile.wall == 0)
+									if (tile.wall == 0)
 										tile.wall = 2;
 									break;
 							}
@@ -5279,8 +5280,8 @@ namespace SOTS
 					}
 				}
 			}
-			if(type == 8)
-            {
+			if (type == 8)
+			{
 				int[,] _structure = {
 					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -5593,7 +5594,7 @@ namespace SOTS
 				UseStarterHouseHalfCircle(spawnX, spawnY + 1, 1, _structure.GetLength(1) / 2, 8);
 
 			}
-			if(type == 9)
+			if (type == 9)
 			{
 				int[,] _structure = {
 					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -5793,14 +5794,14 @@ namespace SOTS
 				}
 				UseStarterHouseHalfCircle(spawnX, spawnY - 1, 1, _structure.GetLength(1) / 2, 10);
 			}
-			if(type == 10)
-            {
+			if (type == 10)
+			{
 				GenerateAstrobitStarterHouse(spawnX, spawnY, waterbolt);
-            }
-			if(type == 11)
-            {
+			}
+			if (type == 11)
+			{
 				GenerateMushnibStarterHouse(spawnX, spawnY, waterbolt);
-            }
+			}
 		}
 		public static void GenerateAstrobitStarterHouse(int spawnX, int spawnY, bool WaterBolt = false)
 		{
@@ -6168,7 +6169,7 @@ namespace SOTS
 			}
 		}
 		public static void GenerateMushnibStarterHouse(int spawnX, int spawnY, bool WaterBolt = false)
-        {
+		{
 			int[,] _structure = {
 				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -6368,7 +6369,7 @@ namespace SOTS
 									if (confirmPlatforms == 2)
 										tile.active(false);
 									WorldGen.PlaceTile(k, l, TileID.Books, true, true, -1, Main.rand.Next(6));
-									if(WaterBolt)
+									if (WaterBolt)
 										tile.frameX = 90;
 									tile.slope(0);
 									tile.halfBrick(false);
@@ -6611,8 +6612,8 @@ namespace SOTS
 			}
 		}
 		public static void GenerateDamocles(int spawnX, int spawnY, int type)
-        {
-			for(int j = 1; j < 30; j++)
+		{
+			for (int j = 1; j < 30; j++)
 			{
 				int counter = 0;
 				for (int i = -1; i <= 1; i++)
@@ -6622,8 +6623,8 @@ namespace SOTS
 					Tile tile = Framing.GetTileSafely(tunnel, tunnelY);
 					Tile tileAbove = Framing.GetTileSafely(tunnel, tunnelY - 1);
 					if ((Main.tileDungeon[tile.type] || TileID.Spikes == tile.type) && tile.active())
-                    {
-						if(Main.tileSolid[tileAbove.type] && !Main.tileSolidTop[tileAbove.type] && tileAbove.active())
+					{
+						if (Main.tileSolid[tileAbove.type] && !Main.tileSolidTop[tileAbove.type] && tileAbove.active())
 							tile.active(false);
 						else
 						{
@@ -6636,7 +6637,7 @@ namespace SOTS
 							WorldGen.PlaceTile(tunnel, tunnelY, TileID.Platforms, true, true, -1, style);
 						}
 						counter++;
-                    }
+					}
 				}
 				if (counter == 0)
 				{
@@ -6656,7 +6657,7 @@ namespace SOTS
 				TileType1 = TileID.GreenDungeonBrick;
 				PlatformStyle = 8;
 			}
-			if(type == 2)
+			if (type == 2)
 			{
 				WallType1 = WallID.BlueDungeonUnsafe;
 				WallType2 = WallID.BlueDungeonTileUnsafe;
@@ -6774,7 +6775,7 @@ namespace SOTS
 						if (WorldGen.InWorld(k, l, 30))
 						{
 							Tile tile = Framing.GetTileSafely(k, l);
-							if(confirmPlatforms == 0)
+							if (confirmPlatforms == 0)
 							{
 								if (_structure[i, j] != 17 && _structure[i, j] != 16)
 								{
@@ -6936,6 +6937,252 @@ namespace SOTS
 										tile.slope(0);
 										tile.halfBrick(false);
 										WorldGen.PlaceTile(k, l, TileID.Containers, true, true, -1, 17);
+									}
+									break;
+							}
+						}
+					}
+				}
+			}
+		}
+		public static void GenerateIceRuin(int spawnX, int spawnY)
+		{
+			int[,] _structure = {
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,1,1,1,1,1,0,0,0,0,0},
+				{0,0,0,0,0,0,1,1,1,0,0,0,1,1,1,1,1,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0},
+				{0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0},
+				{0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,1,1,1,0,0,1,1,1,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0},
+				{0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0},
+				{0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0},
+				{0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0},
+				{0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0},
+				{0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0},
+				{0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0},
+				{0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0},
+				{2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2},
+				{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
+				{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
+				{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
+				{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
+				{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
+				{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
+				{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
+				{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
+				{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
+				{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
+				{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
+				{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
+				{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
+				{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
+				{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2}
+			};
+			int PosX = spawnX - _structure.GetLength(1) / 2;
+			int PosY = spawnY - _structure.GetLength(0) + 16;
+			//i = vertical, j = horizontal
+			int radius =  36;
+			int radiusY = 20;
+			float scale = radiusY / (float)radius;
+			float invertScale = (float)radius / radiusY;
+			for (int x = -radius; x <= radius; x++)
+			{
+				for (float y = -radius; y <= radius; y += invertScale)
+				{
+					if (Math.Sqrt(x * x + y * y) <= radius + 0.5)
+					{
+						int xPosition6 = spawnX + x;
+						int yPosition6 = spawnY + (int)(y * scale + 0.5f) - 17;
+						Tile tile = Framing.GetTileSafely(xPosition6, yPosition6);
+						tile.active(false);
+						tile.wall = 0;
+					}
+				}
+			}
+
+			for (int i = 0; i < _structure.GetLength(0); i++)
+			{
+				for (int j = _structure.GetLength(1) - 1; j >= 0; j--)
+				{
+					int k = PosX + j;
+					int l = PosY + i;
+					if (WorldGen.InWorld(k, l, 30))
+					{
+						Tile tile = Framing.GetTileSafely(k, l);
+						switch (_structure[i, j])
+						{
+							case 0:
+								tile.wall = 0;
+								break;
+							case 1:
+								tile.wall = (ushort)ModContent.WallType<HardIceBrickWallWall>();
+								break;
+							case 2:
+								if (tile.active())
+									tile.wall = 40;
+								break;
+						}
+					}
+				}
+			}
+			_structure = new int[,] {
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,1,2,2,2,2,2,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,2,2,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,5,5,5,5,5,5,5,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,2,2,2,3,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,6,5,5,5,5,5,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,5,5,5,5,5,5,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,6,6,0,0,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,5,5,5,5,6,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,6,6,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,6,0,7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,0,6,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,3,3,2,2,2,2,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,1,2,2,2,2,2,4,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,1,2,2,2,2,2,2,2,2,2,2,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,4,0,0,0,0,0},
+				{0,0,0,1,2,2,2,2,5,5,5,5,5,2,2,2,5,5,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,5,2,2,2,2,2,5,5,5,5,5,2,2,2,2,2,4,0,0},
+				{0,0,0,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,0,0},
+				{0,0,0,0,5,5,5,5,5,6,6,6,5,5,5,5,5,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,5,5,5,5,5,0,0,6,6,5,5,5,5,5,0,0,0,0},
+				{0,0,0,0,0,0,6,6,6,6,0,6,6,6,6,6,6,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,6,6,6,0,0,0,0,0,6,6,6,6,0,0,0,0,0,0},
+				{0,0,0,0,0,0,6,6,6,6,0,6,6,0,0,6,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,6,0,0,0,0,0,0,6,6,6,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,6,6,0,0,0,6,0,0,0,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,0,0,0,0,0,0,0,6,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,7,0,6,0,0,0,6,0,7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,6,0,0,0,0,0,0,7,0,0,0,0,0,0,0,0,7,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,6,6,0,0,0,0,0,0,0,0,0,6,6,6,6,6,0,0,0,0,0,0,0,0,0,6,6,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,6,6,6,0,0,0,0,0,5,5,5,6,6,0,0,0,0,8,0,0,6,6,6,6,5,5,5,0,0,0,0,0,6,6,6,6,6,6,6,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,6,6,6,6,6,6,6,0,0,0,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,0,0,6,6,6,6,6,6,6,6,6,6,6,0,0,0,0,0,0},
+				{0,0,0,6,6,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,6,6,0,0,0},
+				{13,13,6,6,6,5,5,5,6,6,6,6,6,5,5,5,6,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,6,6,5,5,5,6,6,6,6,6,6,5,5,5,6,6,6,13,13},
+				{13,6,6,6,6,6,5,6,6,6,6,6,6,6,5,6,6,6,6,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,6,6,6,6,5,6,6,6,6,6,6,6,6,5,6,6,6,6,6,13},
+				{13,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,13},
+				{13,13,9,9,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,13,13,13},
+				{13,13,9,9,9,9,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,9,13,13,13},
+				{13,13,13,9,9,9,9,9,9,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,9,9,13,13,13},
+				{13,13,13,13,13,9,9,9,9,9,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,9,6,6,6,9,6,6,9,6,6,9,9,9,13,13,13},
+				{13,13,13,13,13,13,9,9,9,9,9,9,9,9,6,6,6,6,6,6,9,6,6,6,6,6,9,9,6,6,6,6,6,6,6,6,6,9,6,6,9,9,9,6,6,9,9,6,9,6,9,9,13,13,13,13,13},
+				{13,13,13,13,13,13,9,9,9,9,9,9,9,9,6,6,6,6,6,6,9,9,6,6,6,6,9,9,6,6,6,6,6,6,6,6,9,9,9,6,9,9,9,9,9,9,9,9,9,9,9,13,13,13,13,13,13},
+				{13,13,13,13,13,13,13,13,13,13,9,9,9,9,9,9,9,6,6,6,9,9,9,6,6,9,9,9,6,6,6,6,9,6,6,6,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,13,13,13,13,13,13},
+				{13,13,13,13,13,13,13,13,13,13,13,13,9,9,9,9,9,9,6,9,9,9,9,6,9,9,9,9,9,6,6,6,9,9,6,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,13,13,13,13,13,13,13},
+				{13,13,13,13,13,13,13,13,13,13,13,13,13,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,6,6,6,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,13,13,13,13,13,13,13,13,13},
+				{13,13,13,13,13,13,13,13,13,13,13,13,13,9,9,9,9,9,9,9,9,9,9,9,9,12,12,9,9,9,6,9,9,9,9,9,9,9,9,9,9,9,9,13,13,9,9,13,13,13,13,13,13,13,13,13,13},
+				{13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,9,9,9,9,9,13,9,9,9,9,10,12,9,9,9,9,9,9,9,9,9,9,13,13,9,9,9,9,13,13,13,13,13,13,13,13,13,13,13,13,13,13},
+				{13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,9,9,9,13,13,13,9,13,9,11,11,11,11,13,13,13,9,9,13,13,13,13,13,13,13,9,9,9,13,13,13,13,13,13,13,13,13,13,13,13,13,13},
+				{13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,9,9,9,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,9,13,13,13,13,13,13,13,13,13,13,13,13,13,13},
+				{13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,9,9,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13}
+			};
+			//i = vertical, j = horizontal
+			for (int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)    //Increase the iterations on this outermost for loop if tabletop-objects are not properly spawning
+			{
+				for (int i = 0; i < _structure.GetLength(0); i++)
+				{
+					for (int j = _structure.GetLength(1) - 1; j >= 0; j--)
+					{
+						int k = PosX + j;
+						int l = PosY + i;
+						if (WorldGen.InWorld(k, l, 30))
+						{
+							Tile tile = Framing.GetTileSafely(k, l);
+							switch (_structure[i, j])
+							{
+								case 1:
+									tile.active(true);
+									tile.type = 147;
+									tile.slope(2);
+									tile.halfBrick(false);
+									break;
+								case 2:
+									tile.active(true);
+									tile.type = 147;
+									tile.slope(0);
+									tile.halfBrick(false);
+									break;
+								case 3:
+									tile.active(true);
+									tile.type = 147;
+									tile.slope(0);
+									tile.halfBrick(true);
+									break;
+								case 4:
+									tile.active(true);
+									tile.type = 147;
+									tile.slope(1);
+									tile.halfBrick(false);
+									break;
+								case 5:
+									tile.active(true);
+									tile.type = (ushort)ModContent.TileType<HardIceBrickTile>();
+									tile.slope(0);
+									tile.halfBrick(false);
+									break;
+								case 6:
+									tile.active(true);
+									tile.type = (ushort)ModContent.TileType<FrigidIceTile>();
+									tile.slope(0);
+									tile.halfBrick(false);
+									if(i >= 22 && tile.wall == 0)
+									{
+										tile.wall = (ushort)ModContent.WallType<HardIceBrickWallWall>();
+									}
+									break;
+								case 7:
+									if (confirmPlatforms == 0)
+										tile.active(false);
+									WorldGen.PlaceTile(k, l, 4, true, true, -1, 9);
+									tile.slope(0);
+									tile.halfBrick(false);
+									break;
+								case 8:
+									if (confirmPlatforms == 1)
+									{
+										tile.active(false);
+										tile.slope(0);
+										tile.halfBrick(false);
+										WorldGen.PlaceTile(k, l, ModContent.TileType<FrostArtifactTile>(), true, true, -1, 0);
+									}
+									break;
+								case 9:
+									tile.active(true);
+									tile.type = 161;
+									tile.slope(0);
+									tile.halfBrick(false);
+									tile.wall = WallID.IceUnsafe;
+									break;
+								case 10:
+									if (confirmPlatforms == 1)
+									{
+										tile.active(false);
+										tile.slope(0);
+										tile.halfBrick(false);
+										WorldGen.PlaceTile(k, l, ModContent.TileType<RuinedChestTile>(), true, true, -1, 1);
+										tile.wall = (ushort)ModContent.WallType<HardIceBrickWallWall>();
+									}
+									break;
+								case 11:
+									tile.active(true);
+									tile.type = TileID.BorealWood;
+									tile.slope(0);
+									tile.halfBrick(false);
+									break;
+								case 12:
+									if (confirmPlatforms == 0)
+									{
+										tile.active(false);
+										tile.halfBrick(false);
+										tile.slope(0);
+										tile.wall = (ushort)ModContent.WallType<HardIceBrickWallWall>();
+									}
+									break;
+								case 13:
+									if(confirmPlatforms == 0 && TrueTileSolid(k, l))
+									{
+										tile.active(true);
+										tile.type = 147;
+										tile.slope(0);
+										tile.halfBrick(false);
 									}
 									break;
 							}
