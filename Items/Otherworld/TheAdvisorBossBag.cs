@@ -19,7 +19,7 @@ namespace SOTS.Items.Otherworld
 			item.value = 0;
 			item.rare = 6;
 			item.expert = true;
-			item.maxStack = 99;
+			item.maxStack = 999;
 			item.consumable = true;
 		}
         public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
