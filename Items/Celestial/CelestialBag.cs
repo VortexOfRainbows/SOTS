@@ -18,7 +18,7 @@ namespace SOTS.Items.Celestial
 			item.value = 0;
 			item.rare = 6;
 			item.expert = true;
-			item.maxStack = 99;
+			item.maxStack = 999;
 			item.consumable = true;
 		}
 		public override int BossBagNPC => mod.NPCType("CelestialSerpentHead");
