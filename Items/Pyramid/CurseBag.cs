@@ -19,7 +19,7 @@ namespace SOTS.Items.Pyramid
 			item.value = 0;
 			item.rare = ItemRarityID.LightPurple;
 			item.expert = true;
-			item.maxStack = 99;
+			item.maxStack = 999;
 			item.consumable = true;
 		}
 		public override int BossBagNPC => mod.NPCType("PharaohsCurse");
