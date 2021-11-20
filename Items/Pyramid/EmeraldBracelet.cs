@@ -15,7 +15,7 @@ namespace SOTS.Items.Pyramid
 		{
       
 			item.maxStack = 1;
-            item.width = 34;     
+            item.width = 30;     
             item.height = 28;   
             item.value = Item.sellPrice(0, 1, 50, 0);
             item.rare = 4;
