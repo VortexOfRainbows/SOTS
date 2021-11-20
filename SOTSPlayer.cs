@@ -38,6 +38,7 @@ using SOTS.Projectiles.Nature;
 using SOTS.Items.Crushers;
 using SOTS.Dusts;
 using SOTS.Projectiles.Evil;
+using SOTS.Projectiles;
 
 namespace SOTS
 {
@@ -98,6 +99,7 @@ namespace SOTS
 		public bool petPepper = false;
 		public bool petAdvisor = false;
 		public int petPinky = -1;
+		public int petFreeWisp = -1;
 		public int symbioteDamage = -1;
 		public bool rippleEffect = false;
 		public int rippleTimer = 0;
@@ -106,7 +108,6 @@ namespace SOTS
 		public bool baguetteDrops = false;
 		public int baguetteLength = 0;
 		public int baguetteLengthCounter = 0;
-		Vector2 playerMouseWorld;
 		public int lightDragon = -1;
 		public int halfLifeRegen = 0;
 		public int additionalHeal = 0;
@@ -196,6 +197,7 @@ namespace SOTS
 		public bool CritCurseFire = false; //cursed icosahedron
 		public bool CritNightmare = false;
 		public bool BlueFire = false;
+		public bool BlueFireOrange = false;
 		public bool netUpdate = false;
 		public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
 		{
@@ -371,79 +373,27 @@ namespace SOTS
 				CreativeFlightButtonPressed = false;
 			}
 		}
-		int Probe = -1;
-		int Probe2 = -1;
-		int Probe3 = -1;
-		int Probe4 = -1;
-		int Probe5 = -1;
-		int Probe6 = -1;
-		int Probe7 = -1;
-		public void runPets(ref int Probe, int type)
+		int[] probes = new int[] { -1, -1, -1, -1, -1, -1, -1, -1};
+		public void runPets(ref int Probe, int type, int damage = 0, bool skipTimeleftReset = false)
 		{
 			if (Main.myPlayer == player.whoAmI)
 			{
 				if (Probe == -1)
 				{
-					Probe = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, type, 0, 0, player.whoAmI, 0);
+					Probe = Projectile.NewProjectile(player.Center, Vector2.Zero, type, damage, 0, player.whoAmI, 0);
 				}
 				if (!Main.projectile[Probe].active || Main.projectile[Probe].type != type || Main.projectile[Probe].owner != player.whoAmI)
 				{
-					Probe = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, type, 0, 0, player.whoAmI, 0);
+					Probe = Projectile.NewProjectile(player.Center, Vector2.Zero, type, damage, 0, player.whoAmI, 0);
 				}
-				Main.projectile[Probe].timeLeft = 6;
-			}
-		}
-		public void PetHoloEye()
-		{
-			if (Main.myPlayer == player.whoAmI)
-			{
-				if (Probe3 == -1)
-				{
-					Probe3 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, ModContent.ProjectileType<HoloEye>(), 1 + HoloEyeDamage, 0, player.whoAmI, 0);
-				}
-				if (!Main.projectile[Probe3].active || Main.projectile[Probe3].type != ModContent.ProjectileType<HoloEye>() || Main.projectile[Probe3].owner != player.whoAmI)
-				{
-					Probe3 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, ModContent.ProjectileType<HoloEye>(), 1 + HoloEyeDamage, 0, player.whoAmI, 0);
-				}
-				Main.projectile[Probe3].timeLeft = 6;
-			}
-		}
-		public void PetPinky()
-		{
-			if (Main.myPlayer == player.whoAmI)
-			{
-				if (Probe4 == -1)
-				{
-					Probe4 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, ModContent.ProjectileType<PetPutridPinkyCrystal>(), petPinky, 0, player.whoAmI, 0);
-				}
-				if (!Main.projectile[Probe4].active || Main.projectile[Probe4].type != ModContent.ProjectileType<PetPutridPinkyCrystal>() || Main.projectile[Probe4].owner != player.whoAmI)
-				{
-					Probe4 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, ModContent.ProjectileType<PetPutridPinkyCrystal>(), petPinky, 0, player.whoAmI, 0);
-				}
-				Main.projectile[Probe4].timeLeft = 6;
+				if(!skipTimeleftReset)
+					Main.projectile[Probe].timeLeft = 6;
 			}
 		}
 		public void PetFluidCurse()
 		{
-			if (Main.myPlayer == player.whoAmI)
-			{
-				if (Probe5 == -1)
-				{
-					Probe5 = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, ModContent.ProjectileType<FluidFollower>(), 0, 0, player.whoAmI);
-				}
-				if (!Main.projectile[Probe5].active || Main.projectile[Probe5].type != ModContent.ProjectileType<FluidFollower>() || Main.projectile[Probe5].owner != player.whoAmI)
-				{
-					Probe5 = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, ModContent.ProjectileType<FluidFollower>(), 0, 0, player.whoAmI);
-				}
-				if (Probe6 == -1)
-				{
-					Probe6 = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, ModContent.ProjectileType<ClairvoyanceShade>(), 0, 0, player.whoAmI);
-				}
-				if (!Main.projectile[Probe6].active || Main.projectile[Probe6].type != ModContent.ProjectileType<ClairvoyanceShade>() || Main.projectile[Probe6].owner != player.whoAmI)
-				{
-					Probe6 = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, ModContent.ProjectileType<ClairvoyanceShade>(), 0, 0, player.whoAmI);
-				}
-			}
+			runPets(ref probes[4], ModContent.ProjectileType<FluidFollower>(), 0, true);
+			runPets(ref probes[5], ModContent.ProjectileType<ClairvoyanceShade>(), 0, true);
 		}
 		public void doCurseAura()
         {
@@ -615,7 +565,7 @@ namespace SOTS
 			}
 			if (skywardBlades >= 0)
 			{
-				if (player.HeldItem.type == mod.ItemType("SkywardBlades"))
+				if (player.HeldItem.type == ModContent.ItemType<SkywardBlades>())
 				{
 					if (bladeAlpha > 0)
 						bladeAlpha -= 5;
@@ -635,17 +585,19 @@ namespace SOTS
 			blinkPackMult = 1f;
 			BlinkDamage = 0;
 			BlinkType = 0;
-			if (RubyMonolith)
-				runPets(ref Probe7, ModContent.ProjectileType<RubyMonolith>());
 			if (petAdvisor)
-				runPets(ref Probe, ModContent.ProjectileType<AdvisorPet>());
+				runPets(ref probes[0], ModContent.ProjectileType<AdvisorPet>());
 			if (petPepper)
-				runPets(ref Probe2, ModContent.ProjectileType<GhostPepper>());
+				runPets(ref probes[1], ModContent.ProjectileType<GhostPepper>());
 			if (HoloEye)
-				PetHoloEye();
+				runPets(ref probes[2], ModContent.ProjectileType<HoloEye>(), HoloEyeDamage + 1);
 			if (petPinky >= 0)
-				PetPinky();
-			if(rippleEffect)
+				runPets(ref probes[3], ModContent.ProjectileType<PetPutridPinkyCrystal>(), petPinky + 1);
+			if (RubyMonolith)
+				runPets(ref probes[6], ModContent.ProjectileType<RubyMonolith>());
+			if (petFreeWisp >= 0)
+				runPets(ref probes[7], ModContent.ProjectileType<WispOrange>(), petFreeWisp + 1);
+			if (rippleEffect)
 			{
 				float healthPercent = (float)player.statLife / (float)player.statLifeMax2;
 				int timerMax = (int)(70 * healthPercent) + 20;
@@ -664,6 +616,7 @@ namespace SOTS
 			rippleBonusDamage = 0;
 			symbioteDamage = -1;
 			petPinky = -1;
+			petFreeWisp = -1;
 			petPepper = false;
 			petAdvisor = false; 
 			rainbowGlowmasks = false; 
@@ -747,7 +700,6 @@ namespace SOTS
 			}
 			shardOnHit = 0;
 			bonusShardDamage = 0;
-			playerMouseWorld = Main.MouseWorld;
 			if (onhit > 0)
 			{
 				onhit--;
@@ -803,6 +755,7 @@ namespace SOTS
 			RubyMonolith = false;
 			CanCurseSwap = false;
 			BlueFire = false;
+			BlueFireOrange = false;
 			if (PyramidBiome)
 				player.AddBuff(ModContent.BuffType<Buffs.PharaohsCurse>(), 16, false); 
 			polarCannons = 0;
@@ -822,7 +775,7 @@ namespace SOTS
 			//Fish Set 2
 
 			if (player.ZoneBeach && liquidType == 0 && Main.rand.NextBool(175)) 
-				caughtType = ModContent.ItemType<SpikyPufferfish>(); 
+				caughtType = ModContent.ItemType<Items.SpecialDrops.SpikyPufferfish>(); 
 			if (player.ZoneBeach && liquidType == 0 && Main.rand.NextBool(225)) 
 				caughtType = ModContent.ItemType<CrabClaw>(); 
 
@@ -993,23 +946,15 @@ namespace SOTS
 		public override bool Shoot(Item item, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
 			shotCounter++;
-			
-			Vector2 cursorPos = playerMouseWorld;
-			
-			float shootCursorX = player.Center.X - cursorPos.X;
-			float shootCursorY = player.Center.Y - cursorPos.Y;
-			Vector2 toCursor = new Vector2(-1, 0).RotatedBy(Math.Atan2(shootCursorY, shootCursorX));
-			
 			if(PurpleBalloon && item.fishingPole > 0)
 			{
-				  Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(50));
-				  Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, mod.ProjectileType("PurpleBobber"), damage, type, player.whoAmI);
-				  //return false;
+				Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(50));
+				Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<PurpleBobber>(), damage, type, player.whoAmI);
 			}
 			if(snakeSling && item.ranged && item.damage > 3 && shotCounter % 5 == 0)
 			{
 				Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(8));
-				Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X * 1.1f, perturbedSpeed.Y * 1.1f, mod.ProjectileType("Pebble"), damage, knockBack, player.whoAmI);
+				Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X * 1.1f, perturbedSpeed.Y * 1.1f, ModContent.ProjectileType<Pebble>(), damage, knockBack, player.whoAmI);
 			}
 			if(backUpBow && item.ranged)
 			{
@@ -1041,7 +986,7 @@ namespace SOTS
 			{
 				standard = time / 2f;
 			}
-			if (item.channel == false || item.type == ModContent.ItemType<OlympianAxe>())
+			if (item.channel == false || item.type == ModContent.ItemType<Items.SpecialDrops.OlympianAxe>())
 				return standard;
 			return base.UseTimeMultiplier(item);
 		}
@@ -1158,15 +1103,23 @@ namespace SOTS
 			else
             {
 				if(target.life <= 0)
-                {
-					if(BlueFire)
-                    {
-						if (Main.myPlayer == player.whoAmI)
+				{
+					if (Main.myPlayer == player.whoAmI)
+					{
+						if(BlueFireOrange && BlueFire)
+						{
+							Projectile.NewProjectile(target.Center, Vector2.Zero, ModContent.ProjectileType<BluefireCrush>(), (int)(damage * 0.7f), 0, Main.myPlayer, 2);
+						}
+						else if (BlueFire)
 						{
 							Projectile.NewProjectile(target.Center, Vector2.Zero, ModContent.ProjectileType<BluefireCrush>(), (int)(damage * 0.4f), 0, Main.myPlayer);
 						}
+						else if (BlueFireOrange)
+						{
+							Projectile.NewProjectile(target.Center, Vector2.Zero, ModContent.ProjectileType<BluefireCrush>(), (int)(damage * 0.3f), 0, Main.myPlayer, 1);
+						}
 					}
-                }
+				}
             }
 		}
 		public override void GetHealLife(Item item, bool quickHeal, ref int healValue)

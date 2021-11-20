@@ -1,4 +1,5 @@
 using SOTS.Items.Fragments;
+using SOTS.Items.Potions;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -34,7 +35,7 @@ namespace SOTS.Items.Tide
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.LifeCrystal, 1);
 			recipe.AddIngredient(ModContent.ItemType<DissolvingDeluge>(), 1);
-			recipe.AddIngredient(null, "RipplePotion", 5);
+			recipe.AddIngredient(ModContent.ItemType<RipplePotion>(), 8);
 			recipe.AddTile(TileID.TinkerersWorkbench);
 			recipe.SetResult(this, 1);
 			recipe.AddRecipe();

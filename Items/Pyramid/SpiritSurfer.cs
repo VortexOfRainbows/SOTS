@@ -17,17 +17,18 @@ namespace SOTS.Items.Pyramid
             item.height = 38;
             item.useTime = 20;
             item.useAnimation = 20;
-            item.useStyle = 1;
+            item.useStyle = ItemUseStyleID.SwingThrow;
 			item.value = Item.sellPrice(0, 5, 0, 0);
             item.rare = ItemRarityID.LightPurple;
             item.UseSound = SoundID.Item1;
             item.noMelee = true;
-            item.mountType = mod.MountType("SpiritSurfer");
+            item.mountType = ModContent.MountType<Mounts.SpiritSurfer>();
         }
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "SoulResidue", 35);
+			recipe.AddIngredient(ModContent.ItemType<AncientGold.RoyalGoldBrick>(), 50);
+			recipe.AddIngredient(ModContent.ItemType<SoulResidue>(), 35);
 			recipe.AddIngredient(ItemID.FlyingCarpet, 1);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this);

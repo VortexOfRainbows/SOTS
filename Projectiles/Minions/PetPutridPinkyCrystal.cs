@@ -81,7 +81,7 @@ namespace SOTS.Projectiles.Minions
 		{
 			Player player = Main.player[projectile.owner];
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-			if(modPlayer.petPinky != projectile.damage)
+			if((modPlayer.petPinky + 1) != projectile.damage)
             {
 				projectile.Kill();
             }

@@ -19,7 +19,7 @@ namespace SOTS.Items.GelGear
 			item.value = 0;
 			item.rare = ItemRarityID.LightPurple;
 			item.expert = true;
-			item.maxStack = 99;
+			item.maxStack = 999;
 			item.consumable = true;
 		}
 		public override int BossBagNPC => ModContent.NPCType<PutridPinkyPhase2>();
@@ -29,30 +29,27 @@ namespace SOTS.Items.GelGear
 		}
 		public override void OpenBossBag(Player player)
 		{
-			player.QuickSpawnItem(mod.ItemType("PutridEye"));
+			player.QuickSpawnItem(ModContent.ItemType<PutridEye>());
 			player.QuickSpawnItem(ModContent.ItemType<VialofAcid>(), Main.rand.Next(20, 30));
 			player.QuickSpawnItem(ItemID.PinkGel,Main.rand.Next(40, 60));
-			player.QuickSpawnItem(mod.ItemType("Wormwood"), Main.rand.Next(20, 30));
-
-			int rand = Main.rand.Next(12);
+			player.QuickSpawnItem(ModContent.ItemType<Wormwood>(), Main.rand.Next(20, 30));
+			int rand = Main.rand.Next(10);
 			if(rand == 0)
-				player.QuickSpawnItem(mod.ItemType("GelWings"));
+				player.QuickSpawnItem(ModContent.ItemType<GelWings>());
 			if(rand == 1)
-				player.QuickSpawnItem(mod.ItemType("WormWoodParasite"));
+				player.QuickSpawnItem(ModContent.ItemType<WormWoodParasite>());
 			if(rand == 2)
-				player.QuickSpawnItem(mod.ItemType("WormWoodHelix"));
+				player.QuickSpawnItem(ModContent.ItemType<WormWoodHelix>());
 			if(rand == 3)
-				player.QuickSpawnItem(mod.ItemType("WormWoodCrystal"), Main.rand.Next(333, 667));
+				player.QuickSpawnItem(ModContent.ItemType<WormWoodHook>());
 			if(rand == 4)
-				player.QuickSpawnItem(mod.ItemType("WormWoodHook"));
+				player.QuickSpawnItem(ModContent.ItemType<WormWoodCollapse>());
 			if(rand == 5)
-				player.QuickSpawnItem(mod.ItemType("WormWoodCollapse"));
+				player.QuickSpawnItem(ModContent.ItemType<WormWoodScepter>());
 			if(rand == 6)
-				player.QuickSpawnItem(mod.ItemType("WormWoodScepter"));
+				player.QuickSpawnItem(ModContent.ItemType<WormWoodStaff>());
 			if(rand == 7)
-				player.QuickSpawnItem(mod.ItemType("WormWoodStaff"));
-			if(rand == 8)
-				player.QuickSpawnItem(mod.ItemType("WormWoodSpike"));
+				player.QuickSpawnItem(ModContent.ItemType<WormWoodSpike>());
 		}
 	}
 }

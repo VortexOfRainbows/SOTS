@@ -24,6 +24,7 @@ Mid Priority:
 	1. Rose Bow
 	2. Voidmage Incubator 
 	3. Phase Ore!?
+		1. Phase Alloy: Phase Ore + Crystal Shards + Chaos Fragment + other stuff perhaps
 	4. True Phaseblade -> Starward Sword
 3. Starcaller Staff: hallowed Chest Item
 	1. Summons small celestial serpent bud to assist in combat. It grows in length and chunkyness as it gains segments
@@ -33,16 +34,27 @@ Mid Priority:
 		1. 8 direction solar eruption
 	3. (tidal construct one)
 5. Witch's Heart accessory; in similar vein to Heart of the Sea, where it is an accessory variant of the Nightmare potion
-	1. Wisp in a Jar; it is an accessory variant of the Bluefire potion
 6. Make unique effect for frigid ice breaking
 7. Mobile Fortress Generator: upgrade to platform generator. Two tiers of upgrades (this + another earlier one), can be visually whatever but it is obtained from Old One's army stuff
 8. Twilight Scouter (already sprited). Spawns in Space and Planetarium.
 	1. drops Gravity Normalizer, maybe Synthetic Jellyfish Staff and/or Thundershock Shortbow
 9. Glaze Repeater, found in polaris structure.
 10. Corrupt and Crimson treasure slimes
+11. Rework visuals for Arcane Aqueduct
 
 Low Priority:
 1. Archaelogist NPC
+
+11/19/21
+1. Updated some treasure bag code to use correct stack size. Also minor optimizations. Pinky bag has a slightly higher chance to drop full items.
+2. (HM) Treasure bags properly give a chance to get developer armor.
+3. Streamlined the accessory pet system internally
+4. Added Wisp in a Jar. Also provides an extra, buffed, wisp minion (thought it would be cool!)
+	1. Should sync in multiplayer due to the shared AI's of other mult-compatable items
+5. Slight AI change to wisps to make them attack at a more consistent pace. Results in a slightly slower attack.
+6. Spirit Surfer now requires 50 ancient gold to craft
+	1. Tried to nerf but somehow the variables aren't working when modified?
+7. Heart of the Sea now costs 8 ripple potions again (from 8 -> 5 -> 8)
 
 11/17/21
 1. New Polaris structure

@@ -2,6 +2,10 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
+using Terraria.ID;
+using SOTS.NPCs.Boss.Advisor;
+using SOTS.Items.Otherworld.FromChests;
+using SOTS.Items.Otherworld.EpicWings;
 
 namespace SOTS.Items.Otherworld
 {
@@ -17,9 +21,9 @@ namespace SOTS.Items.Otherworld
 			item.width = 32;
 			item.height = 32;
 			item.value = 0;
-			item.rare = 6;
+			item.rare = ItemRarityID.LightPurple;
 			item.expert = true;
-			item.maxStack = 99;
+			item.maxStack = 999;
 			item.consumable = true;
 		}
         public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
@@ -59,26 +63,26 @@ namespace SOTS.Items.Otherworld
 				null, color * (1f - (item.alpha / 255f)), rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			}
 		}
-		public override int BossBagNPC => mod.NPCType("TheAdvisorHead");
+		public override int BossBagNPC => ModContent.NPCType<TheAdvisorHead>();
 		public override bool CanRightClick()
 		{
 			return true;
 		}
 		public override void OpenBossBag(Player player)
 		{
-			player.QuickSpawnItem(mod.ItemType("TwilightGyroscope"));
+			player.QuickSpawnItem(ModContent.ItemType<TwilightGyroscope>());
 			if(Main.rand.NextBool(3))
-				player.QuickSpawnItem(mod.ItemType("StarlightAlloy"), Main.rand.Next(12, 19));
+				player.QuickSpawnItem(ModContent.ItemType<StarlightAlloy>(), Main.rand.Next(12, 19));
 			else
-				player.QuickSpawnItem(mod.ItemType("SkywareKey"));
+				player.QuickSpawnItem(ModContent.ItemType<SkywareKey>());
 			if (Main.rand.NextBool(3))
-				player.QuickSpawnItem(mod.ItemType("OtherworldlyAlloy"), Main.rand.Next(12, 19));
+				player.QuickSpawnItem(ModContent.ItemType<OtherworldlyAlloy>(), Main.rand.Next(12, 19));
 			else
-				player.QuickSpawnItem(mod.ItemType("MeteoriteKey"));
+				player.QuickSpawnItem(ModContent.ItemType<MeteoriteKey>());
 			if (Main.rand.NextBool(3))
-				player.QuickSpawnItem(mod.ItemType("HardlightAlloy"), Main.rand.Next(12, 19));
+				player.QuickSpawnItem(ModContent.ItemType<HardlightAlloy>(), Main.rand.Next(12, 19));
 			else
-				player.QuickSpawnItem(mod.ItemType("StrangeKey"));
+				player.QuickSpawnItem(ModContent.ItemType<StrangeKey>());
 		}
 	}
 }

@@ -16,6 +16,8 @@ namespace SOTS.Projectiles.Inferno
     public class BluefireCrush : ModProjectile 
     {
 		public Color blue = new Color(51, 95, 179, 0);
+		public Color orange = new Color(255, 130, 8, 0);
+		public bool useBoth = false;
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Bluefire Crush");
@@ -55,7 +57,7 @@ namespace SOTS.Projectiles.Inferno
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			for (int i = 0; i < particleList.Count; i++)
 			{
-				Color color = blue;
+				Color color = useBoth ? randColor() : toUseColor;
 				Vector2 drawPos = particleList[i].position - Main.screenPosition;
 				color = projectile.GetAlpha(color) * (0.35f + 0.65f * particleList[i].scale);
 				for (int j = 0; j < 2; j++)
@@ -65,6 +67,10 @@ namespace SOTS.Projectiles.Inferno
 			}
 			return false;
         }
+		public Color randColor()
+        {
+			return Main.rand.NextBool(2) ? blue : orange;
+        }
         public override void ModifyDamageHitbox(ref Rectangle hitbox) 
 		{
 			int width = 160;
@@ -72,10 +78,21 @@ namespace SOTS.Projectiles.Inferno
 		}
 		int counter = 0;
 		bool runOnce = true;
+		public Color toUseColor = Color.White;
 		public override void AI()
 		{
 			if(runOnce)
 			{
+				if (projectile.ai[0] == 2)
+				{
+					useBoth = true;
+				}
+				else if (projectile.ai[0] == 1)
+				{
+					toUseColor = orange;
+				}
+				else
+					toUseColor = blue;
 				Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 62, 0.65f, -0.15f);
 				runOnce = false;
 			}
@@ -87,6 +104,8 @@ namespace SOTS.Projectiles.Inferno
 				int baseRate = 70;
 				if (SOTS.Config.lowFidelityMode)
 					baseRate = 110;
+				if (useBoth)
+					baseRate -= 10;
 				float sphereRadius = 80;
 				float mult = counter / 20f;
 				if (mult > 1)
@@ -108,7 +127,7 @@ namespace SOTS.Projectiles.Inferno
 						int i2 = (int)(circular.X + projectile.Center.X) / 16;
 						int j2 = (int)(circular.Y + projectile.Center.Y) / 16;
 						if (!(!WorldGen.InWorld(i2, j2, 20) || Main.tile[i2, j2].active() && Main.tileSolidTop[Main.tile[i2, j2].type] == false && Main.tileSolid[Main.tile[i2, j2].type] == true))
-							particleList.Add(new FireParticle(projectile.Center + circular - rotational * 2, rotational + circular * 0.03f, Main.rand.NextFloat(-3f, 3f), Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(0.8f, 0.9f)));
+							particleList.Add(new FireParticle(projectile.Center + circular - rotational * 2, rotational + circular * 0.03f, Main.rand.NextFloat(-3f, 3f), Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(0.8f, 0.9f) + (useBoth ? 0.1f : 0)));
 					}
 					if(Main.rand.NextBool(baseRate - counter))
                     {
@@ -116,9 +135,9 @@ namespace SOTS.Projectiles.Inferno
 						dust.noGravity = true;
 						dust.velocity *= 0.6f;
 						dust.velocity += circular * 0.15f;
-						dust.scale *= 1.4f + 0.4f * mult;
+						dust.scale *= 1.4f + 0.4f * mult + (useBoth ? 0.2f : 0);
 						dust.fadeIn = 0.1f;
-						dust.color = blue;
+						dust.color = useBoth ? randColor() : toUseColor;
 					}
 				}
 			}

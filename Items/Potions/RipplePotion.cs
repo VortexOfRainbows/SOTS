@@ -1,3 +1,5 @@
+using SOTS.Buffs;
+using SOTS.Items.Fragments;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -18,10 +20,10 @@ namespace SOTS.Items.Potions
             item.value = Item.sellPrice(0, 0, 2, 0);
 			item.rare = ItemRarityID.Blue;
 			item.maxStack = 30;
-            item.buffType = mod.BuffType("RippleBuff");   
+            item.buffType = ModContent.BuffType<RippleBuff>();   
             item.buffTime = 3600 * 7 + 300;  
             item.UseSound = SoundID.Item3;            
-            item.useStyle = 2;        
+            item.useStyle = ItemUseStyleID.EatingUsing;        
             item.useTurn = true;
             item.useAnimation = 16;
             item.useTime = 16;
@@ -31,7 +33,7 @@ namespace SOTS.Items.Potions
 		{
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.BottledWater, 1);
-			recipe.AddIngredient(null, "FragmentOfTide", 1);
+			recipe.AddIngredient(ModContent.ItemType<FragmentOfTide>(), 1);
 			recipe.AddIngredient(ItemID.Waterleaf, 1);
 			recipe.AddIngredient(ItemID.Fireblossom, 1);
 			recipe.AddTile(TileID.Bottles);

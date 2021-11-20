@@ -2,6 +2,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
 using Terraria.ID;
+using SOTS.NPCs.Boss.Curse;
 
 namespace SOTS.Items.Pyramid
 {
@@ -19,10 +20,10 @@ namespace SOTS.Items.Pyramid
 			item.value = 0;
 			item.rare = ItemRarityID.LightPurple;
 			item.expert = true;
-			item.maxStack = 99;
+			item.maxStack = 999;
 			item.consumable = true;
 		}
-		public override int BossBagNPC => mod.NPCType("PharaohsCurse");
+		public override int BossBagNPC => ModContent.NPCType<PharaohsCurse>();
 		public override bool CanRightClick()
 		{
 			return true;
@@ -30,7 +31,7 @@ namespace SOTS.Items.Pyramid
 		public override void OpenBossBag(Player player)
 		{
 			player.QuickSpawnItem(ModContent.ItemType<HeartInAJar>());
-			player.QuickSpawnItem(mod.ItemType("CursedMatter"),Main.rand.Next(14, 25));
+			player.QuickSpawnItem(ModContent.ItemType<CursedMatter>(),Main.rand.Next(14, 25));
 		}
 	}
 }

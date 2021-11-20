@@ -1,5 +1,6 @@
 using Terraria;
 using Terraria.ModLoader;
+using Terraria.ID;
 
 namespace SOTS.Items.Pyramid
 {
@@ -16,7 +17,7 @@ namespace SOTS.Items.Pyramid
             item.width = 28;     
             item.height = 28;   
             item.value = Item.sellPrice(0, 1, 00, 0);
-            item.rare = 3;
+            item.rare = ItemRarityID.Orange;
 			item.accessory = true;
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)

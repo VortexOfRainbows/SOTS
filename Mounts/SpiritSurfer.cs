@@ -3,6 +3,11 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 using SOTS.Void;
+using SOTS.Dusts;
+using System.Collections.Generic;
+using Terraria.DataStructures;
+using Microsoft.Xna.Framework.Graphics;
+using Terraria.ID;
 
 namespace SOTS.Mounts
 {
@@ -10,8 +15,8 @@ namespace SOTS.Mounts
 	{
 		public override void SetDefaults()
 		{	
-			mountData.spawnDust = mod.DustType("LostSoulDust");
-			mountData.buff = mod.BuffType("SpiritSurfer");
+			mountData.spawnDust = ModContent.DustType<LostSoulDust>();
+			mountData.buff = ModContent.BuffType<Buffs.SpiritSurfer>();
 			mountData.heightBoost = 0;
 			mountData.runSpeed = 16f;
 			mountData.dashSpeed = 16f;
@@ -32,15 +37,14 @@ namespace SOTS.Mounts
 			mountData.bodyFrame = 6;
 			mountData.yOffset = 6;
 			mountData.playerHeadOffset = 0;
-			
-			if (Main.netMode != 2)
+			if (Main.netMode != NetmodeID.Server)
 			{
 				mountData.textureWidth = mountData.backTexture.Width;
 				mountData.textureHeight = mountData.backTexture.Height;
 			}
 		}
-		float variation = 0;
-		public override void UpdateEffects(Player player)
+		float variation = 0; 
+        public override void UpdateEffects(Player player)
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			voidPlayer.voidRegen -= 6f;
@@ -48,20 +52,20 @@ namespace SOTS.Mounts
 			if(player.velocity.X > 0.1)
 			{
 				variation += 4;
-				int dust = Dust.NewDust(new Vector2(player.Center.X - 30, player.Center.Y + curve.Y + 21), 4, 4, mod.DustType("LostSoulDust"));
+				int dust = Dust.NewDust(new Vector2(player.Center.X - 30, player.Center.Y + curve.Y + 21), 4, 4, ModContent.DustType<LostSoulDust>());
 				Main.dust[dust].noGravity = true;
 				Main.dust[dust].velocity *= 0.1f;
-				dust = Dust.NewDust(new Vector2(player.Center.X - 30, player.Center.Y - curve.Y + 21), 4, 4, mod.DustType("LostSoulDust"));
+				dust = Dust.NewDust(new Vector2(player.Center.X - 30, player.Center.Y - curve.Y + 21), 4, 4, ModContent.DustType<LostSoulDust>());
 				Main.dust[dust].noGravity = true;
 				Main.dust[dust].velocity *= 0.1f;
 			}
 			if(player.velocity.X < -0.1)
 			{
 				variation += 4;
-				int dust = Dust.NewDust(new Vector2(player.Center.X + 20, player.Center.Y + curve.Y + 21), 4, 4, mod.DustType("LostSoulDust"));
+				int dust = Dust.NewDust(new Vector2(player.Center.X + 20, player.Center.Y + curve.Y + 21), 4, 4, ModContent.DustType<LostSoulDust>());
 				Main.dust[dust].noGravity = true;
 				Main.dust[dust].velocity *= 0.1f;
-				dust = Dust.NewDust(new Vector2(player.Center.X + 20, player.Center.Y - curve.Y + 21), 4, 4, mod.DustType("LostSoulDust"));
+				dust = Dust.NewDust(new Vector2(player.Center.X + 20, player.Center.Y - curve.Y + 21), 4, 4, ModContent.DustType<LostSoulDust>());
 				Main.dust[dust].noGravity = true;
 				Main.dust[dust].velocity *= 0.1f;
 			}

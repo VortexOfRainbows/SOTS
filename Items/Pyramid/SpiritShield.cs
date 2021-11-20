@@ -1,13 +1,6 @@
-using System;
-using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.DataStructures;
-using Terraria.Enums;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.ObjectData;
-using Microsoft.Xna.Framework.Graphics;
 using SOTS.Void;
 
 namespace SOTS.Items.Pyramid
@@ -21,17 +14,14 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void SetDefaults()
 		{
-      
 			item.maxStack = 1;
             item.width = 26;     
-            item.height = 28;   
+            item.height = 40;   
             item.value = Item.sellPrice(0, 3, 50, 0);
-            item.rare = 6;
+            item.rare = ItemRarityID.LightPurple;
 			item.defense = 2;
 			item.accessory = true;
-
 		}
-		
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
@@ -42,9 +32,9 @@ namespace SOTS.Items.Pyramid
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "SoulResidue", 25);
-			recipe.AddIngredient(null, "EmeraldBracelet", 1);
-			recipe.AddIngredient(49, 1); //band of regen
+			recipe.AddIngredient(ModContent.ItemType<SoulResidue>(), 25);
+			recipe.AddIngredient(ModContent.ItemType<EmeraldBracelet>(), 1);
+			recipe.AddIngredient(ItemID.BandofRegeneration, 1);
 			recipe.AddTile(TileID.TinkerersWorkbench);
 			recipe.SetResult(this);
 			recipe.AddRecipe();
