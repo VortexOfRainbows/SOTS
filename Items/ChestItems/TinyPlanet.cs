@@ -3,12 +3,12 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using System;
 using Microsoft.Xna.Framework;
+using SOTS.Items.SpecialDrops;
 
 namespace SOTS.Items.ChestItems
 {
 	public class TinyPlanet : ModItem
-	{	int Probe = -1;
-		int Probe2 = -1;
+	{
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Tiny Planet");
@@ -16,19 +16,17 @@ namespace SOTS.Items.ChestItems
 		}
 		public override void SetDefaults()
 		{
-	
 			item.damage = 10;
             item.width = 34;     
             item.height = 34;   
             item.value = Item.sellPrice(0, 0, 75, 0);
-            item.rare = 1;
+            item.rare = ItemRarityID.Blue;
 			item.accessory = true;
-
 		}
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "TinyPlanetFish", 1);
+			recipe.AddIngredient(ModContent.ItemType<TinyPlanetFish>(), 1);
 			recipe.AddIngredient(ItemID.StoneBlock, 100);
 			recipe.AddTile(TileID.TinkerersWorkbench);
 			recipe.SetResult(this);
@@ -36,26 +34,12 @@ namespace SOTS.Items.ChestItems
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			if (Main.myPlayer == player.whoAmI)
 			{
-				if (Probe == -1)
-				{
-					Probe = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, mod.ProjectileType("TinyPlanetTear"), item.damage, 0, player.whoAmI, 0);
-				}
-				if (!Main.projectile[Probe].active || Main.projectile[Probe].type != mod.ProjectileType("TinyPlanetTear") || Main.projectile[Probe].owner != player.whoAmI || Main.projectile[Probe].ai[0] != 0)
-				{
-					Probe = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, mod.ProjectileType("TinyPlanetTear"), item.damage, 0, player.whoAmI, 0);
-				}
-				Main.projectile[Probe].timeLeft = 6;
-				if (Probe2 == -1)
-				{
-					Probe2 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, mod.ProjectileType("TinyPlanetTear"), item.damage, 0, player.whoAmI, 1);
-				}
-				if (!Main.projectile[Probe2].active || Main.projectile[Probe2].type != mod.ProjectileType("TinyPlanetTear") || Main.projectile[Probe2].owner != player.whoAmI || Main.projectile[Probe2].ai[0] != 1)
-				{
-					Probe2 = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, mod.ProjectileType("TinyPlanetTear"), item.damage, 0, player.whoAmI, 1);
-				}
-				Main.projectile[Probe2].timeLeft = 6;
+				int damage = (int)(item.damage * (1f + (player.allDamage - 1f)));
+				modPlayer.tPlanetDamage += damage;
+				modPlayer.tPlanetNum += 2;
 			}
 		}
 	}

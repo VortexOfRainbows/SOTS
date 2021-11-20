@@ -19,7 +19,6 @@ namespace SOTS.Projectiles.Minions
 			projectile.friendly = true;
 			projectile.timeLeft = 300;
 			projectile.tileCollide = false;
-			projectile.melee = true;
 			projectile.hostile = false;
 			projectile.netImportant = true;
 			projectile.ignoreWater = true;
@@ -34,8 +33,12 @@ namespace SOTS.Projectiles.Minions
 		public override void AI()
 		{
 			Player player  = Main.player[projectile.owner];
-			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			if (player.dead)
+			{
+				projectile.Kill();
+			}
+			if ((modPlayer.tPlanetDamage + 1) != projectile.damage)
 			{
 				projectile.Kill();
 			}
@@ -68,7 +71,7 @@ namespace SOTS.Projectiles.Minions
 						total++;
 					}
 				}
-				Vector2 rotateCenter = new Vector2(128, 0).RotatedBy(MathHelper.ToRadians(modPlayer.orbitalCounter + (ofTotal * 360f / total)));
+				Vector2 rotateCenter = new Vector2(128, 0).RotatedBy(MathHelper.ToRadians(-modPlayer.orbitalCounter + (ofTotal * 360f / total)));
 				rotateCenter += player.Center;
 				Vector2 toRotate = rotateCenter - projectile.Center;
 				float dist2 = toRotate.Length();

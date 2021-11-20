@@ -40,7 +40,6 @@ Mid Priority:
 	1. drops Gravity Normalizer, maybe Synthetic Jellyfish Staff and/or Thundershock Shortbow
 9. Glaze Repeater, found in polaris structure.
 10. Corrupt and Crimson treasure slimes
-11. Rework visuals for Arcane Aqueduct
 
 Low Priority:
 1. Archaelogist NPC
@@ -55,6 +54,16 @@ Low Priority:
 6. Spirit Surfer now requires 50 ancient gold to craft
 	1. Tried to nerf but somehow the variables aren't working when modified?
 7. Heart of the Sea now costs 8 ripple potions again (from 8 -> 5 -> 8)
+8. Arcane Aquaduct/Tiny Planet and related:
+	1. Visuals overhauled
+	2. Internals overhauled
+	3. Damage (Tiny Planet, Aqueduct, Barrier, Bulwark): 10, 14, 30, 50 -> 10, 14, 24, 34
+	4. Damage amount now stacks between them, as well as with projectile amount
+		1. Mathematically, this leads to a tremendous stacking buff but weaker base damage
+		2. Overall a nerf since nobody wears multiple like wtf.
+	5. Similarly, tiny planet projectiles have been overhauled internally and damage now stacks with the same damage nerfs
+		1. Rotates counter-clockwise now to counter the Aquaduct rotation.
+9. Sunlight amulet is no longer used in Bulwark of the Ancients, as it doesn't make sense nor is it balanced
 
 11/17/21
 1. New Polaris structure

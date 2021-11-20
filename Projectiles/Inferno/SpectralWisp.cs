@@ -669,6 +669,10 @@ namespace SOTS.Projectiles.Inferno
 			{
 				projectile.Kill();
 			}
+			if (projectile.timeLeft > 100)
+			{
+				projectile.timeLeft = 300;
+			}
 		}
 		public override void SetStaticDefaults()
 		{

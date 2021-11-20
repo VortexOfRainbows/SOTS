@@ -39,6 +39,7 @@ using SOTS.Items.Crushers;
 using SOTS.Dusts;
 using SOTS.Projectiles.Evil;
 using SOTS.Projectiles;
+using SOTS.Projectiles.Tide;
 
 namespace SOTS
 {
@@ -374,6 +375,14 @@ namespace SOTS
 			}
 		}
 		int[] probes = new int[] { -1, -1, -1, -1, -1, -1, -1, -1};
+		int[] probesAqueduct = new int[] { -1, -1, -1, -1, -1, -1, -1, -1 };
+		int[] probesTinyPlanet = new int[] { -1, -1, -1, -1, -1, -1, -1, -1 };
+		public int aqueductNum = 0;
+		public int aqueductDamage = -1;
+		int lastAqueductMax = 0;
+		public int tPlanetNum = 0;
+		public int tPlanetDamage = -1;
+		int lastPlanetMax = 0;
 		public void runPets(ref int Probe, int type, int damage = 0, bool skipTimeleftReset = false)
 		{
 			if (Main.myPlayer == player.whoAmI)
@@ -394,6 +403,29 @@ namespace SOTS
 		{
 			runPets(ref probes[4], ModContent.ProjectileType<FluidFollower>(), 0, true);
 			runPets(ref probes[5], ModContent.ProjectileType<ClairvoyanceShade>(), 0, true);
+		}
+		public void doPlanetAqueduct()
+		{
+			if (aqueductNum > 8) aqueductNum = 8;
+			if (tPlanetNum > 8) tPlanetNum = 8;
+			if (lastAqueductMax != aqueductNum)
+			{
+				for (int i = 0; i < 8; i++)
+					probesAqueduct[i] = -1;
+			}
+			for (int i = 0; i < aqueductNum; i++)
+			{
+				runPets(ref probesAqueduct[i], ModContent.ProjectileType<Rainbolt>(), aqueductDamage + 1);
+			}
+			if (lastPlanetMax != tPlanetNum)
+			{
+				for (int i = 0; i < 8; i++)
+					probesTinyPlanet[i] = -1;
+			}
+			for (int i = 0; i < tPlanetNum; i++)
+			{
+				runPets(ref probesTinyPlanet[i], ModContent.ProjectileType<TinyPlanetTear>(), tPlanetDamage + 1);
+			}
 		}
 		public void doCurseAura()
         {
@@ -597,6 +629,7 @@ namespace SOTS
 				runPets(ref probes[6], ModContent.ProjectileType<RubyMonolith>());
 			if (petFreeWisp >= 0)
 				runPets(ref probes[7], ModContent.ProjectileType<WispOrange>(), petFreeWisp + 1);
+			doPlanetAqueduct();
 			if (rippleEffect)
 			{
 				float healthPercent = (float)player.statLife / (float)player.statLifeMax2;
@@ -623,6 +656,12 @@ namespace SOTS
 			HoloEye = false;
 			HoloEyeDamage = 0;
 			darkEyeShader = 0;
+			aqueductDamage = -1;
+			lastAqueductMax = aqueductNum;
+			aqueductNum = 0;
+			tPlanetDamage = -1;
+			lastPlanetMax = tPlanetNum;
+			tPlanetNum = 0;
 			for (int i = 9 + player.extraAccessorySlots; i < player.armor.Length; i++) //checking vanity slots
             {
 				Item item = player.armor[i];
