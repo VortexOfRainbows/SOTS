@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using SOTS.Items.Fragments;
 using SOTS.Items.Potions;
 using Terraria;
@@ -8,7 +9,7 @@ using Terraria.ModLoader;
 namespace SOTS.Items.Inferno
 {	
 	public class WispInAJar : ModItem
-	{	
+	{
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Wisp in a Jar");
