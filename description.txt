@@ -42,8 +42,8 @@ Update 0.21.0
 -Added the remaining Constructs
 -New items, enemies, and secrets
 -Various balance changes and bug fixes
--Added a config option to lower the intesity of visuals and help with performance
---Mainly affects certain boss related visuals
+-Added a config option to lower the intesity of visuals and help with performance. Mainly affects certain boss related visuals
+-Many resprites and visual improvements
 
 Update 0.20.2
 -A new item, Plasma Accelerator, and reworked Bore Bullets

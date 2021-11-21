@@ -18,7 +18,7 @@ High Priority:
 3. Digital Daito Obtaining
 
 Mid Priority:
-1. Ethereal Tonic, Heretic Tonic, Blazing Tonic
+1. Ethereal Tonic, Blazing Tonic
 	1. Dissolving Brilliance, Dissolving Nether 
 2. Lux Drops (ask me before you go about spriting these ones):
 	1. Rose Bow
@@ -37,12 +37,16 @@ Mid Priority:
 6. Make unique effect for frigid ice breaking
 7. Mobile Fortress Generator: upgrade to platform generator. Two tiers of upgrades (this + another earlier one), can be visually whatever but it is obtained from Old One's army stuff
 8. Twilight Scouter (already sprited). Spawns in Space and Planetarium.
-	1. drops Gravity Normalizer, maybe Synthetic Jellyfish Staff and/or Thundershock Shortbow
+	1. drops Gravity Normalizer, maybe Synthetic Jellyfish Staff
 9. Glaze Repeater, found in polaris structure.
 10. Corrupt and Crimson treasure slimes
 
 Low Priority:
 1. Archaelogist NPC
+
+11/20/21
+1. Added Heretic Tonic
+2. Finished Thundershock Shortbow. Still needs multiplayer testing
 
 11/19/21
 1. Updated some treasure bag code to use correct stack size. Also minor optimizations. Pinky bag has a slightly higher chance to drop full items.

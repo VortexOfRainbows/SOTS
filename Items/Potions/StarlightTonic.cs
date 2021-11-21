@@ -53,7 +53,7 @@ namespace SOTS.Items.Potions
             item.useAnimation = 16;
             item.useTime = 16;
             item.consumable = true;     
-			item.buffType = 164;
+			item.buffType = BuffID.VortexDebuff;
             item.buffTime = 60;
 		}
 		public override bool ConsumeItem(Player player) 

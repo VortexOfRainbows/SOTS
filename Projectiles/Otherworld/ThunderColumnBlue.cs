@@ -173,7 +173,7 @@ namespace SOTS.Projectiles.Otherworld
 					if (Main.netMode != 1)
 					{
 						Vector2 perturbedSpeed = new Vector2(originalVelo.X, originalVelo.Y).RotatedBy(MathHelper.ToRadians((i - 1) * 5.5f));
-						Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, perturbedSpeed.X, perturbedSpeed.Y, mod.ProjectileType("ThunderColumnBlue"), projectile.damage, 1f, Main.myPlayer, projectile.ai[0] - 1);
+						Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, perturbedSpeed.X, perturbedSpeed.Y, projectile.type, projectile.damage, 1f, Main.myPlayer, projectile.ai[0] - 1);
 					}
 				}
 				projectile.velocity *= 0f;

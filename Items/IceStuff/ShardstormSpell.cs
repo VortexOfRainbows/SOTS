@@ -3,6 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using SOTS.Void;
+using SOTS.Projectiles.Permafrost;
 
 namespace SOTS.Items.IceStuff
 {
@@ -17,27 +18,27 @@ namespace SOTS.Items.IceStuff
 		{
             item.damage = 36;
 			item.magic = true;
-            item.width = 34;    
-            item.height = 36; 
+            item.width = 38;    
+            item.height = 42; 
             item.useTime = 55; 
             item.useAnimation = 55;
-            item.useStyle = 5;    
+            item.useStyle = ItemUseStyleID.HoldingOut;    
             item.knockBack = 1.5f;
 			item.value = Item.sellPrice(0, 7, 0, 0);
-            item.rare = 7;
+            item.rare = ItemRarityID.Lime;
 			item.UseSound = SoundID.Item92;
             item.noMelee = true; 
             item.autoReuse = true;
             item.shootSpeed = 18f; //arbitrary 
-			item.shoot = mod.ProjectileType("Shardstorm");
+			item.shoot = ModContent.ProjectileType<Shardstorm>();
 			item.mana = 20;
 		}
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "AbsoluteBar", 10);
-			recipe.AddIngredient(null, "ShardStaff", 1);
-			recipe.AddIngredient(null, "StormSpell", 1);
+			recipe.AddIngredient(ModContent.ItemType<AbsoluteBar>(), 10);
+			recipe.AddIngredient(ModContent.ItemType<ShardStaff>(), 1);
+			recipe.AddIngredient(ModContent.ItemType<StormSpell>(), 1);
 			recipe.SetResult(this);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.AddRecipe();
