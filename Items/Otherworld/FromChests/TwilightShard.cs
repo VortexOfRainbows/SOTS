@@ -11,14 +11,14 @@ namespace SOTS.Items.Otherworld.FromChests
 	{	
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Twilight Shard");
+			DisplayName.SetDefault("Twilight Plate");
 			Tooltip.SetDefault("");
 		}
 		public override void SetDefaults()
 		{
 			item.maxStack = 999;
-            item.width = 14;     
-            item.height = 34;
+            item.width = 36;     
+            item.height = 26;
             item.value = Item.sellPrice(0, 0, 4, 0);
             item.rare = ItemRarityID.Cyan;
 		}
