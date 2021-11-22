@@ -28,8 +28,8 @@ namespace SOTS.Projectiles.Inferno
 			projectile.width = 70;
             Main.projFrames[projectile.type] = 5;
 			projectile.penetrate = -1;
-			projectile.friendly = true;
-			projectile.timeLeft = 120;
+			projectile.friendly = false;
+			projectile.timeLeft = 140;
 			projectile.tileCollide = false;
 			projectile.hostile = false;
 			projectile.alpha = 0;
@@ -93,43 +93,46 @@ namespace SOTS.Projectiles.Inferno
 				}
 				else
 					toUseColor = blue;
-				Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 62, 0.65f, -0.15f);
 				runOnce = false;
 			}
 			counter++;
-			if (counter > 20)
+			if (counter > 50)
 				projectile.friendly = false;
-			else
+			else if(counter >= 30)
 			{
-				int baseRate = 70;
+				if(counter == 30)
+					Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 62, 0.65f, -0.15f);
+				int currentCounter = counter - 30;
+				projectile.friendly = true;
+				int baseRate = 90;
 				if (SOTS.Config.lowFidelityMode)
-					baseRate = 110;
+					baseRate = 140;
 				if (useBoth)
-					baseRate -= 10;
+					baseRate -= 20;
 				float sphereRadius = 80;
-				float mult = counter / 20f;
+				float mult = currentCounter / 20f;
 				if (mult > 1)
 					mult = 1;
-				float radius = counter / 14f * sphereRadius;
+				float radius = currentCounter / 14f * sphereRadius;
 				if (radius > sphereRadius)
 					radius = sphereRadius;
 				Vector2 rotational = new Vector2(0, -1.0f).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-30f, 30f)));
 				rotational.X *= 0.25f;
 				rotational.Y *= 0.75f;
 				rotational = rotational.SafeNormalize(Vector2.Zero) * 3f;
-				particleList.Add(new FireParticle(projectile.Center - rotational * 2.5f, rotational, Main.rand.NextFloat(-3f, 3f), Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(0.9f, 1.3f)));
+				particleList.Add(new FireParticle(projectile.Center - rotational * 1.5f, rotational, Main.rand.NextFloat(-3f, 3f), Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(1.1f, 1.4f) + (useBoth ? 0.1f : 0)));
 				for (int i = 0; i < 360; i++)
 				{
 					Vector2 circular = new Vector2(radius, 0).RotatedBy(MathHelper.ToRadians(i));
 					rotational = new Vector2(0, -1.5f).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360f)));
-					if (Main.rand.NextBool(baseRate - counter))
+					if (Main.rand.NextBool(baseRate - currentCounter))
 					{
 						int i2 = (int)(circular.X + projectile.Center.X) / 16;
 						int j2 = (int)(circular.Y + projectile.Center.Y) / 16;
-						if (!(!WorldGen.InWorld(i2, j2, 20) || Main.tile[i2, j2].active() && Main.tileSolidTop[Main.tile[i2, j2].type] == false && Main.tileSolid[Main.tile[i2, j2].type] == true))
+						if (!SOTSWorldgenHelper.TrueTileSolid(i2, j2))
 							particleList.Add(new FireParticle(projectile.Center + circular - rotational * 2, rotational + circular * 0.03f, Main.rand.NextFloat(-3f, 3f), Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(0.8f, 0.9f) + (useBoth ? 0.1f : 0)));
 					}
-					if(Main.rand.NextBool(baseRate - counter))
+					if(Main.rand.NextBool(baseRate - currentCounter))
                     {
 						Dust dust = Dust.NewDustDirect(new Vector2(projectile.Center.X - 4, projectile.Center.Y - 4), 4, 4, ModContent.DustType<CopyDust4>());
 						dust.noGravity = true;
@@ -140,6 +143,15 @@ namespace SOTS.Projectiles.Inferno
 						dust.color = useBoth ? randColor() : toUseColor;
 					}
 				}
+			}
+			else
+			{
+				float mult = counter / 30f;
+				Vector2 rotational = new Vector2(0, -1.0f).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-30f, 30f)));
+				rotational.X *= 0.25f;
+				rotational.Y *= 0.75f;
+				rotational = rotational.SafeNormalize(Vector2.Zero) * 3f;
+				particleList.Add(new FireParticle(projectile.Center - rotational * 1.5f, rotational, Main.rand.NextFloat(-3f, 3f), Main.rand.NextFloat(-2f, 2f), mult * (Main.rand.NextFloat(1.1f, 1.4f) + (useBoth ? 0.1f : 0))));
 			}
 			cataloguePos();
         }

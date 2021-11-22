@@ -33,7 +33,7 @@ namespace SOTS.Items.Otherworld
 			item.knockBack = 5f;
 			item.value = Item.sellPrice(0, 3, 50, 0);
 			item.rare = ItemRarityID.LightPurple;
-			item.UseSound = SoundID.Item5;
+			item.UseSound = null;
 			item.autoReuse = false;
 			item.channel = true;
 			item.shoot = ModContent.ProjectileType<Projectiles.Otherworld.ThundershockShortbow>();

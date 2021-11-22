@@ -80,9 +80,9 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
 		{
-			if (Main.netMode != 1 && !noItem && Main.rand.Next(24) == 0 && !fail && !effectOnly)
+			if (Main.netMode != NetmodeID.MultiplayerClient && !noItem && Main.rand.Next(24) == 0 && !fail && !effectOnly)
 			{
-				Projectile.NewProjectile(new Vector2(i * 16 + 8, j * 16 + 8), Vector2.Zero, mod.ProjectileType("ReleaseWallMimic"), 0, 0, Main.myPlayer);
+				Projectile.NewProjectile(new Vector2(i * 16 + 8, j * 16 + 8), Vector2.Zero, ModContent.ProjectileType<ReleaseWallMimic>(), 0, 0, Main.myPlayer);
 				noItem = true;
 			}
 			base.KillTile(i, j, ref fail, ref effectOnly, ref noItem);

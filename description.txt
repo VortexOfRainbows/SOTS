@@ -44,6 +44,7 @@ Update 0.21.0
 -Various balance changes and bug fixes
 -Added a config option to lower the intesity of visuals and help with performance. Mainly affects certain boss related visuals
 -Many resprites and visual improvements
+-Reorganized many internals. This may glitch out items that you have on old worlds.
 
 Update 0.20.2
 -A new item, Plasma Accelerator, and reworked Bore Bullets
