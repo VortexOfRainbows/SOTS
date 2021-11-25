@@ -8,8 +8,8 @@ using SOTS.Items;
 using SOTS.Items.ChestItems;
 using SOTS.Items.Crushers;
 using SOTS.Items.Fragments;
-using SOTS.Items.Fragments.SpiritStaves;
-using SOTS.Items.IceStuff;
+using SOTS.Items.SpiritStaves;
+using SOTS.Items.Permafrost;
 using SOTS.Items.Otherworld;
 using SOTS.Items.Otherworld.FromChests;
 using SOTS.Items.Potions;
@@ -23,6 +23,10 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
 using Terraria.World.Generation;
+using SOTS.Items.Flails;
+using SOTS.Items.Secrets;
+using SOTS.Items.Tools;
+using SOTS.Items.GhostTown;
 
 namespace SOTS
 {
@@ -464,7 +468,7 @@ namespace SOTS
 		{
 			planetarium = tileCounts[ModContent.TileType<DullPlatingTile>()] + tileCounts[ModContent.TileType<AvaritianPlatingTile>()];  
 			//geodeBiome = tileCounts[mod.TileType("GeodeBlock")];
-			pyramidBiome = tileCounts[ModContent.TileType<SarcophagusTile>()] + tileCounts[ModContent.TileType<ZeplineLureTile>()];  
+			pyramidBiome = tileCounts[ModContent.TileType<SarcophagusTile>()] + tileCounts[ModContent.TileType<RefractingCrystalBlockTile>()];  
 		}
         public override void ModifyHardmodeTasks(List<GenPass> list)
         {

@@ -2,16 +2,14 @@ using Microsoft.Xna.Framework;
 using SOTS.Items.Banners;
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 using System.Collections.Generic;
-using System.Linq;
-using System;
 using static Terraria.ModLoader.ModContent;
-using Microsoft.Xna.Framework.Graphics;
-using SOTS.Items.SpecialDrops;
+
 using SOTS.Items.ChestItems;
 using SOTS.Items.Fragments;
 using SOTS.Items.Crushers;
+using SOTS.Items.Tools;
+using SOTS.Items;
 
 namespace SOTS.NPCs.TreasureSlimes
 {

@@ -71,7 +71,7 @@ namespace SOTS.Projectiles.Laser
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
 			Texture2D texture = Main.projectileTexture[projectile.type];
-			Color color = VoidPlayer.VibrantColor;
+			Color color = VoidPlayer.EarthColor;
 			Vector2 drawOrigin = new Vector2(Main.projectileTexture[projectile.type].Width * 0.5f, projectile.height * 0.5f);
 			for (int k = 0; k < 7; k++)
 			{
@@ -91,7 +91,7 @@ namespace SOTS.Projectiles.Laser
 			{
 				inititate++;
 				//Main.PlaySound(2, projectile.Center, 60);
-				Main.PlaySound(2, player.Center, 60);
+				Main.PlaySound(SoundID.Item, player.Center, 60);
 			}
 			if(!projectile.velocity.Equals(new Vector2(0, 0)))
 				projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(45);
@@ -119,7 +119,7 @@ namespace SOTS.Projectiles.Laser
 			if (projectile.owner == Main.myPlayer)
 			{
 				projectile.netUpdate = true;
-				Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("VibrantRing"), projectile.damage, projectile.knockBack * 0.1f, Main.myPlayer);
+				Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, ModContent.ProjectileType<VibrantRing>(), projectile.damage, projectile.knockBack * 0.1f, Main.myPlayer);
 			}
 		}
 	}

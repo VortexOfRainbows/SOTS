@@ -2,14 +2,10 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using System.Collections.Generic;
-using System.Xml.Schema;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using Steamworks;
 using SOTS.Void;
 using SOTS.Items.Void;
 using SOTS.NPCs.Boss;
-using SOTS.Items.SpecialDrops;
 using SOTS.Items;
 using SOTS.Buffs;
 using SOTS.NPCs.Constructs;
@@ -25,6 +21,10 @@ using SOTS.Items.Fragments;
 using SOTS.Dusts;
 using SOTS.Items.Crushers;
 using SOTS.Items.Nature;
+using SOTS.Items.Tools;
+using SOTS.Items.Slime;
+using SOTS.Items.Evil;
+using SOTS.Items.Tide;
 
 namespace SOTS.NPCs
 {
@@ -232,9 +232,6 @@ namespace SOTS.NPCs
 
 				if (npc.type == NPCID.Crab && Main.rand.NextBool(18))
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<CrabClaw>(), 1);
-
-				if (npc.type == NPCID.Mothron && NPC.downedPlantBoss && ((Main.rand.NextBool(5) && !Main.expertMode) || (Main.rand.NextBool(4) && Main.expertMode)))
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<BrokenVillainSword>(), 1);
 
 				if (npc.type == NPCID.PossessedArmor && Main.rand.NextBool(90))
 				{

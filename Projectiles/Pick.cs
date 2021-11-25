@@ -1,9 +1,8 @@
 using System;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ID;
 
 namespace SOTS.Projectiles 
 {    
@@ -12,9 +11,7 @@ namespace SOTS.Projectiles
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Pickaxe");
-			
 		}
-		
         public override void SetDefaults()
         {
             projectile.width = 28;
@@ -25,14 +22,13 @@ namespace SOTS.Projectiles
             projectile.hostile = false; 
             projectile.tileCollide = false;
             projectile.ignoreWater = true; 
-            projectile.ranged = true; 
+            projectile.melee = true; 
             projectile.aiStyle = 3;
 			projectile.alpha = 0;
 		}
 		public override void AI()
 		{
 			Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 206);
-			
 			int explosionRadius = 2;
 			int minTileX = (int)(projectile.Center.X / 16f - (float)explosionRadius);
 			int maxTileX = (int)(projectile.Center.X / 16f + (float)explosionRadius);
@@ -53,21 +49,6 @@ namespace SOTS.Projectiles
 			if (maxTileY > Main.maxTilesY)
 			{
 				maxTileY = Main.maxTilesY;
-			}
-			bool canKillWalls = false;
-			for (int x = minTileX; x <= maxTileX; x++)
-			{
-				for (int y = minTileY; y <= maxTileY; y++)
-				{
-					float diffX = Math.Abs((float)x - projectile.Center.X / 16f);
-					float diffY = Math.Abs((float)y - projectile.Center.Y / 16f);
-					double distance = Math.Sqrt((double)(diffX * diffX + diffY * diffY));
-					if (distance < (double)explosionRadius && Main.tile[x, y] != null && Main.tile[x, y].wall == 0)
-					{
-						canKillWalls = true;
-						break;
-					}
-				}
 			}
 			for (int i = minTileX; i <= maxTileX; i++)
 			{
@@ -97,9 +78,9 @@ namespace SOTS.Projectiles
 							if (canKillTile)
 							{
 								WorldGen.KillTile(i, j, false, false, false);
-								if (!Main.tile[i, j].active() && Main.netMode != 0)
+								if (!Main.tile[i, j].active() && Main.netMode != NetmodeID.SinglePlayer)
 								{
-									NetMessage.SendData(17, -1, -1, null, 0, (float)i, (float)j, 0f, 0, 0, 0);
+									NetMessage.SendData(MessageID.TileChange, -1, -1, null, 0, (float)i, (float)j, 0f, 0, 0, 0);
 								}
 							}
 						}
@@ -111,9 +92,9 @@ namespace SOTS.Projectiles
 								{
 									if(Main.tile[x, y] != null && Main.tile[x, y].wall > 0)
 									{
-										if (Main.tile[x, y].wall == 0 && Main.netMode != 0)
+										if (Main.tile[x, y].wall == 0 && Main.netMode != NetmodeID.SinglePlayer)
 										{
-											NetMessage.SendData(17, -1, -1, null, 2, (float)x, (float)y, 0f, 0, 0, 0);
+											NetMessage.SendData(MessageID.TileChange, -1, -1, null, 2, (float)x, (float)y, 0f, 0, 0, 0);
 										}
 									}
 								}

@@ -11,7 +11,9 @@ using SOTS.Items;
 using SOTS.Items.Pyramid.AncientGold;
 using SOTS.Items.Pyramid.PyramidWalls;
 using SOTS.Items.Tide;
-using SOTS.Items.IceStuff;
+using SOTS.Items.Permafrost;
+using SOTS.Items.Secrets;
+using SOTS.Items.GhostTown;
 
 namespace SOTS
 {

@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
-using SOTS.Items.BaseWeapons;
+using SOTS.Items.Flails;
 using SOTS.Prim.Trails;
 using SOTS.Utilities;
 using SOTS.Void;

@@ -1,7 +1,7 @@
 using System;
 using Microsoft.Xna.Framework;
 using SOTS.Dusts;
-using SOTS.Items.IceStuff;
+using SOTS.Items.Permafrost;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;

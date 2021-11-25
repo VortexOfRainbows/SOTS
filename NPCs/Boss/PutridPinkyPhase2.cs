@@ -3,7 +3,7 @@ using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Items.Banners;
-using SOTS.Items.GelGear;
+using SOTS.Items.Slime;
 using SOTS.Projectiles;
 using Terraria;
 using Terraria.ID;

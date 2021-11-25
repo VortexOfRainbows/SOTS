@@ -1,4 +1,5 @@
 using SOTS.Items.ChestItems;
+using SOTS.Items.Earth;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;

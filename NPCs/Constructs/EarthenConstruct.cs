@@ -2,7 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
 using SOTS.Items.Fragments;
-using SOTS.Projectiles.Terra;
+using SOTS.Projectiles.Earth;
 using System;
 using System.IO;
 using Terraria;

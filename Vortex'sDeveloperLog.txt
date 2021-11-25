@@ -16,7 +16,7 @@ High Priority:
 1. Inferno Construct
 2. Starmap
 3. Digital Daito Obtaining
-4. Reorganize Folders
+4. Reorganize Folders... Planetarium and Pyramid folders remaining.
 
 Mid Priority:
 1. Ethereal Tonic, Blazing Tonic
@@ -31,7 +31,7 @@ Mid Priority:
 3. Starcaller Staff: hallowed Chest Item
 	1. Summons small celestial serpent bud to assist in combat. It grows in length and chunkyness as it gains segments
 4. Construct Items:
-	1. Backup Bow (Permafrost construct, looks like an icicle bow)
+	1. Endothermic Afterburner
 	2. Death Spiral (evil construct one)
 		1. 8 direction solar eruption
 	3. (tidal construct one)
@@ -42,9 +42,20 @@ Mid Priority:
 	1. drops Gravity Normalizer, maybe Synthetic Jellyfish Staff
 9. Glaze Repeater, found in polaris structure.
 10. Corrupt and Crimson treasure slimes
+11. Split Focus Reticle into two accessories to make it less overpowed: Focus Reticle (Amplifiers + Crit Rate), Bag of Charms (Charms + Icosahedrons)
 
 Low Priority:
 1. Archaelogist NPC
+
+11/24/21
+1. Did some reorganization to the item folders (900+ files removed)
+2. Removed: Spiky Pufferfish, Broken Villain Sword, Imitation Crate, Infection Tester, Fireball Test
+	1. Now Abyssal Fury is crafted with Dissolving Umbra. Since it's early tier now, damage 57 -> 50 (not much since I never hear people talking about the item)
+	2. It's a bit weaker than Eclipse but has half the total void cost
+3. Optimized various pieces of code
+4. Miner's pickaxe is now melee
+5. Tome of the Reaper now requires Dissolving Umbra
+6. Zepline Lure renamed, this will cause old world issues
 
 11/21/21
 1. Checked; Thundershock Shortbow works in multiplayer.

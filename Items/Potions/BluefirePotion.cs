@@ -1,6 +1,6 @@
 using SOTS.Buffs;
 using SOTS.Items.Fragments;
-using SOTS.Items.SpecialDrops;
+
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;

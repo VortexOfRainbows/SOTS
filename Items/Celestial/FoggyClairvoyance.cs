@@ -35,6 +35,11 @@ namespace SOTS.Items.Celestial
 		{
 			player.AddBuff(ModContent.BuffType<FluidCurse>(), 3);
 			List<int> bList = new List<int>() { BuffID.PotionSickness, ModContent.BuffType<FluidCurse>(), ModContent.BuffType<VoidRecovery>(), ModContent.BuffType<VoidShock>(), ModContent.BuffType<VoidSickness>(), BuffID.ManaSickness, ModContent.BuffType<Satiated>() };
+			Mod catalyst = ModLoader.GetMod("Catalyst");
+			if(catalyst != null)
+            {
+				bList.Add(catalyst.BuffType("InfluxCoreCooldown"));
+            }
 			for(int i = 0; i < player.buffImmune.Length; i++)
             {
 				bool debuff = Main.debuff[i];

@@ -2,13 +2,12 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Buffs;
 using SOTS.Items;
-using SOTS.Items.IceStuff;
+using SOTS.Items.Permafrost;
 using SOTS.Items.Otherworld;
 using SOTS.Items.Otherworld.EpicWings;
 using SOTS.Items.Otherworld.FromChests;
 using SOTS.Items.Pyramid;
-using SOTS.Items.SpecialDrops;
-using SOTS.Items.Vibrant;
+using SOTS.Items.Earth;
 using SOTS.NPCs.Boss;
 using SOTS.Projectiles.BiomeChest;
 using SOTS.Projectiles.Celestial;
@@ -40,6 +39,8 @@ using SOTS.Dusts;
 using SOTS.Projectiles.Evil;
 using SOTS.Projectiles;
 using SOTS.Projectiles.Tide;
+using SOTS.Items.Fishing;
+using SOTS.Items.Tide;
 
 namespace SOTS
 {
@@ -54,7 +55,7 @@ namespace SOTS
 		{
 			locketBlacklist = new int[] { ItemID.BookStaff, ModContent.ItemType<LashesOfLightning>(), ModContent.ItemType<SkywardBlades>(), ItemID.GolemFist, ItemID.Flairon,
 				ModContent.ItemType<PhaseCannon>(), ModContent.ItemType<Items.Otherworld.FromChests.HardlightGlaive>(), ModContent.ItemType<StarcoreAssaultRifle>(), ModContent.ItemType<VibrantPistol>(),
-				ModContent.ItemType<Items.Otherworld.FromChests.SupernovaHammer>(), ItemID.MonkStaffT1, ModContent.ItemType<Items.IceStuff.FrigidJavelin>(), ModContent.ItemType<Items.DigitalDaito>() };
+				ModContent.ItemType<Items.Otherworld.FromChests.SupernovaHammer>(), ItemID.MonkStaffT1, ModContent.ItemType<Items.Permafrost.FrigidJavelin>(), ModContent.ItemType<Items.DigitalDaito>() };
 			typhonBlacklist = new int[] { ModContent.ProjectileType<ArcColumn>(), ModContent.ProjectileType<PhaseColumn>(), ModContent.ProjectileType<MacaroniBeam>(), ModContent.ProjectileType<GenesisArc>(), ModContent.ProjectileType<GenesisCore>() };
 			symbioteBlacklist = new int[] { ModContent.ProjectileType<BloomingHook>(), ModContent.ProjectileType<BloomingHookMinion>() };
 			typhonWhitelist = new int[] { ModContent.ProjectileType<HardlightArrow>() };
@@ -126,7 +127,7 @@ namespace SOTS
 		public int BlinkDamage = 0;
 		public int typhonRange = 0;
 		public bool weakerCurse = false;
-		public bool vibrantArmor = false;
+		public bool VibrantArmor = false;
 		public int brokenFrigidSword = 0;
 		public int shardSpellExtra = 0;
 		public int frigidJavelinBoost = 0;
@@ -383,17 +384,17 @@ namespace SOTS
 		public int tPlanetNum = 0;
 		public int tPlanetDamage = -1;
 		int lastPlanetMax = 0;
-		public void runPets(ref int Probe, int type, int damage = 0, bool skipTimeleftReset = false)
+		public void runPets(ref int Probe, int type, int damage = 0, float knockback = 0, bool skipTimeleftReset = false)
 		{
 			if (Main.myPlayer == player.whoAmI)
 			{
 				if (Probe == -1)
 				{
-					Probe = Projectile.NewProjectile(player.Center, Vector2.Zero, type, damage, 0, player.whoAmI, 0);
+					Probe = Projectile.NewProjectile(player.Center, Vector2.Zero, type, damage, knockback, player.whoAmI, 0);
 				}
 				if (!Main.projectile[Probe].active || Main.projectile[Probe].type != type || Main.projectile[Probe].owner != player.whoAmI)
 				{
-					Probe = Projectile.NewProjectile(player.Center, Vector2.Zero, type, damage, 0, player.whoAmI, 0);
+					Probe = Projectile.NewProjectile(player.Center, Vector2.Zero, type, damage, knockback, player.whoAmI, 0);
 				}
 				if(!skipTimeleftReset)
 					Main.projectile[Probe].timeLeft = 6;
@@ -401,8 +402,8 @@ namespace SOTS
 		}
 		public void PetFluidCurse()
 		{
-			runPets(ref probes[4], ModContent.ProjectileType<FluidFollower>(), 0, true);
-			runPets(ref probes[5], ModContent.ProjectileType<ClairvoyanceShade>(), 0, true);
+			runPets(ref probes[4], ModContent.ProjectileType<FluidFollower>(), 0, 0, true);
+			runPets(ref probes[5], ModContent.ProjectileType<ClairvoyanceShade>(), 0, 0, true);
 		}
 		public void doPlanetAqueduct()
 		{
@@ -727,7 +728,7 @@ namespace SOTS
 			assassinateFlat = 0;
 			assassinateNum = 1;
 			assassinate = false;
-			vibrantArmor = false;
+			VibrantArmor = false;
 			shardSpellExtra = 0;
 			frigidJavelinBoost = 0;
 			frigidJavelinNoCost = false;
@@ -804,17 +805,16 @@ namespace SOTS
 			//Fish Set 1
 
 			if (ScaleCatch2(power, 0, 100, 9, 29) && (player.ZoneSkyHeight || player.Center.Y < Main.worldSurface * 16 * 0.5f)) 
-				caughtType = ModContent.ItemType<TinyPlanetFish>(); 
+				caughtType = ModContent.ItemType<TinyPlanetFish>();
 
 			//if (Main.rand.Next(200) == 0 && ZeplineBiome) {
 			//caughtType = mod.ItemType("ZephyriousZepline"); }
 			//if (Main.rand.Next(330) == 1 && liquidType == 2 && poolSize >= 500)   {
 			//caughtType = mod.ItemType("ScaledFish");}
-
+			//if (player.ZoneBeach && liquidType == 0 && Main.rand.NextBool(175))
+			//	caughtType = ModContent.ItemType<Items.SpecialDrops.SpikyPufferfish>();
 			//Fish Set 2
 
-			if (player.ZoneBeach && liquidType == 0 && Main.rand.NextBool(175)) 
-				caughtType = ModContent.ItemType<Items.SpecialDrops.SpikyPufferfish>(); 
 			if (player.ZoneBeach && liquidType == 0 && Main.rand.NextBool(225)) 
 				caughtType = ModContent.ItemType<CrabClaw>(); 
 
@@ -1025,7 +1025,7 @@ namespace SOTS
 			{
 				standard = time / 2f;
 			}
-			if (item.channel == false || item.type == ModContent.ItemType<Items.SpecialDrops.OlympianAxe>())
+			if (item.channel == false || item.type == ModContent.ItemType<Items.OlympianAxe>())
 				return standard;
 			return base.UseTimeMultiplier(item);
 		}

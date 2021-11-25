@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
-using SOTS.Items.IceStuff;
+using SOTS.Items.Permafrost;
 using SOTS.Items.Otherworld.FromChests;
 using System;
 using Terraria;

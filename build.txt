@@ -7,4 +7,4 @@ hideResources = false
 includeSource = true
 buildIgnore = *.csproj, *.user, obj\*, bin\*, .vs\*
 includePDB = true
-homepage = https://forums.terraria.org/index.php?threads/secrets-of-the-shadows-terraria-mod.94546/
+homepage = https://forums.Terraria.org/index.php?threads/secrets-of-the-shadows-terraria-mod.94546/

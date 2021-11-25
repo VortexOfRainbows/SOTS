@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SOTS.Items.IceStuff;
+using SOTS.Items.Permafrost;
 using SOTS.Projectiles.Celestial;
 using SOTS.Projectiles.Permafrost;
 using Terraria;

@@ -3,7 +3,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using System;
 using Microsoft.Xna.Framework;
-using SOTS.Items.SpecialDrops;
+
+using SOTS.Items.Fishing;
 
 namespace SOTS.Items.ChestItems
 {

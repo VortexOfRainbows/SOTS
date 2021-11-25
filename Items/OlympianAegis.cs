@@ -1,14 +1,10 @@
-using System;
-using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.DataStructures;
-using Terraria.Enums;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.ObjectData;
-using Microsoft.Xna.Framework.Graphics;
 using SOTS.Void;
+using SOTS.Items.Earth;
+using SOTS.Items.Pyramid;
+using SOTS.Items.ChestItems;
 
 namespace SOTS.Items
 {	[AutoloadEquip(EquipType.Shield)]
@@ -25,7 +21,7 @@ namespace SOTS.Items
             item.width = 34;     
             item.height = 42;   
             item.value = Item.sellPrice(0, 4, 75, 0);
-            item.rare = 6;
+            item.rare = ItemRarityID.LightPurple;
 			item.defense = 3;
 			item.accessory = true;
 		}
@@ -43,9 +39,9 @@ namespace SOTS.Items
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "GraniteProtector", 1);
-			recipe.AddIngredient(null, "SpiritShield", 1);
-			recipe.AddIngredient(null, "CrestofDasuver", 1);
+			recipe.AddIngredient(ModContent.ItemType<GraniteProtector>(), 1);
+			recipe.AddIngredient(ModContent.ItemType<SpiritShield>(), 1);
+			recipe.AddIngredient(ModContent.ItemType<CrestofDasuver>(), 1);
 			recipe.AddTile(TileID.TinkerersWorkbench);
 			recipe.SetResult(this);
 			recipe.AddRecipe();

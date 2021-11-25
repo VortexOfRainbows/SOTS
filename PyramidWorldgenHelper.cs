@@ -11,6 +11,7 @@ using SOTS.Items;
 using SOTS.Items.Pyramid.AncientGold;
 using SOTS.Items.Pyramid.PyramidWalls;
 using SOTS.Items.Pyramid.AltPyramidBlocks;
+using SOTS.Items.Secrets;
 
 namespace SOTS
 {
@@ -1589,7 +1590,7 @@ namespace SOTS
 									tile2.halfBrick(true);
 									break;
 								case 7:
-									tile.type = (ushort)ModContent.TileType<ZeplineLureTile>();
+									tile.type = (ushort)ModContent.TileType<RefractingCrystalBlockTile>();
 									tile.slope(0);
 									tile.halfBrick(false);
 									tile.active(true);

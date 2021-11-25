@@ -10,7 +10,7 @@ using static Terraria.ModLoader.ModContent;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 using Terraria.Graphics.Shaders;
-using SOTS.Items.GelGear;
+using SOTS.Items.Slime;
 using SOTS.Projectiles.Slime;
 
 namespace SOTS.NPCs.TreasureSlimes

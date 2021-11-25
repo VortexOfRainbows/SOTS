@@ -11,7 +11,7 @@ using static Terraria.ModLoader.ModContent;
 using SOTS.Items.Pyramid.AltPyramidBlocks;
 using System.Linq;
 using SOTS.Items.Tide;
-using SOTS.Items.IceStuff;
+using SOTS.Items.Permafrost;
 
 namespace SOTS
 {

@@ -10,7 +10,7 @@ namespace SOTS.Projectiles.Laser
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Lightspeed Blade");
+			DisplayName.SetDefault("Shadow Blade");
 			ProjectileID.Sets.TrailCacheLength[projectile.type] = 240;
 			ProjectileID.Sets.TrailingMode[projectile.type] = 0;
 		}

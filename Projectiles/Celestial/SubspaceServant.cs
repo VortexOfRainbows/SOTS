@@ -9,7 +9,7 @@ using System.IO;
 using SOTS.Items.Celestial;
 using System.Collections.Generic;
 using SOTS.Items.Otherworld.FromChests;
-using SOTS.Items.Vibrant;
+using SOTS.Items.Earth;
 using SOTS.Items.Otherworld;
 using Terraria.Graphics.Shaders;
 using System.Linq;

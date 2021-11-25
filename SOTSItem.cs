@@ -20,13 +20,14 @@ using SOTS.Items.Otherworld;
 using SOTS.Items.ChestItems;
 using SOTS.Items;
 using SOTS.Items.Fragments;
-using SOTS.Items.Vibrant;
+using SOTS.Items.Earth;
 using SOTS.Items.Inferno;
 using Terraria.Utilities;
 using SOTS.Items.Pyramid.PyramidWalls;
 using SOTS.Projectiles.Celestial;
 using SOTS.Projectiles.Permafrost;
 using SOTS.Items.DoorItems;
+using SOTS.Items.Secrets;
 
 namespace SOTS
 {
