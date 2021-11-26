@@ -1,6 +1,7 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Dusts;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -26,7 +27,7 @@ namespace SOTS.NPCs.Constructs
 			npc.width = 90;
 			npc.height = 90;
 			Main.npcFrameCount[npc.type] = 1;  
-			npc.value = 7075;
+			npc.value = Item.buyPrice(0, 1, 0, 0);
 			npc.npcSlots = 3f;
 			npc.boss = false;
 			npc.lavaImmune = false;
@@ -53,8 +54,14 @@ namespace SOTS.NPCs.Constructs
 				float y = Main.rand.Next(-10, 11) * 0.25f;
 				Main.spriteBatch.Draw(texture2, drawPos + new Vector2(x, y), null, color * (1f - (npc.alpha / 255f)), npc.rotation, drawOrigin2, npc.scale, SpriteEffects.None, 0f);
 			}
-			spriteBatch.Draw(texture, drawPos, null, drawColor, dir, drawOrigin, 1f, SpriteEffects.None, 0f);
-			spriteBatch.Draw(textureG, drawPos, null, Color.White, dir, drawOrigin, 1f, SpriteEffects.None, 0f);
+			bool flip = false;
+			if (Math.Abs(MathHelper.WrapAngle(dir)) <= MathHelper.ToRadians(90))
+			{
+				flip = true;
+			}
+			float bonusDir = !flip ? MathHelper.ToRadians(180) : 0;
+			spriteBatch.Draw(texture, drawPos, null, drawColor, dir - bonusDir, drawOrigin, 1f, !flip ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+			spriteBatch.Draw(textureG, drawPos, null, Color.White, dir - bonusDir, drawOrigin, 1f, !flip ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 			return false;
 		}
 		public override void HitEffect(int hitDirection, double damage)
@@ -67,14 +74,11 @@ namespace SOTS.NPCs.Constructs
 				}
 				for (int i = 0; i < 30; i++)
 				{
-					int dust = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, mod.DustType("BigPermafrostDust"));
+					int dust = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, ModContent.DustType<BigPermafrostDust>());
 					Main.dust[dust].velocity *= 5f;
 				}
-				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/PermafrostConstructGore1"), 1f);
-				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/PermafrostConstructGore2"), 1f);
-				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/PermafrostConstructGore3"), 1f);
-				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/PermafrostConstructGore4"), 1f);
-				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/PermafrostConstructGore5"), 1f);
+				for (int i = 1; i <= 7; i++)
+					Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/PermafrostConstruct/PermafrostConstructGore" + i), 1f);
 				for (int i = 0; i < 9; i++)
 					Gore.NewGore(npc.position, npc.velocity, Main.rand.Next(61, 64), 1f);
 			}
@@ -82,6 +86,10 @@ namespace SOTS.NPCs.Constructs
 		public override void PostAI()
 		{
 			npc.velocity.X *= 1f - (npc.alpha / 255f * 0.01f);
+			if (npc.velocity.X > 0)
+				npc.spriteDirection = 1;
+			else
+				npc.spriteDirection = -1;
 			base.PostAI();
 		}
 		public override bool PreAI()

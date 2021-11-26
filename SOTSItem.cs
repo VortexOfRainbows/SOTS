@@ -28,6 +28,7 @@ using SOTS.Projectiles.Celestial;
 using SOTS.Projectiles.Permafrost;
 using SOTS.Items.DoorItems;
 using SOTS.Items.Secrets;
+using System;
 
 namespace SOTS
 {
@@ -446,21 +447,32 @@ namespace SOTS
 		}
         public override bool CanUseItem(Item item, Player player)
 		{
-			if(player.HasAmmo(item, true))
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
+			if (player.HasAmmo(item, true))
 			{
-				int polarCannons = SOTSPlayer.ModPlayer(player).polarCannons;
-				if ((item.ranged || item.melee) && polarCannons > 0 && (!item.autoReuse || player.ownedProjectileCounts[ModContent.ProjectileType<MiniPolarisCannon>()] <= 0))
+				int polarCannons = modPlayer.polarCannons;
+				if ((item.ranged || item.melee) && polarCannons > 0 && (!item.autoReuse || player.ownedProjectileCounts[ProjectileType<MiniPolarisCannon>()] <= 0))
 				{
 					int time = item.useTime;
-					if (item.shoot == 0)
+					if (item.shoot == ProjectileID.None)
 						time = item.useAnimation;
 					if (item.autoReuse || item.channel)
 						time = -2;
 					for (int i = 0; i < polarCannons; i++)
 					{
-						Projectile.NewProjectile(player.Center, Vector2.Zero, ModContent.ProjectileType<MiniPolarisCannon>(), item.damage, item.knockBack, player.whoAmI, time, item.shoot != 0 ? item.useTime : item.useAnimation);
+						Projectile.NewProjectile(player.Center, Vector2.Zero, ProjectileType<MiniPolarisCannon>(), item.damage, item.knockBack, player.whoAmI, time, item.shoot != ProjectileID.None ? item.useTime : item.useAnimation);
 					}
 				}
+			}
+			if (modPlayer.EndothermicAfterburner && item.melee && !item.noMelee)
+			{
+				Vector2 offset = new Vector2(24 * -player.direction, 0);
+				float mult = item.useAnimation / 70f;
+				if (mult > 1)
+					mult = 1;
+				if(Math.Abs(player.velocity.X) < 9f)
+					player.velocity.X += player.direction * 7f * mult;
+				Projectile.NewProjectile(player.Center + offset, Vector2.Zero + offset * 0.16f, ProjectileType<EndoBurst>(), (int)(item.damage * 0.7f), 3f, player.whoAmI);
 			}
 			return base.CanUseItem(item, player);
         }

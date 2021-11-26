@@ -159,12 +159,6 @@ namespace SOTS
 		public int doubledActive = 0;
 		public int doubledAmount = 0;
 		public bool ceres = false;
-		public bool megHat = false;
-		public bool megShirt = false;
-		public bool megSet = false;
-		public int megSetDamage = 0;
-		public bool orion = false;
-		public bool lostSoul = false;
 		public int onhit = 0;
 		public int onhitdamage = 0;
 		public float attackSpeedMod = 0;
@@ -200,6 +194,7 @@ namespace SOTS
 		public bool CritNightmare = false;
 		public bool BlueFire = false;
 		public bool BlueFireOrange = false;
+		public bool EndothermicAfterburner = false;
 		public bool netUpdate = false;
 		public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
 		{
@@ -746,11 +741,6 @@ namespace SOTS
 			}
 			attackSpeedMod = 0;
 			//Some important variables 1
-			lostSoul = false;
-			orion = false;
-			megSet = false;
-			megShirt = false;
-			megHat = false;
 			ceres = false;
 			doubledActive = 0;
 			backUpBow = false;
@@ -796,6 +786,7 @@ namespace SOTS
 			CanCurseSwap = false;
 			BlueFire = false;
 			BlueFireOrange = false;
+			EndothermicAfterburner = false;
 			if (PyramidBiome)
 				player.AddBuff(ModContent.BuffType<Buffs.PharaohsCurse>(), 16, false); 
 			polarCannons = 0;
@@ -954,29 +945,15 @@ namespace SOTS
 		}
 		public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
 		{
-			float downgrade = 0.5f;
-			if(shardOnHit > 0 && damage > 5)
+			if (Main.myPlayer == player.whoAmI)
 			{
-				for(int i = 0; i < shardOnHit; i++)
+				if (shardOnHit > 0 && damage > 5)
 				{
-					Vector2 circularSpeed = new Vector2(0, -12).RotatedBy(MathHelper.ToRadians(i * (360f/shardOnHit)));
-					if(Main.myPlayer == player.whoAmI)
-						Projectile.NewProjectile(player.Center.X, player.Center.Y, circularSpeed.X, circularSpeed.Y, mod.ProjectileType("ShatterShard"), 10 + bonusShardDamage, 3f, player.whoAmI);
-				}
-			}
-			if(Main.expertMode == true)
-			{
-				downgrade = 0.75f;
-			}
-			if(megSet == true)
-			{
-				
-				if(player.statLife < damage - (player.statDefense * downgrade) && player.statMana > 0 && player.statManaMax > 0)
-				{
-					player.AddBuff(mod.BuffType("ManaCut"), 18000, false);
-					megSetDamage += -(int)(player.statLife - (damage - (player.statDefense * downgrade)));
-					damage = 0;
-					player.statLife = player.statMana;
+					for (int i = 0; i < shardOnHit; i++)
+					{
+						Vector2 circularSpeed = new Vector2(0, -12).RotatedBy(MathHelper.ToRadians(i * (360f / shardOnHit)));
+						Projectile.NewProjectile(player.Center.X, player.Center.Y, circularSpeed.X, circularSpeed.Y, ModContent.ProjectileType<ShatterShard>(), 10 + bonusShardDamage, 3f, player.whoAmI);
+					}
 				}
 			}
 			return base.PreHurt(pvp, quiet, ref damage, ref hitDirection, ref crit, ref customDamage, ref playSound, ref genGore, ref damageSource);
@@ -1009,11 +986,6 @@ namespace SOTS
 				}
 			}
 			return true;
-		}
-		public override void OnRespawn(Player player)
-		{
-			megSet = false;
-			megSetDamage = 0;
 		}
 		public override float UseTimeMultiplier(Item item)
 		{

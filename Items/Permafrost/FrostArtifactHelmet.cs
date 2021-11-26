@@ -1,8 +1,6 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using System;
-using Microsoft.Xna.Framework;
 
 namespace SOTS.Items.Permafrost
 {
@@ -24,7 +22,7 @@ namespace SOTS.Items.Permafrost
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs)
         {
-            return body.type == mod.ItemType("FrostArtifactChestplate") && legs.type == mod.ItemType("FrostArtifactTrousers");
+            return body.type == ModContent.ItemType<FrostArtifactChestplate>() && legs.type == ModContent.ItemType<FrostArtifactTrousers>();
         }
         public override void UpdateArmorSet(Player player)
         {	
@@ -41,7 +39,7 @@ namespace SOTS.Items.Permafrost
 		{
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.FrostHelmet, 1);
-			recipe.AddIngredient(null, "AbsoluteBar", 16);
+			recipe.AddIngredient(ModContent.ItemType<AbsoluteBar>(), 16);
 			recipe.SetResult(this);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.AddRecipe();

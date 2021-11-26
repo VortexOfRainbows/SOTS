@@ -25,6 +25,7 @@ using SOTS.Items.Tools;
 using SOTS.Items.Slime;
 using SOTS.Items.Evil;
 using SOTS.Items.Tide;
+using SOTS.Items.Permafrost;
 
 namespace SOTS.NPCs
 {
@@ -279,6 +280,8 @@ namespace SOTS.NPCs
 							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<MantisGrip>(), 1);
 						if (npc.type == ModContent.NPCType<EarthenConstruct>())
 							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<Earthshaker>(), 1);
+						if (npc.type == ModContent.NPCType<PermafrostConstruct>())
+							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<EndothermicAfterburner>(), 1);
 					}
 					if ((npc.type == ModContent.NPCType<OtherworldlyConstructHead>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead2>()) && Main.rand.NextBool(100))
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<PhaseCannon>(), 1);

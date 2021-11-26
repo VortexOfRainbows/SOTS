@@ -38,6 +38,7 @@ namespace SOTS.Projectiles.Inferno
 			projectile.localNPCHitCooldown = 30;
 		}
 		List<FireParticle> particleList = new List<FireParticle>();
+		int removedCounter = 0;
 		public void cataloguePos()
 		{
 			for (int i = 0; i < particleList.Count; i++)
@@ -48,6 +49,7 @@ namespace SOTS.Projectiles.Inferno
 				{
 					particleList.RemoveAt(i);
 					i--;
+					removedCounter++;
 				}
 			}
 		}
@@ -57,7 +59,7 @@ namespace SOTS.Projectiles.Inferno
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			for (int i = 0; i < particleList.Count; i++)
 			{
-				Color color = useBoth ? randColor() : toUseColor;
+				Color color = useBoth ? (((removedCounter + i) % 2) == 0 ? blue : orange) : toUseColor;
 				Vector2 drawPos = particleList[i].position - Main.screenPosition;
 				color = projectile.GetAlpha(color) * (0.35f + 0.65f * particleList[i].scale);
 				for (int j = 0; j < 2; j++)
