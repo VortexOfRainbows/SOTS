@@ -465,12 +465,12 @@ namespace SOTS
 		private void GenSOTSOres(GenerationProgress progress)
 		{
 			progress.Message = "Generating SOTS Ores";
-			float max = 200;
+			float max = 240;
 			if (Main.maxTilesX > 6000) //medium worlds
-				max = 300;
+				max = 360;
 			if (Main.maxTilesX > 8000) //big worlds
-				max = 400;
-			for (int k = 0; k < (int)((Main.maxTilesX * Main.maxTilesY) * 0.1f); k++)
+				max = 480;
+			for (int k = 0; k < (int)((Main.maxTilesX * Main.maxTilesY) * 0.2f); k++)
 			{
 				int x = WorldGen.genRand.Next(100, Main.maxTilesX - 100);
 				int y = WorldGen.genRand.Next((int)WorldGen.rockLayerLow, (int)(WorldGen.rockLayer + Main.maxTilesY - 200) / 2);

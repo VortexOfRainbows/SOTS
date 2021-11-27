@@ -27,7 +27,6 @@ namespace SOTS.NPCs.Constructs
             npc.noTileCollide = true;
             npc.noGravity = true;
             npc.dontCountMe = true;
-            npc.value = 100;
             npc.HitSound = SoundID.NPCHit4;
             npc.DeathSound = SoundID.NPCDeath14;
         }

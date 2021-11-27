@@ -223,7 +223,8 @@ namespace SOTS
 			SyncLootingSoulsAndVoidMax,
 			SyncGlobalNPC,
 			SyncPlayerKnives,
-			SyncRexFlower
+			SyncRexFlower,
+			SyncGlobalProj
 		}
 		public override void HandlePacket(BinaryReader reader, int whoAmI)
 		{
@@ -331,6 +332,23 @@ namespace SOTS
 						packet.Write(playernumber);
 						packet.Write(modPlayer.skywardBlades);
 						packet.Write(modPlayer.cursorRadians);
+						packet.Send(-1, playernumber);
+					}
+					break;
+				case (int)SOTSMessageType.SyncGlobalProj:
+					playernumber = reader.ReadByte();
+					int projNumber = reader.ReadInt32();
+					SOTSProjectile sProj = (SOTSProjectile)GetGlobalProjectile("SOTSProjectile");
+					sProj = (SOTSProjectile)sProj.Instance(Main.projectile[projNumber]);
+					sProj.frostFlake = reader.ReadInt32();
+					// Unlike SyncPlayer, here we have to relay/forward these changes to all other connected clients
+					if (Main.netMode == NetmodeID.Server)
+					{
+						var packet = GetPacket();
+						packet.Write((byte)SOTSMessageType.SyncGlobalNPC);
+						packet.Write(playernumber);
+						packet.Write(projNumber);
+						packet.Write(sProj.frostFlake);
 						packet.Send(-1, playernumber);
 					}
 					break;

@@ -5,13 +5,15 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
 using SOTS.Projectiles.Nature;
+using SOTS.Projectiles.Otherworld;
 using SOTS.Void;
 using Terraria;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static SOTS.SOTS;
 
-namespace SOTS.Projectiles.Otherworld
+namespace SOTS
 {
 	public class SOTSProjectile : GlobalProjectile
 	{
@@ -20,11 +22,40 @@ namespace SOTS.Projectiles.Otherworld
 		{
 			NatureSlimeUnit(projectile);
 			HomingUnit(projectile);
+			if(projectile.arrow)
+				FrostFlakeUnit(projectile, frostFlake - 2);
 		}
+		public int frostFlake = 0;
 		public bool hasHitYet = false;
 		public bool effect = true;
 		public int counter = 0;
 		public int petAdvisorID = -1;
+
+		public void SendClientChanges(Player player, Projectile projectile)
+		{
+			// Send a Mod Packet with the changes.
+			var packet = mod.GetPacket();
+			packet.Write((byte)SOTSMessageType.SyncGlobalProj);
+			packet.Write((byte)player.whoAmI);
+			packet.Write(projectile.whoAmI);
+			packet.Write(frostFlake);
+			packet.Send();
+		}
+		private Vector2 initialVelo = Vector2.Zero;
+		public void FrostFlakeUnit(Projectile projectile, int level)
+        {
+			if (level < -1)
+				return;
+			else if(frostFlake <= 0)
+            {
+				frostFlake += 2;
+				SendClientChanges(Main.player[projectile.owner], projectile);
+            }
+			if(initialVelo == Vector2.Zero)
+				initialVelo = projectile.velocity;
+			if(projectile.velocity.X == initialVelo.X && projectile.velocity.Y != initialVelo.Y)
+				projectile.velocity = initialVelo;
+        }
 		public void HomingUnit(Projectile projectile)
 		{
 			if (hasHitYet || !projectile.active || projectile.damage <= 0 || counter > 900f || SOTSPlayer.typhonBlacklist.Contains(projectile.type))

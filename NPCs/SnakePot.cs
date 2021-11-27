@@ -85,7 +85,7 @@ namespace SOTS.NPCs
 			} 
 			for(int amount = amount2; amount > 0; amount--)
 			{
-				int npcSpawn = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, mod.NPCType("Snake"));	
+				int npcSpawn = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<Snake>());	
 				Main.npc[npcSpawn].velocity.X += Main.rand.NextFloat(-1.6f,1.6f);
 				Main.npc[npcSpawn].velocity.Y -= Main.rand.NextFloat(5.25f,7.5f);
 				Main.npc[npcSpawn].netUpdate = true;

@@ -42,7 +42,6 @@ namespace SOTS.Projectiles.Otherworld
 				projectile.ai[0] = Main.rand.Next(360);
 				projectile.position += projectile.velocity.SafeNormalize(Vector2.Zero) * 18;
 				initialDirection = projectile.velocity;
-				projectile.velocity *= 0f;
 				if(completedLoads == 0)
 					LaserDraw(null);
 				Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 94, 0.6f);
@@ -156,7 +155,7 @@ namespace SOTS.Projectiles.Otherworld
 				if(target.Hitbox.Intersects(new Rectangle((int)drawpos.X - 8, (int)drawpos.Y - 8, projectile.width, projectile.height)) && projectile.friendly && !target.dontTakeDamage)
 				{
 					if(projectile.owner == Main.myPlayer)
-						Projectile.NewProjectile(drawpos.X, drawpos.Y, 0, 0, mod.ProjectileType("HardlightArrowDamage"), projectile.damage, projectile.knockBack, Main.myPlayer, 0f, 0f);
+						Projectile.NewProjectile(drawpos, projectile.velocity, ModContent.ProjectileType<HardlightArrowDamage>(), projectile.damage, projectile.knockBack, Main.myPlayer, 0f, 0f);
 					posX = target.Center.X;
 					posY = target.Center.Y;
 					posRect = target.Hitbox;

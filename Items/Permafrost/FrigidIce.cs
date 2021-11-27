@@ -15,11 +15,12 @@ namespace SOTS.Items.Permafrost
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = false;
 			Main.tileSpelunker[Type] = true;
+			minPick = 45; //requires silver to mine
 			mineResist = 0.5f;
 			dustType = ModContent.DustType<ModIceDust>();
 			drop = ModContent.ItemType<FrigidIce>();
 			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Frigid Ice");
+			name.SetDefault("Frigid Ore");
 			AddMapEntry(new Color(96, 111, 215), name);
 			soundType = SoundID.Tink;
 			soundStyle = 2;
@@ -52,11 +53,12 @@ namespace SOTS.Items.Permafrost
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = false;
+			minPick = 45; //requires silver to mine
 			mineResist = 0.5f;
 			dustType = ModContent.DustType<ModIceDust>();
 			drop = ModContent.ItemType<FrigidIce>();
 			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Frigid Ice");
+			name.SetDefault("Frigid Ore");
 			AddMapEntry(new Color(96, 111, 215), name);
 			soundType = SoundID.Tink;
 			soundStyle = 2;
@@ -64,7 +66,11 @@ namespace SOTS.Items.Permafrost
 	}
 	public class FrigidIce : ModItem
 	{
-		public override void SetDefaults()
+        public override void SetStaticDefaults()
+		{
+			DisplayName.SetDefault("Frigid Ore");
+		}
+        public override void SetDefaults()
 		{
 			item.CloneDefaults(ItemID.StoneBlock);
 			item.rare = ItemRarityID.Blue;
