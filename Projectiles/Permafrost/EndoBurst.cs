@@ -30,6 +30,7 @@ namespace SOTS.Projectiles.Permafrost
 			projectile.hostile = false;
 			projectile.alpha = 0;
 			projectile.hide = false;
+			projectile.melee = true;
 			projectile.usesLocalNPCImmunity = true;
 			projectile.localNPCHitCooldown = 30;
 		}

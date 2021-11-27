@@ -7,6 +7,7 @@ using static Terraria.ModLoader.ModContent;
 using SOTS.Items.Fragments;
 using SOTS.Items.Void;
 using SOTS.Items.Slime;
+using SOTS.Items.Permafrost;
 
 namespace SOTS.NPCs.TreasureSlimes
 {
@@ -39,6 +40,7 @@ namespace SOTS.NPCs.TreasureSlimes
 				new TreasureSlimeItem(ItemID.IronOre, 30, 72, 0.25f),
 				new TreasureSlimeItem(ItemID.SilverOre, 30, 72, 0.25f),
 				new TreasureSlimeItem(ItemID.TungstenOre, 30, 72, 0.25f),
+				new TreasureSlimeItem(ItemType<FrigidIce>(), 40, 80, 1f),
 				new TreasureSlimeItem(ItemID.IceBlock, 30, 90, 0.3f),
 				new TreasureSlimeItem(ItemID.SnowBlock, 30, 90, 0.3f),
 

@@ -105,7 +105,7 @@ namespace SOTS.Items.Tools
 			//PasteCrystal();
 			Vector2 mousePos = Main.MouseWorld;
 			Vector2 tileLocation = mousePos / 16f;
-			SOTSWorldgenHelper.GenerateIceRuin((int)tileLocation.X, (int)tileLocation.Y);
+			SOTSWorldgenHelper.GenerateFrigidIceOre((int)tileLocation.X, (int)tileLocation.Y);
 			return true;
 		}
 	}

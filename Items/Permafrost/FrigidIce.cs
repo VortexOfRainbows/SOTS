@@ -18,7 +18,9 @@ namespace SOTS.Items.Permafrost
 			mineResist = 0.5f;
 			dustType = ModContent.DustType<ModIceDust>();
 			drop = ModContent.ItemType<FrigidIce>();
-			AddMapEntry(new Color(198, 249, 251));
+			ModTranslation name = CreateMapEntryName();
+			name.SetDefault("Frigid Ice");
+			AddMapEntry(new Color(96, 111, 215), name);
 			soundType = SoundID.Tink;
 			soundStyle = 2;
 		}
@@ -53,7 +55,9 @@ namespace SOTS.Items.Permafrost
 			mineResist = 0.5f;
 			dustType = ModContent.DustType<ModIceDust>();
 			drop = ModContent.ItemType<FrigidIce>();
-			AddMapEntry(new Color(198, 249, 251));
+			ModTranslation name = CreateMapEntryName();
+			name.SetDefault("Frigid Ice");
+			AddMapEntry(new Color(96, 111, 215), name);
 			soundType = SoundID.Tink;
 			soundStyle = 2;
 		}

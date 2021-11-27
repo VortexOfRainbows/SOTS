@@ -35,22 +35,25 @@ Mid Priority:
 		1. 8 direction solar eruption
 	2. (tidal construct one)
 5. Witch's Heart accessory; in similar vein to Heart of the Sea, where it is an accessory variant of the Nightmare potion
-6. Frigid Ice spawning
-7. Mobile Fortress Generator: upgrade to platform generator. Two tiers of upgrades (this + another earlier one), can be visually whatever but it is obtained from Old One's army stuff
-8. Twilight Scouter (already sprited). Spawns in Space and Planetarium.
+6. Mobile Fortress Generator: upgrade to platform generator. Two tiers of upgrades (this + another earlier one), can be visually whatever but it is obtained from Old One's army stuff
+7. Twilight Scouter (already sprited). Spawns in Space and Planetarium.
 	1. drops Gravity Normalizer, maybe Synthetic Jellyfish Staff
-9. Glaze Repeater, found in polaris structure.
-10. Corrupt and Crimson treasure slimes
-11. Split Focus Reticle into two accessories to make it less overpowed: Focus Reticle (Amplifiers + Crit Rate), Bag of Charms (Charms + Icosahedrons)
-12. Make Polaris no longer cheesable by shove into ground (remove damageability?)
+8. Glaze Repeater, found in polaris structure.
+9. Corrupt and Crimson treasure slimes
+10. Split Focus Reticle into two accessories to make it less overpowed: Focus Reticle (Amplifiers + Crit Rate), Bag of Charms (Charms + Icosahedrons)
 
 Low Priority:
 1. Archaelogist NPC
+2. Frigid Ice: Pickaxe and Hammaxe
 
 11/25/21 & 11/26/21
 1. Added Endothermic Afterburner. Should work in Multiplayer
 2. Some visual fixes to wisp explosion and permafrost construct
 3. Removed some things
+4. Polaris will no longer abide to being in floor
+5. Frigid Ice spawns naturally in the Ice Biome and can drop from Ice Treasure Slimes
+6. Now requires 10 Frigid Ice to craft 2 Frigid Bars
+7. Slight changes to Polaris Spawn altar in order to lower ore obtainable
 
 11/24/21
 1. Did some reorganization to the item folders (900+ files removed)

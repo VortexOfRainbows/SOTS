@@ -80,7 +80,7 @@ namespace SOTS
 					{
 						Tile tile = Framing.GetTileSafely(k, l);
 						tile.active(true);
-						tile.type = (ushort)mod.TileType("PyramidSlabTile");
+						tile.type = (ushort)ModContent.TileType<PyramidSlabTile>();
 						tile.slope(0);
 						tile.halfBrick(false);
 					}
@@ -102,19 +102,19 @@ namespace SOTS
 							{
 								case 0:
 									tile.active(true);
-									tile.type = (ushort)mod.TileType("PyramidSlabTile");
+									tile.type = (ushort)ModContent.TileType<PyramidSlabTile>();
 									tile.slope(0);
 									tile.halfBrick(false);
 									break;
 								case 1:
 									tile.active(true);
-									tile.type = (ushort)mod.TileType("OvergrownPyramidTile");
+									tile.type = (ushort)ModContent.TileType<OvergrownPyramidTile>();
 									tile.slope(0);
 									tile.halfBrick(false);
 									break;
 								case 2:
 									tile.active(true);
-									tile.type = (ushort)mod.TileType("OvergrownPyramidTile");
+									tile.type = (ushort)ModContent.TileType<OvergrownPyramidTile>();
 									tile.slope((byte)(direction == 1 ? 3 : 4));
 									tile.halfBrick(false);
 									break;
@@ -128,13 +128,13 @@ namespace SOTS
 									break;
 								case 4:
 									tile.active(true);
-									tile.type = (ushort)mod.TileType("OvergrownPyramidTile");
+									tile.type = (ushort)ModContent.TileType<OvergrownPyramidTile>();
 									tile.slope((byte)(direction == 1 ? 4 : 3));
 									tile.halfBrick(false);
 									break;
 								case 5:
 									tile.active(true);
-									tile.type = (ushort)mod.TileType("OvergrownPyramidTile");
+									tile.type = (ushort)ModContent.TileType<OvergrownPyramidTile>();
 									tile.slope((byte)(direction == 1 ? 1 : 2));
 									tile.halfBrick(false);
 									break;
@@ -144,18 +144,18 @@ namespace SOTS
 										tile.active(false);
 										tile.slope(0);
 										tile.halfBrick(false);
-										WorldGen.PlaceTile(k - (direction == 1 ? 1 : 0), l, (ushort)mod.TileType("CursedAppleTile"), true, true, -1, 0);
+										WorldGen.PlaceTile(k - (direction == 1 ? 1 : 0), l, (ushort)ModContent.TileType<CursedAppleTile>(), true, true, -1, 0);
 									}
 									break;
 								case 7:
 									tile.active(true);
-									tile.type = (ushort)mod.TileType("OvergrownPyramidTile");
+									tile.type = (ushort)ModContent.TileType<OvergrownPyramidTile>();
 									tile.slope(0);
 									tile.halfBrick(true);
 									break;
 								case 8:
 									tile.active(true);
-									tile.type = (ushort)mod.TileType("OvergrownPyramidTile");
+									tile.type = (ushort)ModContent.TileType<OvergrownPyramidTile>();
 									tile.slope((byte)(direction == 1 ? 2 : 1));
 									tile.halfBrick(false);
 									break;
@@ -178,7 +178,7 @@ namespace SOTS
 									break;
 								case 11:
 									tile.active(true);
-									tile.type = (ushort)mod.TileType("AcediaPlatingTile");
+									tile.type = (ushort)ModContent.TileType<AcediaPlatingTile>();
 									tile.slope(0);
 									tile.halfBrick(false);
 									break;
@@ -7058,12 +7058,12 @@ namespace SOTS
 				{0,0,0,0,0,0,0,0,0,0,6,6,6,0,0,0,0,0,5,5,5,6,6,0,0,0,0,8,0,0,6,6,6,6,5,5,5,0,0,0,0,0,6,6,6,6,6,6,6,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,0,0,6,6,6,6,6,6,6,0,0,0,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,0,0,6,6,6,6,6,6,6,6,6,6,6,0,0,0,0,0,0},
 				{0,0,0,6,6,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,6,6,0,0,0},
-				{13,13,6,6,6,5,5,5,6,6,6,6,6,5,5,5,6,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,6,6,5,5,5,6,6,6,6,6,6,5,5,5,6,6,6,13,13},
-				{13,6,6,6,6,6,5,6,6,6,6,6,6,6,5,6,6,6,6,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,6,6,6,6,5,6,6,6,6,6,6,6,6,5,6,6,6,6,6,13},
-				{13,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,13},
-				{13,13,9,9,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,13,13,13},
-				{13,13,9,9,9,9,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,9,13,13,13},
-				{13,13,13,9,9,9,9,9,9,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,9,9,13,13,13},
+				{13,13,6,6,6,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,6,6,6,13,13},
+				{13,6,6,6,6,5,5,5,6,6,6,6,6,5,5,5,6,6,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,6,6,6,5,5,5,6,6,6,6,6,6,5,5,5,6,6,6,6,13},
+				{13,6,6,6,6,6,5,6,6,6,6,6,6,6,5,6,6,6,6,6,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,6,6,6,6,6,6,5,6,6,6,6,6,6,6,6,5,6,6,6,6,6,13},
+				{13,13,9,9,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,5,5,5,5,5,5,5,5,5,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,13,13,13},
+				{13,13,9,9,9,9,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,5,5,5,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,9,13,13,13},
+				{13,13,13,9,9,9,9,9,9,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,5,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,9,9,13,13,13},
 				{13,13,13,13,13,9,9,9,9,9,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,9,6,6,6,9,6,6,9,6,6,9,9,9,13,13,13},
 				{13,13,13,13,13,13,9,9,9,9,9,9,9,9,6,6,6,6,6,6,9,6,6,6,6,6,9,9,6,6,6,6,6,6,6,6,6,9,6,6,9,9,9,6,6,9,9,6,9,6,9,9,13,13,13,13,13},
 				{13,13,13,13,13,13,9,9,9,9,9,9,9,9,6,6,6,6,6,6,9,9,6,6,6,6,9,9,6,6,6,6,6,6,6,6,9,9,9,6,9,9,9,9,9,9,9,9,9,9,9,13,13,13,13,13,13},
@@ -7121,13 +7121,16 @@ namespace SOTS
 									tile.halfBrick(false);
 									break;
 								case 6:
-									tile.active(true);
-									tile.type = (ushort)ModContent.TileType<FrigidIceTile>();
-									tile.slope(0);
-									tile.halfBrick(false);
-									if(i >= 22 && tile.wall == 0)
+									if (confirmPlatforms == 0)
 									{
-										tile.wall = (ushort)ModContent.WallType<HardIceBrickWallWall>();
+										tile.active(true);
+										tile.type = (ushort)ModContent.TileType<FrigidIceTile>();
+										tile.slope(0);
+										tile.halfBrick(false);
+										if (i >= 22 && tile.wall == 0)
+										{
+											tile.wall = (ushort)ModContent.WallType<HardIceBrickWallWall>();
+										}
 									}
 									break;
 								case 7:
@@ -7147,11 +7150,25 @@ namespace SOTS
 									}
 									break;
 								case 9:
-									tile.active(true);
-									tile.type = 161;
-									tile.slope(0);
-									tile.halfBrick(false);
-									tile.wall = WallID.IceUnsafe;
+									if (confirmPlatforms == 0)
+									{
+										tile.active(true);
+										tile.type = 161;
+										tile.slope(0);
+										tile.halfBrick(false);
+										tile.wall = WallID.IceUnsafe;
+									}
+									else
+                                    {
+										for(int up = 1; up <= 2; up++)
+										{
+											Tile tileAbove = Main.tile[k, l - up];
+											if (tileAbove.type == ModContent.TileType<FrigidIceTile>() && WorldGen.genRand.NextBool(2 + up))
+											{
+												tileAbove.type = 161;
+											}
+										}
+                                    }
 									break;
 								case 10:
 									if (confirmPlatforms == 1)
@@ -7165,7 +7182,7 @@ namespace SOTS
 									break;
 								case 11:
 									tile.active(true);
-									tile.type = TileID.BorealWood;
+									tile.type = (ushort)ModContent.TileType<CharredWoodTile>();
 									tile.slope(0);
 									tile.halfBrick(false);
 									break;
@@ -7192,6 +7209,35 @@ namespace SOTS
 					}
 				}
 			}
+		}
+		public static bool GenerateFrigidIceOre(int spawnX, int spawnY)
+		{
+			Tile tile = Framing.GetTileSafely(spawnX, spawnY);
+			if (!tile.active() || tile.type == TileID.SnowBlock || tile.type == TileID.IceBlock || tile.type == TileID.Slush)
+			{
+				float rand = Main.rand.NextFloat(2 * (float)Math.PI);
+				float interval = Main.rand.NextFloat(24, 32);
+				int radius = 8 + Main.rand.Next(4);
+				for (int x = -radius; x <= radius; x++)
+				{
+					for (int y = -radius; y <= radius; y++)
+					{
+						float noise = Main.rand.NextFloat(0.7f, 1f);
+						int xP = spawnX + x;
+						int yP = spawnY + y;
+						float angle = (float)Math.Atan2(x, y);
+						if (Math.Sqrt(x * x + (int)y * (int)y) <= radius + 0.5 && Math.Abs(MathHelper.WrapAngle(angle - rand)) < MathHelper.ToRadians(interval * noise))
+						{
+							tile = Framing.GetTileSafely(xP, yP);
+							if (!tile.active() || tile.type == TileID.SnowBlock || tile.type == TileID.IceBlock || tile.type == TileID.Slush)
+								tile.type = (ushort)ModContent.TileType<FrigidIceTile>();
+						}
+					}
+				}
+				return true;
+			}
+			else
+				return false;
 		}
     }
 }

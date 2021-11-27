@@ -17,7 +17,7 @@ namespace SOTS.Items.Permafrost
 			item.CloneDefaults(ItemID.IronBar);
 			item.width = 24;
 			item.height = 22;
-            item.value = Item.sellPrice(0, 0, 2, 50);
+            item.value = Item.sellPrice(0, 0, 6, 0);
 			item.rare = ItemRarityID.Green;
 			item.maxStack = 99;
 			item.placeStyle = 8;
@@ -26,6 +26,7 @@ namespace SOTS.Items.Permafrost
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
+			recipe.AddIngredient(ModContent.ItemType<FrigidIce>(), 10);
 			recipe.AddIngredient(ModContent.ItemType<Goblinsteel>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<FragmentOfPermafrost>(), 1);
 			recipe.AddTile(TileID.Anvils);

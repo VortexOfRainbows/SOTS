@@ -227,7 +227,14 @@ namespace SOTS.NPCs.Boss.Polaris
 			float yDist = vectorToPlayer.Y * 1.35f;
 			float xDist = vectorToPlayer.X;
 			float length = (float)Math.Sqrt(xDist * xDist + yDist * yDist);
-			float speedMult = -9.5f + idleAnim + (float)Math.Pow(length, 1.035) * 0.014f;
+			float baseSpeed = -9.5f;
+			int i = (int)npc.Center.X / 16;
+			int j = (int)npc.Center.Y / 16;
+			if (SOTSWorldgenHelper.TrueTileSolid(i, j))
+            {
+				baseSpeed = -1;
+			}
+			float speedMult = baseSpeed + idleAnim + (float)Math.Pow(length, 1.035) * 0.014f;
 			if(speedMult < 0)
             {
 				speedMult *= 0.5f;

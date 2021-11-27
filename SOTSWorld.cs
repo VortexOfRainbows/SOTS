@@ -245,13 +245,11 @@ namespace SOTS
 		}
 		public override void ModifyWorldGenTasks(List<GenPass> tasks, ref float totalWeight)
         {
-            int genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Shinies"));
+            int genIndexOres = tasks.FindIndex(genpass => genpass.Name.Equals("Shinies"));
             int genIndexGems = tasks.FindIndex(genpass => genpass.Name.Equals("Random Gems"));
             int genIndexEnd = tasks.FindIndex(genpass => genpass.Name.Equals("Final Cleanup"));
-            if (genIndex == -1)
-            {
-                return;
-            }
+
+			tasks.Insert(genIndexOres, new PassLegacy("SOTSOres", GenSOTSOres));
 			tasks.Insert(genIndexGems, new PassLegacy("ModdedSOTSStructures", delegate (GenerationProgress progress)
 			{
 				progress.Message = "Generating Surface Structures";
@@ -463,6 +461,26 @@ namespace SOTS
 				progress.Message = "Generating A Pyramid";
 				PyramidWorldgenHelper.GenerateSOTSPyramid(mod);
 			}));
+		}
+		private void GenSOTSOres(GenerationProgress progress)
+		{
+			progress.Message = "Generating SOTS Ores";
+			float max = 200;
+			if (Main.maxTilesX > 6000) //medium worlds
+				max = 300;
+			if (Main.maxTilesX > 8000) //big worlds
+				max = 400;
+			for (int k = 0; k < (int)((Main.maxTilesX * Main.maxTilesY) * 0.1f); k++)
+			{
+				int x = WorldGen.genRand.Next(100, Main.maxTilesX - 100);
+				int y = WorldGen.genRand.Next((int)WorldGen.rockLayerLow, (int)(WorldGen.rockLayer + Main.maxTilesY - 200) / 2);
+				if(SOTSWorldgenHelper.GenerateFrigidIceOre(x, y))
+                {
+					max--;
+					if (max <= 0)
+						return;
+                }
+			}
 		}
 		public override void TileCountsAvailable(int[] tileCounts)
 		{
