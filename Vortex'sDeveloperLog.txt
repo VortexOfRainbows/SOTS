@@ -41,7 +41,6 @@ Mid Priority:
 8. Glaze Repeater, found in polaris structure.
 9. Corrupt and Crimson treasure slimes
 10. Split Focus Reticle into two accessories to make it less overpowed: Focus Reticle (Amplifiers + Crit Rate), Bag of Charms (Charms + Icosahedrons)
-11. Resize evil spirit
 
 Low Priority:
 1. Archaelogist NPC
@@ -51,6 +50,8 @@ Low Priority:
 1. Hardlight arrow (charged) now inherits KB correctly
 2. Framework for Glaze Bow
 3. Frigid Ice -> Frigid Ore (needs silver to break)
+4. Added Disruptive Electromagnetic Field Emitter (DEFE)
+5. Resize Evil Spirit (58/58 -> 70/70)
 
 11/25/21 & 11/26/21
 1. Added Endothermic Afterburner. Should work in Multiplayer

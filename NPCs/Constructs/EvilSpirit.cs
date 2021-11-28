@@ -41,8 +41,8 @@ namespace SOTS.NPCs.Constructs
             npc.damage = 80; 
             npc.defense = 0;   
             npc.knockBackResist = 0f;
-            npc.width = 58;
-            npc.height = 58;
+            npc.width = 70;
+            npc.height = 70;
             npc.value = Item.buyPrice(0, 10, 0, 0);
             npc.npcSlots = 7f;
             npc.boss = false;

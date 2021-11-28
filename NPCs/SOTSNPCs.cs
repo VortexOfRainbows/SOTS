@@ -274,7 +274,9 @@ namespace SOTS.NPCs
 				{
 					if(Main.rand.NextBool(50))
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<CrushingResistor>(), 1);
-					if(Main.rand.NextBool(30))
+					if (Main.rand.NextBool(75))
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<ElectromagneticDeterrent>(), 1);
+					if (Main.rand.NextBool(30))
 					{
 						if(npc.type == ModContent.NPCType<NatureConstruct>())
 							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<MantisGrip>(), 1);
@@ -335,6 +337,9 @@ namespace SOTS.NPCs
 		public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
 		{
 			Player player = spawnInfo.player;
+			float constructRateMultiplier = 1f;
+			if (SOTSPlayer.ModPlayer(player).noMoreConstructs)
+				constructRateMultiplier = 0f;
 			bool ZoneForest = !player.GetModPlayer<SOTSPlayer>().PyramidBiome && !player.ZoneDesert && !player.ZoneCorrupt && !player.ZoneDungeon && !player.ZoneDungeon && !player.ZoneHoly && !player.ZoneMeteor && !player.ZoneJungle && !player.ZoneSnow && !player.ZoneCrimson && !player.ZoneGlowshroom && !player.ZoneUndergroundDesert && (player.ZoneDirtLayerHeight || player.ZoneOverworldHeight) && !player.ZoneBeach;
 			if (spawnInfo.player.GetModPlayer<SOTSPlayer>().PyramidBiome)
 			{
@@ -386,7 +391,7 @@ namespace SOTS.NPCs
 					pool.Add(ModContent.NPCType<HoloEye>(), 0.1f);
 					pool.Add(ModContent.NPCType<HoloBlade>(), 0.175f);
 					pool.Add(ModContent.NPCType<TwilightDevil>(), 0.04f);
-					pool.Add(ModContent.NPCType<OtherworldlyConstructHead>(), 0.02f);
+					pool.Add(ModContent.NPCType<OtherworldlyConstructHead>(), 0.02f * constructRateMultiplier);
 				}
 			}
 			else if (ZoneForest)
@@ -408,7 +413,7 @@ namespace SOTS.NPCs
 					float overworldChance = 0.01f;
 					if (Main.bloodMoon)
 						overworldChance = 0.005f;
-					pool.Add(ModContent.NPCType<NatureConstruct>(), SpawnCondition.Overworld.Chance * overworldChance);
+					pool.Add(ModContent.NPCType<NatureConstruct>(), SpawnCondition.Overworld.Chance * overworldChance * constructRateMultiplier);
 				}
 			}
 			else if (player.ZoneCorrupt || player.ZoneCrimson)
@@ -426,15 +431,15 @@ namespace SOTS.NPCs
 					{
 						if (NPC.downedBoss3)
 						{
-							pool.Add(ModContent.NPCType<TidalConstruct>(), SpawnCondition.OceanMonster.Chance * 0.025f);
+							pool.Add(ModContent.NPCType<TidalConstruct>(), SpawnCondition.OceanMonster.Chance * 0.025f * constructRateMultiplier);
 						}
 						else
 						{
-							pool.Add(ModContent.NPCType<TidalConstruct>(), SpawnCondition.OceanMonster.Chance * 0.015f);
+							pool.Add(ModContent.NPCType<TidalConstruct>(), SpawnCondition.OceanMonster.Chance * 0.015f * constructRateMultiplier);
 						}
 					}
 					else
-						pool.Add(ModContent.NPCType<TidalConstruct>(), SpawnCondition.OceanMonster.Chance * 0.005f);
+						pool.Add(ModContent.NPCType<TidalConstruct>(), SpawnCondition.OceanMonster.Chance * 0.005f * constructRateMultiplier);
 				}
 			}
 			else if (!player.ZoneBeach)
@@ -446,36 +451,36 @@ namespace SOTS.NPCs
 						if (player.ZoneCorrupt || player.ZoneHoly || player.ZoneCrimson)
 						{
 							if (player.statLifeMax2 >= 140)
-								pool.Add(ModContent.NPCType<EarthenConstruct>(), 0.00125f);
+								pool.Add(ModContent.NPCType<EarthenConstruct>(), 0.00125f * constructRateMultiplier);
 						}
 						else if (player.ZoneRockLayerHeight && !player.ZoneUndergroundDesert)
 						{
 							if(player.statLifeMax2 >= 140)
-								pool.Add(ModContent.NPCType<EarthenConstruct>(), 0.0025f);
+								pool.Add(ModContent.NPCType<EarthenConstruct>(), 0.0025f * constructRateMultiplier);
 						}
 						else if(player.ZoneDesert && !player.ZoneUndergroundDesert)
-							pool.Add(ModContent.NPCType<EarthenConstruct>(), 0.01f); //this is desert spawn so it shouldn't require additional healthgating
+							pool.Add(ModContent.NPCType<EarthenConstruct>(), 0.01f * constructRateMultiplier); //this is desert spawn so it shouldn't require additional healthgating
 						else if(player.ZoneUndergroundDesert)
-							pool.Add(ModContent.NPCType<EarthenConstruct>(), 0.005f);
+							pool.Add(ModContent.NPCType<EarthenConstruct>(), 0.005f * constructRateMultiplier);
 
 					}
 				}
 			}
 			if((player.ZoneCrimson || player.ZoneCorrupt) && (player.ZoneRockLayerHeight || player.ZoneDirtLayerHeight) && Main.hardMode)
 			{
-				pool.Add(ModContent.NPCType<EvilConstruct>(), 0.005f);
+				pool.Add(ModContent.NPCType<EvilConstruct>(), 0.005f * constructRateMultiplier);
 			}
 			if (player.ZoneDungeon)
 			{
 				if (player.statLifeMax2 >= 120)
-					pool.Add(ModContent.NPCType<TidalConstruct>(), SpawnCondition.DungeonNormal.Chance * 0.00375f);
+					pool.Add(ModContent.NPCType<TidalConstruct>(), SpawnCondition.DungeonNormal.Chance * 0.00375f * constructRateMultiplier);
 			}
 			if (spawnInfo.player.ZoneSnow)
 			{
 				if(!spawnInfo.player.ZoneCorrupt && !spawnInfo.player.ZoneCrimson && (NPC.downedBoss1 || NPC.downedGoblins) && spawnInfo.player.ZoneOverworldHeight)
 					pool.Add(ModContent.NPCType<ArcticGoblin>(), SpawnCondition.Overworld.Chance * 0.1f);
 				if (player.statLifeMax2 >= 120)
-					pool.Add(ModContent.NPCType<PermafrostConstruct>(), spawnInfo.spawnTileType == TileID.IceBlock || spawnInfo.spawnTileType == TileID.SnowBlock ? 0.02f : 0.015f);
+					pool.Add(ModContent.NPCType<PermafrostConstruct>(), (spawnInfo.spawnTileType == TileID.IceBlock || spawnInfo.spawnTileType == TileID.SnowBlock ? 0.02f : 0.015f) * constructRateMultiplier);
 				if (spawnInfo.spawnTileY <= Main.rockLayer && spawnInfo.spawnTileY >= Main.worldSurface)
 				{
 					pool.Add(ModContent.NPCType<IceTreasureSlime>(), spawnInfo.spawnTileType == TileID.IceBlock || spawnInfo.spawnTileType == TileID.SnowBlock ? 0.03f : 0.01f);
@@ -492,7 +497,7 @@ namespace SOTS.NPCs
 			else if(player.ZoneJungle)
 			{
 				if (player.statLifeMax2 >= 120)
-					pool.Add(ModContent.NPCType<NatureConstruct>(), (SpawnCondition.SurfaceJungle.Chance * 0.025f) + (SpawnCondition.UndergroundJungle.Chance * 0.0075f));
+					pool.Add(ModContent.NPCType<NatureConstruct>(), ((SpawnCondition.SurfaceJungle.Chance * 0.025f) + (SpawnCondition.UndergroundJungle.Chance * 0.0075f)) * constructRateMultiplier);
 			}
 			if (spawnInfo.player.ZoneUnderworldHeight)
 			{

@@ -46,10 +46,11 @@ namespace SOTS
         {
 			if (level < -1)
 				return;
-			else if(frostFlake <= 0)
+			else if(level <= 0)
             {
 				frostFlake += 2;
-				SendClientChanges(Main.player[projectile.owner], projectile);
+				if (Main.myPlayer == player.whoAmI && Main.netMode == NetmodeID.MultiplayerClient)
+					SendClientChanges(Main.player[projectile.owner], projectile);
             }
 			if(initialVelo == Vector2.Zero)
 				initialVelo = projectile.velocity;

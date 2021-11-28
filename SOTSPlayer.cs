@@ -93,6 +93,7 @@ namespace SOTS
 			if (FluidCurseMult > 60)
 				FluidCurseMult = 60;
 		}
+		public bool noMoreConstructs = false;
 		public bool CanKillNPC = false;
 		public bool CreativeFlightButtonPressed = false;
 		public bool CurseAura = false;
@@ -552,6 +553,7 @@ namespace SOTS
 		{
 			TrailStuff();
 			doCurseAura(); 
+			noMoreConstructs = false;
 			CanKillNPC = false;
 			baguetteDrops = false;
 			if (baguetteLengthCounter >= 180)
