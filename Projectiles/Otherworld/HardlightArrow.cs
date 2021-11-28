@@ -22,6 +22,7 @@ namespace SOTS.Projectiles.Otherworld
 			projectile.penetrate = -1;
 			projectile.timeLeft = 3000;
 			projectile.ranged = true;
+			projectile.arrow = true;
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
