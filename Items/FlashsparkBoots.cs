@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -12,7 +13,8 @@ namespace SOTS.Items
 		{
 			DisplayName.SetDefault("Flashspark Boots");
 			Tooltip.SetDefault("Provides tremendous acceleration while running\nAlso provides flight and extra mobility on ice\nIncreases movement speed greatly\nProvides the ability to walk on water and lava\nGrants immunity to fire blocks and 10 seconds of immunity to lava\n'Recipro Burst!'");
-		}
+            Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(5, 5));
+        }
 		public override void SetDefaults()
 		{
             item.width = 42;     

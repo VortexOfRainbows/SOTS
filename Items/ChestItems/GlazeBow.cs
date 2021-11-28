@@ -20,8 +20,8 @@ namespace SOTS.Items.ChestItems
 			item.ranged = true;
 			item.width = 34;
 			item.height = 64;
-			item.useTime = 17;
-			item.useAnimation = 17;
+			item.useTime = 20;
+			item.useAnimation = 20;
 			item.useStyle = ItemUseStyleID.HoldingOut;
 			item.knockBack = 7f;
 			item.value = Item.sellPrice(0, 3, 0, 0);
