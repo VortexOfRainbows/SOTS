@@ -59,4 +59,30 @@ namespace SOTS.Items.Nvidia
 			item.createTile = ModContent.TileType<EvostoneBrickTile>();
 		}
 	}
+	public class EvostoneBrickWallTile : ModWall
+	{
+		public override void SetDefaults()
+		{
+			Main.wallHouse[Type] = true;
+			dustType = 37;
+			drop = ModContent.ItemType<EvostoneBrickWall>();
+			AddMapEntry(new Color(110, 95, 57));
+		}
+	}
+	public class EvostoneBrickWall : ModItem
+	{
+		public override void SetStaticDefaults()
+		{
+			DisplayName.SetDefault("Evostone Brick Wall");
+			Tooltip.SetDefault("");
+		}
+		public override void SetDefaults()
+		{
+			item.CloneDefaults(ItemID.StoneWall);
+			item.width = 28;
+			item.height = 28;
+			item.rare = ItemRarityID.LightPurple;
+			item.createWall = ModContent.WallType<EvostoneBrickWallTile>();
+		}
+	}
 }
