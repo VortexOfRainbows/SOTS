@@ -14,26 +14,6 @@ namespace SOTS.Projectiles.Permafrost
     {
 		public Color blue = new Color(180, 210, 250, 0);
 		public Color blue2 = new Color(134, 109, 231, 0);
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Endo Burst");
-		}
-        public override void SetDefaults()
-        {
-			projectile.height = 48;
-			projectile.width = 48;
-            Main.projFrames[projectile.type] = 5;
-			projectile.penetrate = -1;
-			projectile.friendly = false;
-			projectile.timeLeft = 90;
-			projectile.tileCollide = false;
-			projectile.hostile = false;
-			projectile.alpha = 0;
-			projectile.hide = false;
-			projectile.melee = true;
-			projectile.usesLocalNPCImmunity = true;
-			projectile.localNPCHitCooldown = 30;
-		}
 		List<FireParticle> particleList = new List<FireParticle>();
 		int removedCounter = 0;
 		public void cataloguePos()
@@ -50,7 +30,27 @@ namespace SOTS.Projectiles.Permafrost
 				}
 			}
 		}
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void SetStaticDefaults()
+		{
+			DisplayName.SetDefault("Endo Burst");
+		}
+		public override void SetDefaults()
+		{
+			projectile.height = 48;
+			projectile.width = 48;
+			Main.projFrames[projectile.type] = 5;
+			projectile.penetrate = -1;
+			projectile.friendly = false;
+			projectile.timeLeft = 90;
+			projectile.tileCollide = false;
+			projectile.hostile = false;
+			projectile.alpha = 0;
+			projectile.hide = false;
+			projectile.melee = true;
+			projectile.usesLocalNPCImmunity = true;
+			projectile.localNPCHitCooldown = 30;
+		}
+		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
 			Player player = Main.player[projectile.owner];
 			player.AddBuff(ModContent.BuffType<Overheat>(), 630);

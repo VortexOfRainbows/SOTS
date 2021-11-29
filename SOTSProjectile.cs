@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
 using SOTS.Projectiles.Nature;
 using SOTS.Projectiles.Otherworld;
+using SOTS.Projectiles.Permafrost;
 using SOTS.Void;
 using Terraria;
 using Terraria.Graphics.Shaders;
@@ -50,7 +51,7 @@ namespace SOTS
 			else if(level <= 0)
             {
 				frostFlake += 2;
-				if (Main.myPlayer == projectile.whoAmI && Main.netMode == NetmodeID.MultiplayerClient)
+				if (Main.myPlayer == projectile.owner && Main.netMode == NetmodeID.MultiplayerClient)
 					SendClientChanges(Main.player[projectile.owner], projectile);
             }
 			if (projectile.type == ModContent.ProjectileType<ChargedHardlightArrow>())
@@ -239,35 +240,17 @@ namespace SOTS
         public void FrostBloom(Projectile projectile)
 		{
 			hasFrostBloomed = true;
+			int ffValue = frostFlake - 2;
+			frostFlake = 0;
 			Vector2 manipulateVelo = projectile.oldVelocity;
 			//TODO: add these visual effect onto the residual projectile to increase multiplayer compatability
-			if (frostFlake == 4 && projectile.type != ModContent.ProjectileType<ChargedHardlightArrow>())
+			if (Main.myPlayer == projectile.owner)
 			{
-				for (int i = 0; i < 3; i++)
-				{
-					Vector2 spawnPos = Vector2.Lerp(projectile.Center + manipulateVelo.SafeNormalize(Vector2.Zero) * 8, projectile.Center + manipulateVelo.SafeNormalize(Vector2.Zero) * -120f, i * 0.3f);
-					float percent = (1 - 0.3f * i);
-					float dist1 = 16 * percent;
-					float dist2 = 12 * percent;
-					DustStar(spawnPos, manipulateVelo * 0.4f, manipulateVelo.ToRotation(), 40 - i * 5, spinCounter + MathHelper.ToRadians(30 * i), 6, dist1, dist2, 0.6f, 1.3f - i * 0.15f);
-				}
+				if (ffValue > 0 && projectile.type != ModContent.ProjectileType<ChargedHardlightArrow>())
+					Projectile.NewProjectile(projectile.Center, manipulateVelo, ModContent.ProjectileType<FrostflakePulse>(), projectile.damage, projectile.knockBack, Main.myPlayer, ffValue, spinCounter);
+				if (Main.netMode == NetmodeID.MultiplayerClient)
+					SendClientChanges(Main.player[projectile.owner], projectile);
 			}
-			else if (frostFlake == 3 && projectile.type != ModContent.ProjectileType<ChargedHardlightArrow>())
-			{
-				for (int k = 0; k < 30; k++)
-				{
-					Vector2 circularLocation = new Vector2(0, 8).RotatedBy(MathHelper.ToRadians(k * 12));
-					circularLocation.Y *= 1.0f;
-					circularLocation.X *= 0.6f;
-					circularLocation = circularLocation.RotatedBy(manipulateVelo.ToRotation());
-					Dust dust = Dust.NewDustDirect(projectile.Center + circularLocation + new Vector2(-4, -4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, new Color(116, 125, 238));
-					dust.noGravity = true;
-					dust.scale = dust.scale * 0.5f + 1f;
-					dust.velocity = dust.velocity * 0.3f + circularLocation * 0.2f + manipulateVelo * 0.3f;
-					dust.fadeIn = 0.1f;
-				}
-			}
-			frostFlake = 0;
 		}
         public override bool PreDraw(Projectile projectile, SpriteBatch spriteBatch, Color lightColor)
 		{
@@ -383,11 +366,11 @@ namespace SOTS
 				dust.shader = GameShaders.Armor.GetShaderFromItemId(player.miscDyes[1].type);
 			}
 		}
-		public static void DrawStar(Vector2 location, float alphaMult, float rotation, float spin = 0, int pointAmount = 6, float innerDistAdd = 10, float innerDistMin = 8, float xCompress = 0.6f)
+		public static void DrawStar(Vector2 location, float alphaMult, float rotation, float spin = 0, int pointAmount = 6, float innerDistAdd = 10, float innerDistMin = 8, float xCompress = 0.6f, int density = 180)
 		{
 			Vector2 fireFrom = location; 
 			Texture2D texture = ModContent.GetTexture("SOTS/Assets/StrangeGradient");
-			for (float k = 0; k < 360; k += 2)
+			for (float k = 0; k < 360; k += 360 / (float)density)
 			{
 				float length = innerDistAdd + innerDistMin;
 				float rad = MathHelper.ToRadians(k);

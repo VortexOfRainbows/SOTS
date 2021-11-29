@@ -29,6 +29,8 @@ namespace SOTS.Items.GhostTown
 		public override void SetDefaults()
 		{
 			item.CloneDefaults(ItemID.StoneBlock);
+			item.width = 24;
+			item.height = 18;
 			item.createTile = ModContent.TileType<CharredWoodTile>();
 		}
 	}

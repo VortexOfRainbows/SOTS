@@ -47,8 +47,8 @@ Low Priority:
 2. Frigid Ice: Pickaxe and Hammaxe
 
 11/28/21
-1. Worked on some Visuals for Glaze Bow (STILL WIP)
-2. 
+1. Added Glaze Bow. Glaze bow still needs some balancing and also MULTIPLAYER SYNCING
+2. Added Evostone and Evostone Brick
 
 11/27/21
 1. Hardlight arrow (charged) now inherits KB correctly
