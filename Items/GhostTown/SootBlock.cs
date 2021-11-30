@@ -27,4 +27,30 @@ namespace SOTS.Items.GhostTown
 			item.createTile = ModContent.TileType<SootBlockTile>();
 		}
 	}
+	public class SootWallTile : ModWall
+	{
+		public override void SetDefaults()
+		{
+			Main.wallHouse[Type] = true;
+			dustType = 38;
+			drop = ModContent.ItemType<SootWall>();
+			AddMapEntry(new Color(34, 29, 24));
+		}
+	}
+	public class SootWall : ModItem
+	{
+		public override void SetStaticDefaults()
+		{
+			DisplayName.SetDefault("Soot Wall");
+			Tooltip.SetDefault("");
+		}
+		public override void SetDefaults()
+		{
+			item.CloneDefaults(ItemID.StoneWall);
+			item.width = 28;
+			item.height = 28;
+			item.rare = ItemRarityID.Blue;
+			item.createWall = ModContent.WallType<SootWallTile>();
+		}
+	}
 }
