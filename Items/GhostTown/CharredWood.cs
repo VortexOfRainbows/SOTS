@@ -34,4 +34,30 @@ namespace SOTS.Items.GhostTown
 			item.createTile = ModContent.TileType<CharredWoodTile>();
 		}
 	}
+	public class CharredWoodWallTile : ModWall
+	{
+		public override void SetDefaults()
+		{
+			Main.wallHouse[Type] = true;
+			dustType = 122;
+			drop = ModContent.ItemType<CharredWoodWall>();
+			AddMapEntry(new Color(110, 81, 46));
+		}
+	}
+	public class CharredWoodWall : ModItem
+	{
+		public override void SetStaticDefaults()
+		{
+			DisplayName.SetDefault("Charred Wood Wall");
+			Tooltip.SetDefault("");
+		}
+		public override void SetDefaults()
+		{
+			item.CloneDefaults(ItemID.StoneWall);
+			item.width = 28;
+			item.height = 28;
+			item.rare = ItemRarityID.Blue;
+			item.createWall = ModContent.WallType<CharredWoodWallTile>();
+		}
+	}
 }
