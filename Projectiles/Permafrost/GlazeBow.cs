@@ -59,7 +59,6 @@ namespace SOTS.Projectiles.Permafrost
             if (projectile.ai[0] != 0)
             {
                 int arrowType = (int)projectile.ai[1];
-                Projectile proj = new Projectile();
                 if(!Main.projectileLoaded[arrowType])
                 {
                     Main.instance.LoadProjectile(arrowType);

@@ -55,8 +55,8 @@ namespace SOTS.Projectiles.Permafrost
         }
         public override void SetDefaults()
         {
-			projectile.height = 8;
-			projectile.width = 8;
+			projectile.height = 16;
+			projectile.width = 16;
             Main.projFrames[projectile.type] = 4;
 			projectile.penetrate = -1;
 			projectile.ranged = true;
@@ -66,7 +66,7 @@ namespace SOTS.Projectiles.Permafrost
 			projectile.hostile = false;
 			projectile.alpha = 0;
 			projectile.usesIDStaticNPCImmunity = true;
-			projectile.idStaticNPCHitCooldown = 10;
+			projectile.idStaticNPCHitCooldown = 15;
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
@@ -152,8 +152,12 @@ namespace SOTS.Projectiles.Permafrost
 			if(counter < 20 && frostFlake == -2)
             {
 				counter = 20;
-            }
-			if(frostFlake == -1)
+			}
+			if (counter < 10 && frostFlake == 2)
+			{
+				counter = 10;
+			}
+			if (frostFlake == -1)
             {
 				projectile.tileCollide = true;
 				projectile.friendly = true;
@@ -209,13 +213,20 @@ namespace SOTS.Projectiles.Permafrost
 			}
 			else
 			{
-				float mult = counter / 20f;
+				float min = 0;
+				float max = 20f;
 				if (frostFlake == 2)
 				{
-					trueVelocity += new Vector2(0, -(float)Math.Sin(mult * MathHelper.Pi) * 1.6f);
-					for (int i = 0; i < 3; i++)
+					max = 10f;
+					min = 10;
+				}
+				float mult = (counter - min) / max;
+				if (frostFlake == 2)
+				{
+					trueVelocity += new Vector2(0, -(float)Math.Sin(mult * MathHelper.Pi) * 6f);
+					for (int i = 0; i < 5; i++)
 					{
-						Vector2 spawnPos = Vector2.Lerp(projectile.Center, projectile.oldPosition + projectile.Size / 2, i * 0.33f);
+						Vector2 spawnPos = Vector2.Lerp(projectile.Center, projectile.oldPosition + projectile.Size / 2, i * 0.2f);
 						Dust dust = Dust.NewDustDirect(spawnPos + new Vector2(-4, -4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, Color.Lerp(blue, blue2, Main.rand.NextFloat(1)));
 						dust.noGravity = true;
 						dust.scale = 1.2f;
@@ -225,8 +236,8 @@ namespace SOTS.Projectiles.Permafrost
 				}
 				if(frostFlake == -1)
 				{
-					if(counter < 20)
-						projectile.velocity = projectile.velocity * 1.09f;
+					if(counter < 16)
+						projectile.velocity = projectile.velocity * 1.16f;
 					trueVelocity = projectile.velocity;
 					for (int i = 0; i < 2; i++)
 					{

@@ -13,7 +13,6 @@ namespace SOTS.NPCs.Constructs
 {
     public class EarthenConstruct : ModNPC
     {
-		int despawn = 0;
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Earthen Construct");
@@ -294,6 +293,11 @@ namespace SOTS.NPCs.Constructs
         int[] segments = {-1,-1,-1,-1};
         public override bool PreAI()
         {
+            if (Main.player[npc.target].dead || Vector2.Distance(Main.player[npc.target].Center, npc.Center) > 4800)
+            {
+                npc.active = false;
+                return false;
+            }
             npc.TargetClosest(true);
             if (Main.netMode != 1)
             {
@@ -351,11 +355,8 @@ namespace SOTS.NPCs.Constructs
         }
         public override void PostAI()
         {
-            if (Main.player[npc.target].dead)
-            {
-                doAIExtras();
+            if (!npc.active)
                 return;
-            }
             Player player = Main.player[npc.target];
             float distToPlayer = (player.Center - npc.Center).Length();
             aiCounter++;
@@ -553,11 +554,6 @@ namespace SOTS.NPCs.Constructs
         public void doAIExtras()
         {
             npc.localAI[1] += 3;
-            if (Main.player[npc.target].dead || Vector2.Distance(Main.player[npc.target].Center, npc.Center) > 4800)
-            {
-                npc.active = false;
-                return;
-            }
 			npc.timeLeft = 100;
 		}
     }

@@ -46,9 +46,14 @@ Low Priority:
 1. Archaelogist NPC
 2. Frigid Ice: Pickaxe and Hammaxe
 
+11/29/21
+1. More work on Glaze Bow. Server Syncs well (a few errors, but my testing concluded it was just packet loss from having 2 clients running at once on my computer)! 
+	1. Still needs to be hard programmed to function with supercharged hardlight arrows
+
 11/28/21
 1. Added Glaze Bow. Glaze bow still needs some balancing and also MULTIPLAYER SYNCING
 2. Added Evostone and Evostone Brick
+3. Some modifications to Earthen construct to make it despawn a few frames quicker.
 
 11/27/21
 1. Hardlight arrow (charged) now inherits KB correctly

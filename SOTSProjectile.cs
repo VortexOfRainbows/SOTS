@@ -39,7 +39,7 @@ namespace SOTS
 			var packet = mod.GetPacket();
 			packet.Write((byte)SOTSMessageType.SyncGlobalProj);
 			packet.Write((byte)player.whoAmI);
-			packet.Write(projectile.whoAmI);
+			packet.Write(projectile.identity);
 			packet.Write(frostFlake);
 			packet.Send();
 		}
@@ -247,7 +247,12 @@ namespace SOTS
 			if (Main.myPlayer == projectile.owner)
 			{
 				if (ffValue > 0 && projectile.type != ModContent.ProjectileType<ChargedHardlightArrow>())
-					Projectile.NewProjectile(projectile.Center, manipulateVelo, ModContent.ProjectileType<FrostflakePulse>(), projectile.damage, projectile.knockBack, Main.myPlayer, ffValue, spinCounter);
+				{
+					float damageMult = 2;
+					if (ffValue == 2)
+						damageMult = 7;
+					Projectile.NewProjectile(projectile.Center, manipulateVelo, ModContent.ProjectileType<FrostflakePulse>(), (int)(projectile.damage * damageMult), projectile.knockBack, Main.myPlayer, ffValue, spinCounter);
+				}
 				if (Main.netMode == NetmodeID.MultiplayerClient)
 					SendClientChanges(Main.player[projectile.owner], projectile);
 			}

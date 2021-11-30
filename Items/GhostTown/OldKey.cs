@@ -14,7 +14,7 @@ namespace SOTS.Items.GhostTown
 			item.width = 14;
 			item.height = 32;
 			item.maxStack = 99; 
-			item.rare = ItemRarityID.Green;
+			item.rare = ItemRarityID.Blue;
 		}
 	}
 }

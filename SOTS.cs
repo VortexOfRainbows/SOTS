@@ -337,18 +337,31 @@ namespace SOTS
 					break;
 				case (int)SOTSMessageType.SyncGlobalProj:
 					playernumber = reader.ReadByte();
-					int projNumber = reader.ReadInt32();
+					int projIdentity = reader.ReadInt32();
+					int frostFlake = reader.ReadInt32();
+					if (Main.netMode != NetmodeID.Server)
+                    {
+						for(int i = 0; i < Main.maxProjectiles; i++)
+                        {
+							Projectile projectile = Main.projectile[i];
+							if (projectile.active && projectile.identity == projIdentity)
+							{
+								projIdentity = projectile.whoAmI;
+								break;
+                            }
+                        }
+                    }
 					SOTSProjectile sProj = (SOTSProjectile)GetGlobalProjectile("SOTSProjectile");
-					sProj = (SOTSProjectile)sProj.Instance(Main.projectile[projNumber]);
-					sProj.frostFlake = reader.ReadInt32();
+					sProj = (SOTSProjectile)sProj.Instance(Main.projectile[projIdentity]);
+					sProj.frostFlake = frostFlake;
 					// Unlike SyncPlayer, here we have to relay/forward these changes to all other connected clients
 					if (Main.netMode == NetmodeID.Server)
 					{
 						var packet = GetPacket();
-						packet.Write((byte)SOTSMessageType.SyncGlobalNPC);
+						packet.Write((byte)SOTSMessageType.SyncGlobalProj);
 						packet.Write(playernumber);
-						packet.Write(projNumber);
-						packet.Write(sProj.frostFlake);
+						packet.Write(projIdentity);
+						packet.Write(frostFlake);
 						packet.Send(-1, playernumber);
 					}
 					break;

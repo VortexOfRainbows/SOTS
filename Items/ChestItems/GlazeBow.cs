@@ -12,18 +12,18 @@ namespace SOTS.Items.ChestItems
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Glaze Bow");
-			Tooltip.SetDefault("Coalesces ice mist to power up your arrows\nWhen briefly charged, arrows will travel faster and hit with an icy explosion that deals 150% damage\nWhen fully charged, arrows bloom into shards of ice, dealing 300% damage each");
+			Tooltip.SetDefault("Coalesces ice mist to power up your arrows\nWhen briefly charged, arrows will travel faster and hit with an icy explosion that deals 200% damage\nWhen fully charged, arrows bloom into wisps of ice, dealing 700% damage");
 		}
 		public override void SetDefaults()
 		{
-			item.damage = 15;
+			item.damage = 12;
 			item.ranged = true;
 			item.width = 34;
 			item.height = 64;
-			item.useTime = 20;
-			item.useAnimation = 20;
+			item.useTime = 22;
+			item.useAnimation = 22;
 			item.useStyle = ItemUseStyleID.HoldingOut;
-			item.knockBack = 7f;
+			item.knockBack = 4f;
 			item.value = Item.sellPrice(0, 3, 0, 0);
 			item.rare = ItemRarityID.LightPurple;
 			item.UseSound = null;
