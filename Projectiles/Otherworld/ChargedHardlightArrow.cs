@@ -150,7 +150,10 @@ namespace SOTS.Projectiles.Otherworld
 				if(target.Hitbox.Intersects(new Rectangle((int)drawpos.X - 8, (int)drawpos.Y - 8, projectile.width, projectile.height)) && projectile.friendly && !target.dontTakeDamage)
 				{
 					if(projectile.owner == Main.myPlayer)
-						Projectile.NewProjectile(drawpos, projectile.velocity, ModContent.ProjectileType<HardlightArrowDamage>(), projectile.damage, projectile.knockBack, Main.myPlayer, 0f, 0f);
+					{
+						SOTSProjectile instance = projectile.GetGlobalProjectile<SOTSProjectile>();
+						Projectile.NewProjectile(drawpos, projectile.velocity, ModContent.ProjectileType<HardlightArrowDamage>(), projectile.damage, projectile.knockBack, Main.myPlayer, instance.frostFlake, 0f);
+					}
 					posX = target.Center.X;
 					posY = target.Center.Y;
 					posRect = target.Hitbox;
@@ -242,6 +245,11 @@ namespace SOTS.Projectiles.Otherworld
 				int j = (int)drawPos.Y / 16;
 				if (!WorldGen.InWorld(i, j, 20) || Main.tile[i, j].active() && Main.tileSolidTop[Main.tile[i, j].type] == false && Main.tileSolid[Main.tile[i, j].type] == true)
 				{
+					if (projectile.owner == Main.myPlayer && completedLoads == 0)
+					{
+						SOTSProjectile instance = projectile.GetGlobalProjectile<SOTSProjectile>();
+						Projectile.NewProjectile(drawPos, projectile.velocity, ModContent.ProjectileType<HardlightArrowDamage>(), projectile.damage, projectile.knockBack, Main.myPlayer, instance.frostFlake, 0f);
+					}
 					distance = counter;
 					break;
                 }

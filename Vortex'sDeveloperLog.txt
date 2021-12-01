@@ -38,13 +38,16 @@ Mid Priority:
 6. Mobile Fortress Generator: upgrade to platform generator. Two tiers of upgrades (this + another earlier one), can be visually whatever but it is obtained from Old One's army stuff
 7. Twilight Scouter (already sprited). Spawns in Space and Planetarium.
 	1. drops Gravity Normalizer, maybe Synthetic Jellyfish Staff
-8. Glaze Repeater, found in polaris structure.
-9. Corrupt and Crimson treasure slimes
-10. Split Focus Reticle into two accessories to make it less overpowed: Focus Reticle (Amplifiers + Crit Rate), Bag of Charms (Charms + Icosahedrons)
+8. Split Focus Reticle into two accessories to make it less overpowed: Focus Reticle (Amplifiers + Crit Rate), Bag of Charms (Charms + Icosahedrons)
 
 Low Priority:
 1. Archaelogist NPC
-2. Frigid Ice: Pickaxe and Hammaxe
+
+11/30/21
+1. Finished Glaze Bow poggers! Might need to be rebalanced later.
+2. Frigid Ice tools added. Can't really add special effects to this.
+3. Added Crimson and Corruption treasure slimes. Right now they lack the quantity of drops that other treasure slimes have.
+4. (probably) Fixed bug with sky furniture and sometimes chests spawning outside of the world in the planetarium
 
 11/29/21
 1. More work on Glaze Bow. Server Syncs well (a few errors, but my testing concluded it was just packet loss from having 2 clients running at once on my computer)! 

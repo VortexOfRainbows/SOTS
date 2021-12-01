@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using SOTS.Items.Permafrost;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -25,7 +26,7 @@ namespace SOTS.Items.Tools
 			item.pick = 100;
 			item.knockBack = 2.5f;
 			item.value = Item.sellPrice(0, 3, 0, 0);
-            item.rare = ItemRarityID.LightRed;
+            item.rare = ItemRarityID.Orange;
 			item.UseSound = SoundID.Item1;
 			item.tileBoost = 3;
 			item.autoReuse = true;

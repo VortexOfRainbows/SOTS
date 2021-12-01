@@ -36,58 +36,58 @@ namespace SOTS.Items.Banners
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
 			int style = frameX / 18;
-			string item;
+			int item;
 			switch (style)
 			{
 				case 0:
-					item = "BlueSlimerBanner";
+					item = ItemType<BlueSlimerBanner>();
 					break;
 				case 1:
-					item = "TreasureSlimeBanner";
+					item = ItemType<TreasureSlimeBanner>();
 					break;
 				case 2:
-					item = "GoldenTreasureSlimeBanner";
+					item = ItemType<GoldenTreasureSlimeBanner>();
 					break;
 				case 3:
-					item = "FrozenTreasureSlimeBanner";
+					item = ItemType<FrozenTreasureSlimeBanner>();
 					break;
 				case 4:
-					item = "ShadowTreasureSlimeBanner";
+					item = ItemType<ShadowTreasureSlimeBanner>();
 					break;
 				case 5:
-					item = "PyramidTreasureSlimeBanner";
+					item = ItemType<PyramidTreasureSlimeBanner>();
 					break;
 				case 6:
-					item = "NatureSlimeBanner";
+					item = ItemType<NatureSlimeBanner>();
 					break;
 				case 7:
-					item = "FlamingGhastBanner";
+					item = ItemType<FlamingGhastBanner>();
 					break;
 				case 8:
-					item = "BleedingGhastBanner";
+					item = ItemType<BleedingGhastBanner>();
 					break;
 				case 9:
-					item = "ArcticGoblinBanner";
+					item = ItemType<ArcticGoblinBanner>();
 					break;
 				case 10:
-					item = "LostSoulBanner";
+					item = ItemType<LostSoulBanner>();
 					break;
 				case 11:
-					item = "SnakeBanner";
+					item = ItemType<SnakeBanner>();
 					break;
 				case 12:
-					item = "SnakePotBanner";
+					item = ItemType<SnakePotBanner>();
 					break;
 				case 13:
-					item = "SittingMushroomBanner";
+					item = ItemType<SittingMushroomBanner>();
 					break;
 				case 14:
-					item = "WallMimicBanner";
+					item = ItemType<WallMimicBanner>();
 					break;
 				default:
 					return;
 			}
-			Item.NewItem(i * 16, j * 16, 16, 48, mod.ItemType(item));
+			Item.NewItem(i * 16, j * 16, 16, 48, item);
 		}
 
 		public override void NearbyEffects(int i, int j, bool closer)
@@ -710,31 +710,37 @@ namespace SOTS.Items.Banners
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
 			int style = frameX / 18;
-			string item;
+			int item;
 			switch (style)
 			{
 				case 0:
-					item = "TwilightDevilBanner";
+					item = ItemType<TwilightDevilBanner>();
 					break;
 				case 1:
-					item = "FluxSlimeBanner";
+					item = ItemType<FluxSlimeBanner>();
 					break;
 				case 2:
-					item = "LesserWispBanner";
+					item = ItemType<LesserWispBanner>();
 					break;
 				case 3:
-					item = "GhastBanner";
+					item = ItemType<GhastBanner>();
 					break;
 				case 4:
-					item = "MaligmorBanner";
+					item = ItemType<MaligmorBanner>();
 					break;
 				case 5:
-					item = "TeratomaBanner";
+					item = ItemType<TeratomaBanner>();
+					break;
+				case 6:
+					item = ItemType<CorruptionTreasureSlimeBanner>();
+					break;
+				case 7:
+					item = ItemType<CrimsonTreasureSlimeBanner>();
 					break;
 				default:
 					return;
 			}
-			Item.NewItem(i * 16, j * 16, 16, 48, mod.ItemType(item));
+			Item.NewItem(i * 16, j * 16, 16, 48, item);
 		}
 
 		public override void NearbyEffects(int i, int j, bool closer)
@@ -763,6 +769,12 @@ namespace SOTS.Items.Banners
 						break;
 					case 5:
 						type = NPCType<Teratoma>();
+						break;
+					case 6:
+						type = NPCType<CorruptionTreasureSlime>();
+						break;
+					case 7:
+						type = NPCType<CrimsonTreasureSlime>();
 						break;
 					default:
 						return;
@@ -826,6 +838,22 @@ namespace SOTS.Items.Banners
 		{
 			item.createTile = TileType<SOTSBanners2>();
 			item.placeStyle = 5;
+		}
+	}
+	public class CorruptionTreasureSlimeBanner : ModBanner
+	{
+		public override void SafeSetDefaults()
+		{
+			item.createTile = TileType<SOTSBanners2>();
+			item.placeStyle = 6;
+		}
+	}
+	public class CrimsonTreasureSlimeBanner : ModBanner
+	{
+		public override void SafeSetDefaults()
+		{
+			item.createTile = TileType<SOTSBanners2>();
+			item.placeStyle = 7;
 		}
 	}
 }

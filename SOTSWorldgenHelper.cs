@@ -2528,7 +2528,7 @@ namespace SOTS
 		}
 		public static bool SkytileValid(Tile tile, Mod mod)
 		{
-			return tile.active() && (tile.type == (ushort)mod.TileType("DullPlatingTile") || tile.type == (ushort)mod.TileType("AvaritianPlatingTile"));
+			return tile.active() && (tile.type == (ushort)ModContent.TileType<DullPlatingTile>() || tile.type == (ushort)ModContent.TileType<AvaritianPlatingTile>());
 		}
 		public static void DistributeSkyThings(Mod mod, int maxChests = 30, int maxDisplays = 7, int maxPotGens = 5, int maxFabricators = 3, int ratePots = 5, int rateDecor = 45)
 		{
@@ -2537,31 +2537,31 @@ namespace SOTS
 			int totalDisplays = 0;
 			int totalPotGens = 0;
 			int totalFabricators = 0;
-			for (int i = 15; i < Main.maxTilesX - 15; i++)
+			for (int i = 20; i < Main.maxTilesX - 20; i++)
 			{
-				for (int j = Main.maxTilesY - 15; j > 15; j--)
+				for (int j = Main.maxTilesY - 20; j > 20; j--)
 				{
 					Tile tile = Framing.GetTileSafely(i, j);
 					Tile tile2 = Framing.GetTileSafely(i + 1, j);
 					Tile tile3 = Framing.GetTileSafely(i + 2, j);
-					if (SkytileValid(tile, mod))
+					if (SkytileValid(tile, mod) && WorldGen.InWorld(i, j, 20))
 					{
 						if (Main.rand.Next(ratePots) == 0 && Empty(i, j - 2, 2, 2) && SkytileValid(tile2, mod))
 						{
-							WorldGen.PlaceTile(i, j - 1, (ushort)mod.TileType("SkyPots"), true, true, -1, Main.rand.Next(9)); //pots
+							WorldGen.PlaceTile(i, j - 1, (ushort)ModContent.TileType<SkyPots>(), true, true, -1, Main.rand.Next(9)); //pots
 						}
 						else if (Main.rand.Next(rateDecor) == 0 && Empty(i - 1, j - 2, 3, 2))
 						{
 							tile2 = Framing.GetTileSafely(i - 2, j);
 							tile3 = Framing.GetTileSafely(i + 2, j);
-							WorldGen.PlaceTile(i, j - 1, (ushort)mod.TileType("HardlightTableTile"), true, true, -1, 0);
+							WorldGen.PlaceTile(i, j - 1, (ushort)ModContent.TileType<HardlightTableTile>(), true, true, -1, 0);
 							if (Main.rand.Next(2) == 0 && SkytileValid(tile2, mod) && Empty(i - 2, j - 2, 1, 2))
 							{
-								WorldGen.PlaceTile(i - 2, j - 1, (ushort)mod.TileType("HardlightChairTile"), true, true, -1, 1);
+								WorldGen.PlaceTile(i - 2, j - 1, (ushort)ModContent.TileType<HardlightChairTile>(), true, true, -1, 1);
 							}
 							if (Main.rand.Next(2) == 0 && SkytileValid(tile2, mod) && Empty(i + 2, j - 2, 1, 2))
 							{
-								WorldGen.PlaceTile(i + 2, j - 1, (ushort)mod.TileType("HardlightChairTile"), true, true, -1, 0);
+								WorldGen.PlaceTile(i + 2, j - 1, (ushort)ModContent.TileType<HardlightChairTile>(), true, true, -1, 0);
 							}
 						}
 					}

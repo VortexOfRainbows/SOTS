@@ -673,9 +673,9 @@ namespace SOTS
 				{
 					int slot = 0;
 					Tile tile2 = Main.tile[chest.x, chest.y + 2];
-					if (tile2.type == TileID.BorealWood && tile.wall == ModContent.WallType<HardIceBrickWallWall>())
+					if (tile2.type == ModContent.TileType<CharredWoodTile>() && tile.wall == ModContent.WallType<HardIceBrickWallWall>())
 					{
-						chest.item[slot].SetDefaults(ModContent.ItemType<IceDeployer>()); //Will be replaced with Glaze Repeater
+						chest.item[slot].SetDefaults(ModContent.ItemType<GlazeBow>()); //Will be replaced with Glaze Repeater
 						slot++;
 						chest.item[slot].SetDefaults(ModContent.ItemType<StrawberryIcecream>());
 						chest.item[slot].stack = 10;

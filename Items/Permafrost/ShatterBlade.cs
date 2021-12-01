@@ -4,6 +4,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
+using SOTS.Projectiles.Permafrost;
 
 namespace SOTS.Items.Permafrost
 {
@@ -52,10 +53,10 @@ namespace SOTS.Items.Permafrost
 			item.useStyle = 1;
 			item.knockBack = 3f;
 			item.value = Item.sellPrice(0, 0, 80, 0);
-			item.rare = 2;
+			item.rare = ItemRarityID.Green;
 			item.UseSound = null;
 			item.autoReuse = true;
-			item.shoot = mod.ProjectileType("ShatterFix");
+			item.shoot = ModContent.ProjectileType<ShatterFix>();
 			item.shootSpeed = 1;
 		}
 		public override void MeleeEffects(Player player, Rectangle hitbox)
@@ -128,7 +129,7 @@ namespace SOTS.Items.Permafrost
 					Vector2 circularSpeed = new Vector2(0, 12).RotatedBy(MathHelper.ToRadians(i * 90));
 					int calc = damage + modPlayer.bonusShardDamage;		
 					if (calc <= 0) calc = 1;
-					Projectile.NewProjectile(player.Center.X, player.Center.Y, circularSpeed.X, circularSpeed.Y, mod.ProjectileType("ShatterShard"), calc, 3f, player.whoAmI);
+					Projectile.NewProjectile(player.Center.X, player.Center.Y, circularSpeed.X, circularSpeed.Y, ModContent.ProjectileType<ShatterShard>(), calc, 3f, player.whoAmI);
 				}
 				broken = 1;
 			}
@@ -136,7 +137,7 @@ namespace SOTS.Items.Permafrost
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "FrigidBar", 8);
+			recipe.AddIngredient(ModContent.ItemType<FrigidBar>(), 8);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this);
 			recipe.AddRecipe();

@@ -422,6 +422,10 @@ namespace SOTS.NPCs
 				{
 					pool.Add(ModContent.NPCType<FluxSlime>(), 0.10f);
 				}
+				if(player.ZoneCrimson)
+					pool.Add(ModContent.NPCType<CrimsonTreasureSlime>(), 0.06f);
+				if (player.ZoneCorrupt)
+					pool.Add(ModContent.NPCType<CorruptionTreasureSlime>(), 0.06f);
 			}
 			if(player.ZoneBeach && !spawnInfo.player.ZonePeaceCandle) //guarenteed to not spawn when a peace candle is nearby
 			{

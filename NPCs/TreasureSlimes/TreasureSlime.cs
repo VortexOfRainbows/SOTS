@@ -75,6 +75,10 @@ namespace SOTS.NPCs.TreasureSlimes
 				for (int i = 0; i < LootAmt; i++)
 				{
 					int rand = Main.rand.Next(items.Count);
+					if(possibleItems.Count() == 0 && (npc.type == NPCType<CorruptionTreasureSlime>() || npc.type == NPCType<CrimsonTreasureSlime>()))
+                    {
+						rand = 0;
+                    }
 					if (Main.rand.NextFloat(1) <= items[rand].FailChance)
 					{
 						possibleItems.Add(items[rand]);
@@ -189,6 +193,10 @@ namespace SOTS.NPCs.TreasureSlimes
 							type = 3;   
 						if (npc.type == NPCType<ShadowTreasureSlime>())
 							type = 4;
+						if (npc.type == NPCType<CorruptionTreasureSlime>())
+							type = 5;
+						if (npc.type == NPCType<CrimsonTreasureSlime>())
+							type = 6;
 						Projectile.NewProjectile(npc.Center + new Vector2(0, 4), Vector2.Zero, ProjectileType<TreasureStarPortal>(), 0, 0, Main.myPlayer, 0, type);
 					}
 					runAwayDelay++;

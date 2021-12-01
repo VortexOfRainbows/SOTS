@@ -2,6 +2,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using SOTS.Void;
+using SOTS.Projectiles.Otherworld;
 
 namespace SOTS.Items.Otherworld.FromChests
 {
@@ -10,7 +11,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Hardlight Quiver");
-			Tooltip.SetDefault("Grants access to infinite hardlight arrows\nHardlight arrows travel faster and are not affected by gravity\nWhen above 50% void, arrows will be supercharged at the cost of some void\nSupercharged arrows travel instantly, and gain slight homing at longer ranges");
+			Tooltip.SetDefault("Grants access to infinite hardlight arrows\nHardlight arrows travel faster and are not affected by gravity\nWhen favorited, arrows will be supercharged at the cost of some void\nSupercharged arrows travel instantly, and gain slight homing at longer ranges");
 		}
 		public override void SafeSetDefaults()
 		{
@@ -22,28 +23,27 @@ namespace SOTS.Items.Otherworld.FromChests
 			item.consumable = false;           
 			item.knockBack = 0.2f;
             item.value = Item.sellPrice(0, 4, 0, 0);
-			item.rare = ItemRarityID.LightPurple; 
-			item.shoot = mod.ProjectileType("HardlightArrow");  
+			item.rare = ItemRarityID.LightRed;
+			item.shoot = ModContent.ProjectileType<HardlightArrow>();  
 			item.shootSpeed = 1f;           
 			item.ammo = AmmoID.Arrow;   
 		}
-		public void UpdateShoot(Player player)
+		public void UpdateShoot()
 		{
-			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-			if (voidPlayer.voidMeter > voidPlayer.voidMeterMax2 * 0.5f)
+			if (item.favorited)
 			{
-				item.shoot = mod.ProjectileType("ChargedHardlightArrow");
+				item.shoot = ModContent.ProjectileType<ChargedHardlightArrow>();
 			}
 			else
 			{
-				item.shoot = mod.ProjectileType("HardlightArrow");
+				item.shoot = ModContent.ProjectileType<HardlightArrow>();
 			}
 		}
 		public override bool BeforeConsumeAmmo(Player player)
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-			UpdateShoot(player);
-			if (voidPlayer.voidMeter > voidPlayer.voidMeterMax2 * 0.5f)
+			UpdateShoot();
+			if (item.favorited)
 			{
 				voidPlayer.voidMeter -= 0.75f;
 			}
@@ -53,8 +53,8 @@ namespace SOTS.Items.Otherworld.FromChests
 		{
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.EndlessQuiver, 1);
-			recipe.AddIngredient(null, "HardlightAlloy", 8);
-			recipe.AddTile(mod.TileType("HardlightFabricatorTile"));
+			recipe.AddIngredient(ModContent.ItemType<HardlightAlloy>(), 8);
+			recipe.AddTile(ModContent.TileType<HardlightFabricatorTile>());
 			recipe.SetResult(this);
 			recipe.AddRecipe();
 		}

@@ -2,6 +2,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using SOTS.Void;
+using SOTS.Projectiles.Otherworld;
 
 namespace SOTS.Items.Otherworld.FromChests
 {
@@ -10,7 +11,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Cataclysm Musket Pouch");
-			Tooltip.SetDefault("Grants access to infinite cataclysm bullets\nCataclysm bullets travel faster and more erratically than normal bullets\nThey will also incur 20% damage to an enemy surrounding the initially hit enemy\nWhen above 50% void, bullets will be supercharged at the cost of some void\nSupercharged bullets travel instantly, and gain increased arcing capabilies");
+			Tooltip.SetDefault("Grants access to infinite cataclysm bullets\nCataclysm bullets travel faster and more erratically than normal bullets\nThey will also incur 20% damage to an enemy surrounding the initially hit enemy\nWhen favorited, bullets will be supercharged at the cost of some void\nSupercharged bullets travel instantly, and gain increased arcing capabilies");
 		}public override void SafeSetDefaults()
 		{
 			item.damage = 8;
@@ -21,28 +22,27 @@ namespace SOTS.Items.Otherworld.FromChests
 			item.consumable = false;           
 			item.knockBack = 1f;
             item.value = Item.sellPrice(0, 4, 0, 0);
-			item.rare = ItemRarityID.LightPurple; 
-			item.shoot = mod.ProjectileType("CataclysmBullet");  
+			item.rare = ItemRarityID.LightRed; 
+			item.shoot = ModContent.ProjectileType<CataclysmBullet>();  
 			item.shootSpeed = 1f;           
 			item.ammo = AmmoID.Bullet;
 		}
-		public void UpdateShoot(Player player)
+		public void UpdateShoot()
 		{
-			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-			if (voidPlayer.voidMeter > voidPlayer.voidMeterMax2 * 0.5f)
+			if (item.favorited)
 			{
-				item.shoot = mod.ProjectileType("ChargedCataclysmBullet");
+				item.shoot = ModContent.ProjectileType<ChargedCataclysmBullet>();
 			}
 			else
 			{
-				item.shoot = mod.ProjectileType("CataclysmBullet");
+				item.shoot = ModContent.ProjectileType<CataclysmBullet>();
 			}
 		}
 		public override bool BeforeConsumeAmmo(Player player)
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-			UpdateShoot(player);
-			if (voidPlayer.voidMeter > voidPlayer.voidMeterMax2 * 0.5f)
+			UpdateShoot();
+			if (item.favorited)
 			{
 				voidPlayer.voidMeter -= 0.75f;
 			}
@@ -52,8 +52,8 @@ namespace SOTS.Items.Otherworld.FromChests
 		{
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.EndlessMusketPouch, 1);
-			recipe.AddIngredient(null, "OtherworldlyAlloy", 8);
-			recipe.AddTile(mod.TileType("HardlightFabricatorTile"));
+			recipe.AddIngredient(ModContent.ItemType<OtherworldlyAlloy>(), 8);
+			recipe.AddTile(ModContent.TileType<HardlightFabricatorTile>());
 			recipe.SetResult(this);
 			recipe.AddRecipe();
 		}
