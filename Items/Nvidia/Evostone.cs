@@ -42,7 +42,7 @@ namespace SOTS.Items.Nvidia
 			Main.tileBlendAll[Type] = true;
 			dustType = 37; //obsidian
 			drop = ModContent.ItemType<EvostoneBrick>();
-			AddMapEntry(new Color(31, 39, 57));
+			AddMapEntry(new Color(46, 63, 77));
 		}
 	}
 	public class EvostoneBrick : ModItem
@@ -66,7 +66,7 @@ namespace SOTS.Items.Nvidia
 			Main.wallHouse[Type] = true;
 			dustType = 37;
 			drop = ModContent.ItemType<EvostoneBrickWall>();
-			AddMapEntry(new Color(110, 95, 57));
+			AddMapEntry(new Color(25, 38, 49));
 		}
 	}
 	public class EvostoneBrickWall : ModItem
@@ -83,6 +83,33 @@ namespace SOTS.Items.Nvidia
 			item.height = 28;
 			item.rare = ItemRarityID.LightPurple;
 			item.createWall = ModContent.WallType<EvostoneBrickWallTile>();
+		}
+	}
+	public class DarkShinglesTile : ModTile
+	{
+		public override void SetDefaults()
+		{
+			Main.tileSolid[Type] = true;
+			Main.tileBlockLight[Type] = true;
+			Main.tileLighted[Type] = false;
+			Main.tileBlendAll[Type] = true;
+			dustType = 37; //obsidian
+			drop = ModContent.ItemType<DarkShingles>();
+			AddMapEntry(new Color(82, 56, 103));
+		}
+	}
+	public class DarkShingles : ModItem
+	{
+		public override void SetStaticDefaults()
+		{
+			DisplayName.SetDefault("Dark Shingles");
+			Tooltip.SetDefault("");
+		}
+		public override void SetDefaults()
+		{
+			item.CloneDefaults(ItemID.StoneBlock);
+			item.rare = ItemRarityID.LightPurple;
+			item.createTile = ModContent.TileType<DarkShinglesTile>();
 		}
 	}
 }

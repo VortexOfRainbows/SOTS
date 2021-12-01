@@ -41,7 +41,7 @@ namespace SOTS.Items.GhostTown
 			Main.wallHouse[Type] = true;
 			dustType = 122;
 			drop = ModContent.ItemType<CharredWoodWall>();
-			AddMapEntry(new Color(110, 81, 46));
+			AddMapEntry(new Color(67, 49, 34));
 		}
 	}
 	public class CharredWoodWall : ModItem
