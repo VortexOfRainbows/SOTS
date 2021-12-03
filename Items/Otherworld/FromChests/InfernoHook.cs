@@ -17,8 +17,8 @@ namespace SOTS.Items.Otherworld.FromChests
 			item.damage = 33;
 			item.melee = true;
 			item.knockBack = 3f;
-            item.width = 44;  
-            item.height = 44;   
+            item.width = 40;  
+            item.height = 40;   
             item.value = Item.sellPrice(0, 3, 80, 0);
             item.rare = ItemRarityID.LightPurple;
 			item.shoot = mod.ProjectileType("InfernoHook"); 

@@ -21,7 +21,7 @@ namespace SOTS.Projectiles.Otherworld
 		}
         public override void SetDefaults()
         {
-			projectile.height = 32;
+			projectile.height = 48;
 			projectile.width = 48;
 			projectile.penetrate = -1;
 			projectile.ranged = true;
