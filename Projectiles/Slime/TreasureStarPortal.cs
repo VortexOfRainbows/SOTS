@@ -33,6 +33,8 @@ namespace SOTS.Projectiles.Slime
 				return new Color(210, 157, 215, 100);
 			if (type == 6)
 				return new Color(145, 33, 30, 100);
+			if (type == 7)
+				return new Color(123, 173, 75, 100);
 			return Color.White;
         }
         public override void SetDefaults()

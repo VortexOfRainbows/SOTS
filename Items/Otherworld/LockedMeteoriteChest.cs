@@ -47,7 +47,12 @@ namespace SOTS.Items.Otherworld
 			chest = "Meteorite Chest";
 			chestDrop = ItemID.MeteoriteChest;
 		}
-		public override ushort GetMapOption(int i, int j) => (ushort)(Main.tile[i, j].frameX / 36);
+		public override ushort GetMapOption(int i, int j)
+		{
+			if (Main.tile[i, j].frameX < 36)
+				return 0;
+			return 1;
+		}
 		public override bool HasSmartInteract() => true;
 		public override bool IsLockedChest(int i, int j) => Main.tile[i, j].frameX / 36 == 1;
 		public override bool UnlockChest(int i, int j, ref short frameXAdjustment, ref int dustType, ref bool manual)

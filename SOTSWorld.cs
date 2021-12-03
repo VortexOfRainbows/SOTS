@@ -312,7 +312,7 @@ namespace SOTS
 				}
 
 			}));
-			tasks.Insert(genIndexEnd + 2, new PassLegacy("genIndexModPlanetarium", delegate (GenerationProgress progress)
+			tasks.Insert(genIndexEnd + 3, new PassLegacy("genIndexModPlanetarium", delegate (GenerationProgress progress)
 			{
 				progress.Message = "Generating Sky Artifacts";
 				int dungeonSide = -1; // -1 = dungeon on left, 1 = dungeon on right
@@ -456,7 +456,7 @@ namespace SOTS
 					}
 				}
 			}));
-			tasks.Insert(genIndexEnd + 3, new PassLegacy("genIndexModPyramid", delegate (GenerationProgress progress)
+			tasks.Insert(genIndexEnd + 4, new PassLegacy("genIndexModPyramid", delegate (GenerationProgress progress)
 			{
 				progress.Message = "Generating A Pyramid";
 				PyramidWorldgenHelper.GenerateSOTSPyramid(mod);

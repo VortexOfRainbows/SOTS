@@ -46,8 +46,8 @@ namespace SOTS.NPCs.TreasureSlimes
 				//new TreasureSlimeItem(ItemID.AncientShadowGreaves, 1, 1, 0.2f), //has 3 less items than corruption for now ig
 				//new TreasureSlimeItem(ItemID.AncientShadowHelmet, 1, 1, 0.2f),
 				//new TreasureSlimeItem(ItemID.AncientShadowScalemail, 1, 1, 0.2f),
-				new TreasureSlimeItem(ItemID.BoneRattle, 1, 1, 0.1f),
-				new TreasureSlimeItem(ItemID.RagePotion, 1, 1, 0.5f),
+				new TreasureSlimeItem(ItemID.BoneRattle, 1, 4, 0.1f),
+				new TreasureSlimeItem(ItemID.RagePotion, 1, 4, 0.5f),
 				new TreasureSlimeItem(ItemID.HeartreachPotion, 1, 1, 0.5f),
 				new TreasureSlimeItem(ItemID.TheUndertaker, 1, 1, 1f),
 				new TreasureSlimeItem(ItemID.CrimsonHeart, 1, 1, 1f),

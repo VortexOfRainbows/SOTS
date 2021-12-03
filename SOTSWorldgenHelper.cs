@@ -490,12 +490,12 @@ namespace SOTS
 										tile.active(false);
 										tile.slope(0);
 										tile.halfBrick(false);
-										WorldGen.PlaceTile(k, l, mod.TileType("LockedStrangeChest"), true, true, -1, 1);
+										WorldGen.PlaceChest(k, l, (ushort)ModContent.TileType<LockedStrangeChest>(), style: 1);
 
 										tile2.active(false);
 										tile2.slope(0);
 										tile2.halfBrick(false);
-										WorldGen.PlaceTile(k2 - 1, l, mod.TileType("LockedStrangeChest"), true, true, -1, 1);
+										WorldGen.PlaceChest(k2 - 1, l, (ushort)ModContent.TileType<LockedStrangeChest>(), style: 1);
 									}
 									break;
 								case 6:
@@ -2574,27 +2574,27 @@ namespace SOTS
 				Tile tile = Framing.GetTileSafely(i, j);
 				Tile tile2 = Framing.GetTileSafely(i + 1, j);
 				Tile tile3 = Framing.GetTileSafely(i + 2, j);
-				if (SkytileValid(tile, mod))
+				if (SkytileValid(tile, mod) && WorldGen.InWorld(i, j, 20))
 				{
 					if (Empty(i, j - 2, 2, 2) && SkytileValid(tile2, mod))
 					{
 						if (next % 3 == 0)
 						{
-							WorldGen.PlaceTile(i, j - 1, (ushort)mod.TileType("LockedSkywareChest"), true, true, -1, 1);
+							WorldGen.PlaceChest(i, j - 1, (ushort)ModContent.TileType<LockedSkywareChest>(), style: 1);
 							tile.type = TileID.Sunplate;
 							tile2.type = TileID.Sunplate;
 						}
 						if (next % 3 == 1)
 						{
-							WorldGen.PlaceTile(i, j - 1, (ushort)mod.TileType("LockedMeteoriteChest"), true, true, -1, 1);
+							WorldGen.PlaceChest(i, j - 1, (ushort)ModContent.TileType<LockedMeteoriteChest>(), style: 1);
 							tile.type = TileID.MeteoriteBrick;
 							tile2.type = TileID.MeteoriteBrick;
 						}
 						if (next % 3 == 2)
 						{
-							WorldGen.PlaceTile(i, j - 1, (ushort)mod.TileType("LockedStrangeChest"), true, true, -1, 1);
-							tile.type = (ushort)mod.TileType("AvaritianPlatingTile");
-							tile2.type = (ushort)mod.TileType("AvaritianPlatingTile");
+							WorldGen.PlaceChest(i, j - 1, (ushort)ModContent.TileType<LockedStrangeChest>(), style: 1);
+							tile.type = (ushort)ModContent.TileType<AvaritianPlatingTile>();
+							tile2.type = (ushort)ModContent.TileType<AvaritianPlatingTile>();
 						}
 						totalChests++;
 						next++;
@@ -2608,11 +2608,11 @@ namespace SOTS
 				Tile tile = Framing.GetTileSafely(i, j);
 				Tile tile2 = Framing.GetTileSafely(i + 1, j);
 				Tile tile3 = Framing.GetTileSafely(i - 1, j);
-				if (SkytileValid(tile, mod))
+				if (SkytileValid(tile, mod) && WorldGen.InWorld(i, j, 20))
 				{
 					if (SkytileValid(tile2, mod) && SkytileValid(tile3, mod) && Empty(i - 1, j - 3, 3, 2))
 					{
-						WorldGen.PlaceTile(i, j - 1, (ushort)mod.TileType("DigitalDisplayTile"), true, true, -1, Main.rand.Next(3));
+						WorldGen.PlaceTile(i, j - 1, (ushort)ModContent.TileType<DigitalDisplayTile>(), true, true, -1, Main.rand.Next(3));
 						totalDisplays++;
 					}
 				}
@@ -2624,11 +2624,11 @@ namespace SOTS
 				Tile tile = Framing.GetTileSafely(i, j);
 				Tile tile2 = Framing.GetTileSafely(i + 1, j);
 				Tile tile3 = Framing.GetTileSafely(i - 1, j);
-				if (SkytileValid(tile, mod))
+				if (SkytileValid(tile, mod) && WorldGen.InWorld(i, j, 20))
 				{
 					if (SkytileValid(tile2, mod) && SkytileValid(tile3, mod) && Empty(i - 1, j - 3, 3, 2))
 					{
-						WorldGen.PlaceTile(i, j - 1, (ushort)mod.TileType("HardlightFabricatorTile"), true, true, -1, 0);
+						WorldGen.PlaceTile(i, j - 1, (ushort)ModContent.TileType<HardlightFabricatorTile>(), true, true, -1, 0);
 						totalFabricators++;
 					}
 				}
@@ -2647,8 +2647,8 @@ namespace SOTS
 					{
 						tile.active(false);
 						tile2.active(false);
-						ModTileEntity modTileEntity = ModTileEntity.GetTileEntity(mod.TileEntityType("PotTimer"));
-						WorldGen.PlaceTile(i, j, (ushort)mod.TileType("PotGeneratorTile"), true, true, -1, 0);
+						ModTileEntity modTileEntity = ModTileEntity.GetTileEntity(ModContent.TileEntityType<PotTimer>());
+						WorldGen.PlaceTile(i, j, (ushort)ModContent.TileType<PotGeneratorTile>(), true, true, -1, 0);
 						modTileEntity.Place(i, j);
 						tile.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();
 						tile2.wall = (ushort)ModContent.WallType<DullPlatingWallWall>();

@@ -737,6 +737,9 @@ namespace SOTS.Items.Banners
 				case 7:
 					item = ItemType<CrimsonTreasureSlimeBanner>();
 					break;
+				case 8:
+					item = ItemType<JungleTreasureSlimeBanner>();
+					break;
 				default:
 					return;
 			}
@@ -775,6 +778,9 @@ namespace SOTS.Items.Banners
 						break;
 					case 7:
 						type = NPCType<CrimsonTreasureSlime>();
+						break;
+					case 8:
+						type = NPCType<JungleTreasureSlime>();
 						break;
 					default:
 						return;
@@ -854,6 +860,14 @@ namespace SOTS.Items.Banners
 		{
 			item.createTile = TileType<SOTSBanners2>();
 			item.placeStyle = 7;
+		}
+	}
+	public class JungleTreasureSlimeBanner : ModBanner
+	{
+		public override void SafeSetDefaults()
+		{
+			item.createTile = TileType<SOTSBanners2>();
+			item.placeStyle = 8;
 		}
 	}
 }

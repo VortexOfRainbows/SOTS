@@ -28,7 +28,7 @@ namespace SOTS.Items.Otherworld
 			item.value = Item.sellPrice(0, 0, 10, 0);
 			item.rare = ItemRarityID.White;
 			item.consumable = true;
-			item.createTile = mod.TileType("LockedStrangeChest");
+			item.createTile = ModContent.TileType<LockedStrangeChest>();
 		}
 	}
 	public class LockedStrangeChest : ModTile
@@ -75,10 +75,6 @@ namespace SOTS.Items.Otherworld
 				Main.spriteBatch.Draw(texture, pos + offset, frame, color * alphaMult * 0.75f, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
 			}
 		}
-        public override void AnimateIndividualTile(int type, int i, int j, ref int frameXOffset, ref int frameYOffset)
-        {
-            base.AnimateIndividualTile(type, i, j, ref frameXOffset, ref frameYOffset);
-        }
         public override void SetDefaults()
 		{
 			Main.tileSpelunker[Type] = true;
@@ -110,7 +106,12 @@ namespace SOTS.Items.Otherworld
 			chest = "Strange Chest";
 			chestDrop = ItemType<StrangeChest>();
 		}
-		public override ushort GetMapOption(int i, int j) => (ushort)(Main.tile[i, j].frameX / 36);
+		public override ushort GetMapOption(int i, int j)
+		{
+			if (Main.tile[i, j].frameX < 36)
+				return 0;
+			return 1;
+		}
 		public override bool HasSmartInteract() => true;
 		public override bool IsLockedChest(int i, int j) => Main.tile[i, j].frameX / 36 == 1;
 		public override bool UnlockChest(int i, int j, ref short frameXAdjustment, ref int dustType, ref bool manual)

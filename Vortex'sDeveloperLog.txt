@@ -43,10 +43,17 @@ Mid Priority:
 Low Priority:
 1. Archaelogist NPC
 
+12/2/21
+1. Added living loom and wands to basic treasure slime
+2. Fixed some treasure slime related rates
+3. Added Jungle Treasure slime
+4. Attempted to fix certain mapping bugs
+5. Added some drastic particle reduction for Glaze Bow (fidelity mode)
+
 11/30/21
 1. Finished Glaze Bow poggers! Might need to be rebalanced later.
 2. Frigid Ice tools added. Can't really add special effects to this.
-3. Added Crimson and Corruption treasure slimes. Right now they lack the quantity of drops that other treasure slimes have.
+3. Added Crimson and Corruption treasure slimes. Right now they lack the quantity of drops that other treasure slimes have (+ spawnrates need to be checked).
 4. (probably) Fixed bug with sky furniture and sometimes chests spawning outside of the world in the planetarium
 
 11/29/21

@@ -423,9 +423,9 @@ namespace SOTS.NPCs
 					pool.Add(ModContent.NPCType<FluxSlime>(), 0.10f);
 				}
 				if(player.ZoneCrimson)
-					pool.Add(ModContent.NPCType<CrimsonTreasureSlime>(), 0.06f);
+					pool.Add(ModContent.NPCType<CrimsonTreasureSlime>(), 0.075f);
 				if (player.ZoneCorrupt)
-					pool.Add(ModContent.NPCType<CorruptionTreasureSlime>(), 0.06f);
+					pool.Add(ModContent.NPCType<CorruptionTreasureSlime>(), 0.075f);
 			}
 			if(player.ZoneBeach && !spawnInfo.player.ZonePeaceCandle) //guarenteed to not spawn when a peace candle is nearby
 			{
@@ -501,7 +501,8 @@ namespace SOTS.NPCs
 			else if(player.ZoneJungle)
 			{
 				if (player.statLifeMax2 >= 120)
-					pool.Add(ModContent.NPCType<NatureConstruct>(), ((SpawnCondition.SurfaceJungle.Chance * 0.025f) + (SpawnCondition.UndergroundJungle.Chance * 0.0075f)) * constructRateMultiplier);
+					pool.Add(ModContent.NPCType<NatureConstruct>(), ((SpawnCondition.SurfaceJungle.Chance * 0.03f) + (SpawnCondition.UndergroundJungle.Chance * 0.0075f)) * constructRateMultiplier);
+				pool.Add(ModContent.NPCType<JungleTreasureSlime>(), (SpawnCondition.SurfaceJungle.Chance * 0.05f) + (SpawnCondition.UndergroundJungle.Chance * 0.015f));
 			}
 			if (spawnInfo.player.ZoneUnderworldHeight)
 			{

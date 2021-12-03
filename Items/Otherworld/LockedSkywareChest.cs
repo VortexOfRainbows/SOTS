@@ -51,7 +51,12 @@ namespace SOTS.Items.Otherworld
 			chestDrop = ItemID.SkywareChest;
 		}
 
-		public override ushort GetMapOption(int i, int j) => (ushort)(Main.tile[i, j].frameX / 36);
+		public override ushort GetMapOption(int i, int j)
+		{
+			if (Main.tile[i, j].frameX < 36)
+				return 0;
+			return 1;
+		}
 
 		public override bool HasSmartInteract() => true;
 

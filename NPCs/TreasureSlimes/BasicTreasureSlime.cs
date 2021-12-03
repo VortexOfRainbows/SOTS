@@ -42,6 +42,9 @@ namespace SOTS.NPCs.TreasureSlimes
 				new TreasureSlimeItem(ItemID.Leather, 5, 5, 1),
 				new TreasureSlimeItem(ItemID.StoneBlock, 30, 60, 1),
 
+				new TreasureSlimeItem(ItemID.LivingWoodWand, 1, 1, 0.1f),
+				new TreasureSlimeItem(ItemID.LeafWand, 1, 1, 0.1f),
+				new TreasureSlimeItem(ItemID.LivingLoom, 1, 1, 0.1f),
 				new TreasureSlimeItem(ItemID.Spear, 1, 1, 0.5f),
 				new TreasureSlimeItem(ItemID.WoodenBoomerang, 1, 1, 0.5f),
 				new TreasureSlimeItem(ItemID.LifeformAnalyzer, 1, 1, 1f),

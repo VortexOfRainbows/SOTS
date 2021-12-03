@@ -111,13 +111,16 @@ namespace SOTS.Projectiles.Permafrost
 					Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 50, 1.1f, 0.1f); //mine ice
 					for (int k = 0; k < 30; k++)
 					{
-						Vector2 circularLocation = new Vector2(0, 8).RotatedBy(MathHelper.ToRadians(k * 12));
-						circularLocation = circularLocation.RotatedBy(manipulateVelo.ToRotation());
-						Dust dust = Dust.NewDustDirect(projectile.Center + circularLocation + new Vector2(-4, -4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, new Color(116, 125, 238));
-						dust.noGravity = true;
-						dust.scale = dust.scale * 0.5f + 1f;
-						dust.velocity = dust.velocity * 0.3f + circularLocation * 0.2f + manipulateVelo * 0.08f;
-						dust.fadeIn = 0.1f;
+						if (!SOTS.Config.lowFidelityMode || Main.rand.NextBool(4))
+						{
+							Vector2 circularLocation = new Vector2(0, 8).RotatedBy(MathHelper.ToRadians(k * 12));
+							circularLocation = circularLocation.RotatedBy(manipulateVelo.ToRotation());
+							Dust dust = Dust.NewDustDirect(projectile.Center + circularLocation + new Vector2(-4, -4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, new Color(116, 125, 238));
+							dust.noGravity = true;
+							dust.scale = dust.scale * 0.5f + 1f;
+							dust.velocity = dust.velocity * 0.3f + circularLocation * 0.2f + manipulateVelo * 0.08f;
+							dust.fadeIn = 0.1f;
+						}
 					}
 				}
 				else if(frostFlake == 2)
@@ -176,22 +179,25 @@ namespace SOTS.Projectiles.Permafrost
 					{
 						Vector2 circular = new Vector2(12, 0).RotatedBy(MathHelper.ToRadians(i * 12));
 						Vector2 rotational = new Vector2(0, -1.5f).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360f)));
-						if(frostFlake == 1 || (frostFlake == -2 && Main.rand.NextBool(2)))
+						if (!SOTS.Config.lowFidelityMode || Main.rand.NextBool(3))
 						{
-							Dust dust = Dust.NewDustDirect(new Vector2(projectile.Center.X - 4, projectile.Center.Y - 4), 4, 4, ModContent.DustType<CopyDust4>());
-							dust.noGravity = true;
-							dust.velocity *= 0.2f;
-							dust.velocity += circular * 0.5f;
-							dust.scale *= 1.75f;
-							dust.fadeIn = 0.1f;
-							dust.color = Color.Lerp(blue, blue2, Main.rand.NextFloat(1));
+							if (frostFlake == 1 || (frostFlake == -2 && Main.rand.NextBool(2)))
+							{
+								Dust dust = Dust.NewDustDirect(new Vector2(projectile.Center.X - 4, projectile.Center.Y - 4), 4, 4, ModContent.DustType<CopyDust4>());
+								dust.noGravity = true;
+								dust.velocity *= 0.2f;
+								dust.velocity += circular * 0.5f;
+								dust.scale *= 1.75f;
+								dust.fadeIn = 0.1f;
+								dust.color = Color.Lerp(blue, blue2, Main.rand.NextFloat(1));
+							}
+							else
+							{
+								circular *= 1.5f;
+							}
+							if (frostFlake != -2 || Main.rand.NextBool(2))
+								particleList.Add(new FireParticle(projectile.Center + circular - rotational * 2, rotational + circular * 0.05f, Main.rand.NextFloat(-3f, 3f), Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(0.8f, 0.9f)));
 						}
-						else
-                        {
-							circular *= 1.5f;
-                        }
-						if(frostFlake != -2 || Main.rand.NextBool(2))
-							particleList.Add(new FireParticle(projectile.Center + circular - rotational * 2, rotational + circular * 0.05f, Main.rand.NextFloat(-3f, 3f), Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(0.8f, 0.9f)));
 					}
 					if (frostFlake == 2)
 					{
@@ -226,12 +232,15 @@ namespace SOTS.Projectiles.Permafrost
 					trueVelocity += new Vector2(0, -(float)Math.Sin(mult * MathHelper.Pi) * 6f);
 					for (int i = 0; i < 5; i++)
 					{
-						Vector2 spawnPos = Vector2.Lerp(projectile.Center, projectile.oldPosition + projectile.Size / 2, i * 0.2f);
-						Dust dust = Dust.NewDustDirect(spawnPos + new Vector2(-4, -4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, Color.Lerp(blue, blue2, Main.rand.NextFloat(1)));
-						dust.noGravity = true;
-						dust.scale = 1.2f;
-						dust.velocity = Vector2.Zero;
-						dust.fadeIn = 0.1f;
+						if(!SOTS.Config.lowFidelityMode || Main.rand.NextBool(4))
+						{
+							Vector2 spawnPos = Vector2.Lerp(projectile.Center, projectile.oldPosition + projectile.Size / 2, i * 0.2f);
+							Dust dust = Dust.NewDustDirect(spawnPos + new Vector2(-4, -4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, Color.Lerp(blue, blue2, Main.rand.NextFloat(1)));
+							dust.noGravity = true;
+							dust.scale = 1.2f;
+							dust.velocity = Vector2.Zero;
+							dust.fadeIn = 0.1f;
+						}
 					}
 				}
 				if(frostFlake == -1)
@@ -241,12 +250,15 @@ namespace SOTS.Projectiles.Permafrost
 					trueVelocity = projectile.velocity;
 					for (int i = 0; i < 2; i++)
 					{
-						Vector2 spawnPos = Vector2.Lerp(projectile.Center, projectile.oldPosition + projectile.Size / 2, i * 0.5f);
-						Dust dust = Dust.NewDustDirect(spawnPos + new Vector2(-4, -4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, Color.Lerp(blue, blue2, Main.rand.NextFloat(1)));
-						dust.noGravity = true;
-						dust.scale = 1.0f;
-						dust.velocity = Vector2.Zero;
-						dust.fadeIn = 0.1f;
+						if (!SOTS.Config.lowFidelityMode || Main.rand.NextBool(3))
+						{
+							Vector2 spawnPos = Vector2.Lerp(projectile.Center, projectile.oldPosition + projectile.Size / 2, i * 0.5f);
+							Dust dust = Dust.NewDustDirect(spawnPos + new Vector2(-4, -4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, Color.Lerp(blue, blue2, Main.rand.NextFloat(1)));
+							dust.noGravity = true;
+							dust.scale = 1.0f;
+							dust.velocity = Vector2.Zero;
+							dust.fadeIn = 0.1f;
+						}
 					}
 				}
 				Vector2 rotational = new Vector2(0, -2.0f).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-30f, 30f)));
@@ -264,13 +276,16 @@ namespace SOTS.Projectiles.Permafrost
 				particleList.Add(new FireParticle(projectile.Center - rotational * 0.5f, rotational, Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(-2f, 2f), mult * Main.rand.NextFloat(0.9f, 1.3f)));
 				if(frostFlake == 1 && Main.rand.NextBool(2))
 				{
-					Dust dust = Dust.NewDustDirect(new Vector2(projectile.Center.X - 4, projectile.Center.Y - 4), 4, 4, ModContent.DustType<CopyDust4>());
-					dust.noGravity = true;
-					dust.velocity *= 0.3f + mult * 0.8f;
-					dust.velocity += trueVelocity * 0.3f;
-					dust.scale *= 1.1f;
-					dust.fadeIn = 0.1f;
-					dust.color = Color.Lerp(blue, blue2, Main.rand.NextFloat(1));
+					if (!SOTS.Config.lowFidelityMode || Main.rand.NextBool(2))
+					{
+						Dust dust = Dust.NewDustDirect(new Vector2(projectile.Center.X - 4, projectile.Center.Y - 4), 4, 4, ModContent.DustType<CopyDust4>());
+						dust.noGravity = true;
+						dust.velocity *= 0.3f + mult * 0.8f;
+						dust.velocity += trueVelocity * 0.3f;
+						dust.scale *= 1.1f;
+						dust.fadeIn = 0.1f;
+						dust.color = Color.Lerp(blue, blue2, Main.rand.NextFloat(1));
+					}
 				}
 			}
 			expandAmt += expandVelocity;
