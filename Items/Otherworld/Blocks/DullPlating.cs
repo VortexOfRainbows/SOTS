@@ -1,47 +1,37 @@
 using Microsoft.Xna.Framework;
+using SOTS.Dusts;
+using SOTS.Items.Otherworld.FromChests;
+using SOTS.Items.Otherworld.Furniture;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace SOTS.Items.Otherworld
+namespace SOTS.Items.Otherworld.Blocks
 {
 	public class DullPlating : ModItem
 	{
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Dull Plating");
-			Tooltip.SetDefault("");
-		}
 		public override void SetDefaults()
 		{
-			item.width = 16;
-			item.height = 16;
-			item.maxStack = 999;
-			item.useTurn = true;
-			item.autoReuse = true;
-			item.useAnimation = 15;
-			item.useTime = 10;
-			item.useStyle = 1;
-			item.rare = ItemRarityID.Cyan;
-			item.consumable = true;
-			item.createTile = mod.TileType("DullPlatingTile");
+			item.CloneDefaults(ItemID.StoneBlock);
+			item.rare = ItemRarityID.LightRed;
+			item.createTile = ModContent.TileType<DullPlatingTile>();
 		}
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "DullPlatingWall", 4);
+			recipe.AddIngredient(ModContent.ItemType<DullPlatingWall>(), 4);
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.SetResult(this, 1);
 			recipe.AddRecipe();
 			recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "AvaritianPlating", 1);
-			recipe.AddTile(mod.TileType("HardlightFabricatorTile"));
+			recipe.AddIngredient(ModContent.ItemType<AvaritianPlating>(), 1);
+			recipe.AddTile(ModContent.TileType<HardlightFabricatorTile>());
 			recipe.SetResult(this, 1);
 			recipe.AddRecipe();
 			recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "TwilightGel", 5);
-			recipe.AddIngredient(null, "TwilightShard", 1);
-			recipe.AddTile(mod.TileType("HardlightFabricatorTile"));
+			recipe.AddIngredient(ModContent.ItemType<TwilightGel>(), 5);
+			recipe.AddIngredient(ModContent.ItemType<TwilightShard>(), 1);
+			recipe.AddTile(ModContent.TileType<HardlightFabricatorTile>());
 			recipe.SetResult(this, 10);
 			recipe.AddRecipe();
 		}
@@ -55,20 +45,16 @@ namespace SOTS.Items.Otherworld
 			Main.tileMergeDirt[Type] = false;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
-			drop = mod.ItemType("DullPlating");
+			drop = ModContent.ItemType<DullPlating>();
 			AddMapEntry(new Color(30, 30, 30));
 			mineResist = 2f;
 			minPick = 80;
 			soundType = 21;
 			soundStyle = 2;
-			dustType = mod.DustType("AvaritianDust");
+			dustType = ModContent.DustType<AvaritianDust>();
 		}
 		public override bool CanExplode(int i, int j)
 		{
-			if (Main.tile[i, j].type == mod.TileType("DullPlatingTile"))
-			{
-				return false;
-			}
 			return false;
 		}
 		public override bool Slope(int i, int j)

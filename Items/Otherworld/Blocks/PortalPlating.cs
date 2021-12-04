@@ -1,11 +1,12 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Dusts;
 using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace SOTS.Items.Otherworld
+namespace SOTS.Items.Otherworld.Blocks
 {
 	public class PortalPlating : ModItem
 	{
@@ -14,20 +15,11 @@ namespace SOTS.Items.Otherworld
 			DisplayName.SetDefault("Avaritia Portal Plating");
 			Tooltip.SetDefault("");
 		}
-
 		public override void SetDefaults()
 		{
-			item.width = 20;
-			item.height = 20;
-			item.maxStack = 999;
-			item.useTurn = true;
-			item.autoReuse = true;
-			item.useAnimation = 15;
-			item.useTime = 10;
-			item.useStyle = 1;
-			item.rare = ItemRarityID.Cyan;
-			item.consumable = true;
-			item.createTile = mod.TileType("PortalPlatingTile");
+			item.CloneDefaults(ItemID.StoneBlock);
+			item.rare = ItemRarityID.LightRed;
+			item.createTile = ModContent.TileType<PortalPlatingTile>();
 		}
 	}
 	public class PortalPlatingTile : ModTile
@@ -43,7 +35,7 @@ namespace SOTS.Items.Otherworld
 		{
 			//float uniquenessCounter = Main.GlobalTime * -100 + (i + j) * 5;
 			Tile tile = Main.tile[i, j];
-			Texture2D texture = mod.GetTexture("Items/Otherworld/PortalPlatingTileGlow");
+			Texture2D texture = mod.GetTexture("Items/Otherworld/Blocks/PortalPlatingTileGlow");
 			Rectangle frame = new Rectangle(tile.frameX, tile.frameY, 16, 16);
 			Color color;
 			color = WorldGen.paintColor((int)Main.tile[i, j].color()) * (100f / 255f);
@@ -66,16 +58,15 @@ namespace SOTS.Items.Otherworld
 			Main.tileSolid[Type] = true;
 			//Main.tileBrick[Type] = true;
 			Main.tileMergeDirt[Type] = false;
-			Main.tileMerge[Type][mod.TileType("AvaritianPlating")] = false;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
-			drop = mod.ItemType("PortalPlating");
+			drop = ModContent.ItemType<PortalPlating>();
 			AddMapEntry(new Color(122, 243, 255));
 			mineResist = 2f;
 			minPick = 250;
 			soundType = 21;
 			soundStyle = 2;
-			dustType = mod.DustType("AvaritianDust");
+			dustType = ModContent.DustType<AvaritianDust>();
 			TileID.Sets.GemsparkFramingTypes[Type] = Type;
 		}
 		public override bool CanExplode(int i, int j)

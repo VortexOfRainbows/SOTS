@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Projectiles.Otherworld;
 using SOTS.Dusts;
+using SOTS.Items.Otherworld.Furniture;
 
 namespace SOTS.Items.Otherworld.FromChests
 {

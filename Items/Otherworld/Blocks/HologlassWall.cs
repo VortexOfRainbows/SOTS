@@ -4,15 +4,16 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using SOTS.Items.Otherworld.Blocks;
 
-namespace SOTS.Items.Otherworld
+namespace SOTS.Items.Otherworld.Blocks
 {
 	public class HologlassWall : ModItem
 	{
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
-			Texture2D texture = mod.GetTexture("Items/Otherworld/HologlassWallOutline");
-			Texture2D texture2 = mod.GetTexture("Items/Otherworld/HologlassWallFill");
+			Texture2D texture = mod.GetTexture("Items/Otherworld/Blocks/HologlassWallOutline");
+			Texture2D texture2 = mod.GetTexture("Items/Otherworld/Blocks/HologlassWallFill");
 			Color color = new Color(100, 100, 100, 0);
 			for (int k = 0; k < 5; k++)
 			{
@@ -26,8 +27,8 @@ namespace SOTS.Items.Otherworld
 		}
 		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
 		{
-			Texture2D texture = mod.GetTexture("Items/Otherworld/HologlassWallOutline");
-			Texture2D texture2 = mod.GetTexture("Items/Otherworld/HologlassWallFill");
+			Texture2D texture = mod.GetTexture("Items/Otherworld/Blocks/HologlassWallOutline");
+			Texture2D texture2 = mod.GetTexture("Items/Otherworld/Blocks/HologlassWallFill");
 			Color color = new Color(100, 100, 100, 0);
 			Vector2 drawOrigin = new Vector2(Main.itemTexture[item.type].Width * 0.5f, item.height * 0.5f);
 			for (int k = 0; k < 5; k++)
@@ -50,8 +51,8 @@ namespace SOTS.Items.Otherworld
 			item.CloneDefaults(ItemID.StoneWall);
 			item.width = 28;
 			item.height = 28;
-			item.rare = ItemRarityID.Cyan;
-			item.createWall = mod.WallType("HologlassWallWall");
+			item.rare = ItemRarityID.LightRed;
+			item.createWall = ModContent.WallType<HologlassWallWall>();
 		}
 		public override void AddRecipes()
 		{
@@ -70,10 +71,10 @@ namespace SOTS.Items.Otherworld
 			float offsetY = 2 * ((int)uniquenessCounter % 4);
 			offsetY -= 6;
 			Tile tile = Main.tile[i, j];
-			Texture2D texture = ModContent.GetTexture("SOTS/Items/Otherworld/HologlassWallWallOutline");
-			Texture2D texture2 = ModContent.GetTexture("SOTS/Items/Otherworld/HologlassWallWallFill");
-			Texture2D textureScan = ModContent.GetTexture("SOTS/Items/Otherworld/HologlassWallWallScan");
-			Texture2D textureFix = ModContent.GetTexture("SOTS/Items/Otherworld/HologlassWallWallInline");
+			Texture2D texture = ModContent.GetTexture("SOTS/Items/Otherworld/Blocks/HologlassWallWallOutline");
+			Texture2D texture2 = ModContent.GetTexture("SOTS/Items/Otherworld/Blocks/HologlassWallWallFill");
+			Texture2D textureScan = ModContent.GetTexture("SOTS/Items/Otherworld/Blocks/HologlassWallWallScan");
+			Texture2D textureFix = ModContent.GetTexture("SOTS/Items/Otherworld/Blocks/HologlassWallWallInline");
 			int xLength = 32;
 			int xOff = 0;
 			Rectangle frame = new Rectangle(tile.wallFrameX() + xOff, tile.wallFrameY(), xLength, 32);
@@ -130,7 +131,7 @@ namespace SOTS.Items.Otherworld
 			Main.wallHouse[Type] = true;
 			Main.wallLight[Type] = true;
 			dustType = DustID.Electric;
-			drop = mod.ItemType("HologlassWall");
+			drop = ModContent.ItemType<HologlassWall>();
 			AddMapEntry(new Color(25, 120, 170));
 		}
 		public override bool KillSound(int i, int j)

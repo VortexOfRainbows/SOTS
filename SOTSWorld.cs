@@ -27,6 +27,8 @@ using SOTS.Items.Flails;
 using SOTS.Items.Secrets;
 using SOTS.Items.Tools;
 using SOTS.Items.GhostTown;
+using SOTS.Items.Otherworld.Blocks;
+using SOTS.Items.Otherworld.Furniture;
 
 namespace SOTS
 {

@@ -11,24 +11,25 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 using static Terraria.ModLoader.ModContent;
 
-namespace SOTS.Items.Otherworld
+namespace SOTS.Items.Otherworld.Furniture
 {
 	public class StrangeChest : ModItem
 	{
+		public override void SetStaticDefaults()
+		{
+			DisplayName.SetDefault("Planetarium Chest");
+		}
 		public override void SetDefaults()
 		{
+			item.CloneDefaults(ItemID.StoneBlock);
 			item.width = 32;
 			item.height = 26;
 			item.maxStack = 99;
-			item.useTurn = true;
-			item.autoReuse = true;
-			item.useAnimation = 15;
-			item.useTime = 10;
 			item.useStyle = 1;
 			item.value = Item.sellPrice(0, 0, 10, 0);
-			item.rare = ItemRarityID.White;
+			item.rare = ItemRarityID.LightRed;
 			item.consumable = true;
-			item.createTile = ModContent.TileType<LockedStrangeChest>();
+			item.createTile = TileType<LockedStrangeChest>();
 		}
 	}
 	public class LockedStrangeChest : ModTile
@@ -57,7 +58,7 @@ namespace SOTS.Items.Otherworld
 			Chest chest = Main.chest[chestI];
 			int cFrame = chest.frame;
 			float uniquenessCounter = Main.GlobalTime * -100 + (i + j) * 5;
-			Texture2D texture = mod.GetTexture("Items/Otherworld/LockedStrangeChestGlow");
+			Texture2D texture = mod.GetTexture("Items/Otherworld/Furniture/LockedStrangeChestGlow");
 			Rectangle frame = new Rectangle(tile.frameX, 38 * cFrame + tile.frameY, 16, 16);
 			Color color;
 			color = WorldGen.paintColor((int)Main.tile[i, j].color()) * (100f / 255f);
@@ -95,15 +96,15 @@ namespace SOTS.Items.Otherworld
 			TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
 			TileObjectData.addTile(Type);
 			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Strange Chest");
+			name.SetDefault("Planetarium Chest");
 			AddMapEntry(new Color(200, 200, 200), name, MapChestName);
 			name = CreateMapEntryName(Name + "_Locked"); // With multiple map entries, you need unique translation keys.
-			name.SetDefault("Locked Strange Chest");
+			name.SetDefault("Locked Planetarium Chest");
 			AddMapEntry(new Color(200, 200, 200), name, MapChestName);
 			dustType = DustType<AvaritianDust>();
 			disableSmartCursor = true;
 			adjTiles = new int[] { TileID.Containers };
-			chest = "Strange Chest";
+			chest = "Planetarium Chest";
 			chestDrop = ItemType<StrangeChest>();
 		}
 		public override ushort GetMapOption(int i, int j)

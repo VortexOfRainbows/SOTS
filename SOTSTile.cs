@@ -12,6 +12,8 @@ using SOTS.Items.Pyramid.AltPyramidBlocks;
 using System.Linq;
 using SOTS.Items.Tide;
 using SOTS.Items.Permafrost;
+using SOTS.Items.Otherworld.Furniture;
+using SOTS.Items.Otherworld.Blocks;
 
 namespace SOTS
 {

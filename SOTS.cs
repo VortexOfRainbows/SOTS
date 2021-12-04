@@ -29,6 +29,7 @@ using SOTS.Items.Banners;
 using Terraria.Graphics.Shaders;
 using SOTS.Items.Dyes;
 using SOTS.Items.Fragments;
+using SOTS.Items.Otherworld.Furniture;
 
 namespace SOTS
 {

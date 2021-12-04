@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Items.Banners;
 using SOTS.Items.Otherworld;
+using SOTS.Items.Otherworld.Blocks;
 using SOTS.Items.Otherworld.FromChests;
 using SOTS.Items.Pyramid;
 using System;

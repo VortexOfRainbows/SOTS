@@ -14,6 +14,8 @@ using SOTS.Items.Tide;
 using SOTS.Items.Permafrost;
 using SOTS.Items.Secrets;
 using SOTS.Items.GhostTown;
+using SOTS.Items.Otherworld.Furniture;
+using SOTS.Items.Otherworld.Blocks;
 
 namespace SOTS
 {

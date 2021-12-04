@@ -1,18 +1,19 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Items.Otherworld.Furniture;
 using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace SOTS.Items.Otherworld
+namespace SOTS.Items.Otherworld.Blocks
 {
 	public class HardlightBlock : ModItem
 	{
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
-			Texture2D texture = mod.GetTexture("Items/Otherworld/HardlightBlockOutline");
-			Texture2D texture2 = mod.GetTexture("Items/Otherworld/HardlightBlockFill");
+			Texture2D texture = mod.GetTexture("Items/Otherworld/Blocks/HardlightBlockOutline");
+			Texture2D texture2 = mod.GetTexture("Items/Otherworld/Blocks/HardlightBlockFill");
 			Color color = new Color(100, 100, 100, 0);
 			for (int k = 0; k < 5; k++)
 			{
@@ -27,8 +28,8 @@ namespace SOTS.Items.Otherworld
 		}
 		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
 		{
-			Texture2D texture = mod.GetTexture("Items/Otherworld/HardlightBlockOutline");
-			Texture2D texture2 = mod.GetTexture("Items/Otherworld/HardlightBlockFill");
+			Texture2D texture = mod.GetTexture("Items/Otherworld/Blocks/HardlightBlockOutline");
+			Texture2D texture2 = mod.GetTexture("Items/Otherworld/Blocks/HardlightBlockFill");
 			Color color = new Color(100, 100, 100, 0);
 			Vector2 drawOrigin = new Vector2(Main.itemTexture[item.type].Width * 0.5f, item.height * 0.5f);
 			for (int k = 0; k < 5; k++)
@@ -42,30 +43,20 @@ namespace SOTS.Items.Otherworld
 			}
 			return false;
 		}
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Hardlight Block");
-			Tooltip.SetDefault("");
-		}
 		public override void SetDefaults()
 		{
+			item.CloneDefaults(ItemID.StoneBlock);
 			item.width = 20;
 			item.height = 20;
 			item.maxStack = 999;
-			item.useTurn = true;
-			item.autoReuse = true;
-			item.useAnimation = 15;
-			item.useTime = 10;
-			item.useStyle = 1;
-			item.rare = ItemRarityID.Cyan;
-			item.consumable = true;
-			item.createTile = mod.TileType("HardlightBlockTile");
+			item.rare = ItemRarityID.LightRed;
+			item.createTile = ModContent.TileType<HardlightBlockTile>();
 		}
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "TwilightGel", 2);
-			recipe.AddTile(mod.TileType("HardlightFabricatorTile"));
+			recipe.AddIngredient(ModContent.ItemType<TwilightGel>(), 2);
+			recipe.AddTile(ModContent.TileType<HardlightFabricatorTile>());
 			recipe.SetResult(this, 1);
 			recipe.AddRecipe();
 		}

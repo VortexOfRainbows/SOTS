@@ -15,7 +15,7 @@ using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
 using static Terraria.ModLoader.ModContent;
 
-namespace SOTS.Items.Otherworld
+namespace SOTS.Items.Otherworld.Furniture
 {
 	public class PotGenerator : ModItem
 	{
@@ -26,21 +26,21 @@ namespace SOTS.Items.Otherworld
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
-			Texture2D texture2 = mod.GetTexture("Items/Otherworld/PotGeneratorBase");
+			Texture2D texture2 = mod.GetTexture("Items/Otherworld/Furniture/PotGeneratorBase");
 			Main.spriteBatch.Draw(texture2, new Vector2(position.X, position.Y), null, drawColor, 0f, origin, scale, SpriteEffects.None, 0f);
 			return false;
 		}
 		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
 		{
-			Texture2D texture2 = mod.GetTexture("Items/Otherworld/PotGeneratorBase");
+			Texture2D texture2 = mod.GetTexture("Items/Otherworld/Furniture/PotGeneratorBase");
 			Vector2 drawOrigin = new Vector2(Main.itemTexture[item.type].Width * 0.5f, item.height * 0.5f);
 			Main.spriteBatch.Draw(texture2, new Vector2((float)(item.Center.X - (int)Main.screenPosition.X), (float)(item.Center.Y - (int)Main.screenPosition.Y) + 2), null, lightColor * (1f - (item.alpha / 255f)), rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			return false;
 		}
 		public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
-			Texture2D texture = mod.GetTexture("Items/Otherworld/PotGeneratorMiniOutline");
-			Texture2D texture2 = mod.GetTexture("Items/Otherworld/PotGeneratorMiniFill");
+			Texture2D texture = mod.GetTexture("Items/Otherworld/Furniture/PotGeneratorMiniOutline");
+			Texture2D texture2 = mod.GetTexture("Items/Otherworld/Furniture/PotGeneratorMiniFill");
 			Color color = new Color(110, 110, 110, 0);
 			for (int k = 0; k < 5; k++)
 			{
@@ -54,8 +54,8 @@ namespace SOTS.Items.Otherworld
 		}
 		public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
 		{
-			Texture2D texture = mod.GetTexture("Items/Otherworld/PotGeneratorMiniOutline");
-			Texture2D texture2 = mod.GetTexture("Items/Otherworld/PotGeneratorMiniFill");
+			Texture2D texture = mod.GetTexture("Items/Otherworld/Furniture/PotGeneratorMiniOutline");
+			Texture2D texture2 = mod.GetTexture("Items/Otherworld/Furniture/PotGeneratorMiniFill");
 			Color color = new Color(110, 110, 110, 0);
 			Vector2 drawOrigin = new Vector2(Main.itemTexture[item.type].Width * 0.5f, item.height * 0.5f);
 			for (int k = 0; k < 5; k++)
@@ -73,7 +73,7 @@ namespace SOTS.Items.Otherworld
 			item.CloneDefaults(ItemID.StoneBlock);
 			item.width = 26;
 			item.height = 36;
-			item.rare = ItemRarityID.Cyan;
+			item.rare = ItemRarityID.LightRed;
 			item.value = Item.sellPrice(0, 5, 0, 0);
 			item.createTile = TileType<PotGeneratorTile>();
 		}
@@ -94,7 +94,7 @@ namespace SOTS.Items.Otherworld
 		{
 			float uniquenessCounter = Main.GlobalTime * -100 + (i + j) * 5;
 			Tile tile = Main.tile[i, j];
-			Texture2D texture = mod.GetTexture("Items/Otherworld/PotGeneratorTileGlow");
+			Texture2D texture = mod.GetTexture("Items/Otherworld/Furniture/PotGeneratorTileGlow");
 			Rectangle frame = new Rectangle(tile.frameX, tile.frameY, 16, 16);
 			Color color;
 			color = WorldGen.paintColor((int)Main.tile[i, j].color()) * (100f / 255f);
@@ -237,8 +237,8 @@ namespace SOTS.Items.Otherworld
 			int style = entity.style % 9;
 			if (Main.tile[i, j].frameX >= 18)
 				return true;
-			Texture2D texture = mod.GetTexture("Items/Otherworld/SkyPotsGlowOutline");
-			Texture2D texture2 = mod.GetTexture("Items/Otherworld/SkyPotsGlowFill");
+			Texture2D texture = mod.GetTexture("Items/Otherworld/Furniture/SkyPotsGlowOutline");
+			Texture2D texture2 = mod.GetTexture("Items/Otherworld/Furniture/SkyPotsGlowFill");
 			Color color;
 			color = WorldGen.paintColor((int)Main.tile[i, j].color()) * (100f / 255f);
 			color.A = 0;

@@ -26,6 +26,7 @@ using SOTS.Items.Slime;
 using SOTS.Items.Evil;
 using SOTS.Items.Tide;
 using SOTS.Items.Permafrost;
+using SOTS.Items.Otherworld.Blocks;
 
 namespace SOTS.NPCs
 {

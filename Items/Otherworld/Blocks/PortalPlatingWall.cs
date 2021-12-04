@@ -4,8 +4,9 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using SOTS.Dusts;
 
-namespace SOTS.Items.Otherworld
+namespace SOTS.Items.Otherworld.Blocks
 {
 	public class PortalPlatingWall : ModItem
 	{
@@ -17,22 +18,14 @@ namespace SOTS.Items.Otherworld
 
 		public override void SetDefaults()
 		{
-			item.width = 16;
-			item.height = 16;
-			item.maxStack = 999;
-			item.useTurn = true;
-			item.autoReuse = true;
-			item.useAnimation = 15;
-			item.useTime = 7;
-			item.useStyle = 1;
-			item.rare = 9;
-			item.consumable = true;
-			item.createWall = mod.WallType("AvaritianPlatingWallWall");
+			item.CloneDefaults(ItemID.StoneWall);
+			item.rare = ItemRarityID.LightRed;
+			item.createWall = ModContent.WallType<AvaritianPlatingWallWall>();
 		}
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "AvaritianPlating", 1);
+			recipe.AddIngredient(ModContent.ItemType<AvaritianPlating>(), 1);
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.SetResult(this, 4);
 			recipe.AddRecipe();
@@ -44,7 +37,7 @@ namespace SOTS.Items.Otherworld
 		{
 			float uniquenessCounter = Main.GlobalTime * -100 + (i + j) * 5;
 			Tile tile = Main.tile[i, j];
-			Texture2D texture = ModContent.GetTexture("SOTS/Items/Otherworld/AvaritianPlatingWallWallGlow");
+			Texture2D texture = ModContent.GetTexture("SOTS/Items/Otherworld/Blocks/AvaritianPlatingWallWallGlow");
 			int xLength = 32;
 			int xOff = 0;
 			/*if (Main.tile[i - 1, j].wall != 0)// && Main.tile[i + 1, j].wall == 0)
@@ -82,8 +75,8 @@ namespace SOTS.Items.Otherworld
 		public override void SetDefaults()
 		{
 			Main.wallHouse[Type] = true;
-			dustType = mod.DustType("AvaritianDust");
-			drop = mod.ItemType("PortalPlatingWall");
+			dustType = ModContent.DustType<AvaritianDust>();
+			drop = ModContent.ItemType<PortalPlatingWall>();
 			AddMapEntry(new Color(0, 130, 215));
 		}
 	}
@@ -97,8 +90,8 @@ namespace SOTS.Items.Otherworld
 		public override void SetDefaults()
 		{
 			Main.wallHouse[Type] = false;
-			dustType = mod.DustType("AvaritianDust");
-			drop = mod.ItemType("PortalPlatingWall");
+			dustType = ModContent.DustType<AvaritianDust>();
+			drop = ModContent.ItemType<PortalPlatingWall>();
 			AddMapEntry(new Color(0, 130, 215));
 		}
 		public override bool CanExplode(int i, int j)

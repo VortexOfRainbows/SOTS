@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SOTS.Buffs;
 using SOTS.Items.Otherworld;
 using SOTS.Items.Otherworld.FromChests;
+using SOTS.Items.Otherworld.Furniture;
 using SOTS.Projectiles.Minions;
 using SOTS.Void;
 using Terraria;

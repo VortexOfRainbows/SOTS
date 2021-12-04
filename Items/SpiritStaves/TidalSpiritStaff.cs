@@ -48,7 +48,7 @@ namespace SOTS.Items.SpiritStaves
 			recipe.AddIngredient(ModContent.ItemType<Fragments.DissolvingDeluge>(), 1);
 			recipe.AddRecipeGroup(RecipeGroupID.IronBar, 10);
 			recipe.AddIngredient(ItemID.SoulofMight, 5);
-			recipe.AddTile(ModContent.TileType<HardlightFabricatorTile>());
+			recipe.AddTile(ItemID.MythrilAnvil);
 			recipe.SetResult(this);
 			recipe.AddRecipe();
 		}

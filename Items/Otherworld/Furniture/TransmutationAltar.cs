@@ -2,22 +2,20 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
 using SOTS.Items.Fragments;
+using SOTS.Items.Otherworld.FromChests;
 using System;
 using System.IO;
-using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.Enums;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
-using Terraria.UI;
 using static Terraria.ModLoader.ModContent;
 
 
-namespace SOTS.Items.Otherworld.FromChests
+namespace SOTS.Items.Otherworld.Furniture
 {
 	public class TransmutationAltar : ModItem
 	{

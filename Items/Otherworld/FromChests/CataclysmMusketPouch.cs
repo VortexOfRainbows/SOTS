@@ -3,6 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using SOTS.Void;
 using SOTS.Projectiles.Otherworld;
+using SOTS.Items.Otherworld.Furniture;
 
 namespace SOTS.Items.Otherworld.FromChests
 {

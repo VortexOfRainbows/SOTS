@@ -1,5 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Dusts;
+using SOTS.Items.Otherworld.Blocks;
 using System;
 using Terraria;
 using Terraria.Enums;
@@ -7,32 +9,27 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
-namespace SOTS.Items.Otherworld
+namespace SOTS.Items.Otherworld.Furniture
 {
 	public class HardlightChair : ModItem
 	{
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Hardlight Chair");
-			Tooltip.SetDefault("");
-		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
-			Texture2D texture2 = mod.GetTexture("Items/Otherworld/HardlightChairBase");
+			Texture2D texture2 = mod.GetTexture("Items/Otherworld/Furniture/HardlightChairBase");
 			Main.spriteBatch.Draw(texture2, new Vector2(position.X, position.Y), null, drawColor, 0f, origin, scale, SpriteEffects.None, 0f);
 			return false;
 		}
 		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
 		{
-			Texture2D texture2 = mod.GetTexture("Items/Otherworld/HardlightChairBase");
+			Texture2D texture2 = mod.GetTexture("Items/Otherworld/Furniture/HardlightChairBase");
 			Vector2 drawOrigin = new Vector2(Main.itemTexture[item.type].Width * 0.5f, item.height * 0.5f);
 			Main.spriteBatch.Draw(texture2, new Vector2((float)(item.Center.X - (int)Main.screenPosition.X), (float)(item.Center.Y - (int)Main.screenPosition.Y) + 2), null, lightColor * (1f - (item.alpha / 255f)), rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			return false;
 		}
 		public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
-			Texture2D texture = mod.GetTexture("Items/Otherworld/HardlightChairOutline");
-			Texture2D texture2 = mod.GetTexture("Items/Otherworld/HardlightChairFill");
+			Texture2D texture = mod.GetTexture("Items/Otherworld/Furniture/HardlightChairOutline");
+			Texture2D texture2 = mod.GetTexture("Items/Otherworld/Furniture/HardlightChairFill");
 			Color color = new Color(110, 110, 110, 0);
 			for (int k = 0; k < 5; k++)
 			{
@@ -46,8 +43,8 @@ namespace SOTS.Items.Otherworld
 		}
 		public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
 		{
-			Texture2D texture = mod.GetTexture("Items/Otherworld/HardlightChairOutline");
-			Texture2D texture2 = mod.GetTexture("Items/Otherworld/HardlightChairFill");
+			Texture2D texture = mod.GetTexture("Items/Otherworld/Furniture/HardlightChairOutline");
+			Texture2D texture2 = mod.GetTexture("Items/Otherworld/Furniture/HardlightChairFill");
 			Color color = new Color(110, 110, 110, 0);
 			Vector2 drawOrigin = new Vector2(Main.itemTexture[item.type].Width * 0.5f, item.height * 0.5f);
 			for (int k = 0; k < 5; k++)
@@ -62,24 +59,17 @@ namespace SOTS.Items.Otherworld
 		}
 		public override void SetDefaults()
 		{
+			item.CloneDefaults(ItemID.StoneBlock);
+			item.rare = ItemRarityID.LightRed;
 			item.width = 20;
 			item.height = 34;
-			item.maxStack = 999;
-			item.useTurn = true;
-			item.autoReuse = true;
-			item.useAnimation = 15;
-			item.useTime = 10;
-			item.useStyle = 1;
-			item.rare = 9;
-			item.value = 0;
-			item.consumable = true;
-			item.createTile = mod.TileType("HardlightChairTile");
+			item.createTile = ModContent.TileType<HardlightChairTile>();
 		}
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "AvaritianPlating", 4);
-			recipe.AddTile(mod.TileType("HardlightFabricatorTile"));
+			recipe.AddIngredient(ModContent.ItemType<AvaritianPlating>(), 4);
+			recipe.AddTile(ModContent.TileType<HardlightFabricatorTile>());
 			recipe.SetResult(this, 1);
 			recipe.AddRecipe();
 		}
@@ -92,7 +82,7 @@ namespace SOTS.Items.Otherworld
 				return;
 			float uniquenessCounter = Main.GlobalTime * -100 + (i + j) * 5;
 			Tile tile = Main.tile[i, j];
-			Texture2D texture = mod.GetTexture("Items/Otherworld/HardlightChairTileGlow");
+			Texture2D texture = mod.GetTexture("Items/Otherworld/Furniture/HardlightChairTileGlow");
 			Rectangle frame = new Rectangle(tile.frameX, tile.frameY, 16, 16);
 			Color color;
 			color = WorldGen.paintColor((int)Main.tile[i, j].color()) * (100f / 255f);
@@ -127,13 +117,13 @@ namespace SOTS.Items.Otherworld
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsChair);
 			AddMapEntry(new Color(55, 55, 55));
 			disableSmartCursor = true;
-			dustType = mod.DustType("AvaritianDust");
+			dustType = ModContent.DustType<AvaritianDust>();
 			adjTiles = new int[] { TileID.Chairs };
 		}
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 32, 16, mod.ItemType("HardlightChair"));
+			Item.NewItem(i * 16, j * 16, 32, 16, ModContent.ItemType<HardlightChair>());
 		}
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
 		{
@@ -143,8 +133,8 @@ namespace SOTS.Items.Otherworld
 			if (Main.tile[i, j].frameX < 18)
 				spriteEffects = SpriteEffects.FlipHorizontally;
 
-			Texture2D texture = mod.GetTexture("Items/Otherworld/HardlightChairOutline");
-			Texture2D texture2 = mod.GetTexture("Items/Otherworld/HardlightChairFill");
+			Texture2D texture = mod.GetTexture("Items/Otherworld/Furniture/HardlightChairOutline");
+			Texture2D texture2 = mod.GetTexture("Items/Otherworld/Furniture/HardlightChairFill");
 			Color color;
 			color = WorldGen.paintColor((int)Main.tile[i, j].color()) * (100f / 255f);
 			color.A = 0;
@@ -160,7 +150,6 @@ namespace SOTS.Items.Otherworld
 				pos.Y -= 12 + dynamicAddition.Y;
 				if (k == 0)
 					Main.spriteBatch.Draw(texture2, pos, null, color * 0.5f, 0f, new Vector2(10, 17), 0.85f, spriteEffects, 0f);
-
 				Main.spriteBatch.Draw(texture, pos, null, color, 0f, new Vector2(10, 17), 0.85f, spriteEffects, 0f);
 			}
 			return true;

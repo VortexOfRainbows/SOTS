@@ -29,6 +29,7 @@ using SOTS.Projectiles.Permafrost;
 using SOTS.Items.DoorItems;
 using SOTS.Items.Secrets;
 using System;
+using SOTS.Items.Otherworld.Furniture;
 
 namespace SOTS
 {

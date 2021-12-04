@@ -11,7 +11,7 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 using static Terraria.ModLoader.ModContent;
 
-namespace SOTS.Items.Otherworld
+namespace SOTS.Items.Otherworld.Furniture
 {
 	public class LockedSkywareChest : ModTile
 	{
@@ -41,9 +41,6 @@ namespace SOTS.Items.Otherworld
 			name = CreateMapEntryName(Name + "_Locked"); // With multiple map entries, you need unique translation keys.
 			name.SetDefault("Locked Skyware Chest");
 			AddMapEntry(new Color(233, 207, 94), name, MapChestName);
-			//if ((int)tileCache.type == 21)
-				//Type1 = (int)tileCache.frameX < 1008 ? ((int)tileCache.frameX < 612 ? ((int)tileCache.frameX < 576 ? ((int)tileCache.frameX < 540 ? ((int)tileCache.frameX < 504 ? ((int)tileCache.frameX < 468 ? ((int)tileCache.frameX < 432 ? ((int)tileCache.frameX < 396 ? ((int)tileCache.frameX < 360 ? ((int)tileCache.frameX < 324 ? ((int)tileCache.frameX < 288 ? ((int)tileCache.frameX < 252 ? ((int)tileCache.frameX < 216 ? ((int)tileCache.frameX < 180 ? ((int)tileCache.frameX < 108 ? ((int)tileCache.frameX < 36 ? 7 : 10) : 37) : 7) : 1) : 77) : 78) : 79) : 10) : 11) : 7) : 116) : 126) : 26) : 148) : 11) : -1;
-
 			dustType = 116;
 			disableSmartCursor = true;
 			adjTiles = new int[] { TileID.Containers };

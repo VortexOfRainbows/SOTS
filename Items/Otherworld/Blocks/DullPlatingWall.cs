@@ -2,35 +2,22 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
+using SOTS.Dusts;
 
-namespace SOTS.Items.Otherworld
+namespace SOTS.Items.Otherworld.Blocks
 {
 	public class DullPlatingWall : ModItem
 	{
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Dull Plating Wall");
-			Tooltip.SetDefault("");
-		}
-
 		public override void SetDefaults()
 		{
-			item.width = 16;
-			item.height = 16;
-			item.maxStack = 999;
-			item.useTurn = true;
-			item.autoReuse = true;
-			item.useAnimation = 15;
-			item.useTime = 7;
-			item.useStyle = 1;
-			item.rare = 9;
-			item.consumable = true;
-			item.createWall = mod.WallType("SafeDullPlatingWallWall");
+			item.CloneDefaults(ItemID.StoneWall);
+			item.rare = ItemRarityID.LightRed;
+			item.createWall = ModContent.WallType<SafeDullPlatingWallWall>();
 		}
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "DullPlating", 1);
+			recipe.AddIngredient(ModContent.ItemType<DullPlating>(), 1);
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.SetResult(this, 4);
 			recipe.AddRecipe();
@@ -38,11 +25,16 @@ namespace SOTS.Items.Otherworld
 	}
 	public class SafeDullPlatingWallWall : ModWall
 	{
+		public override bool Autoload(ref string name, ref string texture)
+		{
+			texture = "SOTS/Items/Otherworld/Blocks/DullPlatingWallWall";
+			return base.Autoload(ref name, ref texture);
+		}
 		public override void SetDefaults()
 		{
 			Main.wallHouse[Type] = true;
-			dustType = mod.DustType("AvaritianDust");
-			drop = mod.ItemType("DullPlatingWall");
+			dustType = ModContent.DustType<AvaritianDust>();
+			drop = ModContent.ItemType<DullPlatingWall>();
 			AddMapEntry(new Color(44, 44, 44));
 		}
 	}
@@ -51,8 +43,8 @@ namespace SOTS.Items.Otherworld
 		public override void SetDefaults()
 		{
 			Main.wallHouse[Type] = false;
-			dustType = mod.DustType("AvaritianDust");
-			drop = mod.ItemType("DullPlatingWall");
+			dustType = ModContent.DustType<AvaritianDust>();
+			drop = ModContent.ItemType<DullPlatingWall>();
 			AddMapEntry(new Color(44, 44, 44));
 		}
 		public override bool CanExplode(int i, int j)

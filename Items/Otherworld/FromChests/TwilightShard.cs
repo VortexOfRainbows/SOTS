@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Items.Fragments;
+using SOTS.Items.Otherworld.Furniture;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;

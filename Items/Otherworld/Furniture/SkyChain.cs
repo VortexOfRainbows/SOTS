@@ -1,5 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Dusts;
+using SOTS.Items.Otherworld.Blocks;
 using System;
 using Terraria;
 using Terraria.DataStructures;
@@ -8,8 +10,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
-
-namespace SOTS.Items.Otherworld
+namespace SOTS.Items.Otherworld.Furniture
 {
 	public class SkyChain : ModItem
 	{
@@ -20,25 +21,19 @@ namespace SOTS.Items.Otherworld
 		}
 		public override void SetDefaults()
 		{
+			item.CloneDefaults(ItemID.StoneBlock);
+			item.rare = ItemRarityID.LightRed;
 			item.width = 16;
 			item.height = 22;
-			item.maxStack = 999;
-			item.useTurn = true;
-			item.autoReuse = true;
-			item.useAnimation = 15;
-			item.useTime = 10;
-			item.useStyle = 1;
-			item.rare = 9;
-			item.value = Item.sellPrice(0, 0, 50, 0);
-			item.consumable = true;
-			item.createTile = mod.TileType("SkyChainTile");
+			item.value = Item.sellPrice(0, 0, 10, 0);
+			item.createTile = ModContent.TileType<SkyChainTile>();
 		}
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "AvaritianPlating", 4);
-			recipe.AddIngredient(null, "TwilightGel", 4);
-			recipe.AddTile(mod.TileType("HardlightFabricatorTile"));
+			recipe.AddIngredient(ModContent.ItemType<AvaritianPlating>(), 4);
+			recipe.AddIngredient(ModContent.ItemType<TwilightGel>(), 4);
+			recipe.AddTile(ModContent.TileType<HardlightFabricatorTile>());
 			recipe.SetResult(this, 1);
 			recipe.AddRecipe();
 		}
@@ -59,8 +54,8 @@ namespace SOTS.Items.Otherworld
 			name.SetDefault("Sky Chain");
 			AddMapEntry(new Color(255, 255, 255), name);
 			disableSmartCursor = true;
-			drop = mod.ItemType("SkyChain");
-			dustType = mod.DustType("AvaritianDust");
+			drop = ModContent.ItemType<SkyChain>();
+			dustType = ModContent.DustType<AvaritianDust>();
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
 		{
@@ -75,7 +70,7 @@ namespace SOTS.Items.Otherworld
 		{
 			float uniquenessCounter = Main.GlobalTime * -100 + (i + j) * 5;
 			Tile tile = Main.tile[i, j];
-			Texture2D texture = mod.GetTexture("Items/Otherworld/SkyChainTileGlow");
+			Texture2D texture = mod.GetTexture("Items/Otherworld/Furniture/SkyChainTileGlow");
 			Rectangle frame = new Rectangle(tile.frameX, tile.frameY, 16, 16);
 			Color color;
 			color = WorldGen.paintColor((int)Main.tile[i, j].color()) * (100f / 255f);
@@ -95,8 +90,8 @@ namespace SOTS.Items.Otherworld
 		}
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
         {
-			Texture2D texture = mod.GetTexture("Items/Otherworld/SkyChainHelixOutline");
-			Texture2D textureF = mod.GetTexture("Items/Otherworld/SkyChainHelixFill");
+			Texture2D texture = mod.GetTexture("Items/Otherworld/Furniture/SkyChainHelixOutline");
+			Texture2D textureF = mod.GetTexture("Items/Otherworld/Furniture/SkyChainHelixFill");
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
 			float height = 16;
 			float timer = Main.GlobalTime * -100 + (i + j) * 5;

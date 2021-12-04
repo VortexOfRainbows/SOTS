@@ -1,5 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Dusts;
+using SOTS.Items.Otherworld.Blocks;
 using System;
 using Terraria;
 using Terraria.ID;
@@ -7,7 +9,7 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 
 
-namespace SOTS.Items.Otherworld
+namespace SOTS.Items.Otherworld.Furniture
 {
 	public class HardlightFabricator : ModItem
 	{
@@ -18,21 +20,21 @@ namespace SOTS.Items.Otherworld
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
-			Texture2D texture2 = mod.GetTexture("Items/Otherworld/HardlightFabricatorBase");
+			Texture2D texture2 = mod.GetTexture("Items/Otherworld/Furniture/HardlightFabricatorBase");
 			Main.spriteBatch.Draw(texture2, new Vector2(position.X, position.Y), null, drawColor, 0f, origin, scale, SpriteEffects.None, 0f);
 			return false;
 		}
 		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
 		{
-			Texture2D texture2 = mod.GetTexture("Items/Otherworld/HardlightFabricatorBase");
+			Texture2D texture2 = mod.GetTexture("Items/Otherworld/Furniture/HardlightFabricatorBase");
 			Vector2 drawOrigin = new Vector2(Main.itemTexture[item.type].Width * 0.5f, item.height * 0.5f);
 			Main.spriteBatch.Draw(texture2, new Vector2((float)(item.Center.X - (int)Main.screenPosition.X), (float)(item.Center.Y - (int)Main.screenPosition.Y) + 2), null, lightColor * (1f - (item.alpha / 255f)), rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			return false;
 		}
 		public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
-			Texture2D texture = mod.GetTexture("Items/Otherworld/HardlightGearMiniBorder");
-			Texture2D texture2 = mod.GetTexture("Items/Otherworld/HardlightGearMiniFill");
+			Texture2D texture = mod.GetTexture("Items/Otherworld/Furniture/HardlightGearMiniBorder");
+			Texture2D texture2 = mod.GetTexture("Items/Otherworld/Furniture/HardlightGearMiniFill");
 			Color color = new Color(110, 110, 110, 0);
 			for (int k = 0; k < 5; k++)
 			{
@@ -46,8 +48,8 @@ namespace SOTS.Items.Otherworld
 		}
 		public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
 		{
-			Texture2D texture = mod.GetTexture("Items/Otherworld/HardlightGearMiniBorder");
-			Texture2D texture2 = mod.GetTexture("Items/Otherworld/HardlightGearMiniFill");
+			Texture2D texture = mod.GetTexture("Items/Otherworld/Furniture/HardlightGearMiniBorder");
+			Texture2D texture2 = mod.GetTexture("Items/Otherworld/Furniture/HardlightGearMiniFill");
 			Color color = new Color(110, 110, 110, 0);
 			Vector2 drawOrigin = new Vector2(Main.itemTexture[item.type].Width * 0.5f, item.height * 0.5f);
 			for (int k = 0; k < 5; k++)
@@ -62,23 +64,16 @@ namespace SOTS.Items.Otherworld
 		}
 		public override void SetDefaults()
 		{
+			item.CloneDefaults(ItemID.StoneBlock);
+			item.rare = ItemRarityID.LightRed;
 			item.width = 38;
 			item.height = 32;
-			item.maxStack = 999;
-			item.useTurn = true;
-			item.autoReuse = true;
-			item.useAnimation = 15;
-			item.useTime = 10;
-			item.useStyle = 1;
-			item.rare = 9;
-			item.value = Item.sellPrice(0, 0, 0, 0);
-			item.consumable = true;
-			item.createTile = mod.TileType("HardlightFabricatorTile");
+			item.createTile = ModContent.TileType<HardlightFabricatorTile>();
 		}
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "AvaritianPlating", 10);
+			recipe.AddIngredient(ModContent.ItemType<AvaritianPlating>(), 10);
 			recipe.SetResult(this);
 			recipe.AddRecipe();
 		}
@@ -98,12 +93,12 @@ namespace SOTS.Items.Otherworld
 			name.SetDefault("Hardlight Fabricator");
 			AddMapEntry(new Color(55, 55, 55), name);
 			disableSmartCursor = true;
-			dustType = mod.DustType("AvaritianDust");
+			dustType = ModContent.DustType<AvaritianDust>();
 			adjTiles = new int[] { TileID.WorkBenches };
 		}
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			int drop = mod.ItemType("HardlightFabricator");
+			int drop = ModContent.ItemType<HardlightFabricator>();
 			Item.NewItem(i * 16, j * 16, 32, 16, drop);
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
@@ -119,7 +114,7 @@ namespace SOTS.Items.Otherworld
 		{
 			float uniquenessCounter = Main.GlobalTime * -100 + (i + j) * 5;
 			Tile tile = Main.tile[i, j];
-			Texture2D texture = mod.GetTexture("Items/Otherworld/HardlightFabricatorTileGlow");
+			Texture2D texture = mod.GetTexture("Items/Otherworld/Furniture/HardlightFabricatorTileGlow");
 			Rectangle frame = new Rectangle(tile.frameX, tile.frameY, 16, 16);
 			Color color;
 			color = WorldGen.paintColor((int)Main.tile[i, j].color()) * (100f / 255f);
@@ -139,8 +134,6 @@ namespace SOTS.Items.Otherworld
 		}
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
 		{
-			int style = Main.tile[i, j].frameY / 36;
-			style++;
 			int type = 0;
 			if (Main.tile[i, j].frameX >= 18 && Main.tile[i, j].frameX < 36 && Main.tile[i, j].frameY % 36 >= 18)
 				type = 1;
@@ -148,11 +141,8 @@ namespace SOTS.Items.Otherworld
 				type = 2;
 			if(Main.tile[i, j].frameX >= 36 && Main.tile[i, j].frameY % 36 >= 18)
 				type = 3;
-
-
-			Texture2D texture = mod.GetTexture("Items/Otherworld/HardlightGearBorder");
-			Texture2D texture2 = mod.GetTexture("Items/Otherworld/HardlightGearFill");
-			ulong randSeed = Main.TileFrameSeed ^ (ulong)((long)j << 32 | (long)((ulong)i));
+			Texture2D texture = mod.GetTexture("Items/Otherworld/Furniture/HardlightGearBorder");
+			Texture2D texture2 = mod.GetTexture("Items/Otherworld/Furniture/HardlightGearFill");
 			Color color;
 			color = WorldGen.paintColor((int)Main.tile[i, j].color()) * (100f / 255f);
 			color.A = 0;

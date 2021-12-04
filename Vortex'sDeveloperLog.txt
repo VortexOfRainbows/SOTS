@@ -43,11 +43,14 @@ Mid Priority:
 Low Priority:
 1. Archaelogist NPC
 
+12/3/21
+1. Reorganziation (Planetarium part 1)
+
 12/2/21
 1. Added living loom and wands to basic treasure slime
 2. Fixed some treasure slime related rates
 3. Added Jungle Treasure slime
-4. Attempted to fix certain mapping bugs
+4. Fixed certain mapping bugs
 5. Added some drastic particle reduction for Glaze Bow (fidelity mode)
 
 11/30/21

@@ -162,7 +162,8 @@ namespace SOTS.Projectiles.Permafrost
 			}
 			if (frostFlake == -1)
             {
-				projectile.tileCollide = true;
+				if(counter >= 17)
+					projectile.tileCollide = true;
 				projectile.friendly = true;
             }
 			counter++;

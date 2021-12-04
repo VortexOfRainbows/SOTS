@@ -10,7 +10,7 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 using static Terraria.ModLoader.ModContent;
 
-namespace SOTS.Items.Otherworld
+namespace SOTS.Items.Otherworld.Furniture
 {
 	internal class SkyPots : ModTile
 	{
@@ -35,7 +35,7 @@ namespace SOTS.Items.Otherworld
         {
             float uniquenessCounter = Main.GlobalTime * -100 + (i + j) * 5;
             Tile tile = Main.tile[i, j];
-            Texture2D texture = mod.GetTexture("Items/Otherworld/SkyPotsGlow");
+            Texture2D texture = mod.GetTexture("Items/Otherworld/Furniture/SkyPotsGlow");
             Rectangle frame = new Rectangle(tile.frameX, tile.frameY, 16, 16);
             Color color;
             color = WorldGen.paintColor((int)Main.tile[i, j].color()) * (100f / 255f);
@@ -456,7 +456,7 @@ namespace SOTS.Items.Otherworld
                 Item.NewItem(i * 16, j * 16, 16, 16, mod.ItemType("TwilightShard"), 1, false, 0, false, false);
         }
     }
-    internal class Pots : ModItem
+    /*internal class Pots : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -470,5 +470,5 @@ namespace SOTS.Items.Otherworld
 			item.createTile = TileType<SkyPots>();
 			item.value = 0;
 		}
-	}
+	}*/
 }
