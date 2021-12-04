@@ -55,7 +55,7 @@ namespace SOTS.Items.Otherworld.Blocks
 			drop = ModContent.ItemType<AvaritianPlating>();
 			AddMapEntry(new Color(0, 75, 140));
 			mineResist = 2f;
-			minPick = 80;
+			minPick = 60;
 			soundType = 21;
 			soundStyle = 2;
 			dustType = ModContent.DustType<AvaritianDust>();

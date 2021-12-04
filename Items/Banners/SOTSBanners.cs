@@ -740,6 +740,9 @@ namespace SOTS.Items.Banners
 				case 8:
 					item = ItemType<JungleTreasureSlimeBanner>();
 					break;
+				case 9:
+					item = ItemType<TwilightScouterBanner>();
+					break;
 				default:
 					return;
 			}
@@ -781,6 +784,9 @@ namespace SOTS.Items.Banners
 						break;
 					case 8:
 						type = NPCType<JungleTreasureSlime>();
+						break;
+					case 9:
+						type = NPCType<TwilightScouter>();
 						break;
 					default:
 						return;
@@ -868,6 +874,14 @@ namespace SOTS.Items.Banners
 		{
 			item.createTile = TileType<SOTSBanners2>();
 			item.placeStyle = 8;
+		}
+	}
+	public class TwilightScouterBanner : ModBanner
+	{
+		public override void SafeSetDefaults()
+		{
+			item.createTile = TileType<SOTSBanners2>();
+			item.placeStyle = 9;
 		}
 	}
 }

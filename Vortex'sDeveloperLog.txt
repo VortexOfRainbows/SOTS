@@ -36,8 +36,7 @@ Mid Priority:
 	2. (tidal construct one)
 5. Witch's Heart accessory; in similar vein to Heart of the Sea, where it is an accessory variant of the Nightmare potion
 6. Mobile Fortress Generator: upgrade to platform generator. Two tiers of upgrades (this + another earlier one), can be visually whatever but it is obtained from Old One's army stuff
-7. Twilight Scouter (already sprited). Spawns in Space and Planetarium.
-	1. drops Gravity Normalizer, maybe Synthetic Jellyfish Staff
+7. Gravity Normalizer
 8. Split Focus Reticle into two accessories to make it less overpowed: Focus Reticle (Amplifiers + Crit Rate), Bag of Charms (Charms + Icosahedrons)
 
 Low Priority:
@@ -45,6 +44,9 @@ Low Priority:
 
 12/3/21
 1. Reorganziation (Planetarium part 1)
+2. Added Twilight Scouter, a non-planetarium space enemy that has a 1/70 chance to drop thundershock shortbow
+	1. Added Banner and also Syncs in multiplayer!
+3. Minimum pickaxe power to break Planetarium tiles reduced to 60% (from 80%)
 
 12/2/21
 1. Added living loom and wands to basic treasure slime

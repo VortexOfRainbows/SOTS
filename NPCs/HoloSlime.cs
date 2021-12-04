@@ -1,6 +1,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Items.Banners;
+using SOTS.Items.Otherworld;
+using SOTS.Items.Otherworld.FromChests;
 using System.IO;
 using Terraria;
 using Terraria.ID;
@@ -286,9 +288,9 @@ namespace SOTS.NPCs
 		}
 		public override void NPCLoot()
 		{
-			if (Main.rand.Next(20) == 0 && SOTSWorld.downedAdvisor) Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("TwilightShard"), 1);
+			if (Main.rand.Next(20) == 0 && SOTSWorld.downedAdvisor) Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<TwilightShard>(), 1);
 
-			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("TwilightGel"), Main.rand.Next(2) + 1);
+			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<TwilightGel>(), Main.rand.Next(2) + 1);
 		}
 	}
 }

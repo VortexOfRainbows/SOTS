@@ -1,7 +1,12 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Dusts;
 using SOTS.Items.Banners;
+using SOTS.Items.Fragments;
+using SOTS.Items.Otherworld;
+using SOTS.Items.Otherworld.FromChests;
 using SOTS.Items.Slime.Furniture;
+using SOTS.Projectiles.Otherworld;
 using System;
 using System.ComponentModel;
 using System.IO;
@@ -39,7 +44,6 @@ namespace SOTS.NPCs
 		private Vector2 lookAtPos = new Vector2(-1, -1);
 		public override void SetStaticDefaults()
 		{
-			
 			DisplayName.SetDefault("Holo Eye");
 		}
 		public override void SetDefaults()
@@ -267,7 +271,7 @@ namespace SOTS.NPCs
 					between.Normalize();
 
 					if (Main.netMode != NetmodeID.MultiplayerClient)
-						Projectile.NewProjectile(npc.Center.X + between.X * 24, npc.Center.Y + between.Y * 24, 0, -1.666f, mod.ProjectileType("FallingBolt"), damage2, 1f, Main.myPlayer, tracerPosX + Main.rand.Next(-14, 15), tracerPosY + Main.rand.Next(-14, 15));
+						Projectile.NewProjectile(npc.Center.X + between.X * 24, npc.Center.Y + between.Y * 24, 0, -1.666f, ModContent.ProjectileType<FallingBolt>(), damage2, 1f, Main.myPlayer, tracerPosX + Main.rand.Next(-14, 15), tracerPosY + Main.rand.Next(-14, 15));
 
 					Main.PlaySound(2, (int)npc.Center.X, (int)npc.Center.Y, 92, 0.5f);
 					npc.ai[1] = 1;
@@ -278,28 +282,15 @@ namespace SOTS.NPCs
 				npc.ai[0] = 0;
 			}
 		}
-		public override float SpawnChance(NPCSpawnInfo spawnInfo)
-		{
-			return 0;
-			//spawnrates manually added in SOTSNPCs.EditSpawnPool in order to avoid conflicts in hardmode
-			Player player = spawnInfo.player;
-			SOTSPlayer modPlayer = player.GetModPlayer<SOTSPlayer>();
-			bool correctBlock = spawnInfo.spawnTileType == mod.TileType("DullPlatingTile") || spawnInfo.spawnTileType == mod.TileType("PortalPlatingTile") || spawnInfo.spawnTileType == mod.TileType("AvaritianPlatingTile");
-			//correctBlock = true;
-			if (modPlayer.PlanetariumBiome && correctBlock)
-			{
-				return 0.1f;
-			}
-		}
 		public override void NPCLoot()
 		{
-			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("TwilightGel"), Main.rand.Next(2) + 1);
+			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<TwilightGel>(), Main.rand.Next(2) + 1);
 
-			if (Main.rand.Next(5) == 0)
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FragmentOfOtherworld"), 1);
+			if (Main.rand.NextBool(5))
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<FragmentOfOtherworld>(), 1);
 
-			if (Main.rand.Next(5) == 0 && SOTSWorld.downedAdvisor) Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("TwilightShard"), 1);
-				//Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("SporeSprayer"), 1);
+			if (Main.rand.NextBool(5) && SOTSWorld.downedAdvisor) 
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<TwilightShard>(), 1);
 		}
 		public override void HitEffect(int hitDirection, double damage)
 		{
@@ -332,7 +323,7 @@ namespace SOTS.NPCs
 					}
 					Dust.NewDust(npc.position, npc.width, npc.height, type, (float)(2 * hitDirection), -2f, 0, default, scale);
 					if (k % 2 == 0)
-						Dust.NewDust(npc.position, npc.width, npc.height, mod.DustType("AvaritianDust"), (float)(2 * hitDirection), -2f, 0, new Color(100, 100, 100, 250), 1f);
+						Dust.NewDust(npc.position, npc.width, npc.height, DustType<AvaritianDust>(), (float)(2 * hitDirection), -2f, 0, new Color(100, 100, 100, 250), 1f);
 				}
 				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/HoloEyeGore1"), 1f);
 			}

@@ -2,6 +2,8 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
+using SOTS.Items.Fragments;
+using SOTS.Projectiles.Permafrost;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -132,7 +134,7 @@ namespace SOTS.NPCs.Constructs
 					{
 						Vector2 velocity = new Vector2(12, 0).RotatedBy(MathHelper.ToRadians(45 * i) + npc.rotation);
 						if (Main.netMode != 1)
-							Projectile.NewProjectile(npc.Center, velocity, mod.ProjectileType("HostileJavelin"), damage, 0, Main.myPlayer, npc.Center.X, npc.Center.Y);
+							Projectile.NewProjectile(npc.Center, velocity, ModContent.ProjectileType<HostileJavelin>(), damage, 0, Main.myPlayer, npc.Center.X, npc.Center.Y);
 					}
 				}
 			}
@@ -148,9 +150,9 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override void NPCLoot()
 		{
-			int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, mod.NPCType("PermafrostSpirit"));	
+			int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<PermafrostSpirit>());	
 			Main.npc[n].velocity.Y = -10f;
-			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("FragmentOfPermafrost"), Main.rand.Next(4) + 4);	
+			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<FragmentOfPermafrost>(), Main.rand.Next(4) + 4);	
 		}	
 	}
 }

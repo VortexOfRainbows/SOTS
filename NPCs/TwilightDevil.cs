@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Dusts;
 using SOTS.Items.Banners;
 using SOTS.Items.Otherworld;
 using SOTS.Items.Otherworld.Blocks;
@@ -259,7 +260,7 @@ namespace SOTS.NPCs
 				int num = 0;
 				while ((double)num < damage / (double)npc.lifeMax * 50.0)
 				{
-					Dust.NewDust(npc.position, npc.width, npc.height, mod.DustType("AvaritianDust"), (float)(2 * hitDirection), -2f, 0, default, 0.5f);
+					Dust.NewDust(npc.position, npc.width, npc.height, DustType<AvaritianDust>(), (float)(2 * hitDirection), -2f, 0, default, 0.5f);
 					num++;
 				}
 			}
@@ -269,7 +270,7 @@ namespace SOTS.NPCs
 				{
 					if (k % 3 == 0)
 						Dust.NewDust(npc.position, npc.width, npc.height, DustID.Electric, (float)(2 * hitDirection), -2f, 0, default, 1f);
-					Dust.NewDust(npc.position, npc.width, npc.height, mod.DustType("AvaritianDust"), (float)(2 * hitDirection), -2f, 0, new Color(100, 100, 100, 250), 1f);
+					Dust.NewDust(npc.position, npc.width, npc.height, DustType<AvaritianDust>(), (float)(2 * hitDirection), -2f, 0, new Color(100, 100, 100, 250), 1f);
 				}
 			}
 		}

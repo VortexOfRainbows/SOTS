@@ -395,6 +395,10 @@ namespace SOTS.NPCs
 					pool.Add(ModContent.NPCType<OtherworldlyConstructHead>(), 0.02f * constructRateMultiplier);
 				}
 			}
+			else if(spawnInfo.player.ZoneSkyHeight)
+			{
+				pool.Add(ModContent.NPCType<TwilightScouter>(), SpawnCondition.Sky.Chance * 0.4f);
+			}
 			else if (ZoneForest)
 			{
 				if (SOTSWorld.downedPinky)
