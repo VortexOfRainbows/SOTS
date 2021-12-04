@@ -47,6 +47,7 @@ Low Priority:
 2. Added Twilight Scouter, a non-planetarium space enemy that has a 1/70 chance to drop thundershock shortbow
 	1. Added Banner and also Syncs in multiplayer!
 3. Minimum pickaxe power to break Planetarium tiles reduced to 60% (from 80%)
+4. Set up some preparation assets for Starmap.
 
 12/2/21
 1. Added living loom and wands to basic treasure slime
