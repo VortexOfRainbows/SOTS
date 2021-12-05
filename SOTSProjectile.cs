@@ -250,7 +250,7 @@ namespace SOTS
 				{
 					float damageMult = 2;
 					if (ffValue == 2)
-						damageMult = 7;
+						damageMult = 6;
 					Projectile.NewProjectile(projectile.Center, manipulateVelo, ModContent.ProjectileType<FrostflakePulse>(), (int)(projectile.damage * damageMult), projectile.knockBack, Main.myPlayer, ffValue, spinCounter);
 				}
 				if (Main.netMode == NetmodeID.MultiplayerClient)

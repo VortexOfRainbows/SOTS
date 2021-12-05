@@ -26,8 +26,8 @@ namespace SOTS.Items.ChestItems
 			item.damage = 40;
 			item.useStyle = ItemUseStyleID.SwingThrow;
 			item.shootSpeed = 10f;
-			item.width = 26;
-			item.height = 28;
+			item.width = 54;
+			item.height = 48;
 			item.UseSound = SoundID.Item44;
 			item.useAnimation = 36;
 			item.useTime = 36;

@@ -22,10 +22,16 @@ namespace SOTS.Items.Permafrost
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Frigid Ore");
 			AddMapEntry(new Color(96, 111, 215), name);
-			soundType = SoundID.Tink;
-			soundStyle = 2;
+			soundType = SoundLoader.customSoundType;
+			soundStyle = mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/FrigidOre");
 		}
-        public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
+		public override bool KillSound(int i, int j)
+		{
+			Vector2 pos = new Vector2(i * 16, j * 16) + new Vector2(8, 8);
+			Main.PlaySound(SoundLoader.customSoundType, (int)pos.X, (int)pos.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/FrigidOre"), 2f, Main.rand.NextFloat(0.9f, 1.1f));
+			return false;
+		}
+		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
         {
 			if(!fail && !effectOnly && !noItem && Main.rand.NextBool(3))
 			{
@@ -60,8 +66,14 @@ namespace SOTS.Items.Permafrost
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Frigid Ore");
 			AddMapEntry(new Color(96, 111, 215), name);
-			soundType = SoundID.Tink;
-			soundStyle = 2;
+			soundType = SoundLoader.customSoundType;
+			soundStyle = mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/FrigidOre");
+		}
+		public override bool KillSound(int i, int j)
+		{
+			Vector2 pos = new Vector2(i * 16, j * 16) + new Vector2(8, 8);
+			Main.PlaySound(SoundLoader.customSoundType, (int)pos.X, (int)pos.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/FrigidOre"), 2f, Main.rand.NextFloat(0.9f, 1.1f));
+			return false;
 		}
 	}
 	public class FrigidIce : ModItem

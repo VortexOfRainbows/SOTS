@@ -42,12 +42,20 @@ Mid Priority:
 Low Priority:
 1. Archaelogist NPC
 
-12/3/21
+12/4/21
+1. Cut underground desert construct spawns by 60%
+2. Glaze bow Nerf
+3. Recolor Frigid Robe + added Boots sheet for Flashspark
+4. Custom block sounds for Frigid Ore and Cursed Tumor
+5. Increased frigid tools speed
+
+12/3/21 & 12/4/21
 1. Reorganziation (Planetarium part 1)
 2. Added Twilight Scouter, a non-planetarium space enemy that has a 1/70 chance to drop thundershock shortbow
 	1. Added Banner and also Syncs in multiplayer!
 3. Minimum pickaxe power to break Planetarium tiles reduced to 60% (from 80%)
 4. Set up some preparation assets for Starmap.
+5. Remove capability of Twilight Circlet to be used while in vanity or inventory
 
 12/2/21
 1. Added living loom and wands to basic treasure slime

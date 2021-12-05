@@ -22,8 +22,8 @@ namespace SOTS.Items.Tools
             item.height = 34;   
             item.useStyle = ItemUseStyleID.SwingThrow;
 			item.useTurn = true;
-            item.useTime = 21;
-            item.useAnimation = 21;
+			item.useTime = 15;
+			item.useAnimation = 21;
 			item.hammer = 50;
 			item.axe = 14;
 			item.knockBack = 4f;

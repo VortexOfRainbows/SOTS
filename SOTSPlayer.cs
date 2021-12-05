@@ -116,6 +116,7 @@ namespace SOTS
 		public int additionalHeal = 0;
 		public int darkEyeShader = 0;
 		public int HoloEyeDamage = 0;
+		public bool HoloEyeIsVanity = false;
 		public bool HoloEye = false;
 		public bool HoloEyeAttack = false;
 		public bool HoloEyeAutoAttack = false;
@@ -353,13 +354,15 @@ namespace SOTS
 			}
 			if (SOTS.ArmorSetHotKey.JustPressed)
 			{
-				HoloEyeAttack = true;
+				if(!HoloEyeIsVanity)
+					HoloEyeAttack = true;
 				if (CanCurseSwap)
 					CurseSwap = true;
 			}
 			else
 			{
-				HoloEyeAttack = false;
+				if (!HoloEyeIsVanity)
+					HoloEyeAttack = false;
 				CurseSwap = false;
 			}
 			if (SOTS.MachinaBoosterHotKey.JustPressed)
@@ -650,7 +653,8 @@ namespace SOTS
 			petFreeWisp = -1;
 			petPepper = false;
 			petAdvisor = false; 
-			rainbowGlowmasks = false; 
+			rainbowGlowmasks = false;
+			HoloEyeIsVanity = false;
 			HoloEye = false;
 			HoloEyeDamage = 0;
 			darkEyeShader = 0;
@@ -682,7 +686,10 @@ namespace SOTS
 				if (item.type == ModContent.ItemType<TwilightAssassinsCirclet>())
 				{
 					if (!HoloEye)
+                    {
+						HoloEyeIsVanity = true;
 						HoloEyeDamage += (int)(33 * (1f + (player.minionDamage - 1f) + (player.allDamage - 1f)));
+					}
 					HoloEye = true;
 				}
 				if (item.type == ModContent.ItemType<TestWings>())
@@ -698,6 +705,20 @@ namespace SOTS
 					SubspacePlayer.ModPlayer(player).subspaceServantShader = GameShaders.Armor.GetShaderIdFromItemId(player.dye[i].type);
 				}*/
 			}
+			for (int i = 0; i < player.inventory.Length; i++)
+			{
+				Item item = player.inventory[i];
+				if (item.type == ModContent.ItemType<TwilightAssassinsCirclet>() && item.favorited)
+				{
+					if (!HoloEye)
+                    {
+						HoloEyeIsVanity = true;
+						HoloEyeDamage += (int)(33 * (1f + (player.minionDamage - 1f) + (player.allDamage - 1f)));
+					}
+					HoloEye = true;
+					break;
+				}
+			}
 			for (int i = 0; i < 10; i++) //iterating through armor + accessories
 			{
 				Item item = player.armor[i];
@@ -705,21 +726,14 @@ namespace SOTS
 				{
 					darkEyeShader = GameShaders.Armor.GetShaderIdFromItemId(player.dye[i].type);
 				}
+				if (item.type == ModContent.ItemType<TwilightAssassinsCirclet>())
+				{
+					HoloEyeIsVanity = false;
+				}
 				/*if (item.type == ModContent.ItemType<SubspaceLocket>())
 				{
 					SubspacePlayer.ModPlayer(player).subspaceServantShader = GameShaders.Armor.GetShaderIdFromItemId(player.dye[i].type);
 				}*/
-			}
-			for (int i = 0; i < player.inventory.Length; i++)
-			{
-				Item item = player.inventory[i];
-				if (item.type == ModContent.ItemType<TwilightAssassinsCirclet>() && item.favorited)
-				{
-					if (!HoloEye)
-						HoloEyeDamage += (int)(33 * (1f + (player.minionDamage - 1f) + (player.allDamage - 1f)));
-					HoloEye = true;
-					break;
-				}
 			}
 			typhonRange = 0;
 			assassinateFlat = 0;

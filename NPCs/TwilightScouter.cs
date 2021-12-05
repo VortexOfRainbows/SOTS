@@ -50,7 +50,7 @@ namespace SOTS.NPCs
 			npc.lavaImmune = true;
 			npc.netAlways = true;
 			npc.noGravity = true;
-			npc.noTileCollide = false;
+			npc.noTileCollide = true;
 			npc.buffImmune[BuffID.OnFire] = true;
 			npc.buffImmune[BuffID.Frostburn] = true;
 			banner = npc.type;

@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using SOTS.Dusts;
 
 namespace SOTS.Items.Pyramid
 {
@@ -36,12 +37,12 @@ namespace SOTS.Items.Pyramid
 			Main.tileMergeDirt[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
-			drop = mod.ItemType("CursedTumor");
+			drop = ModContent.ItemType<CursedTumor>();
 			AddMapEntry(new Color(70, 60, 110));
 			mineResist = 1.5f;
 			soundType = SoundID.NPCHit;
 			soundStyle = 1;
-			dustType = mod.DustType("CurseDust3");
+			dustType = ModContent.DustType<CurseDust3>();
 		}
         public override void WalkDust(ref int dustType, ref bool makeDust, ref Color color)
         {

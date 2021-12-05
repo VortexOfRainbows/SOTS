@@ -46,7 +46,7 @@ namespace SOTS.Items.Otherworld.FromChests
 							"\nDestabilized enemies gain a 5% flat chance to be critically striked" +
 							"\nThis is calculated after normal crits, allowing some attacks to double crit" +
 							"\nCosts 6 void to launch" +
-							"\nHolo Eye remains active in the inventory when favorited or while worn in vanity slots";
+							"\nHolo Eye remains active in the inventory when favorited or while worn in vanity slots, but cannot attack";
 						return;
 					}
 				}
@@ -64,7 +64,7 @@ namespace SOTS.Items.Otherworld.FromChests
 						"\nDestabilized enemies gain a 5% flat chance to be critically striked" +
 						"\nThis is calculated after normal crits, allowing some attacks to double crit" +
 						"\nCosts 6 void to launch" +
-						"\nHolo Eye remains active in the inventory when favorited or while worn in vanity slots";
+						"\nHolo Eye remains active in the inventory when favorited or while worn in vanity slots, but cannot attack";
 				}
 			}
 			base.ModifyTooltips(tooltips);
@@ -111,8 +111,9 @@ namespace SOTS.Items.Otherworld.FromChests
 			VoidPlayer voidPlayer = player.GetModPlayer<VoidPlayer>();
 			voidPlayer.voidMeterMax2 += 50;
 			SOTSPlayer modPlayer = player.GetModPlayer<SOTSPlayer>();
+			if(!modPlayer.HoloEye)
+				modPlayer.HoloEyeDamage += (int)(33 * (1f + (player.minionDamage - 1f) + (player.allDamage - 1f)));
 			modPlayer.HoloEye = true;
-			modPlayer.HoloEyeDamage += (int)(33 * (1f + (player.minionDamage - 1f) + (player.allDamage - 1f)));
 		}
 		public override void AddRecipes()
 		{

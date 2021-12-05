@@ -22,7 +22,7 @@ namespace SOTS.Items.Tools
             item.height = 34;   
             item.useStyle = ItemUseStyleID.SwingThrow;
 			item.useTurn = true;
-            item.useTime = 21;
+            item.useTime = 15;
             item.useAnimation = 21;
 			item.pick = 65;
 			item.knockBack = 3.25f;

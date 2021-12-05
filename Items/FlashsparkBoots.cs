@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using SOTS.Items.Permafrost;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Graphics.Shaders;
@@ -7,9 +8,10 @@ using Terraria.ModLoader;
 
 namespace SOTS.Items
 {
-	public class FlashsparkBoots : ModItem
+    [AutoloadEquip(EquipType.Shoes)]
+    public class FlashsparkBoots : ModItem
 	{
-		public override void SetStaticDefaults()
+        public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Flashspark Boots");
 			Tooltip.SetDefault("Provides tremendous acceleration while running\nAlso provides flight and extra mobility on ice\nIncreases movement speed greatly\nProvides the ability to walk on water and lava\nGrants immunity to fire blocks and 10 seconds of immunity to lava\n'Recipro Burst!'");
@@ -29,7 +31,7 @@ namespace SOTS.Items
 			ModRecipe recipe = new ModRecipe(mod);
 		    recipe.AddIngredient(ItemID.FrostsparkBoots, 1);
 			recipe.AddIngredient(ItemID.LavaWaders, 1);
-			recipe.AddIngredient(null, "AbsoluteBar", 12);
+			recipe.AddIngredient(ModContent.ItemType<AbsoluteBar>(), 12);
 			recipe.AddTile(TileID.TinkerersWorkbench);
 			recipe.SetResult(this);
 			recipe.AddRecipe();
