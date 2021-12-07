@@ -37,36 +37,13 @@ namespace SOTS.Items.ChestItems
 			item.value = Item.sellPrice(0, 20, 0, 0);
 			item.summon = true;
 			item.buffType = ModContent.BuffType<StarlightSerpent>();
-            item.shoot = ModContent.ProjectileType<StarlightSerpentHead>();
+            item.shoot = ModContent.ProjectileType<CrystalSerpentBody>();
         }
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			player.AddBuff(item.buffType, 2);
 			position = Main.MouseWorld;
-			if (modPlayer.lightDragon == -1 || player.altFunctionUse != 2)
-			{
-				player.MinionNPCTargetAim();
-				return true;
-			}
-			else
-            {
-				if(modPlayer.lightDragon != -1)
-                {
-					Projectile proj = Main.projectile[modPlayer.lightDragon];
-					if(proj.active && proj.owner == player.whoAmI && proj.type == ModContent.ProjectileType<StarlightSerpentHead>())
-                    {
-						proj.ai[0] = 2;
-						return false;
-					}
-					else
-                    {
-						modPlayer.lightDragon = -1;
-						return true;
-					}
-				}
-				return true;
-			}
+			return true;
 		}
         public override bool AltFunctionUse(Player player)
         {

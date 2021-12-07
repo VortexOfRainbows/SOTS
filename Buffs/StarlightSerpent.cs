@@ -1,3 +1,4 @@
+using SOTS.Projectiles.BiomeChest;
 using Terraria;
 using Terraria.ModLoader;
  
@@ -7,14 +8,14 @@ namespace SOTS.Buffs
     {
 		public override void SetDefaults()
 		{
-			DisplayName.SetDefault("Starlight Serpent");
+			DisplayName.SetDefault("Crystal Serpent");
 			Description.SetDefault("A prismatic serpent assists with combat");
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
 		}
 		public override void Update(Player player, ref int buffIndex) 
 		{
-			if (player.ownedProjectileCounts[mod.ProjectileType("StarlightSerpentHead")] > 0) 
+			if (player.ownedProjectileCounts[ModContent.ProjectileType<CrystalSerpentHead>()] > 0 || player.ownedProjectileCounts[ModContent.ProjectileType<CrystalSerpentBody>()] > 0)
 			{
 				player.buffTime[buffIndex] = 18000;
 			}

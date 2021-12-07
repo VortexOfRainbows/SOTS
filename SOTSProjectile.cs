@@ -199,7 +199,7 @@ namespace SOTS
 		public void NatureSlimeUnit(Projectile projectile)
 		{
 			Player player = Main.player[projectile.owner];
-			if (player.active && projectile.minion && projectile.active && !SOTSPlayer.symbioteBlacklist.Contains(projectile.type) && (Main.projPet[projectile.type] || VoidPlayer.isVoidMinion(projectile.type)))
+			if (player.active && projectile.minion && projectile.active && !SOTSPlayer.symbioteBlacklist.Contains(projectile.type) && (Main.projPet[projectile.type] || VoidPlayer.isVoidMinion(projectile.type)) && projectile.damage > 0)
 			{
 				SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 				if(modPlayer.symbioteDamage > 0 && projectile.owner == Main.myPlayer)

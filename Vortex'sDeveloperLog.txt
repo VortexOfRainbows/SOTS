@@ -42,6 +42,9 @@ Mid Priority:
 Low Priority:
 1. Archaelogist NPC
 
+12/6/21
+1. Began work on Starcaller Staff
+
 12/4/21
 1. Cut underground desert construct spawns by 60%
 2. Glaze bow Nerf

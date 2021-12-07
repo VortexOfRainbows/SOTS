@@ -6,17 +6,18 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using System.IO;
 using System.Collections.Generic;
+using SOTS.Buffs;
 
 namespace SOTS.Projectiles.BiomeChest
 {
-	public class StarlightSerpentHead : ModProjectile
+	public class CrystalSerpentHead : ModProjectile
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Starlight Serpent");
+			DisplayName.SetDefault("Crystal Serpent");
 			Main.projPet[projectile.type] = true;
-            ProjectileID.Sets.MinionSacrificable[projectile.type] = true;
-            ProjectileID.Sets.MinionTargettingFeature[projectile.type] = false;
+            //ProjectileID.Sets.MinionSacrificable[projectile.type] = true;
+            ProjectileID.Sets.MinionTargettingFeature[projectile.type] = true;
 			ProjectileID.Sets.Homing[projectile.type] = true;
 		}
         List<Vector2> segments = new List<Vector2>();
@@ -27,24 +28,25 @@ namespace SOTS.Projectiles.BiomeChest
 		}
 		public sealed override void SetDefaults()
         {
-            projectile.width = 24;
-			projectile.height = 24;
+            projectile.width = 50;
+			projectile.height = 50;
 			projectile.penetrate = -1;
 			projectile.timeLeft *= 5;
-			projectile.minion = true;
+			//projectile.minion = true;
 			projectile.friendly = true;
 			projectile.ignoreWater = true;
 			projectile.tileCollide = false;
 			projectile.alpha = 255;
             projectile.hide = true;
             projectile.netImportant = true;
-            projectile.minionSlots = 1f;
+            projectile.minionSlots = 0f;
 		}
         public sealed override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
             Texture2D texture = Main.projectileTexture[projectile.type];
+            Vector2 origin = texture.Size() / 2;
             Vector2 first = projectile.Center;
-            spriteBatch.Draw(texture, first - Main.screenPosition, null, (Color)GetAlpha(lightColor), projectile.rotation, new Vector2(texture.Width / 2, texture.Height / 2), 1.05f, projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+            spriteBatch.Draw(texture, first - Main.screenPosition, null, (Color)GetAlpha(lightColor), projectile.rotation, origin, 1.0f * generalScale, projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
             for (int i = 0; i < segments.Count; i++)
             {
                 Vector2 toOther = first - segments[i];
@@ -56,15 +58,18 @@ namespace SOTS.Projectiles.BiomeChest
                     Vector2 vector = default(Vector2);
                     toOther = spinningpoint60.RotatedBy(radians64, vector);
                 }
-                if (i % 2 == 0 && i != segments.Count - 1)
-                    texture = mod.GetTexture("Projectiles/BiomeChest/StarlightSerpentBody1");
-                else if (i != segments.Count - 1)
-                    texture = mod.GetTexture("Projectiles/BiomeChest/StarlightSerpentBody2");
+                Rectangle frame = new Rectangle(0, 0, 58, 120);
+                if (i != segments.Count - 1)
+                {
+                    texture = mod.GetTexture("Projectiles/BiomeChest/CrystalSerpentBody");
+                }
                 else
-                    texture = mod.GetTexture("Projectiles/BiomeChest/StarlightSerpentTail");
+                {
+                    texture = mod.GetTexture("Projectiles/BiomeChest/CrystalSerpentTail");
+                }
                 float rotation = segmentsRotation[i];
                 int spriteDirection = toOther.X > 0f ? 1 : -1;
-                spriteBatch.Draw(texture, segments[i] + projectile.velocity - Main.screenPosition, null, (Color)GetAlpha(lightColor), rotation, new Vector2(texture.Width / 2, texture.Height / 2), 1.05f, spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+                spriteBatch.Draw(texture, segments[i] + projectile.velocity - Main.screenPosition, frame, (Color)GetAlpha(lightColor), rotation, origin, 1.0f * generalScale, spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
                 first = segments[i];
             }
                 //Main.spriteBatch.Draw(texture, projectile.Center + Vector2.UnitY.RotatedBy((double)num2 * 6.28318548202515 / 4.0, new Vector2()) * num1, new Microsoft.Xna.Framework.Rectangle?(r), alpha * 0.1f, projectile.rotation, origin1, projectile.scale, projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0.0f);
@@ -75,26 +80,33 @@ namespace SOTS.Projectiles.BiomeChest
             drawCacheProjsBehindProjectiles.Add(index);
             base.DrawBehind(index, drawCacheProjsBehindNPCsAndTiles, drawCacheProjsBehindNPCs, drawCacheProjsBehindProjectiles, drawCacheProjsOverWiresUI);
         }
+        public float generalScale = 0.75f;
         bool runOnce = true;
+        int initializeTimer = 0;
         public sealed override bool PreAI()
         {
             Player player = Main.player[projectile.owner];
             SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
-            if (runOnce)
+            int ownedCounter = 1;
+            int targetLength = 1;
+            for (int i = 0; i < Main.projectile.Length; i++)
             {
-                modPlayer.lightDragon = projectile.whoAmI;
-                for(int i = 0; i < 3; i++)
-                    segments.Add(projectile.Center);
-                runOnce = false;
+                Projectile proj = Main.projectile[i];
+                if (proj.active && proj.owner == player.whoAmI)
+                {
+                    if(proj.type == ModContent.ProjectileType<CrystalSerpentBody>())
+                        targetLength += 2;
+                    if (proj.type == ModContent.ProjectileType<CrystalSerpentHead>() && proj.whoAmI != projectile.whoAmI)
+                        ownedCounter++;
+                }
             }
-            while(projectile.ai[0] > 0)
+            Main.NewText(targetLength);
+            while(segments.Count < targetLength)
             {
-                projectile.ai[0]--;
                 segments.Add(projectile.Center);
             }
-            while (projectile.ai[0] < 0)
+            while (segments.Count > targetLength)
             {
-                projectile.ai[0]++;
                 segments.RemoveAt(0);
                 if (segments.Count <= 1)
                 {
@@ -109,8 +121,10 @@ namespace SOTS.Projectiles.BiomeChest
             {
                 segmentsRotation.Add(0f);
             }
-            int total = segments.Count - 1;
-            projectile.minionSlots = total * 0.5f;
+            while (segmentsRotation.Count > segments.Count)
+            {
+                segmentsRotation.RemoveAt(0);
+            }
             return true;
         }
         public sealed override void AI()
@@ -127,9 +141,9 @@ namespace SOTS.Projectiles.BiomeChest
             }
             if (player.dead || !player.active) //active check
             {
-                player.ClearBuff(mod.BuffType("StarlightSerpent"));
+                player.ClearBuff(ModContent.BuffType<StarlightSerpent>());
             }
-            if (player.HasBuff(mod.BuffType("StarlightSerpent")))
+            if (player.HasBuff(ModContent.BuffType<StarlightSerpent>()))
             {
                 projectile.timeLeft = 2;
             }
@@ -140,7 +154,7 @@ namespace SOTS.Projectiles.BiomeChest
             {
                 Vector2 pos = segments[i];
                 float rotation = segmentsRotation[i];
-                BodyTailMovement(ref pos, first, ref rotation, firstRot);
+                BodyTailMovement(ref pos, first, ref rotation, firstRot, i);
                 segments[i] = pos;
                 segmentsRotation[i] = rotation;
                 first = pos;
@@ -276,9 +290,9 @@ namespace SOTS.Projectiles.BiomeChest
                 }
             }
         }
-        public void BodyTailMovement(ref Vector2 position, Vector2 prevPosition, ref float segmentsRotation, float segmentsRotation2)
+        public void BodyTailMovement(ref Vector2 position, Vector2 prevPosition, ref float segmentsRotation, float segmentsRotation2, int index)
         {
-            var scaleFactor15 = 16f;
+            float scaleFactor15 = 36f * generalScale;
             Vector2 toOther = prevPosition - position;
             if(segmentsRotation != segmentsRotation2)
             {
