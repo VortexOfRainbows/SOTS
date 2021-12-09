@@ -90,4 +90,30 @@ namespace SOTS.Items.Permafrost
 			item.createTile = ModContent.TileType<FrigidIceTileSafe>();
 		}
 	}
+	public class FrigidBrickTile : ModTile
+	{
+		public override void SetDefaults()
+		{
+			Main.tileSolid[Type] = true;
+			Main.tileMergeDirt[Type] = false;
+			Main.tileBlockLight[Type] = true;
+			Main.tileLighted[Type] = false;
+			Main.tileBlendAll[Type] = true;
+			dustType = ModContent.DustType<ModIceDust>();
+			drop = ModContent.ItemType<FrigidBrick>();
+			AddMapEntry(new Color(96, 111, 215));
+			soundType = SoundLoader.customSoundType;
+			soundStyle = mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/FrigidOre");
+		}
+	}
+	public class FrigidBrick : ModItem
+	{
+		public override void SetDefaults()
+		{
+			item.CloneDefaults(ItemID.StoneBlock);
+			item.rare = ItemRarityID.Blue;
+			item.value = Item.sellPrice(0, 0, 3, 0);
+			item.createTile = ModContent.TileType<FrigidBrickTile>();
+		}
+	}
 }
