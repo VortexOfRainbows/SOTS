@@ -116,4 +116,30 @@ namespace SOTS.Items.Permafrost
 			item.createTile = ModContent.TileType<FrigidBrickTile>();
 		}
 	}
+	public class FrigidBrickWallTile : ModWall
+	{
+		public override void SetDefaults()
+		{
+			Main.wallHouse[Type] = true;
+			dustType = 122;
+			drop = ModContent.ItemType<FrigidBrickWall>();
+			AddMapEntry(new Color(74, 85, 160));
+		}
+	}
+	public class FrigidBrickWall : ModItem
+	{
+		public override void SetStaticDefaults()
+		{
+			DisplayName.SetDefault("Frigid Brick Wall");
+			Tooltip.SetDefault("");
+		}
+		public override void SetDefaults()
+		{
+			item.CloneDefaults(ItemID.StoneWall);
+			item.width = 28;
+			item.height = 28;
+			item.rare = ItemRarityID.Blue;
+			item.createWall = ModContent.WallType<FrigidBrickWallTile>();
+		}
+	}
 }
