@@ -47,8 +47,8 @@ namespace SOTS.Items
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
             damage = (int)(damage * 0.6f);
-            speedX *= (1 + SOTSPlayer.ModPlayer(player).attackSpeedMod);
-            speedY *= (1 + SOTSPlayer.ModPlayer(player).attackSpeedMod);
+            speedX *= (SOTSPlayer.ModPlayer(player).attackSpeedMod);
+            speedY *= (SOTSPlayer.ModPlayer(player).attackSpeedMod);
             return player.ownedProjectileCounts[item.shoot] <= (player.HasBuff(ModContent.BuffType<Frenzy>()) ? 1 : 0) && player.altFunctionUse == 2;
         }
         public override float UseTimeMultiplier(Player player)

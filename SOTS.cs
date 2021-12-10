@@ -225,7 +225,8 @@ namespace SOTS
 			SyncGlobalNPC,
 			SyncPlayerKnives,
 			SyncRexFlower,
-			SyncGlobalProj
+			SyncGlobalProj,
+			SyncVisionNumber
 		}
 		public override void HandlePacket(BinaryReader reader, int whoAmI)
 		{
@@ -363,6 +364,20 @@ namespace SOTS
 						packet.Write(playernumber);
 						packet.Write(projIdentity);
 						packet.Write(frostFlake);
+						packet.Send(-1, playernumber);
+					}
+					break;
+				case (int)SOTSMessageType.SyncVisionNumber:
+					playernumber = reader.ReadByte();
+					modPlayer = Main.player[playernumber].GetModPlayer<SOTSPlayer>();
+					modPlayer.UniqueVisionNumber = reader.ReadInt32();
+					// Unlike SyncPlayer, here we have to relay/forward these changes to all other connected clients
+					if (Main.netMode == NetmodeID.Server)
+					{
+						var packet = GetPacket();
+						packet.Write((byte)SOTSMessageType.SyncVisionNumber);
+						packet.Write(playernumber);
+						packet.Write(modPlayer.UniqueVisionNumber);
 						packet.Send(-1, playernumber);
 					}
 					break;

@@ -41,6 +41,7 @@ using SOTS.Projectiles;
 using SOTS.Projectiles.Tide;
 using SOTS.Items.Fishing;
 using SOTS.Items.Tide;
+using Terraria.ModLoader.IO;
 
 namespace SOTS
 {
@@ -61,18 +62,18 @@ namespace SOTS
 			typhonWhitelist = new int[] { ModContent.ProjectileType<HardlightArrow>() };
 			harmonyWhitelist = new int[] { BuffID.Honey, ModContent.BuffType<Frenzy>(), BuffID.Panic, BuffID.ParryDamageBuff, BuffID.ShadowDodge };
 		}
-		/*
+		public int UniqueVisionNumber = -1;
 		public override TagCompound Save() {
 			return new TagCompound {
 				
-				{"soulAmount", soulAmount},
+				{"uniqueVisionNumber", UniqueVisionNumber},
 				};
 		}
-		public override void Load(TagCompound tag) 
+		public override void Load(TagCompound tag)
 		{
-			soulAmount = tag.GetInt("soulAmount");
+			if (tag.ContainsKey("uniqueVisionNumber"))
+				UniqueVisionNumber = tag.GetInt("uniqueVisionNumber");
 		}
-		*/
 		public static SOTSPlayer ModPlayer(Player player)
 		{
 			return player.GetModPlayer<SOTSPlayer>();
@@ -93,6 +94,8 @@ namespace SOTS
 			if (FluidCurseMult > 60)
 				FluidCurseMult = 60;
 		}
+
+		public bool inazumaLongerPotions = false;
 		public bool noMoreConstructs = false;
 		public bool CanKillNPC = false;
 		public bool CreativeFlightButtonPressed = false;
@@ -162,7 +165,7 @@ namespace SOTS
 		public bool ceres = false;
 		public int onhit = 0;
 		public int onhitdamage = 0;
-		public float attackSpeedMod = 0;
+		public float attackSpeedMod = 1;
 		//some important variables 2
 
 		public bool PurpleBalloon = false;
@@ -189,6 +192,7 @@ namespace SOTS
 		public float maxCritVoidStealPerSecond = 0;
 		public float maxCritVoidStealPerSecondTimer = 0;
 		public int CritBonusDamage = 0; //crit coin + amplfiier
+		public float CritBonusMultiplier = 1f;
 		public bool CritFire = false; //hellfire icosahedron
 		public bool CritFrost = false; //borealis icosahedron
 		public bool CritCurseFire = false; //cursed icosahedron
@@ -232,6 +236,15 @@ namespace SOTS
 					packet.Write((byte)player.whoAmI);
 					packet.Write(skywardBlades);
 					packet.Write(cursorRadians);
+					packet.Send();
+				}
+				if (clone.UniqueVisionNumber != UniqueVisionNumber)
+				{
+					// Send a Mod Packet with the changes.
+					var packet = mod.GetPacket();
+					packet.Write((byte)SOTSMessageType.SyncVisionNumber);
+					packet.Write((byte)player.whoAmI);
+					packet.Write(UniqueVisionNumber);
 					packet.Send();
 				}
 				netUpdate = false;
@@ -546,8 +559,14 @@ namespace SOTS
             }
             return base.CanHitNPC(item, target);
         }
+		public void ResetVisionID()
+        {
+			UniqueVisionNumber = Main.rand.Next(24);
+        }
         public override void PreUpdate()
 		{
+			if (UniqueVisionNumber == -1)
+				ResetVisionID();
 			FoamStuff();
 			base.PreUpdate();
         }
@@ -754,7 +773,7 @@ namespace SOTS
 			{
 				onhit--;
 			}
-			attackSpeedMod = 0;
+			attackSpeedMod = 1;
 			//Some important variables 1
 			ceres = false;
 			doubledActive = 0;
@@ -792,6 +811,7 @@ namespace SOTS
 			CritVoidsteal = 0f;
 			CritManasteal = 0f;
 			CritBonusDamage = 0;
+			CritBonusMultiplier = 1f;
 			CritFire = false;
 			CritFrost = false;
 			CritCurseFire = false;
@@ -1004,7 +1024,7 @@ namespace SOTS
 		}
 		public override float UseTimeMultiplier(Item item)
 		{
-			float standard = 1 + attackSpeedMod;
+			float standard = attackSpeedMod;
 			int time = item.useAnimation;
 			int cannotPass = 2;
 			float current = time / standard;
@@ -1028,6 +1048,10 @@ namespace SOTS
         {
 			if(isModify)
 			{
+				if(crit)
+                {
+					damage = (int)(damage * CritBonusMultiplier);
+                }
 				if (curseVisionCounter >= 60)
 				{
 					if (target.HasBuff(ModContent.BuffType<CurseVision>()))
@@ -1224,7 +1248,7 @@ namespace SOTS
         }
         public override void PreUpdateBuffs()
         {
-            if(player.HasBuff(ModContent.BuffType<Harmony>()))
+            if(player.HasBuff(ModContent.BuffType<Harmony>()) || (inazumaLongerPotions && orbitalCounter % 5 == 0))
             {
 				for(int i = 0; i < player.buffTime.Length; i++)
 				{
@@ -1234,8 +1258,9 @@ namespace SOTS
 						player.buffTime[i]++;
 					}
 				}
-            }
-        }
+			}
+			inazumaLongerPotions = false;
+		}
     }
 }
 

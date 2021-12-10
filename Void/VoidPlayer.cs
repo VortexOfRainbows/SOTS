@@ -489,7 +489,7 @@ namespace SOTS.Void
 				voidMeter += (float)(voidRegen / 60f) * (voidRegenMultiplier + voidMultiplier - 1);
 			else
 				voidMeter += (float)(voidRegen / 60f);
-
+			voidRegenMultiplier = 1f;
 			VoidMinionConsumption = RegisterVoidMinions();
 			voidMeterMax2 -= VoidMinionConsumption;
 

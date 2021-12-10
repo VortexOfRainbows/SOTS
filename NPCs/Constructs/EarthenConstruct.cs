@@ -293,12 +293,12 @@ namespace SOTS.NPCs.Constructs
         int[] segments = {-1,-1,-1,-1};
         public override bool PreAI()
         {
+            npc.TargetClosest(true);
             if (Main.player[npc.target].dead || Vector2.Distance(Main.player[npc.target].Center, npc.Center) > 4800)
             {
                 npc.active = false;
                 return false;
             }
-            npc.TargetClosest(true);
             if (Main.netMode != 1)
             {
                 if (npc.ai[0] == 0)

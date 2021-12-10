@@ -8,7 +8,7 @@ namespace SOTS.Buffs
     {
         public override void SetDefaults()
         {
-            DisplayName.SetDefault("Harmony"); //as per its name the sprite shoul be music related
+            DisplayName.SetDefault("Harmony"); //as per its name the sprite should be music related
 			Description.SetDefault("Buff companionship");   
             Main.buffNoSave[Type] = false;
             Main.buffNoTimeDisplay[Type] = false;
