@@ -33,9 +33,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		int counter = 0;
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			counter++;
-			position = Main.MouseWorld;
-			Projectile.NewProjectile(position, Vector2.Zero, ModContent.ProjectileType<TreasureStarPortal>(), damage, knockBack, player.whoAmI, 0, counter % 5);
+			SOTSPlayer.ModPlayer(player).UniqueVisionNumber = (SOTSPlayer.ModPlayer(player).UniqueVisionNumber + 1) % 24;
 			return false; 
 		}
 	}

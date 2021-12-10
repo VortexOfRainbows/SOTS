@@ -96,11 +96,11 @@ namespace SOTS.Projectiles.Otherworld
                 float num7 = num2 * num6;
                 float num8 = num3 * num6;
 
-                if ((double)num7 != projectile.velocity.X || (double)num8 != projectile.velocity.Y || projectile.ai[0] != selectedItem.useTime)
+                if ((double)num7 != projectile.velocity.X || (double)num8 != projectile.velocity.Y || projectile.ai[0] != (int)(selectedItem.useTime / SOTSPlayer.ModPlayer(player).attackSpeedMod))
                     projectile.netUpdate = true;
                 projectile.velocity.X = num7;
                 projectile.velocity.Y = num8;
-                projectile.ai[0] = selectedItem.useTime;
+                projectile.ai[0] = (int)(selectedItem.useTime / SOTSPlayer.ModPlayer(player).attackSpeedMod);
             }
             if (projectile.ai[0] != 0 && counter > 0)
             {
