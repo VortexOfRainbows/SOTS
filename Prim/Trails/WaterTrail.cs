@@ -9,13 +9,13 @@ namespace SOTS.Prim.Trails
 {
 	class WaterTrail : PrimTrail
 	{
-		public WaterTrail(Projectile projectile)
+		public WaterTrail(Projectile projectile, int width = 12)
 		{
 			Entity = projectile;
 			EntityType = projectile.type;
 			DrawType = PrimTrailManager.DrawProjectile;
 			Color = new Color(46, 104, 234);
-			Width = 12;
+			Width = width;
 			Cap = 20;
 			Pixellated = false;
 		}

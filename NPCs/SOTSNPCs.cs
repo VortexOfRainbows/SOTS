@@ -285,6 +285,8 @@ namespace SOTS.NPCs
 							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<Earthshaker>(), 1);
 						if (npc.type == ModContent.NPCType<PermafrostConstruct>())
 							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<EndothermicAfterburner>(), 1);
+						if (npc.type == ModContent.NPCType<TidalConstruct>())
+							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<PiscesPuncher>(), 1);
 					}
 					if ((npc.type == ModContent.NPCType<OtherworldlyConstructHead>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead2>()) && Main.rand.NextBool(100))
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<PhaseCannon>(), 1);

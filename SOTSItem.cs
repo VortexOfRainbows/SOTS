@@ -30,6 +30,7 @@ using SOTS.Items.DoorItems;
 using SOTS.Items.Secrets;
 using System;
 using SOTS.Items.Otherworld.Furniture;
+using SOTS.Items.Fishing;
 
 namespace SOTS
 {
@@ -176,6 +177,7 @@ namespace SOTS
 		public static int[] dedicatedCoolio;
 		public static Texture2D[] unsafeWallItemRedTextures;
 		public static int[] unsafeWallItem;
+		public static int[] piscesFishItems;
 		public static bool hasSetupRed = false;
 		public static void LoadArrays() //called in SOTS.Load()
 		{
@@ -193,6 +195,12 @@ namespace SOTS
 			dedicatedCoolio = new int[] { ItemType<Baguette>() }; //Coolio/Taco
 			unsafeWallItem = new int[] { ItemType<UnsafeLihzahrdBrickWall>(), ItemType<UnsafeCursedTumorWall>(), ItemType<UnsafePyramidWall>(), ItemType<UnsafePyramidBrickWall>(), ItemType<UnsafeOvergrownPyramidWall>(), ItemType<UnsafeMalditeWall>() }; //Unsafe wall items
 			unsafeWallItemRedTextures = new Texture2D[unsafeWallItem.Length];
+
+			piscesFishItems = new int[] {-6, -5, -4, -3, -2, -1, ItemID.AmanitiaFungifin, ItemID.Angelfish, ItemID.Batfish, ItemID.BloodyManowar, ItemID.Bonefish, ItemID.BumblebeeTuna, ItemID.Bunnyfish, ItemID.CapnTunabeard, ItemID.Catfish, ItemID.Cloudfish, ItemID.Clownfish, ItemID.Cursedfish, ItemID.DemonicHellfish, ItemID.Derpfish,
+			ItemID.Dirtfish, ItemID.DynamiteFish, ItemID.EaterofPlankton, ItemID.FallenStarfish, ItemID.TheFishofCthulu, ItemID.Fishotron, ItemID.Fishron, ItemID.GuideVoodooFish, ItemID.Harpyfish, ItemID.Hungerfish, ItemID.Ichorfish, ItemID.InfectedScabbardfish, ItemID.Jewelfish, ItemID.MirageFish, ItemID.Mudfish,
+			ItemID.MutantFlinxfin, ItemID.Pengfish, ItemID.Pixiefish, ItemID.Slimefish, ItemID.Spiderfish, ItemID.TropicalBarracuda, ItemID.TundraTrout, ItemID.UnicornFish, ItemID.Wyverntail, ItemID.ZombieFish, ItemID.ArmoredCavefish, ItemID.AtlanticCod, ItemID.Bass, ItemID.BlueJellyfish, ItemID.ChaosFish, ItemID.CrimsonTigerfish,
+			ItemID.Damselfish, ItemID.DoubleCod, ItemID.Ebonkoi, ItemID.FlarefinKoi, ItemID.FrostMinnow, ItemID.GoldenCarp, ItemID.GreenJellyfish, ItemID.Hemopiranha, ItemID.Honeyfin, ItemID.NeonTetra, ItemID.Obsidifish, ItemID.PinkJellyfish, ItemID.PrincessFish, ItemID.Prismite, ItemID.RedSnapper, ItemID.Salmon, ItemID.Shrimp, ItemID.SpecularFish,
+			ItemID.Stinkfish, ItemID.Trout, ItemID.Tuna, ItemID.VariegatedLardfish, ItemType<Curgeon>(), ItemType<PhantomFish>(), ItemType<SeaSnake>(), ItemType<TinyPlanetFish>()};
 		}
 		public static void setUpRedTextures()
         {
