@@ -513,7 +513,7 @@ namespace SOTS.NPCs
 			}
 			if (spawnInfo.player.ZoneUnderworldHeight)
 			{
-				pool.Add(ModContent.NPCType<LesserWisp>(), SpawnCondition.Underworld.Chance * 0.12f);
+				pool.Add(ModContent.NPCType<LesserWisp>(), SpawnCondition.Underworld.Chance * 0.07f);
 				if(NPC.downedBoss3)
 					pool.Add(ModContent.NPCType<ShadowTreasureSlime>(), SpawnCondition.Underworld.Chance * 0.03f);
 			}

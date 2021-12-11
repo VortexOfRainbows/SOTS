@@ -7,12 +7,25 @@ using Terraria.ID;
 using System.IO;
 using System.Collections.Generic;
 using SOTS.Buffs;
+using SOTS.Dusts;
 
 namespace SOTS.Projectiles.BiomeChest
 {
-	public class CrystalSerpentHead : ModProjectile
-	{
-		public override void SetStaticDefaults()
+    public class Segment
+    {
+        public Segment(Vector2 position, float rotation, int aliveCounter)
+        {
+            this.position = position;
+            this.rotation = rotation;
+            this.aliveCounter = aliveCounter;
+        }
+        public Vector2 position;
+        public float rotation;
+        public int aliveCounter;
+    }
+    public class CrystalSerpentHead : ModProjectile
+    {
+        public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Crystal Serpent");
 			Main.projPet[projectile.type] = true;
@@ -20,16 +33,38 @@ namespace SOTS.Projectiles.BiomeChest
             ProjectileID.Sets.MinionTargettingFeature[projectile.type] = true;
 			ProjectileID.Sets.Homing[projectile.type] = true;
 		}
-        List<Vector2> segments = new List<Vector2>();
-        List<float> segmentsRotation = new List<float>();
+        public const float BaseAttackRate = 60;
+        public const float framePerAttack = 11f;
+        public void UpdateCounter(Vector2 toCenter, float numberOfSegments = 1)
+        {
+            int rate = (int)(BaseAttackRate / numberOfSegments / framePerAttack * 60f);
+            projectile.ai[0] += 60;
+            while(projectile.ai[0] > rate)
+            {
+                projectile.ai[0] -= rate;
+                projectile.ai[1] = (int)(projectile.ai[1] + 1) % 22;
+                if(Main.myPlayer == projectile.owner && (int)projectile.ai[1] % 11 == 0 && toCenter != Vector2.Zero)
+                {
+                    Vector2 position = segments[segments.Count - 1].position;
+                    int color = 1;
+                    if ((int)projectile.ai[1] == 11)
+                        color = 0;
+                    Vector2 to = toCenter - position;
+                    to = to.SafeNormalize(Vector2.Zero);
+                    Projectile.NewProjectile(position, to * 12, ModContent.ProjectileType<StarBolt>(), projectile.damage, projectile.knockBack, projectile.owner, color);
+                }
+            }
+        }
+        List<Segment> segments = new List<Segment>();
+        Vector2 centerLocation;
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
             target.immune[projectile.owner] = 6;
 		}
 		public sealed override void SetDefaults()
         {
-            projectile.width = 50;
-			projectile.height = 50;
+            projectile.width = 30;
+			projectile.height = 30;
 			projectile.penetrate = -1;
 			projectile.timeLeft *= 5;
 			//projectile.minion = true;
@@ -44,21 +79,26 @@ namespace SOTS.Projectiles.BiomeChest
         public sealed override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
             Texture2D texture = Main.projectileTexture[projectile.type];
-            Vector2 origin = texture.Size() / 2;
+            Vector2 origin = new Vector2(texture.Width/2, texture.Height/2);
             Vector2 first = projectile.Center;
             spriteBatch.Draw(texture, first - Main.screenPosition, null, (Color)GetAlpha(lightColor), projectile.rotation, origin, 1.0f * generalScale, projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
             for (int i = 0; i < segments.Count; i++)
             {
-                Vector2 toOther = first - segments[i];
-                if(segmentsRotation[i] != 0)
+                float alpha = 0.16f * (segments[i].aliveCounter + 1);
+                if (alpha > 1 || projectile.alpha > 0)
                 {
-                    var num1090 = MathHelper.WrapAngle(segmentsRotation[i]);
+                    alpha = 1;
+                }
+                Vector2 toOther = first - segments[i].position;
+                if(segments[i].rotation != 0)
+                {
+                    var num1090 = MathHelper.WrapAngle(segments[i].rotation);
                     var spinningpoint60 = toOther;
                     var radians64 = (double)(num1090 * 0.1f);
                     Vector2 vector = default(Vector2);
                     toOther = spinningpoint60.RotatedBy(radians64, vector);
                 }
-                Rectangle frame = new Rectangle(0, 0, 58, 120);
+                Rectangle frame = new Rectangle(0, 0, 72, 120);
                 if (i != segments.Count - 1)
                 {
                     texture = mod.GetTexture("Projectiles/BiomeChest/CrystalSerpentBody");
@@ -66,13 +106,14 @@ namespace SOTS.Projectiles.BiomeChest
                 else
                 {
                     texture = mod.GetTexture("Projectiles/BiomeChest/CrystalSerpentTail");
+                    frame = new Rectangle(0, 120 * (int)projectile.ai[1], 72, 120);
                 }
-                float rotation = segmentsRotation[i];
+                float rotation = segments[i].rotation;
                 int spriteDirection = toOther.X > 0f ? 1 : -1;
-                spriteBatch.Draw(texture, segments[i] + projectile.velocity - Main.screenPosition, frame, (Color)GetAlpha(lightColor), rotation, origin, 1.0f * generalScale, spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
-                first = segments[i];
+                spriteBatch.Draw(texture, segments[i].position + projectile.velocity - Main.screenPosition, frame, (Color)GetAlpha(lightColor) * alpha, rotation, origin, 1.0f * generalScale, spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+                first = segments[i].position;
             }
-                //Main.spriteBatch.Draw(texture, projectile.Center + Vector2.UnitY.RotatedBy((double)num2 * 6.28318548202515 / 4.0, new Vector2()) * num1, new Microsoft.Xna.Framework.Rectangle?(r), alpha * 0.1f, projectile.rotation, origin1, projectile.scale, projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0.0f);
+            //Main.spriteBatch.Draw(texture, projectile.Center + Vector2.UnitY.RotatedBy((double)num2 * 6.28318548202515 / 4.0, new Vector2()) * num1, new Microsoft.Xna.Framework.Rectangle?(r), alpha * 0.1f, projectile.rotation, origin1, projectile.scale, projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0.0f);
             return false;
         }
         public override void DrawBehind(int index, List<int> drawCacheProjsBehindNPCsAndTiles, List<int> drawCacheProjsBehindNPCs, List<int> drawCacheProjsBehindProjectiles, List<int> drawCacheProjsOverWiresUI)
@@ -81,52 +122,64 @@ namespace SOTS.Projectiles.BiomeChest
             base.DrawBehind(index, drawCacheProjsBehindNPCsAndTiles, drawCacheProjsBehindNPCs, drawCacheProjsBehindProjectiles, drawCacheProjsOverWiresUI);
         }
         public float generalScale = 0.75f;
+        int totalSegments = 1;
         bool runOnce = true;
-        int initializeTimer = 0;
         public sealed override bool PreAI()
         {
+            if(runOnce)
+            {
+                centerLocation = projectile.Center;
+                runOnce = false;
+            }
             Player player = Main.player[projectile.owner];
+            if (player.dead || !player.active) //active check
+            {
+                player.ClearBuff(ModContent.BuffType<StarlightSerpent>());
+            }
+            if (player.HasBuff(ModContent.BuffType<StarlightSerpent>()))
+            {
+                projectile.timeLeft = 2;
+            }
+            else
+            {
+                return false;
+            }
             SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
             int ownedCounter = 1;
-            int targetLength = 1;
+            int targetLength = 2;
             for (int i = 0; i < Main.projectile.Length; i++)
             {
                 Projectile proj = Main.projectile[i];
                 if (proj.active && proj.owner == player.whoAmI)
                 {
                     if(proj.type == ModContent.ProjectileType<CrystalSerpentBody>())
-                        targetLength += 2;
+                        targetLength++;
                     if (proj.type == ModContent.ProjectileType<CrystalSerpentHead>() && proj.whoAmI != projectile.whoAmI)
                         ownedCounter++;
                 }
             }
-            Main.NewText(targetLength);
             while(segments.Count < targetLength)
             {
-                segments.Add(projectile.Center);
+                segments.Add(new Segment(projectile.Center, 0, 0));
             }
             while (segments.Count > targetLength)
             {
                 segments.RemoveAt(0);
-                if (segments.Count <= 1)
+                if (segments.Count <= 2)
                 {
                     projectile.Kill();
                 }
             }
-            if(segments.Count <= 1)
+            if(segments.Count <= 2)
             {
                 projectile.Kill();
+                return false;
             }
-            while (segmentsRotation.Count < segments.Count)
-            {
-                segmentsRotation.Add(0f);
-            }
-            while (segmentsRotation.Count > segments.Count)
-            {
-                segmentsRotation.RemoveAt(0);
-            }
+            totalSegments = targetLength;
             return true;
         }
+        float rotate = 0;
+        float accelerate = 0;
         public sealed override void AI()
         {
             Player player = Main.player[projectile.owner];
@@ -139,26 +192,33 @@ namespace SOTS.Projectiles.BiomeChest
             {
                 projectile.active = false;
             }
-            if (player.dead || !player.active) //active check
-            {
-                player.ClearBuff(ModContent.BuffType<StarlightSerpent>());
-            }
-            if (player.HasBuff(ModContent.BuffType<StarlightSerpent>()))
-            {
-                projectile.timeLeft = 2;
-            }
 
             Vector2 first = projectile.Center;
             float firstRot = projectile.rotation;
             for (int i = 0; i < segments.Count; i++)
             {
-                Vector2 pos = segments[i];
-                float rotation = segmentsRotation[i];
+                Vector2 pos = segments[i].position;
+                float rotation = segments[i].rotation;
                 BodyTailMovement(ref pos, first, ref rotation, firstRot, i);
-                segments[i] = pos;
-                segmentsRotation[i] = rotation;
+                segments[i].position = pos;
+                segments[i].rotation = rotation;
                 first = pos;
-                firstRot = segmentsRotation[i];
+                firstRot = segments[i].rotation;
+                if(segments[i].aliveCounter < 7)
+                {
+                    for (int a = 0; a < 3; a++)
+                    {
+                        Dust dust = Dust.NewDustDirect(segments[i].position - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
+                        dust.velocity *= 1.2f;
+                        dust.velocity += 5 * projectile.velocity.SafeNormalize(Vector2.Zero);
+                        dust.scale *= 2;
+                        dust.noGravity = true;
+                        dust.fadeIn = 0.2f;
+                        dust.color = Main.rand.NextBool(2) ? new Color(170, 100, 190, 0) : new Color(150, 100, 200, 0);
+                        dust.alpha = 100;
+                    }
+                }
+                segments[i].aliveCounter++;
             }
             Vector2 pCenter = player.Center;
             float minDist = 700f;
@@ -173,7 +233,7 @@ namespace SOTS.Projectiles.BiomeChest
             var ownerMinionAttackTargetNPC5 = projectile.OwnerMinionAttackTargetNPC;
             if (ownerMinionAttackTargetNPC5 != null && ownerMinionAttackTargetNPC5.CanBeChasedBy(this, false))
             {
-                float between = projectile.Distance(ownerMinionAttackTargetNPC5.Center);
+                float between = Vector2.Distance(centerLocation, ownerMinionAttackTargetNPC5.Center);
                 if (between < minDist * 2f)
                 {
                     npcID = ownerMinionAttackTargetNPC5.whoAmI;
@@ -182,14 +242,15 @@ namespace SOTS.Projectiles.BiomeChest
 
             if (npcID < 0)
             {
-                for (int i = 0; i < 200; i++)
+                for (int i = 0; i < Main.npc.Length; i++)
                 {
                     NPC npc = Main.npc[i];
                     if (npc.CanBeChasedBy(this, false) && player.Distance(npc.Center) < minDist2)
                     {
-                        float between = projectile.Distance(npc.Center);
+                        float between = Vector2.Distance(centerLocation, npc.Center);
                         if (between < minDist)
                         {
+                            minDist = between;
                             npcID = i;
                         }
                     }
@@ -199,37 +260,29 @@ namespace SOTS.Projectiles.BiomeChest
             if (npcID != -1)
             {
                 NPC npc = Main.npc[npcID];
-                Vector2 toNPC = npc.Center - projectile.Center;
-                (toNPC.X > 0f).ToDirectionInt();
-                (toNPC.Y > 0f).ToDirectionInt();
-                float scaleFactor = 0.4f;
-                if (toNPC.Length() < 600f)
-                {
-                    scaleFactor = 0.6f;
-                }
-                if (toNPC.Length() < 300f)
-                {
-                    scaleFactor = 0.8f;
-                }
-
+                if (accelerate < 1)
+                    accelerate += 0.1f;
+                else
+                    accelerate = 1;
+                rotate += MathHelper.ToRadians((1.6f + 0.4f * (float)Math.Sqrt(totalSegments)) * (npc.whoAmI % 2 * 2 - 1) * accelerate);
+                Vector2 position = npc.Center + new Vector2(0, npc.Size.Length() / 2 + 128 + 16 * (float)Math.Sqrt(totalSegments)).RotatedBy(rotate);
+                centerLocation = Vector2.Lerp(centerLocation, position, 0.05f);
+                Vector2 toNPC = centerLocation - projectile.Center;
                 float dist = toNPC.Length();
-                Vector2 vector = npc.Size;
-                if (dist > vector.Length() * 0.75f)
+                float maxSpeed = (7f + totalSegments * 1.7f) * accelerate;
+                if (dist < maxSpeed)
                 {
-                    projectile.velocity += Vector2.Normalize(toNPC) * scaleFactor * 1.5f;
-                    if (Vector2.Dot(projectile.velocity, toNPC) < 0.25f)
-                    {
-                        projectile.velocity *= 0.8f;
-                    }
+                    maxSpeed = dist;
                 }
-                float maxSpeed = 30f;
-                if (projectile.velocity.Length() > maxSpeed)
-                {
-                    projectile.velocity = Vector2.Normalize(projectile.velocity) * maxSpeed;
-                }
+                projectile.velocity = toNPC.SafeNormalize(Vector2.Zero) * maxSpeed;
+                UpdateCounter(npc.Center, totalSegments - 1);
             } //move towards enemy
             else
             {
+                centerLocation = Vector2.Lerp(centerLocation, player.Center, 0.05f);
+                if (accelerate > 0)
+                    accelerate *= 0.987f;
+                UpdateCounter(Vector2.Zero, totalSegments - 1);
                 float scaleFactor = 0.2f;
                 Vector2 toPlayer = pCenter - projectile.Center;
                 if (toPlayer.Length() < 200f)
@@ -238,7 +291,7 @@ namespace SOTS.Projectiles.BiomeChest
                 }
                 if (toPlayer.Length() < 140f)
                 {
-                    scaleFactor = 0.06f;
+                    scaleFactor = 0.6f;
                 }
                 if (toPlayer.Length() > 100f)
                 {
@@ -254,15 +307,9 @@ namespace SOTS.Projectiles.BiomeChest
                 }
                 else if (projectile.velocity.Length() > 2f)
                 {
-                    projectile.velocity *= 0.96f;
+                    projectile.velocity *= 0.95f;
                 }
-
-                if (Math.Abs(projectile.velocity.Y) < 1f)
-                {
-                    projectile.velocity.Y -= 0.1f;
-                }
-
-                float maxSpeed = 15f;
+                float maxSpeed = 13f;
                 if (projectile.velocity.Length() > maxSpeed)
                 {
                     projectile.velocity = Vector2.Normalize(projectile.velocity) * maxSpeed;
@@ -276,11 +323,6 @@ namespace SOTS.Projectiles.BiomeChest
             {
                 projectile.netUpdate = true;
             }
-
-            projectile.position = projectile.Center;
-            projectile.scale = 1f;
-            projectile.width = projectile.height = (int)(30 * projectile.scale);
-            projectile.Center = projectile.position;
             if (projectile.alpha > 0) //more visuals
             {
                 projectile.alpha -= 42;
