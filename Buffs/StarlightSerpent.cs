@@ -9,7 +9,7 @@ namespace SOTS.Buffs
 		public override void SetDefaults()
 		{
 			DisplayName.SetDefault("Crystal Serpent");
-			Description.SetDefault("A prismatic serpent assists with combat");
+			Description.SetDefault("A Crystal Serpent assists with combat");
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
 		}

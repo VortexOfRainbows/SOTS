@@ -15,7 +15,7 @@ namespace SOTS.Items.ChestItems
 		public override void SetStaticDefaults() 
 		{
 			DisplayName.SetDefault("Starcaller Staff");
-			Tooltip.SetDefault("Summons an Starlight Serpent to fight for you\nRight click to add onto the most recently summoned serpent, left click to summon a new serpent\nThis item was made for testing purposes");
+			Tooltip.SetDefault("Summons a Crystal Serpent to fight for you\nThe Crystal Serpent circles around enemies and fires stars at them");
 			ItemID.Sets.GamepadWholeScreenUseRange[item.type] = true; 
 			ItemID.Sets.LockOnIgnoresCollision[item.type] = true;
 			ItemID.Sets.StaffMinionSlotsRequired[item.type] = 1;
@@ -23,7 +23,7 @@ namespace SOTS.Items.ChestItems
 		public override void SetDefaults()
 		{
 			item.mana = 10;
-			item.damage = 40;
+			item.damage = 64;
 			item.useStyle = ItemUseStyleID.SwingThrow;
 			item.shootSpeed = 10f;
 			item.width = 54;
@@ -33,7 +33,7 @@ namespace SOTS.Items.ChestItems
 			item.useTime = 36;
 			item.rare = ItemRarityID.Yellow;
 			item.noMelee = true;
-			item.knockBack = 2f;
+			item.knockBack = 1.3f;
 			item.value = Item.sellPrice(0, 20, 0, 0);
 			item.summon = true;
 			item.buffType = ModContent.BuffType<StarlightSerpent>();
@@ -45,13 +45,5 @@ namespace SOTS.Items.ChestItems
 			position = Main.MouseWorld;
 			return true;
 		}
-        public override bool AltFunctionUse(Player player)
-        {
-			return true;
-        }
-        public override bool CanUseItem(Player player)
-		{
-			return true;
-        }
     }
 }

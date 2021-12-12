@@ -20,10 +20,6 @@ namespace SOTS.Projectiles.BiomeChest
             ProjectileID.Sets.MinionTargettingFeature[projectile.type] = true;
             ProjectileID.Sets.Homing[projectile.type] = true;
 		}
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
-		{
-            target.immune[projectile.owner] = 6;
-		}
 		public sealed override void SetDefaults()
         {
             projectile.width = 50;
@@ -65,14 +61,12 @@ namespace SOTS.Projectiles.BiomeChest
             {
                 projectile.active = false;
             }
-            if (player.dead || !player.active) //active check
-            {
-                player.ClearBuff(ModContent.BuffType<StarlightSerpent>());
-            }
             if (player.HasBuff(ModContent.BuffType<StarlightSerpent>()))
             {
                 projectile.timeLeft = 2;
             }
+            else
+                projectile.Kill();
         }
         public override bool ShouldUpdatePosition()
         {

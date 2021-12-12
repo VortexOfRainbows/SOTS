@@ -2,7 +2,6 @@ sampler uImage0 : register(s0);
 sampler uImage1 : register(s1);
 float progress;
 float4 ColorOne;
-float4 ColorTwo;
 matrix WorldViewProjection;
 
 struct VertexShaderInput
@@ -41,7 +40,7 @@ float4 White(VertexShaderOutput input) : COLOR0
     float x = (input.TextureCoordinates.x + sin(progress)) % 1;
     float2 noisecoords = float2(x, input.TextureCoordinates.y);
     float brightness = tex2D(tent, noisecoords).r;
-    float4 color = lerp(ColorOne, ColorTwo, pow(brightness, 4));
+    float4 color = ColorOne;
     color *= sqrt(brightness);
     return color * sqrt(input.TextureCoordinates.x);
 }

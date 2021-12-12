@@ -31,7 +31,30 @@ using SOTS.Items.Otherworld.Blocks;
 namespace SOTS.NPCs
 {
     public class SOTSNPCs : GlobalNPC
-    {
+	{
+		public static int FindTarget_Basic(Vector2 center, float minDistance = 2000f, object attacker = null)
+		{
+			return FindTarget_Basic(center, out float _, minDistance, attacker);
+		}
+
+		public static int FindTarget_Basic(Vector2 center, out float dist, float minDistance = 2000f, object attacker = null)
+		{
+			int target = -1;
+			for (int i = 0; i < Main.maxNPCs; i++)
+			{
+				if (Main.npc[i].CanBeChasedBy(attacker))
+				{
+					float distance = (center - Main.npc[i].Center).Length();
+					if (distance < minDistance)
+					{
+						target = i;
+						minDistance = distance;
+					}
+				}
+			}
+			dist = minDistance;
+			return target;
+		}
 		public static bool isPolarisNPC(int type)
         {
 			return (type == ModContent.NPCType<BulletSnakeHead>() || type == ModContent.NPCType<BulletSnakeWing>() || type == ModContent.NPCType<BulletSnakeBody>() || type == ModContent.NPCType<BulletSnakeEnd>() || type == ModContent.NPCType<Polaris>() || type == ModContent.NPCType<PolarisLaser>() || type == ModContent.NPCType<PolarisCannon>());

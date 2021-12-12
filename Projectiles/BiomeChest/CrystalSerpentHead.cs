@@ -33,7 +33,7 @@ namespace SOTS.Projectiles.BiomeChest
             ProjectileID.Sets.MinionTargettingFeature[projectile.type] = true;
 			ProjectileID.Sets.Homing[projectile.type] = true;
 		}
-        public const float BaseAttackRate = 60;
+        public const float BaseAttackRate = 54;
         public const float framePerAttack = 11f;
         public void UpdateCounter(Vector2 toCenter, float numberOfSegments = 1)
         {
@@ -51,7 +51,7 @@ namespace SOTS.Projectiles.BiomeChest
                         color = 0;
                     Vector2 to = toCenter - position;
                     to = to.SafeNormalize(Vector2.Zero);
-                    Projectile.NewProjectile(position, to * 12, ModContent.ProjectileType<StarBolt>(), projectile.damage, projectile.knockBack, projectile.owner, color);
+                    Projectile.NewProjectile(position, to * 13, ModContent.ProjectileType<StarBolt>(), projectile.damage, projectile.knockBack, projectile.owner, color);
                 }
             }
         }
@@ -142,6 +142,7 @@ namespace SOTS.Projectiles.BiomeChest
             }
             else
             {
+                projectile.Kill();
                 return false;
             }
             SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
@@ -265,7 +266,7 @@ namespace SOTS.Projectiles.BiomeChest
                 else
                     accelerate = 1;
                 rotate += MathHelper.ToRadians((1.6f + 0.4f * (float)Math.Sqrt(totalSegments)) * (npc.whoAmI % 2 * 2 - 1) * accelerate);
-                Vector2 position = npc.Center + new Vector2(0, npc.Size.Length() / 2 + 128 + 16 * (float)Math.Sqrt(totalSegments)).RotatedBy(rotate);
+                Vector2 position = npc.Center + new Vector2(0, npc.Size.Length() * 0.6f + 256 + 68 * (float)Math.Sqrt(totalSegments)).RotatedBy(rotate);
                 centerLocation = Vector2.Lerp(centerLocation, position, 0.05f);
                 Vector2 toNPC = centerLocation - projectile.Center;
                 float dist = toNPC.Length();

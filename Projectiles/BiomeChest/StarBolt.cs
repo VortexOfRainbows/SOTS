@@ -1,7 +1,11 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Dusts;
+using SOTS.NPCs;
 using SOTS.Prim.Trails;
+using System;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
  
 namespace SOTS.Projectiles.BiomeChest
@@ -57,7 +61,7 @@ namespace SOTS.Projectiles.BiomeChest
         }
         public override void ModifyDamageHitbox(ref Rectangle hitbox)
         {
-            int width = (int)(projectile.width * projectile.scale);
+            int width = (int)(projectile.width * projectile.scale * 1.1f);
             hitbox = new Rectangle((int)projectile.Center.X - width / 2, (int)projectile.Center.Y - width / 2, width, width);
             base.ModifyDamageHitbox(ref hitbox);
         }
@@ -66,15 +70,47 @@ namespace SOTS.Projectiles.BiomeChest
         {
             if (runOnce)
             {
+                Main.PlaySound(SoundLoader.customSoundType, (int)projectile.Center.X, (int)projectile.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/StarLaser"), 0.6f, 0.2f + Main.rand.NextFloat(-0.1f, 0.1f));
                 projectile.scale = 0.6f;
                 SOTS.primitives.CreateTrail(new StarTrail(projectile, projColor(), projColor(true), 12));
                 runOnce = false;
             }
             return true;
         }
+        public override void Kill(int timeLeft)
+        {
+            if(Main.netMode != NetmodeID.Server)
+            {
+                for(int i = 0; i < 15; i++)
+                {
+                    int width = (int)(projectile.width * projectile.scale * 1.0f);
+                    Dust dust = Dust.NewDustDirect(projectile.Center - new Vector2(width, width) / 2, width, width, ModContent.DustType<CopyDust4>());
+                    dust.velocity = dust.velocity * 0.8f + projectile.velocity.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(1f) * (float)Math.Sqrt(projectile.velocity.Length());
+                    dust.noGravity = true;
+                    dust.fadeIn = 0.2f;
+                    dust.color = projColor();
+                    dust.scale *= 1.4f;
+                }
+            }
+        }
         public override void AI()
         {
-
+            int target = SOTSNPCs.FindTarget_Basic(projectile.Center, 270f, projectile);
+            if (target != -1)
+            {
+                var normal = (Main.npc[target].Center - projectile.Center).SafeNormalize(Vector2.Zero);
+                projectile.velocity = Vector2.Lerp(projectile.velocity, normal * projectile.velocity.Length(), 0.075f);
+            }
+            if(Main.rand.NextBool(2))
+            {
+                Dust dust = Dust.NewDustDirect(projectile.Center - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
+                dust.velocity *= 0.5f;
+                dust.noGravity = true;
+                dust.fadeIn = 0.2f;
+                dust.color = projColor();
+                dust.scale *= 1.2f;
+                projectile.velocity += projectile.velocity.SafeNormalize(Vector2.Zero) * 0.36f;
+            }
         }
 	}	
 }

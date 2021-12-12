@@ -18,7 +18,7 @@ namespace SOTS.Prim.Trails
 			Color = colorStart;
 			color2 = colorEnd;
 			Width = width;
-			Cap = 30;
+			Cap = 18;
 			Pixellated = false;
 		}
 		public override void SetDefaults() => AlphaValue = 0.6f;
@@ -54,7 +54,6 @@ namespace SOTS.Prim.Trails
 			Effect effect = SOTS.WaterTrail; //we'll see how this works :D
 			effect.Parameters["TrailTexture"].SetValue(ModContent.GetInstance<SOTS>().GetTexture("TrailTextures/Trail_1"));
 			effect.Parameters["ColorOne"].SetValue(Color.ToVector4());
-			effect.Parameters["ColorTwo"].SetValue(Color.ToVector4());
 			PrepareShader(effect, "MainPS", Counter / 12f);
 		}
 		public override void OnUpdate()

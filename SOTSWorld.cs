@@ -1011,7 +1011,7 @@ namespace SOTS
 						}
 						if (style == 26)
 						{
-							importantItem = ModContent.ItemType<ChaosSpiritStaff>();
+							importantItem = ModContent.ItemType<StarcallerStaff>();
 							importantItem2 = ModContent.ItemType<DissolvingAether>();
 							consumable = ModContent.ItemType<DigitalCornSyrup>();
 						}
