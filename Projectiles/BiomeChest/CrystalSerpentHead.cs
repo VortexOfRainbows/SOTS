@@ -25,6 +25,16 @@ namespace SOTS.Projectiles.BiomeChest
     }
     public class CrystalSerpentHead : ModProjectile
     {
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write(rotate);
+            writer.Write(accelerate);
+        }
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            rotate = reader.ReadSingle();
+            accelerate = reader.ReadSingle();
+        }
         public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Crystal Serpent");
@@ -142,7 +152,8 @@ namespace SOTS.Projectiles.BiomeChest
             }
             else
             {
-                projectile.Kill();
+                if(projectile.owner == Main.myPlayer)
+                    projectile.Kill();
                 return false;
             }
             SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");

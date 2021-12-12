@@ -65,7 +65,7 @@ namespace SOTS.Projectiles.BiomeChest
             {
                 projectile.timeLeft = 2;
             }
-            else
+            else if(Main.myPlayer == projectile.owner)
                 projectile.Kill();
         }
         public override bool ShouldUpdatePosition()
