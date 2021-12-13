@@ -48,6 +48,7 @@ namespace SOTS
 		public static Effect WaterTrail;
 		public static Effect FireballShader;
 		public static Effect GodrayShader;
+		public static Effect VisionShader;
 		public static SOTSConfig Config
         {
 			get => ModContent.GetInstance<SOTSConfig>();
@@ -133,6 +134,7 @@ namespace SOTS
 				WaterTrail = Instance.GetEffect("Effects/WaterTrail");
 				FireballShader = Instance.GetEffect("Effects/FireballShader");
 				GodrayShader = Instance.GetEffect("Effects/GodrayShader");
+				VisionShader = Instance.GetEffect("Effects/VisionShader");
 				primitives = new PrimTrailManager();
 				primitives.LoadContent(Main.graphics.GraphicsDevice);
 			}
@@ -140,10 +142,11 @@ namespace SOTS
 		}
 		public override void Unload() 
 		{
+			WaterTrail = null;
 			AtenTrail = null;
 			FireballShader = null;
 			GodrayShader = null;
-			//SOTSGlowmasks.UnloadGlowmasks();
+			VisionShader = null;
 			Instance = null;
 			VoidBarSprite._backgroundTexture = null;
 			VoidBarBorder._backgroundTexture = null;

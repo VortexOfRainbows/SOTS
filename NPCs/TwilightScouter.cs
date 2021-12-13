@@ -202,8 +202,6 @@ namespace SOTS.NPCs
 			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<FragmentOfOtherworld>(), 1);
 			if (!Main.rand.NextBool(3) && SOTSWorld.downedAdvisor)
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<TwilightShard>(), 1);
-			if(Main.rand.NextBool(70))
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<Items.Otherworld.ThundershockShortbow>(), 1);
 		}
         public override void HitEffect(int hitDirection, double damage)
 		{

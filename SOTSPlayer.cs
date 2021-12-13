@@ -42,6 +42,7 @@ using SOTS.Projectiles.Tide;
 using SOTS.Items.Fishing;
 using SOTS.Items.Tide;
 using Terraria.ModLoader.IO;
+using SOTS.Items.GhostTown;
 
 namespace SOTS
 {
@@ -95,6 +96,8 @@ namespace SOTS
 				FluidCurseMult = 60;
 		}
 
+		public bool normalizedGravity = false;
+		public bool VisionVanity = false;
 		public bool inazumaLongerPotions = false;
 		public bool noMoreConstructs = false;
 		public bool CanKillNPC = false;
@@ -386,7 +389,7 @@ namespace SOTS
 				CreativeFlightButtonPressed = false;
 			}
 		}
-		int[] probes = new int[] { -1, -1, -1, -1, -1, -1, -1, -1};
+		int[] probes = new int[] { -1, -1, -1, -1, -1, -1, -1, -1, -1};
 		int[] probesAqueduct = new int[] { -1, -1, -1, -1, -1, -1, -1, -1 };
 		int[] probesTinyPlanet = new int[] { -1, -1, -1, -1, -1, -1, -1, -1 };
 		public int aqueductNum = 0;
@@ -572,6 +575,11 @@ namespace SOTS
         }
         public override void ResetEffects()
 		{
+			if(normalizedGravity)
+            {
+				player.gravity = Player.defaultGravity;
+            }
+			normalizedGravity = false; 
 			TrailStuff();
 			doCurseAura(); 
 			noMoreConstructs = false;
@@ -648,7 +656,10 @@ namespace SOTS
 				runPets(ref probes[6], ModContent.ProjectileType<RubyMonolith>());
 			if (petFreeWisp >= 0)
 				runPets(ref probes[7], ModContent.ProjectileType<WispOrange>(), petFreeWisp + 1);
+			if (VisionVanity)
+				runPets(ref probes[8], ModContent.ProjectileType<VisionWeapon>());
 			doPlanetAqueduct();
+			VisionVanity = false;
 			if (rippleEffect)
 			{
 				float healthPercent = (float)player.statLife / (float)player.statLifeMax2;
@@ -709,6 +720,10 @@ namespace SOTS
 						HoloEyeDamage += (int)(33 * (1f + (player.minionDamage - 1f) + (player.allDamage - 1f)));
 					}
 					HoloEye = true;
+				}
+				if(item.type == ModContent.ItemType<VisionAmulet>())
+                {
+					VisionVanity = true;
 				}
 				if (item.type == ModContent.ItemType<TestWings>())
 				{

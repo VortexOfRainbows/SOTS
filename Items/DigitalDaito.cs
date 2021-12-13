@@ -4,6 +4,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using SOTS.Void;
 using Terraria.DataStructures;
+using SOTS.Projectiles.Otherworld;
 
 namespace SOTS.Items
 {
@@ -23,13 +24,13 @@ namespace SOTS.Items
             item.height = 64;  
             item.useTime = 20; 
             item.useAnimation = 20;
-            item.useStyle = 5;		
+            item.useStyle = ItemUseStyleID.HoldingOut;		
             item.knockBack = 8f;
             item.value = Item.sellPrice(0, 10, 0, 0);
             item.rare = ItemRarityID.Cyan;
             item.UseSound = null;
             item.autoReuse = true;
-            item.shoot = mod.ProjectileType("DigitalSlash"); 
+            item.shoot = ModContent.ProjectileType<DigitalSlash>(); 
             item.shootSpeed = 18f;
             item.noUseGraphic = true; 
             item.noMelee = true;

@@ -64,9 +64,9 @@ namespace SOTS.Projectiles.Pyramid
 						break;
 				}
 				Vector2 rotationAround = new Vector2((4 + mult) * projectile.scale, 0).RotatedBy(MathHelper.ToRadians(60 * i + counter));
-				Main.spriteBatch.Draw(texture4, projectile.Center - Main.screenPosition + rotationAround, frame, color, projectile.rotation, drawOrigin, projectile.scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture4, projectile.Center - Main.screenPosition + rotationAround, frame, color, projectile.rotation, drawOrigin, projectile.scale, projectile.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 			}
-			Main.spriteBatch.Draw(texture, projectile.Center - Main.screenPosition, frame, drawColor, projectile.rotation, drawOrigin, projectile.scale, SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(texture, projectile.Center - Main.screenPosition, frame, drawColor, projectile.rotation, drawOrigin, projectile.scale, projectile.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 
 			if (shader != 0)
 			{
@@ -91,7 +91,7 @@ namespace SOTS.Projectiles.Pyramid
 		{
 			Player player = Main.player[projectile.owner];
 			SOTSPlayer modPlayer = player.GetModPlayer<SOTSPlayer>();
-			shader = player.cHead;
+			shader = player.cBody;
 			if (Main.myPlayer != projectile.owner)
 				projectile.timeLeft = 20;
 			if (modPlayer.CanCurseSwap)
@@ -143,6 +143,7 @@ namespace SOTS.Projectiles.Pyramid
 			}
 			Vector2 idlePosition = player.Center;
 			idlePosition.X -= player.direction * 32f;
+			projectile.spriteDirection = player.direction;
 			projectile.ai[0]++;
 			float sin = (float)Math.Sin(MathHelper.ToRadians(projectile.ai[0] * 4)) * 4;
 			idlePosition.Y += sin - 8;

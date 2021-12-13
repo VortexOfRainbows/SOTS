@@ -63,6 +63,8 @@ namespace SOTS.Items.GhostTown
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			int unique = modPlayer.UniqueVisionNumber;
 			GetBonuses(player, GetGem(unique), GetFrame(unique));
+			if(!hideVisual)
+				modPlayer.VisionVanity = true;
 		}
 		public int GetFrame(int unique)
         {

@@ -319,6 +319,20 @@ namespace SOTS.NPCs
 					if (Main.rand.NextBool(50))
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<BotanicalSymbiote>(), 1);
 				}
+				if(npc.type == ModContent.NPCType<TwilightScouter>())
+				{
+					if (Main.rand.NextBool(20))
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<GravityAnchor>(), 1);
+					if (Main.rand.NextBool(70))
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<ThundershockShortbow>(), 1);
+				}
+				if (npc.type == ModContent.NPCType<TwilightDevil>())
+				{
+					if (Main.rand.NextBool(20))
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<TwilightBeads>(), 1);
+					if (Main.rand.NextBool(70))
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<GravityAnchor>(), 1);
+				}
 			}
 		}
 		public override void EditSpawnRate(Player player, ref int spawnRate, ref int maxSpawns) 
