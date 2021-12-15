@@ -16,7 +16,7 @@ namespace SOTS.Items.Otherworld
             item.width = 26;     
             item.height = 36;   
             item.value = Item.sellPrice(0, 1, 0, 0);
-            item.rare = ItemRarityID.Orange;
+			item.rare = ItemRarityID.LightRed;
 			item.accessory = true;
 		}
         public override void UpdateAccessory(Player player, bool hideVisual)

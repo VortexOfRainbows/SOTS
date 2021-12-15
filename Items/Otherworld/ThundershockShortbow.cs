@@ -32,7 +32,7 @@ namespace SOTS.Items.Otherworld
 			item.useStyle = ItemUseStyleID.HoldingOut;
 			item.knockBack = 5f;
 			item.value = Item.sellPrice(0, 3, 50, 0);
-			item.rare = ItemRarityID.LightPurple;
+			item.rare = ItemRarityID.LightRed;
 			item.UseSound = null;
 			item.autoReuse = false;
 			item.channel = true;
