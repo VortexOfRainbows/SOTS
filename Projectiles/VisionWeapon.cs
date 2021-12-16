@@ -189,7 +189,7 @@ namespace SOTS.Projectiles
 			if (Main.myPlayer != projectile.owner)
 				projectile.timeLeft = 20;
 			Vector2 idlePosition = player.Center;
-			idlePosition.X -= player.direction * 18f;
+			idlePosition.X -= player.direction * 16f;
 			projectile.spriteDirection = player.direction;
 			projectile.ai[0]++;
 			float sin = (float)Math.Sin(MathHelper.ToRadians(projectile.ai[0] * 1.75f)) * 4;

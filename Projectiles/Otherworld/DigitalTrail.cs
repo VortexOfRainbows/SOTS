@@ -28,13 +28,7 @@ namespace SOTS.Projectiles.Otherworld
 			projectile.usesIDStaticNPCImmunity = true;
 			projectile.idStaticNPCHitCooldown = 10;
 			projectile.hide = true;
-		}
-		public override bool? CanHitNPC(NPC target)
-		{
-			Player player = Main.player[projectile.owner];
-			Vector2 center = player.Center;
-			bool hitThroughWall = Collision.CanHitLine(center - new Vector2(5, 5), 10, 10, target.Hitbox.TopLeft(), target.Hitbox.Width, target.Hitbox.Height) && !target.friendly;
-			return hitThroughWall || target.behindTiles;
+			projectile.ownerHitCheck = true;
 		}
 		public override void DrawBehind(int index, List<int> drawCacheProjsBehindNPCsAndTiles, List<int> drawCacheProjsBehindNPCs, List<int> drawCacheProjsBehindProjectiles, List<int> drawCacheProjsOverWiresUI)
         {

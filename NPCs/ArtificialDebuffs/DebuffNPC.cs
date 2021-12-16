@@ -291,6 +291,21 @@ namespace SOTS.NPCs.ArtificialDebuffs
                         SendClientChanges(player, npc);
                 }
             }
+            if(projectile.type == ModContent.ProjectileType<DeathSpiralProj>())
+            {
+                bool worm = npc.realLife != -1;
+                float baseChance = 0.1f;
+                int baseStacks = 1;
+                if (worm)
+                {
+                    baseStacks = 2;
+                    baseChance = 0.07f;
+                }
+                if (Main.rand.NextFloat(1) < baseChance / (baseStacks + BleedingCurse)) //1 in 10, drops lower ever time
+                    BleedingCurse++;
+                if (Main.myPlayer == player.whoAmI && Main.netMode == NetmodeID.MultiplayerClient)
+                    SendClientChanges(player, npc);
+            }
             if (projectile.type == ModContent.ProjectileType<DestabilizingBeam>() && !hitByRay)
             {
                 hitByRay = true;
@@ -573,7 +588,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
             if (BleedingCurse > 0)
             {
                 npc.lifeRegen -= BleedingCurse * 10;
-                damage += BleedingCurse / 2;
+                damage += BleedingCurse;
             }
             if(isFlowered)
             {

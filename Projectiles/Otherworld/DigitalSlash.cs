@@ -32,6 +32,7 @@ namespace SOTS.Projectiles.Otherworld
 			projectile.hide = true;
 			projectile.usesLocalNPCImmunity = true;
 			projectile.localNPCHitCooldown = 5;
+			projectile.ownerHitCheck = true;
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
@@ -50,13 +51,6 @@ namespace SOTS.Projectiles.Otherworld
 				return true;
 			}
 			return false;
-		}
-		public override bool? CanHitNPC(NPC target)
-		{
-			Player player = Main.player[projectile.owner];
-			Vector2 center = player.Center;
-			bool hitThroughWall = Collision.CanHitLine(center - new Vector2(5, 5), 10, 10, target.Hitbox.Center() - new Vector2(target.Hitbox.Width / 4f, target.Hitbox.Height / 4f), target.Hitbox.Width / 2, target.Hitbox.Height / 2) && !target.friendly;
-			return hitThroughWall;
 		}
 		public override bool ShouldUpdatePosition()
         {

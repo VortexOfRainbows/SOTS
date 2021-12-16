@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Dusts;
 using System;
 using Terraria;
 using Terraria.Enums;
@@ -27,7 +28,9 @@ namespace SOTS.Projectiles.Evil
             projectile.penetrate = -1;
             projectile.tileCollide = false;
             projectile.ignoreWater = true;
-            projectile.usesLocalNPCImmunity = true;
+            projectile.usesIDStaticNPCImmunity = true;
+            projectile.idStaticNPCHitCooldown = 10;
+            projectile.ownerHitCheck = true;
         }
         public override bool ShouldUpdatePosition()
         {
@@ -35,37 +38,54 @@ namespace SOTS.Projectiles.Evil
         }
         bool runOnce = true;
         float lightningCounter = 0;
+        float normalAICounter = 0;
         public override void AI()
         {
+            Player player = Main.player[projectile.owner];
             if (runOnce)
             {
+                Item item = player.HeldItem;
+                firingSpeed = projectile.velocity.Length();
+                firingAnimation = item.useAnimation;
+                firingTime = item.useTime;
                 lightningCounter = Main.rand.Next(360);
             }
             else
                 lightningCounter += 7f;
-            Player player = Main.player[projectile.owner];
+            if(projectile.ai[0] != -1)
+            {
+                player.ChangeDir(projectile.direction);
+                player.heldProj = projectile.whoAmI;
+                player.itemTime = 2;
+                player.itemAnimation = 2;
+                player.itemRotation = (projectile.velocity * projectile.direction).ToRotation();
+            }
             projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(-90f);
             projectile.spriteDirection = projectile.direction;
             projectile.timeLeft = 2;
-            player.ChangeDir(projectile.direction);
-            player.heldProj = projectile.whoAmI;
-            player.itemTime = 2;
-            player.itemAnimation = 2;
-            player.itemRotation = (projectile.velocity * projectile.direction).ToRotation();
             if (projectile.localAI[0] == 0f)
             {
                 projectile.localAI[0] = projectile.rotation;
             }
-            float direction = (projectile.localAI[0].ToRotationVector2().X >= 0f).ToDirectionInt();
-
-            Vector2 rotation = (direction * (projectile.ai[0] / firingAnimation * MathHelper.ToRadians(360f) + MathHelper.ToRadians(-90f))).ToRotationVector2();
+            float direction = 1f;
+            Vector2 rotation = (direction * (normalAICounter / firingAnimation * MathHelper.ToRadians(360f) + MathHelper.ToRadians(-90f))).ToRotationVector2();
             rotation.Y *= (float)Math.Sin(projectile.ai[1]);
 
             rotation = rotation.RotatedBy(projectile.localAI[0]);
 
-            projectile.ai[0] += 1f;
-            if (projectile.ai[0] < firingTime)
+            normalAICounter += 1f;
+            if (normalAICounter < firingTime)
             {
+                if(Main.rand.NextBool(4))
+                {
+                    Dust dust = Dust.NewDustDirect(projectile.Center + projectile.velocity * Main.rand.NextFloat(1) - new Vector2(5) + Main.rand.NextVector2Circular(12, 12), 0, 0, ModContent.DustType<CopyDust4>());
+                    dust.velocity *= 0.2f;
+                    dust.noGravity = true;
+                    dust.fadeIn = 0.2f;
+                    dust.color = Color.Lerp(new Color(110, 15, 0, 0), new Color(200, 32, 0, 0), Main.rand.NextFloat(1));
+                    dust.scale *= 1.6f;
+                    dust.velocity += projectile.velocity.SafeNormalize(Vector2.Zero) * 1.1f;
+                }
                 projectile.velocity += (firingSpeed * rotation).RotatedBy(MathHelper.ToRadians(90f));
             }
             else
@@ -75,12 +95,6 @@ namespace SOTS.Projectiles.Evil
             projectile.Center = player.RotatedRelativePoint(player.MountedCenter) + projectile.velocity.SafeNormalize(Vector2.Zero) * 12;
             chainHeadPosition = projectile.Center + projectile.velocity;
             SetUpTrails();
-        }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
-        {
-            int cooldown = 3;
-            projectile.localNPCImmunity[target.whoAmI] = 6;
-            target.immune[projectile.owner] = cooldown;
         }
         public override bool? CanCutTiles()
         {
@@ -111,7 +125,7 @@ namespace SOTS.Projectiles.Evil
             for (int i = 0; i < trailPos.Length; i++)
             {
                 float sin = (float)Math.Sin(MathHelper.ToRadians(i * (180f / trailPos.Length)));
-                float radius = sin * 3f;
+                float radius = sin * 6f;
                 Vector2 pos = Vector2.Lerp(from, End, i / 40f);
                 Vector2 sinusoid = new Vector2(0, (float)Math.Cos(MathHelper.ToRadians(i * 8 + lightningCounter)) * 12 * sin).RotatedBy(projectile.velocity.ToRotation());
                 trailPos[i] = pos + Main.rand.NextVector2CircularEdge(radius, radius) + sinusoid;
@@ -122,11 +136,8 @@ namespace SOTS.Projectiles.Evil
             Player player = Main.player[projectile.owner];
             Texture2D texture = Main.projectileTexture[projectile.type];
             Color color = lightColor;
-
             // Some rectangle presets for different parts of the chain.
             Rectangle chainHandle = new Rectangle(0, 2, texture.Width, 40);
-            Rectangle chainLinkEnd = new Rectangle(0, 68, texture.Width, 18);
-            Rectangle chainLink = new Rectangle(0, 46, texture.Width, 18);
             Rectangle chainHead = new Rectangle(0, 90, texture.Width, texture.Height - 90);
 
             // If the chain isn't moving, stop drawing all of its components.
@@ -140,7 +151,8 @@ namespace SOTS.Projectiles.Evil
             DrawLightning();
             Vector2 startPosition = projectile.Center;
             Vector2 yOffset = new Vector2(0, player.gfxOffY);
-            spriteBatch.Draw(texture, startPosition - Main.screenPosition + yOffset, chainHandle, color, projectile.rotation, chainHandle.Size() / 2f, projectile.scale, SpriteEffects.None, 0f);
+            if (projectile.ai[0] != -1)
+                spriteBatch.Draw(texture, startPosition - Main.screenPosition + yOffset, chainHandle, color, projectile.rotation, chainHandle.Size() / 2f, projectile.scale, SpriteEffects.None, 0f);
             Vector2 chainEnd = projectile.Center + projectile.velocity;
             spriteBatch.Draw(texture, chainEnd - Main.screenPosition + yOffset, chainHead, Lighting.GetColor((int)chainEnd.X / 16, (int)chainEnd.Y / 16), projectile.rotation, chainHead.Size() / 2f, projectile.scale, SpriteEffects.None, 0f);
             return false;
@@ -156,10 +168,12 @@ namespace SOTS.Projectiles.Evil
             {
                 return;
             }
+            float lifetimeMult = 0.1f + (float)Math.Sin(normalAICounter / firingAnimation * Math.PI);
             for (int k = 1; k < trailPos.Length; k++)
             {
-                float scale = 0.5f + 0.6f * (0.5f + 0.5f * (float)Math.Sin(MathHelper.ToRadians(k * (180f / trailPos.Length))));
-                scale *= 0.9f;
+                float multiplier = (float)Math.Sin(MathHelper.ToRadians(k * (180f / trailPos.Length)));
+                float scale = 0.5f + 0.6f * (0.5f + 0.5f * multiplier);
+                scale *= 0.9f * lifetimeMult;
                 if (trailPos[k] == Vector2.Zero)
                 {
                     return;
@@ -167,20 +181,18 @@ namespace SOTS.Projectiles.Evil
                 Vector2 drawPos = trailPos[k] - Main.screenPosition;
                 Vector2 currentPos = trailPos[k];
                 Vector2 betweenPositions = previousPosition - currentPos;
-                Color color = new Color(130, 140, 100, 0) * ((trailPos.Length - k) / (float)trailPos.Length) * 0.5f;
-                float max = betweenPositions.Length() / (4 * scale);
+                Color color = new Color(160, 100, 100, 0) * multiplier * 0.5f;
+                float amountMult = 2;
+                if (SOTS.Config.lowFidelityMode)
+                    amountMult = 4;
+                float max = betweenPositions.Length() / (amountMult * scale);
                 for (int i = 0; i < max; i++)
                 {
                     drawPos = previousPosition + -betweenPositions * (i / max) - Main.screenPosition;
-                    for (int j = 0; j < 4; j++)
+                    for (int j = 0; j < 2; j++)
                     {
-                        float x = Main.rand.NextFloat(-4, 4f) * scale;
-                        float y = Main.rand.NextFloat(-4, 4f) * scale;
-                        if (j <= 1)
-                        {
-                            x = 0;
-                            y = 0;
-                        }
+                        float x = Main.rand.NextFloat(-4, 4f) * scale * j;
+                        float y = Main.rand.NextFloat(-4, 4f) * scale * j;
                         if (trailPos[k] != projectile.Center)
                             Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, betweenPositions.ToRotation() + MathHelper.ToRadians(90), drawOrigin, scale, SpriteEffects.None, 0f);
                     }
