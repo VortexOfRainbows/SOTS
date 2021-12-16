@@ -553,7 +553,7 @@ namespace SOTS.NPCs.Constructs
         }
         public void doAIExtras()
         {
-            npc.localAI[1] += 3;
+            npc.localAI[1] += (float)Math.Sqrt(npc.velocity.Length()) * -npc.spriteDirection;
 			npc.timeLeft = 100;
 		}
     }

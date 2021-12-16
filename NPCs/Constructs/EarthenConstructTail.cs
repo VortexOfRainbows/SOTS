@@ -67,6 +67,7 @@ namespace SOTS.NPCs.Constructs
                     Gore.NewGore(npc.position, npc.velocity, Main.rand.Next(61, 64), 1f);
             }
         }
+        Vector2 ownerVelocity = Vector2.Zero;
         public override bool PreAI()
         {
             if (Main.netMode != 1)
@@ -81,7 +82,10 @@ namespace SOTS.NPCs.Constructs
                 }
             }
             if (npc.ai[3] > 0)
+            {
                 npc.realLife = (int)npc.ai[3];
+                ownerVelocity = Main.npc[(int)npc.ai[3]].velocity;
+            }
             if (npc.ai[2] >= 0)
             {
                 npc.scale = 5f / (npc.ai[2] + 6);
@@ -129,7 +133,7 @@ namespace SOTS.NPCs.Constructs
         }
 		public override void PostAI()
 		{
-            npc.localAI[1] += 3;
+            npc.localAI[1] += (float)Math.Sqrt(ownerVelocity.Length()) * -npc.spriteDirection;
 			npc.timeLeft = 100;
 		}
     }

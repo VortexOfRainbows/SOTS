@@ -35,12 +35,13 @@ Mid Priority:
 
 Low Priority:
 1. Archaelogist NPC
-2. Earthen construct pickaxe turning changes
 
 12/14/21 & 12/15/21
 1. Finished Death Spiral. It's strong but shouldn't be too op (I want to start slowing down the powercreep).
 	1. Works in multiplayer!
 2. Digital Daito now uses a vanilla system for tile checking, which makes it feel more responsive/intuitive
+3. Earthen Construct pickaxes now rotate depending on how fast the construct is moving
+4. Began visuals for inferno construct.
 
 12/11/21 & 12/12/21
 1. Starcaller staff finished. Works in multiplayer
