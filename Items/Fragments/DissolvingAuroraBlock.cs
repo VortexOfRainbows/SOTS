@@ -73,8 +73,8 @@ namespace SOTS.Items.Fragments
 		}
 		public static void DrawEffects(int i, int j, SpriteBatch spriteBatch, Mod mod, bool wall = false)
         {
-			Texture2D texture = mod.GetTexture("Gores/AuroraParticle");
-			Texture2D textureBlock = mod.GetTexture("Gores/AuroraBlockOutline");
+			Texture2D texture = mod.GetTexture("Assets/SpiritBlocks/AuroraParticle");
+			Texture2D textureBlock = mod.GetTexture("Assets/SpiritBlocks/AuroraBlockOutline");
 			Color color;
 			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
 			if (Main.drawToScreen)

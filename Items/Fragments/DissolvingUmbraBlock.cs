@@ -64,8 +64,8 @@ namespace SOTS.Items.Fragments
 		}
 		public static void DrawEffects(int i, int j, SpriteBatch spriteBatch, Mod mod, bool wall = false)
         {
-			Texture2D texture = mod.GetTexture("Gores/UmbraParticle");
-			Texture2D textureBlock = mod.GetTexture("Gores/UmbraBlockOutline");
+			Texture2D texture = mod.GetTexture("Assets/SpiritBlocks/UmbraParticle");
+			Texture2D textureBlock = mod.GetTexture("Assets/SpiritBlocks/UmbraBlockOutline");
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
 			float height = 8;
 			float timer = Main.GlobalTime * -90 + (i + j) * 10;
