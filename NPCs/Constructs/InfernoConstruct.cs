@@ -70,16 +70,17 @@ namespace SOTS.NPCs.Constructs
 				for (int i = 0; i < probes.Count; i++)
 				{
 					if(probes[i].degrees >= 180)
-						probes[i].Draw(drawColor);
+						probes[i].Draw();
 				}
 			}
 			Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition + new Vector2(0, npc.gfxOffY), null, drawColor, rotation, origin, npc.scale, npc.spriteDirection != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
-			if(!runOnce)
+			Main.spriteBatch.Draw(ModContent.GetTexture("SOTS/NPCs/Constructs/InfernoConstructGlow"), npc.Center - Main.screenPosition + new Vector2(0, npc.gfxOffY), null, Color.White, rotation, origin, npc.scale, npc.spriteDirection != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+			if (!runOnce)
 			{
 				for (int i = 0; i < probes.Count; i++)
 				{
 					if (probes[i].degrees < 180)
-						probes[i].Draw(drawColor);
+						probes[i].Draw();
 				}
 			}
 			return false;
@@ -125,6 +126,7 @@ namespace SOTS.NPCs.Constructs
 		}
 		public bool runOnce = true;
 		Vector2 aimTo = new Vector2(-1, -1);
+		public const int ProbeCount = 7;
 		public override bool PreAI()
 		{
 			Player player = Main.player[npc.target];
@@ -132,7 +134,7 @@ namespace SOTS.NPCs.Constructs
 			aimTo = player.Center;
 			if(runOnce)
             {
-				for(int i = 0; i <5; i++)
+				for(int i = 0; i < ProbeCount; i++)
                 {
 					probes.Add(new InfernoProbe(npc.Center, aimTo));
                 }
@@ -141,9 +143,9 @@ namespace SOTS.NPCs.Constructs
 			float xCompress = 0.4f;
 			int rotateLength = 72;
 			npc.ai[1]++;
-			for (int i = 0; i < 5; i++)
+			for (int i = 0; i < ProbeCount; i++)
 			{
-				float degrees = npc.ai[1] + i * 72;
+				float degrees = npc.ai[1] + i * (360f / ProbeCount);
 				probes[i].aimTo = aimTo;
 				Vector2 circularLocation = new Vector2(0, rotateLength).RotatedBy(MathHelper.ToRadians(degrees));
 				circularLocation.X *= xCompress;
@@ -204,7 +206,7 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override void NPCLoot()
 		{
-			int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, mod.NPCType("OtherworldlySpirit"));	
+			int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<InfernoSpirit>());	
 			Main.npc[n].velocity.Y = -10f;
 			if (Main.netMode != NetmodeID.MultiplayerClient)
 				Main.npc[n].netUpdate = true;
@@ -240,40 +242,27 @@ namespace SOTS.NPCs.Constructs
 			float rotation = (float)Math.Atan2(aimTo.Y - position.Y, aimTo.X - position.X);
 			if (Main.netMode != NetmodeID.Server)
 			{
-				int amt = 2;
-				for (int i = 0; i < amt; i++)
-				{
-					if(!Main.rand.NextBool(SOTS.Config.lowFidelityMode ? 3 : 4))
-					{
-						Vector2 rotational = new Vector2(-5f, 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-30f, 30f)));
-						if (i <= 1)
-						{
-							rotational.X *= 1f;
-							rotational.Y *= 0.6f;
-						}
-						else
-						{
-							rotational.X *= 0.4f;
-							rotational.Y *= 1.1f;
-						}
-						rotational = rotational.RotatedBy(rotation);
-						particleList.Add(new FireParticle(position + new Vector2(-12, 0).RotatedBy(rotation), rotational, Main.rand.NextFloat(-3f, 3f), Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(1.0f, 1.2f)));
-					}
-				}
+				Vector2 rotational = new Vector2(-5f, 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-30f, 30f)));
+				rotational.X *= 1f;
+				rotational.Y *= 0.6f;
+				rotational = rotational.RotatedBy(rotation);
+				particleList.Add(new FireParticle(position + new Vector2(-12, 0).RotatedBy(rotation), rotational, Main.rand.NextFloat(-3f, 3f), Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(1.0f, 1.2f)));
 				cataloguePos();
 			}
 		}
-		public void Draw(Color drawColor)
+		public void Draw()
 		{
 			DrawFire();
 			Texture2D texture = ModContent.GetTexture("SOTS/NPCs/Constructs/InfernoChild");
+			Texture2D textureGlow = ModContent.GetTexture("SOTS/NPCs/Constructs/InfernoChildGlow");
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
 			int spriteDirection = 1;
 			if (position.X > aimTo.X)
 				spriteDirection = -1;
 			float dir = (float)Math.Atan2(aimTo.Y - position.Y, aimTo.X - position.X);
 			float rotation = dir + (spriteDirection - 1) * 0.5f * -MathHelper.ToRadians(180);
-			Main.spriteBatch.Draw(texture, position - Main.screenPosition, null, drawColor, rotation, origin, 1f, spriteDirection != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(texture, position - Main.screenPosition, null, Lighting.GetColor((int)position.X / 16, (int)position.Y / 16), rotation, origin, 1f, spriteDirection != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(textureGlow, position - Main.screenPosition, null, Color.White, rotation, origin, 1f, spriteDirection != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 		}
 		public void DrawFire()
 		{

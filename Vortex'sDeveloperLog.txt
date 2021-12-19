@@ -36,9 +36,9 @@ Mid Priority:
 Low Priority:
 1. Archaelogist NPC
 
-12/16/21 & 12/18/21
+12/16/21 & 12/18/21 & 12/19/21
 1. Fixed a small issue with botanical symbiote drawing more than it should and not colliding properly.
-2. Some small progress on inferno construct
+2. Some small progress on inferno construct, inferno spirit, dissolving nether
 
 12/14/21 & 12/15/21
 1. Finished Death Spiral. It's strong but shouldn't be too op (I want to start slowing down the powercreep).
