@@ -190,7 +190,7 @@ namespace SOTS.Projectiles.Nature
 			}
 
 			float overlapVelocity = 0.4f;
-			for (int i = 0; i < Main.maxNPCs; i++)
+			for (int i = 0; i < Main.maxProjectiles; i++)
 			{
 				// Fix overlap with other minions
 				Projectile other = Main.projectile[i];

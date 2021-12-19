@@ -275,7 +275,7 @@ namespace SOTS
 					DrawStar(spawnPos, alphaMult, projectile.velocity.ToRotation(), spinCounter + MathHelper.ToRadians(30 * i), 6, dist1, dist2, 0.6f);
 				}
 			}
-			if (bloomingHookAssignment != -1)
+			/*(if (bloomingHookAssignment != -1)
 			{
 				Projectile hook = Main.projectile[bloomingHookAssignment];
 				if (hook.active && hook.type == ModContent.ProjectileType<BloomingHookMinion>())
@@ -283,7 +283,7 @@ namespace SOTS
 					BloomingHookMinion minion = hook.modProjectile as BloomingHookMinion;
 					minion.Draw(spriteBatch, lightColor);
                 }
-			}
+			}*/
             return base.PreDraw(projectile, spriteBatch, lightColor);
         }
         public static void LaserTo(int advisorId, Projectile projectile, int extraAlpha)

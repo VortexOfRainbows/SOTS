@@ -43,6 +43,7 @@ namespace SOTS.NPCs.Constructs
 			npc.damage = 100;
 			npc.lifeMax = 8000;
 		}
+		List<InfernoProbe> probes = new List<InfernoProbe>();
 		List<FireParticle> particleList = new List<FireParticle>();
 		public void cataloguePos()
 		{
@@ -64,7 +65,23 @@ namespace SOTS.NPCs.Constructs
 			dir = (float)Math.Atan2(aimTo.Y - npc.Center.Y, aimTo.X - npc.Center.X);
 			float rotation = dir + (npc.spriteDirection - 1) * 0.5f * -MathHelper.ToRadians(180); 
 			DrawFire();
+			if (!runOnce)
+			{
+				for (int i = 0; i < probes.Count; i++)
+				{
+					if(probes[i].degrees >= 180)
+						probes[i].Draw(drawColor);
+				}
+			}
 			Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition + new Vector2(0, npc.gfxOffY), null, drawColor, rotation, origin, npc.scale, npc.spriteDirection != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+			if(!runOnce)
+			{
+				for (int i = 0; i < probes.Count; i++)
+				{
+					if (probes[i].degrees < 180)
+						probes[i].Draw(drawColor);
+				}
+			}
 			return false;
 		}
 		public void DrawFire()
@@ -106,23 +123,41 @@ namespace SOTS.NPCs.Constructs
 					Gore.NewGore(npc.position, npc.velocity, Main.rand.Next(61, 64), 1f);
 			}
 		}
+		public bool runOnce = true;
 		Vector2 aimTo = new Vector2(-1, -1);
 		public override bool PreAI()
 		{
 			Player player = Main.player[npc.target];
 			npc.TargetClosest(true);
 			aimTo = player.Center;
+			if(runOnce)
+            {
+				for(int i = 0; i <5; i++)
+                {
+					probes.Add(new InfernoProbe(npc.Center, aimTo));
+                }
+				runOnce = false;
+			}
+			float xCompress = 0.4f;
+			int rotateLength = 72;
+			npc.ai[1]++;
+			for (int i = 0; i < 5; i++)
+			{
+				float degrees = npc.ai[1] + i * 72;
+				probes[i].aimTo = aimTo;
+				Vector2 circularLocation = new Vector2(0, rotateLength).RotatedBy(MathHelper.ToRadians(degrees));
+				circularLocation.X *= xCompress;
+				circularLocation = circularLocation.RotatedBy(npc.rotation);
+				probes[i].position = npc.Center + circularLocation;
+				probes[i].degrees = degrees % 360;
+				probes[i].Update();
+			}
 			return true;
 		}
 		public override void AI()
 		{
 			Player player = Main.player[npc.target];
 			Lighting.AddLight(npc.Center, (255 - npc.alpha) * 0.45f / 155f, (255 - npc.alpha) * 0.25f / 155f, (255 - npc.alpha) * 0.45f / 155f);
-			if(npc.ai[0] < 0)
-			{
-				npc.velocity *= 0.98f;
-				return;
-			}
 			Vector2 toPlayer = player.Center - npc.Center;
 			float distToPlayer = toPlayer.Length();
 			float speed = 12 + distToPlayer * 0.0005f;
@@ -175,5 +210,88 @@ namespace SOTS.NPCs.Constructs
 				Main.npc[n].netUpdate = true;
 			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<FragmentOfInferno>(), Main.rand.Next(4) + 4);
 		}	
+	}
+	public class InfernoProbe
+    {
+		public float degrees = 0;
+		public Vector2 position;
+		public Vector2 aimTo;
+		public List<FireParticle> particleList = new List<FireParticle>();
+		public void cataloguePos()
+		{
+			for (int i = 0; i < particleList.Count; i++)
+			{
+				FireParticle particle = particleList[i];
+				particle.Update();
+				if (!particle.active)
+				{
+					particleList.RemoveAt(i);
+					i--;
+				}
+			}
+		}
+		public InfernoProbe(Vector2 position, Vector2 aimTo)
+        {
+			this.position = position;
+			this.aimTo = aimTo;
+        }
+		public void Update()
+		{
+			float rotation = (float)Math.Atan2(aimTo.Y - position.Y, aimTo.X - position.X);
+			if (Main.netMode != NetmodeID.Server)
+			{
+				int amt = 2;
+				for (int i = 0; i < amt; i++)
+				{
+					if(!Main.rand.NextBool(SOTS.Config.lowFidelityMode ? 3 : 4))
+					{
+						Vector2 rotational = new Vector2(-5f, 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-30f, 30f)));
+						if (i <= 1)
+						{
+							rotational.X *= 1f;
+							rotational.Y *= 0.6f;
+						}
+						else
+						{
+							rotational.X *= 0.4f;
+							rotational.Y *= 1.1f;
+						}
+						rotational = rotational.RotatedBy(rotation);
+						particleList.Add(new FireParticle(position + new Vector2(-12, 0).RotatedBy(rotation), rotational, Main.rand.NextFloat(-3f, 3f), Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(1.0f, 1.2f)));
+					}
+				}
+				cataloguePos();
+			}
+		}
+		public void Draw(Color drawColor)
+		{
+			DrawFire();
+			Texture2D texture = ModContent.GetTexture("SOTS/NPCs/Constructs/InfernoChild");
+			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
+			int spriteDirection = 1;
+			if (position.X > aimTo.X)
+				spriteDirection = -1;
+			float dir = (float)Math.Atan2(aimTo.Y - position.Y, aimTo.X - position.X);
+			float rotation = dir + (spriteDirection - 1) * 0.5f * -MathHelper.ToRadians(180);
+			Main.spriteBatch.Draw(texture, position - Main.screenPosition, null, drawColor, rotation, origin, 1f, spriteDirection != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+		}
+		public void DrawFire()
+		{
+			Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Celestial/SubspaceLingeringFlame");
+			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
+			Color color;
+			for (int i = 0; i < particleList.Count; i++)
+			{
+				color = new Color(255, 69, 0, 0);
+				Vector2 drawPos = particleList[i].position - Main.screenPosition;
+				color *= (0.35f + 0.65f * particleList[i].scale);
+				for (int j = 0; j < 2; j++)
+				{
+					float x = Main.rand.NextFloat(-2f, 2f);
+					float y = Main.rand.NextFloat(-2f, 2f);
+					Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, particleList[i].rotation, drawOrigin, particleList[i].scale * 1.0f, SpriteEffects.None, 0f);
+				}
+			}
+		}
 	}
 }
