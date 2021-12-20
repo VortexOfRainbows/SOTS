@@ -9,7 +9,8 @@ namespace SOTS.Projectiles.Nature
 {    
     public class FriendlyFlowerBolt : ModProjectile 
     {
-		public override void SetStaticDefaults()
+        public override string Texture => "SOTS/Projectiles/Nature/NatureBolt";
+        public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Flower Bolt");
 		}

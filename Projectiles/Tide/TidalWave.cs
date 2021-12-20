@@ -8,8 +8,9 @@ using Terraria.ModLoader;
 
 namespace SOTS.Projectiles.Tide
 {    
-    public class TidalWave : ModProjectile 
-    {	
+    public class TidalWave : ModProjectile
+	{
+		public override string Texture => "SOTS/Projectiles/Tide/RippleWave";
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Tidal Wave");

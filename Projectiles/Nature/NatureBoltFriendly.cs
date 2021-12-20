@@ -8,9 +8,10 @@ using Terraria.ModLoader;
 
 namespace SOTS.Projectiles.Nature
 {    
-    public class NatureBoltFriendly : ModProjectile 
-    {
-        public override void SendExtraAI(BinaryWriter writer)
+    public class NatureBoltFriendly : ModProjectile
+	{
+		public override string Texture => "SOTS/Projectiles/Nature/NatureBolt";
+		public override void SendExtraAI(BinaryWriter writer)
         {
 			writer.Write(trueTarget.X);
 			writer.Write(trueTarget.Y);

@@ -181,7 +181,7 @@ namespace SOTS.Projectiles.Minions
 					Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 71, 0.55f, -0.3f);
 					if (Main.myPlayer == projectile.owner)
 					{
-						for(int i = -1; i < 2; i++)
+						for(int i = -1; i <= 1; i++)
                         {
 							Vector2 shotSpread = new Vector2(0, 6.5f).RotatedBy(MathHelper.ToRadians(22.5f * i));
 							Projectile.NewProjectile(projectile.Center, shotSpread, ModContent.ProjectileType<FrostSpear>(), projectile.damage, projectile.knockBack, projectile.owner);

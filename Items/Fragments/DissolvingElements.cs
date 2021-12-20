@@ -508,7 +508,7 @@ namespace SOTS.Items.Fragments
 		{
 			DisplayName.SetDefault("Dissolving Nether");
 			Tooltip.SetDefault("Decreases life regeneration by 2 while in the inventory");
-			Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(4, 8));
+			Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(5, 8));
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
@@ -527,7 +527,7 @@ namespace SOTS.Items.Fragments
 		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
 		{
 			frameCounter++;
-			if (frameCounter >= 4)
+			if (frameCounter >= 5)
 			{
 				frameCounter = 0;
 				frame++;
@@ -562,7 +562,7 @@ namespace SOTS.Items.Fragments
 		public override void UpdateInventory(Player player)
 		{
 			frameCounter++;
-			if (frameCounter >= 4)
+			if (frameCounter >= 5)
 			{
 				frameCounter = 0;
 				frame++;

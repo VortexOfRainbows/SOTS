@@ -9,8 +9,8 @@ using Terraria.ID;
 
 namespace SOTS.Projectiles.Tide
 {    
-    public class RippleWave : ModProjectile 
-    {	
+    public class RippleWave : ModProjectile
+	{
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Ripple Wave");
@@ -116,6 +116,7 @@ namespace SOTS.Projectiles.Tide
 	}
 	public class RippleWaveSummon : ModProjectile
 	{
+		public override string Texture => "SOTS/Projectiles/Tide/RippleWave";
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Ripple Wave");

@@ -6,10 +6,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace SOTS.Projectiles.Nature
-{    
-    public class FlowerBolt : ModProjectile 
-    {
-        public override void SetDefaults()
+{
+	public class FlowerBolt : ModProjectile
+	{
+		public override string Texture => "SOTS/Projectiles/Nature/NatureBolt";
+		public override void SetDefaults()
         {
 			projectile.height = 8;
 			projectile.width = 8;

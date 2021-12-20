@@ -5,8 +5,9 @@ using Terraria.ModLoader;
 
 namespace SOTS.Projectiles.Nature
 {    
-    public class NatureBeatFriendly : ModProjectile 
-    {
+    public class NatureBeatFriendly : ModProjectile
+	{
+		public override string Texture => "SOTS/Projectiles/Nature/NatureBeat";
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Nature Blast");
