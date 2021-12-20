@@ -42,7 +42,7 @@ namespace SOTS.NPCs.TreasureSlimes
 				new TreasureSlimeItem(ItemID.PlatinumOre, 30, 72, 0.25f),
 				new TreasureSlimeItem(ItemID.CrimtaneOre, 30, 72, 0.25f),
 				new TreasureSlimeItem(ItemID.DemoniteOre, 30, 72, 0.25f),
-				new TreasureSlimeItem(ItemType<RoyalGoldBrick>(), 30, 90, 0.2f),
+				new TreasureSlimeItem(ItemType<RoyalGoldBrick>(), 60, 120, 0.5f),
 				new TreasureSlimeItem(ItemType<RoyalRubyShard>(), 10, 30, 0.2f),
 
 				new TreasureSlimeItem(ItemID.HunterPotion, 1, 4, 0.2f),

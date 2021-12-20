@@ -294,13 +294,13 @@ namespace SOTS.NPCs
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<PyramidKey>(), 1);
 				}
-				if(npc.type == ModContent.NPCType<NatureConstruct>() || npc.type == ModContent.NPCType<EarthenConstruct>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead2>() || npc.type == ModContent.NPCType<PermafrostConstruct>() || npc.type == ModContent.NPCType<TidalConstruct>())
+				if(npc.type == ModContent.NPCType<NatureConstruct>() || npc.type == ModContent.NPCType<EarthenConstruct>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead2>() || npc.type == ModContent.NPCType<PermafrostConstruct>() || npc.type == ModContent.NPCType<TidalConstruct>() || npc.type == ModContent.NPCType<EvilConstruct>() || npc.type == ModContent.NPCType<InfernoConstruct>())
 				{
 					if(Main.rand.NextBool(50))
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<CrushingResistor>(), 1);
 					if (Main.rand.NextBool(75))
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<ElectromagneticDeterrent>(), 1);
-					if (Main.rand.NextBool(30))
+					if (Main.rand.NextBool(30) && npc.type != ModContent.NPCType<OtherworldlyConstructHead2>() && npc.type != ModContent.NPCType<OtherworldlyConstructHead>())
 					{
 						if(npc.type == ModContent.NPCType<NatureConstruct>())
 							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<MantisGrip>(), 1);
@@ -312,6 +312,23 @@ namespace SOTS.NPCs
 							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<PiscesPuncher>(), 1);
 						if (npc.type == ModContent.NPCType<EvilConstruct>())
 							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<DeathSpiral>(), 1);
+					}
+					else
+					{
+						int type = ModContent.ItemType<NaturePlating>();
+						int amt = Main.rand.Next(20, 41);
+						if (npc.type == ModContent.NPCType<NatureConstruct>())
+							type = ModContent.ItemType<NaturePlating>();
+						if (npc.type == ModContent.NPCType<EarthenConstruct>())
+							type = ModContent.ItemType<EarthenPlating>();
+						if (npc.type == ModContent.NPCType<PermafrostConstruct>())
+							type = ModContent.ItemType<PermafrostPlating>();
+						if (npc.type == ModContent.NPCType<OtherworldlyConstructHead2>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead>())
+						{
+							if (npc.type == ModContent.NPCType<OtherworldlyConstructHead2>())
+								amt = Main.rand.Next(5, 16);
+						}
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, type, amt);
 					}
 					if ((npc.type == ModContent.NPCType<OtherworldlyConstructHead>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead2>()) && Main.rand.NextBool(100))
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<PhaseCannon>(), 1);

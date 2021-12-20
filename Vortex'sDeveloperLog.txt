@@ -39,6 +39,10 @@ Low Priority:
 12/16/21 & 12/18/21 & 12/19/21
 1. Fixed a small issue with botanical symbiote drawing more than it should and not colliding properly.
 2. Some small progress on inferno construct, inferno spirit, dissolving nether
+3. Resprited and repalleted the spirit items
+4. Added 3 construct related blocks
+5. Pyramid chests now contain Ancient Gold Torch (over normal torch), with an additional chance for Ancient Gold Brick
+6. Increased weighting of Ancient Gold in Pyramid treasure slime: 0.2 -> 0.5 (amt 30-90 -> 60-120)
 
 12/14/21 & 12/15/21
 1. Finished Death Spiral. It's strong but shouldn't be too op (I want to start slowing down the powercreep).

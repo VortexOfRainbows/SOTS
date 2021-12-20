@@ -642,6 +642,18 @@ namespace SOTS
 				ItemID.DiamondRobe
 			});
 			RecipeGroup.RegisterGroup("SOTS:GemRobes", group);
+			group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Pre-Hardmode Ore", new int[]
+			{
+				ItemID.TungstenOre,
+				ItemID.CopperOre,
+				ItemID.TinOre,
+				ItemID.IronOre,
+				ItemID.LeadOre,
+				ItemID.SilverOre,
+				ItemID.GoldOre,
+				ItemID.PlatinumOre
+			});
+			RecipeGroup.RegisterGroup("SOTS:PHMOre", group);
 		}
 		public static float lightingChange = 1f;
         public override void ModifyLightingBrightness(ref float scale)

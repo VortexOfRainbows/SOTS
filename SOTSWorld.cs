@@ -29,6 +29,7 @@ using SOTS.Items.Tools;
 using SOTS.Items.GhostTown;
 using SOTS.Items.Otherworld.Blocks;
 using SOTS.Items.Otherworld.Furniture;
+using SOTS.Items.Pyramid.AncientGold;
 
 namespace SOTS
 {
@@ -929,7 +930,7 @@ namespace SOTS
 					int last = WorldGen.genRand.Next(3);
 					if(last == 0)
 					{
-						chest.item[slot].SetDefaults(ItemID.Torch);
+						chest.item[slot].SetDefaults(ModContent.ItemType<AncientGoldTorch>());
 						chest.item[slot].stack = WorldGen.genRand.Next(20) + 15;
 						slot++;
 					}
@@ -937,6 +938,12 @@ namespace SOTS
 					{
 						chest.item[slot].SetDefaults(ItemID.GoldCoin);
 						chest.item[slot].stack = WorldGen.genRand.Next(3) + 2;
+						slot++;
+					}
+					if(last == 2)
+					{
+						chest.item[slot].SetDefaults(ModContent.ItemType<RoyalGoldBrick>());
+						chest.item[slot].stack = WorldGen.genRand.Next(51) + 50;
 						slot++;
 					}
 				}

@@ -18,7 +18,7 @@ namespace SOTS.Items.Evil
 		}
 		public override void SetDefaults()
 		{
-			item.damage = 37;
+			item.damage = 45;
 			item.width = 52;
 			item.height = 54;
 			item.useStyle = ItemUseStyleID.HoldingOut;
