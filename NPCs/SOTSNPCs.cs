@@ -323,6 +323,10 @@ namespace SOTS.NPCs
 							type = ModContent.ItemType<EarthenPlating>();
 						if (npc.type == ModContent.NPCType<PermafrostConstruct>())
 							type = ModContent.ItemType<PermafrostPlating>();
+						if (npc.type == ModContent.NPCType<TidalConstruct>())
+							type = ModContent.ItemType<TidePlating>();
+						if (npc.type == ModContent.NPCType<EvilConstruct>())
+							type = ModContent.ItemType<EvilPlating>();
 						if (npc.type == ModContent.NPCType<OtherworldlyConstructHead2>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead>())
 						{
 							if (npc.type == ModContent.NPCType<OtherworldlyConstructHead2>())

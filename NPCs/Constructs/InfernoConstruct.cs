@@ -41,7 +41,7 @@ namespace SOTS.NPCs.Constructs
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
 		{
 			npc.damage = 100;
-			npc.lifeMax = 8000;
+			npc.lifeMax = 7500;
 		}
 		List<InfernoProbe> probes = new List<InfernoProbe>();
 		List<FireParticle> particleList = new List<FireParticle>();
@@ -103,25 +103,31 @@ namespace SOTS.NPCs.Constructs
 				}
 			}
 		}
-		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
-		{
-
-		}
 		public override void HitEffect(int hitDirection, double damage)
 		{
 			if (npc.life <= 0)
 			{
-				for (int k = 0; k < 20; k++)
+				if(Main.netMode != NetmodeID.Server)
 				{
-					Dust.NewDust(npc.position, npc.width, npc.height, 82, 2.5f * (float)hitDirection, -2.5f, 0, default(Color), 0.7f);
-				}
-				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/OtherworldlyConstructs/OtherworldlyConstructGore1"), 1f);
-				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/OtherworldlyConstructs/OtherworldlyConstructGore3"), 1f);
-				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/OtherworldlyConstructs/OtherworldlyConstructGore4"), 1f);
-				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/OtherworldlyConstructs/OtherworldlyConstructGore5"), 1f);
-				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/OtherworldlyConstructs/OtherworldlyConstructGore6"), 1f);
-				for (int i = 0; i < 9; i++)
-					Gore.NewGore(npc.position, npc.velocity, Main.rand.Next(61, 64), 1f);
+					for (int k = 0; k < 30; k++)
+					{
+						Dust.NewDust(npc.position, npc.width, npc.height, DustID.Iron, 2.5f * (float)hitDirection, -2.5f, 0, default(Color), 0.7f);
+						Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.Fire, 2.5f * (float)hitDirection, -2.5f, 0, default(Color), 2.2f);
+					}
+					for (int i = 1; i <= 7; i++)
+						Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/InfernoConstruct/InfernoConstructGore" + i), 1f);
+					for (int i = 0; i < 9; i++)
+						Gore.NewGore(npc.position, npc.velocity, Main.rand.Next(61, 64), 1f);
+					for (int i = 0; i < probes.Count; i++)
+					{
+						Gore.NewGore(probes[i].position - new Vector2(13, 13), npc.velocity, mod.GetGoreSlot("Gores/InfernoConstruct/InfernoChildGore"), 1f);
+						for (int k = 0; k < 6; k++)
+						{
+							Dust dust = Dust.NewDustDirect(probes[i].position, 0, 0, DustID.Fire);
+							dust.scale *= 2.1f;
+						}
+					}
+                }
 			}
 		}
 		public bool runOnce = true;
@@ -143,17 +149,26 @@ namespace SOTS.NPCs.Constructs
 			float xCompress = 0.4f;
 			int rotateLength = 72;
 			npc.ai[1]++;
+			npc.ai[2]++;
+			float dynamicDegrees = 15 * (float)Math.Sin(MathHelper.ToRadians(npc.ai[2]));
 			for (int i = 0; i < ProbeCount; i++)
 			{
 				float degrees = npc.ai[1] + i * (360f / ProbeCount);
 				probes[i].aimTo = aimTo;
 				Vector2 circularLocation = new Vector2(0, rotateLength).RotatedBy(MathHelper.ToRadians(degrees));
 				circularLocation.X *= xCompress;
-				circularLocation = circularLocation.RotatedBy(npc.rotation);
+				circularLocation = circularLocation.RotatedBy(npc.rotation + MathHelper.ToRadians(dynamicDegrees));
 				probes[i].position = npc.Center + circularLocation;
 				probes[i].degrees = degrees % 360;
 				probes[i].Update();
 			}
+			if(Main.rand.NextBool(7))
+            {
+				Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.Fire);
+				dust.scale *= 1.6f;
+				dust.noGravity = true;
+				dust.velocity *= 0.2f;
+            }
 			return true;
 		}
 		public override void AI()

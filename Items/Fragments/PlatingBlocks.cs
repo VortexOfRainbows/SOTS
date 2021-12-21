@@ -145,22 +145,6 @@ namespace SOTS.Items.Fragments
 				return true;
 			return false;
 		}
-		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
-		{
-			if (canGlow(i, j))
-			{
-				r = 0.15f;
-				g = 0.2f;
-				b = 0.13f;
-			}
-			else
-			{
-				r = 0;
-				g = 0;
-				b = 0;
-			}
-			base.ModifyLight(i, j, ref r, ref g, ref b);
-		}
 	}
 	public class EarthenPlating : ModItem
 	{
@@ -216,8 +200,8 @@ namespace SOTS.Items.Fragments
 		{
 			if (canGlow(i, j))
 			{
-				r = 0.25f;
-				g = 0.22f;
+				r = 0.36f;
+				g = 0.32f;
 				b = 0.11f;
 			}
 			else
@@ -226,7 +210,6 @@ namespace SOTS.Items.Fragments
 				g = 0;
 				b = 0;
 			}
-			base.ModifyLight(i, j, ref r, ref g, ref b);
 		}
 	}
 	public class PermafrostPlating : ModItem
@@ -281,9 +264,9 @@ namespace SOTS.Items.Fragments
         {
 			if(canGlow(i, j))
 			{
-				r = 0.2f;
-				g = 0.25f;
-				b = 0.25f;
+				r = 0.225f;
+				g = 0.3f;
+				b = 0.3f;
 			}
 			else
             {
@@ -291,7 +274,136 @@ namespace SOTS.Items.Fragments
 				g = 0;
 				b = 0;
             }
-            base.ModifyLight(i, j, ref r, ref g, ref b);
         }
+	}
+	public class TidePlating : ModItem
+	{
+		public override void SetStaticDefaults()
+		{
+			DisplayName.SetDefault("Tide Plating");
+			Tooltip.SetDefault("");
+		}
+		public override void SetDefaults()
+		{
+			item.CloneDefaults(ItemID.StoneBlock);
+			item.rare = ItemRarityID.Blue;
+			item.createTile = ModContent.TileType<TidePlatingTile>();
+		}
+		public override void AddRecipes()
+		{
+			ModRecipe recipe = new ModRecipe(mod);
+			recipe.AddIngredient(ModContent.ItemType<FragmentOfTide>(), 1);
+			recipe.AddRecipeGroup("SOTS:PHMOre", 1);
+			recipe.AddTile(TileID.HeavyWorkBench);
+			recipe.SetResult(this, 5);
+			recipe.AddRecipe();
+		}
+	}
+	public class TidePlatingTile : PlatingTile
+	{
+		public override Texture2D glowTexture => mod.GetTexture("Items/Fragments/TidePlatingTileGlow");
+		public override void SafeSetDefaults()
+		{
+			drop = ModContent.ItemType<TidePlating>();
+			AddMapEntry(new Color(35, 37, 52));
+			mineResist = 1.5f;
+			soundType = SoundID.Tink;
+			soundStyle = 2;
+			dustType = DustID.Lead; //demonite
+		}
+		public override bool canGlow(int i, int j)
+		{
+			Tile tile = Main.tile[i, j];
+			int frameX = tile.frameX / 18;
+			int frameY = tile.frameY / 18;
+			if (frameX >= 6 && frameX <= 8 && (frameY == 0 || frameY == 3 || frameY == 4))
+				return false;
+			if ((frameX == 9 || frameX == 12) && frameY >= 0 && frameY <= 2)
+				return false;
+			if (frameX >= 9 && frameX <= 11 && frameY == 3)
+				return false;
+			return true;
+		}
+		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
+		{
+			if (canGlow(i, j))
+			{
+				r = 0.1f;
+				g = 0.2f;
+				b = 0.7f;
+			}
+			else
+			{
+				r = 0;
+				g = 0;
+				b = 0;
+			}
+		}
+	}
+	public class EvilPlating : ModItem
+	{
+		public override void SetStaticDefaults()
+		{
+			DisplayName.SetDefault("Evil Plating");
+			Tooltip.SetDefault("");
+		}
+		public override void SetDefaults()
+		{
+			item.CloneDefaults(ItemID.StoneBlock);
+			item.rare = ItemRarityID.Blue;
+			item.createTile = ModContent.TileType<EvilPlatingTile>();
+		}
+		public override void AddRecipes()
+		{
+			ModRecipe recipe = new ModRecipe(mod);
+			recipe.AddIngredient(ModContent.ItemType<FragmentOfEvil>(), 1);
+			recipe.AddRecipeGroup("SOTS:PHMOre", 1);
+			recipe.AddTile(TileID.HeavyWorkBench);
+			recipe.SetResult(this, 5);
+			recipe.AddRecipe();
+		}
+	}
+	public class EvilPlatingTile : PlatingTile
+	{
+		public override Texture2D glowTexture => mod.GetTexture("Items/Fragments/EvilPlatingTileGlow");
+		public override void SafeSetDefaults()
+		{
+			drop = ModContent.ItemType<EvilPlating>();
+			AddMapEntry(new Color(98, 47, 126));
+			mineResist = 1.5f;
+			soundType = SoundID.Tink;
+			soundStyle = 2;
+			dustType = 14; //demonite
+		}
+		public override bool canGlow(int i, int j)
+		{
+			Tile tile = Main.tile[i, j];
+			int frameX = tile.frameX / 18;
+			int frameY = tile.frameY / 18;
+			if (frameY == 0 && ((frameX >= 1 && frameX <= 3) || frameX == 10 || frameX == 11))
+			{
+				return true;
+			}
+			if (frameY == 1 && ((frameX >= 1 && frameX <= 3) || (frameX >= 6 && frameX <= 8) || frameX == 10 || frameX == 11))
+				return true;
+			if (frameY == 2 && ((frameX >= 6 && frameX <= 8) || frameX == 10 || frameX == 11))
+				return true;
+			return false;
+		}
+		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
+		{
+			if (canGlow(i, j))
+			{
+				r = 0.8f;
+				g = 0.1f;
+				b = 0.1f;
+			}
+			else
+			{
+				r = 0;
+				g = 0;
+				b = 0;
+			}
+		}
 	}
 }
