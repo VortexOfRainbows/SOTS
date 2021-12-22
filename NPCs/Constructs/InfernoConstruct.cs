@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Items.Fragments;
@@ -12,7 +13,27 @@ namespace SOTS.NPCs.Constructs
 {
 	public class InfernoConstruct : ModNPC
 	{
+		int direction = 1;
 		float dir = 0f;
+		public override void SendExtraAI(BinaryWriter writer)
+		{
+			writer.Write(direction);
+		}
+		public override void ReceiveExtraAI(BinaryReader reader)
+		{
+			direction = reader.ReadInt32();
+		}
+		private float attackPhase
+		{
+			get => npc.ai[0];
+			set => npc.ai[0] = value;
+		}
+		private float attackTimer
+		{
+			get => npc.ai[3];
+			set => npc.ai[3] = value;
+		}
+
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Inferno Construct");
@@ -56,6 +77,8 @@ namespace SOTS.NPCs.Constructs
 					particleList.RemoveAt(i);
 					i--;
 				}
+				else
+					particle.velocity *= 0.96f;
 			}
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
@@ -131,14 +154,16 @@ namespace SOTS.NPCs.Constructs
 			}
 		}
 		public bool runOnce = true;
-		Vector2 aimTo = new Vector2(-1, -1);
+		Vector2 aimTo = Vector2.Zero;
 		public const int ProbeCount = 7;
+		float spinSpeed = 1;
+		float spinDynamicSpeed = 1;
 		public override bool PreAI()
 		{
 			Player player = Main.player[npc.target];
-			npc.TargetClosest(true);
+			npc.TargetClosest(false);
 			aimTo = player.Center;
-			if(runOnce)
+			if (runOnce)
             {
 				for(int i = 0; i < ProbeCount; i++)
                 {
@@ -148,18 +173,21 @@ namespace SOTS.NPCs.Constructs
 			}
 			float xCompress = 0.4f;
 			int rotateLength = 72;
-			npc.ai[1]++;
-			npc.ai[2]++;
+			npc.ai[1] += spinSpeed;
+			npc.ai[2] += spinDynamicSpeed;
+			spinSpeed = MathHelper.Lerp(spinSpeed, 1, 0.05f);
+			spinDynamicSpeed = MathHelper.Lerp(spinDynamicSpeed, 1, 0.05f);
 			float dynamicDegrees = 15 * (float)Math.Sin(MathHelper.ToRadians(npc.ai[2]));
 			for (int i = 0; i < ProbeCount; i++)
 			{
 				float degrees = npc.ai[1] + i * (360f / ProbeCount);
-				probes[i].aimTo = aimTo;
+				probes[i].aimTo = player.Center;
 				Vector2 circularLocation = new Vector2(0, rotateLength).RotatedBy(MathHelper.ToRadians(degrees));
 				circularLocation.X *= xCompress;
 				circularLocation = circularLocation.RotatedBy(npc.rotation + MathHelper.ToRadians(dynamicDegrees));
 				probes[i].position = npc.Center + circularLocation;
 				probes[i].degrees = degrees % 360;
+				probes[i].velocity = npc.velocity;
 				probes[i].Update();
 			}
 			if(Main.rand.NextBool(7))
@@ -176,25 +204,44 @@ namespace SOTS.NPCs.Constructs
 			Player player = Main.player[npc.target];
 			Lighting.AddLight(npc.Center, (255 - npc.alpha) * 0.45f / 155f, (255 - npc.alpha) * 0.25f / 155f, (255 - npc.alpha) * 0.45f / 155f);
 			Vector2 toPlayer = player.Center - npc.Center;
-			float distToPlayer = toPlayer.Length();
-			float speed = 12 + distToPlayer * 0.0005f;
-			if(speed > distToPlayer)
-            {
-				speed = distToPlayer;
-			}
-			if(distToPlayer > 880)
-            {
-				speed *= 2.8f;
-            }
-			if(distToPlayer < 380 && distToPlayer > 320)
-            {
-				speed *= 0.1f;
-            }
-			if(distToPlayer < 320)
+			if(attackPhase == 0)
 			{
-				speed = -2 + distToPlayer * -0.001f;
+				aimTo = player.Center;
+				attackTimer++;
+				float distToPlayer = toPlayer.Length();
+				float speed = 12 + distToPlayer * 0.0005f;
+				if (speed > distToPlayer)
+				{
+					speed = distToPlayer;
+				}
+				if (distToPlayer > 880)
+				{
+					speed *= 2.8f;
+				}
+				if (distToPlayer < 380 && distToPlayer > 320)
+				{
+					speed *= 0.1f;
+				}
+				if (distToPlayer < 320)
+				{
+					speed = -2 + distToPlayer * -0.001f;
+				}
+				if (player.Center.X < npc.Center.X)
+					direction = 1;
+				else
+					direction = -1;
+				npc.velocity = Vector2.Lerp(npc.velocity, toPlayer.SafeNormalize(Vector2.Zero) * speed, 0.1f);
+				if(attackTimer > 180)
+                {
+					attackTimer = 0;
+					attackPhase = 1;
+                }
 			}
-			npc.velocity = Vector2.Lerp(npc.velocity, toPlayer.SafeNormalize(Vector2.Zero) * speed, 0.1f);
+			if(attackPhase == 1)
+            {
+				attackTimer++;
+				DashAttacks(440, 1.3f, 5);
+			}
 			dir = (float)Math.Atan2(aimTo.Y - npc.Center.Y, aimTo.X - npc.Center.X);
 			npc.rotation = dir;
 			if (Main.netMode != NetmodeID.Server)
@@ -208,16 +255,72 @@ namespace SOTS.NPCs.Constructs
 						rotational.Y *= 0.6f;
 					}
 					else
-                    {
+					{
 						rotational.X *= 0.4f;
 						rotational.Y *= 1.1f;
 					}
 					rotational = rotational.RotatedBy(npc.rotation);
-					particleList.Add(new FireParticle(npc.Center + new Vector2(-30, 0).RotatedBy(npc.rotation), rotational, Main.rand.NextFloat(-3f, 3f), Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(1.6f, 2f)));
+					particleList.Add(new FireParticle(npc.Center + new Vector2(-30, 0).RotatedBy(npc.rotation), rotational + npc.velocity * Main.rand.NextFloat(0.8f), Main.rand.NextFloat(-3f, 3f), Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(1.6f, 2f)));
 				}
 				cataloguePos();
 			}
-			npc.spriteDirection = npc.direction;
+			npc.spriteDirection = -direction;
+		}
+		public const int timeBetweenDashes = 80;
+		public void DashAttacks(float distance, float speedMult, int amt = 4)
+		{
+			Player player = Main.player[npc.target];
+			int timer = (int)attackTimer % timeBetweenDashes;
+			if (timer <= 30)
+			{
+				Vector2 dashArea = player.Center + new Vector2(distance * direction, 0);
+				Vector2 toPlayer = dashArea - npc.Center;
+				float distToPlayer = toPlayer.Length();
+				float speed = 10 * speedMult + distToPlayer * 0.0005f;
+				if (speed > distToPlayer)
+				{
+					speed = distToPlayer;
+				}
+				npc.velocity = Vector2.Lerp(npc.velocity, toPlayer.SafeNormalize(Vector2.Zero) * speed, 0.1f);
+				if (npc.velocity.Length() < 2)
+					aimTo = player.Center;
+				aimTo = Vector2.Lerp(npc.Center + npc.velocity * 6, player.Center, timer / 30f);
+			}
+			else if (timer < 50)
+			{
+				aimTo = player.Center;
+				float toPlayerY = (float)(Math.Sign(player.Center.Y - npc.Center.Y) * Math.Sqrt(Math.Abs(player.Center.Y - npc.Center.Y)));
+				float current = timer - 40;
+				float sin = (float)Math.Sin(MathHelper.ToRadians(current * 12f));
+				npc.velocity *= 0.1f;
+				npc.velocity.X += sin * 4.5f * direction;
+				npc.velocity.Y += sin * 0.1f * toPlayerY;
+				spinSpeed = 0.5f;
+				spinDynamicSpeed = 2f;
+			}
+			if (timer == 50)
+			{
+				Vector2 toPlayer = player.Center - npc.Center;
+				Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 62, 1.1f, 0.3f);
+				npc.velocity += 23f * toPlayer.SafeNormalize(Vector2.Zero);
+				npc.velocity.Y *= 0.5f;
+			}
+			if (timer > 50)
+			{
+				aimTo = npc.Center + npc.velocity * 6;
+				npc.velocity += new Vector2(-1.1f * speedMult * direction, 0);
+				spinSpeed = 3.5f;
+				spinDynamicSpeed = 1f;
+			}
+			if (timer == timeBetweenDashes - 1)
+			{
+				direction *= -1;
+			}
+			if (attackTimer > timeBetweenDashes * amt + 30)
+			{
+				attackTimer = 0;
+				attackPhase = 0;
+			}
 		}
 		public override void NPCLoot()
 		{
@@ -233,6 +336,7 @@ namespace SOTS.NPCs.Constructs
 		public float degrees = 0;
 		public Vector2 position;
 		public Vector2 aimTo;
+		public Vector2 velocity;
 		public List<FireParticle> particleList = new List<FireParticle>();
 		public void cataloguePos()
 		{
@@ -245,6 +349,8 @@ namespace SOTS.NPCs.Constructs
 					particleList.RemoveAt(i);
 					i--;
 				}
+				else
+					particle.velocity *= 0.96f;
 			}
 		}
 		public InfernoProbe(Vector2 position, Vector2 aimTo)
@@ -261,7 +367,7 @@ namespace SOTS.NPCs.Constructs
 				rotational.X *= 1f;
 				rotational.Y *= 0.6f;
 				rotational = rotational.RotatedBy(rotation);
-				particleList.Add(new FireParticle(position + new Vector2(-12, 0).RotatedBy(rotation), rotational, Main.rand.NextFloat(-3f, 3f), Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(1.0f, 1.2f)));
+				particleList.Add(new FireParticle(position + new Vector2(-12, 0).RotatedBy(rotation), rotational + velocity * Main.rand.NextFloat(0.8f), Main.rand.NextFloat(-3f, 3f), Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(1.0f, 1.2f)));
 				cataloguePos();
 			}
 		}
