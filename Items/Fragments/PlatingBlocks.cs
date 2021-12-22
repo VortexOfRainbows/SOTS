@@ -133,9 +133,9 @@ namespace SOTS.Items.Fragments
 		{
 			if (canGlow(i, j))
 			{
-				r = 0.09f;
-				g = 0.4f;
-				b = 0.12f;
+				r = 0.55f;
+				g = 0.8f;
+				b = 0.43f;
 			}
 			else
 			{
