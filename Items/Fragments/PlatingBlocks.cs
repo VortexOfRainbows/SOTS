@@ -45,22 +45,6 @@ namespace SOTS.Items.Fragments
 				return false;
 			return true;
 		}
-		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
-		{
-			if (canGlow(i, j))
-			{
-				r = 0.2f;
-				g = 0.25f;
-				b = 0.25f;
-			}
-			else
-			{
-				r = 0;
-				g = 0;
-				b = 0;
-			}
-			base.ModifyLight(i, j, ref r, ref g, ref b);
-		}
 		public sealed override void PostDraw(int i, int j, SpriteBatch spriteBatch)
 		{
 			if(canGlow(i, j))
@@ -144,6 +128,21 @@ namespace SOTS.Items.Fragments
 			if (frameX >= 0 && frameX <= 5 && (frameY == 3 || frameY == 4))
 				return true;
 			return false;
+		}
+		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
+		{
+			if (canGlow(i, j))
+			{
+				r = 0.09f;
+				g = 0.4f;
+				b = 0.12f;
+			}
+			else
+			{
+				r = 0;
+				g = 0;
+				b = 0;
+			}
 		}
 	}
 	public class EarthenPlating : ModItem
@@ -329,8 +328,8 @@ namespace SOTS.Items.Fragments
 			if (canGlow(i, j))
 			{
 				r = 0.1f;
-				g = 0.2f;
-				b = 0.7f;
+				g = 0.12f;
+				b = 0.30f;
 			}
 			else
 			{
@@ -394,9 +393,9 @@ namespace SOTS.Items.Fragments
 		{
 			if (canGlow(i, j))
 			{
-				r = 0.8f;
-				g = 0.1f;
-				b = 0.1f;
+				r = 0.4f;
+				g = 0.04f;
+				b = 0.04f;
 			}
 			else
 			{

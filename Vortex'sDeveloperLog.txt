@@ -32,6 +32,7 @@ Mid Priority:
 4. Witch's Heart accessory; in similar vein to Heart of the Sea, where it is an accessory variant of the Nightmare potion
 5. Mobile Fortress Generator: upgrade to platform generator. Two tiers of upgrades (this + another earlier one), can be visually whatever but it is obtained from Old One's army stuff
 6. Split Focus Reticle into two accessories to make it less overpowered: Focus Reticle (Amplifiers + Crit Rate), Bag of Charms (Charms + Icosahedrons)
+7. Accessory Pets to use own dye slots.
 
 Low Priority:
 1. Archaelogist NPC
@@ -39,7 +40,8 @@ Low Priority:
 12/21/21
 1. Evil Plating and Tide Plating
 2. Inferno Construct Gore, and some other visuals
-	1. Framework for Inferno Construct dash attack. Still going to add more to it
+	1. Inferno Construct dash attack
+	2. Just one more attack to be worked on (but the spirit will have 3 instead of 2): Desync Laser
 3. Changed colors for other platings
 
 12/16/21 & 12/18/21 & 12/19/21

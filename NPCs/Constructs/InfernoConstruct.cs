@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Dusts;
 using SOTS.Items.Fragments;
 using SOTS.Projectiles.Celestial;
+using SOTS.Projectiles.Inferno;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -44,7 +46,7 @@ namespace SOTS.NPCs.Constructs
 			npc.lifeMax = 5000;  
 			npc.damage = 70; 
 			npc.defense = 26;  
-			npc.knockBackResist = 0.1f;
+			npc.knockBackResist = 0f;
 			npc.width = 98;
 			npc.height = 78;
 			Main.npcFrameCount[npc.type] = 1;
@@ -158,6 +160,8 @@ namespace SOTS.NPCs.Constructs
 		public const int ProbeCount = 7;
 		float spinSpeed = 1;
 		float spinDynamicSpeed = 1;
+		float rotateLength = 72;
+		float targetRotateLength = 72;
 		public override bool PreAI()
 		{
 			Player player = Main.player[npc.target];
@@ -172,7 +176,6 @@ namespace SOTS.NPCs.Constructs
 				runOnce = false;
 			}
 			float xCompress = 0.4f;
-			int rotateLength = 72;
 			npc.ai[1] += spinSpeed;
 			npc.ai[2] += spinDynamicSpeed;
 			spinSpeed = MathHelper.Lerp(spinSpeed, 1, 0.05f);
@@ -190,7 +193,9 @@ namespace SOTS.NPCs.Constructs
 				probes[i].velocity = npc.velocity;
 				probes[i].Update();
 			}
-			if(Main.rand.NextBool(7))
+			rotateLength = MathHelper.Lerp(rotateLength, targetRotateLength, 0.05f);
+			targetRotateLength = 72;
+			if (Main.rand.NextBool(7))
             {
 				Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.Fire);
 				dust.scale *= 1.6f;
@@ -273,6 +278,7 @@ namespace SOTS.NPCs.Constructs
 			int timer = (int)attackTimer % timeBetweenDashes;
 			if (timer <= 30)
 			{
+				targetRotateLength = 90;
 				Vector2 dashArea = player.Center + new Vector2(distance * direction, 0);
 				Vector2 toPlayer = dashArea - npc.Center;
 				float distToPlayer = toPlayer.Length();
@@ -288,18 +294,20 @@ namespace SOTS.NPCs.Constructs
 			}
 			else if (timer < 50)
 			{
+				targetRotateLength = 112;
 				aimTo = player.Center;
 				float toPlayerY = (float)(Math.Sign(player.Center.Y - npc.Center.Y) * Math.Sqrt(Math.Abs(player.Center.Y - npc.Center.Y)));
 				float current = timer - 40;
 				float sin = (float)Math.Sin(MathHelper.ToRadians(current * 12f));
 				npc.velocity *= 0.1f;
-				npc.velocity.X += sin * 4.5f * direction;
-				npc.velocity.Y += sin * 0.1f * toPlayerY;
+				npc.velocity.X += sin * 5f * direction;
+				npc.velocity.Y += sin * 0.125f * toPlayerY;
 				spinSpeed = 0.5f;
 				spinDynamicSpeed = 2f;
 			}
 			if (timer == 50)
 			{
+				targetRotateLength = 112;
 				Vector2 toPlayer = player.Center - npc.Center;
 				Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 62, 1.1f, 0.3f);
 				npc.velocity += 23f * toPlayer.SafeNormalize(Vector2.Zero);
@@ -307,10 +315,22 @@ namespace SOTS.NPCs.Constructs
 			}
 			if (timer > 50)
 			{
+				targetRotateLength = 112;
 				aimTo = npc.Center + npc.velocity * 6;
-				npc.velocity += new Vector2(-1.1f * speedMult * direction, 0);
+				npc.velocity += new Vector2(1.1f * speedMult * Math.Sign(npc.velocity.X), 0);
 				spinSpeed = 3.5f;
 				spinDynamicSpeed = 1f;
+				if(attackTimer % 4 == 0)
+                {
+					int num = (int)attackTimer % probes.Count;
+					InfernoProbe probe = probes[num];
+					int damage = npc.damage / 2;
+					if (Main.expertMode)
+					{
+						damage = (int)(damage / Main.expertDamage);
+					}
+					probe.Shoot(damage, 3f);
+				}
 			}
 			if (timer == timeBetweenDashes - 1)
 			{
@@ -353,6 +373,27 @@ namespace SOTS.NPCs.Constructs
 					particle.velocity *= 0.96f;
 			}
 		}
+		public void Shoot(int damage, float knockBack)
+		{
+			Main.PlaySound(SoundID.Item, (int)position.X, (int)position.Y, 62, 0.6f, 1.25f);
+			Vector2 toAim = aimTo - position;
+			Vector2 launchvelo = toAim.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(3f, 4.5f);
+			if (Main.netMode != NetmodeID.MultiplayerClient)
+			{
+				Projectile.NewProjectile(position, launchvelo, ModContent.ProjectileType<LingeringFlame>(), damage, knockBack, Main.myPlayer);
+			}
+			for (int i = 0; i < 6; i++)
+			{
+				int dust2 = Dust.NewDust(position - new Vector2(4, 4), 0, 0, ModContent.DustType<CopyDust4>());
+				Dust dust = Main.dust[dust2];
+				dust.color = new Color(255, 75, 0, 0);
+				dust.noGravity = true;
+				dust.fadeIn = 0.1f;
+				dust.scale *= 2.25f;
+				dust.velocity = dust.velocity * 0.7f + launchvelo * 1.5f;
+				dust.alpha = 125;
+			}
+		}
 		public InfernoProbe(Vector2 position, Vector2 aimTo)
         {
 			this.position = position;
@@ -363,11 +404,11 @@ namespace SOTS.NPCs.Constructs
 			float rotation = (float)Math.Atan2(aimTo.Y - position.Y, aimTo.X - position.X);
 			if (Main.netMode != NetmodeID.Server)
 			{
-				Vector2 rotational = new Vector2(-5f, 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-30f, 30f)));
+				Vector2 rotational = new Vector2(-5f, 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-20f, 20f)));
 				rotational.X *= 1f;
 				rotational.Y *= 0.6f;
 				rotational = rotational.RotatedBy(rotation);
-				particleList.Add(new FireParticle(position + new Vector2(-12, 0).RotatedBy(rotation), rotational + velocity * Main.rand.NextFloat(0.8f), Main.rand.NextFloat(-3f, 3f), Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(1.0f, 1.2f)));
+				particleList.Add(new FireParticle(position + new Vector2(-8, 0).RotatedBy(rotation), rotational + velocity * Main.rand.NextFloat(0.8f), Main.rand.NextFloat(-3f, 3f), Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(1.0f, 1.2f)));
 				cataloguePos();
 			}
 		}

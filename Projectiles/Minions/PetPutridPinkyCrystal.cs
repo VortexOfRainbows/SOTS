@@ -17,7 +17,7 @@ namespace SOTS.Projectiles.Minions
 			DisplayName.SetDefault("Pinky Pet");
 			Main.projFrames[projectile.type] = 1;
 			Main.projPet[projectile.type] = true;
-			ProjectileID.Sets.LightPet[projectile.type] = true;
+			ProjectileID.Sets.LightPet[projectile.type] = false;
 		}
 		public override void SendExtraAI(BinaryWriter writer)
 		{
