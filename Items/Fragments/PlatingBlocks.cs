@@ -21,16 +21,15 @@ namespace SOTS.Items.Fragments
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
 			drop = ModContent.ItemType<PermafrostPlating>();
+		}
+		public virtual void SafeSetDefaults()
+		{
 			AddMapEntry(new Color(165, 179, 198));
 			mineResist = 1.5f;
 			soundType = SoundID.Tink;
 			soundStyle = 2;
 			dustType = DustID.Silver;
 			SafeSetDefaults();
-		}
-		public virtual void SafeSetDefaults()
-		{
-
 		}
 		public virtual bool canGlow(int i, int j)
 		{
@@ -133,9 +132,9 @@ namespace SOTS.Items.Fragments
 		{
 			if (canGlow(i, j))
 			{
-				r = 0.55f;
-				g = 0.8f;
-				b = 0.43f;
+				r = 0.275f;
+				g = 0.4f;
+				b = 0.215f;
 			}
 			else
 			{
@@ -251,13 +250,19 @@ namespace SOTS.Items.Fragments
 			Tile tile = Main.tile[i, j];
 			int frameX = tile.frameX / 18;
 			int frameY = tile.frameY / 18;
-			if (frameX == 5 && (frameY >= 0 && frameY <= 2))
+			if (frameY == 0 && ((frameX >= 0 && frameX <= 4) || (frameX == 10 || frameX == 11)))
 			{
-				return false;
+				return true;
 			}
-			if (frameX >= 6 && frameX <= 8 && (frameY == 0 || frameY == 3))
-				return false;
-			return true;
+			if ((frameY == 1 || frameY == 2) && ((frameX >= 0 && frameX <= 4) || (frameX >= 6 && frameX <= 8) || (frameX == 10 || frameX == 11)))
+			{
+				return true;
+			}
+			if ((frameY == 3 || frameY == 4) && (frameX >= 0 && frameX <= 5))
+			{
+				return true;
+			}
+			return false;
 		}
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {

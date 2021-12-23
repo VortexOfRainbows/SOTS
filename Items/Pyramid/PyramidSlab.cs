@@ -1,8 +1,5 @@
-using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-// If you are using c# 6, you can use: "using static Terraria.Localization.GameCulture;" which would mean you could just write "DisplayName.AddTranslation(German, "");"
-using Terraria.Localization;
 
 namespace SOTS.Items.Pyramid
 {
@@ -16,17 +13,10 @@ namespace SOTS.Items.Pyramid
 
 		public override void SetDefaults()
 		{
-			item.width = 16;
-			item.height = 16;
-			item.maxStack = 999;
-			item.useTurn = true;
-			item.autoReuse = true;
-			item.useAnimation = 15;
-			item.useTime = 10;
-			item.useStyle = 1;
-			item.rare = 5;
+			item.CloneDefaults(ItemID.StoneBlock);
+			item.rare = ItemRarityID.Orange;
 			item.consumable = true;
-			item.createTile = mod.TileType("PyramidSlabTile");
+			item.createTile = ModContent.TileType<PyramidSlabTile>();
 		}
 		public override void AddRecipes()
 		{
@@ -35,19 +25,11 @@ namespace SOTS.Items.Pyramid
 			recipe.AddTile(TileID.Autohammer);
 			recipe.SetResult(this, 1);
 			recipe.AddRecipe();
-			
 			recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.SandstoneSlab, 2);
 			recipe.AddTile(TileID.LunarCraftingStation);
 			recipe.SetResult(this, 1);
 			recipe.AddRecipe();
-			
-			recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "PyramidWall", 4);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.SetResult(this, 1);
-			recipe.AddRecipe();
-			
 			recipe = new ModRecipe(mod);
 			recipe.AddIngredient(this, 1);
 			recipe.AddTile(TileID.WorkBenches);

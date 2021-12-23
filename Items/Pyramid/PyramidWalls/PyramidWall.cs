@@ -18,19 +18,7 @@ namespace SOTS.Items.Pyramid.PyramidWalls
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.SandstoneSlab, 2);
-			recipe.AddTile(TileID.Autohammer);
-			recipe.SetResult(this, 4);
-			recipe.AddRecipe();
-			
-			recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.SandstoneSlab, 2);
-			recipe.AddTile(TileID.LunarCraftingStation);
-			recipe.SetResult(this, 4);
-			recipe.AddRecipe();
-			
-			recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<PyramidWall>(), 1);
+			recipe.AddIngredient(ModContent.ItemType<PyramidSlab>(), 1);
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.SetResult(this, 4);
 			recipe.AddRecipe();
@@ -38,7 +26,7 @@ namespace SOTS.Items.Pyramid.PyramidWalls
 			recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<PyramidWall>(), 4);
 			recipe.AddTile(TileID.WorkBenches);
-			recipe.SetResult(ItemID.SandstoneSlab, 2);
+			recipe.SetResult(ModContent.ItemType<PyramidSlab>(), 1);
 			recipe.AddRecipe();
 		}
 	}
