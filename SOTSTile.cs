@@ -155,6 +155,8 @@ namespace SOTS
                 DissolvingDelugeTile.DrawEffects(i, j, spriteBatch, mod, true);
             if (tile.wall == WallType<UmbraWallWall>() && tile.type != (ushort)TileType<DissolvingUmbraTile>())
                 DissolvingUmbraTile.DrawEffects(i, j, spriteBatch, mod, true);
+            if (tile.wall == WallType<NetherWallWall>() && tile.type != (ushort)TileType<DissolvingNetherTile>())
+                DissolvingNetherTile.DrawEffects(i, j, spriteBatch, mod, true);
             return base.PreDraw(i, j, type, spriteBatch);
         }
         public override void PostDraw(int i, int j, int type, SpriteBatch spriteBatch)

@@ -21,6 +21,7 @@ namespace SOTS.Items.Fragments
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
 			drop = ModContent.ItemType<PermafrostPlating>();
+			SafeSetDefaults();
 		}
 		public virtual void SafeSetDefaults()
 		{
@@ -29,7 +30,6 @@ namespace SOTS.Items.Fragments
 			soundType = SoundID.Tink;
 			soundStyle = 2;
 			dustType = DustID.Silver;
-			SafeSetDefaults();
 		}
 		public virtual bool canGlow(int i, int j)
 		{

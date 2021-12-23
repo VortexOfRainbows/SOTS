@@ -268,4 +268,46 @@ namespace SOTS.Items.Fragments
 			recipe.AddRecipe();
 		}
 	}
+	public class NetherWallWall : ModWall
+	{
+		public Color color = new Color(155, 50, 9);
+		public override void SetDefaults()
+		{
+			Main.wallHouse[Type] = true;
+			drop = ModContent.ItemType<UmbraWall>();
+			AddMapEntry(color);
+		}
+		public override void NumDust(int i, int j, bool fail, ref int num)
+		{
+			num = 5;
+		}
+		public override bool CreateDust(int i, int j, ref int type)
+		{
+			Dust dust = Dust.NewDustDirect(new Vector2(i * 16, j * 16) - new Vector2(5), 16, 16, 267);
+			dust.color = color;
+			dust.noGravity = true;
+			dust.fadeIn = 0.1f;
+			dust.scale *= 1.8f;
+			dust.velocity *= 2.4f;
+			return false;
+		}
+	}
+	public class NetherWall : ElementalWall
+	{
+		public override void SafeSetDefaults()
+		{
+			item.createWall = ModContent.WallType<NetherWallWall>();
+		}
+		public override void AddRecipes()
+		{
+			ModRecipe recipe = new ModRecipe(mod);
+			recipe.AddIngredient(ModContent.ItemType<DissolvingNetherBlock>(), 1);
+			recipe.SetResult(this, 4);
+			recipe.AddRecipe();
+			recipe = new ModRecipe(mod);
+			recipe.AddIngredient(this, 4);
+			recipe.SetResult(ModContent.ItemType<DissolvingNetherBlock>(), 1);
+			recipe.AddRecipe();
+		}
+	}
 }

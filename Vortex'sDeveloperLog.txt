@@ -29,10 +29,11 @@ Mid Priority:
 	5. Chaos Chamber
 3. Construct Items:
 	1. Death Spiral resprite
-	2. (Inferno Construct One). Perhaps a 
+	2. (Inferno Construct One). Perhaps an accessory?
 4. Witch's Heart accessory; in similar vein to Heart of the Sea, where it is an accessory variant of the Nightmare potion
 5. Mobile Fortress Generator: upgrade to platform generator. Base its visuals off of Ectoplasm and Dungeon Brick.
 6. Split Focus Reticle into two accessories to make it less overpowered: Focus Reticle (Amplifiers + Crit Rate), Bag of Charms (Charms + Icosahedrons)
+7. Reworked Dissolving Evil visual effects
 
 Low Priority:
 1. Archaelogist NPC
@@ -40,7 +41,8 @@ Low Priority:
 
 12/22/21
 1. Inferno Construct now has a finished attack!
-2. 
+2. Nature plating wall.
+3. Dissolving Nether tiles added.
 
 12/21/21
 1. Evil Plating and Tide Plating
