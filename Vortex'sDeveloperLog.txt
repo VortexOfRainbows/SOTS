@@ -5,10 +5,10 @@ The following is my development plans :D
 3. Ghost Town to Evil Biome
 
 Known Bugs:
-1. Lag generates in multiplayer after a while of playing.  Conditions unknown.
+1. Lag generates in multiplayer after a while of playing. Seems to have been fixed.
 	1. Seem to generate client-side not server side..?
 	2. No memory leak on single player, or client side when testing..?
-2. Not calling end/begin; mod compatability prims crash. Conditions unknown.
+2. Not calling end/begin; mod compatability prims crash. Seems to have been fixed somehow.
 3. Earthen Construct causing freezes occassionally. Conditions unknown (usually after it goes of screen).
 	1. Less frequent than before 0.20, but still happens? 
 
@@ -29,7 +29,7 @@ Mid Priority:
 	5. Chaos Chamber
 3. Construct Items:
 	1. Death Spiral resprite
-	2. (Inferno Construct One). Perhaps an accessory?
+	2. Magic Item: Incinerator Glove (Magic). Generate a close ranged orb of plama that you can launch a short distance
 4. Witch's Heart accessory; in similar vein to Heart of the Sea, where it is an accessory variant of the Nightmare potion
 5. Mobile Fortress Generator: upgrade to platform generator. Base its visuals off of Ectoplasm and Dungeon Brick.
 6. Split Focus Reticle into two accessories to make it less overpowered: Focus Reticle (Amplifiers + Crit Rate), Bag of Charms (Charms + Icosahedrons)

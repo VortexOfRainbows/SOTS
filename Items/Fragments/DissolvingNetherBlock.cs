@@ -206,7 +206,7 @@ namespace SOTS.Items.Fragments
 					float alphaScale = 1f - (z / (float)maxLength);
 					for (int k = 0; k < 2; k++)
 					{
-						Main.spriteBatch.Draw(texture, startingPosition + zero - Main.screenPosition + Main.rand.NextVector2Circular(0.5f, 0.5f), null, color * alphaScale * 1.5f, rotateTo.ToRotation(), origin, scaleVector2, SpriteEffects.None, 0f);
+						Main.spriteBatch.Draw(texture, startingPosition + zero - Main.screenPosition + Main.rand.NextVector2Circular(0.5f, 0.5f), null, color * alphaScale * 1.5f, rotateTo.ToRotation(), origin, scaleVector2 * (1f + alphaScale), SpriteEffects.None, 0f);
 					}
 				}
 				startingPosition = pos;

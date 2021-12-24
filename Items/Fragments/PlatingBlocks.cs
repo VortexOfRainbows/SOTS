@@ -320,11 +320,15 @@ namespace SOTS.Items.Fragments
 			Tile tile = Main.tile[i, j];
 			int frameX = tile.frameX / 18;
 			int frameY = tile.frameY / 18;
-			if (frameX >= 6 && frameX <= 8 && (frameY == 0 || frameY == 3 || frameY == 4))
+			if (frameX >= 6 && frameX <= 8 && (frameY == 3 || frameY == 4))
 				return false;
 			if ((frameX == 9 || frameX == 12) && frameY >= 0 && frameY <= 2)
 				return false;
 			if (frameX >= 9 && frameX <= 11 && frameY == 3)
+				return false;
+			if (frameY == 4)
+				return false;
+			if (frameY == 2 && frameX >= 1 && frameX <= 3)
 				return false;
 			return true;
 		}
