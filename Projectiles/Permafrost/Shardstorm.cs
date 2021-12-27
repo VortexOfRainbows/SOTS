@@ -99,7 +99,6 @@ namespace SOTS.Projectiles.Permafrost
 			projectile.ai[0] = -1;
 			
 		}
-		Vector2[] trailPos = new Vector2[10];
 		public void TrailPreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
 			if (projectile.ai[0] == 0)
@@ -139,6 +138,7 @@ namespace SOTS.Projectiles.Permafrost
 				previousPosition = currentPos;
 			}
 		}
+		Vector2[] trailPos = new Vector2[10];
 		public void cataloguePos()
 		{
 			Vector2 current = projectile.Center;

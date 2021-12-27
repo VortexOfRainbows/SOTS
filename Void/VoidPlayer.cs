@@ -273,9 +273,19 @@ namespace SOTS.Void
 				LemegetonColor = Color.Lerp(LemegetonPurple, LemegetonRed, lerpAmt);
 			}
 		}
+		public static Color Inferno1 = new Color(213, 68, 13);
+		public static Color Inferno2 = new Color(239, 139, 18);
+		public static Color InfernoColorAttempt(float lerp)
+		{
+			return Color.Lerp(Inferno1, Inferno2, lerp);
+		}
+		public static Color InfernoColorAttemptDegrees(float degrees)
+		{
+			return InfernoColorAttempt(0.5f * (float)Math.Sin(MathHelper.ToRadians(soulColorCounter * 3f + degrees)));
+		}
 		public static Color VibrantColorAttempt(float degrees)
         {
-			return Color.Lerp(new Color(80, 120, 220, 0), new Color(180, 230, 100, 0), 0.5f + new Vector2(0.5f, 0).RotatedBy(MathHelper.ToRadians(soulColorCounter * 2.5f + degrees)).X);
+			return Color.Lerp(new Color(80, 120, 220, 0), new Color(180, 230, 100, 0), 0.5f + 0.5f * (float)Math.Sin(MathHelper.ToRadians(soulColorCounter * 2.5f + degrees)));
 		}
 		public static Color pastelAttempt(float radians)
 		{
