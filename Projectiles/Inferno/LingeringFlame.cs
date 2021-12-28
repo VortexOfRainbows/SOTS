@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SOTS.Buffs;
 using SOTS.Dusts;
 using SOTS.Projectiles.Celestial;
+using SOTS.Void;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -58,7 +59,8 @@ namespace SOTS.Projectiles.Inferno
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			for (int i = 0; i < particleList.Count; i++)
 			{
-				Color color = new Color(255, 69, 0, 0);
+				Color color = VoidPlayer.Inferno1;
+				color.A = 0;
 				Vector2 drawPos = particleList[i].position - Main.screenPosition ;
 				color = projectile.GetAlpha(color) * (0.35f + 0.65f * particleList[i].scale);
 				for (int j = 0; j < 2; j++)

@@ -7,6 +7,7 @@ using SOTS.Dusts;
 using SOTS.Items.Fragments;
 using SOTS.Projectiles.Celestial;
 using SOTS.Projectiles.Inferno;
+using SOTS.Void;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -83,12 +84,54 @@ namespace SOTS.NPCs.Constructs
 					particle.velocity *= 0.96f;
 			}
 		}
+		public const float infernoDuration = 60f;
+		public const float infernoEndDuration = 720f;
+		public void DrawBall(SpriteBatch spriteBatch)
+		{
+			if (attackPhase == 2 && attackTimer > 0)
+			{
+				float percent = attackTimer / infernoDuration;
+				if (attackTimer > infernoDuration)
+				{
+					percent = 1f - 0.9f * (attackTimer - infernoDuration) / infernoEndDuration;
+				}
+				if (percent > 0 && attackTimer < infernoDuration + infernoEndDuration - 120)
+				{
+					Vector2 fireFrom = npc.Center + (aimTo - npc.Center).SafeNormalize(Vector2.Zero) * 90;
+					Texture2D texture = mod.GetTexture("Effects/Masks/Extra_49");
+					Color color = VoidPlayer.InfernoColorAttemptDegrees(attackTimer * 3);
+					color.A = 0;
+					Main.spriteBatch.End();
+					Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
+					SOTS.GodrayShader.Parameters["distance"].SetValue(24 * percent);
+					SOTS.GodrayShader.Parameters["colorMod"].SetValue(color.ToVector4());
+					SOTS.GodrayShader.Parameters["noise"].SetValue(mod.GetTexture("TrailTextures/noise"));
+					SOTS.GodrayShader.Parameters["rotation"].SetValue(MathHelper.ToRadians(percent * 480));
+					SOTS.GodrayShader.Parameters["opacity2"].SetValue(1f * percent);
+					SOTS.GodrayShader.CurrentTechnique.Passes[0].Apply();
+					Main.spriteBatch.Draw(texture, fireFrom - Main.screenPosition, null, Color.White, 0f, new Vector2(texture.Width / 2, texture.Height / 2), percent * 2f, SpriteEffects.None, 0f);
+					Main.spriteBatch.End();
+					Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+					Color inferno1 = VoidPlayer.Inferno1;
+					inferno1.A = 0;
+					Color inferno2 = VoidPlayer.Inferno2;
+					inferno2.A = 0;
+					for (int i = 0; i < 2; i++)
+						spriteBatch.Draw(texture, fireFrom - Main.screenPosition, null, i == 1 ? inferno1 : inferno2, 0f, new Vector2(texture.Width / 2, texture.Height / 2), percent * 1f, SpriteEffects.None, 0f);
+				}
+			}
+		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
 			Vector2 origin = new Vector2(npc.width / 2, npc.height / 2);
 			Texture2D texture = Main.npcTexture[npc.type];
 			dir = (float)Math.Atan2(aimTo.Y - npc.Center.Y, aimTo.X - npc.Center.X);
-			float rotation = dir + (npc.spriteDirection - 1) * 0.5f * -MathHelper.ToRadians(180); 
+			bool flip = false;
+			if (Math.Abs(MathHelper.WrapAngle(dir)) <= MathHelper.ToRadians(90))
+			{
+				flip = true;
+			}
+			float bonusDir = !flip ? MathHelper.ToRadians(180) : 0;
 			DrawFire();
 			if (!runOnce)
 			{
@@ -98,8 +141,8 @@ namespace SOTS.NPCs.Constructs
 						probes[i].Draw();
 				}
 			}
-			Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition + new Vector2(0, npc.gfxOffY), null, drawColor, rotation, origin, npc.scale, npc.spriteDirection != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
-			Main.spriteBatch.Draw(ModContent.GetTexture("SOTS/NPCs/Constructs/InfernoConstructGlow"), npc.Center - Main.screenPosition + new Vector2(0, npc.gfxOffY), null, Color.White, rotation, origin, npc.scale, npc.spriteDirection != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition + new Vector2(0, npc.gfxOffY), null, drawColor, dir - bonusDir, origin, npc.scale, !flip ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(ModContent.GetTexture("SOTS/NPCs/Constructs/InfernoConstructGlow"), npc.Center - Main.screenPosition + new Vector2(0, npc.gfxOffY), null, Color.White, dir - bonusDir, origin, npc.scale, !flip ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 			if (!runOnce)
 			{
 				for (int i = 0; i < probes.Count; i++)
@@ -108,16 +151,17 @@ namespace SOTS.NPCs.Constructs
 						probes[i].Draw();
 				}
 			}
+			DrawBall(spriteBatch);
 			return false;
 		}
 		public void DrawFire()
 		{
 			Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Celestial/SubspaceLingeringFlame");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			Color color;
 			for (int i = 0; i < particleList.Count; i++)
 			{
-				color = new Color(255, 69, 0, 0);
+				Color color = VoidPlayer.Inferno1;
+				color.A = 0;
 				Vector2 drawPos = particleList[i].position - Main.screenPosition;
 				color = npc.GetAlpha(color) * (0.35f + 0.65f * particleList[i].scale);
 				for (int j = 0; j < 2; j++)
@@ -245,7 +289,103 @@ namespace SOTS.NPCs.Constructs
 			if(attackPhase == 1)
             {
 				attackTimer++;
-				DashAttacks(440, 1.3f, 5);
+				DashAttacks(440, 1.2f, 5);
+			}
+			if(attackPhase == 2)
+			{
+				if(attackTimer < 0)
+				{
+					if (aimTo.X < npc.Center.X)
+						direction = 1;
+					else
+						direction = -1;
+				}
+				attackTimer++;
+				Vector2 normal = new Vector2(0, 1).RotatedBy(MathHelper.ToRadians(attackTimer * 0.5f * direction));
+				npc.velocity *= 0.9f;
+				npc.velocity = normal * 0.2f;
+				Vector2 targetAimTo = npc.Center + normal * 32;
+				Vector2 fireFrom = npc.Center + normal.SafeNormalize(Vector2.Zero) * 90;
+				float lerp = 1 + attackTimer / 90f;
+				if (lerp > 1)
+					lerp = 1;
+				if (attackTimer > infernoDuration + infernoEndDuration - 120)
+				{
+					float timer = attackTimer - infernoDuration - infernoEndDuration + 120;
+					lerp = 1 - timer / 120f;
+				}
+				else
+				{
+					if (attackTimer > 0)
+					{
+						if ((int)attackTimer % (int)(infernoDuration / 3) == 0 && attackTimer < infernoDuration)
+						{
+							Main.PlaySound(SoundID.Item, (int)fireFrom.X, (int)fireFrom.Y, 15, 1.3f, -0.3f);
+						}
+						float sizeMult = attackTimer / infernoDuration;
+						if (sizeMult > 1)
+							sizeMult = 1;
+						float dustDirection = 1;
+						if (attackTimer > infernoDuration)
+						{
+							dustDirection = -1;
+							sizeMult = 0.6f - 0.5f * (attackTimer - infernoDuration) / infernoEndDuration;
+						}
+						Vector2 circular = new Vector2(90 * sizeMult, 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)));
+						int dust2 = Dust.NewDust(fireFrom - new Vector2(12, 12) + circular, 16, 16, ModContent.DustType<CopyDust4>());
+						Dust dust = Main.dust[dust2];
+						dust.color = VoidPlayer.InfernoColorAttempt(Main.rand.NextFloat(1));
+						dust.noGravity = true;
+						dust.fadeIn = 0.1f;
+						dust.scale *= 2.2f;
+						dust.velocity = dust.velocity * 0.1f - circular * 0.06f * dustDirection;
+						dust.alpha = 125;
+					}
+				}
+				if ((int)attackTimer == (int)(infernoDuration + infernoEndDuration - 120))
+                {
+					for(int i = 0; i < 30; i++)
+                    {
+						int dust2 = Dust.NewDust(fireFrom - new Vector2(12, 12), 16, 16, ModContent.DustType<CopyDust4>());
+						Dust dust = Main.dust[dust2];
+						dust.color = VoidPlayer.InfernoColorAttempt(Main.rand.NextFloat(1));
+						dust.noGravity = true;
+						dust.fadeIn = 0.1f;
+						dust.scale *= 2.5f;
+						dust.velocity *= 2.5f;
+						dust.alpha = 125;
+					}
+				}
+				aimTo = Vector2.Lerp(aimTo, targetAimTo, lerp);
+				if (attackTimer > infernoDuration + infernoEndDuration)
+				{
+					attackTimer = 0;
+					attackPhase = 0;
+				}
+				float slowDownMult = 1f;
+				if (attackTimer > infernoDuration + infernoEndDuration - 360)
+				{
+					slowDownMult = 1f - (attackTimer - infernoDuration - infernoEndDuration + 360) / 240f;
+				}
+				int fireRate = (int)(10 - 8f * slowDownMult);
+				if (attackTimer > infernoDuration && attackTimer < infernoDuration + infernoEndDuration - 120)
+				{
+					Vector2 launchvelo = normal * Main.rand.NextFloat(2.75f, 3.25f);
+					if (attackTimer % (fireRate * 2) == 0)
+					{
+						npc.Center -= normal * 1.5f;
+						Main.PlaySound(SoundID.Item, (int)fireFrom.X, (int)fireFrom.Y, 34, 1f, 0.5f);
+					}
+					if (Main.netMode != NetmodeID.MultiplayerClient && attackTimer % fireRate == 0)
+					{
+						int damage = npc.damage / 2;
+						if (Main.expertMode)
+						{
+							damage = (int)(damage / Main.expertDamage);
+						}
+						Projectile.NewProjectile(fireFrom, launchvelo * (0.5f + 0.5f * slowDownMult), ModContent.ProjectileType<LavaLaser>(), (int)(damage * 1.5f), 3f, Main.myPlayer, Main.rand.NextFloat(0.65f, 0.75f) * (0.1f + 0.9f * slowDownMult), Main.rand.NextFloat(360));
+					}
+				}
 			}
 			dir = (float)Math.Atan2(aimTo.Y - npc.Center.Y, aimTo.X - npc.Center.X);
 			npc.rotation = dir;
@@ -338,8 +478,8 @@ namespace SOTS.NPCs.Constructs
 			}
 			if (attackTimer > timeBetweenDashes * amt + 30)
 			{
-				attackTimer = 0;
-				attackPhase = 0;
+				attackTimer = -90;
+				attackPhase = 2;
 			}
 		}
 		public override void NPCLoot()
@@ -430,10 +570,10 @@ namespace SOTS.NPCs.Constructs
 		{
 			Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Celestial/SubspaceLingeringFlame");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			Color color;
 			for (int i = 0; i < particleList.Count; i++)
 			{
-				color = new Color(255, 69, 0, 0);
+				Color color = VoidPlayer.Inferno1;
+				color.A = 0;
 				Vector2 drawPos = particleList[i].position - Main.screenPosition;
 				color *= (0.35f + 0.65f * particleList[i].scale);
 				for (int j = 0; j < 2; j++)

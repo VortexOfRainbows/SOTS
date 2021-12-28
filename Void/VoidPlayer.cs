@@ -274,7 +274,7 @@ namespace SOTS.Void
 			}
 		}
 		public static Color Inferno1 = new Color(213, 68, 13);
-		public static Color Inferno2 = new Color(239, 139, 18);
+		public static Color Inferno2 = new Color(255, 210, 155);
 		public static Color InfernoColorAttempt(float lerp)
 		{
 			return Color.Lerp(Inferno1, Inferno2, lerp);

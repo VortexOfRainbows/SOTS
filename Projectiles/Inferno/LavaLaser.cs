@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Dusts;
 using SOTS.Void;
 using System;
 using System.IO;
@@ -27,10 +28,11 @@ namespace SOTS.Projectiles.Inferno
 		{
 			projectile.width = 16;
 			projectile.height = 16;
-			projectile.friendly = true;
+			projectile.hostile = true;
+			projectile.friendly = false;
 			projectile.magic = true;
 			projectile.extraUpdates = 12;
-			projectile.timeLeft = 6000;
+			projectile.timeLeft = 1200;
 			projectile.tileCollide = true;
 			projectile.penetrate = -1;
 		}
@@ -93,7 +95,18 @@ namespace SOTS.Projectiles.Inferno
 			if (runOnce)
 			{
 				runOnce = false;
-				Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 60, 0.8f, -0.1f);
+				//Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 60, 0.8f, -0.1f);
+			}
+			if(Main.rand.NextBool(90))
+            {
+				int dust2 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, ModContent.DustType<CopyDust4>());
+				Dust dust = Main.dust[dust2];
+				dust.color = VoidPlayer.InfernoColorAttempt(Main.rand.NextFloat(1));
+				dust.noGravity = true;
+				dust.fadeIn = 0.1f;
+				dust.scale *= 2f;
+				dust.velocity *= 0.8f;
+				dust.alpha = 125;
 			}
 			if (!projectile.velocity.Equals(new Vector2(0, 0)))
 				projectile.rotation = projectile.velocity.ToRotation();
