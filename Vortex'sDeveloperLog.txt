@@ -43,7 +43,7 @@ Low Priority:
 12/26/21 & 12/28/21
 1. Worked on Lava Laser (for inferno construct)
 2. Finished attacks for Inferno Construct (Syncs in Multiplayer)
-3. 
+3. Added Chaos Plating tile
 
 12/22/21
 1. Inferno Construct now has a finished attack!

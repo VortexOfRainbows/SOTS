@@ -414,4 +414,74 @@ namespace SOTS.Items.Fragments
 			}
 		}
 	}
+	public class ChaosPlating : ModItem
+	{
+		public override void SetStaticDefaults()
+		{
+			DisplayName.SetDefault("Chaos Plating");
+			Tooltip.SetDefault("");
+		}
+		public override void SetDefaults()
+		{
+			item.CloneDefaults(ItemID.StoneBlock);
+			item.rare = ItemRarityID.Blue;
+			item.createTile = ModContent.TileType<ChaosPlatingTile>();
+		}
+		public override void AddRecipes()
+		{
+			ModRecipe recipe = new ModRecipe(mod);
+			recipe.AddIngredient(ModContent.ItemType<FragmentOfChaos>(), 1);
+			recipe.AddRecipeGroup("SOTS:PHMOre", 1);
+			recipe.AddTile(TileID.HeavyWorkBench);
+			recipe.SetResult(this, 5);
+			recipe.AddRecipe();
+		}
+	}
+	public class ChaosPlatingTile : PlatingTile
+	{
+		public override Texture2D glowTexture => mod.GetTexture("Items/Fragments/ChaosPlatingTileGlow");
+		public override void SafeSetDefaults()
+		{
+			drop = ModContent.ItemType<ChaosPlating>();
+			AddMapEntry(new Color(82, 85, 123));
+			mineResist = 1.5f;
+			soundType = SoundID.Tink;
+			soundStyle = 2;
+			dustType = DustID.Platinum; //demonite
+		}
+		public override bool canGlow(int i, int j)
+		{
+			Tile tile = Main.tile[i, j];
+			int frameX = tile.frameX / 18;
+			int frameY = tile.frameY / 18;
+			if (frameX >= 1 && frameX <= 3 && frameY == 1)
+			{
+				return false;
+			}
+			if (frameX >= 6 && frameX <= 8 && (frameY == 1 || frameY == 2 || frameY == 4))
+			{
+				return false;
+			}
+			if ((frameX == 10 || frameX == 11) && frameY >= 0 && frameY <= 2)
+			{
+				return false;
+			}
+			return true;
+		}
+		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
+		{
+			if (canGlow(i, j))
+			{
+				r = 0.23f;
+				g = 0.09f;
+				b = 0.20f;
+			}
+			else
+			{
+				r = 0;
+				g = 0;
+				b = 0;
+			}
+		}
+	}
 }
