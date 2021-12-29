@@ -31,12 +31,12 @@ namespace SOTS.Projectiles.Inferno
 			projectile.hostile = true;
 			projectile.friendly = false;
 			projectile.magic = true;
-			projectile.extraUpdates = 12;
+			projectile.extraUpdates = 10;
 			projectile.timeLeft = 1200;
 			projectile.tileCollide = true;
 			projectile.penetrate = -1;
 		}
-        Vector2[] trailPos = new Vector2[240];
+        Vector2[] trailPos = new Vector2[200];
 		public void cataloguePos()
 		{
 			Vector2 current = projectile.Center;
@@ -97,7 +97,7 @@ namespace SOTS.Projectiles.Inferno
 				runOnce = false;
 				//Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 60, 0.8f, -0.1f);
 			}
-			if(Main.rand.NextBool(90))
+			if(Main.rand.NextBool(120))
             {
 				int dust2 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, ModContent.DustType<CopyDust4>());
 				Dust dust = Main.dust[dust2];
@@ -118,7 +118,7 @@ namespace SOTS.Projectiles.Inferno
 			}
 			else
 			{
-				float sin = (float)Math.Sin(MathHelper.ToRadians(projectile.ai[1])) * projectile.ai[0];
+				float sin = (float)Math.Sin(MathHelper.ToRadians(projectile.ai[1] * 1.1f)) * projectile.ai[0];
 				projectile.Center += new Vector2(0, sin).RotatedBy(projectile.velocity.ToRotation());
 				projectile.ai[1]++;
 			}

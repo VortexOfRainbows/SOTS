@@ -64,7 +64,7 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
 		{
-			npc.damage = 100;
+			npc.damage = 120;
 			npc.lifeMax = 7500;
 		}
 		List<InfernoProbe> probes = new List<InfernoProbe>();
@@ -206,6 +206,8 @@ namespace SOTS.NPCs.Constructs
 		float spinDynamicSpeed = 1;
 		float rotateLength = 72;
 		float targetRotateLength = 72;
+		int probeNumberShootCount = 0;
+		int probeAttackTimer = 0;
 		public override bool PreAI()
 		{
 			Player player = Main.player[npc.target];
@@ -295,12 +297,14 @@ namespace SOTS.NPCs.Constructs
 			{
 				if(attackTimer < 0)
 				{
+					probeAttackTimer = 0;
 					if (aimTo.X < npc.Center.X)
 						direction = 1;
 					else
 						direction = -1;
 				}
-				attackTimer++;
+				attackTimer++; 
+				probeAttackTimer++;
 				Vector2 normal = new Vector2(0, 1).RotatedBy(MathHelper.ToRadians(attackTimer * 0.5f * direction));
 				npc.velocity *= 0.9f;
 				npc.velocity = normal * 0.2f;
@@ -322,29 +326,32 @@ namespace SOTS.NPCs.Constructs
 						{
 							Main.PlaySound(SoundID.Item, (int)fireFrom.X, (int)fireFrom.Y, 15, 1.3f, -0.3f);
 						}
-						float sizeMult = attackTimer / infernoDuration;
-						if (sizeMult > 1)
-							sizeMult = 1;
-						float dustDirection = 1;
-						if (attackTimer > infernoDuration)
+						if(!Main.rand.NextBool(3))
 						{
-							dustDirection = -1;
-							sizeMult = 0.6f - 0.5f * (attackTimer - infernoDuration) / infernoEndDuration;
+							float sizeMult = attackTimer / infernoDuration;
+							if (sizeMult > 1)
+								sizeMult = 1;
+							float dustDirection = 1;
+							if (attackTimer > infernoDuration)
+							{
+								dustDirection = -1;
+								sizeMult = 0.6f - 0.5f * (attackTimer - infernoDuration) / infernoEndDuration;
+							}
+							Vector2 circular = new Vector2(90 * sizeMult, 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)));
+							int dust2 = Dust.NewDust(fireFrom - new Vector2(12, 12) + circular, 16, 16, ModContent.DustType<CopyDust4>());
+							Dust dust = Main.dust[dust2];
+							dust.color = VoidPlayer.InfernoColorAttempt(Main.rand.NextFloat(1));
+							dust.noGravity = true;
+							dust.fadeIn = 0.1f;
+							dust.scale *= 2.2f;
+							dust.velocity = dust.velocity * 0.1f - circular * 0.06f * dustDirection;
+							dust.alpha = 125;
 						}
-						Vector2 circular = new Vector2(90 * sizeMult, 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)));
-						int dust2 = Dust.NewDust(fireFrom - new Vector2(12, 12) + circular, 16, 16, ModContent.DustType<CopyDust4>());
-						Dust dust = Main.dust[dust2];
-						dust.color = VoidPlayer.InfernoColorAttempt(Main.rand.NextFloat(1));
-						dust.noGravity = true;
-						dust.fadeIn = 0.1f;
-						dust.scale *= 2.2f;
-						dust.velocity = dust.velocity * 0.1f - circular * 0.06f * dustDirection;
-						dust.alpha = 125;
 					}
 				}
 				if ((int)attackTimer == (int)(infernoDuration + infernoEndDuration - 120))
                 {
-					for(int i = 0; i < 30; i++)
+					for(int i = 0; i < 20; i++)
                     {
 						int dust2 = Dust.NewDust(fireFrom - new Vector2(12, 12), 16, 16, ModContent.DustType<CopyDust4>());
 						Dust dust = Main.dust[dust2];
@@ -376,14 +383,22 @@ namespace SOTS.NPCs.Constructs
 						npc.Center -= normal * 1.5f;
 						Main.PlaySound(SoundID.Item, (int)fireFrom.X, (int)fireFrom.Y, 34, 1f, 0.5f);
 					}
+					int damage = npc.damage / 2;
+					if (Main.expertMode)
+					{
+						damage = (int)(damage / Main.expertDamage);
+					}
 					if (Main.netMode != NetmodeID.MultiplayerClient && attackTimer % fireRate == 0)
 					{
-						int damage = npc.damage / 2;
-						if (Main.expertMode)
-						{
-							damage = (int)(damage / Main.expertDamage);
-						}
-						Projectile.NewProjectile(fireFrom, launchvelo * (0.5f + 0.5f * slowDownMult), ModContent.ProjectileType<LavaLaser>(), (int)(damage * 1.5f), 3f, Main.myPlayer, Main.rand.NextFloat(0.65f, 0.75f) * (0.1f + 0.9f * slowDownMult), Main.rand.NextFloat(360));
+						Projectile.NewProjectile(fireFrom, launchvelo * (0.5f + 0.5f * slowDownMult), ModContent.ProjectileType<LavaLaser>(), (int)(damage * 3f), 3.5f, Main.myPlayer, Main.rand.NextFloat(0.65f, 0.75f) * (0.1f + 0.9f * slowDownMult), Main.rand.NextFloat(360)); //lava beam should do a ludicrous amount of damage
+					}
+					if (probeAttackTimer >= (int)(fireRate * 5))
+					{
+						probeAttackTimer = 0;
+						int num = (int)probeNumberShootCount % probes.Count;
+						InfernoProbe probe = probes[num];
+						probe.Shoot(damage, 3f, 2.7f);
+						probeNumberShootCount++;
 					}
 				}
 			}
@@ -513,14 +528,14 @@ namespace SOTS.NPCs.Constructs
 					particle.velocity *= 0.96f;
 			}
 		}
-		public void Shoot(int damage, float knockBack)
+		public void Shoot(int damage, float knockBack, float speedMod = 1f)
 		{
 			Main.PlaySound(SoundID.Item, (int)position.X, (int)position.Y, 62, 0.6f, 1.25f);
 			Vector2 toAim = aimTo - position;
 			Vector2 launchvelo = toAim.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(3f, 4.5f);
 			if (Main.netMode != NetmodeID.MultiplayerClient)
 			{
-				Projectile.NewProjectile(position, launchvelo, ModContent.ProjectileType<LingeringFlame>(), damage, knockBack, Main.myPlayer);
+				Projectile.NewProjectile(position, launchvelo * speedMod, ModContent.ProjectileType<LingeringFlame>(), damage, knockBack, Main.myPlayer);
 			}
 			for (int i = 0; i < 6; i++)
 			{

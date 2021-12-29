@@ -13,7 +13,7 @@ Known Bugs:
 	1. Less frequent than before 0.20, but still happens? 
 
 High Priority:
-1. Inferno Construct
+1. Inferno Spirit
 2. Starmap and Digital Daito Obtaining
 3. Reorganize Folders... Planetarium and Pyramid folders remaining.
 
@@ -40,8 +40,10 @@ Low Priority:
 1. Archaelogist NPC
 2. Accessory Pets to use own dye slots.
 
-12/26/21
+12/26/21 & 12/28/21
 1. Worked on Lava Laser (for inferno construct)
+2. Finished attacks for Inferno Construct (Syncs in Multiplayer)
+3. 
 
 12/22/21
 1. Inferno Construct now has a finished attack!
