@@ -29,7 +29,7 @@ Mid Priority:
 	5. Chaos Chamber
 3. Construct Items:
 	1. Death Spiral resprite
-	2. Magic Item: Incinerator Glove (Magic). Generate a close ranged orb of plama that you can launch a short distance
+	2. Inferno Construct: Incinerator Glove (Magic, Void). Generate a close ranged orb of plama that you can launch a short distance
 4. Witch's Heart accessory; in similar vein to Heart of the Sea, where it is an accessory variant of the Nightmare potion
 5. Mobile Fortress Generator: upgrade to platform generator. Base its visuals off of Ectoplasm and Dungeon Brick.
 6. Split Focus Reticle into two accessories to make it less overpowered: Focus Reticle (Amplifiers + Crit Rate), Bag of Charms (Charms + Icosahedrons)
@@ -39,6 +39,9 @@ Mid Priority:
 Low Priority:
 1. Archaelogist NPC
 2. Accessory Pets to use own dye slots.
+
+12/29/21 & 12/30/21
+1. Inferno Spirit spiral attack
 
 12/26/21 & 12/28/21
 1. Worked on Lava Laser (for inferno construct)

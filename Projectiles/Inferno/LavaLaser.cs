@@ -123,6 +123,10 @@ namespace SOTS.Projectiles.Inferno
 				projectile.ai[1]++;
 			}
 		}
+		public override void OnHitPlayer(Player target, int damage, bool crit)
+		{
+			target.AddBuff(BuffID.OnFire, 600, false);
+		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
 			target.immune[projectile.owner] = 0;
