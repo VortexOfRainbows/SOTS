@@ -300,7 +300,16 @@ namespace SOTS.NPCs.TreasureSlimes
 		}
 		public sealed override void NPCLoot()
 		{
-			TreasureSlimeItem item = possibleItems[(int)treasure];
+			int itemMax = possibleItems.Count - 1;
+			int otherId = (int)treasure - 1;
+			if (otherId < 0)
+			{
+				otherId = itemMax;
+			}
+			int itemID = treasure;
+			if (treasureCounter % treasureSpeed <= 7)
+				itemID = otherId;
+			TreasureSlimeItem item = possibleItems[(int)itemID];
 			Item.NewItem(npc.Hitbox, item.Type, Main.rand.Next(item.Amount, item.AmountCap + 1));
 			Item.NewItem(npc.Hitbox, ItemType<Peanut>(), 10 + Main.rand.Next(11));
 			Item.NewItem(npc.Hitbox, ItemID.Gel, 5 + Main.rand.Next(6));

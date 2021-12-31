@@ -34,10 +34,15 @@ Mid Priority:
 5. Mobile Fortress Generator: upgrade to platform generator. Base its visuals off of Ectoplasm and Dungeon Brick.
 6. Split Focus Reticle into two accessories to make it less overpowered: Focus Reticle (Amplifiers + Crit Rate), Bag of Charms (Charms + Icosahedrons)
 7. Void Damage and negative void regeneration combat numbers
+8. Void regeneration changes (interval system)
 
 Low Priority:
 1. Archaelogist NPC
 2. Accessory Pets to use own dye slots.
+
+12/31/21
+1. Treasure Slime now drops previous item during fade in
+2. Void Bar visuals and config
 
 12/29/21 & 12/30/21
 1. Inferno Spirit spiral attack

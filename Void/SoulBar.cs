@@ -35,7 +35,7 @@ namespace SOTS.Void
         public BarDivider()
         {
             if (_backgroundTexture == null)
-                _backgroundTexture = ModContent.GetTexture("SOTS/Void/BarDivider");
+                _backgroundTexture = ModContent.GetTexture("SOTS/Void/VoidBarDivider");
 
         }
         protected override void DrawSelf(SpriteBatch spriteBatch)

@@ -8,7 +8,7 @@ namespace SOTS.Buffs
 		public override void SetDefaults()
 		{
 			DisplayName.SetDefault("Intimidating Presence");
-			Description.SetDefault("Drastically lowers enemy spawns");
+			Description.SetDefault("Drastically lowered enemy spawns");
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
 			Main.debuff[Type] = true;

@@ -27,7 +27,6 @@ namespace SOTS.Void
 		private SoulBar barAmount3;
 		private BarDivider barDivider;
 		private VoidBarBorder2 barBackground;
-		private VoidBarBorder2 outline;
 		private UIText text;
         public override void OnInitialize()
 		{
@@ -40,17 +39,11 @@ namespace SOTS.Void
 			barBackground.Width.Set(width, 0f);
 			barBackground.Height.Set(height, 0f);
 
-			outline = new VoidBarBorder2();
-			outline.Left.Set(0f, 0f);
-			outline.Top.Set(0f, 0f);
-			outline.Width.Set(width, 0f);
-			outline.Height.Set(height, 0f);
-
 			barDivider = new BarDivider();
 			barDivider.Left.Set(2f, 0f);
 			barDivider.Top.Set(4f, 0f);
-			barDivider.Width.Set(10, 0f);
-			barDivider.Height.Set(22, 0f);
+			barDivider.Width.Set(2, 0f);
+			barDivider.Height.Set(20, 0f);
 
 			barAmount = new VoidBarSprite(); 
 			barAmount.SetPadding(0);
@@ -74,7 +67,6 @@ namespace SOTS.Void
 			barBackground.Append(barAmount);
 			barBackground.Append(barAmount3);
 			barBackground.Append(barDivider);
-			barBackground.Append(outline);
 			barBackground.Append(text);
 			base.Append(barBackground);
 		}
@@ -99,28 +91,35 @@ namespace SOTS.Void
 			barAmount3.backgroundColor = VoidPlayer.soulLootingColor;
 			if (text != null)
 			{
-				string textThing = "Void: ";
-				if (voidMax - voidPlayer.lootingSouls <= 0)
-                {
-					textThing += "0 ";
-                }
+				if(SOTS.Config.voidBarTextOn)
+				{
+					string textThing = "Void: ";
+					if (voidMax - voidPlayer.lootingSouls <= 0)
+					{
+						textThing += "0 ";
+					}
+					else
+					{
+						voidManaMaxText = (voidMax - voidPlayer.lootingSouls).ToString();
+						textThing += voidManaText + " / " + voidManaMaxText;
+					}
+					if (voidPlayer.lootingSouls > 0 || (voidPlayer.VoidMinionConsumption > 0 && !SOTS.Config.simpleVoidText))
+					{
+						textThing += " ("; 
+						if (voidPlayer.VoidMinionConsumption > 0 && !SOTS.Config.simpleVoidText)
+							textThing += voidPlayer.VoidMinionConsumption.ToString();
+						if (voidPlayer.lootingSouls > 0 && voidPlayer.VoidMinionConsumption > 0 && !SOTS.Config.simpleVoidText)
+							textThing += " + ";
+						if (voidPlayer.lootingSouls > 0)
+							textThing += voidSoulsText;
+						textThing += ")";
+					}
+					text.SetText(textThing);
+				}
 				else
 				{
-					voidManaMaxText = (voidMax - voidPlayer.lootingSouls).ToString();
-					textThing += voidManaText + " / " + voidManaMaxText;
-                }
-				if(voidPlayer.lootingSouls > 0 || voidPlayer.VoidMinionConsumption > 0)
-				{
-					textThing += " (";
-					if (voidPlayer.VoidMinionConsumption > 0)
-						textThing += voidPlayer.VoidMinionConsumption.ToString();
-					if (voidPlayer.lootingSouls > 0 && voidPlayer.VoidMinionConsumption > 0)
-						textThing += " + ";
-					if (voidPlayer.lootingSouls > 0)
-						textThing += voidSoulsText;
-					textThing += ")";
+					text.SetText("");
 				}
-				text.SetText(textThing);
 			}
 			float quotient = 1f;
 			float quotient2 = 1f;
@@ -136,7 +135,7 @@ namespace SOTS.Void
 					break;
 			}
 			Texture2D fill = ModContent.GetTexture("SOTS/Void/SoulBar");
-			Texture2D divider = ModContent.GetTexture("SOTS/Void/SoulBarDivider");
+			Texture2D divider = ModContent.GetTexture("SOTS/Void/VoidBarDivider");
 			if (quotient > 1)
 			{
 				quotient = 1;
@@ -144,15 +143,15 @@ namespace SOTS.Void
 			if (quotient < 0)
 				quotient = 0;
 			Vector2 padding = new Vector2(6, 6);
-			float prevRight = quotient * 188;
+			float prevRight = 0;
 			float length = 40;
 			int height = 18;
 			Texture2D fill2 = ModContent.GetTexture("SOTS/Void/VoidBarBorder");
-			Texture2D divider2 = ModContent.GetTexture("SOTS/Void/VoidBarDivider");
-			spriteBatch.Draw(fill2, new Rectangle((int)(VoidPlayer.voidBarOffset.X), (int)(VoidPlayer.voidBarOffset.Y), 200, 30), Color.White);
+			spriteBatch.Draw(fill2, new Rectangle((int)VoidPlayer.voidBarOffset.X, (int)VoidPlayer.voidBarOffset.Y + 2, 200, 30), Color.White);
 			List<Rectangle> rectangles = new List<Rectangle>();
-			List<Color> colors = new List<Color>();
-			for (int i = 0; i < voidPlayer.VoidMinions.Count; i++)
+			//List<Color> colors = new List<Color>();
+			int minionCount = voidPlayer.VoidMinions.Count;
+			for (int i = 0; i < minionCount; i++)
             {
 				int type = voidPlayer.VoidMinions[i];
 				int nextType = -1;
@@ -165,36 +164,42 @@ namespace SOTS.Void
 				if (length + prevRight >= 188)
 					length = 188 - prevRight;
 				spriteBatch.Draw(fill, new Rectangle((int)(VoidPlayer.voidBarOffset.X + padding.X + (int)prevRight), (int)(VoidPlayer.voidBarOffset.Y + padding.Y), (int)(length + 1), height), color);
-				if(i == 0)
+				if (SOTS.Config.voidBarBlur)
 				{
-					rectangles.Add(new Rectangle((int)(VoidPlayer.voidBarOffset.X + padding.X + (int)prevRight), (int)(VoidPlayer.voidBarOffset.Y + padding.Y - 2), 6, 22));
-					colors.Add(color);
-				}					
-				prevRight += length;
-				if (nextType == -1 || nextType != type)
-				{
-					rectangles.Add(new Rectangle((int)(VoidPlayer.voidBarOffset.X + padding.X + (int)prevRight), (int)(VoidPlayer.voidBarOffset.Y + padding.Y - 2), 6, 22));
-					colors.Add(color);
-				}
-			}
-			for(int i = 0; i < rectangles.Count; i++)
-			{
-				if(i == 0)
-				{
-					spriteBatch.Draw(divider2, rectangles[i], Color.White);
+					color *= 0.15f;
+					color.A = 0;
+					for (int l = 0; l < 8; l++)
+					{
+						Vector2 circular = new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(45 * l));
+						spriteBatch.Draw(fill, new Rectangle((int)(VoidPlayer.voidBarOffset.X + padding.X + (int)prevRight) + (int)circular.X, (int)(VoidPlayer.voidBarOffset.Y + padding.Y) + (int)circular.Y, (int)(length + 1), height), color);
+					}
 				}
 				else
 				{
-					spriteBatch.Draw(divider, rectangles[i], colors[i]);
+					color.A = 0;
+					spriteBatch.Draw(fill, new Rectangle((int)(VoidPlayer.voidBarOffset.X + padding.X + (int)prevRight), (int)(VoidPlayer.voidBarOffset.Y + padding.Y), (int)(length + 1), height), color);
 				}
+				/*if(i == 0)
+				{
+					rectangles.Add(new Rectangle((int)(VoidPlayer.voidBarOffset.X + padding.X + (int)prevRight), (int)(VoidPlayer.voidBarOffset.Y + padding.Y - 2), 6, 22));
+					colors.Add(color);
+				}*/
+				prevRight += length;
+				if (!SOTS.Config.simpleVoidFill)
+					if (nextType == -1 || nextType != type)
+					{
+						rectangles.Add(new Rectangle((int)(VoidPlayer.voidBarOffset.X + padding.X + (int)prevRight - 2), (int)(VoidPlayer.voidBarOffset.Y + padding.Y - 2), 2, 20));
+						//colors.Add(color);
+					}
 			}
-			barAmount.Width.Set((int)(quotient * 188 + 1f), 0f);
+			barAmount.Left.Set(6f + prevRight, 0f);
+			barAmount.Width.Set((int)(quotient * 188), 0f);
 			if(voidPlayer.lootingSouls > 0)
 			{
 				barAmount3.Width.Set(quotient2 * 188, 0f);
 				barAmount3.Left.Set(200f - quotient2 * 188 - 6, 0f);
-				barDivider.Width.Set(10, 0);
-				barDivider.Left.Set(200f - quotient2 * 188 - 10, 0f);
+				barDivider.Width.Set(2, 0);
+				barDivider.Left.Set(200f - quotient2 * 188 - 8, 0f);
 			}
 			else
             {
@@ -203,6 +208,35 @@ namespace SOTS.Void
 			}
 			Recalculate();
 			base.Draw(spriteBatch);
+			Color color2 = new Color(100, 100, 100, 0);
+			fill = ModContent.GetTexture("SOTS/Void/VoidBarSprite");
+			length = (int)(quotient * 188);
+			if(SOTS.Config.voidBarBlur)
+			{
+				color2 = new Color(15, 15, 15, 0);
+				for (int l = 0; l < 8; l++)
+				{
+					Vector2 circular = new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(45 * l));
+					spriteBatch.Draw(fill, new Rectangle((int)(VoidPlayer.voidBarOffset.X + padding.X + (int)prevRight) + (int)circular.X, (int)(VoidPlayer.voidBarOffset.Y + padding.Y) + (int)circular.Y, (int)length, height), color2);
+				}
+			}
+			else
+			{
+				spriteBatch.Draw(fill, new Rectangle((int)(VoidPlayer.voidBarOffset.X + padding.X + (int)prevRight), (int)(VoidPlayer.voidBarOffset.Y + padding.Y), (int)length, height), color2);
+			}
+			if(!SOTS.Config.simpleVoidFill)
+			{
+				for (int i = 0; i < rectangles.Count; i++)
+				{
+					/*if(i == 0)
+					{
+						spriteBatch.Draw(divider2, rectangles[i], Color.White);
+					}*/
+					spriteBatch.Draw(divider, rectangles[i], Color.White); // colors[i]);
+				}
+			}
+			fill2 = ModContent.GetTexture("SOTS/Void/VoidBarBorder2");
+			spriteBatch.Draw(fill2, new Rectangle((int)VoidPlayer.voidBarOffset.X, (int)VoidPlayer.voidBarOffset.Y, 200, 30), Color.White);
 			if (voidPlayer.safetySwitchVisual)
 				DrawLock(spriteBatch);
 			DrawIce(spriteBatch, false);

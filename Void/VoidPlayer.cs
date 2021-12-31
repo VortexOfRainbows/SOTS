@@ -378,7 +378,7 @@ namespace SOTS.Void
 			if (type == (int)VoidMinionID.TBethanySpirit)
 				return LemegetonColor;
 			if (type == (int)VoidMinionID.CursedBlade)
-				return new Color(76, 58, 101);
+				return new Color(200, 68, 70);
 			if (type == (int)VoidMinionID.TidalSpirit)
 				return TideColor;
 			if (type == (int)VoidMinionID.PermafrostSpirit)
