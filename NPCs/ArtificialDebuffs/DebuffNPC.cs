@@ -22,14 +22,24 @@ using SOTS.Items.Otherworld.FromChests;
 using System.Linq;
 using SOTS.NPCs.Constructs;
 using SOTS.Projectiles.Evil;
+using static Terraria.ModLoader.ModContent;
+using SOTS.NPCs.Boss;
+using SOTS.NPCs.Boss.Advisor;
+using SOTS.NPCs.Boss.Polaris;
+using SOTS.NPCs.Boss.CelestialSerpent;
 
 namespace SOTS.NPCs.ArtificialDebuffs
 {
     public class DebuffNPC : GlobalNPC
     {
         public static int[] miniBosses;
+        public static int[] intimidating;
+        public static int[] spirits;
         public static void LoadArrays()
         {
+            spirits = new int[] { NPCType<Constructs.NatureSpirit>(), NPCType<Constructs.EarthenSpirit>(), NPCType<Constructs.PermafrostSpirit>(), NPCType<Constructs.TidalSpirit>(), NPCType<EvilSpirit>(), NPCType<InfernoSpirit>() };
+            intimidating = new int[] { NPCType<NatureConstruct>(), NPCType<EarthenConstruct>(), NPCType<PermafrostConstruct>(), NPCType<OtherworldlyConstructHead>(), NPCType<TidalConstruct>(), NPCType<EvilConstruct>(), NPCType<InfernoConstruct>(),
+                NPCType<PutridPinkyPhase2>(), NPCType<Boss.Curse.PharaohsCurse>(), NPCType<TheAdvisorHead>(), NPCType<Polaris>(), NPCType<CelestialSerpentHead>(), NPCType<SubspaceSerpentHead>()};
             miniBosses = new int[] { NPCID.Mothron, NPCID.IceQueen, NPCID.SantaNK1, NPCID.Everscream, NPCID.MourningWood, NPCID.Pumpking, NPCID.GoblinSummoner, NPCID.MartianSaucerCore, NPCID.LunarTowerSolar, NPCID.LunarTowerNebula, NPCID.LunarTowerStardust, NPCID.LunarTowerVortex };
         }
         public override bool InstancePerEntity => true;
@@ -38,8 +48,58 @@ namespace SOTS.NPCs.ArtificialDebuffs
         public int DestableCurse = 0;
         public int BleedingCurse = 0;
         //public bool hasJustSpawned = true;
+        public override void OnHitPlayer(NPC npc, Player target, int damage, bool crit)
+        {
+            if (spirits.Contains(npc.type))
+            {
+                int debuffTime = 120;
+                if(npc.type == NPCType<Constructs.NatureSpirit>())
+                {
+                    debuffTime = 120;
+                }
+                if (npc.type == NPCType<Constructs.EarthenSpirit>())
+                {
+                    debuffTime = 150;
+                }
+                if (npc.type == NPCType<Constructs.PermafrostSpirit>() || npc.type == NPCType<Constructs.OtherworldlySpirit>())
+                {
+                    debuffTime = 180;
+                }
+                if (npc.type == NPCType<Constructs.TidalSpirit>())
+                {
+                    debuffTime = 210;
+                }
+                if (npc.type == NPCType<Constructs.EvilSpirit>())
+                {
+                    debuffTime = 240;
+                }
+                if (npc.type == NPCType<Constructs.InfernoSpirit>())
+                {
+                    debuffTime = 270;
+                }
+                VoidPlayer.VoidBurn(mod, target, debuffTime);
+            }
+            base.OnHitPlayer(npc, target, damage, crit);
+        }
         public override bool PreAI(NPC npc)
         {
+            if (intimidating.Contains(npc.type) || spirits.Contains(npc.type))
+            {
+                bool canIntimidate = true;
+                if (npc.type == NPCType<TheAdvisorHead>() && npc.dontTakeDamage)
+                    canIntimidate = false;
+                if(canIntimidate)
+                {
+                    for (int i = 0; i < Main.player.Length; i++)
+                    {
+                        Player player = Main.player[i];
+                        if (player.Distance(npc.Center) <= 2000)
+                        {
+                            player.AddBuff(BuffType<IntimidatingPresence>(), 6, true);
+                        }
+                    }
+                }
+            }
             //hasJustSpawned = false;
             return base.PreAI(npc);
         }
@@ -294,12 +354,12 @@ namespace SOTS.NPCs.ArtificialDebuffs
             if(projectile.type == ModContent.ProjectileType<DeathSpiralProj>())
             {
                 bool worm = npc.realLife != -1;
-                float baseChance = 0.1f;
+                float baseChance = 0.2f;
                 int baseStacks = 1;
                 if (worm)
                 {
                     baseStacks = 2;
-                    baseChance = 0.07f;
+                    baseChance = 0.1f;
                 }
                 if (Main.rand.NextFloat(1) < baseChance / (baseStacks + BleedingCurse)) //1 in 10, drops lower ever time
                     BleedingCurse++;

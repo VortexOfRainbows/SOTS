@@ -3,6 +3,8 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Buffs;
+using SOTS.Void;
 
 namespace SOTS.Projectiles.Permafrost
 {    
@@ -24,6 +26,10 @@ namespace SOTS.Projectiles.Permafrost
 			projectile.tileCollide = false;
 			projectile.hostile = true;
 			projectile.alpha = 0;
+		}
+		public override void OnHitPlayer(Player target, int damage, bool crit)
+		{
+			VoidPlayer.VoidBurn(mod, target, 180);
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{

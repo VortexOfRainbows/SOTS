@@ -1,5 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Buffs;
+using SOTS.Void;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -21,6 +23,11 @@ namespace SOTS.Projectiles.Nature
 			projectile.timeLeft = 19;
 			projectile.tileCollide = false;
 			projectile.alpha = 0;
+		}
+		public override void OnHitPlayer(Player target, int damage, bool crit)
+		{
+			if(Main.rand.NextBool(3))
+				VoidPlayer.VoidBurn(mod, target, 90);
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{

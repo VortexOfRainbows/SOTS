@@ -7,7 +7,6 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-
 namespace SOTS.NPCs.Constructs
 {
 	public class NatureConstruct : ModNPC

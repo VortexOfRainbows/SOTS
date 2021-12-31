@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Buffs;
 using SOTS.Dusts;
 using SOTS.NPCs;
 using SOTS.Prim.Trails;
@@ -44,7 +45,7 @@ namespace SOTS.Projectiles.Inferno
         {
             if (runOnce)
             {
-                Main.PlaySound(SoundLoader.customSoundType, (int)projectile.Center.X, (int)projectile.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/StarLaser"), 0.7f, -0.4f);
+                Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 34, 0.9f, 0.5f);
                 SOTS.primitives.CreateTrail(new StarTrail(projectile, VoidPlayer.InfernoColorAttempt(0.4f), VoidPlayer.InfernoColorAttempt(0.4f), 10));
                 runOnce = false;
                 for (int i = 0; i < 5; i++)
@@ -78,7 +79,10 @@ namespace SOTS.Projectiles.Inferno
         }
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            target.AddBuff(BuffID.OnFire, 180, false);
+            if(Main.rand.NextBool(3))
+                target.AddBuff(BuffID.OnFire, 180, false);
+            else
+                VoidPlayer.VoidBurn(mod, target, 270);
         }
         public override void AI()
         {

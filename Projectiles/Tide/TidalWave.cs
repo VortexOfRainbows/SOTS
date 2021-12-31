@@ -1,6 +1,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Buffs;
 using SOTS.Dusts;
+using SOTS.Void;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -113,6 +115,10 @@ namespace SOTS.Projectiles.Tide
 				}
 			}
 			return false;
+		}
+		public override void OnHitPlayer(Player target, int damage, bool crit)
+		{
+			VoidPlayer.VoidBurn(mod, target, 210);
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{

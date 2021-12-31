@@ -431,6 +431,27 @@ namespace SOTS.Void
 			TidalSpirit,
 			PermafrostSpirit
 		}
+		public static void VoidBurn(Mod mod, Player player, int duration = 0)
+		{
+			if (player.whoAmI == Main.LocalPlayer.whoAmI)
+				Main.PlaySound(SoundLoader.customSoundType, (int)player.Center.X, (int)player.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Void/Void_Damage"), 1.1f);
+			player.AddBuff(BuffType<VoidBurn>(), duration, false);
+			for (int i = 0; i < 5; i++)
+			{
+				Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, 198);
+				dust.noGravity = true;
+				dust.velocity *= 4;
+				dust.scale = 2.2f;
+				dust = Dust.NewDustDirect(player.position, player.width, player.height, 198);
+				dust.noGravity = true;
+				dust.velocity *= 3.5f;
+				dust.scale = 2.7f;
+				dust = Dust.NewDustDirect(player.position, player.width, player.height, 198);
+				dust.noGravity = true;
+				dust.velocity *= 3;
+				dust.scale = 3.2f;
+			}
+		}
         public override void PostUpdateEquips()
         {
 			for(int i = 0; i < player.inventory.Length; i++)
@@ -448,6 +469,8 @@ namespace SOTS.Void
 				{
 					int time = 600;
 					player.AddBuff(ModContent.BuffType<VoidShock>(), time);
+					if (player.whoAmI == Main.LocalPlayer.whoAmI)
+						Main.PlaySound(SoundLoader.customSoundType, (int)player.Center.X, (int)player.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Void/Void_Shock"), 0.9f);
 					//if(time < 120) time = 120;
 				}
 				if(voidRegen > -1 && player.HasBuff(BuffType<VoidShock>()))
@@ -460,14 +483,48 @@ namespace SOTS.Void
 					voidMeter = -150;
 				}
 			}
+			if (player.HasBuff(BuffType<VoidShock>()) || player.HasBuff(BuffType<VoidRecovery>()))
+			{
+				int chance = 25;
+				if (player.HasBuff(BuffType<VoidRecovery>()))
+					chance = 10;
+				if (Main.rand.NextBool(chance))
+				{
+					Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, 198);
+					dust.noGravity = true;
+					dust.velocity *= 4;
+					dust.scale = 2.2f;
+				}
+				if (Main.rand.NextBool(chance))
+				{
+					Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, 198);
+					dust.noGravity = true;
+					dust.velocity *= 3.5f;
+					dust.scale = 2.7f;
+				}
+				if (Main.rand.NextBool(chance))
+				{
+					Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, 198);
+					dust.noGravity = true;
+					dust.velocity *= 3f;
+					dust.scale = 3.2f;
+				}
+			}
 			if (player.HasBuff(ModContent.BuffType<SulfurBurn>()))
 			{
 				if (voidRegen > 0)
 					voidRegen *= 0.5f;
 				voidRegen -= 100f;
 			}
+			if (player.HasBuff(ModContent.BuffType<VoidBurn>()))
+			{
+				if (voidRegen > 0)
+					voidRegen *= 0.2f;
+				voidRegen -= 6f;
+			}
 			base.PostUpdateEquips();
         }
+		bool isFull = false;
         private void ResetVariables() 
 		{
 			ColorUpdate();
@@ -552,13 +609,20 @@ namespace SOTS.Void
 				//make sure meter doesn't go above max
 				voidMeter = voidMeterMax2; 
 				frozenVoidCount = voidMeter;
+				if(!isFull)
+				{
+					if (player.whoAmI == Main.LocalPlayer.whoAmI)
+						Main.PlaySound(SoundLoader.customSoundType, (int)player.Center.X, (int)player.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Void/Void_Full"), 1f);
+					isFull = true;
+				}
 			}
 			else
             {
 				if(frozenVoid)
                 {
 					voidMeter = frozenVoidCount;
-                }
+				}
+				isFull = false;
 			}
 			voidMeterMax2 = voidMeterMax;
 			voidKnockback = 0f;

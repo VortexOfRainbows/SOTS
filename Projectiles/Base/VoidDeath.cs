@@ -23,6 +23,7 @@ namespace SOTS.Projectiles.Base
 			projectile.hostile = false;
 			projectile.alpha = 30;
 		}
+		bool sound = true;
 		public override void AI()
         {
             projectile.frameCounter++;
@@ -38,6 +39,12 @@ namespace SOTS.Projectiles.Base
             }
 			if(projectile.alpha == 255)
 			{
+				if(sound)
+				{
+					if (projectile.owner  == Main.LocalPlayer.whoAmI)
+						Main.PlaySound(SoundLoader.customSoundType, (int)projectile.Center.X, (int)projectile.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Void/Void_Death"), 1.05f);
+					sound = false;
+                }
 				for (int i = 0; i < 3; i++)
 				{
 					int num1 = Dust.NewDust(projectile.position, projectile.width, projectile.height, 198);

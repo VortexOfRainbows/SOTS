@@ -18,13 +18,13 @@ namespace SOTS.Items.Evil
 		}
 		public override void SetDefaults()
 		{
-			item.damage = 45;
+			item.damage = 50;
 			item.width = 52;
 			item.height = 54;
 			item.useStyle = ItemUseStyleID.HoldingOut;
 			item.useAnimation = 36;
 			item.useTime = 36;
-			item.shootSpeed = 20f;
+			item.shootSpeed = 27f;
 			item.knockBack = 3.5f;
 			item.UseSound = SoundID.Item116;
 			item.shoot = ModContent.ProjectileType<DeathSpiralProj>();
@@ -35,7 +35,7 @@ namespace SOTS.Items.Evil
 			item.channel = true;
 			item.autoReuse = true;
 			item.melee = true;
-		}
+		}	
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
 			for(int direction = -1; direction <= 1; direction += 2)

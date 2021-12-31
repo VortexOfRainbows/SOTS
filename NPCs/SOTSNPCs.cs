@@ -36,7 +36,6 @@ namespace SOTS.NPCs
 		{
 			return FindTarget_Basic(center, out float _, minDistance, attacker);
 		}
-
 		public static int FindTarget_Basic(Vector2 center, out float dist, float minDistance = 2000f, object attacker = null)
 		{
 			int target = -1;
@@ -370,6 +369,11 @@ namespace SOTS.NPCs
 				spawnRate = (int)(spawnRate * 0.08f); //essentially setting it to 48
 				maxSpawns = (int)(maxSpawns * 1.5f);
 			}
+			if(player.HasBuff(ModContent.BuffType<IntimidatingPresence>()))
+            {
+				spawnRate = (int)(spawnRate * 10); //makes thing spawn at 1/10th the speed
+				maxSpawns = (int)(maxSpawns * 0.5f); //cut max spawns in half
+            }
 			if (spawnRate < 1)
 				spawnRate = 1;
 		}
@@ -401,7 +405,7 @@ namespace SOTS.NPCs
 		{
 			Player player = spawnInfo.player;
 			float constructRateMultiplier = 1f;
-			if (SOTSPlayer.ModPlayer(player).noMoreConstructs)
+			if (SOTSPlayer.ModPlayer(player).noMoreConstructs || player.HasBuff(ModContent.BuffType<IntimidatingPresence>()))
 				constructRateMultiplier = 0f;
 			bool ZoneForest = !player.GetModPlayer<SOTSPlayer>().PyramidBiome && !player.ZoneDesert && !player.ZoneCorrupt && !player.ZoneDungeon && !player.ZoneDungeon && !player.ZoneHoly && !player.ZoneMeteor && !player.ZoneJungle && !player.ZoneSnow && !player.ZoneCrimson && !player.ZoneGlowshroom && !player.ZoneUndergroundDesert && (player.ZoneDirtLayerHeight || player.ZoneOverworldHeight) && !player.ZoneBeach;
 			if (spawnInfo.player.GetModPlayer<SOTSPlayer>().PyramidBiome)
@@ -455,6 +459,7 @@ namespace SOTS.NPCs
 					pool.Add(ModContent.NPCType<HoloBlade>(), 0.175f);
 					pool.Add(ModContent.NPCType<TwilightDevil>(), 0.04f);
 					pool.Add(ModContent.NPCType<OtherworldlyConstructHead>(), 0.02f * constructRateMultiplier);
+					pool.Add(ModContent.NPCType<TwilightScouter>(), 0.01f);
 				}
 			}
 			else if(spawnInfo.player.ZoneSkyHeight)
@@ -577,7 +582,7 @@ namespace SOTS.NPCs
 				if(NPC.downedBoss3)
 					pool.Add(ModContent.NPCType<ShadowTreasureSlime>(), SpawnCondition.Underworld.Chance * 0.03f);
 				if(Main.hardMode)
-					pool.Add(ModContent.NPCType<InfernoConstruct>(), SpawnCondition.Underworld.Chance * 0.015f);
+					pool.Add(ModContent.NPCType<InfernoConstruct>(), SpawnCondition.Underworld.Chance * 0.015f * constructRateMultiplier);
 			}
 			if (spawnInfo.spawnTileY <= Main.rockLayer)
 			{

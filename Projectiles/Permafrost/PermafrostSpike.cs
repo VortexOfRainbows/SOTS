@@ -1,5 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Buffs;
+using SOTS.Void;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -19,6 +21,10 @@ namespace SOTS.Projectiles.Permafrost
 			projectile.hostile = true;
 			projectile.friendly = false;
 			projectile.tileCollide = true;
+		}
+		public override void OnHitPlayer(Player target, int damage, bool crit)
+		{
+			VoidPlayer.VoidBurn(mod, target, 180);
 		}
 		public override void AI()
 		{
@@ -66,7 +72,7 @@ namespace SOTS.Projectiles.Permafrost
         {
 			if(projectile.owner == Main.myPlayer)
 			{
-				Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("PermafrostLinger"), projectile.damage, 0, projectile.owner, projectile.rotation);
+				Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, ModContent.ProjectileType<PermafrostLinger>(), projectile.damage, 0, projectile.owner, projectile.rotation);
 			}
 		}
 	}

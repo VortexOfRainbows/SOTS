@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Buffs;
 using SOTS.Void;
 using Terraria;
 using Terraria.ID;
@@ -32,6 +33,10 @@ namespace SOTS.Projectiles.Evil
 			hitbox = new Rectangle((int)projectile.Center.X - width/2, (int)projectile.Center.Y - width/2, width, width);
             base.ModifyDamageHitbox(ref hitbox);
         }
+        public override void OnHitPlayer(Player target, int damage, bool crit)
+		{
+			VoidPlayer.VoidBurn(mod, target, 240);
+		}
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
 			Texture2D texture = Main.projectileTexture[projectile.type];

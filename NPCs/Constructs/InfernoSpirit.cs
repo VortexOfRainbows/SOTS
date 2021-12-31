@@ -13,7 +13,6 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-
 namespace SOTS.NPCs.Constructs
 {
 	public class InfernoSpirit : ModNPC
@@ -103,78 +102,85 @@ namespace SOTS.NPCs.Constructs
 				else
                 {
 					npc.ai[1]++;
-					if(npc.ai[1] < (timeToDash * 4))
+					if((int)npc.ai[2] % 3 == 0 || true)
 					{
-						for (int i = 0; i < ProbeCount; i++)
+						if (npc.ai[1] < (timeToDash * 4))
 						{
-							MiniSpirit spirit = miniSpirits[i];
-							spirit.offset = MathHelper.Lerp(spirit.offset, 96, 0.06f);
-							spirit.rotation -= Direction();
-						}
-						if(npc.ai[1] >= 0)
-						{
-							float multiplier = npc.ai[1] / (timeToDash * 4);
-							if (nextDestination != Vector2.Zero)
+							for (int i = 0; i < ProbeCount; i++)
 							{
-								int rnCounter = (int)npc.ai[1] % timeToDash;
-								if (rnCounter == 0)
+								MiniSpirit spirit = miniSpirits[i];
+								spirit.offset = MathHelper.Lerp(spirit.offset, 96, 0.06f);
+								spirit.rotation -= Direction();
+							}
+							if (npc.ai[1] >= 0)
+							{
+								float multiplier = npc.ai[1] / (timeToDash * 4);
+								if (nextDestination != Vector2.Zero)
 								{
-									Vector2 toPlayer = player.Center - npc.Center;
-									nextDestination = npc.Center + toPlayer * (0.25f + 0.8f * multiplier) + Main.rand.NextVector2CircularEdge(160, 160) * (1.0f - 0.8f * multiplier);
-									if (Main.netMode != NetmodeID.MultiplayerClient)
-										npc.netUpdate = true;
+									int rnCounter = (int)npc.ai[1] % timeToDash;
+									if (rnCounter == 0)
+									{
+										Vector2 toPlayer = player.Center - npc.Center;
+										nextDestination = npc.Center + toPlayer * (0.25f + 0.8f * multiplier) + Main.rand.NextVector2CircularEdge(160, 160) * (1.0f - 0.8f * multiplier);
+										if (Main.netMode != NetmodeID.MultiplayerClient)
+											npc.netUpdate = true;
+									}
+									else
+									{
+										npc.Center = Vector2.Lerp(npc.Center, nextDestination, 0.06f);
+									}
 								}
 								else
 								{
-									npc.Center = Vector2.Lerp(npc.Center, nextDestination, 0.06f);
+									nextDestination = npc.Center;
+									npc.velocity *= 0;
 								}
 							}
-							else
+						}
+						else if (npc.ai[1] <= (timeToDash * 4) + 30)
+						{
+							float bonus = (npc.ai[1] - (timeToDash * 4)) / 30f;
+							for (int i = 0; i < ProbeCount; i++)
 							{
-								nextDestination = npc.Center;
-								npc.velocity *= 0;
+								MiniSpirit spirit = miniSpirits[i];
+								spirit.offset = MathHelper.Lerp(96, 60, bonus);
+								spirit.rotation -= Direction() * (1.0f + bonus * 2);
 							}
 						}
-					}
-					else if(npc.ai[1] <= (timeToDash * 4) + 30)
-					{
-						float bonus = (npc.ai[1] - (timeToDash * 4)) / 30f;
-						for (int i = 0; i < ProbeCount; i++)
+						else if (npc.ai[1] > (timeToDash * 4) + 30)
 						{
-							MiniSpirit spirit = miniSpirits[i];
-							spirit.offset = MathHelper.Lerp(96, 60, bonus);
-							spirit.rotation -= Direction() * (1.0f + bonus * 2);
+							for (int i = 0; i < ProbeCount; i++)
+							{
+								MiniSpirit spirit = miniSpirits[i];
+								spirit.offset = MathHelper.Lerp(spirit.offset, 60, 0.06f);
+								spirit.rotation -= Direction() * 3.0f;
+								if ((int)npc.ai[3] % ProbeCount == i)
+								{
+									float mult = npc.ai[1] % timeToFire / (timeToFire - 1);
+									if (mult == 0)
+										mult = 1;
+									spirit.offset = 60 + 32 * mult;
+								}
+							}
+							if (npc.ai[1] % timeToFire == 0)
+							{
+								int i = (int)npc.ai[3] % ProbeCount;
+								MiniSpirit spirit = miniSpirits[i];
+								Vector2 normal = new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(spirit.rotation));
+								Projectile.NewProjectile(spirit.getCenter(npc.Center), normal, ModContent.ProjectileType<InfernoBolt>(), damage, 3.5f, Main.myPlayer, Direction(), 0); //lava beam should do a ludicrous amount of damage
+								npc.ai[3]++;
+							}
+						}
+						if (npc.ai[1] > (timeToDash * 4) + 240)
+						{
+							npc.ai[1] = -60;
+							npc.ai[2]++;
 						}
 					}
-					else if(npc.ai[1] > (timeToDash * 4) + 30)
-					{
-						for (int i = 0; i < ProbeCount; i++)
-						{
-							MiniSpirit spirit = miniSpirits[i];
-							spirit.offset = MathHelper.Lerp(spirit.offset, 60, 0.06f);
-							spirit.rotation -= Direction() * 3.0f;
-							if((int)npc.ai[3] % ProbeCount == i)
-                            {
-								float mult = npc.ai[1] % timeToFire / (timeToFire - 1);
-								if (mult == 0)
-									mult = 1;
-								spirit.offset = 60 + 32 * mult;
-                            }
-						}
-						if (npc.ai[1] % timeToFire == 0)
-						{
-							int i = (int)npc.ai[3] % ProbeCount;
-							MiniSpirit spirit = miniSpirits[i];
-							Vector2 normal = new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(spirit.rotation));
-							Projectile.NewProjectile(spirit.getCenter(npc.Center), normal, ModContent.ProjectileType<InfernoBolt>(), damage, 3.5f, Main.myPlayer, Direction(), 0); //lava beam should do a ludicrous amount of damage
-							npc.ai[3]++;
-						}
-					}
-					if (npc.ai[1] > (timeToDash * 4) + 240)
-					{
-						npc.ai[1] = -60;
-						npc.ai[2]++;
-					}
+					if((int)npc.ai[2] % 3 == 1)
+                    {
+
+                    }
 				}
 				counter2++;
 				Vector2 idle = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(counter2 * 2));
@@ -259,14 +265,29 @@ namespace SOTS.NPCs.Constructs
 		{
 			if (npc.life <= 0)
 			{
-				for(int i = 0; i < 50; i ++)
+				if(Main.netMode	!= NetmodeID.Server)
 				{
-					Dust dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.RainbowMk2);
-					dust.color = new Color(239, 139, 18);
-					dust.noGravity = true;
-					dust.fadeIn = 0.1f;
-					dust.scale *= 2f;
-					dust.velocity *= 5f;
+					for (int i = 0; i < 50; i++)
+					{
+						Dust dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.RainbowMk2);
+						dust.color = VoidPlayer.InfernoColorAttempt(Main.rand.NextFloat(1f));
+						dust.noGravity = true;
+						dust.fadeIn = 0.1f;
+						dust.scale *= 2.2f;
+						dust.velocity *= 4f;
+					}
+					for(int i = 0; i < ProbeCount; i++)
+					{
+						for (int k = 0; k < 10; k++)
+						{
+							Dust dust = Dust.NewDustDirect(miniSpirits[i].getCenter(npc.Center) - new Vector2(4, 4), 0, 0, DustID.RainbowMk2);
+							dust.color = VoidPlayer.InfernoColorAttempt(Main.rand.NextFloat(1f));
+							dust.noGravity = true;
+							dust.fadeIn = 0.1f;
+							dust.scale *= 2.0f;
+							dust.velocity *= 2.5f;
+						}
+					}
 				}
 				if(phase == 1)
 				{

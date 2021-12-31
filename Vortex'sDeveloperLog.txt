@@ -33,8 +33,7 @@ Mid Priority:
 4. Witch's Heart accessory; in similar vein to Heart of the Sea, where it is an accessory variant of the Nightmare potion
 5. Mobile Fortress Generator: upgrade to platform generator. Base its visuals off of Ectoplasm and Dungeon Brick.
 6. Split Focus Reticle into two accessories to make it less overpowered: Focus Reticle (Amplifiers + Crit Rate), Bag of Charms (Charms + Icosahedrons)
-7. Reworked Dissolving Evil Tile visual effects (perhaps?)
-8. Spirit Flames debuff. Inflicted by construct spirits and their attacks. Instead of health, saps void
+7. Void Damage and negative void regeneration combat numbers
 
 Low Priority:
 1. Archaelogist NPC
@@ -42,6 +41,8 @@ Low Priority:
 
 12/29/21 & 12/30/21
 1. Inferno Spirit spiral attack
+2. Intimidation debuff and Void Burn debuff
+	1. Also added various void sound effects
 
 12/26/21 & 12/28/21
 1. Worked on Lava Laser (for inferno construct)

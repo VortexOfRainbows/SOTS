@@ -1,5 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Buffs;
+using SOTS.Void;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -66,6 +68,10 @@ namespace SOTS.Projectiles.Earth
 			projectile.alpha++;
 			projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
 			projectile.velocity = projectile.velocity.RotatedBy(MathHelper.ToRadians(1));
+		}
+		public override void OnHitPlayer(Player target, int damage, bool crit)
+		{
+			VoidPlayer.VoidBurn(mod, target, 150);
 		}
 	}
 }
