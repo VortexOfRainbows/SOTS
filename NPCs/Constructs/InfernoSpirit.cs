@@ -69,6 +69,7 @@ namespace SOTS.NPCs.Constructs
 		public const int ProbeCount = 7;
 		public const int timeToFire = 2;
 		public const int timeToDash = 45;
+		float verticalCompress = 1f;
 		int counter2 = 0;
 		int phase = 1;
 		int counter = 0;
@@ -95,92 +96,132 @@ namespace SOTS.NPCs.Constructs
 				{
 					damage = (int)(damage / Main.expertDamage);
 				}
-				if((int)npc.ai[0] == 0)
-                {
-					npc.ai[0] = 1;
-                }
-				else
-                {
-					npc.ai[1]++;
-					if((int)npc.ai[2] % 3 == 0 || true)
+				npc.ai[1]++;
+				if ((int)npc.ai[2] % 3 == 0 || (int)npc.ai[2] % 3 == 2)
+				{
+					verticalCompress = MathHelper.Lerp(verticalCompress, 1f, 0.04f);
+					if (npc.ai[1] < (timeToDash * 4))
 					{
-						if (npc.ai[1] < (timeToDash * 4))
+						for (int i = 0; i < ProbeCount; i++)
 						{
-							for (int i = 0; i < ProbeCount; i++)
+							MiniSpirit spirit = miniSpirits[i];
+							spirit.offset = MathHelper.Lerp(spirit.offset, 96, 0.06f);
+							spirit.rotation -= Direction();
+						}
+						if (npc.ai[1] >= 0)
+						{
+							float multiplier = npc.ai[1] / (timeToDash * 4);
+							if (nextDestination != Vector2.Zero)
 							{
-								MiniSpirit spirit = miniSpirits[i];
-								spirit.offset = MathHelper.Lerp(spirit.offset, 96, 0.06f);
-								spirit.rotation -= Direction();
-							}
-							if (npc.ai[1] >= 0)
-							{
-								float multiplier = npc.ai[1] / (timeToDash * 4);
-								if (nextDestination != Vector2.Zero)
+								int rnCounter = (int)npc.ai[1] % timeToDash;
+								if (rnCounter == 0)
 								{
-									int rnCounter = (int)npc.ai[1] % timeToDash;
-									if (rnCounter == 0)
-									{
-										Vector2 toPlayer = player.Center - npc.Center;
-										nextDestination = npc.Center + toPlayer * (0.25f + 0.8f * multiplier) + Main.rand.NextVector2CircularEdge(160, 160) * (1.0f - 0.8f * multiplier);
-										if (Main.netMode != NetmodeID.MultiplayerClient)
-											npc.netUpdate = true;
-									}
-									else
-									{
-										npc.Center = Vector2.Lerp(npc.Center, nextDestination, 0.06f);
-									}
+									Vector2 toPlayer = player.Center - npc.Center;
+									nextDestination = npc.Center + toPlayer * (0.25f + 0.8f * multiplier) + Main.rand.NextVector2CircularEdge(160, 160) * (1.0f - 0.8f * multiplier);
+									if (Main.netMode != NetmodeID.MultiplayerClient)
+										npc.netUpdate = true;
 								}
 								else
 								{
-									nextDestination = npc.Center;
-									npc.velocity *= 0;
+									npc.Center = Vector2.Lerp(npc.Center, nextDestination, 0.06f);
 								}
 							}
-						}
-						else if (npc.ai[1] <= (timeToDash * 4) + 30)
-						{
-							float bonus = (npc.ai[1] - (timeToDash * 4)) / 30f;
-							for (int i = 0; i < ProbeCount; i++)
+							else
 							{
-								MiniSpirit spirit = miniSpirits[i];
-								spirit.offset = MathHelper.Lerp(96, 60, bonus);
-								spirit.rotation -= Direction() * (1.0f + bonus * 2);
+								nextDestination = npc.Center;
+								npc.velocity *= 0;
 							}
 						}
-						else if (npc.ai[1] > (timeToDash * 4) + 30)
+					}
+					else if (npc.ai[1] <= (timeToDash * 4) + 30)
+					{
+						float bonus = (npc.ai[1] - (timeToDash * 4)) / 30f;
+						for (int i = 0; i < ProbeCount; i++)
 						{
-							for (int i = 0; i < ProbeCount; i++)
+							MiniSpirit spirit = miniSpirits[i];
+							spirit.offset = MathHelper.Lerp(96, 60, bonus);
+							spirit.rotation -= Direction() * (1.0f + bonus * 2);
+						}
+					}
+					else if (npc.ai[1] > (timeToDash * 4) + 30)
+					{
+						for (int i = 0; i < ProbeCount; i++)
+						{
+							MiniSpirit spirit = miniSpirits[i];
+							spirit.offset = MathHelper.Lerp(spirit.offset, 60, 0.06f);
+							spirit.rotation -= Direction() * 3.0f;
+							if ((int)npc.ai[3] % ProbeCount == i)
 							{
-								MiniSpirit spirit = miniSpirits[i];
-								spirit.offset = MathHelper.Lerp(spirit.offset, 60, 0.06f);
-								spirit.rotation -= Direction() * 3.0f;
-								if ((int)npc.ai[3] % ProbeCount == i)
-								{
-									float mult = npc.ai[1] % timeToFire / (timeToFire - 1);
-									if (mult == 0)
-										mult = 1;
-									spirit.offset = 60 + 32 * mult;
-								}
+								float mult = npc.ai[1] % timeToFire / (timeToFire - 1);
+								if (mult == 0)
+									mult = 1;
+								spirit.offset = 60 + 32 * mult;
 							}
-							if (npc.ai[1] % timeToFire == 0)
+						}
+						if (npc.ai[1] % timeToFire == 0)
+						{
+							if(Main.netMode != NetmodeID.MultiplayerClient)
 							{
 								int i = (int)npc.ai[3] % ProbeCount;
 								MiniSpirit spirit = miniSpirits[i];
 								Vector2 normal = new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(spirit.rotation));
-								Projectile.NewProjectile(spirit.getCenter(npc.Center), normal, ModContent.ProjectileType<InfernoBolt>(), damage, 3.5f, Main.myPlayer, Direction(), 0); //lava beam should do a ludicrous amount of damage
-								npc.ai[3]++;
+								Projectile.NewProjectile(spirit.getCenter(npc.Center, verticalCompress), normal, ModContent.ProjectileType<InfernoBolt>(), damage, 3.5f, Main.myPlayer, Direction(), 0);
+							}
+							npc.ai[3]++;
+						}
+					}
+					if (npc.ai[1] > (timeToDash * 4) + 240)
+					{
+						npc.ai[1] = -60;
+						npc.ai[2]++;
+						npc.ai[3] = 0;
+						npc.ai[0] = 0;
+					}
+				}
+				if ((int)npc.ai[2] % 3 == 1)
+				{
+					float mult = npc.ai[1] / 60f;
+					mult = MathHelper.Clamp(mult, 0, 1);
+					verticalCompress = MathHelper.Lerp(verticalCompress, 0.4f, 0.04f);
+					for (int i = 0; i < ProbeCount; i++)
+					{
+						MiniSpirit spirit = miniSpirits[i];
+						spirit.offset = MathHelper.Lerp(spirit.offset, 96, 0.06f);
+						spirit.rotation -= Direction() * (1f + mult * 2);
+					}
+					if(npc.ai[1] < 0)
+                    {
+						npc.ai[0] = player.Center.X;
+						npc.ai[3] = player.Center.Y;
+                    }
+					Vector2 center = new Vector2(npc.ai[0], npc.ai[3]);
+					Vector2 dashPosition = new Vector2(800 * Direction(), -400) + center;
+					Vector2 dashPositionOther = new Vector2(800 * -Direction(), -400) + center;
+					if (npc.ai[1] < 0)
+					{
+						npc.Center = Vector2.Lerp(npc.Center, dashPosition, 0.06f);
+					}
+					if (npc.ai[1] >= 0)
+					{
+						mult = npc.ai[1] / 240f;
+						npc.Center = Vector2.Lerp(dashPosition, dashPositionOther, mult);
+						if ((int)npc.ai[1] % 4 == 0)
+							Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 34, 1f, 0.5f);
+						if ((int)npc.ai[1] % 2 == 0)
+						{
+							if (Main.netMode != NetmodeID.MultiplayerClient)
+							{
+								Projectile.NewProjectile(npc.Center, new Vector2(Direction() * -0.5f, 4.5f), ModContent.ProjectileType<LavaLaser>(), (int)(damage * 1.5f), 3.5f, Main.myPlayer, Main.rand.NextFloat(0.65f, 0.75f), Main.rand.NextFloat(360));
 							}
 						}
-						if (npc.ai[1] > (timeToDash * 4) + 240)
+						if (npc.ai[1] > 240f)
 						{
 							npc.ai[1] = -60;
 							npc.ai[2]++;
+							npc.ai[3] = 0;
+							npc.ai[0] = 0;
 						}
 					}
-					if((int)npc.ai[2] % 3 == 1)
-                    {
-
-                    }
 				}
 				counter2++;
 				Vector2 idle = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(counter2 * 2));
@@ -256,7 +297,7 @@ namespace SOTS.NPCs.Constructs
 				for (int k = 0; k < ProbeCount; k++)
 				{
 					MiniSpirit spirit = miniSpirits[k];
-					spirit.Draw(spirit.getCenter(npc.Center));
+					spirit.Draw(spirit.getCenter(npc.Center, verticalCompress));
 				}
 			}
 			return false;
@@ -280,7 +321,7 @@ namespace SOTS.NPCs.Constructs
 					{
 						for (int k = 0; k < 10; k++)
 						{
-							Dust dust = Dust.NewDustDirect(miniSpirits[i].getCenter(npc.Center) - new Vector2(4, 4), 0, 0, DustID.RainbowMk2);
+							Dust dust = Dust.NewDustDirect(miniSpirits[i].getCenter(npc.Center, verticalCompress) - new Vector2(4, 4), 0, 0, DustID.RainbowMk2);
 							dust.color = VoidPlayer.InfernoColorAttempt(Main.rand.NextFloat(1f));
 							dust.noGravity = true;
 							dust.fadeIn = 0.1f;
@@ -322,9 +363,11 @@ namespace SOTS.NPCs.Constructs
 			this.offset = offset;
 			this.rotation = rotation;
         }
-		public Vector2 getCenter(Vector2 npcCenter)
+		public Vector2 getCenter(Vector2 npcCenter, float yCompress = 1f, float npcRotation = 0f)
         {
-			return npcCenter + new Vector2(offset, 0).RotatedBy(MathHelper.ToRadians(rotation));
+			Vector2 vectorOffset = new Vector2(offset, 0).RotatedBy(MathHelper.ToRadians(rotation));
+			vectorOffset.Y *= yCompress;
+			return npcCenter + vectorOffset;
 		}
 		public void Draw(Vector2 drawLocation)
 		{

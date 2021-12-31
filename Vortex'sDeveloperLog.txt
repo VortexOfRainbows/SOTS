@@ -43,6 +43,7 @@ Low Priority:
 12/31/21
 1. Treasure Slime now drops previous item during fade in
 2. Void Bar visuals and config
+3. Inferno Construct lava laser attack
 
 12/29/21 & 12/30/21
 1. Inferno Spirit spiral attack

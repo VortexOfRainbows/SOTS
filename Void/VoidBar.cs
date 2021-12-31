@@ -188,7 +188,7 @@ namespace SOTS.Void
 				if (!SOTS.Config.simpleVoidFill)
 					if (nextType == -1 || nextType != type)
 					{
-						rectangles.Add(new Rectangle((int)(VoidPlayer.voidBarOffset.X + padding.X + (int)prevRight - 2), (int)(VoidPlayer.voidBarOffset.Y + padding.Y - 2), 2, 20));
+						rectangles.Add(new Rectangle((int)(VoidPlayer.voidBarOffset.X + padding.X + (int)prevRight - 1), (int)(VoidPlayer.voidBarOffset.Y + padding.Y - 2), 2, 20));
 						//colors.Add(color);
 					}
 			}
