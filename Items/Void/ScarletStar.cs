@@ -9,7 +9,7 @@ namespace SOTS.Items.Void
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Scarlet Star");
+			DisplayName.SetDefault("Scarlet Crescent");
 			Tooltip.SetDefault("Increases max void by 50 and void regen by 1\nCan only be used once");
 		}
 		public override void SetDefaults()
