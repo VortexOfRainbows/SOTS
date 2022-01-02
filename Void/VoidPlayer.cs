@@ -106,6 +106,8 @@ namespace SOTS.Void
 		public float voidCost = 1f;
 		public float voidSpeed = 1f;
 		public int voidMeterMax2 = 0;
+		public bool hasEnteredVoidShock = false;
+		public int voidShockAnimationCounter = 0;
 		public bool voidShock = false;
 		public bool voidRecovery = false;
 		public float voidMultiplier = 1f;
@@ -120,10 +122,13 @@ namespace SOTS.Void
 			ResetVariables();
 		}
 		public override void UpdateDead() {
-			voidMeter = voidMeterMax2 / 2;
 			ResetVariables();
 		}
-		public static void VoidEffect(Player player, int voidAmount)
+        public override void OnRespawn(Player player)
+		{
+			voidMeter = voidMeterMax2 / 2;
+		}
+        public static void VoidEffect(Player player, int voidAmount)
 		{
 			//CombatText.NewText(new Rectangle((int)player.position.X, (int)player.position.Y, player.width, player.height), new Color(100, 80, 115, 255), string.Concat(voidAmount), false, false);
 			if (player.whoAmI == Main.myPlayer)
@@ -539,9 +544,21 @@ namespace SOTS.Void
                 {
 					netUpdate = true;
 				}
-            }
-			voidShock = false;
-			voidRecovery = false;
+			}
+			if (voidShock)
+			{
+				if (!hasEnteredVoidShock)
+				{
+					voidShockAnimationCounter = 1;
+					//play voidshock animation
+				}
+				hasEnteredVoidShock = true;
+			}
+			else
+            {
+				voidShockAnimationCounter = -1;
+				hasEnteredVoidShock = false;
+			}
 			voidDamage = 1f;
 			soulsOnKill = 0;
 			//percent damage grows as health lowers
@@ -655,14 +672,20 @@ namespace SOTS.Void
 		public float voidGainMultiplier = 1f;
 		public float voidRegenSpeed = 1f;
 		public float flatVoidRegen = 0f;
+		public int GreenBarCounter = 0;
 		public void UpdateVoidRegen()
         {
 			float increaseAmount = voidRegenSpeed;
 			if (voidRecovery)
 			{
+				if (voidMeter < 0)
+                {
+					voidRegenTimer = voidRegenTimerMax;
+					voidMeter = 0;
+				}
 				increaseAmount = 60;
 			}
-			else if(voidShock || voidMeter >= voidMeterMax2)
+			else if(voidShock || voidMeter >= voidMeterMax2 || player.dead)
             {
 				increaseAmount = -4;
             }
@@ -673,7 +696,8 @@ namespace SOTS.Void
 			{
 				float voidGain = (baseVoidGain + bonusVoidGain) * voidGainMultiplier;
 				voidMeter += voidGain;
-				voidRegenTimer = 0;
+				voidRegenTimer = 0; 
+				GreenBarCounter = 20;
 			}
 			voidMeter += flatVoidRegen / 60f;
 
@@ -682,12 +706,14 @@ namespace SOTS.Void
 			voidGainMultiplier = 1f;
 			voidRegenSpeed = 1f;
 			flatVoidRegen = 0f;
+			voidShock = false;
+			voidRecovery = false;
 			#endregion
 
 			#region apply upgrade effects
 			voidRegenSpeed += 0.02f * voidAnkh;
 			voidRegenSpeed += 0.05f * voidStar;
-            #endregion
-        }
+			#endregion
+		}
     }
 }

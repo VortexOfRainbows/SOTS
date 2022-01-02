@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.ModLoader;
 using System.Collections.Generic;
+using System;
 
 namespace SOTS.Void
 {
@@ -70,7 +71,7 @@ namespace SOTS.Void
 			barBackground.Append(text);
 			base.Append(barBackground);
 		}
-		public override void Draw(SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch)
 		{
 			Player player = Main.player[Main.myPlayer];
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
@@ -228,26 +229,83 @@ namespace SOTS.Void
 			{
 				for (int i = 0; i < rectangles.Count; i++)
 				{
-					/*if(i == 0)
-					{
-						spriteBatch.Draw(divider2, rectangles[i], Color.White);
-					}*/
-					spriteBatch.Draw(divider, rectangles[i], Color.White); // colors[i]);
+					spriteBatch.Draw(divider, rectangles[i], Color.White);
 				}
 			}
-
-			fill2 = ModContent.GetTexture("SOTS/Void/VoidBarGreen");
-			float regenBarPercent = voidPlayer.voidRegenTimer / VoidPlayer.voidRegenTimerMax;
-			Rectangle frame1 = new Rectangle((int)(VoidPlayer.voidBarOffset.X + 16), (int)(VoidPlayer.voidBarOffset.Y + 2), (int)(168 * regenBarPercent), 30);
-			Rectangle frame = new Rectangle(0, 0, (int)(168 * regenBarPercent), 30);
-			spriteBatch.Draw(fill2, frame1, frame, Color.White);
-			spriteBatch.Draw(fill2, frame1, frame, color2);
-
 			fill2 = ModContent.GetTexture("SOTS/Void/VoidBarBorder2");
 			spriteBatch.Draw(fill2, new Rectangle((int)VoidPlayer.voidBarOffset.X, (int)VoidPlayer.voidBarOffset.Y, 200, 30), Color.White);
+			DrawGreenBar(spriteBatch);
 			if (voidPlayer.safetySwitchVisual)
 				DrawLock(spriteBatch);
 			DrawIce(spriteBatch, false);
+			DrawShock(spriteBatch);
+		}
+		public void DrawGreenBar(SpriteBatch spriteBatch)
+		{
+			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(Main.LocalPlayer);
+			Texture2D texture = ModContent.GetTexture("SOTS/Void/VoidBarGreen");
+			int timerDelay = 90;
+			float regenBarPercent = (voidPlayer.voidRegenTimer - timerDelay) / (VoidPlayer.voidRegenTimerMax - timerDelay);
+			if(regenBarPercent > 0)
+			{
+				Rectangle frame1 = new Rectangle((int)(VoidPlayer.voidBarOffset.X + 16), (int)(VoidPlayer.voidBarOffset.Y + 2), (int)(168 * regenBarPercent), 30);
+				Rectangle frame = new Rectangle(0, 0, (int)(168 * regenBarPercent), 30);
+				spriteBatch.Draw(texture, frame1, frame, Color.White);
+			}
+			if (voidPlayer.GreenBarCounter > 12 || voidPlayer.voidRecovery)
+			{
+				float mult = (voidPlayer.GreenBarCounter - 12) / 8f;
+				if (voidPlayer.voidRecovery)
+					mult = 1f;
+				Rectangle frame1 = new Rectangle((int)(VoidPlayer.voidBarOffset.X + 16), (int)(VoidPlayer.voidBarOffset.Y + 2), 168, 30);
+				spriteBatch.Draw(texture, frame1, Color.White * mult);
+			}
+			if (voidPlayer.voidRecovery && voidPlayer.GreenBarCounter < 20 && voidPlayer.GreenBarCounter != 0)
+			{
+				float mult = voidPlayer.GreenBarCounter / 20f;
+				float reverseMult = 1 - mult;
+				float sinusoid = (float)Math.Sin(Math.PI * reverseMult);
+				Color glow = new Color(60, 60, 60, 0);
+				for (int i = 0; i < 6; i++)
+				{
+					Vector2 circular = new Vector2(sinusoid * 1.5f, 0).RotatedBy(MathHelper.ToRadians(i * 60));
+					Rectangle frame1 = new Rectangle(0, 0, 168, 30);
+					spriteBatch.Draw(texture, new Vector2((int)(VoidPlayer.voidBarOffset.X + 16) + circular.X, (int)(VoidPlayer.voidBarOffset.Y + 2) + circular.Y), frame1, glow * (0.5f * sinusoid + 0.5f * mult));
+				}
+			}
+			else if (voidPlayer.GreenBarCounter < 20 && voidPlayer.GreenBarCounter != 0)
+			{
+				float mult = voidPlayer.GreenBarCounter / 20f;
+				float reverseMult = 1 - mult;
+				float sinusoid = (float)Math.Sin(Math.PI * reverseMult);
+				Color glow = new Color(120, 120, 120, 0);
+				for (int i = 0; i < 6; i++)
+				{
+					Vector2 circular = new Vector2(sinusoid * 3, 0).RotatedBy(MathHelper.ToRadians(i * 60));
+					Rectangle frame1 = new Rectangle(0, 0, 168, 30);
+					spriteBatch.Draw(texture, new Vector2((int)(VoidPlayer.voidBarOffset.X + 16) + circular.X, (int)(VoidPlayer.voidBarOffset.Y + 2) + circular.Y), frame1, glow * (0.5f * sinusoid + 0.5f * mult));
+				}
+			}
+			if (voidPlayer.GreenBarCounter > 0)
+				voidPlayer.GreenBarCounter--;
+		}
+		public void DrawShock(SpriteBatch spriteBatch)
+		{
+			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(Main.LocalPlayer);
+			if (voidPlayer.voidShockAnimationCounter > 0)
+			{
+				Texture2D texture = ModContent.GetTexture("SOTS/Void/VoidShockEffect");
+				int frameNumber = (int)(voidPlayer.voidShockAnimationCounter / 3.6f);
+				if (frameNumber >= 11)
+				{
+					voidPlayer.voidShockAnimationCounter = 0;
+					return;
+				}
+				Rectangle frame1 = new Rectangle((int)(VoidPlayer.voidBarOffset.X - 10), (int)(VoidPlayer.voidBarOffset.Y - 4), 216, 40);
+				Rectangle frame = new Rectangle(0, 40 * frameNumber, 216, 40);
+				spriteBatch.Draw(texture, frame1, frame, Color.White);
+				voidPlayer.voidShockAnimationCounter++;
+			}
 		}
 		public void DrawLock(SpriteBatch spriteBatch)
 		{

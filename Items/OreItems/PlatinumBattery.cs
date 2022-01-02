@@ -11,7 +11,7 @@ namespace SOTS.Items.OreItems
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Platinum Battery");
-			Tooltip.SetDefault("Increases void regen by 0.75 and max void by 20\nRegenerate void when hit, but also have a 10% chance to recieve broken armor when near max void");
+			Tooltip.SetDefault("Increases void gain by 1 and max void by 20\nRegenerate void when hit, but also have a 10% chance to recieve broken armor when near max void");
 		}
 		public override void SetDefaults()
 		{
