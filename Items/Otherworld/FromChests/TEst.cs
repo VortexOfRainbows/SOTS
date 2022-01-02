@@ -9,6 +9,7 @@ using SOTS.NPCs.Boss.Curse;
 using SOTS.Projectiles.Pyramid;
 using SOTS.Buffs;
 using SOTS.Projectiles.Slime;
+using SOTS.Void;
 
 namespace SOTS.Items.Otherworld.FromChests
 {
@@ -34,6 +35,10 @@ namespace SOTS.Items.Otherworld.FromChests
 		int counter = 0;
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
+			VoidPlayer vPlayer = VoidPlayer.ModPlayer(player);
+			vPlayer.voidStar = 0;
+			vPlayer.voidAnkh = 0;
+			vPlayer.voidMeterMax = 100;
 			Projectile.NewProjectile(position, new Vector2(speedX, speedY), type, damage, knockBack, Main.myPlayer, Main.rand.NextFloat(0.65f, 0.75f), Main.rand.NextFloat(360));
 			//SOTSPlayer.ModPlayer(player).UniqueVisionNumber = (SOTSPlayer.ModPlayer(player).UniqueVisionNumber + 1) % 24;
 			return false; 

@@ -12,7 +12,7 @@ namespace SOTS.Items
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Bulwark Of The Ancients");
-			Tooltip.SetDefault("Grants immunity to knockback and fire blocks\nGrants immunity to most debuffs\nIncreases life regen by 1, void regen by 2, reduces damage taken by 7%, and increases crit chance by 4%\nSurrounds you with 4 orbital projectiles\nProjectiles disabled when hidden");
+			Tooltip.SetDefault("Grants immunity to knockback and fire blocks\nGrants immunity to most debuffs\nIncreases void gain by 2, life regen by 1, reduces damage taken by 5%, and increases crit chance by 4%\nSurrounds you with 4 orbital projectiles\nProjectiles disabled when hidden");
 		}
 		public override void SetDefaults()
 		{
@@ -53,12 +53,12 @@ namespace SOTS.Items
             player.buffImmune[BuffID.Silenced] = true; 
             player.buffImmune[BuffID.Cursed] = true; 
             player.buffImmune[BuffID.Darkness] = true; 
-            player.buffImmune[BuffID.Chilled] = true; 
-			
-			//Increases life regen by 1, void regen by 2, reduces damage taken by 7%, and increases crit chance by 4%
-			voidPlayer.voidRegen += 0.2f;
+            player.buffImmune[BuffID.Chilled] = true;
+
+			//Increases void gain by 2, life regen by 1, reduces damage taken by 5%, and increases crit chance by 4%
+			voidPlayer.bonusVoidGain += 2f;
 			player.lifeRegen += 1;
-			player.endurance += 0.07f;
+			player.endurance += 0.05f;
 			player.meleeCrit += 4;
 			player.rangedCrit += 4;
 			player.magicCrit += 4;

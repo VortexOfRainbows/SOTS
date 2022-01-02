@@ -25,7 +25,7 @@ namespace SOTS.Items.Pyramid
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Cursed Robe");
-			Tooltip.SetDefault("Increased maximum mana and void by 80\nReduces mana and void usage by 15%\nSummons a Ruby Monolith to your side\nThe Ruby Monolith increases your void regen by 4");
+			Tooltip.SetDefault("Increased maximum mana and void by 80\nReduces mana and void usage by 15%\nSummons a Ruby Monolith to your side\nThe Ruby Monolith increases your void regeneration speed by 10%");
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs)
 		{

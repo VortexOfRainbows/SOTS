@@ -2,6 +2,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using SOTS.Void;
+using SOTS.Items.Fragments;
 
 namespace SOTS.Items.OreItems
 {
@@ -18,14 +19,14 @@ namespace SOTS.Items.OreItems
             item.width = 18;     
             item.height = 34;   
             item.value = Item.sellPrice(0, 0, 45, 0);
-            item.rare = 1;
+            item.rare = ItemRarityID.Blue;
 			item.accessory = true;
 		}
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.PlatinumBar, 10);
-			recipe.AddIngredient(null, "FragmentOfEvil", 1);
+			recipe.AddIngredient(ModContent.ItemType<FragmentOfEvil>(), 1);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this);
 			recipe.AddRecipe();
@@ -33,11 +34,11 @@ namespace SOTS.Items.OreItems
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-			voidPlayer.voidRegen += 0.075f;
+			voidPlayer.bonusVoidGain += 1;
 			voidPlayer.voidMeterMax2 += 20;
-			
-			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");	
-			if(modPlayer.onhit == 1)
+
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
+			if (modPlayer.onhit == 1)
 			{
 				voidPlayer.voidMeter += 2 + (modPlayer.onhitdamage / 11);
 				VoidPlayer.VoidEffect(player, 2 + (modPlayer.onhitdamage / 11));

@@ -108,7 +108,7 @@ namespace SOTS.Items.GhostTown
 					player.statLifeMax2 += 80;
 					break;
 				case 7: //masterless
-					vPlayer.voidRegenMultiplier += 0.2f;
+					vPlayer.voidRegenSpeed += 0.2f;
 					break;
 			}
 			switch(frame)

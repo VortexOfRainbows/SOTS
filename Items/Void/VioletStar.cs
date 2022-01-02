@@ -2,6 +2,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using SOTS.Void;
+using SOTS.Items.Fragments;
 
 namespace SOTS.Items.Void
 {
@@ -10,29 +11,27 @@ namespace SOTS.Items.Void
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Violet Crescent");
-			Tooltip.SetDefault("Increases max void by 50 and void regen by 1\nCan only be used once");
+			Tooltip.SetDefault("Increases max void by 50 and void regeneration speed 5%\nCan only be used once");
 		}
 		public override void SetDefaults()
 		{
 			item.width = 22;
-			item.height = 24;
+			item.height = 22;
 			item.useAnimation = 12;
 			item.useTime = 12;
-			item.useStyle = 3;
+			item.useStyle = ItemUseStyleID.HoldingUp;
 			item.value = 0;
-			item.rare = 3;
+			item.rare = ItemRarityID.Orange;
 			item.maxStack = 999;
 			item.autoReuse = false;
 			item.consumable = true;
-			ItemID.Sets.ItemNoGravity[item.type] = false; 
+			ItemID.Sets.ItemNoGravity[item.type] = false;
 		}
 		public override bool UseItem(Player player)
 		{
-			Main.PlaySound(4, (int)(player.Center.X), (int)(player.Center.Y), 39);
+			Main.PlaySound(SoundID.NPCKilled, (int)player.Center.X, (int)player.Center.Y, 39);
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");	
-			
-			if(voidPlayer.voidStar < 1)
+			if (voidPlayer.voidStar < 1)
 			{
 				voidPlayer.voidMeterMax += 50;
 				VoidPlayer.VoidEffect(player, 50);
@@ -44,10 +43,10 @@ namespace SOTS.Items.Void
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "DissolvingEarth", 1);
+			recipe.AddIngredient(ModContent.ItemType<DissolvingEarth>(), 1);
 			recipe.AddIngredient(ItemID.ManaCrystal, 1);
-			recipe.AddIngredient(null, "FragmentOfEvil", 5);
-			recipe.AddIngredient(null, "FragmentOfOtherworld", 5);
+			recipe.AddIngredient(ModContent.ItemType<FragmentOfEvil>(), 5);
+			recipe.AddIngredient(ModContent.ItemType<FragmentOfOtherworld>(), 5);
 			recipe.AddIngredient(ItemID.ShadowScale, 15);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this);

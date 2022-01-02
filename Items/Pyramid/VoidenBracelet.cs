@@ -18,7 +18,7 @@ namespace SOTS.Items.Pyramid
             item.width = 26;     
             item.height = 24;   
             item.value = Item.sellPrice(0, 2, 25, 0);
-            item.rare = 5;
+            item.rare = ItemRarityID.Orange;
 			item.accessory = true;
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
@@ -31,7 +31,7 @@ namespace SOTS.Items.Pyramid
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "CursedMatter", 4);
+			recipe.AddIngredient(ModContent.ItemType<CursedMatter>(), 4);
 			recipe.AddIngredient(ItemID.Ruby, 1);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this);

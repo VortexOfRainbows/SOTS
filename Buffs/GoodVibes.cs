@@ -17,7 +17,6 @@ namespace SOTS.Buffs
 		{
 			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-			voidPlayer.maxStandingTimer += 1.5f;
 			modPlayer.attackSpeedMod += 0.05f;
 			if(Math.Abs(player.velocity.X) < 0.1f && Math.Abs(player.velocity.Y) < 0.1f)
 			{	

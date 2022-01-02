@@ -20,7 +20,7 @@ namespace SOTS.Items
             item.width = 26;     
             item.height = 36;   
             item.value = Item.sellPrice(0, 4, 50, 0);
-            item.rare = ItemRarityID.LightPurple;
+			item.rare = ItemRarityID.LightRed;
 			item.accessory = true;
 			item.defense = 1;
 		}

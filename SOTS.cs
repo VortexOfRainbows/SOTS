@@ -422,13 +422,7 @@ namespace SOTS
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.SetResult(ItemID.LihzahrdBrick, 75);
 			recipe.AddRecipe(); */
-			
-			recipe = new ModRecipe(this);
-			recipe.AddIngredient(ModContent.ItemType<FragmentOfChaos>(), 125);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SetResult(ItemID.RodofDiscord, 1); //rod of discord
-			recipe.AddRecipe();
-			
+
 			recipe = new ModRecipe(this);
 			recipe.AddIngredient(ModContent.ItemType<FragmentOfNature>(), 25);
 			recipe.AddIngredient(ItemID.HermesBoots, 1);

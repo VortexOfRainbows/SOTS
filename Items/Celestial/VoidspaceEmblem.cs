@@ -2,6 +2,9 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using SOTS.Void;
+using SOTS.Items.Slime;
+using SOTS.Items.Pyramid;
+using SOTS.Items.Otherworld.FromChests;
 
 namespace SOTS.Items.Celestial
 {
@@ -10,7 +13,7 @@ namespace SOTS.Items.Celestial
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Voidspace Emblem");
-			Tooltip.SetDefault("Increases void damage and magic damage by 10%\nIncreases void crit by 10%\nCritical strikes heal small amounts of void\nReduces void cost by 8%\nIncreases void regen by 3.75 and max void by 50\nRegenerate void when hit\nImmunity to broken armor and ichor");
+			Tooltip.SetDefault("Increases void damage and magic damage by 10%\nIncreases void crit by 10%\nCritical strikes heal small amounts of void\nReduces void cost by 8%\nIncreases void gain by 4 and max void by 50\nRegenerate void when hit\nImmunity to broken armor and ichor");
 		}
 		public override void SetDefaults()
 		{
@@ -24,10 +27,10 @@ namespace SOTS.Items.Celestial
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "SanguiteBar", 15);
-			recipe.AddIngredient(null, "WormWoodParasite", 1);
-			recipe.AddIngredient(null, "VoidenBracelet", 1);
-			recipe.AddIngredient(null, "SkywareBattery", 1);
+			recipe.AddIngredient(ModContent.ItemType<SanguiteBar>(), 15);
+			recipe.AddIngredient(ModContent.ItemType<WormWoodParasite>(), 1);
+			recipe.AddIngredient(ModContent.ItemType<VoidenBracelet>(), 1);
+			recipe.AddIngredient(ModContent.ItemType<SkywareBattery>(), 1);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.SetResult(this);
 			recipe.AddRecipe();
@@ -38,7 +41,7 @@ namespace SOTS.Items.Celestial
 			voidPlayer.voidDamage += 0.1f;
 			voidPlayer.voidCost -= 0.08f;
 			player.magicDamage += 0.1f;
-			voidPlayer.voidRegen += 0.375f;
+			voidPlayer.bonusVoidGain += 4;
 			voidPlayer.voidMeterMax2 += 50;
 			voidPlayer.voidCrit += 10;
 

@@ -31,6 +31,8 @@ namespace SOTS.Void
 		public static Color VibrantColor = new Color(85, 125, 215, 0);
 		public static Color LemegetonColor = new Color(255, 82, 97, 0);
 		public static Color EvilColor = new Color(100, 15, 0, 0);
+		public static Color Inferno1 = new Color(213, 68, 13);
+		public static Color Inferno2 = new Color(255, 210, 155);
 		public static int soulColorCounter = 0;
 		public int voidMeterMax = 100;
 		public int voidAnkh = 0;
@@ -101,14 +103,12 @@ namespace SOTS.Void
 			}
 		}
 		public float voidMeter = 100;
-		public float voidRegen = 0.0035f;
 		public float voidCost = 1f;
 		public float voidSpeed = 1f;
 		public int voidMeterMax2 = 0;
 		public bool voidShock = false;
 		public bool voidRecovery = false;
 		public float voidMultiplier = 1f;
-		public float voidRegenMultiplier = 1f;
 		public static VoidPlayer ModPlayer(Player player) {
 			return player.GetModPlayer<VoidPlayer>();
 		}
@@ -199,9 +199,9 @@ namespace SOTS.Void
 				}
 			}
 		}
-		float standingTimer = 1;
-		public float maxStandingTimer = 2;
-		public void ApplyDynamicMultiplier()
+		//float standingTimer = 1;
+		//public float maxStandingTimer = 2;
+		/*public void ApplyDynamicMultiplier()
 		{
 			voidMultiplier = 0.85f;
 			float hpMult = (float)player.statLife / player.statLifeMax2;
@@ -223,7 +223,7 @@ namespace SOTS.Void
 			}
 			voidMultiplier += hpMult + voidMult;
 			voidMultiplier *= standingTimer;
-		}
+		}*/
 		public void UseSouls()
 		{
 			if (Main.mouseRight && Main.mouseRightRelease && player.ownedProjectileCounts[ProjectileType<HarvestingStrike>()] < 1)
@@ -273,8 +273,6 @@ namespace SOTS.Void
 				LemegetonColor = Color.Lerp(LemegetonPurple, LemegetonRed, lerpAmt);
 			}
 		}
-		public static Color Inferno1 = new Color(213, 68, 13);
-		public static Color Inferno2 = new Color(255, 210, 155);
 		public static Color InfernoColorAttempt(float lerp)
 		{
 			return Color.Lerp(Inferno1, Inferno2, lerp);
@@ -302,6 +300,7 @@ namespace SOTS.Void
 			int blu = (int)(center + width);
 			return new Color(red, grn, blu);
 		}
+		public int VoidMinionConsumption = 0;
 		public int RegisterVoidMinions()
 		{
 			VoidMinions = new List<int>();
@@ -342,7 +341,6 @@ namespace SOTS.Void
 			if (flag) netUpdate = true;
 			return total;
 		}
-		public int VoidMinionConsumption = 0;
 		public static int minionVoidCost(int type)
 		{
 			if (type == (int)VoidMinionID.NatureSpirit || type == (int)VoidMinionID.TidalSpirit)
@@ -473,9 +471,9 @@ namespace SOTS.Void
 						Main.PlaySound(SoundLoader.customSoundType, (int)player.Center.X, (int)player.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Void/Void_Shock"), 0.9f);
 					//if(time < 120) time = 120;
 				}
-				if(voidRegen > -1 && player.HasBuff(BuffType<VoidShock>()))
+				if(flatVoidRegen > -1 && player.HasBuff(BuffType<VoidShock>()))
                 {
-					voidRegen = -1;
+					flatVoidRegen = -1;
                 }
 				player.lifeRegen += (int)(voidMeter * 0.2f);
 				if (voidMeter <= -150)
@@ -512,15 +510,15 @@ namespace SOTS.Void
 			}
 			if (player.HasBuff(ModContent.BuffType<SulfurBurn>()))
 			{
-				if (voidRegen > 0)
-					voidRegen *= 0.5f;
-				voidRegen -= 100f;
+				if (flatVoidRegen > 0)
+					flatVoidRegen *= 0.5f;
+				flatVoidRegen -= 100f;
 			}
 			if (player.HasBuff(ModContent.BuffType<VoidBurn>()))
 			{
-				if (voidRegen > 0)
-					voidRegen *= 0.2f;
-				voidRegen -= 6f;
+				if (flatVoidRegen > 0)
+					flatVoidRegen *= 0.2f;
+				flatVoidRegen -= 5f;
 			}
 			base.PostUpdateEquips();
         }
@@ -551,12 +549,7 @@ namespace SOTS.Void
 
 			voidSpeed = 1f; 
 			voidCost = 1f;
-			ApplyDynamicMultiplier();
-			if (voidRegen > 0)
-				voidMeter += (float)(voidRegen / 60f) * (voidRegenMultiplier + voidMultiplier - 1);
-			else
-				voidMeter += (float)(voidRegen / 60f);
-			voidRegenMultiplier = 1f;
+			UpdateVoidRegen();
 			VoidMinionConsumption = RegisterVoidMinions();
 			voidMeterMax2 -= VoidMinionConsumption;
 
@@ -627,10 +620,7 @@ namespace SOTS.Void
 			voidMeterMax2 = voidMeterMax;
 			voidKnockback = 0f;
 			voidCrit = 0;
-			voidRegen = 0.25f; 
-			voidRegen += 0.05f * (float)voidAnkh;
-			voidRegen += 0.1f * (float)voidStar;
-			maxStandingTimer = 2;
+			//maxStandingTimer = 2;
 			if (voidMeter != 0)
 			{
 				VoidUI.visible = true;
@@ -658,5 +648,46 @@ namespace SOTS.Void
 					return standard;
 			return base.UseTimeMultiplier(item);
 		}
-	}
+		public float voidRegenTimer = 0;
+		public const float voidRegenTimerMax = 600;
+		public const float baseVoidGain = 5f;
+		public float bonusVoidGain = 0f;
+		public float voidGainMultiplier = 1f;
+		public float voidRegenSpeed = 1f;
+		public float flatVoidRegen = 0f;
+		public void UpdateVoidRegen()
+        {
+			float increaseAmount = voidRegenSpeed;
+			if (voidRecovery)
+			{
+				increaseAmount = 60;
+			}
+			else if(voidShock || voidMeter >= voidMeterMax2)
+            {
+				increaseAmount = -4;
+            }
+			voidRegenTimer += increaseAmount;
+
+			voidRegenTimer = MathHelper.Clamp(voidRegenTimer, 0, voidRegenTimerMax);
+			if(voidRegenTimer >= voidRegenTimerMax)
+			{
+				float voidGain = (baseVoidGain + bonusVoidGain) * voidGainMultiplier;
+				voidMeter += voidGain;
+				voidRegenTimer = 0;
+			}
+			voidMeter += flatVoidRegen / 60f;
+
+            #region reset variables
+            bonusVoidGain = 0f;
+			voidGainMultiplier = 1f;
+			voidRegenSpeed = 1f;
+			flatVoidRegen = 0f;
+			#endregion
+
+			#region apply upgrade effects
+			voidRegenSpeed += 0.02f * voidAnkh;
+			voidRegenSpeed += 0.05f * voidStar;
+            #endregion
+        }
+    }
 }

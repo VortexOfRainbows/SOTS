@@ -13,7 +13,7 @@ namespace SOTS.Items.Otherworld
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Blade Necklace");
-			Tooltip.SetDefault("Increases void regen by 1\nPeriodically accumulate up to 9 swords that rotate around you\nEvery 10th melee attack will launch forth the swords\nGetting hit summons 5 Souls of Retaliation into the air\nEvery 10th void attack will release the souls in the form of a powerful laser");
+			Tooltip.SetDefault("Increases void gain by 1\nPeriodically accumulate up to 9 swords that rotate around you\nEvery 10th melee attack will launch forth the swords\nGetting hit summons 5 Souls of Retaliation into the air\nEvery 10th void attack will release the souls in the form of a powerful laser");
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
@@ -68,14 +68,14 @@ namespace SOTS.Items.Otherworld
             item.height = 58;
 			item.knockBack = 1f;
             item.value = Item.sellPrice(0, 3, 50, 0);
-            item.rare = 9;
+            item.rare = ItemRarityID.LightRed;
 			item.accessory = true;
 		}
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "BladeGenerator", 1);
-			recipe.AddIngredient(null, "TwilightBeads", 1);
+			recipe.AddIngredient(ModContent.ItemType<BladeGenerator>(), 1);
+			recipe.AddIngredient(ModContent.ItemType<TwilightBeads>(), 1);
 			recipe.AddTile(TileID.TinkerersWorkbench);
 			recipe.SetResult(this);
 			recipe.AddRecipe();
@@ -87,7 +87,7 @@ namespace SOTS.Items.Otherworld
 			BladePlayer bladePlayer = player.GetModPlayer<BladePlayer>();
 			int damage = (int)(item.damage * (1f + (player.meleeDamage - 1f) + (player.allDamage - 1f) + (voidPlayer.voidDamage - 1f)));
 
-			voidPlayer.voidRegen += 0.1f;
+			voidPlayer.bonusVoidGain += 1f;
 			bladePlayer.maxBlades += 9;
 			bladePlayer.bladeDamage += damage;
 			bladePlayer.bladeGeneration++;

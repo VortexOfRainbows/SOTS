@@ -9,7 +9,7 @@ namespace SOTS.Buffs
         public override void SetDefaults()
         {
             DisplayName.SetDefault("Soul Access");
-			Description.SetDefault("Increases void regen by 10");   
+			Description.SetDefault("Increases void regeneration speed by 10%");   
             Main.buffNoSave[Type] = true;
             Main.buffNoTimeDisplay[Type] = false;
         }
@@ -17,7 +17,7 @@ namespace SOTS.Buffs
 		public override void Update(Player player, ref int buffIndex)
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-			voidPlayer.voidRegen += 1f;
+			voidPlayer.voidRegenSpeed += 0.1f;
 		}
     }
 }

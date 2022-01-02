@@ -18,22 +18,16 @@ namespace SOTS.Buffs
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			voidPlayer.voidRecovery = true;
-			voidPlayer.voidRegen += 1.25f;
-			voidPlayer.voidRegen += 0.0075f * voidPlayer.voidMeterMax2;
-			voidPlayer.voidRegen += 0.0125f * Math.Abs(voidPlayer.voidMeter);	
 			player.channel = false;
-			if(voidPlayer.voidMeter < 0)
+			if(voidPlayer.voidMeter < -10)
 			{
-				voidPlayer.voidRegen += 0.0375f * Math.Abs(voidPlayer.voidMeter);	
-				voidPlayer.voidRegen *= 1.5f;
+				voidPlayer.voidMeter = -10;
 			}
-			if(voidPlayer.voidMeter > voidPlayer.voidMeterMax2 - 10)
+			if(voidPlayer.voidMeter > voidPlayer.voidMeterMax2 / 2)
 			{
                 player.DelBuff(buffIndex);
                 buffIndex--;
 			}
-			voidPlayer.voidRegen *= 8f;
 		}
-
     }
 }

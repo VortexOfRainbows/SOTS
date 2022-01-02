@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Mono.Cecil.Cil;
+using SOTS.Projectiles.Otherworld;
 using System.Runtime.Remoting.Messaging;
 using Terraria;
 using Terraria.ID;
@@ -69,7 +70,7 @@ namespace SOTS.Items.Otherworld
             item.height = 26;
 			item.knockBack = 1f;
             item.value = Item.sellPrice(0, 0, 80, 0);
-            item.rare = 9;
+            item.rare = ItemRarityID.LightRed;
 			item.accessory = true;
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
@@ -106,7 +107,7 @@ namespace SOTS.Items.Otherworld
 			for (int i = 0; i < Main.projectile.Length; i++)
 			{
 				Projectile proj = Main.projectile[i];
-				if (mod.ProjectileType("TwilightBlade") == proj.type && proj.active && proj.owner == player.whoAmI && proj.timeLeft > 748)
+				if (ModContent.ProjectileType<TwilightBlade>() == proj.type && proj.active && proj.owner == player.whoAmI && proj.timeLeft > 748)
 				{
 					currentBlades++;
 				}
@@ -115,7 +116,7 @@ namespace SOTS.Items.Otherworld
 			{
 				bladeGeneration -= bladeGenSpeed;
 				if(maxBlades > 0 && currentBlades < maxBlades && attackNum < 10 && player.whoAmI == Main.myPlayer)
-					Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, mod.ProjectileType("TwilightBlade"), bladeDamage, 1f, player.whoAmI);
+					Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, ModContent.ProjectileType<TwilightBlade>(), bladeDamage, 1f, player.whoAmI);
 			}
 			if(attackNum >= 10)
 			{

@@ -22,11 +22,11 @@ namespace SOTS.Items.Slime
             item.height = 22;   
             item.useTime = 26;  
             item.useAnimation = 26;
-            item.useStyle = 5;    
+            item.useStyle = ItemUseStyleID.HoldingOut;    
             item.noMelee = true; 
             item.knockBack = 5f;
             item.value = Item.sellPrice(0, 2, 50, 0);
-            item.rare = ItemRarityID.LightRed;
+            item.rare = ItemRarityID.Green;
             item.UseSound = SoundID.Item5;
             item.autoReuse = true;
             item.shoot = ModContent.ProjectileType<Projectiles.Nature.Peanut>(); 
@@ -50,7 +50,7 @@ namespace SOTS.Items.Slime
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<DissolvingNature>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<CorrosiveGel>(), 20);
-			recipe.AddIngredient(null, "Wormwood", 20);
+			recipe.AddIngredient(ModContent.ItemType<Wormwood>(), 20);
 			recipe.AddIngredient(ModContent.ItemType<Peanut>(), 40);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this);

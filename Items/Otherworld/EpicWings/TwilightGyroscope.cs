@@ -18,7 +18,7 @@ namespace SOTS.Items.Otherworld.EpicWings
             item.width = 34;     
             item.height = 34;   
             item.value = Item.sellPrice(0, 6, 0, 0);
-            item.rare = 9;
+            item.rare = ItemRarityID.LightRed;
 			item.accessory = true;
 			item.expert = true;
 		}

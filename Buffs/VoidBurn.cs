@@ -9,7 +9,7 @@ namespace SOTS.Buffs
         public override void SetDefaults()
         {
             DisplayName.SetDefault("Void Burn");
-			Description.SetDefault("Void regeneration decreased by 60");   
+			Description.SetDefault("Flat void regeneration decreased by 5");   
             Main.buffNoSave[Type] = true;
             Main.buffNoTimeDisplay[Type] = false;
 			Main.debuff[Type] = true;

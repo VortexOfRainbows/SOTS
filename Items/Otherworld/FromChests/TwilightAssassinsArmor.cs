@@ -1,6 +1,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Items.Fragments;
 using SOTS.Items.Otherworld.EpicWings;
+using SOTS.Items.Otherworld.Furniture;
 using SOTS.Void;
 using System.Collections.Generic;
 using Terraria;
@@ -118,10 +120,10 @@ namespace SOTS.Items.Otherworld.FromChests
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "StarlightAlloy", 12);
-			recipe.AddIngredient(null, "HardlightAlloy", 12);
-			recipe.AddIngredient(null, "DissolvingAether", 1);
-			recipe.AddTile(mod.TileType("HardlightFabricatorTile"));
+			recipe.AddIngredient(ModContent.ItemType<StarlightAlloy>(), 12);
+			recipe.AddIngredient(ModContent.ItemType<HardlightAlloy>(), 12);
+			recipe.AddIngredient(ModContent.ItemType<DissolvingAether>(), 1);
+			recipe.AddTile(ModContent.TileType<HardlightFabricatorTile>());
 			recipe.SetResult(this);
 			recipe.AddRecipe();
 		}
@@ -146,7 +148,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Twilight Assassin Chestplate");
-			Tooltip.SetDefault("Increased your max number of minions by 1\nIncreased melee and void critical strike chance by 10%\nIncreased life regeneration and void regeneration by 2");
+			Tooltip.SetDefault("Increased your max number of minions by 1\nIncreased melee and void critical strike chance by 10%\nIncreased life regeneration by 2 and void regeneration speed by 10%");
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs)
 		{
@@ -160,7 +162,7 @@ namespace SOTS.Items.Otherworld.FromChests
 			player.meleeCrit += 10;
 			player.lifeRegen += 2;
 			VoidPlayer voidPlayer = player.GetModPlayer<VoidPlayer>();
-			voidPlayer.voidRegen += 0.2f;
+			voidPlayer.voidRegenSpeed += 0.1f;
 			voidPlayer.voidCrit += 10;
 		}
 		public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
@@ -188,9 +190,9 @@ namespace SOTS.Items.Otherworld.FromChests
 		{
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.HellstoneBar, 12);
-			recipe.AddIngredient(null, "HardlightAlloy", 20);
-			recipe.AddIngredient(null, "DissolvingAether", 1);
-			recipe.AddTile(mod.TileType("HardlightFabricatorTile"));
+			recipe.AddIngredient(ModContent.ItemType<HardlightAlloy>(), 20);
+			recipe.AddIngredient(ModContent.ItemType<DissolvingAether>(), 1);
+			recipe.AddTile(ModContent.TileType<HardlightFabricatorTile>());
 			recipe.SetResult(this);
 			recipe.AddRecipe();
 		}
@@ -249,10 +251,10 @@ namespace SOTS.Items.Otherworld.FromChests
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "OtherworldlyAlloy", 12);
-			recipe.AddIngredient(null, "HardlightAlloy", 16);
-			recipe.AddIngredient(null, "DissolvingAether", 1);
-			recipe.AddTile(mod.TileType("HardlightFabricatorTile"));
+			recipe.AddIngredient(ModContent.ItemType<OtherworldlyAlloy>(), 12);
+			recipe.AddIngredient(ModContent.ItemType<HardlightAlloy>(), 16);
+			recipe.AddIngredient(ModContent.ItemType<DissolvingAether>(), 1);
+			recipe.AddTile(ModContent.TileType<HardlightFabricatorTile>());
 			recipe.SetResult(this);
 			recipe.AddRecipe();
 		}

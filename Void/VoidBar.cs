@@ -235,6 +235,14 @@ namespace SOTS.Void
 					spriteBatch.Draw(divider, rectangles[i], Color.White); // colors[i]);
 				}
 			}
+
+			fill2 = ModContent.GetTexture("SOTS/Void/VoidBarGreen");
+			float regenBarPercent = voidPlayer.voidRegenTimer / VoidPlayer.voidRegenTimerMax;
+			Rectangle frame1 = new Rectangle((int)(VoidPlayer.voidBarOffset.X + 16), (int)(VoidPlayer.voidBarOffset.Y + 2), (int)(168 * regenBarPercent), 30);
+			Rectangle frame = new Rectangle(0, 0, (int)(168 * regenBarPercent), 30);
+			spriteBatch.Draw(fill2, frame1, frame, Color.White);
+			spriteBatch.Draw(fill2, frame1, frame, color2);
+
 			fill2 = ModContent.GetTexture("SOTS/Void/VoidBarBorder2");
 			spriteBatch.Draw(fill2, new Rectangle((int)VoidPlayer.voidBarOffset.X, (int)VoidPlayer.voidBarOffset.Y, 200, 30), Color.White);
 			if (voidPlayer.safetySwitchVisual)

@@ -2,16 +2,16 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using SOTS.Void;
+using SOTS.Items.Pyramid;
 
-
-namespace SOTS.Items.Pyramid
+namespace SOTS.Items.Void
 {
 	public class VoidenAnkh : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Voiden Ankh");
-			Tooltip.SetDefault("Increases max void by 20 and void regen by 0.5\nCaps out at 5");
+			Tooltip.SetDefault("Increases max void by 20 and void regeneration speed 2%\nCaps out at 5");
 		}
 		public override void SetDefaults()
 		{
@@ -19,9 +19,9 @@ namespace SOTS.Items.Pyramid
 			item.height = 44;
 			item.useAnimation = 12;
 			item.useTime = 12;
-			item.useStyle = 3;
+			item.useStyle = ItemUseStyleID.HoldingUp;
 			item.value = 0;
-			item.rare = 5;
+			item.rare = ItemRarityID.Orange;
 			item.maxStack = 999;
 			item.autoReuse = false;
 			item.consumable = true;
@@ -29,7 +29,7 @@ namespace SOTS.Items.Pyramid
 		}
 		public override bool UseItem(Player player)
 		{
-			Main.PlaySound(4, (int)(player.Center.X), (int)(player.Center.Y), 39);
+			Main.PlaySound(SoundID.NPCKilled, (int)player.Center.X, (int)player.Center.Y, 39);
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			if(voidPlayer.voidAnkh < 5)
 			{
@@ -43,8 +43,8 @@ namespace SOTS.Items.Pyramid
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "CursedMatter", 20);
-			recipe.AddIngredient(null, "SoulResidue", 10);
+			recipe.AddIngredient(ModContent.ItemType<CursedMatter>(), 20);
+			recipe.AddIngredient(ModContent.ItemType<SoulResidue>(), 10);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this);
 			recipe.AddRecipe();

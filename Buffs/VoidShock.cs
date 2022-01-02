@@ -25,7 +25,7 @@ namespace SOTS.Buffs
 			if(player.buffTime[buffIndex] <= 6 || voidPlayer.voidMeter > 0)
 			{
 				if(player.buffTime[buffIndex] <= 6)
-					player.AddBuff(mod.BuffType("VoidRecovery"), 120 + voidPlayer.voidMeterMax2);
+					player.AddBuff(ModContent.BuffType<VoidRecovery>(), 120 + voidPlayer.voidMeterMax2);
                 player.DelBuff(buffIndex);
                 buffIndex--;
 			}

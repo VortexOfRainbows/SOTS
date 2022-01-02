@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Mono.Cecil.Cil;
 using SOTS.Projectiles;
+using SOTS.Projectiles.Otherworld;
 using SOTS.Void;
 using System.Runtime.Remoting.Messaging;
 using Terraria;
@@ -17,7 +18,7 @@ namespace SOTS.Items.Otherworld
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Twilight Beads");
-			Tooltip.SetDefault("Increases void regen by 1\nGetting hit summons 5 Souls of Retaliation into the air, assuming you have less than 5 Souls active already\nEvery 10th void attack will release the souls in the form of a powerful laser");
+			Tooltip.SetDefault("Increases void gain by 1\nGetting hit summons 5 Souls of Retaliation into the air, assuming you have less than 5 Souls active already\nEvery 10th void attack will release the souls in the form of a powerful laser");
 		}
 		public override void SafeSetDefaults()
 		{
@@ -26,13 +27,13 @@ namespace SOTS.Items.Otherworld
             item.width = 30;     
             item.height = 26;   
             item.value = Item.sellPrice(0, 0, 80, 0);
-            item.rare = 9;
+            item.rare = ItemRarityID.LightRed;
 			item.accessory = true;
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			VoidPlayer voidPlayer = player.GetModPlayer<VoidPlayer>();
-			voidPlayer.voidRegen += 0.1f;
+			voidPlayer.bonusVoidGain += 1f;
 			BeadPlayer modPlayer = player.GetModPlayer<BeadPlayer>();
 			modPlayer.soulDamage += (int)(item.damage * (1f + (voidPlayer.voidDamage - 1f)));
 			modPlayer.RetaliationSouls = true;
@@ -52,7 +53,7 @@ namespace SOTS.Items.Otherworld
 			for (int i = 0; i < Main.projectile.Length; i++)
 			{
 				Projectile proj = Main.projectile[i];
-				if (mod.ProjectileType("SoulofRetaliation") == proj.type && proj.active && proj.owner == player.whoAmI && proj.timeLeft > 748)
+				if (ModContent.ProjectileType<SoulofRetaliation>() == proj.type && proj.active && proj.owner == player.whoAmI && proj.timeLeft > 748)
 				{
 					currentSouls++;
 				}
@@ -82,7 +83,7 @@ namespace SOTS.Items.Otherworld
 			{
 				for (int i = 0; i < 5; i++)
 				{
-					Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, mod.ProjectileType("SoulofRetaliation"), soulDamage, 1f, player.whoAmI);
+					Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, ModContent.ProjectileType<SoulofRetaliation>(), soulDamage, 1f, player.whoAmI);
 				}
 			}
 		}

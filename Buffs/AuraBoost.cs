@@ -9,7 +9,7 @@ namespace SOTS.Buffs
         public override void SetDefaults()
         {
             DisplayName.SetDefault("Aura Boost");
-			Description.SetDefault("Void regen increased by 4, life regen by 4, defense by 4, and reduces damage taken by 5%");   
+			Description.SetDefault("Void regeneration speed increased by 4%, life regen by 4, defense by 4, and reduces damage taken by 4%");   
             Main.buffNoSave[Type] = true;
             Main.buffNoTimeDisplay[Type] = false;
         }
@@ -17,10 +17,10 @@ namespace SOTS.Buffs
 		public override void Update(Player player, ref int buffIndex)
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-			voidPlayer.voidRegen += 0.4f;
+			voidPlayer.voidRegenSpeed += 0.04f;
 			player.lifeRegen += 4;
 			player.statDefense += 4;
-			player.endurance += 0.05f;
+			player.endurance += 0.04f;
 		}
     }
 }

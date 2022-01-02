@@ -27,9 +27,9 @@ namespace SOTS.Items.Earth
         }
         public override void UpdateArmorSet(Player player)
         {	
-			player.setBonus = "Increases void regen by 2\nGrants autofire to the Vibrant Pistol at the cost of accuracy";
+			player.setBonus = "Increases void gain by 2\nGrants autofire to the Vibrant Pistol at the cost of accuracy";
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-			voidPlayer.voidRegen += 0.2f;
+			voidPlayer.bonusVoidGain += 2f;
 			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
 			modPlayer.VibrantArmor = true;
 		}

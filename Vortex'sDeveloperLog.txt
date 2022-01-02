@@ -40,6 +40,11 @@ Low Priority:
 1. Archaelogist NPC
 2. Accessory Pets to use own dye slots.
 
+1/1/22 (NEW YEAR POGGERS)
+1. Reworked void reneration stats, nerfed various accessories that have void regen, along with modifying void regen statistics
+	1. Aura Boost void regen 4 -> 4%, endurance 5% -> 4%
+	2. Bulwark of the Ancients, endurance 7% -> 5%
+
 12/31/21
 1. Treasure Slime now drops previous item during fade in
 2. Void Bar visuals and config

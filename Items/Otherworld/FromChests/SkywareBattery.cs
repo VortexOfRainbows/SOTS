@@ -1,6 +1,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Mono.Cecil.Cil;
+using SOTS.Items.OreItems;
+using SOTS.Items.Otherworld.Furniture;
 using SOTS.Void;
 using System.Runtime.Remoting.Messaging;
 using Terraria;
@@ -15,7 +17,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Skyware Battery");
-			Tooltip.SetDefault("Increases void regen by 2 and max void by 50\nRegenerate void when hit\nImmunity to broken armor and ichor");
+			Tooltip.SetDefault("Increases void gain by 2 and max void by 50\nRegenerate void when hit\nImmunity to broken armor and ichor");
 		}
 		public override void SetDefaults()
 		{
@@ -45,10 +47,10 @@ namespace SOTS.Items.Otherworld.FromChests
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-			voidPlayer.voidRegen += 0.2f;
+			voidPlayer.bonusVoidGain += 2;
 			voidPlayer.voidMeterMax2 += 50;
 
-			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			if (modPlayer.onhit == 1)
 			{
 				voidPlayer.voidMeter += 3 + (modPlayer.onhitdamage / 11);
@@ -63,18 +65,18 @@ namespace SOTS.Items.Otherworld.FromChests
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "PlatinumBattery", 1);
+			recipe.AddIngredient(ModContent.ItemType<PlatinumBattery>(), 1);
 			recipe.AddIngredient(ItemID.ArmorPolish, 1);
-			recipe.AddIngredient(null, "StarlightAlloy", 8);
-			recipe.AddTile(mod.TileType("HardlightFabricatorTile"));
+			recipe.AddIngredient(ModContent.ItemType<StarlightAlloy>(), 8);
+			recipe.AddTile(ModContent.TileType<HardlightFabricatorTile>());
 			recipe.SetResult(this);
 			recipe.AddRecipe();
 
 			recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "GoldBattery", 1);
+			recipe.AddIngredient(ModContent.ItemType<GoldBattery>(), 1);
 			recipe.AddIngredient(ItemID.ArmorPolish, 1);
-			recipe.AddIngredient(null, "StarlightAlloy", 8);
-			recipe.AddTile(mod.TileType("HardlightFabricatorTile"));
+			recipe.AddIngredient(ModContent.ItemType<StarlightAlloy>(), 8);
+			recipe.AddTile(ModContent.TileType<HardlightFabricatorTile>());
 			recipe.SetResult(this);
 			recipe.AddRecipe();
 		}

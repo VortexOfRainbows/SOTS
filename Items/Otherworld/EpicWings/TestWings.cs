@@ -1,5 +1,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Items.Fragments;
+using SOTS.Items.Otherworld.FromChests;
+using SOTS.Items.Otherworld.Furniture;
 using SOTS.Void;
 using System.Collections.Generic;
 using Terraria;
@@ -27,7 +30,7 @@ namespace SOTS.Items.Otherworld.EpicWings
 				{
 					if (line.mod == "Terraria" && line.Name == "Tooltip0") //checks the name of the tootip line
 					{
-						line.text = "Allows flight and slow fall\nIncreases void regen by 1\nPress the " + "'" + key + "' key to gain fast, multidirectional flight at the cost of 5 void\nDecreases void regen by 36 while active";
+						line.text = "Allows flight and slow fall\nIncreases void gain by 1\nPress the " + "'" + key + "' key to gain fast, multidirectional flight at the cost of 5 void\nDecreases flat void regeneration by 3 while active";
 						return;
 					}
 				}
@@ -37,7 +40,7 @@ namespace SOTS.Items.Otherworld.EpicWings
 				if (line.mod == "Terraria" && line.Name == "Tooltip0")
 				{
 					string key = "Unbound";
-					line.text = "Allows flight and slow fall\nIncreases void regen by 1\nPress the " + "'" + key + "' key to gain fast, multidirectional flight at the cost of 5 void\nDecreases void regen by 36 while active";
+					line.text = "Allows flight and slow fall\nIncreases void gain by 1\nPress the " + "'" + key + "' key to gain fast, multidirectional flight at the cost of 5 void\nDecreases flat void regeneration by 3 while active";
 				}
 			}
 			base.ModifyTooltips(tooltips);
@@ -87,20 +90,20 @@ namespace SOTS.Items.Otherworld.EpicWings
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "TwilightGyroscope", 1);
-			recipe.AddIngredient(null, "DissolvingAether", 1);
-			recipe.AddIngredient(null, "StarlightAlloy", 20);
+			recipe.AddIngredient(ModContent.ItemType<TwilightGyroscope>(), 1);
+			recipe.AddIngredient(ModContent.ItemType<DissolvingAether>(), 1);
+			recipe.AddIngredient(ModContent.ItemType<StarlightAlloy>(), 20);
 			recipe.AddIngredient(ItemID.SoulofFlight, 20);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.SetResult(this);
 			recipe.AddRecipe();
 
 			recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "TwilightGyroscope", 1);
-			recipe.AddIngredient(null, "DissolvingAether", 1);
-			recipe.AddIngredient(null, "StarlightAlloy", 20);
+			recipe.AddIngredient(ModContent.ItemType<TwilightGyroscope>(), 1);
+			recipe.AddIngredient(ModContent.ItemType<DissolvingAether>(), 1);
+			recipe.AddIngredient(ModContent.ItemType<StarlightAlloy>(), 20);
 			recipe.AddIngredient(ItemID.SoulofFlight, 20);
-			recipe.AddTile(mod.TileType("HardlightFabricatorTile"));
+			recipe.AddTile(ModContent.TileType<HardlightFabricatorTile>());
 			recipe.SetResult(this);
 			recipe.AddRecipe();
 		}
@@ -111,7 +114,7 @@ namespace SOTS.Items.Otherworld.EpicWings
 			player.wingTimeMax = 150;
 			player.noFallDmg = true;
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-			voidPlayer.voidRegen += 0.1f;
+			voidPlayer.bonusVoidGain += 1f;
 		}
 		public override bool WingUpdate(Player player, bool inUse)
 		{
@@ -164,12 +167,12 @@ namespace SOTS.Items.Otherworld.EpicWings
 				packet.Send();
 			}
 		}
+		public const float voidDrain = 3f;
 		public bool canCreativeFlight = false;
 		public bool creativeFlight = false;
 		public float wingSpeed = 7f;
 		public float wingSpeedMax = 7f;
 		public int epicWingType = 0;
-		public float voidDrain = 3.6f;
 		public bool gyro = false;
 		public enum EpicWingType : int
 		{
@@ -303,7 +306,7 @@ namespace SOTS.Items.Otherworld.EpicWings
 		public void flight()
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-			voidPlayer.voidRegen -= voidDrain;
+			voidPlayer.flatVoidRegen -= voidDrain;
 			HaloDust();
 			player.gravity = 0f;
 			player.noFallDmg = true;

@@ -29,9 +29,9 @@ namespace SOTS.Items.Evil
         }
         public override void UpdateArmorSet(Player player)
         {	
-			player.setBonus = "Increases void regen by 5";
+			player.setBonus = "Increases void gain by 5";
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-			voidPlayer.voidRegen += 0.5f;
+			voidPlayer.bonusVoidGain += 5f;
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			modPlayer.VibrantArmor = true;
 		}

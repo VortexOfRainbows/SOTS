@@ -10,7 +10,7 @@ namespace SOTS.Items.Pyramid
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Spirit Shield");
-			Tooltip.SetDefault("Increases void regen by 2, life regen by 1, and reduces damage taken by 2%");
+			Tooltip.SetDefault("Increases void gain by 2, life regen by 1, and reduces damage taken by 2%");
 		}
 		public override void SetDefaults()
 		{
@@ -18,14 +18,14 @@ namespace SOTS.Items.Pyramid
             item.width = 26;     
             item.height = 40;   
             item.value = Item.sellPrice(0, 3, 50, 0);
-            item.rare = ItemRarityID.LightPurple;
+            item.rare = ItemRarityID.Orange;
 			item.defense = 2;
 			item.accessory = true;
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-			voidPlayer.voidRegen += 0.2f;
+			voidPlayer.bonusVoidGain += 2;
 			player.lifeRegen += 1;
 			player.endurance += 0.02f;
 		}
