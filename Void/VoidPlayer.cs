@@ -121,12 +121,10 @@ namespace SOTS.Void
 		{
 			ResetVariables();
 		}
-		public override void UpdateDead() {
-			ResetVariables();
-		}
-        public override void OnRespawn(Player player)
+		public override void UpdateDead()
 		{
 			voidMeter = voidMeterMax2 / 2;
+			ResetVariables();
 		}
         public static void VoidEffect(Player player, int voidAmount)
 		{
@@ -666,7 +664,7 @@ namespace SOTS.Void
 			return base.UseTimeMultiplier(item);
 		}
 		public float voidRegenTimer = 0;
-		public const float voidRegenTimerMax = 600;
+		public const float voidRegenTimerMax = 900;
 		public const float baseVoidGain = 5f;
 		public float bonusVoidGain = 0f;
 		public float voidGainMultiplier = 1f;
@@ -683,7 +681,11 @@ namespace SOTS.Void
 					voidRegenTimer = voidRegenTimerMax;
 					voidMeter = 0;
 				}
-				increaseAmount = 60;
+				if (voidMeter > voidMeterMax2 / 2)
+				{
+					player.ClearBuff(ModContent.BuffType<VoidRecovery>());
+				}
+				increaseAmount = 90;
 			}
 			else if(voidShock || voidMeter >= voidMeterMax2 || player.dead)
             {

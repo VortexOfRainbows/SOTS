@@ -19,11 +19,6 @@ namespace SOTS.Buffs
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			voidPlayer.voidRecovery = true;
 			player.channel = false;
-			if(voidPlayer.voidMeter > voidPlayer.voidMeterMax2 / 2)
-			{
-                player.DelBuff(buffIndex);
-                buffIndex--;
-			}
 		}
     }
 }

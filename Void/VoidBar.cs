@@ -94,6 +94,8 @@ namespace SOTS.Void
 			{
 				if(SOTS.Config.voidBarTextOn)
 				{
+					if (player.dead)
+						voidManaText = "0 ";
 					string textThing = "Void: ";
 					if (voidMax - voidPlayer.lootingSouls <= 0)
 					{
@@ -104,7 +106,7 @@ namespace SOTS.Void
 						voidManaMaxText = (voidMax - voidPlayer.lootingSouls).ToString();
 						textThing += voidManaText + " / " + voidManaMaxText;
 					}
-					if (voidPlayer.lootingSouls > 0 || (voidPlayer.VoidMinionConsumption > 0 && !SOTS.Config.simpleVoidText))
+					if (!player.dead && (voidPlayer.lootingSouls > 0 || (voidPlayer.VoidMinionConsumption > 0 && !SOTS.Config.simpleVoidText)))
 					{
 						textThing += " ("; 
 						if (voidPlayer.VoidMinionConsumption > 0 && !SOTS.Config.simpleVoidText)
@@ -148,7 +150,17 @@ namespace SOTS.Void
 			float length = 40;
 			int height = 18;
 			Texture2D fill2 = ModContent.GetTexture("SOTS/Void/VoidBarBorder");
+			if(player.dead)
+			{
+				Recalculate();
+				base.Draw(spriteBatch);
+				fill2 = ModContent.GetTexture("SOTS/Void/VoidDead");
+			}
 			spriteBatch.Draw(fill2, new Rectangle((int)VoidPlayer.voidBarOffset.X, (int)VoidPlayer.voidBarOffset.Y + 2, 200, 30), Color.White);
+			if (player.dead)
+            {
+				return;
+			}
 			List<Rectangle> rectangles = new List<Rectangle>();
 			//List<Color> colors = new List<Color>();
 			int minionCount = voidPlayer.VoidMinions.Count;

@@ -29,7 +29,7 @@ Mid Priority:
 	5. Chaos Chamber
 3. Construct Items:
 	1. Death Spiral resprite
-	2. Inferno Construct: Incinerator Glove (Magic, Void). Generate a close ranged orb of plama that you can launch a short distance
+	2. Inferno Construct: Incinerator Glove (Magic, Void). Generate a close ranged orb of plasma that you can launch a short distance
 4. Witch's Heart accessory; in similar vein to Heart of the Sea, where it is an accessory variant of the Nightmare potion
 5. Mobile Fortress Generator: upgrade to platform generator. Base its visuals off of Ectoplasm and Dungeon Brick.
 6. Split Focus Reticle into two accessories to make it less overpowered: Focus Reticle (Amplifiers + Crit Rate), Bag of Charms (Charms + Icosahedrons)
@@ -40,10 +40,14 @@ Low Priority:
 1. Archaelogist NPC
 2. Accessory Pets to use own dye slots.
 
+1/2/22
+1. Void bar Death visuals
+
 1/1/22 (NEW YEAR POGGERS)
 1. Reworked void reneration stats, nerfed various accessories that have void regen, along with modifying void regen statistics
 	1. Aura Boost void regen 4 -> 4%, endurance 5% -> 4%
 	2. Bulwark of the Ancients, endurance 7% -> 5%
+2. Void Shock and Void Refill visuals
 
 12/31/21
 1. Treasure Slime now drops previous item during fade in
