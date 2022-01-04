@@ -64,8 +64,8 @@ namespace SOTS.NPCs.Constructs
 			npc.lifeMax = 6000;
 		}
 		Vector2 nextDestination = Vector2.Zero;
-		private int InitiateHealth = 15000;
-		private float ExpertHealthMult = 1.5f; //22500
+		private int InitiateHealth = 12000;
+		private float ExpertHealthMult = 1.5f; //18000
 		public const int ProbeCount = 7;
 		public const int timeToFire = 2;
 		public const int timeToDash = 45;

@@ -127,16 +127,8 @@ namespace SOTS.Void
 			float quotient = 1f;
 			float quotient2 = 1f;
 			//Calculate quotient
-			switch (stat)
-			{
-				case VoidBarMode.voidAmount:
-					quotient = voidPlayer.voidMeter / voidPlayer.voidMeterMax2;
-					quotient2 = (float)voidPlayer.lootingSouls / voidPlayer.voidMeterMax2;
-					break;
-
-				default:
-					break;
-			}
+			quotient = voidPlayer.voidMeter / voidPlayer.voidMeterMax2;
+			quotient2 = (float)voidPlayer.lootingSouls / voidPlayer.voidMeterMax2;
 			Texture2D fill = ModContent.GetTexture("SOTS/Void/SoulBar");
 			Texture2D divider = ModContent.GetTexture("SOTS/Void/VoidBarDivider");
 			if (quotient > 1)
@@ -206,7 +198,10 @@ namespace SOTS.Void
 					}
 			}
 			barAmount.Left.Set(6f + prevRight, 0f);
-			barAmount.Width.Set((int)(quotient * 188), 0f);
+			length = (int)(quotient * 188);
+			if (length + prevRight > 188)
+				length = 188 - prevRight;
+			barAmount.Width.Set(length, 0f);
 			if(voidPlayer.lootingSouls > 0)
 			{
 				barAmount3.Width.Set(quotient2 * 188, 0f);
@@ -220,10 +215,16 @@ namespace SOTS.Void
 				barDivider.Width.Set(0, 0);
 			}
 			Recalculate();
+			if (voidPlayer.lerpingVoidMeter > voidPlayer.voidMeter)
+			{
+				float quotientLerp = voidPlayer.lerpingVoidMeter / voidPlayer.voidMeterMax2;
+				fill = ModContent.GetTexture("SOTS/Void/VoidBarSprite");
+				float lerpLength = (int)(quotientLerp * 188);
+				spriteBatch.Draw(fill, new Rectangle((int)(VoidPlayer.voidBarOffset.X + padding.X + (int)prevRight), (int)(VoidPlayer.voidBarOffset.Y + padding.Y), (int)lerpLength, height), new Color(255, 10, 10, 0) * 0.6f);
+			}
 			base.Draw(spriteBatch);
 			Color color2 = new Color(100, 100, 100, 0);
 			fill = ModContent.GetTexture("SOTS/Void/VoidBarSprite");
-			length = (int)(quotient * 188);
 			if(SOTS.Config.voidBarBlur)
 			{
 				color2 = new Color(15, 15, 15, 0);

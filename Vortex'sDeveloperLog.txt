@@ -33,15 +33,19 @@ Mid Priority:
 4. Witch's Heart accessory; in similar vein to Heart of the Sea, where it is an accessory variant of the Nightmare potion
 5. Mobile Fortress Generator: upgrade to platform generator. Base its visuals off of Ectoplasm and Dungeon Brick.
 6. Split Focus Reticle into two accessories to make it less overpowered: Focus Reticle (Amplifiers + Crit Rate), Bag of Charms (Charms + Icosahedrons)
-7. Void Damage and negative void regeneration combat numbers
-8. Void regeneration changes (interval system)
+7. Void regeneration visuals: some particles
+8. Void Bar strike the player during void shock
+9. Vanilla NPC void damage, +Void Damage server syncing
 
 Low Priority:
 1. Archaelogist NPC
 2. Accessory Pets to use own dye slots.
 
-1/2/22
+1/2/22 & 1/3/22
 1. Void bar Death visuals
+2. Void Heal visuals changed, will now also be less laggy as the projectile is less complicated and has only 2 frames of lifetime
+3. Void bar popup number visuals and flat void damage (nerf void burn)
+4. Inferno health nerfed
 
 1/1/22 (NEW YEAR POGGERS)
 1. Reworked void reneration stats, nerfed various accessories that have void regen, along with modifying void regen statistics

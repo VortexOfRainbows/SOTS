@@ -82,7 +82,7 @@ namespace SOTS.Projectiles.Inferno
             if(Main.rand.NextBool(3))
                 target.AddBuff(BuffID.OnFire, 180, false);
             else
-                VoidPlayer.VoidBurn(mod, target, 270);
+                VoidPlayer.VoidBurn(mod, target, 30, 270);
         }
         public override void AI()
         {

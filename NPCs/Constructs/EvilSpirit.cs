@@ -61,7 +61,7 @@ namespace SOTS.NPCs.Constructs
 		}
 		List<EvilEye> eyes = new List<EvilEye>();
 		private int InitiateHealth = 10000;
-		private float ExpertHealthMult = 1.35f;
+		private float ExpertHealthMult = 1.35f; //13500
 		int phase = 1;
 		int counter = 0;
 		int counter2 = 0;

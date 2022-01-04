@@ -126,12 +126,13 @@ namespace SOTS.Void
 			voidMeter = voidMeterMax2 / 2;
 			ResetVariables();
 		}
-        public static void VoidEffect(Player player, int voidAmount)
+        public static void VoidEffect(Player player, int voidAmount, bool damageOverTime = false)
 		{
 			//CombatText.NewText(new Rectangle((int)player.position.X, (int)player.position.Y, player.width, player.height), new Color(100, 80, 115, 255), string.Concat(voidAmount), false, false);
 			if (player.whoAmI == Main.myPlayer)
 			{
-				Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, ProjectileType<VoidHealEffect>(), 0, 0, player.whoAmI, Main.rand.Next(360), voidAmount);
+				ModPlayer(player).resolveVoidVisual += voidAmount;
+				Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, ProjectileType<VoidHealEffect>(), 0, 0, player.whoAmI, damageOverTime ? -1 : 0, voidAmount);
 				//NetMessage.SendData(43, -1, -1, "", player.whoAmI, (float)voidAmount, 0f, 0f, 0);
 			}
 		}
@@ -432,12 +433,17 @@ namespace SOTS.Void
 			TidalSpirit,
 			PermafrostSpirit
 		}
-		public static void VoidBurn(Mod mod, Player player, int duration = 0)
+		public static void VoidBurn(Mod mod, Player player, int damage, int duration)
 		{
+			VoidDamage(mod, player, damage);
+			player.AddBuff(BuffType<VoidBurn>(), duration, false);
+		}
+		public static void VoidDamage(Mod mod, Player player, int damage)
+		{
+			damage = (int)(damage * Main.rand.NextFloat(0.9f, 1.1f));
 			if (player.whoAmI == Main.LocalPlayer.whoAmI)
 				Main.PlaySound(SoundLoader.customSoundType, (int)player.Center.X, (int)player.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Void/Void_Damage"), 1.1f);
-			player.AddBuff(BuffType<VoidBurn>(), duration, false);
-			for (int i = 0; i < 5; i++)
+			for (int i = 0; i < (int)(4 + 0.5f * Math.Sqrt(damage)); i++)
 			{
 				Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, 198);
 				dust.noGravity = true;
@@ -452,6 +458,8 @@ namespace SOTS.Void
 				dust.velocity *= 3;
 				dust.scale = 3.2f;
 			}
+			ModPlayer(player).voidMeter -= damage;
+			VoidEffect(player, -damage, false);
 		}
         public override void PostUpdateEquips()
         {
@@ -521,7 +529,7 @@ namespace SOTS.Void
 			{
 				if (flatVoidRegen > 0)
 					flatVoidRegen *= 0.2f;
-				flatVoidRegen -= 5f;
+				flatVoidRegen -= 2f;
 			}
 			base.PostUpdateEquips();
         }
@@ -564,7 +572,6 @@ namespace SOTS.Void
 
 			voidSpeed = 1f; 
 			voidCost = 1f;
-			UpdateVoidRegen();
 			VoidMinionConsumption = RegisterVoidMinions();
 			voidMeterMax2 -= VoidMinionConsumption;
 
@@ -620,7 +627,7 @@ namespace SOTS.Void
 				if(!isFull)
 				{
 					if (player.whoAmI == Main.LocalPlayer.whoAmI)
-						Main.PlaySound(SoundLoader.customSoundType, (int)player.Center.X, (int)player.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Void/Void_Full"), 1f);
+						Main.PlaySound(SoundLoader.customSoundType, (int)player.Center.X, (int)player.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Void/Void_Full"), 1.4f);
 					isFull = true;
 				}
 			}
@@ -632,6 +639,7 @@ namespace SOTS.Void
 				}
 				isFull = false;
 			}
+			UpdateVoidRegen();
 			voidMeterMax2 = voidMeterMax;
 			voidKnockback = 0f;
 			voidCrit = 0;
@@ -640,7 +648,7 @@ namespace SOTS.Void
 			{
 				VoidUI.visible = true;
 			}
-			safetySwitch = false; 
+			safetySwitch = false;
 			safetySwitchVisual = false;
 			CrushCapacitor = false;
 			CrushResistor = false;
@@ -663,7 +671,9 @@ namespace SOTS.Void
 					return standard;
 			return base.UseTimeMultiplier(item);
 		}
+		public float resolveVoidVisual = 0;
 		public float voidRegenTimer = 0;
+		public float lerpingVoidMeter = 0;
 		public const float voidRegenTimerMax = 900;
 		public const float baseVoidGain = 5f;
 		public float bonusVoidGain = 0f;
@@ -671,6 +681,9 @@ namespace SOTS.Void
 		public float voidRegenSpeed = 1f;
 		public float flatVoidRegen = 0f;
 		public int GreenBarCounter = 0;
+
+		public float negativeVoidRegenCounter = 0;
+		public int negativeVoidRegenPopupNumber = 1;
 		public void UpdateVoidRegen()
         {
 			float increaseAmount = voidRegenSpeed;
@@ -681,11 +694,10 @@ namespace SOTS.Void
 					voidRegenTimer = voidRegenTimerMax;
 					voidMeter = 0;
 				}
-				if (voidMeter > voidMeterMax2 / 2)
+				if (voidMeter < voidMeterMax2 / 2)
 				{
-					player.ClearBuff(ModContent.BuffType<VoidRecovery>());
+					increaseAmount = 90;
 				}
-				increaseAmount = 90;
 			}
 			else if(voidShock || voidMeter >= voidMeterMax2 || player.dead)
             {
@@ -697,11 +709,28 @@ namespace SOTS.Void
 			if(voidRegenTimer >= voidRegenTimerMax)
 			{
 				float voidGain = (baseVoidGain + bonusVoidGain) * voidGainMultiplier;
+				VoidEffect(player, (int)voidGain);
 				voidMeter += voidGain;
 				voidRegenTimer = 0; 
 				GreenBarCounter = 20;
 			}
-			voidMeter += flatVoidRegen / 60f;
+			float voidRegen = flatVoidRegen / 60f;
+			if(voidRegen < 0 && voidMeter > 0)
+            {
+				int numberScaling = (int)(voidRegen * -3f);
+				negativeVoidRegenPopupNumber = numberScaling + 1;
+				negativeVoidRegenCounter -= voidRegen;
+				if(negativeVoidRegenCounter  > negativeVoidRegenPopupNumber)
+                {
+					negativeVoidRegenCounter -= negativeVoidRegenPopupNumber;
+					VoidEffect(player, -negativeVoidRegenPopupNumber, true);
+					voidMeter -= negativeVoidRegenPopupNumber;
+				}
+			}
+			else
+			{
+				voidMeter += voidRegen;
+			}
 
             #region reset variables
             bonusVoidGain = 0f;
@@ -716,6 +745,12 @@ namespace SOTS.Void
 			voidRegenSpeed += 0.02f * voidAnkh;
 			voidRegenSpeed += 0.05f * voidStar;
 			#endregion
+
+			lerpingVoidMeter = MathHelper.Lerp(lerpingVoidMeter, voidMeter, 0.08f);
+			if (lerpingVoidMeter - voidMeter < 0.25f)
+				lerpingVoidMeter = voidMeter;
+			if (lerpingVoidMeter > voidMeterMax2)
+				lerpingVoidMeter = voidMeterMax2;
 		}
     }
 }

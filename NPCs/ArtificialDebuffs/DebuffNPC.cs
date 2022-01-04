@@ -52,32 +52,39 @@ namespace SOTS.NPCs.ArtificialDebuffs
         {
             if (spirits.Contains(npc.type))
             {
+                int vDamage = 0;
                 int debuffTime = 120;
                 if(npc.type == NPCType<Constructs.NatureSpirit>())
                 {
                     debuffTime = 120;
+                    vDamage = 5;
                 }
                 if (npc.type == NPCType<Constructs.EarthenSpirit>())
                 {
                     debuffTime = 150;
+                    vDamage = 8;
                 }
                 if (npc.type == NPCType<Constructs.PermafrostSpirit>() || npc.type == NPCType<Constructs.OtherworldlySpirit>())
                 {
                     debuffTime = 180;
+                    vDamage = 15;
                 }
                 if (npc.type == NPCType<Constructs.TidalSpirit>())
                 {
                     debuffTime = 210;
+                    vDamage = 25;
                 }
                 if (npc.type == NPCType<Constructs.EvilSpirit>())
                 {
                     debuffTime = 240;
+                    vDamage = 30;
                 }
                 if (npc.type == NPCType<Constructs.InfernoSpirit>())
                 {
                     debuffTime = 270;
+                    vDamage = 40;
                 }
-                VoidPlayer.VoidBurn(mod, target, debuffTime);
+                VoidPlayer.VoidBurn(mod, target, vDamage, debuffTime);
             }
             base.OnHitPlayer(npc, target, damage, crit);
         }
