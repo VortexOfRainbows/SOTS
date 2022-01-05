@@ -164,7 +164,7 @@ namespace SOTS.Items.CritBonus
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Focus Crystal");
-			Tooltip.SetDefault("Critical strikes deal 60 more damage\n5% increased crit chance\nImmunity to bleeding and poisoned debuffs");
+			Tooltip.SetDefault("Critical strikes deal 50 more damage\n5% increased crit chance\nImmunity to bleeding and poisoned debuffs");
 		}
 		public override void SetDefaults()
 		{
@@ -182,7 +182,7 @@ namespace SOTS.Items.CritBonus
 			player.rangedCrit += 5;
 			player.magicCrit += 5;
 			player.thrownCrit += 5;
-			modPlayer.CritBonusDamage += 30;
+			modPlayer.CritBonusDamage += 25;
 			player.buffImmune[BuffID.Bleeding] = true;
 			player.buffImmune[BuffID.Poisoned] = true;
 		}
@@ -191,7 +191,7 @@ namespace SOTS.Items.CritBonus
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<PolishedCoin>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<OtherworldlyAmplifier>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<SanguiteBar>(), 5); //To be replaced later (dissolving inferno)
+			recipe.AddIngredient(ModContent.ItemType<DissolvingNether>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<FragmentOfInferno>(), 5);
 			recipe.AddTile(TileID.TinkerersWorkbench);
 			recipe.SetResult(this);

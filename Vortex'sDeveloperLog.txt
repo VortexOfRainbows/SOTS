@@ -1,8 +1,7 @@
 The following is my development plans :D
 
-1. Dissolving Nether => Focus Crystal
-2. Chaos Spirit Boss: "Lux"
-3. Ghost Town to Evil Biome
+1. Chaos Spirit Boss: "Lux"
+2. Ghost Town to Evil Biome
 
 Known Bugs:
 1. Lag generates in multiplayer after a while of playing. Seems to have been fixed.
@@ -18,8 +17,8 @@ High Priority:
 3. Reorganize Folders... Planetarium and Pyramid folders remaining.
 
 Mid Priority:
-1. Ethereal Tonic, Blazing Tonic
-	1. Dissolving Brilliance, Dissolving Nether 
+1. Ethereal Tonic
+	1. Dissolving Brilliance 
 2. Lux Drops (ask me before you go about spriting these ones):
 	1. Rose Bow
 	2. Voidmage Incubator 
@@ -33,13 +32,19 @@ Mid Priority:
 4. Witch's Heart accessory; in similar vein to Heart of the Sea, where it is an accessory variant of the Nightmare potion
 5. Mobile Fortress Generator: upgrade to platform generator. Base its visuals off of Ectoplasm and Dungeon Brick.
 6. Split Focus Reticle into two accessories to make it less overpowered: Focus Reticle (Amplifiers + Crit Rate), Bag of Charms (Charms + Icosahedrons)
-7. Void regeneration visuals: some particles
-8. Void Bar strike the player during void shock
-9. Vanilla NPC void damage, +Void Damage server syncing
+7. Void Bar strike the player during void shock
+8. Vanilla NPC void damage, +Void Damage server syncing
 
 Low Priority:
 1. Archaelogist NPC
 2. Accessory Pets to use own dye slots.
+
+1/4/22
+1. Added Blazing Tonic
+2. Focus Crystal is now obtained with Dissolving Nether instead of sanguite scales
+	1. Crit damage bonus 60 -> 50
+3. Plasma Accelerator takes dissolving inferno instead of lihzard power cell (same tier)
+4. Added visuals for resolving added void (void fill visuals)
 
 1/2/22 & 1/3/22
 1. Void bar Death visuals

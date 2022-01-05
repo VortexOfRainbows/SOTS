@@ -126,12 +126,29 @@ namespace SOTS.Void
 			voidMeter = voidMeterMax2 / 2;
 			ResetVariables();
 		}
-        public static void VoidEffect(Player player, int voidAmount, bool damageOverTime = false)
+		public int TrueMax()
+        {
+			return voidMeterMax2 - VoidMinionConsumption - lootingSouls;
+		}
+        public static void VoidEffect(Player player, int voidAmount, bool damageOverTime = false, bool resolve = true)
 		{
 			//CombatText.NewText(new Rectangle((int)player.position.X, (int)player.position.Y, player.width, player.height), new Color(100, 80, 115, 255), string.Concat(voidAmount), false, false);
 			if (player.whoAmI == Main.myPlayer)
 			{
-				ModPlayer(player).resolveVoidVisual += voidAmount;
+				if(resolve && voidAmount > 0)
+				{
+					VoidPlayer vPlayer = ModPlayer(player);
+					int amt = voidAmount;
+					if(vPlayer.lastVoidMeter + amt > vPlayer.TrueMax())
+                    {
+						amt = vPlayer.TrueMax() - (int)vPlayer.lastVoidMeter;
+					}
+					if(amt > 0)
+					{
+						vPlayer.resolveVoidCounter = 15;
+						vPlayer.resolveVoidAmount += amt;
+					}
+				}
 				Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, ProjectileType<VoidHealEffect>(), 0, 0, player.whoAmI, damageOverTime ? -1 : 0, voidAmount);
 				//NetMessage.SendData(43, -1, -1, "", player.whoAmI, (float)voidAmount, 0f, 0f, 0);
 			}
@@ -536,6 +553,7 @@ namespace SOTS.Void
 		bool isFull = false;
         private void ResetVariables() 
 		{
+			lastVoidMeter = voidMeter;
 			ColorUpdate();
 			if (soulsOnKill > 0)
 				UseSouls();
@@ -619,7 +637,7 @@ namespace SOTS.Void
 
 			frozenMaxDuration = 0;
 			frozenMinTimer = 3600;
-			if (voidMeter > voidMeterMax2)
+			if (voidMeter >= voidMeterMax2)
 			{
 				//make sure meter doesn't go above max
 				voidMeter = voidMeterMax2; 
@@ -671,7 +689,8 @@ namespace SOTS.Void
 					return standard;
 			return base.UseTimeMultiplier(item);
 		}
-		public float resolveVoidVisual = 0;
+		public float resolveVoidCounter = 0;
+		public float resolveVoidAmount = 0;
 		public float voidRegenTimer = 0;
 		public float lerpingVoidMeter = 0;
 		public const float voidRegenTimerMax = 900;
@@ -681,8 +700,9 @@ namespace SOTS.Void
 		public float voidRegenSpeed = 1f;
 		public float flatVoidRegen = 0f;
 		public int GreenBarCounter = 0;
-
+		public float lastVoidMeter = 0;
 		public float negativeVoidRegenCounter = 0;
+		public float positiveVoidRegenCounter = 0;
 		public int negativeVoidRegenPopupNumber = 1;
 		public void UpdateVoidRegen()
         {
@@ -696,21 +716,33 @@ namespace SOTS.Void
 				}
 				if (voidMeter < voidMeterMax2 / 2)
 				{
+					flatVoidRegen = voidMeterMax2 / 12f;
 					increaseAmount = 90;
+				}
+				else
+				{
+					voidRegenTimer = 0;
+					increaseAmount = 0;
 				}
 			}
 			else if(voidShock || voidMeter >= voidMeterMax2 || player.dead)
             {
 				increaseAmount = -4;
             }
-			voidRegenTimer += increaseAmount;
+			if(!frozenVoid)
+				voidRegenTimer += increaseAmount;
 
 			voidRegenTimer = MathHelper.Clamp(voidRegenTimer, 0, voidRegenTimerMax);
 			if(voidRegenTimer >= voidRegenTimerMax)
 			{
-				float voidGain = (baseVoidGain + bonusVoidGain) * voidGainMultiplier;
-				VoidEffect(player, (int)voidGain);
-				voidMeter += voidGain;
+				if(!voidRecovery)
+				{
+					float voidGain = (baseVoidGain + bonusVoidGain) * voidGainMultiplier;
+					VoidEffect(player, (int)voidGain);
+					voidMeter += voidGain;
+				}
+				else
+					resolveVoidCounter = 15;
 				voidRegenTimer = 0; 
 				GreenBarCounter = 20;
 			}
@@ -720,7 +752,7 @@ namespace SOTS.Void
 				int numberScaling = (int)(voidRegen * -3f);
 				negativeVoidRegenPopupNumber = numberScaling + 1;
 				negativeVoidRegenCounter -= voidRegen;
-				if(negativeVoidRegenCounter  > negativeVoidRegenPopupNumber)
+				if(negativeVoidRegenCounter >= negativeVoidRegenPopupNumber)
                 {
 					negativeVoidRegenCounter -= negativeVoidRegenPopupNumber;
 					VoidEffect(player, -negativeVoidRegenPopupNumber, true);
@@ -729,7 +761,12 @@ namespace SOTS.Void
 			}
 			else
 			{
-				voidMeter += voidRegen;
+				positiveVoidRegenCounter += voidRegen;
+				if(positiveVoidRegenCounter > 1)
+                {
+					positiveVoidRegenCounter -= 1;
+					voidMeter += 1;
+				}					
 			}
 
             #region reset variables
@@ -751,6 +788,15 @@ namespace SOTS.Void
 				lerpingVoidMeter = voidMeter;
 			if (lerpingVoidMeter > voidMeterMax2)
 				lerpingVoidMeter = voidMeterMax2;
+			if (resolveVoidCounter < 0)
+			{
+				resolveVoidAmount = 0;
+				resolveVoidCounter = 0;
+			}
+			if(resolveVoidAmount > 0)
+            {
+				resolveVoidAmount--;
+            }
 		}
     }
 }

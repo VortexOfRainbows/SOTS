@@ -51,7 +51,7 @@ namespace SOTS.Items.Inferno
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<Sharanga>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<DissolvingAether>(), 1);
-			recipe.AddIngredient(ItemID.LihzahrdPowerCell, 1);
+			recipe.AddIngredient(ModContent.ItemType<DissolvingNether>(), 1);
 			recipe.AddIngredient(ItemID.Ectoplasm, 5);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.SetResult(this);
