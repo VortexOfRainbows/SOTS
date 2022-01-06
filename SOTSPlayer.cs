@@ -517,7 +517,7 @@ namespace SOTS
 		int iceIcoCD = 0;
 		int cursedIcoCD = 0;
 		int nightmareArmCD = 0;
-		public void decrement(ref int number)
+		public static void decrement(ref int number)
 		{
 			if (number > 0)
 				number--;

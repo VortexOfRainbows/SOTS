@@ -29,23 +29,27 @@ Mid Priority:
 3. Construct Items:
 	1. Death Spiral resprite
 	2. Inferno Construct: Incinerator Glove (Magic, Void). Generate a close ranged orb of plasma that you can launch a short distance
-4. Witch's Heart accessory; in similar vein to Heart of the Sea, where it is an accessory variant of the Nightmare potion
-5. Mobile Fortress Generator: upgrade to platform generator. Base its visuals off of Ectoplasm and Dungeon Brick.
-6. Void Bar strike the player during void shock
+4. Mobile Fortress Generator: upgrade to platform generator. Base its visuals off of Ectoplasm and Dungeon Brick.
+
 
 Low Priority:
 1. Archaelogist NPC
 2. Accessory Pets to use own dye slots.
+3. Void Bar strike the player during void shock
 
 1/5/22
 1. Select vanilla npcs now have a 20% (33% expert) chance to inflict void damage
-	1. Need mult testing
+	1. Works in multiplayer
 2. Focus reticle split into Focus Reticle and Bag of Charms
-	1. Focus reticle stats nerfed and certain effects thrown onto bag of charms
+	1. Focus reticle stats nerfed and certain effects thrown onto bag of charms (crafting changed accordingly)
 	2. 25% -> 20% increased crit chance
 	3. Now on Bag of Charms: 5% increased critical strike chance, Critical strikes may detonate enemies for 50% critical damage, Critical strikes steal life, regenerate void, and recover mana
 3. Added a second cooldown between void damage
 	1. Void Damage works in multiplayer
+4. Wisp in a Jar now takes dissolving Nether
+	1. Damage 44 -> 60
+5. Added Witch's Heart accessory, allowing for permanent nightmare potion effect
+	1. It's not the best but should be good for Crit builds
 
 1/4/22
 1. Added Blazing Tonic

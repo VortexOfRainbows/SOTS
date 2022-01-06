@@ -1,5 +1,3 @@
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using SOTS.Items.Fragments;
 using SOTS.Items.Potions;
 using Terraria;
@@ -17,12 +15,12 @@ namespace SOTS.Items.Inferno
 		}
 		public override void SetDefaults()
 		{
-			item.damage = 44;
+			item.damage = 60;
 			item.summon = true;
             item.width = 26;     
             item.height = 34;   
-            item.value = Item.sellPrice(0, 10, 0, 0);
-			item.rare = ItemRarityID.Lime;
+            item.value = Item.sellPrice(0, 5, 0, 0);
+			item.rare = ItemRarityID.LightPurple;
 			item.accessory = true;
 		}
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -35,7 +33,7 @@ namespace SOTS.Items.Inferno
 		{
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.Glass, 20);
-			recipe.AddIngredient(ModContent.ItemType<FragmentOfInferno>(), 16);
+			recipe.AddIngredient(ModContent.ItemType<DissolvingNether>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<BluefirePotion>(), 8);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.SetResult(this, 1);

@@ -32,7 +32,6 @@ namespace SOTS.Items.Permafrost
 				modPlayer.shardOnHit += 2;
 			if (rand == 9) //9 10%
 				modPlayer.shardOnHit += 3;
-
 			modPlayer.bonusShardDamage += 2;
 			player.statLifeMax2 += 20;
 		}
