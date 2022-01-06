@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using System;
 using Microsoft.Xna.Framework;
 using SOTS.Items.Otherworld.FromChests;
+using SOTS.Projectiles.Celestial;
 
 namespace SOTS.Items.Celestial
 {
@@ -17,7 +18,7 @@ namespace SOTS.Items.Celestial
 		public override void SetDefaults()
 		{
 			item.damage = 40;
-			item.useStyle = 1;
+			item.useStyle = ItemUseStyleID.SwingThrow;
 			item.useTime = 26;
 			item.useAnimation = 26;
 			item.knockBack = 1.4f;
@@ -28,7 +29,7 @@ namespace SOTS.Items.Celestial
 			item.height = 30;
 			item.maxStack = 1;
 			item.autoReuse = true;            
-			item.shoot = mod.ProjectileType("CataclysmOrb"); 
+			item.shoot = ModContent.ProjectileType<CataclysmOrb>(); 
             item.shootSpeed = 20f;
 			item.consumable = false;
 			item.noMelee = true;
@@ -49,7 +50,7 @@ namespace SOTS.Items.Celestial
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "SanguiteBar", 10);
+			recipe.AddIngredient(ModContent.ItemType<SanguiteBar>(), 10);
 			recipe.AddIngredient(ModContent.ItemType<ArclightOrbs>(), 1);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.SetResult(this);

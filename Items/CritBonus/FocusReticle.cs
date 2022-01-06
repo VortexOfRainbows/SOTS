@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Items.Celestial;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -13,16 +14,15 @@ namespace SOTS.Items.CritBonus
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Focus Reticle");
-			Tooltip.SetDefault("25% increased crit chance\nCritical strikes deal 50 more damage\nCritical strikes may detonate enemies for 50% critical damage\nCritical strikes steal life, regenerate void, and recover mana\nImmunity to bleeding and poisoned debuffs");
+			Tooltip.SetDefault("20% increased crit chance\nCritical strikes deal 50 more damage\nImmunity to bleeding and poisoned debuffs");
 			Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(16, 16));
 		}
 		public override void SetDefaults()
 		{
             item.width = 30;     
             item.height = 30;  
-            item.value = Item.sellPrice(0, 15, 25, 0);
-            item.rare = ItemRarityID.Cyan;
-			item.wornArmor = false;
+            item.value = Item.sellPrice(0, 10, 0, 0);
+            item.rare = ItemRarityID.Yellow;
 			item.accessory = true;
 			item.defense = 1;
 		}
@@ -67,30 +67,14 @@ namespace SOTS.Items.CritBonus
 			{
 				frame = 0;
 			}
-
-			for (int i = 0; i < item.stack; i++)
-			{
-				if (player.moveSpeed > 0f)
-				{
-					player.moveSpeed -= 0.2f;
-				}
-				else
-				{
-					player.moveSpeed = 0;
-				}
-			}
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);	
-			modPlayer.CritLifesteal += 1 + (Main.rand.Next(3) == 0 ? 1 : 0);
-			modPlayer.CritVoidsteal += 1.25f;
-			modPlayer.CritManasteal += 5 + Main.rand.Next(4);
-			modPlayer.CritCurseFire = true;
-			player.meleeCrit += 25;
-			player.rangedCrit += 25;
-			player.magicCrit += 25;
-			player.thrownCrit += 25;
+			player.meleeCrit += 20;
+			player.rangedCrit += 20;
+			player.magicCrit += 20;
+			player.thrownCrit += 20;
 			modPlayer.CritBonusDamage += 25;
             player.buffImmune[BuffID.Bleeding] = true; 
             player.buffImmune[BuffID.Poisoned] = true; 
@@ -99,11 +83,48 @@ namespace SOTS.Items.CritBonus
 		{
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<FocusCrystal>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<CursedIcosahedron>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<EyeOfChaos>(), 1);
+			recipe.AddIngredient(ModContent.ItemType<SanguiteBar>(), 10);
+			recipe.AddTile(TileID.TinkerersWorkbench);
+			recipe.SetResult(this);
+			recipe.AddRecipe();
+		}
+	}
+	public class BagOfCharms : ModItem
+	{
+		public override void SetStaticDefaults()
+		{
+			DisplayName.SetDefault("Bag of Charms");
+			Tooltip.SetDefault("5% increased critical strike chance\nCritical strikes may detonate enemies for 50% critical damage\nCritical strikes steal life, regenerate void, and recover mana");
+		}
+		public override void SetDefaults()
+		{
+			item.width = 30;
+			item.height = 28;
+			item.value = Item.sellPrice(0, 10, 0, 0);
+			item.rare = ItemRarityID.Yellow;
+			item.wornArmor = false;
+			item.accessory = true;
+		}
+		public override void UpdateAccessory(Player player, bool hideVisual)
+		{
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
+			player.meleeCrit += 5;
+			player.rangedCrit += 5;
+			player.magicCrit += 5;
+			player.thrownCrit += 5;
+			modPlayer.CritLifesteal += 1 + (Main.rand.Next(3) == 0 ? 1 : 0);
+			modPlayer.CritVoidsteal += 1.25f;
+			modPlayer.CritManasteal += 5 + Main.rand.Next(4);
+			modPlayer.CritCurseFire = true;
+		}
+		public override void AddRecipes()
+		{
+			ModRecipe recipe = new ModRecipe(mod);
+			recipe.AddIngredient(ModContent.ItemType<CursedIcosahedron>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<SoulCharm>(), 1);
-			recipe.AddIngredient(ItemID.LunarBar, 12);
-			recipe.AddTile(TileID.LunarCraftingStation);
+			recipe.AddIngredient(ModContent.ItemType<StarShard>(), 10);
+			recipe.AddTile(TileID.TinkerersWorkbench);
 			recipe.SetResult(this);
 			recipe.AddRecipe();
 		}

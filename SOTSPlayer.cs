@@ -531,8 +531,8 @@ namespace SOTS
 			decrement(ref iceIcoCD);
 			decrement(ref cursedIcoCD);
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-			maxCritVoidStealPerSecond = (voidPlayer.bonusVoidGain + voidPlayer.bonusVoidGain) * 2; //max stored voidgain is 2x the voidRegen speed
-			maxCritVoidStealPerSecondTimer += (voidPlayer.bonusVoidGain + voidPlayer.bonusVoidGain + CritVoidsteal) / 600f; //takes 10 seconds to fully restore the available pool of critsteal
+			maxCritVoidStealPerSecond = (VoidPlayer.baseVoidGain + voidPlayer.bonusVoidGain) * 2; //max stored voidgain is 2x the void gain stat
+			maxCritVoidStealPerSecondTimer += (VoidPlayer.baseVoidGain + voidPlayer.bonusVoidGain + CritVoidsteal) / 300f; //takes 10 seconds to fully restore the available pool of critsteal
 			//Add critvoidsteal to the timer in some way to make it scale well with multiple voidsteal accessories. Same logic applies to other stat steals
 			if (maxCritVoidStealPerSecondTimer > maxCritVoidStealPerSecond)
 			{

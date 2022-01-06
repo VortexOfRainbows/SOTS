@@ -32,11 +32,16 @@ namespace SOTS.NPCs.ArtificialDebuffs
 {
     public class DebuffNPC : GlobalNPC
     {
+        public static int[] vanillaNPCHasVoidDamage;
         public static int[] miniBosses;
         public static int[] intimidating;
         public static int[] spirits;
         public static void LoadArrays()
         {
+            vanillaNPCHasVoidDamage = new int[] { NPCID.BigCrimera, NPCID.LittleCrimera, NPCID.HeavySkeleton, NPCID.BigEater, NPCID.LittleEater, NPCID.BlackSlime, NPCID.BabySlime, NPCID.Slimer2, NPCID.Slimeling, NPCID.EaterofSouls, NPCID.DevourerHead, NPCID.EaterofWorldsHead, NPCID.MotherSlime, NPCID.ChaosBall, NPCID.ArmoredSkeleton, NPCID.DarkMummy, NPCID.Wraith, NPCID.Corruptor, NPCID.SeekerHead,
+                NPCID.Werewolf, NPCID.Slimer, NPCID.PossessedArmor, NPCID.VampireBat, NPCID.Vampire, NPCID.SwampThing, NPCID.Crimera, NPCID.Reaper, NPCID.BlueArmoredBones, NPCID.BlueArmoredBonesMace, NPCID.BlueArmoredBonesNoPants, NPCID.BlueArmoredBonesSword, NPCID.Necromancer, NPCID.NecromancerArmored, NPCID.DungeonSpirit, NPCID.Ghost, NPCID.MourningWood, NPCID.Splinterling, NPCID.Pumpking, NPCID.Poltergeist,
+                NPCID.Everscream, NPCID.IceQueen, NPCID.StardustCellBig, NPCID.StardustCellSmall, NPCID.CultistBoss, NPCID.CultistDragonHead, NPCID.BloodZombie, NPCID.Drippler
+            };
             spirits = new int[] { NPCType<Constructs.NatureSpirit>(), NPCType<Constructs.EarthenSpirit>(), NPCType<Constructs.PermafrostSpirit>(), NPCType<Constructs.TidalSpirit>(), NPCType<EvilSpirit>(), NPCType<InfernoSpirit>() };
             intimidating = new int[] { NPCType<NatureConstruct>(), NPCType<EarthenConstruct>(), NPCType<PermafrostConstruct>(), NPCType<OtherworldlyConstructHead>(), NPCType<TidalConstruct>(), NPCType<EvilConstruct>(), NPCType<InfernoConstruct>(),
                 NPCType<PutridPinkyPhase2>(), NPCType<Boss.Curse.PharaohsCurse>(), NPCType<TheAdvisorHead>(), NPCType<Polaris>(), NPCType<CelestialSerpentHead>(), NPCType<SubspaceSerpentHead>()};
@@ -85,6 +90,12 @@ namespace SOTS.NPCs.ArtificialDebuffs
                     vDamage = 40;
                 }
                 VoidPlayer.VoidBurn(mod, target, vDamage, debuffTime);
+            }
+            bool canHappen = (Main.expertMode ? Main.rand.NextBool(3) : Main.rand.NextBool(5));
+            if(vanillaNPCHasVoidDamage.Contains(npc.type) && canHappen && target.whoAmI == Main.myPlayer)
+            {
+                int vDamage = 1 + npc.damage / 10; //void damage is 10th of the normal npc damage
+                VoidPlayer.VoidDamage(mod, target, vDamage);
             }
             base.OnHitPlayer(npc, target, damage, crit);
         }

@@ -455,8 +455,14 @@ namespace SOTS.Void
 			VoidDamage(mod, player, damage);
 			player.AddBuff(BuffType<VoidBurn>(), duration, false);
 		}
+		public float voidDamageTimer = 0;
 		public static void VoidDamage(Mod mod, Player player, int damage)
 		{
+			VoidPlayer local = ModPlayer(player);
+			if (local.voidDamageTimer > 0)
+            {
+				return;
+            }
 			damage = (int)(damage * Main.rand.NextFloat(0.9f, 1.1f));
 			if (player.whoAmI == Main.LocalPlayer.whoAmI)
 				Main.PlaySound(SoundLoader.customSoundType, (int)player.Center.X, (int)player.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Void/Void_Damage"), 1.1f);
@@ -475,8 +481,11 @@ namespace SOTS.Void
 				dust.velocity *= 3;
 				dust.scale = 3.2f;
 			}
-			ModPlayer(player).voidMeter -= damage;
+			local.voidMeter -= damage;
 			VoidEffect(player, -damage, false);
+			if(Main.myPlayer == player.whoAmI)
+				local.netUpdate = true;
+			local.voidDamageTimer = 60;
 		}
         public override void PostUpdateEquips()
         {
@@ -797,6 +806,10 @@ namespace SOTS.Void
             {
 				resolveVoidAmount--;
             }
+			if (voidDamageTimer > 0)
+				voidDamageTimer--;
+			else
+				voidDamageTimer = 0;
 		}
     }
 }
