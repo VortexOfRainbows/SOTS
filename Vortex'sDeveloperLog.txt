@@ -37,6 +37,10 @@ Low Priority:
 2. Accessory Pets to use own dye slots.
 3. Void Bar strike the player during void shock
 
+1/6/22
+1. Midnight Prism added (might be OP actually lol)
+2. New Witch's Heart sprite
+
 1/5/22
 1. Select vanilla npcs now have a 20% (33% expert) chance to inflict void damage
 	1. Works in multiplayer

@@ -15,7 +15,7 @@ namespace SOTS.Items.CritBonus
 		{
 			DisplayName.SetDefault("Focus Reticle");
 			Tooltip.SetDefault("20% increased crit chance\nCritical strikes deal 50 more damage\nImmunity to bleeding and poisoned debuffs");
-			Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(16, 16));
+			Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(8, 16));
 		}
 		public override void SetDefaults()
 		{
@@ -30,6 +30,16 @@ namespace SOTS.Items.CritBonus
 		int frameCounter;
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
+			frameCounter++;
+			if (frameCounter >= 8)
+			{
+				frameCounter = 0;
+				this.frame++;
+			}
+			if (this.frame >= 16)
+			{
+				this.frame = 0;
+			}
 			Texture2D texture = Main.itemTexture[item.type];
 			Texture2D texture2 = mod.GetTexture("Items/CritBonus/FocusReticle_Glow");
 			Main.spriteBatch.Draw(texture, position, new Rectangle(0, 30 * this.frame, 30, 30), drawColor, 0f, origin, scale, SpriteEffects.None, 0f);
@@ -54,19 +64,6 @@ namespace SOTS.Items.CritBonus
 			Main.spriteBatch.Draw(texture, item.Center - Main.screenPosition, new Rectangle(0, 30 * frame, 30, 30), lightColor, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			Main.spriteBatch.Draw(texture2, item.Center - Main.screenPosition, new Rectangle(0, 30 * frame, 30, 30), Color.White, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			return false;
-		}
-		public override void UpdateInventory(Player player)
-		{
-			frameCounter++;
-			if (frameCounter >= 8)
-			{
-				frameCounter = 0;
-				frame++;
-			}
-			if (frame >= 16)
-			{
-				frame = 0;
-			}
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
