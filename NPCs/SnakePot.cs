@@ -15,6 +15,7 @@ namespace SOTS.NPCs
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Snake Pot");
+			Main.npcFrameCount[npc.type] = 1;
 		}
 		public override void SetDefaults()
 		{
@@ -25,7 +26,6 @@ namespace SOTS.NPCs
             npc.knockBackResist = 0.06f;
             npc.width = 28;
             npc.height = 42;
-			Main.npcFrameCount[npc.type] = 1;  
             npc.value = 500;
             npc.boss = false;
             npc.lavaImmune = false;
@@ -41,11 +41,13 @@ namespace SOTS.NPCs
 		{
 			if(npc.ai[0] >= 10 && npc.ai[0] <= 59)
 				npc.ai[0] = 0;
-			if (npc.life <= 0)
-            {
-				for(int amount = 0; amount < 3; amount++)
-				Gore.NewGore(new Vector2 (npc.Center.X, npc.Center.Y), default(Vector2), Main.rand.Next(51,54), 1f);	
-            }
+			if (npc.life <= 0 && Main.netMode != NetmodeID.Server)
+			{
+				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/Pots/PyramidPotGore1"), npc.scale);
+				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/Pots/PyramidPotGore5"), npc.scale);
+				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/Pots/PyramidPotGore12"), npc.scale);
+				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/Pots/PyramidPotGore13"), npc.scale);
+			}
 		}
 		public override void AI()
 		{

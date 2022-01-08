@@ -12,9 +12,9 @@ Known Bugs:
 	1. Less frequent than before 0.20, but still happens? 
 
 High Priority:
-1. Inferno Spirit
-2. Starmap and Digital Daito Obtaining
-3. Reorganize Folders... Planetarium and Pyramid folders remaining.
+1. Starmap and Digital Daito Obtaining
+2. Reorganize Folders... Planetarium and Pyramid folders remaining.
+3. Lux and Chaos Construct
 
 Mid Priority:
 1. Ethereal Tonic
@@ -37,9 +37,10 @@ Low Priority:
 2. Accessory Pets to use own dye slots.
 3. Void Bar strike the player during void shock
 
-1/6/22
+1/6/22 & 1/7/22
 1. Midnight Prism added (might be OP actually lol)
 2. New Witch's Heart sprite
+3. Inferno Spirit new attack + Server Syncs well enough.
 
 1/5/22
 1. Select vanilla npcs now have a 20% (33% expert) chance to inflict void damage

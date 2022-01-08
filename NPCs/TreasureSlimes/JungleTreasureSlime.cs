@@ -38,6 +38,7 @@ namespace SOTS.NPCs.TreasureSlimes
 			gelColor = new Color(123, 173, 75, 100);
 			items = new List<TreasureSlimeItem>()
 			{
+				new TreasureSlimeItem(ItemID.Hive, 90, 150, 0.5f),
 				new TreasureSlimeItem(ItemID.RichMahogany, 60, 300, 1),
 				new TreasureSlimeItem(ItemID.Stinger, 6, 14, 0.3f),
 				new TreasureSlimeItem(ItemID.Vine, 4, 8, 0.3f),

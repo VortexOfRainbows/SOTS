@@ -489,7 +489,7 @@ namespace SOTS
 		{
 			planetarium = tileCounts[ModContent.TileType<DullPlatingTile>()] + tileCounts[ModContent.TileType<AvaritianPlatingTile>()];  
 			//geodeBiome = tileCounts[mod.TileType("GeodeBlock")];
-			pyramidBiome = tileCounts[ModContent.TileType<SarcophagusTile>()] + tileCounts[ModContent.TileType<RefractingCrystalBlockTile>()];  
+			pyramidBiome = tileCounts[ModContent.TileType<SarcophagusTile>()] + tileCounts[ModContent.TileType<RefractingCrystalBlockTile>()] + tileCounts[ModContent.TileType<AcediaGatewayTile>()];  
 		}
         public override void ModifyHardmodeTasks(List<GenPass> list)
         {

@@ -43,10 +43,15 @@ namespace SOTS.Projectiles.Inferno
         bool runOnce = true;
         public override bool PreAI()
         {
+            bool other = projectile.ai[1] == -1 || projectile.ai[1] == -2;
             if (runOnce)
             {
-                Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 34, 0.9f, 0.5f);
-                SOTS.primitives.CreateTrail(new StarTrail(projectile, VoidPlayer.InfernoColorAttempt(0.4f), VoidPlayer.InfernoColorAttempt(0.4f), 10));
+                if(!other)
+                    Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 34, 0.9f, 0.5f);
+                else if(projectile.ai[1] == -2)
+                    Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 62, 0.7f, 0.2f);
+                if (Main.netMode != NetmodeID.Server)
+                    SOTS.primitives.CreateTrail(new StarTrail(projectile, VoidPlayer.InfernoColorAttempt(0.4f), VoidPlayer.InfernoColorAttempt(0.4f), 10));
                 runOnce = false;
                 for (int i = 0; i < 5; i++)
                 {
@@ -86,9 +91,10 @@ namespace SOTS.Projectiles.Inferno
         }
         public override void AI()
         {
+            bool other = projectile.ai[1] == -1 || projectile.ai[1] == -2;
             projectile.velocity = projectile.velocity.RotatedBy(MathHelper.ToRadians(-0.9f * projectile.ai[0]));
             projectile.velocity += projectile.velocity.SafeNormalize(Vector2.Zero) * 0.07f;
-            projectile.rotation = projectile.velocity.ToRotation() - MathHelper.PiOver2;
+            projectile.rotation = projectile.velocity.ToRotation() - MathHelper.PiOver2 * (other ? -1 : 1);
             if (Main.rand.NextBool(8))
             {
                 Dust dust = Dust.NewDustDirect(projectile.Center - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());

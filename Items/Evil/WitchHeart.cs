@@ -36,7 +36,7 @@ namespace SOTS.Items.Evil
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.LifeCrystal, 1);
+			recipe.AddIngredient(ItemID.LifeFruit, 4);
 			recipe.AddIngredient(ModContent.ItemType<DissolvingUmbra>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<NightmarePotion>(), 8);
 			recipe.AddTile(TileID.MythrilAnvil);

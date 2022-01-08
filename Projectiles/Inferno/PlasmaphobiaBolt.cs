@@ -122,7 +122,7 @@ namespace SOTS.Projectiles.Inferno
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             if (projectile.penetrate > 2)
-                Projectile.NewProjectile(projectile.Center, Vector2.Zero, ModContent.ProjectileType<PlasmaStar>(), projectile.damage, projectile.knockBack, projectile.owner);
+                Projectile.NewProjectile(projectile.Center, Vector2.Zero, ModContent.ProjectileType<PlasmaStar>(), projectile.damage, 0, projectile.owner);
             else
                 Collide();
         }

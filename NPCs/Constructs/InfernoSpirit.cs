@@ -26,6 +26,7 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override void SendExtraAI(BinaryWriter writer)
 		{
+			writer.Write(rotation);
 			writer.Write(phase);
 			writer.Write(counter);
 			writer.Write(nextDestination.X);
@@ -33,6 +34,7 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override void ReceiveExtraAI(BinaryReader reader)
 		{
+			rotation = reader.ReadSingle();
 			phase = reader.ReadInt32();
 			counter = reader.ReadInt32();
 			nextDestination.X = reader.ReadSingle();
@@ -63,7 +65,13 @@ namespace SOTS.NPCs.Constructs
 			npc.damage = 135;
 			npc.lifeMax = 6000;
 		}
-		Vector2 nextDestination = Vector2.Zero;
+        public override bool CanHitPlayer(Player target, ref int cooldownSlot)
+        {
+            return canDamage;
+        }
+        Vector2 nextDestination = Vector2.Zero;
+		public bool canDamage = true;
+		public float rotation = 0;
 		private int InitiateHealth = 12000;
 		private float ExpertHealthMult = 1.5f; //18000
 		public const int ProbeCount = 7;
@@ -97,16 +105,16 @@ namespace SOTS.NPCs.Constructs
 					damage = (int)(damage / Main.expertDamage);
 				}
 				npc.ai[1]++;
-				if ((int)npc.ai[2] % 3 == 0 || (int)npc.ai[2] % 3 == 2)
+				if ((int)npc.ai[2] % 3 == 0)
 				{
 					verticalCompress = MathHelper.Lerp(verticalCompress, 1f, 0.04f);
 					if (npc.ai[1] < (timeToDash * 4))
 					{
+						rotation -= Direction();
 						for (int i = 0; i < ProbeCount; i++)
 						{
 							MiniSpirit spirit = miniSpirits[i];
 							spirit.offset = MathHelper.Lerp(spirit.offset, 96, 0.06f);
-							spirit.rotation -= Direction();
 						}
 						if (npc.ai[1] >= 0)
 						{
@@ -119,7 +127,9 @@ namespace SOTS.NPCs.Constructs
 									Vector2 toPlayer = player.Center - npc.Center;
 									nextDestination = npc.Center + toPlayer * (0.25f + 0.8f * multiplier) + Main.rand.NextVector2CircularEdge(160, 160) * (1.0f - 0.8f * multiplier);
 									if (Main.netMode != NetmodeID.MultiplayerClient)
+									{
 										npc.netUpdate = true;
+									}
 								}
 								else
 								{
@@ -136,20 +146,20 @@ namespace SOTS.NPCs.Constructs
 					else if (npc.ai[1] <= (timeToDash * 4) + 30)
 					{
 						float bonus = (npc.ai[1] - (timeToDash * 4)) / 30f;
+						rotation -= Direction() * (1.0f + bonus * 2);
 						for (int i = 0; i < ProbeCount; i++)
 						{
 							MiniSpirit spirit = miniSpirits[i];
 							spirit.offset = MathHelper.Lerp(96, 60, bonus);
-							spirit.rotation -= Direction() * (1.0f + bonus * 2);
 						}
 					}
 					else if (npc.ai[1] > (timeToDash * 4) + 30)
 					{
+						rotation -= Direction() * 3.0f;
 						for (int i = 0; i < ProbeCount; i++)
 						{
 							MiniSpirit spirit = miniSpirits[i];
 							spirit.offset = MathHelper.Lerp(spirit.offset, 60, 0.06f);
-							spirit.rotation -= Direction() * 3.0f;
 							if ((int)npc.ai[3] % ProbeCount == i)
 							{
 								float mult = npc.ai[1] % timeToFire / (timeToFire - 1);
@@ -172,10 +182,11 @@ namespace SOTS.NPCs.Constructs
 					}
 					if (npc.ai[1] > (timeToDash * 4) + 240)
 					{
-						npc.ai[1] = -60;
+						npc.ai[1] = -110;
 						npc.ai[2]++;
 						npc.ai[3] = 0;
 						npc.ai[0] = 0;
+						npc.netUpdate = true;
 					}
 				}
 				if ((int)npc.ai[2] % 3 == 1)
@@ -183,11 +194,11 @@ namespace SOTS.NPCs.Constructs
 					float mult = npc.ai[1] / 60f;
 					mult = MathHelper.Clamp(mult, 0, 1);
 					verticalCompress = MathHelper.Lerp(verticalCompress, 0.4f, 0.04f);
+					rotation -= Direction() * (1f + mult * 2);
 					for (int i = 0; i < ProbeCount; i++)
 					{
 						MiniSpirit spirit = miniSpirits[i];
 						spirit.offset = MathHelper.Lerp(spirit.offset, 96, 0.06f);
-						spirit.rotation -= Direction() * (1f + mult * 2);
 					}
 					if(npc.ai[1] < 0)
                     {
@@ -199,11 +210,14 @@ namespace SOTS.NPCs.Constructs
 					Vector2 dashPositionOther = new Vector2(800 * -Direction(), -400) + center;
 					if (npc.ai[1] < 0)
 					{
-						npc.Center = Vector2.Lerp(npc.Center, dashPosition, 0.06f);
+						npc.Center = Vector2.Lerp(npc.Center, dashPosition, 0.054f); 
+						canDamage = false;
 					}
+					else
+						canDamage = true;
 					if (npc.ai[1] >= 0)
 					{
-						mult = npc.ai[1] / 240f;
+						mult = npc.ai[1] / 200f;
 						npc.Center = Vector2.Lerp(dashPosition, dashPositionOther, mult);
 						if ((int)npc.ai[1] % 4 == 0)
 							Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 34, 1f, 0.5f);
@@ -214,13 +228,91 @@ namespace SOTS.NPCs.Constructs
 								Projectile.NewProjectile(npc.Center, new Vector2(Direction() * -0.5f, 4.5f), ModContent.ProjectileType<LavaLaser>(), (int)(damage * 1.5f), 3.5f, Main.myPlayer, Main.rand.NextFloat(0.65f, 0.75f), Main.rand.NextFloat(360));
 							}
 						}
-						if (npc.ai[1] > 240f)
+						if (npc.ai[1] > 200f)
 						{
 							npc.ai[1] = -60;
 							npc.ai[2]++;
 							npc.ai[3] = 0;
 							npc.ai[0] = 0;
+							npc.netUpdate = true;
 						}
+					}
+				}
+				if ((int)npc.ai[2] % 3 == 2)
+				{
+					verticalCompress = MathHelper.Lerp(verticalCompress, 1f, 0.04f);
+					if (npc.ai[1] < (timeToDash * 4))
+					{
+						rotation -= Direction();
+						for (int i = 0; i < ProbeCount; i++)
+						{
+							MiniSpirit spirit = miniSpirits[i];
+							spirit.offset = MathHelper.Lerp(spirit.offset, 96, 0.06f);
+						}
+						if (npc.ai[1] >= 0)
+						{
+							float multiplier = npc.ai[1] / (timeToDash * 4);
+							if (nextDestination != Vector2.Zero)
+							{
+								int rnCounter = (int)npc.ai[1] % timeToDash;
+								if (rnCounter == 0)
+								{
+									Vector2 toPlayer = player.Center - npc.Center;
+									nextDestination = npc.Center + toPlayer * (0.25f + 0.8f * multiplier) + Main.rand.NextVector2CircularEdge(160, 160) * (1.0f - 0.8f * multiplier);
+									if (Main.netMode != NetmodeID.MultiplayerClient)
+                                    {
+										npc.netUpdate = true;
+									}
+								}
+								else
+								{
+									npc.Center = Vector2.Lerp(npc.Center, nextDestination, 0.06f);
+								}
+							}
+							else
+							{
+								nextDestination = npc.Center;
+								npc.velocity *= 0;
+							}
+						}
+					}
+					else if (npc.ai[1] <= (timeToDash * 4) + 30)
+					{
+						float bonus = (npc.ai[1] - (timeToDash * 4)) / 30f;
+						rotation -= Direction() * (1.0f - 0.6f * bonus);
+						for (int i = 0; i < ProbeCount; i++)
+						{
+							MiniSpirit spirit = miniSpirits[i];
+							spirit.offset = MathHelper.Lerp(96, 60, bonus);
+						}
+					}
+					else if (npc.ai[1] > (timeToDash * 4) + 30)
+					{
+						rotation -= Direction() * 0.4f;
+						for (int i = 0; i < ProbeCount; i++)
+						{
+							MiniSpirit spirit = miniSpirits[i];
+							spirit.offset = MathHelper.Lerp(spirit.offset, 480, 0.05f);
+							if (Main.netMode != NetmodeID.MultiplayerClient)
+								if ((int)npc.ai[1] % 30 == 0 && npc.ai[1] > (timeToDash * 4) + 90)
+								{
+									int fortyfive = (int)npc.ai[1] % 60 == 30 ? 45 : 0;
+									for (int j = 0; j < 4; j++)
+									{
+										Vector2 normal = new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(90 * j + fortyfive));
+										Projectile.NewProjectile(spirit.getCenter(npc.Center, verticalCompress), normal, ModContent.ProjectileType<InfernoBolt>(), damage, 3.5f, Main.myPlayer, 0, j == 0 ? -2 : -1);
+									}
+								}
+						}
+						npc.ai[3]++;
+					}
+					if (npc.ai[1] > (timeToDash * 4) + 210)
+					{
+						npc.ai[1] = -60;
+						npc.ai[2]++;
+						npc.ai[3] = 0;
+						npc.ai[0] = 0;
+						npc.netUpdate = true;
 					}
 				}
 				counter2++;
@@ -246,11 +338,20 @@ namespace SOTS.NPCs.Constructs
 			}
 			if(phase != 3)
 			{
+				rotation -= 1.0f;
 				for (int i = 0; i < ProbeCount; i++)
 				{
 					MiniSpirit spirit = miniSpirits[i];
 					spirit.offset = MathHelper.Lerp(spirit.offset, 60, 0.03f);
-					spirit.rotation -= 1.0f;
+					spirit.rotation = i * 360f / ProbeCount + rotation;
+				}
+			}
+			else
+            {
+				for (int i = 0; i < ProbeCount; i++)
+				{
+					MiniSpirit spirit = miniSpirits[i];
+					spirit.rotation = i * 360f / ProbeCount + rotation;
 				}
 			}
 			if (Main.player[npc.target].dead)
