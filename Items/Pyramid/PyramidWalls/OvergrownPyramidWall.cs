@@ -57,7 +57,7 @@ namespace SOTS.Items.Pyramid.PyramidWalls
 			Main.wallHouse[Type] = true;
 			dustType = DustID.Grass;
 			drop = ModContent.ItemType<OvergrownPyramidWall>();
-			AddMapEntry(new Color(50, 85, 45));
+			AddMapEntry(new Color(18, 82, 36));
 		}
 	}
 	public class UnsafeOvergrownPyramidWallWall : ModWall
@@ -72,7 +72,7 @@ namespace SOTS.Items.Pyramid.PyramidWalls
 			Main.wallHouse[Type] = false;
 			dustType = DustID.Grass;
 			drop = ModContent.ItemType<OvergrownPyramidWall>();
-			AddMapEntry(new Color(50, 85, 45));
+			AddMapEntry(new Color(18, 82, 36));
 		}
 		public override void KillWall(int i, int j, ref bool fail)
 		{
