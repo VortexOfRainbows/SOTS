@@ -91,10 +91,14 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 }
                 VoidPlayer.VoidBurn(mod, target, vDamage, debuffTime);
             }
-            bool canHappen = (Main.expertMode ? Main.rand.NextBool(3) : Main.rand.NextBool(5));
-            if(vanillaNPCHasVoidDamage.Contains(npc.type) && canHappen && target.whoAmI == Main.myPlayer)
+            bool canHappen = (Main.dayTime ? (Main.expertMode ? Main.rand.NextBool(3) : Main.rand.NextBool(5)) : Main.rand.NextBool(2));
+            if((npc.type == NPCID.DungeonGuardian || vanillaNPCHasVoidDamage.Contains(npc.type)) && canHappen && target.whoAmI == Main.myPlayer)
             {
-                int vDamage = 1 + npc.damage / 10; //void damage is 10th of the normal npc damage
+                int vDamage = 1 + npc.damage / 6; //void damage is 6th of the normal npc damage
+                if(npc.type == NPCID.DungeonGuardian)
+                {
+                    vDamage = 6969;
+                }
                 VoidPlayer.VoidDamage(mod, target, vDamage);
             }
             base.OnHitPlayer(npc, target, damage, crit);
