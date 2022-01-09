@@ -18,7 +18,6 @@ High Priority:
 
 Mid Priority:
 1. Ethereal Tonic
-	1. Dissolving Brilliance 
 2. Lux Drops (ask me before you go about spriting these ones):
 	1. Rose Bow
 	2. Voidmage Incubator 
@@ -30,20 +29,22 @@ Mid Priority:
 	1. Death Spiral resprite
 	2. Inferno Construct: Incinerator Glove (Magic, Void). Generate a close ranged orb of plasma that you can launch a short distance
 4. Mobile Fortress Generator: upgrade to platform generator. Base its visuals off of Ectoplasm and Dungeon Brick.
-
+5. Implement Pyramid BATTLE theme
 
 Low Priority:
 1. Archaelogist NPC
 2. Accessory Pets to use own dye slots.
 3. Void Bar strike the player during void shock
 
-1/8/22
+
+1/8/22 & 1/9/22
 1. Dungeon Guardian gains void damage
 2. Void damage increased 10% -> 16.667% of enemy damage
 3. Void damage has 50% chance of happening during night
 	1. 20% chance during day (33% expert)
 4. Added Dissolving Brilliance
 5. Some visual fixes to dissolving blocks Nether and Inferno when sloped/halfed
+6. Fixed some Void regen stuff and made void shock more punishing
 
 1/6/22 & 1/7/22
 1. Midnight Prism added (might be OP actually lol)

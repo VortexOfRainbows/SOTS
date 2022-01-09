@@ -165,380 +165,54 @@ namespace SOTS
                 HardlightBlockTile.Draw(i - 1, j, spriteBatch);
             base.PostDraw(i, j, type, spriteBatch);
         }
-        /*public static void DrawTileAsSlope(Tile tile, int i, int j, Texture2D texture, Color color, bool ignoreColorChanges) //unimplemented method
+        public static void DrawSlopedGlowMask(int i, int j, int type, Texture2D texture, Color drawColor)
         {
-            int type = tile.type;
-            if (tile.slope() > (byte)0)
+            Tile tile = Main.tile[i, j];
+            int frameX = tile.frameX;
+            int frameY = tile.frameY;
+            int width = 16;
+            int height = 16;
+            Vector2 location = new Vector2(i * 16, j * 16);
+            Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
+            if (Main.drawToScreen)
             {
-                if(!ignoreColorChanges)
+                zero = Vector2.Zero;
+            }
+            Vector2 drawCoordinates = location + zero - Main.screenPosition;
+            if (tile.slope() == 0 && !tile.halfBrick())
+            {
+                Main.spriteBatch.Draw(texture, drawCoordinates, new Rectangle(frameX, frameY, width, height), drawColor, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+            }
+            else if (tile.halfBrick())
+            {
+                Main.spriteBatch.Draw(texture, new Vector2(drawCoordinates.X, drawCoordinates.Y + 10), new Rectangle(frameX, frameY, width, 6), drawColor, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+            }
+            else
+            {
+                byte b = tile.slope();
+                for (int a = 0; a < 8; a++)
                 {
-                    if (tile.inActive())
-                        color = tile.actColor(color);
-                    else if (Main.tileShine2[(int)type])
-                        color = Main.shine(color, (int)type);
-                }
-                if (TileID.Sets.Platforms[type])
-                {
-                    if (Main.canDrawColorTile(i, j))
-                        Main.spriteBatch.Draw(
-                            (Texture2D)Main.tileAltTexture[(int)type, (int)trackTile.color()],
-                            new Vector2(
-                                (float)(index3 * 16 - (int)Main.screenPosition.X) -
-                                (float)(((double)width1 - 16.0) / 2.0),
-                                (float)(index2 * 16 - (int)Main.screenPosition.Y + num5)) +
-                            vector2_1,
-                            new Microsoft.Xna.Framework.Rectangle?(
-                                new Microsoft.Xna.Framework.Rectangle((int)num3, (int)num4, 16,
-                                    16)), color1, 0.0f, new Vector2(), 1f, effects, 0.0f);
-                    else
-                        Main.spriteBatch.Draw(Main.tileTexture[(int)type],
-                            new Vector2(
-                                (float)(index3 * 16 - (int)Main.screenPosition.X) -
-                                (float)(((double)width1 - 16.0) / 2.0),
-                                (float)(index2 * 16 - (int)Main.screenPosition.Y + num5)) +
-                            vector2_1,
-                            new Microsoft.Xna.Framework.Rectangle?(
-                                new Microsoft.Xna.Framework.Rectangle((int)num3, (int)num4, 16,
-                                    16)), color1, 0.0f, new Vector2(), 1f, effects, 0.0f);
-                    if (trackTile.slope() == (byte)1 &&
-                        Main.tile[index3 + 1, index2 + 1].active() &&
-                        (Main.tile[index3 + 1, index2 + 1].slope() != (byte)2 &&
-                         !Main.tile[index3 + 1, index2 + 1].halfBrick()) &&
-                        (!TileID.Sets.BlocksStairs[(int)Main.tile[index3 + 1, index2 + 1].type] &&
-                         !TileID.Sets.BlocksStairsAbove[(int)Main.tile[index3, index2 + 1].type]))
+                    int num10 = a << 1;
+                    var frame = new Rectangle(frameX, frameY + a * 2, num10, 2);
+                    int xOffset = 0;
+                    switch (b)
                     {
-                        if (TileID.Sets.Platforms[(int)Main.tile[index3 + 1, index2 + 1].type] &&
-                            Main.tile[index3 + 1, index2 + 1].slope() == (byte)0)
-                        {
-                            if (Main.canDrawColorTile(index3, index2))
-                                Main.spriteBatch.Draw(
-                                    (Texture2D)Main.tileAltTexture[(int)type,
-                                        (int)trackTile.color()],
-                                    new Vector2(
-                                        (float)(index3 * 16 - (int)Main.screenPosition.X) -
-                                        (float)(((double)width1 - 16.0) / 2.0),
-                                        (float)(index2 * 16 - (int)Main.screenPosition.Y + num5 +
-                                                 16)) + vector2_1,
-                                    new Microsoft.Xna.Framework.Rectangle?(
-                                        new Microsoft.Xna.Framework.Rectangle(324, (int)num4, 16,
-                                            16)), color1, 0.0f, new Vector2(), 1f, effects, 0.0f);
-                            else
-                                Main.spriteBatch.Draw(Main.tileTexture[(int)type],
-                                    new Vector2(
-                                        (float)(index3 * 16 - (int)Main.screenPosition.X) -
-                                        (float)(((double)width1 - 16.0) / 2.0),
-                                        (float)(index2 * 16 - (int)Main.screenPosition.Y + num5 +
-                                                 16)) + vector2_1,
-                                    new Microsoft.Xna.Framework.Rectangle?(
-                                        new Microsoft.Xna.Framework.Rectangle(324, (int)num4, 16,
-                                            16)), color1, 0.0f, new Vector2(), 1f, effects, 0.0f);
-                        }
-                        else if (Main.canDrawColorTile(index3, index2))
-                            Main.spriteBatch.Draw(
-                                (Texture2D)Main.tileAltTexture[(int)type,
-                                    (int)trackTile.color()],
-                                new Vector2(
-                                    (float)(index3 * 16 - (int)Main.screenPosition.X) -
-                                    (float)(((double)width1 - 16.0) / 2.0),
-                                    (float)(index2 * 16 - (int)Main.screenPosition.Y + num5 +
-                                             16)) + vector2_1,
-                                new Microsoft.Xna.Framework.Rectangle?(
-                                    new Microsoft.Xna.Framework.Rectangle(198, (int)num4, 16, 16)),
-                                color1, 0.0f, new Vector2(), 1f, effects, 0.0f);
-                        else
-                            Main.spriteBatch.Draw(Main.tileTexture[(int)type],
-                                new Vector2(
-                                    (float)(index3 * 16 - (int)Main.screenPosition.X) -
-                                    (float)(((double)width1 - 16.0) / 2.0),
-                                    (float)(index2 * 16 - (int)Main.screenPosition.Y + num5 +
-                                             16)) + vector2_1,
-                                new Microsoft.Xna.Framework.Rectangle?(
-                                    new Microsoft.Xna.Framework.Rectangle(198, (int)num4, 16, 16)),
-                                color1, 0.0f, new Vector2(), 1f, effects, 0.0f);
+                        case 2:
+                            frame.X = 16 - num10;
+                            xOffset = 16 - num10;
+                            break;
+                        case 3:
+                            frame.Width = 16 - num10;
+                            break;
+                        case 4:
+                            frame.Width = 14 - num10;
+                            frame.X = num10 + 2;
+                            xOffset = num10 + 2;
+                            break;
                     }
-                    else if (trackTile.slope() == (byte)2 &&
-                             Main.tile[index3 - 1, index2 + 1].active() &&
-                             (Main.tile[index3 - 1, index2 + 1].slope() != (byte)1 &&
-                              !Main.tile[index3 - 1, index2 + 1].halfBrick()) &&
-                             (!TileID.Sets.BlocksStairs[
-                                  (int)Main.tile[index3 - 1, index2 + 1].type] &&
-                              !TileID.Sets.BlocksStairsAbove[
-                                  (int)Main.tile[index3, index2 + 1].type]))
-                    {
-                        if (TileID.Sets.Platforms[(int)Main.tile[index3 - 1, index2 + 1].type] &&
-                            Main.tile[index3 - 1, index2 + 1].slope() == (byte)0)
-                        {
-                            if (Main.canDrawColorTile(index3, index2))
-                                Main.spriteBatch.Draw(
-                                    (Texture2D)Main.tileAltTexture[(int)type,
-                                        (int)trackTile.color()],
-                                    new Vector2(
-                                        (float)(index3 * 16 - (int)Main.screenPosition.X) -
-                                        (float)(((double)width1 - 16.0) / 2.0),
-                                        (float)(index2 * 16 - (int)Main.screenPosition.Y + num5 +
-                                                 16)) + vector2_1,
-                                    new Microsoft.Xna.Framework.Rectangle?(
-                                        new Microsoft.Xna.Framework.Rectangle(306, (int)num4, 16,
-                                            16)), color1, 0.0f, new Vector2(), 1f, effects, 0.0f);
-                            else
-                                Main.spriteBatch.Draw(Main.tileTexture[(int)type],
-                                    new Vector2(
-                                        (float)(index3 * 16 - (int)Main.screenPosition.X) -
-                                        (float)(((double)width1 - 16.0) / 2.0),
-                                        (float)(index2 * 16 - (int)Main.screenPosition.Y + num5 +
-                                                 16)) + vector2_1,
-                                    new Microsoft.Xna.Framework.Rectangle?(
-                                        new Microsoft.Xna.Framework.Rectangle(306, (int)num4, 16,
-                                            16)), color1, 0.0f, new Vector2(), 1f, effects, 0.0f);
-                        }
-                        else if (Main.canDrawColorTile(index3, index2))
-                            Main.spriteBatch.Draw(
-                                (Texture2D)Main.tileAltTexture[(int)type,
-                                    (int)trackTile.color()],
-                                new Vector2(
-                                    (float)(index3 * 16 - (int)Main.screenPosition.X) -
-                                    (float)(((double)width1 - 16.0) / 2.0),
-                                    (float)(index2 * 16 - (int)Main.screenPosition.Y + num5 +
-                                             16)) + vector2_1,
-                                new Microsoft.Xna.Framework.Rectangle?(
-                                    new Microsoft.Xna.Framework.Rectangle(162, (int)num4, 16, 16)),
-                                color1, 0.0f, new Vector2(), 1f, effects, 0.0f);
-                        else
-                            Main.spriteBatch.Draw(Main.tileTexture[(int)type],
-                                new Vector2(
-                                    (float)(index3 * 16 - (int)Main.screenPosition.X) -
-                                    (float)(((double)width1 - 16.0) / 2.0),
-                                    (float)(index2 * 16 - (int)Main.screenPosition.Y + num5 +
-                                             16)) + vector2_1,
-                                new Microsoft.Xna.Framework.Rectangle?(
-                                    new Microsoft.Xna.Framework.Rectangle(162, (int)num4, 16, 16)),
-                                color1, 0.0f, new Vector2(), 1f, effects, 0.0f);
-                    }
-                }
-                else if (TileID.Sets.HasSlopeFrames[(int)trackTile.type])
-                {
-                    if (Main.canDrawColorTile(index3, index2))
-                        Main.spriteBatch.Draw(
-                            (Texture2D)Main.tileAltTexture[(int)type, (int)trackTile.color()],
-                            new Vector2(
-                                (float)(index3 * 16 - (int)Main.screenPosition.X) -
-                                (float)(((double)width1 - 16.0) / 2.0),
-                                (float)(index2 * 16 - (int)Main.screenPosition.Y + num5)) +
-                            vector2_1,
-                            new Microsoft.Xna.Framework.Rectangle?(
-                                new Microsoft.Xna.Framework.Rectangle((int)num3 + num8,
-                                    (int)num4 + y1, 16, 16)), color1, 0.0f, new Vector2(), 1f,
-                            effects, 0.0f);
-                    else
-                        Main.spriteBatch.Draw(Main.tileTexture[(int)type],
-                            new Vector2(
-                                (float)(index3 * 16 - (int)Main.screenPosition.X) -
-                                (float)(((double)width1 - 16.0) / 2.0),
-                                (float)(index2 * 16 - (int)Main.screenPosition.Y + num5)) +
-                            vector2_1,
-                            new Microsoft.Xna.Framework.Rectangle?(
-                                new Microsoft.Xna.Framework.Rectangle((int)num3 + num8,
-                                    (int)num4 + y1, 16, 16)), color1, 0.0f, new Vector2(), 1f,
-                            effects, 0.0f);
-                }
-                else if (trackTile.slope() > (byte)2)
-                {
-                    if (trackTile.slope() == (byte)3)
-                    {
-                        for (var index4 = 0; index4 < 8; ++index4)
-                        {
-                            var width2 = 2;
-                            var num6 = index4 * 2;
-                            var num9 = index4 * -2;
-                            var height2 = 16 - index4 * 2;
-                            if (Main.canDrawColorTile(index3, index2))
-                                Main.spriteBatch.Draw(
-                                    (Texture2D)Main.tileAltTexture[(int)type,
-                                        (int)trackTile.color()],
-                                    new Vector2(
-                                        (float)(index3 * 16 - (int)Main.screenPosition.X) -
-                                        (float)(((double)width1 - 16.0) / 2.0) + (float)num6,
-                                        (float)(index2 * 16 - (int)Main.screenPosition.Y + num5 +
-                                                 index4 * width2 + num9)) + vector2_1,
-                                    new Microsoft.Xna.Framework.Rectangle?(
-                                        new Microsoft.Xna.Framework.Rectangle(
-                                            (int)num3 + num6 + num8,
-                                            (int)num4 + 16 - height2 + y1, width2, height2)),
-                                    color1, 0.0f, new Vector2(), 1f, effects, 0.0f);
-                            else
-                                Main.spriteBatch.Draw(Main.tileTexture[(int)type],
-                                    new Vector2(
-                                        (float)(index3 * 16 - (int)Main.screenPosition.X) -
-                                        (float)(((double)width1 - 16.0) / 2.0) + (float)num6,
-                                        (float)(index2 * 16 - (int)Main.screenPosition.Y + num5 +
-                                                 index4 * width2 + num9)) + vector2_1,
-                                    new Microsoft.Xna.Framework.Rectangle?(
-                                        new Microsoft.Xna.Framework.Rectangle(
-                                            (int)num3 + num6 + num8,
-                                            (int)num4 + 16 - height2 + y1, width2, height2)),
-                                    color1, 0.0f, new Vector2(), 1f, effects, 0.0f);
-                        }
-                    }
-                    else
-                    {
-                        for (var index4 = 0; index4 < 8; ++index4)
-                        {
-                            var width2 = 2;
-                            var num6 = 16 - index4 * width2 - width2;
-                            var height2 = 16 - index4 * width2;
-                            var num9 = index4 * -2;
-                            if (Main.canDrawColorTile(index3, index2))
-                                Main.spriteBatch.Draw(
-                                    (Texture2D)Main.tileAltTexture[(int)type,
-                                        (int)trackTile.color()],
-                                    new Vector2(
-                                        (float)(index3 * 16 - (int)Main.screenPosition.X) -
-                                        (float)(((double)width1 - 16.0) / 2.0) + (float)num6,
-                                        (float)(index2 * 16 - (int)Main.screenPosition.Y + num5 +
-                                                 index4 * width2 + num9)) + vector2_1,
-                                    new Microsoft.Xna.Framework.Rectangle?(
-                                        new Microsoft.Xna.Framework.Rectangle(
-                                            (int)num3 + num6 + num8,
-                                            (int)num4 + 16 - height2 + y1, width2, height2)),
-                                    color1, 0.0f, new Vector2(), 1f, effects, 0.0f);
-                            else
-                                Main.spriteBatch.Draw(Main.tileTexture[(int)type],
-                                    new Vector2(
-                                        (float)(index3 * 16 - (int)Main.screenPosition.X) -
-                                        (float)(((double)width1 - 16.0) / 2.0) + (float)num6,
-                                        (float)(index2 * 16 - (int)Main.screenPosition.Y + num5 +
-                                                 index4 * width2 + num9)) + vector2_1,
-                                    new Microsoft.Xna.Framework.Rectangle?(
-                                        new Microsoft.Xna.Framework.Rectangle(
-                                            (int)num3 + num6 + num8,
-                                            (int)num4 + 16 - height2 + y1, width2, height2)),
-                                    color1, 0.0f, new Vector2(), 1f, effects, 0.0f);
-                        }
-                    }
-
-                    if (Main.canDrawColorTile(index3, index2))
-                        Main.spriteBatch.Draw(
-                            (Texture2D)Main.tileAltTexture[(int)type, (int)trackTile.color()],
-                            new Vector2(
-                                (float)(index3 * 16 - (int)Main.screenPosition.X) -
-                                (float)(((double)width1 - 16.0) / 2.0),
-                                (float)(index2 * 16 - (int)Main.screenPosition.Y + num5)) +
-                            vector2_1,
-                            new Microsoft.Xna.Framework.Rectangle?(
-                                new Microsoft.Xna.Framework.Rectangle((int)num3 + num8,
-                                    (int)num4 + y1, 16, 2)), color1, 0.0f, new Vector2(), 1f,
-                            effects, 0.0f);
-                    else
-                        Main.spriteBatch.Draw(Main.tileTexture[(int)type],
-                            new Vector2(
-                                (float)(index3 * 16 - (int)Main.screenPosition.X) -
-                                (float)(((double)width1 - 16.0) / 2.0),
-                                (float)(index2 * 16 - (int)Main.screenPosition.Y + num5)) +
-                            vector2_1,
-                            new Microsoft.Xna.Framework.Rectangle?(
-                                new Microsoft.Xna.Framework.Rectangle((int)num3 + num8,
-                                    (int)num4 + y1, 16, 2)), color1, 0.0f, new Vector2(), 1f,
-                            effects, 0.0f);
-                }
-                else
-                {
-                    if (trackTile.slope() == (byte)1)
-                    {
-                        for (var index4 = 0; index4 < 8; ++index4)
-                        {
-                            var width2 = 2;
-                            var num6 = index4 * 2;
-                            var height2 = 14 - index4 * width2;
-                            if (Main.canDrawColorTile(index3, index2))
-                                Main.spriteBatch.Draw(
-                                    (Texture2D)Main.tileAltTexture[(int)type,
-                                        (int)trackTile.color()],
-                                    new Vector2(
-                                        (float)(index3 * 16 - (int)Main.screenPosition.X) -
-                                        (float)(((double)width1 - 16.0) / 2.0) + (float)num6,
-                                        (float)(index2 * 16 - (int)Main.screenPosition.Y + num5 +
-                                                 index4 * width2)) + vector2_1,
-                                    new Microsoft.Xna.Framework.Rectangle?(
-                                        new Microsoft.Xna.Framework.Rectangle(
-                                            (int)num3 + num6 + num8, (int)num4 + y1, width2,
-                                            height2)), color1, 0.0f, new Vector2(), 1f, effects,
-                                    0.0f);
-                            else
-                                Main.spriteBatch.Draw(Main.tileTexture[(int)type],
-                                    new Vector2(
-                                        (float)(index3 * 16 - (int)Main.screenPosition.X) -
-                                        (float)(((double)width1 - 16.0) / 2.0) + (float)num6,
-                                        (float)(index2 * 16 - (int)Main.screenPosition.Y + num5 +
-                                                 index4 * width2)) + vector2_1,
-                                    new Microsoft.Xna.Framework.Rectangle?(
-                                        new Microsoft.Xna.Framework.Rectangle(
-                                            (int)num3 + num6 + num8, (int)num4 + y1, width2,
-                                            height2)), color1, 0.0f, new Vector2(), 1f, effects,
-                                    0.0f);
-                        }
-                    }
-
-                    if (trackTile.slope() == (byte)2)
-                    {
-                        for (var index4 = 0; index4 < 8; ++index4)
-                        {
-                            var width2 = 2;
-                            var num6 = 16 - index4 * width2 - width2;
-                            var height2 = 14 - index4 * width2;
-                            if (Main.canDrawColorTile(index3, index2))
-                                Main.spriteBatch.Draw(
-                                    (Texture2D)Main.tileAltTexture[(int)type,
-                                        (int)trackTile.color()],
-                                    new Vector2(
-                                        (float)(index3 * 16 - (int)Main.screenPosition.X) -
-                                        (float)(((double)width1 - 16.0) / 2.0) + (float)num6,
-                                        (float)(index2 * 16 - (int)Main.screenPosition.Y + num5 +
-                                                 index4 * width2)) + vector2_1,
-                                    new Microsoft.Xna.Framework.Rectangle?(
-                                        new Microsoft.Xna.Framework.Rectangle(
-                                            (int)num3 + num6 + num8, (int)num4 + y1, width2,
-                                            height2)), color1, 0.0f, new Vector2(), 1f, effects,
-                                    0.0f);
-                            else
-                                Main.spriteBatch.Draw(Main.tileTexture[(int)type],
-                                    new Vector2(
-                                        (float)(index3 * 16 - (int)Main.screenPosition.X) -
-                                        (float)(((double)width1 - 16.0) / 2.0) + (float)num6,
-                                        (float)(index2 * 16 - (int)Main.screenPosition.Y + num5 +
-                                                 index4 * width2)) + vector2_1,
-                                    new Microsoft.Xna.Framework.Rectangle?(
-                                        new Microsoft.Xna.Framework.Rectangle(
-                                            (int)num3 + num6 + num8, (int)num4 + y1, width2,
-                                            height2)), color1, 0.0f, new Vector2(), 1f, effects,
-                                    0.0f);
-                        }
-                    }
-
-                    if (Main.canDrawColorTile(index3, index2))
-                        Main.spriteBatch.Draw(
-                            (Texture2D)Main.tileAltTexture[(int)type, (int)trackTile.color()],
-                            new Vector2(
-                                (float)(index3 * 16 - (int)Main.screenPosition.X) -
-                                (float)(((double)width1 - 16.0) / 2.0),
-                                (float)(index2 * 16 - (int)Main.screenPosition.Y + num5 + 14)) +
-                            vector2_1,
-                            new Microsoft.Xna.Framework.Rectangle?(
-                                new Microsoft.Xna.Framework.Rectangle((int)num3 + num8,
-                                    (int)num4 + 14 + y1, 16, 2)), color1, 0.0f, new Vector2(), 1f,
-                            effects, 0.0f);
-                    else
-                        Main.spriteBatch.Draw(Main.tileTexture[(int)type],
-                            new Vector2(
-                                (float)(index3 * 16 - (int)Main.screenPosition.X) -
-                                (float)(((double)width1 - 16.0) / 2.0),
-                                (float)(index2 * 16 - (int)Main.screenPosition.Y + num5 + 14)) +
-                            vector2_1,
-                            new Microsoft.Xna.Framework.Rectangle?(
-                                new Microsoft.Xna.Framework.Rectangle((int)num3 + num8,
-                                    (int)num4 + 14 + y1, 16, 2)), color1, 0.0f, new Vector2(), 1f,
-                            effects, 0.0f);
+                    Main.spriteBatch.Draw(texture, new Vector2(drawCoordinates.X + (float)xOffset, drawCoordinates.Y + a * 2), frame, drawColor, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
                 }
             }
-        }*/
+        }
     }
 }

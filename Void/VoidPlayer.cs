@@ -756,19 +756,20 @@ namespace SOTS.Void
 				GreenBarCounter = 20;
 			}
 			float voidRegen = flatVoidRegen / 60f;
-			if(voidRegen < 0 && voidMeter > 0)
-            {
+			if(voidRegen < 0)
+			{
 				int numberScaling = (int)(voidRegen * -3f);
 				negativeVoidRegenPopupNumber = numberScaling + 1;
 				negativeVoidRegenCounter -= voidRegen;
-				if(negativeVoidRegenCounter >= negativeVoidRegenPopupNumber)
-                {
+				if (negativeVoidRegenCounter >= negativeVoidRegenPopupNumber)
+				{
 					negativeVoidRegenCounter -= negativeVoidRegenPopupNumber;
-					VoidEffect(player, -negativeVoidRegenPopupNumber, true);
+					if (voidMeter >= 0)
+						VoidEffect(player, -negativeVoidRegenPopupNumber, true);
 					voidMeter -= negativeVoidRegenPopupNumber;
 				}
 			}
-			else
+			else if(voidMeter >= 0)
 			{
 				positiveVoidRegenCounter += voidRegen;
 				if(positiveVoidRegenCounter > 1)
