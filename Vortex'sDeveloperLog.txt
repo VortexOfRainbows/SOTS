@@ -37,6 +37,13 @@ Low Priority:
 2. Accessory Pets to use own dye slots.
 3. Void Bar strike the player during void shock
 
+1/8/22
+1. Dungeon Guardian gains void damage
+2. Void damage increased 10% -> 16.667% of enemy damage
+3. Void damage has 50% chance of happening during night
+	1. 20% chance during day (33% expert)
+4. Added Dissolving Brilliance
+
 1/6/22 & 1/7/22
 1. Midnight Prism added (might be OP actually lol)
 2. New Witch's Heart sprite
