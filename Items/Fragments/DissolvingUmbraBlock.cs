@@ -77,6 +77,11 @@ namespace SOTS.Items.Fragments
 			{
 				zero = Vector2.Zero;
 			}
+			Vector2 offset = new Vector2(0, 0);
+			if(Main.tile[i, j].topSlope() || Main.tile[i, j].halfBrick())
+			{
+				offset += new Vector2(0, 8);
+			}
 			int maxLength = 9;
 			for (int j2 = 1; j2 < maxLength; j2++)
 			{
@@ -110,7 +115,7 @@ namespace SOTS.Items.Fragments
 						float alphaScale = (32f - z * 2f) / 20f;
 						for (int k = 0; k < 3; k++)
 						{
-							Main.spriteBatch.Draw(texture, previous + zero - Main.screenPosition + Main.rand.NextVector2Circular(0.5f, 0.5f), null, color * alphaScale, rotateTo.ToRotation(), origin, scaleVector2, SpriteEffects.None, 0f);
+							Main.spriteBatch.Draw(texture, previous + zero - Main.screenPosition + Main.rand.NextVector2Circular(0.5f, 0.5f) + offset, null, color * alphaScale, rotateTo.ToRotation(), origin, scaleVector2, SpriteEffects.None, 0f);
 						}
 					}
 					previous = pos;

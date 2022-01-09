@@ -116,7 +116,17 @@ namespace SOTS.Items.Fragments
 						if (a == 2)
 							offset = 13;
 					}
-					Vector2 previous = new Vector2(i * 16 + offset, j * 16 + 16);
+					float vOffset = 0;
+					if (Main.tile[i, j].halfBrick())
+						vOffset = 8;
+					else
+					{
+						if (Main.tile[i, j].slope() == 1)
+							vOffset += offset * 0.75f;
+						if (Main.tile[i, j].slope() == 2)
+							vOffset += 12 - offset * 0.75f;
+					} 
+					Vector2 previous = new Vector2(i * 16 + offset, j * 16 + 16 + vOffset);
 					DrawChains(maxLength, timer, 270f / tileSeed2 * a, previous, zero, color);
 				}
 			}
