@@ -17,25 +17,28 @@ High Priority:
 3. Lux and Chaos Construct
 
 Mid Priority:
-1. Ethereal Tonic
-2. Lux Drops (ask me before you go about spriting these ones):
+1. Lux Drops (ask me before you go about spriting these ones):
 	1. Rose Bow
 	2. Voidmage Incubator 
 	3. Phase Ore!?
 		1. Phase Alloy: Phase Ore + Crystal Shards + Chaos Fragment + other stuff perhaps
 	4. True Phaseblade -> Starward Sword
 	5. Chaos Chamber
-3. Construct Items:
+2. Construct Items:
 	1. Death Spiral resprite
 	2. Inferno Construct: Incinerator Glove (Magic, Void). Generate a close ranged orb of plasma that you can launch a short distance
-4. Mobile Fortress Generator: upgrade to platform generator. Base its visuals off of Ectoplasm and Dungeon Brick.
-5. Implement Pyramid BATTLE theme
+3. Mobile Fortress Generator: upgrade to platform generator. Base its visuals off of Ectoplasm and Dungeon Brick.
+4. Terminal Cluster (4 other dissolving elements cluster)
+	1. Transmutation altar animation capability
 
 Low Priority:
 1. Archaelogist NPC
 2. Accessory Pets to use own dye slots.
 3. Void Bar strike the player during void shock
 
+1/9/22
+1. Implemented Pyramid BATTLE Theme (works in MULT)
+2. Added Ethereal Tonic (temporary sprite)
 
 1/8/22 & 1/9/22
 1. Dungeon Guardian gains void damage

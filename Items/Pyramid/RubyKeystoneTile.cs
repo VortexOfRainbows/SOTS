@@ -216,6 +216,7 @@ namespace SOTS.Items.Pyramid
 			projectile.penetrate = -1;
 			projectile.timeLeft = 480;
 			projectile.tileCollide = false;
+			projectile.netImportant = true;
 			projectile.hostile = false;
 			projectile.extraUpdates = 3;
 			projectile.alpha = 255;
@@ -241,8 +242,17 @@ namespace SOTS.Items.Pyramid
 		int projID = -1;
 		bool runOnce = true;
 		bool runOnce2 = true;
+		public void MusicCheck()
+        {
+			Player player = Main.LocalPlayer;
+			if(player.Distance(projectile.Center) <= 480)
+            {
+				SOTSPlayer.pyramidBattle = true;
+            }
+        }
 		public override void AI()
 		{
+			MusicCheck();
 			if (runOnce)
 			{
 				bool foundLeader = false;

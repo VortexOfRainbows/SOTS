@@ -53,6 +53,7 @@ namespace SOTS
 		public static int[] typhonWhitelist;
 		public static int[] symbioteBlacklist;
 		public static int[] harmonyWhitelist;
+		public static bool pyramidBattle = false;
 		public static void LoadArrays()
 		{
 			locketBlacklist = new int[] { ItemID.BookStaff, ModContent.ItemType<LashesOfLightning>(), ModContent.ItemType<SkywardBlades>(), ItemID.GolemFist, ItemID.Flairon,
@@ -575,7 +576,8 @@ namespace SOTS
         }
         public override void ResetEffects()
 		{
-			if(normalizedGravity)
+			pyramidBattle = false;
+			if (normalizedGravity)
             {
 				player.gravity = Player.defaultGravity;
             }

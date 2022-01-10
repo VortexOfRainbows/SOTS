@@ -80,7 +80,7 @@ namespace SOTS.Items.Otherworld.EpicWings
 		}
 		public override void SetDefaults()
 		{
-			item.width = 34;
+			item.width = 52;
 			item.height = 28;
 			item.value = Item.sellPrice(0, 10, 0, 0);
 			item.rare = ItemRarityID.Red;

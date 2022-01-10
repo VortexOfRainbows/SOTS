@@ -461,33 +461,26 @@ namespace SOTS
 					music = GetSoundSlot(SoundType.Music, "Sounds/Music/CursedPyramid");
 					priority = MusicPriority.BiomeHigh;
                 }
-			}
-			if (Main.myPlayer != -1 && !Main.gameMenu)
-			{
-				Player player = Main.player[Main.myPlayer];
 				if (player.active && player.GetModPlayer<SOTSPlayer>().PlanetariumBiome)
 				{
 					music = GetSoundSlot(SoundType.Music, "Sounds/Music/Planetarium");
 					priority = MusicPriority.Event;
 				}
-			}
-			if (Main.myPlayer != -1 && !Main.gameMenu)
-			{
-				//Player player = Main.player[Main.myPlayer];
 				if (SOTSWorld.SecretFoundMusicTimer > 0)
 				{
 					SOTSWorld.SecretFoundMusicTimer--;
 					music = GetSoundSlot(SoundType.Music, "Sounds/Music/SecretFound");
 					priority = MusicPriority.BossHigh + 1;
 				}
-			}
-			if (Main.myPlayer != -1 && !Main.gameMenu)
-			{
-				Player player = Main.player[Main.myPlayer];
 				if (NPC.AnyNPCs(ModContent.NPCType<NPCs.knuckles>()) && Main.npc[NPC.FindFirstNPC(ModContent.NPCType<NPCs.knuckles>())].Distance(player.Center) <= 7000f)
 				{
 					music = GetSoundSlot(SoundType.Music, "Sounds/Music/KnucklesTheme");
 					priority = MusicPriority.BossHigh;
+				}
+				if(SOTSPlayer.pyramidBattle) //variable only applies to local player
+				{
+					music = GetSoundSlot(SoundType.Music, "Sounds/Music/PyramidBattle");
+					priority = MusicPriority.Environment;
 				}
 			}
 		}

@@ -8,8 +8,8 @@ Bosses -> Currently 6, all with original AI!
 Items -> Nearly 450, unique gimmicks all around!
 
 New Subclass (void)
--A new resource similar to mana
--Unleash very powerful attacks
+-Unleash very powerful attacks, at a cost
+-High risk, high reward
 -Has melee, ranged, magic, and summon items
 
 Major Stuctures:
@@ -20,9 +20,9 @@ Major Stuctures:
 Credits:
 (Current Developers)
 Code, Direction, Art: Vortex#6230
-Music, Art: Heart Plus Up!
+Music, SFX, Direction, Art: Heart Plus Up!
 Code, Audio Engineering: apotofkoolaid
-Art: Blasfah
+Art: Blasfah, Mochi
 
 (Past Developers)
 Emotional Support, Direction, Art: Coolio
@@ -31,17 +31,17 @@ Music: BananaLizard
 
 (Contributors and Other Credits)
 Art: HugeKraken, Arcri
-Testers: DreadSoul, Crimsonkeep 
-Code: Graydee, ENNWAY, Qwerty3.14, OS
+Testers/Other: Mushnib~, Astrobit, DreadSoul, Crimsonkeep 
+Code: Graydee, ENNWAY, Qwerty3.14, OS, Nalyd T.
 Minor Art: Naka, DeJuiceTD, Nomis
-Other: Mushnib~, Astrobit
 
 Update 0.21.0
 -New worldgen structure in the Dungeon
 -New Polaris summon shrine
 -Added the remaining Constructs
 -New items, enemies, and secrets
--Various balance changes, such as giving certain enemies Void damage
+-Void Reworks, such as enemies being able to deal void damage, and different void regen mechanics
+-Various balance changes
 -Added a config option to lower the intesity of visuals and help with performance. Mainly affects certain boss related visuals
 -Many resprites and visual improvements
 -Reorganized many internals

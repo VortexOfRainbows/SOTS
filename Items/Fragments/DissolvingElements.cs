@@ -427,12 +427,12 @@ namespace SOTS.Items.Fragments
 		{
 			DisplayName.SetDefault("Dissolving Umbra");
 			Tooltip.SetDefault("Reduces max void by 20 while in the inventory");
-			Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(5, 12));
+			Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(5, 10));
 		}
 		public override void SetDefaults()
 		{
-			item.width = 30;
-			item.height = 44;
+			item.width = 38;
+			item.height = 48;
 			item.value = Item.sellPrice(0, 1, 0, 0);
 			item.rare = ItemRarityID.Orange;
 			item.maxStack = 999;
@@ -446,7 +446,7 @@ namespace SOTS.Items.Fragments
 			{
 				Main.spriteBatch.Draw(texture,
 				position + Main.rand.NextVector2Circular(1.5f, 1.5f),
-				new Rectangle(0, 44 * this.frame, 30, 44), color * 1.2f * (1f - (item.alpha / 255f)), 0f, origin, scale, SpriteEffects.None, 0f);
+				new Rectangle(0, item.height * this.frame, item.width, item.height), color * 1.2f * (1f - (item.alpha / 255f)), 0f, origin, scale, SpriteEffects.None, 0f);
 			}
 			return false;
 		}
@@ -458,7 +458,7 @@ namespace SOTS.Items.Fragments
 				frameCounter = 0;
 				frame++;
 			}
-			if (frame >= 12)
+			if (frame >= 10)
 			{
 				frame = 0;
 			}
@@ -469,7 +469,7 @@ namespace SOTS.Items.Fragments
 			{
 				Main.spriteBatch.Draw(texture,
 				item.Center - Main.screenPosition + Main.rand.NextVector2Circular(1.5f, 1.5f),
-				new Rectangle(0, 44 * frame, 30, 44), color * 1.2f * (1f - (item.alpha / 255f)), rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+				new Rectangle(0, item.height * frame, item.width, item.height), color * 1.2f * (1f - (item.alpha / 255f)), rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			}
 			return false;
 		}
@@ -482,7 +482,7 @@ namespace SOTS.Items.Fragments
 				frameCounter = 0;
 				frame++;
 			}
-			if (frame >= 12)
+			if (frame >= 10)
 			{
 				frame = 0;
 			}
