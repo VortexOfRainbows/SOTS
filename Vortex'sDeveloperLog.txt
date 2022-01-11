@@ -28,13 +28,16 @@ Mid Priority:
 	1. Death Spiral resprite
 	2. Inferno Construct: Incinerator Glove (Magic, Void). Generate a close ranged orb of plasma that you can launch a short distance
 3. Mobile Fortress Generator: upgrade to platform generator. Base its visuals off of Ectoplasm and Dungeon Brick.
-4. Terminal Cluster (4 other dissolving elements cluster)
-	1. Transmutation altar animation capability
 
 Low Priority:
 1. Archaelogist NPC
 2. Accessory Pets to use own dye slots.
 3. Void Bar strike the player during void shock
+
+1/10/22
+1. Added Terminal Cluster (elemental cluster)
+2. Added compatability for animated items on transmutation table.
+	1. Also optimized code for transmutation table, making it send WAY less packets in multiplayer for the same data.
 
 1/9/22
 1. Implemented Pyramid BATTLE Theme (works in MULT)

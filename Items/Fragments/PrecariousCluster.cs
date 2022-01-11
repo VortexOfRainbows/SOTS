@@ -4,6 +4,8 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Void;
+using System;
 
 namespace SOTS.Items.Fragments
 {
@@ -122,6 +124,120 @@ namespace SOTS.Items.Fragments
 				else
 				{
 					player.endurance = -1;
+				}
+			}
+		}
+	}
+	public class TerminalCluster : ModItem
+	{
+		public override void SetStaticDefaults()
+		{
+			DisplayName.SetDefault("Terminal Cluster");
+			Tooltip.SetDefault("Reduces max void by 20 while in the inventory, max life by 10, mana by 10, and life regeneration by 2 while in the inventory");
+		}
+		public override void SetDefaults()
+		{
+			item.width = 66;
+			item.height = 66;
+			item.value = Item.sellPrice(0, 10, 0, 0);
+			item.rare = ItemRarityID.Yellow;
+			item.maxStack = 999;
+			ItemID.Sets.ItemNoGravity[item.type] = true;
+		}
+		public override void AddRecipes()
+		{
+			ModRecipe recipe = new ModRecipe(mod);
+			recipe.AddIngredient(ModContent.ItemType<DissolvingBrilliance>(), 1);
+			recipe.AddIngredient(ModContent.ItemType<DissolvingNether>(), 1);
+			recipe.AddIngredient(ModContent.ItemType<DissolvingUmbra>(), 1);
+			recipe.AddIngredient(ModContent.ItemType<DissolvingDeluge>(), 1);
+			recipe.AddTile(TileID.DemonAltar);
+			recipe.SetResult(this, 1);
+			recipe.AddRecipe();
+		}
+		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frameNotUsed, Color drawColor, Color itemColor, Vector2 origin, float scale)
+		{
+			Texture2D texture = mod.GetTexture("Items/Fragments/TerminalClusterSymbols");
+			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.25f * 0.5f);
+			position += new Vector2(33 * scale, 33 * scale);
+			float counter = Main.GlobalTime * 160;
+			int bonus = (int)(counter / 360f);
+			float mult = -12f * (float)Math.Cos(MathHelper.ToRadians(counter));
+			int frameNum = 0;
+			for (int i = 0; i < 3; i++)
+			{
+				frameNum = (i + bonus) % 4;
+				Rectangle frame2 = new Rectangle(0, 28 * frameNum, 28, 28);
+				Vector2 rotationAround = new Vector2((12 + mult) * scale, 0).RotatedBy(MathHelper.ToRadians(120 * i + counter));
+				for (int k = 0; k < 7; k++)
+				{
+					float x = Main.rand.Next(-10, 11) * 0.15f;
+					float y = Main.rand.Next(-10, 11) * 0.15f;
+					Main.spriteBatch.Draw(texture, new Vector2((float)(position.X + x), (float)(position.Y + y)) + rotationAround, frame2, new Color(100, 100, 100, 0) * (1f - (item.alpha / 255f)), 0f, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
+				}
+			}
+			frameNum = (3 + bonus) % 4;
+			Rectangle frame = new Rectangle(0, 28 * frameNum, 28, 28);
+			for (int k = 0; k < 7; k++)
+			{
+				float x = Main.rand.Next(-10, 11) * 0.15f;
+				float y = Main.rand.Next(-10, 11) * 0.15f;
+				Main.spriteBatch.Draw(texture, new Vector2((float)(position.X + x), (float)(position.Y + y)), frame, new Color(100, 100, 100, 0) * (1f - (item.alpha / 255f)), 0f, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
+			}
+			return false;
+		}
+		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
+		{
+			Texture2D texture = mod.GetTexture("Items/Fragments/TerminalClusterSymbols");
+			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.25f * 0.5f);
+			float counter = Main.GlobalTime * 160;
+			int bonus = (int)(counter / 360f);
+			float mult = -18f * (float)Math.Cos(MathHelper.ToRadians(counter));
+			int frameNum;
+			for (int i = 0; i < 3; i++)
+			{
+				frameNum = (i + bonus) % 4;
+				Rectangle frame2 = new Rectangle(0, 28 * frameNum, 28, 28);
+				Vector2 rotationAround = new Vector2((18 + mult) * scale, 0).RotatedBy(MathHelper.ToRadians(120 * i + counter));
+				for (int k = 0; k < 7; k++)
+				{
+					float x = Main.rand.Next(-10, 11) * 0.15f;
+					float y = Main.rand.Next(-10, 11) * 0.15f;
+					Main.spriteBatch.Draw(texture, new Vector2((float)(item.Center.X - (int)Main.screenPosition.X) + x, (float)(item.Center.Y - (int)Main.screenPosition.Y) + y) + rotationAround, frame2, new Color(100, 100, 100, 0) * (1f - (item.alpha / 255f)), rotation, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
+				}
+			}
+			frameNum = (3 + bonus) % 4;
+			Rectangle frame = new Rectangle(0, 28 * frameNum, 28, 28);
+			for (int k = 0; k < 7; k++)
+			{
+				float x = Main.rand.Next(-10, 11) * 0.15f;
+				float y = Main.rand.Next(-10, 11) * 0.15f;
+				Main.spriteBatch.Draw(texture, new Vector2((float)(item.Center.X - (int)Main.screenPosition.X) + x, (float)(item.Center.Y - (int)Main.screenPosition.Y) + y), frame, new Color(100, 100, 100, 0) * (1f - (item.alpha / 255f)), 0f, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
+			}
+			return false;
+		}
+		public override void UpdateInventory(Player player)
+		{
+			AetherPlayer aetherPlayer = (AetherPlayer)player.GetModPlayer(mod, "AetherPlayer");
+			aetherPlayer.infernoNum += item.stack;
+			VoidPlayer vPlayer = VoidPlayer.ModPlayer(player);
+			for (int i = 0; i < item.stack; i++)
+			{
+				if (player.statLifeMax2 > 100)
+				{
+					player.statLifeMax2 -= 10;
+				}
+				if (player.statManaMax2 > 40)
+				{
+					player.statManaMax2 -= 10;
+				}
+				if (vPlayer.voidMeterMax2 > 20)
+				{
+					vPlayer.voidMeterMax2 -= 20;
+				}
+				else if (vPlayer.voidMeterMax2 < 20)
+				{
+					vPlayer.voidMeterMax2 = 20;
 				}
 			}
 		}

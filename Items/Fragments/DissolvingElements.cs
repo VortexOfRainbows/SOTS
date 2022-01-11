@@ -340,7 +340,7 @@ namespace SOTS.Items.Fragments
 				}
 				if (player.statManaMax2 > 40)
 				{
-					player.statManaMax2 -= 40;
+					player.statManaMax2 -= 10;
 				}
 			}
 		}
@@ -434,7 +434,7 @@ namespace SOTS.Items.Fragments
 			item.width = 38;
 			item.height = 48;
 			item.value = Item.sellPrice(0, 1, 0, 0);
-			item.rare = ItemRarityID.Orange;
+			item.rare = ItemRarityID.LightRed;
 			item.maxStack = 999;
 			ItemID.Sets.ItemNoGravity[item.type] = true;
 		}
@@ -555,7 +555,7 @@ namespace SOTS.Items.Fragments
 			item.width = 42;
 			item.height = 40;
 			item.value = Item.sellPrice(0, 1, 0, 0);
-			item.rare = ItemRarityID.Orange;
+			item.rare = ItemRarityID.LightRed;
 			item.maxStack = 999;
 			ItemID.Sets.ItemNoGravity[item.type] = true;
 		}
@@ -630,7 +630,7 @@ namespace SOTS.Items.Fragments
 			item.width = 66;
 			item.height = 66;
 			item.value = Item.sellPrice(0, 1, 0, 0);
-			item.rare = ItemRarityID.Orange;
+			item.rare = ItemRarityID.LightRed;
 			item.maxStack = 999;
 			ItemID.Sets.ItemNoGravity[item.type] = true;
 		}

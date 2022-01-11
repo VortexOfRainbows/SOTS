@@ -315,53 +315,56 @@ namespace SOTS.Items.Otherworld.Furniture
 				texture = Main.itemTexture[entity.itemsArray[l]];
 				for (int g = 0; g < entity.itemAmountsArray[l]; g++)
 				{
-					int frame = entity.itemFrames[l] <= 0 ? 1 : entity.itemFrames[l];
+					DrawAnimation anim = Main.itemAnimations[entity.itemsArray[l]];
+					int frameCount = 1;
+					int ticksPerFrame = 1;
+					if (anim != null)
+					{
+						frameCount = anim.FrameCount;
+						ticksPerFrame = anim.TicksPerFrame;
+					}
 					currentItem++;
 					Vector2 pos = new Vector2((float)(i * 16 - (int)Main.screenPosition.X) + 8, (float)(j * 16 - (int)Main.screenPosition.Y) + 8) + zero;
 					pos.Y -= 80 + dynamicAddition.Y + (totalItems + entity.itemAmountsArray[0]) * 0.5f;
 					Vector2 circularLocation = new Vector2(32 + (totalItems + entity.itemAmountsArray[0]) * 0.5f, 0).RotatedBy(MathHelper.ToRadians(currentItem * 360f / totalItems) + MathHelper.ToRadians(counter));
 					pos += circularLocation;
-					Vector2 origin = new Vector2(texture.Width / 2, texture.Height / frame / 2);
-					float width = texture.Width;
-					float height = texture.Height / frame;
-					float allocatedArea = 48;
-					float scale = 0.8f;
-					if (allocatedArea < (float)Math.Sqrt(width * height))
-						scale = 0.8f * allocatedArea / (float)Math.Sqrt(width * height);
-					for (int k = 0; k < 6; k++)
-					{
-						Vector2 augment = new Vector2(Main.rand.NextFloat(1.5f, 2.5f), 0).RotatedBy(MathHelper.ToRadians(k * 60));
-						Main.spriteBatch.Draw(texture, pos + augment, new Rectangle(0, 0, texture.Width, texture.Height/frame), color, 0f, origin, scale, SpriteEffects.None, 0f);
-						//if (k == 9 && !alpha255Items.Contains<int>(entity.itemsArray[l]))
-							//Main.spriteBatch.Draw(texture, pos, new Rectangle(0, 0, texture.Width, texture.Height / frame), new Color(255, 255, 255), 0f, origin, scale, SpriteEffects.None, 0f);
-					}
+					DrawItem(texture, pos, frameCount, ticksPerFrame, color);
 				}
 			}
 			texture = Main.itemTexture[entity.itemsArray[0]];
 			for (int g = 0; g < entity.itemAmountsArray[0]; g++)
 			{
-				int frame = entity.itemFrames[0] <= 0 ? 1 : entity.itemFrames[0];
+				DrawAnimation anim = Main.itemAnimations[entity.itemsArray[0]];
+				int frameCount = 1;
+				int ticksPerFrame = 1;
+				if (anim != null)
+				{
+					frameCount = anim.FrameCount;
+					ticksPerFrame = anim.TicksPerFrame;
+				}
 				currentItem++;
 				Vector2 pos = new Vector2((float)(i * 16 - (int)Main.screenPosition.X) + 8, (float)(j * 16 - (int)Main.screenPosition.Y) + 8) + zero;
 				pos.Y -= 80 + dynamicAddition.Y + (totalItems + entity.itemAmountsArray[0]) * 0.5f;
 				Vector2 circularLocation = new Vector2((entity.itemAmountsArray[0] > 1 ? 12 : 0) + entity.itemAmountsArray[0] * 0.5f, 0).RotatedBy(MathHelper.ToRadians(currentItem * 360f / entity.itemAmountsArray[0]) + MathHelper.ToRadians(counter));
 				pos += circularLocation;
-				Vector2 origin = new Vector2(texture.Width / 2, texture.Height / frame / 2);
-				float width = texture.Width;
-				float height = texture.Height / frame;
-				float allocatedArea = 48;
-				float scale = 0.8f;
-				if(allocatedArea < (float)Math.Sqrt(width * height))
-					scale = 0.8f * allocatedArea / (float)Math.Sqrt(width * height);
-				for (int n = 0; n < 6; n++)
-				{
-					Vector2 augment = new Vector2(Main.rand.NextFloat(1.5f, 2.5f), 0).RotatedBy(MathHelper.ToRadians(n * 60));
-					Main.spriteBatch.Draw(texture, pos + augment, new Rectangle(0, 0, texture.Width, texture.Height / frame), color, 0f, origin, scale, SpriteEffects.None, 0f);
-					//if (n == 9 && !alpha255Items.Contains<int>(entity.itemsArray[0]))
-						//Main.spriteBatch.Draw(texture, pos, new Rectangle(0, 0, texture.Width, texture.Height / frame), new Color(255, 255, 255), 0f, origin, scale, SpriteEffects.None, 0f);
-				}
+				DrawItem(texture, pos, frameCount, ticksPerFrame, color);
 			}
 			return true;
+		}
+		public void DrawItem(Texture2D texture, Vector2 pos, int frameCount, int ticksPerFrame, Color color)
+		{
+			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / frameCount / 2);
+			float width = texture.Width;
+			float height = texture.Height / frameCount;
+			float allocatedArea = 48;
+			float scale = 0.8f;
+			if (allocatedArea < (float)Math.Sqrt(width * height))
+				scale = 0.8f * allocatedArea / (float)Math.Sqrt(width * height);
+			for (int n = 0; n < 6; n++)
+			{
+				Vector2 augment = new Vector2(Main.rand.NextFloat(1.5f, 2.5f), 0).RotatedBy(MathHelper.ToRadians(n * 60));
+				Main.spriteBatch.Draw(texture, pos + augment, new Rectangle(0, texture.Height / frameCount * ((int)Main.GameUpdateCount / ticksPerFrame % frameCount), texture.Width, texture.Height / frameCount), color, 0f, origin, scale, SpriteEffects.None, 0f);
+			}
 		}
 	}
 	public class UndoParticles : ModProjectile
@@ -460,7 +463,6 @@ namespace SOTS.Items.Otherworld.Furniture
 		internal bool netUpdate = false;
 		internal int[] itemsArray = new int[20];
 		internal int[] itemAmountsArray = new int[20];
-		internal int[] itemFrames = new int[20];
 		internal int timer = -2;
 		internal int style = 0;
 		public override void Update()
@@ -469,13 +471,10 @@ namespace SOTS.Items.Otherworld.Furniture
 			{
 				itemsArray[1] = ItemType<HardlightAlloy>();
 				itemAmountsArray[1] = 1;
-				itemFrames[1] = 1;
 				itemsArray[2] = ItemType<StarlightAlloy>();
 				itemAmountsArray[2] = 1;
-				itemFrames[2] = 1;
 				itemsArray[3] = ItemType<OtherworldlyAlloy>();
 				itemAmountsArray[3] = 1;
-				itemFrames[3] = 1;
 				timer = -1;
 				netUpdate = true;
 			}
@@ -500,10 +499,6 @@ namespace SOTS.Items.Otherworld.Furniture
 			{
 				itemAmountsArray[i] = reader.ReadInt32();
 			}
-			for (int i = 0; i < 20; i++)
-			{
-				itemFrames[i] = reader.ReadInt32();
-			}
 			//if (!lightReceive)
 				//Main.NewText("I received info");
 		}
@@ -521,10 +516,6 @@ namespace SOTS.Items.Otherworld.Furniture
 			{
 				writer.Write(itemAmountsArray[i]);
 			}
-			for (int i = 0; i < 20; i++)
-			{
-				writer.Write(itemFrames[i]);
-			}
 			//if (!lightSend)
 				//Main.NewText("I sent info");
 		}
@@ -537,7 +528,6 @@ namespace SOTS.Items.Otherworld.Furniture
 				{"style", style},
 				{"itemsArray", itemsArray},
 				{"itemAmountsArray", itemAmountsArray},
-				{"itemFrames", itemFrames},
 			};
 		}
 
@@ -547,7 +537,6 @@ namespace SOTS.Items.Otherworld.Furniture
 			style = tag.Get<int>("style");
 			itemsArray = tag.Get<int[]>("itemsArray");
 			itemAmountsArray = tag.Get<int[]>("itemAmountsArray");
-			itemFrames = tag.Get<int[]>("itemFrames");
 		}
 
 		public override bool ValidTile(int i, int j)

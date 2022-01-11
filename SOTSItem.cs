@@ -181,9 +181,10 @@ namespace SOTS
 		public static bool hasSetupRed = false;
 		public static void LoadArrays() //called in SOTS.Load()
 		{
-			rarities1 = new int[] { ItemType<StarlightAlloy>(), ItemType<HardlightAlloy>(), ItemType<OtherworldlyAlloy>(), ItemType<PotGenerator>(), ItemType<PrecariousCluster>(), ItemType<Calculator>(), ItemType<BookOfVirtues>() };
-			rarities2 = new int[] { ItemType<RefractingCrystal>(), ItemType<CursedApple>(), ItemType<RubyKeystone>() };
-			rarities3 = new int[] { ItemType<TaintedKeystoneShard>() };
+			rarities1 = new int[] { ItemType<StarlightAlloy>(), ItemType<HardlightAlloy>(), ItemType<OtherworldlyAlloy>(), ItemType<PotGenerator>(), ItemType<PrecariousCluster>(), ItemType<Calculator>(), ItemType<BookOfVirtues>() }; //Dark Blue
+			rarities2 = new int[] { ItemType<RefractingCrystal>(), ItemType<CursedApple>(), ItemType<RubyKeystone>() }; //Dark Red
+			rarities3 = new int[] { ItemType<TaintedKeystoneShard>(), ItemType<TerminalCluster>() }; //Very Dark gray
+
 			dedicatedOrange = new int[] { ItemType<TerminatorAcorns>(), ItemType<PlasmaCutterButOnAChain>(), ItemType<CoconutGun>() }; //friends
 			dedicatedBlue = new int[] { ItemType<Calculator>() }; //friends 2
 			dedicatedPurpleRed = new int[] { ItemType<CursedApple>(), ItemType<ArcStaffMk2>() }; //James
@@ -275,11 +276,12 @@ namespace SOTS
 			}
 			if (rarities3.Contains(item.type))
 			{
+				Color overrideColor = new Color(50, 50, 50);
 				foreach (TooltipLine line2 in tooltips)
 				{
 					if (line2.mod == "Terraria" && line2.Name == "ItemName")
 					{
-						line2.overrideColor = new Color(50, 50, 50);
+						line2.overrideColor = overrideColor;
 					}
 				}
 			}
@@ -423,7 +425,6 @@ namespace SOTS
 					DataTransferProj proj = (DataTransferProj)projectile.modProjectile;
 					proj.itemsArray[0] = item2.type;
 					proj.itemAmountsArray[0] = item2.stack;
-					proj.itemFrames[0] = Main.itemTexture[item2.type].Height / recipe.requiredItem[0].height;
 					int amountOfUniqueItems = 0;
 					for (int l = 0; l < recipe.requiredItem.Length; l++)
 					{
@@ -441,13 +442,11 @@ namespace SOTS
 						int itemFrames = Main.itemTexture[itemType].Height / recipe.requiredItem[i].height;
 						proj.itemsArray[i + 1] = itemType;
 						proj.itemAmountsArray[i + 1] = itemStack;
-						proj.itemFrames[i + 1] = itemFrames;
 					}
 					for (int i = amountOfUniqueItems; i < 19; i++)
 					{
 						proj.itemsArray[i + 1] = 0;
 						proj.itemAmountsArray[i + 1] = 0;
-						proj.itemFrames[i + 1] = 0;
 					}
 					projectile.netUpdate = true;
 					//Main.NewText("I am Netmode: " + Main.netMode);
@@ -501,7 +500,6 @@ namespace SOTS
 	{
 		public int[] itemsArray = new int[20];
 		public int[] itemAmountsArray = new int[20];
-		public int[] itemFrames = new int[20];
 		public override void SendExtraAI(BinaryWriter writer)
 		{
 			for (int i = 0; i < 20; i++)
@@ -511,10 +509,6 @@ namespace SOTS
 			for (int i = 0; i < 20; i++)
 			{
 				writer.Write(itemAmountsArray[i]);
-			}
-			for (int i = 0; i < 20; i++)
-			{
-				writer.Write(itemFrames[i]);
 			}
 			base.SendExtraAI(writer);
         }
@@ -527,10 +521,6 @@ namespace SOTS
 			for (int i = 0; i < 20; i++)
 			{
 				itemAmountsArray[i] = reader.ReadInt32();
-			}
-			for (int i = 0; i < 20; i++)
-			{
-				itemFrames[i] = reader.ReadInt32();
 			}
 			base.ReceiveExtraAI(reader);
         }
@@ -592,11 +582,10 @@ namespace SOTS
 			TransmutationAltarStorage entity = (TransmutationAltarStorage)TileEntity.ByID[(int)projectile.ai[0]];
 			if(Main.netMode != 1)
             {
-				if (!checkArraySame(entity.itemAmountsArray, itemAmountsArray) || !checkArraySame(entity.itemsArray, itemsArray) || !checkArraySame(entity.itemFrames, itemFrames))
+				if (!checkArraySame(entity.itemAmountsArray, itemAmountsArray) || !checkArraySame(entity.itemsArray, itemsArray))
 				{
 					entity.itemAmountsArray = itemAmountsArray;
 					entity.itemsArray = itemsArray;
-					entity.itemFrames = itemFrames;
 					entity.netUpdate = true;
 
 					Vector2 dynamicAddition = new Vector2(3, 0).RotatedBy(MathHelper.ToRadians(Main.GlobalTime * 40));
@@ -612,7 +601,7 @@ namespace SOTS
 					}
 					Vector2 pos = new Vector2((float)(entity.Position.X * 16 + 24), (float)(entity.Position.Y * 16 + 24));
 					pos.Y -= 80 + dynamicAddition.Y + (totalItems + entity.itemAmountsArray[0]) * 0.5f;
-					Projectile.NewProjectile(pos, Vector2.Zero, mod.ProjectileType("UndoParticles"), 0, 1, Main.myPlayer, entity.Position.X, entity.Position.Y);
+					Projectile.NewProjectile(pos, Vector2.Zero, ModContent.ProjectileType<UndoParticles>(), 0, 1, Main.myPlayer, entity.Position.X, entity.Position.Y);
 				}
             }
 		}
