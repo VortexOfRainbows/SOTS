@@ -48,7 +48,8 @@ namespace SOTS
 			{
 				SOTS.primitives.DrawTargetProj(Main.spriteBatch);
 			}
-			orig(self);
+			if(self != null)
+				orig(self);
 		}
 
 		private static void Main_DrawNPCs(On.Terraria.Main.orig_DrawNPCs orig, Main self, bool behindTiles)
