@@ -48,7 +48,7 @@ namespace SOTS
 			{
 				SOTS.primitives.DrawTargetProj(Main.spriteBatch);
 			}
-			if(self != null)
+			if(self != null && orig != null)
 				orig(self);
 		}
 
@@ -58,7 +58,8 @@ namespace SOTS
 			{
 				SOTS.primitives.DrawTargetNPC(Main.spriteBatch);
 			}
-			orig(self, behindTiles);
+			if (self != null && orig != null)
+				orig(self, behindTiles);
 		}
 
 		private static void Main_DrawPlayers(On.Terraria.Main.orig_DrawPlayers orig, Main self)
