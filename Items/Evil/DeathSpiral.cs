@@ -20,7 +20,7 @@ namespace SOTS.Items.Evil
 		{
 			item.damage = 50;
 			item.width = 52;
-			item.height = 54;
+			item.height = 52;
 			item.useStyle = ItemUseStyleID.HoldingOut;
 			item.useAnimation = 36;
 			item.useTime = 36;

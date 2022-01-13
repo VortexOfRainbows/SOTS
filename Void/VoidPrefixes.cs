@@ -13,7 +13,7 @@ namespace SOTS.Void
 	{
 		private readonly byte _power;
 		public override float RollChance(Item item)
-			=> 4f / _power;
+			=> 12f / _power;
 		public override bool CanRoll(Item item)
 			=> true;
 		public override PrefixCategory Category => PrefixCategory.Accessory;
@@ -36,6 +36,36 @@ namespace SOTS.Void
         public override void ModifyValue(ref float valueMult)
 		{
 			float multiplier = 1.0f + _power / 50f;
+			valueMult *= multiplier;
+		}
+	}
+	public class VoidGainPrefix : ModPrefix
+	{
+		private readonly byte _power;
+		public override float RollChance(Item item)
+			=> 0.4f / _power;
+		public override bool CanRoll(Item item)
+			=> true;
+		public override PrefixCategory Category => PrefixCategory.Accessory;
+		public VoidGainPrefix() { }
+		public VoidGainPrefix(byte power)
+		{
+			_power = power;
+		}
+		public override bool Autoload(ref string name)
+		{
+			if (!base.Autoload(ref name))
+			{
+				return false;
+			}
+			mod.AddPrefix("Chained", new VoidGainPrefix(1));
+			mod.AddPrefix("Soulbound", new VoidGainPrefix(2));
+			return false;
+		}
+		public override void Apply(Item item) => item.GetGlobalItem<PrefixItem>().extraVoidGain = _power;
+		public override void ModifyValue(ref float valueMult)
+		{
+			float multiplier = 1.0f + 0.4f * _power;
 			valueMult *= multiplier;
 		}
 	}

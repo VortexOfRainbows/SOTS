@@ -37,12 +37,12 @@ namespace SOTS
 	public class PrefixItem : GlobalItem
 	{
 		public override bool InstancePerEntity => true;
-		//public string originalOwner;
 		public int extraVoid;
+		public int extraVoidGain;
 		public float voidCostMultiplier;
 		public PrefixItem()
 		{
-			//originalOwner = "";
+			extraVoidGain = 0;
 			extraVoid = 0;
 			voidCostMultiplier = 1;
 		}
@@ -50,6 +50,7 @@ namespace SOTS
 		{
 			PrefixItem myClone = (PrefixItem)base.Clone(item, itemClone);
 			myClone.voidCostMultiplier = voidCostMultiplier;
+			myClone.extraVoidGain = extraVoidGain;
 			myClone.extraVoid = extraVoid;
 			return myClone;
 		}
@@ -64,6 +65,11 @@ namespace SOTS
 				VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 				voidPlayer.voidMeterMax2 += extraVoid;
 			}
+			if (extraVoidGain > 0 && (item.prefix == mod.GetPrefix("Chained").Type || item.prefix == mod.GetPrefix("Soulbound").Type))
+			{
+				VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
+				voidPlayer.bonusVoidGain += extraVoidGain;
+			}
 		}
 		public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
 		{
@@ -73,6 +79,15 @@ namespace SOTS
 				if (extraVoid > 0 && (item.prefix == mod.GetPrefix("Awakened").Type || item.prefix == mod.GetPrefix("Omniscient").Type))
 				{
 					TooltipLine line = new TooltipLine(mod, "PrefixAwakened", "+" + voidTooltip + " max void")
+					{
+						isModifier = true
+					};
+					tooltips.Add(line);
+				}
+				if (extraVoidGain > 0 && (item.prefix == mod.GetPrefix("Chained").Type || item.prefix == mod.GetPrefix("Soulbound").Type))
+				{
+					voidTooltip = extraVoidGain;
+					TooltipLine line = new TooltipLine(mod, "PrefixAwakened", "+" + voidTooltip + " void gain")
 					{
 						isModifier = true
 					};
@@ -150,13 +165,13 @@ namespace SOTS
 		}*/
 		public override void NetSend(Item item, BinaryWriter writer)
 		{
-			//writer.Write(originalOwner);
+			writer.Write(extraVoidGain);
 			writer.Write(extraVoid);
 			writer.Write(voidCostMultiplier);
 		}
 		public override void NetReceive(Item item, BinaryReader reader)
 		{
-			//originalOwner = reader.ReadString();
+			extraVoidGain = reader.ReadInt32();
 			extraVoid = reader.ReadInt32();
 			voidCostMultiplier = reader.ReadSingle();
 		}

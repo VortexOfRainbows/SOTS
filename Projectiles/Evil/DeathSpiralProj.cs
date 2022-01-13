@@ -135,10 +135,9 @@ namespace SOTS.Projectiles.Evil
         {
             Player player = Main.player[projectile.owner];
             Texture2D texture = Main.projectileTexture[projectile.type];
+            Texture2D texture1 = mod.GetTexture("Projectiles/Evil/DeathSpiralBlade");
             Color color = lightColor;
             // Some rectangle presets for different parts of the chain.
-            Rectangle chainHandle = new Rectangle(0, 2, texture.Width, 40);
-            Rectangle chainHead = new Rectangle(0, 90, texture.Width, texture.Height - 90);
 
             // If the chain isn't moving, stop drawing all of its components.
             if (projectile.velocity == Vector2.Zero)
@@ -151,10 +150,11 @@ namespace SOTS.Projectiles.Evil
             DrawLightning();
             Vector2 startPosition = projectile.Center;
             Vector2 yOffset = new Vector2(0, player.gfxOffY);
+            float rotation = MathHelper.ToRadians(135) + projectile.rotation;
             if (projectile.ai[0] != -1)
-                spriteBatch.Draw(texture, startPosition - Main.screenPosition + yOffset, chainHandle, color, projectile.rotation, chainHandle.Size() / 2f, projectile.scale, SpriteEffects.None, 0f);
+                spriteBatch.Draw(texture, startPosition - Main.screenPosition + yOffset, null, color, rotation, texture.Size() / 2f, projectile.scale, SpriteEffects.None, 0f);
             Vector2 chainEnd = projectile.Center + projectile.velocity;
-            spriteBatch.Draw(texture, chainEnd - Main.screenPosition + yOffset, chainHead, Lighting.GetColor((int)chainEnd.X / 16, (int)chainEnd.Y / 16), projectile.rotation, chainHead.Size() / 2f, projectile.scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(texture1, chainEnd - Main.screenPosition + yOffset, null, Lighting.GetColor((int)chainEnd.X / 16, (int)chainEnd.Y / 16), rotation, texture1.Size() / 2f, projectile.scale, SpriteEffects.None, 0f);
             return false;
         }
         public void DrawLightning()

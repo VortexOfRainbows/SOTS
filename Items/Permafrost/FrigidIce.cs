@@ -15,6 +15,9 @@ namespace SOTS.Items.Permafrost
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = false;
 			Main.tileSpelunker[Type] = true;
+			Main.tileShine[Type] = 1000;
+			Main.tileShine2[Type] = true;
+			Main.tileValue[Type] = 420; //above gold
 			minPick = 45; //requires silver to mine
 			mineResist = 0.5f;
 			dustType = ModContent.DustType<ModIceDust>();

@@ -329,7 +329,8 @@ namespace SOTS.NPCs
 						if (npc.type == ModContent.NPCType<OtherworldlyConstructHead2>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead>())
 						{
 							if (npc.type == ModContent.NPCType<OtherworldlyConstructHead2>())
-								amt = Main.rand.Next(5, 16);
+								amt = Main.rand.Next(5, 11);
+							type = ModContent.ItemType<DullPlating>();
 						}
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, type, amt);
 					}

@@ -25,8 +25,7 @@ Mid Priority:
 	4. True Phaseblade -> Starward Sword
 	5. Chaos Chamber
 2. Construct Items:
-	1. Death Spiral resprite
-	2. Inferno Construct: Incinerator Glove (Magic, Void). Generate a close ranged orb of plasma that you can launch a short distance
+	1. Inferno Construct: Incinerator Glove (Magic, Void). Generate a close ranged orb of plasma that you can launch a short distance
 3. Mobile Fortress Generator: upgrade to platform generator. Base its visuals off of Ectoplasm and Dungeon Brick.
 
 Low Priority:
@@ -35,9 +34,14 @@ Low Priority:
 3. Void Bar strike the player during void shock
 4. Fix Ruby Keystone cheese, Teratoma cheese
 5. Fix Planetarium sky island spawning in tandum
+6. Sloped glowmasks to plating tiles
 
 1/12/22
-1. (Hopefully) fixed primitives detours crash
+1. (Failed?) to fixed primitives detours crash
+2. Awakened/Omniscient are 200% more common (0.2, 0.1) -> (0.6, 0.3)
+3. Added new reforges, Chained/Soulbound (0.4, 0.2)
+	1. Increases void gain by (1, 2)
+4. 
 
 1/10/22
 1. Added Terminal Cluster (elemental cluster)
