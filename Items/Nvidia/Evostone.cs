@@ -15,7 +15,7 @@ namespace SOTS.Items.Nvidia
 			Main.tileBlendAll[Type] = true;
 			dustType = 37; //obsidian
 			drop = ModContent.ItemType<Evostone>();
-			AddMapEntry(new Color(57, 46, 76));
+			AddMapEntry(new Color(31, 39, 57));
 		}
 	}
 	public class Evostone : ModItem

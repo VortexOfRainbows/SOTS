@@ -19,7 +19,7 @@ namespace SOTS.Items.Permafrost
 			mineResist = 2.0f;
 			dustType = ModContent.DustType<ModIceDust>();
 			drop = ModContent.ItemType<HardIceBrick>();
-			AddMapEntry(new Color(198, 249, 251));
+			AddMapEntry(new Color(148, 179, 240));
 			soundType = SoundID.Tink;
 			soundStyle = 2;
 		}
@@ -41,7 +41,7 @@ namespace SOTS.Items.Permafrost
 		public override void SetDefaults()
 		{
 			Main.wallHouse[Type] = false;
-			AddMapEntry(new Color(144, 181, 181));
+			AddMapEntry(new Color(80, 35, 180));
 			dustType = ModContent.DustType<ModIceDust>();
 			drop = ModContent.ItemType<HardIceBrickWall>();
 		}

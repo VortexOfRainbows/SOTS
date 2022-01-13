@@ -23,7 +23,7 @@ namespace SOTS.Items.Permafrost
 			dustType = DustID.Ice; 
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Frost Artifact");		
-			AddMapEntry(new Color(150, 240, 255), name);
+			AddMapEntry(new Color(135, 150, 170), name);
 			Main.tileShine2[Type] = true;
 			Main.tileShine[Type] = 1200;
 		}
