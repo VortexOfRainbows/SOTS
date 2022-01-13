@@ -33,6 +33,10 @@ Low Priority:
 1. Archaelogist NPC
 2. Accessory Pets to use own dye slots.
 3. Void Bar strike the player during void shock
+4. Fix Ruby Keystone cheese, Teratoma cheese
+
+1/12/22
+1. (Hopefully) fixed primitives detours crash
 
 1/10/22
 1. Added Terminal Cluster (elemental cluster)

@@ -34,7 +34,7 @@ namespace SOTS.Items.Potions
 		}
 		public override void SetDefaults()
 		{
-			item.width = 16;
+			item.width = 20;
 			item.height = 32;
             item.value = Item.sellPrice(0, 1, 0, 0);
 			item.rare = ItemRarityID.Orange;

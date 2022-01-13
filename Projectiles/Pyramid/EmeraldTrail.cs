@@ -25,6 +25,7 @@ namespace SOTS.Projectiles.Pyramid
 			projectile.ai[1] = -1;
 			projectile.usesLocalNPCImmunity = true;
 			projectile.localNPCHitCooldown = 15;
+			projectile.ownerHitCheck = true;
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
