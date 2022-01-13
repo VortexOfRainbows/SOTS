@@ -44,7 +44,7 @@ namespace SOTS
 		}
 		private static void Main_DrawProjectiles(On.Terraria.Main.orig_DrawProjectiles orig, Main self)
 		{
-			if (!Main.dedServ)
+			if (SOTS.primitives != null)
 			{
 				SOTS.primitives.DrawTargetProj(Main.spriteBatch);
 			}
@@ -54,7 +54,7 @@ namespace SOTS
 
 		private static void Main_DrawNPCs(On.Terraria.Main.orig_DrawNPCs orig, Main self, bool behindTiles)
 		{
-			if (!Main.dedServ)
+			if (SOTS.primitives != null)
 			{
 				SOTS.primitives.DrawTargetNPC(Main.spriteBatch);
 			}
