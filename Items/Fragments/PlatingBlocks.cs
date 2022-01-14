@@ -51,33 +51,17 @@ namespace SOTS.Items.Fragments
 		}
 		public void DrawLights(int i, int j, SpriteBatch spriteBatch)
 		{
-			float uniquenessCounter = Main.GlobalTime * -100 + (i + j) * 5;
 			Tile tile = Main.tile[i, j];
-			Texture2D texture = glowTexture;
-			Rectangle frame = new Rectangle(tile.frameX, tile.frameY, 16, 16);
 			Color color;
 			color = WorldGen.paintColor((int)Main.tile[i, j].color()) * (100f / 255f);
 			color.A = 0;
+			float uniquenessCounter = Main.GlobalTime * -100 + (i + j) * 5;
 			float alphaMult = 0.55f + 0.45f * (float)Math.Sin(MathHelper.ToRadians(uniquenessCounter));
-			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
-			if (Main.drawToScreen)
-			{
-				zero = Vector2.Zero;
-			}
 			for (int k = 0; k < 3; k++)
 			{
-				Vector2 pos = new Vector2((i * 16 - (int)Main.screenPosition.X), (j * 16 - (int)Main.screenPosition.Y)) + zero;
 				Vector2 offset = new Vector2(Main.rand.NextFloat(-1, 1f), Main.rand.NextFloat(-1, 1f)) * 0.25f * k;
-				Main.spriteBatch.Draw(texture, pos + offset, frame, color * alphaMult * 0.6f, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+				SOTSTile.DrawSlopedGlowMask(i, j, tile.type, glowTexture, color * alphaMult * 0.6f, offset);
 			}
-		}
-		public sealed override bool CanExplode(int i, int j)
-		{
-			return false;
-		}
-		public sealed override bool Slope(int i, int j)
-		{
-			return false;
 		}
 	}
 	public class NaturePlating : ModItem

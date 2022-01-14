@@ -14,6 +14,7 @@ using SOTS.Items.Tide;
 using SOTS.Items.Permafrost;
 using SOTS.Items.Otherworld.Furniture;
 using SOTS.Items.Otherworld.Blocks;
+using SOTS.Items.Earth;
 
 namespace SOTS
 {
@@ -26,9 +27,18 @@ namespace SOTS
         }
         public override void RandomUpdate(int i, int j, int type)
         {
-            if(type == TileType<CursedTumorTile>() || type == TileType<MalditeTile>())
+            if(type == TileType<CursedTumorTile>() || type == TileType<MalditeTile>() || type == TileType<VibrantOreTile>())
             {
-                if (WorldGen.genRand.NextBool(60))
+                int rate = 60;
+                int shardType = TileType<RoyalRubyShardTile>();
+                int nearbyRadius = 6;
+                if (type == TileType<VibrantOreTile>())
+                {
+                    rate = 50;
+                    nearbyRadius = 2;
+                    shardType = TileType<VibrantCrystalTile>();
+                }
+                if (WorldGen.genRand.NextBool(rate))
                 {
                     int side = WorldGen.genRand.Next(4);
                     int x = 0;
@@ -51,12 +61,11 @@ namespace SOTS
                     if (!Main.tile[i + x, j + y].active())
                     {
                         int amt = 0;
-                        int nearbyRadius = 6;
                         for (var l = i - nearbyRadius; l <= i + nearbyRadius; l++)
                         {
                             for (var m = j - nearbyRadius; m <= j + nearbyRadius; m++)
                             {
-                                if (Main.tile[l, m].active() && Main.tile[l, m].type == TileType<RoyalRubyShardTile>())
+                                if (Main.tile[l, m].active() && Main.tile[l, m].type == shardType)
                                 {
                                     amt++;
                                 }
@@ -65,7 +74,7 @@ namespace SOTS
 
                         if (amt < 2)
                         {
-                            WorldGen.PlaceTile(i + x, j + y, TileType<RoyalRubyShardTile>(), true, false, -1, 0);
+                            WorldGen.PlaceTile(i + x, j + y, shardType, true, false, -1, 0);
                             Main.tile[i + x, j + y].frameX = (short)(WorldGen.genRand.Next(18) * 18);
                             NetMessage.SendTileSquare(-1, i + x, j + y, 1, TileChangeType.None);
                         }
@@ -165,7 +174,7 @@ namespace SOTS
                 HardlightBlockTile.Draw(i - 1, j, spriteBatch);
             base.PostDraw(i, j, type, spriteBatch);
         }
-        public static void DrawSlopedGlowMask(int i, int j, int type, Texture2D texture, Color drawColor)
+        public static void DrawSlopedGlowMask(int i, int j, int type, Texture2D texture, Color drawColor, Vector2 positionOffset)
         {
             Tile tile = Main.tile[i, j];
             int frameX = tile.frameX;

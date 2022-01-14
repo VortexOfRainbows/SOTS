@@ -34,14 +34,18 @@ Low Priority:
 3. Void Bar strike the player during void shock
 4. Fix Ruby Keystone cheese, Teratoma cheese
 5. Fix Planetarium sky island spawning in tandum
-6. Sloped glowmasks to plating tiles
+7. Finish Vibrant Geodes
+
+1/13/22
+1. Fragment Plating and Planetarium Plating can be sloped now (working glowmasks)
+2. Added Vibrant ore dust, vibrant ore crystals, vibrant ore wall
 
 1/12/22
 1. (Failed?) to fixed primitives detours crash
 2. Awakened/Omniscient are 200% more common (0.2, 0.1) -> (0.6, 0.3)
 3. Added new reforges, Chained/Soulbound (0.4, 0.2)
 	1. Increases void gain by (1, 2)
-4. 
+4. Vibrant Ore WIP
 
 1/10/22
 1. Added Terminal Cluster (elemental cluster)
