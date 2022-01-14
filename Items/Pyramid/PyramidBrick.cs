@@ -61,7 +61,7 @@ namespace SOTS.Items.Pyramid
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
 			drop = ModContent.ItemType<PyramidBrick>();
-			AddMapEntry(new Color(190, 160, 95));
+			AddMapEntry(new Color(203, 191, 112));
 			mineResist = 1.0f;
 			minPick = 0;
 			soundType = SoundID.Tink;

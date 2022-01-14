@@ -69,7 +69,7 @@ namespace SOTS.Items.Pyramid.PyramidWalls
 			Main.wallHouse[Type] = false;
 			dustType = ModContent.DustType<CurseDust3>();
 			drop = ModContent.ItemType<MalditeWall>();
-			AddMapEntry(new Color(22, 15, 30));
+			AddMapEntry(new Color(41, 34, 51));
 		}
 	}
 }

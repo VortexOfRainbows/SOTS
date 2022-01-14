@@ -40,7 +40,7 @@ namespace SOTS.Items.Pyramid
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
 			drop = mod.ItemType("Maldite");
-			AddMapEntry(new Color(35, 30, 45));
+			AddMapEntry(new Color(61, 50, 75));
 			mineResist = 2.25f;
 			soundType = SoundID.Tink;
 			soundStyle = 2;

@@ -36,7 +36,7 @@ namespace SOTS.Items.Pyramid
 			Main.tileMerge[Type][ModContent.TileType<OvergrownPyramidTileSafe>()] = true;
 			Main.tileBrick[Type] = true;
 			Main.tileSolid[Type] = true;
-			Main.tileMergeDirt[Type] = true;
+			Main.tileMergeDirt[Type] = false;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
 			drop = ModContent.ItemType<TrueSandstoneBlock>();

@@ -84,7 +84,7 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
 			TileObjectData.newTile.RandomStyleRange = 2;
 			TileObjectData.newTile.StyleWrapLimit = 2;
 			TileObjectData.addTile(Type);
-			AddMapEntry(new Color(180, 164, 88));
+			AddMapEntry(new Color(156, 137, 78));
 			disableSmartCursor = true;
 			dustType = 32;
 			soundType = SoundID.Dig;
@@ -114,7 +114,7 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
 			TileObjectData.newTile.RandomStyleRange = 3;
 			TileObjectData.newTile.StyleWrapLimit = 3;
 			TileObjectData.addTile(Type);
-			AddMapEntry(new Color(135, 100, 185));
+			AddMapEntry(new Color(78, 55, 108));
 			disableSmartCursor = true;
 			dustType = ModContent.DustType<CurseDust3>();
 			soundType = SoundID.NPCHit;
@@ -144,7 +144,7 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
 			TileObjectData.newTile.RandomStyleRange = 3;
 			TileObjectData.newTile.StyleWrapLimit = 3;
 			TileObjectData.addTile(Type);
-			AddMapEntry(new Color(180, 164, 88));
+			AddMapEntry(new Color(156, 137, 78));
 			disableSmartCursor = true;
 			dustType = 32;
 			soundType = SoundID.Dig;
@@ -174,7 +174,7 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
 			TileObjectData.newTile.RandomStyleRange = 3;
 			TileObjectData.newTile.StyleWrapLimit = 3;
 			TileObjectData.addTile(Type);
-			AddMapEntry(new Color(135, 100, 185));
+			AddMapEntry(new Color(78, 55, 108));
 			disableSmartCursor = true;
 			dustType = ModContent.DustType<CurseDust3>();
 			soundType = SoundID.NPCHit;
@@ -203,7 +203,7 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
 			//TileObjectData.newTile.DrawYOffset = 2;
 			TileObjectData.newTile.StyleWrapLimit = 1;
 			TileObjectData.addTile(Type);
-			AddMapEntry(new Color(135, 100, 185));
+			AddMapEntry(new Color(78, 55, 108));
 			disableSmartCursor = true;
 			dustType = ModContent.DustType<CurseDust3>();
 			soundType = SoundID.NPCHit;
@@ -232,7 +232,7 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
 			//TileObjectData.newTile.DrawYOffset = 2;
 			TileObjectData.newTile.StyleWrapLimit = 1;
 			TileObjectData.addTile(Type);
-			AddMapEntry(new Color(180, 164, 88));
+			AddMapEntry(new Color(156, 137, 78));
 			disableSmartCursor = true;
 			dustType = 32;
 			soundType = SoundID.Dig;
@@ -326,7 +326,7 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
 			TileObjectData.newTile.RandomStyleRange = 3;
 			TileObjectData.newTile.StyleWrapLimit = 3;
 			TileObjectData.addTile(Type);
-			AddMapEntry(new Color(135, 100, 185));
+			AddMapEntry(new Color(78, 55, 108));
 			disableSmartCursor = true;
 			dustType = ModContent.DustType<CurseDust3>();
 			soundType = SoundID.NPCHit;

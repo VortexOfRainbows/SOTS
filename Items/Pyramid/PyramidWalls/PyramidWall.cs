@@ -54,7 +54,7 @@ namespace SOTS.Items.Pyramid.PyramidWalls
 			Main.wallLargeFrames[Type] = (byte)1;
 			dustType = 32;
 			drop = ModContent.ItemType<PyramidWall>();
-			AddMapEntry(new Color(100, 85, 52));
+			AddMapEntry(new Color(89, 81, 38));
 		}
 	}
 	public class UnsafePyramidWallWall : ModWall
@@ -70,7 +70,7 @@ namespace SOTS.Items.Pyramid.PyramidWalls
 			Main.wallHouse[Type] = false;
 			dustType = 32;
 			drop = ModContent.ItemType<PyramidWall>();
-			AddMapEntry(new Color(100, 85, 52));
+			AddMapEntry(new Color(89, 81, 38));
 		}
 	}
 }

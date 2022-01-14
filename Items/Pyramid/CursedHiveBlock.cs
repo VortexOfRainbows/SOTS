@@ -40,7 +40,7 @@ namespace SOTS.Items.Pyramid
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
 			drop = mod.ItemType("CursedHiveBlock");
-			AddMapEntry(new Color(140, 115, 60));
+			AddMapEntry(new Color(135, 120, 158));
 			mineResist = 0.5f;
 			soundType = SoundID.Tink;
 			soundStyle = 2;
@@ -73,7 +73,7 @@ namespace SOTS.Items.Pyramid
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
 			drop = mod.ItemType("CursedHiveBlock");
-			AddMapEntry(new Color(140, 115, 60));
+			AddMapEntry(new Color(135, 120, 158));
 			mineResist = 0.5f;
 			soundType = SoundID.Tink;
 			soundStyle = 2;

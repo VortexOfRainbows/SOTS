@@ -56,7 +56,7 @@ namespace SOTS.Items.Pyramid.PyramidWalls
 			drop = ModContent.ItemType<CursedTumorWall>();
 			soundType = SoundID.NPCHit;
 			soundStyle = 1;
-			AddMapEntry(new Color(50, 45, 90));
+			AddMapEntry(new Color(49, 33, 75));
 		}
 	}
 	public class UnsafeCursedTumorWallWall : ModWall
@@ -73,7 +73,7 @@ namespace SOTS.Items.Pyramid.PyramidWalls
 			drop = ModContent.ItemType<CursedTumorWall>();
 			soundType = SoundID.NPCHit;
 			soundStyle = 1;
-			AddMapEntry(new Color(50, 45, 90));
+			AddMapEntry(new Color(49, 33, 75));
 		}
 	}
 }
