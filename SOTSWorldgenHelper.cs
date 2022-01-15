@@ -16,6 +16,8 @@ using SOTS.Items.Secrets;
 using SOTS.Items.GhostTown;
 using SOTS.Items.Otherworld.Furniture;
 using SOTS.Items.Otherworld.Blocks;
+using SOTS.Items.Earth;
+using SOTS.Items.Nvidia;
 
 namespace SOTS
 {
@@ -7241,5 +7243,52 @@ namespace SOTS
 			else
 				return false;
 		}
-    }
+		public static void GenerateVibrantGeode(int spawnX, int spawnY, int radius = 14, int radiusY = 14, float gemThickMult = 1f, float outThickMult = 1f)
+		{
+			float scale = radiusY / (float)radius;
+			float invertScale = (float)radius / radiusY;
+			for (int x = -radius - 1; x <= radius + 1; x++)
+			{
+				for (float y = -radius - 1; y <= radius + 1; y += invertScale * 0.95f)
+				{
+					float radialMod = Main.rand.NextFloat(3.25f, 3.75f) * outThickMult;
+					float radialMod1 = 2f * outThickMult;
+					float radialMod2 = Main.rand.NextFloat(2.5f, 3.5f) * gemThickMult;
+					double distance = Math.Sqrt(x * x + y * y);
+					int xPosition6 = spawnX + x;
+					int yPosition6 = spawnY + (int)(y * scale);
+					if (distance <= radius + 0.5 + Main.rand.NextFloat(-0.3f, 0.3f))
+					{
+						Tile tile = Framing.GetTileSafely(xPosition6, yPosition6);
+						bool capable = true;
+						if (distance >= radius + 0.5 - radialMod && capable)
+						{
+							WorldGen.PlaceTile(xPosition6, yPosition6, ModContent.TileType<EvostoneTile>());
+							tile.type = (ushort)ModContent.TileType<EvostoneTile>();
+							tile.active(true);
+						}
+						else if (distance >= radius + 0.5 - radialMod - radialMod1 && capable)
+						{
+							WorldGen.PlaceTile(xPosition6, yPosition6, TileID.Marble);
+							tile.wall = (ushort)WallID.Marble;
+							tile.type = TileID.Marble;
+							tile.active(true);
+						}
+						else if(distance >= radius + 0.5 - radialMod - radialMod1 - radialMod2 && capable)
+						{
+							WorldGen.PlaceTile(xPosition6, yPosition6, ModContent.TileType<VibrantOreTile>());
+							tile.wall = (ushort)ModContent.WallType<VibrantWallWall>();
+							tile.type = (ushort)ModContent.TileType<VibrantOreTile>();
+							tile.active(true);
+						}
+						else
+						{
+							tile.wall = (ushort)ModContent.WallType<VibrantWallWall>();
+							tile.active(false);
+						}
+					}
+				}
+			}
+		}
+	}
 }

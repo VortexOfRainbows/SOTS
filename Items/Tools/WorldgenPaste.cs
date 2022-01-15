@@ -2,6 +2,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
+using System;
 
 namespace SOTS.Items.Tools
 {
@@ -105,7 +106,10 @@ namespace SOTS.Items.Tools
 			//PasteCrystal();
 			Vector2 mousePos = Main.MouseWorld;
 			Vector2 tileLocation = mousePos / 16f;
-			SOTSWorldgenHelper.GenerateFrigidIceOre((int)tileLocation.X, (int)tileLocation.Y);
+			int amount = Main.rand.Next(8, 32);
+			float depthMult = amount / 16f;
+			float depth = Main.rand.NextFloat(0.8f, 1.2f) * depthMult;
+			SOTSWorldgenHelper.GenerateVibrantGeode((int)tileLocation.X, (int)tileLocation.Y, amount, (int)(amount * Main.rand.NextFloat(0.9f, 1.1f)), depthMult, (float)Math.Sqrt(depthMult));
 			return true;
 		}
 	}

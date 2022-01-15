@@ -27,6 +27,7 @@ Mid Priority:
 2. Construct Items:
 	1. Inferno Construct: Incinerator Glove (Magic, Void). Generate a close ranged orb of plasma that you can launch a short distance
 3. Mobile Fortress Generator: upgrade to platform generator. Base its visuals off of Ectoplasm and Dungeon Brick.
+4. Geostorm (crystal slam book)
 
 Low Priority:
 1. Archaelogist NPC
@@ -48,6 +49,7 @@ Low Priority:
 	3. Expert hp 220 -> 240
 5. Ghasts can become transparent and go through walls (like Pigron)
 6. Maldite now generates more clumpy and less dithery
+7. Progress on Geode Generation
 
 1/13/22
 1. Fragment Plating and Planetarium Plating can be sloped now (working glowmasks)

@@ -44,7 +44,9 @@ namespace SOTS.Items.Earth
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
 			drop = ModContent.ItemType<VibrantOre>();
-			AddMapEntry(new Color(166, 214, 67));
+			ModTranslation name = CreateMapEntryName();
+			name.SetDefault("Vibrant Ore");
+			AddMapEntry(new Color(166, 214, 67), name);
 			mineResist = 1.6f;
 			minPick = 40; //no copper/tin pickaxe!
 			soundType = SoundID.Tink;
