@@ -41,6 +41,11 @@ Low Priority:
 4. Fix Planetarium sky island spawning in tandum
 5. Finish Vibrant Geodes
 
+1/15/22
+1. Added several precautions to prevent the void bar from going offscreen
+2. Void Bar position can now be modified directly in configs
+3. 
+
 1/14/22
 1. Frigid Ore and Vibrant Ore sounds
 2. Increase vibrant crystal spawnrate

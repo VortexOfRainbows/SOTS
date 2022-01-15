@@ -56,9 +56,29 @@ namespace SOTS.Void
 			}
 
 			if (dragging) {
-				Left.Set(Main.mouseX - offset.X, 0f); // Main.MouseScreen.X and Main.mouseX are the same.
-				Top.Set(Main.mouseY - offset.Y, 0f);
+				float xPos = Main.mouseX - offset.X;
+				float yPos = Main.mouseY - offset.Y;
+				if (type == 0)
+				{
+					xPos = (int)MathHelper.Clamp(xPos, 0, Main.screenWidth - 200);
+					yPos = (int)MathHelper.Clamp(yPos, 0, Main.screenHeight - 30);
+				}
+				Left.Set(xPos, 0f); // Main.MouseScreen.X and Main.mouseX are the same.
+				Top.Set(yPos, 0f);
+				if(type == 0)
+				{
+					VoidPlayer.voidBarOffset = new Vector2((int)Left.Pixels, (int)Top.Pixels);
+					SOTS.Config.voidBarPointX = (int)Left.Pixels;
+					SOTS.Config.voidBarPointY = (int)Top.Pixels;
+				}
 				Recalculate();
+			}
+			else if(type == 0)
+			{
+				float scale = Main.UIScale;
+				SOTS.Config.voidBarPointX = (int)MathHelper.Clamp(SOTS.Config.voidBarPointX, 0, Main.screenWidth - 200);
+				SOTS.Config.voidBarPointY = (int)MathHelper.Clamp(SOTS.Config.voidBarPointY, 0, Main.screenHeight - 30);
+				VoidPlayer.voidBarOffset = new Point(SOTS.Config.voidBarPointX, SOTS.Config.voidBarPointY).ToVector2();
 			}
 
 			// Here we check if the DragableUIPanel is outside the Parent UIElement rectangle. 
@@ -70,10 +90,6 @@ namespace SOTS.Void
 				Top.Pixels = Utils.Clamp(Top.Pixels, 0, parentSpace.Bottom - Height.Pixels);
 				// Recalculate forces the UI system to do the positioning math again.
 				Recalculate();
-			}
-			if(type == 0)
-			{
-				VoidPlayer.voidBarOffset = new Vector2(Left.Pixels, Top.Pixels);
 			}
 		}
     }

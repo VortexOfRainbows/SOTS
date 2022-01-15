@@ -1,3 +1,4 @@
+using Microsoft.Xna.Framework;
 using System.ComponentModel;
 using Terraria.ModLoader.Config;
 
@@ -9,14 +10,23 @@ namespace SOTS
 	{
 		public override ConfigScope Mode => ConfigScope.ClientSide;
 
-		[Header("Graphics Settings")]
-		[Label("Performance Mode")]
-		[Tooltip("Reduces various visual effects in order to increase framerate\nMostly affects boss-related visuals")]
-		[BackgroundColor(110, 80, 150, 192)]
-		[DefaultValue(false)]
-		public bool lowFidelityMode { get; set; }
-
 		[Header("UI")]
+		[Label("Void Bar X")]
+		[Tooltip("The Void Bar's horizontal position on the screen\nMeasured in pixels from left")]
+		[BackgroundColor(110, 80, 150, 192)]
+		[Increment(5)]
+		[Range(0, 3200)]
+		[DefaultValue(810)]
+		public int voidBarPointX;
+
+		[Label("Void Bar Y")]
+		[Tooltip("The Void Bar's vertical position on the screen\nMeasured in pixels from top")]
+		[BackgroundColor(110, 80, 150, 192)]
+		[Increment(5)]
+		[Range(0, 1600)]
+		[DefaultValue(30)]
+		public int voidBarPointY;
+
 		[Label("Lock Void Bar")]
 		[Tooltip("Prevents the Void Bar from being moved by your cursor")]
 		[BackgroundColor(110, 80, 150, 192)]
@@ -46,5 +56,12 @@ namespace SOTS
 		[BackgroundColor(110, 80, 150, 192)]
 		[DefaultValue(false)]
 		public bool simpleVoidFill { get; set; }
+
+		[Header("Graphics Settings")]
+		[Label("Performance Mode")]
+		[Tooltip("Reduces various visual effects in order to increase framerate\nMostly affects boss-related visuals")]
+		[BackgroundColor(110, 80, 150, 192)]
+		[DefaultValue(false)]
+		public bool lowFidelityMode { get; set; }
 	}
 }

@@ -47,7 +47,7 @@ namespace SOTS.Items.Earth
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Vibrant Ore");
 			AddMapEntry(new Color(166, 214, 67), name);
-			mineResist = 1.6f;
+			mineResist = 1.0f;
 			minPick = 40; //no copper/tin pickaxe!
 			soundType = SoundID.Tink;
 			soundStyle = 2;

@@ -22,7 +22,7 @@ Credits:
 Code, Direction, Art: Vortex#6230
 Music, SFX, Direction, Art: Heart Plus Up!
 Code, Audio Engineering: apotofkoolaid
-Art: Blasfah, Mochi
+Art: Blasfah, Mochi, MrPetkins
 
 (Past Developers)
 Emotional Support, Direction, Art: Coolio
@@ -37,15 +37,14 @@ Minor Art: Naka, DeJuiceTD, Nomis
 
 Update 0.21.0
 -New worldgen structure in the Dungeon
--New Polaris summon shrine
--Added the remaining Constructs
+-New Polaris summon shrine + 2 new ores
+-Added the 3 remaining Constructs, all Hardmode
 -New items, enemies, and secrets
 -Void Reworks, such as enemies being able to deal void damage, and different void regen mechanics
 -Various balance changes
 -Added a config option to lower the intesity of visuals and help with performance. Mainly affects certain boss related visuals
 -Many resprites and visual improvements
--Reorganized many internals
--Bug fixes
+-Internal Optimizaions and Bug fixes
 
 Update 0.20.2
 -A new item, Plasma Accelerator, and reworked Bore Bullets
