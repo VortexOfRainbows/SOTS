@@ -53,6 +53,11 @@ namespace SOTS.Items.Earth
 			soundStyle = 2;
 			dustType = ModContent.DustType<VibrantDust>();
 		}
+		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
+		{
+			SOTS.MergeWithFrame(i, j, Type, TileID.Marble, forceSameDown: false, forceSameUp: false, forceSameLeft: false, forceSameRight: false, resetFrame);
+			return false;
+		}
 		public override bool KillSound(int i, int j)
 		{
 			Vector2 pos = new Vector2(i * 16, j * 16) + new Vector2(8, 8);

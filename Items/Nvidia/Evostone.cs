@@ -19,6 +19,11 @@ namespace SOTS.Items.Nvidia
 			soundType = SoundID.Tink;
 			soundStyle = 2;
 		}
+		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
+		{
+			SOTS.MergeWithFrame(i, j, Type, TileID.Marble, forceSameDown: false, forceSameUp: false, forceSameLeft: false, forceSameRight: false, resetFrame);
+			return false;
+		}
 	}
 	public class Evostone : ModItem
 	{
@@ -29,7 +34,7 @@ namespace SOTS.Items.Nvidia
 		public override void SetDefaults()
 		{
 			item.CloneDefaults(ItemID.StoneBlock);
-			item.rare = ItemRarityID.LightPurple;
+			item.rare = ItemRarityID.Blue;
 			item.createTile = ModContent.TileType<EvostoneTile>();
 		}
 	}
@@ -58,8 +63,16 @@ namespace SOTS.Items.Nvidia
 		public override void SetDefaults()
 		{
 			item.CloneDefaults(ItemID.StoneBlock);
-			item.rare = ItemRarityID.LightPurple;
+			item.rare = ItemRarityID.Blue;
 			item.createTile = ModContent.TileType<EvostoneBrickTile>();
+		}
+		public override void AddRecipes()
+		{
+			ModRecipe recipe = new ModRecipe(mod);
+			recipe.AddIngredient(ModContent.ItemType<Evostone>(), 2);
+			recipe.AddTile(TileID.Hellforge);
+			recipe.SetResult(this, 1);
+			recipe.AddRecipe();
 		}
 	}
 	public class EvostoneBrickWallTile : ModWall
@@ -85,8 +98,21 @@ namespace SOTS.Items.Nvidia
 			item.CloneDefaults(ItemID.StoneWall);
 			item.width = 28;
 			item.height = 28;
-			item.rare = ItemRarityID.LightPurple;
+			item.rare = ItemRarityID.Blue;
 			item.createWall = ModContent.WallType<EvostoneBrickWallTile>();
+		}
+		public override void AddRecipes()
+		{
+			ModRecipe recipe = new ModRecipe(mod);
+			recipe.AddIngredient(ModContent.ItemType<EvostoneBrick>(), 1);
+			recipe.AddTile(TileID.WorkBenches);
+			recipe.SetResult(this, 4);
+			recipe.AddRecipe();
+			recipe = new ModRecipe(mod);
+			recipe.AddIngredient(this, 4);
+			recipe.AddTile(TileID.WorkBenches);
+			recipe.SetResult(ModContent.ItemType<EvostoneBrick>(), 1);
+			recipe.AddRecipe();
 		}
 	}
 	public class DarkShinglesTile : ModTile
@@ -113,8 +139,16 @@ namespace SOTS.Items.Nvidia
 		public override void SetDefaults()
 		{
 			item.CloneDefaults(ItemID.StoneBlock);
-			item.rare = ItemRarityID.LightPurple;
+			item.rare = ItemRarityID.Blue;
 			item.createTile = ModContent.TileType<DarkShinglesTile>();
+		}
+		public override void AddRecipes()
+		{
+			ModRecipe recipe = new ModRecipe(mod);
+			recipe.AddIngredient(ModContent.ItemType<EvostoneBrick>(), 2);
+			recipe.AddTile(TileID.Hellforge);
+			recipe.SetResult(this, 1);
+			recipe.AddRecipe();
 		}
 	}
 }

@@ -56,7 +56,7 @@ namespace SOTS.Items.Pyramid
 		}
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
 		{
-			SOTS.MergeWithFrame(i, j, Type, mod.TileType("CursedTumorTile"), forceSameDown: false, forceSameUp: false, forceSameLeft: false, forceSameRight: false, resetFrame);
+			SOTS.MergeWithFrame(i, j, Type, ModContent.TileType<CursedTumorTile>(), forceSameDown: false, forceSameUp: false, forceSameLeft: false, forceSameRight: false, resetFrame);
 			return false;
 		}
 	}
