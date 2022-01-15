@@ -16,6 +16,8 @@ namespace SOTS.Items.Nvidia
 			dustType = 37; //obsidian
 			drop = ModContent.ItemType<Evostone>();
 			AddMapEntry(new Color(31, 39, 57));
+			soundType = SoundID.Tink;
+			soundStyle = 2;
 		}
 	}
 	public class Evostone : ModItem
@@ -23,7 +25,6 @@ namespace SOTS.Items.Nvidia
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Evostone");
-			Tooltip.SetDefault("");
 		}
 		public override void SetDefaults()
 		{
@@ -43,6 +44,8 @@ namespace SOTS.Items.Nvidia
 			dustType = 37; //obsidian
 			drop = ModContent.ItemType<EvostoneBrick>();
 			AddMapEntry(new Color(46, 63, 77));
+			soundType = SoundID.Tink;
+			soundStyle = 2;
 		}
 	}
 	public class EvostoneBrick : ModItem
@@ -67,6 +70,8 @@ namespace SOTS.Items.Nvidia
 			dustType = 37;
 			drop = ModContent.ItemType<EvostoneBrickWall>();
 			AddMapEntry(new Color(25, 38, 49));
+			soundType = SoundID.Tink;
+			soundStyle = 2;
 		}
 	}
 	public class EvostoneBrickWall : ModItem
@@ -74,7 +79,6 @@ namespace SOTS.Items.Nvidia
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Evostone Brick Wall");
-			Tooltip.SetDefault("");
 		}
 		public override void SetDefaults()
 		{
@@ -96,6 +100,8 @@ namespace SOTS.Items.Nvidia
 			dustType = 37; //obsidian
 			drop = ModContent.ItemType<DarkShingles>();
 			AddMapEntry(new Color(82, 56, 103));
+			soundType = SoundID.Tink;
+			soundStyle = 2;
 		}
 	}
 	public class DarkShingles : ModItem
@@ -103,7 +109,6 @@ namespace SOTS.Items.Nvidia
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Dark Shingles");
-			Tooltip.SetDefault("");
 		}
 		public override void SetDefaults()
 		{

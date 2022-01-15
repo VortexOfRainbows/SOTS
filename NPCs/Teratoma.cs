@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Dusts;
 using SOTS.Items.Banners;
 using SOTS.Items.Pyramid;
 using System;
@@ -39,8 +40,8 @@ namespace SOTS.NPCs
 			npc.damage = 34;
 			npc.value = 600;
 			npc.scale = 1.0f;
-			npc.defense = 16;
-			npc.knockBackResist = 0.25f;
+			npc.defense = 20;
+			npc.knockBackResist = 0.1f;
 			npc.HitSound = SoundID.NPCHit19;
 			npc.DeathSound = SoundID.NPCDeath1;
 			Main.npcFrameCount[npc.type] = 7;
@@ -50,7 +51,7 @@ namespace SOTS.NPCs
 		}
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
-			npc.lifeMax = 220;
+			npc.lifeMax = 240;
             base.ScaleExpertStats(numPlayers, bossLifeScale);
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
@@ -197,7 +198,7 @@ namespace SOTS.NPCs
 				int num = 0;
 				while (num < damage / npc.lifeMax * 40.0)
 				{
-					Dust.NewDust(npc.position, npc.width, npc.height, mod.DustType("CurseDust"), (float)(2.4f * hitDirection), -2f, 0, default, 1.6f);
+					Dust.NewDust(npc.position, npc.width, npc.height, DustType<CurseDust>(), (float)(2.4f * hitDirection), -2f, 0, default, 1.6f);
 					num++;
 				}
 			}
@@ -212,14 +213,14 @@ namespace SOTS.NPCs
 					npc.netUpdate = true;
 					for (int k = 0; k < 45; k++)
 					{
-						Dust.NewDust(npc.position, npc.width, npc.height, mod.DustType("CurseDust"), (float)(3f * hitDirection), -2.4f, 0, default, 1.6f);
+						Dust.NewDust(npc.position, npc.width, npc.height, DustType<CurseDust>(), (float)(3f * hitDirection), -2.4f, 0, default, 1.6f);
 					}
 				}
 				else
 				{
 					for (int k = 0; k < 45; k++)
 					{
-						Dust.NewDust(npc.position, npc.width, npc.height, mod.DustType("CurseDust"), (float)(2.4f * hitDirection), -2.1f, 0, default, 1.6f);
+						Dust.NewDust(npc.position, npc.width, npc.height, DustType<CurseDust>(), (float)(2.4f * hitDirection), -2.1f, 0, default, 1.6f);
 					}
 				}
 			}
@@ -227,7 +228,7 @@ namespace SOTS.NPCs
 		public override void NPCLoot()
 		{
 			if (SOTSWorld.downedCurse && Main.rand.NextBool(3))
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("CursedMatter"), Main.rand.Next(2) + 1);
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<CursedMatter>(), Main.rand.Next(2) + 1);
 			else
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<SoulResidue>(), Main.rand.Next(2) + 1);
 			if(Main.rand.NextBool(2))

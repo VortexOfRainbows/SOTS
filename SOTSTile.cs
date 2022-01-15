@@ -34,8 +34,8 @@ namespace SOTS
                 int nearbyRadius = 6;
                 if (type == TileType<VibrantOreTile>())
                 {
-                    rate = 50;
-                    nearbyRadius = 2;
+                    rate = 10;
+                    nearbyRadius = 1;
                     shardType = TileType<VibrantCrystalTile>();
                 }
                 if (WorldGen.genRand.NextBool(rate))

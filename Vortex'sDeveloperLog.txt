@@ -32,9 +32,22 @@ Low Priority:
 1. Archaelogist NPC
 2. Accessory Pets to use own dye slots.
 3. Void Bar strike the player during void shock
-4. Fix Ruby Keystone cheese, Teratoma cheese
-5. Fix Planetarium sky island spawning in tandum
-7. Finish Vibrant Geodes
+4. Fix Planetarium sky island spawning in tandum
+5. Finish Vibrant Geodes
+
+1/14/22
+1. Frigid Ore and Vibrant Ore sounds
+2. Increase vibrant crystal spawnrate
+3. Pyramid Curse Enemies deal void damage
+	1. Ghast/Maligmar: 8
+	2. Teratoma, Bleeding Ghast, Flaming Ghast: 20
+	3. Projectiles also deal void damage (Ghasts)
+4. Teratoma
+	1. Defense 16 -> 20
+	2. More KB resist
+	3. Expert hp 220 -> 240
+5. Ghasts can become transparent and go through walls (like Pigron)
+6. Maldite now generates more clumpy and less dithery
 
 1/13/22
 1. Fragment Plating and Planetarium Plating can be sloped now (working glowmasks)

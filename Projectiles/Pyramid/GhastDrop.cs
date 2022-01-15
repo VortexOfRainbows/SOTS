@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.NPCs;
+using SOTS.Void;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -103,7 +104,14 @@ namespace SOTS.Projectiles.Pyramid
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
 			if(type != -3)
+			{
+				VoidPlayer.VoidBurn(mod, target, 10, 120);
 				target.AddBuff(type == -1 ? BuffID.CursedInferno : BuffID.Ichor, 240);
+			}
+			else
+			{
+				VoidPlayer.VoidBurn(mod, target, 4, 60);
+			}
         }
         public override void AI()
 		{

@@ -101,6 +101,13 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 }
                 VoidPlayer.VoidDamage(mod, target, vDamage);
             }
+            if(npc.type == NPCType<Teratoma>() || npc.type == NPCType<Maligmor>() || npc.type == NPCType<MaligmorChild>() || npc.type == NPCType<Ghast>() || npc.type == NPCType<BleedingGhast>() || npc.type == NPCType<FlamingGhast>())
+            {
+                int vDamage = 8;
+                if (npc.type == NPCType<Teratoma>() || npc.type == NPCType<BleedingGhast>() || npc.type == NPCType<FlamingGhast>())
+                    vDamage = 20;
+                VoidPlayer.VoidDamage(mod, target, vDamage);
+            }
             base.OnHitPlayer(npc, target, damage, crit);
         }
         public override bool PreAI(NPC npc)
@@ -313,7 +320,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
         }
         public override void OnHitByProjectile(NPC npc, Projectile projectile, int damage, float knockback, bool crit)
         {
-            if (projectile.type == ModContent.ProjectileType<HarvestLock>())
+            if (projectile.type == ProjectileType<HarvestLock>())
             {
                 Player player = Main.player[projectile.owner];
                 VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
@@ -348,16 +355,16 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 else
                     damage *= 2;
             }
-            if (projectile.type == ModContent.ProjectileType<CodeVolley>() || projectile.type == ModContent.ProjectileType<CodeBurst>())
+            if (projectile.type == ProjectileType<CodeVolley>() || projectile.type == ProjectileType<CodeBurst>())
             {
-                if(projectile.type == ModContent.ProjectileType<CodeVolley>())
+                if(projectile.type == ProjectileType<CodeVolley>())
                 {
                     if (Main.rand.NextFloat(100f) < 100 * Math.Pow(0.7f, 1 + DestableCurse * 0.45f) && DestableCurse < 20)
                         DestableCurse++;
                     if (Main.myPlayer == player.whoAmI && Main.netMode == NetmodeID.MultiplayerClient)
                         SendClientChanges(player, npc);
                 }
-                if (projectile.type == ModContent.ProjectileType<CodeBurst>() && projectile.ai[1] != -1)
+                if (projectile.type == ProjectileType<CodeBurst>() && projectile.ai[1] != -1)
                 {
                     if (Main.rand.NextFloat(100f) < 100 * Math.Pow(0.3f, 1 + DestableCurse * 0.45f) && DestableCurse < 20)
                         DestableCurse++;
@@ -365,7 +372,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
                         SendClientChanges(player, npc);
                 }
 
-                if (projectile.type == ModContent.ProjectileType<CodeBurst>() && projectile.ai[1] == -1)
+                if (projectile.type == ProjectileType<CodeBurst>() && projectile.ai[1] == -1)
                 {
                     if (Main.rand.NextFloat(100f) < 100 * Math.Pow(0.25f, 1 + DestableCurse * 0.5f) && DestableCurse < 20)
                         DestableCurse++;
@@ -373,7 +380,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
                         SendClientChanges(player, npc);
                 }
             }
-            if(projectile.type == ModContent.ProjectileType<DeathSpiralProj>())
+            if(projectile.type == ProjectileType<DeathSpiralProj>())
             {
                 bool worm = npc.realLife != -1;
                 float baseChance = 0.2f;
@@ -388,7 +395,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 if (Main.myPlayer == player.whoAmI && Main.netMode == NetmodeID.MultiplayerClient)
                     SendClientChanges(player, npc);
             }
-            if (projectile.type == ModContent.ProjectileType<DestabilizingBeam>() && !hitByRay)
+            if (projectile.type == ProjectileType<DestabilizingBeam>() && !hitByRay)
             {
                 hitByRay = true;
                 DestableCurse += 4;
@@ -410,7 +417,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 else
                     damage *= 2;
             }
-            if (item.type == ModContent.ItemType<PlatinumScythe>() || item.type == ModContent.ItemType<SectionChiefsScythe>())
+            if (item.type == ItemType<PlatinumScythe>() || item.type == ItemType<SectionChiefsScythe>())
             {
                 if (PlatinumCurse < 10)
                     PlatinumCurse++;
@@ -432,7 +439,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 amt += 20;
             if (npc.rarity == 4)
                 amt += 10;
-            if (npc.rarity == 5 || npc.type == ModContent.NPCType<OtherworldlyConstructHead2>())
+            if (npc.rarity == 5 || npc.type == NPCType<OtherworldlyConstructHead2>())
                 amt += 10;
             if (miniBosses.Contains(npc.type))
             {
@@ -477,7 +484,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
             for (int i = 0; i < Main.projectile.Length; i++)
             {
                 Projectile proj = Main.projectile[i];
-                if (proj.friendly && proj.active && proj.type == ModContent.ProjectileType<Projectiles.Minions.FluxSlimeBall>())
+                if (proj.friendly && proj.active && proj.type == ProjectileType<Projectiles.Minions.FluxSlimeBall>())
                 {
                     Projectiles.Minions.FluxSlimeBall slimeBall = proj.modProjectile as Projectiles.Minions.FluxSlimeBall;
                     if (slimeBall != null)
@@ -486,7 +493,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
                         {
                             pinkied = true;
                             Projectile owner = Main.projectile[(int)proj.ai[0]];
-                            if(owner.type == ModContent.ProjectileType<PetPutridPinkyCrystal>())
+                            if(owner.type == ProjectileType<PetPutridPinkyCrystal>())
                             {
                                 Vector2 toOwner = new Vector2(owner.Center.X, owner.position.Y - 8) - new Vector2(npc.Center.X, npc.position.Y + npc.height);
                                 float dist = toOwner.Length();
@@ -498,7 +505,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
                         }
                     }
                 }
-                if (proj.friendly && proj.active && proj.type == ModContent.ProjectileType<Projectiles.Doomhook>())
+                if (proj.friendly && proj.active && proj.type == ProjectileType<Projectiles.Doomhook>())
                 {
                     Projectiles.Doomhook hook = proj.modProjectile as Projectiles.Doomhook;
                     if (hook != null)
@@ -507,7 +514,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
                         {
                             hooked = true;
                             Projectile owner = Main.projectile[(int)proj.ai[0]];
-                            if (owner.type == ModContent.ProjectileType<Projectiles.DoomstickHoldOut>())
+                            if (owner.type == ProjectileType<Projectiles.DoomstickHoldOut>())
                             {
                                 if(!npc.boss)
                                 {
@@ -533,11 +540,11 @@ namespace SOTS.NPCs.ArtificialDebuffs
                         }
                     }
                 }
-                if (!proj.friendly && proj.active && proj.type == ModContent.ProjectileType<Projectiles.Ores.PlatinumDart>() && (int)proj.ai[1] == npc.whoAmI && proj.timeLeft < 8998)
+                if (!proj.friendly && proj.active && proj.type == ProjectileType<Projectiles.Ores.PlatinumDart>() && (int)proj.ai[1] == npc.whoAmI && proj.timeLeft < 8998)
                 {
                     impaledDarts++;
                 }
-                if (!proj.friendly && proj.active && proj.type == ModContent.ProjectileType<Rebar>() && (int)proj.ai[1] == npc.whoAmI && proj.timeLeft < 8998)
+                if (!proj.friendly && proj.active && proj.type == ProjectileType<Rebar>() && (int)proj.ai[1] == npc.whoAmI && proj.timeLeft < 8998)
                 {
                     if (Main.rand.NextBool(3))
                     {
@@ -556,12 +563,12 @@ namespace SOTS.NPCs.ArtificialDebuffs
                         proj.ai[0] = -1;
                     }
                 }
-                if (!proj.friendly && proj.active && (proj.type == ModContent.ProjectileType<FloweringBud>() || proj.type == ModContent.ProjectileType<EvilGrowth>()) && proj.timeLeft < 8998)
+                if (!proj.friendly && proj.active && (proj.type == ProjectileType<FloweringBud>() || proj.type == ProjectileType<EvilGrowth>()) && proj.timeLeft < 8998)
                 {
                     bool contains = false;
                     int index = -1;
                     bool isFlower = false;
-                    if (proj.type == ModContent.ProjectileType<FloweringBud>())
+                    if (proj.type == ProjectileType<FloweringBud>())
                     {
                         FloweringBud flower = proj.modProjectile as FloweringBud;
                         if (flower.effected[npc.whoAmI])
@@ -569,13 +576,13 @@ namespace SOTS.NPCs.ArtificialDebuffs
                         index = flower.enemyIndex;
                         isFlower = true;
                     }
-                    if (proj.type == ModContent.ProjectileType<EvilGrowth>())
+                    if (proj.type == ProjectileType<EvilGrowth>())
                     {
                         EvilGrowth evil = proj.modProjectile as EvilGrowth;
                         if (evil.effected[npc.whoAmI])
                             contains = true;
                     }
-                    if(contains && !npc.immortal && npc.type != ModContent.NPCType<BloomingHook>() && npc.realLife == -1)
+                    if(contains && !npc.immortal && npc.type != NPCType<BloomingHook>() && npc.realLife == -1)
                     {
                         if(isFlower)
                         {
@@ -635,7 +642,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
             float dartVeloMult = 1 / (1 + dartMult * impaledDarts);
             float flowerVeloMult = 1 / (1 + flowerMult * flowered);
             float finalSlowdown = 1f;
-            if(npc.HasBuff(ModContent.BuffType<WebbedNPC>()) || darkArmed)
+            if(npc.HasBuff(BuffType<WebbedNPC>()) || darkArmed)
             {
                 if(!npc.boss)
                     finalSlowdown *= 0.2f;
@@ -676,19 +683,19 @@ namespace SOTS.NPCs.ArtificialDebuffs
             {
                 npc.lifeRegen -= 8;
             }
-            if(npc.HasBuff(ModContent.BuffType<Infected>()))
+            if(npc.HasBuff(BuffType<Infected>()))
             {
                 npc.lifeRegen -= 24;
                 damage += 1;
             }
-            if (npc.HasBuff(ModContent.BuffType<PharaohsCurse>()))
+            if (npc.HasBuff(BuffType<PharaohsCurse>()))
             {
                 npc.lifeRegen -= 20;
                 damage += 1;
                 if(Main.rand.NextBool(3))
                 {
                     Vector2 circular = new Vector2(4, 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)));
-                    Dust dust = Dust.NewDustDirect(npc.position - new Vector2(5), npc.width, npc.height, ModContent.DustType<CurseDust>());
+                    Dust dust = Dust.NewDustDirect(npc.position - new Vector2(5), npc.width, npc.height, DustType<CurseDust>());
                     dust.velocity *= 1.25f;
                     dust.velocity += 1f * circular.SafeNormalize(Vector2.Zero);
                     dust.scale = 1.35f;
@@ -708,32 +715,32 @@ namespace SOTS.NPCs.ArtificialDebuffs
             for (int i = 0; i < Main.maxNPCs; i++)
             {
                 Projectile proj = Main.projectile[i];
-                if (!proj.friendly && proj.active && (proj.type == ModContent.ProjectileType<FloweringBud>() || proj.type == ModContent.ProjectileType<EvilGrowth>()) && proj.timeLeft < 8998)
+                if (!proj.friendly && proj.active && (proj.type == ProjectileType<FloweringBud>() || proj.type == ProjectileType<EvilGrowth>()) && proj.timeLeft < 8998)
                 {
                     bool contains = false;
-                    if(proj.type == ModContent.ProjectileType<FloweringBud>())
+                    if(proj.type == ProjectileType<FloweringBud>())
                     {
                         FloweringBud flower = proj.modProjectile as FloweringBud;
                         if (flower.effected[npc.whoAmI])
                             contains = true;
                     }
-                    if(proj.type == ModContent.ProjectileType<EvilGrowth>())
+                    if(proj.type == ProjectileType<EvilGrowth>())
                     {
                         EvilGrowth evil = proj.modProjectile as EvilGrowth;
                         if (evil.effected[npc.whoAmI])
                             contains = true;
                     }
-                    if (contains && npc.type != ModContent.NPCType<BloomingHook>() && npc.realLife == -1)
+                    if (contains && npc.type != NPCType<BloomingHook>() && npc.realLife == -1)
                     {
                         Texture2D texture2 = mod.GetTexture("Projectiles/BiomeChest/TangleGrowthVine");
                         Color color = Color.White;
-                        if (proj.type == ModContent.ProjectileType<EvilGrowth>())
+                        if (proj.type == ProjectileType<EvilGrowth>())
                         {
                             color = new Color(VoidPlayer.EvilColor.R, VoidPlayer.EvilColor.G, VoidPlayer.EvilColor.B);
                             texture2 = mod.GetTexture("Projectiles/Evil/EvilArm");
                         }
                         float scale = proj.scale;
-                        if (proj.type == ModContent.ProjectileType<FloweringBud>())
+                        if (proj.type == ProjectileType<FloweringBud>())
                             scale *= 0.7f;
                         else
                         {
@@ -745,7 +752,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
                         for (int k = 0; k < max; k++)
                         {
                             drawPos = npc.Center + -betweenPositions * (k / max) - Main.screenPosition;
-                            if (k == 0 && proj.type == ModContent.ProjectileType<EvilGrowth>())
+                            if (k == 0 && proj.type == ProjectileType<EvilGrowth>())
                             {
                                 Texture2D texture3 = mod.GetTexture("Projectiles/Evil/EvilHand");
                                 Main.spriteBatch.Draw(texture3, drawPos, null, color, betweenPositions.ToRotation() + MathHelper.Pi/2, new Vector2(texture3.Width / 2, texture3.Height / 2), scale * 1.4f, SpriteEffects.None, 0f);
@@ -758,9 +765,9 @@ namespace SOTS.NPCs.ArtificialDebuffs
                     }
                 }
             }
-            if(npc.HasBuff(ModContent.BuffType<Infected>()) && !npc.immortal)
+            if(npc.HasBuff(BuffType<Infected>()) && !npc.immortal)
             {
-                Texture2D texture = Main.projectileTexture[ModContent.ProjectileType<Pathogen>()];
+                Texture2D texture = Main.projectileTexture[ProjectileType<Pathogen>()];
                 Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
                 Color color;
                 float dimensions = (float)Math.Sqrt(npc.width * npc.height);
@@ -785,9 +792,9 @@ namespace SOTS.NPCs.ArtificialDebuffs
         }
         public override void HitEffect(NPC npc, int hitDirection, double damageTaken)
         {
-            if (npc.HasBuff(ModContent.BuffType<Infected>()) && npc.life <= 0)
+            if (npc.HasBuff(BuffType<Infected>()) && npc.life <= 0)
             {
-                int index = npc.FindBuffIndex(ModContent.BuffType<Infected>());
+                int index = npc.FindBuffIndex(BuffType<Infected>());
                 int time = npc.buffTime[index];
                 int damage = time / 60;
                 Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 14, 0.6f);
@@ -796,16 +803,16 @@ namespace SOTS.NPCs.ArtificialDebuffs
                     for (int i = 0; i < 3; i++)
                     {
                         Vector2 circular = new Vector2(3, 0).RotatedBy(MathHelper.ToRadians(Main.rand.Next(360)));
-                        Projectile.NewProjectile(npc.Center.X, npc.Center.Y, circular.X, circular.Y, ModContent.ProjectileType<Pathogen>(), damage, 0, Main.myPlayer, -1);
+                        Projectile.NewProjectile(npc.Center.X, npc.Center.Y, circular.X, circular.Y, ProjectileType<Pathogen>(), damage, 0, Main.myPlayer, -1);
                     }
                 }
             }
-            if (npc.HasBuff(ModContent.BuffType<PharaohsCurse>()) && npc.life <= 0)
+            if (npc.HasBuff(BuffType<PharaohsCurse>()) && npc.life <= 0)
             {
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     Vector2 circular = new Vector2(4.5f, 0).RotatedBy(MathHelper.ToRadians(Main.rand.Next(360)));
-                    Projectile.NewProjectile(npc.Center.X, npc.Center.Y, circular.X, circular.Y, ModContent.ProjectileType<CurseGhost>(), (int)(npc.lifeMax * 0.1f) + 10, 0, Main.myPlayer, -1);
+                    Projectile.NewProjectile(npc.Center.X, npc.Center.Y, circular.X, circular.Y, ProjectileType<CurseGhost>(), (int)(npc.lifeMax * 0.1f) + 10, 0, Main.myPlayer, -1);
                 }
             }
             base.HitEffect(npc, hitDirection, damageTaken);
@@ -827,12 +834,12 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 for(int i = 0; i < Main.maxItems; i++)
                 {
                     Item item = Main.item[i];
-                    if(item.type == ModContent.ItemType<HealPack>() || item.type == ModContent.ItemType<ManaPack>())
+                    if(item.type == ItemType<HealPack>() || item.type == ItemType<ManaPack>())
                     {
                         if(item.active)
                             packCount++;
                     }
-                    if (item.type == ModContent.ItemType<BaguetteCrumb>())
+                    if (item.type == ItemType<BaguetteCrumb>())
                     {
                         if (item.active)
                             baguetteCount++;
@@ -859,11 +866,11 @@ namespace SOTS.NPCs.ArtificialDebuffs
                             int rand = Main.rand.Next(4);
                             if (player.statLifeMax2 > player.statLife)
                                 for(int j = 0; j < rand; j++)
-                                    Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<HealPack>(), 1);
+                                    Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<HealPack>(), 1);
                             rand = 3 - rand;
                             if (player.statManaMax2 > player.statMana)
                                 for (int j = 0; j < rand; j++)
-                                    Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<ManaPack>(), 1);
+                                    Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<ManaPack>(), 1);
                         }
                         if (SOTSPlayer.ModPlayer(player).baguetteDrops && baguetteCount < 40)
                         {
@@ -875,7 +882,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
                             if (rand >= 3)
                                 rand += Main.rand.Next(5) / 4;
                             for (int j = 0; j < rand; j++)
-                                Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<BaguetteCrumb>(), 1);
+                                Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<BaguetteCrumb>(), 1);
                         }
                     }
                 }

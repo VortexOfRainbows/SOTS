@@ -6863,10 +6863,10 @@ namespace SOTS
 						int malditePosY = tileY + y;
 						float distFromCenter = (float)Math.Sqrt(x * x + y * y);
 						int distRand = (int)distFromCenter;
-						if (distFromCenter <= radiusMaldite + 0.5f && WorldGen.genRand.Next(100) > 4 + distRand * 4)
+						if (distFromCenter <= radiusMaldite + 0.5f && WorldGen.genRand.Next(100) > 2 + distRand * 2)
 						{
 							Tile tileRad = Framing.GetTileSafely(malditePosX, malditePosY);
-							bool capable = tileRad.type == ModContent.TileType<CursedTumorTile>() || (tileRad.type == ModContent.TileType<CursedHive>() && WorldGen.genRand.NextBool(8 + rep));
+							bool capable = tileRad.type == ModContent.TileType<CursedTumorTile>();
 							if (tileRad.active() && capable)
 							{
 								tileRad.type = (ushort)ModContent.TileType<MalditeTile>();

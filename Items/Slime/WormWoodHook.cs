@@ -1,3 +1,4 @@
+using SOTS.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -21,6 +22,7 @@ namespace SOTS.Items.Slime
             item.height = 32;   
             item.value = Item.sellPrice(0, 2, 0, 0);
 			item.rare = ItemRarityID.Green;
+			item.shoot = ModContent.ProjectileType<PinkyHook>();
 			item.shootSpeed = 15f;
 		}
 		public override void AddRecipes()

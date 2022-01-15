@@ -41,7 +41,7 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
 			drop = ModContent.ItemType<PyramidRubble>();
-			AddMapEntry(Color.Lerp(new Color(144, 127, 72), Color.Black, 0.15f));
+			AddMapEntry(Color.Lerp(new Color(181, 164, 88), Color.Black, 0.15f));
 			mineResist = 1.5f;
 			minPick = 0;
 			soundType = SoundID.Tink;
@@ -89,7 +89,7 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
 			drop = ModContent.ItemType<RuinedPyramidBrick>();
-			AddMapEntry(Color.Lerp(new Color(156, 137, 78), Color.Black, 0.08f));
+			AddMapEntry(Color.Lerp(new Color(181, 164, 88), Color.Black, 0.08f));
 			mineResist = 2.0f;
 			minPick = 110;
 			soundType = SoundID.Tink;

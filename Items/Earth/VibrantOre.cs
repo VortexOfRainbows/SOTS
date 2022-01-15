@@ -39,6 +39,7 @@ namespace SOTS.Items.Earth
 			Main.tileBrick[Type] = true;
 			Main.tileMerge[Type][ModContent.TileType<EvostoneTile>()] = true;
 			Main.tileMerge[Type][TileID.Marble] = true;
+			Main.tileMerge[TileID.Marble][Type] = true;
 			Main.tileMergeDirt[Type] = false;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
@@ -50,10 +51,13 @@ namespace SOTS.Items.Earth
 			soundStyle = 2;
 			dustType = ModContent.DustType<VibrantDust>();
 		}
-		/*public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
+		public override bool KillSound(int i, int j)
 		{
-			SOTSTile.DrawSlopedGlowMask(i, j, Main.tile[i, j].type, ModContent.GetTexture("SOTS/Items/Earth/VibrantOreTileGlow"), new Color(70, 80, 70, 0));
-		}*/
+			Vector2 pos = new Vector2(i * 16, j * 16) + new Vector2(8, 8);
+			int type = Main.rand.Next(3) + 1;
+			Main.PlaySound(SoundLoader.customSoundType, (int)pos.X, (int)pos.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/VibrantOre" + type), 2f, Main.rand.NextFloat(0.9f, 1.1f));
+			return false;
+		}
 	}
 	public class VibrantCrystalTile : ModTile
 	{
@@ -118,6 +122,12 @@ namespace SOTS.Items.Earth
 			Color color2 = Lighting.GetColor(i, j, WorldGen.paintColor(tile.color()));
 			Rectangle frame = new Rectangle(tile.frameX, tile.frameY, 16, 16);
 			spriteBatch.Draw(texture, location + zero - Main.screenPosition, frame, color2, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+			float uniquenessCounter = Main.GlobalTime * -100 + (i + j) * 5 + tile.frameX + (i % 7 * 3) + (j % 7 * -2);
+			float alphaMult = 0.55f + 0.45f * (float)Math.Sin(MathHelper.ToRadians(uniquenessCounter));
+			for (int k = 0; k < 2; k++)
+			{
+				SOTSTile.DrawSlopedGlowMask(i, j, tile.type, texture, new Color(100, 100, 100, 0) * alphaMult * 0.6f, Vector2.Zero);
+			}
 			return false;
 		}
 		public override bool CanPlace(int i, int j)

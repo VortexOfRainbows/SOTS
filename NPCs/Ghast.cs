@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Dusts;
 using SOTS.Items.Banners;
 using SOTS.Items.Pyramid;
 using SOTS.Projectiles.Pyramid;
@@ -43,7 +44,7 @@ namespace SOTS.NPCs
 			Texture2D texture = Main.npcTexture[npc.type];
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height / 8);
 			Vector2 drawPos = npc.Center - Main.screenPosition;
-			spriteBatch.Draw(texture, drawPos, new Rectangle(0, npc.frame.Y, npc.width, npc.height), drawColor, npc.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
+			spriteBatch.Draw(texture, drawPos, new Rectangle(0, npc.frame.Y, npc.width, npc.height), npc.GetAlpha(drawColor), npc.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
 			texture = GetTexture("SOTS/NPCs/GhastGlow");
 			spriteBatch.Draw(texture, drawPos, new Rectangle(0, npc.frame.Y, npc.width, npc.height), Color.White, npc.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
 			return false;
@@ -64,10 +65,24 @@ namespace SOTS.NPCs
 				npc.velocity.Y *= 0.9775f;
 				npc.velocity += toPlayer.SafeNormalize(Vector2.Zero) * 0.1475f * speed;
 			}
+			if((!lineOfSight && length < 160) || SOTSWorldgenHelper.TrueTileSolid((int)npc.Center.X / 16, (int)npc.Center.Y / 16))
+            {
+				npc.alpha += 2;
+            }
+			else
+            {
+				npc.alpha -= 3;
+            }
+			npc.alpha = (int)MathHelper.Clamp(npc.alpha, 0, 200);
+			bool tileCollide = true;
+			if(npc.alpha >= 180)
+            {
+				tileCollide = false;
+            }
 			npc.velocity.Y += 0.01f * (float)Math.Sin(MathHelper.ToRadians(ai1 * 6));
 			for (int i = 0; i < 1 + Main.rand.Next(2); i++)
 			{
-				int num1 = Dust.NewDust(npc.position, npc.width - 4, 12, mod.DustType("CurseDust"));
+				int num1 = Dust.NewDust(npc.position, npc.width - 4, 12, DustType<CurseDust>());
 				Main.dust[num1].noGravity = true;
 				Main.dust[num1].velocity.X = npc.velocity.X;
 				Main.dust[num1].velocity.Y = -2 + i * 1.0f;
@@ -102,7 +117,8 @@ namespace SOTS.NPCs
 				Vector2 spawn = (npc.position + new Vector2(4, 4) + new Vector2(Main.rand.Next(npc.width - 8), Main.rand.Next(npc.height - 8)));
 				Projectile.NewProjectile(spawn, npc.velocity * Main.rand.NextFloat(-0.1f, 0.1f), ProjectileType<GhastDrop>(), damage2, 1f, Main.myPlayer, -3, -1f);
 			}
-			npc.velocity = Collision.TileCollision(npc.position + new Vector2(8, 8), npc.velocity, npc.width - 16, npc.height - 16, true);
+			if(tileCollide)
+				npc.velocity = Collision.TileCollision(npc.position + new Vector2(8, 8), npc.velocity, npc.width - 16, npc.height - 16, true);
 		}
 		public override void FindFrame(int frameHeight) 
 		{
@@ -120,7 +136,7 @@ namespace SOTS.NPCs
 		public override void NPCLoot()
 		{
 			if(SOTSWorld.downedCurse && Main.rand.NextBool(3))
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("CursedMatter"), Main.rand.Next(2) + 1);	
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<CursedMatter>(), Main.rand.Next(2) + 1);	
 			else
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<SoulResidue>(), Main.rand.Next(2) + 1);
 			if (Main.rand.NextBool(2))
@@ -133,7 +149,7 @@ namespace SOTS.NPCs
 				int num = 0;
 				while (num < damage / npc.lifeMax * 50.0)
 				{
-					Dust.NewDust(npc.position, npc.width, npc.height, mod.DustType("CurseDust"), (float)(2 * hitDirection), -2f);
+					Dust.NewDust(npc.position, npc.width, npc.height, DustType<CurseDust>(), (float)(2 * hitDirection), -2f);
 					num++;
 				}
 			}
@@ -141,7 +157,7 @@ namespace SOTS.NPCs
 			{
 				for (int k = 0; k < 30; k++)
 				{
-					Dust.NewDust(npc.position, npc.width, npc.height, mod.DustType("CurseDust"), (float)(2 * hitDirection), -2f);
+					Dust.NewDust(npc.position, npc.width, npc.height, DustType<CurseDust>(), (float)(2 * hitDirection), -2f);
 				}
 			}		
 		}
