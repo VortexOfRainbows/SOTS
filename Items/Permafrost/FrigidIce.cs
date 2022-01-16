@@ -93,6 +93,15 @@ namespace SOTS.Items.Permafrost
 			item.value = Item.sellPrice(0, 0, 3, 0);
 			item.createTile = ModContent.TileType<FrigidIceTileSafe>();
 		}
+		public override void AddRecipes()
+		{
+			ModRecipe recipe = new ModRecipe(mod);
+			recipe.AddIngredient(this, 1);
+			recipe.AddIngredient(ItemID.IceBlock, 1);
+			recipe.AddTile(TileID.IceMachine);
+			recipe.SetResult(this, 2);
+			recipe.AddRecipe();
+		}
 	}
 	public class FrigidBrickTile : ModTile
 	{
@@ -116,7 +125,6 @@ namespace SOTS.Items.Permafrost
 		{
 			item.CloneDefaults(ItemID.StoneBlock);
 			item.rare = ItemRarityID.Blue;
-			item.value = Item.sellPrice(0, 0, 3, 0);
 			item.createTile = ModContent.TileType<FrigidBrickTile>();
 		}
 	}

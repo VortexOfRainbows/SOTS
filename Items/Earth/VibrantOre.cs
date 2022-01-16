@@ -24,6 +24,7 @@ namespace SOTS.Items.Earth
 			item.width = 20;
 			item.height = 18;
 			item.rare = ItemRarityID.Blue;
+			item.value = Item.sellPrice(0, 0, 1, 0);
 			item.createTile = ModContent.TileType<VibrantOreTile>();
 		}
 	}
@@ -103,9 +104,12 @@ namespace SOTS.Items.Earth
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
 		{
-			r = 0.27f;
-			g = 0.33f;
-			b = 0.15f;
+			Tile tile = Main.tile[i, j];
+			float uniquenessCounter = Main.GlobalTime * -100 + (i + j) * 5 + tile.frameX + (i % 7 * 3) + (j % 7 * -2);
+			float alphaMult = 0.35f + 0.25f * (float)Math.Sin(MathHelper.ToRadians(uniquenessCounter));
+			r = 0.27f * alphaMult;
+			g = 0.33f * alphaMult;
+			b = 0.15f * alphaMult;
 		}
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
 		{
