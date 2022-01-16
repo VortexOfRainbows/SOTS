@@ -481,8 +481,34 @@ namespace SOTS
                 {
 					max--;
 					if (max <= 0)
-						return;
+						break;
                 }
+			}
+			max = 50;
+			if (Main.maxTilesX > 6000) //medium worlds
+				max = 75;
+			if (Main.maxTilesX > 8000) //big worlds
+				max = 100;
+			int top = (int)WorldGen.rockLayerLow - 40;
+			int bottom = (int)(Main.maxTilesY - 200);
+			float range = bottom - top;
+			for (int k = 0; k < (int)((Main.maxTilesX * Main.maxTilesY) * 0.2f); k++)
+			{
+				int x = WorldGen.genRand.Next(100, Main.maxTilesX - 100);
+				int y = WorldGen.genRand.Next(top, bottom);
+				Tile tile = Main.tile[x, y];
+				bool valid = tile.type == TileID.Stone || tile.type == TileID.Dirt;
+				if(valid)
+				{
+					float percent = (y - top) / range + Main.rand.NextFloat(-0.1f, 0.1f);
+					percent = MathHelper.Clamp(percent, 0, 1);
+					int size = (int)MathHelper.Lerp(8, 20, percent);
+					float depthMult = size / 16f;
+					SOTSWorldgenHelper.GenerateVibrantGeode((int)x, (int)y, size, (int)(size * Main.rand.NextFloat(0.9f, 1.1f)), depthMult, (float)Math.Sqrt(depthMult));
+					max--;
+					if (max <= 0)
+						break;
+				}
 			}
 		}
 		public override void TileCountsAvailable(int[] tileCounts)

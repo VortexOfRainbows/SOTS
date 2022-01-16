@@ -108,7 +108,6 @@ namespace SOTS.Items.Tools
 			Vector2 tileLocation = mousePos / 16f;
 			int amount = Main.rand.Next(8, 32);
 			float depthMult = amount / 16f;
-			float depth = Main.rand.NextFloat(0.8f, 1.2f) * depthMult;
 			SOTSWorldgenHelper.GenerateVibrantGeode((int)tileLocation.X, (int)tileLocation.Y, amount, (int)(amount * Main.rand.NextFloat(0.9f, 1.1f)), depthMult, (float)Math.Sqrt(depthMult));
 			return true;
 		}
