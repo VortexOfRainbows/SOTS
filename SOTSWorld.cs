@@ -30,6 +30,7 @@ using SOTS.Items.GhostTown;
 using SOTS.Items.Otherworld.Blocks;
 using SOTS.Items.Otherworld.Furniture;
 using SOTS.Items.Pyramid.AncientGold;
+using SOTS.Items.Earth;
 
 namespace SOTS
 {
@@ -249,11 +250,13 @@ namespace SOTS
 		public override void ModifyWorldGenTasks(List<GenPass> tasks, ref float totalWeight)
         {
             int genIndexOres = tasks.FindIndex(genpass => genpass.Name.Equals("Shinies"));
-            int genIndexGems = tasks.FindIndex(genpass => genpass.Name.Equals("Random Gems"));
+			int genIndexGeodes = tasks.FindIndex(genpass => genpass.Name.Equals("Lakes"));
+			int genIndexGems = tasks.FindIndex(genpass => genpass.Name.Equals("Random Gems"));
             int genIndexEnd = tasks.FindIndex(genpass => genpass.Name.Equals("Final Cleanup"));
 
 			tasks.Insert(genIndexOres, new PassLegacy("SOTSOres", GenSOTSOres));
-			tasks.Insert(genIndexGems, new PassLegacy("ModdedSOTSStructures", delegate (GenerationProgress progress)
+			tasks.Insert(genIndexGeodes + 1, new PassLegacy("SOTSOres", GenSOTSGeodes));
+			tasks.Insert(genIndexGems + 1, new PassLegacy("ModdedSOTSStructures", delegate (GenerationProgress progress)
 			{
 				progress.Message = "Generating Surface Structures";
 				SOTSWorldgenHelper.GenerateStarterHouseFull(mod, Main.rand.Next(12));
@@ -315,7 +318,7 @@ namespace SOTS
 				}
 
 			}));
-			tasks.Insert(genIndexEnd + 3, new PassLegacy("genIndexModPlanetarium", delegate (GenerationProgress progress)
+			tasks.Insert(genIndexEnd + 4, new PassLegacy("genIndexModPlanetarium", delegate (GenerationProgress progress)
 			{
 				progress.Message = "Generating Sky Artifacts";
 				int dungeonSide = -1; // -1 = dungeon on left, 1 = dungeon on right
@@ -459,10 +462,21 @@ namespace SOTS
 					}
 				}
 			}));
-			tasks.Insert(genIndexEnd + 4, new PassLegacy("genIndexModPyramid", delegate (GenerationProgress progress)
+			tasks.Insert(genIndexEnd + 5, new PassLegacy("genIndexModPyramid", delegate (GenerationProgress progress)
 			{
 				progress.Message = "Generating A Pyramid";
 				PyramidWorldgenHelper.GenerateSOTSPyramid(mod);
+				for (int k = 100; k < Main.maxTilesX - 100; k++)
+				{
+					for (int l = (int)WorldGen.rockLayerLow - 20; l < Main.maxTilesY - 220; l++)
+					{
+						if (Main.tile[k, l].wall == ModContent.WallType<VibrantWallWall>())
+						{
+							Main.tile[k, l].liquidType(0);
+							Main.tile[k, l].liquid = 0;
+						}
+					}
+				}
 			}));
 		}
 		private void GenSOTSOres(GenerationProgress progress)
@@ -477,20 +491,24 @@ namespace SOTS
 			{
 				int x = WorldGen.genRand.Next(100, Main.maxTilesX - 100);
 				int y = WorldGen.genRand.Next((int)WorldGen.rockLayerLow, (int)(WorldGen.rockLayer + Main.maxTilesY - 200) / 2);
-				if(SOTSWorldgenHelper.GenerateFrigidIceOre(x, y))
-                {
+				if (SOTSWorldgenHelper.GenerateFrigidIceOre(x, y))
+				{
 					max--;
 					if (max <= 0)
-						break;
-                }
+						return;
+				}
 			}
-			max = 50;
+		}
+		private void GenSOTSGeodes(GenerationProgress progress)
+		{
+			progress.Message = "Generating Fancy Geodes";
+			int max = 60;
 			if (Main.maxTilesX > 6000) //medium worlds
-				max = 75;
+				max = 90;
 			if (Main.maxTilesX > 8000) //big worlds
-				max = 100;
-			int top = (int)WorldGen.rockLayerLow - 40;
-			int bottom = (int)(Main.maxTilesY - 200);
+				max = 120;
+			int top = (int)WorldGen.rockLayerLow;
+			int bottom = (int)(Main.maxTilesY - 240);
 			float range = bottom - top;
 			for (int k = 0; k < (int)((Main.maxTilesX * Main.maxTilesY) * 0.2f); k++)
 			{
@@ -498,11 +516,11 @@ namespace SOTS
 				int y = WorldGen.genRand.Next(top, bottom);
 				Tile tile = Main.tile[x, y];
 				bool valid = tile.type == TileID.Stone || tile.type == TileID.Dirt;
-				if(valid)
+				if (valid)
 				{
 					float percent = (y - top) / range + Main.rand.NextFloat(-0.1f, 0.1f);
 					percent = MathHelper.Clamp(percent, 0, 1);
-					int size = (int)MathHelper.Lerp(8, 20, percent);
+					int size = (int)MathHelper.Lerp(8, 18, percent);
 					float depthMult = size / 16f;
 					SOTSWorldgenHelper.GenerateVibrantGeode((int)x, (int)y, size, (int)(size * Main.rand.NextFloat(0.9f, 1.1f)), depthMult, (float)Math.Sqrt(depthMult));
 					max--;

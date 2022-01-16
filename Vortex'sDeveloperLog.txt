@@ -39,12 +39,12 @@ Low Priority:
 2. Accessory Pets to use own dye slots.
 3. Void Bar strike the player during void shock
 4. Fix Planetarium sky island spawning in tandum
-5. Finish Vibrant Geodes
 
-1/15/22
+1/15/22 & 1/16/22
 1. Added several precautions to prevent the void bar from going offscreen
 2. Void Bar position can now be modified directly in configs
 3. Added the big Vibrant Crystals which can grow on vibrant ore (works in Multiplayer alongside smol crystal)
+4. Vibrant Geodes now generate upon world creation!
 
 1/14/22
 1. Frigid Ore and Vibrant Ore sounds

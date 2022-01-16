@@ -7263,27 +7263,28 @@ namespace SOTS
 						bool capable = true;
 						if (distance >= radius + 0.5 - radialMod && capable)
 						{
-							WorldGen.PlaceTile(xPosition6, yPosition6, ModContent.TileType<EvostoneTile>());
 							tile.type = (ushort)ModContent.TileType<EvostoneTile>();
 							tile.active(true);
 						}
 						else if (distance >= radius + 0.5 - radialMod - radialMod1 && capable)
 						{
-							WorldGen.PlaceTile(xPosition6, yPosition6, TileID.Marble);
-							tile.wall = (ushort)WallID.Marble;
+							tile.wall = WallID.Marble;
 							tile.type = TileID.Marble;
 							tile.active(true);
 						}
 						else if(distance >= radius + 0.5 - radialMod - radialMod1 - radialMod2 && capable)
 						{
-							WorldGen.PlaceTile(xPosition6, yPosition6, ModContent.TileType<VibrantOreTile>());
 							tile.wall = (ushort)ModContent.WallType<VibrantWallWall>();
 							tile.type = (ushort)ModContent.TileType<VibrantOreTile>();
+							if(distance <= radius + 1.0 - radialMod - radialMod1 - radialMod2)
+                            {
+								SOTSTile.GenerateVibrantCrystal(xPosition6, yPosition6);
+                            }
 							tile.active(true);
 						}
 						else
 						{
-							tile.wall = (ushort)ModContent.WallType<VibrantWallWall>();
+   							tile.wall = (ushort)ModContent.WallType<VibrantWallWall>();
 							tile.active(false);
 						}
 					}
