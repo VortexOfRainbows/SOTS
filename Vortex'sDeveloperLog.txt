@@ -4,10 +4,10 @@ The following is my development plans :D
 2. Ghost Town to Evil Biome
 
 Known Bugs:
-1. Lag generates in multiplayer after a while of playing. Seems to have been fixed.
+1. Lag generates in multiplayer after a while of playing. (Fixed?)
 	1. Seem to generate client-side not server side..?
 	2. No memory leak on single player, or client side when testing..?
-2. Not calling end/begin; mod compatability prims crash. Seems to have been fixed somehow.
+2. Primitives crash. (Fixed?)
 3. Earthen Construct causing freezes occassionally. Conditions unknown (usually after it goes of screen).
 	1. Less frequent than before 0.20, but still happens? 
 
@@ -44,7 +44,7 @@ Low Priority:
 1/15/22
 1. Added several precautions to prevent the void bar from going offscreen
 2. Void Bar position can now be modified directly in configs
-3. 
+3. Added the big Vibrant Crystals which can grow on vibrant ore (works in Multiplayer alongside smol crystal)
 
 1/14/22
 1. Frigid Ore and Vibrant Ore sounds
