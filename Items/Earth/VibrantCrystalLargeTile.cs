@@ -51,7 +51,7 @@ namespace SOTS.Items.Earth
 
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Large Vibrant Shard");
-			AddMapEntry(new Color(135, 182, 39), name);
+			AddMapEntry(new Color(156, 209, 46), name);
 			dustType = ModContent.DustType<VibrantDust>();
 			disableSmartCursor = true;
 			soundType = SoundID.Item;

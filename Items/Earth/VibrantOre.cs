@@ -47,7 +47,7 @@ namespace SOTS.Items.Earth
 			drop = ModContent.ItemType<VibrantOre>();
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Vibrant Ore");
-			AddMapEntry(new Color(166, 214, 67), name);
+			AddMapEntry(new Color(123, 166, 36), name);
 			mineResist = 1.0f;
 			minPick = 40; //no copper/tin pickaxe!
 			soundType = SoundID.Tink;
@@ -80,7 +80,7 @@ namespace SOTS.Items.Earth
 			Main.tileObsidianKill[Type] = true;
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Vibrant Shard");
-			AddMapEntry(new Color(135, 182, 39), name);
+			AddMapEntry(new Color(156, 209, 46), name);
 			soundType = SoundID.Item;
 			soundStyle = 27;
 			dustType = ModContent.DustType<VibrantDust>();
