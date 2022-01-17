@@ -65,7 +65,7 @@ namespace SOTS
                     rate = 15;
                     nearbyRadius = 1;
                     shardType = TileType<VibrantCrystalTile>();
-                    if (WorldGen.genRand.NextBool(120))
+                    if (WorldGen.genRand.NextBool(80))
                     {
                         int side = WorldGen.genRand.Next(4);
                         int x = 0;
