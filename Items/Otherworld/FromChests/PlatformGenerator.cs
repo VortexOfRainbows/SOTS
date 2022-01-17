@@ -1,6 +1,9 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Mono.Cecil.Cil;
+using SOTS.Items.Fragments;
+using SOTS.Items.Otherworld.Furniture;
+using SOTS.Projectiles.Minions;
 using System.Runtime.Remoting.Messaging;
 using Terraria;
 using Terraria.ID;
@@ -68,7 +71,7 @@ namespace SOTS.Items.Otherworld.FromChests
             item.height = 34;
 			item.knockBack = 1f;
             item.value = Item.sellPrice(0, 4, 0, 0);
-			item.rare = ItemRarityID.LightPurple;
+			item.rare = ItemRarityID.LightRed;
 			item.accessory = true;
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
@@ -82,48 +85,51 @@ namespace SOTS.Items.Otherworld.FromChests
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "DissolvingAether", 1);
-			recipe.AddIngredient(null, "HardlightAlloy", 8);
-			recipe.AddTile(mod.TileType("HardlightFabricatorTile"));
+			recipe.AddIngredient(ModContent.ItemType<DissolvingAether>(), 1);
+			recipe.AddIngredient(ModContent.ItemType<HardlightAlloy>(), 8);
+			recipe.AddTile(ModContent.TileType<HardlightFabricatorTile>());
 			recipe.SetResult(this);
 			recipe.AddRecipe();
 		}
 	}
 	public class PlatformPlayer : ModPlayer
 	{
+		public bool fortress = false;
 		public bool hideChains = false;
 		public int platformPairs = 0;
 		public int[] platforms1 = { -1, -1, -1, -1, -1, -1, -1, -1 };
 		public int[] platforms2 = { -1, -1, -1, -1, -1, -1, -1, -1 };
 		public override void ResetEffects()
 		{
-			int type = mod.ProjectileType("HoloPlatform");
+			int type = ModContent.ProjectileType<HoloPlatform>();
 			if(Main.myPlayer == player.whoAmI)
-			for(int i = 0; i < platformPairs; i++)
 			{
-				if (platforms1[i] == -1)
+				for (int i = 0; i < platformPairs; i++)
 				{
-					platforms1[i] = Projectile.NewProjectile(player.Center.X - 320, player.position.Y, 0, 0, type, 0, 0, player.whoAmI, i, -1);
-				}
-				if (!Main.projectile[platforms1[i]].active || Main.projectile[platforms1[i]].type != type || Main.projectile[platforms1[i]].ai[0] != i || Main.projectile[platforms1[i]].ai[1] != -1)
-				{
-					platforms1[i] = Projectile.NewProjectile(player.Center.X - 320, player.position.Y, 0, 0, type, 0, 0, player.whoAmI, i, -1);
-				}
-				Main.projectile[platforms1[i]].timeLeft = 6;
+					if (platforms1[i] == -1)
+					{
+						platforms1[i] = Projectile.NewProjectile(player.Center.X - 160 - (80 * (i + 1)), player.position.Y, 0, 0, type, 0, 0, player.whoAmI, i, -1);
+					}
+					if (!Main.projectile[platforms1[i]].active || Main.projectile[platforms1[i]].type != type || Main.projectile[platforms1[i]].ai[0] != i || Main.projectile[platforms1[i]].ai[1] != -1)
+					{
+						platforms1[i] = Projectile.NewProjectile(player.Center.X - 160 - (80 * (i + 1)), player.position.Y, 0, 0, type, 0, 0, player.whoAmI, i, -1);
+					}
+					Main.projectile[platforms1[i]].timeLeft = 6;
 
-
-				if (platforms2[i] == -1)
-				{
-					platforms2[i] = Projectile.NewProjectile(player.Center.X + 320, player.position.Y, 0, 0, type, 0, 0, player.whoAmI, i, 1);
+					if (platforms2[i] == -1)
+					{
+						platforms2[i] = Projectile.NewProjectile(player.Center.X + 160 + (80 * (i + 1)), player.position.Y, 0, 0, type, 0, 0, player.whoAmI, i, 1);
+					}
+					if (!Main.projectile[platforms2[i]].active || Main.projectile[platforms2[i]].type != type || Main.projectile[platforms2[i]].ai[0] != i || Main.projectile[platforms2[i]].ai[1] != 1)
+					{
+						platforms2[i] = Projectile.NewProjectile(player.Center.X + 160 + (80 * (i + 1)), player.position.Y, 0, 0, type, 0, 0, player.whoAmI, i, 1);
+					}
+					Main.projectile[platforms2[i]].timeLeft = 6;
 				}
-				if (!Main.projectile[platforms2[i]].active || Main.projectile[platforms2[i]].type != type || Main.projectile[platforms2[i]].ai[0] != i || Main.projectile[platforms2[i]].ai[1] != 1)
-				{
-					platforms2[i] = Projectile.NewProjectile(player.Center.X + 320, player.position.Y, 0, 0, type, 0, 0, player.whoAmI, i, 1);
-				}
-				Main.projectile[platforms2[i]].timeLeft = 6;
 			}
 			platformPairs = 0;
 			hideChains = false;
+			fortress = false;
 		}
 	}
 }

@@ -143,7 +143,7 @@ namespace SOTS.Items.Earth
 					}
 					for (int k = 0; k < 2; k++)
 					{
-						spriteBatch.Draw(texture, location + zero - offset - Main.screenPosition, frame, new Color(100, 100, 100, 0) * alphaMult * 0.6f, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+ 						spriteBatch.Draw(texture, location + zero - offset + drawOffSet - Main.screenPosition, frame, new Color(100, 100, 100, 0) * alphaMult * 0.6f, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
 					}
 				}
 			}

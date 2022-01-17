@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Mono.Cecil;
 using SOTS.Items.Otherworld.FromChests;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using Terraria;
 using Terraria.Graphics.Shaders;
@@ -28,26 +29,47 @@ namespace SOTS.Projectiles.Minions
 			projectile.timeLeft = 7200;
 			projectile.sentry = false;
 			projectile.netImportant = true;
+			projectile.hide = true;
 		}
-		private int shader = 0;
-		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
+        private int shader = 0;
+		public void Draw(SpriteBatch spriteBatch)
 		{
 			Player player = Main.player[projectile.owner];
 			if (shader != 0)
 			{
 				Main.spriteBatch.End();
 				Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
-
 				GameShaders.Armor.GetSecondaryShader(shader, player).Apply(null);
 			}
 			PlatformPlayer modPlayer = player.GetModPlayer<PlatformPlayer>();
-			Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Minions/HoloPlatformChainOutline");
-			Texture2D texture1 = ModContent.GetTexture("SOTS/Projectiles/Minions/HoloPlatformChainFill");
-			Texture2D texture2 = ModContent.GetTexture("SOTS/Projectiles/Minions/HoloPlatformOutline");
-			Texture2D texture3 = ModContent.GetTexture("SOTS/Projectiles/Minions/HoloPlatformFill");
-			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
+			Texture2D textureChainOutline = ModContent.GetTexture("SOTS/Projectiles/Minions/HoloPlatformChainOutline");
+			Texture2D textureChainFill = ModContent.GetTexture("SOTS/Projectiles/Minions/HoloPlatformChainFill");
+			Texture2D texturePlatformOutline;
+			Texture2D texturePlatformFill;
+			Rectangle frameLeft;
+			Rectangle frameMiddle;
+			Rectangle frameRight;
+			float verticalOffset = 2;
+			if (modPlayer.fortress)
+			{
+				texturePlatformOutline = ModContent.GetTexture("SOTS/Projectiles/Minions/HoloPlatformRookOutline");
+				texturePlatformFill = ModContent.GetTexture("SOTS/Projectiles/Minions/HoloPlatformRookFill");
+				verticalOffset = -2;
+				frameLeft = new Rectangle(0, 0, 10, 16);
+				frameMiddle = new Rectangle(13, 0, 1, 16);
+				frameRight = new Rectangle(34, 0, 10, 16);
+			}
+			else
+			{
+				texturePlatformOutline = ModContent.GetTexture("SOTS/Projectiles/Minions/HoloPlatformOutline");
+				texturePlatformFill = ModContent.GetTexture("SOTS/Projectiles/Minions/HoloPlatformFill");
+				frameLeft = new Rectangle(0, 0, 8, 12);
+				frameMiddle = new Rectangle(11, 0, 1, 12);
+				frameRight = new Rectangle(20, 0, 8, 12);
+			}
+			Vector2 drawOrigin = new Vector2(textureChainOutline.Width * 0.5f, textureChainOutline.Height * 0.5f);
 			Player owner = Main.player[projectile.owner];
-			Color color = new Color(110, 110, 110, 0);
+			Color color = new Color(100, 100, 100, 0);
 			if (owner.active && !owner.dead && !modPlayer.hideChains)
 			{
 				Vector2 distanceToOwner = new Vector2(projectile.Center.X, projectile.position.Y + projectile.height + 6) - owner.Center;
@@ -66,54 +88,74 @@ namespace SOTS.Projectiles.Minions
 					Vector2 pos = rotationPos += centerOfCircle;
 					Vector2 dynamicAddition = new Vector2(2.5f, 0).RotatedBy(MathHelper.ToRadians(i * 36 + counter * 2));
 					Vector2 drawPos = pos - Main.screenPosition;
-					for (int k = 0; k < 5; k++)
+					for (int k = 0; k < 4; k++)
 					{
 						if (k == 0)
-							spriteBatch.Draw(texture1, drawPos + dynamicAddition, null, color * 0.5f, MathHelper.ToRadians(18 * i - 45) + startingRadians, drawOrigin, projectile.scale * 0.75f, SpriteEffects.None, 0f);
-
-						spriteBatch.Draw(texture, drawPos + dynamicAddition, null, color * (1f - (projectile.alpha / 255f)), MathHelper.ToRadians(18 * i - 45) + startingRadians, drawOrigin, projectile.scale * 0.75f, SpriteEffects.None, 0f);
+							spriteBatch.Draw(textureChainFill, drawPos + dynamicAddition, null, color * 0.5f, MathHelper.ToRadians(18 * i - 45) + startingRadians, drawOrigin, projectile.scale * 0.75f, SpriteEffects.None, 0f);
+						spriteBatch.Draw(textureChainOutline, drawPos + dynamicAddition, null, color * (1f - (projectile.alpha / 255f)), MathHelper.ToRadians(18 * i - 45) + startingRadians, drawOrigin, projectile.scale * 0.75f, SpriteEffects.None, 0f);
 					}
 				}
 			}
 
 			Vector2 drawPos2 = projectile.position - Main.screenPosition;
-			for (int k = 0; k < 5; k++)
+			for (int k = 0; k < 4; k++)
 			{
 				if (k == 0)
-					spriteBatch.Draw(texture3, drawPos2 + new Vector2(0, 2), new Rectangle(0, 0, 8, 12), color * 0.5f, 0, Vector2.Zero, projectile.scale, SpriteEffects.None, 0f);
-
-				Main.spriteBatch.Draw(texture2, drawPos2 + new Vector2(0, 2), new Rectangle(0, 0, 8, 12), color * (1f - (projectile.alpha / 255f)), 0f, Vector2.Zero, projectile.scale, SpriteEffects.None, 0f);
+					spriteBatch.Draw(texturePlatformFill, drawPos2 + new Vector2(0, verticalOffset), frameLeft, color * 0.5f, 0, Vector2.Zero, projectile.scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texturePlatformOutline, drawPos2 + new Vector2(0, verticalOffset), frameLeft, color * (1f - (projectile.alpha / 255f)), 0f, Vector2.Zero, projectile.scale, SpriteEffects.None, 0f);
 			}
-			for(int i = 1; i < projectile.width/8 - 1; i++)
+			float middleWidth = projectile.width - frameLeft.Width - frameRight.Width;
+			if(!modPlayer.fortress)
 			{
-				for (int k = 0; k < 5; k++)
+				Vector2 horiScale = new Vector2(middleWidth, 1f);
+				if (middleWidth > 0)
 				{
-					if (k == 0)
-						spriteBatch.Draw(texture3, drawPos2 + new Vector2(8 * i, 2), new Rectangle(10, 0, 8, 12), color * 0.5f, 0, Vector2.Zero, projectile.scale, SpriteEffects.None, 0f);
-
-					Main.spriteBatch.Draw(texture2, drawPos2 + new Vector2(8 * i, 2), new Rectangle(10, 0, 8, 12), color * (1f - (projectile.alpha / 255f)), 0f, Vector2.Zero, projectile.scale, SpriteEffects.None, 0f);
+					for (int k = 0; k < 4; k++)
+					{
+						if (k == 0)
+							spriteBatch.Draw(texturePlatformFill, drawPos2 + new Vector2(frameLeft.Width, verticalOffset), frameMiddle, color * 0.5f, 0, Vector2.Zero, horiScale, SpriteEffects.None, 0f);
+						Main.spriteBatch.Draw(texturePlatformOutline, drawPos2 + new Vector2(frameLeft.Width, verticalOffset), frameMiddle, color * (1f - (projectile.alpha / 255f)), 0f, Vector2.Zero, horiScale, SpriteEffects.None, 0f);
+					}
 				}
 			}
-			for (int k = 0; k < 5; k++)
+			else
+            {
+				middleWidth = (middleWidth - 10) / 2;
+				Vector2 horiScale = new Vector2(middleWidth, 1f);
+				if (middleWidth > 0)
+				{
+					for (int k = 0; k < 4; k++)
+					{
+						if (k == 0)
+							spriteBatch.Draw(texturePlatformFill, drawPos2 + new Vector2(frameLeft.Width, verticalOffset), frameMiddle, color * 0.5f, 0, Vector2.Zero, horiScale, SpriteEffects.None, 0f);
+						Main.spriteBatch.Draw(texturePlatformOutline, drawPos2 + new Vector2(frameLeft.Width, verticalOffset), frameMiddle, color * (1f - (projectile.alpha / 255f)), 0f, Vector2.Zero, horiScale, SpriteEffects.None, 0f);
+					}
+					for (int k = 0; k < 4; k++)
+					{
+						if (k == 0)
+							spriteBatch.Draw(texturePlatformFill, drawPos2 + new Vector2(frameLeft.Width + middleWidth, verticalOffset), new Rectangle(22, 0, 10, 16), color * 0.5f, 0, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+						Main.spriteBatch.Draw(texturePlatformOutline, drawPos2 + new Vector2(frameLeft.Width + middleWidth, verticalOffset), new Rectangle(22, 0, 10, 16), color * (1f - (projectile.alpha / 255f)), 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+					}
+					for (int k = 0; k < 4; k++)
+					{
+						if (k == 0)
+							spriteBatch.Draw(texturePlatformFill, drawPos2 + new Vector2(frameLeft.Width + middleWidth + 10, verticalOffset), frameMiddle, color * 0.5f, 0, Vector2.Zero, horiScale, SpriteEffects.None, 0f);
+						Main.spriteBatch.Draw(texturePlatformOutline, drawPos2 + new Vector2(frameLeft.Width + middleWidth + 10, verticalOffset), frameMiddle, color * (1f - (projectile.alpha / 255f)), 0f, Vector2.Zero, horiScale, SpriteEffects.None, 0f);
+					}
+				}
+			}
+			for (int k = 0; k < 4; k++)
 			{
 				if (k == 0)
-					spriteBatch.Draw(texture3, drawPos2 + new Vector2(projectile.width - 8, 2), new Rectangle(20, 0, 8, 12), color * 0.5f, 0, Vector2.Zero, projectile.scale, SpriteEffects.None, 0f);
-
-				Main.spriteBatch.Draw(texture2, drawPos2 + new Vector2(projectile.width - 8, 2), new Rectangle(20, 0, 8, 12), color * (1f - (projectile.alpha / 255f)), 0f, Vector2.Zero, projectile.scale, SpriteEffects.None, 0f);
+					spriteBatch.Draw(texturePlatformFill, drawPos2 + new Vector2(projectile.width - frameRight.Width, verticalOffset), frameRight, color * 0.5f, 0, Vector2.Zero, projectile.scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texturePlatformOutline, drawPos2 + new Vector2(projectile.width - frameRight.Width, verticalOffset), frameRight, color * (1f - (projectile.alpha / 255f)), 0f, Vector2.Zero, projectile.scale, SpriteEffects.None, 0f);
 			}
-
-			return false;
-		}
-        public override void PostDraw(SpriteBatch spriteBatch, Color lightColor)
-		{
-			Player player = Main.player[projectile.owner];
 			if (shader != 0)
 			{
 				Main.spriteBatch.End();
 				Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.Transform);
 			}
-			base.PostDraw(spriteBatch, lightColor);
-        }
+		}
         Vector2 rotateVector = new Vector2(4, 0);
 		Vector2 positionToPlayer;
 		Vector2? relativeToMouse;
@@ -150,7 +192,7 @@ namespace SOTS.Projectiles.Minions
 				positionToPlayer = projectile.Center - player.Center;
 				runOnce = false;
 			}
-			shader = player.cBack;
+			shader = SOTSPlayer.ModPlayer(player).platformShader;
 			return true;
         }
 		public void UpdatePartnerPos()
@@ -265,7 +307,7 @@ namespace SOTS.Projectiles.Minions
 				Projectile sentry = Main.projectile[SentryID];
 				if (sentry.active && sentry.owner == projectile.owner && sentry.sentry == true && sentry.whoAmI != projectile.whoAmI && sentry.type != projectile.type && SentryType == sentry.type && !isPartners)
 				{
-					projectile.width = (1 + sentry.width / 8) * 8;
+					projectile.width = sentry.width + 8;
 					if (sentry.timeLeft < 6 || projectile.timeLeft <= 4)
 						sentry.timeLeft = 6;
 					sentry.position = new Vector2(projectile.Center.X - sentry.width/2, projectile.position.Y - sentry.height);
@@ -282,7 +324,7 @@ namespace SOTS.Projectiles.Minions
 				else
                 {
 					SentryType = -1;
-					projectile.width = 40;
+					projectile.width = 48;
 					SentryID = -1;
 				}
 			}

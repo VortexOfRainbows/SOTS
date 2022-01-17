@@ -641,6 +641,30 @@ namespace SOTS
 				ItemID.PlatinumOre
 			});
 			RecipeGroup.RegisterGroup("SOTS:PHMOre", group);
+			group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Tier 2 DD2 Armor", new int[]
+			{
+				ItemID.SquirePlating,
+				ItemID.SquireGreatHelm,
+				ItemID.SquireGreaves,
+				ItemID.HuntressWig,
+				ItemID.HuntressJerkin,
+				ItemID.HuntressPants,
+				ItemID.ApprenticeHat,
+				ItemID.ApprenticeRobe,
+				ItemID.ApprenticeTrousers,
+				ItemID.MonkBrows,
+				ItemID.MonkShirt,
+				ItemID.MonkPants
+			});
+			RecipeGroup.RegisterGroup("SOTS:T2DD2Armor", group);
+			group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Tier 2 DD2 Accessory", new int[]
+			{
+				ItemID.SquireShield,
+				ItemID.HuntressBuckler,
+				ItemID.ApprenticeScarf,
+				ItemID.MonkBelt
+			});
+			RecipeGroup.RegisterGroup("SOTS:T2DD2Accessory", group);
 		}
 		public static float lightingChange = 1f;
         public override void ModifyLightingBrightness(ref float scale)

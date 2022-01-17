@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Projectiles.Minions;
 using SOTS.Utilities;
 using Terraria;
 
@@ -49,7 +50,10 @@ namespace SOTS
 				SOTS.primitives.DrawTargetProj(Main.spriteBatch);
 			}
 			if(self != null && orig != null)
-				orig(self);
+            {
+				orig(self); 
+				PostDrawProjectiles();
+			}
 		}
 
 		private static void Main_DrawNPCs(On.Terraria.Main.orig_DrawNPCs orig, Main self, bool behindTiles)
@@ -67,6 +71,22 @@ namespace SOTS
 			PreDrawPlayers();
 			orig(self);
 			PostDrawPlayers();
+		}
+		private static void PostDrawProjectiles()
+		{
+			if (!Main.dedServ)
+			{
+				Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
+				for (int i = 0; i < Main.projectile.Length; i++)
+				{
+					Projectile proj = Main.projectile[i];
+					if (proj.active && proj.modProjectile is HoloPlatform hPlatform)
+					{
+						hPlatform.Draw(Main.spriteBatch); //change later
+					}
+				}
+				Main.spriteBatch.End();
+			}
 		}
 		private static void PreDrawPlayers()
 		{

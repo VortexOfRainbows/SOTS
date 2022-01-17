@@ -28,72 +28,29 @@ namespace SOTS
         public static void GenerateVibrantCrystal(int i, int j)
         {
             int shardType = TileType<VibrantCrystalTile>();
-            if (WorldGen.genRand.NextBool(5))
+            int side = WorldGen.genRand.Next(4);
+            int x = 0;
+            int y = 0;
+            switch (side)
             {
-                int side = WorldGen.genRand.Next(4);
-                int x = 0;
-                int y = 0;
-                switch (side)
-                {
-                    case 0:
-                        x = -1;
-                        break;
-                    case 1:
-                        x = 1;
-                        break;
-                    case 2:
-                        y = 1;
-                        break;
-                    case 3:
-                        y = -1;
-                        break;
-                }
-                if (x == -1 || y == -1)
-                {
-                    x -= 1;
-                    y -= 1;
-                }
-                if (!Main.tile[i + x, j + y].active() && !Main.tile[i + x + 1, j + y].active() && !Main.tile[i + x + 1, j + y + 1].active() && !Main.tile[i + x, j + y + 1].active())
-                {
-                    bool success = WorldGen.PlaceTile(i + x, j + y, TileType<VibrantCrystalLargeTile>(), true, false, -1, 0);
-                    if (success)
-                    {
-                        int rand = WorldGen.genRand.Next(8);
-                        Main.tile[i + x, j + y].frameX = (short)(rand * 36);
-                        Main.tile[i + x + 1, j + y].frameX = (short)(rand * 36 + 18);
-                        Main.tile[i + x, j + y + 1].frameX = (short)(rand * 36);
-                        Main.tile[i + x + 1, j + y + 1].frameX = (short)(rand * 36 + 18);
-                    }
-                }
-                NetMessage.SendTileSquare(-1, i + x, j + y, 3, TileChangeType.None);
-                return;
+                case 0:
+                    x = -1;
+                    break;
+                case 1:
+                    x = 1;
+                    break;
+                case 2:
+                    y = 1;
+                    break;
+                case 3:
+                    y = -1;
+                    break;
             }
-            else
+            if (!Main.tile[i + x, j + y].active())
             {
-                int side = WorldGen.genRand.Next(4);
-                int x = 0;
-                int y = 0;
-                switch (side)
-                {
-                    case 0:
-                        x = -1;
-                        break;
-                    case 1:
-                        x = 1;
-                        break;
-                    case 2:
-                        y = 1;
-                        break;
-                    case 3:
-                        y = -1;
-                        break;
-                }
-                if (!Main.tile[i + x, j + y].active())
-                {
-                    WorldGen.PlaceTile(i + x, j + y, shardType, true, false, -1, 0);
-                    Main.tile[i + x, j + y].frameX = (short)(WorldGen.genRand.Next(18) * 18);
-                    NetMessage.SendTileSquare(-1, i + x, j + y, 1, TileChangeType.None);
-                }
+                WorldGen.PlaceTile(i + x, j + y, shardType, true, false, -1, 0);
+                Main.tile[i + x, j + y].frameX = (short)(WorldGen.genRand.Next(18) * 18);
+                NetMessage.SendTileSquare(-1, i + x, j + y, 1, TileChangeType.None);
             }
         }
         public override void RandomUpdate(int i, int j, int type)
@@ -108,7 +65,7 @@ namespace SOTS
                     rate = 15;
                     nearbyRadius = 1;
                     shardType = TileType<VibrantCrystalTile>();
-                    if (WorldGen.genRand.NextBool(200))
+                    if (WorldGen.genRand.NextBool(80))
                     {
                         int side = WorldGen.genRand.Next(4);
                         int x = 0;
