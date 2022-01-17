@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
+using SOTS.Items.Pyramid;
 using System;
 using Terraria;
 using Terraria.DataStructures;
@@ -148,6 +149,82 @@ namespace SOTS.Items.Earth
 				}
 			}
 			return false;
+		}
+		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
+		{
+			ModifyFrames(i, j);
+			return true;
+		}
+		public void ModifyFrames(int i, int j)
+		{
+			Tile tile = Main.tile[i, j];
+			int left = i;
+			int top = j;
+			if (tile.frameX % 36 != 0)
+			{
+				left--;
+			}
+			if (tile.frameY % 36 != 0)
+			{
+				top--;
+			}
+			bool flag = true;
+			if (RoyalRubyShardTile.TileIsCapable(left, top + 2) && RoyalRubyShardTile.TileIsCapable(left + 1, top + 2)) //checks if below tile is active
+			{
+				if (Main.tile[left, top].frameY != 0)
+				{
+					Main.tile[left, top].frameY = (short)(Main.tile[left, top].frameY % 36);
+					Main.tile[left + 1, top].frameY = (short)(Main.tile[left + 1, top].frameY % 36);
+					Main.tile[left + 1, top + 1].frameY = (short)(Main.tile[left + 1, top + 1].frameY % 36);
+					Main.tile[left, top + 1].frameY = (short)(Main.tile[left, top + 1].frameY % 36);
+				}
+				else
+					flag = false;
+			}
+			else if (RoyalRubyShardTile.TileIsCapable(left - 1, top) && RoyalRubyShardTile.TileIsCapable(left - 1, top + 1)) //checks if left tile is active
+			{
+				if(Main.tile[left, top].frameY != 108)
+				{
+					Main.tile[left, top].frameY = (short)(Main.tile[left, top].frameY % 36 + 108);
+					Main.tile[left + 1, top].frameY = (short)(Main.tile[left + 1, top].frameY % 36 + 108);
+					Main.tile[left + 1, top + 1].frameY = (short)(Main.tile[left + 1, top + 1].frameY % 36 + 108);
+					Main.tile[left, top + 1].frameY = (short)(Main.tile[left, top + 1].frameY % 36 + 108);
+				}
+				else
+					flag = false;
+			}
+			else if (RoyalRubyShardTile.TileIsCapable(left + 2, top) && RoyalRubyShardTile.TileIsCapable(left + 2, top + 1)) //checks if right tile is active
+			{
+				if(Main.tile[left, top].frameY != 36)
+				{
+					Main.tile[left, top].frameY = (short)(Main.tile[left, top].frameY % 36 + 36);
+					Main.tile[left + 1, top].frameY = (short)(Main.tile[left + 1, top].frameY % 36 + 36);
+					Main.tile[left + 1, top + 1].frameY = (short)(Main.tile[left + 1, top + 1].frameY % 36 + 36);
+					Main.tile[left, top + 1].frameY = (short)(Main.tile[left, top + 1].frameY % 36 + 36);
+				}
+				else
+					flag = false;
+			}
+			else if (RoyalRubyShardTile.TileIsCapable(left, top - 1) && RoyalRubyShardTile.TileIsCapable(left + 1, top - 1)) //checks if above tile is active
+			{
+				if(Main.tile[left, top].frameY != 72)
+				{
+					Main.tile[left, top].frameY = (short)(Main.tile[left, top].frameY % 36 + 72);
+					Main.tile[left + 1, top].frameY = (short)(Main.tile[left + 1, top].frameY % 36 + 72);
+					Main.tile[left + 1, top + 1].frameY = (short)(Main.tile[left + 1, top + 1].frameY % 36 + 72);
+					Main.tile[left, top + 1].frameY = (short)(Main.tile[left, top + 1].frameY % 36 + 72);
+				}
+				else
+					flag = false;
+			}
+			else
+				flag = false;
+			//if (flag)
+			//{
+				//WorldGen.TileFrame(i, j, true);
+				//NetMessage.SendTileSquare(-1, i, j, 4, TileChangeType.None);
+				//NetMessage.SendData(17, -1, -1, null, 1, i, j, Type);
+			//}
 		}
 	}
 }

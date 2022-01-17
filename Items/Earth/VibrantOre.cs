@@ -8,6 +8,7 @@ using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using SOTS.Items.Pyramid;
 
 namespace SOTS.Items.Earth
 {
@@ -143,32 +144,24 @@ namespace SOTS.Items.Earth
 		}
 		public override bool CanPlace(int i, int j)
 		{
-			return TileIsCapable(i, j + 1) || TileIsCapable(i, j - 1) || TileIsCapable(i + 1, j) || TileIsCapable(i - 1, j);
-		}
-		private bool TileIsCapable(Tile tile)
-		{
-			return tile.active() && Main.tileSolid[tile.type] && !Main.tileSolidTop[tile.type] && tile.slope() == 0 && !tile.halfBrick() && !tile.inActive();
-		}
-		private bool TileIsCapable(int i, int j)
-		{
-			return TileIsCapable(Main.tile[i, j]);
+			return RoyalRubyShardTile.TileIsCapable(i, j + 1) || RoyalRubyShardTile.TileIsCapable(i, j - 1) || RoyalRubyShardTile.TileIsCapable(i + 1, j) || RoyalRubyShardTile.TileIsCapable(i - 1, j);
 		}
 		public bool ModifyFrames(int i, int j, bool randomize = false)
 		{
 			bool flag = true;
-			if (TileIsCapable(i, j + 1)) //checks if below tile is active
+			if (RoyalRubyShardTile.TileIsCapable(i, j + 1)) //checks if below tile is active
 			{
 				Main.tile[i, j].frameY = 0;
 			}
-			else if (TileIsCapable(i - 1, j)) //checks if left tile is active
+			else if (RoyalRubyShardTile.TileIsCapable(i - 1, j)) //checks if left tile is active
 			{
 				Main.tile[i, j].frameY = 54;
 			}
-			else if (TileIsCapable(i + 1, j)) //checks if right tile is active
+			else if (RoyalRubyShardTile.TileIsCapable(i + 1, j)) //checks if right tile is active
 			{
 				Main.tile[i, j].frameY = 36;
 			}
-			else if (TileIsCapable(i, j - 1)) //checks if above tile is active
+			else if (RoyalRubyShardTile.TileIsCapable(i, j - 1)) //checks if above tile is active
 			{
 				Main.tile[i, j].frameY = 18;
 			}

@@ -44,6 +44,12 @@ Low Priority:
 2. Void Bar position can now be modified directly in configs
 3. Added the big Vibrant Crystals which can grow on vibrant ore (works in Multiplayer alongside smol crystal)
 4. Vibrant Geodes now generate upon world creation!
+5. Big crystals switch sides now, so that they don't float weirdly when lacking anchor tile. (syncs in multiplayer)
+6. Added Fortress Generator
+7. Fixed the sloped glowmask system
+	1. Plentarium Plating blocks can now be sloped properly.
+8. Vibrant Crystals now cluster in geodes upon worldgen more reliably, contributing to their aesthetic 
+9. Otherworldly Spirit now properly deals void damage
 
 1/14/22
 1. Frigid Ore and Vibrant Ore sounds

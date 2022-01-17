@@ -55,7 +55,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
         //public bool hasJustSpawned = true;
         public override void OnHitPlayer(NPC npc, Player target, int damage, bool crit)
         {
-            if (spirits.Contains(npc.type))
+            if (spirits.Contains(npc.type) || npc.type == NPCType<Constructs.OtherworldlySpirit>())
             {
                 int vDamage = 0;
                 int debuffTime = 120;

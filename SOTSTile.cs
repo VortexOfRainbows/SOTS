@@ -25,7 +25,7 @@ namespace SOTS
         {
             pyramidTiles = new int[] { TileType<CursedHive>(), TileType<PyramidBrickTile>(), TileType<PyramidSlabTile>(), TileType<OvergrownPyramidTile>(), TileType<MalditeTile>(), TileType <CursedTumorTile>(), TileType<RuinedPyramidBrickTile>(), TileType<PyramidRubbleTile>() };
         }
-        public static void GenerateVibrantCrystal(int i, int j)
+        public static bool GenerateVibrantCrystal(int i, int j)
         {
             int shardType = TileType<VibrantCrystalTile>();
             int side = WorldGen.genRand.Next(4);
@@ -46,12 +46,36 @@ namespace SOTS
                     y = -1;
                     break;
             }
-            if (!Main.tile[i + x, j + y].active())
+            if (WorldGen.genRand.Next(5) <= 1)
+            {
+                if (x == -1 || y == -1)
+                {
+                    x -= 1;
+                    y -= 1;
+                }
+                if (!Main.tile[i + x, j + y].active() && !Main.tile[i + x + 1, j + y].active() && !Main.tile[i + x + 1, j + y + 1].active() && !Main.tile[i + x, j + y + 1].active())
+                {
+                    bool success = WorldGen.PlaceTile(i + x, j + y, TileType<VibrantCrystalLargeTile>(), true, false, -1, 0);
+                    if (success)
+                    {
+                        int rand = WorldGen.genRand.Next(8);
+                        Main.tile[i + x, j + y].frameX = (short)(rand * 36);
+                        Main.tile[i + x + 1, j + y].frameX = (short)(rand * 36 + 18);
+                        Main.tile[i + x, j + y + 1].frameX = (short)(rand * 36);
+                        Main.tile[i + x + 1, j + y + 1].frameX = (short)(rand * 36 + 18);
+                        NetMessage.SendTileSquare(-1, i + x, j + y, 3, TileChangeType.None);
+                        return true;
+                    }
+                }
+            }
+            else if (!Main.tile[i + x, j + y].active())
             {
                 WorldGen.PlaceTile(i + x, j + y, shardType, true, false, -1, 0);
                 Main.tile[i + x, j + y].frameX = (short)(WorldGen.genRand.Next(18) * 18);
                 NetMessage.SendTileSquare(-1, i + x, j + y, 1, TileChangeType.None);
+                return true;
             }
+            return false;
         }
         public override void RandomUpdate(int i, int j, int type)
         {
@@ -63,9 +87,16 @@ namespace SOTS
                 if (type == TileType<VibrantOreTile>())
                 {
                     rate = 15;
-                    nearbyRadius = 1;
+                    nearbyRadius = 10;
                     shardType = TileType<VibrantCrystalTile>();
-                    if (WorldGen.genRand.NextBool(80))
+                    int bigRate = 100;
+                    int maxBigs = 4;
+                    if(Main.tile[i, j].wall == WallType<VibrantWallWall>())
+                    {
+                        bigRate = 10; 
+                        maxBigs = 2;
+                    }
+                    if (WorldGen.genRand.NextBool(bigRate))
                     {
                         int side = WorldGen.genRand.Next(4);
                         int x = 0;
@@ -92,19 +123,34 @@ namespace SOTS
                         }
                         if(!Main.tile[i + x, j + y].active() && !Main.tile[i + x + 1, j + y].active() && !Main.tile[i + x + 1, j + y + 1].active() && !Main.tile[i + x, j + y + 1].active())
                         {
-                            bool success = WorldGen.PlaceTile(i + x, j + y, TileType<VibrantCrystalLargeTile>(), true, false, -1, 0);
-                            if (success)
+                            float amt = 0;
+                            for (var l = i - nearbyRadius; l <= i + nearbyRadius; l++)
                             {
-                                int rand = WorldGen.genRand.Next(8);
-                                Main.tile[i + x, j + y].frameX = (short)(rand * 36);
-                                Main.tile[i + x + 1, j + y].frameX = (short)(rand * 36 + 18);
-                                Main.tile[i + x, j + y + 1].frameX = (short)(rand * 36);
-                                Main.tile[i + x + 1, j + y + 1].frameX = (short)(rand * 36 + 18);
+                                for (var m = j - nearbyRadius; m <= j + nearbyRadius; m++)
+                                {
+                                    if (Main.tile[l, m].active() && Main.tile[l, m].type == TileType<VibrantCrystalLargeTile>())
+                                    {
+                                        amt += 0.3f;
+                                    }
+                                }
+                            }
+                            if (amt < maxBigs)
+                            {
+                                bool success = WorldGen.PlaceTile(i + x, j + y, TileType<VibrantCrystalLargeTile>(), true, false, -1, 0);
+                                if (success)
+                                {
+                                    int rand = WorldGen.genRand.Next(8);
+                                    Main.tile[i + x, j + y].frameX = (short)(rand * 36);
+                                    Main.tile[i + x + 1, j + y].frameX = (short)(rand * 36 + 18);
+                                    Main.tile[i + x, j + y + 1].frameX = (short)(rand * 36);
+                                    Main.tile[i + x + 1, j + y + 1].frameX = (short)(rand * 36 + 18);
+                                    NetMessage.SendTileSquare(-1, i + x, j + y, 3, TileChangeType.None);
+                                    return;
+                                }
                             }
                         }
-                        NetMessage.SendTileSquare(-1, i + x, j + y, 3, TileChangeType.None);
-                        return;
                     }
+                    nearbyRadius = 1;
                 }
                 if (WorldGen.genRand.NextBool(rate))
                 {
@@ -255,39 +301,68 @@ namespace SOTS
             {
                 zero = Vector2.Zero;
             }
-            Vector2 drawCoordinates = location + zero - Main.screenPosition;
+            Vector2 offsets = -Main.screenPosition + zero + positionOffset;
+            Vector2 drawCoordinates = location + offsets;
             if (tile.slope() == 0 && !tile.halfBrick())
             {
                 Main.spriteBatch.Draw(texture, drawCoordinates, new Rectangle(frameX, frameY, width, height), drawColor, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
             }
             else if (tile.halfBrick())
             {
-                Main.spriteBatch.Draw(texture, new Vector2(drawCoordinates.X, drawCoordinates.Y + 10), new Rectangle(frameX, frameY, width, 6), drawColor, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+                Main.spriteBatch.Draw(texture, new Vector2(drawCoordinates.X, drawCoordinates.Y + 8), new Rectangle(frameX, frameY, width, 8), drawColor, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
             }
             else
             {
                 byte b = tile.slope();
-                for (int a = 0; a < 8; a++)
+                Rectangle frame;
+                Vector2 drawPos;
+                if (b == 1 || b == 2)
                 {
-                    int num10 = a << 1;
-                    var frame = new Rectangle(frameX, frameY + a * 2, num10, 2);
-                    int xOffset = 0;
-                    switch (b)
+                    int length;
+                    int height2;
+                    for (int a = 0; a < 8; ++a)
                     {
-                        case 2:
-                            frame.X = 16 - num10;
-                            xOffset = 16 - num10;
-                            break;
-                        case 3:
-                            frame.Width = 16 - num10;
-                            break;
-                        case 4:
-                            frame.Width = 14 - num10;
-                            frame.X = num10 + 2;
-                            xOffset = num10 + 2;
-                            break;
+                        if (b == 2)
+                        {
+                            length = 16 - a * 2 - 2;
+                            height2 = 14 - a * 2;
+                        }
+                        else
+                        {
+                            length = a * 2;
+                            height2 = 14 - length;
+                        }
+                        frame = new Rectangle(frameX + length, frameY, 2, height2);
+                        drawPos = new Vector2(i * 16 + length, j * 16 + a * 2) + offsets;
+                        Main.spriteBatch.Draw(texture, drawPos, frame, drawColor, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0.0f);
                     }
-                    Main.spriteBatch.Draw(texture, new Vector2(drawCoordinates.X + (float)xOffset, drawCoordinates.Y + a * 2), frame, drawColor, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+                    frame = new Rectangle(frameX, frameY + 14, 16, 2);
+                    drawPos = new Vector2(i * 16, j * 16 + 14) + offsets;
+                    Main.spriteBatch.Draw(texture, drawPos, frame, drawColor, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0.0f);
+                }
+                else
+                {
+                    int length;
+                    int height2;
+                    for (int a = 0; a < 8; ++a)
+                    {
+                        if (b == 3)
+                        {
+                            length = a * 2;
+                            height2 = 16 - length;
+                        }
+                        else
+                        {
+                            length = 16 - a * 2 - 2;
+                            height2 = 16 - a * 2;
+                        }
+                        frame = new Rectangle(frameX + length, frameY + 16 - height2, 2, height2);
+                        drawPos = new Vector2(i * 16 + length, j * 16) + offsets;
+                        Main.spriteBatch.Draw(texture, drawPos, frame, drawColor, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0.0f);
+                    }
+                    drawPos = new Vector2(i * 16, j * 16) + offsets;
+                    frame = new Rectangle(frameX, frameY, 16, 2);
+                    Main.spriteBatch.Draw(texture, drawPos, frame, drawColor, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0.0f);
                 }
             }
         }

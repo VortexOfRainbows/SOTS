@@ -29,6 +29,7 @@ namespace SOTS.Projectiles.Minions
 			projectile.timeLeft = 7200;
 			projectile.sentry = false;
 			projectile.netImportant = true;
+			projectile.ignoreWater = true;
 			projectile.hide = true;
 		}
         private int shader = 0;

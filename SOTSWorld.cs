@@ -474,6 +474,13 @@ namespace SOTS
 						{
 							Main.tile[k, l].liquidType(0);
 							Main.tile[k, l].liquid = 0;
+							if (Main.tile[k, l].type == ModContent.TileType<VibrantOreTile>() && Main.tile[k, l].active() && Main.tile[k, l].slope() == 0 && !Main.tile[k, l].halfBrick())
+							{
+								bool oneSideIsClear = !Main.tile[k - 1, l].active() || !Main.tile[k + 1, l].active() || !Main.tile[k, l + 1].active() || !Main.tile[k, l - 1].active();
+								if(oneSideIsClear)
+									for (int i = 0; i < 3; i++)
+										if(SOTSTile.GenerateVibrantCrystal(k, l)) break;
+							}
 						}
 					}
 				}
