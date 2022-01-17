@@ -26,13 +26,12 @@ Mid Priority:
 	5. Chaos Chamber
 2. Construct Items:
 	1. Inferno Construct: Incinerator Glove (Magic, Void). Generate a close ranged orb of plasma that you can launch a short distance
-3. Mobile Fortress Generator: upgrade to platform generator. Base its visuals off of Ectoplasm and Dungeon Brick.
-4. Geostorm (void + mage)
+3. Geostorm (void + mage)
 	1. Summons shards that slam into the enemy
-5. Vibrant Bullet & Vibrant Arrow
+4. Vibrant Bullet & Vibrant Arrow
 	1. Bullet that splits into 3 bullets. The one that goes straight does 100%, other two do 20%
 	2. Arrow that drops down 3 shards for 120% damage after hitting a roof. Does normal damage otherwise.
-6. Shattershine (melee flail)
+5. Shattershine (melee flail)
 
 Low Priority:
 1. Archaelogist NPC

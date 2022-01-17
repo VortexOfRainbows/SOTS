@@ -121,6 +121,7 @@ namespace SOTS
 		public int halfLifeRegen = 0;
 		public int additionalHeal = 0;
 		public int darkEyeShader = 0;
+		public int platformShader = 0;
 		public int HoloEyeDamage = 0;
 		public bool HoloEyeIsVanity = false;
 		public bool HoloEye = false;
@@ -689,6 +690,7 @@ namespace SOTS
 			HoloEye = false;
 			HoloEyeDamage = 0;
 			darkEyeShader = 0;
+			platformShader = 0;
 			aqueductDamage = -1;
 			lastAqueductMax = aqueductNum;
 			aqueductNum = 0;
@@ -760,6 +762,10 @@ namespace SOTS
 				if (item.type == ModContent.ItemType<TheDarkEye>())
 				{
 					darkEyeShader = GameShaders.Armor.GetShaderIdFromItemId(player.dye[i].type);
+				}
+				if (item.type == ModContent.ItemType<PlatformGenerator>() || item.type == ModContent.ItemType<FortressGenerator>())
+				{
+					platformShader = GameShaders.Armor.GetShaderIdFromItemId(player.dye[i].type);
 				}
 				if (item.type == ModContent.ItemType<TwilightAssassinsCirclet>())
 				{

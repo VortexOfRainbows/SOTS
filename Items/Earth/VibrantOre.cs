@@ -137,7 +137,7 @@ namespace SOTS.Items.Earth
 			float alphaMult = 0.55f + 0.45f * (float)Math.Sin(MathHelper.ToRadians(uniquenessCounter));
 			for (int k = 0; k < 2; k++)
 			{
-				SOTSTile.DrawSlopedGlowMask(i, j, tile.type, texture, new Color(100, 100, 100, 0) * alphaMult * 0.6f, Vector2.Zero);
+				SOTSTile.DrawSlopedGlowMask(i, j, tile.type, texture, new Color(100, 100, 100, 0) * alphaMult * 0.6f, drawOffSet);
 			}
 			return false;
 		}
