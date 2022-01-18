@@ -39,16 +39,22 @@ Low Priority:
 3. Void Bar strike the player during void shock
 4. Fix Planetarium sky island spawning in tandum
 
+1/17/22
+1. Vibrant Alloy (+related) Recipes
+2. Remove Maldite, Maldite Wall, Glowy Mushroom
+3. Vibrant Arrow + Bullet (should work in Multiplayer
+	1. Some prep for Geostorm
+
 1/15/22 & 1/16/22
 1. Added several precautions to prevent the void bar from going offscreen
 2. Void Bar position can now be modified directly in configs
 3. Added the big Vibrant Crystals which can grow on vibrant ore (works in Multiplayer alongside smol crystal)
 4. Vibrant Geodes now generate upon world creation!
 5. Big crystals switch sides now, so that they don't float weirdly when lacking anchor tile. (syncs in multiplayer)
-6. Added Fortress Generator
+6. Added Fortress Generator + holoplatform code optimization
 7. Fixed the sloped glowmask system
 	1. Plentarium Plating blocks can now be sloped properly.
-8. Vibrant Crystals now cluster in geodes upon worldgen more reliably, contributing to their aesthetic 
+8. Vibrant Crystals now cluster in geodes upon worldgen more reliably, contributing to their aesthetic
 9. Otherworldly Spirit now properly deals void damage
 
 1/14/22

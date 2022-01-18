@@ -13,7 +13,7 @@ namespace SOTS.Items.Earth
 			item.width = 22;
 			item.height = 18;
 			item.value = Item.sellPrice(0, 0, 80, 0);
-			item.rare = 1;
+			item.rare = ItemRarityID.Blue;
 			item.defense = 4;
 		}
 		public override void SetStaticDefaults()
@@ -33,24 +33,9 @@ namespace SOTS.Items.Earth
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.IronGreaves, 1);
-			recipe.AddIngredient(null, "VeryGlowyMushroom", 1);
-			recipe.SetResult(this);
+			recipe.AddIngredient(ModContent.ItemType<VibrantBar>(), 10);
 			recipe.AddTile(TileID.Anvils);
-			recipe.AddRecipe();
-			
-			recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.LeadGreaves, 1);
-			recipe.AddIngredient(null, "VeryGlowyMushroom", 1);
 			recipe.SetResult(this);
-			recipe.AddTile(TileID.Anvils);
-			recipe.AddRecipe();
-
-			recipe = new ModRecipe(mod);
-			recipe.AddRecipeGroup("IronBar", 25);
-			recipe.AddIngredient(null, "VeryGlowyMushroom", 1);
-			recipe.SetResult(this);
-			recipe.AddTile(TileID.Anvils);
 			recipe.AddRecipe();
 		}
 	}

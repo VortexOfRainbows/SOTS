@@ -13,7 +13,7 @@ namespace SOTS
 		public static int[] unsafePyramidWall;
 		public static void LoadArrays() //called in SOTS.Load()
 		{
-			unsafePyramidWall = new int[] { WallType<UnsafePyramidWallWall>() , WallType<UnsafeCursedTumorWallWall>(), WallType<UnsafePyramidBrickWallWall>(), WallType<UnsafeMalditeWallWall>(), WallType<UnsafeOvergrownPyramidWallWall>(), WallType<UnsafeAcediaWallWall>() }; //Unsafe wall items
+			unsafePyramidWall = new int[] { WallType<UnsafePyramidWallWall>() , WallType<UnsafeCursedTumorWallWall>(), WallType<UnsafePyramidBrickWallWall>(), WallType<UnsafeOvergrownPyramidWallWall>(), WallType<UnsafeAcediaWallWall>() }; //Unsafe wall items
 		}
         public override bool CanExplode(int i, int j, int type)
         {

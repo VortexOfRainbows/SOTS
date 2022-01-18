@@ -13,7 +13,7 @@ namespace SOTS.Items.Earth
 			item.width = 22;
 			item.height = 22;
             item.value = Item.sellPrice(0, 0, 80, 0);
-			item.rare = 1;
+			item.rare = ItemRarityID.Blue;
 			item.defense = 4;
 		}
 		public override void SetStaticDefaults()
@@ -23,7 +23,7 @@ namespace SOTS.Items.Earth
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs)
         {
-            return body.type == mod.ItemType("VibrantChestplate") && legs.type == mod.ItemType("VibrantLeggings");
+            return body.type == ModContent.ItemType<VibrantChestplate>() && legs.type == ModContent.ItemType<VibrantLeggings>();
         }
         public override void UpdateArmorSet(Player player)
         {	
@@ -42,24 +42,9 @@ namespace SOTS.Items.Earth
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.IronHelmet, 1);
-			recipe.AddIngredient(null, "VeryGlowyMushroom", 1);
-			recipe.SetResult(this);
+			recipe.AddIngredient(ModContent.ItemType<VibrantBar>(), 10);
 			recipe.AddTile(TileID.Anvils);
-			recipe.AddRecipe();
-			
-			recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.LeadHelmet, 1);
-			recipe.AddIngredient(null, "VeryGlowyMushroom", 1);
 			recipe.SetResult(this);
-			recipe.AddTile(TileID.Anvils);
-			recipe.AddRecipe();
-
-			recipe = new ModRecipe(mod);
-			recipe.AddRecipeGroup("IronBar", 20);
-			recipe.AddIngredient(null, "VeryGlowyMushroom", 1);
-			recipe.SetResult(this);
-			recipe.AddTile(TileID.Anvils);
 			recipe.AddRecipe();
 		}
 	}

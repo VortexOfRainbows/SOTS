@@ -9,12 +9,11 @@ namespace SOTS.Items.Earth
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Echo Disc");
-			Tooltip.SetDefault("");
 		}
 		public override void SetDefaults()
 		{
 			item.damage = 12;
-			item.useStyle = 1;
+			item.useStyle = ItemUseStyleID.SwingThrow;
 			item.useTime = 27;
 			item.useAnimation = 27;
 			item.ranged = true;
@@ -24,7 +23,7 @@ namespace SOTS.Items.Earth
 			item.height = 26;
 			item.maxStack = 1;
 			item.autoReuse = true;            
-			item.shoot = mod.ProjectileType("EchoDisk"); 
+			item.shoot = ModContent.ProjectileType<Projectiles.Earth.EchoDisk>(); 
             item.shootSpeed = 9.5f;
 			item.knockBack = 3f;
 			item.consumable = false;
@@ -34,8 +33,7 @@ namespace SOTS.Items.Earth
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "VeryGlowyMushroom", 1);
-			recipe.AddRecipeGroup("IronBar", 12);
+			recipe.AddIngredient(ModContent.ItemType<VibrantBar>(), 6);
 			recipe.SetResult(this);
 			recipe.AddTile(TileID.Anvils);
 			recipe.AddRecipe();

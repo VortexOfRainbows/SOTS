@@ -209,7 +209,7 @@ namespace SOTS
 			dedicatedBlasfah = new int[] { ItemType<Doomstick>(), ItemType<BookOfVirtues>() }; //Blasfah
 			dedicatedHeartPlus = new int[] { ItemType<DigitalDaito>() }; //Heart Plus Up
 			dedicatedCoolio = new int[] { ItemType<Baguette>() }; //Coolio/Taco
-			unsafeWallItem = new int[] { ItemType<UnsafeLihzahrdBrickWall>(), ItemType<UnsafeCursedTumorWall>(), ItemType<UnsafePyramidWall>(), ItemType<UnsafePyramidBrickWall>(), ItemType<UnsafeOvergrownPyramidWall>(), ItemType<UnsafeMalditeWall>(), ItemType<VibrantWall>() }; //Unsafe wall items
+			unsafeWallItem = new int[] { ItemType<UnsafeLihzahrdBrickWall>(), ItemType<UnsafeCursedTumorWall>(), ItemType<UnsafePyramidWall>(), ItemType<UnsafePyramidBrickWall>(), ItemType<UnsafeOvergrownPyramidWall>(),	ItemType<VibrantWall>() }; //Unsafe wall items
 			unsafeWallItemRedTextures = new Texture2D[unsafeWallItem.Length];
 
 			piscesFishItems = new int[] {-6, -5, -4, -3, -2, -1, ItemID.AmanitiaFungifin, ItemID.Angelfish, ItemID.Batfish, ItemID.BloodyManowar, ItemID.Bonefish, ItemID.BumblebeeTuna, ItemID.Bunnyfish, ItemID.CapnTunabeard, ItemID.Catfish, ItemID.Cloudfish, ItemID.Clownfish, ItemID.Cursedfish, ItemID.DemonicHellfish, ItemID.Derpfish,

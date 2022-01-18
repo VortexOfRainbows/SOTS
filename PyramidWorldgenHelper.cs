@@ -1189,7 +1189,7 @@ namespace SOTS
 					}
 				}
 			}
-			int malditeNum = 0;
+			//int malditeNum = 0;
 			int extraSize = size + 50;
 			for (int findTileY = pyramidY - 50; findTileY < pyramidY + extraSize; findTileY++)
 			{
@@ -1197,7 +1197,7 @@ namespace SOTS
 				for (int findTileX = pyramidX + extraSize; findTileX > pyramidX - extraSize; findTileX--)
 				{
 					Tile tile = Framing.GetTileSafely(findTileX, findTileY);
-					if (tile.type == ModContent.TileType<CursedTumorTile>() && (tile.active() || tile.wall == (ushort)ModContent.WallType<UnsafeCursedTumorWallWall>()))
+					/*if (tile.type == ModContent.TileType<CursedTumorTile>() && (tile.active() || tile.wall == (ushort)ModContent.WallType<UnsafeCursedTumorWallWall>()))
 					{
 						tile.wall = (ushort)ModContent.WallType<UnsafeCursedTumorWallWall>();
 						if (WorldGen.genRand.NextBool(54 + malditeNum * malditeNum * 10))
@@ -1205,7 +1205,7 @@ namespace SOTS
 							DoMalditeGeneration(findTileX, findTileY);
 							malditeNum++;
 						}
-					}
+					}*/
 					if (width > 16 && WorldGen.genRand.NextBool((int)(2300 - width * 5f)) && tile.active() && (tile.type == ModContent.TileType<RuinedPyramidBrickTile>() || tile.type == ModContent.TileType<PyramidSlabTile>()))
 					{
 						int extraWidth = width / 50;
@@ -1305,7 +1305,7 @@ namespace SOTS
 									WorldGen.PlaceTile(findTileX, findTileY - 1, ModContent.TileType<CursedGrowthTile>());
 							}
 						}
-						if (tile.active() && (tile.type == ModContent.TileType<MalditeTile>() || tile.wall == (ushort)ModContent.WallType<UnsafeMalditeWallWall>()))
+						/*if (tile.active() && (tile.type == ModContent.TileType<MalditeTile>() || tile.wall == (ushort)ModContent.WallType<UnsafeMalditeWallWall>()))
 						{
 							int randType = Main.rand.Next(3);
 							if (randType == 0)
@@ -1356,7 +1356,7 @@ namespace SOTS
 								if (capable)
 									WorldGen.PlaceTile(findTileX, findTileY - 1, ModContent.TileType<PyramidAmbientTile3x2Curse>(), false, false, -1, 0);
 							}
-						}
+						}*/
 					}
 					if (WorldGen.genRand.NextBool(3))
 						if (tile.wall != 0 && tile.active() && (tile.type == ModContent.TileType<PyramidBrickTile>() || tile.type == ModContent.TileType<PyramidSlabTile>() || tile.type == ModContent.TileType<RuinedPyramidBrickTile>() || tile.type == ModContent.TileType<PyramidRubbleTile>() || tile.wall == (ushort)ModContent.WallType<PyramidWallWall>()))
@@ -6847,7 +6847,7 @@ namespace SOTS
 				}
 			}
 		}
-		public static void DoMalditeGeneration(int i, int j)
+		/*public static void DoMalditeGeneration(int i, int j)
 		{
 			int rand = WorldGen.genRand.Next(2) + 2;
 			for (int rep = 0; rep < rand; rep++)
@@ -6881,7 +6881,7 @@ namespace SOTS
 					}
 				}
 			}
-		}
+		}*/
 		public static void DoAltBlocksGeneration(int i, int j, int size, bool rubble = false)
 		{
 			int tileX = i + WorldGen.genRand.Next(5);

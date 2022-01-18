@@ -1,6 +1,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Mono.Cecil.Cil;
+using SOTS.Items.Earth;
+using SOTS.Items.Otherworld.Furniture;
 using SOTS.Void;
 using System.Runtime.Remoting.Messaging;
 using Terraria;
@@ -58,9 +60,9 @@ namespace SOTS.Items.Otherworld.FromChests
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "VeryGlowyMushroom", 1);
-			recipe.AddIngredient(null, "OtherworldlyAlloy", 12);
-			recipe.AddTile(mod.TileType("HardlightFabricatorTile"));
+			recipe.AddIngredient(ModContent.ItemType<VibrantBar>(), 8);
+			recipe.AddIngredient(ModContent.ItemType<OtherworldlyAlloy>(), 12);
+			recipe.AddTile(ModContent.TileType<HardlightFabricatorTile>());
 			recipe.SetResult(this);
 			recipe.AddRecipe();
 		}

@@ -12,13 +12,12 @@ Subspace Serpent: Done
 Sprites To Do:
 
 Current:
-1. Buffs icons for various new items
-2. Tiny Planet Fish
+1. Flare Detonator
+2. Curgeon (fish)
 
 Others:
-1. Flashspark Boots Spritesheet
-2. Portal (Gateway) Item Sprites
-4. Trophes For Advisor, Pharaoh, Polaris, and Subspace
-5. Heartsheild Spritesheet
-6. Sarcophagus Item Resprite
-7. Advisor Baby resprite
+1. Portal (Gateway) Item Sprites
+2. Trophes For Advisor, Pharaoh, Polaris, and Subspace
+3. Heartsheild Spritesheet
+4. Sarcophagus Item Resprite
+5. Advisor Baby resprite

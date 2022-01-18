@@ -23,7 +23,7 @@ namespace SOTS
         public static int[] pyramidTiles;
         public static void LoadArrays() //called in SOTS.Load()
         {
-            pyramidTiles = new int[] { TileType<CursedHive>(), TileType<PyramidBrickTile>(), TileType<PyramidSlabTile>(), TileType<OvergrownPyramidTile>(), TileType<MalditeTile>(), TileType <CursedTumorTile>(), TileType<RuinedPyramidBrickTile>(), TileType<PyramidRubbleTile>() };
+            pyramidTiles = new int[] { TileType<CursedHive>(), TileType<PyramidBrickTile>(), TileType<PyramidSlabTile>(), TileType<OvergrownPyramidTile>(), TileType <CursedTumorTile>(), TileType<RuinedPyramidBrickTile>(), TileType<PyramidRubbleTile>() };
         }
         public static bool GenerateVibrantCrystal(int i, int j)
         {
@@ -79,7 +79,7 @@ namespace SOTS
         }
         public override void RandomUpdate(int i, int j, int type)
         {
-            if(type == TileType<CursedTumorTile>() || type == TileType<MalditeTile>() || type == TileType<VibrantOreTile>())
+            if(type == TileType<CursedTumorTile>() || type == TileType<VibrantOreTile>())
             {
                 int rate = 60;
                 int shardType = TileType<RoyalRubyShardTile>();

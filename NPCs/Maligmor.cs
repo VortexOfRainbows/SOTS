@@ -204,12 +204,10 @@ namespace SOTS.NPCs
 		public override void NPCLoot()
 		{
 			if(SOTSWorld.downedCurse && Main.rand.NextBool(3))
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("CursedMatter"), Main.rand.Next(2) + 1);	
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<CursedMatter>(), Main.rand.Next(2) + 1);	
 			else
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<SoulResidue>(), Main.rand.Next(2) + 1);
 			int type = ItemType<CursedTumor>();
-			if (!Main.rand.NextBool(3))
-				type = ItemType<Maldite>();
 			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, type, Main.rand.Next(6) + 5);
 		}
 		public override void HitEffect(int hitDirection, double damage)

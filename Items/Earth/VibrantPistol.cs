@@ -23,7 +23,7 @@ namespace SOTS.Items.Earth
             item.height = 22;
             item.useTime = 5; 
             item.useAnimation = 5;
-            item.useStyle = 5;    
+            item.useStyle = ItemUseStyleID.HoldingOut;    
             item.noMelee = true;
 			item.knockBack = 2f;  
             item.value = Item.sellPrice(0, 0, 80, 0);
@@ -91,8 +91,7 @@ namespace SOTS.Items.Earth
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<VeryGlowyMushroom>(), 1);
-			recipe.AddRecipeGroup("IronBar", 12);
+			recipe.AddIngredient(ModContent.ItemType<VibrantBar>(), 4);
 			recipe.SetResult(this);
 			recipe.AddTile(TileID.Anvils);
 			recipe.AddRecipe();

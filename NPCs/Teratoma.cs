@@ -234,8 +234,6 @@ namespace SOTS.NPCs
 			if(Main.rand.NextBool(2))
 			{
 				int type = ItemType<CursedTumor>();
-				if (Main.rand.NextBool(10))
-					type = ItemType<Maldite>();
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, type, Main.rand.Next(3) + 4);
 			}
 		}

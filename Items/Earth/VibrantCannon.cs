@@ -3,6 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using SOTS.Void;
+using SOTS.Projectiles.Earth;
 
 namespace SOTS.Items.Earth
 {
@@ -28,7 +29,7 @@ namespace SOTS.Items.Earth
             item.rare = ItemRarityID.Blue;
             item.UseSound = SoundID.Item61;
             item.autoReuse = true;
-            item.shoot = mod.ProjectileType("VibrantBall"); 
+            item.shoot = ModContent.ProjectileType<VibrantBall>(); 
             item.shootSpeed = 8;
 		}
 		public override void GetVoid(Player player)
@@ -46,8 +47,7 @@ namespace SOTS.Items.Earth
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<VeryGlowyMushroom>(), 1);
-			recipe.AddRecipeGroup("IronBar", 15);
+			recipe.AddIngredient(ModContent.ItemType<VibrantBar>(), 10);
 			recipe.SetResult(this);
 			recipe.AddTile(TileID.Anvils);
 			recipe.AddRecipe();

@@ -35,8 +35,7 @@ namespace SOTS.Items.Earth
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "VeryGlowyMushroom", 1);
-			recipe.AddRecipeGroup("IronBar", 12);
+			recipe.AddIngredient(ModContent.ItemType<VibrantBar>(), 6);
 			recipe.SetResult(this);
 			recipe.AddTile(TileID.Anvils);
 			recipe.AddRecipe();
