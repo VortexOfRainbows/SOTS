@@ -12,6 +12,7 @@ using SOTS.Items.Pyramid.AncientGold;
 using SOTS.Items.Pyramid.PyramidWalls;
 using SOTS.Items.Pyramid.AltPyramidBlocks;
 using SOTS.Items.Secrets;
+using SOTS.Items.Fishing;
 
 namespace SOTS
 {
@@ -1197,15 +1198,10 @@ namespace SOTS
 				for (int findTileX = pyramidX + extraSize; findTileX > pyramidX - extraSize; findTileX--)
 				{
 					Tile tile = Framing.GetTileSafely(findTileX, findTileY);
-					/*if (tile.type == ModContent.TileType<CursedTumorTile>() && (tile.active() || tile.wall == (ushort)ModContent.WallType<UnsafeCursedTumorWallWall>()))
+					if (tile.type == ModContent.TileType<CursedTumorTile>() && tile.active())
 					{
 						tile.wall = (ushort)ModContent.WallType<UnsafeCursedTumorWallWall>();
-						if (WorldGen.genRand.NextBool(54 + malditeNum * malditeNum * 10))
-						{
-							DoMalditeGeneration(findTileX, findTileY);
-							malditeNum++;
-						}
-					}*/
+					}
 					if (width > 16 && WorldGen.genRand.NextBool((int)(2300 - width * 5f)) && tile.active() && (tile.type == ModContent.TileType<RuinedPyramidBrickTile>() || tile.type == ModContent.TileType<PyramidSlabTile>()))
 					{
 						int extraWidth = width / 50;
@@ -1662,7 +1658,7 @@ namespace SOTS
 			}
 			else
 			{
-				WorldGen.PlaceTile(x + 1, y, mod.TileType("PyramidCrateTile"));
+				WorldGen.PlaceTile(x + 1, y, ModContent.TileType<PyramidCrateTile>());
 			}
 		}
 		public static void GenerateShrineRoom(int x, int y, Mod mod, int type = 0)

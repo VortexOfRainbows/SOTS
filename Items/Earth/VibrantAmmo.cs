@@ -24,7 +24,7 @@ namespace SOTS.Items.Earth
 			item.value = Item.sellPrice(copper: 5);
 			item.rare = ItemRarityID.Blue;
 			item.shoot = ModContent.ProjectileType<Projectiles.Earth.VibrantBullet>(); 
-			item.shootSpeed = 1f;             
+			item.shootSpeed = 4f;             
 			item.ammo = AmmoID.Bullet;   
             item.UseSound = SoundID.Item23;
 		}
@@ -56,7 +56,7 @@ namespace SOTS.Items.Earth
 			item.value = Item.sellPrice(copper: 5);
 			item.rare = ItemRarityID.Blue;
 			item.shoot = ModContent.ProjectileType<Projectiles.Earth.VibrantArrow>();
-			item.shootSpeed = 1f;
+			item.shootSpeed = 5f;
 			item.ammo = AmmoID.Arrow;
 			item.UseSound = SoundID.Item23;
 		}

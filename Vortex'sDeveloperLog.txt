@@ -28,10 +28,7 @@ Mid Priority:
 	1. Inferno Construct: Incinerator Glove (Magic, Void). Generate a close ranged orb of plasma that you can launch a short distance
 3. Geostorm (void + mage)
 	1. Summons shards that slam into the enemy
-4. Vibrant Bullet & Vibrant Arrow
-	1. Bullet that splits into 3 bullets. The one that goes straight does 100%, other two do 20%
-	2. Arrow that drops down 3 shards for 120% damage after hitting a roof. Does normal damage otherwise.
-5. Shattershine (melee flail)
+4. Shattershine (melee flail)
 
 Low Priority:
 1. Archaelogist NPC
@@ -39,11 +36,18 @@ Low Priority:
 3. Void Bar strike the player during void shock
 4. Fix Planetarium sky island spawning in tandum
 
+1/18/22
+1. Checked: Vibrant Ammo works in multiplayer
+2. Increased velocity of vibrant ammo items
+3. Modified Soul Residue alpha/glow
+4. Fixed cursed tumor walls not spawning properly
+
 1/17/22
 1. Vibrant Alloy (+related) Recipes
 2. Remove Maldite, Maldite Wall, Glowy Mushroom
-3. Vibrant Arrow + Bullet (should work in Multiplayer
+3. Vibrant Arrow + Bullet
 	1. Some prep for Geostorm
+4. Soul Residue is somewhat glowy and transparent
 
 1/15/22 & 1/16/22
 1. Added several precautions to prevent the void bar from going offscreen

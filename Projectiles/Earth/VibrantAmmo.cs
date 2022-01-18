@@ -193,7 +193,7 @@ namespace SOTS.Projectiles.Earth
 			height = 8;
 			return base.TileCollideStyle(ref width, ref height, ref fallThrough);
 		}
-		float aiCounter = 500;
+		float aiCounter = 400;
 		public override void AI()
 		{
 			projectile.scale = 0.9f;
@@ -203,7 +203,7 @@ namespace SOTS.Projectiles.Earth
 				projectile.alpha -= 20;
 			else
 				projectile.alpha = 0;
-			aiCounter -= 10 + projectile.velocity.Length();
+			aiCounter -= 8 + projectile.velocity.Length();
 			if(aiCounter <= 0 && !off)
             {
 				off = true;
