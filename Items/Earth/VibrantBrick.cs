@@ -46,6 +46,7 @@ namespace SOTS.Items.Earth
 			Main.tileBrick[Type] = true;
 			Main.tileMergeDirt[Type] = true;
 			Main.tileBlockLight[Type] = true;
+			Main.tileLighted[Type] = true;
 			drop = ModContent.ItemType<VibrantBrick>();
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Vibrant Brick");
@@ -54,6 +55,36 @@ namespace SOTS.Items.Earth
 			soundType = SoundID.Tink;
 			soundStyle = 2;
 			dustType = ModContent.DustType<VibrantDust>();
+		}
+		public bool canGlow(int i, int j)
+		{
+			Tile tile = Main.tile[i, j];
+			int frameX = tile.frameX / 18;
+			int frameY = tile.frameY / 18;
+			if (frameX >= 1 && frameX <= 3 && (frameY == 1))
+				return true;
+			if (frameX >= 6 && frameX <= 8 && (frameY == 1 || frameY == 2 || frameY == 11))
+				return true;
+			if ((frameX == 10 || frameX == 11) && frameY >= 0 && frameY <= 2)
+				return true;
+			if (frameY >= 5 && frameY <= 10 && (frameX <= 3 || (frameX >= 8 && frameX <= 12)))
+				return true;
+			return false;
+		}
+		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
+		{
+			if (canGlow(i, j))
+			{
+				r = 0.27f;
+				g = 0.33f;
+				b = 0.15f;
+			}
+			else
+			{
+				r = 0;
+				g = 0;
+				b = 0;
+			}
 		}
 		public override bool KillSound(int i, int j)
 		{
