@@ -41,6 +41,7 @@ Low Priority:
 2. Increased velocity of vibrant ammo items
 3. Modified Soul Residue alpha/glow
 4. Fixed cursed tumor walls not spawning properly
+5. Vibrant Brick
 
 1/17/22
 1. Vibrant Alloy (+related) Recipes
