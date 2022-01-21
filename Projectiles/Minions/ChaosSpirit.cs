@@ -61,7 +61,7 @@ namespace SOTS.Projectiles.Minions
 					Color color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(i + 180 * j));
 					Vector2 addition = new Vector2(0, postChargeCounter * (0.5f + 0.5f * j)).RotatedBy(projectile.rotation);
 					Vector2 center = projectile.Center + addition;
-					Vector2 rotation = new Vector2(26 * (j == 0 ? 1 : furtherCompression), 0).RotatedBy(MathHelper.ToRadians(i + SOTSPlayer.ModPlayer(player).orbitalCounter));
+					Vector2 rotation = new Vector2(26 * (j == 0 ? 1 : furtherCompression), 0).RotatedBy(MathHelper.ToRadians(i + Main.GameUpdateCount));
 					rotation.Y *= compressions[j];
 					rotation = rotation.RotatedBy(rotations[j] + projectile.rotation);
 					Main.spriteBatch.Draw(texture, center - Main.screenPosition + rotation, null, new Color(color.R, color.G, color.B, 0) * (j == 0 ? 1 : furtherCompression) * 0.6f, projectile.rotation, new Vector2(texture.Width / 2, texture.Height / 2), 0.75f, SpriteEffects.None, 0f);
@@ -73,7 +73,7 @@ namespace SOTS.Projectiles.Minions
 					Color color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(i + 180 * j));
 					Vector2 addition = new Vector2(0, postChargeCounter * (0.5f + 0.5f * j)).RotatedBy(projectile.rotation);
 					Vector2 center = projectile.Center + addition;
-					Vector2 rotation = new Vector2(26 * (j == 0 ? 1 : furtherCompression), 0).RotatedBy(MathHelper.ToRadians(i + SOTSPlayer.ModPlayer(player).orbitalCounter));
+					Vector2 rotation = new Vector2(26 * (j == 0 ? 1 : furtherCompression), 0).RotatedBy(MathHelper.ToRadians(i + Main.GameUpdateCount));
 					rotation.Y *= compressions[j];
 					rotation = rotation.RotatedBy(rotations[j] + projectile.rotation);
 					Main.spriteBatch.Draw(texture, center - Main.screenPosition + rotation, null, new Color(color.R, color.G, color.B, 0) * (j == 0 ? 1 : furtherCompression) * 0.6f, projectile.rotation, new Vector2(texture.Width / 2, texture.Height / 2), 0.75f, SpriteEffects.None, 0f);
@@ -91,7 +91,7 @@ namespace SOTS.Projectiles.Minions
 					{
 						float scale = 1.0f - 0.25f * i;
 						Color color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(k * 60));
-						Vector2 modi = new Vector2(2f * scale, 0).RotatedBy(MathHelper.ToRadians(k * 60 + SOTSPlayer.ModPlayer(player).orbitalCounter));
+						Vector2 modi = new Vector2(2f * scale, 0).RotatedBy(MathHelper.ToRadians(k * 60 + Main.GameUpdateCount));
 						Main.spriteBatch.Draw(texture, projectile.Center - Main.screenPosition + toPosition + modi, null, new Color(color.R, color.G, color.B, 0), toPosition.ToRotation(), origin, scale, SpriteEffects.None, 0f);
 					}
 				}

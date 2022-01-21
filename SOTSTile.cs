@@ -79,6 +79,11 @@ namespace SOTS
         }
         public override void RandomUpdate(int i, int j, int type)
         {
+            Tile tile = Main.tile[i, j];
+            if(tile.slope() != 0 || tile.halfBrick())
+            {
+                return;
+            }
             if(type == TileType<CursedTumorTile>() || type == TileType<VibrantOreTile>())
             {
                 int rate = 60;
