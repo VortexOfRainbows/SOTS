@@ -238,6 +238,13 @@ namespace SOTS
                 if (frame >= 65 && frame <= 69)
                     return false;
             }
+            if (Main.tile[i, j - 1].type == (ushort)TileType<BigCrystalTile>())
+            {
+                int frameX = Main.tile[i, j - 1].frameX / 18;
+                int frameY = Main.tile[i, j - 1].frameY / 18;
+                if (frameY == 13 && frameX >= 2 && frameX <= 11)
+                    return false;
+            }
             if (Main.tile[i, j - 1].type == (ushort)TileType<PotGeneratorTile>() && !SOTSWorld.downedAdvisor)
             {
                 return false;
