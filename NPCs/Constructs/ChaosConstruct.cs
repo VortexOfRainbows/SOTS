@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
 using SOTS.Items.Fragments;
 using SOTS.Projectiles.Celestial;
+using SOTS.Projectiles.Chaos;
 using SOTS.Projectiles.Inferno;
 using SOTS.Void;
 using Terraria;
@@ -56,23 +57,37 @@ namespace SOTS.NPCs.Constructs
 			Main.spriteBatch.Draw(ModContent.GetTexture("SOTS/NPCs/Constructs/ChaosConstructGlow"), npc.Center - Main.screenPosition + new Vector2(0, npc.gfxOffY), null, Color.White, dir, origin, npc.scale, SpriteEffects.None, 0f);
 			return false;
 		}
-		float counter1 = 0;
+		float wingSpeedMult = 1f;
 		float counter2 = 0;
+		bool forceWingHeight = false;
 		float lastWingHeight = 0; //wings offset in degrees
 		float wingHeight; //wings offset in degrees
 		public void WingStuff()
 		{
-			counter2 += 7.5f;
+			counter2 += 7.5f * wingSpeedMult;
 			float dipAndRise = (float)Math.Sin(MathHelper.ToRadians(counter2));
 			//dipAndRise *= (float)Math.sqrt(dipAndRise);
-			wingHeight = 19 + dipAndRise * 27;
-			lastWingHeight = wingHeight;
+			if(!forceWingHeight)
+            {
+				wingHeight = 19 + dipAndRise * 27;
+				lastWingHeight = wingHeight;
+			}
+			else
+            {
+
+            }
 		}
 		public void DrawWings()
         {
 			Texture2D texture = ModContent.GetTexture("SOTS/NPCs/Constructs/ChaosParticle");
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
 			float dipAndRise = (float)Math.Sin(MathHelper.ToRadians(counter2));
+			if(forceWingHeight)
+            {
+				float supposedWingHeight = wingHeight - 19;
+				dipAndRise = supposedWingHeight / 27f;
+				dipAndRise = MathHelper.Clamp(dipAndRise, -1, 1);
+			}
 			int width = 130;
 			int height = 90;
 			int amtOfParticles = 120;
@@ -170,7 +185,6 @@ namespace SOTS.NPCs.Constructs
 		{
 			Player player = Main.player[npc.target];
 			npc.TargetClosest(false);
-			aimTo = player.Center;
 			WingStuff();
 			return true;
 		}
@@ -178,21 +192,99 @@ namespace SOTS.NPCs.Constructs
 		{
 			Player player = Main.player[npc.target];
 			Lighting.AddLight(npc.Center, (255 - npc.alpha) * 0.45f / 155f, (255 - npc.alpha) * 0.25f / 155f, (255 - npc.alpha) * 0.45f / 155f);
-			Vector2 toPlayer = player.Center - npc.Center;
-			dir = (float)Math.Atan2(aimTo.Y - npc.Center.Y, aimTo.X - npc.Center.X);
-			//npc.rotation = dir;
-			if(npc.ai[0] == 0)
-            {
-				npc.rotation = npc.velocity.X * 0.06f;
-				DoPassiveMovement();
+			if (npc.ai[0] == 0)
+			{
+				npc.ai[1]++;
+				if (forceWingHeight)
+				{
+					float mult = npc.ai[1] / 20f;
+					wingHeight = MathHelper.Lerp(wingHeight, lastWingHeight, mult);
+					if (mult >= 1)
+						forceWingHeight = false;
+					npc.rotation = npc.velocity.X * 0.06f;
+					aimTo = Vector2.Lerp(aimTo, npc.Center + new Vector2(0, 400).RotatedBy(npc.rotation), mult);
+				}
+				else
+				{
+					npc.rotation = npc.velocity.X * 0.06f;
+					aimTo = npc.Center + new Vector2(0, 400).RotatedBy(npc.rotation);
+					DoPassiveMovement();
+					if (npc.ai[1] > 180)
+					{
+						float wingSpeed = (npc.ai[1] - 180) / 60f;
+						wingSpeedMult = 1 - wingSpeed;
+						if (npc.ai[1] > 240)
+						{
+							npc.ai[0] = 1;
+							npc.ai[1] = 0;
+						}
+					}
+					else
+					{
+						if (wingSpeedMult < 1)
+						{
+							wingSpeedMult = MathHelper.Lerp(wingSpeedMult, 1, 0.04f);
+						}
+					}
+				}
+			}
+			else if(npc.ai[0] == 1)
+			{
+				npc.ai[1]++;
+				forceWingHeight = true;
+				if(npc.ai[1] > 20)
+				{
+					aimTo = Vector2.Lerp(aimTo, player.Center, 0.08f);
+					wingHeight = 50;
+					Vector2 toPlayer = aimTo - npc.Center;
+					npc.velocity *= 0.96f;
+					if (npc.ai[1] > 80)
+					{
+						Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 91, 1.3f, -0.4f);
+						int damage2 = npc.damage / 2;
+						if (Main.expertMode)
+						{
+							damage2 = (int)(damage2 / Main.expertDamage);
+						}
+						if (Main.netMode != NetmodeID.MultiplayerClient)
+						{
+							Projectile.NewProjectile(npc.Center + toPlayer.SafeNormalize(Vector2.Zero) * 32, toPlayer.SafeNormalize(Vector2.Zero) * 3f, ModContent.ProjectileType<ChaosCircle>(), damage2, 0, Main.myPlayer);
+						}
+						npc.velocity -= toPlayer.SafeNormalize(Vector2.Zero) * 10f;
+						npc.ai[1] = 20;
+						npc.ai[2]++;
+					}
+					else
+                    {
+						float scalingSpeed = (float)Math.Sqrt(toPlayer.Length()) * 0.005f;
+						npc.velocity += toPlayer.SafeNormalize(Vector2.Zero) * (0.10f + scalingSpeed);
+					}
+					if(npc.ai[2] > 3 && npc.ai[1] > 60)
+					{
+						npc.ai[0] = 0;
+						npc.ai[1] = 0;
+						npc.ai[2] = 0;
+					}
+                }
+				else
+				{
+					npc.velocity *= 0.96f;
+					aimTo = Vector2.Lerp(aimTo, player.Center, npc.ai[1] / 30f);
+					wingHeight = MathHelper.Lerp(lastWingHeight, 50, npc.ai[1] / 20f);
+                }
             }
-			dir = npc.rotation;
+			else
+            {
+				aimTo = npc.Center;
+			}
+			dir = (aimTo - npc.Center).ToRotation() - MathHelper.ToRadians(90);
+			npc.rotation = dir;
+			npc.ai[3]++;
 		}
 		public void DoPassiveMovement()
 		{
 			Player player = Main.player[npc.target];
-			npc.ai[1]++;
-			float sinusoid = (float)Math.Sin(MathHelper.ToRadians(npc.ai[1]));
+			float sinusoid = (float)Math.Sin(MathHelper.ToRadians(npc.ai[3]));
 			Vector2 offset = new Vector2(0, -300).RotatedBy(MathHelper.ToRadians(sinusoid * 30));
 			offset.X *= 1.5f;
 			Vector2 position = player.Center + offset;

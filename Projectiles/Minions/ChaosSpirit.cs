@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.ID;
 using System.IO;
 using SOTS.Void;
+using Terraria.ModLoader;
 
 namespace SOTS.Projectiles.Minions
 {
@@ -308,7 +309,7 @@ namespace SOTS.Projectiles.Minions
 					projectile.ai[0] -= 5;
 					if (Main.myPlayer == projectile.owner)
 					{
-						Projectile.NewProjectileDirect(projectile.Center + new Vector2(0, 1).RotatedBy(projectile.rotation) * 45, new Vector2(0, 1).RotatedBy(projectile.rotation) * 3, mod.ProjectileType("ChaosBeam"), projectile.damage, projectile.knockBack, Main.myPlayer, targetID, 0);
+						Projectile.NewProjectileDirect(projectile.Center + new Vector2(0, 1).RotatedBy(projectile.rotation) * 45, new Vector2(0, 1).RotatedBy(projectile.rotation) * 3, ModContent.ProjectileType<ChaosBeam>(), projectile.damage, projectile.knockBack, Main.myPlayer, targetID, 0);
 					}
 					projectile.velocity -= new Vector2(0, 1).RotatedBy(projectile.rotation) * 3.25f;
 				}

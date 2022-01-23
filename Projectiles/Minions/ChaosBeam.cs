@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Dusts;
 using SOTS.Void;
 using System.Collections.Generic;
 using System.IO;
@@ -59,7 +60,7 @@ namespace SOTS.Projectiles.Minions
 				ogPos = projectile.Center;
 				for (int i = 0; i < 2; i++)
 				{
-					Dust dust2 = Dust.NewDustDirect(projectile.Center - new Vector2(5) - new Vector2(10, 10), 24, 24, mod.DustType("CopyDust4"), 0, 0, 100, default, 1.6f);
+					Dust dust2 = Dust.NewDustDirect(projectile.Center - new Vector2(5) - new Vector2(10, 10), 24, 24, ModContent.DustType<CopyDust4>(), 0, 0, 100, default, 1.6f);
 					dust2.velocity += projectile.velocity * 0.5f;
 					dust2.noGravity = true;
 					dust2.color = VoidPlayer.pastelRainbow;
@@ -116,7 +117,7 @@ namespace SOTS.Projectiles.Minions
 				for (int j = drawPoints.Count - 3; j < drawPoints.Count; j++)
 				{
 					center = drawPoints[j];
-					Dust dust = Dust.NewDustDirect(center - new Vector2(5), 0, 0, mod.DustType("CopyDust4"), 0, 0, 100, default, 1.6f);
+					Dust dust = Dust.NewDustDirect(center - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 100, default, 1.6f);
 					dust.velocity += projectile.velocity * 0.3f;
 					dust.noGravity = true;
 					dust.color = VoidPlayer.pastelRainbow;

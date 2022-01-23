@@ -38,6 +38,9 @@ Low Priority:
 3. Void Bar strike the player during void shock
 4. Fix Planetarium sky island spawning in tandum
 
+1/23/22
+1. Attack for Chaos Construct (WIP)
+
 1/20/22 & 1/21/22 & 1/22/22
 1. Basic Wings framework for Chaos Construct
 2. Big (crystal) tile. Will need more stuff but is implemented for now
