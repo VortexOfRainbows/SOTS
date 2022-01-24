@@ -27,6 +27,7 @@ using SOTS.Items.Evil;
 using SOTS.Items.Tide;
 using SOTS.Items.Permafrost;
 using SOTS.Items.Otherworld.Blocks;
+using SOTS.Items.Inferno;
 
 namespace SOTS.NPCs
 {
@@ -293,7 +294,7 @@ namespace SOTS.NPCs
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<PyramidKey>(), 1);
 				}
-				if(npc.type == ModContent.NPCType<NatureConstruct>() || npc.type == ModContent.NPCType<EarthenConstruct>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead2>() || npc.type == ModContent.NPCType<PermafrostConstruct>() || npc.type == ModContent.NPCType<TidalConstruct>() || npc.type == ModContent.NPCType<EvilConstruct>() || npc.type == ModContent.NPCType<InfernoConstruct>())
+				if(npc.type == ModContent.NPCType<NatureConstruct>() || npc.type == ModContent.NPCType<EarthenConstruct>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead2>() || npc.type == ModContent.NPCType<PermafrostConstruct>() || npc.type == ModContent.NPCType<TidalConstruct>() || npc.type == ModContent.NPCType<EvilConstruct>() || npc.type == ModContent.NPCType<InfernoConstruct>() || npc.type == ModContent.NPCType<ChaosConstruct>())
 				{
 					if(Main.rand.NextBool(50))
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<CrushingResistor>(), 1);
@@ -311,6 +312,8 @@ namespace SOTS.NPCs
 							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<PiscesPuncher>(), 1);
 						if (npc.type == ModContent.NPCType<EvilConstruct>())
 							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<DeathSpiral>(), 1);
+						if (npc.type == ModContent.NPCType<InfernoConstruct>())
+							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<IncineratorGlove>(), 1);
 					}
 					else
 					{
@@ -326,6 +329,8 @@ namespace SOTS.NPCs
 							type = ModContent.ItemType<TidePlating>();
 						if (npc.type == ModContent.NPCType<EvilConstruct>())
 							type = ModContent.ItemType<EvilPlating>();
+						if (npc.type == ModContent.NPCType<ChaosConstruct>())
+							type = ModContent.ItemType<ChaosPlating>();
 						if (npc.type == ModContent.NPCType<OtherworldlyConstructHead2>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead>())
 						{
 							if (npc.type == ModContent.NPCType<OtherworldlyConstructHead2>())

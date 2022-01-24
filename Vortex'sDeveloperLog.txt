@@ -40,6 +40,9 @@ Low Priority:
 
 1/23/22
 1. Attack for Chaos Construct (WIP)
+2. Fixed weird glow on Plasma Ball for Inferno Construct
+3. Worked on Incinerator Glove (may need balancing + Server Syncing)
+4. Chaos Construct drops
 
 1/20/22 & 1/21/22 & 1/22/22
 1. Basic Wings framework for Chaos Construct

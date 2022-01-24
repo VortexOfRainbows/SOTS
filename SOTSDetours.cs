@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Projectiles.Inferno;
 using SOTS.Projectiles.Minions;
 using SOTS.Utilities;
 using Terraria;
@@ -114,7 +115,11 @@ namespace SOTS
 					Projectile proj = Main.projectile[i];
 					if (proj.active && proj.modProjectile is IOrbitingProj modProj && modProj.inFront)
 					{
-						modProj.Draw(Main.spriteBatch, Color.White); //change later
+						modProj.Draw(Main.spriteBatch, Color.White);
+					}
+					if (proj.active && proj.modProjectile is IncineratorGloveProjectile modProj2)
+					{
+						modProj2.Draw(Main.spriteBatch, Color.White); 
 					}
 				}
 				Main.spriteBatch.End();

@@ -103,7 +103,7 @@ namespace SOTS.NPCs.Constructs
 					color.A = 0;
 					Main.spriteBatch.End();
 					Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
-					SOTS.GodrayShader.Parameters["distance"].SetValue(24 * percent);
+					SOTS.GodrayShader.Parameters["distance"].SetValue(6);
 					SOTS.GodrayShader.Parameters["colorMod"].SetValue(color.ToVector4());
 					SOTS.GodrayShader.Parameters["noise"].SetValue(mod.GetTexture("TrailTextures/noise"));
 					SOTS.GodrayShader.Parameters["rotation"].SetValue(MathHelper.ToRadians(percent * 480));
