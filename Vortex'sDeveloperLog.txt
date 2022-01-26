@@ -4,12 +4,13 @@ The following is my development plans :D
 2. Ghost Town to Evil Biome
 
 Known Bugs:
-1. Lag generates in multiplayer after a while of playing. (Fixed?)
+1. Lag generates in multiplayer after a while of playing. (Not fixed)
 	1. Seem to generate client-side not server side..?
 	2. No memory leak on single player, or client side when testing..?
 2. Primitives crash. (Fixed?)
 3. Earthen Construct causing freezes occassionally. Conditions unknown (usually after it goes of screen).
 	1. Less frequent than before 0.20, but still happens? 
+4. Alch NPC causes immense lag with Otherworldly Construct (not SOTS-side)
 
 High Priority:
 1. Starmap and Digital Daito Obtaining
@@ -25,7 +26,10 @@ Mid Priority:
 	4. True Phaseblade -> Starward Sword
 	5. Chaos Chamber
 2. Construct Items:
-	1. Inferno Construct: Incinerator Glove (Magic, Void). Generate a close ranged orb of plasma that you can launch a short distance
+	1. Particle Relocator (chaos): getting hit by an enemy (melee) will teleport you to the other side of the enemy, 
+	dealing damage to them and preventing you from taking damage.
+		1. After tp, Chaos State + Surprise Attack
+		2. Surprise Attack (buff): 50% increased melee damage for a few seconds after teleporting
 3. Geostorm (void + mage)
 	1. Summons shards that slam into the enemy
 4. Shattershine (melee flail)
@@ -37,6 +41,11 @@ Low Priority:
 2. Accessory Pets to use own dye slots.
 3. Void Bar strike the player during void shock
 4. Fix Planetarium sky island spawning in tandum
+
+1/25/22
+1. Incinerator Glove now has a max damage of 3300% (80 charges), does 50% damage as melee, and hits half as often as melee
+	1. Damage 27 -> 33 to compensate
+	2. Checked: server syncs fine!
 
 1/23/22
 1. Attack for Chaos Construct (WIP)

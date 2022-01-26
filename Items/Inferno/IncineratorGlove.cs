@@ -14,12 +14,12 @@ namespace SOTS.Items.Inferno
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Incinerator Glove");
-			Tooltip.SetDefault("Charge up a ball of hot plasma\nGains 40% additional damage each charge");
+			Tooltip.SetDefault("Charge up a short-ranged ball of hot plasma\nGains 40% additional damage each charge\nMaxes out at 80 charges\nOnly does half damage prior to firing");
 			Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(6, 4));
 		}
 		public override void SafeSetDefaults()
 		{
-			item.damage = 27;
+			item.damage = 33;
 			item.magic = true;
 			item.width = 36;
 			item.height = 36;

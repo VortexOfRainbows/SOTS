@@ -24,7 +24,7 @@ namespace SOTS.Projectiles.Inferno
 			projectile.timeLeft = 6004;
 			projectile.tileCollide = false;
 			projectile.hostile = false;
-			projectile.localNPCHitCooldown = 5;
+			projectile.localNPCHitCooldown = 10;
 			projectile.usesLocalNPCImmunity = true;
 		}
         public override void ModifyDamageHitbox(ref Rectangle hitbox)
@@ -76,7 +76,10 @@ namespace SOTS.Projectiles.Inferno
 		}
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-			damage = (int)(damage * (0.6f + totalCharges * 0.4f));
+			float damageMult = 1f;
+			if (!ended)
+				damageMult = 0.5f;
+			damage = (int)(damage * (0.6f + totalCharges * 0.4f) * damageMult);
         }
         int counter = 0;
 		int totalCharges = 1;
@@ -87,7 +90,7 @@ namespace SOTS.Projectiles.Inferno
         public override void Kill(int timeLeft)
 		{
 			Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 62, 0.9f, -0.5f);
-			for (int i = 24 + totalCharges * 2; i > 0; i--)
+			for (int i = 30; i > 0; i--)
 			{
 				Vector2 circular = new Vector2(48, 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)));
 				int dust2 = Dust.NewDust(projectile.Center - new Vector2(12, 12), 16, 16, ModContent.DustType<CopyDust4>());
@@ -126,9 +129,9 @@ namespace SOTS.Projectiles.Inferno
 				projectile.Center = player.MountedCenter + projectile.velocity;
 				projectile.timeLeft = 120;
 				projectile.ai[1]++;
-				if(projectile.ai[1] > projectile.ai[0])
+				if(projectile.ai[1] > projectile.ai[0] && totalCharges < 80)
 				{
-					Main.PlaySound(SoundID.Item, (int)(projectile.Center.X), (int)(projectile.Center.Y), 15, 1f, -0.1f);
+					Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 15, 1f, -0.1f);
 					if (Main.myPlayer == player.whoAmI)
 					{
 						VoidItem.DrainMana(player);
@@ -139,9 +142,10 @@ namespace SOTS.Projectiles.Inferno
 			}
 			else
 			{
+				projectile.localNPCHitCooldown = 5;
 				if (projectile.ai[0] >= 0)
 				{
-					Main.PlaySound(SoundID.Item, (int)(projectile.Center.X), (int)(projectile.Center.Y), 92, 0.9f, -0.4f);
+					Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 92, 0.9f, -0.4f);
 					projectile.velocity = projectile.velocity.SafeNormalize(Vector2.Zero) * (10 + (float)Math.Sqrt(totalCharges * 1.3f + 1f));
 					projectile.ai[0] = -1;
 				}
