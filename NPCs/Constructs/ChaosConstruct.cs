@@ -173,7 +173,7 @@ namespace SOTS.NPCs.Constructs
 						Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.Fire, 2.5f * (float)hitDirection, -2.5f, 0, default(Color), 2.2f);
 					}
 					for (int i = 1; i <= 7; i++)
-						Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/InfernoConstruct/InfernoConstructGore" + i), 1f);
+						Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/ChaosConstruct/ChaosConstructGore" + i), 1f);
 					for (int i = 0; i < 9; i++)
 						Gore.NewGore(npc.position, npc.velocity, Main.rand.Next(61, 64), 1f);
                 }
@@ -215,8 +215,10 @@ namespace SOTS.NPCs.Constructs
 						wingSpeedMult = 1 - wingSpeed;
 						if (npc.ai[1] > 240)
 						{
-							npc.ai[0] = 1;
+							npc.ai[0] = Main.rand.Next(2) + 1;
 							npc.ai[1] = 0;
+							if(Main.netMode == NetmodeID.Server)
+								npc.netUpdate = true;
 						}
 					}
 					else
@@ -238,7 +240,7 @@ namespace SOTS.NPCs.Constructs
 					wingHeight = 50;
 					Vector2 toPlayer = aimTo - npc.Center;
 					npc.velocity *= 0.96f;
-					if (npc.ai[1] > 80)
+					if (npc.ai[1] > 70)
 					{
 						Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 91, 1.3f, -0.4f);
 						int damage2 = npc.damage / 2;
@@ -248,10 +250,10 @@ namespace SOTS.NPCs.Constructs
 						}
 						if (Main.netMode != NetmodeID.MultiplayerClient)
 						{
-							Projectile.NewProjectile(npc.Center + toPlayer.SafeNormalize(Vector2.Zero) * 32, toPlayer.SafeNormalize(Vector2.Zero) * 3f, ModContent.ProjectileType<ChaosCircle>(), damage2, 0, Main.myPlayer);
+							Projectile.NewProjectile(npc.Center + toPlayer.SafeNormalize(Vector2.Zero) * 32, toPlayer.SafeNormalize(Vector2.Zero) * 4f, ModContent.ProjectileType<ChaosCircle>(), damage2, 0, Main.myPlayer);
 						}
-						npc.velocity -= toPlayer.SafeNormalize(Vector2.Zero) * 10f;
-						npc.ai[1] = 20;
+						npc.velocity -= toPlayer.SafeNormalize(Vector2.Zero) * 9f;
+						npc.ai[1] = 40;
 						npc.ai[2]++;
 					}
 					else
@@ -259,7 +261,7 @@ namespace SOTS.NPCs.Constructs
 						float scalingSpeed = (float)Math.Sqrt(toPlayer.Length()) * 0.005f;
 						npc.velocity += toPlayer.SafeNormalize(Vector2.Zero) * (0.10f + scalingSpeed);
 					}
-					if(npc.ai[2] > 3 && npc.ai[1] > 60)
+					if(npc.ai[2] > 6 && npc.ai[1] > 60)
 					{
 						npc.ai[0] = 0;
 						npc.ai[1] = 0;
@@ -272,7 +274,52 @@ namespace SOTS.NPCs.Constructs
 					aimTo = Vector2.Lerp(aimTo, player.Center, npc.ai[1] / 30f);
 					wingHeight = MathHelper.Lerp(lastWingHeight, 50, npc.ai[1] / 20f);
                 }
-            }
+			}
+			else if (npc.ai[0] == 2)
+			{
+				npc.ai[1]++;
+				forceWingHeight = true;
+				if (npc.ai[1] > 20)
+				{
+					aimTo = Vector2.Lerp(aimTo, player.Center, 0.08f);
+					wingHeight = 50;
+					Vector2 toPlayer = aimTo - npc.Center;
+					npc.velocity *= 0.96f;
+					if (npc.ai[1] > 100)
+					{
+						Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 92, 1.3f, -0.4f);
+						int damage2 = npc.damage / 2;
+						if (Main.expertMode)
+						{
+							damage2 = (int)(damage2 / Main.expertDamage);
+						}
+						if (Main.netMode != NetmodeID.MultiplayerClient)
+						{ 
+							Projectile.NewProjectile(npc.Center + toPlayer.SafeNormalize(Vector2.Zero) * 32, toPlayer.SafeNormalize(Vector2.Zero) * (11f + 5f * npc.ai[2]), ModContent.ProjectileType<ChaosSphere>(), (int)(damage2 * 1.2f), 0, Main.myPlayer, 220 - npc.ai[2] * 80);
+						}
+						npc.velocity -= toPlayer.SafeNormalize(Vector2.Zero) * 14f;
+						npc.ai[1] = 20;
+						npc.ai[2]++;
+					}
+					else
+					{
+						float scalingSpeed = (float)Math.Sqrt(toPlayer.Length()) * 0.002f;
+						npc.velocity += toPlayer.SafeNormalize(Vector2.Zero) * (0.07f + scalingSpeed);
+					}
+					if (npc.ai[2] > 1 && npc.ai[1] > 70)
+					{
+						npc.ai[0] = 0;
+						npc.ai[1] = 0;
+						npc.ai[2] = 0;
+					}
+				}
+				else
+				{
+					npc.velocity *= 0.96f;
+					aimTo = Vector2.Lerp(aimTo, player.Center, npc.ai[1] / 30f);
+					wingHeight = MathHelper.Lerp(lastWingHeight, 50, npc.ai[1] / 20f);
+				}
+			}
 			else
             {
 				aimTo = npc.Center;

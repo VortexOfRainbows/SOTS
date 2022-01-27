@@ -1,6 +1,7 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Projectiles.Otherworld;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -65,7 +66,7 @@ namespace SOTS.Items.Otherworld
 				Vector2 mouse = Main.MouseWorld;
 				if (player.whoAmI == Main.myPlayer)
 				{
-					index = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, mod.ProjectileType("OtherworldlyTracer"), item.damage, item.knockBack, player.whoAmI, 1000, -1);
+					index = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, ModContent.ProjectileType<OtherworldlyTracer>(), item.damage, item.knockBack, player.whoAmI, 1000, -1);
 				}
 			}
 			else if (index < -1)

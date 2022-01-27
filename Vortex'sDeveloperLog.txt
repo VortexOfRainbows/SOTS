@@ -42,10 +42,12 @@ Low Priority:
 3. Void Bar strike the player during void shock
 4. Fix Planetarium sky island spawning in tandum
 
-1/25/22
+1/25/22 & 1/26/22
 1. Incinerator Glove now has a max damage of 3300% (80 charges), does 50% damage as melee, and hits half as often as melee
 	1. Damage 27 -> 33 to compensate
 	2. Checked: server syncs fine!
+2. Added another attack for Chaos Construct (this one is also a bit simple)
+3. Also Chaos Construct gore
 
 1/23/22
 1. Attack for Chaos Construct (WIP)

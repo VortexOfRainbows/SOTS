@@ -578,7 +578,7 @@ namespace SOTS
         public override void ResetEffects()
 		{
 			pyramidBattle = false;
-			if (normalizedGravity)
+			if (normalizedGravity && !((TestWingsPlayer)player.GetModPlayer(mod, "TestWingsPlayer")).creativeFlight)
             {
 				player.gravity = Player.defaultGravity;
             }
