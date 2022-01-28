@@ -217,7 +217,7 @@ namespace SOTS.Items.Otherworld.EpicWings
 					VoidPlayer.VoidEffect(player, (int)(-5 * voidPlayer.voidCost), false, false);
 				}
 				creativeFlight = !creativeFlight; 
-				if(Main.myPlayer == player.whoAmI)
+				if(Main.myPlayer == player.whoAmI && Main.netMode != NetmodeID.SinglePlayer)
 					SendPacket();
 			}
 		}

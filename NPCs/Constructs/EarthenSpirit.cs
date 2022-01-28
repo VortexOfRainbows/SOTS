@@ -1,6 +1,9 @@
 using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Dusts;
+using SOTS.Items.Fragments;
+using SOTS.Projectiles.Earth;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -150,7 +153,7 @@ namespace SOTS.NPCs.Constructs
 			if(owner != -1)
 			{
 				NPC head = Main.npc[owner];
-				if(head.type == mod.NPCType("EarthenSpirit"))
+				if(head.type == ModContent.NPCType<EarthenSpirit>())
 				{
 					if(!head.active)
 					{
@@ -176,7 +179,7 @@ namespace SOTS.NPCs.Constructs
 		public override void AI()
 		{	
 			Player player = Main.player[npc.target];
-			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			if (phase == 3)
 			{
 				npc.aiStyle = -1;
@@ -228,11 +231,11 @@ namespace SOTS.NPCs.Constructs
 									float degrees = i * 45;
 									Vector2 rotate = new Vector2(2.75f, 0).RotatedBy(MathHelper.ToRadians(degrees));
 									if (Main.netMode != NetmodeID.MultiplayerClient)
-										Projectile.NewProjectile(npc.Center, rotate, mod.ProjectileType("EarthenBolt"), 20, 0, Main.myPlayer);
+										Projectile.NewProjectile(npc.Center, rotate, ModContent.ProjectileType<EarthenBolt>(), 20, 0, Main.myPlayer);
 								}
 							}
 						}
-						if (Main.netMode != 1)
+						if (Main.netMode != NetmodeID.MultiplayerClient)
 						{
 							npc.netUpdate = true;
 						}
@@ -264,7 +267,7 @@ namespace SOTS.NPCs.Constructs
 			}
 			if(phase == 2)
 			{
-				if (Main.netMode != 1)
+				if (Main.netMode != NetmodeID.MultiplayerClient)
 				{
 					npc.netUpdate = true;
 				}
@@ -292,7 +295,7 @@ namespace SOTS.NPCs.Constructs
 				npc.velocity.Y -= 0.014f;
 				npc.dontTakeDamage = true;
 			}
-			int dust2 = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, mod.DustType("CopyDust4"));
+			int dust2 = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, ModContent.DustType<CopyDust4>());
 			Dust dust = Main.dust[dust2];
 			dust.color = new Color(255, 191, 0);
 			dust.noGravity = true;
@@ -354,7 +357,7 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override void NPCLoot()
 		{
-			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("DissolvingEarth"), 1);	
+			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<DissolvingEarth>(), 1);	
 		}	
 	}
 }

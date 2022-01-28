@@ -42,8 +42,8 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 NPCID.Werewolf, NPCID.Slimer, NPCID.PossessedArmor, NPCID.VampireBat, NPCID.Vampire, NPCID.SwampThing, NPCID.Crimera, NPCID.Reaper, NPCID.BlueArmoredBones, NPCID.BlueArmoredBonesMace, NPCID.BlueArmoredBonesNoPants, NPCID.BlueArmoredBonesSword, NPCID.Necromancer, NPCID.NecromancerArmored, NPCID.DungeonSpirit, NPCID.Ghost, NPCID.MourningWood, NPCID.Splinterling, NPCID.Pumpking, NPCID.Poltergeist,
                 NPCID.Everscream, NPCID.IceQueen, NPCID.StardustCellBig, NPCID.StardustCellSmall, NPCID.CultistBoss, NPCID.CultistDragonHead, NPCID.BloodZombie, NPCID.Drippler
             };
-            spirits = new int[] { NPCType<Constructs.NatureSpirit>(), NPCType<Constructs.EarthenSpirit>(), NPCType<Constructs.PermafrostSpirit>(), NPCType<Constructs.TidalSpirit>(), NPCType<EvilSpirit>(), NPCType<InfernoSpirit>() };
-            intimidating = new int[] { NPCType<NatureConstruct>(), NPCType<EarthenConstruct>(), NPCType<PermafrostConstruct>(), NPCType<OtherworldlyConstructHead>(), NPCType<TidalConstruct>(), NPCType<EvilConstruct>(), NPCType<InfernoConstruct>(),
+            spirits = new int[] { NPCType<Constructs.NatureSpirit>(), NPCType<Constructs.EarthenSpirit>(), NPCType<Constructs.PermafrostSpirit>(), NPCType<Constructs.TidalSpirit>(), NPCType<EvilSpirit>(), NPCType<InfernoSpirit>(), NPCType<NPCs.Constructs.ChaosSpirit>() };
+            intimidating = new int[] { NPCType<NatureConstruct>(), NPCType<EarthenConstruct>(), NPCType<PermafrostConstruct>(), NPCType<OtherworldlyConstructHead>(), NPCType<TidalConstruct>(), NPCType<EvilConstruct>(), NPCType<InfernoConstruct>(), NPCType<ChaosConstruct>(),
                 NPCType<PutridPinkyPhase2>(), NPCType<Boss.Curse.PharaohsCurse>(), NPCType<TheAdvisorHead>(), NPCType<Polaris>(), NPCType<CelestialSerpentHead>(), NPCType<SubspaceSerpentHead>()};
             miniBosses = new int[] { NPCID.Mothron, NPCID.IceQueen, NPCID.SantaNK1, NPCID.Everscream, NPCID.MourningWood, NPCID.Pumpking, NPCID.GoblinSummoner, NPCID.MartianSaucerCore, NPCID.LunarTowerSolar, NPCID.LunarTowerNebula, NPCID.LunarTowerStardust, NPCID.LunarTowerVortex };
         }

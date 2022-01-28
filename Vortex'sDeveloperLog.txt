@@ -35,6 +35,9 @@ Mid Priority:
 4. Shattershine (melee flail)
 5. Perfect Star (magic weapon, Cave Story reference)
 	1. Found inside the vibrant geode in the jungle
+6. Harvester Scythe
+	1. Increases Critical Strike Damage by 15%
+	2. Killed enemies have a 10% to drop double loot, or 20% if killed by critical strike
 
 Low Priority:
 1. Archaelogist NPC
@@ -45,6 +48,7 @@ Low Priority:
 1/27/22
 1. Chaos Construct checked: Works in multiplayer
 2. Fixed Machina Booster multiplayer syncing (was not working while standing on the floor)
+3. Chaos Spirit tether and logic (frameworking for later)
 
 1/25/22 & 1/26/22
 1. Incinerator Glove now has a max damage of 3300% (80 charges), does 50% damage as melee, and hits half as often as melee

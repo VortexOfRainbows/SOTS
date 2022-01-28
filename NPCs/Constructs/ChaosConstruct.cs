@@ -32,7 +32,7 @@ namespace SOTS.NPCs.Constructs
 			npc.width = 102;
 			npc.height = 100;
 			Main.npcFrameCount[npc.type] = 1;
-			npc.value = Item.buyPrice(0, 7, 0, 0);
+			npc.value = Item.buyPrice(0, 4, 50, 0);
 			npc.npcSlots = 4f;
 			npc.lavaImmune = true;
 			npc.noGravity = true;
@@ -172,8 +172,9 @@ namespace SOTS.NPCs.Constructs
 						Dust.NewDust(npc.position, npc.width, npc.height, DustID.Iron, 2.5f * (float)hitDirection, -2.5f, 0, default(Color), 0.7f);
 						Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.Fire, 2.5f * (float)hitDirection, -2.5f, 0, default(Color), 2.2f);
 					}
-					for (int i = 1; i <= 7; i++)
-						Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/ChaosConstruct/ChaosConstructGore" + i), 1f);
+					Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/ChaosConstruct/ChaosConstructGore1"), 1f);
+					Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/ChaosConstruct/ChaosConstructGore2"), 1f);
+					Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/ChaosConstruct/ChaosConstructGore5"), 1f);
 					for (int i = 0; i < 9; i++)
 						Gore.NewGore(npc.position, npc.velocity, Main.rand.Next(61, 64), 1f);
                 }
@@ -348,8 +349,13 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override void NPCLoot()
 		{
-			int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<InfernoSpirit>());	
+			int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<ChaosRubble>());	
+			Main.npc[n].velocity.Y = 3f;
+			if (Main.netMode != NetmodeID.MultiplayerClient)
+				Main.npc[n].netUpdate = true;
+			n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<ChaosSpirit>(), 0, n);
 			Main.npc[n].velocity.Y = -10f;
+			Main.npc[n].velocity += npc.oldVelocity * 0.4f;
 			if (Main.netMode != NetmodeID.MultiplayerClient)
 				Main.npc[n].netUpdate = true;
 			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<FragmentOfChaos>(), Main.rand.Next(4) + 4);

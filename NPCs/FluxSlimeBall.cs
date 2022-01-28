@@ -65,7 +65,7 @@ namespace SOTS.NPCs
 			Vector2 ownerCenter = new Vector2(owner.Center.X, owner.position.Y + 6);
 			Vector2 dynamicScaling = new Vector2(40, 0).RotatedBy(MathHelper.ToRadians(aiCounter * 1.1f));
 			float moreScaling = 1.15f - 0.25f * Math.Abs(dynamicScaling.X) / 40f;
-			if (owner.type == mod.NPCType("FluxSlime") && owner.active)
+			if (owner.type == ModContent.NPCType<FluxSlime>() && owner.active)
 			{
 				Vector2 p0 = ownerCenter;
 				Vector2 p1 = ownerCenter - baseVelo.RotatedBy(MathHelper.ToRadians(180 + dynamicScaling.X)) * 3.5f * moreScaling;
@@ -144,7 +144,7 @@ namespace SOTS.NPCs
 			Player player = Main.player[npc.target];
 			NPC owner = Main.npc[(int)ownerID];
 			ownerCenter = npc.Center;
-			if (owner.type != mod.NPCType("FluxSlime") || !owner.active)
+			if (owner.type != ModContent.NPCType<FluxSlime>() || !owner.active)
 			{
 				npc.life = 0;
 				HitEffect(npc.direction, npc.life);

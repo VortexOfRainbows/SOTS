@@ -306,7 +306,7 @@ namespace SOTS.Void
         {
 			return Color.Lerp(new Color(80, 120, 220, 0), new Color(180, 230, 100, 0), 0.5f + 0.5f * (float)Math.Sin(MathHelper.ToRadians(soulColorCounter * 2.5f + degrees)));
 		}
-		public static Color pastelAttempt(float radians)
+		public static Color pastelAttempt(float radians, bool pinkify = false)
 		{
 			float newAi = radians;
 			double center = 190;
@@ -319,7 +319,10 @@ namespace SOTS.Void
 			circlePalette = new Vector2(1, 0).RotatedBy(newAi + MathHelper.ToRadians(240));
 			width = 65 * circlePalette.Y;
 			int blu = (int)(center + width);
-			return new Color(red, grn, blu);
+			if(!pinkify)
+				return new Color(red, grn, blu);
+			else
+				return new Color(red, grn, blu).MultiplyRGB(new Color(253, 198, 234));
 		}
 		public int VoidMinionConsumption = 0;
 		public int RegisterVoidMinions()
