@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Dusts;
 using SOTS.Items.Fragments;
 using SOTS.Items.Otherworld.FromChests;
 using SOTS.Items.Otherworld.Furniture;
@@ -154,18 +155,14 @@ namespace SOTS.Items.Otherworld.EpicWings
 	}
 	public class TestWingsPlayer : ModPlayer
 	{
-		public override void SendClientChanges(ModPlayer clientPlayer)
+		public void SendPacket()
 		{
-			TestWingsPlayer clone = clientPlayer as TestWingsPlayer;
-			if (clone.creativeFlight != creativeFlight)
-			{
-				// Send a Mod Packet with the changes.
-				var packet = mod.GetPacket();
-				packet.Write((byte)SOTSMessageType.SyncCreativeFlight);
-				packet.Write((byte)player.whoAmI);
-				packet.Write(creativeFlight);
-				packet.Send();
-			}
+			var packet = mod.GetPacket();
+			packet.Write((byte)SOTSMessageType.SyncCreativeFlight);
+			packet.Write((byte)player.whoAmI);
+			packet.Write(creativeFlight);
+			packet.Send();
+			netUpdate = false;
 		}
 		public const float voidDrain = 3f;
 		public bool canCreativeFlight = false;
@@ -174,6 +171,7 @@ namespace SOTS.Items.Otherworld.EpicWings
 		public float wingSpeedMax = 7f;
 		public int epicWingType = 0;
 		public bool gyro = false;
+		public bool netUpdate = false;
 		public enum EpicWingType : int
 		{
 			Default = 0,
@@ -185,7 +183,7 @@ namespace SOTS.Items.Otherworld.EpicWings
 			{
 				if (epicWingType == 0)
 				{
-					int index = Dust.NewDust(player.Center + new Vector2(-4, -4), 0, 0, mod.DustType("CopyDust"), 0, 0, 0, Color.White);
+					int index = Dust.NewDust(player.Center + new Vector2(-4, -4), 0, 0, ModContent.DustType<CopyDust>(), 0, 0, 0, Color.White);
 					Dust dust = Main.dust[index];
 					dust.noGravity = true;
 					dust.fadeIn = 0.1f;
@@ -196,7 +194,7 @@ namespace SOTS.Items.Otherworld.EpicWings
 				}
 				else
 				{
-					int index = Dust.NewDust(player.Center + new Vector2(-5, -5), 0, 0, mod.DustType("CubeDust"));
+					int index = Dust.NewDust(player.Center + new Vector2(-5, -5), 0, 0, ModContent.DustType<CopyDust>());
 					Dust dust = Main.dust[index];
 					dust.noGravity = true;
 					dust.fadeIn = 0.5f;
@@ -214,13 +212,13 @@ namespace SOTS.Items.Otherworld.EpicWings
 			{
 				if (!creativeFlight)
 				{
-					if (player.velocity.Y == 0)
-						player.velocity.Y -= 12f;
 					VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 					voidPlayer.voidMeter -= 5 * voidPlayer.voidCost;
+					VoidPlayer.VoidEffect(player, (int)(-5 * voidPlayer.voidCost), false, false);
 				}
-				creativeFlight = !creativeFlight;
-				SendClientChanges(this);
+				creativeFlight = !creativeFlight; 
+				if(Main.myPlayer == player.whoAmI)
+					SendPacket();
 			}
 		}
 		bool movingHori = false;
@@ -259,7 +257,7 @@ namespace SOTS.Items.Otherworld.EpicWings
 				Vector2 circularLocation = new Vector2(10, 0).RotatedBy(MathHelper.ToRadians(randCounter * 6 + i * 120));
 				Vector2 circularLocation2 = new Vector2(circularLocation.X / 2, circularLocation.Y).RotatedBy(MathHelper.ToRadians(45 * player.direction));
 				Vector2 loc = center + circularLocation2;
-				int index = Dust.NewDust(loc + new Vector2(-4, -4), 0, 0, mod.DustType("CopyDust2"), 0, 0, 0, new Color(255, 255, 255));
+				int index = Dust.NewDust(loc + new Vector2(-4, -4), 0, 0, ModContent.DustType<CopyDust2>(), 0, 0, 0, new Color(255, 255, 255));
 				Dust dust = Main.dust[index];
 				dust.noGravity = true;
 				dust.velocity = player.velocity;
@@ -276,7 +274,7 @@ namespace SOTS.Items.Otherworld.EpicWings
 				{
 					Player owner = Main.player[dustOwnerID[i]];
 					Dust dust = Main.dust[dustID[i]];
-					if (dust.type == mod.DustType("CopyDust2") && dust.active && dustPos[i] != new Vector2(-1, -1))
+					if (dust.type == ModContent.DustType<CopyDust2>() && dust.active && dustPos[i] != new Vector2(-1, -1))
 					{
 						dust.position = dustPos[i] + owner.Center;
 						if (dustPos[i].X > 0 && owner.direction == 1)
@@ -441,6 +439,8 @@ namespace SOTS.Items.Otherworld.EpicWings
 			{
 				if (runOnce)
 				{
+					if (player.velocity.Y == 0)
+						player.velocity.Y -= 12f;
 					DustExplosion();
 					runOnce = false;
 				}

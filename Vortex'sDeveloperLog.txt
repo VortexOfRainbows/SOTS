@@ -15,7 +15,7 @@ Known Bugs:
 High Priority:
 1. Starmap and Digital Daito Obtaining
 2. Reorganize Folders... Planetarium and Pyramid folders remaining.
-3. Lux and Chaos Construct
+3. Lux
 
 Mid Priority:
 1. Lux Drops (ask me before you go about spriting these ones):
@@ -41,6 +41,10 @@ Low Priority:
 2. Accessory Pets to use own dye slots.
 3. Void Bar strike the player during void shock
 4. Fix Planetarium sky island spawning in tandum
+
+1/27/22
+1. Chaos Construct checked: Works in multiplayer
+2. Fixed Machina Booster multiplayer syncing (was not working while standing on the floor)
 
 1/25/22 & 1/26/22
 1. Incinerator Glove now has a max damage of 3300% (80 charges), does 50% damage as melee, and hits half as often as melee
