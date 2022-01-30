@@ -27,6 +27,7 @@ using SOTS.NPCs.Boss;
 using SOTS.NPCs.Boss.Advisor;
 using SOTS.NPCs.Boss.Polaris;
 using SOTS.NPCs.Boss.CelestialSerpent;
+using SOTS.Items.GhostTown;
 
 namespace SOTS.NPCs.ArtificialDebuffs
 {
@@ -380,10 +381,10 @@ namespace SOTS.NPCs.ArtificialDebuffs
                         SendClientChanges(player, npc);
                 }
             }
-            if(projectile.type == ProjectileType<DeathSpiralProj>())
+            if(projectile.type == ProjectileType<DeathSpiralProj>() || (projectile.type == ProjectileType<BloodSpark>() && crit))
             {
                 bool worm = npc.realLife != -1;
-                float baseChance = 0.2f;
+                float baseChance = projectile.type == ProjectileType<BloodSpark>() ? 0.5f : 0.2f;
                 int baseStacks = 1;
                 if (worm)
                 {
@@ -421,6 +422,21 @@ namespace SOTS.NPCs.ArtificialDebuffs
             {
                 if (PlatinumCurse < 10)
                     PlatinumCurse++;
+                if (Main.myPlayer == player.whoAmI && Main.netMode == NetmodeID.MultiplayerClient)
+                    SendClientChanges(player, npc);
+            }
+            if (item.type == ItemType<AncientSteelSword>() && crit)
+            {
+                bool worm = npc.realLife != -1;
+                float baseChance = 0.5f;
+                int baseStacks = 1;
+                if (worm)
+                {
+                    baseStacks = 2;
+                    baseChance = 0.1f;
+                }
+                if (Main.rand.NextFloat(1) < baseChance / (baseStacks + BleedingCurse)) //1 in 10, drops lower ever time
+                    BleedingCurse++;
                 if (Main.myPlayer == player.whoAmI && Main.netMode == NetmodeID.MultiplayerClient)
                     SendClientChanges(player, npc);
             }

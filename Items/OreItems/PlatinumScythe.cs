@@ -5,6 +5,8 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using SOTS.Void;
+using SOTS.Dusts;
+
 namespace SOTS.Items.OreItems
 {
 	public class PlatinumScythe : VoidItem
@@ -35,7 +37,7 @@ namespace SOTS.Items.OreItems
 		{
 			if (Main.rand.NextBool(12))
 			{
-				Dust dust = Dust.NewDustDirect(hitbox.Location.ToVector2() - new Vector2(5f), hitbox.Width, hitbox.Height, mod.DustType("CopyDust4"), 0, -2, 200, new Color(), 1f);
+				Dust dust = Dust.NewDustDirect(hitbox.Location.ToVector2() - new Vector2(5f), hitbox.Width, hitbox.Height, ModContent.DustType<CopyDust4>(), 0, -2, 200, new Color(), 1f);
 				dust.velocity *= 0.4f;
 				dust.color = new Color(100, 100, 255, 120);
 				dust.noGravity = true;

@@ -9,6 +9,8 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
+using SOTS.Items.Earth;
+using SOTS.Items.GhostTown;
 
 namespace SOTS.Items
 {
@@ -40,7 +42,7 @@ namespace SOTS.Items
 		{
 			Tile tile = Main.tile[i, j];
 			int style = tile.frameX / 18;
-			if (style == 0)
+			if (style == 0 || style == 11)
 			{
 				type = DustID.Silver;
 			}
@@ -70,8 +72,14 @@ namespace SOTS.Items
 			{
 				type = ModContent.DustType<CopyIceDust>();
 			}
+			if (style == 9)
+			{
+				type = ModContent.DustType<VibrantDust>();
+				if (Main.rand.NextBool(3))
+					type = 59; //DustID.BlueTorch
+			}
 			Dust dust = Dust.NewDustDirect(new Vector2(i * 16, j * 16), 16, 16, type);
-			if (type == 60 || type == DustID.Fire)
+			if (type == 59 || type == 60 || type == DustID.Fire)
 			{
 				dust.scale *= 1.4f;
 			}			
@@ -177,6 +185,14 @@ namespace SOTS.Items
 			if (style == 8)
 			{
 				Item.NewItem(i * 16, j * 16, 16, 16, ModContent.ItemType<FrigidBar>());
+			}
+			if (style == 9)
+			{
+				Item.NewItem(i * 16, j * 16, 16, 16, ModContent.ItemType<VibrantBar>());
+			}
+			if (style == 11)
+			{
+				Item.NewItem(i * 16, j * 16, 16, 16, ModContent.ItemType<AncientSteelBar>());
 			}
 			return base.Drop(i, j);
 		}

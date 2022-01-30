@@ -45,10 +45,17 @@ Low Priority:
 3. Void Bar strike the player during void shock
 4. Fix Planetarium sky island spawning in tandum
 
+1/29/22
+1. Added Ancient steel
+2. Made vibrant bar and ancient steel placeable
+3. Nightmare potion now works on melee items
+4. Added Ancient Steel Sword (should sync fine in Multiplayer)
+
 1/27/22
 1. Chaos Construct checked: Works in multiplayer
 2. Fixed Machina Booster multiplayer syncing (was not working while standing on the floor)
 3. Chaos Spirit tether and logic (frameworking for later)
+	1. Needs to be checked in Mult (will do later, after boss spwaning works)
 
 1/25/22 & 1/26/22
 1. Incinerator Glove now has a max damage of 3300% (80 charges), does 50% damage as melee, and hits half as often as melee

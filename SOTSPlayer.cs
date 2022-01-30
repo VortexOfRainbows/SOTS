@@ -1073,7 +1073,16 @@ namespace SOTS
 			{
 				if(crit)
                 {
-					damage = (int)(damage * CritBonusMultiplier);
+					float damageMultiplier = CritBonusMultiplier; //since this value is 1, and crit damage does 2x damage, a value of 1.2f will increase damage by 40% on the players side (assuming crit damage as 100% base).
+					if(item != null)
+                    {
+						if(item.type == ModContent.ItemType<AncientSteelSword>())
+                        {
+							knockback += 2f;
+							damageMultiplier += 0.5f;
+                        }
+                    }
+					damage = (int)(damage * damageMultiplier);
                 }
 				if (curseVisionCounter >= 60)
 				{
@@ -1160,7 +1169,7 @@ namespace SOTS
 							}
 						}
 					}
-					if (CritNightmare && projectile.type != ModContent.ProjectileType<EvilGrowth>() && projectile.type != ModContent.ProjectileType<EvilStrike>())
+					if (CritNightmare && (projectile != null || (projectile.type != ModContent.ProjectileType<EvilGrowth>() && projectile.type != ModContent.ProjectileType<EvilStrike>())))
 					{
 						if (nightmareArmCD <= 0)
 						{
