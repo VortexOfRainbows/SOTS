@@ -45,8 +45,7 @@ namespace SOTS.NPCs.Constructs
 				{
 					for (int k = 0; k < 30; k++)
 					{
-						Dust.NewDust(npc.position, npc.width, npc.height, DustID.Iron, 2.5f * (float)hitDirection, -2.5f, 0, default(Color), 0.7f);
-						Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.Fire, 2.5f * (float)hitDirection, -2.5f, 0, default(Color), 2.2f);
+						Dust.NewDust(npc.position, npc.width, npc.height, DustID.Platinum, 2.5f * (float)hitDirection, -2.5f, 0, default(Color), 0.7f);
 					}
 					Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/ChaosConstruct/ChaosConstructGore3"), 1f);
 					Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/ChaosConstruct/ChaosConstructGore4"), 1f);

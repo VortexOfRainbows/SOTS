@@ -169,8 +169,7 @@ namespace SOTS.NPCs.Constructs
 				{
 					for (int k = 0; k < 30; k++)
 					{
-						Dust.NewDust(npc.position, npc.width, npc.height, DustID.Iron, 2.5f * (float)hitDirection, -2.5f, 0, default(Color), 0.7f);
-						Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.Fire, 2.5f * (float)hitDirection, -2.5f, 0, default(Color), 2.2f);
+						Dust.NewDust(npc.position, npc.width, npc.height, DustID.Platinum, 2.5f * (float)hitDirection, -2.5f, 0, default(Color), 0.7f);
 					}
 					Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/ChaosConstruct/ChaosConstructGore1"), 1f);
 					Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/ChaosConstruct/ChaosConstructGore2"), 1f);
@@ -353,7 +352,7 @@ namespace SOTS.NPCs.Constructs
 			Main.npc[n].velocity.Y = 3f;
 			if (Main.netMode != NetmodeID.MultiplayerClient)
 				Main.npc[n].netUpdate = true;
-			n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<ChaosSpirit>(), 0, n);
+			n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<ChaosSpirit>(), 0, n, 0, counter2);
 			Main.npc[n].velocity.Y = -10f;
 			Main.npc[n].velocity += npc.oldVelocity * 0.4f;
 			if (Main.netMode != NetmodeID.MultiplayerClient)

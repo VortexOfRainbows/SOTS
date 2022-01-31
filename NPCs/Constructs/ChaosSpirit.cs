@@ -1,13 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
 using SOTS.Items.Fragments;
-using SOTS.Projectiles.Evil;
-using SOTS.Projectiles.Inferno;
-using SOTS.Projectiles.Tide;
+using SOTS.NPCs.Boss;
+using SOTS.Projectiles.Chaos;
 using SOTS.Void;
 using Terraria;
 using Terraria.ID;
@@ -18,47 +16,58 @@ namespace SOTS.NPCs.Constructs
 	public class ChaosSpirit : ModNPC
 	{
 		float wingSpeedMult = 1f;
-		float counter2 = 0;
 		float wingHeight; //wings offset in degrees
 		Vector2 baseVelo = Vector2.Zero;
 		public void WingStuff()
 		{
 			npc.ai[3]++;
-			counter2 += 7.5f * wingSpeedMult;
-			float dipAndRise = (float)Math.Sin(MathHelper.ToRadians(counter2));
+			npc.ai[2] += 7.5f * wingSpeedMult;
+			float dipAndRise = (float)Math.Sin(MathHelper.ToRadians(npc.ai[2]));
 			//dipAndRise *= (float)Math.sqrt(dipAndRise);
 			wingHeight = 19 + dipAndRise * 27;
 			baseVelo *= 0.935f;
 			baseVelo += npc.velocity.SafeNormalize(Vector2.Zero) * (float)Math.Sqrt(npc.velocity.Length());
 		}
-		public void DrawChains()
+		Vector2 lastCenter = Vector2.Zero;
+		public void DrawChains(bool doDust = false)
 		{
 			Texture2D texture = ModContent.GetTexture("SOTS/NPCs/Constructs/ChaosSpiritChain");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			NPC owner = Main.npc[(int)npc.ai[0]];
-			Vector2 ownerCenter = new Vector2(owner.Center.X, owner.Center.Y);
-			float dynamicScaling = (float)Math.Sin(MathHelper.ToRadians(counter2 * 0.15f)) * 10;
+			Vector2 ownerCenter = lastCenter;
+			float dynamicScaling = (float)Math.Sin(MathHelper.ToRadians(npc.ai[2] * 0.15f)) * 10;
 			float moreScaling = 1.1f - 0.1f * Math.Abs(dynamicScaling) / 10f;
-			if (owner.type == ModContent.NPCType<ChaosRubble>() && owner.active)
+			Vector2 p0 = ownerCenter;
+			Vector2 p1 = ownerCenter - baseVelo.RotatedBy(MathHelper.ToRadians(180 + dynamicScaling)) * 4f * moreScaling;
+			Vector2 p2 = npc.Center - baseVelo * 8f * moreScaling;
+			Vector2 p3 = npc.Center;
+			int segments = 16;
+			for (int i = 0; i < segments; i++)
 			{
-				Vector2 p0 = ownerCenter;
-				Vector2 p1 = ownerCenter - baseVelo.RotatedBy(MathHelper.ToRadians(180 + dynamicScaling)) * 4f * moreScaling;
-				Vector2 p2 = npc.Center - baseVelo * 8f * moreScaling;
-				Vector2 p3 = npc.Center;
-				int segments = 16;
-				for (int i = 0; i < segments; i++)
+				float t = i / (float)segments;
+				Vector2 drawPos2 = SOTS.CalculateBezierPoint(t, p0, p1, p2, p3);
+				t = (i + 1) / (float)segments;
+				Vector2 drawPosNext = SOTS.CalculateBezierPoint(t, p0, p1, p2, p3);
+				if (!doDust)
 				{
-					float t = i / (float)segments;
-					Vector2 drawPos2 = SOTS.CalculateBezierPoint(t, p0, p1, p2, p3);
-					t = (i + 1) / (float)segments;
-					Vector2 drawPosNext = SOTS.CalculateBezierPoint(t, p0, p1, p2, p3);
 					float rotation = (drawPos2 - drawPosNext).ToRotation();
-					for(int k = 0; k < 6; k++)
+					for (int k = 0; k < 6; k++)
 					{
 						Color color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(k * 60)) * 0.5f;
 						color.A = 0;
 						Vector2 circular = new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(k * 60 + Main.GameUpdateCount));
 						Main.spriteBatch.Draw(texture, drawPos2 - Main.screenPosition + circular, null, color, rotation, drawOrigin, npc.scale, SpriteEffects.None, 0f);
+					}
+				}
+				else
+				{
+					for (int k = 0; k < 10; k++)
+					{
+						Dust dust = Dust.NewDustDirect(drawPos2, 0, 0, DustID.RainbowMk2);
+						dust.color = VoidPlayer.pastelAttempt(Main.rand.NextFloat(6.28f), true);
+						dust.noGravity = true;
+						dust.fadeIn = 0.1f;
+						dust.scale *= 1.8f;
+						dust.velocity *= 2.2f;
 					}
 				}
 			}
@@ -67,7 +76,7 @@ namespace SOTS.NPCs.Constructs
 		{
 			Texture2D texture = ModContent.GetTexture("SOTS/NPCs/Constructs/ChaosParticle");
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
-			float dipAndRise = (float)Math.Sin(MathHelper.ToRadians(counter2));
+			float dipAndRise = (float)Math.Sin(MathHelper.ToRadians(npc.ai[2]));
 			float supposedWingHeight = wingHeight - 19;
 			dipAndRise = supposedWingHeight / 27f;
 			dipAndRise = MathHelper.Clamp(dipAndRise, -1, 1);
@@ -77,7 +86,7 @@ namespace SOTS.NPCs.Constructs
 			for (int j = -1; j <= 1; j += 2)
 			{
 				float positionalRotation = npc.rotation + MathHelper.ToRadians(wingHeight * -j);
-				Vector2 position = npc.Center + new Vector2(-28 * j, 20).RotatedBy(npc.rotation) + new Vector2((width + npc.width + 96) / 2 * j, 0).RotatedBy(positionalRotation);
+				Vector2 position = npc.Center + new Vector2(-28 * j, 16).RotatedBy(npc.rotation) + new Vector2(((width + npc.width) / 2 + 54) * j, 0).RotatedBy(positionalRotation);
 				float degreesCount = 0f;
 				float flapMult = 0.0f;
 				float baseGrowth = 0.35f;
@@ -160,7 +169,7 @@ namespace SOTS.NPCs.Constructs
             npc.knockBackResist = 0f;
             npc.width = 70;
             npc.height = 70;
-            npc.value = Item.buyPrice(0, 18, 0, 0);
+            npc.value = Item.buyPrice(0, 0, 0, 0);
             npc.npcSlots = 10f;
             npc.boss = false;
             npc.lavaImmune = true;
@@ -200,6 +209,7 @@ namespace SOTS.NPCs.Constructs
                     }
 					ownerActive = true;
 				}
+				lastCenter = owner.Center;
 			}
 			if (!ownerActive)
 			{
@@ -209,7 +219,12 @@ namespace SOTS.NPCs.Constructs
 				}
 				npc.dontTakeDamage = true;
 				npc.velocity.Y -= 0.026f;
-				npc.velocity.X *= 1.10f;
+				npc.velocity.X *= 1.095f;
+				if(Main.netMode != NetmodeID.Server && rubble != -2)
+				{
+					DrawChains(true);
+					npc.ai[0] = -2;
+				}
 			}
 			else
 			{
@@ -257,7 +272,8 @@ namespace SOTS.NPCs.Constructs
 				color.A = 0;
 				spriteBatch.Draw(texture, drawPos, null, color * 0.5f, npc.rotation, drawOrigin, npc.scale * 1.1f, SpriteEffects.None, 0f);
 			}
-			DrawChains();
+			if((int)npc.ai[0] != -2 && lastCenter != Vector2.Zero)
+				DrawChains();
 			DrawWings();
 			return false;
 		}	
@@ -276,6 +292,7 @@ namespace SOTS.NPCs.Constructs
 						dust.scale *= 2.2f;
 						dust.velocity *= 4f;
 					}
+					DrawChains(true);
 				}
 			}
 		}
@@ -300,7 +317,9 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override void NPCLoot()
 		{
-			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<DissolvingBrilliance>(), 1);	
-		}	
-	}
+			int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<Lux>(), 0, npc.ai[2]);
+			if (Main.netMode != NetmodeID.MultiplayerClient)
+				Main.npc[n].netUpdate = true;
+		}
+    }
 }

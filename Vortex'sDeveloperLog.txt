@@ -45,6 +45,9 @@ Low Priority:
 3. Void Bar strike the player during void shock
 4. Fix Planetarium sky island spawning in tandum
 
+1/30/22 & 1/31/22
+1. Lux visuals and Chaos Spirit visuals!
+
 1/29/22
 1. Added Ancient steel
 2. Made vibrant bar and ancient steel placeable

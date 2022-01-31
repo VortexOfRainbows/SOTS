@@ -43,7 +43,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 NPCID.Werewolf, NPCID.Slimer, NPCID.PossessedArmor, NPCID.VampireBat, NPCID.Vampire, NPCID.SwampThing, NPCID.Crimera, NPCID.Reaper, NPCID.BlueArmoredBones, NPCID.BlueArmoredBonesMace, NPCID.BlueArmoredBonesNoPants, NPCID.BlueArmoredBonesSword, NPCID.Necromancer, NPCID.NecromancerArmored, NPCID.DungeonSpirit, NPCID.Ghost, NPCID.MourningWood, NPCID.Splinterling, NPCID.Pumpking, NPCID.Poltergeist,
                 NPCID.Everscream, NPCID.IceQueen, NPCID.StardustCellBig, NPCID.StardustCellSmall, NPCID.CultistBoss, NPCID.CultistDragonHead, NPCID.BloodZombie, NPCID.Drippler
             };
-            spirits = new int[] { NPCType<Constructs.NatureSpirit>(), NPCType<Constructs.EarthenSpirit>(), NPCType<Constructs.PermafrostSpirit>(), NPCType<Constructs.TidalSpirit>(), NPCType<EvilSpirit>(), NPCType<InfernoSpirit>(), NPCType<NPCs.Constructs.ChaosSpirit>() };
+            spirits = new int[] { NPCType<Constructs.NatureSpirit>(), NPCType<Constructs.EarthenSpirit>(), NPCType<Constructs.PermafrostSpirit>(), NPCType<Constructs.TidalSpirit>(), NPCType<EvilSpirit>(), NPCType<InfernoSpirit>(), NPCType<NPCs.Constructs.ChaosSpirit>(), NPCType<Lux>() };
             intimidating = new int[] { NPCType<NatureConstruct>(), NPCType<EarthenConstruct>(), NPCType<PermafrostConstruct>(), NPCType<OtherworldlyConstructHead>(), NPCType<TidalConstruct>(), NPCType<EvilConstruct>(), NPCType<InfernoConstruct>(), NPCType<ChaosConstruct>(),
                 NPCType<PutridPinkyPhase2>(), NPCType<Boss.Curse.PharaohsCurse>(), NPCType<TheAdvisorHead>(), NPCType<Polaris>(), NPCType<CelestialSerpentHead>(), NPCType<SubspaceSerpentHead>()};
             miniBosses = new int[] { NPCID.Mothron, NPCID.IceQueen, NPCID.SantaNK1, NPCID.Everscream, NPCID.MourningWood, NPCID.Pumpking, NPCID.GoblinSummoner, NPCID.MartianSaucerCore, NPCID.LunarTowerSolar, NPCID.LunarTowerNebula, NPCID.LunarTowerStardust, NPCID.LunarTowerVortex };
@@ -75,7 +75,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
                     debuffTime = 180;
                     vDamage = 15;
                 }
-                if (npc.type == NPCType<Constructs.TidalSpirit>())
+                if (npc.type == NPCType<Constructs.TidalSpirit>() || npc.type == NPCType<Constructs.ChaosSpirit>())
                 {
                     debuffTime = 210;
                     vDamage = 25;
@@ -89,6 +89,11 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 {
                     debuffTime = 270;
                     vDamage = 40;
+                }
+                if (npc.type == NPCType<Lux>())
+                {
+                    debuffTime = 300;
+                    vDamage = 50;
                 }
                 VoidPlayer.VoidBurn(mod, target, vDamage, debuffTime);
             }
