@@ -82,7 +82,7 @@ namespace SOTS.Items.Flails
 			strucktile = reader.ReadBoolean();
 		}
 		float soundTimer = 0;
-		int Timer2 = 0;
+		public int Timer2 = 0;
 		public override void AI()
 		{
 			Player Owner = Main.player[projectile.owner];

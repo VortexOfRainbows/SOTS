@@ -30,6 +30,7 @@ namespace SOTS.Items.Flails
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(ModContent.ItemType<AbsoluteBar>(), 12);
             recipe.AddIngredient(ModContent.ItemType<Aten>(), 1);
+            recipe.AddIngredient(ModContent.ItemType<Shattershine>(), 1);
             recipe.AddTile(TileID.MythrilAnvil);
             recipe.SetResult(this);
             recipe.AddRecipe();

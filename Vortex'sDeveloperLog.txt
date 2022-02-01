@@ -32,10 +32,9 @@ Mid Priority:
 		2. Surprise Attack (buff): 50% increased melee damage for a few seconds after teleporting
 3. Geostorm (void + mage)
 	1. Summons shards that slam into the enemy
-4. Shattershine (melee flail)
-5. Perfect Star (magic weapon, Cave Story reference)
+4. Perfect Star (magic weapon, Cave Story reference)
 	1. Found inside the vibrant geode in the jungle
-6. Harvester Scythe
+5. Harvester Scythe
 	1. Increases Critical Strike Damage by 15%
 	2. Killed enemies have a 10% to drop double loot, or 20% if killed by critical strike
 
@@ -47,6 +46,10 @@ Low Priority:
 
 1/30/22 & 1/31/22
 1. Lux visuals and Chaos Spirit visuals!
+2. Vibrant Blade damage 15 -> 17
+	1. Vibrant Blade is already strong. This is meant to differentiate it from Shattershine (which is primarily multitarget)
+2. Added Shattershine (should sync fine in Multiplayer (tested))
+	1. Used in North Star recipe 
 
 1/29/22
 1. Added Ancient steel

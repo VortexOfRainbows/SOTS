@@ -14,7 +14,7 @@ namespace SOTS.Items.Earth
 		}
 		public override void SafeSetDefaults()
 		{
-			item.damage = 15;
+			item.damage = 17;
 			item.melee = true;
 			item.width = 40;
 			item.height = 40;
