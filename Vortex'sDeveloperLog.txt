@@ -30,11 +30,9 @@ Mid Priority:
 	dealing damage to them and preventing you from taking damage.
 		1. After tp, Chaos State + Surprise Attack
 		2. Surprise Attack (buff): 50% increased melee damage for a few seconds after teleporting
-3. Geostorm (void + mage)
-	1. Summons shards that slam into the enemy
-4. Perfect Star (magic weapon, Cave Story reference)
+3. Perfect Star (magic weapon, Cave Story reference)
 	1. Found inside the vibrant geode in the jungle
-5. Harvester Scythe
+4. Harvester Scythe
 	1. Increases Critical Strike Damage by 15%
 	2. Killed enemies have a 10% to drop double loot, or 20% if killed by critical strike
 
@@ -44,11 +42,19 @@ Low Priority:
 3. Void Bar strike the player during void shock
 4. Fix Planetarium sky island spawning in tandum
 
+2/1/22
+1. Gold Arc staff damage 40 -> 34
+	1. Found this to be overtuned even compared to vibrant items (had double the dpv of Vibrant Cannon ON SINGLE target)
+	2. Void cost 3 -> 4 (this can be easily fixed with void accessories)
+2. Added Geostorm (Syncs in multiplayer)
+	1. This does a lot less dpv (damage per void) compared to other on tier void items
+	2. However, it can be aimed anywhere, giving it more utility (though it is a tad slow)
+
 1/30/22 & 1/31/22
 1. Lux visuals and Chaos Spirit visuals!
 2. Vibrant Blade damage 15 -> 17
 	1. Vibrant Blade is already strong. This is meant to differentiate it from Shattershine (which is primarily multitarget)
-2. Added Shattershine (should sync fine in Multiplayer (tested))
+2. Added Shattershine (Syncs in multiplayer)
 	1. Used in North Star recipe 
 
 1/29/22

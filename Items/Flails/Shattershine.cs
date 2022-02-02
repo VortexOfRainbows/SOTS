@@ -18,7 +18,7 @@ namespace SOTS.Items.Flails
         {
             item.Size = new Vector2(34, 38);
             item.damage = 16;
-            item.value = Item.sellPrice(0, 1, 10, 0);
+            item.value = Item.sellPrice(0, 1, 0, 0);
             item.rare = ItemRarityID.Blue;
             item.useTime = 30;
             item.useAnimation = 30;

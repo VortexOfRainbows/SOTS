@@ -14,7 +14,7 @@ namespace SOTS.Items.OreItems
 		}
 		public override void SafeSetDefaults()
 		{
-			item.damage = 40;
+			item.damage = 34;
 			item.magic = true;
 			item.width = 36;
 			item.height = 36;
@@ -32,7 +32,7 @@ namespace SOTS.Items.OreItems
 		}
 		public override void GetVoid(Player player)
 		{
-			voidMana = 3;
+			voidMana = 4;
 		}
 		public override void AddRecipes()
 		{

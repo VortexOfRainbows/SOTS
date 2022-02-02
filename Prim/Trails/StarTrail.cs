@@ -10,7 +10,7 @@ namespace SOTS.Prim.Trails
 	class StarTrail : PrimTrail
 	{
 		public Color color2 = new Color(140, 140, 130);
-		public StarTrail(Projectile projectile, Color colorStart, Color colorEnd, int width = 12)
+		public StarTrail(Projectile projectile, Color colorStart, Color colorEnd, int width = 12, int length = 18)
 		{
 			Entity = projectile;
 			EntityType = projectile.type;
@@ -18,7 +18,7 @@ namespace SOTS.Prim.Trails
 			Color = colorStart;
 			color2 = colorEnd;
 			Width = width;
-			Cap = 18;
+			Cap = length;
 			Pixellated = false;
 		}
 		public override void SetDefaults() => AlphaValue = 0.6f;
