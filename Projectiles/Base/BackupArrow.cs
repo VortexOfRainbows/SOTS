@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using SOTS.NPCs.ArtificialDebuffs;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -26,6 +27,11 @@ namespace SOTS.Projectiles.Base
             projectile.ranged = true; 
 		}
 		int bounceCounter = 0;
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+			if (Main.myPlayer == projectile.owner)
+				DebuffNPC.SetTimeFreeze(Main.player[projectile.owner], target, 60);
+        }
         public override bool OnTileCollide(Vector2 oldVelocity)
 		{
 			bounceCounter++;

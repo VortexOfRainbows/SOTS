@@ -53,6 +53,8 @@ namespace SOTS.NPCs.ArtificialDebuffs
         public int HarvestCurse = 0;
         public int DestableCurse = 0;
         public int BleedingCurse = 0;
+        public int timeFrozen = 0;
+        public bool netUpdateTime = false;
         //public bool hasJustSpawned = true;
         public override void OnHitPlayer(NPC npc, Player target, int damage, bool crit)
         {
@@ -118,6 +120,11 @@ namespace SOTS.NPCs.ArtificialDebuffs
         }
         public override bool PreAI(NPC npc)
         {
+            if(netUpdateTime)
+            {
+                SendClientChanges(null, npc, 1); //update frozen Time
+                netUpdateTime = false;
+            }
             if (intimidating.Contains(npc.type) || spirits.Contains(npc.type))
             {
                 bool canIntimidate = true;
@@ -138,18 +145,42 @@ namespace SOTS.NPCs.ArtificialDebuffs
             //hasJustSpawned = false;
             return base.PreAI(npc);
         }
-        public void SendClientChanges(Player player, NPC npc)
+        public static void SetTimeFreeze(Player player, NPC npc, int time)
+        {
+            bool worm = npc.realLife != -1;
+            if (worm)
+                return;
+            DebuffNPC instancedNPC = npc.GetGlobalNPC<DebuffNPC>();
+            instancedNPC.timeFrozen = time;
+            if((player == null && Main.netMode == NetmodeID.Server) || Main.netMode != NetmodeID.SinglePlayer)
+                instancedNPC.SendClientChanges(player, npc, 1);
+        }
+        public void SendClientChanges(Player player, NPC npc, int type = 0)
         {
             // Send a Mod Packet with the changes.
-            var packet = mod.GetPacket();
-            packet.Write((byte)SOTSMessageType.SyncGlobalNPC);
-            packet.Write((byte)player.whoAmI);
-            packet.Write(npc.whoAmI);
-            packet.Write(HarvestCurse);
-            packet.Write(PlatinumCurse);
-            packet.Write(DestableCurse);
-            packet.Write(BleedingCurse);
-            packet.Send();
+            if (type == 0) //should be called by player
+            {
+                byte playerWhoAmI = (byte)player.whoAmI;
+                var packet = mod.GetPacket();
+                packet.Write((byte)SOTSMessageType.SyncGlobalNPC);
+                packet.Write(playerWhoAmI);
+                packet.Write(npc.whoAmI);
+                packet.Write(HarvestCurse);
+                packet.Write(PlatinumCurse);
+                packet.Write(DestableCurse);
+                packet.Write(BleedingCurse);
+                packet.Send();
+            }
+            else if(type == 1) //can be called by server or player
+            {
+                int playerWhoAmI = player != null ? player.whoAmI : -1;
+                var packet = mod.GetPacket();
+                packet.Write((byte)SOTSMessageType.SyncGlobalNPCTime);
+                packet.Write(playerWhoAmI);
+                packet.Write(npc.whoAmI);
+                packet.Write(timeFrozen);
+                packet.Send();
+            }
         }
         public override void PostDraw(NPC npc, SpriteBatch spriteBatch, Color drawColor)
         {

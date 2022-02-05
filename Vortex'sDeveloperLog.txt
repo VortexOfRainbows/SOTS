@@ -42,6 +42,11 @@ Low Priority:
 3. Void Bar strike the player during void shock
 4. Fix Planetarium sky island spawning in tandum
 
+2/4/22
+1. Implemented npc freeze system from Catalyst
+	1. Works in multiplayer quite well
+2. Some preparations for Particle Relocator
+
 2/1/22
 1. Gold Arc staff damage 40 -> 34
 	1. Found this to be overtuned even compared to vibrant items (had double the dpv of Vibrant Cannon ON SINGLE target)

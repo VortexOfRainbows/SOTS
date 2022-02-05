@@ -229,7 +229,8 @@ namespace SOTS
 			SyncPlayerKnives,
 			SyncRexFlower,
 			SyncGlobalProj,
-			SyncVisionNumber
+			SyncVisionNumber,
+			SyncGlobalNPCTime
 		}
 		public override void HandlePacket(BinaryReader reader, int whoAmI)
 		{
@@ -251,13 +252,11 @@ namespace SOTS
 					testPlayer.creativeFlight = creativeFlight;
 					int lootingSouls = reader.ReadInt32();
 					voidPlayer.lootingSouls = lootingSouls;
-					// SyncPlayer will be called automatically, so there is no need to forward this data to other clients.
 					break;
 				case (int)SOTSMessageType.OrbitalCounterChanged:
 					playernumber = reader.ReadByte();
 					modPlayer = Main.player[playernumber].GetModPlayer<SOTSPlayer>();
 					modPlayer.orbitalCounter = reader.ReadInt32();
-					// Unlike SyncPlayer, here we have to relay/forward these changes to all other connected clients
 					if (Main.netMode == NetmodeID.Server)
 					{
 						var packet = GetPacket();
@@ -271,7 +270,6 @@ namespace SOTS
 					playernumber = reader.ReadByte(); 
 					testPlayer = Main.player[playernumber].GetModPlayer<TestWingsPlayer>();
 					testPlayer.creativeFlight = reader.ReadBoolean();
-					// Unlike SyncPlayer, here we have to relay/forward these changes to all other connected clients
 					if (Main.netMode == NetmodeID.Server)
 					{
 						var packet = GetPacket();
@@ -288,7 +286,6 @@ namespace SOTS
 					voidPlayer.voidMeterMax = reader.ReadInt32();
 					voidPlayer.voidMeterMax2 = reader.ReadInt32();
 					voidPlayer.voidMeter = reader.ReadSingle();
-					// Unlike SyncPlayer, here we have to relay/forward these changes to all other connected clients
 					if (Main.netMode == NetmodeID.Server)
 					{
 						var packet = GetPacket();
@@ -304,13 +301,11 @@ namespace SOTS
 				case (int)SOTSMessageType.SyncGlobalNPC:
 					playernumber = reader.ReadByte();
 					int npcNumber = reader.ReadInt32();
-					DebuffNPC debuffNPC = (DebuffNPC)GetGlobalNPC("DebuffNPC");
-					debuffNPC = (DebuffNPC)debuffNPC.Instance(Main.npc[npcNumber]);
+					DebuffNPC debuffNPC = Main.npc[npcNumber].GetGlobalNPC<DebuffNPC>();
 					debuffNPC.HarvestCurse = reader.ReadInt32();
 					debuffNPC.PlatinumCurse = reader.ReadInt32();
 					debuffNPC.DestableCurse = reader.ReadInt32();
 					debuffNPC.BleedingCurse = reader.ReadInt32();
-					// Unlike SyncPlayer, here we have to relay/forward these changes to all other connected clients
 					if (Main.netMode == NetmodeID.Server)
 					{
 						var packet = GetPacket();
@@ -329,7 +324,6 @@ namespace SOTS
 					modPlayer = Main.player[playernumber].GetModPlayer<SOTSPlayer>();
 					modPlayer.skywardBlades = reader.ReadInt32();
 					modPlayer.cursorRadians = reader.ReadSingle();
-					// Unlike SyncPlayer, here we have to relay/forward these changes to all other connected clients
 					if (Main.netMode == NetmodeID.Server)
 					{
 						var packet = GetPacket();
@@ -356,10 +350,8 @@ namespace SOTS
                             }
                         }
                     }
-					SOTSProjectile sProj = (SOTSProjectile)GetGlobalProjectile("SOTSProjectile");
-					sProj = (SOTSProjectile)sProj.Instance(Main.projectile[projIdentity]);
+					SOTSProjectile sProj = Main.projectile[projIdentity].GetGlobalProjectile<SOTSProjectile>();
 					sProj.frostFlake = frostFlake;
-					// Unlike SyncPlayer, here we have to relay/forward these changes to all other connected clients
 					if (Main.netMode == NetmodeID.Server)
 					{
 						var packet = GetPacket();
@@ -374,7 +366,6 @@ namespace SOTS
 					playernumber = reader.ReadByte();
 					modPlayer = Main.player[playernumber].GetModPlayer<SOTSPlayer>();
 					modPlayer.UniqueVisionNumber = reader.ReadInt32();
-					// Unlike SyncPlayer, here we have to relay/forward these changes to all other connected clients
 					if (Main.netMode == NetmodeID.Server)
 					{
 						var packet = GetPacket();
@@ -382,6 +373,21 @@ namespace SOTS
 						packet.Write(playernumber);
 						packet.Write(modPlayer.UniqueVisionNumber);
 						packet.Send(-1, playernumber);
+					}
+					break;
+				case (int)SOTSMessageType.SyncGlobalNPCTime:
+					int playernumber2 = reader.ReadInt32();
+					npcNumber = reader.ReadInt32();
+					debuffNPC = Main.npc[npcNumber].GetGlobalNPC<DebuffNPC>();
+					debuffNPC.timeFrozen = reader.ReadInt32();
+					if (Main.netMode == NetmodeID.Server)
+					{
+						var packet = GetPacket();
+						packet.Write((byte)SOTSMessageType.SyncGlobalNPCTime);
+						packet.Write(playernumber2);
+						packet.Write(npcNumber);
+						packet.Write(debuffNPC.timeFrozen);
+						packet.Send(-1, playernumber2);
 					}
 					break;
 			}

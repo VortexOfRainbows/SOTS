@@ -1,9 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.NPCs.ArtificialDebuffs;
 using SOTS.Projectiles.Inferno;
 using SOTS.Projectiles.Minions;
 using SOTS.Utilities;
 using Terraria;
+using Terraria.ID;
 
 namespace SOTS
 {
@@ -15,6 +17,7 @@ namespace SOTS
 			On.Terraria.Main.DrawProjectiles += Main_DrawProjectiles;
 			On.Terraria.Main.DrawNPCs += Main_DrawNPCs;
 			On.Terraria.Main.DrawPlayers += Main_DrawPlayers;
+			On.Terraria.NPC.UpdateNPC += NPC_UpdateNPC;
 			Main.OnPreDraw += Main_OnPreDraw;
 			if (!Main.dedServ)
 				ResizeTargets();
@@ -30,7 +33,29 @@ namespace SOTS
 			On.Terraria.Main.DrawProjectiles -= Main_DrawProjectiles;
 			On.Terraria.Main.DrawNPCs -= Main_DrawNPCs;
 			On.Terraria.Main.DrawPlayers -= Main_DrawPlayers;
+			On.Terraria.NPC.UpdateNPC -= NPC_UpdateNPC;
 			Main.OnPreDraw -= Main_OnPreDraw;
+		}
+		private static void NPC_UpdateNPC(On.Terraria.NPC.orig_UpdateNPC orig, NPC self, int i)
+		{
+			if (self.active)
+			{
+				NPC realNPC = self;
+				if (self.realLife != -1)
+					realNPC = Main.npc[self.realLife];
+				DebuffNPC debuffNPC = realNPC.GetGlobalNPC<DebuffNPC>();
+				if (debuffNPC.timeFrozen > 0)
+				{
+					debuffNPC.timeFrozen--;
+					if (debuffNPC.timeFrozen == 0 && Main.netMode == NetmodeID.Server)
+					{
+						debuffNPC.netUpdateTime = true;
+					}
+					self.whoAmI = i;
+					return;
+				}
+			}
+			orig(self, i);
 		}
 
 		private static void Main_OnPreDraw(GameTime obj)

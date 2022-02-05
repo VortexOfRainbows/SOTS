@@ -28,6 +28,7 @@ using SOTS.Items.Tide;
 using SOTS.Items.Permafrost;
 using SOTS.Items.Otherworld.Blocks;
 using SOTS.Items.Inferno;
+using SOTS.Items.Chaos;
 
 namespace SOTS.NPCs
 {
@@ -314,6 +315,8 @@ namespace SOTS.NPCs
 							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<DeathSpiral>(), 1);
 						if (npc.type == ModContent.NPCType<InfernoConstruct>())
 							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<IncineratorGlove>(), 1);
+						if (npc.type == ModContent.NPCType<ChaosConstruct>())
+							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<ParticleRelocator>(), 1);
 					}
 					else
 					{
@@ -331,6 +334,8 @@ namespace SOTS.NPCs
 							type = ModContent.ItemType<EvilPlating>();
 						if (npc.type == ModContent.NPCType<ChaosConstruct>())
 							type = ModContent.ItemType<ChaosPlating>();
+						if (npc.type == ModContent.NPCType<InfernoConstruct>())
+							type = ItemID.LivingFireBlock;
 						if (npc.type == ModContent.NPCType<OtherworldlyConstructHead2>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead>())
 						{
 							if (npc.type == ModContent.NPCType<OtherworldlyConstructHead2>())
