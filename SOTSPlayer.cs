@@ -43,6 +43,7 @@ using SOTS.Items.Fishing;
 using SOTS.Items.Tide;
 using Terraria.ModLoader.IO;
 using SOTS.Items.GhostTown;
+using SOTS.Projectiles.Chaos;
 
 namespace SOTS
 {
@@ -205,6 +206,7 @@ namespace SOTS
 		public bool BlueFire = false;
 		public bool BlueFireOrange = false;
 		public bool EndothermicAfterburner = false;
+		public bool ParticleRelocator = false;
 		public bool netUpdate = false;
 		public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
 		{
@@ -577,6 +579,7 @@ namespace SOTS
         }
         public override void ResetEffects()
 		{
+			ParticleRelocator = false;
 			pyramidBattle = false;
 			if (normalizedGravity && !((TestWingsPlayer)player.GetModPlayer(mod, "TestWingsPlayer")).creativeFlight)
             {
@@ -845,6 +848,7 @@ namespace SOTS
 			BlueFire = false;
 			BlueFireOrange = false;
 			EndothermicAfterburner = false;
+			ParticleRelocator = false;
 			if (PyramidBiome)
 				player.AddBuff(ModContent.BuffType<Buffs.PharaohsCurse>(), 16, false); 
 			polarCannons = 0;
@@ -974,21 +978,16 @@ namespace SOTS
 			onhit = 2;
 			if (PushBack)
 			{
-				float dX = npc.Center.X - player.Center.X;
-				float dY = npc.Center.Y - player.Center.Y;
-				float distance = (float)Math.Sqrt((double)(dX * dX + dY * dY));
-				float speed = 16.0f / distance;
-				dX *= speed;
-				dY *= speed;
 				if(Main.myPlayer == player.whoAmI)
 				{
-					int Proj = Projectile.NewProjectile(npc.Center.X - dX * 5, npc.Center.Y - dY * 5, dX, dY, ProjectileID.JavelinFriendly, 12, 25f, player.whoAmI);
+					Vector2 toNPC = (player.Center - npc.Center).SafeNormalize(Vector2.Zero);
+					int Proj = Projectile.NewProjectile(npc.Center - toNPC * 5, toNPC, ProjectileID.JavelinFriendly, 12, 25f, player.whoAmI);
 					Main.projectile[Proj].timeLeft = 15;
 					Main.projectile[Proj].netUpdate = true;
 				}
 			}
 		}
-		public override void OnHitByProjectile(Projectile proj, int damage, bool crit)
+        public override void OnHitByProjectile(Projectile proj, int damage, bool crit)
 		{
 			onhitdamage = damage;
 			onhit = 2;
@@ -1012,6 +1011,33 @@ namespace SOTS
 						Vector2 circularSpeed = new Vector2(0, -12).RotatedBy(MathHelper.ToRadians(i * (360f / shardOnHit)));
 						Projectile.NewProjectile(player.Center.X, player.Center.Y, circularSpeed.X, circularSpeed.Y, ModContent.ProjectileType<ShatterShard>(), 10 + bonusShardDamage, 3f, player.whoAmI);
 					}
+				}
+			}
+			if (ParticleRelocator)
+			{
+				NPC collidingNPC = null;
+				for(int i = 0; i < 200; i++)
+                {
+					NPC npc = Main.npc[i];
+					if(npc.active && !npc.friendly && npc.Hitbox.Intersects(player.Hitbox))
+                    {
+						collidingNPC = npc;
+						break;
+                    }
+                }
+				if (collidingNPC != null && Main.myPlayer == player.whoAmI && !player.HasBuff(BuffID.ChaosState))
+				{
+					Vector2 toNPC = collidingNPC.Center - player.Center;
+					int direction = 1;
+					if (player.Center.X > collidingNPC.Center.X)
+						direction = -1;
+					Vector2 otherSide = new Vector2(collidingNPC.Center.X + (collidingNPC.width / 2 + 96) * direction, player.Center.Y - 16 + toNPC.X * 0.1f);
+					Projectile.NewProjectile(player.Center, toNPC.SafeNormalize(Vector2.Zero), ModContent.ProjectileType<RelocatorBeam>(), player.statDefense + 1, collidingNPC.whoAmI, player.whoAmI, otherSide.X, otherSide.Y);
+					player.AddBuff(BuffID.ChaosState, 20);
+					damage = 0;
+					player.immuneTime = 4;
+					player.immune = true;
+					return false;
 				}
 			}
 			return base.PreHurt(pvp, quiet, ref damage, ref hitDirection, ref crit, ref customDamage, ref playSound, ref genGore, ref damageSource);

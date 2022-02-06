@@ -56,6 +56,28 @@ namespace SOTS.NPCs
 			dist = minDistance;
 			return target;
 		}
+		public static int FindTarget_Ignore(Vector2 center, List<int> ignore, float minDistance = 2000f, object attacker = null)
+		{
+			return FindTarget_Ignore(center, out float _, ignore, minDistance);
+		}
+		public static int FindTarget_Ignore(Vector2 center, out float dist, List<int> ignore, float minDistance = 2000f, object attacker = null)
+		{
+			int target = -1;
+			for (int i = 0; i < Main.maxNPCs; i++)
+			{
+				if (Main.npc[i].CanBeChasedBy(attacker) && !ignore.Contains(i))
+				{
+					float distance = (center - Main.npc[i].Center).Length();
+					if (distance < minDistance)
+					{
+						target = i;
+						minDistance = distance;
+					}
+				}
+			}
+			dist = minDistance;
+			return target;
+		}
 		public static bool isPolarisNPC(int type)
         {
 			return (type == ModContent.NPCType<BulletSnakeHead>() || type == ModContent.NPCType<BulletSnakeWing>() || type == ModContent.NPCType<BulletSnakeBody>() || type == ModContent.NPCType<BulletSnakeEnd>() || type == ModContent.NPCType<Polaris>() || type == ModContent.NPCType<PolarisLaser>() || type == ModContent.NPCType<PolarisCannon>());

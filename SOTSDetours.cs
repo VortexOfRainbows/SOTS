@@ -46,6 +46,8 @@ namespace SOTS
 				DebuffNPC debuffNPC = realNPC.GetGlobalNPC<DebuffNPC>();
 				if (debuffNPC.timeFrozen > 0)
 				{
+					if(self.immune[Main.myPlayer] > 0)
+						self.immune[Main.myPlayer]--;
 					debuffNPC.timeFrozen--;
 					if (debuffNPC.timeFrozen == 0 && Main.netMode == NetmodeID.Server)
 					{
