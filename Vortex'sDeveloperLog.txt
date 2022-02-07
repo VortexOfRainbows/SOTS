@@ -46,9 +46,9 @@ Low Priority:
 1. Implemented npc freeze system from Catalyst
 	1. Works in multiplayer quite well
 2. Some work on Particle Relocator
-	1. Needs to be tested in multiplayer
-	2. More visual polish needed
-	3. Foggy clairvoyance..?
+	1. Needs multiplayer testing again
+	2. More visual polish needed: need to sync debuffNPC.frozen
+3. Chaos state banned from Foggy Clairvoyance
 
 2/1/22
 1. Gold Arc staff damage 40 -> 34

@@ -40,22 +40,9 @@ namespace SOTS
 		{
 			if (self.active)
 			{
-				NPC realNPC = self;
-				if (self.realLife != -1)
-					realNPC = Main.npc[self.realLife];
-				DebuffNPC debuffNPC = realNPC.GetGlobalNPC<DebuffNPC>();
-				if (debuffNPC.timeFrozen > 0)
-				{
-					if(self.immune[Main.myPlayer] > 0)
-						self.immune[Main.myPlayer]--;
-					debuffNPC.timeFrozen--;
-					if (debuffNPC.timeFrozen == 0 && Main.netMode == NetmodeID.Server)
-					{
-						debuffNPC.netUpdateTime = true;
-					}
-					self.whoAmI = i;
+				bool freeze = DebuffNPC.UpdateWhileFrozen(self, i);
+				if (freeze)
 					return;
-				}
 			}
 			orig(self, i);
 		}

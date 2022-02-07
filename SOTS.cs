@@ -380,6 +380,7 @@ namespace SOTS
 					npcNumber = reader.ReadInt32();
 					debuffNPC = Main.npc[npcNumber].GetGlobalNPC<DebuffNPC>();
 					debuffNPC.timeFrozen = reader.ReadInt32();
+					debuffNPC.frozen = reader.ReadBoolean();
 					if (Main.netMode == NetmodeID.Server)
 					{
 						var packet = GetPacket();
@@ -387,6 +388,7 @@ namespace SOTS
 						packet.Write(playernumber2);
 						packet.Write(npcNumber);
 						packet.Write(debuffNPC.timeFrozen);
+						packet.Write(debuffNPC.frozen);
 						packet.Send(-1, playernumber2);
 					}
 					break;

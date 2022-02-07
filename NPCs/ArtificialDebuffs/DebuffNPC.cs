@@ -55,6 +55,10 @@ namespace SOTS.NPCs.ArtificialDebuffs
         public int BleedingCurse = 0;
         public int timeFrozen = 0;
         public bool netUpdateTime = false;
+        public bool frozen = false;
+        public float aiSpeedCounter = 0;
+        public float aiSpeedMultiplier = 1;
+        public const float timeBeforeFullFreeze = 60f;
         //public bool hasJustSpawned = true;
         public override void OnHitPlayer(NPC npc, Player target, int damage, bool crit)
         {
@@ -152,8 +156,68 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 return;
             DebuffNPC instancedNPC = npc.GetGlobalNPC<DebuffNPC>();
             instancedNPC.timeFrozen = time;
+            instancedNPC.frozen = false;
             if((player == null && Main.netMode == NetmodeID.Server) || Main.netMode != NetmodeID.SinglePlayer)
                 instancedNPC.SendClientChanges(player, npc, 1);
+        }
+        public static bool UpdateWhileFrozen(NPC npc, int i)
+        {
+            NPC realNPC = npc;
+            if (npc.realLife != -1)
+                realNPC = Main.npc[npc.realLife];
+            DebuffNPC debuffNPC = realNPC.GetGlobalNPC<DebuffNPC>();
+            if (debuffNPC.timeFrozen > 0 || debuffNPC.frozen)
+            {
+                if (npc.immune[Main.myPlayer] > 0)
+                    npc.immune[Main.myPlayer]--;
+
+                if (!debuffNPC.frozen)
+                {
+                    if (debuffNPC.aiSpeedMultiplier > 0)
+                    {
+                        debuffNPC.aiSpeedMultiplier -= 1 / timeBeforeFullFreeze;
+                    }
+                    else
+                    {
+                        debuffNPC.aiSpeedMultiplier = 0;
+                        debuffNPC.frozen = true;
+                    }
+                }
+                else
+                {
+                    if (debuffNPC.timeFrozen > 1)
+                    {
+                        debuffNPC.timeFrozen--;
+                    }
+                    else
+                    {
+                        debuffNPC.aiSpeedMultiplier += 1 / timeBeforeFullFreeze;
+                        if (debuffNPC.aiSpeedMultiplier > 1)
+                        {
+                            debuffNPC.aiSpeedMultiplier = 1;
+                            debuffNPC.timeFrozen = 0;
+                            debuffNPC.frozen = false;
+                        }
+                    }
+                }
+                if (debuffNPC.timeFrozen == 0 && Main.netMode == NetmodeID.Server)
+                {
+                    debuffNPC.netUpdateTime = true;
+                }
+                npc.whoAmI = i;
+            }
+            else
+            {
+                debuffNPC.frozen = false;
+            }
+            debuffNPC.aiSpeedCounter += debuffNPC.aiSpeedMultiplier;
+            if (debuffNPC.aiSpeedCounter >= 1)
+            {
+                debuffNPC.aiSpeedCounter -= 1;
+            }
+            else
+                return true;
+            return false;
         }
         public void SendClientChanges(Player player, NPC npc, int type = 0)
         {
@@ -179,8 +243,35 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 packet.Write(playerWhoAmI);
                 packet.Write(npc.whoAmI);
                 packet.Write(timeFrozen);
+                packet.Write(frozen);
                 packet.Send();
             }
+        }
+        public void DrawClock(NPC npc, SpriteBatch spriteBatch, Color drawColor)
+        {
+            float alphaMult = 1 - aiSpeedMultiplier;
+            float generalScaling = 0.75f;
+            Texture2D ring1 = GetTexture("SOTS/NPCs/ArtificialDebuffs/ClockRing1");
+            Texture2D ring2 = GetTexture("SOTS/NPCs/ArtificialDebuffs/ClockRing2");
+            Texture2D ring2F = GetTexture("SOTS/NPCs/ArtificialDebuffs/ClockRing2Fill");
+            Vector2 ringOrigin = new Vector2(ring1.Width / 2, ring1.Height / 2);
+            Texture2D hand1 = GetTexture("SOTS/NPCs/ArtificialDebuffs/ClockHand1");
+            Texture2D hand2 = GetTexture("SOTS/NPCs/ArtificialDebuffs/ClockHand2");
+            Vector2 drawPos = new Vector2(npc.Center.X, npc.position.Y - 32) - Main.screenPosition;
+            Color color = drawColor;
+            color *= alphaMult;
+            float secondsHandMult = timeFrozen / 60f * alphaMult;
+            float minutesHandMult = timeFrozen / 3600f * alphaMult;
+            float rotation1 = secondsHandMult * MathHelper.TwoPi;
+            float rotation2 = minutesHandMult * MathHelper.TwoPi;
+            Vector2 handOrigin = new Vector2(hand1.Width / 2, hand1.Height + 2);
+
+            spriteBatch.Draw(ring2, drawPos, null, color, rotation1 * 0.5f, ringOrigin, generalScaling, SpriteEffects.None, 0f);
+            spriteBatch.Draw(ring2F, drawPos, null, color * 0.5f, rotation1 * 0.5f, ringOrigin, generalScaling, SpriteEffects.None, 0f);
+            spriteBatch.Draw(hand1, drawPos, null, color, rotation1, handOrigin, generalScaling, SpriteEffects.None, 0f);
+            handOrigin = new Vector2(hand2.Width / 2, hand2.Height + 2);
+            spriteBatch.Draw(hand2, drawPos, null, color, rotation2, handOrigin, generalScaling, SpriteEffects.None, 0f);
+            spriteBatch.Draw(ring1, drawPos, null, color, 0, ringOrigin, generalScaling, SpriteEffects.None, 0f);
         }
         public override void PostDraw(NPC npc, SpriteBatch spriteBatch, Color drawColor)
         {
@@ -348,6 +439,10 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 }
                 Main.spriteBatch.Draw(texture, pos - Main.screenPosition, frame, drawColor, 0f, origin, 1f, SpriteEffects.None, 0f);
                 height += 24;
+            }
+            if(timeFrozen != 0)
+            {
+                //DrawClock(npc, spriteBatch, drawColor);
             }
             base.PostDraw(npc, spriteBatch, drawColor);
         }
