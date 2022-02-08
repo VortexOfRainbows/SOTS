@@ -28,8 +28,8 @@ namespace SOTS.Items.SpiritStaves
 			item.useTime = 30;
 			item.useAnimation = 30;
 			item.useStyle = ItemUseStyleID.SwingThrow;
-			item.value = Item.sellPrice(0, 1, 50, 0);
-			item.rare = ItemRarityID.Green;
+			item.value = Item.sellPrice(0, 5, 0, 0);
+			item.rare = ItemRarityID.Pink;
 			item.UseSound = SoundID.Item44;
 			item.noMelee = true;
 			item.summon = true;

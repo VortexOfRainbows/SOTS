@@ -57,9 +57,9 @@ namespace SOTS.NPCs.Boss.Curse
 		public override void SetDefaults()
 		{
 			npc.aiStyle = 0;
-			npc.lifeMax = 3250;
+			npc.lifeMax = 4000;
 			npc.damage = 45;
-			npc.defense = 10;
+			npc.defense = 20;
 			npc.knockBackResist = 0f;
 			npc.width = 42;
 			npc.height = 54;
@@ -150,7 +150,7 @@ namespace SOTS.NPCs.Boss.Curse
 		}
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
 		{
-			npc.lifeMax = (int)(npc.lifeMax * bossLifeScale * 0.6923077f);
+			npc.lifeMax = (int)(npc.lifeMax * bossLifeScale * 0.625f);
 			npc.damage = (int)(npc.damage * 0.75f);
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)

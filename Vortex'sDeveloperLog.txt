@@ -25,11 +25,8 @@ Mid Priority:
 		1. Phase Alloy: Phase Ore + Crystal Shards + Chaos Fragment + other stuff perhaps
 	4. True Phaseblade -> Starward Sword
 	5. Chaos Chamber
-2. Construct Items:
-	1. Particle Relocator (chaos): getting hit by an enemy (melee) will teleport you to the other side of the enemy, 
-	dealing damage to them and preventing you from taking damage.
-		1. After tp, Chaos State + Surprise Attack
-		2. Surprise Attack (buff): 50% increased melee damage for a few seconds after teleporting
+2. Construct Items:	
+	1. Evil Spirit Staff
 3. Perfect Star (magic weapon, Cave Story reference)
 	1. Found inside the vibrant geode in the jungle
 4. Harvester Scythe
@@ -45,9 +42,24 @@ Low Priority:
 2/4/22 to 2/7/22
 1. Implemented npc freeze system from Catalyst
 	1. Works in multiplayer quite well
-2. Some work on Particle Relocator
+2. Added Particle Relocator
+	1. Syncs in multiplayer!
 3. Chaos state banned from Foggy Clairvoyance
 4. Time freeze effect visuals + syncs in multiplayer
+5. Earthen Spirit Staff 
+	1. damage 16 -> 14, void cost 20 -> 25 (roughly a 25+% nerf)
+	2. Watching Pixelated Fireball has taught me how overtuned this item is.
+	3. The void minion nerfs comes this patch, but this should gain an additional nerf due to being massively better than other minion and void minion options.
+6. Added Inferno Spirit Staff
+	1. Syncs in multiplayer!
+Boss Buffs:
+7. Pharaoh's Curse defense 10 -> 20
+	1. He died a little too quickly for my liking
+	2. Hp (3250, 4500) -> (4000, 5000)
+8. Advisor defense 22-> 24
+	1. His fight should be a more notable end to p-Hardmode
+	2. Hp (11000, 14500) -> (12500, 16000)
+	3. Base damage (52, 83) -> (54, 86)
 
 2/1/22
 1. Gold Arc staff damage 40 -> 34

@@ -372,7 +372,7 @@ namespace SOTS.Void
 			if (type == (int)VoidMinionID.ChaosSpirit)
 				return 150;
 			if (type == (int)VoidMinionID.EarthenSpirit)
-				return 20;
+				return 25;
 			if (type == (int)VoidMinionID.OtherworldSpirit)
 				return 65;
 			if (type == (int)VoidMinionID.BethanySpirit)
@@ -383,6 +383,8 @@ namespace SOTS.Void
 				return 100;
 			if (type == (int)VoidMinionID.PermafrostSpirit)
 				return 54;
+			if(type == (int)VoidMinionID.InfernoSpirit)
+				return 120;
 			return 1;
 		}
 		public static Color minionVoidColor(int type)
@@ -405,6 +407,8 @@ namespace SOTS.Void
 				return TideColor;
 			if (type == (int)VoidMinionID.PermafrostSpirit)
 				return PermafrostColor;
+			if (type == (int)VoidMinionID.InfernoSpirit)
+				return InfernoColorAttemptDegrees(VoidPlayer.soulColorCounter);
 			return Color.White;
 		}
 		public static bool isVoidMinion(Projectile projectile)
@@ -439,6 +443,8 @@ namespace SOTS.Void
 				return (int)VoidMinionID.TidalSpirit;
 			if (type == ProjectileType<PermafrostSpirit>())
 				return (int)VoidMinionID.PermafrostSpirit;
+			if (type == ProjectileType<InfernoSpirit>())
+				return (int)VoidMinionID.InfernoSpirit;
 			return -1;
 		}
 		public enum VoidMinionID
@@ -451,7 +457,8 @@ namespace SOTS.Void
 			TBethanySpirit,
 			CursedBlade,
 			TidalSpirit,
-			PermafrostSpirit
+			PermafrostSpirit,
+			InfernoSpirit
 		}
 		public static void VoidBurn(Mod mod, Player player, int damage, int duration)
 		{

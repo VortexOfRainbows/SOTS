@@ -6,6 +6,7 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using System.IO;
 using SOTS.Void;
+using SOTS.Buffs;
 
 namespace SOTS.Projectiles.Minions
 {
@@ -148,33 +149,11 @@ namespace SOTS.Projectiles.Minions
 			#region Active check
 			if (player.dead || !player.active) 
 			{
-				player.ClearBuff(mod.BuffType("OtherworldlySpiritAid"));
+				player.ClearBuff(ModContent.BuffType<OtherworldlySpiritAid>());
 			}
-			if (player.HasBuff(mod.BuffType("OtherworldlySpiritAid")))
+			if (player.HasBuff(ModContent.BuffType<OtherworldlySpiritAid>()))
 			{
 				projectile.timeLeft = 6;
-			}
-			bool found = false;
-			int ofTotal = 0;
-			int total = 0;
-			for (int i = 0; i < Main.projectile.Length; i++)
-			{
-				Projectile proj = Main.projectile[i];
-				if (projectile.type == proj.type && proj.active && projectile.active && proj.owner == projectile.owner)
-				{
-					if (proj == projectile)
-					{
-						found = true;
-					}
-					if (!found)
-						ofTotal++;
-					total++;
-				}
-			}
-			if (Main.myPlayer == player.whoAmI)
-			{
-				if(total > 0)
-					projectile.ai[0] = modPlayer.orbitalCounter + (ofTotal * 360f / total);
 			}
 			#endregion
 			#region Find target
@@ -216,7 +195,6 @@ namespace SOTS.Projectiles.Minions
 				}
 			}
 			#endregion
-
 			#region Movement
 			Vector2 idlePosition = player.Center;
 			idlePosition.Y -= 96f;
@@ -250,7 +228,6 @@ namespace SOTS.Projectiles.Minions
 				projectile.netUpdate = true;
 			}
 			#endregion
-
 			Lighting.AddLight(projectile.Center, VoidPlayer.OtherworldColor.R / 255f, VoidPlayer.OtherworldColor.G / 255f * ((255 - projectile.alpha) / 255f), VoidPlayer.OtherworldColor.B / 255f * ((255 - projectile.alpha) / 255f));
 			MoveAwayFromOthers(true, 0.11f, 2f);
 			if (Main.myPlayer == player.whoAmI)

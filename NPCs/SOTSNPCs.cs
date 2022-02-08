@@ -532,7 +532,11 @@ namespace SOTS.NPCs
 				if (player.ZoneCorrupt)
 					pool.Add(ModContent.NPCType<CorruptionTreasureSlime>(), 0.075f);
 			}
-			if(player.ZoneBeach && !spawnInfo.player.ZonePeaceCandle) //guarenteed to not spawn when a peace candle is nearby
+			else if (player.ZoneHoly && player.ZoneOverworldHeight && Main.hardMode)
+			{
+				pool.Add(ModContent.NPCType<ChaosConstruct>(), 0.005f * constructRateMultiplier);
+			}
+			if (player.ZoneBeach && !spawnInfo.player.ZonePeaceCandle) //guarenteed to not spawn when a peace candle is nearby
 			{
 				if (player.statLifeMax2 >= 120)
 				{

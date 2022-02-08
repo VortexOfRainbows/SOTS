@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Items.Otherworld;
 using SOTS.Projectiles.Otherworld;
 using Terraria;
 using Terraria.ID;
@@ -82,9 +83,9 @@ namespace SOTS.NPCs.Boss.Advisor
 		public override void SetDefaults()
         {
             npc.aiStyle = 0;
-            npc.lifeMax = 11000;
-            npc.damage = 52;
-            npc.defense = 22;
+            npc.lifeMax = 12500;
+            npc.damage = 54;
+            npc.defense = 24;
             npc.knockBackResist = 0f;
             npc.width = 78;
             npc.height = 98;
@@ -101,10 +102,15 @@ namespace SOTS.NPCs.Boss.Advisor
             npc.buffImmune[BuffID.Frostburn] = true;
             npc.buffImmune[BuffID.CursedInferno] = true;
             npc.buffImmune[BuffID.ShadowFlame] = true;
-            bossBag = mod.ItemType("TheAdvisorBossBag");
+            bossBag = ModContent.ItemType<TheAdvisorBossBag>();
 			music = -1;
 			musicPriority = (MusicPriority)(-1);
 			//bossBag = mod.ItemType("BossBagBloodLord");
+		}
+		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+		{
+			npc.lifeMax = (int)(npc.lifeMax * bossLifeScale * 0.64002f); //16000
+			npc.damage = (int)(npc.damage * 0.8f); //86
 		}
 		public static int[] ConstructIds = { -1, -1, -1, -1 };
 		bool dormant = true;
@@ -383,11 +389,6 @@ namespace SOTS.NPCs.Boss.Advisor
 			}
 			DrawGlow(spriteBatch, lightColor);
 			return true;
-        }
-        public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
-        {
-			npc.lifeMax = (int)(npc.lifeMax * bossLifeScale * 0.6591f);  
-            npc.damage = (int)(npc.damage * 0.8f);  
         }
 		bool moveLegsDynamic = true;
 		bool moveLegsReturn = true;
