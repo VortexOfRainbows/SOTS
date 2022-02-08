@@ -58,7 +58,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
         public bool frozen = false;
         public float aiSpeedCounter = 0;
         public float aiSpeedMultiplier = 1;
-        public const float timeBeforeFullFreeze = 60f;
+        public const float timeBeforeFullFreeze = 30f;
         //public bool hasJustSpawned = true;
         public override void OnHitPlayer(NPC npc, Player target, int damage, bool crit)
         {
@@ -157,7 +157,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
             DebuffNPC instancedNPC = npc.GetGlobalNPC<DebuffNPC>();
             instancedNPC.timeFrozen = time;
             instancedNPC.frozen = false;
-            if((player == null && Main.netMode == NetmodeID.Server) || Main.netMode != NetmodeID.SinglePlayer)
+            if ((player == null && Main.netMode == NetmodeID.Server) || Main.netMode != NetmodeID.SinglePlayer)
                 instancedNPC.SendClientChanges(player, npc, 1);
         }
         public static bool UpdateWhileFrozen(NPC npc, int i)
@@ -245,6 +245,29 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 packet.Write(timeFrozen);
                 packet.Write(frozen);
                 packet.Send();
+            }
+        }
+        public void DrawTimeFreeze(NPC npc, SpriteBatch spriteBatch, Color drawColor)
+        {
+            float alphaMult = 1 - aiSpeedMultiplier;
+            int type = npc.whoAmI % 3 + 1;
+            Texture2D ring1 = GetTexture("SOTS/NPCs/ArtificialDebuffs/FreezeSpiral" + type);
+            Vector2 ringOrigin = new Vector2(ring1.Width / 2, ring1.Height / 2);
+            Vector2 drawPos = new Vector2(npc.Center.X, npc.Center.Y + npc.gfxOffY) + npc.visualOffset - Main.screenPosition;
+            Color color = new Color(70, 0, 105, 0);
+            float secondsHandMult = Main.GameUpdateCount / 90f;
+            float drawDimensions = npc.Size.Length();
+            float scale = 0.02f + 1.04f * (drawDimensions / 800f);
+            float rotation1 = secondsHandMult * MathHelper.TwoPi;
+            int direction = npc.direction;
+            if (direction == 0)
+                direction = 1;
+            for (int i = 0; i < 2; i++)
+            {
+                spriteBatch.Draw(ring1, drawPos, null, color * alphaMult, rotation1 * direction, ringOrigin, scale, direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+                color = new Color(40, 0, 100, 0);
+                rotation1 = secondsHandMult * MathHelper.TwoPi * 0.5f;
+                scale *= 0.97f;
             }
         }
         public void DrawClock(NPC npc, SpriteBatch spriteBatch, Color drawColor)
@@ -439,10 +462,6 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 }
                 Main.spriteBatch.Draw(texture, pos - Main.screenPosition, frame, drawColor, 0f, origin, 1f, SpriteEffects.None, 0f);
                 height += 24;
-            }
-            if(timeFrozen != 0)
-            {
-                //DrawClock(npc, spriteBatch, drawColor);
             }
             base.PostDraw(npc, spriteBatch, drawColor);
         }

@@ -75,10 +75,13 @@ namespace SOTS
 		{
 			if (SOTS.primitives != null && Main.spriteBatch != null)
 			{
+				PreDrawNPCs();
 				SOTS.primitives.DrawTargetNPC(Main.spriteBatch);
 			}
 			if (self != null && orig != null)
+            {
 				orig(self, behindTiles);
+			}
 		}
 
 		private static void Main_DrawPlayers(On.Terraria.Main.orig_DrawPlayers orig, Main self)
@@ -101,6 +104,22 @@ namespace SOTS
 					}
 				}
 				Main.spriteBatch.End();
+			}
+		}
+		private static void PreDrawNPCs()
+		{
+			if (!Main.dedServ)
+			{
+				for (int i = 0; i < Main.npc.Length; i++)
+				{
+					NPC npc = Main.npc[i];
+					if (npc.active)
+					{
+						DebuffNPC instancedNPC = npc.GetGlobalNPC<DebuffNPC>();
+						if (instancedNPC.timeFrozen != 0)
+							instancedNPC.DrawTimeFreeze(npc, Main.spriteBatch, Color.White);
+					}
+				}
 			}
 		}
 		private static void PreDrawPlayers()

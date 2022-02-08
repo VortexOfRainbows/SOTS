@@ -42,13 +42,12 @@ Low Priority:
 3. Void Bar strike the player during void shock
 4. Fix Planetarium sky island spawning in tandum
 
-2/4/22 & 2/5/22
+2/4/22 to 2/7/22
 1. Implemented npc freeze system from Catalyst
 	1. Works in multiplayer quite well
 2. Some work on Particle Relocator
-	1. Needs multiplayer testing again
-	2. More visual polish needed: need to sync debuffNPC.frozen
 3. Chaos state banned from Foggy Clairvoyance
+4. Time freeze effect visuals + syncs in multiplayer
 
 2/1/22
 1. Gold Arc staff damage 40 -> 34
