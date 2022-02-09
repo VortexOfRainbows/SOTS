@@ -45,7 +45,7 @@ Low Priority:
 	2. This one attacks through walls, does a lot of damage, and is literally viable up to Subspace Serpent, thus a nerf should be reasonable
 2. Permafrost Spirit Staff damage 19 -> 17
 	1. Make sure this doesn't soley overtake nerfed Earthen spirit staff
-3. 
+3. Added Dissolving Brilliance block and wall
 
 2/4/22 to 2/7/22
 1. Implemented npc freeze system from Catalyst
