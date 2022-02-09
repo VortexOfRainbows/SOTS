@@ -39,6 +39,14 @@ Low Priority:
 3. Void Bar strike the player during void shock
 4. Fix Planetarium sky island spawning in tandum
 
+2/8/22
+1. Otherworld Spirit Staff damage 30 -> 25 (on full charge: 120 -> 100)
+	1. Void cost 65 -> 75
+	2. This one attacks through walls, does a lot of damage, and is literally viable up to Subspace Serpent, thus a nerf should be reasonable
+2. Permafrost Spirit Staff damage 19 -> 17
+	1. Make sure this doesn't soley overtake nerfed Earthen spirit staff
+3. 
+
 2/4/22 to 2/7/22
 1. Implemented npc freeze system from Catalyst
 	1. Works in multiplayer quite well

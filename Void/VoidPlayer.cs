@@ -374,7 +374,7 @@ namespace SOTS.Void
 			if (type == (int)VoidMinionID.EarthenSpirit)
 				return 25;
 			if (type == (int)VoidMinionID.OtherworldSpirit)
-				return 65;
+				return 75;
 			if (type == (int)VoidMinionID.BethanySpirit)
 				return 15;
 			if (type == (int)VoidMinionID.TBethanySpirit)
