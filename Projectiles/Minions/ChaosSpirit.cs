@@ -6,6 +6,7 @@ using Terraria.ID;
 using System.IO;
 using SOTS.Void;
 using Terraria.ModLoader;
+using SOTS.Buffs.MinionBuffs;
 
 namespace SOTS.Projectiles.Minions
 {
@@ -191,13 +192,12 @@ namespace SOTS.Projectiles.Minions
 				wingHeight = lerpMath(lastWingHeight, 15f, 1 - postChargeCounter / 90f);
             }
 			Player player = Main.player[projectile.owner];
-			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
 			#region Active check
 			if (player.dead || !player.active) 
 			{
-				player.ClearBuff(mod.BuffType("ChaosSpiritAid"));
+				player.ClearBuff(ModContent.BuffType<ChaosSpiritAid>());
 			}
-			if (player.HasBuff(mod.BuffType("ChaosSpiritAid")))
+			if (player.HasBuff(ModContent.BuffType<ChaosSpiritAid>()))
 			{
 				projectile.timeLeft = 6;
 			}

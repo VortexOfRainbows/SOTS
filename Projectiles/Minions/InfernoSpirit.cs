@@ -9,6 +9,7 @@ using SOTS.Void;
 using SOTS.Buffs;
 using System.Linq;
 using SOTS.Projectiles.Inferno;
+using SOTS.Buffs.MinionBuffs;
 
 namespace SOTS.Projectiles.Minions
 {

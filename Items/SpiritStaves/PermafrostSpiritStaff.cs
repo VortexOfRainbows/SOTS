@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using SOTS.Buffs;
+using SOTS.Buffs.MinionBuffs;
 using SOTS.Items.Permafrost;
 using SOTS.Projectiles.Minions;
 using SOTS.Void;

@@ -1,7 +1,9 @@
 using System;
 using Microsoft.Xna.Framework;
+using SOTS.Buffs.MinionBuffs;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace SOTS.Projectiles.Minions
 {
@@ -40,9 +42,9 @@ namespace SOTS.Projectiles.Minions
 			#region Active check
 			if (player.dead || !player.active) 
 			{
-				player.ClearBuff(mod.BuffType("NatureSpiritAid"));
+				player.ClearBuff(ModContent.BuffType<NatureSpiritAid>());
 			}
-			if (player.HasBuff(mod.BuffType("NatureSpiritAid")))
+			if (player.HasBuff(ModContent.BuffType<NatureSpiritAid>()))
 			{
 				projectile.timeLeft = 2;
 			}

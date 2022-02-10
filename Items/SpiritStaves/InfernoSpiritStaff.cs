@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Buffs;
+using SOTS.Buffs.MinionBuffs;
 using SOTS.Items.Otherworld;
 using SOTS.Items.Otherworld.FromChests;
 using SOTS.Projectiles.Minions;
@@ -28,7 +29,7 @@ namespace SOTS.Items.SpiritStaves
 			item.useTime = 30;
 			item.useAnimation = 30;
 			item.useStyle = ItemUseStyleID.SwingThrow;
-			item.value = Item.sellPrice(0, 9, 0, 0);
+			item.value = Item.sellPrice(0, 10, 0, 0);
 			item.rare = ItemRarityID.Pink;
 			item.UseSound = SoundID.Item44;
 			item.noMelee = true;

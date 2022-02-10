@@ -375,6 +375,7 @@ namespace SOTS.NPCs.Constructs
 	}
 	public class EvilEye
     {
+		public bool friendly;
 		public Texture2D texture;
 		public Texture2D texturePupil;
 		public Vector2 offset;
@@ -383,13 +384,18 @@ namespace SOTS.NPCs.Constructs
 		public float shootCounter = 0;
 		public bool firing = false;
 		public int damage;
-		public EvilEye(Vector2 offset, int damage)
+		private float warmUp = 40f;
+		public EvilEye(Vector2 offset, int damage, bool friendly = false)
         {
 			texture = ModContent.GetTexture("SOTS/NPCs/Constructs/EvilEye");
 			texturePupil = ModContent.GetTexture("SOTS/NPCs/Constructs/EvilEyePupil");
 			this.offset = offset;
 			this.damage = damage;
-        }
+			this.friendly = friendly;
+			if (friendly)
+				warmUp = 10f;
+
+		}
 		public void Fire(Vector2 fireAt)
         {
 			fireTo = fireAt;
@@ -403,12 +409,15 @@ namespace SOTS.NPCs.Constructs
 				if (firing)
 				{
 					shootCounter++;
-					if (shootCounter >= 40)
+					if (shootCounter >= warmUp)
 					{
 						if (Main.netMode != NetmodeID.MultiplayerClient)
 						{
+							int type = ModContent.ProjectileType<EvilBolt>();
+							if (friendly)
+								type = ProjectileID.Bullet;
 							Vector2 toPosition = fireTo - trueOffset - center;
-							Projectile.NewProjectile(center + trueOffset, toPosition.SafeNormalize(Vector2.Zero) * 1f, ModContent.ProjectileType<EvilBolt>(), damage, 0, Main.myPlayer, 0.1f);
+							Projectile.NewProjectile(center + trueOffset, toPosition.SafeNormalize(Vector2.Zero) * 1f, type, damage, 0, Main.myPlayer, 0.1f);
 						}
 						firing = false;
 					}
@@ -450,8 +459,8 @@ namespace SOTS.NPCs.Constructs
 			color.A = 50;
 			Vector2 drawPosition = center + offset.RotatedBy(rotation) * distMult - Main.screenPosition;
 			Vector2 origin = texture.Size() / 2;
-			float mult = 1.10f + 0.5f * shootCounter / 40f;
-			float alpha2 = shootCounter / 20f;
+			float mult = 1.10f + 0.5f * shootCounter / warmUp;
+			float alpha2 = shootCounter / warmUp * 2f;
 			if (alpha2 > 1)
 				alpha2 = 1;
 			float alpha = 0.5f * counter / 40f + 0.5f * alpha2;

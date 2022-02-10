@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using SOTS.Buffs;
+using SOTS.Buffs.MinionBuffs;
 using SOTS.Projectiles.Minions;
 using SOTS.Void;
 using Terraria;
@@ -30,7 +31,7 @@ namespace SOTS.Items.SpiritStaves
 			item.UseSound = SoundID.Item44;
 			item.noMelee = true;
 			item.summon = true;
-			item.buffType = ModContent.BuffType<SpiritAid>();
+			item.buffType = ModContent.BuffType<EarthenSpiritAid>();
 			item.shoot = ModContent.ProjectileType<EarthenSpirit>();
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) 

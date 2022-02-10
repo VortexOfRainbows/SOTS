@@ -3,6 +3,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using System.IO;
+using SOTS.Buffs.MinionBuffs;
+using Terraria.ModLoader;
 
 namespace SOTS.Projectiles.Minions
 {
@@ -100,14 +102,14 @@ namespace SOTS.Projectiles.Minions
 		public override void AI() 
 		{
 			Player player = Main.player[projectile.owner];
-			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
+			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 
 			#region Active check
 			if (player.dead || !player.active) 
 			{
-				player.ClearBuff(mod.BuffType("SpiritAid"));
+				player.ClearBuff(ModContent.BuffType<EarthenSpiritAid>());
 			}
-			if (player.HasBuff(mod.BuffType("SpiritAid")))
+			if (player.HasBuff(ModContent.BuffType<EarthenSpiritAid>()))
 			{
 				projectile.timeLeft = 6;
 			}

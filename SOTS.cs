@@ -159,7 +159,6 @@ namespace SOTS
 			MachinaBoosterHotKey = null;
 			SOTSDetours.Unload();
 		}
-
 		public override void PreUpdateEntities()
 		{
 			if (!Main.dedServ)
@@ -621,10 +620,16 @@ namespace SOTS
 				ItemID.ShadowScale
 			});
 			RecipeGroup.RegisterGroup("SOTS:EvilMaterial", group);
+			group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Evil Bar", new int[]
+			{
+				ItemID.TissueSample,
+				ItemID.ShadowScale
+			});
+			RecipeGroup.RegisterGroup("SOTS:EvilBar", group);
 			group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Gold Bar", new int[]
 			{
-				ItemID.GoldBar,
-				ItemID.PlatinumBar
+				ItemID.CrimtaneBar,
+				ItemID.DemoniteBar
 			});
 			RecipeGroup.RegisterGroup("SOTS:GoldBar", group);
 			group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Gem Robe", new int[]

@@ -39,6 +39,10 @@ Low Priority:
 3. Void Bar strike the player during void shock
 4. Fix Planetarium sky island spawning in tandum
 
+2/9/22
+1. Reorganized spirit minions buff folder/internals
+2. WIP Evil Spirit Staff
+
 2/8/22
 1. Otherworld Spirit Staff damage 30 -> 25 (on full charge: 120 -> 100)
 	1. Void cost 65 -> 75
