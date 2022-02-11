@@ -58,7 +58,7 @@ namespace SOTS.Items.Fragments
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
 		{
 			r = 2.3f;
-			g = 9.5f;
+			g = 0.95f;
 			b = 2.0f;
 			r *= 0.3f;
 			g *= 0.3f;

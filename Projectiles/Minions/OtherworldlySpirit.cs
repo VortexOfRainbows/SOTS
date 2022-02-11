@@ -207,7 +207,7 @@ namespace SOTS.Projectiles.Minions
 						bool inRange = between < distanceFromTarget;
 						bool lineOfSight = Collision.CanHitLine(player.position, player.width, player.height, npc.position, npc.width, npc.height);
 						
-						bool closeThroughWall = between2 < 360f; //should attack semi-reliably through walls
+						bool closeThroughWall = between2 < 160f; //10 blocks through walls //should attack semi-reliably through walls
 						if (inRange && (lineOfSight || closeThroughWall) && between < distanceFromTarget)
 						{
 							distanceFromTarget = between;

@@ -16,13 +16,13 @@ namespace SOTS.Items.SpiritStaves
 	{
 		public override void SetStaticDefaults() 
 		{
-			Tooltip.SetDefault("Summons an Evil Spirit to fight for you\nAttacks with a flurry of Evil Bolts, dealing 50% damage each\nEnds in an explosion that deals 100% damage, always critical strikes, and stuns enemies temporarily\nWill not stun bosses");
+			Tooltip.SetDefault("Summons an Evil Spirit to fight for you\nAttacks with a flurry of Evil Bolts, dealing 50% damage each\nEnds in an explosion that deals 100% damage, always critical strikes");
 			ItemID.Sets.GamepadWholeScreenUseRange[item.type] = true; 
 			ItemID.Sets.LockOnIgnoresCollision[item.type] = true;
 		}
 		public override void SafeSetDefaults() 
 		{
-			item.damage = 70;
+			item.damage = 66;
 			item.knockBack = 4f;
 			item.width = 40;
 			item.height = 42;

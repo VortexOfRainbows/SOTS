@@ -26,7 +26,7 @@ Mid Priority:
 	4. True Phaseblade -> Starward Sword
 	5. Chaos Chamber
 2. Construct Items:	
-	1. Evil Spirit Staff
+	1. Inferno Plating block
 3. Perfect Star (magic weapon, Cave Story reference)
 	1. Found inside the vibrant geode in the jungle
 4. Harvester Scythe
@@ -39,9 +39,12 @@ Low Priority:
 3. Void Bar strike the player during void shock
 4. Fix Planetarium sky island spawning in tandum
 
-2/9/22
+2/9/22 & 1/10/22
 1. Reorganized spirit minions buff folder/internals
-2. WIP Evil Spirit Staff
+2. Added Evil Spirit Staff!
+	1. Syncs in Multiplayer!
+3. Added hardmode bars to Transmutation Altar
+4. Inferno and Otherworld Minions now have stricter checks for enemies behind blocks
 
 2/8/22
 1. Otherworld Spirit Staff damage 30 -> 25 (on full charge: 120 -> 100)

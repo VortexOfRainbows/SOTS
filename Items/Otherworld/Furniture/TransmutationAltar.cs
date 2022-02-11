@@ -142,6 +142,23 @@ namespace SOTS.Items.Otherworld.Furniture
 			recipe.AddTile(TileType<TransmutationAltarTile>());
 			recipe.SetResult(ItemID.DemoniteBar, 1);
 			recipe.AddRecipe();
+
+			AddDirectExchangeRecipe(mod, ItemID.CobaltBar, ItemID.PalladiumBar);
+			AddDirectExchangeRecipe(mod, ItemID.MythrilBar, ItemID.OrichalcumBar);
+			AddDirectExchangeRecipe(mod, ItemID.AdamantiteBar, ItemID.TitaniumBar);
+		}
+		public static void AddDirectExchangeRecipe(Mod mod, int item1, int item2)
+		{
+			ModRecipe recipe = new ModRecipe(mod);
+			recipe.AddIngredient(item1, 1);
+			recipe.AddTile(TileType<TransmutationAltarTile>());
+			recipe.SetResult(item2, 1);
+			recipe.AddRecipe(); 
+			recipe = new ModRecipe(mod);
+			recipe.AddIngredient(item2, 1);
+			recipe.AddTile(TileType<TransmutationAltarTile>());
+			recipe.SetResult(item1, 1);
+			recipe.AddRecipe();
 		}
 	}
 	public class TransmutationAltarTile : ModTile

@@ -126,7 +126,9 @@ namespace SOTS.Projectiles.Minions
 				if (target.CanBeChasedBy() && !npcList.Contains(target.whoAmI))
 				{
 					distance = Vector2.Distance(target.Center, projectile.Center);
-					if (distance < minDist)
+					bool lineOfSight = Collision.CanHitLine(projectile.position, projectile.width, projectile.height, target.position, target.width, target.height);
+					bool closeThroughWall = distance < 480f; //30 blocks through walls
+					if (distance < minDist && (lineOfSight || closeThroughWall))
 					{
 						minDist = distance;
 						target2 = i;

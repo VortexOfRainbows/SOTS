@@ -384,6 +384,7 @@ namespace SOTS.NPCs.Constructs
 		public float shootCounter = 0;
 		public bool firing = false;
 		public int damage;
+		public int target;
 		private float warmUp = 40f;
 		public EvilEye(Vector2 offset, int damage, bool friendly = false)
         {
@@ -394,13 +395,14 @@ namespace SOTS.NPCs.Constructs
 			this.friendly = friendly;
 			if (friendly)
 				warmUp = 10f;
-
+			target = -1;
 		}
-		public void Fire(Vector2 fireAt)
+		public void Fire(Vector2 fireAt, int target = -1)
         {
 			fireTo = fireAt;
 			firing = true;
-        }
+			this.target = target;
+		}
 		public void Update(Vector2 center, float rotation, float distMult, bool dust2 = false)
         {
 			Vector2 trueOffset = offset.RotatedBy(rotation) * distMult;
@@ -414,10 +416,16 @@ namespace SOTS.NPCs.Constructs
 						if (Main.netMode != NetmodeID.MultiplayerClient)
 						{
 							int type = ModContent.ProjectileType<EvilBolt>();
+							float speed = 1;
+							float ai0 = 0.1f;
 							if (friendly)
-								type = ProjectileID.Bullet;
+							{
+								ai0 = target;
+								speed = 4f;
+								type = ModContent.ProjectileType<Projectiles.Minions.EvilSpear>();
+							}
 							Vector2 toPosition = fireTo - trueOffset - center;
-							Projectile.NewProjectile(center + trueOffset, toPosition.SafeNormalize(Vector2.Zero) * 1f, type, damage, 0, Main.myPlayer, 0.1f);
+							Projectile.NewProjectile(center + trueOffset, toPosition.SafeNormalize(Vector2.Zero) * speed, type, damage, 0, Main.myPlayer, ai0);
 						}
 						firing = false;
 					}
@@ -453,7 +461,7 @@ namespace SOTS.NPCs.Constructs
 				}
 			}
         }
-		public void Draw(Vector2 center, float rotation, float distMult)
+		public void Draw(Vector2 center, float rotation, float distMult, float alphaMult = 1f)
 		{
 			Color color = VoidPlayer.EvilColor;
 			color.A = 50;
@@ -472,7 +480,7 @@ namespace SOTS.NPCs.Constructs
 				if (i != 0)
 					length = 1;
 				Vector2 circular = new Vector2(length, 0).RotatedBy(i * MathHelper.Pi / 2f);
-				Main.spriteBatch.Draw(texture, drawPosition + circular, null, color * alpha, 0f, origin, mult, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, drawPosition + circular, null, color * alpha * alphaMult, 0f, origin, mult, SpriteEffects.None, 0f);
 			}
 			color = VoidPlayer.EvilColor;
 			color.A = 50;
@@ -480,7 +488,7 @@ namespace SOTS.NPCs.Constructs
 			{
 				int length = 1;
 				Vector2 circular = new Vector2(length, 0).RotatedBy(i * MathHelper.Pi / 2f);
-				Main.spriteBatch.Draw(texturePupil, drawPosition + circular, null, color * alpha2, 0f, origin, mult, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texturePupil, drawPosition + circular, null, color * alpha2 * alphaMult, 0f, origin, mult, SpriteEffects.None, 0f);
 			}
 		}
     }

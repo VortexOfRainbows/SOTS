@@ -408,9 +408,12 @@ namespace SOTS.Void
 			if (type == (int)VoidMinionID.PermafrostSpirit)
 				return PermafrostColor;
 			if (type == (int)VoidMinionID.InfernoSpirit)
-				return InfernoColorAttemptDegrees(VoidPlayer.soulColorCounter);
+				return InfernoColorAttemptDegrees(soulColorCounter);
 			if (type == (int)VoidMinionID.EvilSpirit)
-				return VoidPlayer.EvilColor;
+			{
+				Color color = Color.Lerp(new Color(165, 21, 0), new Color(114, 54, 183), 0.5f + (float)Math.Sin(MathHelper.ToRadians(soulColorCounter * 1.25f)) * 0.5f);
+				return color;
+			}
 			return Color.White;
 		}
 		public static bool isVoidMinion(Projectile projectile)
