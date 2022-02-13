@@ -467,10 +467,11 @@ namespace SOTS.NPCs.ArtificialDebuffs
         }
         public override void OnHitByItem(NPC npc, Player player, Item item, int damage, float knockback, bool crit)
         {
-            base.OnHitByItem(npc, player, item, damage, knockback, crit);
+            lastHitWasCrit = crit;
         }
         public override void OnHitByProjectile(NPC npc, Projectile projectile, int damage, float knockback, bool crit)
         {
+            lastHitWasCrit = crit;
             if (projectile.type == ProjectileType<HarvestLock>())
             {
                 Player player = Main.player[projectile.owner];
@@ -492,6 +493,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
             }
         }
         bool hitByRay = false;
+        bool lastHitWasCrit = false;
         public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
             Player player = Main.player[projectile.owner];
@@ -1017,17 +1019,18 @@ namespace SOTS.NPCs.ArtificialDebuffs
                     if (player.active && npc.playerInteraction[i])
                     {
                         VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
+                        SOTSPlayer sPlayer = SOTSPlayer.ModPlayer(player);
                         if (voidPlayer.soulsOnKill > 0)
                         {
                             float numberProjectiles = voidPlayer.soulsOnKill * HarvestCost(npc) * 0.1f;
                             for (int j = 0; j < numberProjectiles; j++)
                             {
                                 Vector2 perturbedSpeed = new Vector2(-4.5f, 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(180)));
-                                Projectile proj = Projectile.NewProjectileDirect(npc.Center, perturbedSpeed, mod.ProjectileType("SoulofLooting"), 0, 0, Main.myPlayer, player.whoAmI, 0);
+                                Projectile proj = Projectile.NewProjectileDirect(npc.Center, perturbedSpeed, ModContent.ProjectileType<SoulofLooting>(), 0, 0, Main.myPlayer, player.whoAmI, 0);
                                 proj.netUpdate = true;
                             }
                         }
-                        if(SOTSPlayer.ModPlayer(player).doomDrops && packCount < 40)
+                        if(sPlayer.doomDrops && packCount < 40)
                         {
                             int rand = Main.rand.Next(4);
                             if (player.statLifeMax2 > player.statLife)
@@ -1038,7 +1041,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
                                 for (int j = 0; j < rand; j++)
                                     Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<ManaPack>(), 1);
                         }
-                        if (SOTSPlayer.ModPlayer(player).baguetteDrops && baguetteCount < 40)
+                        if (sPlayer.baguetteDrops && baguetteCount < 40)
                         {
                             int rand = Main.rand.Next(2);
                             if(rand >= 1)
@@ -1049,6 +1052,12 @@ namespace SOTS.NPCs.ArtificialDebuffs
                                 rand += Main.rand.Next(5) / 4;
                             for (int j = 0; j < rand; j++)
                                 Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<BaguetteCrumb>(), 1);
+                        }
+                        if(sPlayer.HarvestersScythe && Main.rand.NextBool(lastHitWasCrit ? 5 : 10))
+                        {
+                            sPlayer.HarvestersScythe = false;
+                            npc.extraValue = 0;
+                            npc.NPCLoot();
                         }
                     }
                 }

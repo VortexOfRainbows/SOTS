@@ -178,6 +178,7 @@ namespace SOTS
 		public int StartingDamage = 0;
 		public bool ItemDivision = false;
 		public bool PushBack = false; // marble protecter effect
+		public bool HarvestersScythe = false;
 
 		public bool pearlescentMagic = false; //pearlescent core effect
 		public bool bloodstainedJewel = false; //bloodstained jewel effect
@@ -579,6 +580,7 @@ namespace SOTS
         }
         public override void ResetEffects()
 		{
+			HarvestersScythe = false;
 			ParticleRelocator = false;
 			pyramidBattle = false;
 			if (normalizedGravity && !((TestWingsPlayer)player.GetModPlayer(mod, "TestWingsPlayer")).creativeFlight)

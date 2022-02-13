@@ -29,15 +29,17 @@ Mid Priority:
 	1. Inferno Plating block
 3. Perfect Star (magic weapon, Cave Story reference)
 	1. Found inside the vibrant geode in the jungle
-4. Harvester Scythe
-	1. Increases Critical Strike Damage by 15%
-	2. Killed enemies have a 10% to drop double loot, or 20% if killed by critical strike
 
 Low Priority:
 1. Archaelogist NPC
 2. Accessory Pets to use own dye slots.
 3. Void Bar strike the player during void shock
 4. Fix Planetarium sky island spawning in tandum
+
+2/13/22
+1. Added Harvester Scythe
+2. A little bit of work on Lux (WIP)
+	1. test attack
 
 2/9/22 & 1/10/22
 1. Reorganized spirit minions buff folder/internals

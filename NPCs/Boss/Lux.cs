@@ -40,6 +40,7 @@ namespace SOTS.NPCs.Boss
 			get => npc.ai[3];
 			set => npc.ai[3] = value;
 		}
+		float IdleTimer = 0;
 		float wingSpeedMult = 1f;
 		float wingHeight; //wings offset in degrees
 		float drawNewWingsCounter = 0;
@@ -58,11 +59,11 @@ namespace SOTS.NPCs.Boss
 			float bonusWidth = drawNewWingsCounter * 16f;
 			float bonusDegree = drawNewWingsCounter * -13f;
 			DrawRings(spriteBatch, false);
-			DrawWings(1f + bonusScale, bonusWidth, bonusDegree, 1f);
+			DrawWings(1, 1f + bonusScale, bonusWidth, bonusDegree, 1f);
 			if(drawNewWingsCounter > 0)
             {
-				DrawWings((1f + bonusScale) * 1.25f, bonusWidth + 12, bonusDegree + 36, drawNewWingsCounter);
-				DrawWings((1f + bonusScale) * 0.75f, bonusWidth - 18, bonusDegree - 36, drawNewWingsCounter);
+				DrawWings(2, (1f + bonusScale) * 1.25f, bonusWidth + 12, bonusDegree + 36, drawNewWingsCounter);
+				DrawWings(0, (1f + bonusScale) * 0.75f, bonusWidth - 18, bonusDegree - 36, drawNewWingsCounter);
 			}
 			return false;
 		}
@@ -85,6 +86,8 @@ namespace SOTS.NPCs.Boss
 			}
 			DrawRings(spriteBatch, true);
 		}
+		public float wingHeightLerp = 0f;
+		public float forcedWingHeight = 0;
 		public void WingStuff()
 		{
 			wingCounter += 7.5f * wingSpeedMult;
@@ -92,17 +95,26 @@ namespace SOTS.NPCs.Boss
 			//dipAndRise *= (float)Math.sqrt(dipAndRise);
 			wingHeight = 19 + dipAndRise * 27;
 		}
-		public void DrawWings(float sizeMult = 1f, float widthOffset = 0, float degreeOffset = 0, float genPercent = 1f)
+		public void DrawWings(int ID, float sizeMult = 1f, float widthOffset = 0, float degreeOffset = 0, float genPercent = 1f)
 		{
 			Texture2D texture = ModContent.GetTexture("SOTS/NPCs/Constructs/ChaosParticle");
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
 			float dipAndRise;
-			float supposedWingHeight = wingHeight - 19;
-			dipAndRise = supposedWingHeight / 27f;
-			dipAndRise = MathHelper.Clamp(dipAndRise, -1, 1);
+			float wingHeight = this.wingHeight;
 			int width = (int)(130 * sizeMult);
 			int height = (int)(90 * sizeMult);
 			int amtOfParticles = 120;
+			if (ID == 2)
+            {
+				wingHeight = MathHelper.Lerp(this.wingHeight, forcedWingHeight, wingHeightLerp);
+            }
+			float supposedWingHeight = wingHeight - 19;
+			dipAndRise = supposedWingHeight / 27f;
+			if(ID == 2)
+            {
+				dipAndRise *= 1 - 2 * wingHeightLerp;
+            }
+			dipAndRise = MathHelper.Clamp(dipAndRise, -1, 1);
 			for (int j = -1; j <= 1; j += 2)
 			{
 				float positionalRotation = npc.rotation + MathHelper.ToRadians((wingHeight + degreeOffset) * -j);
@@ -244,7 +256,7 @@ namespace SOTS.NPCs.Boss
 				attackPhase = -1;
 				runOnce = false;
 			}
-			if (attackPhase == -1)
+			if (attackPhase == SetupPhase)
 			{
 				npc.velocity *= 0.95f;
 				attackTimer1++;
@@ -254,10 +266,10 @@ namespace SOTS.NPCs.Boss
 					float mult = (attackTimer1 - 60f) / 60f;
 					mult = MathHelper.Clamp(mult, 0, 1f);
 					wingSpeedMult = MathHelper.Lerp(2f, 1.0f, mult);
-					npc.Center += new Vector2(0, (float)Math.Sin(MathHelper.ToRadians(attackTimer1 * 12)) * 12f * (1 - mult));
+					npc.Center += new Vector2(0, (float)Math.Sin(MathHelper.ToRadians(attackTimer1 * 12)) * 6f * (1 - mult));
 					if(attackTimer1 > 120)
                     {
-						//swap phases
+						SwapPhase(LaserOrbPhase);
                     }
 				}
 				else if(attackTimer1 > 0)
@@ -267,14 +279,41 @@ namespace SOTS.NPCs.Boss
 					wingSpeedMult = MathHelper.Lerp(0f, 2f, mult);
 					drawNewWingsCounter = mult;
 					if (attackTimer1 > 0)
-						npc.Center += new Vector2(0, (float)Math.Sin(MathHelper.ToRadians(attackTimer1 * 12)) * 12f * mult);
+						npc.Center += new Vector2(0, (float)Math.Sin(MathHelper.ToRadians(attackTimer1 * 12)) * 6f * mult);
 				}
 				else
                 {
 					wingSpeedMult = MathHelper.Lerp(wingSpeedMult, 0f, 0.06f);
                 }
-				Vector2 toPlayer = player.Center - npc.Center;
-				npc.velocity += 0.2f * toPlayer.SafeNormalize(Vector2.Zero);
+			}
+			else
+			{
+				IdleTimer++;
+				npc.Center += new Vector2(0, (float)Math.Sin(MathHelper.ToRadians(IdleTimer * 6)));
+			}
+			if (attackPhase == LaserOrbPhase)
+			{
+				npc.dontTakeDamage = false;
+				if (attackTimer2 == 0)
+				{
+					Vector2 toLocation = player.Center + new Vector2(0, -240);
+					teleport(toLocation);
+					attackTimer2 = 1;
+                }
+				forcedWingHeight = 46;
+				attackTimer1++;
+				if(attackTimer1 <= 120)
+                {
+					wingHeightLerp = attackTimer1 / 120f * 0.9f;
+					wingSpeedMult = 1 - attackTimer1 / 120f * 0.2f;
+				}
+				if(attackTimer1 % 120 == 0 && attackTimer1 >= 120)
+				{
+					if (Main.netMode != NetmodeID.MultiplayerClient)
+					{
+						Projectile.NewProjectile(npc.Center + new Vector2(0, -196), Vector2.Zero, ModContent.ProjectileType<ChaosSphere>(), 0, 0, Main.myPlayer);
+					}
+				}
 			}
 			WingStuff();
 			npc.rotation = npc.velocity.X * 0.06f;
@@ -293,23 +332,6 @@ namespace SOTS.NPCs.Boss
         {
 
         }
-        public void DoPassiveMovement(Vector2 center)
-		{
-			float sinusoid = (float)Math.Sin(MathHelper.ToRadians(npc.ai[3]));
-			Vector2 offset = new Vector2(0, -300).RotatedBy(MathHelper.ToRadians(sinusoid * 30));
-			offset.X *= 1.5f;
-			Vector2 position = center + offset;
-			float verticalOffset = 40 + 40 * (float)Math.Sin(MathHelper.ToRadians(npc.ai[1] * 2f));
-			position.Y -= verticalOffset;
-			Vector2 goTo = position - npc.Center;
-			float speed = 13f;
-			if (goTo.Length() < speed)
-			{
-				speed = goTo.Length();
-			}
-			npc.velocity *= 0.3f;
-			npc.velocity += 0.6f * speed * goTo.SafeNormalize(Vector2.Zero);
-		}
 		public override void HitEffect(int hitDirection, double damage)
 		{
 			if (npc.life <= 0)
@@ -332,6 +354,26 @@ namespace SOTS.NPCs.Boss
 		{
 			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<DissolvingBrilliance>(), 3);	
 		}
+		public void teleport(Vector2 destination)
+		{
+			if (Main.netMode != NetmodeID.MultiplayerClient)
+			{
+				Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<LuxRelocatorBeam>(), 0, 0, Main.myPlayer, destination.X, destination.Y);
+			}
+			npc.Center = destination;
+			if(Main.netMode == NetmodeID.Server)
+				npc.netUpdate = true;
+		}
+		public const int SetupPhase = -1;
+		public const int LaserOrbPhase = 0;
+		public void SwapPhase(int phase)
+        {
+			attackPhase = phase;
+			attackTimer1 = 0;
+			attackTimer2 = 0;
+			if (Main.netMode == NetmodeID.Server)
+				npc.netUpdate = true;
+        }
 	}
 	public class RingManager
 	{
