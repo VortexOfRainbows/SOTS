@@ -23,8 +23,8 @@ namespace SOTS.Projectiles.Chaos
 		}
         public override void SetDefaults()
         {
-            projectile.width = 20;
-            projectile.height = 20; 
+            projectile.width = 24;
+            projectile.height = 24; 
             projectile.timeLeft = 60;
             projectile.penetrate = -1; 
             projectile.friendly = false; 
@@ -153,11 +153,11 @@ namespace SOTS.Projectiles.Chaos
         public float Redirect(float radians, Vector2 pos, Vector2 npc)
         {
             Vector2 toNPC = npc - pos;
-            float speed = Speed / 4f + redirectGrowth;
+            float speed = Speed / 3.5f + redirectGrowth;
             Vector2 rnVelo = new Vector2(Speed, 0).RotatedBy(radians);
             rnVelo += toNPC.SafeNormalize(Vector2.Zero) * speed;
             float npcRad = rnVelo.ToRotation();
-            redirectGrowth += 0.1f;
+            redirectGrowth += 0.2f;
             return npcRad;
         }
         public override bool ShouldUpdatePosition()

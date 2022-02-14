@@ -236,7 +236,7 @@ namespace SOTS.NPCs.Boss.Lux
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
 		{
 			npc.lifeMax = (int)(npc.lifeMax * bossLifeScale * 0.75f);
-			npc.damage = (int)(npc.damage * 0.75f); //150 damage
+			npc.damage = (int)(npc.damage * 0.8f); //160 damage
 		}
 		bool runOnce = true;
         public override bool PreAI()
@@ -261,7 +261,7 @@ namespace SOTS.NPCs.Boss.Lux
 			{
 				npc.velocity *= 0.95f;
 				attackTimer1++;
-				if(attackTimer1 % 40 == 39)
+				if(attackTimer1 % 30 == 0 && attackTimer1 < 100)
 				{
 					Main.PlaySound(SoundID.Item, (int)(npc.Center.X), (int)(npc.Center.Y), 15, 1.25f, 0.1f);
 				}
@@ -298,6 +298,7 @@ namespace SOTS.NPCs.Boss.Lux
 			}
 			if (attackPhase == LaserOrbPhase)
 			{
+				npc.velocity *= 0.95f;
 				npc.dontTakeDamage = false;
 				if (attackTimer2 == 0)
 				{
@@ -324,6 +325,37 @@ namespace SOTS.NPCs.Boss.Lux
 						Projectile.NewProjectile(npc.Center + new Vector2(0, -196), Vector2.Zero, ModContent.ProjectileType<DogmaSphere>(), damage, 0, Main.myPlayer, npc.target);
 					}
 				}
+				if(attackTimer1 > 600)
+                {
+					SwapPhase(idlePhase);
+                }
+			}
+			if(attackPhase == idlePhase)
+			{
+				npc.velocity *= 0.95f;
+				attackTimer1++;
+				float resetForceHeight = (1 - attackTimer1 / 120f);
+				if (resetForceHeight < 0)
+                {
+					forcedWingHeight = 0;
+					resetForceHeight = 0;
+				}
+				wingHeightLerp = resetForceHeight * 0.9f;
+				if(attackTimer1 > 60 && attackTimer1 % 300 == 180)
+                {
+					teleport(player.Center + Main.rand.NextVector2CircularEdge(360, 240), player.Center);
+                }
+				else if(attackTimer1 > 60)
+                {
+					float speedMult = (attackTimer1 - 60f) / 120f;
+					if (speedMult > 1)
+						speedMult = 1;
+					npc.velocity = (player.Center - npc.Center).SafeNormalize(Vector2.Zero) * 2 * speedMult; 
+                }
+				if(attackTimer1 > 600)
+                {
+					SwapPhase(LaserOrbPhase);
+                }
 			}
 			WingStuff();
 			npc.rotation = npc.velocity.X * 0.06f;
@@ -376,6 +408,7 @@ namespace SOTS.NPCs.Boss.Lux
 		}
 		public const int SetupPhase = -1;
 		public const int LaserOrbPhase = 0;
+		public const int idlePhase = 1;
 		public void SwapPhase(int phase)
         {
 			attackPhase = phase;

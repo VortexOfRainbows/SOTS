@@ -12,7 +12,7 @@ namespace SOTS.Projectiles.Chaos
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Chaos Dart");
-			ProjectileID.Sets.TrailCacheLength[projectile.type] = 10;
+			ProjectileID.Sets.TrailCacheLength[projectile.type] = 20;
 			ProjectileID.Sets.TrailingMode[projectile.type] = 0;
 		}
         public override void SetDefaults()
@@ -39,12 +39,12 @@ namespace SOTS.Projectiles.Chaos
 		{
 			Texture2D texture = Main.projectileTexture[projectile.type];
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			Color color2 = VoidPlayer.pastelAttempt(MathHelper.ToRadians(VoidPlayer.soulColorCounter * 6 + projectile.whoAmI * 18));
-			color2.A = 0;
 			for (int k = 0; k < projectile.oldPos.Length; k++)
 			{
+				Color color2 = VoidPlayer.pastelAttempt(MathHelper.ToRadians((VoidPlayer.soulColorCounter + k) * 6 + projectile.whoAmI * 18));
+				color2.A = 0;
 				float scale = ((float)(projectile.oldPos.Length - k) / (float)projectile.oldPos.Length);
-				Vector2 drawPos = projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, projectile.gfxOffY);
+				Vector2 drawPos = projectile.oldPos[k] - Main.screenPosition + drawOrigin;
 				Color color = projectile.GetAlpha(color2) * scale;
 				spriteBatch.Draw(texture, drawPos, null, color * 0.5f, projectile.rotation, drawOrigin, projectile.scale * scale, SpriteEffects.None, 0f);
 			}
@@ -100,10 +100,10 @@ namespace SOTS.Projectiles.Chaos
 				if (player.active && !player.dead)
 				{
 					Vector2 toPlayer = player.Center - projectile.Center;
-					float homingMult = 0.012f * projectile.timeLeft / 360f - 0.004f;
+					float homingMult = 0.016f * projectile.timeLeft / 360f - 0.004f;
 					if (homingMult < 0)
 						homingMult = 0;
-					projectile.velocity = Vector2.Lerp(projectile.velocity, toPlayer.SafeNormalize(Vector2.Zero) * (projectile.velocity.Length() + 0.8f), homingMult);
+					projectile.velocity = Vector2.Lerp(projectile.velocity, toPlayer.SafeNormalize(Vector2.Zero) * (projectile.velocity.Length() + 1.2f), homingMult);
 				}
 			}
 		}

@@ -16,6 +16,8 @@ High Priority:
 1. Starmap and Digital Daito Obtaining
 2. Reorganize Folders... Planetarium and Pyramid folders remaining.
 3. Lux
+	1. Darkened BG
+	2. More attacks
 
 Mid Priority:
 1. Lux Drops (ask me before you go about spriting these ones):
@@ -36,10 +38,11 @@ Low Priority:
 3. Void Bar strike the player during void shock
 4. Fix Planetarium sky island spawning in tandum
 
-2/13/22
+2/13/22 & 2/14/22
 1. Added Harvester Scythe
 2. A little bit of work on Lux (WIP)
 	1. test attacks
+	2. Dogma
 
 2/9/22 & 1/10/22
 1. Reorganized spirit minions buff folder/internals
