@@ -28,6 +28,7 @@ using SOTS.NPCs.Boss.Advisor;
 using SOTS.NPCs.Boss.Polaris;
 using SOTS.NPCs.Boss.CelestialSerpent;
 using SOTS.Items.GhostTown;
+using SOTS.NPCs.Boss.Lux;
 
 namespace SOTS.NPCs.ArtificialDebuffs
 {

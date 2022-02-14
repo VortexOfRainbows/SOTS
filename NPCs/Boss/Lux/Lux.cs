@@ -11,7 +11,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace SOTS.NPCs.Boss
+namespace SOTS.NPCs.Boss.Lux
 {
 	[AutoloadBossHead]
 	public class Lux : ModNPC
@@ -227,6 +227,7 @@ namespace SOTS.NPCs.Boss
             npc.HitSound = SoundID.NPCHit54;
             npc.DeathSound = SoundID.NPCDeath6;
             npc.netAlways = false;
+			music = MusicID.Boss2;
 		}
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
@@ -260,6 +261,10 @@ namespace SOTS.NPCs.Boss
 			{
 				npc.velocity *= 0.95f;
 				attackTimer1++;
+				if(attackTimer1 % 40 == 39)
+				{
+					Main.PlaySound(SoundID.Item, (int)(npc.Center.X), (int)(npc.Center.Y), 15, 1.25f, 0.1f);
+				}
 				if (attackTimer1 > 60)
 				{
 					npc.dontTakeDamage = true;
@@ -297,7 +302,7 @@ namespace SOTS.NPCs.Boss
 				if (attackTimer2 == 0)
 				{
 					Vector2 toLocation = player.Center + new Vector2(0, -240);
-					teleport(toLocation);
+					teleport(toLocation, player.Center);
 					attackTimer2 = 1;
                 }
 				forcedWingHeight = 46;
@@ -307,11 +312,16 @@ namespace SOTS.NPCs.Boss
 					wingHeightLerp = attackTimer1 / 120f * 0.9f;
 					wingSpeedMult = 1 - attackTimer1 / 120f * 0.2f;
 				}
-				if(attackTimer1 % 120 == 0 && attackTimer1 >= 120)
+				if(attackTimer1 % 600 == 120 && attackTimer1 >= 120)
 				{
 					if (Main.netMode != NetmodeID.MultiplayerClient)
 					{
-						Projectile.NewProjectile(npc.Center + new Vector2(0, -196), Vector2.Zero, ModContent.ProjectileType<ChaosSphere>(), 0, 0, Main.myPlayer);
+						int damage = npc.damage / 2;
+						if (Main.expertMode)
+						{
+							damage = (int)(damage / Main.expertDamage);
+						}
+						Projectile.NewProjectile(npc.Center + new Vector2(0, -196), Vector2.Zero, ModContent.ProjectileType<DogmaSphere>(), damage, 0, Main.myPlayer, npc.target);
 					}
 				}
 			}
@@ -354,11 +364,11 @@ namespace SOTS.NPCs.Boss
 		{
 			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<DissolvingBrilliance>(), 3);	
 		}
-		public void teleport(Vector2 destination)
+		public void teleport(Vector2 destination, Vector2 playerDestination)
 		{
 			if (Main.netMode != NetmodeID.MultiplayerClient)
 			{
-				Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<LuxRelocatorBeam>(), 0, 0, Main.myPlayer, destination.X, destination.Y);
+				Projectile.NewProjectile(npc.Center, playerDestination, ModContent.ProjectileType<LuxRelocatorBeam>(), 0, 0, Main.myPlayer, destination.X, destination.Y);
 			}
 			npc.Center = destination;
 			if(Main.netMode == NetmodeID.Server)

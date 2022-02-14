@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
 using SOTS.Items.Fragments;
 using SOTS.NPCs.Boss;
+using SOTS.NPCs.Boss.Lux;
 using SOTS.Projectiles.Chaos;
 using SOTS.Void;
 using Terraria;

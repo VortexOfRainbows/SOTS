@@ -403,7 +403,7 @@ namespace SOTS.NPCs.Boss.Advisor
         }
         public override bool PreAI()
 		{
-			if(NPC.CountNPCS(mod.NPCType("TheAdvisorHead")) > 1)
+			if(NPC.CountNPCS(ModContent.NPCType<TheAdvisorHead>()) > 1)
             {
 				npc.active = false;
             }

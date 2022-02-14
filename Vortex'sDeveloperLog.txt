@@ -39,7 +39,7 @@ Low Priority:
 2/13/22
 1. Added Harvester Scythe
 2. A little bit of work on Lux (WIP)
-	1. test attack
+	1. test attacks
 
 2/9/22 & 1/10/22
 1. Reorganized spirit minions buff folder/internals
