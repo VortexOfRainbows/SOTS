@@ -178,13 +178,12 @@ namespace SOTS.Projectiles.Chaos
 				Vector2 circularLocation = new Vector2(Main.rand.NextFloat(10), 0).RotatedBy(MathHelper.ToRadians(i) + projectile.rotation);
 				int dust2 = Dust.NewDust(new Vector2(projectile.Center.X + circularLocation.X - 4, projectile.Center.Y + circularLocation.Y - 4), 4, 4, ModContent.DustType<Dusts.CopyDust4>());
 				Dust dust = Main.dust[dust2];
-				dust.velocity = circularLocation * 2f;
-				dust.velocity += projectile.velocity * 0.2f;
+				dust.velocity += circularLocation * 4f;
 				dust.color = VoidPlayer.pastelAttempt(Main.rand.NextFloat(6.28f), true);
 				dust.noGravity = true;
 				dust.alpha = 60;
 				dust.fadeIn = 0.1f;
-				dust.scale *= 2.25f;
+				dust.scale *= 2.5f;
 			}
 		}
     }

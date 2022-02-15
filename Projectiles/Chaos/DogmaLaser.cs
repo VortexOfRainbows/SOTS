@@ -68,10 +68,11 @@ namespace SOTS.Projectiles.Chaos
 			if (counter > windUpLength)
 			{
 				Vector2 position = projectile.Center;
-				for (float i = 0; i <= maxDistance; i += 4)
+				for (float i = 40; i <= maxDistance; i += 8)
 				{
 					if (Main.rand.NextBool(1000) || (counter == windUpLength + 1 && Main.rand.NextBool(4)))
 					{
+						position = projectile.Center + projectile.velocity.SafeNormalize(Vector2.Zero) * i;
 						int dust2 = Dust.NewDust(position - new Vector2(12, 12), 16, 16, ModContent.DustType<Dusts.CopyDust4>());
 						Dust dust = Main.dust[dust2];
 						dust.velocity *= 2f;
@@ -81,7 +82,6 @@ namespace SOTS.Projectiles.Chaos
 						dust.alpha = 90;
 						dust.fadeIn = 0.1f;
 						dust.scale *= 2.5f * projectile.scale;
-						position += projectile.velocity.SafeNormalize(Vector2.Zero) * i;
 					}
 				}
 			}
