@@ -19,7 +19,7 @@ namespace SOTS.Projectiles.Chaos
 		{
 			projectile.width = 8;
 			projectile.height = 8;
-			projectile.timeLeft = 150;
+			projectile.timeLeft = 140;
 			projectile.penetrate = -1;
 			projectile.hostile = true;
 			projectile.friendly = false;
@@ -31,8 +31,8 @@ namespace SOTS.Projectiles.Chaos
         {
 			return false;
         }
-		public const float windUpAngle = 90f;
-		public const float windUpLength = 100f;
+		public const float windUpAngle = 80f;
+		public const float windUpLength = 90f;
 		bool runOnce = true;
 		Vector2 ogVelo = Vector2.Zero;
 		float scaleMult = 1f;
@@ -61,8 +61,9 @@ namespace SOTS.Projectiles.Chaos
 				lerp = 1;
 			float angle = angleToTraverse * (float)Math.Pow(1 - lerp, 1.5f) * 0.8f + 0.2f * (1 - lerp);
 			projectile.velocity = ogVelo.RotatedBy(MathHelper.ToRadians(angle));
-			if(counter == windUpLength + 1)
+			if(counter == windUpLength + 1)// && projectile.knockBack == -1)
 			{
+				//Main.PlaySound(SoundLoader.customSoundType, (int)projectile.Center.X, (int)projectile.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Enemies/LuxBeann"), 1.6f, -0.1f);
 				Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 94, 1.1f, 0.1f);
 			}
 			if (counter > windUpLength)
@@ -90,7 +91,7 @@ namespace SOTS.Projectiles.Chaos
 		{
 			float point = 0f;
 			Vector2 finalPoint = projectile.Center + projectile.velocity.SafeNormalize(Vector2.Zero) * maxDistance;
-			if(counter > windUpLength && counter < 135)
+			if(counter > windUpLength && counter < 125)
 			{
 				if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), projectile.Center, finalPoint, 24f * scaleMult * projectile.scale, ref point))
 				{

@@ -25,7 +25,7 @@ namespace SOTS.Projectiles.Chaos
         {
             projectile.width = 24;
             projectile.height = 24; 
-            projectile.timeLeft = 60;
+            projectile.timeLeft = 50;
             projectile.penetrate = -1; 
             projectile.friendly = false; 
             projectile.hostile = false; 
@@ -37,7 +37,7 @@ namespace SOTS.Projectiles.Chaos
         List<Vector2> drawPositionList = new List<Vector2>();
         List<Vector2> desinationList = new List<Vector2>();
         bool runOnce = true;
-        public const float Speed = 4f;
+        public const float Speed = 3f;
         public int GrowthRange = 20;
         public int DegradeRange = 10;
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
@@ -47,7 +47,7 @@ namespace SOTS.Projectiles.Chaos
             Texture2D texture = Main.projectileTexture[projectile.type];
             Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
             Color color = new Color(140, 140, 140, 0);
-            float endPercent = projectile.timeLeft / 60f;
+            float endPercent = projectile.timeLeft / 50f;
             float rotation = projectile.velocity.ToRotation();
             int max = drawPositionList.Count;
             int startPos = (int)((1 - endPercent) * max);
@@ -193,8 +193,8 @@ namespace SOTS.Projectiles.Chaos
                 }
                 runOnce = false;
             }
-            float endPercent = projectile.timeLeft / 60f;
-            projectile.alpha = (int)(255 - 255 * endPercent * endPercent);
+            float endPercent = projectile.timeLeft / 50f;
+            projectile.alpha = (int)(255 - 235 * endPercent * endPercent);
         }
 	}
 }

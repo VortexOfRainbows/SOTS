@@ -534,7 +534,10 @@ namespace SOTS.NPCs
 			}
 			else if (player.ZoneHoly && player.ZoneOverworldHeight && Main.hardMode)
 			{
-				pool.Add(ModContent.NPCType<ChaosConstruct>(), 0.005f * constructRateMultiplier);
+				float rateMult = 1f;
+				if (!Main.dayTime)
+					rateMult = 3f;
+				pool.Add(ModContent.NPCType<ChaosConstruct>(), 0.006f * constructRateMultiplier * rateMult);
 			}
 			if (player.ZoneBeach && !spawnInfo.player.ZonePeaceCandle) //guarenteed to not spawn when a peace candle is nearby
 			{
@@ -581,7 +584,10 @@ namespace SOTS.NPCs
 			}
 			if((player.ZoneCrimson || player.ZoneCorrupt) && (player.ZoneRockLayerHeight || player.ZoneDirtLayerHeight) && Main.hardMode)
 			{
-				pool.Add(ModContent.NPCType<EvilConstruct>(), 0.005f * constructRateMultiplier);
+				float rateMult = 1f;
+				if (Main.dayTime)
+					rateMult = 1.5f;
+				pool.Add(ModContent.NPCType<EvilConstruct>(), 0.006f * constructRateMultiplier * rateMult);
 			}
 			if (player.ZoneDungeon)
 			{

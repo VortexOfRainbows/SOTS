@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
@@ -16,7 +17,15 @@ namespace SOTS.NPCs.Boss.Lux
 	[AutoloadBossHead]
 	public class Lux : ModNPC
 	{
-		List<RingManager> rings = new List<RingManager>();
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+			writer.Write(attackTimer3);
+        }
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+			attackTimer3 = reader.ReadSingle();
+        }
+        List<RingManager> rings = new List<RingManager>();
 		private float wingCounter
 		{
 			get => npc.ai[0];
@@ -40,6 +49,7 @@ namespace SOTS.NPCs.Boss.Lux
 			get => npc.ai[3];
 			set => npc.ai[3] = value;
 		}
+		private float attackTimer3 = 0;
 		float IdleTimer = 0;
 		float wingSpeedMult = 1f;
 		float wingHeight; //wings offset in degrees
@@ -88,6 +98,7 @@ namespace SOTS.NPCs.Boss.Lux
 		}
 		public float wingHeightLerp = 0f;
 		public float forcedWingHeight = 0;
+		public bool allWingsForced = false;
 		public void WingStuff()
 		{
 			wingCounter += 7.5f * wingSpeedMult;
@@ -104,13 +115,13 @@ namespace SOTS.NPCs.Boss.Lux
 			int width = (int)(130 * sizeMult);
 			int height = (int)(90 * sizeMult);
 			int amtOfParticles = 120;
-			if (ID == 2)
+			if (ID == 2 || allWingsForced)
             {
 				wingHeight = MathHelper.Lerp(this.wingHeight, forcedWingHeight, wingHeightLerp);
             }
 			float supposedWingHeight = wingHeight - 19;
 			dipAndRise = supposedWingHeight / 27f;
-			if(ID == 2)
+			if(ID == 2 || allWingsForced)
             {
 				dipAndRise *= 1 - 2 * wingHeightLerp;
             }
@@ -199,7 +210,7 @@ namespace SOTS.NPCs.Boss.Lux
 				return;
 			for(int i = 0; i < rings.Count; i++)
             {
-				rings[i].Draw(spriteBatch, 1f, drawNewWingsCounter, 1f, npc.rotation, front);
+				rings[i].Draw(spriteBatch, 4 - i, 1f, drawNewWingsCounter, 1f, npc.rotation, front);
             }
         }
 		public override void SetStaticDefaults()
@@ -241,6 +252,11 @@ namespace SOTS.NPCs.Boss.Lux
 		bool runOnce = true;
         public override bool PreAI()
 		{
+			int damage = npc.damage / 2;
+			if (Main.expertMode)
+			{
+				damage = (int)(damage / Main.expertDamage);
+			}
 			Player player = Main.player[npc.target];
 			npc.TargetClosest(false);
 			for (int i = 0; i < 4; i++)
@@ -250,14 +266,10 @@ namespace SOTS.NPCs.Boss.Lux
 				else
 					rings[i].CalculationStuff(npc.Center);
 			}
-			RingManager innerRing1 = rings[0];
-			RingManager innerRing2 = rings[1];
-			RingManager outerRing1 = rings[2];
-			RingManager outerRing2 = rings[3];
 			if (runOnce)
             {
 				npc.dontTakeDamage = true;
-				attackTimer1 = -20;
+				attackTimer1 = -90;
 				attackPhase = -1;
 				runOnce = false;
 			}
@@ -265,9 +277,14 @@ namespace SOTS.NPCs.Boss.Lux
 			{
 				npc.velocity *= 0.95f;
 				attackTimer1++;
-				if(attackTimer1 % 30 == 0 && attackTimer1 < 100)
+				if(attackTimer1 % 30 == 0 && attackTimer1 < 100 && attackTimer1 > 20)
 				{
-					Main.PlaySound(SoundID.Item, (int)(npc.Center.X), (int)(npc.Center.Y), 15, 1.25f, 0.1f);
+					Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 15, 1.25f, 0.1f);
+				}
+				if(attackTimer1 == 120)
+				{
+					Main.PlaySound(SoundID.Roar, (int)npc.Center.X, (int)npc.Center.Y, 0, 1.3f, 0.1f);
+					Main.NewText("Lux has awoken!", 175, 75, byte.MaxValue);
 				}
 				if (attackTimer1 > 60)
 				{
@@ -292,8 +309,9 @@ namespace SOTS.NPCs.Boss.Lux
 				}
 				else
                 {
-					wingSpeedMult = MathHelper.Lerp(wingSpeedMult, 0f, 0.06f);
-                }
+					wingSpeedMult = MathHelper.Lerp(wingSpeedMult, 0f, 0.02f);
+				}
+				modifyRotation(false);
 			}
 			else
 			{
@@ -302,6 +320,8 @@ namespace SOTS.NPCs.Boss.Lux
 			}
 			if (attackPhase == LaserOrbPhase)
 			{
+				allWingsForced = false;
+				modifyRotation(false);
 				npc.velocity *= 0.95f;
 				npc.dontTakeDamage = false;
 				if (attackTimer2 == 0)
@@ -320,67 +340,142 @@ namespace SOTS.NPCs.Boss.Lux
 				Vector2 laserPos = npc.Center + new Vector2(0, -196);
 				if(attackTimer1 > 90 && attackTimer1 < 120)
 				{
-					outerRing1.MoveTo(laserPos);
-					outerRing2.MoveTo(laserPos);
+					for (int i = 2; i < 4; i++)
+					{
+						rings[i].MoveTo(laserPos);
+						rings[i].targetRadius = 72;
+					}
 				}
 				if (attackTimer1 == 120)
 				{
-					outerRing1.MoveTo(laserPos);
-					outerRing2.MoveTo(laserPos);
-					outerRing1.targetRadius = 90;
-					outerRing2.targetRadius = 90;
+					for (int i = 2; i < 4; i++)
+						rings[i].MoveTo(laserPos);
 					if (Main.netMode != NetmodeID.MultiplayerClient)
 					{
-						int damage = npc.damage / 2;
-						if (Main.expertMode)
-						{
-							damage = (int)(damage / Main.expertDamage);
-						}
 						Projectile.NewProjectile(laserPos, Vector2.Zero, ModContent.ProjectileType<DogmaSphere>(), damage, 0, Main.myPlayer, npc.target);
 					}
 				}
-				if(attackTimer1 > 600)
+				if(attackTimer1 > 550)
 				{
-					outerRing1.MoveTo(npc.Center, true);
-					outerRing2.MoveTo(npc.Center, true);
-					outerRing1.targetRadius = outerRing1.originalRadius;
-					outerRing2.targetRadius = outerRing2.originalRadius;
-					float resetForceHeight = (1 - (attackTimer1 - 600) / 60f);
+					for (int i = 2; i < 4; i++)
+					{
+						rings[i].ResetVariables();
+						rings[i].MoveTo(npc.Center, true);
+					}
+					float resetForceHeight = (1 - (attackTimer1 - 550) / 60f);
 					if (resetForceHeight < 0)
 					{
 						forcedWingHeight = 0;
 						resetForceHeight = 0;
 					}
 					wingHeightLerp = resetForceHeight * 0.9f;
-					if(attackTimer1 >= 660)
+					if(attackTimer1 >= 610)
                     {
-						SwapPhase(idlePhase);
+						SwapPhase(ShotgunPhase);
 					}
 				}
 			}
-			if(attackPhase == idlePhase)
+			if(attackPhase == ShotgunPhase)
 			{
-				npc.velocity *= 0.95f;
+				Vector2 toPlayer = player.Center - npc.Center;
+				npc.velocity *= 0.93f;
 				attackTimer1++;
-				if(attackTimer1 > 20 && attackTimer1 % 240 == 120 && attackTimer1 < 600)
-                {
-					teleport(player.Center + Main.rand.NextVector2CircularEdge(360, 240), player.Center);
-                }
-				else
-                {
+				bool end = attackTimer3 > 6;
+				if (end)
+				{
+					modifyRotation(false);
+					for(int i = 0; i < 2; i++)
+					{
+						rings[i].ResetVariables();
+					}
+					if (attackTimer2 > 0)
+						attackTimer2--;
+					else
+					{
+						SwapPhase(LaserOrbPhase);
+					}
+				}
+				else if(attackTimer1 > 0)
+				{
+					if (attackTimer1 < 100)
+						modifyRotation(true);
+					for (int i = 0; i < 2; i++)
+					{
+						rings[i].aiming = true;
+						rings[i].targetRadius = 60;
+					}
+					forcedWingHeight = 40;
+					allWingsForced = true;
+					if (attackTimer2 < 60)
+						attackTimer2++;
+					if(attackTimer1 == 90)
+					{
+						if(Main.netMode != NetmodeID.MultiplayerClient)
+						{
+							float degrees = Main.rand.Next(4) * 90f;
+							Vector2 circular = new Vector2(640, 0).RotatedBy(MathHelper.ToRadians(degrees + Main.rand.NextFloat(35, 55f)));
+							circular.Y *= 0.75f;
+							teleport(player.Center + circular, player.Center, true);
+						}
+					}
+					else if(attackTimer1 > 100 && attackTimer1 <= 140)
+					{
+						float localCounter = attackTimer1 - 100;
+						if(localCounter % 6 == 0)
+						{
+							Vector2 outward = new Vector2(0, 1).RotatedBy(npc.rotation);
+							Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 91, 1.1f, 0.2f);
+							if (Main.netMode != NetmodeID.MultiplayerClient)
+							{
+								int amt = 4 - (int)attackTimer3 % 2;
+								for(int i = 0; i <= amt; i++)
+                                {
+									float radians = MathHelper.ToRadians(28f * (i - amt / 2f));
+									Projectile.NewProjectile(npc.Center + outward * 40, outward.RotatedBy(radians) * 5f, ModContent.ProjectileType<ChaosWave>(), damage, 0, Main.myPlayer, 0);
+								}
+							}
+							npc.velocity -= outward * 1.5f;
+						}
+                    }
+					if(attackTimer1 >= 150)
+                    {
+						attackTimer1 = 89;
+						attackTimer3++;
+					}
 					float speedMult = attackTimer1 / 60f;
 					if (speedMult > 1)
 						speedMult = 1;
-					npc.velocity = (player.Center - npc.Center).SafeNormalize(Vector2.Zero) * 2 * speedMult; 
-                }
-				if(attackTimer1 > 600)
-                {
-					SwapPhase(LaserOrbPhase);
-                }
+					if(attackTimer1 < 90)
+					npc.velocity += toPlayer.SafeNormalize(Vector2.Zero) * 0.3f * speedMult;
+				}
+				wingHeightLerp = attackTimer2 / 60f * 0.85f;
 			}
 			WingStuff();
-			npc.rotation = npc.velocity.X * 0.06f;
 			return true;
+		}
+		public const float timeToAimAtPlayer = 40;
+		public float aimToPlayer = 0;
+		public void modifyRotation(bool aimAtPlayer)
+		{
+			Player player = Main.player[npc.target];
+			Vector2 toPlayer = player.Center - npc.Center;
+			npc.rotation = npc.velocity.X * 0.06f;
+			if (aimAtPlayer)
+            {
+				aimToPlayer++;
+			}
+			else
+            {
+				aimToPlayer--;
+			}
+			float r = toPlayer.ToRotation() - MathHelper.PiOver2;
+			float x = npc.rotation - r;
+			x = MathHelper.WrapAngle(x);
+			float lerpedAngle = MathHelper.Lerp(x, 0, aimToPlayer / timeToAimAtPlayer);
+			lerpedAngle += r;
+			aimToPlayer = MathHelper.Clamp(aimToPlayer, 0, timeToAimAtPlayer);
+			npc.rotation = lerpedAngle;
+
 		}
 		public override void AI()
 		{
@@ -417,30 +512,37 @@ namespace SOTS.NPCs.Boss.Lux
 		{
 			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<DissolvingBrilliance>(), 3);	
 		}
-		public void teleport(Vector2 destination, Vector2 playerDestination)
+		public void teleport(Vector2 destination, Vector2 playerDestination, bool serverOnly = false)
 		{
 			if (Main.netMode != NetmodeID.MultiplayerClient)
 			{
 				Projectile.NewProjectile(npc.Center, playerDestination, ModContent.ProjectileType<LuxRelocatorBeam>(), 0, 0, Main.myPlayer, destination.X, destination.Y);
 			}
-			npc.Center = destination;
+			if(!serverOnly || Main.netMode != NetmodeID.MultiplayerClient)
+				npc.Center = destination;
 			if(Main.netMode == NetmodeID.Server)
 				npc.netUpdate = true;
 		}
 		public const int SetupPhase = -1;
 		public const int LaserOrbPhase = 0;
-		public const int idlePhase = 1;
+		public const int ShotgunPhase = 1;
 		public void SwapPhase(int phase)
         {
 			attackPhase = phase;
 			attackTimer1 = 0;
 			attackTimer2 = 0;
+			attackTimer3 = 0;
+			if(phase == ShotgunPhase)
+			{
+				attackTimer1 = -40;
+			}
 			if (Main.netMode == NetmodeID.Server)
 				npc.netUpdate = true;
         }
 	}
 	public class RingManager
 	{
+		public const int AimTimerMax = 60;
 		Vector2 location = Vector2.Zero;
 		Vector2 toLocation = Vector2.Zero;
 		bool backToNPC = false;
@@ -455,6 +557,13 @@ namespace SOTS.NPCs.Boss.Lux
 		public float counter = -1;
 		public float countingSpeed = 3f;
 		public float targetRadius = 32f;
+		public bool aiming = false;
+		public float aimTimer = 0;
+		public void ResetVariables()
+        {
+			aiming = false;
+			targetRadius = originalRadius;
+        }
 		public RingManager(float rotation, float compression, float countingSpeed = 3f, float radius = 32f)
 		{
 			this.rotation = rotation;
@@ -481,13 +590,23 @@ namespace SOTS.NPCs.Boss.Lux
 			}
 			if (counter < 180)
 				counter += countingSpeed;
-			if(location == Vector2.Zero || toLocation == Vector2.Zero)
+			if(aiming)
+            {
+				aimTimer++;
+            }				
+			else
+            {
+				aimTimer--;
+            }
+			aimTimer = MathHelper.Clamp(aimTimer, 0, 60);
+			spinCounter += 1 + 4 * aimTimer / 60f;
+			if (location == Vector2.Zero || toLocation == Vector2.Zero)
             {
 				location = npcCenter;
 			}
 			else
             {
-				location = Vector2.Lerp(location, toLocation, 0.06f);
+				location = Vector2.Lerp(location, toLocation, 0.08f);
 				if(Vector2.Distance(location, toLocation) < 2f)
                 {
 					location = toLocation;
@@ -511,24 +630,54 @@ namespace SOTS.NPCs.Boss.Lux
 			rotation = MathHelper.Lerp(prevRotation, nextRotation, scale);
 			compression = MathHelper.Lerp(prevCompression, nextCompression, scale);
 		}
-		public void Draw(SpriteBatch spriteBatch, float alphaMult = 1f, float radiusMult = 1f, float sizeMult = 1f, float baseRotation = 0f, bool front = false)
+		float spinCounter = 0;
+		public void Draw(SpriteBatch spriteBatch, int ID, float alphaMult = 1f, float radiusMult = 1f, float sizeMult = 1f, float baseRotation = 0f, bool front = false)
 		{
+			baseRotation += MathHelper.PiOver2;
 			Texture2D texture = Main.projectileTexture[ModContent.ProjectileType<ChaosSphere>()];
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			Vector2 center = location;
 			int start = 0;
 			int end = 180;
+			float radiusOverride = 1f;
 			if (front)
 			{
 				start += 180;
 				end += 180;
 			}
+			float offset = 96;
+			if (ID == 3)
+			{
+				offset = 80;
+				radiusOverride = 1.0f;
+			}
+			else if (ID == 4)
+			{
+				offset = 140;
+				radiusOverride = 0.8f;
+			}
+			else if (ID == 1)
+			{
+				offset = 200;
+				radiusOverride = 1.1f;
+			}
+			else if (ID == 2)
+			{
+				offset = 260;
+				radiusOverride = 0.9f;
+			}
+			float aimMult = aimTimer / (float)AimTimerMax;
+			float overrideCompression = MathHelper.Lerp(compression, 0.5f, aimMult);
+			float overrideRotation = MathHelper.Lerp(MathHelper.WrapAngle(rotation), 0f, aimMult);
+			radiusMult = MathHelper.Lerp(radiusMult, radiusOverride, aimMult);
+			Vector2 aimOffset = new Vector2(offset * aimMult, 0).RotatedBy(baseRotation);
+			Vector2 center = location + aimOffset;
 			for (int i = start; i < end; i += 4)
 			{
 				Color color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(i));
-				Vector2 rotationV = new Vector2(radius * radiusMult, 0).RotatedBy(MathHelper.ToRadians(i + Main.GameUpdateCount));
-				rotationV.X *= compression;
-				rotationV = rotationV.RotatedBy(rotation);
+				float radians = MathHelper.ToRadians(i + spinCounter);
+				Vector2 rotationV = new Vector2(radius * radiusMult, 0).RotatedBy(radians);
+				rotationV.X *= overrideCompression;
+				rotationV = rotationV.RotatedBy(overrideRotation + baseRotation);
 				spriteBatch.Draw(texture, center - Main.screenPosition + rotationV, null, new Color(color.R, color.G, color.B, 0) * alphaMult, baseRotation, drawOrigin, 0.8f * sizeMult, SpriteEffects.None, 0f);
 			}
 		}

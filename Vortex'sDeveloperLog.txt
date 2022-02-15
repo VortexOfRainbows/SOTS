@@ -43,6 +43,8 @@ Low Priority:
 2. A little bit of work on Lux (WIP)
 	1. test attacks
 	2. Dogma
+	3. Asriel
+3. Increase Evil and Chaos Construct spawn rates, further increased depending on time of day
 
 2/9/22 & 1/10/22
 1. Reorganized spirit minions buff folder/internals

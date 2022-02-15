@@ -25,7 +25,7 @@ namespace SOTS.Projectiles.Chaos
 			projectile.height = 70;
 			projectile.hostile = true;
 			projectile.friendly = false;
-			projectile.timeLeft = 1000;
+			projectile.timeLeft = 930;
 			projectile.tileCollide = false;
 			projectile.penetrate = -1;
 			projectile.scale = 1f;
@@ -135,7 +135,7 @@ namespace SOTS.Projectiles.Chaos
 				}
 				else
 				{
-					if (counter % 300 == 181 && counter < 900)
+					if (counter % 240 == 181 && counter < 750)
 					{
 						Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 15, 1f, -0.2f);
 						if (Main.netMode != NetmodeID.MultiplayerClient)
@@ -152,19 +152,19 @@ namespace SOTS.Projectiles.Chaos
 							for (int i = 0; i < amt; i++)
 							{
 								Vector2 circular = new Vector2(5, 0).RotatedBy(MathHelper.ToRadians(i * 360f / amt + Main.rand.NextFloat(-13, 13)));
-								Projectile.NewProjectile(projectile.Center, circular, ModContent.ProjectileType<DogmaLaser>(), projectile.damage, projectile.knockBack, Main.myPlayer, Main.rand.NextFloat(-55, 55f), Main.rand.NextFloat(-0.2f, 0.2f));
+								Projectile.NewProjectile(projectile.Center, circular, ModContent.ProjectileType<DogmaLaser>(), projectile.damage, projectile.knockBack, Main.myPlayer, Main.rand.NextFloat(-60, 60f), Main.rand.NextFloat(-0.2f, 0.2f));
 							}
 							amt--;
 							for (int i = 0; i < amt; i++)
 							{
 								Vector2 circular = new Vector2(5, 0).RotatedBy(MathHelper.ToRadians(i * 360f / amt + Main.rand.NextFloat(-7, 7)));
-								Projectile.NewProjectile(projectile.Center, circular, ModContent.ProjectileType<DogmaLaser>(), projectile.damage, projectile.knockBack, Main.myPlayer, Main.rand.NextFloat(-35, 35f), Main.rand.NextFloat(0.2f, 0.5f));
+								Projectile.NewProjectile(projectile.Center, circular, ModContent.ProjectileType<DogmaLaser>(), projectile.damage, projectile.knockBack, Main.myPlayer, Main.rand.NextFloat(-40, 40f), Main.rand.NextFloat(0.2f, 0.5f));
 							}
 						}
 					}
-					else if(counter > 950)
+					else if(counter > 900)
                     {
-						projectile.scale *= 1 - (counter - 950f) / 50f;
+						projectile.scale *= 1 - (counter - 900f) / 30f;
                     }
 					//projectile.Kill();
 				}
@@ -173,17 +173,17 @@ namespace SOTS.Projectiles.Chaos
 		}
         public override void Kill(int timeLeft)
         {
-			for (int i = 0; i < 360; i += 6)
+			for (int i = 0; i < 360; i += 5)
 			{
 				Vector2 circularLocation = new Vector2(Main.rand.NextFloat(10), 0).RotatedBy(MathHelper.ToRadians(i) + projectile.rotation);
 				int dust2 = Dust.NewDust(new Vector2(projectile.Center.X + circularLocation.X - 4, projectile.Center.Y + circularLocation.Y - 4), 4, 4, ModContent.DustType<Dusts.CopyDust4>());
 				Dust dust = Main.dust[dust2];
-				dust.velocity += circularLocation * 4f;
+				dust.velocity += circularLocation * 3f;
 				dust.color = VoidPlayer.pastelAttempt(Main.rand.NextFloat(6.28f), true);
 				dust.noGravity = true;
 				dust.alpha = 60;
 				dust.fadeIn = 0.1f;
-				dust.scale *= 2.5f;
+				dust.scale *= 2.4f;
 			}
 		}
     }
