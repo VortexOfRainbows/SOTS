@@ -38,12 +38,13 @@ Low Priority:
 3. Void Bar strike the player during void shock
 4. Fix Planetarium sky island spawning in tandum
 
-2/13/22 & 2/14/22
+2/13/22 & 2/14/22 & 2/16/22 & 2/17/22
 1. Added Harvester Scythe
 2. A little bit of work on Lux (WIP)
 	1. test attacks
 	2. Dogma
 	3. Asriel
+	4. Subspace
 3. Increase Evil and Chaos Construct spawn rates, further increased depending on time of day
 
 2/9/22 & 1/10/22

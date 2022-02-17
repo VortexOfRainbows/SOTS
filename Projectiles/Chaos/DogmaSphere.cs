@@ -169,7 +169,6 @@ namespace SOTS.Projectiles.Chaos
 					//projectile.Kill();
 				}
 			}
-			Lighting.AddLight(projectile.Center, 0.25f, 0.45f, 0.75f);
 		}
         public override void Kill(int timeLeft)
         {
