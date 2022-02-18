@@ -13,7 +13,7 @@ namespace SOTS.Void
 	{
 		private readonly byte _power;
 		public override float RollChance(Item item)
-			=> 12f / _power;
+			=> 6f / _power;
 		public override bool CanRoll(Item item)
 			=> true;
 		public override PrefixCategory Category => PrefixCategory.Accessory;
@@ -28,14 +28,14 @@ namespace SOTS.Void
 			{
 				return false;
 			}
-			mod.AddPrefix("Awakened", new VoidPrefix(20));
-			mod.AddPrefix("Omniscient", new VoidPrefix(40));
+			mod.AddPrefix("Awakened", new VoidPrefix(10));
+			mod.AddPrefix("Omniscient", new VoidPrefix(20));
 			return false;
 		}
 		public override void Apply(Item item) => item.GetGlobalItem<PrefixItem>().extraVoid = _power;
         public override void ModifyValue(ref float valueMult)
 		{
-			float multiplier = 1.0f + _power / 50f;
+			float multiplier = 1.0f + _power / 25f;
 			valueMult *= multiplier;
 		}
 	}

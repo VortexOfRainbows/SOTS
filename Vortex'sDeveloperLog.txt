@@ -46,6 +46,10 @@ Low Priority:
 	3. Asriel
 	4. Subspace
 3. Increase Evil and Chaos Construct spawn rates, further increased depending on time of day
+4. Nerfed Omnipotent and Awakened (40, 20) -> (20, 10)
+	1. Making these as strong as they were was the most delusional decision I have ever made.
+	2. This is mainly to nerf Void Minions
+	3. Chained and Soulbound remain as powerful void-reforges that will aid the other classes
 
 2/9/22 & 1/10/22
 1. Reorganized spirit minions buff folder/internals
