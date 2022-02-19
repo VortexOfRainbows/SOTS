@@ -228,7 +228,7 @@ namespace SOTS.NPCs.Boss.Lux
 			npc.aiStyle = 0;
             npc.lifeMax = 60000; 
             npc.damage = 100; 
-            npc.defense = 30;   
+            npc.defense = 60;   
             npc.knockBackResist = 0f;
             npc.width = 70;
             npc.height = 70;
@@ -279,6 +279,9 @@ namespace SOTS.NPCs.Boss.Lux
 			}
 			if (attackPhase == SetupPhase)
 			{
+				float lightMult = attackTimer1 / 120f;
+				lightMult = MathHelper.Clamp(lightMult, 0, 1);
+				SOTS.LuxLightingFadeIn = lightMult;
 				npc.velocity *= 0.95f;
 				attackTimer1++;
 				if(attackTimer1 % 30 == 0 && attackTimer1 < 100 && attackTimer1 > 20)
@@ -468,11 +471,14 @@ namespace SOTS.NPCs.Boss.Lux
 				if(attackTimer3 > 12)
 				{
 					modifyRotation(false);
-					for (int i = 1; i < 4; i++)
-						rings[i].MoveTo(npc.Center, true);
-					rings[0].ResetVariables();
-					if (attackTimer1 > 100)
-						SwapPhase(Main.rand.Next(2));
+					if(attackTimer1 > 150)
+					{
+						for (int i = 1; i < 4; i++)
+							rings[i].MoveTo(npc.Center, true);
+						rings[0].ResetVariables();
+						if (attackTimer1 > 210)
+							SwapPhase(Main.rand.Next(2));
+					}
                 }
 				else
 				{

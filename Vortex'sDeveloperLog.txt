@@ -16,8 +16,7 @@ High Priority:
 1. Starmap and Digital Daito Obtaining
 2. Reorganize Folders... Planetarium and Pyramid folders remaining.
 3. Lux
-	1. Darkened BG
-	2. More attacks
+	1. More attacks
 
 Mid Priority:
 1. Lux Drops (ask me before you go about spriting these ones):
@@ -31,12 +30,17 @@ Mid Priority:
 	1. Inferno Plating block
 3. Perfect Star (magic weapon, Cave Story reference)
 	1. Found inside the vibrant geode in the jungle
+4. Replace goblinsteel (ancient steel)
+5. More Ancientsteel
 
 Low Priority:
 1. Archaelogist NPC
 2. Accessory Pets to use own dye slots.
 3. Void Bar strike the player during void shock
 4. Fix Planetarium sky island spawning in tandum
+
+2/19/22
+1. Lux BG and worked on some Lux Proejctiles
 
 2/13/22 & 2/14/22 & 2/16/22 & 2/17/22
 1. Added Harvester Scythe

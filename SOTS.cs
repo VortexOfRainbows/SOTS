@@ -30,6 +30,8 @@ using Terraria.Graphics.Shaders;
 using SOTS.Items.Dyes;
 using SOTS.Items.Fragments;
 using SOTS.Items.Otherworld.Furniture;
+using Terraria.Graphics.Effects;
+using Catalyst.Backgrounds;
 
 namespace SOTS
 {
@@ -81,6 +83,7 @@ namespace SOTS
 
 				_lastScreenSize = new Vector2(Main.screenWidth, Main.screenHeight);
 				_lastViewSize = Main.ViewSize;
+				//SkyManager.Instance["SOTS:LuxFight"] = new LuxSky();
 			}
 			Mod yabhb = ModLoader.GetMod("FKBossHealthBar");
 			if (yabhb != null)
@@ -687,6 +690,23 @@ namespace SOTS
 		}
 		//Custom Tile Merging
 		public static bool[][] tileMergeTypes;
+		public static float LuxLightingFadeIn = 0;
+		public override void ModifySunLightColor(ref Color tileColor, ref Color backgroundColor)
+		{
+			if (Main.gameMenu)
+			{
+				return;
+			}
+			var player = Main.LocalPlayer;
+			SOTSPlayer sPlayer = SOTSPlayer.ModPlayer(player);
+			if (sPlayer.zoneLux)
+			{
+			}
+			else if (LuxLightingFadeIn > 0)
+				LuxLightingFadeIn -= 0.01f;
+			backgroundColor = Color.Lerp(backgroundColor, new Color(15, 0, 30), 0.96f * LuxLightingFadeIn);
+			tileColor = Color.Lerp(tileColor, new Color(15, 0, 30), 0.96f * LuxLightingFadeIn);
+		}
 		public enum Similarity
 		{
 			None,

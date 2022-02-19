@@ -44,6 +44,7 @@ using SOTS.Items.Tide;
 using Terraria.ModLoader.IO;
 using SOTS.Items.GhostTown;
 using SOTS.Projectiles.Chaos;
+using SOTS.NPCs.Boss.Lux;
 
 namespace SOTS
 {
@@ -97,6 +98,7 @@ namespace SOTS
 			if (FluidCurseMult > 60)
 				FluidCurseMult = 60;
 		}
+		public bool zoneLux = false;
 
 		public bool normalizedGravity = false;
 		public bool VisionVanity = false;
@@ -580,6 +582,18 @@ namespace SOTS
         }
         public override void ResetEffects()
 		{
+			zoneLux = false;
+			if (NPC.AnyNPCs(ModContent.NPCType<Lux>()))
+			{
+				for(int i = 0; i < Main.npc.Length; i++)
+                {
+					if(Main.npc[i].active && Main.npc[i].type == ModContent.NPCType<Lux>() && Main.npc[i].Distance(player.Center) < 3200)
+                    {
+						zoneLux = true;
+						break;
+                    }
+                }
+            }				
 			HarvestersScythe = false;
 			ParticleRelocator = false;
 			pyramidBattle = false;

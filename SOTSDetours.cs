@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.NPCs.ArtificialDebuffs;
+using SOTS.Projectiles.Chaos;
 using SOTS.Projectiles.Inferno;
 using SOTS.Projectiles.Minions;
 using SOTS.Utilities;
@@ -101,6 +102,10 @@ namespace SOTS
 					if (proj.active && proj.modProjectile is HoloPlatform hPlatform)
 					{
 						hPlatform.Draw(Main.spriteBatch); //change later
+					}
+					if (proj.active && proj.modProjectile is ChaosDiamondLaser dLaser)
+					{
+						dLaser.DrawBlack(Main.spriteBatch); //change later
 					}
 				}
 				Main.spriteBatch.End();
