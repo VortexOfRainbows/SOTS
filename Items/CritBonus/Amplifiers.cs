@@ -1,5 +1,6 @@
 using SOTS.Items.Celestial;
 using SOTS.Items.Fragments;
+using SOTS.Items.GhostTown;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -67,7 +68,7 @@ namespace SOTS.Items.CritBonus
 		{
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.Vertebrae, 5);
-			recipe.AddIngredient(ModContent.ItemType<Goblinsteel>(), 8);
+			recipe.AddIngredient(ModContent.ItemType<AncientSteelBar>(), 8);
 			recipe.AddIngredient(ModContent.ItemType<FragmentOfEvil>(), 4);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this);
@@ -105,7 +106,7 @@ namespace SOTS.Items.CritBonus
 		{
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.RottenChunk, 5);
-			recipe.AddIngredient(ModContent.ItemType<Goblinsteel>(), 8);
+			recipe.AddIngredient(ModContent.ItemType<AncientSteelBar>(), 8);
 			recipe.AddIngredient(ModContent.ItemType<FragmentOfEvil>(), 4);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this);

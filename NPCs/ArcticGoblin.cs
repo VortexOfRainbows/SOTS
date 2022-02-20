@@ -1,5 +1,8 @@
 using Microsoft.Xna.Framework;
 using SOTS.Items.Banners;
+using SOTS.Items.Fragments;
+using SOTS.Items.GhostTown;
+using SOTS.Items.Void;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -57,13 +60,13 @@ namespace SOTS.NPCs
 		public override void NPCLoot()
 		{
 			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemID.TatteredCloth, Main.rand.Next(2) + 1);
-			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("FragmentOfPermafrost"), Main.rand.Next(2) + 1);
+			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<FragmentOfPermafrost>(), Main.rand.Next(2) + 1);
 
 			if(Main.rand.Next(2) == 0 || Main.expertMode)
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("Goblinsteel"), Main.rand.Next(2) + 1);
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<AncientSteelBar>(), Main.rand.Next(2) + 1);
 
 			if (Main.rand.NextBool(2) || Main.expertMode)
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("StrawberryIcecream"), 1);
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<StrawberryIcecream>(), 1);
 
 			if (Main.rand.NextBool(2))
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemID.SpikyBall, Main.rand.Next(1, 16));

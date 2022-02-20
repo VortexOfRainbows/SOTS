@@ -9,6 +9,7 @@ namespace SOTS.Items.GhostTown
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Ancient Steel Bar");
+			Tooltip.SetDefault("'An ancient proto-steel used by various civilizations... and goblins'");
 		}
 		public override void SetDefaults()
 		{

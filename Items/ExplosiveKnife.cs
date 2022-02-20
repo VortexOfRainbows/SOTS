@@ -2,6 +2,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
+using SOTS.Items.GhostTown;
 
 namespace SOTS.Items
 {
@@ -34,7 +35,7 @@ namespace SOTS.Items
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.ThrowingKnife, 15);
 			recipe.AddIngredient(ItemID.Grenade, 15);
-			recipe.AddIngredient(ModContent.ItemType<Goblinsteel>(), 1);
+			recipe.AddIngredient(ModContent.ItemType<AncientSteelBar>(), 1);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this, 15);
 			recipe.AddRecipe();

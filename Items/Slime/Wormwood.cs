@@ -29,7 +29,7 @@ namespace SOTS.Items.Slime
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.Wood, 2);
+			recipe.AddRecipeGroup(RecipeGroupID.Wood, 2);
 			recipe.AddIngredient(ItemID.Gel, 5);
 			recipe.AddTile(TileID.Solidifier);
 			recipe.SetResult(this, 2);

@@ -164,7 +164,7 @@ namespace SOTS.Items
 			int style = tile.frameX / 18;
 			if (style == 0) 
 			{
-				Item.NewItem(i * 16, j * 16, 16, 16, ModContent.ItemType<Goblinsteel>());
+				Item.NewItem(i * 16, j * 16, 16, 16, ModContent.ItemType<AncientSteelBar>());
 			}
 			if (style == 1 || style == 2) 
 			{

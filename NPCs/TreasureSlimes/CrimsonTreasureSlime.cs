@@ -38,6 +38,7 @@ namespace SOTS.NPCs.TreasureSlimes
 			items = new List<TreasureSlimeItem>()
 			{
 				new TreasureSlimeItem(ItemType<OldKey>(), 1, 1, 1f), //guaranteed
+				new TreasureSlimeItem(ItemType<AncientSteelBar>(), 9, 15, 1f),
 				new TreasureSlimeItem(ItemID.Shadewood, 60, 300, 1),
 				new TreasureSlimeItem(ItemID.CrimtaneOre, 30, 60, 1f),
 				new TreasureSlimeItem(ItemID.Vertebrae, 30, 60, 0.25f),

@@ -340,6 +340,7 @@ namespace SOTS
 					playernumber = reader.ReadByte();
 					int projIdentity = reader.ReadInt32();
 					int frostFlake = reader.ReadInt32();
+					int affixID = reader.ReadInt32();
 					if (Main.netMode != NetmodeID.Server)
                     {
 						for(int i = 0; i < Main.maxProjectiles; i++)
@@ -354,6 +355,7 @@ namespace SOTS
                     }
 					SOTSProjectile sProj = Main.projectile[projIdentity].GetGlobalProjectile<SOTSProjectile>();
 					sProj.frostFlake = frostFlake;
+					sProj.affixID = affixID;
 					if (Main.netMode == NetmodeID.Server)
 					{
 						var packet = GetPacket();
@@ -361,6 +363,7 @@ namespace SOTS
 						packet.Write(playernumber);
 						packet.Write(projIdentity);
 						packet.Write(frostFlake);
+						packet.Write(affixID);
 						packet.Send(-1, playernumber);
 					}
 					break;

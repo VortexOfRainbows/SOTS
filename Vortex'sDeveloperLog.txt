@@ -31,7 +31,7 @@ Mid Priority:
 3. Perfect Star (magic weapon, Cave Story reference)
 	1. Found inside the vibrant geode in the jungle
 4. Replace goblinsteel (ancient steel)
-5. More Ancientsteel
+5. More Ancientsteels
 
 Low Priority:
 1. Archaelogist NPC
@@ -39,8 +39,11 @@ Low Priority:
 3. Void Bar strike the player during void shock
 4. Fix Planetarium sky island spawning in tandum
 
-2/19/22
-1. Lux BG and worked on some Lux Proejctiles
+2/19/22 & 2/20/22
+1. Lux BG and worked on some Lux Projectiles
+2. Goblinsteel replaced with Ancient Steel
+3. Some prep for Perfect Star an Ancient Steel Longbow
+4. Some wood recipes changed to recipe group
 
 2/13/22 & 2/14/22 & 2/16/22 & 2/17/22
 1. Added Harvester Scythe

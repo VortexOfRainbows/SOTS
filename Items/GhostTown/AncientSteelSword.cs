@@ -44,8 +44,8 @@ namespace SOTS.Items.GhostTown
         {
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(ModContent.ItemType<AncientSteelBar>(), 18);
-            recipe.SetResult(this);
             recipe.AddTile(TileID.Anvils);
+            recipe.SetResult(this);
             recipe.AddRecipe();
         }
         public Vector2 EdgeOfRect(Rectangle rect, float rad)

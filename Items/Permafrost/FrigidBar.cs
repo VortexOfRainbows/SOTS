@@ -1,4 +1,5 @@
 using SOTS.Items.Fragments;
+using SOTS.Items.GhostTown;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -10,7 +11,6 @@ namespace SOTS.Items.Permafrost
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Frigid Bar");
-			Tooltip.SetDefault("");
 		}
 		public override void SetDefaults()
 		{
@@ -27,7 +27,7 @@ namespace SOTS.Items.Permafrost
 		{
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<FrigidIce>(), 10);
-			recipe.AddIngredient(ModContent.ItemType<Goblinsteel>(), 1);
+			recipe.AddIngredient(ModContent.ItemType<AncientSteelBar>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<FragmentOfPermafrost>(), 1);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this, 2);

@@ -7,25 +7,25 @@ using Terraria.ModLoader;
 
 namespace SOTS.Items.ChestItems
 {
-	public class GlazeBow : ModItem
+	public class PerfectStar : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Glaze Bow");
-			Tooltip.SetDefault("Coalesces ice mist to power up your arrows\nWhen briefly charged, arrows will travel faster and hit with an icy explosion that deals 200% damage\nWhen fully charged, arrows bloom into wisps of ice, dealing 600% damage");
+			DisplayName.SetDefault("Perfect Star");
+			Tooltip.SetDefault("Can be charged up to 3 times, gaining damage and piercing with each charge\n'The perfect weapon'");
 		}
 		public override void SetDefaults()
 		{
-			item.damage = 10;
-			item.ranged = true;
-			item.width = 34;
-			item.height = 64;
-			item.useTime = 22;
-			item.useAnimation = 22;
+			item.damage = 14;
+			item.magic = true;
+			item.width = 68;
+			item.height = 30;
+			item.useTime = 30;
+			item.useAnimation = 30;
 			item.useStyle = ItemUseStyleID.HoldingOut;
 			item.knockBack = 4f;
 			item.value = Item.sellPrice(0, 3, 0, 0);
-			item.rare = ItemRarityID.Orange;
+			item.rare = ItemRarityID.LightPurple;
 			item.UseSound = null;
 			item.autoReuse = false;
 			item.channel = true;
@@ -33,7 +33,7 @@ namespace SOTS.Items.ChestItems
 			item.shootSpeed = 18f;
 			item.noMelee = true;
 			item.noUseGraphic = true;
-			item.useAmmo = AmmoID.Arrow;
+			item.mana = 10;
 		}
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{

@@ -8,6 +8,7 @@ using SOTS.Items.Fragments;
 using SOTS.Items.Void;
 using SOTS.Items.Slime;
 using SOTS.Items.Permafrost;
+using SOTS.Items.GhostTown;
 
 namespace SOTS.NPCs.TreasureSlimes
 {
@@ -35,6 +36,7 @@ namespace SOTS.NPCs.TreasureSlimes
 			gelColor = new Color(106, 210, 255, 100);
 			items = new List<TreasureSlimeItem>()
 			{
+				new TreasureSlimeItem(ItemType<AncientSteelBar>(), 9, 15, 1f),
 				new TreasureSlimeItem(ItemID.BorealWood, 60, 300, 1f),
 				new TreasureSlimeItem(ItemID.LeadOre, 30, 72, 0.25f),
 				new TreasureSlimeItem(ItemID.IronOre, 30, 72, 0.25f),

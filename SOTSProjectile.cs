@@ -28,6 +28,7 @@ namespace SOTS
 				FrostFlakeUnit(projectile, frostFlake - 2);
 		}
 		public int frostFlake = 0;
+		public int affixID = 0;
 		public bool hasHitYet = false;
 		public bool effect = true;
 		public int counter = 0;
@@ -41,6 +42,7 @@ namespace SOTS
 			packet.Write((byte)player.whoAmI);
 			packet.Write(projectile.identity);
 			packet.Write(frostFlake);
+			packet.Write(affixID);
 			packet.Send();
 		}
 		private Vector2 initialVelo = Vector2.Zero;
