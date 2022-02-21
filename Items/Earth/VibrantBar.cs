@@ -28,7 +28,7 @@ namespace SOTS.Items.Earth
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<VibrantOre>(), 10);
 			recipe.AddIngredient(ItemID.GlowingMushroom, 2);
-			recipe.AddIngredient(ItemID.IronBar, 1);
+			recipe.AddRecipeGroup(RecipeGroupID.IronBar, 1);
 			recipe.AddIngredient(ModContent.ItemType<FragmentOfEarth>(), 1);
 			recipe.AddTile(TileID.Furnaces);
 			recipe.SetResult(this, 2);
