@@ -4,6 +4,7 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
+using SOTS.Projectiles.Evil;
 using SOTS.Projectiles.Nature;
 using SOTS.Projectiles.Otherworld;
 using SOTS.Projectiles.Permafrost;
@@ -26,6 +27,7 @@ namespace SOTS
 			counter++;
 			if (projectile.arrow || projectile.type == ModContent.ProjectileType<ChargedHardlightArrow>())
 				FrostFlakeUnit(projectile, frostFlake - 2);
+			AffixUnit(projectile);
 		}
 		public int frostFlake = 0;
 		public int affixID = 0;
@@ -46,6 +48,37 @@ namespace SOTS
 			packet.Send();
 		}
 		private Vector2 initialVelo = Vector2.Zero;
+		public void AffixUnit(Projectile projectile)
+        {
+			if(affixID < 0)
+            {
+				affixID = -affixID;
+				if (Main.myPlayer == projectile.owner && Main.netMode == NetmodeID.MultiplayerClient)
+					SendClientChanges(Main.player[projectile.owner], projectile);
+			}
+			if(affixID > 0) //not else if
+            {
+				if(affixID == 1) //Ancient Steel Longbow
+				{
+					if (projectile.extraUpdates < 1)
+						projectile.extraUpdates++;
+					for (int i = 0; i < 3; i++)
+					{
+						Vector2 spawnPos = Vector2.Lerp(projectile.Center, projectile.oldPosition + projectile.Size / 2, i * 0.34f);
+						Dust dust = Dust.NewDustDirect(spawnPos + new Vector2(-4, -4), 0, 0, DustID.Silver, 0, 0, 0, Color.LightGray);
+						dust.noGravity = true;
+						dust.scale = 1.1f;
+						dust.velocity = Vector2.Zero;
+					}
+					if (initialVelo == Vector2.Zero)
+						initialVelo = projectile.velocity;
+					else
+						initialVelo -= (initialVelo - projectile.velocity) * 0.4f; //only recieve 40% of arrows usual gravity
+					if (projectile.velocity.X == initialVelo.X && projectile.velocity.Y != initialVelo.Y)
+						projectile.velocity = initialVelo;
+				}
+			}
+		}
 		public void FrostFlakeUnit(Projectile projectile, int level)
         {
 			if (level < -1)
@@ -232,11 +265,32 @@ namespace SOTS
 		{
 			if (!hasFrostBloomed && frostFlake >= 3)
 				FrostBloom(projectile);
+			if(affixID == 1)
+			{
+				if (Main.myPlayer == projectile.owner)
+				{
+					for (int i = 0; i < 3; i++)
+					{
+						float randAmt = 5 + 12 * i;
+						Projectile.NewProjectile(projectile.Center, projectile.velocity.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-randAmt, randAmt))) * Main.rand.NextFloat(0.2f, 0.3f), ModContent.ProjectileType<SteelShrapnel>(), (int)(projectile.damage), projectile.knockBack, Main.myPlayer, Main.rand.Next(3));
+					}
+				}
+            }
 		}
         public override bool OnTileCollide(Projectile projectile, Vector2 oldVelocity)
 		{
 			if (!hasFrostBloomed && frostFlake >= 3)
 				FrostBloom(projectile);
+			if (affixID == 1)
+			{
+				if (Main.myPlayer == projectile.owner)
+				{
+					for (int i = 0; i < 6; i++)
+					{
+						Projectile.NewProjectile(projectile.Center, projectile.velocity.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-180, 180f))) * Main.rand.NextFloat(0.2f, 0.3f), ModContent.ProjectileType<SteelShrapnel>(), (int)(projectile.damage), projectile.knockBack, Main.myPlayer, Main.rand.Next(3));
+					}
+				}
+			}
 			return base.OnTileCollide(projectile, oldVelocity);
         }
         public void FrostBloom(Projectile projectile)

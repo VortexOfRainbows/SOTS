@@ -39,6 +39,9 @@ Low Priority:
 3. Void Bar strike the player during void shock
 4. Fix Planetarium sky island spawning in tandum
 
+2/20/22
+1. Added Ancient Steel Longbow. Works in multiplayer.
+
 2/19/22 & 2/20/22
 1. Lux BG and worked on some Lux Projectiles
 2. Goblinsteel replaced with Ancient Steel

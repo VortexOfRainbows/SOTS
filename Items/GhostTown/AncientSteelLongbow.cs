@@ -12,16 +12,16 @@ namespace SOTS.Items.GhostTown
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Ancient Steel Longbow");
-			Tooltip.SetDefault("Fired arrows explode into piercing shrapnel upon hitting enemies");
+			Tooltip.SetDefault("Has to windup before firing\nArrows travel fast and explode into piercing shrapnel for 100% damage upon hitting enemies");
 		}
 		public override void SetDefaults()
 		{
-			item.damage = 14;
+			item.damage = 15;
 			item.ranged = true;
 			item.width = 30;
 			item.height = 64;
-			item.useTime = 30;
-			item.useAnimation = 30;
+			item.useTime = 44;
+			item.useAnimation = 44;
 			item.useStyle = ItemUseStyleID.HoldingOut;
 			item.knockBack = 4f;
 			item.value = Item.sellPrice(0, 0, 80, 0);
