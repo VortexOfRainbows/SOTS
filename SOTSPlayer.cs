@@ -45,6 +45,7 @@ using Terraria.ModLoader.IO;
 using SOTS.Items.GhostTown;
 using SOTS.Projectiles.Chaos;
 using SOTS.NPCs.Boss.Lux;
+using SOTS.Items.Tools;
 
 namespace SOTS
 {
@@ -1118,7 +1119,7 @@ namespace SOTS
 					float damageMultiplier = CritBonusMultiplier; //since this value is 1, and crit damage does 2x damage, a value of 1.2f will increase damage by 40% on the players side (assuming crit damage as 100% base).
 					if(item != null)
                     {
-						if(item.type == ModContent.ItemType<AncientSteelSword>())
+						if(item.type == ModContent.ItemType<AncientSteelSword>() || item.type == ModContent.ItemType<AncientSteelGreatPickaxe>())
                         {
 							knockback += 2f;
 							damageMultiplier += 0.5f;

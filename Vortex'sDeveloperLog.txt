@@ -41,6 +41,7 @@ Low Priority:
 
 2/20/22
 1. Added Ancient Steel Longbow. Works in multiplayer.
+2. Added Ancient Steel Great Pickaxe
 
 2/19/22 & 2/20/22
 1. Lux BG and worked on some Lux Projectiles

@@ -29,6 +29,7 @@ using SOTS.NPCs.Boss.Polaris;
 using SOTS.NPCs.Boss.CelestialSerpent;
 using SOTS.Items.GhostTown;
 using SOTS.NPCs.Boss.Lux;
+using SOTS.Items.Tools;
 
 namespace SOTS.NPCs.ArtificialDebuffs
 {
@@ -578,7 +579,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 if (Main.myPlayer == player.whoAmI && Main.netMode == NetmodeID.MultiplayerClient)
                     SendClientChanges(player, npc);
             }
-            if (item.type == ItemType<AncientSteelSword>() && crit)
+            if ((item.type == ItemType<AncientSteelSword>() || item.type == ItemType<AncientSteelGreatPickaxe>()) && crit)
             {
                 bool worm = npc.realLife != -1;
                 float baseChance = 0.5f;
