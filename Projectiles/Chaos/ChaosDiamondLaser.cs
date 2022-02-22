@@ -37,24 +37,27 @@ namespace SOTS.Projectiles.Chaos
 		{
 			if(runOnce)
 			{
-				Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 94, 1.1f, 0.1f);
+				Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 92, 1.1f, -0.3f);
 			}
 			scaleMult = 3 * projectile.timeLeft / 90f;
 			Vector2 position;
-			for (float i = 40; i <= maxDistance; i += 8)
+			if(runOnce)
 			{
-				if (Main.rand.NextBool(1000) || (runOnce && Main.rand.NextBool(4)))
+				for (float i = 40; i <= maxDistance; i += 8)
 				{
-					position = projectile.Center + projectile.velocity.SafeNormalize(Vector2.Zero) * i;
-					int dust2 = Dust.NewDust(position - new Vector2(12, 12), 16, 16, ModContent.DustType<Dusts.CopyDust4>());
-					Dust dust = Main.dust[dust2];
-					dust.velocity *= 2f;
-					dust.velocity += projectile.velocity * 0.2f;
-					dust.color = VoidPlayer.pastelAttempt(Main.rand.NextFloat(6.28f), true);
-					dust.noGravity = true;
-					dust.alpha = 90;
-					dust.fadeIn = 0.1f;
-					dust.scale *= 2.5f * projectile.scale;
+					if (Main.rand.NextBool(10))
+					{
+						position = projectile.Center + projectile.velocity.SafeNormalize(Vector2.Zero) * i;
+						int dust2 = Dust.NewDust(position - new Vector2(12, 12), 16, 16, ModContent.DustType<Dusts.CopyDust4>());
+						Dust dust = Main.dust[dust2];
+						dust.velocity *= 2f;
+						dust.velocity += projectile.velocity * 0.2f;
+						dust.color = VoidPlayer.pastelAttempt(Main.rand.NextFloat(6.28f), true);
+						dust.noGravity = true;
+						dust.alpha = 90;
+						dust.fadeIn = 0.1f;
+						dust.scale *= 2.5f * projectile.scale;
+					}
 				}
 			}
 			runOnce = false;
@@ -62,14 +65,14 @@ namespace SOTS.Projectiles.Chaos
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) 
 		{
 			float point = 0f;
-			if(projectile.timeLeft > 30)
+			if(projectile.timeLeft > 20)
 			{
-				Vector2 finalPoint = projectile.Center + projectile.velocity.SafeNormalize(Vector2.Zero) * (maxDistance - 200);
+				Vector2 finalPoint = projectile.Center + projectile.velocity.SafeNormalize(Vector2.Zero) * (maxDistance - 80);
 				if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), projectile.Center, finalPoint, 20f * scaleMult * projectile.scale, ref point))
 				{
 					return true;
 				}
-				finalPoint = projectile.Center - projectile.velocity.SafeNormalize(Vector2.Zero) * (maxDistance - 200);
+				finalPoint = projectile.Center - projectile.velocity.SafeNormalize(Vector2.Zero) * (maxDistance - 80);
 				if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), projectile.Center, finalPoint, 20f * scaleMult * projectile.scale, ref point))
 				{
 					return true;
@@ -78,7 +81,7 @@ namespace SOTS.Projectiles.Chaos
 			return false;
 			//return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), projectile.Center, endPoint, 8f, ref point);
 		}
-		public const float maxDistance = 1800;
+		public const float maxDistance = 3200;
 		public void Draw(SpriteBatch spriteBatch, int type)
 		{
 			if (runOnce)
@@ -88,7 +91,7 @@ namespace SOTS.Projectiles.Chaos
 			Texture2D textureBlack = ModContent.GetTexture("SOTS/Projectiles/Chaos/BlackLuxLaser");
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
 			Vector2 originBlack = new Vector2(textureBlack.Width / 2, textureBlack.Height / 2);
-			float length = texture.Width * 0.5f;
+			float length = texture.Width * 1f;
 			Vector2 unit = projectile.velocity.SafeNormalize(Vector2.Zero);
 			float maxLength = maxDistance / length;
 			for (float i = -maxLength; i <= maxLength; i++)
@@ -102,9 +105,9 @@ namespace SOTS.Projectiles.Chaos
 				float scale = projectile.scale * scaleMult * sinusoid * (1 - 0.9f * (float)Math.Abs(i) / maxLength);
 				Vector2 drawPos = position - Main.screenPosition;
 				if (type == 1)
-					spriteBatch.Draw(texture, drawPos, null, color * alphaScale * mult, projectile.velocity.ToRotation(), origin, new Vector2(1f, scale), SpriteEffects.None, 0f);
+					spriteBatch.Draw(texture, drawPos, null, color * alphaScale * mult, projectile.velocity.ToRotation(), origin, new Vector2(2f, scale), SpriteEffects.None, 0f);
 				else
-					spriteBatch.Draw(textureBlack, drawPos, null, Color.White * alphaScale * mult, projectile.velocity.ToRotation(), originBlack, new Vector2(1f, scale), SpriteEffects.None, 0f);
+					spriteBatch.Draw(textureBlack, drawPos, null, Color.White * alphaScale * mult, projectile.velocity.ToRotation(), originBlack, new Vector2(2f, scale), SpriteEffects.None, 0f);
 			}
 			return;
 		}

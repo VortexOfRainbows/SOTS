@@ -103,7 +103,7 @@ namespace SOTS.Projectiles.Chaos
 					float homingMult = 0.014f * projectile.timeLeft / 360f - 0.004f;
 					if (homingMult < 0)
 						homingMult = 0;
-					projectile.velocity = Vector2.Lerp(projectile.velocity, toPlayer.SafeNormalize(Vector2.Zero) * (projectile.velocity.Length() + 1.2f), homingMult);
+					projectile.velocity = Vector2.Lerp(projectile.velocity, toPlayer.SafeNormalize(Vector2.Zero) * (projectile.velocity.Length() + 1.2f), homingMult * (1 + projectile.ai[1]));
 				}
 			}
 		}

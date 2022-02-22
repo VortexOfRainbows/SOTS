@@ -28,10 +28,8 @@ Mid Priority:
 	5. Chaos Chamber
 2. Construct Items:	
 	1. Inferno Plating block
-3. Perfect Star (magic weapon, Cave Story reference)
-	1. Found inside the vibrant geode in the jungle
-4. Replace goblinsteel (ancient steel)
-5. More Ancientsteels
+3. Big Vibrant geode in the jungle
+4. Ancientsteel Axe and Halberd
 
 Low Priority:
 1. Archaelogist NPC
@@ -41,6 +39,8 @@ Low Priority:
 
 2/21/22
 1. Perfect Star visual updates and Checked: syncs in multiplayer
+2. Added Shatter Laser attack to Lux	
+	1. Might need more work, but I'm leaning towards it feeling complete
 
 2/20/22
 1. Added Ancient Steel Longbow. Works in multiplayer.

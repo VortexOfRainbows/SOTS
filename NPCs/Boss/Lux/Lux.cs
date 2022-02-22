@@ -60,6 +60,7 @@ namespace SOTS.NPCs.Boss.Lux
 		public float wingHeightLerp = 0f;
 		public float forcedWingHeight = 0;
 		public bool allWingsForced = false;
+		public float wingOutwardOffset = 0;
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
 			Texture2D texture = Main.npcTexture[npc.type];
@@ -67,12 +68,12 @@ namespace SOTS.NPCs.Boss.Lux
 			for (int k = 0; k < npc.oldPos.Length; k++)
 			{
 				Vector2 drawPos = npc.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, npc.gfxOffY);
-				Color color = VoidPlayer.pastelRainbow * ((float)(npc.oldPos.Length - k) / (float)npc.oldPos.Length);
+				Color color = npc.GetAlpha(VoidPlayer.pastelRainbow) * ((float)(npc.oldPos.Length - k) / (float)npc.oldPos.Length);
 				color.A = 0;
 				spriteBatch.Draw(texture, drawPos, null, color * 0.5f, npc.rotation, drawOrigin, npc.scale * 1.1f, SpriteEffects.None, 0f);
 			}
 			float bonusScale = drawNewWingsCounter * 0.1f;
-			float bonusWidth = drawNewWingsCounter * 16f;
+			float bonusWidth = drawNewWingsCounter * 16f + wingOutwardOffset;
 			float bonusDegree = drawNewWingsCounter * -13f;
 			DrawRings(spriteBatch, false);
 			DrawWings(1, 1f + bonusScale, bonusWidth, bonusDegree, 1f);
@@ -98,7 +99,7 @@ namespace SOTS.NPCs.Boss.Lux
 				}
 				else
 					circular *= 0f;
-				Main.spriteBatch.Draw(texture, npc.Center + circular - Main.screenPosition, null, color, 0f, drawOrigin, npc.scale * 1.1f, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, npc.Center + circular - Main.screenPosition, null, npc.GetAlpha(color), 0f, drawOrigin, npc.scale * 1.1f, SpriteEffects.None, 0f);
 			}
 			DrawRings(spriteBatch, true);
 		}
@@ -159,7 +160,7 @@ namespace SOTS.NPCs.Boss.Lux
 						if (degreesCount < 0)
 							sinusoid = 0;
 						float radians = MathHelper.ToRadians(i * 360f / amtOfParticles);
-						Color c = VoidPlayer.pastelAttempt(radians + MathHelper.ToRadians(Main.GameUpdateCount));
+						Color c = npc.GetAlpha(VoidPlayer.pastelAttempt(radians + MathHelper.ToRadians(Main.GameUpdateCount)));
 						Vector2 circular = new Vector2(-1, 0).RotatedBy(radians);
 						float increaseAmount = 1f;
 						if (i < amtOfParticles / 2)
@@ -213,7 +214,7 @@ namespace SOTS.NPCs.Boss.Lux
 				return;
 			for(int i = 0; i < rings.Count; i++)
             {
-				rings[i].Draw(spriteBatch, 4 - i, 1f, drawNewWingsCounter, 1f, npc.rotation, front);
+				rings[i].Draw(spriteBatch, 4 - i, (1 - npc.alpha / 255f), drawNewWingsCounter, 1f, npc.rotation, front);
             }
         }
 		public override void SetStaticDefaults()
@@ -241,11 +242,11 @@ namespace SOTS.NPCs.Boss.Lux
             npc.HitSound = SoundID.NPCHit54;
             npc.DeathSound = SoundID.NPCDeath6;
             npc.netAlways = false;
-			music = MusicID.Boss2;
+			music = MusicID.Boss3;
 		}
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
-            return attackPhase != -1;
+            return attackPhase != -1 && !npc.dontTakeDamage;
         }
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
 		{
@@ -322,6 +323,7 @@ namespace SOTS.NPCs.Boss.Lux
 			}
 			else
 			{
+				SOTS.LuxLightingFadeIn = 1f;
 				IdleTimer++;
 				npc.Center += new Vector2(0, (float)Math.Sin(MathHelper.ToRadians(IdleTimer * 6)));
 			}
@@ -378,7 +380,7 @@ namespace SOTS.NPCs.Boss.Lux
 					wingHeightLerp = resetForceHeight * 0.9f;
 					if(attackTimer1 >= 610)
                     {
-						SwapPhase(SubspaceCrossPhase);
+						SwapPhase(PickRandom(4, (int)attackPhase));
 					}
 				}
 			}
@@ -398,7 +400,7 @@ namespace SOTS.NPCs.Boss.Lux
 						attackTimer2--;
 					else
 					{
-						SwapPhase(LaserOrbPhase);
+						SwapPhase(PickRandom(4, (int)attackPhase));
 					}
 				}
 				else if(attackTimer1 > 0)
@@ -477,7 +479,7 @@ namespace SOTS.NPCs.Boss.Lux
 							rings[i].MoveTo(npc.Center, true);
 						rings[0].ResetVariables();
 						if (attackTimer1 > 210)
-							SwapPhase(Main.rand.Next(2));
+							SwapPhase(PickRandom(4, (int)attackPhase));
 					}
                 }
 				else
@@ -511,7 +513,94 @@ namespace SOTS.NPCs.Boss.Lux
 					}
 				}
 			}
+			if(attackPhase == ShatterLaserPhase)
+			{
+				allWingsForced = false;
+				modifyRotation(false);
+				attackTimer1++;
+				int maxCharges = 8;
+				int timeBetweenShots = 45;
+				float speed2 = 40f;
+				if (attackTimer4 >= maxCharges)
+				{
+					for (int i = 0; i < 4; i++)
+					{
+						rings[i].ResetVariables();
+					}
+					float timeToExplosion = timeBetweenShots + 120;
+					float explodeMult = attackTimer1 / timeToExplosion;
+					float slowDownMult = attackTimer1 / timeToExplosion * 2f;
+					if (explodeMult > 1)
+						explodeMult = 1;
+					if (slowDownMult > 1)
+						slowDownMult = 1;
+					npc.alpha = (int)(255 * (1 - explodeMult));
+					speed2 *= 0.5f * (1 - slowDownMult) * (1 - slowDownMult);
+					npc.velocity *= (1 - slowDownMult);
+					if (attackTimer1 > timeToExplosion + 60f)
+					{
+						forcedWingHeight = 0;
+						wingHeightLerp = 0;
+						SwapPhase(PickRandom(4, (int)attackPhase));
+					}
+					else
+					{
+						if (attackTimer1 > timeToExplosion)
+						{
+							explodeMult = 1 - (attackTimer1 - timeToExplosion) / 50f;
+							if (explodeMult < 0)
+								explodeMult = 0;
+						}
+						forcedWingHeight = 54;
+						wingHeightLerp = explodeMult * 0.95f;
+						wingSpeedMult = 1 - explodeMult * 0.6f;
+						wingOutwardOffset = -32 * explodeMult;
+					}
+				}
+				else
+				{
+					wingSpeedMult = 1;
+					npc.alpha += 3 + ((int)attackTimer1 % 3 / 2);
+					float compressMult = attackTimer1 / (30f + timeBetweenShots);
+					if (compressMult > 1)
+						compressMult = 1;
+					speed2 *= compressMult;
+					for (int i = 0; i < 4; i++)
+					{
+						rings[i].targetRadius = MathHelper.Lerp(rings[i].originalRadius, 30, compressMult);
+					}
+					if (attackTimer1 >= 30 + timeBetweenShots)
+					{
+						if (Main.netMode != NetmodeID.MultiplayerClient)
+						{
+							Vector2 spawnPosition = new Vector2(attackTimer2, attackTimer3);
+							if (attackTimer2 <= 0 && attackTimer3 <= 0)
+								spawnPosition = npc.Center;
+							int timeUntilEnd = 90 + timeBetweenShots * (int)(maxCharges - attackTimer4);
+							Vector2 rotate = spawnPosition - player.Center;
+							float length = player.velocity.LengthSquared() * 0.6f;
+							if (length > 70)
+								length = 70;
+							Vector2 spawnAt = player.Center + Main.rand.NextVector2Circular(128, 128) + player.velocity * length;
+							Projectile.NewProjectile(spawnAt, rotate.SafeNormalize(Vector2.Zero), ModContent.ProjectileType<ChaosDiamond>(), (int)(damage * 1.5f), 1, Main.myPlayer, timeUntilEnd, npc.target);
+							attackTimer2 = spawnAt.X;
+							attackTimer3 = spawnAt.Y;
+							npc.netUpdate = true;
+						}
+						attackTimer1 = 30;
+						attackTimer4++;
+					}
+				}
+				if (speed2 > toPlayer.Length())
+					speed2 = toPlayer.Length();
+				npc.velocity = toPlayer.SafeNormalize(Vector2.Zero) * speed2 * 0.25f;
+			}
 			WingStuff();
+			npc.alpha = (int)MathHelper.Clamp(npc.alpha, 0, 255);
+			if (npc.alpha > 150)
+				npc.dontTakeDamage = true;
+			else if (attackPhase != SetupPhase)
+				npc.dontTakeDamage = false;
 			return true;
 		}
 		public const float timeToAimAtPlayer = 40;
@@ -549,7 +638,7 @@ namespace SOTS.NPCs.Boss.Lux
 		{
 			int dust2 = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.RainbowMk2);
 			Dust dust = Main.dust[dust2];
-			dust.color = VoidPlayer.pastelAttempt(Main.rand.NextFloat(6.28f), true);
+			dust.color = npc.GetAlpha(VoidPlayer.pastelAttempt(Main.rand.NextFloat(6.28f), true));
 			dust.noGravity = true;
 			dust.fadeIn = 0.1f;
 			dust.scale *= 2f;
@@ -595,6 +684,14 @@ namespace SOTS.NPCs.Boss.Lux
 		public const int LaserOrbPhase = 0;
 		public const int ShotgunPhase = 1;
 		public const int SubspaceCrossPhase = 2;
+		public const int ShatterLaserPhase = 3;
+		public int PickRandom(int max = 4, int exclude = -1)
+        {
+			int rand = Main.rand.Next(max);
+			while(rand == exclude)
+				rand = Main.rand.Next(max);
+			return rand;
+		}
 		public void SwapPhase(int phase)
         {
 			attackPhase = phase;

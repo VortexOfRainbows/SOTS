@@ -43,6 +43,7 @@ namespace SOTS.Projectiles.Earth
         int chargeLevel = 0;
         public override void Kill(int timeLeft)
         {
+            DoDust(0.7f + 0.1f * chargeLevel, 2 + chargeLevel);
             if (projectile.owner == Main.myPlayer)
             {
                 Vector2 fireFrom = projectile.Center + projectile.velocity.SafeNormalize(Vector2.Zero) * 32;
@@ -75,7 +76,6 @@ namespace SOTS.Projectiles.Earth
                     else
                         Main.PlaySound(SoundLoader.customSoundType, (int)projectile.Center.X, (int)projectile.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/PerfectStarFull"), 1.6f, 0);
                     chargeLevel++;
-                    DoDust(0.7f + 0.1f * chargeLevel, 2 + chargeLevel);
                     projectile.ai[1] = -6 * chargeLevel;
                 }
             }
@@ -87,17 +87,17 @@ namespace SOTS.Projectiles.Earth
             Vector2 presumedVelo = projectile.position - projectile.oldPosition;
             for (int j = 0; j < numSpikes; j++)
             {
-                Vector2 offset = new Vector2(0, 16 * scale -(5 - numSpikes)).RotatedBy(MathHelper.ToRadians(j * 360f / numSpikes) + projectile.rotation + MathHelper.PiOver2 * projectile.direction);
+                Vector2 offset = new Vector2(0, 14 * scale -(5 - numSpikes)).RotatedBy(MathHelper.ToRadians(j * 360f / numSpikes) + projectile.rotation + MathHelper.PiOver2 * projectile.direction);
                 for (int i = -10; i < 10; i++)
                 {
-                    startingLocation = new Vector2(i * scale, (20 - Math.Abs(i) * 2) * scale).RotatedBy(MathHelper.ToRadians(j * 360f / numSpikes) + projectile.rotation + MathHelper.PiOver2 * projectile.direction);
+                    startingLocation = new Vector2(i * scale * 0.825f, (20 - Math.Abs(i) * 2) * scale).RotatedBy(MathHelper.ToRadians(j * 360f / numSpikes) + projectile.rotation + MathHelper.PiOver2 * projectile.direction);
                     Vector2 velo = offset + startingLocation;
                     Dust dust = Dust.NewDustPerfect(dustCenter + velo * 1f, ModContent.DustType<CopyDust4>());
                     dust.noGravity = true;
                     dust.scale = 1.1f;
                     dust.fadeIn = 0.1f;
                     dust.color = Color.Lerp(new Color(175, 218, 118, 0), new Color(74, 186, 54, 0), Main.rand.NextFloat(1));
-                    dust.velocity = -velo * 0.105f * scale + presumedVelo * 0.25f;
+                    dust.velocity = velo * 0.06f * scale + presumedVelo * 0.25f;
                 }
             }
         }

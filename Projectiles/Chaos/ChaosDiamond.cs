@@ -64,15 +64,15 @@ namespace SOTS.Projectiles.Chaos
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			for(int j = 0; j < 3; j++)
 			{
-				int radius = 16 + j * 4;
-				for (int i = 0; i < 360; i += 10)
+				float radius = (18 + j * 4) * (1f + radiusMult * 2.5f);
+				for (int i = 0; i < 360; i += 9)
 				{
 					Color color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(i));
 					Vector2 center = projectile.Center;
 					Vector2 rotation = new Vector2(radius, 0).RotatedBy(MathHelper.ToRadians(i + Main.GameUpdateCount));
 					rotation.X *= compressions[j];
 					rotation = rotation.RotatedBy(rotations[j]);
-					Main.spriteBatch.Draw(texture, center - Main.screenPosition + rotation, null, projectile.GetAlpha(new Color(color.R, color.G, color.B, 0)), projectile.rotation, drawOrigin, 0.75f, SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture, center - Main.screenPosition + rotation, null, projectile.GetAlpha(new Color(color.R, color.G, color.B, 0)) * (1 - radiusMult), projectile.rotation, drawOrigin, 0.75f, SpriteEffects.None, 0f);
 				}
 			}
 			return false;
@@ -97,12 +97,18 @@ namespace SOTS.Projectiles.Chaos
 			}
         }
 		bool runOnce = true;
+        public override bool ShouldUpdatePosition()
+        {
+            return false;
+        }
+		float radiusMult = 1f;
+		int counter3 = 0;
         public override void AI()
 		{
 			if (runOnce)
 			{
-				if(projectile.ai[0] > projectile.timeLeft)
-					projectile.timeLeft = (int)projectile.ai[0];
+				Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 77, 1.1f, -0.3f);
+				projectile.timeLeft = (int)projectile.ai[0];
 				runOnce = false;
 				for (int i = 0; i < 15; i++)
 				{
@@ -117,8 +123,33 @@ namespace SOTS.Projectiles.Chaos
 			}
 			else
 				RingStuff();
+			if(counter3 >= 0)
+			{
+				counter3++;
+				float mult = counter3 / 55f;
+				if (mult > 1)
+					mult = 1;
+				radiusMult = 1 - mult;
+				if(counter3 > 60)
+				{
+					if(Main.netMode!= NetmodeID.MultiplayerClient)
+                    {
+						int numDarts = 6;
+						for (int i = 0; i < numDarts; i++)
+						{
+							Vector2 circular = new Vector2(2.5f, 0).RotatedBy(projectile.rotation + MathHelper.ToRadians(i * 360f / numDarts));
+							Projectile.NewProjectile(projectile.Center, circular, ModContent.ProjectileType<ChaosDart>(), (int)(projectile.damage * 0.5f), projectile.knockBack, Main.myPlayer, (int)projectile.ai[1], -0.8f);
+						}
+					}
+					counter3 = -1;
+                }
+			}
+			else
+            {
+
+            }
+
 			Lighting.AddLight(projectile.Center, new Color(231, 95, 203).ToVector3());
-			if(projectile.velocity.Length() > 2f)
 			projectile.rotation = projectile.velocity.ToRotation();
 			if (projectile.timeLeft < 100)
 				projectile.alpha += 1;
