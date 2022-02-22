@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Dusts;
 using System;
 using System.IO;
 using Terraria;
@@ -74,7 +75,29 @@ namespace SOTS.Projectiles.Earth
                     else
                         Main.PlaySound(SoundLoader.customSoundType, (int)projectile.Center.X, (int)projectile.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/PerfectStarFull"), 1.6f, 0);
                     chargeLevel++;
+                    DoDust(0.7f + 0.1f * chargeLevel, 2 + chargeLevel);
                     projectile.ai[1] = -6 * chargeLevel;
+                }
+            }
+        }
+        public void DoDust(float scale, float numSpikes)
+        {
+            Vector2 dustCenter = projectile.Center + new Vector2(37, 1 * projectile.direction).RotatedBy(projectile.rotation - MathHelper.PiOver2);
+            Vector2 startingLocation = dustCenter;
+            Vector2 presumedVelo = projectile.position - projectile.oldPosition;
+            for (int j = 0; j < numSpikes; j++)
+            {
+                Vector2 offset = new Vector2(0, 16 * scale -(5 - numSpikes)).RotatedBy(MathHelper.ToRadians(j * 360f / numSpikes) + projectile.rotation + MathHelper.PiOver2 * projectile.direction);
+                for (int i = -10; i < 10; i++)
+                {
+                    startingLocation = new Vector2(i * scale, (20 - Math.Abs(i) * 2) * scale).RotatedBy(MathHelper.ToRadians(j * 360f / numSpikes) + projectile.rotation + MathHelper.PiOver2 * projectile.direction);
+                    Vector2 velo = offset + startingLocation;
+                    Dust dust = Dust.NewDustPerfect(dustCenter + velo * 1f, ModContent.DustType<CopyDust4>());
+                    dust.noGravity = true;
+                    dust.scale = 1.1f;
+                    dust.fadeIn = 0.1f;
+                    dust.color = Color.Lerp(new Color(175, 218, 118, 0), new Color(74, 186, 54, 0), Main.rand.NextFloat(1));
+                    dust.velocity = -velo * 0.105f * scale + presumedVelo * 0.25f;
                 }
             }
         }
@@ -115,7 +138,7 @@ namespace SOTS.Projectiles.Earth
                 Main.player[projectile.owner].heldProj = projectile.whoAmI;
                 projectile.alpha = 0;
             }
-            projectile.rotation = (float)(Math.Atan2((double)projectile.velocity.Y, (double)projectile.velocity.X) + 1.57000005245209);
+            projectile.rotation = (float)(projectile.velocity.ToRotation() + MathHelper.PiOver2);
             if (Main.player[projectile.owner].channel || projectile.timeLeft > 50)
             {
                 player.ChangeDir(projectile.direction);

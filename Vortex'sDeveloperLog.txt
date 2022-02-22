@@ -39,10 +39,13 @@ Low Priority:
 3. Void Bar strike the player during void shock
 4. Fix Planetarium sky island spawning in tandum
 
+2/21/22
+1. Perfect Star visual updates and Checked: syncs in multiplayer
+
 2/20/22
 1. Added Ancient Steel Longbow. Works in multiplayer.
 2. Added Ancient Steel Great Pickaxe
-3. Added Perfect Star added (needs more visuals + mult testing)
+3. Added Perfect Star added
 
 2/19/22 & 2/20/22
 1. Lux BG and worked on some Lux Projectiles

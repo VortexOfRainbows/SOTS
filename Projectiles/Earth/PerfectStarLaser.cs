@@ -61,7 +61,7 @@ namespace SOTS.Projectiles.Earth
 				{
 					Color color = new Color(100, 100, 100, 0);
 					color = projectile.GetAlpha(color);
-					float max = betweenPositions.Length() / (texture.Width * 0.25f);
+					float max = betweenPositions.Length() / (texture.Width * 0.2f);
 					for (int i = 0; i < max; i++)
 					{
 						drawPos = previousPosition + -betweenPositions * (i / max) - Main.screenPosition;
