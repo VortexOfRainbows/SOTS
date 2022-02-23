@@ -499,6 +499,13 @@ namespace SOTS.NPCs.ArtificialDebuffs
         public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
             Player player = Main.player[projectile.owner];
+            if (npc.HasBuff(BuffType<Shattered>()) && projectile.melee && projectile.type != ProjectileType<Projectiles.Evil.AncientSteelHalberd>())
+            {
+                int ignoreDefense = ((npc.defense + 1) / 2);
+                damage += ignoreDefense;
+                crit = true;
+                npc.DelBuff(npc.FindBuffIndex(BuffType<Shattered>()));
+            }
             if (npc.immortal)
             {
                 return;
@@ -538,7 +545,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
             if(projectile.type == ProjectileType<DeathSpiralProj>() || (projectile.type == ProjectileType<BloodSpark>() && crit))
             {
                 bool worm = npc.realLife != -1;
-                float baseChance = projectile.type == ProjectileType<BloodSpark>() ? 0.5f : 0.2f;
+                float baseChance = projectile.type == ProjectileType<BloodSpark>() ? 1.1f : 0.2f;
                 int baseStacks = 1;
                 if (worm)
                 {
@@ -565,6 +572,13 @@ namespace SOTS.NPCs.ArtificialDebuffs
             {
                 return;
             }
+            if (npc.HasBuff(BuffType<Shattered>()) && item.melee)
+            {
+                int ignoreDefense = ((npc.defense + 1) / 2);
+                damage += ignoreDefense;
+                crit = true;
+                npc.DelBuff(npc.FindBuffIndex(BuffType<Shattered>()));
+            }
             if (Main.rand.NextFloat(100f) < 5f * DestableCurse)
             {
                 if (!crit)
@@ -582,14 +596,14 @@ namespace SOTS.NPCs.ArtificialDebuffs
             if ((item.type == ItemType<AncientSteelSword>() || item.type == ItemType<AncientSteelGreatPickaxe>()) && crit)
             {
                 bool worm = npc.realLife != -1;
-                float baseChance = 0.5f;
+                float baseChance = 1f;
                 int baseStacks = 1;
                 if (worm)
                 {
                     baseStacks = 2;
                     baseChance = 0.1f;
                 }
-                if (Main.rand.NextFloat(1) < baseChance / (baseStacks + BleedingCurse)) //1 in 10, drops lower ever time
+                if (Main.rand.NextFloat(1) < baseChance / (baseStacks + BleedingCurse * 0.7f)) //1 in 1, drops lower ever time
                     BleedingCurse++;
                 if (Main.myPlayer == player.whoAmI && Main.netMode == NetmodeID.MultiplayerClient)
                     SendClientChanges(player, npc);

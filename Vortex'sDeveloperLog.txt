@@ -37,10 +37,15 @@ Low Priority:
 3. Void Bar strike the player during void shock
 4. Fix Planetarium sky island spawning in tandum
 
+2/23/22
+1. WIP Ancient Steel Halberd
+	1. Needs On hit effects and debuff visualization
+2. Increased chance for Ancient Steel melee to bleed
+
 2/21/22
 1. Perfect Star visual updates and Checked: syncs in multiplayer
 2. Added Shatter Laser attack to Lux	
-	1. Might need more work, but I'm leaning towards it feeling complete
+	1. Attack might need more work, but I'm leaning towards it feeling complete
 
 2/20/22
 1. Added Ancient Steel Longbow. Works in multiplayer.
