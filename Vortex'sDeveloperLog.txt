@@ -29,7 +29,7 @@ Mid Priority:
 2. Construct Items:	
 	1. Inferno Plating block
 3. Big Vibrant geode in the jungle
-4. Ancientsteel Axe and Halberd
+4. Ancientsteel Axe
 
 Low Priority:
 1. Archaelogist NPC
@@ -38,8 +38,9 @@ Low Priority:
 4. Fix Planetarium sky island spawning in tandum
 
 2/23/22
-1. WIP Ancient Steel Halberd
-	1. Needs On hit effects and debuff visualization
+1. Finished Ancient Steel Halberd
+	1. Tested: Should multiplayer sync fine
+	2. Might be OP af
 2. Increased chance for Ancient Steel melee to bleed
 
 2/21/22

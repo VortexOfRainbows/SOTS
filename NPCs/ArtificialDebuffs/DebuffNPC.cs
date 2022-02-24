@@ -632,17 +632,52 @@ namespace SOTS.NPCs.ArtificialDebuffs
             return amt;
         }
         bool pinkied = false;
+        bool shattered = false;
         public override void PostAI(NPC npc)
         {
             if(npc.immortal)
             {
                 return;
             }
+            int indexShatter = npc.FindBuffIndex(BuffType<Shattered>());
+            if (indexShatter >= 0 && npc.buffTime[indexShatter] < 4)
+                shattered = false;
+            else if(npc.HasBuff(BuffType<Shattered>()))
+            {
+                if(!shattered)
+                {
+                    Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 23, 1.0f, -0.3f);
+                    for (int i = 0; i < 36; i++)
+                    {
+                        Vector2 circular = new Vector2(0, 3).RotatedBy(MathHelper.ToRadians(i * 10));
+                        Dust dust = Dust.NewDustDirect(npc.Center - new Vector2(4, 4) + circular.SafeNormalize(Vector2.Zero) * (npc.Size.Length()) * 0.5f, 0, 0, DustID.Silver, 0, 0, 100, Scale: Main.rand.NextFloat(1.2f, 1.6f));
+                        dust.velocity += circular * Main.rand.NextFloat(0.8f, 1.2f);
+                        dust.velocity *= 0.2f;
+                        dust.noGravity = true;
+                        dust.color = Color.LightGray;
+                    }
+                    shattered = true;
+                }
+            }
+            else if(shattered)
+            {
+                Main.PlaySound(21, (int)npc.Center.X, (int)npc.Center.Y, 0, 1f, -0.6f);
+                for (int i = 0; i < 12; i++)
+                {
+                    Vector2 circular = new Vector2(0, 3).RotatedBy(MathHelper.ToRadians(i * 30 + Main.rand.NextFloat(-8f, 8f)));
+                    Dust dust = Dust.NewDustDirect(npc.Center - new Vector2(4, 4) + circular.SafeNormalize(Vector2.Zero) * (npc.Size.Length()) * 0.3f, 0, 0, DustID.Silver, 0, 0, 100, Scale: Main.rand.NextFloat(1.2f, 1.6f));
+                    dust.velocity += circular * Main.rand.NextFloat(0.1f, 1f);
+                    dust.velocity *= 0.2f;
+                    dust.noGravity = true;
+                    dust.color = Color.LightGray;
+                }
+                shattered = false;
+            }
             for(int i = 0; i < PlatinumCurse; i++)
             {
                 if(Main.rand.NextBool(20 + i))
                 {
-                    Dust dust = Dust.NewDustDirect(npc.position - new Vector2(5f), npc.width, npc.height, mod.DustType("CopyDust4"), 0, -2, 200, new Color(), 1f);
+                    Dust dust = Dust.NewDustDirect(npc.position - new Vector2(5f), npc.width, npc.height, ModContent.DustType<CopyDust4>(), 0, -2, 200, new Color(), 1f);
                     dust.velocity *= 0.4f;
                     dust.color = new Color(100, 100, 255, 120);
                     dust.noGravity = true;
@@ -654,7 +689,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
             {
                 if (Main.rand.NextBool(20 + i * 2))
                 {
-                    Dust dust = Dust.NewDustDirect(npc.position - new Vector2(5f), npc.width, npc.height, mod.DustType("CodeDust"));
+                    Dust dust = Dust.NewDustDirect(npc.position - new Vector2(5f), npc.width, npc.height, ModContent.DustType<CopyDust4>());
                     dust.velocity *= 0.75f;
                     dust.noGravity = true;
                     dust.scale *= 2.25f;
@@ -997,6 +1032,22 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 {
                     Vector2 circular = new Vector2(4.5f, 0).RotatedBy(MathHelper.ToRadians(Main.rand.Next(360)));
                     Projectile.NewProjectile(npc.Center.X, npc.Center.Y, circular.X, circular.Y, ProjectileType<CurseGhost>(), (int)(npc.lifeMax * 0.1f) + 10, 0, Main.myPlayer, -1);
+                }
+            }
+            if(npc.life <= 0)
+            {
+                if (shattered)
+                {
+                    Main.PlaySound(21, (int)npc.Center.X, (int)npc.Center.Y, 0, 1f, -0.6f);
+                    for (int i = 0; i < 12; i++)
+                    {
+                        Vector2 circular = new Vector2(0, 3).RotatedBy(MathHelper.ToRadians(i * 30 + Main.rand.NextFloat(-8f, 8f)));
+                        Dust dust = Dust.NewDustDirect(npc.Center - new Vector2(4, 4) + circular.SafeNormalize(Vector2.Zero) * (npc.Size.Length()) * 0.3f, 0, 0, DustID.Silver, 0, 0, 100, Scale: Main.rand.NextFloat(1.2f, 1.6f));
+                        dust.velocity += circular * Main.rand.NextFloat(0.1f, 1f);
+                        dust.velocity *= 0.2f;
+                        dust.noGravity = true;
+                        dust.color = Color.LightGray;
+                    }
                 }
             }
             base.HitEffect(npc, hitDirection, damageTaken);

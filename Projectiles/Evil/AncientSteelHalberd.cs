@@ -4,6 +4,7 @@ using SOTS.Buffs;
 using SOTS.Dusts;
 using System;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace SOTS.Projectiles.Evil
@@ -49,11 +50,7 @@ namespace SOTS.Projectiles.Evil
 				return true;
 			return base.Colliding(projHitbox, targetHitbox);
 		}
-        public float movementFactor 
-		{
-			get => projectile.ai[0];
-			set => projectile.ai[0] = value;
-		}
+		public float movementFactor = 0;
 		Vector2 originalVelo = Vector2.Zero;
 		bool runOnce = true;
 		float counter = 0;
@@ -64,39 +61,32 @@ namespace SOTS.Projectiles.Evil
             {
 				originalVelo = projectile.velocity;
 				runOnce = false;
-            }
+			}
+			int useTime = (int)projectile.ai[0];
 			Player player = Main.player[projectile.owner];
-			counter = 270 * (1f - player.itemAnimation / (float)player.itemAnimationMax);
+			float degrees = 360 * (counter / useTime);
+			counter++;
 
 			Vector2 ownerMountedCenter = player.RotatedRelativePoint(player.MountedCenter, true);
 			Vector2 mousePosition = new Vector2(-40, 0).RotatedBy(originalVelo.ToRotation());
-			mousePosition += new Vector2(36, 0).RotatedBy(MathHelper.ToRadians(counter * projectile.direction) + originalVelo.ToRotation());
+			mousePosition += new Vector2(32, 0).RotatedBy(MathHelper.ToRadians(degrees * projectile.direction) + originalVelo.ToRotation());
 			Vector2 toMouse = mousePosition;
 			projectile.velocity = new Vector2(-projectile.velocity.Length(), 0).RotatedBy(toMouse.ToRotation());
 
 			projectile.direction = player.direction;
 			player.heldProj = projectile.whoAmI;
-			player.itemTime = player.itemAnimation;
+			player.itemTime = 2;
+			player.itemAnimation = 2;
 			projectile.position.X = ownerMountedCenter.X - (float)(projectile.width / 2);
 			projectile.position.Y = ownerMountedCenter.Y - (float)(projectile.height / 2);
 			if (!player.frozen)
 			{
-				if (movementFactor == 0f) 
-				{
-					movementFactor = 12f; 
-					projectile.netUpdate = true;
-				}
-				if (player.itemAnimation < player.itemAnimationMax / 3) // Somewhere along the item animation, make sure the spear moves back
-				{
-					movementFactor -= 2.0f;
-				}
-				else // Otherwise, increase the movement factor
-				{
-					movementFactor += 1.6f;
-				}
+				float progress = counter / useTime;
+				float sin = (float)Math.Sin(progress * MathHelper.Pi);
+				movementFactor = MathHelper.Lerp(10, 24, sin);
 			}
 			projectile.position += projectile.velocity * movementFactor;
-			if (player.itemAnimation == 0)
+			if (counter >= useTime)
 			{
 				projectile.Kill();
 			}
@@ -106,24 +96,11 @@ namespace SOTS.Projectiles.Evil
 			{
 				projectile.rotation -= MathHelper.ToRadians(90f);
 			}
-			if (Main.rand.NextBool(2))
-			{
-				Dust dust = Dust.NewDustDirect(projectile.position, projectile.height, projectile.width, ModContent.DustType<CopyDust4>(), projectile.velocity.X * .2f, projectile.velocity.Y * .2f, 100, Scale: 1.2f);
-				dust.velocity += projectile.velocity * 0.3f;
-				dust.velocity *= 0.2f;
-				dust.noGravity = true;
-				dust.color = Color.LightGray;
-				dust.fadeIn = 0.2f;
-			}
-			if (Main.rand.NextBool(3))
-			{
-				Dust dust = Dust.NewDustDirect(projectile.position, projectile.height, projectile.width, ModContent.DustType<CopyDust4>(), 0, 0, 150, Scale: 0.3f);
-				dust.velocity += projectile.velocity * 0.5f;
-				dust.velocity *= 0.5f;
-				dust.noGravity = true;
-				dust.color = Color.LightGray;
-				dust.fadeIn = 0.2f;
-			}
+			Dust dust = Dust.NewDustDirect(projectile.position, projectile.height, projectile.width, DustID.Silver, projectile.velocity.X * .2f, projectile.velocity.Y * .2f, 100, Scale: 1.2f);
+			dust.velocity += projectile.velocity * 0.33f;
+			dust.velocity *= 0.2f;
+			dust.noGravity = true;
+			dust.color = Color.LightGray;
 		}
 	}
 }

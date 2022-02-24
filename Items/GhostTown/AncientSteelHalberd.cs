@@ -10,13 +10,6 @@ namespace SOTS.Items.GhostTown
 {
 	public class AncientSteelHalberd : ModItem
 	{
-		public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
-		{
-			Texture2D texture = mod.GetTexture("Items/Otherworld/FromChests/HardlightGlaiveGlow");
-			Color color = Color.White;
-			Vector2 drawOrigin = new Vector2(Main.itemTexture[item.type].Width * 0.5f, item.height * 0.5f);
-			Main.spriteBatch.Draw(texture, new Vector2((float)(item.Center.X - (int)Main.screenPosition.X), (float)(item.Center.Y - (int)Main.screenPosition.Y) + 2), null, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
-		}
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Ancient Steel Halberd");
@@ -28,12 +21,12 @@ namespace SOTS.Items.GhostTown
 			item.melee = true;
 			item.width = 66;
 			item.height = 66;
-			item.useTime = 16;
-			item.useAnimation = 16;
+			item.useTime = 20;
+			item.useAnimation = 20;
 			item.useStyle = ItemUseStyleID.HoldingOut;
-			item.knockBack = 2f;
+			item.knockBack = 1.6f;
             item.value = Item.sellPrice(0, 0, 60, 0);
-			item.rare = ItemRarityID.LightPurple;
+			item.rare = ItemRarityID.Blue;
 			item.UseSound = SoundID.DD2_GhastlyGlaivePierce;
 			item.autoReuse = true;            
 			item.shoot = ModContent.ProjectileType<Projectiles.Evil.AncientSteelHalberd>(); 
@@ -61,7 +54,8 @@ namespace SOTS.Items.GhostTown
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-			return true; 
+			Projectile.NewProjectile(position, new Vector2(speedX, speedY), type, damage, knockBack, player.whoAmI, (int)(item.useTime / SOTSPlayer.ModPlayer(player).attackSpeedMod));
+			return false; 
 		}
     }
 }
