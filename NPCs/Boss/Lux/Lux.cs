@@ -574,15 +574,15 @@ namespace SOTS.NPCs.Boss.Lux
 						if (Main.netMode != NetmodeID.MultiplayerClient)
 						{
 							Vector2 spawnPosition = new Vector2(attackTimer2, attackTimer3);
-							if (attackTimer2 <= 0 && attackTimer3 <= 0)
+							if (attackTimer2 <= 0 || attackTimer3 <= 0)
 								spawnPosition = npc.Center;
 							int timeUntilEnd = 90 + timeBetweenShots * (int)(maxCharges - attackTimer4);
 							Vector2 rotate = spawnPosition - player.Center;
-							float length = player.velocity.LengthSquared() * 0.6f;
+							float length = player.velocity.LengthSquared() * 0.525f;
 							if (length > 70)
 								length = 70;
-							Vector2 spawnAt = player.Center + Main.rand.NextVector2Circular(128, 128) + player.velocity * length;
-							Projectile.NewProjectile(spawnAt, rotate.SafeNormalize(Vector2.Zero), ModContent.ProjectileType<ChaosDiamond>(), (int)(damage * 1.5f), 1, Main.myPlayer, timeUntilEnd, npc.target);
+							Vector2 spawnAt = player.Center + Main.rand.NextVector2Circular(96, 96) + player.velocity * length;
+							Projectile.NewProjectile(spawnAt, spawnPosition, ModContent.ProjectileType<ChaosDiamond>(), (int)(damage * 1.5f), 1, Main.myPlayer, timeUntilEnd, npc.target);
 							attackTimer2 = spawnAt.X;
 							attackTimer3 = spawnAt.Y;
 							npc.netUpdate = true;

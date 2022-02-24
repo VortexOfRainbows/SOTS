@@ -42,6 +42,7 @@ Low Priority:
 	1. Tested: Should multiplayer sync fine
 	2. Might be OP af
 2. Increased chance for Ancient Steel melee to bleed
+3. Small Lux adjustments + telegraph
 
 2/21/22
 1. Perfect Star visual updates and Checked: syncs in multiplayer
