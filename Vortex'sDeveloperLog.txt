@@ -24,8 +24,17 @@ Mid Priority:
 	2. Voidmage Incubator 
 	3. Phase Ore!?
 		1. Phase Alloy: Phase Ore + Crystal Shards + Chaos Fragment + other stuff perhaps
-	4. True Phaseblade -> Starward Sword
+	4. True Phaseblade (upgrades into) -> Starward Sword
 	5. Chaos Chamber
+	6. Replace Celestial Serpent Drops (resprites and maybe some reworks)
+		1. Galaxy Blade -> Reality Shatter
+		2. Ethereal Scepter
+		3. Armageddon
+		4. Angelic Catalyst -> Void Anomaly
+		5. Star Storm Spell -> Supernova Storm
+		6. Stellar Serpent Launcher
+		7. Stellar Serpent Staff -> Hyperlight Launcher (magic gun)
+		8. Stellar Shot
 2. Construct Items:	
 	1. Inferno Plating block
 3. Big Vibrant geode in the jungle
@@ -40,6 +49,7 @@ Low Priority:
 2/24/22
 1. Added Scatterball attack to Lux
 	1. Also some small adjustments
+2. Start on Phase Ore
 
 2/23/22
 1. Finished Ancient Steel Halberd
