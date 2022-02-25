@@ -91,7 +91,7 @@ namespace SOTS.Projectiles.Chaos
 		{
 			float point = 0f;
 			Vector2 finalPoint = projectile.Center + projectile.velocity.SafeNormalize(Vector2.Zero) * maxDistance;
-			if(counter > windUpLength && counter < 125)
+			if(counter > windUpLength && counter < 110)
 			{
 				if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), projectile.Center, finalPoint, 24f * scaleMult * projectile.scale, ref point))
 				{

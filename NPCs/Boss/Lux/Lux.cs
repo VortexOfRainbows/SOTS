@@ -578,7 +578,9 @@ namespace SOTS.NPCs.Boss.Lux
 								spawnPosition = npc.Center;
 							int timeUntilEnd = 90 + timeBetweenShots * (int)(maxCharges - attackTimer4);
 							Vector2 rotate = spawnPosition - player.Center;
-							float length = player.velocity.LengthSquared() * 0.525f;
+							float lengthX = player.velocity.X * 1.2f;
+							float lengthY = player.velocity.Y * 0.6f;
+							float length = (lengthX * lengthX + lengthY * lengthY) * 0.525f;
 							if (length > 70)
 								length = 70;
 							Vector2 spawnAt = player.Center + Main.rand.NextVector2Circular(96, 96) + player.velocity * length;
@@ -594,6 +596,79 @@ namespace SOTS.NPCs.Boss.Lux
 				if (speed2 > toPlayer.Length())
 					speed2 = toPlayer.Length();
 				npc.velocity = toPlayer.SafeNormalize(Vector2.Zero) * speed2 * 0.25f;
+			}
+			if (attackPhase == ScatterBulletsPhase)
+			{
+				modifyRotation(false);
+				npc.velocity *= 0.93f;
+				attackTimer1++;
+				bool end = attackTimer3 > 7;
+				if (end)
+				{
+					if (attackTimer2 > 0)
+					{
+						attackTimer2--;
+						wingOutwardOffset = MathHelper.Lerp(0, -12, attackTimer2 / 30f);
+					}
+					else
+					{
+						SwapPhase(PickRandom(4, (int)attackPhase));
+					}
+				}
+				else if (attackTimer1 > 0)
+				{
+					if (attackTimer2 < 30)
+					{
+						wingOutwardOffset = MathHelper.Lerp(0, -12, attackTimer2 / 30f);
+						attackTimer2++;
+
+					}
+					if (attackTimer1 == 90)
+					{
+						if (Main.netMode != NetmodeID.MultiplayerClient)
+						{
+							int rand = Main.rand.Next(8);
+							if (attackTimer4 == rand)
+								rand = Main.rand.Next(8); //allow it to hit the same angle again, but less likely
+							float degrees = rand * 45f;
+							Vector2 circular = new Vector2(Main.rand.NextFloat(640, 720), 0).RotatedBy(MathHelper.ToRadians(degrees + Main.rand.NextFloat(-5f, 5f)));
+							circular.Y *= 0.85f;
+							teleport(player.Center + circular, player.Center, true);
+							attackTimer4 = rand;
+						}
+					}
+					else if (attackTimer1 == 95)
+					{
+						Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 91, 1.1f, 0.2f);
+						if (Main.netMode != NetmodeID.MultiplayerClient)
+						{
+							int amt = 10;
+							if (Main.expertMode)
+								amt = 12;
+							float startRadians = toPlayer.ToRotation() + MathHelper.ToRadians(Main.rand.NextFloat(-7f, 7f));
+							for (int i = 0; i <= amt; i++)
+							{
+								float radians = startRadians + MathHelper.ToRadians(i * 360f / amt);
+								Projectile.NewProjectile(npc.Center + new Vector2(1f, 0).RotatedBy(radians) * 40, new Vector2(1, 0).RotatedBy(radians) * 6f, ModContent.ProjectileType<ChaosBall>(), damage, 0, Main.myPlayer, 0);
+							}
+						}
+						wingOutwardOffset = 24;
+					}
+					else if(attackTimer1 > 95)
+                    {
+						wingOutwardOffset = MathHelper.Lerp(24f, -12, 1 - ((attackTimer1 - 95) / 15f));
+					}
+					if(attackTimer1 > 110)
+					{
+						attackTimer1 = 89;
+						attackTimer3++;
+					}
+					float speedMult = attackTimer1 / 60f;
+					if (speedMult > 1)
+						speedMult = 1;
+					if (attackTimer1 < 90)
+						npc.velocity += toPlayer.SafeNormalize(Vector2.Zero) * 0.3f * speedMult;
+				}
 			}
 			WingStuff();
 			npc.alpha = (int)MathHelper.Clamp(npc.alpha, 0, 255);
@@ -685,8 +760,13 @@ namespace SOTS.NPCs.Boss.Lux
 		public const int ShotgunPhase = 1;
 		public const int SubspaceCrossPhase = 2;
 		public const int ShatterLaserPhase = 3;
+		public const int ScatterBulletsPhase = 4;
+		public const int BigLaserPhase = 5;
 		public int PickRandom(int max = 4, int exclude = -1)
         {
+			max = 5;
+			if(exclude == LaserOrbPhase)
+				return ScatterBulletsPhase;
 			int rand = Main.rand.Next(max);
 			while(rand == exclude)
 				rand = Main.rand.Next(max);

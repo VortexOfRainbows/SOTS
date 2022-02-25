@@ -37,6 +37,10 @@ Low Priority:
 3. Void Bar strike the player during void shock
 4. Fix Planetarium sky island spawning in tandum
 
+2/24/22
+1. Added Scatterball attack to Lux
+	1. Also some small adjustments
+
 2/23/22
 1. Finished Ancient Steel Halberd
 	1. Tested: Should multiplayer sync fine
