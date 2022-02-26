@@ -24,7 +24,7 @@ namespace SOTS.Items.Earth
 			item.CloneDefaults(ItemID.StoneBlock);
 			item.width = 20;
 			item.height = 18;
-			item.rare = ItemRarityID.Blue;
+			item.rare = ItemRarityID.LightRed;
 			item.value = Item.sellPrice(0, 0, 1, 0);
 			item.createTile = ModContent.TileType<VibrantOreTile>();
 		}

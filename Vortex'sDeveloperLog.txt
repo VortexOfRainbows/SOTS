@@ -22,11 +22,9 @@ Mid Priority:
 1. Lux Drops (ask me before you go about spriting these ones):
 	1. Rose Bow
 	2. Voidmage Incubator 
-	3. Phase Ore!?
-		1. Phase Alloy: Phase Ore + Crystal Shards + Chaos Fragment + other stuff perhaps
-	4. True Phaseblade (upgrades into) -> Starward Sword
-	5. Chaos Chamber
-	6. Replace Celestial Serpent Drops (resprites and maybe some reworks)
+	3. True Phaseblade (upgrades into) -> Starward Sword
+	4. Chaos Chamber
+	5. Replace Celestial Serpent Drops (resprites and maybe some reworks)
 		1. Galaxy Blade -> Reality Shatter
 		2. Ethereal Scepter
 		3. Armageddon
@@ -45,6 +43,9 @@ Low Priority:
 2. Accessory Pets to use own dye slots.
 3. Void Bar strike the player during void shock
 4. Fix Planetarium sky island spawning in tandum
+
+2/25/22
+1. Adjustments to Phase Ore + Phase Bar
 
 2/24/22
 1. Added Scatterball attack to Lux

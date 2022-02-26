@@ -72,9 +72,9 @@ namespace SOTS.Projectiles.Earth
                 if (projectile.ai[1] > chargeTime)
                 {
                     if(chargeLevel != 2)
-                        Main.PlaySound(SoundLoader.customSoundType, (int)projectile.Center.X, (int)projectile.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/PerfectStarCharge"), 1.6f, 0.1f * chargeLevel);
+                        Main.PlaySound(SoundLoader.customSoundType, (int)projectile.Center.X, (int)projectile.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/PerfectStarCharge"), 1.2f, 0.1f * chargeLevel);
                     else
-                        Main.PlaySound(SoundLoader.customSoundType, (int)projectile.Center.X, (int)projectile.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/PerfectStarFull"), 1.6f, 0);
+                        Main.PlaySound(SoundLoader.customSoundType, (int)projectile.Center.X, (int)projectile.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/PerfectStarFull"), 1.2f, 0);
                     chargeLevel++;
                     projectile.ai[1] = -6 * chargeLevel;
                 }

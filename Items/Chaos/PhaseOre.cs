@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Dusts;
 using SOTS.Items.Otherworld.Furniture;
 using System;
 using Terraria;
@@ -21,6 +22,7 @@ namespace SOTS.Items.Chaos
 			item.height = 16;
 			item.maxStack = 999;
 			item.rare = ItemRarityID.LightRed;
+			item.value = Item.sellPrice(silver: 20);
 			item.createTile = ModContent.TileType<PhaseOreTile>();
 		}
 	}
@@ -39,25 +41,37 @@ namespace SOTS.Items.Chaos
 			Main.tileLighted[Type] = true;
 			drop = ModContent.ItemType<PhaseOre>();
 			//AddMapEntry(new Color(0, 0, 0, 0));
-			mineResist = 1.0f;
-			minPick = 0;
+			mineResist = 5.4f;
+			minPick = 180; //adamantite/chlorophyte level
 			soundType = 3;
 			soundStyle = 53;
-			dustType = 242; //DustID.PinkFlame
+			dustType = ModContent.DustType<CopyDust4>(); //DustID.PinkFlame
 		}
-        public override bool KillSound(int i, int j)
+		public override bool KillSound(int i, int j)
 		{
 			Vector2 pos = new Vector2(i * 16, j * 16) + new Vector2(8, 8);
-			Main.PlaySound(3, (int)pos.X, (int)pos.Y, 53, 0.5f, 0.5f);
+			Main.PlaySound(3, (int)pos.X, (int)pos.Y, 53, 0.25f, 0.6f);
+			int type = Main.rand.Next(3) + 1;
+			Main.PlaySound(SoundLoader.customSoundType, (int)pos.X, (int)pos.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/VibrantOre" + type), 1.85f, Main.rand.NextFloat(0.1f, 0.2f));
 			return false;
         }
         public override void NumDust(int i, int j, bool fail, ref int num)
 		{
 			num = 7;
 		}
-		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
+        public override bool CreateDust(int i, int j, ref int type)
 		{
-			Draw(i, j, spriteBatch);
+			Dust dust = Dust.NewDustDirect(new Vector2(i * 16, j * 16), 16, 16, ModContent.DustType<CopyDust4>());
+			dust.noGravity = true;
+			dust.velocity *= 0.8f;
+			dust.scale = 1.4f;
+			dust.color = new Color(238, 145, 219, 0);
+			dust.fadeIn = 0.1f;
+			return false;
+		}
+        public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
+		{
+			Draw(i, j);
 			return false;
 		}
 		public static int closestPlayer(int i, int j, ref float minDist)
@@ -86,13 +100,16 @@ namespace SOTS.Items.Chaos
 			float currentDistanceAway = 196;
 			if (Main.rand.NextBool(300) && closestPlayer(i, j, ref currentDistanceAway) != -1)
 			{
-				Dust dust = Dust.NewDustDirect(new Vector2(i * 16, j * 16), 16, 16, 242);
+				Dust dust = Dust.NewDustDirect(new Vector2(i * 16, j * 16), 16, 16, ModContent.DustType<CopyDust4>());
 				dust.noGravity = true;
-				dust.velocity *= 0.7f;
-				dust.scale = 1.4f;
+				dust.velocity *= 0.5f;
+				dust.scale = 1.2f;
+				dust.color = new Color(238, 145, 219, 0);
+				dust.alpha = 100;
+				dust.fadeIn = 0.1f;
 			}
 		}
-        public static void Draw(int i, int j, SpriteBatch spriteBatch)
+        public static void Draw(int i, int j)
 		{
 			Tile tile = Framing.GetTileSafely(i, j);
 			float currentDistanceAway = 196;
@@ -110,12 +127,15 @@ namespace SOTS.Items.Chaos
             {
 				if(tile.frameY > 72)
                 {
-					for(int k = 0; k < 3; k++)
+					for(int k = 0; k < 2; k++)
                     {
-						Dust dust = Dust.NewDustDirect(new Vector2(i * 16, j * 16), 16, 16, 242);
+						Dust dust = Dust.NewDustDirect(new Vector2(i * 16, j * 16), 16, 16, ModContent.DustType<CopyDust4>());
 						dust.noGravity = true;
-						dust.velocity *= 0.7f;
-						dust.scale = 1.4f;
+						dust.velocity *= 0.5f;
+						dust.scale = 1.2f;
+						dust.color = new Color(238, 145, 219, 0);
+						dust.alpha = 200;
+						dust.fadeIn = 0.1f;
 					}
 					tile.frameY -= 90;
 				}
@@ -138,6 +158,19 @@ namespace SOTS.Items.Chaos
 		public override bool Slope(int i, int j)
 		{
 			return true;
+		}
+		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
+		{
+			float currentDistanceAway = 196;
+			int playerN = closestPlayer(i, j, ref currentDistanceAway);
+			if (playerN == -1)
+				return;
+			float alphaScale = (float)Math.Pow(1.0f - currentDistanceAway / 196f, 0.5f) * 0.3f;
+			if (currentDistanceAway >= 195)
+				return;
+			r = 2.5f * alphaScale;
+			g = 1.45f * alphaScale;
+			b = 2.2f * alphaScale;
 		}
 	}
 }
