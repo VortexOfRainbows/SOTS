@@ -48,9 +48,9 @@ namespace SOTS.Projectiles.Earth
             {
                 Vector2 fireFrom = projectile.Center + projectile.velocity.SafeNormalize(Vector2.Zero) * 32;
                 if(chargeLevel != 0)
-                    Main.PlaySound(SoundLoader.customSoundType, (int)projectile.Center.X, (int)projectile.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/PerfectStarShot" + chargeLevel), 1.6f, -0.1f);
+                    Main.PlaySound(SoundLoader.customSoundType, (int)projectile.Center.X, (int)projectile.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/PerfectStarShot" + chargeLevel), 1.2f, -0.1f);
                 else
-                    Main.PlaySound(SoundLoader.customSoundType, (int)projectile.Center.X, (int)projectile.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/PerfectStarShot1"), 1.6f, 0.4f);
+                    Main.PlaySound(SoundLoader.customSoundType, (int)projectile.Center.X, (int)projectile.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/PerfectStarShot1"), 1.2f, 0.4f);
                 if(chargeLevel == 0)
                 {
                     int size = 10;

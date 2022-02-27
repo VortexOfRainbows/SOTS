@@ -11,6 +11,7 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 using SOTS.Items.Earth;
 using SOTS.Items.GhostTown;
+using SOTS.Items.Chaos;
 
 namespace SOTS.Items
 {
@@ -78,6 +79,16 @@ namespace SOTS.Items
 				if (Main.rand.NextBool(3))
 					type = 59; //DustID.BlueTorch
 			}
+			if(style == 10)
+            {
+				Dust dust2 = Dust.NewDustDirect(new Vector2(i * 16, j * 16), 16, 16, ModContent.DustType<CopyDust4>());
+				dust2.noGravity = true;
+				dust2.velocity *= 0.8f;
+				dust2.scale = 1.4f;
+				dust2.color = new Color(238, 145, 219, 0);
+				dust2.fadeIn = 0.1f;
+				return false;
+            }
 			Dust dust = Dust.NewDustDirect(new Vector2(i * 16, j * 16), 16, 16, type);
 			if (type == 59 || type == 60 || type == DustID.Fire)
 			{
@@ -86,6 +97,17 @@ namespace SOTS.Items
 			if(type == ModContent.DustType<CopyIceDust>())
 				dust.scale *= 1.2f;
 			return false;
+        }
+        public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
+		{
+			Tile tile = Main.tile[i, j];
+			int style = tile.frameX / 18;
+			if(style == 10)
+			{
+				PhaseOreTile.Draw(ModContent.GetTexture("SOTS/Items/PhaseBarTileOutline"), ModContent.GetTexture("SOTS/Items/PhaseBarTileFill"), i, j, 0.5f, true);
+				return false;
+            }				
+			return true;
         }
         public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
 		{
@@ -189,6 +211,10 @@ namespace SOTS.Items
 			if (style == 9)
 			{
 				Item.NewItem(i * 16, j * 16, 16, 16, ModContent.ItemType<VibrantBar>());
+			}
+			if (style == 10)
+			{
+				Item.NewItem(i * 16, j * 16, 16, 16, ModContent.ItemType<PhaseBar>());
 			}
 			if (style == 11)
 			{

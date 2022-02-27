@@ -309,11 +309,16 @@ namespace SOTS
                 HardlightBlockTile.Draw(i - 1, j, spriteBatch);
             base.PostDraw(i, j, type, spriteBatch);
         }
-        public static void DrawSlopedGlowMask(int i, int j, int type, Texture2D texture, Color drawColor, Vector2 positionOffset)
+        public static void DrawSlopedGlowMask(int i, int j, int type, Texture2D texture, Color drawColor, Vector2 positionOffset, bool overrideFrame = false)
         {
             Tile tile = Main.tile[i, j];
             int frameX = tile.frameX;
             int frameY = tile.frameY;
+            if (overrideFrame)
+            {
+                frameX = 0;
+                frameY = 0;
+            }
             int width = 16;
             int height = 16;
             Vector2 location = new Vector2(i * 16, j * 16);

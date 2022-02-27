@@ -44,8 +44,9 @@ Low Priority:
 3. Void Bar strike the player during void shock
 4. Fix Planetarium sky island spawning in tandum
 
-2/25/22
+2/25/22 & 2/26/2
 1. Adjustments to Phase Ore + Phase Bar
+2. Placeable Phase Bar
 
 2/24/22
 1. Added Scatterball attack to Lux
