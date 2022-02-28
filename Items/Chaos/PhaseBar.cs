@@ -18,7 +18,7 @@ namespace SOTS.Items.Chaos
 				Vector2 offset = new Vector2(2.5f, 0).RotatedBy(MathHelper.ToRadians(Main.GameUpdateCount * 3 + k * 90));
 				Main.spriteBatch.Draw(texture, position + Main.rand.NextVector2Circular(1.0f, 1.0f) + offset, frame, color * 1.1f * (1f - (item.alpha / 255f)), 0f, origin, scale, SpriteEffects.None, 0f);
 			}
-			Main.spriteBatch.Draw(texture, position, frame, Color.White, 0f, origin, scale, SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(texture, position, frame, Color.White * 0.65f, 0f, origin, scale, SpriteEffects.None, 0f);
 			return false;
 		}
 		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
@@ -31,7 +31,7 @@ namespace SOTS.Items.Chaos
 				Vector2 offset = new Vector2(2.5f, 0).RotatedBy(MathHelper.ToRadians(Main.GameUpdateCount * 3 + k * 90));
 				Main.spriteBatch.Draw(texture, item.Center - Main.screenPosition + Main.rand.NextVector2Circular(1.0f, 1.0f) + offset, null, color * 1.1f * (1f - (item.alpha / 255f)), rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			}
-			Main.spriteBatch.Draw(texture, item.Center - Main.screenPosition, null, Color.White, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(texture, item.Center - Main.screenPosition, null, Color.White * 0.65f, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			return false;
 		}
 		public override void SetStaticDefaults()

@@ -21,7 +21,7 @@ High Priority:
 Mid Priority:
 1. Lux Drops (ask me before you go about spriting these ones):
 	1. Rose Bow
-	2. Voidmage Incubator 
+	2. Voidmage Incubator (No-Hit drop)
 	3. True Phaseblade (upgrades into) -> Starward Sword
 	4. Chaos Chamber
 	5. Replace Celestial Serpent Drops (resprites and maybe some reworks)
@@ -37,6 +37,9 @@ Mid Priority:
 	1. Inferno Plating block
 3. Big Vibrant geode in the jungle
 4. Ancientsteel Axe
+5. Prickly Pear Shield
+	1. Prickly Pear (to keep up the trend with dye items being used with nature recipes) + Fragments of Nature
+	2. Release cactus spines when hit
 
 Low Priority:
 1. Archaelogist NPC
@@ -44,9 +47,18 @@ Low Priority:
 3. Void Bar strike the player during void shock
 4. Fix Planetarium sky island spawning in tandum
 
-2/25/22 & 2/26/2
+2/27/22
+1. Lux Curving Laser attack
+	1. Increased randomization of Lux attacks.
+2. Phase ore modifications
+3. Acorn Bag hit damage 7 -> 6, cooldown 17 -> 20
+	1. For a tremendously early, early game summon (homing, infinite pierce, hits through walls), it is quite strong
+4. Fixed lighting on Botanical Symbiote
+
+2/25/22 & 2/26/22
 1. Adjustments to Phase Ore + Phase Bar
 2. Placeable Phase Bar
+3. More WIP Lux stuff
 
 2/24/22
 1. Added Scatterball attack to Lux

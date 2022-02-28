@@ -22,6 +22,7 @@ namespace SOTS.Items
 			Main.tileShine[Type] = 1100;
 			Main.tileSolid[Type] = true;
 			Main.tileSolidTop[Type] = true;
+			Main.tileLighted[Type] = true;
 			Main.tileFrameImportant[Type] = true;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style1x1);
 			TileObjectData.newTile.StyleHorizontal = true;
@@ -221,6 +222,30 @@ namespace SOTS.Items
 				Item.NewItem(i * 16, j * 16, 16, 16, ModContent.ItemType<AncientSteelBar>());
 			}
 			return base.Drop(i, j);
+		}
+		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
+		{
+			Tile tile = Main.tile[i, j];
+			int style = tile.frameX / 18;
+			if (style == 10)
+			{
+				float currentDistanceAway = 196;
+				int playerN = PhaseOreTile.closestPlayer(i, j, ref currentDistanceAway);
+				if (playerN == -1)
+					return;
+				float alphaScale = (float)Math.Pow(1.0f - currentDistanceAway / 196f, 0.5f) * 0.3f;
+				if (currentDistanceAway >= 195)
+					return;
+				r = 2.5f * alphaScale;
+				g = 1.45f * alphaScale;
+				b = 2.2f * alphaScale;
+			}
+			else
+            {
+				r = 0;
+				g = 0;
+				b = 0;
+            }
 		}
 	}
 }

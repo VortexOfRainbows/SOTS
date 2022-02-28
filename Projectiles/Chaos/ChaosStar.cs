@@ -72,7 +72,7 @@ namespace SOTS.Projectiles.Chaos
 				}
 				else
 					circular *= 0f;
-				Main.spriteBatch.Draw(texture, projectile.Center + circular - Main.screenPosition, null, projectile.GetAlpha(color * 0.8f), 0f, drawOrigin, projectile.scale * 1.0f, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, projectile.Center + circular - Main.screenPosition, null, projectile.GetAlpha(color * 0.8f), projectile.rotation, drawOrigin, projectile.scale * 1.0f, SpriteEffects.None, 0f);
 			}
 			base.PostDraw(spriteBatch, drawColor);
 		}
@@ -80,9 +80,8 @@ namespace SOTS.Projectiles.Chaos
         {
 			return false;
         }
-		float counter = 0;
 		bool runOnce = true;
-		float bonusRotation = 420;
+		float bonusRotation = 90;
         public override void AI()
 		{
 			float finalRotation = projectile.ai[0];
@@ -115,15 +114,7 @@ namespace SOTS.Projectiles.Chaos
 			{
 				projectile.scale -= 0.015f;
 			}
-			float scaleMult = counter / 90f;
-			if (scaleMult > 1)
-				scaleMult = 1;
-			if(counter == 90)
-			{
-				Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 93, 0.8f, 0.1f);
-			}
-			projectile.rotation = MathHelper.ToRadians(bonusRotation + finalRotation);
-			bonusRotation = MathHelper.Lerp(420f, 0, scaleMult * scaleMult);
+			projectile.rotation = MathHelper.ToRadians(finalRotation);
 		}
         public override void Kill(int timeLeft)
         {

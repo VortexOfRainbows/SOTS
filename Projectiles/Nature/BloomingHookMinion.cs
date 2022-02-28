@@ -42,7 +42,7 @@ namespace SOTS.Projectiles.Nature
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Draw(spriteBatch, drawColor);
+			Draw(spriteBatch, Lighting.GetColor((int)projectile.Center.X / 16, (int)projectile.Center.Y / 16));
 			return false;
 		}
 		public void Draw(SpriteBatch spriteBatch, Color drawColor)

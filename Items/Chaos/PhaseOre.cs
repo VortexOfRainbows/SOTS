@@ -20,7 +20,7 @@ namespace SOTS.Items.Chaos
 				Vector2 offset = new Vector2(3f, 0).RotatedBy(MathHelper.ToRadians(Main.GameUpdateCount * 3 + k * 90));
 				Main.spriteBatch.Draw(texture, position + Main.rand.NextVector2Circular(1.0f, 1.0f) + offset, frame, color * 1.1f * (1f - (item.alpha / 255f)), 0f, origin, scale, SpriteEffects.None, 0f);
 			}
-			Main.spriteBatch.Draw(texture, position, frame, Color.White, 0f, origin, scale, SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(texture, position, frame, Color.White * 0.65f, 0f, origin, scale, SpriteEffects.None, 0f);
 			return false;
 		}
 		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
@@ -33,7 +33,7 @@ namespace SOTS.Items.Chaos
 				Vector2 offset = new Vector2(3f, 0).RotatedBy(MathHelper.ToRadians(Main.GameUpdateCount * 3 + k * 90));
 				Main.spriteBatch.Draw(texture, item.Center - Main.screenPosition + Main.rand.NextVector2Circular(1.0f, 1.0f) + offset, null, color * 1.1f * (1f - (item.alpha / 255f)), rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			}
-			Main.spriteBatch.Draw(texture, item.Center - Main.screenPosition, null, Color.White, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(texture, item.Center - Main.screenPosition, null, Color.White * 0.65f, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			return false;
 		}
         public override void SetDefaults()
@@ -73,7 +73,7 @@ namespace SOTS.Items.Chaos
 			Vector2 pos = new Vector2(i * 16, j * 16) + new Vector2(8, 8);
 			Main.PlaySound(3, (int)pos.X, (int)pos.Y, 53, 0.25f, 0.6f);
 			int type = Main.rand.Next(3) + 1;
-			Main.PlaySound(SoundLoader.customSoundType, (int)pos.X, (int)pos.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/VibrantOre" + type), 1.85f, Main.rand.NextFloat(0.1f, 0.2f));
+			Main.PlaySound(SoundLoader.customSoundType, (int)pos.X, (int)pos.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/VibrantOre" + type), 1.85f, -0.2f + Main.rand.NextFloat(0.1f, 0.2f));
 			return false;
         }
         public override void NumDust(int i, int j, bool fail, ref int num)
@@ -123,10 +123,20 @@ namespace SOTS.Items.Chaos
 			{
 				Dust dust = Dust.NewDustDirect(new Vector2(i * 16, j * 16), 16, 16, ModContent.DustType<CopyDust4>());
 				dust.noGravity = true;
-				dust.velocity *= 0.5f;
-				dust.scale = 1.2f;
+				dust.velocity *= 0.6f;
+				dust.scale = 1.3f;
 				dust.color = new Color(238, 145, 219, 0);
 				dust.alpha = 100;
+				dust.fadeIn = 0.1f;
+			}
+			else if(Main.rand.NextBool(1800))
+			{
+				Dust dust = Dust.NewDustDirect(new Vector2(i * 16, j * 16), 16, 16, ModContent.DustType<CopyDust4>());
+				dust.noGravity = true;
+				dust.velocity *= 0.0f;
+				dust.scale = 1.0f;
+				dust.color = Color.Lerp(Color.White, new Color(238, 145, 219), Main.rand.NextFloat(1) * Main.rand.NextFloat(1));
+				dust.alpha = 0;
 				dust.fadeIn = 0.1f;
 			}
 		}

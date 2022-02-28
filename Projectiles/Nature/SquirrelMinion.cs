@@ -38,7 +38,7 @@ namespace SOTS.Projectiles.Nature
 			projectile.minionSlots = 1f;
 			projectile.penetrate = -1;
 			projectile.usesLocalNPCImmunity = true;
-			projectile.localNPCHitCooldown = 17;
+			projectile.localNPCHitCooldown = 20;
 		}
 		public override bool? CanCutTiles()
 		{

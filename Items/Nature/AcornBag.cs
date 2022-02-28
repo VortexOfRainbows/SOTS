@@ -19,7 +19,7 @@ namespace SOTS.Items.Nature
 		}
 		public override void SetDefaults() 
 		{
-			item.damage = 7;
+			item.damage = 6;
 			item.knockBack = 2f;
 			item.mana = 9;
 			item.width = 24;
@@ -35,7 +35,6 @@ namespace SOTS.Items.Nature
 			item.buffType = ModContent.BuffType<SquirrelBuff>();
 			item.shoot = ModContent.ProjectileType<SquirrelMinion>();
 		}
-
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) 
 		{
 			player.AddBuff(item.buffType, 2);
