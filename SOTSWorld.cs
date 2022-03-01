@@ -742,6 +742,36 @@ namespace SOTS
 						chest.item[slot].stack = Main.rand.Next(3) + 1; // 1 to 3
 						slot++;
 					}
+					else if(tile2.type == ModContent.TileType<PyramidBrickTile>())
+					{
+						chest.item[slot].SetDefaults(ModContent.ItemType<CoconutGun>());
+						slot++;
+						chest.item[slot].SetDefaults(ModContent.ItemType<CoconutMilk>());
+						chest.item[slot].stack = 10; // 3 to 5
+						slot++;
+						chest.item[slot].SetDefaults(ItemID.LifeCrystal);
+						slot++;
+						chest.item[slot].SetDefaults(ItemID.ManaCrystal);
+						slot++;
+						chest.item[slot].SetDefaults(ItemID.GoldCoin);
+						chest.item[slot].stack = Main.rand.Next(3) + 3; // 3 to 5
+						slot++;
+					}
+					else if (tile2.type == ModContent.TileType<DullPlatingTile>())
+					{
+						chest.item[slot].SetDefaults(ModContent.ItemType<BoneClapper>());
+						slot++;
+						chest.item[slot].SetDefaults(ModContent.ItemType<AvocadoSoup>());
+						chest.item[slot].stack = 10;
+						slot++;
+						chest.item[slot].SetDefaults(ItemID.LifeCrystal);
+						slot++;
+						chest.item[slot].SetDefaults(ItemID.ManaCrystal);
+						slot++;
+						chest.item[slot].SetDefaults(ItemID.GoldCoin);
+						chest.item[slot].stack = Main.rand.Next(5) + 6; // 6 to 10
+						slot++;
+					}
 					else
                     {
 						chest.item[slot].SetDefaults(ModContent.ItemType<WorldgenScanner>());
@@ -1013,36 +1043,6 @@ namespace SOTS
 					int style = TileObjectData.GetTileStyle(tile);
 					Tile tile2 = Main.tile[chest.x, chest.y + 2];
 					Tile tile3 = Main.tile[chest.x, chest.y + 5];
-					if (style == 31 && tile2.type == (ushort)ModContent.TileType<PyramidBrickTile>()) //Coconut Chest
-					{
-						chest.item[slot].SetDefaults(ModContent.ItemType<CoconutGun>());
-						slot++;
-						chest.item[slot].SetDefaults(ModContent.ItemType<CoconutMilk>());
-						chest.item[slot].stack = 10; // 3 to 5
-						slot++;
-						chest.item[slot].SetDefaults(ItemID.LifeCrystal);
-						slot++;
-						chest.item[slot].SetDefaults(ItemID.ManaCrystal);
-						slot++;
-						chest.item[slot].SetDefaults(ItemID.GoldCoin);
-						chest.item[slot].stack = Main.rand.Next(3) + 3; // 3 to 5
-						slot++;
-					}
-					if (style == 17 && tile2.type == (ushort)ModContent.TileType<DullPlatingTile>()) //Damocles Chest
-					{
-						chest.item[slot].SetDefaults(ModContent.ItemType<BoneClapper>());
-						slot++;
-						chest.item[slot].SetDefaults(ModContent.ItemType<AvocadoSoup>());
-						chest.item[slot].stack = 10;
-						slot++;
-						chest.item[slot].SetDefaults(ItemID.LifeCrystal);
-						slot++;
-						chest.item[slot].SetDefaults(ItemID.ManaCrystal);
-						slot++;
-						chest.item[slot].SetDefaults(ItemID.GoldCoin);
-						chest.item[slot].stack = Main.rand.Next(5) + 6; // 6 to 10
-						slot++;
-					}
 					if (style >= 23 && style <= 27 && (tile3.type == ModContent.TileType<DullPlatingTile>() || tile3.type == ModContent.TileType<AvaritianPlatingTile>()))
                     {
 						int importantItem = 0;

@@ -16,7 +16,7 @@ High Priority:
 1. Starmap and Digital Daito Obtaining
 2. Reorganize Folders... Planetarium and Pyramid folders remaining.
 3. Lux
-	1. More attacks
+	1. One more attack for phase 1 and then phase 2 work begins
 
 Mid Priority:
 1. Lux Drops (ask me before you go about spriting these ones):
@@ -33,6 +33,7 @@ Mid Priority:
 		6. Stellar Serpent Launcher
 		7. Stellar Serpent Staff -> Hyperlight Launcher (magic gun)
 		8. Stellar Shot
+		9. Hyperdrive (upgrade to Vibrancy Module)
 2. Construct Items:	
 	1. Inferno Plating block
 3. Big Vibrant geode in the jungle
@@ -46,6 +47,13 @@ Low Priority:
 2. Accessory Pets to use own dye slots.
 3. Void Bar strike the player during void shock
 4. Fix Planetarium sky island spawning in tandum
+
+2/28/22
+1. Decrease Spawnrates of Evil Treasure slimes 0.075 -> 0.05
+2. Made frigid bricks/wall actually craftable
+3. Bone Clapper and Coconut Gun now spawn in locked chests that require the ruined key
+	1. Will serve as a minor nerf to Coconut Gun and a consistency addition to Bone Clapper
+4. Perfect Star tile collision changes
 
 2/27/22
 1. Lux Curving Laser attack

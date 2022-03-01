@@ -33,6 +33,12 @@ namespace SOTS.Projectiles.Earth
 			projectile.height = 24;
 			projectile.extraUpdates = 2;
 		}
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+		{
+			width = 12;
+			height = 12;
+            return base.TileCollideStyle(ref width, ref height, ref fallThrough);
+        }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
 			TriggerStop();

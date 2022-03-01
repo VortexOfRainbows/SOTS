@@ -35,6 +35,12 @@ namespace SOTS.Projectiles.Earth
 			projectile.localNPCHitCooldown = 15;
 			projectile.usesLocalNPCImmunity = true;
 		}
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+		{
+			width = 12;
+			height = 12;
+			return base.TileCollideStyle(ref width, ref height, ref fallThrough);
+		}
 		int pierceCount = 0;
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{

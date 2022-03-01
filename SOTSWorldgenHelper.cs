@@ -2958,7 +2958,7 @@ namespace SOTS
 										tile.active(false);
 										tile.slope(0);
 										tile.halfBrick(false);
-										WorldGen.PlaceTile(k - (direction != 1 ? 1 : 0), l, 21, true, true, -1, 31);
+										WorldGen.PlaceTile(k - (direction != 1 ? 1 : 0), l, ModContent.TileType<RuinedChestTile>(), true, true, -1, 1);
 										tile.wall = (ushort)WallID.SandstoneBrick;
 									}
 									break;
@@ -6942,7 +6942,7 @@ namespace SOTS
 										tile.active(false);
 										tile.slope(0);
 										tile.halfBrick(false);
-										WorldGen.PlaceTile(k, l, TileID.Containers, true, true, -1, 17);
+										WorldGen.PlaceTile(k, l, ModContent.TileType<RuinedChestTile>(), true, true, -1, 1);
 									}
 									break;
 							}
