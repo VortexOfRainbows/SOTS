@@ -38,7 +38,7 @@ namespace SOTS.Items.Otherworld.FromChests
         public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-			modPlayer.typhonRange = 120;
+			modPlayer.typhonRange = 96;
 			if(!hideVisual)
 				modPlayer.petAdvisor = true;
 		}

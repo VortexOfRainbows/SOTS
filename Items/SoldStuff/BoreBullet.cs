@@ -14,7 +14,7 @@ namespace SOTS.Items.SoldStuff
 		}
 		public override void SetDefaults()
 		{
-			item.damage = 9;
+			item.damage = 11;
 			item.ranged = true;
 			item.width = 14;
 			item.height = 30;
@@ -31,10 +31,10 @@ namespace SOTS.Items.SoldStuff
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.EmptyBullet, 200);
+			recipe.AddIngredient(ItemID.EmptyBullet, 100);
 			recipe.AddIngredient(ModContent.ItemType<JuryRiggedDrill>(), 1);
 			recipe.AddTile(TileID.WorkBenches);
-			recipe.SetResult(this, 200);
+			recipe.SetResult(this, 100);
 			recipe.AddRecipe();
 		}
 	}

@@ -22,8 +22,7 @@ namespace SOTS.NPCs
 				shop[nextSlot] = ModContent.ItemType<CrushingCapacitor>();
 				nextSlot++;
 			}
-			int chance = NPC.downedBoss1 ? 4 : 8;
-			if (Main.rand.NextBool(chance))
+			if (Main.hardMode && Main.rand.NextBool(4))
 			{
 				shop[nextSlot] = ModContent.ItemType<BoreBullet>();
 				nextSlot++;

@@ -4,6 +4,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using SOTS.Void;
 using SOTS.Items.Pyramid;
+using SOTS.Items.Fragments;
 
 namespace SOTS.Items
 {	[AutoloadEquip(EquipType.Shield)]
@@ -31,6 +32,7 @@ namespace SOTS.Items
 			recipe.AddIngredient(ModContent.ItemType<OlympianAegis>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<ChiseledBarrier>(), 1);
 			recipe.AddIngredient(ItemID.AnkhShield, 1);
+			recipe.AddIngredient(ModContent.ItemType<TerminalCluster>(), 1);
 			recipe.AddTile(TileID.TinkerersWorkbench);
 			recipe.SetResult(this);
 			recipe.AddRecipe();

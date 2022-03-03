@@ -40,7 +40,7 @@ namespace SOTS.Projectiles
 			projectile.height = 24;
 			projectile.alpha = 255;
 			projectile.usesLocalNPCImmunity = true;
-			projectile.localNPCHitCooldown = 45;
+			projectile.localNPCHitCooldown = 240;
 		}
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
         {
@@ -50,7 +50,7 @@ namespace SOTS.Projectiles
         }
         public override void OnHitNPC(NPC n, int damage, float knockback, bool crit)
 		{
-			projectile.ai[0] = -1;
+			projectile.ai[0] = -2;
 			projectile.netUpdate = true;
 		}
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
@@ -104,7 +104,10 @@ namespace SOTS.Projectiles
             {
 				if(!runOnce)
                 {
-					projectile.ai[0] = 30;
+					if (projectile.ai[0] == -2)
+						projectile.ai[0] = 15;
+					else
+						projectile.ai[0] = 30;
 					Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 22, 0.75f, 0.1f);
 				}
 				projectile.velocity *= 0.04f;

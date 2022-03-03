@@ -27,14 +27,5 @@ namespace SOTS.Items.Pyramid
 			item.consumable = true;
 			item.createTile = mod.TileType("SarcophagusTile");
 		}
-		public override void AddRecipes()
-		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "PyramidSlab", 250);
-			recipe.AddIngredient(ItemID.GoldCoin, 20);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this, 1);
-			recipe.AddRecipe();
-		}
 	}
 }
