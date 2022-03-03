@@ -174,6 +174,7 @@ namespace SOTS
 		public bool ceres = false;
 		public int onhit = 0;
 		public int onhitdamage = 0;
+		public int OnHitCD = 0;
 		public float attackSpeedMod = 1;
 		//some important variables 2
 
@@ -211,6 +212,7 @@ namespace SOTS
 		public bool BlueFireOrange = false;
 		public bool EndothermicAfterburner = false;
 		public bool ParticleRelocator = false;
+		public int CactusSpineDamage = 0;
 		public bool netUpdate = false;
 		public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
 		{
@@ -538,6 +540,7 @@ namespace SOTS
 			decrement(ref fireIcoCD);
 			decrement(ref iceIcoCD);
 			decrement(ref cursedIcoCD);
+			decrement(ref OnHitCD);
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			maxCritVoidStealPerSecond = (VoidPlayer.baseVoidGain + voidPlayer.bonusVoidGain) * 2; //max stored voidgain is 2x the void gain stat
 			maxCritVoidStealPerSecondTimer += (VoidPlayer.baseVoidGain + voidPlayer.bonusVoidGain + CritVoidsteal) / 300f; //takes 10 seconds to fully restore the available pool of critsteal
@@ -594,7 +597,8 @@ namespace SOTS
 						break;
                     }
                 }
-            }				
+            }
+			CactusSpineDamage = 0;
 			HarvestersScythe = false;
 			ParticleRelocator = false;
 			pyramidBattle = false;
@@ -991,8 +995,6 @@ namespace SOTS
 		}
 		public override void OnHitByNPC(NPC npc, int damage, bool crit)
 		{
-			onhitdamage = damage;
-			onhit = 2;
 			if (PushBack)
 			{
 				if(Main.myPlayer == player.whoAmI)
@@ -1004,11 +1006,6 @@ namespace SOTS
 				}
 			}
 		}
-        public override void OnHitByProjectile(Projectile proj, int damage, bool crit)
-		{
-			onhitdamage = damage;
-			onhit = 2;
-		}
 		public override void OnHitNPCWithProj(Projectile proj, NPC target, int damage, float knockback, bool crit)
 		{
 			ModifyHitNPCGeneral(target, proj, null, ref damage, ref knockback, ref crit, false);
@@ -1019,16 +1016,34 @@ namespace SOTS
 		}
 		public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
 		{
-			if (Main.myPlayer == player.whoAmI)
+			if (Main.myPlayer == player.whoAmI && OnHitCD <= 0)
 			{
-				if (shardOnHit > 0 && damage > 5)
+				if(damage > 5)
 				{
-					for (int i = 0; i < shardOnHit; i++)
+					if (shardOnHit > 0)
 					{
-						Vector2 circularSpeed = new Vector2(0, -12).RotatedBy(MathHelper.ToRadians(i * (360f / shardOnHit)));
-						Projectile.NewProjectile(player.Center.X, player.Center.Y, circularSpeed.X, circularSpeed.Y, ModContent.ProjectileType<ShatterShard>(), 10 + bonusShardDamage, 3f, player.whoAmI);
+						for (int i = 0; i < shardOnHit; i++)
+						{
+							Vector2 circularSpeed = new Vector2(0, -12).RotatedBy(MathHelper.ToRadians(i * (360f / shardOnHit)));
+							Projectile.NewProjectile(player.Center.X, player.Center.Y, circularSpeed.X, circularSpeed.Y, ModContent.ProjectileType<ShatterShard>(), 10 + bonusShardDamage, 3f, player.whoAmI);
+						}
+					}
+					if (CactusSpineDamage > 0)
+					{
+						int amt = Main.rand.Next(14, 24);
+						for (int i = 0; i < 18; i++)
+						{
+							Vector2 circularSpeed = new Vector2(0, -Main.rand.NextFloat(1.6f, 2.8f)).RotatedBy(MathHelper.ToRadians(i * (360f / amt)) + Main.rand.NextFloat(-5, 5));
+							Projectile.NewProjectile(player.Center.X, player.Center.Y, circularSpeed.X, circularSpeed.Y, ModContent.ProjectileType<CactusSpine>(), CactusSpineDamage, 1.5f, player.whoAmI);
+						}
 					}
 				}
+				if (OnHitCD <= 0)
+				{
+					onhitdamage = damage;
+					onhit = 2;
+				}
+				OnHitCD = 15;
 			}
 			if (ParticleRelocator)
 			{

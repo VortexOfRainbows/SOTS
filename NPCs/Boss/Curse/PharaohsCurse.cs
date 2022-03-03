@@ -59,7 +59,7 @@ namespace SOTS.NPCs.Boss.Curse
 			npc.aiStyle = 0;
 			npc.lifeMax = 4000;
 			npc.damage = 45;
-			npc.defense = 16;
+			npc.defense = 13;
 			npc.knockBackResist = 0f;
 			npc.width = 42;
 			npc.height = 54;

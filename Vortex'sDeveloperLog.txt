@@ -38,9 +38,6 @@ Mid Priority:
 	1. Inferno Plating block
 3. Big Vibrant geode in the jungle
 4. Ancientsteel Axe
-5. Prickly Pear Shield
-	1. Prickly Pear (to keep up the trend with dye items being used with nature recipes) + Fragments of Nature
-	2. Release cactus spines when hit
 
 Low Priority:
 1. Archaelogist NPC
@@ -49,14 +46,17 @@ Low Priority:
 4. Fix Planetarium sky island spawning in tandum
 
 3/2/22
-1. Pharaoh's Curse defense 20 -> 16
-	1. Wanted to buff its defense, but felt a bit overtuned
+1. Pharaoh's Curse defense 20 -> 13
+	1. Wanted to buff its defense, but felt a bit overtuned given the hp increase too
 2. Bulwark of the Ancients requires Terminal Cluster
 3. Bore Bullets are sold exclusively in Hardmode (still 25% chance), slow down less going through enemies (30 -> 15), and have a higher multi-hit CD (45 -> 240)
 	1. Damage 9 -> 11. No longer hits enemies multiple times, slight compensation
 	2. Now crafts 100 per Jury Rigged Drill (down from 200)
 4. Calculator Homing Range decreased, 120 -> 96
 	1. Still extremely potent - slight nerf
+5. 1/4 second cooldown to onhit effects
+6. Added Prickly Pear Shield. Should sync in multiplayer (not tested)
+	1. A bit of a niche accessory, but should be useful when you don't have many accessory early game
 
 2/28/22
 1. Decrease Spawnrates of Evil Treasure slimes 0.075 -> 0.05
