@@ -308,6 +308,13 @@ namespace SOTS.Void
 		}
 		public static Color pastelAttempt(float radians, bool pinkify = false)
 		{
+			Color color = Color.White;
+			if(pinkify)
+				color = new Color(253, 198, 234);
+			return pastelAttempt(radians, color);
+		}
+		public static Color pastelAttempt(float radians, Color overrideColor)
+		{
 			float newAi = radians;
 			double center = 190;
 			Vector2 circlePalette = new Vector2(1, 0).RotatedBy(newAi);
@@ -319,10 +326,10 @@ namespace SOTS.Void
 			circlePalette = new Vector2(1, 0).RotatedBy(newAi + MathHelper.ToRadians(240));
 			width = 65 * circlePalette.Y;
 			int blu = (int)(center + width);
-			if(!pinkify)
+			if(overrideColor == Color.White)
 				return new Color(red, grn, blu);
 			else
-				return new Color(red, grn, blu).MultiplyRGB(new Color(253, 198, 234));
+				return new Color(red, grn, blu).MultiplyRGB(overrideColor);
 		}
 		public int VoidMinionConsumption = 0;
 		public int RegisterVoidMinions()

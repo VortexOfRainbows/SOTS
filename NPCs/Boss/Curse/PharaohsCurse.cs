@@ -786,7 +786,7 @@ namespace SOTS.NPCs.Boss.Curse
 				if (ai2 >= timeToStart + 30)
 				{
 					startParticles = 1;
-					aiPhase = 0;
+					TransitionPhase(0);
 					ai2 = -30;
 					npc.alpha = 0;
 					npc.dontTakeDamage = false;
@@ -1332,7 +1332,11 @@ namespace SOTS.NPCs.Boss.Curse
 		{
 			smaller = false;
 			if(nextPhase == 0)
-            {
+			{
+				if (npc.Center.X > Main.player[npc.target].Center.X)
+					direction = 1;
+				else
+					direction = -1;
 				ai2 = -90;
 				ai3 = 0;
 			}

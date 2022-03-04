@@ -22,11 +22,13 @@ namespace SOTS.NPCs.Boss.Lux
 		{ 
 			writer.Write(attackTimer3);
 			writer.Write(attackTimer4);
-        }
+			writer.Write(SecondPhase);
+		}
         public override void ReceiveExtraAI(BinaryReader reader)
         {
 			attackTimer3 = reader.ReadSingle();
 			attackTimer4 = reader.ReadSingle();
+			SecondPhase = reader.ReadBoolean();
 		}
         List<RingManager> rings = new List<RingManager>();
 		private float wingCounter
@@ -59,6 +61,8 @@ namespace SOTS.NPCs.Boss.Lux
 		public float forcedWingHeight = 0;
 		public bool allWingsForced = false;
 		public float wingOutwardOffset = 0;
+		public bool SecondPhase = false;
+		public float compressWings = 0;
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
 			Texture2D texture = Main.npcTexture[npc.type];
@@ -74,11 +78,15 @@ namespace SOTS.NPCs.Boss.Lux
 			float bonusWidth = drawNewWingsCounter * 16f + wingOutwardOffset;
 			float bonusDegree = drawNewWingsCounter * -13f;
 			DrawRings(spriteBatch, false);
+			if (compressWings >= 2)
+			{
+				return false;
+			}
 			DrawWings(1, 1f + bonusScale, bonusWidth, bonusDegree, 1f);
 			if(drawNewWingsCounter > 0)
             {
-				DrawWings(2, (1f + bonusScale) * 1.25f, bonusWidth + 12, bonusDegree + 36, drawNewWingsCounter);
-				DrawWings(0, (1f + bonusScale) * 0.75f, bonusWidth - 18, bonusDegree - 36, drawNewWingsCounter);
+				DrawWings(2, (1f + bonusScale) * 1.25f, bonusWidth + MathHelper.Lerp(12, 8, compressWings), bonusDegree + 36 * (1 - compressWings), drawNewWingsCounter);
+				DrawWings(0, (1f + bonusScale) * 0.75f, bonusWidth - MathHelper.Lerp(18, -12, compressWings), bonusDegree - 36 * (1 - compressWings), drawNewWingsCounter);
 			}
 			return false;
 		}
@@ -106,7 +114,7 @@ namespace SOTS.NPCs.Boss.Lux
 			wingCounter += 7.5f * wingSpeedMult;
 			float dipAndRise = (float)Math.Sin(MathHelper.ToRadians(wingCounter));
 			//dipAndRise *= (float)Math.sqrt(dipAndRise);
-			wingHeight = 19 + dipAndRise * 27;
+			wingHeight = 19 + dipAndRise * 27 * (1 - compressWings * 0.9f);
 		}
 		public void DrawWings(int ID, float sizeMult = 1f, float widthOffset = 0, float degreeOffset = 0, float genPercent = 1f)
 		{
@@ -211,9 +219,11 @@ namespace SOTS.NPCs.Boss.Lux
 			if (runOnce)
 				return;
 			for(int i = 0; i < rings.Count; i++)
-            {
+			{
 				rings[i].Draw(spriteBatch, 4 - i, (1 - npc.alpha / 255f), drawNewWingsCounter, 1f, npc.rotation, front);
-            }
+				if (compressWings >= 2)
+					break;
+			}
         }
 		public override void SetStaticDefaults()
 		{
@@ -275,6 +285,11 @@ namespace SOTS.NPCs.Boss.Lux
 				attackTimer1 = -90;
 				attackPhase = -1;
 				runOnce = false;
+			}
+			if (canEnterSecondPhase())
+			{
+				npc.dontTakeDamage = true;
+				npc.life = (int)(npc.lifeMax / 3f);
 			}
 			if (attackPhase == SetupPhase)
 			{
@@ -723,9 +738,61 @@ namespace SOTS.NPCs.Boss.Lux
 					}
 				}
 			}
+			if (attackPhase == RGBTransition)
+			{
+				for (int i = 0; i < 4; i++)
+				{
+					rings[i].ResetVariables();
+				}
+				allWingsForced = false;
+				modifyRotation(false, true);
+				npc.velocity *= 0.9f;
+				attackTimer1++;
+				compressWings = attackTimer1 / 180f;
+				if(compressWings > 1)
+                {
+					compressWings = 1;
+                }
+				if (attackTimer1 >= 180)
+                {
+					compressWings = 2;
+					if(attackTimer1 == 180)
+					{
+						teleport(player.Center + new Vector2(0, -240), player.Center);
+						Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 62, 1.2f, 0.4f);
+						for (int i = 0; i < 120; i++)
+						{
+							Dust dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.RainbowMk2);
+							dust.color = VoidPlayer.pastelAttempt(Main.rand.NextFloat(6.28f), true);
+							dust.noGravity = true;
+							dust.fadeIn = 0.1f;
+							dust.scale *= 2.4f;
+							dust.velocity *= 4f;
+						}
+						if (Main.netMode != NetmodeID.MultiplayerClient)
+							for (int i = 0; i < 3; i++)
+							{
+								int npc1 = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<FakeLux>(), 0, npc.whoAmI, 120 * i, 0, 0); //summons 180, 270, and 360
+								Main.npc[npc1].netUpdate = true;
+							}
+					}
+					npc.alpha = 0;
+					SecondPhase = true;
+                }	
+				else
+				{
+					if (attackTimer1 > 90)
+					{
+						float rnMult = (attackTimer1 - 90f) / 60f;
+						if (rnMult > 1)
+							rnMult = 1;
+						npc.alpha = (int)(rnMult * 255);
+					}
+				}
+			}
 			WingStuff();
 			npc.alpha = (int)MathHelper.Clamp(npc.alpha, 0, 255);
-			if (npc.alpha > 150)
+			if (npc.alpha > 150 || (!SecondPhase && npc.life <= npc.lifeMax / 3f))
 				npc.dontTakeDamage = true;
 			else if (attackPhase != SetupPhase)
 				npc.dontTakeDamage = false;
@@ -787,6 +854,11 @@ namespace SOTS.NPCs.Boss.Lux
 						dust.velocity *= 4f;
 					}
 				}
+				if (canEnterSecondPhase())
+				{
+					npc.dontTakeDamage = true;
+					npc.life = (int)(npc.lifeMax / 3f);
+				}
 			}
 		}
 		public override void NPCLoot()
@@ -811,6 +883,7 @@ namespace SOTS.NPCs.Boss.Lux
 		public const int ShatterLaserPhase = 3;
 		public const int ScatterBulletsPhase = 4;
 		public const int BigLaserPhase = 5;
+		public const int RGBTransition = 6;
 		public int[] previousAttacks = new int[] { -2, -2, -2 };
 		public int PickRandom(int exclude = -1)
         {
@@ -820,8 +893,16 @@ namespace SOTS.NPCs.Boss.Lux
 				rand = Main.rand.Next(max);
 			return rand;
 		}
+		public bool canEnterSecondPhase()
+        {
+			return !SecondPhase && npc.life <= npc.lifeMax / 3f;
+		}
 		public void SwapPhase(int phase)
 		{
+			if (canEnterSecondPhase())
+			{
+				phase = RGBTransition;
+			}
 			int setAttack = (int)attackPhase; //ban previous attack phase
 			for (int i = 0; i < 3; i++)
 			{
@@ -944,6 +1025,10 @@ namespace SOTS.NPCs.Boss.Lux
 		}
 		float spinCounter = 0;
 		public void Draw(SpriteBatch spriteBatch, int ID, float alphaMult = 1f, float radiusMult = 1f, float sizeMult = 1f, float baseRotation = 0f, bool front = false)
+        {
+			Draw(spriteBatch, Color.White, ID, alphaMult, radiusMult, sizeMult, baseRotation, front);
+        }
+		public void Draw(SpriteBatch spriteBatch, Color overrideColor, int ID, float alphaMult = 1f, float radiusMult = 1f, float sizeMult = 1f, float baseRotation = 0f, bool front = false)
 		{
 			baseRotation += MathHelper.PiOver2;
 			Texture2D texture = Main.projectileTexture[ModContent.ProjectileType<ChaosSphere>()];
@@ -985,7 +1070,7 @@ namespace SOTS.NPCs.Boss.Lux
 			Vector2 center = location + aimOffset;
 			for (int i = start; i < end; i += 4)
 			{
-				Color color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(i));
+				Color color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(i), overrideColor);
 				float radians = MathHelper.ToRadians(i + spinCounter);
 				Vector2 rotationV = new Vector2(radius * radiusMult, 0).RotatedBy(radians);
 				rotationV.X *= overrideCompression;

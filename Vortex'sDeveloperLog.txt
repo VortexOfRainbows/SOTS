@@ -45,6 +45,10 @@ Low Priority:
 3. Void Bar strike the player during void shock
 4. Fix Planetarium sky island spawning in tandum
 
+3/3/22 & 3/4/22
+1. Preparations for Chaos Spirit's entry attack in Phase 2
+2. Pharaoh's Curse will now dash at you from whichever side it is already closest to.
+
 3/2/22
 1. Pharaoh's Curse defense 20 -> 13
 	1. Wanted to buff its defense, but felt a bit overtuned given the hp increase too

@@ -73,11 +73,11 @@ namespace SOTS.NPCs.Constructs
 				}
 			}
 		}
-		public void DrawWings()
+		public static void DrawWings(float wingHeight, float dipAndRiseCounter, float baseRotation, Vector2 center, Color overrideColor, float scale = 1f)
 		{
 			Texture2D texture = ModContent.GetTexture("SOTS/NPCs/Constructs/ChaosParticle");
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
-			float dipAndRise = (float)Math.Sin(MathHelper.ToRadians(npc.ai[2]));
+			float dipAndRise = (float)Math.Sin(MathHelper.ToRadians(dipAndRiseCounter));
 			float supposedWingHeight = wingHeight - 19;
 			dipAndRise = supposedWingHeight / 27f;
 			dipAndRise = MathHelper.Clamp(dipAndRise, -1, 1);
@@ -86,8 +86,8 @@ namespace SOTS.NPCs.Constructs
 			int amtOfParticles = 120;
 			for (int j = -1; j <= 1; j += 2)
 			{
-				float positionalRotation = npc.rotation + MathHelper.ToRadians(wingHeight * -j);
-				Vector2 position = npc.Center + new Vector2(-28 * j, 16).RotatedBy(npc.rotation) + new Vector2(((width + npc.width) / 2 + 54) * j, 0).RotatedBy(positionalRotation);
+				float positionalRotation = baseRotation + MathHelper.ToRadians(wingHeight * -j);
+				Vector2 position = center + new Vector2(-28 * j, 16).RotatedBy(baseRotation) + new Vector2(((width + 70) / 2 + 54) * j, 0).RotatedBy(positionalRotation);
 				float degreesCount = 0f;
 				float flapMult = 0.0f;
 				float baseGrowth = 0.35f;
@@ -111,7 +111,7 @@ namespace SOTS.NPCs.Constructs
 					if (degreesCount < 0)
 						sinusoid = 0;
 					float radians = MathHelper.ToRadians(i * 360f / amtOfParticles);
-					Color c = VoidPlayer.pastelAttempt(radians + MathHelper.ToRadians(Main.GameUpdateCount));
+					Color c = VoidPlayer.pastelAttempt(radians + MathHelper.ToRadians(Main.GameUpdateCount), overrideColor);
 					Vector2 circular = new Vector2(-1, 0).RotatedBy(radians);
 					float increaseAmount = 1f;
 					if (i < amtOfParticles / 2)
@@ -150,7 +150,7 @@ namespace SOTS.NPCs.Constructs
 					circular.X *= width / 2 * j;
 					circular.Y *= height / 2;
 					circular = circular.RotatedBy(positionalRotation);
-					Main.spriteBatch.Draw(texture, position - Main.screenPosition + circular, null, new Color(c.R, c.G, c.B, 0), radians * j, origin, npc.scale * 0.8f * (0.5f + 0.5f * (float)Math.Sqrt(increaseAmount)), SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture, position - Main.screenPosition + circular, null, new Color(c.R, c.G, c.B, 0), radians * j, origin, scale * 0.8f * (0.5f + 0.5f * (float)Math.Sqrt(increaseAmount)), SpriteEffects.None, 0f);
 				}
 			}
 		}
@@ -275,7 +275,7 @@ namespace SOTS.NPCs.Constructs
 			}
 			if((int)npc.ai[0] != -2 && lastCenter != Vector2.Zero)
 				DrawChains();
-			DrawWings();
+			DrawWings(wingHeight, npc.ai[2], npc.rotation, npc.Center, Color.White);
 			return false;
 		}	
 		public override void HitEffect(int hitDirection, double damage)
