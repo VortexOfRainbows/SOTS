@@ -88,11 +88,7 @@ namespace SOTS.NPCs.Boss.Lux
 			npc.rotation = lerpedAngle;
 
 		}
-		public float counter
-        {
-			get => npc.ai[3];
-			set => npc.ai[3] = value;
-		}
+		public float counter = 0;
 		bool kill = false;
 		public override bool PreAI()
 		{
@@ -122,32 +118,45 @@ namespace SOTS.NPCs.Boss.Lux
 				kill = true;
 			if (kill)
 			{
-				for (int i = 0; i < 50; i++)
-				{
-					Dust dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.RainbowMk2);
-					dust.color = VoidPlayer.pastelAttempt(Main.rand.NextFloat(6.28f), illusionColor());
-					dust.noGravity = true;
-					dust.fadeIn = 0.1f;
-					dust.scale *= 2.2f;
-					dust.velocity *= 4f;
-				}
+				if(counter < 1230)
+					for (int i = 0; i < 50; i++)
+					{
+						Dust dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.RainbowMk2);
+						dust.color = VoidPlayer.pastelAttempt(Main.rand.NextFloat(6.28f), illusionColor());
+						dust.noGravity = true;
+						dust.fadeIn = 0.1f;
+						dust.scale *= 2.2f;
+						dust.velocity *= 4f;
+					}
 				npc.active = false;
 				return false;
 			}
-			if(counter > 900)
-            {
-				//need to move back towards lux
+			float moveBack = 0;
+			if(counter > 1200)
+			{
+				if (counter > 1230)
+				{
+					float rnCounter = (counter - 1230) / 60f;
+					if (rnCounter > 1)
+					{
+						rnCounter = 1;
+						kill = true;
+					}
+					moveBack = (float)Math.Pow(rnCounter, 1.2f);
+				}
+				npc.alpha += 4;
+				ring.ResetVariables();
             }	
 			rotationCounter += 0.8f;
 			float mult = counter / 900f;
 			if (mult > 1)
 				mult = 1;
-			Vector2 rotatePos = new Vector2(960 - 240 * mult, 0).RotatedBy(MathHelper.ToRadians(rotationCounter + npc.ai[1]));
+			Vector2 rotatePos = new Vector2((960 - 120 * mult) * (1 - moveBack), 0).RotatedBy(MathHelper.ToRadians(rotationCounter + npc.ai[1]));
 			Vector2 toPos = rotatePos + rotateCenter;
 			Vector2 goToPos = toPos - npc.Center;
-			float speed = 12;
+			float speed = 16;
 			float length = goToPos.Length();
-			speed += length * 0.008f;
+			speed += length * 0.01f;
 			if (speed > length)
 			{
 				speed = length;
@@ -155,7 +164,7 @@ namespace SOTS.NPCs.Boss.Lux
 			goToPos = goToPos.SafeNormalize(Vector2.Zero);
 			npc.velocity = goToPos * speed;
 			counter++;
-			if (counter > 240)
+			if (counter > 240 && counter < 1200)
 			{
 				Vector2 aimAtCenter = rotateCenter;
 				if (Type() == 2)
@@ -168,13 +177,13 @@ namespace SOTS.NPCs.Boss.Lux
 					if(counter > 300)
 					{
 						float localCounter = counter - 300;
-						if (localCounter % 20 == 0)
+						if (localCounter % 30 == 0)
 						{
 							Vector2 outward = new Vector2(0, 1).RotatedBy(npc.rotation);
 							Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 91, 1.1f, 0.2f);
 							if (Main.netMode != NetmodeID.MultiplayerClient)
 							{
-								Projectile.NewProjectile(npc.Center + outward * 72, outward * (6f + 6f * mult), ProjectileType<ChaosBall>(), damage, 0, Main.myPlayer, 0, -Type());
+								Projectile.NewProjectile(npc.Center + outward * 48, outward * (6f + 6f * mult), ProjectileType<ChaosBall>(), damage, 0, Main.myPlayer, 0, -Type());
 							}
 						}
 					}
@@ -190,10 +199,10 @@ namespace SOTS.NPCs.Boss.Lux
 							Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 62, 1.1f, 0.2f);
 							if (Main.netMode != NetmodeID.MultiplayerClient)
 							{
-								for(int i = -2; i <= 2; i++)
+								for (int i = -2; i <= 2; i++)
 								{
-									outward = new Vector2(0, 1).RotatedBy(npc.rotation + MathHelper.ToRadians(i * 20));
-									Projectile.NewProjectile(npc.Center + outward * 72, outward * (2f + 1f * mult), ProjectileType<ChaosWave>(), damage, 0, Main.myPlayer, 0, -Type());
+									outward = new Vector2(0, 1).RotatedBy(npc.rotation + MathHelper.ToRadians(i * 22.5f));
+									Projectile.NewProjectile(npc.Center + outward * 48, outward * (2f + 1.5f * mult), ProjectileType<ChaosWave>(), damage, 0, Main.myPlayer, 0, -Type());
 								}
 							}
 						}
@@ -219,11 +228,17 @@ namespace SOTS.NPCs.Boss.Lux
 		}
         public override void PostAI()
 		{
+			int dust2 = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.RainbowMk2);
+			Dust dust = Main.dust[dust2];
+			dust.color = npc.GetAlpha(VoidPlayer.pastelAttempt(Main.rand.NextFloat(6.28f), illusionColor() * 1.2f));
+			dust.noGravity = true;
+			dust.fadeIn = 0.1f;
+			dust.scale *= 2f;
 			ring.CalculationStuff(npc.Center + npc.velocity);
 		}
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
-            return npc.ai[3] > 90;
+            return counter > 90 && counter < 1200;
         }
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
@@ -233,7 +248,7 @@ namespace SOTS.NPCs.Boss.Lux
 		{
 			Texture2D texture = Main.npcTexture[npc.type];
 			Vector2 drawOrigin = new Vector2(Main.npcTexture[npc.type].Width * 0.5f, npc.height * 0.5f);
-			ChaosSpirit.DrawWings(MathHelper.Lerp(wingHeight, 40, wingHeightLerp), npc.ai[2], npc.rotation, npc.Center, illusionColor());
+			ChaosSpirit.DrawWings(MathHelper.Lerp(wingHeight, 40, wingHeightLerp), npc.ai[2], npc.rotation, npc.Center, npc.GetAlpha(illusionColor()));
 			DrawRings(spriteBatch, false);
 			for (int k = 0; k < 7; k++)
 			{
@@ -261,7 +276,7 @@ namespace SOTS.NPCs.Boss.Lux
 		}
 		public void DrawRings(SpriteBatch spriteBatch, bool front)
 		{
-			ring.Draw(spriteBatch, illusionColor(), 3, 1, 1, 1, npc.rotation, front);
+			ring.Draw(spriteBatch, illusionColor(), 3, (255 - npc.alpha) / 255f, 1, 1, npc.rotation, front);
 		}
 		public int Type()
 		{

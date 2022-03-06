@@ -102,7 +102,7 @@ namespace SOTS.Projectiles.Chaos
                 {
                     radians = npc2.rotation + MathHelper.ToRadians(90);
                     projectile.velocity = velocity = new Vector2(1, 0).RotatedBy(radians);
-                    projectile.Center = npc2.Center + velocity * 32;
+                    projectile.Center = npc2.Center + velocity * 32 + npc2.velocity;
                 }
                 else
                 {
@@ -140,14 +140,14 @@ namespace SOTS.Projectiles.Chaos
                     Dust dust2 = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, ModContent.DustType<CopyDust4>(), 0, 0, 120);
                     dust2.velocity += projectile.velocity * 0.1f;
                     dust2.noGravity = true;
-                    dust2.color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(i * 18), new Color(200, 100, 100));
+                    dust2.color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(i * 18), new Color(255, 100, 100));
                     dust2.noGravity = true;
                     dust2.fadeIn = 0.2f;
                     dust2.scale *= 2.2f;
                     dust2 = Dust.NewDustDirect(endPosition - new Vector2(projectile.width / 2, projectile.height / 2), projectile.width, projectile.height, ModContent.DustType<CopyDust4>(), 0, 0, 120);
                     dust2.velocity += projectile.velocity * 0.1f;
                     dust2.noGravity = true;
-                    dust2.color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(i * 18), new Color(200, 100, 100));
+                    dust2.color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(i * 18), new Color(255, 100, 100));
                     dust2.noGravity = true;
                     dust2.fadeIn = 0.2f;
                     dust2.scale *= 2.2f;
@@ -155,12 +155,12 @@ namespace SOTS.Projectiles.Chaos
                 Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 94, 1.6f, -0.4f);
                 for (int i = 0; i < drawPositionList.Count; i += 2)
                 {
-                    if (Main.rand.NextBool(5))
+                    if (Main.rand.NextBool(4))
                     {
                         Dust dust2 = Dust.NewDustPerfect(drawPositionList[i], ModContent.DustType<CopyDust4>(), Main.rand.NextVector2Circular(3, 3), 120);
                         dust2.velocity += projectile.velocity * 0.1f;
                         dust2.noGravity = true;
-                        dust2.color = VoidPlayer.pastelAttempt(Main.rand.NextFloat(0, 6.28f), new Color(200, 100, 100));
+                        dust2.color = VoidPlayer.pastelAttempt(Main.rand.NextFloat(0, 6.28f), new Color(255, 100, 100));
                         dust2.noGravity = true;
                         dust2.fadeIn = 0.2f;
                         dust2.scale *= 2.2f;
@@ -174,7 +174,7 @@ namespace SOTS.Projectiles.Chaos
                     Dust dust2 = Dust.NewDustPerfect(drawPositionList[i], ModContent.DustType<CopyDust4>(), Main.rand.NextVector2Circular(3, 3), 120);
                     dust2.velocity += projectile.velocity * 0.1f;
                     dust2.noGravity = true;
-                    dust2.color = VoidPlayer.pastelAttempt(Main.rand.NextFloat(0, 6.28f), new Color(200, 100, 100));
+                    dust2.color = VoidPlayer.pastelAttempt(Main.rand.NextFloat(0, 6.28f), new Color(255, 100, 100));
                     dust2.noGravity = true;
                     dust2.fadeIn = 0.2f;
                     dust2.scale *= 2.2f;

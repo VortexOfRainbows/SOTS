@@ -50,8 +50,9 @@ Low Priority:
 3. Void Bar strike the player during void shock
 4. Fix Planetarium sky island spawning in tandum
 
-3/5/22
-1. WIP Lux RGB attack
+3/5/22 & 3/6/22
+1. Finished LUX RGB Transition Attack
+2. Started on Phase2 Lux development
 
 3/3/22 & 3/4/22
 1. Preparations for Chaos Spirit's entry attack in Phase 2

@@ -19,13 +19,15 @@ namespace SOTS.NPCs.Boss.Lux
 	public class Lux : ModNPC
 	{
         public override void SendExtraAI(BinaryWriter writer)
-		{ 
+		{
+			writer.Write(npc.alpha);
 			writer.Write(attackTimer3);
 			writer.Write(attackTimer4);
 			writer.Write(SecondPhase);
 		}
         public override void ReceiveExtraAI(BinaryReader reader)
         {
+			npc.alpha = reader.ReadInt32();
 			attackTimer3 = reader.ReadSingle();
 			attackTimer4 = reader.ReadSingle();
 			SecondPhase = reader.ReadBoolean();
@@ -780,18 +782,40 @@ namespace SOTS.NPCs.Boss.Lux
 					else
 					{
 						float rnTimer = attackTimer1 - 180; //will start at 1
+						attackTimer4++;
 						Vector2 nextDestination = new Vector2(attackTimer2, attackTimer3);
 						float multiplier = rnTimer / (150f); //will equal 1 when rnTimer > 180
 						if (multiplier > 1)
 							multiplier = 1;
-						if (rnTimer >= 200)
+						if (attackTimer4 > 1200)
+						{
+							if(attackTimer4 > 1320)
+							{
+								compressWings = 0;
+								npc.alpha = 0;
+								SwapPhase(PickRandom((int)attackPhase));
+								teleport(new Vector2(player.Center.X, player.Center.Y - 240), player.Center);
+								Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 62, 1.2f, 0.4f);
+								for (int i = 0; i < 120; i++)
+								{
+									Dust dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.RainbowMk2);
+									dust.color = VoidPlayer.pastelAttempt(Main.rand.NextFloat(6.28f), true);
+									dust.noGravity = true;
+									dust.fadeIn = 0.1f;
+									dust.scale *= 2.4f;
+									dust.velocity *= 4f;
+								}
+							}
+							npc.alpha += 4;
+						}
+						else if (rnTimer >= 200)
 						{
 							Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 91, 1.1f, 0.2f);
 							if (Main.netMode != NetmodeID.MultiplayerClient)
 							{
-								int amt = 12;
+								int amt = 8;
 								if (Main.expertMode)
-									amt = 16;
+									amt = 12;
 								for (int i = 0; i <= amt; i++)
 								{
 									float radians = MathHelper.ToRadians(i * 360f / amt);
@@ -810,7 +834,8 @@ namespace SOTS.NPCs.Boss.Lux
 						else
 							npc.Center = Vector2.Lerp(npc.Center, nextDestination, 0.065f);
 					}
-					npc.alpha = 0;
+					if(attackTimer4 < 1200)
+						npc.alpha = 0;
 					SecondPhase = true;
                 }	
 				else
@@ -920,11 +945,22 @@ namespace SOTS.NPCs.Boss.Lux
 		public int[] previousAttacks = new int[] { -2, -2, -2 };
 		public int PickRandom(int exclude = -1)
         {
-			int max = 6;
-			int rand = Main.rand.Next(max);
-			while(rand == exclude || previousAttacks.Contains(rand))
-				rand = Main.rand.Next(max);
-			return rand;
+			if(!SecondPhase)
+			{
+				int max = 6;
+				int rand = Main.rand.Next(max);
+				while (rand == exclude || previousAttacks.Contains(rand))
+					rand = Main.rand.Next(max);
+				return rand;
+			}
+			else
+            {
+				int[] phase2Attacks = new int[] { LaserOrbPhase, ScatterBulletsPhase, BigLaserPhase, RGBTransition };
+				int rand = Main.rand.Next(phase2Attacks.Count());
+				while(rand == exclude || previousAttacks[0] == rand || previousAttacks[1] == rand)
+					rand = Main.rand.Next(phase2Attacks.Count());
+				return phase2Attacks[rand];
+			}
 		}
 		public bool canEnterSecondPhase()
         {
