@@ -289,7 +289,6 @@ namespace SOTS.NPCs.Boss.Lux
 			if (canEnterSecondPhase())
 			{
 				npc.dontTakeDamage = true;
-				npc.life = (int)(npc.lifeMax / 3f);
 			}
 			if (attackPhase == SetupPhase)
 			{
@@ -759,6 +758,8 @@ namespace SOTS.NPCs.Boss.Lux
 					if(attackTimer1 == 180)
 					{
 						teleport(player.Center + new Vector2(0, -240), player.Center);
+						attackTimer2 = player.Center.X;
+						attackTimer3 = player.Center.Y - 240;
 						Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 62, 1.2f, 0.4f);
 						for (int i = 0; i < 120; i++)
 						{
@@ -775,6 +776,39 @@ namespace SOTS.NPCs.Boss.Lux
 								int npc1 = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<FakeLux>(), 0, npc.whoAmI, 120 * i, 0, 0); //summons 180, 270, and 360
 								Main.npc[npc1].netUpdate = true;
 							}
+					}
+					else
+					{
+						float rnTimer = attackTimer1 - 180; //will start at 1
+						Vector2 nextDestination = new Vector2(attackTimer2, attackTimer3);
+						float multiplier = rnTimer / (150f); //will equal 1 when rnTimer > 180
+						if (multiplier > 1)
+							multiplier = 1;
+						if (rnTimer >= 200)
+						{
+							Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 91, 1.1f, 0.2f);
+							if (Main.netMode != NetmodeID.MultiplayerClient)
+							{
+								int amt = 12;
+								if (Main.expertMode)
+									amt = 16;
+								for (int i = 0; i <= amt; i++)
+								{
+									float radians = MathHelper.ToRadians(i * 360f / amt);
+									Projectile.NewProjectile(npc.Center + new Vector2(1f, 0).RotatedBy(radians) * 40, new Vector2(1, 0).RotatedBy(radians) * 6f, ModContent.ProjectileType<ChaosBall>(), damage, 0, Main.myPlayer, 0);
+								}
+							}
+							attackTimer1 -= 200;
+						}
+						else if (rnTimer % 50 == 0)
+						{
+							nextDestination = npc.Center + toPlayer * (0.4f + 0.7f * multiplier) + Main.rand.NextVector2CircularEdge(80, 80) * (1.0f - 0.7f * multiplier);
+							attackTimer2 = nextDestination.X;
+							attackTimer3 = nextDestination.Y;
+							npc.netUpdate = true;
+						}
+						else
+							npc.Center = Vector2.Lerp(npc.Center, nextDestination, 0.065f);
 					}
 					npc.alpha = 0;
 					SecondPhase = true;
@@ -857,7 +891,6 @@ namespace SOTS.NPCs.Boss.Lux
 				if (canEnterSecondPhase())
 				{
 					npc.dontTakeDamage = true;
-					npc.life = (int)(npc.lifeMax / 3f);
 				}
 			}
 		}

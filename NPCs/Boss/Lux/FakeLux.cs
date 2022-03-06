@@ -57,6 +57,33 @@ namespace SOTS.NPCs.Boss.Lux
 		}
 		bool runOnce = true;
 		float rotationCounter = 0;
+		public const float timeToAimAtPlayer = 40;
+		public float aimToPlayer = 0;
+		public float wingHeightLerp = 0;
+		public void modifyRotation(bool aimAt, Vector2 whereToAim, bool modifyWings = true)
+		{
+			Vector2 toPlayer = whereToAim - npc.Center;
+			npc.rotation = npc.velocity.X * 0.06f;
+			if (aimAt)
+			{
+				aimToPlayer++;
+			}
+			else
+			{
+				aimToPlayer--;
+			}
+			aimToPlayer = MathHelper.Clamp(aimToPlayer, 0, timeToAimAtPlayer);
+			if (modifyWings)
+				wingHeightLerp = aimToPlayer / timeToAimAtPlayer * 0.85f;
+			float r = toPlayer.ToRotation() - MathHelper.PiOver2;
+			float x = npc.rotation - r;
+			x = MathHelper.WrapAngle(x);
+			float lerpedAngle = MathHelper.Lerp(x, 0, aimToPlayer / timeToAimAtPlayer);
+			lerpedAngle += r;
+			npc.rotation = lerpedAngle;
+
+		}
+		public float counter = 0;
 		public override bool PreAI()
 		{
 			if (runOnce)
@@ -88,18 +115,30 @@ namespace SOTS.NPCs.Boss.Lux
 				}
 			}
 			rotationCounter += 0.5f;
-			Vector2 rotatePos = new Vector2(640, 0).RotatedBy(MathHelper.ToRadians(rotationCounter + npc.ai[1]));
+			Vector2 rotatePos = new Vector2(800, 0).RotatedBy(MathHelper.ToRadians(rotationCounter + npc.ai[1]));
 			Vector2 toPos = rotatePos + rotateCenter;
 			Vector2 goToPos = toPos - npc.Center;
 			float speed = 12;
 			float length = goToPos.Length();
+			speed += length * 0.008f;
 			if (speed > length)
 			{
 				speed = length;
 			}
 			goToPos = goToPos.SafeNormalize(Vector2.Zero);
 			npc.velocity = goToPos * speed;
-			npc.rotation = npc.velocity.X * 0.05f;
+			counter++;
+			if (counter > 240)
+			{
+				Vector2 aimAtCenter = rotateCenter;
+				if (Type() == 1)
+					aimAtCenter = player.Center;
+				modifyRotation(true, rotateCenter, true);
+				ring.aiming = true;
+				ring.targetRadius = 40;
+			}
+			else
+				modifyRotation(false, player.Center, true);
 			return base.PreAI();
 		}
         public override void PostAI()
@@ -118,7 +157,7 @@ namespace SOTS.NPCs.Boss.Lux
 		{
 			Texture2D texture = Main.npcTexture[npc.type];
 			Vector2 drawOrigin = new Vector2(Main.npcTexture[npc.type].Width * 0.5f, npc.height * 0.5f);
-			ChaosSpirit.DrawWings(wingHeight, npc.ai[2], npc.rotation, npc.Center, illusionColor());
+			ChaosSpirit.DrawWings(MathHelper.Lerp(wingHeight, 40, wingHeightLerp), npc.ai[2], npc.rotation, npc.Center, illusionColor());
 			DrawRings(spriteBatch, false);
 			for (int k = 0; k < 7; k++)
 			{
@@ -149,11 +188,19 @@ namespace SOTS.NPCs.Boss.Lux
 		{
 			ring.Draw(spriteBatch, illusionColor(), 3, 1, 1, 1, npc.rotation, front);
 		}
+		public int Type()
+		{
+			if (npc.ai[1] == 120)
+				return 1; //green
+			if (npc.ai[1] == 240)
+				return 2; //blue
+			return 0; //red
+        }
 		public Color illusionColor()
         {
-			if(npc.ai[1] == 120)
+			if(Type() == 1)
 				return new Color(80, 240, 80);
-			if (npc.ai[1] == 240)
+			if (Type() == 2)
 				return new Color(60, 140, 200);
 			return new Color(200, 100, 100);
         }

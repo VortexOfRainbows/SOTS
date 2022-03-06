@@ -16,7 +16,12 @@ High Priority:
 1. Starmap and Digital Daito Obtaining
 2. Reorganize Folders... Planetarium and Pyramid folders remaining.
 3. Lux
-	1. One more attack for phase 1 and then phase 2 work begins
+	1. Phase 2 work begins
+	2. RGB Attack: each fake sphere can chose between 3 different attacks
+		1. Laser at middle
+		2. Shotgun at middle
+		3. Rapid fire bullets at player
+		4. Creates a border around you during the attack, preventing you from flying out farther than the spirits.
 
 Mid Priority:
 1. Lux Drops (ask me before you go about spriting these ones):
@@ -44,6 +49,9 @@ Low Priority:
 2. Accessory Pets to use own dye slots.
 3. Void Bar strike the player during void shock
 4. Fix Planetarium sky island spawning in tandum
+
+3/5/22
+1. WIP Lux attacks
 
 3/3/22 & 3/4/22
 1. Preparations for Chaos Spirit's entry attack in Phase 2
