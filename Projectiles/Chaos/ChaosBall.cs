@@ -39,9 +39,14 @@ namespace SOTS.Projectiles.Chaos
 		{
 			Texture2D texture = Main.projectileTexture[projectile.type];
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
+			Color blendColor = Color.White;
+			if (projectile.ai[1] == -2)
+				blendColor = new Color(60, 140, 200);
+			else if(projectile.ai[1] == -1)
+				blendColor = new Color(80, 240, 80);
 			for (int k = 0; k < projectile.oldPos.Length; k++)
 			{
-				Color color2 = VoidPlayer.pastelAttempt(MathHelper.ToRadians((VoidPlayer.soulColorCounter + k) * 6 + projectile.whoAmI * 18));
+				Color color2 = VoidPlayer.pastelAttempt(MathHelper.ToRadians((VoidPlayer.soulColorCounter + k) * 6 + projectile.whoAmI * 18), blendColor);
 				color2.A = 0;
 				float scale = ((float)(projectile.oldPos.Length - k) / (float)projectile.oldPos.Length);
 				Vector2 drawPos = projectile.oldPos[k] + new Vector2(12, 12) - Main.screenPosition;
@@ -52,7 +57,12 @@ namespace SOTS.Projectiles.Chaos
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
 			Texture2D texture = Main.projectileTexture[projectile.type];
-			Color color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(VoidPlayer.soulColorCounter * 6 + projectile.whoAmI * 18));
+			Color blendColor = Color.White;
+			if (projectile.ai[1] == -2)
+				blendColor = new Color(60, 140, 200);
+			else if (projectile.ai[1] == -1)
+				blendColor = new Color(80, 240, 80);
+			Color color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(VoidPlayer.soulColorCounter * 6 + projectile.whoAmI * 18), blendColor);
 			color.A = 0;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			DrawTrail(spriteBatch, lightColor);
@@ -89,7 +99,12 @@ namespace SOTS.Projectiles.Chaos
 			DustOut();
 		}
 		public void DustOut()
-        {
+		{
+			Color blendColor = Color.White;
+			if (projectile.ai[1] == -2)
+				blendColor = new Color(60, 140, 200);
+			else if (projectile.ai[1] == -1)
+				blendColor = new Color(80, 240, 80);
 			for (int i = 0; i < 360; i += 40)
 			{
 				Vector2 circularLocation = new Vector2(Main.rand.NextFloat(5), 0).RotatedBy(MathHelper.ToRadians(i) + projectile.rotation);
@@ -97,7 +112,7 @@ namespace SOTS.Projectiles.Chaos
 				Dust dust = Main.dust[dust2];
 				dust.velocity = circularLocation * 0.7f;
 				dust.velocity += projectile.velocity * 0.7f;
-				dust.color = VoidPlayer.pastelAttempt(Main.rand.NextFloat(6.28f), true);
+				dust.color = VoidPlayer.pastelAttempt(Main.rand.NextFloat(6.28f), blendColor);
 				dust.noGravity = true;
 				dust.alpha = 60;
 				dust.fadeIn = 0.1f;

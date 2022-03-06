@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SOTS.Items.Banners;
 using SOTS.Items.Pyramid;
 using SOTS.NPCs.Constructs;
+using SOTS.Projectiles.Chaos;
 using SOTS.Projectiles.Pyramid;
 using SOTS.Void;
 using System;
@@ -60,7 +61,11 @@ namespace SOTS.NPCs.Boss.Lux
 		public const float timeToAimAtPlayer = 40;
 		public float aimToPlayer = 0;
 		public float wingHeightLerp = 0;
-		public void modifyRotation(bool aimAt, Vector2 whereToAim, bool modifyWings = true)
+        public override bool CheckActive()
+        {
+            return false;
+        }
+        public void modifyRotation(bool aimAt, Vector2 whereToAim, bool modifyWings = true)
 		{
 			Vector2 toPlayer = whereToAim - npc.Center;
 			npc.rotation = npc.velocity.X * 0.06f;
@@ -83,9 +88,19 @@ namespace SOTS.NPCs.Boss.Lux
 			npc.rotation = lerpedAngle;
 
 		}
-		public float counter = 0;
+		public float counter
+        {
+			get => npc.ai[3];
+			set => npc.ai[3] = value;
+		}
+		bool kill = false;
 		public override bool PreAI()
 		{
+			int damage = npc.damage / 2;
+			if (Main.expertMode)
+			{
+				damage = (int)(damage / Main.expertDamage);
+			}
 			if (runOnce)
 				ring = new RingManager(MathHelper.ToRadians(npc.ai[1]), 0.6f, 3, 72);
 			WingStuff();
@@ -101,21 +116,33 @@ namespace SOTS.NPCs.Boss.Lux
 					rotateCenter = npc2.Center;
 				}
 				else
-				{
-					for (int i = 0; i < 50; i++)
-					{
-						Dust dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.RainbowMk2);
-						dust.color = VoidPlayer.pastelAttempt(Main.rand.NextFloat(6.28f), illusionColor());
-						dust.noGravity = true;
-						dust.fadeIn = 0.1f;
-						dust.scale *= 2.2f;
-						dust.velocity *= 4f;
-					}
-					npc.active = false;
-				}
+					kill = true;
 			}
-			rotationCounter += 0.5f;
-			Vector2 rotatePos = new Vector2(800, 0).RotatedBy(MathHelper.ToRadians(rotationCounter + npc.ai[1]));
+			else
+				kill = true;
+			if (kill)
+			{
+				for (int i = 0; i < 50; i++)
+				{
+					Dust dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.RainbowMk2);
+					dust.color = VoidPlayer.pastelAttempt(Main.rand.NextFloat(6.28f), illusionColor());
+					dust.noGravity = true;
+					dust.fadeIn = 0.1f;
+					dust.scale *= 2.2f;
+					dust.velocity *= 4f;
+				}
+				npc.active = false;
+				return false;
+			}
+			if(counter > 900)
+            {
+				//need to move back towards lux
+            }	
+			rotationCounter += 0.8f;
+			float mult = counter / 900f;
+			if (mult > 1)
+				mult = 1;
+			Vector2 rotatePos = new Vector2(960 - 240 * mult, 0).RotatedBy(MathHelper.ToRadians(rotationCounter + npc.ai[1]));
 			Vector2 toPos = rotatePos + rotateCenter;
 			Vector2 goToPos = toPos - npc.Center;
 			float speed = 12;
@@ -131,14 +158,63 @@ namespace SOTS.NPCs.Boss.Lux
 			if (counter > 240)
 			{
 				Vector2 aimAtCenter = rotateCenter;
-				if (Type() == 1)
+				if (Type() == 2)
 					aimAtCenter = player.Center;
-				modifyRotation(true, rotateCenter, true);
+				modifyRotation(true, aimAtCenter, true);
 				ring.aiming = true;
 				ring.targetRadius = 40;
+				if(Type() == 2) // blue
+                {
+					if(counter > 300)
+					{
+						float localCounter = counter - 300;
+						if (localCounter % 20 == 0)
+						{
+							Vector2 outward = new Vector2(0, 1).RotatedBy(npc.rotation);
+							Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 91, 1.1f, 0.2f);
+							if (Main.netMode != NetmodeID.MultiplayerClient)
+							{
+								Projectile.NewProjectile(npc.Center + outward * 72, outward * (6f + 6f * mult), ProjectileType<ChaosBall>(), damage, 0, Main.myPlayer, 0, -Type());
+							}
+						}
+					}
+                }
+				else if(Type() == 1) //green
+				{
+					if (counter > 300)
+					{
+						float localCounter = counter - 300;
+						if (localCounter % 90 == 0)
+						{
+							Vector2 outward = new Vector2(0, 1).RotatedBy(npc.rotation);
+							Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 62, 1.1f, 0.2f);
+							if (Main.netMode != NetmodeID.MultiplayerClient)
+							{
+								for(int i = -2; i <= 2; i++)
+								{
+									outward = new Vector2(0, 1).RotatedBy(npc.rotation + MathHelper.ToRadians(i * 20));
+									Projectile.NewProjectile(npc.Center + outward * 72, outward * (2f + 1f * mult), ProjectileType<ChaosWave>(), damage, 0, Main.myPlayer, 0, -Type());
+								}
+							}
+						}
+					}
+				}
+				else //red
+				{
+					if (counter == 300)
+					{
+						Vector2 outward = new Vector2(0, 1).RotatedBy(npc.rotation);
+						if (Main.netMode != NetmodeID.MultiplayerClient)
+						{
+							Projectile.NewProjectile(npc.Center + outward * 32, outward * 6f, ProjectileType<ChaosEraser2>(), damage, 0, Main.myPlayer, npc.whoAmI);
+						}
+					}
+				}
 			}
 			else
+			{
 				modifyRotation(false, player.Center, true);
+			}
 			return base.PreAI();
 		}
         public override void PostAI()
@@ -178,7 +254,6 @@ namespace SOTS.NPCs.Boss.Lux
 		float wingHeight = 0;
 		public void WingStuff()
 		{
-			npc.ai[3]++;
 			npc.ai[2] += 7.5f * wingSpeedMult;
 			float dipAndRise = (float)Math.Sin(MathHelper.ToRadians(npc.ai[2] + npc.ai[1]));
 			//dipAndRise *= (float)Math.sqrt(dipAndRise);
