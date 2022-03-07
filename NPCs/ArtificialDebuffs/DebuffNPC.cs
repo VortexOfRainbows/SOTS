@@ -593,7 +593,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 if (Main.myPlayer == player.whoAmI && Main.netMode == NetmodeID.MultiplayerClient)
                     SendClientChanges(player, npc);
             }
-            if ((item.type == ItemType<AncientSteelSword>() || item.type == ItemType<AncientSteelGreatPickaxe>()) && crit)
+            if ((item.type == ItemType<AncientSteelSword>() || item.type == ItemType<AncientSteelGreatPickaxe>() || item.type == ItemType<AncientSteelGreatHamaxe>()) && crit)
             {
                 bool worm = npc.realLife != -1;
                 float baseChance = 1f;

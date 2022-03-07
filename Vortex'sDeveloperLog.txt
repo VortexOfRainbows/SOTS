@@ -42,7 +42,6 @@ Mid Priority:
 2. Construct Items:	
 	1. Inferno Plating block
 3. Big Vibrant geode in the jungle
-4. Ancientsteel Axe
 
 Low Priority:
 1. Archaelogist NPC
