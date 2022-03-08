@@ -49,41 +49,15 @@ namespace SOTS
 		public static bool downedCelestial = false;
 		public static bool downedSubspace = false;
 		public static bool downedAdvisor = false;
-
-		#region unused
-		public static bool downedEntity = false;
-		public static bool downedAntilion = false;
-		public static bool downedChess = false;
-		
-		public static bool challengeDecay = false;
-		public static bool challengeLock = false;
-		public static bool challengePermanence = false;
-		
-		public static bool challengeIce = false;
-		public static bool challengeGlass = false;
-		public static bool challengeIcarus = false;
-        #endregion
         public override void Initialize()
 		{
 			downedPinky = false;
 			downedAdvisor = false;
 			downedCurse = false;
-			downedEntity = false;
 			downedBoss2 = false;
-			downedAntilion = false;
 			downedAmalgamation = false;
-			downedChess = false;
-			
 			downedCelestial = false;
 			downedSubspace = false;
-			
-			challengeDecay = false;
-			challengeLock = false;
-			challengePermanence = false;
-			
-			challengeIce = false;
-			challengeGlass = false;
-			challengeIcarus = false;
 		}
 		public override TagCompound Save() {
 			var downed = new List<string>();
@@ -96,17 +70,8 @@ namespace SOTS
 			if (downedCurse) {
 				downed.Add("curse");
 			}
-			if (downedEntity) {
-				downed.Add("entity");
-			}
-			if (downedAntilion) {
-				downed.Add("antilion");
-			}
 			if (downedAmalgamation) {
 				downed.Add("amalgamation");
-			}
-			if (downedChess) {
-				downed.Add("chess");
 			}
 			if (downedCelestial) {
 				downed.Add("celestial");
@@ -118,29 +83,8 @@ namespace SOTS
 			{
 				downed.Add("boss2");
 			}
-
-			var challenge = new List<string>();
-			if (challengeDecay) {
-				challenge.Add("decay");
-			}
-			if (challengeLock) {
-				challenge.Add("lock");
-			}
-			if (challengePermanence) {
-				challenge.Add("permanence");
-			}
-			if (challengeIce) {
-				challenge.Add("ice");
-			}
-			if (challengeGlass) {
-				challenge.Add("glass");
-			}
-			if (challengeIcarus) {
-				challenge.Add("icarus");
-			}
 			return new TagCompound {
-				{"downed", downed},
-				{"challenge", challenge},
+				{"downed", downed}
 			};
 		}
 		public override void Load(TagCompound tag) {
@@ -148,96 +92,30 @@ namespace SOTS
 			downedPinky = downed.Contains("pinky");
 			downedAdvisor = downed.Contains("advisor");
 			downedCurse = downed.Contains("curse");
-			downedEntity = downed.Contains("entity");
-			downedAntilion = downed.Contains("antilion");
 			downedAmalgamation = downed.Contains("amalgamation");
-			downedChess = downed.Contains("chess");
 			downedCelestial = downed.Contains("celestial");
 			downedSubspace = downed.Contains("subspace");
 			downedBoss2 = downed.Contains("boss2");
-
-			var challenge = tag.GetList<string>("challenge");
-			challengeDecay = challenge.Contains("decay");
-			challengeLock = challenge.Contains("lock");
-			challengePermanence = challenge.Contains("permanence");
-			challengeIce = challenge.Contains("ice");
-			challengeGlass = challenge.Contains("glass");
-			challengeIcarus = challenge.Contains("icarus");
-		}
-		public override void LoadLegacy(BinaryReader reader) {
-			int loadVersion = reader.ReadInt32();
-			if (loadVersion == 0) {
-				BitsByte flags = reader.ReadByte();
-				downedPinky = flags[0];
-				downedAdvisor = flags[1];
-				downedEntity = flags[2];
-				downedAntilion = flags[3];
-				downedAmalgamation = flags[4];
-				downedChess = flags[5];
-				downedCurse = flags[6];
-				downedCelestial = flags[7];
-				
-				BitsByte flags3 = reader.ReadByte();
-				downedSubspace = flags3[0];
-				downedBoss2 = flags3[1];
-
-				BitsByte flags2 = reader.ReadByte();
-				challengeDecay = flags2[0];
-				challengeLock = flags2[1];
-				challengePermanence = flags2[2];
-				challengeIce = flags2[3];
-				challengeGlass = flags2[4];
-				challengeIcarus = flags2[5];
-			}
 		}
 		public override void NetSend(BinaryWriter writer) {
 			BitsByte flags = new BitsByte();
 			flags[0] = downedPinky;
 			flags[1] = downedAdvisor;
-			flags[2] = downedEntity;
-			flags[3] = downedAntilion;
-			flags[4] = downedAmalgamation;
-			flags[5] = downedChess;
-			flags[6] = downedCurse;
-			flags[7] = downedCelestial;
-			writer.Write(flags);
-			
-			BitsByte flags3 = new BitsByte();
-			flags3[0] = downedSubspace;
-			flags3[1] = downedBoss2;
-			writer.Write(flags3);
-			
-			BitsByte flags2 = new BitsByte();
-			flags2[0] = challengeDecay;
-			flags2[1] = challengeLock;
-			flags2[2] = challengePermanence;
-			flags2[3] = challengeIce;
-			flags2[4] = challengeGlass;
-			flags2[5] = challengeIcarus;
-			writer.Write(flags2);
+			flags[2] = downedAmalgamation;
+			flags[3] = downedCurse;
+			flags[4] = downedCelestial;
+			flags[5] = downedSubspace;
+			flags[6] = downedBoss2;
 		}
 		public override void NetReceive(BinaryReader reader) {
 			BitsByte flags = reader.ReadByte();
 			downedPinky = flags[0];
 			downedAdvisor = flags[1];
-			downedEntity = flags[2];
-			downedAntilion = flags[3];
-			downedAmalgamation = flags[4];
-			downedChess = flags[5];
-			downedCurse = flags[6];
-			downedCelestial = flags[7];
-			
-			BitsByte flags3 = reader.ReadByte();
-			downedSubspace = flags3[0];
-			downedBoss2 = flags3[1];
-
-			BitsByte flags2 = reader.ReadByte();
-			challengeDecay = flags2[0];
-			challengeLock = flags2[1];
-			challengePermanence = flags2[2];
-			challengeIce = flags2[3];
-			challengeGlass = flags2[4];
-			challengeIcarus = flags2[5];
+			downedAmalgamation = flags[2];
+			downedCurse = flags[3];
+			downedCelestial = flags[4];
+			downedSubspace = flags[5];
+			downedBoss2 = flags[6];
 		}
 		public override void PostUpdate()
 		{

@@ -48,6 +48,7 @@ Low Priority:
 1. Lux 
 	1. Decreased number of bursts in shotgun 7 -> 6
 	2. Phase two Light Ball attack is doubled
+2. Remove unused world tag-compounds, Lux Boss log (not implemented)
 
 3/5/22 & 3/6/22
 1. Finished LUX RGB Transition Attack
