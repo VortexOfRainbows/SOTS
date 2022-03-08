@@ -361,12 +361,32 @@ namespace SOTS.NPCs.Boss.Lux
 					wingSpeedMult = 1 - attackTimer1 / 120f * 0.2f;
 				}
 				Vector2 laserPos = npc.Center + new Vector2(0, -196);
+				Vector2 otherLaserPosition = new Vector2(attackTimer3, attackTimer4);
+				if (SecondPhase && attackTimer1 > 70)
+				{
+					if(attackTimer3 == 0 && attackTimer4 == 0)
+                    {
+						otherLaserPosition = npc.Center + toPlayer.SafeNormalize(Vector2.Zero) * 320 + Main.rand.NextVector2Circular(128, 128);
+						attackTimer3 = otherLaserPosition.X;
+						attackTimer4 = otherLaserPosition.Y;
+						if (Main.netMode == NetmodeID.Server)
+							npc.netUpdate = true;
+                    }
+				}
 				if (attackTimer1 > 90 && attackTimer1 < 120)
 				{
 					for (int i = 2; i < 4; i++)
 					{
 						rings[i].MoveTo(laserPos);
 						rings[i].targetRadius = 72;
+					}
+					if (SecondPhase)
+					{
+						for(int i = 0; i < 2; i++)
+						{
+							rings[i].MoveTo(otherLaserPosition);
+							rings[i].targetRadius = 72;
+						}
 					}
 				}
 				if (attackTimer1 == 120)
@@ -375,12 +395,20 @@ namespace SOTS.NPCs.Boss.Lux
 						rings[i].MoveTo(laserPos);
 					if (Main.netMode != NetmodeID.MultiplayerClient)
 					{
-						Projectile.NewProjectile(laserPos, Vector2.Zero, ModContent.ProjectileType<DogmaSphere>(), damage, 0, Main.myPlayer, npc.target);
+						if(SecondPhase)
+						{
+							Projectile.NewProjectile(otherLaserPosition, Vector2.Zero, ModContent.ProjectileType<DogmaSphere>(), damage, 0, Main.myPlayer, npc.target, -1); //projectile.ai[1] value of -1 to carry on weaker dogma sphere projectile
+							Projectile.NewProjectile(laserPos, Vector2.Zero, ModContent.ProjectileType<DogmaSphere>(), damage, 0, Main.myPlayer, npc.target, -2);
+						}
+						else
+						{
+							Projectile.NewProjectile(laserPos, Vector2.Zero, ModContent.ProjectileType<DogmaSphere>(), damage, 0, Main.myPlayer, npc.target);
+						}
 					}
 				}
 				if (attackTimer1 > 550)
 				{
-					for (int i = 2; i < 4; i++)
+					for (int i = 0; i < 4; i++)
 					{
 						rings[i].ResetVariables();
 						rings[i].MoveTo(npc.Center, true);
@@ -402,7 +430,7 @@ namespace SOTS.NPCs.Boss.Lux
 			{
 				npc.velocity *= 0.93f;
 				attackTimer1++;
-				bool end = attackTimer3 > 6;
+				bool end = attackTimer3 > 5;
 				if (end)
 				{
 					modifyRotation(false);
@@ -957,7 +985,7 @@ namespace SOTS.NPCs.Boss.Lux
             {
 				int[] phase2Attacks = new int[] { LaserOrbPhase, ScatterBulletsPhase, BigLaserPhase, RGBTransition };
 				int rand = Main.rand.Next(phase2Attacks.Count());
-				while(rand == exclude || previousAttacks[0] == rand || previousAttacks[1] == rand)
+				while(phase2Attacks[rand] == exclude || previousAttacks[0] == phase2Attacks[rand] || previousAttacks[1] == phase2Attacks[rand])
 					rand = Main.rand.Next(phase2Attacks.Count());
 				return phase2Attacks[rand];
 			}

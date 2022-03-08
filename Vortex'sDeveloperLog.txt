@@ -4,7 +4,7 @@ The following is my development plans :D
 2. Ghost Town to Evil Biome
 
 Known Bugs:
-1. Lag generates in multiplayer after a while of playing. (Not fixed)
+1. Lag generates in multiplayer after a while of playing. (Maybe fixed?)
 	1. Seem to generate client-side not server side..?
 	2. No memory leak on single player, or client side when testing..?
 2. Primitives crash. (Fixed?)
@@ -16,12 +16,7 @@ High Priority:
 1. Starmap and Digital Daito Obtaining
 2. Reorganize Folders... Planetarium and Pyramid folders remaining.
 3. Lux
-	1. Phase 2 work begins
-	2. RGB Attack: each fake sphere can chose between 3 different attacks
-		1. Laser at middle
-		2. Shotgun at middle
-		3. Rapid fire bullets at player
-		4. Creates a border around you during the attack, preventing you from flying out farther than the spirits.
+	1. Phase 2 Advisor purple lightning column attack
 
 Mid Priority:
 1. Lux Drops (ask me before you go about spriting these ones):
@@ -48,6 +43,11 @@ Low Priority:
 2. Accessory Pets to use own dye slots.
 3. Void Bar strike the player during void shock
 4. Fix Planetarium sky island spawning in tandum
+
+3/7/22
+1. Lux 
+	1. Decreased number of bursts in shotgun 7 -> 6
+	2. Phase two Light Ball attack is doubled
 
 3/5/22 & 3/6/22
 1. Finished LUX RGB Transition Attack

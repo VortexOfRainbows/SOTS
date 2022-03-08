@@ -67,7 +67,7 @@ namespace SOTS.NPCs.Boss.Lux
         }
         public void modifyRotation(bool aimAt, Vector2 whereToAim, bool modifyWings = true)
 		{
-			Vector2 toPlayer = whereToAim - npc.Center;
+			Vector2 toPlayer = whereToAim - npc.Center - npc.velocity;
 			npc.rotation = npc.velocity.X * 0.06f;
 			if (aimAt)
 			{

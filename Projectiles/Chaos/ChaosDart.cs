@@ -94,7 +94,7 @@ namespace SOTS.Projectiles.Chaos
 				dust2.scale *= 1.7f;
 			}
 			int target = (int)projectile.ai[0];
-			if (target >= 0 && projectile.ai[1] != -1)
+			if (target >= 0 && projectile.ai[1] > -1)
 			{
 				Player player = Main.player[target];
 				if (player.active && !player.dead)
