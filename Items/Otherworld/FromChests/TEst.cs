@@ -31,22 +31,14 @@ namespace SOTS.Items.Otherworld.FromChests
 			item.thrown = true;
 			item.rare = ItemRarityID.Green;
 			item.autoReuse = false;            
-			item.shoot = ModContent.ProjectileType<ChaosDiamond>(); 
+			item.shoot = ModContent.ProjectileType<ThunderBall>(); 
             item.shootSpeed = 3.0f;
 			item.consumable = true;
 		}
-		int counter = 0;
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			//DrawTexture();
-			//VoidPlayer vPlayer = VoidPlayer.ModPlayer(player);
-			//vPlayer.voidStar = 0;
-			//vPlayer.voidAnkh = 0;
-			//vPlayer.voidMeterMax = 100;
-			//Projectile.NewProjectile(position, new Vector2(speedX, speedY), type, damage, knockBack, Main.myPlayer, Main.rand.NextFloat(0.65f, 0.75f), Main.rand.NextFloat(360));
-			////SOTSPlayer.ModPlayer(player).UniqueVisionNumber = (SOTSPlayer.ModPlayer(player).UniqueVisionNumber + 1) % 24;
-			position = Main.MouseWorld;
-			return true; 
+			Projectile.NewProjectile(position, new Vector2(0, 1), ModContent.ProjectileType<ThunderSpawnBeam>(), 0, 0, Main.myPlayer, Main.MouseWorld.X, Main.MouseWorld.Y);
+			return false; 
 		}
 		public void DrawTexture()
         {

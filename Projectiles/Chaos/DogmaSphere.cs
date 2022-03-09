@@ -120,18 +120,20 @@ namespace SOTS.Projectiles.Chaos
 							dust2.scale *= 2.2f;
 						}
 					}
-					if (counter % 40 == 20)
+					if (projectile.ai[1] != -1)
 					{
-						if (Main.netMode != NetmodeID.MultiplayerClient)
+						if (counter % 40 == 20)
 						{
-							for (int i = 0; i < numDarts; i++)
+							if (Main.netMode != NetmodeID.MultiplayerClient)
 							{
-								Vector2 circular = new Vector2(3f, 0).RotatedBy(MathHelper.ToRadians(i * 360f / numDarts));
-								Projectile.NewProjectile(projectile.Center, circular, ModContent.ProjectileType<ChaosDart>(), projectile.damage, projectile.knockBack, Main.myPlayer, target, projectile.ai[1] == -1 ? -1 : 0);
+								for (int i = 0; i < numDarts; i++)
+								{
+									Vector2 circular = new Vector2(3f, 0).RotatedBy(MathHelper.ToRadians(i * 360f / numDarts));
+									Projectile.NewProjectile(projectile.Center, circular, ModContent.ProjectileType<ChaosDart>(), projectile.damage, projectile.knockBack, Main.myPlayer, target, projectile.ai[1] == -1 ? -1 : 0);
+								}
 							}
-						}
-						if (projectile.ai[1] != -1)
 							numDarts += 2;
+						}
 					}
 				}
 				else
@@ -144,8 +146,10 @@ namespace SOTS.Projectiles.Chaos
 							int amt = 8;
 							if (Main.expertMode)
 								amt = 10;
-							if (projectile.ai[1] >= 0)
+							if (projectile.ai[1] < 0)
 								amt -= 2;
+							if (projectile.ai[1] == -1)
+								amt -= 1;
 							for (int i = 0; i < amt; i++)
 							{
 								Vector2 circular = new Vector2(5, 0).RotatedBy(MathHelper.ToRadians(i * 360f / amt + Main.rand.NextFloat(-20, 20)));

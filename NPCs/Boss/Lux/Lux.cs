@@ -236,7 +236,7 @@ namespace SOTS.NPCs.Boss.Lux
 		}
 		public override void SetDefaults()
 		{
-			npc.aiStyle = 0;
+			npc.aiStyle = -1;
             npc.lifeMax = 60000; 
             npc.damage = 100; 
             npc.defense = 60;   
@@ -264,8 +264,26 @@ namespace SOTS.NPCs.Boss.Lux
 			npc.damage = (int)(npc.damage * 0.8f); //160 damage
 		}
 		bool runOnce = true;
+		public void TargettingUnit()
+		{
+			npc.velocity.X *= 0.93f; //consequence of being programmed with an aiStyle = 0
+			if ((double)npc.velocity.X > -0.1 && (double)npc.velocity.X < 0.1) //consequence of being programmed with an aiStyle = 0
+			{
+				npc.velocity.X = 0f;
+			}
+			if (!npc.HasValidTarget)
+				npc.TargetClosest(false);
+			else
+			{
+				if (npc.Center.X < Main.player[npc.target].Center.X)
+					npc.direction = -1;
+				else
+					npc.direction = 1;
+			}
+		}
 		public override bool PreAI()
 		{
+			TargettingUnit(); //target only one player at a time before switching
 			int damage = npc.damage / 2;
 			if (Main.expertMode)
 			{
@@ -877,6 +895,82 @@ namespace SOTS.NPCs.Boss.Lux
 					}
 				}
 			}
+			if (attackPhase == HelixColumnPhase)
+			{
+				npc.velocity *= 0.93f;
+				attackTimer1++;
+				bool end = attackTimer3 > 6;
+				if (end)
+				{
+					modifyRotation(false);
+					for (int i = 0; i < 4; i++)
+					{
+						rings[i].ResetVariables();
+					}
+					if (attackTimer2 > 0)
+						attackTimer2--;
+					else
+					{
+						SwapPhase(PickRandom((int)attackPhase));
+					}
+				}
+				else if (attackTimer1 > 0)
+				{
+					if (attackTimer1 < 100)
+						modifyRotation(true);
+					rings[0].aiming = true;
+					rings[0].targetRadius = 60;
+					if (attackTimer2 < 60)
+						attackTimer2++;
+					if (attackTimer1 == 90)
+					{
+						if (Main.netMode != NetmodeID.MultiplayerClient)
+						{
+							int rand = Main.rand.Next(4);
+							if (attackTimer4 == rand)
+								rand = Main.rand.Next(4); //allow it to hit the same angle again, but less likely
+							float degrees = rand * 90f;
+							Vector2 circular = new Vector2(640, 0).RotatedBy(MathHelper.ToRadians(degrees));
+							circular.Y *= 0.75f; //480
+							teleport(player.Center + circular, player.Center, true);
+							attackTimer4 = rand;
+						}
+					}
+					else if (attackTimer1 >= 120 && attackTimer1 <= 190) //will launch 14 shots total
+					{
+						float localCounter = attackTimer1 - 120;
+						if (localCounter % 5 == 0)
+						{
+							Vector2 outward = new Vector2(0, 1).RotatedBy(npc.rotation);
+							Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 91, 1.1f, 0.2f);
+							if (Main.netMode != NetmodeID.MultiplayerClient)
+							{
+								float degrees = attackTimer4 * 90f;
+								Vector2 direction = new Vector2(-1, 0).RotatedBy(MathHelper.ToRadians(degrees));
+								direction.Y *= 0.75f;
+								Vector2 destinationTop = npc.Center + direction * 2400 + new Vector2(0, 1200).RotatedBy(MathHelper.ToRadians(degrees));
+								Vector2 destinationBot = npc.Center + direction * 2400 - new Vector2(0, 1200).RotatedBy(MathHelper.ToRadians(degrees));
+								float num = localCounter / 70f;
+								if (attackTimer3 % 2 == 0)
+									num = 1 - num;
+								Vector2 destination = Vector2.Lerp(destinationTop, destinationBot, num);
+								Projectile.NewProjectile(npc.Center + outward * 96, direction, ModContent.ProjectileType<ThunderSpawnBeam>(), damage, npc.target, Main.myPlayer, destination.X, destination.Y);
+							}
+							npc.velocity -= outward * 2f;
+						}
+					}
+					if (attackTimer1 >= 195)
+					{
+						attackTimer1 = 89;
+						attackTimer3++;
+					}
+					float speedMult = attackTimer1 / 60f;
+					if (speedMult > 1)
+						speedMult = 1;
+					if (attackTimer1 < 90)
+						npc.velocity += toPlayer.SafeNormalize(Vector2.Zero) * 0.3f * speedMult;
+				}
+			}
 			WingStuff();
 			npc.alpha = (int)MathHelper.Clamp(npc.alpha, 0, 255);
 			if (npc.alpha > 150 || (!SecondPhase && npc.life <= npc.lifeMax / 3f))
@@ -970,6 +1064,7 @@ namespace SOTS.NPCs.Boss.Lux
 		public const int ScatterBulletsPhase = 4;
 		public const int BigLaserPhase = 5;
 		public const int RGBTransition = 6;
+		public const int HelixColumnPhase = 7;
 		public int[] previousAttacks = new int[] { -2, -2, -2 };
 		public int PickRandom(int exclude = -1)
         {
@@ -983,7 +1078,7 @@ namespace SOTS.NPCs.Boss.Lux
 			}
 			else
             {
-				int[] phase2Attacks = new int[] { LaserOrbPhase, ScatterBulletsPhase, BigLaserPhase, RGBTransition };
+				int[] phase2Attacks = new int[] { HelixColumnPhase, LaserOrbPhase, ScatterBulletsPhase, BigLaserPhase, RGBTransition };
 				int rand = Main.rand.Next(phase2Attacks.Count());
 				while(phase2Attacks[rand] == exclude || previousAttacks[0] == phase2Attacks[rand] || previousAttacks[1] == phase2Attacks[rand])
 					rand = Main.rand.Next(phase2Attacks.Count());

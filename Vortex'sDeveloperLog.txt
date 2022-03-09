@@ -16,7 +16,9 @@ High Priority:
 1. Starmap and Digital Daito Obtaining
 2. Reorganize Folders... Planetarium and Pyramid folders remaining.
 3. Lux
-	1. Phase 2 Advisor purple lightning column attack
+	1. Phase 2 RGB Spiral
+	2. Enhance other Phase 1 attacks that persist in Phase 2
+	3. Death animation
 
 Mid Priority:
 1. Lux Drops (ask me before you go about spriting these ones):
@@ -44,10 +46,11 @@ Low Priority:
 3. Void Bar strike the player during void shock
 4. Fix Planetarium sky island spawning in tandum
 
-3/7/22
+3/7/22 & 3/8/22
 1. Lux 
 	1. Decreased number of bursts in shotgun 7 -> 6
 	2. Phase two Light Ball attack is doubled
+	3. Added Thunder Column attack
 2. Remove unused world tag-compounds, Lux Boss log (not implemented)
 
 3/5/22 & 3/6/22
