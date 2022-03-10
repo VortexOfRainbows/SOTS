@@ -25,7 +25,7 @@ namespace SOTS.Projectiles.Chaos
 			projectile.height = 70;
 			projectile.hostile = true;
 			projectile.friendly = false;
-			projectile.timeLeft = 140;
+			projectile.timeLeft = 80;
 			projectile.tileCollide = false;
 			projectile.penetrate = -1;
 			projectile.scale = 1f;
@@ -44,7 +44,7 @@ namespace SOTS.Projectiles.Chaos
 		{
 			Texture2D texture = mod.GetTexture("Projectiles/Chaos/ChaosCircle");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			if(counter <= 120)
+			if(counter <= 40)
 				for (int k = 0; k < 90; k++)
 				{
 					float sin = (float)Math.Sin(MathHelper.ToRadians(k * 24 + 720f * (counter / 60f) * (counter / 60f)));
@@ -92,16 +92,16 @@ namespace SOTS.Projectiles.Chaos
 				projectile.scale = 0;
 				projectile.alpha = 0;
 			}
-			float alphaMult = counter / 100f;
+			float alphaMult = counter / 40f;
 			if(alphaMult > 1)
             {
-				alphaMult = 1 - ((counter - 100f) / 40f);
+				alphaMult = 1 - ((counter - 40f) / 40f);
             }
 			projectile.alpha = (int)(255 * (1 - alphaMult));
-			float scaleMult = counter / 100f;
+			float scaleMult = counter / 40f;
 			if (scaleMult > 1)
 			{
-				projectile.scale = 1 - ((counter - 100f) / 40f);
+				projectile.scale = 1 - ((counter - 40f) / 40f);
 			}
 			else
 				projectile.scale = scaleMult * 0.5f + 0.5f * scaleMult * scaleMult;

@@ -20,7 +20,7 @@ namespace SOTS.Projectiles.Chaos
         {
             projectile.width = 20;
             projectile.height = 20;
-            projectile.timeLeft = 140;
+            projectile.timeLeft = 80;
             projectile.penetrate = -1;
             projectile.friendly = false;
             projectile.hostile = true;
@@ -28,16 +28,16 @@ namespace SOTS.Projectiles.Chaos
             projectile.ignoreWater = true;
         }
         List<Vector2> drawPositionList = new List<Vector2>();
-        float startUpTime = 100;
+        float startUpTime = 40;
         int counter = 0;
         bool runOnce = true;
         public const float Speed = 15f;
         public const float SeekOutOthersRange = 96f;
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
-            if(projectile.timeLeft < 140 - startUpTime && projectile.timeLeft > 14)
+            if(projectile.timeLeft < 80 - startUpTime && projectile.timeLeft > 14)
             {
-                for(int i = 0; i < drawPositionList.Count - 10; i += 2)
+                for(int i = 0; i < drawPositionList.Count - 10; i += 3)
                 {
                     float otherMult = i / 30f;
                     if (otherMult > 1)
@@ -76,9 +76,9 @@ namespace SOTS.Projectiles.Chaos
                 if (otherMult > 1)
                     otherMult = 1;
                 float actualScale = scale * (0.3f + 0.7f * otherMult * otherMult);
-                if(i > 176)
+                if(i > 210)
                 {
-                    float mult = (i - 176) / 24f;
+                    float mult = (i - 210) / 39f;
                     actualScale *= 1 - mult;
                 }
                 Vector2 drawPos = drawPositionList[i];
@@ -107,7 +107,7 @@ namespace SOTS.Projectiles.Chaos
             if (playerID < 0)
                 return;
             Player target = Main.player[playerID];
-            for(int i = 0; i < 200; i++)
+            for(int i = 0; i < 240; i++)
             {
                 position += velocity;
                 drawPositionList.Add(position);
@@ -149,7 +149,7 @@ namespace SOTS.Projectiles.Chaos
                     dust2.fadeIn = 0.2f;
                     dust2.scale *= 2.2f;
                 }
-                Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 94, 0.9f, 0.2f);
+                Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 94, 0.75f, 0.2f);
                 for (int i = 0; i < drawPositionList.Count; i += 2)
                 {
                     if (!Main.rand.NextBool(3))

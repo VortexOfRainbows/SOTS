@@ -46,6 +46,11 @@ Low Priority:
 3. Void Bar strike the player during void shock
 4. Fix Planetarium sky island spawning in tandum
 
+3/9/22
+1. Lux 
+	1. Thunder Column attack is far stronger
+	2. Phase 2 scatter bullets is much faster (I still plan on reworking it a bit)
+
 3/7/22 & 3/8/22
 1. Lux 
 	1. Decreased number of bursts in shotgun 7 -> 6

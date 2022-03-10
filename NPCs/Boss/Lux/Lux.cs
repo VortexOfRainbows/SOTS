@@ -662,6 +662,8 @@ namespace SOTS.NPCs.Boss.Lux
 				npc.velocity *= 0.93f;
 				attackTimer1++;
 				bool end = attackTimer3 > 7;
+				if(SecondPhase)
+					end = attackTimer3 > 12;
 				if (end)
 				{
 					if (attackTimer2 > 0)
@@ -717,7 +719,7 @@ namespace SOTS.NPCs.Boss.Lux
 					{
 						wingOutwardOffset = MathHelper.Lerp(24f, -12, 1 - ((attackTimer1 - 95) / 15f));
 					}
-					if (attackTimer1 > 110)
+					if (attackTimer1 > 110 || (SecondPhase && attackTimer1 > 100))
 					{
 						attackTimer1 = 89;
 						attackTimer3++;
@@ -930,15 +932,15 @@ namespace SOTS.NPCs.Boss.Lux
 							if (attackTimer4 == rand)
 								rand = Main.rand.Next(4); //allow it to hit the same angle again, but less likely
 							float degrees = rand * 90f;
-							Vector2 circular = new Vector2(640, 0).RotatedBy(MathHelper.ToRadians(degrees));
+							Vector2 circular = new Vector2(640, 0).RotatedBy(MathHelper.ToRadians(degrees + Main.rand.NextFloat(-14, 14f)));
 							circular.Y *= 0.75f; //480
 							teleport(player.Center + circular, player.Center, true);
 							attackTimer4 = rand;
 						}
 					}
-					else if (attackTimer1 >= 120 && attackTimer1 <= 190) //will launch 14 shots total
+					else if (attackTimer1 >= 100 && attackTimer1 <= 170) //will launch 14 shots total
 					{
-						float localCounter = attackTimer1 - 120;
+						float localCounter = attackTimer1 - 100;
 						if (localCounter % 5 == 0)
 						{
 							Vector2 outward = new Vector2(0, 1).RotatedBy(npc.rotation);
@@ -948,8 +950,10 @@ namespace SOTS.NPCs.Boss.Lux
 								float degrees = attackTimer4 * 90f;
 								Vector2 direction = new Vector2(-1, 0).RotatedBy(MathHelper.ToRadians(degrees));
 								direction.Y *= 0.75f;
-								Vector2 destinationTop = npc.Center + direction * 2400 + new Vector2(0, 1200).RotatedBy(MathHelper.ToRadians(degrees));
-								Vector2 destinationBot = npc.Center + direction * 2400 - new Vector2(0, 1200).RotatedBy(MathHelper.ToRadians(degrees));
+								Vector2 spreadOut = new Vector2(0, 1100).RotatedBy(MathHelper.ToRadians(degrees));
+								spreadOut.X *= 0.825f;
+								Vector2 destinationTop = npc.Center + direction * 3000 + spreadOut;
+								Vector2 destinationBot = npc.Center + direction * 3000 - spreadOut;
 								float num = localCounter / 70f;
 								if (attackTimer3 % 2 == 0)
 									num = 1 - num;
@@ -959,7 +963,7 @@ namespace SOTS.NPCs.Boss.Lux
 							npc.velocity -= outward * 2f;
 						}
 					}
-					if (attackTimer1 >= 195)
+					if (attackTimer1 >= 171)
 					{
 						attackTimer1 = 89;
 						attackTimer3++;
