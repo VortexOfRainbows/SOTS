@@ -164,7 +164,7 @@ namespace SOTS.Projectiles.Chaos
                 SetupLaser();
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                     Projectile.NewProjectile(projectile.Center, -projectile.velocity, ModContent.ProjectileType<ThunderBall>(), projectile.damage, 0, Main.myPlayer, 0, 0);
-                Main.PlaySound(SoundID.Item, (int)player.Center.X, (int)player.Center.Y, 92, 0.9f, 0.2f);
+                //Main.PlaySound(SoundID.Item, (int)player.Center.X, (int)player.Center.Y, 92, 0.6f, 0.4f);
                 for (int i = 0; i < 4; i++)
                 {
                     Dust dust2 = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, ModContent.DustType<CopyDust4>(), 0, 0, 120);

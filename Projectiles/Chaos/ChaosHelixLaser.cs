@@ -35,14 +35,14 @@ namespace SOTS.Projectiles.Chaos
         public const float SeekOutOthersRange = 96f;
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
-            if(projectile.timeLeft < 80 - startUpTime && projectile.timeLeft > 14)
+            if(projectile.timeLeft < 80 - startUpTime && projectile.timeLeft >= 30)
             {
                 for(int i = 0; i < drawPositionList.Count - 10; i += 3)
                 {
                     float otherMult = i / 30f;
                     if (otherMult > 1)
                         otherMult = 1;
-                    int width = (int)(48 * otherMult);
+                    int width = (int)(44 * otherMult);
                     Rectangle hitBox = new Rectangle((int)drawPositionList[i].X - width / 2, (int)drawPositionList[i].Y - width / 2, width, width);
                     if (hitBox.Intersects(targetHitbox))
                         return true;
@@ -63,7 +63,7 @@ namespace SOTS.Projectiles.Chaos
             float alphaMult = 1f;
             if (scale < 1)
             {
-                alphaMult = 0.1f + 0.15f * scale;
+                alphaMult = 0.15f + 0.2f * scale;
                 scale *= 0.5f;
             }
             else
@@ -149,7 +149,9 @@ namespace SOTS.Projectiles.Chaos
                     dust2.fadeIn = 0.2f;
                     dust2.scale *= 2.2f;
                 }
-                Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 94, 0.75f, 0.2f);
+                Player player = Main.LocalPlayer;
+                if(player.Distance(projectile.Center) < 4800)
+                    Main.PlaySound(SoundID.Item, (int)player.Center.X, (int)player.Center.Y, 94, 0.75f, 0.2f);
                 for (int i = 0; i < drawPositionList.Count; i += 2)
                 {
                     if (!Main.rand.NextBool(3))
@@ -164,7 +166,7 @@ namespace SOTS.Projectiles.Chaos
                     }
                 }
             }
-            float endPercent = projectile.timeLeft / 30f;
+            float endPercent = projectile.timeLeft / 40f;
             if (endPercent > 1)
                 endPercent = 1;
             projectile.alpha = (int)(255 - 255 * endPercent * endPercent);

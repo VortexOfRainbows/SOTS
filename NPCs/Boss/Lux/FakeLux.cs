@@ -116,9 +116,30 @@ namespace SOTS.NPCs.Boss.Lux
 			}
 			else
 				kill = true;
+			float moveBack = 0;
+			float max = 1200;
+			if(npc.ai[3] != 0)
+            {
+				max = 900;
+            }
+			if(counter > max)
+			{
+				if (counter > max + 30)
+				{
+					float rnCounter = (counter - max - 30) / 60f;
+					if (rnCounter > 1)
+					{
+						rnCounter = 1;
+						kill = true;
+					}
+					moveBack = (float)Math.Pow(rnCounter, 1.2f);
+				}
+				npc.alpha += 4;
+				ring.ResetVariables();
+			}
 			if (kill)
 			{
-				if(counter < 1230)
+				if (counter < max)
 					for (int i = 0; i < 50; i++)
 					{
 						Dust dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.RainbowMk2);
@@ -131,24 +152,13 @@ namespace SOTS.NPCs.Boss.Lux
 				npc.active = false;
 				return false;
 			}
-			float moveBack = 0;
-			if(counter > 1200)
+			if (npc.ai[3] != 0)
 			{
-				if (counter > 1230)
-				{
-					float rnCounter = (counter - 1230) / 60f;
-					if (rnCounter > 1)
-					{
-						rnCounter = 1;
-						kill = true;
-					}
-					moveBack = (float)Math.Pow(rnCounter, 1.2f);
-				}
-				npc.alpha += 4;
-				ring.ResetVariables();
-            }	
-			rotationCounter += 0.8f;
-			float mult = counter / 900f;
+				rotationCounter += 1.0f;
+			}
+			else
+				rotationCounter += 0.8f;
+			float mult = counter / (max * 0.75f);
 			if (mult > 1)
 				mult = 1;
 			Vector2 rotatePos = new Vector2((960 - 120 * mult) * (1 - moveBack), 0).RotatedBy(MathHelper.ToRadians(rotationCounter + npc.ai[1]));
@@ -164,58 +174,81 @@ namespace SOTS.NPCs.Boss.Lux
 			goToPos = goToPos.SafeNormalize(Vector2.Zero);
 			npc.velocity = goToPos * speed;
 			counter++;
-			if (counter > 240 && counter < 1200)
+			if (counter > 240 && counter < max)
 			{
-				Vector2 aimAtCenter = rotateCenter;
-				if (Type() == 2)
-					aimAtCenter = player.Center;
-				modifyRotation(true, aimAtCenter, true);
-				ring.aiming = true;
-				ring.targetRadius = 40;
-				if(Type() == 2) // blue
-                {
-					if(counter > 300)
+				if (npc.ai[3] == 0) //3 different AI()
+				{
+					Vector2 aimAtCenter = rotateCenter;
+					if (Type() == 2)
+						aimAtCenter = player.Center;
+					modifyRotation(true, aimAtCenter, true);
+					ring.aiming = true;
+					ring.targetRadius = 40;
+					if (Type() == 2) // blue
+					{
+						if (counter > 300)
+						{
+							float localCounter = counter - 300;
+							if (localCounter % 30 == 0)
+							{
+								Vector2 outward = new Vector2(0, 1).RotatedBy(npc.rotation);
+								Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 91, 1.1f, 0.2f);
+								if (Main.netMode != NetmodeID.MultiplayerClient)
+								{
+									Projectile.NewProjectile(npc.Center + outward * 48, outward * (6f + 6f * mult), ProjectileType<ChaosBall>(), damage, 0, Main.myPlayer, 0, -Type());
+								}
+							}
+						}
+					}
+					else if (Type() == 1) //green
+					{
+						if (counter > 300)
+						{
+							float localCounter = counter - 300;
+							if (localCounter % 90 == 0)
+							{
+								Vector2 outward = new Vector2(0, 1).RotatedBy(npc.rotation);
+								Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 62, 1.1f, 0.2f);
+								if (Main.netMode != NetmodeID.MultiplayerClient)
+								{
+									for (int i = -2; i <= 2; i++)
+									{
+										outward = new Vector2(0, 1).RotatedBy(npc.rotation + MathHelper.ToRadians(i * 22.5f));
+										Projectile.NewProjectile(npc.Center + outward * 48, outward * (2f + 1.5f * mult), ProjectileType<ChaosWave>(), damage, 0, Main.myPlayer, 0, -Type());
+									}
+								}
+							}
+						}
+					}
+					else //red
+					{
+						if (counter == 300)
+						{
+							Vector2 outward = new Vector2(0, 1).RotatedBy(npc.rotation);
+							if (Main.netMode != NetmodeID.MultiplayerClient)
+							{
+								Projectile.NewProjectile(npc.Center + outward * 32, outward * 6f, ProjectileType<ChaosEraser2>(), damage, 0, Main.myPlayer, npc.whoAmI);
+							}
+						}
+					}
+				}
+				else
+				{
+					Vector2 aimAtCenter = rotateCenter;
+					modifyRotation(true, aimAtCenter, true);
+					ring.aiming = true;
+					ring.targetRadius = 40;
+					if (counter > 300)
 					{
 						float localCounter = counter - 300;
-						if (localCounter % 30 == 0)
+						if (localCounter % 9 == 0)
 						{
 							Vector2 outward = new Vector2(0, 1).RotatedBy(npc.rotation);
 							Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 91, 1.1f, 0.2f);
 							if (Main.netMode != NetmodeID.MultiplayerClient)
 							{
-								Projectile.NewProjectile(npc.Center + outward * 48, outward * (6f + 6f * mult), ProjectileType<ChaosBall>(), damage, 0, Main.myPlayer, 0, -Type());
+								Projectile.NewProjectile(npc.Center + outward * 48, outward * (6f + 8f * mult), ProjectileType<ChaosBall>(), damage, 0, Main.myPlayer, 0, -Type());
 							}
-						}
-					}
-                }
-				else if(Type() == 1) //green
-				{
-					if (counter > 300)
-					{
-						float localCounter = counter - 300;
-						if (localCounter % 90 == 0)
-						{
-							Vector2 outward = new Vector2(0, 1).RotatedBy(npc.rotation);
-							Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 62, 1.1f, 0.2f);
-							if (Main.netMode != NetmodeID.MultiplayerClient)
-							{
-								for (int i = -2; i <= 2; i++)
-								{
-									outward = new Vector2(0, 1).RotatedBy(npc.rotation + MathHelper.ToRadians(i * 22.5f));
-									Projectile.NewProjectile(npc.Center + outward * 48, outward * (2f + 1.5f * mult), ProjectileType<ChaosWave>(), damage, 0, Main.myPlayer, 0, -Type());
-								}
-							}
-						}
-					}
-				}
-				else //red
-				{
-					if (counter == 300)
-					{
-						Vector2 outward = new Vector2(0, 1).RotatedBy(npc.rotation);
-						if (Main.netMode != NetmodeID.MultiplayerClient)
-						{
-							Projectile.NewProjectile(npc.Center + outward * 32, outward * 6f, ProjectileType<ChaosEraser2>(), damage, 0, Main.myPlayer, npc.whoAmI);
 						}
 					}
 				}

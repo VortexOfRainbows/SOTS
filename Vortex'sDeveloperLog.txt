@@ -16,9 +16,7 @@ High Priority:
 1. Starmap and Digital Daito Obtaining
 2. Reorganize Folders... Planetarium and Pyramid folders remaining.
 3. Lux
-	1. Phase 2 RGB Spiral
-	2. Enhance other Phase 1 attacks that persist in Phase 2
-	3. Death animation
+	1. Death animation
 
 Mid Priority:
 1. Lux Drops (ask me before you go about spriting these ones):
@@ -46,10 +44,12 @@ Low Priority:
 3. Void Bar strike the player during void shock
 4. Fix Planetarium sky island spawning in tandum
 
-3/9/22
+3/9/22 & 3/10/22
 1. Lux 
-	1. Thunder Column attack is far stronger
-	2. Phase 2 scatter bullets is much faster (I still plan on reworking it a bit)
+	1. Thunder Column attack is far stronger, more fair hitbox
+	2. Phase 2 RGB attack, Scatter bullet attack, and Hyperbeam attack all enhanced
+		1. RGB and Scatter bullet is different
+		2. Hyperbeam is much faster
 
 3/7/22 & 3/8/22
 1. Lux 

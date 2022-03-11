@@ -149,7 +149,13 @@ namespace SOTS.Projectiles.Chaos
                     dust2.fadeIn = 0.2f;
                     dust2.scale *= 2.2f;
                 }
-                Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 91, 1.5f, -0.4f);
+                int playerID = (int)projectile.ai[0];
+                if (playerID >= 0)
+                {
+                    Player target = Main.player[playerID];
+                    if (target.active)
+                        Main.PlaySound(SoundID.Item, (int)target.Center.X, (int)target.Center.Y, 91, 1.1f, -0.4f);
+                }
                 for (int i = 0; i < drawPositionList.Count; i += 2)
                 {
                     if (Main.rand.NextBool(5))

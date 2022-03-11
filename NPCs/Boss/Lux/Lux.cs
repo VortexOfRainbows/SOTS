@@ -703,14 +703,29 @@ namespace SOTS.NPCs.Boss.Lux
 						Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 91, 1.1f, 0.2f);
 						if (Main.netMode != NetmodeID.MultiplayerClient)
 						{
-							int amt = 10;
-							if (Main.expertMode)
-								amt = 12;
-							float startRadians = toPlayer.ToRotation() + MathHelper.ToRadians(Main.rand.NextFloat(-7f, 7f));
-							for (int i = 0; i <= amt; i++)
+							if(SecondPhase)
 							{
-								float radians = startRadians + MathHelper.ToRadians(i * 360f / amt);
-								Projectile.NewProjectile(npc.Center + new Vector2(1f, 0).RotatedBy(radians) * 40, new Vector2(1, 0).RotatedBy(radians) * 6f, ModContent.ProjectileType<ChaosBall>(), damage, 0, Main.myPlayer, 0);
+								int amt = 1;
+								if (Main.expertMode)
+									amt = 2;
+								float startRadians = toPlayer.ToRotation() + MathHelper.ToRadians(Main.rand.NextFloat(-2.5f, 2.5f));
+								for (int i = -amt; i <= amt; i++)
+								{
+									float radians = startRadians + MathHelper.ToRadians(i * 30f);
+									Projectile.NewProjectile(npc.Center + new Vector2(1f, 0).RotatedBy(radians) * 40, new Vector2(1, 0).RotatedBy(radians) * 2.5f, ModContent.ProjectileType<ChaosDart2>(), damage, 0, Main.myPlayer, 0);
+								}
+							}
+							else
+							{
+								int amt = 10;
+								if (Main.expertMode)
+									amt = 12;
+								float startRadians = toPlayer.ToRotation() + MathHelper.ToRadians(Main.rand.NextFloat(-7f, 7f));
+								for (int i = 0; i <= amt; i++)
+								{
+									float radians = startRadians + MathHelper.ToRadians(i * 360f / amt);
+									Projectile.NewProjectile(npc.Center + new Vector2(1f, 0).RotatedBy(radians) * 40, new Vector2(1, 0).RotatedBy(radians) * 6f, ModContent.ProjectileType<ChaosBall>(), damage, 0, Main.myPlayer, 0);
+								}
 							}
 						}
 						wingOutwardOffset = 24;
@@ -735,7 +750,10 @@ namespace SOTS.NPCs.Boss.Lux
 			{
 				npc.velocity *= 0.964f;
 				attackTimer1++;
-				if (attackTimer3 > 2)
+				int cycles = 3;
+				if (SecondPhase)
+					cycles = 4;
+				if (attackTimer3 >= cycles)
 				{
 					for (int i = 0; i < 4; i++)
 					{
@@ -748,6 +766,9 @@ namespace SOTS.NPCs.Boss.Lux
 				}
 				else
 				{
+					int numberOfShots = 30;
+					if (SecondPhase)
+						numberOfShots = 20;
 					if (attackTimer1 == 60)
 					{
 						Vector2 toLocation = player.Center + new Vector2(480, 0).RotatedBy(toPlayer.ToRotation()); //teleports behind the player
@@ -773,13 +794,15 @@ namespace SOTS.NPCs.Boss.Lux
 							Vector2 outward = new Vector2(0, 1).RotatedBy(npc.rotation);
 							if (Main.netMode != NetmodeID.MultiplayerClient)
 							{
-								Projectile.NewProjectile(npc.Center, outward * 4, ModContent.ProjectileType<ChaosEraser>(), (int)(damage * 1.4f), 0, Main.myPlayer, npc.target, 0.023f * attackTimer2);
+								Projectile.NewProjectile(npc.Center, outward * 4, ModContent.ProjectileType<ChaosEraser>(), (int)(damage * 1.4f), 0, Main.myPlayer, npc.target, 0.023f * attackTimer2 * 30f / numberOfShots);
 							}
 							attackTimer2++;
 							npc.velocity -= outward * 1f;
 						}
 					}
-					if (attackTimer2 > 30)
+					else if (attackTimer1 % 2 == 0 && SecondPhase && attackTimer1 > 60)
+						attackTimer1++;
+					if (attackTimer2 > numberOfShots)
 					{
 						attackTimer1 = 50;
 						attackTimer2 = 0;
@@ -787,7 +810,7 @@ namespace SOTS.NPCs.Boss.Lux
 					}
 				}
 			}
-			if (attackPhase == RGBTransition)
+			if (attackPhase == RGBTransition || attackPhase == RGBPhase)
 			{
 				for (int i = 0; i < 4; i++)
 				{
@@ -803,7 +826,10 @@ namespace SOTS.NPCs.Boss.Lux
 					compressWings = 1;
                 }
 				if (attackTimer1 >= 180)
-                {
+				{
+					float end = 1200;
+					if (attackPhase == RGBPhase)
+						end = 900;
 					compressWings = 2;
 					if(attackTimer1 == 180)
 					{
@@ -823,7 +849,7 @@ namespace SOTS.NPCs.Boss.Lux
 						if (Main.netMode != NetmodeID.MultiplayerClient)
 							for (int i = 0; i < 3; i++)
 							{
-								int npc1 = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<FakeLux>(), 0, npc.whoAmI, 120 * i, 0, 0); //summons 180, 270, and 360
+								int npc1 = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<FakeLux>(), 0, npc.whoAmI, 120 * i, 0, attackPhase == RGBPhase ? 1 : 0); //summons 120, 240, and 360
 								Main.npc[npc1].netUpdate = true;
 							}
 					}
@@ -835,9 +861,9 @@ namespace SOTS.NPCs.Boss.Lux
 						float multiplier = rnTimer / (150f); //will equal 1 when rnTimer > 180
 						if (multiplier > 1)
 							multiplier = 1;
-						if (attackTimer4 > 1200)
+						if (attackTimer4 > end)
 						{
-							if(attackTimer4 > 1320)
+							if(attackTimer4 > end + 120)
 							{
 								compressWings = 0;
 								npc.alpha = 0;
@@ -880,9 +906,14 @@ namespace SOTS.NPCs.Boss.Lux
 							npc.netUpdate = true;
 						}
 						else
-							npc.Center = Vector2.Lerp(npc.Center, nextDestination, 0.065f);
+						{
+							float lerpSpeed = 0.065f;
+							if (attackPhase == RGBPhase)
+								lerpSpeed = 0.03f;
+							npc.Center = Vector2.Lerp(npc.Center, nextDestination, lerpSpeed);
+						}
 					}
-					if(attackTimer4 < 1200)
+					if(attackTimer4 < end)
 						npc.alpha = 0;
 					SecondPhase = true;
                 }	
@@ -1069,6 +1100,7 @@ namespace SOTS.NPCs.Boss.Lux
 		public const int BigLaserPhase = 5;
 		public const int RGBTransition = 6;
 		public const int HelixColumnPhase = 7;
+		public const int RGBPhase = 8;
 		public int[] previousAttacks = new int[] { -2, -2, -2 };
 		public int PickRandom(int exclude = -1)
         {
@@ -1082,7 +1114,7 @@ namespace SOTS.NPCs.Boss.Lux
 			}
 			else
             {
-				int[] phase2Attacks = new int[] { HelixColumnPhase, LaserOrbPhase, ScatterBulletsPhase, BigLaserPhase, RGBTransition };
+				int[] phase2Attacks = new int[] { HelixColumnPhase, LaserOrbPhase, ScatterBulletsPhase, BigLaserPhase, RGBPhase };
 				int rand = Main.rand.Next(phase2Attacks.Count());
 				while(phase2Attacks[rand] == exclude || previousAttacks[0] == phase2Attacks[rand] || previousAttacks[1] == phase2Attacks[rand])
 					rand = Main.rand.Next(phase2Attacks.Count());
