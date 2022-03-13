@@ -35,7 +35,7 @@ namespace SOTS.Projectiles.Chaos
         public const float SeekOutOthersRange = 96f;
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
-            if(projectile.timeLeft < 60 - startUpTime && projectile.timeLeft > 15)
+            if(projectile.timeLeft < 60 - startUpTime && projectile.timeLeft > 20)
             {
                 int width = 64;
                 for(int i = 0; i < drawPositionList.Count - 60; i += 3)

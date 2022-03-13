@@ -4,7 +4,9 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
+using SOTS.NPCs.ArtificialDebuffs;
 using SOTS.Projectiles.Evil;
+using SOTS.Projectiles.Inferno;
 using SOTS.Projectiles.Nature;
 using SOTS.Projectiles.Otherworld;
 using SOTS.Projectiles.Permafrost;
@@ -29,6 +31,72 @@ namespace SOTS
 				FrostFlakeUnit(projectile, frostFlake - 2);
 			AffixUnit(projectile);
 		}
+		public int timeFrozen = 0;
+		public bool netUpdateTime = false;
+		public bool frozen = false;
+		public float aiSpeedCounter = 0;
+		public float aiSpeedMultiplier = 1;
+		public static void SetTimeFreeze(Player player, Projectile proj, int time)
+		{
+			SOTSProjectile instancedProjectile = proj.GetGlobalProjectile<SOTSProjectile>();
+			instancedProjectile.timeFrozen = time;
+			instancedProjectile.frozen = false;
+			if ((player == null && Main.netMode == NetmodeID.Server) || Main.netMode != NetmodeID.SinglePlayer)
+				instancedProjectile.SendClientChanges(player, proj, 1);
+		}
+		public static bool UpdateWhileFrozen(Projectile proj, int i)
+		{
+			SOTSProjectile instancedProjectile = proj.GetGlobalProjectile<SOTSProjectile>();
+			if (instancedProjectile.timeFrozen > 0 || instancedProjectile.frozen)
+			{
+				if (!instancedProjectile.frozen)
+				{
+					if (instancedProjectile.aiSpeedMultiplier > 0)
+					{
+						instancedProjectile.aiSpeedMultiplier -= 1 / DebuffNPC.timeBeforeFullFreeze;
+					}
+					else
+					{
+						instancedProjectile.aiSpeedMultiplier = 0;
+						instancedProjectile.frozen = true;
+					}
+				}
+				else
+				{
+					if (instancedProjectile.timeFrozen > 1)
+					{
+						instancedProjectile.timeFrozen--;
+					}
+					else
+					{
+						instancedProjectile.aiSpeedMultiplier += 1 / DebuffNPC.timeBeforeFullFreeze;
+						if (instancedProjectile.aiSpeedMultiplier > 1)
+						{
+							instancedProjectile.aiSpeedMultiplier = 1;
+							instancedProjectile.timeFrozen = 0;
+							instancedProjectile.frozen = false;
+						}
+					}
+				}
+				if (instancedProjectile.timeFrozen == 0 && Main.netMode == NetmodeID.Server)
+				{
+					instancedProjectile.netUpdateTime = true;
+				}
+				proj.whoAmI = i;
+			}
+			else
+			{
+				instancedProjectile.frozen = false;
+			}
+			instancedProjectile.aiSpeedCounter += instancedProjectile.aiSpeedMultiplier;
+			if (instancedProjectile.aiSpeedCounter >= 1)
+			{
+				instancedProjectile.aiSpeedCounter -= 1;
+			}
+			else
+				return true;
+			return false;
+		}
 		public int frostFlake = 0;
 		public int affixID = 0;
 		public bool hasHitYet = false;
@@ -36,16 +104,30 @@ namespace SOTS
 		public int counter = 0;
 		public int petAdvisorID = -1;
 		private float spinCounter = 0;
-		public void SendClientChanges(Player player, Projectile projectile)
+		public void SendClientChanges(Player player, Projectile projectile, int type = 0)
 		{
 			// Send a Mod Packet with the changes.
-			var packet = mod.GetPacket();
-			packet.Write((byte)SOTSMessageType.SyncGlobalProj);
-			packet.Write((byte)player.whoAmI);
-			packet.Write(projectile.identity);
-			packet.Write(frostFlake);
-			packet.Write(affixID);
-			packet.Send();
+			if(type == 0)
+			{
+				var packet = mod.GetPacket();
+				packet.Write((byte)SOTSMessageType.SyncGlobalProj);
+				packet.Write((byte)player.whoAmI);
+				packet.Write(projectile.identity);
+				packet.Write(frostFlake);
+				packet.Write(affixID);
+				packet.Send();
+			}
+			if (type == 1) //can be called by server or player
+			{
+				int playerWhoAmI = player != null ? player.whoAmI : -1;
+				var packet = mod.GetPacket();
+				packet.Write((byte)SOTSMessageType.SyncGlobalProjTime);
+				packet.Write(playerWhoAmI);
+				packet.Write(projectile.whoAmI);
+				packet.Write(timeFrozen);
+				packet.Write(frozen);
+				packet.Send();
+			}
 		}
 		private Vector2 initialVelo = Vector2.Zero;
 		public void AffixUnit(Projectile projectile)
@@ -76,6 +158,34 @@ namespace SOTS
 						initialVelo -= (initialVelo - projectile.velocity) * 0.4f; //only recieve 40% of arrows usual gravity
 					if (projectile.velocity.X == initialVelo.X && projectile.velocity.Y != initialVelo.Y)
 						projectile.velocity = initialVelo;
+				}
+				if (affixID == 2) //Blaspha
+				{
+					for (int i = 0; i < 2; i++)
+					{
+						if(Main.rand.NextBool(7))
+						{
+							Vector2 spawnPos = Vector2.Lerp(projectile.Center, projectile.oldPosition + projectile.Size / 2, i * 0.5f);
+							Dust dust = Dust.NewDustDirect(spawnPos + new Vector2(-4, -4), 0, 0, DustID.Fire);
+							dust.noGravity = true;
+							dust.scale += 0.2f;
+							dust.scale *= 1.1f;
+							dust.velocity *= 0.5f;
+							dust.velocity += projectile.velocity * 0.1f;
+						}
+						else if(Main.rand.NextBool(14))
+						{
+							Vector2 spawnPos = Vector2.Lerp(projectile.Center, projectile.oldPosition + projectile.Size / 2, i * 0.5f);
+							Dust dust = Dust.NewDustDirect(spawnPos + new Vector2(-4, -4), 0, 0, ModContent.DustType<CopyDust4>());
+							dust.velocity *= 0.1f;
+							dust.noGravity = true;
+							dust.scale += 0.2f;
+							dust.color = VoidPlayer.InfernoColorAttempt(Main.rand.NextFloat(1f));
+							dust.fadeIn = 0.1f;
+							dust.scale *= 1.2f;
+							dust.velocity += projectile.velocity * 0.1f;
+						}
+					}
 				}
 			}
 		}
@@ -259,8 +369,15 @@ namespace SOTS
 			if(!hasFrostBloomed && frostFlake >= 3)
 			{
 				FrostBloom(projectile);
-            }
-        }
+			}
+			if (affixID == 2)
+			{
+				if (Main.myPlayer == projectile.owner)
+				{
+					Projectile.NewProjectile(projectile.Center, projectile.velocity.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-120, 120))) * Main.rand.NextFloat(0.4f, 0.6f), ModContent.ProjectileType<InfernoSeeker>(), (int)(projectile.damage * 0.5f), projectile.knockBack, Main.myPlayer, Main.rand.Next(3));
+				}
+			}
+		}
         public override void OnHitNPC(Projectile projectile, NPC target, int damage, float knockback, bool crit)
 		{
 			if (!hasFrostBloomed && frostFlake >= 3)
@@ -275,7 +392,7 @@ namespace SOTS
 						Projectile.NewProjectile(projectile.Center, projectile.velocity.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-randAmt, randAmt))) * Main.rand.NextFloat(0.2f, 0.3f), ModContent.ProjectileType<SteelShrapnel>(), (int)(projectile.damage), projectile.knockBack, Main.myPlayer, Main.rand.Next(3));
 					}
 				}
-            }
+			}
 		}
         public override bool OnTileCollide(Projectile projectile, Vector2 oldVelocity)
 		{

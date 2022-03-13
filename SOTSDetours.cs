@@ -19,6 +19,7 @@ namespace SOTS
 			On.Terraria.Main.DrawNPCs += Main_DrawNPCs;
 			On.Terraria.Main.DrawPlayers += Main_DrawPlayers;
 			On.Terraria.NPC.UpdateNPC += NPC_UpdateNPC;
+            On.Terraria.Projectile.Update += Projectile_Update;
 			Main.OnPreDraw += Main_OnPreDraw;
 			if (!Main.dedServ)
 				ResizeTargets();
@@ -35,6 +36,7 @@ namespace SOTS
 			On.Terraria.Main.DrawNPCs -= Main_DrawNPCs;
 			On.Terraria.Main.DrawPlayers -= Main_DrawPlayers;
 			On.Terraria.NPC.UpdateNPC -= NPC_UpdateNPC;
+			On.Terraria.Projectile.Update -= Projectile_Update;
 			Main.OnPreDraw -= Main_OnPreDraw;
 		}
 		private static void NPC_UpdateNPC(On.Terraria.NPC.orig_UpdateNPC orig, NPC self, int i)
@@ -47,7 +49,16 @@ namespace SOTS
 			}
 			orig(self, i);
 		}
-
+		private static void Projectile_Update(On.Terraria.Projectile.orig_Update orig, Projectile self, int i)
+		{
+			if (self.active)
+			{
+				bool freeze = SOTSProjectile.UpdateWhileFrozen(self, i);
+				if (freeze)
+					return;
+			}
+			orig(self, i);
+		}
 		private static void Main_OnPreDraw(GameTime obj)
 		{
 			if (Main.spriteBatch != null && !Main.dedServ)

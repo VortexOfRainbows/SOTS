@@ -17,12 +17,12 @@ namespace SOTS.Items
 		}
 		public override void SafeSetDefaults()
 		{
-			item.damage = 58;
+			item.damage = 70;
 			item.ranged = true;
 			item.width = 36;
 			item.height = 74;
-			item.useTime = 13;
-			item.useAnimation = 13;
+			item.useTime = 15;
+			item.useAnimation = 15;
 			item.useStyle = 5;
 			item.knockBack = 1.5f;
 			item.value = Item.sellPrice(0, 10, 0, 0);

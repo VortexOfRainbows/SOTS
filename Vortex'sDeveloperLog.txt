@@ -15,8 +15,9 @@ Known Bugs:
 High Priority:
 1. Starmap and Digital Daito Obtaining
 2. Reorganize Folders... Planetarium and Pyramid folders remaining.
-3. Lux
-	1. Death animation
+3. Lux	
+	1. Death animation + despawning + balance + phase ore spawning
+	2. Notes: increase survivability and length of phase 2
 
 Mid Priority:
 1. Lux Drops (ask me before you go about spriting these ones):
@@ -43,6 +44,17 @@ Low Priority:
 2. Accessory Pets to use own dye slots.
 3. Void Bar strike the player during void shock
 4. Fix Planetarium sky island spawning in tandum
+
+3/12/22
+1. Added time freeze mechanic to projectiles, WORKS IN MULTIPLAYER
+	1. This will remain unused for now
+2. WIP Voidmage Incubator
+	1. THIS IS VERY UNFINISHED. I plan to make a DIFFERENT time freeze system for this item! Also needs new buffs, debuffs, etc
+3. Added Blaspha as an upgrade to Doomstick. WORKS IN MULTIPLAYER
+	1. Doomstick Damage 31 -> 27
+	2. Could be overpowered?? Idk 
+4. Spectre Spirit Storm damage 58 -> 70, usetime 13 -> 15
+	1. Used a bit too much void for what it did. This should make it more efficient and compete better with Plasma Accelerator and Blaspha which are both non-void and same tier
 
 3/9/22 & 3/10/22
 1. Lux 

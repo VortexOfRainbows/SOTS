@@ -7,13 +7,13 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace SOTS.Projectiles.Earth
+namespace SOTS.Projectiles.Inferno
 {
-    public class PerfectStar : ModProjectile
+    public class Blaspha : ModProjectile
     {
         public override void SetDefaults()
         {
-            projectile.width = 30;
+            projectile.width = 26;
             projectile.height = 68;
             projectile.friendly = false;
             projectile.penetrate = -1;
@@ -33,78 +33,81 @@ namespace SOTS.Projectiles.Earth
         }
         public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
         {
-            Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Earth/PerfectStarGlow");
+            Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Inferno/BlasphaGlow");
             Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
             Vector2 drawPos = projectile.Center - Main.screenPosition;
             Color color = Color.White;
             spriteBatch.Draw(texture, drawPos, null, color, projectile.rotation, drawOrigin, projectile.scale, projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+            if (Main.myPlayer == projectile.owner)
+            {
+                texture = ModContent.GetTexture("SOTS/Projectiles/Inferno/BlasphaChargeReticle");
+                drawOrigin = new Vector2(texture.Width / 2, texture.Height - 4);
+                for (int i = 0; i < 8; i++)
+                {
+                    Vector2 circular = new Vector2(0, -GetLength() * (1 - chargePercent)).RotatedBy(MathHelper.ToRadians(45 * i + 180 * chargePercent + 90 * windupPercent));
+                    drawPos = Main.MouseWorld - Main.screenPosition + circular;
+                    spriteBatch.Draw(texture, drawPos, null, new Color(200, 200, 200, 0) * windupPercent, MathHelper.ToRadians(45 * i + 180 * chargePercent + 90 * windupPercent), drawOrigin, projectile.scale, SpriteEffects.None, 0f);
+                }
+            }
         }
+        bool runOnce = true;
         bool ended = false;
-        int chargeLevel = 0;
+        int counter = 0;
+        float chargePercent = 0;
+        float windupPercent = 0;
+        public float GetLength()
+        {
+            Player player = Main.player[projectile.owner];
+            float target = 112;
+            float targetRange = 480;
+            float rightNow = Vector2.Distance(player.Center, Main.MouseWorld) + 8;
+            return target * rightNow / targetRange;
+        }
+        public Vector2 fireFrom()
+        {
+            return projectile.Center + projectile.velocity.SafeNormalize(Vector2.Zero) * 32;
+        }
         public override void Kill(int timeLeft)
         {
-            DoDust(0.7f + 0.1f * chargeLevel, 2 + chargeLevel);
-            if (chargeLevel != 0)
-                Main.PlaySound(SoundLoader.customSoundType, (int)projectile.Center.X, (int)projectile.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/PerfectStarShot" + chargeLevel), 1.2f, -0.1f);
-            else
-                Main.PlaySound(SoundLoader.customSoundType, (int)projectile.Center.X, (int)projectile.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/PerfectStarShot1"), 1.2f, 0.4f);
+            Player player = Main.player[projectile.owner];
+            Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 36, 1.2f, 0.4f);
             if (projectile.owner == Main.myPlayer)
             {
-                Vector2 fireFrom = projectile.Center + projectile.velocity.SafeNormalize(Vector2.Zero) * 32;
-                if(chargeLevel == 0)
+                for (int i = 0; i < 8; i++)
                 {
-                    int size = 10;
-                    Projectile.NewProjectileDirect(fireFrom, projectile.velocity * 0.5f, ModContent.ProjectileType<PerfectStarLaser>(), projectile.damage, projectile.knockBack, Main.myPlayer, size);
-                }
-                else
-                {
-                    int size = 28 + chargeLevel * 24;
-                    Projectile.NewProjectileDirect(fireFrom, projectile.velocity * 0.3f, ModContent.ProjectileType<PerfectStarLaser2>(), projectile.damage, projectile.knockBack, Main.myPlayer, size, -chargeLevel);
+                    Vector2 circular = new Vector2(0, -GetLength() * (1 - chargePercent)).RotatedBy(MathHelper.ToRadians(45 * i + 360 * chargePercent));
+                    Vector2 fireTo = Main.MouseWorld + circular - player.Center + Main.rand.NextVector2Circular(1.5f, 1.5f) * (1 - chargePercent);
+                    float velocityMult = projectile.velocity.Length() * (0.6f + chargePercent * 1.4f) * Main.rand.NextFloat(0.7f + 0.2f * chargePercent, 1.3f - 0.2f * chargePercent);
+                    Projectile proj = Projectile.NewProjectileDirect(fireFrom(), fireTo.SafeNormalize(Vector2.Zero) * velocityMult, (int)projectile.ai[1], projectile.damage, projectile.knockBack, Main.myPlayer);
+                    proj.GetGlobalProjectile<SOTSProjectile>().affixID = -2; //this sould sync automatically on the SOTSProjectile end
                 }
             }
         }
         public override void AI()
         {
-            int chargeTime = (int)projectile.ai[0];
-            if(chargeLevel < 3)
+            int chargeTime = (int)(projectile.ai[0] * 1.0f);
+            counter++;
+            if(counter >= 0)
             {
-                projectile.ai[1]++;
-                if (projectile.ai[1] > chargeTime)
-                {
-                    if(chargeLevel != 2)
-                        Main.PlaySound(SoundLoader.customSoundType, (int)projectile.Center.X, (int)projectile.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/PerfectStarCharge"), 1.2f, 0.1f * chargeLevel);
-                    else
-                        Main.PlaySound(SoundLoader.customSoundType, (int)projectile.Center.X, (int)projectile.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/PerfectStarFull"), 1.2f, 0);
-                    chargeLevel++;
-                    projectile.ai[1] = -6 * chargeLevel;
-                }
+                chargePercent = counter / (float)chargeTime;
+                if (chargePercent > 1)
+                    chargePercent = 1;
+                windupPercent = 1;
             }
-        }
-        public void DoDust(float scale, float numSpikes)
-        {
-            Vector2 dustCenter = projectile.Center + new Vector2(37, 1 * projectile.direction).RotatedBy(projectile.rotation - MathHelper.PiOver2);
-            Vector2 startingLocation = dustCenter;
-            Vector2 presumedVelo = projectile.position - projectile.oldPosition;
-            for (int j = 0; j < numSpikes; j++)
+            else
             {
-                Vector2 offset = new Vector2(0, 14 * scale -(5 - numSpikes)).RotatedBy(MathHelper.ToRadians(j * 360f / numSpikes) + projectile.rotation + MathHelper.PiOver2 * projectile.direction);
-                for (int i = -10; i < 10; i++)
-                {
-                    startingLocation = new Vector2(i * scale * 0.825f, (20 - Math.Abs(i) * 2) * scale).RotatedBy(MathHelper.ToRadians(j * 360f / numSpikes) + projectile.rotation + MathHelper.PiOver2 * projectile.direction);
-                    Vector2 velo = offset + startingLocation;
-                    Dust dust = Dust.NewDustPerfect(dustCenter + velo * 1f, ModContent.DustType<CopyDust4>());
-                    dust.noGravity = true;
-                    dust.scale = 1.1f;
-                    dust.fadeIn = 0.1f;
-                    dust.color = Color.Lerp(new Color(175, 218, 118, 0), new Color(74, 186, 54, 0), Main.rand.NextFloat(1));
-                    dust.velocity = velo * 0.06f * scale + presumedVelo * 0.25f;
-                }
+                windupPercent = 1 + counter / projectile.ai[0];
             }
         }
         public override bool PreAI()
         {
+            if(runOnce)
+            {
+                counter = -(int)(projectile.ai[0]);
+                runOnce = false;
+            }
             Player player = Main.player[projectile.owner];
-            if (!player.channel && (projectile.ai[1] > 6 || chargeLevel > 0))
+            if (!player.channel && (counter >= 0))
                 ended = true;
             if (!ended)
             {

@@ -46,6 +46,7 @@ using SOTS.Items.GhostTown;
 using SOTS.Projectiles.Chaos;
 using SOTS.NPCs.Boss.Lux;
 using SOTS.Items.Tools;
+using SOTS.NPCs.ArtificialDebuffs;
 
 namespace SOTS
 {
@@ -100,7 +101,7 @@ namespace SOTS
 				FluidCurseMult = 60;
 		}
 		public bool zoneLux = false;
-
+		public bool VMincubator = false;
 		public bool normalizedGravity = false;
 		public bool VisionVanity = false;
 		public bool inazumaLongerPotions = false;
@@ -586,6 +587,7 @@ namespace SOTS
         }
         public override void ResetEffects()
 		{
+			VMincubator = false;
 			zoneLux = false;
 			if (NPC.AnyNPCs(ModContent.NPCType<Lux>()))
 			{
@@ -1072,6 +1074,24 @@ namespace SOTS
 					return false;
 				}
 			}
+			if(VMincubator && Main.myPlayer == player.whoAmI)
+            {
+				if(!pvp)
+                {
+					for(int i = 0; i < Main.npc.Length; i++)
+					{
+						NPC target = Main.npc[i];
+						if(target.active)
+							DebuffNPC.SetTimeFreeze(player, target, 240);
+					}
+					for (int i = 0; i < Main.projectile.Length; i++)
+					{
+						Projectile target = Main.projectile[i];
+						if (target.active)
+							SOTSProjectile.SetTimeFreeze(player, target, 240);
+					}
+				}
+            }
 			return base.PreHurt(pvp, quiet, ref damage, ref hitDirection, ref crit, ref customDamage, ref playSound, ref genGore, ref damageSource);
 		}
 		int shotCounter = 0;

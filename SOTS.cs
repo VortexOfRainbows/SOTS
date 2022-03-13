@@ -232,7 +232,8 @@ namespace SOTS
 			SyncRexFlower,
 			SyncGlobalProj,
 			SyncVisionNumber,
-			SyncGlobalNPCTime
+			SyncGlobalNPCTime,
+			SyncGlobalProjTime
 		}
 		public override void HandlePacket(BinaryReader reader, int whoAmI)
 		{
@@ -394,6 +395,23 @@ namespace SOTS
 						packet.Write(npcNumber);
 						packet.Write(debuffNPC.timeFrozen);
 						packet.Write(debuffNPC.frozen);
+						packet.Send(-1, playernumber2);
+					}
+					break;
+				case (int)SOTSMessageType.SyncGlobalProjTime:
+					playernumber2 = reader.ReadInt32();
+					int projNumber = reader.ReadInt32();
+					sProj = Main.projectile[projNumber].GetGlobalProjectile<SOTSProjectile>();
+					sProj.timeFrozen = reader.ReadInt32();
+					sProj.frozen = reader.ReadBoolean();
+					if (Main.netMode == NetmodeID.Server)
+					{
+						var packet = GetPacket();
+						packet.Write((byte)SOTSMessageType.SyncGlobalProjTime);
+						packet.Write(playernumber2);
+						packet.Write(projNumber);
+						packet.Write(sProj.timeFrozen);
+						packet.Write(sProj.frozen);
 						packet.Send(-1, playernumber2);
 					}
 					break;
