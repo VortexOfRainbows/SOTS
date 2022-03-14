@@ -1083,7 +1083,7 @@ namespace SOTS
             {
 				if(!pvp)
                 {
-					SOTSWorld.SetTimeFreeze(player, 120);
+					SOTSWorld.SetTimeFreeze(player, 180);
 				}
             }
 			return base.PreHurt(pvp, quiet, ref damage, ref hitDirection, ref crit, ref customDamage, ref playSound, ref genGore, ref damageSource);

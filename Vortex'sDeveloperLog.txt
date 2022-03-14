@@ -17,7 +17,6 @@ High Priority:
 2. Reorganize Folders... Planetarium and Pyramid folders remaining.
 3. Lux	
 	1. Death animation + despawning + balance + phase ore spawning
-	2. Notes: increase survivability and length of phase 2
 
 Mid Priority:
 1. Lux Drops (ask me before you go about spriting these ones):
@@ -46,8 +45,12 @@ Low Priority:
 4. Fix Planetarium sky island spawning in tandum
 
 3/13/22 & 3/14/22
-1. WIP timefreeze mechanic
+1. WIP timefreeze mechanic (VM Incubator)
 	1. Potentially very laggy when killing enemies with luiAFK ultimate battler. Though this shouldn't be a big issue with most items/weapons
+2. Lux max life (60000, 90000) -> (60000, 96000)
+	1. Lux damage (100, 160) -> (110, 176)
+	2. Second phase (33%, 33%) -> (45%, 55%)
+		1. However, you can now damage it before it fully transitions
 
 3/12/22
 1. Added time freeze mechanic to projectiles, WORKS IN MULTIPLAYER

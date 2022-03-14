@@ -238,7 +238,7 @@ namespace SOTS.NPCs.Boss.Lux
 		{
 			npc.aiStyle = -1;
             npc.lifeMax = 60000; 
-            npc.damage = 100; 
+            npc.damage = 110; 
             npc.defense = 60;   
             npc.knockBackResist = 0f;
             npc.width = 70;
@@ -260,8 +260,8 @@ namespace SOTS.NPCs.Boss.Lux
         }
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
 		{
-			npc.lifeMax = (int)(npc.lifeMax * bossLifeScale * 0.75f);
-			npc.damage = (int)(npc.damage * 0.8f); //160 damage
+			npc.lifeMax = (int)(npc.lifeMax * bossLifeScale * 0.8f); //96000 hp
+			npc.damage = (int)(npc.damage * 0.8f); //176 damage
 		}
 		bool runOnce = true;
 		public void TargettingUnit()
@@ -305,10 +305,6 @@ namespace SOTS.NPCs.Boss.Lux
 				attackTimer1 = -90;
 				attackPhase = -1;
 				runOnce = false;
-			}
-			if (canEnterSecondPhase())
-			{
-				npc.dontTakeDamage = true;
 			}
 			if (attackPhase == SetupPhase)
 			{
@@ -1008,7 +1004,7 @@ namespace SOTS.NPCs.Boss.Lux
 			}
 			WingStuff();
 			npc.alpha = (int)MathHelper.Clamp(npc.alpha, 0, 255);
-			if (npc.alpha > 150 || (!SecondPhase && npc.life <= npc.lifeMax / 3f))
+			if (npc.alpha > 150)
 				npc.dontTakeDamage = true;
 			else if (attackPhase != SetupPhase)
 				npc.dontTakeDamage = false;
@@ -1070,10 +1066,6 @@ namespace SOTS.NPCs.Boss.Lux
 						dust.velocity *= 4f;
 					}
 				}
-				if (canEnterSecondPhase())
-				{
-					npc.dontTakeDamage = true;
-				}
 			}
 		}
 		public override void NPCLoot()
@@ -1123,7 +1115,10 @@ namespace SOTS.NPCs.Boss.Lux
 		}
 		public bool canEnterSecondPhase()
         {
-			return !SecondPhase && npc.life <= npc.lifeMax / 3f;
+			float healthRange = 0.45f;
+			if (Main.expertMode)
+				healthRange = 0.55f;
+			return !SecondPhase && npc.life <= (npc.lifeMax  * healthRange);
 		}
 		public void SwapPhase(int phase)
 		{
