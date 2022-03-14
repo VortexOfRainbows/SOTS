@@ -20,7 +20,7 @@ High Priority:
 
 Mid Priority:
 1. Lux Drops (ask me before you go about spriting these ones):
-	1. Rose Bow
+	1. Rose Bow (glaze bow upgrade)
 	2. Voidmage Incubator (No-Hit drop)
 	3. True Phaseblade (upgrades into) -> Starward Sword
 	4. Chaos Chamber
@@ -31,12 +31,15 @@ Mid Priority:
 		4. Angelic Catalyst -> Void Anomaly
 		5. Star Storm Spell -> Supernova Storm
 		6. Stellar Serpent Launcher
-		7. Stellar Serpent Staff -> Hyperlight Launcher (magic gun)
-		8. Stellar Shot
+		7. Stellar Serpent Staff -> Hyperlight Launcher (magic gun, photon geyser upgrade)
+		8. Stellar Shot (will become Perfect Star upgrade)
 		9. Hyperdrive (upgrade to Vibrancy Module)
 2. Construct Items:	
 	1. Inferno Plating block
 3. Big Vibrant geode in the jungle
+4. Electromagnetic Lure
+	1. Similar idea to D.E.F.E
+	2. Can be used to attract constructs (will be useful for summoning Lux)
 
 Low Priority:
 1. Archaelogist NPC
@@ -51,6 +54,9 @@ Low Priority:
 	1. Lux damage (100, 160) -> (110, 176)
 	2. Second phase (33%, 33%) -> (45%, 55%)
 		1. However, you can now damage it before it fully transitions
+3. Added Chaos Chamber (will replace the current Stellar Shot)
+	1. Same tier as Blaspha, if not higher tier, though it does less single target and more multi-target
+	2. Syncs in Multiplayer
 
 3/12/22
 1. Added time freeze mechanic to projectiles, WORKS IN MULTIPLAYER

@@ -5,6 +5,7 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
+using SOTS.NPCs;
 using SOTS.NPCs.ArtificialDebuffs;
 using SOTS.Projectiles;
 using SOTS.Projectiles.Evil;
@@ -240,6 +241,34 @@ namespace SOTS
 							dust.scale *= 1.2f;
 							dust.velocity += projectile.velocity * 0.1f;
 						}
+					}
+				}
+				if(affixID == 3) //Chaos Chamber
+				{
+					for (int i = 0; i < 4; i++)
+					{
+						if(Main.rand.NextBool(2))
+						{
+							Vector2 spawnPos = Vector2.Lerp(projectile.Center, projectile.oldPosition + projectile.Size / 2, i * 0.25f);
+							Dust dust = Dust.NewDustDirect(spawnPos + new Vector2(-4, -4), 0, 0, ModContent.DustType<CopyDust4>());
+							dust.velocity *= 0.33f;
+							dust.noGravity = true;
+							dust.scale *= 0.3f;
+							dust.scale += 0.8f;
+							dust.color = VoidPlayer.pastelAttempt(MathHelper.ToRadians((projectile.whoAmI + Main.GameUpdateCount) * 12 + i * 4), true);
+							dust.alpha = (int)(projectile.alpha * 0.5f + 125);
+							dust.fadeIn = 0.1f;
+							dust.velocity += projectile.velocity * 0.05f;
+						}
+					}
+					float homingRange = (float)(180 + 64 * Math.Sqrt(counter));
+					if (homingRange > 640)
+						homingRange = 640;
+					int target = SOTSNPCs.FindTarget_Basic(projectile.Center, homingRange, this);
+					if (target >= 0)
+					{
+						NPC npc = Main.npc[target];
+						projectile.velocity = Vector2.Lerp(projectile.velocity, (npc.Center - projectile.Center).SafeNormalize(Vector2.Zero) * (projectile.velocity.Length() + 3), 0.055f);
 					}
 				}
 			}
