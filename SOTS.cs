@@ -128,6 +128,7 @@ namespace SOTS
 			SOTSTile.LoadArrays();
 			SOTSWall.LoadArrays();
 			SOTSPlayer.LoadArrays();
+			SOTSProjectile.LoadArrays();
 			DebuffNPC.LoadArrays();
 			if(Main.netMode != NetmodeID.Server)
 			{
@@ -233,7 +234,8 @@ namespace SOTS
 			SyncGlobalProj,
 			SyncVisionNumber,
 			SyncGlobalNPCTime,
-			SyncGlobalProjTime
+			SyncGlobalProjTime,
+			SyncGlobalWorldFreeze
 		}
 		public override void HandlePacket(BinaryReader reader, int whoAmI)
 		{
@@ -412,6 +414,20 @@ namespace SOTS
 						packet.Write(projNumber);
 						packet.Write(sProj.timeFrozen);
 						packet.Write(sProj.frozen);
+						packet.Send(-1, playernumber2);
+					}
+					break;
+				case (int)SOTSMessageType.SyncGlobalWorldFreeze:
+					playernumber2 = reader.ReadInt32();
+					SOTSWorld.GlobalTimeFreeze = reader.ReadInt32();
+					SOTSWorld.GlobalFrozen = reader.ReadBoolean();
+					if (Main.netMode == NetmodeID.Server)
+					{
+						var packet = GetPacket();
+						packet.Write((byte)SOTSMessageType.SyncGlobalWorldFreeze);
+						packet.Write(playernumber2);
+						packet.Write(SOTSWorld.GlobalTimeFreeze);
+						packet.Write(SOTSWorld.GlobalFrozen);
 						packet.Send(-1, playernumber2);
 					}
 					break;

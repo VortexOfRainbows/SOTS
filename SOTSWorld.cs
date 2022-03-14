@@ -31,12 +31,94 @@ using SOTS.Items.Otherworld.Blocks;
 using SOTS.Items.Otherworld.Furniture;
 using SOTS.Items.Pyramid.AncientGold;
 using SOTS.Items.Earth;
+using static SOTS.SOTS;
 
 namespace SOTS
 {
     public class SOTSWorld : ModWorld
 	{
-		public static int SecretFoundMusicTimer = 0;
+		public const float GlobalFreezeStartup = 30f;
+		public static int GlobalTimeFreeze = 0;
+		public static bool GlobalFrozen = false;
+		public static float GlobalFreezeCounter = 0;
+		public static float GlobalSpeedMultiplier = 1;
+		public static bool IsFrozenThisFrame = false;
+		public static void SyncTimeFreeze(Player clientSender)
+		{
+			int playerWhoAmI = clientSender != null ? clientSender.whoAmI : -1;
+			var packet = Instance.GetPacket();
+			packet.Write((byte)SOTSMessageType.SyncGlobalWorldFreeze);
+			packet.Write(playerWhoAmI);
+			packet.Write(GlobalTimeFreeze);
+			packet.Write(GlobalFrozen);
+			packet.Send();
+		}
+		public static void SetTimeFreeze(Player clientSender, int time)
+		{
+			GlobalTimeFreeze = time;
+			GlobalFrozen = false;
+			if ((clientSender == null && Main.netMode == NetmodeID.Server) || Main.netMode != NetmodeID.SinglePlayer)
+				SyncTimeFreeze(clientSender);
+		}
+		public static bool UpdateWhileFrozen() //returns true if frozen
+		{
+			if (GlobalTimeFreeze > 0 || GlobalFrozen)
+			{
+				if (!GlobalFrozen)
+				{
+					if (GlobalSpeedMultiplier > 0)
+					{
+						GlobalSpeedMultiplier -= 1 / GlobalFreezeStartup;
+					}
+					else
+					{
+						GlobalSpeedMultiplier = 0;
+						GlobalFrozen = true;
+					}
+				}
+				else
+				{
+					if (GlobalTimeFreeze > 1)
+					{
+						GlobalTimeFreeze--;
+					}
+					else
+					{
+						GlobalSpeedMultiplier += 1 / GlobalFreezeStartup;
+						if (GlobalSpeedMultiplier > 1)
+						{
+							GlobalSpeedMultiplier = 1;
+							GlobalTimeFreeze = 0;
+							GlobalFrozen = false;
+						}
+					}
+				}
+				if (GlobalTimeFreeze == 0 && Main.netMode == NetmodeID.Server)
+				{
+					SyncTimeFreeze(null);
+				}
+			}
+			else
+			{
+				GlobalFrozen = false;
+			}
+			GlobalFreezeCounter += GlobalSpeedMultiplier;
+			if (GlobalFreezeCounter >= 1)
+			{
+				IsFrozenThisFrame = false;
+				GlobalFreezeCounter -= 1;
+			}
+			else
+			{
+				IsFrozenThisFrame = true;
+			}
+			return IsFrozenThisFrame;
+		}
+        public override void PreUpdate()
+        {
+			UpdateWhileFrozen();
+        }
+        public static int SecretFoundMusicTimer = 0;
         public static int planetarium = 0;
 		public static int pyramidBiome = 0;
 		public static int geodeBiome = 0;
@@ -51,6 +133,10 @@ namespace SOTS
 		public static bool downedAdvisor = false;
         public override void Initialize()
 		{
+			GlobalTimeFreeze = 0;
+			GlobalFrozen = false;
+			GlobalFreezeCounter = 0;
+			GlobalSpeedMultiplier = 1;
 			downedPinky = false;
 			downedAdvisor = false;
 			downedCurse = false;

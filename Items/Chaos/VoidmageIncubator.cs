@@ -67,6 +67,7 @@ namespace SOTS.Items.Chaos
 			vPlayer.bonusVoidGain += 10f;
 			vPlayer.voidRegenSpeed += 0.1f;
 			modPlayer.VMincubator = true;
+			modPlayer.TimeFreezeImmune = true;
 		}
 		public int GetGem(int unique)
 		{

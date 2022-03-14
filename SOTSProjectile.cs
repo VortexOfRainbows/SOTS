@@ -1,12 +1,15 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
 using SOTS.NPCs.ArtificialDebuffs;
+using SOTS.Projectiles;
 using SOTS.Projectiles.Evil;
 using SOTS.Projectiles.Inferno;
+using SOTS.Projectiles.Laser;
 using SOTS.Projectiles.Nature;
 using SOTS.Projectiles.Otherworld;
 using SOTS.Projectiles.Permafrost;
@@ -21,6 +24,44 @@ namespace SOTS
 {
 	public class SOTSProjectile : GlobalProjectile
 	{
+		public static int[] immuneToTimeFreeze;
+		public static int[] isChargeWeapon;
+		public static void LoadArrays()
+		{
+			immuneToTimeFreeze = new int[]
+			{
+				ModContent.ProjectileType<VisionWeapon>()
+			};
+			isChargeWeapon = new int[]
+			{
+				ProjectileID.LastPrismLaser,
+				ModContent.ProjectileType<PrismOrb>()
+			};
+		}
+		public static bool CanBeTimeFrozen(Projectile proj)
+        {
+			if(proj.owner >= 0)
+			{
+				Player player = Main.player[proj.owner];
+				SOTSPlayer sPlayer = SOTSPlayer.ModPlayer(player);
+				if (sPlayer.oldTimeFreezeImmune || sPlayer.TimeFreezeImmune)
+                {
+					if(ProjectileID.Sets.LightPet[proj.type] || Main.projPet[proj.type])
+                    {
+						return false;
+                    }
+					if(immuneToTimeFreeze.Contains(proj.type) || isChargeWeapon.Contains(proj.type))
+                    {
+						return false;
+					}
+					if (sPlayer.oldHeldProj == proj.whoAmI)
+                    {
+						return false;
+                    }
+				}
+			}
+			return true;
+        }
 		public override bool InstancePerEntity => true;
 		public override void PostAI(Projectile projectile)
 		{
@@ -43,6 +84,20 @@ namespace SOTS
 			instancedProjectile.frozen = false;
 			if ((player == null && Main.netMode == NetmodeID.Server) || Main.netMode != NetmodeID.SinglePlayer)
 				instancedProjectile.SendClientChanges(player, proj, 1);
+		}
+		public const float GlobalFreezeSlowdownDuration = 12f;
+		public float GlobalFreezeSlowdownCounter = 0;
+		public static bool GlobalFreezeSlowdown(Projectile proj)
+		{
+			SOTSProjectile instancedProjectile = proj.GetGlobalProjectile<SOTSProjectile>();
+			float percent = 1 - instancedProjectile.counter / GlobalFreezeSlowdownDuration;
+			instancedProjectile.GlobalFreezeSlowdownCounter += percent;
+			if(instancedProjectile.GlobalFreezeSlowdownCounter >= 1)
+            {
+				instancedProjectile.GlobalFreezeSlowdownCounter -= 1;
+				return false;
+			}
+			return true;
 		}
 		public static bool UpdateWhileFrozen(Projectile proj, int i)
 		{

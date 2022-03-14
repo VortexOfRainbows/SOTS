@@ -45,6 +45,10 @@ Low Priority:
 3. Void Bar strike the player during void shock
 4. Fix Planetarium sky island spawning in tandum
 
+3/13/22 & 3/14/22
+1. WIP timefreeze mechanic
+	1. Potentially very laggy when killing enemies with luiAFK ultimate battler. Though this shouldn't be a big issue with most items/weapons
+
 3/12/22
 1. Added time freeze mechanic to projectiles, WORKS IN MULTIPLAYER
 	1. This will remain unused for now

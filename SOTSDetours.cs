@@ -18,8 +18,16 @@ namespace SOTS
 			On.Terraria.Main.DrawProjectiles += Main_DrawProjectiles;
 			On.Terraria.Main.DrawNPCs += Main_DrawNPCs;
 			On.Terraria.Main.DrawPlayers += Main_DrawPlayers;
+
+			//order of updates: player, NPC, gore, projectile, item, dust, time
+			On.Terraria.Player.Update += Player_Update;
 			On.Terraria.NPC.UpdateNPC += NPC_UpdateNPC;
+			On.Terraria.Gore.Update += Gore_Update;
             On.Terraria.Projectile.Update += Projectile_Update;
+			On.Terraria.Item.UpdateItem += Item_UpdateItem;
+			On.Terraria.Dust.UpdateDust += Dust_UpdateDust;
+			On.Terraria.Main.UpdateTime += Main_UpdateTime;
+			//On.Terraria.NPC.UpdateCollision += NPC_UpdateCollision;
 			Main.OnPreDraw += Main_OnPreDraw;
 			if (!Main.dedServ)
 				ResizeTargets();
@@ -39,25 +47,99 @@ namespace SOTS
 			On.Terraria.Projectile.Update -= Projectile_Update;
 			Main.OnPreDraw -= Main_OnPreDraw;
 		}
+		private static void Player_Update(On.Terraria.Player.orig_Update orig, Player self, int i)
+        {
+			if(SOTSWorld.IsFrozenThisFrame && self.active)
+            {
+				SOTSPlayer sPlayer = SOTSPlayer.ModPlayer(self);
+				sPlayer.oldHeldProj = self.heldProj;
+				if (!sPlayer.TimeFreezeImmune)
+                {
+					return;
+                }
+            }
+			orig(self, i);
+		}
+		/*private static void NPC_UpdateCollision(On.Terraria.NPC.orig_UpdateCollision orig, NPC self)
+		{
+			if (self.active)
+			{
+				if (SOTSWorld.IsFrozenThisFrame)
+				{
+					return;
+				}
+			}
+			orig(self);
+		}*/
 		private static void NPC_UpdateNPC(On.Terraria.NPC.orig_UpdateNPC orig, NPC self, int i)
 		{
 			if (self.active)
 			{
-				bool freeze = DebuffNPC.UpdateWhileFrozen(self, i);
-				if (freeze)
+				if (SOTSWorld.IsFrozenThisFrame)
+				{
 					return;
+				}
+				else
+				{
+					bool freeze = DebuffNPC.UpdateWhileFrozen(self, i);
+					if (freeze)
+						return;
+				}
 			}
 			orig(self, i);
 		}
+		private static void Gore_Update(On.Terraria.Gore.orig_Update orig, Gore self)
+		{
+			if (SOTSWorld.IsFrozenThisFrame && self.active)
+			{
+				return;
+			}
+			orig(self);
+		}
 		private static void Projectile_Update(On.Terraria.Projectile.orig_Update orig, Projectile self, int i)
 		{
-			if (self.active)
+			if(self.active)
 			{
-				bool freeze = SOTSProjectile.UpdateWhileFrozen(self, i);
-				if (freeze)
-					return;
+				if (SOTSWorld.IsFrozenThisFrame)
+				{
+					bool dragIntoFreeze = SOTSProjectile.GlobalFreezeSlowdown(self);
+					if (dragIntoFreeze && SOTSProjectile.CanBeTimeFrozen(self))
+					{
+						return;
+					}
+				}
+				else
+				{
+					bool freeze = SOTSProjectile.UpdateWhileFrozen(self, i);
+					if (freeze)
+						return;
+				}
 			}
 			orig(self, i);
+		}
+		private static void Item_UpdateItem(On.Terraria.Item.orig_UpdateItem orig, Item self, int i)
+		{
+			if (SOTSWorld.IsFrozenThisFrame && self.active)
+			{
+				return;
+			}
+			orig(self, i);
+		}
+		private static void Dust_UpdateDust(On.Terraria.Dust.orig_UpdateDust orig)
+		{
+			if (SOTSWorld.IsFrozenThisFrame)
+			{
+				return;
+			}
+			orig();
+		}
+		private static void Main_UpdateTime(On.Terraria.Main.orig_UpdateTime orig)
+		{
+			if (SOTSWorld.IsFrozenThisFrame)
+			{
+				return;
+			}
+			orig();
 		}
 		private static void Main_OnPreDraw(GameTime obj)
 		{
@@ -82,7 +164,6 @@ namespace SOTS
 				PostDrawProjectiles();
 			}
 		}
-
 		private static void Main_DrawNPCs(On.Terraria.Main.orig_DrawNPCs orig, Main self, bool behindTiles)
 		{
 			if (SOTS.primitives != null && Main.spriteBatch != null)
