@@ -23,8 +23,7 @@ Mid Priority:
 	1. Rose Bow (glaze bow upgrade)
 	2. Voidmage Incubator (No-Hit drop)
 	3. True Phaseblade (upgrades into) -> Starward Sword
-	4. Chaos Chamber
-	5. Replace Celestial Serpent Drops (resprites and maybe some reworks)
+	4. Replace Celestial Serpent Drops (resprites and maybe some reworks)
 		1. Galaxy Blade -> Reality Shatter
 		2. Ethereal Scepter
 		3. Armageddon
@@ -57,6 +56,7 @@ Low Priority:
 3. Added Chaos Chamber (will replace the current Stellar Shot)
 	1. Same tier as Blaspha, if not higher tier, though it does less single target and more multi-target
 	2. Syncs in Multiplayer
+4. WIP Art for Collector Mk2
 
 3/12/22
 1. Added time freeze mechanic to projectiles, WORKS IN MULTIPLAYER
