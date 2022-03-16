@@ -24,15 +24,15 @@ Mid Priority:
 	2. Voidmage Incubator (No-Hit drop)
 	3. True Phaseblade (upgrades into) -> Starward Sword
 	4. Replace Celestial Serpent Drops (resprites and maybe some reworks)
-		1. Galaxy Blade -> Reality Shatter
-		2. Ethereal Scepter
-		3. Armageddon
-		4. Angelic Catalyst -> Void Anomaly
-		5. Star Storm Spell -> Supernova Storm
-		6. Stellar Serpent Launcher
+		1. Galaxy Blade -> Reality Shatter (melee)
+		2. Ethereal Scepter (summon)
+		3. Armageddon (melee + void)
+		4. Angelic Catalyst -> Void Anomaly (expert accessory)
+		5. Star Storm Spell -> Supernova Storm (magic)
+		6. Stellar Serpent Launcher (ranged)
 		7. Stellar Serpent Staff -> Hyperlight Launcher (magic gun, photon geyser upgrade)
-		8. Stellar Shot (will become Perfect Star upgrade)
-		9. Hyperdrive (upgrade to Vibrancy Module)
+		8. Stellar Shot (will become Perfect Star upgrade, magic gun)
+		9. Hyperdrive (upgrade to Vibrancy Module, accessory)
 2. Construct Items:	
 	1. Inferno Plating block
 3. Big Vibrant geode in the jungle
