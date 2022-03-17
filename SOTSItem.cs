@@ -31,6 +31,7 @@ using SOTS.Items.Secrets;
 using System;
 using SOTS.Items.Otherworld.Furniture;
 using SOTS.Items.Fishing;
+using SOTS.Items.Chaos;
 
 namespace SOTS
 {
@@ -721,27 +722,51 @@ namespace SOTS
 							}
 						}
 					}
-					else
+					else //for swords and stuff
 					{
-						Color color = new Color(Main.DiscoR, Main.DiscoG, Main.DiscoB, 0);
-						int recurse = 1;
-						if(modPlayer.rainbowGlowmasks)
-                        {
-							recurse = 2;
-                        }
-						for (int i = 0; i < recurse; i++)
+						if(item.type == ItemType<RealityShatter>())
 						{
-							DrawData value = new DrawData(texture,
-								new Vector2((float)((int)(location.X - Main.screenPosition.X)),
-								(float)((int)(location.Y - Main.screenPosition.Y))), new Rectangle?(new Rectangle(0, 0, texture.Width, texture.Height)),
-								modPlayer.rainbowGlowmasks ? color : Color.White,
-								drawPlayer.itemRotation,
-								 new Vector2(texture.Width * 0.5f - texture.Width * 0.5f * (float)drawPlayer.direction, drawPlayer.gravDir == -1 ? 0f : texture.Height),
-								item.scale,
-								drawInfo.spriteEffects,
-								0);
-
-							Main.playerDrawData.Add(value);
+							for (int k = 0; k < 6; k++)
+							{
+								Color color = Color.White;
+								Vector2 circular = new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(k * 60 + Main.GameUpdateCount * 6));
+								color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(k * 60));
+								color.A = 0;
+								DrawData value = new DrawData(texture, location - Main.screenPosition + circular, new Rectangle(0, 0, texture.Width, texture.Height), color, drawPlayer.itemRotation, new Vector2(texture.Width * 0.5f - texture.Width * 0.5f * (float)drawPlayer.direction, drawPlayer.gravDir == -1 ? 0f : texture.Height), item.scale, drawInfo.spriteEffects, 0);
+								Main.playerDrawData.Add(value);
+							}
+							Texture2D tBlack = mod.GetTexture("Items/Chaos/RealityShatterBlack");
+							DrawData value2 = new DrawData(tBlack, location - Main.screenPosition, new Rectangle(0, 0, texture.Width, texture.Height), Color.Black, drawPlayer.itemRotation, new Vector2(texture.Width * 0.5f - texture.Width * 0.5f * (float)drawPlayer.direction, drawPlayer.gravDir == -1 ? 0f : texture.Height), item.scale, drawInfo.spriteEffects, 0);
+							Main.playerDrawData.Add(value2);
+							for (int k = 0; k < 6; k++)
+							{
+								Color color = Color.Black * 0.7f;
+								Vector2 circular = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(k * 60));
+								DrawData value = new DrawData(tBlack, location - Main.screenPosition + circular, new Rectangle(0, 0, texture.Width, texture.Height), color, drawPlayer.itemRotation, new Vector2(texture.Width * 0.5f - texture.Width * 0.5f * (float)drawPlayer.direction, drawPlayer.gravDir == -1 ? 0f : texture.Height), item.scale, drawInfo.spriteEffects, 0);
+								Main.playerDrawData.Add(value);
+							}
+						}
+						else
+						{
+							Color color = new Color(Main.DiscoR, Main.DiscoG, Main.DiscoB, 0);
+							int recurse = 1;
+							if (modPlayer.rainbowGlowmasks)
+							{
+								recurse = 2;
+							}
+							for (int i = 0; i < recurse; i++)
+							{
+								DrawData value = new DrawData(texture,
+									new Vector2((float)((int)(location.X - Main.screenPosition.X)),
+									(float)((int)(location.Y - Main.screenPosition.Y))), new Rectangle?(new Rectangle(0, 0, texture.Width, texture.Height)),
+									modPlayer.rainbowGlowmasks ? color : Color.White,
+									drawPlayer.itemRotation,
+									 new Vector2(texture.Width * 0.5f - texture.Width * 0.5f * (float)drawPlayer.direction, drawPlayer.gravDir == -1 ? 0f : texture.Height),
+									item.scale,
+									drawInfo.spriteEffects,
+									0);
+								Main.playerDrawData.Add(value);
+							}
 						}
 					}
 				}

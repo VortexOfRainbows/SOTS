@@ -199,7 +199,10 @@ namespace SOTS.Void
 					player.lifeRegen = 0;
 				}
 				player.lifeRegenTime = 0;
-				player.lifeRegen -= 16;
+				if (SOTSPlayer.ModPlayer(player).VMincubator) //also lengthens time of curse
+					player.lifeRegen -= 20; // -10 hp * 20 seconds = -200 hp
+				else
+					player.lifeRegen -= 16; // -8 hp * 10 seconds = -80 hp
 				if (player.statLife <= 0 && player.whoAmI == Main.myPlayer)
 				{
 					player.KillMe(PlayerDeathReason.ByCustomReason(player.name + voidDeathMessages[Main.rand.Next(voidDeathMessages.Length)]), 10.0, 0, false);
@@ -214,6 +217,13 @@ namespace SOTS.Void
 				player.lifeRegenTime = 0;
 				player.lifeRegen -= 20;
 				player.lifeRegen -= player.statLifeMax2 / 20;
+				if (SOTSPlayer.ModPlayer(player).VMincubator)
+                {
+					if(player.lifeRegen < 0)
+                    {
+						player.lifeRegen = (int)(player.lifeRegen * 1.25f); //simply 1.25x the hp loss as normal
+                    }
+                }
 				if (player.statLife <= 0 && player.whoAmI == Main.myPlayer)
 				{
 					player.KillMe(PlayerDeathReason.ByCustomReason(player.name + voidDeathMessages[Main.rand.Next(voidDeathMessages.Length)]), 10.0, 0, false);
@@ -528,6 +538,8 @@ namespace SOTS.Void
 				if (!voidShock && !voidRecovery)
 				{
 					int time = 600;
+					if (SOTSPlayer.ModPlayer(player).VMincubator)
+						time = 1200;
 					player.AddBuff(ModContent.BuffType<VoidShock>(), time);
 					if (player.whoAmI == Main.LocalPlayer.whoAmI)
 						Main.PlaySound(SoundLoader.customSoundType, (int)player.Center.X, (int)player.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Void/Void_Shock"), 0.9f);

@@ -29,6 +29,7 @@ namespace SOTS.Items.Pyramid
 			item.rare = ItemRarityID.Orange;
 			item.UseSound = SoundID.Item1;
 			item.autoReuse = true;
+			item.scale = 1.4f;
 		}
 		public override void ModifyHitNPC(Player player, NPC target, ref int damage, ref float knockBack, ref bool crit)
 		{

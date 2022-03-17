@@ -24,15 +24,14 @@ Mid Priority:
 	2. Voidmage Incubator (No-Hit drop)
 	3. True Phaseblade (upgrades into) -> Starward Sword
 	4. Replace Celestial Serpent Drops (resprites and maybe some reworks)
-		1. Galaxy Blade -> Reality Shatter (melee)
-		2. Ethereal Scepter (summon)
-		3. Armageddon (melee + void)
-		4. Angelic Catalyst -> Void Anomaly (expert accessory)
-		5. Star Storm Spell -> Supernova Storm (magic)
-		6. Stellar Serpent Launcher (ranged)
-		7. Stellar Serpent Staff -> Hyperlight Launcher (magic gun, photon geyser upgrade)
-		8. Stellar Shot (will become Perfect Star upgrade, magic gun)
-		9. Hyperdrive (upgrade to Vibrancy Module, accessory)
+		1. Ethereal Scepter (summon)
+		2. Armageddon (melee + void)
+		3. Angelic Catalyst -> Void Anomaly (expert accessory)
+		4. Star Storm Spell -> Supernova Storm (magic)
+		5. Stellar Serpent Launcher (ranged)
+		6. Stellar Serpent Staff -> Hyperlight Launcher (magic gun, photon geyser upgrade)
+		7. Stellar Shot (will become Perfect Star upgrade, magic gun)
+		8. Hyperdrive (upgrade to Vibrancy Module, accessory)
 2. Construct Items:	
 	1. Inferno Plating block
 3. Big Vibrant geode in the jungle
@@ -45,6 +44,15 @@ Low Priority:
 2. Accessory Pets to use own dye slots.
 3. Void Bar strike the player during void shock
 4. Fix Planetarium sky island spawning in tandum
+5. Stars in Planetarium Sky
+
+3/15/22 & 3/16/22
+1. Added Reality Shatter
+	1. True melee. Works in Multiplayer
+2. Sandstone Edge now has scale 1.0 -> 1.4
+	1. Was outclassed by Imperial Pike. The extra range should help it compete with the Pike.
+3. Void debuffs are incredibly punishing when using VMIncubator
+4. Planetarium Sky is now incredibly dark
 
 3/13/22 & 3/14/22
 1. WIP timefreeze mechanic (VM Incubator)

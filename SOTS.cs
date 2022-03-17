@@ -728,6 +728,7 @@ namespace SOTS
 		//Custom Tile Merging
 		public static bool[][] tileMergeTypes;
 		public static float LuxLightingFadeIn = 0;
+		public static float PlanetariumLightingFadeIn = 0;
 		public override void ModifySunLightColor(ref Color tileColor, ref Color backgroundColor)
 		{
 			if (Main.gameMenu)
@@ -738,11 +739,25 @@ namespace SOTS
 			SOTSPlayer sPlayer = SOTSPlayer.ModPlayer(player);
 			if (sPlayer.zoneLux)
 			{
+
 			}
 			else if (LuxLightingFadeIn > 0)
+			{
 				LuxLightingFadeIn -= 0.01f;
+			}
 			backgroundColor = Color.Lerp(backgroundColor, new Color(15, 0, 30), 0.96f * LuxLightingFadeIn);
 			tileColor = Color.Lerp(tileColor, new Color(15, 0, 30), 0.96f * LuxLightingFadeIn);
+			if (sPlayer.PlanetariumBiome)
+			{
+				if (PlanetariumLightingFadeIn < 1)
+					PlanetariumLightingFadeIn += 0.01f;
+			}
+			else if (PlanetariumLightingFadeIn > 0)
+			{
+				PlanetariumLightingFadeIn -= 0.01f;
+			}
+			backgroundColor = Color.Lerp(backgroundColor, new Color(0, 0, 10), 0.9f * PlanetariumLightingFadeIn);
+			tileColor = Color.Lerp(tileColor, new Color(0, 0, 10), 0.9f * PlanetariumLightingFadeIn);
 		}
 		public enum Similarity
 		{

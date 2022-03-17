@@ -43,8 +43,16 @@ namespace SOTS
 			On.Terraria.Main.DrawProjectiles -= Main_DrawProjectiles;
 			On.Terraria.Main.DrawNPCs -= Main_DrawNPCs;
 			On.Terraria.Main.DrawPlayers -= Main_DrawPlayers;
+
+			//order of updates: player, NPC, gore, projectile, item, dust, time
+			On.Terraria.Player.Update -= Player_Update;
 			On.Terraria.NPC.UpdateNPC -= NPC_UpdateNPC;
+			On.Terraria.Gore.Update -= Gore_Update;
 			On.Terraria.Projectile.Update -= Projectile_Update;
+			On.Terraria.Item.UpdateItem -= Item_UpdateItem;
+			On.Terraria.Dust.UpdateDust -= Dust_UpdateDust;
+			On.Terraria.Main.UpdateTime -= Main_UpdateTime;
+
 			Main.OnPreDraw -= Main_OnPreDraw;
 		}
 		private static void Player_Update(On.Terraria.Player.orig_Update orig, Player self, int i)

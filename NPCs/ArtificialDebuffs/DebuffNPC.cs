@@ -61,6 +61,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
         public float aiSpeedCounter = 0;
         public float aiSpeedMultiplier = 1;
         public const float timeBeforeFullFreeze = 30f;
+        public float frozenForTime = 0;
         //public bool hasJustSpawned = true;
         public override void OnHitPlayer(NPC npc, Player target, int damage, bool crit)
         {
@@ -172,7 +173,6 @@ namespace SOTS.NPCs.ArtificialDebuffs
             {
                 if (npc.immune[Main.myPlayer] > 0)
                     npc.immune[Main.myPlayer]--;
-
                 if (!debuffNPC.frozen)
                 {
                     if (debuffNPC.aiSpeedMultiplier > 0)
@@ -187,6 +187,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 }
                 else
                 {
+                    debuffNPC.frozenForTime++;
                     if (debuffNPC.timeFrozen > 1)
                     {
                         debuffNPC.timeFrozen--;
@@ -210,6 +211,12 @@ namespace SOTS.NPCs.ArtificialDebuffs
             }
             else
             {
+                if (debuffNPC.frozenForTime > 0)
+                {
+                    debuffNPC.frozenForTime--;
+                }
+                else
+                    debuffNPC.frozenForTime = 0;
                 debuffNPC.frozen = false;
             }
             debuffNPC.aiSpeedCounter += debuffNPC.aiSpeedMultiplier;
