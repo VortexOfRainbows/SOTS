@@ -1,13 +1,14 @@
 using System;
-using System.IO;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using SOTS.Buffs;
+using SOTS.Projectiles.Celestial;
+using System.Collections.Generic;
+using SOTS.Void;
+using static SOTS.CurseHelper;
 
 namespace SOTS.Projectiles.Minions
 {
@@ -16,27 +17,25 @@ namespace SOTS.Projectiles.Minions
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Ethereal Flame");
-			Main.projFrames[projectile.type] = 5;
 			ProjectileID.Sets.MinionTargettingFeature[projectile.type] = true;
-
 			Main.projPet[projectile.type] = true;
 			ProjectileID.Sets.MinionSacrificable[projectile.type] = true;
-			// Don't mistake this with "if this is true, then it will automatically home". It is just for damage reduction for certain NPCs
 			ProjectileID.Sets.Homing[projectile.type] = true;
-			ProjectileID.Sets.TrailCacheLength[projectile.type] = 5;  
+			ProjectileID.Sets.TrailCacheLength[projectile.type] = 20;  
 			ProjectileID.Sets.TrailingMode[projectile.type] = 0;   
 		}
-
 		public sealed override void SetDefaults()
 		{
-			projectile.width = 28;
-			projectile.height = 52;
+			projectile.width = 22;
+			projectile.height = 22;
 			projectile.tileCollide = false;
-
 			projectile.friendly = true;
 			projectile.minion = true;
 			projectile.minionSlots = 1f;
 			projectile.penetrate = -1;
+			projectile.usesLocalNPCImmunity = true;
+			projectile.localNPCHitCooldown = 30;
+			projectile.extraUpdates = 1;
 		}
 		public override bool? CanCutTiles()
 		{
@@ -48,45 +47,95 @@ namespace SOTS.Projectiles.Minions
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Minions/EtherealFlame" + (projectile.frame + 1));
-			Vector2 drawOrigin = new Vector2(Main.projectileTexture[projectile.type].Width * 0.5f, projectile.height * 0.5f);
-			for (int k = 0; k < projectile.oldPos.Length; k++) {
-				Vector2 drawPos = projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, projectile.gfxOffY);
-				Color color = projectile.GetAlpha(lightColor) * ((float)(projectile.oldPos.Length - k) / (float)projectile.oldPos.Length);
-				spriteBatch.Draw(texture, drawPos, null, color * 0.5f, projectile.rotation, drawOrigin, projectile.scale, SpriteEffects.None, 0f);
+			Texture2D textureTrail = ModContent.GetTexture("SOTS/Projectiles/Minions/EtherealFlameTrail");
+			Vector2 drawOrigin2 = new Vector2(textureTrail.Width / 2, textureTrail.Height / 2);
+			Vector2 lastPosition = projectile.Center;
+			for (int k = 0; k < projectile.oldPos.Length; k++)
+			{
+				float scale = 1f - 0.95f * (k / (float)projectile.oldPos.Length);
+				Vector2 drawPos = projectile.oldPos[k] + new Vector2(projectile.width / 2, projectile.height / 2);
+				Color color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(colorCounter * 3 + k * 10));
+				color.A = 0;
+				Vector2 towards = lastPosition - drawPos;
+				float lengthTowards = towards.Length() / textureTrail.Height / scale;
+				for(int j = 0; j < 2; j++)
+				{
+					spriteBatch.Draw(textureTrail, drawPos - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), null, projectile.GetAlpha(color) * scale * (1 - j * 0.5f), towards.ToRotation() + MathHelper.PiOver2, drawOrigin2, new Vector2(1, lengthTowards) * scale * (1 + j * 0.05f), projectile.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+				}
+				lastPosition = drawPos;
 			}
-			return true;
-		}	
+			Texture2D texture = Main.projectileTexture[projectile.type];
+			Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
+			DrawFlames();
+			Vector2 drawPos2 = projectile.Center - Main.screenPosition + new Vector2(0f, projectile.gfxOffY);
+			Color color2 = VoidPlayer.pastelAttempt(MathHelper.ToRadians(colorCounter * 3));
+			color2.A = 0;
+			spriteBatch.Draw(texture, drawPos2, null, projectile.GetAlpha(color2), projectile.rotation, drawOrigin, projectile.scale, SpriteEffects.None, 0f);
+			return false;
+		}
+		public void DrawFlames()
+		{
+			Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Celestial/SubspaceLingeringFlame");
+			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
+			Color color;
+			for (int i = 0; i < particleList.Count; i++)
+			{
+				color = particleList[i].color;
+				color.A = 0;
+				Vector2 drawPos = projectile.Center + particleList[i].position - Main.screenPosition;
+				color = projectile.GetAlpha(color) * (0.4f + 0.6f * particleList[i].scale);
+				Main.spriteBatch.Draw(texture, drawPos, null, color, particleList[i].rotation, drawOrigin, particleList[i].scale * 1.25f, SpriteEffects.None, 0f);
+			}
+		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-			Player player = Main.player[projectile.owner];
 			projectile.ai[0] = 1;
-			projectile.ai[1] = 1;
-			if(target.life <= 2500)
-			{
-            target.immune[projectile.owner] = 5;
-			}
-			else
-			{
-            target.immune[projectile.owner] = 3;
-			}
 			projectile.netUpdate = true;
 			if(Main.myPlayer == projectile.owner)
-			Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("SmallStellarHitbox"), 0, 0, Main.myPlayer);
+				Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, ModContent.ProjectileType<SmallStellarHitbox>(), 0, 0, Main.myPlayer);
 		}
 		bool atNewLocation = true;
 		Vector2 toLocation = new Vector2(0, 0);
+		public List<ColoredFireParticle> particleList = new List<ColoredFireParticle>();
+		public void cataloguePos()
+		{
+			colorCounter++;
+			for (int i = 0; i < particleList.Count; i++)
+			{
+				ColoredFireParticle particle = particleList[i];
+				particle.Update();
+				if (!particle.active)
+				{
+					particleList.RemoveAt(i);
+					i--;
+				}
+			}
+		}
+		public override bool PreAI()
+		{
+			if (Main.netMode != NetmodeID.Server)
+			{
+				if(!SOTS.Config.lowFidelityMode || Main.rand.NextBool(2))
+				{
+					Vector2 rotational = new Vector2(0, -6f).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-40f, 40f)));
+					rotational.X *= 0.3f;
+					rotational.Y *= 1f;
+					particleList.Add(new ColoredFireParticle(rotational * -2f, rotational * 0.7f - projectile.velocity * 0.05f, Main.rand.NextFloat(-3f, 3f), Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(1.1f, 1.2f), VoidPlayer.pastelAttempt(MathHelper.ToRadians(colorCounter * 3 + Main.rand.NextFloat(-1, 1)), true)));
+				}
+				cataloguePos();
+			}
+			return base.PreAI();
+		}
+		int colorCounter = 0;
 		public override void AI() 
 		{
 			Player player = Main.player[projectile.owner];
-		
-			projectile.netUpdate = true; //idk why this works but I'm keeping it here because it does
 			#region Active check
 			if (player.dead || !player.active) 
 			{
-				player.ClearBuff(mod.BuffType("Ethereal"));
+				player.ClearBuff(ModContent.BuffType<Ethereal>());
 			}
-			if (player.HasBuff(mod.BuffType("Ethereal")))
+			if (player.HasBuff(ModContent.BuffType<Ethereal>()))
 			{
 				projectile.timeLeft = 2;
 			}
@@ -117,18 +166,14 @@ namespace SOTS.Projectiles.Minions
 			float distanceFromTarget = 1000f;
 			Vector2 targetCenter = projectile.Center;
 			bool foundTarget = false;
-			int targetWidth = 0;
-
 			// This code is required if your minion weapon has the targeting feature
 			if (player.HasMinionAttackTargetNPC)
 			{
 				NPC npc = Main.npc[player.MinionAttackTargetNPC];
 				float between = Vector2.Distance(npc.Center, player.Center);
-				
 				if (between < 1600f) 
 				{
 					distanceFromTarget = between;
-					targetWidth = npc.width;
 					targetCenter = npc.Center;
 					foundTarget = true;
 				}
@@ -141,14 +186,14 @@ namespace SOTS.Projectiles.Minions
 					if (npc.CanBeChasedBy()) 
 					{
 						float between = Vector2.Distance(npc.Center, player.Center);
-						bool inRange = between < distanceFromTarget;
+						float between2 = Vector2.Distance(npc.Center, projectile.Center);
+						bool inRange = between < distanceFromTarget || between2 < distanceFromTarget * 0.6f; 
 						bool lineOfSight = Collision.CanHitLine(projectile.position, projectile.width, projectile.height, npc.position, npc.width, npc.height);
 						
-						bool closeThroughWall = between < 200f; //should attack semi-reliably through walls
+						bool closeThroughWall = between < 320f || between2 < 320f; //should attack semi-reliably through walls
 						if (inRange && (lineOfSight || closeThroughWall))
 						{
 							distanceFromTarget = between;
-							targetWidth = npc.width;
 							targetCenter = npc.Center;
 							foundTarget = true;
 						}
@@ -159,52 +204,43 @@ namespace SOTS.Projectiles.Minions
 			#endregion
 
 			#region Movement
-			float speed = 62f;
-			float inertia = 17f;
-
-			if (foundTarget) 
+			float speed = 4.5f;
+			float inertia = 15f;
+			if (foundTarget)
 			{
-				if (projectile.ai[0] == 0) 
+				Vector2 direction = targetCenter - projectile.Center;
+				direction = direction.SafeNormalize(Vector2.Zero);
+				if (projectile.ai[0] == 0)
 				{
+					projectile.velocity *= 0.96f;
 					projectile.friendly = true;
-					Vector2 direction = targetCenter - projectile.Center;
-					direction.Normalize();
-					direction *= speed;
-					projectile.velocity = (projectile.velocity * (inertia - 1) + direction) / inertia;
+					projectile.velocity += direction * 0.9f;
 				}
 				else
 				{
-					projectile.ai[0]++;
+					projectile.velocity *= 0.9675f;
 					projectile.friendly = false;
-					projectile.velocity *= 0.97f;
+					projectile.velocity += direction.RotatedBy(MathHelper.ToRadians(90f * (float)Math.Sin(MathHelper.ToRadians(colorCounter * 1.2f)))) * 0.1f;
+					projectile.ai[0]++;
 				}
-				if(projectile.ai[0] == 11)
+				if(projectile.ai[0] > 30)
 				{
-					projectile.velocity *= 0f;
-					Vector2 nextLocation = new Vector2(56 + targetWidth/1.2f, 0).RotatedBy(Math.Atan2(projectile.Center.Y - targetCenter.Y, projectile.Center.X - targetCenter.X) - MathHelper.ToRadians(Main.rand.Next(105)));
-					projectile.position = new Vector2(targetCenter.X + nextLocation.X - projectile.width/2, targetCenter.Y + nextLocation.Y - projectile.height/2);
-				}
-				if(projectile.ai[0] > 16)
-				{
-					projectile.ai[0] = 0;
+					projectile.ai[0] = -30;
 				}
 			}
-			else 
+			else
 			{
-				projectile.ai[0] = 0;
-				if (distanceToIdlePosition > 600f)
+				if (projectile.ai[0] > 0)
 				{
-					speed = 30f;
-					inertia = 20f;
+					projectile.ai[0]--;
 				}
-				else
+				else if (projectile.ai[0] < 0)
 				{
-					speed = 16.5f;
-					inertia = 30f;
+					projectile.ai[0]++;
 				}
-				if (distanceToIdlePosition > 20f) 
+				if (distanceToIdlePosition > 60f) 
 				{
-					vectorToIdlePosition.Normalize();
+					vectorToIdlePosition = vectorToIdlePosition.SafeNormalize(Vector2.Zero);
 					vectorToIdlePosition *= speed;
 					projectile.velocity = (projectile.velocity * (inertia - 1) + vectorToIdlePosition) / inertia;
 				}
@@ -213,46 +249,12 @@ namespace SOTS.Projectiles.Minions
 					atNewLocation = true;
 				}
 			}
-			projectile.alpha = (int)projectile.ai[0] * 26;
+			projectile.alpha = (int)(255 * (1 - 1f * Math.Cos(1f * MathHelper.Clamp(projectile.ai[0] / 15f, -1, 1) * MathHelper.PiOver2)));
+			projectile.alpha = (int)MathHelper.Clamp(projectile.alpha, 0, 255);
 			#endregion
 
 			#region Animation and visuals
 			projectile.rotation = projectile.velocity.X * 0.05f;
-
-			int frameSpeed = 6;
-			projectile.frameCounter++;
-			if (projectile.frameCounter >= frameSpeed) {
-				projectile.frameCounter = 0;
-				projectile.frame++;
-				if (projectile.frame >= Main.projFrames[projectile.type]) {
-					projectile.frame = 0;
-				}
-			}
-			if(projectile.ai[1] == 1)
-			{
-				/*
-				int color = Main.rand.Next(2);
-				float size = 60f;
-				float starPosX = projectile.Center.X - size/2f;
-				float starPosY = projectile.Center.Y - size/6f;
-				for(int i = 0; i < 5; i ++)
-				{
-					float rads = MathHelper.ToRadians(144 * i);
-					for(float j = 0; j < size; j += 3f)
-					{
-						int num1 = Dust.NewDust(new Vector2(starPosX, starPosY), 0, 0, color == 0 ? 88 : 21);
-						Main.dust[num1].noGravity = true;
-						Main.dust[num1].velocity *= 0.1f;
-						
-						Vector2 rotationDirection = new Vector2(3f, 0).RotatedBy(rads);
-						starPosX += rotationDirection.X;
-						starPosY += rotationDirection.Y;
-					}
-				}
-				Main.PlaySound(SoundID.Item9, (int)(projectile.Center.X), (int)(projectile.Center.Y));
-				*/
-				projectile.ai[1] = 0;
-			}
 			Lighting.AddLight(projectile.Center, Color.White.ToVector3() * 0.78f);
 			#endregion
 		}

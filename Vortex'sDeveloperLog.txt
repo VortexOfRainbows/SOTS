@@ -46,6 +46,10 @@ Low Priority:
 4. Fix Planetarium sky island spawning in tandum
 5. Stars in Planetarium Sky
 
+3/17/22 & 3/18/22
+1. WIP Ethereal Scepter
+	1. Next: Polish on main body, more fluent attack cycle and "randomization", better hit visuals, item related visuals
+
 3/15/22 & 3/16/22
 1. Added Reality Shatter
 	1. True melee. Works in Multiplayer

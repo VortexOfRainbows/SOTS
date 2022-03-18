@@ -1,3 +1,4 @@
+using SOTS.Projectiles.Minions;
 using System;
 using Terraria;
 using Terraria.ModLoader;
@@ -15,7 +16,7 @@ namespace SOTS.Buffs
 		}
 		public override void Update(Player player, ref int buffIndex) 
 		{
-			if (player.ownedProjectileCounts[mod.ProjectileType("EtherealFlame")] > 0) 
+			if (player.ownedProjectileCounts[ModContent.ProjectileType<EtherealFlame>()] > 0) 
 			{
 				player.buffTime[buffIndex] = 18000;
 			}

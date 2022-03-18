@@ -91,5 +91,54 @@ namespace SOTS
 				spriteBatch.Draw(texture, drawPos + new Vector2(0, 0), frame, color, dustList[i].rotation, drawOrigin, dustList[i].scale * scale, SpriteEffects.None, 0);
 			}
 		}
+		public class ColoredFireParticle
+		{
+			public Color color;
+			public Vector2 position;
+			public Vector2 velocity;
+			public float rotation;
+			public float nextRotation;
+			public float mult;
+			public ColoredFireParticle()
+			{
+				position = Vector2.Zero;
+				velocity = Vector2.Zero;
+				rotation = 0;
+				nextRotation = 0;
+				scale = 1;
+				mult = Main.rand.NextFloat(0.9f, 1.1f);
+			}
+			public ColoredFireParticle(Vector2 position, Vector2 velocity, float rotation, float nextRotation, float scale, Color color)
+			{
+				this.position = position;
+				this.velocity = velocity;
+				this.rotation = rotation;
+				this.nextRotation = nextRotation;
+				this.scale = scale;
+				this.color = color;
+				mult = Main.rand.NextFloat(0.9f, 1.1f);
+			}
+			public float counter = 0;
+			public float scale;
+			public bool active = true;
+			public void Update()
+			{
+				counter++;
+				float veloMult = 0.6f + 0.4f * counter / 15f;
+				if (veloMult > 1)
+					veloMult = 1f;
+				position += velocity * veloMult;
+				for (int i = 0; i < 1 + (int)(Main.rand.NextFloat(1f) * mult); i++)
+				{
+					velocity.Y *= 0.95f;
+					velocity.X *= 0.98f;
+					scale *= 0.95f;
+				}
+				if (counter < 31f)
+					rotation += nextRotation / 30f;
+				if (scale <= 0.05f)
+					active = false;
+			}
+		}
 	}
 }
