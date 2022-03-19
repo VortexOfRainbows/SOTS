@@ -24,14 +24,13 @@ Mid Priority:
 	2. Voidmage Incubator (No-Hit drop)
 	3. True Phaseblade (upgrades into) -> Starward Sword
 	4. Replace Celestial Serpent Drops (resprites and maybe some reworks)
-		1. Ethereal Scepter (summon)
-		2. Armageddon (melee + void)
-		3. Angelic Catalyst -> Void Anomaly (expert accessory)
-		4. Star Storm Spell -> Supernova Storm (magic)
-		5. Stellar Serpent Launcher (ranged)
-		6. Stellar Serpent Staff -> Hyperlight Launcher (magic gun, photon geyser upgrade)
-		7. Stellar Shot (will become Perfect Star upgrade, magic gun)
-		8. Hyperdrive (upgrade to Vibrancy Module, accessory)
+		1. Armageddon (melee + void)
+		2. Angelic Catalyst -> Void Anomaly (expert accessory)
+		3. Star Storm Spell -> Supernova Storm (magic)
+		4. Stellar Serpent Launcher (ranged)
+		5. Stellar Serpent Staff -> Hyperlight Launcher (magic gun, photon geyser upgrade)
+		6. Stellar Shot (will become Perfect Star upgrade, magic gun)
+		7. Hyperdrive (upgrade to Vibrancy Module, accessory)
 2. Construct Items:	
 	1. Inferno Plating block
 3. Big Vibrant geode in the jungle
@@ -46,9 +45,14 @@ Low Priority:
 4. Fix Planetarium sky island spawning in tandum
 5. Stars in Planetarium Sky
 
+3/18/22
+1. Finished Ethereal Scepter.
+	1. Damage is about 5~10% weaker single target than Xenos (and somewhat less reliable), but has far more capable multi-target
+	2. Syncs in Multiplayer! :D
+
+
 3/17/22 & 3/18/22
 1. WIP Ethereal Scepter
-	1. Next: Polish on main body, more fluent attack cycle and "randomization", better hit visuals, item related visuals
 
 3/15/22 & 3/16/22
 1. Added Reality Shatter

@@ -130,7 +130,7 @@ namespace SOTS
 				position += velocity * veloMult;
 				for (int i = 0; i < 1 + (int)(Main.rand.NextFloat(1f) * mult); i++)
 				{
-					velocity.Y *= 0.95f;
+					velocity.Y *= 0.98f;
 					velocity.X *= 0.98f;
 					scale *= 0.95f;
 				}

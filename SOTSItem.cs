@@ -746,6 +746,23 @@ namespace SOTS
 								Main.playerDrawData.Add(value);
 							}
 						}
+						else if (item.type == ItemType<EtherealScepter>())
+						{
+							Texture2D tEffect= mod.GetTexture("Items/Chaos/EtherealScepterEffect");
+							for (int k = 0; k < 6; k++)
+							{
+								Color color = Color.White;
+								Vector2 circular = new Vector2(4, 0).RotatedBy(MathHelper.ToRadians(k * 60 + Main.GameUpdateCount * 6));
+								color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(k * 60));
+								color.A = 0;
+								DrawData value = new DrawData(tEffect, location - Main.screenPosition + circular, new Rectangle(0, 0, texture.Width, texture.Height), color * 0.3f, drawPlayer.itemRotation, new Vector2(texture.Width * 0.5f - texture.Width * 0.5f * (float)drawPlayer.direction, drawPlayer.gravDir == -1 ? 0f : texture.Height), item.scale, drawInfo.spriteEffects, 0);
+								Main.playerDrawData.Add(value);
+							}
+							DrawData value2 = new DrawData(texture, location - Main.screenPosition, new Rectangle(0, 0, texture.Width, texture.Height), Color.White, drawPlayer.itemRotation, new Vector2(texture.Width * 0.5f - texture.Width * 0.5f * (float)drawPlayer.direction, drawPlayer.gravDir == -1 ? 0f : texture.Height), item.scale, drawInfo.spriteEffects, 0);
+							Main.playerDrawData.Add(value2);
+							value2 = new DrawData(tEffect, location - Main.screenPosition, new Rectangle(0, 0, texture.Width, texture.Height), Color.White, drawPlayer.itemRotation, new Vector2(texture.Width * 0.5f - texture.Width * 0.5f * (float)drawPlayer.direction, drawPlayer.gravDir == -1 ? 0f : texture.Height), item.scale, drawInfo.spriteEffects, 0);
+							Main.playerDrawData.Add(value2);
+						}
 						else
 						{
 							Color color = new Color(Main.DiscoR, Main.DiscoG, Main.DiscoB, 0);
