@@ -32,6 +32,7 @@ using SOTS.Items.Otherworld.Furniture;
 using SOTS.Items.Pyramid.AncientGold;
 using SOTS.Items.Earth;
 using static SOTS.SOTS;
+using Terraria.Graphics.Effects;
 
 namespace SOTS
 {
@@ -112,6 +113,26 @@ namespace SOTS
 			{
 				IsFrozenThisFrame = true;
 			}
+			if(GlobalTimeFreeze == 0)
+            {
+				if (Main.netMode != NetmodeID.Server && Filters.Scene["VMFilter"].IsActive())
+				{
+					Filters.Scene["VMFilter"].Deactivate();
+				}
+			}
+			else
+			{
+				if (Main.netMode != NetmodeID.Server)
+				{
+					if(!Filters.Scene["VMFilter"].IsActive())
+						Filters.Scene.Activate("VMFilter", Main.LocalPlayer.Center).GetShader().UseColor(1, 1, 1).UseTargetPosition(Main.LocalPlayer.Center);
+					if(Filters.Scene["VMFilter"].IsActive())
+					{
+						float progress = 1 - GlobalSpeedMultiplier;
+						Filters.Scene["VMFilter"].GetShader().UseProgress(progress).UseTargetPosition(Main.LocalPlayer.Center).UseColor(SOTSPlayer.VoidMageColor(Main.LocalPlayer).ToVector3()).UseIntensity(SOTS.Config.coloredTimeFreeze ? 0.12f : 0);
+					}
+				}
+			}
 			return IsFrozenThisFrame;
 		}
         public override void PreUpdate()
@@ -122,7 +143,6 @@ namespace SOTS
         public static int planetarium = 0;
 		public static int pyramidBiome = 0;
 		public static int geodeBiome = 0;
-		public static bool downedBoss2 = false;
 
 		public static bool downedPinky = false;
 		public static bool downedCurse = false;
@@ -140,7 +160,6 @@ namespace SOTS
 			downedPinky = false;
 			downedAdvisor = false;
 			downedCurse = false;
-			downedBoss2 = false;
 			downedAmalgamation = false;
 			downedCelestial = false;
 			downedSubspace = false;
@@ -165,10 +184,6 @@ namespace SOTS
 			if (downedSubspace) {
 				downed.Add("subspace");
 			}
-			if (downedBoss2)
-			{
-				downed.Add("boss2");
-			}
 			return new TagCompound {
 				{"downed", downed}
 			};
@@ -181,7 +196,6 @@ namespace SOTS
 			downedAmalgamation = downed.Contains("amalgamation");
 			downedCelestial = downed.Contains("celestial");
 			downedSubspace = downed.Contains("subspace");
-			downedBoss2 = downed.Contains("boss2");
 		}
 		public override void NetSend(BinaryWriter writer) {
 			BitsByte flags = new BitsByte();
@@ -191,7 +205,6 @@ namespace SOTS
 			flags[3] = downedCurse;
 			flags[4] = downedCelestial;
 			flags[5] = downedSubspace;
-			flags[6] = downedBoss2;
 		}
 		public override void NetReceive(BinaryReader reader) {
 			BitsByte flags = reader.ReadByte();
@@ -201,15 +214,6 @@ namespace SOTS
 			downedCurse = flags[3];
 			downedCelestial = flags[4];
 			downedSubspace = flags[5];
-			downedBoss2 = flags[6];
-		}
-		public override void PostUpdate()
-		{
-			if(NPC.downedBoss2 && !downedBoss2)
-			{
-				downedBoss2 = true;
-				//Main.NewText("The pyramid's curse weakens", 155, 115, 0);
-			}
 		}
 		public override void ModifyWorldGenTasks(List<GenPass> tasks, ref float totalWeight)
         {

@@ -133,7 +133,10 @@ namespace SOTS
 			if(Main.netMode != NetmodeID.Server)
 			{
 				Ref<Effect> TPrismdyeRef = new Ref<Effect>(GetEffect("Effects/TPrismEffect"));
+				Ref<Effect> voidMageShader = new Ref<Effect>(GetEffect("Effects/VMShader"));
 				GameShaders.Armor.BindShader(ModContent.ItemType<TaintedPrismDye>(), new ArmorShaderData(TPrismdyeRef, "TPrismDyePass")).UseColor(0.3f, 0.4f, 0.4f);
+				Filters.Scene["VMFilter"] = new Filter(new ScreenShaderData(voidMageShader, "VMShaderPass"), EffectPriority.VeryHigh);
+				Filters.Scene["VMFilter"].Load();
 				AtenTrail = Instance.GetEffect("Effects/AtenTrail");
 				WaterTrail = Instance.GetEffect("Effects/WaterTrail");
 				FireballShader = Instance.GetEffect("Effects/FireballShader");
@@ -476,6 +479,14 @@ namespace SOTS
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(ItemID.FlowerBoots, 1);
 			recipe.AddRecipe();
+
+			recipe = new ModRecipe(this);
+			recipe.AddIngredient(ModContent.ItemType<FragmentOfTide>(), 10);
+			recipe.AddIngredient(ItemID.WaterWalkingPotion, 5);
+			recipe.AddIngredient(ItemID.HermesBoots, 1);
+			recipe.AddTile(TileID.Anvils);
+			recipe.SetResult(ItemID.WaterWalkingBoots, 1);
+			recipe.AddRecipe();
 		}
 		public override void UpdateMusic(ref int music, ref MusicPriority priority)
         {
@@ -654,24 +665,28 @@ namespace SOTS
 				ItemID.TungstenBar
 			});
 			RecipeGroup.RegisterGroup("SOTS:SilverBar", group);
+
 			group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Evil Material", new int[]
 			{
 				ItemID.TissueSample,
 				ItemID.ShadowScale
 			});
 			RecipeGroup.RegisterGroup("SOTS:EvilMaterial", group);
+
 			group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Evil Bar", new int[]
-			{
-				ItemID.TissueSample,
-				ItemID.ShadowScale
-			});
-			RecipeGroup.RegisterGroup("SOTS:EvilBar", group);
-			group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Gold Bar", new int[]
 			{
 				ItemID.CrimtaneBar,
 				ItemID.DemoniteBar
 			});
+			RecipeGroup.RegisterGroup("SOTS:EvilBar", group);
+
+			group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Gold Bar", new int[]
+			{
+				ItemID.GoldBar,
+				ItemID.PlatinumBar
+			});
 			RecipeGroup.RegisterGroup("SOTS:GoldBar", group);
+
 			group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Gem Robe", new int[]
 			{
 				ItemID.RubyRobe,
@@ -682,6 +697,7 @@ namespace SOTS
 				ItemID.DiamondRobe
 			});
 			RecipeGroup.RegisterGroup("SOTS:GemRobes", group);
+
 			group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Pre-Hardmode Ore", new int[]
 			{
 				ItemID.TungstenOre,
@@ -694,6 +710,7 @@ namespace SOTS
 				ItemID.PlatinumOre
 			});
 			RecipeGroup.RegisterGroup("SOTS:PHMOre", group);
+
 			group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Tier 2 DD2 Armor", new int[]
 			{
 				ItemID.SquirePlating,
@@ -710,6 +727,7 @@ namespace SOTS
 				ItemID.MonkPants
 			});
 			RecipeGroup.RegisterGroup("SOTS:T2DD2Armor", group);
+
 			group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Tier 2 DD2 Accessory", new int[]
 			{
 				ItemID.SquireShield,

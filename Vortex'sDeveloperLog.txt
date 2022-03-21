@@ -44,12 +44,24 @@ Low Priority:
 3. Void Bar strike the player during void shock
 4. Fix Planetarium sky island spawning in tandum
 5. Stars in Planetarium Sky
+6. Matsumoto Minion
+	1. Calculator + Subspace Locket + Some digital related item
+
+3/20/22
+1. Tidal construct no longer spawns in the Dungeon
+2. Added recipe for Water Walking Boots (temporary, will be replaced by treasure slimes eventually)
+3. Pyramid Checks now use vanilla NPC.downedBoss2 variables.
+4. Removed Leather from Patchleather Armor recipe
+5. Fixed some weird crash with modding toolkit + Subspace Locket
+6. More work on Voidmage Incubator (STILL WIP)
+	1. Added shaders
+	2. Added Void Metamorphosis
+	3. Some balancing tweaks
 
 3/18/22
 1. Finished Ethereal Scepter.
 	1. Damage is about 5~10% weaker single target than Xenos (and somewhat less reliable), but has far more capable multi-target
 	2. Syncs in Multiplayer! :D
-
 
 3/17/22 & 3/18/22
 1. WIP Ethereal Scepter

@@ -582,17 +582,23 @@ namespace SOTS.Void
 					dust.scale = 3.2f;
 				}
 			}
-			if (player.HasBuff(ModContent.BuffType<SulfurBurn>()))
+			if (player.HasBuff(BuffType<SulfurBurn>()))
 			{
 				if (flatVoidRegen > 0)
 					flatVoidRegen *= 0.5f;
 				flatVoidRegen -= 100f;
 			}
-			if (player.HasBuff(ModContent.BuffType<VoidBurn>()))
+			if (player.HasBuff(BuffType<VoidBurn>()))
 			{
 				if (flatVoidRegen > 0)
 					flatVoidRegen *= 0.2f;
 				flatVoidRegen -= 2f;
+			}
+			if(player.HasBuff(BuffType<VoidMetamorphosis>()))
+			{
+				if (flatVoidRegen > 0)
+					flatVoidRegen *= 0.5f;
+				flatVoidRegen -= 6f;
 			}
 			base.PostUpdateEquips();
         }
@@ -775,7 +781,7 @@ namespace SOTS.Void
             {
 				increaseAmount = -4;
             }
-			if(!frozenVoid)
+			if(!frozenVoid && !SOTSWorld.GlobalFrozen)
 				voidRegenTimer += increaseAmount;
 
 			voidRegenTimer = MathHelper.Clamp(voidRegenTimer, 0, voidRegenTimerMax);
@@ -795,14 +801,22 @@ namespace SOTS.Void
 			float voidRegen = flatVoidRegen / 60f;
 			if(voidRegen < 0)
 			{
-				int numberScaling = (int)(voidRegen * -3f);
+				int numberScaling = (int)(flatVoidRegen * -0.25f);
 				negativeVoidRegenPopupNumber = numberScaling + 1;
 				negativeVoidRegenCounter -= voidRegen;
 				if (negativeVoidRegenCounter >= negativeVoidRegenPopupNumber)
 				{
 					negativeVoidRegenCounter -= negativeVoidRegenPopupNumber;
 					if (voidMeter >= 0)
+					{
 						VoidEffect(player, -negativeVoidRegenPopupNumber, true);
+						if (player.HasBuff(BuffType<VoidMetamorphosis>()))
+						{
+							if (player.whoAmI == Main.myPlayer)
+								player.HealEffect(negativeVoidRegenPopupNumber);
+							player.statLife += negativeVoidRegenPopupNumber;
+						}
+					}
 					voidMeter -= negativeVoidRegenPopupNumber;
 				}
 			}

@@ -92,9 +92,8 @@ namespace SOTS.Items.Pyramid
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "Snakeskin", 24);
+			recipe.AddIngredient(ModContent.ItemType<Snakeskin>(), 24);
 			recipe.AddRecipeGroup("SOTS:EvilMaterial", 8);
-			recipe.AddIngredient(ItemID.Leather, 8);
 			recipe.SetResult(this);
 			recipe.AddTile(TileID.Anvils);
 			recipe.AddRecipe();

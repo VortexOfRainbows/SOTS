@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using System.ComponentModel;
+using Terraria;
 using Terraria.ModLoader.Config;
 
 namespace SOTS
@@ -63,5 +64,10 @@ namespace SOTS
 		[BackgroundColor(110, 80, 150, 192)]
 		[DefaultValue(false)]
 		public bool lowFidelityMode { get; set; }
+		[Label("Colored Time Freeze")]
+		[Tooltip("Whether the color of the screen during time freeze is tinted or black and white")]
+		[BackgroundColor(110, 80, 150, 192)]
+		[DefaultValue(true)]
+		public bool coloredTimeFreeze { get; set; }
 	}
 }

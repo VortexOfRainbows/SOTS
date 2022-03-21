@@ -592,8 +592,8 @@ namespace SOTS.NPCs
 			}
 			if (player.ZoneDungeon)
 			{
-				if (player.statLifeMax2 >= 120)
-					pool.Add(ModContent.NPCType<TidalConstruct>(), SpawnCondition.DungeonNormal.Chance * 0.00375f * constructRateMultiplier);
+				//if (player.statLifeMax2 >= 120)
+					//pool.Add(ModContent.NPCType<TidalConstruct>(), SpawnCondition.DungeonNormal.Chance * 0.00375f * constructRateMultiplier);
 			}
 			if (spawnInfo.player.ZoneSnow)
 			{

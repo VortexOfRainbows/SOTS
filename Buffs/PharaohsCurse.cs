@@ -17,7 +17,7 @@ namespace SOTS.Buffs
 		{
 			bool update = true;
 			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
-			if (SOTSWorld.downedBoss2 || modPlayer.weakerCurse)
+			if (NPC.downedBoss2 || modPlayer.weakerCurse)
 			{
 				update = false;	
 			}

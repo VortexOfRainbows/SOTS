@@ -37,7 +37,10 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			Projectile.NewProjectile(position, new Vector2(0, 1), ModContent.ProjectileType<ThunderSpawnBeam>(), 0, 0, Main.myPlayer, Main.MouseWorld.X, Main.MouseWorld.Y);
+			SOTSPlayer sPlayer = SOTSPlayer.ModPlayer(player);
+			sPlayer.UniqueVisionNumber++;
+			sPlayer.UniqueVisionNumber = sPlayer.UniqueVisionNumber % 24;
+			//Projectile.NewProjectile(position, new Vector2(0, 1), ModContent.ProjectileType<ThunderSpawnBeam>(), 0, 0, Main.myPlayer, Main.MouseWorld.X, Main.MouseWorld.Y);
 			return false; 
 		}
 		public void DrawTexture()

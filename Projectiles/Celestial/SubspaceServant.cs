@@ -366,12 +366,15 @@ namespace SOTS.Projectiles.Celestial
         public override void PostDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
 			Player player = Main.player[projectile.owner];
-			SubspacePlayer subspacePlayer = SubspacePlayer.ModPlayer(player);
-			DrawItemAnimation(spriteBatch, false);
-			Texture2D texture = mod.GetTexture("Projectiles/Celestial/SubspaceServantArms");
-			Vector2 drawPos = projectile.Center - Main.screenPosition + new Vector2(0, -4);
-			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 6 / 2);
-			spriteBatch.Draw(texture, drawPos, new Rectangle(0, frame * texture.Height / 6, texture.Width, texture.Height / 6), Color.White, projectile.rotation, origin, projectile.scale, direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+			if(player.active)
+            {
+				//SubspacePlayer subspacePlayer = SubspacePlayer.ModPlayer(player);
+				DrawItemAnimation(spriteBatch, false);
+				Texture2D texture = mod.GetTexture("Projectiles/Celestial/SubspaceServantArms");
+				Vector2 drawPos = projectile.Center - Main.screenPosition + new Vector2(0, -4);
+				Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 6 / 2);
+				spriteBatch.Draw(texture, drawPos, new Rectangle(0, frame * texture.Height / 6, texture.Width, texture.Height / 6), Color.White, projectile.rotation, origin, projectile.scale, direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+			}
 			//if (subspacePlayer.subspaceServantShader != 0)
 			//{
 			//	Main.spriteBatch.End();

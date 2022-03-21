@@ -69,6 +69,33 @@ namespace SOTS
 			harmonyWhitelist = new int[] { BuffID.Honey, ModContent.BuffType<Frenzy>(), BuffID.Panic, BuffID.ParryDamageBuff, BuffID.ShadowDodge };
 		}
 		public int UniqueVisionNumber = -1;
+		public static Color VoidMageColor(Player player)
+        {
+			SOTSPlayer sPlayer = ModPlayer(player);
+			if(SOTS.Config.coloredTimeFreeze)
+			{
+				switch (sPlayer.UniqueVisionNumber % 8)
+				{
+					case 0: //geo, earth
+						return new Color(224, 131, 29);
+					case 1: //electro, evil
+						return new Color(255, 45, 43);
+					case 2: //anemo, otherworld
+						return new Color(163, 114, 241);
+					case 3: //cyro, permafrost
+						return new Color(172, 202, 199);
+					case 4: //pyro, inferno
+						return new Color(255, 157, 1);
+					case 5: //hydro, tidal
+						return new Color(88, 141, 240);
+					case 6: //dendro, nature
+						return new Color(172, 216, 78);
+					case 7: //masterless, chaos
+						return new Color(245, 145, 255);
+				}
+			}
+			return Color.White;
+        }
 		public override TagCompound Save() {
 			return new TagCompound {
 				
@@ -103,7 +130,7 @@ namespace SOTS
 		public int oldHeldProj = -1;
 		public bool zoneLux = false;
 		public bool oldTimeFreezeImmune = false;
-		public bool TimeFreezeImmune = false;
+		public bool TimeFreezeImmune = true;
 		public bool VMincubator = false;
 		public bool normalizedGravity = false;
 		public bool VisionVanity = false;
@@ -591,7 +618,14 @@ namespace SOTS
         public override void ResetEffects()
 		{
 			oldTimeFreezeImmune = TimeFreezeImmune;
-			TimeFreezeImmune = false;
+			TimeFreezeImmune = true;
+			if(VMincubator)
+            {
+				if(SOTSWorld.GlobalFrozen)
+                {
+					player.AddBuff(ModContent.BuffType<VoidMetamorphosis>(), 30, true);
+                }
+            }
 			VMincubator = false;
 			zoneLux = false;
 			if (NPC.AnyNPCs(ModContent.NPCType<Lux>()))
@@ -1082,8 +1116,9 @@ namespace SOTS
 			if(VMincubator && Main.myPlayer == player.whoAmI)
             {
 				if(!pvp)
-                {
-					SOTSWorld.SetTimeFreeze(player, 180);
+				{
+					int finalDamage = (int)Main.CalculatePlayerDamage(damage, player.statDefense);
+					SOTSWorld.SetTimeFreeze(player, 240 + finalDamage);
 				}
             }
 			return base.PreHurt(pvp, quiet, ref damage, ref hitDirection, ref crit, ref customDamage, ref playSound, ref genGore, ref damageSource);

@@ -100,19 +100,22 @@ namespace SOTS.Items.Celestial
         {
             Mod mod = ModLoader.GetMod("SOTS");
             Player drawPlayer = drawInfo.drawPlayer;
-            SubspacePlayer modPlayer = SubspacePlayer.ModPlayer(drawPlayer);
-            int Probe = modPlayer.Probe;
-            for(int i = 0; i < Main.projectile.Length; i++)
+            if(drawPlayer.active)
             {
-                Projectile proj = Main.projectile[i];
-                SubspaceServant subServ = proj.modProjectile as SubspaceServant;
-                if(subServ != null && proj.owner == drawInfo.drawPlayer.whoAmI && proj.active)
+                SubspacePlayer modPlayer = SubspacePlayer.ModPlayer(drawPlayer);
+                int Probe = modPlayer.Probe;
+                for (int i = 0; i < Main.projectile.Length; i++)
                 {
-                    float drawX = (int)drawInfo.position.X + drawPlayer.width / 2;
-                    float drawY = (int)drawInfo.position.Y + drawPlayer.height / 2;
-                    Color color = Color.White.MultiplyRGBA(Lighting.GetColor((int)drawX / 16, (int)drawY / 16));
-                    subServ.PreDraw(Main.spriteBatch, color);
-                    subServ.PostDraw(Main.spriteBatch, color);
+                    Projectile proj = Main.projectile[i];
+                    SubspaceServant subServ = proj.modProjectile as SubspaceServant;
+                    if (subServ != null && proj.owner == drawInfo.drawPlayer.whoAmI && proj.active)
+                    {
+                        float drawX = (int)drawInfo.position.X + drawPlayer.width / 2;
+                        float drawY = (int)drawInfo.position.Y + drawPlayer.height / 2;
+                        Color color = Color.White.MultiplyRGBA(Lighting.GetColor((int)drawX / 16, (int)drawY / 16));
+                        subServ.PreDraw(Main.spriteBatch, color);
+                        subServ.PostDraw(Main.spriteBatch, color);
+                    }
                 }
             }
         });

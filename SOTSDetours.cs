@@ -113,6 +113,7 @@ namespace SOTS
 					bool dragIntoFreeze = SOTSProjectile.GlobalFreezeSlowdown(self);
 					if (dragIntoFreeze && SOTSProjectile.CanBeTimeFrozen(self))
 					{
+						self.Damage(); //turn on hitboxes
 						return;
 					}
 				}

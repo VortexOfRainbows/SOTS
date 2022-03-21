@@ -47,10 +47,12 @@ namespace SOTS
 				SOTSPlayer sPlayer = SOTSPlayer.ModPlayer(player);
 				if (sPlayer.oldTimeFreezeImmune || sPlayer.TimeFreezeImmune)
                 {
-					if(ProjectileID.Sets.LightPet[proj.type] || Main.projPet[proj.type])
+					if((ProjectileID.Sets.LightPet[proj.type] || Main.projPet[proj.type]) && !proj.minion)
                     {
 						return false;
                     }
+					if (proj.aiStyle == 7) //grappling hook
+						return false;
 					if(immuneToTimeFreeze.Contains(proj.type) || isChargeWeapon.Contains(proj.type))
                     {
 						return false;
