@@ -17,7 +17,7 @@ namespace SOTS.Items.Celestial
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Subspace Locket");
-			Tooltip.SetDefault("Summons a Subspace Servant to assist in combat\nUses the weapon in your last inventory slot for you (bottom right inventory slot)\nDoesn't work with all weapons\n'You've proven yourself plenty'");
+			Tooltip.SetDefault("Summons a Subspace Servant to assist in combat\nUses the weapon in your last inventory slot for you (bottom right inventory slot)\nDoesn't work with all weapons\nDecreases damage by 25% multiplicatively\n'You've proven yourself plenty'");
 		}
 		public override void SetDefaults()
 		{
@@ -33,6 +33,7 @@ namespace SOTS.Items.Celestial
 		{
 			SubspacePlayer modPlayer = SubspacePlayer.ModPlayer(player);
 			modPlayer.servantActive = true;
+            player.allDamageMult -= 0.25f;
         }
         public override void UpdateInventory(Player player)
         {

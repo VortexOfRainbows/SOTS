@@ -109,7 +109,11 @@ namespace SOTS.NPCs.Boss.Lux
 				NPC npc2 = Main.npc[parentID];
 				if (npc2.active && npc2.type == NPCType<Lux>())
 				{
-					rotateCenter = npc2.Center;
+					Lux lux = npc2.modNPC as Lux;
+					if (lux != null && lux.desperation)
+						kill = true;
+					else
+						rotateCenter = npc2.Center;
 				}
 				else
 					kill = true;

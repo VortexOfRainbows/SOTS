@@ -24,11 +24,13 @@ High Priority:
 Mid Priority:
 1. Lux Drops (ask me before you go about spriting these ones):
 	1. Rose Bow (glaze bow upgrade)
-	2. Voidmage Incubator (No-Hit drop)
+	2. Voidmage Incubator
+		1. Requires a secret with Void Anomaly and Tainted to obtain 
 	3. True Phaseblade (upgrades into) -> Starward Sword
 	4. Replace Celestial Serpent Drops (resprites and maybe some reworks)
 		1. Armageddon (melee + void)
 		2. Angelic Catalyst -> Void Anomaly (expert accessory)
+			1. Increases Void based capabilities
 		3. Star Storm Spell -> Supernova Storm (magic)
 		4. Stellar Serpent Launcher (ranged)
 		5. Stellar Serpent Staff -> Hyperlight Launcher (magic gun, photon geyser upgrade)
@@ -53,6 +55,12 @@ Low Priority:
 2. VM Incubator now somewhat syncs in Multiplayer (more testing needed)
 3. Moved various minion buffs into the appropraite folder, some code ModContent call optimizations
 4. SOTSWorld.downed variables now sync in mulitplayer properly
+5. Foggy Clairvoyance damage buff 35% -> 15%
+	1. Was far too strong for how little it actually hurt you
+	2. It still provides immunity to pretty much every debuff, so it will remain strong
+6. Subspace Locket decreases damage by a multiplicative 25%
+	1. This is obvious why I would nerf it
+7. Began working on Lux death animation (VERY WIP)
 
 3/20/22
 1. Tidal construct no longer spawns in the Dungeon

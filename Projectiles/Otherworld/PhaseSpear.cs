@@ -61,13 +61,13 @@ namespace SOTS.Projectiles.Otherworld
         }
         public override void Kill(int timeLeft)
 		{
-			Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 14, 0.6f);
+			Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 14, 0.6f);
 			if (Main.netMode != 1)
 			{
 				for (int i = 0; i < 4 + (Main.expertMode ? 1 : 0); i++)
 				{
 					Vector2 circular = new Vector2(3, 0).RotatedBy(MathHelper.ToRadians(Main.rand.Next(360)));
-					Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, circular.X, circular.Y, mod.ProjectileType("ThunderColumn"), projectile.damage, 0, Main.myPlayer);
+					Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, circular.X, circular.Y, ModContent.ProjectileType<ThunderColumn>(), projectile.damage, 0, Main.myPlayer);
 				}
 			}
 			for (int i = 0; i < 40; i++)

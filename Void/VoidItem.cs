@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using SOTS.Buffs;
 using SOTS.Items.Celestial;
 using SOTS.Items.Otherworld;
+using SOTS.Items.Permafrost;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
@@ -42,7 +43,7 @@ namespace SOTS.Void
 					voidCostMult = item.GetGlobalItem<PrefixItem>().voidCostMultiplier;
 				}
 				voidManaAmount = (int)(voidMana * voidPlayer.voidCost * voidCostMult);
-				if (voidManaAmount < 1 && item.type != mod.ItemType("FrigidJavelin"))
+				if (voidManaAmount < 1 && item.type != ModContent.ItemType<FrigidJavelin>())
 				{
 					voidManaAmount = 1;
 				}
