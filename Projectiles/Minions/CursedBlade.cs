@@ -188,9 +188,9 @@ namespace SOTS.Projectiles.Minions
 			#region Active check
 			if (player.dead || !player.active)
 			{
-				player.ClearBuff(ModContent.BuffType<Buffs.CursedBlade>());
+				player.ClearBuff(ModContent.BuffType<Buffs.MinionBuffs.CursedBlade>());
 			}
-			if (player.HasBuff(ModContent.BuffType<Buffs.CursedBlade>()))
+			if (player.HasBuff(ModContent.BuffType<Buffs.MinionBuffs.CursedBlade>()))
 			{
 				projectile.timeLeft = 6;
 			}

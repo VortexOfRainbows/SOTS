@@ -135,10 +135,6 @@ namespace SOTS
 			}
 			return IsFrozenThisFrame;
 		}
-        public override void PreUpdate()
-        {
-			UpdateWhileFrozen();
-        }
         public static int SecretFoundMusicTimer = 0;
         public static int planetarium = 0;
 		public static int pyramidBiome = 0;
@@ -188,7 +184,11 @@ namespace SOTS
 				{"downed", downed}
 			};
 		}
-		public override void Load(TagCompound tag) {
+        public override void LoadLegacy(BinaryReader reader)
+        {
+            base.LoadLegacy(reader);
+        }
+        public override void Load(TagCompound tag) {
 			var downed = tag.GetList<string>("downed");
 			downedPinky = downed.Contains("pinky");
 			downedAdvisor = downed.Contains("advisor");
@@ -205,6 +205,7 @@ namespace SOTS
 			flags[3] = downedCurse;
 			flags[4] = downedCelestial;
 			flags[5] = downedSubspace;
+			writer.Write(flags);
 		}
 		public override void NetReceive(BinaryReader reader) {
 			BitsByte flags = reader.ReadByte();

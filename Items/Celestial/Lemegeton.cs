@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using SOTS.Buffs;
+using SOTS.Buffs.MinionBuffs;
 using SOTS.Items.Inferno;
 using SOTS.Projectiles.Inferno;
 using SOTS.Void;
@@ -46,7 +47,7 @@ namespace SOTS.Items.Celestial
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "SanguiteBar", 10);
+			recipe.AddIngredient(ModContent.ItemType<SanguiteBar>(), 10);
 			recipe.AddIngredient(ModContent.ItemType<BookOfVirtues>(), 1);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.SetResult(this);

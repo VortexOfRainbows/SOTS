@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using SOTS.Void;
 using static SOTS.CurseHelper;
 using System.IO;
+using SOTS.Buffs.MinionBuffs;
 
 namespace SOTS.Projectiles.Minions
 {

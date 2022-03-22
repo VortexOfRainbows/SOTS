@@ -27,13 +27,13 @@ namespace SOTS.Items.Pyramid
             item.value = Item.sellPrice(0, 2, 25, 0);
             item.rare = ItemRarityID.Pink;
             item.UseSound = SoundID.Item44;
-            item.shoot = mod.ProjectileType("CursedBlade");
-			item.buffType = mod.BuffType("CursedBlade");
+            item.shoot = ModContent.ProjectileType<Projectiles.Minions.CursedBlade>();
+			item.buffType = ModContent.BuffType<Buffs.MinionBuffs.CursedBlade>();
         }
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "CursedMatter", 8);
+			recipe.AddIngredient(ModContent.ItemType<CursedMatter>(), 8);
 			recipe.AddIngredient(ItemID.Ruby, 1);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this);

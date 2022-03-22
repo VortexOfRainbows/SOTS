@@ -2,20 +2,20 @@ using SOTS.Projectiles.Inferno;
 using Terraria;
 using Terraria.ModLoader;
  
-namespace SOTS.Buffs
+namespace SOTS.Buffs.MinionBuffs
 {
-    public class InfernalDefense : ModBuff
+    public class Virtuous : ModBuff
     {
 		public override void SetDefaults()
 		{
-			DisplayName.SetDefault("Infernal Defense");
-			Description.SetDefault("'Wisp Summoner'");
+			DisplayName.SetDefault("Virtuous");
+			Description.SetDefault("'Spiritual Companionship'");
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
 		}
 		public override void Update(Player player, ref int buffIndex) 
 		{
-			if (player.ownedProjectileCounts[ModContent.ProjectileType<LemegetonWispRed>()] > 0) 
+			if (player.ownedProjectileCounts[ModContent.ProjectileType<SpectralWisp>()] > 0) 
 			{
 				player.buffTime[buffIndex] = 6;
 			}

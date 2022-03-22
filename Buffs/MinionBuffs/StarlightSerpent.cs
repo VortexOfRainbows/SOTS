@@ -2,7 +2,7 @@ using SOTS.Projectiles.BiomeChest;
 using Terraria;
 using Terraria.ModLoader;
  
-namespace SOTS.Buffs
+namespace SOTS.Buffs.MinionBuffs
 {
     public class StarlightSerpent : ModBuff
     {

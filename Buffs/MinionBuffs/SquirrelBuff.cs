@@ -1,20 +1,22 @@
+using SOTS.Projectiles.Nature;
+using System;
 using Terraria;
 using Terraria.ModLoader;
  
-namespace SOTS.Buffs
+namespace SOTS.Buffs.MinionBuffs
 {
-    public class AerialAssistance : ModBuff
+    public class SquirrelBuff : ModBuff
     {
 		public override void SetDefaults()
 		{
-			DisplayName.SetDefault("Aerial Assistance");
-			Description.SetDefault("Penguins assist you in combat");
+			DisplayName.SetDefault("Squirrel");
+			Description.SetDefault("Squirrels assist you in combat");
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
 		}
 		public override void Update(Player player, ref int buffIndex) 
 		{
-			if (player.ownedProjectileCounts[mod.ProjectileType("PenguinCopter")] > 0) 
+			if (player.ownedProjectileCounts[ModContent.ProjectileType<SquirrelMinion>()] > 0) 
 			{
 				player.buffTime[buffIndex] = 18000;
 			}

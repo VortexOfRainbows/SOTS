@@ -328,24 +328,24 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 {
                     int currentNum = plat % 10;
                     frame = new Rectangle(1 + ((1 + currentNum) * (texture.Width / 11)), 1, texture.Width / 11 - 2, texture.Height - 2);
-                    for (int i = 0; i < 6; i++)
+                    /*for (int i = 0; i < 6; i++)
                     {
                         float x = Main.rand.Next(-10, 11) * 0.3f;
                         float y = Main.rand.Next(-10, 11) * 0.3f;
                         Main.spriteBatch.Draw(texture, pos - Main.screenPosition + new Vector2(x, y), frame, color, 0f, origin, 1f, SpriteEffects.None, 0f);
-                    }
+                    }*/
                     Main.spriteBatch.Draw(texture, pos - Main.screenPosition, frame, drawColor, 0f, origin, 1f, SpriteEffects.None, 0f);
                     pos.X -= (texture.Width / 11f) - 2;
                 }
                 pos.X -= 4;
                 frame = new Rectangle(0, 0, texture.Width / 11, texture.Height);
                 pos.Y -= 1;
-                for (int i = 0; i < 6; i++)
+                /*for (int i = 0; i < 6; i++)
                 {
                     float x = Main.rand.Next(-10, 11) * 0.3f;
                     float y = Main.rand.Next(-10, 11) * 0.3f;
                     Main.spriteBatch.Draw(texture, pos - Main.screenPosition + new Vector2(x, y), frame, color, 0f, origin, 1f, SpriteEffects.None, 0f);
-                }
+                }*/
                 Main.spriteBatch.Draw(texture, pos - Main.screenPosition, frame, drawColor, 0f, origin, 1f, SpriteEffects.None, 0f);
                 height += 24;
             }
@@ -369,24 +369,24 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 {
                     int currentNum = plat % 10;
                     frame = new Rectangle(1 + ((1 + currentNum) * (texture.Width / 11)), 1, texture.Width / 11 - 2, texture.Height - 2);
-                    for (int i = 0; i < 6; i++)
+                    /*for (int i = 0; i < 6; i++)
                     {
                         float x = Main.rand.Next(-10, 11) * 0.3f;
                         float y = Main.rand.Next(-10, 11) * 0.3f;
                         Main.spriteBatch.Draw(texture, pos - Main.screenPosition + new Vector2(x, y), frame, color, 0f, origin, 1f, SpriteEffects.None, 0f);
-                    }
+                    }*/
                     Main.spriteBatch.Draw(texture, pos - Main.screenPosition, frame, VoidPlayer.soulLootingColor, 0f, origin, 1f, SpriteEffects.None, 0f);
                     pos.X -= (texture.Width / 11f) - 2;
                 }
                 pos.X -= 4;
                 frame = new Rectangle(0, 0, texture.Width / 11, texture.Height);
                 pos.Y -= 1;
-                for (int i = 0; i < 6; i++)
+                /*for (int i = 0; i < 6; i++)
                 {
                     float x = Main.rand.Next(-10, 11) * 0.3f;
                     float y = Main.rand.Next(-10, 11) * 0.3f;
                     Main.spriteBatch.Draw(texture, pos - Main.screenPosition + new Vector2(x, y), frame, color, 0f, origin, 1f, SpriteEffects.None, 0f);
-                }
+                }*/
                 Main.spriteBatch.Draw(texture, pos - Main.screenPosition, frame, VoidPlayer.soulLootingColor, 0f, origin, 1f, SpriteEffects.None, 0f);
                 height += 24;
             }
@@ -410,24 +410,24 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 {
                     int currentNum = plat % 10;
                     frame = new Rectangle(1 + ((1 + currentNum) * (texture.Width / 11)), 1, texture.Width / 11 - 2, texture.Height - 2);
-                    for (int i = 0; i < 6; i++)
+                    /*for (int i = 0; i < 6; i++)
                     {
                         float x = Main.rand.Next(-10, 11) * 0.3f;
                         float y = Main.rand.Next(-10, 11) * 0.3f;
                         Main.spriteBatch.Draw(texture, pos - Main.screenPosition + new Vector2(x, y), frame, color, 0f, origin, 1f, SpriteEffects.None, 0f);
-                    }
+                    }*/
                     Main.spriteBatch.Draw(texture, pos - Main.screenPosition, frame, VoidPlayer.destabilizeColor, 0f, origin, 1f, SpriteEffects.None, 0f);
                     pos.X -= (texture.Width / 11f) - 2;
                 }
                 pos.X -= 4;
                 frame = new Rectangle(0, 0, texture.Width / 11, texture.Height);
                 pos.Y -= 1;
-                for (int i = 0; i < 6; i++)
+                /*for (int i = 0; i < 6; i++)
                 {
                     float x = Main.rand.Next(-10, 11) * 0.3f;
                     float y = Main.rand.Next(-10, 11) * 0.3f;
                     Main.spriteBatch.Draw(texture, pos - Main.screenPosition + new Vector2(x, y), frame, color, 0f, origin, 1f, SpriteEffects.None, 0f);
-                }
+                }*/
                 Main.spriteBatch.Draw(texture, pos - Main.screenPosition, frame, VoidPlayer.destabilizeColor, 0f, origin, 1f, SpriteEffects.None, 0f);
                 height += 24;
             }
@@ -451,24 +451,24 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 {
                     int currentNum = plat % 10;
                     frame = new Rectangle(1 + ((1 + currentNum) * (texture.Width / 11)), 1, texture.Width / 11 - 2, texture.Height - 2);
-                    for (int i = 0; i < 6; i++)
+                    /*for (int i = 0; i < 6; i++)
                     {
                         float x = Main.rand.Next(-10, 11) * 0.3f;
                         float y = Main.rand.Next(-10, 11) * 0.3f;
                         Main.spriteBatch.Draw(texture, pos - Main.screenPosition + new Vector2(x, y), frame, color, 0f, origin, 1f, SpriteEffects.None, 0f);
-                    }
+                    }*/
                     Main.spriteBatch.Draw(texture, pos - Main.screenPosition, frame, drawColor, 0f, origin, 1f, SpriteEffects.None, 0f);
                     pos.X -= (texture.Width / 11f) - 2;
                 }
                 pos.X -= 4;
                 frame = new Rectangle(0, 0, texture.Width / 11, texture.Height);
                 pos.Y -= 1;
-                for (int i = 0; i < 6; i++)
+                /*for (int i = 0; i < 6; i++)
                 {
                     float x = Main.rand.Next(-10, 11) * 0.3f;
                     float y = Main.rand.Next(-10, 11) * 0.3f;
                     Main.spriteBatch.Draw(texture, pos - Main.screenPosition + new Vector2(x, y), frame, color, 0f, origin, 1f, SpriteEffects.None, 0f);
-                }
+                }*/
                 Main.spriteBatch.Draw(texture, pos - Main.screenPosition, frame, drawColor, 0f, origin, 1f, SpriteEffects.None, 0f);
                 height += 24;
             }

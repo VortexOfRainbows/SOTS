@@ -1,7 +1,10 @@
 using Microsoft.Xna.Framework;
+using SOTS.Buffs.MinionBuffs;
+using SOTS.Projectiles.Inferno;
 using SOTS.Void;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace SOTS.Items.Inferno
 {
@@ -28,8 +31,8 @@ namespace SOTS.Items.Inferno
 			item.UseSound = SoundID.Item44;
 			item.noMelee = true;
 			item.summon = true;
-			item.buffType = mod.BuffType("Virtuous");
-			item.shoot = mod.ProjectileType("SpectralWisp");
+			item.buffType = ModContent.BuffType<Virtuous>();
+			item.shoot = ModContent.ProjectileType<SpectralWisp>();
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) 
 		{

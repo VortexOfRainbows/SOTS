@@ -2,7 +2,7 @@ using System;
 using Terraria;
 using Terraria.ModLoader;
  
-namespace SOTS.Buffs
+namespace SOTS.Buffs.MinionBuffs
 {
     public class CursedBlade : ModBuff
     {
@@ -19,7 +19,7 @@ namespace SOTS.Buffs
 			
 			player.buffTime[buffIndex] = 18000;
 			bool projectileNotSpawned = true;
-			if (player.ownedProjectileCounts[mod.ProjectileType("CursedBlade")] > 0)
+			if (player.ownedProjectileCounts[ModContent.ProjectileType<Projectiles.Minions.CursedBlade>()] > 0)
 			{
 				projectileNotSpawned = false;
 			}

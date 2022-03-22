@@ -1,5 +1,10 @@
 using System;
 using Microsoft.Xna.Framework;
+using SOTS.Buffs.MinionBuffs;
+using SOTS.Items.Fragments;
+using SOTS.Items.Nature;
+using SOTS.Items.Otherworld.Furniture;
+using SOTS.Projectiles.Minions;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -24,14 +29,14 @@ namespace SOTS.Items.Otherworld.FromChests
 			item.height = 32;
 			item.useTime = 30;
 			item.useAnimation = 30;
-			item.useStyle = 1;
+			item.useStyle = ItemUseStyleID.SwingThrow;
 			item.value = Item.sellPrice(0, 5, 0, 0);
 			item.rare = ItemRarityID.LightPurple;
 			item.UseSound = SoundID.Item44;
 			item.noMelee = true;
 			item.summon = true;
-			item.buffType = mod.BuffType("TerminatorSquirrelBuff");
-			item.shoot = mod.ProjectileType("TerminatorSquirrel");
+			item.buffType = ModContent.BuffType<TerminatorSquirrelBuff>();
+			item.shoot = ModContent.ProjectileType<TerminatorSquirrel>();
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) 
 		{
@@ -42,11 +47,11 @@ namespace SOTS.Items.Otherworld.FromChests
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "DissolvingNature", 1);
-			recipe.AddIngredient(null, "FragmentOfInferno", 3);
-			recipe.AddIngredient(null, "AcornBag", 1);
-			recipe.AddIngredient(null, "OtherworldlyAlloy", 10);
-			recipe.AddTile(mod.TileType("HardlightFabricatorTile"));
+			recipe.AddIngredient(ModContent.ItemType<DissolvingNature>(), 1);
+			recipe.AddIngredient(ModContent.ItemType<FragmentOfInferno>(), 3);
+			recipe.AddIngredient(ModContent.ItemType<AcornBag>(), 1);
+			recipe.AddIngredient(ModContent.ItemType<OtherworldlyAlloy>(), 10);
+			recipe.AddTile(ModContent.TileType<HardlightFabricatorTile>());
 			recipe.SetResult(this);
 			recipe.AddRecipe();
 		}

@@ -2,6 +2,9 @@ The following is my development plans :D
 
 1. Chaos Spirit Boss: "Lux"
 2. Ghost Town to Evil Biome
+3. AI Companion related accessories
+	1. Matsumoto Minion (Vivy reference)
+	2. Calculator + Subspace Locket + Some digital related item
 
 Known Bugs:
 1. Lag generates in multiplayer after a while of playing. (Maybe fixed?)
@@ -44,8 +47,12 @@ Low Priority:
 3. Void Bar strike the player during void shock
 4. Fix Planetarium sky island spawning in tandum
 5. Stars in Planetarium Sky
-6. Matsumoto Minion
-	1. Calculator + Subspace Locket + Some digital related item
+
+3/21/22
+1. Artificial (Stackable) debuffs no longer have a weird shaking effect to their text
+2. VM Incubator now somewhat syncs in Multiplayer (more testing needed)
+3. Moved various minion buffs into the appropraite folder, some code ModContent call optimizations
+4. SOTSWorld.downed variables now sync in mulitplayer properly
 
 3/20/22
 1. Tidal construct no longer spawns in the Dungeon
@@ -57,6 +64,7 @@ Low Priority:
 	1. Added shaders
 	2. Added Void Metamorphosis
 	3. Some balancing tweaks
+	4. Needed: debuff: Dilation Sickness, some balancing. MULTIPLAYER SYNCNG (DOES NOT WORK AT ALL IN MULTIPLAYER)
 
 3/18/22
 1. Finished Ethereal Scepter.

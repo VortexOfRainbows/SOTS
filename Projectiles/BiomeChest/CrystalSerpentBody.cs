@@ -7,6 +7,7 @@ using Terraria.ID;
 using System.IO;
 using System.Collections.Generic;
 using SOTS.Buffs;
+using SOTS.Buffs.MinionBuffs;
 
 namespace SOTS.Projectiles.BiomeChest
 {

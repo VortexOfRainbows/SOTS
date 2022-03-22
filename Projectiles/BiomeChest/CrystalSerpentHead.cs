@@ -8,6 +8,7 @@ using System.IO;
 using System.Collections.Generic;
 using SOTS.Buffs;
 using SOTS.Dusts;
+using SOTS.Buffs.MinionBuffs;
 
 namespace SOTS.Projectiles.BiomeChest
 {

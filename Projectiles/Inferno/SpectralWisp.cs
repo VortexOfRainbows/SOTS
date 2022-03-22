@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using SOTS.Buffs;
 using SOTS.Projectiles.Otherworld;
 using SOTS.Projectiles.Pyramid;
+using SOTS.Buffs.MinionBuffs;
 
 namespace SOTS.Projectiles.Inferno
 {

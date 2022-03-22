@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Buffs;
+using SOTS.Buffs.MinionBuffs;
 using SOTS.Projectiles.BiomeChest;
 using System.Collections.Generic;
 using Terraria;

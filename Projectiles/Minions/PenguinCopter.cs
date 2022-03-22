@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
-using SOTS.Buffs;
+using SOTS.Buffs.MinionBuffs;
 
 namespace SOTS.Projectiles.Minions
 {

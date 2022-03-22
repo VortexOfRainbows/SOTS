@@ -5,6 +5,7 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using SOTS.Buffs;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Buffs.MinionBuffs;
 
 namespace SOTS.Projectiles.Minions
 {

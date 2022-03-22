@@ -181,6 +181,7 @@ namespace SOTS
 				_lastScreenSize = new Vector2(Main.screenWidth, Main.screenHeight);
 				_lastViewSize = Main.ViewSize;
 			}
+			SOTSWorld.UpdateWhileFrozen();
 		}
 		public override void MidUpdateProjectileItem()
 		{
