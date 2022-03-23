@@ -36,10 +36,8 @@ Mid Priority:
 		5. Stellar Serpent Staff -> Hyperlight Launcher (magic gun, photon geyser upgrade)
 		6. Stellar Shot (will become Perfect Star upgrade, magic gun)
 		7. Hyperdrive (upgrade to Vibrancy Module, accessory)
-2. Construct Items:	
-	1. Inferno Plating block
-3. Big Vibrant geode in the jungle
-4. Electromagnetic Lure
+2. Big Vibrant geode in the jungle
+3. Electromagnetic Lure
 	1. Similar idea to D.E.F.E
 	2. Can be used to attract constructs (will be useful for summoning Lux)
 
@@ -49,6 +47,9 @@ Low Priority:
 3. Void Bar strike the player during void shock
 4. Fix Planetarium sky island spawning in tandum
 5. Stars in Planetarium Sky
+
+3/22/22
+1. Added Inferno and Ultimate plating
 
 3/21/22
 1. Artificial (Stackable) debuffs no longer have a weird shaking effect to their text

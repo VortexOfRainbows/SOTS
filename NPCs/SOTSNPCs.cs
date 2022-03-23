@@ -358,7 +358,7 @@ namespace SOTS.NPCs
 						if (npc.type == ModContent.NPCType<ChaosConstruct>())
 							type = ModContent.ItemType<ChaosPlating>();
 						if (npc.type == ModContent.NPCType<InfernoConstruct>())
-							type = ItemID.LivingFireBlock;
+							type = ModContent.ItemType<InfernoPlating>();
 						if (npc.type == ModContent.NPCType<OtherworldlyConstructHead2>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead>())
 						{
 							if (npc.type == ModContent.NPCType<OtherworldlyConstructHead2>())

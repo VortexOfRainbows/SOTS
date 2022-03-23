@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
+using SOTS.Items.Otherworld.Blocks;
 using SOTS.Items.Otherworld.FromChests;
 using SOTS.Items.Otherworld.Furniture;
 using System;
@@ -431,7 +432,7 @@ namespace SOTS.Items.Fragments
 			mineResist = 1.5f;
 			soundType = SoundID.Tink;
 			soundStyle = 2;
-			dustType = DustID.Platinum; //demonite
+			dustType = DustID.Platinum;
 		}
 		public override bool canGlow(int i, int j)
 		{
@@ -459,6 +460,167 @@ namespace SOTS.Items.Fragments
 				r = 0.23f;
 				g = 0.09f;
 				b = 0.20f;
+			}
+			else
+			{
+				r = 0;
+				g = 0;
+				b = 0;
+			}
+		}
+	}
+	public class InfernoPlating : ModItem
+	{
+		public override void SetStaticDefaults()
+		{
+			DisplayName.SetDefault("Inferno Plating");
+			Tooltip.SetDefault("");
+		}
+		public override void SetDefaults()
+		{
+			item.CloneDefaults(ItemID.StoneBlock);
+			item.height = 22;
+			item.rare = ItemRarityID.Blue;
+			item.createTile = ModContent.TileType<InfernoPlatingTile>();
+		}
+		public override void AddRecipes()
+		{
+			ModRecipe recipe = new ModRecipe(mod);
+			recipe.AddIngredient(ModContent.ItemType<FragmentOfInferno>(), 1);
+			recipe.AddRecipeGroup("SOTS:PHMOre", 1);
+			recipe.AddTile(TileID.HeavyWorkBench);
+			recipe.SetResult(this, 5);
+			recipe.AddRecipe();
+		}
+	}
+	public class InfernoPlatingTile : PlatingTile
+	{
+		public override Texture2D glowTexture => mod.GetTexture("Items/Fragments/InfernoPlatingTileGlow");
+		public override void SafeSetDefaults()
+		{
+			drop = ModContent.ItemType<InfernoPlating>();
+			AddMapEntry(new Color(73, 35, 59));
+			mineResist = 1.5f;
+			soundType = SoundID.Tink;
+			soundStyle = 2;
+			dustType = DustID.Iron;
+		}
+        public override bool CreateDust(int i, int j, ref int type)
+		{
+			type = dustType;
+			if (Main.rand.NextBool(3))
+				type = DustID.Fire;
+			return true;
+        }
+        public override bool canGlow(int i, int j)
+		{
+			Tile tile = Main.tile[i, j];
+			int frameX = tile.frameX / 18;
+			int frameY = tile.frameY / 18;
+			if ((frameX == 5 || frameX == 12) && frameY >= 0 && frameY <= 2)
+			{
+				return false;
+			}
+			if (frameX >= 6 && frameX <= 8 && frameY == 0)
+			{
+				return false;
+			}
+			if (frameX >= 9 && frameX <= 11 && frameY == 3)
+			{
+				return false;
+			}
+			return true;
+		}
+		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
+		{
+			if (canGlow(i, j))
+			{
+				r = 0.213f;
+				g = 0.068f;
+				b = 0.013f;
+			}
+			else
+			{
+				r = 0;
+				g = 0;
+				b = 0;
+			}
+		}
+	}
+	public class UltimatePlating : ModItem
+	{
+		public override void SetStaticDefaults()
+		{
+			DisplayName.SetDefault("Ultimate Plating");
+			Tooltip.SetDefault("");
+		}
+		public override void SetDefaults()
+		{
+			item.CloneDefaults(ItemID.StoneBlock);
+			item.rare = ItemRarityID.Blue;
+			item.createTile = ModContent.TileType<UltimatePlatingTile>();
+		}
+		public override void AddRecipes()
+		{
+			ModRecipe recipe = new ModRecipe(mod);
+			recipe.AddIngredient(ModContent.ItemType<NaturePlating>(), 1);
+			recipe.AddIngredient(ModContent.ItemType<EarthenPlating>(), 1);
+			recipe.AddIngredient(ModContent.ItemType<PermafrostPlating>(), 1);
+			recipe.AddIngredient(ModContent.ItemType<DullPlating>(), 1);
+			recipe.AddIngredient(ModContent.ItemType<TidePlating>(), 1);
+			recipe.AddIngredient(ModContent.ItemType<EvilPlating>(), 1);
+			recipe.AddIngredient(ModContent.ItemType<ChaosPlating>(), 1);
+			recipe.AddIngredient(ModContent.ItemType<InfernoPlating>(), 1);
+			recipe.AddTile(TileID.HeavyWorkBench);
+			recipe.SetResult(this, 8);
+			recipe.AddRecipe();
+		}
+	}
+	public class UltimatePlatingTile : PlatingTile
+	{
+		public override Texture2D glowTexture => mod.GetTexture("Items/Fragments/UltimatePlatingTileGlow");
+		public override void SafeSetDefaults()
+		{
+			drop = ModContent.ItemType<UltimatePlating>();
+			AddMapEntry(new Color(82, 85, 123));
+			mineResist = 1.5f;
+			soundType = SoundID.Tink;
+			soundStyle = 2;
+			dustType = 146; //Titanium
+		}
+		public override bool CreateDust(int i, int j, ref int type)
+		{
+			type = dustType;
+			if (Main.rand.NextBool(3))
+				type = 63; //white torch
+			return true;
+		}
+		public override bool canGlow(int i, int j)
+		{
+			Tile tile = Main.tile[i, j];
+			int frameX = tile.frameX / 18;
+			int frameY = tile.frameY / 18;
+			if (frameX >= 1 && frameX <= 3 && frameY == 2)
+			{
+				return false;
+			}
+			if (frameX >= 6 && frameX <= 8 && frameY == 4)
+			{
+				return false;
+			}
+			if ((frameY >= 0 && frameY <= 2) && (frameX == 9 || frameX == 12))
+			{
+				return false;
+			}
+			return true;
+		}
+		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
+		{
+			if (canGlow(i, j))
+			{
+				r = 0.2f;
+				g = 0.2f;
+				b = 0.2f;
 			}
 			else
 			{
