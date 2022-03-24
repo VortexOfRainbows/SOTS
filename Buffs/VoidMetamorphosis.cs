@@ -11,7 +11,7 @@ namespace SOTS.Buffs
             DisplayName.SetDefault("Void Metamorphosis");
 			Description.SetDefault("Decreases flat void regeneration by 6\nLosing void to flat void regeneration will recover life");   
             Main.buffNoSave[Type] = true;
-            Main.buffNoTimeDisplay[Type] = true;
+            Main.buffNoTimeDisplay[Type] = false;
 			Main.debuff[Type] = true;
             longerExpertDebuff = false;
         }

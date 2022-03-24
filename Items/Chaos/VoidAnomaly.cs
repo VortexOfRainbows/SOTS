@@ -17,7 +17,7 @@ namespace SOTS.Items.Chaos
         public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Void Anomaly");
-			Tooltip.SetDefault("Increases void gain by 10 and void regeneration speed by 10%\nGetting hit will freeze time, converting void into life for the duration\nIncreases the potency of Void Shock and Void Recovery");
+			Tooltip.SetDefault("Increases void gain by 10 and void regeneration speed by 10%\nGetting hit will convert void into life for a duration\nIncreases the potency of Void Shock and Void Recovery");
 		}
 		public override void SetDefaults()
 		{
@@ -26,6 +26,7 @@ namespace SOTS.Items.Chaos
             item.value = Item.sellPrice(gold: 10);
             item.rare = ItemRarityID.Yellow;
 			item.accessory = true;
+			item.expert = true;
 		}
         public override void UpdateAccessory(Player player, bool hideVisual)
 		{
@@ -34,7 +35,7 @@ namespace SOTS.Items.Chaos
 			vPlayer.bonusVoidGain += 10f;
 			vPlayer.voidRegenSpeed += 0.1f;
 			//modPlayer.VMincubator = true;
-			modPlayer.TimeFreezeImmune = true;
+			modPlayer.VoidAnomaly = true;
 		}
 	}
 }

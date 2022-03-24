@@ -45,7 +45,6 @@ namespace SOTS.NPCs.Boss.CelestialSerpent
 		public override void BossLoot(ref string name, ref int potionType)
 		{ 
 			Player player = Main.player[npc.target];
-			SOTSWorld.downedCelestial = true;
 			potionType = ItemID.GreaterHealingPotion;
 			npc.position = player.position;
 			if(Main.expertMode)

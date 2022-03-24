@@ -131,6 +131,7 @@ namespace SOTS
 		public bool zoneLux = false;
 		public bool oldTimeFreezeImmune = false;
 		public bool TimeFreezeImmune = true;
+		public bool VoidAnomaly = false;
 		public bool VMincubator = false;
 		public bool normalizedGravity = false;
 		public bool VisionVanity = false;
@@ -626,6 +627,7 @@ namespace SOTS
 					player.AddBuff(ModContent.BuffType<VoidMetamorphosis>(), 30, true);
                 }
             }
+			VoidAnomaly = false;
 			VMincubator = false;
 			zoneLux = false;
 			if (NPC.AnyNPCs(ModContent.NPCType<Lux>()))
@@ -1113,14 +1115,24 @@ namespace SOTS
 					return false;
 				}
 			}
-			if(VMincubator && Main.myPlayer == player.whoAmI)
-            {
-				if(!pvp)
+			if(Main.myPlayer == player.whoAmI)
+			{
+				int finalDamage = (int)Main.CalculatePlayerDamage(damage, player.statDefense);
+				if (VMincubator)
 				{
-					int finalDamage = (int)Main.CalculatePlayerDamage(damage, player.statDefense);
-					SOTSWorld.SetTimeFreeze(player, 240 + finalDamage);
+					if (!pvp)
+					{
+						SOTSWorld.SetTimeFreeze(player, 240 + finalDamage);
+					}
 				}
-            }
+				else if (VoidAnomaly)
+				{
+					if (!pvp)
+					{
+						player.AddBuff(ModContent.BuffType<VoidMetamorphosis>(), 240 + finalDamage, true);
+					}
+				}
+			}
 			return base.PreHurt(pvp, quiet, ref damage, ref hitDirection, ref crit, ref customDamage, ref playSound, ref genGore, ref damageSource);
 		}
 		int shotCounter = 0;
@@ -1400,7 +1412,11 @@ namespace SOTS
 			}
 			inazumaLongerPotions = false;
 		}
-    }
+		public static bool ZoneForest(Player player)
+		{
+			return !player.GetModPlayer<SOTSPlayer>().PyramidBiome && !player.ZoneDesert && !player.ZoneCorrupt && !player.ZoneDungeon && !player.ZoneDungeon && !player.ZoneHoly && !player.ZoneMeteor && !player.ZoneJungle && !player.ZoneSnow && !player.ZoneCrimson && !player.ZoneGlowshroom && !player.ZoneUndergroundDesert && (player.ZoneDirtLayerHeight || player.ZoneOverworldHeight) && !player.ZoneBeach;
+		}
+	}
 }
 
 

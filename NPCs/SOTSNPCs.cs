@@ -441,7 +441,7 @@ namespace SOTS.NPCs
 			float constructRateMultiplier = 1f;
 			if (SOTSPlayer.ModPlayer(player).noMoreConstructs || player.HasBuff(ModContent.BuffType<IntimidatingPresence>()))
 				constructRateMultiplier = 0f;
-			bool ZoneForest = !player.GetModPlayer<SOTSPlayer>().PyramidBiome && !player.ZoneDesert && !player.ZoneCorrupt && !player.ZoneDungeon && !player.ZoneDungeon && !player.ZoneHoly && !player.ZoneMeteor && !player.ZoneJungle && !player.ZoneSnow && !player.ZoneCrimson && !player.ZoneGlowshroom && !player.ZoneUndergroundDesert && (player.ZoneDirtLayerHeight || player.ZoneOverworldHeight) && !player.ZoneBeach;
+			bool ZoneForest = SOTSPlayer.ZoneForest(player);
 			if (spawnInfo.player.GetModPlayer<SOTSPlayer>().PyramidBiome)
 			{
 				int tileWall = Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY - 1].wall;

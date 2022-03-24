@@ -144,7 +144,7 @@ namespace SOTS
 		public static bool downedCurse = false;
 		
 		public static bool downedAmalgamation = false;
-		public static bool downedCelestial = false;
+		public static bool downedLux = false;
 		public static bool downedSubspace = false;
 		public static bool downedAdvisor = false;
         public override void Initialize()
@@ -157,7 +157,7 @@ namespace SOTS
 			downedAdvisor = false;
 			downedCurse = false;
 			downedAmalgamation = false;
-			downedCelestial = false;
+			downedLux = false;
 			downedSubspace = false;
 		}
 		public override TagCompound Save() {
@@ -174,8 +174,8 @@ namespace SOTS
 			if (downedAmalgamation) {
 				downed.Add("amalgamation");
 			}
-			if (downedCelestial) {
-				downed.Add("celestial");
+			if (downedLux) {
+				downed.Add("lux");
 			}
 			if (downedSubspace) {
 				downed.Add("subspace");
@@ -194,7 +194,7 @@ namespace SOTS
 			downedAdvisor = downed.Contains("advisor");
 			downedCurse = downed.Contains("curse");
 			downedAmalgamation = downed.Contains("amalgamation");
-			downedCelestial = downed.Contains("celestial");
+			downedLux = downed.Contains("lux");
 			downedSubspace = downed.Contains("subspace");
 		}
 		public override void NetSend(BinaryWriter writer) {
@@ -203,7 +203,7 @@ namespace SOTS
 			flags[1] = downedAdvisor;
 			flags[2] = downedAmalgamation;
 			flags[3] = downedCurse;
-			flags[4] = downedCelestial;
+			flags[4] = downedLux;
 			flags[5] = downedSubspace;
 			writer.Write(flags);
 		}
@@ -213,7 +213,7 @@ namespace SOTS
 			downedAdvisor = flags[1];
 			downedAmalgamation = flags[2];
 			downedCurse = flags[3];
-			downedCelestial = flags[4];
+			downedLux = flags[4];
 			downedSubspace = flags[5];
 		}
 		public override void ModifyWorldGenTasks(List<GenPass> tasks, ref float totalWeight)

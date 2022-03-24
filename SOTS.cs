@@ -32,6 +32,10 @@ using SOTS.Items.Fragments;
 using SOTS.Items.Otherworld.Furniture;
 using Terraria.Graphics.Effects;
 using Catalyst.Backgrounds;
+using SOTS.NPCs.Boss.Lux;
+using SOTS.Items;
+using SOTS.Items.Chaos;
+using SOTS.Items.Otherworld.Blocks;
 
 namespace SOTS
 {
@@ -489,6 +493,126 @@ namespace SOTS
 			recipe.SetResult(ItemID.WaterWalkingBoots, 1);
 			recipe.AddRecipe();
 		}
+		public override void AddRecipeGroups()
+		{
+			RecipeGroup group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Silver Bar", new int[]
+			{
+				ItemID.SilverBar,
+				ItemID.TungstenBar
+			});
+			RecipeGroup.RegisterGroup("SOTS:SilverBar", group);
+
+			group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Evil Material", new int[]
+			{
+				ItemID.TissueSample,
+				ItemID.ShadowScale
+			});
+			RecipeGroup.RegisterGroup("SOTS:EvilMaterial", group);
+
+			group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Evil Bar", new int[]
+			{
+				ItemID.CrimtaneBar,
+				ItemID.DemoniteBar
+			});
+			RecipeGroup.RegisterGroup("SOTS:EvilBar", group);
+
+			group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Gold Bar", new int[]
+			{
+				ItemID.GoldBar,
+				ItemID.PlatinumBar
+			});
+			RecipeGroup.RegisterGroup("SOTS:GoldBar", group);
+
+			group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Gem Robe", new int[]
+			{
+				ItemID.RubyRobe,
+				ItemID.AmethystRobe,
+				ItemID.TopazRobe,
+				ItemID.SapphireRobe,
+				ItemID.EmeraldRobe,
+				ItemID.DiamondRobe
+			});
+			RecipeGroup.RegisterGroup("SOTS:GemRobes", group);
+
+			group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Pre-Hardmode Ore", new int[]
+			{
+				ItemID.TungstenOre,
+				ItemID.CopperOre,
+				ItemID.TinOre,
+				ItemID.IronOre,
+				ItemID.LeadOre,
+				ItemID.SilverOre,
+				ItemID.GoldOre,
+				ItemID.PlatinumOre
+			});
+			RecipeGroup.RegisterGroup("SOTS:PHMOre", group);
+
+			group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Tier 2 DD2 Armor", new int[]
+			{
+				ItemID.SquirePlating,
+				ItemID.SquireGreatHelm,
+				ItemID.SquireGreaves,
+				ItemID.HuntressWig,
+				ItemID.HuntressJerkin,
+				ItemID.HuntressPants,
+				ItemID.ApprenticeHat,
+				ItemID.ApprenticeRobe,
+				ItemID.ApprenticeTrousers,
+				ItemID.MonkBrows,
+				ItemID.MonkShirt,
+				ItemID.MonkPants
+			});
+			RecipeGroup.RegisterGroup("SOTS:T2DD2Armor", group);
+
+			group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Tier 2 DD2 Accessory", new int[]
+			{
+				ItemID.SquireShield,
+				ItemID.HuntressBuckler,
+				ItemID.ApprenticeScarf,
+				ItemID.MonkBelt
+			});
+			RecipeGroup.RegisterGroup("SOTS:T2DD2Accessory", group);
+
+			group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Dissolving Element", new int[]
+			{
+				ModContent.ItemType<DissolvingAether>(),
+				ModContent.ItemType<DissolvingNature>(),
+				ModContent.ItemType<DissolvingEarth>(),
+				ModContent.ItemType<DissolvingAurora>(),
+				ModContent.ItemType<DissolvingDeluge>(),
+				ModContent.ItemType<DissolvingUmbra>(),
+				ModContent.ItemType<DissolvingBrilliance>(),
+				ModContent.ItemType<DissolvingNether>()
+			});
+			RecipeGroup.RegisterGroup("SOTS:DissolvingElement", group);
+
+			group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Elemental Fragment", new int[]
+			{
+				ModContent.ItemType<FragmentOfOtherworld>(),
+				ModContent.ItemType<FragmentOfNature>(),
+				ModContent.ItemType<FragmentOfEarth>(),
+				ModContent.ItemType<FragmentOfPermafrost>(),
+				ModContent.ItemType<FragmentOfTide>(),
+				ModContent.ItemType<FragmentOfEvil>(),
+				ModContent.ItemType<FragmentOfChaos>(),
+				ModContent.ItemType<FragmentOfInferno>()
+			});
+			RecipeGroup.RegisterGroup("SOTS:ElementalFragment", group);
+
+			group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Elemental Plating", new int[]
+			{
+				ModContent.ItemType<UltimatePlating>(),
+				ModContent.ItemType<DullPlating>(),
+				ModContent.ItemType<NaturePlating>(),
+				ModContent.ItemType<EarthenPlating>(),
+				ModContent.ItemType<PermafrostPlating>(),
+				ModContent.ItemType<TidePlating>(),
+				ModContent.ItemType<EvilPlating>(),
+				ModContent.ItemType<ChaosPlating>(),
+				ModContent.ItemType<InfernoPlating>()
+			});
+			RecipeGroup.RegisterGroup("SOTS:ElementalPlating", group);
+		}
 		public override void UpdateMusic(ref int music, ref MusicPriority priority)
         {
 			/*
@@ -618,16 +742,16 @@ namespace SOTS
 				bossChecklist.Call(
 					"AddBoss",
 					11.4f,
-					new List<int>() { ModContent.NPCType<CelestialSerpentHead>(), ModContent.NPCType<CelestialSerpentBody>(), ModContent.NPCType<CelestialSerpentTail>() },
+					new List<int>() { ModContent.NPCType<Lux>() },
 					this,
-					"Celestial Serpent",
-					(Func<bool>)(() => SOTSWorld.downedCelestial),
-					new List<int>() { ModContent.ItemType<CelestialTorch>() },
+					"Lux",
+					(Func<bool>)(() => SOTSWorld.downedLux),
+					new List<int>() { ModContent.ItemType<ElectromagneticLure>() },
 					new List<int>() { },
-					new List<int>() { ModContent.ItemType<CelestialBag>(), ModContent.ItemType<StarShard>(), ModContent.ItemType<StrangeFruit>() },
-					"Use a [i:" + ModContent.ItemType<CelestialTorch>() + "] during the night",
+					new List<int>() { ModContent.ItemType<CelestialBag>(), ModContent.ItemType<DissolvingBrilliance>(), ModContent.ItemType<PhaseOre>() },
+					"Anger a Chaos Spirit",
 					"",
-					"SOTS/NPCs/Boss/CelestialSerpent/CelestialSerpent_Display",
+					"SOTS/BossCL/LuxBossLog",
 					"",
 					(Func<bool>)(() => true));
 				bossChecklist.Call(
@@ -653,91 +777,11 @@ namespace SOTS
 
 				//bossChecklist.Call("AddBossWithInfo", "Antimaterial Antlion", 7.21f, (Func<bool>)(() => SOTSWorld.downedAntilion), "Use [i:" + ItemType("ForbiddenPyramid") + "] in a desert biome");
 				//bossChecklist.Call("AddBossWithInfo", "Icy Amalgamation", 8.21f, (Func<bool>)(() => SOTSWorld.downedAmalgamation), "Use [i:" + ItemType("FrostedKey") + "] on a [i:" + ItemType("FrostArtifact") + "] in a snow biome");
-				//bossChecklist.Call("AddBossWithInfo", "Celestial Serpent", 11.1f, (Func<bool>)(() => SOTSWorld.downedCelestial), "Use [i:" + ItemType("CelestialTorch") + "] during night time");
+				//bossChecklist.Call("AddBossWithInfo", "Celestial Serpent", 11.1f, (Func<bool>)(() => SOTSWorld.downedLux), "Use [i:" + ItemType("CelestialTorch") + "] during night time");
                // bossChecklist.Call("AddBossWithInfo", "Subspace Serpent", 11.2f, (Func<bool>)(() => SOTSWorld.downedSubspace), "Tear a rift in hell by detonating a [i:" + ItemType("CatalystBomb") + "]");
 
 			 }
         }
-		public override void AddRecipeGroups()
-		{
-			RecipeGroup group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Silver Bar", new int[]
-			{
-				ItemID.SilverBar,
-				ItemID.TungstenBar
-			});
-			RecipeGroup.RegisterGroup("SOTS:SilverBar", group);
-
-			group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Evil Material", new int[]
-			{
-				ItemID.TissueSample,
-				ItemID.ShadowScale
-			});
-			RecipeGroup.RegisterGroup("SOTS:EvilMaterial", group);
-
-			group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Evil Bar", new int[]
-			{
-				ItemID.CrimtaneBar,
-				ItemID.DemoniteBar
-			});
-			RecipeGroup.RegisterGroup("SOTS:EvilBar", group);
-
-			group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Gold Bar", new int[]
-			{
-				ItemID.GoldBar,
-				ItemID.PlatinumBar
-			});
-			RecipeGroup.RegisterGroup("SOTS:GoldBar", group);
-
-			group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Gem Robe", new int[]
-			{
-				ItemID.RubyRobe,
-				ItemID.AmethystRobe,
-				ItemID.TopazRobe,
-				ItemID.SapphireRobe,
-				ItemID.EmeraldRobe,
-				ItemID.DiamondRobe
-			});
-			RecipeGroup.RegisterGroup("SOTS:GemRobes", group);
-
-			group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Pre-Hardmode Ore", new int[]
-			{
-				ItemID.TungstenOre,
-				ItemID.CopperOre,
-				ItemID.TinOre,
-				ItemID.IronOre,
-				ItemID.LeadOre,
-				ItemID.SilverOre,
-				ItemID.GoldOre,
-				ItemID.PlatinumOre
-			});
-			RecipeGroup.RegisterGroup("SOTS:PHMOre", group);
-
-			group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Tier 2 DD2 Armor", new int[]
-			{
-				ItemID.SquirePlating,
-				ItemID.SquireGreatHelm,
-				ItemID.SquireGreaves,
-				ItemID.HuntressWig,
-				ItemID.HuntressJerkin,
-				ItemID.HuntressPants,
-				ItemID.ApprenticeHat,
-				ItemID.ApprenticeRobe,
-				ItemID.ApprenticeTrousers,
-				ItemID.MonkBrows,
-				ItemID.MonkShirt,
-				ItemID.MonkPants
-			});
-			RecipeGroup.RegisterGroup("SOTS:T2DD2Armor", group);
-
-			group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Tier 2 DD2 Accessory", new int[]
-			{
-				ItemID.SquireShield,
-				ItemID.HuntressBuckler,
-				ItemID.ApprenticeScarf,
-				ItemID.MonkBelt
-			});
-			RecipeGroup.RegisterGroup("SOTS:T2DD2Accessory", group);
-		}
 		public static float lightingChange = 1f;
         public override void ModifyLightingBrightness(ref float scale)
         {

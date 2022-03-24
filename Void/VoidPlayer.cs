@@ -191,6 +191,7 @@ namespace SOTS.Void
 		public List<int> VoidMinions = new List<int>();
 		public override void UpdateBadLifeRegen()
 		{
+			SOTSPlayer sPlayer = SOTSPlayer.ModPlayer(player);
 			if (voidShock)
 			{
 				player.lifeRegen = 0;
@@ -199,7 +200,7 @@ namespace SOTS.Void
 					player.lifeRegen = 0;
 				}
 				player.lifeRegenTime = 0;
-				if (SOTSPlayer.ModPlayer(player).VMincubator) //also lengthens time of curse
+				if (sPlayer.VMincubator || sPlayer.VoidAnomaly) //also lengthens time of curse
 					player.lifeRegen -= 20; // -10 hp * 20 seconds = -200 hp
 				else
 					player.lifeRegen -= 16; // -8 hp * 10 seconds = -80 hp
@@ -217,7 +218,7 @@ namespace SOTS.Void
 				player.lifeRegenTime = 0;
 				player.lifeRegen -= 20;
 				player.lifeRegen -= player.statLifeMax2 / 20;
-				if (SOTSPlayer.ModPlayer(player).VMincubator)
+				if (sPlayer.VMincubator || sPlayer.VoidAnomaly)
                 {
 					if(player.lifeRegen < 0)
                     {
@@ -537,8 +538,9 @@ namespace SOTS.Void
 			{
 				if (!voidShock && !voidRecovery)
 				{
+					SOTSPlayer sPlayer = SOTSPlayer.ModPlayer(player);
 					int time = 600;
-					if (SOTSPlayer.ModPlayer(player).VMincubator)
+					if (sPlayer.VMincubator || sPlayer.VoidAnomaly)
 						time = 1200;
 					player.AddBuff(ModContent.BuffType<VoidShock>(), time);
 					if (player.whoAmI == Main.LocalPlayer.whoAmI)
@@ -812,9 +814,10 @@ namespace SOTS.Void
 						VoidEffect(player, -negativeVoidRegenPopupNumber, true);
 						if (player.HasBuff(BuffType<VoidMetamorphosis>()))
 						{
+							int healAmt = (int)(1.6 * negativeVoidRegenPopupNumber);
 							if (player.whoAmI == Main.myPlayer)
-								player.HealEffect(negativeVoidRegenPopupNumber);
-							player.statLife += negativeVoidRegenPopupNumber;
+								player.HealEffect(healAmt);
+							player.statLife += healAmt;
 						}
 					}
 					voidMeter -= negativeVoidRegenPopupNumber;
