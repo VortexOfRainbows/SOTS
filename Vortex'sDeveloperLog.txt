@@ -43,10 +43,13 @@ Low Priority:
 4. Fix Planetarium sky island spawning in tandum
 5. Stars in Planetarium Sky
 
+3/24/22
+1. Electromagnetic Lure now telegraphs where the construct spawns
+2. New Subspace Sprite (Heart+Up & Poker)
+
 3/23/22
 1. Adjusted healing on Void Metamorphosis (Void Anomaly and VM Incubator)
 2. Added Electromagnetic Lure and did some work on Lux in BossCL
-	1. Might need some sort of telegraph to indicate where it spawns
 
 3/22/22
 1. Added Inferno and Ultimate plating

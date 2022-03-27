@@ -4,6 +4,8 @@ using Terraria.ModLoader;
 using Terraria.DataStructures;
 using SOTS.NPCs.Constructs;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework;
+using SOTS.Projectiles;
 
 namespace SOTS.Items
 {
@@ -28,7 +30,7 @@ namespace SOTS.Items
 			item.consumable = true;
 			item.noUseGraphic = true;
 		}
-		public override void AddRecipes()
+        public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddRecipeGroup("SOTS:DissolvingElement", 1);
@@ -106,6 +108,8 @@ namespace SOTS.Items
 		}
 		public override bool UseItem(Player player)
 		{
+			if(Main.myPlayer == player.whoAmI)
+				Projectile.NewProjectile(player.Center + new Vector2(0, -32), new Vector2(0, -4), ModContent.ProjectileType<ConstructFinder>(), 0, 0, Main.myPlayer);
 			int type = GetNPCType(CapableNPCS(player));
 			if (type == -1)
 				return false;
