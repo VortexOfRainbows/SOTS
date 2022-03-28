@@ -46,6 +46,7 @@ Low Priority:
 3/24/22
 1. Electromagnetic Lure now telegraphs where the construct spawns
 2. New Subspace Sprite (Heart+Up & Poker)
+3. Melee attacks work during Frozen Time
 
 3/23/22
 1. Adjusted healing on Void Metamorphosis (Void Anomaly and VM Incubator)

@@ -741,7 +741,7 @@ namespace SOTS
 					(Func<bool>)(() => true));
 				bossChecklist.Call(
 					"AddBoss",
-					11.4f,
+					12.5f,
 					new List<int>() { ModContent.NPCType<Lux>() },
 					this,
 					"Lux",

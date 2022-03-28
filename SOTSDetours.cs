@@ -85,13 +85,20 @@ namespace SOTS
 			{
 				if (SOTSWorld.IsFrozenThisFrame)
 				{
+					for (int index = 0; index < 256; ++index)
+					{
+						if (self.immune[index] > 0)
+							--self.immune[index];
+					}
 					return;
 				}
 				else
 				{
 					bool freeze = DebuffNPC.UpdateWhileFrozen(self, i);
 					if (freeze)
+					{
 						return;
+					}
 				}
 			}
 			orig(self, i);

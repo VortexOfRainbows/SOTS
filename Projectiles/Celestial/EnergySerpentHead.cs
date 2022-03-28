@@ -72,14 +72,14 @@ namespace SOTS.Projectiles.Celestial
 			{
 				for (int a = 0; a < 360; a += 60)
 				{
-					Vector2 circular = new Vector2(Main.rand.NextFloat(3.5f, 5), 0).RotatedBy(MathHelper.ToRadians(a));
-					color = new Color(100, 255, 100, 0);
+					Vector2 circular = new Vector2(Main.rand.NextFloat(3.0f, 4), 0).RotatedBy(MathHelper.ToRadians(a));
+					color = new Color(100, 255, 100, 0) * 0.2f;
 					spriteBatch.Draw(texture, first + circular - Main.screenPosition, null, color * ((255f - projectile.alpha) / 255f), projectile.rotation, origin, 1.05f, projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 				}
 			}
 			else
 			{
-				color = new Color(0, 255, 0);
+				color = new Color(200, 255, 200);
 				spriteBatch.Draw(texture, first - Main.screenPosition, null, color, projectile.rotation, origin, 1.05f, projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 1f);
 			}
 			for (int i = 0; i < segments.Count; i++)
@@ -104,14 +104,14 @@ namespace SOTS.Projectiles.Celestial
 				{
 					for (int a = 0; a < 360; a += 60)
 					{
-						Vector2 circular = new Vector2(Main.rand.NextFloat(3.5f, 5), 0).RotatedBy(MathHelper.ToRadians(a));
-						color = new Color(100, 255, 100, 0);
+						Vector2 circular = new Vector2(Main.rand.NextFloat(3.0f, 4), 0).RotatedBy(MathHelper.ToRadians(a));
+						color = new Color(100, 255, 100, 0) * 0.2f;
 						spriteBatch.Draw(texture, segments[i] + projectile.velocity + circular - Main.screenPosition, null, color * ((255f - projectile.alpha) / 255f), rotation, origin, 1.05f, spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 					}
 				}
 				else
 				{
-					color = new Color(0, 255, 0);
+					color = new Color(200, 255, 200);
 					spriteBatch.Draw(texture, segments[i] + projectile.velocity - Main.screenPosition, null, color, rotation, origin, 1.05f, spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 1f);
 				}
 				first = segments[i];
