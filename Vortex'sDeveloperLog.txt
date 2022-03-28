@@ -43,10 +43,11 @@ Low Priority:
 4. Fix Planetarium sky island spawning in tandum
 5. Stars in Planetarium Sky
 
-3/24/22
+3/27/22
 1. Electromagnetic Lure now telegraphs where the construct spawns
 2. New Subspace Sprite (Heart+Up & Poker)
-3. Melee attacks work during Frozen Time
+3. Worked on Supernova Storm
+	1. Needs: Multiplayer Testing + explosion effect
 
 3/23/22
 1. Adjusted healing on Void Metamorphosis (Void Anomaly and VM Incubator)

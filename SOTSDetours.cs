@@ -85,11 +85,11 @@ namespace SOTS
 			{
 				if (SOTSWorld.IsFrozenThisFrame)
 				{
-					for (int index = 0; index < 256; ++index)
+					/*for (int index = 0; index < 256; ++index)
 					{
 						if (self.immune[index] > 0)
 							--self.immune[index];
-					}
+					}*/
 					return;
 				}
 				else
