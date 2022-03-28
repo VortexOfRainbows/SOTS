@@ -32,6 +32,7 @@ using System;
 using SOTS.Items.Otherworld.Furniture;
 using SOTS.Items.Fishing;
 using SOTS.Items.Chaos;
+using SOTS.Projectiles.Otherworld;
 
 namespace SOTS
 {
@@ -651,7 +652,7 @@ namespace SOTS
 				Item item = drawPlayer.HeldItem;
 				Texture2D texture = item.GetGlobalItem<ItemUseGlow>().glowTexture;
 				Vector2 zero2 = Vector2.Zero;
-				bool isTwilightPole = item.type == mod.ItemType("TwilightFishingPole") && drawPlayer.ownedProjectileCounts[mod.ProjectileType("TwilightBobber")]> 0;
+				bool isTwilightPole = item.type == ItemType<TwilightFishingPole>() && drawPlayer.ownedProjectileCounts[ProjectileType<TwilightBobber>()]> 0;
 				if (texture != null && (drawPlayer.itemAnimation > 0 || isTwilightPole))
 				{
 					Vector2 location = drawInfo.itemLocation;
@@ -715,9 +716,23 @@ namespace SOTS
 							{
 								recurse = 2;
 							}
+							Vector2 position = location - Main.screenPosition + vector10;
+							if (item.type == ItemType<SupernovaStorm>())
+							{
+								for (int k = 0; k < 6; k++)
+								{
+									Vector2 circular = new Vector2(3, 0).RotatedBy(MathHelper.ToRadians(k * 60 + Main.GameUpdateCount * 6));
+									color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(k * 60)) * 0.33f;
+									color.A = 0;
+									DrawData value2 = new DrawData(texture, position + circular, new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Main.itemTexture[item.type].Width, Main.itemTexture[item.type].Height)), color, drawPlayer.itemRotation, origin5, item.scale, drawInfo.spriteEffects, 0);
+									Main.playerDrawData.Add(value2);
+								}
+								DrawData value = new DrawData(mod.GetTexture("Items/Chaos/SupernovaStorm"), position, new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Main.itemTexture[item.type].Width, Main.itemTexture[item.type].Height)), Lighting.GetColor((int)location.X / 16, (int)location.Y / 16), drawPlayer.itemRotation, origin5, item.scale, drawInfo.spriteEffects, 0);
+								Main.playerDrawData.Add(value);
+							}
 							for (int i = 0; i < recurse; i++)
 							{
-								DrawData value = new DrawData(texture, new Vector2((float)((int)(location.X - Main.screenPosition.X + vector10.X)), (float)((int)(location.Y - Main.screenPosition.Y + vector10.Y))), new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Main.itemTexture[item.type].Width, Main.itemTexture[item.type].Height)), rainbow ? color : Color.White, drawPlayer.itemRotation, origin5, item.scale, drawInfo.spriteEffects, 0);
+								DrawData value = new DrawData(texture, position, new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Main.itemTexture[item.type].Width, Main.itemTexture[item.type].Height)), rainbow ? color : Color.White, drawPlayer.itemRotation, origin5, item.scale, drawInfo.spriteEffects, 0);
 								Main.playerDrawData.Add(value);
 							}
 						}

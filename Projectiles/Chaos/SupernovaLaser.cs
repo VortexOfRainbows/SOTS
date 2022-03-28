@@ -39,7 +39,7 @@ namespace SOTS.Projectiles.Chaos
 		{
 			if(runOnce)
 			{
-				color = VoidPlayer.pastelAttempt(Main.rand.NextFloat(6.28f), true);
+				color = Color.Lerp(new Color(238, 145, 219), new Color(81, 170, 247), Main.rand.NextFloat(1));
 				SetPostitions();
 				runOnce = false;
 				return true;
@@ -63,6 +63,7 @@ namespace SOTS.Projectiles.Chaos
 				k++;
 				posList.Add(currentPos);
 				currentPos += direction;
+				/*
 				if (!collided && k > 20)
 				{
 					int npc = FindClosestEnemy(currentPos, k);
@@ -82,8 +83,8 @@ namespace SOTS.Projectiles.Chaos
 						}
 					}
 				}
-				else if (maxDist > 30 && collided)
-					maxDist = 30;
+				else if (maxDist > 120 && collided)
+					maxDist = 120;*/
 				if (Main.rand.NextBool(3))
 				{
 					Dust dust = Dust.NewDustDirect(posList[posList.Count - 1] - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
@@ -91,35 +92,23 @@ namespace SOTS.Projectiles.Chaos
 					dust.noGravity = true;
 					dust.alpha = 100;
 					dust.color = color;
-					dust.scale *= 1.2f;
+					dust.scale *= 1.4f;
 					dust.velocity *= 1.5f;
 				}
 				maxDist--;
 			}
 		}
-		float redirections = 0;
-		public float Redirect(float radians, Vector2 pos, Vector2 npc)
-		{
-			Vector2 toNPC = npc - pos;
-			float speed = redirections * 0.05f;
-			Vector2 rnVelo = new Vector2(length - (redirections * 0.025f), 0).RotatedBy(radians);
-			rnVelo += toNPC.SafeNormalize(Vector2.Zero) * speed;
-			float npcRad = rnVelo.ToRotation();
-			redirections++;
-			return npcRad;
-		}
-		int currentNPC = -1;
-		public int FindClosestEnemy(Vector2 pos, int length)
-		{
-			if (currentNPC != -1)
-			{
-				return currentNPC;
-			}
-			return SOTSNPCs.FindTarget_Basic(pos, length * 4);
-		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.immune[projectile.owner] = 5;
+			if (projectile.owner == Main.myPlayer)
+			{
+				float rand = Main.rand.Next(120);
+				for (int i = 0; i < 3; i++)
+                {
+					Vector2 circular = new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(i * 120 + rand));
+					Projectile.NewProjectile(target.Center + circular.SafeNormalize(Vector2.Zero) * 0.5f * target.Size.Length(), circular * 4f, ModContent.ProjectileType<SupernovaScatter>(), (int)(projectile.damage * 1.4f), projectile.knockBack, Main.myPlayer, target.whoAmI, rand * 3 + i * 120);
+                }
+            }
         }
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
 		{

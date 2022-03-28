@@ -29,11 +29,10 @@ Mid Priority:
 	3. True Phaseblade (upgrades into) -> Starward Sword
 	4. Replace Celestial Serpent Drops (resprites and maybe some reworks)
 		1. Armageddon (melee + void)
-		2. Star Storm Spell -> Supernova Storm (magic)
-		3. Stellar Serpent Launcher (ranged)
-		4. Stellar Serpent Staff -> Hyperlight Launcher (magic gun, photon geyser upgrade)
-		5. Stellar Shot (will become Perfect Star upgrade, magic gun)
-		6. Hyperdrive (upgrade to Vibrancy Module, accessory)
+		2. Stellar Serpent Launcher (ranged)
+		3. Stellar Serpent Staff -> Hyperlight Launcher (magic gun, photon geyser upgrade)
+		4. Stellar Shot (will become Perfect Star upgrade, magic gun)
+		5. Hyperdrive (upgrade to Vibrancy Module, accessory)
 2. Big Vibrant geode in the jungle
 
 Low Priority:
@@ -46,8 +45,8 @@ Low Priority:
 3/27/22
 1. Electromagnetic Lure now telegraphs where the construct spawns
 2. New Subspace Sprite (Heart+Up & Poker)
-3. Worked on Supernova Storm
-	1. Needs: Multiplayer Testing + explosion effect
+3. Added Supernova Storm. Works in MULTIPLAYER!
+4. Buffed some Lux Drops due to retiering (Same tier as subspace/slightly earlier)
 
 3/23/22
 1. Adjusted healing on Void Metamorphosis (Void Anomaly and VM Incubator)

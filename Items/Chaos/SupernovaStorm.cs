@@ -20,10 +20,10 @@ namespace SOTS.Items.Chaos
 			Color color = Color.White;
 			for (int k = 0; k < 6; k++)
 			{
-				Vector2 circular = new Vector2(4 * scale, 0).RotatedBy(MathHelper.ToRadians(k * 60 + Main.GameUpdateCount * 2));
-				color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(k * 60));
+				Vector2 circular = new Vector2(3 * scale, 0).RotatedBy(MathHelper.ToRadians(k * 60 + Main.GameUpdateCount * 2));
+				color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(k * 60)) * 0.33f;
 				color.A = 0;
-				Main.spriteBatch.Draw(texture, new Vector2((float)(item.Center.X - (int)Main.screenPosition.X), (float)(item.Center.Y - (int)Main.screenPosition.Y) + 2) + circular, null, color * 0.3f, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, new Vector2((float)(item.Center.X - (int)Main.screenPosition.X), (float)(item.Center.Y - (int)Main.screenPosition.Y) + 2) + circular, null, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			}
 			return base.PreDrawInWorld(spriteBatch, lightColor, alphaColor, ref rotation, ref scale, whoAmI);
 		}
@@ -36,7 +36,7 @@ namespace SOTS.Items.Chaos
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Supernova Storm");
-			Tooltip.SetDefault("");
+			Tooltip.SetDefault("Calls down a Supernova Beam from the sky\nCauses enemies to rupture into homing bolts for 3x140% damage");
 		}
 		public override void SetDefaults()
 		{
@@ -44,8 +44,8 @@ namespace SOTS.Items.Chaos
 			item.magic = true;
             item.width = 40;    
             item.height = 52; 
-            item.useTime = 12; 
-            item.useAnimation = 12;
+            item.useTime = 14; 
+            item.useAnimation = 14;
             item.useStyle = ItemUseStyleID.HoldingOut;    
             item.knockBack = 1.5f;
 			item.value = Item.sellPrice(0, 12, 0, 0);
@@ -55,7 +55,11 @@ namespace SOTS.Items.Chaos
             item.autoReuse = true;
             item.shootSpeed = 3f; 
 			item.shoot = ModContent.ProjectileType<SupernovaLaser>();
-			item.mana = 8;
+			item.mana = 7;
+			if (!Main.dedServ)
+			{
+				item.GetGlobalItem<ItemUseGlow>().glowTexture = mod.GetTexture("Items/Chaos/SupernovaStormGlow");
+			}
 		}
 		public override void AddRecipes()
 		{
