@@ -27,6 +27,10 @@ namespace SOTS
 		{
 			return (!WorldGen.InWorld(i, j, 20) || Main.tile[i, j].active() && Main.tileSolidTop[Main.tile[i, j].type] == false && Main.tileSolid[Main.tile[i, j].type] == true && Main.tile[i, j].nactive());
 		}
+		public static bool TileTopCapable(int i, int j)
+		{
+			return (!WorldGen.InWorld(i, j, 20) || Main.tile[i, j].active() && (Main.tileSolidTop[Main.tile[i, j].type] || Main.tileSolid[Main.tile[i, j].type]) && Main.tile[i, j].nactive());
+		}
 		public static void GenerateAcediaRoom(int x, int y, Mod mod, int direction = 1)
 		{
 			if (direction != 1 && direction != -1)

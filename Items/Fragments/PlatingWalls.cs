@@ -22,6 +22,7 @@ namespace SOTS.Items.Fragments
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.SetResult(this, 4);
 			recipe.AddRecipe();
+			recipe = new ModRecipe(mod);
 			recipe.AddIngredient(this, 4);
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.SetResult(ModContent.ItemType<NaturePlating>(), 1);
