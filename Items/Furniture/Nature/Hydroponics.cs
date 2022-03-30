@@ -15,6 +15,7 @@ namespace SOTS.Items.Furniture.Nature
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Nature Plating Hydroponics");
+			Tooltip.SetDefault("Automatically grows an assortment of alchemical herbs\nRight click to harvest all fully grown herbs\nPlants can be harvested at any time or weather");
 		}
 		public override void SetDefaults()
 		{
@@ -28,6 +29,7 @@ namespace SOTS.Items.Furniture.Nature
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<DissolvingNature>(), 1);
 			recipe.AddIngredient(ItemID.HerbBag, 1);
+			recipe.AddIngredient(ItemID.DirtBlock, 100);
 			recipe.AddIngredient(ModContent.ItemType<NaturePlating>(), 100);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this, 1);
@@ -38,6 +40,7 @@ namespace SOTS.Items.Furniture.Nature
 	{
 		public override void SetDefaults()
 		{
+			Main.tileLighted[Type] = true;
 			Main.tileSolid[Type] = false;
 			Main.tileFrameImportant[Type] = true;
 			Main.tileNoAttach[Type] = true;
@@ -56,6 +59,11 @@ namespace SOTS.Items.Furniture.Nature
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Hydroponics");		
 			AddMapEntry(new Color(119, 141, 138), name);
+			disableSmartCursor = false;
+		}
+		public override bool HasSmartInteract()
+		{
+			return false;
 		}
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
 		{
@@ -242,9 +250,9 @@ namespace SOTS.Items.Furniture.Nature
         public override bool NewRightClick(int i, int j)
 		{
 			GetTopLeft(ref i, ref j);
-			for (int y = 0; y < 6; y++)
+			for (int y = 0; y < 6; y += 2)
 			{
-				for (int x = 0; x < 6; x++)
+				for (int x = 1; x <= 4; x++)
 				{
 					Tile growTile = Main.tile[i + x, j + y];
 					if (x >= 1 && x <= 4 && y % 2 == 0 && growTile.type == Type)
@@ -264,11 +272,14 @@ namespace SOTS.Items.Furniture.Nature
 			{
 				zero = Vector2.Zero;
 			}
+			//Main.SmartInteractTileCoordsSelected
 			Tile tile = Main.tile[i, j];
 			bool topLeft = tile.frameY == 0 && tile.frameX == 0;
 			if (topLeft) //check for it being the top left tile
 			{
+				//int highlightCapable = -1;
 				Texture2D texture = Main.tileTexture[Type];
+				Texture2D textureGlow = ModContent.GetTexture("SOTS/Items/Furniture/Nature/HydroponicsGlow");
 				for (int layer = 0; layer < 2; layer ++)
 				{
 					for (int y = 0; y < 6; y++)
@@ -282,33 +293,170 @@ namespace SOTS.Items.Furniture.Nature
 							{
 								frameHeight = 18;
 							}
+							Color lightColor = Lighting.GetColor(i + x, j + y);
 							Rectangle frame = new Rectangle(18 * x, 18 * y, 16, frameHeight);
-							if(layer == 0)
-								spriteBatch.Draw(texture, drawPosition, frame, Lighting.GetColor(i + x, j + y), 0f, default(Vector2), 1.0f, SpriteEffects.None, 0f);
-							else if(layer == 1 && x >= 1 && x <= 4 && y % 2 == 0)
+							if (layer == 0)
 							{
-								Tile growTile = Main.tile[i + x, j + y];
-								int growthStage = growTile.frameY / 18 - 1;
-								if(growthStage > 0)
+								spriteBatch.Draw(texture, drawPosition, frame, lightColor, 0f, default(Vector2), 1.0f, SpriteEffects.None, 0f);
+								spriteBatch.Draw(textureGlow, drawPosition, frame, Color.White, 0f, default(Vector2), 1.0f, SpriteEffects.None, 0f);
+							}
+							else if (layer == 1)
+							{
+								/*if (highlightCapable != -1)
+									DrawHighlight(highlightCapable == 2, drawPosition, frame, spriteBatch, lightColor);*/
+								if (x >= 1 && x <= 4 && y % 2 == 0)
 								{
-									int type = growTile.frameX / 18 - 1;
-									if (!Main.tileSetsLoaded[81 + growthStage])
-										Main.instance.LoadTiles(81 + growthStage);
-									Texture2D texture2 = Main.tileTexture[81 + growthStage];
-									int direction = ((i + x) % 2 * 2 - 1);
-									drawPosition.Y -= 6;
-									if(type == 1)
-                                    {
-										drawPosition.X += 4 * direction;
-                                    }
-									spriteBatch.Draw(texture2, drawPosition, new Rectangle(type * 18, 0, 16, 20), Lighting.GetColor(i + x, j + y), 0f, default(Vector2), 1.0f, direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+									Tile growTile = Main.tile[i + x, j + y];
+									int growthStage = growTile.frameY / 18 - 1;
+									if (growthStage > 0)
+									{
+										int type = growTile.frameX / 18 - 1;
+										if (!Main.tileSetsLoaded[81 + growthStage])
+											Main.instance.LoadTiles(81 + growthStage);
+										Texture2D texture2 = Main.tileTexture[81 + growthStage];
+										int direction = ((i + x) % 2 * 2 - 1);
+										drawPosition.Y -= 6;
+										if (type == 1)
+										{
+											drawPosition.X += 4 * direction;
+										}
+										if(growthStage == 3)
+											DoDust(i + x, j + y, type, ref lightColor);
+										spriteBatch.Draw(texture2, drawPosition, new Rectangle(type * 18, 0, 16, 20), lightColor, 0f, default(Vector2), 1.0f, direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+									}
 								}
+							} 
+						}
+					}
+				}
+				/*if (highlightCapable != -1)
+					for(int a = 0; a < Main.SmartInteractTileCoordsSelected.Count; a++)
+					{
+						spriteBatch.Draw(ModContent.GetTexture("SOTS/Items/Fragments/NaturePlating"), Main.SmartInteractTileCoordsSelected[a].ToVector2() * 16 - Main.screenPosition + zero, null, Color.White * 0.5f, 0f, default(Vector2), 0.5f, SpriteEffects.None, 0f);
+					}*/
+			}
+			return false;
+        }
+		public void DoDust(int i, int j, int type, ref Color color1) 
+		{
+			if (type == 0 && Main.rand.Next(100) == 0)
+			{
+				int dust = Dust.NewDust(new Vector2(i * 16, (float)(j * 16 - 4)), 16, 16, 19, 0.0f, 0.0f, 160, new Color(), 0.1f);
+				Main.dust[dust].velocity.X /= 2f;
+				Main.dust[dust].velocity.Y /= 2f;
+				Main.dust[dust].noGravity = true;
+				Main.dust[dust].fadeIn = 1f;
+			}
+			if (type == 1 && Main.rand.Next(100) == 0)
+				Dust.NewDust(new Vector2(i * 16, j * 16), 16, 16, 41, 0.0f, 0.0f, 250, new Color(), 0.8f);
+			if (type == 3)
+			{
+				if (Main.rand.Next(200) == 0)
+				{
+					int dust = Dust.NewDust(new Vector2(i * 16, j * 16), 16, 16, 14, 0.0f, 0.0f, 100, new Color(), 0.2f);
+					Main.dust[dust].fadeIn = 1.2f;
+				}
+
+				if (Main.rand.Next(75) == 0)
+				{
+					int dust = Dust.NewDust(new Vector2(i * 16, j * 16), 16, 16, 27);
+					Main.dust[dust].velocity.X /= 2f;
+					Main.dust[dust].velocity.Y /= 2f;
+				}
+			}
+			if (type == 4 && Main.rand.Next(150) == 0)
+			{
+				int dust = Dust.NewDust(new Vector2(i * 16, j * 16), 16, 8, 16);
+				Main.dust[dust].velocity.X /= 3f;
+				Main.dust[dust].velocity.Y /= 3f;
+				Main.dust[dust].velocity.Y -= 0.7f;
+				Main.dust[dust].alpha = 50;
+				Main.dust[dust].scale *= 0.1f;
+				Main.dust[dust].fadeIn = 0.9f;
+				Main.dust[dust].noGravity = true;
+			}
+			if (type == 5)
+			{
+				if (Main.rand.Next(40) == 0)
+				{
+					int dust = Dust.NewDust(new Vector2(i * 16, (float)(j * 16 - 6)), 16, 16, DustID.Fire, 0.0f, 0.0f, 0, new Color(), 1.5f);
+					Main.dust[dust].velocity.Y -= 2f;
+					Main.dust[dust].noGravity = true;
+				}
+				color1.A = (byte)(Main.mouseTextColor / 2U);
+				color1.G = Main.mouseTextColor;
+				color1.B = Main.mouseTextColor;
+			}
+			if (type == 6)
+			{
+				if (Main.rand.Next(30) == 0)
+				{
+					var newColor = new Color(50, byte.MaxValue, byte.MaxValue, byte.MaxValue); 
+					int dust = Dust.NewDust(new Vector2((i * 16), (j * 16)), 16, 16,43, 0.0f, 0.0f, 254, newColor, 0.5f);
+					Main.dust[dust].velocity *= 0.0f;
+				}
+				var num9 = (byte)((Main.mouseTextColor + color1.G * 2) / 3);
+				var num10 = (byte)((Main.mouseTextColor + color1.B * 2) / 3);
+				if (num9 > color1.G)
+					color1.G = num9;
+				if (num10 > color1.B)
+					color1.B = num10;
+			}
+		}
+        /*public void DrawHighlight(bool selected, Vector2 drawPosition, Rectangle frame, SpriteBatch spriteBatch, Color lightColor)
+		{
+			int ave = ((int)lightColor.R + (int)lightColor.G + (int)lightColor.B) / 3;
+			if (ave > 10)
+			{
+				Texture2D texture2 = ModContent.GetTexture(HighlightTexture);
+				Color drawColor = !selected ? new Color(ave / 2, ave / 2, ave / 2, ave) : new Color(ave, ave, ave / 3, ave);
+				spriteBatch.Draw(texture2, drawPosition, frame, drawColor, 0f, default(Vector2), 1.0f, SpriteEffects.None, 0f);
+			}
+		}*/
+        public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
+		{
+			r = 0;
+			g = 0;
+			b = 0;
+			GetTopLeft(ref i, ref j);
+			for (int y = 0; y < 6; y += 2)
+			{
+				for (int x = 1; x <= 4; x++)
+				{
+					Tile growTile = Main.tile[i + x, j + y];
+					if (x >= 1 && x <= 4 && y % 2 == 0 && growTile.type == Type)
+					{
+						if (growTile.frameY == 72)
+						{
+							switch (growTile.frameX / 18 - 1)
+							{
+								case 2:
+									var num18 = (270 - Main.mouseTextColor) / 800f;
+									if (num18 > 1.0)
+										num18 = 1f;
+									else if (num18 < 0.0)
+										num18 = 0.0f;
+									r = num18 * 0.7f;
+									g = num18;
+									b = num18 * 0.1f;
+									break;
+								case 5:
+									var num25 = 0.9f;
+									r = num25;
+									g = num25 * 0.8f;
+									b = num25 * 0.2f;
+									break;
+								case 6:
+									var num26 = 0.08f;
+									g = num26 * 0.8f;
+									b = num26;
+									break;
 							}
 						}
 					}
 				}
 			}
-			return false;
+			base.ModifyLight(i, j, ref r, ref g, ref b);
         }
         public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
 		{

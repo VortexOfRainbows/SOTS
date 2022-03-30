@@ -42,12 +42,17 @@ Low Priority:
 4. Fix Planetarium sky island spawning in tandum
 5. Stars in Planetarium Sky
 
+3/29/22
+1. Attempted Smart Cursor for Hydroponics
+	1. This WON'T work without an IL edit, so it's best to avoid this
+	2. Added Glowmask + dust and drawstyles for the herbs
+	3. Needs: Multiplayer Testing + Testing in General, Balancing
+
 3/28/22
 1. Nature and Jungle Treasure slime now can drop Herb Bags 1-3
 2. Worked on Hydroponics.
 	1. This was a batshit dumb stupid idea... BUT IT ACTUALLY WORKED?!?
-	2. Needs: Visual improvements, Multiplayer Testing + Testing in General, and Tooltip, Balancing
-
+	
 3/27/22
 1. Electromagnetic Lure now telegraphs where the construct spawns
 2. New Subspace Sprite (Heart+Up & Poker)
