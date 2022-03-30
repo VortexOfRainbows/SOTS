@@ -127,7 +127,7 @@ namespace SOTS.Items.Furniture.Nature
 			{
 				for (int x = 0; x < 6; x++)
 				{
-					if (x >= 1 && x <= 4 && y % 2 == 0 && WorldGen.genRand.NextBool(50))
+					if (x >= 1 && x <= 4 && y % 2 == 0 && WorldGen.genRand.NextBool(1200))
 					{
 						GrowPlant(i + x, j + y);
 						NetMessage.SendTileSquare(-1, i + x, j + y, 1, TileChangeType.None);
@@ -418,41 +418,39 @@ namespace SOTS.Items.Furniture.Nature
 			r = 0;
 			g = 0;
 			b = 0;
-			GetTopLeft(ref i, ref j);
-			for (int y = 0; y < 6; y += 2)
+			int top = j;
+			int left = i;
+			GetTopLeft(ref left, ref top);
+			Tile growTile = Main.tile[i, j];
+			int x = i - left;
+			int y = j - top;
+			if (x >= 1 && x <= 4 && y % 2 == 0 && growTile.type == Type)
 			{
-				for (int x = 1; x <= 4; x++)
+				if (growTile.frameY == 72)
 				{
-					Tile growTile = Main.tile[i + x, j + y];
-					if (x >= 1 && x <= 4 && y % 2 == 0 && growTile.type == Type)
+					switch (growTile.frameX / 18 - 1)
 					{
-						if (growTile.frameY == 72)
-						{
-							switch (growTile.frameX / 18 - 1)
-							{
-								case 2:
-									var num18 = (270 - Main.mouseTextColor) / 800f;
-									if (num18 > 1.0)
-										num18 = 1f;
-									else if (num18 < 0.0)
-										num18 = 0.0f;
-									r = num18 * 0.7f;
-									g = num18;
-									b = num18 * 0.1f;
-									break;
-								case 5:
-									var num25 = 0.9f;
-									r = num25;
-									g = num25 * 0.8f;
-									b = num25 * 0.2f;
-									break;
-								case 6:
-									var num26 = 0.08f;
-									g = num26 * 0.8f;
-									b = num26;
-									break;
-							}
-						}
+						case 2:
+							var num18 = (270 - Main.mouseTextColor) / 800f;
+							if (num18 > 1.0)
+								num18 = 1f;
+							else if (num18 < 0.0)
+								num18 = 0.0f;
+							r = num18 * 0.7f;
+							g = num18;
+							b = num18 * 0.1f;
+							break;
+						case 5:
+							var num25 = 0.9f;
+							r = num25;
+							g = num25 * 0.8f;
+							b = num25 * 0.2f;
+							break;
+						case 6:
+							var num26 = 0.08f;
+							g = num26 * 0.8f;
+							b = num26;
+							break;
 					}
 				}
 			}

@@ -46,7 +46,7 @@ Low Priority:
 1. Attempted Smart Cursor for Hydroponics
 	1. This WON'T work without an IL edit, so it's best to avoid this
 	2. Added Glowmask + dust and drawstyles for the herbs
-	3. Needs: Multiplayer Testing + Testing in General, Balancing
+	3. Tested: Works in multiplayer! A miracle!
 
 3/28/22
 1. Nature and Jungle Treasure slime now can drop Herb Bags 1-3
