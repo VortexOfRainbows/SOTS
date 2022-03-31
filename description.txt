@@ -22,12 +22,13 @@ Credits:
 Code, Direction, Art: Vortex#6230
 Music, SFX, Direction, Art: Heart Plus Up!
 Code, Audio Engineering: apotofkoolaid
-Art: Blasfah, Mochi, MrPetkins 
+Art: Mochi, MrPetkins 
 
 (Past Developers)
 Emotional Support, Direction, Art: Coolio
 Misc, Direction: FlameFreezer
 Music: BananaLizard
+Art: Blasfah
 
 (Contributors and Other Credits)
 Art: HugeKraken, Arcri, Pokerface

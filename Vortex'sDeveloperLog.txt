@@ -5,6 +5,7 @@ The following is my development plans :D
 3. AI Companion related accessories
 	1. Matsumoto Minion (Vivy reference)
 	2. Calculator + Subspace Locket + Some digital related item
+4. Starward Sword (Upgrade to Digital Daito)
 
 Known Bugs:
 1. Lag generates in multiplayer after a while of playing. (Maybe fixed?)
@@ -26,14 +27,14 @@ Mid Priority:
 	1. Rose Bow (glaze bow upgrade)
 	2. Voidmage Incubator
 		1. Requires a secret with Void Anomaly and Tainted to obtain 
-	3. True Phaseblade (upgrades into) -> Starward Sword
-	4. Replace Celestial Serpent Drops (resprites and maybe some reworks)
+	3. Replace Celestial Serpent Drops (resprites and maybe some reworks)
 		1. Armageddon (melee + void)
 		2. Stellar Serpent Launcher (ranged)
 		3. Stellar Serpent Staff -> Hyperlight Launcher (magic gun, photon geyser upgrade)
 		4. Stellar Shot (will become Perfect Star upgrade, magic gun)
 		5. Hyperdrive (upgrade to Vibrancy Module, accessory)
 2. Big Vibrant geode in the jungle
+3. Nature Plating Furniture
 
 Low Priority:
 1. Archaelogist NPC
@@ -42,8 +43,12 @@ Low Priority:
 4. Fix Planetarium sky island spawning in tandum
 5. Stars in Planetarium Sky
 
+3/30/22
+1. Added Nature Plating furniture and Abstract Furniture system.
+	1. Need: Platform and Door
+
 3/29/22
-1. Attempted Smart Cursor for Hydroponics
+1. Attempted (failed) Smart Cursor for Hydroponics
 	1. This WON'T work without an IL edit, so it's best to avoid this
 	2. Added Glowmask + dust and drawstyles for the herbs
 	3. Tested: Works in multiplayer! A miracle!

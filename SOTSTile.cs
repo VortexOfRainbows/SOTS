@@ -20,6 +20,8 @@ namespace SOTS
 {
     public class SOTSTile : GlobalTile
     {
+        public static Color NaturePlatingColor = new Color(119, 141, 138);
+        public static Vector3 NaturePlatingLight = new Vector3(0.275f, 0.4f, 0.215f);
         public static int[] pyramidTiles;
         public static void LoadArrays() //called in SOTS.Load()
         {

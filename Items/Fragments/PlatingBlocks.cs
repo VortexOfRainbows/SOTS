@@ -50,7 +50,11 @@ namespace SOTS.Items.Fragments
 			if(canGlow(i, j))
 				DrawLights(i, j, spriteBatch);
 		}
-		public void DrawLights(int i, int j, SpriteBatch spriteBatch)
+        public override bool CanExplode(int i, int j)
+        {
+            return false;
+        }
+        public void DrawLights(int i, int j, SpriteBatch spriteBatch)
 		{
 			Tile tile = Main.tile[i, j];
 			Color color;
@@ -94,7 +98,7 @@ namespace SOTS.Items.Fragments
 		public override void SafeSetDefaults()
 		{
 			drop = ModContent.ItemType<NaturePlating>();
-			AddMapEntry(new Color(158, 177, 171));
+			AddMapEntry(SOTSTile.NaturePlatingColor);
 			mineResist = 1.5f;
 			soundType = SoundID.Tink;
 			soundStyle = 2;

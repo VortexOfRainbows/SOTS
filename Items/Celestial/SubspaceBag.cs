@@ -14,8 +14,8 @@ namespace SOTS.Items.Celestial
 		}
 		public override void SetDefaults()
 		{
-			item.width = 30;
-			item.height = 32;
+			item.width = 40;
+			item.height = 34;
 			item.value = 0;
 			item.rare = ItemRarityID.Red;
 			item.maxStack = 999;

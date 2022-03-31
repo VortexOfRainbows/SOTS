@@ -38,6 +38,10 @@ namespace SOTS.Items.Furniture.Nature
 	}
 	public class Hydroponics : ModTile
 	{
+		public override bool CanExplode(int i, int j)
+		{
+			return false;
+		}
 		public override void SetDefaults()
 		{
 			Main.tileLighted[Type] = true;
@@ -58,7 +62,7 @@ namespace SOTS.Items.Furniture.Nature
 			dustType = DustID.Tungsten;
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Hydroponics");		
-			AddMapEntry(new Color(119, 141, 138), name);
+			AddMapEntry(SOTSTile.NaturePlatingColor, name);
 			disableSmartCursor = false;
 		}
 		public override bool HasSmartInteract()
@@ -297,7 +301,13 @@ namespace SOTS.Items.Furniture.Nature
 							Rectangle frame = new Rectangle(18 * x, 18 * y, 16, frameHeight);
 							if (layer == 0)
 							{
-								spriteBatch.Draw(texture, drawPosition, frame, lightColor, 0f, default(Vector2), 1.0f, SpriteEffects.None, 0f);
+								if(Main.canDrawColorTile(i +x, j + y))
+                                {
+									spriteBatch.Draw(Main.tileAltTexture[Type, tile.color()], drawPosition, frame, lightColor, 0f, default(Vector2), 1.0f, SpriteEffects.None, 0f);
+
+								}
+								else
+									spriteBatch.Draw(texture, drawPosition, frame, lightColor, 0f, default(Vector2), 1.0f, SpriteEffects.None, 0f);
 								spriteBatch.Draw(textureGlow, drawPosition, frame, Color.White, 0f, default(Vector2), 1.0f, SpriteEffects.None, 0f);
 							}
 							else if (layer == 1)
