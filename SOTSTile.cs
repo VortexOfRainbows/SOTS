@@ -331,7 +331,7 @@ namespace SOTS
             }
             Vector2 offsets = -Main.screenPosition + zero + positionOffset;
             Vector2 drawCoordinates = location + offsets;
-            if (tile.slope() == 0 && !tile.halfBrick())
+            if ((tile.slope() == 0 && !tile.halfBrick()) || (Main.tileSolid[tile.type] && Main.tileSolidTop[tile.type])) //second one should be for platforms
             {
                 Main.spriteBatch.Draw(texture, drawCoordinates, new Rectangle(frameX, frameY, width, height), drawColor, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
             }

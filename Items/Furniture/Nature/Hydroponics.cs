@@ -301,10 +301,9 @@ namespace SOTS.Items.Furniture.Nature
 							Rectangle frame = new Rectangle(18 * x, 18 * y, 16, frameHeight);
 							if (layer == 0)
 							{
-								if(Main.canDrawColorTile(i +x, j + y))
+								if(Main.canDrawColorTile(i + x, j + y))
                                 {
-									spriteBatch.Draw(Main.tileAltTexture[Type, tile.color()], drawPosition, frame, lightColor, 0f, default(Vector2), 1.0f, SpriteEffects.None, 0f);
-
+									spriteBatch.Draw(Main.tileAltTexture[Type, Main.tile[i + x, j + y].color()], drawPosition, frame, lightColor, 0f, default(Vector2), 1.0f, SpriteEffects.None, 0f);
 								}
 								else
 									spriteBatch.Draw(texture, drawPosition, frame, lightColor, 0f, default(Vector2), 1.0f, SpriteEffects.None, 0f);
