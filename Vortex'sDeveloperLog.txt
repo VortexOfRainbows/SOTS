@@ -34,7 +34,6 @@ Mid Priority:
 		4. Stellar Shot (will become Perfect Star upgrade, magic gun)
 		5. Hyperdrive (upgrade to Vibrancy Module, accessory)
 2. Big Vibrant geode in the jungle
-3. Nature Plating Furniture
 
 Low Priority:
 1. Archaelogist NPC
@@ -45,7 +44,7 @@ Low Priority:
 
 3/30/22
 1. Added Nature Plating furniture and Abstract Furniture system.
-	1. Need: Platform and Door
+2. Added Doors and Platforms for Nature Plating
 
 3/29/22
 1. Attempted (failed) Smart Cursor for Hydroponics

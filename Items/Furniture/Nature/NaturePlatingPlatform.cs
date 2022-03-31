@@ -27,7 +27,6 @@ namespace SOTS.Items.Furniture.Nature
 		{
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<NaturePlating>());
-			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this, 2);
 			recipe.AddRecipe();
 		}
