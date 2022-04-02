@@ -286,7 +286,8 @@ namespace SOTS.NPCs.Boss.Lux
 			Texture2D texture = Main.npcTexture[npc.type];
 			Vector2 drawOrigin = new Vector2(Main.npcTexture[npc.type].Width * 0.5f, npc.height * 0.5f);
 			ChaosSpirit.DrawWings(MathHelper.Lerp(wingHeight, 40, wingHeightLerp), npc.ai[2], npc.rotation, npc.Center, npc.GetAlpha(illusionColor()));
-			DrawRings(spriteBatch, false);
+			if (!runOnce)
+				DrawRings(spriteBatch, false);
 			for (int k = 0; k < 7; k++)
 			{
 				Color color = illusionColor();
@@ -300,7 +301,8 @@ namespace SOTS.NPCs.Boss.Lux
 				color.A = 0;
 				Main.spriteBatch.Draw(texture, npc.Center + circular - Main.screenPosition, null, npc.GetAlpha(color), 0f, drawOrigin, npc.scale * 1.1f, SpriteEffects.None, 0f);
 			}
-			DrawRings(spriteBatch, true);
+			if (!runOnce)
+				DrawRings(spriteBatch, true);
 		}
         float wingSpeedMult = 1;
 		float wingHeight = 0;
@@ -313,7 +315,8 @@ namespace SOTS.NPCs.Boss.Lux
 		}
 		public void DrawRings(SpriteBatch spriteBatch, bool front)
 		{
-			ring.Draw(spriteBatch, illusionColor(), 3, (255 - npc.alpha) / 255f, 1, 1, npc.rotation, front);
+			if(!runOnce)
+				ring.Draw(spriteBatch, illusionColor(), 3, (255 - npc.alpha) / 255f, 1, 1, npc.rotation, front);
 		}
 		public int Type()
 		{

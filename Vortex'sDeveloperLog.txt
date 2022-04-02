@@ -42,6 +42,16 @@ Low Priority:
 4. Fix Planetarium sky island spawning in tandum
 5. Stars in Planetarium Sky
 
+4/1/22 & 4/2/22
+1. Worked on Collector Mk2
+	1. Needs: Multiplayer testing, maybe some polish?
+2. Precarious Cluster and Dissolving brilliances decrease void gain while in inventory
+
+3/31/22
+1. Worked on Collect Mk2
+	1. Scrapped chain death idea for Lux
+	2. STILL WIP
+
 3/30/22
 1. Added Nature Plating furniture and Abstract Furniture system.
 2. Added Doors and Platforms for Nature Plating

@@ -91,7 +91,7 @@ namespace SOTS.NPCs.Boss.Lux
 			float overrideGenPercent = 1;
 			if(desperation)
             {
-				overrideGenPercent = 1 - attackTimer1 / 60f;
+				overrideGenPercent = 1 - attackTimer1 / 140f;
 				if (overrideGenPercent < -0.05f)
 					overrideGenPercent = -0.05f;
             }
@@ -331,63 +331,101 @@ namespace SOTS.NPCs.Boss.Lux
 			if(desperation)
 			{
 				modifyRotation(false, true);
-				if (attackTimer1 < 60)
+				if (attackTimer1 < 90)
 					for (int i = 0; i < 4; i++)
 					{
 						rings[i].ResetVariables();
+						rings[i].MoveTo(npc.Center, true);
 					}
 				if (attackPhase != DesperationPhase)
 				{
-					Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 62, 1f, 0.2f);
-					if (Main.netMode != NetmodeID.Server)
-					{
-						for (int i = 0; i < 12; i++)
+					for(int i = 0; i < Main.projectile.Length; i++)
+                    {
+						Projectile proj = Main.projectile[i];
+						if(proj.active && proj.type == ModContent.ProjectileType<DogmaSphere>())
 						{
-							for(float j = 1; j <= 2; j += 0.25f)
-                            {
-								Dust dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.RainbowMk2);
-								dust.color = VoidPlayer.pastelAttempt(Main.rand.NextFloat(6.28f), true);
-								dust.noGravity = true;
-								dust.fadeIn = 0.1f;
-								dust.scale *= 2.2f * j;
-								dust.velocity *= 10f / j;
-							}
+							proj.Kill();
 						}
-					}
+                    }
 					SwapPhase(DesperationPhase);
                 }
 				npc.dontTakeDamage = true;
 				npc.life = 1;
 				npc.lifeMax = 1;
 				attackTimer1++;
-				float lerp = attackTimer1 / 80f;
+				float lerp = attackTimer1 / 150f;
 				for (int i = 0; i < 4; i++)
 				{
 					rings[i].radius = MathHelper.Lerp(rings[i].originalRadius, 0, lerp);
 				}
-				if (attackTimer1 > 100)
-                {
-					if(attackTimer2 == 0 && attackTimer3 == 0)
+				if (attackTimer1 > 180)
+				{
+					if (attackTimer2 == 0 && attackTimer3 == 0)
 					{
 						attackTimer2 = npc.Center.X;
 						attackTimer3 = npc.Center.Y;
 					}
 					npc.Center = new Vector2(attackTimer2, attackTimer3);
-					float lengthToPlayer = toPlayer.Length();
-					npc.velocity = toPlayer.SafeNormalize(Vector2.Zero) * ((float)Math.Pow(lengthToPlayer, 0.6f) + 0.0034f * lengthToPlayer);
-					if(attackTimer1 == 101 && Main.netMode != NetmodeID.Server)
-                    {
-						for(int j = -1; j <= 1; j += 2)
+					if(attackTimer1 == 181 && Main.netMode != NetmodeID.MultiplayerClient)
+					{
+						DesperationExplosion(24, 1.2f);
+						npc.velocity *= 0f;
+						if (Main.netMode != NetmodeID.MultiplayerClient)
 						{
-							for (int i = -1; i <= 1; i++)
+							int n = NPC.NewNPC((int)npc.Center.X + 10, (int)npc.position.Y, ModContent.NPCType<Collector2>());
+							Main.npc[n].netUpdate = true;
+							attackTimer4 = n;
+							npc.netUpdate = true;
+						}
+					}
+					if (attackTimer4 != -1)
+					{
+						npc.velocity *= 0f;
+						NPC collector = Main.npc[(int)attackTimer4];
+						if (collector.type != ModContent.NPCType<Collector2>())
+						{
+							NPC npc2 = Main.npc[NPC.NewNPC((int)npc.Center.X, (int)npc.position.Y, ModContent.NPCType<Collector2>())];
+							npc2.netUpdate = true;
+							attackTimer4 = npc2.whoAmI;
+							npc.netUpdate = true;
+						}
+						else
+						{
+							float ai3 = collector.ai[3];
+							if (ai3 < 80 && ai3 > 0)
 							{
-								Vector2 circular = new Vector2(32 * j, 0).RotatedBy(MathHelper.ToRadians(i * 20));
-								Projectile.NewProjectile(npc.Center + circular, circular * 0.5f, ModContent.ProjectileType<ChaosSpiritChain>(), 0, 0, Main.myPlayer, npc.whoAmI);
+								npc.scale -= 0.005f;
+								int dust3 = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, ModContent.DustType<CopyDust4>(), 0, 0, 0, VoidPlayer.pastelAttempt(Main.rand.NextFloat(6.28f), true));
+								Dust dust4 = Main.dust[dust3];
+								dust4.velocity *= 2.5f;
+								dust4.noGravity = true;
+								dust4.fadeIn = 0.1f;
+								dust4.scale *= 2.5f;
+								if (ai3 % 25 == 0)
+								{
+									if (Main.netMode != NetmodeID.MultiplayerClient)
+									{
+										int item = Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<DissolvingBrilliance>(), 1);
+										Main.item[item].velocity = new Vector2(0, 5).RotatedBy(MathHelper.ToRadians(50 * ((ai3 - 50) / 25)));
+										NetMessage.SendData(MessageID.SyncItem, -1, -1, null, item, 1f, 0.0f, 0.0f, 0, 0, 0);
+									}
+								}
+							}
+							if (ai3 >= 90)
+							{
+								npc.StrikeNPC(10000, 0, 0);
+								if (Main.netMode == NetmodeID.Server)
+									NetMessage.SendData(MessageID.StrikeNPC, -1, -1, null, npc.whoAmI, 10000, 0, 0, 0, 0, 0);
 							}
 						}
 					}
 				}
-            }
+				else
+				{
+					IdleTimer += 0.1f + 1.4f * (float)Math.Sin(MathHelper.Pi * attackTimer1 / 180f);
+					npc.Center += new Vector2(0, 3f * attackTimer1 / 180f * (float)Math.Sin(MathHelper.ToRadians(IdleTimer * 6)) * (float)Math.Sin(MathHelper.Pi * attackTimer1 / 180f));
+				}
+			}
 			else
 			{
 				if (attackPhase == SetupPhase)
@@ -1100,6 +1138,25 @@ namespace SOTS.NPCs.Boss.Lux
 		}
 		public const float timeToAimAtPlayer = 40;
 		public float aimToPlayer = 0;
+		public void DesperationExplosion(int dustAmt = 20, float volume = 1f)
+		{
+			Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 62, volume, -0.4f);
+			if (Main.netMode != NetmodeID.Server)
+			{
+				for (int i = 0; i < dustAmt; i++)
+				{
+					for (float j = 1; j <= 2; j += 0.25f)
+					{
+						Dust dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.RainbowMk2);
+						dust.color = VoidPlayer.pastelAttempt(Main.rand.NextFloat(6.28f), true);
+						dust.noGravity = true;
+						dust.fadeIn = 0.1f;
+						dust.scale *= 1.3f * j;
+						dust.velocity *= 6f / j;
+					}
+				}
+			}
+		}
 		public void modifyRotation(bool aimAtPlayer, bool modifyWings = true)
 		{
 			Player player = Main.player[npc.target];
@@ -1129,7 +1186,7 @@ namespace SOTS.NPCs.Boss.Lux
 			npc.rotation = lerpedAngle;
 
 		}
-		public override void AI()
+		public override void PostAI()
 		{
 			int dust2 = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.RainbowMk2);
 			Dust dust = Main.dust[dust2];
@@ -1162,10 +1219,6 @@ namespace SOTS.NPCs.Boss.Lux
 					}
 				}
 			}
-		}
-		public override void NPCLoot()
-		{
-			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<DissolvingBrilliance>(), 3);	
 		}
 		public void teleport(Vector2 destination, Vector2 playerDestination, bool serverOnly = false)
 		{

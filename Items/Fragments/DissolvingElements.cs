@@ -582,7 +582,7 @@ namespace SOTS.Items.Fragments
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Dissolving Brilliance");
-			//Tooltip.SetDefault("");
+			Tooltip.SetDefault("Decreases void gain by 1 while in the inventory");
 			Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(5, 8));
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
@@ -636,6 +636,7 @@ namespace SOTS.Items.Fragments
 		}
 		public override void UpdateInventory(Player player)
 		{
+			VoidPlayer vPlayer = VoidPlayer.ModPlayer(player);
 			frameCounter++;
 			if (frameCounter >= 5)
 			{
@@ -645,6 +646,13 @@ namespace SOTS.Items.Fragments
 			if (frame >= 8)
 			{
 				frame = 0;
+			}
+			for (int i = 0; i < item.stack; i++)
+			{
+				if (vPlayer.bonusVoidGain >= 1)
+				{
+					vPlayer.bonusVoidGain--;
+				}
 			}
 		}
 	}

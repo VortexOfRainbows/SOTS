@@ -133,7 +133,7 @@ namespace SOTS.Items.Fragments
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Terminal Cluster");
-			Tooltip.SetDefault("Reduces max void by 20 while in the inventory, max life by 10, mana by 10, and life regeneration by 2 while in the inventory");
+			Tooltip.SetDefault("Reduces max void by 20 while in the inventory, max life by 10, mana by 10, void gain by 1, and life regeneration by 2 while in the inventory");
 		}
 		public override void SetDefaults()
 		{
@@ -238,6 +238,10 @@ namespace SOTS.Items.Fragments
 				else if (vPlayer.voidMeterMax2 < 20)
 				{
 					vPlayer.voidMeterMax2 = 20;
+				}
+				if (vPlayer.bonusVoidGain >= 1)
+				{
+					vPlayer.bonusVoidGain--;
 				}
 			}
 		}
