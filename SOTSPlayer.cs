@@ -177,7 +177,10 @@ namespace SOTS
 		public int shardSpellExtra = 0;
 		public int frigidJavelinBoost = 0;
 		public bool frigidJavelinNoCost = false;
-		public int orbitalCounter = 0;
+		public int orbitalCounter
+        {
+			get => SOTSWorld.GlobalCounter + player.whoAmI * 30;
+        }
 		public int shardOnHit = 0;
 		public int bonusShardDamage = 0;
 		public int phaseCannonIndex = -1;
@@ -253,7 +256,6 @@ namespace SOTS
 			ModPacket packet = mod.GetPacket();
 			packet.Write((byte)SOTSMessageType.SOTSSyncPlayer);
 			packet.Write((byte)player.whoAmI);
-			packet.Write(orbitalCounter);
 			packet.Write(testPlayer.creativeFlight);
 			packet.Write(voidPlayer.lootingSouls);
 			packet.Send(toWho, fromWho);
@@ -264,15 +266,6 @@ namespace SOTS
 			SOTSPlayer clone = clientPlayer as SOTSPlayer;
 			if(netUpdate)
 			{
-				if (clone.orbitalCounter != orbitalCounter)
-				{
-					// Send a Mod Packet with the changes.
-					var packet = mod.GetPacket();
-					packet.Write((byte)SOTSMessageType.OrbitalCounterChanged);
-					packet.Write((byte)player.whoAmI);
-					packet.Write(orbitalCounter);
-					packet.Send();
-				}
 				if (clone.skywardBlades != skywardBlades)
 				{
 					// Send a Mod Packet with the changes.
@@ -852,8 +845,7 @@ namespace SOTS
 			frigidJavelinBoost = 0;
 			frigidJavelinNoCost = false;
 			brokenFrigidSword = brokenFrigidSword > 0 ? brokenFrigidSword - 1 : brokenFrigidSword;
-			orbitalCounter++;
-			if (orbitalCounter % 360 == 0)
+			if (SOTSWorld.GlobalCounter % 360 == 0)
 			{
 				netUpdate = true;
 			}

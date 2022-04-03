@@ -36,6 +36,7 @@ namespace SOTS.Projectiles.Minions
 			projectile.penetrate = -1;
 			projectile.usesLocalNPCImmunity = true;
 			projectile.localNPCHitCooldown = 10;
+			projectile.netImportant = true;
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
@@ -61,7 +62,6 @@ namespace SOTS.Projectiles.Minions
 			}
 		}
 		int ofTotal2 = 0;
-		int updateNetCounter = 0;
 		public void MoveAwayFromOthers(bool andTiles = false, float movespeed = 0.09f, float widthMult = 1.5f)
 		{
 			float overlapVelocity = movespeed;
@@ -111,11 +111,10 @@ namespace SOTS.Projectiles.Minions
 				}
 			}
 			if (Main.myPlayer == player.whoAmI)
-            {
-				ofTotal2 = ofTotal;
-				updateNetCounter++;
-				if (updateNetCounter % 60 == 0)
+			{
+				if (ofTotal2 != ofTotal)
 					projectile.netUpdate = true;
+				ofTotal2 = ofTotal;
             }
 
 			Vector2 idlePosition = player.Center;

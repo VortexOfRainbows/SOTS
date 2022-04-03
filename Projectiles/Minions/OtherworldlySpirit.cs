@@ -175,9 +175,12 @@ namespace SOTS.Projectiles.Minions
 			}
 			if (Main.myPlayer == player.whoAmI)
 			{
-				if (total > 0)
-					projectile.ai[0] = modPlayer.orbitalCounter + (ofTotal * 360f / total);
+				if (projectile.ai[1] != ofTotal)
+					projectile.netUpdate = true;
+				projectile.ai[1] = ofTotal;
 			}
+			if (total > 0)
+				projectile.ai[0] = modPlayer.orbitalCounter + (projectile.ai[1] * 360f / total);
 			#endregion
 			#region Find target
 			float distanceFromTarget = 1200f;
@@ -255,10 +258,6 @@ namespace SOTS.Projectiles.Minions
 
 			Lighting.AddLight(projectile.Center, VoidPlayer.OtherworldColor.R / 255f, VoidPlayer.OtherworldColor.G / 255f * ((255 - projectile.alpha) / 255f), VoidPlayer.OtherworldColor.B / 255f * ((255 - projectile.alpha) / 255f));
 			MoveAwayFromOthers(true, 0.11f, 2f);
-			if (Main.myPlayer == player.whoAmI)
-			{
-				projectile.netUpdate = true;
-			}
 		}
 	}
 }

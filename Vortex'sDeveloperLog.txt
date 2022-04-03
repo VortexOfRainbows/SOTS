@@ -35,9 +35,7 @@ Mid Priority:
 2. Big Vibrant geode in the jungle
 3. Pyramid Battle Music Box
 4. ToDo: 
-	1. Change OrbitalCounter for players to be a SOTSWorld.GlobalCounter.
-	2. Resize Earthen resprites + rework Miners Pickaxe and Manic Miner
-	3. See what you can do to fix Spirit Minions bugging out in multiplayer
+	1. Resize Earthen related resprites + rework Miners Pickaxe and Manic Miner
 
 Low Priority:
 1. Archaelogist NPC
@@ -45,6 +43,17 @@ Low Priority:
 3. Void Bar strike the player during void shock
 4. Fix Planetarium sky island spawning in tandum
 5. Stars in Planetarium Sky
+
+4/3/22
+1. Replaced SOTSPlayer.OrbitalCounter with SOTSWorld.GlobalCounter.
+	1. This should make the orbital relating minions and other values that require the iterator more consistent in multiplayer
+	2. In addition, it also lessens the amount of packets that are sent in total, making it less strenuous.
+2. Reworked some logic in Void Minion and Void parameter related syncing.
+	1. This *should* make void minions function better in multiplayer, as there was a massive oversight in multiplayer void minion calculations 
+		(used projectile.owner == player.whoAmI instead of projectile.owner == Main.myPlayer)
+	2. Also less intensive, as only the owner client will calculate void minion consumption, instead of all clients
+		(now using Main.myPlayer == player.whoAmI, which makes it so only the client player runs the calculations)
+3. 
 
 4/2/22 & 4/3/22
 1. Nature Plating doors are considered housing viable!

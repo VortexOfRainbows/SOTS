@@ -185,7 +185,11 @@ namespace SOTS
 				_lastScreenSize = new Vector2(Main.screenWidth, Main.screenHeight);
 				_lastViewSize = Main.ViewSize;
 			}
-			SOTSWorld.UpdateWhileFrozen();
+			bool frozen = SOTSWorld.UpdateWhileFrozen();
+			if(!frozen)
+            {
+				SOTSWorld.Update();
+            }
 		}
 		public override void MidUpdateProjectileItem()
 		{
@@ -233,7 +237,6 @@ namespace SOTS
 		internal enum SOTSMessageType : int
 		{
 			SOTSSyncPlayer,
-			OrbitalCounterChanged,
 			SyncCreativeFlight,
 			SyncLootingSoulsAndVoidMax,
 			SyncGlobalNPC,
@@ -243,7 +246,8 @@ namespace SOTS
 			SyncVisionNumber,
 			SyncGlobalNPCTime,
 			SyncGlobalProjTime,
-			SyncGlobalWorldFreeze
+			SyncGlobalWorldFreeze,
+			SyncGlobalCounter
 		}
 		public override void HandlePacket(BinaryReader reader, int whoAmI)
 		{
@@ -259,25 +263,10 @@ namespace SOTS
 					SOTSPlayer modPlayer = Main.player[playernumber].GetModPlayer<SOTSPlayer>();
 					TestWingsPlayer testPlayer = Main.player[playernumber].GetModPlayer<TestWingsPlayer>();
 					VoidPlayer voidPlayer = Main.player[playernumber].GetModPlayer<VoidPlayer>();
-					int orbitalCounter = reader.ReadInt32();
-					modPlayer.orbitalCounter = orbitalCounter;
 					bool creativeFlight = reader.ReadBoolean();
 					testPlayer.creativeFlight = creativeFlight;
 					int lootingSouls = reader.ReadInt32();
 					voidPlayer.lootingSouls = lootingSouls;
-					break;
-				case (int)SOTSMessageType.OrbitalCounterChanged:
-					playernumber = reader.ReadByte();
-					modPlayer = Main.player[playernumber].GetModPlayer<SOTSPlayer>();
-					modPlayer.orbitalCounter = reader.ReadInt32();
-					if (Main.netMode == NetmodeID.Server)
-					{
-						var packet = GetPacket();
-						packet.Write((byte)SOTSMessageType.OrbitalCounterChanged);
-						packet.Write(playernumber);
-						packet.Write(modPlayer.orbitalCounter);
-						packet.Send(-1, playernumber);
-					}
 					break;
                 case (int)SOTSMessageType.SyncCreativeFlight:
 					playernumber = reader.ReadByte(); 
@@ -299,6 +288,7 @@ namespace SOTS
 					voidPlayer.voidMeterMax = reader.ReadInt32();
 					voidPlayer.voidMeterMax2 = reader.ReadInt32();
 					voidPlayer.voidMeter = reader.ReadSingle();
+					voidPlayer.VoidMinionConsumption = reader.ReadInt32();
 					if (Main.netMode == NetmodeID.Server)
 					{
 						var packet = GetPacket();
@@ -308,6 +298,7 @@ namespace SOTS
 						packet.Write(voidPlayer.voidMeterMax);
 						packet.Write(voidPlayer.voidMeterMax2);
 						packet.Write(voidPlayer.voidMeter);
+						packet.Write(voidPlayer.VoidMinionConsumption);
 						packet.Send(-1, playernumber);
 					}
 					break;
@@ -437,6 +428,16 @@ namespace SOTS
 						packet.Write(SOTSWorld.GlobalTimeFreeze);
 						packet.Write(SOTSWorld.GlobalFrozen);
 						packet.Send(-1, playernumber2);
+					}
+					break;
+				case (int)SOTSMessageType.SyncGlobalCounter:
+					SOTSWorld.GlobalCounter = reader.ReadInt32();
+					if (Main.netMode == NetmodeID.Server)
+					{
+						var packet = GetPacket();
+						packet.Write((byte)SOTSMessageType.SyncGlobalCounter);
+						packet.Write(SOTSWorld.GlobalCounter);
+						packet.Send(-1, -1);
 					}
 					break;
 			}

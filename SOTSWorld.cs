@@ -38,6 +38,7 @@ namespace SOTS
 {
     public class SOTSWorld : ModWorld
 	{
+		public static int GlobalCounter = 0;
 		public const float GlobalFreezeStartup = 30f;
 		public static int GlobalTimeFreeze = 0;
 		public static bool GlobalFrozen = false;
@@ -52,6 +53,13 @@ namespace SOTS
 			packet.Write(playerWhoAmI);
 			packet.Write(GlobalTimeFreeze);
 			packet.Write(GlobalFrozen);
+			packet.Send();
+		}
+		public static void SyncGlobalCounter()
+		{
+			var packet = Instance.GetPacket();
+			packet.Write((byte)SOTSMessageType.SyncGlobalCounter);
+			packet.Write(GlobalCounter);
 			packet.Send();
 		}
 		public static void SetTimeFreeze(Player clientSender, int time)
@@ -135,6 +143,15 @@ namespace SOTS
 			}
 			return IsFrozenThisFrame;
 		}
+		public static void Update()
+        {
+			GlobalCounter++;
+			if(GlobalCounter % 300 == 0)
+            {
+				if (Main.netMode == NetmodeID.Server)
+					SyncGlobalCounter();
+            }
+		}
         public static int SecretFoundMusicTimer = 0;
         public static int planetarium = 0;
 		public static int pyramidBiome = 0;
@@ -149,6 +166,7 @@ namespace SOTS
 		public static bool downedAdvisor = false;
         public override void Initialize()
 		{
+			GlobalCounter = 0;
 			GlobalTimeFreeze = 0;
 			GlobalFrozen = false;
 			GlobalFreezeCounter = 0;
@@ -206,6 +224,7 @@ namespace SOTS
 			flags[4] = downedLux;
 			flags[5] = downedSubspace;
 			writer.Write(flags);
+			writer.Write(GlobalCounter);
 		}
 		public override void NetReceive(BinaryReader reader) {
 			BitsByte flags = reader.ReadByte();
@@ -215,6 +234,7 @@ namespace SOTS
 			downedCurse = flags[3];
 			downedLux = flags[4];
 			downedSubspace = flags[5];
+			GlobalCounter = reader.ReadInt32();
 		}
 		public override void ModifyWorldGenTasks(List<GenPass> tasks, ref float totalWeight)
         {

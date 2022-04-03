@@ -97,6 +97,7 @@ namespace SOTS.Void
 					packet.Write(voidMeterMax);
 					packet.Write(voidMeterMax2);
 					packet.Write(voidMeter);
+					packet.Write(VoidMinionConsumption);
 					packet.Send();
 				}
 				netUpdate = false;
@@ -607,6 +608,7 @@ namespace SOTS.Void
 		bool isFull = false;
         private void ResetVariables() 
 		{
+			Main.NewText("I think " + player.whoAmI + " has " + voidMeterMax2 + " meter max 2 and " + voidMeter + " void and " + voidMeterMax + " void meter max 1 and " + VoidMinionConsumption + " void minion consumption");
 			lastVoidMeter = voidMeter;
 			ColorUpdate();
 			if (soulsOnKill > 0)
@@ -644,7 +646,13 @@ namespace SOTS.Void
 
 			voidSpeed = 1f; 
 			voidCost = 1f;
-			VoidMinionConsumption = RegisterVoidMinions();
+			if(Main.myPlayer == player.whoAmI)
+			{
+				int newVoidConsumption = RegisterVoidMinions();
+				if (VoidMinionConsumption != newVoidConsumption)
+					netUpdate = true;
+				VoidMinionConsumption = newVoidConsumption;
+			}
 			voidMeterMax2 -= VoidMinionConsumption;
 
 			if (lootingSouls > voidMeterMax2 && lootingSouls > 0)
