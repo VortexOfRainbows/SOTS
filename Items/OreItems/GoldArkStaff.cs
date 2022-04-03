@@ -2,6 +2,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using SOTS.Void;
+using SOTS.Projectiles.Ores;
 
 namespace SOTS.Items.OreItems
 {
@@ -20,19 +21,19 @@ namespace SOTS.Items.OreItems
 			item.height = 36;
 			item.useTime = 30;
 			item.useAnimation = 30;
-			item.useStyle = 1;
+			item.useStyle = ItemUseStyleID.SwingThrow;
 			item.knockBack = 3.5f;
             item.value = Item.sellPrice(0, 0, 35, 0);
 			item.rare = ItemRarityID.Green;
 			item.UseSound = SoundID.Item8;
 			item.autoReuse = true;     
 			item.noMelee = true;
-			item.shoot = mod.ProjectileType("ArkBolt"); 
+			item.shoot = ModContent.ProjectileType<ArkBolt>(); 
             item.shootSpeed = 12.5f;
 		}
-		public override void GetVoid(Player player)
+		public override int GetVoid(Player player)
 		{
-			voidMana = 4;
+			return 4;
 		}
 		public override void AddRecipes()
 		{

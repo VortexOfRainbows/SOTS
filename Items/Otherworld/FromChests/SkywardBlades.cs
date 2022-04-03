@@ -75,9 +75,9 @@ namespace SOTS.Items.Otherworld.FromChests
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			return modPlayer.skywardBlades <= 0;
         }
-        public override void GetVoid(Player player)
+        public override int GetVoid(Player player)
 		{
-			voidMana = 60;
+			return  60;
 		}
 		public override void AddRecipes()
 		{

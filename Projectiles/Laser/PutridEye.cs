@@ -162,8 +162,11 @@ namespace SOTS.Projectiles.Laser
 				DrawCircle(false, -6 + dist, 180, 1);
 				if (Main.myPlayer == projectile.owner)
 				{
-					Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("FriendlyPinkLaser"), projectile.damage, 1f, projectile.owner, projectile.Center.X + shootToX * 60, projectile.Center.Y + shootToY * 60);
-					VoidItem.DrainMana(player);
+					Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, ModContent.ProjectileType<FriendlyPinkLaser>(), projectile.damage, 1f, projectile.owner, projectile.Center.X + shootToX * 60, projectile.Center.Y + shootToY * 60);
+					Item item = player.HeldItem;
+					VoidItem vItem = item.modItem as VoidItem;
+					if (vItem != null)
+						vItem.DrainMana(player);
 				}
 				dist = -10;
 				Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 0.8f / 255f, (255 - projectile.alpha) * 0.8f / 255f, (255 - projectile.alpha) * 0.8f / 255f);

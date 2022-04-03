@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using SOTS.Void;
+using SOTS.Projectiles.Ores;
 
 namespace SOTS.Items.OreItems
 {
@@ -21,19 +22,19 @@ namespace SOTS.Items.OreItems
 			item.height = 40;
 			item.useTime = 31;
 			item.useAnimation = 31;
-			item.useStyle = 5;
+			item.useStyle = ItemUseStyleID.HoldingOut;
 			item.knockBack = 5;
             item.value = Item.sellPrice(0, 0, 35, 0);
 			item.rare = ItemRarityID.Green;
 			item.UseSound = SoundID.Item1;       
-			item.shoot = mod.ProjectileType("GoldSpear"); 
+			item.shoot = ModContent.ProjectileType<GoldSpear>(); 
             item.shootSpeed = 3.8f;
 			item.noUseGraphic = true;
 			item.noMelee = true;
 		}
-		public override void GetVoid(Player player)
+		public override int GetVoid(Player player)
 		{
-			voidMana = 5;
+			return 5;
 		}
 		public override void AddRecipes()
 		{

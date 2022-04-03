@@ -14,8 +14,6 @@ namespace SOTS.Void
 	public abstract class VoidItem : ModItem
 	{
 		//public int voidUsage = 0;
-		public static int voidMana;
-		public static int voidManaAmount;
 		public virtual void SafeSetDefaults() 
 		{
 			
@@ -33,25 +31,8 @@ namespace SOTS.Void
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			float realDamageBoost = voidPlayer.voidDamage;
-			GetVoid(player);
+			int baseVoidCost = VoidCost(player);
 			item.mana = 1;
-			if(!item.summon)
-			{
-				float voidCostMult = 1f;
-				if (item.prefix == mod.GetPrefix("Famished").Type || item.prefix == mod.GetPrefix("Precarious").Type || item.prefix == mod.GetPrefix("Potent").Type || item.prefix == mod.GetPrefix("Omnipotent").Type)
-				{
-					voidCostMult = item.GetGlobalItem<PrefixItem>().voidCostMultiplier;
-				}
-				voidManaAmount = (int)(voidMana * voidPlayer.voidCost * voidCostMult);
-				if (voidManaAmount < 1 && item.type != ModContent.ItemType<FrigidJavelin>())
-				{
-					voidManaAmount = 1;
-				}
-			}
-			else
-            {
-				voidManaAmount = voidMana;
-            }
 			add += realDamageBoost - 1;
 		}
 		public override void GetWeaponKnockback(Player player, ref float knockback) 	
@@ -65,20 +46,44 @@ namespace SOTS.Void
 		{
 			crit = crit + VoidPlayer.ModPlayer(player).voidCrit;
 		}
-		public virtual void GetVoid(Player player)
+		public int VoidCost(Player player)
 		{
-			voidMana = 1;
+			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
+			int baseCost = GetVoid(player);
+			int finalCost;
+			float voidCostMult = 1f;
+			if (!item.summon)
+			{
+				if (item.prefix == mod.GetPrefix("Famished").Type || item.prefix == mod.GetPrefix("Precarious").Type || item.prefix == mod.GetPrefix("Potent").Type || item.prefix == mod.GetPrefix("Omnipotent").Type)
+				{
+					voidCostMult = item.GetGlobalItem<PrefixItem>().voidCostMultiplier;
+				}
+				finalCost = (int)(baseCost * voidPlayer.voidCost * voidCostMult);
+				if (finalCost < 1 && item.type != ModContent.ItemType<FrigidJavelin>())
+				{
+					finalCost = 1;
+				}
+			}
+			else
+			{
+				finalCost = baseCost;
+			}
+			return finalCost;
+        }
+		public virtual int GetVoid(Player player)
+		{
+			int cost = 1;
 			if(item.summon)
             {
-				voidMana = VoidPlayer.minionVoidCost(VoidPlayer.voidMinion(item.shoot));
+				cost = VoidPlayer.minionVoidCost(VoidPlayer.voidMinion(item.shoot));
 				if (item.type == ModContent.ItemType<Lemegeton>())
-					voidMana *= 3;
+					cost *= 3;
             }
+			return cost;
 		}
 		public sealed override void ModifyTooltips(List<TooltipLine> tooltips) 
 		{
-			
-			//Player player = Main.player[localPlayer];
+			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(Main.LocalPlayer); //only the local player will see the tooltip, afterall
 			TooltipLine tt = tooltips.FirstOrDefault(x => x.Name == "Damage" && x.mod == "Terraria");
 			if (tt != null) 
 			{
@@ -101,7 +106,7 @@ namespace SOTS.Void
 					tt.text = damageValue + " void + summon " + damageWord;
 			}
 				
-			string voidManaText = voidManaAmount.ToString();
+			string voidCostText = VoidCost(Main.LocalPlayer).ToString();
 			TooltipLine tt2 = tooltips.FirstOrDefault(x => x.Name == "UseMana" && x.mod == "Terraria");
 			if (tt2 != null) 
 			{
@@ -109,7 +114,7 @@ namespace SOTS.Void
 				//string damageValue = splitText.First();
 				//string damageWord = splitText.Last();
 				if(item.accessory == false)
-					tt2.text = "Consumes " + voidManaText + " void";
+					tt2.text = "Consumes " + voidCostText + " void";
 				else
 				{
 					tooltips.Remove(tt2);
@@ -149,11 +154,12 @@ namespace SOTS.Void
 			if (cursed)
 				return false;
 			int currentVoid = voidPlayer.voidMeterMax2 - voidPlayer.lootingSouls - voidPlayer.VoidMinionConsumption;
-			if (voidPlayer.safetySwitch && voidPlayer.voidMeter < voidMana && !item.summon && !voidPlayer.frozenVoid)
+			int finalCost = VoidCost(player);
+			if (voidPlayer.safetySwitch && voidPlayer.voidMeter < finalCost && !item.summon && !voidPlayer.frozenVoid)
 			{
 				return false;
 			}
-			if(!canUse || player.FindBuffIndex(ModContent.BuffType<VoidRecovery>()) > -1 || item.useAnimation < 2 || (player.altFunctionUse != 2 && item.summon && currentVoid < voidMana))
+			if(!canUse || player.FindBuffIndex(ModContent.BuffType<VoidRecovery>()) > -1 || item.useAnimation < 2 || (player.altFunctionUse != 2 && item.summon && currentVoid < finalCost))
 			{
 				return false;
 			}
@@ -181,12 +187,14 @@ namespace SOTS.Void
 		{
 			return true;
 		}
-		public static void DrainMana(Player player)
+		public void DrainMana(Player player)
 		{
-			if(voidManaAmount > 0)
+			VoidPlayer vPlayer = VoidPlayer.ModPlayer(player);
+			int finalCost = VoidCost(player);
+			if (finalCost > 0)
 			{
 				if(player.whoAmI == Main.myPlayer)
-					VoidPlayer.ModPlayer(player).voidMeter -= voidManaAmount;
+					vPlayer.voidMeter -= finalCost;
 			}
 		}
 	}

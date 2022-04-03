@@ -98,9 +98,8 @@ namespace SOTS
 				if (!item.summon && item.modItem as VoidItem != null)
 				{
 					VoidItem vItem = item.modItem as VoidItem;
-					vItem.GetVoid(Main.LocalPlayer);
-					int voidAmt = VoidItem.voidMana;
-					if(voidAmt != 0)
+					int voidAmt = vItem.GetVoid(Main.LocalPlayer);
+					if (voidAmt != 0)
                     {
 						int intMax = (int)(voidCostMultiplier * voidAmt);
 						float mult = intMax / (float)voidAmt;

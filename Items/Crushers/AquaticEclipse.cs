@@ -40,9 +40,9 @@ namespace SOTS.Items.Crushers
 		{
 			return player.ownedProjectileCounts[type] <= 0;
 		}
-		public override void GetVoid(Player player)
+		public override int GetVoid(Player player)
 		{
-			voidMana = 7;
+			return 7;
 		}
 		public override void AddRecipes()
 		{

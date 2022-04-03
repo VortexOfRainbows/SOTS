@@ -24,7 +24,7 @@ namespace SOTS.Items.Slime
             item.useTime = 40;
             item.knockBack = 4.5f;
             item.noUseGraphic = true; 
-            item.shoot = mod.ProjectileType("WormWoodSpike");
+            item.shoot = ModContent.ProjectileType<Projectiles.WormWoodSpike>();
             item.shootSpeed = 14.5f;
             item.UseSound = SoundID.Item1;
             item.melee = true; 
@@ -34,7 +34,7 @@ namespace SOTS.Items.Slime
 		{
 			ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(ModContent.ItemType<CorrosiveGel>(), 32);
-            recipe.AddIngredient(null, "Wormwood", 16);
+            recipe.AddIngredient(ModContent.ItemType<Wormwood>(), 16);
             recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this);
 			recipe.AddRecipe();

@@ -22,18 +22,18 @@ namespace SOTS.Items.OreItems
 			item.ranged = true;
 			item.thrown = false;
 			item.value = Item.sellPrice(0, 0, 35, 0);
-			item.rare = 2;
+			item.rare = ItemRarityID.Green;
 			item.width = 22;
 			item.height = 22;
 			item.maxStack = 1;
 			item.autoReuse = true;            
-			item.shoot = mod.ProjectileType("PlatinumDart"); 
+			item.shoot = ModContent.ProjectileType<Projectiles.Ores.PlatinumDart>(); 
             item.shootSpeed = 14f;
 			item.consumable = false;
 		}
-		public override void GetVoid(Player player)
+		public override int GetVoid(Player player)
 		{
-			voidMana = 3;
+			return 3;
 		}
 		public override void AddRecipes()
 		{

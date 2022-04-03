@@ -36,9 +36,9 @@ namespace SOTS.Items.Tide
 			item.shoot = ModContent.ProjectileType<PurpleThunderCluster>();
 			Item.staff[item.type] = true; 
 		}
-		public override void GetVoid(Player player)
+		public override int GetVoid(Player player)
 		{
-			voidMana = 7;
+			return  7;
 		}
 		public override void UpdateInventory(Player player)
 		{ 

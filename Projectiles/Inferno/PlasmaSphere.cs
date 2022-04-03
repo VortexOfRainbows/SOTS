@@ -134,7 +134,10 @@ namespace SOTS.Projectiles.Inferno
 					Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 15, 1f, -0.1f);
 					if (Main.myPlayer == player.whoAmI)
 					{
-						VoidItem.DrainMana(player);
+						Item item = player.HeldItem;
+						VoidItem vItem = item.modItem as VoidItem;
+						if(vItem != null)
+							vItem.DrainMana(player);
 					}
 					projectile.ai[1] -= projectile.ai[0];
 					totalCharges++;

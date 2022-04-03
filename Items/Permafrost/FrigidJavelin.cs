@@ -37,13 +37,13 @@ namespace SOTS.Items.Permafrost
 		{
 			return true;
 		}
-		public override void GetVoid(Player player)
+		public override int GetVoid(Player player)
 		{
-			voidMana = 5;
+			return  5;
 			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
 			if(modPlayer.frigidJavelinNoCost)
             {
-				voidMana = 0;
+				return  0;
             }
 		}
 		public override float UseTimeMultiplier(Player player)

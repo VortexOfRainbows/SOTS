@@ -35,7 +35,7 @@ Mid Priority:
 		5. Hyperdrive (upgrade to Vibrancy Module, accessory)
 2. Big Vibrant geode in the jungle
 3. Pyramid Battle Music Box
-4. Bugs: void minion amounts aren't correctly maintained in multiplayer. Void cost transfer from multiple players in multiplayer (crushers)
+4. Bugs: void minion amounts aren't correctly maintained in multiplayer.
 
 Low Priority:
 1. Archaelogist NPC
@@ -46,6 +46,8 @@ Low Priority:
 
 4/2/22 & 4/3/22
 1. Nature Plating doors are considered housing viable!
+2. Reworked void consumption internals. This fixes any weird interactions between multiple players or Subspace Servant.
+	1. This seems to have better multiplayer compatability.
 
 4/1/22 & 4/2/22
 1. Worked on Collector Mk2

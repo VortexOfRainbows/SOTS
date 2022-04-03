@@ -2,6 +2,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using SOTS.Void;
+using SOTS.Projectiles.Otherworld;
 
 namespace SOTS.Items.Otherworld.FromChests
 {
@@ -27,12 +28,12 @@ namespace SOTS.Items.Otherworld.FromChests
 			item.UseSound = SoundID.Item8;
 			item.autoReuse = true;     
 			item.noMelee = true;
-			item.shoot = mod.ProjectileType("GenesisCore"); 
+			item.shoot = ModContent.ProjectileType<GenesisCore>(); 
             item.shootSpeed = 12.5f;
 		}
-		public override void GetVoid(Player player)
+		public override int GetVoid(Player player)
 		{
-			voidMana = 60;
+			return 60;
 		}
 		public override void AddRecipes()
 		{

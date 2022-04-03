@@ -43,9 +43,9 @@ namespace SOTS.Items.Pyramid
 			}
 			return false;
 		}
-        public override void GetVoid(Player player)
+        public override int GetVoid(Player player)
         {
-			voidMana = 3;
+			return  3;
         }
         public override void AddRecipes()
 		{

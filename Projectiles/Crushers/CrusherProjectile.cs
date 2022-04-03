@@ -73,22 +73,27 @@ namespace SOTS.Projectiles.Crushers
 		{
 			Player player = Main.player[projectile.owner];
 			VoidPlayer vPlayer = VoidPlayer.ModPlayer(player);
-			if (charge >= 0.25f && consumedAmt == 0)
+			Item item = player.HeldItem;
+			VoidItem vItem = item.modItem as VoidItem;
+			if(vItem != null)
 			{
-				consumedAmt++;
-				if (!(vPlayer.CrushResistor && Main.rand.NextBool(3)))
-					VoidItem.DrainMana(player);
-			}
-			if (charge >= 0.50f && consumedAmt == 1)
-			{
-				consumedAmt++;
-				VoidItem.DrainMana(player);
-			}
-			if (charge >= 0.75f && consumedAmt == 2)
-			{
-				consumedAmt++;
-				if(!vPlayer.CrushCapacitor)
-					VoidItem.DrainMana(player);
+				if (charge >= 0.25f && consumedAmt == 0)
+				{
+					consumedAmt++;
+					if (!(vPlayer.CrushResistor && Main.rand.NextBool(3)))
+						vItem.DrainMana(player);
+				}
+				if (charge >= 0.50f && consumedAmt == 1)
+				{
+					consumedAmt++;
+					vItem.DrainMana(player);
+				}
+				if (charge >= 0.75f && consumedAmt == 2)
+				{
+					consumedAmt++;
+					if (!vPlayer.CrushCapacitor)
+						vItem.DrainMana(player);
+				}
 			}
 		}
 		public virtual bool CanCharge()

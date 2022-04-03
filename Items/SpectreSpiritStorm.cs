@@ -34,9 +34,9 @@ namespace SOTS.Items
 			item.useAmmo = AmmoID.Arrow;
 			item.noMelee = true;
 		}
-		public override void GetVoid(Player player)
+		public override int GetVoid(Player player)
 		{
-			voidMana = 6;
+			return  6;
 		}
 		public override Vector2? HoldoutOffset()
 		{

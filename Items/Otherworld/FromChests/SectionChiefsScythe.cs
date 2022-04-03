@@ -72,9 +72,9 @@ namespace SOTS.Items.Otherworld.FromChests
 				}
 			}
 		}
-		public override void GetVoid(Player player)
+		public override int GetVoid(Player player)
 		{
-			voidMana = 10;
+			return  10;
 		}
 		public override void AddRecipes()
 		{

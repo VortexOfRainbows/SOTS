@@ -29,9 +29,9 @@ namespace SOTS.Items.Pyramid
 			item.shoot = mod.ProjectileType("Bloodaxe");  
             item.shootSpeed = 13.5f;
 		}
-		public override void GetVoid(Player player)
+		public override int GetVoid(Player player)
 		{
-			voidMana = 6;
+			return  6;
 		}
 	}
 }

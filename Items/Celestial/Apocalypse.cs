@@ -53,9 +53,9 @@ namespace SOTS.Items.Celestial
 			}
 			return false; 
 		}
-		public override void GetVoid(Player player)
+		public override int GetVoid(Player player)
 		{
-			voidMana = 8;
+			return 8;
 		}
 	}
 }

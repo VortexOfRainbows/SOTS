@@ -3,6 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using SOTS.Void;
+using SOTS.Projectiles.Tide;
 
 namespace SOTS.Items.ChestItems
 {
@@ -21,19 +22,19 @@ namespace SOTS.Items.ChestItems
             item.height = 36;
             item.useTime = 50; 
             item.useAnimation = 50;
-            item.useStyle = 5;    
+            item.useStyle = ItemUseStyleID.HoldingOut;    
             item.noMelee = true;
 			item.knockBack = 6f;  
             item.value = Item.sellPrice(0, 1, 0, 0);
             item.rare = ItemRarityID.Blue;
             item.UseSound = SoundID.Item61;
             item.autoReuse = true;
-            item.shoot = mod.ProjectileType("Coconut"); 
+            item.shoot = ModContent.ProjectileType<Coconut>(); 
             item.shootSpeed = 9.5f;
 		}
-		public override void GetVoid(Player player)
+		public override int GetVoid(Player player)
 		{
-			voidMana = 24;
+			return 24;
 		}
 		public override Vector2? HoldoutOffset()
 		{

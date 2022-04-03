@@ -21,21 +21,21 @@ namespace SOTS.Items.OreItems
 			item.height = 34;
 			item.useTime = 36;
 			item.useAnimation = 36;
-			item.useStyle = 1;
+			item.useStyle = ItemUseStyleID.SwingThrow;
 			item.knockBack = 4.5f;
             item.value = Item.sellPrice(0, 0, 35, 0);
-			item.rare = 2;
+			item.rare = ItemRarityID.Green;
 			item.UseSound = SoundID.Item18;
 			item.autoReuse = true;     
 			item.noMelee = true;
-			item.shoot = mod.ProjectileType("GoldChakram"); 
+			item.shoot = ModContent.ProjectileType<Projectiles.Ores.GoldChakram>(); 
             item.shootSpeed = 13.5f;
             item.noUseGraphic = true; 
 
 		}
-		public override void GetVoid(Player player)
+		public override int GetVoid(Player player)
 		{
-			voidMana = 7;
+			return 7;
 		}
 		public override void AddRecipes()
 		{

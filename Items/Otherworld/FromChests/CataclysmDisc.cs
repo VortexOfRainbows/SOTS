@@ -33,9 +33,9 @@ namespace SOTS.Items.Otherworld.FromChests
             item.shootSpeed = 13.5f;
             item.noUseGraphic = true;
 		}
-		public override void GetVoid(Player player)
+		public override int GetVoid(Player player)
 		{
-			voidMana = 12;
+			return 12;
 		}
 		public override void AddRecipes()
 		{

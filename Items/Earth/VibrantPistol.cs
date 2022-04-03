@@ -69,9 +69,9 @@ namespace SOTS.Items.Earth
 			triggerItemUpdates(player);
 			return base.BeforeUseItem(player);
 		}
-		public override void GetVoid(Player player)
+		public override int GetVoid(Player player)
 		{
-			voidMana = 1;
+			return 1;
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{

@@ -40,9 +40,9 @@ namespace SOTS.Items.Pyramid
 			recipe.SetResult(this);
 			recipe.AddRecipe();
 		}
-		public override void GetVoid(Player player)
+		public override int GetVoid(Player player)
 		{
-			voidMana = 6;
+			return  6;
 		}
 		public override Vector2? HoldoutOffset()
 		{

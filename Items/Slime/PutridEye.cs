@@ -2,6 +2,8 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using SOTS.Void;
 using Microsoft.Xna.Framework.Graphics;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace SOTS.Items.Slime
 {
@@ -78,13 +80,13 @@ namespace SOTS.Items.Slime
             item.height = 44;   
             item.useTime = 40;
 			item.useAnimation = 40;
-            item.useStyle = 5;    
+            item.useStyle = ItemUseStyleID.HoldingOut;    
             item.knockBack = 2.25f;
             item.value = Item.sellPrice(0, 1, 80, 0);
-            item.rare = 4;
+            item.rare = ItemRarityID.LightRed;
 			//item.UseSound = SoundID.Item15;
 			item.autoReuse = true;
-			item.shoot = mod.ProjectileType("PutridEye"); 
+			item.shoot = ModContent.ProjectileType<Projectiles.Laser.PutridEye>(); 
             item.shootSpeed = 1;
 			item.noMelee = true;
 			item.noUseGraphic = true;
@@ -95,9 +97,9 @@ namespace SOTS.Items.Slime
 		{
 			return false;
 		}
-		public override void GetVoid(Player player)
+		public override int GetVoid(Player player)
 		{
-			voidMana = 20;
+			return  20;
 		}
 		public override float UseTimeMultiplier(Player player)
 		{

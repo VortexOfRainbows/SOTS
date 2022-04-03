@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.ID;
 using SOTS.Void;
 using Terraria.ModLoader;
+using SOTS.Projectiles.Crushers;
 
 namespace SOTS.Items.Celestial
 {
@@ -27,7 +28,7 @@ namespace SOTS.Items.Celestial
 			item.rare = ItemRarityID.Yellow;
 			item.UseSound = SoundID.Item22;
             item.autoReuse = true;
-            item.shoot = mod.ProjectileType("SubspaceCrusher"); 
+            item.shoot = ModContent.ProjectileType<SubspaceCrusher>(); 
             item.shootSpeed = 18f;
 			item.channel = true;
             item.noUseGraphic = true; 
@@ -37,14 +38,14 @@ namespace SOTS.Items.Celestial
         {
 			return player.ownedProjectileCounts[type] <= 0; 
 		}
-		public override void GetVoid(Player player)
+		public override int GetVoid(Player player)
 		{
-			voidMana = 17;
+			return 17;
 		}
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "SanguiteBar", 15);
+			recipe.AddIngredient(ModContent.ItemType<SanguiteBar>(), 15);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.SetResult(this);
 			recipe.AddRecipe();

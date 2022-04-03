@@ -42,9 +42,9 @@ namespace SOTS.Items
 			Projectile.NewProjectile(position, new Vector2(speedX, speedY), type, damage, knockBack, player.whoAmI, i % 2 * 2 -1, Main.rand.NextFloat(0.875f, 1.125f));
 			return false;
 		}
-		/*public override void GetVoid(Player player)
+		/*public override int GetVoid(Player player)
 		{
-			voidMana = 3;
+			return  3;
 		}*/
 	}
 }

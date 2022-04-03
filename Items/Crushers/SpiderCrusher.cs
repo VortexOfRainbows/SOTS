@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using SOTS.Void;
+using SOTS.Items.Fragments;
 
 namespace SOTS.Items.Crushers
 {
@@ -27,7 +28,7 @@ namespace SOTS.Items.Crushers
             item.rare = ItemRarityID.LightRed;
             item.UseSound = SoundID.Item22;
             item.autoReuse = true;
-            item.shoot = mod.ProjectileType("SpiderCrusher"); 
+            item.shoot = ModContent.ProjectileType<Projectiles.Crushers.SpiderCrusher>(); 
             item.shootSpeed = 18f;
 			item.channel = true;
             item.noUseGraphic = true; 
@@ -37,15 +38,15 @@ namespace SOTS.Items.Crushers
         {
 			return player.ownedProjectileCounts[type] <= 0; 
 		}
-		public override void GetVoid(Player player)
+		public override int GetVoid(Player player)
 		{
-			voidMana = 5;
+			return 5;
 		}
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.SpiderFang, 18);
-			recipe.AddIngredient(null, "DissolvingEarth", 1);
+			recipe.AddIngredient(ModContent.ItemType<DissolvingEarth>(), 1);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this);
 			recipe.AddRecipe();

@@ -29,9 +29,9 @@ namespace SOTS.Items.Earth
 			item.shoot = ModContent.ProjectileType<Projectiles.Laser.VibrantBlade>(); 
             item.shootSpeed = 1.9f;
 		}
-		public override void GetVoid(Player player)
+		public override int GetVoid(Player player)
 		{
-			voidMana = 7;
+			return 7;
 		}
 		public override void AddRecipes()
 		{

@@ -44,9 +44,9 @@ namespace SOTS.Items.Inferno
 			Projectile.NewProjectile(position, normal * 48, ModContent.ProjectileType<PlasmaSphere>(), damage, knockBack, player.whoAmI, item.useTime);
 			return false;
         }
-		public override void GetVoid(Player player)
+		public override int GetVoid(Player player)
 		{
-			voidMana = 6;
+			return 6;
 		}
 	}
 }

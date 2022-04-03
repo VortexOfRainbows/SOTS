@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using System;
 using Microsoft.Xna.Framework;
 using SOTS.Void;
+using SOTS.Projectiles.Ores;
 
 namespace SOTS.Items.OreItems
 {
@@ -23,13 +24,13 @@ namespace SOTS.Items.OreItems
 			item.height = 32;
 			item.useTime = 30;
 			item.useAnimation = 30;
-			item.useStyle = 5;
+			item.useStyle = ItemUseStyleID.HoldingOut;
 			item.knockBack = 1.5f;
 			item.value = Item.sellPrice(0, 0, 35, 0);
-			item.rare = 2;
+			item.rare = ItemRarityID.Green;
 			item.UseSound = SoundID.Item8;
 			item.autoReuse = true;            
-			item.shoot = mod.ProjectileType("SoulLock"); 
+			item.shoot = ModContent.ProjectileType<SoulLock>(); 
             item.shootSpeed = 5.5f; //arbitrary
 			item.noMelee = true;
 			Item.staff[item.type] = true; //this makes the useStyle animate as a staff
@@ -110,9 +111,9 @@ namespace SOTS.Items.OreItems
 			RegisterPhantoms(player);
 			return false; 
 		}
-		public override void GetVoid(Player player)
+		public override int GetVoid(Player player)
 		{
-			voidMana = 4;
+			return 4;
 		}
 		public override void AddRecipes()
 		{

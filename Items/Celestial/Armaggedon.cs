@@ -70,9 +70,9 @@ namespace SOTS.Items.Celestial
 			recipe.SetResult(this);
 			recipe.AddRecipe();
 		}
-		public override void GetVoid(Player player)
+		public override int GetVoid(Player player)
 		{
-			voidMana = 5;
+			return 5;
 		}
 	}
 }

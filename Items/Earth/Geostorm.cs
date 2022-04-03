@@ -39,9 +39,9 @@ namespace SOTS.Items.Earth
 			Projectile.NewProjectile(cursorPos.X, cursorPos.Y, 0, 0, type, damage, knockBack, player.whoAmI, -1);
 			return false;
 		}
-		public override void GetVoid(Player player)
+		public override int GetVoid(Player player)
 		{
-			voidMana = 15;
+			return 15;
 		}
 		public override void AddRecipes()
 		{

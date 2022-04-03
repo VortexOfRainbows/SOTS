@@ -29,9 +29,9 @@ namespace SOTS.Items.Tools
 			item.shoot = ModContent.ProjectileType<ManaMiner>(); 
             item.shootSpeed = 5.75f;
 		}
-		public override void GetVoid(Player player)
+		public override int GetVoid(Player player)
 		{
-			voidMana = 6;
+			return  6;
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
