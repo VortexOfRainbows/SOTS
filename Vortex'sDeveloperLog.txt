@@ -31,8 +31,7 @@ Mid Priority:
 		5. Hyperdrive (upgrade to Vibrancy Module, accessory)
 2. Big Vibrant geode in the jungle
 3. Pyramid Battle Music Box
-4. ToDo: 
-	1. Resize Earthen related resprites + rework Miners Pickaxe and Manic Miner
+4. Rework Miners Pickaxe
 
 Low Priority:
 1. Archaelogist NPC
@@ -53,6 +52,8 @@ Low Priority:
 3. Fixed an oversight with Pharaoh's Shade that required the projectile to spawn on every client, instead of being synced in Multiplayer.
 	1. This should fix Pharaoh's Curse turning Invisible occasionally.
 	2. Also fixed a lighting oversight with Phase 2 transition which caused the mask to change colors weirdly
+4. Added glowmask to Earthshaker, Miners Sword, Manic Miner
+	1. Reworked manic miner to now be a linear mining tool
 
 4/2/22 & 4/3/22
 1. Nature Plating doors are considered housing viable!

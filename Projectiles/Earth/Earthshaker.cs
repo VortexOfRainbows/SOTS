@@ -10,10 +10,21 @@ namespace SOTS.Projectiles.Earth
 {
     public class Earthshaker : ModProjectile
     {
+        public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
+        {
+            Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Earth/EarthshakerGlow");
+            Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
+            Vector2 drawPos = projectile.Center - Main.screenPosition;
+            for (int i = 0; i < 4; i++)
+            {
+                Vector2 addition = Main.rand.NextVector2Circular(1, 1);
+                spriteBatch.Draw(texture, drawPos + addition, null, new Color(110, 105, 100, 0), projectile.rotation, drawOrigin, projectile.scale, projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+            }
+        }
         public override void SetDefaults()
         {
             projectile.width = 26;
-            projectile.height = 46;
+            projectile.height = 56;
             projectile.friendly = false;
             projectile.penetrate = -1;
             projectile.tileCollide = false;

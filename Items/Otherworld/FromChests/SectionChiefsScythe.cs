@@ -33,7 +33,6 @@ namespace SOTS.Items.Otherworld.FromChests
 			{
 				item.GetGlobalItem<ItemUseGlow>().glowTexture = mod.GetTexture("Items/Otherworld/FromChests/HardlightScytheGlow");
 			}
-
 			item.shoot = mod.ProjectileType("ScytheSlash");
 			item.shootSpeed = 15f;
 		}
