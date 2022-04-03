@@ -32,7 +32,7 @@ Art: Blasfah
 
 (Contributors and Other Credits)
 Art: HugeKraken, Arcri, Pokerface
-Testers/Other: Mushnib~, Astrobit, DreadSoul, Crimsonkeep 
+Testers/Other: Mushnib~, Astrobit, DreadSoul, Crimsonkeep, Bman, TheoR
 Code: Graydee, ENNWAY, Qwerty3.14, OS, Nalyd T.
 Minor Art: Naka, DeJuiceTD, Nomis
 

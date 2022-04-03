@@ -11,9 +11,6 @@ Known Bugs:
 1. Earthen Construct causing freezes occassionally. Conditions unknown (usually after it goes of screen).
 	1. Less frequent than before 0.20, but still happens? 
 2. Void minions sometimes don't persist in multiplayer for other players. Conditions unknown
-3. Sometimes is invisible in multiplayer on phase 2
-	1. Caused by some weird dissapearance of the Pharaoh's shade projectile in Phase 2.
-	2. Should be fixed (not confirmed)
 
 High Priority:
 1. Starmap and Digital Daito Obtaining
@@ -53,7 +50,9 @@ Low Priority:
 		(used projectile.owner == player.whoAmI instead of projectile.owner == Main.myPlayer)
 	2. Also less intensive, as only the owner client will calculate void minion consumption, instead of all clients
 		(now using Main.myPlayer == player.whoAmI, which makes it so only the client player runs the calculations)
-3. 
+3. Fixed an oversight with Pharaoh's Shade that required the projectile to spawn on every client, instead of being synced in Multiplayer.
+	1. This should fix Pharaoh's Curse turning Invisible occasionally.
+	2. Also fixed a lighting oversight with Phase 2 transition which caused the mask to change colors weirdly
 
 4/2/22 & 4/3/22
 1. Nature Plating doors are considered housing viable!

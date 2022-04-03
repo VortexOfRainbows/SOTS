@@ -126,7 +126,7 @@ namespace SOTS.Projectiles.Pyramid
         Vector2 oldPos;
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
-            if (!projectile.active || Main.LocalPlayer.whoAmI != projectile.owner)
+            if (!projectile.active || Main.LocalPlayer.Distance(projectile.Center) > 3200)
                 return false;
             if(oldPos == null)
             {
@@ -184,7 +184,7 @@ namespace SOTS.Projectiles.Pyramid
                 if (npc.active && npc.type == ModContent.NPCType<PharaohsCurse>())
                 {
                     PharaohsCurse pharaoh = npc.modNPC as PharaohsCurse;
-                    pharaoh.TruePreDraw(spriteBatch, lightColor, fadeInTimer);
+                    pharaoh.TruePreDraw(spriteBatch, Lighting.GetColor((int)npc.Center.X / 16, (int)npc.Center.Y / 16), fadeInTimer);
                 }
             }
         }

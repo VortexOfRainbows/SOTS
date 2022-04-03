@@ -1238,7 +1238,7 @@ namespace SOTS.NPCs.Boss.Curse
 					startParticles = 0.5f;
 					if(ai2 > 180)
                     {
-						npc.StrikeNPC(666 + npc.defense / 2, 0, 0);
+						npc.StrikeNPC(667 + npc.defense / 2, 0, 0);
                     }
 				}
             }
