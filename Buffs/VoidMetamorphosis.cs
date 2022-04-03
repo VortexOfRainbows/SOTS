@@ -9,7 +9,7 @@ namespace SOTS.Buffs
         public override void SetDefaults()
         {
             DisplayName.SetDefault("Void Metamorphosis");
-			Description.SetDefault("Decreases flat void regeneration by 6\nLosing void to flat void regeneration will recover life");   
+			Description.SetDefault("Increases void drain by 6\nLosing void to void drain will recover life");   
             Main.buffNoSave[Type] = true;
             Main.buffNoTimeDisplay[Type] = false;
 			Main.debuff[Type] = true;

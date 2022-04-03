@@ -1118,7 +1118,7 @@ namespace SOTS
 			if(Main.myPlayer == player.whoAmI)
 			{
 				int finalDamage = (int)Main.CalculatePlayerDamage(damage, player.statDefense);
-				if (VMincubator)
+				if (VMincubator && finalDamage < player.statLife)
 				{
 					if (!pvp)
 					{

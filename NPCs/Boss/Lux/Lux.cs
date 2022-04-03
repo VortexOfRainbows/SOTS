@@ -20,20 +20,25 @@ namespace SOTS.NPCs.Boss.Lux
 	{
         public override void SendExtraAI(BinaryWriter writer)
 		{
+			writer.Write(despawnTimer);
 			writer.Write(npc.alpha);
 			writer.Write(attackTimer3);
 			writer.Write(attackTimer4);
 			writer.Write(SecondPhase);
 			writer.Write(desperation);
+			writer.Write(compressWings);
 		}
         public override void ReceiveExtraAI(BinaryReader reader)
-        {
+		{
+			despawnTimer = reader.ReadSingle();
 			npc.alpha = reader.ReadInt32();
 			attackTimer3 = reader.ReadSingle();
 			attackTimer4 = reader.ReadSingle();
 			SecondPhase = reader.ReadBoolean();
 			desperation = reader.ReadBoolean();
+			compressWings = reader.ReadSingle();
 		}
+		public float despawnTimer = 0;
         List<RingManager> rings = new List<RingManager>();
 		private float wingCounter
 		{
@@ -264,7 +269,8 @@ namespace SOTS.NPCs.Boss.Lux
             npc.HitSound = SoundID.NPCHit54;
             npc.DeathSound = SoundID.NPCDeath6;
             npc.netAlways = false;
-			music = MusicID.Boss3;
+			music = mod.GetSoundSlot(SoundType.Music, "Sounds/Music/Advisor");
+			musicPriority = MusicPriority.BossHigh;
 			SetupDebuffImmunities();
 		}
 		public void SetupDebuffImmunities()
@@ -286,7 +292,7 @@ namespace SOTS.NPCs.Boss.Lux
 			npc.damage = (int)(npc.damage * 0.8f); //176 damage
 		}
 		bool runOnce = true;
-		public void TargettingUnit()
+		public bool TargettingUnit()
 		{
 			npc.velocity.X *= 0.93f; //consequence of being programmed with an aiStyle = 0
 			if ((double)npc.velocity.X > -0.1 && (double)npc.velocity.X < 0.1) //consequence of being programmed with an aiStyle = 0
@@ -302,10 +308,46 @@ namespace SOTS.NPCs.Boss.Lux
 				else
 					npc.direction = 1;
 			}
+			Player player = Main.player[npc.target];
+			if (despawnTimer > 300)
+			{
+				despawnTimer++;
+				if (despawnTimer > 900)
+					npc.active = false;
+				return true;
+			}
+			else
+			{
+				if (player.dead || !player.active)
+				{
+					despawnTimer++;
+				}
+				else if (despawnTimer > 0)
+					despawnTimer--;
+			}
+			return false;
 		}
 		public override bool PreAI()
 		{
-			TargettingUnit(); //target only one player at a time before switching
+			bool despawn = TargettingUnit(); //target only one player at a time before switching
+			if(despawn && !desperation && attackPhase != DesperationPhase)
+			{
+				allWingsForced = false;
+				modifyRotation(false, true);
+				attackPhase = -2;
+				npc.dontTakeDamage = true;
+				npc.velocity.X *= 0.9f;
+				if (despawnTimer > 390)
+					npc.velocity.Y -= 0.10f;
+				else
+				{
+					for (int i = 0; i < 4; i++)
+					{
+						rings[i].MoveTo(npc.Center, true);
+						rings[i].ResetVariables();
+					}
+				}
+			}
 			int damage = npc.damage / 2;
 			if (Main.expertMode)
 			{
@@ -368,11 +410,10 @@ namespace SOTS.NPCs.Boss.Lux
 					npc.Center = new Vector2(attackTimer2, attackTimer3);
 					if(attackTimer1 == 181 && Main.netMode != NetmodeID.MultiplayerClient)
 					{
-						DesperationExplosion(24, 1.2f);
 						npc.velocity *= 0f;
 						if (Main.netMode != NetmodeID.MultiplayerClient)
 						{
-							int n = NPC.NewNPC((int)npc.Center.X + 10, (int)npc.position.Y, ModContent.NPCType<Collector2>());
+							int n = NPC.NewNPC((int)npc.Center.X + 10, (int)npc.position.Y + 12, ModContent.NPCType<Collector2>());
 							Main.npc[n].netUpdate = true;
 							attackTimer4 = n;
 							npc.netUpdate = true;
@@ -381,20 +422,23 @@ namespace SOTS.NPCs.Boss.Lux
 					if (attackTimer4 != -1)
 					{
 						npc.velocity *= 0f;
-						NPC collector = Main.npc[(int)attackTimer4];
+						NPC collector = Main.npc[(int)(attackTimer4 + 0.5f)];
 						if (collector.type != ModContent.NPCType<Collector2>())
 						{
-							NPC npc2 = Main.npc[NPC.NewNPC((int)npc.Center.X, (int)npc.position.Y, ModContent.NPCType<Collector2>())];
-							npc2.netUpdate = true;
-							attackTimer4 = npc2.whoAmI;
-							npc.netUpdate = true;
+							if (Main.netMode != NetmodeID.MultiplayerClient)
+							{
+								NPC npc2 = Main.npc[NPC.NewNPC((int)npc.Center.X + 10, (int)npc.position.Y + 12, ModContent.NPCType<Collector2>())];
+								npc2.netUpdate = true;
+								attackTimer4 = npc2.whoAmI;
+								npc.netUpdate = true;
+							}
 						}
 						else
 						{
 							float ai3 = collector.ai[3];
 							if (ai3 < 80 && ai3 > 0)
 							{
-								npc.scale -= 0.005f;
+								npc.scale -= 0.012f;
 								int dust3 = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, ModContent.DustType<CopyDust4>(), 0, 0, 0, VoidPlayer.pastelAttempt(Main.rand.NextFloat(6.28f), true));
 								Dust dust4 = Main.dust[dust3];
 								dust4.velocity *= 2.5f;
@@ -656,7 +700,8 @@ namespace SOTS.NPCs.Boss.Lux
 							for (int i = 1; i < 4; i++)
 								rings[i].MoveTo(npc.Center, true);
 							rings[0].ResetVariables();
-							SwapPhase(PickRandom((int)attackPhase));
+							if(attackTimer1 > 180)
+								SwapPhase(PickRandom((int)attackPhase));
 						}
 					}
 					else
@@ -1127,7 +1172,7 @@ namespace SOTS.NPCs.Boss.Lux
 			}
 			WingStuff();
 			npc.alpha = (int)MathHelper.Clamp(npc.alpha, 0, 255);
-			if(attackPhase != DesperationPhase)
+			if(attackPhase != DesperationPhase && !despawn)
 			{
 				if (npc.alpha > 150)
 					npc.dontTakeDamage = true;
@@ -1138,25 +1183,6 @@ namespace SOTS.NPCs.Boss.Lux
 		}
 		public const float timeToAimAtPlayer = 40;
 		public float aimToPlayer = 0;
-		public void DesperationExplosion(int dustAmt = 20, float volume = 1f)
-		{
-			Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 62, volume, -0.4f);
-			if (Main.netMode != NetmodeID.Server)
-			{
-				for (int i = 0; i < dustAmt; i++)
-				{
-					for (float j = 1; j <= 2; j += 0.25f)
-					{
-						Dust dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.RainbowMk2);
-						dust.color = VoidPlayer.pastelAttempt(Main.rand.NextFloat(6.28f), true);
-						dust.noGravity = true;
-						dust.fadeIn = 0.1f;
-						dust.scale *= 1.3f * j;
-						dust.velocity *= 6f / j;
-					}
-				}
-			}
-		}
 		public void modifyRotation(bool aimAtPlayer, bool modifyWings = true)
 		{
 			Player player = Main.player[npc.target];
@@ -1367,7 +1393,10 @@ namespace SOTS.NPCs.Boss.Lux
 			}
 			else
             {
-				location = Vector2.Lerp(location, toLocation, 0.08f);
+				float speed = 0.08f;
+				if (backToNPC)
+					speed = 0.11f;
+				location = Vector2.Lerp(location, toLocation, speed);
 				if(Vector2.Distance(location, toLocation) < 5f)
                 {
 					location = toLocation;
@@ -1376,7 +1405,6 @@ namespace SOTS.NPCs.Boss.Lux
 						location = npcCenter;
 						toLocation = Vector2.Zero;
 						backToNPC = false;
-
 					}
                 }
 				else

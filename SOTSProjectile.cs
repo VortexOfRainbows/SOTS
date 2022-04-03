@@ -8,6 +8,7 @@ using SOTS.Dusts;
 using SOTS.NPCs;
 using SOTS.NPCs.ArtificialDebuffs;
 using SOTS.Projectiles;
+using SOTS.Projectiles.Earth;
 using SOTS.Projectiles.Evil;
 using SOTS.Projectiles.Inferno;
 using SOTS.Projectiles.Laser;
@@ -36,7 +37,9 @@ namespace SOTS
 			isChargeWeapon = new int[]
 			{
 				ProjectileID.LastPrismLaser,
-				ModContent.ProjectileType<PrismOrb>()
+				ModContent.ProjectileType<PrismOrb>(),
+				ModContent.ProjectileType<Starshot>(),
+				ModContent.ProjectileType<EarthshakerPickaxe>()
 			};
 		}
 		public static bool CanBeTimeFrozen(Projectile proj)
@@ -57,7 +60,7 @@ namespace SOTS
                     {
 						return false;
 					}
-					if (sPlayer.oldHeldProj == proj.whoAmI)
+					if (sPlayer.oldHeldProj == proj.whoAmI || player.heldProj == proj.whoAmI)
                     {
 						return false;
                     }

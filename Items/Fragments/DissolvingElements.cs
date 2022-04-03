@@ -582,7 +582,7 @@ namespace SOTS.Items.Fragments
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Dissolving Brilliance");
-			Tooltip.SetDefault("Decreases void gain by 1 while in the inventory");
+			Tooltip.SetDefault("Increases void drain by 0.5 while in the inventory");
 			Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(5, 8));
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
@@ -647,13 +647,7 @@ namespace SOTS.Items.Fragments
 			{
 				frame = 0;
 			}
-			for (int i = 0; i < item.stack; i++)
-			{
-				if (vPlayer.bonusVoidGain >= 1)
-				{
-					vPlayer.bonusVoidGain--;
-				}
-			}
+			vPlayer.flatVoidRegen -= 0.5f * item.stack;
 		}
 	}
 	public class AetherPlayer : ModPlayer

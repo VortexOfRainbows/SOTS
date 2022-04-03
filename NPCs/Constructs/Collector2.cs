@@ -13,21 +13,19 @@ namespace SOTS.NPCs.Constructs
 {
 	public class Collector2 : ModNPC
 	{
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Collector"); //mr steal yo kill is back!
-		}
 		public override void SendExtraAI(BinaryWriter writer)
 		{
-			writer.Write(runOnce);
 			writer.Write(toPos.X);
 			writer.Write(toPos.Y);
 		}
 		public override void ReceiveExtraAI(BinaryReader reader)
 		{
-			runOnce = reader.ReadBoolean();
 			toPos.X = reader.ReadSingle();
 			toPos.Y = reader.ReadSingle();
+		}
+		public override void SetStaticDefaults()
+		{
+			DisplayName.SetDefault("Collector"); //mr steal yo kill is back!
 		}
 		public override void SetDefaults()
 		{
@@ -46,6 +44,7 @@ namespace SOTS.NPCs.Constructs
 			npc.HitSound = SoundID.NPCHit4;
 			npc.DeathSound = SoundID.NPCDeath14;
 			npc.dontTakeDamage = true;
+			npc.alpha = 255;
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
@@ -226,16 +225,18 @@ namespace SOTS.NPCs.Constructs
 			npc.TargetClosest(false);
 			if(runOnce)
             {
+				if(Main.netMode != NetmodeID.MultiplayerClient)
+				{
+					toPos = npc.Center;
+					npc.netUpdate = true;
+				}
 				runOnce = false;
-				toPos = npc.Center;
-				//npc.position += new Vector2(0, -600);
-				npc.netUpdate = true;
-				for(int i= 0; i < 4;i++)
+				for (int i = 0; i < 4;i++)
                 {
 					trailPos.Add(new Vector2[10]);
                 }
-				SetUpTrails();
 			}
+			npc.alpha = 0;
 			npc.ai[0]++;
 			if (npc.ai[0] <= 60)
 			{

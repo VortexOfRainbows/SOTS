@@ -31,7 +31,7 @@ namespace SOTS.Items.Otherworld.EpicWings
 				{
 					if (line.mod == "Terraria" && line.Name == "Tooltip0") //checks the name of the tootip line
 					{
-						line.text = "Allows flight and slow fall\nIncreases void gain by 1\nPress the " + "'" + key + "' key to gain fast, multidirectional flight at the cost of 5 void\nDecreases flat void regeneration by 3 while active";
+						line.text = "Allows flight and slow fall\nIncreases void gain by 1\nPress the " + "'" + key + "' key to gain fast, multidirectional flight at the cost of 5 void\nIncreases void drain by 3 while active";
 						return;
 					}
 				}
@@ -41,7 +41,7 @@ namespace SOTS.Items.Otherworld.EpicWings
 				if (line.mod == "Terraria" && line.Name == "Tooltip0")
 				{
 					string key = "Unbound";
-					line.text = "Allows flight and slow fall\nIncreases void gain by 1\nPress the " + "'" + key + "' key to gain fast, multidirectional flight at the cost of 5 void\nDecreases flat void regeneration by 3 while active";
+					line.text = "Allows flight and slow fall\nIncreases void gain by 1\nPress the " + "'" + key + "' key to gain fast, multidirectional flight at the cost of 5 void\nIncreases void drain by 3 while active";
 				}
 			}
 			base.ModifyTooltips(tooltips);

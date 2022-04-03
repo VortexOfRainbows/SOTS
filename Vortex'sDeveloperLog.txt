@@ -20,13 +20,13 @@ High Priority:
 1. Starmap and Digital Daito Obtaining
 2. Reorganize Folders... Planetarium and Pyramid folders remaining.
 3. Lux	
-	1. Death animation + despawning + balance + phase ore spawning
+	1. Balance + phase ore spawning
 
 Mid Priority:
 1. Lux Drops (ask me before you go about spriting these ones):
 	1. Rose Bow (glaze bow upgrade)
 	2. Voidmage Incubator
-		1. Requires a secret with Void Anomaly and Tainted to obtain 
+		1. Requires a secret with Void Anomaly and Tainted to obtain + Dilation Sickness
 	3. Replace Celestial Serpent Drops (resprites and maybe some reworks)
 		1. Armageddon (melee + void)
 		2. Stellar Serpent Launcher (ranged)
@@ -34,6 +34,7 @@ Mid Priority:
 		4. Stellar Shot (will become Perfect Star upgrade, magic gun)
 		5. Hyperdrive (upgrade to Vibrancy Module, accessory)
 2. Big Vibrant geode in the jungle
+3. Pyramid Battle Music Box
 
 Low Priority:
 1. Archaelogist NPC
@@ -44,8 +45,17 @@ Low Priority:
 
 4/1/22 & 4/2/22
 1. Worked on Collector Mk2
-	1. Needs: Multiplayer testing, maybe some polish?
-2. Precarious Cluster and Dissolving brilliances decrease void gain while in inventory
+	1. Now works in Multiplayer!
+2. Precarious Cluster and Dissolving brilliances decrease flat void regeneration while in inventory
+3. Amber Mosquito added to Gold Treasure Slime loot pool
+4. Renamed "flat void regeneration" to "void drain"
+	1. All instances of changes to flat void regeneration are negative, so this makes sense
+5. Lux now uses Advisor Theme (temp)
+	1. Putrid Pinky music box is also craftable now
+6. Lux now despawns properly
+	1. Works in multiplayer
+7. Lux tested in and got some fixes for Multiplayer
+	1. Works almost flawlessly as far as I am concerned
 
 3/31/22
 1. Worked on Collect Mk2

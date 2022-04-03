@@ -9,7 +9,7 @@ namespace SOTS.Buffs
         public override void SetDefaults()
         {
             DisplayName.SetDefault("Ruby Monolith Attack");
-			Description.SetDefault("Decreases flat void regeneration by 6\nIncreases void damage by 10%");   
+			Description.SetDefault("Increases void drain by 6\nIncreases void damage by 10%");   
             Main.buffNoSave[Type] = true;
             Main.buffNoTimeDisplay[Type] = true;
         }

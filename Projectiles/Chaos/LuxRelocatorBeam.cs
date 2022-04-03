@@ -166,7 +166,6 @@ namespace SOTS.Projectiles.Chaos
         }
         public override void AI()
         {
-            Player player = Main.player[projectile.owner];
             if (runOnce)
             {
                 for (int i = 0; i < 10; i++)
@@ -180,7 +179,7 @@ namespace SOTS.Projectiles.Chaos
                     dust2.scale *= 2.2f;
                 }
                 SetupLaser();
-                Main.PlaySound(SoundID.Item, (int)player.Center.X, (int)player.Center.Y, 72, 1.0f, -0.3f);
+                Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 72, 1.0f, -0.3f);
                 for (int i = 0; i < 10; i++)
                 {
                     Dust dust2 = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, ModContent.DustType<CopyDust4>(), 0, 0, 120);

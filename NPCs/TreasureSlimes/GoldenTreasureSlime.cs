@@ -59,6 +59,7 @@ namespace SOTS.NPCs.TreasureSlimes
 				new TreasureSlimeItem(ItemID.Extractinator, 1, 1),
 				new TreasureSlimeItem(ItemID.LavaCharm, 1, 1, 0.1f),
 				new TreasureSlimeItem(ItemID.SpelunkerPotion, 1, 4, 0.75f),
+				new TreasureSlimeItem(ItemID.AmberMosquito, 1, 1, 0.25f),
 				new TreasureSlimeItem(ItemType<ManicMiner>(), 1, 1, 0.1f),
 				new TreasureSlimeItem(ItemType<MinersSword>(), 1, 1, 0.5f),
 				new TreasureSlimeItem(ItemType<CrushingAmplifier>(), 1, 1, 0.5f),

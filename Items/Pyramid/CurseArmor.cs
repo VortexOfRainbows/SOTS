@@ -97,7 +97,7 @@ namespace SOTS.Items.Pyramid
 			{
 				theKey = key;
 			}
-			player.setBonus = "Press the '" + theKey + "' key to change the Ruby Monolith into an offensive stance\nWhile in offensive stance, decreases the cooldown of Curse Flaring by 80%\nHowever, decreases flat void regeneration by 6 instead of increasing void regeneration speed by 10%";
+			player.setBonus = "Press the '" + theKey + "' key to change the Ruby Monolith into an offensive stance\nWhile in offensive stance, decreases the cooldown of Curse Flaring by 80%\nHowever, increases void drain by 6 instead of increasing void regeneration speed by 10%";
 		}
 		public override void AddRecipes()
 		{

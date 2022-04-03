@@ -5,6 +5,7 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.Utilities;
 using Microsoft.Xna.Framework;
+using SOTS.Items.Banners;
 //using SOTS.Items.Trophies;
 
 namespace SOTS.Items.MusicBoxes
@@ -15,7 +16,6 @@ namespace SOTS.Items.MusicBoxes
 		{
 			DisplayName.SetDefault("Music Box (Putrid Pinky)");
 		}
-
 		public override void SetDefaults()
 		{
 			item.useStyle = ItemUseStyleID.SwingThrow;
@@ -24,23 +24,22 @@ namespace SOTS.Items.MusicBoxes
 			item.useTime = 10;
 			item.autoReuse = true;
 			item.consumable = true;
-			item.createTile = mod.TileType("PutridPinkyMusicBoxTile");
+			item.createTile = ModContent.TileType<PutridPinkyMusicBoxTile>();
 			item.width = 24;
 			item.height = 24;
 			item.rare = ItemRarityID.LightRed;
-			item.value = 100000;
+			item.value = Item.sellPrice(0, 2, 0, 0);
 			item.accessory = true;
 		}
-
-		/*public override void AddRecipes()
+		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "PutridPinkyTrophy", 1);
+			recipe.AddIngredient(ModContent.ItemType<PutridPinkyTrophy>(), 1);
 			recipe.AddIngredient(ItemID.MusicBox);
 			recipe.AddTile(TileID.HeavyWorkBench);
 			recipe.SetResult(this);
 			recipe.AddRecipe();
-		}*/
+		}
 	}
 	public class PutridPinkyMusicBoxTile : ModTile
 	{
@@ -61,7 +60,7 @@ namespace SOTS.Items.MusicBoxes
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 16, 48, mod.ItemType("PutridPinkyMusicBox"));
+			Item.NewItem(i * 16, j * 16, 16, 48, ModContent.ItemType<PutridPinkyMusicBox>());
 		}
 
 		public override void MouseOver(int i, int j)
@@ -69,7 +68,7 @@ namespace SOTS.Items.MusicBoxes
 			Player player = Main.LocalPlayer;
 			player.noThrow = 2;
 			player.showItemIcon = true;
-			player.showItemIcon2 = mod.ItemType("PutridPinkyMusicBox");
+			player.showItemIcon2 = ModContent.ItemType<PutridPinkyMusicBox>();
 		}
 	}
 }
