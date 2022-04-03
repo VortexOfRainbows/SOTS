@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Items.Furniture.Nature;
 using SOTS.NPCs.ArtificialDebuffs;
 using SOTS.Projectiles.Chaos;
 using SOTS.Projectiles.Inferno;
@@ -7,6 +8,7 @@ using SOTS.Projectiles.Minions;
 using SOTS.Utilities;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace SOTS
 {
@@ -19,6 +21,7 @@ namespace SOTS
 			On.Terraria.Main.DrawNPCs += Main_DrawNPCs;
 			On.Terraria.Main.DrawPlayers += Main_DrawPlayers;
 
+			//The following is for Time Freeze
 			//order of updates: player, NPC, gore, projectile, item, dust, time
 			On.Terraria.Player.Update += Player_Update;
 			On.Terraria.NPC.UpdateNPC += NPC_UpdateNPC;
@@ -28,6 +31,10 @@ namespace SOTS
 			On.Terraria.Dust.UpdateDust += Dust_UpdateDust;
 			On.Terraria.Main.UpdateTime += Main_UpdateTime;
 			//On.Terraria.NPC.UpdateCollision += NPC_UpdateCollision;
+
+			//The following is to allow Plating Doors to function as tiles for housing (in conjuction with Tmodloader stuff)
+			On.Terraria.WorldGen.CloseDoor += Worldgen_CloseDoor;
+
 			Main.OnPreDraw += Main_OnPreDraw;
 			if (!Main.dedServ)
 				ResizeTargets();
@@ -53,7 +60,17 @@ namespace SOTS
 			On.Terraria.Dust.UpdateDust -= Dust_UpdateDust;
 			On.Terraria.Main.UpdateTime -= Main_UpdateTime;
 
+			On.Terraria.WorldGen.CloseDoor -= Worldgen_CloseDoor;
+
 			Main.OnPreDraw -= Main_OnPreDraw;
+		}
+		private static bool Worldgen_CloseDoor(On.Terraria.WorldGen.orig_CloseDoor orig, int i, int j, bool forced)
+		{
+			if(Framing.GetTileSafely(i, j).type == ModContent.TileType<NaturePlatingBlastDoorTileOpen>())
+            {
+				return true;
+            }
+			return orig(i, j, forced);
 		}
 		private static void Player_Update(On.Terraria.Player.orig_Update orig, Player self, int i)
         {

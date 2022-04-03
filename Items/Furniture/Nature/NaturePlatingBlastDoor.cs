@@ -55,6 +55,7 @@ namespace SOTS.Items.Furniture.Nature
 			Main.tileFrameImportant[Type] = true;
 			Main.tileNoAttach[Type] = true;
 			Main.tileBlockLight[Type] = true;
+			TileID.Sets.HousingWalls[Type] = true;
 			TileID.Sets.NotReallySolid[Type] = true;
 			TileID.Sets.HasOutlines[Type] = true;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style3x3);
@@ -105,6 +106,7 @@ namespace SOTS.Items.Furniture.Nature
 				{
 					Tile targetTile = Main.tile[i, top + k];
 					targetTile.type = (ushort)ModContent.TileType<NaturePlatingBlastDoorTileOpen>();
+					targetTile.frameX *= 3;
 				}
 				NetMessage.SendTileSquare(client ? Main.myPlayer : -1, i, top + 1, 3, TileChangeType.None);
 				Projectile.NewProjectile(new Vector2(i, top + 1) * 16, Vector2.Zero, ModContent.ProjectileType<BlastDoorProj>(), 0, 0, Main.myPlayer, 0);
@@ -139,7 +141,6 @@ namespace SOTS.Items.Furniture.Nature
 		}
 		public override void SetDefaults()
 		{
-			TileID.Sets.DrawsWalls[Type] = true;
 			Main.tileSolid[Type] = false;
 			Main.tileLighted[Type] = true;
 			Main.tileFrameImportant[Type] = true;
@@ -168,6 +169,9 @@ namespace SOTS.Items.Furniture.Nature
 			dustType = -1;
 			disableSmartCursor = true;
 			adjTiles = new int[] { TileID.OpenDoor };
+			TileID.Sets.DrawsWalls[Type] = true;
+			TileID.Sets.HousingWalls[Type] = true;
+			closeDoorID = ModContent.TileType<NaturePlatingBlastDoorTileClosed>();
 		}
 		public override bool NewRightClick(int i, int j)
 		{
@@ -194,6 +198,7 @@ namespace SOTS.Items.Furniture.Nature
 				{
 					Tile targetTile = Main.tile[i, top + k];
 					targetTile.type = (ushort)ModContent.TileType<NaturePlatingBlastDoorTileClosed>();
+					targetTile.frameX /= 3;
 				}
 				NetMessage.SendTileSquare(client ? Main.myPlayer : -1, i, top + 1, 3, TileChangeType.None);
 				Projectile.NewProjectile(new Vector2(i, top + 1) * 16, Vector2.Zero, ModContent.ProjectileType<BlastDoorProj>(), 0, 0, Main.myPlayer, 1);
