@@ -38,6 +38,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
         public static int[] vanillaNPCHasVoidDamage;
         public static int[] miniBosses;
         public static int[] intimidating;
+        public static int[] vanillaBoss;
         public static int[] spirits;
         public static int[] constructs;
         public static void LoadArrays()
@@ -50,6 +51,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
             spirits = new int[] { NPCType<Constructs.NatureSpirit>(), NPCType<Constructs.EarthenSpirit>(), NPCType<Constructs.PermafrostSpirit>(), NPCType<Constructs.TidalSpirit>(), NPCType<Constructs.EvilSpirit>(), NPCType<Constructs.InfernoSpirit>(), NPCType<Constructs.ChaosSpirit>(), NPCType<Lux>(), NPCType<FakeLux>() };
             intimidating = new int[] { NPCType<NatureConstruct>(), NPCType<EarthenConstruct>(), NPCType<PermafrostConstruct>(), NPCType<OtherworldlyConstructHead>(), NPCType<TidalConstruct>(), NPCType<EvilConstruct>(), NPCType<InfernoConstruct>(), NPCType<ChaosConstruct>(),
                 NPCType<PutridPinkyPhase2>(), NPCType<Boss.Curse.PharaohsCurse>(), NPCType<TheAdvisorHead>(), NPCType<Polaris>(), NPCType<CelestialSerpentHead>(), NPCType<SubspaceSerpentHead>()};
+            vanillaBoss = new int[] { NPCID.KingSlime, NPCID.EyeofCthulhu, NPCID.EaterofWorldsHead, NPCID.BrainofCthulhu, NPCID.QueenBee, NPCID.SkeletronHead, NPCID.WallofFlesh, NPCID.Spazmatism, NPCID.Retinazer, NPCID.TheDestroyer, NPCID.SkeletronPrime, NPCID.Plantera, NPCID.Golem, NPCID.DukeFishron, NPCID.CultistBoss, NPCID.MoonLordCore};
             miniBosses = new int[] { NPCID.Mothron, NPCID.IceQueen, NPCID.SantaNK1, NPCID.Everscream, NPCID.MourningWood, NPCID.Pumpking, NPCID.GoblinSummoner, NPCID.MartianSaucerCore, NPCID.LunarTowerSolar, NPCID.LunarTowerNebula, NPCID.LunarTowerStardust, NPCID.LunarTowerVortex };
         }
         public override bool InstancePerEntity => true;
@@ -134,7 +136,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 SendClientChanges(null, npc, 1); //update frozen Time
                 netUpdateTime = false;
             }
-            if (intimidating.Contains(npc.type) || spirits.Contains(npc.type))
+            if (intimidating.Contains(npc.type) || spirits.Contains(npc.type) || vanillaBoss.Contains(npc.type))
             {
                 bool canIntimidate = true;
                 if (npc.type == NPCType<TheAdvisorHead>() && npc.dontTakeDamage)

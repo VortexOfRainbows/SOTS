@@ -56,6 +56,7 @@ Low Priority:
 	1. Works in multiplayer
 7. Lux tested in and got some fixes for Multiplayer
 	1. Works almost flawlessly as far as I am concerned
+8. Intimidating Presence now is in effect during Vanilla Bosses. Not other mods yet, since I don't know how the compatability will work.
 
 3/31/22
 1. Worked on Collect Mk2
