@@ -196,7 +196,7 @@ namespace SOTS.NPCs.Boss.Curse
 					}
 				}
 				int endPoint = 0;
-				if(enteredSecondPhase && ai1 >= 200)
+				if((enteredSecondPhase && ai1 >= 200) || SOTS.Config.lowFidelityMode)
                 {
 					endPoint = 1;
                 }
@@ -269,6 +269,7 @@ namespace SOTS.NPCs.Boss.Curse
 		int eyeFrame = 0;
 		float eyeOffsetMult = 1f;
 		public float shadeAlpha = 1f;
+		public int PharaohsShade = -1;
 		public void DrawEye(SpriteBatch spriteBatch, Vector2 position, bool pupil = true)
 		{
 			float scale = smaller ? 0.85f : 1f;
@@ -309,8 +310,6 @@ namespace SOTS.NPCs.Boss.Curse
 			{
 				if (overrideStart != -1)
 				{
-					if (SOTS.Config.lowFidelityMode && overrideStart == 2)
-						overrideStart = 1;
 					for (int i = 0; i < dustList.Count; i++)
 					{
 						int shade = 255 - (int)(dustList[i].counter * 4f) - (overrideStart != 2 ? fadeIn : 0);
@@ -318,9 +317,8 @@ namespace SOTS.NPCs.Boss.Curse
 							shade = 0;
 						Color color = new Color(shade + dustList[i].dustColorVariation, shade - dustList[i].dustColorVariation, shade - dustList[i].dustColorVariation);
 						if (overrideStart != 2)
-                        {
-							if(overrideStart != 1 || !SOTS.Config.lowFidelityMode)
-								color = Lighting.GetColor((int)dustList[i].position.X / 16, (int)dustList[i].position.Y / 16, color);
+						{
+							color = Lighting.GetColor((int)dustList[i].position.X / 16, (int)dustList[i].position.Y / 16, color);
 						}
 						else
 						{
@@ -339,14 +337,12 @@ namespace SOTS.NPCs.Boss.Curse
 				else
 				{
 					int endPoint = 0;
-					if (enteredSecondPhase && ai1 >= 200)
+					if ((enteredSecondPhase && ai1 >= 200) || (SOTS.Config.lowFidelityMode && startPoint != 1))
 					{
 						endPoint = 1;
 					}
 					if (startPoint != 2)
 						texture = ModContent.GetTexture("SOTS/NPCs/Boss/Curse/CurseFoamAlt");
-					if (SOTS.Config.lowFidelityMode && startPoint == 2)
-						startPoint = 1;
 					for (int j = startPoint; j >= endPoint; j--)
 					{
 						for (int i = 0; i < dustList.Count; i++)
@@ -357,8 +353,7 @@ namespace SOTS.NPCs.Boss.Curse
 							Color color = new Color(shade + dustList[i].dustColorVariation, shade - dustList[i].dustColorVariation, shade - dustList[i].dustColorVariation);
 							if (j != 2)
 							{
-								if (startPoint != 1 || !SOTS.Config.lowFidelityMode)
-									color = Lighting.GetColor((int)dustList[i].position.X / 16, (int)dustList[i].position.Y / 16, color);
+								color = Lighting.GetColor((int)dustList[i].position.X / 16, (int)dustList[i].position.Y / 16, color);
 							}
 							else
 							{
@@ -882,7 +877,14 @@ namespace SOTS.NPCs.Boss.Curse
 				}
             }
 			if (aiPhase == 3) //This is the start of the second phase attacks
-            {
+			{
+				if (Main.netMode != NetmodeID.MultiplayerClient)
+				{
+					if (PharaohsShade == -1)
+					{
+						PharaohsShade = Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<Projectiles.Pyramid.PharaohShade>(), 0, 0, Main.myPlayer, (npc.whoAmI + 0.5f), 0);
+					}
+				}
 				if (ai2 < 150)
 				{
 					npc.velocity *= 0.975f;
@@ -922,10 +924,6 @@ namespace SOTS.NPCs.Boss.Curse
 							Main.PlaySound(SoundID.Roar, (int)npc.Center.X, (int)npc.Center.Y, 0, 1.25f);
 						}
                     }
-					if (ai1 == 1)
-					{
-						Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<Projectiles.Pyramid.PharaohShade>(), 0, 0, Main.myPlayer, npc.whoAmI, 0);
-					}
 				}
 				else
 				{
@@ -1268,6 +1266,7 @@ namespace SOTS.NPCs.Boss.Curse
 			{
 				npc.dontTakeDamage = false;
 			}
+			shadeAlpha = MathHelper.Clamp(shadeAlpha, 0, 1);
         }
 		public void DashAttacks(float distance, float speedMult, int amt = 4)
 		{

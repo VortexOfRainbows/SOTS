@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.NPCs.Boss.Curse;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace SOTS.Projectiles.Pyramid
@@ -71,7 +72,7 @@ namespace SOTS.Projectiles.Pyramid
                     fadeInTimer = 255;
             }
             projectile.alpha = fadeInTimer;
-            if (Main.netMode != 1)
+            if (Main.netMode == NetmodeID.Server)
             {
                 projectile.netUpdate = true;
             }

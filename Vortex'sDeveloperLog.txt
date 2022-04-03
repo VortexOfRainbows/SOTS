@@ -8,13 +8,12 @@ The following is my development plans :D
 4. Starward Sword (Upgrade to Digital Daito)
 
 Known Bugs:
-1. Lag generates in multiplayer after a while of playing. (Maybe fixed?)
-	1. Seem to generate client-side not server side..?
-	2. No memory leak on single player, or client side when testing..?
-2. Primitives crash. (Fixed?)
-3. Earthen Construct causing freezes occassionally. Conditions unknown (usually after it goes of screen).
+1. Earthen Construct causing freezes occassionally. Conditions unknown (usually after it goes of screen).
 	1. Less frequent than before 0.20, but still happens? 
-4. Alch NPC causes immense lag with Otherworldly Construct (not SOTS-side)
+2. Void minions sometimes don't persist in multiplayer for other players. Conditions unknown
+3. Sometimes is invisible in multiplayer on phase 2
+	1. Caused by some weird dissapearance of the Pharaoh's shade projectile in Phase 2.
+	2. Should be fixed (not confirmed)
 
 High Priority:
 1. Starmap and Digital Daito Obtaining
@@ -35,7 +34,10 @@ Mid Priority:
 		5. Hyperdrive (upgrade to Vibrancy Module, accessory)
 2. Big Vibrant geode in the jungle
 3. Pyramid Battle Music Box
-4. Bugs: void minion amounts aren't correctly maintained in multiplayer.
+4. ToDo: 
+	1. Change OrbitalCounter for players to be a SOTSWorld.GlobalCounter.
+	2. Resize Earthen resprites + rework Miners Pickaxe and Manic Miner
+	3. See what you can do to fix Spirit Minions bugging out in multiplayer
 
 Low Priority:
 1. Archaelogist NPC
@@ -48,6 +50,10 @@ Low Priority:
 1. Nature Plating doors are considered housing viable!
 2. Reworked void consumption internals. This fixes any weird interactions between multiple players or Subspace Servant.
 	1. This seems to have better multiplayer compatability.
+3. Decrease hydroponics crafting cost.
+	1. May also now be crafted with any 20 alchemical seeds.
+4. Pharaohs Curse low fidelity setting now works properly in Phase 2
+	1. Attempted a fix on the invisibility bug. Unvarified results.
 
 4/1/22 & 4/2/22
 1. Worked on Collector Mk2

@@ -29,8 +29,16 @@ namespace SOTS.Items.Furniture.Nature
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<DissolvingNature>(), 1);
 			recipe.AddIngredient(ItemID.HerbBag, 1);
-			recipe.AddIngredient(ItemID.DirtBlock, 100);
-			recipe.AddIngredient(ModContent.ItemType<NaturePlating>(), 100);
+			recipe.AddIngredient(ItemID.DirtBlock, 40);
+			recipe.AddIngredient(ModContent.ItemType<NaturePlating>(), 40);
+			recipe.AddTile(TileID.Anvils);
+			recipe.SetResult(this, 1);
+			recipe.AddRecipe();
+			recipe = new ModRecipe(mod);
+			recipe.AddIngredient(ModContent.ItemType<DissolvingNature>(), 1);
+			recipe.AddRecipeGroup("SOTS:AlchSeeds", 20);
+			recipe.AddIngredient(ItemID.DirtBlock, 40);
+			recipe.AddIngredient(ModContent.ItemType<NaturePlating>(), 40);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this, 1);
 			recipe.AddRecipe();

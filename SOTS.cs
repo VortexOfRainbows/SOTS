@@ -612,6 +612,19 @@ namespace SOTS
 				ModContent.ItemType<InfernoPlating>()
 			});
 			RecipeGroup.RegisterGroup("SOTS:ElementalPlating", group);
+
+			group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Alchemical Seeds", new int[]
+			{
+				ItemID.DaybloomSeeds,
+				ItemID.MoonglowSeeds,
+				ItemID.BlinkrootSeeds,
+				ItemID.ShiverthornSeeds,
+				ItemID.WaterleafSeeds,
+				ItemID.FireblossomSeeds,
+				ItemID.DeathweedSeeds
+
+			});
+			RecipeGroup.RegisterGroup("SOTS:AlchSeeds", group);
 		}
 		public override void UpdateMusic(ref int music, ref MusicPriority priority)
         {
