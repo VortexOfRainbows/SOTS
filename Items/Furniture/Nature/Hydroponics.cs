@@ -139,7 +139,7 @@ namespace SOTS.Items.Furniture.Nature
 			{
 				for (int x = 0; x < 6; x++)
 				{
-					if (x >= 1 && x <= 4 && y % 2 == 0 && WorldGen.genRand.NextBool(1200))
+					if (x >= 1 && x <= 4 && y % 2 == 0 && WorldGen.genRand.NextBool(240))
 					{
 						GrowPlant(i + x, j + y);
 						NetMessage.SendTileSquare(-1, i + x, j + y, 1, TileChangeType.None);

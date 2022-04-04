@@ -74,7 +74,9 @@ namespace SOTS
 		}
 		private static void Player_Update(On.Terraria.Player.orig_Update orig, Player self, int i)
         {
-			if(SOTSWorld.IsFrozenThisFrame && self.active)
+			//I'm going to avoid fully freezing the player because this might create some bugs..?
+			//as of now, there is also no way for the player to not have sPlayer.TimeFreezeImmune = true;
+			/*if(SOTSWorld.IsFrozenThisFrame && self.active)
             {
 				SOTSPlayer sPlayer = SOTSPlayer.ModPlayer(self);
 				sPlayer.oldHeldProj = self.heldProj;
@@ -82,7 +84,7 @@ namespace SOTS
                 {
 					return;
                 }
-            }
+            }*/
 			orig(self, i);
 		}
 		/*private static void NPC_UpdateCollision(On.Terraria.NPC.orig_UpdateCollision orig, NPC self)

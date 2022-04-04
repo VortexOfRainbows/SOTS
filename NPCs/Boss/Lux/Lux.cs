@@ -5,6 +5,7 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
+using SOTS.Items.Chaos;
 using SOTS.Items.Fragments;
 using SOTS.NPCs.Constructs;
 using SOTS.Projectiles.Chaos;
@@ -272,6 +273,7 @@ namespace SOTS.NPCs.Boss.Lux
 			music = mod.GetSoundSlot(SoundType.Music, "Sounds/Music/Advisor");
 			musicPriority = MusicPriority.BossHigh;
 			SetupDebuffImmunities();
+			bossBag = ModContent.ItemType<LuxBag>();
 		}
 		public void SetupDebuffImmunities()
         {
@@ -281,6 +283,28 @@ namespace SOTS.NPCs.Boss.Lux
 			npc.buffImmune[BuffID.Frostburn] = true;
 			npc.buffImmune[BuffID.Ichor] = true;
 			npc.buffImmune[BuffID.BetsysCurse] = true;
+		}
+        public override void BossLoot(ref string name, ref int potionType)
+        {
+			SOTSWorld.downedLux = true;
+			potionType = ItemID.GreaterHealingPotion;
+			if (Main.rand.NextBool(10))
+			{
+				//Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<PutridPinkyTrophy>(), 1);
+			}
+			if (Main.rand.NextBool(7))
+			{
+				//Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<PutridPinkyMask>(), 1);
+			}
+			if (Main.expertMode)
+			{
+				npc.DropBossBags();
+			}
+			else
+			{
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<PhaseOre>(), Main.rand.Next(36, 61)); //6 to 8 bars
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemID.SoulofLight, Main.rand.Next(10, 20));
+			}
 		}
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {

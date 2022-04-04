@@ -8,10 +8,12 @@ The following is my development plans :D
 4. Starward Sword (Upgrade to Digital Daito)
 
 Known Bugs:
-1. Earthen Construct causing freezes occassionally. Conditions unknown (usually after it goes of screen).
-	1. Less frequent than before 0.20, but still happens? 
-2. Curse Foam on players freezes when the owner of the foam dust isn't nearby, but other clients are
+1. Curse Foam on players freezes when the owner of the foam dust isn't nearby, but other clients are
 	1. Foam updates probably aren't run unless owner is near
+2. Player freezing completely, locking out menu (conditions unknown)
+	1. May be caused by time freeze and modders toolkit interaction.
+		1. Not sure. No other leads.
+	3. Prevents the game from saving.
 
 High Priority:
 1. Starmap and Digital Daito Obtaining
@@ -30,6 +32,8 @@ Mid Priority:
 		3. Stellar Serpent Staff -> Hyperlight Launcher (magic gun, photon geyser upgrade)
 		4. Stellar Shot (will become Perfect Star upgrade, magic gun)
 		5. Hyperdrive (upgrade to Vibrancy Module, accessory)
+	4. Rebalance:
+		1. Chaos Spirit Staff
 2. Big Vibrant geode in the jungle
 3. Pyramid Battle Music Box
 4. Rework Miners Pickaxe
@@ -58,6 +62,10 @@ Low Priority:
 	1. Reworked manic miner to now be a linear mining tool
 5. Added Tainted Keystone
 	1. Part of Voidmage Incubator recipe
+6. Buff growth rate for Hydroponics (1200 -> 240)
+	1. Watching beta testers. Its quite expensive and it isn't as fast as I'd like it to be. 
+	2. It's also important to note that it won't ever give double from a regrowth staff, like normal plants would, nor seeds for exponential growth.
+7. Added Lux Treasure bag
 
 4/2/22 & 4/3/22
 1. Nature Plating doors are considered housing viable!
