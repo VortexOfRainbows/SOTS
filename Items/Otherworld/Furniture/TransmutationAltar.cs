@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
 using SOTS.Items.Fragments;
 using SOTS.Items.Otherworld.FromChests;
+using SOTS.Items.Pyramid;
 using System;
 using System.IO;
 using Terraria;
@@ -255,11 +256,12 @@ namespace SOTS.Items.Otherworld.Furniture
 			Main.mouseRightRelease = false;
 			Player player = Main.LocalPlayer;
 			int amountNeeded = entity.itemAmountsArray[0];
+			int middleItemType = entity.itemsArray[0];
 			int amountHas = 0;
 			for (int k = 0; k < 50; k++)
 			{
 				Item item = player.inventory[k];
-				if (item.type == entity.itemsArray[0])
+				if (item.type == middleItemType)
 				{
 					amountHas += item.stack;
 				}
@@ -273,7 +275,7 @@ namespace SOTS.Items.Otherworld.Furniture
 				{
 					if (entity.itemsArray[l] != 0)
 					{
-						if (Main.myPlayer == player.whoAmI)
+						if (Main.myPlayer == player.whoAmI && (middleItemType != ItemType<RoyalRubyShard>() || (entity.itemsArray[l] != ModContent.ItemType<PrecariousCluster>())))
 						{
 							int item = Item.NewItem((int)pos.X, (int)pos.Y, 0, 0, entity.itemsArray[l], entity.itemAmountsArray[l]);
 							Main.item[item].velocity += new Vector2(-3, 0).RotatedBy(MathHelper.ToRadians(Main.rand.Next(360)));

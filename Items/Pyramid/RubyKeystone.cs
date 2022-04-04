@@ -43,7 +43,7 @@ namespace SOTS.Items.Pyramid
         }
         public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frameNotUsed, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
-			Texture2D texture = mod.GetTexture("Items/Pyramid/RubyKeystoneGlow");
+			Texture2D texture = mod.GetTexture("Items/Pyramid/TaintedKeystone");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			position += drawOrigin * scale;
 			float counter = Main.GlobalTime * 160;
@@ -81,7 +81,7 @@ namespace SOTS.Items.Pyramid
 		}
 		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
 		{
-			Texture2D texture2 = mod.GetTexture("Items/Pyramid/RubyKeystoneGlow");
+			Texture2D texture2 = mod.GetTexture("Items/Pyramid/TaintedKeystone");
 			Vector2 drawOrigin = new Vector2(texture2.Width * 0.5f, texture2.Height * 0.5f);
 			float counter = Main.GlobalTime * 160;
 			float mult = new Vector2(-4f, 0).RotatedBy(MathHelper.ToRadians(counter)).X;

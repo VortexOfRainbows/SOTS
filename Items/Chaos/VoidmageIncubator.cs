@@ -5,6 +5,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using SOTS.Void;
+using SOTS.Items.Fragments;
+using SOTS.Items.Pyramid;
 
 namespace SOTS.Items.Chaos
 {
@@ -43,6 +45,7 @@ namespace SOTS.Items.Chaos
             item.value = Item.sellPrice(gold: 20);
             item.rare = ItemRarityID.Yellow;
 			item.accessory = true;
+			item.expert = true;
 		}
         public override void ModifyTooltips(List<TooltipLine> tooltips)
 		{
@@ -140,6 +143,16 @@ namespace SOTS.Items.Chaos
 					break;
 			}
 			return text;
+		}
+		public override void AddRecipes()
+		{
+			ModRecipe recipe = new ModRecipe(mod);
+			recipe.AddIngredient(ModContent.ItemType<VoidAnomaly>(), 1);
+			recipe.AddIngredient(ModContent.ItemType<DissolvingBrilliance>(), 1);
+			recipe.AddIngredient(ModContent.ItemType<TaintedKeystone>(), 1);
+			recipe.AddTile(TileID.MythrilAnvil);
+			recipe.SetResult(this, 1);
+			recipe.AddRecipe();
 		}
 	}
 }

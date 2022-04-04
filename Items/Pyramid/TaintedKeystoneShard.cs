@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Items.Fragments;
 
 namespace SOTS.Items.Pyramid
 {
@@ -26,7 +27,7 @@ namespace SOTS.Items.Pyramid
 			item.useStyle = 1;
 			item.rare = ItemRarityID.LightRed;
 			item.consumable = true;
-			item.createTile = mod.TileType("TaintedKeystoneShardTile");
+			item.createTile = ModContent.TileType<TaintedKeystoneShardTile>();
 		}
 		public override void PostUpdate()
 		{
@@ -111,8 +112,7 @@ namespace SOTS.Items.Pyramid
 		{
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(this, 1);
-			recipe.AddIngredient(ItemID.SoulofLight, 1);
-			recipe.AddIngredient(ItemID.SoulofNight, 1);
+			recipe.AddIngredient(ModContent.ItemType<PrecariousCluster>(), 1);
 			recipe.AddTile(TileID.DemonAltar);
 			recipe.SetResult(ModContent.ItemType<RoyalRubyShard>(), 1);
 			recipe.AddRecipe();
@@ -126,7 +126,7 @@ namespace SOTS.Items.Pyramid
 			Main.tileNoFail[Type] = true;
 			Main.tileFrameImportant[Type] = true;
 			Main.tileObsidianKill[Type] = true;
-			drop = mod.ItemType("TaintedKeystoneShard");
+			drop = ModContent.ItemType<TaintedKeystoneShard>();
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Tainted Keystone Shard");
 			AddMapEntry(new Color(24, 24, 24), name);

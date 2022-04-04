@@ -41,5 +41,15 @@ namespace SOTS.Items.SpiritStaves
 			position = Main.MouseWorld;
 			return true;
 		}
+		public override void AddRecipes()
+		{
+			ModRecipe recipe = new ModRecipe(mod);
+			recipe.AddIngredient(ModContent.ItemType<Fragments.DissolvingBrilliance>(), 1);
+			recipe.AddIngredient(ModContent.ItemType<Chaos.PhaseBar>(), 10);
+			recipe.AddIngredient(ItemID.SoulofLight, 5);
+			recipe.AddTile(ItemID.MythrilAnvil);
+			recipe.SetResult(this);
+			recipe.AddRecipe();
+		}
 	}
 }

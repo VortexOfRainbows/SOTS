@@ -10,7 +10,8 @@ The following is my development plans :D
 Known Bugs:
 1. Earthen Construct causing freezes occassionally. Conditions unknown (usually after it goes of screen).
 	1. Less frequent than before 0.20, but still happens? 
-2. Void minions sometimes don't persist in multiplayer for other players. Conditions unknown
+2. Curse Foam on players freezes when the owner of the foam dust isn't nearby, but other clients are
+	1. Foam updates probably aren't run unless owner is near
 
 High Priority:
 1. Starmap and Digital Daito Obtaining
@@ -22,7 +23,7 @@ Mid Priority:
 1. Lux Drops (ask me before you go about spriting these ones):
 	1. Rose Bow (glaze bow upgrade)
 	2. Voidmage Incubator
-		1. Requires a secret with Void Anomaly and Tainted to obtain + Dilation Sickness
+		1. Needs Dilation Sickness
 	3. Replace Celestial Serpent Drops (resprites and maybe some reworks)
 		1. Armageddon (melee + void)
 		2. Stellar Serpent Launcher (ranged)
@@ -49,11 +50,14 @@ Low Priority:
 		(used projectile.owner == player.whoAmI instead of projectile.owner == Main.myPlayer)
 	2. Also less intensive, as only the owner client will calculate void minion consumption, instead of all clients
 		(now using Main.myPlayer == player.whoAmI, which makes it so only the client player runs the calculations)
+	3. Confirmed fixed! The only error case is if the spirit owner is running behind, aka has frame skip subtle or off.
 3. Fixed an oversight with Pharaoh's Shade that required the projectile to spawn on every client, instead of being synced in Multiplayer.
 	1. This should fix Pharaoh's Curse turning Invisible occasionally.
 	2. Also fixed a lighting oversight with Phase 2 transition which caused the mask to change colors weirdly
 4. Added glowmask to Earthshaker, Miners Sword, Manic Miner
 	1. Reworked manic miner to now be a linear mining tool
+5. Added Tainted Keystone
+	1. Part of Voidmage Incubator recipe
 
 4/2/22 & 4/3/22
 1. Nature Plating doors are considered housing viable!
