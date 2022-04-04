@@ -11,9 +11,7 @@ Known Bugs:
 1. Curse Foam on players freezes when the owner of the foam dust isn't nearby, but other clients are
 	1. Foam updates probably aren't run unless owner is near
 2. Player freezing completely, locking out menu (conditions unknown)
-	1. May be caused by time freeze and modders toolkit interaction.
-		1. Not sure. No other leads.
-	3. Prevents the game from saving.
+	1. Probably caused by some weird interaction in SOTSDetours.UpdatePlayer
 
 High Priority:
 1. Starmap and Digital Daito Obtaining
@@ -66,6 +64,7 @@ Low Priority:
 	1. Watching beta testers. Its quite expensive and it isn't as fast as I'd like it to be. 
 	2. It's also important to note that it won't ever give double from a regrowth staff, like normal plants would, nor seeds for exponential growth.
 7. Added Lux Treasure bag
+8. Attempted bug fix on weird player freeze. Not sure if it works yet, but haven't seen the bug reoccur.
 
 4/2/22 & 4/3/22
 1. Nature Plating doors are considered housing viable!
