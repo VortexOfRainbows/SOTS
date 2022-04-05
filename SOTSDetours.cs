@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Items.Furniture;
+using SOTS.Items.Furniture.Earthen;
 using SOTS.Items.Furniture.Nature;
 using SOTS.NPCs.ArtificialDebuffs;
 using SOTS.Projectiles.Chaos;
@@ -66,9 +68,11 @@ namespace SOTS
 		}
 		private static bool Worldgen_CloseDoor(On.Terraria.WorldGen.orig_CloseDoor orig, int i, int j, bool forced)
 		{
-			if(Framing.GetTileSafely(i, j).type == ModContent.TileType<NaturePlatingBlastDoorTileOpen>())
+			if(Framing.GetTileSafely(i, j).active())
             {
-				return true;
+				Tile tile = Framing.GetTileSafely(i, j);
+				if(tile.type == ModContent.TileType<NaturePlatingBlastDoorTileOpen>() || tile.type == ModContent.TileType<EarthenPlatingBlastDoorTileOpen>())
+					return true;
             }
 			return orig(i, j, forced);
 		}

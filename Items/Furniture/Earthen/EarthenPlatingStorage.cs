@@ -1,48 +1,73 @@
-﻿using Microsoft.Xna.Framework;
+using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Items.Fragments;
+using SOTS.Items.GhostTown;
+using SOTS.Items.Otherworld;
 using Terraria;
+using Terraria.DataStructures;
+using Terraria.Enums;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.ObjectData;
 
-namespace SOTS.Items.Furniture.Nature
+namespace SOTS.Items.Furniture.Earthen
 {
-    public class NaturePlatingCapsule : ModItem
+	public class EarthenPlatingStorage : ModItem
     {
         public override void SetDefaults()
         {
             item.CloneDefaults(ItemID.StoneBlock);
             item.Size = new Vector2(32, 24);
             item.rare = ItemRarityID.Blue;
-            item.createTile = ModContent.TileType<NaturePlatingCapsuleTile>();
+            item.createTile = ModContent.TileType<EarthenPlatingStorageTile>();
+            item.placeStyle = 1;
         }
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ModContent.ItemType<NaturePlating>(), 20);
+            recipe.AddIngredient(ModContent.ItemType<EarthenPlating>(), 20);
             recipe.AddTile(TileID.Anvils);
             recipe.SetResult(this, 1);
             recipe.AddRecipe();
         }
     }
-    public class NaturePlatingCapsuleTile : ContainerType
+    public class EarthenPlatingStorageTile : ContainerType
     {
         public override bool CanExplode(int i, int j)
         {
             return false;
         }
-        protected override string ChestName => "Nature Plating Capsule";
-        protected override int ChestDrop => ModContent.ItemType<NaturePlatingCapsule>();
-        protected override int DustType => DustID.Tungsten;
+        protected override string ChestName => "Earthen Plating Storage";
+        protected override int ChestDrop => ModContent.ItemType<EarthenPlatingStorage>();
+        protected override int DustType => DustID.Iron;
         protected override void AddMapEntires()
         {
-            Color color = Color.Lerp(SOTSTile.NaturePlatingColor, Color.Black, 0.17f);
+            Color color = Color.Lerp(SOTSTile.EarthenPlatingColor, Color.Black, 0.17f);
             ModTranslation name = CreateMapEntryName();
             name.SetDefault(ChestName);
             AddMapEntry(color, name, MapChestName);
+            name = CreateMapEntryName(Name + "_Locked"); // With multiple map entries, you need unique translation keys.
+            name.SetDefault("Locked " + ChestName);
+            AddMapEntry(color, name, MapChestName);
+        }
+        public override ushort GetMapOption(int i, int j)
+        {
+            if (Main.tile[i, j].frameX < 36)
+                return 0;
+            return 1;
+        }
+        public override bool IsLockedChest(int i, int j) => Main.tile[i, j].frameX / 36 == 1;
+        protected override bool ManageLockedChest(Player player, int i, int j, int x, int y)
+        {
+            int key = ModContent.ItemType<OldKey>();
+            return player.ConsumeItem(key);
         }
         protected override int ShowHoverItem(Player player, int i, int j, int x, int y)
         {
+            if(IsLockedChest(x, y))
+                return ModContent.ItemType<OldKey>();
             return ChestDrop;
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
@@ -77,6 +102,11 @@ namespace SOTS.Items.Furniture.Nature
             {
 
             }
+        }
+        public override bool UnlockChest(int i, int j, ref short frameXAdjustment, ref int dustType, ref bool manual)
+        {
+            dustType = DustType;
+            return true;
         }
     }
 }

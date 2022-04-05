@@ -38,8 +38,8 @@ namespace SOTS.Items.Furniture.Nature
             int xFrameOffset = Main.tile[i, j].frameX;
             int yFrameOffset = Main.tile[i, j].frameY;
             Texture2D glowmask = ModContent.GetTexture(this.GetPath("Glow"));
-            Vector2 drawOffest = Main.drawToScreen ? Vector2.Zero : new Vector2(Main.offScreenRange);
-            Vector2 drawPosition = new Vector2(i * 16 - Main.screenPosition.X, j * 16 - Main.screenPosition.Y) + drawOffest;
+            Vector2 drawOffset = Main.drawToScreen ? Vector2.Zero : new Vector2(Main.offScreenRange);
+            Vector2 drawPosition = new Vector2(i * 16 - Main.screenPosition.X, j * 16 - Main.screenPosition.Y) + drawOffset;
             Color drawColour = new Color(100, 100, 100, 0);
             for (int k = 0; k < 5; k++)
             {

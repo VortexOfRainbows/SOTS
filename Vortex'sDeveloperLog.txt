@@ -15,7 +15,7 @@ Known Bugs:
 
 High Priority:
 1. Starmap and Digital Daito Obtaining
-2. Reorganize Folders... Planetarium and Pyramid folders remaining.
+2. Reorganize Folders... Planetarium, Pyramid, Furniture folders remaining.
 3. Lux	
 	1. Balance + phase ore spawning
 
@@ -42,6 +42,9 @@ Low Priority:
 3. Void Bar strike the player during void shock
 4. Fix Planetarium sky island spawning in tandum
 5. Stars in Planetarium Sky
+
+4/4/22
+1. Added Earthen Furniture tiles. Missing walls
 
 4/3/22
 1. Replaced SOTSPlayer.OrbitalCounter with SOTSWorld.GlobalCounter.

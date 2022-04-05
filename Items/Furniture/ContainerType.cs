@@ -11,10 +11,6 @@ namespace SOTS.Items.Furniture
 {
     public abstract class ContainerType : ModTile // Directly ported from Aequus to have an abstract chest type class. By the way, Nalyd T. does contribute to this mod, and also fun fact, this is him writing the text you are reading right now! Hi nalyd - vortex!!
     {
-        public override bool CreateDust(int i, int j, ref int type)
-        {
-            return false;
-        }
         protected virtual void AddMapEntires()
         {
 
@@ -58,8 +54,8 @@ namespace SOTS.Items.Furniture
         public override bool IsLockedChest(int i, int j) => false;
         protected string MapChestName(string name, int i, int j)
         {
-            if (ChestName != "Chest")
-                name = ChestName;
+            //if (ChestName != "Chest")
+            //    name = ChestName;
             int x = i;
             int y = j;
             Tile tile = Main.tile[i, j];

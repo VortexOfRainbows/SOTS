@@ -162,7 +162,7 @@ namespace SOTS.Items.Fragments
 		public override void SafeSetDefaults()
 		{
 			drop = ModContent.ItemType<EarthenPlating>();
-			AddMapEntry(new Color(112, 90, 86));
+			AddMapEntry(SOTSTile.EarthenPlatingColor);
 			mineResist = 1.5f;
 			soundType = SoundID.Tink;
 			soundStyle = 2;
