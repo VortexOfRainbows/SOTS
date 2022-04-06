@@ -30,6 +30,7 @@ namespace SOTS.Void
 		public static Color OtherworldColor = new Color(167, 45, 225, 0);
 		public static Color VibrantColor = new Color(85, 125, 215, 0);
 		public static Color LemegetonColor = new Color(255, 82, 97, 0);
+		public static Color ChaosPink = new Color(231, 95, 203);
 		public static Color EvilColor = new Color(100, 15, 0, 0);
 		public static Color Inferno1 = new Color(213, 68, 13);
 		public static Color Inferno2 = new Color(255, 210, 155);

@@ -635,6 +635,10 @@ namespace SOTS
 		}
 		public static void DrawStar(Vector2 location, float alphaMult, float rotation, float spin = 0, int pointAmount = 6, float innerDistAdd = 10, float innerDistMin = 8, float xCompress = 0.6f, int density = 180)
 		{
+			DrawStar(location, new Color(116, 125, 238, 0), alphaMult, rotation, spin, pointAmount, innerDistAdd, innerDistMin, xCompress, density);
+		}
+		public static void DrawStar(Vector2 location, Color color, float alphaMult, float rotation, float spin = 0, int pointAmount = 6, float innerDistAdd = 10, float innerDistMin = 8, float xCompress = 0.6f, int density = 180)
+		{
 			Vector2 fireFrom = location; 
 			Texture2D texture = ModContent.GetTexture("SOTS/Assets/StrangeGradient");
 			for (float k = 0; k < 360; k += 360 / (float)density)
@@ -649,7 +653,7 @@ namespace SOTS
 				circular.X *= xCompress;
 				Vector2 scale = new Vector2(circular.Length() / length, 0.5f);
 				circular = circular.RotatedBy(rotation);
-				Main.spriteBatch.Draw(texture, fireFrom + circular - Main.screenPosition, null, new Color(116, 125, 238, 0) * alphaMult * (1 / (circular.Length() / length)), circular.ToRotation(), new Vector2(texture.Width / 2, texture.Height / 2), scale * 1.25f, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, fireFrom + circular - Main.screenPosition, null, color * alphaMult * (1 / (circular.Length() / length)), circular.ToRotation(), new Vector2(texture.Width / 2, texture.Height / 2), scale * 1.25f, SpriteEffects.None, 0f);
 			}
 		}
 		public static void DustStar(Vector2 location, Vector2 velocity, float rotation, int total = 30, float spin = 0, int pointAmount = 6, float innerDistAdd = 10, float innerDistMin = 8, float xCompress = 0.6f, float scaleMult = 1f)

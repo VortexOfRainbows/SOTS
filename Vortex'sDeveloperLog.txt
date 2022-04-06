@@ -43,6 +43,9 @@ Low Priority:
 4. Fix Planetarium sky island spawning in tandum
 5. Stars in Planetarium Sky
 
+4/5/22
+1. Worked on the Charging visuals for Rose Bow. WIP
+
 4/4/22
 1. Added Earthen Furniture tiles. Missing walls
 
