@@ -73,8 +73,8 @@ namespace SOTS.Projectiles.Chaos
         const int fireFromDist = 48;
         const int fireFromTighten = 12;
         const float visualsOffsetAmt = 28f;
-        const float firstDelay = 0.6f;
-        const float secondDelay = 0.6f;
+        const float firstDelay = 0.06f;
+        const float secondDelay = 0.7f;
         float afterCount1 = 0;
         float afterCount2 = 0;
         float textureHeight = 10;
@@ -178,8 +178,25 @@ namespace SOTS.Projectiles.Chaos
                 float percent = counter / projectile.ai[0];
                 Vector2 fireFrom = projectile.Center + projectile.velocity.SafeNormalize(Vector2.Zero) * (fireFromDist - (percent + chargeLevel) * fireFromTighten);
                 Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 5, 1.2f, -0.1f);
-                Projectile proj = Projectile.NewProjectileDirect(fireFrom, projectile.velocity * (0.5f + 0.5f * chargeLevel), (int)projectile.ai[1], projectile.damage, projectile.knockBack * (0.2f + 0.4f * (percent + chargeLevel)), Main.myPlayer);
-                proj.GetGlobalProjectile<SOTSProjectile>().frostFlake = chargeLevel; //this sould sync automatically on the SOTSProjectile end
+                int type = ModContent.ProjectileType<ChaosArrow1>();
+                if (chargeLevel >= 1)
+                    type = ModContent.ProjectileType<ChaosArrow2>();
+                Projectile.NewProjectile(fireFrom, projectile.velocity, type, projectile.damage, projectile.knockBack * (0.2f + 0.4f * (percent + chargeLevel)), Main.myPlayer, chargeLevel == 2 ? 1 : 0);
+            }
+            if(chargeLevel >= 1)
+            {
+                Vector2 pos = projectile.Center + projectile.velocity.SafeNormalize(Vector2.Zero) * (fireFromDist - 24);
+                float rand = Main.rand.NextFloat(MathHelper.Pi);
+                DustStar(pos, projectile.velocity * 1.65f, ModContent.DustType<CopyDust4>(), 8, 2.4f, 3.5f, 1.0f, 1f, 0.6f, projectile.velocity.ToRotation(), rand, 0.9f);
+                DustStar(pos, projectile.velocity * 1.65f, ModContent.DustType<CopyDust4>(), 8, 1.6f, 2.5f, 1.0f, 1f, 0.4f, projectile.velocity.ToRotation(), rand, 0.6f);
+
+            }
+            if(chargeLevel == 2)
+            {
+                Vector2 pos = projectile.Center + projectile.velocity.SafeNormalize(Vector2.Zero) * (fireFromDist + 12);
+                float rand = Main.rand.NextFloat(MathHelper.Pi);
+                DustStar(pos, projectile.velocity * 2.5f, ModContent.DustType<CopyDust4>(), 6, 2.0f, 3.5f, 1.0f, 1f, 0.6f, projectile.velocity.ToRotation(), rand, 0.9f);
+                DustStar(pos, projectile.velocity * 2.5f, ModContent.DustType<CopyDust4>(), 6, 1.2f, 2.5f,1.0f, 1f, 0.4f, projectile.velocity.ToRotation(), rand, 0.6f);
             }
         }
         public Vector2 getTip(float percent)
@@ -215,15 +232,15 @@ namespace SOTS.Projectiles.Chaos
                         {
                             Vector2 pos = projectile.Center + projectile.velocity.SafeNormalize(Vector2.Zero) * (fireFromDist - 24);
                             float rand = Main.rand.NextFloat(MathHelper.Pi);
-                            DustStar(pos, ModContent.DustType<CopyDust4>(), 8, 2.4f, 3f, 1.0f, 1f, 0.6f, projectile.velocity.ToRotation(), rand, 0.9f);
-                            DustStar(pos, ModContent.DustType<CopyDust4>(), 8, 1.6f, 2f, 1.0f, 1f, 0.4f, projectile.velocity.ToRotation(), rand, 0.6f);
+                            DustStar(pos, Vector2.Zero, ModContent.DustType<CopyDust4>(), 8, 2.4f, 3f, 1.0f, 1f, 0.6f, projectile.velocity.ToRotation(), rand, 0.9f);
+                            DustStar(pos, Vector2.Zero, ModContent.DustType<CopyDust4>(), 8, 1.6f, 2f, 1.0f, 1f, 0.4f, projectile.velocity.ToRotation(), rand, 0.6f);
                         }
                         else
                         {
                             Vector2 pos = projectile.Center + projectile.velocity.SafeNormalize(Vector2.Zero) * (fireFromDist + 12);
                             float rand = Main.rand.NextFloat(MathHelper.Pi);
-                            DustStar(pos, ModContent.DustType<CopyDust4>(), 6, 2.0f, 3f, 1.0f, 1f, 0.6f, projectile.velocity.ToRotation(), rand, 0.9f);
-                            DustStar(pos, ModContent.DustType<CopyDust4>(), 6, 1.2f, 2f, 1.0f, 1f, 0.4f, projectile.velocity.ToRotation(), rand, 0.6f);
+                            DustStar(pos, Vector2.Zero, ModContent.DustType<CopyDust4>(), 6, 2.0f, 3f, 1.0f, 1f, 0.6f, projectile.velocity.ToRotation(), rand, 0.9f);
+                            DustStar(pos, Vector2.Zero, ModContent.DustType<CopyDust4>(), 6, 1.2f, 2f, 1.0f, 1f, 0.4f, projectile.velocity.ToRotation(), rand, 0.6f);
                         }
                         counter = -(int)projectile.ai[0] * secondDelay;
                         chargeLevel++;
@@ -308,7 +325,7 @@ namespace SOTS.Projectiles.Chaos
             projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
             return false;
         }
-        public void DustStar(Vector2 position, int dustType, float pointAmount = 5, float mainSize = 1, float dustDensity = 1, float pointDepthMult = 1f, float pointDepthMultOffset = 0.5f, float randomAmount = 0, float rotation = 0, float spin = 0, float scaleMult = 1f)
+        public void DustStar(Vector2 position, Vector2 outWards, int dustType, float pointAmount = 5, float mainSize = 1, float dustDensity = 1, float pointDepthMult = 1f, float pointDepthMultOffset = 0.5f, float randomAmount = 0, float rotation = 0, float spin = 0, float scaleMult = 1f)
         {
             Player player = Main.player[projectile.owner];
             float density = 1 / dustDensity * 0.1f;
@@ -326,7 +343,9 @@ namespace SOTS.Projectiles.Chaos
                 Dust dust = Dust.NewDustDirect(position - new Vector2(4, 4), 0, 0, dustType, 0, 0, 0, VoidPlayer.ChaosPink);
                 dust.noGravity = true;
                 dust.scale = (dust.scale * 0.5f + 1) * scaleMult;
-                dust.velocity = dust.velocity * 0.1f + velocity + player.velocity * 0.95f;
+                dust.velocity = dust.velocity * 0.1f + velocity + outWards;
+                if (outWards == Vector2.Zero)
+                    dust.velocity += player.velocity * 0.95f;
                 dust.fadeIn = 0.1f;
             }
         }

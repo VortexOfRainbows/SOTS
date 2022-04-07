@@ -17,7 +17,7 @@ namespace SOTS.Items.Crushers
 		}
 		public override void SafeSetDefaults()
 		{
-            item.damage = 27;
+            item.damage = 26;
             item.melee = true;  
             item.width = 42;
             item.height = 42;  
@@ -41,7 +41,7 @@ namespace SOTS.Items.Crushers
 		}
 		public override int GetVoid(Player player)
 		{
-			return 4;
+			return 5;
 		}
 	}
 }

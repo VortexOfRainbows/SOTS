@@ -12,11 +12,11 @@ namespace SOTS.Items.Chaos
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Rose Bow");
-			Tooltip.SetDefault("Transforms arrows into spears of light\nCoalesces ice mist to power up your arrows\nWhen briefly charged, arrows will travel faster and hit with an icy explosion that deals 200% damage\nWhen fully charged, arrows bloom into wisps of ice, dealing 600% damage");
+			Tooltip.SetDefault("Transforms arrows into spears of light\nWhen briefly charged, arrows explode for 200% damage\nWhen fully charged, arrows bloom for 700% damage\nCharging will also conjure thorns, which are launched for 100% damage each");
 		}
 		public override void SetDefaults()
 		{
-			item.damage = 10;
+			item.damage = 30;
 			item.ranged = true;
 			item.width = 44;
 			item.height = 92;

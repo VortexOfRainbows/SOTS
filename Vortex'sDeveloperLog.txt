@@ -35,6 +35,9 @@ Mid Priority:
 2. Big Vibrant geode in the jungle
 3. Pyramid Battle Music Box
 4. Rework Miners Pickaxe
+5. Pulverizer (Upgrade to Bone Clapper)
+	1. 4 arms, 2 normal and 2 laser cannon
+6. Earthen and Nature plating extra walls + torch
 
 Low Priority:
 1. Archaelogist NPC
@@ -43,8 +46,18 @@ Low Priority:
 4. Fix Planetarium sky island spawning in tandum
 5. Stars in Planetarium Sky
 
+4/6/22
+1. Rose Bow WIP: 
+	1. More visuals for charge level 2
+	2. Balancing and damage
+	3. Thorns
+	4. Tile collision
+
 4/5/22
 1. Worked on the Charging visuals for Rose Bow. WIP
+2. Void ankh now cost 20 -> 15 cursed matter
+3. Bone Clapper Damage 27 -> 26, void cost 4 -> 5
+	1. Not quite sure how good this weapon is yet, but testing showed it to be quite powerful and cheap.
 
 4/4/22
 1. Added Earthen Furniture tiles. Missing walls
