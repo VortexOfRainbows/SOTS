@@ -55,6 +55,7 @@ namespace SOTS.Items.Chaos
 		{
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<TerminalCluster>(), 1);
+			recipe.AddIngredient(ModContent.ItemType<PrecariousCluster>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<GlazeBow>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<SpectreSpiritStorm>(), 1);
 			recipe.AddIngredient(ItemID.ChlorophyteShotbow, 1);
