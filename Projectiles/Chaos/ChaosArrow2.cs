@@ -41,16 +41,23 @@ namespace SOTS.Projectiles.Chaos
 			projectile.usesLocalNPCImmunity = true;
 			projectile.localNPCHitCooldown = 90;
 		}
+		float counter = 0;
 		bool runOnce = true;
 		Color color;
 		float scale = 1.0f;
 		public const float length = 5.5f;
+		public const int timeToEnd = 15;
 		public float percentDeath => projectile.timeLeft / 50f;
 		public override bool PreAI()
 		{
+			if (projectile.ai[0] == 1)
+				scale = 1.25f;
 			if (runOnce)
 			{
-				Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 96, 1.0f, -0.1f + Main.rand.NextFloat(-0.1f, 0.1f));
+				if(projectile.ai[0] != 1)
+					Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 96, 1.0f, -0.1f);
+				else
+					Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 94, 1.0f, -0.1f);
 				DustOut();
 				color = VoidPlayer.ChaosPink;
 				SetPostitions();
@@ -62,25 +69,27 @@ namespace SOTS.Projectiles.Chaos
 		public override void AI()
 		{
 			projectile.alpha = (int)(255 * (1 - percentDeath));
-			projectile.ai[1]++;
+			counter++;
 		}
 		public void SetPostitions()
 		{
 			Vector2 direction = new Vector2(length * scale, 0).RotatedBy(projectile.velocity.ToRotation());
-			int maxDist = 300;
+			int maxDist = (int)(300 / scale);
 			Vector2 currentPos = projectile.Center;
 			int k = 0;
+			projectile.ai[1] = -1;
 			while (maxDist > 0)
 			{
 				k++;
 				posList.Add(currentPos);
 				currentPos += direction;
-				if(maxDist > 20)
+				if(maxDist > (int)(timeToEnd / scale))
 				{
 					int npcID = isHittingEnemy(currentPos);
 					if (npcID != -1)
 					{
-						maxDist = 20;
+						projectile.ai[1] = npcID;
+						maxDist = (int)(timeToEnd / scale);
 					}
 				}
 				if (!Main.rand.NextBool(3))
@@ -121,8 +130,11 @@ namespace SOTS.Projectiles.Chaos
 			projectile.netUpdate = true;
 			if (Main.myPlayer == projectile.owner && !runOnce)
 			{
+				float dmgMult = 4f;
+				if (projectile.ai[0] == 1)
+					dmgMult = 12f;
 				Vector2 position = posList[posList.Count - 2];
-				Projectile.NewProjectile(position, projectile.velocity, ModContent.ProjectileType<ChaosBloomExplosion>(), projectile.damage, projectile.knockBack, Main.myPlayer, -Main.rand.NextFloat(360) - 1, Main.rand.NextFloat(360));
+				Projectile.NewProjectile(position, projectile.velocity, ModContent.ProjectileType<ChaosBloomExplosion>(), (int)(dmgMult * projectile.damage), projectile.knockBack, Main.myPlayer, -Main.rand.NextFloat(360) - 1, Main.rand.NextFloat(360));
 				if(projectile.ai[0] == 1)
                 {
 					int otherDir = Main.rand.Next(2) * 2 - 1;
@@ -132,8 +144,8 @@ namespace SOTS.Projectiles.Chaos
 						float speedMult = 0.8f + 0.2f * dir;
 						for (int i = 0; i < 3; i++)
 						{
-							Vector2 circular = new Vector2(Main.rand.Next(7, 10) * speedMult, 0).RotatedBy(MathHelper.ToRadians(i * 120 + rand));
-							Projectile.NewProjectile(position, circular, ModContent.ProjectileType<ChaosArrowBloom>(), projectile.damage, projectile.knockBack, Main.myPlayer, Main.rand.NextFloat(1.8f, 2.4f) * speedMult, otherDir * dir * Main.rand.NextFloat(6, 11));
+							Vector2 circular = new Vector2(Main.rand.Next(10, 14) * speedMult, 0).RotatedBy(MathHelper.ToRadians(i * 120 + rand));
+							Projectile.NewProjectile(position, circular, ModContent.ProjectileType<ChaosArrowBloom>(), (int)(dmgMult * projectile.damage), projectile.knockBack, Main.myPlayer, 2 * speedMult, otherDir * dir * Main.rand.NextFloat(6, 9));
 						}
 						rand += Main.rand.NextFloat(-20, 20);
 					}
@@ -142,24 +154,13 @@ namespace SOTS.Projectiles.Chaos
 		}
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
 		{
-			if (projectile.alpha >= 100)
-			{
-				return false;
-			}
-			float width = projectile.width * scale;
-			float height = projectile.height * scale;
-			for (int i = 0; i < posList.Count - 10; i += 2)
-			{
-				Vector2 pos = posList[i];
-				projHitbox = new Rectangle((int)pos.X - (int)width / 2, (int)pos.Y - (int)height / 2, (int)width, (int)height);
-				if (projHitbox.Intersects(targetHitbox))
-				{
-					return true;
-				}
-			}
-			return false;
+			return true;
 		}
-		List<Vector2> posList = new List<Vector2>();
+        public override bool? CanHitNPC(NPC target)
+        {
+            return (int)projectile.ai[1] == target.whoAmI;
+        }
+        List<Vector2> posList = new List<Vector2>();
 		public override bool ShouldUpdatePosition()
 		{
 			return false;
@@ -176,17 +177,23 @@ namespace SOTS.Projectiles.Chaos
 			for (int i = 0; i < posList.Count; i++)
 			{
 				Vector2 drawPos = posList[i];
-				if (i > posList.Count - 20)
+				if (i > posList.Count - (int)(timeToEnd / scale))
 				{
-					alpha = 1 - (i - posList.Count + 20) / 20f;
+					alpha = 1 - (i - posList.Count + (int)(timeToEnd / scale)) / (float)(int)(timeToEnd / scale);
 				}
-				Color color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(i * 4 + projectile.ai[1] * -2), this.color) * alpha * (0.2f + 0.8f * percentDeath);
+				Color color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(i * 4 + counter * -2), this.color) * alpha * (0.2f + 0.8f * percentDeath);
 				color.A = 0;
 				Vector2 direction = drawPos - lastPosition;
 				lastPosition = drawPos;
 				float rotation = i == 0 ? projectile.velocity.ToRotation() : direction.ToRotation();
-				//Vector2 sinusoid = new Vector2(0, percentDeath * scale * 18 * (float)Math.Sin(MathHelper.ToRadians(i * 3 + projectile.ai[1] * 3))).RotatedBy(rotation);
-				//spriteBatch.Draw(texture, drawPos - Main.screenPosition + sinusoid, null, color * 0.4f * startingScale, rotation, origin, new Vector2(scale * 2, scale * percentDeath * 0.5f * startingScale), SpriteEffects.None, 0f);
+				if(projectile.ai[0] == 1)
+				{
+					for(int j = 0; j < 3; j++)
+					{
+						Vector2 sinusoid = new Vector2(0, percentDeath * scale * 22 * (float)Math.Sin(MathHelper.ToRadians(i * 3 + counter * 3 + j * 120)) * startingScale).RotatedBy(rotation);
+						spriteBatch.Draw(texture, drawPos - Main.screenPosition + sinusoid, null, color * 0.4f * startingScale, rotation, origin, new Vector2(scale * 2, scale * percentDeath * 0.4f * startingScale), SpriteEffects.None, 0f);
+					}
+				}
 				spriteBatch.Draw(texture, drawPos - Main.screenPosition, null, color * 0.6f * startingScale, rotation, origin, new Vector2(scale * 2, scale * percentDeath * startingScale), SpriteEffects.None, 0f);
 				if (startingScale < 1f || alpha != 1)
 					startingScale += 0.05f;

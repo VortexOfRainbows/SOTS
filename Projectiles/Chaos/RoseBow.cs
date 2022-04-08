@@ -73,8 +73,7 @@ namespace SOTS.Projectiles.Chaos
         const int fireFromDist = 48;
         const int fireFromTighten = 12;
         const float visualsOffsetAmt = 28f;
-        const float firstDelay = 0.06f;
-        const float secondDelay = 0.7f;
+        const float secondDelay = 1.25f;
         float afterCount1 = 0;
         float afterCount2 = 0;
         float textureHeight = 10;
@@ -220,6 +219,24 @@ namespace SOTS.Projectiles.Chaos
                 }
                 if (chargeLevel >= 1)
                     afterCount2++;
+                int timeForThorn = (int)(projectile.ai[0] * 0.5f);
+                if((int)afterCount2 % timeForThorn == 0 && (int)afterCount2 <= timeForThorn * 6 && (int)afterCount2 > 0) //6 thorns one first charge
+                {
+                    if(Main.myPlayer == projectile.owner)
+                    {
+                        float rotation = (float)(afterCount2 / timeForThorn) * 60;
+                        Projectile.NewProjectile(projectile.Center, projectile.velocity.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(1.5f, 4f), ModContent.ProjectileType<ChaosThorn>(), (int)(projectile.damage * 1.0f), projectile.knockBack, Main.myPlayer, 60, rotation);
+                    }
+                }
+                timeForThorn = (int)(projectile.ai[0] * 0.4f);
+                if ((int)afterCount1 % timeForThorn == 0 && (int)afterCount1 <= timeForThorn * 8 && (int)afterCount1 > 0) //8 thorns on second charge
+                {
+                    if (Main.myPlayer == projectile.owner)
+                    {
+                        float rotation = (float)(afterCount1 / timeForThorn) * 45;
+                        Projectile.NewProjectile(projectile.Center, projectile.velocity.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(2f, 4.5f), ModContent.ProjectileType<ChaosThorn>(), (int)(projectile.damage * 1.0f), projectile.knockBack, Main.myPlayer, 120, rotation);
+                    }
+                }
                 float percent = counter / projectile.ai[0];
                 if (chargeLevel < 2 && counter > 0)
                 {
@@ -244,6 +261,13 @@ namespace SOTS.Projectiles.Chaos
                         }
                         counter = -(int)projectile.ai[0] * secondDelay;
                         chargeLevel++;
+                        if(Main.myPlayer == player.whoAmI)
+                        {
+                            Item item = player.HeldItem;
+                            VoidItem vItem = item.modItem as VoidItem;
+                            if (vItem != null)
+                                vItem.DrainMana(player);
+                        }
                     }
                 }
                 actionPercent = percent;
@@ -308,7 +332,7 @@ namespace SOTS.Projectiles.Chaos
             if (counter == -1 && projectile.ai[0] != 0 && runOnce)
             {
                 runOnce = false;
-                counter = -(int)(projectile.ai[0] * firstDelay);
+                counter = 0;
             }
             ChargeAI();
             if (projectile.hide == false)

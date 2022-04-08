@@ -21,16 +21,15 @@ High Priority:
 
 Mid Priority:
 1. Lux Drops (ask me before you go about spriting these ones):
-	1. Rose Bow (glaze bow upgrade)
-	2. Voidmage Incubator
+	1. Voidmage Incubator
 		1. Needs Dilation Sickness
-	3. Replace Celestial Serpent Drops (resprites and maybe some reworks)
+	2. Replace Celestial Serpent Drops (resprites and maybe some reworks)
 		1. Armageddon (melee + void)
 		2. Stellar Serpent Launcher (ranged)
 		3. Stellar Serpent Staff -> Hyperlight Launcher (magic gun, photon geyser upgrade)
 		4. Stellar Shot (will become Perfect Star upgrade, magic gun)
 		5. Hyperdrive (upgrade to Vibrancy Module, accessory)
-	4. Rebalance:
+	3. Rebalance:
 		1. Chaos Spirit Staff
 2. Big Vibrant geode in the jungle
 3. Pyramid Battle Music Box
@@ -46,12 +45,14 @@ Low Priority:
 4. Fix Planetarium sky island spawning in tandum
 5. Stars in Planetarium Sky
 
-4/6/22
-1. Rose Bow WIP: 
-	1. More visuals for charge level 2
-	2. Balancing and damage
-	3. Thorns
-	4. Tile collision
+4/6/22 & 4/7/22
+1. Rose Bow Finished!
+	1. WORKS IN MULTIPLAYER!!
+	2. Should be balanced as a void weapon. Against single target, it does give or take the same as Tsunami and Phantasm (if not worse)
+		1. Though it goes through walls and homes
+	3. Has amazing Void to Damage ratio, doing about 8000 damage full charge with equipment against Lux. ~266.67 damage per void
+2. Lux damage 110 (176) -> 100 (160)
+	1. Hits like a fucking train still
 
 4/5/22
 1. Worked on the Charging visuals for Rose Bow. WIP

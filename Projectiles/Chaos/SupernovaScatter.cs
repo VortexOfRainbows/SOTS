@@ -91,7 +91,6 @@ namespace SOTS.Projectiles.Chaos
 		public override void AI()
 		{
 			cataloguePos();
-			Lighting.AddLight(projectile.Center, VoidPlayer.Inferno1.ToVector3());
 			if (runOnce)
 			{
 				runOnce = false;
@@ -110,7 +109,6 @@ namespace SOTS.Projectiles.Chaos
 			}
 			if (!projectile.velocity.Equals(new Vector2(0, 0)))
 				projectile.rotation = projectile.velocity.ToRotation();
-
 			if (hasHit)
 			{
 				if (projectile.timeLeft > 60)

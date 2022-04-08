@@ -60,7 +60,7 @@ namespace SOTS.Projectiles.Chaos
             }
 			if(deathTime == -1 && projectile.owner == Main.myPlayer)
             {
-				deathTime = Main.rand.Next(80, 110);
+				deathTime = Main.rand.Next(80, 105);
 				projectile.netUpdate = true;
 			}
 			if (projectile.timeLeft < deathTime)
@@ -92,7 +92,7 @@ namespace SOTS.Projectiles.Chaos
         public override void Kill(int timeLeft)
         {
             if(projectile.owner == Main.myPlayer)
-				Projectile.NewProjectile(projectile.Center, Vector2.Zero, ModContent.ProjectileType<ChaosBloomExplosion>(), projectile.damage, -1, Main.myPlayer, Main.rand.NextFloat(360), Main.rand.NextFloat(360));
+				Projectile.NewProjectile(projectile.Center, projectile.velocity, ModContent.ProjectileType<ChaosBloomExplosion>(), projectile.damage, projectile.knockBack, Main.myPlayer, Main.rand.NextFloat(360), Main.rand.NextFloat(360));
 		}
     }
 }

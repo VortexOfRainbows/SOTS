@@ -26,7 +26,7 @@ namespace SOTS.Projectiles.Chaos
 		}
         public override void SetDefaults()
         {
-			projectile.penetrate = -1;
+			projectile.penetrate = -3;
 			projectile.friendly = true;
 			projectile.hostile = false;
 			projectile.alpha = 0;
@@ -121,8 +121,15 @@ namespace SOTS.Projectiles.Chaos
 		}
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-			projectile.friendly = false;
-			projectile.netUpdate = true;
+			if(projectile.penetrate >= -1)
+			{
+				projectile.friendly = false;
+				projectile.netUpdate = true;
+			}	
+			else
+            {
+				projectile.penetrate++;
+            }
         }
         public void DustOut()
         {
