@@ -73,6 +73,7 @@ namespace SOTS.Projectiles.Chaos
         const int fireFromDist = 48;
         const int fireFromTighten = 12;
         const float visualsOffsetAmt = 28f;
+        const float firstDelay = 0.1f;
         const float secondDelay = 1.25f;
         float afterCount1 = 0;
         float afterCount2 = 0;
@@ -332,7 +333,7 @@ namespace SOTS.Projectiles.Chaos
             if (counter == -1 && projectile.ai[0] != 0 && runOnce)
             {
                 runOnce = false;
-                counter = 0;
+                counter = -(projectile.ai[0] * firstDelay);
             }
             ChargeAI();
             if (projectile.hide == false)

@@ -8,7 +8,7 @@ using Terraria.ID;
 
 namespace SOTS.Items.Furniture.Earthen
 {
-    public class EarthenPlatingWorkbench : ModItem
+    public class EarthenPlatingWorkBench : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -19,7 +19,7 @@ namespace SOTS.Items.Furniture.Earthen
             item.CloneDefaults(ItemID.StoneBlock);
             item.Size = new Vector2(32, 18);
             item.rare = ItemRarityID.Blue;
-            item.createTile = ModContent.TileType<EarthenPlatingWorkbenchTile>();
+            item.createTile = ModContent.TileType<EarthenPlatingWorkBenchTile>();
         }
         public override void AddRecipes()
         {
@@ -30,7 +30,7 @@ namespace SOTS.Items.Furniture.Earthen
             recipe.AddRecipe();
         }
     }
-    public class EarthenPlatingWorkbenchTile : Workbench<EarthenPlatingWorkbench>
+    public class EarthenPlatingWorkBenchTile : Workbench<EarthenPlatingWorkBench>
     {
         public override bool CanExplode(int i, int j)
         {

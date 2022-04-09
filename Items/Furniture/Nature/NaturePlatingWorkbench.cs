@@ -8,7 +8,7 @@ using Terraria.ID;
 
 namespace SOTS.Items.Furniture.Nature
 {
-    public class NaturePlatingWorkbench : ModItem
+    public class NaturePlatingWorkBench : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -19,7 +19,7 @@ namespace SOTS.Items.Furniture.Nature
             item.CloneDefaults(ItemID.StoneBlock);
             item.Size = new Vector2(32, 18);
             item.rare = ItemRarityID.Blue;
-            item.createTile = ModContent.TileType<NaturePlatingWorkbenchTile>();
+            item.createTile = ModContent.TileType<NaturePlatingWorkBenchTile>();
         }
         public override void AddRecipes()
         {
@@ -30,7 +30,7 @@ namespace SOTS.Items.Furniture.Nature
             recipe.AddRecipe();
         }
     }
-    public class NaturePlatingWorkbenchTile : Workbench<NaturePlatingWorkbench>
+    public class NaturePlatingWorkBenchTile : Workbench<NaturePlatingWorkBench>
     {
         public override bool CanExplode(int i, int j)
         {

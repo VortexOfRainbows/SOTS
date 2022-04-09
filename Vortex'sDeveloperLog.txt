@@ -36,7 +36,7 @@ Mid Priority:
 4. Rework Miners Pickaxe
 5. Pulverizer (Upgrade to Bone Clapper)
 	1. 4 arms, 2 normal and 2 laser cannon
-6. Earthen and Nature plating extra walls + torch
+6. Nature Plating Extra walls plus Torch
 
 Low Priority:
 1. Archaelogist NPC

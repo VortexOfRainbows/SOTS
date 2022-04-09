@@ -239,13 +239,13 @@ namespace SOTS.Projectiles.Chaos
 		public void triggerUpdate()
 		{
 			hasHit = true;
-			projectile.velocity *= 0;
 			projectile.friendly = false;
 			if (projectile.owner == Main.myPlayer)
 			{
 				projectile.netUpdate = true;
 				Projectile.NewProjectile(projectile.Center, projectile.velocity, ModContent.ProjectileType<ChaosBloomExplosion>(), projectile.damage, projectile.knockBack * 0.5f, Main.myPlayer, Main.rand.NextFloat(-390, -30), Main.rand.NextFloat(-390, -30));
 			}
+			projectile.velocity *= 0;
 		}
         public override bool ShouldUpdatePosition()
         {
