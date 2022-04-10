@@ -606,7 +606,6 @@ namespace SOTS
 		{
 			if (UniqueVisionNumber == -1)
 				ResetVisionID();
-			FoamStuff();
 			base.PreUpdate();
         }
         public override void ResetEffects()

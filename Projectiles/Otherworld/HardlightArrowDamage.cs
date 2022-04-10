@@ -31,11 +31,11 @@ namespace SOTS.Projectiles.Otherworld
         public override void Kill(int timeLeft)
 		{
 			int frostFlake = (int)projectile.ai[0];
-			if(frostFlake > 0)
+			if(frostFlake > 0 && Main.myPlayer == projectile.owner)
 			{
 				float damageMult = 2;
 				if (frostFlake == 2)
-					damageMult = 7;
+					damageMult = 6;
 				Projectile.NewProjectile(projectile.Center, projectile.velocity, ModContent.ProjectileType<FrostflakePulse>(), (int)(projectile.damage * damageMult), projectile.knockBack, Main.myPlayer, frostFlake, 0);
 			}
 			for (int h = 0; h < 20; h++)

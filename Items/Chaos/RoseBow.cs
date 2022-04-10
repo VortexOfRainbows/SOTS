@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Items.ChestItems;
 using SOTS.Items.Fragments;
+using SOTS.Items.Otherworld.FromChests;
 using SOTS.Void;
 using Terraria;
 using Terraria.ID;
@@ -58,6 +59,7 @@ namespace SOTS.Items.Chaos
 			recipe.AddIngredient(ModContent.ItemType<PrecariousCluster>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<GlazeBow>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<SpectreSpiritStorm>(), 1);
+			recipe.AddIngredient(ModContent.ItemType<StarshotCrossbow>(), 1);
 			recipe.AddIngredient(ItemID.ChlorophyteShotbow, 1);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.SetResult(this);

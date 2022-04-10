@@ -80,10 +80,12 @@ namespace SOTS.NPCs.Boss.Advisor
 		{
 			return !dormant;
 		}
+		public const int NormalModeHP = 12500;
+		public const float ExpertLifeScale = 0.64002f;
 		public override void SetDefaults()
         {
             npc.aiStyle = 0;
-            npc.lifeMax = 12500;
+            npc.lifeMax = NormalModeHP;
             npc.damage = 54;
             npc.defense = 24;
             npc.knockBackResist = 0f;
@@ -109,7 +111,7 @@ namespace SOTS.NPCs.Boss.Advisor
 		}
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
 		{
-			npc.lifeMax = (int)(npc.lifeMax * bossLifeScale * 0.64002f); //16000
+			npc.lifeMax = (int)(npc.lifeMax * bossLifeScale * ExpertLifeScale); //16000
 			npc.damage = (int)(npc.damage * 0.8f); //86
 		}
 		public static int[] ConstructIds = { -1, -1, -1, -1 };
@@ -507,6 +509,20 @@ namespace SOTS.NPCs.Boss.Advisor
 			bool lineOfSight = Collision.CanHitLine(npc.position, npc.width, npc.height, player.position, player.width, player.height);
 			if (dormant)
 			{
+				var bossHPScale = 1f;
+				var num6 = 0.35f;
+				for (var index = 1; index < SOTS.PlayerCount; ++index)
+				{
+					bossHPScale += num6;
+					num6 += (float)((1.0 - (double)num6) / 3.0);
+				}
+				if (bossHPScale > 8.0)
+					bossHPScale = (float)((bossHPScale * 2.0 + 8.0) / 3.0);
+				if (bossHPScale > 1000.0)
+					bossHPScale = 1000f;
+				int trueLife = (int)(NormalModeHP * bossHPScale * ExpertLifeScale * Main.expertLife);
+				npc.lifeMax = trueLife;
+				npc.life = trueLife;
 				attackPhase1 = -1;
 				attackPhase2 = -1;
 				npc.velocity.Y = new Vector2(0.08f, 0).RotatedBy(MathHelper.ToRadians(ai1)).Y;

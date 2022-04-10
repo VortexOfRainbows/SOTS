@@ -70,6 +70,7 @@ namespace SOTS
 		}
 		private UserInterface _VoidUserInterface;
 		internal VoidUI VoidUI;
+		public static int PlayerCount = 0;
 		public override void Load()
 		{
 			//SOTSGlowmasks.LoadGlowmasks();
@@ -190,6 +191,24 @@ namespace SOTS
 			if(!frozen)
             {
 				SOTSWorld.Update();
+				PlayerCount = 0;
+				if (Main.netMode != NetmodeID.SinglePlayer) //updating this on Dedicated Server just in case I accidentally forgot to make dust not spawn in multiplayer somewhere
+				{
+					for (int i = 0; i < Main.player.Length; i++)
+					{
+						Player player = Main.player[i];
+						if (player.active)
+						{
+							PlayerCount++;
+							SOTSPlayer.ModPlayer(player).FoamStuff();
+						}
+					}
+				}
+				else
+				{
+					PlayerCount = 1;
+					SOTSPlayer.ModPlayer(Main.LocalPlayer).FoamStuff();
+				}
             }
 		}
 		public override void MidUpdateProjectileItem()
