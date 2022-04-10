@@ -11,7 +11,7 @@ namespace SOTS.Items.Slime.Furniture
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Goopwood Workbench");
+			DisplayName.SetDefault("Goopwood Work Bench");
 			Tooltip.SetDefault("");
 		}
 
@@ -52,7 +52,7 @@ namespace SOTS.Items.Slime.Furniture
 			TileObjectData.addTile(Type);
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
 			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Wormwood Workbench");
+			name.SetDefault("Wormwood Work Bench");
 			AddMapEntry(new Color(140, 70, 20), name);
 			dustType = 7;
 			disableSmartCursor = true;

@@ -126,6 +126,7 @@ namespace SOTS
 			AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/Polaris"), ModContent.ItemType<PolarisMusicBox>(), ModContent.TileType<PolarisMusicBoxTile>());
 			AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/SubspaceSerpent"), ModContent.ItemType<SubspaceSerpentMusicBox>(), ModContent.TileType<SubspaceSerpentMusicBoxTile>());
 			AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/CursedPyramid"), ModContent.ItemType<AncientPyramidMusicBox>(), ModContent.TileType<AncientPyramidMusicBoxTile>());
+			AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/PyramidBattle"), ModContent.ItemType<PyramidBattleMusicBox>(), ModContent.TileType<PyramidBattleMusicBoxTile>());
 			AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/Planetarium"), ModContent.ItemType<PlanetariumMusicBox>(), ModContent.TileType<PlanetariumMusicBoxTile>());
 			AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/KnucklesTheme"), ModContent.ItemType<KnucklesMusicBox>(), ModContent.TileType<KnucklesMusicBoxTile>()); //WHY THE FUCK
 			SOTSItem.LoadArrays();

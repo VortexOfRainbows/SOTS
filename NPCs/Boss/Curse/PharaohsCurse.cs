@@ -79,7 +79,7 @@ namespace SOTS.NPCs.Boss.Curse
 			npc.buffImmune[69] = true;
 			npc.buffImmune[70] = true;
 			npc.buffImmune[153] = true;
-			bossBag = mod.ItemType("CurseBag");
+			bossBag = ModContent.ItemType<CurseBag>();
 			npc.netAlways = true;
 			npc.alpha = 255;
 			npc.dontTakeDamage = true;

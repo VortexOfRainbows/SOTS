@@ -32,11 +32,10 @@ Mid Priority:
 	3. Rebalance:
 		1. Chaos Spirit Staff
 2. Big Vibrant geode in the jungle
-3. Pyramid Battle Music Box
-4. Rework Miners Pickaxe
-5. Pulverizer (Upgrade to Bone Clapper)
+3. Rework Miners Pickaxe
+4. Pulverizer (Upgrade to Bone Clapper)
 	1. 4 arms, 2 normal and 2 laser cannon
-6. Nature Plating Extra walls plus Torch
+5. Nature Plating Extra walls plus Torch
 
 Low Priority:
 1. Archaelogist NPC

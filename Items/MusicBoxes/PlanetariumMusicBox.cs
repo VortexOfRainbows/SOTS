@@ -47,6 +47,10 @@ namespace SOTS.Items.MusicBoxes
 	}
 	public class PlanetariumMusicBoxTile : ModTile
 	{
+		public override bool CreateDust(int i, int j, ref int type)
+		{
+			return false;
+		}
 		public override void SetDefaults()
 		{
 			Main.tileFrameImportant[Type] = true;
@@ -61,8 +65,7 @@ namespace SOTS.Items.MusicBoxes
 			name.SetDefault("Music Box");
 			AddMapEntry(new Color(191, 142, 111), name);
 		}
-
-		public override void KillMultiTile(int i, int j, int frameX, int frameY)
+        public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
 			Item.NewItem(i * 16, j * 16, 16, 48, mod.ItemType("PlanetariumMusicBox"));
 		}

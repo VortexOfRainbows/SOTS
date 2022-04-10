@@ -22,7 +22,7 @@ namespace SOTS.Items.Furniture.Earthen
             item.Size = new Vector2(32, 24);
             item.rare = ItemRarityID.Blue;
             item.createTile = ModContent.TileType<EarthenPlatingStorageTile>();
-            item.placeStyle = 1;
+            //item.placeStyle = 1;
         }
         public override void AddRecipes()
         {

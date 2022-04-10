@@ -10,7 +10,7 @@ namespace SOTS.Items.Pyramid.AncientGold
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Ancient Gold Workbench");
+			DisplayName.SetDefault("Ancient Gold Work Bench");
 			Tooltip.SetDefault("");
 		}
 		public override void SetDefaults()
@@ -50,7 +50,7 @@ namespace SOTS.Items.Pyramid.AncientGold
 			TileObjectData.addTile(Type);
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
 			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Ancient Gold Workbench");
+			name.SetDefault("Ancient Gold Work Bench");
 			AddMapEntry(new Color(220, 180, 25), name);
 			dustType = DustID.GoldCoin;
 			disableSmartCursor = true;

@@ -42,6 +42,10 @@ namespace SOTS.Items.MusicBoxes
 	}
 	public class PolarisMusicBoxTile : ModTile
 	{
+		public override bool CreateDust(int i, int j, ref int type)
+		{
+			return false;
+		}
 		public override void SetDefaults()
 		{
 			Main.tileFrameImportant[Type] = true;
