@@ -526,7 +526,7 @@ namespace SOTS.NPCs
 			{
 				if (SOTSWorld.downedPinky)
 				{
-					pool.Add(ModContent.NPCType<FluxSlime>(), 0.10f);
+					pool.Add(ModContent.NPCType<FluxSlime>(), 0.075f);
 				}
 				if(player.ZoneCrimson)
 					pool.Add(ModContent.NPCType<CrimsonTreasureSlime>(), 0.05f);

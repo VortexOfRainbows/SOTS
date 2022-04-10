@@ -11,7 +11,7 @@ namespace SOTS.Items.Tools
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Worldgen Paste");
-			Tooltip.SetDefault("Development tool, NOT MEANT FOR GAMEPLAY");
+			Tooltip.SetDefault("Development tool, NOT MEANT FOR GAMEPLAY\nUsing this may break your world, or spawn a ton of ore, or generate a whole pyramid\nWhatever the case, it's probably best not to use it");
 		}
 		public override void SetDefaults()
 		{
@@ -28,13 +28,13 @@ namespace SOTS.Items.Tools
 		{
 			player.rulerGrid = true;
 		}
+		int counter = 0;
 		public override bool UseItem(Player player)
 		{
 			Vector2 mousePos = Main.MouseWorld;
 			Vector2 tileLocation = mousePos / 16f;
-			int size = 32; //radius of the geode
-			float depthMult = 1f; //thickness multiplier of each layer
-			SOTSWorldgenHelper.GenerateVibrantGeode((int)tileLocation.X, (int)tileLocation.Y, size, size, depthMult, (float)Math.Sqrt(depthMult));
+			SOTSWorldgenHelper.GeneratePhaseOre((int)tileLocation.X, (int)tileLocation.Y, 20, counter % 3);
+			counter++;
 			return true;
 		}
 	}

@@ -18,6 +18,7 @@ using SOTS.Items.Otherworld.Furniture;
 using SOTS.Items.Otherworld.Blocks;
 using SOTS.Items.Earth;
 using SOTS.Items.Nvidia;
+using SOTS.Items.Chaos;
 
 namespace SOTS
 {
@@ -7287,6 +7288,379 @@ namespace SOTS
    							tile.wall = (ushort)ModContent.WallType<VibrantWallWall>();
 							tile.active(false);
 						}
+					}
+				}
+			}
+		}
+		public static void GeneratePhaseOre(int spawnX, int spawnY, int size = 20, int type = -1)
+        {
+			if(type < 0)
+            {
+				type = Main.rand.Next(2);
+            }
+			
+			if(type == 0)
+			{
+				float rand = Main.rand.NextFloat(MathHelper.TwoPi);
+				float frequency = Main.rand.NextFloat(0.3f, 0.5f);
+				float amplitude = Main.rand.NextFloat(1.2f, 3.6f);
+				float rotation = MathHelper.ToRadians(Main.rand.NextFloat(-30, 30));
+				float torque = Main.rand.NextFloat(-60, 60) / size;
+				Vector2 direction = new Vector2(Main.rand.Next(2) * 2 - 1, 0).RotatedBy(rotation);
+				Vector2 start = new Vector2(spawnX, spawnY);
+				Vector2 smoothArea = new Vector2(spawnX, spawnY);
+				bool hasSpawnedCircle = false;
+				for (int i = 0; i < size; i++)
+				{
+					Vector2 sinusoid = new Vector2(0, amplitude * (float)Math.Cos(rand)).RotatedBy(rotation);
+					for (int j = 0; j < 9; j++)
+					{
+						Vector2 circular = new Vector2(j == 0 ? 0 : 0.6f, 0).RotatedBy(j * MathHelper.PiOver4);
+						WorldGen.PlaceTile((int)(start.X + sinusoid.X + circular.X), (int)(start.Y + sinusoid.Y + circular.Y), ModContent.TileType<PhaseOreTile>(), true, false, -1, 0);
+					}
+					if (i == size / 2)
+						smoothArea = start;
+					start += direction;
+					bool lessThan180 = rand < MathHelper.Pi; 
+					rand += frequency;
+					bool greaterThan180 = rand > MathHelper.Pi;
+					if(lessThan180 && greaterThan180 && !hasSpawnedCircle)
+                    {
+						hasSpawnedCircle = true;
+						if(Main.rand.NextBool(2))
+                        {
+							Vector2 oppositeSinusoid = sinusoid * -2f * (5f - amplitude);
+							GeneratePhaseCircle((int)(start.X + oppositeSinusoid.X), (int)(start.Y + oppositeSinusoid.Y), 4, 4, 2);
+                        }
+                    }
+					direction = direction.RotatedBy(MathHelper.ToRadians(torque));
+					rotation += MathHelper.ToRadians(torque);
+				}
+				SmoothRegion((int)smoothArea.X, (int)smoothArea.Y, size / 2 + 1, size / 2 + 1, ModContent.TileType<PhaseOreTile>());
+			}
+			if(type == 1)
+			{
+				Vector2 direction = new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)));
+				Vector2 pos = new Vector2(spawnX, spawnY);
+				size = 3;
+				for (int i = 0; i < 3; i++)
+				{
+					float twist = Main.rand.NextFloat(-120, 120);
+					GeneratePhaseCircle((int)pos.X, (int)pos.Y, size, size, Main.rand.NextFloat(1.5f, 2.1f));
+					pos += direction * size * Main.rand.NextFloat(1.2f, 1.8f);
+					direction = direction.RotatedBy(MathHelper.ToRadians(twist));
+					size++;
+				}
+			}
+			if(type == 2)
+            {
+				GeneratePhaseTree(spawnX, spawnY, 5, Vector2.Zero);
+			}
+        }
+		public static void GeneratePhaseTree(int spawnX, int spawnY, int i, Vector2 myDirection)
+		{
+			if(i <= 0)
+			{
+				WorldGen.PlaceTile((int)spawnX - 1, (int)spawnY, ModContent.TileType<PhaseOreTile>());
+				WorldGen.PlaceTile((int)spawnX, (int)spawnY - 1, ModContent.TileType<PhaseOreTile>());
+				WorldGen.PlaceTile((int)spawnX + 1, (int)spawnY, ModContent.TileType<PhaseOreTile>());
+				WorldGen.PlaceTile((int)spawnX, (int)spawnY + 1, ModContent.TileType<PhaseOreTile>());
+				return;
+			}
+			if(i != 1)
+				GeneratePhaseCircle((int)spawnX, (int)spawnY, i, i, (int)(i * 0.4f + 1));
+			else
+			{
+				for(int k = -1; k <= 1; k++)
+                {
+					for(int j = -1; j <= 1; j++)
+					{
+						if(k != 0 || j != 0)
+							WorldGen.PlaceTile((int)spawnX + k, (int)spawnY + j, ModContent.TileType<PhaseOreTile>());
+					}
+                }
+			}
+			float lengthMultiplier = Main.rand.NextFloat(2.3f, 3.3f);
+			if (i >= 5)
+            {
+				i--;
+				float iRand = Main.rand.NextFloat(360);
+				for (int k = 0; k < 3; k++)
+                {
+					float rand = Main.rand.NextFloat(-45, 45);
+					Vector2 direction = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(k * 120 + rand + iRand));
+					Vector2 spawnPos = new Vector2(spawnX, spawnY) + direction * i;
+					for(float j = i * lengthMultiplier; j > 0; j--)
+                    {
+						WorldGen.PlaceTile((int)spawnPos.X, (int)spawnPos.Y, ModContent.TileType<PhaseOreTile>());
+						spawnPos += direction;
+					}
+					spawnPos += direction * (i - 1);
+					GeneratePhaseTree((int)spawnPos.X, (int)spawnPos.Y, i - 1, direction);
+				}
+            }
+			else if(i > 0)
+			{
+				for (int k = -1; k <= 1; k += 2)
+				{
+					if(!Main.rand.NextBool(i + 2))
+					{
+						float rand = Main.rand.NextFloat(-24 + i, 24 - i);
+						Vector2 direction = myDirection.RotatedBy(MathHelper.ToRadians(k * Main.rand.NextFloat(30, 45) + rand));
+						Vector2 spawnPos = new Vector2(spawnX, spawnY) + direction * i;
+						for (float j = i * lengthMultiplier; j > 0; j--)
+						{
+							WorldGen.PlaceTile((int)spawnPos.X, (int)spawnPos.Y, ModContent.TileType<PhaseOreTile>());
+							spawnPos += direction;
+						}
+						spawnPos += direction * (i - 1);
+						GeneratePhaseTree((int)spawnPos.X, (int)spawnPos.Y, i - 1, direction);
+					}
+				}
+			}
+        }
+		public static void GeneratePhaseCircle(int spawnX, int spawnY, int radius = 14, int radiusY = 14, float thickness = 2)
+		{
+			float scale = radiusY / (float)radius;
+			float invertScale = (float)radius / radiusY;
+			for (float x = -radius - 2; x <= radius + 2; x += 0.5f)
+			{
+				for (float y = -radius - 2; y <= radius + 2; y += invertScale * 0.5f)
+				{
+					double distance = Math.Sqrt(x * x + y * y);
+					int xPosition6 = spawnX + (int)x;
+					int yPosition6 = spawnY + (int)(y * scale);
+					if (distance < radius + 0.5)
+					{
+						if (distance > radius + 0.5 - thickness)
+						{
+							WorldGen.PlaceTile(xPosition6, yPosition6, ModContent.TileType<PhaseOreTile>(), true, false, -1, 0);
+						}
+					}
+				}
+			}
+			SmoothRegion(spawnX, spawnY, radius, radiusY, ModContent.TileType<PhaseOreTile>());
+		}
+		public static void SmoothRegion(int spawnX, int spawnY, int width, int height, int whitelist = -1)
+		{
+			for (int i = spawnX - width / 2; i < spawnX + width; i++)
+			{
+				for (int j = spawnY - height / 2; j < spawnY + height / 2; j++)
+				{
+					if ((whitelist == Main.tile[i,j].type) || (whitelist == -1 && Main.tile[i, j].type != 48 && Main.tile[i, j].type != 137 &&
+						Main.tile[i, j].type != 232 && Main.tile[i, j].type != 191 &&
+						Main.tile[i, j].type != 151 && Main.tile[i, j].type != 274))
+					{
+						if (!Main.tile[i, j - 1].active())
+						{
+							if (WorldGen.SolidTile(i, j) &&
+								TileID.Sets.CanBeClearedDuringGeneration[Main.tile[i, j].type])
+							{
+								if (!Main.tile[i - 1, j].halfBrick() &&
+									!Main.tile[i + 1, j].halfBrick() &&
+									Main.tile[i - 1, j].slope() == 0 &&
+									Main.tile[i + 1, j].slope() == 0)
+								{
+									if (WorldGen.SolidTile(i, j + 1))
+									{
+										if (!WorldGen.SolidTile(i - 1, j) &&
+											!Main.tile[i - 1, j + 1].halfBrick() &&
+											WorldGen.SolidTile(i - 1, j + 1) && WorldGen.SolidTile(i + 1, j) &&
+											!Main.tile[i + 1, j - 1].active())
+										{
+											if (WorldGen.genRand.Next(2) == 0)
+											{
+												WorldGen.SlopeTile(i, j, 2);
+											}
+											else
+											{
+												WorldGen.PoundTile(i, j);
+											}
+										}
+										else if (!WorldGen.SolidTile(i + 1, j) &&
+												 !Main.tile[i + 1, j + 1].halfBrick() &&
+												 WorldGen.SolidTile(i + 1, j + 1) && WorldGen.SolidTile(i - 1, j) &&
+												 !Main.tile[i - 1, j - 1].active())
+										{
+											if (WorldGen.genRand.Next(2) == 0)
+											{
+												WorldGen.SlopeTile(i, j, 1);
+											}
+											else
+											{
+												WorldGen.PoundTile(i, j);
+											}
+										}
+										else if (WorldGen.SolidTile(i + 1, j + 1) &&
+												 WorldGen.SolidTile(i - 1, j + 1) &&
+												 !Main.tile[i + 1, j].active() &&
+												 !Main.tile[i - 1, j].active())
+										{
+											WorldGen.PoundTile(i, j);
+										}
+
+										if (WorldGen.SolidTile(i, j))
+										{
+											if (WorldGen.SolidTile(i - 1, j) && WorldGen.SolidTile(i + 1, j + 2) &&
+												!Main.tile[i + 1, j].active() &&
+												!Main.tile[i + 1, j + 1].active() &&
+												!Main.tile[i - 1, j - 1].active())
+											{
+												WorldGen.KillTile(i, j, false, false, true);
+											}
+											else if (WorldGen.SolidTile(i + 1, j) &&
+													 WorldGen.SolidTile(i - 1, j + 2) &&
+													 !Main.tile[i - 1, j].active() &&
+													 !Main.tile[i - 1, j + 1].active() &&
+													 !Main.tile[i + 1, j - 1].active())
+											{
+												WorldGen.KillTile(i, j, false, false, true);
+											}
+											else if (!Main.tile[i - 1, j + 1].active() &&
+													 !Main.tile[i - 1, j].active() &&
+													 WorldGen.SolidTile(i + 1, j) && WorldGen.SolidTile(i, j + 2))
+											{
+												if (WorldGen.genRand.Next(5) == 0)
+												{
+													WorldGen.KillTile(i, j, false, false, true);
+												}
+												else if (WorldGen.genRand.Next(5) == 0)
+												{
+													WorldGen.PoundTile(i, j);
+												}
+												else
+												{
+													WorldGen.SlopeTile(i, j, 2);
+												}
+											}
+											else if (!Main.tile[i + 1, j + 1].active() &&
+													 !Main.tile[i + 1, j].active() &&
+													 WorldGen.SolidTile(i - 1, j) && WorldGen.SolidTile(i, j + 2))
+											{
+												if (WorldGen.genRand.Next(5) == 0)
+												{
+													WorldGen.KillTile(i, j, false, false, true);
+												}
+												else if (WorldGen.genRand.Next(5) == 0)
+												{
+													WorldGen.PoundTile(i, j);
+												}
+												else
+												{
+													WorldGen.SlopeTile(i, j, 1);
+												}
+											}
+										}
+									}
+
+									if (WorldGen.SolidTile(i, j) && !Main.tile[i - 1, j].active() &&
+										!Main.tile[i + 1, j].active())
+									{
+										WorldGen.KillTile(i, j, false, false, true);
+									}
+								}
+							}
+							else if (!Main.tile[i, j].active() && Main.tile[i, j + 1].type != 151 &&
+									 Main.tile[i, j + 1].type != 274)
+							{
+								if (Main.tile[i + 1, j].type != 190 &&
+									Main.tile[i + 1, j].type != 48 &&
+									Main.tile[i + 1, j].type != 232 && WorldGen.SolidTile(i - 1, j + 1) &&
+									WorldGen.SolidTile(i + 1, j) && !Main.tile[i - 1, j].active() &&
+									!Main.tile[i + 1, j - 1].active())
+								{
+									WorldGen.PlaceTile(i, j, Main.tile[i, j + 1].type, false, false, -1, 0);
+									if (WorldGen.genRand.Next(2) == 0)
+									{
+										WorldGen.SlopeTile(i, j, 2);
+									}
+									else
+									{
+										WorldGen.PoundTile(i, j);
+									}
+								}
+
+								if (Main.tile[i - 1, j].type != 190 &&
+									Main.tile[i - 1, j].type != 48 &&
+									Main.tile[i - 1, j].type != 232 && WorldGen.SolidTile(i + 1, j + 1) &&
+									WorldGen.SolidTile(i - 1, j) && !Main.tile[i + 1, j].active() &&
+									!Main.tile[i - 1, j - 1].active())
+								{
+									WorldGen.PlaceTile(i, j, Main.tile[i, j + 1].type, false, false, -1, 0);
+									if (WorldGen.genRand.Next(2) == 0)
+									{
+										WorldGen.SlopeTile(i, j, 1);
+									}
+									else
+									{
+										WorldGen.PoundTile(i, j);
+									}
+								}
+							}
+						}
+						else if (!Main.tile[i, j + 1].active() && WorldGen.genRand.Next(2) == 0 &&
+								 WorldGen.SolidTile(i, j) && !Main.tile[i - 1, j].halfBrick() &&
+								 !Main.tile[i + 1, j].halfBrick() &&
+								 Main.tile[i - 1, j].slope() == 0 &&
+								 Main.tile[i + 1, j].slope() == 0 && WorldGen.SolidTile(i, j - 1))
+						{
+							if (WorldGen.SolidTile(i - 1, j) && !WorldGen.SolidTile(i + 1, j) &&
+								WorldGen.SolidTile(i - 1, j - 1))
+							{
+								WorldGen.SlopeTile(i, j, 3);
+							}
+							else if (WorldGen.SolidTile(i + 1, j) && !WorldGen.SolidTile(i - 1, j) &&
+									 WorldGen.SolidTile(i + 1, j - 1))
+							{
+								WorldGen.SlopeTile(i, j, 4);
+							}
+						}
+
+						if (TileID.Sets.Conversion.Sand[Main.tile[i, j].type])
+						{
+							Tile.SmoothSlope(i, j, false);
+						}
+					}
+				}
+			}
+
+			for (int i = spawnX - width / 2; i < spawnX + width; i++)
+			{
+				for (int j = spawnY - height / 2; j < spawnY + height / 2; j++)
+				{
+					bool canRun = WorldGen.genRand.Next(2) == 0 && !Main.tile[i, j - 1].active() && WorldGen.SolidTile(i, j);
+					if (canRun && ((whitelist == Main.tile[i, j].type) || 
+						(whitelist == -1 && Main.tile[i, j].type != 137 && 
+						Main.tile[i, j].type != 48 &&
+						Main.tile[i, j].type != 232 && Main.tile[i, j].type != 191 &&
+						Main.tile[i, j].type != 151 && Main.tile[i, j].type != 274 &&
+						Main.tile[i, j].type != 75 && Main.tile[i, j].type != 76 &&
+						Main.tile[i - 1, j].type != 137 &&
+						Main.tile[i + 1, j].type != 137)))
+					{
+						if (WorldGen.SolidTile(i, j + 1) && WorldGen.SolidTile(i + 1, j) &&
+							!Main.tile[i - 1, j].active())
+						{
+							WorldGen.SlopeTile(i, j, 2);
+						}
+
+						if (WorldGen.SolidTile(i, j + 1) && WorldGen.SolidTile(i - 1, j) &&
+							!Main.tile[i + 1, j].active())
+						{
+							WorldGen.SlopeTile(i, j, 1);
+						}
+					}
+
+					if (Main.tile[i, j].slope() == 1 && !WorldGen.SolidTile(i - 1, j))
+					{
+						WorldGen.SlopeTile(i, j, 0);
+						WorldGen.PoundTile(i, j);
+					}
+
+					if (Main.tile[i, j].slope() == 2 && !WorldGen.SolidTile(i + 1, j))
+					{
+						WorldGen.SlopeTile(i, j, 0);
+						WorldGen.PoundTile(i, j);
 					}
 				}
 			}

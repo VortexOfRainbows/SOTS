@@ -44,6 +44,10 @@ Low Priority:
 4. Fix Planetarium sky island spawning in tandum
 5. Stars in Planetarium Sky
 
+4/9/22
+1. Slight decrease to Flux Slime spawnrate in crimson/corruption (0.1 -> 0.075)
+2. Worked on Phase ore Spawning. so far, these are just some ideas
+
 4/6/22 & 4/7/22
 1. Rose Bow Finished!
 	1. WORKS IN MULTIPLAYER!!

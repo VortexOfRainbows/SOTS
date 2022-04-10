@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
 using SOTS.Items.Otherworld.Furniture;
+using SOTS.Void;
 using System;
 using Terraria;
 using Terraria.ID;
@@ -61,7 +62,7 @@ namespace SOTS.Items.Chaos
 			Main.tileBlockLight[Type] = false;
 			Main.tileLighted[Type] = true;
 			drop = ModContent.ItemType<PhaseOre>();
-			//AddMapEntry(new Color(0, 0, 0, 0));
+			AddMapEntry(VoidPlayer.ChaosPink);
 			mineResist = 5.4f;
 			minPick = 180; //adamantite/chlorophyte level
 			soundType = 3;
@@ -97,6 +98,8 @@ namespace SOTS.Items.Chaos
 		}
 		public static int closestPlayer(int i, int j, ref float minDist)
 		{
+			//minDist = 32;
+			//return Main.myPlayer;
 			int p = -1;
 			for (int k = 0; k < Main.player.Length; k++)
 			{
@@ -133,8 +136,8 @@ namespace SOTS.Items.Chaos
 			{
 				Dust dust = Dust.NewDustDirect(new Vector2(i * 16, j * 16), 16, 16, ModContent.DustType<CopyDust4>());
 				dust.noGravity = true;
-				dust.velocity *= 0.0f;
-				dust.scale = 1.0f;
+				dust.velocity *= 0.1f;
+				dust.scale = 1.3f;
 				dust.color = Color.Lerp(Color.White, new Color(238, 145, 219), Main.rand.NextFloat(1) * Main.rand.NextFloat(1));
 				dust.alpha = 0;
 				dust.fadeIn = 0.1f;
