@@ -11,6 +11,7 @@ using SOTS.Utilities;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Social;
 
 namespace SOTS
 {
@@ -19,6 +20,7 @@ namespace SOTS
 		public static RenderTarget2D TargetProj;
 		public static void Initialize()
 		{
+			On.Terraria.IO.WorldFile.saveWorld_bool_bool += Hooks.AwaitWorldSave;
 			On.Terraria.Main.DrawProjectiles += Main_DrawProjectiles;
 			On.Terraria.Main.DrawNPCs += Main_DrawNPCs;
 			On.Terraria.Main.DrawPlayers += Main_DrawPlayers;
@@ -49,6 +51,7 @@ namespace SOTS
 
 		public static void Unload()
 		{
+			On.Terraria.IO.WorldFile.saveWorld_bool_bool -= Hooks.AwaitWorldSave;
 			On.Terraria.Main.DrawProjectiles -= Main_DrawProjectiles;
 			On.Terraria.Main.DrawNPCs -= Main_DrawNPCs;
 			On.Terraria.Main.DrawPlayers -= Main_DrawPlayers;
@@ -299,6 +302,31 @@ namespace SOTS
 				}
 				Main.spriteBatch.End();
 			}
+		}
+	}
+	public static class Hooks
+	{
+		private static void await()
+		{
+			while (PhaseWorldgenHelper.Generating)
+			{
+				Main.statusText = PhaseWorldgenHelper.GetStatus();
+			}
+		}
+		internal static void AwaitWorldSave(On.Terraria.IO.WorldFile.orig_saveWorld_bool_bool orig, bool useCloudSaving, bool resetTime)
+		{
+			if (useCloudSaving && SocialAPI.Cloud == null)
+			{
+				return;
+			}
+			if (WorldGen.saveLock)
+			{
+				return;
+			}
+
+			await();
+
+			orig(useCloudSaving: useCloudSaving, resetTime: resetTime);
 		}
 	}
 }

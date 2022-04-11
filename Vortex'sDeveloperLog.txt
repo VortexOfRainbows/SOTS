@@ -42,17 +42,21 @@ Low Priority:
 4. Fix Planetarium sky island spawning in tandum
 5. Stars in Planetarium Sky
 
+4/10/22 & 4/11/22
+1. Worked on Phase Ore Generation
+	1. Still Needs: Balancing, Polish, Multiplayer Testing, Lux Testing
+
 4/9/22
 1. Slight decrease to Flux Slime spawnrate in crimson/corruption (0.1 -> 0.075)
-2. Worked on Phase ore Spawning. so far, these are just some ideas
+2. Worked on Phase ore Spawning. so far can be manually spawned, these are just some ideas
 3. Cursed foam now properly works during Time freeze
 4. Cursed foam drawing has been moved to SOTS.cs, which means it should no longer freeze on other player Multiplayer Clients
 5. Glaze Bow no longer creates multiple projectiles in multiplayer when using hardlight arrows.
 	1. Also no longer does 700%, now appropriately does 600%
 6. Starshot Crossbow added to Rose Bow crafting
-7. Inferno Construct spawn rate 0.015 -> 0.01
+7. Inferno Construct spawn rate decrease 0.015 -> 0.01
 	1. Was spawning far, far too often
-8. Advisors health now scales with multiplayers players while dormant.
+8. Advisors health now scales with multiplayer's players while dormant.
 	1. Prevents it from being at 16000 if spawned to early in multiplayer
 
 4/6/22 & 4/7/22

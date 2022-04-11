@@ -40,8 +40,8 @@ namespace SOTS.Items.Chaos
         public override void SetDefaults()
 		{
 			item.CloneDefaults(ItemID.StoneBlock);
-			item.width = 16;
-			item.height = 16;
+			item.width = 18;
+			item.height = 18;
 			item.maxStack = 999;
 			item.rare = ItemRarityID.LightRed;
 			item.value = Item.sellPrice(silver: 20);
@@ -63,7 +63,7 @@ namespace SOTS.Items.Chaos
 			Main.tileLighted[Type] = true;
 			drop = ModContent.ItemType<PhaseOre>();
 			AddMapEntry(VoidPlayer.ChaosPink);
-			mineResist = 5.4f;
+			mineResist = 3f;
 			minPick = 180; //adamantite/chlorophyte level
 			soundType = 3;
 			soundStyle = 53;
@@ -98,8 +98,8 @@ namespace SOTS.Items.Chaos
 		}
 		public static int closestPlayer(int i, int j, ref float minDist)
 		{
-			//minDist = 32;
-			//return Main.myPlayer;
+			minDist = 32;
+			return Main.myPlayer;
 			int p = -1;
 			for (int k = 0; k < Main.player.Length; k++)
 			{

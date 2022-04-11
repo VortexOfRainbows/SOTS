@@ -89,6 +89,8 @@ namespace SOTS.Items.Permafrost
         public override void SetDefaults()
 		{
 			item.CloneDefaults(ItemID.StoneBlock);
+			item.width = 18;
+			item.height = 18;
 			item.rare = ItemRarityID.Blue;
 			item.value = Item.sellPrice(0, 0, 3, 0);
 			item.createTile = ModContent.TileType<FrigidIceTileSafe>();

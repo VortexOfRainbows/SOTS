@@ -64,7 +64,7 @@ namespace SOTS.Items.Chaos
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<PhaseBar>(), 15);
+			recipe.AddIngredient(ModContent.ItemType<PhaseBar>(), 18);
 			recipe.AddIngredient(ModContent.ItemType<ShardstormSpell>(), 1);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.SetResult(this);

@@ -286,7 +286,11 @@ namespace SOTS.NPCs.Boss.Lux
 		}
         public override void BossLoot(ref string name, ref int potionType)
         {
-			SOTSWorld.downedLux = true;
+			if(!SOTSWorld.downedLux)
+            {
+				PhaseWorldgenHelper.Generate();
+				SOTSWorld.downedLux = true;
+			}
 			potionType = ItemID.GreaterHealingPotion;
 			if (Main.rand.NextBool(10))
 			{
@@ -302,7 +306,7 @@ namespace SOTS.NPCs.Boss.Lux
 			}
 			else
 			{
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<PhaseOre>(), Main.rand.Next(36, 61)); //6 to 8 bars
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<PhaseOre>(), Main.rand.Next(90, 151)); //6 to 8 bars
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemID.SoulofLight, Main.rand.Next(10, 20));
 			}
 		}

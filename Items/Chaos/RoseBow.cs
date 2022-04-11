@@ -61,6 +61,7 @@ namespace SOTS.Items.Chaos
 			recipe.AddIngredient(ModContent.ItemType<SpectreSpiritStorm>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<StarshotCrossbow>(), 1);
 			recipe.AddIngredient(ItemID.ChlorophyteShotbow, 1);
+			recipe.AddIngredient(ModContent.ItemType<PhaseBar>(), 6);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.SetResult(this);
 			recipe.AddRecipe();

@@ -33,7 +33,7 @@ namespace SOTS.Items.Tools
 		{
 			Vector2 mousePos = Main.MouseWorld;
 			Vector2 tileLocation = mousePos / 16f;
-			SOTSWorldgenHelper.GeneratePhaseOre((int)tileLocation.X, (int)tileLocation.Y, 20, counter % 3);
+			PhaseWorldgenHelper.Generate();
 			counter++;
 			return true;
 		}

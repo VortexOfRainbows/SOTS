@@ -181,6 +181,7 @@ namespace SOTS.NPCs.Constructs
             npc.netAlways = false;
 			npc.rarity = 2;
 		}
+		bool rubbleActive = true;
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
             return false;
@@ -221,9 +222,10 @@ namespace SOTS.NPCs.Constructs
 				npc.dontTakeDamage = true;
 				npc.velocity.Y -= 0.026f;
 				npc.velocity.X *= 1.095f;
-				if(Main.netMode != NetmodeID.Server && rubble != -2)
+				if(Main.netMode != NetmodeID.Server && rubble != -2 && rubbleActive)
 				{
 					DrawChains(true);
+					rubbleActive = false;
 					npc.ai[0] = -2;
 				}
 			}

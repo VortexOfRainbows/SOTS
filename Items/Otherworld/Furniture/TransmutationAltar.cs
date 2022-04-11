@@ -132,21 +132,11 @@ namespace SOTS.Items.Otherworld.Furniture
 			recipe.SetResult(ItemID.PlatinumOre, 1);
 			recipe.AddRecipe();
 
-			recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.DemoniteBar, 1);
-			recipe.AddTile(TileType<TransmutationAltarTile>());
-			recipe.SetResult(ItemID.CrimtaneBar, 1);
-			recipe.AddRecipe();
-
-			recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.CrimtaneBar, 1);
-			recipe.AddTile(TileType<TransmutationAltarTile>());
-			recipe.SetResult(ItemID.DemoniteBar, 1);
-			recipe.AddRecipe();
-
+			AddDirectExchangeRecipe(mod, ItemID.DemoniteBar, ItemID.CrimtaneBar);
 			AddDirectExchangeRecipe(mod, ItemID.CobaltBar, ItemID.PalladiumBar);
 			AddDirectExchangeRecipe(mod, ItemID.MythrilBar, ItemID.OrichalcumBar);
 			AddDirectExchangeRecipe(mod, ItemID.AdamantiteBar, ItemID.TitaniumBar);
+			AddDirectExchangeRecipe(mod, ItemID.BandofStarpower, ItemID.PanicNecklace);
 		}
 		public static void AddDirectExchangeRecipe(Mod mod, int item1, int item2)
 		{
