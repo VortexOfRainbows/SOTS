@@ -306,7 +306,7 @@ namespace SOTS.NPCs.Boss.Lux
 			}
 			else
 			{
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<PhaseOre>(), Main.rand.Next(90, 151)); //6 to 8 bars
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<PhaseOre>(), Main.rand.Next(90, 151)); //9 to 15 bars
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemID.SoulofLight, Main.rand.Next(10, 20));
 			}
 		}
@@ -551,6 +551,7 @@ namespace SOTS.NPCs.Boss.Lux
 				}
 				if (attackPhase == LaserOrbPhase)
 				{
+					drawNewWingsCounter = 1;
 					allWingsForced = false;
 					modifyRotation(false, false);
 					npc.velocity *= 0.95f;
@@ -1253,7 +1254,7 @@ namespace SOTS.NPCs.Boss.Lux
 		{
 			if (npc.life <= 0)
 			{
-				if(!desperation)
+				if(attackPhase != DesperationPhase)
                 {
 					desperation = true;
 					npc.dontTakeDamage = true;
@@ -1274,7 +1275,15 @@ namespace SOTS.NPCs.Boss.Lux
 				}
 			}
 		}
-		public void teleport(Vector2 destination, Vector2 playerDestination, bool serverOnly = false)
+        public override bool CheckDead()
+        {
+			if(attackPhase == DesperationPhase && desperation && attackTimer1 > 180)
+            {
+				return true;
+            }
+            return false;
+        }
+        public void teleport(Vector2 destination, Vector2 playerDestination, bool serverOnly = false)
 		{
 			if (Main.netMode != NetmodeID.MultiplayerClient)
 			{

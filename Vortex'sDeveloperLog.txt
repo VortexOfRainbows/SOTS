@@ -14,8 +14,7 @@ Known Bugs:
 High Priority:
 1. Starmap and Digital Daito Obtaining
 2. Reorganize Folders... Planetarium, Pyramid, Furniture folders remaining.
-3. Lux	
-	1. Balance + phase ore spawning
+3. Lux Balancing
 
 Mid Priority:
 1. Lux Drops (ask me before you go about spriting these ones):
@@ -44,7 +43,13 @@ Low Priority:
 
 4/10/22 & 4/11/22
 1. Worked on Phase Ore Generation
-	1. Still Needs: Balancing, Polish, Multiplayer Testing, Lux Testing
+	1. Tested: Works in Singleplayer after Lux is killed...
+	2. Tested: Works in Multiplayer after Lux kill!
+	3. Now attepts to avoid space generation
+	4. Average Ore: 18609 (10 tests, large), 13224 (13 tests, medium), 8017 (8 tests, small)
+		1. 1860 bars, 1322 bars, 801 bars (reminder that Lux also drops a handful!)
+2. Phase Bar is more expensive to craft, along with the items that require it. 6 per bar -> 10 per bar
+3. Prevent Lux from dying in desperation before collector arrives
 
 4/9/22
 1. Slight decrease to Flux Slime spawnrate in crimson/corruption (0.1 -> 0.075)

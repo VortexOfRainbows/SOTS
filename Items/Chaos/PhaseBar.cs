@@ -57,7 +57,7 @@ namespace SOTS.Items.Chaos
 			recipe.AddIngredient(ItemID.CrystalShard, 5);
 			recipe.AddIngredient(ModContent.ItemType<FragmentOfChaos>(), 1);
 			recipe.AddTile(TileID.AdamantiteForge);
-			recipe.SetResult(this, 2);
+			recipe.SetResult(this, 3);
 			recipe.AddRecipe();
 		}
 	}

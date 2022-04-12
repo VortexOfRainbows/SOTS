@@ -64,7 +64,7 @@ namespace SOTS.Items.Chaos
 		public override void OpenBossBag(Player player)
 		{
 			player.QuickSpawnItem(ModContent.ItemType<VoidAnomaly>());
-			player.QuickSpawnItem(ModContent.ItemType<PhaseOre>(), Main.rand.Next(120, 181)); //8 to 12 bars
+			player.QuickSpawnItem(ModContent.ItemType<PhaseOre>(), Main.rand.Next(120, 181)); //12 to 18 bars
 			player.QuickSpawnItem(ItemID.SoulofLight, Main.rand.Next(10, 20));
 		}
 	}
