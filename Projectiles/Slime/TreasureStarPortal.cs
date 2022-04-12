@@ -10,6 +10,7 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using SOTS.NPCs;
 using SOTS.Dusts;
+using SOTS.Void;
 
 namespace SOTS.Projectiles.Slime
 {    
@@ -35,6 +36,12 @@ namespace SOTS.Projectiles.Slime
 				return new Color(145, 33, 30, 100);
 			if (type == 7)
 				return new Color(123, 173, 75, 100);
+			if (type == 8)
+            {
+				Color c = VoidPlayer.ChaosPink;
+				c.A = 100;
+				return c;
+			}				
 			return Color.White;
         }
         public override void SetDefaults()

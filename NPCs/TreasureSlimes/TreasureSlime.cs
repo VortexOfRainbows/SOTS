@@ -199,6 +199,8 @@ namespace SOTS.NPCs.TreasureSlimes
 							type = 6;
 						if (npc.type == NPCType<JungleTreasureSlime>())
 							type = 7;
+						if (npc.type == NPCType<HallowTreasureSlime>())
+							type = 8;
 						Projectile.NewProjectile(npc.Center + new Vector2(0, 4), Vector2.Zero, ProjectileType<TreasureStarPortal>(), 0, 0, Main.myPlayer, 0, type);
 					}
 					runAwayDelay++;

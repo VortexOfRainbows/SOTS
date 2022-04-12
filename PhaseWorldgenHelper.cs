@@ -46,19 +46,18 @@ namespace SOTS
             ClearPrevious = false;
             float worldPercent;
             int total = 6; //4 clumps
-            int scattered = 30;
+            int scattered = 18;
             if (Main.maxTilesX > 6000) //medium
             {
                 total = 8; //6 clumps
-                scattered = 45;
+                scattered = 27;
             }
             if (Main.maxTilesX > 8000) //large
             {
                 total = 10; //8 clumps
-                scattered = 60;
+                scattered = 36;
             }
             int clearRadius = 15;
-            int amountInCluster = 10;
             float spread = 1f / total;
             float randomMult = 0;
             for(int i = 1; i < total; i++)
@@ -72,22 +71,6 @@ namespace SOTS
                     if (SOTSWorldgenHelper.Empty(xPos - clearRadius * 2, yPos - clearRadius * 2, clearRadius * 4, clearRadius * 4, 1))
                     {
                         SOTSWorldgenHelper.GeneratePhaseOre(xPos, yPos, 20, 2); //generate primary branches
-                        int outwardsMax = 240;
-                        for (int j = 0; j < amountInCluster; j++)
-                        {
-                            int newX = xPos + WorldGen.genRand.Next(-outwardsMax, outwardsMax);
-                            yPos = WorldGen.genRand.Next(40, (int)(Main.worldSurface * 0.25f) + outwardsMax / 5);
-                            if (WorldGen.InWorld(newX, yPos) && SOTSWorldgenHelper.Empty(newX - clearRadius, yPos - clearRadius, clearRadius * 2, clearRadius * 2, 1))
-                            {
-                                SOTSWorldgenHelper.GeneratePhaseOre(newX, yPos, WorldGen.genRand.Next(12, 33), 0); //generate squigglies around the cluster
-                            }
-                            else
-                            {
-                                outwardsMax += 10;
-                                if (outwardsMax > 320)
-                                    outwardsMax = 320;
-                            }
-                        }
                         randomMult = 0;
                     }
                     else
@@ -99,19 +82,19 @@ namespace SOTS
             }
             for (int j = 1; j < scattered; j++)
             {
-                int newX = (int)MathHelper.Lerp(50, Main.maxTilesX - 50, j / (float)scattered) + WorldGen.genRand.Next(-20, 20);
-                int minMax = 40;
-                if (j % 4 == 0)
-                    minMax = 80;
-                int yPos = WorldGen.genRand.Next(minMax, (int)(Main.worldSurface * 0.3f) + (80 - minMax));
+                float randomMinMax = 20 * (randomMult + 1);
+                int newX = (int)(MathHelper.Lerp(50, Main.maxTilesX - 50, j / (float)scattered) + WorldGen.genRand.NextFloat(-randomMinMax, randomMinMax));
+                int yPos = WorldGen.genRand.Next(80, (int)(Main.worldSurface * 0.3f));
                 if (SOTSWorldgenHelper.Empty(newX - clearRadius, yPos - clearRadius, clearRadius * 2, clearRadius * 2, 1))
                 {
-                    if (j % 4 == 0)
-                    {
-                        SOTSWorldgenHelper.GeneratePhaseOre(newX, yPos, (WorldGen.genRand.Next(4) + 1) * 4, 2);
-                    }
-                    else
-                        SOTSWorldgenHelper.GeneratePhaseOre(newX, yPos, WorldGen.genRand.Next(12, 21), 0); //generate strangler squigglies
+                    int size = 3 + WorldGen.genRand.Next(2);
+                    SOTSWorldgenHelper.GeneratePhaseOre(newX, yPos, size * 4, 2);
+                    randomMult = 0;
+                }
+                else
+                {
+                    j--;
+                    randomMult += 1;
                 }
             }
             string text = "Starlight solidifies in the upper atmosphere!";

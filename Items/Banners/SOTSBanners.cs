@@ -567,7 +567,6 @@ namespace SOTS.Items.Banners
 		{
 			Texture2D texture = mod.GetTexture("Items/Banners/HoloSwordBannerTileFill");
 			Texture2D texture2 = mod.GetTexture("Items/Banners/HoloSwordBannerTileOutline");
-			ulong randSeed = Main.TileFrameSeed ^ (ulong)((long)j << 32 | (long)((ulong)i));
 			Color color = new Color(90, 90, 90, 0);
 			int frameX = Main.tile[i, j].frameX;
 			int frameY = Main.tile[i, j].frameY;
@@ -645,7 +644,6 @@ namespace SOTS.Items.Banners
 			Texture2D texture = mod.GetTexture("Items/Banners/HoloEyeBannerTileFill");
 			Texture2D texture2 = mod.GetTexture("Items/Banners/HoloEyeBannerTileOutline");
 			Texture2D texture3 = mod.GetTexture("Items/Banners/HoloEyeBannerTilePupil");
-			ulong randSeed = Main.TileFrameSeed ^ (ulong)((long)j << 32 | (long)((ulong)i));
 			Color color = new Color(90, 90, 90, 0);
 			int frameX = Main.tile[i, j].frameX;
 			int frameY = Main.tile[i, j].frameY;
@@ -743,6 +741,9 @@ namespace SOTS.Items.Banners
 				case 9:
 					item = ItemType<TwilightScouterBanner>();
 					break;
+				case 10:
+					item = ItemType<HallowTreasureSlimeBanner>();
+					break;
 				default:
 					return;
 			}
@@ -787,6 +788,9 @@ namespace SOTS.Items.Banners
 						break;
 					case 9:
 						type = NPCType<TwilightScouter>();
+						break;
+					case 10:
+						type = NPCType<HallowTreasureSlime>();
 						break;
 					default:
 						return;
@@ -882,6 +886,14 @@ namespace SOTS.Items.Banners
 		{
 			item.createTile = TileType<SOTSBanners2>();
 			item.placeStyle = 9;
+		}
+	}
+	public class HallowTreasureSlimeBanner : ModBanner
+	{
+		public override void SafeSetDefaults()
+		{
+			item.createTile = TileType<SOTSBanners2>();
+			item.placeStyle = 10;
 		}
 	}
 }

@@ -533,12 +533,14 @@ namespace SOTS.NPCs
 				if (player.ZoneCorrupt)
 					pool.Add(ModContent.NPCType<CorruptionTreasureSlime>(), 0.05f);
 			}
-			else if (player.ZoneHoly && player.ZoneOverworldHeight && Main.hardMode)
+			else if (player.ZoneHoly && Main.hardMode)
 			{
 				float rateMult = 1f;
 				if (!Main.dayTime)
 					rateMult = 3f;
-				pool.Add(ModContent.NPCType<ChaosConstruct>(), 0.006f * constructRateMultiplier * rateMult);
+				if(player.ZoneOverworldHeight)
+					pool.Add(ModContent.NPCType<ChaosConstruct>(), 0.006f * constructRateMultiplier * rateMult);
+				pool.Add(ModContent.NPCType<HallowTreasureSlime>(), 0.0075f);
 			}
 			if (player.ZoneBeach && !spawnInfo.player.ZonePeaceCandle) //guarenteed to not spawn when a peace candle is nearby
 			{
@@ -624,7 +626,7 @@ namespace SOTS.NPCs
 			{
 				pool.Add(ModContent.NPCType<LesserWisp>(), SpawnCondition.Underworld.Chance * 0.07f);
 				if(NPC.downedBoss3)
-					pool.Add(ModContent.NPCType<ShadowTreasureSlime>(), SpawnCondition.Underworld.Chance * 0.03f);
+					pool.Add(ModContent.NPCType<ShadowTreasureSlime>(), SpawnCondition.Underworld.Chance * 0.02f);
 				if(Main.hardMode)
 					pool.Add(ModContent.NPCType<InfernoConstruct>(), SpawnCondition.Underworld.Chance * 0.01f * constructRateMultiplier);
 			}

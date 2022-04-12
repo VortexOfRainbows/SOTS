@@ -26,8 +26,6 @@ Mid Priority:
 		3. Stellar Serpent Staff -> Hyperlight Launcher (magic gun, photon geyser upgrade)
 		4. Stellar Shot (will become Perfect Star upgrade, magic gun)
 		5. Hyperdrive (upgrade to Vibrancy Module, accessory)
-	3. Rebalance:
-		1. Chaos Spirit Staff
 2. Big Vibrant geode in the jungle
 3. Rework Miners Pickaxe
 4. Pulverizer (Upgrade to Bone Clapper)
@@ -45,11 +43,16 @@ Low Priority:
 1. Worked on Phase Ore Generation
 	1. Tested: Works in Singleplayer after Lux is killed...
 	2. Tested: Works in Multiplayer after Lux kill!
-	3. Now attepts to avoid space generation
-	4. Average Ore: 18609 (10 tests, large), 13224 (13 tests, medium), 8017 (8 tests, small)
-		1. 1860 bars, 1322 bars, 801 bars (reminder that Lux also drops a handful!)
+	3. Now attepts to avoid other space generated structures
 2. Phase Bar is more expensive to craft, along with the items that require it. 6 per bar -> 10 per bar
 3. Prevent Lux from dying in desperation before collector arrives
+4. Chaos Spirit Staff damage 48 -> 50
+	1. This one is still the best single target damage void weapon.
+	2. It holds up quite well, and I don't think it needs much of a buff, despite the harder obtain
+5. Added Hallowed Treasure Slime and Banner
+	1. Shadow Treasure Slime rates 0.03 -> 0.02
+		1. Was spawning way frequently
+6. 
 
 4/9/22
 1. Slight decrease to Flux Slime spawnrate in crimson/corruption (0.1 -> 0.075)
