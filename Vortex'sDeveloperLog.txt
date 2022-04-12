@@ -54,6 +54,9 @@ Low Priority:
 		1. Was spawning way frequently
 6. Added Dungeon Treasure slime
 	1. This one might be too rare, idk.
+7. Reset Inferno Construct spawns. Turns out it is still pretty rare. 0.01 -> 0.015
+8. Evil Spirit damage increased: (80, 135) -> (80, 145), second phase hp (10000, 13500 -> 10000, 14500)
+	1. It was a bit facetankable
 
 4/9/22
 1. Slight decrease to Flux Slime spawnrate in crimson/corruption (0.1 -> 0.075)

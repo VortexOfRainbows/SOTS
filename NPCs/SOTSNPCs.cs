@@ -627,7 +627,7 @@ namespace SOTS.NPCs
 				if(NPC.downedBoss3)
 					pool.Add(ModContent.NPCType<ShadowTreasureSlime>(), SpawnCondition.Underworld.Chance * 0.02f);
 				if(Main.hardMode)
-					pool.Add(ModContent.NPCType<InfernoConstruct>(), SpawnCondition.Underworld.Chance * 0.01f * constructRateMultiplier);
+					pool.Add(ModContent.NPCType<InfernoConstruct>(), SpawnCondition.Underworld.Chance * 0.015f * constructRateMultiplier);
 			}
 			if (spawnInfo.spawnTileY <= Main.rockLayer)
 			{
