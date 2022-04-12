@@ -744,6 +744,9 @@ namespace SOTS.Items.Banners
 				case 10:
 					item = ItemType<HallowTreasureSlimeBanner>();
 					break;
+				case 11:
+					item = ItemType<DungeonTreasureSlimeBanner>();
+					break;
 				default:
 					return;
 			}
@@ -791,6 +794,9 @@ namespace SOTS.Items.Banners
 						break;
 					case 10:
 						type = NPCType<HallowTreasureSlime>();
+						break;
+					case 11:
+						type = NPCType<DungeonTreasureSlime>();
 						break;
 					default:
 						return;
@@ -894,6 +900,14 @@ namespace SOTS.Items.Banners
 		{
 			item.createTile = TileType<SOTSBanners2>();
 			item.placeStyle = 10;
+		}
+	}
+	public class DungeonTreasureSlimeBanner : ModBanner
+	{
+		public override void SafeSetDefaults()
+		{
+			item.createTile = TileType<SOTSBanners2>();
+			item.placeStyle = 11;
 		}
 	}
 }

@@ -11,6 +11,7 @@ using Terraria.ID;
 using SOTS.NPCs;
 using SOTS.Dusts;
 using SOTS.Void;
+using SOTS.NPCs.TreasureSlimes;
 
 namespace SOTS.Projectiles.Slime
 {    
@@ -41,7 +42,9 @@ namespace SOTS.Projectiles.Slime
 				Color c = VoidPlayer.ChaosPink;
 				c.A = 100;
 				return c;
-			}				
+			}
+			if (type == 9)
+				return DungeonTreasureSlime.color;
 			return Color.White;
         }
         public override void SetDefaults()

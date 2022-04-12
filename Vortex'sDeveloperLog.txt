@@ -52,7 +52,8 @@ Low Priority:
 5. Added Hallowed Treasure Slime and Banner
 	1. Shadow Treasure Slime rates 0.03 -> 0.02
 		1. Was spawning way frequently
-6. 
+6. Added Dungeon Treasure slime
+	1. This one might be too rare, idk.
 
 4/9/22
 1. Slight decrease to Flux Slime spawnrate in crimson/corruption (0.1 -> 0.075)

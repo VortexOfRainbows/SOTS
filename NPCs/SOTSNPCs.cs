@@ -594,8 +594,7 @@ namespace SOTS.NPCs
 			}
 			if (player.ZoneDungeon)
 			{
-				//if (player.statLifeMax2 >= 120)
-					//pool.Add(ModContent.NPCType<TidalConstruct>(), SpawnCondition.DungeonNormal.Chance * 0.00375f * constructRateMultiplier);
+				pool.Add(ModContent.NPCType<DungeonTreasureSlime>(), SpawnCondition.DungeonNormal.Chance * 0.015f); //this is about 75% of dungeon slime spawn rate
 			}
 			if (spawnInfo.player.ZoneSnow)
 			{
