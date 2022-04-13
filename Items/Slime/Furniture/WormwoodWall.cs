@@ -32,9 +32,14 @@ namespace SOTS.Items.Slime.Furniture
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "Wormwood", 1);
+			recipe.AddIngredient(ModContent.ItemType<Wormwood>(), 1);
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.SetResult(this, 4);
+			recipe.AddRecipe();
+			recipe = new ModRecipe(mod);
+			recipe.AddIngredient(this, 4);
+			recipe.AddTile(TileID.WorkBenches);
+			recipe.SetResult(ModContent.ItemType<Wormwood>(), 1);
 			recipe.AddRecipe();
 		}
 	}
