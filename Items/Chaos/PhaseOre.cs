@@ -62,7 +62,7 @@ namespace SOTS.Items.Chaos
 			Main.tileBlockLight[Type] = false;
 			Main.tileLighted[Type] = true;
 			drop = ModContent.ItemType<PhaseOre>();
-			AddMapEntry(VoidPlayer.ChaosPink);
+			//AddMapEntry(VoidPlayer.ChaosPink);
 			mineResist = 3f;
 			minPick = 180; //adamantite/chlorophyte level
 			soundType = 3;
@@ -98,8 +98,8 @@ namespace SOTS.Items.Chaos
 		}
 		public static int closestPlayer(int i, int j, ref float minDist)
 		{
-			minDist = 32;
-			return Main.myPlayer;
+			//minDist = 32;
+			//return Main.myPlayer;
 			int p = -1;
 			for (int k = 0; k < Main.player.Length; k++)
 			{
@@ -187,7 +187,7 @@ namespace SOTS.Items.Chaos
 		}
         public override bool CanExplode(int i, int j)
 		{
-			return true;
+			return false;
 		}
 		public override bool Slope(int i, int j)
 		{

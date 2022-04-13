@@ -24,6 +24,27 @@ namespace SOTS
 {
 	public class SOTSWorldgenHelper
 	{
+		public static bool CanExplodeTile(int i, int j)
+		{
+			bool canKillTile = true;
+			if (Main.tile[i, j] != null && Main.tile[i, j].active())
+			{
+				canKillTile = true;
+				if (Main.tileDungeon[(int)Main.tile[i, j].type] || Main.tile[i, j].type == 88 || Main.tile[i, j].type == 21 || Main.tile[i, j].type == 26 || Main.tile[i, j].type == 107 || Main.tile[i, j].type == 108 || Main.tile[i, j].type == 111 || Main.tile[i, j].type == 226 || Main.tile[i, j].type == 237 || Main.tile[i, j].type == 221 || Main.tile[i, j].type == 222 || Main.tile[i, j].type == 223 || Main.tile[i, j].type == 211 || Main.tile[i, j].type == 404)
+				{
+					canKillTile = false;
+				}
+				if (!Main.hardMode && Main.tile[i, j].type == 58)
+				{
+					canKillTile = false;
+				}
+				if (!TileLoader.CanExplode(i, j))
+				{
+					canKillTile = false;
+				}
+			}
+			return canKillTile;
+		}
 		public static bool TrueTileSolid(int i, int j)
 		{
 			return (!WorldGen.InWorld(i, j, 20) || Main.tile[i, j].active() && Main.tileSolidTop[Main.tile[i, j].type] == false && Main.tileSolid[Main.tile[i, j].type] == true && Main.tile[i, j].nactive());

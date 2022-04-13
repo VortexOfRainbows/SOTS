@@ -1,11 +1,10 @@
 The following is my development plans :D
 
-1. Chaos Spirit Boss: "Lux"
-2. Ghost Town to Evil Biome
-3. AI Companion related accessories
+1. Ghost Town to Evil Biome
+2. AI Companion related accessories
 	1. Matsumoto Minion (Vivy reference)
 	2. Calculator + Subspace Locket + Some digital related item
-4. Starward Sword (Upgrade to Digital Daito)
+3. Starward Sword (Upgrade to Digital Daito)
 
 Known Bugs:
 1. Player freezing completely, locking out menu (conditions unknown)
@@ -27,10 +26,9 @@ Mid Priority:
 		4. Stellar Shot (will become Perfect Star upgrade, magic gun)
 		5. Hyperdrive (upgrade to Vibrancy Module, accessory)
 2. Big Vibrant geode in the jungle
-3. Rework Miners Pickaxe
-4. Pulverizer (Upgrade to Bone Clapper)
+3. Pulverizer (Upgrade to Bone Clapper)
 	1. 4 arms, 2 normal and 2 laser cannon
-5. Nature Plating Extra walls plus Torch
+4. Nature Plating Extra walls plus Torch
 
 Low Priority:
 1. Archaelogist NPC
@@ -38,6 +36,12 @@ Low Priority:
 3. Void Bar strike the player during void shock
 4. Fix Planetarium sky island spawning in tandum
 5. Stars in Planetarium Sky
+
+4/12/22
+1. Crafting recipe fixes
+2. Starmap Sheeting
+3. Reworked Miner's Pickaxe
+	1. Works in multiplayer
 
 4/10/22 & 4/11/22
 1. Worked on Phase Ore Generation

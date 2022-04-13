@@ -45,8 +45,8 @@ namespace SOTS.Items.Otherworld.FromChests
 		public override void SetDefaults()
 		{
 			item.maxStack = 1;
-            item.width = 24;     
-            item.height = 28;
+            item.width = 34;     
+            item.height = 22;
             item.value = Item.sellPrice(0, 4, 80, 0);
 			item.rare = ItemRarityID.LightPurple;
 			item.accessory = true;
