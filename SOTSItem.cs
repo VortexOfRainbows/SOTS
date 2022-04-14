@@ -204,7 +204,7 @@ namespace SOTS
 			dedicatedOrange = new int[] { ItemType<TerminatorAcorns>(), ItemType<PlasmaCutterButOnAChain>(), ItemType<CoconutGun>() }; //friends
 			dedicatedBlue = new int[] { ItemType<Calculator>() }; //friends 2
 			dedicatedPurpleRed = new int[] { ItemType<CursedApple>(), ItemType<ArcStaffMk2>() }; //James
-			dedicatedPastelPink = new int[] { ItemType<StrangeFruit>() }; //Tris
+			//dedicatedPastelPink = new int[] { ItemType<StrangeFruit>() }; //Tris
 			dedicatedMinez = new int[] { ItemType<DoorPants>(), ItemType<BandOfDoor>() }; //Minez
 			dedicatedRainbow = new int[] { ItemType<SubspaceLocket>() /*ItemType<PhotonGeyser>(), ItemType<Traingun>()*/ }; //Vortex
 			dedicatedBlasfah = new int[] { ItemType<Doomstick>(), ItemType<TheBlaspha>(), ItemType<BookOfVirtues>() }; //Blasfah

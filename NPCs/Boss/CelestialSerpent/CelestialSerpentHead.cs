@@ -40,7 +40,7 @@ namespace SOTS.NPCs.Boss.CelestialSerpent
 				npc.buffImmune[i] = true;
 			}
 			npc.aiStyle = 6;
-			bossBag = mod.ItemType("CelestialBag");
+			//bossBag = mod.ItemType("CelestialBag");
         }
 		public override void BossLoot(ref string name, ref int potionType)
 		{ 
@@ -53,9 +53,9 @@ namespace SOTS.NPCs.Boss.CelestialSerpent
 			} 
 			else 
 			{
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("StarShard"), Main.rand.Next(16, 25)); 
-				if(Main.rand.NextBool(20))
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("StrangeFruit"), 1); 
+				//Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("StarShard"), Main.rand.Next(16, 25)); 
+				//if(Main.rand.NextBool(20))
+					//Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("StrangeFruit"), 1); 
 			}
 		}
         public override bool PreAI()
