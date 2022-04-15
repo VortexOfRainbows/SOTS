@@ -16,7 +16,7 @@ namespace SOTS.Void
 		//public int voidUsage = 0;
 		public virtual void SafeSetDefaults() 
 		{
-			
+
 		}
 		public sealed override void SetDefaults() {
 			item.shoot = 10; 
