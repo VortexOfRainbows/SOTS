@@ -17,13 +17,10 @@ High Priority:
 
 Mid Priority:
 1. Lux Drops (ask me before you go about spriting these ones):
-	1. Voidmage Incubator
-		1. Needs Dilation Sickness
-	2. Replace Celestial Serpent Drops (resprites and maybe some reworks)
-		1. Armageddon (melee + void)
-		2. Stellar Serpent Launcher (ranged)
-		3. Stellar Shot (will become Perfect Star upgrade, magic gun)
-		4. Hyperdrive (upgrade to Vibrancy Module, accessory)
+	1. Replace Celestial Serpent Drops (resprites and maybe some reworks)
+		1. Stellar Serpent Launcher (ranged)
+		2. Stellar Shot (will become Perfect Star upgrade, magic gun)
+		3. Hyperdrive (upgrade to Vibrancy Module, accessory)
 2. Big Vibrant geode in the jungle
 4. Nature Plating Extra walls plus Torch
 
@@ -44,6 +41,10 @@ Low Priority:
 4. Rose Bow damage 68 -> 75, consensus is that it is a bit weak
 5. Polaris is now less intensive on Low Fidel
 6. Fixed weird recipe errors
+7. Cursed Gauntlet: kb 8.5 -> 7, useAnim 12 -> 24, void cost 3 -> 4
+	1. This means it will attack twice for the cost of 4 void, meaning it actually goes from 3 per fist to 2 per fist. 
+	2. Also attacks faster and does less knockback to make it more consistent.
+8. Hyperlight Geyser damage 48 -> 54, still a bit too weak
 
 4/13/22 & 4/14/22
 1. Finished Hyperlight Geyser

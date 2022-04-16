@@ -52,7 +52,7 @@ namespace SOTS.Items.Chaos
 		}
         public override void SetDefaults()
 		{
-			item.damage = 48;
+			item.damage = 54;
 			item.magic = true;
 			item.width = 78;
 			item.height = 36;

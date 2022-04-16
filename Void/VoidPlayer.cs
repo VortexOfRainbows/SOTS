@@ -708,7 +708,7 @@ namespace SOTS.Void
 				frozenVoidCount = voidMeter;
 				if(!isFull)
 				{
-					if (player.whoAmI == Main.LocalPlayer.whoAmI)
+					if (player.whoAmI == Main.LocalPlayer.whoAmI && !frozenVoid)
 						Main.PlaySound(SoundLoader.customSoundType, (int)player.Center.X, (int)player.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Void/Void_Full"), 1.4f);
 					isFull = true;
 				}

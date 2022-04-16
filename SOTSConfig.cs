@@ -60,7 +60,7 @@ namespace SOTS
 
 		[Header("Graphics Settings")]
 		[Label("Performance Mode")]
-		[Tooltip("Reduces various visual effects in order to increase framerate\nMostly affects boss-related visuals")]
+		[Tooltip("Reduces various visual effects in order to increase framerate\nMostly affects boss-related visuals and projectile trails")]
 		[BackgroundColor(110, 80, 150, 192)]
 		[DefaultValue(false)]
 		public bool lowFidelityMode { get; set; }

@@ -172,6 +172,7 @@ namespace SOTS.Projectiles
 						float height = target.height * Ymult * 0.5f;
 						rotationArea = new Vector2(width, height);
 						toPos = target.Center + rotationArea;
+						target.netUpdate = true;
 						if (!hasHit)
                         {
 							goBack = true;

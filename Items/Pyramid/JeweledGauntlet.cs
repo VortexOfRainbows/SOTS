@@ -3,6 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using SOTS.Void;
+using SOTS.Projectiles.Pyramid;
 
 namespace SOTS.Items.Pyramid
 {
@@ -20,14 +21,14 @@ namespace SOTS.Items.Pyramid
 			item.height = 30;
 			item.damage = 54;
             item.useTime = 12;
-            item.useAnimation = 12;
-			item.useStyle = 5;
-			item.knockBack = 8.5f;
+            item.useAnimation = 24;
+			item.useStyle = ItemUseStyleID.HoldingOut;
+			item.knockBack = 7.0f;
             item.value = Item.sellPrice(0, 4, 50, 0);
-            item.rare = 6;
+            item.rare = ItemRarityID.LightPurple;
             item.UseSound = SoundID.Item19;
             item.autoReuse = true;       
-			item.shoot = mod.ProjectileType("PhantomFist"); 
+			item.shoot = ModContent.ProjectileType<PhantomFist>(); 
             item.shootSpeed = 9f;
 			item.consumable = false;
 			item.noMelee = true;
@@ -45,14 +46,14 @@ namespace SOTS.Items.Pyramid
 		}
         public override int GetVoid(Player player)
         {
-			return  3;
+			return 4;
         }
         public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "SandstoneWarhammer", 1);
-			recipe.AddIngredient(null, "SpiritGlove", 1);
-			recipe.AddIngredient(null, "CursedMatter", 4);
+			recipe.AddIngredient(ModContent.ItemType<SandstoneWarhammer>(), 1);
+			recipe.AddIngredient(ModContent.ItemType<SpiritGlove>(), 1);
+			recipe.AddIngredient(ModContent.ItemType<CursedMatter>(), 4);
 			recipe.AddIngredient(ItemID.SoulofNight, 15);
 			recipe.AddIngredient(ItemID.Ruby, 1);
 			recipe.AddTile(TileID.MythrilAnvil);
