@@ -14,6 +14,7 @@ using Terraria.ID;
 using SOTS.Projectiles.Inferno;
 using SOTS.Items.Void;
 using SOTS.Projectiles.Pyramid;
+using SOTS.Buffs.DilationSickness;
 
 namespace SOTS.Void
 {
@@ -768,7 +769,13 @@ namespace SOTS.Void
 		public float positiveVoidRegenCounter = 0;
 		public int negativeVoidRegenPopupNumber = 1;
 		public void UpdateVoidRegen()
-        {
+		{
+			if (player.HasBuff(BuffType<DilationSickness>()))
+			{
+				voidRegenSpeed -= 0.9f;
+			}
+			if (voidRegenSpeed < 0)
+				voidRegenSpeed = 0;
 			float increaseAmount = voidRegenSpeed;
 			if (voidRecovery)
 			{

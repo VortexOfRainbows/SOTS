@@ -627,6 +627,7 @@ namespace SOTS
 				if(SOTSWorld.GlobalFrozen)
                 {
 					player.AddBuff(ModContent.BuffType<VoidMetamorphosis>(), 30, true);
+					player.AddBuff(ModContent.BuffType<DilationSickness>(), SOTSWorld.GlobalTimeFreeze * 2 + 600, true);
                 }
             }
 			VoidAnomaly = false;
@@ -1119,7 +1120,7 @@ namespace SOTS
 			if(Main.myPlayer == player.whoAmI)
 			{
 				int finalDamage = (int)Main.CalculatePlayerDamage(damage, player.statDefense);
-				if (VMincubator && finalDamage < player.statLife)
+				if (VMincubator && finalDamage < player.statLife && !player.HasBuff(ModContent.BuffType<DilationSickness>()))
 				{
 					if (!pvp)
 					{
