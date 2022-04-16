@@ -19,8 +19,8 @@ namespace SOTS.Items.Slime
 		}
 		public override void SetDefaults()
 		{
-			item.width = 42;
-			item.height = 38;
+			item.width = 38;
+			item.height = 40;
             item.value = Item.sellPrice(0, 1, 50, 0);
 			item.rare = ItemRarityID.LightRed;
 			item.accessory = true;
@@ -90,7 +90,7 @@ namespace SOTS.Items.Slime
 			recipe.AddRecipe();
 		}
 	}
-	public class StarbeltPlayer : ModPlayer
+	public class GelWingsPlayer : ModPlayer
 	{
 		public static readonly PlayerLayer GelWings = new PlayerLayer("SOTS", "GelWings", PlayerLayer.Wings, delegate (PlayerDrawInfo drawInfo) {
 
@@ -111,7 +111,7 @@ namespace SOTS.Items.Slime
 				Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 12);
 				Vector2 pos = new Vector2((float)((int)(Position.X - Main.screenPosition.X + (float)(drawPlayer.width / 2) - (float)(9 * drawPlayer.direction))), (float)(Position.Y - Main.screenPosition.Y + (float)(drawPlayer.height / 2) - 6f * drawPlayer.gravDir));
 				Color lightColor = Lighting.GetColor((int)drawPlayer.Center.X / 16, (int)drawPlayer.Center.Y / 16, Color.White);
-				Color color = TestWingsPlayer.changeColorBasedOnStealth(lightColor, drawPlayer) * (155f / 255f) * alpha;
+				Color color = TestWingsPlayer.changeColorBasedOnStealth(lightColor, drawPlayer) * (175f / 255f) * alpha;
 				DrawData data = new DrawData(texture, pos, new Rectangle(0, texture.Height / 6 * drawPlayer.wingFrame, texture.Width, texture.Height / 6), color, 0f, origin, 1f, drawInfo.spriteEffects, 0);
 				data.shader = drawInfo.wingShader;
 				Main.playerDrawData.Add(data);

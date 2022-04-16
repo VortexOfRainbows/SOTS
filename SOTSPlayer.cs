@@ -47,6 +47,7 @@ using SOTS.Projectiles.Chaos;
 using SOTS.NPCs.Boss.Lux;
 using SOTS.Items.Tools;
 using SOTS.NPCs.ArtificialDebuffs;
+using SOTS.Buffs.DilationSickness;
 
 namespace SOTS
 {
@@ -546,6 +547,15 @@ namespace SOTS
 				int damage3 = Main.DamageVar(50);
 				player.Hurt(PlayerDeathReason.ByOther(3), damage3, 0, false, false, false, 0);
 			}
+			int ID = UniqueVisionNumber % 8;
+			if(!Main.dedServ)
+            {
+				if(player.HasBuff(ModContent.BuffType<DilationSickness>()))
+				{
+					Texture2D texture = ModContent.GetTexture("SOTS/Buffs/DilationSickness/DilationSickness" + ID);
+					Main.buffTexture[ModContent.BuffType<DilationSickness>()] = texture;
+				}
+            }
 			base.PostUpdateMiscEffects();
         }
 		int fireIcoCD = 0;
