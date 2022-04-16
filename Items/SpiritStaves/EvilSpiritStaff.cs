@@ -51,7 +51,7 @@ namespace SOTS.Items.SpiritStaves
 			recipe.AddIngredient(ItemID.SpectreBar, 10);
 			recipe.AddRecipeGroup("SOTS:EvilBar", 10);
 			recipe.AddIngredient(ItemID.SoulofSight, 5);
-			recipe.AddTile(ItemID.MythrilAnvil);
+			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.SetResult(this);
 			recipe.AddRecipe();
 		}

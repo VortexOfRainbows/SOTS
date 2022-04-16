@@ -106,6 +106,9 @@ namespace SOTS.Projectiles.Permafrost
 			Texture2D texture = mod.GetTexture("Projectiles/Permafrost/ShardstormTrail");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Vector2 previousPosition = projectile.Center;
+			float drawAmt = 1f;
+			if (SOTS.Config.lowFidelityMode)
+				drawAmt = 0.5f;
 			for (int k = 0; k < trailPos.Length; k++)
 			{
 				float scale = projectile.scale * 1.25f * (trailPos.Length - k) / (float)trailPos.Length;
@@ -118,7 +121,7 @@ namespace SOTS.Projectiles.Permafrost
 				Vector2 currentPos = trailPos[k];
 				Vector2 betweenPositions = previousPosition - currentPos;
 				color = color * ((trailPos.Length - k) / (float)trailPos.Length) * 0.33f;
-				float max = betweenPositions.Length() / (2.5f * scale);
+				float max = betweenPositions.Length() / (2.5f * scale) * drawAmt;
 				for (int i = 0; i < max; i++)
 				{
 					drawPos = previousPosition + -betweenPositions * (i / max) - Main.screenPosition;

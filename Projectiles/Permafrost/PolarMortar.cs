@@ -59,6 +59,9 @@ namespace SOTS.Projectiles.Permafrost
 			Texture2D texture = mod.GetTexture("Projectiles/Permafrost/PolarMortarTrail");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Vector2 previousPosition = projectile.Center;
+			float drawAmt = 1f;
+			if (SOTS.Config.lowFidelityMode)
+				drawAmt = 0.5f;
 			for (int k = 0; k < trailPos.Length; k++)
 			{
 				float scale = projectile.scale * 1.8f * (trailPos.Length - k) / (float)trailPos.Length;
@@ -71,7 +74,7 @@ namespace SOTS.Projectiles.Permafrost
 				Vector2 currentPos = trailPos[k];
 				Vector2 betweenPositions = previousPosition - currentPos;
 				color = color * ((trailPos.Length - k) / (float)trailPos.Length) * 0.33f;
-				float max = betweenPositions.Length() / (5f * scale);
+				float max = betweenPositions.Length() / (5f * scale) * drawAmt;
 				for (int i = 0; i < max; i++)
 				{
 					drawPos = previousPosition + -betweenPositions * (i / max) - Main.screenPosition;
@@ -108,12 +111,15 @@ namespace SOTS.Projectiles.Permafrost
 		}
 		public override bool PreAI()
 		{
+			int dustAmtMult = 3;
+			if (SOTS.Config.lowFidelityMode)
+				dustAmtMult = 1;
 			if (projectile.ai[0] == -1)
 			{
 				Vector2 position = projectile.Center;
 				Main.PlaySound(SoundID.Item14, (int)position.X, (int)position.Y);
 				projectile.ai[0]--;
-				for (int i = 0; i < 45; i++)
+				for (int i = 0; i < 15 * dustAmtMult; i++)
 				{
 					int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y) - new Vector2(5), projectile.width, projectile.height, mod.DustType("CopyDust4"));
 					Dust dust = Main.dust[num1];
@@ -129,7 +135,7 @@ namespace SOTS.Projectiles.Permafrost
 			}
 			if (runOnce)
 			{
-				for (int i = 0; i < 25; i++)
+				for (int i = 0; i < 8.5 * dustAmtMult; i++)
 				{
 					int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y) - new Vector2(5), projectile.width, projectile.height, mod.DustType("CopyDust4"));
 					Dust dust = Main.dust[num1];

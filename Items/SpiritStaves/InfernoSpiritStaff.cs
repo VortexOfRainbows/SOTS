@@ -49,7 +49,7 @@ namespace SOTS.Items.SpiritStaves
 			recipe.AddIngredient(ModContent.ItemType<Fragments.DissolvingNether>(), 1);
 			recipe.AddIngredient(ItemID.HellstoneBar, 10);
 			recipe.AddIngredient(ItemID.SoulofFright, 5);
-			recipe.AddTile(ItemID.MythrilAnvil);
+			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.SetResult(this);
 			recipe.AddRecipe();
 		}
