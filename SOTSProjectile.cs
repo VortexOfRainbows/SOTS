@@ -8,6 +8,7 @@ using SOTS.Dusts;
 using SOTS.NPCs;
 using SOTS.NPCs.ArtificialDebuffs;
 using SOTS.Projectiles;
+using SOTS.Projectiles.Chaos;
 using SOTS.Projectiles.Earth;
 using SOTS.Projectiles.Evil;
 using SOTS.Projectiles.Inferno;
@@ -32,14 +33,16 @@ namespace SOTS
 		{
 			immuneToTimeFreeze = new int[]
 			{
-				ModContent.ProjectileType<VisionWeapon>()
+				ModContent.ProjectileType<VisionWeapon>(),
+				ModContent.ProjectileType<ChaosThorn>()
 			};
 			isChargeWeapon = new int[]
 			{
 				ProjectileID.LastPrismLaser,
 				ModContent.ProjectileType<PrismOrb>(),
 				ModContent.ProjectileType<Starshot>(),
-				ModContent.ProjectileType<EarthshakerPickaxe>()
+				ModContent.ProjectileType<EarthshakerPickaxe>(),
+				ModContent.ProjectileType<HyperlightOrb>(),
 			};
 		}
 		public static bool CanBeTimeFrozen(Projectile proj)

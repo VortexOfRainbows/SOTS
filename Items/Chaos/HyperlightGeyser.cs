@@ -84,8 +84,15 @@ namespace SOTS.Items.Chaos
 		{
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<Items.Secrets.PhotonGeyser>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<PhaseBar>(), 30);
+			recipe.AddIngredient(ModContent.ItemType<PhaseBar>(), 24);
 			recipe.AddIngredient(ModContent.ItemType<DissolvingBrilliance>(), 1);
+			recipe.AddTile(TileID.MythrilAnvil);
+			recipe.SetResult(this);
+			recipe.AddRecipe();
+			recipe = new ModRecipe(mod);
+			recipe.AddIngredient(ItemID.RainbowRod, 1);
+			recipe.AddIngredient(ModContent.ItemType<PhaseBar>(), 48);
+			recipe.AddIngredient(ModContent.ItemType<TerminalCluster>(), 1);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.SetResult(this);
 			recipe.AddRecipe();

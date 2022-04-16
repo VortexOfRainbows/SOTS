@@ -36,6 +36,11 @@ Low Priority:
 6. Pulverizer (Upgrade to Bone Clapper)
 	1. 4 arms, 2 normal and 2 laser cannon
 
+4/15/22
+1. Armaggedon resprite
+2. Slimer resprite
+3. Voidmage Incubator Dilation Sickness/Cooldown + some more whitelisted items
+
 4/13/22 & 4/14/22
 1. Finished Hyperlight Geyser
 	1. Photon Geyser hits 10 times (42 damage)

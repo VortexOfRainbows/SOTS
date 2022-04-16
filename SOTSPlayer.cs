@@ -47,6 +47,7 @@ using SOTS.Projectiles.Chaos;
 using SOTS.NPCs.Boss.Lux;
 using SOTS.Items.Tools;
 using SOTS.NPCs.ArtificialDebuffs;
+using SOTS.Buffs.DilationSickness;
 
 namespace SOTS
 {
@@ -546,6 +547,15 @@ namespace SOTS
 				int damage3 = Main.DamageVar(50);
 				player.Hurt(PlayerDeathReason.ByOther(3), damage3, 0, false, false, false, 0);
 			}
+			int ID = UniqueVisionNumber % 8;
+			if(!Main.dedServ)
+            {
+				if(player.HasBuff(ModContent.BuffType<DilationSickness>()))
+				{
+					Texture2D texture = ModContent.GetTexture("SOTS/Buffs/DilationSickness/DilationSickness" + ID);
+					Main.buffTexture[ModContent.BuffType<DilationSickness>()] = texture;
+				}
+            }
 			base.PostUpdateMiscEffects();
         }
 		int fireIcoCD = 0;
@@ -617,6 +627,7 @@ namespace SOTS
 				if(SOTSWorld.GlobalFrozen)
                 {
 					player.AddBuff(ModContent.BuffType<VoidMetamorphosis>(), 30, true);
+					player.AddBuff(ModContent.BuffType<DilationSickness>(), SOTSWorld.GlobalTimeFreeze * 2 + 600, true);
                 }
             }
 			VoidAnomaly = false;
@@ -1109,7 +1120,7 @@ namespace SOTS
 			if(Main.myPlayer == player.whoAmI)
 			{
 				int finalDamage = (int)Main.CalculatePlayerDamage(damage, player.statDefense);
-				if (VMincubator && finalDamage < player.statLife)
+				if (VMincubator && finalDamage < player.statLife && !player.HasBuff(ModContent.BuffType<DilationSickness>()))
 				{
 					if (!pvp)
 					{

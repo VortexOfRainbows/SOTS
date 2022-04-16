@@ -21,8 +21,8 @@ namespace SOTS.NPCs
             npc.damage = 8; 
             npc.defense = 0; 
             npc.knockBackResist = 0.45f;
-            npc.width = 86;
-            npc.height = 66;
+            npc.width = 92;
+            npc.height = 48;
             animationType = NPCID.Slimer;  
 			Main.npcFrameCount[npc.type] = 4;  
             npc.value = 15;
