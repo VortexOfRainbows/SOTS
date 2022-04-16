@@ -6,9 +6,11 @@ The following is my development plans :D
 	2. Calculator + Subspace Locket + Some digital related item
 3. Starward Sword (Upgrade to Digital Daito)
 
-Known Bugs:
+Known Bugs/Issues:
 1. Player freezing completely, locking out menu (conditions unknown)
 	1. Probably caused by some weird interaction in SOTSDetours.UpdatePlayer
+2. Lux is quite laggy for lower end systems.
+3. 
 
 High Priority:
 1. Starmap and Digital Daito Obtaining
@@ -33,6 +35,11 @@ Low Priority:
 6. Pulverizer (Upgrade to Bone Clapper)
 	1. 4 arms, 2 normal and 2 laser cannon
 
+4/16/22
+1. Buffed Armaggedon's projectile speed to make it more consistent
+2. Chaos Spirit Staff damage 50 -> 60, make it appropriately stronger for the tier it is now in
+	1. Lowered laser volume tremendously
+
 4/15/22
 1. Armaggedon resprite
 2. Slimer resprite
@@ -45,6 +52,8 @@ Low Priority:
 	1. This means it will attack twice for the cost of 4 void, meaning it actually goes from 3 per fist to 2 per fist. 
 	2. Also attacks faster and does less knockback to make it more consistent.
 8. Hyperlight Geyser damage 48 -> 54, still a bit too weak
+9. Chaos Chamber damage 80 -> 90, still a bit too weak
+10. Dimension Shatter damage 100 -> 120, want this to remain a strong close range option compared to armageddon
 
 4/13/22 & 4/14/22
 1. Finished Hyperlight Geyser

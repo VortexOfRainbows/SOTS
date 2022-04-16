@@ -29,7 +29,8 @@ namespace SOTS.Projectiles.Chaos
 			projectile.ignoreWater = true;
 			projectile.alpha = 40;
 			projectile.usesLocalNPCImmunity = true;
-			projectile.localNPCHitCooldown = 10;
+			projectile.localNPCHitCooldown = 15;
+			projectile.extraUpdates = 1;
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
@@ -76,7 +77,7 @@ namespace SOTS.Projectiles.Chaos
 				if (toHit.active && projectile.ai[0] < 200)
 				{
 					Vector2 toNPC = toHit.Center - projectile.Center;
-					projectile.velocity = Vector2.Lerp(projectile.velocity, toNPC.SafeNormalize(Vector2.Zero) * (projectile.velocity.Length() + 4), 0.06f);
+					projectile.velocity = Vector2.Lerp(projectile.velocity, toNPC.SafeNormalize(Vector2.Zero) * (projectile.velocity.Length() + 3), 0.07f);
 				}
 			}
 			if(projectile.ai[0] > 6)
