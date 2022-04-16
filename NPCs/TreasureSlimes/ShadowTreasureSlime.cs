@@ -53,7 +53,9 @@ namespace SOTS.NPCs.TreasureSlimes
 				new TreasureSlimeItem(ItemID.LifeforcePotion, 1, 4, 0.25f),
 				new TreasureSlimeItem(ItemID.HeartreachPotion, 1, 4, 0.25f),
 				new TreasureSlimeItem(ItemType<FragmentOfInferno>(), 3, 6, 0.2f),
-				new TreasureSlimeItem(ItemType<BookOfVirtues>(), 1, 1, 0.05f)
+				new TreasureSlimeItem(ItemType<BookOfVirtues>(), 1, 1, 0.05f),
+
+				new TreasureSlimeItem(ItemType<Items.GhostTown.VisionAmulet>(), 1, 1, 0.01f)
 			};
 		}
         public override void AdditionalLoot()

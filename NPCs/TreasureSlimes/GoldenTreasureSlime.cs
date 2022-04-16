@@ -65,7 +65,9 @@ namespace SOTS.NPCs.TreasureSlimes
 				new TreasureSlimeItem(ItemType<CrushingAmplifier>(), 1, 1, 0.5f),
 				new TreasureSlimeItem(ItemType<ShieldofDesecar>(), 1, 1, 0.2f),
 				new TreasureSlimeItem(ItemType<ShieldofStekpla>(), 1, 1, 0.2f),
-				new TreasureSlimeItem(ItemType<FragmentOfEarth>(), 3, 6, 1f)
+				new TreasureSlimeItem(ItemType<FragmentOfEarth>(), 3, 6, 1f),
+
+				new TreasureSlimeItem(ItemType<Items.GhostTown.VisionAmulet>(), 1, 1, 0.01f)
 			};
 		}
         public override void AdditionalLoot()

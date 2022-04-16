@@ -152,7 +152,7 @@ namespace SOTS.Projectiles.Earth
                         if (Main.netMode != NetmodeID.SinglePlayer)
                             NetMessage.SendData(MessageID.TileChange, -1, -1, null, 0, (float)i, (float)j, 0f, 0, 0, 0);
                     }
-                    else if (Main.myPlayer == projectile.owner)
+                    else if (Main.myPlayer == projectile.owner && NPC.downedBoss2)
                         player.PickTile(i, j, 70);
                 }
             }

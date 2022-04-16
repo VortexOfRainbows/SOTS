@@ -66,7 +66,7 @@ namespace SOTS.Items.Chaos
 			item.autoReuse = false;
 			item.channel = true;
 			item.shoot = ModContent.ProjectileType<Projectiles.Chaos.HyperlightGeyser>();
-			item.shootSpeed = 34f;
+			item.shootSpeed = 30f;
 			item.noMelee = true;
 			item.noUseGraphic = true;
 			item.mana = 40;

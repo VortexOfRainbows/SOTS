@@ -90,7 +90,7 @@ namespace SOTS.Projectiles.Chaos
         {
             return false;
         }
-        public const float distOffset = 60;
+        public const float distOffset = 56;
         int ai2 = 0;
         bool ended = false;
         public override void AI()

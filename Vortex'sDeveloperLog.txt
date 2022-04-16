@@ -40,6 +40,8 @@ Low Priority:
 1. Armaggedon resprite
 2. Slimer resprite
 3. Voidmage Incubator Dilation Sickness/Cooldown + some more whitelisted items
+	1. checked again, seems to work in multiplayer
+4. Rose Bow damage 68 -> 75, consensus is that it is a bit weak
 
 4/13/22 & 4/14/22
 1. Finished Hyperlight Geyser

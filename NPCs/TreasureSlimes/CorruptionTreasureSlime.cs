@@ -57,7 +57,9 @@ namespace SOTS.NPCs.TreasureSlimes
 				new TreasureSlimeItem(ItemID.BallOHurt, 1, 1, 1f),
 				new TreasureSlimeItem(ItemType<ZombieHand>(), 1, 1, 0.2f),
 				new TreasureSlimeItem(ItemType<FragmentOfEvil>(), 3, 6, 0.3f),
-				new TreasureSlimeItem(ItemType<FoulConcoction>(), 5, 5, 0.3f)
+				new TreasureSlimeItem(ItemType<FoulConcoction>(), 5, 5, 0.3f),
+
+				new TreasureSlimeItem(ItemType<VisionAmulet>(), 1, 1, 0.01f)
 			};
 		}
         public override void AdditionalLoot()
