@@ -223,7 +223,7 @@ namespace SOTS
 					if (projectile.velocity.X == initialVelo.X && projectile.velocity.Y != initialVelo.Y)
 						projectile.velocity = initialVelo;
 				}
-				if (affixID == 2) //Blaspha
+				if (affixID == 2 && projectile.type != ModContent.ProjectileType<ChargedCataclysmBullet>()) //Blaspha
 				{
 					for (int i = 0; i < 2; i++)
 					{
@@ -251,7 +251,7 @@ namespace SOTS
 						}
 					}
 				}
-				if(affixID == 3) //Chaos Chamber
+				if(affixID == 3 && projectile.type != ModContent.ProjectileType<ChargedCataclysmBullet>()) //Chaos Chamber
 				{
 					for (int i = 0; i < 4; i++)
 					{
@@ -462,11 +462,16 @@ namespace SOTS
 			{
 				FrostBloom(projectile);
 			}
-			if (affixID == 2)
+			if (affixID == 2 && projectile.type != ModContent.ProjectileType<ChargedCataclysmBullet>())
 			{
 				if (Main.myPlayer == projectile.owner)
 				{
-					Projectile.NewProjectile(projectile.Center, projectile.velocity.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-120, 120))) * Main.rand.NextFloat(0.4f, 0.6f), ModContent.ProjectileType<InfernoSeeker>(), (int)(projectile.damage * 0.5f), projectile.knockBack, Main.myPlayer, Main.rand.Next(3));
+					Vector2 outward = projectile.velocity.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-120, 120))) * Main.rand.NextFloat(0.4f, 0.6f);
+					if(projectile.type == ModContent.ProjectileType<CataclysmBullet>() || projectile.type == ModContent.ProjectileType<CataclysmBulletDamage>())
+                    {
+						outward = Main.rand.NextVector2CircularEdge(9, 9);
+                    }
+					Projectile.NewProjectile(projectile.Center, outward, ModContent.ProjectileType<InfernoSeeker>(), (int)(projectile.damage * 0.5f), projectile.knockBack, Main.myPlayer, Main.rand.Next(3));
 				}
 			}
 		}

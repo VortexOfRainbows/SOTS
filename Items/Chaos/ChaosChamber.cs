@@ -33,10 +33,15 @@ namespace SOTS.Items.Chaos
             item.shoot = ProjectileID.PurificationPowder; 
             item.shootSpeed = 15f;
 			item.useAmmo = AmmoID.Bullet;
+			if (!Main.dedServ)
+			{
+				item.GetGlobalItem<ItemUseGlow>().glowTexture = mod.GetTexture("Items/Chaos/ChaosChamberGlow");
+				item.GetGlobalItem<ItemUseGlow>().glowOffsetX = -2;
+			}
 		}
 		public override Vector2? HoldoutOffset()
 		{
-			return new Vector2(2, 0);
+			return new Vector2(-2, 0);
 		}
 		int counter = 0;
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

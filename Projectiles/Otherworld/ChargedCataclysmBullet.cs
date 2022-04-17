@@ -135,7 +135,11 @@ namespace SOTS.Projectiles.Otherworld
 					if (npc.active && npc.Hitbox.Intersects(new Rectangle((int)addPos.X - 12, (int)addPos.Y - 12, 24, 24)) && !npc.friendly && !npc.dontTakeDamage)
 					{
 						if (projectile.owner == Main.myPlayer && projectile.friendly)
-							Projectile.NewProjectile(addPos.X, addPos.Y, projectile.velocity.X, projectile.velocity.Y, mod.ProjectileType("CataclysmBulletDamage"), projectile.damage, projectile.knockBack, Main.myPlayer, -1f, 5f);
+						{
+							Projectile proj = Main.projectile[Projectile.NewProjectile(addPos.X, addPos.Y, projectile.velocity.X, projectile.velocity.Y, ModContent.ProjectileType<CataclysmBulletDamage>(), projectile.damage, projectile.knockBack, Main.myPlayer, -1f, 5f)];
+							SOTSProjectile instance = proj.GetGlobalProjectile<SOTSProjectile>();
+							instance.affixID = projectile.GetGlobalProjectile<SOTSProjectile>().affixID;
+						}
 						if (projectile.friendly)
 							collided = true;
 						projectile.friendly = false;

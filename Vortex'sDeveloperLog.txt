@@ -9,7 +9,7 @@ The following is my development plans :D
 Known Bugs/Issues:
 1. Player freezing completely, locking out menu (conditions unknown)
 	1. Probably caused by some weird interaction in SOTSDetours.UpdatePlayer
-2. Lux is quite laggy for lower end systems.
+2. Lux is quite laggy for lower end systems. !! This mostly applies to the laser related attacks !!
 3. 
 
 High Priority:
@@ -20,9 +20,8 @@ High Priority:
 Mid Priority:
 1. Lux Drops (ask me before you go about spriting these ones):
 	1. Replace Celestial Serpent Drops (resprites and maybe some reworks)
-		1. Stellar Serpent Launcher (ranged)
-		2. Stellar Shot (will become Perfect Star upgrade, magic gun)
-		3. Hyperdrive (upgrade to Vibrancy Module, accessory)
+		1. Stellar Shot (will become Perfect Star upgrade, magic gun)
+		2. Hyperdrive (upgrade to Vibrancy Module, accessory)
 2. Big Vibrant geode in the jungle
 4. Nature Plating Extra walls plus Torch
 
@@ -35,10 +34,13 @@ Low Priority:
 6. Pulverizer (Upgrade to Bone Clapper)
 	1. 4 arms, 2 normal and 2 laser cannon
 
-4/16/22
+4/16/22 & 4/17/22
 1. Buffed Armaggedon's projectile speed to make it more consistent
 2. Chaos Spirit Staff damage 50 -> 60, make it appropriately stronger for the tier it is now in
 	1. Lowered laser volume tremendously
+3. Worked on Stellar Serpent Launcher
+	1. Works in multiplayer
+4. Fixed Cataclysm rounds interaction with Blaspha and Chaos Chamber
 
 4/15/22
 1. Armaggedon resprite
