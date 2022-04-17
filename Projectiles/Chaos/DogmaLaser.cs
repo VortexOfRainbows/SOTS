@@ -135,23 +135,26 @@ namespace SOTS.Projectiles.Chaos
 			float maxLength = maxDistance / length * lerp;
 			for (float i = 0; i <= maxLength; i++)
 			{
-				float radians = MathHelper.ToRadians((i + VoidPlayer.soulColorCounter) * 2);
-				color = VoidPlayer.pastelAttempt(radians);
-				color.A = 0;
-				float mult = 1 - (i / maxLength);
-				float sinusoid = 1;
-				if (lerp >= 1)
+				if (!SOTS.Config.lowFidelityMode || i % 2 == 0)
 				{
-					mult = 1;
-					if(i > maxLength - 40)
-                    {
-						mult = 1 - (i - maxLength + 40) / 40f;
-                    }
-					sinusoid = 1.0f + (0.5f + 0.5f * (float)Math.Sin(MathHelper.ToRadians(i * 16 + VoidPlayer.soulColorCounter * 4f))) * projectile.scale;
+					float radians = MathHelper.ToRadians((i + VoidPlayer.soulColorCounter) * 2);
+					color = VoidPlayer.pastelAttempt(radians);
+					color.A = 0;
+					float mult = 1 - (i / maxLength);
+					float sinusoid = 1;
+					if (lerp >= 1)
+					{
+						mult = 1;
+						if (i > maxLength - 40)
+						{
+							mult = 1 - (i - maxLength + 40) / 40f;
+						}
+						sinusoid = 1.0f + (0.5f + 0.5f * (float)Math.Sin(MathHelper.ToRadians(i * 16 + VoidPlayer.soulColorCounter * 4f))) * projectile.scale;
+					}
+					float scale = projectile.scale * scalingFactor * scaleMult * sinusoid;
+					Vector2 drawPos = position - Main.screenPosition;
+					spriteBatch.Draw(texture, drawPos, null, color * alphaScale * mult, projectile.velocity.ToRotation(), origin, new Vector2(scalingFactor, scale), SpriteEffects.None, 0f);
 				}
-				float scale = projectile.scale * scalingFactor * scaleMult * sinusoid;
-				Vector2 drawPos = position - Main.screenPosition;
-				spriteBatch.Draw(texture, drawPos, null, color * alphaScale * mult, projectile.velocity.ToRotation(), origin, new Vector2(scalingFactor, scale), SpriteEffects.None, 0f);
 				position += unit * length;
 			}
 			return false;

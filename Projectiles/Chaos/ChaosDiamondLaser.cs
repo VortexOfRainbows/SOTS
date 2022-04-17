@@ -96,18 +96,21 @@ namespace SOTS.Projectiles.Chaos
 			float maxLength = maxDistance / length;
 			for (float i = -maxLength; i <= maxLength; i++)
 			{
-				Vector2 position = projectile.Center + unit * length * i;
-				float radians = MathHelper.ToRadians((Math.Abs(i) + VoidPlayer.soulColorCounter) * 2);
-				Color color = VoidPlayer.pastelAttempt(radians);
-				color.A = 0;
-				float mult = 1;
-				float sinusoid = 1.0f + (0.1f + 0.1f * (float)Math.Sin(MathHelper.ToRadians(Math.Abs(i) * 16 + VoidPlayer.soulColorCounter * 4f))) * projectile.scale;
-				float scale = projectile.scale * scaleMult * sinusoid * (1 - 0.9f * (float)Math.Abs(i) / maxLength);
-				Vector2 drawPos = position - Main.screenPosition;
-				if (type == 1)
-					spriteBatch.Draw(texture, drawPos, null, color * alphaScale * mult, projectile.velocity.ToRotation(), origin, new Vector2(2f, scale), SpriteEffects.None, 0f);
-				else
-					spriteBatch.Draw(textureBlack, drawPos, null, Color.White * alphaScale * mult, projectile.velocity.ToRotation(), originBlack, new Vector2(2f, scale), SpriteEffects.None, 0f);
+				if (!SOTS.Config.lowFidelityMode || (int)(i % 2) == 0)
+				{
+					Vector2 position = projectile.Center + unit * length * i;
+					float radians = MathHelper.ToRadians((Math.Abs(i) + VoidPlayer.soulColorCounter) * 2);
+					Color color = VoidPlayer.pastelAttempt(radians);
+					color.A = 0;
+					float mult = 1;
+					float sinusoid = 1.0f + (0.1f + 0.1f * (float)Math.Sin(MathHelper.ToRadians(Math.Abs(i) * 16 + VoidPlayer.soulColorCounter * 4f))) * projectile.scale;
+					float scale = projectile.scale * scaleMult * sinusoid * (1 - 0.9f * (float)Math.Abs(i) / maxLength);
+					Vector2 drawPos = position - Main.screenPosition;
+					if (type == 1)
+						spriteBatch.Draw(texture, drawPos, null, color * alphaScale * mult, projectile.velocity.ToRotation(), origin, new Vector2(2f, scale), SpriteEffects.None, 0f);
+					else
+						spriteBatch.Draw(textureBlack, drawPos, null, Color.White * alphaScale * mult, projectile.velocity.ToRotation(), originBlack, new Vector2(2f, scale), SpriteEffects.None, 0f);
+				}
 			}
 			return;
 		}

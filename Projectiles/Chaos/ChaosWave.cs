@@ -47,12 +47,15 @@ namespace SOTS.Projectiles.Chaos
 				blendColor = new Color(80, 240, 80);
 			for (int k = 0; k < projectile.oldPos.Length; k++)
 			{
-				Color color2 = VoidPlayer.pastelAttempt(MathHelper.ToRadians((VoidPlayer.soulColorCounter + k) * 6 + projectile.whoAmI * 18), blendColor);
-				color2.A = 0;
-				float scale = ((float)(projectile.oldPos.Length - k) / (float)projectile.oldPos.Length);
-				Vector2 drawPos = projectile.oldPos[k] + new Vector2(12, 12) - Main.screenPosition;
-				Color color = projectile.GetAlpha(color2) * scale;
-				spriteBatch.Draw(texture, drawPos, null, color * 0.5f, projectile.rotation, drawOrigin, projectile.scale * scale, SpriteEffects.None, 0f);
+				if (!SOTS.Config.lowFidelityMode || k % 2 == 0)
+				{
+					Color color2 = VoidPlayer.pastelAttempt(MathHelper.ToRadians((VoidPlayer.soulColorCounter + k) * 6 + projectile.whoAmI * 18), blendColor);
+					color2.A = 0;
+					float scale = ((float)(projectile.oldPos.Length - k) / (float)projectile.oldPos.Length);
+					Vector2 drawPos = projectile.oldPos[k] + new Vector2(12, 12) - Main.screenPosition;
+					Color color = projectile.GetAlpha(color2) * scale;
+					spriteBatch.Draw(texture, drawPos, null, color * 0.5f, projectile.rotation, drawOrigin, projectile.scale * scale, SpriteEffects.None, 0f);
+				}
 			}
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)

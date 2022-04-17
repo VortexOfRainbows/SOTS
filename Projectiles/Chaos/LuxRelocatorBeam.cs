@@ -54,24 +54,27 @@ namespace SOTS.Projectiles.Chaos
             int progress = 0;
             for (int i = startPos; i < max; i++)
             {
-                float scale = 1.25f;
-                if(progress < GrowthRange)
+                if (!SOTS.Config.lowFidelityMode || i % 2 == 0)
                 {
-                    scale *= progress / (float)GrowthRange;
+                    float scale = 1.25f;
+                    if (progress < GrowthRange)
+                    {
+                        scale *= progress / (float)GrowthRange;
+                    }
+                    else if (i > max - DegradeRange)
+                    {
+                        int index = i - (max - DegradeRange);
+                        scale *= 1 - index / (float)DegradeRange;
+                    }
+                    Vector2 drawPos = drawPositionList[i];
+                    Color otherC = VoidPlayer.pastelAttempt(MathHelper.ToRadians(i * 3), false);
+                    otherC.A = 0;
+                    Vector2 sinusoid = new Vector2(0, 14 * scale * (float)Math.Sin(MathHelper.ToRadians(Main.GameUpdateCount * 8 + i * 3))).RotatedBy(rotation);
+                    spriteBatch.Draw(texture, drawPos - Main.screenPosition, null, color * ((255 - projectile.alpha) / 255f), rotation, origin, new Vector2(1, scale * 1f) * projectile.scale, SpriteEffects.None, 0f);
+                    spriteBatch.Draw(texture, drawPos + sinusoid - Main.screenPosition, null, otherC * ((255 - projectile.alpha) / 255f), rotation, origin, new Vector2(1, scale * 0.75f) * projectile.scale, SpriteEffects.None, 0f);
+                    if (i != drawPositionList.Count - 1)
+                        rotation = (drawPositionList[i + 1] - drawPos).ToRotation();
                 }
-                else if(i > max - DegradeRange)
-                {
-                    int index = i - (max - DegradeRange);
-                    scale *= 1 - index / (float)DegradeRange;
-                }
-                Vector2 drawPos = drawPositionList[i];
-                Color otherC = VoidPlayer.pastelAttempt(MathHelper.ToRadians(i * 3), false);
-                otherC.A = 0;
-                Vector2 sinusoid = new Vector2(0, 14 * scale * (float)Math.Sin(MathHelper.ToRadians(Main.GameUpdateCount * 8 + i * 3))).RotatedBy(rotation);
-                spriteBatch.Draw(texture, drawPos - Main.screenPosition, null, color * ((255 - projectile.alpha) / 255f), rotation, origin, new Vector2(1, scale * 1f) * projectile.scale, SpriteEffects.None, 0f);
-                spriteBatch.Draw(texture, drawPos + sinusoid - Main.screenPosition, null, otherC * ((255 - projectile.alpha) / 255f), rotation, origin, new Vector2(1, scale * 0.75f) * projectile.scale, SpriteEffects.None, 0f);
-                if (i != drawPositionList.Count - 1)
-                    rotation = (drawPositionList[i + 1] - drawPos).ToRotation();
                 progress++;
             }
             return false;

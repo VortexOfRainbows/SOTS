@@ -9,8 +9,6 @@ The following is my development plans :D
 Known Bugs/Issues:
 1. Player freezing completely, locking out menu (conditions unknown)
 	1. Probably caused by some weird interaction in SOTSDetours.UpdatePlayer
-2. Lux is quite laggy for lower end systems. !! This mostly applies to the laser related attacks !!
-3. 
 
 High Priority:
 1. Starmap and Digital Daito Obtaining
@@ -23,7 +21,7 @@ Mid Priority:
 		1. Stellar Shot (will become Perfect Star upgrade, magic gun)
 		2. Hyperdrive (upgrade to Vibrancy Module, accessory)
 2. Big Vibrant geode in the jungle
-4. Nature Plating Extra walls plus Torch
+3. Nature Plating Extra walls plus Torch
 
 Low Priority:
 1. Archaelogist NPC
@@ -41,6 +39,7 @@ Low Priority:
 3. Worked on Stellar Serpent Launcher
 	1. Works in multiplayer
 4. Fixed Cataclysm rounds interaction with Blaspha and Chaos Chamber
+5. Lux is now less laggy in performance mode (mostly by factors of 2)
 
 4/15/22
 1. Armaggedon resprite

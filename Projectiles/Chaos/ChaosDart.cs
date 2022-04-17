@@ -83,7 +83,12 @@ namespace SOTS.Projectiles.Chaos
 			}
 			projectile.rotation = projectile.velocity.ToRotation();
 			projectile.velocity += projectile.velocity.SafeNormalize(Vector2.Zero) * 0.04f;
-			for(float i = 0; i < 1; i += 0.5f)
+			float grow = 0.5f;
+			if (SOTS.Config.lowFidelityMode)
+			{
+				grow = 1f;
+			}
+			for (float i = 0; i < 1; i += grow)
 			{
 				Dust dust2 = Dust.NewDustPerfect(projectile.Center - projectile.velocity * i, ModContent.DustType<Dusts.CopyDust4>(), Main.rand.NextVector2Circular(0.2f, 0.2f));
 				dust2.velocity += projectile.velocity * 0.1f;

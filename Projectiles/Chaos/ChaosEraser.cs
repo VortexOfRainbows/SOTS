@@ -80,7 +80,8 @@ namespace SOTS.Projectiles.Chaos
                 otherC.A = 0;
                 Vector2 sinusoid = new Vector2(0, 64 * actualScale * (float)Math.Sin(MathHelper.ToRadians(Main.GameUpdateCount * 3 + i * 3))).RotatedBy(rotation);
                 spriteBatch.Draw(texture, drawPos - Main.screenPosition, null, otherC * ((255 - projectile.alpha) / 255f) * alphaMult * 0.6f, rotation, origin, new Vector2(2f, actualScale * 3.5f) * projectile.scale, SpriteEffects.None, 0f);
-                spriteBatch.Draw(texture, drawPos + sinusoid - Main.screenPosition, null, otherC * ((255 - projectile.alpha) / 255f) * alphaMult * 0.6f, rotation, origin, new Vector2(2f, actualScale * 1.25f) * projectile.scale, SpriteEffects.None, 0f);
+                if (!SOTS.Config.lowFidelityMode)
+                    spriteBatch.Draw(texture, drawPos + sinusoid - Main.screenPosition, null, otherC * ((255 - projectile.alpha) / 255f) * alphaMult * 0.6f, rotation, origin, new Vector2(2f, actualScale * 1.25f) * projectile.scale, SpriteEffects.None, 0f);
                 if (i != drawPositionList.Count - 1)
                     rotation = (drawPositionList[i + 1] - drawPos).ToRotation();
             }

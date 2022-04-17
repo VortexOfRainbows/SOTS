@@ -70,21 +70,24 @@ namespace SOTS.Projectiles.Chaos
             }
             for (int i = 0; i < max; i++)
             {
-                float actualScale = scale;
-                if(i > 600)
+                if (!SOTS.Config.lowFidelityMode || i % 2 == 0)
                 {
-                    float mult = (i - 600) / 120f;
-                    actualScale *= 1 - mult;
+                    float actualScale = scale;
+                    if (i > 600)
+                    {
+                        float mult = (i - 600) / 120f;
+                        actualScale *= 1 - mult;
+                    }
+                    Vector2 drawPos = drawPositionList[i];
+                    Color otherC = VoidPlayer.pastelAttempt(MathHelper.ToRadians(i * 3), new Color(255, 70, 70));
+                    otherC.A = 0;
+                    Vector2 sinusoid = new Vector2(0, 64 * ((255 - projectile.alpha) / 255f) * actualScale * (float)Math.Sin(MathHelper.ToRadians(Main.GameUpdateCount * 8 + i * 5))).RotatedBy(rotation);
+                    float sinusoid2 = (float)Math.Sin(MathHelper.ToRadians(Main.GameUpdateCount * 3 + i * 4));
+                    spriteBatch.Draw(texture, drawPos - Main.screenPosition, null, otherC * ((255 - projectile.alpha) / 255f) * alphaMult * 1.1f, rotation, origin, new Vector2(2f, actualScale * 2.5f * (1 + sinusoid2 * 0.3f) * ((255 - projectile.alpha) / 255f)) * projectile.scale, SpriteEffects.None, 0f);
+                    spriteBatch.Draw(texture, drawPos + sinusoid - Main.screenPosition, null, otherC * ((255 - projectile.alpha) / 255f) * alphaMult * 1.1f, rotation, origin, new Vector2(2f, actualScale * 1.0f * (1 + sinusoid2 * 0.3f) * ((255 - projectile.alpha) / 255f)) * projectile.scale, SpriteEffects.None, 0f);
+                    if (i != drawPositionList.Count - 1)
+                        rotation = (drawPositionList[i + 1] - drawPos).ToRotation();
                 }
-                Vector2 drawPos = drawPositionList[i];
-                Color otherC = VoidPlayer.pastelAttempt(MathHelper.ToRadians(i * 3), new Color(255, 70, 70));
-                otherC.A = 0;
-                Vector2 sinusoid = new Vector2(0, 64 * ((255 - projectile.alpha) / 255f) * actualScale * (float)Math.Sin(MathHelper.ToRadians(Main.GameUpdateCount * 8 + i * 5))).RotatedBy(rotation);
-                float sinusoid2 = (float)Math.Sin(MathHelper.ToRadians(Main.GameUpdateCount * 3 + i * 4));
-                spriteBatch.Draw(texture, drawPos - Main.screenPosition, null, otherC * ((255 - projectile.alpha) / 255f) * alphaMult * 1.1f, rotation, origin, new Vector2(2f, actualScale * 2.5f * (1 + sinusoid2 * 0.3f) * ((255 - projectile.alpha) / 255f)) * projectile.scale, SpriteEffects.None, 0f);
-                spriteBatch.Draw(texture, drawPos + sinusoid - Main.screenPosition, null, otherC * ((255 - projectile.alpha) / 255f) * alphaMult * 1.1f, rotation, origin, new Vector2(2f, actualScale * 1.0f * (1 + sinusoid2 * 0.3f) * ((255 - projectile.alpha) / 255f)) * projectile.scale, SpriteEffects.None, 0f);
-                if (i != drawPositionList.Count - 1)
-                    rotation = (drawPositionList[i + 1] - drawPos).ToRotation();
             }
             return false;
         }
