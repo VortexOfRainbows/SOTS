@@ -34,7 +34,6 @@ namespace SOTS.Items.Furniture.Nature
 			return false;
 		}
 		protected override Vector3 LightClr => SOTSTile.NaturePlatingLight * 3f;
-
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
             Texture2D glowmask = ModContent.GetTexture(this.GetPath("Glow"));

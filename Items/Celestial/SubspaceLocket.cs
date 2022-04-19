@@ -2011,6 +2011,7 @@ namespace SOTS.Items.Celestial
                                                 NPCLoader.ModifyHitByItem(Main.npc[index1], player, sItem, ref num8, ref num3, ref crit);
                                                 PlayerHooks.ModifyHitNPC(player, sItem, Main.npc[index1], ref num8, ref num3, ref crit);
                                                 var num9 = (int)Main.npc[index1].StrikeNPC(num8, num3, direction, crit, false, false);
+                                                ItemLoader.OnHitNPC(sItem, player, Main.npc[index1], num8, knockBack, crit);
                                                 NPCLoader.OnHitByItem(Main.npc[index1], player, sItem, num8, num3, crit);
                                                 PlayerHooks.OnHitNPC(player, sItem, Main.npc[index1], num8, num3, crit);
                                                 player.StatusNPC(sItem.type, index1);

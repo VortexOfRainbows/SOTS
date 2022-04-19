@@ -251,7 +251,7 @@ namespace SOTS
 						}
 					}
 				}
-				if(affixID == 3 && projectile.type != ModContent.ProjectileType<ChargedCataclysmBullet>()) //Chaos Chamber
+				if(affixID == 3 && projectile.type != ModContent.ProjectileType<ChargedCataclysmBullet>() && projectile.type != ModContent.ProjectileType<CataclysmBullet>()) //Chaos Chamber
 				{
 					for (int i = 0; i < 4; i++)
 					{

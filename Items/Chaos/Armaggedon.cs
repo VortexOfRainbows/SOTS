@@ -19,11 +19,11 @@ namespace SOTS.Items.Chaos
 		}
 		public override void SafeSetDefaults()
 		{
-			item.damage = 150;
+			item.damage = 300;
 			item.melee = true;
 			item.width = 28;
 			item.height = 26;
-            item.useTime = 5;
+            item.useTime = 10;
             item.useAnimation = 30;
 			item.useStyle = ItemUseStyleID.HoldingOut;
 			item.knockBack = 8.0f;

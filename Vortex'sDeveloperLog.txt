@@ -36,8 +36,14 @@ Low Priority:
 	1. Should work in Multiplayer.
 	2. This gun is quite simple, but its satisfying to use!
 	3. Still need obtain method for Perfect Star
-2. Armaggedon Damage 120 -> 150
+2. Armaggedon Damage 120 -> 300
 	1. Weaker than non-void magic weapons behind it in tier
+	2. Shoots 6 -> 3 fists (still a buff)
+3. Wormwood furniture moved to furniture folder
+4. Rose Bow damage 75 -> 85. In general, dps is lower than surrounding islands
+	1. Does 4100% damage total if everything hits = 3485 at full charge
+5. Chaos Chamber damage 90 -> 100. Weak for being non-autofire
+6. Subspace Servant inherits some melee hit effects.
 
 4/16/22 & 4/17/22
 1. Buffed Armaggedon's projectile speed to make it more consistent

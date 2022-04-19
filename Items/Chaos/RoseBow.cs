@@ -20,7 +20,7 @@ namespace SOTS.Items.Chaos
 		}
 		public override void SafeSetDefaults()
 		{
-			item.damage = 75;
+			item.damage = 85;
 			item.ranged = true;
 			item.width = 44;
 			item.height = 92;

@@ -2,32 +2,18 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ObjectData;
 
-namespace SOTS.Items.Slime.Furniture
+namespace SOTS.Items.Slime
 {
-	public class WormwoodWall : ModItem
+	public class GoopwoodWall : ModItem
 	{
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Goopwood Wall");
-			Tooltip.SetDefault("");
-		}
-
 		public override void SetDefaults()
 		{
-			item.width = 12;
-			item.height = 12;
-			item.maxStack = 999;
-			item.useTurn = true;
-			item.autoReuse = true;
-			item.useAnimation = 15;
-			item.useTime = 7;
-			item.useStyle = 1;
-			item.rare = 1;
-			item.value = 0;
-			item.consumable = true;
-			item.createWall = mod.WallType("WormwoodWallWall");
+			item.CloneDefaults(ItemID.StoneWall);
+			item.width = 24;
+			item.height = 24;
+			item.rare = ItemRarityID.Blue;
+			item.createWall = ModContent.WallType<GoopwoodWallWall>();
 		}
 		public override void AddRecipes()
 		{
@@ -43,13 +29,13 @@ namespace SOTS.Items.Slime.Furniture
 			recipe.AddRecipe();
 		}
 	}
-	public class WormwoodWallWall: ModWall
+	public class GoopwoodWallWall : ModWall
 	{
 		public override void SetDefaults()
 		{
 			Main.wallHouse[Type] = true;
 			dustType = 7;
-			drop = mod.ItemType("WormwoodWall");
+			drop = ModContent.ItemType<GoopwoodWall>();
 			AddMapEntry(new Color(120, 54, 16));
 		}
 	}

@@ -1,33 +1,21 @@
 using Microsoft.Xna.Framework;
+using SOTS.Items.Slime;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
-namespace SOTS.Items.Slime.Furniture
+namespace SOTS.Items.Furniture.Goopwood
 {
-	public class WormwoodPlatform : ModItem
+	public class GoopwoodPlatform : ModItem
 	{
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Goopwood Platform");
-			Tooltip.SetDefault("");
-		}
-
 		public override void SetDefaults()
 		{
+			item.CloneDefaults(ItemID.StoneBlock);
+			item.rare = ItemRarityID.Blue;
 			item.width = 24;
 			item.height = 14;
-			item.maxStack = 999;
-			item.useTurn = true;
-			item.autoReuse = true;
-			item.useAnimation = 15;
-			item.useTime = 10;
-			item.useStyle = 1;
-			item.rare = 1;
-			item.value = 0;
-			item.consumable = true;
-			item.createTile = mod.TileType("WormwoodPlatformTile");
+			item.createTile = ModContent.TileType<GoopwoodPlatformTile>();
 		}
 		public override void AddRecipes()
 		{
@@ -41,7 +29,7 @@ namespace SOTS.Items.Slime.Furniture
 			recipe.AddRecipe();
 		}
 	}
-	public class WormwoodPlatformTile : ModTile
+	public class GoopwoodPlatformTile : ModTile
 	{
 		public override void SetDefaults()
 		{
@@ -63,11 +51,10 @@ namespace SOTS.Items.Slime.Furniture
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
 			AddMapEntry(new Color(140, 70, 20));
 			dustType = 7;
-			drop = mod.ItemType("WormwoodPlatform");
+			drop = ModContent.ItemType<GoopwoodPlatform>();
 			adjTiles = new int[]{ TileID.Platforms };
 			TileID.Sets.Platforms[Type] = true;
 		}
-
 		public override void PostSetDefaults()
 		{
 			Main.tileNoSunLight[Type] = false;
