@@ -18,8 +18,7 @@ High Priority:
 Mid Priority:
 1. Lux Drops (ask me before you go about spriting these ones):
 	1. Replace Celestial Serpent Drops (resprites and maybe some reworks)
-		1. Stellar Shot (will become Perfect Star upgrade, magic gun)
-		2. Hyperdrive (upgrade to Vibrancy Module, accessory)
+		1. Hyperdrive (upgrade to Vibrancy Module, accessory)
 2. Big Vibrant geode in the jungle
 3. Nature Plating Extra walls plus Torch
 
@@ -31,6 +30,14 @@ Low Priority:
 5. Stars in Planetarium Sky
 6. Pulverizer (Upgrade to Bone Clapper)
 	1. 4 arms, 2 normal and 2 laser cannon
+
+4/18/22
+1. Worked on Stellar Shot
+	1. Should work in Multiplayer.
+	2. This gun is quite simple, but its satisfying to use!
+	3. Still need obtain method for Perfect Star
+2. Armaggedon Damage 120 -> 150
+	1. Weaker than non-void magic weapons behind it in tier
 
 4/16/22 & 4/17/22
 1. Buffed Armaggedon's projectile speed to make it more consistent

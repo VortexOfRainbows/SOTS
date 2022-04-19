@@ -20,8 +20,8 @@ namespace SOTS.Items.Chaos
 		{
             item.damage = 60;   
             item.ranged = true;   
-            item.width = 68;    
-            item.height = 30;  
+            item.width = 78;    
+            item.height = 26;  
             item.useTime = 20;  
             item.useAnimation = 20;
             item.useStyle = ItemUseStyleID.HoldingOut;    
@@ -46,7 +46,7 @@ namespace SOTS.Items.Chaos
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
 			Vector2 speed = new Vector2(speedX, speedY);
-			Projectile.NewProjectile(position + speed.SafeNormalize(Vector2.Zero) * 32, speed, ModContent.ProjectileType<ChaosSnake>(), damage, knockBack, player.whoAmI, Main.rand.Next(360));
+			Projectile.NewProjectile(position + speed.SafeNormalize(Vector2.Zero) * 40, speed, ModContent.ProjectileType<ChaosSnake>(), damage, knockBack, player.whoAmI, Main.rand.Next(360));
 			return false; 
 		}
 		public override void AddRecipes()
