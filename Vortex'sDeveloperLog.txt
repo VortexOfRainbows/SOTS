@@ -16,11 +16,8 @@ High Priority:
 3. Lux Balancing
 
 Mid Priority:
-1. Lux Drops (ask me before you go about spriting these ones):
-	1. Replace Celestial Serpent Drops (resprites and maybe some reworks)
-		1. Hyperdrive (upgrade to Vibrancy Module, accessory)
-2. Big Vibrant geode in the jungle
-3. Nature Plating Extra walls plus Torch
+1. Big Vibrant geode in the jungle
+2. Nature Plating Extra walls plus Torch
 
 Low Priority:
 1. Archaelogist NPC
@@ -31,6 +28,13 @@ Low Priority:
 6. Pulverizer (Upgrade to Bone Clapper)
 	1. 4 arms, 2 normal and 2 laser cannon
 
+4/19/22
+1. Added Hyperdrive
+	1. This item doesn't work with Terrablade, since it's hardcoded, but it works with Influx Waver..?
+	2. Should be strong as it makes void weapons 20% faster
+	3. This item should be watched attentively. It doesn't work with a lot of melees, but affected melees become superpowered (Armaggedon deals 300% more damage with proper set up)
+2. Imported Giant geode array, still has not been adapted.
+
 4/18/22
 1. Worked on Stellar Shot
 	1. Should work in Multiplayer.
@@ -40,7 +44,7 @@ Low Priority:
 	1. Weaker than non-void magic weapons behind it in tier
 	2. Shoots 6 -> 3 fists (still a buff)
 3. Wormwood furniture moved to furniture folder
-4. Rose Bow damage 75 -> 85. In general, dps is lower than surrounding islands
+4. Rose Bow damage 75 -> 85. In general, dps is lower than surrounding items
 	1. Does 4100% damage total if everything hits = 3485 at full charge
 5. Chaos Chamber damage 90 -> 100. Weak for being non-autofire
 6. Subspace Servant inherits some melee hit effects.

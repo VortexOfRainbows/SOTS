@@ -241,9 +241,9 @@ namespace SOTS.Projectiles.Chaos
                 float percent = counter / projectile.ai[0];
                 if (chargeLevel < 2 && counter > 0)
                 {
-                    if (counter == (int)projectile.ai[0] / 2)
+                    if ((int)counter == (int)projectile.ai[0] / 2)
                         Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 15, 1.1f, 0.6f);
-                    if (counter >= projectile.ai[0])
+                    if ((int)counter >= projectile.ai[0])
                     {
                         Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 30, 0.8f, -0.3f);
                         if(chargeLevel == 0)
@@ -332,8 +332,9 @@ namespace SOTS.Projectiles.Chaos
             }
             if (counter == -1 && projectile.ai[0] != 0 && runOnce)
             {
+                //Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 15, 1.1f, 0.6f);
                 runOnce = false;
-                counter = -(projectile.ai[0] * firstDelay);
+                counter = -(int)(projectile.ai[0] * firstDelay);
             }
             ChargeAI();
             if (projectile.hide == false)

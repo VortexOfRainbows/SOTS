@@ -228,6 +228,7 @@ namespace SOTS
 		public bool RubyMonolith = false;
 		public bool CanCurseSwap = false;
 		public bool CurseSwap = false;
+		public bool Hyperdrive = false;
 
 		public int CritLifesteal = 0; //crit clover
 		public float maxCritLifestealPerSecond = 0;
@@ -620,6 +621,7 @@ namespace SOTS
         }
         public override void ResetEffects()
 		{
+			Hyperdrive = false;
 			oldTimeFreezeImmune = TimeFreezeImmune;
 			TimeFreezeImmune = true;
 			if(VMincubator)
@@ -1166,7 +1168,7 @@ namespace SOTS
 			}
 			return true;
 		}
-		public override float UseTimeMultiplier(Item item)
+        public override float UseTimeMultiplier(Item item)
 		{
 			float standard = attackSpeedMod;
 			int time = item.useAnimation;
