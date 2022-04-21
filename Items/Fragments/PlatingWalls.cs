@@ -39,6 +39,40 @@ namespace SOTS.Items.Fragments
 			AddMapEntry(Color.Lerp(SOTSTile.NaturePlatingColor, Color.Black, 0.2f));
 		}
 	}
+	public class NaturePlatingPanelWall : ModItem
+	{
+		public override void SetDefaults()
+		{
+			item.CloneDefaults(ItemID.StoneWall);
+			item.width = 28;
+			item.height = 28;
+			item.rare = ItemRarityID.Blue;
+			item.createWall = ModContent.WallType<NaturePlatingPanelWallWall>();
+		}
+		public override void AddRecipes()
+		{
+			ModRecipe recipe = new ModRecipe(mod);
+			recipe.AddIngredient(ModContent.ItemType<NaturePlating>(), 1);
+			recipe.AddTile(TileID.WorkBenches);
+			recipe.SetResult(this, 4);
+			recipe.AddRecipe();
+			recipe = new ModRecipe(mod);
+			recipe.AddIngredient(this, 4);
+			recipe.AddTile(TileID.WorkBenches);
+			recipe.SetResult(ModContent.ItemType<NaturePlating>(), 1);
+			recipe.AddRecipe();
+		}
+	}
+	public class NaturePlatingPanelWallWall : ModWall
+	{
+		public override void SetDefaults()
+		{
+			Main.wallHouse[Type] = true;
+			dustType = DustID.Tungsten;
+			drop = ModContent.ItemType<NaturePlatingPanelWall>();
+			AddMapEntry(Color.Lerp(SOTSTile.NaturePlatingColor, Color.Black, 0.3f));
+		}
+	}
 	public class EarthenPlatingWall : ModItem
 	{
 		public override void SetDefaults()

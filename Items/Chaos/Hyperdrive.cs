@@ -36,7 +36,7 @@ namespace SOTS.Items.Chaos
 		}
 		public override void SetStaticDefaults()
 		{
-			Tooltip.SetDefault("The second charge of a Crusher has a 33% chance to not consume void\nThe fourth charge of Crushers no longer consumes void\nExtends the range of Crushers by 1\nIncreases void attack speed by 20%\nReduces void cost by 10%\nMelee speed buffs are converted into true melee attack speed buffs, which affects both swing speed and the rate of firing projectiles\n(Note: some vanilla weapons are hardcoded not to scale off of this, such as Terra Blade)");
+			Tooltip.SetDefault("The second charge of a Crusher has a 33% chance to not consume void\nThe fourth charge of Crushers no longer consumes void\nExtends the range of Crushers by 1\nIncreases attack speed by 25% and melee damage by 5%\nReduces void cost by 10%");
 		}
 		public override void SetDefaults()
 		{
@@ -44,19 +44,19 @@ namespace SOTS.Items.Chaos
             item.width = 28;     
             item.height = 30;   
             item.value = Item.sellPrice(0, 15, 0, 0);
-			item.rare = ItemRarityID.Yellow;;
+			item.rare = ItemRarityID.Yellow;
 			item.accessory = true;
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			VoidPlayer vPlayer = VoidPlayer.ModPlayer(player);
-			vPlayer.voidSpeed += 0.2f;
+			SOTSPlayer.ModPlayer(player).attackSpeedMod += 0.25f;
+			player.meleeDamage += 0.05f;
 			vPlayer.voidCost -= 0.1f;
 			vPlayer.CrushResistor = true;
 			vPlayer.CrushCapacitor = true;
 			vPlayer.BonusCrushRangeMax++;
 			vPlayer.BonusCrushRangeMin++;
-			SOTSPlayer.ModPlayer(player).Hyperdrive = true;
 		}
 		public override void AddRecipes()
 		{
