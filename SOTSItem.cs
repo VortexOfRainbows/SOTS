@@ -500,18 +500,6 @@ namespace SOTS
 			}
 			return base.CanUseItem(item, player);
         }
-        public override float MeleeSpeedMultiplier(Item item, Player player)
-		{
-			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-			if (modPlayer.Hyperdrive && player.HeldItem.melee)
-			{
-				float meleeSpeed = player.meleeSpeed;
-				modPlayer.attackSpeedMod += (1f / meleeSpeed) - 1;
-				player.meleeSpeed = 1;
-				//Main.NewText(meleeSpeed);
-			}
-			return base.MeleeSpeedMultiplier(item, player);
-        }
         public override bool UseItem(Item item, Player player)
 		{
 			return base.UseItem(item, player);

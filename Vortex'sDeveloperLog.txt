@@ -10,16 +10,17 @@ Known Bugs/Issues:
 1. Player freezing completely, locking out menu (conditions unknown)
 	1. Probably caused by some weird interaction in SOTSDetours.UpdatePlayer
 
-High Priority:
+Big Objectives:
 1. Starmap and Digital Daito Obtaining
 2. Reorganize Folders... Planetarium, Pyramid, Furniture folders remaining.
 3. Lux Balancing
 
-Mid Priority:
+Update Objectives:
 1. Big Vibrant geode in the jungle
-2. Nature Plating Extra walls plus Torch
+2. Nature Plating Torch
+3. Phase Enemies
 
-Low Priority:
+Low Priority Objectives:
 1. Archaelogist NPC
 2. Accessory Pets to use own dye slots.
 3. Void Bar strike the player during void shock
@@ -28,12 +29,10 @@ Low Priority:
 6. Pulverizer (Upgrade to Bone Clapper)
 	1. 4 arms, 2 normal and 2 laser cannon
 
-4/19/22
+4/19/22 & 4/20/22
 1. Added Hyperdrive
-	1. This item doesn't work with Terrablade, since it's hardcoded, but it works with Influx Waver..?
-	2. Should be strong as it makes void weapons 20% faster
-	3. This item should be watched attentively. It doesn't work with a lot of melees, but affected melees become superpowered (Armaggedon deals 300% more damage with proper set up)
 2. Imported Giant geode array, still has not been adapted.
+3. Nature Panel Wall
 
 4/18/22
 1. Worked on Stellar Shot
