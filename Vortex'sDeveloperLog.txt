@@ -16,7 +16,7 @@ Big Objectives:
 3. Lux Balancing
 
 Update Objectives:
-1. Big Vibrant geode in the jungle
+1. Generate loot in Vibrant Geode
 2. Nature Plating Torch
 3. Phase Enemies
 
@@ -28,6 +28,10 @@ Low Priority Objectives:
 5. Stars in Planetarium Sky
 6. Pulverizer (Upgrade to Bone Clapper)
 	1. 4 arms, 2 normal and 2 laser cannon
+
+4/22/22
+1. BIG Vibrant Geode Generates!
+	1. Still needs loot
 
 4/19/22 & 4/20/22
 1. Added Hyperdrive

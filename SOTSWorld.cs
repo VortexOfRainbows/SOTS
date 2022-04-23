@@ -316,6 +316,8 @@ namespace SOTS
 					dungeonSide = 1;
 				}
 				SOTSWorldgenHelper.FindAndGenerateDamocles(dungeonSide);
+				SOTSWorldgenHelper.SpamCrystals(true);
+				SOTSWorldgenHelper.FindAndGenerateBigGeode(-dungeonSide); //jungle is opp dungeon side
 				int pX = -1;
 				int checks = 0;
 				if (dungeonSide == -1)
@@ -455,24 +457,7 @@ namespace SOTS
 			{
 				progress.Message = "Generating A Pyramid";
 				PyramidWorldgenHelper.GenerateSOTSPyramid(mod);
-				for (int k = 100; k < Main.maxTilesX - 100; k++)
-				{
-					for (int l = (int)WorldGen.rockLayerLow - 20; l < Main.maxTilesY - 220; l++)
-					{
-						if (Main.tile[k, l].wall == ModContent.WallType<VibrantWallWall>())
-						{
-							Main.tile[k, l].liquidType(0);
-							Main.tile[k, l].liquid = 0;
-							if (Main.tile[k, l].type == ModContent.TileType<VibrantOreTile>() && Main.tile[k, l].active() && Main.tile[k, l].slope() == 0 && !Main.tile[k, l].halfBrick())
-							{
-								bool oneSideIsClear = !Main.tile[k - 1, l].active() || !Main.tile[k + 1, l].active() || !Main.tile[k, l + 1].active() || !Main.tile[k, l - 1].active();
-								if(oneSideIsClear)
-									for (int i = 0; i < 3; i++)
-										if(SOTSTile.GenerateVibrantCrystal(k, l)) break;
-							}
-						}
-					}
-				}
+				SOTSWorldgenHelper.SpamCrystals(false);
 			}));
 		}
 		private void GenSOTSOres(GenerationProgress progress)

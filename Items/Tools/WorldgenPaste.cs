@@ -28,14 +28,14 @@ namespace SOTS.Items.Tools
 		{
 			player.rulerGrid = true;
 		}
-		int counter = 0;
 		public override bool UseItem(Player player)
 		{
 			Vector2 mousePos = Main.MouseWorld;
 			Vector2 tileLocation = mousePos / 16f;
-			PhaseWorldgenHelper.ClearPrevious = true;
-			PhaseWorldgenHelper.Generate();
-			counter++;
+			//PhaseWorldgenHelper.ClearPrevious = true;
+			//PhaseWorldgenHelper.Generate();
+			SOTSWorldgenHelper.FindAndGenerateBigGeode(Main.rand.Next(2) * 2 -1);
+			//counter++;
 			return true;
 		}
 	}

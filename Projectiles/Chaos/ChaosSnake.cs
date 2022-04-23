@@ -146,20 +146,26 @@ namespace SOTS.Projectiles.Chaos
 				dust.alpha = (int)MathHelper.Clamp(alpha, 0, 255);
 				return;
 			}
-			int target2 = SOTSNPCs.FindTarget_Basic(projectile.Center, 900, this, true);
-			if (target2 != -1)
+			if (!end)
 			{
-				NPC toHit = Main.npc[target2];
-				if (toHit.active)
+				int target2 = SOTSNPCs.FindTarget_Basic(projectile.Center, 900, this, true);
+				if (target2 != -1)
 				{
-					Vector2 toNPC = toHit.Center - projectile.Center;
-					projectile.velocity = Vector2.Lerp(projectile.velocity, toNPC.SafeNormalize(Vector2.Zero) * (projectile.velocity.Length() + 5), 0.11f);
+					NPC toHit = Main.npc[target2];
+					if (toHit.active)
+					{
+						Vector2 toNPC = toHit.Center - projectile.Center;
+						projectile.velocity = Vector2.Lerp(projectile.velocity, toNPC.SafeNormalize(Vector2.Zero) * (projectile.velocity.Length() + 5), 0.11f);
+					}
 				}
 			}
 			projectile.ai[0]++;
-			projectile.velocity += new Vector2(0, (float)Math.Sin(MathHelper.ToRadians(projectile.ai[0] * 12)) * 0.4f).RotatedBy(projectile.velocity.ToRotation());
-			if (projectile.velocity.Length() < 11)
-				projectile.velocity = projectile.velocity.SafeNormalize(Vector2.Zero) * 11f;
+			if(!end)
+			{
+				projectile.velocity += new Vector2(0, (float)Math.Sin(MathHelper.ToRadians(projectile.ai[0] * 12)) * 0.4f).RotatedBy(projectile.velocity.ToRotation());
+				if (projectile.velocity.Length() < 11)
+					projectile.velocity = projectile.velocity.SafeNormalize(Vector2.Zero) * 11f;
+			}
 		}
 	}
 }
