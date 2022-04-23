@@ -123,8 +123,8 @@ namespace SOTS.Items.Fragments
 		}
 		public override void SetDefaults()
 		{
-			item.width = 22;
-			item.height = 36;
+			item.width = 40;
+			item.height = 38;
 			item.value = Item.sellPrice(0, 0, 0, 50);
 			item.rare = ItemRarityID.Blue;
 			item.maxStack = 999;
