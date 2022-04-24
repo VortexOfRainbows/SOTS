@@ -202,7 +202,7 @@ namespace SOTS
 		public bool TurtleTem = false;
 
 		public bool PlanetariumBiome = false;
-		//public bool GeodeBiome = false;
+		public bool PhaseBiome = false;
 		public bool PyramidBiome = false;
 		public bool backUpBow = false;
 		public int doubledActive = 0;
@@ -998,8 +998,8 @@ namespace SOTS
 		}
 		public override void UpdateBiomes()
 		{
-			PlanetariumBiome = (SOTSWorld.planetarium > 100) && player.Center.Y < Main.worldSurface * 16 * 0.5f;
-			//GeodeBiome = (SOTSWorld.geodeBiome > 300);
+			PlanetariumBiome = (SOTSWorld.planetarium > 100) && player.Center.Y < Main.worldSurface * 16 * 0.5f; //planetarium if block count is greater than 100
+			PhaseBiome = (SOTSWorld.phaseBiome > 50) && player.Center.Y < Main.worldSurface * 16 * 0.35f; //phase biome if nearby ore is greater than 50
 
 			//checking for background walls
 			int tileBehindX = (int)(player.Center.X / 16);
@@ -1017,19 +1017,21 @@ namespace SOTS
 		public override bool CustomBiomesMatch(Player other)
 		{
 			var modOther = other.GetModPlayer<SOTSPlayer>();
-			return PyramidBiome == modOther.PyramidBiome && PlanetariumBiome == modOther.PlanetariumBiome;
+			return PyramidBiome == modOther.PyramidBiome && PlanetariumBiome == modOther.PlanetariumBiome && PhaseBiome == modOther.PhaseBiome;
 		}
 		public override void CopyCustomBiomesTo(Player other)
 		{
 			var modOther = other.GetModPlayer<SOTSPlayer>();
 			modOther.PyramidBiome = PyramidBiome;
 			modOther.PlanetariumBiome = PlanetariumBiome;
+			modOther.PhaseBiome = PhaseBiome;
 		}
 		public override void SendCustomBiomes(BinaryWriter writer)
 		{
 			BitsByte flags = new BitsByte();
 			flags[0] = PyramidBiome;
 			flags[1] = PlanetariumBiome;
+			flags[2] = PhaseBiome;
 			writer.Write(flags);
 		}
 		public override void ReceiveCustomBiomes(BinaryReader reader)
@@ -1037,6 +1039,7 @@ namespace SOTS
 			BitsByte flags = reader.ReadByte();
 			PyramidBiome = flags[0];
 			PlanetariumBiome = flags[1];
+			PhaseBiome = flags[2];
 		}
 		public override void OnHitByNPC(NPC npc, int damage, bool crit)
 		{

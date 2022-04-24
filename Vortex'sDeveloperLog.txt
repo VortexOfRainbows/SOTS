@@ -32,6 +32,13 @@ Low Priority Objectives:
 1. BIG Vibrant Geode Generates!
 2. Big Geode Loot
 	1. Starter chest gets extra loot too!
+3. WIP Phase Speeder
+	1. Right now just acts like Holo Blade
+	2. Needs more visuals and also Banner
+4. Rose Bow damage 85 -> 100
+	1. Charge 1 damage 400% -> 600%, 2 damage 1200% to 1500%
+	2. Was being outperformed severley by Armageddon, despite its harder recipe and usage
+5. Armageddon Damage 300 -> 280
 
 4/19/22 & 4/20/22
 1. Added Hyperdrive

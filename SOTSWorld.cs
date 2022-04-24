@@ -34,6 +34,7 @@ using SOTS.Items.Earth;
 using static SOTS.SOTS;
 using Terraria.Graphics.Effects;
 using SOTS.Items.Furniture.Earthen;
+using SOTS.Items.Chaos;
 
 namespace SOTS
 {
@@ -156,7 +157,7 @@ namespace SOTS
         public static int SecretFoundMusicTimer = 0;
         public static int planetarium = 0;
 		public static int pyramidBiome = 0;
-		public static int geodeBiome = 0;
+		public static int phaseBiome = 0;
 
 		public static bool downedPinky = false;
 		public static bool downedCurse = false;
@@ -514,7 +515,7 @@ namespace SOTS
 		public override void TileCountsAvailable(int[] tileCounts)
 		{
 			planetarium = tileCounts[ModContent.TileType<DullPlatingTile>()] + tileCounts[ModContent.TileType<AvaritianPlatingTile>()];  
-			//geodeBiome = tileCounts[mod.TileType("GeodeBlock")];
+			phaseBiome = tileCounts[ModContent.TileType<PhaseOreTile>()];
 			pyramidBiome = tileCounts[ModContent.TileType<SarcophagusTile>()] + tileCounts[ModContent.TileType<RefractingCrystalBlockTile>()] + tileCounts[ModContent.TileType<AcediaGatewayTile>()];  
 		}
         public override void ModifyHardmodeTasks(List<GenPass> list)

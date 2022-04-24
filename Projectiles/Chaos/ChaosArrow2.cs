@@ -130,9 +130,9 @@ namespace SOTS.Projectiles.Chaos
 			projectile.netUpdate = true;
 			if (Main.myPlayer == projectile.owner && !runOnce)
 			{
-				float dmgMult = 4f;
+				float dmgMult = 6f;
 				if (projectile.ai[0] == 1)
-					dmgMult = 12f;
+					dmgMult = 15f;
 				Vector2 position = posList[posList.Count - 2];
 				Projectile.NewProjectile(position, projectile.velocity, ModContent.ProjectileType<ChaosBloomExplosion>(), (int)(dmgMult * projectile.damage), projectile.knockBack, Main.myPlayer, -Main.rand.NextFloat(360) - 1, Main.rand.NextFloat(360));
 				if(projectile.ai[0] == 1)
