@@ -16,8 +16,8 @@ namespace SOTS.Items.ChestItems
 			item.damage = 12;
 			item.thrown = true;
 			item.rare = 1;
-			item.width = 34;
-			item.height = 26;
+			item.width = 46;
+			item.height = 36;
 			item.maxStack = 1;
 			item.useTime = 24;
 			item.useAnimation = 24;
