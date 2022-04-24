@@ -33,6 +33,7 @@ using SOTS.Items.Pyramid.AncientGold;
 using SOTS.Items.Earth;
 using static SOTS.SOTS;
 using Terraria.Graphics.Effects;
+using SOTS.Items.Furniture.Earthen;
 
 namespace SOTS
 {
@@ -697,6 +698,51 @@ namespace SOTS
 						slot++;
 					}
 				}
+				if (tile.type == ModContent.TileType<EarthenPlatingStorageTile>())
+				{
+					int slot = 0;
+					Tile tile2 = Main.tile[chest.x, chest.y + 2];
+					if (tile2.type == ModContent.TileType<VibrantBrickTile>() && tile.wall == ModContent.WallType<VibrantWallWall>()) //locked chest
+					{
+						chest.item[slot].SetDefaults(ModContent.ItemType<PerfectStar>());
+						slot++;
+						chest.item[slot].SetDefaults(ModContent.ItemType<MinersPickaxe>());
+						chest.item[slot].stack = Main.rand.Next(11) + 20; // 20 to 30
+						slot++;
+						chest.item[slot].SetDefaults(ItemID.LifeCrystal);
+						slot++;
+						chest.item[slot].SetDefaults(ItemID.ManaCrystal);
+						slot++;
+						chest.item[slot].SetDefaults(ItemID.GoldCoin);
+						chest.item[slot].stack = Main.rand.Next(3) + 3; // 3 to 5
+						slot++;
+					}
+					else if (tile2.type == ModContent.TileType<EarthenPlatingTile>() && tile.frameX < 36)
+					{
+						chest.item[slot].SetDefaults(ModContent.ItemType<VisionAmulet>());
+						slot++;
+						if(Main.rand.NextBool(2))
+                        {
+							chest.item[slot].SetDefaults(ModContent.ItemType<ManicMiner>());
+							slot++;
+						}
+						else
+						{
+							chest.item[slot].SetDefaults(ItemID.BonePickaxe);
+							slot++;
+						}
+						chest.item[slot].SetDefaults(ModContent.ItemType<MinersPickaxe>());
+						chest.item[slot].stack = Main.rand.Next(11) + 20; // 20 to 30
+						slot++;
+						chest.item[slot].SetDefaults(ItemID.LifeCrystal);
+						slot++;
+						chest.item[slot].SetDefaults(ItemID.ManaCrystal);
+						slot++;
+						chest.item[slot].SetDefaults(ItemID.GoldCoin);
+						chest.item[slot].stack = Main.rand.Next(3) + 1; // 1 to 3
+						slot++;
+					}
+				}
 				if (tile.type == ModContent.TileType<RuinedChestTile>())
 				{
 					int slot = 0;
@@ -749,6 +795,20 @@ namespace SOTS
 					else
                     {
 						chest.item[slot].SetDefaults(ModContent.ItemType<WorldgenScanner>());
+						slot++;
+						chest.item[slot].SetDefaults(ItemID.Rope);
+						chest.item[slot].stack = 100;
+						slot++;
+						chest.item[slot].SetDefaults(ItemID.Grenade);
+						chest.item[slot].stack = 5;
+						slot++;
+						chest.item[slot].SetDefaults(ItemID.LesserHealingPotion);
+						chest.item[slot].stack = 5;
+						slot++;
+						chest.item[slot].SetDefaults(ItemID.LesserManaPotion);
+						chest.item[slot].stack = 10;
+						slot++;
+						chest.item[slot].SetDefaults(ItemID.CopperHammer);
 						slot++;
 					}
 				}

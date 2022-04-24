@@ -16,9 +16,8 @@ Big Objectives:
 3. Lux Balancing
 
 Update Objectives:
-1. Generate loot in Vibrant Geode
-2. Nature Plating Torch
-3. Phase Enemies
+1. Nature Plating Torch
+2. Phase Enemies
 
 Low Priority Objectives:
 1. Archaelogist NPC
@@ -29,9 +28,10 @@ Low Priority Objectives:
 6. Pulverizer (Upgrade to Bone Clapper)
 	1. 4 arms, 2 normal and 2 laser cannon
 
-4/22/22
+4/22/22 & 4/23/22
 1. BIG Vibrant Geode Generates!
-	1. Still needs loot
+2. Big Geode Loot
+	1. Starter chest gets extra loot too!
 
 4/19/22 & 4/20/22
 1. Added Hyperdrive
