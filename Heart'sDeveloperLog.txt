@@ -1,12 +1,15 @@
 Music To Do:
+Title Screen: No Progress
 Construct Theme: No Progress
+Pinky Theme: Done
 Pyramid Theme: Done
-Pyramid Battle Theme: 40% Done
+Pyramid Battle Theme: Done
 Pharaohs Curse Theme: No Progress
 Planetarium Theme: Done
-Advisor's Theme: 95% Done
+Advisor's Theme: Done
 Polaris Theme: Done
 Celestal Serpent: https://www.youtube.com/watch?v=jxo_K7JLZxQ
+Lux: 
 Subspace Serpent: Done
 
 Sprites To Do:
@@ -14,10 +17,14 @@ Sprites To Do:
 Current:
 1. Flare Detonator
 2. Curgeon (fish)
+3. Prime Crusher
+4. Vibrant Armor and Weapons (1.4)
+5. Miners Pickaxe 
+6. Subspace Weapons
 
 Others:
 1. Portal (Gateway) Item Sprites
-2. Trophes For Advisor, Pharaoh, Polaris, and Subspace
+2. Trophes For Advisor, Pharaoh, Polaris, Lux, and Subspace
 3. Heartsheild Spritesheet
 4. Sarcophagus Item Resprite
 5. Advisor Baby resprite
