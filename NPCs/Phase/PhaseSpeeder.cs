@@ -6,7 +6,9 @@ using SOTS.Items.Chaos;
 using SOTS.Items.Fragments;
 using SOTS.Items.Otherworld;
 using SOTS.Items.Otherworld.FromChests;
+using SOTS.Projectiles.Chaos;
 using SOTS.Projectiles.Otherworld;
+using SOTS.Void;
 using System;
 using Terraria;
 using Terraria.ID;
@@ -34,10 +36,10 @@ namespace SOTS.NPCs.Phase
 		public override void SetDefaults()
 		{
             npc.aiStyle = -1; 
-            npc.lifeMax = 500;   
+            npc.lifeMax = 650;   
             npc.damage = 64; 
-            npc.defense = 30;  
-            npc.knockBackResist = 0.66f;
+            npc.defense = 40;  
+            npc.knockBackResist = 0f; //take no knockback
             npc.width = 62;
             npc.height = 54;
             npc.value = Item.buyPrice(0, 0, 40, 0);
@@ -65,6 +67,7 @@ namespace SOTS.NPCs.Phase
         {
 			Texture2D texture = Main.npcTexture[npc.type];
 			Texture2D texture2 = GetTexture("SOTS/NPCs/Phase/PhaseSpeederGlow");
+			Texture2D texture3 = GetTexture("SOTS/NPCs/Phase/PhaseSpeederPink");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height / 2);
 			float dir = npc.rotation;
 			bool flip = false;
@@ -73,19 +76,20 @@ namespace SOTS.NPCs.Phase
 				flip = true;
 			}
 			float bonusDir = !flip ? MathHelper.ToRadians(180) : 0;
-			Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition + new Vector2(0, npc.gfxOffY), npc.frame, drawColor * ((255 - npc.alpha) / 255f), dir - bonusDir, drawOrigin, npc.scale, !flip ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
-			Main.spriteBatch.Draw(texture2, npc.Center - Main.screenPosition + new Vector2(0, npc.gfxOffY), npc.frame, new Color(100, 100, 120, 0), dir - bonusDir, drawOrigin, npc.scale, !flip ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+			for(int i = 0; i < 4; i++)
+            {
+				Vector2 circular = new Vector2(2, 0).RotatedBy(npc.rotation + i * MathHelper.PiOver2);
+				Main.spriteBatch.Draw(texture3, npc.Center - Main.screenPosition + new Vector2(0, npc.gfxOffY) + circular, npc.frame, new Color(100, 100, 100, 0) * (0.1f + 0.9f * ((255 - npc.alpha) / 255f)), dir - bonusDir, drawOrigin, npc.scale, !flip ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+			}
+			Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition + new Vector2(0, npc.gfxOffY), npc.frame, Color.White * ((255 - npc.alpha) / 255f), dir - bonusDir, drawOrigin, npc.scale, !flip ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 			return false;
         }
 		public void MoveCursorToPlayer()
 		{
-			float scaleFactor = counter / 50f;
-			if (scaleFactor > 1)
-				scaleFactor = 1;
 			Player player = Main.player[npc.target];
 			Vector2 between = player.Center - new Vector2(tracerPosX, tracerPosY);
 			float length = between.Length();
-			float speed = 16f * scaleFactor;
+			float speed = 32f;
 			if (speed > length)
 			{
 				speed = length;
@@ -94,15 +98,16 @@ namespace SOTS.NPCs.Phase
 			tracerPosX += between.X;
 			tracerPosY += between.Y;
 		}
-		int counter = 0;
+		int direction = 0;
+		float spinny = 0;
 		public bool runOnce = true;
 		public override bool PreAI()
 		{
-			counter++;
 			npc.TargetClosest(false);
 			Player player = Main.player[npc.target];
 			if (runOnce)
 			{
+				direction = npc.whoAmI % 2 * 2 - 1;
 				tracerPosX = npc.Center.X;
 				tracerPosY = npc.Center.Y;
 				npc.ai[0] = Main.rand.Next(360);
@@ -125,37 +130,37 @@ namespace SOTS.NPCs.Phase
 					npc.ai[1]++;
 				}
 				float scale = (float)Math.Sqrt((npc.ai[1] - 120) / 90f); //make the curve better
-				float sinusoid = scale * 6 * (float)Math.Sin(MathHelper.ToRadians(npc.ai[1] - 120) * 5.5f); // 6 * 90 = 540
+				float sinusoid = scale * 6 * (float)Math.Sin(MathHelper.ToRadians(npc.ai[1] - 120) * 6f); // 6 * 90 = 540
 				Vector2 rotatePos = toTracer.SafeNormalize(Vector2.Zero) * sinusoid;
 				npc.Center += rotatePos;
 				if (npc.ai[1] >= 210)
 				{
-					npc.ai[0] = -1;
-					npc.ai[1] = -60;
+					spinny = 720;
+					npc.ai[1] = -120;
 					rotatePos = rotatePos.SafeNormalize(Vector2.Zero);
-					npc.velocity = rotatePos * 22;
-					Main.PlaySound(SoundID.Item71, npc.Center);
+					npc.velocity = rotatePos * 24;
+					Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 92);
 					return;
 				}
 			}
-			else if (npc.ai[1] > 0)
+			else if (npc.ai[1] > -40)
 			{
-				if(npc.ai[1] < 30)
+				if (npc.ai[1] < 30)
                 {
-					npc.alpha += 8;
+					if(npc.ai[1] == -29)
+					{
+						direction *= -1;
+						npc.ai[0] = MathHelper.ToDegrees((npc.Center - player.Center).ToRotation());
+					}
+					npc.ai[0] += direction;
                 }
 				else
                 {
 					npc.alpha -= 8;
                 }
-				if(npc.ai[0] == -1)
-                {
-					npc.ai[0] = MathHelper.ToDegrees((npc.Center - player.Center).ToRotation());
-				}
-				float speed = (float)Math.Sin(MathHelper.ToRadians(npc.ai[1] * 1.5f)); //finished 180 degree
-				npc.ai[0] += speed;
-
-				Vector2 rotatePos = new Vector2(200, 0).RotatedBy(MathHelper.ToRadians(npc.ai[0] * (npc.whoAmI % 2 * 2 - 1))); //rotates cw or ccw depending on index
+				float speed = (float)Math.Sin(MathHelper.ToRadians((npc.ai[1] + 30) * 1.2f)); //finished 180 degree
+				npc.ai[0] += speed * direction;
+				Vector2 rotatePos = new Vector2(320, 0).RotatedBy(MathHelper.ToRadians(npc.ai[0] * (npc.whoAmI % 2 * 2 - 1))); //rotates cw or ccw depending on index
 				Vector2 toPos = rotatePos + tracerPos;
 				Vector2 goToPos = npc.Center - toPos;
 				float length = goToPos.Length();
@@ -164,27 +169,46 @@ namespace SOTS.NPCs.Phase
 					length = 12;
 				}
 				goToPos = goToPos.SafeNormalize(Vector2.Zero);
-				npc.velocity = goToPos * -length;
+				npc.velocity = Vector2.Lerp(npc.velocity, goToPos * -length, 0.05f);
 			}
-			else
+			if(npc.ai[1] < 0)
 			{
-				if(npc.ai[0] < -30)
+				if (npc.ai[1] < -80)
 				{
 					npc.alpha = 0;
-					npc.velocity *= 0.99f;
 				}
 				else
-				{
 					npc.alpha += 8;
-					npc.velocity *= 0.975f;
-				}
-				npc.rotation = npc.velocity.ToRotation() + MathHelper.ToRadians(npc.ai[1] * 12);
+				npc.velocity *= 0.9775f;
+				if(npc.ai[1] > -100)
+					npc.velocity = npc.velocity.RotatedBy(MathHelper.ToRadians(direction * -2.4f));
+				npc.rotation = toTracer.ToRotation() + MathHelper.ToRadians(spinny);
+				spinny = MathHelper.Lerp(0, 720, (npc.ai[1] / 120f) * (npc.ai[1] / 120f));
+				if(Math.Abs(npc.ai[1]) % 10 == 0 && npc.ai[1] < -80 && Main.netMode != NetmodeID.MultiplayerClient)
+				{
+					int damage = npc.damage / 2;
+					if (Main.expertMode)
+					{
+						damage = (int)(damage / Main.expertDamage);
+					}
+					for (int i = -2; i <= 2; i++)
+                    {
+						Vector2 spread = new Vector2(2.5f, 0).RotatedBy(MathHelper.ToRadians(i * 30) + npc.rotation);
+						Projectile.NewProjectile(npc.Center + spread.SafeNormalize(Vector2.Zero) * 20, spread, ProjectileType<PhaseDart>(), damage, 0, Main.myPlayer, 0);
+					}
+                }
 			}
 			npc.alpha = (int)MathHelper.Clamp(npc.alpha, 0, 255);
+			if(npc.alpha > 200)
+            {
+				npc.dontTakeDamage = true;
+            }
+			else
+				npc.dontTakeDamage = false;
 		}
         public override void PostAI()
 		{
-			if (npc.ai[1] > 0)
+			if (npc.ai[1] >= 0)
 				npc.rotation = toTracer.ToRotation();
 		}
 		public Vector2 tracerPos => new Vector2(tracerPosX, tracerPosY);

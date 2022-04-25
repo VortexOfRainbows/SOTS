@@ -24,8 +24,8 @@ namespace SOTS.Items.Chaos
 			item.ranged = true;
 			item.width = 44;
 			item.height = 92;
-			item.useTime = 21;
-			item.useAnimation = 21;
+			item.useTime = 23;
+			item.useAnimation = 23;
 			item.useStyle = ItemUseStyleID.HoldingOut;
 			item.knockBack = 6f;
 			item.value = Item.sellPrice(0, 20, 0, 0);

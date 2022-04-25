@@ -40,9 +40,9 @@ namespace SOTS.Projectiles
 			{
 				for(int i = 0; i < 4; i++)
 				{
-					int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 4, 4, 60);
-					Main.dust[num1].noGravity = true;
-					Main.dust[num1].velocity *= 0.1f;
+					Dust dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), 4, 4, 60);
+					dust.noGravity = true;
+					dust.velocity *= 0.1f;
 				}
 			}
 		}
