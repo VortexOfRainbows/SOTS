@@ -24,8 +24,8 @@ namespace SOTS.Items.Chaos
 			item.ranged = true;
 			item.width = 44;
 			item.height = 92;
-			item.useTime = 24;
-			item.useAnimation = 24;
+			item.useTime = 21;
+			item.useAnimation = 21;
 			item.useStyle = ItemUseStyleID.HoldingOut;
 			item.knockBack = 6f;
 			item.value = Item.sellPrice(0, 20, 0, 0);
@@ -45,7 +45,7 @@ namespace SOTS.Items.Chaos
         }
         public override int GetVoid(Player player)
         {
-            return 15;
+            return 12;
         }
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{

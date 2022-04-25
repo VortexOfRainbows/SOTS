@@ -130,7 +130,8 @@ namespace SOTS.NPCs.Phase
 				npc.Center += rotatePos;
 				if (npc.ai[1] >= 210)
 				{
-					npc.ai[1] = -22;
+					npc.ai[0] = -1;
+					npc.ai[1] = -60;
 					rotatePos = rotatePos.SafeNormalize(Vector2.Zero);
 					npc.velocity = rotatePos * 22;
 					Main.PlaySound(SoundID.Item71, npc.Center);
@@ -139,30 +140,47 @@ namespace SOTS.NPCs.Phase
 			}
 			else if (npc.ai[1] > 0)
 			{
-				if (npc.ai[0] == 0)
-				{
-					npc.ai[0] = Main.rand.Next(360);
+				if(npc.ai[1] < 30)
+                {
+					npc.alpha += 8;
+                }
+				else
+                {
+					npc.alpha -= 8;
+                }
+				if(npc.ai[0] == -1)
+                {
+					npc.ai[0] = MathHelper.ToDegrees((npc.Center - player.Center).ToRotation());
 				}
-				npc.ai[0]++;
-				Vector2 rotatePos = new Vector2(200, 0).RotatedBy(MathHelper.ToRadians(npc.ai[0] * (npc.whoAmI % 2 * 2 - 1)));
+				float speed = (float)Math.Sin(MathHelper.ToRadians(npc.ai[1] * 1.5f)); //finished 180 degree
+				npc.ai[0] += speed;
+
+				Vector2 rotatePos = new Vector2(200, 0).RotatedBy(MathHelper.ToRadians(npc.ai[0] * (npc.whoAmI % 2 * 2 - 1))); //rotates cw or ccw depending on index
 				Vector2 toPos = rotatePos + tracerPos;
 				Vector2 goToPos = npc.Center - toPos;
-				float length = goToPos.Length() + 0.1f;
+				float length = goToPos.Length();
 				if (length > 12)
 				{
 					length = 12;
 				}
-				if (length > 1.1f)
-				{
-					goToPos.Normalize();
-					npc.velocity = goToPos * -length;
-				}
-				else npc.velocity *= 0f;
+				goToPos = goToPos.SafeNormalize(Vector2.Zero);
+				npc.velocity = goToPos * -length;
 			}
 			else
 			{
-				npc.rotation = npc.velocity.ToRotation();
+				if(npc.ai[0] < -30)
+				{
+					npc.alpha = 0;
+					npc.velocity *= 0.99f;
+				}
+				else
+				{
+					npc.alpha += 8;
+					npc.velocity *= 0.975f;
+				}
+				npc.rotation = npc.velocity.ToRotation() + MathHelper.ToRadians(npc.ai[1] * 12);
 			}
+			npc.alpha = (int)MathHelper.Clamp(npc.alpha, 0, 255);
 		}
         public override void PostAI()
 		{
@@ -171,7 +189,6 @@ namespace SOTS.NPCs.Phase
 		}
 		public Vector2 tracerPos => new Vector2(tracerPosX, tracerPosY);
 		public Vector2 toTracer => tracerPos - npc.Center;
-
 		public override void NPCLoot()
 		{
 			if (Main.rand.NextBool(5))

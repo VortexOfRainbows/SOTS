@@ -74,7 +74,7 @@ namespace SOTS.Projectiles.Chaos
         const int fireFromTighten = 12;
         const float visualsOffsetAmt = 28f;
         const float firstDelay = 0.1f;
-        const float secondDelay = 1.25f;
+        const float secondDelay = 1.0f;
         float afterCount1 = 0;
         float afterCount2 = 0;
         float textureHeight = 10;
@@ -220,7 +220,7 @@ namespace SOTS.Projectiles.Chaos
                 }
                 if (chargeLevel >= 1)
                     afterCount2++;
-                int timeForThorn = (int)(projectile.ai[0] * 0.5f);
+                int timeForThorn = (int)(projectile.ai[0] * 0.4f);
                 if((int)afterCount2 % timeForThorn == 0 && (int)afterCount2 <= timeForThorn * 6 && (int)afterCount2 > 0) //6 thorns one first charge
                 {
                     if(Main.myPlayer == projectile.owner)
@@ -229,7 +229,7 @@ namespace SOTS.Projectiles.Chaos
                         Projectile.NewProjectile(projectile.Center, projectile.velocity.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(1.5f, 4f), ModContent.ProjectileType<ChaosThorn>(), (int)(projectile.damage * 1.0f), projectile.knockBack, Main.myPlayer, 60, rotation);
                     }
                 }
-                timeForThorn = (int)(projectile.ai[0] * 0.4f);
+                timeForThorn = (int)(projectile.ai[0] * 0.3f);
                 if ((int)afterCount1 % timeForThorn == 0 && (int)afterCount1 <= timeForThorn * 8 && (int)afterCount1 > 0) //8 thorns on second charge
                 {
                     if (Main.myPlayer == projectile.owner)

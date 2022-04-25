@@ -17,8 +17,8 @@ namespace SOTS.Projectiles
 			projectile.aiStyle = 2;
 			projectile.thrown = true;
 			projectile.friendly = true;
-			projectile.width = 34;
-			projectile.height = 26;
+			projectile.width = 46;
+			projectile.height = 36;
 			projectile.timeLeft = 6000;
 			projectile.penetrate = -1;
 			projectile.tileCollide = true;
