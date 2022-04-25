@@ -16,8 +16,8 @@ namespace SOTS.Items
 		{
 			item.damage = 20;
 			item.summon = true;
-            item.width = 34;     
-            item.height = 36;   
+            item.width = 40;     
+            item.height = 34;   
             item.value = Item.sellPrice(0, 5, 0, 0);
 			item.rare = ItemRarityID.LightPurple;
 			item.accessory = true;
