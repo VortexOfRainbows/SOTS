@@ -28,6 +28,15 @@ Low Priority Objectives:
 6. Pulverizer (Upgrade to Bone Clapper)
 	1. 4 arms, 2 normal and 2 laser cannon
 
+4/25/22
+1. Rose Bow speed renerfed a bit (buffs were perhaps a bit too much)
+	1. Usetime 23 -> 24
+	2. Also nerfed thorn spawning rate
+	3. Damage 100 -> 92
+2. Finished Phase Speeder
+	1. Tested: Works in multiplayer, except for perhaps the trail bugging a little
+3. Armageddon 280 -> 270
+
 4/22/22 & 4/23/22 & 4/24/22
 1. BIG Vibrant Geode Generates!
 2. Big Geode Loot

@@ -20,12 +20,12 @@ namespace SOTS.Items.Chaos
 		}
 		public override void SafeSetDefaults()
 		{
-			item.damage = 100;
+			item.damage = 92;
 			item.ranged = true;
 			item.width = 44;
 			item.height = 92;
-			item.useTime = 23;
-			item.useAnimation = 23;
+			item.useTime = 24;
+			item.useAnimation = 24;
 			item.useStyle = ItemUseStyleID.HoldingOut;
 			item.knockBack = 6f;
 			item.value = Item.sellPrice(0, 20, 0, 0);

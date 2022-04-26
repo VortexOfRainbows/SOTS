@@ -19,7 +19,11 @@ namespace SOTS.NPCs.Phase
 {
 	public class PhaseSpeeder : ModNPC
 	{
-		private float tracerPosX
+        public override bool CanHitPlayer(Player target, ref int cooldownSlot)
+        {
+            return !npc.dontTakeDamage;
+        }
+        private float tracerPosX
 		{
 			get => npc.ai[2];
 			set => npc.ai[2] = value;
@@ -65,8 +69,9 @@ namespace SOTS.NPCs.Phase
 		}
         public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
         {
+			TrailPreDraw(spriteBatch);
 			Texture2D texture = Main.npcTexture[npc.type];
-			Texture2D texture2 = GetTexture("SOTS/NPCs/Phase/PhaseSpeederGlow");
+			//Texture2D texture2 = GetTexture("SOTS/NPCs/Phase/PhaseSpeederGlow");
 			Texture2D texture3 = GetTexture("SOTS/NPCs/Phase/PhaseSpeederPink");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height / 2);
 			float dir = npc.rotation;
@@ -83,7 +88,50 @@ namespace SOTS.NPCs.Phase
 			}
 			Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition + new Vector2(0, npc.gfxOffY), npc.frame, Color.White * ((255 - npc.alpha) / 255f), dir - bonusDir, drawOrigin, npc.scale, !flip ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 			return false;
-        }
+		}
+		public void TrailPreDraw(SpriteBatch spriteBatch)
+		{
+			Texture2D texture = GetTexture("SOTS/NPCs/Phase/PhaseSpeederTrail");
+			Vector2 drawOrigin = new Vector2(0, texture.Height * 0.5f);
+			Vector2 previousPosition = npc.Center + new Vector2(-24, 0).RotatedBy(npc.rotation);
+			for (int k = 0; k < trailPos.Length; k++)
+			{
+				if (trailPos[k] == Vector2.Zero)
+				{
+					break;
+				}
+				Color color = VoidPlayer.ChaosPink * (0.1f + 0.9f * ((255 - npc.alpha) / 255f));
+				color.A = 0;
+				color = color * ((trailPos.Length - k) / (float)trailPos.Length) * 0.5f;
+				Vector2 drawPos = trailPos[k] - Main.screenPosition;
+				Vector2 currentPos = trailPos[k];
+				Vector2 betweenPositions = previousPosition - currentPos;
+				float lengthTowards = betweenPositions.Length() / texture.Height;
+				spriteBatch.Draw(texture, drawPos, null, color, betweenPositions.ToRotation(), drawOrigin, new Vector2(lengthTowards * 3, 2f), SpriteEffects.None, 0f);
+				previousPosition = currentPos;
+			}
+		}
+		Vector2[] trailPos = new Vector2[40];
+		public void cataloguePos()
+		{
+			Vector2 current = npc.Center + new Vector2(-24, 0).RotatedBy(npc.rotation);
+			for (int i = 0; i < trailPos.Length; i++)
+			{
+				Vector2 previousPosition = trailPos[i];
+				trailPos[i] = current;
+				current = previousPosition;
+			}
+			if(Main.rand.NextBool(4))
+			{
+				Vector2 from = npc.Center + new Vector2(-24, 0).RotatedBy(npc.rotation);
+				Dust dust = Dust.NewDustDirect(from - new Vector2(5), 0, 0, DustType<CopyDust4>(), 0, 0, npc.alpha, VoidPlayer.ChaosPink, 1.4f);
+				dust.velocity *= 0.3f;
+				dust.velocity += new Vector2(-2, 0).RotatedBy(npc.rotation);
+				dust.noGravity = true;
+				dust.fadeIn = 0.1f;
+				dust.alpha = (int)MathHelper.Clamp(npc.alpha - 20, 0, 255);
+			}
+		}
 		public void MoveCursorToPlayer()
 		{
 			Player player = Main.player[npc.target];
@@ -115,6 +163,7 @@ namespace SOTS.NPCs.Phase
 					npc.netUpdate = true;
 				runOnce = false;
 			}
+			cataloguePos();
 			return true;
 		}
 		public override void AI()
@@ -123,22 +172,24 @@ namespace SOTS.NPCs.Phase
 			MoveCursorToPlayer();
 			npc.ai[1]++;
 			//Vector2 toPlayer = player.Center - npc.Center;
-			if (npc.ai[1] >= 120)
+			if (npc.ai[1] >= 90)
 			{
-				if (npc.ai[1] >= 165)
+				if (npc.ai[1] >= 135)
 				{
 					npc.ai[1]++;
 				}
-				float scale = (float)Math.Sqrt((npc.ai[1] - 120) / 90f); //make the curve better
-				float sinusoid = scale * 6 * (float)Math.Sin(MathHelper.ToRadians(npc.ai[1] - 120) * 6f); // 6 * 90 = 540
+				float scale = (float)Math.Sqrt((npc.ai[1] - 90) / 90f); //make the curve better
+				float sinusoid = scale * 6 * (float)Math.Sin(MathHelper.ToRadians(npc.ai[1] - 90) * 6f); // 6 * 90 = 540
 				Vector2 rotatePos = toTracer.SafeNormalize(Vector2.Zero) * sinusoid;
 				npc.Center += rotatePos;
-				if (npc.ai[1] >= 210)
+				if (npc.ai[1] >= 180)
 				{
-					spinny = 720;
-					npc.ai[1] = -120;
+					spinny = 1080;
+					npc.ai[1] = -110;
 					rotatePos = rotatePos.SafeNormalize(Vector2.Zero);
-					npc.velocity = rotatePos * 24;
+					npc.velocity = rotatePos * 30f;
+					if(Main.netMode != NetmodeID.MultiplayerClient)
+						npc.netUpdate = true;
 					Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 92);
 					return;
 				}
@@ -159,7 +210,7 @@ namespace SOTS.NPCs.Phase
 					npc.alpha -= 8;
                 }
 				float speed = (float)Math.Sin(MathHelper.ToRadians((npc.ai[1] + 30) * 1.2f)); //finished 180 degree
-				npc.ai[0] += speed * direction;
+				npc.ai[0] += speed * direction * 1.33f;
 				Vector2 rotatePos = new Vector2(320, 0).RotatedBy(MathHelper.ToRadians(npc.ai[0] * (npc.whoAmI % 2 * 2 - 1))); //rotates cw or ccw depending on index
 				Vector2 toPos = rotatePos + tracerPos;
 				Vector2 goToPos = npc.Center - toPos;
@@ -173,18 +224,18 @@ namespace SOTS.NPCs.Phase
 			}
 			if(npc.ai[1] < 0)
 			{
-				if (npc.ai[1] < -80)
+				if (npc.ai[1] < -70)
 				{
 					npc.alpha = 0;
 				}
 				else
 					npc.alpha += 8;
-				npc.velocity *= 0.9775f;
-				if(npc.ai[1] > -100)
+				npc.velocity *= 0.97725f;
+				if(npc.ai[1] > -90)
 					npc.velocity = npc.velocity.RotatedBy(MathHelper.ToRadians(direction * -2.4f));
 				npc.rotation = toTracer.ToRotation() + MathHelper.ToRadians(spinny);
-				spinny = MathHelper.Lerp(0, 720, (npc.ai[1] / 120f) * (npc.ai[1] / 120f));
-				if(Math.Abs(npc.ai[1]) % 10 == 0 && npc.ai[1] < -80 && Main.netMode != NetmodeID.MultiplayerClient)
+				spinny = MathHelper.Lerp(0, 1440, (npc.ai[1] / 110f) * (npc.ai[1] / 110f));
+				if(Math.Abs(npc.ai[1]) % 10 == 0 && npc.ai[1] < -70 && Main.netMode != NetmodeID.MultiplayerClient)
 				{
 					int damage = npc.damage / 2;
 					if (Main.expertMode)
