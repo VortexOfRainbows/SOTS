@@ -29,8 +29,10 @@ Low Priority Objectives:
 	1. 4 arms, 2 normal and 2 laser cannon
 
 4/26/22
-1. Phase Speeder banner! (finished! Needs proper spawning, will be done when )
+1. Phase Speeder banner! (finished! Needs proper spawning, which will be completed after both enemies are ready)
 2. Craftable Digital Daito (temporary..?)
+3. Phase Assaulter visuals, gore, and framework 
+	1. Needs: balance and attack patterns
 
 4/25/22
 1. Rose Bow speed renerfed a bit (buffs were perhaps a bit too much)

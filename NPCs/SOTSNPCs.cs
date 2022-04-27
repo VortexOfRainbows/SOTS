@@ -30,6 +30,7 @@ using SOTS.Items.Otherworld.Blocks;
 using SOTS.Items.Inferno;
 using SOTS.Items.Chaos;
 using SOTS.Items.GhostTown;
+using SOTS.NPCs.Phase;
 
 namespace SOTS.NPCs
 {
@@ -101,10 +102,10 @@ namespace SOTS.NPCs
 			return base.PreAI(npc);
         }
         public override void HitEffect(NPC npc, int hitDirection, double damage)
-        {
-			if(npc.life <= 0)
+		{
+			if (isPolarisNPC(npc.type))
 			{
-				if (isPolarisNPC(npc.type))
+				if (npc.life <= 0)
 				{
 					for (int i = 0; i < 3; i++)
 					{
@@ -122,6 +123,47 @@ namespace SOTS.NPCs
 						dust.fadeIn = 0.1f;
 						dust.scale *= 1.5f;
 						dust.alpha = npc.alpha;
+					}
+				}
+			}
+			else if (npc.type == ModContent.NPCType<PhaseAssaulterHead>() || npc.type == ModContent.NPCType<PhaseAssaulterBody>() || npc.type == ModContent.NPCType<PhaseAssaulterTail>())
+			{
+				if (npc.life > 0)
+				{
+					int num = 0;
+					while (num < damage / npc.lifeMax * 40.0)
+					{
+						if (Main.rand.NextBool(3))
+							Dust.NewDust(npc.position, npc.width, npc.height, DustID.Gold, (float)(2 * hitDirection), -2f, 0, default, 0.9f);
+						else
+						{
+							Dust.NewDust(npc.position, npc.width, npc.height, DustID.Platinum, (float)(2 * hitDirection), -2f, 0, default, 0.9f);
+						}
+						num++;
+					}
+				}
+				else
+				{
+					{
+						for (int k = 0; k < 20; k++)
+						{
+							if (k % 4 == 0)
+							{
+								Dust.NewDust(npc.position, npc.width, npc.height, 242, (float)(2 * hitDirection), -2f, 0, default, 2f);
+							}
+							if (Main.rand.NextBool(3))
+								Dust.NewDust(npc.position, npc.width, npc.height, DustID.Gold, (float)(2 * hitDirection), -2f, 0, default, 0.9f);
+							else
+							{
+								Dust.NewDust(npc.position, npc.width, npc.height, DustID.Platinum, (float)(2 * hitDirection), -2f, 0, default, 0.9f);
+							}
+						}
+						if(npc.type == ModContent.NPCType<PhaseAssaulterHead>())
+							Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/PhaseAssaulter/PhaseAssaulterHeadGore"), 1f);
+						if (npc.type == ModContent.NPCType<PhaseAssaulterBody>())
+							Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/PhaseAssaulter/PhaseAssaulterBodyGore"), 1f);
+						if (npc.type == ModContent.NPCType<PhaseAssaulterTail>())
+							Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/PhaseAssaulter/PhaseAssaulterTailGore"), 1f);
 					}
 				}
 			}
