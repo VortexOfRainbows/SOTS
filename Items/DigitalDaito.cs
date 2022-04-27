@@ -5,6 +5,10 @@ using Terraria.ModLoader;
 using SOTS.Void;
 using Terraria.DataStructures;
 using SOTS.Projectiles.Otherworld;
+using SOTS.Items.Otherworld.Furniture;
+using SOTS.Items.Otherworld.FromChests;
+using SOTS.Items.Fragments;
+using SOTS.Items.Pyramid;
 
 namespace SOTS.Items
 {
@@ -41,6 +45,17 @@ namespace SOTS.Items
 			i++;
 			Projectile.NewProjectile(position, new Vector2(speedX, speedY), type, damage, knockBack, player.whoAmI, i % 2 * 2 -1, Main.rand.NextFloat(0.875f, 1.125f));
 			return false;
+		}
+		public override void AddRecipes()
+		{
+			ModRecipe recipe = new ModRecipe(mod);
+			recipe.AddIngredient(ItemID.Arkhalis, 1);
+			recipe.AddIngredient(ModContent.ItemType<HardlightAlloy>(), 30);
+			recipe.AddIngredient(ModContent.ItemType<PrecariousCluster>(), 1);
+			recipe.AddIngredient(ModContent.ItemType<TaintedKeystone>(), 1);
+			recipe.AddTile(ModContent.TileType<HardlightFabricatorTile>());
+			recipe.SetResult(this);
+			recipe.AddRecipe();
 		}
 		/*public override int GetVoid(Player player)
 		{

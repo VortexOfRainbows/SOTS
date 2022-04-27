@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.NPCs;
 using SOTS.NPCs.Inferno;
+using SOTS.NPCs.Phase;
 using SOTS.NPCs.TreasureSlimes;
 using Terraria;
 using Terraria.DataStructures;
@@ -747,6 +748,9 @@ namespace SOTS.Items.Banners
 				case 11:
 					item = ItemType<DungeonTreasureSlimeBanner>();
 					break;
+				case 12:
+					item = ItemType<PhaseSpeederBanner>();
+					break;
 				default:
 					return;
 			}
@@ -797,6 +801,9 @@ namespace SOTS.Items.Banners
 						break;
 					case 11:
 						type = NPCType<DungeonTreasureSlime>();
+						break;
+					case 12:
+						type = NPCType<PhaseSpeeder>();
 						break;
 					default:
 						return;
@@ -908,6 +915,14 @@ namespace SOTS.Items.Banners
 		{
 			item.createTile = TileType<SOTSBanners2>();
 			item.placeStyle = 11;
+		}
+	}
+	public class PhaseSpeederBanner : ModBanner
+	{
+		public override void SafeSetDefaults()
+		{
+			item.createTile = TileType<SOTSBanners2>();
+			item.placeStyle = 12;
 		}
 	}
 }

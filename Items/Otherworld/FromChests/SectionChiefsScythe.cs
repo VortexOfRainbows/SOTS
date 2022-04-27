@@ -4,6 +4,8 @@ using Terraria.ModLoader;
 using SOTS.Void;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Items.Otherworld.Furniture;
+using SOTS.Items.OreItems;
 
 namespace SOTS.Items.Otherworld.FromChests
 {
@@ -78,9 +80,9 @@ namespace SOTS.Items.Otherworld.FromChests
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "PlatinumScythe", 1);
-			recipe.AddIngredient(null, "HardlightAlloy", 12);
-			recipe.AddTile(mod.TileType("HardlightFabricatorTile"));
+			recipe.AddIngredient(ModContent.ItemType<PlatinumScythe>(), 1);
+			recipe.AddIngredient(ModContent.ItemType<HardlightAlloy>(), 12);
+			recipe.AddTile(ModContent.TileType<HardlightFabricatorTile>());
 			recipe.SetResult(this);
 			recipe.AddRecipe();
 		}

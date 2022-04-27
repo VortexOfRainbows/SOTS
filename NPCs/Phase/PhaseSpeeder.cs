@@ -55,7 +55,7 @@ namespace SOTS.NPCs.Phase
 			npc.noGravity = true;
 			npc.noTileCollide = true;
 			banner = npc.type;
-			bannerItem = ItemType<TwilightScouterBanner>();
+			bannerItem = ItemType<PhaseSpeederBanner>();
 			SetupDebuffImmunities();
 		}
 		public void SetupDebuffImmunities()

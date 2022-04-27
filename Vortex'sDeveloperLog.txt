@@ -17,7 +17,7 @@ Big Objectives:
 
 Update Objectives:
 1. Nature Plating Torch
-2. Phase Enemies
+2. Phase Assaulter Worm
 
 Low Priority Objectives:
 1. Archaelogist NPC
@@ -27,6 +27,10 @@ Low Priority Objectives:
 5. Stars in Planetarium Sky
 6. Pulverizer (Upgrade to Bone Clapper)
 	1. 4 arms, 2 normal and 2 laser cannon
+
+4/26/22
+1. Phase Speeder banner! (finished! Needs proper spawning, will be done when )
+2. Craftable Digital Daito (temporary..?)
 
 4/25/22
 1. Rose Bow speed renerfed a bit (buffs were perhaps a bit too much)
