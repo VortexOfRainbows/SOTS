@@ -197,16 +197,6 @@ namespace SOTS.NPCs
         public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
 		{
 			hitBy(npc, Main.player[projectile.owner], projectile, null, ref damage, ref knockback, ref crit);
-			List<int> nerfBeeNPC = new List<int>() { ModContent.NPCType<PutridHook>() };
-			List<int> nerfBeeBoss = new List<int>() { ModContent.NPCType<PutridPinkyPhase2>(), ModContent.NPCType<Boss.Curse.PharaohsCurse>(), ModContent.NPCType<TheAdvisorHead>() };
-			List<int> nerfBeeProj = new List<int>() { ProjectileID.Bee, ProjectileID.GiantBee };
-			if (nerfBeeProj.Contains(projectile.type))
-            {
-				if(nerfBeeBoss.Contains(npc.type))
-					damage = (int)(damage * 0.8f);
-				if(nerfBeeNPC.Contains(npc.type))
-					damage = (int)(damage * 0.6f);
-			}
 			base.ModifyHitByProjectile(npc, projectile, ref damage, ref knockback, ref crit, ref hitDirection);
         }
 		public void hitBy(NPC npc, Player player, Projectile projectile, Item item, ref int damage, ref float knockback, ref bool crit)
@@ -450,7 +440,7 @@ namespace SOTS.NPCs
 		{
 			if (player.GetModPlayer<SOTSPlayer>().PhaseBiome) //spawnrates for this biome have to be very high due to how npc spawning in sky height works.
 			{
-				spawnRate = (int)(spawnRate * 0.33f); //quadruple spawn rates
+				spawnRate = (int)(spawnRate * 0.7f);
 				maxSpawns = (int)(maxSpawns * 1f); //less maximum spawns
 			}
 			if (player.GetModPlayer<SOTSPlayer>().PyramidBiome)
@@ -502,6 +492,7 @@ namespace SOTS.NPCs
 			if (SOTSPlayer.ModPlayer(player).noMoreConstructs || player.HasBuff(ModContent.BuffType<IntimidatingPresence>()))
 				constructRateMultiplier = 0f;
 			bool ZoneForest = SOTSPlayer.ZoneForest(player);
+			bool ZonePlanetarium = spawnInfo.player.GetModPlayer<SOTSPlayer>().PlanetariumBiome;
 			if (spawnInfo.player.GetModPlayer<SOTSPlayer>().PyramidBiome)
 			{
 				int tileWall = Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY - 1].wall;
@@ -541,7 +532,7 @@ namespace SOTS.NPCs
 					pool.Add(ModContent.NPCType<Maligmor>(), 0.15f);
 				}
 			}
-			else if (spawnInfo.player.GetModPlayer<SOTSPlayer>().PlanetariumBiome)
+			else if (ZonePlanetarium)
 			{
 				pool.Clear();
 				int distanceDown = 6;
@@ -555,17 +546,6 @@ namespace SOTS.NPCs
 					pool.Add(ModContent.NPCType<OtherworldlyConstructHead>(), 0.02f * constructRateMultiplier);
 					pool.Add(ModContent.NPCType<TwilightScouter>(), 0.01f);
 				}
-			}
-			else if(spawnInfo.player.ZoneSkyHeight)
-			{
-				if(spawnInfo.player.GetModPlayer<SOTSPlayer>().PhaseBiome)
-				{
-					if (NPC.CountNPCS(ModContent.NPCType<PhaseSpeeder>()) < 2) //only two speeders max
-						pool.Add(ModContent.NPCType<PhaseSpeeder>(), SpawnCondition.Sky.Chance * 2.4f);
-					if(NPC.CountNPCS(ModContent.NPCType<PhaseAssaulterHead>()) < 1) //only one assaulter max
-						pool.Add(ModContent.NPCType<PhaseAssaulterHead>(), SpawnCondition.Sky.Chance * 1.2f);
-				}
-				pool.Add(ModContent.NPCType<TwilightScouter>(), SpawnCondition.Sky.Chance * 0.4f);
 			}
 			else if (ZoneForest)
 			{
@@ -703,6 +683,18 @@ namespace SOTS.NPCs
 			else if (spawnInfo.spawnTileY <= Main.maxTilesY - 200)
 			{
 				pool.Add(ModContent.NPCType<GoldenTreasureSlime>(), SpawnCondition.Underground.Chance * 0.03f);
+			}
+			if (spawnInfo.player.ZoneSkyHeight)
+			{
+				if (spawnInfo.player.GetModPlayer<SOTSPlayer>().PhaseBiome)
+				{
+					if (NPC.CountNPCS(ModContent.NPCType<PhaseSpeeder>()) < 2) //only two speeders max
+						pool.Add(ModContent.NPCType<PhaseSpeeder>(), SpawnCondition.Sky.Chance * 2.4f);
+					if (NPC.CountNPCS(ModContent.NPCType<PhaseAssaulterHead>()) < 1) //only one assaulter max
+						pool.Add(ModContent.NPCType<PhaseAssaulterHead>(), SpawnCondition.Sky.Chance * 1.2f);
+				}
+				if(!ZonePlanetarium)
+					pool.Add(ModContent.NPCType<TwilightScouter>(), SpawnCondition.Sky.Chance * 0.4f);
 			}
 		}
 	}

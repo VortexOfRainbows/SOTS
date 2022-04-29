@@ -135,6 +135,7 @@ namespace SOTS.NPCs.Phase
                 }
             }
         }
+        int despawn = 0;
         public override bool PreAI()
         {
             if(runOnce)
@@ -144,6 +145,16 @@ namespace SOTS.NPCs.Phase
             }
             npc.TargetClosest();
             Player player = Main.player[npc.target];
+            if (player.dead || player.Distance(npc.Center) > 5400)
+            {
+                despawn++;
+            }
+            else if (despawn > 0)
+                despawn--;
+            if (despawn >= 300)
+            {
+                npc.active = false;
+            }
             float dist2 = (npc.Center - player.Center).Length();
             float farDist = 800f;
             npc.alpha = (int)(255f * (dist2 / farDist)) - 50;

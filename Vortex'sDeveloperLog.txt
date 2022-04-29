@@ -16,7 +16,7 @@ Big Objectives:
 3. Lux Balancing
 
 Update Objectives:
-1. Nature Plating Torch
+1. None :)
 
 Low Priority Objectives:
 1. Archaelogist NPC
@@ -26,6 +26,14 @@ Low Priority Objectives:
 5. Stars in Planetarium Sky
 6. Pulverizer (Upgrade to Bone Clapper)
 	1. 4 arms, 2 normal and 2 laser cannon
+
+4/29/22
+1. Phase Enemy spawnrates nerfed 0.33 -> 0.7
+	1. Now can spawn in phase around any biome
+2. Phase Assaulter now despawns properly
+3. Nature Plating Torch
+4. Reality Shatter nerfed on Subspace
+	1. could kill it extremely fast
 
 4/28/22
 1. Further decrease Earthen Construct spawn rate

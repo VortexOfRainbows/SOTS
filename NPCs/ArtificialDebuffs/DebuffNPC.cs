@@ -30,11 +30,16 @@ using SOTS.NPCs.Boss.CelestialSerpent;
 using SOTS.Items.GhostTown;
 using SOTS.NPCs.Boss.Lux;
 using SOTS.Items.Tools;
+using SOTS.Projectiles.Chaos;
 
 namespace SOTS.NPCs.ArtificialDebuffs
 {
     public class DebuffNPC : GlobalNPC
     {
+        public static int[] nerfBeeNPC;
+        public static int[] nerfBeeBoss;
+        public static int[] nerfBeeProj;
+        public static int[] nerfRealityShatter;
         public static int[] vanillaNPCHasVoidDamage;
         public static int[] miniBosses;
         public static int[] intimidating;
@@ -53,6 +58,10 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 NPCType<PutridPinkyPhase2>(), NPCType<Boss.Curse.PharaohsCurse>(), NPCType<TheAdvisorHead>(), NPCType<Polaris>(), NPCType<CelestialSerpentHead>(), NPCType<SubspaceSerpentHead>()};
             vanillaBoss = new int[] { NPCID.KingSlime, NPCID.EyeofCthulhu, NPCID.EaterofWorldsHead, NPCID.BrainofCthulhu, NPCID.QueenBee, NPCID.SkeletronHead, NPCID.WallofFlesh, NPCID.Spazmatism, NPCID.Retinazer, NPCID.TheDestroyer, NPCID.SkeletronPrime, NPCID.Plantera, NPCID.Golem, NPCID.DukeFishron, NPCID.CultistBoss, NPCID.MoonLordCore};
             miniBosses = new int[] { NPCID.Mothron, NPCID.IceQueen, NPCID.SantaNK1, NPCID.Everscream, NPCID.MourningWood, NPCID.Pumpking, NPCID.GoblinSummoner, NPCID.MartianSaucerCore, NPCID.LunarTowerSolar, NPCID.LunarTowerNebula, NPCID.LunarTowerStardust, NPCID.LunarTowerVortex };
+            nerfBeeNPC = new int[] { NPCType<PutridHook>() };
+            nerfBeeBoss = new int[] { NPCType<PutridPinkyPhase2>(), NPCType<Boss.Curse.PharaohsCurse>(), NPCType<TheAdvisorHead>() };
+            nerfBeeProj = new int[] { ProjectileID.Bee, ProjectileID.GiantBee };
+            nerfRealityShatter = new int[] { NPCType<SubspaceSerpentBody>(), NPCType<SubspaceSerpentHead>(), NPCType<SubspaceSerpentTail>() };
         }
         public override bool InstancePerEntity => true;
         public int PlatinumCurse = 0;
@@ -574,6 +583,18 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 DestableCurse += 4;
                 if (Main.myPlayer == player.whoAmI && Main.netMode == NetmodeID.MultiplayerClient)
                     SendClientChanges(player, npc);
+            }
+            if (nerfBeeProj.Contains(projectile.type))
+            {
+                if (nerfBeeBoss.Contains(npc.type))
+                    damage = (int)(damage * 0.8f);
+                if (nerfBeeNPC.Contains(npc.type))
+                    damage = (int)(damage * 0.6f);
+            }
+            if(projectile.type == ProjectileType<RealityShatter>())
+            {
+                if (nerfRealityShatter.Contains(npc.type))
+                    damage = (int)(damage * 0.3f);
             }
             base.ModifyHitByProjectile(npc, projectile, ref damage, ref knockback, ref crit, ref hitDirection);
         }
