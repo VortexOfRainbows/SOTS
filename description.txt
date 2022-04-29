@@ -1,21 +1,22 @@
-A mod which may have something to do with secrets and shadows.
-This mod's main plan is to add generated structures to the world, some are sort-of like roguelike dungeons.
+A mod which probably has something to do with Secrets and Shadows.
+This mod's main plan is to add structures and other unique generation to the world, which can act as dungeons or help spice up exploration.
 
 !! This mod is early in development !!
 !! A large world is recommended in order for the generated structures to spawn without overriding vanilla structures !!
 
 Bosses -> Currently 6, all with original AI!
-Items -> Nearly 450, unique gimmicks all around!
+Items -> Nearly 600, designed to unique!
+Ores -> 3
 
-New Subclass (void)
+New Subclass: Void
 -Unleash very powerful attacks, at a cost
 -High risk, high reward
 -Has melee, ranged, magic, and summon items
 
-Major Stuctures:
+Major Stuctures: 2
 -Pyramid Dungeon Worldgen
 -Planetarium Temple Worldgen
--Plus a handful of smaller structures
+-A generous amount of smaller structures
 
 Credits:
 (Current Developers)
@@ -24,29 +25,29 @@ Music, SFX, Direction, Art: Heart Plus Up!
 Code, Audio Engineering: apotofkoolaid
 Art: Mochi, MrPetkins 
 
-(Past Developers)
-Emotional Support, Direction, Art: Coolio
-Misc, Direction: FlameFreezer
-Music: BananaLizard
-Art: Blasfah
-
 (Contributors and Other Credits)
 Art: HugeKraken, Arcri, Pokerface
 Testers/Other: Mushnib~, Astrobit, DreadSoul, Crimsonkeep, Bman, TheoR
 Code: Graydee, ENNWAY, Qwerty3.14, OS, Nalyd T.
 Minor Art: Naka, DeJuiceTD, Nomis
 
+(Past Developers)
+Emotional Support, Direction, Art: Coolio
+Misc, Direction: FlameFreezer
+Music: BananaLizard
+Art: Blasfah
+
 Update 0.21.0 "The Construct Update"
--New worldgen structure in the Dungeon
--New Polaris summon shrine + 2 new ores
+-New worldgen structure in the Dungeon and Jungle
+-New Polaris summon shrine + 3 new ores
 -Added the 3 remaining Constructs, all Hardmode
 -Replaced Celestial Serpent with a new boss, Lux
--New items, enemies, and secrets
+-Reworked and added more items. New enemies
 -Void Reworks, such as enemies being able to deal void damage, and different void regen mechanics
 -Various balance changes
--Added a config option to lower the intesity of visuals and help with performance. Mainly affects certain boss related visuals
+-Added a config option to lower the intesity of visuals and help with performance. Mainly affects certain boss related visuals, lasers, trails, etc.
 -Many resprites and visual improvements
--Internal Optimizaions and Bug fixes
+-Internal Optimizations and many Bug fixes
 
 Update 0.20.2
 -A new item, Plasma Accelerator, and reworked Bore Bullets
