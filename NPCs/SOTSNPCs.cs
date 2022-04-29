@@ -163,7 +163,20 @@ namespace SOTS.NPCs
 						if (npc.type == ModContent.NPCType<PhaseAssaulterBody>())
 							Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/PhaseAssaulter/PhaseAssaulterBodyGore"), 1f);
 						if (npc.type == ModContent.NPCType<PhaseAssaulterTail>())
+						{
+							PhaseAssaulterTail tail = npc.modNPC as PhaseAssaulterTail;
+							if(Main.netMode != NetmodeID.Server)
+                            {
+								for (int i = 0; i < tail.trailPos.Length; i++)
+                                {
+									if(Main.rand.NextBool(3))
+									{
+										Dust.NewDust(tail.trailPos[i] - new Vector2(8, 8), 8, 8, 242, (float)(2 * hitDirection), -2f, 0, default, 2f);
+									}
+                                }
+                            }
 							Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/PhaseAssaulter/PhaseAssaulterTailGore"), 1f);
+						}
 					}
 				}
 			}
@@ -417,25 +430,30 @@ namespace SOTS.NPCs
 					if (Main.rand.NextBool(50))
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<BotanicalSymbiote>(), 1);
 				}
-				if(npc.type == ModContent.NPCType<TwilightScouter>())
+				if(npc.type == ModContent.NPCType<TwilightScouter>() || npc.type == ModContent.NPCType<PhaseAssaulterHead>())
 				{
 					if (Main.rand.NextBool(20))
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<GravityAnchor>(), 1);
-					if (Main.rand.NextBool(70))
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<ThundershockShortbow>(), 1);
 				}
-				if (npc.type == ModContent.NPCType<TwilightDevil>())
+				if (npc.type == ModContent.NPCType<TwilightDevil>() || npc.type == ModContent.NPCType<PhaseSpeeder>())
 				{
 					if (Main.rand.NextBool(20))
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<TwilightBeads>(), 1);
-					if (Main.rand.NextBool(70))
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<GravityAnchor>(), 1);
 				}
+				if (Main.rand.NextBool(70) && npc.type == ModContent.NPCType<TwilightScouter>())
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<ThundershockShortbow>(), 1);
+				if (Main.rand.NextBool(70) && npc.type == ModContent.NPCType<TwilightDevil>())
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<GravityAnchor>(), 1);
 			}
 		}
-		public override void EditSpawnRate(Player player, ref int spawnRate, ref int maxSpawns) 
+		public override void EditSpawnRate(Player player, ref int spawnRate, ref int maxSpawns)
 		{
-			if(player.GetModPlayer<SOTSPlayer>().PyramidBiome)
+			if (player.GetModPlayer<SOTSPlayer>().PhaseBiome) //spawnrates for this biome have to be very high due to how npc spawning in sky height works.
+			{
+				spawnRate = (int)(spawnRate * 0.33f); //quadruple spawn rates
+				maxSpawns = (int)(maxSpawns * 1f); //less maximum spawns
+			}
+			if (player.GetModPlayer<SOTSPlayer>().PyramidBiome)
 			{
 				spawnRate = (int)(spawnRate * 0.175f); //basically setting to 105
 				maxSpawns = (int)(maxSpawns * 1.5f);
@@ -540,6 +558,13 @@ namespace SOTS.NPCs
 			}
 			else if(spawnInfo.player.ZoneSkyHeight)
 			{
+				if(spawnInfo.player.GetModPlayer<SOTSPlayer>().PhaseBiome)
+				{
+					if (NPC.CountNPCS(ModContent.NPCType<PhaseSpeeder>()) < 2) //only two speeders max
+						pool.Add(ModContent.NPCType<PhaseSpeeder>(), SpawnCondition.Sky.Chance * 2.4f);
+					if(NPC.CountNPCS(ModContent.NPCType<PhaseAssaulterHead>()) < 1) //only one assaulter max
+						pool.Add(ModContent.NPCType<PhaseAssaulterHead>(), SpawnCondition.Sky.Chance * 1.2f);
+				}
 				pool.Add(ModContent.NPCType<TwilightScouter>(), SpawnCondition.Sky.Chance * 0.4f);
 			}
 			else if (ZoneForest)
@@ -617,7 +642,7 @@ namespace SOTS.NPCs
 						else if (player.ZoneRockLayerHeight && !player.ZoneUndergroundDesert)
 						{
 							if(player.statLifeMax2 >= 140)
-								pool.Add(ModContent.NPCType<EarthenConstruct>(), 0.0025f * constructRateMultiplier);
+								pool.Add(ModContent.NPCType<EarthenConstruct>(), 0.002f * constructRateMultiplier);
 						}
 						else if(player.ZoneDesert && !player.ZoneUndergroundDesert)
 							pool.Add(ModContent.NPCType<EarthenConstruct>(), 0.01f * constructRateMultiplier); //this is desert spawn so it shouldn't require additional healthgating

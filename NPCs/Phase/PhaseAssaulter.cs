@@ -3,6 +3,11 @@ using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
+using SOTS.Items.Banners;
+using SOTS.Items.Chaos;
+using SOTS.Items.Fragments;
+using SOTS.Items.Otherworld.FromChests;
+using SOTS.Projectiles.Chaos;
 using SOTS.Void;
 using Terraria;
 using Terraria.ID;
@@ -12,6 +17,10 @@ namespace SOTS.NPCs.Phase
 {
     public class PhaseAssaulterHead : ModNPC
     {
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Phase Assaulter");
+        }
         Vector2 directVelo;
         public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
         {
@@ -44,6 +53,8 @@ namespace SOTS.NPCs.Phase
             npc.value = Item.buyPrice(0, 3, 20, 0);
             npc.npcSlots = 3f;
             npc.netAlways = true;
+            banner = npc.type;
+            bannerItem = ModContent.ItemType<PhaseAssaulterBanner>();
             SetupDebuffImmunities();
         }
         public void SetupDebuffImmunities()
@@ -65,7 +76,16 @@ namespace SOTS.NPCs.Phase
         }
         public override void NPCLoot()
         {
-
+            if (!Main.rand.NextBool(3))
+                Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<PhaseOre>(), Main.rand.Next(6) + 5); //drops 5 to 10 ore at a time, since you need quite a lot
+            if (Main.rand.NextBool(5))
+                Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<FragmentOfChaos>(), 1);
+            if (Main.rand.NextBool(8))
+                Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<TwilightShard>(), 1);
+            if (Main.rand.NextBool(11))
+                Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<FragmentOfOtherworld>(), 1);
+            if (Main.rand.NextBool(20))
+                Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<PhaseBar>(), 1);
         }
         public override void AI()
         {
@@ -78,7 +98,27 @@ namespace SOTS.NPCs.Phase
                 dust.alpha = (int)MathHelper.Clamp(npc.alpha - 20, 0, 255);
             }
             Player player = Main.player[npc.target];
-            npc.ai[1]++;
+            float dist2 = (npc.Center - player.Center).Length();
+
+            if(dist2 < 480 || npc.ai[1] >= 300)
+            {
+                int damage = npc.damage / 2;
+                if (Main.expertMode)
+                {
+                    damage = (int)(damage / Main.expertDamage);
+                }
+                npc.ai[1]++;
+                if ((int)npc.ai[1] == 300)
+                {
+                    Vector2 outward = new Vector2(0, -1).RotatedBy(npc.rotation);
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        Projectile.NewProjectile(npc.Center + outward * 32, outward * 6f, ModContent.ProjectileType<PhaseEraser>(), (int)(damage * 0.7f), 0, Main.myPlayer, npc.whoAmI);
+                    }
+                }
+                if (npc.ai[1] > 600)
+                    npc.ai[1] = -120;
+            }
         }
         bool runOnce = true;
         public override void PostAI()
@@ -104,6 +144,16 @@ namespace SOTS.NPCs.Phase
             }
             npc.TargetClosest();
             Player player = Main.player[npc.target];
+            float dist2 = (npc.Center - player.Center).Length();
+            float farDist = 800f;
+            npc.alpha = (int)(255f * (dist2 / farDist)) - 50;
+            npc.alpha = (int)MathHelper.Clamp(npc.alpha, 0, 255);
+            if (npc.alpha > 200)
+            {
+                npc.dontTakeDamage = true;
+            }
+            else
+                npc.dontTakeDamage = false;
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 if (npc.ai[0] < 0)
@@ -126,12 +176,12 @@ namespace SOTS.NPCs.Phase
             }
             DoWormStuff();
             npc.rotation = directVelo.ToRotation() + 1.57f;
-            return npc.life < npc.lifeMax;
+            return true;
         }
         public void DoWormStuff()
         {
-            float speed = 11f;
-            float acceleration = 0.16f;
+            float speed = 14f;
+            float acceleration = 0.09f;
             Vector2 npcCenter = npc.Center;
             Vector2 targetPos = Main.player[npc.target].Center;
             float targetRoundedPosX = targetPos.X;
@@ -211,6 +261,10 @@ namespace SOTS.NPCs.Phase
     }
     public class PhaseAssaulterBody : ModNPC
     {
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Phase Assaulter");
+        }
         public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
         {
             Texture2D texture = Main.npcTexture[npc.type];
@@ -241,6 +295,8 @@ namespace SOTS.NPCs.Phase
             npc.value = 10000;
             npc.HitSound = SoundID.NPCHit4;
             npc.DeathSound = SoundID.NPCDeath14;
+            banner = ModContent.NPCType<PhaseAssaulterHead>();
+            bannerItem = ModContent.ItemType<PhaseAssaulterBanner>();
             SetupDebuffImmunities();
         }
         public void SetupDebuffImmunities()
@@ -273,9 +329,18 @@ namespace SOTS.NPCs.Phase
             }
             if (npc.ai[3] > 0)
                 npc.realLife = (int)npc.ai[3];
-            if (npc.target < 0 || npc.target == byte.MaxValue || Main.player[npc.target].dead)
-                npc.TargetClosest(true);
-
+            npc.TargetClosest();
+            Player player = Main.player[npc.target];
+            float dist2 = (npc.Center - player.Center).Length();
+            float farDist = 800f;
+            npc.alpha = (int)(255f * (dist2 / farDist)) - 50;
+            npc.alpha = (int)MathHelper.Clamp(npc.alpha, 0, 255);
+            if (npc.alpha > 200)
+            {
+                npc.dontTakeDamage = true;
+            }
+            else
+                npc.dontTakeDamage = false;
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 if (!Main.npc[(int)npc.ai[1]].active)
@@ -327,6 +392,10 @@ namespace SOTS.NPCs.Phase
     }
     public class PhaseAssaulterTail : ModNPC
     {
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Phase Assaulter");
+        }
         public void TrailPreDraw(SpriteBatch spriteBatch)
         {
             Texture2D texture = ModContent.GetTexture("SOTS/NPCs/Phase/PhaseSpeederTrail");
@@ -379,6 +448,8 @@ namespace SOTS.NPCs.Phase
             npc.value = 100000;
             npc.HitSound = SoundID.NPCHit4;
             npc.DeathSound = SoundID.NPCDeath14;
+            banner = ModContent.NPCType<PhaseAssaulterHead>();
+            bannerItem = ModContent.ItemType<PhaseAssaulterBanner>();
             SetupDebuffImmunities();
         }
         public void SetupDebuffImmunities()
@@ -398,7 +469,7 @@ namespace SOTS.NPCs.Phase
         {
             return false;
         }
-        Vector2[] trailPos = new Vector2[120];
+        public Vector2[] trailPos = new Vector2[120];
         public void cataloguePos()
         {
             Vector2 current = npc.Center + new Vector2(0, 8).RotatedBy(npc.rotation);
@@ -424,9 +495,18 @@ namespace SOTS.NPCs.Phase
             cataloguePos();
             if (npc.ai[3] > 0)
                 npc.realLife = (int)npc.ai[3];
-            if (npc.target < 0 || npc.target == byte.MaxValue || Main.player[npc.target].dead)
-                npc.TargetClosest(true);
-
+            npc.TargetClosest();
+            Player player = Main.player[npc.target];
+            float dist2 = (npc.Center - player.Center).Length();
+            float farDist = 800f;
+            npc.alpha = (int)(255f * (dist2 / farDist)) - 50;
+            npc.alpha = (int)MathHelper.Clamp(npc.alpha, 0, 255);
+            if (npc.alpha > 200)
+            {
+                npc.dontTakeDamage = true;
+            }
+            else
+                npc.dontTakeDamage = false;
             if (Main.netMode != 1)
             {
                 if (!Main.npc[(int)npc.ai[1]].active)

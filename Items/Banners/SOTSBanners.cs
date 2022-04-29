@@ -751,6 +751,9 @@ namespace SOTS.Items.Banners
 				case 12:
 					item = ItemType<PhaseSpeederBanner>();
 					break;
+				case 13:
+					item = ItemType<PhaseAssaulterBanner>();
+					break;
 				default:
 					return;
 			}
@@ -804,6 +807,13 @@ namespace SOTS.Items.Banners
 						break;
 					case 12:
 						type = NPCType<PhaseSpeeder>();
+						break;
+					case 13:
+						type = NPCType<PhaseAssaulterHead>();
+						player.NPCBannerBuff[NPCType<PhaseAssaulterBody>()] = true;
+						player.hasBanner = true;
+						player.NPCBannerBuff[NPCType<PhaseAssaulterTail>()] = true;
+						player.hasBanner = true;
 						break;
 					default:
 						return;
@@ -923,6 +933,14 @@ namespace SOTS.Items.Banners
 		{
 			item.createTile = TileType<SOTSBanners2>();
 			item.placeStyle = 12;
+		}
+	}
+	public class PhaseAssaulterBanner : ModBanner
+	{
+		public override void SafeSetDefaults()
+		{
+			item.createTile = TileType<SOTSBanners2>();
+			item.placeStyle = 13;
 		}
 	}
 }

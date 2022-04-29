@@ -47,7 +47,7 @@ namespace SOTS.NPCs.Phase
             npc.width = 62;
             npc.height = 54;
             npc.value = Item.buyPrice(0, 0, 40, 0);
-            npc.npcSlots = 1f;
+            npc.npcSlots = 1.5f;
 			npc.HitSound = SoundID.NPCHit4;
 			npc.DeathSound = SoundID.NPCDeath14;
 			npc.lavaImmune = true;
@@ -296,6 +296,16 @@ namespace SOTS.NPCs.Phase
 			}
 			else
 			{
+				if (Main.netMode != NetmodeID.Server)
+				{
+					for (int i = 0; i < trailPos.Length; i++)
+					{
+						if (Main.rand.NextBool(3))
+						{
+							Dust.NewDust(trailPos[i] - new Vector2(8, 8), 8, 8, 242, (float)(2 * hitDirection), -2f, 0, default, 2f);
+						}
+					}
+				}
 				for (int k = 0; k < 50; k++)
 				{
 					if (k % 4 == 0)
