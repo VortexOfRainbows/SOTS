@@ -81,15 +81,15 @@ namespace SOTS.NPCs.Phase
         public override void NPCLoot()
         {
             if (!Main.rand.NextBool(3))
-                Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<PhaseOre>(), Main.rand.Next(6) + 5); //drops 5 to 10 ore at a time, since you need quite a lot
+                Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<PhaseOre>(), Main.rand.Next(6) + 6); //drops 6 to 11 ore at a time, since you need quite a lot
             if (Main.rand.NextBool(5))
                 Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<FragmentOfChaos>(), 1);
             if (Main.rand.NextBool(8))
                 Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<TwilightShard>(), 1);
             if (Main.rand.NextBool(11))
                 Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<FragmentOfOtherworld>(), 1);
-            if (Main.rand.NextBool(20))
-                Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<PhaseBar>(), 1);
+            //if (Main.rand.NextBool(20))
+               // Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<PhaseBar>(), 1);
         }
         public override void AI()
         {

@@ -267,15 +267,15 @@ namespace SOTS.NPCs.Phase
 		public override void NPCLoot()
 		{
 			if (Main.rand.NextBool(5))
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<PhaseOre>(), Main.rand.Next(3) + 3); //drops 3 to 5 ore at a time, since you need quite a lot
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<PhaseOre>(), Main.rand.Next(3) + 4); //drops 4 to 6 ore at a time, since you need quite a lot
 			if (Main.rand.NextBool(8))
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<FragmentOfChaos>(), 1);
 			if (Main.rand.NextBool(12))
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<TwilightShard>(), 1);
 			if (Main.rand.NextBool(20))
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<FragmentOfOtherworld>(), 1);
-			if (Main.rand.NextBool(40))
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<PhaseBar>(), 1);
+			//if (Main.rand.NextBool(40))
+				//Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<PhaseBar>(), 1);
 
 		}
         public override void HitEffect(int hitDirection, double damage)

@@ -45,6 +45,7 @@ Low Priority Objectives:
 7. Phase Assaulter max life (9500, 19000) -> (9500, 15000)
 	1. Phase speeder dies pretty quick but still poses a threat (increased defense 40 -> 42)
 	2. Assaulter is very hard to kill, deserving of a nerf
+8. Undecrease Earthen Construct rate (0.002 -> 0.0025)
 
 4/28/22
 1. Further decrease Earthen Construct spawn rate
