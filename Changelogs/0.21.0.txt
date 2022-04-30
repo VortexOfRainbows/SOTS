@@ -1,0 +1,84 @@
+0.21.0:
+
+
+Additions (generalized):
+Fidelity Mode: A config that makes certain visual effects less intesive
+New Boss: Lux
+New Constructs: Evil, Inferno, Chaos
+New Items and Enemies
+New Furniture and Sprites
+New Accessory Reforges: Chained and Soulbound
+New Recipes
+Cursed Armor Set
+
+
+Changes:
+Added config options for the void bar
+Reworked many item functionalities
+Reworked void mechanics
+Earthen Construct spawnrates lowered by a lot
+Lesser wisp spawnrates decreased a lot
+Treasure slimes drop more peanuts
+Blue Slimers only spawn post-king slime
+Planetarium Blocks can be broken with pickaxe power 60
+Ghasts can now travel through walls
+Many recipe changes
+Adjusted some Treasure Slime loot pools
+
+
+Balance Changes:
+Buff:
+Pharaohs curse now has more health and defense
+Vibrant Blade: damage 15 -> 17
+Sandstone Edge: size 1.0 -> 1.4
+Cursed Gauntlet: usetime 12 -> 24, cost 3 -> 4, but fires two bursts at once
+Abyssal Fury: damage 57 -> 50, but can be crafted earlier
+Spectre Spirit Sotrm: damage 58 -> 70, usetime 13 -> 15
+Focus Crystal: crit bonus damage 60 -> 50, but can be crafted earlier
+Teratoma: defense 16 -> 20, increased KB resist and expert health multiplier
+
+Nerf:
+Acorn Bag: damage 7 -> 6, attack cooldown 17 -> 20
+Gold Arc Staff: damage 40 -> 34, void cost 3 -> 4
+Aten: damage 210% -> 140%
+Bore Bullets: damage 9 -> 11, but doesn't hit the same enemy multiple times
+Lashes of Lightning: mana cost 18 -> 20, damage 30 -> 26
+Doomstick: Damage 31 -> 27
+Voidspace Aura Staff: endurance 5% -> 4%
+Bulwark of the Ancients: endurance 7% -> 5%, now tiered after Lux
+Calculator: homing range 120 -> 96
+Foggy Clairvoyance: damage buff 35% -> 15%
+Subspace Locket: decreases damage by 25% (multiplicate)
+Spirit Staves:
+Earthen: damage 16 -> 14, cost 20 -> 25
+Permafrost: damage 19 -> 17
+Otherworld: damage 30 -> 25, cost 65 -> 75
+Chaos: damage 48 -> 60, but is harder to obtain
+
+Decreased damage of Tiny Planet, Arcane Aqueduct, and following recipes, but can stack with each other
+Focus Reticle is now craftable pre-moonlord, but has been split into multiple accessories
+Awakened, Omniscient accessory bonuses give less max void, but are 3x as common
+
+
+Misc:
+Removed Maldite blocks
+Replaced goblinsteel with Ancient Steel
+Celestial Serpent can no longer be summoned by normal means
+Replace Celestial Serpent drops
+Material Bars can be placed
+Steamlined and optimized many internals
+Reorganized many internals
+
+
+Bug Fixes:
+Old ones army no longer drops SOTS items
+Fixed treasure bag stack sizes, can now give dev armor
+Polaris tries to exit the floor
+Frigid Robe is properly colored
+Glowmasks now work on sloped blocks
+Transmutation Table now sends a reasonable amount of packets in multiplayer
+Fixed obscure bug with void costs in multiplayer being manipulatable by player ids and holding void items
+Fixed bug where Pharaohs Curse could become invisible in Phase 2 in multiplayer
+Subspace Serpent now inherits modded sword effects
+*Attempted fix at Earthen Construct crash
+

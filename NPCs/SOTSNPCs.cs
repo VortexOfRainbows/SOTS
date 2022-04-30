@@ -622,7 +622,7 @@ namespace SOTS.NPCs
 						else if (player.ZoneRockLayerHeight && !player.ZoneUndergroundDesert)
 						{
 							if(player.statLifeMax2 >= 140)
-								pool.Add(ModContent.NPCType<EarthenConstruct>(), 0.002f * constructRateMultiplier);
+								pool.Add(ModContent.NPCType<EarthenConstruct>(), 0.0025f * constructRateMultiplier);
 						}
 						else if(player.ZoneDesert && !player.ZoneUndergroundDesert)
 							pool.Add(ModContent.NPCType<EarthenConstruct>(), 0.01f * constructRateMultiplier); //this is desert spawn so it shouldn't require additional healthgating
