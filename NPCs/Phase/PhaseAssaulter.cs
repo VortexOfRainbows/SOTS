@@ -57,6 +57,10 @@ namespace SOTS.NPCs.Phase
             bannerItem = ModContent.ItemType<PhaseAssaulterBanner>();
             SetupDebuffImmunities();
         }
+        public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+        {
+            npc.lifeMax = 15000;
+        }
         public void SetupDebuffImmunities()
         {
             npc.buffImmune[BuffID.OnFire] = true;

@@ -28,12 +28,23 @@ Low Priority Objectives:
 	1. 4 arms, 2 normal and 2 laser cannon
 
 4/29/22
-1. Phase Enemy spawnrates nerfed 0.33 -> 0.7
+1. Phase Enemy spawnrates nerfed 0.33 -> 1.0
 	1. Now can spawn in phase around any biome
+	2. Increase weighting as to drown out vanilla and other spawns
 2. Phase Assaulter now despawns properly
 3. Nature Plating Torch
 4. Reality Shatter nerfed on Subspace
 	1. could kill it extremely fast
+5. Lux Damage (100, 160) -> (100, 150), defense 50 -> 46
+	1. Lux takes 110% from melee sources, 92% from ranged, magic
+		1. Summoner feels fine	
+		2. Blizzard staff 80%
+	2. Beta testers have incredible troubles with this fight (though without fishron gear)
+6. Blaspha damage 47 -> 43
+	1. Kills Lux faster than everything else in its tier
+7. Phase Assaulter max life (9500, 19000) -> (9500, 15000)
+	1. Phase speeder dies pretty quick but still poses a threat (increased defense 40 -> 42)
+	2. Assaulter is very hard to kill, deserving of a nerf
 
 4/28/22
 1. Further decrease Earthen Construct spawn rate

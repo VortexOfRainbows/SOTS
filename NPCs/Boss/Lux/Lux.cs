@@ -257,7 +257,7 @@ namespace SOTS.NPCs.Boss.Lux
 			npc.aiStyle = -1;
             npc.lifeMax = 60000; 
             npc.damage = 100; 
-            npc.defense = 50;   
+            npc.defense = 46;   
             npc.knockBackResist = 0f;
             npc.width = 70;
             npc.height = 70;
@@ -317,7 +317,7 @@ namespace SOTS.NPCs.Boss.Lux
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
 		{
 			npc.lifeMax = (int)(npc.lifeMax * bossLifeScale * 0.8f); //96000 hp
-			npc.damage = (int)(npc.damage * 0.8f); //160 damage
+			npc.damage = (int)(npc.damage * 0.75f); //150 damage
 		}
 		bool runOnce = true;
 		public bool TargettingUnit()

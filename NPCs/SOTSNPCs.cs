@@ -440,8 +440,8 @@ namespace SOTS.NPCs
 		{
 			if (player.GetModPlayer<SOTSPlayer>().PhaseBiome) //spawnrates for this biome have to be very high due to how npc spawning in sky height works.
 			{
-				spawnRate = (int)(spawnRate * 0.7f);
-				maxSpawns = (int)(maxSpawns * 1f); //less maximum spawns
+				spawnRate = (int)(spawnRate * 1.0f);
+				maxSpawns = (int)(maxSpawns * 0.9f); //slightly less maximum spawns
 			}
 			if (player.GetModPlayer<SOTSPlayer>().PyramidBiome)
 			{
@@ -689,9 +689,9 @@ namespace SOTS.NPCs
 				if (spawnInfo.player.GetModPlayer<SOTSPlayer>().PhaseBiome)
 				{
 					if (NPC.CountNPCS(ModContent.NPCType<PhaseSpeeder>()) < 2) //only two speeders max
-						pool.Add(ModContent.NPCType<PhaseSpeeder>(), SpawnCondition.Sky.Chance * 2.4f);
+						pool.Add(ModContent.NPCType<PhaseSpeeder>(), SpawnCondition.Sky.Chance * 10f);
 					if (NPC.CountNPCS(ModContent.NPCType<PhaseAssaulterHead>()) < 1) //only one assaulter max
-						pool.Add(ModContent.NPCType<PhaseAssaulterHead>(), SpawnCondition.Sky.Chance * 1.2f);
+						pool.Add(ModContent.NPCType<PhaseAssaulterHead>(), SpawnCondition.Sky.Chance * 5f);
 				}
 				if(!ZonePlanetarium)
 					pool.Add(ModContent.NPCType<TwilightScouter>(), SpawnCondition.Sky.Chance * 0.4f);

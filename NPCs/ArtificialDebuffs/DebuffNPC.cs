@@ -596,6 +596,21 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 if (nerfRealityShatter.Contains(npc.type))
                     damage = (int)(damage * 0.3f);
             }
+            if(npc.type == ModContent.NPCType<Lux>())
+            {
+                if(projectile.melee)
+                {
+                    damage = (int)(damage * 1.1f);
+                }
+                if (projectile.type == ProjectileID.Blizzard)
+                {
+                    damage = (int)(damage * 0.8f);
+                }
+                else if (projectile.ranged || projectile.magic)
+                {
+                    damage = (int)(damage * 0.92f);
+                }
+            }
             base.ModifyHitByProjectile(npc, projectile, ref damage, ref knockback, ref crit, ref hitDirection);
         }
         public override void ModifyHitByItem(NPC npc, Player player, Item item, ref int damage, ref float knockback, ref bool crit)

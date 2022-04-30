@@ -42,7 +42,7 @@ namespace SOTS.NPCs.Phase
             npc.aiStyle = -1; 
             npc.lifeMax = 650;   
             npc.damage = 64; 
-            npc.defense = 40;  
+            npc.defense = 42;  
             npc.knockBackResist = 0f; //take no knockback
             npc.width = 62;
             npc.height = 54;
