@@ -51,12 +51,12 @@ namespace SOTS.Items.Chaos
 		}
 		public override void SetDefaults()
 		{
-			item.damage = 120;
+			item.damage = 80;
 			item.melee = true;
 			item.width = 90;
 			item.height = 98;
-			item.useTime = 15;
-			item.useAnimation = 15;
+			item.useTime = 20;
+			item.useAnimation = 20;
 			item.useStyle = 1;
 			item.knockBack = 5.5f;
 			item.value = Item.sellPrice(0, 12, 0, 0);

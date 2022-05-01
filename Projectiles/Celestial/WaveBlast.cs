@@ -42,7 +42,7 @@ namespace SOTS.Projectiles.Celestial
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
 			Color color = new Color(100, 255, 100, 0);
 			if ((int)projectile.ai[0] == 1)
-				color = new Color(255, 100, 100, 0);
+				color = new Color(185, 39, 23, 0) * 1.5f;
 			int amt = 60;
 			if (SOTS.Config.lowFidelityMode)
 				amt = 90;
@@ -89,7 +89,12 @@ namespace SOTS.Projectiles.Celestial
             }
 			Vector2 velo = projectile.velocity * mult;
 			projectile.position += velo;
-			Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 0.1f / 255f, (255 - projectile.alpha) * 0.9f / 255f, (255 - projectile.alpha) * 0.3f / 255f);
+			if (projectile.ai[0] == 1)
+			{
+				Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 0.9f / 255f, (255 - projectile.alpha) * 0.2f / 255f, (255 - projectile.alpha) * 0.1f / 255f);
+			}
+			else
+				Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 0.1f / 255f, (255 - projectile.alpha) * 0.9f / 255f, (255 - projectile.alpha) * 0.3f / 255f);
 			projectile.rotation = (float)Math.Atan2((double)projectile.velocity.Y, (double)projectile.velocity.X);
 		}
         public override bool ShouldUpdatePosition()

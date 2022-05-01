@@ -21,7 +21,7 @@ namespace SOTS.NPCs.Constructs
 		Vector2 baseVelo = Vector2.Zero;
 		public void WingStuff()
 		{
-			npc.ai[3]++;
+			npc.ai[3] += 1.5f;
 			npc.ai[2] += 7.5f * wingSpeedMult;
 			float dipAndRise = (float)Math.Sin(MathHelper.ToRadians(npc.ai[2]));
 			//dipAndRise *= (float)Math.sqrt(dipAndRise);
@@ -37,9 +37,12 @@ namespace SOTS.NPCs.Constructs
 			Vector2 ownerCenter = lastCenter;
 			float dynamicScaling = (float)Math.Sin(MathHelper.ToRadians(npc.ai[2] * 0.15f)) * 10;
 			float moreScaling = 1.1f - 0.1f * Math.Abs(dynamicScaling) / 10f;
+			float tightenScale = ((ownerCenter - npc.Center).Length() - 300) / 80f;
+			tightenScale = 1 - tightenScale;
+			tightenScale = MathHelper.Clamp(tightenScale, 0, 1);
 			Vector2 p0 = ownerCenter;
-			Vector2 p1 = ownerCenter - baseVelo.RotatedBy(MathHelper.ToRadians(180 + dynamicScaling)) * 4f * moreScaling;
-			Vector2 p2 = npc.Center - baseVelo * 8f * moreScaling;
+			Vector2 p1 = ownerCenter - baseVelo.RotatedBy(MathHelper.ToRadians(180 + dynamicScaling)) * 4f * moreScaling * tightenScale;
+			Vector2 p2 = npc.Center - baseVelo * 8f * moreScaling * tightenScale;
 			Vector2 p3 = npc.Center;
 			int segments = 16;
 			for (int i = 0; i < segments; i++)

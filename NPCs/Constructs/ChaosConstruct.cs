@@ -171,9 +171,8 @@ namespace SOTS.NPCs.Constructs
 					{
 						Dust.NewDust(npc.position, npc.width, npc.height, DustID.Platinum, 2.5f * (float)hitDirection, -2.5f, 0, default(Color), 0.7f);
 					}
-					Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/ChaosConstruct/ChaosConstructGore1"), 1f);
-					Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/ChaosConstruct/ChaosConstructGore2"), 1f);
-					Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/ChaosConstruct/ChaosConstructGore5"), 1f);
+					for (int i = 1; i <= 7; i++)
+						Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/ChaosConstruct/ChaosConstructGore" + i), 1f);
 					for (int i = 0; i < 9; i++)
 						Gore.NewGore(npc.position, npc.velocity, Main.rand.Next(61, 64), 1f);
                 }
@@ -348,8 +347,8 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override void NPCLoot()
 		{
-			int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<ChaosRubble>());	
-			Main.npc[n].velocity.Y = 3f;
+			int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<ChaosRubble>());
+			Main.npc[n].velocity = npc.oldVelocity + Main.rand.NextVector2Circular(5, 5);
 			if (Main.netMode != NetmodeID.MultiplayerClient)
 				Main.npc[n].netUpdate = true;
 			n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<ChaosSpirit>(), 0, n, 0, counter2);
