@@ -24,6 +24,7 @@ Planetarium Blocks can be broken with pickaxe power 60
 Ghasts can now travel through walls
 Many recipe changes
 Adjusted some Treasure Slime loot pools
+Reworked Ice Monument Structure
 
 
 Balance Changes:
@@ -63,7 +64,7 @@ Awakened, Omniscient accessory bonuses give less max void, but are 3x as common
 Misc:
 Removed Maldite blocks
 Replaced goblinsteel with Ancient Steel
-Celestial Serpent can no longer be summoned by normal means
+Celestial Serpent is gone
 Replace Celestial Serpent drops
 Material Bars can be placed
 Streamlined and optimized many internals
