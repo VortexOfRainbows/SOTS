@@ -32,7 +32,7 @@ namespace SOTS.Items
 		    recipe.AddIngredient(ItemID.FrostsparkBoots, 1);
 			recipe.AddIngredient(ItemID.LavaWaders, 1);
 			recipe.AddIngredient(ModContent.ItemType<AbsoluteBar>(), 12);
-			recipe.AddTile(TileID.TinkerersWorkbench);
+            recipe.AddTile(TileID.TinkerersWorkbench);
 			recipe.SetResult(this);
 			recipe.AddRecipe();
 		}
@@ -172,7 +172,7 @@ namespace SOTS.Items
             bool doAccel1 = false;
             bool doAccel2 = false;
             float doubleRun = player.runAcceleration * 2.5f;
-            float doubleAcc = 13f;
+            float doubleAcc = 10f;
             bool doDust = false;
             bool otherDust = false;
             float num1 = (doubleAcc + player.maxRunSpeed) / 1.4f;
@@ -186,7 +186,7 @@ namespace SOTS.Items
                 else if ((player.itemAnimation == 0 || player.inventory[player.selectedItem].useTurn) && player.mount.AllowDirectionChange)
                     player.direction = -1;
                 doAccel1 = true;
-                float speedMod = 0.25f;
+                float speedMod = 0.35f;
                 if(player.velocity.X < -player.accRunSpeed && player.velocity.Y == 0.0)
                 {
                     otherDust = true;
@@ -210,7 +210,7 @@ namespace SOTS.Items
                 else if ((player.itemAnimation == 0 || player.inventory[player.selectedItem].useTurn) && player.mount.AllowDirectionChange)
                     player.direction = 1;
                 doAccel2 = true;
-                float speedMod = 0.25f;
+                float speedMod = 0.35f;
                 if (player.velocity.X > player.accRunSpeed && player.velocity.Y == 0.0)
                 {
                     otherDust = true;

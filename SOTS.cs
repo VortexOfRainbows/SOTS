@@ -781,7 +781,7 @@ namespace SOTS
 					(Func<bool>)(() => SOTSWorld.downedLux),
 					new List<int>() { ModContent.ItemType<ElectromagneticLure>() },
 					new List<int>() { },
-					new List<int>() { ModContent.ItemType<LuxBag>(), ModContent.ItemType<DissolvingBrilliance>(), ModContent.ItemType<PhaseOre>() },
+					new List<int>() { ModContent.ItemType<LuxBag>(), ModContent.ItemType<DissolvingBrilliance>(), ModContent.ItemType<PhaseOre>(), ItemID.SoulofLight },
 					"Anger a Chaos Spirit",
 					"",
 					"SOTS/BossCL/LuxBossLog",

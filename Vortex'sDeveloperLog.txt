@@ -9,6 +9,7 @@ The following is my development plans :D
 Known Bugs/Issues:
 1. Player freezing completely, locking out menu (conditions unknown)
 	1. Probably caused by some weird interaction in SOTSDetours.UpdatePlayer
+2. Game crashes with Recipe Browser enabled
 
 Big Objectives:
 1. Starmap and Digital Daito Obtaining
@@ -16,7 +17,12 @@ Big Objectives:
 3. Lux Balancing
 
 Update Objectives:
-1. None :)
+1. Buff Lux survivability during Second Phase Split attack
+2. Fix bugs regarding crash with Recipe Browser
+3. Nerf Flashspark max speed and boost speed
+	1. Add upgrade with dashing activation (Tabi)
+4. Pulverizer (Upgrade to Bone Clapper)
+	1. 4 arms, 2 normal and 2 laser cannon
 
 Low Priority Objectives:
 1. Archaelogist NPC
@@ -24,8 +30,26 @@ Low Priority Objectives:
 3. Void Bar strike the player during void shock
 4. Fix Planetarium sky island spawning in tandum
 5. Stars in Planetarium Sky
-6. Pulverizer (Upgrade to Bone Clapper)
-	1. 4 arms, 2 normal and 2 laser cannon
+
+
+5/1/22
+1. Attempted a fix for the Recipe Browser crash
+2. Lux defense 46 -> 60
+	1. Lux takes 8% -> 12% less damage from Ranged and Magic attacks
+	2. 26% less from blizzard staff
+	3. 10% -> 8% more from melee attacks
+	4. Takes 65% less damage during split attacks and 30% less during laser orb attack
+3. Reality Shatter does 20% less damage to bosses with its slash attacks
+4. Nerf Flashspark boots boost and max speed
+	1. The boost speed nerf actually makes the item more usable imo
+	1. 67 mph (34 frostspark) -> 51 mph
+
+
+-- Update 0.21.0 -- ALSO BIRTHDAY WOOOO
+
+
+4/30/22
+1. Final polishing before getting the update out!
 
 4/29/22
 1. Phase Enemy spawnrates nerfed 0.33 -> 1.0

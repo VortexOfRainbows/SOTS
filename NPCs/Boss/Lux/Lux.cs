@@ -257,7 +257,7 @@ namespace SOTS.NPCs.Boss.Lux
 			npc.aiStyle = -1;
             npc.lifeMax = 60000; 
             npc.damage = 100; 
-            npc.defense = 46;   
+            npc.defense = 60;   
             npc.knockBackResist = 0f;
             npc.width = 70;
             npc.height = 70;
@@ -275,7 +275,35 @@ namespace SOTS.NPCs.Boss.Lux
 			SetupDebuffImmunities();
 			bossBag = ModContent.ItemType<LuxBag>();
 		}
-		public void SetupDebuffImmunities()
+        public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+		{
+			if (projectile.melee)
+			{
+				damage = (int)(damage * 1.08f);
+			}
+			if (projectile.type == ProjectileID.Blizzard)
+			{
+				damage = (int)(damage * 0.74f);
+			}
+			else if (projectile.ranged || projectile.magic)
+			{
+				damage = (int)(damage * 0.88f);
+			}
+			float damageMult = 1;
+			switch(attackPhase)
+            {
+				case LaserOrbPhase:
+					damageMult = 0.7f;
+					break;
+				case RGBTransition:
+				case RGBPhase:
+					damageMult = 0.35f;
+					break;
+			}
+			if (damageMult != 1)
+				damage = (int)(damage * damageMult);
+		}
+        public void SetupDebuffImmunities()
         {
 			npc.buffImmune[BuffID.OnFire] = true;
 			npc.buffImmune[BuffID.Poisoned] = true;
@@ -286,9 +314,10 @@ namespace SOTS.NPCs.Boss.Lux
 		}
         public override void BossLoot(ref string name, ref int potionType)
         {
-			if(!SOTSWorld.downedLux)
+			if(!SOTSWorld.downedLux && SOTSWorld.GlobalCounter > 120) //have to be in world for more than 2 seconds. Objective is to hopefully prevent recipe browser from crashing the game.
             {
-				PhaseWorldgenHelper.Generate();
+				if(!Main.gameInactive)
+					PhaseWorldgenHelper.Generate();
 				SOTSWorld.downedLux = true;
 			}
 			potionType = ItemID.GreaterHealingPotion;

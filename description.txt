@@ -37,6 +37,11 @@ Misc, Direction: FlameFreezer
 Music: BananaLizard
 Art: Blasfah
 
+Update 0.21.1
+-Attempted a fix for Recipe Browser crash
+-Buffed Lux's survivablity across the board
+-Other balance related changes
+
 Update 0.21.0 "The Construct Update"
 -New worldgen structure in the Dungeon and Jungle
 -New Polaris summon shrine + 3 new ores

@@ -1,0 +1,4 @@
+0.21.1:
+1. Attempted a fix for Recipe Browser crash
+2. Buffed Lux's survivablity across the board
+3. Nerfed max speed of Flashspark Boots (67 mph -> 51 mph)
