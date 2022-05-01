@@ -26,7 +26,6 @@ using static Terraria.ModLoader.ModContent;
 using SOTS.NPCs.Boss;
 using SOTS.NPCs.Boss.Advisor;
 using SOTS.NPCs.Boss.Polaris;
-using SOTS.NPCs.Boss.CelestialSerpent;
 using SOTS.Items.GhostTown;
 using SOTS.NPCs.Boss.Lux;
 using SOTS.Items.Tools;
@@ -55,7 +54,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
             constructs = new int[] { NPCType<NatureConstruct>(), NPCType<EarthenConstruct>(), NPCType<PermafrostConstruct>(), NPCType<OtherworldlyConstructHead>(), NPCType<TidalConstruct>(), NPCType<InfernoConstruct>(), NPCType<EvilConstruct>(), NPCType<ChaosConstruct>() };
             spirits = new int[] { NPCType<Constructs.NatureSpirit>(), NPCType<Constructs.EarthenSpirit>(), NPCType<Constructs.PermafrostSpirit>(), NPCType<Constructs.TidalSpirit>(), NPCType<Constructs.EvilSpirit>(), NPCType<Constructs.InfernoSpirit>(), NPCType<Constructs.ChaosSpirit>(), NPCType<Lux>(), NPCType<FakeLux>() };
             intimidating = new int[] { NPCType<NatureConstruct>(), NPCType<EarthenConstruct>(), NPCType<PermafrostConstruct>(), NPCType<OtherworldlyConstructHead>(), NPCType<TidalConstruct>(), NPCType<EvilConstruct>(), NPCType<InfernoConstruct>(), NPCType<ChaosConstruct>(),
-                NPCType<PutridPinkyPhase2>(), NPCType<Boss.Curse.PharaohsCurse>(), NPCType<TheAdvisorHead>(), NPCType<Polaris>(), NPCType<CelestialSerpentHead>(), NPCType<SubspaceSerpentHead>()};
+                NPCType<PutridPinkyPhase2>(), NPCType<Boss.Curse.PharaohsCurse>(), NPCType<TheAdvisorHead>(), NPCType<Polaris>(), NPCType<SubspaceSerpentHead>()};
             vanillaBoss = new int[] { NPCID.KingSlime, NPCID.EyeofCthulhu, NPCID.EaterofWorldsHead, NPCID.BrainofCthulhu, NPCID.QueenBee, NPCID.SkeletronHead, NPCID.WallofFlesh, NPCID.Spazmatism, NPCID.Retinazer, NPCID.TheDestroyer, NPCID.SkeletronPrime, NPCID.Plantera, NPCID.Golem, NPCID.DukeFishron, NPCID.CultistBoss, NPCID.MoonLordCore};
             miniBosses = new int[] { NPCID.Mothron, NPCID.IceQueen, NPCID.SantaNK1, NPCID.Everscream, NPCID.MourningWood, NPCID.Pumpking, NPCID.GoblinSummoner, NPCID.MartianSaucerCore, NPCID.LunarTowerSolar, NPCID.LunarTowerNebula, NPCID.LunarTowerStardust, NPCID.LunarTowerVortex };
             nerfBeeNPC = new int[] { NPCType<PutridHook>() };

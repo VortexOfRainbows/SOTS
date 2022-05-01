@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Items.Celestial;
+using SOTS.Items.Chaos;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -120,7 +121,7 @@ namespace SOTS.Items.CritBonus
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<CursedIcosahedron>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<SoulCharm>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<StarShard>(), 10);
+			recipe.AddIngredient(ModContent.ItemType<PhaseBar>(), 10);
 			recipe.AddTile(TileID.TinkerersWorkbench);
 			recipe.SetResult(this);
 			recipe.AddRecipe();

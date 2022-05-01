@@ -23,7 +23,6 @@ using SOTS.Items.Celestial;
 using SOTS.Items.MusicBoxes;
 using SOTS.NPCs.Boss.Polaris;
 using SOTS.NPCs.Boss.Curse;
-using SOTS.NPCs.Boss.CelestialSerpent;
 using SOTS.NPCs.Boss.Advisor;
 using SOTS.Items.Banners;
 using Terraria.Graphics.Shaders;
