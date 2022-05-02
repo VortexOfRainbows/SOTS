@@ -58,6 +58,7 @@ namespace SOTS.NPCs.Boss.Lux
 		}
 		bool runOnce = true;
 		float rotationCounter = 0;
+		float acceleration = 0;
 		public const float timeToAimAtPlayer = 40;
 		public float aimToPlayer = 0;
 		public float wingHeightLerp = 0;
@@ -90,6 +91,7 @@ namespace SOTS.NPCs.Boss.Lux
 		}
 		public float counter = 0;
 		bool kill = false;
+		float fireRateCounter = 0;
 		public override bool PreAI()
 		{
 			int damage = npc.damage / 2;
@@ -158,7 +160,11 @@ namespace SOTS.NPCs.Boss.Lux
 			}
 			if (npc.ai[3] != 0)
 			{
-				rotationCounter += 1.0f;
+				acceleration = (counter - 300) / 600f;
+				if (acceleration < 0)
+					acceleration = 0;
+				acceleration -= 0.3f;
+				rotationCounter += 0.8f + acceleration;
 			}
 			else
 				rotationCounter += 0.8f;
@@ -244,8 +250,8 @@ namespace SOTS.NPCs.Boss.Lux
 					ring.targetRadius = 40;
 					if (counter > 300)
 					{
-						float localCounter = counter - 300;
-						if (localCounter % 9 == 0)
+						fireRateCounter += 0.8f + acceleration * 2;
+						if (fireRateCounter >= 20)
 						{
 							Vector2 outward = new Vector2(0, 1).RotatedBy(npc.rotation);
 							Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 91, 1.1f, 0.2f);
@@ -253,6 +259,7 @@ namespace SOTS.NPCs.Boss.Lux
 							{
 								Projectile.NewProjectile(npc.Center + outward * 48, outward * (6f + 8f * mult), ProjectileType<ChaosBall>(), damage, 0, Main.myPlayer, 0, -Type());
 							}
+							fireRateCounter -= 9;
 						}
 					}
 				}
@@ -274,8 +281,13 @@ namespace SOTS.NPCs.Boss.Lux
 			ring.CalculationStuff(npc.Center + npc.velocity);
 		}
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
-        {
-            return counter > 90 && counter < 1200;
+		{
+			float max = 1200;
+			if (npc.ai[3] != 0)
+			{
+				max = 900;
+			}
+			return counter > 90 && counter < max;
         }
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{

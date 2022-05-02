@@ -39,7 +39,7 @@ Art: Blasfah
 
 Update 0.21.1
 -Attempted a fix for Recipe Browser crash
--Buffed Lux's survivablity across the board
+-Modified Lux's survivablity
 -Other balance related changes
 
 Update 0.21.0 "The Construct Update"

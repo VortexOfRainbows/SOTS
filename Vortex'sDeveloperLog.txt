@@ -17,11 +17,8 @@ Big Objectives:
 3. Lux Balancing
 
 Update Objectives:
-1. Buff Lux survivability during Second Phase Split attack
-2. Fix bugs regarding crash with Recipe Browser
-3. Nerf Flashspark max speed and boost speed
-	1. Add upgrade with dashing activation (Tabi)
-4. Pulverizer (Upgrade to Bone Clapper)
+1. Add upgrade to Flashspark boots with dashing activation (Tabi)
+2. Pulverizer (Upgrade to Bone Clapper)
 	1. 4 arms, 2 normal and 2 laser cannon
 
 Low Priority Objectives:
@@ -34,11 +31,12 @@ Low Priority Objectives:
 
 5/1/22
 1. Attempted a fix for the Recipe Browser crash
-2. Lux defense 46 -> 60
-	1. Lux takes 8% -> 12% less damage from Ranged and Magic attacks
-	2. 26% less from blizzard staff
-	3. 10% -> 8% more from melee attacks
-	4. Takes 65% less damage during split attacks and 30% less during laser orb attack
+2. Lux defense 46 -> 54 (expert health 96000 -> 90000, since it is a bit tanky now)
+	1. Lux takes 8% -> 12% less damage from Ranged
+	2. Lux takes 8% -> 5% less from magic attacks
+	3. 20% less from blizzard staff, 10% less from Xenostaff
+	4. 10% -> 8% more from melee attacks
+	5. Takes 65% less damage during split attacks (50% after transition) and 30% less during laser orb attack
 3. Reality Shatter does 20% less damage to bosses with its slash attacks
 4. Nerf Flashspark boots boost and max speed
 	1. The boost speed nerf actually makes the item more usable imo

@@ -257,7 +257,7 @@ namespace SOTS.NPCs.Boss.Lux
 			npc.aiStyle = -1;
             npc.lifeMax = 60000; 
             npc.damage = 100; 
-            npc.defense = 60;   
+            npc.defense = 54;   
             npc.knockBackResist = 0f;
             npc.width = 70;
             npc.height = 70;
@@ -281,13 +281,22 @@ namespace SOTS.NPCs.Boss.Lux
 			{
 				damage = (int)(damage * 1.08f);
 			}
-			if (projectile.type == ProjectileID.Blizzard)
+			if (projectile.magic)
 			{
-				damage = (int)(damage * 0.74f);
+				if(projectile.type == ProjectileID.Blizzard)
+				{
+					damage = (int)(damage * 0.8f);
+				}
+				else
+					damage = (int)(damage * 0.95f);
 			}
-			else if (projectile.ranged || projectile.magic)
+			else if (projectile.ranged)
 			{
 				damage = (int)(damage * 0.88f);
+			}
+			if(projectile.type == ProjectileID.UFOLaser)
+			{
+				damage = (int)(damage * 0.9f);
 			}
 			float damageMult = 1;
 			switch(attackPhase)
@@ -296,8 +305,10 @@ namespace SOTS.NPCs.Boss.Lux
 					damageMult = 0.7f;
 					break;
 				case RGBTransition:
-				case RGBPhase:
 					damageMult = 0.35f;
+					break;
+				case RGBPhase:
+					damageMult = 0.5f;
 					break;
 			}
 			if (damageMult != 1)
@@ -345,7 +356,7 @@ namespace SOTS.NPCs.Boss.Lux
         }
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
 		{
-			npc.lifeMax = (int)(npc.lifeMax * bossLifeScale * 0.8f); //96000 hp
+			npc.lifeMax = (int)(npc.lifeMax * bossLifeScale * 0.75f); //90000 hp
 			npc.damage = (int)(npc.damage * 0.75f); //150 damage
 		}
 		bool runOnce = true;
@@ -1088,7 +1099,7 @@ namespace SOTS.NPCs.Boss.Lux
 								{
 									compressWings = 0;
 									npc.alpha = 0;
-									SwapPhase(PickRandom((int)attackPhase));
+									SwapPhase(PickRandom(RGBPhase));
 									teleport(new Vector2(player.Center.X, player.Center.Y - 240), player.Center);
 									Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 62, 1.2f, 0.4f);
 									for (int i = 0; i < 120; i++)
@@ -1202,7 +1213,7 @@ namespace SOTS.NPCs.Boss.Lux
 									float degrees = attackTimer4 * 90f;
 									Vector2 direction = new Vector2(-1, 0).RotatedBy(MathHelper.ToRadians(degrees));
 									direction.Y *= 0.75f;
-									Vector2 spreadOut = new Vector2(0, 1100).RotatedBy(MathHelper.ToRadians(degrees));
+									Vector2 spreadOut = new Vector2(0, 1200).RotatedBy(MathHelper.ToRadians(degrees));
 									spreadOut.X *= 0.825f;
 									Vector2 destinationTop = npc.Center + direction * 3000 + spreadOut;
 									Vector2 destinationBot = npc.Center + direction * 3000 - spreadOut;
