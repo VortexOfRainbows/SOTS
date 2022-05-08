@@ -1,4 +1,5 @@
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -10,11 +11,12 @@ namespace SOTS.Items.Tide
 		{
 			DisplayName.SetDefault("Prismarine Necklace");
 			Tooltip.SetDefault("Increases armor penetration by 8 and max life by 20\nRelease waves of damage periodically\nRelease more waves at lower health\nWaves ignore up to 16 defense total\nWaves disabled when hidden");
+			Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(3, 20));
 		}
 		public override void SetDefaults()
 		{
             item.width = 26;     
-            item.height = 38;   
+            item.height = 44;   
             item.value = Item.sellPrice(0, 4, 0, 0);
 			item.rare = ItemRarityID.LightRed;
 			item.accessory = true;

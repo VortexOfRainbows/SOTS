@@ -29,6 +29,13 @@ Low Priority Objectives:
 5. Stars in Planetarium Sky
 
 
+5/2/22
+1. Electromagnetic lure doesn't work when boss or miniboss is active
+
+
+-- Hotfix 0.21.1 --
+
+
 5/1/22
 1. Attempted a fix for the Recipe Browser crash
 2. Lux defense 46 -> 54 (expert health 96000 -> 90000, since it is a bit tanky now)

@@ -6,6 +6,7 @@ using SOTS.NPCs.Constructs;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using SOTS.Projectiles;
+using SOTS.Buffs;
 
 namespace SOTS.Items
 {
@@ -94,6 +95,10 @@ namespace SOTS.Items
 		}
 		public override bool CanUseItem(Player player)
 		{
+			if(player.HasBuff(ModContent.BuffType<IntimidatingPresence>())
+            {
+				return false;
+            }
 			List<int> capable = CapableNPCS(player);
 			int type = GetNPCType(capable);
 			if (type == -1)
