@@ -30,7 +30,7 @@ namespace SOTS.Projectiles.Otherworld
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
         {
-            Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Otherworld/ThundershockShortbowGlow");
+            Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Otherworld/ThundershockShortbowGlow");
             Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
             Vector2 drawPos = projectile.Center - Main.screenPosition;
             Color color = Color.White;
@@ -51,14 +51,14 @@ namespace SOTS.Projectiles.Otherworld
                 if(percent > 0)
                 {
                     Vector2 fireFrom = projectile.Center + projectile.velocity.SafeNormalize(Vector2.Zero) * 28;
-                    Texture2D texture = mod.GetTexture("Effects/Masks/Extra_49");
+                    Texture2D texture = Mod.Assets.Request<Texture2D>("Effects/Masks/Extra_49").Value;
                     Color color = new Color(120, 200, 255);
                     color.A = 0;
                     Main.spriteBatch.End();
                     Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
                     SOTS.GodrayShader.Parameters["distance"].SetValue(8 * percent);
                     SOTS.GodrayShader.Parameters["colorMod"].SetValue(color.ToVector4());
-                    SOTS.GodrayShader.Parameters["noise"].SetValue(mod.GetTexture("TrailTextures/noise"));
+                    SOTS.GodrayShader.Parameters["noise"].SetValue(Mod.Assets.Request<Texture2D>("TrailTextures/noise").Value);
                     SOTS.GodrayShader.Parameters["rotation"].SetValue(MathHelper.ToRadians(percent * 360));
                     SOTS.GodrayShader.Parameters["opacity2"].SetValue(1f * percent);
                     SOTS.GodrayShader.CurrentTechnique.Passes[0].Apply();
@@ -106,7 +106,7 @@ namespace SOTS.Projectiles.Otherworld
             {
                 Vector2 fireFrom = projectile.Center + projectile.velocity.SafeNormalize(Vector2.Zero) * 28;
                 if (counter == (int)projectile.ai[0] / 3)
-                    Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 15, 1.1f, 0.1f);
+                    SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 15, 1.1f, 0.1f);
                 float percent = counter / projectile.ai[0];
                 for (int k = -1; k <= 1; k += 2)
                 {
@@ -122,7 +122,7 @@ namespace SOTS.Projectiles.Otherworld
                 }
                 if (counter >= projectile.ai[0])
                 {
-                    Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 94, 0.7f, 0.3f);
+                    SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 94, 0.7f, 0.3f);
                     for (int k = 0; k < 60; k++)
                     {
                         Dust dust = Dust.NewDustDirect(fireFrom + new Vector2(-4, -4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, new Color(120, 200, 255));

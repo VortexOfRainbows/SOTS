@@ -60,7 +60,7 @@ namespace SOTS.Items.Otherworld.Furniture
 				Chest chest = Main.chest[chestI];
 				int cFrame = chest.frame;
 				float uniquenessCounter = Main.GlobalTime * -100 + (i + j) * 5;
-				Texture2D texture = mod.GetTexture("Items/Otherworld/Furniture/LockedStrangeChestGlow");
+				Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/Furniture/LockedStrangeChestGlow").Value;
 				Rectangle frame = new Rectangle(tile.frameX, 38 * cFrame + tile.frameY, 16, 16);
 				Color color;
 				color = WorldGen.paintColor((int)Main.tile[i, j].color()) * (100f / 255f);
@@ -180,14 +180,14 @@ namespace SOTS.Items.Otherworld.Furniture
 			}
 			if (player.sign >= 0)
 			{
-				Main.PlaySound(SoundID.MenuClose);
+				SoundEngine.PlaySound(SoundID.MenuClose);
 				player.sign = -1;
 				Main.editSign = false;
 				Main.npcChatText = "";
 			}
 			if (Main.editChest)
 			{
-				Main.PlaySound(SoundID.MenuTick);
+				SoundEngine.PlaySound(SoundID.MenuTick);
 				Main.editChest = false;
 				Main.npcChatText = "";
 			}
@@ -203,7 +203,7 @@ namespace SOTS.Items.Otherworld.Furniture
 				{
 					player.chest = -1;
 					Recipe.FindRecipes();
-					Main.PlaySound(SoundID.MenuClose);
+					SoundEngine.PlaySound(SoundID.MenuClose);
 				}
 				else
 				{
@@ -233,7 +233,7 @@ namespace SOTS.Items.Otherworld.Furniture
 						if (chest == player.chest)
 						{
 							player.chest = -1;
-							Main.PlaySound(SoundID.MenuClose);
+							SoundEngine.PlaySound(SoundID.MenuClose);
 						}
 						else
 						{
@@ -242,7 +242,7 @@ namespace SOTS.Items.Otherworld.Furniture
 							Main.recBigList = false;
 							player.chestX = left;
 							player.chestY = top;
-							Main.PlaySound(player.chest < 0 ? SoundID.MenuOpen : SoundID.MenuTick);
+							SoundEngine.PlaySound(player.chest < 0 ? SoundID.MenuOpen : SoundID.MenuTick);
 						}
 						Recipe.FindRecipes();
 					}

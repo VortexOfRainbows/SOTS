@@ -151,7 +151,7 @@ namespace SOTS.Projectiles.Crushers
 					VoidConsumption(chargePercentage, ref consumedVoid);
 					if (prev != consumedVoid)
 					{
-						Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 15, 1.0f + 0.1f * consumedVoid);
+						SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 15, 1.0f + 0.1f * consumedVoid);
 					}
 					int trueMaxExplosions = maxExplosions + vPlayer.BonusCrushRangeMax;
 					int trueMinExplosions = minExplosions + vPlayer.BonusCrushRangeMin;
@@ -287,7 +287,7 @@ namespace SOTS.Projectiles.Crushers
 		}
 		public virtual void ExplosionSound()
 		{
-			Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 14, 1.1f);
+			SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 14, 1.1f);
 		}
 		public virtual Texture2D ArmTexture(int handNum, int direction)
         {

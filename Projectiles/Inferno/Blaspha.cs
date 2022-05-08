@@ -33,14 +33,14 @@ namespace SOTS.Projectiles.Inferno
         }
         public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
         {
-            Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Inferno/BlasphaGlow");
+            Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Inferno/BlasphaGlow");
             Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
             Vector2 drawPos = projectile.Center - Main.screenPosition;
             Color color = Color.White;
             spriteBatch.Draw(texture, drawPos, null, color, projectile.rotation, drawOrigin, projectile.scale, projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
             if (Main.myPlayer == projectile.owner)
             {
-                texture = ModContent.GetTexture("SOTS/Projectiles/Inferno/BlasphaChargeReticle");
+                texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Inferno/BlasphaChargeReticle");
                 drawOrigin = new Vector2(texture.Width / 2, texture.Height - 4);
                 for (int i = 0; i < 8; i++)
                 {
@@ -70,7 +70,7 @@ namespace SOTS.Projectiles.Inferno
         public override void Kill(int timeLeft)
         {
             Player player = Main.player[projectile.owner];
-            Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 36, 1.2f, 0.4f);
+            SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 36, 1.2f, 0.4f);
             if (projectile.owner == Main.myPlayer)
             {
                 for (int i = 0; i < 8; i++)

@@ -79,7 +79,7 @@ namespace SOTS.Projectiles.Chaos
 		}
         public override void Kill(int timeLeft)
 		{
-			Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 94, 1.3f, -0.2f);
+			SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 94, 1.3f, -0.2f);
 			for (int i = 0; i < 30; i++)
             {
 				Dust dust2 = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, ModContent.DustType<CopyDust4>(), 0, 0, 120);

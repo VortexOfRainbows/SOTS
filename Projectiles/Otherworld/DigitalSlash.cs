@@ -79,8 +79,8 @@ namespace SOTS.Projectiles.Otherworld
         {
 			Player player = Main.player[projectile.owner];
 			Texture2D texture = Main.projectileTexture[projectile.type];
-			Texture2D texture2 = ModContent.GetTexture("SOTS/Projectiles/Otherworld/DigitalSlashBlade");
-			Texture2D texture3 = ModContent.GetTexture("SOTS/Projectiles/Otherworld/DigitalSlashBlade2");
+			Texture2D texture2 = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Otherworld/DigitalSlashBlade");
+			Texture2D texture3 = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Otherworld/DigitalSlashBlade2");
 			Vector2 toProjectile = projectile.Center - player.RotatedRelativePoint(player.MountedCenter, true);
 			int length = (int)toProjectile.Length() / 2 - 8;
 			Vector2 rotateToPosition = relativePoint(toProjectile);
@@ -161,7 +161,7 @@ namespace SOTS.Projectiles.Otherworld
 			float randMod = projectile.ai[1];
 			if (runOnce)
 			{
-				Main.PlaySound(SoundID.Item, (int)player.Center.X, (int)player.Center.Y, 71, 0.9f, 1f * randMod);
+				SoundEngine.PlaySound(SoundID.Item, (int)player.Center.X, (int)player.Center.Y, 71, 0.9f, 1f * randMod);
 				if (Main.myPlayer == projectile.owner)
 				{
 					cursorArea = Main.MouseWorld;

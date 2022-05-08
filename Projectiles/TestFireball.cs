@@ -46,12 +46,12 @@ namespace SOTS.Projectiles
             color.A = 0;
             Vector4 colorMod = color.ToVector4();
             SOTS.FireballShader.Parameters["colorMod"].SetValue(colorMod);
-            SOTS.FireballShader.Parameters["noise"].SetValue(mod.GetTexture("TrailTextures/vnoise"));
-            SOTS.FireballShader.Parameters["pallette"].SetValue(mod.GetTexture("TrailTextures/Pallette1"));
+            SOTS.FireballShader.Parameters["noise"].SetValue(Mod.Assets.Request<Texture2D>("TrailTextures/vnoise").Value);
+            SOTS.FireballShader.Parameters["pallette"].SetValue(Mod.Assets.Request<Texture2D>("TrailTextures/Pallette1").Value);
             SOTS.FireballShader.Parameters["opacity2"].SetValue(0.25f);
             SOTS.FireballShader.Parameters["counter"].SetValue(projectile.ai[0]);
             SOTS.FireballShader.CurrentTechnique.Passes[0].Apply();
-            Main.spriteBatch.Draw(mod.GetTexture("Effects/Masks/Extra_49"), (projectile.Center - Main.screenPosition) / 2, null, Color.Pink * projectile.Opacity, projectile.rotation, new Vector2(50, 50), (projectile.scale * new Vector2(4f, 1) / 2) / 2, SpriteEffects.None, 0f);
+            Main.spriteBatch.Draw(Mod.Assets.Request<Texture2D>("Effects/Masks/Extra_49").Value, (projectile.Center - Main.screenPosition) / 2, null, Color.Pink * projectile.Opacity, projectile.rotation, new Vector2(50, 50), (projectile.scale * new Vector2(4f, 1) / 2) / 2, SpriteEffects.None, 0f);
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, Main.GameViewMatrix.TransformationMatrix);
             #endregion

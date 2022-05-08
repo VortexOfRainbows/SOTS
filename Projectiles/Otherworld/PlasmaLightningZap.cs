@@ -32,7 +32,7 @@ namespace SOTS.Projectiles.Otherworld
 		{
 			if (runOnce || !hit)
 				return false;
-			Texture2D texture = mod.GetTexture("Projectiles/Otherworld/HardlightColumn");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Otherworld/HardlightColumn").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Vector2 previousPosition = projectile.Center;
 			for (int k = 0; k < trailPos.Length; k++)
@@ -87,7 +87,7 @@ namespace SOTS.Projectiles.Otherworld
 			if (runOnce)
 			{
 				projectile.velocity = target.Center - projectile.Center;
-				Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 94, 0.5f);
+				SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 94, 0.5f);
 				for (int i = 0; i < randStorage.Length; i++)
 				{
 					randStorage[i] = Main.rand.Next(-35, 36);

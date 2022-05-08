@@ -102,7 +102,7 @@ namespace SOTS.Projectiles.Chaos
             else
                 scale = Main.rand.NextFloat(1f, 1.4f);
        
-            Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 62, 0.7f, -0.2f);
+            SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 62, 0.7f, -0.2f);
             Color colorMan = VoidPlayer.ChaosPink;
             Vector2 atLoc = projectile.Center;
             float density = 1.5f;

@@ -90,7 +90,7 @@ namespace SOTS.Items.Earth
 		{
 			Vector2 pos = new Vector2(i * 16, j * 16) + new Vector2(8, 8);
 			int type = Main.rand.Next(3) + 1;
-			Main.PlaySound(SoundLoader.customSoundType, (int)pos.X, (int)pos.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/VibrantOre" + type), 1.8f, Main.rand.NextFloat(0.3f, 0.4f));
+			SoundEngine.PlaySound(SoundLoader.customSoundType, (int)pos.X, (int)pos.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/VibrantOre" + type), 1.8f, Main.rand.NextFloat(0.3f, 0.4f));
 			return false;
 		}
 	}

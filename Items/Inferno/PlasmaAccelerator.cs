@@ -25,7 +25,7 @@ namespace SOTS.Items.Inferno
             Item.height = 64; 
             Item.useTime = 10; 
             Item.useAnimation = 10;
-            Item.useStyle = ItemUseStyleID.HoldingOut;    
+            Item.useStyle = ItemUseStyleID.Shoot;    
             Item.noMelee = true;
             Item.knockBack = 4f;
             Item.value = Item.sellPrice(0, 7, 0, 0);

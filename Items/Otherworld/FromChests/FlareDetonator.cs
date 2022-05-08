@@ -23,7 +23,7 @@ namespace SOTS.Items.Otherworld.FromChests
             Item.height = 26;   
             Item.useTime = 10;  
             Item.useAnimation = 10;
-            Item.useStyle = ItemUseStyleID.HoldingOut;    
+            Item.useStyle = ItemUseStyleID.Shoot;    
             Item.knockBack = 5f;
 			Item.value = Item.sellPrice(0, 5, 0, 0);
 			Item.rare = ItemRarityID.LightPurple;

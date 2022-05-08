@@ -103,13 +103,13 @@ namespace SOTS.Items.Fragments
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
-			Texture2D texture = WorldGen.crimson ? mod.GetTexture("Items/Fragments/FragmentOfEvil") : mod.GetTexture("Items/Fragments/FragmentOfEvilAlt");
+			Texture2D texture = WorldGen.crimson ? Mod.Assets.Request<Texture2D>("Items/Fragments/FragmentOfEvil").Value : Mod.Assets.Request<Texture2D>("Items/Fragments/FragmentOfEvilAlt").Value;
 			spriteBatch.Draw(texture, position, frame, drawColor, 0f, origin, scale, SpriteEffects.None, 0f);
 			return false;
 		}
 		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
 		{
-			Texture2D texture = WorldGen.crimson ? mod.GetTexture("Items/Fragments/FragmentOfEvil") : mod.GetTexture("Items/Fragments/FragmentOfEvilAlt");
+			Texture2D texture = WorldGen.crimson ? Mod.Assets.Request<Texture2D>("Items/Fragments/FragmentOfEvil").Value : Mod.Assets.Request<Texture2D>("Items/Fragments/FragmentOfEvilAlt").Value;
 			spriteBatch.Draw(texture, Item.Center - Main.screenPosition, null, lightColor, 0f, new Vector2(texture.Width / 2, texture.Height / 2), scale, SpriteEffects.None, 0f);
 			return false;
 		}

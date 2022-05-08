@@ -25,7 +25,7 @@ namespace SOTS.NPCs.Phase
         public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
         {
             Texture2D texture = Main.npcTexture[npc.type];
-            Texture2D textureP = ModContent.GetTexture("SOTS/NPCs/Phase/PhaseAssaulterHeadPink");
+            Texture2D textureP = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Phase/PhaseAssaulterHeadPink");
             Vector2 origin = new Vector2(texture.Width * 0.5f, npc.height * 0.5f);
             for (int i = 0; i < 4; i++)
             {
@@ -283,8 +283,8 @@ namespace SOTS.NPCs.Phase
         public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
         {
             Texture2D texture = Main.npcTexture[npc.type];
-            Texture2D textureG = ModContent.GetTexture("SOTS/NPCs/Phase/PhaseAssaulterBodyGlow");
-            Texture2D textureP = ModContent.GetTexture("SOTS/NPCs/Phase/PhaseAssaulterBodyPink");
+            Texture2D textureG = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Phase/PhaseAssaulterBodyGlow");
+            Texture2D textureP = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Phase/PhaseAssaulterBodyPink");
             Vector2 origin = new Vector2(texture.Width * 0.5f, npc.height * 0.5f);
             for (int i = 0; i < 4; i++)
             {
@@ -413,7 +413,7 @@ namespace SOTS.NPCs.Phase
         }
         public void TrailPreDraw(SpriteBatch spriteBatch)
         {
-            Texture2D texture = ModContent.GetTexture("SOTS/NPCs/Phase/PhaseSpeederTrail");
+            Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Phase/PhaseSpeederTrail");
             Vector2 drawOrigin = new Vector2(0, texture.Height * 0.5f);
             Vector2 previousPosition = npc.Center + new Vector2(0, 8).RotatedBy(npc.rotation);
             for (int k = 0; k < trailPos.Length; k++)
@@ -437,7 +437,7 @@ namespace SOTS.NPCs.Phase
         {
             TrailPreDraw(spriteBatch);
             Texture2D texture = Main.npcTexture[npc.type];
-            Texture2D textureP = ModContent.GetTexture("SOTS/NPCs/Phase/PhaseAssaulterTailPink");
+            Texture2D textureP = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Phase/PhaseAssaulterTailPink");
             Vector2 origin = new Vector2(texture.Width * 0.5f, npc.height * 0.5f);
             for (int i = 0; i < 4; i++)
             {

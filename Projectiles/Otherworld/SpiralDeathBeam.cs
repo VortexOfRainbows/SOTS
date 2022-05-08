@@ -98,8 +98,8 @@ namespace SOTS.Projectiles.Otherworld
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
 			int maxDist = 200;
-			Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Otherworld/SpiralDeathBeam");
-			Texture2D texture2 = ModContent.GetTexture("SOTS/Projectiles/Otherworld/SpiralDeathBeamEnd");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Otherworld/SpiralDeathBeam");
+			Texture2D texture2 = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Otherworld/SpiralDeathBeamEnd");
 			bool dust = false;
 			if(projectile.alpha < 5)
 			{

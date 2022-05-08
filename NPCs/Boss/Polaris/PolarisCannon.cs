@@ -48,7 +48,7 @@ namespace SOTS.NPCs.Boss.Polaris
 		}
         public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
         {
-			Texture2D texture = mod.GetTexture("NPCs/Boss/Polaris/PolarisCannonPump");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("NPCs/Boss/Polaris/PolarisCannonPump").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f + WidthOffset * npc.spriteDirection, texture.Height * 0.5f);
 			Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition, null, Color.White * ((255 - npc.alpha) / 255f), npc.rotation, drawOrigin, npc.scale, npc.spriteDirection == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 		}

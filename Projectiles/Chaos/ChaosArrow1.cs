@@ -49,7 +49,7 @@ namespace SOTS.Projectiles.Chaos
 		}
 		public void DrawTrail(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Chaos/SupernovaLaser");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Chaos/SupernovaLaser");
 			Vector2 drawOrigin = new Vector2(0, texture.Height * 0.5f);
 			Vector2 original = projectile.Center;
 			for (int k = 0; k < projectile.oldPos.Length; k++)
@@ -92,7 +92,7 @@ namespace SOTS.Projectiles.Chaos
 		{
 			if (runOnce)
 			{
-				Main.PlaySound(SoundLoader.customSoundType, (int)projectile.Center.X, (int)projectile.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/StarLaser"), 0.6f, 0.2f + Main.rand.NextFloat(-0.1f, 0.1f));
+				SoundEngine.PlaySound(SoundLoader.customSoundType, (int)projectile.Center.X, (int)projectile.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/StarLaser"), 0.6f, 0.2f + Main.rand.NextFloat(-0.1f, 0.1f));
 				DustOut();
 				projectile.scale = 0.1f;
 				projectile.alpha = 0;

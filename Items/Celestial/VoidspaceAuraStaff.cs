@@ -21,15 +21,15 @@ namespace SOTS.Items.Celestial
             Item.height = 40;    
             Item.useTime = 45;  
             Item.useAnimation = 45;   
-            Item.useStyle = ItemUseStyleID.SwingThrow;  
+            Item.useStyle = ItemUseStyleID.Swing;  
             Item.noMelee = true; 
             Item.knockBack = 1f; 
             Item.value = Item.sellPrice(0, 15, 0, 0);
             Item.rare = ItemRarityID.Yellow;
             Item.UseSound = SoundID.Item44; 
             Item.autoReuse = true;  
-            Item.shoot = ModContent.ProjectileType<VoidspaceCell>();  
-            Item.summon = true; 
+            Item.shoot = ModContent.ProjectileType<VoidspaceCell>();
+            Item.DamageType = DamageClass.Summon;
             Item.sentry = true; 
         } 
 		public override void AddRecipes()

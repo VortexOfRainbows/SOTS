@@ -20,8 +20,8 @@ namespace SOTS.Items.Permafrost
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
-			Texture2D texture = mod.GetTexture("Items/Permafrost/ShatterBlade");
-			Texture2D texture2 = mod.GetTexture("Items/Permafrost/ShatterFix");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Permafrost/ShatterBlade").Value;
+			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Permafrost/ShatterFix").Value;
 			if(broken == 0)
 				spriteBatch.Draw(texture, position, frame, drawColor, 0, origin, scale, SpriteEffects.None, 0f);
 			if(broken == 1)
@@ -32,8 +32,8 @@ namespace SOTS.Items.Permafrost
 		}
 		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
 		{
-			Texture2D texture = mod.GetTexture("Items/Permafrost/ShatterBlade");
-			Texture2D texture2 = mod.GetTexture("Items/Permafrost/ShatterFix");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Permafrost/ShatterBlade").Value;
+			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Permafrost/ShatterFix").Value;
 			if (broken == 0)
 				spriteBatch.Draw(texture, Item.Center - Main.screenPosition, new Rectangle(0, 0, 42, 42), lightColor, 0, new Vector2(17,17), scale, SpriteEffects.None, 0f);
 			if (broken == 1)
@@ -45,7 +45,7 @@ namespace SOTS.Items.Permafrost
 		public override void SetDefaults()
 		{
 			Item.damage = 15;
-			Item.melee = true;
+			Item.DamageType = DamageClass.Melee;
 			Item.width = 42;
 			Item.height = 42;
 			Item.useTime = 15;
@@ -116,7 +116,7 @@ namespace SOTS.Items.Permafrost
 				}
 				return false;
 			}
-			Main.PlaySound(2, (int)(position.X), (int)(position.Y), 1, 1f);
+			SoundEngine.PlaySound(2, (int)(position.X), (int)(position.Y), 1, 1f);
 			return false;
 		}
 		public override void ModifyHitNPC(Player player, NPC target, ref int damage, ref float knockBack, ref bool crit)

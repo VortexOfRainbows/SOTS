@@ -136,7 +136,7 @@ namespace SOTS.NPCs
 			}
 			if(npc.ai[0] == 510 && npc.ai[1] == 0) //time of release
 			{
-				Main.PlaySound(SoundID.Item46, (int)(npc.Center.X), (int)(npc.Center.Y));
+				SoundEngine.PlaySound(SoundID.Item46, (int)(npc.Center.X), (int)(npc.Center.Y));
 			}
 			if(npc.ai[0] >= 540 && npc.ai[1] == 0) //teleport out
 			{

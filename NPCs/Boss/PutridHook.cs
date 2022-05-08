@@ -93,7 +93,7 @@ namespace SOTS.NPCs.Boss
 				for (int i = 0; i < 12; i++)
 				{
 					counterArr[i] += randSeed1[i];
-					texture = ModContent.GetTexture("SOTS/NPCs/Boss/PinkyGrappleSpike");
+					texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Boss/PinkyGrappleSpike");
 					Vector2 circular = new Vector2(0, (npc.width / 2) * npc.scale).RotatedBy(MathHelper.ToRadians(i * 30 + counter2 * 0.3f * randMult));
 					int frame = 0;
 					if(counterArr[i] >= 10)
@@ -126,7 +126,7 @@ namespace SOTS.NPCs.Boss
         public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
 			Player player = Main.player[npc.target];
-			Texture2D texture = ModContent.GetTexture("SOTS/NPCs/Boss/PutridHookEye");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Boss/PutridHookEye");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Vector2 drawPos = npc.Center - Main.screenPosition;
 			

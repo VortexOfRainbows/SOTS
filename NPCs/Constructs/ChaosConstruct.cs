@@ -54,7 +54,7 @@ namespace SOTS.NPCs.Constructs
 			Texture2D texture = Main.npcTexture[npc.type];
 			DrawWings();
 			Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition + new Vector2(0, npc.gfxOffY), null, drawColor, dir, origin, npc.scale, SpriteEffects.None, 0f);
-			Main.spriteBatch.Draw(ModContent.GetTexture("SOTS/NPCs/Constructs/ChaosConstructGlow"), npc.Center - Main.screenPosition + new Vector2(0, npc.gfxOffY), null, Color.White, dir, origin, npc.scale, SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw((Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Constructs/ChaosConstructGlow"), npc.Center - Main.screenPosition + new Vector2(0, npc.gfxOffY), null, Color.White, dir, origin, npc.scale, SpriteEffects.None, 0f);
 			return false;
 		}
 		float wingSpeedMult = 1f;
@@ -79,7 +79,7 @@ namespace SOTS.NPCs.Constructs
 		}
 		public void DrawWings()
         {
-			Texture2D texture = ModContent.GetTexture("SOTS/NPCs/Constructs/ChaosParticle");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Constructs/ChaosParticle");
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
 			float dipAndRise = (float)Math.Sin(MathHelper.ToRadians(counter2));
 			if(forceWingHeight)
@@ -241,7 +241,7 @@ namespace SOTS.NPCs.Constructs
 					npc.velocity *= 0.96f;
 					if (npc.ai[1] > 70)
 					{
-						Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 91, 1.3f, -0.4f);
+						SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 91, 1.3f, -0.4f);
 						int damage2 = npc.damage / 2;
 						if (Main.expertMode)
 						{
@@ -286,7 +286,7 @@ namespace SOTS.NPCs.Constructs
 					npc.velocity *= 0.96f;
 					if (npc.ai[1] > 100)
 					{
-						Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 92, 1.3f, -0.4f);
+						SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 92, 1.3f, -0.4f);
 						int damage2 = npc.damage / 2;
 						if (Main.expertMode)
 						{

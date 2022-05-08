@@ -28,12 +28,12 @@ namespace SOTS.Items.SpiritStaves
 			Item.height = 42;
 			Item.useTime = 30;
 			Item.useAnimation = 30;
-			Item.useStyle = ItemUseStyleID.SwingThrow;
+			Item.useStyle = ItemUseStyleID.Swing;
 			Item.value = Item.sellPrice(0, 5, 0, 0);
 			Item.rare = ItemRarityID.Pink;
 			Item.UseSound = SoundID.Item44;
 			Item.noMelee = true;
-			Item.summon = true;
+			Item.DamageType = DamageClass.Summon;
 			Item.buffType = ModContent.BuffType<TidalSpiritAid>();
 			Item.shoot = ModContent.ProjectileType<TidalSpirit>();
 		}

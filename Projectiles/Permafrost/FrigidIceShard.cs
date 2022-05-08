@@ -29,7 +29,7 @@ namespace SOTS.Projectiles.Permafrost
         {
 			if(projectile.hide)
 			{
-				Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 17, 1.1f, 0.1f);
+				SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 17, 1.1f, 0.1f);
 				projectile.hide = false;
 				projectile.frame = projectile.whoAmI % 3;
 			}

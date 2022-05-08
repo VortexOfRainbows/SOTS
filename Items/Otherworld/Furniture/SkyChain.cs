@@ -70,7 +70,7 @@ namespace SOTS.Items.Otherworld.Furniture
 		{
 			float uniquenessCounter = Main.GlobalTime * -100 + (i + j) * 5;
 			Tile tile = Main.tile[i, j];
-			Texture2D texture = mod.GetTexture("Items/Otherworld/Furniture/SkyChainTileGlow");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/Furniture/SkyChainTileGlow").Value;
 			Rectangle frame = new Rectangle(tile.frameX, tile.frameY, 16, 16);
 			Color color;
 			color = WorldGen.paintColor((int)Main.tile[i, j].color()) * (100f / 255f);
@@ -90,8 +90,8 @@ namespace SOTS.Items.Otherworld.Furniture
 		}
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
         {
-			Texture2D texture = mod.GetTexture("Items/Otherworld/Furniture/SkyChainHelixOutline");
-			Texture2D textureF = mod.GetTexture("Items/Otherworld/Furniture/SkyChainHelixFill");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/Furniture/SkyChainHelixOutline").Value;
+			Texture2D textureF = Mod.Assets.Request<Texture2D>("Items/Otherworld/Furniture/SkyChainHelixFill").Value;
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
 			float height = 16;
 			float timer = Main.GlobalTime * -100 + (i + j) * 5;

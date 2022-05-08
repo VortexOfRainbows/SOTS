@@ -27,7 +27,7 @@ namespace SOTS.Items
 			Item.maxStack = 30;
 			Item.useAnimation = 30;
 			Item.useTime = 30;
-			Item.useStyle = ItemUseStyleID.HoldingUp;
+			Item.useStyle = ItemUseStyleID.HoldUp;
 			Item.consumable = true;
 			Item.noUseGraphic = true;
 		}
@@ -119,7 +119,7 @@ namespace SOTS.Items
 			if (type == -1)
 				return false;
 			NPC.SpawnOnPlayer(player.whoAmI, type);
-			Main.PlaySound(SoundID.Item, (int)player.position.X, (int)player.position.Y, 122, 0.8f, 0.1f);
+			SoundEngine.PlaySound(SoundID.Item, (int)player.position.X, (int)player.position.Y, 122, 0.8f, 0.1f);
 			return true;
 		}
 	}

@@ -11,7 +11,7 @@ namespace SOTS.Items.Tools
 	{
 		public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
 		{
-			Texture2D texture = mod.GetTexture("Items/Tools/ManicMinerGlow");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Tools/ManicMinerGlow").Value;
 			Color color = Color.White;
 			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
 			Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y) + 2), null, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
@@ -27,7 +27,7 @@ namespace SOTS.Items.Tools
 			Item.height = 18;
 			Item.useTime = 24;
 			Item.useAnimation = 24;
-			Item.useStyle = ItemUseStyleID.HoldingOut;
+			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.knockBack = 5;
             Item.value = Item.sellPrice(0, 1, 0, 0);
 			Item.rare = ItemRarityID.Blue;
@@ -37,7 +37,7 @@ namespace SOTS.Items.Tools
             Item.shootSpeed = 4f;
 			if (!Main.dedServ)
 			{
-				Item.GetGlobalItem<ItemUseGlow>().glowTexture = mod.GetTexture("Items/Tools/ManicMinerGlow");
+				Item.GetGlobalItem<ItemUseGlow>().glowTexture = Mod.Assets.Request<Texture2D>("Items/Tools/ManicMinerGlow").Value;
 				Item.GetGlobalItem<ItemUseGlow>().glowOffsetX = -4;
 			}
 		}

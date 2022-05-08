@@ -64,7 +64,7 @@ namespace SOTS.Items.Fragments
 		}
 		public static void DrawEffects(int i, int j, SpriteBatch spriteBatch, Mod mod, bool wall = false)
         {
-			Texture2D textureBlock = mod.GetTexture("Assets/SpiritBlocks/NetherBlockOutline");
+			Texture2D textureBlock = Mod.Assets.Request<Texture2D>("Assets/SpiritBlocks/NetherBlockOutline").Value;
 			float timer = Main.GlobalTime * 100 + (i + j) * 20;
 			Color color;
 			color = WorldGen.paintColor((int)Main.tile[i, j].color()) * (100f / 255f);
@@ -192,7 +192,7 @@ namespace SOTS.Items.Fragments
 		}
 		public static void DrawChains(int maxLength, float timer, float bonusDegrees, Vector2 startingPosition, Vector2 zero, Color color)
 		{
-			Texture2D texture = ModContent.GetTexture("SOTS/Assets/SpiritBlocks/NetherParticle");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Assets/SpiritBlocks/NetherParticle");
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
 			float height = texture.Width * 0.5f;
 			maxLength = (int)(maxLength * (16f / height) + 0.5f);

@@ -27,12 +27,12 @@ namespace SOTS.Items.Nature
 			Item.height = 32;
 			Item.useTime = 36;
 			Item.useAnimation = 36;
-			Item.useStyle = ItemUseStyleID.SwingThrow;
+			Item.useStyle = ItemUseStyleID.Swing;
 			Item.value = Item.sellPrice(0, 0, 20, 0);
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item44;
 			Item.noMelee = true;
-			Item.summon = true;
+			Item.DamageType = DamageClass.Summon;
 			Item.buffType = ModContent.BuffType<SquirrelBuff>();
 			Item.shoot = ModContent.ProjectileType<SquirrelMinion>();
 		}

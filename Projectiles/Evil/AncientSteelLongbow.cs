@@ -52,7 +52,7 @@ namespace SOTS.Projectiles.Evil
                 Texture2D texture = Main.projectileTexture[arrowType];
                 if (arrowType == ModContent.ProjectileType<HardlightArrow>() || arrowType == ModContent.ProjectileType<ChargedHardlightArrow>())
                 {
-                    texture = mod.GetTexture("Projectiles/Otherworld/HardlightArrowShaft");
+                    texture = Mod.Assets.Request<Texture2D>("Projectiles/Otherworld/HardlightArrowShaft").Value;
                 }
                 textureHeight = texture.Height / 2 + 2;
                 float additionalAlphaMult = 1;
@@ -116,7 +116,7 @@ namespace SOTS.Projectiles.Evil
                 if (projectile.owner == Main.myPlayer)
                 {
                     Vector2 fireFrom = projectile.Center + projectile.velocity.SafeNormalize(Vector2.Zero) * (fireFromDist - textureHeight);
-                    Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 5, 1.2f, -0.1f);
+                    SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 5, 1.2f, -0.1f);
                     Projectile proj = Projectile.NewProjectileDirect(fireFrom, projectile.velocity * 4f, (int)projectile.ai[1], projectile.damage, projectile.knockBack, Main.myPlayer);
                     proj.GetGlobalProjectile<SOTSProjectile>().affixID = -1; //this sould sync automatically on the SOTSProjectile end
                 }

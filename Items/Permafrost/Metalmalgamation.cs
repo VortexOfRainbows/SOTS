@@ -15,7 +15,7 @@ namespace SOTS.Items.Permafrost
         {
             Item.Size = new Microsoft.Xna.Framework.Vector2(34, 30);
             Item.damage = 40;
-            Item.melee = true; 
+            Item.DamageType = DamageClass.Melee; 
             Item.useTime = 22;  
             Item.useAnimation = 22;   
             Item.useStyle = 5;

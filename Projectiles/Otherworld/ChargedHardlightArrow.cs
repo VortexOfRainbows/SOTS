@@ -39,7 +39,7 @@ namespace SOTS.Projectiles.Otherworld
 				initialDirection = projectile.velocity;
 				if(completedLoads == 0)
 					LaserDraw(null);
-				Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 94, 0.6f);
+				SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 94, 0.6f);
 			}
 			return true;
 		}

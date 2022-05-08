@@ -55,8 +55,8 @@ namespace SOTS.NPCs.Constructs
 			DrawLightning(spriteBatch, drawColor, 2);
 			DrawLightning(spriteBatch, drawColor, 3);
 			Texture2D texture = Main.npcTexture[npc.type];
-			Texture2D textureDrill = mod.GetTexture("NPCs/Constructs/Collector2Drill");
-			Texture2D textureSpirit = mod.GetTexture("NPCs/Constructs/Collector2Spirit");
+			Texture2D textureDrill = Mod.Assets.Request<Texture2D>("NPCs/Constructs/Collector2Drill").Value;
+			Texture2D textureSpirit = Mod.Assets.Request<Texture2D>("NPCs/Constructs/Collector2Spirit").Value;
 			Vector2 drawOrigin = new Vector2(textureDrill.Width * 0.5f, textureDrill.Height * 0.5f);
 			Vector2 drawOrigin2 = new Vector2(textureSpirit.Width * 0.5f, textureSpirit.Height * 0.5f);
 			for (int i = 0; i < 2; i++)
@@ -93,8 +93,8 @@ namespace SOTS.NPCs.Constructs
 		{
 			if (runOnce)
 				return;
-			Texture2D texture2 = mod.GetTexture("NPCs/Constructs/Collector2Booster");
-			Texture2D texture3 = mod.GetTexture("NPCs/Constructs/Collector2BoosterEffect");
+			Texture2D texture2 = Mod.Assets.Request<Texture2D>("NPCs/Constructs/Collector2Booster").Value;
+			Texture2D texture3 = Mod.Assets.Request<Texture2D>("NPCs/Constructs/Collector2BoosterEffect").Value;
 			Vector2 drawOrigin = new Vector2(texture2.Width * 0.5f, texture2.Height / 2);
 			Color color = new Color(100, 100, 100, 0);
 			for (int i = -1; i <= 1; i += 2)
@@ -126,7 +126,7 @@ namespace SOTS.NPCs.Constructs
 		{
 			if (runOnce)
 				return;
-			Texture2D texture = mod.GetTexture("Projectiles/Otherworld/ThunderColumn");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Otherworld/ThunderColumn").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Vector2[] trailPos = this.trailPos[id];
 			Vector2 previousPosition = trailPos[0];
@@ -265,7 +265,7 @@ namespace SOTS.NPCs.Constructs
 					npc.ai[3] += 1f;
 					if(npc.ai[3] % 10 == 0)
 					{
-						Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 13, 1.2f);
+						SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 13, 1.2f);
 					}
 					float spiritScale = npc.ai[3] / timeToChargeOrb;
 					if (spiritScale < 1f)
@@ -299,9 +299,9 @@ namespace SOTS.NPCs.Constructs
 					float sinusoid = 1.5f * (float)Math.Sin(MathHelper.ToRadians(ai3 * 225f / 150f + 0.5f));
 					npc.velocity = new Vector2(-sinusoid, 0).RotatedBy(MathHelper.ToRadians(-70));
 					if(ai3 % 30 == 0 && ai3 < 100)
-						Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 15, 0.3f + ai3 * 0.05f);
+						SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 15, 0.3f + ai3 * 0.05f);
 					if(ai3 == 95)
-						Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 121, 1.3f, 0);
+						SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 121, 1.3f, 0);
 					if (ai3 > 150 && startRunning)
                     {
 						for (int k = 0; k < 300; k++)

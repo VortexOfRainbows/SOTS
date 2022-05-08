@@ -73,8 +73,8 @@ namespace SOTS.NPCs.Constructs
 			bool trail = false;
 			if (!draw)
 				trail = true;
-			Texture2D texture = ModContent.GetTexture("SOTS/NPCs/Constructs/TidalConstructVine");
-			Texture2D texture2 = ModContent.GetTexture("SOTS/NPCs/Constructs/TidalConstructVineGlow");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Constructs/TidalConstructVine");
+			Texture2D texture2 = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Constructs/TidalConstructVineGlow");
 			for (int j = 0; j < 4; j++)
 			{
 				Vector2 modi = new Vector2(0.5f, 0).RotatedBy(MathHelper.ToRadians(npc.ai[0] * 4));
@@ -178,8 +178,8 @@ namespace SOTS.NPCs.Constructs
 		}
         public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture = ModContent.GetTexture("SOTS/NPCs/Constructs/TidalConstruct");
-			Texture2D texture2 = ModContent.GetTexture("SOTS/NPCs/Constructs/TidalConstructGlow");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Constructs/TidalConstruct");
+			Texture2D texture2 = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Constructs/TidalConstructGlow");
 			dir = npc.rotation;
 			float rotation = dir + (npc.spriteDirection - 1) * 0.5f * -MathHelper.ToRadians(180);
 			spriteBatch.Draw(texture, npc.Center - Main.screenPosition, npc.frame, drawColor, rotation, new Vector2(npc.width / 2, npc.height / 2), npc.scale, npc.direction == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);

@@ -23,7 +23,7 @@ namespace SOTS.Items.Earth
 			Item.height = 38;
 			Item.useTime = 50;
 			Item.useAnimation = 50;
-			Item.useStyle = ItemUseStyleID.HoldingUp;
+			Item.useStyle = ItemUseStyleID.HoldUp;
 			Item.knockBack = 1.5f;
 			Item.value = Item.sellPrice(0, 1, 0, 0);
 			Item.rare = ItemRarityID.Blue;

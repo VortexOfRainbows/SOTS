@@ -106,7 +106,7 @@ namespace SOTS.Projectiles.Tide
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Texture2D texture = mod.GetTexture("Projectiles/Tide/TidalConstructTrail");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Tide/TidalConstructTrail").Value;
 			if ((int)projectile.ai[0] >= 0)
 			{
 				for(int i = 0; i < ParticlePos.Count; i++)

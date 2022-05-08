@@ -52,7 +52,7 @@ namespace SOTS.Items.Pyramid
 				zero = Vector2.Zero;
 			}
 			Tile tile = Main.tile[i, j];
-			Texture2D texture = mod.GetTexture("Items/Pyramid/RubyKeystoneTileBack");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Pyramid/RubyKeystoneTileBack").Value;
 			if (tile.frameY % 90 == 0 && tile.frameX % 90 == 0) //check for it being the top left tile
 			{
 				int currentFrame = tile.frameY / 90;
@@ -71,7 +71,7 @@ namespace SOTS.Items.Pyramid
 			Tile tile = Main.tile[i, j];
 			float counter = Main.GlobalTime * 120;
 			float mult = new Vector2(-1f, 0).RotatedBy(MathHelper.ToRadians(counter / 2f)).X;
-			Texture2D texture = mod.GetTexture("Items/Pyramid/RubyKeystoneTileGlow");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Pyramid/RubyKeystoneTileGlow").Value;
 			if (tile.frameY % 90 == 0 && tile.frameX % 90 == 0) //check for it being the top left tile
 			{
 				int currentFrame = tile.frameY / 90;
@@ -344,7 +344,7 @@ namespace SOTS.Items.Pyramid
 						int item = Item.NewItem((int)projectile.position.X, (int)projectile.position.Y, projectile.width, projectile.height, ModContent.ItemType<RubyKeystone>(), 1, false, 0, true);
 						NetMessage.SendData(MessageID.SyncItem, -1, -1, null, item, 1f, 0.0f, 0.0f, 0, 0, 0);
 					}
-					Main.PlaySound(SoundID.Shatter, (int)projectile.Center.X, (int)projectile.Center.Y, 0, 1.10f, -0.1f);
+					SoundEngine.PlaySound(SoundID.Shatter, (int)projectile.Center.X, (int)projectile.Center.Y, 0, 1.10f, -0.1f);
 					projectile.Kill();
 					projectile.active = false;
 				}

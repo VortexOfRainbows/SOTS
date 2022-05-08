@@ -28,7 +28,7 @@ namespace SOTS.Items.Otherworld
 		}
         public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
         {
-			Texture2D texture = mod.GetTexture("Items/Otherworld/TheAdvisorBossBagGlow");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/TheAdvisorBossBagGlow").Value;
 			Color color = new Color(110, 110, 110, 0);
 			for (int k = 0; k < 6; k++)
 			{
@@ -46,7 +46,7 @@ namespace SOTS.Items.Otherworld
 		}
         public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
         {
-			Texture2D texture = mod.GetTexture("Items/Otherworld/TheAdvisorBossBagGlow");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/TheAdvisorBossBagGlow").Value;
 			Color color = new Color(110, 110, 110, 0);
 			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
 			for (int k = 0; k < 6; k++)

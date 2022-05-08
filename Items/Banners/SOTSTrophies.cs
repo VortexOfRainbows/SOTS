@@ -50,7 +50,7 @@ namespace SOTS.Items.Banners
 			Item.autoReuse = true;
 			Item.useAnimation = 15;
 			Item.useTime = 10;
-			Item.useStyle = ItemUseStyleID.SwingThrow;
+			Item.useStyle = ItemUseStyleID.Swing;
 			Item.consumable = true;
 			Item.rare = ItemRarityID.Blue;
 			Item.value = Item.buyPrice(0, 1, 0, 0);

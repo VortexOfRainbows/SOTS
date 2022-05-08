@@ -29,7 +29,7 @@ namespace SOTS.Projectiles.Crushers
 		}
 		public override Texture2D ArmTexture(int handNum, int direction)
 		{
-			return mod.GetTexture("Projectiles/Crushers/WormWoodArm");
+			return Mod.Assets.Request<Texture2D>("Projectiles/Crushers/WormWoodArm").Value;
 		}
 	}
 }

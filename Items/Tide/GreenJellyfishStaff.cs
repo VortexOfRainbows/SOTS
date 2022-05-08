@@ -22,7 +22,7 @@ namespace SOTS.Items.Tide
             Item.height = 38; 
             Item.useTime = 18; 
             Item.useAnimation = 18;
-            Item.useStyle = ItemUseStyleID.HoldingOut;    
+            Item.useStyle = ItemUseStyleID.Shoot;    
             Item.knockBack = 3.5f;
 			Item.value = Item.sellPrice(0, 7, 50, 0);
             Item.rare = ItemRarityID.Lime;

@@ -16,7 +16,7 @@ namespace SOTS.Items.Fragments
 		public override void SetDefaults()
 		{
 			Item.CloneDefaults(ItemID.StoneBlock);
-			Item.useStyle = ItemUseStyleID.SwingThrow;
+			Item.useStyle = ItemUseStyleID.Swing;
 			Item.rare = ItemRarityID.Orange;
 			Item.createTile = ModContent.TileType<DissolvingBrillianceTile>();
 		}
@@ -66,8 +66,8 @@ namespace SOTS.Items.Fragments
 		}
 		public static void DrawEffects(int i, int j, SpriteBatch spriteBatch, Mod mod, bool wall = false)
 		{
-			Texture2D texture = mod.GetTexture("Assets/SpiritBlocks/BrillianceParticle");
-			Texture2D textureBlock = mod.GetTexture("Assets/SpiritBlocks/BrillianceBlockOutline");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Assets/SpiritBlocks/BrillianceParticle").Value;
+			Texture2D textureBlock = Mod.Assets.Request<Texture2D>("Assets/SpiritBlocks/BrillianceBlockOutline").Value;
 			Color color; // = DissolvingBrillianceTile.color;
 			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
 			if (Main.drawToScreen)

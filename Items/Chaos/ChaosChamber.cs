@@ -23,7 +23,7 @@ namespace SOTS.Items.Chaos
             Item.height = 26;  
             Item.useTime = 5;  
             Item.useAnimation = 5;
-            Item.useStyle = ItemUseStyleID.HoldingOut;    
+            Item.useStyle = ItemUseStyleID.Shoot;    
             Item.noMelee = true; 
             Item.knockBack = 1;
             Item.value = Item.sellPrice(0, 12, 0, 0);
@@ -35,7 +35,7 @@ namespace SOTS.Items.Chaos
 			Item.useAmmo = AmmoID.Bullet;
 			if (!Main.dedServ)
 			{
-				Item.GetGlobalItem<ItemUseGlow>().glowTexture = mod.GetTexture("Items/Chaos/ChaosChamberGlow");
+				Item.GetGlobalItem<ItemUseGlow>().glowTexture = Mod.Assets.Request<Texture2D>("Items/Chaos/ChaosChamberGlow").Value;
 				Item.GetGlobalItem<ItemUseGlow>().glowOffsetX = -2;
 			}
 		}
@@ -55,7 +55,7 @@ namespace SOTS.Items.Chaos
 			if (counter >= 6)
 			{
 				counter = 0;
-				Main.PlaySound(SoundID.Item38, (int)position.X, (int)position.Y);
+				SoundEngine.PlaySound(SoundID.Item38, (int)position.X, (int)position.Y);
 				Projectile.NewProjectile(position.X, position.Y, speedX, speedY, ModContent.ProjectileType<ChaosBallFriendly>(), damage, knockBack, player.whoAmI);
 			}
 			else

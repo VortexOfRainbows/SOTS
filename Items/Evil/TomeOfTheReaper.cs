@@ -22,7 +22,7 @@ namespace SOTS.Items.Evil
             Item.height = 44;   
             Item.useTime = 18;   
             Item.useAnimation = 18;
-            Item.useStyle = ItemUseStyleID.HoldingOut;    
+            Item.useStyle = ItemUseStyleID.Shoot;    
             Item.noMelee = true;  
             Item.knockBack = 4.5f;
             Item.value = Item.sellPrice(0, 5, 0, 0);

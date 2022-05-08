@@ -47,8 +47,8 @@ namespace SOTS.NPCs.Constructs
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
 			Texture2D texture = Main.npcTexture[npc.type];
-			Texture2D texture4 = mod.GetTexture("NPCs/Constructs/CollectorDrill");
-			Texture2D texture5 = mod.GetTexture("NPCs/Constructs/CollectorSpirit");
+			Texture2D texture4 = Mod.Assets.Request<Texture2D>("NPCs/Constructs/CollectorDrill").Value;
+			Texture2D texture5 = Mod.Assets.Request<Texture2D>("NPCs/Constructs/CollectorSpirit").Value;
 			Vector2 drawOrigin = new Vector2(texture4.Width * 0.5f, texture4.Height * 0.5f);
 			Vector2 drawOrigin2 = new Vector2(texture5.Width * 0.5f, texture5.Height * 0.5f);
 
@@ -72,9 +72,9 @@ namespace SOTS.NPCs.Constructs
 		}
         public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture2 = mod.GetTexture("NPCs/Constructs/CollectorBooster");
+			Texture2D texture2 = Mod.Assets.Request<Texture2D>("NPCs/Constructs/CollectorBooster").Value;
 			Vector2 drawOrigin = new Vector2(texture2.Width * 0.5f, texture2.Height * 0.5f);
-			Texture2D texture3 = mod.GetTexture("NPCs/Constructs/CollectorBoosterFill");
+			Texture2D texture3 = Mod.Assets.Request<Texture2D>("NPCs/Constructs/CollectorBoosterFill").Value;
 			Color color = new Color(100, 100, 100, 0);
 			for (int i = 0; i < 2; i++)
 			{
@@ -175,7 +175,7 @@ namespace SOTS.NPCs.Constructs
 					npc.ai[3] += 0.5f;
 					if(npc.ai[3] % 5 == 0 && spiritScale < 0.8f)
 					{
-						Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 13, 1.2f);
+						SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 13, 1.2f);
 					}
 					if (spiritScale < 0.9f)
 					{
@@ -206,9 +206,9 @@ namespace SOTS.NPCs.Constructs
 					Vector2 circularVelo = new Vector2(12, 0).RotatedBy(MathHelper.ToRadians(ai3 + 0.5f));
 					npc.velocity = new Vector2(-circularVelo.X * 0.1f, 0).RotatedBy(MathHelper.ToRadians(-48));
 					if(ai3 % 20 == 0 && ai3 < 125)
-						Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 15, 0.3f + ai3 * 0.05f);
+						SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 15, 0.3f + ai3 * 0.05f);
 					if(ai3 == 125)
-						Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 121, 1.3f);
+						SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 121, 1.3f);
 					if (ai3 > 180 && runAway)
                     {
 						for (int j = 0; j < 300; j++)

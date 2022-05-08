@@ -24,7 +24,7 @@ namespace SOTS.Projectiles.Earth
         }
         public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
         {
-            Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Earth/EarthshakerPickaxeGlow");
+            Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Earth/EarthshakerPickaxeGlow");
             Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
             Vector2 drawPos = projectile.Center - Main.screenPosition;
             for(int i = 0; i < 4; i++)
@@ -143,7 +143,7 @@ namespace SOTS.Projectiles.Earth
         {
             if (runOnce)
                 return true;
-            Texture2D texture = mod.GetTexture("Projectiles/Earth/EarthenRing");
+            Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Earth/EarthenRing").Value;
             Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
             Vector2 previousPosition = trailPos[0];
             if (previousPosition == Vector2.Zero)

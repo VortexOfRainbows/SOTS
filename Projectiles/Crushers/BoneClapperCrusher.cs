@@ -47,7 +47,7 @@ namespace SOTS.Projectiles.Crushers
 		}
 		public override Texture2D ArmTexture(int handNum, int direction)
 		{
-			return mod.GetTexture("Projectiles/Crushers/BoneClapperArm");
+			return Mod.Assets.Request<Texture2D>("Projectiles/Crushers/BoneClapperArm").Value;
 		}
 	}
 }

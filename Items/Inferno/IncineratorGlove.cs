@@ -27,7 +27,7 @@ namespace SOTS.Items.Inferno
 			Item.rare = ItemRarityID.Pink;
 			Item.useTime = 40;
 			Item.useAnimation = 40;
-			Item.useStyle = ItemUseStyleID.HoldingOut;
+			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.autoReuse = false;            
 			Item.shoot = ModContent.ProjectileType<IncineratorGloveProjectile>(); 
 			Item.shootSpeed = 5f;

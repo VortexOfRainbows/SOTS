@@ -44,7 +44,7 @@ namespace SOTS.Projectiles.Earth
         {
             if(runOnce)
             {
-                Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 27, 0.85f, -0.1f);
+                SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 27, 0.85f, -0.1f);
                 projectile.rotation = projectile.ai[0];
                 if(projectile.ai[1] > projectile.timeLeft)
                     projectile.timeLeft = (int)projectile.ai[1];
@@ -84,7 +84,7 @@ namespace SOTS.Projectiles.Earth
         }
         public override void Kill(int timeLeft)
         {
-            Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 105, 0.7f, -0.2f);
+            SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 105, 0.7f, -0.2f);
             StarDust();
         }
     }

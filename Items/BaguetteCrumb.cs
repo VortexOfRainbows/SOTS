@@ -58,7 +58,7 @@ namespace SOTS.Items
 		}
 		public override bool OnPickup(Player player)
 		{
-			Main.PlaySound(SoundID.Grab, player.Center);
+			SoundEngine.PlaySound(SoundID.Grab, player.Center);
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			modPlayer.baguetteLength++;
 			player.statLife += 3;

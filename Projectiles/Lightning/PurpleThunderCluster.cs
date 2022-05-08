@@ -72,7 +72,7 @@ namespace SOTS.Projectiles.Lightning
 			shootToX *= distance * 5;
 			shootToY *= distance * 5;
 		
-			Main.PlaySound(SoundID.Item94, (int)(projectile.Center.X), (int)(projectile.Center.Y));
+			SoundEngine.PlaySound(SoundID.Item94, (int)(projectile.Center.X), (int)(projectile.Center.Y));
 			if(projectile.owner == Main.myPlayer)
 			{
 				for(int i = 0; i < 3; i++)

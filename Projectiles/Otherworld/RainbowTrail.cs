@@ -58,7 +58,7 @@ namespace SOTS.Projectiles.Otherworld
 			int counter2 = counter;
 			if (runOnce)
 				return true;
-			Texture2D texture = mod.GetTexture("Projectiles/Otherworld/RainbowTrail");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Otherworld/RainbowTrail").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Vector2 previousPosition = projectile.Center;
 			for (int k = 0; k < trailPos.Length; k++)

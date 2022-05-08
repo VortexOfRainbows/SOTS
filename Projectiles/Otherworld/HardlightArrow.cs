@@ -32,7 +32,7 @@ namespace SOTS.Projectiles.Otherworld
 		Vector2[] trailPos = new Vector2[12];
 		public void TrailPreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Texture2D texture = mod.GetTexture("Projectiles/Otherworld/HardlightArrowSmallShaft");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Otherworld/HardlightArrowSmallShaft").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Vector2 previousPosition = projectile.Center;
 			for (int k = 0; k < trailPos.Length; k++)
@@ -79,7 +79,7 @@ namespace SOTS.Projectiles.Otherworld
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Texture2D texture2 = mod.GetTexture("Projectiles/Otherworld/HardlightArrowShaft");
+			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Projectiles/Otherworld/HardlightArrowShaft").Value;
 			Color color = new Color(120, 120, 120, 0);
 			Vector2 drawOrigin = new Vector2(Main.projectileTexture[projectile.type].Width * 0.5f, projectile.height * 0.5f);
 			if(endHow == 0)

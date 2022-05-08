@@ -37,7 +37,7 @@ namespace SOTS.Items.Pyramid
                 {
                     zero = Vector2.Zero;
                 }
-                Texture2D texture = ModContent.GetTexture("SOTS/Items/Pyramid/ManaStatueDraw");
+                Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Items/Pyramid/ManaStatueDraw");
                 Vector2 location = new Vector2(i * 16, j * 16) + new Vector2(-4, -4);
                 Color color = Lighting.GetColor(i, j, WorldGen.paintColor(Main.tile[i, j].color()));
                 spriteBatch.Draw(texture, location + zero - Main.screenPosition, null, color, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);

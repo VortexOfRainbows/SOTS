@@ -41,7 +41,7 @@ namespace SOTS.Projectiles.Base
 				projectile.velocity.X = -oldVelocity.X;
 			if (projectile.velocity.Y != oldVelocity.Y)
 				projectile.velocity.Y = -oldVelocity.Y;
-			Main.PlaySound(SoundID.Item10, projectile.Center);
+			SoundEngine.PlaySound(SoundID.Item10, projectile.Center);
 			return false;
 		}
 	}

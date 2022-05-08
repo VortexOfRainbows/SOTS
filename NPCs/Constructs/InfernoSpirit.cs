@@ -220,7 +220,7 @@ namespace SOTS.NPCs.Constructs
 						mult = npc.ai[1] / 200f;
 						npc.Center = Vector2.Lerp(dashPosition, dashPositionOther, mult);
 						if ((int)npc.ai[1] % 4 == 0)
-							Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 34, 1f, 0.5f);
+							SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 34, 1f, 0.5f);
 						if ((int)npc.ai[1] % 2 == 0)
 						{
 							if (Main.netMode != NetmodeID.MultiplayerClient)
@@ -472,7 +472,7 @@ namespace SOTS.NPCs.Constructs
 		}
 		public void Draw(Vector2 drawLocation)
 		{
-			Texture2D texture = ModContent.GetTexture("SOTS/NPCs/Constructs/InfernoSpiritMini");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Constructs/InfernoSpiritMini");
 			Color color = new Color(100, 100, 100, 0);
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			for (int k = 0; k < 7; k++)

@@ -49,8 +49,8 @@ namespace SOTS.Projectiles.Laser
 		{
 			Player player = Main.player[projectile.owner];
 			double direction = (player.Center - projectile.Center).ToRotation();
-			Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Laser/PutridPupil");
-			Texture2D texture2 = ModContent.GetTexture("SOTS/Projectiles/Laser/PutridEye");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Laser/PutridPupil");
+			Texture2D texture2 = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Laser/PutridEye");
 			Vector2 drawOrigin = new Vector2(texture2.Width / 2, texture2.Height / 2);
 			Vector2 drawOrigin2 = new Vector2(texture.Width / 2, texture.Height / 2);
 			spriteBatch.Draw(texture2, projectile.Center - Main.screenPosition, null, lightColor, (float)direction + MathHelper.ToRadians(225), drawOrigin, projectile.scale, SpriteEffects.None, 0f);
@@ -73,7 +73,7 @@ namespace SOTS.Projectiles.Laser
 		public void DrawCircle(bool spriteBatch, float size, float dist, float colorMod = 1)
 		{
 			Player player = Main.player[projectile.owner];
-			Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Laser/PutridEyeDecor");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Laser/PutridEyeDecor");
 			Vector2 drawOrigin2 = new Vector2(texture.Width / 2, texture.Height / 2);
 			Color lightColor = new Color(100, 100, 100, 0);
 			double direction = (player.Center - projectile.Center).ToRotation();
@@ -170,14 +170,14 @@ namespace SOTS.Projectiles.Laser
 				}
 				dist = -10;
 				Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 0.8f / 255f, (255 - projectile.alpha) * 0.8f / 255f, (255 - projectile.alpha) * 0.8f / 255f);
-				Main.PlaySound(SoundID.Item94, (int)(projectile.Center.X), (int)(projectile.Center.Y));
+				SoundEngine.PlaySound(SoundID.Item94, (int)(projectile.Center.X), (int)(projectile.Center.Y));
 			}
 			if(dist >= 2.8f && dist <= 3.2f)
-				Main.PlaySound(SoundID.Item15, (int)(projectile.Center.X), (int)(projectile.Center.Y));
+				SoundEngine.PlaySound(SoundID.Item15, (int)(projectile.Center.X), (int)(projectile.Center.Y));
 			if (dist >= 8.8f && dist <= 9.2f)
-				Main.PlaySound(SoundID.Item15, (int)(projectile.Center.X), (int)(projectile.Center.Y));
+				SoundEngine.PlaySound(SoundID.Item15, (int)(projectile.Center.X), (int)(projectile.Center.Y));
 			if (dist >= 14.8f && dist <= 15.2f)
-				Main.PlaySound(SoundID.Item15, (int)(projectile.Center.X), (int)(projectile.Center.Y));
+				SoundEngine.PlaySound(SoundID.Item15, (int)(projectile.Center.X), (int)(projectile.Center.Y));
 		}
 	}
 }

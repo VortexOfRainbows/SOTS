@@ -188,7 +188,7 @@ namespace SOTS.Projectiles.Celestial
 			}
 			proj.active = false;
 			proj.Kill();
-			if (!capable && lastItem == Item.type && Item.active && !Item.IsAir && !Item.summon && !Item.thrown && !Item.channel && !SOTSPlayer.locketBlacklist.Contains(type) && (Item.useStyle == ItemUseStyleID.SwingThrow || Item.useStyle == ItemUseStyleID.HoldingOut) && !subPlayer.servantIsVanity && !Item.consumable)
+			if (!capable && lastItem == Item.type && Item.active && !Item.IsAir && !Item.summon && !Item.thrown && !Item.channel && !SOTSPlayer.locketBlacklist.Contains(type) && (Item.useStyle == ItemUseStyleID.Swing || Item.useStyle == ItemUseStyleID.Shoot) && !subPlayer.servantIsVanity && !Item.consumable)
 			{
 				subPlayer.foundItem = true;
 				float allSpeed = ItemLoader.UseTimeMultiplier(item, player) * PlayerHooks.UseTimeMultiplier(player, item);
@@ -199,7 +199,7 @@ namespace SOTS.Projectiles.Celestial
 					fireRate = FullUseTime;
 				}
 				int extraSpeed = 1;
-				if (Item.useStyle == ItemUseStyleID.SwingThrow)
+				if (Item.useStyle == ItemUseStyleID.Swing)
 					extraSpeed++;
 				if (UseTime <= -Item.reuseDelay + extraSpeed || UseTime > FullUseTime + 1)
 				{
@@ -262,7 +262,7 @@ namespace SOTS.Projectiles.Celestial
 							return;
 						}
 						ItemLoader.UseItem(item, player);
-						Main.PlaySound(Item.UseSound, projectile.Center);
+						SoundEngine.PlaySound(Item.UseSound, projectile.Center);
 					}
 					if (UseTime <= FullUseTime && (UseTime % fireRate == 0 || (UseTime == FullUseTime && fireRate > FullUseTime)))
 					{
@@ -347,8 +347,8 @@ namespace SOTS.Projectiles.Celestial
 			//	Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
 			//	GameShaders.Armor.GetSecondaryShader(subspacePlayer.subspaceServantShader, player).Apply(null);
 			//}
-			Texture2D texture = mod.GetTexture("Projectiles/Celestial/SubspaceServantBody");
-			Texture2D textureOutline = mod.GetTexture("Projectiles/Celestial/SubspaceServantBodyOutline");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Celestial/SubspaceServantBody").Value;
+			Texture2D textureOutline = Mod.Assets.Request<Texture2D>("Projectiles/Celestial/SubspaceServantBodyOutline").Value;
 			Vector2 drawPos = projectile.Center - Main.screenPosition + new Vector2(0, -4);
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 6 / 2);
 			for (int k = 0; k < 4; k++)
@@ -370,7 +370,7 @@ namespace SOTS.Projectiles.Celestial
             {
 				//SubspacePlayer subspacePlayer = SubspacePlayer.ModPlayer(player);
 				DrawItemAnimation(spriteBatch, false);
-				Texture2D texture = mod.GetTexture("Projectiles/Celestial/SubspaceServantArms");
+				Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Celestial/SubspaceServantArms").Value;
 				Vector2 drawPos = projectile.Center - Main.screenPosition + new Vector2(0, -4);
 				Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 6 / 2);
 				spriteBatch.Draw(texture, drawPos, new Rectangle(0, frame * texture.Height / 6, texture.Width, texture.Height / 6), Color.White, projectile.rotation, origin, projectile.scale, direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
@@ -387,9 +387,9 @@ namespace SOTS.Projectiles.Celestial
 			{
 				return;
 			}
-			Texture2D texture = mod.GetTexture("Projectiles/Celestial/SubspaceServantTail");
-			Texture2D textureOutline = mod.GetTexture("Projectiles/Celestial/SubspaceServantTailOutline");
-			Texture2D texture2 = mod.GetTexture("Projectiles/Celestial/SubspaceServantTailScales");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Celestial/SubspaceServantTail").Value;
+			Texture2D textureOutline = Mod.Assets.Request<Texture2D>("Projectiles/Celestial/SubspaceServantTailOutline").Value;
+			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Projectiles/Celestial/SubspaceServantTailScales").Value;
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
 			Vector2 center = projectile.Center;
 			Vector2 velo = new Vector2(0, 4f);
@@ -433,8 +433,8 @@ namespace SOTS.Projectiles.Celestial
 		}
 		public void DrawWings(SpriteBatch spriteBatch)
 		{
-			Texture2D texture = mod.GetTexture("Projectiles/Celestial/SubspaceServantWings");
-			Texture2D textureOutline = mod.GetTexture("Projectiles/Celestial/SubspaceServantWingsOutline");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Celestial/SubspaceServantWings").Value;
+			Texture2D textureOutline = Mod.Assets.Request<Texture2D>("Projectiles/Celestial/SubspaceServantWingsOutline").Value;
 			Vector2 drawPos = projectile.Center - Main.screenPosition + new Vector2(-8 * direction, -4);
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 6 / 2);
 			int frame = (int)(projectile.ai[1] / 4);
@@ -472,7 +472,7 @@ namespace SOTS.Projectiles.Celestial
 				if (itemLocation != null && texture != null && UseTime != -1000 && UseTime <= FullUseTime && (!Item.noUseGraphic || Item.type == ModContent.ItemType<VibrantPistol>() || Item.type == ModContent.ItemType<StarcoreAssaultRifle>()))
 				{
 					Vector2 location = itemLocation;
-					if (Item.useStyle == ItemUseStyleID.HoldingOut)
+					if (Item.useStyle == ItemUseStyleID.Shoot)
 					{
 						if (Item.staff[Item.type])
 						{

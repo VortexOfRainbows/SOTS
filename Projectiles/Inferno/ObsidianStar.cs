@@ -25,7 +25,7 @@ namespace SOTS.Projectiles.Inferno
 		{
 			if(runOnce)
             {
-				Main.PlaySound(SoundID.Item20, (int)(projectile.Center.X), (int)(projectile.Center.Y));
+				SoundEngine.PlaySound(SoundID.Item20, (int)(projectile.Center.X), (int)(projectile.Center.Y));
 				runOnce = false;
             }
 			//projectile.rotation += 1f;

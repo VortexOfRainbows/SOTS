@@ -19,7 +19,7 @@ namespace SOTS.Items.MusicBoxes
 
 		public override void SetDefaults()
 		{
-			Item.useStyle = ItemUseStyleID.SwingThrow;
+			Item.useStyle = ItemUseStyleID.Swing;
 			Item.useTurn = true;
 			Item.useAnimation = 15;
 			Item.useTime = 10;
@@ -99,7 +99,7 @@ namespace SOTS.Items.MusicBoxes
 						x = 0;
 						y = 0;
 					}
-					Main.spriteBatch.Draw(mod.GetTexture("Items/MusicBoxes/PlanetariumMusicBoxGlow"), new Vector2(i * 16 - Main.screenPosition.X + x, j * 16 - Main.screenPosition.Y + y + 2) + zero, new Rectangle(frameX * 18, frameY * 18, 16, 16), color, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(Mod.Assets.Request<Texture2D>("Items/MusicBoxes/PlanetariumMusicBoxGlow").Value, new Vector2(i * 16 - Main.screenPosition.X + x, j * 16 - Main.screenPosition.Y + y + 2) + zero, new Rectangle(frameX * 18, frameY * 18, 16, 16), color, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
 				}
 			}
 		}

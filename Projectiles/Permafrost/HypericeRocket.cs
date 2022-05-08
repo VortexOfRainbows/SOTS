@@ -24,7 +24,7 @@ namespace SOTS.Projectiles.Permafrost
 		}
 		public override void Kill(int timeLeft)
 		{
-			Main.PlaySound(SoundID.Item14, (int)projectile.Center.X, (int)projectile.Center.Y);
+			SoundEngine.PlaySound(SoundID.Item14, (int)projectile.Center.X, (int)projectile.Center.Y);
 			for (int i = 0; i < 2; i++)
 			{
 				int goreIndex = Gore.NewGore(new Vector2(projectile.position.X, projectile.position.Y), default(Vector2), Main.rand.Next(61,64), 1f);	

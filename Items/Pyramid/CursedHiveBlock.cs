@@ -144,7 +144,7 @@ namespace SOTS.Items.Pyramid
 					Main.npc[npc1].netUpdate = true;
 					Main.npc[npc1].ai[2] = 900;
 				}
-				Main.PlaySound(SoundID.Item14, (int)(projectile.Center.X), (int)(projectile.Center.Y));
+				SoundEngine.PlaySound(SoundID.Item14, (int)(projectile.Center.X), (int)(projectile.Center.Y));
 				int x2 = (int)(projectile.Center.X / 16f);
 				int y2 = (int)(projectile.Center.Y / 16f);
 				for (int i = x2 - 1; i <= x2 + 1; i++)
@@ -182,9 +182,9 @@ namespace SOTS.Items.Pyramid
 							{
 								for (int y = j - 1; y <= j + 1; y++)
 								{
-									if (Main.tile[x, y] != null && Main.tile[x, y].wall > 0)
+									if (Main.tile[x, y] != null && Main.tile[x, y].WallType > 0)
 									{
-										if (Main.tile[x, y].wall == 0 && Main.netMode != 0)
+										if (Main.tile[x, y].WallType == 0 && Main.netMode != 0)
 										{
 											NetMessage.SendData(17, -1, -1, null, 2, (float)x, (float)y, 0f, 0, 0, 0);
 										}

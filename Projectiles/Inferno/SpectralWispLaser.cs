@@ -40,7 +40,7 @@ namespace SOTS.Projectiles.Inferno
 			if(projectile.ai[0] == -1)
 			{
 				projectile.ai[0] = 29;
-				Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 15, 1f, 0.25f);
+				SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 15, 1f, 0.25f);
 				green = true;
             }
             return base.PreAI();
@@ -93,7 +93,7 @@ namespace SOTS.Projectiles.Inferno
 			projectile.rotation += MathHelper.ToRadians(8);
 			if(projectile.ai[0] == 0)
 			{
-				Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 15, 1f, 0.25f);
+				SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 15, 1f, 0.25f);
 			}
 			if(projectile.ai[0] == 29)
 			{
@@ -113,7 +113,7 @@ namespace SOTS.Projectiles.Inferno
 				counter++;
 			if (runOnce)
 			{
-				Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 94, 0.75f, 0.4f);
+				SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 94, 0.75f, 0.4f);
 				Laser();
 				runOnce = false;
 				//projectile.friendly = true;
@@ -149,7 +149,7 @@ namespace SOTS.Projectiles.Inferno
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Celestial/SubspaceLingeringFlame");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Celestial/SubspaceLingeringFlame");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Color color;
 			for (int i = 0; i < particleList.Count; i++)
@@ -166,7 +166,7 @@ namespace SOTS.Projectiles.Inferno
 			}
 			if(projectile.ai[0] < 30)
 			{
-				Texture2D texture2 = green ? ModContent.GetTexture("SOTS/Projectiles/Inferno/GreenWispIndicator") : ModContent.GetTexture("SOTS/Projectiles/Inferno/SansIndicator");
+				Texture2D texture2 = green ? (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Inferno/GreenWispIndicator") : (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Inferno/SansIndicator");
 				Vector2 drawOrigin2 = new Vector2(0, 2);
 				for(int j = 0; j < 450; j++)
 				{

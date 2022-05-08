@@ -65,7 +65,7 @@ namespace SOTS.Projectiles.Celestial
 		public void DrawWorm(SpriteBatch spriteBatch, bool outer)
 		{
 			Color color = new Color(100, 255, 100, 0);
-			Texture2D texture = mod.GetTexture("Projectiles/Celestial/EnergySerpentHead");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Celestial/EnergySerpentHead").Value;
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
 			Vector2 first = projectile.Center;
 			if (outer)
@@ -94,9 +94,9 @@ namespace SOTS.Projectiles.Celestial
 					toOther = spinningpoint60.RotatedBy(radians64, vector);
 				}
 				if (i != segments.Count - 1)
-					texture = mod.GetTexture("Projectiles/Celestial/EnergySerpentBody");
+					texture = Mod.Assets.Request<Texture2D>("Projectiles/Celestial/EnergySerpentBody").Value;
 				else
-					texture = mod.GetTexture("Projectiles/Celestial/EnergySerpentTail");
+					texture = Mod.Assets.Request<Texture2D>("Projectiles/Celestial/EnergySerpentTail").Value;
 				origin = new Vector2(texture.Width / 2, texture.Height / 2);
 				float rotation = segmentsRotation[i];
 				int spriteDirection = toOther.X > 0f ? 1 : -1;

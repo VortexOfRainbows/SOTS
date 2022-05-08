@@ -14,8 +14,8 @@ namespace SOTS.Items.Chaos
 	{
 		public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
 		{
-			Texture2D texture = mod.GetTexture("Items/Chaos/RealityShatterEffect");
-			Texture2D textureBlack = mod.GetTexture("Items/Chaos/RealityShatterBlack");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Chaos/RealityShatterEffect").Value;
+			Texture2D textureBlack = Mod.Assets.Request<Texture2D>("Items/Chaos/RealityShatterBlack").Value;
 			Color color = Color.White;
 			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
 			for (int k = 0; k < 6; k++)
@@ -35,7 +35,7 @@ namespace SOTS.Items.Chaos
 		}
 		public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
-			Texture2D texture = mod.GetTexture("Items/Chaos/RealityShatterEffect");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Chaos/RealityShatterEffect").Value;
 			for (int k = 0; k < 6; k++)
 			{
 				Vector2 circular = new Vector2(1 * scale, 0).RotatedBy(MathHelper.ToRadians(k * 60 + Main.GameUpdateCount * 6));
@@ -52,7 +52,7 @@ namespace SOTS.Items.Chaos
 		public override void SetDefaults()
 		{
 			Item.damage = 80;
-			Item.melee = true;
+			Item.DamageType = DamageClass.Melee;
 			Item.width = 90;
 			Item.height = 98;
 			Item.useTime = 20;
@@ -70,7 +70,7 @@ namespace SOTS.Items.Chaos
 			Item.scale = 1.1f;
 			if (!Main.dedServ)
 			{
-				Item.GetGlobalItem<ItemUseGlow>().glowTexture = mod.GetTexture("Items/Chaos/RealityShatterEffect");
+				Item.GetGlobalItem<ItemUseGlow>().glowTexture = Mod.Assets.Request<Texture2D>("Items/Chaos/RealityShatterEffect").Value;
 			}
 		}
         public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)

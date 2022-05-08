@@ -37,9 +37,9 @@ namespace SOTS.Projectiles.Minions
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Minions/CursedBladeHilt");
-			Texture2D texture2 = ModContent.GetTexture("SOTS/Projectiles/Minions/CursedBladePart");
-			Texture2D texture3 = ModContent.GetTexture("SOTS/Projectiles/Minions/CursedBladeEnd");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Minions/CursedBladeHilt");
+			Texture2D texture2 = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Minions/CursedBladePart");
+			Texture2D texture3 = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Minions/CursedBladeEnd");
 			Vector2 drawPos = projectile.Center- Main.screenPosition;
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
 			int length = (int)(13f * (1 - projectile.ai[0] / attackTimerMax));
@@ -252,7 +252,7 @@ namespace SOTS.Projectiles.Minions
 				{
 					if (canDoDashSounds)
 					{
-						Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 92, 0.7f, 0.25f);
+						SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 92, 0.7f, 0.25f);
 					}
 					canDoDashSounds = false;
 				}

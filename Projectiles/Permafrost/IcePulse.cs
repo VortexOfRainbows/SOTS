@@ -34,7 +34,7 @@ namespace SOTS.Projectiles.Permafrost
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Texture2D texture = alt ? mod.GetTexture("Projectiles/Permafrost/IcePulseAlt") : Main.projectileTexture[projectile.type];
+			Texture2D texture = alt ? Mod.Assets.Request<Texture2D>("Projectiles/Permafrost/IcePulseAlt").Value : Main.projectileTexture[projectile.type];
 			Vector2 drawOrigin = new Vector2(Main.projectileTexture[projectile.type].Width * 0.5f, projectile.height * 0.5f);
 			spriteBatch.Draw(texture, projectile.Center - Main.screenPosition, new Rectangle(0, projectile.height * projectile.frame, projectile.width, projectile.height), lightColor, projectile.rotation, drawOrigin, projectile.scale, SpriteEffects.None, 0f);
 			return false;
@@ -51,7 +51,7 @@ namespace SOTS.Projectiles.Permafrost
 			Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 1.5f / 255f, (255 - projectile.alpha) * 1.5f / 255f, (255 - projectile.alpha) * 1.5f / 255f);
 			if (runOnce)
 			{
-				Main.PlaySound(SoundID.Item50, (int)(projectile.Center.X), (int)(projectile.Center.Y));
+				SoundEngine.PlaySound(SoundID.Item50, (int)(projectile.Center.X), (int)(projectile.Center.Y));
 				runOnce = false;
 				for (int i = 0; i < 360; i += 10)
 				{

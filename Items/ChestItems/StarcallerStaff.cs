@@ -25,7 +25,7 @@ namespace SOTS.Items.ChestItems
 		{
 			Item.mana = 10;
 			Item.damage = 64;
-			Item.useStyle = ItemUseStyleID.SwingThrow;
+			Item.useStyle = ItemUseStyleID.Swing;
 			Item.shootSpeed = 10f;
 			Item.width = 54;
 			Item.height = 48;
@@ -36,7 +36,7 @@ namespace SOTS.Items.ChestItems
 			Item.noMelee = true;
 			Item.knockBack = 1.3f;
 			Item.value = Item.sellPrice(0, 20, 0, 0);
-			Item.summon = true;
+			Item.DamageType = DamageClass.Summon;
 			Item.buffType = ModContent.BuffType<StarlightSerpent>();
             Item.shoot = ModContent.ProjectileType<CrystalSerpentBody>();
         }

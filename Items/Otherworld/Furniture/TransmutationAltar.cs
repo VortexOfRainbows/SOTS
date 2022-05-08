@@ -411,7 +411,7 @@ namespace SOTS.Items.Otherworld.Furniture
 			
 			if(projectile.knockBack == 1)
 			{
-				Main.PlaySound(SoundID.Item4, projectile.Center);
+				SoundEngine.PlaySound(SoundID.Item4, projectile.Center);
 				Vector2 position = projectile.Center;
 				for (int k = 0; k < 360; k += 3)
 				{
@@ -440,7 +440,7 @@ namespace SOTS.Items.Otherworld.Furniture
 			}
 			else
 			{
-				Main.PlaySound(SoundID.Item4, projectile.Center);
+				SoundEngine.PlaySound(SoundID.Item4, projectile.Center);
 				Vector2 position = projectile.Center;
 				for (int k = 0; k < 360; k += 3)
 				{

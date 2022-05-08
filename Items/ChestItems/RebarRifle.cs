@@ -21,7 +21,7 @@ namespace SOTS.Items.ChestItems
             Item.height = 24;
             Item.useTime = 21;
             Item.useAnimation = 21;
-            Item.useStyle = ItemUseStyleID.HoldingOut;
+            Item.useStyle = ItemUseStyleID.Shoot;
             Item.noMelee = true;
             Item.knockBack = 3;
             Item.value = Item.sellPrice(0, 20, 0, 0);

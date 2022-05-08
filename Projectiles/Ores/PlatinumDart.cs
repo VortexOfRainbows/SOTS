@@ -118,7 +118,7 @@ namespace SOTS.Projectiles.Ores
 		public override void Kill(int timeLeft)
         {
 			if(timeLeft > 1)
-				Main.PlaySound(SoundID.Dig, projectile.Center);
+				SoundEngine.PlaySound(SoundID.Dig, projectile.Center);
 			for(int i = 0; i < 18; i++)
 			{
 				int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Platinum);

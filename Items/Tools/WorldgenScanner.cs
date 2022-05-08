@@ -25,7 +25,7 @@ namespace SOTS.Items.Tools
 			Item.height = 34;
 			Item.useTime = 48;
 			Item.useAnimation = 48;
-			Item.useStyle = ItemUseStyleID.HoldingUp;
+			Item.useStyle = ItemUseStyleID.HoldUp;
 			Item.value = 0;
 			Item.rare = ItemRarityID.Cyan;
 			Item.UseSound = SoundID.Item1;

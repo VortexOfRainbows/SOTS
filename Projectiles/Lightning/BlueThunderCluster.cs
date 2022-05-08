@@ -44,7 +44,7 @@ namespace SOTS.Projectiles.Lightning
 		public override void Kill(int timeLeft)
 		{
 			Player player = Main.player[projectile.owner];
-			Main.PlaySound(SoundID.Item94, (int)(projectile.Center.X), (int)(projectile.Center.Y));
+			SoundEngine.PlaySound(SoundID.Item94, (int)(projectile.Center.X), (int)(projectile.Center.Y));
 			if(projectile.owner == Main.myPlayer)
 			{
 				for(int i = 0; i < 8; i++)

@@ -18,12 +18,12 @@ namespace SOTS.Items.GhostTown
 		public override void SetDefaults()
 		{
 			Item.damage = 6;
-			Item.melee = true;
+			Item.DamageType = DamageClass.Melee;
 			Item.width = 66;
 			Item.height = 66;
 			Item.useTime = 20;
 			Item.useAnimation = 20;
-			Item.useStyle = ItemUseStyleID.HoldingOut;
+			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.knockBack = 1.6f;
             Item.value = Item.sellPrice(0, 0, 60, 0);
 			Item.rare = ItemRarityID.Blue;

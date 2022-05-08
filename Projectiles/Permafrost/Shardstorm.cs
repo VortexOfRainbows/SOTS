@@ -103,7 +103,7 @@ namespace SOTS.Projectiles.Permafrost
 		{
 			if (projectile.ai[0] == 0)
 				return;
-			Texture2D texture = mod.GetTexture("Projectiles/Permafrost/ShardstormTrail");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Permafrost/ShardstormTrail").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Vector2 previousPosition = projectile.Center;
 			float drawAmt = 1f;
@@ -177,7 +177,7 @@ namespace SOTS.Projectiles.Permafrost
 				if (count % 3 == 0) //will activate 12 times
 				{
 					Vector2 stormPos = projectile.Center - new Vector2(348, 0).RotatedBy(MathHelper.ToRadians((projectile.whoAmI + count) * 15));
-					Main.PlaySound(SoundID.Item44, (int)stormPos.X, (int)stormPos.Y);
+					SoundEngine.PlaySound(SoundID.Item44, (int)stormPos.X, (int)stormPos.Y);
 					if(Main.myPlayer == projectile.owner)
 						Projectile.NewProjectile(stormPos, Vector2.Zero, projectile.type, projectile.damage, projectile.knockBack, player.whoAmI, 1, (float)(MathHelper.ToRadians(180) + MathHelper.ToRadians((projectile.whoAmI + count) * 15)));
 				}
@@ -200,7 +200,7 @@ namespace SOTS.Projectiles.Permafrost
 					int num = 30;
 					if(projectile.alpha < 245)
 					{
-						Main.PlaySound(SoundID.Item, (int)position.X, (int)position.Y, 14, 0.7f, 0.1f);
+						SoundEngine.PlaySound(SoundID.Item, (int)position.X, (int)position.Y, 14, 0.7f, 0.1f);
 					}
 					else
                     {

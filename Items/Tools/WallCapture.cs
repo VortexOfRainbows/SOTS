@@ -78,7 +78,7 @@ namespace SOTS.Items.Tools
 							Tile tile = Framing.GetTileSafely(k, l);
 							int w = structure[i, j];
 							double specialType = tiles[w]; //WWWW.XYZZZZ
-							tile.wall = (ushort)specialType;
+							tile.WallType = (ushort)specialType;
 						}
 					}
 				}
@@ -293,7 +293,7 @@ namespace SOTS.Items.Tools
 			{
 				finalExport += "					case " + i + ":\n";
 				double specialType = tiles[i]; //W.YXXX
-				finalExport += "							tile.wall = " + specialType + ";\n";
+				finalExport += "							tile.WallType = " + specialType + ";\n";
 				finalExport += "					break;\n";
 			}
 			finalExport += "				}\n";

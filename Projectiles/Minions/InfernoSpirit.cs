@@ -61,7 +61,7 @@ namespace SOTS.Projectiles.Minions
 				float y = Main.rand.NextFloat(-2, 2f);
 				Main.spriteBatch.Draw(texture, new Vector2((float)(projectile.Center.X - (int)Main.screenPosition.X) + x, (float)(projectile.Center.Y - (int)Main.screenPosition.Y) + y), null, color, 0f, drawOrigin, projectile.scale, SpriteEffects.None, 0f);
 			}
-			texture = mod.GetTexture("Projectiles/Minions/InfernoSpiritBall");
+			texture = Mod.Assets.Request<Texture2D>("Projectiles/Minions/InfernoSpiritBall").Value;
 			drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			if(!runOnce)
             {
@@ -243,7 +243,7 @@ namespace SOTS.Projectiles.Minions
 				projectile.velocity = newGoTo * speed;
 				if (projectile.ai[0] > 50)
 				{
-					Main.PlaySound(SoundID.Item, (int)projectile.position.X, (int)projectile.position.Y, 20, 1.1f, -0.2f);
+					SoundEngine.PlaySound(SoundID.Item, (int)projectile.position.X, (int)projectile.position.Y, 20, 1.1f, -0.2f);
 					projectile.ai[0] = 0;
                 }
 			}

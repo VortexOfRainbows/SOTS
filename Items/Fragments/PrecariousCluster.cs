@@ -38,7 +38,7 @@ namespace SOTS.Items.Fragments
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frameNotUsed, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
-			Texture2D texture = mod.GetTexture("Items/Fragments/PrecariousClusterSymbols");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Fragments/PrecariousClusterSymbols").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.25f * 0.5f);
 			position += new Vector2(33 * scale, 33 * scale);
 			float counter = Main.GlobalTime * 160;
@@ -68,7 +68,7 @@ namespace SOTS.Items.Fragments
 		}
 		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
 		{
-			Texture2D texture = mod.GetTexture("Items/Fragments/PrecariousClusterSymbols");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Fragments/PrecariousClusterSymbols").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.25f * 0.5f);
 			float counter = Main.GlobalTime * 160;
 			int bonus = (int)(counter / 360f);
@@ -157,7 +157,7 @@ namespace SOTS.Items.Fragments
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frameNotUsed, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
-			Texture2D texture = mod.GetTexture("Items/Fragments/TerminalClusterSymbols");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Fragments/TerminalClusterSymbols").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.25f * 0.5f);
 			position += new Vector2(33 * scale, 33 * scale);
 			float counter = Main.GlobalTime * 160;
@@ -188,7 +188,7 @@ namespace SOTS.Items.Fragments
 		}
 		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
 		{
-			Texture2D texture = mod.GetTexture("Items/Fragments/TerminalClusterSymbols");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Fragments/TerminalClusterSymbols").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.25f * 0.5f);
 			float counter = Main.GlobalTime * 160;
 			int bonus = (int)(counter / 360f);

@@ -45,7 +45,7 @@ namespace SOTS.Projectiles
 		}
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
-            Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Hungry_Chain");    //this where the chain of grappling hook is drawn
+            Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Hungry_Chain");    //this where the chain of grappling hook is drawn
                                                       //change YourModName with ur mod name/ and CustomHookPr_Chain with the name of ur one
             Vector2 position = projectile.Center;
             Vector2 mountedCenter = Main.player[projectile.owner].MountedCenter;

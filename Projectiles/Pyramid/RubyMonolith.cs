@@ -34,7 +34,7 @@ namespace SOTS.Projectiles.Pyramid
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
 			Texture2D texture = Main.projectileTexture[projectile.type];
-			Texture2D texture4 = mod.GetTexture("Projectiles/Pyramid/RubyMonolithGlow");
+			Texture2D texture4 = Mod.Assets.Request<Texture2D>("Projectiles/Pyramid/RubyMonolithGlow").Value;
 			Rectangle frame = new Rectangle(0, projectile.height * projectile.frame, projectile.width, projectile.height);
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.25f);
 			float counter = Main.GlobalTime * 160;
@@ -112,7 +112,7 @@ namespace SOTS.Projectiles.Pyramid
 			}
 			if(projectile.frame != projectile.ai[1])
             {
-				Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 4, 0.9f, 0.2f);
+				SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 4, 0.9f, 0.2f);
 				for (int i = 0; i < 30; i++)
 				{
 					Vector2 circular = new Vector2(36, 0).RotatedBy(MathHelper.ToRadians(i * 12));

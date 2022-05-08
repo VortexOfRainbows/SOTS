@@ -17,7 +17,7 @@ namespace SOTS.Items.Crushers
 		public override void SafeSetDefaults()
 		{
             Item.damage = 42;
-            Item.melee = true;  
+            Item.DamageType = DamageClass.Melee;  
             Item.width = 44;
             Item.height = 44;  
             Item.useTime = 30; 

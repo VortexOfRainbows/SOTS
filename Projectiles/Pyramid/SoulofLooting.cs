@@ -28,7 +28,7 @@ namespace SOTS.Projectiles.Pyramid
 		}
         public override void PostDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Texture2D texture1 = mod.GetTexture("Projectiles/Pyramid/SoulofLooting");
+			Texture2D texture1 = Mod.Assets.Request<Texture2D>("Projectiles/Pyramid/SoulofLooting").Value;
 			Vector2 drawOrigin1 = new Vector2(texture1.Width * 0.5f, texture1.Height * 0.5f * 0.125f);
 			Vector2 drawPos2 = projectile.Center - Main.screenPosition;
 			Main.spriteBatch.Draw(texture1, drawPos2 + new Vector2(0, projectile.gfxOffY), new Rectangle(0, 22 * projectile.frame, 22, 22), projectile.GetAlpha(VoidPlayer.soulLootingColor), projectile.rotation, drawOrigin1, projectile.scale, projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
@@ -96,7 +96,7 @@ namespace SOTS.Projectiles.Pyramid
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			if (voidPlayer.lootingSouls < voidPlayer.voidMeterMax2 - voidPlayer.VoidMinionConsumption)
 			{
-				Main.PlaySound(7, (int)projectile.Center.X, (int)projectile.Center.Y, 0, 1.3f);
+				SoundEngine.PlaySound(7, (int)projectile.Center.X, (int)projectile.Center.Y, 0, 1.3f);
 				voidPlayer.lootingSouls++;
 				voidPlayer.SendClientChanges(voidPlayer);
 				var index = CombatText.NewText(projectile.Hitbox, VoidPlayer.soulLootingColor.MultiplyRGB(Color.White), 1);

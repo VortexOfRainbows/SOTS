@@ -55,7 +55,7 @@ namespace SOTS.Projectiles.Minions
 				float y = Main.rand.Next(-10, 11) * 0.25f;
 				Main.spriteBatch.Draw(texture, new Vector2((float)(projectile.Center.X - (int)Main.screenPosition.X) + x, (float)(projectile.Center.Y - (int)Main.screenPosition.Y) + y), null, color, 0f, drawOrigin, projectile.scale, SpriteEffects.None, 0f);
 			}
-			texture = mod.GetTexture("Projectiles/Minions/OtherworldlySpiritBall");
+			texture = Mod.Assets.Request<Texture2D>("Projectiles/Minions/OtherworldlySpiritBall").Value;
 			drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			for (int i = 0; i < orbLocations.Length; i++)
             {
@@ -113,7 +113,7 @@ namespace SOTS.Projectiles.Minions
 							toLocation = new Vector2(rotationalVelo.X, 0).RotatedBy(toLocation.ToRotation());
 							if (currentAI >= 30)
 							{
-								//Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 43, 0.4f);
+								//SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 43, 0.4f);
 								if (Main.myPlayer == projectile.owner)
 								{
 									Projectile.NewProjectileDirect(orbLocations[i], new Vector2(1, 0).RotatedBy(toLocation.ToRotation()) * 12, ModContent.ProjectileType<OtherworldLightning>(), projectile.damage, projectile.knockBack, Main.myPlayer, 0, 0);

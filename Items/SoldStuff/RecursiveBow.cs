@@ -21,7 +21,7 @@ namespace SOTS.Items.SoldStuff
             Item.height = 64;
             Item.useTime = 33;
             Item.useAnimation = 33;
-            Item.useStyle = ItemUseStyleID.HoldingOut;    
+            Item.useStyle = ItemUseStyleID.Shoot;    
             Item.noMelee = true;
             Item.knockBack = 4.5f;
             Item.value = Item.buyPrice(0, 15, 0, 0);

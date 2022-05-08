@@ -19,7 +19,7 @@ namespace SOTS.Items.Void
 			Item.height = 22;
 			Item.useAnimation = 12;
 			Item.useTime = 12;
-			Item.useStyle = ItemUseStyleID.HoldingUp;
+			Item.useStyle = ItemUseStyleID.HoldUp;
 			Item.value = 0;
 			Item.rare = ItemRarityID.Orange;
 			Item.maxStack = 999;
@@ -29,7 +29,7 @@ namespace SOTS.Items.Void
 		}
 		public override bool UseItem(Player player)
 		{
-			Main.PlaySound(SoundID.NPCKilled, (int)player.Center.X, (int)player.Center.Y, 39);
+			SoundEngine.PlaySound(SoundID.NPCKilled, (int)player.Center.X, (int)player.Center.Y, 39);
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			if (voidPlayer.voidStar < 1)
 			{

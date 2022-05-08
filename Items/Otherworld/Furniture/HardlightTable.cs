@@ -21,21 +21,21 @@ namespace SOTS.Items.Otherworld.Furniture
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
-			Texture2D texture2 = mod.GetTexture("Items/Otherworld/Furniture/HardlightTableBase");
+			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Otherworld/Furniture/HardlightTableBase").Value;
 			Main.spriteBatch.Draw(texture2, new Vector2(position.X, position.Y), null, drawColor, 0f, origin, scale, SpriteEffects.None, 0f);
 			return false;
 		}
 		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
 		{
-			Texture2D texture2 = mod.GetTexture("Items/Otherworld/Furniture/HardlightTableBase");
+			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Otherworld/Furniture/HardlightTableBase").Value;
 			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
 			Main.spriteBatch.Draw(texture2, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y) + 2), null, lightColor * (1f - (Item.alpha / 255f)), rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			return false;
 		}
 		public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
-			Texture2D texture = mod.GetTexture("Items/Otherworld/Furniture/HardlightTableMiniOutline");
-			Texture2D texture2 = mod.GetTexture("Items/Otherworld/Furniture/HardlightTableMiniFill");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/Furniture/HardlightTableMiniOutline").Value;
+			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Otherworld/Furniture/HardlightTableMiniFill").Value;
 			Color color = new Color(110, 110, 110, 0);
 			for (int k = 0; k < 5; k++)
 			{
@@ -49,8 +49,8 @@ namespace SOTS.Items.Otherworld.Furniture
 		}
 		public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
 		{
-			Texture2D texture = mod.GetTexture("Items/Otherworld/Furniture/HardlightTableMiniOutline");
-			Texture2D texture2 = mod.GetTexture("Items/Otherworld/Furniture/HardlightTableMiniFill");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/Furniture/HardlightTableMiniOutline").Value;
+			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Otherworld/Furniture/HardlightTableMiniFill").Value;
 			Color color = new Color(110, 110, 110, 0);
 			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
 			for (int k = 0; k < 5; k++)
@@ -88,7 +88,7 @@ namespace SOTS.Items.Otherworld.Furniture
 				return;
 			float uniquenessCounter = Main.GlobalTime * -100 + (i + j) * 5;
 			Tile tile = Main.tile[i, j];
-			Texture2D texture = mod.GetTexture("Items/Otherworld/Furniture/HardlightTableTileGlow");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/Furniture/HardlightTableTileGlow").Value;
 			Rectangle frame = new Rectangle(tile.frameX, tile.frameY, 16, 16);
 			Color color;
 			color = WorldGen.paintColor((int)Main.tile[i, j].color()) * (100f / 255f);
@@ -144,8 +144,8 @@ namespace SOTS.Items.Otherworld.Furniture
 		{
 			if (Main.tile[i, j].frameX < 18 || Main.tile[i, j].frameX > 35 || Main.tile[i, j].frameY % 36 < 18)
 				return true;
-			Texture2D texture = mod.GetTexture("Items/Otherworld/Furniture/HardlightTableOutline");
-			Texture2D texture2 = mod.GetTexture("Items/Otherworld/Furniture/HardlightTableFill");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/Furniture/HardlightTableOutline").Value;
+			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Otherworld/Furniture/HardlightTableFill").Value;
 			Color color;
 			color = WorldGen.paintColor((int)Main.tile[i, j].color()) * (100f / 255f);
 			color.A = 0;

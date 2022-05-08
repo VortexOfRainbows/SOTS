@@ -12,7 +12,7 @@ namespace SOTS.Projectiles.Earth
     {
         public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
         {
-            Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Earth/EarthshakerGlow");
+            Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Earth/EarthshakerGlow");
             Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
             Vector2 drawPos = projectile.Center - Main.screenPosition;
             for (int i = 0; i < 4; i++)

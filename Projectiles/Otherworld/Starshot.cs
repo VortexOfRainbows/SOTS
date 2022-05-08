@@ -25,7 +25,7 @@ namespace SOTS.Projectiles.Otherworld
         }
         public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
         {
-            Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Otherworld/Starshot");
+            Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Otherworld/Starshot");
             Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
             Vector2 drawPos = projectile.Center - Main.screenPosition;
             Color color = Color.White;
@@ -71,14 +71,14 @@ namespace SOTS.Projectiles.Otherworld
             if (!player.channel) ended = true;
             if (ended && speed <= 0.1f)
             {
-                Main.PlaySound(2, (int)(projectile.Center.X), (int)(projectile.Center.Y), 9, 0.75f);
+                SoundEngine.PlaySound(2, (int)(projectile.Center.X), (int)(projectile.Center.Y), 9, 0.75f);
                 projectile.Kill();
             }
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
-            Texture2D texture = mod.GetTexture("Projectiles/Otherworld/StarshotTrail");
-            Texture2D texture2 = mod.GetTexture("Projectiles/Otherworld/Starshot");
+            Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Otherworld/StarshotTrail").Value;
+            Texture2D texture2 = Mod.Assets.Request<Texture2D>("Projectiles/Otherworld/Starshot").Value;
             float compression = (100f - projectile.ai[0]) / 100f;
             if (compression < 0)
                 compression = 0;

@@ -16,13 +16,13 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void SafeSetDefaults()
 		{
-			Item.melee = true;
+			Item.DamageType = DamageClass.Melee;
 			Item.width = 24;
 			Item.height = 30;
 			Item.damage = 54;
             Item.useTime = 12;
             Item.useAnimation = 24;
-			Item.useStyle = ItemUseStyleID.HoldingOut;
+			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.knockBack = 7.0f;
             Item.value = Item.sellPrice(0, 4, 50, 0);
             Item.rare = ItemRarityID.LightPurple;

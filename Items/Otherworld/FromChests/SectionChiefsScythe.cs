@@ -19,7 +19,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		public override void SafeSetDefaults()
 		{
             Item.damage = 48;  
-            Item.melee = true; 
+            Item.DamageType = DamageClass.Melee; 
             Item.width = 58;    
             Item.height = 58;  
             Item.useTime = 24;
@@ -33,14 +33,14 @@ namespace SOTS.Items.Otherworld.FromChests
 			Item.crit = 11;
 			if (!Main.dedServ)
 			{
-				Item.GetGlobalItem<ItemUseGlow>().glowTexture = mod.GetTexture("Items/Otherworld/FromChests/HardlightScytheGlow");
+				Item.GetGlobalItem<ItemUseGlow>().glowTexture = Mod.Assets.Request<Texture2D>("Items/Otherworld/FromChests/HardlightScytheGlow").Value;
 			}
 			Item.shoot = mod.ProjectileType("ScytheSlash");
 			Item.shootSpeed = 15f;
 		}
 		public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
 		{
-			Texture2D texture = mod.GetTexture("Items/Otherworld/FromChests/HardlightScytheGlow");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/FromChests/HardlightScytheGlow").Value;
 			Color color = Color.White;
 			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
 			Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y) + 2), null, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);

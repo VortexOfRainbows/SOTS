@@ -31,7 +31,7 @@ namespace SOTS.Projectiles.Nature
 		{
 			if(runOnce)
 			{
-				Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 17, 0.8f, 0.1f);
+				SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 17, 0.8f, 0.1f);
 				runOnce = false;
             }
 			projectile.alpha = (int)(255 * (1 - projectile.timeLeft / 50f));

@@ -39,7 +39,7 @@ namespace SOTS.Projectiles.Otherworld
 		{
 			Player player = Main.player[projectile.owner];
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-			Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Otherworld/HardlightGlaiveGlow");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Otherworld/HardlightGlaiveGlow");
 			Vector2 drawOrigin = new Vector2(0, 0) + (projectile.spriteDirection != 1 ? new Vector2(48, 0) : Vector2.Zero);
 			Vector2 drawPos = projectile.Center - Main.screenPosition;
 			if (modPlayer.rainbowGlowmasks)
@@ -141,7 +141,7 @@ namespace SOTS.Projectiles.Otherworld
 			}
 			if (runOnce2 && player.itemAnimation <= player.itemAnimationMax / 3)
 			{
-				Main.PlaySound(3, (int)projectile.Center.X, (int)projectile.Center.Y, 53, 0.625f);
+				SoundEngine.PlaySound(3, (int)projectile.Center.X, (int)projectile.Center.Y, 53, 0.625f);
 				runOnce2 = false;
 				if(projectile.owner == Main.myPlayer)
 					Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, originalVelo.X * 1.3f, originalVelo.Y * 1.3f, mod.ProjectileType("HardlightColumn"), (int)(projectile.damage * 1.6f) + 1, projectile.knockBack * 0.5f, projectile.owner, 3, 0);

@@ -16,12 +16,12 @@ namespace SOTS.Items
 		public override void SetDefaults()
 		{
             Item.damage = 21; 
-            Item.melee = true;  
+            Item.DamageType = DamageClass.Melee;  
             Item.width = 38;   
             Item.height = 38;
             Item.useTime = 24; 
             Item.useAnimation = 24;
-            Item.useStyle = ItemUseStyleID.SwingThrow;    
+            Item.useStyle = ItemUseStyleID.Swing;    
             Item.knockBack = 4f;
             Item.value = Item.sellPrice(0, 1, 0, 0);
             Item.rare = ItemRarityID.Blue;
@@ -36,7 +36,7 @@ namespace SOTS.Items
         {
             if (target.life <= 0)
             {
-                Main.PlaySound(SoundID.MaxMana, player.Center);
+                SoundEngine.PlaySound(SoundID.MaxMana, player.Center);
                 player.AddBuff(ModContent.BuffType<Frenzy>(), 190);
             }
         }

@@ -99,7 +99,7 @@ namespace SOTS.NPCs.Boss
 		public void Draw(SpriteBatch spriteBatch, Color drawColor)
 		{
 			Player player = Main.player[npc.target];
-			Texture2D texture = ModContent.GetTexture("SOTS/NPCs/Boss/PutridHookEye");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Boss/PutridHookEye");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Vector2 drawPos = npc.Center - Main.screenPosition;
 
@@ -118,7 +118,7 @@ namespace SOTS.NPCs.Boss
 			drawPos.X += shootToX;
             drawPos.Y += -1 + shootToY;
 			drawColor = npc.GetAlpha(drawColor); 
-			texture = ModContent.GetTexture("SOTS/NPCs/Boss/PutridHookEye");
+			texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Boss/PutridHookEye");
 			drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			spriteBatch.Draw(texture, drawPos, null, drawColor, npc.rotation, drawOrigin, npc.scale, SpriteEffects.None, 0f);
 

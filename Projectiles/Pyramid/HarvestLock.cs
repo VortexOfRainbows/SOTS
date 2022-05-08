@@ -102,7 +102,7 @@ namespace SOTS.Projectiles.Pyramid
 							{
 								GhostPepper pepper = (GhostPepper)proj.modProjectile;
 								if (pepper.npcTargetId != npc.whoAmI)
-									Main.PlaySound(2, (int)proj.Center.X, (int)proj.Center.Y, 8, 1.4f);
+									SoundEngine.PlaySound(2, (int)proj.Center.X, (int)proj.Center.Y, 8, 1.4f);
 								pepper.npcTargetId = npc.whoAmI;
 								pepper.cooldown = 40;
 								proj.netUpdate = true;
@@ -171,7 +171,7 @@ namespace SOTS.Projectiles.Pyramid
 		}
 		public void Draw(SpriteBatch spriteBatch, Vector2[] trailArray, Vector2 current)
 		{
-			Texture2D texture2 = mod.GetTexture("Projectiles/Pyramid/GhostPepperTail");
+			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Projectiles/Pyramid/GhostPepperTail").Value;
 			Vector2 drawOrigin2 = new Vector2(texture2.Width * 0.5f, texture2.Height * 0.5f);
 			Vector2 previousPosition = current;
 			Color color = new Color(VoidPlayer.soulLootingColor.R, VoidPlayer.soulLootingColor.G, VoidPlayer.soulLootingColor.B, 0);

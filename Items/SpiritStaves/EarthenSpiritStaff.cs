@@ -25,12 +25,12 @@ namespace SOTS.Items.SpiritStaves
 			Item.height = 36;
 			Item.useTime = 20;
 			Item.useAnimation = 20;
-			Item.useStyle = ItemUseStyleID.SwingThrow;
+			Item.useStyle = ItemUseStyleID.Swing;
 			Item.value = Item.sellPrice(0, 3, 0, 0);
 			Item.rare = ItemRarityID.Orange;
 			Item.UseSound = SoundID.Item44;
 			Item.noMelee = true;
-			Item.summon = true;
+			Item.DamageType = DamageClass.Summon;
 			Item.buffType = ModContent.BuffType<EarthenSpiritAid>();
 			Item.shoot = ModContent.ProjectileType<EarthenSpirit>();
 		}

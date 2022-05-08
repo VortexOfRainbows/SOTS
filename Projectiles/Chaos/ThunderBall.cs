@@ -42,7 +42,7 @@ namespace SOTS.Projectiles.Chaos
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Texture2D texture = mod.GetTexture("Projectiles/Chaos/ChaosCircle");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Chaos/ChaosCircle").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			if(counter <= 40)
 				for (int k = 0; k < 90; k++)

@@ -145,7 +145,7 @@ namespace SOTS.Projectiles.Minions
 				int fireRate = 72;
 				if((int)(modPlayer.orbitalCounter + (float)fireRate / total * projectile.ai[1]) % fireRate == 0 && inRange)
 				{
-					Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 43, 0.4f);
+					SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 43, 0.4f);
 					if (Main.myPlayer == projectile.owner)
 					{
 						Projectile.NewProjectile(projectile.Center, toNPC.SafeNormalize(Vector2.Zero) * 3, mod.ProjectileType("NatureBeam"), projectile.damage, projectile.knockBack, projectile.owner);

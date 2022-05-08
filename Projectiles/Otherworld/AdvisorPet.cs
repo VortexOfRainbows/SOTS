@@ -131,7 +131,7 @@ namespace SOTS.Projectiles.Otherworld
 		}
 		public void DrawGlow(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Otherworld/AdvisorPetSpirit");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Otherworld/AdvisorPetSpirit");
 			Vector2 drawOrigin = new Vector2(Main.projectileTexture[projectile.type].Width * 0.5f, projectile.height * 0.5f);
 			Vector2 drawPos = projectile.Center - Main.screenPosition;
 			Color color = new Color(100, 100, 100, 0);
@@ -149,8 +149,8 @@ namespace SOTS.Projectiles.Otherworld
 				if (j > 1)
 					ai2 += 180;
 				Vector2 toPos = projectile.Center + hookPos[j];
-				Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Otherworld/AdvisorPetVine");
-				Texture2D texture2 = ModContent.GetTexture("SOTS/Projectiles/Otherworld/AdvisorPetVineGlow");
+				Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Otherworld/AdvisorPetVine");
+				Texture2D texture2 = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Otherworld/AdvisorPetVineGlow");
 				Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 				Vector2 projectilePos = new Vector2(projectile.Center.X + (-24 + 16 * j) * 1f * 0.25f, projectile.position.Y + projectile.height);
 				Vector2 distanceToOwner = projectilePos - toPos;
@@ -266,8 +266,8 @@ namespace SOTS.Projectiles.Otherworld
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Otherworld/AdvisorPetEye");
-			Texture2D texture2 = ModContent.GetTexture("SOTS/Projectiles/Otherworld/AdvisorPetHighlight");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Otherworld/AdvisorPetEye");
+			Texture2D texture2 = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Otherworld/AdvisorPetHighlight");
 			Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
 			Vector2 drawPos = projectile.Center - Main.screenPosition;
 

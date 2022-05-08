@@ -64,9 +64,9 @@ namespace SOTS.NPCs
         }
         public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture = mod.GetTexture("NPCs/PhaseEyeOutline");
-			Texture2D texture3 = mod.GetTexture("NPCs/PhaseEyePupil");
-			Texture2D texture4 = mod.GetTexture("NPCs/PhaseEyeFill");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("NPCs/PhaseEyeOutline").Value;
+			Texture2D texture3 = Mod.Assets.Request<Texture2D>("NPCs/PhaseEyePupil").Value;
+			Texture2D texture4 = Mod.Assets.Request<Texture2D>("NPCs/PhaseEyeFill").Value;
 			Color color = new Color(110, 110, 110, 0);
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Vector2 drawOrigin3 = new Vector2(texture3.Width * 0.5f, texture3.Height * 0.5f);
@@ -258,7 +258,7 @@ namespace SOTS.NPCs
 					if (Main.netMode != NetmodeID.MultiplayerClient)
 						Projectile.NewProjectile(npc.Center.X + between.X * 24, npc.Center.Y + between.Y * 24, between.X * 5, between.Y * 5, mod.ProjectileType("OtherworldlyBolt"), damage2, 1f, Main.myPlayer, 0, 0);
 
-					Main.PlaySound(2, (int)npc.Center.X, (int)npc.Center.Y, 92, 0.5f);
+					SoundEngine.PlaySound(2, (int)npc.Center.X, (int)npc.Center.Y, 92, 0.5f);
 					npc.ai[1] = 1;
 				}
 			}

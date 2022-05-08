@@ -44,7 +44,7 @@ namespace SOTS.Projectiles.Otherworld
 		{
 			Texture2D texture = Main.projectileTexture[projectile.type];
 			if (projectile.ai[1] == -1 || hasPlayer)
-				texture = mod.GetTexture("Projectiles/Otherworld/OtherworldlyTracerAlt");
+				texture = Mod.Assets.Request<Texture2D>("Projectiles/Otherworld/OtherworldlyTracerAlt").Value;
 			Color color = new Color(110, 110, 110, 0);
 			Vector2 drawOrigin = new Vector2(Main.projectileTexture[projectile.type].Width * 0.5f, projectile.height * 0.5f);
 			for(int i = 0; i < 1 + (int)(ai1)/30; i++)
@@ -60,7 +60,7 @@ namespace SOTS.Projectiles.Otherworld
 		}
 		public override void Kill(int timeLeft)
 		{
-			//Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 14, 0.6f);
+			//SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 14, 0.6f);
 		}
 		bool hasPlayer = false;
 		float[] rotation = { 0, 0, 0 };
@@ -107,11 +107,11 @@ namespace SOTS.Projectiles.Otherworld
 			ai1++;
 			if (ai1 == 30)
 			{
-				Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 30, 0.3f);
+				SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 30, 0.3f);
 			}
 			if (ai1 == 60)
 			{
-				Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 30, 0.4f);
+				SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 30, 0.4f);
 			}
 			if (ai1 > 61)
 			{
@@ -119,7 +119,7 @@ namespace SOTS.Projectiles.Otherworld
 			}
 			if(doOnce)
 			{
-				Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 30, 0.2f);
+				SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 30, 0.2f);
 				if (projectile.timeLeft > projectile.ai[0])
 				{
 					projectile.timeLeft = (int)projectile.ai[0];

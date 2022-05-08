@@ -92,7 +92,7 @@ namespace SOTS.Projectiles.Earth
 		float dist = 24f;
 		public void Explode()
 		{
-			Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 28, 0.6f);
+			SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 28, 0.6f);
 			for (int i = 0; i < 30; i++)
 			{
 				int num2 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, ModContent.DustType<CopyDust4>());

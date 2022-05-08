@@ -59,7 +59,7 @@ namespace SOTS.Projectiles.Minions
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
 			Texture2D texture = Main.projectileTexture[projectile.type];
-			Texture2D texture2 = mod.GetTexture("Projectiles/Minions/TidalSpiritReticle");
+			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Projectiles/Minions/TidalSpiritReticle").Value;
 			Color color = new Color(100, 100, 100, 0);
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			for (int k = 0; k < 9; k++)
@@ -86,7 +86,7 @@ namespace SOTS.Projectiles.Minions
 			{
 				Projectile.NewProjectile(projectile.Center, new Vector2(8f, 0).RotatedBy(MathHelper.ToRadians(Main.rand.Next(360))), ModContent.ProjectileType<Tide.RippleWaveSummon>(), projectile.damage, 0f, projectile.owner, 1, 0);
 			}
-			Main.PlaySound(2, (int)(projectile.Center.X), (int)(projectile.Center.Y), 14, 0.5f, -0.1f);
+			SoundEngine.PlaySound(2, (int)(projectile.Center.X), (int)(projectile.Center.Y), 14, 0.5f, -0.1f);
 			for (int i = 0; i < 360; i += 24)
 			{
 				Vector2 circularLocation = new Vector2(Main.rand.NextFloat(4.5f, 6f), 0).RotatedBy(MathHelper.ToRadians(i));

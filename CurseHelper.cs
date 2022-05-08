@@ -68,7 +68,7 @@ namespace SOTS
 		}
 		public static void DrawFoam(List<CurseFoam> dustList, int layer, SpriteBatch spriteBatch)
 		{
-			Texture2D texture = ModContent.GetTexture("SOTS/Assets/PlayerCurseFoam");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Assets/PlayerCurseFoam");
 			Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 6);
 			for (int i = 0; i < dustList.Count; i++)
 			{

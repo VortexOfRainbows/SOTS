@@ -44,7 +44,7 @@ namespace SOTS.Projectiles.Otherworld
 		{
 			if (runOnce)
 				return false;
-			Texture2D texture = mod.GetTexture("Projectiles/Otherworld/ThunderColumnFast");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Otherworld/ThunderColumnFast").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Vector2 previousPosition = projectile.Center;
 			for (int k = 0; k < trailPos.Length; k++)
@@ -172,7 +172,7 @@ namespace SOTS.Projectiles.Otherworld
 				originalPos = new Vector2(projectile.ai[0], projectile.ai[1]);
 				projectile.ai[0] = 0;
 				projectile.ai[1] = 0;
-				Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 92);
+				SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 92);
 			}
 			checkPos();
 			Vector2 toPlayer = player.Center - projectile.Center;
@@ -181,7 +181,7 @@ namespace SOTS.Projectiles.Otherworld
 			if(counter2 > 600)
 			{
 				projectile.extraUpdates = 9;
-				Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 94);
+				SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 94);
 				counter2 = -100000;
 				projectile.scale *= 4.5f;
 				projectile.position = originalPos - new Vector2(projectile.width / 2, projectile.height / 2);

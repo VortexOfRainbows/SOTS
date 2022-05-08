@@ -11,7 +11,7 @@ namespace SOTS.Items.Tools
 	{
 		public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
 		{
-			Texture2D texture = mod.GetTexture("Items/Tools/EarthshakerGlow");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Tools/EarthshakerGlow").Value;
 			Color color = Color.White;
 			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
 			Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y) + 2), null, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
@@ -23,12 +23,12 @@ namespace SOTS.Items.Tools
 		public override void SetDefaults()
 		{
 			Item.damage = 11;
-			Item.melee = true;
+			Item.DamageType = DamageClass.Melee;
 			Item.width = 66;
 			Item.height = 34;
 			Item.useTime = 30;
 			Item.useAnimation = 30;
-			Item.useStyle = ItemUseStyleID.HoldingOut;
+			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.knockBack = 7.5f;
             Item.value = Item.sellPrice(0, 2, 25, 0);
 			Item.rare = ItemRarityID.Blue;

@@ -38,9 +38,9 @@ namespace SOTS.Projectiles.Celestial
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
 			Texture2D texture = Main.projectileTexture[projectile.type];
-			Texture2D texture2 = ModContent.GetTexture("SOTS/Projectiles/Celestial/CrossLaserIndicator");
+			Texture2D texture2 = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Celestial/CrossLaserIndicator");
 			if ((int)projectile.ai[0] % 3 == 2)
-				texture = ModContent.GetTexture("SOTS/Projectiles/Celestial/SunLaser");
+				texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Celestial/SunLaser");
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
 			Vector2 origin2 = new Vector2(texture2.Width / 2, texture2.Height / 2);
 			Color color = Color.Black;
@@ -124,7 +124,7 @@ namespace SOTS.Projectiles.Celestial
 					color = new Color(255, 100, 255, 0);
 					finalRotation = 22.5f;
 				}
-				Main.PlaySound(SoundID.Item92, (int)projectile.Center.X, (int)projectile.Center.Y);
+				SoundEngine.PlaySound(SoundID.Item92, (int)projectile.Center.X, (int)projectile.Center.Y);
 				runOnce = false;
 				DoLine();
 			}
@@ -194,7 +194,7 @@ namespace SOTS.Projectiles.Celestial
 		}
 		public override void Kill(int timeLeft)
 		{
-			Main.PlaySound(SoundID.Item93, (int)projectile.Center.X, (int)projectile.Center.Y);
+			SoundEngine.PlaySound(SoundID.Item93, (int)projectile.Center.X, (int)projectile.Center.Y);
 			if (Main.netMode != 1)
 			{
 				int amt = 4;

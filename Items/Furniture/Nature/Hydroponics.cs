@@ -220,7 +220,7 @@ namespace SOTS.Items.Furniture.Nature
 				NetMessage.SendData(MessageID.SyncItem, Main.myPlayer, Main.myPlayer, null, item, 1f, 0.0f, 0.0f, 0, 0, 0);
 				SetPlant(i, j, Main.rand.Next(7));
 				NetMessage.SendTileSquare(Main.myPlayer, i, j, 1, TileChangeType.None);
-				Main.PlaySound(SoundID.Grass, i * 16, j * 16, 1, 1f, 0f);
+				SoundEngine.PlaySound(SoundID.Grass, i * 16, j * 16, 1, 1f, 0f);
 				for(int a = 0; a < 10; a++)
                 {
 					Dust.NewDust(new Vector2(i * 16, j * 16), 16, 16, dustType);
@@ -291,7 +291,7 @@ namespace SOTS.Items.Furniture.Nature
 			{
 				//int highlightCapable = -1;
 				Texture2D texture = Main.tileTexture[Type];
-				Texture2D textureGlow = ModContent.GetTexture("SOTS/Items/Furniture/Nature/HydroponicsGlow");
+				Texture2D textureGlow = (Texture2D)ModContent.Request<Texture2D>("SOTS/Items/Furniture/Nature/HydroponicsGlow");
 				for (int layer = 0; layer < 2; layer ++)
 				{
 					for (int y = 0; y < 6; y++)
@@ -349,7 +349,7 @@ namespace SOTS.Items.Furniture.Nature
 				/*if (highlightCapable != -1)
 					for(int a = 0; a < Main.SmartInteractTileCoordsSelected.Count; a++)
 					{
-						spriteBatch.Draw(ModContent.GetTexture("SOTS/Items/Fragments/NaturePlating"), Main.SmartInteractTileCoordsSelected[a].ToVector2() * 16 - Main.screenPosition + zero, null, Color.White * 0.5f, 0f, default(Vector2), 0.5f, SpriteEffects.None, 0f);
+						spriteBatch.Draw((Texture2D)ModContent.Request<Texture2D>("SOTS/Items/Fragments/NaturePlating"), Main.SmartInteractTileCoordsSelected[a].ToVector2() * 16 - Main.screenPosition + zero, null, Color.White * 0.5f, 0f, default(Vector2), 0.5f, SpriteEffects.None, 0f);
 					}*/
 			}
 			return false;
@@ -425,7 +425,7 @@ namespace SOTS.Items.Furniture.Nature
 			int ave = ((int)lightColor.R + (int)lightColor.G + (int)lightColor.B) / 3;
 			if (ave > 10)
 			{
-				Texture2D texture2 = ModContent.GetTexture(HighlightTexture);
+				Texture2D texture2 = (Texture2D)ModContent.Request<Texture2D>(HighlightTexture);
 				Color drawColor = !selected ? new Color(ave / 2, ave / 2, ave / 2, ave) : new Color(ave, ave, ave / 3, ave);
 				spriteBatch.Draw(texture2, drawPosition, frame, drawColor, 0f, default(Vector2), 1.0f, SpriteEffects.None, 0f);
 			}

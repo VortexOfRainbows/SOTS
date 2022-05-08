@@ -69,7 +69,7 @@ namespace SOTS.NPCs
 				}
 				if(Main.netMode != NetmodeID.MultiplayerClient)
 					Projectile.NewProjectile(npc.Center.X, npc.Center.Y, distance.X, distance.Y, mod.ProjectileType("SporeCloud"), damage2, 2f, Main.myPlayer);
-				Main.PlaySound(2, npc.Center, 34);
+				SoundEngine.PlaySound(2, npc.Center, 34);
 			}
 			if (npc.ai[1] >= 42)
 			{
@@ -151,7 +151,7 @@ namespace SOTS.NPCs
 					if (Main.netMode != NetmodeID.MultiplayerClient)
 						Projectile.NewProjectile(npc.Center.X, npc.Center.Y, circularLocation.X, circularLocation.Y, mod.ProjectileType("SporeCloud"), damage2, 2f, Main.myPlayer);
 				}
-				Main.PlaySound(2, npc.Center, 34);
+				SoundEngine.PlaySound(2, npc.Center, 34);
 				Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/SittingMushroomGore1"), 1f);
 			}
 		}

@@ -24,7 +24,7 @@ namespace SOTS.Items.Chaos
             Item.height = 26;  
             Item.useTime = 20;  
             Item.useAnimation = 20;
-            Item.useStyle = ItemUseStyleID.HoldingOut;    
+            Item.useStyle = ItemUseStyleID.Shoot;    
             Item.noMelee = true; 
             Item.knockBack = 1;
             Item.value = Item.sellPrice(0, 20, 0, 0);
@@ -35,7 +35,7 @@ namespace SOTS.Items.Chaos
             Item.shootSpeed = 16.0f;
 			if (!Main.dedServ)
 			{
-				Item.GetGlobalItem<ItemUseGlow>().glowTexture = mod.GetTexture("Items/Chaos/StellarSerpentLauncherGlow");
+				Item.GetGlobalItem<ItemUseGlow>().glowTexture = Mod.Assets.Request<Texture2D>("Items/Chaos/StellarSerpentLauncherGlow").Value;
 				Item.GetGlobalItem<ItemUseGlow>().glowOffsetX = -2;
 			}
 		}

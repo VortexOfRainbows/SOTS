@@ -28,7 +28,7 @@ namespace SOTS.Projectiles.Laser
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
-            Texture2D texture = mod.GetTexture("Projectiles/Laser/PhotonGeyser_Glow");
+            Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Laser/PhotonGeyser_Glow").Value;
             Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
             float counter = Main.GlobalTime * 160;
             //int bonus = (int)(counter / 360f);
@@ -59,7 +59,7 @@ namespace SOTS.Projectiles.Laser
                 Vector2 rotationAround = new Vector2(4 * projectile.scale, 0).RotatedBy(MathHelper.ToRadians(60 * i + counter));
                 Main.spriteBatch.Draw(texture, projectile.Center + rotationAround - Main.screenPosition, null, color * 1f, projectile.rotation, drawOrigin, projectile.scale * 1f, projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
             }
-            texture = mod.GetTexture("Projectiles/Laser/PhotonGeyser");
+            texture = Mod.Assets.Request<Texture2D>("Projectiles/Laser/PhotonGeyser").Value;
             Main.spriteBatch.Draw(texture, projectile.Center - Main.screenPosition, null, lightColor, projectile.rotation, drawOrigin, projectile.scale * 1f, projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
             return false;
         }

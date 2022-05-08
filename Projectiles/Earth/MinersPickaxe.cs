@@ -40,7 +40,7 @@ namespace SOTS.Projectiles.Earth
         public void DrawOutline(SpriteBatch spriteBatch, Color drawColor)
         {
             Player player = Main.player[projectile.owner];
-            Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Earth/MinersPickaxeOutline");
+            Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Earth/MinersPickaxeOutline");
             Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
             Vector2 drawPos = projectile.Center - Main.screenPosition;
             float scale = 1 - counter / (float)(timeToLaunch - 8);
@@ -57,7 +57,7 @@ namespace SOTS.Projectiles.Earth
         public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
         {
             Player player = Main.player[projectile.owner];
-            Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Earth/MinersPickaxeGlow");
+            Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Earth/MinersPickaxeGlow");
             Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
             Vector2 drawPos = projectile.Center - Main.screenPosition;
             for (int i = 0; i < 4; i++)
@@ -82,7 +82,7 @@ namespace SOTS.Projectiles.Earth
             if(counter < timeToLaunch)
             {
                 if(counter == 1)
-                    Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 15, 0.8f, -0.2f);
+                    SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 15, 0.8f, -0.2f);
                 if (projectile.owner == Main.myPlayer)
                 {
                     projectile.ai[0] = Main.MouseWorld.X;
@@ -106,7 +106,7 @@ namespace SOTS.Projectiles.Earth
             else
             {
                 if(counter == timeToLaunch)
-                    Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 19, 1.0f, -0.1f);
+                    SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 19, 1.0f, -0.1f);
                 if (player.itemTime > itemUseTime)
                 {
                     player.itemTime = itemUseTime;
@@ -160,7 +160,7 @@ namespace SOTS.Projectiles.Earth
         public override void Kill(int timeLeft)
         {
             HitTiles();
-            Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 62, 0.7f, 0.4f);
+            SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 62, 0.7f, 0.4f);
             for (int i = 0; i < 360; i += 24)
             {
                 Vector2 circularLocation = new Vector2(-4, 0).RotatedBy(MathHelper.ToRadians(i));

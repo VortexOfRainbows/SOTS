@@ -69,14 +69,14 @@ namespace SOTS.NPCs
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, 25);
 			Vector2 drawPos = npc.Center - Main.screenPosition;
 			spriteBatch.Draw(texture, drawPos, new Rectangle(0, npc.frame.Y, 50, 50), drawColor, npc.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
-			texture = ModContent.GetTexture("SOTS/NPCs/WallMimicGlow");
+			texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/WallMimicGlow");
 			spriteBatch.Draw(texture, drawPos, new Rectangle(0, npc.frame.Y, 50, 50), Color.White, npc.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
 			return false;
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
 			Player player = Main.player[npc.target];
-			Texture2D texture = ModContent.GetTexture("SOTS/NPCs/WallMimicEye");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/WallMimicEye");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Vector2 drawPos = npc.Center - Main.screenPosition;
 
@@ -207,7 +207,7 @@ namespace SOTS.NPCs
 						{
 							Dust.NewDust(npc.position, npc.width, npc.height, 32, Main.rand.Next(-7, 8), Main.rand.Next(-7, 8));
 						}
-						Main.PlaySound(SoundID.Item14, npc.Center);
+						SoundEngine.PlaySound(SoundID.Item14, npc.Center);
 						aiCounter = 0;
 						ready = false;
 					}

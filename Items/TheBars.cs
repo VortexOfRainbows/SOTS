@@ -105,7 +105,7 @@ namespace SOTS.Items
 			int style = tile.frameX / 18;
 			if(style == 10)
 			{
-				PhaseOreTile.Draw(ModContent.GetTexture("SOTS/Items/PhaseBarTileOutline"), ModContent.GetTexture("SOTS/Items/PhaseBarTileFill"), i, j, 0.5f, true);
+				PhaseOreTile.Draw((Texture2D)ModContent.Request<Texture2D>("SOTS/Items/PhaseBarTileOutline"), (Texture2D)ModContent.Request<Texture2D>("SOTS/Items/PhaseBarTileFill"), i, j, 0.5f, true);
 				return false;
             }				
 			return true;
@@ -156,7 +156,7 @@ namespace SOTS.Items
 			Tile tile = Main.tile[i, j];
 			int style = tile.frameX / 18;
 			float uniquenessCounter = Main.GlobalTime * -100 + (i + j) * 5;
-			Texture2D texture = mod.GetTexture("Items/TheBarsGlow");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/TheBarsGlow").Value;
 			Rectangle frame = new Rectangle(tile.frameX, tile.frameY, 16, 16);
 			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
 			if (Main.drawToScreen)

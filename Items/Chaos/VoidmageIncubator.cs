@@ -17,7 +17,7 @@ namespace SOTS.Items.Chaos
 			Player player = Main.LocalPlayer;
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			int unique = modPlayer.UniqueVisionNumber;
-			Texture2D texture = ModContent.GetTexture("SOTS/Items/Chaos/VoidmageIncubatorSheet");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Items/Chaos/VoidmageIncubatorSheet");
 			frame = new Rectangle(0, 48 * GetGem(unique) + 2, 24, 44);
 			spriteBatch.Draw(texture, position, frame, drawColor, 0f, origin, scale, SpriteEffects.None, 0f);
 			return false;
@@ -27,7 +27,7 @@ namespace SOTS.Items.Chaos
 			Player player = Main.LocalPlayer;
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			int unique = modPlayer.UniqueVisionNumber;
-			Texture2D texture = ModContent.GetTexture("SOTS/Items/Chaos/VoidmageIncubatorSheet");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Items/Chaos/VoidmageIncubatorSheet");
 			Rectangle frame = new Rectangle(0, 48 * GetGem(unique) + 2, 24, 44);
 			Vector2 origin = Item.Size / 2;
 			spriteBatch.Draw(texture, Item.Center - Main.screenPosition, frame, lightColor, rotation, origin, scale, SpriteEffects.None, 0f);

@@ -198,7 +198,7 @@ namespace SOTS.NPCs
 					{
 						npc.netUpdate = true;
 					}
-					Main.PlaySound(SoundID.Item8, npc.Center);
+					SoundEngine.PlaySound(SoundID.Item8, npc.Center);
 				}
 				if(direction == 0)
 				{
@@ -208,7 +208,7 @@ namespace SOTS.NPCs
 					{
 						npc.netUpdate = true;
 					}
-					Main.PlaySound(SoundID.Item8, npc.Center);
+					SoundEngine.PlaySound(SoundID.Item8, npc.Center);
 				}
 			}
 			justWarped--;
@@ -220,7 +220,7 @@ namespace SOTS.NPCs
 				{
 					npc.netUpdate = true;
 				}
-				Main.PlaySound(SoundID.Item8, npc.Center);
+				SoundEngine.PlaySound(SoundID.Item8, npc.Center);
 			}
 			npc.velocity.Y *= 0.96f;
 
@@ -232,8 +232,8 @@ namespace SOTS.NPCs
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture = mod.GetTexture("NPCs/HoloSlimeOutline");
-			Texture2D texture2 = mod.GetTexture("NPCs/HoloSlimeFill");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("NPCs/HoloSlimeOutline").Value;
+			Texture2D texture2 = Mod.Assets.Request<Texture2D>("NPCs/HoloSlimeFill").Value;
 			Color color = new Color(110, 110, 110, 0);
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.25f);
 			Vector2 drawOrigin2 = new Vector2(texture2.Width * 0.5f, texture2.Height * 0.25f);

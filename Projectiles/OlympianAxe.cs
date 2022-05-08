@@ -31,7 +31,7 @@ namespace SOTS.Projectiles
             Player player = Main.player[projectile.owner];
             if (target.life <= 0)
             {
-                Main.PlaySound(SoundID.MaxMana, player.Center);
+                SoundEngine.PlaySound(SoundID.MaxMana, player.Center);
                 player.AddBuff(ModContent.BuffType<Frenzy>(), 190);
             }
         }

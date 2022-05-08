@@ -37,7 +37,7 @@ namespace SOTS.Projectiles.Chaos
 		}
 		public void DrawTelegraph(SpriteBatch spriteBatch)
 		{
-			Texture2D texture2 = ModContent.GetTexture("SOTS/Projectiles/Chaos/DartTelegraph");
+			Texture2D texture2 = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Chaos/DartTelegraph");
 			Vector2 from = projectile.Center;
 			for (int i = 1; i < 10; i++)
 			{
@@ -87,7 +87,7 @@ namespace SOTS.Projectiles.Chaos
 				counter++;
 			if (runOnce)
 			{
-				Main.PlaySound(SoundLoader.customSoundType, (int)projectile.Center.X, (int)projectile.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/StarLaser"), 0.6f, 0.2f + Main.rand.NextFloat(-0.1f, 0.1f));
+				SoundEngine.PlaySound(SoundLoader.customSoundType, (int)projectile.Center.X, (int)projectile.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/StarLaser"), 0.6f, 0.2f + Main.rand.NextFloat(-0.1f, 0.1f));
 				DustOut();
 				projectile.scale = 0.1f;
 				projectile.alpha = 0;

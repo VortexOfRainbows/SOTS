@@ -66,7 +66,7 @@ namespace SOTS.Projectiles.Pyramid
 		{
 			if (runOnce)
 				return true;
-			Texture2D texture2 = mod.GetTexture("Projectiles/Pyramid/GhostPepperTail");
+			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Projectiles/Pyramid/GhostPepperTail").Value;
 			Vector2 drawOrigin2 = new Vector2(texture2.Width * 0.5f, texture2.Height * 0.5f);
 			Vector2 current = projectile.Center + new Vector2(0, 17.5f).RotatedBy(projectile.rotation);
 			Vector2 previousPosition = current;
@@ -101,7 +101,7 @@ namespace SOTS.Projectiles.Pyramid
 				}
 				previousPosition = currentPos;
 			}
-			Texture2D texture3 = mod.GetTexture("Projectiles/Pyramid/GhostPepperShell");
+			Texture2D texture3 = Mod.Assets.Request<Texture2D>("Projectiles/Pyramid/GhostPepperShell").Value;
 			Vector2 drawPos2 = projectile.Center - Main.screenPosition;
 			Vector2 drawOrigin1 = new Vector2(texture3.Width * 0.5f, texture3.Height * 0.5f);
 			for (int j = 0; j < 8; j++)
@@ -114,8 +114,8 @@ namespace SOTS.Projectiles.Pyramid
 		}
         public override void PostDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Texture2D texture1 = mod.GetTexture("Projectiles/Pyramid/GhostPepperGlow");
-			Texture2D texture4 = mod.GetTexture("Projectiles/Pyramid/GhostPepperGlowmask");
+			Texture2D texture1 = Mod.Assets.Request<Texture2D>("Projectiles/Pyramid/GhostPepperGlow").Value;
+			Texture2D texture4 = Mod.Assets.Request<Texture2D>("Projectiles/Pyramid/GhostPepperGlowmask").Value;
 			Vector2 drawOrigin1 = new Vector2(texture1.Width * 0.5f, texture1.Height * 0.5f);
 			Color color = new Color(90, 40, 90, 0);
 			Vector2 drawPos2 = projectile.Center - Main.screenPosition;

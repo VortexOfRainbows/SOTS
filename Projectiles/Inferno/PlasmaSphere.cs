@@ -46,7 +46,7 @@ namespace SOTS.Projectiles.Inferno
 			float timeBeforeEnd = (float)Math.Sqrt(timeLeft / 50f);
 			if (timeBeforeEnd > 1)
 				timeBeforeEnd = 1;
-			Texture2D texture = mod.GetTexture("Effects/Masks/Extra_49");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Effects/Masks/Extra_49").Value;
 			float sin = (float)Math.Sin(MathHelper.ToRadians(120 - projectile.timeLeft));
 			sin = 0.8f + sin * 0.3f;
 			Color color = VoidPlayer.InfernoColorAttempt(0.3f + 0.3f * (float)Math.Sin(MathHelper.ToRadians(counter)));
@@ -55,7 +55,7 @@ namespace SOTS.Projectiles.Inferno
 			Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
 			SOTS.GodrayShader.Parameters["distance"].SetValue(6);
 			SOTS.GodrayShader.Parameters["colorMod"].SetValue(color.ToVector4());
-			SOTS.GodrayShader.Parameters["noise"].SetValue(mod.GetTexture("TrailTextures/noise"));
+			SOTS.GodrayShader.Parameters["noise"].SetValue(Mod.Assets.Request<Texture2D>("TrailTextures/noise").Value);
 			SOTS.GodrayShader.Parameters["rotation"].SetValue(MathHelper.ToRadians(counter));
 			SOTS.GodrayShader.Parameters["opacity2"].SetValue(1f * sin);
 			SOTS.GodrayShader.CurrentTechnique.Passes[0].Apply();
@@ -89,7 +89,7 @@ namespace SOTS.Projectiles.Inferno
 		float veloScale = 0;
         public override void Kill(int timeLeft)
 		{
-			Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 62, 0.9f, -0.5f);
+			SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 62, 0.9f, -0.5f);
 			for (int i = 30; i > 0; i--)
 			{
 				Vector2 circular = new Vector2(48, 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)));
@@ -131,7 +131,7 @@ namespace SOTS.Projectiles.Inferno
 				projectile.ai[1]++;
 				if(projectile.ai[1] > projectile.ai[0] && totalCharges < 80)
 				{
-					Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 15, 1f, -0.1f);
+					SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 15, 1f, -0.1f);
 					if (Main.myPlayer == player.whoAmI)
 					{
 						Item item = player.HeldItem;
@@ -148,7 +148,7 @@ namespace SOTS.Projectiles.Inferno
 				projectile.localNPCHitCooldown = 5;
 				if (projectile.ai[0] >= 0)
 				{
-					Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 92, 0.9f, -0.4f);
+					SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 92, 0.9f, -0.4f);
 					projectile.velocity = projectile.velocity.SafeNormalize(Vector2.Zero) * (10 + (float)Math.Sqrt(totalCharges * 1.3f + 1f));
 					projectile.ai[0] = -1;
 				}

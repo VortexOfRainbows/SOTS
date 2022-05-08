@@ -44,7 +44,7 @@ namespace SOTS.Projectiles.Nature
 				Color color = new Color(100, 120, 100, 0);
 				Player player = Main.player[(int)projectile.ai[1]];
 				projectile.position = player.Center;
-				Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Nature/NatureReticle");
+				Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Nature/NatureReticle");
 				Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 				Vector2 drawPos = trueTarget - Main.screenPosition + new Vector2(0f, projectile.gfxOffY);
 				for (int k = 0; k < 4; k++)
@@ -120,7 +120,7 @@ namespace SOTS.Projectiles.Nature
 		{
 			if(Main.netMode != NetmodeID.MultiplayerClient)
 				Projectile.NewProjectile(trueTarget.X, trueTarget.Y, 0, 0, ModContent.ProjectileType<NatureBeat>(), projectile.damage, 0, Main.myPlayer);
-			Main.PlaySound(SoundID.Item, (int)trueTarget.X, (int)trueTarget.Y, 93, 0.35f);
+			SoundEngine.PlaySound(SoundID.Item, (int)trueTarget.X, (int)trueTarget.Y, 93, 0.35f);
 		}
 	}
 }

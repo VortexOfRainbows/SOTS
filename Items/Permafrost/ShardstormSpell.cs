@@ -22,7 +22,7 @@ namespace SOTS.Items.Permafrost
             Item.height = 42; 
             Item.useTime = 55; 
             Item.useAnimation = 55;
-            Item.useStyle = ItemUseStyleID.HoldingOut;    
+            Item.useStyle = ItemUseStyleID.Shoot;    
             Item.knockBack = 1.5f;
 			Item.value = Item.sellPrice(0, 7, 0, 0);
             Item.rare = ItemRarityID.Lime;

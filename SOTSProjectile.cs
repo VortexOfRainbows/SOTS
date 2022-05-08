@@ -420,7 +420,7 @@ namespace SOTS
 										pet.fireToX = projectile.Center.X;
 										pet.fireToY = projectile.Center.Y;
 										pet.glow = 11.5f + 3.5f * recalc;
-										Main.PlaySound(SoundID.Item, (int)proj.Center.X, (int)proj.Center.Y, 8, 1.35f * (0.75f + 0.5f * recalc));
+										SoundEngine.PlaySound(SoundID.Item, (int)proj.Center.X, (int)proj.Center.Y, 8, 1.35f * (0.75f + 0.5f * recalc));
 									}
 									effect = false;
 								}
@@ -648,7 +648,7 @@ namespace SOTS
 		public static void DrawStar(Vector2 location, Color color, float alphaMult, float rotation, float spin = 0, int pointAmount = 6, float innerDistAdd = 10, float innerDistMin = 8, float xCompress = 0.6f, int density = 180)
 		{
 			Vector2 fireFrom = location; 
-			Texture2D texture = ModContent.GetTexture("SOTS/Assets/StrangeGradient");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Assets/StrangeGradient");
 			for (float k = 0; k < 360; k += 360 / (float)density)
 			{
 				float length = innerDistAdd + innerDistMin;

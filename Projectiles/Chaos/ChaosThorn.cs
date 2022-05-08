@@ -62,7 +62,7 @@ namespace SOTS.Projectiles.Chaos
 		}
 		public void TrailPreDraw(SpriteBatch spriteBatch)
 		{
-			Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Chaos/SupernovaLaser");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Chaos/SupernovaLaser");
 			Vector2 drawOrigin = new Vector2(0, texture.Height * 0.5f);
 			Vector2 previousPosition = projectile.Center;
 			for (int k = 0; k < trailLength; k++)
@@ -117,7 +117,7 @@ namespace SOTS.Projectiles.Chaos
 			Player player = Main.player[projectile.owner];
 			if (runOnce)
 			{
-				Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 30, 0.6f, 0.5f);
+				SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 30, 0.6f, 0.5f);
 				if(timeLeftSetter == 900)
 				{
 					if (projectile.owner == Main.myPlayer)

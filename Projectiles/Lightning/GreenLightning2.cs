@@ -90,7 +90,7 @@ namespace SOTS.Projectiles.Lightning
 			if (runOnce)
 			{
 				projectile.position += projectile.velocity.SafeNormalize(Vector2.Zero) * 24;
-				Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 94, 0.6f, 0.2f);
+				SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 94, 0.6f, 0.2f);
 				for (int i = 0; i < randStorage.Length; i++)
 				{
 					randStorage[i] = Main.rand.Next(-75, 76);

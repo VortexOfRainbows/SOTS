@@ -35,7 +35,7 @@ namespace SOTS.Projectiles.Chaos
             Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
             Vector2 drawPos = projectile.Center - Main.screenPosition;
             spriteBatch.Draw(texture, drawPos, null, drawColor, projectile.rotation, drawOrigin, projectile.scale, projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
-            Texture2D gTexture = mod.GetTexture("Projectiles/Chaos/RoseBowGlow");
+            Texture2D gTexture = Mod.Assets.Request<Texture2D>("Projectiles/Chaos/RoseBowGlow").Value;
             float chargePercent = counter / projectile.ai[0];
             if (chargePercent < 0)
                 chargePercent = 0;
@@ -82,13 +82,13 @@ namespace SOTS.Projectiles.Chaos
         {
             if (projectile.ai[0] != 0)
             {
-                Texture2D texture = mod.GetTexture("Projectiles/Chaos/ChaosArrow" + (chargeLevel + 1));
+                Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Chaos/ChaosArrow" + (chargeLevel + 1).Value);
                 Texture2D oldTexture = null;
                 textureHeight = texture.Height;
                 int oldHeight = texture.Height;
                 if (chargeLevel >= 1)
                 {
-                    oldTexture = mod.GetTexture("Projectiles/Chaos/ChaosArrow" + (chargeLevel));
+                    oldTexture = Mod.Assets.Request<Texture2D>("Projectiles/Chaos/ChaosArrow" + (chargeLevel).Value);
                     oldHeight = oldTexture.Height;
                 }
                 float chargePercent = counter / projectile.ai[0];
@@ -150,7 +150,7 @@ namespace SOTS.Projectiles.Chaos
                 if (chargePercent < 0)
                     chargePercent = 0;
                 Vector2 fireFrom = getTip(chargePercent);
-                Texture2D texture = mod.GetTexture("Assets/StrangeGradient");
+                Texture2D texture = Mod.Assets.Request<Texture2D>("Assets/StrangeGradient").Value;
                 if(chargePercent > 0)
                 {
                     Color c = VoidPlayer.ChaosPink;
@@ -177,7 +177,7 @@ namespace SOTS.Projectiles.Chaos
             {
                 float percent = counter / projectile.ai[0];
                 Vector2 fireFrom = projectile.Center + projectile.velocity.SafeNormalize(Vector2.Zero) * (fireFromDist - (percent + chargeLevel) * fireFromTighten);
-                Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 5, 1.2f, -0.1f);
+                SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 5, 1.2f, -0.1f);
                 int type = ModContent.ProjectileType<ChaosArrow1>();
                 if (chargeLevel >= 1)
                     type = ModContent.ProjectileType<ChaosArrow2>();
@@ -242,10 +242,10 @@ namespace SOTS.Projectiles.Chaos
                 if (chargeLevel < 2 && counter > 0)
                 {
                     if ((int)counter == (int)projectile.ai[0] / 2)
-                        Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 15, 1.1f, 0.6f);
+                        SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 15, 1.1f, 0.6f);
                     if ((int)counter >= projectile.ai[0])
                     {
-                        Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 30, 0.8f, -0.3f);
+                        SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 30, 0.8f, -0.3f);
                         if(chargeLevel == 0)
                         {
                             Vector2 pos = projectile.Center + projectile.velocity.SafeNormalize(Vector2.Zero) * (fireFromDist - 24);
@@ -332,7 +332,7 @@ namespace SOTS.Projectiles.Chaos
             }
             if (counter == -1 && projectile.ai[0] != 0 && runOnce)
             {
-                //Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 15, 1.1f, 0.6f);
+                //SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 15, 1.1f, 0.6f);
                 runOnce = false;
                 counter = -(int)(projectile.ai[0] * firstDelay);
             }

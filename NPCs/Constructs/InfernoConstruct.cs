@@ -98,14 +98,14 @@ namespace SOTS.NPCs.Constructs
 				if (percent > 0 && attackTimer < infernoDuration + infernoEndDuration - 120)
 				{
 					Vector2 fireFrom = npc.Center + (aimTo - npc.Center).SafeNormalize(Vector2.Zero) * 90;
-					Texture2D texture = mod.GetTexture("Effects/Masks/Extra_49");
+					Texture2D texture = Mod.Assets.Request<Texture2D>("Effects/Masks/Extra_49").Value;
 					Color color = VoidPlayer.InfernoColorAttemptDegrees(attackTimer * 3);
 					color.A = 0;
 					Main.spriteBatch.End();
 					Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
 					SOTS.GodrayShader.Parameters["distance"].SetValue(6);
 					SOTS.GodrayShader.Parameters["colorMod"].SetValue(color.ToVector4());
-					SOTS.GodrayShader.Parameters["noise"].SetValue(mod.GetTexture("TrailTextures/noise"));
+					SOTS.GodrayShader.Parameters["noise"].SetValue(Mod.Assets.Request<Texture2D>("TrailTextures/noise").Value);
 					SOTS.GodrayShader.Parameters["rotation"].SetValue(MathHelper.ToRadians(percent * 480));
 					SOTS.GodrayShader.Parameters["opacity2"].SetValue(1f * percent);
 					SOTS.GodrayShader.CurrentTechnique.Passes[0].Apply();
@@ -142,7 +142,7 @@ namespace SOTS.NPCs.Constructs
 				}
 			}
 			Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition + new Vector2(0, npc.gfxOffY), null, drawColor, dir - bonusDir, origin, npc.scale, !flip ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
-			Main.spriteBatch.Draw(ModContent.GetTexture("SOTS/NPCs/Constructs/InfernoConstructGlow"), npc.Center - Main.screenPosition + new Vector2(0, npc.gfxOffY), null, Color.White, dir - bonusDir, origin, npc.scale, !flip ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw((Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Constructs/InfernoConstructGlow"), npc.Center - Main.screenPosition + new Vector2(0, npc.gfxOffY), null, Color.White, dir - bonusDir, origin, npc.scale, !flip ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 			if (!runOnce)
 			{
 				for (int i = 0; i < probes.Count; i++)
@@ -156,7 +156,7 @@ namespace SOTS.NPCs.Constructs
 		}
 		public void DrawFire()
 		{
-			Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Celestial/SubspaceLingeringFlame");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Celestial/SubspaceLingeringFlame");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			for (int i = 0; i < particleList.Count; i++)
 			{
@@ -324,7 +324,7 @@ namespace SOTS.NPCs.Constructs
 					{
 						if ((int)attackTimer % (int)(infernoDuration / 3) == 0 && attackTimer < infernoDuration)
 						{
-							Main.PlaySound(SoundID.Item, (int)fireFrom.X, (int)fireFrom.Y, 15, 1.3f, -0.3f);
+							SoundEngine.PlaySound(SoundID.Item, (int)fireFrom.X, (int)fireFrom.Y, 15, 1.3f, -0.3f);
 						}
 						if(!Main.rand.NextBool(3))
 						{
@@ -381,7 +381,7 @@ namespace SOTS.NPCs.Constructs
 					if (attackTimer % (fireRate * 2) == 0)
 					{
 						npc.Center -= normal * 1.5f;
-						Main.PlaySound(SoundID.Item, (int)fireFrom.X, (int)fireFrom.Y, 34, 1f, 0.5f);
+						SoundEngine.PlaySound(SoundID.Item, (int)fireFrom.X, (int)fireFrom.Y, 34, 1f, 0.5f);
 					}
 					int damage = npc.damage / 2;
 					if (Main.expertMode)
@@ -464,7 +464,7 @@ namespace SOTS.NPCs.Constructs
 			{
 				targetRotateLength = 112;
 				Vector2 toPlayer = player.Center - npc.Center;
-				Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 62, 1.1f, 0.3f);
+				SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 62, 1.1f, 0.3f);
 				npc.velocity += 23f * toPlayer.SafeNormalize(Vector2.Zero);
 				npc.velocity.Y *= 0.5f;
 			}
@@ -530,7 +530,7 @@ namespace SOTS.NPCs.Constructs
 		}
 		public void Shoot(int damage, float knockBack, float speedMod = 1f)
 		{
-			Main.PlaySound(SoundID.Item, (int)position.X, (int)position.Y, 62, 0.6f, 1.25f);
+			SoundEngine.PlaySound(SoundID.Item, (int)position.X, (int)position.Y, 62, 0.6f, 1.25f);
 			Vector2 toAim = aimTo - position;
 			Vector2 launchvelo = toAim.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(3f, 4.5f);
 			if (Main.netMode != NetmodeID.MultiplayerClient)
@@ -570,8 +570,8 @@ namespace SOTS.NPCs.Constructs
 		public void Draw()
 		{
 			DrawFire();
-			Texture2D texture = ModContent.GetTexture("SOTS/NPCs/Constructs/InfernoChild");
-			Texture2D textureGlow = ModContent.GetTexture("SOTS/NPCs/Constructs/InfernoChildGlow");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Constructs/InfernoChild");
+			Texture2D textureGlow = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Constructs/InfernoChildGlow");
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
 			int spriteDirection = 1;
 			if (position.X > aimTo.X)
@@ -583,7 +583,7 @@ namespace SOTS.NPCs.Constructs
 		}
 		public void DrawFire()
 		{
-			Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Celestial/SubspaceLingeringFlame");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Celestial/SubspaceLingeringFlame");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			for (int i = 0; i < particleList.Count; i++)
 			{

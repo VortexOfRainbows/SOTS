@@ -106,14 +106,14 @@ namespace SOTS.Items.Furniture
             }
             if (player.sign >= 0)
             {
-                Main.PlaySound(SoundID.MenuClose);
+                SoundEngine.PlaySound(SoundID.MenuClose);
                 player.sign = -1;
                 Main.editSign = false;
                 Main.npcChatText = "";
             }
             if (Main.editChest)
             {
-                Main.PlaySound(SoundID.MenuTick);
+                SoundEngine.PlaySound(SoundID.MenuTick);
                 Main.editChest = false;
                 Main.npcChatText = "";
             }
@@ -129,7 +129,7 @@ namespace SOTS.Items.Furniture
                 {
                     player.chest = -1;
                     Recipe.FindRecipes();
-                    Main.PlaySound(SoundID.MenuClose);
+                    SoundEngine.PlaySound(SoundID.MenuClose);
                 }
                 else
                 {
@@ -158,7 +158,7 @@ namespace SOTS.Items.Furniture
                         if (chest == player.chest)
                         {
                             player.chest = -1;
-                            Main.PlaySound(SoundID.MenuClose);
+                            SoundEngine.PlaySound(SoundID.MenuClose);
                         }
                         else
                         {
@@ -167,7 +167,7 @@ namespace SOTS.Items.Furniture
                             Main.recBigList = false;
                             player.chestX = x;
                             player.chestY = y;
-                            Main.PlaySound(player.chest < 0 ? SoundID.MenuOpen : SoundID.MenuTick);
+                            SoundEngine.PlaySound(player.chest < 0 ? SoundID.MenuOpen : SoundID.MenuTick);
                         }
                         Recipe.FindRecipes();
                     }

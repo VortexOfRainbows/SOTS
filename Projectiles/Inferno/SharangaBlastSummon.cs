@@ -41,7 +41,7 @@ namespace SOTS.Projectiles.Inferno
             }
 			if(expand == -1)
 			{
-				Main.PlaySound(SoundID.Item14, (int)(projectile.Center.X), (int)(projectile.Center.Y));
+				SoundEngine.PlaySound(SoundID.Item14, (int)(projectile.Center.X), (int)(projectile.Center.Y));
 				expand = 0;
 				for(int i = 0; i < 360; i += 10)
 				{

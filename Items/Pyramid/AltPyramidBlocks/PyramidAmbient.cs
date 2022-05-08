@@ -23,7 +23,7 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
 			Item.autoReuse = true;
 			Item.useAnimation = 15;
 			Item.useTime = 10;
-			Item.useStyle = ItemUseStyleID.SwingThrow;
+			Item.useStyle = ItemUseStyleID.Swing;
 			Item.rare = ItemRarityID.LightRed;
 			Item.value = 0;
 			Item.consumable = true;
@@ -261,7 +261,7 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
 			Vector2 drawOffSet = Vector2.Zero;
 			drawOffSet.Y += 2;
 			Vector2 location = new Vector2(i * 16, j * 16) + drawOffSet;
-			Texture2D texture2 = mod.GetTexture("Items/Pyramid/AltPyramidBlocks/PyramidAmbientTile3x2CurseGlow");
+			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Pyramid/AltPyramidBlocks/PyramidAmbientTile3x2CurseGlow").Value;
 			float counter = Main.GlobalTime * 160;
 			float mult = new Vector2(-1f, 0).RotatedBy(MathHelper.ToRadians(counter)).X;
 			Rectangle frame = new Rectangle(tile.frameX / 18 * 16, tile.frameY / 18 * 16, 48, 32);
@@ -352,13 +352,13 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
 			if (tile.frameX >= 108)
 			{
 				Vector2 pos = new Vector2(i * 16, j * 16) + new Vector2(8, 8);
-				Main.PlaySound(soundType, (int)pos.X, (int)pos.Y, soundStyle, 0.9f, 0.1f);
+				SoundEngine.PlaySound(soundType, (int)pos.X, (int)pos.Y, soundStyle, 0.9f, 0.1f);
 				return true;
 			}
 			if (tile.frameX >= 54)
 			{
 				Vector2 pos = new Vector2(i * 16, j * 16) + new Vector2(8, 8);
-				Main.PlaySound(soundType, (int)pos.X, (int)pos.Y, soundStyle, 0.9f, 0.1f);
+				SoundEngine.PlaySound(soundType, (int)pos.X, (int)pos.Y, soundStyle, 0.9f, 0.1f);
 				return true;
 			}
 			return true;

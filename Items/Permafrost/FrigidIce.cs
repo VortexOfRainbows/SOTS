@@ -32,7 +32,7 @@ namespace SOTS.Items.Permafrost
 		{
 			Vector2 pos = new Vector2(i * 16, j * 16) + new Vector2(8, 8);
 			int type = Main.rand.Next(2) + 1;
-			Main.PlaySound(SoundLoader.customSoundType, (int)pos.X, (int)pos.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/FrigidOre" + type), 2f, Main.rand.NextFloat(0.9f, 1.1f));
+			SoundEngine.PlaySound(SoundLoader.customSoundType, (int)pos.X, (int)pos.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/FrigidOre" + type), 2f, Main.rand.NextFloat(0.9f, 1.1f));
 			return false;
 		}
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
@@ -76,7 +76,7 @@ namespace SOTS.Items.Permafrost
 		public override bool KillSound(int i, int j)
 		{
 			Vector2 pos = new Vector2(i * 16, j * 16) + new Vector2(8, 8);
-			Main.PlaySound(SoundLoader.customSoundType, (int)pos.X, (int)pos.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/FrigidOre"), 2f, Main.rand.NextFloat(0.9f, 1.1f));
+			SoundEngine.PlaySound(SoundLoader.customSoundType, (int)pos.X, (int)pos.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/FrigidOre"), 2f, Main.rand.NextFloat(0.9f, 1.1f));
 			return false;
 		}
 	}

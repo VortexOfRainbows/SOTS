@@ -117,7 +117,7 @@ namespace SOTS.NPCs.Constructs
 					{
 						if (startEyes % 6 == 0)
 						{
-							Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 30, 0.7f, -0.4f);
+							SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 30, 0.7f, -0.4f);
 						}
 					}
 					if(startEyes < 120)
@@ -177,7 +177,7 @@ namespace SOTS.NPCs.Constructs
 						{
 							if(npc.ai[1] > 0)
 							{
-								Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 46, 1.1f, -0.15f);
+								SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 46, 1.1f, -0.15f);
 							}
 							if(npc.ai[1] >= 6)
                             {
@@ -213,7 +213,7 @@ namespace SOTS.NPCs.Constructs
 							if (counterR % 150 == 30)
 							{
 								npc.velocity *= 0.1f;
-								Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 105, 1.2f, -0.25f);
+								SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 105, 1.2f, -0.25f);
 								if (Main.netMode != NetmodeID.MultiplayerClient)
 								{
 									int amt = 8;
@@ -388,8 +388,8 @@ namespace SOTS.NPCs.Constructs
 		private float warmUp = 40f;
 		public EvilEye(Vector2 offset, int damage, bool friendly = false)
         {
-			texture = ModContent.GetTexture("SOTS/NPCs/Constructs/EvilEye");
-			texturePupil = ModContent.GetTexture("SOTS/NPCs/Constructs/EvilEyePupil");
+			texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Constructs/EvilEye");
+			texturePupil = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Constructs/EvilEyePupil");
 			this.offset = offset;
 			this.damage = damage;
 			this.friendly = friendly;

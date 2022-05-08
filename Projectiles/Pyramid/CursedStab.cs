@@ -123,7 +123,7 @@ namespace SOTS.Projectiles.Pyramid
 						modPlayer.foamParticleList1.Add(new CurseFoam(spawnLoc + velocity * 0.1f * i, new Vector2(Main.rand.NextFloat(-0.1f, 0.1f), Main.rand.NextFloat(-0.1f, 0.1f)) + velocity * i, 0.75f * scaleMult, true));
 					}
 				}
-				Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 71, 0.7f, 1.1f);
+				SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 71, 0.7f, 1.1f);
 			}
 			else
             {
@@ -152,7 +152,7 @@ namespace SOTS.Projectiles.Pyramid
 					}
 				}
 			}
-			Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 62, 0.9f, 0.4f);
+			SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 62, 0.9f, 0.4f);
 		}
 	}
 }

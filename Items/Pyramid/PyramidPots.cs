@@ -46,7 +46,7 @@ namespace SOTS.Items.Pyramid
 		}
         public void PotDrops(int i, int j, int frameX, int frameY)
         {
-            Main.PlaySound(SoundID.Shatter, i * 16, j * 16, 1, 1f, 0.0f);
+            SoundEngine.PlaySound(SoundID.Shatter, i * 16, j * 16, 1, 1f, 0.0f);
             int num = 0;
             bool snakePot = false;
             if (frameY < 36)

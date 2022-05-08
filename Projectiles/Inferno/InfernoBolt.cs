@@ -47,9 +47,9 @@ namespace SOTS.Projectiles.Inferno
             if (runOnce)
             {
                 if(!other)
-                    Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 34, 0.9f, 0.5f);
+                    SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 34, 0.9f, 0.5f);
                 else if(projectile.ai[1] == -2)
-                    Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 62, 0.7f, 0.2f);
+                    SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 62, 0.7f, 0.2f);
                 if (Main.netMode != NetmodeID.Server)
                     SOTS.primitives.CreateTrail(new StarTrail(projectile, VoidPlayer.InfernoColorAttempt(0.4f), VoidPlayer.InfernoColorAttempt(0.4f), 10));
                 runOnce = false;

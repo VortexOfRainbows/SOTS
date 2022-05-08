@@ -23,8 +23,8 @@ namespace SOTS.Items.Tools
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Texture2D texture1 = ModContent.GetTexture("SOTS/Items/Tools/WorldgenCapture_Outline");
-			Texture2D texture2 = ModContent.GetTexture("SOTS/Items/Tools/WorldgenCapture_OutlineInterior");
+			Texture2D texture1 = (Texture2D)ModContent.Request<Texture2D>("SOTS/Items/Tools/WorldgenCapture_Outline");
+			Texture2D texture2 = (Texture2D)ModContent.Request<Texture2D>("SOTS/Items/Tools/WorldgenCapture_OutlineInterior");
 			Texture2D texture3 = Main.projectileTexture[projectile.type];
 
 			//Vector2 drawOrigin = new Vector2(texture1.Width * 0.5f, texture1.Height * 0.5f);

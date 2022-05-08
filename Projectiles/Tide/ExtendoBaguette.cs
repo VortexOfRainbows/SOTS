@@ -107,7 +107,7 @@ namespace SOTS.Projectiles.Tide
         {
             Player player = Main.player[projectile.owner];
             SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-            Texture2D texture2 = mod.GetTexture("Projectiles/Tide/GradientScale");
+            Texture2D texture2 = Mod.Assets.Request<Texture2D>("Projectiles/Tide/GradientScale").Value;
             Vector2 previousPosition = projectile.Center + new Vector2(length * segmentDist - 4, 0).RotatedBy(projectile.rotation);
             for (int k = 1; k < trailPos.Length; k++)
             {

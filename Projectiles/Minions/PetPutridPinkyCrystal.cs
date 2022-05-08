@@ -207,7 +207,7 @@ namespace SOTS.Projectiles.Minions
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Minions/PetPutridPinkyEye");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Minions/PetPutridPinkyEye");
 			Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
 			Vector2 drawPos = projectile.Center - Main.screenPosition;
 			float shootToX = fireToX - projectile.Center.X;

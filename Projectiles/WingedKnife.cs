@@ -84,7 +84,7 @@ namespace SOTS.Projectiles
 				Main.gore[goreIndex].velocity.Y *= 0.25f;
 				Main.gore[goreIndex].velocity.X *= 0.25f;
 			}
-            Main.PlaySound(2, (int)(projectile.Center.X), (int)(projectile.Center.Y), 14, 0.4f);
+            SoundEngine.PlaySound(2, (int)(projectile.Center.X), (int)(projectile.Center.Y), 14, 0.4f);
 		}
 	}
 }

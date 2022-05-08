@@ -32,7 +32,7 @@ namespace SOTS.Items.Pyramid
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
-			Texture2D texture = mod.GetTexture("Items/Pyramid/TheDarkEyeEmpty");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Pyramid/TheDarkEyeEmpty").Value;
 			Vector2 origin2 = new Vector2(5, 5);
 			if (CurrentPos.X != toPos.X || CurrentPos.Y != toPos.Y)
 			{
@@ -53,14 +53,14 @@ namespace SOTS.Items.Pyramid
 			}
 			else
 				waitTime--;
-			Texture2D texture2 = mod.GetTexture("Items/Pyramid/TheDarkEyePupil");
+			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Pyramid/TheDarkEyePupil").Value;
 			spriteBatch.Draw(texture, position, frame, drawColor, 0, origin, scale, SpriteEffects.None, 0f);
 			spriteBatch.Draw(texture2, position + new Vector2(19 * scale, 20 * scale) + CurrentPos * scale, null, drawColor, 0, origin2, scale, SpriteEffects.None, 1f);
 			return false;
 		}
 		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
 		{
-			Texture2D texture = mod.GetTexture("Items/Pyramid/TheDarkEyeEmpty");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Pyramid/TheDarkEyeEmpty").Value;
 			Vector2 origin = new Vector2(19, 20);
 			Vector2 origin2 = new Vector2(5, 5);
 			if (CurrentPos.X != toPos.X || CurrentPos.Y != toPos.Y)
@@ -82,7 +82,7 @@ namespace SOTS.Items.Pyramid
 			}
 			else
 				waitTime--;
-			Texture2D texture2 = mod.GetTexture("Items/Pyramid/TheDarkEyePupil");
+			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Pyramid/TheDarkEyePupil").Value;
 			spriteBatch.Draw(texture, Item.Center - Main.screenPosition, null, lightColor, 0, origin, scale, SpriteEffects.None, 0f);
 			spriteBatch.Draw(texture2, Item.position + new Vector2(19 * scale, 20 * scale) - Main.screenPosition + CurrentPos * scale, null, lightColor, 0, origin2, scale, SpriteEffects.None, 1f);
 			return false;
@@ -563,7 +563,7 @@ namespace SOTS.Items.Pyramid
 				Vector2 velo = Vector2.Zero;
 				effect = true;
 				Vector2 finalPos = TheDarkEye.StaticDrawDetect(mod, projectile.Center, (int)projectile.ai[0], (int)projectile.ai[1], projectile.damage, (int)projectile.knockBack, ref velo, true, player);
-				Main.PlaySound(SoundID.Item8, Main.player[projectile.owner].Center);
+				SoundEngine.PlaySound(SoundID.Item8, Main.player[projectile.owner].Center);
 				player.position = finalPos - new Vector2(player.width / 2, player.height / 2);
 				if(player.velocity.Y > 1)
 				{

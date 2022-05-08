@@ -51,7 +51,7 @@ namespace SOTS.Projectiles.Otherworld
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture2 = mod.GetTexture("Projectiles/Otherworld/HoloMissileFill");
+			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Projectiles/Otherworld/HoloMissileFill").Value;
 			Color color = new Color(110, 110, 110, 0);
 			Vector2 drawOrigin = new Vector2(Main.projectileTexture[projectile.type].Width * 0.5f, projectile.height * 0.5f);
 			float approaching = ((540f - projectile.timeLeft) / 540f);
@@ -84,7 +84,7 @@ namespace SOTS.Projectiles.Otherworld
 				projectile.velocity += -toPlayer * (0.125f * projectile.timeLeft/540f) + new Vector2(x, y);
 			}
 			if(projectile.timeLeft == 30)
-				Main.PlaySound(2, (int)(projectile.Center.X), (int)(projectile.Center.Y), 14, 0.4f);
+				SoundEngine.PlaySound(2, (int)(projectile.Center.X), (int)(projectile.Center.Y), 14, 0.4f);
 			if (projectile.timeLeft < 30)
             {
 				projectile.tileCollide = false;

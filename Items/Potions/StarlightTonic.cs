@@ -15,7 +15,7 @@ namespace SOTS.Items.Potions
 		}
 		public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
-			Texture2D texture = mod.GetTexture("Items/Potions/StarlightTonicEffect");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Potions/StarlightTonicEffect").Value;
 			Color color = new Color(100, 100, 100, 0);
 			for (int k = 0; k < 1; k++)
 			{
@@ -28,7 +28,7 @@ namespace SOTS.Items.Potions
 		}
 		public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
 		{
-			Texture2D texture = mod.GetTexture("Items/Potions/StarlightTonicEffect");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Potions/StarlightTonicEffect").Value;
 			Color color = new Color(100, 100, 100, 0);
 			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
 			for (int k = 0; k < 1; k++)

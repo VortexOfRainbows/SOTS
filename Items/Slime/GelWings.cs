@@ -104,7 +104,7 @@ namespace SOTS.Items.Slime
 			Mod mod = ModLoader.GetMod("SOTS");
 			if (drawPlayer.wings == mod.GetEquipSlot("GelWings", EquipType.Wings))
 			{
-				Texture2D texture = mod.GetTexture("Items/Slime/GelWings_Wings2");
+				Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Slime/GelWings_Wings2").Value;
 				int drawX = (int)(drawPlayer.position.X - Main.screenPosition.X);
 				int drawY = (int)(drawPlayer.position.Y - Main.screenPosition.Y);
 				Vector2 Position = drawInfo.position;

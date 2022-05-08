@@ -27,7 +27,7 @@ namespace SOTS.Projectiles.Earth
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Texture2D texture = mod.GetTexture("Projectiles/Earth/EarthenTrail");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Earth/EarthenTrail").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			for (int k = 0; k < projectile.oldPos.Length; k++)
 			{
@@ -67,7 +67,7 @@ namespace SOTS.Projectiles.Earth
 			if (inititate == 0)
 			{
 				inititate++;
-				Main.PlaySound(2, projectile.Center, 60);
+				SoundEngine.PlaySound(2, projectile.Center, 60);
 			}
 			if(!projectile.velocity.Equals(new Vector2(0, 0)))
 				projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(45);

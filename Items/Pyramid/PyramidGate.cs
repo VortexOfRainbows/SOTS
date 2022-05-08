@@ -70,7 +70,7 @@ namespace SOTS.Items.Pyramid
 				zero = Vector2.Zero;
 			}
 			Tile tile = Main.tile[i, j];
-			Texture2D texture = mod.GetTexture("Items/Pyramid/PyramidGateTile");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Pyramid/PyramidGateTile").Value;
 			Rectangle frame = new Rectangle(tile.frameX, tile.frameY, 16, 16);
 			Color color = WorldGen.paintColor((int)Main.tile[i, j].color());
 			color = Lighting.GetColor(i, j, color);
@@ -170,7 +170,7 @@ namespace SOTS.Items.Pyramid
 			if (!Main.tile[i, j].active() && Main.netMode != NetmodeID.SinglePlayer)
 				NetMessage.SendData(MessageID.TileChange, -1, -1, null, 0, (float)i, (float)j, 0f, 0, 0, 0);
 			Vector2 center = projectile.Center + new Vector2(0, -16);
-			Main.PlaySound(2, (int)center.X, (int)center.Y, 62, 1.25f, -0.5f);
+			SoundEngine.PlaySound(2, (int)center.X, (int)center.Y, 62, 1.25f, -0.5f);
 			if(Main.netMode != NetmodeID.Server)
 			{
 				for (int k = 0; k < 16; k++)

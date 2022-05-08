@@ -35,7 +35,7 @@ namespace SOTS.Items.Furniture.Goopwood
 		protected override Vector3 LightClr => new Vector3(1.3f, 0.12f, 1.3f);
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
 		{
-			Texture2D glowmask = ModContent.GetTexture(this.GetPath("Flame"));
+			Texture2D glowmask = (Texture2D)ModContent.Request<Texture2D>(this.GetPath("Flame"));
 			for (int k = 0; k < 5; k++)
 			{
 				SOTSTile.DrawSlopedGlowMask(i, j, -1, glowmask, new Color(100, 100, 100, 0), Main.rand.NextVector2Circular(1, 1) * (k * 0.25f));

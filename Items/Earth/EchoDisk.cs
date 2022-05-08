@@ -13,7 +13,7 @@ namespace SOTS.Items.Earth
 		public override void SetDefaults()
 		{
 			Item.damage = 12;
-			Item.useStyle = ItemUseStyleID.SwingThrow;
+			Item.useStyle = ItemUseStyleID.Swing;
 			Item.useTime = 27;
 			Item.useAnimation = 27;
 			Item.ranged = true;

@@ -22,7 +22,7 @@ namespace SOTS.Items.ChestItems
 			Item.height = 64;
 			Item.useTime = 22;
 			Item.useAnimation = 22;
-			Item.useStyle = ItemUseStyleID.HoldingOut;
+			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.knockBack = 4f;
 			Item.value = Item.sellPrice(0, 3, 0, 0);
 			Item.rare = ItemRarityID.Orange;

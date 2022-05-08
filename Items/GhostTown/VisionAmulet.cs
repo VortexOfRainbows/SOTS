@@ -15,7 +15,7 @@ namespace SOTS.Items.GhostTown
 			Player player = Main.LocalPlayer;
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			int unique = modPlayer.UniqueVisionNumber;
-			Texture2D texture = ModContent.GetTexture("SOTS/Items/GhostTown/VisionAmuletSheet");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Items/GhostTown/VisionAmuletSheet");
 			frame = new Rectangle(38 * GetGem(unique), 38 * GetFrame(unique), 36, 38);
 			spriteBatch.Draw(texture, position, frame, drawColor, 0f, origin, scale, SpriteEffects.None, 0f);
 			return false;
@@ -25,7 +25,7 @@ namespace SOTS.Items.GhostTown
 			Player player = Main.LocalPlayer;
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			int unique = modPlayer.UniqueVisionNumber;
-			Texture2D texture = ModContent.GetTexture("SOTS/Items/GhostTown/VisionAmuletSheet");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Items/GhostTown/VisionAmuletSheet");
 			Rectangle frame = new Rectangle(38 * GetGem(unique), 38 * GetFrame(unique), 36, 38);
 			Vector2 origin = Item.Size / 2;
 			spriteBatch.Draw(texture, Item.Center - Main.screenPosition, frame, lightColor, rotation, origin, scale, SpriteEffects.None, 0f);

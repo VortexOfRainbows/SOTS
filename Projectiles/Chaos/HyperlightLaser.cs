@@ -51,7 +51,7 @@ namespace SOTS.Projectiles.Chaos
 		{
 			if (runOnce)
 			{
-				Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 94, 1.0f, -0.1f);
+				SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 94, 1.0f, -0.1f);
 				DustOut();
 				color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(projectile.ai[0] * 90 + SOTSWorld.GlobalCounter * 3));
 				SetPostitions();
@@ -188,7 +188,7 @@ namespace SOTS.Projectiles.Chaos
 		{
 			if (runOnce)
 				return false;
-			Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Chaos/HyperlightOrb");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Chaos/HyperlightOrb");
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
 			for (int i = 0; i < 8; i++)
 			{
@@ -198,7 +198,7 @@ namespace SOTS.Projectiles.Chaos
 				Vector2 dynamicAddition = new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(45 * i) + SOTSWorld.GlobalCounter * 2);
 				spriteBatch.Draw(texture, drawPos + dynamicAddition, null, color * 0.5f * percentDeath, projectile.rotation, origin, projectile.scale, SpriteEffects.None, 0f);
 			}
-			texture = ModContent.GetTexture("SOTS/Projectiles/Chaos/DogmaLaser");
+			texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Chaos/DogmaLaser");
 			origin = new Vector2(texture.Width / 2, texture.Height / 2);
 			float alpha = 1;
 			Vector2 lastPosition = projectile.Center;

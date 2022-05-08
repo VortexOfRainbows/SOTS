@@ -240,7 +240,7 @@ namespace SOTS.NPCs.TreasureSlimes
 		public override void HitEffect(int hitDirection, double damage)
 		{
 			if(Main.rand.NextBool(2))
-				Main.PlaySound(SoundID.NPCHit, (int)npc.Center.X, (int)npc.Center.Y, 4, 0.6f, 0.2f);
+				SoundEngine.PlaySound(SoundID.NPCHit, (int)npc.Center.X, (int)npc.Center.Y, 4, 0.6f, 0.2f);
 			if (npc.life > 0)
 			{
 				int num = 0;
@@ -281,7 +281,7 @@ namespace SOTS.NPCs.TreasureSlimes
 			Texture2D texture = Main.itemTexture[Item.Type];
 			float scale = 1.2f * npc.scale / (float)Math.Sqrt(texture.Width * texture.Width + texture.Height * texture.Height) * npc.width;
 			scale = MathHelper.Clamp(scale, 0.4f, 1.1f);
-			//Texture2D textureGlow = ModContent.GetTexture("SOTS/Assets/TreasureSlimeBloom");
+			//Texture2D textureGlow = (Texture2D)ModContent.Request<Texture2D>("SOTS/Assets/TreasureSlimeBloom");
 			Rectangle frame = new Rectangle(0, 0, texture.Width, texture.Height);
 			//spriteBatch.Draw(textureGlow, new Vector2(npc.Center.X, npc.position.Y + npc.gfxOffY + 12) - Main.screenPosition, null, new Color(glowColor.R, glowColor.G, glowColor.B, 0), 0, new Vector2(textureGlow.Width/2, textureGlow.Height), 2f / (float)Math.Sqrt(textureGlow.Width * textureGlow.Width + textureGlow.Height * textureGlow.Height) * npc.width, SpriteEffects.None, 0f);
 			spriteBatch.Draw(texture, drawPos, frame, drawColor * firstAlpha, MathHelper.ToRadians(npc.velocity.X * 1.2f), texture.Size() / 2, scale, SpriteEffects.None, 0f);

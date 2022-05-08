@@ -32,7 +32,7 @@ namespace SOTS.Projectiles.Pyramid
         {
 			if(runOnce)
 			{
-				Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 117, 1.0f, 0.2f);
+				SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 117, 1.0f, 0.2f);
 				for (int i = 0; i < 30; i++)
 				{
 					float mult = 0.2f + 0.8f * i / 30f;

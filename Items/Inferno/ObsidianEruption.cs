@@ -16,7 +16,7 @@ namespace SOTS.Items.Inferno
 		public override void SetDefaults()
 		{
 			Item.damage = 24;
-			Item.melee = true;
+			Item.DamageType = DamageClass.Melee;
 			Item.width = 34;
 			Item.height = 34;
 			Item.useTime = 21;

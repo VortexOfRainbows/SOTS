@@ -19,12 +19,12 @@ namespace SOTS.Items.Celestial
 		public override void SetDefaults()
 		{
             Item.damage = 130;
-            Item.melee = true;  
+            Item.DamageType = DamageClass.Melee;  
             Item.width = 64;
             Item.height = 54;  
             Item.useTime = 28; 
             Item.useAnimation = 28;
-            Item.useStyle = ItemUseStyleID.SwingThrow;    
+            Item.useStyle = ItemUseStyleID.Swing;    
             Item.knockBack = 6f;
             Item.value = Item.sellPrice(0, 15, 0, 0);
             Item.rare = ItemRarityID.Yellow;

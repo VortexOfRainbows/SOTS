@@ -15,7 +15,7 @@ namespace SOTS.Items.Chaos
 	{
         public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
 		{
-			Texture2D texture = mod.GetTexture("Items/Chaos/EtherealScepterEffect");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Chaos/EtherealScepterEffect").Value;
 			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
 			Color color = Color.White;
 			for (int k = 0; k < 6; k++)
@@ -29,10 +29,10 @@ namespace SOTS.Items.Chaos
         }
         public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
 		{
-			Texture2D texture = mod.GetTexture("Items/Chaos/EtherealScepterEffect");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Chaos/EtherealScepterEffect").Value;
 			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
 			Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y) + 2), null, Color.White, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
-			texture = mod.GetTexture("Items/Chaos/EtherealScepterGlow");
+			texture = Mod.Assets.Request<Texture2D>("Items/Chaos/EtherealScepterGlow").Value;
 			Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y) + 2), null, Color.White, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 		}
 		public override void SetStaticDefaults() 
@@ -51,18 +51,18 @@ namespace SOTS.Items.Chaos
 			Item.height = 74;
 			Item.useTime = 30;
 			Item.useAnimation = 30;
-			Item.useStyle = ItemUseStyleID.SwingThrow;
+			Item.useStyle = ItemUseStyleID.Swing;
 			Item.value = Item.sellPrice(0, 12, 0, 0);
 			Item.rare = ItemRarityID.Yellow;
 			Item.UseSound = SoundID.Item44;
 			Item.noMelee = true;
-			Item.summon = true;
+			Item.DamageType = DamageClass.Summon;
 			Item.buffType = ModContent.BuffType<Ethereal>();
 			Item.shoot = ModContent.ProjectileType<EtherealFlame>();
 			Item.mana = 16;
 			if (!Main.dedServ)
 			{
-				Item.GetGlobalItem<ItemUseGlow>().glowTexture = mod.GetTexture("Items/Chaos/EtherealScepterGlow");
+				Item.GetGlobalItem<ItemUseGlow>().glowTexture = Mod.Assets.Request<Texture2D>("Items/Chaos/EtherealScepterGlow").Value;
 			}
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) 

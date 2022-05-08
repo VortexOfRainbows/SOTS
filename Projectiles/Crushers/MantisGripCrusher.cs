@@ -36,7 +36,7 @@ namespace SOTS.Projectiles.Crushers
 		}
         public override void ExplosionSound()
 		{
-			Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 92, 0.55f, 0.4f);
+			SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 92, 0.55f, 0.4f);
 			base.ExplosionSound();
 		}
         public override bool UseCustomExplosionEffect(float x, float y, float dist, float rotation, float chargePercent, int index)
@@ -70,7 +70,7 @@ namespace SOTS.Projectiles.Crushers
         }
 		public override Texture2D ArmTexture(int handNum, int direction)
 		{
-			return mod.GetTexture("Projectiles/Crushers/MantisGripArm");
+			return Mod.Assets.Request<Texture2D>("Projectiles/Crushers/MantisGripArm").Value;
 		}
 	}
 }

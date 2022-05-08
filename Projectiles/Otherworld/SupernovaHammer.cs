@@ -23,7 +23,7 @@ namespace SOTS.Projectiles.Otherworld
         }
         public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
         {
-            Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Otherworld/SupernovaHammerGlow");
+            Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Otherworld/SupernovaHammerGlow");
             Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
             Vector2 drawPos = projectile.Center - Main.screenPosition;
             Color color = Color.White;
@@ -50,7 +50,7 @@ namespace SOTS.Projectiles.Otherworld
             if ((double)projectile.ai[0] >= 36f) projectile.localAI[1] = 1.0f;
             if (crit)
             {
-                Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 14, 0.6f);
+                SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 14, 0.6f);
                 if (projectile.owner == Main.myPlayer)
                 {
                     for (int i = 0; i < 3; i++)
@@ -66,7 +66,7 @@ namespace SOTS.Projectiles.Otherworld
         {
             if (target.life <= 0)
             {
-                Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 14, 0.6f);
+                SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 14, 0.6f);
                 if (projectile.owner == Main.myPlayer)
                 {
                     for (int i = 0; i < 3; i++)

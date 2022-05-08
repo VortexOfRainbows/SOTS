@@ -127,7 +127,7 @@ namespace SOTS.Projectiles
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture = ModContent.GetTexture("SOTS/Dusts/CopyDust4");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Dusts/CopyDust4");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height / 6);
 			Color color2 = GetColor();
 			color2.A = 0;
@@ -210,11 +210,11 @@ namespace SOTS.Projectiles
 				{
 					frameCount = 1;
 				}
-				if(Item.useStyle == ItemUseStyleID.SwingThrow || Item.staff[Item.type] || Item.type == ModContent.ItemType<DigitalDaito>())
+				if(Item.useStyle == ItemUseStyleID.Swing || Item.staff[Item.type] || Item.type == ModContent.ItemType<DigitalDaito>())
                 {
 					projectile.rotation += MathHelper.ToRadians(150) * projectile.spriteDirection;
                 }
-				else if(Item.useStyle == ItemUseStyleID.HoldingOut)
+				else if(Item.useStyle == ItemUseStyleID.Shoot)
                 {
 					if(Item.height > Item.width) //bow type?
 					{

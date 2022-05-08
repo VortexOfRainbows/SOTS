@@ -56,7 +56,7 @@ namespace SOTS.Projectiles.Pyramid
 		{
 			if (runOnce)
 				return true;
-			Texture2D texture = mod.GetTexture("Projectiles/Otherworld/HardlightTrail");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Otherworld/HardlightTrail").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Vector2 previousPosition = trailPos[0];
 			if (previousPosition == Vector2.Zero)

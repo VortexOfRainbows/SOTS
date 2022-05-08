@@ -29,7 +29,7 @@ namespace SOTS.Projectiles.Chaos
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
         {
-            Texture2D texture = mod.GetTexture("Projectiles/Laser/PrismLaser");
+            Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Laser/PrismLaser").Value;
             Texture2D texture2 = Main.projectileTexture[projectile.type];
             float compression = (100f - projectile.ai[0]) / 100f;
             if (compression < 0)

@@ -133,7 +133,7 @@ namespace SOTS.Items.Pyramid
 			{
 				return;
 			}
-			Texture2D texture = mod.GetTexture("Items/Pyramid/CursedHood_HeadGlow");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Pyramid/CursedHood_HeadGlow").Value;
 			float drawX = (int)drawInfo.position.X + drawPlayer.width / 2;
 			float drawY = (int)drawInfo.position.Y + drawPlayer.height - drawPlayer.bodyFrame.Height / 2 + 4f;
 			Vector2 origin = drawInfo.bodyOrigin;

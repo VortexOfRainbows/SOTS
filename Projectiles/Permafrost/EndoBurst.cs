@@ -58,7 +58,7 @@ namespace SOTS.Projectiles.Permafrost
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Celestial/SubspaceLingeringFlame");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Celestial/SubspaceLingeringFlame");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			for (int i = 0; i < particleList.Count; i++)
 			{
@@ -90,7 +90,7 @@ namespace SOTS.Projectiles.Permafrost
 			{
 				if(counter == 0)
 				{
-					Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 20, 0.6f, -0.4f);
+					SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 20, 0.6f, -0.4f);
 					for(int i = 0; i < 30; i++)
 					{
 						Vector2 circular = new Vector2(8, 0).RotatedBy(MathHelper.ToRadians(i * 12f));

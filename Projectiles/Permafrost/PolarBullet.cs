@@ -34,7 +34,7 @@ namespace SOTS.Projectiles.Permafrost
         }
         public void TrailPreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Texture2D texture = mod.GetTexture("Projectiles/Permafrost/PolarisTrail");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Permafrost/PolarisTrail").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Vector2 previousPosition = projectile.Center;
 			float drawAmt = 1f;
@@ -129,7 +129,7 @@ namespace SOTS.Projectiles.Permafrost
 					dust.scale *= 1.4f;
 					dust.alpha = projectile.alpha;
 				}
-				Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 11, 1.25f);
+				SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 11, 1.25f);
 				for (int i = 0; i < trailPos.Length; i++)
 				{
 					trailPos[i] = Vector2.Zero;

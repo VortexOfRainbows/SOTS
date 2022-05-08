@@ -32,7 +32,7 @@ namespace SOTS.Projectiles.Lightning
 		{
 			if (runOnce || !hit)
 				return false;
-			Texture2D texture = mod.GetTexture("Projectiles/Lightning/PurpleLightning");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Lightning/PurpleLightning").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Vector2 previousPosition = projectile.Center;
 			Color color = new Color(140, 130, 140, 0);
@@ -87,7 +87,7 @@ namespace SOTS.Projectiles.Lightning
 			if (runOnce)
 			{
 				projectile.velocity = target.Center - projectile.Center;
-				Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 94, 0.6f);
+				SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 94, 0.6f);
 				for (int i = 0; i < randStorage.Length; i++)
 				{
 					randStorage[i] = Main.rand.Next(-35, 36);

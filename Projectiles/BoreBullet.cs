@@ -15,7 +15,7 @@ namespace SOTS.Projectiles
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/BoreBulletTrail");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/BoreBulletTrail");
 			Vector2 drawOrigin = new Vector2(texture.Width/2, texture.Height/2);
 			Vector2 lastPosition = projectile.Center;
 			for (int k = 0; k < projectile.oldPos.Length; k++)
@@ -108,7 +108,7 @@ namespace SOTS.Projectiles
 						projectile.ai[0] = 15;
 					else
 						projectile.ai[0] = 30;
-					Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 22, 0.75f, 0.1f);
+					SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 22, 0.75f, 0.1f);
 				}
 				projectile.velocity *= 0.04f;
 				runOnce = false;

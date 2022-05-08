@@ -21,7 +21,7 @@ namespace SOTS.Items.Pyramid
             Item.height = 22;
             Item.useTime = 14;
             Item.useAnimation = 14;
-            Item.useStyle = ItemUseStyleID.HoldingOut;    
+            Item.useStyle = ItemUseStyleID.Shoot;    
             Item.noMelee = true;
             Item.knockBack = 2.5f;
             Item.value = Item.sellPrice(0, 1, 50, 0);

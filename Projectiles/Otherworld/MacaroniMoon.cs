@@ -120,7 +120,7 @@ namespace SOTS.Projectiles.Otherworld
 				projectile.ai[1]++;
 				if (projectile.ai[1] >= 10)
 				{
-					Main.PlaySound(2, (int)(projectile.Center.X), (int)(projectile.Center.Y), 9, 0.75f);
+					SoundEngine.PlaySound(2, (int)(projectile.Center.X), (int)(projectile.Center.Y), 9, 0.75f);
 					if (Main.myPlayer == projectile.owner)
 					{
 						Projectile.NewProjectile(projectile.Center, new Vector2(4, 0).RotatedBy(projectile.rotation), mod.ProjectileType("MacaroniBeam"), projectile.damage, projectile.knockBack, projectile.owner);

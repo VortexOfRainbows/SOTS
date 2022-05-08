@@ -55,9 +55,9 @@ namespace SOTS.Projectiles.Chaos
 			if (runOnce)
 			{
 				if(projectile.ai[0] != 1)
-					Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 96, 1.0f, -0.1f);
+					SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 96, 1.0f, -0.1f);
 				else
-					Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 94, 1.0f, -0.1f);
+					SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 94, 1.0f, -0.1f);
 				DustOut();
 				color = VoidPlayer.ChaosPink;
 				SetPostitions();
@@ -169,7 +169,7 @@ namespace SOTS.Projectiles.Chaos
 		{
 			if (runOnce)
 				return false;
-			Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Chaos/DogmaLaser");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Chaos/DogmaLaser");
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
 			float alpha = 1;
 			Vector2 lastPosition = projectile.Center;

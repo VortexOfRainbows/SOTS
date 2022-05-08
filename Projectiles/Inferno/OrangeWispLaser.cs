@@ -87,7 +87,7 @@ namespace SOTS.Projectiles.Inferno
 			if(projectile.ai[0] == 0)
 			{
 				projectile.ai[0] = 0;
-				Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 15, 1f, 0.25f);
+				SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 15, 1f, 0.25f);
 			}
 			if(projectile.ai[0] == 14)
 			{
@@ -107,7 +107,7 @@ namespace SOTS.Projectiles.Inferno
 				counter++;
 			if (runOnce)
 			{
-				Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 94, 0.75f, 0.4f);
+				SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 94, 0.75f, 0.4f);
 				Laser();
 				runOnce = false;
 				//projectile.friendly = true;
@@ -143,7 +143,7 @@ namespace SOTS.Projectiles.Inferno
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Celestial/SubspaceLingeringFlame");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Celestial/SubspaceLingeringFlame");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Color color;
 			for (int i = 0; i < particleList.Count; i++)
@@ -160,7 +160,7 @@ namespace SOTS.Projectiles.Inferno
 			}
 			if(projectile.ai[0] < 15)
 			{
-				Texture2D texture2 = ModContent.GetTexture("SOTS/Projectiles/Inferno/WispIndicator");
+				Texture2D texture2 = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Inferno/WispIndicator");
 				Vector2 drawOrigin2 = new Vector2(0, 2);
 				for(int j = 0; j < 450; j++)
 				{

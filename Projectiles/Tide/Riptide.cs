@@ -51,7 +51,7 @@ namespace SOTS.Projectiles.Tide
                     wasInWaterY = 0.75f;
                 }
                 if(wasInWaterX > 0)
-                    Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 71, 1.1f, -0.33f);
+                    SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 71, 1.1f, -0.33f);
             }
             counter--;
             if (wasInWaterX > 0)

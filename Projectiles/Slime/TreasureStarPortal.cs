@@ -68,7 +68,7 @@ namespace SOTS.Projectiles.Slime
 				return false;
 			SpriteEffects effects1 = SpriteEffects.None;
 			Texture2D texture1 = Main.projectileTexture[projectile.type];
-			Texture2D texture2 = mod.GetTexture("Projectiles/Slime/TreasureStarPortalBG");
+			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Projectiles/Slime/TreasureStarPortalBG").Value;
 			Vector2 origin = new Vector2(texture1.Width/2, texture1.Height/2);
 			Color alpha = new Color(treasureColor.R, treasureColor.G, treasureColor.B);
 			Color color1 = alpha * 0.8f;

@@ -21,7 +21,7 @@ namespace SOTS.Items.ChestItems
             Item.height = 34;
             Item.useTime = 24;
             Item.useAnimation = 24;
-            Item.useStyle = ItemUseStyleID.HoldingOut;
+            Item.useStyle = ItemUseStyleID.Shoot;
             Item.noMelee = true;
             Item.knockBack = 3;
             Item.value = Item.sellPrice(0, 20, 0, 0);
@@ -32,7 +32,7 @@ namespace SOTS.Items.ChestItems
             Item.shootSpeed = 15.5f;
             if (!Main.dedServ)
             {
-                Item.GetGlobalItem<ItemUseGlow>().glowTexture = mod.GetTexture("Items/ChestItems/PathogenRegurgitator_Glow");
+                Item.GetGlobalItem<ItemUseGlow>().glowTexture = Mod.Assets.Request<Texture2D>("Items/ChestItems/PathogenRegurgitator_Glow").Value;
                 Item.GetGlobalItem<ItemUseGlow>().glowOffsetX = (int)((Vector2)HoldoutOffset()).X;
                 Item.GetGlobalItem<ItemUseGlow>().glowOffsetY = (int)((Vector2)HoldoutOffset()).Y;
             }

@@ -62,7 +62,7 @@ namespace SOTS.Projectiles.Tide
 			projectile.alpha += 5;
 			if (runOnce)
 			{
-				Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 21, 0.4f);
+				SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 21, 0.4f);
 				runOnce = false;
             }
 			Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 0.15f / 255f, (255 - projectile.alpha) * 0.25f / 255f, (255 - projectile.alpha) * 0.65f / 255f);
@@ -103,7 +103,7 @@ namespace SOTS.Projectiles.Tide
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Texture2D texture = mod.GetTexture("Projectiles/Tide/TidalConstructTrail");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Tide/TidalConstructTrail").Value;
 			if ((int)projectile.ai[0] >= 0)
 			{
 				for(int i = 0; i < ParticlePos.Count; i++)
@@ -151,7 +151,7 @@ namespace SOTS.Projectiles.Tide
 			projectile.alpha += 9;
 			if (runOnce)
 			{
-				Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 21, 0.5f, -0.1f);
+				SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 21, 0.5f, -0.1f);
 				runOnce = false;
 			}
 			Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 0.15f / 255f, (255 - projectile.alpha) * 0.25f / 255f, (255 - projectile.alpha) * 0.65f / 255f);
@@ -189,7 +189,7 @@ namespace SOTS.Projectiles.Tide
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Texture2D texture = mod.GetTexture("Projectiles/Tide/TidalConstructTrail");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Tide/TidalConstructTrail").Value;
 			if ((int)projectile.ai[0] >= 0)
 			{
 				for (int i = 0; i < ParticlePos.Count; i++)

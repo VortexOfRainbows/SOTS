@@ -22,7 +22,7 @@ namespace SOTS.Items.Pyramid.AncientGold
 			Item.autoReuse = true;
 			Item.useAnimation = 15;
 			Item.useTime = 10;
-			Item.useStyle = ItemUseStyleID.SwingThrow;
+			Item.useStyle = ItemUseStyleID.Swing;
 			Item.rare = ItemRarityID.LightRed;
 			Item.value = 0;
 			Item.consumable = true;
@@ -121,7 +121,7 @@ namespace SOTS.Items.Pyramid.AncientGold
 			{
 				zero = Vector2.Zero;
 			}
-			Texture2D texture = mod.GetTexture("Items/Pyramid/AncientGold/AncientGoldCampfireTile_Flame");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Pyramid/AncientGold/AncientGoldCampfireTile_Flame").Value;
 			int k = Main.tileFrame[Type] % 8;
 			int animate = k * 36;
 			for (k = 0; k < 7; k++)

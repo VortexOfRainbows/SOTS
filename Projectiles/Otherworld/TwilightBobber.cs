@@ -15,7 +15,7 @@ namespace SOTS.Projectiles.Otherworld
         }
         public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
         {
-            Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Otherworld/TwilightBobberGlow");
+            Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Otherworld/TwilightBobberGlow");
             Vector2 drawOrigin = new Vector2(texture.Width/2, projectile.height/2);
             Vector2 drawPos = projectile.Center - Main.screenPosition;
             drawPos.X += 8;

@@ -190,7 +190,7 @@ namespace SOTS.NPCs.Phase
 					npc.velocity = rotatePos * 30f;
 					if(Main.netMode != NetmodeID.MultiplayerClient)
 						npc.netUpdate = true;
-					Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 92);
+					SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 92);
 					return;
 				}
 			}

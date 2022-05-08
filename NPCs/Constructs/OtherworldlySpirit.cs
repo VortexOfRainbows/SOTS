@@ -162,7 +162,7 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Texture2D texture = mod.GetTexture("NPCs/Constructs/OtherworldlySpiritOld");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("NPCs/Constructs/OtherworldlySpiritOld").Value;
 			Vector2 drawOrigin = new Vector2(Main.npcTexture[npc.type].Width * 0.5f, npc.height * 0.5f);
 			for (int k = 0; k < npc.oldPos.Length; k++) {
 				Vector2 drawPos = npc.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, npc.gfxOffY);

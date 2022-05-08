@@ -53,8 +53,8 @@ namespace SOTS.Items
             {
                 if(hasActivate == -1)
                 {
-                    Main.PlaySound(SoundID.Item, (int)player.Center.X, (int)player.Center.Y, 45, 1.3f, -0.4f);
-                    Main.PlaySound(SoundID.Item, (int)player.Center.X, (int)player.Center.Y, 14, 1.0f, -0.3f);
+                    SoundEngine.PlaySound(SoundID.Item, (int)player.Center.X, (int)player.Center.Y, 45, 1.3f, -0.4f);
+                    SoundEngine.PlaySound(SoundID.Item, (int)player.Center.X, (int)player.Center.Y, 14, 1.0f, -0.3f);
                     hasActivate = 180;
                     for(int i = 0; i < 3; i++)
                     {
@@ -264,12 +264,12 @@ namespace SOTS.Items
                 {
                     if(!doDust)
                     {
-                        Main.PlaySound(player.hermesStepSound.SoundType, (int)player.Center.X, (int)player.Center.Y, player.hermesStepSound.SoundStyle, 1f, -0.075f);
+                        SoundEngine.PlaySound(player.hermesStepSound.SoundType, (int)player.Center.X, (int)player.Center.Y, player.hermesStepSound.SoundStyle, 1f, -0.075f);
                         player.runSoundDelay = (int)(player.hermesStepSound.IntendedCooldown / 1.25f);
                     }    
                     else
                     {
-                        Main.PlaySound(player.hermesStepSound.SoundType, (int)player.Center.X, (int)player.Center.Y, player.hermesStepSound.SoundStyle, 1f, 0.125f);
+                        SoundEngine.PlaySound(player.hermesStepSound.SoundType, (int)player.Center.X, (int)player.Center.Y, player.hermesStepSound.SoundStyle, 1f, 0.125f);
                         player.runSoundDelay = (int)(player.hermesStepSound.IntendedCooldown / 1.6f);
                     }
                 }

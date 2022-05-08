@@ -15,7 +15,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		{
 			Item.CloneDefaults(ItemID.AmethystHook);
 			Item.damage = 33;
-			Item.melee = true;
+			Item.DamageType = DamageClass.Melee;
 			Item.knockBack = 3f;
             Item.width = 40;  
             Item.height = 40;   

@@ -40,8 +40,8 @@ namespace SOTS.NPCs.Boss
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
 			Player player = Main.player[npc.target];
-			Texture2D texture = ModContent.GetTexture("SOTS/NPCs/Boss/PutridPinkyPupil");
-			Texture2D texture2 = ModContent.GetTexture("SOTS/NPCs/Boss/PutridPinky1Eye");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Boss/PutridPinkyPupil");
+			Texture2D texture2 = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Boss/PutridPinky1Eye");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Vector2 drawOrigin2 = new Vector2(texture2.Width * 0.5f, texture2.Height * 0.25f);
 			Vector2 drawPos = npc.Center - Main.screenPosition;
@@ -67,7 +67,7 @@ namespace SOTS.NPCs.Boss
 		public void Explode()
 		{
 			NPC.NewNPC((int)npc.position.X + npc.width/2, (int)npc.Center.Y, mod.NPCType("PutridPinkyPhase2"));
-			Main.PlaySound(15, (int)(npc.Center.X), (int)(npc.Center.Y), 0, 1.25f);
+			SoundEngine.PlaySound(15, (int)(npc.Center.X), (int)(npc.Center.Y), 0, 1.25f);
 			for (int i = 0; i < 12; i++)
 			{
 				Vector2 rotation = new Vector2(50, 0).RotatedBy(MathHelper.ToRadians(i * 30));

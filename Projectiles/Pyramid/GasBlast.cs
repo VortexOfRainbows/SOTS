@@ -84,7 +84,7 @@ namespace SOTS.Projectiles.Pyramid
 		{
 			if (runOnce)
 			{
-				Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 62, 0.7f, 0.4f);
+				SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 62, 0.7f, 0.4f);
 				Direction1 = projectile.ai[1];
 				Direction2 = Direction1;
 				runOnce = false;
@@ -124,7 +124,7 @@ namespace SOTS.Projectiles.Pyramid
 				}
 			}
 			foamParticleList1 = null;
-			//Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 62, 0.9f, 0.45f);
+			//SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 62, 0.9f, 0.45f);
 		}
         public override void AI()
 		{

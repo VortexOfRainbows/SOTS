@@ -14,7 +14,7 @@ namespace SOTS.Items.Permafrost
 		public override void SetDefaults()
 		{
 			Item.damage = 36;
-			Item.summon = true;
+			Item.DamageType = DamageClass.Summon;
             Item.width = 34;     
             Item.height = 38;   
             Item.value = Item.sellPrice(0, 5, 50, 0);

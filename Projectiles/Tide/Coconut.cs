@@ -83,7 +83,7 @@ namespace SOTS.Projectiles.Tide
 		}
 		public override void Kill(int timeLeft)
 		{
-			Main.PlaySound(SoundID.Item14, (int)projectile.Center.X, (int)projectile.Center.Y);
+			SoundEngine.PlaySound(SoundID.Item14, (int)projectile.Center.X, (int)projectile.Center.Y);
 			Player owner = Main.player[projectile.owner];
             SOTSPlayer modPlayer = (SOTSPlayer)owner.GetModPlayer(mod, "SOTSPlayer");
 			int RandMod = (int)projectile.ai[0];

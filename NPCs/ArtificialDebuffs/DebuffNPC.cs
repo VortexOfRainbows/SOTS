@@ -324,7 +324,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
             {
                 drawColor = Color.White;
                 Color color = new Color(100, 100, 255, 0);
-                Texture2D texture = mod.GetTexture("NPCs/ArtificialDebuffs/PlatinumCurse");
+                Texture2D texture = Mod.Assets.Request<Texture2D>("NPCs/ArtificialDebuffs/PlatinumCurse").Value;
                 int size = 0;
                 for(int plat = PlatinumCurse; plat > 0; plat /= 10)
                 {
@@ -365,7 +365,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
             {
                 drawColor = Color.White;
                 Color color = new Color(VoidPlayer.soulLootingColor.R, VoidPlayer.soulLootingColor.G, VoidPlayer.soulLootingColor.B, 0);
-                Texture2D texture = mod.GetTexture("NPCs/ArtificialDebuffs/Harvesting");
+                Texture2D texture = Mod.Assets.Request<Texture2D>("NPCs/ArtificialDebuffs/Harvesting").Value;
                 int size = 0;
                 for (int plat = HarvestCurse; plat > 0; plat /= 10)
                 {
@@ -406,7 +406,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
             {
                 drawColor = Color.White;
                 Color color = new Color(VoidPlayer.destabilizeColor.R, VoidPlayer.destabilizeColor.G, VoidPlayer.destabilizeColor.B, 0);
-                Texture2D texture = mod.GetTexture("NPCs/ArtificialDebuffs/Destabilized");
+                Texture2D texture = Mod.Assets.Request<Texture2D>("NPCs/ArtificialDebuffs/Destabilized").Value;
                 int size = 0;
                 for (int plat = DestableCurse; plat > 0; plat /= 10)
                 {
@@ -447,7 +447,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
             {
                 drawColor = new Color(255, 0, 0);
                 Color color = new Color(255, 50, 50, 0);
-                Texture2D texture = mod.GetTexture("NPCs/ArtificialDebuffs/Bleeding");
+                Texture2D texture = Mod.Assets.Request<Texture2D>("NPCs/ArtificialDebuffs/Bleeding").Value;
                 int size = 0;
                 for (int plat = BleedingCurse; plat > 0; plat /= 10)
                 {
@@ -681,7 +681,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
             {
                 if(!shattered)
                 {
-                    Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 23, 1.0f, -0.3f);
+                    SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 23, 1.0f, -0.3f);
                     for (int i = 0; i < 36; i++)
                     {
                         Vector2 circular = new Vector2(0, 3).RotatedBy(MathHelper.ToRadians(i * 10));
@@ -696,7 +696,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
             }
             else if(shattered)
             {
-                Main.PlaySound(21, (int)npc.Center.X, (int)npc.Center.Y, 0, 1f, -0.6f);
+                SoundEngine.PlaySound(21, (int)npc.Center.X, (int)npc.Center.Y, 0, 1f, -0.6f);
                 for (int i = 0; i < 12; i++)
                 {
                     Vector2 circular = new Vector2(0, 3).RotatedBy(MathHelper.ToRadians(i * 30 + Main.rand.NextFloat(-8f, 8f)));
@@ -986,12 +986,12 @@ namespace SOTS.NPCs.ArtificialDebuffs
                     }
                     if (contains && npc.type != NPCType<BloomingHook>() && npc.realLife == -1)
                     {
-                        Texture2D texture2 = mod.GetTexture("Projectiles/BiomeChest/TangleGrowthVine");
+                        Texture2D texture2 = Mod.Assets.Request<Texture2D>("Projectiles/BiomeChest/TangleGrowthVine").Value;
                         Color color = Color.White;
                         if (proj.type == ProjectileType<EvilGrowth>())
                         {
                             color = new Color(VoidPlayer.EvilColor.R, VoidPlayer.EvilColor.G, VoidPlayer.EvilColor.B);
-                            texture2 = mod.GetTexture("Projectiles/Evil/EvilArm");
+                            texture2 = Mod.Assets.Request<Texture2D>("Projectiles/Evil/EvilArm").Value;
                         }
                         float scale = proj.scale;
                         if (proj.type == ProjectileType<FloweringBud>())
@@ -1008,7 +1008,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
                             drawPos = npc.Center + -betweenPositions * (k / max) - Main.screenPosition;
                             if (k == 0 && proj.type == ProjectileType<EvilGrowth>())
                             {
-                                Texture2D texture3 = mod.GetTexture("Projectiles/Evil/EvilHand");
+                                Texture2D texture3 = Mod.Assets.Request<Texture2D>("Projectiles/Evil/EvilHand").Value;
                                 Main.spriteBatch.Draw(texture3, drawPos, null, color, betweenPositions.ToRotation() + MathHelper.Pi/2, new Vector2(texture3.Width / 2, texture3.Height / 2), scale * 1.4f, SpriteEffects.None, 0f);
                             }
                             else
@@ -1051,7 +1051,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 int index = npc.FindBuffIndex(BuffType<Infected>());
                 int time = npc.buffTime[index];
                 int damage = time / 60;
-                Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 14, 0.6f);
+                SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 14, 0.6f);
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     for (int i = 0; i < 3; i++)
@@ -1073,7 +1073,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
             {
                 if (shattered)
                 {
-                    Main.PlaySound(21, (int)npc.Center.X, (int)npc.Center.Y, 0, 1f, -0.6f);
+                    SoundEngine.PlaySound(21, (int)npc.Center.X, (int)npc.Center.Y, 0, 1f, -0.6f);
                     for (int i = 0; i < 12; i++)
                     {
                         Vector2 circular = new Vector2(0, 3).RotatedBy(MathHelper.ToRadians(i * 30 + Main.rand.NextFloat(-8f, 8f)));

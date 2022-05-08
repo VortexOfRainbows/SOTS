@@ -57,7 +57,7 @@ namespace SOTS.NPCs
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
 			Player player = Main.player[npc.target];
-			Texture2D texture = ModContent.GetTexture("SOTS/NPCs/MaligmorEye");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/MaligmorEye");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Vector2 drawPos = npc.Center - Main.screenPosition;
 			Vector2 aimAt = toPlayer;
@@ -125,7 +125,7 @@ namespace SOTS.NPCs
 				{
 					if (npc.ai[2] == -1)
 					{
-						Main.PlaySound(4, (int)npc.Center.X, (int)npc.Center.Y, 1, 0.9f, -0.25f);
+						SoundEngine.PlaySound(4, (int)npc.Center.X, (int)npc.Center.Y, 1, 0.9f, -0.25f);
 						if(Main.netMode != 1)
 						{
 							int total = 0;

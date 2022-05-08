@@ -32,7 +32,7 @@ namespace SOTS.Items.Otherworld.FromChests
             Item.shoot = mod.ProjectileType("PlasmaBall");
             Item.shootSpeed = 12.5f;
             Item.UseSound = SoundID.Item1;
-            Item.melee = true; 
+            Item.DamageType = DamageClass.Melee; 
             Item.channel = true;
         }
         public override void AddRecipes()

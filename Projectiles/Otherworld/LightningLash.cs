@@ -95,7 +95,7 @@ namespace SOTS.Projectiles.Otherworld
 			Vector2 center = player.Center + new Vector2(16 * player.direction, -16);
 			if (runOnce)
 				return false;
-			Texture2D texture = mod.GetTexture("Projectiles/Otherworld/LightningLash");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Otherworld/LightningLash").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Vector2 previousPosition = center;
 			for (int k = 0; k < trailPos.Length; k++)
@@ -169,7 +169,7 @@ namespace SOTS.Projectiles.Otherworld
 					randStorage[i] = Main.rand.Next(-45, 46);
 					trailPos[i] = Vector2.Zero;
 				}
-				Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 93, 0.7f);
+				SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 93, 0.7f);
                 if (player.whoAmI == Main.myPlayer)
                 {
                     Vector2 cursorArea = Main.MouseWorld;

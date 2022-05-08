@@ -14,7 +14,7 @@ namespace SOTS.Items.Chaos
 	{
 		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
 		{
-			Texture2D texture = mod.GetTexture("Items/Chaos/LuxBag");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Chaos/LuxBag").Value;
 			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
 			Color color;
 			for (int k = 0; k < 12; k++)

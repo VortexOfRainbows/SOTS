@@ -21,7 +21,7 @@ namespace SOTS.Items.Evil
 			Item.damage = 50;
 			Item.width = 52;
 			Item.height = 52;
-			Item.useStyle = ItemUseStyleID.HoldingOut;
+			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.useAnimation = 36;
 			Item.useTime = 36;
 			Item.shootSpeed = 27f;
@@ -34,7 +34,7 @@ namespace SOTS.Items.Evil
 			Item.noUseGraphic = true;
 			Item.channel = true;
 			Item.autoReuse = true;
-			Item.melee = true;
+			Item.DamageType = DamageClass.Melee;
 		}	
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{

@@ -33,7 +33,7 @@ namespace SOTS.Projectiles.Otherworld
 		{
 			if (runOnce || !hit)
 				return false;
-			Texture2D texture = mod.GetTexture("Projectiles/Otherworld/CataclysmTrail");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Otherworld/CataclysmTrail").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Vector2 previousPosition = projectile.Center;
 			Color color = new Color(255, 100, 100, 0) * ((255 - projectile.alpha) / 255f);
@@ -87,7 +87,7 @@ namespace SOTS.Projectiles.Otherworld
 			if (runOnce)
 			{
 				projectile.velocity = target.Center - projectile.Center;
-				Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 94, 0.6f);
+				SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 94, 0.6f);
 				for (int i = 0; i < randStorage.Length; i++)
 				{
 					randStorage[i] = Main.rand.Next(-35, 36);

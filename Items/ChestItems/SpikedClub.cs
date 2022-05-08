@@ -16,12 +16,12 @@ namespace SOTS.Items.ChestItems
 		public override void SetDefaults()
 		{
 			Item.damage = 12;
-			Item.melee = true;
+			Item.DamageType = DamageClass.Melee;
 			Item.width = 52;
 			Item.height = 52;
 			Item.useTime = 38;
 			Item.useAnimation = 38;
-			Item.useStyle = ItemUseStyleID.SwingThrow;
+			Item.useStyle = ItemUseStyleID.Swing;
 			Item.knockBack = 3;
 			Item.value = Item.sellPrice(0, 1, 0, 0);
 			Item.rare = ItemRarityID.Blue;

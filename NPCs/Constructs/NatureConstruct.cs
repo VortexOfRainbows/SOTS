@@ -57,8 +57,8 @@ namespace SOTS.NPCs.Constructs
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
 			Player player = Main.player[npc.target];
-			Texture2D texture = ModContent.GetTexture("SOTS/NPCs/Constructs/NatureConstructHead");
-			Texture2D texture2 = ModContent.GetTexture("SOTS/NPCs/Constructs/NatureConstructHeadGlow");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Constructs/NatureConstructHead");
+			Texture2D texture2 = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Constructs/NatureConstructHeadGlow");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Vector2 drawPos = npc.Center - Main.screenPosition + new Vector2(0f, npc.gfxOffY);
 			if(npc.frame.Y == 70) //frame 2
@@ -159,7 +159,7 @@ namespace SOTS.NPCs.Constructs
 						}
 					}
 					npc.velocity.Y -= 2.0f;
-					Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 92, 1.1f, -0.1f);
+					SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 92, 1.1f, -0.1f);
                 }
 				if(sinPercent <= 0)
                 {

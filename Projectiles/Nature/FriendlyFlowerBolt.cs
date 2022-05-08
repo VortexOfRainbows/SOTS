@@ -35,7 +35,7 @@ namespace SOTS.Projectiles.Nature
 		}
 		public override void Kill(int timeLeft)
 		{
-			Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 105, 0.45f, -0.2f);
+			SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 105, 0.45f, -0.2f);
 			DustHelper.DrawStar(projectile.Center, 231, 5f, 4f, 1.5f, 1.75f, 0.7f, 0.7f, true, 10, 0);
 		}
 		public override void AI()

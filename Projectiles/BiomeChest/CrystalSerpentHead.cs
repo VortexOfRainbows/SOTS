@@ -112,11 +112,11 @@ namespace SOTS.Projectiles.BiomeChest
                 Rectangle frame = new Rectangle(0, 0, 72, 120);
                 if (i != segments.Count - 1)
                 {
-                    texture = mod.GetTexture("Projectiles/BiomeChest/CrystalSerpentBody");
+                    texture = Mod.Assets.Request<Texture2D>("Projectiles/BiomeChest/CrystalSerpentBody").Value;
                 }
                 else
                 {
-                    texture = mod.GetTexture("Projectiles/BiomeChest/CrystalSerpentTail");
+                    texture = Mod.Assets.Request<Texture2D>("Projectiles/BiomeChest/CrystalSerpentTail").Value;
                     frame = new Rectangle(0, 120 * (int)projectile.ai[1], 72, 120);
                 }
                 float rotation = segments[i].rotation;

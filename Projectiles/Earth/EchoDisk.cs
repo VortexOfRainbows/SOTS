@@ -123,7 +123,7 @@ namespace SOTS.Projectiles.Earth
 			if (projectile.ai[0] != -1)
 				projectile.ai[0] = 1;
 			projectile.velocity = oldVelocity;
-			Main.PlaySound(SoundID.Item10, projectile.position);
+			SoundEngine.PlaySound(SoundID.Item10, projectile.position);
 			return projectile.ai[0] == -1;
 		}
 	}

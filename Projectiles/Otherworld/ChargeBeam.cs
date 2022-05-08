@@ -86,7 +86,7 @@ namespace SOTS.Projectiles.Otherworld
             {
 				if(projectile.timeLeft % 20 == 0)
 				{
-					Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 15, 0.7f);
+					SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 15, 0.7f);
 					for (int k = 0; k < 360; k += 10)
 					{
 						Vector2 circularLocation = new Vector2(-38 * projectile.scale, 0).RotatedBy(MathHelper.ToRadians(k));
@@ -104,7 +104,7 @@ namespace SOTS.Projectiles.Otherworld
             {
 				if(projectile.timeLeft == 200)
 				{
-					Main.PlaySound(2, (int)(projectile.Center.X), (int)(projectile.Center.Y), 94);
+					SoundEngine.PlaySound(2, (int)(projectile.Center.X), (int)(projectile.Center.Y), 94);
 					if (Main.netMode != 1)
                     {
 						int numberProjectiles = 3;

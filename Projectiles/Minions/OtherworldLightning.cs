@@ -84,7 +84,7 @@ namespace SOTS.Projectiles.Minions
 			if (runOnce)
 			{
 				projectile.position += projectile.velocity.SafeNormalize(Vector2.Zero) * 24;
-				Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 94, 0.6f);
+				SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 94, 0.6f);
 				for (int i = 0; i < randStorage.Length; i++)
 				{
 					randStorage[i] = Main.rand.Next(-65, 66);

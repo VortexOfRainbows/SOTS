@@ -43,7 +43,7 @@ namespace SOTS.Projectiles.Permafrost
             }
 			if(runOnce)
 			{
-				Main.PlaySound(SoundID.Item50, (int)(projectile.Center.X), (int)(projectile.Center.Y));
+				SoundEngine.PlaySound(SoundID.Item50, (int)(projectile.Center.X), (int)(projectile.Center.Y));
 				for (int i = 0; i < 360; i += 10)
 				{
 					Vector2 circularLocation = new Vector2(-14, 0).RotatedBy(MathHelper.ToRadians(i));

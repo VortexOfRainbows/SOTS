@@ -20,7 +20,7 @@ namespace SOTS.Items.Slime
             Item.height = 24;
             Item.useTime = 30;
             Item.useAnimation = 30;
-            Item.useStyle = ItemUseStyleID.HoldingOut;
+            Item.useStyle = ItemUseStyleID.Shoot;
             Item.noMelee = true;
             Item.knockBack = 0;
             Item.value = Item.sellPrice(0, 0, 10, 0);

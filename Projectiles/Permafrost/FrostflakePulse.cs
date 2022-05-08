@@ -70,7 +70,7 @@ namespace SOTS.Projectiles.Permafrost
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Celestial/SubspaceLingeringFlame");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Celestial/SubspaceLingeringFlame");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			for (int i = 0; i < particleList.Count; i++)
 			{
@@ -108,7 +108,7 @@ namespace SOTS.Projectiles.Permafrost
 				Vector2 manipulateVelo = projectile.velocity;
 				if (frostFlake == 1)
 				{
-					Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 50, 1.1f, 0.1f); //mine ice
+					SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 50, 1.1f, 0.1f); //mine ice
 					for (int k = 0; k < 30; k++)
 					{
 						if (!SOTS.Config.lowFidelityMode || Main.rand.NextBool(4))
@@ -125,7 +125,7 @@ namespace SOTS.Projectiles.Permafrost
 				}
 				else if(frostFlake == 2)
 				{
-					Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 105, 1.1f, -0.4f); //starfury
+					SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 105, 1.1f, -0.4f); //starfury
 					for (int i = 0; i < 3; i++)
 					{
 						Vector2 spawnPos = Vector2.Lerp(projectile.Center + manipulateVelo.SafeNormalize(Vector2.Zero) * 8, projectile.Center + manipulateVelo.SafeNormalize(Vector2.Zero) * -120f, i * 0.3f);
@@ -173,9 +173,9 @@ namespace SOTS.Projectiles.Permafrost
 				if (counter == 21)
 				{
 					if (frostFlake != -2)
-						Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 62, 0.6f, -0.2f);
+						SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 62, 0.6f, -0.2f);
 					else
-						Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 50, 0.75f, 0.35f);
+						SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 50, 0.75f, 0.35f);
 					for (int i = 0; i < 30; i++)
 					{
 						Vector2 circular = new Vector2(12, 0).RotatedBy(MathHelper.ToRadians(i * 12));

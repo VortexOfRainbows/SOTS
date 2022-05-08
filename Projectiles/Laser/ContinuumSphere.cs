@@ -41,7 +41,7 @@ namespace SOTS.Projectiles.Laser
 			double grn = Math.Sin(frequency * (double)newAi + 2.0) * width + center;
 			double blu = Math.Sin(frequency * (double)newAi + 4.0) * width + center;
 			Color color = new Color((int)red, (int)grn, (int)blu);
-			Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Laser/ContinuumSphereHighlight");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Laser/ContinuumSphereHighlight");
 			if(orbs.Length == 1)
 			{
 				spriteBatch.Draw(Main.projectileTexture[projectile.type], projectile.Center - Main.screenPosition, null, color, projectile.rotation, drawOrigin, projectile.scale, SpriteEffects.None, 0f);

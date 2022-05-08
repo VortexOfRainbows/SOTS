@@ -51,7 +51,7 @@ namespace SOTS.Projectiles.Celestial
 		}
 		public override void Kill(int timeLeft)
         {
-			Main.PlaySound(3, (int)projectile.Center.X, (int)projectile.Center.Y, 53, 0.625f);
+			SoundEngine.PlaySound(3, (int)projectile.Center.X, (int)projectile.Center.Y, 53, 0.625f);
 			for (int i = 0; i < 10; i++)
 			{
 				var num371 = Dust.NewDust(projectile.Center - new Vector2(5) - new Vector2(10, 10), 24, 24, mod.DustType("CopyDust4"), 0, 0, 100, default, 1.6f);
@@ -63,7 +63,7 @@ namespace SOTS.Projectiles.Celestial
 				dust.fadeIn = 0.2f;
 				dust.alpha = projectile.alpha;
 			}
-			Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 94, 0.55f, 0.1f);
+			SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 94, 0.55f, 0.1f);
 			if (projectile.owner == Main.myPlayer)
 			{
 				int amt = 1;

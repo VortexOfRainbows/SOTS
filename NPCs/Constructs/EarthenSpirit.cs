@@ -208,7 +208,7 @@ namespace SOTS.NPCs.Constructs
 							reticleAlpha = 0;
 							npc.alpha = 0;
 							npc.ai[0] = -20;
-							Main.PlaySound(2, (int)(npc.Center.X), (int)(npc.Center.Y), 14, 2.0f - saveData * 0.02f);
+							SoundEngine.PlaySound(2, (int)(npc.Center.X), (int)(npc.Center.Y), 14, 2.0f - saveData * 0.02f);
 							for (int i = 0; i < 360; i += 10)
 							{
 								Vector2 circularLocation = new Vector2(16 - npc.width, 0).RotatedBy(MathHelper.ToRadians(i));
@@ -339,7 +339,7 @@ namespace SOTS.NPCs.Constructs
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
 			Texture2D texture = Main.npcTexture[npc.type];
-			Texture2D texture2 = mod.GetTexture("NPCs/Constructs/EarthenReticle");
+			Texture2D texture2 = Mod.Assets.Request<Texture2D>("NPCs/Constructs/EarthenReticle").Value;
 			Color color = new Color(100, 100, 100, 0);
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			for (int k = 0; k < 7; k++)

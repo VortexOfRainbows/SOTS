@@ -43,8 +43,8 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D textureG = ModContent.GetTexture("SOTS/NPCs/Constructs/PermafrostConstructHeadGlow");
-			Texture2D texture = ModContent.GetTexture("SOTS/NPCs/Constructs/PermafrostConstructHead");
+			Texture2D textureG = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Constructs/PermafrostConstructHeadGlow");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Constructs/PermafrostConstructHead");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Vector2 drawPos = npc.Center - Main.screenPosition + new Vector2(0f, npc.gfxOffY);
 			Texture2D texture2 = Main.npcTexture[npc.type];

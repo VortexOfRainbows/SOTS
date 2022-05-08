@@ -35,7 +35,7 @@ namespace SOTS.Projectiles
         {
             if(playOnce)
             {
-                Main.PlaySound(SoundID.Item99, projectile.Center);
+                SoundEngine.PlaySound(SoundID.Item99, projectile.Center);
                 playOnce = false;
             }
             if (projectile.ai[0] == -1)
@@ -56,7 +56,7 @@ namespace SOTS.Projectiles
                     projectile.velocity = projectile.velocity.Length() * toHook;
                     if (projectile.Hitbox.Intersects(hook.Hitbox))
                     {
-                        Main.PlaySound(SoundID.NPCHit1, hook.Center);
+                        SoundEngine.PlaySound(SoundID.NPCHit1, hook.Center);
                         projectile.velocity *= 0.05f;
                         projectile.Center = hook.Center;
                         hookId = hook.whoAmI;
@@ -102,7 +102,7 @@ namespace SOTS.Projectiles
                         hook.localAI[1] = 0; // temp2;
                         hook.localAI[0] = owner.whoAmI;
                         hook.netUpdate = true;
-                        Main.PlaySound(SoundID.NPCHit, (int)hook.Center.X, (int)hook.Center.Y, 1, 1.2f);
+                        SoundEngine.PlaySound(SoundID.NPCHit, (int)hook.Center.X, (int)hook.Center.Y, 1, 1.2f);
                     }
                     projectile.Kill();
                 }

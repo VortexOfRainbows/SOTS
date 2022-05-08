@@ -19,7 +19,7 @@ namespace SOTS.Projectiles.Earth
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Earth/VibrantArrowTrail");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Earth/VibrantArrowTrail");
 			Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
 			Vector2 lastPosition = projectile.Center;
 			for (int k = 0; k < projectile.oldPos.Length; k++)
@@ -104,7 +104,7 @@ namespace SOTS.Projectiles.Earth
 						dust.velocity += projectile.velocity * 0.5f;
 					}
 					if (projectile.type != ModContent.ProjectileType<VibrantShard>())
-						Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 27, 0.7f, -0.2f);
+						SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 27, 0.7f, -0.2f);
 					runOnce = false;
 				}
 				projectile.friendly = false;

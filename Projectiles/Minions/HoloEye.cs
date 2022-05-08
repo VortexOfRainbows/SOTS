@@ -65,9 +65,9 @@ namespace SOTS.Projectiles.Minions
 		float eyeReset = 1f;
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture = mod.GetTexture("Projectiles/Minions/HoloEye");
-			Texture2D texture3 = mod.GetTexture("NPCs/HoloEyePupil");
-			Texture2D texture4 = mod.GetTexture("NPCs/HoloEyeFill");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Minions/HoloEye").Value;
+			Texture2D texture3 = Mod.Assets.Request<Texture2D>("NPCs/HoloEyePupil").Value;
+			Texture2D texture4 = Mod.Assets.Request<Texture2D>("NPCs/HoloEyeFill").Value;
 			Color color = new Color(110, 110, 110, 0);
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Vector2 drawOrigin3 = new Vector2(texture3.Width * 0.5f, texture3.Height * 0.5f);
@@ -106,8 +106,8 @@ namespace SOTS.Projectiles.Minions
 
 				GameShaders.Armor.GetSecondaryShader(shader, owner).Apply(null);
 			}
-			Texture2D texture1 = ModContent.GetTexture("SOTS/Projectiles/Minions/HoloPlatformChainOutline");
-			Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Minions/HoloPlatformChainFill");
+			Texture2D texture1 = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Minions/HoloPlatformChainOutline");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Minions/HoloPlatformChainFill");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Vector2 center = projectile.Center;
 			Vector2 toPlayer = projectile.Center - owner.Center;
@@ -285,7 +285,7 @@ namespace SOTS.Projectiles.Minions
 				Vector2 distanceToMouse = cursor - projectile.Center;
 				rotateVector = distanceToMouse;
 				rotateVector = new Vector2(4, 0).RotatedBy(rotateVector.ToRotation());
-				Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 94, 0.75f);
+				SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 94, 0.75f);
 				if (Main.myPlayer == projectile.owner)
 				{
 					Projectile.NewProjectile(projectile.Center, rotateVector * 5.75f, mod.ProjectileType("DestabilizingBeam"), projectile.damage, 1f, owner.whoAmI, 0, -1);
@@ -299,7 +299,7 @@ namespace SOTS.Projectiles.Minions
 				aiCounter2++;
 				if (aiCounter2 >= 54 && distanceToTarget2 < 1080)
 				{
-					Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 96, 0.5f);
+					SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 96, 0.5f);
 					if (Main.myPlayer == projectile.owner)
 					{
 						Projectile.NewProjectile(projectile.Center, rotateVector * 5.75f, mod.ProjectileType("CodeBurst"), projectile.damage, 1f, owner.whoAmI, 0, -1);

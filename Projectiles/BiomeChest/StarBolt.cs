@@ -70,7 +70,7 @@ namespace SOTS.Projectiles.BiomeChest
         {
             if (runOnce)
             {
-                Main.PlaySound(SoundLoader.customSoundType, (int)projectile.Center.X, (int)projectile.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/StarLaser"), 0.6f, 0.2f + Main.rand.NextFloat(-0.1f, 0.1f));
+                SoundEngine.PlaySound(SoundLoader.customSoundType, (int)projectile.Center.X, (int)projectile.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/StarLaser"), 0.6f, 0.2f + Main.rand.NextFloat(-0.1f, 0.1f));
                 projectile.scale = 0.6f;
                 if (Main.netMode != NetmodeID.Server)
                     SOTS.primitives.CreateTrail(new StarTrail(projectile, projColor(), projColor(true), 12));

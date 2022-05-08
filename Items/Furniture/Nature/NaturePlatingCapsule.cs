@@ -71,7 +71,7 @@ namespace SOTS.Items.Furniture.Nature
                 {
                     zero = Vector2.Zero;
                 }
-                Main.spriteBatch.Draw(ModContent.GetTexture(this.GetPath("Glow")), new Vector2(i * 16 - (int)Main.screenPosition.X, j * 16 - (int)Main.screenPosition.Y) + zero, new Rectangle(tile.frameX, 38 * (chest == -1 ? 0 : Main.chest[chest].frame) + tile.frameY, 16, 16), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+                Main.spriteBatch.Draw((Texture2D)ModContent.Request<Texture2D>(this.GetPath("Glow")), new Vector2(i * 16 - (int)Main.screenPosition.X, j * 16 - (int)Main.screenPosition.Y) + zero, new Rectangle(tile.frameX, 38 * (chest == -1 ? 0 : Main.chest[chest].frame) + tile.frameY, 16, 16), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
             }
             catch
             {

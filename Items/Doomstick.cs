@@ -24,7 +24,7 @@ namespace SOTS.Items
             Item.useTime = 10; 
             Item.useAnimation = 20;
             Item.reuseDelay = 32;
-            Item.useStyle = ItemUseStyleID.HoldingOut;    
+            Item.useStyle = ItemUseStyleID.Shoot;    
             Item.knockBack = 3f;
             Item.value = Item.sellPrice(0, 6, 0, 0);
             Item.rare = ItemRarityID.Pink;
@@ -65,7 +65,7 @@ namespace SOTS.Items
                 }
                 return false;
             }
-            Main.PlaySound(Item.UseSound, player.Center);
+            SoundEngine.PlaySound(Item.UseSound, player.Center);
             int amt = 4;
             for(int i = 0; i < amt; i++)
             {

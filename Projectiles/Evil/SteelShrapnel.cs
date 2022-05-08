@@ -47,7 +47,7 @@ namespace SOTS.Projectiles.Evil
 		{
 			if(projectile.scale != 0.8f)
 			{
-				Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 17, 1.1f, -0.1f);
+				SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 17, 1.1f, -0.1f);
 				projectile.scale = 0.8f;
 			}
 			projectile.rotation = projectile.velocity.ToRotation() + 1.57f;

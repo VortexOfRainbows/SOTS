@@ -133,14 +133,14 @@ namespace SOTS.Projectiles.Otherworld
 				projectile.alpha -= 2;
 				if(projectile.timeLeft > 748)
 				{
-					Main.PlaySound(SoundID.NPCDeath39, player.Center);
+					SoundEngine.PlaySound(SoundID.NPCDeath39, player.Center);
 					projectile.scale = 1f;
 				}
 				projectile.scale += 0.02f;
 			}
 			if (projectile.timeLeft < 720) //launch effects
 			{
-				Main.PlaySound(2, (int)(projectile.Center.X), (int)(projectile.Center.Y), 94);
+				SoundEngine.PlaySound(2, (int)(projectile.Center.X), (int)(projectile.Center.Y), 94);
 				aimTo = aimTo.SafeNormalize(new Vector2(0, 1));
 				aimTo *= -12;
 				projectile.velocity = aimTo;

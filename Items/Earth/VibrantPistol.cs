@@ -23,7 +23,7 @@ namespace SOTS.Items.Earth
             Item.height = 22;
             Item.useTime = 5; 
             Item.useAnimation = 5;
-            Item.useStyle = ItemUseStyleID.HoldingOut;    
+            Item.useStyle = ItemUseStyleID.Shoot;    
             Item.noMelee = true;
 			Item.knockBack = 2f;  
             Item.value = Item.sellPrice(0, 0, 80, 0);
@@ -39,7 +39,7 @@ namespace SOTS.Items.Earth
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			if (modPlayer.VibrantArmor)
 			{
-				Texture2D texture = mod.GetTexture("Items/Earth/VibrantRifle");
+				Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Earth/VibrantRifle").Value;
 				Main.spriteBatch.Draw(texture, position - new Vector2((texture.Width - Item.width)/ 2 - 3.5f, 0), null, drawColor, 0f, origin, scale * 0.85f, SpriteEffects.None, 0f); //I had to position and draw this by testing values manually ughh
 				return false;
 			}
@@ -84,7 +84,7 @@ namespace SOTS.Items.Earth
 				Projectile.NewProjectile(position, Vector2.Zero, ModContent.ProjectileType<VibrantRifle>(), 0, 0, player.whoAmI, perturbedSpeed.ToRotation() - new Vector2(speedX, speedY).ToRotation());
 				speedX = perturbedSpeed.X * mult;
 				speedY = perturbedSpeed.Y * mult;
-				//Main.PlaySound(SoundID.Item11, position);
+				//SoundEngine.PlaySound(SoundID.Item11, position);
 			}
 			return true; 
 		}

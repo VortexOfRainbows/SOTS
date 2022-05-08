@@ -22,7 +22,7 @@ namespace SOTS.Items.Pyramid.AncientGold
             Item.autoReuse = true;
             Item.useAnimation = 15;
             Item.useTime = 10;
-            Item.useStyle = ItemUseStyleID.SwingThrow;
+            Item.useStyle = ItemUseStyleID.Swing;
             Item.rare = ItemRarityID.LightRed;
             Item.consumable = true;
             Item.value = 0;
@@ -125,7 +125,7 @@ namespace SOTS.Items.Pyramid.AncientGold
             {
                 float x = (float)Utils.RandomInt(ref randSeed, -10, 11) * 0.15f;
                 float y = (float)Utils.RandomInt(ref randSeed, -10, 1) * 0.35f;
-                Main.spriteBatch.Draw(mod.GetTexture("Items/Pyramid/AncientGold/AncientGoldCandelabraTile_Flame"), new Vector2((float)(i * 16 - (int)Main.screenPosition.X + offsetX) - (width - 16f) / 2f + x, (float)(j * 16 - (int)Main.screenPosition.Y + offsetY) + y) + zero, new Rectangle(frameX, frameY, width, height), color, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+                Main.spriteBatch.Draw(Mod.Assets.Request<Texture2D>("Items/Pyramid/AncientGold/AncientGoldCandelabraTile_Flame").Value, new Vector2((float)(i * 16 - (int)Main.screenPosition.X + offsetX) - (width - 16f) / 2f + x, (float)(j * 16 - (int)Main.screenPosition.Y + offsetY) + y) + zero, new Rectangle(frameX, frameY, width, height), color, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
             }
         }
     }

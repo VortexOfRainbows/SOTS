@@ -42,7 +42,7 @@ namespace SOTS.Projectiles.Base
 				if(sound)
 				{
 					if (projectile.owner  == Main.LocalPlayer.whoAmI)
-						Main.PlaySound(SoundLoader.customSoundType, (int)projectile.Center.X, (int)projectile.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Void/Void_Death"), 1.05f);
+						SoundEngine.PlaySound(SoundLoader.customSoundType, (int)projectile.Center.X, (int)projectile.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Void/Void_Death"), 1.05f);
 					sound = false;
                 }
 				for (int i = 0; i < 3; i++)

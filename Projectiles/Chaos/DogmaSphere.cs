@@ -42,7 +42,7 @@ namespace SOTS.Projectiles.Chaos
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Texture2D texture = mod.GetTexture("Effects/Masks/Extra_49");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Effects/Masks/Extra_49").Value;
 			Color color = new Color(253, 198, 234);
 			color.A = 0;
 			Main.spriteBatch.End();
@@ -51,7 +51,7 @@ namespace SOTS.Projectiles.Chaos
 			{
 				SOTS.GodrayShader.Parameters["distance"].SetValue(3);
 				SOTS.GodrayShader.Parameters["colorMod"].SetValue(color.ToVector4());
-				SOTS.GodrayShader.Parameters["noise"].SetValue(mod.GetTexture("TrailTextures/noise"));
+				SOTS.GodrayShader.Parameters["noise"].SetValue(Mod.Assets.Request<Texture2D>("TrailTextures/noise").Value);
 				SOTS.GodrayShader.Parameters["rotation"].SetValue(projectile.rotation + projectile.whoAmI + Main.GameUpdateCount * MathHelper.PiOver2 / 90f * (i % 2 * 2 - 1));
 				SOTS.GodrayShader.Parameters["opacity2"].SetValue(1f);
 				SOTS.GodrayShader.CurrentTechnique.Passes[0].Apply();
@@ -107,7 +107,7 @@ namespace SOTS.Projectiles.Chaos
 				{
 					if (counter % 40 == 0)
 					{
-						Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 15, 0.7f, 0.4f);
+						SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 15, 0.7f, 0.4f);
 						for (int k = 0; k < 360; k += 10)
 						{
 							Vector2 circularLocation = new Vector2(-70 * projectile.scale - 26, 0).RotatedBy(MathHelper.ToRadians(k));
@@ -140,7 +140,7 @@ namespace SOTS.Projectiles.Chaos
 				{
 					if (counter % 240 == 181 && counter < 750)
 					{
-						Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 15, 1f, -0.2f);
+						SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 15, 1f, -0.2f);
 						if (Main.netMode != NetmodeID.MultiplayerClient)
 						{
 							int amt = 8;

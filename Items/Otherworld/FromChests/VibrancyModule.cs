@@ -21,7 +21,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
-			Texture2D texture = mod.GetTexture("Items/Otherworld/FromChests/VibrancyModuleEffect");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/FromChests/VibrancyModuleEffect").Value;
 			Color color = new Color(80, 80, 80, 0);
 			for (int k = 0; k < 5; k++)
 			{
@@ -32,7 +32,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
 		{
-			Texture2D texture = mod.GetTexture("Items/Otherworld/FromChests/VibrancyModuleEffect");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/FromChests/VibrancyModuleEffect").Value;
 			Color color = new Color(80, 80, 80, 0);
 			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
 			for (int k = 0; k < 5; k++)

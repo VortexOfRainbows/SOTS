@@ -141,7 +141,7 @@ namespace SOTS.NPCs.Boss
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
-            Texture2D texture = mod.GetTexture("NPCs/Boss/SubspaceSerpentTailFill");
+            Texture2D texture = Mod.Assets.Request<Texture2D>("NPCs/Boss/SubspaceSerpentTailFill").Value;
             Vector2 origin = new Vector2(texture.Width * 0.5f, npc.height * 0.5f);
             NPC head = Main.npc[npc.realLife];
             SubspaceSerpentHead subHead = head.modNPC as SubspaceSerpentHead;
@@ -160,7 +160,7 @@ namespace SOTS.NPCs.Boss
             texture = Main.npcTexture[npc.type];
             origin = new Vector2(texture.Width * 0.5f, npc.height * 0.5f);
             Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition, npc.frame, lightColor * ((255f - npc.alpha) / 255f), npc.rotation, origin, npc.scale, SpriteEffects.None, 0);
-            texture = mod.GetTexture("NPCs/Boss/SubspaceSerpentTailGlow");
+            texture = Mod.Assets.Request<Texture2D>("NPCs/Boss/SubspaceSerpentTailGlow").Value;
             origin = new Vector2(texture.Width * 0.5f, npc.height * 0.5f);
             Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition, npc.frame, Color.White * ((255f - npc.alpha) / 255f), npc.rotation, origin, npc.scale, SpriteEffects.None, 0);
             counter++;
@@ -179,7 +179,7 @@ namespace SOTS.NPCs.Boss
         {
             if (runOnce)
                 return;
-            Texture2D texture2 = mod.GetTexture("NPCs/Boss/SerpentTailTrail");
+            Texture2D texture2 = Mod.Assets.Request<Texture2D>("NPCs/Boss/SerpentTailTrail").Value;
             Vector2 drawOrigin2 = new Vector2(texture2.Width * 0.5f, texture2.Height * 0.5f);
             Vector2 current = npc.Center + new Vector2(0, 20).RotatedBy(npc.rotation);
             Vector2 previousPosition = current;

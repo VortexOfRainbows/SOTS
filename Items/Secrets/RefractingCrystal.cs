@@ -16,7 +16,7 @@ namespace SOTS.Items.Secrets
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frameNotUsed, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
-			Texture2D texture = mod.GetTexture("Items/Secrets/RefractingCrystal");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Secrets/RefractingCrystal").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			position += new Vector2(11 * scale, 9 * scale);
 			float counter = Main.GlobalTime * 160;
@@ -57,7 +57,7 @@ namespace SOTS.Items.Secrets
 			int i = (int)Item.Center.X / 16;
 			int j = (int)Item.Center.Y / 16;
 			Tile tile = Framing.GetTileSafely(i, j);
-			if (tile.wall > 0 || j > Main.rockLayer)
+			if (tile.WallType > 0 || j > Main.rockLayer)
             {
 				return true;
             }
@@ -66,12 +66,12 @@ namespace SOTS.Items.Secrets
             {
 				return true;
 			}
-			Texture2D texture2 = mod.GetTexture("Items/Secrets/RefractingCrystal");
+			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Secrets/RefractingCrystal").Value;
 			float time = (float)Main.time;
 			float maxTime = 54000f;
 			float percent = (float)time / (float)maxTime;
 			float lightIntesity = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(180f * percent)).Y;
-			Texture2D texture = mod.GetTexture("Items/Secrets/WhitePixel");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Secrets/WhitePixel").Value;
 			Vector2 drawOrigin;
 			float counter = time * 0.024f;
 			float mult = new Vector2(-11.8f, 0).RotatedBy(MathHelper.ToRadians(180f * percent)).Y;
@@ -129,7 +129,7 @@ namespace SOTS.Items.Secrets
 			j += 4;
 			Tile tile = Framing.GetTileSafely(i, j);
 			bool day = Main.dayTime;
-			if (tile.wall > 0 || j > Main.rockLayer || Main.raining || !day)
+			if (tile.WallType > 0 || j > Main.rockLayer || Main.raining || !day)
 			{
 				return;
 			}
@@ -180,7 +180,7 @@ namespace SOTS.Items.Secrets
 									{
 										WorldGen.KillTile(i2, j2, true, true, false);
 										if(Main.rand.NextBool(2))
-											Main.PlaySound(SoundID.Tink, new Vector2(i2 * 16 + 8, j2 * 16 + 8));
+											SoundEngine.PlaySound(SoundID.Tink, new Vector2(i2 * 16 + 8, j2 * 16 + 8));
 									}
 								}
 							}
@@ -234,7 +234,7 @@ namespace SOTS.Items.Secrets
 				{
 					SOTSWorld.SecretFoundMusicTimer = 720;
 				}
-				Main.PlaySound(2, projectile.Center, 14);
+				SoundEngine.PlaySound(2, projectile.Center, 14);
 				int cc = 0;
 				for (int l = 0; l < 360; l += 3)
 				{

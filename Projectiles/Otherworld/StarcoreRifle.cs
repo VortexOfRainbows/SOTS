@@ -29,20 +29,20 @@ namespace SOTS.Projectiles.Otherworld
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Otherworld/StarcoreRifleEffect");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Otherworld/StarcoreRifleEffect");
 			Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
 			Vector2 drawPos = projectile.Center - Main.screenPosition;
 			Color color = new Color(Main.DiscoR, Main.DiscoG, Main.DiscoB, 0);
 			for (int k = 0; k < 2; k++)
                 spriteBatch.Draw(texture, drawPos, null, color, projectile.rotation, drawOrigin, projectile.scale, projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
-            texture = ModContent.GetTexture("SOTS/Projectiles/Otherworld/StarcoreRifleEffect2");
+            texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Otherworld/StarcoreRifleEffect2");
             for (int k = 0; k < 2; k++)
                 spriteBatch.Draw(texture, drawPos, null, new Color(Main.DiscoG, Main.DiscoB, Main.DiscoR, 0), projectile.rotation, drawOrigin, projectile.scale, projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
-            texture = ModContent.GetTexture("SOTS/Projectiles/Otherworld/StarcoreRifleEffect3");
+            texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Otherworld/StarcoreRifleEffect3");
             for (int k = 0; k < 2; k++)
                 spriteBatch.Draw(texture, drawPos, null, new Color(Main.DiscoB, Main.DiscoR, Main.DiscoG, 0), projectile.rotation, drawOrigin, projectile.scale, projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
             color = Color.White;
-            texture = ModContent.GetTexture("SOTS/Projectiles/Otherworld/StarcoreRifleGlow");
+            texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Otherworld/StarcoreRifleGlow");
             spriteBatch.Draw(texture, drawPos, null, color, projectile.rotation, drawOrigin, projectile.scale, projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
         }
 		public override bool PreAI()

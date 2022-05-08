@@ -27,7 +27,7 @@ namespace SOTS.Projectiles.Otherworld
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Texture2D texture = mod.GetTexture("Projectiles/Otherworld/CurveBoltTrail");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Otherworld/CurveBoltTrail").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			for (int k = 0; k < projectile.oldPos.Length; k++)
 			{
@@ -61,7 +61,7 @@ namespace SOTS.Projectiles.Otherworld
 		}
 		public override void Kill(int timeLeft)
 		{
-			Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 14, 0.6f);
+			SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 14, 0.6f);
 			if (projectile.owner == Main.myPlayer)
 			{
 				Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("AvaritianExplosion"), projectile.damage, 0, Main.myPlayer);

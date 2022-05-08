@@ -90,7 +90,7 @@ namespace SOTS.Projectiles.Evil
 						dust.alpha = 40;
 						dust.noGravity = true;
 					}
-					Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 116, 2.3f, -0.5f);
+					SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 116, 2.3f, -0.5f);
 				}
 				if (projectile.scale < 1)
 				{
@@ -156,9 +156,9 @@ namespace SOTS.Projectiles.Evil
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Texture2D flower = mod.GetTexture("Projectiles/Evil/EvilGrowth");
-			spriteBatch.Draw(mod.GetTexture("Gores/CircleAura"), projectile.Center - Main.screenPosition, null, new Color(200, 50, 0) * 0.2f * (projectile.timeLeft / (float)MaxTimeLeft), 0f, new Vector2(300f, 300f), bubbleSize / 600f, SpriteEffects.None, 0f);
-			spriteBatch.Draw(mod.GetTexture("Gores/CircleBorder"), projectile.Center - Main.screenPosition, null, new Color(150, 30, 0) * 0.5f * (projectile.timeLeft / (float)MaxTimeLeft), 0f, new Vector2(300f, 300f), bubbleSize / 600f, SpriteEffects.None, 0f);
+			Texture2D flower = Mod.Assets.Request<Texture2D>("Projectiles/Evil/EvilGrowth").Value;
+			spriteBatch.Draw(Mod.Assets.Request<Texture2D>("Gores/CircleAura").Value, projectile.Center - Main.screenPosition, null, new Color(200, 50, 0) * 0.2f * (projectile.timeLeft / (float)MaxTimeLeft), 0f, new Vector2(300f, 300f), bubbleSize / 600f, SpriteEffects.None, 0f);
+			spriteBatch.Draw(Mod.Assets.Request<Texture2D>("Gores/CircleBorder").Value, projectile.Center - Main.screenPosition, null, new Color(150, 30, 0) * 0.5f * (projectile.timeLeft / (float)MaxTimeLeft), 0f, new Vector2(300f, 300f), bubbleSize / 600f, SpriteEffects.None, 0f);
 			Vector2 drawOrigin = new Vector2(flower.Width * 0.5f, flower.Height * 0.5f);
 			Main.spriteBatch.Draw(flower, projectile.Center - Main.screenPosition, null, new Color(VoidPlayer.EvilColor.R, VoidPlayer.EvilColor.G, VoidPlayer.EvilColor.B), projectile.rotation, drawOrigin, projectile.scale * 1.0f * (projectile.timeLeft / (float)MaxTimeLeft) + 0.3f, SpriteEffects.None, 0f);
 			return false;

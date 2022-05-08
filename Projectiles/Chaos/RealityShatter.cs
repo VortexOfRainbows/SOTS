@@ -39,7 +39,7 @@ namespace SOTS.Projectiles.Chaos
 		{
 			if(runOnce)
 			{
-				Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 92, 1.1f, 0.4f);
+				SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 92, 1.1f, 0.4f);
 			}
 			float bonus = projectile.ai[0];
 			if (bonus > 8)
@@ -91,7 +91,7 @@ namespace SOTS.Projectiles.Chaos
 			float alphaScale = 1f;
 			Texture2D texture = Main.projectileTexture[projectile.type];
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
-			Texture2D textureBlack = ModContent.GetTexture("SOTS/Projectiles/Chaos/BlackLuxLaser");
+			Texture2D textureBlack = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Chaos/BlackLuxLaser");
 			Vector2 originBlack = new Vector2(textureBlack.Width / 2, textureBlack.Height / 2);
 			float length = texture.Width * 0.5f;
 			Vector2 unit = projectile.velocity.SafeNormalize(Vector2.Zero);

@@ -12,7 +12,7 @@ namespace SOTS.Projectiles.Earth
 	{
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Texture2D texture = mod.GetTexture("Projectiles/Earth/ManicMinerTrail");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Earth/ManicMinerTrail").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
 			Vector2 lastPosition = projectile.Center;
 			for (int k = 0; k < projectile.oldPos.Length; k++)
@@ -87,7 +87,7 @@ namespace SOTS.Projectiles.Earth
 			{
 				if (runOnce)
 				{
-					Main.PlaySound(SoundLoader.customSoundType, (int)projectile.Center.X, (int)projectile.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/StarLaser"), 0.6f, -0.1f + Main.rand.NextFloat(-0.1f, 0.1f));
+					SoundEngine.PlaySound(SoundLoader.customSoundType, (int)projectile.Center.X, (int)projectile.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/StarLaser"), 0.6f, -0.1f + Main.rand.NextFloat(-0.1f, 0.1f));
 					for (int i = 0; i < 13; i++)
 					{
 						Dust dust = Dust.NewDustDirect(projectile.Center - new Vector2(4, 4), 0, 0, ModContent.DustType<CopyDust4>());

@@ -72,10 +72,10 @@ namespace SOTS.NPCs.Constructs
 		}
 		public void Draw(Vector2 to, bool gore = false)
 		{
-			Texture2D texture = ModContent.GetTexture("SOTS/NPCs/Constructs/EvilDrillArm");
-			Texture2D texture2 = ModContent.GetTexture("SOTS/NPCs/Constructs/EvilDrill");
-			Texture2D textureGlow = ModContent.GetTexture("SOTS/NPCs/Constructs/EvilDrillArmGlow");
-			Texture2D texture2Glow = ModContent.GetTexture("SOTS/NPCs/Constructs/EvilDrillGlow");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Constructs/EvilDrillArm");
+			Texture2D texture2 = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Constructs/EvilDrill");
+			Texture2D textureGlow = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Constructs/EvilDrillArmGlow");
+			Texture2D texture2Glow = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Constructs/EvilDrillGlow");
 			Vector2 position = to;
 			Vector2 origin = new Vector2((float)texture.Width * 0.5f, (float)texture.Height * 0.5f);
 			float height = (float)texture.Height;
@@ -161,8 +161,8 @@ namespace SOTS.NPCs.Constructs
 		float glowTimer = 0;
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture = mod.GetTexture("NPCs/Constructs/EvilConstructGlow");
-			Texture2D texture2 = mod.GetTexture("NPCs/Constructs/EvilConstructGlow2");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("NPCs/Constructs/EvilConstructGlow").Value;
+			Texture2D texture2 = Mod.Assets.Request<Texture2D>("NPCs/Constructs/EvilConstructGlow2").Value;
 			Color color = Color.White;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			float dir = (float)Math.Atan2(aimTo.Y - npc.Center.Y, aimTo.X - npc.Center.X);
@@ -285,7 +285,7 @@ namespace SOTS.NPCs.Constructs
 							npc.ai[0] = 40; //this will be used for the shock attack
 							if (Main.netMode == NetmodeID.Server)
 								npc.netUpdate = true;
-							Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 93, 1.3f, -0.4f);
+							SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 93, 1.3f, -0.4f);
 						}
 						else
 						{
@@ -399,7 +399,7 @@ namespace SOTS.NPCs.Constructs
 						else if (counter < 72)
 						{
 							if (counter == 24 || counter == 48)
-								Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 15, 1f, -0.05f);
+								SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 15, 1f, -0.05f);
 							float degrees = (counter - 24) * 7.5f;
 							float sin = (float)Math.Sin(degrees * Math.PI / 180f);
 							Vector2 safeToPlayer = toPlayer.SafeNormalize(Vector2.Zero);
@@ -408,7 +408,7 @@ namespace SOTS.NPCs.Constructs
 						}
 						else
 						{
-							Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 96, 1.3f, 0.1f);
+							SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 96, 1.3f, 0.1f);
 							arm.Launch(player.Center, 25.5f);
 						}
 						targetPosition += proj.Center;
@@ -456,12 +456,12 @@ namespace SOTS.NPCs.Constructs
 						int trueNum = 0;
 						if (num >= 4)
 						{
-							Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 92, 1.3f, 0.1f);
+							SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 92, 1.3f, 0.1f);
 							trueNum = 2;
 						}
 						else
 						{
-							Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 98, 1.1f + 0.1f * num, 0.2f - 0.05f * num);
+							SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 98, 1.1f + 0.1f * num, 0.2f - 0.05f * num);
 						}
 						if (Main.netMode != NetmodeID.MultiplayerClient)
 						{
@@ -677,7 +677,7 @@ namespace SOTS.NPCs.Constructs
 						startAnim = true;
 					launch = false;
 					stuck = true;
-					Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 22, 1.4f, -0.1f);
+					SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 22, 1.4f, -0.1f);
 				}
 				runOnce = false;
 				if (NetmodeID.Server == Main.netMode)

@@ -33,11 +33,11 @@ namespace SOTS.Projectiles.Crushers
 		}
 		public override Texture2D ArmTexture(int handNum, int direction)
 		{
-			return mod.GetTexture("Projectiles/Crushers/EclipseArm");
+			return Mod.Assets.Request<Texture2D>("Projectiles/Crushers/EclipseArm").Value;
 		}
         public override void ExplosionSound()
 		{
-			Main.PlaySound(SoundID.NPCKilled, (int)projectile.Center.X, (int)projectile.Center.Y, 13, 1.1f, -0.25f);
+			SoundEngine.PlaySound(SoundID.NPCKilled, (int)projectile.Center.X, (int)projectile.Center.Y, 13, 1.1f, -0.25f);
 			base.ExplosionSound();
 		}
     }

@@ -107,7 +107,7 @@ namespace SOTS.NPCs.Boss
         }
 		public void Draw(Vector2 to, bool gore = false)
 		{
-			Texture2D texture = ModContent.GetTexture("SOTS/NPCs/Boss/PutridVine");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Boss/PutridVine");
 			Vector2 position = npc.Center + new Vector2(0, 3.5f);
 			Vector2 origin = new Vector2((float)texture.Width * 0.5f, (float)texture.Height * 0.5f);
 			float height = (float)texture.Height;
@@ -178,7 +178,7 @@ namespace SOTS.NPCs.Boss
 		}
         public override void PostDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Texture2D texture = ModContent.GetTexture("SOTS/NPCs/Boss/PutridPinkyEye");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Boss/PutridPinkyEye");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Vector2 drawPos = npc.Center - Main.screenPosition;
 			lightColor = lightColor * ((195 - npc.alpha + 60) / 195f);
@@ -188,7 +188,7 @@ namespace SOTS.NPCs.Boss
         }
         public void DrawEye(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture = ModContent.GetTexture("SOTS/NPCs/Boss/PutridPinkyPupil");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Boss/PutridPinkyPupil");
 			Vector2 drawOrigin = new Vector2(texture.Width/2, texture.Height/2);
 			Vector2 drawPos = npc.Center - Main.screenPosition;
 			
@@ -268,7 +268,7 @@ namespace SOTS.NPCs.Boss
 				{
 					followPlayer = 0;
 					DustCircle(npc.Center.X, npc.Center.Y, 10, 128, 2);
-					Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 15, 1.2f);
+					SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 15, 1.2f);
 				}
 				if(attackTimer == 870 || attackTimer == 600 || attackTimer == 330 || attackTimer == 810 || attackTimer == 540 || attackTimer == 270 || attackTimer == 750 || attackTimer == 480 || attackTimer == 210)
 				{
@@ -336,14 +336,14 @@ namespace SOTS.NPCs.Boss
 					rotateDir = Main.rand.Next(2) == 1 ? -1 : 1;
 				}
 				if (attackTimer == 960)
-					Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 15, 1.0f);
+					SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 15, 1.0f);
 				if (attackTimer == 950)
-					Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 15, 1.15f);
+					SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 15, 1.15f);
 				if (attackTimer == 940)
-					Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 15, 1.3f);
+					SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 15, 1.3f);
 				if (rotationDistance == 0 && attackTimer > 0)
 				{
-					Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 14, 1.3f);
+					SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 14, 1.3f);
 					npc.damage = storeDamage;
 					rotationSpeed = 7f * rotateDir;
 					attackTimer = -1;
@@ -492,7 +492,7 @@ namespace SOTS.NPCs.Boss
 							DustCircle(Main.npc[i].Center.X, Main.npc[i].Center.Y, 20, 64, 1);
 						}
 					}
-					Main.PlaySound(SoundID.Item15, npc.Center);
+					SoundEngine.PlaySound(SoundID.Item15, npc.Center);
 				}
 				if(attackTimer == 900 || attackTimer == 600 || attackTimer == 300)
 				{
@@ -630,7 +630,7 @@ namespace SOTS.NPCs.Boss
 			//NetMessage.SendData(27, -1, -1, null, Probe);
 			eyeReset = -0.8f;
 			npc.velocity += direction.SafeNormalize(Vector2.Zero) * 2.75f;
-			Main.PlaySound(SoundID.Item94, (int)(fromArea.X), (int)(fromArea.Y));
+			SoundEngine.PlaySound(SoundID.Item94, (int)(fromArea.X), (int)(fromArea.Y));
 		}
 		private void InitiateHooks()
 		{

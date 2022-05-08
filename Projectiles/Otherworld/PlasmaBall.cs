@@ -82,7 +82,7 @@ namespace SOTS.Projectiles.Otherworld
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
             Draw();
-            Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Otherworld/InfernoHookChain");
+            Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Otherworld/InfernoHookChain");
             Vector2 position = projectile.Center;
             Vector2 mountedCenter = Main.player[projectile.owner].MountedCenter;
             Rectangle? sourceRectangle = new Microsoft.Xna.Framework.Rectangle?();

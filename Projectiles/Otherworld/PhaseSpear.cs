@@ -28,7 +28,7 @@ namespace SOTS.Projectiles.Otherworld
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Texture2D texture = mod.GetTexture("Projectiles/Otherworld/OtherworldlyBolt");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Otherworld/OtherworldlyBolt").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			for (int k = 0; k < projectile.oldPos.Length; k++)
 			{
@@ -61,7 +61,7 @@ namespace SOTS.Projectiles.Otherworld
         }
         public override void Kill(int timeLeft)
 		{
-			Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 14, 0.6f);
+			SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 14, 0.6f);
 			if (Main.netMode != 1)
 			{
 				for (int i = 0; i < 4 + (Main.expertMode ? 1 : 0); i++)

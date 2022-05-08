@@ -16,12 +16,12 @@ namespace SOTS.Items.Nature
 		public override void SetDefaults()
 		{
 			Item.damage = 11;
-			Item.melee = true;
+			Item.DamageType = DamageClass.Melee;
 			Item.width = 46;
 			Item.height = 52;
 			Item.useTime = 30;
 			Item.useAnimation = 30;
-			Item.useStyle = ItemUseStyleID.SwingThrow;
+			Item.useStyle = ItemUseStyleID.Swing;
 			Item.knockBack = 5.75f;
 			Item.value = Item.sellPrice(0, 0, 20, 0);
 			Item.rare = ItemRarityID.Blue;

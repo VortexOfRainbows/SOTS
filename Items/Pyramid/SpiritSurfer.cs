@@ -17,7 +17,7 @@ namespace SOTS.Items.Pyramid
             Item.height = 38;
             Item.useTime = 20;
             Item.useAnimation = 20;
-            Item.useStyle = ItemUseStyleID.SwingThrow;
+            Item.useStyle = ItemUseStyleID.Swing;
 			Item.value = Item.sellPrice(0, 5, 0, 0);
             Item.rare = ItemRarityID.LightPurple;
             Item.UseSound = SoundID.Item1;

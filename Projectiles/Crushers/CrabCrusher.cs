@@ -31,7 +31,7 @@ namespace SOTS.Projectiles.Crushers
 		}
 		public override Texture2D ArmTexture(int handNum, int direction)
 		{
-			return (handNum + (direction == 1 ? 0 : 1)) % 2 == 0 ? mod.GetTexture("Projectiles/Crushers/CrabClaw1") : mod.GetTexture("Projectiles/Crushers/CrabClaw2");
+			return (handNum + (direction == 1 ? 0 : 1)) % 2 == 0 ? Mod.Assets.Request<Texture2D>("Projectiles/Crushers/CrabClaw1").Value : Mod.Assets.Request<Texture2D>("Projectiles/Crushers/CrabClaw2").Value;
 		}
 	}
 }

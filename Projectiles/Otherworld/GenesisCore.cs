@@ -100,7 +100,7 @@ namespace SOTS.Projectiles.Otherworld
 		}
 		public override void Kill(int timeLeft)
 		{
-			Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 94, 1.5f);
+			SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 94, 1.5f);
 			Vector2 circularLocation = new Vector2(10, 0);
 			for(int j = 1; j < 3; j++)
 			{

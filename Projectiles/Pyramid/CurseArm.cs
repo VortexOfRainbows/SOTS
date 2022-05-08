@@ -142,7 +142,7 @@ namespace SOTS.Projectiles.Pyramid
 					projectile.velocity *= 1.1f;
 				if(aiCounter1 == 60)
 				{
-					Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 96, 1.25f, -0.2f);
+					SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 96, 1.25f, -0.2f);
 				}
 				if(aiCounter1 > 90)
                 {
@@ -190,7 +190,7 @@ namespace SOTS.Projectiles.Pyramid
 					int x = (int)projectile.Center.X / 16;
 					int y = (int)projectile.Center.Y / 16;
 					Tile tile = Framing.GetTileSafely(x, y);
-					if ((!WorldGen.InWorld(x, y, 20) || tile.active() && !Main.tileSolidTop[tile.type] && Main.tileSolid[tile.type] && tile.type == ModContent.TileType<TrueSandstoneTile>()) || tile.wall == ModContent.WallType<TrueSandstoneWallWall>())
+					if ((!WorldGen.InWorld(x, y, 20) || tile.active() && !Main.tileSolidTop[tile.type] && Main.tileSolid[tile.type] && tile.type == ModContent.TileType<TrueSandstoneTile>()) || tile.WallType == ModContent.WallType<TrueSandstoneWallWall>())
 					{
 						projectile.velocity *= 0.0f;
 					}
@@ -264,7 +264,7 @@ namespace SOTS.Projectiles.Pyramid
 						Vector2 distanceToOwner = projectile.Center - OwnerPos;
 						PharaohsCurse curse = npc.modNPC as PharaohsCurse;
 						DrawLimbs(curse.foamParticleList1, new Rectangle(0, 0, 0, 0));
-						PharaohsCurse.SpawnPassiveDust(ModContent.GetTexture("SOTS/NPCs/Boss/Curse/CurseHookMask"), projectile.Center, 0.75f, curse.foamParticleList1, 0.2f, 3, 25, distanceToOwner.ToRotation() + MathHelper.ToRadians(90), draggingType ? 2.5f : 1);
+						PharaohsCurse.SpawnPassiveDust((Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Curse/CurseHookMask"), projectile.Center, 0.75f, curse.foamParticleList1, 0.2f, 3, 25, distanceToOwner.ToRotation() + MathHelper.ToRadians(90), draggingType ? 2.5f : 1);
 					}
 				}
 				else

@@ -27,7 +27,7 @@ namespace SOTS.Items.Slime
             Item.shoot = ModContent.ProjectileType<Projectiles.WormWoodSpike>();
             Item.shootSpeed = 14.5f;
             Item.UseSound = SoundID.Item1;
-            Item.melee = true; 
+            Item.DamageType = DamageClass.Melee; 
             Item.channel = true;
         }
 		public override void AddRecipes()

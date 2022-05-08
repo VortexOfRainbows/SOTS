@@ -35,7 +35,7 @@ namespace SOTS.Items.Otherworld.Furniture
         {
             float uniquenessCounter = Main.GlobalTime * -100 + (i + j) * 5;
             Tile tile = Main.tile[i, j];
-            Texture2D texture = mod.GetTexture("Items/Otherworld/Furniture/SkyPotsGlow");
+            Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/Furniture/SkyPotsGlow").Value;
             Rectangle frame = new Rectangle(tile.frameX, tile.frameY, 16, 16);
             Color color;
             color = WorldGen.paintColor((int)Main.tile[i, j].color()) * (100f / 255f);
@@ -70,7 +70,7 @@ namespace SOTS.Items.Otherworld.Furniture
 		}
         public void PotDrops(int i, int j, int frameX, int frameY)
         {
-            Main.PlaySound(SoundID.Shatter, i * 16, j * 16, 1, 1f, 0.0f);
+            SoundEngine.PlaySound(SoundID.Shatter, i * 16, j * 16, 1, 1f, 0.0f);
             Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/Pots/SkyPotGore1"), 1f);
             Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default, mod.GetGoreSlot("Gores/Pots/SkyPotGore2"), 1f);
             int num = 0;

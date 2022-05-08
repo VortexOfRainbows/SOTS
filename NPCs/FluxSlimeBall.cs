@@ -59,7 +59,7 @@ namespace SOTS.NPCs
 		float[] randSeed1 = new float[6];
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture = ModContent.GetTexture("SOTS/NPCs/FluxSlimeVine");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/FluxSlimeVine");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			NPC owner = Main.npc[(int)ownerID];
 			Vector2 ownerCenter = new Vector2(owner.Center.X, owner.position.Y + 6);
@@ -89,7 +89,7 @@ namespace SOTS.NPCs
 				for (int i = 0; i < 6; i++)
 				{
 					counterArr[i] += randSeed1[i];
-					texture = ModContent.GetTexture("SOTS/NPCs/Boss/PinkyGrappleSpike");
+					texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Boss/PinkyGrappleSpike");
 					Vector2 circular = new Vector2(0, (npc.width / 2 - 1.5f) * npc.scale).RotatedBy(MathHelper.ToRadians(i * 60 + counter2 * 0.3f * randMult) + npc.rotation);
 					int frame = 0;
 					if (counterArr[i] >= 20)
@@ -197,7 +197,7 @@ namespace SOTS.NPCs
 				npc.velocity += rotateVector * 7.8f;
 				npc.netUpdate = true;
 				aiCounter2 = Main.rand.Next(-90, 30);
-				//Main.PlaySound(2, (int)npc.Center.X, (int)npc.Center.Y, 96, 0.6f);
+				//SoundEngine.PlaySound(2, (int)npc.Center.X, (int)npc.Center.Y, 96, 0.6f);
 			}
 		}
 		public override void HitEffect(int hitDirection, double damage)

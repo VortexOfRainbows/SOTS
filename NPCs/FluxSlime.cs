@@ -37,7 +37,7 @@ namespace SOTS.NPCs
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture = ModContent.GetTexture("SOTS/NPCs/Boss/PinkyGrappleSpike");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Boss/PinkyGrappleSpike");
 			Vector2 drawPos = new Vector2(npc.Center.X, npc.position.Y + npc.height - 10) - Main.screenPosition;
 			drawColor = npc.GetAlpha(drawColor);
 			if (initiateSize == -1)

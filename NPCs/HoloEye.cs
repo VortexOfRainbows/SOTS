@@ -67,12 +67,12 @@ namespace SOTS.NPCs
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture = mod.GetTexture("NPCs/HoloEyeBase");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("NPCs/HoloEyeBase").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Vector2 drawPos = new Vector2((float)(npc.Center.X - (int)Main.screenPosition.X), (float)(npc.Center.Y - (int)Main.screenPosition.Y) + 18);
 			Main.spriteBatch.Draw(texture, drawPos, null, drawColor * ((255 - npc.alpha) / 255f), 0f, drawOrigin, npc.scale, SpriteEffects.None, 0f);
 			Color color = new Color(100, 100, 100, 0); 
-			texture = mod.GetTexture("NPCs/HoloEyeBaseGlow");
+			texture = Mod.Assets.Request<Texture2D>("NPCs/HoloEyeBaseGlow").Value;
 			for (int k = 0; k < 5; k++)
 			{
 				Vector2 offset = new Vector2(Main.rand.NextFloat(-1, 1f), Main.rand.NextFloat(-1, 1f)) * 0.25f * k;
@@ -82,10 +82,10 @@ namespace SOTS.NPCs
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture = mod.GetTexture("NPCs/HoloEyeOutline");
-			Texture2D texture2 = mod.GetTexture("NPCs/HoloEyeReticle");
-			Texture2D texture3 = mod.GetTexture("NPCs/HoloEyePupil");
-			Texture2D texture4 = mod.GetTexture("NPCs/HoloEyeFill");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("NPCs/HoloEyeOutline").Value;
+			Texture2D texture2 = Mod.Assets.Request<Texture2D>("NPCs/HoloEyeReticle").Value;
+			Texture2D texture3 = Mod.Assets.Request<Texture2D>("NPCs/HoloEyePupil").Value;
+			Texture2D texture4 = Mod.Assets.Request<Texture2D>("NPCs/HoloEyeFill").Value;
 			Color color = new Color(110, 110, 110, 0);
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Vector2 drawOrigin2 = new Vector2(texture2.Width * 0.5f, texture2.Height * 0.5f);
@@ -271,7 +271,7 @@ namespace SOTS.NPCs
 					if (Main.netMode != NetmodeID.MultiplayerClient)
 						Projectile.NewProjectile(npc.Center.X + between.X * 24, npc.Center.Y + between.Y * 24, 0, -1.666f, ModContent.ProjectileType<FallingBolt>(), damage2, 1f, Main.myPlayer, tracerPosX + Main.rand.Next(-14, 15), tracerPosY + Main.rand.Next(-14, 15));
 
-					Main.PlaySound(2, (int)npc.Center.X, (int)npc.Center.Y, 92, 0.5f);
+					SoundEngine.PlaySound(2, (int)npc.Center.X, (int)npc.Center.Y, 92, 0.5f);
 					npc.ai[1] = 1;
 				}
 			}

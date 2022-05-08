@@ -37,7 +37,7 @@ namespace SOTS.Projectiles.Permafrost
 		public override bool PreAI()
 		{
 			if (rotation == 0)
-				Main.PlaySound(SoundID.Item50, (int)(projectile.Center.X), (int)(projectile.Center.Y));
+				SoundEngine.PlaySound(SoundID.Item50, (int)(projectile.Center.X), (int)(projectile.Center.Y));
 
 			rotation++;
 			return true;
@@ -95,7 +95,7 @@ namespace SOTS.Projectiles.Permafrost
 		}
 		public override void Kill(int timeLeft)
 		{
-			Main.PlaySound(SoundID.Item50, (int)(projectile.Center.X), (int)(projectile.Center.Y));
+			SoundEngine.PlaySound(SoundID.Item50, (int)(projectile.Center.X), (int)(projectile.Center.Y));
 			for (int i = 0; i < 10; i++)
 			{
 				int num1 = Dust.NewDust(projectile.position - new Vector2(5), projectile.width, projectile.height, ModContent.DustType<CopyIceDust>());

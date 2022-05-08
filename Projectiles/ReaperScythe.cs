@@ -67,7 +67,7 @@ namespace SOTS.Projectiles
 			if (projectile.ai[0] > 20 && projectile.ai[0] < 50)
             {
 				if(projectile.ai[0] == 28)
-					Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 71, 0.55f, 0.2f);
+					SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 71, 0.55f, 0.2f);
 				projectile.velocity += cen * 1.8f;
             }
             else if (projectile.ai[0] < 20)

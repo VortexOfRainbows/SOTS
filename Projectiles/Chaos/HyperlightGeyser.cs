@@ -29,7 +29,7 @@ namespace SOTS.Projectiles.Chaos
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
-            Texture2D texture = mod.GetTexture("Projectiles/Chaos/HyperlightGeyser");
+            Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Chaos/HyperlightGeyser").Value;
             Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
             for (int i = 0; i < 6; i++)
             {
@@ -39,7 +39,7 @@ namespace SOTS.Projectiles.Chaos
                 Main.spriteBatch.Draw(texture, projectile.Center + rotationAround - Main.screenPosition, null, color * 1f, projectile.rotation, drawOrigin, projectile.scale * 1f, projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
             }
             Main.spriteBatch.Draw(texture, projectile.Center - Main.screenPosition, null, lightColor, projectile.rotation, drawOrigin, projectile.scale * 1f, projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
-            texture = mod.GetTexture("Projectiles/Chaos/HyperlightGeyserGlow");
+            texture = Mod.Assets.Request<Texture2D>("Projectiles/Chaos/HyperlightGeyserGlow").Value;
             Main.spriteBatch.Draw(texture, projectile.Center - Main.screenPosition, null, Color.White, projectile.rotation, drawOrigin, projectile.scale * 1f, projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
             return false;
         }

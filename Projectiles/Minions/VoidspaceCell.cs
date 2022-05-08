@@ -90,7 +90,7 @@ namespace SOTS.Projectiles.Minions
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Celestial/SubspaceLingeringFlame");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Celestial/SubspaceLingeringFlame");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			if(chains)
 				DrawChain((int)projectile.Center.X / 16, (int)projectile.Center.Y / 16, spriteBatch);
@@ -109,7 +109,7 @@ namespace SOTS.Projectiles.Minions
 		}
 		public void DrawChain(int i, int j, SpriteBatch spriteBatch)
 		{
-			Texture2D texture = mod.GetTexture("Projectiles/Minions/VoidspaceAuraChain");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Minions/VoidspaceAuraChain").Value;
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
 			Color color = new Color(255, 255, 255) * 0.5f;
 			float height = 16;
@@ -150,8 +150,8 @@ namespace SOTS.Projectiles.Minions
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor) 
 		{
 			//SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");	
-			//spriteBatch.Draw(mod.GetTexture("Gores/CircleAura"), projectile.Center - Main.screenPosition, null, new Color(0, 20, 0, 0), 0f, new Vector2(300f, 300f), sphereRadius / 300f, SpriteEffects.None, 0f);
-			//spriteBatch.Draw(mod.GetTexture("Gores/CircleBorder"), projectile.Center - Main.screenPosition, null, new Color(5, 30, 5, 0), 0f, new Vector2(300f, 300f), sphereRadius / 300f, SpriteEffects.None, 0f);
+			//spriteBatch.Draw(Mod.Assets.Request<Texture2D>("Gores/CircleAura").Value, projectile.Center - Main.screenPosition, null, new Color(0, 20, 0, 0), 0f, new Vector2(300f, 300f), sphereRadius / 300f, SpriteEffects.None, 0f);
+			//spriteBatch.Draw(Mod.Assets.Request<Texture2D>("Gores/CircleBorder").Value, projectile.Center - Main.screenPosition, null, new Color(5, 30, 5, 0), 0f, new Vector2(300f, 300f), sphereRadius / 300f, SpriteEffects.None, 0f);
 			return true;
 		}
 		bool runOnce = true;

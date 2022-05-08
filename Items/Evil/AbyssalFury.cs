@@ -19,12 +19,12 @@ namespace SOTS.Items.Evil
 		public override void SafeSetDefaults()
 		{
 			Item.damage = 50;
-			Item.melee = true;
+			Item.DamageType = DamageClass.Melee;
 			Item.width = 48;
 			Item.height = 48;
 			Item.useTime = 11;
 			Item.useAnimation = 33;
-			Item.useStyle = ItemUseStyleID.SwingThrow;
+			Item.useStyle = ItemUseStyleID.Swing;
 			Item.knockBack = 5f;
 			Item.value = Item.sellPrice(0, 20, 0, 0);
 			Item.rare = ItemRarityID.Yellow;
@@ -50,7 +50,7 @@ namespace SOTS.Items.Evil
 			return 12;
 		}
 		int rotate = 0;
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
 			int numberProjectiles = 1;  //This defines how many projectiles to shot
             for (int index = 0; index < numberProjectiles; ++index)

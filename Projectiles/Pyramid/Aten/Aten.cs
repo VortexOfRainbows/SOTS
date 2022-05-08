@@ -52,7 +52,7 @@ namespace SOTS.Projectiles.Pyramid.Aten
             }
             if (projectile.localAI[0] % 24 == 0 && summonedNum < 9) //prevent spawning more in multiplayer with Main.myPlayer == projectile.owner
             {
-                Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 30, 0.8f, -0.15f);
+                SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 30, 0.8f, -0.15f);
                 if (Main.myPlayer == projectile.owner)
                 {
                     Projectile.NewProjectileDirect(player.Center, Vector2.Zero, ModContent.ProjectileType<AtenStar>(), (int)(projectile.damage * 0.7f) + 1, 0, projectile.owner, summonedNum, projectile.identity); //use identity since it aids with server syncing (.whoAmI is client dependent)
@@ -70,7 +70,7 @@ namespace SOTS.Projectiles.Pyramid.Aten
         {
             Vector2 drawPos = projectile.Center - Main.screenPosition + new Vector2(0, projectile.gfxOffY);
             Color color = new Color(255, 230, 138, 0);
-            Texture2D tex = mod.GetTexture("Assets/FlailBloom");
+            Texture2D tex = Mod.Assets.Request<Texture2D>("Assets/FlailBloom").Value;
             spriteBatch.Draw(tex, drawPos, null, color, 0, new Vector2(tex.Width, tex.Height) / 2, projectile.scale * 1.50f, SpriteEffects.None, 0f);
             tex = Main.projectileTexture[projectile.type];
             spriteBatch.Draw(tex, drawPos, null, lightColor, projectile.rotation, new Vector2(tex.Width, tex.Height) / 2, projectile.scale * 1.25f, SpriteEffects.None, 0f); //putting origin on center of ball instead of on spike + ball
@@ -240,7 +240,7 @@ namespace SOTS.Projectiles.Pyramid.Aten
         }
         public void Draw(SpriteBatch spriteBatch, Color lightColor)
         {
-            Texture2D texture = ModContent.GetTexture("SOTS/Assets/Glow");
+            Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Assets/Glow");
             Vector2 origin = texture.Size() / 2;
             int length = projectile.oldPos.Length;
             int end = 0;

@@ -48,9 +48,9 @@ namespace SOTS.Items.Otherworld.EpicWings
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
-			Texture2D texture = mod.GetTexture("Items/Otherworld/EpicWings/TestWings");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/EpicWings/TestWings").Value;
 			Main.spriteBatch.Draw(texture, new Vector2(position.X, position.Y), null, drawColor, 0f, origin, scale, SpriteEffects.None, 0f);
-			Texture2D texture2 = mod.GetTexture("Items/Otherworld/EpicWings/TestWingsEffect");
+			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Otherworld/EpicWings/TestWingsEffect").Value;
 			Color color = new Color(110, 110, 110, 0);
 			for (int k = 0; k < 4; k++)
 			{
@@ -58,16 +58,16 @@ namespace SOTS.Items.Otherworld.EpicWings
 				float y = Main.rand.Next(-10, 11) * 0.03f;
 				Main.spriteBatch.Draw(texture2, new Vector2(position.X + x, position.Y + y), null, color * (1f - (Item.alpha / 255f)), 0f, origin, scale, SpriteEffects.None, 0f);
 			}
-			texture = mod.GetTexture("Items/Otherworld/EpicWings/TestWingsBorder");
+			texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/EpicWings/TestWingsBorder").Value;
 			Main.spriteBatch.Draw(texture, new Vector2(position.X, position.Y), null, drawColor, 0f, origin, scale, SpriteEffects.None, 0f);
 			return false;
 		}
 		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
 		{
 			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
-			Texture2D texture = mod.GetTexture("Items/Otherworld/EpicWings/TestWings");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/EpicWings/TestWings").Value;
 			Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y) + 2), null, lightColor * (1f - (Item.alpha / 255f)), rotation, drawOrigin, scale, SpriteEffects.None, 0f);
-			Texture2D texture2 = mod.GetTexture("Items/Otherworld/EpicWings/TestWingsEffect");
+			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Otherworld/EpicWings/TestWingsEffect").Value;
 			Color color = new Color(110, 110, 110, 0);
 			for (int k = 0; k < 4; k++)
 			{
@@ -75,7 +75,7 @@ namespace SOTS.Items.Otherworld.EpicWings
 				float y = Main.rand.Next(-10, 11) * 0.03f;
 				Main.spriteBatch.Draw(texture2, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X) + x, (float)(Item.Center.Y - (int)Main.screenPosition.Y) + y + 2), null, color * (1f - (Item.alpha / 255f)), rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			}
-			texture = mod.GetTexture("Items/Otherworld/EpicWings/TestWingsBorder");
+			texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/EpicWings/TestWingsBorder").Value;
 			Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y) + 2), null, lightColor * (1f - (Item.alpha / 255f)), rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			return false;
 		}
@@ -204,7 +204,7 @@ namespace SOTS.Items.Otherworld.EpicWings
 					dust.shader = GameShaders.Armor.GetSecondaryShader(player.cWings, player);
 				}
 			}
-			Main.PlaySound(12, player.Center);
+			SoundEngine.PlaySound(12, player.Center);
 		}
 		public void flightStart()
 		{
@@ -521,30 +521,30 @@ namespace SOTS.Items.Otherworld.EpicWings
 				return;
 			}
 
-			//Texture2D texture = mod.GetTexture("Items/Otherworld/EpicWings/TestWings_Wings_Glow");
-			Texture2D smallPiece = mod.GetTexture("Items/Otherworld/EpicWings/WingPart1");
-			Texture2D bigPiece = mod.GetTexture("Items/Otherworld/EpicWings/WingPart2");
-			Texture2D bigPieceAlt = mod.GetTexture("Items/Otherworld/EpicWings/WingPart2");
-			Texture2D mediumPiece = mod.GetTexture("Items/Otherworld/EpicWings/WingPart3");
-			Texture2D mediumPieceAlt = mod.GetTexture("Items/Otherworld/EpicWings/WingPart3");
-			Texture2D boosterPiece = mod.GetTexture("Items/Otherworld/EpicWings/WingBooster1");
-			Texture2D bonusPiece = mod.GetTexture("Items/Otherworld/EpicWings/WingPart4EffectFill");
-			Texture2D bonusPiece2 = mod.GetTexture("Items/Otherworld/EpicWings/WingPart4EffectOutline");
-			Texture2D bonusPiece3 = mod.GetTexture("Items/Otherworld/EpicWings/WingBooster2Effect");
-			Texture2D boosterPieceGlow = mod.GetTexture("Items/Otherworld/EpicWings/WingBooster2Glow");
-			Texture2D wingPieceGlow = mod.GetTexture("Items/Otherworld/EpicWings/WingPart4Glow");
+			//Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/EpicWings/TestWings_Wings_Glow").Value;
+			Texture2D smallPiece = Mod.Assets.Request<Texture2D>("Items/Otherworld/EpicWings/WingPart1").Value;
+			Texture2D bigPiece = Mod.Assets.Request<Texture2D>("Items/Otherworld/EpicWings/WingPart2").Value;
+			Texture2D bigPieceAlt = Mod.Assets.Request<Texture2D>("Items/Otherworld/EpicWings/WingPart2").Value;
+			Texture2D mediumPiece = Mod.Assets.Request<Texture2D>("Items/Otherworld/EpicWings/WingPart3").Value;
+			Texture2D mediumPieceAlt = Mod.Assets.Request<Texture2D>("Items/Otherworld/EpicWings/WingPart3").Value;
+			Texture2D boosterPiece = Mod.Assets.Request<Texture2D>("Items/Otherworld/EpicWings/WingBooster1").Value;
+			Texture2D bonusPiece = Mod.Assets.Request<Texture2D>("Items/Otherworld/EpicWings/WingPart4EffectFill").Value;
+			Texture2D bonusPiece2 = Mod.Assets.Request<Texture2D>("Items/Otherworld/EpicWings/WingPart4EffectOutline").Value;
+			Texture2D bonusPiece3 = Mod.Assets.Request<Texture2D>("Items/Otherworld/EpicWings/WingBooster2Effect").Value;
+			Texture2D boosterPieceGlow = Mod.Assets.Request<Texture2D>("Items/Otherworld/EpicWings/WingBooster2Glow").Value;
+			Texture2D wingPieceGlow = Mod.Assets.Request<Texture2D>("Items/Otherworld/EpicWings/WingPart4Glow").Value;
 			int type = testWingsPlayer.epicWingType;
 			switch (type)
 			{
 				case (int)EpicWingType.Blocky:
 					break;
 				case (int)EpicWingType.Default:
-					smallPiece = mod.GetTexture("Items/Otherworld/EpicWings/WingPart1");
-					bigPiece = mod.GetTexture("Items/Otherworld/EpicWings/WingPart4Base");
-					bigPieceAlt = mod.GetTexture("Items/Otherworld/EpicWings/WingPart4Base2");
-					mediumPiece = mod.GetTexture("Items/Otherworld/EpicWings/WingPart5");
-					mediumPieceAlt = mod.GetTexture("Items/Otherworld/EpicWings/WingPart5_2");
-					boosterPiece = mod.GetTexture("Items/Otherworld/EpicWings/WingBooster2");
+					smallPiece = Mod.Assets.Request<Texture2D>("Items/Otherworld/EpicWings/WingPart1").Value;
+					bigPiece = Mod.Assets.Request<Texture2D>("Items/Otherworld/EpicWings/WingPart4Base").Value;
+					bigPieceAlt = Mod.Assets.Request<Texture2D>("Items/Otherworld/EpicWings/WingPart4Base2").Value;
+					mediumPiece = Mod.Assets.Request<Texture2D>("Items/Otherworld/EpicWings/WingPart5").Value;
+					mediumPieceAlt = Mod.Assets.Request<Texture2D>("Items/Otherworld/EpicWings/WingPart5_2").Value;
+					boosterPiece = Mod.Assets.Request<Texture2D>("Items/Otherworld/EpicWings/WingBooster2").Value;
 					break;
 			}
 

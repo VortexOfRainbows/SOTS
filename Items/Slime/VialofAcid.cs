@@ -32,7 +32,7 @@ namespace SOTS.Items.Slime
 			Item.width = 20;
 			Item.height = 22;
 			Item.maxStack = 999;
-			Item.useStyle = ItemUseStyleID.SwingThrow;
+			Item.useStyle = ItemUseStyleID.Swing;
 			Item.rare = ItemRarityID.Blue;
 			Item.value = Item.sellPrice(0, 0, 5, 0);
 		}

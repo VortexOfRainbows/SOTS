@@ -171,7 +171,7 @@ namespace SOTS.NPCs
 					npc.velocity -= between * 3.4f;
 					if (Main.netMode != NetmodeID.MultiplayerClient)
 						Projectile.NewProjectile(npc.Center + between * 24, between * 2.5f, ProjectileType<ThunderColumnBlue>(), damage2, 2f, Main.myPlayer, 2);
-					Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 92, 0.5f, 0.1f);
+					SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 92, 0.5f, 0.1f);
 					for (int k = 0; k < 16; k++)
 					{
 						Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.Electric, 0, 0, 0, default, 1f);

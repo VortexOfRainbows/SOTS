@@ -12,8 +12,8 @@ namespace SOTS.Items.Otherworld.Blocks
 	{
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
-			Texture2D texture = mod.GetTexture("Items/Otherworld/Blocks/HologlassWallOutline");
-			Texture2D texture2 = mod.GetTexture("Items/Otherworld/Blocks/HologlassWallFill");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/Blocks/HologlassWallOutline").Value;
+			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Otherworld/Blocks/HologlassWallFill").Value;
 			Color color = new Color(100, 100, 100, 0);
 			for (int k = 0; k < 5; k++)
 			{
@@ -27,8 +27,8 @@ namespace SOTS.Items.Otherworld.Blocks
 		}
 		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
 		{
-			Texture2D texture = mod.GetTexture("Items/Otherworld/Blocks/HologlassWallOutline");
-			Texture2D texture2 = mod.GetTexture("Items/Otherworld/Blocks/HologlassWallFill");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/Blocks/HologlassWallOutline").Value;
+			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Otherworld/Blocks/HologlassWallFill").Value;
 			Color color = new Color(100, 100, 100, 0);
 			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
 			for (int k = 0; k < 5; k++)
@@ -71,10 +71,10 @@ namespace SOTS.Items.Otherworld.Blocks
 			float offsetY = 2 * ((int)uniquenessCounter % 4);
 			offsetY -= 6;
 			Tile tile = Main.tile[i, j];
-			Texture2D texture = ModContent.GetTexture("SOTS/Items/Otherworld/Blocks/HologlassWallWallOutline");
-			Texture2D texture2 = ModContent.GetTexture("SOTS/Items/Otherworld/Blocks/HologlassWallWallFill");
-			Texture2D textureScan = ModContent.GetTexture("SOTS/Items/Otherworld/Blocks/HologlassWallWallScan");
-			Texture2D textureFix = ModContent.GetTexture("SOTS/Items/Otherworld/Blocks/HologlassWallWallInline");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Items/Otherworld/Blocks/HologlassWallWallOutline");
+			Texture2D texture2 = (Texture2D)ModContent.Request<Texture2D>("SOTS/Items/Otherworld/Blocks/HologlassWallWallFill");
+			Texture2D textureScan = (Texture2D)ModContent.Request<Texture2D>("SOTS/Items/Otherworld/Blocks/HologlassWallWallScan");
+			Texture2D textureFix = (Texture2D)ModContent.Request<Texture2D>("SOTS/Items/Otherworld/Blocks/HologlassWallWallInline");
 			int xLength = 32;
 			int xOff = 0;
 			Rectangle frame = new Rectangle(tile.wallFrameX() + xOff, tile.wallFrameY(), xLength, 32);
@@ -96,22 +96,22 @@ namespace SOTS.Items.Otherworld.Blocks
 				Main.spriteBatch.Draw(texture, pos + offset + new Vector2(-8 + xOff, -8), frame, forBorder, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
 				if(k <= 1)
 				{
-					if (Main.tile[i, j - 1].wall != 0 && Main.tile[i, j - 1].wall != Type)
+					if (Main.tile[i, j - 1].WallType != 0 && Main.tile[i, j - 1].WallType != Type)
 					{
 						Rectangle frameF = new Rectangle(0, 0, 20, 20);
 						Main.spriteBatch.Draw(textureFix, pos + offset + new Vector2(-2 + xOff, -2), frameF, forBorder, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
 					}
-					if (Main.tile[i, j + 1].wall != 0 && Main.tile[i, j + 1].wall != Type)
+					if (Main.tile[i, j + 1].WallType != 0 && Main.tile[i, j + 1].WallType != Type)
 					{
 						Rectangle frameF = new Rectangle(0, 40, 20, 20);
 						Main.spriteBatch.Draw(textureFix, pos + offset + new Vector2(-2 + xOff, -2), frameF, forBorder, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
 					}
-					if (Main.tile[i - 1, j].wall != 0 && Main.tile[i - 1, j].wall != Type)
+					if (Main.tile[i - 1, j].WallType != 0 && Main.tile[i - 1, j].WallType != Type)
 					{
 						Rectangle frameF = new Rectangle(0, 20, 20, 20);
 						Main.spriteBatch.Draw(textureFix, pos + offset + new Vector2(-2 + xOff, -2), frameF, forBorder, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
 					}
-					if (Main.tile[i + 1, j].wall != 0 && Main.tile[i + 1, j].wall != Type)
+					if (Main.tile[i + 1, j].WallType != 0 && Main.tile[i + 1, j].WallType != Type)
 					{
 						Rectangle frameF = new Rectangle(0, 60, 20, 20);
 						Main.spriteBatch.Draw(textureFix, pos + offset + new Vector2(-2 + xOff, -2), frameF, forBorder, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
@@ -137,7 +137,7 @@ namespace SOTS.Items.Otherworld.Blocks
 		public override bool KillSound(int i, int j)
 		{
 			Vector2 pos = new Vector2(i * 16, j * 16) + new Vector2(8, 8);
-			Main.PlaySound(3, (int)pos.X, (int)pos.Y, 53, 0.5f, 0.5f);
+			SoundEngine.PlaySound(3, (int)pos.X, (int)pos.Y, 53, 0.5f, 0.5f);
 			return false;
 		}
 		public override void NumDust(int i, int j, bool fail, ref int num)

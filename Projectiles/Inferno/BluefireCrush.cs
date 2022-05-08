@@ -55,7 +55,7 @@ namespace SOTS.Projectiles.Inferno
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Celestial/SubspaceLingeringFlame");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Celestial/SubspaceLingeringFlame");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			for (int i = 0; i < particleList.Count; i++)
 			{
@@ -103,7 +103,7 @@ namespace SOTS.Projectiles.Inferno
 			else if(counter >= 30)
 			{
 				if(counter == 30)
-					Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 62, 0.65f, -0.15f);
+					SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 62, 0.65f, -0.15f);
 				int currentCounter = counter - 30;
 				projectile.friendly = true;
 				int baseRate = 90;

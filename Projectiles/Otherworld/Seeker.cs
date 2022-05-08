@@ -40,7 +40,7 @@ namespace SOTS.Projectiles.Otherworld
 		{
 			if (target.life <= 0)
 			{
-				Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 14, 0.6f);
+				SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 14, 0.6f);
 				if (projectile.owner == Main.myPlayer)
 				{
 					for (int i = 0; i < 2; i++)

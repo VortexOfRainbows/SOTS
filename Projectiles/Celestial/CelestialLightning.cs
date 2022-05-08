@@ -122,7 +122,7 @@ namespace SOTS.Projectiles.Celestial
 				if (type == 2)
 					color = new Color(255, 100, 255, 0);
 				projectile.position += projectile.velocity.SafeNormalize(Vector2.Zero) * 24;
-				Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 94, 0.6f);
+				SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 94, 0.6f);
 				for (int i = 0; i < randStorage.Length; i++)
 				{
 					randStorage[i] = Main.rand.Next(-45, 46);

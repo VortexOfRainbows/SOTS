@@ -139,12 +139,12 @@ namespace SOTS.Projectiles.Inferno
                 Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
                 Vector4 colorMod = color.ToVector4();
                 SOTS.FireballShader.Parameters["colorMod"].SetValue(colorMod);
-                SOTS.FireballShader.Parameters["noise"].SetValue(mod.GetTexture("TrailTextures/vnoise"));
-                SOTS.FireballShader.Parameters["pallette"].SetValue(mod.GetTexture("TrailTextures/Pallette2"));
+                SOTS.FireballShader.Parameters["noise"].SetValue(Mod.Assets.Request<Texture2D>("TrailTextures/vnoise").Value);
+                SOTS.FireballShader.Parameters["pallette"].SetValue(Mod.Assets.Request<Texture2D>("TrailTextures/Pallette2").Value);
                 SOTS.FireballShader.Parameters["opacity2"].SetValue(0.25f);
                 SOTS.FireballShader.Parameters["counter"].SetValue(projectile.ai[0]);
                 SOTS.FireballShader.CurrentTechnique.Passes[0].Apply();
-                Main.spriteBatch.Draw(mod.GetTexture("Effects/Masks/Extra_49"), projectile.Center - Main.screenPosition, null, new Color(157, 93, 213, 40) * projectile.Opacity, projectile.rotation, new Vector2(50, 50), projectile.scale * 0.5f * new Vector2(2f, 0.3f), SpriteEffects.None, 0f);
+                Main.spriteBatch.Draw(Mod.Assets.Request<Texture2D>("Effects/Masks/Extra_49").Value, projectile.Center - Main.screenPosition, null, new Color(157, 93, 213, 40) * projectile.Opacity, projectile.rotation, new Vector2(50, 50), projectile.scale * 0.5f * new Vector2(2f, 0.3f), SpriteEffects.None, 0f);
                 Main.spriteBatch.End();
                 Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
             }
@@ -162,7 +162,7 @@ namespace SOTS.Projectiles.Inferno
                     float scale = (projectile.oldPos.Length - k) / (float)projectile.oldPos.Length;
                     Vector2 drawPos = projectile.oldPos[k] - Main.screenPosition + projectile.Size / 2 + new Vector2(0f, projectile.gfxOffY);
                     float direction = (original - projectile.oldPos[k]).ToRotation();
-                    spriteBatch.Draw(mod.GetTexture("Effects/Masks/Extra_49"), drawPos, null, color * scale, direction, drawOrigin, (0.1f + 0.3f * scale) * new Vector2(2f, 0.3f), SpriteEffects.None, 0f);
+                    spriteBatch.Draw(Mod.Assets.Request<Texture2D>("Effects/Masks/Extra_49").Value, drawPos, null, color * scale, direction, drawOrigin, (0.1f + 0.3f * scale) * new Vector2(2f, 0.3f), SpriteEffects.None, 0f);
                     original = projectile.oldPos[k];
                 }
             }
@@ -220,7 +220,7 @@ namespace SOTS.Projectiles.Inferno
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
-            Texture2D texture = mod.GetTexture("Effects/Masks/Extra_49");
+            Texture2D texture = Mod.Assets.Request<Texture2D>("Effects/Masks/Extra_49").Value;
             float sin = (float)Math.Sin(MathHelper.ToRadians(180 - projectile.timeLeft * 3));
             sin = (float)Math.Pow(sin, 0.9);
             Color color = new Color(157, 93, 213);
@@ -229,7 +229,7 @@ namespace SOTS.Projectiles.Inferno
             Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
             SOTS.GodrayShader.Parameters["distance"].SetValue(6 * sin);
             SOTS.GodrayShader.Parameters["colorMod"].SetValue(color.ToVector4());
-            SOTS.GodrayShader.Parameters["noise"].SetValue(mod.GetTexture("TrailTextures/noise"));
+            SOTS.GodrayShader.Parameters["noise"].SetValue(Mod.Assets.Request<Texture2D>("TrailTextures/noise").Value);
             SOTS.GodrayShader.Parameters["rotation"].SetValue(projectile.rotation + projectile.whoAmI * 1.1f);
             SOTS.GodrayShader.Parameters["opacity2"].SetValue(1f * sin);
             SOTS.GodrayShader.CurrentTechnique.Passes[0].Apply();

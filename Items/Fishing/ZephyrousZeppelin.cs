@@ -15,10 +15,10 @@ namespace SOTS.Items.Fishing
         public override void SetDefaults()
         {
             Item.damage = 22;
-            Item.melee = true; 
+            Item.DamageType = DamageClass.Melee; 
             Item.useTime = 25;  
             Item.useAnimation = 25;   
-            Item.useStyle = ItemUseStyleID.HoldingOut;
+            Item.useStyle = ItemUseStyleID.Shoot;
             Item.channel = true;
             Item.knockBack = 2f;
             Item.value = Item.sellPrice(0, 1, 50, 0);

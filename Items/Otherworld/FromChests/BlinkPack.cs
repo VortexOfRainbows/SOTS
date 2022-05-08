@@ -40,7 +40,7 @@ namespace SOTS.Items.Otherworld.FromChests
         }
         public override void SetDefaults()
 		{
-			Item.melee = true;
+			Item.DamageType = DamageClass.Melee;
 			Item.damage = 45;
 			Item.maxStack = 1;
             Item.width = 32;     

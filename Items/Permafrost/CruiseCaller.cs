@@ -28,12 +28,12 @@ namespace SOTS.Items.Permafrost
 			Item.height = 42;
 			Item.useTime = 32;
 			Item.useAnimation = 32;
-			Item.useStyle = ItemUseStyleID.HoldingUp;
+			Item.useStyle = ItemUseStyleID.HoldUp;
 			Item.value = Item.sellPrice(0, 8, 75, 0);
 			Item.rare = ItemRarityID.Yellow;
 			Item.UseSound = SoundID.Item44;
 			Item.noMelee = true;
-			Item.summon = true;
+			Item.DamageType = DamageClass.Summon;
 			Item.buffType = ModContent.BuffType<AerialAssistance>();
 			Item.shoot = ModContent.ProjectileType<PenguinCopter>();
 		}

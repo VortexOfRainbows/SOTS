@@ -34,7 +34,7 @@ namespace SOTS.Projectiles.Inferno
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Celestial/SubspaceLingeringFlame");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Celestial/SubspaceLingeringFlame");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Color color;
 			for (int i = 0; i < particleList.Count; i++)
@@ -49,7 +49,7 @@ namespace SOTS.Projectiles.Inferno
 					Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, particleList[i].rotation, drawOrigin, particleList[i].scale * 1.25f, SpriteEffects.None, 0f);
 				}
 			}
-			texture = ModContent.GetTexture("SOTS/Projectiles/Inferno/SpectralWispOutline");
+			texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Inferno/SpectralWispOutline");
 			drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
 			color = new Color(100, 100, 100, 0);
 			for (int k = 0; k < 12; k++)
@@ -330,7 +330,7 @@ namespace SOTS.Projectiles.Inferno
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Celestial/SubspaceLingeringFlame");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Celestial/SubspaceLingeringFlame");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Color color;
 			for (int i = 0; i < particleList.Count; i++)
@@ -345,7 +345,7 @@ namespace SOTS.Projectiles.Inferno
 					Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, particleList[i].rotation, drawOrigin, particleList[i].scale * 1.25f, SpriteEffects.None, 0f);
 				}
 			}
-			texture = ModContent.GetTexture("SOTS/Projectiles/Inferno/SpectralWispOutline");
+			texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Inferno/SpectralWispOutline");
 			drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
 			color = new Color(100, 100, 100, 0);
 			for (int k = 0; k < 12; k++)
@@ -443,7 +443,7 @@ namespace SOTS.Projectiles.Inferno
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Celestial/SubspaceLingeringFlame");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Celestial/SubspaceLingeringFlame");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Color color;
 			for (int i = 0; i < particleList.Count; i++)
@@ -458,7 +458,7 @@ namespace SOTS.Projectiles.Inferno
 					Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, particleList[i].rotation, drawOrigin, particleList[i].scale * 1.25f, SpriteEffects.None, 0f);
 				}
 			}
-			texture = ModContent.GetTexture("SOTS/Projectiles/Inferno/LemegetonWispRedOutline");
+			texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Inferno/LemegetonWispRedOutline");
 			drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
 			color = new Color(100, 100, 100, 0);
 			for (int k = 0; k < 12; k++)
@@ -532,7 +532,7 @@ namespace SOTS.Projectiles.Inferno
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Celestial/SubspaceLingeringFlame");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Celestial/SubspaceLingeringFlame");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Color color;
 			for (int i = 0; i < particleList.Count; i++)
@@ -547,7 +547,7 @@ namespace SOTS.Projectiles.Inferno
 					Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, particleList[i].rotation, drawOrigin, particleList[i].scale * 1.25f, SpriteEffects.None, 0f);
 				}
 			}
-			texture = ModContent.GetTexture("SOTS/Projectiles/Inferno/LemegetonWispGreenOutline");
+			texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Inferno/LemegetonWispGreenOutline");
 			drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
 			color = new Color(100, 100, 100, 0);
 			for (int k = 0; k < 12; k++)
@@ -625,7 +625,7 @@ namespace SOTS.Projectiles.Inferno
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Celestial/SubspaceLingeringFlame");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Celestial/SubspaceLingeringFlame");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Color color;
 			for (int i = 0; i < particleList.Count; i++)
@@ -640,7 +640,7 @@ namespace SOTS.Projectiles.Inferno
 					Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, particleList[i].rotation, drawOrigin, particleList[i].scale * 1.25f, SpriteEffects.None, 0f);
 				}
 			}
-			texture = ModContent.GetTexture("SOTS/Projectiles/Inferno/LemegetonWispPurpleOutline");
+			texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Inferno/LemegetonWispPurpleOutline");
 			drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
 			color = new Color(100, 100, 100, 0);
 			for (int k = 0; k < 12; k++)
@@ -715,7 +715,7 @@ namespace SOTS.Projectiles.Inferno
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Celestial/SubspaceLingeringFlame");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Celestial/SubspaceLingeringFlame");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Color color;
 			for (int i = 0; i < particleList.Count; i++)
@@ -730,7 +730,7 @@ namespace SOTS.Projectiles.Inferno
 					Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, particleList[i].rotation, drawOrigin, particleList[i].scale * 1.25f, SpriteEffects.None, 0f);
 				}
 			}
-			texture = ModContent.GetTexture("SOTS/Projectiles/Inferno/WispOrangeOutline");
+			texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Inferno/WispOrangeOutline");
 			drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
 			color = new Color(100, 100, 100, 0);
 			for (int k = 0; k < 12; k++)

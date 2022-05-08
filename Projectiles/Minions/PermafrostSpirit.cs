@@ -31,7 +31,7 @@ namespace SOTS.Projectiles.Minions
 		public override void PostDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
 			base.PostDraw(spriteBatch, lightColor);
-			Texture2D texture = mod.GetTexture("Projectiles/Minions/PermafrostSpiritBand");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Minions/PermafrostSpiritBand").Value;
 			float alpha = (48 - projectile.ai[0]) / 48f;
 			Color color = new Color(90, 90, 90, 0) * alpha;
 		
@@ -179,7 +179,7 @@ namespace SOTS.Projectiles.Minions
 						dust.fadeIn = 0.1f;
 						dust.scale *= 1.8f;
 					}
-					Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 71, 0.55f, -0.3f);
+					SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 71, 0.55f, -0.3f);
 					if (Main.myPlayer == projectile.owner)
 					{
 						for(int i = -1; i <= 1; i++)

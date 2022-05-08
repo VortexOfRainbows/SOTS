@@ -145,7 +145,7 @@ namespace SOTS.NPCs.Boss.Curse
 				}
 			}
 			if (!quiet)
-				Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 62, 1f, 0.2f);
+				SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 62, 1f, 0.2f);
 		}
 		public override void AI()
 		{
@@ -163,14 +163,14 @@ namespace SOTS.NPCs.Boss.Curse
 					npc.velocity.Y -= 0.4f * waveY;
 					if (npc.ai[2] == 40)
 					{
-						Main.PlaySound(2, (int)player.Center.X, (int)player.Center.Y, 15, 1.33f, -0.05f);
+						SoundEngine.PlaySound(2, (int)player.Center.X, (int)player.Center.Y, 15, 1.33f, -0.05f);
 					}
 				}
 				else
 				{
 					if (npc.ai[2] == 60)
 					{
-						Main.PlaySound(2, (int)player.Center.X, (int)player.Center.Y, 96, 1f, 0f);
+						SoundEngine.PlaySound(2, (int)player.Center.X, (int)player.Center.Y, 96, 1f, 0f);
 						npc.velocity.Y += 4.5f;
 					}
 					npc.velocity.Y += 0.8f;
@@ -233,7 +233,7 @@ namespace SOTS.NPCs.Boss.Curse
 			}
 			if (npc.life > 0)
 			{
-				Main.PlaySound(3, (int)npc.Center.X, (int)npc.Center.Y, 54, 1.2f, -0.25f);
+				SoundEngine.PlaySound(3, (int)npc.Center.X, (int)npc.Center.Y, 54, 1.2f, -0.25f);
 				int num = 0;
 				while ((double)num < damage / (double)npc.lifeMax * 60.0)
 				{

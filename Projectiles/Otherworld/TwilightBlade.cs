@@ -143,7 +143,7 @@ namespace SOTS.Projectiles.Otherworld
 				aimTo = aimTo.SafeNormalize(new Vector2(0,1));
 				if (projectile.timeLeft == 721)
 				{
-					Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 71, 0.7f);
+					SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 71, 0.7f);
 					aimTo *= -12;
 					projectile.velocity = aimTo;
 				}

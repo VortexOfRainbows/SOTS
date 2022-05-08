@@ -135,7 +135,7 @@ namespace SOTS.Projectiles.Evil
         {
             Player player = Main.player[projectile.owner];
             Texture2D texture = Main.projectileTexture[projectile.type];
-            Texture2D texture1 = mod.GetTexture("Projectiles/Evil/DeathSpiralBlade");
+            Texture2D texture1 = Mod.Assets.Request<Texture2D>("Projectiles/Evil/DeathSpiralBlade").Value;
             Color color = lightColor;
             // Some rectangle presets for different parts of the chain.
 
@@ -161,7 +161,7 @@ namespace SOTS.Projectiles.Evil
         {
             if (runOnce)
                 return;
-            Texture2D texture = mod.GetTexture("Projectiles/Evil/DeathSpiralTrail");
+            Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Evil/DeathSpiralTrail").Value;
             Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
             Vector2 previousPosition = trailPos[0];
             if (previousPosition == Vector2.Zero)

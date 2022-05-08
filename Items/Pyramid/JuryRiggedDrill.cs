@@ -18,7 +18,7 @@ namespace SOTS.Items.Pyramid
 		public override void SetDefaults()
 		{
 			Item.damage = 24;
-			Item.melee = true;
+			Item.DamageType = DamageClass.Melee;
 			Item.width = 42;
 			Item.height = 22;
 			Item.useTime = 5;
@@ -62,7 +62,7 @@ namespace SOTS.Items.Pyramid
 			{
 				counter = 0;
 				Main.projectile[index].Kill();
-				Main.PlaySound(SoundID.Item14, (int)(Main.projectile[index].Center.X), (int)(Main.projectile[index].Center.Y));
+				SoundEngine.PlaySound(SoundID.Item14, (int)(Main.projectile[index].Center.X), (int)(Main.projectile[index].Center.Y));
 				for(int i = 0; i < 15; i ++)
 				{
 					int num1 = Dust.NewDust(new Vector2(Main.projectile[index].position.X, Main.projectile[index].position.Y), 20, 34, 32);

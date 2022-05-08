@@ -19,7 +19,7 @@ namespace SOTS.Items.Slime
 		int waitTime = 0;
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
-			Texture2D texture = mod.GetTexture("Items/Slime/PutridEyeEmpty");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Slime/PutridEyeEmpty").Value;
 			Vector2 origin2 = new Vector2(7, 7);
 			if (CurrentPos.X != toPos.X || CurrentPos.Y != toPos.Y)
 			{
@@ -39,14 +39,14 @@ namespace SOTS.Items.Slime
 			}
 			else
 				waitTime--;
-			Texture2D texture2 = mod.GetTexture("Items/Slime/PutridPupil");
+			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Slime/PutridPupil").Value;
 			spriteBatch.Draw(texture, position, frame, drawColor, 0, origin, scale, SpriteEffects.None, 0f);
 			spriteBatch.Draw(texture2, position + new Vector2(27 * scale, 17 * scale) + CurrentPos * scale, null, drawColor, 0, origin2, scale, SpriteEffects.None, 1f);
 			return false;
 		}
 		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
 		{
-			Texture2D texture = mod.GetTexture("Items/Slime/PutridEyeEmpty");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Slime/PutridEyeEmpty").Value;
 			Vector2 origin = new Vector2(Item.width/2, Item.height/2);
 			Vector2 origin2 = new Vector2(7, 7);
 			if (CurrentPos.X != toPos.X || CurrentPos.Y != toPos.Y)
@@ -67,7 +67,7 @@ namespace SOTS.Items.Slime
 			}
 			else
 				waitTime--;
-			Texture2D texture2 = mod.GetTexture("Items/Slime/PutridPupil");
+			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Slime/PutridPupil").Value;
 			spriteBatch.Draw(texture, Item.Center - Main.screenPosition, null, lightColor, 0, origin, scale, SpriteEffects.None, 0f);
 			spriteBatch.Draw(texture2, Item.position + new Vector2(27 * scale, 17 * scale) - Main.screenPosition + CurrentPos * scale, null, lightColor, 0, origin2, scale, SpriteEffects.None, 1f);
 			return false;
@@ -80,7 +80,7 @@ namespace SOTS.Items.Slime
             Item.height = 44;   
             Item.useTime = 40;
 			Item.useAnimation = 40;
-            Item.useStyle = ItemUseStyleID.HoldingOut;    
+            Item.useStyle = ItemUseStyleID.Shoot;    
             Item.knockBack = 2.25f;
             Item.value = Item.sellPrice(0, 1, 80, 0);
             Item.rare = ItemRarityID.LightRed;

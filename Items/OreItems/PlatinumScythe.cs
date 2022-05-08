@@ -19,7 +19,7 @@ namespace SOTS.Items.OreItems
         public override void SafeSetDefaults()
 		{
             Item.damage = 32;  
-            Item.melee = true; 
+            Item.DamageType = DamageClass.Melee; 
             Item.width = 48;    
             Item.height = 48;  
             Item.useTime = 30;

@@ -16,7 +16,7 @@ namespace SOTS.Items.Slime
 		{
 			Item.CloneDefaults(ItemID.AmethystHook);
 			Item.damage = 24;
-			Item.melee = true;
+			Item.DamageType = DamageClass.Melee;
 			Item.knockBack = 0;
             Item.width = 32;  
             Item.height = 32;   

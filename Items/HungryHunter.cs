@@ -20,7 +20,7 @@ namespace SOTS.Items
             Item.value = Item.sellPrice(0, 1, 20, 0);
             Item.rare = ItemRarityID.Pink;
             Item.noMelee = true;
-            Item.useStyle = ItemUseStyleID.HoldingOut;
+            Item.useStyle = ItemUseStyleID.Shoot;
             Item.useAnimation = 40;
             Item.useTime = 40;
             Item.knockBack = 4.5f;
@@ -28,7 +28,7 @@ namespace SOTS.Items
             Item.shoot = ModContent.ProjectileType<Projectiles.HungryHunter>();
             Item.shootSpeed = 21.5f;
             Item.UseSound = SoundID.Item1;
-            Item.melee = true; 
+            Item.DamageType = DamageClass.Melee;
             Item.channel = true;
         }
 		public override int GetVoid(Player player)

@@ -16,7 +16,7 @@ namespace SOTS.Items.Inferno
 		public override void SetDefaults()
 		{
 			Item.damage = 60;
-			Item.summon = true;
+			Item.DamageType = DamageClass.Summon;
             Item.width = 26;     
             Item.height = 34;   
             Item.value = Item.sellPrice(0, 5, 0, 0);

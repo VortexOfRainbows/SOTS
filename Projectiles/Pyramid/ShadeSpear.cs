@@ -60,7 +60,7 @@ namespace SOTS.Projectiles.Pyramid
 				Vector2 to = projectile.Center + projectile.velocity * i * 6;
 				Vector2 toPos = from - to;
 				int length = (int)toPos.Length() + 1;
-				Texture2D texture2 = ModContent.GetTexture("SOTS/Projectiles/Pyramid/ShadeSpearIndicator");
+				Texture2D texture2 = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Pyramid/ShadeSpearIndicator");
 				spriteBatch.Draw(texture2, from - Main.screenPosition, new Rectangle(0, 0, length, 2), Color.White * alphaMult, projectile.velocity.ToRotation(), new Vector2(1, 1), 1f, SpriteEffects.None, 0f);
 				from = to;
 			}

@@ -44,7 +44,7 @@ namespace SOTS.Projectiles.Celestial
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
 			Player player  = Main.player[projectile.owner];
-			Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Celestial/PlasmaCutterGlow");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Celestial/PlasmaCutterGlow");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			for (int k = 0; k < projectile.oldPos.Length; k++) 
 			{
@@ -55,7 +55,7 @@ namespace SOTS.Projectiles.Celestial
 				float rotation2 = (float)Math.Atan2(disY,disX) + MathHelper.ToRadians(225f);
 				spriteBatch.Draw(texture, drawPos, null, color, rotation2, drawOrigin, projectile.scale, SpriteEffects.None, 0f);
 			}
-			texture = ModContent.GetTexture("SOTS/Projectiles/Celestial/PlasmaCutterChain");  
+			texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Celestial/PlasmaCutterChain");  
             Vector2 position = projectile.Center;
             Vector2 mountedCenter = Main.player[projectile.owner].MountedCenter;
             Rectangle? sourceRectangle = new Microsoft.Xna.Framework.Rectangle?();
@@ -93,7 +93,7 @@ namespace SOTS.Projectiles.Celestial
 		}
         public override void PostDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Celestial/PlasmaCutterGlow");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Celestial/PlasmaCutterGlow");
 			Vector2 origin = new Vector2(texture.Width / 2, projectile.height / 2);
 			Color color = new Color(100, 155, 100, 0);
 			for (int i = 0; i < 360; i += 60)

@@ -60,7 +60,7 @@ namespace SOTS.Items.Pyramid
 		{
 			//float uniquenessCounter = Main.GlobalTime * -100 + (i + j) * 5;
 			Tile tile = Main.tile[i, j];
-			Texture2D texture = mod.GetTexture("Items/Pyramid/AcediaGatewayTileGlow");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Pyramid/AcediaGatewayTileGlow").Value;
 			Rectangle frame = new Rectangle(tile.frameX, tile.frameY, 16, 16);
 			Color color;
 			color = WorldGen.paintColor((int)Main.tile[i, j].color()) * (100f / 255f);

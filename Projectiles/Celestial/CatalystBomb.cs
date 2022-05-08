@@ -44,7 +44,7 @@ namespace SOTS.Projectiles.Celestial
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Celestial/SubspaceLingeringFlame");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Celestial/SubspaceLingeringFlame");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			for (int i = 0; i < particleList.Count; i++)
 			{
@@ -157,7 +157,7 @@ namespace SOTS.Projectiles.Celestial
 					Gore.NewGore(projectile.position + new Vector2(Main.rand.NextFloat(12, 36), 0).RotatedBy(MathHelper.ToRadians(i * 15)), default(Vector2), Main.rand.Next(61, 64), 1.25f);
 				if (player.ZoneUnderworldHeight)
 				{
-					Main.PlaySound(SoundID.Item119, (int)projectile.Center.X, (int)projectile.Center.Y);
+					SoundEngine.PlaySound(SoundID.Item119, (int)projectile.Center.X, (int)projectile.Center.Y);
 					if (!NPC.AnyNPCs(mod.NPCType("SubspaceSerpentHead")))
 					{
 						NPC.SpawnOnPlayer(player.whoAmI, mod.NPCType("SubspaceSerpentHead"));
@@ -174,7 +174,7 @@ namespace SOTS.Projectiles.Celestial
 				}
 				else
 				{
-					Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 14, 1.0f);
+					SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 14, 1.0f);
 				}
 			}
 		}
@@ -276,7 +276,7 @@ namespace SOTS.Projectiles.Celestial
 							}
 						}
 						count++;
-						Main.PlaySound(SoundID.NPCKilled, (int)projectile.Center.X, (int)projectile.Center.Y, 39, 0.95f, -0.4f);
+						SoundEngine.PlaySound(SoundID.NPCKilled, (int)projectile.Center.X, (int)projectile.Center.Y, 39, 0.95f, -0.4f);
 						if (Main.myPlayer == projectile.owner)
 						{
 							Vector2 circular = new Vector2(Main.rand.NextFloat(6f, 8f), 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)));

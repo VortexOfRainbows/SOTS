@@ -98,7 +98,7 @@ namespace SOTS.Items.Pyramid
 			Tile tile = Main.tile[i, j];
 			float counter = Main.GlobalTime * 120;
 			float mult = new Vector2(-1f, 0).RotatedBy(MathHelper.ToRadians(counter / 2f)).X;
-			Texture2D texture = mod.GetTexture("Items/Pyramid/AncientGoldGateGems");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Pyramid/AncientGoldGateGems").Value;
 			if (tile.frameY % 90 == 0 && tile.frameX % 36 == 0) //check for it being the top left tile
 			{
 				int currentFrame = tile.frameY / 90;
@@ -196,7 +196,7 @@ namespace SOTS.Items.Pyramid
 			int top = j - (tile.frameY / 18) % 5;
 			if (able)
 			{
-				Main.PlaySound(2, (int)player.Center.X, (int)player.Center.Y, 4, 1.0f, 0.3f);
+				SoundEngine.PlaySound(2, (int)player.Center.X, (int)player.Center.Y, 4, 1.0f, 0.3f);
 				for (int x = left; x < left + 2; x++)
 				{
 					for (int y = top; y < top + 5; y++)
@@ -316,7 +316,7 @@ namespace SOTS.Items.Pyramid
 				if (!Main.tile[i, j].active() && Main.netMode != NetmodeID.SinglePlayer)
 					NetMessage.SendData(MessageID.TileChange, -1, -1, null, 0, (float)i, (float)j, 0f, 0, 0, 0);
 				Vector2 center = projectile.Center + new Vector2(16, 40);
-				Main.PlaySound(2, (int)center.X, (int)center.Y, 14, 1.25f, -0.25f);
+				SoundEngine.PlaySound(2, (int)center.X, (int)center.Y, 14, 1.25f, -0.25f);
 				for (int k = 0; k < 12; k++)
 				{
 					int goreIndex = Gore.NewGore(center - new Vector2(32, 32) + new Vector2(Main.rand.NextFloat(-16, 16f), Main.rand.NextFloat(-16, 64f)), default(Vector2), Main.rand.Next(61, 64), 1f);

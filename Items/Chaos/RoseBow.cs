@@ -26,7 +26,7 @@ namespace SOTS.Items.Chaos
 			Item.height = 92;
 			Item.useTime = 24;
 			Item.useAnimation = 24;
-			Item.useStyle = ItemUseStyleID.HoldingOut;
+			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.knockBack = 6f;
 			Item.value = Item.sellPrice(0, 20, 0, 0);
 			Item.rare = ItemRarityID.Cyan;

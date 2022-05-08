@@ -32,7 +32,7 @@ namespace SOTS.Projectiles.Minions
 		Vector2[] trailPos = new Vector2[7];
 		public void TrailPreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Texture2D texture = mod.GetTexture("Projectiles/Minions/TerminatorAcornTrail");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Minions/TerminatorAcornTrail").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Vector2 previousPosition = projectile.Center;
 			for (int k = 0; k < trailPos.Length; k++)
@@ -79,7 +79,7 @@ namespace SOTS.Projectiles.Minions
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Texture2D texture = mod.GetTexture("Projectiles/Minions/TerminatorAcornTrail");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Minions/TerminatorAcornTrail").Value;
 			Color color = new Color(120, 120, 120, 0);
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			if(endHow == 0)
@@ -129,7 +129,7 @@ namespace SOTS.Projectiles.Minions
 					dust.scale *= 1.4f;
 					dust.alpha = projectile.alpha;
 				}
-				Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 20, 0.8f);
+				SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 20, 0.8f);
 				for (int i = 0; i < trailPos.Length; i++)
 				{
 					trailPos[i] = Vector2.Zero;

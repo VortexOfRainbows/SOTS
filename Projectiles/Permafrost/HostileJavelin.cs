@@ -103,7 +103,7 @@ namespace SOTS.Projectiles.Permafrost
 					projectile.extraUpdates = 20;
 					counter = -1;
 					projectile.netUpdate = true;
-					Main.PlaySound(SoundID.Item71, (int)(projectile.Center.X), (int)(projectile.Center.Y));
+					SoundEngine.PlaySound(SoundID.Item71, (int)(projectile.Center.X), (int)(projectile.Center.Y));
 					return;
 				}
 				projectile.tileCollide = true;

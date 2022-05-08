@@ -126,7 +126,7 @@ namespace SOTS.Projectiles.Pyramid
                 }
 				if (runOnce)
 				{
-					Main.PlaySound(2, (int)npc.Center.X, (int)npc.Center.Y, 73, 1.3f, 0.3f);
+					SoundEngine.PlaySound(2, (int)npc.Center.X, (int)npc.Center.Y, 73, 1.3f, 0.3f);
 					runOnce = false;
 					//projectile.friendly = true;
 				}

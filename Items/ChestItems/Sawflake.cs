@@ -19,7 +19,7 @@ namespace SOTS.Items.ChestItems
             Item.value = Item.sellPrice(0, 20, 0, 0);
             Item.rare = ItemRarityID.Yellow;
             Item.noMelee = true;
-            Item.useStyle = ItemUseStyleID.SwingThrow;
+            Item.useStyle = ItemUseStyleID.Swing;
             Item.useAnimation = 16;
             Item.useTime = 16;
             Item.knockBack = 7f;
@@ -27,7 +27,7 @@ namespace SOTS.Items.ChestItems
             Item.shoot = ModContent.ProjectileType<Projectiles.BiomeChest.Sawflake>();
             Item.shootSpeed = 13.5f;
             Item.UseSound = SoundID.Item1;
-            Item.melee = true; 
+            Item.DamageType = DamageClass.Melee; 
             Item.autoReuse = true;
         }
     }

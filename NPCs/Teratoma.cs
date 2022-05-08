@@ -206,7 +206,7 @@ namespace SOTS.NPCs
 			{
 				if (!mushForm) // enter second phase
 				{
-					Main.PlaySound(SoundID.NPCDeath1, npc.Center);
+					SoundEngine.PlaySound(SoundID.NPCDeath1, npc.Center);
 					mushForm = true;
 					int temp = npc.lifeMax;
 					npc.life = (int)(temp * 0.5f);

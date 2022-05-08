@@ -15,7 +15,7 @@ namespace SOTS.Items.Chaos
 	{
 		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
 		{
-			Texture2D texture = mod.GetTexture("Items/Chaos/SupernovaStormGlow");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Chaos/SupernovaStormGlow").Value;
 			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
 			Color color = Color.White;
 			for (int k = 0; k < 6; k++)
@@ -29,7 +29,7 @@ namespace SOTS.Items.Chaos
 		}
 		public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
 		{
-			Texture2D texture = mod.GetTexture("Items/Chaos/SupernovaStormGlow");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Chaos/SupernovaStormGlow").Value;
 			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
 			Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y) + 2), null, Color.White, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 		}
@@ -46,7 +46,7 @@ namespace SOTS.Items.Chaos
             Item.height = 52; 
             Item.useTime = 14; 
             Item.useAnimation = 14;
-            Item.useStyle = ItemUseStyleID.HoldingOut;    
+            Item.useStyle = ItemUseStyleID.Shoot;    
             Item.knockBack = 1.5f;
 			Item.value = Item.sellPrice(0, 12, 0, 0);
             Item.rare = ItemRarityID.Yellow;
@@ -58,7 +58,7 @@ namespace SOTS.Items.Chaos
 			Item.mana = 7;
 			if (!Main.dedServ)
 			{
-				Item.GetGlobalItem<ItemUseGlow>().glowTexture = mod.GetTexture("Items/Chaos/SupernovaStormGlow");
+				Item.GetGlobalItem<ItemUseGlow>().glowTexture = Mod.Assets.Request<Texture2D>("Items/Chaos/SupernovaStormGlow").Value;
 			}
 		}
 		public override void AddRecipes()

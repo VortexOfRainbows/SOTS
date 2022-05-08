@@ -68,7 +68,7 @@ namespace SOTS.Projectiles.Minions
 					{
 						Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, shootTo.X, shootTo.Y, mod.ProjectileType("PinkBubble"), projectile.damage, 0, Main.myPlayer);
 					}
-					Main.PlaySound(2, (int)projectile.position.X, (int)projectile.position.Y, 21);
+					SoundEngine.PlaySound(2, (int)projectile.position.X, (int)projectile.position.Y, 21);
 				}
 			}
 		}

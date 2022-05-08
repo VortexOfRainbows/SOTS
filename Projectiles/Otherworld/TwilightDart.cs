@@ -115,7 +115,7 @@ namespace SOTS.Projectiles.Otherworld
 				if (ofTotal == 0 && soundIterater >= 75)
 				{
 					soundIterater = 0;
-					Main.PlaySound(2, (int)(projectile.Center.X), (int)(projectile.Center.Y), 15, 1 - projectile.alpha / 255f);
+					SoundEngine.PlaySound(2, (int)(projectile.Center.X), (int)(projectile.Center.Y), 15, 1 - projectile.alpha / 255f);
 				}
 				Vector2 playerPos = new Vector2(owner.ai[2], owner.ai[3]);
 				Vector2 towardsPlayer = projectile.Center - playerPos;

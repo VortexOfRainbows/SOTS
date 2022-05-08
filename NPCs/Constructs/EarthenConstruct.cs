@@ -91,7 +91,7 @@ namespace SOTS.NPCs.Constructs
                 if (num1 > 25.0)
                     num1 = 25f;
                 npc.soundDelay = (int)num1;
-                Main.PlaySound(SoundLoader.customSoundType, (int)npc.Center.X, (int)npc.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Enemies/EarthenElementalDig"), 1.0f, 0f);
+                SoundEngine.PlaySound(SoundLoader.customSoundType, (int)npc.Center.X, (int)npc.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Enemies/EarthenElementalDig"), 1.0f, 0f);
             }
         }
         public void DoWormAI()
@@ -209,7 +209,7 @@ namespace SOTS.NPCs.Constructs
                     if (num1 > 25.0)
                         num1 = 25f;
                     npc.soundDelay = (int)num1;
-                    Main.PlaySound(SoundLoader.customSoundType, (int)npc.Center.X, (int)npc.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Enemies/EarthenElementalDig"), 1.0f, 0f);
+                    SoundEngine.PlaySound(SoundLoader.customSoundType, (int)npc.Center.X, (int)npc.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Enemies/EarthenElementalDig"), 1.0f, 0f);
                 }
                 float absDirX = Math.Abs(dirX);
                 float absDirY = Math.Abs(dirY);
@@ -472,14 +472,14 @@ namespace SOTS.NPCs.Constructs
                     Projectile.NewProjectile(npc.Center.X, npc.Center.Y, circularLocation.X, circularLocation.Y, ModContent.ProjectileType<EarthenShot>(), damage, 0, Main.myPlayer, 0, Main.player[npc.target].Center.Y - 32);
                 }
             }
-            Main.PlaySound(SoundID.Item92, (int)(npc.Center.X), (int)(npc.Center.Y));
+            SoundEngine.PlaySound(SoundID.Item92, (int)(npc.Center.X), (int)(npc.Center.Y));
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
         {
-            Texture2D texture = mod.GetTexture("NPCs/Constructs/EarthenConstructHead");
+            Texture2D texture = Mod.Assets.Request<Texture2D>("NPCs/Constructs/EarthenConstructHead").Value;
             Vector2 origin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-            Texture2D texture2 = mod.GetTexture("NPCs/Constructs/EarthenConstruct");
-            Texture2D texture3 = mod.GetTexture("NPCs/Constructs/EarthenConstructHeadGlow");
+            Texture2D texture2 = Mod.Assets.Request<Texture2D>("NPCs/Constructs/EarthenConstruct").Value;
+            Texture2D texture3 = Mod.Assets.Request<Texture2D>("NPCs/Constructs/EarthenConstructHeadGlow").Value;
             Vector2 origin2 = new Vector2(texture2.Width * 0.5f, texture2.Height * 0.5f);
             Main.spriteBatch.Draw(texture2, npc.Center - Main.screenPosition, null, drawColor, npc.rotation - MathHelper.ToRadians(npc.localAI[1]), origin2, npc.scale + 0.04f, npc.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
             Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition, null, drawColor, npc.rotation - MathHelper.ToRadians(90), origin, npc.scale, npc.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);

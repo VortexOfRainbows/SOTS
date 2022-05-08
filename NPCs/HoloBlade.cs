@@ -92,7 +92,7 @@ namespace SOTS.NPCs
 					rotatePos.Normalize();
 					npc.velocity = rotatePos * -23;
 					consistentAcceleration = npc.velocity;
-					Main.PlaySound(SoundID.Item71, npc.Center);
+					SoundEngine.PlaySound(SoundID.Item71, npc.Center);
 					drawTrail = true;
 					return;
 				}
@@ -130,8 +130,8 @@ namespace SOTS.NPCs
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
 			Texture2D texture = Main.npcTexture[npc.type];
-			Texture2D texture2 = mod.GetTexture("NPCs/HoloBladeOutline");
-			Texture2D texture4 = mod.GetTexture("NPCs/HoloBladeFill");
+			Texture2D texture2 = Mod.Assets.Request<Texture2D>("NPCs/HoloBladeOutline").Value;
+			Texture2D texture4 = Mod.Assets.Request<Texture2D>("NPCs/HoloBladeFill").Value;
 			Vector2 drawOrigin = new Vector2(Main.npcTexture[npc.type].Width * 0.5f, npc.height * 0.5f);
 			Color color = new Color(110, 110, 110, 0);
 			if (drawTrail)
@@ -150,8 +150,8 @@ namespace SOTS.NPCs
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture = mod.GetTexture("NPCs/HoloBladeOutline");
-			Texture2D texture4 = mod.GetTexture("NPCs/HoloBladeFill");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("NPCs/HoloBladeOutline").Value;
+			Texture2D texture4 = Mod.Assets.Request<Texture2D>("NPCs/HoloBladeFill").Value;
 			Color color = new Color(110, 110, 110, 0);
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			for (int k = 0; k < 5; k++)

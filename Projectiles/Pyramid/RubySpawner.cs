@@ -40,7 +40,7 @@ namespace SOTS.Projectiles.Pyramid
 				return false;
 			SpriteEffects effects1 = SpriteEffects.None;
 			Texture2D texture1 = Main.projectileTexture[projectile.type];
-			Texture2D texture2 = mod.GetTexture("Projectiles/Pyramid/RubyBackground");
+			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Projectiles/Pyramid/RubyBackground").Value;
 			Vector2 origin = new Vector2(texture1.Width/2, texture1.Height/2);
 			Color alpha = Color.White;
 			Color color1 = alpha * 0.8f;

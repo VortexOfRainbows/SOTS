@@ -16,7 +16,7 @@ namespace SOTS.Projectiles.Celestial
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
 			Texture2D texture = Main.projectileTexture[projectile.type];
-			Texture2D texture2 = ModContent.GetTexture("SOTS/Projectiles/Celestial/CrossLaserIndicator");
+			Texture2D texture2 = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Celestial/CrossLaserIndicator");
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
 			Vector2 origin2 = new Vector2(texture2.Width / 2, texture2.Height / 2);
 			Color color = Color.Black;
@@ -89,7 +89,7 @@ namespace SOTS.Projectiles.Celestial
 		}
 		public override void Kill(int timeLeft)
 		{
-			Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 92, 0.8f);
+			SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 92, 0.8f);
 			if (Main.netMode != 1)
 			{
 				Projectile.NewProjectile(projectile.Center, projectile.velocity, ModContent.ProjectileType<BabyLaser>(), projectile.damage, 0, Main.myPlayer, projectile.ai[0]);

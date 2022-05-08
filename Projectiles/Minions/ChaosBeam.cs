@@ -55,7 +55,7 @@ namespace SOTS.Projectiles.Minions
 		{
 			if (runOnce)
 			{
-				Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 91, 0.6f);
+				SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 91, 0.6f);
 				runOnce = false;
 				ogPos = projectile.Center;
 				for (int i = 0; i < 2; i++)

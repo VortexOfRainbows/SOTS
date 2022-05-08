@@ -127,8 +127,8 @@ namespace SOTS.Void
 			//Calculate quotient
 			float quotient = voidPlayer.voidMeter / voidPlayer.voidMeterMax2;
 			float quotient2 = (float)voidPlayer.lootingSouls / voidPlayer.voidMeterMax2;
-			Texture2D fill = ModContent.GetTexture("SOTS/Void/SoulBar");
-			Texture2D divider = ModContent.GetTexture("SOTS/Void/VoidBarDivider");
+			Texture2D fill = (Texture2D)ModContent.Request<Texture2D>("SOTS/Void/SoulBar");
+			Texture2D divider = (Texture2D)ModContent.Request<Texture2D>("SOTS/Void/VoidBarDivider");
 			if (quotient > 1)
 			{
 				quotient = 1;
@@ -139,12 +139,12 @@ namespace SOTS.Void
 			float prevRight = 0;
 			float length = 40;
 			int height = 18;
-			Texture2D fill2 = ModContent.GetTexture("SOTS/Void/VoidBarBorder");
+			Texture2D fill2 = (Texture2D)ModContent.Request<Texture2D>("SOTS/Void/VoidBarBorder");
 			if(player.dead)
 			{
 				Recalculate();
 				base.Draw(spriteBatch);
-				fill2 = ModContent.GetTexture("SOTS/Void/VoidDead");
+				fill2 = (Texture2D)ModContent.Request<Texture2D>("SOTS/Void/VoidDead");
 			}
 			spriteBatch.Draw(fill2, new Rectangle((int)VoidPlayer.voidBarOffset.X, (int)VoidPlayer.voidBarOffset.Y + 2, 200, 30), Color.White);
 			if (player.dead)
@@ -216,7 +216,7 @@ namespace SOTS.Void
 			if (voidPlayer.lerpingVoidMeter > voidPlayer.voidMeter)
 			{
 				float quotientLerp = voidPlayer.lerpingVoidMeter / voidPlayer.voidMeterMax2;
-				fill = ModContent.GetTexture("SOTS/Void/VoidBarSprite");
+				fill = (Texture2D)ModContent.Request<Texture2D>("SOTS/Void/VoidBarSprite");
 				float lerpLength = (int)(quotientLerp * 188);
 				if (SOTS.Config.voidBarBlur)
 				{
@@ -231,7 +231,7 @@ namespace SOTS.Void
 			}
 			base.Draw(spriteBatch);
 			Color color2 = new Color(100, 100, 100, 0);
-			fill = ModContent.GetTexture("SOTS/Void/VoidBarSprite");
+			fill = (Texture2D)ModContent.Request<Texture2D>("SOTS/Void/VoidBarSprite");
 			if(SOTS.Config.voidBarBlur)
 			{
 				color2 = new Color(15, 15, 15, 0);
@@ -252,7 +252,7 @@ namespace SOTS.Void
 					spriteBatch.Draw(divider, rectangles[i], Color.White);
 				}
 			}
-			fill2 = ModContent.GetTexture("SOTS/Void/VoidBarBorder2");
+			fill2 = (Texture2D)ModContent.Request<Texture2D>("SOTS/Void/VoidBarBorder2");
 			spriteBatch.Draw(fill2, new Rectangle((int)VoidPlayer.voidBarOffset.X, (int)VoidPlayer.voidBarOffset.Y, 200, 30), Color.White);
 			DrawGreenBar(spriteBatch);
 			if (voidPlayer.resolveVoidCounter > 0) //resolve visuals
@@ -286,7 +286,7 @@ namespace SOTS.Void
 		public void DrawGreenBar(SpriteBatch spriteBatch)
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(Main.LocalPlayer);
-			Texture2D texture = ModContent.GetTexture("SOTS/Void/VoidBarGreen");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Void/VoidBarGreen");
 			int timerDelay = 90;
 			float regenBarPercent = (voidPlayer.voidRegenTimer - timerDelay) / (VoidPlayer.voidRegenTimerMax - timerDelay);
 			if(regenBarPercent > 0)
@@ -337,7 +337,7 @@ namespace SOTS.Void
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(Main.LocalPlayer);
 			if (voidPlayer.voidShockAnimationCounter > 0)
 			{
-				Texture2D texture = ModContent.GetTexture("SOTS/Void/VoidShockEffect");
+				Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Void/VoidShockEffect");
 				int frameNumber = (int)(voidPlayer.voidShockAnimationCounter / 3.6f);
 				if (frameNumber >= 11)
 				{
@@ -354,17 +354,17 @@ namespace SOTS.Void
 		{
 			Player player = Main.player[Main.myPlayer];
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-			Texture2D Lock = ModContent.GetTexture("SOTS/Void/VoidBarLock");
+			Texture2D Lock = (Texture2D)ModContent.Request<Texture2D>("SOTS/Void/VoidBarLock");
 			spriteBatch.Draw(Lock, new Vector2(VoidPlayer.voidBarOffset.X, VoidPlayer.voidBarOffset.Y), new Rectangle(0, 0, Lock.Width, Lock.Height), new Color(255, 255, 255));
 		}
 		public void DrawIce(SpriteBatch spriteBatch, bool shadow = false)
 		{
 			Player player = Main.player[Main.myPlayer];
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-			Texture2D frozenBar = ModContent.GetTexture("SOTS/Void/FrozenVoidBar");
-			Texture2D fill = ModContent.GetTexture("SOTS/Void/FrozenVoidBarFill");
-			Texture2D frozenBarBorder = ModContent.GetTexture("SOTS/Void/FrozenVoidBarBorder");
-			Texture2D LockFrozen = ModContent.GetTexture("SOTS/Void/FrozenVoidBarLock");
+			Texture2D frozenBar = (Texture2D)ModContent.Request<Texture2D>("SOTS/Void/FrozenVoidBar");
+			Texture2D fill = (Texture2D)ModContent.Request<Texture2D>("SOTS/Void/FrozenVoidBarFill");
+			Texture2D frozenBarBorder = (Texture2D)ModContent.Request<Texture2D>("SOTS/Void/FrozenVoidBarBorder");
+			Texture2D LockFrozen = (Texture2D)ModContent.Request<Texture2D>("SOTS/Void/FrozenVoidBarLock");
 			Vector2 padding = new Vector2(-2, 0);
 			Rectangle frame = new Rectangle((int)(VoidPlayer.voidBarOffset.X + padding.X), (int)(VoidPlayer.voidBarOffset.Y + padding.Y), frozenBar.Width, frozenBar.Height);
 			if (voidPlayer.frozenVoid)

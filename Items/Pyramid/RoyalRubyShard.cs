@@ -34,7 +34,7 @@ namespace SOTS.Items.Pyramid
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frameNotUsed, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
-			Texture2D texture = mod.GetTexture("Items/Pyramid/TaintedKeystoneShard");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Pyramid/TaintedKeystoneShard").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			position += drawOrigin * scale;
 			float counter = Main.GlobalTime * 160;
@@ -66,13 +66,13 @@ namespace SOTS.Items.Pyramid
 				Vector2 rotationAround = new Vector2((3 + mult) * scale, 0).RotatedBy(MathHelper.ToRadians(60 * i + counter));
 				Main.spriteBatch.Draw(texture, new Vector2(position.X, position.Y) + rotationAround, null, color, 0f, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
 			}
-			texture = mod.GetTexture("Items/Pyramid/RoyalRubyShard");
+			texture = Mod.Assets.Request<Texture2D>("Items/Pyramid/RoyalRubyShard").Value;
 			Main.spriteBatch.Draw(texture, new Vector2(position.X, position.Y), null, drawColor, 0f, drawOrigin, scale * 1.0f, SpriteEffects.None, 0f);
 			return false;
 		}
 		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
 		{
-			Texture2D texture2 = mod.GetTexture("Items/Pyramid/TaintedKeystoneShard");
+			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Pyramid/TaintedKeystoneShard").Value;
 			Vector2 drawOrigin = new Vector2(texture2.Width * 0.5f, texture2.Height * 0.5f);
 			float counter = Main.GlobalTime * 160;
 			float mult = new Vector2(-2.5f, 0).RotatedBy(MathHelper.ToRadians(counter)).X;
@@ -103,7 +103,7 @@ namespace SOTS.Items.Pyramid
 				Vector2 rotationAround2 = 0.5f * new Vector2((6 + mult) * scale, 0).RotatedBy(MathHelper.ToRadians(60 * i + counter));
 				Main.spriteBatch.Draw(texture2, rotationAround2 + Item.Center - Main.screenPosition + new Vector2(0, 2), null, color, rotation, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
 			}
-			texture2 = mod.GetTexture("Items/Pyramid/RoyalRubyShard");
+			texture2 = Mod.Assets.Request<Texture2D>("Items/Pyramid/RoyalRubyShard").Value;
 			Main.spriteBatch.Draw(texture2, Item.Center - Main.screenPosition + new Vector2(0, 2), null, lightColor, rotation, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
 			return false;
 		}
@@ -217,7 +217,7 @@ namespace SOTS.Items.Pyramid
 				drawOffSet.X -= 2;
 			Vector2 location = new Vector2(i * 16, j * 16) + drawOffSet;
 			Color color2 = Lighting.GetColor(i, j, WorldGen.paintColor(tile.color()));
-			Texture2D texture2 = mod.GetTexture("Items/Pyramid/TaintedKeystoneShardTile");
+			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Pyramid/TaintedKeystoneShardTile").Value;
 			float counter = Main.GlobalTime * 160;
 			float mult = new Vector2(-1f, 0).RotatedBy(MathHelper.ToRadians(counter)).X;
 			Rectangle frame = new Rectangle(tile.frameX, tile.frameY, 16, 16);

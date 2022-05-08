@@ -51,7 +51,7 @@ namespace SOTS.Projectiles.Crushers
         }
         public override void ExplosionSound()
 		{
-			Main.PlaySound(SoundID.NPCKilled, (int)projectile.Center.X, (int)projectile.Center.Y, 39, 1.25f, -0.5f);
+			SoundEngine.PlaySound(SoundID.NPCKilled, (int)projectile.Center.X, (int)projectile.Center.Y, 39, 1.25f, -0.5f);
 		}
         public override void SendExtraAI(BinaryWriter writer)
         {
@@ -98,13 +98,13 @@ namespace SOTS.Projectiles.Crushers
         }
         public override Texture2D ArmTexture(int handNum, int direction)
         {
-            return mod.GetTexture("Projectiles/Crushers/SubspaceClaw");
+            return Mod.Assets.Request<Texture2D>("Projectiles/Crushers/SubspaceClaw").Value;
         }
         public override void PostDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
 			if (runOnce || storage.Count <= 1)
 				return;
-			Texture2D texture = mod.GetTexture("Projectiles/Crushers/SubspaceLine");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Crushers/SubspaceLine").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Vector2 previousPosition = storage[1];
 			for (int k = 1; k < storage.Count; k++)

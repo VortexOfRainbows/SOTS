@@ -39,7 +39,7 @@ namespace SOTS.Items.Furniture.Nature
         }
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
 		{
-			Texture2D glowmask = ModContent.GetTexture(this.GetPath("Glow"));
+			Texture2D glowmask = (Texture2D)ModContent.Request<Texture2D>(this.GetPath("Glow"));
 			SOTSTile.DrawSlopedGlowMask(i, j, -1, glowmask, Color.White, Vector2.Zero);
 		}
     }

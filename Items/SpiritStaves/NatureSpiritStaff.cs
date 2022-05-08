@@ -26,12 +26,12 @@ namespace SOTS.Items.SpiritStaves
 			Item.height = 50;
 			Item.useTime = 36;
 			Item.useAnimation = 36;
-			Item.useStyle = ItemUseStyleID.SwingThrow;
+			Item.useStyle = ItemUseStyleID.Swing;
 			Item.value = Item.sellPrice(0, 1, 50, 0);
 			Item.rare = ItemRarityID.Green;
 			Item.UseSound = SoundID.Item44;
 			Item.noMelee = true;
-			Item.summon = true;
+			Item.DamageType = DamageClass.Summon;
 			Item.buffType = ModContent.BuffType<NatureSpiritAid>();
 			Item.shoot = ModContent.ProjectileType<NatureSpirit>();
 		}

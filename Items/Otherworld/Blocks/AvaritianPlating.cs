@@ -71,7 +71,7 @@ namespace SOTS.Items.Otherworld.Blocks
 		{
 			float uniquenessCounter = Main.GlobalTime * -100 + (i + j) * 5;
 			Tile tile = Main.tile[i, j];
-			Texture2D texture = mod.GetTexture("Items/Otherworld/Blocks/AvaritianPlatingTileGlow");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/Blocks/AvaritianPlatingTileGlow").Value;
 			Color color;
 			color = WorldGen.paintColor((int)Main.tile[i, j].color()) * (100f / 255f);
 			color.A = 0;

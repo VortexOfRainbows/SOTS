@@ -23,12 +23,12 @@ namespace SOTS.Items
 		public override void SetDefaults()
 		{
             Item.damage = 50;
-            Item.melee = true;  
+            Item.DamageType = DamageClass.Melee;  
             Item.width = 62;
             Item.height = 64;  
             Item.useTime = 20; 
             Item.useAnimation = 20;
-            Item.useStyle = ItemUseStyleID.HoldingOut;		
+            Item.useStyle = ItemUseStyleID.Shoot;		
             Item.knockBack = 8f;
             Item.value = Item.sellPrice(0, 10, 0, 0);
             Item.rare = ItemRarityID.Cyan;

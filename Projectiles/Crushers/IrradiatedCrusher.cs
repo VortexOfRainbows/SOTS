@@ -31,7 +31,7 @@ namespace SOTS.Projectiles.Crushers
 		}
 		public override Texture2D ArmTexture(int handNum, int direction)
 		{
-			return mod.GetTexture("Projectiles/Crushers/IrradiatedArm");
+			return Mod.Assets.Request<Texture2D>("Projectiles/Crushers/IrradiatedArm").Value;
 		}
 	}
 }

@@ -76,7 +76,7 @@ namespace SOTS.Projectiles.Earth
 				Main.spriteBatch.Draw(texture, projectile.Center + circular - Main.screenPosition, frame, color * ((255f - projectile.alpha) / 255f) * (0.4f + 0.5f * windup / maxWindup), projectile.rotation, origin, projectile.scale * 1.1f, SpriteEffects.FlipVertically, 0.0f);
 			}
 			color = Color.White * ((255f - projectile.alpha) / 255f);
-			Main.spriteBatch.Draw(ModContent.GetTexture("SOTS/Projectiles/Earth/GeostormCrystalGreen"), projectile.Center - Main.screenPosition, frame, color, projectile.rotation, origin, projectile.scale * 1.2f, SpriteEffects.FlipVertically, 0.0f);
+			Main.spriteBatch.Draw((Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Earth/GeostormCrystalGreen"), projectile.Center - Main.screenPosition, frame, color, projectile.rotation, origin, projectile.scale * 1.2f, SpriteEffects.FlipVertically, 0.0f);
 			return false;
 		}
 		public const float maxWindup = 22f;
@@ -108,7 +108,7 @@ namespace SOTS.Projectiles.Earth
 				{
 					float radians = MathHelper.ToRadians((spawnedNum - 2) * 21 * spawnDirection);
 					Vector2 stormPos = projectile.Center - new Vector2(0, 88).RotatedBy(radians); 
-					Main.PlaySound(SoundID.Item, (int)stormPos.X, (int)stormPos.Y, 30, 0.75f, -0.2f);
+					SoundEngine.PlaySound(SoundID.Item, (int)stormPos.X, (int)stormPos.Y, 30, 0.75f, -0.2f);
 					if (Main.myPlayer == projectile.owner)
 						Projectile.NewProjectile(stormPos, Vector2.Zero, projectile.type, projectile.damage, projectile.knockBack, player.whoAmI, Main.rand.Next(8), radians);
 					spawnedNum++;
@@ -146,7 +146,7 @@ namespace SOTS.Projectiles.Earth
 					reverseMult = MathHelper.Clamp(reverseMult, 0, 1);
 					if(count == 170)
 					{
-						Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 72, 0.75f, -0.3f);
+						SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 72, 0.75f, -0.3f);
 						DoDust(velocity * -0.3f);
 					}
 					projectile.velocity *= (float)Math.Sqrt(count / 180f) * reverseMult;

@@ -169,7 +169,7 @@ namespace SOTS.Projectiles.Laser
                 }
                 if (projectile.soundDelay <= 0)//this is the proper sound delay for this type of weapon
                 {
-                    Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 15);    //this is the sound when the weapon is used   cheange 15 for diferent sound
+                    SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 15);    //this is the sound when the weapon is used   cheange 15 for diferent sound
                     projectile.soundDelay = 40;    //this is the proper sound delay for this type of weapon
                 }
             }

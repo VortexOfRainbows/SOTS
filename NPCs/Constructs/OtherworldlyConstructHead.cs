@@ -45,7 +45,7 @@ namespace SOTS.NPCs.Constructs
 		bool glow = false;
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture = mod.GetTexture("NPCs/Constructs/OtherworldlyConstructHeadGlow");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("NPCs/Constructs/OtherworldlyConstructHeadGlow").Value;
 			Color color = new Color(110, 110, 110, 0);
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			if (glow)
@@ -184,7 +184,7 @@ namespace SOTS.NPCs.Constructs
 								break;
 							}
 						}
-						Main.PlaySound(2, (int)locX, (int)locY, 30, 0.2f);
+						SoundEngine.PlaySound(2, (int)locX, (int)locY, 30, 0.2f);
 						if (Main.netMode != 1)
 							Projectile.NewProjectile(locX, locY, 0, 0, mod.ProjectileType("OtherworldlyTracer"), damage, 0f, Main.myPlayer, 571 - npc.ai[0], npc.whoAmI);
 					}
@@ -193,7 +193,7 @@ namespace SOTS.NPCs.Constructs
 				{
 					npc.ai[1] = 0;
 					npc.ai[0] = -90;
-					Main.PlaySound(SoundID.Item92, npc.Center);
+					SoundEngine.PlaySound(SoundID.Item92, npc.Center);
 					for (int i = 0; i < Main.projectile.Length; i++)
 					{
 						Projectile proj = Main.projectile[i];

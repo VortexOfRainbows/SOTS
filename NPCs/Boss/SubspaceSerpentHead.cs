@@ -232,7 +232,7 @@ namespace SOTS.NPCs.Boss
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
         {
-            Texture2D texture = mod.GetTexture("NPCs/Boss/SubspaceSerpentHeadFill");
+            Texture2D texture = Mod.Assets.Request<Texture2D>("NPCs/Boss/SubspaceSerpentHeadFill").Value;
             Vector2 origin = new Vector2(texture.Width * 0.5f, npc.height * 0.5f);
             if (hasEnteredSecondPhase)
             {
@@ -249,7 +249,7 @@ namespace SOTS.NPCs.Boss
         int counter = 0;
         public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
         {
-            Texture2D texture = mod.GetTexture("NPCs/Boss/SubspaceSerpentHeadGlow");
+            Texture2D texture = Mod.Assets.Request<Texture2D>("NPCs/Boss/SubspaceSerpentHeadGlow").Value;
             Vector2 origin = new Vector2(texture.Width * 0.5f, npc.height * 0.5f);
             Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition, npc.frame, Color.White * ((255f - npc.alpha) / 255f), npc.rotation, origin, npc.scale, SpriteEffects.None, 0);
             counter++;
@@ -397,7 +397,7 @@ namespace SOTS.NPCs.Boss
                     {
                         Vector2 goTo = prevLocation - npc.Center;
                         directVelo = goTo.SafeNormalize(Vector2.Zero) * 24f;
-                        Main.PlaySound(SoundID.Roar, (int)npc.Center.X, (int)npc.Center.Y, 0, 0.8f);
+                        SoundEngine.PlaySound(SoundID.Roar, (int)npc.Center.X, (int)npc.Center.Y, 0, 0.8f);
                         if (Main.netMode != 1)
                         {
                             for(int i = 0; i < 16; i++)
@@ -959,7 +959,7 @@ namespace SOTS.NPCs.Boss
                 prevdir = new Vector2(0, -1);
                 if((int)rand3 == ModContent.ProjectileType<EnergySerpentHead>())
                 {
-                    Main.PlaySound(SoundID.Item119, (int)(selectArea + prevLocation).X, (int)(selectArea + prevLocation).Y);
+                    SoundEngine.PlaySound(SoundID.Item119, (int)(selectArea + prevLocation).X, (int)(selectArea + prevLocation).Y);
                     if (Main.netMode != 1)
                     {
                         int damage2 = npc.damage / 2;
@@ -986,7 +986,7 @@ namespace SOTS.NPCs.Boss
         }
         public void DoDash(int direction = 1, bool push = false)
         {
-            Main.PlaySound(SoundID.Item119, (int)prevLocation.X, (int)prevLocation.Y);
+            SoundEngine.PlaySound(SoundID.Item119, (int)prevLocation.X, (int)prevLocation.Y);
             Vector2 velo = prevdir;
             if (push)
                npc.Center = prevLocation - velo * 2700 * direction;

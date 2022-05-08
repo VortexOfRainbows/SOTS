@@ -86,7 +86,7 @@ namespace SOTS.NPCs.Constructs
 					Projectile.NewProjectile(npc.Center, velocity, ModContent.ProjectileType<PermafrostSpike>(), damage, 0, Main.myPlayer, 180 - npc.ai[1]);
 				}
 			}
-			//Main.PlaySound(SoundID.Item92, (int)(npc.Center.X), (int)(npc.Center.Y));
+			//SoundEngine.PlaySound(SoundID.Item92, (int)(npc.Center.X), (int)(npc.Center.Y));
 		}
 		public override void AI()
 		{
@@ -113,7 +113,7 @@ namespace SOTS.NPCs.Constructs
 					}
 					if (npc.ai[1] >= 180)
 					{
-						Main.PlaySound(SoundID.Item46, (int)(npc.Center.X), (int)(npc.Center.Y));
+						SoundEngine.PlaySound(SoundID.Item46, (int)(npc.Center.X), (int)(npc.Center.Y));
 						npc.ai[1] = 0;
 						npc.ai[0]++;
 					}

@@ -76,7 +76,7 @@ namespace SOTS.Projectiles.Otherworld
 		}
 		public override void Kill(int timeLeft)
 		{
-			Main.PlaySound(3, (int)projectile.Center.X, (int)projectile.Center.Y, 53, 0.75f);
+			SoundEngine.PlaySound(3, (int)projectile.Center.X, (int)projectile.Center.Y, 53, 0.75f);
 			if (projectile.owner == Main.myPlayer)
 			{
 				for(int i = 0; i < 8; i++)

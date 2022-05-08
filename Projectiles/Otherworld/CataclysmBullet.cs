@@ -69,7 +69,7 @@ namespace SOTS.Projectiles.Otherworld
 		{
 			if (runOnce)
 				return false;
-			Texture2D texture = mod.GetTexture("Projectiles/Otherworld/CataclysmTrail");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Otherworld/CataclysmTrail").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Vector2 previousPosition = projectile.Center;
 			for (int k = 0; k < trailPos.Length; k++)
@@ -104,7 +104,7 @@ namespace SOTS.Projectiles.Otherworld
 				}
 				previousPosition = currentPos;
 			}
-			texture = mod.GetTexture("Projectiles/Otherworld/CataclysmBullet");
+			texture = Mod.Assets.Request<Texture2D>("Projectiles/Otherworld/CataclysmBullet").Value;
 			drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			for (int j = 0; j < 4; j++)
 			{

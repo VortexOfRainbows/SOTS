@@ -655,7 +655,7 @@ namespace SOTS
 				if (texture != null && (drawPlayer.itemAnimation > 0 || isTwilightPole))
 				{
 					Vector2 location = drawInfo.itemLocation;
-					if (Item.useStyle == ItemUseStyleID.HoldingOut)
+					if (Item.useStyle == ItemUseStyleID.Shoot)
 					{
 						if (Item.staff[Item.type])
 						{
@@ -726,7 +726,7 @@ namespace SOTS
 									DrawData value2 = new DrawData(texture, position + circular, new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Main.itemTexture[Item.type].Width, Main.itemTexture[Item.type].Height)), color, drawPlayer.itemRotation, origin5, Item.scale, drawInfo.spriteEffects, 0);
 									Main.playerDrawData.Add(value2);
 								}
-								DrawData value = new DrawData(mod.GetTexture("Items/Chaos/SupernovaStorm"), position, new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Main.itemTexture[Item.type].Width, Main.itemTexture[Item.type].Height)), Lighting.GetColor((int)location.X / 16, (int)location.Y / 16), drawPlayer.itemRotation, origin5, Item.scale, drawInfo.spriteEffects, 0);
+								DrawData value = new DrawData(Mod.Assets.Request<Texture2D>("Items/Chaos/SupernovaStorm").Value, position, new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Main.itemTexture[Item.type].Width, Main.itemTexture[Item.type].Height)), Lighting.GetColor((int)location.X / 16, (int)location.Y / 16), drawPlayer.itemRotation, origin5, Item.scale, drawInfo.spriteEffects, 0);
 								Main.playerDrawData.Add(value);
 							}
 							for (int i = 0; i < recurse; i++)
@@ -749,7 +749,7 @@ namespace SOTS
 								DrawData value = new DrawData(texture, location - Main.screenPosition + circular, new Rectangle(0, 0, texture.Width, texture.Height), color, drawPlayer.itemRotation, new Vector2(texture.Width * 0.5f - texture.Width * 0.5f * (float)drawPlayer.direction, drawPlayer.gravDir == -1 ? 0f : texture.Height), Item.scale, drawInfo.spriteEffects, 0);
 								Main.playerDrawData.Add(value);
 							}
-							Texture2D tBlack = mod.GetTexture("Items/Chaos/RealityShatterBlack");
+							Texture2D tBlack = Mod.Assets.Request<Texture2D>("Items/Chaos/RealityShatterBlack").Value;
 							DrawData value2 = new DrawData(tBlack, location - Main.screenPosition, new Rectangle(0, 0, texture.Width, texture.Height), Color.Black, drawPlayer.itemRotation, new Vector2(texture.Width * 0.5f - texture.Width * 0.5f * (float)drawPlayer.direction, drawPlayer.gravDir == -1 ? 0f : texture.Height), Item.scale, drawInfo.spriteEffects, 0);
 							Main.playerDrawData.Add(value2);
 							for (int k = 0; k < 6; k++)
@@ -762,7 +762,7 @@ namespace SOTS
 						}
 						else if (Item.type == ItemType<EtherealScepter>())
 						{
-							Texture2D tEffect= mod.GetTexture("Items/Chaos/EtherealScepterEffect");
+							Texture2D tEffect= Mod.Assets.Request<Texture2D>("Items/Chaos/EtherealScepterEffect").Value;
 							for (int k = 0; k < 6; k++)
 							{
 								Color color = Color.White;

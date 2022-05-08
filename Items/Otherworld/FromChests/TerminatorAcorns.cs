@@ -29,12 +29,12 @@ namespace SOTS.Items.Otherworld.FromChests
 			Item.height = 32;
 			Item.useTime = 30;
 			Item.useAnimation = 30;
-			Item.useStyle = ItemUseStyleID.SwingThrow;
+			Item.useStyle = ItemUseStyleID.Swing;
 			Item.value = Item.sellPrice(0, 5, 0, 0);
 			Item.rare = ItemRarityID.LightPurple;
 			Item.UseSound = SoundID.Item44;
 			Item.noMelee = true;
-			Item.summon = true;
+			Item.DamageType = DamageClass.Summon;
 			Item.buffType = ModContent.BuffType<TerminatorSquirrelBuff>();
 			Item.shoot = ModContent.ProjectileType<TerminatorSquirrel>();
 		}

@@ -22,7 +22,7 @@ namespace SOTS.Items.Fragments
 			Item.autoReuse = true;
 			Item.useAnimation = 15;
 			Item.useTime = 10;
-			Item.useStyle = ItemUseStyleID.SwingThrow;
+			Item.useStyle = ItemUseStyleID.Swing;
 			Item.rare = ItemRarityID.Orange;
 			Item.consumable = true;
 			Item.createTile = ModContent.TileType<DissolvingAetherTile>();
@@ -72,8 +72,8 @@ namespace SOTS.Items.Fragments
 		}
 		public static void DrawEffects(int i, int j, SpriteBatch spriteBatch, Mod mod, bool wall = false)
 		{
-			Texture2D texture = mod.GetTexture("Assets/SpiritBlocks/AetherParticle");
-			Texture2D textureBlock = mod.GetTexture("Assets/SpiritBlocks/AetherBlockOutline");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Assets/SpiritBlocks/AetherParticle").Value;
+			Texture2D textureBlock = Mod.Assets.Request<Texture2D>("Assets/SpiritBlocks/AetherBlockOutline").Value;
 			Color color;
 			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
 			if (Main.drawToScreen)

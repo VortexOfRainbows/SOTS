@@ -14,7 +14,7 @@ namespace SOTS.Void
         public SoulBar()
         {
             if (_backgroundTexture == null)
-                _backgroundTexture = ModContent.GetTexture("SOTS/Void/SoulBar");
+                _backgroundTexture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Void/SoulBar");
 			
         }
 		protected override void DrawSelf(SpriteBatch spriteBatch)
@@ -35,7 +35,7 @@ namespace SOTS.Void
         public BarDivider()
         {
             if (_backgroundTexture == null)
-                _backgroundTexture = ModContent.GetTexture("SOTS/Void/VoidBarDivider");
+                _backgroundTexture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Void/VoidBarDivider");
 
         }
         protected override void DrawSelf(SpriteBatch spriteBatch)
@@ -56,7 +56,7 @@ namespace SOTS.Void
         public VoidBarBorder2()
         {
             if (_backgroundTexture == null)
-                _backgroundTexture = ModContent.GetTexture("SOTS/Void/VoidBarBorder2");
+                _backgroundTexture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Void/VoidBarBorder2");
 
         }
         protected override void DrawSelf(SpriteBatch spriteBatch)

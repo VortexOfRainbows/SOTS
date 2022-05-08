@@ -17,13 +17,13 @@ namespace SOTS.Items.Pyramid
 			Item.crit = 10;
 			Item.damage = 30;
 			Item.scale = 1.2f;
-			Item.melee = true;
+			Item.DamageType = DamageClass.Melee;
 			Item.useTurn = true;
 			Item.width = 46;
 			Item.height = 52;
 			Item.useTime = 22;
 			Item.useAnimation = 22;
-			Item.useStyle = ItemUseStyleID.SwingThrow;
+			Item.useStyle = ItemUseStyleID.Swing;
 			Item.knockBack = 3.5f;
 			Item.value = Item.sellPrice(0, 1, 20, 0);
 			Item.rare = ItemRarityID.Orange;

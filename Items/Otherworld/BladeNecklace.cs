@@ -17,21 +17,21 @@ namespace SOTS.Items.Otherworld
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
-			Texture2D texture2 = mod.GetTexture("Items/Otherworld/BladeNecklaceBase");
+			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Otherworld/BladeNecklaceBase").Value;
 			Main.spriteBatch.Draw(texture2, new Vector2(position.X, position.Y), null, drawColor, 0f, origin, scale, SpriteEffects.None, 0f);
 			return false;
 		}
 		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
 		{
-			Texture2D texture2 = mod.GetTexture("Items/Otherworld/BladeNecklaceBase");
+			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Otherworld/BladeNecklaceBase").Value;
 			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
 			Main.spriteBatch.Draw(texture2, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y) + 2), null, lightColor * (1f - (Item.alpha / 255f)), rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			return false;
 		}
 		public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
-			Texture2D texture = mod.GetTexture("Items/Otherworld/BladeNecklaceOutline");
-			Texture2D texture2 = mod.GetTexture("Items/Otherworld/BladeNecklaceFill");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/BladeNecklaceOutline").Value;
+			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Otherworld/BladeNecklaceFill").Value;
 			Color color = new Color(110, 110, 110, 0);
 			for (int k = 0; k < 5; k++)
 			{
@@ -45,8 +45,8 @@ namespace SOTS.Items.Otherworld
 		}
 		public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
 		{
-			Texture2D texture = mod.GetTexture("Items/Otherworld/BladeNecklaceOutline");
-			Texture2D texture2 = mod.GetTexture("Items/Otherworld/BladeNecklaceFill");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/BladeNecklaceOutline").Value;
+			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Otherworld/BladeNecklaceFill").Value;
 			Color color = new Color(110, 110, 110, 0);
 			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
 			for (int k = 0; k < 5; k++)
@@ -61,7 +61,7 @@ namespace SOTS.Items.Otherworld
 		}
 		public override void SafeSetDefaults()
 		{
-			Item.melee = true;
+			Item.DamageType = DamageClass.Melee;
 			Item.damage = 40;
 			Item.maxStack = 1;
             Item.width = 30;     

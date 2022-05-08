@@ -43,7 +43,7 @@ namespace SOTS.Projectiles.Pyramid
 		Vector2[] trailPos = new Vector2[10];
 		public void TrailPreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Texture2D texture = mod.GetTexture("Projectiles/Pyramid/CurseGhostTrail");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Pyramid/CurseGhostTrail").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Vector2 previousPosition = projectile.Center + new Vector2(-12 * projectile.spriteDirection, 0).RotatedBy(projectile.rotation);
 			for (int k = 0; k < trailPos.Length; k++)
@@ -79,7 +79,7 @@ namespace SOTS.Projectiles.Pyramid
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Texture2D texture2 = mod.GetTexture("Projectiles/Pyramid/CurseGhost");
+			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Projectiles/Pyramid/CurseGhost").Value;
 			TrailPreDraw(spriteBatch, lightColor);
 			float rotation = projectile.rotation;
 			Color color = Color.White;
@@ -110,7 +110,7 @@ namespace SOTS.Projectiles.Pyramid
 					dust.scale *= 1.65f;
 				}
 				projectile.ai[1] = Main.rand.Next(2) * 2 - 1;
-				Main.PlaySound(SoundID.NPCKilled, (int)projectile.Center.X, (int)projectile.Center.Y, 39, 0.825f, -0.4f);
+				SoundEngine.PlaySound(SoundID.NPCKilled, (int)projectile.Center.X, (int)projectile.Center.Y, 39, 0.825f, -0.4f);
 			}
 			Vector2 circular = new Vector2(0, 15 * scaleVelocity).RotatedBy(MathHelper.ToRadians(projectile.ai[0] * 4.5f * projectile.ai[1]));
 			scaleVelocity *= 0.99f;

@@ -26,14 +26,14 @@ namespace SOTS.Items.Otherworld.FromChests
             Item.useTime = 8;
             Item.useAnimation = 24;
 			Item.reuseDelay = 18;
-            Item.useStyle = ItemUseStyleID.HoldingUp;   
+            Item.useStyle = ItemUseStyleID.HoldUp;   
             Item.autoReuse = true; 
             Item.knockBack = 3f;
 			Item.value = Item.sellPrice(0, 5, 0, 0);
             Item.rare = ItemRarityID.LightPurple;
 			if (!Main.dedServ)
 			{
-				Item.GetGlobalItem<ItemUseGlow>().glowTexture = mod.GetTexture("Items/Otherworld/FromChests/LashesOfLightningGlow");
+				Item.GetGlobalItem<ItemUseGlow>().glowTexture = Mod.Assets.Request<Texture2D>("Items/Otherworld/FromChests/LashesOfLightningGlow").Value;
 			}
 
 			Item.shoot = ModContent.ProjectileType<LightningLash>();
@@ -43,7 +43,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
 		{
-			Texture2D texture = mod.GetTexture("Items/Otherworld/FromChests/LashesOfLightningGlow");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/FromChests/LashesOfLightningGlow").Value;
 			Color color = Color.White;
 			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
 			Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y) + 2), null, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);

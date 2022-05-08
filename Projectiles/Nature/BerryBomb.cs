@@ -53,7 +53,7 @@ namespace SOTS.Projectiles.Nature
 		public override void Kill(int timeLeft)
         {
 			Vector2 position = projectile.Center;
-			Main.PlaySound(SoundID.NPCHit1, (int)position.X, (int)position.Y);  
+			SoundEngine.PlaySound(SoundID.NPCHit1, (int)position.X, (int)position.Y);  
 			for(int i = 0; i < 12; i++)
 			{
 				int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 33);

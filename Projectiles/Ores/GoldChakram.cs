@@ -85,7 +85,7 @@ namespace SOTS.Projectiles.Ores
 					projectile.velocity.Y = -oldVelocity.Y;
 				}
 				projectile.timeLeft = projectile.timeLeft > 705 ? 705 : projectile.timeLeft;
-				Main.PlaySound(SoundID.Item10, projectile.position);
+				SoundEngine.PlaySound(SoundID.Item10, projectile.position);
 			projectile.tileCollide = false;
 			return false;
 		}

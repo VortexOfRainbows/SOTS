@@ -144,7 +144,7 @@ namespace SOTS.Projectiles.Pyramid
 					Vector2 toPos = from - to;
 					float rotation = toPos.ToRotation();
 					int length = (int)toPos.Length() + 1;
-					Texture2D texture2 = ModContent.GetTexture("SOTS/Projectiles/Pyramid/CurseLineIndicator");
+					Texture2D texture2 = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Pyramid/CurseLineIndicator");
 					Main.spriteBatch.Draw(texture2, from - Main.screenPosition, new Rectangle(0, 0, length, 2), Color.White * alphaMult, rotation, new Vector2(1, 1), 1f, SpriteEffects.None, 0f);
 					from = to;
 				}

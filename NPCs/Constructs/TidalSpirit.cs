@@ -92,7 +92,7 @@ namespace SOTS.NPCs.Constructs
 								{
 									damage2 = (int)(damage2 / Main.expertDamage);
 								}
-								Main.PlaySound(2, (int)npc.Center.X, (int)npc.Center.Y, 21, 0.8f);
+								SoundEngine.PlaySound(2, (int)npc.Center.X, (int)npc.Center.Y, 21, 0.8f);
 								int last = -1;
 								for (int i = 0; i < 2; i++)
 								{
@@ -161,7 +161,7 @@ namespace SOTS.NPCs.Constructs
 							{
 								damage2 = (int)(damage2 / Main.expertDamage);
 							}
-							Main.PlaySound(2, (int)npc.Center.X, (int)npc.Center.Y, 21, 0.8f);
+							SoundEngine.PlaySound(2, (int)npc.Center.X, (int)npc.Center.Y, 21, 0.8f);
 							int last = -1;
 							for (int i = 0; i < 2; i++)
 							{

@@ -27,7 +27,7 @@ namespace SOTS.Projectiles.Permafrost
 		public void Bang(float pos1, float pos2)
 		{
 			Vector2 atLoc = new Vector2(projectile.Center.X + pos1, projectile.Center.Y + pos2);
-			Main.PlaySound(2, (int)(atLoc.X), (int)(atLoc.Y), 30, 0.3f);
+			SoundEngine.PlaySound(2, (int)(atLoc.X), (int)(atLoc.Y), 30, 0.3f);
 			for (int i = 0; i < 360; i += 5)
 			{
 				Vector2 circularLocation = new Vector2(30, 0).RotatedBy(MathHelper.ToRadians(i));

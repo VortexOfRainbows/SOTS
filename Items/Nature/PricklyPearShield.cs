@@ -14,7 +14,7 @@ namespace SOTS.Items.Nature
 		}
 		public override void SetDefaults()
 		{
-			Item.melee = true;
+			Item.DamageType = DamageClass.Melee;
 			Item.knockBack = 1.5f; //this is a constant consistent with the projectile value
 			Item.damage = 10;
             Item.width = 34;     

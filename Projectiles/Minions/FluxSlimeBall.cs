@@ -67,7 +67,7 @@ namespace SOTS.Projectiles.Minions
 				Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
 				GameShaders.Armor.GetSecondaryShader(shader, player).Apply(null);
 			}
-			Texture2D texture = ModContent.GetTexture("SOTS/NPCs/FluxSlimeVine");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/FluxSlimeVine");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Projectile parent = null;
 			for (short i = 0; i < Main.maxProjectiles; i++)
@@ -104,7 +104,7 @@ namespace SOTS.Projectiles.Minions
 				for (int i = 0; i < 6; i++)
 				{
 					counterArr[i] += randSeed1[i];
-					texture = ModContent.GetTexture("SOTS/NPCs/Boss/PinkyGrappleSpike");
+					texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Boss/PinkyGrappleSpike");
 					Vector2 circular = new Vector2(0, (projectile.width / 2 - 1.5f) * projectile.scale).RotatedBy(MathHelper.ToRadians(i * 60 + counter2 * 0.3f * randMult) + projectile.rotation);
 					int frame = 0;
 					if (counterArr[i] >= 20)

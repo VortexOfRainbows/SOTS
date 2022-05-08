@@ -22,7 +22,7 @@ namespace SOTS.Items.Nature
             Item.height = 28;   
             Item.useTime = 30;   
             Item.useAnimation = 30;
-            Item.useStyle = ItemUseStyleID.HoldingOut;    
+            Item.useStyle = ItemUseStyleID.Shoot;    
             Item.noMelee = true;  
             Item.knockBack = 2.5f;
 			Item.value = Item.sellPrice(0, 0, 20, 0);

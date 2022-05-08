@@ -29,7 +29,7 @@ namespace SOTS.Projectiles.Pyramid
 			Player player = Main.player[projectile.owner];
 			if(randseed == -1)
 			{
-				Main.PlaySound(SoundID.Item14, projectile.Center);
+				SoundEngine.PlaySound(SoundID.Item14, projectile.Center);
 				randseed = Main.rand.Next(360);
 				for (int i = 0; i < 360; i += 5)
 				{

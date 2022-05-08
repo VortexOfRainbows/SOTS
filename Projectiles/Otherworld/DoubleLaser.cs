@@ -69,8 +69,8 @@ namespace SOTS.Projectiles.Otherworld
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Otherworld/DoubleLaser");
-			Texture2D texture2 = ModContent.GetTexture("SOTS/Projectiles/Otherworld/DoubleLaserEnd");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Otherworld/DoubleLaser");
+			Texture2D texture2 = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Otherworld/DoubleLaserEnd");
 			bool dust = false;
 			if(projectile.alpha < 5)
 			{

@@ -57,7 +57,7 @@ namespace SOTS.Projectiles.Pyramid
 			int top = j - 2;
 			int left = i - 1;
 			bool valid = true;
-			Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 4, 1.25f, 0.3f);
+			SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 4, 1.25f, 0.3f);
 			for (int x = left; x < left + 2; x++)
 			{
 				for (int y = top; y < top + 5; y++)

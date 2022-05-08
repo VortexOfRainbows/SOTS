@@ -32,7 +32,7 @@ namespace SOTS.Projectiles.Otherworld
 		{
 			if (runOnce || !hit)
 				return false;
-			Texture2D texture = mod.GetTexture("Projectiles/Otherworld/CataclysmTrail");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Otherworld/CataclysmTrail").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Vector2 previousPosition = projectile.Center;
 			for (int k = 0; k < trailPos.Length; k++)

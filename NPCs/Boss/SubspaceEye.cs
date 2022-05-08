@@ -57,9 +57,9 @@ namespace SOTS.NPCs.Boss
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
         {
-            Texture2D texture = ModContent.GetTexture("SOTS/NPCs/Boss/SubspaceEyeDraw");
-            Texture2D texture2 = ModContent.GetTexture("SOTS/NPCs/Boss/SubspaceEyeFlames");
-            Texture2D texture3 = ModContent.GetTexture("SOTS/NPCs/Boss/SubspaceEyePupil");
+            Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Boss/SubspaceEyeDraw");
+            Texture2D texture2 = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Boss/SubspaceEyeFlames");
+            Texture2D texture3 = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Boss/SubspaceEyePupil");
             Vector2 origin = new Vector2(texture.Width / 2, 102);
             for (int a = 0; a < 360; a += 30)
             {

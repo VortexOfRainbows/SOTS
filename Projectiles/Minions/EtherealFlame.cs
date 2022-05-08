@@ -49,7 +49,7 @@ namespace SOTS.Projectiles.Minions
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Texture2D textureTrail = ModContent.GetTexture("SOTS/Projectiles/Minions/EtherealFlameTrail");
+			Texture2D textureTrail = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Minions/EtherealFlameTrail");
 			Vector2 drawOrigin2 = new Vector2(textureTrail.Width / 2, 0);
 			Vector2 lastPosition = projectile.Center;
 			for (int k = 0; k < trailPos.Length; k++)
@@ -80,7 +80,7 @@ namespace SOTS.Projectiles.Minions
 		}
 		public void DrawFlames()
 		{
-			Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Celestial/SubspaceLingeringFlame");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Celestial/SubspaceLingeringFlame");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Color color;
 			for (int i = 0; i < particleList.Count; i++)

@@ -124,7 +124,7 @@ namespace SOTS.Utilities
 		{
 			if (Main.netMode != NetmodeID.Server) {
 				float rotation = Main.rand.NextFloat(0 - rot, rot);
-				Texture2D glyphTexture = ModContent.GetTexture(imagePath);
+				Texture2D glyphTexture = (Texture2D)ModContent.Request<Texture2D>(imagePath);
 				Color[] data = new Color[glyphTexture.Width * glyphTexture.Height];
 				glyphTexture.GetData(data);
 				for (int i = 0; i < glyphTexture.Width; i += 2) {
@@ -150,7 +150,7 @@ namespace SOTS.Utilities
 			Color color = new Color(red, green, blue);
 			if (Main.netMode != NetmodeID.Server) {
 				float rotation = Main.rand.NextFloat(0 - rot, rot);
-				Texture2D glyphTexture = ModContent.GetTexture(imagePath);
+				Texture2D glyphTexture = (Texture2D)ModContent.Request<Texture2D>(imagePath);
 				Color[] data = new Color[glyphTexture.Width * glyphTexture.Height];
 				glyphTexture.GetData(data);
 				for (int i = 0; i < glyphTexture.Width; i += 2) {

@@ -20,12 +20,12 @@ namespace SOTS.Items.Chaos
 		public override void SafeSetDefaults()
 		{
 			Item.damage = 270;
-			Item.melee = true;
+			Item.DamageType = DamageClass.Melee;
 			Item.width = 28;
 			Item.height = 26;
             Item.useTime = 10;
             Item.useAnimation = 30;
-			Item.useStyle = ItemUseStyleID.HoldingOut;
+			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.knockBack = 8.0f;
             Item.value = Item.sellPrice(0, 14, 0, 0);
             Item.rare = ItemRarityID.Yellow;

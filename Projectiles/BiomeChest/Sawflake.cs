@@ -46,7 +46,7 @@ namespace SOTS.Projectiles.BiomeChest
 		}
         public override bool OnTileCollide(Vector2 oldVelocity)
 		{
-			Main.PlaySound(SoundID.Dig, projectile.Center);
+			SoundEngine.PlaySound(SoundID.Dig, projectile.Center);
 			projectile.timeLeft = 89;
 			projectile.netUpdate = true;
 			projectile.tileCollide = false;
@@ -254,7 +254,7 @@ namespace SOTS.Projectiles.BiomeChest
 			{
 				return;
 			}
-			Texture2D texture2 = mod.GetTexture("Projectiles/BiomeChest/SawflakeTrail");
+			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Projectiles/BiomeChest/SawflakeTrail").Value;
 			Vector2 drawOrigin2 = new Vector2(texture2.Width * 0.5f, texture2.Height * 0.5f);
 			Vector2 previousPosition = projectile.Center;
 			Color color = new Color(140, 140, 205, 0);

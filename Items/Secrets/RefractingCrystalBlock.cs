@@ -186,7 +186,7 @@ namespace SOTS.Items.Secrets
 						for (int y = -range; y <= range; y++)
 						{
 							Tile tile = Framing.GetTileSafely(i + x, j + y);
-							if (tile.wall == ModContent.WallType<UnsafeOvergrownPyramidWallWall>())
+							if (tile.WallType == ModContent.WallType<UnsafeOvergrownPyramidWallWall>())
 							{
 								count++;
 							}

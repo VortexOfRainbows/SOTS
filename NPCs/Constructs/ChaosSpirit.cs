@@ -32,7 +32,7 @@ namespace SOTS.NPCs.Constructs
 		Vector2 lastCenter = Vector2.Zero;
 		public void DrawChains(bool doDust = false)
 		{
-			Texture2D texture = ModContent.GetTexture("SOTS/NPCs/Constructs/ChaosSpiritChain");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Constructs/ChaosSpiritChain");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Vector2 ownerCenter = lastCenter;
 			float dynamicScaling = (float)Math.Sin(MathHelper.ToRadians(npc.ai[2] * 0.15f)) * 10;
@@ -78,7 +78,7 @@ namespace SOTS.NPCs.Constructs
 		}
 		public static void DrawWings(float wingHeight, float dipAndRiseCounter, float baseRotation, Vector2 center, Color overrideColor, float scale = 1f)
 		{
-			Texture2D texture = ModContent.GetTexture("SOTS/NPCs/Constructs/ChaosParticle");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Constructs/ChaosParticle");
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
 			float dipAndRise = (float)Math.Sin(MathHelper.ToRadians(dipAndRiseCounter));
 			float supposedWingHeight = wingHeight - 19;

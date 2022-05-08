@@ -22,7 +22,7 @@ namespace SOTS.Items.Permafrost
             Item.height = 38;
             Item.useTime = 36;
             Item.useAnimation = 36;
-            Item.useStyle = ItemUseStyleID.HoldingOut;
+            Item.useStyle = ItemUseStyleID.Shoot;
             Item.noMelee = true;
             Item.knockBack = 1.35f;
 			Item.shootSpeed = 9;

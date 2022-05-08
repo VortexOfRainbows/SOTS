@@ -63,8 +63,8 @@ namespace SOTS.Projectiles.Chaos
 			projectile.velocity = ogVelo.RotatedBy(MathHelper.ToRadians(angle));
 			if(counter == windUpLength + 1)// && projectile.knockBack == -1)
 			{
-				//Main.PlaySound(SoundLoader.customSoundType, (int)projectile.Center.X, (int)projectile.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Enemies/LuxBeann"), 1.6f, -0.1f);
-				Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 94, 1.1f, 0.1f);
+				//SoundEngine.PlaySound(SoundLoader.customSoundType, (int)projectile.Center.X, (int)projectile.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Enemies/LuxBeann"), 1.6f, -0.1f);
+				SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 94, 1.1f, 0.1f);
 			}
 			if (counter > windUpLength)
 			{

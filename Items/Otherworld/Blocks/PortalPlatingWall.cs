@@ -37,15 +37,15 @@ namespace SOTS.Items.Otherworld.Blocks
 		{
 			float uniquenessCounter = Main.GlobalTime * -100 + (i + j) * 5;
 			Tile tile = Main.tile[i, j];
-			Texture2D texture = ModContent.GetTexture("SOTS/Items/Otherworld/Blocks/AvaritianPlatingWallWallGlow");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Items/Otherworld/Blocks/AvaritianPlatingWallWallGlow");
 			int xLength = 32;
 			int xOff = 0;
-			/*if (Main.tile[i - 1, j].wall != 0)// && Main.tile[i + 1, j].wall == 0)
+			/*if (Main.tile[i - 1, j].WallType != 0)// && Main.tile[i + 1, j].WallType == 0)
 			{
 				xOff += 8;
 				xLength -= 8;
 			}
-			if (Main.tile[i + 1, j].wall != 0)// && Main.tile[i - 1, j].wall == 0)
+			if (Main.tile[i + 1, j].WallType != 0)// && Main.tile[i - 1, j].WallType == 0)
 			{
 				xLength -= 8;
 			}*/

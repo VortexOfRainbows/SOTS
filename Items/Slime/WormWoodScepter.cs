@@ -28,7 +28,7 @@ namespace SOTS.Items.Slime
             Item.UseSound = SoundID.Item44; 
             Item.autoReuse = true;   
             Item.shoot = mod.ProjectileType("PinkyTurret");  
-            Item.summon = true;  
+            Item.DamageType = DamageClass.Summon; 
             Item.sentry = true;
         } 
 		public override void AddRecipes()

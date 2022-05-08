@@ -20,10 +20,10 @@ namespace SOTS.NPCs.Constructs
 				Vector2 circular = new Vector2(6, 0).RotatedBy(MathHelper.ToRadians(i * 45 - SOTSWorld.GlobalCounter));
 				Color color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(i * 45 + SOTSWorld.GlobalCounter));
 				color.A = 0;
-				Main.spriteBatch.Draw(ModContent.GetTexture("SOTS/NPCs/Constructs/ChaosRubbleGlow"), npc.Center - Main.screenPosition + new Vector2(0, npc.gfxOffY) + circular, null, color * 0.4f, npc.rotation, origin, npc.scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw((Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Constructs/ChaosRubbleGlow"), npc.Center - Main.screenPosition + new Vector2(0, npc.gfxOffY) + circular, null, color * 0.4f, npc.rotation, origin, npc.scale, SpriteEffects.None, 0f);
 			}
 			Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition + new Vector2(0, npc.gfxOffY), null, drawColor, npc.rotation, origin, npc.scale, SpriteEffects.None, 0f);
-			Main.spriteBatch.Draw(ModContent.GetTexture("SOTS/NPCs/Constructs/ChaosRubbleGlow"), npc.Center - Main.screenPosition + new Vector2(0, npc.gfxOffY), null, Color.White, npc.rotation, origin, npc.scale, SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw((Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Constructs/ChaosRubbleGlow"), npc.Center - Main.screenPosition + new Vector2(0, npc.gfxOffY), null, Color.White, npc.rotation, origin, npc.scale, SpriteEffects.None, 0f);
 			return false;
 		}
 		public override void SetStaticDefaults()
@@ -91,7 +91,7 @@ namespace SOTS.NPCs.Constructs
 			{
 				if(npc.ai[1] == -1)
 				{
-					Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 53, 1.5f, 0.1f);
+					SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 53, 1.5f, 0.1f);
 					float dampen = (Math.Abs(lastVelocity.Y) - 0.5f) * 0.8f;
 					if (dampen < 0)
 						dampen = 0;

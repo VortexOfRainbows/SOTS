@@ -23,7 +23,7 @@ namespace SOTS.Items.Otherworld.FromChests
             Item.height = 30;   
             Item.useTime = 24;  
             Item.useAnimation = 24;
-            Item.useStyle = ItemUseStyleID.HoldingOut;    
+            Item.useStyle = ItemUseStyleID.Shoot;    
             Item.knockBack = 6f;
 			Item.value = Item.sellPrice(0, 5, 0, 0);
 			Item.rare = ItemRarityID.LightPurple;
@@ -35,13 +35,13 @@ namespace SOTS.Items.Otherworld.FromChests
 			Item.mana = 14;
 			if (!Main.dedServ)
 			{
-				Item.GetGlobalItem<ItemUseGlow>().glowTexture = mod.GetTexture("Items/Otherworld/FromChests/CodeCorrupterGlow");
+				Item.GetGlobalItem<ItemUseGlow>().glowTexture = Mod.Assets.Request<Texture2D>("Items/Otherworld/FromChests/CodeCorrupterGlow").Value;
 				Item.GetGlobalItem<ItemUseGlow>().glowOffsetX = -1;
 			}
 		}
 		public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
 		{
-			Texture2D texture = mod.GetTexture("Items/Otherworld/FromChests/CodeCorrupterGlow");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/FromChests/CodeCorrupterGlow").Value;
 			Color color = Color.White;
 			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
 			Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y) + 2), null, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);

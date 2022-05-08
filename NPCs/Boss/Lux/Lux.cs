@@ -138,7 +138,7 @@ namespace SOTS.NPCs.Boss.Lux
 		}
 		public void DrawWings(int ID, float sizeMult = 1f, float widthOffset = 0, float degreeOffset = 0, float genPercent = 1f)
 		{
-			Texture2D texture = ModContent.GetTexture("SOTS/NPCs/Constructs/ChaosParticle");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Constructs/ChaosParticle");
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
 			float dipAndRise;
 			float wingHeight = this.wingHeight;
@@ -549,11 +549,11 @@ namespace SOTS.NPCs.Boss.Lux
 					attackTimer1++;
 					if (attackTimer1 % 30 == 0 && attackTimer1 < 100 && attackTimer1 > 20)
 					{
-						Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 15, 1.25f, 0.1f);
+						SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 15, 1.25f, 0.1f);
 					}
 					if (attackTimer1 == 120)
 					{
-						Main.PlaySound(SoundID.Roar, (int)npc.Center.X, (int)npc.Center.Y, 0, 1.3f, 0.1f);
+						SoundEngine.PlaySound(SoundID.Roar, (int)npc.Center.X, (int)npc.Center.Y, 0, 1.3f, 0.1f);
 						Main.NewText("Lux has awoken!", 175, 75, byte.MaxValue);
 					}
 					if (attackTimer1 > 60)
@@ -725,7 +725,7 @@ namespace SOTS.NPCs.Boss.Lux
 							if (localCounter % 6 == 0)
 							{
 								Vector2 outward = new Vector2(0, 1).RotatedBy(npc.rotation);
-								Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 91, 1.1f, 0.2f);
+								SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 91, 1.1f, 0.2f);
 								if (Main.netMode != NetmodeID.MultiplayerClient)
 								{
 									int amt = 4 - (int)attackTimer3 % 2;
@@ -793,7 +793,7 @@ namespace SOTS.NPCs.Boss.Lux
 							attackTimer2++;
 							if (attackTimer2 > 70)
 							{
-								Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 91, 1.1f, 0.2f);
+								SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 91, 1.1f, 0.2f);
 								if (Main.netMode != NetmodeID.MultiplayerClient)
 								{
 									Vector2 outward = new Vector2(0, 1).RotatedBy(npc.rotation);
@@ -932,7 +932,7 @@ namespace SOTS.NPCs.Boss.Lux
 						}
 						else if (attackTimer1 == 95)
 						{
-							Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 91, 1.1f, 0.2f);
+							SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 91, 1.1f, 0.2f);
 							if (Main.netMode != NetmodeID.MultiplayerClient)
 							{
 								if (SecondPhase)
@@ -1016,7 +1016,7 @@ namespace SOTS.NPCs.Boss.Lux
 							}
 							if (attackTimer1 % 20 == 0)
 							{
-								Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 15, 1.6f, 0.1f - 0.1f * attackTimer1 / 20f);
+								SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 15, 1.6f, 0.1f - 0.1f * attackTimer1 / 20f);
 							}
 						}
 						if (attackTimer1 >= 120)
@@ -1068,7 +1068,7 @@ namespace SOTS.NPCs.Boss.Lux
 							teleport(player.Center + new Vector2(0, -240), player.Center);
 							attackTimer2 = player.Center.X;
 							attackTimer3 = player.Center.Y - 240;
-							Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 62, 1.2f, 0.4f);
+							SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 62, 1.2f, 0.4f);
 							for (int i = 0; i < 120; i++)
 							{
 								Dust dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.RainbowMk2);
@@ -1101,7 +1101,7 @@ namespace SOTS.NPCs.Boss.Lux
 									npc.alpha = 0;
 									SwapPhase(PickRandom(RGBPhase));
 									teleport(new Vector2(player.Center.X, player.Center.Y - 240), player.Center);
-									Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 62, 1.2f, 0.4f);
+									SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 62, 1.2f, 0.4f);
 									for (int i = 0; i < 120; i++)
 									{
 										Dust dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.RainbowMk2);
@@ -1116,7 +1116,7 @@ namespace SOTS.NPCs.Boss.Lux
 							}
 							else if (rnTimer >= 200)
 							{
-								Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 91, 1.1f, 0.2f);
+								SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 91, 1.1f, 0.2f);
 								if (Main.netMode != NetmodeID.MultiplayerClient)
 								{
 									int amt = 8;
@@ -1207,7 +1207,7 @@ namespace SOTS.NPCs.Boss.Lux
 							if (localCounter % 5 == 0)
 							{
 								Vector2 outward = new Vector2(0, 1).RotatedBy(npc.rotation);
-								Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 91, 1.1f, 0.2f);
+								SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 91, 1.1f, 0.2f);
 								if (Main.netMode != NetmodeID.MultiplayerClient)
 								{
 									float degrees = attackTimer4 * 90f;

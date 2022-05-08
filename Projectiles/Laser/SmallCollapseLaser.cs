@@ -199,8 +199,8 @@ namespace SOTS.Projectiles.Laser
 			double frequency = 0.3; //set up constants for the color spectrum variables
 			double center = 130;
 			double width = 125;
-			Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Laser/CollapseLaserHighlight"); //load the secondary required textures
-			Texture2D texture2 = ModContent.GetTexture("SOTS/Projectiles/Laser/ContinuumSphereHighlight");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Laser/CollapseLaserHighlight"); //load the secondary required textures
+			Texture2D texture2 = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Laser/ContinuumSphereHighlight");
 			float radianDir = (float)Math.Atan2(initialDirection.Y, initialDirection.X);
 			Color color = new Color(100,100,100); //initialize a color variable, this white color won't be used, but the variable will
 			Color white = new Color(255, 255, 255); //initialize white color

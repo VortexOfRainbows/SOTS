@@ -31,7 +31,7 @@ namespace SOTS.Projectiles.Otherworld
 		{
 			Player player = Main.player[projectile.owner];
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-			Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Otherworld/ArclightBomb");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Otherworld/ArclightBomb");
 			Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
 			Vector2 drawPos = projectile.Center - Main.screenPosition;
 			if (modPlayer.rainbowGlowmasks)
@@ -59,7 +59,7 @@ namespace SOTS.Projectiles.Otherworld
 		public override void Kill(int timeLeft)
         {
 			Vector2 position = projectile.Center;
-			Main.PlaySound(3, (int)projectile.Center.X, (int)projectile.Center.Y, 53, 0.625f);
+			SoundEngine.PlaySound(3, (int)projectile.Center.X, (int)projectile.Center.Y, 53, 0.625f);
 			for (int i = 0; i < 13; i++)
 			{
 				var num371 = Dust.NewDust(projectile.Center - new Vector2(5) - new Vector2(10, 10), 24, 24, mod.DustType("CopyDust4"), 0, 0, 100, default, 1.6f);

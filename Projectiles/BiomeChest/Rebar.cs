@@ -18,37 +18,37 @@ namespace SOTS.Projectiles.BiomeChest
 		}
         public override void SetDefaults()
         {
-			projectile.width = 36;
-			projectile.height = 6;
-			projectile.penetrate = -1;
-			projectile.ranged = true;
-			projectile.alpha = 0; 
-			projectile.friendly = true;
-			projectile.tileCollide = true;
-			projectile.timeLeft = 7200;
-			projectile.extraUpdates = 20;
+			Projectile.width = 36;
+			Projectile.height = 6;
+			Projectile.penetrate = -1;
+			Projectile.ranged = true;
+			Projectile.alpha = 0; 
+			Projectile.friendly = true;
+			Projectile.tileCollide = true;
+			Projectile.timeLeft = 7200;
+			Projectile.extraUpdates = 20;
 		}
 		public override void SendExtraAI(BinaryWriter writer) 
 		{
-			writer.Write(projectile.alpha);
-			writer.Write(projectile.tileCollide);
+			writer.Write(Projectile.alpha);
+			writer.Write(Projectile.tileCollide);
 			writer.Write(latch);
-			writer.Write(projectile.friendly);
+			writer.Write(Projectile.friendly);
 			writer.Write(diffPosX);
 			writer.Write(diffPosY);
-			writer.Write(projectile.extraUpdates);
+			writer.Write(Projectile.extraUpdates);
 			writer.Write(startAnim);
 			writer.Write(storeRot);
 		}
 		public override void ReceiveExtraAI(BinaryReader reader)
 		{	
-			projectile.alpha = reader.ReadInt32();
-			projectile.tileCollide = reader.ReadBoolean();
+			Projectile.alpha = reader.ReadInt32();
+			Projectile.tileCollide = reader.ReadBoolean();
 			latch = reader.ReadBoolean();
-			projectile.friendly = reader.ReadBoolean();
+			Projectile.friendly = reader.ReadBoolean();
 			diffPosX = reader.ReadSingle();
 			diffPosY = reader.ReadSingle();
-			projectile.extraUpdates = reader.ReadInt32();
+			Projectile.extraUpdates = reader.ReadInt32();
 			startAnim = reader.ReadBoolean();
 			storeRot = reader.ReadSingle();
 		}
@@ -59,7 +59,7 @@ namespace SOTS.Projectiles.BiomeChest
 		float diffPosY = 0;
         public override void ModifyDamageHitbox(ref Rectangle hitbox)
         {
-			hitbox = new Rectangle((int)projectile.Center.X - 3, (int)projectile.Center.Y - 3, 6, 6);
+			hitbox = new Rectangle((int)Projectile.Center.X - 3, (int)Projectile.Center.Y - 3, 6, 6);
             base.ModifyDamageHitbox(ref hitbox);
         }
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
@@ -71,19 +71,19 @@ namespace SOTS.Projectiles.BiomeChest
         public override void AI()
 		{
 			counter++;
-			Player player = Main.player[projectile.owner];
-			projectile.rotation = (float)Math.Atan2((double)projectile.velocity.Y, (double)projectile.velocity.X);
-			projectile.spriteDirection = 1;
+			Player player = Main.player[Projectile.owner];
+			Projectile.rotation = (float)Math.Atan2((double)Projectile.velocity.Y, (double)Projectile.velocity.X);
+			Projectile.spriteDirection = 1;
 			if (runOnce)
 			{
 				runOnce = false;
-				projectile.ai[1] = -1;
+				Projectile.ai[1] = -1;
             }
-			if (counter > 13 && (projectile.velocity.X != 0 || projectile.velocity.Y != 0))
+			if (counter > 13 && (Projectile.velocity.X != 0 || Projectile.velocity.Y != 0))
 			{
-				Vector2 circular = new Vector2(10 * -projectile.direction, 0).RotatedBy(MathHelper.ToRadians(counter * 20));
-				Vector2 circularLocation = new Vector2(0, circular.X).RotatedBy(projectile.velocity.ToRotation());
-				int num1 = Dust.NewDust(new Vector2(projectile.Center.X, projectile.Center.Y) - new Vector2(5), 0, 0, 235);
+				Vector2 circular = new Vector2(10 * -Projectile.direction, 0).RotatedBy(MathHelper.ToRadians(counter * 20));
+				Vector2 circularLocation = new Vector2(0, circular.X).RotatedBy(Projectile.velocity.ToRotation());
+				int num1 = Dust.NewDust(new Vector2(Projectile.Center.X, Projectile.Center.Y) - new Vector2(5), 0, 0, 235);
 				Main.dust[num1].noGravity = true;
 				Main.dust[num1].velocity *= 0.1f;
 				Main.dust[num1].velocity += circularLocation * 0.2f;
@@ -101,9 +101,9 @@ namespace SOTS.Projectiles.BiomeChest
 					counter2 *= -1;
 
 				}
-				projectile.rotation = storeRot + radians;
-				if (projectile.alpha > 250)
-					projectile.Kill();
+				Projectile.rotation = storeRot + radians;
+				if (Projectile.alpha > 250)
+					Projectile.Kill();
 			}
 			Latch();
 		}
@@ -111,70 +111,70 @@ namespace SOTS.Projectiles.BiomeChest
 		{
 			if (latch)
 			{
-				if(projectile.extraUpdates > 2)
+				if(Projectile.extraUpdates > 2)
 				{
 					for (int i = 0; i < 24; i++)
 					{
-						int num1 = Dust.NewDust(new Vector2(projectile.Center.X, projectile.Center.Y) - new Vector2(5), 0, 0, 235);
+						int num1 = Dust.NewDust(new Vector2(Projectile.Center.X, Projectile.Center.Y) - new Vector2(5), 0, 0, 235);
 						Main.dust[num1].noGravity = true;
 						Main.dust[num1].velocity *= 1.55f;
-						Main.dust[num1].velocity += projectile.velocity * 0.4f;
+						Main.dust[num1].velocity += Projectile.velocity * 0.4f;
 						Main.dust[num1].scale *= 2.25f;
 					}
 					triggerAnim();
 				}
-				if ((int)projectile.ai[1] != -1)
+				if ((int)Projectile.ai[1] != -1)
 				{
-					NPC target = Main.npc[(int)projectile.ai[1]];
-					projectile.alpha += projectile.timeLeft % 10 == 0 ? 1 : 0;
+					NPC target = Main.npc[(int)Projectile.ai[1]];
+					Projectile.alpha += Projectile.timeLeft % 10 == 0 ? 1 : 0;
 					if (target.active && !target.friendly)
 					{
-						projectile.position.X = target.Center.X - projectile.width / 2 - diffPosX;
-						projectile.position.Y = target.Center.Y - projectile.height / 2 - diffPosY;
+						Projectile.position.X = target.Center.X - Projectile.width / 2 - diffPosX;
+						Projectile.position.Y = target.Center.Y - Projectile.height / 2 - diffPosY;
 					}
 					else
 					{
-						projectile.Kill();
+						Projectile.Kill();
 					}
 				}
 				else
 				{
-					projectile.alpha += projectile.timeLeft % 2 == 0 ? 1 : 0;
+					Projectile.alpha += Projectile.timeLeft % 2 == 0 ? 1 : 0;
 				}
 			}
 		}
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			storeRot = projectile.rotation;
-			projectile.friendly = false;
-			target.immune[projectile.owner] = 0;
+			storeRot = Projectile.rotation;
+			Projectile.friendly = false;
+			target.immune[Projectile.owner] = 0;
 			latch = true;
 			if(diffPosX == 0)
-				diffPosX = target.Center.X - projectile.Center.X;
+				diffPosX = target.Center.X - Projectile.Center.X;
 			if(diffPosY == 0)
-				diffPosY = target.Center.Y - projectile.Center.Y;
+				diffPosY = target.Center.Y - Projectile.Center.Y;
 			diffPosX *= 0.9f;
 			diffPosY *= 0.9f;
-			projectile.ai[1] = target.whoAmI;
-			projectile.ai[0] = target.whoAmI;
+			Projectile.ai[1] = target.whoAmI;
+			Projectile.ai[0] = target.whoAmI;
 			if(target.life <= 0)
 			{
-				projectile.Kill();
+				Projectile.Kill();
 			}
-			projectile.netUpdate = true;
+			Projectile.netUpdate = true;
 		}
 		public void triggerAnim()
 		{
-			projectile.velocity *= 0;
-			projectile.tileCollide = false;
-			projectile.friendly = false;
+			Projectile.velocity *= 0;
+			Projectile.tileCollide = false;
+			Projectile.friendly = false;
 			startAnim = true;
-			projectile.extraUpdates = 2;
-			projectile.netUpdate = true;
+			Projectile.extraUpdates = 2;
+			Projectile.netUpdate = true;
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{
-			storeRot = projectile.rotation;
+			storeRot = Projectile.rotation;
 			latch = true;
 			return false;
 		}

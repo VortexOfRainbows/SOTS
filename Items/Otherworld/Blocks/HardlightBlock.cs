@@ -12,8 +12,8 @@ namespace SOTS.Items.Otherworld.Blocks
 	{
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
-			Texture2D texture = mod.GetTexture("Items/Otherworld/Blocks/HardlightBlockOutline");
-			Texture2D texture2 = mod.GetTexture("Items/Otherworld/Blocks/HardlightBlockFill");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/Blocks/HardlightBlockOutline").Value;
+			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Otherworld/Blocks/HardlightBlockFill").Value;
 			Color color = new Color(100, 100, 100, 0);
 			for (int k = 0; k < 5; k++)
 			{
@@ -28,8 +28,8 @@ namespace SOTS.Items.Otherworld.Blocks
 		}
 		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
 		{
-			Texture2D texture = mod.GetTexture("Items/Otherworld/Blocks/HardlightBlockOutline");
-			Texture2D texture2 = mod.GetTexture("Items/Otherworld/Blocks/HardlightBlockFill");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/Blocks/HardlightBlockOutline").Value;
+			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Otherworld/Blocks/HardlightBlockFill").Value;
 			Color color = new Color(100, 100, 100, 0);
 			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
 			for (int k = 0; k < 5; k++)
@@ -82,7 +82,7 @@ namespace SOTS.Items.Otherworld.Blocks
         public override bool KillSound(int i, int j)
 		{
 			Vector2 pos = new Vector2(i * 16, j * 16) + new Vector2(8, 8);
-			Main.PlaySound(3, (int)pos.X, (int)pos.Y, 53, 0.5f, 0.5f);
+			SoundEngine.PlaySound(3, (int)pos.X, (int)pos.Y, 53, 0.5f, 0.5f);
 			return false;
         }
         public override void NumDust(int i, int j, bool fail, ref int num)

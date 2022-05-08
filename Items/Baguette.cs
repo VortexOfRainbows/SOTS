@@ -19,7 +19,7 @@ namespace SOTS.Items
 		public override void SetDefaults()
 		{
 			Item.damage = 20;
-			Item.melee = true;
+			Item.DamageType = DamageClass.Melee;
 			Item.width = 30;
 			Item.height = 30;
 			Item.useTime = 14;

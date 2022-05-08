@@ -42,7 +42,7 @@ namespace SOTS.Projectiles
 		{
 			for(int i = 0; i < 4; i++)
 				Gore.NewGore(new Vector2(projectile.position.X, projectile.position.Y), default(Vector2), Main.rand.Next(61,64), 0.45f);	
-			Main.PlaySound(SoundID.Item, (int)(projectile.Center.X), (int)(projectile.Center.Y), 14, 0.3f);
+			SoundEngine.PlaySound(SoundID.Item, (int)(projectile.Center.X), (int)(projectile.Center.Y), 14, 0.3f);
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{	

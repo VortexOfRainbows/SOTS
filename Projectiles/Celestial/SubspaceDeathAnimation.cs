@@ -54,9 +54,9 @@ namespace SOTS.Projectiles.Celestial
 		int counter = 0;
 		public void DrawWorm(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Texture2D texture3 = mod.GetTexture("NPCs/Boss/SubspaceSerpentHeadFill");
-			Texture2D texture2 = mod.GetTexture("NPCs/Boss/SubspaceSerpentHeadGlow");
-			Texture2D texture = mod.GetTexture("NPCs/Boss/SubspaceSerpentHead");
+			Texture2D texture3 = Mod.Assets.Request<Texture2D>("NPCs/Boss/SubspaceSerpentHeadFill").Value;
+			Texture2D texture2 = Mod.Assets.Request<Texture2D>("NPCs/Boss/SubspaceSerpentHeadGlow").Value;
+			Texture2D texture = Mod.Assets.Request<Texture2D>("NPCs/Boss/SubspaceSerpentHead").Value;
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 16);
 			Vector2 first = projectile.Center;
 			Color color = Lighting.GetColor((int)first.X / 16, (int)first.Y / 16, Color.White);
@@ -86,15 +86,15 @@ namespace SOTS.Projectiles.Celestial
 				color = Lighting.GetColor((int)segments[i].X / 16, (int)segments[i].Y / 16, Color.White);
 				if (i != segments.Count - 1)
 				{
-					texture3 = mod.GetTexture("NPCs/Boss/SubspaceSerpentBodyFill");
-					texture2 = mod.GetTexture("NPCs/Boss/SubspaceSerpentBodyGlow");
-					texture = mod.GetTexture("NPCs/Boss/SubspaceSerpentBody");
+					texture3 = Mod.Assets.Request<Texture2D>("NPCs/Boss/SubspaceSerpentBodyFill").Value;
+					texture2 = Mod.Assets.Request<Texture2D>("NPCs/Boss/SubspaceSerpentBodyGlow").Value;
+					texture = Mod.Assets.Request<Texture2D>("NPCs/Boss/SubspaceSerpentBody").Value;
 				}
 				else
 				{
-					texture3 = mod.GetTexture("NPCs/Boss/SubspaceSerpentTailFill");
-					texture2 = mod.GetTexture("NPCs/Boss/SubspaceSerpentTailGlow");
-					texture = mod.GetTexture("NPCs/Boss/SubspaceSerpentTail");
+					texture3 = Mod.Assets.Request<Texture2D>("NPCs/Boss/SubspaceSerpentTailFill").Value;
+					texture2 = Mod.Assets.Request<Texture2D>("NPCs/Boss/SubspaceSerpentTailGlow").Value;
+					texture = Mod.Assets.Request<Texture2D>("NPCs/Boss/SubspaceSerpentTail").Value;
 				}
 				origin = new Vector2(texture.Width / 2, texture.Height / 16);
 				frame = new Rectangle(0, texture.Height / 8 * segmentFrame[i], texture.Width, texture.Height / 8);
@@ -260,9 +260,9 @@ namespace SOTS.Projectiles.Celestial
 					Gore gore2 = Main.gore[Gore.NewGore(atLoc - new Vector2(18, 18), default(Vector2), gore, 1.0f)];
 					gore2.velocity *= 0.2f;
 					if(segmentsDead % 4 == 0)
-						Main.PlaySound(SoundID.NPCKilled, (int)atLoc.X, (int)atLoc.Y, 39, 0.95f, -0.3f);
+						SoundEngine.PlaySound(SoundID.NPCKilled, (int)atLoc.X, (int)atLoc.Y, 39, 0.95f, -0.3f);
 					else
-						Main.PlaySound(2, (int)atLoc.X, (int)atLoc.Y, 62, 1.25f, -0.3f);
+						SoundEngine.PlaySound(2, (int)atLoc.X, (int)atLoc.Y, 62, 1.25f, -0.3f);
 					if (Main.netMode != 1)
                     {
 						Projectile.NewProjectile(atLoc, new Vector2(0, -1), ModContent.ProjectileType<GreenLightning2>(), 0, 0, Main.myPlayer);

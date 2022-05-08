@@ -26,7 +26,7 @@ namespace SOTS.Items.Pyramid.AncientGold
 			Item.consumable = true;
 			Item.createTile = TileType<AncientGoldTorchTile>();
 			Item.flame = true;
-            Item.useStyle = ItemUseStyleID.SwingThrow;
+            Item.useStyle = ItemUseStyleID.Swing;
             Item.rare = ItemRarityID.LightRed;
 			Item.value = 50;
 		}
@@ -154,7 +154,7 @@ namespace SOTS.Items.Pyramid.AncientGold
 			{
 				float x = (float)Utils.RandomInt(ref randSeed, -10, 11) * 0.15f;
 				float y = (float)Utils.RandomInt(ref randSeed, -10, 1) * 0.35f;
-				Main.spriteBatch.Draw(mod.GetTexture("Items/Pyramid/AncientGold/AncientGoldTorchTile_Flame"), new Vector2((float)(i * 16 - (int)Main.screenPosition.X) - (width - 16f) / 2f + x, (float)(j * 16 - (int)Main.screenPosition.Y + offsetY) + y) + zero, new Rectangle(frameX, frameY, width, height), color, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(Mod.Assets.Request<Texture2D>("Items/Pyramid/AncientGold/AncientGoldTorchTile_Flame").Value, new Vector2((float)(i * 16 - (int)Main.screenPosition.X) - (width - 16f) / 2f + x, (float)(j * 16 - (int)Main.screenPosition.Y + offsetY) + y) + zero, new Rectangle(frameX, frameY, width, height), color, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 			}
 		}
 	}

@@ -54,7 +54,7 @@ namespace SOTS.Projectiles.Minions
 						Gore.NewGore(new Vector2(projectile.Center.X - 12, projectile.Center.Y - 22), new Vector2(speedX, 0).RotatedByRandom(MathHelper.ToRadians(360)) + projectile.velocity * 0.12f, mod.GetGoreSlot("Gores/PenguinMissileGore" + (i + 1)), projectile.scale);
 				}
 			}
-			Main.PlaySound(2, (int)(projectile.Center.X), (int)(projectile.Center.Y), 14, 0.45f);
+			SoundEngine.PlaySound(2, (int)(projectile.Center.X), (int)(projectile.Center.Y), 14, 0.45f);
 		}
 		public override void Kill(int timeLeft)
 		{

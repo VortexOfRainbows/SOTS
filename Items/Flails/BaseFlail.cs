@@ -13,9 +13,9 @@ namespace SOTS.Items.Flails
 	{
 		public override void SetDefaults()
 		{
-			Item.useStyle = ItemUseStyleID.HoldingOut;
+			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.noUseGraphic = true;
-			Item.melee = true;
+			Item.DamageType = DamageClass.Melee;
 			Item.channel = true;
 			Item.UseSound = SoundID.Item19;
 			SafeSetDefaults();
@@ -106,7 +106,7 @@ namespace SOTS.Items.Flails
 				soundTimer += 1f + ChargeTime / MaxChargeTime;
 				if (soundTimer >= 30)
 				{
-					Main.PlaySound(new LegacySoundStyle(SoundID.Item, 19).WithPitchVariance(0.1f).WithVolume(0.5f), projectile.Center);
+					SoundEngine.PlaySound(new LegacySoundStyle(SoundID.Item, 19).WithPitchVariance(0.1f).WithVolume(0.5f), projectile.Center);
 					soundTimer -= 30;
 				}
 
@@ -138,7 +138,7 @@ namespace SOTS.Items.Flails
 				if(++Timer == 1 && Owner.whoAmI == Main.myPlayer)
 				{
 					if(Timer > 8)
-						Main.PlaySound(SoundID.Item19, projectile.Center);
+						SoundEngine.PlaySound(SoundID.Item19, projectile.Center);
 					projectile.Center = Owner.MountedCenter;
 					projectile.velocity = Owner.DirectionTo(Main.MouseWorld) * launchspeed;
 					OnLaunch(Owner);
@@ -220,7 +220,7 @@ namespace SOTS.Items.Flails
 				strucktile = true;
 				FallingTileCollide(oldVelocity);
 			}
-			Main.PlaySound(SoundID.Dig, projectile.Center);
+			SoundEngine.PlaySound(SoundID.Dig, projectile.Center);
 			Collision.HitTiles(projectile.position, projectile.velocity, projectile.width, projectile.height);
 			projectile.velocity = new Vector2((projectile.velocity.X != projectile.oldVelocity.X) ?
 				-projectile.oldVelocity.X / 5 : projectile.velocity.X,
@@ -233,7 +233,7 @@ namespace SOTS.Items.Flails
 
 		public override bool PreDrawExtras(SpriteBatch spriteBatch)
 		{
-			Texture2D ChainTexture = mod.GetTexture(Texture.Remove(0, mod.Name.Length + 1) + "_chain");
+			Texture2D ChainTexture = Mod.Assets.Request<Texture2D>(Texture.Remove(0, mod.Name.Length + 1).Value + "_chain");
 			Player Owner = Main.player[projectile.owner];
 			int timestodrawchain = Math.Max((int)(projectile.Distance(Owner.MountedCenter) / ChainTexture.Width), 1);
 			for (int i = 0; i < timestodrawchain; i++)

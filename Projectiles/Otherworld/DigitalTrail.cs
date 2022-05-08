@@ -69,7 +69,7 @@ namespace SOTS.Projectiles.Otherworld
 			bool black = projectile.ai[0] < 0;
 			if (black)
 			{
-				texture = mod.GetTexture("Projectiles/Otherworld/DigitalTrailBlack");
+				texture = Mod.Assets.Request<Texture2D>("Projectiles/Otherworld/DigitalTrailBlack").Value;
 			}
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Vector2 previousPosition = trailPos[0];

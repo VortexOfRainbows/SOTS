@@ -27,12 +27,12 @@ namespace SOTS.Items.Celestial
 			Item.height = 34;
 			Item.useTime = 16;
 			Item.useAnimation = 16;
-			Item.useStyle = ItemUseStyleID.HoldingUp;
+			Item.useStyle = ItemUseStyleID.HoldUp;
 			Item.value = Item.sellPrice(0, 15, 0, 0);
 			Item.rare = ItemRarityID.Yellow;
 			Item.UseSound = SoundID.Item44;
 			Item.noMelee = true;
-			Item.summon = true;
+			Item.DamageType = DamageClass.Summon;
 			Item.buffType = ModContent.BuffType<InfernalDefense>();
 			Item.shoot = ModContent.ProjectileType<LemegetonWispRed>();
 		}

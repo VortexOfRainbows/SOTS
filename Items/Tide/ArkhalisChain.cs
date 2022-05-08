@@ -79,13 +79,13 @@ namespace SOTS.Items.Tide
 			int key = ItemID.Arkhalis;
 			if (Main.tile[i, j].frameX < 18 && player.ConsumeItem(key))
 			{
-				Main.PlaySound(SoundID.Grab, (int)player.Center.X, (int)player.Center.Y, 0, 1.1f, -0.2f);
+				SoundEngine.PlaySound(SoundID.Grab, (int)player.Center.X, (int)player.Center.Y, 0, 1.1f, -0.2f);
 				tile.frameX = 18;
 				NetMessage.SendTileSquare(-1, i, j, 2);
 			}
 			else if(Main.tile[i, j].frameX >= 18)
 			{
-				Main.PlaySound(SoundID.Grab, (int)player.Center.X, (int)player.Center.Y, 0, 1.1f, -0.2f);
+				SoundEngine.PlaySound(SoundID.Grab, (int)player.Center.X, (int)player.Center.Y, 0, 1.1f, -0.2f);
 				int item = Item.NewItem(i * 16, (j + 6) * 16, 16, 16, ItemID.Arkhalis, 1, false, 0, true);
 				NetMessage.SendData(MessageID.SyncItem, player.whoAmI, -1, null, item, 1f, 0.0f, 0.0f, 0, 0, 0);
 				tile.frameX = 0;

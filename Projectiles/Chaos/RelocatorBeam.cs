@@ -231,7 +231,7 @@ namespace SOTS.Projectiles.Chaos
                 player.velocity *= 0.1f;
                 player.velocity += projectile.velocity * 4.6f;
                 player.velocity.Y -= 2;
-                Main.PlaySound(SoundID.Item, (int)player.Center.X, (int)player.Center.Y, 72, 1.2f, 0.1f);
+                SoundEngine.PlaySound(SoundID.Item, (int)player.Center.X, (int)player.Center.Y, 72, 1.2f, 0.1f);
                 for (int i = 0; i < 20; i++)
                 {
                     Dust dust2 = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, ModContent.DustType<CopyDust4>(), 0, 0, 120);

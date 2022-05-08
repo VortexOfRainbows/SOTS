@@ -60,7 +60,7 @@ namespace SOTS.Projectiles.Minions
 		{
 			if (runOnce)
 				return true;
-			Texture2D texture2 = mod.GetTexture("Projectiles/Minions/TerminatorSquirrelTrail");
+			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Projectiles/Minions/TerminatorSquirrelTrail").Value;
 			Vector2 drawOrigin2 = new Vector2(texture2.Width * 0.5f, texture2.Height * 0.5f);
 			Vector2 current = projectile.Center + new Vector2(4 * projectile.spriteDirection, 12).RotatedBy(projectile.rotation);
 			Vector2 previousPosition = current;
@@ -120,8 +120,8 @@ namespace SOTS.Projectiles.Minions
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture = mod.GetTexture("Projectiles/Minions/TerminatorSquirrelArm");
-			Texture2D texture2 = mod.GetTexture("Projectiles/Minions/TerminatorSquirrelArmGlow");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Minions/TerminatorSquirrelArm").Value;
+			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Projectiles/Minions/TerminatorSquirrelArmGlow").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Vector2 drawPos = projectile.Center - Main.screenPosition;
 			Main.spriteBatch.Draw(texture, drawPos + gunVelocity, null, drawColor, projectile.rotation, drawOrigin, projectile.scale, projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);

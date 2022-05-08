@@ -133,7 +133,7 @@ namespace SOTS.NPCs.Boss
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
         {
-            Texture2D texture = mod.GetTexture("NPCs/Boss/SubspaceSerpentBodyFill");
+            Texture2D texture = Mod.Assets.Request<Texture2D>("NPCs/Boss/SubspaceSerpentBodyFill").Value;
             Vector2 origin = new Vector2(texture.Width * 0.5f, npc.height * 0.5f);
             float percentShield = (maxDPS - currentDPS) / maxDPS;
             NPC head = Main.npc[npc.realLife];
@@ -158,7 +158,7 @@ namespace SOTS.NPCs.Boss
         int counter = 0;
         public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
         {
-            Texture2D texture = mod.GetTexture("NPCs/Boss/SubspaceSerpentBodyGlow");
+            Texture2D texture = Mod.Assets.Request<Texture2D>("NPCs/Boss/SubspaceSerpentBodyGlow").Value;
             Vector2 origin = new Vector2(texture.Width * 0.5f, npc.height * 0.5f);
             Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition, npc.frame, Color.White * ((255f - npc.alpha) / 255f), npc.rotation, origin, npc.scale, SpriteEffects.None, 0);
             counter++;

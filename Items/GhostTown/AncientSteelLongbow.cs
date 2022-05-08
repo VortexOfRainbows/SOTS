@@ -22,7 +22,7 @@ namespace SOTS.Items.GhostTown
 			Item.height = 64;
 			Item.useTime = 44;
 			Item.useAnimation = 44;
-			Item.useStyle = ItemUseStyleID.HoldingOut;
+			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.knockBack = 4f;
 			Item.value = Item.sellPrice(0, 0, 80, 0);
 			Item.rare = ItemRarityID.Blue;

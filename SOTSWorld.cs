@@ -703,7 +703,7 @@ namespace SOTS
 				{
 					int slot = 0;
 					Tile tile2 = Main.tile[chest.x, chest.y + 2];
-					if (tile2.type == ModContent.TileType<VibrantBrickTile>() && tile.wall == ModContent.WallType<VibrantWallWall>()) //locked chest
+					if (tile2.type == ModContent.TileType<VibrantBrickTile>() && tile.WallType == ModContent.WallType<VibrantWallWall>()) //locked chest
 					{
 						chest.item[slot].SetDefaults(ModContent.ItemType<PerfectStar>());
 						slot++;
@@ -748,7 +748,7 @@ namespace SOTS
 				{
 					int slot = 0;
 					Tile tile2 = Main.tile[chest.x, chest.y + 2];
-					if (tile2.type == ModContent.TileType<CharredWoodTile>() && tile.wall == ModContent.WallType<HardIceBrickWallWall>())
+					if (tile2.type == ModContent.TileType<CharredWoodTile>() && tile.WallType == ModContent.WallType<HardIceBrickWallWall>())
 					{
 						chest.item[slot].SetDefaults(ModContent.ItemType<GlazeBow>()); //Will be replaced with Glaze Repeater
 						slot++;

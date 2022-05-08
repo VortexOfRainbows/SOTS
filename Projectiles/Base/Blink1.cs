@@ -119,7 +119,7 @@ namespace SOTS.Projectiles.Base
                 }
                 player.immuneTime = 10 + (int)(counter / 12f);
                 player.immune = true;
-                Main.PlaySound(SoundID.Item8, Main.player[projectile.owner].Center);
+                SoundEngine.PlaySound(SoundID.Item8, Main.player[projectile.owner].Center);
                 modPlayer.BlinkedAmount += 1.25f;
             }
         }

@@ -15,12 +15,12 @@ namespace SOTS.Items.Tools
 		public override void SetDefaults()
 		{
             Item.damage = 12; 
-            Item.melee = true;  
+            Item.DamageType = DamageClass.Melee;  
             Item.width = 28;    
             Item.height = 28;   
             Item.useTime = 16; 
             Item.useAnimation = 16;
-            Item.useStyle = ItemUseStyleID.SwingThrow;    
+            Item.useStyle = ItemUseStyleID.Swing;    
             Item.noMelee = true;
             Item.knockBack = 2.4f;
             Item.value = Item.sellPrice(0, 0, 2, 75);

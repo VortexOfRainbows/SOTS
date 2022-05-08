@@ -87,7 +87,7 @@ namespace SOTS.Projectiles.Otherworld
 		int previousDistance = 120;
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Otherworld/DestabilizingBeam");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Otherworld/DestabilizingBeam");
 			bool dust = false;
 			if(projectile.alpha < 10)
 			{

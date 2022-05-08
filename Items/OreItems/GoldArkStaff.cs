@@ -21,7 +21,7 @@ namespace SOTS.Items.OreItems
 			Item.height = 36;
 			Item.useTime = 30;
 			Item.useAnimation = 30;
-			Item.useStyle = ItemUseStyleID.SwingThrow;
+			Item.useStyle = ItemUseStyleID.Swing;
 			Item.knockBack = 3.5f;
             Item.value = Item.sellPrice(0, 0, 35, 0);
 			Item.rare = ItemRarityID.Green;

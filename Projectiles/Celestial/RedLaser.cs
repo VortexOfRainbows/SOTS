@@ -163,8 +163,8 @@ namespace SOTS.Projectiles.Celestial
 		}
 		public override void PostDraw(Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch, Color lightColor)
         {
-			Texture2D texture = ModContent.GetTexture("SOTS/NPCs/Boss/LaserTargeting");
-			//Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/PinkyHook_Chain");    //this where the chain of grappling hook is drawn
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Boss/LaserTargeting");
+			//Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/PinkyHook_Chain");    //this where the chain of grappling hook is drawn
 													  //change YourModName with ur mod name/ and CustomHookPr_Chain with the name of ur one
 			Vector2 directionArea = new Vector2(2555, 0).RotatedBy(MathHelper.ToRadians((float)startingDirection));
 			directionArea.X = projectile.Center.X + directionArea.X;

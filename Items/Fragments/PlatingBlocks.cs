@@ -13,7 +13,7 @@ namespace SOTS.Items.Fragments
 {
 	public abstract class PlatingTile : ModTile
 	{
-		public virtual Texture2D glowTexture => mod.GetTexture("Items/Fragments/PermafrostPlatingTileGlow");
+		public virtual Texture2D glowTexture => Mod.Assets.Request<Texture2D>("Items/Fragments/PermafrostPlatingTileGlow").Value;
 		public sealed override void SetDefaults()
 		{
 			Main.tileSolid[Type] = true;
@@ -94,7 +94,7 @@ namespace SOTS.Items.Fragments
 	}
 	public class NaturePlatingTile : PlatingTile
 	{
-		public override Texture2D glowTexture => mod.GetTexture("Items/Fragments/NaturePlatingTileGlow");
+		public override Texture2D glowTexture => Mod.Assets.Request<Texture2D>("Items/Fragments/NaturePlatingTileGlow").Value;
 		public override void SafeSetDefaults()
 		{
 			drop = ModContent.ItemType<NaturePlating>();
@@ -158,7 +158,7 @@ namespace SOTS.Items.Fragments
 	}
 	public class EarthenPlatingTile : PlatingTile
 	{
-		public override Texture2D glowTexture => mod.GetTexture("Items/Fragments/EarthenPlatingTileGlow");
+		public override Texture2D glowTexture => Mod.Assets.Request<Texture2D>("Items/Fragments/EarthenPlatingTileGlow").Value;
 		public override void SafeSetDefaults()
 		{
 			drop = ModContent.ItemType<EarthenPlating>();
@@ -224,7 +224,7 @@ namespace SOTS.Items.Fragments
 	}
 	public class PermafrostPlatingTile : PlatingTile
 	{
-		public override Texture2D glowTexture => mod.GetTexture("Items/Fragments/PermafrostPlatingTileGlow");
+		public override Texture2D glowTexture => Mod.Assets.Request<Texture2D>("Items/Fragments/PermafrostPlatingTileGlow").Value;
 		public override void SafeSetDefaults()
 		{
 			drop = ModContent.ItemType<PermafrostPlating>();
@@ -294,7 +294,7 @@ namespace SOTS.Items.Fragments
 	}
 	public class TidePlatingTile : PlatingTile
 	{
-		public override Texture2D glowTexture => mod.GetTexture("Items/Fragments/TidePlatingTileGlow");
+		public override Texture2D glowTexture => Mod.Assets.Request<Texture2D>("Items/Fragments/TidePlatingTileGlow").Value;
 		public override void SafeSetDefaults()
 		{
 			drop = ModContent.ItemType<TidePlating>();
@@ -362,7 +362,7 @@ namespace SOTS.Items.Fragments
 	}
 	public class EvilPlatingTile : PlatingTile
 	{
-		public override Texture2D glowTexture => mod.GetTexture("Items/Fragments/EvilPlatingTileGlow");
+		public override Texture2D glowTexture => Mod.Assets.Request<Texture2D>("Items/Fragments/EvilPlatingTileGlow").Value;
 		public override void SafeSetDefaults()
 		{
 			drop = ModContent.ItemType<EvilPlating>();
@@ -428,7 +428,7 @@ namespace SOTS.Items.Fragments
 	}
 	public class ChaosPlatingTile : PlatingTile
 	{
-		public override Texture2D glowTexture => mod.GetTexture("Items/Fragments/ChaosPlatingTileGlow");
+		public override Texture2D glowTexture => Mod.Assets.Request<Texture2D>("Items/Fragments/ChaosPlatingTileGlow").Value;
 		public override void SafeSetDefaults()
 		{
 			drop = ModContent.ItemType<ChaosPlating>();
@@ -499,7 +499,7 @@ namespace SOTS.Items.Fragments
 	}
 	public class InfernoPlatingTile : PlatingTile
 	{
-		public override Texture2D glowTexture => mod.GetTexture("Items/Fragments/InfernoPlatingTileGlow");
+		public override Texture2D glowTexture => Mod.Assets.Request<Texture2D>("Items/Fragments/InfernoPlatingTileGlow").Value;
 		public override void SafeSetDefaults()
 		{
 			drop = ModContent.ItemType<InfernoPlating>();
@@ -582,7 +582,7 @@ namespace SOTS.Items.Fragments
 	}
 	public class UltimatePlatingTile : PlatingTile
 	{
-		public override Texture2D glowTexture => mod.GetTexture("Items/Fragments/UltimatePlatingTileGlow");
+		public override Texture2D glowTexture => Mod.Assets.Request<Texture2D>("Items/Fragments/UltimatePlatingTileGlow").Value;
 		public override void SafeSetDefaults()
 		{
 			drop = ModContent.ItemType<UltimatePlating>();

@@ -18,7 +18,7 @@ namespace SOTS.Items.Celestial
 		public override void SetDefaults()
 		{
 			Item.damage = 40;
-			Item.useStyle = ItemUseStyleID.SwingThrow;
+			Item.useStyle = ItemUseStyleID.Swing;
 			Item.useTime = 26;
 			Item.useAnimation = 26;
 			Item.knockBack = 1.4f;

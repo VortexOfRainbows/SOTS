@@ -55,7 +55,7 @@ namespace SOTS.Projectiles.Minions
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
 			Player player = Main.player[projectile.owner];
-			Texture2D texture = mod.GetTexture("Projectiles/Minions/ChaosSpiritRing");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Minions/ChaosSpiritRing").Value;
 			float furtherCompression = 1f - postChargeCounter / 270f;
 			for (int j = 0; j < 2; j++)
 				for (int i = 180; i < 360; i += 6)
@@ -81,7 +81,7 @@ namespace SOTS.Projectiles.Minions
 					Main.spriteBatch.Draw(texture, center - Main.screenPosition + rotation, null, new Color(color.R, color.G, color.B, 0) * (j == 0 ? 1 : furtherCompression) * 0.6f, projectile.rotation, new Vector2(texture.Width / 2, texture.Height / 2), 0.75f, SpriteEffects.None, 0f);
 				}
 
-			texture = mod.GetTexture("Projectiles/Minions/ChaosSpiritWing");
+			texture = Mod.Assets.Request<Texture2D>("Projectiles/Minions/ChaosSpiritWing").Value;
 			float bonusSpread = .205f * postChargeCounter;
 			for (int j = 0; j < 2; j++)
 				for (int i = 0; i < 3; i++)
@@ -296,7 +296,7 @@ namespace SOTS.Projectiles.Minions
 					postChargeCounter++;
 				if(postChargeCounter % 30 == 29)
                 {
-					Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 15, 1.3f);
+					SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 15, 1.3f);
 				}
 
 				direction *= (float)Math.Pow(distance, 1.35) * 0.005f + speed;

@@ -18,12 +18,12 @@ namespace SOTS.Items.Crushers
 		public override void SafeSetDefaults()
 		{
             Item.damage = 26;
-            Item.melee = true;  
+            Item.DamageType = DamageClass.Melee;  
             Item.width = 42;
             Item.height = 42;  
             Item.useTime = 30; 
             Item.useAnimation = 30;
-            Item.useStyle = ItemUseStyleID.HoldingOut;    
+            Item.useStyle = ItemUseStyleID.Shoot;    
             Item.knockBack = 6f;
             Item.value = Item.sellPrice(0, 3, 60, 0);
             Item.rare = ItemRarityID.Pink;

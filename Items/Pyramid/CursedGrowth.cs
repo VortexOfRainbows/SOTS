@@ -24,7 +24,7 @@ namespace SOTS.Items.Pyramid
 			Item.autoReuse = true;
 			Item.useAnimation = 15;
 			Item.useTime = 10;
-			Item.useStyle = ItemUseStyleID.SwingThrow;
+			Item.useStyle = ItemUseStyleID.Swing;
 			Item.rare = ItemRarityID.LightRed;
 			Item.value = 0;
 			Item.consumable = true;

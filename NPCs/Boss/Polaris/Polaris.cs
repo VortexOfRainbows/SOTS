@@ -66,7 +66,7 @@ namespace SOTS.NPCs.Boss.Polaris
 		}
         public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Celestial/SubspaceLingeringFlame");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Celestial/SubspaceLingeringFlame");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			for (int i = 0; i < particleListRed.Count; i++)
 			{
@@ -96,7 +96,7 @@ namespace SOTS.NPCs.Boss.Polaris
         }
         public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture = mod.GetTexture("NPCs/Boss/Polaris/PolarisThruster");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("NPCs/Boss/Polaris/PolarisThruster").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
 			for (int i = 0; i < 4; i++)
 			{
@@ -180,7 +180,7 @@ namespace SOTS.NPCs.Boss.Polaris
 		public void SpawnShard(int amt = 1)
 		{
 			Player player = Main.player[npc.target];
-			Main.PlaySound(SoundID.Item44, (int)npc.Center.X, (int)npc.Center.Y);
+			SoundEngine.PlaySound(SoundID.Item44, (int)npc.Center.X, (int)npc.Center.Y);
 			if (Main.netMode != 1)
 			{
 				int damage = npc.damage / 2;
@@ -197,7 +197,7 @@ namespace SOTS.NPCs.Boss.Polaris
 		}
 		public void SpawnCannons()
 		{
-			Main.PlaySound(SoundID.Item50, (int)npc.Center.X, (int)npc.Center.Y);
+			SoundEngine.PlaySound(SoundID.Item50, (int)npc.Center.X, (int)npc.Center.Y);
 			if (Main.netMode != 1)
 				for (int i = 0; i < 4; i++)
 				{
@@ -207,7 +207,7 @@ namespace SOTS.NPCs.Boss.Polaris
 		public void SpawnDragon()
 		{
 			Player player = Main.player[npc.target];
-			Main.PlaySound(SoundID.Item119, (int)(npc.Center.X), (int)(npc.Center.Y));
+			SoundEngine.PlaySound(SoundID.Item119, (int)(npc.Center.X), (int)(npc.Center.Y));
 			if (Main.netMode != 1)
 			{
 				Vector2 vectorToPlayer = player.Center - npc.Center;
@@ -288,7 +288,7 @@ namespace SOTS.NPCs.Boss.Polaris
 					int index = (int)(transition / 30);
 					if(Main.netMode != 1)
 						NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<PolarisSpike>(), 0, index, npc.whoAmI);
-					Main.PlaySound(SoundID.Item50, (int)(npc.Center.X), (int)(npc.Center.Y));
+					SoundEngine.PlaySound(SoundID.Item50, (int)(npc.Center.X), (int)(npc.Center.Y));
 				}
 			}
 			else

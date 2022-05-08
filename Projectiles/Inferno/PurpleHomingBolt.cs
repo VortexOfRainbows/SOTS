@@ -113,7 +113,7 @@ namespace SOTS.Projectiles.Inferno
 		{
 			if(runOnce)
 			{
-				Main.PlaySound(2, (int)(projectile.Center.X), (int)(projectile.Center.Y), 91, 0.8f, 0.1f);
+				SoundEngine.PlaySound(2, (int)(projectile.Center.X), (int)(projectile.Center.Y), 91, 0.8f, 0.1f);
 				runOnce = false;
             }
 			if (end == true && projectile.timeLeft > 40)

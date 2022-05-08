@@ -14,7 +14,7 @@ namespace SOTS.Void
         public VoidBarBorder()
         {
             if (_backgroundTexture == null)
-                _backgroundTexture = ModContent.GetTexture("SOTS/Void/VoidBarBorder");
+                _backgroundTexture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Void/VoidBarBorder");
 			
         }
 		protected override void DrawSelf(SpriteBatch spriteBatch)

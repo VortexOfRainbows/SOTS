@@ -25,7 +25,7 @@ namespace SOTS.Projectiles.Laser
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
         {
-            Texture2D texture = mod.GetTexture("Projectiles/Laser/PrismLaser");
+            Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Laser/PrismLaser").Value;
             Texture2D texture2 = Main.projectileTexture[projectile.type];
             float compression = (100f - projectile.ai[0]) / 100f;
             if (compression < 0)
@@ -161,7 +161,7 @@ namespace SOTS.Projectiles.Laser
             if (!player.channel && projectile.ai[0] >= 100 && ai2 >= 5) ended = true;
             if (ended)
             {
-                Main.PlaySound(SoundID.Item94, (int)(projectile.Center.X), (int)(projectile.Center.Y));
+                SoundEngine.PlaySound(SoundID.Item94, (int)(projectile.Center.X), (int)(projectile.Center.Y));
                 projectile.Kill();
             }
         }

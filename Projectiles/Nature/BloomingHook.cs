@@ -41,7 +41,7 @@ namespace SOTS.Projectiles.Nature
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Nature/BloomingVine");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Nature/BloomingVine");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Player owner = Main.player[projectile.owner];
 			if (owner.active && !owner.dead)
@@ -178,7 +178,7 @@ namespace SOTS.Projectiles.Nature
 					frame++;
 					if (frame == 7)
 					{
-						Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 30, 0.7f, -0.4f);
+						SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 30, 0.7f, -0.4f);
 						if (Main.myPlayer == projectile.owner)
 						{
 							Projectile.NewProjectile(projectile.Center, rotateVector * 1f, ModContent.ProjectileType<FriendlyFlowerBolt>(), projectile.damage, 1f, owner.whoAmI);

@@ -57,7 +57,7 @@ namespace SOTS.Projectiles.Celestial
 			if(projectile.ai[0] != 1)
 			{
 				Vector2 position = projectile.Center;
-				Main.PlaySound(SoundID.Item14, (int)position.X, (int)position.Y);  
+				SoundEngine.PlaySound(SoundID.Item14, (int)position.X, (int)position.Y);  
 				
 				int gore = Gore.NewGore(new Vector2(projectile.position.X, projectile.position.Y), new Vector2(Main.rand.Next(-25,21), Main.rand.Next(-20,21)), mod.GetGoreSlot("Gores/NukeTurtleGore1"), projectile.scale);
 				Main.gore[gore].velocity *= Main.rand.Next(70, 121) * 0.01f;
@@ -102,7 +102,7 @@ namespace SOTS.Projectiles.Celestial
 			if(projectile.ai[0] == 1 && projectile.timeLeft > 90)
 			{
 				Vector2 stormPos = new Vector2(1800, 0).RotatedBy(MathHelper.ToRadians(count * 11));
-				Main.PlaySound(SoundID.Item16, (int)(projectile.Center.X - stormPos.X), (int)(projectile.Center.Y - stormPos.Y)); //fart sound
+				SoundEngine.PlaySound(SoundID.Item16, (int)(projectile.Center.X - stormPos.X), (int)(projectile.Center.Y - stormPos.Y)); //fart sound
 				if(Main.myPlayer == projectile.owner)
 				{
 					int shard = Projectile.NewProjectile(projectile.Center.X - stormPos.X, projectile.Center.Y - stormPos.Y, 0, 0, projectile.type, 0, projectile.knockBack, player.whoAmI);

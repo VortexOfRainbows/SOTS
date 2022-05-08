@@ -137,14 +137,14 @@ namespace SOTS.NPCs.Boss.Advisor
         }
         public void DrawGlow(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Texture2D texture = ModContent.GetTexture("SOTS/NPCs/Boss/Advisor/TheAdvisorHead_Spirit");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Advisor/TheAdvisorHead_Spirit");
 			Vector2 drawOrigin = new Vector2(Main.npcTexture[npc.type].Width * 0.5f, npc.height * 0.5f);
 			Vector2 drawPos = npc.Center - Main.screenPosition;
 			Color color = new Color(100, 100, 100, 0);
 			if (attackPhase2 == 0)
 			{
-				Texture2D texture2 = ModContent.GetTexture("SOTS/NPCs/Boss/Advisor/AdvisorMissileAttachment");
-				Texture2D texture3 = ModContent.GetTexture("SOTS/NPCs/Boss/Advisor/AdvisorMissileAttachment_Highlight");
+				Texture2D texture2 = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Advisor/AdvisorMissileAttachment");
+				Texture2D texture3 = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Advisor/AdvisorMissileAttachment_Highlight");
 				Vector2 drawOrigin2 = new Vector2(texture2.Width * 0.5f, texture2.Height * 0.5f);
 				if (attackTimer2 > 0)
 				{
@@ -182,8 +182,8 @@ namespace SOTS.NPCs.Boss.Advisor
 			}
 			if (attackPhase2 == 1)
 			{
-				Texture2D texture2 = ModContent.GetTexture("SOTS/NPCs/Boss/Advisor/AdvisorLaserAttachment");
-				Texture2D texture3 = ModContent.GetTexture("SOTS/NPCs/Boss/Advisor/AdvisorLaserAttachment_Highlight");
+				Texture2D texture2 = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Advisor/AdvisorLaserAttachment");
+				Texture2D texture3 = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Advisor/AdvisorLaserAttachment_Highlight");
 				Vector2 drawOrigin2 = new Vector2(texture2.Width * 0.5f, texture2.Height * 0.5f);
 				if (attackTimer2 > 0)
 				{
@@ -217,8 +217,8 @@ namespace SOTS.NPCs.Boss.Advisor
 			}
 			if (attackPhase2 == 2)
 			{
-				Texture2D texture2 = ModContent.GetTexture("SOTS/NPCs/Boss/Advisor/AdvisorTazerAttachment");
-				Texture2D texture3 = ModContent.GetTexture("SOTS/NPCs/Boss/Advisor/AdvisorTazerAttachment_Highlight");
+				Texture2D texture2 = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Advisor/AdvisorTazerAttachment");
+				Texture2D texture3 = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Advisor/AdvisorTazerAttachment_Highlight");
 				Vector2 drawOrigin2 = new Vector2(texture2.Width * 0.5f, texture2.Height * 0.5f);
 				if (attackTimer2 > 0)
 				{
@@ -269,8 +269,8 @@ namespace SOTS.NPCs.Boss.Advisor
 					ai2 += 180;
 				float npcRadians = npc.rotation;
 				Vector2 toPos = npc.Center + hookPos[j].RotatedBy(npcRadians);
-				Texture2D texture = ModContent.GetTexture("SOTS/NPCs/Constructs/OtherworldVine");
-				Texture2D texture2 = ModContent.GetTexture("SOTS/NPCs/Constructs/OtherworldVine_Highlight");
+				Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Constructs/OtherworldVine");
+				Texture2D texture2 = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Constructs/OtherworldVine_Highlight");
 				Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 				Vector2 npcPos = new Vector2(npc.Center.X + (-96 + 64 * j) * 1f * 0.25f, npc.position.Y + npc.height).RotatedBy(npcRadians);
 				Vector2 distanceToOwner = npcPos - toPos;
@@ -549,7 +549,7 @@ namespace SOTS.NPCs.Boss.Advisor
 				}
 				if(dormantCounter > 90)
 				{
-					Main.PlaySound(SoundID.Roar, (int)(npc.Center.X), (int)(npc.Center.Y), 0, 1.25f);
+					SoundEngine.PlaySound(SoundID.Roar, (int)(npc.Center.X), (int)(npc.Center.Y), 0, 1.25f);
 					Main.NewText("The Advisor has awoken!", 175, 75, byte.MaxValue);
 					dormant = false;
 					npc.dontTakeDamage = false;
@@ -563,9 +563,9 @@ namespace SOTS.NPCs.Boss.Advisor
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture = ModContent.GetTexture("SOTS/NPCs/Boss/Advisor/TheAdvisorHead_Eye");
-			Texture2D texture3 = ModContent.GetTexture("SOTS/NPCs/Boss/Advisor/TheAdvisorHead_EyeClosed");
-			Texture2D texture2 = ModContent.GetTexture("SOTS/NPCs/Boss/Advisor/TheAdvisorHead_Highlight");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Advisor/TheAdvisorHead_Eye");
+			Texture2D texture3 = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Advisor/TheAdvisorHead_EyeClosed");
+			Texture2D texture2 = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Advisor/TheAdvisorHead_Highlight");
 			Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
 			Vector2 drawPos = npc.Center - Main.screenPosition;
 
@@ -690,15 +690,15 @@ namespace SOTS.NPCs.Boss.Advisor
 					circularAddition.Y -= (attackTimer1 - 360) * 1f;
 					glow = true;
 					if(attackTimer1 == 390)
-						Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 15, 0.7f);
+						SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 15, 0.7f);
 					if (attackTimer1 == 420)
-						Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 15, 1f);
+						SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 15, 1f);
 					if(attackTimer1 == 450)
-						Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 15, 1.3f);
+						SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 15, 1.3f);
 					if (attackTimer1 >= 480)
 					{
 						if (attackTimer1 == 480)
-							Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 96, 1.4f);
+							SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 96, 1.4f);
 						if (attackTimer1 < 510)
 						{
 							hookDistortion += 8.5f;
@@ -818,7 +818,7 @@ namespace SOTS.NPCs.Boss.Advisor
 									break;
 								}
 							}
-							Main.PlaySound(2, (int)locX, (int)locY, 30, 0.2f);
+							SoundEngine.PlaySound(2, (int)locX, (int)locY, 30, 0.2f);
 							if (Main.netMode != 1)
 								Projectile.NewProjectile(locX, locY, 0, 0, mod.ProjectileType("OtherworldlyTracer"), damage, 0f, Main.myPlayer, (1071) - (attackTimer1 * 2), npc.whoAmI);
 						}
@@ -829,7 +829,7 @@ namespace SOTS.NPCs.Boss.Advisor
 						attackTimer1 = -150;
 						attackPhase1 = -2;
 						glow = false;
-						Main.PlaySound(SoundID.Item92, npc.Center);
+						SoundEngine.PlaySound(SoundID.Item92, npc.Center);
 						for (int i = 0; i < Main.projectile.Length; i++)
 						{
 							Projectile proj = Main.projectile[i];
@@ -981,17 +981,17 @@ namespace SOTS.NPCs.Boss.Advisor
 					ai3 += npc.velocity.X * 1.2f;
 				}
 				if (attackTimer2 == 30)
-					Main.PlaySound(SoundID.Mech, (int)npc.Center.X, (int)npc.Center.Y, 0, 1f);
+					SoundEngine.PlaySound(SoundID.Mech, (int)npc.Center.X, (int)npc.Center.Y, 0, 1f);
 				if (attackTimer2 == 60)
-					Main.PlaySound(SoundID.Mech, (int)npc.Center.X, (int)npc.Center.Y, 0, 1.15f);
+					SoundEngine.PlaySound(SoundID.Mech, (int)npc.Center.X, (int)npc.Center.Y, 0, 1.15f);
 				if (attackTimer2 == 90)
-					Main.PlaySound(SoundID.Mech, (int)npc.Center.X, (int)npc.Center.Y, 0, 1.3f);
+					SoundEngine.PlaySound(SoundID.Mech, (int)npc.Center.X, (int)npc.Center.Y, 0, 1.3f);
 				if (attackTimer2 == 810)
-					Main.PlaySound(SoundID.Mech, (int)npc.Center.X, (int)npc.Center.Y, 0, 1.3f);
+					SoundEngine.PlaySound(SoundID.Mech, (int)npc.Center.X, (int)npc.Center.Y, 0, 1.3f);
 				if (attackTimer2 == 840)
-					Main.PlaySound(SoundID.Mech, (int)npc.Center.X, (int)npc.Center.Y, 0, 1.15f);
+					SoundEngine.PlaySound(SoundID.Mech, (int)npc.Center.X, (int)npc.Center.Y, 0, 1.15f);
 				if (attackTimer2 == 870)
-					Main.PlaySound(SoundID.Mech, (int)npc.Center.X, (int)npc.Center.Y, 0, 1f);
+					SoundEngine.PlaySound(SoundID.Mech, (int)npc.Center.X, (int)npc.Center.Y, 0, 1f);
 				if(attackTimer2 > 90 && attackTimer2 < 810)
 				{
 					float FasterRate = 1f;
@@ -1009,7 +1009,7 @@ namespace SOTS.NPCs.Boss.Advisor
 							damage2 = (int)(damage2 * 0.8f);
 							Projectile.NewProjectile(npc.Center.X - 54, npc.Center.Y + 20, Main.rand.Next(-10, 11) * 0.5f, Main.rand.Next(-10, 11) * 0.5f, mod.ProjectileType("HoloMissile"), damage2, 0, Main.myPlayer, 0, npc.target);
 						}
-						Main.PlaySound(SoundID.Item, (int)npc.Center.X - 54, (int)npc.Center.Y + 20, 61, 1f);
+						SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X - 54, (int)npc.Center.Y + 20, 61, 1f);
 						for (int i = 0; i < 15; i++)
 						{
 							int dust = Dust.NewDust(npc.Center + new Vector2(-54 - 8, 20 - 8), 8, 8, DustID.Electric, 0, 0, 0, default, 1.25f);
@@ -1028,7 +1028,7 @@ namespace SOTS.NPCs.Boss.Advisor
 							}
 							Projectile.NewProjectile(npc.Center.X + 54, npc.Center.Y + 20, Main.rand.Next(-10, 11) * 0.5f, Main.rand.Next(-10, 11) * 0.5f, mod.ProjectileType("HoloMissile"), damage2, 0, Main.myPlayer, 0, npc.target);
 						}
-						Main.PlaySound(2, (int)npc.Center.X + 54, (int)npc.Center.Y + 20, 61, 1f);
+						SoundEngine.PlaySound(2, (int)npc.Center.X + 54, (int)npc.Center.Y + 20, 61, 1f);
 						for (int i = 0; i < 15; i++)
 						{
 							int dust = Dust.NewDust(npc.Center + new Vector2(54 - 8, 20 - 8), 8, 8, DustID.Electric, 0, 0, 0, default, 1.25f);
@@ -1093,7 +1093,7 @@ namespace SOTS.NPCs.Boss.Advisor
 					}
 					else if(attackTimer2 % 160 < 32)
 					{
-						Main.PlaySound(SoundID.Mech, (int)npc.Center.X, (int)npc.Center.Y, 0, 1f);
+						SoundEngine.PlaySound(SoundID.Mech, (int)npc.Center.X, (int)npc.Center.Y, 0, 1f);
 					}
 					if (attackTimer2 % 160 == 0)
 					{
@@ -1131,7 +1131,7 @@ namespace SOTS.NPCs.Boss.Advisor
 				eyeReset = 2.5f;
 				if (attackTimer2 >= 180 && attackTimer2 % 90 == 0 && attackTimer2 < 810)
 				{
-					Main.PlaySound(2, (int)npc.Center.X, (int)npc.Center.Y, 93, 1.3f);
+					SoundEngine.PlaySound(2, (int)npc.Center.X, (int)npc.Center.Y, 93, 1.3f);
 					Vector2 shift = new Vector2(16, 0).RotatedBy(MathHelper.ToRadians(new Vector2(fireToX, fireToY).ToRotation()));
 					Vector2 playerCenter = new Vector2(fireToX, fireToY);
 					Vector2 fromCenter = playerCenter - npc.Center;

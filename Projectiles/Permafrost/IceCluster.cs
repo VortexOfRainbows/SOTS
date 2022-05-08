@@ -63,7 +63,7 @@ namespace SOTS.Projectiles.Permafrost
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Texture2D texture = alt ? mod.GetTexture("Projectiles/Permafrost/IceClusterAlt") : Main.projectileTexture[projectile.type];
+			Texture2D texture = alt ? Mod.Assets.Request<Texture2D>("Projectiles/Permafrost/IceClusterAlt").Value : Main.projectileTexture[projectile.type];
 			Vector2 drawOrigin = new Vector2(Main.projectileTexture[projectile.type].Width * 0.5f, projectile.height * 0.5f);
 			for (int k = 0; k < projectile.oldPos.Length; k++)
 			{

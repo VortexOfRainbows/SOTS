@@ -263,7 +263,7 @@ namespace SOTS.Projectiles.Laser
 			if (runOnce)
 				return false;
 			Texture2D texture = Main.projectileTexture[projectile.type];
-			Texture2D texture2 = mod.GetTexture("Projectiles/Laser/PrismOrb");
+			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Projectiles/Laser/PrismOrb").Value;
 			Vector2 origin = new Vector2(texture.Width/2, texture.Height/2);
 			Vector2 origin2 = new Vector2(texture2.Width / 2, texture2.Height / 2);
 			Player player  = Main.player[projectile.owner];

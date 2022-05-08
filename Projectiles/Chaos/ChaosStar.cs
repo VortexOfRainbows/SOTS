@@ -41,14 +41,14 @@ namespace SOTS.Projectiles.Chaos
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Texture2D texture = mod.GetTexture("Effects/Masks/Extra_49");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Effects/Masks/Extra_49").Value;
 			Color color = projectile.GetAlpha(new Color(253, 198, 234));
 			color.A = 0;
 			Main.spriteBatch.End();
 			Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
 			SOTS.GodrayShader.Parameters["distance"].SetValue(3);
 			SOTS.GodrayShader.Parameters["colorMod"].SetValue(color.ToVector4());
-			SOTS.GodrayShader.Parameters["noise"].SetValue(mod.GetTexture("TrailTextures/noise"));
+			SOTS.GodrayShader.Parameters["noise"].SetValue(Mod.Assets.Request<Texture2D>("TrailTextures/noise").Value);
 			SOTS.GodrayShader.Parameters["rotation"].SetValue(projectile.rotation + projectile.whoAmI + Main.GameUpdateCount * MathHelper.PiOver2 / 180f);
 			SOTS.GodrayShader.Parameters["opacity2"].SetValue(1f);
 			SOTS.GodrayShader.CurrentTechnique.Passes[0].Apply();
@@ -107,7 +107,7 @@ namespace SOTS.Projectiles.Chaos
 			if (projectile.timeLeft > 30)
 			{
 				if (projectile.timeLeft == 100)
-					Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 15, 0.8f, 0.1f);
+					SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 15, 0.8f, 0.1f);
 				projectile.scale += 0.005f;
 			}
 			else

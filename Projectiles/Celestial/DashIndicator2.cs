@@ -77,7 +77,7 @@ namespace SOTS.Projectiles.Celestial
 			projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
 			if(projectile.timeLeft == 26)
 			{
-				//Main.PlaySound(SoundID.Item119, (int)projectile.Center.X, (int)projectile.Center.Y);
+				//SoundEngine.PlaySound(SoundID.Item119, (int)projectile.Center.X, (int)projectile.Center.Y);
 				if (Main.netMode != 1)
 				{
 					Vector2 center = projectile.Center - projectile.velocity.SafeNormalize(new Vector2(1, 0)) * 1500 * projectile.ai[0];

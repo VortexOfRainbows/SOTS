@@ -151,7 +151,7 @@ namespace SOTS.Projectiles.BiomeChest
 								dust.alpha = 50;
 								dust.noGravity = true;
 							}
-							//Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 9, 0.8f);
+							//SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 9, 0.8f);
 						}
 						if (projectile.scale < 1)
                         {
@@ -266,21 +266,21 @@ namespace SOTS.Projectiles.BiomeChest
 		{
 			if(bloom)
 			{
-				spriteBatch.Draw(mod.GetTexture("Gores/CircleAura"), projectile.Center - Main.screenPosition, null, new Color(120, 160, 140) * (50f / 255f) * (projectile.timeLeft / 1500f), 0f, new Vector2(300f, 300f), bubbleSize / 600f, SpriteEffects.None, 0f);
-				spriteBatch.Draw(mod.GetTexture("Gores/CircleBorder"), projectile.Center - Main.screenPosition, null, new Color(100, 140, 120) * 0.5f * (projectile.timeLeft / 1500f), 0f, new Vector2(300f, 300f), bubbleSize / 600f, SpriteEffects.None, 0f);
-				Texture2D texture = mod.GetTexture("Projectiles/BiomeChest/TangleGrowth");
+				spriteBatch.Draw(Mod.Assets.Request<Texture2D>("Gores/CircleAura").Value, projectile.Center - Main.screenPosition, null, new Color(120, 160, 140) * (50f / 255f) * (projectile.timeLeft / 1500f), 0f, new Vector2(300f, 300f), bubbleSize / 600f, SpriteEffects.None, 0f);
+				spriteBatch.Draw(Mod.Assets.Request<Texture2D>("Gores/CircleBorder").Value, projectile.Center - Main.screenPosition, null, new Color(100, 140, 120) * 0.5f * (projectile.timeLeft / 1500f), 0f, new Vector2(300f, 300f), bubbleSize / 600f, SpriteEffects.None, 0f);
+				Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/BiomeChest/TangleGrowth").Value;
 				Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 				Main.spriteBatch.Draw(texture, projectile.Center - Main.screenPosition, null, Color.White, projectile.rotation, drawOrigin, projectile.scale, SpriteEffects.None, 0f);
 				return false;
 			}
 			else
 			{
-				Texture2D texture = mod.GetTexture("Projectiles/BiomeChest/FloweringBud");
+				Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/BiomeChest/FloweringBud").Value;
 				Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 				Main.spriteBatch.Draw(texture, projectile.Center - Main.screenPosition, null, Color.White, projectile.rotation, drawOrigin, projectile.scale, SpriteEffects.None, 0f);
 				if (runOnce)
 					return false;
-				texture = mod.GetTexture("Projectiles/BiomeChest/FloweringBudTrail");
+				texture = Mod.Assets.Request<Texture2D>("Projectiles/BiomeChest/FloweringBudTrail").Value;
 				drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 				Vector2 previousPosition = projectile.Center - new Vector2(8, -8).RotatedBy(projectile.rotation);
 				if (previousPosition == Vector2.Zero)

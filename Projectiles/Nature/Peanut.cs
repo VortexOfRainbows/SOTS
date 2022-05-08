@@ -55,7 +55,7 @@ namespace SOTS.Projectiles.Nature
 		{
 			for(int i = 0; i < 5; i++)
 			{
-				Main.PlaySound(SoundID.Dig, projectile.Center);
+				SoundEngine.PlaySound(SoundID.Dig, projectile.Center);
 				Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y) - new Vector2(5), 26, 26, 0);
 				Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y) - new Vector2(5), 26, 26, 7);
 			}

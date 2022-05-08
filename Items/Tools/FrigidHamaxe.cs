@@ -17,10 +17,10 @@ namespace SOTS.Items.Tools
 		public override void SetDefaults()
 		{
             Item.damage = 18;
-            Item.melee = true;  
+            Item.DamageType = DamageClass.Melee;  
             Item.width = 34;   
             Item.height = 34;   
-            Item.useStyle = ItemUseStyleID.SwingThrow;
+            Item.useStyle = ItemUseStyleID.Swing;
 			Item.useTurn = true;
 			Item.useTime = 15;
 			Item.useAnimation = 21;

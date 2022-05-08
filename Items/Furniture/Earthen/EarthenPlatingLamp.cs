@@ -37,7 +37,7 @@ namespace SOTS.Items.Furniture.Earthen
         {
             int xFrameOffset = Main.tile[i, j].frameX;
             int yFrameOffset = Main.tile[i, j].frameY;
-            Texture2D glowmask = ModContent.GetTexture(this.GetPath("Glow"));
+            Texture2D glowmask = (Texture2D)ModContent.Request<Texture2D>(this.GetPath("Glow"));
             Vector2 drawOffset = Main.drawToScreen ? Vector2.Zero : new Vector2(Main.offScreenRange);
             Vector2 drawPosition = new Vector2(i * 16 - Main.screenPosition.X, j * 16 - Main.screenPosition.Y) + drawOffset;
             Color drawColour = new Color(100, 100, 100, 0);

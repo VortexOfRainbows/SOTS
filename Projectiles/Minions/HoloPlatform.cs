@@ -43,8 +43,8 @@ namespace SOTS.Projectiles.Minions
 				GameShaders.Armor.GetSecondaryShader(shader, player).Apply(null);
 			}
 			PlatformPlayer modPlayer = player.GetModPlayer<PlatformPlayer>();
-			Texture2D textureChainOutline = ModContent.GetTexture("SOTS/Projectiles/Minions/HoloPlatformChainOutline");
-			Texture2D textureChainFill = ModContent.GetTexture("SOTS/Projectiles/Minions/HoloPlatformChainFill");
+			Texture2D textureChainOutline = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Minions/HoloPlatformChainOutline");
+			Texture2D textureChainFill = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Minions/HoloPlatformChainFill");
 			Texture2D texturePlatformOutline;
 			Texture2D texturePlatformFill;
 			Rectangle frameLeft;
@@ -53,8 +53,8 @@ namespace SOTS.Projectiles.Minions
 			float verticalOffset = 2;
 			if (modPlayer.fortress)
 			{
-				texturePlatformOutline = ModContent.GetTexture("SOTS/Projectiles/Minions/HoloPlatformRookOutline");
-				texturePlatformFill = ModContent.GetTexture("SOTS/Projectiles/Minions/HoloPlatformRookFill");
+				texturePlatformOutline = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Minions/HoloPlatformRookOutline");
+				texturePlatformFill = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Minions/HoloPlatformRookFill");
 				verticalOffset = -2;
 				frameLeft = new Rectangle(0, 0, 10, 16);
 				frameMiddle = new Rectangle(13, 0, 1, 16);
@@ -62,8 +62,8 @@ namespace SOTS.Projectiles.Minions
 			}
 			else
 			{
-				texturePlatformOutline = ModContent.GetTexture("SOTS/Projectiles/Minions/HoloPlatformOutline");
-				texturePlatformFill = ModContent.GetTexture("SOTS/Projectiles/Minions/HoloPlatformFill");
+				texturePlatformOutline = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Minions/HoloPlatformOutline");
+				texturePlatformFill = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Minions/HoloPlatformFill");
 				frameLeft = new Rectangle(0, 0, 8, 12);
 				frameMiddle = new Rectangle(11, 0, 1, 12);
 				frameRight = new Rectangle(20, 0, 8, 12);

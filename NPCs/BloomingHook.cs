@@ -52,7 +52,7 @@ namespace SOTS.NPCs
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture = ModContent.GetTexture("SOTS/NPCs/BloomingVine");
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/BloomingVine");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			NPC owner = Main.npc[(int)ownerID];
 			if (owner.type == ModContent.NPCType<NatureSlime>() && owner.active)
@@ -151,7 +151,7 @@ namespace SOTS.NPCs
 					frame++;
 					if (frame == 7)
 					{
-						Main.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 30, 0.7f, -0.4f);
+						SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 30, 0.7f, -0.4f);
 						if (Main.netMode != NetmodeID.MultiplayerClient)
 						{
 							int damage = npc.damage / 2;

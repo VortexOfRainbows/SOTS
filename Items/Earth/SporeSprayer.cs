@@ -21,7 +21,7 @@ namespace SOTS.Items.Earth
             Item.height = 60;
             Item.useTime = 18;
             Item.useAnimation = 18;
-            Item.useStyle = ItemUseStyleID.HoldingOut;
+            Item.useStyle = ItemUseStyleID.Shoot;
             Item.noMelee = true;
             Item.knockBack = 0.5f;
             Item.value = Item.sellPrice(0, 0, 40, 0);
@@ -52,7 +52,7 @@ namespace SOTS.Items.Earth
                     }
                 }
             if(field)
-                Main.PlaySound(2, (int)position.X, (int)position.Y, 34, 0.7f, -0.1f);
+                SoundEngine.PlaySound(2, (int)position.X, (int)position.Y, 34, 0.7f, -0.1f);
             return true; 
         }
     }

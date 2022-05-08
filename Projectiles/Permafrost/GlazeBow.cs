@@ -66,7 +66,7 @@ namespace SOTS.Projectiles.Permafrost
                 Texture2D texture = Main.projectileTexture[arrowType];
                 if (arrowType == ModContent.ProjectileType<HardlightArrow>() || arrowType == ModContent.ProjectileType<ChargedHardlightArrow>())
                 {
-                    texture = mod.GetTexture("Projectiles/Otherworld/HardlightArrowShaft");
+                    texture = Mod.Assets.Request<Texture2D>("Projectiles/Otherworld/HardlightArrowShaft").Value;
                 }
                 textureHeight = texture.Height / 2 + 2;
                 float additionalAlphaMult = 1;
@@ -103,7 +103,7 @@ namespace SOTS.Projectiles.Permafrost
                 if (chargePercent < 0)
                     chargePercent = 0;
                 Vector2 fireFrom = projectile.Center + projectile.velocity.SafeNormalize(Vector2.Zero) * (fireFromDist - 4 - (chargePercent + chargeLevel) * fireFromTighten);
-                Texture2D texture = mod.GetTexture("Assets/StrangeGradient");
+                Texture2D texture = Mod.Assets.Request<Texture2D>("Assets/StrangeGradient").Value;
                 if(chargePercent > 0)
                 {
                     float alphaMult = (float)Math.Sin(MathHelper.ToRadians(chargePercent * 170));
@@ -128,7 +128,7 @@ namespace SOTS.Projectiles.Permafrost
             {
                 float percent = counter / projectile.ai[0];
                 Vector2 fireFrom = projectile.Center + projectile.velocity.SafeNormalize(Vector2.Zero) * (fireFromDist - textureHeight - (percent + chargeLevel) * fireFromTighten);
-                Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 5, 1.2f, -0.1f);
+                SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 5, 1.2f, -0.1f);
                 Projectile proj = Projectile.NewProjectileDirect(fireFrom, projectile.velocity * (0.5f + 0.5f * chargeLevel), (int)projectile.ai[1], projectile.damage, projectile.knockBack * (0.2f + 0.4f * (percent + chargeLevel)), Main.myPlayer);
                 proj.GetGlobalProjectile<SOTSProjectile>().frostFlake = chargeLevel; //this sould sync automatically on the SOTSProjectile end
             }
@@ -150,10 +150,10 @@ namespace SOTS.Projectiles.Permafrost
                 if (chargeLevel < 2 && counter > 0)
                 {
                     if (counter == (int)projectile.ai[0] / 2)
-                        Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 15, 1.1f, 0.6f);
+                        SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 15, 1.1f, 0.6f);
                     if (counter >= projectile.ai[0])
                     {
-                        Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 30, 0.8f, -0.3f);
+                        SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 30, 0.8f, -0.3f);
                         if(chargeLevel == 0)
                             for (int k = 0; k < 30; k++)
                             {

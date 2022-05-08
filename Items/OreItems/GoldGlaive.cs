@@ -17,12 +17,12 @@ namespace SOTS.Items.OreItems
 		public override void SafeSetDefaults()
 		{
 			Item.damage = 28;
-			Item.melee = true;
+			Item.DamageType = DamageClass.Melee;
 			Item.width = 42;
 			Item.height = 40;
 			Item.useTime = 31;
 			Item.useAnimation = 31;
-			Item.useStyle = ItemUseStyleID.HoldingOut;
+			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.knockBack = 5;
             Item.value = Item.sellPrice(0, 0, 35, 0);
 			Item.rare = ItemRarityID.Green;

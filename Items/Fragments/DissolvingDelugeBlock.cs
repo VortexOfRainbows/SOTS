@@ -23,7 +23,7 @@ namespace SOTS.Items.Fragments
 			Item.autoReuse = true;
 			Item.useAnimation = 15;
 			Item.useTime = 10;
-			Item.useStyle = ItemUseStyleID.SwingThrow;
+			Item.useStyle = ItemUseStyleID.Swing;
 			Item.rare = ItemRarityID.Orange;
 			Item.consumable = true;
 			Item.createTile = ModContent.TileType<DissolvingDelugeTile>();
@@ -74,8 +74,8 @@ namespace SOTS.Items.Fragments
 		}
 		public static void DrawEffects(int i, int j, SpriteBatch spriteBatch, Mod mod, bool wall = false)
 		{
-			Texture2D texture = mod.GetTexture("Assets/SpiritBlocks/DelugeParticle");
-			Texture2D textureBlock = mod.GetTexture("Assets/SpiritBlocks/DelugeBlockOutline");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Assets/SpiritBlocks/DelugeParticle").Value;
+			Texture2D textureBlock = Mod.Assets.Request<Texture2D>("Assets/SpiritBlocks/DelugeBlockOutline").Value;
 			Color color; // = DissolvingDelugeTile.color;
 			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
 			if (Main.drawToScreen)
@@ -136,7 +136,7 @@ namespace SOTS.Items.Fragments
 				if (extraJ != 0)
 					next2 = Framing.GetTileSafely(i, j + extraJ);
 				bool run = true;
-				if ((next.active() && (Main.tileSolid[next.type] || next1.wall == ModContent.WallType<DelugeWallWall>())) || (next1.active() && ((Main.tileSolid[next1.type] && next1.type == ModContent.TileType<DissolvingDelugeTile>()) || next1.wall == ModContent.WallType<DelugeWallWall>())) || (next2.active() && ((Main.tileSolid[next2.type] && next2.type == ModContent.TileType<DissolvingDelugeTile>()) || next2.wall == ModContent.WallType<DelugeWallWall>())))
+				if ((next.active() && (Main.tileSolid[next.type] || next1.WallType == ModContent.WallType<DelugeWallWall>())) || (next1.active() && ((Main.tileSolid[next1.type] && next1.type == ModContent.TileType<DissolvingDelugeTile>()) || next1.WallType == ModContent.WallType<DelugeWallWall>())) || (next2.active() && ((Main.tileSolid[next2.type] && next2.type == ModContent.TileType<DissolvingDelugeTile>()) || next2.WallType == ModContent.WallType<DelugeWallWall>())))
 					run = false;
 				if (run)
 					for (int k = 0; k < 8; k += 1)

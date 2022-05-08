@@ -60,9 +60,9 @@ namespace SOTS.Projectiles.Celestial
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
 			Player player = Main.player[projectile.owner];
-			Texture2D texture = mod.GetTexture("Projectiles/Celestial/FluidFollowerOutline");
-			Texture2D texture3 = mod.GetTexture("Projectiles/Celestial/FluidFollowerEye");
-			Texture2D texture4 = mod.GetTexture("Projectiles/Celestial/FluidFollowerFill");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Celestial/FluidFollowerOutline").Value;
+			Texture2D texture3 = Mod.Assets.Request<Texture2D>("Projectiles/Celestial/FluidFollowerEye").Value;
+			Texture2D texture4 = Mod.Assets.Request<Texture2D>("Projectiles/Celestial/FluidFollowerFill").Value;
 			Color color = new Color(100, 100, 100, 0);
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Vector2 drawOrigin3 = new Vector2(texture3.Width * 0.5f, texture3.Height * 0.5f);
@@ -101,7 +101,7 @@ namespace SOTS.Projectiles.Celestial
 				for (int i = 0; i < 12; i++)
 				{
 					counterArr[i] += randSeed1[i];
-					Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Celestial/FluidFollowerSpike");
+					Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Celestial/FluidFollowerSpike");
 					Vector2 circular = new Vector2(16 * projectile.scale, 0).RotatedBy(MathHelper.ToRadians(i * 30));
 					int frame = 0;
 					float scaleMult = 0.5f;

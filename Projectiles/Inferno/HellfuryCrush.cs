@@ -39,7 +39,7 @@ namespace SOTS.Projectiles.Inferno
 		{
 			if(runOnce)
 			{
-				Main.PlaySound(SoundID.Item14, (int)(projectile.Center.X), (int)(projectile.Center.Y));
+				SoundEngine.PlaySound(SoundID.Item14, (int)(projectile.Center.X), (int)(projectile.Center.Y));
 				runOnce = false;
             }
 			Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 1.5f / 255f, (255 - projectile.alpha) * 1.5f / 255f, (255 - projectile.alpha) * 1.5f / 255f);

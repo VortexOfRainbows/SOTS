@@ -19,7 +19,7 @@ namespace SOTS.Items.MusicBoxes
 		}
 		public override void SetDefaults()
 		{
-			Item.useStyle = ItemUseStyleID.SwingThrow;
+			Item.useStyle = ItemUseStyleID.Swing;
 			Item.useTurn = true;
 			Item.useAnimation = 15;
 			Item.useTime = 10;
@@ -91,7 +91,7 @@ namespace SOTS.Items.MusicBoxes
 				zero = Vector2.Zero;
 			}
 			Tile tile = Main.tile[i, j];
-			Texture2D texture = mod.GetTexture("Items/MusicBoxes/PyramidBattleMusicBoxTileBack");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/MusicBoxes/PyramidBattleMusicBoxTileBack").Value;
 			if (tile.frameY % 36 == 0 && tile.frameX % 36 == 0) //check for it being the top left tile
 			{
 				int currentFrame = tile.frameX / 36;
@@ -110,7 +110,7 @@ namespace SOTS.Items.MusicBoxes
 			Tile tile = Main.tile[i, j];
 			float counter = Main.GlobalTime * 120;
 			float mult = new Vector2(-1f, 0).RotatedBy(MathHelper.ToRadians(counter / 2f)).X;
-			Texture2D texture = mod.GetTexture("Items/MusicBoxes/PyramidBattleMusicBoxTileGlow");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/MusicBoxes/PyramidBattleMusicBoxTileGlow").Value;
 			if (tile.frameY % 36 == 0 && tile.frameX % 36 == 0) //check for it being the top left tile
 			{
 				int currentFrame = tile.frameX / 36;

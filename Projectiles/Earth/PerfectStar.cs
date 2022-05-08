@@ -33,7 +33,7 @@ namespace SOTS.Projectiles.Earth
         }
         public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
         {
-            Texture2D texture = ModContent.GetTexture("SOTS/Projectiles/Earth/PerfectStarGlow");
+            Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Earth/PerfectStarGlow");
             Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
             Vector2 drawPos = projectile.Center - Main.screenPosition;
             Color color = Color.White;
@@ -45,9 +45,9 @@ namespace SOTS.Projectiles.Earth
         {
             DoDust(0.7f + 0.1f * chargeLevel, 2 + chargeLevel);
             if (chargeLevel != 0)
-                Main.PlaySound(SoundLoader.customSoundType, (int)projectile.Center.X, (int)projectile.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/PerfectStarShot" + chargeLevel), 1.2f, -0.1f);
+                SoundEngine.PlaySound(SoundLoader.customSoundType, (int)projectile.Center.X, (int)projectile.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/PerfectStarShot" + chargeLevel), 1.2f, -0.1f);
             else
-                Main.PlaySound(SoundLoader.customSoundType, (int)projectile.Center.X, (int)projectile.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/PerfectStarShot1"), 1.2f, 0.4f);
+                SoundEngine.PlaySound(SoundLoader.customSoundType, (int)projectile.Center.X, (int)projectile.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/PerfectStarShot1"), 1.2f, 0.4f);
             if (projectile.owner == Main.myPlayer)
             {
                 Vector2 fireFrom = projectile.Center + projectile.velocity.SafeNormalize(Vector2.Zero) * 32;
@@ -72,9 +72,9 @@ namespace SOTS.Projectiles.Earth
                 if (projectile.ai[1] > chargeTime)
                 {
                     if(chargeLevel != 2)
-                        Main.PlaySound(SoundLoader.customSoundType, (int)projectile.Center.X, (int)projectile.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/PerfectStarCharge"), 1.2f, 0.1f * chargeLevel);
+                        SoundEngine.PlaySound(SoundLoader.customSoundType, (int)projectile.Center.X, (int)projectile.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/PerfectStarCharge"), 1.2f, 0.1f * chargeLevel);
                     else
-                        Main.PlaySound(SoundLoader.customSoundType, (int)projectile.Center.X, (int)projectile.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/PerfectStarFull"), 1.2f, 0);
+                        SoundEngine.PlaySound(SoundLoader.customSoundType, (int)projectile.Center.X, (int)projectile.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/PerfectStarFull"), 1.2f, 0);
                     chargeLevel++;
                     projectile.ai[1] = -6 * chargeLevel;
                 }

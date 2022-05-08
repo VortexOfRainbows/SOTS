@@ -45,7 +45,7 @@ namespace SOTS.Items.Slime
 			{
 				return;
 			}
-			Texture2D texture = mod.GetTexture("Items/Slime/PutridPinkyMaskEye_Head");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Slime/PutridPinkyMaskEye_Head").Value;
 			float drawX = (int)drawInfo.position.X + drawPlayer.width / 2;
 			float drawY = (int)drawInfo.position.Y + drawPlayer.height - drawPlayer.bodyFrame.Height / 2 + 4f;
 			Vector2 origin = drawInfo.bodyOrigin;

@@ -47,7 +47,7 @@ namespace SOTS.Projectiles.Otherworld
 		{
 			if (runOnce)
 				return false;
-			Texture2D texture = mod.GetTexture("Projectiles/Otherworld/HardlightColumn");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Otherworld/HardlightColumn").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Vector2 previousPosition = projectile.Center;
 			for (int k = 0; k < trailPos.Length; k++)
@@ -147,7 +147,7 @@ namespace SOTS.Projectiles.Otherworld
 				{
 					projectile.extraUpdates = 3;
 					projectile.ai[1] = 0;
-					Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 94, 0.6f);
+					SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 94, 0.6f);
 				}
 				originalVelo = projectile.velocity;
 				for (int i = 0; i < trailPos.Length; i++)

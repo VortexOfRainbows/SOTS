@@ -15,10 +15,10 @@ namespace SOTS.Items.Slime
 			Item.CloneDefaults(ItemID.Shuriken);
 			Item.damage = 11;
 			Item.alpha = 25;
-			Item.thrown = true;
+			Item.DamageType = DamageClass.Ranged;
 			Item.width = 32;
 			Item.height = 20;
-			Item.useStyle = ItemUseStyleID.SwingThrow;
+			Item.useStyle = ItemUseStyleID.Swing;
 			Item.knockBack = 1.75f;
 			Item.value = 100;
 			Item.rare = ItemRarityID.Blue;

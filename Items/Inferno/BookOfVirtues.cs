@@ -25,12 +25,12 @@ namespace SOTS.Items.Inferno
 			Item.height = 34;
 			Item.useTime = 18;
 			Item.useAnimation = 18;
-			Item.useStyle = ItemUseStyleID.HoldingUp;
+			Item.useStyle = ItemUseStyleID.HoldUp;
 			Item.value = Item.sellPrice(0, 7, 50, 0);
 			Item.rare = ItemRarityID.Pink;
 			Item.UseSound = SoundID.Item44;
 			Item.noMelee = true;
-			Item.summon = true;
+			Item.DamageType = DamageClass.Summon;
 			Item.buffType = ModContent.BuffType<Virtuous>();
 			Item.shoot = ModContent.ProjectileType<SpectralWisp>();
 		}

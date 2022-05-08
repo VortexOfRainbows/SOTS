@@ -93,7 +93,7 @@ namespace SOTS.Projectiles.Chaos
 			}
 			if (runOnce)
 			{
-				Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 96, 1.4f, -0.4f);
+				SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 96, 1.4f, -0.4f);
 				runOnce = false;
 			}
 			aiCounter2++;

@@ -13,7 +13,7 @@ namespace SOTS.Items.Otherworld.FromChests
     {
         public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
         {
-            Texture2D texture = mod.GetTexture("Items/Otherworld/FromChests/PoyoyoGlow");
+            Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/FromChests/PoyoyoGlow").Value;
             Color color = Color.White;
             Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
             Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y) + 2), null, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
@@ -28,7 +28,7 @@ namespace SOTS.Items.Otherworld.FromChests
             Item.damage = 30;
             Item.width = 30;
             Item.height = 26;
-            Item.melee = true; 
+            Item.DamageType = DamageClass.Melee; 
             Item.useTime = 25;  
             Item.useAnimation = 25;   
             Item.useStyle = 5;

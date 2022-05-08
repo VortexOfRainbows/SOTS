@@ -49,7 +49,7 @@ namespace SOTS.Projectiles.Nature
 			if (runOnce)
 			{
 				runOnce = false;
-				Main.PlaySound(2, player.Center, 60);
+				SoundEngine.PlaySound(2, player.Center, 60);
 				Vector2 toLocation = new Vector2(projectile.ai[0], projectile.ai[1]);
 				Vector2 goTo = toLocation - projectile.Center;
 				goTo = goTo.SafeNormalize(Vector2.Zero);

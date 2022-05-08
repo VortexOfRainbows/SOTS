@@ -55,7 +55,7 @@ namespace SOTS.Projectiles.Base
 			if ((int) type == 7)
 			{
 				projectile.alpha = 0;
-				Texture2D texture = mod.GetTexture("Projectiles/Base/CeremonialEffect");
+				Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Base/CeremonialEffect").Value;
 				Vector2 drawOrigin = new Vector2(2, 2);
 				for (int k = 0; k < 11; k++)
 				{
@@ -208,7 +208,7 @@ namespace SOTS.Projectiles.Base
             {
 				if((int)type == -1)
 				{
-					Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 14, 0.5f, 0.1f);
+					SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 14, 0.5f, 0.1f);
 					for (int i = 0; i < 40; i++)
 					{
 						Vector2 circularLocation = new Vector2(Main.rand.NextFloat(6f), 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)));
