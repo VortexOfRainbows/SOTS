@@ -2,23 +2,23 @@
   "version": 3,
   "targets": {
     ".NETFramework,Version=v4.5": {
-      "tModLoader.CodeAssist/0.1.3": {
+      "tModLoader.CodeAssist/0.1.5": {
         "type": "package"
       }
     }
   },
   "libraries": {
-    "tModLoader.CodeAssist/0.1.3": {
-      "sha512": "2TVpwEsbJF+LZOGZ7q/VTTcsnFnQzngjVOcwkzGlXimFXEMjPROLjDv32F/eA+k2MLHtdL0DJ0JNWudUVs70fw==",
+    "tModLoader.CodeAssist/0.1.5": {
+      "sha512": "Sg/jKEg/z5eN+Cdi3/9CU4JfJwvXHVH+UDJf4Lipo26uTa+guLLJXH1XDJNPShTFwKK8jMUYbthINP4QhsgHSA==",
       "type": "package",
-      "path": "tmodloader.codeassist/0.1.3",
+      "path": "tmodloader.codeassist/0.1.5",
       "hasTools": true,
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "NugetIcon.png",
         "analyzers/dotnet/cs/tModLoader.CodeAssist.dll",
-        "tmodloader.codeassist.0.1.3.nupkg.sha512",
+        "tmodloader.codeassist.0.1.5.nupkg.sha512",
         "tmodloader.codeassist.nuspec",
         "tools/install.ps1",
         "tools/uninstall.ps1"
@@ -36,11 +36,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\vorte\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\SOTS\\SOTS.csproj",
+      "projectUniqueName": "C:\\Users\\vorte\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\SOTS\\SOTS.csproj",
       "projectName": "SOTS",
-      "projectPath": "C:\\Users\\vorte\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\SOTS\\SOTS.csproj",
+      "projectPath": "C:\\Users\\vorte\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\SOTS\\SOTS.csproj",
       "packagesPath": "C:\\Users\\vorte\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\vorte\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\SOTS\\obj\\",
+      "outputPath": "C:\\Users\\vorte\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\SOTS\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\vorte\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -74,7 +74,7 @@
             "version": "[0.1.*, )"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.202\\RuntimeIdentifierGraph.json"
       }
     }
   }
