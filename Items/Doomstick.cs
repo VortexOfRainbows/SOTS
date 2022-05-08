@@ -17,24 +17,24 @@ namespace SOTS.Items
         }
 		public override void SetDefaults()
 		{
-            item.damage = 27; 
-            item.ranged = true;  
-            item.width = 58;   
-            item.height = 20;
-            item.useTime = 10; 
-            item.useAnimation = 20;
-            item.reuseDelay = 32;
-            item.useStyle = ItemUseStyleID.HoldingOut;    
-            item.knockBack = 3f;
-            item.value = Item.sellPrice(0, 6, 0, 0);
-            item.rare = ItemRarityID.Pink;
-            item.UseSound = SoundID.Item36;
-            item.autoReuse = true;
-            item.noMelee = true;
-            item.shoot = 10;
-            item.shootSpeed = 8.5f;
-            item.useAmmo = AmmoID.Bullet;
-            item.channel = true;
+            Item.damage = 27; 
+            Item.ranged = true;  
+            Item.width = 58;   
+            Item.height = 20;
+            Item.useTime = 10; 
+            Item.useAnimation = 20;
+            Item.reuseDelay = 32;
+            Item.useStyle = ItemUseStyleID.HoldingOut;    
+            Item.knockBack = 3f;
+            Item.value = Item.sellPrice(0, 6, 0, 0);
+            Item.rare = ItemRarityID.Pink;
+            Item.UseSound = SoundID.Item36;
+            Item.autoReuse = true;
+            Item.noMelee = true;
+            Item.shoot = 10;
+            Item.shootSpeed = 8.5f;
+            Item.useAmmo = AmmoID.Bullet;
+            Item.channel = true;
         }
         public override Vector2? HoldoutOffset()
         {
@@ -65,7 +65,7 @@ namespace SOTS.Items
                 }
                 return false;
             }
-            Main.PlaySound(item.UseSound, player.Center);
+            Main.PlaySound(Item.UseSound, player.Center);
             int amt = 4;
             for(int i = 0; i < amt; i++)
             {
@@ -78,13 +78,13 @@ namespace SOTS.Items
         {
             if (player.altFunctionUse == 2)
             {
-                item.noUseGraphic = true;
-                item.reuseDelay = 0;
+                Item.noUseGraphic = true;
+                Item.reuseDelay = 0;
             }
             else
             {
-                item.noUseGraphic = false;
-                item.reuseDelay = 32;
+                Item.noUseGraphic = false;
+                Item.reuseDelay = 32;
             }
             return player.ownedProjectileCounts[ModContent.ProjectileType<DoomstickHoldOut>()] < 1;
         }

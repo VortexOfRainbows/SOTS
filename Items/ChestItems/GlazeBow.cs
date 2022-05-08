@@ -16,28 +16,28 @@ namespace SOTS.Items.ChestItems
 		}
 		public override void SetDefaults()
 		{
-			item.damage = 10;
-			item.ranged = true;
-			item.width = 34;
-			item.height = 64;
-			item.useTime = 22;
-			item.useAnimation = 22;
-			item.useStyle = ItemUseStyleID.HoldingOut;
-			item.knockBack = 4f;
-			item.value = Item.sellPrice(0, 3, 0, 0);
-			item.rare = ItemRarityID.Orange;
-			item.UseSound = null;
-			item.autoReuse = false;
-			item.channel = true;
-			item.shoot = ModContent.ProjectileType<Projectiles.Permafrost.GlazeBow>();
-			item.shootSpeed = 18f;
-			item.noMelee = true;
-			item.noUseGraphic = true;
-			item.useAmmo = AmmoID.Arrow;
+			Item.damage = 10;
+			Item.ranged = true;
+			Item.width = 34;
+			Item.height = 64;
+			Item.useTime = 22;
+			Item.useAnimation = 22;
+			Item.useStyle = ItemUseStyleID.HoldingOut;
+			Item.knockBack = 4f;
+			Item.value = Item.sellPrice(0, 3, 0, 0);
+			Item.rare = ItemRarityID.Orange;
+			Item.UseSound = null;
+			Item.autoReuse = false;
+			Item.channel = true;
+			Item.shoot = ModContent.ProjectileType<Projectiles.Permafrost.GlazeBow>();
+			Item.shootSpeed = 18f;
+			Item.noMelee = true;
+			Item.noUseGraphic = true;
+			Item.useAmmo = AmmoID.Arrow;
 		}
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			Projectile.NewProjectile(position.X, position.Y, 0, 0, ModContent.ProjectileType<Projectiles.Permafrost.GlazeBow>(), damage, knockBack, player.whoAmI, (int)(item.useTime / SOTSPlayer.ModPlayer(player).attackSpeedMod), type);
+			Projectile.NewProjectile(position.X, position.Y, 0, 0, ModContent.ProjectileType<Projectiles.Permafrost.GlazeBow>(), damage, knockBack, player.whoAmI, (int)(Item.useTime / SOTSPlayer.ModPlayer(player).attackSpeedMod), type);
 			return false;
         }
 	}

@@ -17,11 +17,11 @@ namespace SOTS.Items.Otherworld.FromChests
 	{	
 		public override void SetDefaults()
 		{
-			item.width = 30;
-			item.height = 22;
-            item.value = Item.sellPrice(0, 4, 0, 0);
-			item.rare = ItemRarityID.LightPurple;
-			item.defense = 8;
+			Item.width = 30;
+			Item.height = 22;
+            Item.value = Item.sellPrice(0, 4, 0, 0);
+			Item.rare = ItemRarityID.LightPurple;
+			Item.defense = 8;
 		}
 		public override void DrawHair(ref bool drawHair, ref bool drawAltHair)
 		{
@@ -95,11 +95,11 @@ namespace SOTS.Items.Otherworld.FromChests
 		{
 			Texture2D texture = mod.GetTexture("Items/Otherworld/FromChests/TwilightAssassinsCircletGlow");
 			Color color = new Color(60, 70, 80, 0);
-			Vector2 drawOrigin = new Vector2(Main.itemTexture[item.type].Width * 0.5f, Main.itemTexture[item.type].Height * 0.5f);
+			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Main.itemTexture[Item.type].Height * 0.5f);
 			for (int i = 0; i < 360; i += 30)
 			{
 				Vector2 addition = new Vector2(-Main.rand.Next(15) * 0.1f + 1.75f, 0).RotatedBy(MathHelper.ToRadians(i));
-				Main.spriteBatch.Draw(texture, new Vector2((float)(item.Center.X - (int)Main.screenPosition.X), (float)(item.Center.Y - (int)Main.screenPosition.Y)) + addition, null, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y)) + addition, null, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			}
 		}
 		public override void UpdateEquip(Player player)
@@ -134,11 +134,11 @@ namespace SOTS.Items.Otherworld.FromChests
 	{
 		public override void SetDefaults()
 		{
-			item.width = 30;
-			item.height = 22;
-			item.value = Item.sellPrice(0, 4, 0, 0);
-			item.rare = ItemRarityID.LightPurple;
-			item.defense = 10;
+			Item.width = 30;
+			Item.height = 22;
+			Item.value = Item.sellPrice(0, 4, 0, 0);
+			Item.rare = ItemRarityID.LightPurple;
+			Item.defense = 10;
 		}
 		public override void DrawHands(ref bool drawHands, ref bool drawArms)
 		{
@@ -179,11 +179,11 @@ namespace SOTS.Items.Otherworld.FromChests
 		{
 			Texture2D texture = mod.GetTexture("Items/Otherworld/FromChests/TwilightAssassinsChestplateGlow");
 			Color color = new Color(60, 70, 80, 0);
-			Vector2 drawOrigin = new Vector2(Main.itemTexture[item.type].Width * 0.5f, Main.itemTexture[item.type].Height * 0.5f);
+			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Main.itemTexture[Item.type].Height * 0.5f);
 			for (int i = 0; i < 360; i += 30)
 			{
 				Vector2 addition = new Vector2(-Main.rand.Next(15) * 0.1f + 1.75f, 0).RotatedBy(MathHelper.ToRadians(i));
-				Main.spriteBatch.Draw(texture, new Vector2((float)(item.Center.X - (int)Main.screenPosition.X), (float)(item.Center.Y - (int)Main.screenPosition.Y)) + addition, null, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y)) + addition, null, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			}
 		}
 		public override void AddRecipes()
@@ -203,11 +203,11 @@ namespace SOTS.Items.Otherworld.FromChests
 	{
 		public override void SetDefaults()
 		{
-			item.width = 22;
-			item.height = 16;
-			item.value = Item.sellPrice(0, 3, 60, 0);
-			item.rare = ItemRarityID.LightPurple;
-			item.defense = 9;
+			Item.width = 22;
+			Item.height = 16;
+			Item.value = Item.sellPrice(0, 3, 60, 0);
+			Item.rare = ItemRarityID.LightPurple;
+			Item.defense = 9;
 		}
 		public override void SetStaticDefaults()
 		{
@@ -232,11 +232,11 @@ namespace SOTS.Items.Otherworld.FromChests
 		{
 			Texture2D texture = mod.GetTexture("Items/Otherworld/FromChests/TwilightAssassinsLeggingsGlow");
 			Color color = new Color(60, 70, 80, 0);
-			Vector2 drawOrigin = new Vector2(Main.itemTexture[item.type].Width * 0.5f, Main.itemTexture[item.type].Height * 0.5f);
+			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Main.itemTexture[Item.type].Height * 0.5f);
 			for (int i = 0; i < 360; i += 30)
 			{
 				Vector2 addition = new Vector2(-Main.rand.Next(15) * 0.1f + 1.75f, 0).RotatedBy(MathHelper.ToRadians(i));
-				Main.spriteBatch.Draw(texture, new Vector2((float)(item.Center.X - (int)Main.screenPosition.X), (float)(item.Center.Y - (int)Main.screenPosition.Y)) + addition, null, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y)) + addition, null, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			}
 		}
 		public override void UpdateEquip(Player player)

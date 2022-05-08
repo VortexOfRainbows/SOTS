@@ -18,17 +18,17 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void SetDefaults()
 		{
-			item.width = 16;
-			item.height = 16;
-			item.maxStack = 999;
-			item.useTurn = true;
-			item.autoReuse = true;
-			item.useAnimation = 15;
-			item.useTime = 10;
-			item.useStyle = 1;
-			item.rare = 5;
-			item.consumable = true;
-			item.createTile = mod.TileType("OvergrownPyramidTileSafe");
+			Item.width = 16;
+			Item.height = 16;
+			Item.maxStack = 999;
+			Item.useTurn = true;
+			Item.autoReuse = true;
+			Item.useAnimation = 15;
+			Item.useTime = 10;
+			Item.useStyle = 1;
+			Item.rare = 5;
+			Item.consumable = true;
+			Item.createTile = mod.TileType("OvergrownPyramidTileSafe");
 		}
 	}
 	public class OvergrownPyramidTileSafe : ModTile

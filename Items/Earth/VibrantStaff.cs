@@ -14,23 +14,23 @@ namespace SOTS.Items.Earth
 		}
 		public override void SetDefaults()
 		{
-			item.damage = 16;
-			item.magic = true;
-			item.width = 32;
-			item.height = 32;
-			item.useTime = 23;
-			item.useAnimation = 23;
-			item.useStyle = 5;
-			item.knockBack = 2.5f;
-			item.value = Item.sellPrice(0, 0, 80, 0);
-			item.rare = ItemRarityID.Blue;
-			item.UseSound = SoundID.Item8;
-			item.autoReuse = true;            
-			item.shoot = ModContent.ProjectileType<VibrantArc>(); 
-            item.shootSpeed = 12f;
-			item.noMelee = true;
-			Item.staff[item.type] = true; //this makes the useStyle animate as a staff
-			item.mana = 8;
+			Item.damage = 16;
+			Item.magic = true;
+			Item.width = 32;
+			Item.height = 32;
+			Item.useTime = 23;
+			Item.useAnimation = 23;
+			Item.useStyle = 5;
+			Item.knockBack = 2.5f;
+			Item.value = Item.sellPrice(0, 0, 80, 0);
+			Item.rare = ItemRarityID.Blue;
+			Item.UseSound = SoundID.Item8;
+			Item.autoReuse = true;            
+			Item.shoot = ModContent.ProjectileType<VibrantArc>(); 
+            Item.shootSpeed = 12f;
+			Item.noMelee = true;
+			Item.staff[Item.type] = true; //this makes the useStyle animate as a staff
+			Item.mana = 8;
 		}
 		public override void AddRecipes()
 		{

@@ -11,17 +11,17 @@ namespace SOTS.Items.Otherworld
 		}
 		public override void SetDefaults()
 		{
-			//item.CloneDefaults(ItemID.GoldenKey);
-			item.width = 18;
-			item.height = 36;
-			item.maxStack = 99; 
-			item.rare = 2;
+			//Item.CloneDefaults(ItemID.GoldenKey);
+			Item.width = 18;
+			Item.height = 36;
+			Item.maxStack = 99; 
+			Item.rare = 2;
 
-			//item.useAnimation = 15;
-			//item.useTime = 10;
-			//item.useStyle = 1;
-			//item.createTile = mod.TileType("LockedMeteoriteChest");
-			//item.placeStyle = 1;
+			//Item.useAnimation = 15;
+			//Item.useTime = 10;
+			//Item.useStyle = 1;
+			//Item.createTile = mod.TileType("LockedMeteoriteChest");
+			//Item.placeStyle = 1;
 		}
 		public override void AddRecipes()
 		{

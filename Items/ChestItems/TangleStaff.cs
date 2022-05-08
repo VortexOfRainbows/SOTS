@@ -15,23 +15,23 @@ namespace SOTS.Items.ChestItems
 		}
 		public override void SetDefaults()
 		{
-			item.damage = 80;
-			item.magic = true;
-			item.width = 64;
-			item.height = 60;
-			item.useTime = 36;
-			item.useAnimation = 36;
-			item.useStyle = ItemUseStyleID.HoldingOut;
-			item.knockBack = 2.5f;
-			item.value = Item.sellPrice(0, 20, 0, 0);
-			item.rare = ItemRarityID.Yellow;
-			item.UseSound = SoundID.Item42;
-			item.autoReuse = true;            
-			item.shoot = ModContent.ProjectileType<FloweringBud>(); 
-            item.shootSpeed = 20f;
-			item.noMelee = true;
-			Item.staff[item.type] = true; //this makes the useStyle animate as a staff
-			item.mana = 22;
+			Item.damage = 80;
+			Item.magic = true;
+			Item.width = 64;
+			Item.height = 60;
+			Item.useTime = 36;
+			Item.useAnimation = 36;
+			Item.useStyle = ItemUseStyleID.HoldingOut;
+			Item.knockBack = 2.5f;
+			Item.value = Item.sellPrice(0, 20, 0, 0);
+			Item.rare = ItemRarityID.Yellow;
+			Item.UseSound = SoundID.Item42;
+			Item.autoReuse = true;            
+			Item.shoot = ModContent.ProjectileType<FloweringBud>(); 
+            Item.shootSpeed = 20f;
+			Item.noMelee = true;
+			Item.staff[Item.type] = true; //this makes the useStyle animate as a staff
+			Item.mana = 22;
 		}
         public override Vector2? HoldoutOffset()
         {

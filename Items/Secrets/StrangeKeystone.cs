@@ -15,11 +15,11 @@ namespace SOTS.Items.Secrets
 		}
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.StoneBlock);
-			item.width = 32;
-			item.height = 42;
-			item.rare = ItemRarityID.Orange;
-			item.createTile = ModContent.TileType<StrangeKeystoneTile>();
+			Item.CloneDefaults(ItemID.StoneBlock);
+			Item.width = 32;
+			Item.height = 42;
+			Item.rare = ItemRarityID.Orange;
+			Item.createTile = ModContent.TileType<StrangeKeystoneTile>();
 		}
 		public override void UpdateInventory(Player player)
 		{
@@ -35,12 +35,12 @@ namespace SOTS.Items.Secrets
 		}
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.StoneBlock);
-			item.width = 32;
-			item.height = 20;
-			item.rare = ItemRarityID.Orange;
-			item.createTile = ModContent.TileType<StrangeKeystoneTile>();
-			item.placeStyle = 1;
+			Item.CloneDefaults(ItemID.StoneBlock);
+			Item.width = 32;
+			Item.height = 20;
+			Item.rare = ItemRarityID.Orange;
+			Item.createTile = ModContent.TileType<StrangeKeystoneTile>();
+			Item.placeStyle = 1;
 		}
 	}
 	public class StrangeKeystoneTile : ModTile

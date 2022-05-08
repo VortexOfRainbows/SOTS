@@ -13,16 +13,16 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.AmethystHook);
-			item.damage = 33;
-			item.melee = true;
-			item.knockBack = 3f;
-            item.width = 40;  
-            item.height = 40;   
-            item.value = Item.sellPrice(0, 3, 80, 0);
-            item.rare = ItemRarityID.LightPurple;
-			item.shoot = mod.ProjectileType("InfernoHook"); 
-            item.shootSpeed = 26f;
+			Item.CloneDefaults(ItemID.AmethystHook);
+			Item.damage = 33;
+			Item.melee = true;
+			Item.knockBack = 3f;
+            Item.width = 40;  
+            Item.height = 40;   
+            Item.value = Item.sellPrice(0, 3, 80, 0);
+            Item.rare = ItemRarityID.LightPurple;
+			Item.shoot = mod.ProjectileType("InfernoHook"); 
+            Item.shootSpeed = 26f;
 		}
 		public override void AddRecipes()
 		{

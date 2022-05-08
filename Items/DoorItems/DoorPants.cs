@@ -9,11 +9,11 @@ namespace SOTS.Items.DoorItems
 	{
 		public override void SetDefaults()
 		{
-			item.width = 26;
-			item.height = 26;
-			item.value = Item.sellPrice(0, 0, 1, 0);
-			item.rare = 1;
-			item.defense = 1;
+			Item.width = 26;
+			Item.height = 26;
+			Item.value = Item.sellPrice(0, 0, 1, 0);
+			Item.rare = 1;
+			Item.defense = 1;
 		}
 		public override void SetStaticDefaults()
 		{
@@ -48,12 +48,12 @@ namespace SOTS.Items.DoorItems
 	{
 		public override void SetDefaults()
 		{
-			item.width = 34;
-			item.height = 28;
-			item.value = Item.sellPrice(0, 1, 0, 0);
-			item.rare = ItemRarityID.Blue;
-			item.accessory = true;
-			item.defense = 1;
+			Item.width = 34;
+			Item.height = 28;
+			Item.value = Item.sellPrice(0, 1, 0, 0);
+			Item.rare = ItemRarityID.Blue;
+			Item.accessory = true;
+			Item.defense = 1;
 		}
 		public override void SetStaticDefaults()
 		{

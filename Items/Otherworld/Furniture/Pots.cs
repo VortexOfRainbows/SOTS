@@ -464,11 +464,11 @@ namespace SOTS.Items.Otherworld.Furniture
 		}
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.DartTrap);
-			item.width = 24;
-			item.height = 26;
-			item.createTile = TileType<SkyPots>();
-			item.value = 0;
+			Item.CloneDefaults(ItemID.DartTrap);
+			Item.width = 24;
+			Item.height = 26;
+			Item.createTile = TileType<SkyPots>();
+			Item.value = 0;
 		}
 	}*/
 }

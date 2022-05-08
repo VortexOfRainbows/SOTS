@@ -14,16 +14,16 @@ namespace SOTS.Items.Slime
 		}
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.AmethystHook);
-			item.damage = 24;
-			item.melee = true;
-			item.knockBack = 0;
-            item.width = 32;  
-            item.height = 32;   
-            item.value = Item.sellPrice(0, 2, 0, 0);
-			item.rare = ItemRarityID.Green;
-			item.shoot = ModContent.ProjectileType<PinkyHook>();
-			item.shootSpeed = 15f;
+			Item.CloneDefaults(ItemID.AmethystHook);
+			Item.damage = 24;
+			Item.melee = true;
+			Item.knockBack = 0;
+            Item.width = 32;  
+            Item.height = 32;   
+            Item.value = Item.sellPrice(0, 2, 0, 0);
+			Item.rare = ItemRarityID.Green;
+			Item.shoot = ModContent.ProjectileType<PinkyHook>();
+			Item.shootSpeed = 15f;
 		}
 		public override void AddRecipes()
 		{

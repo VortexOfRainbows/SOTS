@@ -73,7 +73,7 @@ namespace SOTS.Items.Permafrost
 			for(int k = 0; k < 50; k++)
 			{
 				Item item = player.inventory[k];
-				if(item.type == ModContent.ItemType<FrostedKey>() && !NPC.AnyNPCs(ModContent.NPCType<Polaris>()))
+				if(Item.type == ModContent.ItemType<FrostedKey>() && !NPC.AnyNPCs(ModContent.NPCType<Polaris>()))
 				{
 					//Main.NewText("Debug", 145, 145, 255); //storing spawn info as buffs to make it easy to spawn in multiplayer
 					player.AddBuff(ModContent.BuffType<SpawnBossIce>(), ylocation, false);

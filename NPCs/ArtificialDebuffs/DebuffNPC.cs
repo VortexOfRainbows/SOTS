@@ -607,7 +607,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
             {
                 return;
             }
-            if (npc.HasBuff(BuffType<Shattered>()) && item.melee)
+            if (npc.HasBuff(BuffType<Shattered>()) && Item.melee)
             {
                 int ignoreDefense = ((npc.defense + 1) / 2);
                 damage += ignoreDefense;
@@ -621,14 +621,14 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 else
                     damage *= 2;
             }
-            if (item.type == ItemType<PlatinumScythe>() || item.type == ItemType<SectionChiefsScythe>())
+            if (Item.type == ItemType<PlatinumScythe>() || Item.type == ItemType<SectionChiefsScythe>())
             {
                 if (PlatinumCurse < 10)
                     PlatinumCurse++;
                 if (Main.myPlayer == player.whoAmI && Main.netMode == NetmodeID.MultiplayerClient)
                     SendClientChanges(player, npc);
             }
-            if ((item.type == ItemType<AncientSteelSword>() || item.type == ItemType<AncientSteelGreatPickaxe>() || item.type == ItemType<AncientSteelGreatHamaxe>()) && crit)
+            if ((Item.type == ItemType<AncientSteelSword>() || Item.type == ItemType<AncientSteelGreatPickaxe>() || Item.type == ItemType<AncientSteelGreatHamaxe>()) && crit)
             {
                 bool worm = npc.realLife != -1;
                 float baseChance = 1f;
@@ -1104,14 +1104,14 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 for(int i = 0; i < Main.maxItems; i++)
                 {
                     Item item = Main.item[i];
-                    if(item.type == ItemType<HealPack>() || item.type == ItemType<ManaPack>())
+                    if(Item.type == ItemType<HealPack>() || Item.type == ItemType<ManaPack>())
                     {
-                        if(item.active)
+                        if(Item.active)
                             packCount++;
                     }
-                    if (item.type == ItemType<BaguetteCrumb>())
+                    if (Item.type == ItemType<BaguetteCrumb>())
                     {
-                        if (item.active)
+                        if (Item.active)
                             baguetteCount++;
                     }
                 }

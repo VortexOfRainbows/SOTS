@@ -13,10 +13,10 @@ namespace SOTS.Items.Pyramid
 
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.StoneBlock);
-			item.rare = ItemRarityID.Orange;
-			item.consumable = true;
-			item.createTile = ModContent.TileType<PyramidSlabTile>();
+			Item.CloneDefaults(ItemID.StoneBlock);
+			Item.rare = ItemRarityID.Orange;
+			Item.consumable = true;
+			Item.createTile = ModContent.TileType<PyramidSlabTile>();
 		}
 		public override void AddRecipes()
 		{

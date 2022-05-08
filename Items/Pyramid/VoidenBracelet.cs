@@ -14,12 +14,12 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void SetDefaults()
 		{
-			item.maxStack = 1;
-            item.width = 26;     
-            item.height = 24;   
-            item.value = Item.sellPrice(0, 2, 25, 0);
-            item.rare = ItemRarityID.Orange;
-			item.accessory = true;
+			Item.maxStack = 1;
+            Item.width = 26;     
+            Item.height = 24;   
+            Item.value = Item.sellPrice(0, 2, 25, 0);
+            Item.rare = ItemRarityID.Orange;
+			Item.accessory = true;
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{

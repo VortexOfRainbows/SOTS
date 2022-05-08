@@ -15,20 +15,20 @@ namespace SOTS.Items.ChestItems
 		}
 		public override void SetDefaults()
 		{
-			item.damage = 12;
-			item.melee = true;
-			item.width = 52;
-			item.height = 52;
-			item.useTime = 38;
-			item.useAnimation = 38;
-			item.useStyle = ItemUseStyleID.SwingThrow;
-			item.knockBack = 3;
-			item.value = Item.sellPrice(0, 1, 0, 0);
-			item.rare = ItemRarityID.Blue;
-			item.UseSound = SoundID.Item1;
-			item.autoReuse = true;            
-			item.shoot = ModContent.ProjectileType<SpikeTrap>(); 
-            item.shootSpeed = 3.5f;
+			Item.damage = 12;
+			Item.melee = true;
+			Item.width = 52;
+			Item.height = 52;
+			Item.useTime = 38;
+			Item.useAnimation = 38;
+			Item.useStyle = ItemUseStyleID.SwingThrow;
+			Item.knockBack = 3;
+			Item.value = Item.sellPrice(0, 1, 0, 0);
+			Item.rare = ItemRarityID.Blue;
+			Item.UseSound = SoundID.Item1;
+			Item.autoReuse = true;            
+			Item.shoot = ModContent.ProjectileType<SpikeTrap>(); 
+            Item.shootSpeed = 3.5f;
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{

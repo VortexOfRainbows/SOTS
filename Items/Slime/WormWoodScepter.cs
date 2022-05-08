@@ -14,22 +14,22 @@ namespace SOTS.Items.Slime
 		}
         public override void SetDefaults()
         {
-            item.damage = 21;  
-            item.mana = 20;     
-            item.width = 44;  
-            item.height = 44;    
-            item.useTime = 45; 
-            item.useAnimation = 45;   
-            item.useStyle = 1;  
-            item.noMelee = true;
-            item.knockBack = 0;  
-            item.value = Item.sellPrice(0, 2, 0, 0);
-            item.rare = 4;  
-            item.UseSound = SoundID.Item44; 
-            item.autoReuse = true;   
-            item.shoot = mod.ProjectileType("PinkyTurret");  
-            item.summon = true;  
-            item.sentry = true;
+            Item.damage = 21;  
+            Item.mana = 20;     
+            Item.width = 44;  
+            Item.height = 44;    
+            Item.useTime = 45; 
+            Item.useAnimation = 45;   
+            Item.useStyle = 1;  
+            Item.noMelee = true;
+            Item.knockBack = 0;  
+            Item.value = Item.sellPrice(0, 2, 0, 0);
+            Item.rare = 4;  
+            Item.UseSound = SoundID.Item44; 
+            Item.autoReuse = true;   
+            Item.shoot = mod.ProjectileType("PinkyTurret");  
+            Item.summon = true;  
+            Item.sentry = true;
         } 
 		public override void AddRecipes()
 		{

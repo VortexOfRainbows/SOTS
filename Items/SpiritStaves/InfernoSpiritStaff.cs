@@ -17,29 +17,29 @@ namespace SOTS.Items.SpiritStaves
 		public override void SetStaticDefaults() 
 		{
 			Tooltip.SetDefault("Summons an Inferno Spirit to fight for you\nAttacks up to 7 enemies at a time");
-			ItemID.Sets.GamepadWholeScreenUseRange[item.type] = true; 
-			ItemID.Sets.LockOnIgnoresCollision[item.type] = true;
+			ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true; 
+			ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;
 		}
 		public override void SafeSetDefaults() 
 		{
-			item.damage = 50;
-			item.knockBack = 4f;
-			item.width = 38;
-			item.height = 52;
-			item.useTime = 30;
-			item.useAnimation = 30;
-			item.useStyle = ItemUseStyleID.SwingThrow;
-			item.value = Item.sellPrice(0, 10, 0, 0);
-			item.rare = ItemRarityID.Pink;
-			item.UseSound = SoundID.Item44;
-			item.noMelee = true;
-			item.summon = true;
-			item.buffType = ModContent.BuffType<InfernoSpiritAid>();
-			item.shoot = ModContent.ProjectileType<InfernoSpirit>();
+			Item.damage = 50;
+			Item.knockBack = 4f;
+			Item.width = 38;
+			Item.height = 52;
+			Item.useTime = 30;
+			Item.useAnimation = 30;
+			Item.useStyle = ItemUseStyleID.SwingThrow;
+			Item.value = Item.sellPrice(0, 10, 0, 0);
+			Item.rare = ItemRarityID.Pink;
+			Item.UseSound = SoundID.Item44;
+			Item.noMelee = true;
+			Item.summon = true;
+			Item.buffType = ModContent.BuffType<InfernoSpiritAid>();
+			Item.shoot = ModContent.ProjectileType<InfernoSpirit>();
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) 
 		{
-			player.AddBuff(item.buffType, 2);
+			player.AddBuff(Item.buffType, 2);
 			position = Main.MouseWorld;
 			return true;
 		}

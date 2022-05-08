@@ -17,15 +17,15 @@ namespace SOTS.Items.Slime
 		}
 		public override void SetDefaults()
 		{
-			item.width = 20;
-			item.height = 26;
-			item.value = 0;
-			item.rare = 3;
-			item.maxStack = 30;
-			item.useAnimation = 30;
-			item.useTime = 30;
-			item.useStyle = 4;
-			item.consumable = true;
+			Item.width = 20;
+			Item.height = 26;
+			Item.value = 0;
+			Item.rare = 3;
+			Item.maxStack = 30;
+			Item.useAnimation = 30;
+			Item.useTime = 30;
+			Item.useStyle = 4;
+			Item.consumable = true;
 		}
 		public override void AddRecipes()
 		{

@@ -21,14 +21,14 @@ namespace SOTS.Items.Tools
 		}
 		public override void SetDefaults()
 		{
-			item.width = 32;
-			item.height = 34;
-			item.useTime = 48;
-			item.useAnimation = 48;
-			item.useStyle = ItemUseStyleID.HoldingUp;
-			item.value = 0;
-			item.rare = ItemRarityID.Cyan;
-			item.UseSound = SoundID.Item1;
+			Item.width = 32;
+			Item.height = 34;
+			Item.useTime = 48;
+			Item.useAnimation = 48;
+			Item.useStyle = ItemUseStyleID.HoldingUp;
+			Item.value = 0;
+			Item.rare = ItemRarityID.Cyan;
+			Item.UseSound = SoundID.Item1;
 		}
 		public override bool UseItem(Player player)
 		{

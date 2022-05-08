@@ -17,24 +17,24 @@ namespace SOTS.Items.Crushers
 		}
 		public override void SafeSetDefaults()
 		{
-            item.damage = 23;
-            item.melee = true;  
-            item.width = 48;
-            item.height = 48;  
-            item.useTime = 30; 
-            item.useAnimation = 30;
-            item.useStyle = ItemUseStyleID.HoldingOut;    
-            item.knockBack = 8.5f;
-            item.value = Item.sellPrice(0, 0, 33, 0);
-            item.rare = ItemRarityID.Blue;
-            item.UseSound = SoundID.Item22;
-            item.autoReuse = true;
-            item.shoot = ModContent.ProjectileType<CardiacCollapseCrusher>(); 
-            item.shootSpeed = 18f;
-			item.channel = true;
-            item.noUseGraphic = true; 
-            item.noMelee = true;
-			item.crit = 6;
+            Item.damage = 23;
+            Item.melee = true;  
+            Item.width = 48;
+            Item.height = 48;  
+            Item.useTime = 30; 
+            Item.useAnimation = 30;
+            Item.useStyle = ItemUseStyleID.HoldingOut;    
+            Item.knockBack = 8.5f;
+            Item.value = Item.sellPrice(0, 0, 33, 0);
+            Item.rare = ItemRarityID.Blue;
+            Item.UseSound = SoundID.Item22;
+            Item.autoReuse = true;
+            Item.shoot = ModContent.ProjectileType<CardiacCollapseCrusher>(); 
+            Item.shootSpeed = 18f;
+			Item.channel = true;
+            Item.noUseGraphic = true; 
+            Item.noMelee = true;
+			Item.crit = 6;
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{

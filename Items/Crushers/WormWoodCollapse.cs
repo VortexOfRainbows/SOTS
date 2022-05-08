@@ -17,23 +17,23 @@ namespace SOTS.Items.Crushers
 		}
 		public override void SafeSetDefaults()
 		{
-            item.damage = 34;
-            item.melee = true;  
-            item.width = 42;
-            item.height = 42;  
-            item.useTime = 30; 
-            item.useAnimation = 30;
-            item.useStyle = ItemUseStyleID.HoldingOut;    
-            item.knockBack = 7f;
-            item.value = Item.sellPrice(0, 2, 0, 0);
-            item.rare = ItemRarityID.LightRed;
-            item.UseSound = SoundID.Item22;
-            item.autoReuse = true;
-            item.shoot = ModContent.ProjectileType<WormWoodCrusher>(); 
-            item.shootSpeed = 18f;
-			item.channel = true;
-            item.noUseGraphic = true; 
-            item.noMelee = true;
+            Item.damage = 34;
+            Item.melee = true;  
+            Item.width = 42;
+            Item.height = 42;  
+            Item.useTime = 30; 
+            Item.useAnimation = 30;
+            Item.useStyle = ItemUseStyleID.HoldingOut;    
+            Item.knockBack = 7f;
+            Item.value = Item.sellPrice(0, 2, 0, 0);
+            Item.rare = ItemRarityID.LightRed;
+            Item.UseSound = SoundID.Item22;
+            Item.autoReuse = true;
+            Item.shoot = ModContent.ProjectileType<WormWoodCrusher>(); 
+            Item.shootSpeed = 18f;
+			Item.channel = true;
+            Item.noUseGraphic = true; 
+            Item.noMelee = true;
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{

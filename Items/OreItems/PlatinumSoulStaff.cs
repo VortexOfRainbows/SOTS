@@ -18,23 +18,23 @@ namespace SOTS.Items.OreItems
 		public override void SafeSetDefaults()
 		{
 
-			item.damage = 8;
-			item.magic = true;
-			item.width = 28;
-			item.height = 32;
-			item.useTime = 30;
-			item.useAnimation = 30;
-			item.useStyle = ItemUseStyleID.HoldingOut;
-			item.knockBack = 1.5f;
-			item.value = Item.sellPrice(0, 0, 35, 0);
-			item.rare = ItemRarityID.Green;
-			item.UseSound = SoundID.Item8;
-			item.autoReuse = true;            
-			item.shoot = ModContent.ProjectileType<SoulLock>(); 
-            item.shootSpeed = 5.5f; //arbitrary
-			item.noMelee = true;
-			Item.staff[item.type] = true; //this makes the useStyle animate as a staff
-			item.crit = 6;
+			Item.damage = 8;
+			Item.magic = true;
+			Item.width = 28;
+			Item.height = 32;
+			Item.useTime = 30;
+			Item.useAnimation = 30;
+			Item.useStyle = ItemUseStyleID.HoldingOut;
+			Item.knockBack = 1.5f;
+			Item.value = Item.sellPrice(0, 0, 35, 0);
+			Item.rare = ItemRarityID.Green;
+			Item.UseSound = SoundID.Item8;
+			Item.autoReuse = true;            
+			Item.shoot = ModContent.ProjectileType<SoulLock>(); 
+            Item.shootSpeed = 5.5f; //arbitrary
+			Item.noMelee = true;
+			Item.staff[Item.type] = true; //this makes the useStyle animate as a staff
+			Item.crit = 6;
 		}
 		public void RegisterPhantoms(Player player)
 		{
@@ -83,7 +83,7 @@ namespace SOTS.Items.OreItems
 					
 					if(!npc.friendly && npc.lifeMax > 5 && npc.active)
 					{
-						int newIndex = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, item.shoot, item.damage, item.knockBack, player.whoAmI, npc.whoAmI);
+						int newIndex = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, Item.shoot, Item.damage, Item.knockBack, player.whoAmI, npc.whoAmI);
 					}
 				}
 				if(npcIndex1 != -1)
@@ -92,7 +92,7 @@ namespace SOTS.Items.OreItems
 					
 					if(!npc.friendly && npc.lifeMax > 5 && npc.active)
 					{
-						int newIndex1 = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, item.shoot, item.damage, item.knockBack, player.whoAmI, npc.whoAmI);
+						int newIndex1 = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, Item.shoot, Item.damage, Item.knockBack, player.whoAmI, npc.whoAmI);
 					}
 				}
 				if(npcIndex2!= -1)
@@ -101,7 +101,7 @@ namespace SOTS.Items.OreItems
 					
 					if(!npc.friendly && npc.lifeMax > 5 && npc.active)
 					{
-						int newIndex2 = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, item.shoot, item.damage, item.knockBack, player.whoAmI, npc.whoAmI);
+						int newIndex2 = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, Item.shoot, Item.damage, Item.knockBack, player.whoAmI, npc.whoAmI);
 					}
 				}
 			}

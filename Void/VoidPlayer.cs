@@ -531,9 +531,9 @@ namespace SOTS.Void
 			for(int i = 0; i < player.inventory.Length; i++)
             {
 				Item item = player.inventory[i];
-				if(item.modItem as VoidConsumable != null)
+				if(Item.modItem as VoidConsumable != null)
                 {
-					VoidConsumable vCon = item.modItem as VoidConsumable;
+					VoidConsumable vCon = Item.modItem as VoidConsumable;
 					vCon.SealedUpdateInventory(player);
 				}
 			}
@@ -741,15 +741,15 @@ namespace SOTS.Void
 		public override float UseTimeMultiplier(Item item)
 		{
 			float standard = voidSpeed;
-			int time = item.useAnimation;
+			int time = Item.useAnimation;
 			int cannotPass = 2;
 			float current = time / standard;
 			if (current < cannotPass)
 			{
 				standard = time / 2f;
 			}
-			if (item.modItem is VoidItem isVoid)
-				if (item.channel == false)
+			if (Item.modItem is VoidItem isVoid)
+				if (Item.channel == false)
 					return standard;
 			return base.UseTimeMultiplier(item);
 		}

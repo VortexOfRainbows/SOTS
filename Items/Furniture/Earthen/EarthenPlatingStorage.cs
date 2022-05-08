@@ -18,11 +18,11 @@ namespace SOTS.Items.Furniture.Earthen
     {
         public override void SetDefaults()
         {
-            item.CloneDefaults(ItemID.StoneBlock);
-            item.Size = new Vector2(32, 24);
-            item.rare = ItemRarityID.Blue;
-            item.createTile = ModContent.TileType<EarthenPlatingStorageTile>();
-            //item.placeStyle = 1;
+            Item.CloneDefaults(ItemID.StoneBlock);
+            Item.Size = new Vector2(32, 24);
+            Item.rare = ItemRarityID.Blue;
+            Item.createTile = ModContent.TileType<EarthenPlatingStorageTile>();
+            //Item.placeStyle = 1;
         }
         public override void AddRecipes()
         {

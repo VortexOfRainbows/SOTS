@@ -13,11 +13,11 @@ namespace SOTS.Items
 		}
 		public override void SetDefaults()
 		{
-            item.width = 56;     
-            item.height = 50;   
-            item.value = 0;
-            item.rare = ItemRarityID.Lime;
-			item.accessory = true;
+            Item.width = 56;     
+            Item.height = 50;   
+            Item.value = 0;
+            Item.rare = ItemRarityID.Lime;
+			Item.accessory = true;
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{

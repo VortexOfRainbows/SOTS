@@ -15,22 +15,22 @@ namespace SOTS.Items.Celestial
 		}
 		public override void SetDefaults()
 		{
-            item.damage = 110; 
-            item.magic = true; 
-            item.width = 42;   
-            item.height = 44;   
-            item.useTime = 30;   
-            item.useAnimation = 30;
-            item.useStyle = 5;    
-            item.noMelee = true;  
-            item.knockBack = 6.5f;
-            item.value = Item.sellPrice(0, 15, 0, 0);
-            item.rare = ItemRarityID.Yellow;
-            item.UseSound = SoundID.Item71;
-            item.autoReuse = true;
-            item.shoot = ModContent.ProjectileType<DeathBlade>(); 
-            item.shootSpeed = 9.5f;
-			item.mana = 12;
+            Item.damage = 110; 
+            Item.magic = true; 
+            Item.width = 42;   
+            Item.height = 44;   
+            Item.useTime = 30;   
+            Item.useAnimation = 30;
+            Item.useStyle = 5;    
+            Item.noMelee = true;  
+            Item.knockBack = 6.5f;
+            Item.value = Item.sellPrice(0, 15, 0, 0);
+            Item.rare = ItemRarityID.Yellow;
+            Item.UseSound = SoundID.Item71;
+            Item.autoReuse = true;
+            Item.shoot = ModContent.ProjectileType<DeathBlade>(); 
+            Item.shootSpeed = 9.5f;
+			Item.mana = 12;
 		}
         public override Vector2? HoldoutOffset()
         {

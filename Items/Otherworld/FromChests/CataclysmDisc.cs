@@ -16,22 +16,22 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override void SafeSetDefaults()
 		{
-			item.damage = 32;
-			item.ranged = true;
-			item.width = 48;
-			item.height = 48;
-			item.useTime = 34;
-			item.useAnimation = 34;
-			item.useStyle = 1;
-			item.knockBack = 4.5f;
-            item.value = Item.sellPrice(0, 5, 0, 0);
-			item.rare = ItemRarityID.LightRed;
-			item.UseSound = SoundID.Item18;
-			item.autoReuse = true;     
-			item.noMelee = true;
-			item.shoot = ModContent.ProjectileType<Projectiles.Otherworld.CataclysmDisc>(); 
-            item.shootSpeed = 13.5f;
-            item.noUseGraphic = true;
+			Item.damage = 32;
+			Item.ranged = true;
+			Item.width = 48;
+			Item.height = 48;
+			Item.useTime = 34;
+			Item.useAnimation = 34;
+			Item.useStyle = 1;
+			Item.knockBack = 4.5f;
+            Item.value = Item.sellPrice(0, 5, 0, 0);
+			Item.rare = ItemRarityID.LightRed;
+			Item.UseSound = SoundID.Item18;
+			Item.autoReuse = true;     
+			Item.noMelee = true;
+			Item.shoot = ModContent.ProjectileType<Projectiles.Otherworld.CataclysmDisc>(); 
+            Item.shootSpeed = 13.5f;
+            Item.noUseGraphic = true;
 		}
 		public override int GetVoid(Player player)
 		{

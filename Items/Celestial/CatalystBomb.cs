@@ -14,21 +14,21 @@ namespace SOTS.Items.Celestial
 		}
 		public override void SetDefaults()
 		{
-			item.damage = 0;
-			item.width = 34;
-			item.height = 38;
-			item.useStyle = 1;
-			item.value = 0;
-			item.rare = ItemRarityID.Yellow;
-			item.useTime = 30;
-			item.useAnimation = 30;
-			item.UseSound = SoundID.Item1;
-			item.autoReuse = false;            
-			item.shoot = mod.ProjectileType("CatalystBomb"); 
-            item.shootSpeed = 12f;
-			item.consumable = true;
-			item.maxStack = 30;
-			item.noUseGraphic = true;
+			Item.damage = 0;
+			Item.width = 34;
+			Item.height = 38;
+			Item.useStyle = 1;
+			Item.value = 0;
+			Item.rare = ItemRarityID.Yellow;
+			Item.useTime = 30;
+			Item.useAnimation = 30;
+			Item.UseSound = SoundID.Item1;
+			Item.autoReuse = false;            
+			Item.shoot = mod.ProjectileType("CatalystBomb"); 
+            Item.shootSpeed = 12f;
+			Item.consumable = true;
+			Item.maxStack = 30;
+			Item.noUseGraphic = true;
 		}
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {

@@ -14,19 +14,19 @@ namespace SOTS.Items
 		}
 		public override void SetDefaults()
 		{
-			item.damage = 17;
-			item.summon = true;
-            item.width = 22;     
-            item.height = 28;   
-            item.value = Item.sellPrice(0, 3, 0, 0);
-			item.rare = ItemRarityID.LightRed;
-			item.accessory = true;
+			Item.damage = 17;
+			Item.summon = true;
+            Item.width = 22;     
+            Item.height = 28;   
+            Item.value = Item.sellPrice(0, 3, 0, 0);
+			Item.rare = ItemRarityID.LightRed;
+			Item.accessory = true;
 		}
         public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			player.lifeRegen += 1;
-			modPlayer.petPinky += (int)(item.damage * (1f + (player.minionDamage - 1f) + (player.allDamage - 1f)));
+			modPlayer.petPinky += (int)(Item.damage * (1f + (player.minionDamage - 1f) + (player.allDamage - 1f)));
 		}
 	}
 }

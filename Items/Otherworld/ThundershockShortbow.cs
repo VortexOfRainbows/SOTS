@@ -13,8 +13,8 @@ namespace SOTS.Items.Otherworld
 		{
 			Texture2D texture = mod.GetTexture("Items/Otherworld/ThundershockShortbowGlow");
 			Color color = Color.White;
-			Vector2 drawOrigin = new Vector2(Main.itemTexture[item.type].Width * 0.5f, item.height * 0.5f);
-			Main.spriteBatch.Draw(texture, new Vector2((float)(item.Center.X - (int)Main.screenPosition.X), (float)(item.Center.Y - (int)Main.screenPosition.Y) + 2), null, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
+			Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y) + 2), null, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 		}
 		public override void SetStaticDefaults()
 		{
@@ -23,24 +23,24 @@ namespace SOTS.Items.Otherworld
 		}
 		public override void SetDefaults()
 		{
-			item.damage = 30;
-			item.ranged = true;
-			item.width = 30;
-			item.height = 62;
-			item.useTime = 30;
-			item.useAnimation = 30;
-			item.useStyle = ItemUseStyleID.HoldingOut;
-			item.knockBack = 5f;
-			item.value = Item.sellPrice(0, 3, 50, 0);
-			item.rare = ItemRarityID.LightRed;
-			item.UseSound = null;
-			item.autoReuse = false;
-			item.channel = true;
-			item.shoot = ModContent.ProjectileType<Projectiles.Otherworld.ThundershockShortbow>();
-			item.shootSpeed = 20f;
-			item.noMelee = true;
-			item.noUseGraphic = true;
-			item.crit = 4;
+			Item.damage = 30;
+			Item.ranged = true;
+			Item.width = 30;
+			Item.height = 62;
+			Item.useTime = 30;
+			Item.useAnimation = 30;
+			Item.useStyle = ItemUseStyleID.HoldingOut;
+			Item.knockBack = 5f;
+			Item.value = Item.sellPrice(0, 3, 50, 0);
+			Item.rare = ItemRarityID.LightRed;
+			Item.UseSound = null;
+			Item.autoReuse = false;
+			Item.channel = true;
+			Item.shoot = ModContent.ProjectileType<Projectiles.Otherworld.ThundershockShortbow>();
+			Item.shootSpeed = 20f;
+			Item.noMelee = true;
+			Item.noUseGraphic = true;
+			Item.crit = 4;
 		}
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{

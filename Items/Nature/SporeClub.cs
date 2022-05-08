@@ -15,20 +15,20 @@ namespace SOTS.Items.Nature
 		}
 		public override void SetDefaults()
 		{
-			item.damage = 11;
-			item.melee = true;
-			item.width = 46;
-			item.height = 52;
-			item.useTime = 30;
-			item.useAnimation = 30;
-			item.useStyle = ItemUseStyleID.SwingThrow;
-			item.knockBack = 5.75f;
-			item.value = Item.sellPrice(0, 0, 20, 0);
-			item.rare = ItemRarityID.Blue;
-			item.UseSound = SoundID.Item18;
-			item.autoReuse = false;            
-			item.shoot = ModContent.ProjectileType<ShroomSpore>(); 
-            item.shootSpeed = 5f;
+			Item.damage = 11;
+			Item.melee = true;
+			Item.width = 46;
+			Item.height = 52;
+			Item.useTime = 30;
+			Item.useAnimation = 30;
+			Item.useStyle = ItemUseStyleID.SwingThrow;
+			Item.knockBack = 5.75f;
+			Item.value = Item.sellPrice(0, 0, 20, 0);
+			Item.rare = ItemRarityID.Blue;
+			Item.UseSound = SoundID.Item18;
+			Item.autoReuse = false;            
+			Item.shoot = ModContent.ProjectileType<ShroomSpore>(); 
+            Item.shootSpeed = 5f;
 		}
 		public override void AddRecipes()
 		{

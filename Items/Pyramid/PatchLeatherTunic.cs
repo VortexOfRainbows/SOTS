@@ -9,11 +9,11 @@ namespace SOTS.Items.Pyramid
 	{
 		public override void SetDefaults()
 		{
-			item.width = 28;
-			item.height = 18;
-			item.value = Item.sellPrice(0, 0, 80, 0);
-			item.rare = 4;
-			item.defense = 4;
+			Item.width = 28;
+			Item.height = 18;
+			Item.value = Item.sellPrice(0, 0, 80, 0);
+			Item.rare = 4;
+			Item.defense = 4;
 		}
 		public override void SetStaticDefaults()
 		{

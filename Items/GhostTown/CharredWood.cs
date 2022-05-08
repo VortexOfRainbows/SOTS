@@ -28,10 +28,10 @@ namespace SOTS.Items.GhostTown
 		}
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.StoneBlock);
-			item.width = 24;
-			item.height = 18;
-			item.createTile = ModContent.TileType<CharredWoodTile>();
+			Item.CloneDefaults(ItemID.StoneBlock);
+			Item.width = 24;
+			Item.height = 18;
+			Item.createTile = ModContent.TileType<CharredWoodTile>();
 		}
 	}
 	public class CharredWoodWallTile : ModWall
@@ -53,11 +53,11 @@ namespace SOTS.Items.GhostTown
 		}
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.StoneWall);
-			item.width = 28;
-			item.height = 28;
-			item.rare = ItemRarityID.Blue;
-			item.createWall = ModContent.WallType<CharredWoodWallTile>();
+			Item.CloneDefaults(ItemID.StoneWall);
+			Item.width = 28;
+			Item.height = 28;
+			Item.rare = ItemRarityID.Blue;
+			Item.createWall = ModContent.WallType<CharredWoodWallTile>();
 		}
 	}
 }

@@ -15,18 +15,18 @@ namespace SOTS.Items.Inferno
 		}
 		public override void SetDefaults()
 		{
-			item.damage = 60;
-			item.summon = true;
-            item.width = 26;     
-            item.height = 34;   
-            item.value = Item.sellPrice(0, 5, 0, 0);
-			item.rare = ItemRarityID.LightPurple;
-			item.accessory = true;
+			Item.damage = 60;
+			Item.summon = true;
+            Item.width = 26;     
+            Item.height = 34;   
+            Item.value = Item.sellPrice(0, 5, 0, 0);
+			Item.rare = ItemRarityID.LightPurple;
+			Item.accessory = true;
 		}
         public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-			modPlayer.petFreeWisp += (int)(item.damage * (1f + (player.minionDamage - 1f) + (player.allDamage - 1f)));
+			modPlayer.petFreeWisp += (int)(Item.damage * (1f + (player.minionDamage - 1f) + (player.allDamage - 1f)));
 			modPlayer.BlueFireOrange = true;
 		}
 		public override void AddRecipes()

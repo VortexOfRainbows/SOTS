@@ -18,23 +18,23 @@ namespace SOTS.Items
 		}
 		public override void SetDefaults()
 		{
-			item.damage = 20;
-			item.melee = true;
-			item.width = 30;
-			item.height = 30;
-			item.useTime = 14;
-			item.useAnimation = 14;
-			item.useStyle = 5;
-			item.knockBack = 7.5f;
-            item.value = Item.sellPrice(0, 1, 0, 0);
-			item.rare = ItemRarityID.Green;
-			item.UseSound = SoundID.Item1;
-			//item.autoReuse = true;            
-			item.shoot = ModContent.ProjectileType<ExtendoBaguette>(); 
-            item.shootSpeed = 4f;
-			item.noUseGraphic = true;
-			item.channel = true;
-			item.noMelee = true;
+			Item.damage = 20;
+			Item.melee = true;
+			Item.width = 30;
+			Item.height = 30;
+			Item.useTime = 14;
+			Item.useAnimation = 14;
+			Item.useStyle = 5;
+			Item.knockBack = 7.5f;
+            Item.value = Item.sellPrice(0, 1, 0, 0);
+			Item.rare = ItemRarityID.Green;
+			Item.UseSound = SoundID.Item1;
+			//Item.autoReuse = true;            
+			Item.shoot = ModContent.ProjectileType<ExtendoBaguette>(); 
+            Item.shootSpeed = 4f;
+			Item.noUseGraphic = true;
+			Item.channel = true;
+			Item.noMelee = true;
 		}
         public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat)
 		{

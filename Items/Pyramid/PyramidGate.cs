@@ -21,19 +21,19 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void SetDefaults()
 		{
-			item.width = 40;
-			item.height = 16;
-			item.maxStack = 999;
-			item.useTurn = true;
-			item.autoReuse = true;
-			item.useAnimation = 15;
-			item.useTime = 10;
-			item.useStyle = 1;
-			item.rare = ItemRarityID.LightRed;
-			item.value = Item.sellPrice(0, 1, 0, 0);
-			item.consumable = true;
-			item.createTile = ModContent.TileType<PyramidGateTile>();
-			item.placeStyle = 0;
+			Item.width = 40;
+			Item.height = 16;
+			Item.maxStack = 999;
+			Item.useTurn = true;
+			Item.autoReuse = true;
+			Item.useAnimation = 15;
+			Item.useTime = 10;
+			Item.useStyle = 1;
+			Item.rare = ItemRarityID.LightRed;
+			Item.value = Item.sellPrice(0, 1, 0, 0);
+			Item.consumable = true;
+			Item.createTile = ModContent.TileType<PyramidGateTile>();
+			Item.placeStyle = 0;
 		}
 	}	
 	public class PyramidGateTile : ModTile

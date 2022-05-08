@@ -14,19 +14,19 @@ namespace SOTS.Items.Earth
 		}
 		public override void SetDefaults()
 		{
-			item.damage = 6;
-			item.ranged = true;
-			item.width = 14;
-			item.height = 36;
-			item.maxStack = 999;
-			item.consumable = true;           
-			item.knockBack = 1f;
-			item.value = Item.sellPrice(copper: 5);
-			item.rare = ItemRarityID.Blue;
-			item.shoot = ModContent.ProjectileType<Projectiles.Earth.VibrantBullet>(); 
-			item.shootSpeed = 4f;             
-			item.ammo = AmmoID.Bullet;   
-            item.UseSound = SoundID.Item23;
+			Item.damage = 6;
+			Item.ranged = true;
+			Item.width = 14;
+			Item.height = 36;
+			Item.maxStack = 999;
+			Item.consumable = true;           
+			Item.knockBack = 1f;
+			Item.value = Item.sellPrice(copper: 5);
+			Item.rare = ItemRarityID.Blue;
+			Item.shoot = ModContent.ProjectileType<Projectiles.Earth.VibrantBullet>(); 
+			Item.shootSpeed = 4f;             
+			Item.ammo = AmmoID.Bullet;   
+            Item.UseSound = SoundID.Item23;
 		}
 		public override void AddRecipes()
 		{
@@ -46,19 +46,19 @@ namespace SOTS.Items.Earth
 		}
 		public override void SetDefaults()
 		{
-			item.damage = 12;
-			item.ranged = true;
-			item.width = 26;
-			item.height = 56;
-			item.maxStack = 999;
-			item.consumable = true;
-			item.knockBack = 1f;
-			item.value = Item.sellPrice(copper: 5);
-			item.rare = ItemRarityID.Blue;
-			item.shoot = ModContent.ProjectileType<Projectiles.Earth.VibrantArrow>();
-			item.shootSpeed = 5f;
-			item.ammo = AmmoID.Arrow;
-			item.UseSound = SoundID.Item23;
+			Item.damage = 12;
+			Item.ranged = true;
+			Item.width = 26;
+			Item.height = 56;
+			Item.maxStack = 999;
+			Item.consumable = true;
+			Item.knockBack = 1f;
+			Item.value = Item.sellPrice(copper: 5);
+			Item.rare = ItemRarityID.Blue;
+			Item.shoot = ModContent.ProjectileType<Projectiles.Earth.VibrantArrow>();
+			Item.shootSpeed = 5f;
+			Item.ammo = AmmoID.Arrow;
+			Item.UseSound = SoundID.Item23;
 		}
 		public override void AddRecipes()
 		{

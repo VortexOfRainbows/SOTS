@@ -17,23 +17,23 @@ namespace SOTS.Items.Celestial
 		}
 		public override void SafeSetDefaults()
 		{
-			item.damage = 120;
-			item.magic = true;
-			item.width = 26;
-			item.height = 32;
-            item.value = Item.sellPrice(0, 20, 0, 0);
-			item.rare = 12;
-			item.useTime = 20;
-			item.useAnimation = 20;
-			item.useStyle = 5;
-			item.autoReuse = true;            
-			item.shoot = mod.ProjectileType("ContinuumSphere"); 
-			item.shootSpeed = 1;
-			item.knockBack = 3;
-			item.channel = true;
-			item.UseSound = SoundID.Item15; //phaseblade
-			item.noUseGraphic = true;
-			item.noMelee = true;
+			Item.damage = 120;
+			Item.magic = true;
+			Item.width = 26;
+			Item.height = 32;
+            Item.value = Item.sellPrice(0, 20, 0, 0);
+			Item.rare = 12;
+			Item.useTime = 20;
+			Item.useAnimation = 20;
+			Item.useStyle = 5;
+			Item.autoReuse = true;            
+			Item.shoot = mod.ProjectileType("ContinuumSphere"); 
+			Item.shootSpeed = 1;
+			Item.knockBack = 3;
+			Item.channel = true;
+			Item.UseSound = SoundID.Item15; //phaseblade
+			Item.noUseGraphic = true;
+			Item.noMelee = true;
 		}
 		public override bool BeforeDrainMana(Player player)
 		{
@@ -49,14 +49,14 @@ namespace SOTS.Items.Celestial
 			for (int l = 0; l < Main.projectile.Length; l++)
 			{
 				Projectile proj = Main.projectile[l];
-				if(proj.active && proj.type == item.shoot && Main.player[proj.owner] == player)
+				if(proj.active && proj.type == Item.shoot && Main.player[proj.owner] == player)
 				{
 					summon = false;
 				}
 			}
 			if(player.altFunctionUse != 2)
 			{
-				//item.UseSound = SoundID.Item22;
+				//Item.UseSound = SoundID.Item22;
 				if(summon)
 				{
 					return true; 

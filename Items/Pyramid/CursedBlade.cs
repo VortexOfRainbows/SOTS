@@ -15,20 +15,20 @@ namespace SOTS.Items.Pyramid
 		}
         public override void SafeSetDefaults()
         {
-            item.damage = 24;
-            item.summon = true;
-            item.width = 34;
-            item.height = 34;
-            item.useTime = 30;
-            item.useAnimation = 30;
-            item.useStyle = 1;
-            item.noMelee = true;
-            item.knockBack = 1;
-            item.value = Item.sellPrice(0, 2, 25, 0);
-            item.rare = ItemRarityID.Pink;
-            item.UseSound = SoundID.Item44;
-            item.shoot = ModContent.ProjectileType<Projectiles.Minions.CursedBlade>();
-			item.buffType = ModContent.BuffType<Buffs.MinionBuffs.CursedBlade>();
+            Item.damage = 24;
+            Item.summon = true;
+            Item.width = 34;
+            Item.height = 34;
+            Item.useTime = 30;
+            Item.useAnimation = 30;
+            Item.useStyle = 1;
+            Item.noMelee = true;
+            Item.knockBack = 1;
+            Item.value = Item.sellPrice(0, 2, 25, 0);
+            Item.rare = ItemRarityID.Pink;
+            Item.UseSound = SoundID.Item44;
+            Item.shoot = ModContent.ProjectileType<Projectiles.Minions.CursedBlade>();
+			Item.buffType = ModContent.BuffType<Buffs.MinionBuffs.CursedBlade>();
         }
 		public override void AddRecipes()
 		{
@@ -41,7 +41,7 @@ namespace SOTS.Items.Pyramid
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			player.AddBuff(item.buffType, 2);
+			player.AddBuff(Item.buffType, 2);
 			position = Main.MouseWorld;
 			return true;
 		}

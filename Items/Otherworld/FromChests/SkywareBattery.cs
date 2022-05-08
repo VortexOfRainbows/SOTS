@@ -21,12 +21,12 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override void SetDefaults()
 		{
-			item.maxStack = 1;
-            item.width = 18;     
-            item.height = 32;
-            item.value = Item.sellPrice(0, 4, 50, 0);
-			item.rare = ItemRarityID.LightPurple;
-			item.accessory = true;
+			Item.maxStack = 1;
+            Item.width = 18;     
+            Item.height = 32;
+            Item.value = Item.sellPrice(0, 4, 50, 0);
+			Item.rare = ItemRarityID.LightPurple;
+			Item.accessory = true;
 		}
 		public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
@@ -38,11 +38,11 @@ namespace SOTS.Items.Otherworld.FromChests
 		{
 			Texture2D texture = mod.GetTexture("Items/Otherworld/FromChests/SkywareBatteryGlow");
 			Color color = Color.White;
-			Vector2 drawOrigin = new Vector2(Main.itemTexture[item.type].Width * 0.5f, item.height * 0.5f);
-			Main.spriteBatch.Draw(texture, new Vector2((float)(item.Center.X - (int)Main.screenPosition.X), (float)(item.Center.Y - (int)Main.screenPosition.Y) + 2), null, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
+			Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y) + 2), null, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 
 			texture = mod.GetTexture("Items/Otherworld/FromChests/SkywareBatteryEffect");
-			Main.spriteBatch.Draw(texture, item.Center - Main.screenPosition + new Vector2(0, 2), null, new Color(Main.DiscoR, Main.DiscoG, Main.DiscoB, 0), rotation, new Vector2(texture.Width / 2, texture.Height / 2), scale, SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(texture, Item.Center - Main.screenPosition + new Vector2(0, 2), null, new Color(Main.DiscoR, Main.DiscoG, Main.DiscoB, 0), rotation, new Vector2(texture.Width / 2, texture.Height / 2), scale, SpriteEffects.None, 0f);
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{

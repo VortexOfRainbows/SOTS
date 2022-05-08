@@ -20,24 +20,24 @@ namespace SOTS.Items.Chaos
 		}
 		public override void SafeSetDefaults()
 		{
-			item.damage = 92;
-			item.ranged = true;
-			item.width = 44;
-			item.height = 92;
-			item.useTime = 24;
-			item.useAnimation = 24;
-			item.useStyle = ItemUseStyleID.HoldingOut;
-			item.knockBack = 6f;
-			item.value = Item.sellPrice(0, 20, 0, 0);
-			item.rare = ItemRarityID.Cyan;
-			item.UseSound = null;
-			item.autoReuse = false;
-			item.channel = true;
-			item.shoot = ModContent.ProjectileType<Projectiles.Chaos.RoseBow>();
-			item.shootSpeed = 12f;
-			item.noMelee = true;
-			item.noUseGraphic = true;
-			item.useAmmo = AmmoID.Arrow;
+			Item.damage = 92;
+			Item.ranged = true;
+			Item.width = 44;
+			Item.height = 92;
+			Item.useTime = 24;
+			Item.useAnimation = 24;
+			Item.useStyle = ItemUseStyleID.HoldingOut;
+			Item.knockBack = 6f;
+			Item.value = Item.sellPrice(0, 20, 0, 0);
+			Item.rare = ItemRarityID.Cyan;
+			Item.UseSound = null;
+			Item.autoReuse = false;
+			Item.channel = true;
+			Item.shoot = ModContent.ProjectileType<Projectiles.Chaos.RoseBow>();
+			Item.shootSpeed = 12f;
+			Item.noMelee = true;
+			Item.noUseGraphic = true;
+			Item.useAmmo = AmmoID.Arrow;
 		}
         public override bool BeforeDrainMana(Player player)
         {
@@ -49,7 +49,7 @@ namespace SOTS.Items.Chaos
         }
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			Projectile.NewProjectile(position.X, position.Y, 0, 0, ModContent.ProjectileType<Projectiles.Chaos.RoseBow>(), damage, knockBack, player.whoAmI, (int)(item.useTime / (SOTSPlayer.ModPlayer(player).attackSpeedMod + VoidPlayer.ModPlayer(player).voidSpeed - 1f)), type);
+			Projectile.NewProjectile(position.X, position.Y, 0, 0, ModContent.ProjectileType<Projectiles.Chaos.RoseBow>(), damage, knockBack, player.whoAmI, (int)(Item.useTime / (SOTSPlayer.ModPlayer(player).attackSpeedMod + VoidPlayer.ModPlayer(player).voidSpeed - 1f)), type);
 			return false;
 		}
 		public override void AddRecipes()

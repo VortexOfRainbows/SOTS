@@ -14,17 +14,17 @@ namespace SOTS.Items.Pyramid.AncientGold
 		}
 		public override void SetDefaults()
 		{
-			item.width = 16;
-			item.height = 16;
-			item.maxStack = 999;
-			item.useTurn = true;
-			item.autoReuse = true;
-			item.useAnimation = 15;
-			item.useTime = 7;
-			item.useStyle = 1;
-			item.rare = 5;
-			item.consumable = true;
-			item.createWall = mod.WallType("AncientGoldBeamWall");
+			Item.width = 16;
+			Item.height = 16;
+			Item.maxStack = 999;
+			Item.useTurn = true;
+			Item.autoReuse = true;
+			Item.useAnimation = 15;
+			Item.useTime = 7;
+			Item.useStyle = 1;
+			Item.rare = 5;
+			Item.consumable = true;
+			Item.createWall = mod.WallType("AncientGoldBeamWall");
 		}
 		public override void AddRecipes()
 		{
@@ -59,17 +59,17 @@ namespace SOTS.Items.Pyramid.AncientGold
 		}
 		public override void SetDefaults()
 		{
-			item.width = 28;
-			item.height = 28;
-			item.maxStack = 999;
-			item.useTurn = true;
-			item.autoReuse = true;
-			item.useAnimation = 15;
-			item.useTime = 7;
-			item.useStyle = 1;
-			item.rare = 5;
-			item.consumable = true;
-			item.createWall = mod.WallType("AncientGoldBrickWallTile");
+			Item.width = 28;
+			Item.height = 28;
+			Item.maxStack = 999;
+			Item.useTurn = true;
+			Item.autoReuse = true;
+			Item.useAnimation = 15;
+			Item.useTime = 7;
+			Item.useStyle = 1;
+			Item.rare = 5;
+			Item.consumable = true;
+			Item.createWall = mod.WallType("AncientGoldBrickWallTile");
 		}
 		public override void AddRecipes()
 		{

@@ -13,14 +13,14 @@ namespace SOTS.Items.Slime
 		}
 		public override void SetDefaults()
 		{
-			item.width = 26;
-			item.height = 26;
-			item.maxStack = 999;      
-			item.knockBack = 1.15f;
-			item.value = Item.sellPrice(0, 0, 0, 25);
-			item.rare = 1;
-			item.ammo = item.type;
-			item.consumable = true;
+			Item.width = 26;
+			Item.height = 26;
+			Item.maxStack = 999;      
+			Item.knockBack = 1.15f;
+			Item.value = Item.sellPrice(0, 0, 0, 25);
+			Item.rare = 1;
+			Item.ammo = Item.type;
+			Item.consumable = true;
 		}
 	}
 }

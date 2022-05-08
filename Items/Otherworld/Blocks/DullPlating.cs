@@ -12,9 +12,9 @@ namespace SOTS.Items.Otherworld.Blocks
 	{
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.StoneBlock);
-			item.rare = ItemRarityID.Blue;
-			item.createTile = ModContent.TileType<DullPlatingTile>();
+			Item.CloneDefaults(ItemID.StoneBlock);
+			Item.rare = ItemRarityID.Blue;
+			Item.createTile = ModContent.TileType<DullPlatingTile>();
 		}
 		public override void AddRecipes()
 		{

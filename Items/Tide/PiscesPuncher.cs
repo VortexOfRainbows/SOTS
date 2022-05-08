@@ -16,22 +16,22 @@ namespace SOTS.Items.Tide
 		}
 		public override void SetDefaults()
 		{
-            item.damage = 21;
-            item.magic = true;
-            item.width = 64;
-            item.height = 30;
-            item.useTime = 29; 
-            item.useAnimation = 29;
-            item.useStyle = ItemUseStyleID.HoldingOut;    
-            item.noMelee = true;
-			item.knockBack = 6f;  
-            item.value = Item.sellPrice(0, 5, 0, 0);
-            item.rare = ItemRarityID.Orange;
-            item.UseSound = SoundID.Item61;
-            item.autoReuse = true;
-			item.shoot = ModContent.ProjectileType<FishBullet>(); 
-            item.shootSpeed = 12.5f;
-			item.mana = 12;
+            Item.damage = 21;
+            Item.magic = true;
+            Item.width = 64;
+            Item.height = 30;
+            Item.useTime = 29; 
+            Item.useAnimation = 29;
+            Item.useStyle = ItemUseStyleID.HoldingOut;    
+            Item.noMelee = true;
+			Item.knockBack = 6f;  
+            Item.value = Item.sellPrice(0, 5, 0, 0);
+            Item.rare = ItemRarityID.Orange;
+            Item.UseSound = SoundID.Item61;
+            Item.autoReuse = true;
+			Item.shoot = ModContent.ProjectileType<FishBullet>(); 
+            Item.shootSpeed = 12.5f;
+			Item.mana = 12;
 		}
 		public override Vector2? HoldoutOffset()
 		{

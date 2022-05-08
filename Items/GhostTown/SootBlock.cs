@@ -23,8 +23,8 @@ namespace SOTS.Items.GhostTown
 	{
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.StoneBlock);
-			item.createTile = ModContent.TileType<SootBlockTile>();
+			Item.CloneDefaults(ItemID.StoneBlock);
+			Item.createTile = ModContent.TileType<SootBlockTile>();
 		}
 	}
 	public class SootWallTile : ModWall
@@ -46,11 +46,11 @@ namespace SOTS.Items.GhostTown
 		}
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.StoneWall);
-			item.width = 28;
-			item.height = 28;
-			item.rare = ItemRarityID.Blue;
-			item.createWall = ModContent.WallType<SootWallTile>();
+			Item.CloneDefaults(ItemID.StoneWall);
+			Item.width = 28;
+			Item.height = 28;
+			Item.rare = ItemRarityID.Blue;
+			Item.createWall = ModContent.WallType<SootWallTile>();
 		}
 	}
 }

@@ -16,28 +16,28 @@ namespace SOTS.Items.ChestItems
 		}
 		public override void SetDefaults()
 		{
-			item.damage = 24;
-			item.magic = true;
-			item.width = 68;
-			item.height = 30;
-			item.useTime = 30;
-			item.useAnimation = 30;
-			item.useStyle = ItemUseStyleID.HoldingOut;
-			item.knockBack = 4f;
-			item.value = Item.sellPrice(0, 3, 0, 0);
-			item.rare = ItemRarityID.Orange;
-			item.UseSound = null;
-			item.autoReuse = false;
-			item.channel = true;
-			item.shoot = ModContent.ProjectileType<Projectiles.Earth.PerfectStar>();
-			item.shootSpeed = 18f;
-			item.noMelee = true;
-			item.noUseGraphic = true;
-			item.mana = 12;
+			Item.damage = 24;
+			Item.magic = true;
+			Item.width = 68;
+			Item.height = 30;
+			Item.useTime = 30;
+			Item.useAnimation = 30;
+			Item.useStyle = ItemUseStyleID.HoldingOut;
+			Item.knockBack = 4f;
+			Item.value = Item.sellPrice(0, 3, 0, 0);
+			Item.rare = ItemRarityID.Orange;
+			Item.UseSound = null;
+			Item.autoReuse = false;
+			Item.channel = true;
+			Item.shoot = ModContent.ProjectileType<Projectiles.Earth.PerfectStar>();
+			Item.shootSpeed = 18f;
+			Item.noMelee = true;
+			Item.noUseGraphic = true;
+			Item.mana = 12;
 		}
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			Projectile.NewProjectile(position.X, position.Y, 0, 0, ModContent.ProjectileType<Projectiles.Earth.PerfectStar>(), damage, knockBack, player.whoAmI, (int)(item.useTime / SOTSPlayer.ModPlayer(player).attackSpeedMod));
+			Projectile.NewProjectile(position.X, position.Y, 0, 0, ModContent.ProjectileType<Projectiles.Earth.PerfectStar>(), damage, knockBack, player.whoAmI, (int)(Item.useTime / SOTSPlayer.ModPlayer(player).attackSpeedMod));
 			return false;
         }
 	}

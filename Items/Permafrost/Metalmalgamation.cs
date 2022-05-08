@@ -13,21 +13,21 @@ namespace SOTS.Items.Permafrost
 		}
         public override void SetDefaults()
         {
-            item.Size = new Microsoft.Xna.Framework.Vector2(34, 30);
-            item.damage = 40;
-            item.melee = true; 
-            item.useTime = 22;  
-            item.useAnimation = 22;   
-            item.useStyle = 5;
-            item.channel = true;
-            item.knockBack = 3.5f;
-            item.value = Item.sellPrice(0, 7, 0, 0);
-			item.rare = ItemRarityID.Lime;
-            item.autoReuse = false; 
-            item.shoot = ModContent.ProjectileType<Projectiles.Permafrost.Metalmalgamation>(); 
-            item.noUseGraphic = true; 
-            item.noMelee = true;
-            item.UseSound = SoundID.Item1; 
+            Item.Size = new Microsoft.Xna.Framework.Vector2(34, 30);
+            Item.damage = 40;
+            Item.melee = true; 
+            Item.useTime = 22;  
+            Item.useAnimation = 22;   
+            Item.useStyle = 5;
+            Item.channel = true;
+            Item.knockBack = 3.5f;
+            Item.value = Item.sellPrice(0, 7, 0, 0);
+			Item.rare = ItemRarityID.Lime;
+            Item.autoReuse = false; 
+            Item.shoot = ModContent.ProjectileType<Projectiles.Permafrost.Metalmalgamation>(); 
+            Item.noUseGraphic = true; 
+            Item.noMelee = true;
+            Item.UseSound = SoundID.Item1; 
         }
 		public override void AddRecipes()
 		{

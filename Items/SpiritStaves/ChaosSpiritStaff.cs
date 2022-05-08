@@ -15,29 +15,29 @@ namespace SOTS.Items.SpiritStaves
 		public override void SetStaticDefaults() 
 		{
 			Tooltip.SetDefault("Summons a Chaos Spirit to fight for you\nLocks onto one enemy at a time");
-			ItemID.Sets.GamepadWholeScreenUseRange[item.type] = true; 
-			ItemID.Sets.LockOnIgnoresCollision[item.type] = true;
+			ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true; 
+			ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;
 		}
 		public override void SafeSetDefaults() 
 		{
-			item.damage = 60;
-			item.knockBack = 4f;
-			item.width = 38;
-			item.height = 38;
-			item.useTime = 36;
-			item.useAnimation = 36;
-			item.useStyle = ItemUseStyleID.SwingThrow;
-			item.value = Item.sellPrice(0, 20, 0, 0);
-			item.rare = ItemRarityID.Yellow;
-			item.UseSound = SoundID.Item44;
-			item.noMelee = true;
-			item.summon = true;
-			item.buffType = ModContent.BuffType<ChaosSpiritAid>();
-			item.shoot = ModContent.ProjectileType<ChaosSpirit>();
+			Item.damage = 60;
+			Item.knockBack = 4f;
+			Item.width = 38;
+			Item.height = 38;
+			Item.useTime = 36;
+			Item.useAnimation = 36;
+			Item.useStyle = ItemUseStyleID.SwingThrow;
+			Item.value = Item.sellPrice(0, 20, 0, 0);
+			Item.rare = ItemRarityID.Yellow;
+			Item.UseSound = SoundID.Item44;
+			Item.noMelee = true;
+			Item.summon = true;
+			Item.buffType = ModContent.BuffType<ChaosSpiritAid>();
+			Item.shoot = ModContent.ProjectileType<ChaosSpirit>();
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) 
 		{
-			player.AddBuff(item.buffType, 2);
+			player.AddBuff(Item.buffType, 2);
 			position = Main.MouseWorld;
 			return true;
 		}

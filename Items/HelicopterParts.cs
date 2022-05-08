@@ -13,11 +13,11 @@ namespace SOTS.Items
 		}
 		public override void SetDefaults()
 		{
-			item.width = 44;
-			item.height = 34;
-            item.value = Item.sellPrice(0, 0, 70, 0);
-			item.rare = ItemRarityID.LightPurple;
-			item.maxStack = 99;
+			Item.width = 44;
+			Item.height = 34;
+            Item.value = Item.sellPrice(0, 0, 70, 0);
+			Item.rare = ItemRarityID.LightPurple;
+			Item.maxStack = 99;
 		}
 	}
 }

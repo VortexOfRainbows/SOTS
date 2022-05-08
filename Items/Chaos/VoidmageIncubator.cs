@@ -29,8 +29,8 @@ namespace SOTS.Items.Chaos
 			int unique = modPlayer.UniqueVisionNumber;
 			Texture2D texture = ModContent.GetTexture("SOTS/Items/Chaos/VoidmageIncubatorSheet");
 			Rectangle frame = new Rectangle(0, 48 * GetGem(unique) + 2, 24, 44);
-			Vector2 origin = item.Size / 2;
-			spriteBatch.Draw(texture, item.Center - Main.screenPosition, frame, lightColor, rotation, origin, scale, SpriteEffects.None, 0f);
+			Vector2 origin = Item.Size / 2;
+			spriteBatch.Draw(texture, Item.Center - Main.screenPosition, frame, lightColor, rotation, origin, scale, SpriteEffects.None, 0f);
 			return false;
 		}
 		public override void SetStaticDefaults()
@@ -40,12 +40,12 @@ namespace SOTS.Items.Chaos
 		}
 		public override void SetDefaults()
 		{
-            item.width = 24;     
-            item.height = 44;   
-            item.value = Item.sellPrice(gold: 20);
-            item.rare = ItemRarityID.Yellow;
-			item.accessory = true;
-			item.expert = true;
+            Item.width = 24;     
+            Item.height = 44;   
+            Item.value = Item.sellPrice(gold: 20);
+            Item.rare = ItemRarityID.Yellow;
+			Item.accessory = true;
+			Item.expert = true;
 		}
         public override void ModifyTooltips(List<TooltipLine> tooltips)
 		{

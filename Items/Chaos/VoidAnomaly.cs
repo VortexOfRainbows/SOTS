@@ -21,12 +21,12 @@ namespace SOTS.Items.Chaos
 		}
 		public override void SetDefaults()
 		{
-            item.width = 44;     
-            item.height = 26;   
-            item.value = Item.sellPrice(gold: 10);
-            item.rare = ItemRarityID.Yellow;
-			item.accessory = true;
-			item.expert = true;
+            Item.width = 44;     
+            Item.height = 26;   
+            Item.value = Item.sellPrice(gold: 10);
+            Item.rare = ItemRarityID.Yellow;
+			Item.accessory = true;
+			Item.expert = true;
 		}
         public override void UpdateAccessory(Player player, bool hideVisual)
 		{

@@ -16,22 +16,22 @@ namespace SOTS.Items.Permafrost
 		}
         public override void SetDefaults()
         {
-            item.damage = 14;
-            item.magic = true;
-            item.width = 40;
-            item.height = 38;
-            item.useTime = 36;
-            item.useAnimation = 36;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.noMelee = true;
-            item.knockBack = 1.35f;
-			item.shootSpeed = 9;
-            item.value = Item.sellPrice(0, 0, 80, 0);
-            item.rare = ItemRarityID.Green;
-			item.UseSound = SoundID.Item92;
-			item.mana = 15;
-			item.crit = 2;
-			item.shoot = ModContent.ProjectileType<IceStorm>();
+            Item.damage = 14;
+            Item.magic = true;
+            Item.width = 40;
+            Item.height = 38;
+            Item.useTime = 36;
+            Item.useAnimation = 36;
+            Item.useStyle = ItemUseStyleID.HoldingOut;
+            Item.noMelee = true;
+            Item.knockBack = 1.35f;
+			Item.shootSpeed = 9;
+            Item.value = Item.sellPrice(0, 0, 80, 0);
+            Item.rare = ItemRarityID.Green;
+			Item.UseSound = SoundID.Item92;
+			Item.mana = 15;
+			Item.crit = 2;
+			Item.shoot = ModContent.ProjectileType<IceStorm>();
         }
 		public override void AddRecipes()
 		{

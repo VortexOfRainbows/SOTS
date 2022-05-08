@@ -13,10 +13,10 @@ namespace SOTS.Items.Fishing
 	{	
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.StoneBlock);
-			item.Size = new Vector2(34, 34);
-			item.autoReuse = true;
-			item.createTile = ModContent.TileType<PyramidCrateTile>();
+			Item.CloneDefaults(ItemID.StoneBlock);
+			Item.Size = new Vector2(34, 34);
+			Item.autoReuse = true;
+			Item.createTile = ModContent.TileType<PyramidCrateTile>();
 		}
 		public override bool CanRightClick()
 		{

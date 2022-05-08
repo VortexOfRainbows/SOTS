@@ -11,10 +11,10 @@ namespace SOTS.Items.Furniture.Earthen
 	{
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.StoneBlock);
-			item.Size = new Vector2(28, 28);
-			item.rare = ItemRarityID.Blue;
-			item.createTile = ModContent.TileType<EarthenPlatingSinkTile>();
+			Item.CloneDefaults(ItemID.StoneBlock);
+			Item.Size = new Vector2(28, 28);
+			Item.rare = ItemRarityID.Blue;
+			Item.createTile = ModContent.TileType<EarthenPlatingSinkTile>();
 		}
 		public override void AddRecipes()
 		{

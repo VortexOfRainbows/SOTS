@@ -16,22 +16,22 @@ namespace SOTS.Items.Permafrost
 		}
 		public override void SetDefaults()
 		{
-            item.damage = 36;
-			item.magic = true;
-            item.width = 38;    
-            item.height = 42; 
-            item.useTime = 55; 
-            item.useAnimation = 55;
-            item.useStyle = ItemUseStyleID.HoldingOut;    
-            item.knockBack = 1.5f;
-			item.value = Item.sellPrice(0, 7, 0, 0);
-            item.rare = ItemRarityID.Lime;
-			item.UseSound = SoundID.Item92;
-            item.noMelee = true; 
-            item.autoReuse = true;
-            item.shootSpeed = 18f; //arbitrary 
-			item.shoot = ModContent.ProjectileType<Shardstorm>();
-			item.mana = 20;
+            Item.damage = 36;
+			Item.magic = true;
+            Item.width = 38;    
+            Item.height = 42; 
+            Item.useTime = 55; 
+            Item.useAnimation = 55;
+            Item.useStyle = ItemUseStyleID.HoldingOut;    
+            Item.knockBack = 1.5f;
+			Item.value = Item.sellPrice(0, 7, 0, 0);
+            Item.rare = ItemRarityID.Lime;
+			Item.UseSound = SoundID.Item92;
+            Item.noMelee = true; 
+            Item.autoReuse = true;
+            Item.shootSpeed = 18f; //arbitrary 
+			Item.shoot = ModContent.ProjectileType<Shardstorm>();
+			Item.mana = 20;
 		}
 		public override void AddRecipes()
 		{

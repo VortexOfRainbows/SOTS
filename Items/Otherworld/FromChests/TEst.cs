@@ -25,15 +25,15 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.ThrowingKnife);
-			item.damage = 17;
-			//item.useTime = 3;
-			item.thrown = true;
-			item.rare = ItemRarityID.Green;
-			item.autoReuse = false;            
-			item.shoot = ModContent.ProjectileType<ThunderBall>(); 
-            item.shootSpeed = 3.0f;
-			item.consumable = true;
+			Item.CloneDefaults(ItemID.ThrowingKnife);
+			Item.damage = 17;
+			//Item.useTime = 3;
+			Item.thrown = true;
+			Item.rare = ItemRarityID.Green;
+			Item.autoReuse = false;            
+			Item.shoot = ModContent.ProjectileType<ThunderBall>(); 
+            Item.shootSpeed = 3.0f;
+			Item.consumable = true;
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{

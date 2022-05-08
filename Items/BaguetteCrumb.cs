@@ -17,11 +17,11 @@ namespace SOTS.Items
 		}
 		public override void SetDefaults()
 		{
-			item.width = 14;
-			item.height = 12;
-			item.value = 0;
-			item.rare = ItemRarityID.Blue;
-			item.maxStack = 1;
+			Item.width = 14;
+			Item.height = 12;
+			Item.value = 0;
+			Item.rare = ItemRarityID.Blue;
+			Item.maxStack = 1;
 		}
         public override bool ItemSpace(Player player)
         {
@@ -41,7 +41,7 @@ namespace SOTS.Items
         public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
         {
 			rotation = this.rotation;
-			spriteBatch.Draw(Main.itemTexture[item.type], item.Center - Main.screenPosition, new Rectangle(0, frame * item.height, item.width, item.height), lightColor, rotation, new Vector2(item.width / 2, item.height / 2), 1f, SpriteEffects.None, 0.0f);
+			spriteBatch.Draw(Main.itemTexture[Item.type], Item.Center - Main.screenPosition, new Rectangle(0, frame * Item.height, Item.width, Item.height), lightColor, rotation, new Vector2(Item.width / 2, Item.height / 2), 1f, SpriteEffects.None, 0.0f);
             return false;
         }
         float rotation = 0;
@@ -54,7 +54,7 @@ namespace SOTS.Items
 				frame = Main.rand.Next(3);
 				runOnce = false;
 			}
-			rotation += item.velocity.X * 0.1f;
+			rotation += Item.velocity.X * 0.1f;
 		}
 		public override bool OnPickup(Player player)
 		{

@@ -14,20 +14,20 @@ namespace SOTS.Items.Earth
 		}
 		public override void SafeSetDefaults()
 		{
-			item.damage = 17;
-			item.melee = true;
-			item.width = 40;
-			item.height = 40;
-			item.useTime = 24;
-			item.useAnimation = 24;
-			item.useStyle = ItemUseStyleID.SwingThrow;
-			item.knockBack = 2.5f;
-			item.value = Item.sellPrice(0, 0, 80, 0);
-			item.rare = ItemRarityID.Blue;
-			item.UseSound = SoundID.Item1;
-			item.autoReuse = false;  
-			item.shoot = ModContent.ProjectileType<Projectiles.Laser.VibrantBlade>(); 
-            item.shootSpeed = 1.9f;
+			Item.damage = 17;
+			Item.melee = true;
+			Item.width = 40;
+			Item.height = 40;
+			Item.useTime = 24;
+			Item.useAnimation = 24;
+			Item.useStyle = ItemUseStyleID.SwingThrow;
+			Item.knockBack = 2.5f;
+			Item.value = Item.sellPrice(0, 0, 80, 0);
+			Item.rare = ItemRarityID.Blue;
+			Item.UseSound = SoundID.Item1;
+			Item.autoReuse = false;  
+			Item.shoot = ModContent.ProjectileType<Projectiles.Laser.VibrantBlade>(); 
+            Item.shootSpeed = 1.9f;
 		}
 		public override int GetVoid(Player player)
 		{

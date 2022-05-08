@@ -16,20 +16,20 @@ namespace SOTS.Items.GhostTown
         }
 		public override void SetDefaults()
 		{
-            item.damage = 16; 
-            item.melee = true;  
-            item.width = 60;   
-            item.height = 60;
-            item.useTime = 30; 
-            item.useAnimation = 30;
-            item.useStyle = ItemUseStyleID.SwingThrow;    
-            item.knockBack = 5.4f;
-            item.value = Item.sellPrice(0, 0, 60, 0);
-            item.rare = ItemRarityID.Blue;
-            item.UseSound = SoundID.Item1;
-            item.autoReuse = true;
-            item.useTurn = true;
-            item.crit = 4;
+            Item.damage = 16; 
+            Item.melee = true;  
+            Item.width = 60;   
+            Item.height = 60;
+            Item.useTime = 30; 
+            Item.useAnimation = 30;
+            Item.useStyle = ItemUseStyleID.SwingThrow;    
+            Item.knockBack = 5.4f;
+            Item.value = Item.sellPrice(0, 0, 60, 0);
+            Item.rare = ItemRarityID.Blue;
+            Item.UseSound = SoundID.Item1;
+            Item.autoReuse = true;
+            Item.useTurn = true;
+            Item.crit = 4;
 		}
         public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)
         {

@@ -62,12 +62,12 @@ namespace SOTS
 		}
 		public override void UpdateAccessory(Item item, Player player, bool hideVisual)
 		{
-			if (extraVoid > 0 && (item.prefix == mod.GetPrefix("Awakened").Type || item.prefix == mod.GetPrefix("Omniscient").Type))
+			if (extraVoid > 0 && (Item.prefix == mod.GetPrefix("Awakened").Type || Item.prefix == mod.GetPrefix("Omniscient").Type))
 			{
 				VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 				voidPlayer.voidMeterMax2 += extraVoid;
 			}
-			if (extraVoidGain > 0 && (item.prefix == mod.GetPrefix("Chained").Type || item.prefix == mod.GetPrefix("Soulbound").Type))
+			if (extraVoidGain > 0 && (Item.prefix == mod.GetPrefix("Chained").Type || Item.prefix == mod.GetPrefix("Soulbound").Type))
 			{
 				VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 				voidPlayer.bonusVoidGain += extraVoidGain;
@@ -75,10 +75,10 @@ namespace SOTS
 		}
 		public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
 		{
-			if (!item.social && item.prefix > 0)
+			if (!Item.social && Item.prefix > 0)
 			{
 				int voidTooltip = extraVoid;
-				if (extraVoid > 0 && (item.prefix == mod.GetPrefix("Awakened").Type || item.prefix == mod.GetPrefix("Omniscient").Type))
+				if (extraVoid > 0 && (Item.prefix == mod.GetPrefix("Awakened").Type || Item.prefix == mod.GetPrefix("Omniscient").Type))
 				{
 					TooltipLine line = new TooltipLine(mod, "PrefixAwakened", "+" + voidTooltip + " max void")
 					{
@@ -86,7 +86,7 @@ namespace SOTS
 					};
 					tooltips.Add(line);
 				}
-				if (extraVoidGain > 0 && (item.prefix == mod.GetPrefix("Chained").Type || item.prefix == mod.GetPrefix("Soulbound").Type))
+				if (extraVoidGain > 0 && (Item.prefix == mod.GetPrefix("Chained").Type || Item.prefix == mod.GetPrefix("Soulbound").Type))
 				{
 					voidTooltip = extraVoidGain;
 					TooltipLine line = new TooltipLine(mod, "PrefixAwakened", "+" + voidTooltip + " void gain")
@@ -95,16 +95,16 @@ namespace SOTS
 					};
 					tooltips.Add(line);
 				}
-				if (!item.summon && item.modItem as VoidItem != null)
+				if (!Item.summon && Item.modItem as VoidItem != null)
 				{
-					VoidItem vItem = item.modItem as VoidItem;
+					VoidItem vItem = Item.modItem as VoidItem;
 					int voidAmt = vItem.GetVoid(Main.LocalPlayer);
 					if (voidAmt != 0)
                     {
 						int intMax = (int)(voidCostMultiplier * voidAmt);
 						float mult = intMax / (float)voidAmt;
 						int voidCostTooltip = (int)(100f * (mult - 1f));
-						if (voidCostTooltip != 0 && (item.prefix == mod.GetPrefix("Famished").Type || item.prefix == mod.GetPrefix("Precarious").Type || item.prefix == mod.GetPrefix("Potent").Type || item.prefix == mod.GetPrefix("Omnipotent").Type))
+						if (voidCostTooltip != 0 && (Item.prefix == mod.GetPrefix("Famished").Type || Item.prefix == mod.GetPrefix("Precarious").Type || Item.prefix == mod.GetPrefix("Potent").Type || Item.prefix == mod.GetPrefix("Omnipotent").Type))
 						{
 							string sign = (voidCostTooltip > 0 ? "+" : "");
 							Color baseColor = (voidCostTooltip < 0 ? new Color(120, 190, 120) : new Color(190, 120, 120));
@@ -138,7 +138,7 @@ namespace SOTS
 				{
 					if (line3.mod == "Terraria" && line3.Name == "ItemName")
 					{
-						line3.text = line3.text + (item.modItem != null ? " [" + item.modItem.mod.DisplayName + "]" : "");
+						line3.text = line3.text + (Item.modItem != null ? " [" + Item.modItem.mod.DisplayName + "]" : "");
 					}
 				}
 			}*/
@@ -159,7 +159,7 @@ namespace SOTS
 		}
 		public override void OnCraft(Item item, Recipe recipe)
 		{
-			if (item.maxStack == 1)
+			if (Item.maxStack == 1)
 			{
 				originalOwner = Main.LocalPlayer.name;
 			}
@@ -235,10 +235,10 @@ namespace SOTS
 		{
 			if (!hasSetupRed)
 				setUpRedTextures();
-			if (unsafeWallItem.Contains(item.type))
+			if (unsafeWallItem.Contains(Item.type))
 			{
 				List<int> items = unsafeWallItem.ToList();
-				int id = items.IndexOf(item.type);
+				int id = items.IndexOf(Item.type);
 				items = null;
 				Texture2D texture = unsafeWallItemRedTextures[id];
 				for (int i = 0; i < 4; i++)
@@ -253,24 +253,24 @@ namespace SOTS
 		{
 			if (!hasSetupRed)
 				setUpRedTextures();
-			if (unsafeWallItem.Contains(item.type))
+			if (unsafeWallItem.Contains(Item.type))
 			{
 				List<int> items = unsafeWallItem.ToList();
-				int id = items.IndexOf(item.type);
+				int id = items.IndexOf(Item.type);
 				items = null;
 				Texture2D texture = unsafeWallItemRedTextures[id];
 				Vector2 origin = new Vector2(texture.Width/2, texture.Height/2);
 				for (int i = 0; i < 4; i++)
 				{
 					Vector2 circular = new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(90 * i));
-					spriteBatch.Draw(texture, item.Center + circular - Main.screenPosition + new Vector2(0, 2), null, Color.Red, rotation, origin, scale, SpriteEffects.None, 0f);
+					spriteBatch.Draw(texture, Item.Center + circular - Main.screenPosition + new Vector2(0, 2), null, Color.Red, rotation, origin, scale, SpriteEffects.None, 0f);
 				}
 			}
 			return base.PreDrawInWorld(item, spriteBatch, lightColor, alphaColor, ref rotation, ref scale, whoAmI);
         }
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
 		{
-			if (rarities1.Contains(item.type))
+			if (rarities1.Contains(Item.type))
 			{
 				foreach (TooltipLine line2 in tooltips)
 				{
@@ -280,7 +280,7 @@ namespace SOTS
 					}
 				}
 			}
-			if (rarities2.Contains(item.type))
+			if (rarities2.Contains(Item.type))
 			{
 				foreach (TooltipLine line2 in tooltips)
 				{
@@ -290,7 +290,7 @@ namespace SOTS
 					}
 				}
 			}
-			if (rarities3.Contains(item.type))
+			if (rarities3.Contains(Item.type))
 			{
 				Color overrideColor = new Color(50, 50, 50);
 				foreach (TooltipLine line2 in tooltips)
@@ -303,27 +303,27 @@ namespace SOTS
 			}
 			bool dedicated = false;
 			Color dedicatedColor = Color.White;
-			if(dedicatedOrange.Contains(item.type))
+			if(dedicatedOrange.Contains(Item.type))
 			{
 				dedicatedColor = new Color(255, 115, 0);
 				dedicated = true;
 			}
-			if (dedicatedBlue.Contains(item.type))
+			if (dedicatedBlue.Contains(Item.type))
 			{
 				dedicatedColor = new Color(0, 130, 235, 255);
 				dedicated = true;
 			}
-			if (dedicatedPurpleRed.Contains(item.type))
+			if (dedicatedPurpleRed.Contains(Item.type))
             {
 				dedicatedColor = VoidPlayer.soulLootingColor;
 				dedicated = true;
 			}
-			if (dedicatedRainbow.Contains(item.type))
+			if (dedicatedRainbow.Contains(Item.type))
 			{
 				dedicatedColor = VoidPlayer.pastelRainbow;
 				dedicated = true;
 			}
-			if (dedicatedPastelPink.Contains(item.type))
+			if (dedicatedPastelPink.Contains(Item.type))
 			{
 				Color color = new Color(211, 0, 194);
 				foreach (TooltipLine line2 in tooltips)
@@ -336,22 +336,22 @@ namespace SOTS
 				dedicatedColor = new Color(255, 158, 235);
 				dedicated = true;
 			}
-			if (dedicatedMinez.Contains(item.type))
+			if (dedicatedMinez.Contains(Item.type))
 			{
 				dedicatedColor = new Color(255, 153, 51);
 				dedicated = true;
 			}
-			if (dedicatedBlasfah.Contains(item.type))
+			if (dedicatedBlasfah.Contains(Item.type))
 			{
 				dedicatedColor = new Color(90, 12, 240);
 				dedicated = true;
 			}
-			if (dedicatedHeartPlus.Contains(item.type))
+			if (dedicatedHeartPlus.Contains(Item.type))
 			{
 				dedicatedColor = new Color(255, 123, 123);
 				dedicated = true;
 			}
-			if (dedicatedCoolio.Contains(item.type))
+			if (dedicatedCoolio.Contains(Item.type))
 			{
 				dedicatedColor = new Color(252, 254, 56);
 				dedicated = true;
@@ -475,28 +475,28 @@ namespace SOTS
 			if (player.HasAmmo(item, true))
 			{
 				int polarCannons = modPlayer.polarCannons;
-				if ((item.ranged || item.melee) && polarCannons > 0 && (!item.autoReuse || player.ownedProjectileCounts[ProjectileType<MiniPolarisCannon>()] <= 0))
+				if ((Item.ranged || Item.melee) && polarCannons > 0 && (!Item.autoReuse || player.ownedProjectileCounts[ProjectileType<MiniPolarisCannon>()] <= 0))
 				{
-					int time = item.useTime;
-					if (item.shoot == ProjectileID.None)
-						time = item.useAnimation;
-					if (item.autoReuse || item.channel)
+					int time = Item.useTime;
+					if (Item.shoot == ProjectileID.None)
+						time = Item.useAnimation;
+					if (Item.autoReuse || Item.channel)
 						time = -2;
 					for (int i = 0; i < polarCannons; i++)
 					{
-						Projectile.NewProjectile(player.Center, Vector2.Zero, ProjectileType<MiniPolarisCannon>(), item.damage, item.knockBack, player.whoAmI, time, item.shoot != ProjectileID.None ? item.useTime : item.useAnimation);
+						Projectile.NewProjectile(player.Center, Vector2.Zero, ProjectileType<MiniPolarisCannon>(), Item.damage, Item.knockBack, player.whoAmI, time, Item.shoot != ProjectileID.None ? Item.useTime : Item.useAnimation);
 					}
 				}
 			}
-			if (modPlayer.EndothermicAfterburner && item.melee && !item.noMelee)
+			if (modPlayer.EndothermicAfterburner && Item.melee && !Item.noMelee)
 			{
 				Vector2 offset = new Vector2(24 * -player.direction, 0);
-				float mult = item.useAnimation / 70f;
+				float mult = Item.useAnimation / 70f;
 				if (mult > 1)
 					mult = 1;
 				if(Math.Abs(player.velocity.X) < 9f)
 					player.velocity.X += player.direction * 7f * mult;
-				Projectile.NewProjectile(player.Center + offset, Vector2.Zero + offset * 0.16f, ProjectileType<EndoBurst>(), (int)(item.damage * 0.7f), 3f, player.whoAmI);
+				Projectile.NewProjectile(player.Center + offset, Vector2.Zero + offset * 0.16f, ProjectileType<EndoBurst>(), (int)(Item.damage * 0.7f), 3f, player.whoAmI);
 			}
 			return base.CanUseItem(item, player);
         }
@@ -649,27 +649,27 @@ namespace SOTS
 			if (!drawPlayer.HeldItem.IsAir)
 			{
 				Item item = drawPlayer.HeldItem;
-				Texture2D texture = item.GetGlobalItem<ItemUseGlow>().glowTexture;
+				Texture2D texture = Item.GetGlobalItem<ItemUseGlow>().glowTexture;
 				Vector2 zero2 = Vector2.Zero;
-				bool isTwilightPole = item.type == ItemType<TwilightFishingPole>() && drawPlayer.ownedProjectileCounts[ProjectileType<TwilightBobber>()]> 0;
+				bool isTwilightPole = Item.type == ItemType<TwilightFishingPole>() && drawPlayer.ownedProjectileCounts[ProjectileType<TwilightBobber>()]> 0;
 				if (texture != null && (drawPlayer.itemAnimation > 0 || isTwilightPole))
 				{
 					Vector2 location = drawInfo.itemLocation;
-					if (item.useStyle == ItemUseStyleID.HoldingOut)
+					if (Item.useStyle == ItemUseStyleID.HoldingOut)
 					{
-						if (Item.staff[item.type])
+						if (Item.staff[Item.type])
 						{
 							float rotation = drawPlayer.itemRotation + 0.785f * (float)drawPlayer.direction;
 							int width = 0;
-							Vector2 origin = new Vector2(0f, (float)Main.itemTexture[item.type].Height);
+							Vector2 origin = new Vector2(0f, (float)Main.itemTexture[Item.type].Height);
 
 							if (drawPlayer.gravDir == -1f)
 							{
 								if (drawPlayer.direction == -1)
 								{
 									rotation += 1.57f;
-									origin = new Vector2((float)Main.itemTexture[item.type].Width, 0f);
-									width -= Main.itemTexture[item.type].Width;
+									origin = new Vector2((float)Main.itemTexture[Item.type].Width, 0f);
+									width -= Main.itemTexture[Item.type].Width;
 								}
 								else
 								{
@@ -679,66 +679,66 @@ namespace SOTS
 							}
 							else if (drawPlayer.direction == -1)
 							{
-								origin = new Vector2((float)Main.itemTexture[item.type].Width, (float)Main.itemTexture[item.type].Height);
-								width -= Main.itemTexture[item.type].Width;
+								origin = new Vector2((float)Main.itemTexture[Item.type].Width, (float)Main.itemTexture[Item.type].Height);
+								width -= Main.itemTexture[Item.type].Width;
 							}
 
-							DrawData value = new DrawData(texture, new Vector2((float)((int)(location.X - Main.screenPosition.X + origin.X + (float)width)), (float)((int)(location.Y - Main.screenPosition.Y))), new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Main.itemTexture[item.type].Width, Main.itemTexture[item.type].Height)), Color.White, rotation, origin, item.scale, drawInfo.spriteEffects, 0);
+							DrawData value = new DrawData(texture, new Vector2((float)((int)(location.X - Main.screenPosition.X + origin.X + (float)width)), (float)((int)(location.Y - Main.screenPosition.Y))), new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Main.itemTexture[Item.type].Width, Main.itemTexture[Item.type].Height)), Color.White, rotation, origin, Item.scale, drawInfo.spriteEffects, 0);
 							Main.playerDrawData.Add(value);
 						}
 						else
 						{
-							Vector2 vector10 = new Vector2((float)(Main.itemTexture[item.type].Width / 2), (float)(Main.itemTexture[item.type].Height / 2));
+							Vector2 vector10 = new Vector2((float)(Main.itemTexture[Item.type].Width / 2), (float)(Main.itemTexture[Item.type].Height / 2));
 
-							//Vector2 vector11 = this.DrawPlayerItemPos(drawPlayer.gravDir, item.type);
+							//Vector2 vector11 = this.DrawPlayerItemPos(drawPlayer.gravDir, Item.type);
 							Vector2 vector11 = new Vector2(10, texture.Height / 2);
-							if (item.GetGlobalItem<ItemUseGlow>().glowOffsetX != 0)
+							if (Item.GetGlobalItem<ItemUseGlow>().glowOffsetX != 0)
 							{
-								vector11.X = item.GetGlobalItem<ItemUseGlow>().glowOffsetX;
+								vector11.X = Item.GetGlobalItem<ItemUseGlow>().glowOffsetX;
 							}
-							vector11.Y += item.GetGlobalItem<ItemUseGlow>().glowOffsetY * drawPlayer.gravDir;
+							vector11.Y += Item.GetGlobalItem<ItemUseGlow>().glowOffsetY * drawPlayer.gravDir;
 							int num107 = (int)vector11.X;
 							vector10.Y = vector11.Y;
-							Vector2 origin5 = new Vector2((float)(-(float)num107), (float)(Main.itemTexture[item.type].Height / 2));
+							Vector2 origin5 = new Vector2((float)(-(float)num107), (float)(Main.itemTexture[Item.type].Height / 2));
 							if (drawPlayer.direction == -1)
 							{
-								origin5 = new Vector2((float)(Main.itemTexture[item.type].Width + num107), (float)(Main.itemTexture[item.type].Height / 2));
+								origin5 = new Vector2((float)(Main.itemTexture[Item.type].Width + num107), (float)(Main.itemTexture[Item.type].Height / 2));
 							}
 
-							//value = new DrawData(Main.itemTexture[item.type], new Vector2((float)((int)(value2.X - Main.screenPosition.X + vector10.X)), (float)((int)(value2.Y - Main.screenPosition.Y + vector10.Y))), new Microsoft.Xna.Framework.Rectangle?(new Microsoft.Xna.Framework.Rectangle(0, 0, Main.itemTexture[item.type].Width, Main.itemTexture[item.type].Height)), item.GetAlpha(color37), drawPlayer.itemRotation, origin5, item.scale, effect, 0);
+							//value = new DrawData(Main.itemTexture[Item.type], new Vector2((float)((int)(value2.X - Main.screenPosition.X + vector10.X)), (float)((int)(value2.Y - Main.screenPosition.Y + vector10.Y))), new Microsoft.Xna.Framework.Rectangle?(new Microsoft.Xna.Framework.Rectangle(0, 0, Main.itemTexture[Item.type].Width, Main.itemTexture[Item.type].Height)), Item.GetAlpha(color37), drawPlayer.itemRotation, origin5, Item.scale, effect, 0);
 							//Main.playerDrawData.Add(value);
 
 							Color color = new Color(Main.DiscoR, Main.DiscoG, Main.DiscoB, 0);
 							int recurse = 1;
-							bool rainbow = item.type == ItemType<PhaseCannon>() && modPlayer.rainbowGlowmasks;
+							bool rainbow = Item.type == ItemType<PhaseCannon>() && modPlayer.rainbowGlowmasks;
 							if (rainbow)
 							{
 								recurse = 2;
 							}
 							Vector2 position = location - Main.screenPosition + vector10;
-							if (item.type == ItemType<SupernovaStorm>())
+							if (Item.type == ItemType<SupernovaStorm>())
 							{
 								for (int k = 0; k < 6; k++)
 								{
 									Vector2 circular = new Vector2(3, 0).RotatedBy(MathHelper.ToRadians(k * 60 + Main.GameUpdateCount * 6));
 									color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(k * 60)) * 0.33f;
 									color.A = 0;
-									DrawData value2 = new DrawData(texture, position + circular, new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Main.itemTexture[item.type].Width, Main.itemTexture[item.type].Height)), color, drawPlayer.itemRotation, origin5, item.scale, drawInfo.spriteEffects, 0);
+									DrawData value2 = new DrawData(texture, position + circular, new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Main.itemTexture[Item.type].Width, Main.itemTexture[Item.type].Height)), color, drawPlayer.itemRotation, origin5, Item.scale, drawInfo.spriteEffects, 0);
 									Main.playerDrawData.Add(value2);
 								}
-								DrawData value = new DrawData(mod.GetTexture("Items/Chaos/SupernovaStorm"), position, new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Main.itemTexture[item.type].Width, Main.itemTexture[item.type].Height)), Lighting.GetColor((int)location.X / 16, (int)location.Y / 16), drawPlayer.itemRotation, origin5, item.scale, drawInfo.spriteEffects, 0);
+								DrawData value = new DrawData(mod.GetTexture("Items/Chaos/SupernovaStorm"), position, new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Main.itemTexture[Item.type].Width, Main.itemTexture[Item.type].Height)), Lighting.GetColor((int)location.X / 16, (int)location.Y / 16), drawPlayer.itemRotation, origin5, Item.scale, drawInfo.spriteEffects, 0);
 								Main.playerDrawData.Add(value);
 							}
 							for (int i = 0; i < recurse; i++)
 							{
-								DrawData value = new DrawData(texture, position, new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Main.itemTexture[item.type].Width, Main.itemTexture[item.type].Height)), rainbow ? color : Color.White, drawPlayer.itemRotation, origin5, item.scale, drawInfo.spriteEffects, 0);
+								DrawData value = new DrawData(texture, position, new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Main.itemTexture[Item.type].Width, Main.itemTexture[Item.type].Height)), rainbow ? color : Color.White, drawPlayer.itemRotation, origin5, Item.scale, drawInfo.spriteEffects, 0);
 								Main.playerDrawData.Add(value);
 							}
 						}
 					}
 					else //for swords and stuff
 					{
-						if(item.type == ItemType<RealityShatter>())
+						if(Item.type == ItemType<RealityShatter>())
 						{
 							for (int k = 0; k < 6; k++)
 							{
@@ -746,21 +746,21 @@ namespace SOTS
 								Vector2 circular = new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(k * 60 + Main.GameUpdateCount * 6));
 								color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(k * 60));
 								color.A = 0;
-								DrawData value = new DrawData(texture, location - Main.screenPosition + circular, new Rectangle(0, 0, texture.Width, texture.Height), color, drawPlayer.itemRotation, new Vector2(texture.Width * 0.5f - texture.Width * 0.5f * (float)drawPlayer.direction, drawPlayer.gravDir == -1 ? 0f : texture.Height), item.scale, drawInfo.spriteEffects, 0);
+								DrawData value = new DrawData(texture, location - Main.screenPosition + circular, new Rectangle(0, 0, texture.Width, texture.Height), color, drawPlayer.itemRotation, new Vector2(texture.Width * 0.5f - texture.Width * 0.5f * (float)drawPlayer.direction, drawPlayer.gravDir == -1 ? 0f : texture.Height), Item.scale, drawInfo.spriteEffects, 0);
 								Main.playerDrawData.Add(value);
 							}
 							Texture2D tBlack = mod.GetTexture("Items/Chaos/RealityShatterBlack");
-							DrawData value2 = new DrawData(tBlack, location - Main.screenPosition, new Rectangle(0, 0, texture.Width, texture.Height), Color.Black, drawPlayer.itemRotation, new Vector2(texture.Width * 0.5f - texture.Width * 0.5f * (float)drawPlayer.direction, drawPlayer.gravDir == -1 ? 0f : texture.Height), item.scale, drawInfo.spriteEffects, 0);
+							DrawData value2 = new DrawData(tBlack, location - Main.screenPosition, new Rectangle(0, 0, texture.Width, texture.Height), Color.Black, drawPlayer.itemRotation, new Vector2(texture.Width * 0.5f - texture.Width * 0.5f * (float)drawPlayer.direction, drawPlayer.gravDir == -1 ? 0f : texture.Height), Item.scale, drawInfo.spriteEffects, 0);
 							Main.playerDrawData.Add(value2);
 							for (int k = 0; k < 6; k++)
 							{
 								Color color = Color.Black * 0.7f;
 								Vector2 circular = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(k * 60));
-								DrawData value = new DrawData(tBlack, location - Main.screenPosition + circular, new Rectangle(0, 0, texture.Width, texture.Height), color, drawPlayer.itemRotation, new Vector2(texture.Width * 0.5f - texture.Width * 0.5f * (float)drawPlayer.direction, drawPlayer.gravDir == -1 ? 0f : texture.Height), item.scale, drawInfo.spriteEffects, 0);
+								DrawData value = new DrawData(tBlack, location - Main.screenPosition + circular, new Rectangle(0, 0, texture.Width, texture.Height), color, drawPlayer.itemRotation, new Vector2(texture.Width * 0.5f - texture.Width * 0.5f * (float)drawPlayer.direction, drawPlayer.gravDir == -1 ? 0f : texture.Height), Item.scale, drawInfo.spriteEffects, 0);
 								Main.playerDrawData.Add(value);
 							}
 						}
-						else if (item.type == ItemType<EtherealScepter>())
+						else if (Item.type == ItemType<EtherealScepter>())
 						{
 							Texture2D tEffect= mod.GetTexture("Items/Chaos/EtherealScepterEffect");
 							for (int k = 0; k < 6; k++)
@@ -769,12 +769,12 @@ namespace SOTS
 								Vector2 circular = new Vector2(4, 0).RotatedBy(MathHelper.ToRadians(k * 60 + Main.GameUpdateCount * 6));
 								color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(k * 60));
 								color.A = 0;
-								DrawData value = new DrawData(tEffect, location - Main.screenPosition + circular, new Rectangle(0, 0, texture.Width, texture.Height), color * 0.3f, drawPlayer.itemRotation, new Vector2(texture.Width * 0.5f - texture.Width * 0.5f * (float)drawPlayer.direction, drawPlayer.gravDir == -1 ? 0f : texture.Height), item.scale, drawInfo.spriteEffects, 0);
+								DrawData value = new DrawData(tEffect, location - Main.screenPosition + circular, new Rectangle(0, 0, texture.Width, texture.Height), color * 0.3f, drawPlayer.itemRotation, new Vector2(texture.Width * 0.5f - texture.Width * 0.5f * (float)drawPlayer.direction, drawPlayer.gravDir == -1 ? 0f : texture.Height), Item.scale, drawInfo.spriteEffects, 0);
 								Main.playerDrawData.Add(value);
 							}
-							DrawData value2 = new DrawData(texture, location - Main.screenPosition, new Rectangle(0, 0, texture.Width, texture.Height), Color.White, drawPlayer.itemRotation, new Vector2(texture.Width * 0.5f - texture.Width * 0.5f * (float)drawPlayer.direction, drawPlayer.gravDir == -1 ? 0f : texture.Height), item.scale, drawInfo.spriteEffects, 0);
+							DrawData value2 = new DrawData(texture, location - Main.screenPosition, new Rectangle(0, 0, texture.Width, texture.Height), Color.White, drawPlayer.itemRotation, new Vector2(texture.Width * 0.5f - texture.Width * 0.5f * (float)drawPlayer.direction, drawPlayer.gravDir == -1 ? 0f : texture.Height), Item.scale, drawInfo.spriteEffects, 0);
 							Main.playerDrawData.Add(value2);
-							value2 = new DrawData(tEffect, location - Main.screenPosition, new Rectangle(0, 0, texture.Width, texture.Height), Color.White, drawPlayer.itemRotation, new Vector2(texture.Width * 0.5f - texture.Width * 0.5f * (float)drawPlayer.direction, drawPlayer.gravDir == -1 ? 0f : texture.Height), item.scale, drawInfo.spriteEffects, 0);
+							value2 = new DrawData(tEffect, location - Main.screenPosition, new Rectangle(0, 0, texture.Width, texture.Height), Color.White, drawPlayer.itemRotation, new Vector2(texture.Width * 0.5f - texture.Width * 0.5f * (float)drawPlayer.direction, drawPlayer.gravDir == -1 ? 0f : texture.Height), Item.scale, drawInfo.spriteEffects, 0);
 							Main.playerDrawData.Add(value2);
 						}
 						else
@@ -793,7 +793,7 @@ namespace SOTS
 									modPlayer.rainbowGlowmasks ? color : Color.White,
 									drawPlayer.itemRotation,
 									 new Vector2(texture.Width * 0.5f - texture.Width * 0.5f * (float)drawPlayer.direction, drawPlayer.gravDir == -1 ? 0f : texture.Height),
-									item.scale,
+									Item.scale,
 									drawInfo.spriteEffects,
 									0);
 								Main.playerDrawData.Add(value);

@@ -16,21 +16,21 @@ namespace SOTS.Items.ChestItems
 		}
 		public override void SafeSetDefaults()
 		{
-            item.damage = 17;
-            item.ranged = true;
-            item.width = 38;
-            item.height = 36;
-            item.useTime = 50; 
-            item.useAnimation = 50;
-            item.useStyle = ItemUseStyleID.HoldingOut;    
-            item.noMelee = true;
-			item.knockBack = 6f;  
-            item.value = Item.sellPrice(0, 1, 0, 0);
-            item.rare = ItemRarityID.Blue;
-            item.UseSound = SoundID.Item61;
-            item.autoReuse = true;
-            item.shoot = ModContent.ProjectileType<Coconut>(); 
-            item.shootSpeed = 9.5f;
+            Item.damage = 17;
+            Item.ranged = true;
+            Item.width = 38;
+            Item.height = 36;
+            Item.useTime = 50; 
+            Item.useAnimation = 50;
+            Item.useStyle = ItemUseStyleID.HoldingOut;    
+            Item.noMelee = true;
+			Item.knockBack = 6f;  
+            Item.value = Item.sellPrice(0, 1, 0, 0);
+            Item.rare = ItemRarityID.Blue;
+            Item.UseSound = SoundID.Item61;
+            Item.autoReuse = true;
+            Item.shoot = ModContent.ProjectileType<Coconut>(); 
+            Item.shootSpeed = 9.5f;
 		}
 		public override int GetVoid(Player player)
 		{

@@ -15,18 +15,18 @@ namespace SOTS.Items.Pyramid.AncientGold
 		}
 		public override void SetDefaults()
 		{
-			item.width = 30;
-			item.height = 18;
-			item.maxStack = 999;
-			item.useTurn = true;
-			item.autoReuse = true;
-			item.useAnimation = 15;
-			item.useTime = 10;
-			item.useStyle = ItemUseStyleID.SwingThrow;
-			item.rare = ItemRarityID.LightRed;
-			item.value = 0;
-			item.consumable = true;
-			item.createTile = mod.TileType("AncientGoldCampfireTile");
+			Item.width = 30;
+			Item.height = 18;
+			Item.maxStack = 999;
+			Item.useTurn = true;
+			Item.autoReuse = true;
+			Item.useAnimation = 15;
+			Item.useTime = 10;
+			Item.useStyle = ItemUseStyleID.SwingThrow;
+			Item.rare = ItemRarityID.LightRed;
+			Item.value = 0;
+			Item.consumable = true;
+			Item.createTile = mod.TileType("AncientGoldCampfireTile");
 		}
 		public override void AddRecipes()
 		{

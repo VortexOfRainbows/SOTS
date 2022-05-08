@@ -10,11 +10,11 @@ namespace SOTS.Items.Earth
 	{
 		public override void SetDefaults()
 		{
-			item.width = 30;
-			item.height = 20;
-			item.value = Item.sellPrice(0, 1, 0, 0);
-			item.rare = ItemRarityID.Blue;
-			item.defense = 5;
+			Item.width = 30;
+			Item.height = 20;
+			Item.value = Item.sellPrice(0, 1, 0, 0);
+			Item.rare = ItemRarityID.Blue;
+			Item.defense = 5;
 		}
 		public override void SetStaticDefaults()
 		{

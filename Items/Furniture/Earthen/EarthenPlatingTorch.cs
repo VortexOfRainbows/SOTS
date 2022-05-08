@@ -14,10 +14,10 @@ namespace SOTS.Items.Furniture.Earthen
 	{
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.Torch);
-			item.Size = new Vector2(14, 16);
-			item.rare = ItemRarityID.Blue;
-			item.createTile = ModContent.TileType<EarthenPlatingTorchTile>();
+			Item.CloneDefaults(ItemID.Torch);
+			Item.Size = new Vector2(14, 16);
+			Item.rare = ItemRarityID.Blue;
+			Item.createTile = ModContent.TileType<EarthenPlatingTorchTile>();
 		}
 		public override void HoldItem(Player player)
 		{
@@ -26,9 +26,9 @@ namespace SOTS.Items.Furniture.Earthen
 		}
 		public override void PostUpdate()
 		{
-			if (!item.wet)
+			if (!Item.wet)
 			{
-				Lighting.AddLight(new Vector2((item.position.X + item.width / 2) / 16f, (item.position.Y + item.height / 2) / 16f), SOTSTile.EarthenPlatingLight * 2.7f);
+				Lighting.AddLight(new Vector2((Item.position.X + Item.width / 2) / 16f, (Item.position.Y + Item.height / 2) / 16f), SOTSTile.EarthenPlatingLight * 2.7f);
 			}
 		}
 		public override void AutoLightSelect(ref bool dryTorch, ref bool wetTorch, ref bool glowstick)

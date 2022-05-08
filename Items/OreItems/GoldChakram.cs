@@ -15,22 +15,22 @@ namespace SOTS.Items.OreItems
 		public override void SafeSetDefaults()
 		{
 
-			item.damage = 18;
-			item.ranged = true;
-			item.width = 30;
-			item.height = 34;
-			item.useTime = 36;
-			item.useAnimation = 36;
-			item.useStyle = ItemUseStyleID.SwingThrow;
-			item.knockBack = 4.5f;
-            item.value = Item.sellPrice(0, 0, 35, 0);
-			item.rare = ItemRarityID.Green;
-			item.UseSound = SoundID.Item18;
-			item.autoReuse = true;     
-			item.noMelee = true;
-			item.shoot = ModContent.ProjectileType<Projectiles.Ores.GoldChakram>(); 
-            item.shootSpeed = 13.5f;
-            item.noUseGraphic = true; 
+			Item.damage = 18;
+			Item.ranged = true;
+			Item.width = 30;
+			Item.height = 34;
+			Item.useTime = 36;
+			Item.useAnimation = 36;
+			Item.useStyle = ItemUseStyleID.SwingThrow;
+			Item.knockBack = 4.5f;
+            Item.value = Item.sellPrice(0, 0, 35, 0);
+			Item.rare = ItemRarityID.Green;
+			Item.UseSound = SoundID.Item18;
+			Item.autoReuse = true;     
+			Item.noMelee = true;
+			Item.shoot = ModContent.ProjectileType<Projectiles.Ores.GoldChakram>(); 
+            Item.shootSpeed = 13.5f;
+            Item.noUseGraphic = true; 
 
 		}
 		public override int GetVoid(Player player)

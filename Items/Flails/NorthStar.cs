@@ -15,15 +15,15 @@ namespace SOTS.Items.Flails
         }
         public override void SafeSetDefaults()
         {
-            item.Size = new Vector2(44, 42);
-            item.damage = 42;
-            item.value = Item.sellPrice(0, 7, 25, 0);
-            item.rare = ItemRarityID.Lime;
-            item.useTime = 30;
-            item.useAnimation = 30;
-            item.shoot = ModContent.ProjectileType<Projectiles.Permafrost.NorthStar.NorthStar>();
-            item.shootSpeed = 15;
-            item.knockBack = 5;
+            Item.Size = new Vector2(44, 42);
+            Item.damage = 42;
+            Item.value = Item.sellPrice(0, 7, 25, 0);
+            Item.rare = ItemRarityID.Lime;
+            Item.useTime = 30;
+            Item.useAnimation = 30;
+            Item.shoot = ModContent.ProjectileType<Projectiles.Permafrost.NorthStar.NorthStar>();
+            Item.shootSpeed = 15;
+            Item.knockBack = 5;
         }
         public override void AddRecipes()
         {

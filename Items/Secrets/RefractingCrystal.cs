@@ -54,8 +54,8 @@ namespace SOTS.Items.Secrets
 		}
         public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
         {
-			int i = (int)item.Center.X / 16;
-			int j = (int)item.Center.Y / 16;
+			int i = (int)Item.Center.X / 16;
+			int j = (int)Item.Center.Y / 16;
 			Tile tile = Framing.GetTileSafely(i, j);
 			if (tile.wall > 0 || j > Main.rockLayer)
             {
@@ -106,12 +106,12 @@ namespace SOTS.Items.Secrets
 				float rotation2 = rotationAround.ToRotation() - MathHelper.ToRadians(90);
 				float dist = 2;
 				float scale2 = 1 + 0.5f * lightIntesity;
-				Main.spriteBatch.Draw(texture2, rotationAround2 + item.Center - Main.screenPosition + new Vector2(0, 2), null, color * lightIntesity, rotation, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture2, rotationAround2 + Item.Center - Main.screenPosition + new Vector2(0, 2), null, color * lightIntesity, rotation, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
 				for (int k = 0; k < 51; k++)
 				{
 					scale2 += 0.1f + 0.01f * lightIntesity;
 					dist += 2;
-					Vector2 fromCenter = item.Center + new Vector2(0, dist * scale).RotatedBy(rotation2);
+					Vector2 fromCenter = Item.Center + new Vector2(0, dist * scale).RotatedBy(rotation2);
 					int width = (int)(2 * scale2);
 					int height = 2;
 					drawOrigin = new Vector2(width * 0.5f, 0);
@@ -124,8 +124,8 @@ namespace SOTS.Items.Secrets
 		int counter = 0;
         public override void Update(ref float gravity, ref float maxFallSpeed)
 		{
-			int i = (int)item.Center.X / 16;
-			int j = (int)item.Center.Y / 16;
+			int i = (int)Item.Center.X / 16;
+			int j = (int)Item.Center.Y / 16;
 			j += 4;
 			Tile tile = Framing.GetTileSafely(i, j);
 			bool day = Main.dayTime;
@@ -199,11 +199,11 @@ namespace SOTS.Items.Secrets
 		}
         public override void SetDefaults()
 		{
-			item.width = 20;
-			item.height = 18;
-			item.maxStack = 999;
-			item.value = Item.sellPrice(1, 0, 0, 0);
-			item.rare = ItemRarityID.LightPurple;
+			Item.width = 20;
+			Item.height = 18;
+			Item.maxStack = 999;
+			Item.value = Item.sellPrice(1, 0, 0, 0);
+			Item.rare = ItemRarityID.LightPurple;
 		}
 	}
 	public class StrangeKeystoneExplosion : ModProjectile

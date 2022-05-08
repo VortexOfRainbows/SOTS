@@ -16,22 +16,22 @@ namespace SOTS.Items.Tide
 		}
 		public override void SafeSetDefaults()
 		{
-            item.damage = 70;
-			item.magic = true;
-            item.width = 38;    
-            item.height = 38; 
-            item.useTime = 18; 
-            item.useAnimation = 18;
-            item.useStyle = ItemUseStyleID.HoldingOut;    
-            item.knockBack = 3.5f;
-			item.value = Item.sellPrice(0, 7, 50, 0);
-            item.rare = ItemRarityID.Lime;
-			item.UseSound = SoundID.Item92;
-            item.noMelee = true; 
-            item.autoReuse = true;
-            item.shootSpeed = 6.25f; 
-			item.shoot = ModContent.ProjectileType<GreenThunderCluster>();
-			Item.staff[item.type] = true; 
+            Item.damage = 70;
+			Item.magic = true;
+            Item.width = 38;    
+            Item.height = 38; 
+            Item.useTime = 18; 
+            Item.useAnimation = 18;
+            Item.useStyle = ItemUseStyleID.HoldingOut;    
+            Item.knockBack = 3.5f;
+			Item.value = Item.sellPrice(0, 7, 50, 0);
+            Item.rare = ItemRarityID.Lime;
+			Item.UseSound = SoundID.Item92;
+            Item.noMelee = true; 
+            Item.autoReuse = true;
+            Item.shootSpeed = 6.25f; 
+			Item.shoot = ModContent.ProjectileType<GreenThunderCluster>();
+			Item.staff[Item.type] = true; 
 		}
 		public override int GetVoid(Player player)
 		{

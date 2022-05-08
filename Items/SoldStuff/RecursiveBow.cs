@@ -15,22 +15,22 @@ namespace SOTS.Items.SoldStuff
 		}
 		public override void SetDefaults()
 		{
-            item.damage = 14;  
-            item.ranged = true; 
-            item.width = 22; 
-            item.height = 64;
-            item.useTime = 33;
-            item.useAnimation = 33;
-            item.useStyle = ItemUseStyleID.HoldingOut;    
-            item.noMelee = true;
-            item.knockBack = 4.5f;
-            item.value = Item.buyPrice(0, 15, 0, 0);
-            item.rare = ItemRarityID.Orange;
-            item.UseSound = SoundID.Item5;
-            item.autoReuse = true;
-            item.shoot = 10;
-            item.shootSpeed = 14.5f;
-            item.useAmmo = AmmoID.Arrow;
+            Item.damage = 14;  
+            Item.ranged = true; 
+            Item.width = 22; 
+            Item.height = 64;
+            Item.useTime = 33;
+            Item.useAnimation = 33;
+            Item.useStyle = ItemUseStyleID.HoldingOut;    
+            Item.noMelee = true;
+            Item.knockBack = 4.5f;
+            Item.value = Item.buyPrice(0, 15, 0, 0);
+            Item.rare = ItemRarityID.Orange;
+            Item.UseSound = SoundID.Item5;
+            Item.autoReuse = true;
+            Item.shoot = 10;
+            Item.shootSpeed = 14.5f;
+            Item.useAmmo = AmmoID.Arrow;
 		}
         public override Vector2? HoldoutOffset()
         {

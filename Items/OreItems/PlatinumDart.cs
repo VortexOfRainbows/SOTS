@@ -15,21 +15,21 @@ namespace SOTS.Items.OreItems
 		}
 		public override void SafeSetDefaults()
 		{
-			item.CloneDefaults(279);
-			item.damage = 15;
-			item.useTime = 15;
-			item.useAnimation = 15;
-			item.ranged = true;
-			item.thrown = false;
-			item.value = Item.sellPrice(0, 0, 35, 0);
-			item.rare = ItemRarityID.Green;
-			item.width = 22;
-			item.height = 22;
-			item.maxStack = 1;
-			item.autoReuse = true;            
-			item.shoot = ModContent.ProjectileType<Projectiles.Ores.PlatinumDart>(); 
-            item.shootSpeed = 14f;
-			item.consumable = false;
+			Item.CloneDefaults(279);
+			Item.damage = 15;
+			Item.useTime = 15;
+			Item.useAnimation = 15;
+			Item.ranged = true;
+			Item.thrown = false;
+			Item.value = Item.sellPrice(0, 0, 35, 0);
+			Item.rare = ItemRarityID.Green;
+			Item.width = 22;
+			Item.height = 22;
+			Item.maxStack = 1;
+			Item.autoReuse = true;            
+			Item.shoot = ModContent.ProjectileType<Projectiles.Ores.PlatinumDart>(); 
+            Item.shootSpeed = 14f;
+			Item.consumable = false;
 		}
 		public override int GetVoid(Player player)
 		{

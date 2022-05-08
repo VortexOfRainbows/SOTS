@@ -16,21 +16,21 @@ namespace SOTS.Items.OreItems
 		}
 		public override void SafeSetDefaults()
 		{
-			item.damage = 28;
-			item.melee = true;
-			item.width = 42;
-			item.height = 40;
-			item.useTime = 31;
-			item.useAnimation = 31;
-			item.useStyle = ItemUseStyleID.HoldingOut;
-			item.knockBack = 5;
-            item.value = Item.sellPrice(0, 0, 35, 0);
-			item.rare = ItemRarityID.Green;
-			item.UseSound = SoundID.Item1;       
-			item.shoot = ModContent.ProjectileType<GoldSpear>(); 
-            item.shootSpeed = 3.8f;
-			item.noUseGraphic = true;
-			item.noMelee = true;
+			Item.damage = 28;
+			Item.melee = true;
+			Item.width = 42;
+			Item.height = 40;
+			Item.useTime = 31;
+			Item.useAnimation = 31;
+			Item.useStyle = ItemUseStyleID.HoldingOut;
+			Item.knockBack = 5;
+            Item.value = Item.sellPrice(0, 0, 35, 0);
+			Item.rare = ItemRarityID.Green;
+			Item.UseSound = SoundID.Item1;       
+			Item.shoot = ModContent.ProjectileType<GoldSpear>(); 
+            Item.shootSpeed = 3.8f;
+			Item.noUseGraphic = true;
+			Item.noMelee = true;
 		}
 		public override int GetVoid(Player player)
 		{

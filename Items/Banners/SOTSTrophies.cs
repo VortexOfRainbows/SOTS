@@ -43,31 +43,31 @@ namespace SOTS.Items.Banners
 	{
 		public override void SetDefaults()
 		{
-			item.width = 30;
-			item.height = 30;
-			item.maxStack = 99;
-			item.useTurn = true;
-			item.autoReuse = true;
-			item.useAnimation = 15;
-			item.useTime = 10;
-			item.useStyle = ItemUseStyleID.SwingThrow;
-			item.consumable = true;
-			item.rare = ItemRarityID.Blue;
-			item.value = Item.buyPrice(0, 1, 0, 0);
+			Item.width = 30;
+			Item.height = 30;
+			Item.maxStack = 99;
+			Item.useTurn = true;
+			Item.autoReuse = true;
+			Item.useAnimation = 15;
+			Item.useTime = 10;
+			Item.useStyle = ItemUseStyleID.SwingThrow;
+			Item.consumable = true;
+			Item.rare = ItemRarityID.Blue;
+			Item.value = Item.buyPrice(0, 1, 0, 0);
 			SafeSetDefaults();
 		}
 		public virtual void SafeSetDefaults()
 		{
-			item.createTile = TileType<SOTSTrophies>();
-			item.placeStyle = 0;
+			Item.createTile = TileType<SOTSTrophies>();
+			Item.placeStyle = 0;
 		}
 	}
 	public class PutridPinkyTrophy : ModBanner
 	{
 		public override void SafeSetDefaults()
 		{
-			item.createTile = TileType<SOTSTrophies>();
-			item.placeStyle = 0;
+			Item.createTile = TileType<SOTSTrophies>();
+			Item.placeStyle = 0;
 		}
 	}
 }

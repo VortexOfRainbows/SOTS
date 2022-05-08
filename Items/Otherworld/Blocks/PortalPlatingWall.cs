@@ -18,9 +18,9 @@ namespace SOTS.Items.Otherworld.Blocks
 
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.StoneWall);
-			item.rare = ItemRarityID.LightRed;
-			item.createWall = ModContent.WallType<AvaritianPlatingWallWall>();
+			Item.CloneDefaults(ItemID.StoneWall);
+			Item.rare = ItemRarityID.LightRed;
+			Item.createWall = ModContent.WallType<AvaritianPlatingWallWall>();
 		}
 		public override void AddRecipes()
 		{

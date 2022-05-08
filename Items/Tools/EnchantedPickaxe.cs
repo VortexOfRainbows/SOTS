@@ -15,21 +15,21 @@ namespace SOTS.Items.Tools
 		}
 		public override void SetDefaults()
 		{
-            item.damage = 14;
-            item.melee = true;  
-            item.width = 30;   
-            item.height = 30;   
-            item.useStyle = ItemUseStyleID.SwingThrow;
-			item.useTurn = true;
-            item.useTime = 18;
-            item.useAnimation = 18;
-			item.pick = 100;
-			item.knockBack = 2.5f;
-			item.value = Item.sellPrice(0, 3, 0, 0);
-            item.rare = ItemRarityID.Orange;
-			item.UseSound = SoundID.Item1;
-			item.tileBoost = 3;
-			item.autoReuse = true;
+            Item.damage = 14;
+            Item.melee = true;  
+            Item.width = 30;   
+            Item.height = 30;   
+            Item.useStyle = ItemUseStyleID.SwingThrow;
+			Item.useTurn = true;
+            Item.useTime = 18;
+            Item.useAnimation = 18;
+			Item.pick = 100;
+			Item.knockBack = 2.5f;
+			Item.value = Item.sellPrice(0, 3, 0, 0);
+            Item.rare = ItemRarityID.Orange;
+			Item.UseSound = SoundID.Item1;
+			Item.tileBoost = 3;
+			Item.autoReuse = true;
 		}
 		public override void MeleeEffects(Player player, Rectangle hitbox)
 		{

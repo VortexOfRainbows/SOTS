@@ -13,11 +13,11 @@ namespace SOTS.Items.Permafrost
 		}
 		public override void SetDefaults()
 		{
-			item.width = 22;
-			item.height = 36;
-			item.value = Item.sellPrice(0, 7, 0, 0);
-			item.rare = ItemRarityID.LightPurple;
-			item.maxStack = 1;
+			Item.width = 22;
+			Item.height = 36;
+			Item.value = Item.sellPrice(0, 7, 0, 0);
+			Item.rare = ItemRarityID.LightPurple;
+			Item.maxStack = 1;
 		}
 		public override void AddRecipes()
 		{

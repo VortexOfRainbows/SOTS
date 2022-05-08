@@ -31,7 +31,7 @@ namespace SOTS.Items.Chaos
 		}
 		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
 		{
-			Texture2D texture = Main.itemTexture[item.type];
+			Texture2D texture = Main.itemTexture[Item.type];
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Rectangle frame = new Rectangle(0, 0, 78, 36);
 			for (int i = 0; i < 6; i++)
@@ -39,10 +39,10 @@ namespace SOTS.Items.Chaos
 				Color color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(i * 60 - SOTSWorld.GlobalCounter)) * 0.6f;
 				color.A = 0;
 				Vector2 rotationAround = new Vector2(4 * scale, 0).RotatedBy(MathHelper.ToRadians(60 * i + SOTSWorld.GlobalCounter));
-				Main.spriteBatch.Draw(texture, item.Center + rotationAround - Main.screenPosition + new Vector2(0, 2), frame, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, Item.Center + rotationAround - Main.screenPosition + new Vector2(0, 2), frame, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			}
 			texture = mod.GetTexture("Items/Chaos/HyperlightGeyserGlow");
-			Main.spriteBatch.Draw(texture, item.Center - Main.screenPosition + new Vector2(0, 2), frame, Color.White, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(texture, Item.Center - Main.screenPosition + new Vector2(0, 2), frame, Color.White, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			return true;
 		}
 		public override void SetStaticDefaults()
@@ -52,24 +52,24 @@ namespace SOTS.Items.Chaos
 		}
         public override void SetDefaults()
 		{
-			item.damage = 54;
-			item.magic = true;
-			item.width = 78;
-			item.height = 36;
-			item.useTime = 30;
-			item.useAnimation = 30;
-			item.useStyle = ItemUseStyleID.HoldingOut;
-			item.knockBack = 5f;
-			item.value = Item.sellPrice(0, 20, 0, 0);
-			item.rare = ItemRarityID.Cyan;
-			//item.UseSound = SoundID.Item5;
-			item.autoReuse = false;
-			item.channel = true;
-			item.shoot = ModContent.ProjectileType<Projectiles.Chaos.HyperlightGeyser>();
-			item.shootSpeed = 30f;
-			item.noMelee = true;
-			item.noUseGraphic = true;
-			item.mana = 40;
+			Item.damage = 54;
+			Item.magic = true;
+			Item.width = 78;
+			Item.height = 36;
+			Item.useTime = 30;
+			Item.useAnimation = 30;
+			Item.useStyle = ItemUseStyleID.HoldingOut;
+			Item.knockBack = 5f;
+			Item.value = Item.sellPrice(0, 20, 0, 0);
+			Item.rare = ItemRarityID.Cyan;
+			//Item.UseSound = SoundID.Item5;
+			Item.autoReuse = false;
+			Item.channel = true;
+			Item.shoot = ModContent.ProjectileType<Projectiles.Chaos.HyperlightGeyser>();
+			Item.shootSpeed = 30f;
+			Item.noMelee = true;
+			Item.noUseGraphic = true;
+			Item.mana = 40;
 		}
         public override void UpdateInventory(Player player)
         {

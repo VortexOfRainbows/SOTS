@@ -13,16 +13,16 @@ namespace SOTS.Items.Pyramid
 		}
         public override void SetDefaults()
         {
-            item.width = 36;
-            item.height = 38;
-            item.useTime = 20;
-            item.useAnimation = 20;
-            item.useStyle = ItemUseStyleID.SwingThrow;
-			item.value = Item.sellPrice(0, 5, 0, 0);
-            item.rare = ItemRarityID.LightPurple;
-            item.UseSound = SoundID.Item1;
-            item.noMelee = true;
-            item.mountType = ModContent.MountType<Mounts.SpiritSurfer>();
+            Item.width = 36;
+            Item.height = 38;
+            Item.useTime = 20;
+            Item.useAnimation = 20;
+            Item.useStyle = ItemUseStyleID.SwingThrow;
+			Item.value = Item.sellPrice(0, 5, 0, 0);
+            Item.rare = ItemRarityID.LightPurple;
+            Item.UseSound = SoundID.Item1;
+            Item.noMelee = true;
+            Item.mountType = ModContent.MountType<Mounts.SpiritSurfer>();
         }
 		public override void AddRecipes()
 		{

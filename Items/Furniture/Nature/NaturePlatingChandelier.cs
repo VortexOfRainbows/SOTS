@@ -11,10 +11,10 @@ namespace SOTS.Items.Furniture.Nature
 	{
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.StoneBlock);
-			item.Size = new Vector2(26, 28);
-			item.rare = ItemRarityID.Blue;
-			item.createTile = ModContent.TileType<NaturePlatingChandelierTile>();
+			Item.CloneDefaults(ItemID.StoneBlock);
+			Item.Size = new Vector2(26, 28);
+			Item.rare = ItemRarityID.Blue;
+			Item.createTile = ModContent.TileType<NaturePlatingChandelierTile>();
 		}
 		public override void AddRecipes()
 		{

@@ -14,20 +14,20 @@ namespace SOTS.Items.Fishing
 		}
         public override void SetDefaults()
         {
-            item.damage = 22;
-            item.melee = true; 
-            item.useTime = 25;  
-            item.useAnimation = 25;   
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.channel = true;
-            item.knockBack = 2f;
-            item.value = Item.sellPrice(0, 1, 50, 0);
-			item.rare = ItemRarityID.LightRed;
-            item.autoReuse = false; 
-            item.shoot = ModContent.ProjectileType<Zeppelin>(); 
-            item.noUseGraphic = true; 
-            item.noMelee = true;
-            item.UseSound = SoundID.Item1; 
+            Item.damage = 22;
+            Item.melee = true; 
+            Item.useTime = 25;  
+            Item.useAnimation = 25;   
+            Item.useStyle = ItemUseStyleID.HoldingOut;
+            Item.channel = true;
+            Item.knockBack = 2f;
+            Item.value = Item.sellPrice(0, 1, 50, 0);
+			Item.rare = ItemRarityID.LightRed;
+            Item.autoReuse = false; 
+            Item.shoot = ModContent.ProjectileType<Zeppelin>(); 
+            Item.noUseGraphic = true; 
+            Item.noMelee = true;
+            Item.UseSound = SoundID.Item1; 
 		}
     }
 }

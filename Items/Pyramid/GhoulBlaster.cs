@@ -16,22 +16,22 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void SetDefaults()
 		{
-            item.damage = 28;
-            item.ranged = true;
-            item.width = 42; 
-            item.height = 26;
-            item.useTime = 6;
-            item.useAnimation = 6;
-            item.useStyle = 5;    
-            item.noMelee = true;
-            item.knockBack = 3f;
-            item.value = Item.sellPrice(0, 5, 25, 0);
-            item.rare = 6;
-            item.UseSound = SoundID.Item41;
-            item.autoReuse = false;
-            item.shoot = 10; //not really important 
-            item.shootSpeed = 13.5f;
-			item.useAmmo = AmmoID.Bullet;
+            Item.damage = 28;
+            Item.ranged = true;
+            Item.width = 42; 
+            Item.height = 26;
+            Item.useTime = 6;
+            Item.useAnimation = 6;
+            Item.useStyle = 5;    
+            Item.noMelee = true;
+            Item.knockBack = 3f;
+            Item.value = Item.sellPrice(0, 5, 25, 0);
+            Item.rare = 6;
+            Item.UseSound = SoundID.Item41;
+            Item.autoReuse = false;
+            Item.shoot = 10; //not really important 
+            Item.shootSpeed = 13.5f;
+			Item.useAmmo = AmmoID.Bullet;
 		}
 		public override void AddRecipes()
 		{
@@ -53,11 +53,11 @@ namespace SOTS.Items.Pyramid
 		int shotNum = 0;
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-			item.reuseDelay = 0;
+			Item.reuseDelay = 0;
 			shotNum++;
 			if(shotNum == 5)
 			{
-				item.reuseDelay = 12;
+				Item.reuseDelay = 12;
 			}
 			if(shotNum >= 6)
 			{

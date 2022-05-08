@@ -14,14 +14,14 @@ namespace SOTS.Items.Permafrost
 		}
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.IronBar);
-			item.width = 24;
-			item.height = 22;
-            item.value = Item.sellPrice(0, 0, 6, 0);
-			item.rare = ItemRarityID.Green;
-			item.maxStack = 99;
-			item.placeStyle = 8;
-			item.createTile = ModContent.TileType<TheBars>();
+			Item.CloneDefaults(ItemID.IronBar);
+			Item.width = 24;
+			Item.height = 22;
+            Item.value = Item.sellPrice(0, 0, 6, 0);
+			Item.rare = ItemRarityID.Green;
+			Item.maxStack = 99;
+			Item.placeStyle = 8;
+			Item.createTile = ModContent.TileType<TheBars>();
 		}
 		public override void AddRecipes()
 		{

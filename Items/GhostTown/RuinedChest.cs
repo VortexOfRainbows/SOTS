@@ -14,13 +14,13 @@ namespace SOTS.Items.GhostTown
 	{
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.Chest);
-			item.width = 32;
-			item.height = 28;
-			item.value = Item.sellPrice(0, 0, 10, 0);
-			item.rare = ItemRarityID.White;
-			item.consumable = true;
-			item.createTile = ModContent.TileType<RuinedChestTile>();
+			Item.CloneDefaults(ItemID.Chest);
+			Item.width = 32;
+			Item.height = 28;
+			Item.value = Item.sellPrice(0, 0, 10, 0);
+			Item.rare = ItemRarityID.White;
+			Item.consumable = true;
+			Item.createTile = ModContent.TileType<RuinedChestTile>();
 		}
 	}
 	public class RuinedChestTile : ModTile

@@ -12,17 +12,17 @@ namespace SOTS.Items
 		{
 			DisplayName.SetDefault("Arcane Aqueduct");
 			Tooltip.SetDefault("Surrounds you with 2 orbital projectiles");
-			Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(5, 5));
+			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 5));
 		}
 		public override void SetDefaults()
 		{
-			item.damage = 14;
-			item.magic = true;
-            item.width = 28;     
-            item.height = 44;   
-            item.value = Item.sellPrice(0, 2, 0, 0);
-            item.rare = ItemRarityID.Green;
-			item.accessory = true;
+			Item.damage = 14;
+			Item.magic = true;
+            Item.width = 28;     
+            Item.height = 44;   
+            Item.value = Item.sellPrice(0, 2, 0, 0);
+            Item.rare = ItemRarityID.Green;
+			Item.accessory = true;
 		}
 		public override void AddRecipes()
 		{
@@ -38,7 +38,7 @@ namespace SOTS.Items
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-			modPlayer.aqueductDamage += (int)(item.damage * (1f + (player.magicDamage - 1f) + (player.allDamage - 1f)));
+			modPlayer.aqueductDamage += (int)(Item.damage * (1f + (player.magicDamage - 1f) + (player.allDamage - 1f)));
 			modPlayer.aqueductNum += 2;
 		}
 	}

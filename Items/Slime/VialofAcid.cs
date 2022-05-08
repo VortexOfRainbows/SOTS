@@ -13,11 +13,11 @@ namespace SOTS.Items.Slime
 		}
 		public override void SetDefaults()
 		{
-			item.width = 24;
-			item.height = 24;
-			item.maxStack = 999;
-			item.rare = ItemRarityID.Blue;
-			item.value = Item.sellPrice(0, 0, 2, 0);
+			Item.width = 24;
+			Item.height = 24;
+			Item.maxStack = 999;
+			Item.rare = ItemRarityID.Blue;
+			Item.value = Item.sellPrice(0, 0, 2, 0);
 		}
 	}
 	public class CorrosiveGel : ModItem
@@ -29,12 +29,12 @@ namespace SOTS.Items.Slime
 		}
 		public override void SetDefaults()
 		{
-			item.width = 20;
-			item.height = 22;
-			item.maxStack = 999;
-			item.useStyle = ItemUseStyleID.SwingThrow;
-			item.rare = ItemRarityID.Blue;
-			item.value = Item.sellPrice(0, 0, 5, 0);
+			Item.width = 20;
+			Item.height = 22;
+			Item.maxStack = 999;
+			Item.useStyle = ItemUseStyleID.SwingThrow;
+			Item.rare = ItemRarityID.Blue;
+			Item.value = Item.sellPrice(0, 0, 5, 0);
 		}
 		public override void AddRecipes()
 		{

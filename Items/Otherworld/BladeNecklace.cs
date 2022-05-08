@@ -24,8 +24,8 @@ namespace SOTS.Items.Otherworld
 		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
 		{
 			Texture2D texture2 = mod.GetTexture("Items/Otherworld/BladeNecklaceBase");
-			Vector2 drawOrigin = new Vector2(Main.itemTexture[item.type].Width * 0.5f, item.height * 0.5f);
-			Main.spriteBatch.Draw(texture2, new Vector2((float)(item.Center.X - (int)Main.screenPosition.X), (float)(item.Center.Y - (int)Main.screenPosition.Y) + 2), null, lightColor * (1f - (item.alpha / 255f)), rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
+			Main.spriteBatch.Draw(texture2, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y) + 2), null, lightColor * (1f - (Item.alpha / 255f)), rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			return false;
 		}
 		public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
@@ -40,7 +40,7 @@ namespace SOTS.Items.Otherworld
 				if (k == 0)
 					Main.spriteBatch.Draw(texture2, new Vector2(position.X, position.Y), null, color * 0.5f, 0f, origin, scale, SpriteEffects.None, 0f);
 
-				Main.spriteBatch.Draw(texture, new Vector2(position.X + x, position.Y + y), null, color * (1f - (item.alpha / 255f)), 0f, origin, scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, new Vector2(position.X + x, position.Y + y), null, color * (1f - (Item.alpha / 255f)), 0f, origin, scale, SpriteEffects.None, 0f);
 			}
 		}
 		public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
@@ -48,28 +48,28 @@ namespace SOTS.Items.Otherworld
 			Texture2D texture = mod.GetTexture("Items/Otherworld/BladeNecklaceOutline");
 			Texture2D texture2 = mod.GetTexture("Items/Otherworld/BladeNecklaceFill");
 			Color color = new Color(110, 110, 110, 0);
-			Vector2 drawOrigin = new Vector2(Main.itemTexture[item.type].Width * 0.5f, item.height * 0.5f);
+			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
 			for (int k = 0; k < 5; k++)
 			{
 				float x = Main.rand.Next(-10, 11) * 0.03f;
 				float y = Main.rand.Next(-10, 11) * 0.03f;
 				if (k == 0)
-					Main.spriteBatch.Draw(texture2, new Vector2((float)(item.Center.X - (int)Main.screenPosition.X), (float)(item.Center.Y - (int)Main.screenPosition.Y) + 2), null, color * 0.5f, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture2, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y) + 2), null, color * 0.5f, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 
-				Main.spriteBatch.Draw(texture, new Vector2((float)(item.Center.X - (int)Main.screenPosition.X) + x, (float)(item.Center.Y - (int)Main.screenPosition.Y) + y + 2), null, color * (1f - (item.alpha / 255f)), rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X) + x, (float)(Item.Center.Y - (int)Main.screenPosition.Y) + y + 2), null, color * (1f - (Item.alpha / 255f)), rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			}
 		}
 		public override void SafeSetDefaults()
 		{
-			item.melee = true;
-			item.damage = 40;
-			item.maxStack = 1;
-            item.width = 30;     
-            item.height = 58;
-			item.knockBack = 1f;
-            item.value = Item.sellPrice(0, 3, 50, 0);
-            item.rare = ItemRarityID.LightRed;
-			item.accessory = true;
+			Item.melee = true;
+			Item.damage = 40;
+			Item.maxStack = 1;
+            Item.width = 30;     
+            Item.height = 58;
+			Item.knockBack = 1f;
+            Item.value = Item.sellPrice(0, 3, 50, 0);
+            Item.rare = ItemRarityID.LightRed;
+			Item.accessory = true;
 		}
 		public override void AddRecipes()
 		{
@@ -85,7 +85,7 @@ namespace SOTS.Items.Otherworld
 			VoidPlayer voidPlayer = player.GetModPlayer<VoidPlayer>();
 			BeadPlayer beadPlayer = player.GetModPlayer<BeadPlayer>();
 			BladePlayer bladePlayer = player.GetModPlayer<BladePlayer>();
-			int damage = (int)(item.damage * (1f + (player.meleeDamage - 1f) + (player.allDamage - 1f) + (voidPlayer.voidDamage - 1f)));
+			int damage = (int)(Item.damage * (1f + (player.meleeDamage - 1f) + (player.allDamage - 1f) + (voidPlayer.voidDamage - 1f)));
 
 			voidPlayer.bonusVoidGain += 1f;
 			bladePlayer.maxBlades += 9;

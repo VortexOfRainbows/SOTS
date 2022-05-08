@@ -15,21 +15,21 @@ namespace SOTS.Items.Celestial
 		}
 		public override void SafeSetDefaults()
 		{
-			item.damage = 330;
-			item.magic = true;
-			item.width = 30;
-			item.height = 30;
-            item.value = Item.sellPrice(0, 15, 0, 0);
-			item.rare = ItemRarityID.Yellow;
-			item.useTime = 15;
-			item.useAnimation = 15;
-			item.useStyle = 5;
-			item.autoReuse = true;            
-			item.shoot = mod.ProjectileType("GreenLightning"); 
-			item.shootSpeed = 1;
-			item.knockBack = 5;
-			item.UseSound = SoundID.Item92;
-			item.noUseGraphic = true;
+			Item.damage = 330;
+			Item.magic = true;
+			Item.width = 30;
+			Item.height = 30;
+            Item.value = Item.sellPrice(0, 15, 0, 0);
+			Item.rare = ItemRarityID.Yellow;
+			Item.useTime = 15;
+			Item.useAnimation = 15;
+			Item.useStyle = 5;
+			Item.autoReuse = true;            
+			Item.shoot = mod.ProjectileType("GreenLightning"); 
+			Item.shootSpeed = 1;
+			Item.knockBack = 5;
+			Item.UseSound = SoundID.Item92;
+			Item.noUseGraphic = true;
 		}
 		public override void UpdateInventory(Player player)
 		{

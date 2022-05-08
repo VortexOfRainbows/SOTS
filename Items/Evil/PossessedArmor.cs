@@ -12,11 +12,11 @@ namespace SOTS.Items.Evil
 	{
 		public override void SetDefaults()
 		{
-			item.width = 22;
-			item.height = 20;
-            item.value = Item.sellPrice(0, 2, 75, 0);
-			item.rare = ItemRarityID.LightPurple;
-			item.defense = 9;
+			Item.width = 22;
+			Item.height = 20;
+            Item.value = Item.sellPrice(0, 2, 75, 0);
+			Item.rare = ItemRarityID.LightPurple;
+			Item.defense = 9;
 		}
 		public override void SetStaticDefaults()
 		{
@@ -61,11 +61,11 @@ namespace SOTS.Items.Evil
 	{
 		public override void SetDefaults()
 		{
-			item.width = 22;
-			item.height = 18;
-			item.value = Item.sellPrice(0, 3, 50, 0);
-			item.rare = ItemRarityID.LightPurple;
-			item.defense = 10;
+			Item.width = 22;
+			Item.height = 18;
+			Item.value = Item.sellPrice(0, 3, 50, 0);
+			Item.rare = ItemRarityID.LightPurple;
+			Item.defense = 10;
 		}
 		public override void SetStaticDefaults()
 		{
@@ -97,11 +97,11 @@ namespace SOTS.Items.Evil
 	{
 		public override void SetDefaults()
 		{
-			item.width = 30;
-			item.height = 20;
-			item.value = Item.sellPrice(0, 3, 0, 0);
-			item.rare = ItemRarityID.LightPurple;
-			item.defense = 11;
+			Item.width = 30;
+			Item.height = 20;
+			Item.value = Item.sellPrice(0, 3, 0, 0);
+			Item.rare = ItemRarityID.LightPurple;
+			Item.defense = 11;
 		}
 		public override void SetStaticDefaults()
 		{

@@ -28,7 +28,7 @@ namespace SOTS.Items.Otherworld
 				}
 				Main.spriteBatch.Draw(texture,
 				new Vector2(position.X + x, position.Y + y),
-				null, color * (1f - (item.alpha / 255f)), 0f, origin, scale, SpriteEffects.None, 0f);
+				null, color * (1f - (Item.alpha / 255f)), 0f, origin, scale, SpriteEffects.None, 0f);
 			}
 			return true;
 		}
@@ -36,7 +36,7 @@ namespace SOTS.Items.Otherworld
 		{
 			Texture2D texture = mod.GetTexture("Items/Otherworld/JarOfSoulsEffect");
 			Color color = new Color(110, 110, 110, 0);
-			Vector2 drawOrigin = new Vector2(Main.itemTexture[item.type].Width * 0.5f, item.height * 0.5f);
+			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
 			for (int k = 0; k < 6; k++)
 			{
 				float x = Main.rand.Next(-10, 11) * 0.1f;
@@ -47,19 +47,19 @@ namespace SOTS.Items.Otherworld
 					y = 0;
 				}
 				Main.spriteBatch.Draw(texture,
-				new Vector2((float)(item.Center.X - (int)Main.screenPosition.X) + x, (float)(item.Center.Y - (int)Main.screenPosition.Y) + y + 2),
-				null, color * (1f - (item.alpha / 255f)), rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+				new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X) + x, (float)(Item.Center.Y - (int)Main.screenPosition.Y) + y + 2),
+				null, color * (1f - (Item.alpha / 255f)), rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			}
 			return true;
 		}
 		public override void SetDefaults()
 		{
-			item.width = 40;
-			item.height = 58;
-			item.value = Item.sellPrice(0, 1, 0, 0);
-			item.rare = 1;
-			item.maxStack = 99;
-			item.consumable = true;
+			Item.width = 40;
+			Item.height = 58;
+			Item.value = Item.sellPrice(0, 1, 0, 0);
+			Item.rare = 1;
+			Item.maxStack = 99;
+			Item.consumable = true;
 		}
 		public override bool CanRightClick()
 		{

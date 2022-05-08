@@ -15,11 +15,11 @@ namespace SOTS.Items.Tide
 		}
 		public override void SetDefaults()
 		{
-            item.width = 42;     
-            item.height = 40;   
-            item.value = Item.sellPrice(0, 2, 50, 0);
-			item.rare = ItemRarityID.Orange;
-			item.accessory = true;
+            Item.width = 42;     
+            Item.height = 40;   
+            Item.value = Item.sellPrice(0, 2, 50, 0);
+			Item.rare = ItemRarityID.Orange;
+			Item.accessory = true;
 		}
         public override void UpdateAccessory(Player player, bool hideVisual)
 		{

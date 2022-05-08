@@ -18,23 +18,23 @@ namespace SOTS.Items.Evil
 		}
 		public override void SetDefaults()
 		{
-			item.damage = 50;
-			item.width = 52;
-			item.height = 52;
-			item.useStyle = ItemUseStyleID.HoldingOut;
-			item.useAnimation = 36;
-			item.useTime = 36;
-			item.shootSpeed = 27f;
-			item.knockBack = 3.5f;
-			item.UseSound = SoundID.Item116;
-			item.shoot = ModContent.ProjectileType<DeathSpiralProj>();
-			item.value = Item.sellPrice(gold: 10);
-			item.rare = ItemRarityID.LightPurple;
-			item.noMelee = true;
-			item.noUseGraphic = true;
-			item.channel = true;
-			item.autoReuse = true;
-			item.melee = true;
+			Item.damage = 50;
+			Item.width = 52;
+			Item.height = 52;
+			Item.useStyle = ItemUseStyleID.HoldingOut;
+			Item.useAnimation = 36;
+			Item.useTime = 36;
+			Item.shootSpeed = 27f;
+			Item.knockBack = 3.5f;
+			Item.UseSound = SoundID.Item116;
+			Item.shoot = ModContent.ProjectileType<DeathSpiralProj>();
+			Item.value = Item.sellPrice(gold: 10);
+			Item.rare = ItemRarityID.LightPurple;
+			Item.noMelee = true;
+			Item.noUseGraphic = true;
+			Item.channel = true;
+			Item.autoReuse = true;
+			Item.melee = true;
 		}	
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{

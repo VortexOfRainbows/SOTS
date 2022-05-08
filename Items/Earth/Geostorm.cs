@@ -17,21 +17,21 @@ namespace SOTS.Items.Earth
 		}
 		public override void SafeSetDefaults()
 		{
-			item.damage = 20;
-			item.magic = true;
-			item.width = 26;
-			item.height = 38;
-			item.useTime = 50;
-			item.useAnimation = 50;
-			item.useStyle = ItemUseStyleID.HoldingUp;
-			item.knockBack = 1.5f;
-			item.value = Item.sellPrice(0, 1, 0, 0);
-			item.rare = ItemRarityID.Blue;
-			item.UseSound = SoundID.Item8;
-			item.autoReuse = true;
-			item.shoot = ModContent.ProjectileType<GeostormCrystal>();
-            item.shootSpeed = 5.5f; //arbitrary
-			item.noMelee = true;
+			Item.damage = 20;
+			Item.magic = true;
+			Item.width = 26;
+			Item.height = 38;
+			Item.useTime = 50;
+			Item.useAnimation = 50;
+			Item.useStyle = ItemUseStyleID.HoldingUp;
+			Item.knockBack = 1.5f;
+			Item.value = Item.sellPrice(0, 1, 0, 0);
+			Item.rare = ItemRarityID.Blue;
+			Item.UseSound = SoundID.Item8;
+			Item.autoReuse = true;
+			Item.shoot = ModContent.ProjectileType<GeostormCrystal>();
+            Item.shootSpeed = 5.5f; //arbitrary
+			Item.noMelee = true;
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{

@@ -14,8 +14,8 @@ namespace SOTS.Items.Otherworld.FromChests
 		{
 			Texture2D texture = mod.GetTexture("Items/Otherworld/FromChests/HardlightGlaiveGlow");
 			Color color = Color.White;
-			Vector2 drawOrigin = new Vector2(Main.itemTexture[item.type].Width * 0.5f, item.height * 0.5f);
-			Main.spriteBatch.Draw(texture, new Vector2((float)(item.Center.X - (int)Main.screenPosition.X), (float)(item.Center.Y - (int)Main.screenPosition.Y) + 2), null, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
+			Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y) + 2), null, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 		}
 		public override void SetStaticDefaults()
 		{
@@ -24,26 +24,26 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override void SafeSetDefaults()
 		{
-			item.damage = 40;
-			item.melee = true;
-			item.width = 48;
-			item.height = 54;
-			item.useTime = 36;
-			item.useAnimation = 36;
-			item.useStyle = 5;
-			item.knockBack = 4.5f;
-            item.value = Item.sellPrice(0, 5, 75, 0);
-			item.rare = ItemRarityID.LightPurple;
-			item.UseSound = SoundID.DD2_GhastlyGlaivePierce;
-			item.autoReuse = true;            
-			item.shoot = mod.ProjectileType("HardlightGlaive"); 
-            item.shootSpeed = 6.2f;
-			item.noUseGraphic = true;
-			item.noMelee = true;
+			Item.damage = 40;
+			Item.melee = true;
+			Item.width = 48;
+			Item.height = 54;
+			Item.useTime = 36;
+			Item.useAnimation = 36;
+			Item.useStyle = 5;
+			Item.knockBack = 4.5f;
+            Item.value = Item.sellPrice(0, 5, 75, 0);
+			Item.rare = ItemRarityID.LightPurple;
+			Item.UseSound = SoundID.DD2_GhastlyGlaivePierce;
+			Item.autoReuse = true;            
+			Item.shoot = mod.ProjectileType("HardlightGlaive"); 
+            Item.shootSpeed = 6.2f;
+			Item.noUseGraphic = true;
+			Item.noMelee = true;
 		}
 		public override bool BeforeUseItem(Player player)
 		{
-			return player.ownedProjectileCounts[item.shoot] < 1;
+			return player.ownedProjectileCounts[Item.shoot] < 1;
 		}
 		public override void AddRecipes()
 		{

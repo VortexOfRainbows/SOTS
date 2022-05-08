@@ -12,22 +12,22 @@ namespace SOTS.Items.Slime
 		}
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.Shuriken);
-			item.damage = 11;
-			item.alpha = 25;
-			item.thrown = true;
-			item.width = 32;
-			item.height = 20;
-			item.useStyle = ItemUseStyleID.SwingThrow;
-			item.knockBack = 1.75f;
-			item.value = 100;
-			item.rare = ItemRarityID.Blue;
-			item.UseSound = SoundID.Item1;
-			item.autoReuse = false;            
-			item.shoot = ModContent.ProjectileType<Projectiles.GelAxe>(); 
-            item.shootSpeed *= 1.2f;
-			item.consumable = true;
-			item.maxStack = 999;
+			Item.CloneDefaults(ItemID.Shuriken);
+			Item.damage = 11;
+			Item.alpha = 25;
+			Item.thrown = true;
+			Item.width = 32;
+			Item.height = 20;
+			Item.useStyle = ItemUseStyleID.SwingThrow;
+			Item.knockBack = 1.75f;
+			Item.value = 100;
+			Item.rare = ItemRarityID.Blue;
+			Item.UseSound = SoundID.Item1;
+			Item.autoReuse = false;            
+			Item.shoot = ModContent.ProjectileType<Projectiles.GelAxe>(); 
+            Item.shootSpeed *= 1.2f;
+			Item.consumable = true;
+			Item.maxStack = 999;
 		}
 		public override void AddRecipes()
 		{

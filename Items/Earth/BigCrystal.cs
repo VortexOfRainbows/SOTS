@@ -19,11 +19,11 @@ namespace SOTS.Items.Earth
 		}
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.StoneBlock);
-			item.width = 26;
-			item.height = 32;
-			item.rare = ItemRarityID.Blue;
-			item.createTile = ModContent.TileType<BigCrystalTile>();
+			Item.CloneDefaults(ItemID.StoneBlock);
+			Item.width = 26;
+			Item.height = 32;
+			Item.rare = ItemRarityID.Blue;
+			Item.createTile = ModContent.TileType<BigCrystalTile>();
 		}
 	}	
 	public class BigCrystalTile : ModTile

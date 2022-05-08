@@ -15,10 +15,10 @@ namespace SOTS.Items.Fragments
 		}
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.StoneBlock);
-			item.useStyle = ItemUseStyleID.SwingThrow;
-			item.rare = ItemRarityID.Orange;
-			item.createTile = ModContent.TileType<DissolvingBrillianceTile>();
+			Item.CloneDefaults(ItemID.StoneBlock);
+			Item.useStyle = ItemUseStyleID.SwingThrow;
+			Item.rare = ItemRarityID.Orange;
+			Item.createTile = ModContent.TileType<DissolvingBrillianceTile>();
 		}
 		public override void AddRecipes()
 		{

@@ -27,8 +27,8 @@ namespace SOTS.Items.GhostTown
 			int unique = modPlayer.UniqueVisionNumber;
 			Texture2D texture = ModContent.GetTexture("SOTS/Items/GhostTown/VisionAmuletSheet");
 			Rectangle frame = new Rectangle(38 * GetGem(unique), 38 * GetFrame(unique), 36, 38);
-			Vector2 origin = item.Size / 2;
-			spriteBatch.Draw(texture, item.Center - Main.screenPosition, frame, lightColor, rotation, origin, scale, SpriteEffects.None, 0f);
+			Vector2 origin = Item.Size / 2;
+			spriteBatch.Draw(texture, Item.Center - Main.screenPosition, frame, lightColor, rotation, origin, scale, SpriteEffects.None, 0f);
 			return false;
 		}
 		public override void SetStaticDefaults()
@@ -38,11 +38,11 @@ namespace SOTS.Items.GhostTown
 		}
 		public override void SetDefaults()
 		{
-            item.width = 36;     
-            item.height = 38;   
-            item.value = Item.sellPrice(gold: 10);
-            item.rare = ItemRarityID.Orange;
-			item.accessory = true;
+            Item.width = 36;     
+            Item.height = 38;   
+            Item.value = Item.sellPrice(gold: 10);
+            Item.rare = ItemRarityID.Orange;
+			Item.accessory = true;
 		}
         public override void ModifyTooltips(List<TooltipLine> tooltips)
 		{

@@ -14,24 +14,24 @@ namespace SOTS.Items.Tools
 		}
 		public override void SetDefaults()
 		{
-            item.damage = 12; 
-            item.melee = true;  
-            item.width = 28;    
-            item.height = 28;   
-            item.useTime = 16; 
-            item.useAnimation = 16;
-            item.useStyle = ItemUseStyleID.SwingThrow;    
-            item.noMelee = true;
-            item.knockBack = 2.4f;
-            item.value = Item.sellPrice(0, 0, 2, 75);
-            item.rare = ItemRarityID.Blue;
-            item.UseSound = SoundID.Item1;
-            item.autoReuse = true;
-            item.shoot =  ModContent.ProjectileType<Projectiles.Earth.MinersPickaxe>(); 
-            item.shootSpeed = 13f;
-			item.consumable = true;
-			item.noUseGraphic = true;
-			item.maxStack = 999;
+            Item.damage = 12; 
+            Item.melee = true;  
+            Item.width = 28;    
+            Item.height = 28;   
+            Item.useTime = 16; 
+            Item.useAnimation = 16;
+            Item.useStyle = ItemUseStyleID.SwingThrow;    
+            Item.noMelee = true;
+            Item.knockBack = 2.4f;
+            Item.value = Item.sellPrice(0, 0, 2, 75);
+            Item.rare = ItemRarityID.Blue;
+            Item.UseSound = SoundID.Item1;
+            Item.autoReuse = true;
+            Item.shoot =  ModContent.ProjectileType<Projectiles.Earth.MinersPickaxe>(); 
+            Item.shootSpeed = 13f;
+			Item.consumable = true;
+			Item.noUseGraphic = true;
+			Item.maxStack = 999;
 		}
 	}
 }

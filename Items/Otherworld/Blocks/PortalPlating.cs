@@ -17,9 +17,9 @@ namespace SOTS.Items.Otherworld.Blocks
 		}
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.StoneBlock);
-			item.rare = ItemRarityID.LightRed;
-			item.createTile = ModContent.TileType<PortalPlatingTile>();
+			Item.CloneDefaults(ItemID.StoneBlock);
+			Item.rare = ItemRarityID.LightRed;
+			Item.createTile = ModContent.TileType<PortalPlatingTile>();
 		}
 	}
 	public class PortalPlatingTile : ModTile

@@ -78,9 +78,9 @@ namespace SOTS.Items.Fragments
 		}
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.StoneBlock);
-			item.rare = ItemRarityID.Blue;
-			item.createTile = ModContent.TileType<NaturePlatingTile>();
+			Item.CloneDefaults(ItemID.StoneBlock);
+			Item.rare = ItemRarityID.Blue;
+			Item.createTile = ModContent.TileType<NaturePlatingTile>();
 		}
 		public override void AddRecipes()
 		{
@@ -142,9 +142,9 @@ namespace SOTS.Items.Fragments
 		}
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.StoneBlock);
-			item.rare = ItemRarityID.Blue;
-			item.createTile = ModContent.TileType<EarthenPlatingTile>();
+			Item.CloneDefaults(ItemID.StoneBlock);
+			Item.rare = ItemRarityID.Blue;
+			Item.createTile = ModContent.TileType<EarthenPlatingTile>();
 		}
 		public override void AddRecipes()
 		{
@@ -208,9 +208,9 @@ namespace SOTS.Items.Fragments
 		}
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.StoneBlock);
-			item.rare = ItemRarityID.Blue;
-			item.createTile = ModContent.TileType<PermafrostPlatingTile>();
+			Item.CloneDefaults(ItemID.StoneBlock);
+			Item.rare = ItemRarityID.Blue;
+			Item.createTile = ModContent.TileType<PermafrostPlatingTile>();
 		}
 		public override void AddRecipes()
 		{
@@ -278,9 +278,9 @@ namespace SOTS.Items.Fragments
 		}
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.StoneBlock);
-			item.rare = ItemRarityID.Blue;
-			item.createTile = ModContent.TileType<TidePlatingTile>();
+			Item.CloneDefaults(ItemID.StoneBlock);
+			Item.rare = ItemRarityID.Blue;
+			Item.createTile = ModContent.TileType<TidePlatingTile>();
 		}
 		public override void AddRecipes()
 		{
@@ -346,9 +346,9 @@ namespace SOTS.Items.Fragments
 		}
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.StoneBlock);
-			item.rare = ItemRarityID.Blue;
-			item.createTile = ModContent.TileType<EvilPlatingTile>();
+			Item.CloneDefaults(ItemID.StoneBlock);
+			Item.rare = ItemRarityID.Blue;
+			Item.createTile = ModContent.TileType<EvilPlatingTile>();
 		}
 		public override void AddRecipes()
 		{
@@ -412,9 +412,9 @@ namespace SOTS.Items.Fragments
 		}
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.StoneBlock);
-			item.rare = ItemRarityID.Blue;
-			item.createTile = ModContent.TileType<ChaosPlatingTile>();
+			Item.CloneDefaults(ItemID.StoneBlock);
+			Item.rare = ItemRarityID.Blue;
+			Item.createTile = ModContent.TileType<ChaosPlatingTile>();
 		}
 		public override void AddRecipes()
 		{
@@ -482,10 +482,10 @@ namespace SOTS.Items.Fragments
 		}
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.StoneBlock);
-			item.height = 22;
-			item.rare = ItemRarityID.Blue;
-			item.createTile = ModContent.TileType<InfernoPlatingTile>();
+			Item.CloneDefaults(ItemID.StoneBlock);
+			Item.height = 22;
+			Item.rare = ItemRarityID.Blue;
+			Item.createTile = ModContent.TileType<InfernoPlatingTile>();
 		}
 		public override void AddRecipes()
 		{
@@ -560,9 +560,9 @@ namespace SOTS.Items.Fragments
 		}
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.StoneBlock);
-			item.rare = ItemRarityID.Blue;
-			item.createTile = ModContent.TileType<UltimatePlatingTile>();
+			Item.CloneDefaults(ItemID.StoneBlock);
+			Item.rare = ItemRarityID.Blue;
+			Item.createTile = ModContent.TileType<UltimatePlatingTile>();
 		}
 		public override void AddRecipes()
 		{

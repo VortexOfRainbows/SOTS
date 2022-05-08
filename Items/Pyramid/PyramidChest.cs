@@ -7,17 +7,17 @@ namespace SOTS.Items.Pyramid
 	{
 		public override void SetDefaults()
 		{
-			item.width = 32;
-			item.height = 28;
-			item.maxStack = 999;
-			item.useTurn = true;
-			item.autoReuse = true;
-			item.useAnimation = 15;
-			item.useTime = 15;
-			item.useStyle = 1;
-			item.rare = ItemRarityID.Blue;
-			item.consumable = true;
-			item.createTile = ModContent.TileType<PyramidChestTile>();
+			Item.width = 32;
+			Item.height = 28;
+			Item.maxStack = 999;
+			Item.useTurn = true;
+			Item.autoReuse = true;
+			Item.useAnimation = 15;
+			Item.useTime = 15;
+			Item.useStyle = 1;
+			Item.rare = ItemRarityID.Blue;
+			Item.consumable = true;
+			Item.createTile = ModContent.TileType<PyramidChestTile>();
 		}
 	}
 }

@@ -16,23 +16,23 @@ namespace SOTS.Items.Evil
 		}
 		public override void SetDefaults()
 		{
-            item.damage = 48; 
-            item.magic = true; 
-            item.width = 42;   
-            item.height = 44;   
-            item.useTime = 18;   
-            item.useAnimation = 18;
-            item.useStyle = ItemUseStyleID.HoldingOut;    
-            item.noMelee = true;  
-            item.knockBack = 4.5f;
-            item.value = Item.sellPrice(0, 5, 0, 0);
-            item.rare = ItemRarityID.LightPurple;
-            item.UseSound = SoundID.Item8;
-            item.autoReuse = true;
-            item.shoot = ModContent.ProjectileType<ReaperScythe>(); 
-            item.shootSpeed = 9.5f;
-			item.mana = 14;
-			item.reuseDelay = 16;
+            Item.damage = 48; 
+            Item.magic = true; 
+            Item.width = 42;   
+            Item.height = 44;   
+            Item.useTime = 18;   
+            Item.useAnimation = 18;
+            Item.useStyle = ItemUseStyleID.HoldingOut;    
+            Item.noMelee = true;  
+            Item.knockBack = 4.5f;
+            Item.value = Item.sellPrice(0, 5, 0, 0);
+            Item.rare = ItemRarityID.LightPurple;
+            Item.UseSound = SoundID.Item8;
+            Item.autoReuse = true;
+            Item.shoot = ModContent.ProjectileType<ReaperScythe>(); 
+            Item.shootSpeed = 9.5f;
+			Item.mana = 14;
+			Item.reuseDelay = 16;
 		}
 		public override void AddRecipes()
 		{

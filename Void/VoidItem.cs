@@ -19,25 +19,25 @@ namespace SOTS.Void
 
 		}
 		public sealed override void SetDefaults() {
-			item.shoot = 10; 
-			item.magic = false;
-			item.melee = false;
-			item.ranged = false; 
+			Item.shoot = 10; 
+			Item.magic = false;
+			Item.melee = false;
+			Item.ranged = false; 
 			SafeSetDefaults();
-			item.mana = 1;
-			item.thrown = false;
+			Item.mana = 1;
+			Item.thrown = false;
 		}
 		public sealed override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat)
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			float realDamageBoost = voidPlayer.voidDamage;
 			int baseVoidCost = VoidCost(player);
-			item.mana = 1;
+			Item.mana = 1;
 			add += realDamageBoost - 1;
 		}
 		public override void GetWeaponKnockback(Player player, ref float knockback) 	
 		{
-			if(!item.magic && !item.thrown && !item.summon && !item.melee && !item.ranged)
+			if(!Item.magic && !Item.thrown && !Item.summon && !Item.melee && !Item.ranged)
 			{
 				knockback = knockback + VoidPlayer.ModPlayer(player).voidKnockback;
 			}
@@ -52,14 +52,14 @@ namespace SOTS.Void
 			int baseCost = GetVoid(player);
 			int finalCost;
 			float voidCostMult = 1f;
-			if (!item.summon)
+			if (!Item.summon)
 			{
-				if (item.prefix == mod.GetPrefix("Famished").Type || item.prefix == mod.GetPrefix("Precarious").Type || item.prefix == mod.GetPrefix("Potent").Type || item.prefix == mod.GetPrefix("Omnipotent").Type)
+				if (Item.prefix == mod.GetPrefix("Famished").Type || Item.prefix == mod.GetPrefix("Precarious").Type || Item.prefix == mod.GetPrefix("Potent").Type || Item.prefix == mod.GetPrefix("Omnipotent").Type)
 				{
-					voidCostMult = item.GetGlobalItem<PrefixItem>().voidCostMultiplier;
+					voidCostMult = Item.GetGlobalItem<PrefixItem>().voidCostMultiplier;
 				}
 				finalCost = (int)(baseCost * voidPlayer.voidCost * voidCostMult);
-				if (finalCost < 1 && item.type != ModContent.ItemType<FrigidJavelin>())
+				if (finalCost < 1 && Item.type != ModContent.ItemType<FrigidJavelin>())
 				{
 					finalCost = 1;
 				}
@@ -73,10 +73,10 @@ namespace SOTS.Void
 		public virtual int GetVoid(Player player)
 		{
 			int cost = 1;
-			if(item.summon)
+			if(Item.summon)
             {
-				cost = VoidPlayer.minionVoidCost(VoidPlayer.voidMinion(item.shoot));
-				if (item.type == ModContent.ItemType<Lemegeton>())
+				cost = VoidPlayer.minionVoidCost(VoidPlayer.voidMinion(Item.shoot));
+				if (Item.type == ModContent.ItemType<Lemegeton>())
 					cost *= 3;
             }
 			return cost;
@@ -93,16 +93,16 @@ namespace SOTS.Void
 				
 				tt.text = damageValue + " void " + damageWord;
 				
-				if(item.melee)
+				if(Item.melee)
 					tt.text = damageValue + " void + melee " + damageWord;
 				
-				if(item.ranged)
+				if(Item.ranged)
 					tt.text = damageValue + " void + ranged " + damageWord;
 			
-				if(item.magic)
+				if(Item.magic)
 					tt.text = damageValue + " void + magic " + damageWord;
 
-				if (item.summon)
+				if (Item.summon)
 					tt.text = damageValue + " void + summon " + damageWord;
 			}
 				
@@ -113,7 +113,7 @@ namespace SOTS.Void
 				string[] splitText = tt2.text.Split(' ');
 				//string damageValue = splitText.First();
 				//string damageWord = splitText.Last();
-				if(item.accessory == false)
+				if(Item.accessory == false)
 					tt2.text = "Consumes " + voidCostText + " void";
 				else
 				{
@@ -124,7 +124,7 @@ namespace SOTS.Void
 		}	
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) 
 		{
-			if(item.shoot != 10)
+			if(Item.shoot != 10)
 			{
 				return true;
 			}
@@ -132,7 +132,7 @@ namespace SOTS.Void
 		}
 		public sealed override bool ConsumeAmmo(Player player) ///this is the only way i have found to make void not be consumed when ammo is not present
 		{
-			if(item.useAmmo != 0 && BeforeDrainMana(player))
+			if(Item.useAmmo != 0 && BeforeDrainMana(player))
 				DrainMana(player);
 			bool canUse = BeforeConsumeAmmo(player);
 			if(!canUse)
@@ -150,22 +150,22 @@ namespace SOTS.Void
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			bool canUse = BeforeUseItem(player);
-			bool cursed = player.HasBuff(BuffID.Cursed) || (player.HasBuff(BuffID.Silenced) && item.magic);
+			bool cursed = player.HasBuff(BuffID.Cursed) || (player.HasBuff(BuffID.Silenced) && Item.magic);
 			if (cursed)
 				return false;
 			int currentVoid = voidPlayer.voidMeterMax2 - voidPlayer.lootingSouls - voidPlayer.VoidMinionConsumption;
 			int finalCost = VoidCost(player);
-			if (voidPlayer.safetySwitch && voidPlayer.voidMeter < finalCost && !item.summon && !voidPlayer.frozenVoid)
+			if (voidPlayer.safetySwitch && voidPlayer.voidMeter < finalCost && !Item.summon && !voidPlayer.frozenVoid)
 			{
 				return false;
 			}
-			if(!canUse || player.FindBuffIndex(ModContent.BuffType<VoidRecovery>()) > -1 || item.useAnimation < 2 || (player.altFunctionUse != 2 && item.summon && currentVoid < finalCost))
+			if(!canUse || player.FindBuffIndex(ModContent.BuffType<VoidRecovery>()) > -1 || Item.useAnimation < 2 || (player.altFunctionUse != 2 && Item.summon && currentVoid < finalCost))
 			{
 				return false;
 			}
 			OnUseEffects(player);
-			item.mana = 0;
-			if(item.useAmmo == 0 && BeforeDrainMana(player) && !item.summon)
+			Item.mana = 0;
+			if(Item.useAmmo == 0 && BeforeDrainMana(player) && !Item.summon)
 				DrainMana(player);
 			return true;
 		}

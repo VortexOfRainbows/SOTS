@@ -15,20 +15,20 @@ namespace SOTS.Items.Inferno
 		}
 		public override void SetDefaults()
 		{
-			item.damage = 24;
-			item.melee = true;
-			item.width = 34;
-			item.height = 34;
-			item.useTime = 21;
-			item.useAnimation = 21;
-			item.useStyle = 1;
-			item.knockBack = 4.5f;
-            item.value = Item.sellPrice(0, 2, 75, 0);
-			item.rare = 3;
-			item.UseSound = SoundID.Item1;
-			item.autoReuse = false;            
-			item.shoot = mod.ProjectileType("ObsidianStar"); 
-            item.shootSpeed = 26.5f;
+			Item.damage = 24;
+			Item.melee = true;
+			Item.width = 34;
+			Item.height = 34;
+			Item.useTime = 21;
+			Item.useAnimation = 21;
+			Item.useStyle = 1;
+			Item.knockBack = 4.5f;
+            Item.value = Item.sellPrice(0, 2, 75, 0);
+			Item.rare = 3;
+			Item.UseSound = SoundID.Item1;
+			Item.autoReuse = false;            
+			Item.shoot = mod.ProjectileType("ObsidianStar"); 
+            Item.shootSpeed = 26.5f;
 		}
 		public override void AddRecipes()
 		{
@@ -54,7 +54,7 @@ namespace SOTS.Items.Inferno
                 if ((double)num13 < 0.0) num13 *= -1f;
                 if ((double)num13 < 20.0) num13 = 20f;
                 float num14 = (float)Math.Sqrt((double)num12 * (double)num12 + (double)num13 * (double)num13);
-                float num15 = item.shootSpeed / num14;
+                float num15 = Item.shootSpeed / num14;
                 float num16 = num12 * num15;
                 float num17 = num13 * num15;
                 float SpeedX = num16 + (float)Main.rand.Next(-40, 41) * 0.01f;  //this defines the projectile X position speed and randomnes

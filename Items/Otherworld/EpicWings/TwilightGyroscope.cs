@@ -14,13 +14,13 @@ namespace SOTS.Items.Otherworld.EpicWings
 		}
 		public override void SetDefaults()
 		{
-			item.maxStack = 1;
-            item.width = 34;     
-            item.height = 34;   
-            item.value = Item.sellPrice(0, 6, 0, 0);
-            item.rare = ItemRarityID.LightRed;
-			item.accessory = true;
-			item.expert = true;
+			Item.maxStack = 1;
+            Item.width = 34;     
+            Item.height = 34;   
+            Item.value = Item.sellPrice(0, 6, 0, 0);
+            Item.rare = ItemRarityID.LightRed;
+			Item.accessory = true;
+			Item.expert = true;
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{

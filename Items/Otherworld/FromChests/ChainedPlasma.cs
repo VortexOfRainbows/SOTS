@@ -18,22 +18,22 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
         public override void SetDefaults()
         {
-            item.damage = 30;
-            item.width = 36;
-            item.height = 34;
-            item.value = Item.sellPrice(0, 4, 50, 0);
-            item.rare = ItemRarityID.LightPurple;
-            item.noMelee = true;
-            item.useStyle = 5;
-            item.useAnimation = 30;
-            item.useTime = 30;
-            item.knockBack = 5f;
-            item.noUseGraphic = true; 
-            item.shoot = mod.ProjectileType("PlasmaBall");
-            item.shootSpeed = 12.5f;
-            item.UseSound = SoundID.Item1;
-            item.melee = true; 
-            item.channel = true;
+            Item.damage = 30;
+            Item.width = 36;
+            Item.height = 34;
+            Item.value = Item.sellPrice(0, 4, 50, 0);
+            Item.rare = ItemRarityID.LightPurple;
+            Item.noMelee = true;
+            Item.useStyle = 5;
+            Item.useAnimation = 30;
+            Item.useTime = 30;
+            Item.knockBack = 5f;
+            Item.noUseGraphic = true; 
+            Item.shoot = mod.ProjectileType("PlasmaBall");
+            Item.shootSpeed = 12.5f;
+            Item.UseSound = SoundID.Item1;
+            Item.melee = true; 
+            Item.channel = true;
         }
         public override void AddRecipes()
         {

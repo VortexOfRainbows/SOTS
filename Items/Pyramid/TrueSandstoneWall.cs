@@ -14,18 +14,18 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void SetDefaults()
 		{
-			item.width = 28;
-			item.height = 28;
-			item.maxStack = 999;
-			item.useTurn = true;
-			item.autoReuse = true;
-			item.useAnimation = 15;
-			item.useTime = 7;
-			item.useStyle = 1;
-			item.rare = 5;
-			item.consumable = true;
-			item.createWall = mod.WallType("TrueSandstoneWallWall");
-			item.expert = true;
+			Item.width = 28;
+			Item.height = 28;
+			Item.maxStack = 999;
+			Item.useTurn = true;
+			Item.autoReuse = true;
+			Item.useAnimation = 15;
+			Item.useTime = 7;
+			Item.useStyle = 1;
+			Item.rare = 5;
+			Item.consumable = true;
+			Item.createWall = mod.WallType("TrueSandstoneWallWall");
+			Item.expert = true;
 		}
 	}
 	public class TrueSandstoneWallWall : ModWall

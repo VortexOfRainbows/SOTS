@@ -14,22 +14,22 @@ namespace SOTS.Items.Tide
 		}
 		public override void SetDefaults()
 		{
-			item.damage = 25;
-			item.melee = true;
-			item.width = 58;
-			item.height = 58;
-			item.useTime = 29;
-			item.useAnimation = 29;
-			item.useStyle = 5;
-			item.knockBack = 7f;
-			item.value = Item.sellPrice(0, 1, 0, 0);
-			item.rare = 3;
-			item.UseSound = SoundID.Item1;
-			item.autoReuse = false;
-			item.shoot = mod.ProjectileType("Riptide");
-			item.shootSpeed = 3.0f;
-			item.noUseGraphic = true;
-			item.noMelee = true;
+			Item.damage = 25;
+			Item.melee = true;
+			Item.width = 58;
+			Item.height = 58;
+			Item.useTime = 29;
+			Item.useAnimation = 29;
+			Item.useStyle = 5;
+			Item.knockBack = 7f;
+			Item.value = Item.sellPrice(0, 1, 0, 0);
+			Item.rare = 3;
+			Item.UseSound = SoundID.Item1;
+			Item.autoReuse = false;
+			Item.shoot = mod.ProjectileType("Riptide");
+			Item.shootSpeed = 3.0f;
+			Item.noUseGraphic = true;
+			Item.noMelee = true;
 		}
         public override void HoldItem(Player player)
 		{ 
@@ -81,7 +81,7 @@ namespace SOTS.Items.Tide
 		}
 		public override bool CanUseItem(Player player)
 		{
-			return player.ownedProjectileCounts[item.shoot] < 1;
+			return player.ownedProjectileCounts[Item.shoot] < 1;
 		}
 	}
 }

@@ -15,21 +15,21 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override void SafeSetDefaults()
 		{
-			item.damage = 120;
-			item.magic = true;
-			item.width = 44;
-			item.height = 44;
-			item.useTime = 60;
-			item.useAnimation = 60;
-			item.useStyle = 1;
-			item.knockBack = 3.5f;
-            item.value = Item.sellPrice(0, 3, 80, 0);
-			item.rare = ItemRarityID.LightPurple;
-			item.UseSound = SoundID.Item8;
-			item.autoReuse = true;     
-			item.noMelee = true;
-			item.shoot = ModContent.ProjectileType<GenesisCore>(); 
-            item.shootSpeed = 12.5f;
+			Item.damage = 120;
+			Item.magic = true;
+			Item.width = 44;
+			Item.height = 44;
+			Item.useTime = 60;
+			Item.useAnimation = 60;
+			Item.useStyle = 1;
+			Item.knockBack = 3.5f;
+            Item.value = Item.sellPrice(0, 3, 80, 0);
+			Item.rare = ItemRarityID.LightPurple;
+			Item.UseSound = SoundID.Item8;
+			Item.autoReuse = true;     
+			Item.noMelee = true;
+			Item.shoot = ModContent.ProjectileType<GenesisCore>(); 
+            Item.shootSpeed = 12.5f;
 		}
 		public override int GetVoid(Player player)
 		{

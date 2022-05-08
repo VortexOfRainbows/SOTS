@@ -15,14 +15,14 @@ namespace SOTS.Items.Tools
 		}
 		public override void SetDefaults()
 		{
-			item.width = 34;
-			item.height = 34;
-			item.useTime = 12;
-			item.useAnimation = 12;
-			item.useStyle = ItemUseStyleID.Stabbing;
-			item.value = 0;
-			item.rare = ItemRarityID.Cyan;
-			item.UseSound = SoundID.Item1;
+			Item.width = 34;
+			Item.height = 34;
+			Item.useTime = 12;
+			Item.useAnimation = 12;
+			Item.useStyle = ItemUseStyleID.Stabbing;
+			Item.value = 0;
+			Item.rare = ItemRarityID.Cyan;
+			Item.UseSound = SoundID.Item1;
 		}
 		public override void HoldItem(Player player)
 		{

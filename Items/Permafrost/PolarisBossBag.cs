@@ -14,13 +14,13 @@ namespace SOTS.Items.Permafrost
 		}
 		public override void SetDefaults()
 		{
-			item.width = 48;
-			item.height = 34;
-			item.value = 0;
-			item.rare = ItemRarityID.Cyan;
-			item.expert = true;
-			item.maxStack = 999;
-			item.consumable = true;
+			Item.width = 48;
+			Item.height = 34;
+			Item.value = 0;
+			Item.rare = ItemRarityID.Cyan;
+			Item.expert = true;
+			Item.maxStack = 999;
+			Item.consumable = true;
 		}
 		public override int BossBagNPC => ModContent.NPCType<Polaris>();
 		public override bool CanRightClick() { return true; }

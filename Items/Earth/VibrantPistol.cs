@@ -17,21 +17,21 @@ namespace SOTS.Items.Earth
 		}
 		public override void SafeSetDefaults()
 		{
-            item.damage = 15;
-            item.ranged = true;
-            item.width = 30;
-            item.height = 22;
-            item.useTime = 5; 
-            item.useAnimation = 5;
-            item.useStyle = ItemUseStyleID.HoldingOut;    
-            item.noMelee = true;
-			item.knockBack = 2f;  
-            item.value = Item.sellPrice(0, 0, 80, 0);
-            item.rare = ItemRarityID.Blue;
-            item.UseSound = SoundID.Item91;
-            item.autoReuse = false;
-            item.shoot = ModContent.ProjectileType<VibrantBolt>(); 
-            item.shootSpeed = 24f;
+            Item.damage = 15;
+            Item.ranged = true;
+            Item.width = 30;
+            Item.height = 22;
+            Item.useTime = 5; 
+            Item.useAnimation = 5;
+            Item.useStyle = ItemUseStyleID.HoldingOut;    
+            Item.noMelee = true;
+			Item.knockBack = 2f;  
+            Item.value = Item.sellPrice(0, 0, 80, 0);
+            Item.rare = ItemRarityID.Blue;
+            Item.UseSound = SoundID.Item91;
+            Item.autoReuse = false;
+            Item.shoot = ModContent.ProjectileType<VibrantBolt>(); 
+            Item.shootSpeed = 24f;
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
@@ -40,7 +40,7 @@ namespace SOTS.Items.Earth
 			if (modPlayer.VibrantArmor)
 			{
 				Texture2D texture = mod.GetTexture("Items/Earth/VibrantRifle");
-				Main.spriteBatch.Draw(texture, position - new Vector2((texture.Width - item.width)/ 2 - 3.5f, 0), null, drawColor, 0f, origin, scale * 0.85f, SpriteEffects.None, 0f); //I had to position and draw this by testing values manually ughh
+				Main.spriteBatch.Draw(texture, position - new Vector2((texture.Width - Item.width)/ 2 - 3.5f, 0), null, drawColor, 0f, origin, scale * 0.85f, SpriteEffects.None, 0f); //I had to position and draw this by testing values manually ughh
 				return false;
 			}
 			return true;
@@ -50,13 +50,13 @@ namespace SOTS.Items.Earth
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			if (modPlayer.VibrantArmor)
 			{
-				item.autoReuse = true;
-				item.noUseGraphic = true;
+				Item.autoReuse = true;
+				Item.noUseGraphic = true;
 			}
 			else
 			{
-				item.autoReuse = false;
-				item.noUseGraphic = false;
+				Item.autoReuse = false;
+				Item.noUseGraphic = false;
 			}
 		}
 		public override void GetWeaponKnockback(Player player, ref float knockback)

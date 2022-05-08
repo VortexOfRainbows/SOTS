@@ -12,11 +12,11 @@ namespace SOTS.Items
 		}
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.StoneWall);
-			item.width = 24;
-			item.height = 24;
-			item.rare = ItemRarityID.Red;
-			item.createWall = WallID.LihzahrdBrickUnsafe;
+			Item.CloneDefaults(ItemID.StoneWall);
+			Item.width = 24;
+			Item.height = 24;
+			Item.rare = ItemRarityID.Red;
+			Item.createWall = WallID.LihzahrdBrickUnsafe;
 		}
 		public override void AddRecipes()
 		{

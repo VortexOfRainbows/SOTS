@@ -14,22 +14,22 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void SetDefaults()
 		{
-            item.damage = 16;
-            item.magic = true; 
-            item.width = 34;    
-            item.height = 34; 
-            item.useTime = 23; 
-            item.useAnimation = 23;
-            item.useStyle = 5;    
-            item.knockBack = 6.5f;
-            item.value = Item.sellPrice(0, 1, 20, 0);
-            item.rare = ItemRarityID.Orange;
-			item.UseSound = SoundID.Item34;
-            item.noMelee = true; 
-            item.autoReuse = true;
-            item.shootSpeed = 2f; 
-			item.shoot = mod.ProjectileType("SandPuff");
-			item.mana = 16;
+            Item.damage = 16;
+            Item.magic = true; 
+            Item.width = 34;    
+            Item.height = 34; 
+            Item.useTime = 23; 
+            Item.useAnimation = 23;
+            Item.useStyle = 5;    
+            Item.knockBack = 6.5f;
+            Item.value = Item.sellPrice(0, 1, 20, 0);
+            Item.rare = ItemRarityID.Orange;
+			Item.UseSound = SoundID.Item34;
+            Item.noMelee = true; 
+            Item.autoReuse = true;
+            Item.shootSpeed = 2f; 
+			Item.shoot = mod.ProjectileType("SandPuff");
+			Item.mana = 16;
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {

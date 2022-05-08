@@ -15,17 +15,17 @@ namespace SOTS.Items.Void
 		}
 		public override void SetDefaults()
 		{
-			item.width = 22;
-			item.height = 22;
-			item.useAnimation = 12;
-			item.useTime = 12;
-			item.useStyle = ItemUseStyleID.HoldingUp;
-			item.value = 0;
-			item.rare = ItemRarityID.Orange;
-			item.maxStack = 999;
-			item.autoReuse = false;
-			item.consumable = true;
-			ItemID.Sets.ItemNoGravity[item.type] = false;
+			Item.width = 22;
+			Item.height = 22;
+			Item.useAnimation = 12;
+			Item.useTime = 12;
+			Item.useStyle = ItemUseStyleID.HoldingUp;
+			Item.value = 0;
+			Item.rare = ItemRarityID.Orange;
+			Item.maxStack = 999;
+			Item.autoReuse = false;
+			Item.consumable = true;
+			ItemID.Sets.ItemNoGravity[Item.type] = false;
 		}
 		public override bool UseItem(Player player)
 		{

@@ -24,11 +24,11 @@ namespace SOTS.Items.Pyramid
 		int waitTime = 0;
 		public override void SetDefaults()
 		{
-			item.width = 38;
-			item.height = 40;
-			item.accessory = true;
-			item.rare = ItemRarityID.Yellow;
-			item.value = Item.sellPrice(0, 4, 0, 0);
+			Item.width = 38;
+			Item.height = 40;
+			Item.accessory = true;
+			Item.rare = ItemRarityID.Yellow;
+			Item.value = Item.sellPrice(0, 4, 0, 0);
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
@@ -83,8 +83,8 @@ namespace SOTS.Items.Pyramid
 			else
 				waitTime--;
 			Texture2D texture2 = mod.GetTexture("Items/Pyramid/TheDarkEyePupil");
-			spriteBatch.Draw(texture, item.Center - Main.screenPosition, null, lightColor, 0, origin, scale, SpriteEffects.None, 0f);
-			spriteBatch.Draw(texture2, item.position + new Vector2(19 * scale, 20 * scale) - Main.screenPosition + CurrentPos * scale, null, lightColor, 0, origin2, scale, SpriteEffects.None, 1f);
+			spriteBatch.Draw(texture, Item.Center - Main.screenPosition, null, lightColor, 0, origin, scale, SpriteEffects.None, 0f);
+			spriteBatch.Draw(texture2, Item.position + new Vector2(19 * scale, 20 * scale) - Main.screenPosition + CurrentPos * scale, null, lightColor, 0, origin2, scale, SpriteEffects.None, 1f);
 			return false;
 		}
 		int rotation = 0;
@@ -593,7 +593,7 @@ namespace SOTS.Items.Pyramid
 			{
 				Item item = player.armor[i];
 
-				if (item.type == ItemType<TheDarkEye>())
+				if (Item.type == ItemType<TheDarkEye>())
 				{ 
 					dashAccessoryEquipped = true;
 				}

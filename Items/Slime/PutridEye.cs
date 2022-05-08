@@ -47,7 +47,7 @@ namespace SOTS.Items.Slime
 		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
 		{
 			Texture2D texture = mod.GetTexture("Items/Slime/PutridEyeEmpty");
-			Vector2 origin = new Vector2(item.width/2, item.height/2);
+			Vector2 origin = new Vector2(Item.width/2, Item.height/2);
 			Vector2 origin2 = new Vector2(7, 7);
 			if (CurrentPos.X != toPos.X || CurrentPos.Y != toPos.Y)
 			{
@@ -68,30 +68,30 @@ namespace SOTS.Items.Slime
 			else
 				waitTime--;
 			Texture2D texture2 = mod.GetTexture("Items/Slime/PutridPupil");
-			spriteBatch.Draw(texture, item.Center - Main.screenPosition, null, lightColor, 0, origin, scale, SpriteEffects.None, 0f);
-			spriteBatch.Draw(texture2, item.position + new Vector2(27 * scale, 17 * scale) - Main.screenPosition + CurrentPos * scale, null, lightColor, 0, origin2, scale, SpriteEffects.None, 1f);
+			spriteBatch.Draw(texture, Item.Center - Main.screenPosition, null, lightColor, 0, origin, scale, SpriteEffects.None, 0f);
+			spriteBatch.Draw(texture2, Item.position + new Vector2(27 * scale, 17 * scale) - Main.screenPosition + CurrentPos * scale, null, lightColor, 0, origin2, scale, SpriteEffects.None, 1f);
 			return false;
 		}
 		public override void SafeSetDefaults()
 		{
-            item.damage = 50;  
-            item.magic = true;  
-            item.width = 44;    
-            item.height = 44;   
-            item.useTime = 40;
-			item.useAnimation = 40;
-            item.useStyle = ItemUseStyleID.HoldingOut;    
-            item.knockBack = 2.25f;
-            item.value = Item.sellPrice(0, 1, 80, 0);
-            item.rare = ItemRarityID.LightRed;
-			//item.UseSound = SoundID.Item15;
-			item.autoReuse = true;
-			item.shoot = ModContent.ProjectileType<Projectiles.Laser.PutridEye>(); 
-            item.shootSpeed = 1;
-			item.noMelee = true;
-			item.noUseGraphic = true;
-			item.channel = true;
-			item.expert = true;
+            Item.damage = 50;  
+            Item.magic = true;  
+            Item.width = 44;    
+            Item.height = 44;   
+            Item.useTime = 40;
+			Item.useAnimation = 40;
+            Item.useStyle = ItemUseStyleID.HoldingOut;    
+            Item.knockBack = 2.25f;
+            Item.value = Item.sellPrice(0, 1, 80, 0);
+            Item.rare = ItemRarityID.LightRed;
+			//Item.UseSound = SoundID.Item15;
+			Item.autoReuse = true;
+			Item.shoot = ModContent.ProjectileType<Projectiles.Laser.PutridEye>(); 
+            Item.shootSpeed = 1;
+			Item.noMelee = true;
+			Item.noUseGraphic = true;
+			Item.channel = true;
+			Item.expert = true;
 		}
 		public override bool BeforeDrainMana(Player player)
 		{
@@ -111,14 +111,14 @@ namespace SOTS.Items.Slime
 			for (int l = 0; l < Main.projectile.Length; l++)
 			{
 				Projectile proj = Main.projectile[l];
-				if (proj.active && proj.type == item.shoot && Main.player[proj.owner] == player)
+				if (proj.active && proj.type == Item.shoot && Main.player[proj.owner] == player)
 				{
 					summon = false;
 				}
 			}
 			if (player.altFunctionUse != 2)
 			{
-				//item.UseSound = SoundID.Item22;
+				//Item.UseSound = SoundID.Item22;
 				if (summon)
 				{
 					//Projectile.NewProjectile(position.X, position.Y, 0, 0, type, damage, knockBack, player.whoAmI);

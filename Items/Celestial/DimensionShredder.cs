@@ -16,15 +16,15 @@ namespace SOTS.Items.Celestial
 		}
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(1929); //chaingun
-			item.damage = 42;
-            item.width = 48;   
-            item.height = 32;   
-			item.rare = 8;
-			item.useTime = 4;
-			item.useAnimation = 4;
-            item.value = Item.sellPrice(0, 15, 0, 0);
-            item.shootSpeed = 15.5f;
+			Item.CloneDefaults(1929); //chaingun
+			Item.damage = 42;
+            Item.width = 48;   
+            Item.height = 32;   
+			Item.rare = 8;
+			Item.useTime = 4;
+			Item.useAnimation = 4;
+            Item.value = Item.sellPrice(0, 15, 0, 0);
+            Item.shootSpeed = 15.5f;
 		}
 		public override bool ConsumeAmmo(Player p)
 		{

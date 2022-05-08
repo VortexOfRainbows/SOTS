@@ -17,38 +17,38 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override void SafeSetDefaults()
 		{
-            item.damage = 37;  
-            item.ranged = true; 
-            item.width = 56;    
-            item.height = 52;  
-            item.useTime = 10;
-            item.useAnimation = 10;
-            item.useStyle = 1;   
-            item.autoReuse = true; 
-            item.knockBack = 3f;
-			item.value = Item.sellPrice(0, 5, 0, 0);
-            item.rare = ItemRarityID.LightPurple;
-            item.UseSound = SoundID.Item44;
-			item.crit = 2;
-			item.shoot = mod.ProjectileType("SkywardBladeBeam");
-			item.shootSpeed = 5.5f;
-			item.noMelee = true;
-			item.noUseGraphic = true;
+            Item.damage = 37;  
+            Item.ranged = true; 
+            Item.width = 56;    
+            Item.height = 52;  
+            Item.useTime = 10;
+            Item.useAnimation = 10;
+            Item.useStyle = 1;   
+            Item.autoReuse = true; 
+            Item.knockBack = 3f;
+			Item.value = Item.sellPrice(0, 5, 0, 0);
+            Item.rare = ItemRarityID.LightPurple;
+            Item.UseSound = SoundID.Item44;
+			Item.crit = 2;
+			Item.shoot = mod.ProjectileType("SkywardBladeBeam");
+			Item.shootSpeed = 5.5f;
+			Item.noMelee = true;
+			Item.noUseGraphic = true;
 		}
         public override bool BeforeUseItem(Player player)
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			if (modPlayer.skywardBlades <= 0)
 			{
-				item.useTime = 48;
-				item.useAnimation = 48;
-				item.UseSound = SoundID.Item44;
+				Item.useTime = 48;
+				Item.useAnimation = 48;
+				Item.UseSound = SoundID.Item44;
 			}
 			else
 			{
-				item.useTime = 8;
-				item.useAnimation = 8;
-				item.UseSound = SoundID.Item71;
+				Item.useTime = 8;
+				Item.useAnimation = 8;
+				Item.UseSound = SoundID.Item71;
 			}
 			return true;
         }

@@ -9,9 +9,9 @@ namespace SOTS.Items.Fragments
 	{
 		public sealed override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.StoneWall);
-			item.rare = ItemRarityID.Orange;
-			item.createWall = ModContent.WallType<NatureWallWall>();
+			Item.CloneDefaults(ItemID.StoneWall);
+			Item.rare = ItemRarityID.Orange;
+			Item.createWall = ModContent.WallType<NatureWallWall>();
 			SafeSetDefaults();
 		}
 		public virtual void SafeSetDefaults() { }
@@ -20,7 +20,7 @@ namespace SOTS.Items.Fragments
 	{
 		public override void SafeSetDefaults()
 		{
-			item.createWall = ModContent.WallType<NatureWallWall>();
+			Item.createWall = ModContent.WallType<NatureWallWall>();
 		}
 		public override void AddRecipes()
 		{
@@ -62,7 +62,7 @@ namespace SOTS.Items.Fragments
 	{
 		public override void SafeSetDefaults()
 		{
-			item.createWall = ModContent.WallType<EarthWallWall>();
+			Item.createWall = ModContent.WallType<EarthWallWall>();
 		}
 		public override void AddRecipes()
 		{
@@ -104,7 +104,7 @@ namespace SOTS.Items.Fragments
 	{
 		public override void SafeSetDefaults()
 		{
-			item.createWall = ModContent.WallType<DelugeWallWall>();
+			Item.createWall = ModContent.WallType<DelugeWallWall>();
 		}
 		public override void AddRecipes()
 		{
@@ -146,7 +146,7 @@ namespace SOTS.Items.Fragments
 	{
 		public override void SafeSetDefaults()
 		{
-			item.createWall = ModContent.WallType<AetherWallWall>();
+			Item.createWall = ModContent.WallType<AetherWallWall>();
 		}
 		public override void AddRecipes()
 		{
@@ -188,7 +188,7 @@ namespace SOTS.Items.Fragments
 	{
 		public override void SafeSetDefaults()
 		{
-			item.createWall = ModContent.WallType<AuroraWallWall>();
+			Item.createWall = ModContent.WallType<AuroraWallWall>();
 		}
 		public override void AddRecipes()
 		{
@@ -254,7 +254,7 @@ namespace SOTS.Items.Fragments
 	{
 		public override void SafeSetDefaults()
 		{
-			item.createWall = ModContent.WallType<UmbraWallWall>();
+			Item.createWall = ModContent.WallType<UmbraWallWall>();
 		}
 		public override void AddRecipes()
 		{
@@ -296,7 +296,7 @@ namespace SOTS.Items.Fragments
 	{
 		public override void SafeSetDefaults()
 		{
-			item.createWall = ModContent.WallType<NetherWallWall>();
+			Item.createWall = ModContent.WallType<NetherWallWall>();
 		}
 		public override void AddRecipes()
 		{
@@ -314,7 +314,7 @@ namespace SOTS.Items.Fragments
 	{
 		public override void SafeSetDefaults()
 		{
-			item.createWall = ModContent.WallType<BrillianceWallWall>();
+			Item.createWall = ModContent.WallType<BrillianceWallWall>();
 		}
 		public override void AddRecipes()
 		{

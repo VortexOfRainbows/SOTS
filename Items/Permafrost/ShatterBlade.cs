@@ -35,44 +35,44 @@ namespace SOTS.Items.Permafrost
 			Texture2D texture = mod.GetTexture("Items/Permafrost/ShatterBlade");
 			Texture2D texture2 = mod.GetTexture("Items/Permafrost/ShatterFix");
 			if (broken == 0)
-				spriteBatch.Draw(texture, item.Center - Main.screenPosition, new Rectangle(0, 0, 42, 42), lightColor, 0, new Vector2(17,17), scale, SpriteEffects.None, 0f);
+				spriteBatch.Draw(texture, Item.Center - Main.screenPosition, new Rectangle(0, 0, 42, 42), lightColor, 0, new Vector2(17,17), scale, SpriteEffects.None, 0f);
 			if (broken == 1)
 			{
-				spriteBatch.Draw(texture2, item.Center - Main.screenPosition, new Rectangle(0, 46 * counter + 1, 42, 45), lightColor, 0, new Vector2(17, 17), scale, SpriteEffects.None, 0f);
+				spriteBatch.Draw(texture2, Item.Center - Main.screenPosition, new Rectangle(0, 46 * counter + 1, 42, 45), lightColor, 0, new Vector2(17, 17), scale, SpriteEffects.None, 0f);
 			}
 			return false;
 		}
 		public override void SetDefaults()
 		{
-			item.damage = 15;
-			item.melee = true;
-			item.width = 42;
-			item.height = 42;
-			item.useTime = 15;
-			item.useAnimation = 15;
-			item.useStyle = 1;
-			item.knockBack = 3f;
-			item.value = Item.sellPrice(0, 0, 80, 0);
-			item.rare = ItemRarityID.Green;
-			item.UseSound = null;
-			item.autoReuse = true;
-			item.shoot = ModContent.ProjectileType<ShatterFix>();
-			item.shootSpeed = 1;
+			Item.damage = 15;
+			Item.melee = true;
+			Item.width = 42;
+			Item.height = 42;
+			Item.useTime = 15;
+			Item.useAnimation = 15;
+			Item.useStyle = 1;
+			Item.knockBack = 3f;
+			Item.value = Item.sellPrice(0, 0, 80, 0);
+			Item.rare = ItemRarityID.Green;
+			Item.UseSound = null;
+			Item.autoReuse = true;
+			Item.shoot = ModContent.ProjectileType<ShatterFix>();
+			Item.shootSpeed = 1;
 		}
 		public override void MeleeEffects(Player player, Rectangle hitbox)
 		{
 			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
 			if (broken == 1 || modPlayer.brokenFrigidSword >= 1)
 			{
-				item.useStyle = 4;
-				item.noMelee = true;
-				item.noUseGraphic = true;
+				Item.useStyle = 4;
+				Item.noMelee = true;
+				Item.noUseGraphic = true;
 			}
 			else
 			{
-				item.useStyle = 1;
-				item.noMelee = false;
-				item.noUseGraphic = false;
+				Item.useStyle = 1;
+				Item.noMelee = false;
+				Item.noUseGraphic = false;
 			}
 		}
 		public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat)
@@ -85,15 +85,15 @@ namespace SOTS.Items.Permafrost
 			}
 			if (broken == 1)
 			{
-				item.useStyle = 4;
-				item.noMelee = true;
-				item.noUseGraphic = true;
+				Item.useStyle = 4;
+				Item.noMelee = true;
+				Item.noUseGraphic = true;
 			}
 			else
 			{
-				item.useStyle = 1;
-				item.noMelee = false;
-				item.noUseGraphic = false;
+				Item.useStyle = 1;
+				Item.noMelee = false;
+				Item.noUseGraphic = false;
 			}
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

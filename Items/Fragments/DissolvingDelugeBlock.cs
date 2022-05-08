@@ -16,17 +16,17 @@ namespace SOTS.Items.Fragments
 
 		public override void SetDefaults()
 		{
-			item.width = 16;
-			item.height = 16;
-			item.maxStack = 999;
-			item.useTurn = true;
-			item.autoReuse = true;
-			item.useAnimation = 15;
-			item.useTime = 10;
-			item.useStyle = ItemUseStyleID.SwingThrow;
-			item.rare = ItemRarityID.Orange;
-			item.consumable = true;
-			item.createTile = ModContent.TileType<DissolvingDelugeTile>();
+			Item.width = 16;
+			Item.height = 16;
+			Item.maxStack = 999;
+			Item.useTurn = true;
+			Item.autoReuse = true;
+			Item.useAnimation = 15;
+			Item.useTime = 10;
+			Item.useStyle = ItemUseStyleID.SwingThrow;
+			Item.rare = ItemRarityID.Orange;
+			Item.consumable = true;
+			Item.createTile = ModContent.TileType<DissolvingDelugeTile>();
 		}
 		public override void AddRecipes()
 		{

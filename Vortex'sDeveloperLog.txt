@@ -2213,7 +2213,7 @@ Beta 0.19.4.3 Released
 12/24/20 (Christmas EVE :D)
 1. Skyware Battery Added
 2. Changed the way collision works with various lightnings to stop ghost hits (Arclight Orbs, Hardlight Glaive, Cursed Icosahedron)
-3. Added whitelist and blacklist to Typhon (advisor) homing to allow for me to more easily make direct changes to the item.
+3. Added whitelist and blacklist to Typhon (advisor) homing to allow for me to more easily make direct changes to the Item.
 	1. Added Arclight Orb Thunder Column to blacklist
 	2. Added Hardlight Arrow to whitelist
 4. Typhon now functions as PostAI() instead of AI()

@@ -16,22 +16,22 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void SetDefaults()
 		{
-			item.width = 14;
-			item.height = 26;
-			item.maxStack = 999;
-			item.useTurn = true;
-			item.autoReuse = true;
-			item.value = Item.sellPrice(0, 0, 60, 0);
-			item.useAnimation = 15;
-			item.useTime = 10;
-			item.useStyle = 1;
-			item.rare = ItemRarityID.LightRed;
-			item.consumable = true;
-			item.createTile = ModContent.TileType<TaintedKeystoneShardTile>();
+			Item.width = 14;
+			Item.height = 26;
+			Item.maxStack = 999;
+			Item.useTurn = true;
+			Item.autoReuse = true;
+			Item.value = Item.sellPrice(0, 0, 60, 0);
+			Item.useAnimation = 15;
+			Item.useTime = 10;
+			Item.useStyle = 1;
+			Item.rare = ItemRarityID.LightRed;
+			Item.consumable = true;
+			Item.createTile = ModContent.TileType<TaintedKeystoneShardTile>();
 		}
 		public override void PostUpdate()
 		{
-			Lighting.AddLight(item.Center, 10 / 255f, 10 / 255f, 10 / 255f);
+			Lighting.AddLight(Item.Center, 10 / 255f, 10 / 255f, 10 / 255f);
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frameNotUsed, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
@@ -102,10 +102,10 @@ namespace SOTS.Items.Pyramid
 						break;
 				}
 				Vector2 rotationAround2 = 0.5f * new Vector2((6 + mult) * scale, 0).RotatedBy(MathHelper.ToRadians(60 * i + counter));
-				Main.spriteBatch.Draw(texture2, rotationAround2 + item.Center - Main.screenPosition + new Vector2(0, 2), null, color, rotation, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture2, rotationAround2 + Item.Center - Main.screenPosition + new Vector2(0, 2), null, color, rotation, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
 			}
 			texture2 = mod.GetTexture("Items/Pyramid/TaintedKeystoneShard");
-			Main.spriteBatch.Draw(texture2, item.Center - Main.screenPosition + new Vector2(0, 2), null, Color.Lerp(lightColor, Color.Black, 0.7f), rotation, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(texture2, Item.Center - Main.screenPosition + new Vector2(0, 2), null, Color.Lerp(lightColor, Color.Black, 0.7f), rotation, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
 			return false;
 		}
 		public override void AddRecipes()

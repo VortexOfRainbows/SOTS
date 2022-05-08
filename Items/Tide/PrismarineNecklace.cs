@@ -11,6 +11,7 @@ namespace SOTS.Items.Tide
 		{
 			DisplayName.SetDefault("Prismarine Necklace");
 			Tooltip.SetDefault("Increases armor penetration by 8 and max life by 20\nRelease waves of damage periodically\nRelease more waves at lower health\nWaves ignore up to 16 defense total\nWaves disabled when hidden");
+<<<<<<< Updated upstream
 			Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(3, 20));
 		}
 		public override void SetDefaults()
@@ -20,6 +21,17 @@ namespace SOTS.Items.Tide
             item.value = Item.sellPrice(0, 4, 0, 0);
 			item.rare = ItemRarityID.LightRed;
 			item.accessory = true;
+=======
+			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(3, 20));
+		}
+		public override void SetDefaults()
+		{
+            Item.width = 26;     
+            Item.height = 44;   
+            Item.value = Item.sellPrice(0, 4, 0, 0);
+			Item.rare = ItemRarityID.LightRed;
+			Item.accessory = true;
+>>>>>>> Stashed changes
 		}
         public override void UpdateAccessory(Player player, bool hideVisual)
 		{

@@ -17,23 +17,23 @@ namespace SOTS.Items.Tools
 		}
 		public override void SetDefaults()
 		{
-            item.damage = 14;
-            item.melee = true;  
-            item.width = 52;   
-            item.height = 48;   
-            item.useStyle = ItemUseStyleID.SwingThrow;
-			item.useTurn = true;
-			item.useTime = 18;
-			item.useAnimation = 24;
-			item.hammer = 45;
-			item.axe = 12;
-			item.knockBack = 4f;
-			item.value = Item.sellPrice(0, 0, 80, 0);
-			item.rare = ItemRarityID.Blue;
-			item.UseSound = SoundID.Item1;
-			item.tileBoost = 4;
-			item.autoReuse = true;
-			item.crit = 4;
+            Item.damage = 14;
+            Item.melee = true;  
+            Item.width = 52;   
+            Item.height = 48;   
+            Item.useStyle = ItemUseStyleID.SwingThrow;
+			Item.useTurn = true;
+			Item.useTime = 18;
+			Item.useAnimation = 24;
+			Item.hammer = 45;
+			Item.axe = 12;
+			Item.knockBack = 4f;
+			Item.value = Item.sellPrice(0, 0, 80, 0);
+			Item.rare = ItemRarityID.Blue;
+			Item.UseSound = SoundID.Item1;
+			Item.tileBoost = 4;
+			Item.autoReuse = true;
+			Item.crit = 4;
 		}
 		public override void AddRecipes()
 		{

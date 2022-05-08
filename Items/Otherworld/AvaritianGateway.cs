@@ -21,18 +21,18 @@ namespace SOTS.Items.Otherworld
 		}
 		public override void SetDefaults()
 		{
-			item.width = 46;
-			item.height = 42;
-			item.maxStack = 999;
-			item.useTurn = true;
-			item.autoReuse = true;
-			item.useAnimation = 15;
-			item.useTime = 10;
-			item.useStyle = 1;
-			item.rare = 9;
-			item.value = Item.sellPrice(0, 1, 0, 0);
-			item.consumable = true;
-			item.createTile = mod.TileType("AvaritianGatewayTile");
+			Item.width = 46;
+			Item.height = 42;
+			Item.maxStack = 999;
+			Item.useTurn = true;
+			Item.autoReuse = true;
+			Item.useAnimation = 15;
+			Item.useTime = 10;
+			Item.useStyle = 1;
+			Item.rare = 9;
+			Item.value = Item.sellPrice(0, 1, 0, 0);
+			Item.consumable = true;
+			Item.createTile = mod.TileType("AvaritianGatewayTile");
 		}
 	}	
 	public class AvaritianGatewayTile : ModTile

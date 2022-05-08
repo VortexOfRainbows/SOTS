@@ -15,23 +15,23 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void SetDefaults()
 		{
-            item.damage = 20; 
-            item.magic = true; 
-            item.width = 32;   
-            item.height = 34;   
-            item.useTime = 6;   
-            item.useAnimation = 28;
-            item.useStyle = 5;    
-            item.noMelee = true;  
-            item.knockBack = 2.5f;
-            item.value = Item.sellPrice(0, 2, 25, 0);
-            item.rare = 5;
-            item.UseSound = SoundID.Item8;
-            item.autoReuse = true;
-            item.shoot = ModContent.ProjectileType<GasBlast>(); 
-            item.shootSpeed = 7f;
-			item.mana = 17;
-			item.reuseDelay = 22;
+            Item.damage = 20; 
+            Item.magic = true; 
+            Item.width = 32;   
+            Item.height = 34;   
+            Item.useTime = 6;   
+            Item.useAnimation = 28;
+            Item.useStyle = 5;    
+            Item.noMelee = true;  
+            Item.knockBack = 2.5f;
+            Item.value = Item.sellPrice(0, 2, 25, 0);
+            Item.rare = 5;
+            Item.UseSound = SoundID.Item8;
+            Item.autoReuse = true;
+            Item.shoot = ModContent.ProjectileType<GasBlast>(); 
+            Item.shootSpeed = 7f;
+			Item.mana = 17;
+			Item.reuseDelay = 22;
 		}
 		int counter = 0;
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
@@ -71,7 +71,7 @@ namespace SOTS.Items.Pyramid
 			if(index1 != -1)
 			{
 				Projectile proj = Main.projectile[index1];
-				if(proj.type == item.shoot)
+				if(proj.type == Item.shoot)
 				{
 					Vector2 rotatePos = new Vector2(64, 0).RotatedBy(MathHelper.ToRadians(rot));
 					proj.position.X = rotatePos.X + player.Center.X - proj.width/2;
@@ -81,7 +81,7 @@ namespace SOTS.Items.Pyramid
 			if(index2 != -1)
 			{
 				Projectile proj = Main.projectile[index2];
-				if(proj.type == item.shoot)
+				if(proj.type == Item.shoot)
 				{
 					Vector2 rotatePos = new Vector2(64, 0).RotatedBy(MathHelper.ToRadians(rot + 90));
 					proj.position.X = rotatePos.X + player.Center.X - proj.width/2;
@@ -91,7 +91,7 @@ namespace SOTS.Items.Pyramid
 			if(index3 != -1)
 			{
 				Projectile proj = Main.projectile[index3];
-				if(proj.type == item.shoot)
+				if(proj.type == Item.shoot)
 				{
 					Vector2 rotatePos = new Vector2(64, 0).RotatedBy(MathHelper.ToRadians(rot + 180));
 					proj.position.X = rotatePos.X + player.Center.X - proj.width/2;
@@ -101,7 +101,7 @@ namespace SOTS.Items.Pyramid
 			if(index4 != -1)
 			{
 				Projectile proj = Main.projectile[index4];
-				if(proj.type == item.shoot)
+				if(proj.type == Item.shoot)
 				{
 					Vector2 rotatePos = new Vector2(64, 0).RotatedBy(MathHelper.ToRadians(rot + 270));
 					proj.position.X = rotatePos.X + player.Center.X - proj.width/2;

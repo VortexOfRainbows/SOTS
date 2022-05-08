@@ -16,15 +16,15 @@ namespace SOTS.Items.Flails
         }
         public override void SafeSetDefaults()
         {
-            item.Size = new Vector2(34, 38);
-            item.damage = 16;
-            item.value = Item.sellPrice(0, 1, 0, 0);
-            item.rare = ItemRarityID.Blue;
-            item.useTime = 30;
-            item.useAnimation = 30;
-            item.shoot = ModContent.ProjectileType<Projectiles.Earth.Shattershine>();
-            item.shootSpeed = 10f;
-            item.knockBack = 4f;
+            Item.Size = new Vector2(34, 38);
+            Item.damage = 16;
+            Item.value = Item.sellPrice(0, 1, 0, 0);
+            Item.rare = ItemRarityID.Blue;
+            Item.useTime = 30;
+            Item.useAnimation = 30;
+            Item.shoot = ModContent.ProjectileType<Projectiles.Earth.Shattershine>();
+            Item.shootSpeed = 10f;
+            Item.knockBack = 4f;
         }
         public override void AddRecipes()
         {

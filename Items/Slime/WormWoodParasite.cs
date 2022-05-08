@@ -14,11 +14,11 @@ namespace SOTS.Items.Slime
 		}
 		public override void SetDefaults()
 		{
-            item.width = 34;     
-            item.height = 30;   
-            item.value = Item.sellPrice(0, 2, 0, 0);
-			item.rare = ItemRarityID.Green;
-			item.accessory = true;
+            Item.width = 34;     
+            Item.height = 30;   
+            Item.value = Item.sellPrice(0, 2, 0, 0);
+			Item.rare = ItemRarityID.Green;
+			Item.accessory = true;
 		}
 		public override void AddRecipes()
 		{

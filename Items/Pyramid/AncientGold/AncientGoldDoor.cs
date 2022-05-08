@@ -17,18 +17,18 @@ namespace SOTS.Items.Pyramid.AncientGold
 		}
 		public override void SetDefaults()
 		{
-			item.width = 18;
-			item.height = 32;
-			item.maxStack = 999;
-			item.useTurn = true;
-			item.autoReuse = true;
-			item.useAnimation = 15;
-			item.useTime = 10;
-			item.useStyle = 1;
-			item.rare = ItemRarityID.LightRed;
-			item.value = 0;
-			item.consumable = true;
-			item.createTile = mod.TileType("AncientGoldDoorClosed");
+			Item.width = 18;
+			Item.height = 32;
+			Item.maxStack = 999;
+			Item.useTurn = true;
+			Item.autoReuse = true;
+			Item.useAnimation = 15;
+			Item.useTime = 10;
+			Item.useStyle = 1;
+			Item.rare = ItemRarityID.LightRed;
+			Item.value = 0;
+			Item.consumable = true;
+			Item.createTile = mod.TileType("AncientGoldDoorClosed");
 		}
 		public override void AddRecipes()
 		{

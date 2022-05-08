@@ -16,8 +16,8 @@ namespace SOTS.Items.Banners
 {
 	public class SOTSBanners : ModTile
 	{
-		public override void SetDefaults()
-		{
+        public override void SetStaticDefaults()
+        {
 			Main.tileFrameImportant[Type] = true;
 			Main.tileNoAttach[Type] = true;
 			Main.tileLavaDeath[Type] = true;
@@ -28,13 +28,15 @@ namespace SOTS.Items.Banners
 			TileObjectData.newTile.AnchorTop = new AnchorData(AnchorType.SolidTile | AnchorType.SolidSide | AnchorType.SolidBottom, TileObjectData.newTile.Width, 0);
 			TileObjectData.newTile.StyleWrapLimit = 111;
 			TileObjectData.addTile(Type);
-			dustType = -1;
-			disableSmartCursor = true;
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Banner");
 			AddMapEntry(new Color(13, 88, 130), name);
 		}
-		public override void KillMultiTile(int i, int j, int frameX, int frameY)
+        public override bool CreateDust(int i, int j, ref int type)
+        {
+            return false;
+        }
+        public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
 			int style = frameX / 18;
 			int item;
@@ -88,15 +90,14 @@ namespace SOTS.Items.Banners
 				default:
 					return;
 			}
-			Item.NewItem(i * 16, j * 16, 16, 48, item);
+			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 48, item);
 		}
-
 		public override void NearbyEffects(int i, int j, bool closer)
 		{
 			if (closer)
 			{
 				Player player = Main.LocalPlayer;
-				int style = Main.tile[i, j].frameX / 18;
+				int style = Main.tile[i, j].TileFrameX / 18;
 				int type;
 				switch (style)
 				{
@@ -148,11 +149,9 @@ namespace SOTS.Items.Banners
 					default:
 						return;
 				}
-				player.NPCBannerBuff[type] = true;
-				player.hasBanner = true;
+				Main.SceneMetrics.NPCBannerBuff[type] = true;
 			}
 		}
-
 		public override void SetSpriteEffects(int i, int j, ref SpriteEffects spriteEffects)
 		{
 			if (i % 2 == 1)
@@ -165,71 +164,71 @@ namespace SOTS.Items.Banners
 	{
 		public override void SetDefaults()
 		{
-			item.width = 10;
-			item.height = 24;
-			item.maxStack = 99;
-			item.useTurn = true;
-			item.autoReuse = true;
-			item.useAnimation = 15;
-			item.useTime = 10;
-			item.useStyle = ItemUseStyleID.SwingThrow;
-			item.consumable = true;
-			item.rare = ItemRarityID.Blue;
-			item.value = Item.buyPrice(0, 0, 10, 0);
+			Item.width = 10;
+			Item.height = 24;
+			Item.maxStack = 99;
+			Item.useTurn = true;
+			Item.autoReuse = true;
+			Item.useAnimation = 15;
+			Item.useTime = 10;
+			Item.useStyle = ItemUseStyleID.Swing;
+			Item.consumable = true;
+			Item.rare = ItemRarityID.Blue;
+			Item.value = Item.buyPrice(0, 0, 10, 0);
 			SafeSetDefaults();
 		}
 		public virtual void SafeSetDefaults()
 		{
-			item.createTile = TileType<SOTSBanners>();
-			item.placeStyle = 0;
+			Item.createTile = TileType<SOTSBanners>();
+			Item.placeStyle = 0;
 		}
 	}
 	public class BlueSlimerBanner : ModBanner
 	{
 		public override void SafeSetDefaults()
 		{
-			item.createTile = TileType<SOTSBanners>(); 
-			item.placeStyle = 0;
+			Item.createTile = TileType<SOTSBanners>(); 
+			Item.placeStyle = 0;
 		}
 	}
 	public class TreasureSlimeBanner : ModBanner
 	{
 		public override void SafeSetDefaults()
 		{
-			item.createTile = TileType<SOTSBanners>();
-			item.placeStyle = 1;
+			Item.createTile = TileType<SOTSBanners>();
+			Item.placeStyle = 1;
 		}
 	}
 	public class GoldenTreasureSlimeBanner : ModBanner
 	{
 		public override void SafeSetDefaults()
 		{
-			item.createTile = TileType<SOTSBanners>();
-			item.placeStyle = 2;
+			Item.createTile = TileType<SOTSBanners>();
+			Item.placeStyle = 2;
 		}
 	}
 	public class FrozenTreasureSlimeBanner : ModBanner
 	{
 		public override void SafeSetDefaults()
 		{
-			item.createTile = TileType<SOTSBanners>();
-			item.placeStyle = 3;
+			Item.createTile = TileType<SOTSBanners>();
+			Item.placeStyle = 3;
 		}
 	}
 	public class ShadowTreasureSlimeBanner : ModBanner
 	{
 		public override void SafeSetDefaults()
 		{
-			item.createTile = TileType<SOTSBanners>();
-			item.placeStyle = 4;
+			Item.createTile = TileType<SOTSBanners>();
+			Item.placeStyle = 4;
 		}
 	}
 	public class PyramidTreasureSlimeBanner : ModBanner
 	{
 		public override void SafeSetDefaults()
 		{
-			item.createTile = TileType<SOTSBanners>();
-			item.placeStyle = 5;
+			Item.createTile = TileType<SOTSBanners>();
+			Item.placeStyle = 5;
 		}
 	}
 	public class NatureSlimeBanner : ModBanner
@@ -240,84 +239,84 @@ namespace SOTS.Items.Banners
 		}
 		public override void SafeSetDefaults()
 		{
-			item.createTile = TileType<SOTSBanners>();
-			item.placeStyle = 6;
+			Item.createTile = TileType<SOTSBanners>();
+			Item.placeStyle = 6;
 		}
 	}
 	public class FlamingGhastBanner : ModBanner
 	{
 		public override void SafeSetDefaults()
 		{
-			item.createTile = TileType<SOTSBanners>();
-			item.placeStyle = 7;
+			Item.createTile = TileType<SOTSBanners>();
+			Item.placeStyle = 7;
 		}
 	}
 	public class BleedingGhastBanner : ModBanner
 	{
 		public override void SafeSetDefaults()
 		{
-			item.createTile = TileType<SOTSBanners>();
-			item.placeStyle = 8;
+			Item.createTile = TileType<SOTSBanners>();
+			Item.placeStyle = 8;
 		}
 	}
 	public class ArcticGoblinBanner : ModBanner
 	{
 		public override void SafeSetDefaults()
 		{
-			item.createTile = TileType<SOTSBanners>();
-			item.placeStyle = 9;
+			Item.createTile = TileType<SOTSBanners>();
+			Item.placeStyle = 9;
 		}
 	}
 	public class LostSoulBanner : ModBanner
 	{
 		public override void SafeSetDefaults()
 		{
-			item.createTile = TileType<SOTSBanners>();
-			item.placeStyle = 10;
+			Item.createTile = TileType<SOTSBanners>();
+			Item.placeStyle = 10;
 		}
 	}
 	public class SnakeBanner : ModBanner
 	{
 		public override void SafeSetDefaults()
 		{
-			item.createTile = TileType<SOTSBanners>();
-			item.placeStyle = 11;
+			Item.createTile = TileType<SOTSBanners>();
+			Item.placeStyle = 11;
 		}
 	}
 	public class SnakePotBanner : ModBanner
 	{
 		public override void SafeSetDefaults()
 		{
-			item.createTile = TileType<SOTSBanners>();
-			item.placeStyle = 12;
+			Item.createTile = TileType<SOTSBanners>();
+			Item.placeStyle = 12;
 		}
 	}
 	public class SittingMushroomBanner : ModBanner
 	{
 		public override void SafeSetDefaults()
 		{
-			item.createTile = TileType<SOTSBanners>();
-			item.placeStyle = 13;
+			Item.createTile = TileType<SOTSBanners>();
+			Item.placeStyle = 13;
 		}
 	}
 	public class WallMimicBanner : ModBanner
 	{
 		public override void SafeSetDefaults()
 		{
-			item.createTile = TileType<SOTSBanners>();
-			item.placeStyle = 14;
+			Item.createTile = TileType<SOTSBanners>();
+			Item.placeStyle = 14;
 		}
 	}
 	public class HoloSlimeBanner : ModBanner
 	{
 		public override void SafeSetDefaults()
 		{
-			item.createTile = TileType<HoloSlimeBannerTile>();
+			Item.createTile = TileType<HoloSlimeBannerTile>();
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
-			Texture2D texture = mod.GetTexture("Items/Banners/HoloSlimeBannerOutline");
-			Texture2D texture2 = mod.GetTexture("Items/Banners/HoloSlimeBannerFill");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Banners/HoloSlimeBannerOutline").Value;
+			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Banners/HoloSlimeBannerFill").Value;
 			Color color = new Color(110, 110, 110, 0);
 			for (int k = 0; k < 5; k++)
 			{
@@ -326,24 +325,24 @@ namespace SOTS.Items.Banners
 				if (k == 0)
 					Main.spriteBatch.Draw(texture2, new Vector2(position.X, position.Y), null, color * 0.5f, 0f, origin, scale, SpriteEffects.None, 0f);
 
-				Main.spriteBatch.Draw(texture, new Vector2(position.X + x, position.Y + y), null, color * (1f - (item.alpha / 255f)), 0f, origin, scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, new Vector2(position.X + x, position.Y + y), null, color * (1f - (Item.alpha / 255f)), 0f, origin, scale, SpriteEffects.None, 0f);
 			}
 			return false;
 		}
 		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
 		{
-			Texture2D texture = mod.GetTexture("Items/Banners/HoloSlimeBannerOutline");
-			Texture2D texture2 = mod.GetTexture("Items/Banners/HoloSlimeBannerFill");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Banners/HoloSlimeBannerOutline").Value;
+			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Banners/HoloSlimeBannerFill").Value;
 			Color color = new Color(110, 110, 110, 0);
-			Vector2 drawOrigin = new Vector2(Main.itemTexture[item.type].Width * 0.5f, item.height * 0.5f);
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, Item.height * 0.5f);
 			for (int k = 0; k < 5; k++)
 			{
 				float x = Main.rand.Next(-10, 11) * 0.03f;
 				float y = Main.rand.Next(-10, 11) * 0.03f;
 				if (k == 0)
-					Main.spriteBatch.Draw(texture2, new Vector2((float)(item.Center.X - (int)Main.screenPosition.X), (float)(item.Center.Y - (int)Main.screenPosition.Y) + 2), null, color * 0.5f, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture2, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y) + 2), null, color * 0.5f, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 
-				Main.spriteBatch.Draw(texture, new Vector2((float)(item.Center.X - (int)Main.screenPosition.X) + x, (float)(item.Center.Y - (int)Main.screenPosition.Y) + y + 2), null, color * (1f - (item.alpha / 255f)), rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X) + x, (float)(Item.Center.Y - (int)Main.screenPosition.Y) + y + 2), null, color * (1f - (Item.alpha / 255f)), rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			}
 			return false;
 		}
@@ -356,12 +355,12 @@ namespace SOTS.Items.Banners
 		}
 		public override void SafeSetDefaults()
 		{
-			item.createTile = TileType<HoloSwordBannerTile>();
+			Item.createTile = TileType<HoloSwordBannerTile>();
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
-			Texture2D texture = mod.GetTexture("Items/Banners/HoloSwordBannerOutline");
-			Texture2D texture2 = mod.GetTexture("Items/Banners/HoloSwordBannerFill");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Banners/HoloSwordBannerOutline").Value;
+			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Banners/HoloSwordBannerFill").Value;
 			Color color = new Color(110, 110, 110, 0);
 			for (int k = 0; k < 5; k++)
 			{
@@ -370,24 +369,24 @@ namespace SOTS.Items.Banners
 				if (k == 0)
 					Main.spriteBatch.Draw(texture2, new Vector2(position.X, position.Y), null, color * 0.5f, 0f, origin, scale, SpriteEffects.None, 0f);
 
-				Main.spriteBatch.Draw(texture, new Vector2(position.X + x, position.Y + y), null, color * (1f - (item.alpha / 255f)), 0f, origin, scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, new Vector2(position.X + x, position.Y + y), null, color * (1f - (Item.alpha / 255f)), 0f, origin, scale, SpriteEffects.None, 0f);
 			}
 			return false;
 		}
 		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
 		{
-			Texture2D texture = mod.GetTexture("Items/Banners/HoloSwordBannerOutline");
-			Texture2D texture2 = mod.GetTexture("Items/Banners/HoloSwordBannerFill");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Banners/HoloSwordBannerOutline").Value;
+			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Banners/HoloSwordBannerFill").Value;
 			Color color = new Color(110, 110, 110, 0);
-			Vector2 drawOrigin = new Vector2(Main.itemTexture[item.type].Width * 0.5f, item.height * 0.5f);
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, Item.height * 0.5f);
 			for (int k = 0; k < 5; k++)
 			{
 				float x = Main.rand.Next(-10, 11) * 0.03f;
 				float y = Main.rand.Next(-10, 11) * 0.03f;
 				if (k == 0)
-					Main.spriteBatch.Draw(texture2, new Vector2((float)(item.Center.X - (int)Main.screenPosition.X), (float)(item.Center.Y - (int)Main.screenPosition.Y) + 2), null, color * 0.5f, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture2, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y) + 2), null, color * 0.5f, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 
-				Main.spriteBatch.Draw(texture, new Vector2((float)(item.Center.X - (int)Main.screenPosition.X) + x, (float)(item.Center.Y - (int)Main.screenPosition.Y) + y + 2), null, color * (1f - (item.alpha / 255f)), rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X) + x, (float)(Item.Center.Y - (int)Main.screenPosition.Y) + y + 2), null, color * (1f - (Item.alpha / 255f)), rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			}
 			return false;
 		}
@@ -396,27 +395,27 @@ namespace SOTS.Items.Banners
 	{
 		public override void SafeSetDefaults()
 		{
-			item.createTile = TileType<HoloEyeBannerTile>();
-			item.width = 20;
-			item.height = 30;
+			Item.createTile = TileType<HoloEyeBannerTile>();
+			Item.width = 20;
+			Item.height = 30;
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
-			Texture2D texture2 = mod.GetTexture("Items/Banners/HoloEyeBannerBase");
+			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Banners/HoloEyeBannerBase").Value;
 			Main.spriteBatch.Draw(texture2, new Vector2(position.X, position.Y), null, drawColor, 0f, origin, scale, SpriteEffects.None, 0f);
 			return false;
 		}
 		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
 		{
-			Texture2D texture2 = mod.GetTexture("Items/Banners/HoloEyeBannerBase");
-			Vector2 drawOrigin = new Vector2(Main.itemTexture[item.type].Width * 0.5f, item.height * 0.5f);
-			Main.spriteBatch.Draw(texture2, new Vector2((float)(item.Center.X - (int)Main.screenPosition.X), (float)(item.Center.Y - (int)Main.screenPosition.Y) + 2), null, lightColor * (1f - (item.alpha / 255f)), rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Banners/HoloEyeBannerBase").Value;
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, Item.height * 0.5f);
+			Main.spriteBatch.Draw(texture2, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y) + 2), null, lightColor * (1f - (Item.alpha / 255f)), rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			return false;
 		}
 		public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
-			Texture2D texture = mod.GetTexture("Items/Banners/HoloEyeBannerOutline");
-			Texture2D texture2 = mod.GetTexture("Items/Banners/HoloEyeBannerFill");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Banners/HoloEyeBannerOutline").Value;
+			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Banners/HoloEyeBannerFill").Value;
 			Color color = new Color(110, 110, 110, 0);
 			for (int k = 0; k < 5; k++)
 			{
@@ -425,30 +424,30 @@ namespace SOTS.Items.Banners
 				if (k == 0)
 					Main.spriteBatch.Draw(texture2, new Vector2(position.X, position.Y), null, color * 0.5f, 0f, origin, scale, SpriteEffects.None, 0f);
 
-				Main.spriteBatch.Draw(texture, new Vector2(position.X + x, position.Y + y), null, color * (1f - (item.alpha / 255f)), 0f, origin, scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, new Vector2(position.X + x, position.Y + y), null, color * (1f - (Item.alpha / 255f)), 0f, origin, scale, SpriteEffects.None, 0f);
 			}
 		}
         public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
         {
-			Texture2D texture = mod.GetTexture("Items/Banners/HoloEyeBannerOutline");
-			Texture2D texture2 = mod.GetTexture("Items/Banners/HoloEyeBannerFill");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Banners/HoloEyeBannerOutline").Value;
+			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Banners/HoloEyeBannerFill").Value;
 			Color color = new Color(110, 110, 110, 0);
-			Vector2 drawOrigin = new Vector2(Main.itemTexture[item.type].Width * 0.5f, item.height * 0.5f);
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, Item.height * 0.5f);
 			for (int k = 0; k < 5; k++)
 			{
 				float x = Main.rand.Next(-10, 11) * 0.03f;
 				float y = Main.rand.Next(-10, 11) * 0.03f;
 				if (k == 0)
-					Main.spriteBatch.Draw(texture2, new Vector2((float)(item.Center.X - (int)Main.screenPosition.X), (float)(item.Center.Y - (int)Main.screenPosition.Y) + 2), null, color * 0.5f, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture2, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y) + 2), null, color * 0.5f, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 
-				Main.spriteBatch.Draw(texture, new Vector2((float)(item.Center.X - (int)Main.screenPosition.X) + x, (float)(item.Center.Y - (int)Main.screenPosition.Y) + y + 2), null, color * (1f - (item.alpha / 255f)), rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X) + x, (float)(Item.Center.Y - (int)Main.screenPosition.Y) + y + 2), null, color * (1f - (Item.alpha / 255f)), rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			}
 		}
 	}
 	public class HoloSlimeBannerTile : ModTile
 	{
-		public override void SetDefaults()
-		{
+        public override void SetStaticDefaults()
+        {
 			Main.tileFrameImportant[Type] = true;
 			Main.tileNoAttach[Type] = true;
 			Main.tileLavaDeath[Type] = true;
@@ -459,28 +458,23 @@ namespace SOTS.Items.Banners
 			TileObjectData.newTile.AnchorTop = new AnchorData(AnchorType.SolidTile | AnchorType.SolidSide | AnchorType.SolidBottom, TileObjectData.newTile.Width, 0);
 			TileObjectData.newTile.StyleWrapLimit = 1;
 			TileObjectData.addTile(Type);
-			dustType = -1;
-			disableSmartCursor = true;
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Banner");
 			AddMapEntry(new Color(13, 88, 130), name);
 		}
-
-		public override void KillMultiTile(int i, int j, int frameX, int frameY)
+        public override bool CreateDust(int i, int j, ref int type)
+        {
+            return false;
+        }
+        public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			string item;
-			item = "HoloSlimeBanner";
-			Item.NewItem(i * 16, j * 16, 16, 48, mod.ItemType(item));
+			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 48, ModContent.ItemType<HoloSlimeBanner>());
 		}
 		public override void NearbyEffects(int i, int j, bool closer)
 		{
 			if (closer)
 			{
-				Player player = Main.LocalPlayer;
-				string type;
-				type = "HoloSlime";
-				player.NPCBannerBuff[mod.NPCType(type)] = true;
-				player.hasBanner = true;
+				Main.SceneMetrics.NPCBannerBuff[ModContent.NPCType<HoloSlime>()] = true;
 			}
 		}
         public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
@@ -489,12 +483,11 @@ namespace SOTS.Items.Banners
         }
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
 		{
-			Texture2D texture = mod.GetTexture("Items/Banners/HoloSlimeBannerTileFill");
-			Texture2D texture2 = mod.GetTexture("Items/Banners/HoloSlimeBannerTileOutline");
-			ulong randSeed = Main.TileFrameSeed ^ (ulong)((long)j << 32 | (long)((ulong)i));
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Banners/HoloSlimeBannerTileFill").Value;
+			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Banners/HoloSlimeBannerTileOutline").Value;
 			Color color = new Color(90, 90, 90, 0);
-			int frameX = Main.tile[i, j].frameX;
-			int frameY = Main.tile[i, j].frameY;
+			int frameX = Main.tile[i, j].TileFrameX;
+			int frameY = Main.tile[i, j].TileFrameY;
 			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
 			if (Main.drawToScreen)
 			{
@@ -524,7 +517,7 @@ namespace SOTS.Items.Banners
 	}
 	public class HoloSwordBannerTile : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileFrameImportant[Type] = true;
 			Main.tileNoAttach[Type] = true;
@@ -536,28 +529,23 @@ namespace SOTS.Items.Banners
 			TileObjectData.newTile.AnchorTop = new AnchorData(AnchorType.SolidTile | AnchorType.SolidSide | AnchorType.SolidBottom, TileObjectData.newTile.Width, 0);
 			TileObjectData.newTile.StyleWrapLimit = 1;
 			TileObjectData.addTile(Type);
-			dustType = -1;
-			disableSmartCursor = true;
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Banner");
 			AddMapEntry(new Color(13, 88, 130), name);
 		}
-
-		public override void KillMultiTile(int i, int j, int frameX, int frameY)
+        public override bool CreateDust(int i, int j, ref int type)
+        {
+            return false;
+        }
+        public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			string item;
-			item = "HoloSwordBanner";
-			Item.NewItem(i * 16, j * 16, 16, 48, mod.ItemType(item));
+			Item.NewItem(new EntitySource_TileBreak(i, j),i * 16, j * 16, 16, 48, ModContent.ItemType<HoloSwordBanner>());
 		}
 		public override void NearbyEffects(int i, int j, bool closer)
 		{
 			if (closer)
 			{
-				Player player = Main.LocalPlayer;
-				string type;
-				type = "HoloBlade";
-				player.NPCBannerBuff[mod.NPCType(type)] = true;
-				player.hasBanner = true;
+				Main.SceneMetrics.NPCBannerBuff[ModContent.NPCType<HoloBlade>()] = true;
 			}
 		}
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
@@ -566,11 +554,11 @@ namespace SOTS.Items.Banners
 		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
 		{
-			Texture2D texture = mod.GetTexture("Items/Banners/HoloSwordBannerTileFill");
-			Texture2D texture2 = mod.GetTexture("Items/Banners/HoloSwordBannerTileOutline");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Banners/HoloSwordBannerTileFill").Value;
+			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Banners/HoloSwordBannerTileOutline").Value;
 			Color color = new Color(90, 90, 90, 0);
-			int frameX = Main.tile[i, j].frameX;
-			int frameY = Main.tile[i, j].frameY;
+			int frameX = Main.tile[i, j].TileFrameX;
+			int frameY = Main.tile[i, j].TileFrameY;
 			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
 			if (Main.drawToScreen)
 			{
@@ -600,7 +588,7 @@ namespace SOTS.Items.Banners
 	}
 	public class HoloEyeBannerTile : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileFrameImportant[Type] = true;
 			Main.tileNoAttach[Type] = true;
@@ -612,42 +600,35 @@ namespace SOTS.Items.Banners
 			TileObjectData.newTile.AnchorTop = new AnchorData(AnchorType.SolidTile | AnchorType.SolidSide | AnchorType.SolidBottom, TileObjectData.newTile.Width, 0);
 			TileObjectData.newTile.StyleWrapLimit = 1;
 			TileObjectData.addTile(Type);
-			dustType = -1;
-			disableSmartCursor = true;
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Banner");
 			AddMapEntry(new Color(13, 88, 130), name);
 		}
-
-		public override void KillMultiTile(int i, int j, int frameX, int frameY)
+        public override bool CreateDust(int i, int j, ref int type)
+        {
+			return false;
+        }
+        public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			string item;
-			item = "HoloEyeBanner";
-			Item.NewItem(i * 16, j * 16, 16, 48, mod.ItemType(item));
+			Item.NewItem(new EntitySource_TileBreak(i, j),i * 16, j * 16, 16, 48, ModContent.ItemType<HoloEyeBanner>());
 		}
 		public override void NearbyEffects(int i, int j, bool closer)
 		{
 			if (closer)
 			{
-				Player player = Main.LocalPlayer;
-				string type;
-				type = "HoloEye";
-				player.NPCBannerBuff[mod.NPCType(type)] = true;
-				player.hasBanner = true;
+				Main.SceneMetrics.NPCBannerBuff[ModContent.NPCType<HoloEye>()] = true;
 			}
 		}
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
 		{
-			if (Main.tile[i, j].frameX != 0 || Main.tile[i, j].frameY != 0)
+			if (Main.tile[i, j].TileFrameX != 0 || Main.tile[i, j].TileFrameY != 0)
 			{
 				return true;
 			}
-			Texture2D texture = mod.GetTexture("Items/Banners/HoloEyeBannerTileFill");
-			Texture2D texture2 = mod.GetTexture("Items/Banners/HoloEyeBannerTileOutline");
-			Texture2D texture3 = mod.GetTexture("Items/Banners/HoloEyeBannerTilePupil");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Banners/HoloEyeBannerTileFill").Value;
+			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Banners/HoloEyeBannerTileOutline").Value;
+			Texture2D texture3 = Mod.Assets.Request<Texture2D>("Items/Banners/HoloEyeBannerTilePupil").Value;
 			Color color = new Color(90, 90, 90, 0);
-			int frameX = Main.tile[i, j].frameX;
-			int frameY = Main.tile[i, j].frameY;
 			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
 			if (Main.drawToScreen)
 			{
@@ -687,7 +668,7 @@ namespace SOTS.Items.Banners
 	}
 	public class SOTSBanners2 : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileFrameImportant[Type] = true;
 			Main.tileNoAttach[Type] = true;
@@ -699,14 +680,15 @@ namespace SOTS.Items.Banners
 			TileObjectData.newTile.AnchorTop = new AnchorData(AnchorType.SolidTile | AnchorType.SolidSide | AnchorType.SolidBottom, TileObjectData.newTile.Width, 0);
 			TileObjectData.newTile.StyleWrapLimit = 111;
 			TileObjectData.addTile(Type);
-			dustType = -1;
-			disableSmartCursor = true;
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Banner");
 			AddMapEntry(new Color(13, 88, 130), name);
 		}
-
-		public override void KillMultiTile(int i, int j, int frameX, int frameY)
+        public override bool CreateDust(int i, int j, ref int type)
+        {
+            return false;
+        }
+        public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
 			int style = frameX / 18;
 			int item;
@@ -757,7 +739,7 @@ namespace SOTS.Items.Banners
 				default:
 					return;
 			}
-			Item.NewItem(i * 16, j * 16, 16, 48, item);
+			Item.NewItem(new EntitySource_TileBreak(i, j),i * 16, j * 16, 16, 48, item);
 		}
 
 		public override void NearbyEffects(int i, int j, bool closer)
@@ -765,7 +747,7 @@ namespace SOTS.Items.Banners
 			if (closer)
 			{
 				Player player = Main.LocalPlayer;
-				int style = Main.tile[i, j].frameX / 18;
+				int style = Main.tile[i, j].TileFrameX / 18;
 				int type;
 				switch (style)
 				{
@@ -810,16 +792,13 @@ namespace SOTS.Items.Banners
 						break;
 					case 13:
 						type = NPCType<PhaseAssaulterHead>();
-						player.NPCBannerBuff[NPCType<PhaseAssaulterBody>()] = true;
-						player.hasBanner = true;
-						player.NPCBannerBuff[NPCType<PhaseAssaulterTail>()] = true;
-						player.hasBanner = true;
+						Main.SceneMetrics.NPCBannerBuff[NPCType<PhaseAssaulterBody>()] = true;
+						Main.SceneMetrics.NPCBannerBuff[NPCType<PhaseAssaulterTail>()] = true;
 						break;
 					default:
 						return;
 				}
-				player.NPCBannerBuff[type] = true;
-				player.hasBanner = true;
+				Main.SceneMetrics.NPCBannerBuff[type] = true;
 			}
 		}
 
@@ -835,112 +814,112 @@ namespace SOTS.Items.Banners
 	{
 		public override void SafeSetDefaults()
 		{
-			item.createTile = TileType<SOTSBanners2>();
-			item.placeStyle = 0;
+			Item.createTile = TileType<SOTSBanners2>();
+			Item.placeStyle = 0;
 		}
 	}
 	public class FluxSlimeBanner : ModBanner
 	{
 		public override void SafeSetDefaults()
 		{
-			item.createTile = TileType<SOTSBanners2>();
-			item.placeStyle = 1;
+			Item.createTile = TileType<SOTSBanners2>();
+			Item.placeStyle = 1;
 		}
 	}
 	public class LesserWispBanner : ModBanner
 	{
 		public override void SafeSetDefaults()
 		{
-			item.createTile = TileType<SOTSBanners2>();
-			item.placeStyle = 2;
+			Item.createTile = TileType<SOTSBanners2>();
+			Item.placeStyle = 2;
 		}
 	}
 	public class GhastBanner : ModBanner
 	{
 		public override void SafeSetDefaults()
 		{
-			item.createTile = TileType<SOTSBanners2>();
-			item.placeStyle = 3;
+			Item.createTile = TileType<SOTSBanners2>();
+			Item.placeStyle = 3;
 		}
 	}
 	public class MaligmorBanner : ModBanner
 	{
 		public override void SafeSetDefaults()
 		{
-			item.createTile = TileType<SOTSBanners2>();
-			item.placeStyle = 4;
+			Item.createTile = TileType<SOTSBanners2>();
+			Item.placeStyle = 4;
 		}
 	}
 	public class TeratomaBanner : ModBanner
 	{
 		public override void SafeSetDefaults()
 		{
-			item.createTile = TileType<SOTSBanners2>();
-			item.placeStyle = 5;
+			Item.createTile = TileType<SOTSBanners2>();
+			Item.placeStyle = 5;
 		}
 	}
 	public class CorruptionTreasureSlimeBanner : ModBanner
 	{
 		public override void SafeSetDefaults()
 		{
-			item.createTile = TileType<SOTSBanners2>();
-			item.placeStyle = 6;
+			Item.createTile = TileType<SOTSBanners2>();
+			Item.placeStyle = 6;
 		}
 	}
 	public class CrimsonTreasureSlimeBanner : ModBanner
 	{
 		public override void SafeSetDefaults()
 		{
-			item.createTile = TileType<SOTSBanners2>();
-			item.placeStyle = 7;
+			Item.createTile = TileType<SOTSBanners2>();
+			Item.placeStyle = 7;
 		}
 	}
 	public class JungleTreasureSlimeBanner : ModBanner
 	{
 		public override void SafeSetDefaults()
 		{
-			item.createTile = TileType<SOTSBanners2>();
-			item.placeStyle = 8;
+			Item.createTile = TileType<SOTSBanners2>();
+			Item.placeStyle = 8;
 		}
 	}
 	public class TwilightScouterBanner : ModBanner
 	{
 		public override void SafeSetDefaults()
 		{
-			item.createTile = TileType<SOTSBanners2>();
-			item.placeStyle = 9;
+			Item.createTile = TileType<SOTSBanners2>();
+			Item.placeStyle = 9;
 		}
 	}
 	public class HallowTreasureSlimeBanner : ModBanner
 	{
 		public override void SafeSetDefaults()
 		{
-			item.createTile = TileType<SOTSBanners2>();
-			item.placeStyle = 10;
+			Item.createTile = TileType<SOTSBanners2>();
+			Item.placeStyle = 10;
 		}
 	}
 	public class DungeonTreasureSlimeBanner : ModBanner
 	{
 		public override void SafeSetDefaults()
 		{
-			item.createTile = TileType<SOTSBanners2>();
-			item.placeStyle = 11;
+			Item.createTile = TileType<SOTSBanners2>();
+			Item.placeStyle = 11;
 		}
 	}
 	public class PhaseSpeederBanner : ModBanner
 	{
 		public override void SafeSetDefaults()
 		{
-			item.createTile = TileType<SOTSBanners2>();
-			item.placeStyle = 12;
+			Item.createTile = TileType<SOTSBanners2>();
+			Item.placeStyle = 12;
 		}
 	}
 	public class PhaseAssaulterBanner : ModBanner
 	{
 		public override void SafeSetDefaults()
 		{
-			item.createTile = TileType<SOTSBanners2>();
-			item.placeStyle = 13;
+			Item.createTile = TileType<SOTSBanners2>();
+			Item.placeStyle = 13;
 		}
 	}
 }

@@ -18,20 +18,20 @@ namespace SOTS.Items.Evil
 		}
 		public override void SafeSetDefaults()
 		{
-			item.damage = 50;
-			item.melee = true;
-			item.width = 48;
-			item.height = 48;
-			item.useTime = 11;
-			item.useAnimation = 33;
-			item.useStyle = ItemUseStyleID.SwingThrow;
-			item.knockBack = 5f;
-			item.value = Item.sellPrice(0, 20, 0, 0);
-			item.rare = ItemRarityID.Yellow;
-			item.UseSound = SoundID.Item1;
-			item.autoReuse = false;            
-			item.shoot = ModContent.ProjectileType<LightspeedBlade>(); 
-            item.shootSpeed = 7f;
+			Item.damage = 50;
+			Item.melee = true;
+			Item.width = 48;
+			Item.height = 48;
+			Item.useTime = 11;
+			Item.useAnimation = 33;
+			Item.useStyle = ItemUseStyleID.SwingThrow;
+			Item.knockBack = 5f;
+			Item.value = Item.sellPrice(0, 20, 0, 0);
+			Item.rare = ItemRarityID.Yellow;
+			Item.UseSound = SoundID.Item1;
+			Item.autoReuse = false;            
+			Item.shoot = ModContent.ProjectileType<LightspeedBlade>(); 
+            Item.shootSpeed = 7f;
 		}
 		public override void AddRecipes()
 		{

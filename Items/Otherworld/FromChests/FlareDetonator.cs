@@ -16,30 +16,30 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override void SetDefaults()
 		{
-			item.noMelee = true;
-			item.damage = 23;  
-            item.ranged = true;    
-            item.width = 44;  
-            item.height = 26;   
-            item.useTime = 10;  
-            item.useAnimation = 10;
-            item.useStyle = ItemUseStyleID.HoldingOut;    
-            item.knockBack = 5f;
-			item.value = Item.sellPrice(0, 5, 0, 0);
-			item.rare = ItemRarityID.LightPurple;
-			item.UseSound = SoundID.Item11;
-            item.autoReuse = false;
-            item.shoot = 10; 
-            item.shootSpeed = 8f;
-			item.reuseDelay = 8;
-			item.useAmmo = AmmoID.Flare;
-			item.noUseGraphic = true;
-			item.channel = true;
+			Item.noMelee = true;
+			Item.damage = 23;  
+            Item.ranged = true;    
+            Item.width = 44;  
+            Item.height = 26;   
+            Item.useTime = 10;  
+            Item.useAnimation = 10;
+            Item.useStyle = ItemUseStyleID.HoldingOut;    
+            Item.knockBack = 5f;
+			Item.value = Item.sellPrice(0, 5, 0, 0);
+			Item.rare = ItemRarityID.LightPurple;
+			Item.UseSound = SoundID.Item11;
+            Item.autoReuse = false;
+            Item.shoot = 10; 
+            Item.shootSpeed = 8f;
+			Item.reuseDelay = 8;
+			Item.useAmmo = AmmoID.Flare;
+			Item.noUseGraphic = true;
+			Item.channel = true;
 		}
         public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat)
 		{
-			item.useTime = 10;
-			item.useAnimation = 10;
+			Item.useTime = 10;
+			Item.useAnimation = 10;
 			base.ModifyWeaponDamage(player, ref add, ref mult, ref flat);
         }
         public override Vector2? HoldoutOffset()

@@ -8,11 +8,11 @@ namespace SOTS.Items.Furniture.Goopwood
 	{
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.StoneBlock);
-			item.rare = ItemRarityID.Blue;
-			item.width = 20;
-			item.height = 36;
-			item.createTile = ModContent.TileType<GoopwoodDoorClosed>();
+			Item.CloneDefaults(ItemID.StoneBlock);
+			Item.rare = ItemRarityID.Blue;
+			Item.width = 20;
+			Item.height = 36;
+			Item.createTile = ModContent.TileType<GoopwoodDoorClosed>();
 		}
 		public override void AddRecipes()
 		{

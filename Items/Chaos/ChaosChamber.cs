@@ -17,26 +17,26 @@ namespace SOTS.Items.Chaos
 		}
 		public override void SetDefaults()
 		{
-            item.damage = 100;   
-            item.ranged = true;   
-            item.width = 48;    
-            item.height = 26;  
-            item.useTime = 5;  
-            item.useAnimation = 5;
-            item.useStyle = ItemUseStyleID.HoldingOut;    
-            item.noMelee = true; 
-            item.knockBack = 1;
-            item.value = Item.sellPrice(0, 12, 0, 0);
-            item.rare = ItemRarityID.Yellow;
-            item.UseSound = SoundID.Item36;
-            item.autoReuse = false;
-            item.shoot = ProjectileID.PurificationPowder; 
-            item.shootSpeed = 15f;
-			item.useAmmo = AmmoID.Bullet;
+            Item.damage = 100;   
+            Item.ranged = true;   
+            Item.width = 48;    
+            Item.height = 26;  
+            Item.useTime = 5;  
+            Item.useAnimation = 5;
+            Item.useStyle = ItemUseStyleID.HoldingOut;    
+            Item.noMelee = true; 
+            Item.knockBack = 1;
+            Item.value = Item.sellPrice(0, 12, 0, 0);
+            Item.rare = ItemRarityID.Yellow;
+            Item.UseSound = SoundID.Item36;
+            Item.autoReuse = false;
+            Item.shoot = ProjectileID.PurificationPowder; 
+            Item.shootSpeed = 15f;
+			Item.useAmmo = AmmoID.Bullet;
 			if (!Main.dedServ)
 			{
-				item.GetGlobalItem<ItemUseGlow>().glowTexture = mod.GetTexture("Items/Chaos/ChaosChamberGlow");
-				item.GetGlobalItem<ItemUseGlow>().glowOffsetX = -2;
+				Item.GetGlobalItem<ItemUseGlow>().glowTexture = mod.GetTexture("Items/Chaos/ChaosChamberGlow");
+				Item.GetGlobalItem<ItemUseGlow>().glowOffsetX = -2;
 			}
 		}
 		public override Vector2? HoldoutOffset()
@@ -46,11 +46,11 @@ namespace SOTS.Items.Chaos
 		int counter = 0;
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			item.reuseDelay = 0;
+			Item.reuseDelay = 0;
 			counter++;
 			if (counter == 5)
 			{
-				item.reuseDelay = 4;
+				Item.reuseDelay = 4;
 			}
 			if (counter >= 6)
 			{

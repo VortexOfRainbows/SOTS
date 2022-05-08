@@ -13,12 +13,12 @@ namespace SOTS.Items.Permafrost
 		}
 		public override void SetDefaults()
 		{
-			item.maxStack = 1;
-            item.width = 26;     
-            item.height = 26;   
-            item.value = Item.sellPrice(0, 1, 20, 0);
-            item.rare = 2;
-			item.accessory = true;
+			Item.maxStack = 1;
+            Item.width = 26;     
+            Item.height = 26;   
+            Item.value = Item.sellPrice(0, 1, 20, 0);
+            Item.rare = 2;
+			Item.accessory = true;
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{

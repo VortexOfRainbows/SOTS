@@ -15,14 +15,14 @@ namespace SOTS.Items
 		}
 		public override void SetDefaults()
 		{
-			item.damage = 24;
-			item.magic = true;
-            item.width = 26;     
-            item.height = 36;   
-            item.value = Item.sellPrice(0, 4, 50, 0);
-			item.rare = ItemRarityID.LightRed;
-			item.accessory = true;
-			item.defense = 1;
+			Item.damage = 24;
+			Item.magic = true;
+            Item.width = 26;     
+            Item.height = 36;   
+            Item.value = Item.sellPrice(0, 4, 50, 0);
+			Item.rare = ItemRarityID.LightRed;
+			Item.accessory = true;
+			Item.defense = 1;
 		}
 		public override void AddRecipes()
 		{
@@ -40,7 +40,7 @@ namespace SOTS.Items
 			modPlayer.PushBack = true;
 			if(Main.myPlayer == player.whoAmI && !hideVisual)
 			{
-				int damage = (int)(item.damage * (1f + (player.magicDamage - 1f) + (player.allDamage - 1f)));
+				int damage = (int)(Item.damage * (1f + (player.magicDamage - 1f) + (player.allDamage - 1f)));
 				modPlayer.tPlanetDamage += damage;
 				modPlayer.tPlanetNum += 2;
 				modPlayer.aqueductDamage += damage;

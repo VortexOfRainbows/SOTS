@@ -61,8 +61,8 @@ namespace SOTS.Items.Permafrost
 		}
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.StoneWall);
-			item.createWall = ModContent.WallType<HardIceBrickWallWall>();
+			Item.CloneDefaults(ItemID.StoneWall);
+			Item.createWall = ModContent.WallType<HardIceBrickWallWall>();
 		}
 	}
 }

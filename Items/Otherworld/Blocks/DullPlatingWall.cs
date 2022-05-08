@@ -10,9 +10,9 @@ namespace SOTS.Items.Otherworld.Blocks
 	{
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.StoneWall);
-			item.rare = ItemRarityID.LightRed;
-			item.createWall = ModContent.WallType<SafeDullPlatingWallWall>();
+			Item.CloneDefaults(ItemID.StoneWall);
+			Item.rare = ItemRarityID.LightRed;
+			Item.createWall = ModContent.WallType<SafeDullPlatingWallWall>();
 		}
 		public override void AddRecipes()
 		{

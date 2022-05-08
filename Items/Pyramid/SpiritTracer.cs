@@ -15,22 +15,22 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void SafeSetDefaults()
 		{
-			item.damage = 33;
-			item.ranged = true;
-			item.width = 30;
-			item.height = 68;
-			item.useTime = 18;
-			item.useAnimation = 18;
-			item.useStyle = 5;
-			item.knockBack = 1.5f;
-			item.value = Item.sellPrice(0, 7, 25, 0);
-			item.rare = ItemRarityID.Pink;
-			item.UseSound = SoundID.Item5;
-			item.autoReuse = true;            
-			item.shoot = 1; 
-            item.shootSpeed = 16.5f;
-			item.useAmmo = AmmoID.Arrow;
-			item.noMelee = true;
+			Item.damage = 33;
+			Item.ranged = true;
+			Item.width = 30;
+			Item.height = 68;
+			Item.useTime = 18;
+			Item.useAnimation = 18;
+			Item.useStyle = 5;
+			Item.knockBack = 1.5f;
+			Item.value = Item.sellPrice(0, 7, 25, 0);
+			Item.rare = ItemRarityID.Pink;
+			Item.UseSound = SoundID.Item5;
+			Item.autoReuse = true;            
+			Item.shoot = 1; 
+            Item.shootSpeed = 16.5f;
+			Item.useAmmo = AmmoID.Arrow;
+			Item.noMelee = true;
 		}
 		public override void AddRecipes()
 		{

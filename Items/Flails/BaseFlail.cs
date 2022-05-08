@@ -13,17 +13,17 @@ namespace SOTS.Items.Flails
 	{
 		public override void SetDefaults()
 		{
-			item.useStyle = ItemUseStyleID.HoldingOut;
-			item.noUseGraphic = true;
-			item.melee = true;
-			item.channel = true;
-			item.UseSound = SoundID.Item19;
+			Item.useStyle = ItemUseStyleID.HoldingOut;
+			Item.noUseGraphic = true;
+			Item.melee = true;
+			Item.channel = true;
+			Item.UseSound = SoundID.Item19;
 			SafeSetDefaults();
 		}
 
 		public virtual void SafeSetDefaults() { }
 
-		public override bool CanUseItem(Player player) => player.ownedProjectileCounts[item.shoot] == 0;
+		public override bool CanUseItem(Player player) => player.ownedProjectileCounts[Item.shoot] == 0;
 	}
 
 	public abstract class BaseFlailProj : ModProjectile

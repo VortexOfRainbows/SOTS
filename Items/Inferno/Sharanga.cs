@@ -16,22 +16,22 @@ namespace SOTS.Items.Inferno
 		}
 		public override void SetDefaults()
 		{
-            item.damage = 25; 
-            item.ranged = true;  
-            item.width = 36;   
-            item.height = 54; 
-            item.useTime = 25; 
-            item.useAnimation = 25;
-            item.useStyle = ItemUseStyleID.HoldingOut;    
-            item.noMelee = true;
-            item.knockBack = 4f;
-            item.value = Item.sellPrice(0, 2, 25, 0);
-            item.rare = ItemRarityID.Orange;
-            item.UseSound = SoundID.Item5;
-            item.autoReuse = true;
-            item.shoot = ModContent.ProjectileType<SharangaBolt>(); 
-            item.shootSpeed = 21.5f;
-			item.useAmmo = ItemID.WoodenArrow;
+            Item.damage = 25; 
+            Item.ranged = true;  
+            Item.width = 36;   
+            Item.height = 54; 
+            Item.useTime = 25; 
+            Item.useAnimation = 25;
+            Item.useStyle = ItemUseStyleID.HoldingOut;    
+            Item.noMelee = true;
+            Item.knockBack = 4f;
+            Item.value = Item.sellPrice(0, 2, 25, 0);
+            Item.rare = ItemRarityID.Orange;
+            Item.UseSound = SoundID.Item5;
+            Item.autoReuse = true;
+            Item.shoot = ModContent.ProjectileType<SharangaBolt>(); 
+            Item.shootSpeed = 21.5f;
+			Item.useAmmo = ItemID.WoodenArrow;
 		}
         public override Vector2? HoldoutOffset()
         {

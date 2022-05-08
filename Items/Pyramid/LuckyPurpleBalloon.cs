@@ -13,13 +13,13 @@ namespace SOTS.Items.Pyramid
 		}
         public override void SetDefaults()
         {
-            item.CloneDefaults(ItemID.Carrot);
-            item.shoot = mod.ProjectileType("LuckyPurpleBalloon");
-            item.buffType = mod.BuffType("PurpleBalloon");
-            item.value = Item.sellPrice(0, 2, 25, 0);
-            item.rare = 5;
-			item.width = 18;
-			item.height = 42;
+            Item.CloneDefaults(ItemID.Carrot);
+            Item.shoot = mod.ProjectileType("LuckyPurpleBalloon");
+            Item.buffType = mod.BuffType("PurpleBalloon");
+            Item.value = Item.sellPrice(0, 2, 25, 0);
+            Item.rare = 5;
+			Item.width = 18;
+			Item.height = 42;
         }
 		public override void AddRecipes()
 		{
@@ -34,7 +34,7 @@ namespace SOTS.Items.Pyramid
         {
             if (player.whoAmI == Main.myPlayer && player.itemTime == 0)
             {
-                player.AddBuff(item.buffType, 3600, true);
+                player.AddBuff(Item.buffType, 3600, true);
             }
         }
     }

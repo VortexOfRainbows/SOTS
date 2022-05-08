@@ -15,26 +15,26 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void SetDefaults()
 		{
-			item.damage = 23;
-			item.melee = true;
-			item.width = 46;
-			item.height = 50;
-			item.useTime = 20;
-			item.useAnimation = 20;
-			item.useStyle = 5;
-			item.knockBack = 5;
-			item.value = Item.sellPrice(0, 1, 20, 0);
-			item.rare = 3;
-			item.UseSound = SoundID.Item1;
-			item.autoReuse = true;
-			item.shoot = mod.ProjectileType("PyramidSpear");
-			item.shootSpeed = 5.5f;
-			item.noUseGraphic = true;
-			item.noMelee = true;
+			Item.damage = 23;
+			Item.melee = true;
+			Item.width = 46;
+			Item.height = 50;
+			Item.useTime = 20;
+			Item.useAnimation = 20;
+			Item.useStyle = 5;
+			Item.knockBack = 5;
+			Item.value = Item.sellPrice(0, 1, 20, 0);
+			Item.rare = 3;
+			Item.UseSound = SoundID.Item1;
+			Item.autoReuse = true;
+			Item.shoot = mod.ProjectileType("PyramidSpear");
+			Item.shootSpeed = 5.5f;
+			Item.noUseGraphic = true;
+			Item.noMelee = true;
 		}
 		public override bool CanUseItem(Player player)
 		{
-			return player.ownedProjectileCounts[item.shoot] < 1;
+			return player.ownedProjectileCounts[Item.shoot] < 1;
 		}
 	}
 }

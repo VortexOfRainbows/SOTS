@@ -16,22 +16,22 @@ namespace SOTS.Items.Nature
 		}
 		public override void SetDefaults()
 		{
-            item.damage = 10; 
-            item.magic = true; 
-            item.width = 30;   
-            item.height = 36;   
-            item.useTime = 39;   
-            item.useAnimation = 39;
-            item.useStyle = ItemUseStyleID.HoldingOut;    
-            item.noMelee = true;  
-            item.knockBack = 2.25f;
-			item.value = Item.sellPrice(0, 1, 25, 0);
-            item.rare = ItemRarityID.Orange;
-			item.autoReuse = true;
-            item.UseSound = SoundID.Item8;
-            item.shoot = ModContent.ProjectileType<FlowerSeed>(); 
-            item.shootSpeed = 15f;
-			item.mana = 10;
+            Item.damage = 10; 
+            Item.magic = true; 
+            Item.width = 30;   
+            Item.height = 36;   
+            Item.useTime = 39;   
+            Item.useAnimation = 39;
+            Item.useStyle = ItemUseStyleID.HoldingOut;    
+            Item.noMelee = true;  
+            Item.knockBack = 2.25f;
+			Item.value = Item.sellPrice(0, 1, 25, 0);
+            Item.rare = ItemRarityID.Orange;
+			Item.autoReuse = true;
+            Item.UseSound = SoundID.Item8;
+            Item.shoot = ModContent.ProjectileType<FlowerSeed>(); 
+            Item.shootSpeed = 15f;
+			Item.mana = 10;
 		}
 		public override void AddRecipes()
 		{

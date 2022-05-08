@@ -18,9 +18,9 @@ namespace SOTS.Items.Secrets
 		}
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.StoneBlock);
-			item.rare = ItemRarityID.Red;
-			item.createTile = ModContent.TileType<RefractingCrystalBlockTile>();
+			Item.CloneDefaults(ItemID.StoneBlock);
+			Item.rare = ItemRarityID.Red;
+			Item.createTile = ModContent.TileType<RefractingCrystalBlockTile>();
 		}
 	}
 	public class RefractingCrystalBlockTile : ModTile

@@ -21,12 +21,12 @@ namespace SOTS.Items.Earth
 		}
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.StoneBlock);
-			item.width = 20;
-			item.height = 18;
-			item.rare = ItemRarityID.LightRed;
-			item.value = Item.sellPrice(0, 0, 1, 0);
-			item.createTile = ModContent.TileType<VibrantOreTile>();
+			Item.CloneDefaults(ItemID.StoneBlock);
+			Item.width = 20;
+			Item.height = 18;
+			Item.rare = ItemRarityID.LightRed;
+			Item.value = Item.sellPrice(0, 0, 1, 0);
+			Item.createTile = ModContent.TileType<VibrantOreTile>();
 		}
 	}
 	public class VibrantOreTile : ModTile
@@ -191,11 +191,11 @@ namespace SOTS.Items.Earth
 		}
         public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.StoneWall);
-			item.width = 28;
-			item.height = 28;
-			item.rare = ItemRarityID.Blue;
-			item.createWall = ModContent.WallType<VibrantWallWall>();
+			Item.CloneDefaults(ItemID.StoneWall);
+			Item.width = 28;
+			Item.height = 28;
+			Item.rare = ItemRarityID.Blue;
+			Item.createWall = ModContent.WallType<VibrantWallWall>();
 		}
 	}
 	public class VibrantWallWall : ModWall

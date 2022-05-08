@@ -15,11 +15,11 @@ namespace SOTS.Items.Furniture.Earthen
 		}
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.StoneBlock);
-			item.rare = ItemRarityID.Blue;
-			item.width = 16;
-			item.height = 36;
-			item.createTile = ModContent.TileType<EarthenPlatingBlastDoorTileClosed>();
+			Item.CloneDefaults(ItemID.StoneBlock);
+			Item.rare = ItemRarityID.Blue;
+			Item.width = 16;
+			Item.height = 36;
+			Item.createTile = ModContent.TileType<EarthenPlatingBlastDoorTileClosed>();
 		}
 		public override void AddRecipes()
 		{

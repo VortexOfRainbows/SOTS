@@ -13,8 +13,8 @@ namespace SOTS.Items.Tools
 		{
 			Texture2D texture = mod.GetTexture("Items/Tools/EarthshakerGlow");
 			Color color = Color.White;
-			Vector2 drawOrigin = new Vector2(Main.itemTexture[item.type].Width * 0.5f, item.height * 0.5f);
-			Main.spriteBatch.Draw(texture, new Vector2((float)(item.Center.X - (int)Main.screenPosition.X), (float)(item.Center.Y - (int)Main.screenPosition.Y) + 2), null, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
+			Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y) + 2), null, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 		}
 		public override void SetStaticDefaults()
 		{
@@ -22,22 +22,22 @@ namespace SOTS.Items.Tools
 		}
 		public override void SetDefaults()
 		{
-			item.damage = 11;
-			item.melee = true;
-			item.width = 66;
-			item.height = 34;
-			item.useTime = 30;
-			item.useAnimation = 30;
-			item.useStyle = ItemUseStyleID.HoldingOut;
-			item.knockBack = 7.5f;
-            item.value = Item.sellPrice(0, 2, 25, 0);
-			item.rare = ItemRarityID.Blue;
-			item.UseSound = SoundID.Item61;
-			item.shoot = ModContent.ProjectileType<Projectiles.Earth.Earthshaker>(); 
-            item.shootSpeed = 16f;
-			item.noUseGraphic = true;
-			item.channel = true;
-			item.noMelee = true;
+			Item.damage = 11;
+			Item.melee = true;
+			Item.width = 66;
+			Item.height = 34;
+			Item.useTime = 30;
+			Item.useAnimation = 30;
+			Item.useStyle = ItemUseStyleID.HoldingOut;
+			Item.knockBack = 7.5f;
+            Item.value = Item.sellPrice(0, 2, 25, 0);
+			Item.rare = ItemRarityID.Blue;
+			Item.UseSound = SoundID.Item61;
+			Item.shoot = ModContent.ProjectileType<Projectiles.Earth.Earthshaker>(); 
+            Item.shootSpeed = 16f;
+			Item.noUseGraphic = true;
+			Item.channel = true;
+			Item.noMelee = true;
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{

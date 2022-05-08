@@ -12,23 +12,23 @@ namespace SOTS.Items.Earth
 		}
 		public override void SetDefaults()
 		{
-			item.damage = 12;
-			item.useStyle = ItemUseStyleID.SwingThrow;
-			item.useTime = 27;
-			item.useAnimation = 27;
-			item.ranged = true;
-			item.value = Item.sellPrice(0, 0, 80, 0);
-			item.rare = ItemRarityID.Blue;
-			item.width = 26;
-			item.height = 26;
-			item.maxStack = 1;
-			item.autoReuse = true;            
-			item.shoot = ModContent.ProjectileType<Projectiles.Earth.EchoDisk>(); 
-            item.shootSpeed = 9.5f;
-			item.knockBack = 3f;
-			item.consumable = false;
-			item.noUseGraphic = true;
-			item.noMelee = true;
+			Item.damage = 12;
+			Item.useStyle = ItemUseStyleID.SwingThrow;
+			Item.useTime = 27;
+			Item.useAnimation = 27;
+			Item.ranged = true;
+			Item.value = Item.sellPrice(0, 0, 80, 0);
+			Item.rare = ItemRarityID.Blue;
+			Item.width = 26;
+			Item.height = 26;
+			Item.maxStack = 1;
+			Item.autoReuse = true;            
+			Item.shoot = ModContent.ProjectileType<Projectiles.Earth.EchoDisk>(); 
+            Item.shootSpeed = 9.5f;
+			Item.knockBack = 3f;
+			Item.consumable = false;
+			Item.noUseGraphic = true;
+			Item.noMelee = true;
 		}
 		public override void AddRecipes()
 		{

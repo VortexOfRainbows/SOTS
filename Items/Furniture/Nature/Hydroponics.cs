@@ -19,10 +19,10 @@ namespace SOTS.Items.Furniture.Nature
 		}
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.StoneBlock);
-			item.Size = new Vector2(34, 30);
-			item.rare = ItemRarityID.Orange;
-			item.createTile = ModContent.TileType<Hydroponics>();
+			Item.CloneDefaults(ItemID.StoneBlock);
+			Item.Size = new Vector2(34, 30);
+			Item.rare = ItemRarityID.Orange;
+			Item.createTile = ModContent.TileType<Hydroponics>();
 		}
 		public override void AddRecipes()
 		{

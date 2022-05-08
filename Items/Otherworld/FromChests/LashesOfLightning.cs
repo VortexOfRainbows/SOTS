@@ -19,34 +19,34 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override void SetDefaults()
 		{
-            item.damage = 26;  
-            item.magic = true; 
-            item.width = 30;    
-            item.height = 46;  
-            item.useTime = 8;
-            item.useAnimation = 24;
-			item.reuseDelay = 18;
-            item.useStyle = ItemUseStyleID.HoldingUp;   
-            item.autoReuse = true; 
-            item.knockBack = 3f;
-			item.value = Item.sellPrice(0, 5, 0, 0);
-            item.rare = ItemRarityID.LightPurple;
+            Item.damage = 26;  
+            Item.magic = true; 
+            Item.width = 30;    
+            Item.height = 46;  
+            Item.useTime = 8;
+            Item.useAnimation = 24;
+			Item.reuseDelay = 18;
+            Item.useStyle = ItemUseStyleID.HoldingUp;   
+            Item.autoReuse = true; 
+            Item.knockBack = 3f;
+			Item.value = Item.sellPrice(0, 5, 0, 0);
+            Item.rare = ItemRarityID.LightPurple;
 			if (!Main.dedServ)
 			{
-				item.GetGlobalItem<ItemUseGlow>().glowTexture = mod.GetTexture("Items/Otherworld/FromChests/LashesOfLightningGlow");
+				Item.GetGlobalItem<ItemUseGlow>().glowTexture = mod.GetTexture("Items/Otherworld/FromChests/LashesOfLightningGlow");
 			}
 
-			item.shoot = ModContent.ProjectileType<LightningLash>();
-			item.shootSpeed = 15f;
-			item.noMelee = true;
-			item.mana = 20;
+			Item.shoot = ModContent.ProjectileType<LightningLash>();
+			Item.shootSpeed = 15f;
+			Item.noMelee = true;
+			Item.mana = 20;
 		}
 		public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
 		{
 			Texture2D texture = mod.GetTexture("Items/Otherworld/FromChests/LashesOfLightningGlow");
 			Color color = Color.White;
-			Vector2 drawOrigin = new Vector2(Main.itemTexture[item.type].Width * 0.5f, item.height * 0.5f);
-			Main.spriteBatch.Draw(texture, new Vector2((float)(item.Center.X - (int)Main.screenPosition.X), (float)(item.Center.Y - (int)Main.screenPosition.Y) + 2), null, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
+			Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y) + 2), null, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 		}
 		public override void MeleeEffects(Player player, Rectangle hitbox)
 		{

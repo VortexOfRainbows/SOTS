@@ -20,12 +20,12 @@ namespace SOTS.Items.Tide
 		}
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.StoneBlock);
-			item.rare = ItemRarityID.Cyan;
-			item.value = Item.sellPrice(0, 0, 50, 0);
-			item.consumable = true;
-			item.createTile = ModContent.TileType<ArkhalisChainTile>();
-			item.placeStyle = 0;
+			Item.CloneDefaults(ItemID.StoneBlock);
+			Item.rare = ItemRarityID.Cyan;
+			Item.value = Item.sellPrice(0, 0, 50, 0);
+			Item.consumable = true;
+			Item.createTile = ModContent.TileType<ArkhalisChainTile>();
+			Item.placeStyle = 0;
 		}
 	}	
 	public class ArkhalisChainTile : ModTile

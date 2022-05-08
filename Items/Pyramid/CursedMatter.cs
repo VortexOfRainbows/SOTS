@@ -15,16 +15,16 @@ namespace SOTS.Items.Pyramid
 		{
 			DisplayName.SetDefault("Cursed Matter");
 			Tooltip.SetDefault("");
-			Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(5, 6));
+			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 6));
 		}
 		public override void SetDefaults()
 		{
 
-			item.width = 26;
-			item.height = 30;
-            item.value = Item.sellPrice(0, 0, 7, 50);
-			item.rare = 3;
-			item.maxStack = 999;
+			Item.width = 26;
+			Item.height = 30;
+            Item.value = Item.sellPrice(0, 0, 7, 50);
+			Item.rare = 3;
+			Item.maxStack = 999;
 		}
 	}
 }

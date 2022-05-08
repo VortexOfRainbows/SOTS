@@ -31,14 +31,14 @@ namespace SOTS.Items.Tools
 		}
 		public override void SetDefaults()
 		{
-			item.width = 30;
-			item.height = 18;
-			item.useTime = 12;
-			item.useAnimation = 12;
-			item.useStyle = ItemUseStyleID.Stabbing;
-			item.value = 0;
-			item.rare = ItemRarityID.Cyan;
-			item.UseSound = SoundID.Item1;
+			Item.width = 30;
+			Item.height = 18;
+			Item.useTime = 12;
+			Item.useAnimation = 12;
+			Item.useStyle = ItemUseStyleID.Stabbing;
+			Item.value = 0;
+			Item.rare = ItemRarityID.Cyan;
+			Item.UseSound = SoundID.Item1;
 		}
 		List<double> tiles = new List<double>(); //I store extra data as decimals because I'm lazy
 		readonly int[] gemspark = {153,154,155,156,157,158,159,160,161,162,163,164,165,166};

@@ -18,26 +18,26 @@ namespace SOTS.Items
 		{
 			DisplayName.SetDefault("Digital Daito");
 			Tooltip.SetDefault("");
-			Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(2, 15));
+			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(2, 15));
 		}
 		public override void SetDefaults()
 		{
-            item.damage = 50;
-            item.melee = true;  
-            item.width = 62;
-            item.height = 64;  
-            item.useTime = 20; 
-            item.useAnimation = 20;
-            item.useStyle = ItemUseStyleID.HoldingOut;		
-            item.knockBack = 8f;
-            item.value = Item.sellPrice(0, 10, 0, 0);
-            item.rare = ItemRarityID.Cyan;
-            item.UseSound = null;
-            item.autoReuse = true;
-            item.shoot = ModContent.ProjectileType<DigitalSlash>(); 
-            item.shootSpeed = 18f;
-            item.noUseGraphic = true; 
-            item.noMelee = true;
+            Item.damage = 50;
+            Item.melee = true;  
+            Item.width = 62;
+            Item.height = 64;  
+            Item.useTime = 20; 
+            Item.useAnimation = 20;
+            Item.useStyle = ItemUseStyleID.HoldingOut;		
+            Item.knockBack = 8f;
+            Item.value = Item.sellPrice(0, 10, 0, 0);
+            Item.rare = ItemRarityID.Cyan;
+            Item.UseSound = null;
+            Item.autoReuse = true;
+            Item.shoot = ModContent.ProjectileType<DigitalSlash>(); 
+            Item.shootSpeed = 18f;
+            Item.noUseGraphic = true; 
+            Item.noMelee = true;
 		}
 		int i = 0;
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

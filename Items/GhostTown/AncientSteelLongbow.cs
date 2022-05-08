@@ -16,28 +16,28 @@ namespace SOTS.Items.GhostTown
 		}
 		public override void SetDefaults()
 		{
-			item.damage = 15;
-			item.ranged = true;
-			item.width = 30;
-			item.height = 64;
-			item.useTime = 44;
-			item.useAnimation = 44;
-			item.useStyle = ItemUseStyleID.HoldingOut;
-			item.knockBack = 4f;
-			item.value = Item.sellPrice(0, 0, 80, 0);
-			item.rare = ItemRarityID.Blue;
-			item.UseSound = null;
-			item.autoReuse = false;
-			item.channel = true;
-			item.shoot = ModContent.ProjectileType<Projectiles.Evil.AncientSteelLongbow>();
-			item.shootSpeed = 8f;
-			item.noMelee = true;
-			item.noUseGraphic = true;
-			item.useAmmo = AmmoID.Arrow;
+			Item.damage = 15;
+			Item.ranged = true;
+			Item.width = 30;
+			Item.height = 64;
+			Item.useTime = 44;
+			Item.useAnimation = 44;
+			Item.useStyle = ItemUseStyleID.HoldingOut;
+			Item.knockBack = 4f;
+			Item.value = Item.sellPrice(0, 0, 80, 0);
+			Item.rare = ItemRarityID.Blue;
+			Item.UseSound = null;
+			Item.autoReuse = false;
+			Item.channel = true;
+			Item.shoot = ModContent.ProjectileType<Projectiles.Evil.AncientSteelLongbow>();
+			Item.shootSpeed = 8f;
+			Item.noMelee = true;
+			Item.noUseGraphic = true;
+			Item.useAmmo = AmmoID.Arrow;
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			Projectile.NewProjectile(position.X, position.Y, 0, 0, ModContent.ProjectileType<Projectiles.Evil.AncientSteelLongbow>(), damage, knockBack, player.whoAmI, (int)(item.useTime / SOTSPlayer.ModPlayer(player).attackSpeedMod), type);
+			Projectile.NewProjectile(position.X, position.Y, 0, 0, ModContent.ProjectileType<Projectiles.Evil.AncientSteelLongbow>(), damage, knockBack, player.whoAmI, (int)(Item.useTime / SOTSPlayer.ModPlayer(player).attackSpeedMod), type);
 			return false;
 		}
 		public override void AddRecipes()

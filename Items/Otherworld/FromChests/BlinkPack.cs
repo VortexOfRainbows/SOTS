@@ -40,20 +40,20 @@ namespace SOTS.Items.Otherworld.FromChests
         }
         public override void SetDefaults()
 		{
-			item.melee = true;
-			item.damage = 45;
-			item.maxStack = 1;
-            item.width = 32;     
-            item.height = 32;
-            item.value = Item.sellPrice(0, 4, 20, 0);
-			item.rare = ItemRarityID.LightPurple;
-			item.accessory = true;
+			Item.melee = true;
+			Item.damage = 45;
+			Item.maxStack = 1;
+            Item.width = 32;     
+            Item.height = 32;
+            Item.value = Item.sellPrice(0, 4, 20, 0);
+			Item.rare = ItemRarityID.LightPurple;
+			Item.accessory = true;
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			modPlayer.BlinkType = 1;
-			modPlayer.BlinkDamage += (int)(item.damage * (1f + (player.meleeDamage - 1f) + (player.allDamage - 1f)));
+			modPlayer.BlinkDamage += (int)(Item.damage * (1f + (player.meleeDamage - 1f) + (player.allDamage - 1f)));
 			player.noFallDmg = true;
 		}
         public override void UpdateVanity(Player player, EquipType type)

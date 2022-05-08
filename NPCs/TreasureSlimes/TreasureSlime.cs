@@ -278,7 +278,7 @@ namespace SOTS.NPCs.TreasureSlimes
 				firstAlpha -= secondAlpha;
 			}
 			Vector2 drawPos = npc.oldPos[3] + new Vector2(0, -20 + (float)(Math.Cos((float)treasureCounter / treasureSpeed) * 2) + npc.gfxOffY) + (npc.Size / 2) - Main.screenPosition;
-			Texture2D texture = Main.itemTexture[item.Type];
+			Texture2D texture = Main.itemTexture[Item.Type];
 			float scale = 1.2f * npc.scale / (float)Math.Sqrt(texture.Width * texture.Width + texture.Height * texture.Height) * npc.width;
 			scale = MathHelper.Clamp(scale, 0.4f, 1.1f);
 			//Texture2D textureGlow = ModContent.GetTexture("SOTS/Assets/TreasureSlimeBloom");
@@ -314,7 +314,7 @@ namespace SOTS.NPCs.TreasureSlimes
 			if (treasureCounter % treasureSpeed <= 7)
 				itemID = otherId;
 			TreasureSlimeItem item = possibleItems[(int)itemID];
-			Item.NewItem(npc.Hitbox, item.Type, Main.rand.Next(item.Amount, item.AmountCap + 1));
+			Item.NewItem(npc.Hitbox, Item.Type, Main.rand.Next(Item.Amount, Item.AmountCap + 1));
 			Item.NewItem(npc.Hitbox, ItemType<Peanut>(), 10 + Main.rand.Next(11));
 			Item.NewItem(npc.Hitbox, ItemID.Gel, 5 + Main.rand.Next(6));
 			AdditionalLoot();

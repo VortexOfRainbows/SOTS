@@ -15,12 +15,12 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void SetDefaults()
 		{
-            item.width = 38;     
-            item.height = 48;   
-            item.value = Item.sellPrice(0, 5, 0, 0);
-			item.rare = ItemRarityID.LightPurple;
-			item.accessory = true;
-			item.expert = true;
+            Item.width = 38;     
+            Item.height = 48;   
+            Item.value = Item.sellPrice(0, 5, 0, 0);
+			Item.rare = ItemRarityID.LightPurple;
+			Item.accessory = true;
+			Item.expert = true;
 		}
         public override void UpdateAccessory(Player player, bool hideVisual)
 		{

@@ -11,10 +11,10 @@ namespace SOTS.Items.GhostTown
 		}
 		public override void SetDefaults()
 		{
-			item.width = 14;
-			item.height = 32;
-			item.maxStack = 99; 
-			item.rare = ItemRarityID.Blue;
+			Item.width = 14;
+			Item.height = 32;
+			Item.maxStack = 99; 
+			Item.rare = ItemRarityID.Blue;
 		}
 	}
 }

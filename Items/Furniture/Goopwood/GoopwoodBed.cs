@@ -11,10 +11,10 @@ namespace SOTS.Items.Furniture.Goopwood
 	{
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.StoneBlock);
-			item.Size = new Vector2(32, 22);
-			item.rare = ItemRarityID.Blue;
-			item.createTile = ModContent.TileType<GoopwoodBedTile>();
+			Item.CloneDefaults(ItemID.StoneBlock);
+			Item.Size = new Vector2(32, 22);
+			Item.rare = ItemRarityID.Blue;
+			Item.createTile = ModContent.TileType<GoopwoodBedTile>();
 		}
 		public override void AddRecipes()
 		{

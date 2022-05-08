@@ -15,24 +15,24 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override void SetDefaults()
 		{
-			item.damage = 20;
-			item.useStyle = 1;
-			item.useTime = 26;
-			item.useAnimation = 26;
-			item.knockBack = 1.4f;
-			item.ranged = true;
-			item.value = Item.sellPrice(0, 5, 0, 0);
-			item.rare = ItemRarityID.LightPurple;
-			item.width = 26;
-			item.height = 30;
-			item.maxStack = 1;
-			item.autoReuse = true;            
-			item.shoot = mod.ProjectileType("ArclightBomb"); 
-            item.shootSpeed = 17.75f;
-			item.consumable = false;
-			item.noMelee = true;
-			item.noUseGraphic = true;
-			item.UseSound = SoundID.Item1;
+			Item.damage = 20;
+			Item.useStyle = 1;
+			Item.useTime = 26;
+			Item.useAnimation = 26;
+			Item.knockBack = 1.4f;
+			Item.ranged = true;
+			Item.value = Item.sellPrice(0, 5, 0, 0);
+			Item.rare = ItemRarityID.LightPurple;
+			Item.width = 26;
+			Item.height = 30;
+			Item.maxStack = 1;
+			Item.autoReuse = true;            
+			Item.shoot = mod.ProjectileType("ArclightBomb"); 
+            Item.shootSpeed = 17.75f;
+			Item.consumable = false;
+			Item.noMelee = true;
+			Item.noUseGraphic = true;
+			Item.UseSound = SoundID.Item1;
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {

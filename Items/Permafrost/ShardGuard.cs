@@ -15,15 +15,15 @@ namespace SOTS.Items.Permafrost
 		}
 		public override void SetDefaults()
 		{
-			item.damage = 36;
-			item.summon = true;
-			item.maxStack = 1;
-            item.width = 38;     
-            item.height = 34;   
-            item.value = Item.sellPrice(0, 5, 0, 0);
-            item.rare = ItemRarityID.Lime;
-			item.defense = 1;
-			item.accessory = true;
+			Item.damage = 36;
+			Item.summon = true;
+			Item.maxStack = 1;
+            Item.width = 38;     
+            Item.height = 34;   
+            Item.value = Item.sellPrice(0, 5, 0, 0);
+            Item.rare = ItemRarityID.Lime;
+			Item.defense = 1;
+			Item.accessory = true;
 		}
 		int[] Probes = { -1, -1, -1, -1, -1, -1, -1, -1 };
 		public void ProbesGen(Player player)
@@ -35,11 +35,11 @@ namespace SOTS.Items.Permafrost
 				{
 					if (Probes[i] == -1)
 					{
-						Probes[i] = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, type, (int)(item.damage * (1 + (player.minionDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI, i, i * 15);
+						Probes[i] = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, type, (int)(Item.damage * (1 + (player.minionDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI, i, i * 15);
 					}
 					if (!Main.projectile[Probes[i]].active || Main.projectile[Probes[i]].type != type || Main.projectile[Probes[i]].ai[0] != i)
 					{
-						Probes[i] = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, type, (int)(item.damage * (1 + (player.minionDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI, i, i * 15);
+						Probes[i] = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, type, (int)(Item.damage * (1 + (player.minionDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI, i, i * 15);
 					}
 					Main.projectile[Probes[i]].timeLeft = 6;
 				}
@@ -56,7 +56,7 @@ namespace SOTS.Items.Permafrost
 			if (rand >= 5) //5,6,7,8,9 50%
 				modPlayer.shardOnHit += 5;
 
-			modPlayer.bonusShardDamage += (int)(item.damage * (1 + (player.minionDamage - 1f) + (player.allDamage - 1f)));
+			modPlayer.bonusShardDamage += (int)(Item.damage * (1 + (player.minionDamage - 1f) + (player.allDamage - 1f)));
 			player.statLifeMax2 += 10;
 
 			if ((double)player.statLife <= (double)player.statLifeMax * 0.5)

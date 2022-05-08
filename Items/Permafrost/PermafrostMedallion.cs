@@ -13,13 +13,13 @@ namespace SOTS.Items.Permafrost
 		}
 		public override void SetDefaults()
 		{
-			item.damage = 36;
-			item.summon = true;
-            item.width = 34;     
-            item.height = 38;   
-            item.value = Item.sellPrice(0, 5, 50, 0);
-            item.rare = 7;
-			item.accessory = true;
+			Item.damage = 36;
+			Item.summon = true;
+            Item.width = 34;     
+            Item.height = 38;   
+            Item.value = Item.sellPrice(0, 5, 50, 0);
+            Item.rare = 7;
+			Item.accessory = true;
 		}
 		int[] Probes = { -1, -1, -1, -1, -1, -1, -1, -1 };
 		public override void AddRecipes()
@@ -39,11 +39,11 @@ namespace SOTS.Items.Permafrost
 				{
 					if (Probes[i] == -1)
 					{
-						Probes[i] = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, type, (int)(item.damage * (1 + (player.minionDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI, i, i * 15);
+						Probes[i] = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, type, (int)(Item.damage * (1 + (player.minionDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI, i, i * 15);
 					}
 					if (!Main.projectile[Probes[i]].active || Main.projectile[Probes[i]].type != type || Main.projectile[Probes[i]].ai[0] != i)
 					{
-						Probes[i] = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, type, (int)(item.damage * (1 + (player.minionDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI, i, i * 15);
+						Probes[i] = Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, type, (int)(Item.damage * (1 + (player.minionDamage - 1f) + (player.allDamage - 1f))), 0, player.whoAmI, i, i * 15);
 					}
 					Main.projectile[Probes[i]].timeLeft = 6;
 				}

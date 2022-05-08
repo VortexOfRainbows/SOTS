@@ -16,22 +16,22 @@ namespace SOTS.Items.Slime
 		}
 		public override void SetDefaults()
 		{
-            item.damage = 27;  
-            item.ranged = true;    
-            item.width = 66;  
-            item.height = 22;   
-            item.useTime = 26;  
-            item.useAnimation = 26;
-            item.useStyle = ItemUseStyleID.HoldingOut;    
-            item.noMelee = true; 
-            item.knockBack = 5f;
-            item.value = Item.sellPrice(0, 2, 50, 0);
-            item.rare = ItemRarityID.Green;
-            item.UseSound = SoundID.Item5;
-            item.autoReuse = true;
-            item.shoot = ModContent.ProjectileType<Projectiles.Nature.Peanut>(); 
-            item.shootSpeed = 19f;
-			item.useAmmo = ModContent.ItemType<Peanut>();
+            Item.damage = 27;  
+            Item.ranged = true;    
+            Item.width = 66;  
+            Item.height = 22;   
+            Item.useTime = 26;  
+            Item.useAnimation = 26;
+            Item.useStyle = ItemUseStyleID.HoldingOut;    
+            Item.noMelee = true; 
+            Item.knockBack = 5f;
+            Item.value = Item.sellPrice(0, 2, 50, 0);
+            Item.rare = ItemRarityID.Green;
+            Item.UseSound = SoundID.Item5;
+            Item.autoReuse = true;
+            Item.shoot = ModContent.ProjectileType<Projectiles.Nature.Peanut>(); 
+            Item.shootSpeed = 19f;
+			Item.useAmmo = ModContent.ItemType<Peanut>();
 		}
         public override bool ConsumeAmmo(Player player)
         {

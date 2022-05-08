@@ -12,20 +12,20 @@ namespace SOTS.Items.ChestItems
 		}
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.ThrowingKnife);
-			item.damage = 12;
-			item.thrown = true;
-			item.rare = 1;
-			item.width = 46;
-			item.height = 36;
-			item.maxStack = 1;
-			item.useTime = 24;
-			item.useAnimation = 24;
-			item.autoReuse = true;            
-			item.shoot = mod.ProjectileType("WingedKnife"); 
-            item.shootSpeed = 12f;
-			item.consumable = false;
-			item.knockBack = 1.5f;
+			Item.CloneDefaults(ItemID.ThrowingKnife);
+			Item.damage = 12;
+			Item.thrown = true;
+			Item.rare = 1;
+			Item.width = 46;
+			Item.height = 36;
+			Item.maxStack = 1;
+			Item.useTime = 24;
+			Item.useAnimation = 24;
+			Item.autoReuse = true;            
+			Item.shoot = mod.ProjectileType("WingedKnife"); 
+            Item.shootSpeed = 12f;
+			Item.consumable = false;
+			Item.knockBack = 1.5f;
 		}
 	}
 }

@@ -15,9 +15,9 @@ namespace SOTS.Items.Fragments
 		}
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.StoneBlock);
-			item.rare = ItemRarityID.Orange;
-			item.createTile = ModContent.TileType<DissolvingNetherTile>();
+			Item.CloneDefaults(ItemID.StoneBlock);
+			Item.rare = ItemRarityID.Orange;
+			Item.createTile = ModContent.TileType<DissolvingNetherTile>();
 		}
 		public override void AddRecipes()
 		{

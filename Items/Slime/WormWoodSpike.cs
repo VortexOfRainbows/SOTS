@@ -13,22 +13,22 @@ namespace SOTS.Items.Slime
 		}
         public override void SetDefaults()
         {
-            item.damage = 32;
-            item.width = 34;
-            item.height = 34;
-            item.value = Item.sellPrice(0, 2, 0, 0);
-            item.rare = 4;
-            item.noMelee = true;
-            item.useStyle = 5;
-            item.useAnimation = 40;
-            item.useTime = 40;
-            item.knockBack = 4.5f;
-            item.noUseGraphic = true; 
-            item.shoot = ModContent.ProjectileType<Projectiles.WormWoodSpike>();
-            item.shootSpeed = 14.5f;
-            item.UseSound = SoundID.Item1;
-            item.melee = true; 
-            item.channel = true;
+            Item.damage = 32;
+            Item.width = 34;
+            Item.height = 34;
+            Item.value = Item.sellPrice(0, 2, 0, 0);
+            Item.rare = 4;
+            Item.noMelee = true;
+            Item.useStyle = 5;
+            Item.useAnimation = 40;
+            Item.useTime = 40;
+            Item.knockBack = 4.5f;
+            Item.noUseGraphic = true; 
+            Item.shoot = ModContent.ProjectileType<Projectiles.WormWoodSpike>();
+            Item.shootSpeed = 14.5f;
+            Item.UseSound = SoundID.Item1;
+            Item.melee = true; 
+            Item.channel = true;
         }
 		public override void AddRecipes()
 		{

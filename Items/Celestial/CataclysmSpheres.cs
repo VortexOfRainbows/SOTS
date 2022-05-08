@@ -17,24 +17,24 @@ namespace SOTS.Items.Celestial
 		}
 		public override void SetDefaults()
 		{
-			item.damage = 40;
-			item.useStyle = ItemUseStyleID.SwingThrow;
-			item.useTime = 26;
-			item.useAnimation = 26;
-			item.knockBack = 1.4f;
-			item.ranged = true;
-			item.value = Item.sellPrice(0, 15, 0, 0);
-			item.rare = ItemRarityID.Yellow;
-			item.width = 26;
-			item.height = 30;
-			item.maxStack = 1;
-			item.autoReuse = true;            
-			item.shoot = ModContent.ProjectileType<CataclysmOrb>(); 
-            item.shootSpeed = 20f;
-			item.consumable = false;
-			item.noMelee = true;
-			item.noUseGraphic = true;
-			item.UseSound = SoundID.Item1;
+			Item.damage = 40;
+			Item.useStyle = ItemUseStyleID.SwingThrow;
+			Item.useTime = 26;
+			Item.useAnimation = 26;
+			Item.knockBack = 1.4f;
+			Item.ranged = true;
+			Item.value = Item.sellPrice(0, 15, 0, 0);
+			Item.rare = ItemRarityID.Yellow;
+			Item.width = 26;
+			Item.height = 30;
+			Item.maxStack = 1;
+			Item.autoReuse = true;            
+			Item.shoot = ModContent.ProjectileType<CataclysmOrb>(); 
+            Item.shootSpeed = 20f;
+			Item.consumable = false;
+			Item.noMelee = true;
+			Item.noUseGraphic = true;
+			Item.UseSound = SoundID.Item1;
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {

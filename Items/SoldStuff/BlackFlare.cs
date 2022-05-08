@@ -13,19 +13,19 @@ namespace SOTS.Items.SoldStuff
 		}
 		public override void SetDefaults()
 		{
-			item.damage = 1;
-			item.ranged = true;
-			item.width = 8;
-			item.height = 20;
-			item.maxStack = 999;
-			item.consumable = true;           
-			item.knockBack = 2f;
-			item.value = Item.buyPrice(0, 0, 0, 9);
-			item.rare = ItemRarityID.Orange;
-			item.shoot = mod.ProjectileType("BlackFlareShot"); 
-			item.shootSpeed =  8f;             
-			item.ammo = AmmoID.Flare;   
-            item.UseSound = SoundID.Item23;
+			Item.damage = 1;
+			Item.ranged = true;
+			Item.width = 8;
+			Item.height = 20;
+			Item.maxStack = 999;
+			Item.consumable = true;           
+			Item.knockBack = 2f;
+			Item.value = Item.buyPrice(0, 0, 0, 9);
+			Item.rare = ItemRarityID.Orange;
+			Item.shoot = mod.ProjectileType("BlackFlareShot"); 
+			Item.shootSpeed =  8f;             
+			Item.ammo = AmmoID.Flare;   
+            Item.UseSound = SoundID.Item23;
 		}
 	}
 }

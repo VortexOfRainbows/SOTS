@@ -22,20 +22,20 @@ namespace SOTS.Items.Otherworld
 		}
 		public override void SafeSetDefaults()
 		{
-			item.damage = 34;
-			item.maxStack = 1;
-            item.width = 30;     
-            item.height = 26;   
-            item.value = Item.sellPrice(0, 0, 80, 0);
-            item.rare = ItemRarityID.LightRed;
-			item.accessory = true;
+			Item.damage = 34;
+			Item.maxStack = 1;
+            Item.width = 30;     
+            Item.height = 26;   
+            Item.value = Item.sellPrice(0, 0, 80, 0);
+            Item.rare = ItemRarityID.LightRed;
+			Item.accessory = true;
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			VoidPlayer voidPlayer = player.GetModPlayer<VoidPlayer>();
 			voidPlayer.bonusVoidGain += 1f;
 			BeadPlayer modPlayer = player.GetModPlayer<BeadPlayer>();
-			modPlayer.soulDamage += (int)(item.damage * (1f + (voidPlayer.voidDamage - 1f)));
+			modPlayer.soulDamage += (int)(Item.damage * (1f + (voidPlayer.voidDamage - 1f)));
 			modPlayer.RetaliationSouls = true;
 		}
 	}

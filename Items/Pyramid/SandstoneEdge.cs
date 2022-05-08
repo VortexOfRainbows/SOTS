@@ -14,22 +14,22 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void SetDefaults()
 		{
-			item.crit = 10;
-			item.damage = 30;
-			item.scale = 1.2f;
-			item.melee = true;
-			item.useTurn = true;
-			item.width = 46;
-			item.height = 52;
-			item.useTime = 22;
-			item.useAnimation = 22;
-			item.useStyle = ItemUseStyleID.SwingThrow;
-			item.knockBack = 3.5f;
-			item.value = Item.sellPrice(0, 1, 20, 0);
-			item.rare = ItemRarityID.Orange;
-			item.UseSound = SoundID.Item1;
-			item.autoReuse = true;
-			item.scale = 1.4f;
+			Item.crit = 10;
+			Item.damage = 30;
+			Item.scale = 1.2f;
+			Item.melee = true;
+			Item.useTurn = true;
+			Item.width = 46;
+			Item.height = 52;
+			Item.useTime = 22;
+			Item.useAnimation = 22;
+			Item.useStyle = ItemUseStyleID.SwingThrow;
+			Item.knockBack = 3.5f;
+			Item.value = Item.sellPrice(0, 1, 20, 0);
+			Item.rare = ItemRarityID.Orange;
+			Item.UseSound = SoundID.Item1;
+			Item.autoReuse = true;
+			Item.scale = 1.4f;
 		}
 		public override void ModifyHitNPC(Player player, NPC target, ref int damage, ref float knockBack, ref bool crit)
 		{

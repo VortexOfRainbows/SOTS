@@ -33,9 +33,9 @@ namespace SOTS.Items.Nvidia
 		}
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.StoneBlock);
-			item.rare = ItemRarityID.Blue;
-			item.createTile = ModContent.TileType<EvostoneTile>();
+			Item.CloneDefaults(ItemID.StoneBlock);
+			Item.rare = ItemRarityID.Blue;
+			Item.createTile = ModContent.TileType<EvostoneTile>();
 		}
 	}
 	public class EvostoneBrickTile : ModTile
@@ -62,9 +62,9 @@ namespace SOTS.Items.Nvidia
 		}
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.StoneBlock);
-			item.rare = ItemRarityID.Blue;
-			item.createTile = ModContent.TileType<EvostoneBrickTile>();
+			Item.CloneDefaults(ItemID.StoneBlock);
+			Item.rare = ItemRarityID.Blue;
+			Item.createTile = ModContent.TileType<EvostoneBrickTile>();
 		}
 		public override void AddRecipes()
 		{
@@ -95,11 +95,11 @@ namespace SOTS.Items.Nvidia
 		}
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.StoneWall);
-			item.width = 28;
-			item.height = 28;
-			item.rare = ItemRarityID.Blue;
-			item.createWall = ModContent.WallType<EvostoneBrickWallTile>();
+			Item.CloneDefaults(ItemID.StoneWall);
+			Item.width = 28;
+			Item.height = 28;
+			Item.rare = ItemRarityID.Blue;
+			Item.createWall = ModContent.WallType<EvostoneBrickWallTile>();
 		}
 		public override void AddRecipes()
 		{
@@ -138,9 +138,9 @@ namespace SOTS.Items.Nvidia
 		}
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.StoneBlock);
-			item.rare = ItemRarityID.Blue;
-			item.createTile = ModContent.TileType<DarkShinglesTile>();
+			Item.CloneDefaults(ItemID.StoneBlock);
+			Item.rare = ItemRarityID.Blue;
+			Item.createTile = ModContent.TileType<DarkShinglesTile>();
 		}
 		public override void AddRecipes()
 		{

@@ -18,12 +18,12 @@ namespace SOTS.Items.Fragments
 		}
 		public override void SetDefaults()
 		{
-			item.width = 66;
-			item.height = 66;
-            item.value = Item.sellPrice(0, 10, 0, 0);
-			item.rare = 3;
-			item.maxStack = 999;
-			ItemID.Sets.ItemNoGravity[item.type] = true;
+			Item.width = 66;
+			Item.height = 66;
+            Item.value = Item.sellPrice(0, 10, 0, 0);
+			Item.rare = 3;
+			Item.maxStack = 999;
+			ItemID.Sets.ItemNoGravity[Item.type] = true;
 		}
 		public override void AddRecipes()
 		{
@@ -53,7 +53,7 @@ namespace SOTS.Items.Fragments
 				{
 					float x = Main.rand.Next(-10, 11) * 0.15f;
 					float y = Main.rand.Next(-10, 11) * 0.15f;
-					Main.spriteBatch.Draw(texture, new Vector2((float)(position.X + x), (float)(position.Y + y)) + rotationAround, frame, new Color(100, 100, 100, 0) * (1f - (item.alpha / 255f)), 0f, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture, new Vector2((float)(position.X + x), (float)(position.Y + y)) + rotationAround, frame, new Color(100, 100, 100, 0) * (1f - (Item.alpha / 255f)), 0f, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
 				}
 			}
 			for (int k = 0; k < 7; k++)
@@ -62,7 +62,7 @@ namespace SOTS.Items.Fragments
 				Rectangle frame = new Rectangle(0, 22 * frameNum, 22, 22);
 				float x = Main.rand.Next(-10, 11) * 0.15f;
 				float y = Main.rand.Next(-10, 11) * 0.15f;
-				Main.spriteBatch.Draw(texture, new Vector2((float)(position.X + x), (float)(position.Y + y)), frame, new Color(100, 100, 100, 0) * (1f - (item.alpha / 255f)), 0f, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, new Vector2((float)(position.X + x), (float)(position.Y + y)), frame, new Color(100, 100, 100, 0) * (1f - (Item.alpha / 255f)), 0f, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
 			}
 			return false;
 		}
@@ -82,7 +82,7 @@ namespace SOTS.Items.Fragments
 				{
 					float x = Main.rand.Next(-10, 11) * 0.15f;
 					float y = Main.rand.Next(-10, 11) * 0.15f;
-					Main.spriteBatch.Draw(texture, new Vector2((float)(item.Center.X - (int)Main.screenPosition.X) + x, (float)(item.Center.Y - (int)Main.screenPosition.Y) + y) + rotationAround, frame, new Color(100, 100, 100, 0) * (1f - (item.alpha / 255f)), rotation, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X) + x, (float)(Item.Center.Y - (int)Main.screenPosition.Y) + y) + rotationAround, frame, new Color(100, 100, 100, 0) * (1f - (Item.alpha / 255f)), rotation, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
 				}
 			}
 			for (int k = 0; k < 7; k++)
@@ -91,15 +91,15 @@ namespace SOTS.Items.Fragments
 				Rectangle frame = new Rectangle(0, 22 * frameNum, 22, 22);
 				float x = Main.rand.Next(-10, 11) * 0.15f;
 				float y = Main.rand.Next(-10, 11) * 0.15f;
-				Main.spriteBatch.Draw(texture, new Vector2((float)(item.Center.X - (int)Main.screenPosition.X) + x, (float)(item.Center.Y - (int)Main.screenPosition.Y) + y), frame, new Color(100, 100, 100, 0) * (1f - (item.alpha / 255f)), 0f, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X) + x, (float)(Item.Center.Y - (int)Main.screenPosition.Y) + y), frame, new Color(100, 100, 100, 0) * (1f - (Item.alpha / 255f)), 0f, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
 			}
 			return false;
 		}
 		public override void UpdateInventory(Player player)
 		{
 			AetherPlayer aetherPlayer = (AetherPlayer)player.GetModPlayer(mod, "AetherPlayer");
-			aetherPlayer.aetherNum += item.stack;
-			for (int i = 0; i < item.stack; i++)
+			aetherPlayer.aetherNum += Item.stack;
+			for (int i = 0; i < Item.stack; i++)
 			{
 				if (player.allDamage > 0f)
 				{
@@ -137,12 +137,12 @@ namespace SOTS.Items.Fragments
 		}
 		public override void SetDefaults()
 		{
-			item.width = 66;
-			item.height = 66;
-			item.value = Item.sellPrice(0, 10, 0, 0);
-			item.rare = ItemRarityID.Yellow;
-			item.maxStack = 999;
-			ItemID.Sets.ItemNoGravity[item.type] = true;
+			Item.width = 66;
+			Item.height = 66;
+			Item.value = Item.sellPrice(0, 10, 0, 0);
+			Item.rare = ItemRarityID.Yellow;
+			Item.maxStack = 999;
+			ItemID.Sets.ItemNoGravity[Item.type] = true;
 		}
 		public override void AddRecipes()
 		{
@@ -173,7 +173,7 @@ namespace SOTS.Items.Fragments
 				{
 					float x = Main.rand.Next(-10, 11) * 0.15f;
 					float y = Main.rand.Next(-10, 11) * 0.15f;
-					Main.spriteBatch.Draw(texture, new Vector2((float)(position.X + x), (float)(position.Y + y)) + rotationAround, frame2, new Color(100, 100, 100, 0) * (1f - (item.alpha / 255f)), 0f, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture, new Vector2((float)(position.X + x), (float)(position.Y + y)) + rotationAround, frame2, new Color(100, 100, 100, 0) * (1f - (Item.alpha / 255f)), 0f, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
 				}
 			}
 			frameNum = (3 + bonus) % 4;
@@ -182,7 +182,7 @@ namespace SOTS.Items.Fragments
 			{
 				float x = Main.rand.Next(-10, 11) * 0.15f;
 				float y = Main.rand.Next(-10, 11) * 0.15f;
-				Main.spriteBatch.Draw(texture, new Vector2((float)(position.X + x), (float)(position.Y + y)), frame, new Color(100, 100, 100, 0) * (1f - (item.alpha / 255f)), 0f, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, new Vector2((float)(position.X + x), (float)(position.Y + y)), frame, new Color(100, 100, 100, 0) * (1f - (Item.alpha / 255f)), 0f, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
 			}
 			return false;
 		}
@@ -203,7 +203,7 @@ namespace SOTS.Items.Fragments
 				{
 					float x = Main.rand.Next(-10, 11) * 0.15f;
 					float y = Main.rand.Next(-10, 11) * 0.15f;
-					Main.spriteBatch.Draw(texture, new Vector2((float)(item.Center.X - (int)Main.screenPosition.X) + x, (float)(item.Center.Y - (int)Main.screenPosition.Y) + y) + rotationAround, frame2, new Color(100, 100, 100, 0) * (1f - (item.alpha / 255f)), rotation, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X) + x, (float)(Item.Center.Y - (int)Main.screenPosition.Y) + y) + rotationAround, frame2, new Color(100, 100, 100, 0) * (1f - (Item.alpha / 255f)), rotation, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
 				}
 			}
 			frameNum = (3 + bonus) % 4;
@@ -212,16 +212,16 @@ namespace SOTS.Items.Fragments
 			{
 				float x = Main.rand.Next(-10, 11) * 0.15f;
 				float y = Main.rand.Next(-10, 11) * 0.15f;
-				Main.spriteBatch.Draw(texture, new Vector2((float)(item.Center.X - (int)Main.screenPosition.X) + x, (float)(item.Center.Y - (int)Main.screenPosition.Y) + y), frame, new Color(100, 100, 100, 0) * (1f - (item.alpha / 255f)), 0f, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X) + x, (float)(Item.Center.Y - (int)Main.screenPosition.Y) + y), frame, new Color(100, 100, 100, 0) * (1f - (Item.alpha / 255f)), 0f, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
 			}
 			return false;
 		}
 		public override void UpdateInventory(Player player)
 		{
 			AetherPlayer aetherPlayer = (AetherPlayer)player.GetModPlayer(mod, "AetherPlayer");
-			aetherPlayer.infernoNum += item.stack;
+			aetherPlayer.infernoNum += Item.stack;
 			VoidPlayer vPlayer = VoidPlayer.ModPlayer(player);
-			for (int i = 0; i < item.stack; i++)
+			for (int i = 0; i < Item.stack; i++)
 			{
 				if (player.statLifeMax2 > 100)
 				{

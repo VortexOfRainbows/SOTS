@@ -9,11 +9,11 @@ namespace SOTS.Items.Fragments
 	{
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.StoneWall);
-			item.width = 28;
-			item.height = 28;
-			item.rare = ItemRarityID.Blue;
-			item.createWall = ModContent.WallType<NaturePlatingWallWall>();
+			Item.CloneDefaults(ItemID.StoneWall);
+			Item.width = 28;
+			Item.height = 28;
+			Item.rare = ItemRarityID.Blue;
+			Item.createWall = ModContent.WallType<NaturePlatingWallWall>();
 		}
 		public override void AddRecipes()
 		{
@@ -43,11 +43,11 @@ namespace SOTS.Items.Fragments
 	{
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.StoneWall);
-			item.width = 28;
-			item.height = 28;
-			item.rare = ItemRarityID.Blue;
-			item.createWall = ModContent.WallType<NaturePlatingPanelWallWall>();
+			Item.CloneDefaults(ItemID.StoneWall);
+			Item.width = 28;
+			Item.height = 28;
+			Item.rare = ItemRarityID.Blue;
+			Item.createWall = ModContent.WallType<NaturePlatingPanelWallWall>();
 		}
 		public override void AddRecipes()
 		{
@@ -77,11 +77,11 @@ namespace SOTS.Items.Fragments
 	{
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.StoneWall);
-			item.width = 28;
-			item.height = 28;
-			item.rare = ItemRarityID.Blue;
-			item.createWall = ModContent.WallType<EarthenPlatingWallWall>();
+			Item.CloneDefaults(ItemID.StoneWall);
+			Item.width = 28;
+			Item.height = 28;
+			Item.rare = ItemRarityID.Blue;
+			Item.createWall = ModContent.WallType<EarthenPlatingWallWall>();
 		}
 		public override void AddRecipes()
 		{
@@ -111,11 +111,11 @@ namespace SOTS.Items.Fragments
 	{
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.StoneWall);
-			item.width = 28;
-			item.height = 28;
-			item.rare = ItemRarityID.Blue;
-			item.createWall = ModContent.WallType<EarthenPlatingPanelWallWall>();
+			Item.CloneDefaults(ItemID.StoneWall);
+			Item.width = 28;
+			Item.height = 28;
+			Item.rare = ItemRarityID.Blue;
+			Item.createWall = ModContent.WallType<EarthenPlatingPanelWallWall>();
 		}
 		public override void AddRecipes()
 		{
@@ -145,11 +145,11 @@ namespace SOTS.Items.Fragments
 	{
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.StoneWall);
-			item.width = 16;
-			item.height = 18;
-			item.rare = ItemRarityID.Blue;
-			item.createWall = ModContent.WallType<EarthenPlatingBeamWall>();
+			Item.CloneDefaults(ItemID.StoneWall);
+			Item.width = 16;
+			Item.height = 18;
+			Item.rare = ItemRarityID.Blue;
+			Item.createWall = ModContent.WallType<EarthenPlatingBeamWall>();
 		}
 		public override void AddRecipes()
 		{

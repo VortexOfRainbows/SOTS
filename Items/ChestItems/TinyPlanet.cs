@@ -17,12 +17,12 @@ namespace SOTS.Items.ChestItems
 		}
 		public override void SetDefaults()
 		{
-			item.damage = 10;
-            item.width = 34;     
-            item.height = 34;   
-            item.value = Item.sellPrice(0, 0, 75, 0);
-            item.rare = ItemRarityID.Blue;
-			item.accessory = true;
+			Item.damage = 10;
+            Item.width = 34;     
+            Item.height = 34;   
+            Item.value = Item.sellPrice(0, 0, 75, 0);
+            Item.rare = ItemRarityID.Blue;
+			Item.accessory = true;
 		}
 		public override void AddRecipes()
 		{
@@ -38,7 +38,7 @@ namespace SOTS.Items.ChestItems
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			if (Main.myPlayer == player.whoAmI)
 			{
-				int damage = (int)(item.damage * (1f + (player.allDamage - 1f)));
+				int damage = (int)(Item.damage * (1f + (player.allDamage - 1f)));
 				modPlayer.tPlanetDamage += damage;
 				modPlayer.tPlanetNum += 2;
 			}

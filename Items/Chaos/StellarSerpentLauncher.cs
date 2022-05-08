@@ -18,25 +18,25 @@ namespace SOTS.Items.Chaos
 		}
 		public override void SetDefaults()
 		{
-            item.damage = 60;   
-            item.ranged = true;   
-            item.width = 78;    
-            item.height = 26;  
-            item.useTime = 20;  
-            item.useAnimation = 20;
-            item.useStyle = ItemUseStyleID.HoldingOut;    
-            item.noMelee = true; 
-            item.knockBack = 1;
-            item.value = Item.sellPrice(0, 20, 0, 0);
-            item.rare = ItemRarityID.Yellow;
-            item.UseSound = SoundID.Item61;
-            item.autoReuse = true;
-            item.shoot = ModContent.ProjectileType<ChaosSnake>(); 
-            item.shootSpeed = 16.0f;
+            Item.damage = 60;   
+            Item.ranged = true;   
+            Item.width = 78;    
+            Item.height = 26;  
+            Item.useTime = 20;  
+            Item.useAnimation = 20;
+            Item.useStyle = ItemUseStyleID.HoldingOut;    
+            Item.noMelee = true; 
+            Item.knockBack = 1;
+            Item.value = Item.sellPrice(0, 20, 0, 0);
+            Item.rare = ItemRarityID.Yellow;
+            Item.UseSound = SoundID.Item61;
+            Item.autoReuse = true;
+            Item.shoot = ModContent.ProjectileType<ChaosSnake>(); 
+            Item.shootSpeed = 16.0f;
 			if (!Main.dedServ)
 			{
-				item.GetGlobalItem<ItemUseGlow>().glowTexture = mod.GetTexture("Items/Chaos/StellarSerpentLauncherGlow");
-				item.GetGlobalItem<ItemUseGlow>().glowOffsetX = -2;
+				Item.GetGlobalItem<ItemUseGlow>().glowTexture = mod.GetTexture("Items/Chaos/StellarSerpentLauncherGlow");
+				Item.GetGlobalItem<ItemUseGlow>().glowOffsetX = -2;
 			}
 		}
 		public override Vector2? HoldoutOffset()

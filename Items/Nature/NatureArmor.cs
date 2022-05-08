@@ -13,11 +13,11 @@ namespace SOTS.Items.Nature
 		int[] Probes = new int[] {-1, -1, -1 };
 		public override void SetDefaults()
 		{
-			item.width = 28;
-			item.height = 18;
-            item.value = Item.sellPrice(0, 0, 50, 0);
-			item.rare = ItemRarityID.Blue;
-			item.defense = 1;
+			Item.width = 28;
+			Item.height = 18;
+            Item.value = Item.sellPrice(0, 0, 50, 0);
+			Item.rare = ItemRarityID.Blue;
+			Item.defense = 1;
 		}
 		public override void DrawHair(ref bool drawHair, ref bool drawAltHair)
 		{
@@ -62,11 +62,11 @@ namespace SOTS.Items.Nature
 	{
 		public override void SetDefaults()
 		{
-			item.width = 30;
-			item.height = 18;
-			item.value = Item.sellPrice(0, 0, 40, 0);
-			item.rare = ItemRarityID.Blue;
-			item.defense = 2;
+			Item.width = 30;
+			Item.height = 18;
+			Item.value = Item.sellPrice(0, 0, 40, 0);
+			Item.rare = ItemRarityID.Blue;
+			Item.defense = 2;
 		}
 		public override void SetStaticDefaults()
 		{
@@ -97,11 +97,11 @@ namespace SOTS.Items.Nature
 	{
 		public override void SetDefaults()
 		{
-			item.width = 34;
-			item.height = 22;
-			item.value = Item.sellPrice(0, 0, 60, 0);
-			item.rare = ItemRarityID.Blue;
-			item.defense = 3;
+			Item.width = 34;
+			Item.height = 22;
+			Item.value = Item.sellPrice(0, 0, 60, 0);
+			Item.rare = ItemRarityID.Blue;
+			Item.defense = 3;
 		}
 		public override void DrawHands(ref bool drawHands, ref bool drawArms)
 		{

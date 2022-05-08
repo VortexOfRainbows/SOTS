@@ -14,11 +14,11 @@ namespace SOTS.Items.Fishing
 		}
 		public override void SetDefaults()
 		{
-			item.width = 28;
-			item.height = 28;
-            item.value = Item.sellPrice(0, 0, 5, 75);
-			item.rare = ItemRarityID.Blue;
-			item.maxStack = 99;
+			Item.width = 28;
+			Item.height = 28;
+            Item.value = Item.sellPrice(0, 0, 5, 75);
+			Item.rare = ItemRarityID.Blue;
+			Item.maxStack = 99;
 		}
 		public override void AddRecipes()
 		{

@@ -16,11 +16,11 @@ namespace SOTS.Items.CritBonus
 		}
 		public override void SetDefaults()
 		{
-            item.width = 26;     
-            item.height = 42;  
-            item.value = Item.sellPrice(0, 0, 25, 0);
-            item.rare = ItemRarityID.Green;
-			item.accessory = true;
+            Item.width = 26;     
+            Item.height = 42;  
+            Item.value = Item.sellPrice(0, 0, 25, 0);
+            Item.rare = ItemRarityID.Green;
+			Item.accessory = true;
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
@@ -46,11 +46,11 @@ namespace SOTS.Items.CritBonus
 		}
 		public override void SetDefaults()
 		{
-			item.width = 28;
-			item.height = 28;
-			item.value = Item.sellPrice(0, 0, 35, 0);
-			item.rare = ItemRarityID.Green;
-			item.accessory = true;
+			Item.width = 28;
+			Item.height = 28;
+			Item.value = Item.sellPrice(0, 0, 35, 0);
+			Item.rare = ItemRarityID.Green;
+			Item.accessory = true;
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
@@ -84,11 +84,11 @@ namespace SOTS.Items.CritBonus
 		}
 		public override void SetDefaults()
 		{
-			item.width = 28;
-			item.height = 28;
-			item.value = Item.sellPrice(0, 0, 35, 0);
-			item.rare = ItemRarityID.Green;
-			item.accessory = true;
+			Item.width = 28;
+			Item.height = 28;
+			Item.value = Item.sellPrice(0, 0, 35, 0);
+			Item.rare = ItemRarityID.Green;
+			Item.accessory = true;
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
@@ -122,12 +122,12 @@ namespace SOTS.Items.CritBonus
 		}
 		public override void SetDefaults()
 		{
-			item.width = 28;
-			item.height = 28;
-			item.value = Item.sellPrice(0, 2, 0, 0);
-			item.rare = ItemRarityID.Pink;
-			item.accessory = true;
-			item.defense = 1;
+			Item.width = 28;
+			Item.height = 28;
+			Item.value = Item.sellPrice(0, 2, 0, 0);
+			Item.rare = ItemRarityID.Pink;
+			Item.accessory = true;
+			Item.defense = 1;
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
@@ -169,12 +169,12 @@ namespace SOTS.Items.CritBonus
 		}
 		public override void SetDefaults()
 		{
-			item.width = 22;
-			item.height = 22;
-			item.value = Item.sellPrice(0, 10, 0, 0);
-			item.rare = ItemRarityID.Yellow;
-			item.accessory = true;
-			item.defense = 1;
+			Item.width = 22;
+			Item.height = 22;
+			Item.value = Item.sellPrice(0, 10, 0, 0);
+			Item.rare = ItemRarityID.Yellow;
+			Item.accessory = true;
+			Item.defense = 1;
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{

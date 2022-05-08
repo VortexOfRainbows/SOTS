@@ -15,18 +15,18 @@ namespace SOTS.Items.Permafrost
         public override void SetDefaults()
         {
             
-            item.width = 30;
-            item.height = 30;
-			item.expert = false;
-            item.useTime = 20;
-            item.useAnimation = 20;
-            item.useAnimation = 20;
-            item.useStyle = 1;
-            item.value = 80000;
-            item.rare = 9;
-            item.UseSound = SoundID.Item1;
-            item.noMelee = true;
-            item.mountType = mod.MountType("IceShield");
+            Item.width = 30;
+            Item.height = 30;
+			Item.expert = false;
+            Item.useTime = 20;
+            Item.useAnimation = 20;
+            Item.useAnimation = 20;
+            Item.useStyle = 1;
+            Item.value = 80000;
+            Item.rare = 9;
+            Item.UseSound = SoundID.Item1;
+            Item.noMelee = true;
+            Item.mountType = mod.MountType("IceShield");
         }
     }
 }

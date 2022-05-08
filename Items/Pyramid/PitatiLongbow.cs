@@ -16,22 +16,22 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void SetDefaults()
 		{
-			item.damage = 18;
-			item.ranged = true;
-			item.width = 22;
-			item.height = 62;
-			item.useTime = 24;
-			item.useAnimation = 24;
-			item.useStyle = ItemUseStyleID.HoldingOut;
-			item.knockBack = 2.5f;
-			item.value = Item.sellPrice(0, 1, 20, 0);
-			item.rare = ItemRarityID.Orange;
-			item.noMelee = true;
-			item.UseSound = SoundID.Item5;
-			item.autoReuse = false;            
-			item.shoot = ProjectileID.WoodenArrowFriendly; 
-            item.shootSpeed = 20;
-			item.useAmmo = AmmoID.Arrow;
+			Item.damage = 18;
+			Item.ranged = true;
+			Item.width = 22;
+			Item.height = 62;
+			Item.useTime = 24;
+			Item.useAnimation = 24;
+			Item.useStyle = ItemUseStyleID.HoldingOut;
+			Item.knockBack = 2.5f;
+			Item.value = Item.sellPrice(0, 1, 20, 0);
+			Item.rare = ItemRarityID.Orange;
+			Item.noMelee = true;
+			Item.UseSound = SoundID.Item5;
+			Item.autoReuse = false;            
+			Item.shoot = ProjectileID.WoodenArrowFriendly; 
+            Item.shootSpeed = 20;
+			Item.useAmmo = AmmoID.Arrow;
 		}
         public override Vector2? HoldoutOffset()
         {

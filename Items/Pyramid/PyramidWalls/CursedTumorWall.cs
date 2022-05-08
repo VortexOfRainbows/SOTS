@@ -10,11 +10,11 @@ namespace SOTS.Items.Pyramid.PyramidWalls
 	{
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.StoneWall);
-			item.width = 28;
-			item.height = 28;
-			item.rare = ItemRarityID.Blue;
-			item.createWall = ModContent.WallType<CursedTumorWallWall>();
+			Item.CloneDefaults(ItemID.StoneWall);
+			Item.width = 28;
+			Item.height = 28;
+			Item.rare = ItemRarityID.Blue;
+			Item.createWall = ModContent.WallType<CursedTumorWallWall>();
 		}
 		public override void AddRecipes()
 		{
@@ -40,11 +40,11 @@ namespace SOTS.Items.Pyramid.PyramidWalls
 		}
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.StoneWall);
-			item.width = 28;
-			item.height = 28;
-			item.rare = ItemRarityID.Red;
-			item.createWall = ModContent.WallType<UnsafeCursedTumorWallWall>();
+			Item.CloneDefaults(ItemID.StoneWall);
+			Item.width = 28;
+			Item.height = 28;
+			Item.rare = ItemRarityID.Red;
+			Item.createWall = ModContent.WallType<UnsafeCursedTumorWallWall>();
 		}
 	}
 	public class CursedTumorWallWall : ModWall

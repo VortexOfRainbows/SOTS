@@ -27,12 +27,12 @@ namespace SOTS.Items.Otherworld.Furniture
 		}
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.StoneBlock);
-			item.width = 36;
-			item.height = 40;
-			item.rare = ItemRarityID.Cyan;
-			item.value = Item.sellPrice(0, 20, 0, 0);
-			item.createTile = TileType<TransmutationAltarTile>();
+			Item.CloneDefaults(ItemID.StoneBlock);
+			Item.width = 36;
+			Item.height = 40;
+			Item.rare = ItemRarityID.Cyan;
+			Item.value = Item.sellPrice(0, 20, 0, 0);
+			Item.createTile = TileType<TransmutationAltarTile>();
 		}
 		public override void AddRecipes()
 		{
@@ -251,9 +251,9 @@ namespace SOTS.Items.Otherworld.Furniture
 			for (int k = 0; k < 50; k++)
 			{
 				Item item = player.inventory[k];
-				if (item.type == middleItemType)
+				if (Item.type == middleItemType)
 				{
-					amountHas += item.stack;
+					amountHas += Item.stack;
 				}
 			}
 			if (amountHas >= amountNeeded && entity.itemsArray[0] != 0)

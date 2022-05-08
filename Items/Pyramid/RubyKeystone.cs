@@ -16,24 +16,24 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void SetDefaults()
 		{
-			item.width = 18;
-			item.height = 42;
-			item.value = Item.sellPrice(0, 7, 50, 0);
-			item.rare = ItemRarityID.LightRed;
-			item.maxStack = 999;
-			ItemID.Sets.ItemNoGravity[item.type] = true;
-			//item.autoReuse = false;
-			//item.useAnimation = 15;
-			//item.useTime = 10;
-			//item.useStyle = 1;
-			//item.consumable = true;
-			//item.createTile = mod.TileType("RubyKeystoneTile");
+			Item.width = 18;
+			Item.height = 42;
+			Item.value = Item.sellPrice(0, 7, 50, 0);
+			Item.rare = ItemRarityID.LightRed;
+			Item.maxStack = 999;
+			ItemID.Sets.ItemNoGravity[Item.type] = true;
+			//Item.autoReuse = false;
+			//Item.useAnimation = 15;
+			//Item.useTime = 10;
+			//Item.useStyle = 1;
+			//Item.consumable = true;
+			//Item.createTile = mod.TileType("RubyKeystoneTile");
 		}
 		float positionMod = 0;
 		float counter = 0;
 		public override void PostUpdate()
 		{
-			Lighting.AddLight(item.Center, 90 / 255f, 10 / 255f, 30 / 255f);
+			Lighting.AddLight(Item.Center, 90 / 255f, 10 / 255f, 30 / 255f);
 		}
 		public override void Update(ref float gravity, ref float maxFallSpeed)
 		{
@@ -110,10 +110,10 @@ namespace SOTS.Items.Pyramid
 						break;
 				}
 				Vector2 rotationAround2 = 0.5f * new Vector2((8 + mult) * scale, 0).RotatedBy(MathHelper.ToRadians(60 * i + counter));
-				Main.spriteBatch.Draw(texture2, rotationAround2 + item.Center - Main.screenPosition + new Vector2(0, 2 + positionMod), null, color, rotation, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture2, rotationAround2 + Item.Center - Main.screenPosition + new Vector2(0, 2 + positionMod), null, color, rotation, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
 			}
 			texture2 = mod.GetTexture("Items/Pyramid/RubyKeystone");
-			Main.spriteBatch.Draw(texture2, item.Center - Main.screenPosition + new Vector2(0, 2 + positionMod), null, lightColor, rotation, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(texture2, Item.Center - Main.screenPosition + new Vector2(0, 2 + positionMod), null, lightColor, rotation, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
 			return false;
 		}
 	}

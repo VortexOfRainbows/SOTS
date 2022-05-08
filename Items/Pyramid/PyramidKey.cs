@@ -11,10 +11,10 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void SetDefaults()
 		{
-			item.width = 16;
-			item.height = 30;
-			item.maxStack = 99; 
-			item.rare = ItemRarityID.Blue;
+			Item.width = 16;
+			Item.height = 30;
+			Item.maxStack = 99; 
+			Item.rare = ItemRarityID.Blue;
 		}
 		public override void AddRecipes()
 		{

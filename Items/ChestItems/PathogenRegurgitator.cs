@@ -15,26 +15,26 @@ namespace SOTS.Items.ChestItems
         }
         public override void SetDefaults()
         {
-            item.damage = 45;
-            item.ranged = true;
-            item.width = 58;
-            item.height = 34;
-            item.useTime = 24;
-            item.useAnimation = 24;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.noMelee = true;
-            item.knockBack = 3;
-            item.value = Item.sellPrice(0, 20, 0, 0);
-            item.rare = ItemRarityID.Yellow;
-            item.UseSound = SoundID.Item34;
-            item.autoReuse = true;
-            item.shoot = ModContent.ProjectileType<Pathogen>();
-            item.shootSpeed = 15.5f;
+            Item.damage = 45;
+            Item.ranged = true;
+            Item.width = 58;
+            Item.height = 34;
+            Item.useTime = 24;
+            Item.useAnimation = 24;
+            Item.useStyle = ItemUseStyleID.HoldingOut;
+            Item.noMelee = true;
+            Item.knockBack = 3;
+            Item.value = Item.sellPrice(0, 20, 0, 0);
+            Item.rare = ItemRarityID.Yellow;
+            Item.UseSound = SoundID.Item34;
+            Item.autoReuse = true;
+            Item.shoot = ModContent.ProjectileType<Pathogen>();
+            Item.shootSpeed = 15.5f;
             if (!Main.dedServ)
             {
-                item.GetGlobalItem<ItemUseGlow>().glowTexture = mod.GetTexture("Items/ChestItems/PathogenRegurgitator_Glow");
-                item.GetGlobalItem<ItemUseGlow>().glowOffsetX = (int)((Vector2)HoldoutOffset()).X;
-                item.GetGlobalItem<ItemUseGlow>().glowOffsetY = (int)((Vector2)HoldoutOffset()).Y;
+                Item.GetGlobalItem<ItemUseGlow>().glowTexture = mod.GetTexture("Items/ChestItems/PathogenRegurgitator_Glow");
+                Item.GetGlobalItem<ItemUseGlow>().glowOffsetX = (int)((Vector2)HoldoutOffset()).X;
+                Item.GetGlobalItem<ItemUseGlow>().glowOffsetY = (int)((Vector2)HoldoutOffset()).Y;
             }
         }
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

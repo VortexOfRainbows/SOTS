@@ -14,11 +14,11 @@ namespace SOTS.Items.CritBonus
 		}
 		public override void SetDefaults()
 		{
-            item.width = 44;     
-            item.height = 42;     
-            item.value = Item.sellPrice(0, 7, 25, 0);
-            item.rare = ItemRarityID.Yellow;
-			item.accessory = true;
+            Item.width = 44;     
+            Item.height = 42;     
+            Item.value = Item.sellPrice(0, 7, 25, 0);
+            Item.rare = ItemRarityID.Yellow;
+			Item.accessory = true;
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{

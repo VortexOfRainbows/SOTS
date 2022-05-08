@@ -14,22 +14,22 @@ namespace SOTS.Items.Slime
         }
         public override void SetDefaults()
         {
-            item.damage = 10;
-            item.ranged = true;
-            item.width = 44;
-            item.height = 24;
-            item.useTime = 30;
-            item.useAnimation = 30;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.noMelee = true;
-            item.knockBack = 0;
-            item.value = Item.sellPrice(0, 0, 10, 0);
-            item.rare = ItemRarityID.Blue;
-            item.UseSound = SoundID.Item20;
-            item.autoReuse = true;
-            item.shoot = ProjectileID.Flames;
-            item.shootSpeed = 5.5f;
-            item.useAmmo = 23; 
+            Item.damage = 10;
+            Item.ranged = true;
+            Item.width = 44;
+            Item.height = 24;
+            Item.useTime = 30;
+            Item.useAnimation = 30;
+            Item.useStyle = ItemUseStyleID.HoldingOut;
+            Item.noMelee = true;
+            Item.knockBack = 0;
+            Item.value = Item.sellPrice(0, 0, 10, 0);
+            Item.rare = ItemRarityID.Blue;
+            Item.UseSound = SoundID.Item20;
+            Item.autoReuse = true;
+            Item.shoot = ProjectileID.Flames;
+            Item.shootSpeed = 5.5f;
+            Item.useAmmo = 23; 
         }
         public override Vector2? HoldoutOffset()
         {

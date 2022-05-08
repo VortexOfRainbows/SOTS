@@ -9,11 +9,11 @@ namespace SOTS.Items.Permafrost
 	{
 		public override void SetDefaults()
 		{
-			item.width = 34;
-			item.height = 22;
-            item.value = Item.sellPrice(0, 1, 40, 0);
-			item.rare = ItemRarityID.Green;
-			item.defense = 10;
+			Item.width = 34;
+			Item.height = 22;
+            Item.value = Item.sellPrice(0, 1, 40, 0);
+			Item.rare = ItemRarityID.Green;
+			Item.defense = 10;
 		}
 		public override void SetStaticDefaults()
 		{

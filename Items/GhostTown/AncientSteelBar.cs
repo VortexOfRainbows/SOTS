@@ -13,14 +13,14 @@ namespace SOTS.Items.GhostTown
 		}
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.IronBar);
-			item.width = 30;
-			item.height = 24;
-            item.value = Item.sellPrice(0, 0, 5, 0);
-			item.rare = ItemRarityID.Blue;
-			item.maxStack = 99;
-			item.placeStyle = 11;
-			item.createTile = ModContent.TileType<TheBars>();
+			Item.CloneDefaults(ItemID.IronBar);
+			Item.width = 30;
+			Item.height = 24;
+            Item.value = Item.sellPrice(0, 0, 5, 0);
+			Item.rare = ItemRarityID.Blue;
+			Item.maxStack = 99;
+			Item.placeStyle = 11;
+			Item.createTile = ModContent.TileType<TheBars>();
 		}
 	}
 }

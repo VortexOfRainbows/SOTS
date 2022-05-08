@@ -13,13 +13,13 @@ namespace SOTS.Items.SoldStuff
 		}
 		public override void SetDefaults()
 		{
-            item.width = 60;     
-            item.height = 22;   
-            item.value = Item.buyPrice(15, 0, 0, 0);
-            item.rare = ItemRarityID.Red;
-			item.accessory = true;
-			item.defense = 69696969;
-			item.expert = true;
+            Item.width = 60;     
+            Item.height = 22;   
+            Item.value = Item.buyPrice(15, 0, 0, 0);
+            Item.rare = ItemRarityID.Red;
+			Item.accessory = true;
+			Item.defense = 69696969;
+			Item.expert = true;
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{

@@ -14,22 +14,22 @@ namespace SOTS.Items
 		}
         public override void SafeSetDefaults()
         {
-            item.damage = 21;
-            item.width = 32;
-            item.height = 34;
-            item.value = Item.sellPrice(0, 1, 20, 0);
-            item.rare = ItemRarityID.Pink;
-            item.noMelee = true;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.useAnimation = 40;
-            item.useTime = 40;
-            item.knockBack = 4.5f;
-            item.noUseGraphic = true; 
-            item.shoot = ModContent.ProjectileType<Projectiles.HungryHunter>();
-            item.shootSpeed = 21.5f;
-            item.UseSound = SoundID.Item1;
-            item.melee = true; 
-            item.channel = true;
+            Item.damage = 21;
+            Item.width = 32;
+            Item.height = 34;
+            Item.value = Item.sellPrice(0, 1, 20, 0);
+            Item.rare = ItemRarityID.Pink;
+            Item.noMelee = true;
+            Item.useStyle = ItemUseStyleID.HoldingOut;
+            Item.useAnimation = 40;
+            Item.useTime = 40;
+            Item.knockBack = 4.5f;
+            Item.noUseGraphic = true; 
+            Item.shoot = ModContent.ProjectileType<Projectiles.HungryHunter>();
+            Item.shootSpeed = 21.5f;
+            Item.UseSound = SoundID.Item1;
+            Item.melee = true; 
+            Item.channel = true;
         }
 		public override int GetVoid(Player player)
 		{

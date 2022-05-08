@@ -14,19 +14,19 @@ namespace SOTS.Items.SoldStuff
 		}
 		public override void SetDefaults()
 		{
-			item.damage = 11;
-			item.ranged = true;
-			item.width = 14;
-			item.height = 30;
-			item.maxStack = 999;
-			item.consumable = true;           
-			item.knockBack = 1f;
-			item.value = Item.buyPrice(0, 0, 1, 50);
-			item.rare = ItemRarityID.Pink;
-			item.shoot = ModContent.ProjectileType<Projectiles.BoreBullet>(); 
-			item.shootSpeed = 0.5f;             
-			item.ammo = AmmoID.Bullet;   
-            item.UseSound = SoundID.Item23;
+			Item.damage = 11;
+			Item.ranged = true;
+			Item.width = 14;
+			Item.height = 30;
+			Item.maxStack = 999;
+			Item.consumable = true;           
+			Item.knockBack = 1f;
+			Item.value = Item.buyPrice(0, 0, 1, 50);
+			Item.rare = ItemRarityID.Pink;
+			Item.shoot = ModContent.ProjectileType<Projectiles.BoreBullet>(); 
+			Item.shootSpeed = 0.5f;             
+			Item.ammo = AmmoID.Bullet;   
+            Item.UseSound = SoundID.Item23;
 		}
 		public override void AddRecipes()
 		{

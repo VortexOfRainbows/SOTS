@@ -17,21 +17,21 @@ namespace SOTS.Items.Nature
 		}
 		public override void SetDefaults()
 		{
-            item.damage = 13; 
-            item.magic = true; 
-            item.width = 42;   
-            item.height = 46;   
-            item.useTime = 39;   
-            item.useAnimation = 39;
-            item.useStyle = ItemUseStyleID.HoldingOut;    
-            item.noMelee = true;  
-            item.knockBack = 3.25f;
-            item.value = Item.sellPrice(0, 2, 0, 0);
-            item.rare = ItemRarityID.Pink;
-            item.UseSound = SoundID.Item8;
-            item.shoot = ModContent.ProjectileType<AcornOfJustice>(); 
-            item.shootSpeed = 15.5f;
-			item.mana = 15;
+            Item.damage = 13; 
+            Item.magic = true; 
+            Item.width = 42;   
+            Item.height = 46;   
+            Item.useTime = 39;   
+            Item.useAnimation = 39;
+            Item.useStyle = ItemUseStyleID.HoldingOut;    
+            Item.noMelee = true;  
+            Item.knockBack = 3.25f;
+            Item.value = Item.sellPrice(0, 2, 0, 0);
+            Item.rare = ItemRarityID.Pink;
+            Item.UseSound = SoundID.Item8;
+            Item.shoot = ModContent.ProjectileType<AcornOfJustice>(); 
+            Item.shootSpeed = 15.5f;
+			Item.mana = 15;
 		}
         public override Vector2? HoldoutOffset()
         {

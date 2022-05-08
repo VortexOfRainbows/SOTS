@@ -16,32 +16,32 @@ namespace SOTS.Items.Celestial
 		{
 			DisplayName.SetDefault("Lemegeton");
 			Tooltip.SetDefault("Summons a horde of Wisps to defend you from nearby enemies\nRed wisps will attack closer enemies and steal life for 100% damage\nGreen wisps will fire short-ranged blasts for 200% damage\nPurple wisps launch a cluster of homing bolts for 75% damage each");
-			ItemID.Sets.GamepadWholeScreenUseRange[item.type] = true; 
-			ItemID.Sets.LockOnIgnoresCollision[item.type] = true;
+			ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true; 
+			ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;
 		}
 		public override void SafeSetDefaults()
 		{
-			item.damage = 62;
-			item.knockBack = 2.5f;
-			item.width = 24;
-			item.height = 34;
-			item.useTime = 16;
-			item.useAnimation = 16;
-			item.useStyle = ItemUseStyleID.HoldingUp;
-			item.value = Item.sellPrice(0, 15, 0, 0);
-			item.rare = ItemRarityID.Yellow;
-			item.UseSound = SoundID.Item44;
-			item.noMelee = true;
-			item.summon = true;
-			item.buffType = ModContent.BuffType<InfernalDefense>();
-			item.shoot = ModContent.ProjectileType<LemegetonWispRed>();
+			Item.damage = 62;
+			Item.knockBack = 2.5f;
+			Item.width = 24;
+			Item.height = 34;
+			Item.useTime = 16;
+			Item.useAnimation = 16;
+			Item.useStyle = ItemUseStyleID.HoldingUp;
+			Item.value = Item.sellPrice(0, 15, 0, 0);
+			Item.rare = ItemRarityID.Yellow;
+			Item.UseSound = SoundID.Item44;
+			Item.noMelee = true;
+			Item.summon = true;
+			Item.buffType = ModContent.BuffType<InfernalDefense>();
+			Item.shoot = ModContent.ProjectileType<LemegetonWispRed>();
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
 			Projectile.NewProjectile(position, new Vector2(speedX, speedY), ModContent.ProjectileType<LemegetonWispRed>(), damage, knockBack, player.whoAmI);
 			Projectile.NewProjectile(position, new Vector2(speedX, speedY), ModContent.ProjectileType<LemegetonWispGreen>(), (int)(damage * 2.00f), knockBack, player.whoAmI);
 			Projectile.NewProjectile(position, new Vector2(speedX, speedY), ModContent.ProjectileType<LemegetonWispPurple>(), (int)(damage * 0.75f), knockBack, player.whoAmI);
-			player.AddBuff(item.buffType, 2);
+			player.AddBuff(Item.buffType, 2);
 			return false;
 		}
 		public override void AddRecipes()

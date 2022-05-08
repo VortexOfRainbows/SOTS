@@ -23,38 +23,38 @@ namespace SOTS.Items.Potions
 				float y = Main.rand.Next(-10, 11) * 0.15f;
 				Main.spriteBatch.Draw(texture,
 				new Vector2(position.X + x, position.Y + y),
-				null, color * (1f - (item.alpha / 255f)), 0f, origin, scale, SpriteEffects.None, 0f);
+				null, color * (1f - (Item.alpha / 255f)), 0f, origin, scale, SpriteEffects.None, 0f);
 			}
 		}
 		public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
 		{
 			Texture2D texture = mod.GetTexture("Items/Potions/StarlightTonicEffect");
 			Color color = new Color(100, 100, 100, 0);
-			Vector2 drawOrigin = new Vector2(Main.itemTexture[item.type].Width * 0.5f, item.height * 0.5f);
+			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
 			for (int k = 0; k < 1; k++)
 			{
 				float x = Main.rand.Next(-10, 11) * 0.15f;
 				float y = Main.rand.Next(-10, 11) * 0.15f;
 				Main.spriteBatch.Draw(texture,
-				new Vector2((float)(item.Center.X - (int)Main.screenPosition.X) + x, (float)(item.Center.Y - (int)Main.screenPosition.Y) + y + 2),
-				null, color * (1f - (item.alpha / 255f)), rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+				new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X) + x, (float)(Item.Center.Y - (int)Main.screenPosition.Y) + y + 2),
+				null, color * (1f - (Item.alpha / 255f)), rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			}
 		}
 		public override void SetDefaults()
 		{
-			item.width = 16;
-			item.height = 32;
-            item.value = Item.sellPrice(0, 1, 0, 0);
-			item.rare = 3;
-			item.maxStack = 30;
-            item.UseSound = SoundID.Item3;            
-            item.useStyle = 2;        
-            item.useTurn = true;
-            item.useAnimation = 16;
-            item.useTime = 16;
-            item.consumable = true;     
-			item.buffType = BuffID.VortexDebuff;
-            item.buffTime = 60;
+			Item.width = 16;
+			Item.height = 32;
+            Item.value = Item.sellPrice(0, 1, 0, 0);
+			Item.rare = 3;
+			Item.maxStack = 30;
+            Item.UseSound = SoundID.Item3;            
+            Item.useStyle = 2;        
+            Item.useTurn = true;
+            Item.useAnimation = 16;
+            Item.useTime = 16;
+            Item.consumable = true;     
+			Item.buffType = BuffID.VortexDebuff;
+            Item.buffTime = 60;
 		}
 		public override bool ConsumeItem(Player player) 
 		{

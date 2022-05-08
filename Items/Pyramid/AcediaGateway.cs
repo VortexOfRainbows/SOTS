@@ -19,18 +19,18 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void SetDefaults()
 		{
-			item.width = 74;
-			item.height = 66;
-			item.maxStack = 999;
-			item.useTurn = true;
-			item.autoReuse = true;
-			item.useAnimation = 15;
-			item.useTime = 10;
-			item.useStyle = 1;
-			item.rare = ItemRarityID.Purple;
-			item.value = Item.sellPrice(0, 1, 0, 0);
-			item.consumable = true;
-			item.createTile = mod.TileType("AcediaGatewayTile");
+			Item.width = 74;
+			Item.height = 66;
+			Item.maxStack = 999;
+			Item.useTurn = true;
+			Item.autoReuse = true;
+			Item.useAnimation = 15;
+			Item.useTime = 10;
+			Item.useStyle = 1;
+			Item.rare = ItemRarityID.Purple;
+			Item.value = Item.sellPrice(0, 1, 0, 0);
+			Item.consumable = true;
+			Item.createTile = mod.TileType("AcediaGatewayTile");
 		}
 	}	
 	public class AcediaGatewayTile : ModTile

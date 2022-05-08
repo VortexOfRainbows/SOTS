@@ -19,19 +19,19 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override void SetDefaults()
 		{
-			item.maxStack = 1;
-            item.width = 34;     
-            item.height = 26;
-            item.value = Item.sellPrice(0, 3, 75, 0);
-			item.rare = ItemRarityID.LightPurple;
-			item.accessory = true;
+			Item.maxStack = 1;
+            Item.width = 34;     
+            Item.height = 26;
+            Item.value = Item.sellPrice(0, 3, 75, 0);
+			Item.rare = ItemRarityID.LightPurple;
+			Item.accessory = true;
 		}
         public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
 		{
 			Texture2D texture = mod.GetTexture("Items/Otherworld/FromChests/StarbeltGlow");
 			Color color = Color.White;
-			Vector2 drawOrigin = new Vector2(Main.itemTexture[item.type].Width * 0.5f, item.height * 0.5f);
-			Main.spriteBatch.Draw(texture, new Vector2((float)(item.Center.X - (int)Main.screenPosition.X), (float)(item.Center.Y - (int)Main.screenPosition.Y) + 2), null, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
+			Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y) + 2), null, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{

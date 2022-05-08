@@ -17,26 +17,26 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override void SafeSetDefaults()
 		{
-            item.damage = 36;
-            item.magic = true;
-            item.width = 40;
-            item.height = 40;
-            item.useTime = 10; 
-            item.useAnimation = 30;
-            item.useStyle = 5;    
-            item.noMelee = true;
-			item.knockBack = 2f;
-			item.value = Item.sellPrice(0, 3, 80, 0);
-			item.rare = ItemRarityID.LightPurple;
-			item.UseSound = SoundID.Item8;
-            item.autoReuse = true;
-            item.shoot = mod.ProjectileType("MacaroniMoon");
-            item.shootSpeed = 4.25f;
+            Item.damage = 36;
+            Item.magic = true;
+            Item.width = 40;
+            Item.height = 40;
+            Item.useTime = 10; 
+            Item.useAnimation = 30;
+            Item.useStyle = 5;    
+            Item.noMelee = true;
+			Item.knockBack = 2f;
+			Item.value = Item.sellPrice(0, 3, 80, 0);
+			Item.rare = ItemRarityID.LightPurple;
+			Item.UseSound = SoundID.Item8;
+            Item.autoReuse = true;
+            Item.shoot = mod.ProjectileType("MacaroniMoon");
+            Item.shootSpeed = 4.25f;
 			if (!Main.dedServ)
 			{
-				item.GetGlobalItem<ItemUseGlow>().glowTexture = mod.GetTexture("Items/Otherworld/FromChests/CrescentStaffGlow");
+				Item.GetGlobalItem<ItemUseGlow>().glowTexture = mod.GetTexture("Items/Otherworld/FromChests/CrescentStaffGlow");
 			}
-			Item.staff[item.type] = true;
+			Item.staff[Item.type] = true;
 		}
 		int projectileNum = 0;
 		int highestProjectileNum = 0;
@@ -49,8 +49,8 @@ namespace SOTS.Items.Otherworld.FromChests
 		{
 			Texture2D texture = mod.GetTexture("Items/Otherworld/FromChests/CrescentStaffGlow");
 			Color color = Color.White;
-			Vector2 drawOrigin = new Vector2(Main.itemTexture[item.type].Width * 0.5f, item.height * 0.5f);
-			Main.spriteBatch.Draw(texture, new Vector2((float)(item.Center.X - (int)Main.screenPosition.X), (float)(item.Center.Y - (int)Main.screenPosition.Y) + 2), null, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
+			Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y) + 2), null, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			base.PostDrawInWorld(spriteBatch, lightColor, alphaColor, rotation, scale, whoAmI);
         }
         public override int GetVoid(Player player)

@@ -17,27 +17,27 @@ namespace SOTS.Items.Chaos
 		}
 		public override void SetDefaults()
 		{
-            item.damage = 53;   
-            item.magic = true;   
-            item.width = 102;    
-            item.height = 34;  
-            item.useTime = 6;  
-            item.useAnimation = 6;
-            item.useStyle = ItemUseStyleID.HoldingOut;    
-            item.noMelee = true; 
-            item.knockBack = 3.5f;
-            item.value = Item.sellPrice(0, 20, 0, 0);
-            item.rare = ItemRarityID.Yellow;
-            item.UseSound = SoundID.Item91;
-            item.autoReuse = true;
-            item.shoot = ModContent.ProjectileType<StarLaser>(); 
-            item.shootSpeed = 9f;
-			item.mana = 3;
+            Item.damage = 53;   
+            Item.magic = true;   
+            Item.width = 102;    
+            Item.height = 34;  
+            Item.useTime = 6;  
+            Item.useAnimation = 6;
+            Item.useStyle = ItemUseStyleID.HoldingOut;    
+            Item.noMelee = true; 
+            Item.knockBack = 3.5f;
+            Item.value = Item.sellPrice(0, 20, 0, 0);
+            Item.rare = ItemRarityID.Yellow;
+            Item.UseSound = SoundID.Item91;
+            Item.autoReuse = true;
+            Item.shoot = ModContent.ProjectileType<StarLaser>(); 
+            Item.shootSpeed = 9f;
+			Item.mana = 3;
 			if (!Main.dedServ)
 			{
-				item.GetGlobalItem<ItemUseGlow>().glowTexture = mod.GetTexture("Items/Chaos/StellarShotGlow");
-				item.GetGlobalItem<ItemUseGlow>().glowOffsetX = -32;
-				item.GetGlobalItem<ItemUseGlow>().glowOffsetY = 2;
+				Item.GetGlobalItem<ItemUseGlow>().glowTexture = mod.GetTexture("Items/Chaos/StellarShotGlow");
+				Item.GetGlobalItem<ItemUseGlow>().glowOffsetX = -32;
+				Item.GetGlobalItem<ItemUseGlow>().glowOffsetY = 2;
 			}
 		}
 		public override Vector2? HoldoutOffset()

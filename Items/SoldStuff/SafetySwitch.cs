@@ -14,12 +14,12 @@ namespace SOTS.Items.SoldStuff
 		}
 		public override void SetDefaults()
 		{
-			item.maxStack = 1;
-            item.width = 28;     
-            item.height = 26;   
-            item.value = Item.buyPrice(0, 5, 0, 0);
-            item.rare = ItemRarityID.Blue;
-			item.accessory = true;
+			Item.maxStack = 1;
+            Item.width = 28;     
+            Item.height = 26;   
+            Item.value = Item.buyPrice(0, 5, 0, 0);
+            Item.rare = ItemRarityID.Blue;
+			Item.accessory = true;
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{

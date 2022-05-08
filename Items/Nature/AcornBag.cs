@@ -15,30 +15,30 @@ namespace SOTS.Items.Nature
 		{
 			DisplayName.SetDefault("Acorn Bag");
 			Tooltip.SetDefault("Summons a squirrel to fight for you");
-			ItemID.Sets.GamepadWholeScreenUseRange[item.type] = true; 
-			ItemID.Sets.LockOnIgnoresCollision[item.type] = true;
+			ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true; 
+			ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;
 		}
 		public override void SetDefaults() 
 		{
-			item.damage = 6;
-			item.knockBack = 2f;
-			item.mana = 9;
-			item.width = 24;
-			item.height = 32;
-			item.useTime = 36;
-			item.useAnimation = 36;
-			item.useStyle = ItemUseStyleID.SwingThrow;
-			item.value = Item.sellPrice(0, 0, 20, 0);
-			item.rare = ItemRarityID.Blue;
-			item.UseSound = SoundID.Item44;
-			item.noMelee = true;
-			item.summon = true;
-			item.buffType = ModContent.BuffType<SquirrelBuff>();
-			item.shoot = ModContent.ProjectileType<SquirrelMinion>();
+			Item.damage = 6;
+			Item.knockBack = 2f;
+			Item.mana = 9;
+			Item.width = 24;
+			Item.height = 32;
+			Item.useTime = 36;
+			Item.useAnimation = 36;
+			Item.useStyle = ItemUseStyleID.SwingThrow;
+			Item.value = Item.sellPrice(0, 0, 20, 0);
+			Item.rare = ItemRarityID.Blue;
+			Item.UseSound = SoundID.Item44;
+			Item.noMelee = true;
+			Item.summon = true;
+			Item.buffType = ModContent.BuffType<SquirrelBuff>();
+			Item.shoot = ModContent.ProjectileType<SquirrelMinion>();
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) 
 		{
-			player.AddBuff(item.buffType, 2);
+			player.AddBuff(Item.buffType, 2);
 			position = Main.MouseWorld;
 			return true;
 		}

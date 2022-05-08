@@ -16,19 +16,19 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
 		}
 		public override void SetDefaults()
 		{
-			item.width = 24;
-			item.height = 22;
-			item.maxStack = 999;
-			item.useTurn = true;
-			item.autoReuse = true;
-			item.useAnimation = 15;
-			item.useTime = 10;
-			item.useStyle = ItemUseStyleID.SwingThrow;
-			item.rare = ItemRarityID.LightRed;
-			item.value = 0;
-			item.consumable = true;
-			item.createTile = ModContent.TileType<PyramidAmbientTile1x1>();
-			item.placeStyle = 0;
+			Item.width = 24;
+			Item.height = 22;
+			Item.maxStack = 999;
+			Item.useTurn = true;
+			Item.autoReuse = true;
+			Item.useAnimation = 15;
+			Item.useTime = 10;
+			Item.useStyle = ItemUseStyleID.SwingThrow;
+			Item.rare = ItemRarityID.LightRed;
+			Item.value = 0;
+			Item.consumable = true;
+			Item.createTile = ModContent.TileType<PyramidAmbientTile1x1>();
+			Item.placeStyle = 0;
 		}
 		int type = 0;
         public override bool UseItem(Player player)
@@ -36,31 +36,31 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
 			int modU = type % 7;
 			if(modU == 0)
 			{
-				item.createTile = ModContent.TileType<PyramidAmbientTile1x1>();
+				Item.createTile = ModContent.TileType<PyramidAmbientTile1x1>();
 			}
 			else if (modU == 1)
 			{
-				item.createTile = ModContent.TileType<PyramidAmbientTile1x1Curse>();
+				Item.createTile = ModContent.TileType<PyramidAmbientTile1x1Curse>();
 			}
 			else if (modU == 2)
 			{
-				item.createTile = ModContent.TileType<PyramidAmbientTile2x1Curse>();
+				Item.createTile = ModContent.TileType<PyramidAmbientTile2x1Curse>();
 			}
 			else if (modU == 3)
 			{
-				item.createTile = ModContent.TileType<PyramidAmbientTile2x1Curse>();
+				Item.createTile = ModContent.TileType<PyramidAmbientTile2x1Curse>();
 			}
 			else if (modU == 4)
 			{
-				item.createTile = ModContent.TileType<PyramidAmbientTile2x2>();
+				Item.createTile = ModContent.TileType<PyramidAmbientTile2x2>();
 			}
 			else if (modU == 5)
 			{
-				item.createTile = ModContent.TileType<PyramidAmbientTile3x1Curse>();
+				Item.createTile = ModContent.TileType<PyramidAmbientTile3x1Curse>();
 			}
 			else if (modU == 6)
 			{
-				item.createTile = ModContent.TileType<PyramidAmbientTile3x2Curse>();
+				Item.createTile = ModContent.TileType<PyramidAmbientTile3x2Curse>();
 			}
 			type++;
 			return base.UseItem(player);

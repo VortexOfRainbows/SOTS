@@ -164,7 +164,7 @@ namespace SOTS.Projectiles.Laser
 				{
 					Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, ModContent.ProjectileType<FriendlyPinkLaser>(), projectile.damage, 1f, projectile.owner, projectile.Center.X + shootToX * 60, projectile.Center.Y + shootToY * 60);
 					Item item = player.HeldItem;
-					VoidItem vItem = item.modItem as VoidItem;
+					VoidItem vItem = Item.modItem as VoidItem;
 					if (vItem != null)
 						vItem.DrainMana(player);
 				}

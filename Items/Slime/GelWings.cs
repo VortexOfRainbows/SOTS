@@ -19,11 +19,11 @@ namespace SOTS.Items.Slime
 		}
 		public override void SetDefaults()
 		{
-			item.width = 38;
-			item.height = 40;
-            item.value = Item.sellPrice(0, 1, 50, 0);
-			item.rare = ItemRarityID.LightRed;
-			item.accessory = true;
+			Item.width = 38;
+			Item.height = 40;
+            Item.value = Item.sellPrice(0, 1, 50, 0);
+			Item.rare = ItemRarityID.LightRed;
+			Item.accessory = true;
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{

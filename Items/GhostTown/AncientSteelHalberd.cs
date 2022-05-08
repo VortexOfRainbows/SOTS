@@ -17,22 +17,22 @@ namespace SOTS.Items.GhostTown
 		}
 		public override void SetDefaults()
 		{
-			item.damage = 6;
-			item.melee = true;
-			item.width = 66;
-			item.height = 66;
-			item.useTime = 20;
-			item.useAnimation = 20;
-			item.useStyle = ItemUseStyleID.HoldingOut;
-			item.knockBack = 1.6f;
-            item.value = Item.sellPrice(0, 0, 60, 0);
-			item.rare = ItemRarityID.Blue;
-			item.UseSound = SoundID.DD2_GhastlyGlaivePierce;
-			item.autoReuse = true;            
-			item.shoot = ModContent.ProjectileType<Projectiles.Evil.AncientSteelHalberd>(); 
-            item.shootSpeed = 6.2f;
-			item.noUseGraphic = true;
-			item.noMelee = true;
+			Item.damage = 6;
+			Item.melee = true;
+			Item.width = 66;
+			Item.height = 66;
+			Item.useTime = 20;
+			Item.useAnimation = 20;
+			Item.useStyle = ItemUseStyleID.HoldingOut;
+			Item.knockBack = 1.6f;
+            Item.value = Item.sellPrice(0, 0, 60, 0);
+			Item.rare = ItemRarityID.Blue;
+			Item.UseSound = SoundID.DD2_GhastlyGlaivePierce;
+			Item.autoReuse = true;            
+			Item.shoot = ModContent.ProjectileType<Projectiles.Evil.AncientSteelHalberd>(); 
+            Item.shootSpeed = 6.2f;
+			Item.noUseGraphic = true;
+			Item.noMelee = true;
 		}
         public override void GetWeaponCrit(Player player, ref int crit)
         {
@@ -41,7 +41,7 @@ namespace SOTS.Items.GhostTown
         }
         public override bool CanUseItem(Player player)
         {
-			return player.ownedProjectileCounts[item.shoot] < 1;
+			return player.ownedProjectileCounts[Item.shoot] < 1;
 		}
 		public override void AddRecipes()
 		{
@@ -54,7 +54,7 @@ namespace SOTS.Items.GhostTown
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-			Projectile.NewProjectile(position, new Vector2(speedX, speedY), type, damage, knockBack, player.whoAmI, (int)(item.useTime / SOTSPlayer.ModPlayer(player).attackSpeedMod));
+			Projectile.NewProjectile(position, new Vector2(speedX, speedY), type, damage, knockBack, player.whoAmI, (int)(Item.useTime / SOTSPlayer.ModPlayer(player).attackSpeedMod));
 			return false; 
 		}
     }

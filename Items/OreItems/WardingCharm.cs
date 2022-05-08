@@ -13,13 +13,13 @@ namespace SOTS.Items.OreItems
 		}
 		public override void SetDefaults()
 		{
-			item.width = 18;
-			item.height = 30;
-            item.value = Item.sellPrice(0, 0, 35, 0);
-			item.rare = 1;
-			item.maxStack = 1;
-			item.accessory = true;
-			item.defense = 1;
+			Item.width = 18;
+			Item.height = 30;
+            Item.value = Item.sellPrice(0, 0, 35, 0);
+			Item.rare = 1;
+			Item.maxStack = 1;
+			Item.accessory = true;
+			Item.defense = 1;
 		}
 		public override void AddRecipes()
 		{

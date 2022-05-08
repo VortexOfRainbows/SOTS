@@ -21,12 +21,12 @@ namespace SOTS.Items.Celestial
 		}
 		public override void SetDefaults()
 		{
-            item.width = 40;     
-            item.height = 50;   
-            item.value = Item.sellPrice(0, 20, 0, 0);
-			item.rare = ItemRarityID.Red;
-			item.accessory = true;
-			item.expert = true;
+            Item.width = 40;     
+            Item.height = 50;   
+            Item.value = Item.sellPrice(0, 20, 0, 0);
+			Item.rare = ItemRarityID.Red;
+			Item.accessory = true;
+			Item.expert = true;
 		}
         bool accessory = true;
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -44,7 +44,7 @@ namespace SOTS.Items.Celestial
         {
             Player player = Main.LocalPlayer;
             SubspacePlayer modPlayer = SubspacePlayer.ModPlayer(player);
-            Texture2D texture = Main.itemTexture[item.type];
+            Texture2D texture = Main.itemTexture[Item.type];
             if(itemTextureOutline == null)
             {
                 Color[] data = SubspaceServant.Greenify(texture, new Color(0, 255, 0));
@@ -70,13 +70,13 @@ namespace SOTS.Items.Celestial
             if(player.inventory[49] == item)
             {
                 SubspacePlayer modPlayer = SubspacePlayer.ModPlayer(player);
-                Texture2D texture = Main.itemTexture[item.type];
-                if (itemID != item.type || itemTextureOutline == null)
+                Texture2D texture = Main.itemTexture[Item.type];
+                if (itemID != Item.type || itemTextureOutline == null)
                 {
                     Color[] data = SubspaceServant.Greenify(texture, new Color(0, 255, 0));
                     itemTextureOutline = new Texture2D(Main.graphics.GraphicsDevice, texture.Width, texture.Height);
                     itemTextureOutline.SetData(0, null, data, 0, texture.Width * texture.Height);
-                    itemID = item.type;
+                    itemID = Item.type;
                 }
                 if (modPlayer.foundItem)
                     for (int i = 0; i < 4; i++)
@@ -133,12 +133,12 @@ namespace SOTS.Items.Celestial
             for (int i = 9 + player.extraAccessorySlots; i < player.armor.Length; i++) //checking vanity slots
             {
                 Item item = player.armor[i];
-                if (item.type == ModContent.ItemType<SubspaceLocket>())
+                if (Item.type == ModContent.ItemType<SubspaceLocket>())
                 {
                     servantActive = true;
                     servantIsVanity = true;
                 }
-                //if (item.type == ModContent.ItemType<SubspaceLocket>())
+                //if (Item.type == ModContent.ItemType<SubspaceLocket>())
                 //{
                 //    SubspacePlayer.ModPlayer(player).subspaceServantShader = GameShaders.Armor.GetShaderIdFromItemId(player.dye[i].type);
                 //}
@@ -146,7 +146,7 @@ namespace SOTS.Items.Celestial
             //for (int i = 0; i < 10; i++) //iterating through armor + accessories
             //{
             //    Item item = player.armor[i];
-            //    if (item.type == ModContent.ItemType<SubspaceLocket>())
+            //    if (Item.type == ModContent.ItemType<SubspaceLocket>())
             //    {
             //        SubspacePlayer.ModPlayer(player).subspaceServantShader = GameShaders.Armor.GetShaderIdFromItemId(player.dye[i].type);
             //    }

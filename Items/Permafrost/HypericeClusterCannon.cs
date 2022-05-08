@@ -14,22 +14,22 @@ namespace SOTS.Items.Permafrost
 		}
 		public override void SetDefaults()
 		{
-            item.damage = 30;
-            item.ranged = true;
-            item.width = 64;
-            item.height = 24;
-            item.useTime = 26; 
-            item.useAnimation = 26;
-            item.useStyle = 5;    
-            item.noMelee = true;
-			item.knockBack = 1f;  
-            item.value = Item.sellPrice(0, 8, 0, 0);
-            item.rare = 7;
-            item.UseSound = SoundID.Item61;
-            item.autoReuse = true;
-            item.shoot = mod.ProjectileType("HypericeRocket"); 
-            item.shootSpeed = 8;
-			item.useAmmo = ItemID.Snowball;
+            Item.damage = 30;
+            Item.ranged = true;
+            Item.width = 64;
+            Item.height = 24;
+            Item.useTime = 26; 
+            Item.useAnimation = 26;
+            Item.useStyle = 5;    
+            Item.noMelee = true;
+			Item.knockBack = 1f;  
+            Item.value = Item.sellPrice(0, 8, 0, 0);
+            Item.rare = 7;
+            Item.UseSound = SoundID.Item61;
+            Item.autoReuse = true;
+            Item.shoot = mod.ProjectileType("HypericeRocket"); 
+            Item.shootSpeed = 8;
+			Item.useAmmo = ItemID.Snowball;
 		}
 		public override Vector2? HoldoutOffset()
 		{

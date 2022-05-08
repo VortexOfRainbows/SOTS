@@ -15,23 +15,23 @@ namespace SOTS.Items.Permafrost
 		}
 		public override void SafeSetDefaults()
 		{
-            item.damage = 42;  
-            item.magic = true;  
-            item.width = 38;    
-            item.height = 38;
-			item.useAnimation = 44;
-			item.useTime = 44;
-			item.useStyle = 5;    
-            item.knockBack = 5.25f;
-            item.value = Item.sellPrice(0, 0, 80, 0);
-            item.rare = ItemRarityID.Green;
-			item.UseSound = SoundID.Item1;
-			item.autoReuse = true;
-			item.shoot = mod.ProjectileType("FrigidJavelin"); 
-            item.shootSpeed = 12f;
-			item.noMelee = true;
-			item.noUseGraphic = true;
-			item.crit = 16;
+            Item.damage = 42;  
+            Item.magic = true;  
+            Item.width = 38;    
+            Item.height = 38;
+			Item.useAnimation = 44;
+			Item.useTime = 44;
+			Item.useStyle = 5;    
+            Item.knockBack = 5.25f;
+            Item.value = Item.sellPrice(0, 0, 80, 0);
+            Item.rare = ItemRarityID.Green;
+			Item.UseSound = SoundID.Item1;
+			Item.autoReuse = true;
+			Item.shoot = mod.ProjectileType("FrigidJavelin"); 
+            Item.shootSpeed = 12f;
+			Item.noMelee = true;
+			Item.noUseGraphic = true;
+			Item.crit = 16;
 		}
 		public override bool BeforeDrainMana(Player player)
 		{

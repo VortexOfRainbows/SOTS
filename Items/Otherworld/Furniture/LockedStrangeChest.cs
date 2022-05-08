@@ -21,15 +21,15 @@ namespace SOTS.Items.Otherworld.Furniture
 		}
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.StoneBlock);
-			item.width = 32;
-			item.height = 26;
-			item.maxStack = 99;
-			item.useStyle = 1;
-			item.value = Item.sellPrice(0, 0, 10, 0);
-			item.rare = ItemRarityID.LightRed;
-			item.consumable = true;
-			item.createTile = TileType<LockedStrangeChest>();
+			Item.CloneDefaults(ItemID.StoneBlock);
+			Item.width = 32;
+			Item.height = 26;
+			Item.maxStack = 99;
+			Item.useStyle = 1;
+			Item.value = Item.sellPrice(0, 0, 10, 0);
+			Item.rare = ItemRarityID.LightRed;
+			Item.consumable = true;
+			Item.createTile = TileType<LockedStrangeChest>();
 		}
 	}
 	public class LockedStrangeChest : ModTile

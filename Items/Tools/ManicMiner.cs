@@ -13,8 +13,8 @@ namespace SOTS.Items.Tools
 		{
 			Texture2D texture = mod.GetTexture("Items/Tools/ManicMinerGlow");
 			Color color = Color.White;
-			Vector2 drawOrigin = new Vector2(Main.itemTexture[item.type].Width * 0.5f, item.height * 0.5f);
-			Main.spriteBatch.Draw(texture, new Vector2((float)(item.Center.X - (int)Main.screenPosition.X), (float)(item.Center.Y - (int)Main.screenPosition.Y) + 2), null, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
+			Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y) + 2), null, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 		}
 		public override void SetStaticDefaults()
 		{
@@ -23,22 +23,22 @@ namespace SOTS.Items.Tools
 		}
 		public override void SafeSetDefaults()
 		{
-			item.width = 48;
-			item.height = 18;
-			item.useTime = 24;
-			item.useAnimation = 24;
-			item.useStyle = ItemUseStyleID.HoldingOut;
-			item.knockBack = 5;
-            item.value = Item.sellPrice(0, 1, 0, 0);
-			item.rare = ItemRarityID.Blue;
-			item.UseSound = null;
-			item.autoReuse = true;            
-			item.shoot = ModContent.ProjectileType<Projectiles.Earth.ManicMiner>(); 
-            item.shootSpeed = 4f;
+			Item.width = 48;
+			Item.height = 18;
+			Item.useTime = 24;
+			Item.useAnimation = 24;
+			Item.useStyle = ItemUseStyleID.HoldingOut;
+			Item.knockBack = 5;
+            Item.value = Item.sellPrice(0, 1, 0, 0);
+			Item.rare = ItemRarityID.Blue;
+			Item.UseSound = null;
+			Item.autoReuse = true;            
+			Item.shoot = ModContent.ProjectileType<Projectiles.Earth.ManicMiner>(); 
+            Item.shootSpeed = 4f;
 			if (!Main.dedServ)
 			{
-				item.GetGlobalItem<ItemUseGlow>().glowTexture = mod.GetTexture("Items/Tools/ManicMinerGlow");
-				item.GetGlobalItem<ItemUseGlow>().glowOffsetX = -4;
+				Item.GetGlobalItem<ItemUseGlow>().glowTexture = mod.GetTexture("Items/Tools/ManicMinerGlow");
+				Item.GetGlobalItem<ItemUseGlow>().glowOffsetX = -4;
 			}
 		}
         public override Vector2? HoldoutOrigin()

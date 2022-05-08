@@ -16,23 +16,23 @@ namespace SOTS.Items.Celestial
 		}
 		public override void SafeSetDefaults()
 		{
-            item.damage = 190;
-            item.melee = true;  
-            item.width = 46;
-            item.height = 46;  
-            item.useTime = 30; 
-            item.useAnimation = 30;
-            item.useStyle = 5;    
-            item.knockBack = 5f;
-            item.value = Item.sellPrice(0, 15, 0, 0);
-			item.rare = ItemRarityID.Yellow;
-			item.UseSound = SoundID.Item22;
-            item.autoReuse = true;
-            item.shoot = ModContent.ProjectileType<SubspaceCrusher>(); 
-            item.shootSpeed = 18f;
-			item.channel = true;
-            item.noUseGraphic = true; 
-            item.noMelee = true;
+            Item.damage = 190;
+            Item.melee = true;  
+            Item.width = 46;
+            Item.height = 46;  
+            Item.useTime = 30; 
+            Item.useAnimation = 30;
+            Item.useStyle = 5;    
+            Item.knockBack = 5f;
+            Item.value = Item.sellPrice(0, 15, 0, 0);
+			Item.rare = ItemRarityID.Yellow;
+			Item.UseSound = SoundID.Item22;
+            Item.autoReuse = true;
+            Item.shoot = ModContent.ProjectileType<SubspaceCrusher>(); 
+            Item.shootSpeed = 18f;
+			Item.channel = true;
+            Item.noUseGraphic = true; 
+            Item.noMelee = true;
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {

@@ -15,12 +15,12 @@ namespace SOTS.Items.Celestial
 		}
 		public override void SetDefaults()
 		{
-			item.maxStack = 1;
-            item.width = 38;     
-            item.height = 40;   
-            item.value = Item.sellPrice(0, 15, 0, 0);
-            item.rare = ItemRarityID.Yellow;
-			item.accessory = true;
+			Item.maxStack = 1;
+            Item.width = 38;     
+            Item.height = 40;   
+            Item.value = Item.sellPrice(0, 15, 0, 0);
+            Item.rare = ItemRarityID.Yellow;
+			Item.accessory = true;
 		}
 		public override void AddRecipes()
 		{

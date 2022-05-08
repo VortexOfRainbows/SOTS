@@ -16,14 +16,14 @@ namespace SOTS.Items.Dyes
 		}
 		public override void SetDefaults()
 		{
-			item.width = 16;
-			item.height = 24;
-			item.value = Item.sellPrice(0, 5, 0, 0);
-			item.rare = ItemRarityID.LightRed;
+			Item.width = 16;
+			Item.height = 24;
+			Item.value = Item.sellPrice(0, 5, 0, 0);
+			Item.rare = ItemRarityID.LightRed;
 		}
 		public override void PostUpdate()
 		{
-			Lighting.AddLight(item.Center, 10 / 255f, 10 / 255f, 10 / 255f);
+			Lighting.AddLight(Item.Center, 10 / 255f, 10 / 255f, 10 / 255f);
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frameNotUsed, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
@@ -59,7 +59,7 @@ namespace SOTS.Items.Dyes
 				Vector2 rotationAround = new Vector2((3 + mult) * scale, 0).RotatedBy(MathHelper.ToRadians(60 * i + counter));
 				Main.spriteBatch.Draw(texture, new Vector2(position.X, position.Y) + rotationAround, null, color, 0f, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
 			}
-			texture = Main.itemTexture[item.type];
+			texture = Main.itemTexture[Item.type];
 			Main.spriteBatch.Draw(texture, new Vector2(position.X, position.Y), null, Color.Lerp(drawColor, Color.Black, 0.1f), 0f, drawOrigin, scale * 1.0f, SpriteEffects.None, 0f);
 			return true;
 		}
@@ -94,10 +94,10 @@ namespace SOTS.Items.Dyes
 						break;
 				}
 				Vector2 rotationAround2 = 0.5f * new Vector2((6 + mult) * scale, 0).RotatedBy(MathHelper.ToRadians(60 * i + counter));
-				Main.spriteBatch.Draw(texture2, rotationAround2 + item.Center - Main.screenPosition + new Vector2(0, 2), null, color, rotation, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture2, rotationAround2 + Item.Center - Main.screenPosition + new Vector2(0, 2), null, color, rotation, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
 			}
-			texture2 = Main.itemTexture[item.type];
-			Main.spriteBatch.Draw(texture2, item.Center - Main.screenPosition + new Vector2(0, 2), null, Color.Lerp(lightColor, Color.Black, 0.7f), rotation, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
+			texture2 = Main.itemTexture[Item.type];
+			Main.spriteBatch.Draw(texture2, Item.Center - Main.screenPosition + new Vector2(0, 2), null, Color.Lerp(lightColor, Color.Black, 0.7f), rotation, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
 			return true;
 		}
 		public override void AddRecipes()

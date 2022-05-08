@@ -379,11 +379,11 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.DartTrap);
-			item.width = 28;
-			item.height = 24;
-			item.createTile = TileType<PyramidPots>();
-			item.value = 0;
+			Item.CloneDefaults(ItemID.DartTrap);
+			Item.width = 28;
+			Item.height = 24;
+			Item.createTile = TileType<PyramidPots>();
+			Item.value = 0;
 		}
 	}
 }

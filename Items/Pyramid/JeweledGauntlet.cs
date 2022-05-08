@@ -16,23 +16,23 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void SafeSetDefaults()
 		{
-			item.melee = true;
-			item.width = 24;
-			item.height = 30;
-			item.damage = 54;
-            item.useTime = 12;
-            item.useAnimation = 24;
-			item.useStyle = ItemUseStyleID.HoldingOut;
-			item.knockBack = 7.0f;
-            item.value = Item.sellPrice(0, 4, 50, 0);
-            item.rare = ItemRarityID.LightPurple;
-            item.UseSound = SoundID.Item19;
-            item.autoReuse = true;       
-			item.shoot = ModContent.ProjectileType<PhantomFist>(); 
-            item.shootSpeed = 9f;
-			item.consumable = false;
-			item.noMelee = true;
-			item.noUseGraphic = true;
+			Item.melee = true;
+			Item.width = 24;
+			Item.height = 30;
+			Item.damage = 54;
+            Item.useTime = 12;
+            Item.useAnimation = 24;
+			Item.useStyle = ItemUseStyleID.HoldingOut;
+			Item.knockBack = 7.0f;
+            Item.value = Item.sellPrice(0, 4, 50, 0);
+            Item.rare = ItemRarityID.LightPurple;
+            Item.UseSound = SoundID.Item19;
+            Item.autoReuse = true;       
+			Item.shoot = ModContent.ProjectileType<PhantomFist>(); 
+            Item.shootSpeed = 9f;
+			Item.consumable = false;
+			Item.noMelee = true;
+			Item.noUseGraphic = true;
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{

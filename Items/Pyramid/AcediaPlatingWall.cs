@@ -15,17 +15,17 @@ namespace SOTS.Items.Pyramid
 
 		public override void SetDefaults()
 		{
-			item.width = 16;
-			item.height = 16;
-			item.maxStack = 999;
-			item.useTurn = true;
-			item.autoReuse = true;
-			item.useAnimation = 15;
-			item.useTime = 7;
-			item.useStyle = 1;
-			item.rare = 9;
-			item.consumable = true;
-			item.createWall = ModContent.WallType<UnsafeAcediaWallWall>();
+			Item.width = 16;
+			Item.height = 16;
+			Item.maxStack = 999;
+			Item.useTurn = true;
+			Item.autoReuse = true;
+			Item.useAnimation = 15;
+			Item.useTime = 7;
+			Item.useStyle = 1;
+			Item.rare = 9;
+			Item.consumable = true;
+			Item.createWall = ModContent.WallType<UnsafeAcediaWallWall>();
 		}
 		public override void AddRecipes()
 		{

@@ -15,11 +15,11 @@ namespace SOTS.Items.Fragments
 		}
 		public override void SetDefaults()
 		{
-			item.width = 24;
-			item.height = 26;
-			item.value = Item.sellPrice(0, 0, 0, 50);
-			item.rare = ItemRarityID.Blue;
-			item.maxStack = 999;
+			Item.width = 24;
+			Item.height = 26;
+			Item.value = Item.sellPrice(0, 0, 0, 50);
+			Item.rare = ItemRarityID.Blue;
+			Item.maxStack = 999;
 		}
 	}
 	public class FragmentOfEarth : ModItem
@@ -31,11 +31,11 @@ namespace SOTS.Items.Fragments
 		}
 		public override void SetDefaults()
 		{
-			item.width = 22;
-			item.height = 24;
-			item.value = Item.sellPrice(0, 0, 0, 50);
-			item.rare = ItemRarityID.Blue;
-			item.maxStack = 999;
+			Item.width = 22;
+			Item.height = 24;
+			Item.value = Item.sellPrice(0, 0, 0, 50);
+			Item.rare = ItemRarityID.Blue;
+			Item.maxStack = 999;
 		}
 	}
 	public class FragmentOfPermafrost : ModItem
@@ -47,11 +47,11 @@ namespace SOTS.Items.Fragments
 		}
 		public override void SetDefaults()
 		{
-			item.width = 18;
-			item.height = 30;
-			item.value = Item.sellPrice(0, 0, 0, 50);
-			item.rare = ItemRarityID.Blue;
-			item.maxStack = 999;
+			Item.width = 18;
+			Item.height = 30;
+			Item.value = Item.sellPrice(0, 0, 0, 50);
+			Item.rare = ItemRarityID.Blue;
+			Item.maxStack = 999;
 		}
 	}
 	public class FragmentOfTide : ModItem
@@ -63,11 +63,11 @@ namespace SOTS.Items.Fragments
 		}
 		public override void SetDefaults()
 		{
-			item.width = 26;
-			item.height = 28;
-			item.value = Item.sellPrice(0, 0, 0, 50);
-			item.rare = ItemRarityID.Blue;
-			item.maxStack = 999;
+			Item.width = 26;
+			Item.height = 28;
+			Item.value = Item.sellPrice(0, 0, 0, 50);
+			Item.rare = ItemRarityID.Blue;
+			Item.maxStack = 999;
 		}
 	}
 	public class FragmentOfOtherworld : ModItem
@@ -79,11 +79,11 @@ namespace SOTS.Items.Fragments
 		}
 		public override void SetDefaults()
 		{
-			item.width = 28;
-			item.height = 30;
-			item.value = Item.sellPrice(0, 0, 0, 50);
-			item.rare = ItemRarityID.Blue;
-			item.maxStack = 999;
+			Item.width = 28;
+			Item.height = 30;
+			Item.value = Item.sellPrice(0, 0, 0, 50);
+			Item.rare = ItemRarityID.Blue;
+			Item.maxStack = 999;
 		}
 	}
 	public class FragmentOfEvil : ModItem
@@ -95,11 +95,11 @@ namespace SOTS.Items.Fragments
 		}
 		public override void SetDefaults()
 		{
-			item.width = 26;
-			item.height = 26;
-			item.value = Item.sellPrice(0, 0, 0, 50);
-			item.rare = ItemRarityID.Blue;
-			item.maxStack = 999;
+			Item.width = 26;
+			Item.height = 26;
+			Item.value = Item.sellPrice(0, 0, 0, 50);
+			Item.rare = ItemRarityID.Blue;
+			Item.maxStack = 999;
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
@@ -110,7 +110,7 @@ namespace SOTS.Items.Fragments
 		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
 		{
 			Texture2D texture = WorldGen.crimson ? mod.GetTexture("Items/Fragments/FragmentOfEvil") : mod.GetTexture("Items/Fragments/FragmentOfEvilAlt");
-			spriteBatch.Draw(texture, item.Center - Main.screenPosition, null, lightColor, 0f, new Vector2(texture.Width / 2, texture.Height / 2), scale, SpriteEffects.None, 0f);
+			spriteBatch.Draw(texture, Item.Center - Main.screenPosition, null, lightColor, 0f, new Vector2(texture.Width / 2, texture.Height / 2), scale, SpriteEffects.None, 0f);
 			return false;
 		}
 	}
@@ -123,11 +123,11 @@ namespace SOTS.Items.Fragments
 		}
 		public override void SetDefaults()
 		{
-			item.width = 40;
-			item.height = 38;
-			item.value = Item.sellPrice(0, 0, 0, 50);
-			item.rare = ItemRarityID.Blue;
-			item.maxStack = 999;
+			Item.width = 40;
+			Item.height = 38;
+			Item.value = Item.sellPrice(0, 0, 0, 50);
+			Item.rare = ItemRarityID.Blue;
+			Item.maxStack = 999;
 		}
 	}
 	public class FragmentOfInferno : ModItem
@@ -139,11 +139,11 @@ namespace SOTS.Items.Fragments
 		}
 		public override void SetDefaults()
 		{
-			item.width = 26;
-			item.height = 36;
-			item.value = Item.sellPrice(0, 0, 0, 50);
-			item.rare = 1;
-			item.maxStack = 999;
+			Item.width = 26;
+			Item.height = 36;
+			Item.value = Item.sellPrice(0, 0, 0, 50);
+			Item.rare = 1;
+			Item.maxStack = 999;
 		}
 	}
 }

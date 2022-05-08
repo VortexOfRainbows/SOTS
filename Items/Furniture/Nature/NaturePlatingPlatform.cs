@@ -17,11 +17,11 @@ namespace SOTS.Items.Furniture.Nature
 
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.StoneBlock);
-			item.rare = ItemRarityID.Blue;
-			item.width = 26;
-			item.height = 18;
-			item.createTile = ModContent.TileType<NaturePlatingPlatformTile>();
+			Item.CloneDefaults(ItemID.StoneBlock);
+			Item.rare = ItemRarityID.Blue;
+			Item.width = 26;
+			Item.height = 18;
+			Item.createTile = ModContent.TileType<NaturePlatingPlatformTile>();
 		}
 		public override void AddRecipes()
 		{

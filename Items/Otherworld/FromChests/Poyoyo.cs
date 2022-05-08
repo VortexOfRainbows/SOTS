@@ -15,8 +15,8 @@ namespace SOTS.Items.Otherworld.FromChests
         {
             Texture2D texture = mod.GetTexture("Items/Otherworld/FromChests/PoyoyoGlow");
             Color color = Color.White;
-            Vector2 drawOrigin = new Vector2(Main.itemTexture[item.type].Width * 0.5f, item.height * 0.5f);
-            Main.spriteBatch.Draw(texture, new Vector2((float)(item.Center.X - (int)Main.screenPosition.X), (float)(item.Center.Y - (int)Main.screenPosition.Y) + 2), null, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+            Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
+            Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y) + 2), null, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
         }
         public override void SetStaticDefaults()
 		{
@@ -25,22 +25,22 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
         public override void SetDefaults()
         {
-            item.damage = 30;
-            item.width = 30;
-            item.height = 26;
-            item.melee = true; 
-            item.useTime = 25;  
-            item.useAnimation = 25;   
-            item.useStyle = 5;
-            item.channel = true;
-            item.knockBack = 2f;
-            item.value = Item.sellPrice(0, 4, 0, 0);
-            item.rare = ItemRarityID.LightPurple;
-            item.autoReuse = false; 
-            item.shoot = mod.ProjectileType("Poyoyo"); 
-            item.noUseGraphic = true; 
-            item.noMelee = true;
-            item.UseSound = SoundID.Item1;
+            Item.damage = 30;
+            Item.width = 30;
+            Item.height = 26;
+            Item.melee = true; 
+            Item.useTime = 25;  
+            Item.useAnimation = 25;   
+            Item.useStyle = 5;
+            Item.channel = true;
+            Item.knockBack = 2f;
+            Item.value = Item.sellPrice(0, 4, 0, 0);
+            Item.rare = ItemRarityID.LightPurple;
+            Item.autoReuse = false; 
+            Item.shoot = mod.ProjectileType("Poyoyo"); 
+            Item.noUseGraphic = true; 
+            Item.noMelee = true;
+            Item.UseSound = SoundID.Item1;
         }
         public override void AddRecipes()
         {

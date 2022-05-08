@@ -18,20 +18,20 @@ namespace SOTS.Items.OreItems
 		}
         public override void SafeSetDefaults()
 		{
-            item.damage = 32;  
-            item.melee = true; 
-            item.width = 48;    
-            item.height = 48;  
-            item.useTime = 30;
-            item.useAnimation = 30;
-            item.useStyle = 1;   
-            item.autoReuse = true; 
-			item.useTurn = true;
-            item.knockBack = 4f;
-			item.value = Item.sellPrice(0, 0, 35, 0);
-            item.rare = ItemRarityID.Green;
-            item.UseSound = SoundID.Item71;
-			item.crit = 11;
+            Item.damage = 32;  
+            Item.melee = true; 
+            Item.width = 48;    
+            Item.height = 48;  
+            Item.useTime = 30;
+            Item.useAnimation = 30;
+            Item.useStyle = 1;   
+            Item.autoReuse = true; 
+			Item.useTurn = true;
+            Item.knockBack = 4f;
+			Item.value = Item.sellPrice(0, 0, 35, 0);
+            Item.rare = ItemRarityID.Green;
+            Item.UseSound = SoundID.Item71;
+			Item.crit = 11;
 		}
 		public override void MeleeEffects(Player player, Rectangle hitbox)
 		{

@@ -17,23 +17,23 @@ namespace SOTS.Items.Crushers
 		}
 		public override void SafeSetDefaults()
 		{
-            item.damage = 18;
-            item.melee = true;  
-            item.width = 32;
-            item.height = 26;  
-            item.useTime = 30; 
-            item.useAnimation = 30;
-            item.useStyle = ItemUseStyleID.HoldingOut;    
-            item.knockBack = 10f;
-            item.value = Item.sellPrice(0, 0, 50, 0);
-            item.rare = ItemRarityID.Green;
-            item.UseSound = SoundID.Item22;
-            item.autoReuse = true;
-            item.shoot = ModContent.ProjectileType<CrabCrusher>(); 
-            item.shootSpeed = 18f;
-			item.channel = true;
-            item.noUseGraphic = true; 
-            item.noMelee = true;
+            Item.damage = 18;
+            Item.melee = true;  
+            Item.width = 32;
+            Item.height = 26;  
+            Item.useTime = 30; 
+            Item.useAnimation = 30;
+            Item.useStyle = ItemUseStyleID.HoldingOut;    
+            Item.knockBack = 10f;
+            Item.value = Item.sellPrice(0, 0, 50, 0);
+            Item.rare = ItemRarityID.Green;
+            Item.UseSound = SoundID.Item22;
+            Item.autoReuse = true;
+            Item.shoot = ModContent.ProjectileType<CrabCrusher>(); 
+            Item.shootSpeed = 18f;
+			Item.channel = true;
+            Item.noUseGraphic = true; 
+            Item.noMelee = true;
 		}
 		public override void AddRecipes()
 		{

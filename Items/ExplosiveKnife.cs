@@ -15,16 +15,16 @@ namespace SOTS.Items
 		}
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.ThrowingKnife);
-			item.damage = 15;
-			item.useTime = 17;
-			item.useAnimation = 17;
-			item.thrown = true;
-			item.rare = ItemRarityID.Green;
-			item.autoReuse = true;            
-			item.shoot = ModContent.ProjectileType<Projectiles.ExplosiveKnife>(); 
-            item.shootSpeed = 12f;
-			item.consumable = true;
+			Item.CloneDefaults(ItemID.ThrowingKnife);
+			Item.damage = 15;
+			Item.useTime = 17;
+			Item.useAnimation = 17;
+			Item.thrown = true;
+			Item.rare = ItemRarityID.Green;
+			Item.autoReuse = true;            
+			Item.shoot = ModContent.ProjectileType<Projectiles.ExplosiveKnife>(); 
+            Item.shootSpeed = 12f;
+			Item.consumable = true;
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {

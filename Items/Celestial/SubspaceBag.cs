@@ -14,13 +14,13 @@ namespace SOTS.Items.Celestial
 		}
 		public override void SetDefaults()
 		{
-			item.width = 40;
-			item.height = 34;
-			item.value = 0;
-			item.rare = ItemRarityID.Red;
-			item.maxStack = 999;
-			item.consumable = true;
-			item.expert = true;
+			Item.width = 40;
+			Item.height = 34;
+			Item.value = 0;
+			Item.rare = ItemRarityID.Red;
+			Item.maxStack = 999;
+			Item.consumable = true;
+			Item.expert = true;
 		}
 		public override int BossBagNPC => ModContent.NPCType<SubspaceSerpentHead>();
 		public override bool CanRightClick()

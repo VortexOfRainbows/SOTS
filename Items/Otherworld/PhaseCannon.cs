@@ -17,26 +17,26 @@ namespace SOTS.Items.Otherworld
 		}
 		public override void SetDefaults()
 		{
-            item.damage = 27; 
-            item.ranged = true;  
-            item.width = 52;   
-            item.height = 26; 
-            item.useTime = 90; 
-            item.useAnimation = 90;
-            item.useStyle = 5;    
-            item.noMelee = true;
-            item.knockBack = 4f;
-            item.value = Item.sellPrice(0, 3, 25, 0);
-            item.rare = ItemRarityID.LightPurple;
-            item.UseSound = SoundID.Item92;
-            item.autoReuse = true;
-            item.shoot = mod.ProjectileType("FriendlyOtherworldlyBall");
-			item.shootSpeed = 10; //not important
+            Item.damage = 27; 
+            Item.ranged = true;  
+            Item.width = 52;   
+            Item.height = 26; 
+            Item.useTime = 90; 
+            Item.useAnimation = 90;
+            Item.useStyle = 5;    
+            Item.noMelee = true;
+            Item.knockBack = 4f;
+            Item.value = Item.sellPrice(0, 3, 25, 0);
+            Item.rare = ItemRarityID.LightPurple;
+            Item.UseSound = SoundID.Item92;
+            Item.autoReuse = true;
+            Item.shoot = mod.ProjectileType("FriendlyOtherworldlyBall");
+			Item.shootSpeed = 10; //not important
 			if (!Main.dedServ)
 			{
-				item.GetGlobalItem<ItemUseGlow>().glowTexture = mod.GetTexture("Items/Otherworld/PhaseCannonGlow");
-				item.GetGlobalItem<ItemUseGlow>().glowOffsetX = -2;
-				item.GetGlobalItem<ItemUseGlow>().glowOffsetY = 1;
+				Item.GetGlobalItem<ItemUseGlow>().glowTexture = mod.GetTexture("Items/Otherworld/PhaseCannonGlow");
+				Item.GetGlobalItem<ItemUseGlow>().glowOffsetX = -2;
+				Item.GetGlobalItem<ItemUseGlow>().glowOffsetY = 1;
 			}
 
 		}
@@ -48,8 +48,8 @@ namespace SOTS.Items.Otherworld
 		{
 			Texture2D texture = mod.GetTexture("Items/Otherworld/PhaseCannonGlow");
 			Color color = Color.White;
-			Vector2 drawOrigin = new Vector2(Main.itemTexture[item.type].Width * 0.5f, item.height * 0.5f);
-			Main.spriteBatch.Draw(texture, new Vector2((float)(item.Center.X - (int)Main.screenPosition.X), (float)(item.Center.Y - (int)Main.screenPosition.Y) + 2), null, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
+			Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y) + 2), null, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 		}
 		public override void HoldItem(Player player)
 		{
@@ -66,7 +66,7 @@ namespace SOTS.Items.Otherworld
 				Vector2 mouse = Main.MouseWorld;
 				if (player.whoAmI == Main.myPlayer)
 				{
-					index = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, ModContent.ProjectileType<OtherworldlyTracer>(), item.damage, item.knockBack, player.whoAmI, 1000, -1);
+					index = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, ModContent.ProjectileType<OtherworldlyTracer>(), Item.damage, Item.knockBack, player.whoAmI, 1000, -1);
 				}
 			}
 			else if (index < -1)

@@ -14,11 +14,11 @@ namespace SOTS.Items.Slime
 	{
 		public override void SetDefaults()
 		{
-			item.width = 26;
-			item.height = 20;
-			item.vanity = true;
-			item.value = Item.sellPrice(0, 0, 75, 0);
-			item.rare = ItemRarityID.Blue;
+			Item.width = 26;
+			Item.height = 20;
+			Item.vanity = true;
+			Item.value = Item.sellPrice(0, 0, 75, 0);
+			Item.rare = ItemRarityID.Blue;
 		}
 	}
 	public class PutridPinkyMaskPlayer : ModPlayer

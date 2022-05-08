@@ -15,13 +15,13 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void SetDefaults()
 		{
-			item.width = 32;
-			item.height = 32;
-			item.value = 0;
-			item.rare = ItemRarityID.LightPurple;
-			item.expert = true;
-			item.maxStack = 999;
-			item.consumable = true;
+			Item.width = 32;
+			Item.height = 32;
+			Item.value = 0;
+			Item.rare = ItemRarityID.LightPurple;
+			Item.expert = true;
+			Item.maxStack = 999;
+			Item.consumable = true;
 		}
 		public override int BossBagNPC => ModContent.NPCType<PharaohsCurse>();
 		public override bool CanRightClick()

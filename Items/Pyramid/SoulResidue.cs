@@ -9,16 +9,16 @@ namespace SOTS.Items.Pyramid
 	{
         public override void SetDefaults()
 		{
-			item.width = 18;
-			item.height = 28;
-			item.value = Item.sellPrice(0, 0, 2, 50);
-			item.rare = ItemRarityID.Orange;
-			item.maxStack = 999;
-			item.alpha = 80;
+			Item.width = 18;
+			Item.height = 28;
+			Item.value = Item.sellPrice(0, 0, 2, 50);
+			Item.rare = ItemRarityID.Orange;
+			Item.maxStack = 999;
+			Item.alpha = 80;
 		}
         public override Color? GetAlpha(Color lightColor)
         {
-            return Color.White * (1 - item.alpha / 255f);
+            return Color.White * (1 - Item.alpha / 255f);
         }
     }
 }

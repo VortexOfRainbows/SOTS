@@ -15,29 +15,29 @@ namespace SOTS.Items.SpiritStaves
 		public override void SetStaticDefaults() 
 		{
 			Tooltip.SetDefault("Summons an Permafrost Spirit to fight for you\nLaunches 3 permafrost spears downwards at enemies");
-			ItemID.Sets.GamepadWholeScreenUseRange[item.type] = true; 
-			ItemID.Sets.LockOnIgnoresCollision[item.type] = true;
+			ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true; 
+			ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;
 		}
 		public override void SafeSetDefaults() 
 		{
-			item.damage = 17;
-			item.knockBack = 4f;
-			item.width = 46;
-			item.height = 46;
-			item.useTime = 20;
-			item.useAnimation = 20;
-			item.useStyle = ItemUseStyleID.SwingThrow;
-			item.value = Item.sellPrice(0, 2, 50, 0);
-			item.rare = ItemRarityID.Green;
-			item.UseSound = SoundID.Item44;
-			item.noMelee = true;
-			item.summon = true;
-			item.buffType = ModContent.BuffType<PermafrostSpiritAid>();
-			item.shoot = ModContent.ProjectileType<PermafrostSpirit>();
+			Item.damage = 17;
+			Item.knockBack = 4f;
+			Item.width = 46;
+			Item.height = 46;
+			Item.useTime = 20;
+			Item.useAnimation = 20;
+			Item.useStyle = ItemUseStyleID.SwingThrow;
+			Item.value = Item.sellPrice(0, 2, 50, 0);
+			Item.rare = ItemRarityID.Green;
+			Item.UseSound = SoundID.Item44;
+			Item.noMelee = true;
+			Item.summon = true;
+			Item.buffType = ModContent.BuffType<PermafrostSpiritAid>();
+			Item.shoot = ModContent.ProjectileType<PermafrostSpirit>();
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) 
 		{
-			player.AddBuff(item.buffType, 2);
+			player.AddBuff(Item.buffType, 2);
 			position = Main.MouseWorld;
 			return true;
 		}

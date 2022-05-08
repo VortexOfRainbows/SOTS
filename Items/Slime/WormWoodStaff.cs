@@ -14,22 +14,22 @@ namespace SOTS.Items.Slime
 		}
 		public override void SetDefaults()
 		{
-            item.damage = 20;  
-            item.magic = true;  
-            item.width = 34;    
-            item.height = 34;   
-            item.useTime = 8;  
-            item.useAnimation = 24;
-            item.useStyle = 1;    
-			item.mana = 20;
-            item.knockBack = 1;
-            item.value = Item.sellPrice(0, 2, 0, 0);
-            item.rare = ItemRarityID.LightRed;
-            item.UseSound = SoundID.Item1;
-            item.autoReuse = false;
-			item.shoot = mod.ProjectileType("WormBullet"); 
-            item.shootSpeed = 2.75f;
-			item.noMelee = true;
+            Item.damage = 20;  
+            Item.magic = true;  
+            Item.width = 34;    
+            Item.height = 34;   
+            Item.useTime = 8;  
+            Item.useAnimation = 24;
+            Item.useStyle = 1;    
+			Item.mana = 20;
+            Item.knockBack = 1;
+            Item.value = Item.sellPrice(0, 2, 0, 0);
+            Item.rare = ItemRarityID.LightRed;
+            Item.UseSound = SoundID.Item1;
+            Item.autoReuse = false;
+			Item.shoot = mod.ProjectileType("WormBullet"); 
+            Item.shootSpeed = 2.75f;
+			Item.noMelee = true;
 		}
 		int projectileNum = 0;
         public override bool CanUseItem(Player player)

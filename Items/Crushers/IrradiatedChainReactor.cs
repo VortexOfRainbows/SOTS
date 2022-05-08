@@ -17,23 +17,23 @@ namespace SOTS.Items.Crushers
 		}
 		public override void SafeSetDefaults()
 		{
-            item.damage = 40;
-            item.melee = true;  
-            item.width = 54;
-            item.height = 54;  
-            item.useTime = 30; 
-            item.useAnimation = 30;
-            item.useStyle = ItemUseStyleID.HoldingOut;    
-            item.knockBack = 6f;
-            item.value = Item.sellPrice(0, 5, 40, 0);
-            item.rare = ItemRarityID.Lime;
-            item.UseSound = SoundID.Item22;
-            item.autoReuse = true;
-            item.shoot = ModContent.ProjectileType<IrradiatedCrusher>(); 
-            item.shootSpeed = 12f;
-			item.channel = true;
-            item.noUseGraphic = true; 
-            item.noMelee = true;
+            Item.damage = 40;
+            Item.melee = true;  
+            Item.width = 54;
+            Item.height = 54;  
+            Item.useTime = 30; 
+            Item.useAnimation = 30;
+            Item.useStyle = ItemUseStyleID.HoldingOut;    
+            Item.knockBack = 6f;
+            Item.value = Item.sellPrice(0, 5, 40, 0);
+            Item.rare = ItemRarityID.Lime;
+            Item.UseSound = SoundID.Item22;
+            Item.autoReuse = true;
+            Item.shoot = ModContent.ProjectileType<IrradiatedCrusher>(); 
+            Item.shootSpeed = 12f;
+			Item.channel = true;
+            Item.noUseGraphic = true; 
+            Item.noMelee = true;
 		}
 		public override void AddRecipes()
 		{

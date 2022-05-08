@@ -15,16 +15,16 @@ namespace SOTS.Items
 		{
 			DisplayName.SetDefault("Flashspark Boots");
 			Tooltip.SetDefault("Provides tremendous acceleration while running\nAlso provides flight and extra mobility on ice\nIncreases movement speed greatly\nProvides the ability to walk on water and lava\nGrants immunity to fire blocks and 10 seconds of immunity to lava\n'Recipro Burst!'");
-            Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(5, 5));
+            Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 5));
         }
 		public override void SetDefaults()
 		{
-            item.width = 42;     
-            item.height = 36;   
-            item.value = Item.sellPrice(0, 15, 0, 0);
-            item.rare = ItemRarityID.Yellow;
-			item.accessory = true;
-			item.expert = false;
+            Item.width = 42;     
+            Item.height = 36;   
+            Item.value = Item.sellPrice(0, 15, 0, 0);
+            Item.rare = ItemRarityID.Yellow;
+			Item.accessory = true;
+			Item.expert = false;
 		}
 		public override void AddRecipes()
 		{

@@ -16,21 +16,21 @@ namespace SOTS.Items.Nature
 		}
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.ThrowingKnife);
-			item.damage = 13;
-			item.useTime = 29;
-			item.useAnimation = 29;
-			item.ranged = true;
-			item.thrown = false;
-			item.value = Item.sellPrice(0, 0, 80, 0);
-			item.rare = ItemRarityID.Orange;
-			item.width = 28;
-			item.height = 32;
-			item.maxStack = 1;
-			item.autoReuse = true;            
-			item.shoot = ModContent.ProjectileType<SporeBomb>(); 
-            item.shootSpeed = 15.75f;
-			item.consumable = false;
+			Item.CloneDefaults(ItemID.ThrowingKnife);
+			Item.damage = 13;
+			Item.useTime = 29;
+			Item.useAnimation = 29;
+			Item.ranged = true;
+			Item.thrown = false;
+			Item.value = Item.sellPrice(0, 0, 80, 0);
+			Item.rare = ItemRarityID.Orange;
+			Item.width = 28;
+			Item.height = 32;
+			Item.maxStack = 1;
+			Item.autoReuse = true;            
+			Item.shoot = ModContent.ProjectileType<SporeBomb>(); 
+            Item.shootSpeed = 15.75f;
+			Item.consumable = false;
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {

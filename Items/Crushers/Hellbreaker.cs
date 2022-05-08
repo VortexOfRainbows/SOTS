@@ -17,24 +17,24 @@ namespace SOTS.Items.Crushers
 		}
 		public override void SafeSetDefaults()
 		{
-            item.damage = 48;
-            item.melee = true;  
-            item.width = 46;
-            item.height = 46;  
-            item.useTime = 30; 
-            item.useAnimation = 30;
-            item.useStyle = ItemUseStyleID.HoldingOut;    
-            item.knockBack = 8f;
-            item.value = Item.sellPrice(0, 1, 55, 0);
-            item.rare = ItemRarityID.Orange;
-            item.UseSound = SoundID.Item22;
-            item.autoReuse = true;
-            item.shoot = ModContent.ProjectileType<HellbreakerCrusher>(); 
-            item.shootSpeed = 20f;
-			item.channel = true;
-            item.noUseGraphic = true; 
-            item.noMelee = true;
-			Item.staff[item.type] = true;
+            Item.damage = 48;
+            Item.melee = true;  
+            Item.width = 46;
+            Item.height = 46;  
+            Item.useTime = 30; 
+            Item.useAnimation = 30;
+            Item.useStyle = ItemUseStyleID.HoldingOut;    
+            Item.knockBack = 8f;
+            Item.value = Item.sellPrice(0, 1, 55, 0);
+            Item.rare = ItemRarityID.Orange;
+            Item.UseSound = SoundID.Item22;
+            Item.autoReuse = true;
+            Item.shoot = ModContent.ProjectileType<HellbreakerCrusher>(); 
+            Item.shootSpeed = 20f;
+			Item.channel = true;
+            Item.noUseGraphic = true; 
+            Item.noMelee = true;
+			Item.staff[Item.type] = true;
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{

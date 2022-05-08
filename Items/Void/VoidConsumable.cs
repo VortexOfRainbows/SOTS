@@ -21,16 +21,16 @@ namespace SOTS.Items.Void
         }
         public sealed override void SetDefaults()
 		{
-			item.width = 32;
-			item.height = 32;
-			item.value = Item.sellPrice(0, 0, 0, 0);
-			item.rare = ItemRarityID.Blue;
-			item.maxStack = 999;
-			item.useStyle = 2;
-			item.useTime = 15;
-			item.useAnimation = 15;
-			item.UseSound = SoundID.Item3;
-			item.consumable = true;
+			Item.width = 32;
+			Item.height = 32;
+			Item.value = Item.sellPrice(0, 0, 0, 0);
+			Item.rare = ItemRarityID.Blue;
+			Item.maxStack = 999;
+			Item.useStyle = 2;
+			Item.useTime = 15;
+			Item.useAnimation = 15;
+			Item.UseSound = SoundID.Item3;
+			Item.consumable = true;
 			SafeSetDefaults();
 		}
 		public virtual void SafeSetDefaults()
@@ -58,7 +58,7 @@ namespace SOTS.Items.Void
 		}
 		public sealed override void OnConsumeItem(Player player)
 		{
-			item.stack++;
+			Item.stack++;
 			Activate(player);
 		}
 		public void Activate(Player player)
@@ -68,7 +68,7 @@ namespace SOTS.Items.Void
 			OnActivation(player);
 			if (ConsumeStack())
 			{
-				item.stack--;
+				Item.stack--;
 			}
 		}
 		public virtual bool ConsumeStack()
@@ -93,7 +93,7 @@ namespace SOTS.Items.Void
 			int consumeAt = 0;
 			int currentMax = voidPlayer.voidMeterMax2 - voidPlayer.lootingSouls - voidPlayer.VoidMinionConsumption;
 			int leniency = currentMax - GetVoidAmt();
-			while (voidPlayer.voidMeter <= consumeAt && leniency >= 0 && item.stack > 0 && CanUseItem(player))
+			while (voidPlayer.voidMeter <= consumeAt && leniency >= 0 && Item.stack > 0 && CanUseItem(player))
 			{
 				Activate(player);
 			}
@@ -108,11 +108,11 @@ namespace SOTS.Items.Void
 		}
 		public override void SafeSetDefaults()
 		{
-			item.width = 28;
-			item.height = 30;
-			item.value = Item.sellPrice(0, 0, 20, 0);
-			item.rare = ItemRarityID.Blue;
-			item.UseSound = SoundID.Item3;
+			Item.width = 28;
+			Item.height = 30;
+			Item.value = Item.sellPrice(0, 0, 20, 0);
+			Item.rare = ItemRarityID.Blue;
+			Item.UseSound = SoundID.Item3;
 		}
         public override int GetSatiateDuration()
         {
@@ -132,9 +132,9 @@ namespace SOTS.Items.Void
 		}
 		public override void SafeSetDefaults()
 		{
-			item.value = Item.sellPrice(0, 0, 20, 0);
-			item.rare = 2;
-			item.UseSound = SoundID.Item3;
+			Item.value = Item.sellPrice(0, 0, 20, 0);
+			Item.rare = 2;
+			Item.UseSound = SoundID.Item3;
 		}
         public override int GetVoidAmt()
         {
@@ -154,11 +154,11 @@ namespace SOTS.Items.Void
 		}
 		public override void SafeSetDefaults()
 		{
-			item.width = 22;
-			item.height = 22;
-			item.value = Item.sellPrice(0, 0, 12, 50);
-			item.rare = ItemRarityID.Blue;
-			item.UseSound = SoundID.Item2;
+			Item.width = 22;
+			Item.height = 22;
+			Item.value = Item.sellPrice(0, 0, 12, 50);
+			Item.rare = ItemRarityID.Blue;
+			Item.UseSound = SoundID.Item2;
 		}
         public override int GetVoidAmt()
         {
@@ -183,11 +183,11 @@ namespace SOTS.Items.Void
 		}
 		public override void SafeSetDefaults()
 		{
-			item.width = 28;
-			item.height = 40;
-			item.value = Item.sellPrice(0, 0, 5, 0);
-			item.rare = ItemRarityID.Blue;
-			item.UseSound = SoundID.Item3;
+			Item.width = 28;
+			Item.height = 40;
+			Item.value = Item.sellPrice(0, 0, 5, 0);
+			Item.rare = ItemRarityID.Blue;
+			Item.UseSound = SoundID.Item3;
 		}
         public override int GetVoidAmt()
         {
@@ -207,11 +207,11 @@ namespace SOTS.Items.Void
 		}
 		public override void SafeSetDefaults()
 		{
-			item.width = 26;
-			item.height = 32;
-			item.value = Item.sellPrice(0, 0, 2, 0);
-			item.rare = ItemRarityID.Blue;
-			item.UseSound = SoundID.Item2;
+			Item.width = 26;
+			Item.height = 32;
+			Item.value = Item.sellPrice(0, 0, 2, 0);
+			Item.rare = ItemRarityID.Blue;
+			Item.UseSound = SoundID.Item2;
 		}
 		public override int GetVoidAmt()
 		{
@@ -231,11 +231,11 @@ namespace SOTS.Items.Void
 		}
 		public override void SafeSetDefaults()
 		{
-			item.width = 28;
-			item.height = 22;
-			item.value = Item.sellPrice(0, 0, 12, 50);
-			item.rare = ItemRarityID.Blue;
-			item.UseSound = SoundID.Item2;
+			Item.width = 28;
+			Item.height = 22;
+			Item.value = Item.sellPrice(0, 0, 12, 50);
+			Item.rare = ItemRarityID.Blue;
+			Item.UseSound = SoundID.Item2;
 		}
         public override void OnActivation(Player player)
         {
@@ -278,11 +278,11 @@ namespace SOTS.Items.Void
 		}
 		public override void SafeSetDefaults()
 		{
-			item.width = 30;
-			item.height = 18;
-			item.value = Item.sellPrice(0, 0, 0, 50);
-			item.rare = ItemRarityID.Blue;
-			item.UseSound = SoundID.Item2;
+			Item.width = 30;
+			Item.height = 18;
+			Item.value = Item.sellPrice(0, 0, 0, 50);
+			Item.rare = ItemRarityID.Blue;
+			Item.UseSound = SoundID.Item2;
 		}
 		public override int GetVoidAmt()
 		{
@@ -302,11 +302,11 @@ namespace SOTS.Items.Void
 		}
 		public override void SafeSetDefaults()
 		{
-			item.width = 22;
-			item.height = 30;
-			item.value = Item.sellPrice(0, 0, 7, 50);
-			item.rare = ItemRarityID.Blue;
-			item.UseSound = SoundID.Item2;
+			Item.width = 22;
+			Item.height = 30;
+			Item.value = Item.sellPrice(0, 0, 7, 50);
+			Item.rare = ItemRarityID.Blue;
+			Item.UseSound = SoundID.Item2;
 		}
         public override int GetVoidAmt()
         {
@@ -350,11 +350,11 @@ namespace SOTS.Items.Void
 		}
 		public override void SafeSetDefaults()
 		{
-			item.width = 32;
-			item.height = 26;
-			item.value = Item.sellPrice(0, 0, 25, 0);
-			item.rare = ItemRarityID.Blue;
-			item.UseSound = SoundID.Item3;
+			Item.width = 32;
+			Item.height = 26;
+			Item.value = Item.sellPrice(0, 0, 25, 0);
+			Item.rare = ItemRarityID.Blue;
+			Item.UseSound = SoundID.Item3;
 		}
 		public override void OnActivation(Player player)
 		{

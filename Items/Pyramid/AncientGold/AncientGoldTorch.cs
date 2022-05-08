@@ -14,21 +14,21 @@ namespace SOTS.Items.Pyramid.AncientGold
 	{
 		public override void SetDefaults()
 		{
-			item.width = 14;
-			item.height = 16;
-			item.maxStack = 99;
-			item.holdStyle = 1;
-			item.noWet = true;
-			item.useTurn = true;
-			item.autoReuse = true;
-			item.useAnimation = 15;
-			item.useTime = 10;
-			item.consumable = true;
-			item.createTile = TileType<AncientGoldTorchTile>();
-			item.flame = true;
-            item.useStyle = ItemUseStyleID.SwingThrow;
-            item.rare = ItemRarityID.LightRed;
-			item.value = 50;
+			Item.width = 14;
+			Item.height = 16;
+			Item.maxStack = 99;
+			Item.holdStyle = 1;
+			Item.noWet = true;
+			Item.useTurn = true;
+			Item.autoReuse = true;
+			Item.useAnimation = 15;
+			Item.useTime = 10;
+			Item.consumable = true;
+			Item.createTile = TileType<AncientGoldTorchTile>();
+			Item.flame = true;
+            Item.useStyle = ItemUseStyleID.SwingThrow;
+            Item.rare = ItemRarityID.LightRed;
+			Item.value = 50;
 		}
 		public override void HoldItem(Player player)
 		{
@@ -41,9 +41,9 @@ namespace SOTS.Items.Pyramid.AncientGold
 		}
 		public override void PostUpdate()
 		{
-			if (!item.wet)
+			if (!Item.wet)
 			{
-				Lighting.AddLight((int)((item.position.X + item.width / 2) / 16f), (int)((item.position.Y + item.height / 2) / 16f), 1.1f, 0.9f, 0.9f);
+				Lighting.AddLight((int)((Item.position.X + Item.width / 2) / 16f), (int)((Item.position.Y + Item.height / 2) / 16f), 1.1f, 0.9f, 0.9f);
 			}
 		}
 		public override void AutoLightSelect(ref bool dryTorch, ref bool wetTorch, ref bool glowstick)

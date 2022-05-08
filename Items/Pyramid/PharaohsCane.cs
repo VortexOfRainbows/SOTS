@@ -13,18 +13,18 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void SetDefaults()
 		{
-			item.damage = 11;
-			item.melee = true;
-			item.width = 36;
-			item.height = 26;
-			item.useTime = 25;
-			item.useAnimation = 25;
-			item.useStyle = 1;
-			item.knockBack = 2.5f;
-			item.value = Item.sellPrice(0, 15, 0, 0);
-			item.rare = 3;
-			item.UseSound = SoundID.Item1;
-			item.autoReuse = true;     
+			Item.damage = 11;
+			Item.melee = true;
+			Item.width = 36;
+			Item.height = 26;
+			Item.useTime = 25;
+			Item.useAnimation = 25;
+			Item.useStyle = 1;
+			Item.knockBack = 2.5f;
+			Item.value = Item.sellPrice(0, 15, 0, 0);
+			Item.rare = 3;
+			Item.UseSound = SoundID.Item1;
+			Item.autoReuse = true;     
 		}
         public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)
         {

@@ -15,20 +15,20 @@ namespace SOTS.Items.Potions
 		}
 		public override void SetDefaults()
 		{
-			item.width = 20;
-			item.height = 28;
-            item.value = Item.sellPrice(0, 0, 10, 0);
-			item.rare = 3;
-			item.maxStack = 30;
-            item.buffType = mod.BuffType("DoubleVision");   
+			Item.width = 20;
+			Item.height = 28;
+            Item.value = Item.sellPrice(0, 0, 10, 0);
+			Item.rare = 3;
+			Item.maxStack = 30;
+            Item.buffType = mod.BuffType("DoubleVision");   
 			int minute = 3600;
-            item.buffTime = minute * 6;
-            item.UseSound = SoundID.Item3;            
-            item.useStyle = 2;        
-            item.useTurn = true;
-            item.useAnimation = 16;
-            item.useTime = 16;
-            item.consumable = true;       
+            Item.buffTime = minute * 6;
+            Item.UseSound = SoundID.Item3;            
+            Item.useStyle = 2;        
+            Item.useTurn = true;
+            Item.useAnimation = 16;
+            Item.useTime = 16;
+            Item.consumable = true;       
 			
 		}
 		public override bool UseItem(Player player) 

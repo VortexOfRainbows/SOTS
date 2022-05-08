@@ -13,12 +13,12 @@ namespace SOTS.Items.Crushers
 		}
 		public override void SetDefaults()
 		{
-			item.maxStack = 1;
-            item.width = 32;     
-            item.height = 34;   
-            item.value = Item.buyPrice(0, 6, 0, 0);
-            item.rare = ItemRarityID.Orange;
-			item.accessory = true;
+			Item.maxStack = 1;
+            Item.width = 32;     
+            Item.height = 34;   
+            Item.value = Item.buyPrice(0, 6, 0, 0);
+            Item.rare = ItemRarityID.Orange;
+			Item.accessory = true;
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{

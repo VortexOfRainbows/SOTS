@@ -15,20 +15,20 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void SetDefaults()
 		{
-			item.width = 18;
-			item.height = 42;
-			item.value = Item.sellPrice(0, 25, 0, 0);
-			item.rare = ItemRarityID.LightRed;
-			item.maxStack = 999;
-			ItemID.Sets.ItemNoGravity[item.type] = true;
+			Item.width = 18;
+			Item.height = 42;
+			Item.value = Item.sellPrice(0, 25, 0, 0);
+			Item.rare = ItemRarityID.LightRed;
+			Item.maxStack = 999;
+			ItemID.Sets.ItemNoGravity[Item.type] = true;
 		}
 		public override void PostUpdate()
 		{
-			Lighting.AddLight(item.Center, 10 / 255f, 10 / 255f, 10 / 255f);
+			Lighting.AddLight(Item.Center, 10 / 255f, 10 / 255f, 10 / 255f);
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frameNotUsed, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
-			Texture2D texture = Main.itemTexture[item.type];
+			Texture2D texture = Main.itemTexture[Item.type];
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			position += drawOrigin * scale;
 			float counter = Main.GlobalTime * 160;
@@ -65,7 +65,7 @@ namespace SOTS.Items.Pyramid
 		}
 		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
 		{
-			Texture2D texture = Main.itemTexture[item.type];
+			Texture2D texture = Main.itemTexture[Item.type];
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			float counter = Main.GlobalTime * 160;
 			float mult = new Vector2(-2.5f, 0).RotatedBy(MathHelper.ToRadians(counter)).X;
@@ -94,9 +94,9 @@ namespace SOTS.Items.Pyramid
 						break;
 				}
 				Vector2 rotationAround2 = 0.5f * new Vector2((6 + mult) * scale, 0).RotatedBy(MathHelper.ToRadians(60 * i + counter));
-				Main.spriteBatch.Draw(texture, rotationAround2 + item.Center - Main.screenPosition + new Vector2(0, 2), null, color, rotation, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, rotationAround2 + Item.Center - Main.screenPosition + new Vector2(0, 2), null, color, rotation, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
 			}
-			Main.spriteBatch.Draw(texture, item.Center - Main.screenPosition + new Vector2(0, 2), null, Color.Lerp(lightColor, Color.Black, 0.7f), rotation, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(texture, Item.Center - Main.screenPosition + new Vector2(0, 2), null, Color.Lerp(lightColor, Color.Black, 0.7f), rotation, drawOrigin, scale * 1.1f, SpriteEffects.None, 0f);
 			return false;
 		}
 		public override void AddRecipes()

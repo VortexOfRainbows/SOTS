@@ -15,17 +15,17 @@ namespace SOTS.Items.Pyramid
 
 		public override void SetDefaults()
 		{
-			item.width = 32;
-			item.height = 28;
-			item.maxStack = 999;
-			item.useTurn = true;
-			item.autoReuse = true;
-			item.useAnimation = 15;
-			item.useTime = 10;
-			item.useStyle = 1;
-			item.rare = 4;
-			item.consumable = true;
-			item.createTile = mod.TileType("SarcophagusTile");
+			Item.width = 32;
+			Item.height = 28;
+			Item.maxStack = 999;
+			Item.useTurn = true;
+			Item.autoReuse = true;
+			Item.useAnimation = 15;
+			Item.useTime = 10;
+			Item.useStyle = 1;
+			Item.rare = 4;
+			Item.consumable = true;
+			Item.createTile = mod.TileType("SarcophagusTile");
 		}
 	}
 }

@@ -17,27 +17,27 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void SetDefaults()
 		{
-			item.damage = 24;
-			item.melee = true;
-			item.width = 42;
-			item.height = 22;
-			item.useTime = 5;
-			item.useAnimation = 25;
-			item.channel = true;
-			item.noUseGraphic = true;
-			item.noMelee = true;
-			item.pick = 110;
-			item.tileBoost++;
-			item.useStyle = 5;
-			item.knockBack = 0;
-			item.value = Item.sellPrice(0, 0, 1, 50);
-			item.rare = 5;
-			item.UseSound = SoundID.Item23;
-			item.autoReuse = true;
-			item.shoot = mod.ProjectileType("JuryRiggedDrill");
-			item.shootSpeed = 20f;
-			item.consumable = true;
-			item.maxStack = 999;
+			Item.damage = 24;
+			Item.melee = true;
+			Item.width = 42;
+			Item.height = 22;
+			Item.useTime = 5;
+			Item.useAnimation = 25;
+			Item.channel = true;
+			Item.noUseGraphic = true;
+			Item.noMelee = true;
+			Item.pick = 110;
+			Item.tileBoost++;
+			Item.useStyle = 5;
+			Item.knockBack = 0;
+			Item.value = Item.sellPrice(0, 0, 1, 50);
+			Item.rare = 5;
+			Item.UseSound = SoundID.Item23;
+			Item.autoReuse = true;
+			Item.shoot = mod.ProjectileType("JuryRiggedDrill");
+			Item.shootSpeed = 20f;
+			Item.consumable = true;
+			Item.maxStack = 999;
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
@@ -58,7 +58,7 @@ namespace SOTS.Items.Pyramid
 		public override bool ConsumeItem(Player player) 
 		{
 			inInventory = false;
-			if(counter > 8 && index != -1 && Main.projectile[index].active && Main.player[Main.projectile[index].owner] == player && Main.projectile[index].type == item.shoot)
+			if(counter > 8 && index != -1 && Main.projectile[index].active && Main.player[Main.projectile[index].owner] == player && Main.projectile[index].type == Item.shoot)
 			{
 				counter = 0;
 				Main.projectile[index].Kill();

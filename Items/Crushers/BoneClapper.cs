@@ -17,23 +17,23 @@ namespace SOTS.Items.Crushers
 		}
 		public override void SafeSetDefaults()
 		{
-            item.damage = 26;
-            item.melee = true;  
-            item.width = 42;
-            item.height = 42;  
-            item.useTime = 30; 
-            item.useAnimation = 30;
-            item.useStyle = ItemUseStyleID.HoldingOut;    
-            item.knockBack = 6f;
-            item.value = Item.sellPrice(0, 3, 60, 0);
-            item.rare = ItemRarityID.Pink;
-            item.UseSound = SoundID.Item22;
-            item.autoReuse = true;
-            item.shoot = ModContent.ProjectileType<BoneClapperCrusher>(); 
-            item.shootSpeed = 12f;
-			item.channel = true;
-            item.noUseGraphic = true; 
-            item.noMelee = true;
+            Item.damage = 26;
+            Item.melee = true;  
+            Item.width = 42;
+            Item.height = 42;  
+            Item.useTime = 30; 
+            Item.useAnimation = 30;
+            Item.useStyle = ItemUseStyleID.HoldingOut;    
+            Item.knockBack = 6f;
+            Item.value = Item.sellPrice(0, 3, 60, 0);
+            Item.rare = ItemRarityID.Pink;
+            Item.UseSound = SoundID.Item22;
+            Item.autoReuse = true;
+            Item.shoot = ModContent.ProjectileType<BoneClapperCrusher>(); 
+            Item.shootSpeed = 12f;
+			Item.channel = true;
+            Item.noUseGraphic = true; 
+            Item.noMelee = true;
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{

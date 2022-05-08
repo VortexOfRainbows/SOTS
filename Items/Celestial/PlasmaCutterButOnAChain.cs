@@ -18,25 +18,25 @@ namespace SOTS.Items.Celestial
 		}
 		public override void SetDefaults()
 		{
-            item.damage = 130;
-            item.melee = true;  
-            item.width = 64;
-            item.height = 54;  
-            item.useTime = 28; 
-            item.useAnimation = 28;
-            item.useStyle = ItemUseStyleID.SwingThrow;    
-            item.knockBack = 6f;
-            item.value = Item.sellPrice(0, 15, 0, 0);
-            item.rare = ItemRarityID.Yellow;
-            item.UseSound = SoundID.Item22;
-            item.autoReuse = true;
-            item.shoot = mod.ProjectileType("PlasmaCutter"); 
-            item.shootSpeed = 0f;
-			item.channel = true;
-			item.axe = 200;
-            item.noUseGraphic = true; 
-            item.noMelee = true;
-			Item.staff[item.type] = true; 
+            Item.damage = 130;
+            Item.melee = true;  
+            Item.width = 64;
+            Item.height = 54;  
+            Item.useTime = 28; 
+            Item.useAnimation = 28;
+            Item.useStyle = ItemUseStyleID.SwingThrow;    
+            Item.knockBack = 6f;
+            Item.value = Item.sellPrice(0, 15, 0, 0);
+            Item.rare = ItemRarityID.Yellow;
+            Item.UseSound = SoundID.Item22;
+            Item.autoReuse = true;
+            Item.shoot = mod.ProjectileType("PlasmaCutter"); 
+            Item.shootSpeed = 0f;
+			Item.channel = true;
+			Item.axe = 200;
+            Item.noUseGraphic = true; 
+            Item.noMelee = true;
+			Item.staff[Item.type] = true; 
 		}
         public override float UseTimeMultiplier(Player player)
 		{
@@ -50,8 +50,8 @@ namespace SOTS.Items.Celestial
 			if (speedMod < 6)
 				speedMod = 6;
 			int useTime = speedMod;
-			item.useTime = useTime;
-			item.useAnimation = useTime;
+			Item.useTime = useTime;
+			Item.useAnimation = useTime;
 			return base.UseTimeMultiplier(player);
         }
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
@@ -60,14 +60,14 @@ namespace SOTS.Items.Celestial
 			for (int l = 0; l < Main.projectile.Length; l++)
 			{
 				Projectile proj = Main.projectile[l];
-				if(proj.active && proj.type == item.shoot && Main.player[proj.owner] == player)
+				if(proj.active && proj.type == Item.shoot && Main.player[proj.owner] == player)
 				{
 					summon = false;
 				}
 			}
 			if(player.altFunctionUse != 2)
 			{
-				item.UseSound = SoundID.Item22;
+				Item.UseSound = SoundID.Item22;
 				if(summon)
 				{
 					Projectile.NewProjectile(position.X, position.Y, speedX, speedY, type, damage, knockBack, player.whoAmI, (float)Math.Atan2(speedY, speedX) + 90f, 0);

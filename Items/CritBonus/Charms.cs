@@ -16,11 +16,11 @@ namespace SOTS.Items.CritBonus
 		}
 		public override void SetDefaults()
 		{
-            item.width = 30;     
-            item.height = 32;  
-            item.value = Item.sellPrice(0, 0, 25, 0);
-            item.rare = ItemRarityID.Blue;
-			item.accessory = true;
+            Item.width = 30;     
+            Item.height = 32;  
+            Item.value = Item.sellPrice(0, 0, 25, 0);
+            Item.rare = ItemRarityID.Blue;
+			Item.accessory = true;
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
@@ -52,11 +52,11 @@ namespace SOTS.Items.CritBonus
 		}
 		public override void SetDefaults()
 		{
-			item.width = 30;
-			item.height = 32;
-			item.value = Item.sellPrice(0, 1, 50, 0);
-			item.rare = ItemRarityID.Pink;
-			item.accessory = true;
+			Item.width = 30;
+			Item.height = 32;
+			Item.value = Item.sellPrice(0, 1, 50, 0);
+			Item.rare = ItemRarityID.Pink;
+			Item.accessory = true;
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
@@ -87,11 +87,11 @@ namespace SOTS.Items.CritBonus
 		}
 		public override void SetDefaults()
 		{
-			item.width = 30;
-			item.height = 34;
-			item.value = Item.sellPrice(0, 5, 0, 0);
-			item.rare = ItemRarityID.Yellow;
-			item.accessory = true;
+			Item.width = 30;
+			Item.height = 34;
+			Item.value = Item.sellPrice(0, 5, 0, 0);
+			Item.rare = ItemRarityID.Yellow;
+			Item.accessory = true;
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{

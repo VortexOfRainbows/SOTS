@@ -16,16 +16,16 @@ namespace SOTS.Items.CritBonus
 		{
 			DisplayName.SetDefault("Focus Reticle");
 			Tooltip.SetDefault("20% increased crit chance\nCritical strikes deal 50 more damage\nImmunity to bleeding and poisoned debuffs");
-			Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(8, 16));
+			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(8, 16));
 		}
 		public override void SetDefaults()
 		{
-            item.width = 30;     
-            item.height = 30;  
-            item.value = Item.sellPrice(0, 10, 0, 0);
-            item.rare = ItemRarityID.Yellow;
-			item.accessory = true;
-			item.defense = 1;
+            Item.width = 30;     
+            Item.height = 30;  
+            Item.value = Item.sellPrice(0, 10, 0, 0);
+            Item.rare = ItemRarityID.Yellow;
+			Item.accessory = true;
+			Item.defense = 1;
 		}
 		int frame;
 		int frameCounter;
@@ -41,7 +41,7 @@ namespace SOTS.Items.CritBonus
 			{
 				this.frame = 0;
 			}
-			Texture2D texture = Main.itemTexture[item.type];
+			Texture2D texture = Main.itemTexture[Item.type];
 			Texture2D texture2 = mod.GetTexture("Items/CritBonus/FocusReticle_Glow");
 			Main.spriteBatch.Draw(texture, position, new Rectangle(0, 30 * this.frame, 30, 30), drawColor, 0f, origin, scale, SpriteEffects.None, 0f);
 			Main.spriteBatch.Draw(texture2, position, new Rectangle(0, 30 * this.frame, 30, 30), Color.White, 0f, origin, scale, SpriteEffects.None, 0f);
@@ -59,11 +59,11 @@ namespace SOTS.Items.CritBonus
 			{
 				frame = 0;
 			}
-			Texture2D texture = Main.itemTexture[item.type];
+			Texture2D texture = Main.itemTexture[Item.type];
 			Texture2D texture2 = mod.GetTexture("Items/CritBonus/FocusReticle_Glow");
-			Vector2 drawOrigin = new Vector2(Main.itemTexture[item.type].Width * 0.5f, item.height * 0.5f);
-			Main.spriteBatch.Draw(texture, item.Center - Main.screenPosition, new Rectangle(0, 30 * frame, 30, 30), lightColor, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
-			Main.spriteBatch.Draw(texture2, item.Center - Main.screenPosition, new Rectangle(0, 30 * frame, 30, 30), Color.White, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
+			Main.spriteBatch.Draw(texture, Item.Center - Main.screenPosition, new Rectangle(0, 30 * frame, 30, 30), lightColor, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(texture2, Item.Center - Main.screenPosition, new Rectangle(0, 30 * frame, 30, 30), Color.White, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			return false;
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
@@ -97,12 +97,12 @@ namespace SOTS.Items.CritBonus
 		}
 		public override void SetDefaults()
 		{
-			item.width = 30;
-			item.height = 28;
-			item.value = Item.sellPrice(0, 10, 0, 0);
-			item.rare = ItemRarityID.Yellow;
-			item.wornArmor = false;
-			item.accessory = true;
+			Item.width = 30;
+			Item.height = 28;
+			Item.value = Item.sellPrice(0, 10, 0, 0);
+			Item.rare = ItemRarityID.Yellow;
+			Item.wornArmor = false;
+			Item.accessory = true;
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{

@@ -15,21 +15,21 @@ namespace SOTS.Items.ChestItems
         }
         public override void SetDefaults()
         {
-            item.damage = 135;
-            item.ranged = true;
-            item.width = 68;
-            item.height = 24;
-            item.useTime = 21;
-            item.useAnimation = 21;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.noMelee = true;
-            item.knockBack = 3;
-            item.value = Item.sellPrice(0, 20, 0, 0);
-            item.rare = ItemRarityID.Yellow;
-            item.UseSound = SoundID.Item99;
-            item.autoReuse = true;
-            item.shoot = ModContent.ProjectileType<Rebar>();
-            item.shootSpeed = 4.75f;
+            Item.damage = 135;
+            Item.ranged = true;
+            Item.width = 68;
+            Item.height = 24;
+            Item.useTime = 21;
+            Item.useAnimation = 21;
+            Item.useStyle = ItemUseStyleID.HoldingOut;
+            Item.noMelee = true;
+            Item.knockBack = 3;
+            Item.value = Item.sellPrice(0, 20, 0, 0);
+            Item.rare = ItemRarityID.Yellow;
+            Item.UseSound = SoundID.Item99;
+            Item.autoReuse = true;
+            Item.shoot = ModContent.ProjectileType<Rebar>();
+            Item.shootSpeed = 4.75f;
         }
         public override Vector2? HoldoutOffset()
         {

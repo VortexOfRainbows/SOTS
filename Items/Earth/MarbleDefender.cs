@@ -14,14 +14,14 @@ namespace SOTS.Items.Earth
 		}
 		public override void SetDefaults()
 		{
-			item.damage = 12;
-			item.maxStack = 1;
-            item.width = 28;     
-            item.height = 36;   
-            item.value = Item.sellPrice(0, 0, 20, 0);
-            item.rare = ItemRarityID.Blue;
-			item.defense = 1;
-			item.accessory = true;
+			Item.damage = 12;
+			Item.maxStack = 1;
+            Item.width = 28;     
+            Item.height = 36;   
+            Item.value = Item.sellPrice(0, 0, 20, 0);
+            Item.rare = ItemRarityID.Blue;
+			Item.defense = 1;
+			Item.accessory = true;
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{

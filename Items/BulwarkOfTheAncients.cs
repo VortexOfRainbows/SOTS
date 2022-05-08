@@ -17,14 +17,14 @@ namespace SOTS.Items
 		}
 		public override void SetDefaults()
 		{
-			item.damage = 34;
-			item.magic = true;
-            item.width = 42;     
-            item.height = 46;   
-            item.value = Item.sellPrice(0, 25, 0, 0);
-            item.rare = ItemRarityID.Yellow;
-			item.accessory = true;
-			item.defense = 6;
+			Item.damage = 34;
+			Item.magic = true;
+            Item.width = 42;     
+            Item.height = 46;   
+            Item.value = Item.sellPrice(0, 25, 0, 0);
+            Item.rare = ItemRarityID.Yellow;
+			Item.accessory = true;
+			Item.defense = 6;
 		}
 		public override void AddRecipes()
 		{
@@ -69,7 +69,7 @@ namespace SOTS.Items
 			//Surrounds you with 4 orbital projectiles
 			if(Main.myPlayer == player.whoAmI && !hideVisual)
 			{
-				int damage = (int)(item.damage * (1f + (player.magicDamage - 1f) + (player.allDamage - 1f)));
+				int damage = (int)(Item.damage * (1f + (player.magicDamage - 1f) + (player.allDamage - 1f)));
 				modPlayer.tPlanetDamage += damage;
 				modPlayer.tPlanetNum += 2;
 				modPlayer.aqueductDamage += damage;

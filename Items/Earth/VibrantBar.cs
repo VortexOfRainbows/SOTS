@@ -14,14 +14,14 @@ namespace SOTS.Items.Earth
 		}
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.IronBar);
-			item.width = 30;
-			item.height = 24;
-            item.value = Item.sellPrice(0, 0, 15, 0);
-			item.rare = ItemRarityID.Blue;
-			item.maxStack = 99;
-			item.placeStyle = 9;
-			item.createTile = ModContent.TileType<TheBars>();
+			Item.CloneDefaults(ItemID.IronBar);
+			Item.width = 30;
+			Item.height = 24;
+            Item.value = Item.sellPrice(0, 0, 15, 0);
+			Item.rare = ItemRarityID.Blue;
+			Item.maxStack = 99;
+			Item.placeStyle = 9;
+			Item.createTile = ModContent.TileType<TheBars>();
 		}
 		public override void AddRecipes()
 		{

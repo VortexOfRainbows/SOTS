@@ -9,11 +9,11 @@ namespace SOTS.Items.Slime
 	{
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.StoneWall);
-			item.width = 24;
-			item.height = 24;
-			item.rare = ItemRarityID.Blue;
-			item.createWall = ModContent.WallType<GoopwoodWallWall>();
+			Item.CloneDefaults(ItemID.StoneWall);
+			Item.width = 24;
+			Item.height = 24;
+			Item.rare = ItemRarityID.Blue;
+			Item.createWall = ModContent.WallType<GoopwoodWallWall>();
 		}
 		public override void AddRecipes()
 		{

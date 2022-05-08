@@ -83,30 +83,30 @@ namespace SOTS.Items.Secrets
 				}
 				Rectangle frame = new Rectangle(0, 0, 74, 36);
 				Vector2 rotationAround = new Vector2(4 * scale, 0).RotatedBy(MathHelper.ToRadians(60 * i + counter));
-				Main.spriteBatch.Draw(texture, item.Center + rotationAround - Main.screenPosition + new Vector2(0, 2), frame, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, Item.Center + rotationAround - Main.screenPosition + new Vector2(0, 2), frame, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			}
 			return true;
 		}
         public override void SetDefaults()
 		{
-			item.damage = 42;
-			item.magic = true;
-			item.width = 74;
-			item.height = 36;
-			item.useTime = 30;
-			item.useAnimation = 30;
-			item.useStyle = ItemUseStyleID.HoldingOut;
-			item.knockBack = 5f;
-			item.value = Item.sellPrice(0, 5, 0, 0);
-			item.rare = ItemRarityID.LightPurple;
-			//item.UseSound = SoundID.Item5;
-			item.autoReuse = false;
-			item.channel = true;
-			item.shoot = ModContent.ProjectileType<Projectiles.Laser.PhotonGeyser>();
-			item.shootSpeed = 22f;
-			item.noMelee = true;
-			item.noUseGraphic = true;
-			item.mana = 50;
+			Item.damage = 42;
+			Item.magic = true;
+			Item.width = 74;
+			Item.height = 36;
+			Item.useTime = 30;
+			Item.useAnimation = 30;
+			Item.useStyle = ItemUseStyleID.HoldingOut;
+			Item.knockBack = 5f;
+			Item.value = Item.sellPrice(0, 5, 0, 0);
+			Item.rare = ItemRarityID.LightPurple;
+			//Item.UseSound = SoundID.Item5;
+			Item.autoReuse = false;
+			Item.channel = true;
+			Item.shoot = ModContent.ProjectileType<Projectiles.Laser.PhotonGeyser>();
+			Item.shootSpeed = 22f;
+			Item.noMelee = true;
+			Item.noUseGraphic = true;
+			Item.mana = 50;
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{

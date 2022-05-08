@@ -15,10 +15,10 @@ namespace SOTS.Items.Permafrost
 		}
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.StoneBlock);
-			item.rare = ItemRarityID.Cyan;
-			item.consumable = true;
-			item.createTile = ModContent.TileType<HardIceBrickTile>();
+			Item.CloneDefaults(ItemID.StoneBlock);
+			Item.rare = ItemRarityID.Cyan;
+			Item.consumable = true;
+			Item.createTile = ModContent.TileType<HardIceBrickTile>();
 		}
 		public override void AddRecipes()
 		{

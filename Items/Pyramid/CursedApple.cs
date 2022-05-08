@@ -19,14 +19,14 @@ namespace SOTS.Items.Pyramid
 
 		public override void SetDefaults()
 		{
-			item.width = 26;
-			item.height = 32;
-			item.maxStack = 1;
-			item.rare = 6;
-			//item.consumable = true;
-			//item.createTile = mod.TileType("CursedAppleTile");
-			item.value = Item.sellPrice(0, 10, 0, 0);
-			item.accessory = true;
+			Item.width = 26;
+			Item.height = 32;
+			Item.maxStack = 1;
+			Item.rare = 6;
+			//Item.consumable = true;
+			//Item.createTile = mod.TileType("CursedAppleTile");
+			Item.value = Item.sellPrice(0, 10, 0, 0);
+			Item.accessory = true;
 		}
 		public override void UpdateVanity(Player player, EquipType type)
 		{

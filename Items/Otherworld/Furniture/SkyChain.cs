@@ -21,12 +21,12 @@ namespace SOTS.Items.Otherworld.Furniture
 		}
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.StoneBlock);
-			item.rare = ItemRarityID.LightRed;
-			item.width = 16;
-			item.height = 22;
-			item.value = Item.sellPrice(0, 0, 10, 0);
-			item.createTile = ModContent.TileType<SkyChainTile>();
+			Item.CloneDefaults(ItemID.StoneBlock);
+			Item.rare = ItemRarityID.LightRed;
+			Item.width = 16;
+			Item.height = 22;
+			Item.value = Item.sellPrice(0, 0, 10, 0);
+			Item.createTile = ModContent.TileType<SkyChainTile>();
 		}
 		public override void AddRecipes()
 		{

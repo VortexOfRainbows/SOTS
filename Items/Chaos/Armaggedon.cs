@@ -19,23 +19,23 @@ namespace SOTS.Items.Chaos
 		}
 		public override void SafeSetDefaults()
 		{
-			item.damage = 270;
-			item.melee = true;
-			item.width = 28;
-			item.height = 26;
-            item.useTime = 10;
-            item.useAnimation = 30;
-			item.useStyle = ItemUseStyleID.HoldingOut;
-			item.knockBack = 8.0f;
-            item.value = Item.sellPrice(0, 14, 0, 0);
-            item.rare = ItemRarityID.Yellow;
-            item.UseSound = SoundID.Item19;
-            item.autoReuse = true;       
-			item.shoot = ModContent.ProjectileType<ChaosPunch>(); 
-            item.shootSpeed = 11f;
-			item.noMelee = true;
-			item.noUseGraphic = true;
-			item.crit = 10;
+			Item.damage = 270;
+			Item.melee = true;
+			Item.width = 28;
+			Item.height = 26;
+            Item.useTime = 10;
+            Item.useAnimation = 30;
+			Item.useStyle = ItemUseStyleID.HoldingOut;
+			Item.knockBack = 8.0f;
+            Item.value = Item.sellPrice(0, 14, 0, 0);
+            Item.rare = ItemRarityID.Yellow;
+            Item.UseSound = SoundID.Item19;
+            Item.autoReuse = true;       
+			Item.shoot = ModContent.ProjectileType<ChaosPunch>(); 
+            Item.shootSpeed = 11f;
+			Item.noMelee = true;
+			Item.noUseGraphic = true;
+			Item.crit = 10;
 		}
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{

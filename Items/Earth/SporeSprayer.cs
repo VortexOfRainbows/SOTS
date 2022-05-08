@@ -15,22 +15,22 @@ namespace SOTS.Items.Earth
         }
         public override void SetDefaults()
         {
-            item.damage = 11;
-            item.ranged = true;
-            item.width = 30;
-            item.height = 60;
-            item.useTime = 18;
-            item.useAnimation = 18;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.noMelee = true;
-            item.knockBack = 0.5f;
-            item.value = Item.sellPrice(0, 0, 40, 0);
-            item.rare = ItemRarityID.Blue;
-            item.UseSound = SoundID.Item5;
-            item.autoReuse = true;
-            item.shoot = ProjectileID.WoodenArrowFriendly;
-            item.shootSpeed = 8f;
-            item.useAmmo = AmmoID.Arrow; 
+            Item.damage = 11;
+            Item.ranged = true;
+            Item.width = 30;
+            Item.height = 60;
+            Item.useTime = 18;
+            Item.useAnimation = 18;
+            Item.useStyle = ItemUseStyleID.HoldingOut;
+            Item.noMelee = true;
+            Item.knockBack = 0.5f;
+            Item.value = Item.sellPrice(0, 0, 40, 0);
+            Item.rare = ItemRarityID.Blue;
+            Item.UseSound = SoundID.Item5;
+            Item.autoReuse = true;
+            Item.shoot = ProjectileID.WoodenArrowFriendly;
+            Item.shootSpeed = 8f;
+            Item.useAmmo = AmmoID.Arrow; 
         }
         public override Vector2? HoldoutOffset()
         {

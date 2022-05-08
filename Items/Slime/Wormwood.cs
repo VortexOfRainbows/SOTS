@@ -14,17 +14,17 @@ namespace SOTS.Items.Slime
 		}
 		public override void SetDefaults()
 		{
-			item.width = 28;
-			item.height = 22;
-			item.maxStack = 999;
-			item.useTurn = true;
-			item.autoReuse = true;
-			item.useAnimation = 15;
-			item.useTime = 10;
-			item.useStyle = 1;
-			item.rare = 1;
-			item.consumable = true;
-			item.createTile = mod.TileType("WormwoodTile");
+			Item.width = 28;
+			Item.height = 22;
+			Item.maxStack = 999;
+			Item.useTurn = true;
+			Item.autoReuse = true;
+			Item.useAnimation = 15;
+			Item.useTime = 10;
+			Item.useStyle = 1;
+			Item.rare = 1;
+			Item.consumable = true;
+			Item.createTile = mod.TileType("WormwoodTile");
 		}
 		public override void AddRecipes()
 		{

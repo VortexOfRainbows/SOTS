@@ -16,20 +16,20 @@ namespace SOTS.Items
 		{
 			DisplayName.SetDefault("Electromagnetic Lure");
 			Tooltip.SetDefault("Attracts a single biome construct");
-			Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(4, 6));
+			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 6));
 		}
 		public override void SetDefaults()
 		{
-			item.width = 18;
-			item.height = 40;
-			item.value = Item.sellPrice(0, 1, 0, 0);
-			item.rare = ItemRarityID.Orange;
-			item.maxStack = 30;
-			item.useAnimation = 30;
-			item.useTime = 30;
-			item.useStyle = ItemUseStyleID.HoldingUp;
-			item.consumable = true;
-			item.noUseGraphic = true;
+			Item.width = 18;
+			Item.height = 40;
+			Item.value = Item.sellPrice(0, 1, 0, 0);
+			Item.rare = ItemRarityID.Orange;
+			Item.maxStack = 30;
+			Item.useAnimation = 30;
+			Item.useTime = 30;
+			Item.useStyle = ItemUseStyleID.HoldingUp;
+			Item.consumable = true;
+			Item.noUseGraphic = true;
 		}
         public override void AddRecipes()
 		{

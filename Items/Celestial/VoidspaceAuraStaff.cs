@@ -15,22 +15,22 @@ namespace SOTS.Items.Celestial
 		}
         public override void SetDefaults()
         {
-            item.damage = 90;  
-            item.mana = 12;   
-            item.width = 44;    
-            item.height = 40;    
-            item.useTime = 45;  
-            item.useAnimation = 45;   
-            item.useStyle = ItemUseStyleID.SwingThrow;  
-            item.noMelee = true; 
-            item.knockBack = 1f; 
-            item.value = Item.sellPrice(0, 15, 0, 0);
-            item.rare = ItemRarityID.Yellow;
-            item.UseSound = SoundID.Item44; 
-            item.autoReuse = true;  
-            item.shoot = ModContent.ProjectileType<VoidspaceCell>();  
-            item.summon = true; 
-            item.sentry = true; 
+            Item.damage = 90;  
+            Item.mana = 12;   
+            Item.width = 44;    
+            Item.height = 40;    
+            Item.useTime = 45;  
+            Item.useAnimation = 45;   
+            Item.useStyle = ItemUseStyleID.SwingThrow;  
+            Item.noMelee = true; 
+            Item.knockBack = 1f; 
+            Item.value = Item.sellPrice(0, 15, 0, 0);
+            Item.rare = ItemRarityID.Yellow;
+            Item.UseSound = SoundID.Item44; 
+            Item.autoReuse = true;  
+            Item.shoot = ModContent.ProjectileType<VoidspaceCell>();  
+            Item.summon = true; 
+            Item.sentry = true; 
         } 
 		public override void AddRecipes()
 		{

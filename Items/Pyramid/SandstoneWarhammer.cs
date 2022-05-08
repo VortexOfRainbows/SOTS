@@ -13,21 +13,21 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void SafeSetDefaults()
 		{
-			item.damage = 23;
-			item.melee = true;
-			item.width = 40;
-			item.height = 40;
-			item.useTime = 18;
-			item.useAnimation = 18;
-			item.useStyle = 1;
-			item.knockBack = 1.5f;
-			item.value = Item.sellPrice(0, 1, 50, 0);
-			item.rare = 3;
-			item.UseSound = SoundID.Item1;
-			item.autoReuse = true;            
-			item.noMelee = false;
-			item.shoot = mod.ProjectileType("Bloodaxe");  
-            item.shootSpeed = 13.5f;
+			Item.damage = 23;
+			Item.melee = true;
+			Item.width = 40;
+			Item.height = 40;
+			Item.useTime = 18;
+			Item.useAnimation = 18;
+			Item.useStyle = 1;
+			Item.knockBack = 1.5f;
+			Item.value = Item.sellPrice(0, 1, 50, 0);
+			Item.rare = 3;
+			Item.UseSound = SoundID.Item1;
+			Item.autoReuse = true;            
+			Item.noMelee = false;
+			Item.shoot = mod.ProjectileType("Bloodaxe");  
+            Item.shootSpeed = 13.5f;
 		}
 		public override int GetVoid(Player player)
 		{

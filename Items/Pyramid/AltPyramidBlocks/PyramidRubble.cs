@@ -16,17 +16,17 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
 		}
 		public override void SetDefaults()
 		{
-			item.width = 16;
-			item.height = 16;
-			item.maxStack = 999;
-			item.useTurn = true;
-			item.autoReuse = true;
-			item.useAnimation = 15;
-			item.useTime = 10;
-			item.useStyle = 1;
-			item.rare = ItemRarityID.Blue;
-			item.consumable = true;
-			item.createTile = ModContent.TileType<PyramidRubbleTile>();
+			Item.width = 16;
+			Item.height = 16;
+			Item.maxStack = 999;
+			Item.useTurn = true;
+			Item.autoReuse = true;
+			Item.useAnimation = 15;
+			Item.useTime = 10;
+			Item.useStyle = 1;
+			Item.rare = ItemRarityID.Blue;
+			Item.consumable = true;
+			Item.createTile = ModContent.TileType<PyramidRubbleTile>();
 		}
 	}
 	public class PyramidRubbleTile : ModTile
@@ -64,17 +64,17 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
 		}
 		public override void SetDefaults()
 		{
-			item.width = 16;
-			item.height = 16;
-			item.maxStack = 999;
-			item.useTurn = true;
-			item.autoReuse = true;
-			item.useAnimation = 15;
-			item.useTime = 10;
-			item.useStyle = 1;
-			item.rare = ItemRarityID.LightRed;
-			item.consumable = true;
-			item.createTile = ModContent.TileType<RuinedPyramidBrickTile>();
+			Item.width = 16;
+			Item.height = 16;
+			Item.maxStack = 999;
+			Item.useTurn = true;
+			Item.autoReuse = true;
+			Item.useAnimation = 15;
+			Item.useTime = 10;
+			Item.useStyle = 1;
+			Item.rare = ItemRarityID.LightRed;
+			Item.consumable = true;
+			Item.createTile = ModContent.TileType<RuinedPyramidBrickTile>();
 		}
 	}
 	public class RuinedPyramidBrickTile : ModTile

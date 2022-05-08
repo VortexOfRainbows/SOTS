@@ -32,7 +32,7 @@ namespace SOTS.Void
 			mod.AddPrefix("Omniscient", new VoidPrefix(20));
 			return false;
 		}
-		public override void Apply(Item item) => item.GetGlobalItem<PrefixItem>().extraVoid = _power;
+		public override void Apply(Item item) => Item.GetGlobalItem<PrefixItem>().extraVoid = _power;
         public override void ModifyValue(ref float valueMult)
 		{
 			float multiplier = 1.0f + _power / 25f;
@@ -62,7 +62,7 @@ namespace SOTS.Void
 			mod.AddPrefix("Soulbound", new VoidGainPrefix(2));
 			return false;
 		}
-		public override void Apply(Item item) => item.GetGlobalItem<PrefixItem>().extraVoidGain = _power;
+		public override void Apply(Item item) => Item.GetGlobalItem<PrefixItem>().extraVoidGain = _power;
 		public override void ModifyValue(ref float valueMult)
 		{
 			float multiplier = 1.0f + 0.4f * _power;
@@ -75,7 +75,7 @@ namespace SOTS.Void
 			=> 1f;
 		public override bool CanRoll(Item item)
         {
-			return item.modItem as VoidItem != null;
+			return Item.modItem as VoidItem != null;
         }
 		public override PrefixCategory Category => PrefixCategory.AnyWeapon;
 		public Famished() { }
@@ -90,7 +90,7 @@ namespace SOTS.Void
 		}
 		public override void Apply(Item item)
         {
-			item.GetGlobalItem<PrefixItem>().voidCostMultiplier = 1.25f;
+			Item.GetGlobalItem<PrefixItem>().voidCostMultiplier = 1.25f;
 		}
         public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus)
         {
@@ -110,7 +110,7 @@ namespace SOTS.Void
 			=> 1f;
 		public override bool CanRoll(Item item)
 		{
-			return item.modItem as VoidItem != null;
+			return Item.modItem as VoidItem != null;
 		}
 		public override PrefixCategory Category => PrefixCategory.AnyWeapon;
 		public Precarious() { }
@@ -125,7 +125,7 @@ namespace SOTS.Void
 		}
 		public override void Apply(Item item)
 		{
-			item.GetGlobalItem<PrefixItem>().voidCostMultiplier = 1.2f;
+			Item.GetGlobalItem<PrefixItem>().voidCostMultiplier = 1.2f;
 		}
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus)
 		{
@@ -146,7 +146,7 @@ namespace SOTS.Void
 			=> 0.75f;
 		public override bool CanRoll(Item item)
 		{
-			return item.modItem as VoidItem != null;
+			return Item.modItem as VoidItem != null;
 		}
 		public override PrefixCategory Category => PrefixCategory.AnyWeapon;
 		public Potent() { }
@@ -161,7 +161,7 @@ namespace SOTS.Void
 		}
 		public override void Apply(Item item)
 		{
-			item.GetGlobalItem<PrefixItem>().voidCostMultiplier = 0.9f;
+			Item.GetGlobalItem<PrefixItem>().voidCostMultiplier = 0.9f;
 		}
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus)
 		{
@@ -181,7 +181,7 @@ namespace SOTS.Void
 			=> 0.5f;
 		public override bool CanRoll(Item item)
 		{
-			return item.modItem as VoidItem != null;
+			return Item.modItem as VoidItem != null;
 		}
 		public override PrefixCategory Category => PrefixCategory.AnyWeapon;
 		public Omnipotent() { }
@@ -196,7 +196,7 @@ namespace SOTS.Void
 		}
 		public override void Apply(Item item)
 		{
-			item.GetGlobalItem<PrefixItem>().voidCostMultiplier = 0.9f;
+			Item.GetGlobalItem<PrefixItem>().voidCostMultiplier = 0.9f;
 		}
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus)
 		{

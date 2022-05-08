@@ -15,11 +15,11 @@ namespace SOTS.Items.Permafrost
 		}
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.StoneBlock);
-			item.width = 44;
-			item.height = 26;
-			item.consumable = true;
-			item.createTile = ModContent.TileType<FrostArtifactTile>();
+			Item.CloneDefaults(ItemID.StoneBlock);
+			Item.width = 44;
+			Item.height = 26;
+			Item.consumable = true;
+			Item.createTile = ModContent.TileType<FrostArtifactTile>();
 		}
 		public override void AddRecipes()
 		{

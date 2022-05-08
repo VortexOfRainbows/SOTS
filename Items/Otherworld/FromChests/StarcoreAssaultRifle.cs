@@ -17,23 +17,23 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override void SafeSetDefaults()
 		{
-            item.damage = 23;
-            item.ranged = true;
-            item.width = 70;
-            item.height = 30;
-            item.useTime = 5; 
-            item.useAnimation = 20;
-            item.useStyle = 5;    
-            item.noMelee = true;
-			item.knockBack = 2f;
-			item.value = Item.sellPrice(0, 5, 0, 0);
-			item.rare = ItemRarityID.LightPurple;
-			item.UseSound = SoundID.Item11;
-            item.autoReuse = true;
-            item.shoot = mod.ProjectileType("StarcoreBullet"); 
-            item.shootSpeed = 4f;
-			item.reuseDelay = 10;
-			item.noUseGraphic = true;
+            Item.damage = 23;
+            Item.ranged = true;
+            Item.width = 70;
+            Item.height = 30;
+            Item.useTime = 5; 
+            Item.useAnimation = 20;
+            Item.useStyle = 5;    
+            Item.noMelee = true;
+			Item.knockBack = 2f;
+			Item.value = Item.sellPrice(0, 5, 0, 0);
+			Item.rare = ItemRarityID.LightPurple;
+			Item.UseSound = SoundID.Item11;
+            Item.autoReuse = true;
+            Item.shoot = mod.ProjectileType("StarcoreBullet"); 
+            Item.shootSpeed = 4f;
+			Item.reuseDelay = 10;
+			Item.noUseGraphic = true;
 		}
 		int projectileNum = 0;
 		int highestProjectileNum = 0;
@@ -59,18 +59,18 @@ namespace SOTS.Items.Otherworld.FromChests
 		{
 			Texture2D texture = mod.GetTexture("Items/Otherworld/FromChests/StarcoreAssaultRifleEffect");
 			for (int k = 0; k < 2; k++)
-				Main.spriteBatch.Draw(texture, item.Center - Main.screenPosition + new Vector2(0, 2), null, new Color(Main.DiscoR, Main.DiscoG, Main.DiscoB, 0), rotation, new Vector2(texture.Width/2, texture.Height/2), scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, Item.Center - Main.screenPosition + new Vector2(0, 2), null, new Color(Main.DiscoR, Main.DiscoG, Main.DiscoB, 0), rotation, new Vector2(texture.Width/2, texture.Height/2), scale, SpriteEffects.None, 0f);
 			texture = mod.GetTexture("Items/Otherworld/FromChests/StarcoreAssaultRifleEffect2");
 			for (int k = 0; k < 2; k++)
-				Main.spriteBatch.Draw(texture, item.Center - Main.screenPosition + new Vector2(0, 2), null, new Color(Main.DiscoG, Main.DiscoB, Main.DiscoR, 0), rotation, new Vector2(texture.Width / 2, texture.Height / 2), scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, Item.Center - Main.screenPosition + new Vector2(0, 2), null, new Color(Main.DiscoG, Main.DiscoB, Main.DiscoR, 0), rotation, new Vector2(texture.Width / 2, texture.Height / 2), scale, SpriteEffects.None, 0f);
 			texture = mod.GetTexture("Items/Otherworld/FromChests/StarcoreAssaultRifleEffect3");
 			for (int k = 0; k < 2; k++)
-				Main.spriteBatch.Draw(texture, item.Center - Main.screenPosition + new Vector2(0, 2), null, new Color(Main.DiscoB, Main.DiscoR, Main.DiscoG, 0), rotation, new Vector2(texture.Width / 2, texture.Height / 2), scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, Item.Center - Main.screenPosition + new Vector2(0, 2), null, new Color(Main.DiscoB, Main.DiscoR, Main.DiscoG, 0), rotation, new Vector2(texture.Width / 2, texture.Height / 2), scale, SpriteEffects.None, 0f);
 
 			texture = mod.GetTexture("Items/Otherworld/FromChests/StarcoreAssaultRifleGlow");
 			Color color = Color.White;
-			Vector2 drawOrigin = new Vector2(Main.itemTexture[item.type].Width * 0.5f, item.height * 0.5f);
-			Main.spriteBatch.Draw(texture, new Vector2((float)(item.Center.X - (int)Main.screenPosition.X), (float)(item.Center.Y - (int)Main.screenPosition.Y) + 2), null, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
+			Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y) + 2), null, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			base.PostDrawInWorld(spriteBatch, lightColor, alphaColor, rotation, scale, whoAmI);
         }
         public override int GetVoid(Player player)
@@ -82,7 +82,7 @@ namespace SOTS.Items.Otherworld.FromChests
 			Main.PlaySound(SoundID.Item11, position);
 			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
 			Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians((speedX < 0 ? -1 : 1) * (-3f + 1.75f * projectileNum)));
-			Projectile.NewProjectile(position, Vector2.Zero, mod.ProjectileType("StarcoreRifle"), item.useTime + (projectileNum >= highestProjectileNum - 1 && highestProjectileNum > 3 ? item.reuseDelay - 1 : 0) + 1, 0, player.whoAmI, perturbedSpeed.ToRotation() - new Vector2(speedX, speedY).ToRotation());
+			Projectile.NewProjectile(position, Vector2.Zero, mod.ProjectileType("StarcoreRifle"), Item.useTime + (projectileNum >= highestProjectileNum - 1 && highestProjectileNum > 3 ? Item.reuseDelay - 1 : 0) + 1, 0, player.whoAmI, perturbedSpeed.ToRotation() - new Vector2(speedX, speedY).ToRotation());
 			speedX = perturbedSpeed.X;
 			speedY = perturbedSpeed.Y;
 			position += new Vector2(speedX, speedY) * 6;

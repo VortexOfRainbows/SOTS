@@ -13,22 +13,22 @@ namespace SOTS.Items.ChestItems
 		}
         public override void SetDefaults()
         {
-            item.damage = 70;
-            item.width = 50;
-            item.height = 50;
-            item.value = Item.sellPrice(0, 20, 0, 0);
-            item.rare = ItemRarityID.Yellow;
-            item.noMelee = true;
-            item.useStyle = ItemUseStyleID.SwingThrow;
-            item.useAnimation = 16;
-            item.useTime = 16;
-            item.knockBack = 7f;
-            item.noUseGraphic = true; 
-            item.shoot = ModContent.ProjectileType<Projectiles.BiomeChest.Sawflake>();
-            item.shootSpeed = 13.5f;
-            item.UseSound = SoundID.Item1;
-            item.melee = true; 
-            item.autoReuse = true;
+            Item.damage = 70;
+            Item.width = 50;
+            Item.height = 50;
+            Item.value = Item.sellPrice(0, 20, 0, 0);
+            Item.rare = ItemRarityID.Yellow;
+            Item.noMelee = true;
+            Item.useStyle = ItemUseStyleID.SwingThrow;
+            Item.useAnimation = 16;
+            Item.useTime = 16;
+            Item.knockBack = 7f;
+            Item.noUseGraphic = true; 
+            Item.shoot = ModContent.ProjectileType<Projectiles.BiomeChest.Sawflake>();
+            Item.shootSpeed = 13.5f;
+            Item.UseSound = SoundID.Item1;
+            Item.melee = true; 
+            Item.autoReuse = true;
         }
     }
 }

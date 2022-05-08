@@ -16,35 +16,35 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override void SafeSetDefaults()
 		{
-			item.damage = 6;
-			item.ranged = true;
-			item.width = 32;
-			item.height = 32;
-			item.maxStack = 1;
-			item.consumable = false;           
-			item.knockBack = 0.2f;
-            item.value = Item.sellPrice(0, 4, 0, 0);
-			item.rare = ItemRarityID.LightRed;
-			item.shoot = ModContent.ProjectileType<HardlightArrow>();  
-			item.shootSpeed = 1f;           
-			item.ammo = AmmoID.Arrow;   
+			Item.damage = 6;
+			Item.ranged = true;
+			Item.width = 32;
+			Item.height = 32;
+			Item.maxStack = 1;
+			Item.consumable = false;           
+			Item.knockBack = 0.2f;
+            Item.value = Item.sellPrice(0, 4, 0, 0);
+			Item.rare = ItemRarityID.LightRed;
+			Item.shoot = ModContent.ProjectileType<HardlightArrow>();  
+			Item.shootSpeed = 1f;           
+			Item.ammo = AmmoID.Arrow;   
 		}
 		public void UpdateShoot()
 		{
-			if (item.favorited)
+			if (Item.favorited)
 			{
-				item.shoot = ModContent.ProjectileType<ChargedHardlightArrow>();
+				Item.shoot = ModContent.ProjectileType<ChargedHardlightArrow>();
 			}
 			else
 			{
-				item.shoot = ModContent.ProjectileType<HardlightArrow>();
+				Item.shoot = ModContent.ProjectileType<HardlightArrow>();
 			}
 		}
 		public override bool BeforeConsumeAmmo(Player player)
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			UpdateShoot();
-			if (item.favorited)
+			if (Item.favorited)
 			{
 				voidPlayer.voidMeter -= 0.75f;
 			}

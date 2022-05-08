@@ -9,11 +9,11 @@ namespace SOTS.Items.Pyramid.PyramidWalls
 	{
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.StoneWall);
-			item.width = 28;
-			item.height = 28;
-			item.rare = ItemRarityID.Blue;
-			item.createWall = ModContent.WallType<PyramidBrickWallWall>();
+			Item.CloneDefaults(ItemID.StoneWall);
+			Item.width = 28;
+			Item.height = 28;
+			Item.rare = ItemRarityID.Blue;
+			Item.createWall = ModContent.WallType<PyramidBrickWallWall>();
 		}
 		public override void AddRecipes()
 		{
@@ -38,11 +38,11 @@ namespace SOTS.Items.Pyramid.PyramidWalls
 		}
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.StoneWall);
-			item.width = 28;
-			item.height = 28;
-			item.rare = ItemRarityID.Red;
-			item.createWall = ModContent.WallType<UnsafePyramidBrickWallWall>();
+			Item.CloneDefaults(ItemID.StoneWall);
+			Item.width = 28;
+			Item.height = 28;
+			Item.rare = ItemRarityID.Red;
+			Item.createWall = ModContent.WallType<UnsafePyramidBrickWallWall>();
 		}
 	}
 	public class PyramidBrickWallWall : ModWall

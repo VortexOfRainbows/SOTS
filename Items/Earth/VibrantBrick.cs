@@ -21,9 +21,9 @@ namespace SOTS.Items.Earth
 		}
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.StoneBlock);
-			item.rare = ItemRarityID.Blue;
-			item.createTile = ModContent.TileType<VibrantBrickTile>();
+			Item.CloneDefaults(ItemID.StoneBlock);
+			Item.rare = ItemRarityID.Blue;
+			Item.createTile = ModContent.TileType<VibrantBrickTile>();
 		}
 		public override void AddRecipes()
 		{

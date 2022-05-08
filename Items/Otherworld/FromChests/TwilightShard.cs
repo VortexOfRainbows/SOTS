@@ -17,11 +17,11 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override void SetDefaults()
 		{
-			item.maxStack = 999;
-            item.width = 36;     
-            item.height = 26;
-            item.value = Item.sellPrice(0, 0, 4, 0);
-            item.rare = ItemRarityID.Cyan;
+			Item.maxStack = 999;
+            Item.width = 36;     
+            Item.height = 26;
+            Item.value = Item.sellPrice(0, 0, 4, 0);
+            Item.rare = ItemRarityID.Cyan;
 		}
 	}
 	public class StarlightAlloy : ModItem
@@ -30,18 +30,18 @@ namespace SOTS.Items.Otherworld.FromChests
 		{
 			Texture2D texture = mod.GetTexture("Items/Otherworld/FromChests/StarlightAlloyGlow");
 			Color color = Color.White;
-			Vector2 drawOrigin = new Vector2(Main.itemTexture[item.type].Width * 0.5f, item.height * 0.5f);
-			Main.spriteBatch.Draw(texture, new Vector2((float)(item.Center.X - (int)Main.screenPosition.X), (float)(item.Center.Y - (int)Main.screenPosition.Y) + 2), null, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
+			Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y) + 2), null, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 		}
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.IronBar);
-			item.width = 30;
-			item.height = 22;
-			item.value = Item.sellPrice(0, 0, 45, 0);
-			item.rare = ItemRarityID.Cyan;
-			item.placeStyle = 3;
-			item.createTile = ModContent.TileType<TheBars>();
+			Item.CloneDefaults(ItemID.IronBar);
+			Item.width = 30;
+			Item.height = 22;
+			Item.value = Item.sellPrice(0, 0, 45, 0);
+			Item.rare = ItemRarityID.Cyan;
+			Item.placeStyle = 3;
+			Item.createTile = ModContent.TileType<TheBars>();
 		}
 		public override void AddRecipes()
 		{
@@ -82,13 +82,13 @@ namespace SOTS.Items.Otherworld.FromChests
 	{
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.IronBar);
-			item.width = 30;
-			item.height = 22;
-			item.value = Item.sellPrice(0, 0, 45, 0);
-			item.rare = ItemRarityID.Cyan;
-			item.placeStyle = 1;
-			item.createTile = ModContent.TileType<TheBars>();
+			Item.CloneDefaults(ItemID.IronBar);
+			Item.width = 30;
+			Item.height = 22;
+			Item.value = Item.sellPrice(0, 0, 45, 0);
+			Item.rare = ItemRarityID.Cyan;
+			Item.placeStyle = 1;
+			Item.createTile = ModContent.TileType<TheBars>();
 		}
 		public override void AddRecipes()
 		{
@@ -133,13 +133,13 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.IronBar);
-			item.width = 30;
-			item.height = 22;
-			item.value = Item.sellPrice(0, 0, 45, 0);
-			item.rare = ItemRarityID.Cyan;
-			item.placeStyle = 5;
-			item.createTile = ModContent.TileType<TheBars>();
+			Item.CloneDefaults(ItemID.IronBar);
+			Item.width = 30;
+			Item.height = 22;
+			Item.value = Item.sellPrice(0, 0, 45, 0);
+			Item.rare = ItemRarityID.Cyan;
+			Item.placeStyle = 5;
+			Item.createTile = ModContent.TileType<TheBars>();
 		}
 		public override void AddRecipes()
 		{

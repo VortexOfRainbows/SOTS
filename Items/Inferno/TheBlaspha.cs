@@ -18,24 +18,24 @@ namespace SOTS.Items.Inferno
         }
 		public override void SetDefaults()
 		{
-            item.damage = 43;
-            item.ranged = true;  
-            item.width = 68;   
-            item.height = 26;
-            item.useTime = 33; 
-            item.useAnimation = 33;
-            item.useStyle = ItemUseStyleID.HoldingOut;    
-            item.knockBack = 3f;
-            item.value = Item.sellPrice(0, 10, 0, 0);
-            item.rare = ItemRarityID.LightPurple;
-            item.UseSound = null;
-            item.autoReuse = false;
-            item.noMelee = true;
-            item.noUseGraphic = true;
-            item.shoot = 10;
-            item.shootSpeed = 12.0f;
-            item.useAmmo = AmmoID.Bullet;
-            item.channel = true;
+            Item.damage = 43;
+            Item.ranged = true;  
+            Item.width = 68;   
+            Item.height = 26;
+            Item.useTime = 33; 
+            Item.useAnimation = 33;
+            Item.useStyle = ItemUseStyleID.HoldingOut;    
+            Item.knockBack = 3f;
+            Item.value = Item.sellPrice(0, 10, 0, 0);
+            Item.rare = ItemRarityID.LightPurple;
+            Item.UseSound = null;
+            Item.autoReuse = false;
+            Item.noMelee = true;
+            Item.noUseGraphic = true;
+            Item.shoot = 10;
+            Item.shootSpeed = 12.0f;
+            Item.useAmmo = AmmoID.Bullet;
+            Item.channel = true;
         }
         public override Vector2? HoldoutOffset()
         {
@@ -43,7 +43,7 @@ namespace SOTS.Items.Inferno
         }
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-            Projectile.NewProjectile(position.X, position.Y, speedX, speedY, ModContent.ProjectileType<Blaspha>(), damage, knockBack, player.whoAmI, (int)(item.useTime / SOTSPlayer.ModPlayer(player).attackSpeedMod), type);
+            Projectile.NewProjectile(position.X, position.Y, speedX, speedY, ModContent.ProjectileType<Blaspha>(), damage, knockBack, player.whoAmI, (int)(Item.useTime / SOTSPlayer.ModPlayer(player).attackSpeedMod), type);
             return false;
         }
         public override void AddRecipes()

@@ -16,23 +16,23 @@ namespace SOTS.Items.Tide
 		}
 		public override void SetDefaults()
 		{
-            item.damage = 14;
-            item.magic = true; 
-            item.width = 34;    
-            item.height = 32; 
-            item.useTime = 20; 
-            item.useAnimation = 20;
-            item.useStyle = ItemUseStyleID.HoldingOut;    
-            item.knockBack = 3;
-			item.value = Item.sellPrice(0, 1, 0, 0);
-            item.rare = ItemRarityID.Green;
-			item.UseSound = SoundID.Item93;
-            item.noMelee = true; 
-            item.autoReuse = false;
-            item.shootSpeed = 5.5f; 
-			item.shoot = ModContent.ProjectileType<PinkLightning>();
-			Item.staff[item.type] = true; 
-			item.mana = 13;
+            Item.damage = 14;
+            Item.magic = true; 
+            Item.width = 34;    
+            Item.height = 32; 
+            Item.useTime = 20; 
+            Item.useAnimation = 20;
+            Item.useStyle = ItemUseStyleID.HoldingOut;    
+            Item.knockBack = 3;
+			Item.value = Item.sellPrice(0, 1, 0, 0);
+            Item.rare = ItemRarityID.Green;
+			Item.UseSound = SoundID.Item93;
+            Item.noMelee = true; 
+            Item.autoReuse = false;
+            Item.shootSpeed = 5.5f; 
+			Item.shoot = ModContent.ProjectileType<PinkLightning>();
+			Item.staff[Item.type] = true; 
+			Item.mana = 13;
 		}
 		public override void AddRecipes()
 		{

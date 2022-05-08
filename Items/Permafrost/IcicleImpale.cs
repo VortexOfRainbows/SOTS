@@ -16,21 +16,21 @@ namespace SOTS.Items.Permafrost
 		}
 		public override void SafeSetDefaults()
 		{
-            item.damage = 75;
-            item.ranged = true;
-            item.width = 78;
-            item.height = 30;
-            item.useTime = 17; 
-            item.useAnimation = 17;
-            item.useStyle = 5;    
-            item.noMelee = true;
-			item.knockBack = 1f;  
-            item.value = Item.sellPrice(0, 10, 0, 0);
-            item.rare = ItemRarityID.Yellow;
-            item.UseSound = SoundID.Item61;
-            item.autoReuse = true;
-            item.shoot = mod.ProjectileType("HypericeRocket"); 
-            item.shootSpeed = 19f;
+            Item.damage = 75;
+            Item.ranged = true;
+            Item.width = 78;
+            Item.height = 30;
+            Item.useTime = 17; 
+            Item.useAnimation = 17;
+            Item.useStyle = 5;    
+            Item.noMelee = true;
+			Item.knockBack = 1f;  
+            Item.value = Item.sellPrice(0, 10, 0, 0);
+            Item.rare = ItemRarityID.Yellow;
+            Item.UseSound = SoundID.Item61;
+            Item.autoReuse = true;
+            Item.shoot = mod.ProjectileType("HypericeRocket"); 
+            Item.shootSpeed = 19f;
 		}
 		public override int GetVoid(Player player)
 		{

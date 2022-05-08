@@ -17,19 +17,19 @@ namespace SOTS.Items.Potions
 		}
 		public override void SetDefaults()
 		{
-			item.width = 22;
-			item.height = 32;
-            item.value = Item.sellPrice(0, 0, 2, 0);
-			item.rare = ItemRarityID.Blue;
-			item.maxStack = 30;
-            item.buffType = ModContent.BuffType<Nightmare>();   
-            item.buffTime = 21900;  
-            item.UseSound = SoundID.Item3;            
-            item.useStyle = ItemUseStyleID.EatingUsing;        
-            item.useTurn = true;
-            item.useAnimation = 16;
-            item.useTime = 16;
-            item.consumable = true;       
+			Item.width = 22;
+			Item.height = 32;
+            Item.value = Item.sellPrice(0, 0, 2, 0);
+			Item.rare = ItemRarityID.Blue;
+			Item.maxStack = 30;
+            Item.buffType = ModContent.BuffType<Nightmare>();   
+            Item.buffTime = 21900;  
+            Item.UseSound = SoundID.Item3;            
+            Item.useStyle = ItemUseStyleID.EatingUsing;        
+            Item.useTurn = true;
+            Item.useAnimation = 16;
+            Item.useTime = 16;
+            Item.consumable = true;       
 		}
 		public override void AddRecipes()
 		{

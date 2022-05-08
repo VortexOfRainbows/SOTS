@@ -46,8 +46,8 @@ namespace SOTS.Projectiles.Evil
             {
                 Item item = player.HeldItem;
                 firingSpeed = projectile.velocity.Length();
-                firingAnimation = item.useAnimation;
-                firingTime = item.useTime;
+                firingAnimation = Item.useAnimation;
+                firingTime = Item.useTime;
                 lightningCounter = Main.rand.Next(360);
             }
             else

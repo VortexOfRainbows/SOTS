@@ -22,7 +22,7 @@ namespace SOTS.Items.Otherworld.Blocks
 				if (k == 0)
 					Main.spriteBatch.Draw(texture2, new Vector2(position.X, position.Y), null, color * 0.5f, 0f, origin, scale, SpriteEffects.None, 0f);
 
-				Main.spriteBatch.Draw(texture, new Vector2(position.X + x, position.Y + y), null, color * (1f - (item.alpha / 255f)), 0f, origin, scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, new Vector2(position.X + x, position.Y + y), null, color * (1f - (Item.alpha / 255f)), 0f, origin, scale, SpriteEffects.None, 0f);
 			}
 			return false;
 		}
@@ -31,26 +31,26 @@ namespace SOTS.Items.Otherworld.Blocks
 			Texture2D texture = mod.GetTexture("Items/Otherworld/Blocks/HardlightBlockOutline");
 			Texture2D texture2 = mod.GetTexture("Items/Otherworld/Blocks/HardlightBlockFill");
 			Color color = new Color(100, 100, 100, 0);
-			Vector2 drawOrigin = new Vector2(Main.itemTexture[item.type].Width * 0.5f, item.height * 0.5f);
+			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
 			for (int k = 0; k < 5; k++)
 			{
 				float x = Main.rand.Next(-10, 11) * 0.03f;
 				float y = Main.rand.Next(-10, 11) * 0.03f;
 				if (k == 0)
-					Main.spriteBatch.Draw(texture2, new Vector2((float)(item.Center.X - (int)Main.screenPosition.X), (float)(item.Center.Y - (int)Main.screenPosition.Y) + 2), null, color * 0.5f, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture2, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y) + 2), null, color * 0.5f, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 
-				Main.spriteBatch.Draw(texture, new Vector2((float)(item.Center.X - (int)Main.screenPosition.X) + x, (float)(item.Center.Y - (int)Main.screenPosition.Y) + y + 2), null, color * (1f - (item.alpha / 255f)), rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X) + x, (float)(Item.Center.Y - (int)Main.screenPosition.Y) + y + 2), null, color * (1f - (Item.alpha / 255f)), rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			}
 			return false;
 		}
 		public override void SetDefaults()
 		{
-			item.CloneDefaults(ItemID.StoneBlock);
-			item.width = 20;
-			item.height = 20;
-			item.maxStack = 999;
-			item.rare = ItemRarityID.LightRed;
-			item.createTile = ModContent.TileType<HardlightBlockTile>();
+			Item.CloneDefaults(ItemID.StoneBlock);
+			Item.width = 20;
+			Item.height = 20;
+			Item.maxStack = 999;
+			Item.rare = ItemRarityID.LightRed;
+			Item.createTile = ModContent.TileType<HardlightBlockTile>();
 		}
 		public override void AddRecipes()
 		{

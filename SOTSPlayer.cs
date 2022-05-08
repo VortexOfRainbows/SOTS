@@ -602,7 +602,7 @@ namespace SOTS
         }
         public override bool? CanHitNPC(Item item, NPC target)
         {
-			if(CanKillNPC && item.melee && target.townNPC)
+			if(CanKillNPC && Item.melee && target.townNPC)
             {
 				return true;
             }
@@ -770,23 +770,23 @@ namespace SOTS
 			for (int i = 9 + player.extraAccessorySlots; i < player.armor.Length; i++) //checking vanity slots
             {
 				Item item = player.armor[i];
-				if(item.type == ModContent.ItemType<CursedApple>())
+				if(Item.type == ModContent.ItemType<CursedApple>())
 				{
 					petPepper = true;
 				}
-				if (item.type == ModContent.ItemType<Calculator>())
+				if (Item.type == ModContent.ItemType<Calculator>())
 				{
 					petAdvisor = true;
 				}
-				if (item.type == ModContent.ItemType<PeanutButter>())
+				if (Item.type == ModContent.ItemType<PeanutButter>())
 				{
 					petPinky = 0;
 				}
-				if (item.type == ModContent.ItemType<SkywareBattery>())
+				if (Item.type == ModContent.ItemType<SkywareBattery>())
 				{
 					rainbowGlowmasks = true;
 				}
-				if (item.type == ModContent.ItemType<TwilightAssassinsCirclet>())
+				if (Item.type == ModContent.ItemType<TwilightAssassinsCirclet>())
 				{
 					if (!HoloEye)
                     {
@@ -795,11 +795,11 @@ namespace SOTS
 					}
 					HoloEye = true;
 				}
-				if(item.type == ModContent.ItemType<VisionAmulet>())
+				if(Item.type == ModContent.ItemType<VisionAmulet>())
                 {
 					VisionVanity = true;
 				}
-				if (item.type == ModContent.ItemType<TestWings>())
+				if (Item.type == ModContent.ItemType<TestWings>())
 				{
 					TestWingsPlayer testWingsPlayer = (TestWingsPlayer)player.GetModPlayer(mod, "TestWingsPlayer");
 					if(!testWingsPlayer.canCreativeFlight)
@@ -807,7 +807,7 @@ namespace SOTS
 						testWingsPlayer.HaloDust();
 					}
 				}
-				/*if (item.type == ModContent.ItemType<SubspaceLocket>())
+				/*if (Item.type == ModContent.ItemType<SubspaceLocket>())
 				{
 					SubspacePlayer.ModPlayer(player).subspaceServantShader = GameShaders.Armor.GetShaderIdFromItemId(player.dye[i].type);
 				}*/
@@ -815,7 +815,7 @@ namespace SOTS
 			for (int i = 0; i < player.inventory.Length; i++)
 			{
 				Item item = player.inventory[i];
-				if (item.type == ModContent.ItemType<TwilightAssassinsCirclet>() && item.favorited)
+				if (Item.type == ModContent.ItemType<TwilightAssassinsCirclet>() && Item.favorited)
 				{
 					if (!HoloEye)
                     {
@@ -829,19 +829,19 @@ namespace SOTS
 			for (int i = 0; i < 10; i++) //iterating through armor + accessories
 			{
 				Item item = player.armor[i];
-				if (item.type == ModContent.ItemType<TheDarkEye>())
+				if (Item.type == ModContent.ItemType<TheDarkEye>())
 				{
 					darkEyeShader = GameShaders.Armor.GetShaderIdFromItemId(player.dye[i].type);
 				}
-				if (item.type == ModContent.ItemType<PlatformGenerator>() || item.type == ModContent.ItemType<FortressGenerator>())
+				if (Item.type == ModContent.ItemType<PlatformGenerator>() || Item.type == ModContent.ItemType<FortressGenerator>())
 				{
 					platformShader = GameShaders.Armor.GetShaderIdFromItemId(player.dye[i].type);
 				}
-				if (item.type == ModContent.ItemType<TwilightAssassinsCirclet>())
+				if (Item.type == ModContent.ItemType<TwilightAssassinsCirclet>())
 				{
 					HoloEyeIsVanity = false;
 				}
-				/*if (item.type == ModContent.ItemType<SubspaceLocket>())
+				/*if (Item.type == ModContent.ItemType<SubspaceLocket>())
 				{
 					SubspacePlayer.ModPlayer(player).subspaceServantShader = GameShaders.Armor.GetShaderIdFromItemId(player.dye[i].type);
 				}*/
@@ -1144,22 +1144,22 @@ namespace SOTS
 		public override bool Shoot(Item item, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
 			shotCounter++;
-			if(PurpleBalloon && item.fishingPole > 0)
+			if(PurpleBalloon && Item.fishingPole > 0)
 			{
 				Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(50));
 				Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<PurpleBobber>(), damage, type, player.whoAmI);
 			}
-			if(snakeSling && item.ranged && item.damage > 3 && shotCounter % 5 == 0)
+			if(snakeSling && Item.ranged && Item.damage > 3 && shotCounter % 5 == 0)
 			{
 				Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(8));
 				Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X * 1.1f, perturbedSpeed.Y * 1.1f, ModContent.ProjectileType<Pebble>(), damage, knockBack, player.whoAmI);
 			}
-			if(backUpBow && item.ranged)
+			if(backUpBow && Item.ranged)
 			{
 				Vector2 perturbedSpeed = -new Vector2(speedX, speedY);
 				Projectile.NewProjectile(position, perturbedSpeed, ModContent.ProjectileType<BackupArrow>(), (int)(damage * 0.45f) + 1, knockBack, player.whoAmI);
 			}
-			if(doubledActive == 1 && item.fishingPole > 0)
+			if(doubledActive == 1 && Item.fishingPole > 0)
 			{
 				for(int i = doubledAmount; i > 0; i--)
 				{
@@ -1172,14 +1172,14 @@ namespace SOTS
         public override float UseTimeMultiplier(Item item)
 		{
 			float standard = attackSpeedMod;
-			int time = item.useAnimation;
+			int time = Item.useAnimation;
 			int cannotPass = 2;
 			float current = time / standard;
 			if (current < cannotPass)
 			{
 				standard = time / 2f;
 			}
-			if (item.channel == false || item.type == ModContent.ItemType<Items.OlympianAxe>())
+			if (Item.channel == false || Item.type == ModContent.ItemType<Items.OlympianAxe>())
 				return standard;
 			return base.UseTimeMultiplier(item);
 		}
@@ -1200,7 +1200,7 @@ namespace SOTS
 					float damageMultiplier = CritBonusMultiplier; //since this value is 1, and crit damage does 2x damage, a value of 1.2f will increase damage by 40% on the players side (assuming crit damage as 100% base).
 					if(item != null)
                     {
-						if(item.type == ModContent.ItemType<AncientSteelSword>() || item.type == ModContent.ItemType<AncientSteelGreatPickaxe>())
+						if(Item.type == ModContent.ItemType<AncientSteelSword>() || Item.type == ModContent.ItemType<AncientSteelGreatPickaxe>())
                         {
 							knockback += 2f;
 							damageMultiplier += 0.5f;
