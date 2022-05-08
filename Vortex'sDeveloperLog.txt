@@ -8,8 +8,12 @@ The following is my development plans :D
 
 Known Bugs/Issues:
 1. Player freezing completely, locking out menu (conditions unknown)
-	1. Probably caused by some weird interaction in SOTSDetours.UpdatePlayer
+	1. Seems to be actually a modder's toolkit error
 2. Game crashes with Recipe Browser enabled
+3. In Multiplayer, when some players run frame skip subtle and others do not, Time may be frozen forever by VM incubator
+	1. Make sure to better sync or correct time freeze (sync other freeze related variables).
+
+!!! ~ ALL OBJECTIVES POSTPONED UNTIL COMPLETED WITH 1.4 PORTING ~ !!!
 
 Big Objectives:
 1. Starmap and Digital Daito Obtaining
@@ -18,8 +22,12 @@ Big Objectives:
 
 Update Objectives:
 1. Add upgrade to Flashspark boots with dashing activation (Tabi)
+	1. Subspace Treads
 2. Pulverizer (Upgrade to Bone Clapper)
 	1. 4 arms, 2 normal and 2 laser cannon
+3. Lesser Elemental Polarizer (grants some stats and inverses the effects of Dissolving Nature, Earth, Aurora, Otherworld, up to certain point)
+4. Elemental Polarizer (grants some stats and inverses the effects of ALL dissolving elements, up to a certain point)
+5. Blazing Quiver (Dissolving Inferno + Molten Quiver)
 
 Low Priority Objectives:
 1. Archaelogist NPC
@@ -27,6 +35,10 @@ Low Priority Objectives:
 3. Void Bar strike the player during void shock
 4. Fix Planetarium sky island spawning in tandum
 5. Stars in Planetarium Sky
+6. Nerf VM Incubator and Rose Bow
+
+5/7/22
+1. Started porting. I have constant headaches due to this.
 
 
 5/2/22

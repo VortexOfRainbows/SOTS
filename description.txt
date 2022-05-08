@@ -37,6 +37,10 @@ Misc, Direction: FlameFreezer
 Music: BananaLizard
 Art: Blasfah
 
+Update 0.22.0
+-Ported to 1.4!
+-Some internal optimizations
+
 Update 0.21.1
 -Attempted a fix for Recipe Browser crash
 -Modified Lux's survivablity
