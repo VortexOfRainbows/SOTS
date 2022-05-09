@@ -73,10 +73,10 @@ namespace SOTS.Items.Pyramid.AncientGold
 		{
 			Player player = Main.LocalPlayer;
 			Tile tile = Main.tile[i, j];
-			int spawnX = i - tile.frameX / 18;
+			int spawnX = i - tile.TileFrameX / 18;
 			int spawnY = j + 1;
-			spawnX += tile.frameX >= 72 ? 5 : 2;
-			if (tile.frameY != 0)
+			spawnX += tile.TileFrameX >= 72 ? 5 : 2;
+			if (tile.TileFrameY != 0)
 			{
 				spawnY--;
 			}

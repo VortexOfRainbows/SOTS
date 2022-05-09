@@ -18,41 +18,41 @@ namespace SOTS.Projectiles.Earth
 	{
 		public override void SendExtraAI(BinaryWriter writer)
 		{
-			writer.Write(projectile.tileCollide);
-			writer.Write(projectile.friendly);
+			writer.Write(Projectile.tileCollide);
+			writer.Write(Projectile.friendly);
 			writer.Write(endHow);
 		}
 		public override void ReceiveExtraAI(BinaryReader reader)
 		{
-			projectile.tileCollide = reader.ReadBoolean();
-			projectile.friendly = reader.ReadBoolean();
+			Projectile.tileCollide = reader.ReadBoolean();
+			Projectile.friendly = reader.ReadBoolean();
 			endHow = reader.ReadInt32();
 		}
 		int count = 0;
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Geostorm Crystal");
-			Main.projFrames[projectile.type] = 8;
+			Main.projFrames[Projectile.type] = 8;
 		}
         public override void SetDefaults()
         {
-			projectile.aiStyle = 0;
-			projectile.width = 30;
-			projectile.height = 38;
-			projectile.penetrate = -1;
-			projectile.friendly = false;
-			projectile.hostile = false;
-			projectile.timeLeft = 360;
-			projectile.tileCollide = false;
-			projectile.magic = true;
-			projectile.alpha = 255;
-			projectile.usesLocalNPCImmunity = true;
-			projectile.localNPCHitCooldown = 100;
+			Projectile.aiStyle = 0;
+			Projectile.width = 30;
+			Projectile.height = 38;
+			Projectile.penetrate = -1;
+			Projectile.friendly = false;
+			Projectile.hostile = false;
+			Projectile.timeLeft = 360;
+			Projectile.tileCollide = false;
+			Projectile.magic = true;
+			Projectile.alpha = 255;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = 100;
 		}
 		public override void ModifyDamageHitbox(ref Rectangle hitbox)
 		{
 			int width = 36;
-			hitbox = new Rectangle((int)(projectile.Center.X - width), (int)(projectile.Center.Y - width), width * 2, width * 2);
+			hitbox = new Rectangle((int)(Projectile.Center.X - width), (int)(Projectile.Center.Y - width), width * 2, width * 2);
 		}
 		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
 		{
@@ -61,22 +61,22 @@ namespace SOTS.Projectiles.Earth
 			return base.TileCollideStyle(ref width, ref height, ref fallThrough);
 		}
 		int endHow = 0;
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
-			if (projectile.ai[0] == -1)
+			if (Projectile.ai[0] == -1)
 				return false;
-			Texture2D texture = Main.projectileTexture[projectile.type];
-			Vector2 origin = new Vector2(texture.Width / 2, projectile.height / 2);
+			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
+			Vector2 origin = new Vector2(texture.Width / 2, Projectile.height / 2);
 			Color color;
-			Rectangle frame = new Rectangle(0, projectile.height * projectile.frame, texture.Width, projectile.height);
+			Rectangle frame = new Rectangle(0, Projectile.height * Projectile.frame, texture.Width, Projectile.height);
 			for (int i = 0; i < 360; i += 60)
 			{
 				Vector2 circular = new Vector2(windup, 0).RotatedBy(MathHelper.ToRadians(i + windup * 3f));
 				color = VoidPlayer.VibrantColorAttempt(i);
-				Main.spriteBatch.Draw(texture, projectile.Center + circular - Main.screenPosition, frame, color * ((255f - projectile.alpha) / 255f) * (0.4f + 0.5f * windup / maxWindup), projectile.rotation, origin, projectile.scale * 1.1f, SpriteEffects.FlipVertically, 0.0f);
+				Main.spriteBatch.Draw(texture, Projectile.Center + circular - Main.screenPosition, frame, color * ((255f - Projectile.alpha) / 255f) * (0.4f + 0.5f * windup / maxWindup), Projectile.rotation, origin, Projectile.scale * 1.1f, SpriteEffects.FlipVertically, 0.0f);
 			}
-			color = Color.White * ((255f - projectile.alpha) / 255f);
-			Main.spriteBatch.Draw((Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Earth/GeostormCrystalGreen"), projectile.Center - Main.screenPosition, frame, color, projectile.rotation, origin, projectile.scale * 1.2f, SpriteEffects.FlipVertically, 0.0f);
+			color = Color.White * ((255f - Projectile.alpha) / 255f);
+			Main.spriteBatch.Draw((Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Earth/GeostormCrystalGreen"), Projectile.Center - Main.screenPosition, frame, color, Projectile.rotation, origin, Projectile.scale * 1.2f, SpriteEffects.FlipVertically, 0.0f);
 			return false;
 		}
 		public const float maxWindup = 22f;
@@ -86,58 +86,58 @@ namespace SOTS.Projectiles.Earth
 		int postCounter = 0;
         public override bool PreAI()
         {
-			projectile.frame = (int)projectile.ai[0];
+			Projectile.frame = (int)Projectile.ai[0];
             return true;
         }
         public override void AI()
 		{
-			Player player = Main.player[projectile.owner];
-			Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 0.3f / 255f, (255 - projectile.alpha) * 0.1f / 255f, (255 - projectile.alpha) * 0.9f / 255f);
-			if(projectile.ai[0] == -1)
+			Player player = Main.player[Projectile.owner];
+			Lighting.AddLight(Projectile.Center, (255 - Projectile.alpha) * 0.3f / 255f, (255 - Projectile.alpha) * 0.1f / 255f, (255 - Projectile.alpha) * 0.9f / 255f);
+			if(Projectile.ai[0] == -1)
 			{
-				if (projectile.timeLeft > 30)
+				if (Projectile.timeLeft > 30)
 				{
 					if (Main.rand.NextBool(2))
 						spawnDirection = 1;
-					projectile.rotation = (float)Math.PI;
+					Projectile.rotation = (float)Math.PI;
 					DoDust(Vector2.Zero);
-					projectile.timeLeft = 30;
+					Projectile.timeLeft = 30;
 				}
 				count++;
 				if (count % 6 == 0) //will activate 5 times
 				{
 					float radians = MathHelper.ToRadians((spawnedNum - 2) * 21 * spawnDirection);
-					Vector2 stormPos = projectile.Center - new Vector2(0, 88).RotatedBy(radians); 
+					Vector2 stormPos = Projectile.Center - new Vector2(0, 88).RotatedBy(radians); 
 					SoundEngine.PlaySound(SoundID.Item, (int)stormPos.X, (int)stormPos.Y, 30, 0.75f, -0.2f);
-					if (Main.myPlayer == projectile.owner)
-						Projectile.NewProjectile(stormPos, Vector2.Zero, projectile.type, projectile.damage, projectile.knockBack, player.whoAmI, Main.rand.Next(8), radians);
+					if (Main.myPlayer == Projectile.owner)
+						Projectile.NewProjectile(stormPos, Vector2.Zero, Projectile.type, Projectile.damage, Projectile.knockBack, player.whoAmI, Main.rand.Next(8), radians);
 					spawnedNum++;
 				}
 			}
 			else
 			{
-				if (projectile.timeLeft > 120)
+				if (Projectile.timeLeft > 120)
                 {
 					if (Main.netMode != NetmodeID.Server)
-						SOTS.primitives.CreateTrail(new StarTrail(projectile, VoidPlayer.VibrantColorAttempt(projectile.ai[1]) * 0.5f, VoidPlayer.VibrantColorAttempt(projectile.ai[1]) * 0.5f, 12, 8));
-					projectile.timeLeft = 120;
+						SOTS.primitives.CreateTrail(new StarTrail(projectile, VoidPlayer.VibrantColorAttempt(Projectile.ai[1]) * 0.5f, VoidPlayer.VibrantColorAttempt(Projectile.ai[1]) * 0.5f, 12, 8));
+					Projectile.timeLeft = 120;
 				}
 				count += 5;
 				if (windup > 0)
 					windup--;
-				projectile.alpha -= 11;
-				if (projectile.alpha < 0)
-					projectile.alpha = 0;
-				Vector2 velocity = new Vector2(0, 16).RotatedBy(projectile.ai[1]);
+				Projectile.alpha -= 11;
+				if (Projectile.alpha < 0)
+					Projectile.alpha = 0;
+				Vector2 velocity = new Vector2(0, 16).RotatedBy(Projectile.ai[1]);
 				velocity.Y += 4f;
-				projectile.rotation = velocity.ToRotation() - MathHelper.PiOver2;
-				projectile.velocity = velocity * -(float)Math.Cos(MathHelper.ToRadians(count));
+				Projectile.rotation = velocity.ToRotation() - MathHelper.PiOver2;
+				Projectile.velocity = velocity * -(float)Math.Cos(MathHelper.ToRadians(count));
 				if (count > 180)
 				{
 					if (postCounter > 6)
-						projectile.tileCollide = true;
+						Projectile.tileCollide = true;
 					postCounter++;
-					projectile.friendly = true;
+					Projectile.friendly = true;
 					count = 180;
 				}
 				else
@@ -146,26 +146,26 @@ namespace SOTS.Projectiles.Earth
 					reverseMult = MathHelper.Clamp(reverseMult, 0, 1);
 					if(count == 170)
 					{
-						SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 72, 0.75f, -0.3f);
+						SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 72, 0.75f, -0.3f);
 						DoDust(velocity * -0.3f);
 					}
-					projectile.velocity *= (float)Math.Sqrt(count / 180f) * reverseMult;
+					Projectile.velocity *= (float)Math.Sqrt(count / 180f) * reverseMult;
 				}
 			}
 		}
 		public void DoDust(Vector2 outwards)
 		{
 			Vector2 startingLocation;
-			float degrees = MathHelper.ToDegrees(projectile.ai[1]);
+			float degrees = MathHelper.ToDegrees(Projectile.ai[1]);
 			for (int j = 0; j < 8; j++)
 			{
-				Vector2 offset = new Vector2(0, 8).RotatedBy(MathHelper.ToRadians(j * 90) + projectile.rotation);
+				Vector2 offset = new Vector2(0, 8).RotatedBy(MathHelper.ToRadians(j * 90) + Projectile.rotation);
 				for (int i = -4; i < 4; i++)
 				{
 					degrees += 360f / 40f;
-					startingLocation = new Vector2(i, 8 - Math.Abs(i) * 2).RotatedBy(MathHelper.ToRadians(j * 45) + projectile.rotation);
+					startingLocation = new Vector2(i, 8 - Math.Abs(i) * 2).RotatedBy(MathHelper.ToRadians(j * 45) + Projectile.rotation);
 					Vector2 velo = offset + startingLocation;
-					Dust dust = Dust.NewDustPerfect(projectile.Center + velo * 0.4f, ModContent.DustType<CopyDust4>());
+					Dust dust = Dust.NewDustPerfect(Projectile.Center + velo * 0.4f, ModContent.DustType<CopyDust4>());
 					dust.noGravity = true;
 					dust.velocity *= 0.1f;
 					dust.scale = 1.5f + Main.rand.NextFloat(-0.1f, 0.1f);
@@ -178,26 +178,26 @@ namespace SOTS.Projectiles.Earth
 		}
         public override void Kill(int timeLeft)
         {
-			if(projectile.ai[0] != -1)
+			if(Projectile.ai[0] != -1)
             {
 				for(int i = 0; i < 8; i++)
 				{
-					Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, ModContent.DustType<CopyDust4>());
+					Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>());
 					dust.noGravity = true;
 					dust.velocity *= 0.6f;
 					dust.scale = 1.8f + Main.rand.NextFloat(-0.1f, 0.1f);
 					dust.fadeIn = 0.1f;
 					dust.alpha = 100;
 					dust.color = VoidPlayer.VibrantColorAttempt(Main.rand.NextFloat(360));
-					dust.velocity += projectile.oldVelocity * 0.3f;
+					dust.velocity += Projectile.oldVelocity * 0.3f;
 				}
 				for (int i = 0; i < 16; i++)
 				{
-					Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, ModContent.DustType<VibrantDust>());
+					Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<VibrantDust>());
 					dust.noGravity = true;
 					dust.velocity *= 1f;
 					dust.scale = 2f + Main.rand.NextFloat(-0.2f, 0.2f);
-					dust.velocity += projectile.oldVelocity * 0.2f;
+					dust.velocity += Projectile.oldVelocity * 0.2f;
 				}
 			}
         }

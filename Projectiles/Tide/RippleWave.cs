@@ -17,16 +17,16 @@ namespace SOTS.Projectiles.Tide
 		}
         public override void SetDefaults()
         {
-			projectile.penetrate = -1;
-			projectile.width = 24;
-			projectile.height = 24;
-			projectile.timeLeft = 31;
-			projectile.hostile = false;
-			projectile.friendly = true;
-			projectile.tileCollide = false;
-			projectile.idStaticNPCHitCooldown = 15;
-			projectile.usesIDStaticNPCImmunity = true;
-			projectile.alpha = 100;
+			Projectile.penetrate = -1;
+			Projectile.width = 24;
+			Projectile.height = 24;
+			Projectile.timeLeft = 31;
+			Projectile.hostile = false;
+			Projectile.friendly = true;
+			Projectile.tileCollide = false;
+			Projectile.idStaticNPCHitCooldown = 15;
+			Projectile.usesIDStaticNPCImmunity = true;
+			Projectile.alpha = 100;
 		}
         public override bool? CanCutTiles()
         {
@@ -56,35 +56,35 @@ namespace SOTS.Projectiles.Tide
         public override void AI()
 		{
 			UpdateList();
-			length += projectile.velocity.Length();
-			projectile.position += projectile.velocity;
-			projectile.ai[1]++;
-			projectile.alpha += 5;
+			length += Projectile.velocity.Length();
+			Projectile.position += Projectile.velocity;
+			Projectile.ai[1]++;
+			Projectile.alpha += 5;
 			if (runOnce)
 			{
-				SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 21, 0.4f);
+				SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 21, 0.4f);
 				runOnce = false;
             }
-			Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 0.15f / 255f, (255 - projectile.alpha) * 0.25f / 255f, (255 - projectile.alpha) * 0.65f / 255f);
-			projectile.rotation += 0.04f;
+			Lighting.AddLight(Projectile.Center, (255 - Projectile.alpha) * 0.15f / 255f, (255 - Projectile.alpha) * 0.25f / 255f, (255 - Projectile.alpha) * 0.65f / 255f);
+			Projectile.rotation += 0.04f;
 		}
 		float length = 0;
 		const float finalDegree = 0f;
 		List<Vector2> ParticlePos = new List<Vector2>();
 		public void UpdateList()
 		{
-			Player player = Main.player[projectile.owner];
-			if ((int)projectile.ai[0] >= 0)
+			Player player = Main.player[Projectile.owner];
+			if ((int)Projectile.ai[0] >= 0)
 			{
 				ParticlePos = new List<Vector2>();
 				Vector2 origin = player.Center;
-				float rotation = projectile.velocity.ToRotation();
+				float rotation = Projectile.velocity.ToRotation();
 				float C = 2 * (float)Math.PI * length;
 				float oneLength = 360f / C * 10;
 				float mult = 0f;
 				for (float i = 0; i < 360; i += oneLength)
 				{
-					float waveValue = new Vector2(8, 0).RotatedBy(MathHelper.ToRadians(i * 8 + projectile.ai[1])).X;
+					float waveValue = new Vector2(8, 0).RotatedBy(MathHelper.ToRadians(i * 8 + Projectile.ai[1])).X;
 					Vector2 drawArea = origin + new Vector2(length + waveValue, 0).RotatedBy(MathHelper.ToRadians(i) + rotation);
 					if(i <= 360)
 					ParticlePos.Add(drawArea);
@@ -101,14 +101,14 @@ namespace SOTS.Projectiles.Tide
 			}
 			return false;
         }
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override bool PreDraw(ref Color lightColor)
 		{
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Tide/TidalConstructTrail").Value;
-			if ((int)projectile.ai[0] >= 0)
+			if ((int)Projectile.ai[0] >= 0)
 			{
 				for(int i = 0; i < ParticlePos.Count; i++)
 				{
-					spriteBatch.Draw(texture, ParticlePos[i] - Main.screenPosition, null, new Color(200, 200, 255, 0) * (1f - (projectile.alpha / 255f)), projectile.rotation, new Vector2(texture.Width / 2, texture.Height / 2), 1f, SpriteEffects.None, 0f);
+					spriteBatch.Draw(texture, ParticlePos[i] - Main.screenPosition, null, new Color(200, 200, 255, 0) * (1f - (Projectile.alpha / 255f)), Projectile.rotation, new Vector2(texture.Width / 2, texture.Height / 2), 1f, SpriteEffects.None, 0f);
 				}
 			}
 			return false;
@@ -123,16 +123,16 @@ namespace SOTS.Projectiles.Tide
 		}
 		public override void SetDefaults()
 		{
-			projectile.penetrate = -1;
-			projectile.width = 24;
-			projectile.height = 24;
-			projectile.timeLeft = 20;
-			projectile.hostile = false;
-			projectile.friendly = true;
-			projectile.tileCollide = false;
-			projectile.localNPCHitCooldown = 45;
-			projectile.usesLocalNPCImmunity = true;
-			projectile.alpha = 70;
+			Projectile.penetrate = -1;
+			Projectile.width = 24;
+			Projectile.height = 24;
+			Projectile.timeLeft = 20;
+			Projectile.hostile = false;
+			Projectile.friendly = true;
+			Projectile.tileCollide = false;
+			Projectile.localNPCHitCooldown = 45;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.alpha = 70;
 		}
 		public override bool? CanCutTiles()
 		{
@@ -146,31 +146,31 @@ namespace SOTS.Projectiles.Tide
 		public override void AI()
 		{
 			UpdateList();
-			length += projectile.velocity.Length();
-			projectile.ai[1]++;
-			projectile.alpha += 9;
+			length += Projectile.velocity.Length();
+			Projectile.ai[1]++;
+			Projectile.alpha += 9;
 			if (runOnce)
 			{
-				SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 21, 0.5f, -0.1f);
+				SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 21, 0.5f, -0.1f);
 				runOnce = false;
 			}
-			Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 0.15f / 255f, (255 - projectile.alpha) * 0.25f / 255f, (255 - projectile.alpha) * 0.65f / 255f);
-			projectile.rotation += 0.04f;
+			Lighting.AddLight(Projectile.Center, (255 - Projectile.alpha) * 0.15f / 255f, (255 - Projectile.alpha) * 0.25f / 255f, (255 - Projectile.alpha) * 0.65f / 255f);
+			Projectile.rotation += 0.04f;
 		}
 		float length = 0;
 		List<Vector2> ParticlePos = new List<Vector2>();
 		public void UpdateList()
 		{
-			if ((int)projectile.ai[0] >= 0)
+			if ((int)Projectile.ai[0] >= 0)
 			{
 				ParticlePos = new List<Vector2>();
-				Vector2 origin = projectile.Center;
-				float rotation = projectile.velocity.ToRotation();
+				Vector2 origin = Projectile.Center;
+				float rotation = Projectile.velocity.ToRotation();
 				float C = 2 * (float)Math.PI * length;
 				float oneLength = 360f / C * 10;
 				for (float i = 0; i < 360; i += oneLength)
 				{
-					float waveValue = new Vector2(8, 0).RotatedBy(MathHelper.ToRadians(i * 8 + projectile.ai[1])).X;
+					float waveValue = new Vector2(8, 0).RotatedBy(MathHelper.ToRadians(i * 8 + Projectile.ai[1])).X;
 					Vector2 drawArea = origin + new Vector2(length + waveValue, 0).RotatedBy(MathHelper.ToRadians(i) + rotation);
 					if (i <= 360)
 						ParticlePos.Add(drawArea);
@@ -187,14 +187,14 @@ namespace SOTS.Projectiles.Tide
 			}
 			return false;
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Tide/TidalConstructTrail").Value;
-			if ((int)projectile.ai[0] >= 0)
+			if ((int)Projectile.ai[0] >= 0)
 			{
 				for (int i = 0; i < ParticlePos.Count; i++)
 				{
-					spriteBatch.Draw(texture, ParticlePos[i] - Main.screenPosition, null, new Color(200, 200, 255, 0) * (1f - (projectile.alpha / 255f)), projectile.rotation, new Vector2(texture.Width / 2, texture.Height / 2), 1f, SpriteEffects.None, 0f);
+					spriteBatch.Draw(texture, ParticlePos[i] - Main.screenPosition, null, new Color(200, 200, 255, 0) * (1f - (Projectile.alpha / 255f)), Projectile.rotation, new Vector2(texture.Width / 2, texture.Height / 2), 1f, SpriteEffects.None, 0f);
 				}
 			}
 			return false;

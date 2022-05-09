@@ -13,14 +13,14 @@ namespace SOTS.Void
 		}
         public override void SetDefaults()
         {
-			projectile.height = 4;
-			projectile.width = 4;
-			projectile.friendly = false;
-			projectile.hostile = false;
-			projectile.timeLeft = 2;
-			projectile.alpha = 255;
-			projectile.tileCollide = false;
-			projectile.hide = true;
+			Projectile.height = 4;
+			Projectile.width = 4;
+			Projectile.friendly = false;
+			Projectile.hostile = false;
+			Projectile.timeLeft = 2;
+			Projectile.alpha = 255;
+			Projectile.tileCollide = false;
+			Projectile.hide = true;
 		}
 		/**
 		* The reason I use a projectile to execute server syncing is because I don't know enough to do it a different way
@@ -28,13 +28,13 @@ namespace SOTS.Void
 		*/
 		public override void Kill(int timeLeft)
 		{
-			Player player = Main.player[projectile.owner];
-			int voidAmt = (int)projectile.ai[1];
-			bool dot = (int)projectile.ai[0] == -1;
+			Player player = Main.player[Projectile.owner];
+			int voidAmt = (int)Projectile.ai[1];
+			bool dot = (int)Projectile.ai[0] == -1;
 			if(voidAmt > 0)
 			{
-				CombatText.NewText(new Rectangle((int)player.position.X, (int)player.position.Y, player.width, player.height), new Color(110, 90, 125, 255), string.Concat((int)projectile.ai[1]), false, dot);
-				for (int i = 0; i < (int)(2 * Math.Sqrt((int)projectile.ai[1])); i++)
+				CombatText.NewText(new Rectangle((int)player.position.X, (int)player.position.Y, player.width, player.height), new Color(110, 90, 125, 255), string.Concat((int)Projectile.ai[1]), false, dot);
+				for (int i = 0; i < (int)(2 * Math.Sqrt((int)Projectile.ai[1])); i++)
 				{
 					Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, 37);
 					dust.noGravity = true;
@@ -44,8 +44,8 @@ namespace SOTS.Void
 			}
 			else
 			{
-				CombatText.NewText(new Rectangle((int)player.position.X, (int)player.position.Y, player.width, player.height), new Color(125, 35, 35, 255), string.Concat((int)projectile.ai[1]), false, dot);
-				for (int i = 0; i < (int)(Math.Sqrt(-2 * (int)projectile.ai[1])); i++)
+				CombatText.NewText(new Rectangle((int)player.position.X, (int)player.position.Y, player.width, player.height), new Color(125, 35, 35, 255), string.Concat((int)Projectile.ai[1]), false, dot);
+				for (int i = 0; i < (int)(Math.Sqrt(-2 * (int)Projectile.ai[1])); i++)
 				{
 					Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, 198);
 					dust.noGravity = true;

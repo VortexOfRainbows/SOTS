@@ -139,7 +139,7 @@ namespace SOTS.NPCs.Boss
                 current = previousPosition;
             }
         }
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = Mod.Assets.Request<Texture2D>("NPCs/Boss/SubspaceSerpentTailFill").Value;
             Vector2 origin = new Vector2(texture.Width * 0.5f, npc.height * 0.5f);

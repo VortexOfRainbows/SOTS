@@ -17,7 +17,7 @@ namespace SOTS.Items
 		public override void SetDefaults()
 		{
 			Item.damage = 14;
-			Item.magic = true;
+			Item.DamageType = DamageClass.Magic;
             Item.width = 28;     
             Item.height = 44;   
             Item.value = Item.sellPrice(0, 2, 0, 0);

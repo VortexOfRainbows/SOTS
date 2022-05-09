@@ -14,19 +14,19 @@ namespace SOTS.Projectiles.Pyramid
 		
         public override void SetDefaults()
         {
-            projectile.CloneDefaults(64);
+            Projectile.CloneDefaults(64);
             aiType = 64;
-            projectile.melee = true;
-			projectile.alpha = 0;
+            Projectile.melee = true;
+			Projectile.alpha = 0;
 		}
 		int storeData = -1;
 		public override void PostAI()
 		{
-			if (storeData == -1 && projectile.owner == Main.myPlayer)
+			if (storeData == -1 && Projectile.owner == Main.myPlayer)
 			{
-				storeData = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, projectile.velocity.X, projectile.velocity.Y, mod.ProjectileType("EmeraldTrail"), (int)(projectile.damage * 1f) + 1, projectile.knockBack * 0.75f, projectile.owner, 0, projectile.whoAmI);
-				projectile.ai[1] = storeData;
-				projectile.netUpdate = true;
+				storeData = Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, Projectile.velocity.X, Projectile.velocity.Y, mod.ProjectileType("EmeraldTrail"), (int)(Projectile.damage * 1f) + 1, Projectile.knockBack * 0.75f, Projectile.owner, 0, Projectile.whoAmI);
+				Projectile.ai[1] = storeData;
+				Projectile.netUpdate = true;
 			}
 		}
 	}

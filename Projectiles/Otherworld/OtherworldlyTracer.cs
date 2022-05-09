@@ -11,16 +11,16 @@ namespace SOTS.Projectiles.Otherworld
 	{
 		public override void SetDefaults()
 		{
-			projectile.width = 58;
-			projectile.height = 58;
-			projectile.hostile = false;
-			projectile.friendly = false;
-			projectile.timeLeft = 12000;
-			projectile.tileCollide = false;
-			projectile.penetrate = -1;
-			projectile.alpha = 100;
-			projectile.ranged = true;
-			projectile.ignoreWater = true;
+			Projectile.width = 58;
+			Projectile.height = 58;
+			Projectile.hostile = false;
+			Projectile.friendly = false;
+			Projectile.timeLeft = 12000;
+			Projectile.tileCollide = false;
+			Projectile.penetrate = -1;
+			Projectile.alpha = 100;
+			Projectile.ranged = true;
+			Projectile.ignoreWater = true;
 		}
         public override bool CanHitPlayer(Player target)
         {
@@ -28,39 +28,39 @@ namespace SOTS.Projectiles.Otherworld
         }
         public override void SendExtraAI(BinaryWriter writer)
 		{
-			writer.Write(projectile.alpha);
-			writer.Write(projectile.timeLeft);
+			writer.Write(Projectile.alpha);
+			writer.Write(Projectile.timeLeft);
 		}
 		public override void ReceiveExtraAI(BinaryReader reader)
 		{
-			projectile.alpha = reader.ReadInt32();
-			projectile.timeLeft = reader.ReadInt32();
+			Projectile.alpha = reader.ReadInt32();
+			Projectile.timeLeft = reader.ReadInt32();
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
 			return false;
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture = Main.projectileTexture[projectile.type];
-			if (projectile.ai[1] == -1 || hasPlayer)
+			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
+			if (Projectile.ai[1] == -1 || hasPlayer)
 				texture = Mod.Assets.Request<Texture2D>("Projectiles/Otherworld/OtherworldlyTracerAlt").Value;
 			Color color = new Color(110, 110, 110, 0);
-			Vector2 drawOrigin = new Vector2(Main.projectileTexture[projectile.type].Width * 0.5f, projectile.height * 0.5f);
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value.Width * 0.5f, Projectile.height * 0.5f);
 			for(int i = 0; i < 1 + (int)(ai1)/30; i++)
 			{
 				for (int k = 0; k < 7 - (hasPlayer ? 2 : 0); k++)
 				{
 					float x = Main.rand.Next(-10, 11) * 0.1f;
 					float y = Main.rand.Next(-10, 11) * 0.1f;
-					Main.spriteBatch.Draw(texture, new Vector2((float)(projectile.Center.X - (int)Main.screenPosition.X) + x, (float)(projectile.Center.Y - (int)Main.screenPosition.Y) + y), null, color * (1f - (projectile.alpha / 255f)), rotation[i], drawOrigin, sizes[i], SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture, new Vector2((float)(Projectile.Center.X - (int)Main.screenPosition.X) + x, (float)(Projectile.Center.Y - (int)Main.screenPosition.Y) + y), null, color * (1f - (Projectile.alpha / 255f)), rotation[i], drawOrigin, sizes[i], SpriteEffects.None, 0f);
 				}
 			}
 			base.PostDraw(spriteBatch, drawColor);
 		}
 		public override void Kill(int timeLeft)
 		{
-			//SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 14, 0.6f);
+			//SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 14, 0.6f);
 		}
 		bool hasPlayer = false;
 		float[] rotation = { 0, 0, 0 };
@@ -70,48 +70,48 @@ namespace SOTS.Projectiles.Otherworld
 		int ai1 = 0;
 		public override void AI()
 		{
-			if(projectile.ai[1] == -1)
+			if(Projectile.ai[1] == -1)
 			{
 				hasPlayer = true;
-				Lighting.AddLight(projectile.Center, 0.45f * ((255 - projectile.alpha) / 255), 0.4f * ((255 - projectile.alpha) / 255), 0.95f * ((255 - projectile.alpha) / 255));
-				if (projectile.alpha < 255)
-					projectile.alpha += 3;
+				Lighting.AddLight(Projectile.Center, 0.45f * ((255 - Projectile.alpha) / 255), 0.4f * ((255 - Projectile.alpha) / 255), 0.95f * ((255 - Projectile.alpha) / 255));
+				if (Projectile.alpha < 255)
+					Projectile.alpha += 3;
 
-				projectile.timeLeft = 6;
-				if (Main.myPlayer == projectile.owner)
+				Projectile.timeLeft = 6;
+				if (Main.myPlayer == Projectile.owner)
 				{
-					projectile.netUpdate = true;
-					projectile.position = Main.MouseWorld - new Vector2(projectile.width/2, projectile.height/2);
+					Projectile.netUpdate = true;
+					Projectile.position = Main.MouseWorld - new Vector2(Projectile.width/2, Projectile.height/2);
 				}
 			}
-			else if (projectile.ai[1] >= 0)
+			else if (Projectile.ai[1] >= 0)
 			{
-				Lighting.AddLight(projectile.Center, 0.95f * ((255 - projectile.alpha)/255), 0.45f * ((255 - projectile.alpha) / 255), 0.95f * ((255 - projectile.alpha)/255));
-				NPC owner = Main.npc[(int)projectile.ai[1]];
+				Lighting.AddLight(Projectile.Center, 0.95f * ((255 - Projectile.alpha)/255), 0.45f * ((255 - Projectile.alpha) / 255), 0.95f * ((255 - Projectile.alpha)/255));
+				NPC owner = Main.npc[(int)Projectile.ai[1]];
 				if (!owner.active || !(owner.type == mod.NPCType("OtherworldlyConstructHead2") || owner.type == mod.NPCType("OtherworldlyConstructHead") || owner.type == mod.NPCType("TheAdvisorHead")))
 				{
-					projectile.Kill();
+					Projectile.Kill();
 				}
 				if (owner.type == mod.NPCType("TheAdvisorHead"))
-					projectile.extraUpdates = 1;
+					Projectile.extraUpdates = 1;
 			}
-			if(projectile.ai[1] == -3)
+			if(Projectile.ai[1] == -3)
 			{
-				if (Main.myPlayer == projectile.owner)
+				if (Main.myPlayer == Projectile.owner)
 				{
-					projectile.netUpdate = true;
+					Projectile.netUpdate = true;
 				}
-				projectile.timeLeft = 30;
-				projectile.ai[1]--;
+				Projectile.timeLeft = 30;
+				Projectile.ai[1]--;
 			}
 			ai1++;
 			if (ai1 == 30)
 			{
-				SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 30, 0.3f);
+				SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 30, 0.3f);
 			}
 			if (ai1 == 60)
 			{
-				SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 30, 0.4f);
+				SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 30, 0.4f);
 			}
 			if (ai1 > 61)
 			{
@@ -119,10 +119,10 @@ namespace SOTS.Projectiles.Otherworld
 			}
 			if(doOnce)
 			{
-				SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 30, 0.2f);
-				if (projectile.timeLeft > projectile.ai[0])
+				SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 30, 0.2f);
+				if (Projectile.timeLeft > Projectile.ai[0])
 				{
-					projectile.timeLeft = (int)projectile.ai[0];
+					Projectile.timeLeft = (int)Projectile.ai[0];
 				}
 				doOnce = false;
 				for (int i = 0; i < 3; i++)
@@ -135,9 +135,9 @@ namespace SOTS.Projectiles.Otherworld
 			{
 				rotation[i] += MathHelper.ToRadians(0.5f * rotationSpeed[i]);
 			}
-			if(projectile.timeLeft < 50 && projectile.ai[1] >= 0)
+			if(Projectile.timeLeft < 50 && Projectile.ai[1] >= 0)
 			{
-				projectile.alpha -= 2;
+				Projectile.alpha -= 2;
 			}
 		}
 	}

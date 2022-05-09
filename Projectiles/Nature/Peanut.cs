@@ -13,14 +13,14 @@ namespace SOTS.Projectiles.Nature
 		}
         public override void SetDefaults()
         {
-			projectile.ranged = true;
-			projectile.friendly = true;
-			projectile.width = 26;
-			projectile.height = 26;
-			projectile.timeLeft = 3000;
-			projectile.penetrate = 1;
-			projectile.tileCollide = true;
-			projectile.ignoreWater = false;
+			Projectile.ranged = true;
+			Projectile.friendly = true;
+			Projectile.width = 26;
+			Projectile.height = 26;
+			Projectile.timeLeft = 3000;
+			Projectile.penetrate = 1;
+			Projectile.tileCollide = true;
+			Projectile.ignoreWater = false;
 		}
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
         {
@@ -30,40 +30,40 @@ namespace SOTS.Projectiles.Nature
         }
         public override bool PreAI()
 		{
-			if (projectile.velocity.X > 0)
+			if (Projectile.velocity.X > 0)
 			{
-				projectile.rotation -= MathHelper.Pi;
-				projectile.spriteDirection = -1;
+				Projectile.rotation -= MathHelper.Pi;
+				Projectile.spriteDirection = -1;
 			}
 			else
 			{
-				projectile.spriteDirection = 1;
+				Projectile.spriteDirection = 1;
 			}
-			projectile.rotation = projectile.velocity.ToRotation() + (float)MathHelper.Pi / 4 * projectile.spriteDirection;
-			if (projectile.velocity.X < 0)
+			Projectile.rotation = Projectile.velocity.ToRotation() + (float)MathHelper.Pi / 4 * Projectile.spriteDirection;
+			if (Projectile.velocity.X < 0)
 			{
-				projectile.rotation -= MathHelper.Pi;
+				Projectile.rotation -= MathHelper.Pi;
 			}
 			return base.PreAI();
         }
         public override void AI()
 		{
-			projectile.velocity.Y += 0.09f;
-			projectile.alpha = 0;
+			Projectile.velocity.Y += 0.09f;
+			Projectile.alpha = 0;
 		}
 		public override void Kill(int timeLeft)
 		{
 			for(int i = 0; i < 5; i++)
 			{
-				SoundEngine.PlaySound(SoundID.Dig, projectile.Center);
-				Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y) - new Vector2(5), 26, 26, 0);
-				Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y) - new Vector2(5), 26, 26, 7);
+				SoundEngine.PlaySound(SoundID.Dig, Projectile.Center);
+				Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), 26, 26, 0);
+				Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), 26, 26, 7);
 			}
-			if(Main.myPlayer == projectile.owner)
+			if(Main.myPlayer == Projectile.owner)
 			{
-				Vector2 location = new Vector2(projectile.Center.X, projectile.Center.Y - 480);
+				Vector2 location = new Vector2(Projectile.Center.X, Projectile.Center.Y - 480);
 				Vector2 fromLocation = location + new Vector2(1920 * (Main.rand.Next(2) * 2 - 1), Main.rand.NextFloat(-128, 128));
-				Projectile.NewProjectile(fromLocation, Vector2.Zero, ModContent.ProjectileType<PinkyBomber>(), projectile.damage, projectile.knockBack, Main.myPlayer, location.X, location.Y);
+				Projectile.NewProjectile(fromLocation, Vector2.Zero, ModContent.ProjectileType<PinkyBomber>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, location.X, location.Y);
 			}
 		}
 	}

@@ -17,7 +17,7 @@ namespace SOTS.Projectiles.Pyramid.Aten
         public override void ModifyDamageHitbox(ref Rectangle hitbox)
         {
             int width = 48;
-            hitbox = new Rectangle((int)projectile.Center.X - width / 2, (int)projectile.Center.Y - width / 2, width, width);
+            hitbox = new Rectangle((int)Projectile.Center.X - width / 2, (int)Projectile.Center.Y - width / 2, width, width);
         }
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
         {
@@ -27,53 +27,53 @@ namespace SOTS.Projectiles.Pyramid.Aten
         }
         public override void OnLaunch(Player player)
         {
-            projectile.velocity *= 0.85f;
+            Projectile.velocity *= 0.85f;
         }
         public override void SetStaticDefaults() => DisplayName.SetDefault("Aten");
         public override void SetDefaults()
         {
-            projectile.Size = new Vector2(34, 34);
-            projectile.friendly = true;
-            projectile.melee = true;
-            projectile.penetrate = -1;
-            projectile.localNPCHitCooldown = 15;
-            projectile.usesLocalNPCImmunity = true;
+            Projectile.Size = new Vector2(34, 34);
+            Projectile.friendly = true;
+            Projectile.melee = true;
+            Projectile.penetrate = -1;
+            Projectile.localNPCHitCooldown = 15;
+            Projectile.usesLocalNPCImmunity = true;
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.immune[projectile.owner] = 0;
+            target.immune[Projectile.owner] = 0;
         }
         int summonedNum = 0;
         public override void SpinExtras(Player player)
         {
-            if (projectile.localAI[0] == 0)
+            if (Projectile.localAI[0] == 0)
             {
                 SOTS.primitives.CreateTrail(new AtenPrimTrail(projectile));
             }
-            if (projectile.localAI[0] % 24 == 0 && summonedNum < 9) //prevent spawning more in multiplayer with Main.myPlayer == projectile.owner
+            if (Projectile.localAI[0] % 24 == 0 && summonedNum < 9) //prevent spawning more in multiplayer with Main.myPlayer == Projectile.owner
             {
-                SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 30, 0.8f, -0.15f);
-                if (Main.myPlayer == projectile.owner)
+                SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 30, 0.8f, -0.15f);
+                if (Main.myPlayer == Projectile.owner)
                 {
-                    Projectile.NewProjectileDirect(player.Center, Vector2.Zero, ModContent.ProjectileType<AtenStar>(), (int)(projectile.damage * 0.7f) + 1, 0, projectile.owner, summonedNum, projectile.identity); //use identity since it aids with server syncing (.whoAmI is client dependent)
+                    Projectile.NewProjectileDirect(player.Center, Vector2.Zero, ModContent.ProjectileType<AtenStar>(), (int)(Projectile.damage * 0.7f) + 1, 0, Projectile.owner, summonedNum, Projectile.identity); //use identity since it aids with server syncing (.whoAmI is client dependent)
                 }
                 summonedNum++;
             }
-            projectile.localAI[0]++;
-            Lighting.AddLight(projectile.Center, new Color(255, 230, 138).ToVector3());
+            Projectile.localAI[0]++;
+            Lighting.AddLight(Projectile.Center, new Color(255, 230, 138).ToVector3());
         }
         public override void NotSpinningExtras(Player player)
         {
-            Lighting.AddLight(projectile.Center, new Color(255, 230, 138).ToVector3());
+            Lighting.AddLight(Projectile.Center, new Color(255, 230, 138).ToVector3());
         }
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override bool PreDraw(ref Color lightColor)
         {
-            Vector2 drawPos = projectile.Center - Main.screenPosition + new Vector2(0, projectile.gfxOffY);
+            Vector2 drawPos = Projectile.Center - Main.screenPosition + new Vector2(0, Projectile.gfxOffY);
             Color color = new Color(255, 230, 138, 0);
             Texture2D tex = Mod.Assets.Request<Texture2D>("Assets/FlailBloom").Value;
-            spriteBatch.Draw(tex, drawPos, null, color, 0, new Vector2(tex.Width, tex.Height) / 2, projectile.scale * 1.50f, SpriteEffects.None, 0f);
-            tex = Main.projectileTexture[projectile.type];
-            spriteBatch.Draw(tex, drawPos, null, lightColor, projectile.rotation, new Vector2(tex.Width, tex.Height) / 2, projectile.scale * 1.25f, SpriteEffects.None, 0f); //putting origin on center of ball instead of on spike + ball
+            spriteBatch.Draw(tex, drawPos, null, color, 0, new Vector2(tex.Width, tex.Height) / 2, Projectile.scale * 1.50f, SpriteEffects.None, 0f);
+            tex = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
+            spriteBatch.Draw(tex, drawPos, null, lightColor, Projectile.rotation, new Vector2(tex.Width, tex.Height) / 2, Projectile.scale * 1.25f, SpriteEffects.None, 0f); //putting origin on center of ball instead of on spike + ball
             return false;
         }
     }
@@ -89,18 +89,18 @@ namespace SOTS.Projectiles.Pyramid.Aten
         }
         public bool inFront
         {
-            get => projectile.scale > 1;
+            get => Projectile.scale > 1;
             set
             {
 
             }
         }
-        private Player Player => Main.player[projectile.owner];
+        private Player Player => Main.player[Projectile.owner];
         Projectile pastParent = null;
         private Projectile Parent()
         {
             Projectile parent = pastParent;
-            if (parent != null && parent.active && parent.owner == projectile.owner && parent.type == ModContent.ProjectileType<AtenProj>() && parent.identity == (int)(projectile.ai[1] + 0.5f)) //this is to prevent it from iterating the loop over and over
+            if (parent != null && parent.active && parent.owner == Projectile.owner && parent.type == ModContent.ProjectileType<AtenProj>() && parent.identity == (int)(Projectile.ai[1] + 0.5f)) //this is to prevent it from iterating the loop over and over
             {
                 return parent;
             }
@@ -109,7 +109,7 @@ namespace SOTS.Projectiles.Pyramid.Aten
             for (short i = 0; i < Main.maxProjectiles; i++)
             {
                 Projectile proj = Main.projectile[i];
-                if (proj.active && proj.owner == projectile.owner && proj.type == ModContent.ProjectileType<AtenProj>() && proj.identity == (int)(projectile.ai[1] + 0.5f)) //use identity since it aids with server syncing (.whoAmI is client dependent)
+                if (proj.active && proj.owner == Projectile.owner && proj.type == ModContent.ProjectileType<AtenProj>() && proj.identity == (int)(Projectile.ai[1] + 0.5f)) //use identity since it aids with server syncing (.whoAmI is client dependent)
                 {
                     parent = proj;
                     break;
@@ -128,29 +128,29 @@ namespace SOTS.Projectiles.Pyramid.Aten
         float angleProgression = 0;
         public float orbitNum
         {
-            get => projectile.ai[0];
-            set => projectile.ai[0] = value;
+            get => Projectile.ai[0];
+            set => Projectile.ai[0] = value;
         }
         public override void SetStaticDefaults()
         {
-            ProjectileID.Sets.TrailCacheLength[projectile.type] = 30;
-            ProjectileID.Sets.TrailingMode[projectile.type] = 0;
+            ProjectileID.Sets.TrailCacheLength[Projectile.type] = 30;
+            ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }
         public override void SetDefaults()
         {
-            projectile.friendly = true;
-            projectile.melee = true;
-            projectile.Size = new Vector2(12, 12);
-            projectile.tileCollide = false;
-            projectile.timeLeft = 180;
-            projectile.penetrate = -1;
-            projectile.extraUpdates = 1;
-            projectile.idStaticNPCHitCooldown = 30;
-            projectile.usesIDStaticNPCImmunity = true;
+            Projectile.friendly = true;
+            Projectile.melee = true;
+            Projectile.Size = new Vector2(12, 12);
+            Projectile.tileCollide = false;
+            Projectile.timeLeft = 180;
+            Projectile.penetrate = -1;
+            Projectile.extraUpdates = 1;
+            Projectile.idStaticNPCHitCooldown = 30;
+            Projectile.usesIDStaticNPCImmunity = true;
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.immune[projectile.owner] = 0;
+            target.immune[Projectile.owner] = 0;
         }
         public override Color? GetAlpha(Color lightColor)
         {
@@ -159,29 +159,29 @@ namespace SOTS.Projectiles.Pyramid.Aten
         bool runOnce = true;
         public void DelayEnd() //so that trails can disappear properly
         {
-            if (Main.myPlayer == projectile.owner)
+            if (Main.myPlayer == Projectile.owner)
             {
-                Projectile.NewProjectileDirect(projectile.Center, Vector2.Zero, ModContent.ProjectileType<AtenStarExplosion>(), (int)(projectile.damage * 2), 0, projectile.owner, projectile.scale);
+                Projectile.NewProjectileDirect(Projectile.Center, Vector2.Zero, ModContent.ProjectileType<AtenStarExplosion>(), (int)(Projectile.damage * 2), 0, Projectile.owner, Projectile.scale);
             }
-            if (projectile.timeLeft > 30)
-                projectile.timeLeft = 30;
-            projectile.velocity *= 0f;
+            if (Projectile.timeLeft > 30)
+                Projectile.timeLeft = 30;
+            Projectile.velocity *= 0f;
             orbitalDistance = -1;
-            projectile.netUpdate = true;
-            projectile.friendly = false;
+            Projectile.netUpdate = true;
+            Projectile.friendly = false;
         }
         public override bool PreAI()
         {
             if (runOnce)
             {
                 orbitalDistance = Main.rand.NextFloat(70, 90);
-                projectile.netUpdate = true;
+                Projectile.netUpdate = true;
                 runOnce = false;
             }
             if(orbitalDistance == -1)
             {
-                projectile.velocity *= 0f;
-                projectile.friendly = false;
+                Projectile.velocity *= 0f;
+                Projectile.friendly = false;
             }
             return orbitalDistance != -1;
         }
@@ -200,7 +200,7 @@ namespace SOTS.Projectiles.Pyramid.Aten
                 if (released)
                 {
                     if (Main.rand.NextBool(10))
-                        Dust.NewDustPerfect(projectile.Center, 244, Main.rand.NextVector2Circular(0.5f, 0.5f));
+                        Dust.NewDustPerfect(Projectile.Center, 244, Main.rand.NextVector2Circular(0.5f, 0.5f));
                     additionalCounter++;
                     toCenter = Parent().Center;
                     if (!Parent().tileCollide && additionalCounter > 4) //added counter here to counteract pre-emptive exploding due to place in projectile array
@@ -211,28 +211,28 @@ namespace SOTS.Projectiles.Pyramid.Aten
                 }
                 else
                 {
-                    projectile.timeLeft = 180;
+                    Projectile.timeLeft = 180;
                 }
                 float endSin = (float)Math.Sin(1.5f * additionalCounter * MathHelper.Pi / 180);
                 angleProgression = MathHelper.ToRadians((SOTSPlayer.ModPlayer(Player).orbitalCounter + additionalCounter * 1.5f) * 2.5f + (orbitNum % 3) * 120 + (int)(orbitNum / 3) * 30);
                 Vector2 offset = Vector2.UnitX.RotatedBy(Angle + MathHelper.ToRadians((int)(orbitNum / 3) * 120)) * (float)Math.Sin(angleProgression) * (orbitalDistance + additionalCounter * 1.25f * endSin);
-                projectile.scale = 1 + ((float)Math.Cos(angleProgression) / 2f);
-                if (projectile.scale < 1)
-                    projectile.scale = (projectile.scale + 1) / 2;
+                Projectile.scale = 1 + ((float)Math.Cos(angleProgression) / 2f);
+                if (Projectile.scale < 1)
+                    Projectile.scale = (Projectile.scale + 1) / 2;
                 Vector2 goToPos = toCenter + offset;
-                goToPos -= projectile.Center;
-                float speed = projectile.velocity.Length() + 1.0f;
+                goToPos -= Projectile.Center;
+                float speed = Projectile.velocity.Length() + 1.0f;
                 float dist = goToPos.Length();
                 if (speed > dist)
                 {
                     speed = dist;
                 }
-                projectile.velocity = speed * goToPos.SafeNormalize(Vector2.Zero);
+                Projectile.velocity = speed * goToPos.SafeNormalize(Vector2.Zero);
             }
             else
                 DelayEnd();
         }
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override bool PreDraw(ref Color lightColor)
         {
             if (!inFront)
                 Draw(spriteBatch, Color.White);
@@ -242,25 +242,25 @@ namespace SOTS.Projectiles.Pyramid.Aten
         {
             Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Assets/Glow");
             Vector2 origin = texture.Size() / 2;
-            int length = projectile.oldPos.Length;
+            int length = Projectile.oldPos.Length;
             int end = 0;
-            if(length > projectile.timeLeft)
+            if(length > Projectile.timeLeft)
             {
-                end = length - projectile.timeLeft;
+                end = length - Projectile.timeLeft;
             }
             for (int k = length - 1; k >= end; k--)
             {
-                float scale = projectile.scale * (0.2f + 0.8f * (projectile.oldPos.Length - k) / projectile.oldPos.Length);
+                float scale = Projectile.scale * (0.2f + 0.8f * (Projectile.oldPos.Length - k) / Projectile.oldPos.Length);
                 if (k != 0) scale *= 0.3f;
                 else scale *= 0.4f;
-                Vector2 drawPos = projectile.oldPos[k] - Main.screenPosition + projectile.Size / 2f + new Vector2(0, projectile.gfxOffY);
-                float lerpPercent = (float)k / projectile.oldPos.Length;
+                Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + Projectile.Size / 2f + new Vector2(0, Projectile.gfxOffY);
+                float lerpPercent = (float)k / Projectile.oldPos.Length;
                 Color colorMan = Color.Lerp(new Color(255, 230, 140), new Color(180, 90, 20), lerpPercent);
-                Color color = colorMan * ((projectile.oldPos.Length - k) / (float)projectile.oldPos.Length) * scale;
-                spriteBatch.Draw(texture, drawPos, null, color, projectile.rotation, origin, scale, SpriteEffects.None, 0f);
+                Color color = colorMan * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length) * scale;
+                spriteBatch.Draw(texture, drawPos, null, color, Projectile.rotation, origin, scale, SpriteEffects.None, 0f);
             }
             if(orbitalDistance != -1)
-                spriteBatch.Draw(Main.projectileTexture[projectile.type], projectile.Center - Main.screenPosition + new Vector2(0, projectile.gfxOffY), null, new Color(255, 255, 255, 100), projectile.rotation, Main.projectileTexture[projectile.type].Size() / 2, projectile.scale * 0.9f, SpriteEffects.None, 0);
+                spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, Projectile.Center - Main.screenPosition + new Vector2(0, Projectile.gfxOffY), null, new Color(255, 255, 255, 100), Projectile.rotation, Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value.Size() / 2, Projectile.scale * 0.9f, SpriteEffects.None, 0);
         }
     }
 }

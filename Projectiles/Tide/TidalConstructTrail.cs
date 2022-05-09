@@ -14,15 +14,15 @@ namespace SOTS.Projectiles.Tide
 		}
 		public override void SetDefaults()
 		{
-			projectile.width = 10;
-			projectile.height = 10;
-			projectile.friendly = false;
-			projectile.timeLeft = 3600;
-			projectile.penetrate = -1;
-			projectile.tileCollide = false;
-			projectile.alpha = 255;
-			projectile.ai[1] = -1;
-			projectile.hide = true;
+			Projectile.width = 10;
+			Projectile.height = 10;
+			Projectile.friendly = false;
+			Projectile.timeLeft = 3600;
+			Projectile.penetrate = -1;
+			Projectile.tileCollide = false;
+			Projectile.alpha = 255;
+			Projectile.ai[1] = -1;
+			Projectile.hide = true;
 		}
 		Color color = Color.White;
 		public override bool PreAI()
@@ -41,7 +41,7 @@ namespace SOTS.Projectiles.Tide
 		public override void PostAI()
 		{
 			counter++;
-			Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 0.7f / 255f, (255 - projectile.alpha) * 1f / 255f, (255 - projectile.alpha) * 1.45f / 255f);
+			Lighting.AddLight(Projectile.Center, (255 - Projectile.alpha) * 0.7f / 255f, (255 - Projectile.alpha) * 1f / 255f, (255 - Projectile.alpha) * 1.45f / 255f);
 			if(counter % 2 == 0)
 			{
 				checkPos();
@@ -53,11 +53,11 @@ namespace SOTS.Projectiles.Tide
         {
 			drawCacheProjsBehindNPCs.Add(index);
         }
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override bool PreDraw(ref Color lightColor)
 		{
 			if (runOnce)
 				return true;
-			Texture2D texture = Main.projectileTexture[projectile.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Vector2 previousPosition = trailPos[0];
 			if (previousPosition == Vector2.Zero)
@@ -66,7 +66,7 @@ namespace SOTS.Projectiles.Tide
 			}
 			for (int k = 1; k < trailPos.Length; k++)
 			{
-				float scale = projectile.scale * (trailPos.Length - k) / (float)trailPos.Length;
+				float scale = Projectile.scale * (trailPos.Length - k) / (float)trailPos.Length;
 				scale *= 0.7f;
 				if (trailPos[k] == Vector2.Zero)
 				{
@@ -90,7 +90,7 @@ namespace SOTS.Projectiles.Tide
 							x = 0;
 							y = 0;
 						}
-						if (trailPos[k] != projectile.Center)
+						if (trailPos[k] != Projectile.Center)
 							Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, betweenPositions.ToRotation() + MathHelper.ToRadians(90), drawOrigin, scale, SpriteEffects.None, 0f);
 					}
 				}
@@ -101,7 +101,7 @@ namespace SOTS.Projectiles.Tide
 		bool runOnce = true;
 		public void cataloguePos()
 		{
-			Vector2 current = projectile.Center;
+			Vector2 current = Projectile.Center;
 			for (int i = 0; i < trailPos.Length; i++)
 			{
 				Vector2 previousPosition = trailPos[i];
@@ -112,7 +112,7 @@ namespace SOTS.Projectiles.Tide
 		public void checkPos()
 		{
 			float iterator = 0f;
-			Vector2 current = projectile.Center;
+			Vector2 current = Projectile.Center;
 			for (int i = 0; i < trailPos.Length; i++)
 			{
 				Vector2 previousPosition = trailPos[i];
@@ -122,17 +122,17 @@ namespace SOTS.Projectiles.Tide
 				}
 			}
 			//if (iterator >= trailPos.Length)
-			//	projectile.Kill();
+			//	Projectile.Kill();
 		}
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
 		{
 			return false;
 			/*
 			float point = 0f;
-			Vector2 previousPosition = projectile.Center;
+			Vector2 previousPosition = Projectile.Center;
 			for (int k = 0; k < trailPos.Length; k++)
 			{
-				float scale = projectile.scale * (trailPos.Length - k) / (float)trailPos.Length;
+				float scale = Projectile.scale * (trailPos.Length - k) / (float)trailPos.Length;
 				scale *= 0.7f;
 				if (trailPos[k] == Vector2.Zero)
 				{
@@ -149,14 +149,14 @@ namespace SOTS.Projectiles.Tide
 		bool end = false;
 		public override void AI()
 		{
-			if(projectile.ai[1] != -1 && end == false)
+			if(Projectile.ai[1] != -1 && end == false)
 			{
-				NPC npc = Main.npc[(int)projectile.ai[1]];
+				NPC npc = Main.npc[(int)Projectile.ai[1]];
 				if(npc.active && npc.type == mod.ProjectileType("TidalConstruct"))
 				{
-					projectile.active = true;
-					if (projectile.timeLeft < 30)
-						projectile.timeLeft = 30;
+					Projectile.active = true;
+					if (Projectile.timeLeft < 30)
+						Projectile.timeLeft = 30;
 				}
 				else
                 {

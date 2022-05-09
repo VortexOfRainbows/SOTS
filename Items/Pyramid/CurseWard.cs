@@ -16,7 +16,7 @@ namespace SOTS.Items.Pyramid
 			Item.width = 40;
 			Item.height = 44;
 			Item.value = 0;
-			Item.rare = 3;
+			Item.rare = ItemRarityID.Orange;
 			Item.maxStack = 1;
 		}
 		public override void UpdateInventory(Player player)

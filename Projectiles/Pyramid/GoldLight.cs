@@ -15,36 +15,36 @@ namespace SOTS.Projectiles.Pyramid
 		}
         public override void SetDefaults()
         {
-            projectile.alpha = 255;
-            projectile.width = 160;
-            projectile.height = 160; 
-            projectile.timeLeft = 90;
-            projectile.penetrate = -1; 
-            projectile.friendly = true; 
-            projectile.hostile = false; 
-            projectile.tileCollide = false;
-            projectile.ignoreWater = true; 
-            projectile.ranged = true;
-			projectile.extraUpdates = 1;
-			projectile.usesLocalNPCImmunity = true;
-			projectile.localNPCHitCooldown = 120;
+            Projectile.alpha = 255;
+            Projectile.width = 160;
+            Projectile.height = 160; 
+            Projectile.timeLeft = 90;
+            Projectile.penetrate = -1; 
+            Projectile.friendly = true; 
+            Projectile.hostile = false; 
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = true; 
+            Projectile.ranged = true;
+			Projectile.extraUpdates = 1;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = 120;
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			projectile.localNPCImmunity[target.whoAmI] = projectile.localNPCHitCooldown;
-			target.immune[projectile.owner] = 0;
+			Projectile.localNPCImmunity[target.whoAmI] = Projectile.localNPCHitCooldown;
+			target.immune[Projectile.owner] = 0;
 		}
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override bool PreDraw(ref Color lightColor)
         {
-			float percent = projectile.ai[1] / 90;
+			float percent = Projectile.ai[1] / 90;
 			float lightIntesity = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(180f * percent)).Y;
-			Texture2D texture = Main.projectileTexture[projectile.type];
-			float counter = projectile.ai[0] * rotationSpeed;
+			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
+			float counter = Projectile.ai[0] * rotationSpeed;
 			float mult = new Vector2(-11.8f, 0).RotatedBy(MathHelper.ToRadians(180f * percent)).Y;
 			for (int i = 0; i < 3; i++)
 			{
 				Color color = new Color(255, 165, 0, 0);
-				Vector2 rotationAround = new Vector2((12 + mult) * projectile.scale, 0).RotatedBy(MathHelper.ToRadians(120 * i + counter));
+				Vector2 rotationAround = new Vector2((12 + mult) * Projectile.scale, 0).RotatedBy(MathHelper.ToRadians(120 * i + counter));
 				float rotation2 = rotationAround.ToRotation() - MathHelper.ToRadians(90);
 				float dist = 0;
 				int maxDist = 5 + (int)(lightIntesity * 51);
@@ -52,11 +52,11 @@ namespace SOTS.Projectiles.Pyramid
 				for (int k = 0; k < maxDist; k++)
 				{
 					scale2 += 0.1f + 0.15f * lightIntesity;
-					Vector2 fromCenter = projectile.Center + new Vector2(0, dist * projectile.scale).RotatedBy(rotation2);
+					Vector2 fromCenter = Projectile.Center + new Vector2(0, dist * Projectile.scale).RotatedBy(rotation2);
 					int width = (int)(2 * scale2);
 					int height = 2;
 					Vector2 drawOrigin = new Vector2(width * 0.5f, 0);
-					Main.spriteBatch.Draw(texture, fromCenter - Main.screenPosition, new Rectangle(0, 0, width, height), color * lightIntesity * ((maxDist - k) / (float)maxDist), projectile.rotation + rotation2, drawOrigin, 1, SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture, fromCenter - Main.screenPosition, new Rectangle(0, 0, width, height), color * lightIntesity * ((maxDist - k) / (float)maxDist), Projectile.rotation + rotation2, drawOrigin, 1, SpriteEffects.None, 0f);
 					dist += 2;
 				}
 			}
@@ -70,8 +70,8 @@ namespace SOTS.Projectiles.Pyramid
         }
         public override void AI()
 		{
-			projectile.ai[0]++;
-			projectile.ai[1]++;
+			Projectile.ai[0]++;
+			Projectile.ai[1]++;
 			if (runOnce)
             {
                 runOnce = false;

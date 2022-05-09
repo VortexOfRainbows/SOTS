@@ -35,8 +35,8 @@ namespace SOTS.Items.Fragments
 		public virtual bool canGlow(int i, int j)
 		{
 			Tile tile = Main.tile[i, j];
-			int frameX = tile.frameX / 18;
-			int frameY = tile.frameY / 18;
+			int frameX = tile.TileFrameX / 18;
+			int frameY = tile.TileFrameY / 18;
 			if (frameX == 5 && (frameY >= 0 && frameY <= 2))
 			{
 				return false;
@@ -65,7 +65,7 @@ namespace SOTS.Items.Fragments
 			for (int k = 0; k < 3; k++)
 			{
 				Vector2 offset = new Vector2(Main.rand.NextFloat(-1, 1f), Main.rand.NextFloat(-1, 1f)) * 0.25f * k;
-				SOTSTile.DrawSlopedGlowMask(i, j, tile.type, glowTexture, color * alphaMult * 0.6f, offset);
+				SOTSTile.DrawSlopedGlowMask(i, j, tile.TileType, glowTexture, color * alphaMult * 0.6f, offset);
 			}
 		}
 	}
@@ -107,8 +107,8 @@ namespace SOTS.Items.Fragments
 		public override bool canGlow(int i, int j)
 		{
 			Tile tile = Main.tile[i, j];
-			int frameX = tile.frameX / 18;
-			int frameY = tile.frameY / 18;
+			int frameX = tile.TileFrameX / 18;
+			int frameY = tile.TileFrameY / 18;
 			if (frameX >= 1 && frameX <= 3 && (frameY == 0 || frameY == 2))
 			{
 				return true;
@@ -171,8 +171,8 @@ namespace SOTS.Items.Fragments
 		public override bool canGlow(int i, int j)
 		{
 			Tile tile = Main.tile[i, j];
-			int frameX = tile.frameX / 18;
-			int frameY = tile.frameY / 18;
+			int frameX = tile.TileFrameX / 18;
+			int frameY = tile.TileFrameY / 18;
 			if (frameX == 0 || frameX == 4 || frameX == 5)
 			{
 				return true;
@@ -237,8 +237,8 @@ namespace SOTS.Items.Fragments
 		public override bool canGlow(int i, int j)
 		{
 			Tile tile = Main.tile[i, j];
-			int frameX = tile.frameX / 18;
-			int frameY = tile.frameY / 18;
+			int frameX = tile.TileFrameX / 18;
+			int frameY = tile.TileFrameY / 18;
 			if (frameY == 0 && ((frameX >= 0 && frameX <= 4) || (frameX == 10 || frameX == 11)))
 			{
 				return true;
@@ -307,8 +307,8 @@ namespace SOTS.Items.Fragments
 		public override bool canGlow(int i, int j)
 		{
 			Tile tile = Main.tile[i, j];
-			int frameX = tile.frameX / 18;
-			int frameY = tile.frameY / 18;
+			int frameX = tile.TileFrameX / 18;
+			int frameY = tile.TileFrameY / 18;
 			if (frameX >= 6 && frameX <= 8 && (frameY == 3 || frameY == 4))
 				return false;
 			if ((frameX == 9 || frameX == 12) && frameY >= 0 && frameY <= 2)
@@ -375,8 +375,8 @@ namespace SOTS.Items.Fragments
 		public override bool canGlow(int i, int j)
 		{
 			Tile tile = Main.tile[i, j];
-			int frameX = tile.frameX / 18;
-			int frameY = tile.frameY / 18;
+			int frameX = tile.TileFrameX / 18;
+			int frameY = tile.TileFrameY / 18;
 			if (frameY == 0 && ((frameX >= 1 && frameX <= 3) || frameX == 10 || frameX == 11))
 			{
 				return true;
@@ -441,8 +441,8 @@ namespace SOTS.Items.Fragments
 		public override bool canGlow(int i, int j)
 		{
 			Tile tile = Main.tile[i, j];
-			int frameX = tile.frameX / 18;
-			int frameY = tile.frameY / 18;
+			int frameX = tile.TileFrameX / 18;
+			int frameY = tile.TileFrameY / 18;
 			if (frameX >= 1 && frameX <= 3 && frameY == 1)
 			{
 				return false;
@@ -519,8 +519,8 @@ namespace SOTS.Items.Fragments
         public override bool canGlow(int i, int j)
 		{
 			Tile tile = Main.tile[i, j];
-			int frameX = tile.frameX / 18;
-			int frameY = tile.frameY / 18;
+			int frameX = tile.TileFrameX / 18;
+			int frameY = tile.TileFrameY / 18;
 			if ((frameX == 5 || frameX == 12) && frameY >= 0 && frameY <= 2)
 			{
 				return false;
@@ -602,8 +602,8 @@ namespace SOTS.Items.Fragments
 		public override bool canGlow(int i, int j)
 		{
 			Tile tile = Main.tile[i, j];
-			int frameX = tile.frameX / 18;
-			int frameY = tile.frameY / 18;
+			int frameX = tile.TileFrameX / 18;
+			int frameY = tile.TileFrameY / 18;
 			if (frameX >= 1 && frameX <= 3 && frameY == 2)
 			{
 				return false;

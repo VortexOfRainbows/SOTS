@@ -17,7 +17,7 @@ namespace SOTS.Items.Nature
 		public override void SetDefaults()
 		{
             Item.damage = 5; 
-            Item.magic = true; 
+            Item.DamageType = DamageClass.Magic; 
             Item.width = 24;   
             Item.height = 28;   
             Item.useTime = 30;   

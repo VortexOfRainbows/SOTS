@@ -6,7 +6,10 @@ using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using SOTS.Void;
- 
+using SOTS.Projectiles.Otherworld;
+using SOTS.Items.Otherworld.Furniture;
+using SOTS.Items.Fragments;
+
 namespace SOTS.Items.Otherworld.FromChests
 {
     public class ChainedPlasma : ModItem
@@ -24,12 +27,12 @@ namespace SOTS.Items.Otherworld.FromChests
             Item.value = Item.sellPrice(0, 4, 50, 0);
             Item.rare = ItemRarityID.LightPurple;
             Item.noMelee = true;
-            Item.useStyle = 5;
+            Item.useStyle = ItemUseStyleID.Shoot;
             Item.useAnimation = 30;
             Item.useTime = 30;
             Item.knockBack = 5f;
             Item.noUseGraphic = true; 
-            Item.shoot = mod.ProjectileType("PlasmaBall");
+            Item.shoot = ModContent .ProjectileType<PlasmaBall>();
             Item.shootSpeed = 12.5f;
             Item.UseSound = SoundID.Item1;
             Item.DamageType = DamageClass.Melee; 
@@ -37,12 +40,7 @@ namespace SOTS.Items.Otherworld.FromChests
         }
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(null, "DissolvingAether", 1);
-            recipe.AddIngredient(null, "HardlightAlloy", 12);
-            recipe.AddTile(mod.TileType("HardlightFabricatorTile"));
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe(1).AddIngredient<DissolvingAether>(1).AddIngredient<HardlightAlloy>(12).AddTile<HardlightFabricatorTile>().Register();
         }
     }
 }

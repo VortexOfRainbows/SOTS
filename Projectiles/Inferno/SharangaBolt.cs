@@ -17,44 +17,44 @@ namespace SOTS.Projectiles.Inferno
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Sharanga Bolt");
-			ProjectileID.Sets.TrailCacheLength[projectile.type] = 12;  
-			ProjectileID.Sets.TrailingMode[projectile.type] = 0;    
+			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 12;  
+			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;    
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
-			Vector2 drawOrigin = new Vector2(Main.projectileTexture[projectile.type].Width * 0.5f, projectile.height * 0.5f);
-			for (int k = 0; k < projectile.oldPos.Length; k++) {
-				Vector2 drawPos = projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, projectile.gfxOffY);
-				Color color = projectile.GetAlpha(lightColor) * ((float)(projectile.oldPos.Length - k) / (float)projectile.oldPos.Length);
-				spriteBatch.Draw(Main.projectileTexture[projectile.type], drawPos, null, color * 0.8f, projectile.rotation, drawOrigin, projectile.scale, SpriteEffects.None, 0f);
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value.Width * 0.5f, Projectile.height * 0.5f);
+			for (int k = 0; k < Projectile.oldPos.Length; k++) {
+				Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
+				Color color = Projectile.GetAlpha(lightColor) * ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
+				spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, drawPos, null, color * 0.8f, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
 			}
 			return true;
 		}
         public override void SetDefaults()
         {
-			projectile.CloneDefaults(1);
+			Projectile.CloneDefaults(1);
             aiType = 1;
-			projectile.penetrate = 3;
-			projectile.alpha = 0;
-			projectile.width = 14;
-			projectile.height = 38;
+			Projectile.penetrate = 3;
+			Projectile.alpha = 0;
+			Projectile.width = 14;
+			Projectile.height = 38;
 		}
 		public override void Kill(int timeLeft)
 		{
-			Player player = Main.player[projectile.owner];
-			if(projectile.owner == Main.myPlayer)
+			Player player = Main.player[Projectile.owner];
+			if(Projectile.owner == Main.myPlayer)
 			{
-				Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("SharangaBlast"), projectile.damage, 0, Main.myPlayer);
+				Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, mod.ProjectileType("SharangaBlast"), Projectile.damage, 0, Main.myPlayer);
 			}
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			Player player = Main.player[projectile.owner];
-            target.immune[projectile.owner] = 10;
+			Player player = Main.player[Projectile.owner];
+            target.immune[Projectile.owner] = 10;
 			target.AddBuff(BuffID.OnFire, 60, false);
-			if(projectile.owner == Main.myPlayer && projectile.penetrate != 1)
+			if(Projectile.owner == Main.myPlayer && Projectile.penetrate != 1)
 			{
-				Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("SharangaBlast"), projectile.damage, 0, Main.myPlayer);
+				Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, mod.ProjectileType("SharangaBlast"), Projectile.damage, 0, Main.myPlayer);
 			}
 		}
 		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough) 
@@ -66,7 +66,7 @@ namespace SOTS.Projectiles.Inferno
 		}
 		public override void AI()
 		{
-			float rad = (float)Math.Atan2((double)projectile.velocity.Y, (double)projectile.velocity.X);
+			float rad = (float)Math.Atan2((double)Projectile.velocity.Y, (double)Projectile.velocity.X);
 			//Vector2 curve = new Vector2(8f,0).RotatedBy(MathHelper.ToRadians(helixRot * 5f));
 			Vector2 curve2 = new Vector2(8f,0).RotatedBy(MathHelper.ToRadians(helixRot * 15f));
 			helixRot ++;
@@ -74,8 +74,8 @@ namespace SOTS.Projectiles.Inferno
 			Vector2 helixPos3 = new Vector2(18f + curve2.X, 0).RotatedBy(rad + MathHelper.ToRadians(90));
 			Vector2 helixPos4 = new Vector2(18f + curve2.X, 0).RotatedBy(rad - MathHelper.ToRadians(90));
 			/*
-			Vector2 helixPos1 = projectile.Center + new Vector2(curve.X, 0).RotatedBy(rad + MathHelper.ToRadians(90));
-			//Vector2 helixPos2 = projectile.Center + new Vector2(curve.X, 0).RotatedBy(rad - MathHelper.ToRadians(90));
+			Vector2 helixPos1 = Projectile.Center + new Vector2(curve.X, 0).RotatedBy(rad + MathHelper.ToRadians(90));
+			//Vector2 helixPos2 = Projectile.Center + new Vector2(curve.X, 0).RotatedBy(rad - MathHelper.ToRadians(90));
 			
 			int num1 = Dust.NewDust(new Vector2(helixPos1.X - 4, helixPos1.Y - 4), 4, 4, 269);
 			Main.dust[num1].noGravity = true;
@@ -87,12 +87,12 @@ namespace SOTS.Projectiles.Inferno
 			//Main.dust[num1].velocity *= 0.15f;
 			//Main.dust[num1].scale = 1.5f
 			*/
-			int num2 = Dust.NewDust(new Vector2(projectile.Center.X + helixPos3.X - 4, projectile.Center.Y + helixPos3.Y - 4), 4, 4, 6);
+			int num2 = Dust.NewDust(new Vector2(Projectile.Center.X + helixPos3.X - 4, Projectile.Center.Y + helixPos3.Y - 4), 4, 4, 6);
 			Main.dust[num2].noGravity = true;
 			Main.dust[num2].velocity = helixPos3 * 0.125f;
 			Main.dust[num2].scale = 2;
 			
-			num2 = Dust.NewDust(new Vector2(projectile.Center.X + helixPos4.X - 4, projectile.Center.Y + helixPos4.Y - 4), 4, 4, 6);
+			num2 = Dust.NewDust(new Vector2(Projectile.Center.X + helixPos4.X - 4, Projectile.Center.Y + helixPos4.Y - 4), 4, 4, 6);
 			Main.dust[num2].noGravity = true;
 			Main.dust[num2].velocity = helixPos4 * 0.125f;
 			Main.dust[num2].scale = 2;

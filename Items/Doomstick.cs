@@ -18,7 +18,7 @@ namespace SOTS.Items
 		public override void SetDefaults()
 		{
             Item.damage = 27; 
-            Item.ranged = true;  
+            Item.DamageType = DamageClass.Ranged;  
             Item.width = 58;   
             Item.height = 20;
             Item.useTime = 10; 

@@ -12,14 +12,14 @@ namespace SOTS.Projectiles.Pyramid
 	{
 		private float findLocationX
 		{
-			get => projectile.ai[0];
-			set => projectile.ai[0] = value;
+			get => Projectile.ai[0];
+			set => Projectile.ai[0] = value;
 		}
 
 		private float findLocationY
 		{
-			get => projectile.ai[1];
-			set => projectile.ai[1] = value;
+			get => Projectile.ai[1];
+			set => Projectile.ai[1] = value;
 		}
 
 		public override void SetStaticDefaults()
@@ -28,15 +28,15 @@ namespace SOTS.Projectiles.Pyramid
 		}
         public override void SetDefaults()
         {
-			projectile.height = 16;
-			projectile.width = 16;
-			projectile.penetrate = -1;
-			projectile.friendly = false;
-			projectile.timeLeft = 120;
-			projectile.tileCollide = false;
-			projectile.hostile = false;
-			projectile.alpha = 255;
-			projectile.extraUpdates = 1;
+			Projectile.height = 16;
+			Projectile.width = 16;
+			Projectile.penetrate = -1;
+			Projectile.friendly = false;
+			Projectile.timeLeft = 120;
+			Projectile.tileCollide = false;
+			Projectile.hostile = false;
+			Projectile.alpha = 255;
+			Projectile.extraUpdates = 1;
 		}
 		public void findTravelTo()
         {
@@ -46,7 +46,7 @@ namespace SOTS.Projectiles.Pyramid
 				for(int j = 0; j < 2; j++)
 				{
 					Vector2 circular = new Vector2(16 * i, 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)));
-					circular += projectile.Center;
+					circular += Projectile.Center;
 					int x = (int)circular.X / 16;
 					int y = (int)circular.Y / 16;
 					if (SOTSWorldgenHelper.Empty(x - 1, y - 1, 3, 3))
@@ -92,19 +92,19 @@ namespace SOTS.Projectiles.Pyramid
 					findTravelTo();
 					if (findLocationX == 0 && findLocationY == 0)
 					{
-						findLocationY = projectile.Center.Y - 48;
-						findLocationX = projectile.Center.X;
+						findLocationY = Projectile.Center.Y - 48;
+						findLocationX = Projectile.Center.X;
 					}
-					projectile.netUpdate = true;
+					Projectile.netUpdate = true;
 				}
             }
 			else
 			{
-				float approaching = projectile.timeLeft / 120f;
-				Lighting.AddLight(projectile.Center, 0.25f, 0.1f, 0.1f);
+				float approaching = Projectile.timeLeft / 120f;
+				Lighting.AddLight(Projectile.Center, 0.25f, 0.1f, 0.1f);
 				if(Main.rand.NextBool(5))
 				{
-					int num2 = Dust.NewDust(new Vector2(projectile.Center.X, projectile.Center.Y) - new Vector2(5), 0, 0, mod.DustType("CopyDust4"));
+					int num2 = Dust.NewDust(new Vector2(Projectile.Center.X, Projectile.Center.Y) - new Vector2(5), 0, 0, mod.DustType("CopyDust4"));
 					Dust dust = Main.dust[num2];
 					dust.color = new Color(180, 140, 140, 40);
 					dust.noGravity = true;
@@ -112,30 +112,30 @@ namespace SOTS.Projectiles.Pyramid
 					dust.scale *= 1.1f;
 					dust.velocity *= 0.75f;
 				}
-				Vector2 toLoc = projectile.Center - new Vector2(findLocationX, findLocationY);
+				Vector2 toLoc = Projectile.Center - new Vector2(findLocationX, findLocationY);
 				if(toLoc.Length() < 4)
                 {
-					projectile.velocity *= 0f;
+					Projectile.velocity *= 0f;
                 }
 				else
 				{
-					toLoc = toLoc.RotatedBy(MathHelper.ToRadians((projectile.whoAmI % 2 * 2 - 1) * 24 * approaching)) * (0.5f + 1 - approaching);
-					projectile.velocity *= approaching;
-					projectile.velocity += -toLoc * 0.04f;
+					toLoc = toLoc.RotatedBy(MathHelper.ToRadians((Projectile.whoAmI % 2 * 2 - 1) * 24 * approaching)) * (0.5f + 1 - approaching);
+					Projectile.velocity *= approaching;
+					Projectile.velocity += -toLoc * 0.04f;
 				}
 			}
-			if (trailPos[trailPos.Length - 1] == projectile.Center)
-				projectile.Kill();
-			cataloguePos(projectile.Center, trailPos);
+			if (trailPos[trailPos.Length - 1] == Projectile.Center)
+				Projectile.Kill();
+			cataloguePos(Projectile.Center, trailPos);
 		}
         public override void Kill(int timeLeft)
 		{
 			if(Main.netMode != 1)
-				Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, ModContent.ProjectileType<RubySpawner>(), (int)(projectile.damage * 1f), 0, Main.myPlayer);
+				Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<RubySpawner>(), (int)(Projectile.damage * 1f), 0, Main.myPlayer);
         }
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override bool PreDraw(ref Color lightColor)
 		{
-			Vector2 circularLocation = projectile.Center;
+			Vector2 circularLocation = Projectile.Center;
 			if (runOnce)
 				return false;
 			Vector2 current = circularLocation;
@@ -144,7 +144,7 @@ namespace SOTS.Projectiles.Pyramid
 		}
 		public void Draw(SpriteBatch spriteBatch, Vector2[] trailArray, Vector2 current)
 		{
-			Texture2D texture2 = Main.projectileTexture[projectile.type];
+			Texture2D texture2 = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Vector2 drawOrigin2 = new Vector2(texture2.Width * 0.5f, texture2.Height * 0.5f);
 			Vector2 previousPosition = current;
 			Color color = new Color(100, 75, 75, 0);
@@ -154,9 +154,9 @@ namespace SOTS.Projectiles.Pyramid
 				{
 					return;
 				}
-				if(trailArray[k] != projectile.Center)
+				if(trailArray[k] != Projectile.Center)
 				{
-					float scale = projectile.scale * (trailArray.Length - k) / (float)trailArray.Length;
+					float scale = Projectile.scale * (trailArray.Length - k) / (float)trailArray.Length;
 					scale *= 1f;
 					Vector2 drawPos = trailArray[k] - Main.screenPosition;
 					Vector2 currentPos = trailArray[k];
@@ -175,7 +175,7 @@ namespace SOTS.Projectiles.Pyramid
 								x = 0;
 								y = 0;
 							}
-							spriteBatch.Draw(texture2, drawPos + new Vector2(x, y), null, color, projectile.rotation, drawOrigin2, scale, projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+							spriteBatch.Draw(texture2, drawPos + new Vector2(x, y), null, color, Projectile.rotation, drawOrigin2, scale, Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 						}
 					}
 					previousPosition = currentPos;

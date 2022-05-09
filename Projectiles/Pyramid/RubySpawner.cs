@@ -21,25 +21,25 @@ namespace SOTS.Projectiles.Pyramid
 		}
         public override void SetDefaults()
         {
-			projectile.height = 60;
-			projectile.width = 60;
-			projectile.magic = false;
-			projectile.friendly = false;
-			projectile.penetrate = -1;
-			projectile.timeLeft = 480;
-			projectile.tileCollide = false;
-			projectile.hide = true;
+			Projectile.height = 60;
+			Projectile.width = 60;
+			Projectile.magic = false;
+			Projectile.friendly = false;
+			Projectile.penetrate = -1;
+			Projectile.timeLeft = 480;
+			Projectile.tileCollide = false;
+			Projectile.hide = true;
 		}
         public override void DrawBehind(int index, List<int> drawCacheProjsBehindNPCsAndTiles, List<int> drawCacheProjsBehindNPCs, List<int> drawCacheProjsBehindProjectiles, List<int> drawCacheProjsOverWiresUI)
         {
 			drawCacheProjsBehindNPCs.Add(index);
         }
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override bool PreDraw(ref Color lightColor)
 		{
 			if (runOnce)
 				return false;
 			SpriteEffects effects1 = SpriteEffects.None;
-			Texture2D texture1 = Main.projectileTexture[projectile.type];
+			Texture2D texture1 = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Projectiles/Pyramid/RubyBackground").Value;
 			Vector2 origin = new Vector2(texture1.Width/2, texture1.Height/2);
 			Color alpha = Color.White;
@@ -47,16 +47,16 @@ namespace SOTS.Projectiles.Pyramid
 			color1.A /= 2;
 			Color color2 = Color.Lerp(alpha, Color.Black, 0.5f);
 			color2.A = alpha.A;
-			float num1 =  0.95f + (projectile.rotation * 0.75f).ToRotationVector2().Y * 0.1f;
+			float num1 =  0.95f + (Projectile.rotation * 0.75f).ToRotationVector2().Y * 0.1f;
 			Color color4 = color2 * num1;
-			float scale = 0.4f + projectile.scale * 0.8f * num1;
-			Main.spriteBatch.Draw(texture2, projectile.Center - Main.screenPosition, null, color4, -projectile.rotation + 0.35f, origin, scale, effects1 ^ SpriteEffects.FlipHorizontally, 0.0f);
-			Main.spriteBatch.Draw(texture2, projectile.Center - Main.screenPosition, null, alpha, -projectile.rotation, origin, projectile.scale, effects1 ^ SpriteEffects.FlipHorizontally, 0.0f);
-			Main.spriteBatch.Draw(texture2, projectile.Center - Main.screenPosition, null, alpha * 0.8f, projectile.rotation * 0.5f, origin, projectile.scale * 0.9f, effects1, 0.0f);
+			float scale = 0.4f + Projectile.scale * 0.8f * num1;
+			Main.spriteBatch.Draw(texture2, Projectile.Center - Main.screenPosition, null, color4, -Projectile.rotation + 0.35f, origin, scale, effects1 ^ SpriteEffects.FlipHorizontally, 0.0f);
+			Main.spriteBatch.Draw(texture2, Projectile.Center - Main.screenPosition, null, alpha, -Projectile.rotation, origin, Projectile.scale, effects1 ^ SpriteEffects.FlipHorizontally, 0.0f);
+			Main.spriteBatch.Draw(texture2, Projectile.Center - Main.screenPosition, null, alpha * 0.8f, Projectile.rotation * 0.5f, origin, Projectile.scale * 0.9f, effects1, 0.0f);
 			color1.A = 0;
 			for (int i = 0; i < 2; i++)
 			{
-				Main.spriteBatch.Draw(texture1, projectile.Center - Main.screenPosition, null, color1, -projectile.rotation * 0.7f * (i * 2 - 1), origin, projectile.scale, effects1 ^ SpriteEffects.FlipHorizontally, 0.0f);
+				Main.spriteBatch.Draw(texture1, Projectile.Center - Main.screenPosition, null, color1, -Projectile.rotation * 0.7f * (i * 2 - 1), origin, Projectile.scale, effects1 ^ SpriteEffects.FlipHorizontally, 0.0f);
 			}
 			return false;
         }
@@ -71,28 +71,28 @@ namespace SOTS.Projectiles.Pyramid
 			{
 				if(Main.rand.NextBool(2))
 				{
-					Vector2 circular = new Vector2(projectile.width * 0.6f * projectile.scale, 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)));
-					int num2 = Dust.NewDust(projectile.Center + circular - new Vector2(4, 4), 0, 0, mod.DustType("CopyDust4"));
+					Vector2 circular = new Vector2(Projectile.width * 0.6f * Projectile.scale, 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)));
+					int num2 = Dust.NewDust(Projectile.Center + circular - new Vector2(4, 4), 0, 0, mod.DustType("CopyDust4"));
 					Dust dust = Main.dust[num2];
 					dust.color = new Color(127, 80, 80, 40);
 					dust.noGravity = true;
 					dust.fadeIn = 0.1f;
 					dust.scale *= 0.15f;
-					dust.scale += 1.05f * projectile.scale;
-					dust.alpha = projectile.alpha;
+					dust.scale += 1.05f * Projectile.scale;
+					dust.alpha = Projectile.alpha;
 					dust.velocity *= 0.2f;
-					dust.velocity += circular.RotatedBy(MathHelper.ToRadians(80 * direction)).SafeNormalize(Vector2.Zero) * (1.3f + projectile.scale * 0.7f);
-					circular = new Vector2(projectile.width * 0.2f * projectile.scale, 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)));
-					num2 = Dust.NewDust(projectile.Center + circular - new Vector2(4, 4), 0, 0, mod.DustType("CopyDust4"));
+					dust.velocity += circular.RotatedBy(MathHelper.ToRadians(80 * direction)).SafeNormalize(Vector2.Zero) * (1.3f + Projectile.scale * 0.7f);
+					circular = new Vector2(Projectile.width * 0.2f * Projectile.scale, 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)));
+					num2 = Dust.NewDust(Projectile.Center + circular - new Vector2(4, 4), 0, 0, mod.DustType("CopyDust4"));
 					dust = Main.dust[num2];
 					dust.color = new Color(255, 164, 164, 40);
 					dust.noGravity = true;
 					dust.fadeIn = 0.1f;
 					dust.scale *= 0.1f;
-					dust.scale += 0.65f * projectile.scale;
-					dust.alpha = projectile.alpha;
+					dust.scale += 0.65f * Projectile.scale;
+					dust.alpha = Projectile.alpha;
 					dust.velocity *= 0.2f;
-					dust.velocity += circular.RotatedBy(MathHelper.ToRadians(80 * -direction)).SafeNormalize(Vector2.Zero) * (1.0f + projectile.scale * 0.5f);
+					dust.velocity += circular.RotatedBy(MathHelper.ToRadians(80 * -direction)).SafeNormalize(Vector2.Zero) * (1.0f + Projectile.scale * 0.5f);
 				}
 			}
 		}
@@ -117,7 +117,7 @@ namespace SOTS.Projectiles.Pyramid
             {
 				type = ModContent.NPCType<Maligmor>();
 			}
-			NPC newNPC = Main.npc[NPC.NewNPC((int)projectile.Center.X, (int)projectile.Center.Y, type)];
+			NPC newNPC = Main.npc[NPC.NewNPC((int)Projectile.Center.X, (int)Projectile.Center.Y, type)];
 			newNPC.position.Y += newNPC.height * 0.5f;
 			newNPC.netUpdate = true;
         }
@@ -126,32 +126,32 @@ namespace SOTS.Projectiles.Pyramid
 			if(runOnce)
             {
 				runOnce = false;
-				projectile.scale = 0.0f;
+				Projectile.scale = 0.0f;
             }
-			Player player = Main.player[projectile.owner];
-			projectile.ai[0]++;
-			if(projectile.ai[0] <= 50)
+			Player player = Main.player[Projectile.owner];
+			Projectile.ai[0]++;
+			if(Projectile.ai[0] <= 50)
 			{
-				projectile.rotation -= MathHelper.ToRadians(6);
-				projectile.scale += 0.0175f;
+				Projectile.rotation -= MathHelper.ToRadians(6);
+				Projectile.scale += 0.0175f;
 				dustRing(1);
 			}
-			else if (projectile.ai[0] <= 90)
+			else if (Projectile.ai[0] <= 90)
 			{
-				projectile.rotation -= MathHelper.ToRadians(2);
+				Projectile.rotation -= MathHelper.ToRadians(2);
 				if (Main.rand.NextBool(4))
 					dustRing(1);
-				if (projectile.ai[0] == 70)
+				if (Projectile.ai[0] == 70)
 				{
 					for (int i = 0; i < 50; i++)
 					{
-						int num2 = Dust.NewDust(new Vector2(projectile.Center.X, projectile.Center.Y) - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
+						int num2 = Dust.NewDust(new Vector2(Projectile.Center.X, Projectile.Center.Y) - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
 						Dust dust = Main.dust[num2];
 						dust.color = new Color(127, 80, 80, 40);
 						dust.noGravity = true;
 						dust.fadeIn = 0.1f;
 						dust.scale *= 1.25f;
-						dust.alpha = projectile.alpha;
+						dust.alpha = Projectile.alpha;
 						dust.velocity.X *= 2.25f;
 						dust.velocity.Y *= 1.55f;
 					}
@@ -161,11 +161,11 @@ namespace SOTS.Projectiles.Pyramid
 			}
 			else
 			{
-				projectile.rotation += MathHelper.ToRadians(10);
-				projectile.scale -= 0.027f;
-				if(projectile.scale <= 0)
+				Projectile.rotation += MathHelper.ToRadians(10);
+				Projectile.scale -= 0.027f;
+				if(Projectile.scale <= 0)
                 {
-					projectile.Kill();
+					Projectile.Kill();
 				}
 				dustRing(-1);
 			}
@@ -174,13 +174,13 @@ namespace SOTS.Projectiles.Pyramid
 		{
 			for (int i = 0; i < 10; i++)
 			{
-				int num2 = Dust.NewDust(new Vector2(projectile.Center.X, projectile.Center.Y) - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
+				int num2 = Dust.NewDust(new Vector2(Projectile.Center.X, Projectile.Center.Y) - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
 				Dust dust = Main.dust[num2];
 				dust.color = new Color(127, 80, 80, 40);
 				dust.noGravity = true;
 				dust.fadeIn = 0.1f;
 				dust.scale *= 1.25f;
-				dust.alpha = projectile.alpha;
+				dust.alpha = Projectile.alpha;
 				dust.velocity.X *= 1.25f;
 				dust.velocity.Y *= 0.75f;
 			}

@@ -13,42 +13,42 @@ namespace SOTS.Projectiles.Otherworld
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Phase Ball");
-			ProjectileID.Sets.TrailCacheLength[projectile.type] = 7;
-			ProjectileID.Sets.TrailingMode[projectile.type] = 1;
+			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 7;
+			ProjectileID.Sets.TrailingMode[Projectile.type] = 1;
 		}
 		public override void SetDefaults()
 		{
-			projectile.width = 34;
-			projectile.height = 34;
-			projectile.hostile = false;
-			projectile.friendly = true;
-			projectile.timeLeft = 30;
-			projectile.tileCollide = false;
-			projectile.penetrate = -1;
-			projectile.ranged = true;
+			Projectile.width = 34;
+			Projectile.height = 34;
+			Projectile.hostile = false;
+			Projectile.friendly = true;
+			Projectile.timeLeft = 30;
+			Projectile.tileCollide = false;
+			Projectile.penetrate = -1;
+			Projectile.ranged = true;
 		}
 		public override void ModifyDamageHitbox(ref Rectangle hitbox)
 		{
-			float width = projectile.width * projectile.scale;
-			float height = projectile.width * projectile.scale;
-			hitbox = new Rectangle((int)(projectile.Center.X - width/2), (int)(projectile.Center.Y - height/2), (int)width, (int)height);
+			float width = Projectile.width * Projectile.scale;
+			float height = Projectile.width * Projectile.scale;
+			hitbox = new Rectangle((int)(Projectile.Center.X - width/2), (int)(Projectile.Center.Y - height/2), (int)width, (int)height);
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
-			Texture2D texture = Main.projectileTexture[projectile.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			for (int k = 0; k < projectile.oldPos.Length; k++)
+			for (int k = 0; k < Projectile.oldPos.Length; k++)
 			{
 				Color color = new Color(110, 110, 110, 0);
-				Vector2 drawPos = projectile.oldPos[k] - Main.screenPosition + drawOrigin;
-				color = projectile.GetAlpha(color) * ((projectile.oldPos.Length - k) / (float)projectile.oldPos.Length) * 0.5f;
+				Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin;
+				color = Projectile.GetAlpha(color) * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length) * 0.5f;
 				for (int j = 0; j < 5; j++)
 				{
 					float x = Main.rand.Next(-10, 11) * 0.1f;
 					float y = Main.rand.Next(-10, 11) * 0.1f;
-					if(!projectile.oldPos[k].Equals(projectile.position))
+					if(!Projectile.oldPos[k].Equals(Projectile.position))
 					{
-						Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, projectile.rotation, drawOrigin, projectile.scale * (projectile.oldPos.Length - k) / (float)projectile.oldPos.Length, SpriteEffects.None, 0f);
+						Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, Projectile.rotation, drawOrigin, Projectile.scale * (Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length, SpriteEffects.None, 0f);
 					}
 				}
 			}
@@ -56,14 +56,14 @@ namespace SOTS.Projectiles.Otherworld
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture = Main.projectileTexture[projectile.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Color color = new Color(110, 110, 110, 0);
-			Vector2 drawOrigin = new Vector2(Main.projectileTexture[projectile.type].Width * 0.5f, projectile.height * 0.5f);
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value.Width * 0.5f, Projectile.height * 0.5f);
 			for (int k = 0; k < 6; k++)
 			{
 				float x = Main.rand.Next(-10, 11) * 0.1f;
 				float y = Main.rand.Next(-10, 11) * 0.1f;
-				Main.spriteBatch.Draw(texture, new Vector2((float)(projectile.Center.X - (int)Main.screenPosition.X) + x, (float)(projectile.Center.Y - (int)Main.screenPosition.Y) + y), null, color * (1f - (projectile.alpha / 255f)), projectile.rotation, drawOrigin, projectile.scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, new Vector2((float)(Projectile.Center.X - (int)Main.screenPosition.X) + x, (float)(Projectile.Center.Y - (int)Main.screenPosition.Y) + y), null, color * (1f - (Projectile.alpha / 255f)), Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
 			}
 			base.PostDraw(spriteBatch, drawColor);
 		}
@@ -76,25 +76,25 @@ namespace SOTS.Projectiles.Otherworld
 		}
 		public override void Kill(int timeLeft)
 		{
-			SoundEngine.PlaySound(3, (int)projectile.Center.X, (int)projectile.Center.Y, 53, 0.75f);
-			if (projectile.owner == Main.myPlayer)
+			SoundEngine.PlaySound(3, (int)Projectile.Center.X, (int)Projectile.Center.Y, 53, 0.75f);
+			if (Projectile.owner == Main.myPlayer)
 			{
 				for(int i = 0; i < 8; i++)
 				{
 					Vector2 circular = new Vector2(3, 0).RotatedBy(MathHelper.ToRadians(i * 45));
-					Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, circular.X, circular.Y, mod.ProjectileType("FriendlyOtherworldlyBolt"), projectile.damage, projectile.knockBack, Main.myPlayer);
+					Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, circular.X, circular.Y, mod.ProjectileType("FriendlyOtherworldlyBolt"), Projectile.damage, Projectile.knockBack, Main.myPlayer);
 				}
 				for (int i = 0; i < 3; i++)
 				{
 					Vector2 circular = new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(i + Main.rand.Next(120) + 120 * i));
-					Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, circular.X, circular.Y, mod.ProjectileType("PhaseColumn"), projectile.damage, projectile.knockBack, Main.myPlayer, 2, 0);
+					Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, circular.X, circular.Y, mod.ProjectileType("PhaseColumn"), Projectile.damage, Projectile.knockBack, Main.myPlayer, 2, 0);
 				}
 			}
 			for (int i = 0; i < 35; i++)
 			{
 				Vector2 circularLocation = new Vector2(12, 0);
 				resetVector2(ref circularLocation, i);
-				int dust = Dust.NewDust(new Vector2(projectile.Center.X - 4, projectile.Center.Y - 3), 0, 0, ModContent.DustType<CopyDust4>());
+				int dust = Dust.NewDust(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 3), 0, 0, ModContent.DustType<CopyDust4>());
 				Main.dust[dust].velocity = circularLocation;
 				Main.dust[dust].velocity *= 3.5f;
 				Main.dust[dust].scale *= 5f;
@@ -103,7 +103,7 @@ namespace SOTS.Projectiles.Otherworld
 				Main.dust[dust].color = new Color(100, 80, 200);
 
 				resetVector2(ref circularLocation, i);
-				dust = Dust.NewDust(new Vector2(projectile.Center.X - 4, projectile.Center.Y - 3), 0, 0, ModContent.DustType<CopyDust4>());
+				dust = Dust.NewDust(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 3), 0, 0, ModContent.DustType<CopyDust4>());
 				Main.dust[dust].velocity = circularLocation;
 				Main.dust[dust].velocity *= 6f;
 				Main.dust[dust].scale *= 4f;
@@ -112,7 +112,7 @@ namespace SOTS.Projectiles.Otherworld
 				Main.dust[dust].color = new Color(100, 80, 200);
 
 				resetVector2(ref circularLocation, i);
-				dust = Dust.NewDust(new Vector2(projectile.Center.X - 4, projectile.Center.Y - 3), 0, 0, ModContent.DustType<CopyDust4>());
+				dust = Dust.NewDust(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 3), 0, 0, ModContent.DustType<CopyDust4>());
 				Main.dust[dust].velocity = circularLocation;
 				Main.dust[dust].velocity *= 8f;
 				Main.dust[dust].scale *= 3f;
@@ -121,7 +121,7 @@ namespace SOTS.Projectiles.Otherworld
 				Main.dust[dust].color = new Color(100, 80, 200);
 
 				resetVector2(ref circularLocation, i);
-				dust = Dust.NewDust(new Vector2(projectile.Center.X - 4, projectile.Center.Y - 3), 0, 0, ModContent.DustType<CopyDust4>());
+				dust = Dust.NewDust(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 3), 0, 0, ModContent.DustType<CopyDust4>());
 				Main.dust[dust].velocity = circularLocation;
 				Main.dust[dust].velocity *= 12f;
 				Main.dust[dust].scale *= 2f;
@@ -132,8 +132,8 @@ namespace SOTS.Projectiles.Otherworld
 		}
 		public override void AI()
 		{
-			Lighting.AddLight(projectile.Center, 0.75f, 0.25f, 0.75f);
-			projectile.scale += ((62f / 34f) - 1) / 30f;
+			Lighting.AddLight(Projectile.Center, 0.75f, 0.25f, 0.75f);
+			Projectile.scale += ((62f / 34f) - 1) / 30f;
 		}
 	}
 }

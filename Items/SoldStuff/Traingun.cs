@@ -17,12 +17,12 @@ namespace SOTS.Items.SoldStuff
         public override void SetDefaults()
         {
             Item.damage = 75;
-            Item.ranged = true;
+            Item.DamageType = DamageClass.Ranged;
             Item.width = 90;
             Item.height = 62;
             Item.useTime = 24;
             Item.useAnimation = 24;
-            Item.useStyle = 5;
+            Item.useStyle = ItemUseStyleID.Shoot;
             Item.noMelee = true;
             Item.knockBack = 5f;
             Item.value = Item.buyPrice(5, 0, 0, 0);

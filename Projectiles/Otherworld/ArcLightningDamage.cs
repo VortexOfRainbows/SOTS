@@ -13,24 +13,24 @@ namespace SOTS.Projectiles.Otherworld
 		}
         public override void SetDefaults()
 		{
-			projectile.height = 24;
-			projectile.width = 24;
-			projectile.penetrate = 1;
-			projectile.friendly = true;
-			projectile.magic = true;
-			projectile.timeLeft = 6;
-			projectile.tileCollide = false;
-			projectile.alpha = 255;
+			Projectile.height = 24;
+			Projectile.width = 24;
+			Projectile.penetrate = 1;
+			Projectile.friendly = true;
+			Projectile.magic = true;
+			Projectile.timeLeft = 6;
+			Projectile.tileCollide = false;
+			Projectile.alpha = 255;
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			if(projectile.ai[1] <= 0)
+			if(Projectile.ai[1] <= 0)
             {
 				return;
             }
-			Player player = Main.player[projectile.owner];
-			target.immune[projectile.owner] = 0;
-			if (projectile.owner == Main.myPlayer)
+			Player player = Main.player[Projectile.owner];
+			target.immune[Projectile.owner] = 0;
+			if (Projectile.owner == Main.myPlayer)
 			{
 				int npcIndex = -1;
 				double distanceTB = 216;
@@ -39,10 +39,10 @@ namespace SOTS.Projectiles.Otherworld
 					NPC npc = Main.npc[i];
 					if (!npc.friendly && npc.lifeMax > 5 && npc.active && !npc.dontTakeDamage)
 					{
-						if (npcIndex != i && target.whoAmI != i && npc.whoAmI != (int)projectile.ai[0])
+						if (npcIndex != i && target.whoAmI != i && npc.whoAmI != (int)Projectile.ai[0])
 						{
-							float disX = projectile.Center.X - npc.Center.X;
-							float disY = projectile.Center.Y - npc.Center.Y;
+							float disX = Projectile.Center.X - npc.Center.X;
+							float disY = Projectile.Center.Y - npc.Center.Y;
 							double dis = Math.Sqrt(disX * disX + disY * disY);
 							if (dis < distanceTB)
 							{
@@ -57,7 +57,7 @@ namespace SOTS.Projectiles.Otherworld
 					NPC npc = Main.npc[npcIndex];
 					if (!npc.friendly && npc.lifeMax > 5 && npc.active && !npc.dontTakeDamage)
 					{
-						Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("ArcLightningZap"), (int)(projectile.damage * 0.8f) + 1, target.whoAmI, projectile.owner, npc.whoAmI, projectile.ai[1]);
+						Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, mod.ProjectileType("ArcLightningZap"), (int)(Projectile.damage * 0.8f) + 1, target.whoAmI, Projectile.owner, npc.whoAmI, Projectile.ai[1]);
 					}
 				}
 			}
@@ -70,7 +70,7 @@ namespace SOTS.Projectiles.Otherworld
 		{
 			for (int i = 0; i < 8; i++)
 			{
-				var num371 = Dust.NewDust(projectile.Center - new Vector2(5) - new Vector2(10, 10), 24, 24, mod.DustType("CopyDust4"), 0, 0, 100, default, 1.6f);
+				var num371 = Dust.NewDust(Projectile.Center - new Vector2(5) - new Vector2(10, 10), 24, 24, mod.DustType("CopyDust4"), 0, 0, 100, default, 1.6f);
 				Dust dust = Main.dust[num371];
 				dust.noGravity = true;
 				dust.color = Color.Lerp(new Color(160, 200, 220, 100), new Color(120, 140, 180, 100), new Vector2(-0.5f, 0).RotatedBy(Main.rand.Next(360)).X + 0.5f);

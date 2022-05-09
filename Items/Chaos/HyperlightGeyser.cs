@@ -31,7 +31,7 @@ namespace SOTS.Items.Chaos
 		}
 		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
 		{
-			Texture2D texture = Main.itemTexture[Item.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Item[Item.type].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Rectangle frame = new Rectangle(0, 0, 78, 36);
 			for (int i = 0; i < 6; i++)
@@ -53,7 +53,7 @@ namespace SOTS.Items.Chaos
         public override void SetDefaults()
 		{
 			Item.damage = 54;
-			Item.magic = true;
+			Item.DamageType = DamageClass.Magic;
 			Item.width = 78;
 			Item.height = 36;
 			Item.useTime = 30;

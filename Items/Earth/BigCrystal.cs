@@ -77,11 +77,11 @@ namespace SOTS.Items.Earth
 			Tile tile = Main.tile[i, j];
 			int left = i;
 			int top = j;
-			if (tile.frameX % 36 != 0)
+			if (tile.TileFrameX % 36 != 0)
 			{
 				left--;
 			}
-			if (tile.frameY % 36 != 0)
+			if (tile.TileFrameY % 36 != 0)
 			{
 				top--;
 			}

@@ -142,7 +142,7 @@ namespace SOTS.Items.Fragments
 			Item.width = 26;
 			Item.height = 36;
 			Item.value = Item.sellPrice(0, 0, 0, 50);
-			Item.rare = 1;
+			Item.rare = ItemRarityID.Blue;
 			Item.maxStack = 999;
 		}
 	}

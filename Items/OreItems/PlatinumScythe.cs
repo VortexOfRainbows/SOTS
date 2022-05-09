@@ -24,7 +24,7 @@ namespace SOTS.Items.OreItems
             Item.height = 48;  
             Item.useTime = 30;
             Item.useAnimation = 30;
-            Item.useStyle = 1;   
+            Item.useStyle = ItemUseStyleID.Swing;   
             Item.autoReuse = true; 
 			Item.useTurn = true;
             Item.knockBack = 4f;

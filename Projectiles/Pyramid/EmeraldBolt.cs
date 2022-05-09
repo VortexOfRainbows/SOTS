@@ -14,25 +14,25 @@ namespace SOTS.Projectiles.Pyramid
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Emerald Bolt");
-			ProjectileID.Sets.TrailCacheLength[projectile.type] = 20;
-			ProjectileID.Sets.TrailingMode[projectile.type] = 1;
+			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 20;
+			ProjectileID.Sets.TrailingMode[Projectile.type] = 1;
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
-			Texture2D texture = Main.projectileTexture[projectile.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			for (int k = 0; k < projectile.oldPos.Length; k++)
+			for (int k = 0; k < Projectile.oldPos.Length; k++)
 			{
 				Color color2 = new Color(110, 110, 110, 0);
-				Vector2 drawPos = projectile.oldPos[k] - Main.screenPosition + drawOrigin;
-				color2 = projectile.GetAlpha(color2) * ((projectile.oldPos.Length - k) / (float)projectile.oldPos.Length) * 0.5f;
+				Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin;
+				color2 = Projectile.GetAlpha(color2) * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length) * 0.5f;
 				for (int j = 0; j < 5; j++)
 				{
 					float x = Main.rand.Next(-10, 11) * 0.1f;
 					float y = Main.rand.Next(-10, 11) * 0.1f;
-					if (!projectile.oldPos[k].Equals(projectile.position))
+					if (!Projectile.oldPos[k].Equals(Projectile.position))
 					{
-						Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color2, projectile.rotation, drawOrigin, (projectile.oldPos.Length - k) / (float)projectile.oldPos.Length, SpriteEffects.None, 0f);
+						Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color2, Projectile.rotation, drawOrigin, (Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length, SpriteEffects.None, 0f);
 					}
 				}
 			}
@@ -40,39 +40,39 @@ namespace SOTS.Projectiles.Pyramid
 		}
 		public override void SetDefaults()
         {
-			projectile.height = 10;
-			projectile.width = 10;
-			projectile.friendly = true;
-			projectile.penetrate = -1;
-			projectile.timeLeft = 7200;
-			projectile.tileCollide = true;
-			projectile.ranged = true;
-			projectile.extraUpdates = 3;
-			projectile.usesLocalNPCImmunity = true;
-			projectile.localNPCHitCooldown = 20 * (1 + projectile.extraUpdates);
+			Projectile.height = 10;
+			Projectile.width = 10;
+			Projectile.friendly = true;
+			Projectile.penetrate = -1;
+			Projectile.timeLeft = 7200;
+			Projectile.tileCollide = true;
+			Projectile.ranged = true;
+			Projectile.extraUpdates = 3;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = 20 * (1 + Projectile.extraUpdates);
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
 			bounceCount++;
 			if (bounceCount > 3)
 				UpdateEnd();
-			projectile.localNPCImmunity[target.whoAmI] = projectile.localNPCHitCooldown;
-			target.immune[projectile.owner] = 0;
+			Projectile.localNPCImmunity[target.whoAmI] = Projectile.localNPCHitCooldown;
+			target.immune[Projectile.owner] = 0;
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity)
         {
 			bounceCount++;
 			if (bounceCount > 3)
 				UpdateEnd();
-			if (projectile.velocity.X != oldVelocity.X)
+			if (Projectile.velocity.X != oldVelocity.X)
 			{
-				projectile.velocity.X = -oldVelocity.X;
+				Projectile.velocity.X = -oldVelocity.X;
 			}
-			if (projectile.velocity.Y != oldVelocity.Y)
+			if (Projectile.velocity.Y != oldVelocity.Y)
 			{
-				projectile.velocity.Y = -oldVelocity.Y;
+				Projectile.velocity.Y = -oldVelocity.Y;
 			}
-			initialVelo = projectile.velocity;
+			initialVelo = Projectile.velocity;
 		
 			return false;
         }
@@ -80,15 +80,15 @@ namespace SOTS.Projectiles.Pyramid
 		{
 			for (int i = 0; i < 14; i++)
 			{
-				int num2 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, mod.DustType("CopyDust4"));
+				int num2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, mod.DustType("CopyDust4"));
 				Dust dust = Main.dust[num2];
 				Color color2 = new Color(110, 210, 90, 0);
 				dust.color = color2;
 				dust.noGravity = true;
 				dust.fadeIn = 0.1f;
 				dust.scale *= 2f;
-				dust.alpha = 255 - (int)(255 * (projectile.timeLeft / 40f));
-				dust.velocity += projectile.velocity * 0.2f;
+				dust.alpha = 255 - (int)(255 * (Projectile.timeLeft / 40f));
+				dust.velocity += Projectile.velocity * 0.2f;
 			}
 		}
 		bool runOnce = true;
@@ -97,31 +97,31 @@ namespace SOTS.Projectiles.Pyramid
 		{
 			if (bounceCount > 3)
 			{
-				if (projectile.timeLeft > 40)
-					projectile.timeLeft = 40;
+				if (Projectile.timeLeft > 40)
+					Projectile.timeLeft = 40;
 				end = true;
-				projectile.velocity *= 0;
-				projectile.friendly = false;
-				projectile.extraUpdates = 1;
-				if(Main.myPlayer == projectile.owner)
-					projectile.netUpdate = true;
+				Projectile.velocity *= 0;
+				Projectile.friendly = false;
+				Projectile.extraUpdates = 1;
+				if(Main.myPlayer == Projectile.owner)
+					Projectile.netUpdate = true;
 			}
 		}
 		public override void SendExtraAI(BinaryWriter writer)
 		{
-			writer.Write(projectile.tileCollide);
-			writer.Write(projectile.friendly);
+			writer.Write(Projectile.tileCollide);
+			writer.Write(Projectile.friendly);
 			writer.Write(end);
-			writer.Write(projectile.extraUpdates);
+			writer.Write(Projectile.extraUpdates);
 			writer.Write(bounceCount);
 			base.SendExtraAI(writer);
 		}
 		public override void ReceiveExtraAI(BinaryReader reader)
 		{
-			projectile.tileCollide = reader.ReadBoolean();
-			projectile.friendly = reader.ReadBoolean();
+			Projectile.tileCollide = reader.ReadBoolean();
+			Projectile.friendly = reader.ReadBoolean();
 			end = reader.ReadBoolean();
-			projectile.extraUpdates = reader.ReadInt32();
+			Projectile.extraUpdates = reader.ReadInt32();
 			bounceCount = reader.ReadInt32();
 			base.ReceiveExtraAI(reader);
 		}
@@ -129,21 +129,21 @@ namespace SOTS.Projectiles.Pyramid
 		{
 			if (runOnce)
 			{
-				initialVelo = projectile.velocity;
+				initialVelo = Projectile.velocity;
 				runOnce = false;
 			}
-			if (end == true && projectile.timeLeft > 40)
-				projectile.timeLeft = 40;
+			if (end == true && Projectile.timeLeft > 40)
+				Projectile.timeLeft = 40;
 			if ((Main.rand.NextBool(2) && end) || Main.rand.NextBool(22))
 			{
-				int num2 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y) - new Vector2(4, 4), projectile.width, projectile.height, mod.DustType("CopyDust4"));
+				int num2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(4, 4), Projectile.width, Projectile.height, mod.DustType("CopyDust4"));
 				Dust dust = Main.dust[num2];
 				Color color2 = new Color(110, 210, 90, 0);
 				dust.color = color2;
 				dust.noGravity = true;
 				dust.fadeIn = 0.1f;
 				dust.scale *= 2f;
-				int alpha = 255 - (int)(255 * (projectile.timeLeft / 40f));
+				int alpha = 255 - (int)(255 * (Projectile.timeLeft / 40f));
 				alpha = alpha > 255 ? 255 : alpha;
 				alpha = alpha < 0 ? 0 : alpha;
 				dust.alpha = alpha;

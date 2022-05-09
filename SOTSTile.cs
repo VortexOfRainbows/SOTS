@@ -282,23 +282,23 @@ namespace SOTS
         public override bool PreDraw(int i, int j, int type, SpriteBatch spriteBatch)
         {
             Tile tile = Framing.GetTileSafely(i, j);
-            if (tile.WallType == WallType<NatureWallWall>() && tile.type != TileType<DissolvingNatureTile>())
+            if (tile.WallType == WallType<NatureWallWall>() && tile.TileType != TileType<DissolvingNatureTile>())
                 DissolvingNatureTile.DrawEffects(i, j, spriteBatch, mod, true);
-            if (tile.WallType == WallType<EarthWallWall>() && tile.type != TileType<DissolvingEarthTile>())
+            if (tile.WallType == WallType<EarthWallWall>() && tile.TileType != TileType<DissolvingEarthTile>())
                 DissolvingEarthTile.DrawEffects(i, j, spriteBatch, mod, true);
-            if (tile.WallType == WallType<AuroraWallWall>() && tile.type != TileType<DissolvingAuroraTile>())
+            if (tile.WallType == WallType<AuroraWallWall>() && tile.TileType != TileType<DissolvingAuroraTile>())
                 DissolvingAuroraTile.DrawEffects(i, j, spriteBatch, mod, true);
-            if (tile.WallType == WallType<AetherWallWall>() && tile.type != TileType<DissolvingAetherTile>())
+            if (tile.WallType == WallType<AetherWallWall>() && tile.TileType != TileType<DissolvingAetherTile>())
                 DissolvingAetherTile.DrawEffects(i, j, spriteBatch, mod, true);
-            if (tile.WallType == WallType<DelugeWallWall>() && tile.type != TileType<DissolvingDelugeTile>())
+            if (tile.WallType == WallType<DelugeWallWall>() && tile.TileType != TileType<DissolvingDelugeTile>())
                 DissolvingDelugeTile.DrawEffects(i, j, spriteBatch, mod, true);
-            if (tile.WallType == WallType<UmbraWallWall>() && tile.type != TileType<DissolvingUmbraTile>())
+            if (tile.WallType == WallType<UmbraWallWall>() && tile.TileType != TileType<DissolvingUmbraTile>())
                 DissolvingUmbraTile.DrawEffects(i, j, spriteBatch, mod, true);
-            if (tile.WallType == WallType<NetherWallWall>() && tile.type != TileType<DissolvingNetherTile>())
+            if (tile.WallType == WallType<NetherWallWall>() && tile.TileType != TileType<DissolvingNetherTile>())
                 DissolvingNetherTile.DrawEffects(i, j, spriteBatch, mod, true);
             if ((!Main.tile[i - 1, j].active() || !Main.tileSolid[Main.tile[i - 1, j].type]) && (!Main.tile[i, j - 1].active() || !Main.tileSolid[Main.tile[i, j - 1].type]))
             {
-                if (tile.WallType == WallType<BrillianceWallWall>() || tile.type == (ushort)TileType<DissolvingBrillianceTile>())
+                if (tile.WallType == WallType<BrillianceWallWall>() || tile.TileType == (ushort)TileType<DissolvingBrillianceTile>())
                     DissolvingBrillianceTile.DrawEffects(i, j, spriteBatch, mod, true);
             }
             if (Main.tile[i, j + 1].active() && (Main.tile[i, j + 1].type == TileType<DissolvingBrillianceTile>() || Main.tile[i, j + 1].WallType == WallType<BrillianceWallWall>()) && Main.tileSolid[type])
@@ -316,8 +316,8 @@ namespace SOTS
         public static void DrawSlopedGlowMask(int i, int j, int type, Texture2D texture, Color drawColor, Vector2 positionOffset, bool overrideFrame = false)
         {
             Tile tile = Main.tile[i, j];
-            int frameX = tile.frameX;
-            int frameY = tile.frameY;
+            int frameX = tile.TileFrameX;
+            int frameY = tile.TileFrameY;
             if (overrideFrame)
             {
                 frameX = 0;
@@ -333,7 +333,7 @@ namespace SOTS
             }
             Vector2 offsets = -Main.screenPosition + zero + positionOffset;
             Vector2 drawCoordinates = location + offsets;
-            if ((tile.slope() == 0 && !tile.halfBrick()) || (Main.tileSolid[tile.type] && Main.tileSolidTop[tile.type])) //second one should be for platforms
+            if ((tile.slope() == 0 && !tile.halfBrick()) || (Main.tileSolid[tile.TileType] && Main.tileSolidTop[tile.TileType])) //second one should be for platforms
             {
                 Main.spriteBatch.Draw(texture, drawCoordinates, new Rectangle(frameX, frameY, width, height), drawColor, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
             }

@@ -28,7 +28,7 @@ namespace SOTS.Items.Pyramid
 			Item.noMelee = true;
 			Item.pick = 110;
 			Item.tileBoost++;
-			Item.useStyle = 5;
+			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.knockBack = 0;
 			Item.value = Item.sellPrice(0, 0, 1, 50);
 			Item.rare = 5;

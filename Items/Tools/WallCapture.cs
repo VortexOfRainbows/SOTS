@@ -95,15 +95,15 @@ namespace SOTS.Items.Tools
 				Point16 offset = tileData.Origin;
 				int correctX = pointX + offset.X;
 				int correctY = pointY + offset.Y;
-				if (tile.type == TileID.FishingCrate)
+				if (tile.TileType == TileID.FishingCrate)
 				{
 					correctX--;
 				}
-				if (tile.type == TileID.ClosedDoor)
+				if (tile.TileType == TileID.ClosedDoor)
 				{
 					correctY++;
 				}
-				if (tile.type == TileID.TallGateClosed || tile.type == TileID.TallGateOpen)
+				if (tile.TileType == TileID.TallGateClosed || tile.TileType == TileID.TallGateOpen)
 				{
 					correctY--;
 				}
@@ -114,10 +114,10 @@ namespace SOTS.Items.Tools
 					for (int i = pointX; i < distX; i++)
 					{
 						Tile checkingTile = Main.tile[i + (int)point1.X, j + (int)point1.Y];
-						double specialType = tile.type + (tile.slope() * 0.01) + (tile.halfBrick() ? 0.1 : 0); //This allows tile type to be stored as W in WWWW.XYZZZZ, slope to be stored as X in WWWW.XYZZZZ, and half brick as Y in WWWW.XYZZZZ;
+						double specialType = tile.TileType + (tile.slope() * 0.01) + (tile.halfBrick() ? 0.1 : 0); //This allows tile type to be stored as W in WWWW.XYZZZZ, slope to be stored as X in WWWW.XYZZZZ, and half brick as Y in WWWW.XYZZZZ;
 
 						specialType += style * 0.01 * 0.0001; //this allows tile styles to be stored as Z in WWWW.XYZZZZ;
-						if (i >= _structure.GetLength(0) || j >= _structure.GetLength(1) || checkingTile.type != tile.type)
+						if (i >= _structure.GetLength(0) || j >= _structure.GetLength(1) || checkingTile.type != tile.TileType)
 						{
 							Main.NewText("Points Reset", 150, 255, 255);
 							point1 = new Vector2(-1, 0);
@@ -252,7 +252,7 @@ namespace SOTS.Items.Tools
 					_structure[i, j] = tiles.IndexOf(specialType);
 
 					/*
-					if ((!Main.tileSolid[tile.type] || tileData != null) && tile.active())
+					if ((!Main.tileSolid[tile.TileType] || tileData != null) && tile.active())
 					{
 						FindOrigin(tile, i, j);
 					}

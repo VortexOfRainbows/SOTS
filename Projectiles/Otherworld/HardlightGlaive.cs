@@ -16,58 +16,58 @@ namespace SOTS.Projectiles.Otherworld
 
 		public override void SetDefaults()
 		{
-			projectile.width = 24;
-			projectile.height = 24;
-			projectile.aiStyle = 19;
-			projectile.penetrate = -1;
-			projectile.scale = 1.2f;
-			projectile.alpha = 0;
-			projectile.hide = true;
-			projectile.ownerHitCheck = true;
-			projectile.melee = true;
-			projectile.tileCollide = false;
-			projectile.friendly = true;
-			projectile.usesLocalNPCImmunity = true;
-			projectile.localNPCHitCooldown = 10;
+			Projectile.width = 24;
+			Projectile.height = 24;
+			Projectile.aiStyle = 19;
+			Projectile.penetrate = -1;
+			Projectile.scale = 1.2f;
+			Projectile.alpha = 0;
+			Projectile.hide = true;
+			Projectile.ownerHitCheck = true;
+			Projectile.melee = true;
+			Projectile.tileCollide = false;
+			Projectile.friendly = true;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = 10;
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			projectile.localNPCImmunity[target.whoAmI] = projectile.localNPCHitCooldown;
-			target.immune[projectile.owner] = 0;
+			Projectile.localNPCImmunity[target.whoAmI] = Projectile.localNPCHitCooldown;
+			target.immune[Projectile.owner] = 0;
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Otherworld/HardlightGlaiveGlow");
-			Vector2 drawOrigin = new Vector2(0, 0) + (projectile.spriteDirection != 1 ? new Vector2(48, 0) : Vector2.Zero);
-			Vector2 drawPos = projectile.Center - Main.screenPosition;
+			Vector2 drawOrigin = new Vector2(0, 0) + (Projectile.spriteDirection != 1 ? new Vector2(48, 0) : Vector2.Zero);
+			Vector2 drawPos = Projectile.Center - Main.screenPosition;
 			if (modPlayer.rainbowGlowmasks)
 			{
 				Color color = new Color(Main.DiscoR, Main.DiscoG, Main.DiscoB, 0);
 				for (int k = 0; k < 3; k++)
 				{
-					spriteBatch.Draw(texture, drawPos, null, projectile.GetAlpha(color), projectile.rotation, drawOrigin, projectile.scale, projectile.spriteDirection != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+					spriteBatch.Draw(texture, drawPos, null, Projectile.GetAlpha(color), Projectile.rotation, drawOrigin, Projectile.scale, Projectile.spriteDirection != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 				}
 			}
 			else
 			{
 				Color color = Color.White;
-				spriteBatch.Draw(texture, drawPos, null, projectile.GetAlpha(color), projectile.rotation, drawOrigin, projectile.scale, projectile.spriteDirection != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+				spriteBatch.Draw(texture, drawPos, null, Projectile.GetAlpha(color), Projectile.rotation, drawOrigin, Projectile.scale, Projectile.spriteDirection != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 			}
 		}
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
 		{
 			float point = 0f;
-			float rotation = projectile.velocity.ToRotation();
-			if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), projectile.Center + rotation.ToRotationVector2() * 12, projectile.Center + rotation.ToRotationVector2() * -88, 24f * projectile.scale, ref point))
+			float rotation = Projectile.velocity.ToRotation();
+			if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center + rotation.ToRotationVector2() * 12, Projectile.Center + rotation.ToRotationVector2() * -88, 24f * Projectile.scale, ref point))
 				return true;
 			return base.Colliding(projHitbox, targetHitbox);
 		}
         public float movementFactor 
 		{
-			get => projectile.ai[0];
-			set => projectile.ai[0] = value;
+			get => Projectile.ai[0];
+			set => Projectile.ai[0] = value;
 		}
 		Vector2 originalVelo = Vector2.Zero;
 		bool runOnce = true;
@@ -77,29 +77,29 @@ namespace SOTS.Projectiles.Otherworld
 		{
 			if(runOnce)
             {
-				originalVelo = projectile.velocity;
+				originalVelo = Projectile.velocity;
 				runOnce = false;
             }
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			counter++;
 
 			Vector2 ownerMountedCenter = player.RotatedRelativePoint(player.MountedCenter, true);
 			Vector2 mousePosition = new Vector2(-64, 0).RotatedBy(originalVelo.ToRotation());
-			mousePosition += new Vector2(20, 0).RotatedBy(MathHelper.ToRadians(counter * 8 * projectile.direction) + originalVelo.ToRotation());
+			mousePosition += new Vector2(20, 0).RotatedBy(MathHelper.ToRadians(counter * 8 * Projectile.direction) + originalVelo.ToRotation());
 			Vector2 toMouse = mousePosition;
-			projectile.velocity = new Vector2(-projectile.velocity.Length(), 0).RotatedBy(toMouse.ToRotation());
+			Projectile.velocity = new Vector2(-Projectile.velocity.Length(), 0).RotatedBy(toMouse.ToRotation());
 
-			projectile.direction = player.direction;
-			player.heldProj = projectile.whoAmI;
+			Projectile.direction = player.direction;
+			player.heldProj = Projectile.whoAmI;
 			player.itemTime = player.itemAnimation;
-			projectile.position.X = ownerMountedCenter.X - (float)(projectile.width / 2);
-			projectile.position.Y = ownerMountedCenter.Y - (float)(projectile.height / 2);
+			Projectile.position.X = ownerMountedCenter.X - (float)(Projectile.width / 2);
+			Projectile.position.Y = ownerMountedCenter.Y - (float)(Projectile.height / 2);
 			if (!player.frozen)
 			{
 				if (movementFactor == 0f) 
 				{
 					movementFactor = 10f; 
-					projectile.netUpdate = true;
+					Projectile.netUpdate = true;
 				}
 				if (player.itemAnimation < player.itemAnimationMax / 3) // Somewhere along the item animation, make sure the spear moves back
 				{
@@ -110,21 +110,21 @@ namespace SOTS.Projectiles.Otherworld
 					movementFactor += 0.75f;
 				}
 			}
-			projectile.position += projectile.velocity * movementFactor;
+			Projectile.position += Projectile.velocity * movementFactor;
 			if (player.itemAnimation == 0)
 			{
-				projectile.Kill();
+				Projectile.Kill();
 			}
-			projectile.rotation = (projectile.Center - player.Center).ToRotation() + MathHelper.ToRadians(135f);
-			projectile.spriteDirection = -projectile.direction;
-			if (projectile.spriteDirection == -1)
+			Projectile.rotation = (Projectile.Center - player.Center).ToRotation() + MathHelper.ToRadians(135f);
+			Projectile.spriteDirection = -Projectile.direction;
+			if (Projectile.spriteDirection == -1)
 			{
-				projectile.rotation -= MathHelper.ToRadians(90f);
+				Projectile.rotation -= MathHelper.ToRadians(90f);
 			}
 			if (Main.rand.NextBool(3))
 			{
-				Dust dust = Dust.NewDustDirect(projectile.position, projectile.height, projectile.width, ModContent.DustType<CopyDust4>(), projectile.velocity.X * .2f, projectile.velocity.Y * .2f, 100, Scale: 1.2f);
-				dust.velocity += projectile.velocity * 0.3f;
+				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.height, Projectile.width, ModContent.DustType<CopyDust4>(), Projectile.velocity.X * .2f, Projectile.velocity.Y * .2f, 100, Scale: 1.2f);
+				dust.velocity += Projectile.velocity * 0.3f;
 				dust.velocity *= 0.2f;
 				dust.noGravity = true;
 				dust.color = Color.Lerp(new Color(160, 200, 220, 70), new Color(120, 140, 180, 70), new Vector2(-0.5f, 0).RotatedBy(Main.rand.Next(360)).X + 0.5f);
@@ -132,8 +132,8 @@ namespace SOTS.Projectiles.Otherworld
 			}
 			if (Main.rand.NextBool(4))
 			{
-				Dust dust = Dust.NewDustDirect(projectile.position, projectile.height, projectile.width, ModContent.DustType<CopyDust4>(), 0, 0, 150, Scale: 0.3f);
-				dust.velocity += projectile.velocity * 0.5f;
+				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.height, Projectile.width, ModContent.DustType<CopyDust4>(), 0, 0, 150, Scale: 0.3f);
+				dust.velocity += Projectile.velocity * 0.5f;
 				dust.velocity *= 0.5f;
 				dust.noGravity = true;
 				dust.color = Color.Lerp(new Color(160, 200, 220, 70), new Color(120, 140, 180, 70), new Vector2(-0.5f, 0).RotatedBy(Main.rand.Next(360)).X + 0.5f);
@@ -141,20 +141,20 @@ namespace SOTS.Projectiles.Otherworld
 			}
 			if (runOnce2 && player.itemAnimation <= player.itemAnimationMax / 3)
 			{
-				SoundEngine.PlaySound(3, (int)projectile.Center.X, (int)projectile.Center.Y, 53, 0.625f);
+				SoundEngine.PlaySound(3, (int)Projectile.Center.X, (int)Projectile.Center.Y, 53, 0.625f);
 				runOnce2 = false;
-				if(projectile.owner == Main.myPlayer)
-					Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, originalVelo.X * 1.3f, originalVelo.Y * 1.3f, mod.ProjectileType("HardlightColumn"), (int)(projectile.damage * 1.6f) + 1, projectile.knockBack * 0.5f, projectile.owner, 3, 0);
+				if(Projectile.owner == Main.myPlayer)
+					Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, originalVelo.X * 1.3f, originalVelo.Y * 1.3f, mod.ProjectileType("HardlightColumn"), (int)(Projectile.damage * 1.6f) + 1, Projectile.knockBack * 0.5f, Projectile.owner, 3, 0);
 			}
 		}
 		int storeData = -1;
 		public override void PostAI()
 		{
-			if (storeData == -1 && projectile.owner == Main.myPlayer)
+			if (storeData == -1 && Projectile.owner == Main.myPlayer)
 			{
-				storeData = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, projectile.velocity.X, projectile.velocity.Y, mod.ProjectileType("HardlightTrail"), (int)(projectile.damage * 1f) + 1, projectile.knockBack * 0.75f, projectile.owner, 0, projectile.whoAmI);
-				projectile.ai[1] = storeData;
-				projectile.netUpdate = true;
+				storeData = Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, Projectile.velocity.X, Projectile.velocity.Y, mod.ProjectileType("HardlightTrail"), (int)(Projectile.damage * 1f) + 1, Projectile.knockBack * 0.75f, Projectile.owner, 0, Projectile.whoAmI);
+				Projectile.ai[1] = storeData;
+				Projectile.netUpdate = true;
 			}
 		}
 	}

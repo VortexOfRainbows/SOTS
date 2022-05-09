@@ -15,29 +15,29 @@ namespace SOTS.Projectiles.Minions
 		}
 		public override void SetDefaults()
 		{
-			projectile.arrow = false;
-			projectile.width = 16;
-			projectile.height = 16;
-			projectile.penetrate = -1;
-			projectile.timeLeft = 3000;
-			projectile.ranged = false;
-			projectile.friendly = true;
+			Projectile.arrow = false;
+			Projectile.width = 16;
+			Projectile.height = 16;
+			Projectile.penetrate = -1;
+			Projectile.timeLeft = 3000;
+			Projectile.ranged = false;
+			Projectile.friendly = true;
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
 			target.AddBuff(BuffID.OnFire, 360);
-			target.immune[projectile.owner] = 0;
+			target.immune[Projectile.owner] = 0;
 			triggerStop();
 		}
 		Vector2[] trailPos = new Vector2[7];
-		public void TrailPreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public void TrailPreDraw(ref Color lightColor)
 		{
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Minions/TerminatorAcornTrail").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			Vector2 previousPosition = projectile.Center;
+			Vector2 previousPosition = Projectile.Center;
 			for (int k = 0; k < trailPos.Length; k++)
 			{
-				float scale = projectile.scale * (trailPos.Length - k) / (float)trailPos.Length;
+				float scale = Projectile.scale * (trailPos.Length - k) / (float)trailPos.Length;
 				if (trailPos[k] == Vector2.Zero)
 				{
 					break;
@@ -46,7 +46,7 @@ namespace SOTS.Projectiles.Minions
 				Vector2 drawPos = trailPos[k] - Main.screenPosition;
 				Vector2 currentPos = trailPos[k];
 				Vector2 betweenPositions = previousPosition - currentPos;
-				color = projectile.GetAlpha(color) * ((trailPos.Length - k) / (float)trailPos.Length) * 0.5f;
+				color = Projectile.GetAlpha(color) * ((trailPos.Length - k) / (float)trailPos.Length) * 0.5f;
 				float max = betweenPositions.Length() / (6f * scale);
 				for (int i = 0; i < max; i++)
 				{
@@ -60,7 +60,7 @@ namespace SOTS.Projectiles.Minions
 							x = 0;
 							y = 0;
 						}
-						if (trailPos[k] != projectile.Center)
+						if (trailPos[k] != Projectile.Center)
 							spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, betweenPositions.ToRotation() + MathHelper.ToRadians(45), drawOrigin, scale, SpriteEffects.None, 0f);
 					}
 				}
@@ -69,7 +69,7 @@ namespace SOTS.Projectiles.Minions
 		}
 		public void cataloguePos()
 		{
-			Vector2 current = projectile.Center;
+			Vector2 current = Projectile.Center;
 			for (int i = 0; i < trailPos.Length; i++)
 			{
 				Vector2 previousPosition = trailPos[i];
@@ -77,7 +77,7 @@ namespace SOTS.Projectiles.Minions
 				current = previousPosition;
 			}
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Minions/TerminatorAcornTrail").Value;
 			Color color = new Color(120, 120, 120, 0);
@@ -87,7 +87,7 @@ namespace SOTS.Projectiles.Minions
 				{
 					float x = Main.rand.Next(-10, 11) * 0.15f;
 					float y = Main.rand.Next(-10, 11) * 0.15f;
-					Main.spriteBatch.Draw(texture, new Vector2((float)(projectile.Center.X - (int)Main.screenPosition.X) + x, (float)(projectile.Center.Y - (int)Main.screenPosition.Y) + y), null, color * (1f - (projectile.alpha / 255f)), projectile.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture, new Vector2((float)(Projectile.Center.X - (int)Main.screenPosition.X) + x, (float)(Projectile.Center.Y - (int)Main.screenPosition.Y) + y), null, color * (1f - (Projectile.alpha / 255f)), Projectile.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
 				}
 			TrailPreDraw(spriteBatch, lightColor);
 			return endHow == 0;
@@ -95,41 +95,41 @@ namespace SOTS.Projectiles.Minions
 		bool runOnce = true;
 		public override bool PreAI()
 		{
-			if(projectile.ai[0] == -1)
+			if(Projectile.ai[0] == -1)
             {
-				projectile.ai[0]--;
+				Projectile.ai[0]--;
 				for (int i = 0; i < 12; i++)
 				{
-					int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y) - new Vector2(5), projectile.width, projectile.height, mod.DustType("CopyDust4"));
+					int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, mod.DustType("CopyDust4"));
 					Dust dust = Main.dust[num1];
 					dust.velocity *= 0.2f;
-					dust.velocity += projectile.velocity * 0.225f;
+					dust.velocity += Projectile.velocity * 0.225f;
 					dust.noGravity = true;
 					dust.scale += 0.1f;
 					dust.color = new Color(220, 60, 7, 100);
 					dust.fadeIn = 0.1f;
 					dust.scale *= 1.6f;
-					dust.alpha = projectile.alpha;
+					dust.alpha = Projectile.alpha;
 				}
 			}
-			projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(45);
+			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(45);
 			if (runOnce)
 			{
-				projectile.scale -= 0.125f * projectile.ai[0];
+				Projectile.scale -= 0.125f * Projectile.ai[0];
 				for (int i = 0; i < 3; i++)
 				{
-					int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y) - new Vector2(5), projectile.width, projectile.height, mod.DustType("CopyDust4"));
+					int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, mod.DustType("CopyDust4"));
 					Dust dust = Main.dust[num1];
 					dust.velocity *= 0.2f;
-					dust.velocity += projectile.velocity * 0.1f;
+					dust.velocity += Projectile.velocity * 0.1f;
 					dust.noGravity = true;
 					dust.scale += 0.1f;
 					dust.color = new Color(220, 60, 7, 100);
 					dust.fadeIn = 0.1f;
 					dust.scale *= 1.4f;
-					dust.alpha = projectile.alpha;
+					dust.alpha = Projectile.alpha;
 				}
-				SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 20, 0.8f);
+				SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 20, 0.8f);
 				for (int i = 0; i < trailPos.Length; i++)
 				{
 					trailPos[i] = Vector2.Zero;
@@ -138,26 +138,26 @@ namespace SOTS.Projectiles.Minions
 			}
 			if (!runOnce)
 			{
-				if (projectile.ai[1] % 2 == 0)
+				if (Projectile.ai[1] % 2 == 0)
 					cataloguePos();
 			}
 			checkPos();
-			if (projectile.timeLeft < 1000 && endHow == 0)
+			if (Projectile.timeLeft < 1000 && endHow == 0)
 			{
 				triggerStop();
 			}
-			projectile.ai[1]++;
-			return projectile.friendly;
+			Projectile.ai[1]++;
+			return Projectile.friendly;
 		}
         public override void AI()
 		{
-			projectile.velocity.Y += 0.09f;
+			Projectile.velocity.Y += 0.09f;
 			base.AI();
         }
         public void checkPos()
 		{
 			float iterator = 0f;
-			Vector2 current = projectile.Center;
+			Vector2 current = Projectile.Center;
 			for (int i = 0; i < trailPos.Length; i++)
 			{
 				Vector2 previousPosition = trailPos[i];
@@ -167,7 +167,7 @@ namespace SOTS.Projectiles.Minions
 				}
 			}
 			if (iterator >= trailPos.Length)
-				projectile.Kill();
+				Projectile.Kill();
 		}
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
         {
@@ -184,23 +184,23 @@ namespace SOTS.Projectiles.Minions
 		public void triggerStop()
 		{
 			endHow = 1;
-			projectile.tileCollide = false;
-			projectile.friendly = false;
-			projectile.velocity *= 0f;
-			projectile.netUpdate = true;
-			projectile.ai[0] = -1;
+			Projectile.tileCollide = false;
+			Projectile.friendly = false;
+			Projectile.velocity *= 0f;
+			Projectile.netUpdate = true;
+			Projectile.ai[0] = -1;
 		}
 		public override void SendExtraAI(BinaryWriter writer)
 		{
-			writer.Write(projectile.tileCollide);
-			writer.Write(projectile.friendly);
+			writer.Write(Projectile.tileCollide);
+			writer.Write(Projectile.friendly);
 			writer.Write(endHow);
 			base.SendExtraAI(writer);
 		}
 		public override void ReceiveExtraAI(BinaryReader reader)
 		{
-			projectile.tileCollide = reader.ReadBoolean();
-			projectile.friendly = reader.ReadBoolean();
+			Projectile.tileCollide = reader.ReadBoolean();
+			Projectile.friendly = reader.ReadBoolean();
 			endHow = reader.ReadInt32();
 			base.ReceiveExtraAI(reader);
 		}

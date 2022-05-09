@@ -20,7 +20,7 @@ namespace SOTS.Items.Slime
 			Item.width = 20;
 			Item.height = 26;
 			Item.value = 0;
-			Item.rare = 3;
+			Item.rare = ItemRarityID.Orange;
 			Item.maxStack = 30;
 			Item.useAnimation = 30;
 			Item.useTime = 30;

@@ -28,7 +28,7 @@ namespace SOTS.Items.Pyramid
 			Item.autoReuse = true;
 			Item.useAnimation = 15;
 			Item.useTime = 10;
-			Item.useStyle = 1;
+			Item.useStyle = ItemUseStyleID.Swing;
 			Item.rare = ItemRarityID.LightRed;
 			Item.value = Item.sellPrice(0, 1, 0, 0);
 			Item.consumable = true;
@@ -70,7 +70,7 @@ namespace SOTS.Items.Pyramid
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
 		{
 			Tile tile = Main.tile[i, j];
-			if (tile.frameY < 270)
+			if (tile.TileFrameY < 270)
 				DrawGems(i, j, spriteBatch);
 			/* 
 			// Flips the sprite
@@ -83,7 +83,7 @@ namespace SOTS.Items.Pyramid
 			} 
 			Main.spriteBatch.Draw(texture,
 				new Vector2(i * 16 - (int)Main.screenPosition.X, j * 16 - (int)Main.screenPosition.Y) + zero,
-				new Rectangle(tile.frameX, tile.frameY, 16, 16),
+				new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, 16),
 				Lighting.GetColor(i, j), 0f, default(Vector2), 1f, effects, 0f); */
 
 			return true;
@@ -99,9 +99,9 @@ namespace SOTS.Items.Pyramid
 			float counter = Main.GlobalTime * 120;
 			float mult = new Vector2(-1f, 0).RotatedBy(MathHelper.ToRadians(counter / 2f)).X;
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Pyramid/AncientGoldGateGems").Value;
-			if (tile.frameY % 90 == 0 && tile.frameX % 36 == 0) //check for it being the top left tile
+			if (tile.TileFrameY % 90 == 0 && tile.TileFrameX % 36 == 0) //check for it being the top left tile
 			{
-				int currentFrame = tile.frameY / 90;
+				int currentFrame = tile.TileFrameY / 90;
 				for (int k = 0; k < 6; k++)
 				{
 					Color color = new Color(255, 0, 0, 0);
@@ -143,7 +143,7 @@ namespace SOTS.Items.Pyramid
 						}
 						Vector2 rotationAround = new Vector2((2 + mult), 0).RotatedBy(MathHelper.ToRadians(60 * k + counter));
 						spriteBatch.Draw(texture, new Vector2(i * 16 - (int)Main.screenPosition.X, j * 16 - (int)Main.screenPosition.Y + frame.Y) + zero + rotationAround,
-							frame, color, 0f, default(Vector2), 1.0f, tile.frameX > 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+							frame, color, 0f, default(Vector2), 1.0f, tile.TileFrameX > 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 					}
 				}
 			}
@@ -152,7 +152,7 @@ namespace SOTS.Items.Pyramid
 		{
 			Player player = Main.LocalPlayer;
 			Tile tile = Main.tile[i, j];
-			if (tile.frameY < 270)
+			if (tile.TileFrameY < 270)
 			{
 				player.showItemIcon2 = ModContent.ItemType<RubyKeystone>();
 				player.noThrow = 2;
@@ -169,7 +169,7 @@ namespace SOTS.Items.Pyramid
 			Player player = Main.LocalPlayer;
 			Tile tile = Main.tile[i, j];
 			MouseOver(i, j);
-			if (tile.frameY < 270)
+			if (tile.TileFrameY < 270)
 			{
 				if (player.showItemIconText == "")
 				{
@@ -190,10 +190,10 @@ namespace SOTS.Items.Pyramid
 			Main.mouseRightRelease = false;
 			int key = ModContent.ItemType<RubyKeystone>();
 			bool able = false;
-			if (!able && tile.frameY < 270)
+			if (!able && tile.TileFrameY < 270)
 				able = player.ConsumeItem(key);
-			int left = i - (tile.frameX / 18) % 2;
-			int top = j - (tile.frameY / 18) % 5;
+			int left = i - (tile.TileFrameX / 18) % 2;
+			int top = j - (tile.TileFrameY / 18) % 5;
 			if (able)
 			{
 				SoundEngine.PlaySound(2, (int)player.Center.X, (int)player.Center.Y, 4, 1.0f, 0.3f);
@@ -212,7 +212,7 @@ namespace SOTS.Items.Pyramid
 			}
 			Vector2 Center = new Vector2(left * 16 + 8, top * 16 + 8);
 			bool active = false;
-			for (int l = 0; l < Main.projectile.Length; l++)
+			for (int l = 0; l < Main.Projectile.Length; l++)
             {
 				Projectile proj = Main.projectile[l];
 				if(proj.active && proj.type == ModContent.ProjectileType<AncientGoldGateGems>() && Vector2.Distance(proj.Center, Center) < 16)
@@ -221,10 +221,10 @@ namespace SOTS.Items.Pyramid
                 }
             }
 			tile = Main.tile[left, top];
-			if (tile.frameY >= 270 && tile.frameY < 360 && !active)
+			if (tile.TileFrameY >= 270 && tile.TileFrameY < 360 && !active)
 			{
 				int direction = 1;
-				if (tile.frameX >= 36)
+				if (tile.TileFrameX >= 36)
 					direction = -1;
 				for (int h = 1; h <= 2; h++)
 					Projectile.NewProjectile(new Vector2(left, top) * 16, Vector2.Zero, ModContent.ProjectileType<AncientGoldGateGems>(), 0, 0, Main.myPlayer, direction * h);
@@ -238,19 +238,19 @@ namespace SOTS.Items.Pyramid
         public override bool CanExplode(int i, int j)
 		{
 			Tile tile = Main.tile[i, j];
-			return tile.frameY >= 360;
+			return tile.TileFrameY >= 360;
         }
         public override bool CanKillTile(int i, int j, ref bool blockDamaged)
 		{
 			Tile tile = Main.tile[i, j];
-			int left = i - (tile.frameX / 18) % 2;
-			int top = j - (tile.frameY / 18) % 5;
+			int left = i - (tile.TileFrameX / 18) % 2;
+			int top = j - (tile.TileFrameY / 18) % 5;
 			Tile tileUp = Main.tile[left, top - 1];
 			Tile tileDown = Main.tile[left, top + 5];
 			Tile tileUp2 = Main.tile[left + 1, top - 1];
 			Tile tileDown2 = Main.tile[left + 1, top + 5];
 			bool surrounded = (tileUp.type == ModContent.TileType<TrueSandstoneTile>() && tileDown.type == ModContent.TileType<TrueSandstoneTile>()) || (tileUp2.type == ModContent.TileType<TrueSandstoneTile>() && tileDown2.type == ModContent.TileType<TrueSandstoneTile>());
-			return tile.frameY >= 360 && (!surrounded || !NPC.AnyNPCs(ModContent.NPCType<PharaohsCurse>()));
+			return tile.TileFrameY >= 360 && (!surrounded || !NPC.AnyNPCs(ModContent.NPCType<PharaohsCurse>()));
 		}
 		public override void NumDust(int i, int j, bool fail, ref int num)
 		{
@@ -268,7 +268,7 @@ namespace SOTS.Items.Pyramid
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
 		{
 			Tile tile = Main.tile[i, j];
-			if((tile.frameY == 144 || tile.frameY == 234 || tile.frameY == 216 || tile.frameY == 324 || tile.frameY == 306 || tile.frameY == 288) && (tile.frameX == 0 || tile.frameX == 54))
+			if((tile.TileFrameY == 144 || tile.TileFrameY == 234 || tile.TileFrameY == 216 || tile.TileFrameY == 324 || tile.TileFrameY == 306 || tile.TileFrameY == 288) && (tile.TileFrameX == 0 || tile.TileFrameX == 54))
 			{
 				r = 0.6f;
 				g = 0.05f;
@@ -286,36 +286,36 @@ namespace SOTS.Items.Pyramid
 		{
 			DisplayName.SetDefault("Gems");
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
-			int i = (int)projectile.Center.X / 16;
-			int j = (int)projectile.Center.Y / 16;
+			int i = (int)Projectile.Center.X / 16;
+			int j = (int)Projectile.Center.Y / 16;
 			DrawGems(i, j, spriteBatch);
 			return false;
 		}
 		public override void SetDefaults()
 		{
-			projectile.height = 32;
-			projectile.width = 80;
-			projectile.friendly = false;
-			projectile.penetrate = -1;
-			projectile.timeLeft = 720;
-			projectile.tileCollide = false;
-			projectile.hostile = false;
-			projectile.alpha = 255;
-			projectile.hide = true;
+			Projectile.height = 32;
+			Projectile.width = 80;
+			Projectile.friendly = false;
+			Projectile.penetrate = -1;
+			Projectile.timeLeft = 720;
+			Projectile.tileCollide = false;
+			Projectile.hostile = false;
+			Projectile.alpha = 255;
+			Projectile.hide = true;
 		}
 		public override void Kill(int timeLeft)
 		{
-			int uniqueC = (int)projectile.ai[0];
+			int uniqueC = (int)Projectile.ai[0];
 			if (Math.Abs(uniqueC) == 1)
             {
-				int i = (int)projectile.Center.X / 16;
-				int j = (int)projectile.Center.Y / 16;
+				int i = (int)Projectile.Center.X / 16;
+				int j = (int)Projectile.Center.Y / 16;
 				WorldGen.KillTile(i, j, false, false, false);
 				if (!Main.tile[i, j].active() && Main.netMode != NetmodeID.SinglePlayer)
 					NetMessage.SendData(MessageID.TileChange, -1, -1, null, 0, (float)i, (float)j, 0f, 0, 0, 0);
-				Vector2 center = projectile.Center + new Vector2(16, 40);
+				Vector2 center = Projectile.Center + new Vector2(16, 40);
 				SoundEngine.PlaySound(2, (int)center.X, (int)center.Y, 14, 1.25f, -0.25f);
 				for (int k = 0; k < 12; k++)
 				{
@@ -360,18 +360,18 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void AI()
 		{
-			int uniqueC = (int)projectile.ai[0];
-			projectile.hide = Math.Abs(uniqueC) != 2;
-			projectile.ai[1]++;	
+			int uniqueC = (int)Projectile.ai[0];
+			Projectile.hide = Math.Abs(uniqueC) != 2;
+			Projectile.ai[1]++;	
 		}
 		public void DrawGems(int i, int j, SpriteBatch spriteBatch)
 		{
 			float counter = Main.GlobalTime * 120;
 			float mult = new Vector2(-1f, 0).RotatedBy(MathHelper.ToRadians(counter / 2f)).X;
-			Texture2D texture = Main.projectileTexture[projectile.type];
-			float fadeOutMult = projectile.ai[1] / 720f;
+			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
+			float fadeOutMult = Projectile.ai[1] / 720f;
 			int ACounter = (int)(255 * fadeOutMult);
-			int uniqueC = (int)projectile.ai[0];
+			int uniqueC = (int)Projectile.ai[0];
 			if (Math.Abs(uniqueC) == 2)
 			{
 				spriteBatch.Draw(texture, new Vector2(i * 16 - (int)Main.screenPosition.X + 16, j * 16 - (int)Main.screenPosition.Y),

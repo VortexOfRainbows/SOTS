@@ -12,16 +12,16 @@ namespace SOTS.Projectiles
 		}
         public override void SetDefaults()
         {
-			projectile.CloneDefaults(48);
+			Projectile.CloneDefaults(48);
             aiType = 48; 
-			projectile.penetrate = 1;
+			Projectile.penetrate = 1;
 		}
 		public override void Kill(int timeLeft)
         {
-			if(projectile.owner == Main.myPlayer)
+			if(Projectile.owner == Main.myPlayer)
 			{
 				for(int i = 0; i < 3; i++)
-					Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, Main.rand.Next(-5, 6), Main.rand.Next(-5, 6), ProjectileID.StyngerShrapnel, projectile.damage, 0, projectile.owner);
+					Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, Main.rand.Next(-5, 6), Main.rand.Next(-5, 6), ProjectileID.StyngerShrapnel, Projectile.damage, 0, Projectile.owner);
 			}
 		}
 	}

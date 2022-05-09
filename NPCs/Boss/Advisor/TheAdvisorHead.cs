@@ -259,7 +259,7 @@ namespace SOTS.NPCs.Boss.Advisor
 				Main.spriteBatch.Draw(texture, new Vector2((float)(npc.Center.X - (int)Main.screenPosition.X) + x, (float)(npc.Center.Y - (int)Main.screenPosition.Y) + y), null, color, 0f, drawOrigin, 1.125f, SpriteEffects.None, 0f);
 			}
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
 			for(int j = 0; j < 4;)
 			{
@@ -830,7 +830,7 @@ namespace SOTS.NPCs.Boss.Advisor
 						attackPhase1 = -2;
 						glow = false;
 						SoundEngine.PlaySound(SoundID.Item92, npc.Center);
-						for (int i = 0; i < Main.projectile.Length; i++)
+						for (int i = 0; i < Main.Projectile.Length; i++)
 						{
 							Projectile proj = Main.projectile[i];
 							if (proj.active && proj.type == mod.ProjectileType("OtherworldlyTracer") && proj.ai[1] == npc.whoAmI)

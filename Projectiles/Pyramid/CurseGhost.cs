@@ -17,38 +17,38 @@ namespace SOTS.Projectiles.Pyramid
 		}
 		public override void SetDefaults()
 		{
-			projectile.width = 30;
-			projectile.height = 26;
-			projectile.penetrate = 7;
-			projectile.timeLeft = 510;
-			//projectile.melee = true;
-			projectile.friendly = true;
-			projectile.tileCollide = false;
-			projectile.ignoreWater = true;
-			projectile.usesLocalNPCImmunity = true;
-			projectile.localNPCHitCooldown = 30;
+			Projectile.width = 30;
+			Projectile.height = 26;
+			Projectile.penetrate = 7;
+			Projectile.timeLeft = 510;
+			//Projectile.melee = true;
+			Projectile.friendly = true;
+			Projectile.tileCollide = false;
+			Projectile.ignoreWater = true;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = 30;
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			target.immune[player.whoAmI] = 0;
-			if (projectile.penetrate <= 2)
-				projectile.friendly = false;
+			if (Projectile.penetrate <= 2)
+				Projectile.friendly = false;
 			lockedVelo = true;
 			if (Main.netMode != 1)
 			{
-				projectile.netUpdate = true;
+				Projectile.netUpdate = true;
 			}
 		}
 		Vector2[] trailPos = new Vector2[10];
-		public void TrailPreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public void TrailPreDraw(ref Color lightColor)
 		{
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Pyramid/CurseGhostTrail").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			Vector2 previousPosition = projectile.Center + new Vector2(-12 * projectile.spriteDirection, 0).RotatedBy(projectile.rotation);
+			Vector2 previousPosition = Projectile.Center + new Vector2(-12 * Projectile.spriteDirection, 0).RotatedBy(Projectile.rotation);
 			for (int k = 0; k < trailPos.Length; k++)
 			{
-				float scale = projectile.scale * (trailPos.Length - k) / (float)trailPos.Length;
+				float scale = Projectile.scale * (trailPos.Length - k) / (float)trailPos.Length;
 				if (trailPos[k] == Vector2.Zero)
 				{
 					break;
@@ -57,19 +57,19 @@ namespace SOTS.Projectiles.Pyramid
 				Vector2 drawPos = trailPos[k] - Main.screenPosition;
 				Vector2 currentPos = trailPos[k];
 				Vector2 betweenPositions = previousPosition - currentPos;
-				color = projectile.GetAlpha(color);
+				color = Projectile.GetAlpha(color);
 				float max = betweenPositions.Length() / (4f * scale);
 				for (int i = 0; i < max; i++)
 				{
 					drawPos = previousPosition + -betweenPositions * (i / max) - Main.screenPosition;
-					spriteBatch.Draw(texture, drawPos, null, color, betweenPositions.ToRotation() - (projectile.spriteDirection == -1 ? (float)Math.PI : 0), drawOrigin, scale, projectile.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+					spriteBatch.Draw(texture, drawPos, null, color, betweenPositions.ToRotation() - (Projectile.spriteDirection == -1 ? (float)Math.PI : 0), drawOrigin, scale, Projectile.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 				}
 				previousPosition = currentPos;
 			}
 		}
 		public void cataloguePos()
 		{
-			Vector2 current = projectile.Center + new Vector2(-12 * projectile.spriteDirection, 0).RotatedBy(projectile.rotation);
+			Vector2 current = Projectile.Center + new Vector2(-12 * Projectile.spriteDirection, 0).RotatedBy(Projectile.rotation);
 			for (int i = 0; i < trailPos.Length; i++)
 			{
 				Vector2 previousPosition = trailPos[i];
@@ -77,14 +77,14 @@ namespace SOTS.Projectiles.Pyramid
 				current = previousPosition;
 			}
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
 			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Projectiles/Pyramid/CurseGhost").Value;
 			TrailPreDraw(spriteBatch, lightColor);
-			float rotation = projectile.rotation;
+			float rotation = Projectile.rotation;
 			Color color = Color.White;
 			Vector2 drawOrigin = new Vector2(texture2.Width * 0.5f, texture2.Height * 0.5f);
-			Main.spriteBatch.Draw(texture2, projectile.Center - Main.screenPosition, null, color * (1f - (projectile.alpha / 255f)), rotation, drawOrigin, 1f, projectile.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(texture2, Projectile.Center - Main.screenPosition, null, color * (1f - (Projectile.alpha / 255f)), rotation, drawOrigin, 1f, Projectile.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 			return false;
 		}
 		bool runOnce = true;
@@ -98,40 +98,40 @@ namespace SOTS.Projectiles.Pyramid
         }
         public override void AI()
 		{
-			if (projectile.ai[1] == 0)
+			if (Projectile.ai[1] == 0)
 			{
 				for (int i = 0; i < 360; i += 10)
 				{
 					Vector2 circularLocation = new Vector2(-12, 0).RotatedBy(MathHelper.ToRadians(i));
-					Dust dust = Dust.NewDustDirect(new Vector2(projectile.Center.X + circularLocation.X - 4, projectile.Center.Y + circularLocation.Y - 4), 4, 4, ModContent.DustType<CurseDust>());
+					Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, ModContent.DustType<CurseDust>());
 					dust.noGravity = true;
 					dust.velocity *= 0.1f;
 					dust.velocity += circularLocation * 0.6f;
 					dust.scale *= 1.65f;
 				}
-				projectile.ai[1] = Main.rand.Next(2) * 2 - 1;
-				SoundEngine.PlaySound(SoundID.NPCKilled, (int)projectile.Center.X, (int)projectile.Center.Y, 39, 0.825f, -0.4f);
+				Projectile.ai[1] = Main.rand.Next(2) * 2 - 1;
+				SoundEngine.PlaySound(SoundID.NPCKilled, (int)Projectile.Center.X, (int)Projectile.Center.Y, 39, 0.825f, -0.4f);
 			}
-			Vector2 circular = new Vector2(0, 15 * scaleVelocity).RotatedBy(MathHelper.ToRadians(projectile.ai[0] * 4.5f * projectile.ai[1]));
+			Vector2 circular = new Vector2(0, 15 * scaleVelocity).RotatedBy(MathHelper.ToRadians(Projectile.ai[0] * 4.5f * Projectile.ai[1]));
 			scaleVelocity *= 0.99f;
 			if (lockedVelo)
 			{
 				scaleVelocity = 1.2f;
-				projectile.velocity = lockVelo;
+				Projectile.velocity = lockVelo;
 			}
-			projectile.velocity = projectile.velocity.SafeNormalize(Vector2.Zero) * initialSpeed;
-			projectile.velocity = projectile.velocity.RotatedBy(MathHelper.ToRadians(circular.X));
+			Projectile.velocity = Projectile.velocity.SafeNormalize(Vector2.Zero) * initialSpeed;
+			Projectile.velocity = Projectile.velocity.RotatedBy(MathHelper.ToRadians(circular.X));
 			float minDist = 1000;
 			int target2 = -1;
 			float distance;
-			if (projectile.friendly == true && projectile.damage > 0 && projectile.hostile == false && !lockedVelo)
+			if (Projectile.friendly == true && Projectile.damage > 0 && Projectile.hostile == false && !lockedVelo)
 			{
 				for (int i = 0; i < Main.npc.Length; i++)
 				{
 					NPC target = Main.npc[i];
 					if (!target.friendly && target.dontTakeDamage == false && target.lifeMax > 5 && target.CanBeChasedBy())
 					{
-						distance = Vector2.Distance(target.Center, projectile.Center);
+						distance = Vector2.Distance(target.Center, Projectile.Center);
 						if (distance < minDist)
 						{
 							minDist = distance;
@@ -143,7 +143,7 @@ namespace SOTS.Projectiles.Pyramid
 				{
 					if (Main.netMode != 1)
 					{
-						projectile.netUpdate = true;
+						Projectile.netUpdate = true;
 					}
 					if (counter < 1f)
 						counter += 0.01f;
@@ -152,32 +152,32 @@ namespace SOTS.Projectiles.Pyramid
 					NPC toHit = Main.npc[target2];
 					if (toHit.active == true)
 					{
-						Vector2 toNpc = toHit.Center - projectile.Center;
+						Vector2 toNpc = toHit.Center - Projectile.Center;
 						toNpc = toNpc.SafeNormalize(Vector2.Zero) * initialSpeed;
-						projectile.velocity = projectile.velocity * (1 - counter) + toNpc * counter;
-						lockVelo = projectile.velocity;
+						Projectile.velocity = Projectile.velocity * (1 - counter) + toNpc * counter;
+						lockVelo = Projectile.velocity;
 					}
 				}
 				else
                 {
-					lockVelo = projectile.velocity;
+					lockVelo = Projectile.velocity;
                 }
 			}
 		}
 		float initialSpeed = 0;
         public override bool PreAI()
 		{
-			if(projectile.velocity.Length() > 0.01f)
+			if(Projectile.velocity.Length() > 0.01f)
 			{
-				projectile.rotation = projectile.velocity.ToRotation();
-				if (projectile.velocity.X < 0)
+				Projectile.rotation = Projectile.velocity.ToRotation();
+				if (Projectile.velocity.X < 0)
 				{
-					projectile.spriteDirection = -1;
-					projectile.rotation -= MathHelper.ToRadians(180);
+					Projectile.spriteDirection = -1;
+					Projectile.rotation -= MathHelper.ToRadians(180);
 				}
 				else
 				{
-					projectile.spriteDirection = 1;
+					Projectile.spriteDirection = 1;
 				}
 			}
 			if (runOnce)
@@ -187,11 +187,11 @@ namespace SOTS.Projectiles.Pyramid
 					trailPos[i] = Vector2.Zero;
 				}
 				runOnce = false;
-				projectile.velocity = projectile.velocity * -2f;
-				initialSpeed = projectile.velocity.Length();
+				Projectile.velocity = Projectile.velocity * -2f;
+				initialSpeed = Projectile.velocity.Length();
 				if (Main.netMode != 1)
 				{
-					projectile.netUpdate = true;
+					Projectile.netUpdate = true;
 				}
 			}
 			if (!runOnce)
@@ -199,13 +199,13 @@ namespace SOTS.Projectiles.Pyramid
 				cataloguePos();
 			}
 			checkPos();
-			projectile.ai[0]++;
+			Projectile.ai[0]++;
 			return true;
 		}
 		public void checkPos()
 		{
 			float iterator = 0f;
-			Vector2 current = projectile.Center;
+			Vector2 current = Projectile.Center;
 			for (int i = 0; i < trailPos.Length; i++)
 			{
 				Vector2 previousPosition = trailPos[i];
@@ -215,28 +215,28 @@ namespace SOTS.Projectiles.Pyramid
 				}
 			}
 			if (iterator >= trailPos.Length)
-				projectile.Kill();
+				Projectile.Kill();
 		}
 		public override void SendExtraAI(BinaryWriter writer)
 		{
 			writer.Write(initialSpeed);
-			writer.Write(projectile.velocity.X);
-			writer.Write(projectile.velocity.Y);
+			writer.Write(Projectile.velocity.X);
+			writer.Write(Projectile.velocity.Y);
 			writer.Write(lockVelo.X);
 			writer.Write(lockVelo.Y);
-			writer.Write(projectile.tileCollide);
-			writer.Write(projectile.friendly);
+			writer.Write(Projectile.tileCollide);
+			writer.Write(Projectile.friendly);
 			writer.Write(lockedVelo);
 		}
 		public override void ReceiveExtraAI(BinaryReader reader)
 		{
 			initialSpeed = reader.ReadSingle();
-			projectile.velocity.X = reader.ReadSingle();
-			projectile.velocity.Y = reader.ReadSingle();
+			Projectile.velocity.X = reader.ReadSingle();
+			Projectile.velocity.Y = reader.ReadSingle();
 			lockVelo.X = reader.ReadSingle();
 			lockVelo.Y = reader.ReadSingle();
-			projectile.tileCollide = reader.ReadBoolean();
-			projectile.friendly = reader.ReadBoolean();
+			Projectile.tileCollide = reader.ReadBoolean();
+			Projectile.friendly = reader.ReadBoolean();
 			lockedVelo = reader.ReadBoolean();
 		}
 		public override void Kill(int timeLeft)

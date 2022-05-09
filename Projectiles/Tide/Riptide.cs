@@ -14,12 +14,12 @@ namespace SOTS.Projectiles.Tide
 		}
         public override void SetDefaults()
         {
-            projectile.CloneDefaults(64);
+            Projectile.CloneDefaults(64);
             aiType = 64;
-            projectile.melee = true;
-			projectile.alpha = 0;
-            projectile.scale = 1.0f;
-            projectile.ignoreWater = true;
+            Projectile.melee = true;
+			Projectile.alpha = 0;
+            Projectile.scale = 1.0f;
+            Projectile.ignoreWater = true;
 		}
         bool runOnce = true;
         float wasInWaterX = 0;
@@ -27,17 +27,17 @@ namespace SOTS.Projectiles.Tide
         int counter = 11;
         public override void ModifyDamageHitbox(ref Rectangle hitbox)
         {
-            int width = !runOnce ? projectile.width * 2 : projectile.width;
-            hitbox.X = (int)projectile.Center.X - width / 2;
-            hitbox.Y = (int)projectile.Center.Y - width / 2;
+            int width = !runOnce ? Projectile.width * 2 : Projectile.width;
+            hitbox.X = (int)Projectile.Center.X - width / 2;
+            hitbox.Y = (int)Projectile.Center.Y - width / 2;
             hitbox.Width = width;
             hitbox.Height = width;
             base.ModifyDamageHitbox(ref hitbox);
         }
         public override bool PreAI()
         {
-            Player player = Main.player[projectile.owner];
-            if(runOnce && projectile.ai[0] == 1)
+            Player player = Main.player[Projectile.owner];
+            if(runOnce && Projectile.ai[0] == 1)
             {
                 runOnce = false;
                 if (player.wet || player.HasBuff(BuffID.Wet))
@@ -51,7 +51,7 @@ namespace SOTS.Projectiles.Tide
                     wasInWaterY = 0.75f;
                 }
                 if(wasInWaterX > 0)
-                    SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 71, 1.1f, -0.33f);
+                    SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 71, 1.1f, -0.33f);
             }
             counter--;
             if (wasInWaterX > 0)
@@ -64,8 +64,8 @@ namespace SOTS.Projectiles.Tide
                 if(counter > 0)
                 {
                     player.velocity.Y -= 0.05f;
-                    player.velocity.X += projectile.velocity.X * 2f * wasInWaterX;
-                    player.velocity.Y += projectile.velocity.Y * 2.5f * wasInWaterY;
+                    player.velocity.X += Projectile.velocity.X * 2f * wasInWaterX;
+                    player.velocity.Y += Projectile.velocity.Y * 2.5f * wasInWaterY;
                 }
                 else
                 {

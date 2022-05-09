@@ -92,9 +92,9 @@ namespace SOTS.Items.MusicBoxes
 			}
 			Tile tile = Main.tile[i, j];
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/MusicBoxes/PyramidBattleMusicBoxTileBack").Value;
-			if (tile.frameY % 36 == 0 && tile.frameX % 36 == 0) //check for it being the top left tile
+			if (tile.TileFrameY % 36 == 0 && tile.TileFrameX % 36 == 0) //check for it being the top left tile
 			{
-				int currentFrame = tile.frameX / 36;
+				int currentFrame = tile.TileFrameX / 36;
 				Rectangle frame = new Rectangle(currentFrame * 32, 0, 32, 32);
 				spriteBatch.Draw(texture, new Vector2(i * 16 - (int)Main.screenPosition.X, j * 16 - (int)Main.screenPosition.Y + 2) + zero,
 					frame, Lighting.GetColor(i, j), 0f, default(Vector2), 1.0f, SpriteEffects.None, 0f);
@@ -111,9 +111,9 @@ namespace SOTS.Items.MusicBoxes
 			float counter = Main.GlobalTime * 120;
 			float mult = new Vector2(-1f, 0).RotatedBy(MathHelper.ToRadians(counter / 2f)).X;
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/MusicBoxes/PyramidBattleMusicBoxTileGlow").Value;
-			if (tile.frameY % 36 == 0 && tile.frameX % 36 == 0) //check for it being the top left tile
+			if (tile.TileFrameY % 36 == 0 && tile.TileFrameX % 36 == 0) //check for it being the top left tile
 			{
-				int currentFrame = tile.frameX / 36;
+				int currentFrame = tile.TileFrameX / 36;
 				for (int k = 0; k < 6; k++)
 				{
 					Color color = new Color(255, 0, 0, 0);

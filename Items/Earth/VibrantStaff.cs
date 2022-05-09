@@ -15,12 +15,12 @@ namespace SOTS.Items.Earth
 		public override void SetDefaults()
 		{
 			Item.damage = 16;
-			Item.magic = true;
+			Item.DamageType = DamageClass.Magic;
 			Item.width = 32;
 			Item.height = 32;
 			Item.useTime = 23;
 			Item.useAnimation = 23;
-			Item.useStyle = 5;
+			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.knockBack = 2.5f;
 			Item.value = Item.sellPrice(0, 0, 80, 0);
 			Item.rare = ItemRarityID.Blue;

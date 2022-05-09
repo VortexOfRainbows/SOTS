@@ -79,7 +79,7 @@ namespace SOTS.Items.Otherworld.Blocks
 			for (int k = 0; k < 5; k++)
 			{
 				Vector2 offset = new Vector2(Main.rand.NextFloat(-1, 1f), Main.rand.NextFloat(-1, 1f)) * 0.25f * k;
-				SOTSTile.DrawSlopedGlowMask(i, j, tile.type, texture, color * alphaMult * 0.8f, offset);
+				SOTSTile.DrawSlopedGlowMask(i, j, tile.TileType, texture, color * alphaMult * 0.8f, offset);
 			}
 		}
         public override bool CanExplode(int i, int j)

@@ -13,54 +13,54 @@ namespace SOTS.Projectiles.Minions
 		}
         public override void SetDefaults()
         {
-			projectile.height = 30;
-			projectile.width = 30;
-			projectile.penetrate = -1;
-			projectile.friendly = true;
-			projectile.timeLeft = 300;
-			projectile.tileCollide = false;
-			projectile.hostile = false;
-			projectile.netImportant = true;
-			projectile.ignoreWater = true;
-			projectile.usesLocalNPCImmunity = true;
-			projectile.localNPCHitCooldown = 20;
+			Projectile.height = 30;
+			Projectile.width = 30;
+			Projectile.penetrate = -1;
+			Projectile.friendly = true;
+			Projectile.timeLeft = 300;
+			Projectile.tileCollide = false;
+			Projectile.hostile = false;
+			Projectile.netImportant = true;
+			Projectile.ignoreWater = true;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = 20;
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			projectile.localNPCImmunity[target.whoAmI] = projectile.localNPCHitCooldown;
-			target.immune[projectile.owner] = 0;
+			Projectile.localNPCImmunity[target.whoAmI] = Projectile.localNPCHitCooldown;
+			target.immune[Projectile.owner] = 0;
 		}
 		public override void AI()
 		{
-			Player player  = Main.player[projectile.owner];
+			Player player  = Main.player[Projectile.owner];
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			if (player.dead)
 			{
-				projectile.Kill();
+				Projectile.Kill();
 			}
-			if ((modPlayer.tPlanetDamage + 1) != projectile.damage)
+			if ((modPlayer.tPlanetDamage + 1) != Projectile.damage)
 			{
-				projectile.Kill();
+				Projectile.Kill();
 			}
-			if (projectile.timeLeft > 100)
+			if (Projectile.timeLeft > 100)
 			{
-				projectile.timeLeft = 300;
+				Projectile.timeLeft = 300;
 			}
-			Vector2 toPlayer = player.Center - projectile.Center;
+			Vector2 toPlayer = player.Center - Projectile.Center;
 			float distance = toPlayer.Length();
 			float speed = distance * 0.12f;
 			if (speed < 12) speed = 12;
 
-			projectile.velocity = new Vector2(-speed, 0).RotatedBy(Math.Atan2(projectile.Center.Y - player.Center.Y, projectile.Center.X - player.Center.X));
+			Projectile.velocity = new Vector2(-speed, 0).RotatedBy(Math.Atan2(Projectile.Center.Y - player.Center.Y, Projectile.Center.X - player.Center.X));
 			if (distance < 256)
 			{
 				bool found = false;
 				int ofTotal = 0;
 				int total = 0;
-				for(int i = 0; i < Main.projectile.Length; i++)
+				for(int i = 0; i < Main.Projectile.Length; i++)
 				{
 					Projectile proj = Main.projectile[i];
-					if(projectile.type == proj.type && proj.active && projectile.active && proj.owner == projectile.owner)
+					if(Projectile.type == proj.type && proj.active && Projectile.active && proj.owner == Projectile.owner)
 					{
 						if(proj == projectile)
 						{
@@ -73,13 +73,13 @@ namespace SOTS.Projectiles.Minions
 				}
 				Vector2 rotateCenter = new Vector2(128, 0).RotatedBy(MathHelper.ToRadians(-modPlayer.orbitalCounter + (ofTotal * 360f / total)));
 				rotateCenter += player.Center;
-				Vector2 toRotate = rotateCenter - projectile.Center;
+				Vector2 toRotate = rotateCenter - Projectile.Center;
 				float dist2 = toRotate.Length();
 				if(dist2 > 30)
 				{
 					dist2 = 30;
 				}
-				projectile.velocity = new Vector2(-dist2, 0).RotatedBy(Math.Atan2(projectile.Center.Y - rotateCenter.Y, projectile.Center.X - rotateCenter.X));
+				Projectile.velocity = new Vector2(-dist2, 0).RotatedBy(Math.Atan2(Projectile.Center.Y - rotateCenter.Y, Projectile.Center.X - rotateCenter.X));
 			}
 		}
 	}

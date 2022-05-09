@@ -22,20 +22,20 @@ namespace SOTS.Projectiles.Chaos
 		}
         public override void SetDefaults()
         {
-			projectile.height = 180;
-			projectile.width = 180;
-			projectile.penetrate = -1;
-			projectile.friendly = true;
-			projectile.timeLeft = 50;
-			projectile.tileCollide = false;
-			projectile.hostile = false;
-			projectile.alpha = 255;
-			projectile.ranged = true;
-            projectile.idStaticNPCHitCooldown = 30;
-            projectile.usesIDStaticNPCImmunity = true;
+			Projectile.height = 180;
+			Projectile.width = 180;
+			Projectile.penetrate = -1;
+			Projectile.friendly = true;
+			Projectile.timeLeft = 50;
+			Projectile.tileCollide = false;
+			Projectile.hostile = false;
+			Projectile.alpha = 255;
+			Projectile.ranged = true;
+            Projectile.idStaticNPCHitCooldown = 30;
+            Projectile.usesIDStaticNPCImmunity = true;
         }
-        public bool isAlternate => projectile.ai[0] < 0 && projectile.ai[1] < 0;
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public bool isAlternate => Projectile.ai[0] < 0 && Projectile.ai[1] < 0;
+        public override bool PreDraw(ref Color lightColor)
         {
             if (counter < 50 && counter > 0)
             {
@@ -52,11 +52,11 @@ namespace SOTS.Projectiles.Chaos
                 Color c = VoidPlayer.ChaosPink;
                 c.A = 0;
                 if(!isAlternate)
-                    SOTSProjectile.DrawStar(projectile.Center, c, alphaMult * 1.5f, 0, MathHelper.ToRadians(projectile.ai[0]), 8, dist1, dist2, 0.9f, 360);
+                    SOTSProjectile.DrawStar(Projectile.Center, c, alphaMult * 1.5f, 0, MathHelper.ToRadians(Projectile.ai[0]), 8, dist1, dist2, 0.9f, 360);
                 int density = 240;
                 if (isAlternate)
                     density = 180;
-                SOTSProjectile.DrawStar(projectile.Center, c, alphaMult * 1.0f, 0, MathHelper.ToRadians(projectile.ai[1]), 6, dist1 * 0.5f, dist2 * 0.5f, 0.9f, density);
+                SOTSProjectile.DrawStar(Projectile.Center, c, alphaMult * 1.0f, 0, MathHelper.ToRadians(Projectile.ai[1]), 6, dist1 * 0.5f, dist2 * 0.5f, 0.9f, density);
             }
             return false;
         }
@@ -66,7 +66,7 @@ namespace SOTS.Projectiles.Chaos
             if (isAlternate)
                 scale = 1;
             int width = (int)(120 * scale);
-            hitbox = new Rectangle((int)projectile.Center.X - width / 2, (int)projectile.Center.Y - width / 2, width, width);
+            hitbox = new Rectangle((int)Projectile.Center.X - width / 2, (int)Projectile.Center.Y - width / 2, width, width);
         }
         public override bool? CanHitNPC(NPC target)
         {
@@ -81,10 +81,10 @@ namespace SOTS.Projectiles.Chaos
         {
             if(isAlternate)
             {
-                projectile.usesIDStaticNPCImmunity = false;
-                projectile.idStaticNPCHitCooldown = 0;
-                projectile.usesLocalNPCImmunity = true;
-                projectile.localNPCHitCooldown = 30;
+                Projectile.usesIDStaticNPCImmunity = false;
+                Projectile.idStaticNPCHitCooldown = 0;
+                Projectile.usesLocalNPCImmunity = true;
+                Projectile.localNPCHitCooldown = 30;
             }
             expandAmt += expandVelocity;
             expandVelocity *= 0.94f;
@@ -97,14 +97,14 @@ namespace SOTS.Projectiles.Chaos
             {
                 scale = Main.rand.NextFloat(0.5f, 1.0f);
             }
-            else if (projectile.ai[0] < 0)
+            else if (Projectile.ai[0] < 0)
                 scale = 1.5f;
             else
                 scale = Main.rand.NextFloat(1f, 1.4f);
        
-            SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 62, 0.7f, -0.2f);
+            SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 62, 0.7f, -0.2f);
             Color colorMan = VoidPlayer.ChaosPink;
-            Vector2 atLoc = projectile.Center;
+            Vector2 atLoc = Projectile.Center;
             float density = 1.5f;
             if (isAlternate)
                 density = 0.5f;

@@ -19,34 +19,34 @@ namespace SOTS.Projectiles.Pyramid
 		}
         public override void SetDefaults()
         {
-			projectile.height = 18;
-			projectile.width = 18;
-			projectile.friendly = false;
-			projectile.timeLeft = 7200;
-			projectile.hostile = true;
-			projectile.alpha = 255;
-			projectile.penetrate = 5;
-			projectile.netImportant = true;
+			Projectile.height = 18;
+			Projectile.width = 18;
+			Projectile.friendly = false;
+			Projectile.timeLeft = 7200;
+			Projectile.hostile = true;
+			Projectile.alpha = 255;
+			Projectile.penetrate = 5;
+			Projectile.netImportant = true;
 		}
 		public override void AI()
 		{
-			projectile.alpha -= projectile.alpha > 0 ? 1 : 0;
-			projectile.rotation += Main.rand.Next(-3,4);
-			projectile.alpha = projectile.timeLeft <= 255 ? 200 - projectile.timeLeft : projectile.alpha;
-			int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 18, 18, mod.DustType("CurseDust"));
+			Projectile.alpha -= Projectile.alpha > 0 ? 1 : 0;
+			Projectile.rotation += Main.rand.Next(-3,4);
+			Projectile.alpha = Projectile.timeLeft <= 255 ? 200 - Projectile.timeLeft : Projectile.alpha;
+			int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), 18, 18, mod.DustType("CurseDust"));
 			Main.dust[num1].noGravity = true;
-			Main.dust[num1].alpha = projectile.alpha;
+			Main.dust[num1].alpha = Projectile.alpha;
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{	
-			projectile.timeLeft -= 60;
-			if (projectile.velocity.X != oldVelocity.X)
+			Projectile.timeLeft -= 60;
+			if (Projectile.velocity.X != oldVelocity.X)
 			{
-				projectile.velocity.X = -oldVelocity.X;
+				Projectile.velocity.X = -oldVelocity.X;
 			}
-			if (projectile.velocity.Y != oldVelocity.Y)
+			if (Projectile.velocity.Y != oldVelocity.Y)
 			{
-				projectile.velocity.Y = -oldVelocity.Y;
+				Projectile.velocity.Y = -oldVelocity.Y;
 			}
 			return false;
 		}

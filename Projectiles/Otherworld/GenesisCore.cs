@@ -19,14 +19,14 @@ namespace SOTS.Projectiles.Otherworld
 		}
         public override void SetDefaults()
         {
-			projectile.height = 30;
-			projectile.width = 30;
-			projectile.magic = true;
-			projectile.timeLeft = 7200;
-			projectile.friendly = false;
-			projectile.hostile = false;
-			projectile.tileCollide = false;
-			projectile.alpha = 100;
+			Projectile.height = 30;
+			Projectile.width = 30;
+			Projectile.magic = true;
+			Projectile.timeLeft = 7200;
+			Projectile.friendly = false;
+			Projectile.hostile = false;
+			Projectile.tileCollide = false;
+			Projectile.alpha = 100;
 		}
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
@@ -35,18 +35,18 @@ namespace SOTS.Projectiles.Otherworld
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture = Main.projectileTexture[projectile.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Color color = new Color(255, 70, 70, 0);
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			for (int k = 0; k < 4 + num * 2; k++)
 			{
-				float x = Main.rand.Next(-10, 11) * 0.25f * (1 + projectile.ai[1] * 10);
+				float x = Main.rand.Next(-10, 11) * 0.25f * (1 + Projectile.ai[1] * 10);
 				Vector2 direction = new Vector2(x, 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(361)));
 				if(k < 2)
                 {
 					direction *= 0;
 				}
-				Main.spriteBatch.Draw(texture, new Vector2((float)(projectile.Center.X - (int)Main.screenPosition.X), (float)(projectile.Center.Y - (int)Main.screenPosition.Y)) + direction, null, color * ((255 - projectile.alpha) / 255f), direction.ToRotation(), drawOrigin, projectile.scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, new Vector2((float)(Projectile.Center.X - (int)Main.screenPosition.X), (float)(Projectile.Center.Y - (int)Main.screenPosition.Y)) + direction, null, color * ((255 - Projectile.alpha) / 255f), direction.ToRotation(), drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
 			}
 			return false;
 		}
@@ -57,7 +57,7 @@ namespace SOTS.Projectiles.Otherworld
 		public override void AI()
 		{
 			counter++;
-			projectile.ai[0] += 5;
+			Projectile.ai[0] += 5;
 			if (num >= 28)
 			{
 				if(DistanceMult > 0)
@@ -73,7 +73,7 @@ namespace SOTS.Projectiles.Otherworld
 				{
 					counter2++;
 					if(counter2 >= 20)
-						projectile.Kill();
+						Projectile.Kill();
 				}
 			}
 			else
@@ -82,14 +82,14 @@ namespace SOTS.Projectiles.Otherworld
             {
 				if (num < 24)
 				{
-					Vector2 velo = projectile.velocity.SafeNormalize(new Vector2(1, 0)) * 6;
-					Projectile.NewProjectile(projectile.Center, velo, ModContent.ProjectileType<GenesisArc>(), projectile.damage, projectile.knockBack, projectile.owner, projectile.whoAmI, 0);
+					Vector2 velo = Projectile.velocity.SafeNormalize(new Vector2(1, 0)) * 6;
+					Projectile.NewProjectile(Projectile.Center, velo, ModContent.ProjectileType<GenesisArc>(), Projectile.damage, Projectile.knockBack, Projectile.owner, Projectile.whoAmI, 0);
 				}
 				num++;
 			}
-			if (projectile.ai[1] < 1.9)
-				projectile.ai[1] += 0.0075f;
-			projectile.velocity *= 0.975f;
+			if (Projectile.ai[1] < 1.9)
+				Projectile.ai[1] += 0.0075f;
+			Projectile.velocity *= 0.975f;
 		}
 		public void resetVector2(ref Vector2 loc, int i)
 		{
@@ -100,14 +100,14 @@ namespace SOTS.Projectiles.Otherworld
 		}
 		public override void Kill(int timeLeft)
 		{
-			SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 94, 1.5f);
+			SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 94, 1.5f);
 			Vector2 circularLocation = new Vector2(10, 0);
 			for(int j = 1; j < 3; j++)
 			{
 				for (int i = 0; i < 72; i++)
 				{
 					resetVector2(ref circularLocation, i);
-					int dust = Dust.NewDust(new Vector2(projectile.Center.X - 4, projectile.Center.Y - 3), 0, 0, 235);
+					int dust = Dust.NewDust(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 3), 0, 0, 235);
 					Main.dust[dust].velocity = circularLocation;
 					Main.dust[dust].velocity *= Main.rand.NextFloat(4.5f, 15.5f) * j;
 					Main.dust[dust].scale *= 2f - (j - 1);
@@ -116,7 +116,7 @@ namespace SOTS.Projectiles.Otherworld
 					if (Main.rand.NextBool(2))
 					{
 						resetVector2(ref circularLocation, i);
-						dust = Dust.NewDust(new Vector2(projectile.Center.X - 4, projectile.Center.Y - 3), 0, 0, 235);
+						dust = Dust.NewDust(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 3), 0, 0, 235);
 						Main.dust[dust].velocity = circularLocation;
 						Main.dust[dust].velocity *= Main.rand.NextFloat(0.4f, 2.1f) * j;
 						Main.dust[dust].scale *= 6f - (j - 1);
@@ -126,7 +126,7 @@ namespace SOTS.Projectiles.Otherworld
 					if (Main.rand.NextBool(2))
 					{
 						resetVector2(ref circularLocation, i);
-						dust = Dust.NewDust(new Vector2(projectile.Center.X - 4, projectile.Center.Y - 3), 0, 0, 235);
+						dust = Dust.NewDust(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 3), 0, 0, 235);
 						Main.dust[dust].velocity = circularLocation;
 						Main.dust[dust].velocity *= Main.rand.NextFloat(1.5f, 4.5f) * j;
 						Main.dust[dust].scale *= 5f - (j - 1);
@@ -134,14 +134,14 @@ namespace SOTS.Projectiles.Otherworld
 					}
 
 					resetVector2(ref circularLocation, i);
-					dust = Dust.NewDust(new Vector2(projectile.Center.X - 4, projectile.Center.Y - 3), 0, 0, 235);
+					dust = Dust.NewDust(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 3), 0, 0, 235);
 					Main.dust[dust].velocity = circularLocation;
 					Main.dust[dust].velocity *= Main.rand.NextFloat(2.25f, 7.5f) * j;
 					Main.dust[dust].scale *= 4f - (j - 1);
 					Main.dust[dust].noGravity = true;
 
 					resetVector2(ref circularLocation, i);
-					dust = Dust.NewDust(new Vector2(projectile.Center.X - 4, projectile.Center.Y - 3), 0, 0, 235);
+					dust = Dust.NewDust(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 3), 0, 0, 235);
 					Main.dust[dust].velocity = circularLocation;
 					Main.dust[dust].velocity *= Main.rand.NextFloat(3.75f, 12.5f) * j;
 					Main.dust[dust].scale *= 3f - (j - 1);
@@ -149,8 +149,8 @@ namespace SOTS.Projectiles.Otherworld
 				}
 			}
 
-			Player player = Main.player[projectile.owner];
-			if (projectile.owner == Main.myPlayer)
+			Player player = Main.player[Projectile.owner];
+			if (Projectile.owner == Main.myPlayer)
 			{
 				List<int> blackList = new List<int>();
 				for (int j = 0; j < 36; j++)
@@ -164,8 +164,8 @@ namespace SOTS.Projectiles.Otherworld
 						{
 							if (npcIndex != i)
 							{
-								float disX = projectile.Center.X - npc.Center.X;
-								float disY = projectile.Center.Y - npc.Center.Y;
+								float disX = Projectile.Center.X - npc.Center.X;
+								float disY = Projectile.Center.Y - npc.Center.Y;
 								double dis = Math.Sqrt(disX * disX + disY * disY);
 								if (dis < distanceTB)
 								{
@@ -181,7 +181,7 @@ namespace SOTS.Projectiles.Otherworld
 						NPC npc = Main.npc[npcIndex];
 						if (!npc.friendly && npc.lifeMax > 5 && npc.active && !npc.dontTakeDamage)
 						{
-							Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("OriginLightningZap"), (int)(projectile.damage * 1f), 0, projectile.owner, npc.whoAmI);
+							Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, mod.ProjectileType("OriginLightningZap"), (int)(Projectile.damage * 1f), 0, Projectile.owner, npc.whoAmI);
 						}
 					}
 				}

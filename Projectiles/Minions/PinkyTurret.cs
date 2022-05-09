@@ -16,17 +16,17 @@ namespace SOTS.Projectiles.Minions
 		}
         public override void SetDefaults()
         {
-            projectile.width = 30; 
-            projectile.height = 30; 
-            projectile.hostile = false; 
-            projectile.friendly = false;
-            projectile.ignoreWater = true;  
-            Main.projFrames[projectile.type] = 1; 
-            projectile.penetrate = -1;
-            projectile.tileCollide = false; 
-            projectile.sentry = true;
-			projectile.netImportant = true;
-			projectile.timeLeft = Projectile.SentryLifeTime;
+            Projectile.width = 30; 
+            Projectile.height = 30; 
+            Projectile.hostile = false; 
+            Projectile.friendly = false;
+            Projectile.ignoreWater = true;  
+            Main.projFrames[Projectile.type] = 1; 
+            Projectile.penetrate = -1;
+            Projectile.tileCollide = false; 
+            Projectile.sentry = true;
+			Projectile.netImportant = true;
+			Projectile.timeLeft = Projectile.SentryLifeTime;
 		}
 		public int findTargets(int[] npcList)
 		{
@@ -38,8 +38,8 @@ namespace SOTS.Projectiles.Minions
 				NPC target = Main.npc[i];
 				if (!target.friendly && target.dontTakeDamage == false && target.lifeMax > 5 && target.CanBeChasedBy() && !npcList.Contains(target.whoAmI))
 				{
-					distance = Vector2.Distance(target.Center, projectile.Center);
-					bool lineOfSight = Collision.CanHitLine(projectile.position, projectile.width, projectile.height, target.position, target.width, target.height);
+					distance = Vector2.Distance(target.Center, Projectile.Center);
+					bool lineOfSight = Collision.CanHitLine(Projectile.position, Projectile.width, Projectile.height, target.position, target.width, target.height);
 					bool closeThroughWall = distance < 32f;
 					if (distance < minDist && (lineOfSight || closeThroughWall))
 					{
@@ -58,24 +58,24 @@ namespace SOTS.Projectiles.Minions
 				NPC toHit = Main.npc[target];
 				if (toHit.active)
 				{
-					float dX = toHit.Center.X - projectile.Center.X;
-					float dY = toHit.Center.Y - projectile.Center.Y;
+					float dX = toHit.Center.X - Projectile.Center.X;
+					float dY = toHit.Center.Y - Projectile.Center.Y;
 					float distance = (float)Math.Sqrt((double)(dX * dX + dY * dY));
 					speed /= distance;
 
 					Vector2 shootTo = new Vector2(dX * speed, dY * speed);
-					if (projectile.owner == Main.myPlayer)
+					if (Projectile.owner == Main.myPlayer)
 					{
-						Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, shootTo.X, shootTo.Y, mod.ProjectileType("PinkBubble"), projectile.damage, 0, Main.myPlayer);
+						Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, shootTo.X, shootTo.Y, mod.ProjectileType("PinkBubble"), Projectile.damage, 0, Main.myPlayer);
 					}
-					SoundEngine.PlaySound(2, (int)projectile.position.X, (int)projectile.position.Y, 21);
+					SoundEngine.PlaySound(2, (int)Projectile.position.X, (int)Projectile.position.Y, 21);
 				}
 			}
 		}
         public override void AI()
         {
-			Main.player[projectile.owner].UpdateMaxTurrets();
-			projectile.rotation += 0.11f;
+			Main.player[Projectile.owner].UpdateMaxTurrets();
+			Projectile.rotation += 0.11f;
 			int[] foundNpcList = {-1,-1,-1,-1};
 
 			int target1 = findTargets(foundNpcList);
@@ -87,14 +87,14 @@ namespace SOTS.Projectiles.Minions
 			int target4 = findTargets(foundNpcList);
 			foundNpcList[3] = target4;
 
-			projectile.ai[0] += 1f;
-			if (projectile.ai[0] >= 50)
+			Projectile.ai[0] += 1f;
+			if (Projectile.ai[0] >= 50)
 			{
 				fireProj(target1);
 				fireProj(target2);
 				fireProj(target3);
 				fireProj(target4);
-				projectile.ai[0] = 0f;
+				Projectile.ai[0] = 0f;
 			}
         }
     }

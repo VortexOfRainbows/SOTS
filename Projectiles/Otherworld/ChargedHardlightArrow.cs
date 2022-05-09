@@ -15,16 +15,16 @@ namespace SOTS.Projectiles.Otherworld
 		}
 		public override void SetDefaults() 
 		{
-			projectile.width = 16;
-			projectile.height = 16;
-			projectile.timeLeft = 30;
-			projectile.penetrate = -1;
-			projectile.hostile = false;
-			projectile.friendly = true;
-			projectile.ranged = true;
-			projectile.tileCollide = false;
-			projectile.ignoreWater = true;
-			projectile.alpha = 0;
+			Projectile.width = 16;
+			Projectile.height = 16;
+			Projectile.timeLeft = 30;
+			Projectile.penetrate = -1;
+			Projectile.hostile = false;
+			Projectile.friendly = true;
+			Projectile.ranged = true;
+			Projectile.tileCollide = false;
+			Projectile.ignoreWater = true;
+			Projectile.alpha = 0;
 		}
         public override bool CanDamage()
         {
@@ -34,28 +34,28 @@ namespace SOTS.Projectiles.Otherworld
 		{
 			if(initialDirection.X == 0 && initialDirection.Y == 0)
 			{
-				projectile.ai[0] = Main.rand.Next(360);
-				projectile.position += projectile.velocity.SafeNormalize(Vector2.Zero) * 18;
-				initialDirection = projectile.velocity;
+				Projectile.ai[0] = Main.rand.Next(360);
+				Projectile.position += Projectile.velocity.SafeNormalize(Vector2.Zero) * 18;
+				initialDirection = Projectile.velocity;
 				if(completedLoads == 0)
 					LaserDraw(null);
-				SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 94, 0.6f);
+				SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 94, 0.6f);
 			}
 			return true;
 		}
 		public override void AI() 
 		{
-			Player player = Main.player[projectile.owner];
-			//projectile.Center = npc.Center;
-			projectile.ai[0]++;
+			Player player = Main.player[Projectile.owner];
+			//Projectile.Center = npc.Center;
+			Projectile.ai[0]++;
 			if(completedLoads > 0)
 			{
-				projectile.alpha += 10;
+				Projectile.alpha += 10;
 			}
-			if(projectile.alpha > 255)
+			if(Projectile.alpha > 255)
 			{
-				projectile.active = false;
-				projectile.Kill();
+				Projectile.active = false;
+				Projectile.Kill();
 			}
 		}
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) 
@@ -68,7 +68,7 @@ namespace SOTS.Projectiles.Otherworld
 		Rectangle posRect;
 		public int FindClosestEnemy(Vector2 pos, float dist)
 		{
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			float minDist = dist;
 			int target2 = -1;
 			float dX;
@@ -95,7 +95,7 @@ namespace SOTS.Projectiles.Otherworld
 					NPC target = Main.npc[i];
 					if (target.active && !target.friendly && !target.dontTakeDamage)
 					{
-						if (target.Hitbox.Intersects(new Rectangle((int)pos.X - 8, (int)pos.Y -8, projectile.width, projectile.height)))
+						if (target.Hitbox.Intersects(new Rectangle((int)pos.X - 8, (int)pos.Y -8, Projectile.width, Projectile.height)))
 						{
 							direct = true;
 							target2 = i;
@@ -108,7 +108,7 @@ namespace SOTS.Projectiles.Otherworld
 		bool currentPointRange = false;
 		public bool FindClosestPoint(Vector2 pos, Vector2 pos2, float dist)
 		{
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			if(currentPointRange)
 			{
 				return true;
@@ -121,7 +121,7 @@ namespace SOTS.Projectiles.Otherworld
 			dX = pos2.X - pos.X;
 			dY = pos2.Y - pos.Y;
 			distance = (float) Math.Sqrt((double)(dX * dX + dY * dY));
-			if(distance < minDist || posRect.Intersects(new Rectangle((int)pos.X - 8, (int)pos.Y - 8, projectile.width, projectile.height)))
+			if(distance < minDist || posRect.Intersects(new Rectangle((int)pos.X - 8, (int)pos.Y - 8, Projectile.width, Projectile.height)))
 			{
 				currentPointRange = true;
 				return true;
@@ -147,12 +147,12 @@ namespace SOTS.Projectiles.Otherworld
 			if(hitbox)
 			{
 				NPC target = Main.npc[FindClosestEnemy(drawpos, dist)];
-				if(target.Hitbox.Intersects(new Rectangle((int)drawpos.X - 8, (int)drawpos.Y - 8, projectile.width, projectile.height)) && projectile.friendly && !target.dontTakeDamage)
+				if(target.Hitbox.Intersects(new Rectangle((int)drawpos.X - 8, (int)drawpos.Y - 8, Projectile.width, Projectile.height)) && Projectile.friendly && !target.dontTakeDamage)
 				{
-					if(projectile.owner == Main.myPlayer)
+					if(Projectile.owner == Main.myPlayer)
 					{
-						SOTSProjectile instance = projectile.GetGlobalProjectile<SOTSProjectile>();
-						Projectile.NewProjectile(drawpos, projectile.velocity, ModContent.ProjectileType<HardlightArrowDamage>(), projectile.damage, projectile.knockBack, Main.myPlayer, instance.frostFlake, 0f);
+						SOTSProjectile instance = Projectile.GetGlobalProjectile<SOTSProjectile>();
+						Projectile.NewProjectile(drawpos, Projectile.velocity, ModContent.ProjectileType<HardlightArrowDamage>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, instance.frostFlake, 0f);
 					}
 					posX = target.Center.X;
 					posY = target.Center.Y;
@@ -162,7 +162,7 @@ namespace SOTS.Projectiles.Otherworld
 			}
 			else
 			{
-				if(npcHitbox.Intersects(new Rectangle((int)drawpos.X - 8, (int)drawpos.Y - 8, projectile.width, projectile.height)) && projectile.friendly)
+				if(npcHitbox.Intersects(new Rectangle((int)drawpos.X - 8, (int)drawpos.Y - 8, Projectile.width, Projectile.height)) && Projectile.friendly)
 				{
 					currentPointRange = false;
 					return true;
@@ -177,17 +177,17 @@ namespace SOTS.Projectiles.Otherworld
 		{
 			return false;
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
 			return false;
 		}
 		public void LaserDraw(SpriteBatch spriteBatch)
 		{
-			Player player = Main.player[projectile.owner];
-			Texture2D texture = Main.projectileTexture[projectile.type];
+			Player player = Main.player[Projectile.owner];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			float radianDir = (float)Math.Atan2(initialDirection.Y, initialDirection.X);
-			Vector2 drawPos = projectile.Center;
-			int helixRot = (int)projectile.ai[0];
+			Vector2 drawPos = Projectile.Center;
+			int helixRot = (int)Projectile.ai[0];
 			float unitDis = 3f; //initiate a distance constant, this determines the "speed" at which the laser moves and bends
 			bool stop = false;
 			int counter = 0; 
@@ -234,21 +234,21 @@ namespace SOTS.Projectiles.Otherworld
 				}
 				if(completedLoads > 0 && spriteBatch != null) //checking if it is the second strand that starts (calculated strand)
 				{
-					Color color = new Color(255, 255, 255, 0) * ((255 - projectile.alpha) / 255f);
+					Color color = new Color(255, 255, 255, 0) * ((255 - Projectile.alpha) / 255f);
 					Vector2 helixPos1 = drawPos + new Vector2(curve.X, 0).RotatedBy(radianDir + MathHelper.ToRadians(90));
 					//if (forceTerminate % 4 == 0)
-						//Lighting.AddLight(drawPos, color.ToVector3() * (255 - projectile.alpha) / 20000f); //adds game light at the area
-					spriteBatch.Draw(texture, helixPos1 - Main.screenPosition, null, color, radianDir + MathHelper.ToRadians(90), new Vector2(texture.Width/2, texture.Height/2), projectile.scale, SpriteEffects.None, 0f);
-					spriteBatch.Draw(texture, drawPos - Main.screenPosition, null, color, radianDir + MathHelper.ToRadians(90), new Vector2(texture.Width / 2, texture.Height / 2), projectile.scale, SpriteEffects.None, 0f);
+						//Lighting.AddLight(drawPos, color.ToVector3() * (255 - Projectile.alpha) / 20000f); //adds game light at the area
+					spriteBatch.Draw(texture, helixPos1 - Main.screenPosition, null, color, radianDir + MathHelper.ToRadians(90), new Vector2(texture.Width/2, texture.Height/2), Projectile.scale, SpriteEffects.None, 0f);
+					spriteBatch.Draw(texture, drawPos - Main.screenPosition, null, color, radianDir + MathHelper.ToRadians(90), new Vector2(texture.Width / 2, texture.Height / 2), Projectile.scale, SpriteEffects.None, 0f);
 				}
 				int i = (int)drawPos.X / 16;
 				int j = (int)drawPos.Y / 16;
 				if (!WorldGen.InWorld(i, j, 20) || Main.tile[i, j].active() && Main.tileSolidTop[Main.tile[i, j].type] == false && Main.tileSolid[Main.tile[i, j].type] == true)
 				{
-					if (projectile.owner == Main.myPlayer && completedLoads == 0)
+					if (Projectile.owner == Main.myPlayer && completedLoads == 0)
 					{
-						SOTSProjectile instance = projectile.GetGlobalProjectile<SOTSProjectile>();
-						Projectile.NewProjectile(drawPos, projectile.velocity, ModContent.ProjectileType<HardlightArrowDamage>(), projectile.damage, projectile.knockBack, Main.myPlayer, instance.frostFlake, 0f);
+						SOTSProjectile instance = Projectile.GetGlobalProjectile<SOTSProjectile>();
+						Projectile.NewProjectile(drawPos, Projectile.velocity, ModContent.ProjectileType<HardlightArrowDamage>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, instance.frostFlake, 0f);
 					}
 					distance = counter;
 					break;
@@ -260,13 +260,13 @@ namespace SOTS.Projectiles.Otherworld
 				{
 					int dust = Dust.NewDust(new Vector2(drawPos.X - 12, drawPos.Y - 12), 16, 16, DustID.Electric);
 					Main.dust[dust].scale *= 1f;
-					Main.dust[dust].velocity += projectile.velocity * 0.1f;
+					Main.dust[dust].velocity += Projectile.velocity * 0.1f;
 					Main.dust[dust].noGravity = true;
 				}
 			}
 			completedLoads++;
 		}
-		public override void PostDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override void PostDraw(Color lightColor)
 		{
 			if(completedLoads > 0)
 			{

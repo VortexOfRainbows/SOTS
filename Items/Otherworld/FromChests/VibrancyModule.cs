@@ -34,7 +34,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		{
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/FromChests/VibrancyModuleEffect").Value;
 			Color color = new Color(80, 80, 80, 0);
-			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, Item.height * 0.5f);
 			for (int k = 0; k < 5; k++)
 			{
 				float x = Main.rand.Next(-10, 11) * 0.15f;

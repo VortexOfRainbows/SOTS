@@ -26,20 +26,20 @@ namespace SOTS.Projectiles.Inferno
 		}
 		public override void SetDefaults()
 		{
-			projectile.width = 16;
-			projectile.height = 16;
-			projectile.hostile = true;
-			projectile.friendly = false;
-			projectile.magic = true;
-			projectile.extraUpdates = 10;
-			projectile.timeLeft = 1200;
-			projectile.tileCollide = true;
-			projectile.penetrate = -1;
+			Projectile.width = 16;
+			Projectile.height = 16;
+			Projectile.hostile = true;
+			Projectile.friendly = false;
+			Projectile.magic = true;
+			Projectile.extraUpdates = 10;
+			Projectile.timeLeft = 1200;
+			Projectile.tileCollide = true;
+			Projectile.penetrate = -1;
 		}
         Vector2[] trailPos = new Vector2[200];
 		public void cataloguePos()
 		{
-			Vector2 current = projectile.Center;
+			Vector2 current = Projectile.Center;
 			for (int i = 0; i < trailPos.Length; i++)
 			{
 				Vector2 previousPosition = trailPos[i];
@@ -54,12 +54,12 @@ namespace SOTS.Projectiles.Inferno
 		}
 		public void TrailPreDraw(SpriteBatch spriteBatch)
 		{
-			Texture2D texture = Main.projectileTexture[projectile.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			Vector2 previousPosition = projectile.Center;
+			Vector2 previousPosition = Projectile.Center;
 			for (int k = 0; k < trailPos.Length; k++)
 			{
-				float scale = projectile.scale * 1.25f * (trailPos.Length - k) / (float)trailPos.Length;
+				float scale = Projectile.scale * 1.25f * (trailPos.Length - k) / (float)trailPos.Length;
 				if (trailPos[k] == Vector2.Zero)
 				{
 					break;
@@ -74,13 +74,13 @@ namespace SOTS.Projectiles.Inferno
 				for (int i = 0; i < max; i++)
 				{
 					drawPos = previousPosition + -betweenPositions * (i / max) - Main.screenPosition;
-					if (trailPos[k] != projectile.Center)
+					if (trailPos[k] != Projectile.Center)
 						spriteBatch.Draw(texture, drawPos, null, color, betweenPositions.ToRotation(), drawOrigin, scale, SpriteEffects.None, 0f);
 				}
 				previousPosition = currentPos;
 			}
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
 			TrailPreDraw(spriteBatch);
 			return false;
@@ -90,16 +90,16 @@ namespace SOTS.Projectiles.Inferno
 		public override void AI()
 		{
 			cataloguePos();
-			Player player = Main.player[projectile.owner];
-			Lighting.AddLight(projectile.Center, VoidPlayer.Inferno1.ToVector3());
+			Player player = Main.player[Projectile.owner];
+			Lighting.AddLight(Projectile.Center, VoidPlayer.Inferno1.ToVector3());
 			if (runOnce)
 			{
 				runOnce = false;
-				//SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 60, 0.8f, -0.1f);
+				//SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 60, 0.8f, -0.1f);
 			}
 			if(Main.rand.NextBool(120))
             {
-				int dust2 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, ModContent.DustType<CopyDust4>());
+				int dust2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>());
 				Dust dust = Main.dust[dust2];
 				dust.color = VoidPlayer.InfernoColorAttempt(Main.rand.NextFloat(1));
 				dust.noGravity = true;
@@ -108,19 +108,19 @@ namespace SOTS.Projectiles.Inferno
 				dust.velocity *= 0.8f;
 				dust.alpha = 125;
 			}
-			if (!projectile.velocity.Equals(new Vector2(0, 0)))
-				projectile.rotation = projectile.velocity.ToRotation();
+			if (!Projectile.velocity.Equals(new Vector2(0, 0)))
+				Projectile.rotation = Projectile.velocity.ToRotation();
 
 			if (hasHit)
 			{
-				if (projectile.timeLeft > 240)
-					projectile.timeLeft = 240;
+				if (Projectile.timeLeft > 240)
+					Projectile.timeLeft = 240;
 			}
 			else
 			{
-				float sin = (float)Math.Sin(MathHelper.ToRadians(projectile.ai[1] * 1.1f)) * projectile.ai[0];
-				projectile.Center += new Vector2(0, sin).RotatedBy(projectile.velocity.ToRotation());
-				projectile.ai[1]++;
+				float sin = (float)Math.Sin(MathHelper.ToRadians(Projectile.ai[1] * 1.1f)) * Projectile.ai[0];
+				Projectile.Center += new Vector2(0, sin).RotatedBy(Projectile.velocity.ToRotation());
+				Projectile.ai[1]++;
 			}
 		}
 		public override void OnHitPlayer(Player target, int damage, bool crit)
@@ -129,18 +129,18 @@ namespace SOTS.Projectiles.Inferno
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			target.immune[projectile.owner] = 0;
+			target.immune[Projectile.owner] = 0;
 			triggerUpdate();
 		}
 		public void triggerUpdate()
 		{
 			hasHit = true;
-			projectile.velocity *= 0;
-			projectile.friendly = false;
-			if (projectile.owner == Main.myPlayer)
+			Projectile.velocity *= 0;
+			Projectile.friendly = false;
+			if (Projectile.owner == Main.myPlayer)
 			{
-				projectile.netUpdate = true;
-				//Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, ModContent.ProjectileType<VibrantRing>(), projectile.damage, projectile.knockBack * 0.1f, Main.myPlayer);
+				Projectile.netUpdate = true;
+				//Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<VibrantRing>(), Projectile.damage, Projectile.knockBack * 0.1f, Main.myPlayer);
 			}
 		}
 	}

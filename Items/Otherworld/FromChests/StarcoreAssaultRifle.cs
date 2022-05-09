@@ -18,12 +18,12 @@ namespace SOTS.Items.Otherworld.FromChests
 		public override void SafeSetDefaults()
 		{
             Item.damage = 23;
-            Item.ranged = true;
+            Item.DamageType = DamageClass.Ranged;
             Item.width = 70;
             Item.height = 30;
             Item.useTime = 5; 
             Item.useAnimation = 20;
-            Item.useStyle = 5;    
+            Item.useStyle = ItemUseStyleID.Shoot;    
             Item.noMelee = true;
 			Item.knockBack = 2f;
 			Item.value = Item.sellPrice(0, 5, 0, 0);
@@ -69,7 +69,7 @@ namespace SOTS.Items.Otherworld.FromChests
 
 			texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/FromChests/StarcoreAssaultRifleGlow").Value;
 			Color color = Color.White;
-			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, Item.height * 0.5f);
 			Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y) + 2), null, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			base.PostDrawInWorld(spriteBatch, lightColor, alphaColor, rotation, scale, whoAmI);
         }

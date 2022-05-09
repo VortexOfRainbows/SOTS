@@ -14,30 +14,30 @@ namespace SOTS.Projectiles.Laser
         }
         public override void SetDefaults()
         {
-            projectile.width = 18;
-            projectile.height = 18;
-            projectile.friendly = false;
-            projectile.ranged = true;
-            projectile.alpha = 0;
-            projectile.penetrate = -1;
-            projectile.tileCollide = false;
-            projectile.light = 0.8f;
+            Projectile.width = 18;
+            Projectile.height = 18;
+            Projectile.friendly = false;
+            Projectile.ranged = true;
+            Projectile.alpha = 0;
+            Projectile.penetrate = -1;
+            Projectile.tileCollide = false;
+            Projectile.light = 0.8f;
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
         {
             Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Laser/PrismLaser").Value;
-            Texture2D texture2 = Main.projectileTexture[projectile.type];
-            float compression = (100f - projectile.ai[0]) / 100f;
+            Texture2D texture2 = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
+            float compression = (100f - Projectile.ai[0]) / 100f;
             if (compression < 0)
                 compression = 0;
             Vector2 drawPos;
             Color color;
             int i = 0;
             float counter = 160 + Main.GlobalTime;
-            float scale = projectile.scale * 0.75f - 0.25f * compression;
+            float scale = Projectile.scale * 0.75f - 0.25f * compression;
             for (int d = -3; d < 4; d++)
             {
-                drawPos = projectile.Center;
+                drawPos = Projectile.Center;
                 color = Color.White;
                 
                 switch (i)
@@ -66,9 +66,9 @@ namespace SOTS.Projectiles.Laser
                 }
                 Vector2 dynamicAddition = new Vector2(Main.rand.NextFloat(2, 4) * (1 - 1f * compression), 0).RotatedBy(MathHelper.ToRadians(360f / 7f * i) + counter);
                 i++;
-                color *= ((100f - projectile.alpha) / 255f);
+                color *= ((100f - Projectile.alpha) / 255f);
                 float rotation = 0f;
-                Vector2 angle = projectile.velocity.RotatedBy(MathHelper.ToRadians(d * 45 * compression));
+                Vector2 angle = Projectile.velocity.RotatedBy(MathHelper.ToRadians(d * 45 * compression));
                 rotation = angle.ToRotation();
                 for (int a = 0; a < 200; a++)
                 {
@@ -82,12 +82,12 @@ namespace SOTS.Projectiles.Laser
                     }
                 }
             }
-            float distance = 32 * ((100f - projectile.ai[0]) / 100f);
+            float distance = 32 * ((100f - Projectile.ai[0]) / 100f);
             if (distance < 0) distance = 0;
 
             for (i = 0; i < 7; i++)
             {
-                drawPos = projectile.Center;
+                drawPos = Projectile.Center;
                 color = Color.White;
                 switch (i)
                 {
@@ -114,17 +114,17 @@ namespace SOTS.Projectiles.Laser
                         break;
                 }
                 Vector2 dynamicAddition = new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(360f / 7f * i) + counter);
-                color *= ((100f - projectile.alpha) / 255f);
-                float angle = projectile.rotation + MathHelper.ToRadians(projectile.ai[0] * 5);
+                color *= ((100f - Projectile.alpha) / 255f);
+                float angle = Projectile.rotation + MathHelper.ToRadians(Projectile.ai[0] * 5);
                 drawPos += new Vector2(distance, 0).RotatedBy(angle + MathHelper.ToRadians(360f / 7f * i));
                 float x = Main.rand.Next(-10, 11) * 0.5f * (1 - compression);
                 float y = Main.rand.Next(-10, 11) * 0.5f * (1 - compression);
-                spriteBatch.Draw(texture2, drawPos - Main.screenPosition + new Vector2(x, y) + dynamicAddition, null, color, projectile.rotation, new Vector2(texture2.Width / 2, texture2.Height / 2), projectile.scale, SpriteEffects.None, 0f);
+                spriteBatch.Draw(texture2, drawPos - Main.screenPosition + new Vector2(x, y) + dynamicAddition, null, color, Projectile.rotation, new Vector2(texture2.Width / 2, texture2.Height / 2), Projectile.scale, SpriteEffects.None, 0f);
             }
             // Vector2 drawOrigin = new Vector2(texture2.Width / 2, texture2.Height / 2);
-            // drawPos = projectile.Center - Main.screenPosition;
+            // drawPos = Projectile.Center - Main.screenPosition;
             // color = Color.White;
-            // spriteBatch.Draw(texture2, drawPos, null, color, projectile.rotation, drawOrigin, projectile.scale, projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+            // spriteBatch.Draw(texture2, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
             return false;
         }
         public override bool ShouldUpdatePosition()
@@ -136,41 +136,41 @@ namespace SOTS.Projectiles.Laser
         bool ended = false;
         public override void AI()
         {
-            projectile.spriteDirection = projectile.direction;
-            projectile.ai[0] += 0.35f;
-            if (projectile.ai[0] < 100)
+            Projectile.spriteDirection = Projectile.direction;
+            Projectile.ai[0] += 0.35f;
+            if (Projectile.ai[0] < 100)
             {
-                projectile.ai[0] *= 1.035f;
+                Projectile.ai[0] *= 1.035f;
             }
             else
             {
-                projectile.ai[0] = 100;
+                Projectile.ai[0] = 100;
                 ai2++;
             }
-            Player player = Main.player[projectile.owner];
-            if (projectile.owner == Main.myPlayer)
+            Player player = Main.player[Projectile.owner];
+            if (Projectile.owner == Main.myPlayer)
             {
                 Vector2 toCursor = Main.MouseWorld - player.Center;
                 Vector2 fromPlayer = new Vector2(dist, 0).RotatedBy(toCursor.ToRotation());
-                projectile.Center = fromPlayer + player.Center;
-                projectile.position += new Vector2(0, 4 * projectile.spriteDirection).RotatedBy(toCursor.ToRotation());
-                projectile.velocity = toCursor.SafeNormalize(Vector2.Zero) * projectile.velocity.Length();
-                projectile.netUpdate = true;
+                Projectile.Center = fromPlayer + player.Center;
+                Projectile.position += new Vector2(0, 4 * Projectile.spriteDirection).RotatedBy(toCursor.ToRotation());
+                Projectile.velocity = toCursor.SafeNormalize(Vector2.Zero) * Projectile.velocity.Length();
+                Projectile.netUpdate = true;
             }
-            projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
-            if (!player.channel && projectile.ai[0] >= 100 && ai2 >= 5) ended = true;
+            Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
+            if (!player.channel && Projectile.ai[0] >= 100 && ai2 >= 5) ended = true;
             if (ended)
             {
-                SoundEngine.PlaySound(SoundID.Item94, (int)(projectile.Center.X), (int)(projectile.Center.Y));
-                projectile.Kill();
+                SoundEngine.PlaySound(SoundID.Item94, (int)(Projectile.Center.X), (int)(Projectile.Center.Y));
+                Projectile.Kill();
             }
         }
         public override void Kill(int timeLeft)
         {
-            if (Main.myPlayer == projectile.owner)
+            if (Main.myPlayer == Projectile.owner)
                 for (int i = 0; i < 7; i++)
                 {
-                    Projectile.NewProjectile(projectile.Center, projectile.velocity, ModContent.ProjectileType<PrismLaser>(), projectile.damage, projectile.knockBack, Main.myPlayer, i);
+                    Projectile.NewProjectile(Projectile.Center, Projectile.velocity, ModContent.ProjectileType<PrismLaser>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, i);
                 }   
             base.Kill(timeLeft);
         }

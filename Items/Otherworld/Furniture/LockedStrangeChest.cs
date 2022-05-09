@@ -25,7 +25,7 @@ namespace SOTS.Items.Otherworld.Furniture
 			Item.width = 32;
 			Item.height = 26;
 			Item.maxStack = 99;
-			Item.useStyle = 1;
+			Item.useStyle = ItemUseStyleID.Swing;
 			Item.value = Item.sellPrice(0, 0, 10, 0);
 			Item.rare = ItemRarityID.LightRed;
 			Item.consumable = true;
@@ -48,11 +48,11 @@ namespace SOTS.Items.Otherworld.Furniture
 				Tile tile = Main.tile[i, j];
 				int left = i;
 				int top = j;
-				if (tile.frameX % 36 != 0)
+				if (tile.TileFrameX % 36 != 0)
 				{
 					left--;
 				}
-				if (tile.frameY != 0)
+				if (tile.TileFrameY != 0)
 				{
 					top--;
 				}
@@ -61,7 +61,7 @@ namespace SOTS.Items.Otherworld.Furniture
 				int cFrame = chest.frame;
 				float uniquenessCounter = Main.GlobalTime * -100 + (i + j) * 5;
 				Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/Furniture/LockedStrangeChestGlow").Value;
-				Rectangle frame = new Rectangle(tile.frameX, 38 * cFrame + tile.frameY, 16, 16);
+				Rectangle frame = new Rectangle(tile.TileFrameX, 38 * cFrame + tile.TileFrameY, 16, 16);
 				Color color;
 				color = WorldGen.paintColor((int)Main.tile[i, j].color()) * (100f / 255f);
 				color.A = 0;
@@ -132,11 +132,11 @@ namespace SOTS.Items.Otherworld.Furniture
 			int left = i;
 			int top = j;
 			Tile tile = Main.tile[i, j];
-			if (tile.frameX % 36 != 0)
+			if (tile.TileFrameX % 36 != 0)
 			{
 				left--;
 			}
-			if (tile.frameY != 0)
+			if (tile.TileFrameY != 0)
 			{
 				top--;
 			}
@@ -170,11 +170,11 @@ namespace SOTS.Items.Otherworld.Furniture
 			Main.mouseRightRelease = false;
 			int left = i;
 			int top = j;
-			if (tile.frameX % 36 != 0)
+			if (tile.TileFrameX % 36 != 0)
 			{
 				left--;
 			}
-			if (tile.frameY != 0)
+			if (tile.TileFrameY != 0)
 			{
 				top--;
 			}
@@ -256,11 +256,11 @@ namespace SOTS.Items.Otherworld.Furniture
 			Tile tile = Main.tile[i, j];
 			int left = i;
 			int top = j;
-			if (tile.frameX % 36 != 0)
+			if (tile.TileFrameX % 36 != 0)
 			{
 				left--;
 			}
-			if (tile.frameY != 0)
+			if (tile.TileFrameY != 0)
 			{
 				top--;
 			}

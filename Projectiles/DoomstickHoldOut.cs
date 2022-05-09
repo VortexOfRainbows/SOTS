@@ -16,16 +16,16 @@ namespace SOTS.Projectiles
         }
         public override void SetDefaults()
         {
-            projectile.width = 20;
-            projectile.height = 58;
-            projectile.aiStyle = 20;
-            projectile.friendly = false;
-            projectile.penetrate = -1;
-            projectile.tileCollide = false;
-            projectile.ranged = true;
-            projectile.timeLeft = 20;
-            projectile.hide = true;
-            projectile.alpha = 255;
+            Projectile.width = 20;
+            Projectile.height = 58;
+            Projectile.aiStyle = 20;
+            Projectile.friendly = false;
+            Projectile.penetrate = -1;
+            Projectile.tileCollide = false;
+            Projectile.ranged = true;
+            Projectile.timeLeft = 20;
+            Projectile.hide = true;
+            Projectile.alpha = 255;
         }
         public override void SendExtraAI(BinaryWriter writer)
         {
@@ -38,18 +38,18 @@ namespace SOTS.Projectiles
         bool ended = false;
         public override bool PreAI()
         {
-            Player player = Main.player[projectile.owner];
-            if ((player.ownedProjectileCounts[ModContent.ProjectileType<Doomhook>()] < 1) && Main.myPlayer == projectile.owner && projectile.timeLeft <= 2)
+            Player player = Main.player[Projectile.owner];
+            if ((player.ownedProjectileCounts[ModContent.ProjectileType<Doomhook>()] < 1) && Main.myPlayer == Projectile.owner && Projectile.timeLeft <= 2)
             {
                 ended = true;
-                projectile.netUpdate = true;
+                Projectile.netUpdate = true;
             }
-            if (!ended && projectile.timeLeft < 2)
-                projectile.timeLeft = 2;
+            if (!ended && Projectile.timeLeft < 2)
+                Projectile.timeLeft = 2;
             Vector2 vector2_1 = player.RotatedRelativePoint(player.MountedCenter, true);
-            if (Main.myPlayer == projectile.owner)
+            if (Main.myPlayer == Projectile.owner)
             {
-                float num1 =  projectile.velocity.Length() * projectile.scale;
+                float num1 =  Projectile.velocity.Length() * Projectile.scale;
                 Vector2 vector2_2 = vector2_1;
                 float num2 = (float)((double)Main.mouseX + Main.screenPosition.X - vector2_2.X);
                 float num3 = (float)((double)Main.mouseY + Main.screenPosition.Y - vector2_2.Y);
@@ -60,30 +60,30 @@ namespace SOTS.Projectiles
                 float num7 = num2 * num6;
                 float num8 = num3 * num6;
 
-                if ((double)num7 != projectile.velocity.X || (double)num8 != projectile.velocity.Y)
-                    projectile.netUpdate = true;
-                projectile.velocity.X = num7;
-                projectile.velocity.Y = num8;
-                projectile.velocity = projectile.velocity.RotatedBy(projectile.ai[0]);
+                if ((double)num7 != Projectile.velocity.X || (double)num8 != Projectile.velocity.Y)
+                    Projectile.netUpdate = true;
+                Projectile.velocity.X = num7;
+                Projectile.velocity.Y = num8;
+                Projectile.velocity = Projectile.velocity.RotatedBy(Projectile.ai[0]);
             }
-            if (projectile.hide == false)
+            if (Projectile.hide == false)
             {
-                player.ChangeDir(projectile.direction);
-                player.heldProj = projectile.whoAmI;
-                player.itemRotation = (projectile.velocity * projectile.direction).ToRotation();
+                player.ChangeDir(Projectile.direction);
+                player.heldProj = Projectile.whoAmI;
+                player.itemRotation = (Projectile.velocity * Projectile.direction).ToRotation();
                 if (!ended && player.itemTime < 2)
                 {
                     player.itemTime = 2;
                     player.itemAnimation = 2;
                 }
-                projectile.alpha = 0;
+                Projectile.alpha = 0;
             }
-            projectile.hide = false;
-            projectile.spriteDirection = projectile.direction;
-            projectile.position.X = (vector2_1.X - (projectile.width / 2));
-            projectile.position.Y = (vector2_1.Y - (projectile.height / 2));
-            projectile.position += projectile.velocity;
-            projectile.rotation = (float)(Math.Atan2((double)projectile.velocity.Y, (double)projectile.velocity.X) + 1.57000005245209);
+            Projectile.hide = false;
+            Projectile.spriteDirection = Projectile.direction;
+            Projectile.position.X = (vector2_1.X - (Projectile.width / 2));
+            Projectile.position.Y = (vector2_1.Y - (Projectile.height / 2));
+            Projectile.position += Projectile.velocity;
+            Projectile.rotation = (float)(Math.Atan2((double)Projectile.velocity.Y, (double)Projectile.velocity.X) + 1.57000005245209);
             return false;
         }
         public override bool ShouldUpdatePosition()

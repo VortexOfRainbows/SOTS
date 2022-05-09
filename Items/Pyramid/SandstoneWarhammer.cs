@@ -19,10 +19,10 @@ namespace SOTS.Items.Pyramid
 			Item.height = 40;
 			Item.useTime = 18;
 			Item.useAnimation = 18;
-			Item.useStyle = 1;
+			Item.useStyle = ItemUseStyleID.Swing;
 			Item.knockBack = 1.5f;
 			Item.value = Item.sellPrice(0, 1, 50, 0);
-			Item.rare = 3;
+			Item.rare = ItemRarityID.Orange;
 			Item.UseSound = SoundID.Item1;
 			Item.autoReuse = true;            
 			Item.noMelee = false;

@@ -11,37 +11,37 @@ namespace SOTS.Projectiles.Otherworld
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Phase Spear");
-			ProjectileID.Sets.TrailCacheLength[projectile.type] = 7;
-			ProjectileID.Sets.TrailingMode[projectile.type] = 1;
+			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 7;
+			ProjectileID.Sets.TrailingMode[Projectile.type] = 1;
 		}
 		public override void SetDefaults()
 		{
-			projectile.width = 18;
-			projectile.height = 36;
-			projectile.hostile = true;
-			projectile.friendly = false;
-			projectile.timeLeft = 2160;
-			projectile.tileCollide = true;
-			projectile.penetrate = -1;
-			projectile.alpha = 255;
-			projectile.extraUpdates = 2;
+			Projectile.width = 18;
+			Projectile.height = 36;
+			Projectile.hostile = true;
+			Projectile.friendly = false;
+			Projectile.timeLeft = 2160;
+			Projectile.tileCollide = true;
+			Projectile.penetrate = -1;
+			Projectile.alpha = 255;
+			Projectile.extraUpdates = 2;
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Otherworld/OtherworldlyBolt").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			for (int k = 0; k < projectile.oldPos.Length; k++)
+			for (int k = 0; k < Projectile.oldPos.Length; k++)
 			{
 				Color color = new Color(110, 110, 110, 0);
-				Vector2 drawPos = projectile.oldPos[k] - Main.screenPosition + drawOrigin;
-				color = projectile.GetAlpha(color) * ((projectile.oldPos.Length - k) / (float)projectile.oldPos.Length) * 0.5f;
+				Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin;
+				color = Projectile.GetAlpha(color) * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length) * 0.5f;
 				for (int j = 0; j < 5; j++)
 				{
 					float x = Main.rand.Next(-10, 11) * 0.1f;
 					float y = Main.rand.Next(-10, 11) * 0.1f;
-					if(!projectile.oldPos[k].Equals(projectile.position))
+					if(!Projectile.oldPos[k].Equals(Projectile.position))
 					{
-						Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, projectile.rotation, drawOrigin, projectile.scale * (projectile.oldPos.Length - k) / (float)projectile.oldPos.Length, SpriteEffects.None, 0f);
+						Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, Projectile.rotation, drawOrigin, Projectile.scale * (Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length, SpriteEffects.None, 0f);
 					}
 				}
 			}
@@ -61,41 +61,41 @@ namespace SOTS.Projectiles.Otherworld
         }
         public override void Kill(int timeLeft)
 		{
-			SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 14, 0.6f);
+			SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 14, 0.6f);
 			if (Main.netMode != 1)
 			{
 				for (int i = 0; i < 4 + (Main.expertMode ? 1 : 0); i++)
 				{
 					Vector2 circular = new Vector2(3, 0).RotatedBy(MathHelper.ToRadians(Main.rand.Next(360)));
-					Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, circular.X, circular.Y, ModContent.ProjectileType<ThunderColumn>(), projectile.damage, 0, Main.myPlayer);
+					Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, circular.X, circular.Y, ModContent.ProjectileType<ThunderColumn>(), Projectile.damage, 0, Main.myPlayer);
 				}
 			}
 			for (int i = 0; i < 40; i++)
 			{
 				Vector2 circularLocation = new Vector2(10, 0);
 				resetVector2(ref circularLocation, i);
-				int dust = Dust.NewDust(new Vector2(projectile.Center.X - 4, projectile.Center.Y - 3), 0, 0, 242);
+				int dust = Dust.NewDust(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 3), 0, 0, 242);
 				Main.dust[dust].velocity = circularLocation;
 				Main.dust[dust].velocity *= 2f;
 				Main.dust[dust].scale *= 6f;
 				Main.dust[dust].noGravity = true;
 
 				resetVector2(ref circularLocation, i);
-				dust = Dust.NewDust(new Vector2(projectile.Center.X - 4, projectile.Center.Y - 3), 0, 0, 242);
+				dust = Dust.NewDust(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 3), 0, 0, 242);
 				Main.dust[dust].velocity = circularLocation;
 				Main.dust[dust].velocity *= 4f;
 				Main.dust[dust].scale *= 5;
 				Main.dust[dust].noGravity = true;
 
 				resetVector2(ref circularLocation, i);
-				dust = Dust.NewDust(new Vector2(projectile.Center.X - 4, projectile.Center.Y - 3), 0, 0, 242);
+				dust = Dust.NewDust(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 3), 0, 0, 242);
 				Main.dust[dust].velocity = circularLocation;
 				Main.dust[dust].velocity *= 6.5f;
 				Main.dust[dust].scale *= 4f;
 				Main.dust[dust].noGravity = true;
 
 				resetVector2(ref circularLocation, i);
-				dust = Dust.NewDust(new Vector2(projectile.Center.X - 4, projectile.Center.Y - 3), 0, 0, 242);
+				dust = Dust.NewDust(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 3), 0, 0, 242);
 				Main.dust[dust].velocity = circularLocation;
 				Main.dust[dust].velocity *= 10f;
 				Main.dust[dust].scale *= 3f;

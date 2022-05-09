@@ -15,57 +15,57 @@ namespace SOTS.Projectiles.Pyramid
 		}
         public override void SetDefaults()
 		{
-			projectile.width = 22;
-			projectile.height = 22;
-			Main.projFrames[projectile.type] = 8;
-			projectile.netImportant = true;
-			projectile.timeLeft = 900;
-			projectile.hostile = false;
-			projectile.friendly = false;
-			projectile.penetrate = -1;
-			projectile.tileCollide = false;
-			projectile.alpha = 0;
+			Projectile.width = 22;
+			Projectile.height = 22;
+			Main.projFrames[Projectile.type] = 8;
+			Projectile.netImportant = true;
+			Projectile.timeLeft = 900;
+			Projectile.hostile = false;
+			Projectile.friendly = false;
+			Projectile.penetrate = -1;
+			Projectile.tileCollide = false;
+			Projectile.alpha = 0;
 		}
-        public override void PostDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override void PostDraw(Color lightColor)
 		{
 			Texture2D texture1 = Mod.Assets.Request<Texture2D>("Projectiles/Pyramid/SoulofLooting").Value;
 			Vector2 drawOrigin1 = new Vector2(texture1.Width * 0.5f, texture1.Height * 0.5f * 0.125f);
-			Vector2 drawPos2 = projectile.Center - Main.screenPosition;
-			Main.spriteBatch.Draw(texture1, drawPos2 + new Vector2(0, projectile.gfxOffY), new Rectangle(0, 22 * projectile.frame, 22, 22), projectile.GetAlpha(VoidPlayer.soulLootingColor), projectile.rotation, drawOrigin1, projectile.scale, projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+			Vector2 drawPos2 = Projectile.Center - Main.screenPosition;
+			Main.spriteBatch.Draw(texture1, drawPos2 + new Vector2(0, Projectile.gfxOffY), new Rectangle(0, 22 * Projectile.frame, 22, 22), Projectile.GetAlpha(VoidPlayer.soulLootingColor), Projectile.rotation, drawOrigin1, Projectile.scale, Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			base.PostDraw(spriteBatch, lightColor);
         }
 		int owner = 0;
 		public override void AI()
 		{
-			owner = (int)projectile.ai[0];
-			Lighting.AddLight(projectile.Center, new Vector3(VoidPlayer.soulLootingColor.R, VoidPlayer.soulLootingColor.G, VoidPlayer.soulLootingColor.B) * 1f / 255f);
-			projectile.frameCounter++;																																						
-			if (projectile.frameCounter >= 5)
+			owner = (int)Projectile.ai[0];
+			Lighting.AddLight(Projectile.Center, new Vector3(VoidPlayer.soulLootingColor.R, VoidPlayer.soulLootingColor.G, VoidPlayer.soulLootingColor.B) * 1f / 255f);
+			Projectile.frameCounter++;																																						
+			if (Projectile.frameCounter >= 5)
 			{
-				projectile.frameCounter = 0;
-				projectile.frame = (projectile.frame + 1) % 8;
+				Projectile.frameCounter = 0;
+				Projectile.frame = (Projectile.frame + 1) % 8;
 			}
-			projectile.ai[1]++;
-			if (projectile.ai[1] % 6 == 0)
-				projectile.alpha++;
-			projectile.velocity *= 0.95f;
+			Projectile.ai[1]++;
+			if (Projectile.ai[1] % 6 == 0)
+				Projectile.alpha++;
+			Projectile.velocity *= 0.95f;
 			Player player = Main.player[owner];
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			int pepperID = -1;
 			int count = 0;
-			for(int i = 0; i < Main.projectile.Length; i++)
+			for(int i = 0; i < Main.Projectile.Length; i++)
             {
 				Projectile proj = Main.projectile[i];
 				if(proj.type == ModContent.ProjectileType<GhostPepper>() && proj.active && proj.owner == owner)
                 {
 					pepperID = proj.whoAmI;
                 }
-				if (proj.type == projectile.type && proj.active && (int)proj.ai[0] == owner)
+				if (proj.type == Projectile.type && proj.active && (int)proj.ai[0] == owner)
 					count++;
             }
 			if(count > 40 || voidPlayer.lootingSouls >= voidPlayer.voidMeterMax2 - voidPlayer.VoidMinionConsumption)
             {
-				projectile.Kill();
+				Projectile.Kill();
             }
 			Collect(player, pepperID);
 		}
@@ -74,32 +74,32 @@ namespace SOTS.Projectiles.Pyramid
 			if(proj != -1)
 			{
 				Projectile pepper = Main.projectile[proj];
-				if (pepper.Hitbox.Intersects(projectile.Hitbox))
+				if (pepper.Hitbox.Intersects(Projectile.Hitbox))
                 {
-					projectile.Kill();
+					Projectile.Kill();
                 }
 			}
-			if (player.Hitbox.Intersects(projectile.Hitbox))
+			if (player.Hitbox.Intersects(Projectile.Hitbox))
 			{
-				projectile.Kill();
+				Projectile.Kill();
 			}
 		}
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override bool PreDraw(ref Color lightColor)
         {
             return false;
         }
         public override void Kill(int timeLeft)
 		{
 			int particlesR = 60;
-			owner = (int)projectile.ai[0];
+			owner = (int)Projectile.ai[0];
 			Player player = Main.player[owner];
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			if (voidPlayer.lootingSouls < voidPlayer.voidMeterMax2 - voidPlayer.VoidMinionConsumption)
 			{
-				SoundEngine.PlaySound(7, (int)projectile.Center.X, (int)projectile.Center.Y, 0, 1.3f);
+				SoundEngine.PlaySound(7, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0, 1.3f);
 				voidPlayer.lootingSouls++;
 				voidPlayer.SendClientChanges(voidPlayer);
-				var index = CombatText.NewText(projectile.Hitbox, VoidPlayer.soulLootingColor.MultiplyRGB(Color.White), 1);
+				var index = CombatText.NewText(Projectile.Hitbox, VoidPlayer.soulLootingColor.MultiplyRGB(Color.White), 1);
 				if (Main.netMode == 2 && index != 100)
 				{
 					var combatText = Main.combatText[index];
@@ -110,7 +110,7 @@ namespace SOTS.Projectiles.Pyramid
 			for (int i = 0; i < 360; i += particlesR)
 			{
 				Vector2 rotationalPos = new Vector2(6, 0).RotatedBy(MathHelper.ToRadians(i));
-				int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y) - new Vector2(5), 22, 22, mod.DustType("CopyDust4"));
+				int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), 22, 22, mod.DustType("CopyDust4"));
 				Dust dust = Main.dust[num1];
 				dust.noGravity = true;
 				dust.velocity *= 0.1f;
@@ -118,7 +118,7 @@ namespace SOTS.Projectiles.Pyramid
 				dust.velocity += rotationalPos * 0.3f;
 				dust.scale *= 2f;
 				dust.fadeIn = 0.1f;
-				dust.alpha = projectile.alpha;
+				dust.alpha = Projectile.alpha;
 				dust.color = VoidPlayer.soulLootingColor;
 			}
 			base.Kill(timeLeft);

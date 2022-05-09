@@ -95,7 +95,7 @@ namespace SOTS.Items.Furniture.Nature
 							break;
 						}
 					}
-					else if(tile != null && (!tile.active() || tile.type != ModContent.TileType<Hydroponics>()))
+					else if(tile != null && (!tile.active() || tile.TileType != ModContent.TileType<Hydroponics>()))
 					{
 						noBreak = false;
 						break;
@@ -167,23 +167,23 @@ namespace SOTS.Items.Furniture.Nature
 		{
 			Tile tile = Main.tile[i, j];
 			//daybloom, moonglow, blinkroot, deathweed, waterleaf, fireblossom, shiverthorn
-			tile.frameX = (short)(18 * (type + 1));
-			tile.frameY = 18;
+			tile.TileFrameX = (short)(18 * (type + 1));
+			tile.TileFrameY = 18;
 		}
 		public static void GrowPlant(int i, int j)
 		{
 			Tile tile = Main.tile[i, j];
-			if (tile.frameY < 72)
-				tile.frameY += 18;
+			if (tile.TileFrameY < 72)
+				tile.TileFrameY += 18;
 		}
 		public static bool DropPlant(int i, int j)
 		{
 			Tile tile = Main.tile[i, j];
-			if(tile.frameY == 72)
+			if(tile.TileFrameY == 72)
 			{
 				int type = -1;
 				int dustType = 3;
-				switch (tile.frameX / 18 - 1)
+				switch (tile.TileFrameX / 18 - 1)
                 {
 					case 0:
 						type = ItemID.Daybloom;
@@ -232,27 +232,27 @@ namespace SOTS.Items.Furniture.Nature
 		public void GetTopLeft(ref int i, ref int j)
 		{
 			Tile tile = Main.tile[i, j];
-			if (tile.frameX == 0 && tile.frameY == 0 && tile.type == ModContent.TileType<Hydroponics>())
+			if (tile.TileFrameX == 0 && tile.TileFrameY == 0 && tile.TileType == ModContent.TileType<Hydroponics>())
 				return;
-			if (tile.frameX != 0)
+			if (tile.TileFrameX != 0)
 			{
 				for (int k = 0; k < 6; k++)
 				{
 					i--;
 					tile = Main.tile[i, j];
-					if (tile.frameX == 0)
+					if (tile.TileFrameX == 0)
 					{
 						break;
 					}
 				}
 			}
-			if (tile.frameY != 0)
+			if (tile.TileFrameY != 0)
 			{
 				for (int k = 0; k < 6; k++)
 				{
 					j--;
 					tile = Main.tile[i, j];
-					if (tile.frameY == 0)
+					if (tile.TileFrameY == 0)
 					{
 						break;
 					}
@@ -269,7 +269,7 @@ namespace SOTS.Items.Furniture.Nature
 					Tile growTile = Main.tile[i + x, j + y];
 					if (x >= 1 && x <= 4 && y % 2 == 0 && growTile.type == Type)
 					{
-						if (growTile.frameY > 72)
+						if (growtile.TileFrameY > 72)
 							SetPlant(i + x, j + y, Main.rand.Next(7));
 						DropPlant(i + x, j + y);
 					}
@@ -286,7 +286,7 @@ namespace SOTS.Items.Furniture.Nature
 			}
 			//Main.SmartInteractTileCoordsSelected
 			Tile tile = Main.tile[i, j];
-			bool topLeft = tile.frameY == 0 && tile.frameX == 0;
+			bool topLeft = tile.TileFrameY == 0 && tile.TileFrameX == 0;
 			if (topLeft) //check for it being the top left tile
 			{
 				//int highlightCapable = -1;
@@ -324,10 +324,10 @@ namespace SOTS.Items.Furniture.Nature
 								if (x >= 1 && x <= 4 && y % 2 == 0)
 								{
 									Tile growTile = Main.tile[i + x, j + y];
-									int growthStage = growTile.frameY / 18 - 1;
+									int growthStage = growtile.TileFrameY / 18 - 1;
 									if (growthStage > 0)
 									{
-										int type = growTile.frameX / 18 - 1;
+										int type = growtile.TileFrameX / 18 - 1;
 										if (!Main.tileSetsLoaded[81 + growthStage])
 											Main.instance.LoadTiles(81 + growthStage);
 										Texture2D texture2 = Main.tileTexture[81 + growthStage];
@@ -443,9 +443,9 @@ namespace SOTS.Items.Furniture.Nature
 			int y = j - top;
 			if (x >= 1 && x <= 4 && y % 2 == 0 && growTile.type == Type)
 			{
-				if (growTile.frameY == 72)
+				if (growtile.TileFrameY == 72)
 				{
-					switch (growTile.frameX / 18 - 1)
+					switch (growtile.TileFrameX / 18 - 1)
 					{
 						case 2:
 							var num18 = (270 - Main.mouseTextColor) / 800f;
@@ -476,7 +476,7 @@ namespace SOTS.Items.Furniture.Nature
         public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
 		{
 			Tile tile = Main.tile[i, j];
-			if (tile.frameX == 0 && tile.frameY == 0)
+			if (tile.TileFrameX == 0 && tile.TileFrameY == 0)
 			{
 				if(!noItem)
 				{

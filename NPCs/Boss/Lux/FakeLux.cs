@@ -289,7 +289,7 @@ namespace SOTS.NPCs.Boss.Lux
 			}
 			return counter > 90 && counter < max;
         }
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
 			return false;
 		}

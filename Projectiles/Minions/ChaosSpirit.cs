@@ -27,20 +27,20 @@ namespace SOTS.Projectiles.Minions
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Chaos Spirit");
-			ProjectileID.Sets.MinionTargettingFeature[projectile.type] = true;
-			ProjectileID.Sets.TrailCacheLength[projectile.type] = 12;
-			ProjectileID.Sets.TrailingMode[projectile.type] = 0;
+			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
+			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 12;
+			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
 		}
 		public sealed override void SetDefaults()
 		{
-			projectile.width = 34;
-			projectile.height = 34;
-			projectile.tileCollide = false;
-			projectile.friendly = false;
-			projectile.penetrate = -1;
-			projectile.usesLocalNPCImmunity = true;
-			projectile.ignoreWater = true;
-			projectile.localNPCHitCooldown = 10;
+			Projectile.width = 34;
+			Projectile.height = 34;
+			Projectile.tileCollide = false;
+			Projectile.friendly = false;
+			Projectile.penetrate = -1;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.ignoreWater = true;
+			Projectile.localNPCHitCooldown = 10;
 		}
 		public override bool? CanCutTiles()
 		{
@@ -52,33 +52,33 @@ namespace SOTS.Projectiles.Minions
 		}
 		float[] rotations = new float[2] { 1.56f, 0 };
 		float[] compressions = new float[2] { 0.5f, 0.5f };
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Minions/ChaosSpiritRing").Value;
 			float furtherCompression = 1f - postChargeCounter / 270f;
 			for (int j = 0; j < 2; j++)
 				for (int i = 180; i < 360; i += 6)
 				{
 					Color color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(i + 180 * j));
-					Vector2 addition = new Vector2(0, postChargeCounter * (0.5f + 0.5f * j)).RotatedBy(projectile.rotation);
-					Vector2 center = projectile.Center + addition;
+					Vector2 addition = new Vector2(0, postChargeCounter * (0.5f + 0.5f * j)).RotatedBy(Projectile.rotation);
+					Vector2 center = Projectile.Center + addition;
 					Vector2 rotation = new Vector2(26 * (j == 0 ? 1 : furtherCompression), 0).RotatedBy(MathHelper.ToRadians(i + Main.GameUpdateCount));
 					rotation.Y *= compressions[j];
-					rotation = rotation.RotatedBy(rotations[j] + projectile.rotation);
-					Main.spriteBatch.Draw(texture, center - Main.screenPosition + rotation, null, new Color(color.R, color.G, color.B, 0) * (j == 0 ? 1 : furtherCompression) * 0.6f, projectile.rotation, new Vector2(texture.Width / 2, texture.Height / 2), 0.75f, SpriteEffects.None, 0f);
+					rotation = rotation.RotatedBy(rotations[j] + Projectile.rotation);
+					Main.spriteBatch.Draw(texture, center - Main.screenPosition + rotation, null, new Color(color.R, color.G, color.B, 0) * (j == 0 ? 1 : furtherCompression) * 0.6f, Projectile.rotation, new Vector2(texture.Width / 2, texture.Height / 2), 0.75f, SpriteEffects.None, 0f);
 				}
 			base.PreDraw(spriteBatch, lightColor);
 			for (int j = 0; j < 2; j++)
 				for (int i = 0; i < 180; i += 6)
 				{
 					Color color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(i + 180 * j));
-					Vector2 addition = new Vector2(0, postChargeCounter * (0.5f + 0.5f * j)).RotatedBy(projectile.rotation);
-					Vector2 center = projectile.Center + addition;
+					Vector2 addition = new Vector2(0, postChargeCounter * (0.5f + 0.5f * j)).RotatedBy(Projectile.rotation);
+					Vector2 center = Projectile.Center + addition;
 					Vector2 rotation = new Vector2(26 * (j == 0 ? 1 : furtherCompression), 0).RotatedBy(MathHelper.ToRadians(i + Main.GameUpdateCount));
 					rotation.Y *= compressions[j];
-					rotation = rotation.RotatedBy(rotations[j] + projectile.rotation);
-					Main.spriteBatch.Draw(texture, center - Main.screenPosition + rotation, null, new Color(color.R, color.G, color.B, 0) * (j == 0 ? 1 : furtherCompression) * 0.6f, projectile.rotation, new Vector2(texture.Width / 2, texture.Height / 2), 0.75f, SpriteEffects.None, 0f);
+					rotation = rotation.RotatedBy(rotations[j] + Projectile.rotation);
+					Main.spriteBatch.Draw(texture, center - Main.screenPosition + rotation, null, new Color(color.R, color.G, color.B, 0) * (j == 0 ? 1 : furtherCompression) * 0.6f, Projectile.rotation, new Vector2(texture.Width / 2, texture.Height / 2), 0.75f, SpriteEffects.None, 0f);
 				}
 
 			texture = Mod.Assets.Request<Texture2D>("Projectiles/Minions/ChaosSpiritWing").Value;
@@ -88,27 +88,27 @@ namespace SOTS.Projectiles.Minions
 				{
 					Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
 					Vector2 toPosition = new Vector2((44 - i * 4) * (j * 2 - 1), -20).RotatedBy(MathHelper.ToRadians((i * (21.5f + bonusSpread - i) - wingHeight) * (j * 2 - 1)));
-					toPosition = toPosition.RotatedBy(projectile.rotation);
+					toPosition = toPosition.RotatedBy(Projectile.rotation);
 					for (int k = 0; k < 6; k++)
 					{
 						float scale = 1.0f - 0.25f * i;
 						Color color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(k * 60));
 						Vector2 modi = new Vector2(2f * scale, 0).RotatedBy(MathHelper.ToRadians(k * 60 + Main.GameUpdateCount));
-						Main.spriteBatch.Draw(texture, projectile.Center - Main.screenPosition + toPosition + modi, null, new Color(color.R, color.G, color.B, 0), toPosition.ToRotation(), origin, scale, SpriteEffects.None, 0f);
+						Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition + toPosition + modi, null, new Color(color.R, color.G, color.B, 0), toPosition.ToRotation(), origin, scale, SpriteEffects.None, 0f);
 					}
 				}
 			return false;
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Player player = Main.player[projectile.owner];
-			Texture2D texture = Main.projectileTexture[projectile.type];
+			Player player = Main.player[Projectile.owner];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			for (int k = 0; k < 6; k++)
 			{
 				Color color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(k * 60));
 				Vector2 modi = new Vector2(2f, 0).RotatedBy(MathHelper.ToRadians(k * 60 + SOTSPlayer.ModPlayer(player).orbitalCounter));
-				Main.spriteBatch.Draw(texture, projectile.Center - Main.screenPosition + modi, null, new Color(color.R, color.G, color.B, 0), 0f, drawOrigin, projectile.scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition + modi, null, new Color(color.R, color.G, color.B, 0), 0f, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
 			}
 		}
 		float postChargeCounter = 0;
@@ -191,7 +191,7 @@ namespace SOTS.Projectiles.Minions
 				counter2 = 0;
 				wingHeight = lerpMath(lastWingHeight, 15f, 1 - postChargeCounter / 90f);
             }
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			#region Active check
 			if (player.dead || !player.active) 
 			{
@@ -199,7 +199,7 @@ namespace SOTS.Projectiles.Minions
 			}
 			if (player.HasBuff(ModContent.BuffType<ChaosSpiritAid>()))
 			{
-				projectile.timeLeft = 6;
+				Projectile.timeLeft = 6;
 			}
 			#endregion
 
@@ -207,10 +207,10 @@ namespace SOTS.Projectiles.Minions
 			bool found = false;
 			int ofTotal = 0;
 			int total = 0;
-			for (int i = 0; i < Main.projectile.Length; i++)
+			for (int i = 0; i < Main.Projectile.Length; i++)
 			{
 				Projectile proj = Main.projectile[i];
-				if (projectile.type == proj.type && proj.active && projectile.active && proj.owner == projectile.owner)
+				if (Projectile.type == proj.type && proj.active && Projectile.active && proj.owner == Projectile.owner)
 				{
 					if (proj == projectile)
 					{
@@ -222,7 +222,7 @@ namespace SOTS.Projectiles.Minions
 				}
 			}
 			if (Main.myPlayer == player.whoAmI)
-				projectile.ai[1] = ofTotal;
+				Projectile.ai[1] = ofTotal;
 			#endregion
 
 			#region Find target
@@ -235,14 +235,14 @@ namespace SOTS.Projectiles.Minions
 				if (player.HasMinionAttackTargetNPC)
 				{
 					NPC npc = Main.npc[player.MinionAttackTargetNPC];
-					float between = Vector2.Distance(npc.Center, projectile.Center);
+					float between = Vector2.Distance(npc.Center, Projectile.Center);
 					if (between < distanceFromTarget)
 					{
 						distanceFromTarget = between;
 						targetID = npc.whoAmI;
 						targetType = npc.type;
 						foundTarget = true;
-						projectile.netUpdate = true;
+						Projectile.netUpdate = true;
 					}
 				}
 				if (!foundTarget)
@@ -252,7 +252,7 @@ namespace SOTS.Projectiles.Minions
 						NPC npc = Main.npc[i];
 						if (npc.CanBeChasedBy())
 						{
-							float between = Vector2.Distance(npc.Center, projectile.Center);
+							float between = Vector2.Distance(npc.Center, Projectile.Center);
 							bool inRange = between < distanceFromTarget;
 							bool lineOfSight = Collision.CanHitLine(player.position, player.width, player.height, npc.position, npc.width, npc.height);
 							bool closeThroughWall = between < 240f; //should attack semi-reliably through walls
@@ -261,7 +261,7 @@ namespace SOTS.Projectiles.Minions
 								distanceFromTarget = between;
 								targetID = npc.whoAmI;
 								targetType = npc.type;
-								projectile.netUpdate = true;
+								Projectile.netUpdate = true;
 							}
 						}
 					}
@@ -283,40 +283,40 @@ namespace SOTS.Projectiles.Minions
 					targetType = -1;
 					return;
                 }
-				Vector2 direction = npcCenter - projectile.Center;
+				Vector2 direction = npcCenter - Projectile.Center;
 				float distance = direction.Length();
 				direction = direction.SafeNormalize(Vector2.Zero);
 				int intDirection = direction.X > 0 ? 1 : -1;
-				Vector2 rotateBy = new Vector2(0, 18 * intDirection).RotatedBy(projectile.rotation);
+				Vector2 rotateBy = new Vector2(0, 18 * intDirection).RotatedBy(Projectile.rotation);
 				rotateBy += direction.SafeNormalize(Vector2.Zero) * intDirection;
-				projectile.rotation = rotateBy.ToRotation() - MathHelper.ToRadians(90) * intDirection;
+				Projectile.rotation = rotateBy.ToRotation() - MathHelper.ToRadians(90) * intDirection;
 				if(charging == 0)
 					charging = 1;
 				if (postChargeCounter < 90)
 					postChargeCounter++;
 				if(postChargeCounter % 30 == 29)
                 {
-					SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 15, 1.3f);
+					SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 15, 1.3f);
 				}
 
 				direction *= (float)Math.Pow(distance, 1.35) * 0.005f + speed;
-				projectile.velocity += direction;
-				projectile.velocity *= 0.5f;
+				Projectile.velocity += direction;
+				Projectile.velocity *= 0.5f;
 
-				projectile.ai[0]++;
-				if (projectile.ai[0] > 120)
+				Projectile.ai[0]++;
+				if (Projectile.ai[0] > 120)
 				{
-					projectile.ai[0] -= 5;
-					if (Main.myPlayer == projectile.owner)
+					Projectile.ai[0] -= 5;
+					if (Main.myPlayer == Projectile.owner)
 					{
-						Projectile.NewProjectileDirect(projectile.Center + new Vector2(0, 1).RotatedBy(projectile.rotation) * 45, new Vector2(0, 1).RotatedBy(projectile.rotation) * 3, ModContent.ProjectileType<ChaosBeam>(), projectile.damage, projectile.knockBack, Main.myPlayer, targetID, 0);
+						Projectile.NewProjectileDirect(Projectile.Center + new Vector2(0, 1).RotatedBy(Projectile.rotation) * 45, new Vector2(0, 1).RotatedBy(Projectile.rotation) * 3, ModContent.ProjectileType<ChaosBeam>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, targetID, 0);
 					}
-					projectile.velocity -= new Vector2(0, 1).RotatedBy(projectile.rotation) * 3.25f;
+					Projectile.velocity -= new Vector2(0, 1).RotatedBy(Projectile.rotation) * 3.25f;
 				}
 			}
 			else
 			{
-				projectile.ai[0] = 0;
+				Projectile.ai[0] = 0;
 				if (postChargeCounter > 0)
 				{
 					GoIdle(4f);
@@ -330,26 +330,26 @@ namespace SOTS.Projectiles.Minions
 					charging = -1;
 				float scale = new Vector2(1f, 0).RotatedBy(MathHelper.ToRadians(counter2 * 0.33f)).X;
 				Vector2 direction = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(7 * scale));
-				Vector2 rotateBy = new Vector2(18, 0).RotatedBy(projectile.rotation);
+				Vector2 rotateBy = new Vector2(18, 0).RotatedBy(Projectile.rotation);
 				rotateBy += direction.SafeNormalize(Vector2.Zero);
-				projectile.rotation = rotateBy.ToRotation();
-				Vector2 vectorToIdlePosition = idlePosition - projectile.Center;
+				Projectile.rotation = rotateBy.ToRotation();
+				Vector2 vectorToIdlePosition = idlePosition - Projectile.Center;
 				float distanceToIdlePosition = vectorToIdlePosition.Length();
 				if (Main.myPlayer == player.whoAmI && distanceToIdlePosition > 1400f)
 				{
-					projectile.position = idlePosition;
-					projectile.velocity *= 0.1f;
-					projectile.netUpdate = true;
+					Projectile.position = idlePosition;
+					Projectile.velocity *= 0.1f;
+					Projectile.netUpdate = true;
 				}
 			}
 			#endregion
 
-			Lighting.AddLight(projectile.Center, 2.0f * 0.5f * ((255 - projectile.alpha) / 255f), 1.4f * 0.5f * ((255 - projectile.alpha) / 255f), 2.0f * 0.5f * ((255 - projectile.alpha) / 255f));
+			Lighting.AddLight(Projectile.Center, 2.0f * 0.5f * ((255 - Projectile.alpha) / 255f), 1.4f * 0.5f * ((255 - Projectile.alpha) / 255f), 2.0f * 0.5f * ((255 - Projectile.alpha) / 255f));
 			MoveAwayFromOthers(true, 0.125f, 3.5f);
 
 			if (Main.myPlayer == player.whoAmI)
 			{
-				projectile.netUpdate = true;
+				Projectile.netUpdate = true;
 			}
 		}
 	}

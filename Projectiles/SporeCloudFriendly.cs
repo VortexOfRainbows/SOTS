@@ -13,27 +13,27 @@ namespace SOTS.Projectiles
 		}
         public override void SetDefaults()
 		{
-			projectile.width = 40;
-			projectile.height = 38;
-			projectile.timeLeft = 70;
-			projectile.friendly = true;
-			projectile.hostile = false;
-			projectile.scale = 1.01f;
-			projectile.alpha = 45;
-			projectile.penetrate = -1;
-			projectile.tileCollide = false;
-			projectile.ranged = true;
+			Projectile.width = 40;
+			Projectile.height = 38;
+			Projectile.timeLeft = 70;
+			Projectile.friendly = true;
+			Projectile.hostile = false;
+			Projectile.scale = 1.01f;
+			Projectile.alpha = 45;
+			Projectile.penetrate = -1;
+			Projectile.tileCollide = false;
+			Projectile.ranged = true;
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
 			if (Main.rand.NextBool(10))
 				target.AddBuff(BuffID.Confused, 120, false);
-			projectile.damage = (int)(projectile.damage * 0.75f);
+			Projectile.damage = (int)(Projectile.damage * 0.75f);
 		}
 		public override void ModifyDamageHitbox(ref Rectangle hitbox)
         {
 			int width = 32;
-			hitbox = new Rectangle((int)projectile.Center.X - width/2, (int)projectile.Center.Y - width / 2, width, width);
+			hitbox = new Rectangle((int)Projectile.Center.X - width/2, (int)Projectile.Center.Y - width / 2, width, width);
         }
         bool runOnce = true;
 		float randMod = 1f;
@@ -42,17 +42,17 @@ namespace SOTS.Projectiles
 			if(runOnce)
 			{
 				randMod = Main.rand.NextFloat(0.6f, 1.1f);
-				projectile.scale = 0.1f * randMod;
+				Projectile.scale = 0.1f * randMod;
 				runOnce = false;
 			}
-			projectile.alpha += 3;
-			projectile.velocity *= 0.95f - 0.05f * randMod;
-			projectile.rotation += (projectile.velocity.X + projectile.direction) * 0.1f / randMod;
-			if(projectile.scale < 1 * randMod)
-				projectile.scale += 0.02f * randMod;
+			Projectile.alpha += 3;
+			Projectile.velocity *= 0.95f - 0.05f * randMod;
+			Projectile.rotation += (Projectile.velocity.X + Projectile.direction) * 0.1f / randMod;
+			if(Projectile.scale < 1 * randMod)
+				Projectile.scale += 0.02f * randMod;
 			if (Main.rand.NextBool(140))
 			{
-				Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 41, 0, 0, 250, new Color(100, 100, 100, 250), 0.8f);
+				Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 41, 0, 0, 250, new Color(100, 100, 100, 250), 0.8f);
 			}
 			return true;
 		}

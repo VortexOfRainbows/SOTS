@@ -12,34 +12,34 @@ namespace SOTS.Projectiles.Crushers
 		}
         public override void SetDefaults()
         {
-			projectile.width = 72;
-			projectile.height = 76;
-            Main.projFrames[projectile.type] = 6;
-			projectile.penetrate = -1;
-			projectile.friendly = true;
-			projectile.melee = true;
-			projectile.timeLeft = 23;
-			projectile.tileCollide = false;
-			projectile.hostile = false;
-			projectile.alpha = 0;
-			projectile.ownerHitCheck = true;
+			Projectile.width = 72;
+			Projectile.height = 76;
+            Main.projFrames[Projectile.type] = 6;
+			Projectile.penetrate = -1;
+			Projectile.friendly = true;
+			Projectile.melee = true;
+			Projectile.timeLeft = 23;
+			Projectile.tileCollide = false;
+			Projectile.hostile = false;
+			Projectile.alpha = 0;
+			Projectile.ownerHitCheck = true;
 		}
 		public override void AI()
         {
-			Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 1.5f / 255f, (255 - projectile.alpha) * 1.5f / 255f, (255 - projectile.alpha) * 1.5f / 255f);
-            projectile.frameCounter++;
-            if (projectile.frameCounter >= 4)
+			Lighting.AddLight(Projectile.Center, (255 - Projectile.alpha) * 1.5f / 255f, (255 - Projectile.alpha) * 1.5f / 255f, (255 - Projectile.alpha) * 1.5f / 255f);
+            Projectile.frameCounter++;
+            if (Projectile.frameCounter >= 4)
             {
-				projectile.friendly = false;
-                projectile.frameCounter = 0;
-                projectile.frame = (projectile.frame + 1) % 6;
+				Projectile.friendly = false;
+                Projectile.frameCounter = 0;
+                Projectile.frame = (Projectile.frame + 1) % 6;
             }
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-			Player player = Main.player[projectile.owner];
-            target.immune[projectile.owner] = 10;
-			if(target.life <= 0 && projectile.owner == Main.myPlayer)
+			Player player = Main.player[Projectile.owner];
+            target.immune[Projectile.owner] = 10;
+			if(target.life <= 0 && Projectile.owner == Main.myPlayer)
 			{
 				for(int i = 0; i < 4; i++)
 				{

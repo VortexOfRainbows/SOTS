@@ -12,18 +12,18 @@ namespace SOTS.Projectiles
 		}
         public override void SetDefaults()
         {
-			projectile.CloneDefaults(616);
+			Projectile.CloneDefaults(616);
             aiType = 616;
-			projectile.alpha = 255;
-			projectile.width = 4;
-			projectile.height = 4;
-			projectile.timeLeft = 3600;
-			projectile.ranged = true;
+			Projectile.alpha = 255;
+			Projectile.width = 4;
+			Projectile.height = 4;
+			Projectile.timeLeft = 3600;
+			Projectile.ranged = true;
 		}
 		public override void AI()
 		{	
-			projectile.alpha = 255;
-			int num1 = Dust.NewDust(new Vector2(projectile.Center.X, projectile.Center.Y) - new Vector2(5), 0, 0, 72);
+			Projectile.alpha = 255;
+			int num1 = Dust.NewDust(new Vector2(Projectile.Center.X, Projectile.Center.Y) - new Vector2(5), 0, 0, 72);
 			Main.dust[num1].noGravity = true;
 			Main.dust[num1].velocity *= 0.1f;
 		}

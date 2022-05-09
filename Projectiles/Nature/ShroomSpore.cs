@@ -12,29 +12,29 @@ namespace SOTS.Projectiles.Nature
 		}
         public override void SetDefaults()
         {
-			projectile.CloneDefaults(512);
+			Projectile.CloneDefaults(512);
             aiType = 512;
-			projectile.height = 16;
-			projectile.width = 16;
-			projectile.penetrate = 4;
-			projectile.thrown = false;
-			projectile.melee = true;
-			projectile.magic = false;
-			projectile.tileCollide = true;
-			projectile.alpha = 100;
-			projectile.timeLeft = 100;
+			Projectile.height = 16;
+			Projectile.width = 16;
+			Projectile.penetrate = 4;
+			Projectile.thrown = false;
+			Projectile.melee = true;
+			Projectile.magic = false;
+			Projectile.tileCollide = true;
+			Projectile.alpha = 100;
+			Projectile.timeLeft = 100;
 		}
 		public override void AI()
 		{
-			projectile.alpha = 260 - projectile.timeLeft;
+			Projectile.alpha = 260 - Projectile.timeLeft;
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
 			if(Main.rand.Next(7) == 0)
 			target.AddBuff(BuffID.Confused, 90, false);
 			
-			projectile.damage = (int)(projectile.damage * 0.75f);
-			projectile.friendly = projectile.penetrate > 2;
+			Projectile.damage = (int)(Projectile.damage * 0.75f);
+			Projectile.friendly = Projectile.penetrate > 2;
 		}
 	}
 }

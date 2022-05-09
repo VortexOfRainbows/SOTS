@@ -249,9 +249,9 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
 		{
 			Tile tile = Main.tile[i, j];
-			if (tile.frameX != 54 && tile.frameX != 108)
+			if (tile.TileFrameX != 54 && tile.TileFrameX != 108)
 				return false;
-			if (tile.frameY != 0)
+			if (tile.TileFrameY != 0)
 				return false;
 			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
 			if (Main.drawToScreen)
@@ -264,7 +264,7 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
 			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Pyramid/AltPyramidBlocks/PyramidAmbientTile3x2CurseGlow").Value;
 			float counter = Main.GlobalTime * 160;
 			float mult = new Vector2(-1f, 0).RotatedBy(MathHelper.ToRadians(counter)).X;
-			Rectangle frame = new Rectangle(tile.frameX / 18 * 16, tile.frameY / 18 * 16, 48, 32);
+			Rectangle frame = new Rectangle(tile.TileFrameX / 18 * 16, tile.TileFrameY / 18 * 16, 48, 32);
 			for (int k = 0; k < 6; k++)
 			{
 				Color color = new Color(255, 0, 0, 0);
@@ -297,12 +297,12 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
 		{
 			Tile tile = Main.tile[i, j];
-			Texture2D texture = Main.tileTexture[tile.type];
+			Texture2D texture = Main.tileTexture[tile.TileType];
 			Color color2 = Lighting.GetColor(i, j, WorldGen.paintColor(tile.color()));
 			Vector2 drawOffSet = Vector2.Zero;
 			drawOffSet.Y += 2;
 			Vector2 location = new Vector2(i * 16, j * 16) + drawOffSet;
-			Rectangle frame = new Rectangle(tile.frameX, tile.frameY, 16, 16);
+			Rectangle frame = new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, 16);
 			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
 			if (Main.drawToScreen)
 			{
@@ -349,13 +349,13 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
 			Tile tile = Main.tile[i, j];
 			int soundType = 2;
 			int soundStyle = 27;
-			if (tile.frameX >= 108)
+			if (tile.TileFrameX >= 108)
 			{
 				Vector2 pos = new Vector2(i * 16, j * 16) + new Vector2(8, 8);
 				SoundEngine.PlaySound(soundType, (int)pos.X, (int)pos.Y, soundStyle, 0.9f, 0.1f);
 				return true;
 			}
-			if (tile.frameX >= 54)
+			if (tile.TileFrameX >= 54)
 			{
 				Vector2 pos = new Vector2(i * 16, j * 16) + new Vector2(8, 8);
 				SoundEngine.PlaySound(soundType, (int)pos.X, (int)pos.Y, soundStyle, 0.9f, 0.1f);

@@ -18,12 +18,12 @@ namespace SOTS.Items
 		public override void SafeSetDefaults()
 		{
 			Item.damage = 70;
-			Item.ranged = true;
+			Item.DamageType = DamageClass.Ranged;
 			Item.width = 36;
 			Item.height = 74;
 			Item.useTime = 15;
 			Item.useAnimation = 15;
-			Item.useStyle = 5;
+			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.knockBack = 1.5f;
 			Item.value = Item.sellPrice(0, 10, 0, 0);
 			Item.rare = ItemRarityID.Yellow;

@@ -17,8 +17,8 @@ namespace SOTS.Projectiles.Crushers
 		}
         public override void SafeSetDefaults()
 		{
-			projectile.width = 16;
-			projectile.height = 16;
+			Projectile.width = 16;
+			Projectile.height = 16;
 			maxDamage = 0f;
 			chargeTime = 60;
 			minExplosions = 1;
@@ -39,11 +39,11 @@ namespace SOTS.Projectiles.Crushers
 			for(int i = 1; i < storage.Count; i++)
 			{
 				Vector2 location = storage[i];
-				int whoAmI = Projectile.NewProjectile(location, Vector2.Zero, ModContent.ProjectileType<PlasmaCrush>(), projectile.damage, projectile.knockBack, projectile.owner, first);
+				int whoAmI = Projectile.NewProjectile(location, Vector2.Zero, ModContent.ProjectileType<PlasmaCrush>(), Projectile.damage, Projectile.knockBack, Projectile.owner, first);
 				if(i % 5 == 1)
 				{
 					Vector2 circular = new Vector2(Main.rand.NextFloat(3f, 7f), 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)));
-					Projectile.NewProjectile(location, circular, ModContent.ProjectileType<PurgatoryGhost>(), projectile.damage, projectile.knockBack, projectile.owner);
+					Projectile.NewProjectile(location, circular, ModContent.ProjectileType<PurgatoryGhost>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
 				}
 				first = whoAmI;
 			}
@@ -51,7 +51,7 @@ namespace SOTS.Projectiles.Crushers
         }
         public override void ExplosionSound()
 		{
-			SoundEngine.PlaySound(SoundID.NPCKilled, (int)projectile.Center.X, (int)projectile.Center.Y, 39, 1.25f, -0.5f);
+			SoundEngine.PlaySound(SoundID.NPCKilled, (int)Projectile.Center.X, (int)Projectile.Center.Y, 39, 1.25f, -0.5f);
 		}
         public override void SendExtraAI(BinaryWriter writer)
         {
@@ -70,19 +70,19 @@ namespace SOTS.Projectiles.Crushers
         {
 			if(runOnce)
             {
-				if(Main.myPlayer == projectile.owner)
+				if(Main.myPlayer == Projectile.owner)
 				{
 					current = Main.MouseWorld;
-					projectile.netUpdate = true;
+					Projectile.netUpdate = true;
 					storage.Add(current);
 				}
 				runOnce = false;
 				return true;
 			}
-			if (Main.myPlayer == projectile.owner)
+			if (Main.myPlayer == Projectile.owner)
 			{
 				current = Main.MouseWorld;
-				projectile.netUpdate = true;
+				Projectile.netUpdate = true;
 			}
 			Vector2 prev = storage[storage.Count - 1];
 			if(current != null && Vector2.Distance(current, prev) > 24f)
@@ -100,7 +100,7 @@ namespace SOTS.Projectiles.Crushers
         {
             return Mod.Assets.Request<Texture2D>("Projectiles/Crushers/SubspaceClaw").Value;
         }
-        public override void PostDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override void PostDraw(Color lightColor)
 		{
 			if (runOnce || storage.Count <= 1)
 				return;
@@ -109,7 +109,7 @@ namespace SOTS.Projectiles.Crushers
 			Vector2 previousPosition = storage[1];
 			for (int k = 1; k < storage.Count; k++)
 			{
-				float scale = projectile.scale;
+				float scale = Projectile.scale;
 				scale *= 1.25f;
 				if (storage[k] == Vector2.Zero)
 				{

@@ -13,32 +13,32 @@ namespace SOTS.Projectiles.BiomeChest
 		}
         public override void SetDefaults()
 		{
-			projectile.height = 48;
-			projectile.width = 48;
-			projectile.penetrate = -1;
-			projectile.friendly = true;
-			projectile.timeLeft = 1;
-			projectile.tileCollide = false;
-			projectile.hostile = false;
-			projectile.alpha = 255;
-			projectile.usesLocalNPCImmunity = true;
-			projectile.localNPCHitCooldown = 40;
+			Projectile.height = 48;
+			Projectile.width = 48;
+			Projectile.penetrate = -1;
+			Projectile.friendly = true;
+			Projectile.timeLeft = 1;
+			Projectile.tileCollide = false;
+			Projectile.hostile = false;
+			Projectile.alpha = 255;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = 40;
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			projectile.localNPCImmunity[target.whoAmI] = projectile.localNPCHitCooldown;
-			target.immune[projectile.owner] = 0;
+			Projectile.localNPCImmunity[target.whoAmI] = Projectile.localNPCHitCooldown;
+			target.immune[Projectile.owner] = 0;
 		}
 		public override bool? CanHitNPC(NPC target)
         {
-            return projectile.ai[0] == target.whoAmI;
+            return Projectile.ai[0] == target.whoAmI;
         }
         public override void AI()
 		{
 			for(int i = 0; i < 360; i += 30)
 			{
 				Vector2 circularLocation = new Vector2(8, 0).RotatedBy(MathHelper.ToRadians(i));
-				int num1 = Dust.NewDust(new Vector2(projectile.Center.X + circularLocation.X - 4, projectile.Center.Y + circularLocation.Y - 4), 0, 0, ModContent.DustType<CopyDust4>());
+				int num1 = Dust.NewDust(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 0, 0, ModContent.DustType<CopyDust4>());
 				Main.dust[num1].noGravity = true;
 				Main.dust[num1].velocity *= 0.75f;
 				Main.dust[num1].scale *= 1.45f;

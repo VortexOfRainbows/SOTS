@@ -13,9 +13,9 @@ namespace SOTS.Projectiles.Minions
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Spirit");
-			ProjectileID.Sets.MinionTargettingFeature[projectile.type] = true;
-			ProjectileID.Sets.TrailCacheLength[projectile.type] = 5;  
-			ProjectileID.Sets.TrailingMode[projectile.type] = 0;
+			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
+			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;  
+			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
 		}
 		public override void SendExtraAI(BinaryWriter writer)
 		{
@@ -27,38 +27,38 @@ namespace SOTS.Projectiles.Minions
 		}
 		public override void SetDefaults()
 		{
-			projectile.width = 34;
-			projectile.height = 34;
-			projectile.tileCollide = false;
-			projectile.friendly = true;
-			projectile.minion = true;
-			projectile.minionSlots = 1f;
-			projectile.penetrate = -1;
-			projectile.usesLocalNPCImmunity = true;
-			projectile.localNPCHitCooldown = 10;
-			projectile.netImportant = true;
+			Projectile.width = 34;
+			Projectile.height = 34;
+			Projectile.tileCollide = false;
+			Projectile.friendly = true;
+			Projectile.minion = true;
+			Projectile.minionSlots = 1f;
+			Projectile.penetrate = -1;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = 10;
+			Projectile.netImportant = true;
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
-			Texture2D texture = Main.projectileTexture[projectile.type];
-			Vector2 drawOrigin = new Vector2(Main.projectileTexture[projectile.type].Width * 0.5f, projectile.height * 0.5f);
-			for (int k = 0; k < projectile.oldPos.Length; k++) {
-				Vector2 drawPos = projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, projectile.gfxOffY);
-				Color color = projectile.GetAlpha(new Color(100, 100, 100, 0)) * ((float)(projectile.oldPos.Length - k) / (float)projectile.oldPos.Length);
-				spriteBatch.Draw(texture, drawPos, null, color * 0.5f, projectile.rotation, drawOrigin, projectile.scale, SpriteEffects.None, 0f);
+			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value.Width * 0.5f, Projectile.height * 0.5f);
+			for (int k = 0; k < Projectile.oldPos.Length; k++) {
+				Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
+				Color color = Projectile.GetAlpha(new Color(100, 100, 100, 0)) * ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
+				spriteBatch.Draw(texture, drawPos, null, color * 0.5f, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
 			}
 			return false;
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture = Main.projectileTexture[projectile.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Color color = new Color(100, 100, 100, 0);
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			for (int k = 0; k < 9; k++)
 			{
 				float x = Main.rand.Next(-10, 11) * 0.25f;
 				float y = Main.rand.Next(-10, 11) * 0.25f;
-				Main.spriteBatch.Draw(texture, new Vector2((float)(projectile.Center.X - (int)Main.screenPosition.X) + x, (float)(projectile.Center.Y - (int)Main.screenPosition.Y) + y), null, color * ((255 - projectile.alpha) / 255f), 0f, drawOrigin, projectile.scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, new Vector2((float)(Projectile.Center.X - (int)Main.screenPosition.X) + x, (float)(Projectile.Center.Y - (int)Main.screenPosition.Y) + y), null, color * ((255 - Projectile.alpha) / 255f), 0f, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
 			}
 		}
 		int ofTotal2 = 0;
@@ -68,38 +68,38 @@ namespace SOTS.Projectiles.Minions
 			for (int i = 0; i < Main.maxProjectiles; i++)
 			{
 				Projectile other = Main.projectile[i];
-				if (i != projectile.whoAmI && other.active && other.owner == projectile.owner && Math.Abs(projectile.Center.X - other.Center.X) + Math.Abs(projectile.Center.Y - other.Center.Y) < projectile.width * widthMult && other.modProjectile as SpiritMinion != null)
+				if (i != Projectile.whoAmI && other.active && other.owner == Projectile.owner && Math.Abs(Projectile.Center.X - other.Center.X) + Math.Abs(Projectile.Center.Y - other.Center.Y) < Projectile.width * widthMult && other.modProjectile as SpiritMinion != null)
 				{
-					if (projectile.position.X < other.position.X) projectile.velocity.X -= overlapVelocity;
-					else projectile.velocity.X += overlapVelocity;
+					if (Projectile.position.X < other.position.X) Projectile.velocity.X -= overlapVelocity;
+					else Projectile.velocity.X += overlapVelocity;
 
-					if (projectile.position.Y < other.position.Y) projectile.velocity.Y -= overlapVelocity;
-					else projectile.velocity.Y += overlapVelocity;
+					if (Projectile.position.Y < other.position.Y) Projectile.velocity.Y -= overlapVelocity;
+					else Projectile.velocity.Y += overlapVelocity;
 				}
 			}
 			if(andTiles)
 			{
 				float tileMult = 17.5f;
-				int i = (int)projectile.Center.X / 16;
-				int j = (int)projectile.Center.Y / 16;
+				int i = (int)Projectile.Center.X / 16;
+				int j = (int)Projectile.Center.Y / 16;
 				Tile tile = Framing.GetTileSafely(i, j + 1);
-				if (!WorldGen.InWorld(i, j + 1, 20) || (tile.active() && !Main.tileSolidTop[tile.type] && Main.tileSolid[tile.type]))
+				if (!WorldGen.InWorld(i, j + 1, 20) || (tile.active() && !Main.tileSolidTop[tile.TileType] && Main.tileSolid[tile.TileType]))
 				{
-					projectile.velocity.Y -= overlapVelocity * tileMult;
+					Projectile.velocity.Y -= overlapVelocity * tileMult;
 				}
 			}
 		}
 		public void GoIdle(float speed = 10f) 
 		{
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
 			bool found = false;
 			int ofTotal = 0;
 			int total = 0;
-			for (int i = 0; i < Main.projectile.Length; i++)
+			for (int i = 0; i < Main.Projectile.Length; i++)
 			{
 				Projectile proj = Main.projectile[i];
-				if (proj.modProjectile as SpiritMinion != null && proj.active && projectile.active && proj.owner == projectile.owner)
+				if (proj.modProjectile as SpiritMinion != null && proj.active && Projectile.active && proj.owner == Projectile.owner)
 				{
 					if (proj == projectile)
 					{
@@ -113,27 +113,27 @@ namespace SOTS.Projectiles.Minions
 			if (Main.myPlayer == player.whoAmI)
 			{
 				if (ofTotal2 != ofTotal)
-					projectile.netUpdate = true;
+					Projectile.netUpdate = true;
 				ofTotal2 = ofTotal;
             }
 
 			Vector2 idlePosition = player.Center;
 			float extraDist = 5;
 			idlePosition.Y -= 96f + total * extraDist;
-			Vector2 toPlayer = idlePosition - projectile.Center;
+			Vector2 toPlayer = idlePosition - Projectile.Center;
 			float distance = toPlayer.Length();
-			projectile.velocity = new Vector2(-speed, 0).RotatedBy(Math.Atan2(projectile.Center.Y - idlePosition.Y, projectile.Center.X - idlePosition.X));
+			Projectile.velocity = new Vector2(-speed, 0).RotatedBy(Math.Atan2(Projectile.Center.Y - idlePosition.Y, Projectile.Center.X - idlePosition.X));
 			if (distance < 256)
 			{
 				Vector2 rotateCenter = new Vector2(64 + total * extraDist, 0).RotatedBy(MathHelper.ToRadians(modPlayer.orbitalCounter + (ofTotal2 * 360f / total)));
 				rotateCenter += idlePosition;
-				Vector2 toRotate = rotateCenter - projectile.Center;
+				Vector2 toRotate = rotateCenter - Projectile.Center;
 				float dist2 = toRotate.Length();
 				if (dist2 > 12)
 				{
 					dist2 = 12;
 				}
-				projectile.velocity = new Vector2(-dist2, 0).RotatedBy(Math.Atan2(projectile.Center.Y - rotateCenter.Y, projectile.Center.X - rotateCenter.X));
+				Projectile.velocity = new Vector2(-dist2, 0).RotatedBy(Math.Atan2(Projectile.Center.Y - rotateCenter.Y, Projectile.Center.X - rotateCenter.X));
 			}
 		}
 	}

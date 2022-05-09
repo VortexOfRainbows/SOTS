@@ -15,30 +15,30 @@ namespace SOTS.Projectiles.Otherworld
 		
         public override void SetDefaults()
         {
-			projectile.height = 22;
-			projectile.width = 22;
-			projectile.friendly = false;
-			projectile.timeLeft = 960;
-			projectile.hostile = true;
-			projectile.alpha = 255;
-			projectile.penetrate = 5;
-			projectile.netImportant = true;
-			projectile.tileCollide = false;
+			Projectile.height = 22;
+			Projectile.width = 22;
+			Projectile.friendly = false;
+			Projectile.timeLeft = 960;
+			Projectile.hostile = true;
+			Projectile.alpha = 255;
+			Projectile.penetrate = 5;
+			Projectile.netImportant = true;
+			Projectile.tileCollide = false;
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
 			return false;
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture = Main.projectileTexture[projectile.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Color color = new Color(115, 115, 115, 0);
-			Vector2 drawOrigin = new Vector2(Main.projectileTexture[projectile.type].Width * 0.5f, projectile.height * 0.5f);
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value.Width * 0.5f, Projectile.height * 0.5f);
 			for (int k = 0; k < 6; k++)
 			{
 				float x = Main.rand.Next(-10, 11) * (0.2f - distMult);
 				float y = Main.rand.Next(-10, 11) * (0.2f - distMult);
-				Main.spriteBatch.Draw(texture, new Vector2((float)(projectile.Center.X - (int)Main.screenPosition.X) + x, (float)(projectile.Center.Y - (int)Main.screenPosition.Y) + y), null, color * (1f - (projectile.alpha / 255f)), projectile.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, new Vector2((float)(Projectile.Center.X - (int)Main.screenPosition.X) + x, (float)(Projectile.Center.Y - (int)Main.screenPosition.Y) + y), null, color * (1f - (Projectile.alpha / 255f)), Projectile.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
 			}
 			base.PostDraw(spriteBatch, drawColor);
 		}
@@ -48,30 +48,30 @@ namespace SOTS.Projectiles.Otherworld
 		{
 			for (int i = 0; i < 10; i++)
 			{
-				int dust = Dust.NewDust(projectile.Center, 0, 0, DustID.Electric, 0, 0, projectile.alpha, default, 1.25f);
+				int dust = Dust.NewDust(Projectile.Center, 0, 0, DustID.Electric, 0, 0, Projectile.alpha, default, 1.25f);
 				Main.dust[dust].noGravity = true;
 				Main.dust[dust].velocity *= 1.5f;
 			}
 		}
 		public override void AI()
 		{
-			Lighting.AddLight(projectile.Center, 0.55f, 0.55f, 0.75f);
-			NPC owner = Main.npc[(int)projectile.ai[1]];
+			Lighting.AddLight(Projectile.Center, 0.55f, 0.55f, 0.75f);
+			NPC owner = Main.npc[(int)Projectile.ai[1]];
 			if (owner.type != mod.NPCType("TwilightDevil") || !owner.active)
 			{
-				if (projectile.timeLeft > 480)
-					projectile.Kill();
+				if (Projectile.timeLeft > 480)
+					Projectile.Kill();
 			}
 			Player player = Main.player[owner.target];
-			projectile.alpha -= projectile.alpha > 0 ? 2 : 0;
+			Projectile.alpha -= Projectile.alpha > 0 ? 2 : 0;
 			
 			bool found = false;
 			int ofTotal = 0;
 			int total = 0;
-			for (int i = 0; i < Main.projectile.Length; i++)
+			for (int i = 0; i < Main.Projectile.Length; i++)
 			{
 				Projectile proj = Main.projectile[i];
-				if (projectile.type == proj.type && proj.active && projectile.active && Main.npc[(int)proj.ai[1]] == owner && proj.timeLeft >= 480)
+				if (Projectile.type == proj.type && proj.active && Projectile.active && Main.npc[(int)proj.ai[1]] == owner && proj.timeLeft >= 480)
 				{
 					if (proj == projectile)
 					{
@@ -82,7 +82,7 @@ namespace SOTS.Projectiles.Otherworld
 					total++;
 				}
 			}
-			float mult = (360 - projectile.ai[0]) / 360;
+			float mult = (360 - Projectile.ai[0]) / 360;
 			float addRot = 0;
 			if(ofTotal % 2 == 0)
 			{
@@ -94,20 +94,20 @@ namespace SOTS.Projectiles.Otherworld
 			}
 
 			if(mult > 0)
-				projectile.ai[0]++;
+				Projectile.ai[0]++;
 
-			if(projectile.timeLeft == 480)
+			if(Projectile.timeLeft == 480)
 			{
-				Vector2 newVelocity = new Vector2(9.5f, 0).RotatedBy(projectile.rotation - MathHelper.ToRadians(90));
-				projectile.velocity = newVelocity;
+				Vector2 newVelocity = new Vector2(9.5f, 0).RotatedBy(Projectile.rotation - MathHelper.ToRadians(90));
+				Projectile.velocity = newVelocity;
 				if (Main.netMode != 1)
 				{
-					projectile.netUpdate = true;
+					Projectile.netUpdate = true;
 				}
 			}
-			else if (projectile.timeLeft > 480)
+			else if (Projectile.timeLeft > 480)
 			{
-				if(projectile.timeLeft < 600)
+				if(Projectile.timeLeft < 600)
 				{
 					distMult *= 0.98f;
 				}
@@ -115,16 +115,16 @@ namespace SOTS.Projectiles.Otherworld
 				if (ofTotal == 0 && soundIterater >= 75)
 				{
 					soundIterater = 0;
-					SoundEngine.PlaySound(2, (int)(projectile.Center.X), (int)(projectile.Center.Y), 15, 1 - projectile.alpha / 255f);
+					SoundEngine.PlaySound(2, (int)(Projectile.Center.X), (int)(Projectile.Center.Y), 15, 1 - Projectile.alpha / 255f);
 				}
 				Vector2 playerPos = new Vector2(owner.ai[2], owner.ai[3]);
-				Vector2 towardsPlayer = projectile.Center - playerPos;
+				Vector2 towardsPlayer = Projectile.Center - playerPos;
 				towardsPlayer = -towardsPlayer;
 				float rotationP = towardsPlayer.ToRotation();
-				Vector2 fromNPC = new Vector2(32 + projectile.ai[0] * distMult, 0).RotatedBy(rotationP + MathHelper.ToRadians(addRot - 360 * mult * mult * 6) * ((owner.whoAmI % 2) * 2 - 1));
+				Vector2 fromNPC = new Vector2(32 + Projectile.ai[0] * distMult, 0).RotatedBy(rotationP + MathHelper.ToRadians(addRot - 360 * mult * mult * 6) * ((owner.whoAmI % 2) * 2 - 1));
 				float rotation = fromNPC.ToRotation();
-				projectile.rotation = rotation + MathHelper.ToRadians(90);
-				projectile.position = fromNPC + owner.Center - new Vector2(projectile.width / 2, projectile.height / 2);
+				Projectile.rotation = rotation + MathHelper.ToRadians(90);
+				Projectile.position = fromNPC + owner.Center - new Vector2(Projectile.width / 2, Projectile.height / 2);
 			}
 		}
 	}

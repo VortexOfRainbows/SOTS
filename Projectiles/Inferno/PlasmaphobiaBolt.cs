@@ -14,47 +14,47 @@ namespace SOTS.Projectiles.Inferno
     {
         public override void SendExtraAI(BinaryWriter writer)
         {
-            writer.Write(projectile.timeLeft);
+            writer.Write(Projectile.timeLeft);
         }
         public override void ReceiveExtraAI(BinaryReader reader)
         {
-            projectile.timeLeft = reader.ReadInt32();
+            Projectile.timeLeft = reader.ReadInt32();
         }
         public const int trailLength = 20;
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Plasma Bolt");
-            ProjectileID.Sets.TrailCacheLength[projectile.type] = trailLength;
-            ProjectileID.Sets.TrailingMode[projectile.type] = 0;
+            ProjectileID.Sets.TrailCacheLength[Projectile.type] = trailLength;
+            ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }
         public override void SetDefaults()
         {
-            projectile.aiStyle = -1;
-            projectile.width = 24;
-            projectile.height = 24;
-            projectile.scale = 1f;
-            projectile.tileCollide = true;
-            projectile.penetrate = 5;
-            projectile.timeLeft = 80;
-            projectile.friendly = true;
-            projectile.ranged = true;
-            projectile.usesLocalNPCImmunity = true;
-            projectile.localNPCHitCooldown = 90;
-            projectile.extraUpdates = 1;
+            Projectile.aiStyle = -1;
+            Projectile.width = 24;
+            Projectile.height = 24;
+            Projectile.scale = 1f;
+            Projectile.tileCollide = true;
+            Projectile.penetrate = 5;
+            Projectile.timeLeft = 80;
+            Projectile.friendly = true;
+            Projectile.ranged = true;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = 90;
+            Projectile.extraUpdates = 1;
         }
         public void Collide()
         {
-            if (projectile.timeLeft > trailLength)
+            if (Projectile.timeLeft > trailLength)
             {
-                if (projectile.owner == Main.myPlayer)
-                    Projectile.NewProjectile(projectile.Center, Vector2.Zero, ModContent.ProjectileType<PlasmaStar>(), projectile.damage, projectile.knockBack, projectile.owner);
-                projectile.timeLeft = trailLength;
-                projectile.netUpdate = true;
+                if (Projectile.owner == Main.myPlayer)
+                    Projectile.NewProjectile(Projectile.Center, Vector2.Zero, ModContent.ProjectileType<PlasmaStar>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
+                Projectile.timeLeft = trailLength;
+                Projectile.netUpdate = true;
                 for(int i = 0; i < 20; i++)
                 {
-                    Dust dust = Dust.NewDustDirect(projectile.Center - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
+                    Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
                     dust.velocity *= 1f;
-                    dust.velocity += projectile.velocity * 0.2f;
+                    dust.velocity += Projectile.velocity * 0.2f;
                     dust.noGravity = true;
                     dust.color = new Color(157, 93, 213, 40);
                     dust.fadeIn = 0.1f;
@@ -66,28 +66,28 @@ namespace SOTS.Projectiles.Inferno
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
             Collide();
-            projectile.velocity = oldVelocity;
+            Projectile.velocity = oldVelocity;
             return false;
         }
         bool runOnce = true;
         public override void AI()
         {
-            projectile.ai[0] += 0.01f;
-            if (projectile.timeLeft == trailLength + 1)
+            Projectile.ai[0] += 0.01f;
+            if (Projectile.timeLeft == trailLength + 1)
             {
                 Collide();
             }
-            if (projectile.timeLeft <= trailLength)
+            if (Projectile.timeLeft <= trailLength)
             {
-                projectile.tileCollide = false;
-                projectile.friendly = false;
-                projectile.velocity *= 0f;
+                Projectile.tileCollide = false;
+                Projectile.friendly = false;
+                Projectile.velocity *= 0f;
                 return;
             }
-            Player player = Main.player[projectile.owner];
+            Player player = Main.player[Projectile.owner];
             if(runOnce)
             {
-                projectile.scale = 0f;
+                Projectile.scale = 0f;
                 runOnce = false;
                 for (float j = 0.25f; j <= 0.75f; j += 0.25f)
                 {
@@ -95,9 +95,9 @@ namespace SOTS.Projectiles.Inferno
                     {
                         Vector2 circular = new Vector2(2 + 4 * j, 0).RotatedBy(MathHelper.ToRadians(i));
                         circular.X *= 0.55f;
-                        circular = circular.RotatedBy(projectile.velocity.ToRotation());
-                        Vector2 fromCenter = projectile.velocity.SafeNormalize(Vector2.Zero) * 32 * j;
-                        Dust dust = Dust.NewDustDirect(projectile.Center + projectile.velocity * j + circular - new Vector2(5) + fromCenter, 0, 0, ModContent.DustType<CopyDust4>());
+                        circular = circular.RotatedBy(Projectile.velocity.ToRotation());
+                        Vector2 fromCenter = Projectile.velocity.SafeNormalize(Vector2.Zero) * 32 * j;
+                        Dust dust = Dust.NewDustDirect(Projectile.Center + Projectile.velocity * j + circular - new Vector2(5) + fromCenter, 0, 0, ModContent.DustType<CopyDust4>());
                         dust.velocity = 0.5f * circular + fromCenter;
                         dust.noGravity = true;
                         dust.color = new Color(157, 93, 213, 40);
@@ -107,33 +107,33 @@ namespace SOTS.Projectiles.Inferno
                     }
                 }
             }
-            if (projectile.scale < 1)
+            if (Projectile.scale < 1)
             {
-                projectile.scale += 0.05f;
-                projectile.scale *= 1.1f;
-                projectile.velocity *= 1.08f;
+                Projectile.scale += 0.05f;
+                Projectile.scale *= 1.1f;
+                Projectile.velocity *= 1.08f;
             }
             else
             {
-                projectile.scale = 1;
+                Projectile.scale = 1;
             }
-            projectile.rotation = projectile.velocity.ToRotation();
+            Projectile.rotation = Projectile.velocity.ToRotation();
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            if (projectile.penetrate > 2)
-                Projectile.NewProjectile(projectile.Center, Vector2.Zero, ModContent.ProjectileType<PlasmaStar>(), projectile.damage, 0, projectile.owner);
+            if (Projectile.penetrate > 2)
+                Projectile.NewProjectile(Projectile.Center, Vector2.Zero, ModContent.ProjectileType<PlasmaStar>(), Projectile.damage, 0, Projectile.owner);
             else
                 Collide();
         }
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override bool PreDraw(ref Color lightColor)
         {
             if (runOnce)
                 return false;
             Color color = Color.White;
             color.A = 0;
             DrawTrail(spriteBatch);
-            if(projectile.timeLeft > trailLength)
+            if(Projectile.timeLeft > trailLength)
             {
                 Main.spriteBatch.End();
                 Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
@@ -142,9 +142,9 @@ namespace SOTS.Projectiles.Inferno
                 SOTS.FireballShader.Parameters["noise"].SetValue(Mod.Assets.Request<Texture2D>("TrailTextures/vnoise").Value);
                 SOTS.FireballShader.Parameters["pallette"].SetValue(Mod.Assets.Request<Texture2D>("TrailTextures/Pallette2").Value);
                 SOTS.FireballShader.Parameters["opacity2"].SetValue(0.25f);
-                SOTS.FireballShader.Parameters["counter"].SetValue(projectile.ai[0]);
+                SOTS.FireballShader.Parameters["counter"].SetValue(Projectile.ai[0]);
                 SOTS.FireballShader.CurrentTechnique.Passes[0].Apply();
-                Main.spriteBatch.Draw(Mod.Assets.Request<Texture2D>("Effects/Masks/Extra_49").Value, projectile.Center - Main.screenPosition, null, new Color(157, 93, 213, 40) * projectile.Opacity, projectile.rotation, new Vector2(50, 50), projectile.scale * 0.5f * new Vector2(2f, 0.3f), SpriteEffects.None, 0f);
+                Main.spriteBatch.Draw(Mod.Assets.Request<Texture2D>("Effects/Masks/Extra_49").Value, Projectile.Center - Main.screenPosition, null, new Color(157, 93, 213, 40) * Projectile.Opacity, Projectile.rotation, new Vector2(50, 50), Projectile.scale * 0.5f * new Vector2(2f, 0.3f), SpriteEffects.None, 0f);
                 Main.spriteBatch.End();
                 Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
             }
@@ -154,16 +154,16 @@ namespace SOTS.Projectiles.Inferno
         {
             Color color = new Color(157, 93, 213, 40) * 0.8f;
             Vector2 drawOrigin = new Vector2(50, 50);
-            Vector2 original = projectile.position;
-            for (int k = 0; k < projectile.oldPos.Length; k++)
+            Vector2 original = Projectile.position;
+            for (int k = 0; k < Projectile.oldPos.Length; k++)
             {
-                if(projectile.oldPos[k] != projectile.position)
+                if(Projectile.oldPos[k] != Projectile.position)
                 {
-                    float scale = (projectile.oldPos.Length - k) / (float)projectile.oldPos.Length;
-                    Vector2 drawPos = projectile.oldPos[k] - Main.screenPosition + projectile.Size / 2 + new Vector2(0f, projectile.gfxOffY);
-                    float direction = (original - projectile.oldPos[k]).ToRotation();
+                    float scale = (Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length;
+                    Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + Projectile.Size / 2 + new Vector2(0f, Projectile.gfxOffY);
+                    float direction = (original - Projectile.oldPos[k]).ToRotation();
                     spriteBatch.Draw(Mod.Assets.Request<Texture2D>("Effects/Masks/Extra_49").Value, drawPos, null, color * scale, direction, drawOrigin, (0.1f + 0.3f * scale) * new Vector2(2f, 0.3f), SpriteEffects.None, 0f);
-                    original = projectile.oldPos[k];
+                    original = Projectile.oldPos[k];
                 }
             }
         }
@@ -173,29 +173,29 @@ namespace SOTS.Projectiles.Inferno
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Plasma Star");
-            //ProjectileID.Sets.TrailCacheLength[projectile.type] = 30;
-            //ProjectileID.Sets.TrailingMode[projectile.type] = 0;
-            //Main.projFrames[projectile.type] = 6;
+            //ProjectileID.Sets.TrailCacheLength[Projectile.type] = 30;
+            //ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+            //Main.projFrames[Projectile.type] = 6;
         }
         public override void SetDefaults()
         {
-            projectile.width = 80;
-            projectile.height = 80;
-            projectile.aiStyle = 0;
-            projectile.tileCollide = false;
-            projectile.penetrate = -1;
-            projectile.timeLeft = 60;
-            projectile.friendly = true;
-            projectile.ranged = true;
-            projectile.scale = 1f;
-            projectile.usesLocalNPCImmunity = true;
-            projectile.localNPCHitCooldown = 90;
+            Projectile.width = 80;
+            Projectile.height = 80;
+            Projectile.aiStyle = 0;
+            Projectile.tileCollide = false;
+            Projectile.penetrate = -1;
+            Projectile.timeLeft = 60;
+            Projectile.friendly = true;
+            Projectile.ranged = true;
+            Projectile.scale = 1f;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = 90;
         }
         public void GenDust(float mult = 1f)
         {
             for (int i = 0; i < 10; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.Center - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
+                Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
                 dust.velocity *= mult;
                 dust.noGravity = true;
                 dust.color = new Color(157, 93, 213, 40);
@@ -216,12 +216,12 @@ namespace SOTS.Projectiles.Inferno
                 GenDust(2f);
                 runOnce = false;
             }
-            projectile.rotation += 0.03f;
+            Projectile.rotation += 0.03f;
         }
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = Mod.Assets.Request<Texture2D>("Effects/Masks/Extra_49").Value;
-            float sin = (float)Math.Sin(MathHelper.ToRadians(180 - projectile.timeLeft * 3));
+            float sin = (float)Math.Sin(MathHelper.ToRadians(180 - Projectile.timeLeft * 3));
             sin = (float)Math.Pow(sin, 0.9);
             Color color = new Color(157, 93, 213);
             color.A = 0; 
@@ -230,14 +230,14 @@ namespace SOTS.Projectiles.Inferno
             SOTS.GodrayShader.Parameters["distance"].SetValue(6 * sin);
             SOTS.GodrayShader.Parameters["colorMod"].SetValue(color.ToVector4());
             SOTS.GodrayShader.Parameters["noise"].SetValue(Mod.Assets.Request<Texture2D>("TrailTextures/noise").Value);
-            SOTS.GodrayShader.Parameters["rotation"].SetValue(projectile.rotation + projectile.whoAmI * 1.1f);
+            SOTS.GodrayShader.Parameters["rotation"].SetValue(Projectile.rotation + Projectile.whoAmI * 1.1f);
             SOTS.GodrayShader.Parameters["opacity2"].SetValue(1f * sin);
             SOTS.GodrayShader.CurrentTechnique.Passes[0].Apply();
-            Main.spriteBatch.Draw(texture, projectile.Center - Main.screenPosition, null, Color.White, 0f, new Vector2(texture.Width / 2, texture.Height / 2), projectile.scale * sin, SpriteEffects.None, 0f);
+            Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, null, Color.White, 0f, new Vector2(texture.Width / 2, texture.Height / 2), Projectile.scale * sin, SpriteEffects.None, 0f);
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
             for(int i = 0; i < 2; i++)
-              spriteBatch.Draw(texture, projectile.Center - Main.screenPosition, null, i == 1 ? new Color(255, 255, 255, 0) : color * 2, projectile.rotation, new Vector2(texture.Width/2, texture.Height/2), projectile.scale / 2f * sin, SpriteEffects.None, 0f);
+              spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, null, i == 1 ? new Color(255, 255, 255, 0) : color * 2, Projectile.rotation, new Vector2(texture.Width/2, texture.Height/2), Projectile.scale / 2f * sin, SpriteEffects.None, 0f);
             return false;
         }
     }

@@ -13,79 +13,79 @@ namespace SOTS.Projectiles.Celestial
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Death's Touch");
-			ProjectileID.Sets.TrailCacheLength[projectile.type] = 6;  
-			ProjectileID.Sets.TrailingMode[projectile.type] = 1;    
+			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 6;  
+			ProjectileID.Sets.TrailingMode[Projectile.type] = 1;    
 		}
         public override void SetDefaults()
         {
-			projectile.magic = true;
-			projectile.friendly = true;
-			projectile.width = 66;
-			projectile.height = 46;
-			projectile.timeLeft = 240;
-			projectile.penetrate = 5;
-			projectile.alpha = 100;
-			projectile.tileCollide = false;
-			projectile.usesLocalNPCImmunity = true;
-			projectile.localNPCHitCooldown = 15;
+			Projectile.magic = true;
+			Projectile.friendly = true;
+			Projectile.width = 66;
+			Projectile.height = 46;
+			Projectile.timeLeft = 240;
+			Projectile.penetrate = 5;
+			Projectile.alpha = 100;
+			Projectile.tileCollide = false;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = 15;
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			target.immune[projectile.owner] = 0;
-			projectile.localNPCImmunity[target.whoAmI] = projectile.localNPCHitCooldown;
-			projectile.velocity *= 0.25f;
-			projectile.netUpdate = true;
+			target.immune[Projectile.owner] = 0;
+			Projectile.localNPCImmunity[target.whoAmI] = Projectile.localNPCHitCooldown;
+			Projectile.velocity *= 0.25f;
+			Projectile.netUpdate = true;
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
-			Texture2D texture = Main.projectileTexture[projectile.type];
-			Vector2 origin = new Vector2(texture.Width / 2, projectile.height / 2);
+			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
+			Vector2 origin = new Vector2(texture.Width / 2, Projectile.height / 2);
 			DrawTrail(spriteBatch, lightColor);
 			Color color;
 			for (int i = 0; i < 360; i += 45)
 			{
 				Vector2 circular = new Vector2(Main.rand.NextFloat(2f, 3f), 0).RotatedBy(MathHelper.ToRadians(i));
 				color = new Color(100, 255, 100, 0);
-				Main.spriteBatch.Draw(texture, projectile.Center + circular - Main.screenPosition, new Rectangle(0, projectile.height * projectile.frame, projectile.width, projectile.height), color * ((255f - projectile.alpha) / 255f), projectile.rotation, origin, projectile.scale, SpriteEffects.None, 0.0f);
+				Main.spriteBatch.Draw(texture, Projectile.Center + circular - Main.screenPosition, new Rectangle(0, Projectile.height * Projectile.frame, Projectile.width, Projectile.height), color * ((255f - Projectile.alpha) / 255f), Projectile.rotation, origin, Projectile.scale, SpriteEffects.None, 0.0f);
 			}
 			color = new Color(0, 0, 0);
-			Main.spriteBatch.Draw(texture, projectile.Center - Main.screenPosition, new Rectangle(0, projectile.height * projectile.frame, projectile.width, projectile.height), color, projectile.rotation, origin, projectile.scale, SpriteEffects.None, 0.0f);
+			Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, new Rectangle(0, Projectile.height * Projectile.frame, Projectile.width, Projectile.height), color, Projectile.rotation, origin, Projectile.scale, SpriteEffects.None, 0.0f);
 			return false;
 		}
 		public void DrawTrail(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Vector2 drawOrigin = new Vector2(Main.projectileTexture[projectile.type].Width * 0.5f, projectile.height * 0.5f);
-			for (int k = 0; k < projectile.oldPos.Length; k++) {
-				Vector2 drawPos = projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, projectile.gfxOffY);
-				Color color = projectile.GetAlpha(new Color(33, 100, 33)) * ((float)(projectile.oldPos.Length - k) / (float)projectile.oldPos.Length);
-				spriteBatch.Draw(Main.projectileTexture[projectile.type], drawPos, null, color, projectile.rotation, drawOrigin, projectile.scale, SpriteEffects.None, 0f);
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value.Width * 0.5f, Projectile.height * 0.5f);
+			for (int k = 0; k < Projectile.oldPos.Length; k++) {
+				Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
+				Color color = Projectile.GetAlpha(new Color(33, 100, 33)) * ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
+				spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
 			}
 		}
 		public override void AI()
 		{ 
-			Player player = Main.player[projectile.owner];
-			Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 0.1f / 255f, (255 - projectile.alpha) * 0.9f / 255f, (255 - projectile.alpha) * 0.3f / 255f);
-			projectile.rotation += 0.3f;
+			Player player = Main.player[Projectile.owner];
+			Lighting.AddLight(Projectile.Center, (255 - Projectile.alpha) * 0.1f / 255f, (255 - Projectile.alpha) * 0.9f / 255f, (255 - Projectile.alpha) * 0.3f / 255f);
+			Projectile.rotation += 0.3f;
 			if(player.whoAmI == Main.myPlayer)
 			{
-				projectile.netUpdate = true;
+				Projectile.netUpdate = true;
 				Vector2 cursorArea = Main.MouseWorld;
-				if(projectile.timeLeft > 192 && projectile.timeLeft < 224 && projectile.penetrate >= 5)
+				if(Projectile.timeLeft > 192 && Projectile.timeLeft < 224 && Projectile.penetrate >= 5)
 				{
-					float dX = cursorArea.X - projectile.Center.X;
-					float dY = cursorArea.Y - projectile.Center.Y;
+					float dX = cursorArea.X - Projectile.Center.X;
+					float dY = cursorArea.Y - Projectile.Center.Y;
 					float distance = (float)Math.Sqrt((double)(dX * dX + dY * dY));
 					float speed = 1f / distance;
-					projectile.velocity *= 0.95f;
-					projectile.velocity += new Vector2(dX * speed, dY * speed);
+					Projectile.velocity *= 0.95f;
+					Projectile.velocity += new Vector2(dX * speed, dY * speed);
 				}
 			}
-			if(projectile.timeLeft <= 30)
+			if(Projectile.timeLeft <= 30)
 			{
-				projectile.alpha += 7;
-				projectile.velocity *= 0.915f;
-				if (projectile.alpha > 255)
-					projectile.Kill();
+				Projectile.alpha += 7;
+				Projectile.velocity *= 0.915f;
+				if (Projectile.alpha > 255)
+					Projectile.Kill();
 			}
 			
 		}
@@ -94,7 +94,7 @@ namespace SOTS.Projectiles.Celestial
 			for(int i = 0; i < 360; i += 10)
 			{
 				Vector2 circularLocation = new Vector2(-15, 0).RotatedBy(MathHelper.ToRadians(i));
-				Dust dust = Dust.NewDustDirect(new Vector2(projectile.Center.X + circularLocation.X - 4, projectile.Center.Y + circularLocation.Y - 4), 4, 4, 107);
+				Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, 107);
 				dust.noGravity = true;
 				dust.velocity *= 0.1f;
 				dust.velocity += circularLocation * 0.3f;
@@ -103,7 +103,7 @@ namespace SOTS.Projectiles.Celestial
 			for (int i = 0; i < 360; i += 10)
 			{
 				Vector2 circularLocation = new Vector2(-15, 0).RotatedBy(MathHelper.ToRadians(i));
-				Dust dust = Dust.NewDustDirect(new Vector2(projectile.Center.X + circularLocation.X - 4, projectile.Center.Y + circularLocation.Y - 4), 4, 4, ModContent.DustType<CopyDust4>());
+				Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, ModContent.DustType<CopyDust4>());
 				dust.noGravity = true;
 				dust.velocity *= 0.5f;
 				dust.velocity += circularLocation * 0.15f;

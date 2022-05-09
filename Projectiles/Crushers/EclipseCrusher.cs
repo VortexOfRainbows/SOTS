@@ -13,8 +13,8 @@ namespace SOTS.Projectiles.Crushers
 		}
         public override void SafeSetDefaults()
         {
-			projectile.width = 28;
-			projectile.height = 28;
+			Projectile.width = 28;
+			Projectile.height = 28;
 			maxDamage = 7;
 			chargeTime = 180;
 			explosiveRange = 70;
@@ -37,7 +37,7 @@ namespace SOTS.Projectiles.Crushers
 		}
         public override void ExplosionSound()
 		{
-			SoundEngine.PlaySound(SoundID.NPCKilled, (int)projectile.Center.X, (int)projectile.Center.Y, 13, 1.1f, -0.25f);
+			SoundEngine.PlaySound(SoundID.NPCKilled, (int)Projectile.Center.X, (int)Projectile.Center.Y, 13, 1.1f, -0.25f);
 			base.ExplosionSound();
 		}
     }

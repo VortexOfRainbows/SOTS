@@ -16,7 +16,7 @@ namespace SOTS.Items.Earth
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.useTime = 27;
 			Item.useAnimation = 27;
-			Item.ranged = true;
+			Item.DamageType = DamageClass.Ranged;
 			Item.value = Item.sellPrice(0, 0, 80, 0);
 			Item.rare = ItemRarityID.Blue;
 			Item.width = 26;

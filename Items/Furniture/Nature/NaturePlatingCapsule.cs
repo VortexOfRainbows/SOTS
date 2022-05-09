@@ -57,11 +57,11 @@ namespace SOTS.Items.Furniture.Nature
                 Tile tile = Main.tile[i, j];
                 int left = i;
                 int top = j;
-                if (tile.frameX % 36 != 0)
+                if (tile.TileFrameX % 36 != 0)
                 {
                     left--;
                 }
-                if (tile.frameY != 0)
+                if (tile.TileFrameY != 0)
                 {
                     top--;
                 }
@@ -71,7 +71,7 @@ namespace SOTS.Items.Furniture.Nature
                 {
                     zero = Vector2.Zero;
                 }
-                Main.spriteBatch.Draw((Texture2D)ModContent.Request<Texture2D>(this.GetPath("Glow")), new Vector2(i * 16 - (int)Main.screenPosition.X, j * 16 - (int)Main.screenPosition.Y) + zero, new Rectangle(tile.frameX, 38 * (chest == -1 ? 0 : Main.chest[chest].frame) + tile.frameY, 16, 16), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+                Main.spriteBatch.Draw((Texture2D)ModContent.Request<Texture2D>(this.GetPath("Glow")), new Vector2(i * 16 - (int)Main.screenPosition.X, j * 16 - (int)Main.screenPosition.Y) + zero, new Rectangle(tile.TileFrameX, 38 * (chest == -1 ? 0 : Main.chest[chest].frame) + tile.TileFrameY, 16, 16), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
             }
             catch
             {

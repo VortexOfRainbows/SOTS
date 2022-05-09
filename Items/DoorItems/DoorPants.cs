@@ -12,7 +12,7 @@ namespace SOTS.Items.DoorItems
 			Item.width = 26;
 			Item.height = 26;
 			Item.value = Item.sellPrice(0, 0, 1, 0);
-			Item.rare = 1;
+			Item.rare = ItemRarityID.Blue;
 			Item.defense = 1;
 		}
 		public override void SetStaticDefaults()
@@ -37,11 +37,7 @@ namespace SOTS.Items.DoorItems
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.WoodenDoor, 2);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ItemID.WoodenDoor, 2).AddTile(TileID.WorkBenches).Register();
 		}
 	}
 	public class BandOfDoor : ModItem
@@ -67,12 +63,7 @@ namespace SOTS.Items.DoorItems
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.Shackle, 1);
-			recipe.AddIngredient(ModContent.ItemType<DoorPants>(), 20);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ItemID.Shackle, 1).AddIngredient<DoorPants>(20).AddTile(TileID.WorkBenches).Register();
 		}
 	}
 	public class DoorPlayer : ModPlayer
@@ -85,6 +76,7 @@ namespace SOTS.Items.DoorItems
 		float speedDuration = 0;
 		public override void ResetEffects()
 		{
+			Player player = this.Player;
 			if(doorPants > 0)
 			{
 				int i = (int)(player.Center.X / 16);
@@ -114,16 +106,16 @@ namespace SOTS.Items.DoorItems
 					for (int j2 = -2; j2 < 3; j2++)
 					{
 						Tile tile = Main.tile[i + i2, j + j2];
-						ModTile mTile = TileLoader.GetTile(tile.type);
+						ModTile mTile = TileLoader.GetTile(tile.TileType);
 						bool isDoor = false;
 						if (mTile != null)
 						{
-							List<int> checkArray = new List<int>(mTile.adjTiles);
-							isDoor = checkArray.Contains(TileID.OpenDoor) || tile.type == TileID.OpenDoor;
+							List<int> checkArray = new List<int>(mTile.AdjTiles);
+							isDoor = checkArray.Contains(TileID.OpenDoor) || tile.TileType == TileID.OpenDoor;
 						}
 						else
-							isDoor = tile.type == TileID.OpenDoor;
-						if (isDoor && tile.active())
+							isDoor = tile.TileType == TileID.OpenDoor;
+						if (isDoor && tile.HasTile)
 						{
 							inDoor = true;
 							break;

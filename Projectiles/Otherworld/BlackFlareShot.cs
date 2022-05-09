@@ -14,14 +14,14 @@ namespace SOTS.Projectiles.Otherworld
 		}
         public override void SetDefaults()
         {
-            projectile.tileCollide = true;
-            projectile.netImportant = true;
-            projectile.width = 6;
-            projectile.height = 6;
-            projectile.friendly = true;
-            projectile.penetrate = -1;
-            projectile.alpha = (int)byte.MaxValue;
-            projectile.timeLeft = 36000;
+            Projectile.tileCollide = true;
+            Projectile.netImportant = true;
+            Projectile.width = 6;
+            Projectile.height = 6;
+            Projectile.friendly = true;
+            Projectile.penetrate = -1;
+            Projectile.alpha = (int)byte.MaxValue;
+            Projectile.timeLeft = 36000;
         }
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
@@ -31,18 +31,18 @@ namespace SOTS.Projectiles.Otherworld
         public override void AI() //adapted directly from terraria source
         {
             counter++;
-            if (projectile.alpha > 0)
+            if (Projectile.alpha > 0)
             {
-                projectile.alpha -= 50;
-                if (projectile.alpha < 0)
+                Projectile.alpha -= 50;
+                if (Projectile.alpha < 0)
                 {
-                    projectile.alpha = 0;
+                    Projectile.alpha = 0;
                 }
             }
 
             var dist = 10f;
-            var num366 = projectile.ai[0];
-            var num367 = projectile.ai[1];
+            var num366 = Projectile.ai[0];
+            var num367 = Projectile.ai[1];
             if (num366 == 0f && num367 == 0f)
             {
                 num366 = 1f;
@@ -52,9 +52,9 @@ namespace SOTS.Projectiles.Otherworld
             num368 = dist / num368;
             num366 *= num368;
             num367 *= num368;
-            if (projectile.alpha < 70)
+            if (Projectile.alpha < 70)
             {
-                var position116 = new Vector2(projectile.position.X, projectile.position.Y - 2f);
+                var position116 = new Vector2(Projectile.position.X, Projectile.position.Y - 2f);
                 Color newColor = default(Color);
                 var num371 = Dust.NewDust(position116, 6, 6, mod.DustType("CopyDust4"), 0, 0, 100, newColor, 1.6f);
                 Dust dust = Main.dust[num371];
@@ -68,49 +68,49 @@ namespace SOTS.Projectiles.Otherworld
                 dust.noGravity = true;
                 dust.fadeIn = 0.2f;
                 dust.scale *= 0.6f;
-                dust.alpha = projectile.alpha;
+                dust.alpha = Projectile.alpha;
             }
 
-            if (projectile.localAI[0] == 0f)
+            if (Projectile.localAI[0] == 0f)
             {
-                projectile.ai[0] = projectile.velocity.X;
-                projectile.ai[1] = projectile.velocity.Y;
-                projectile.localAI[1] += 1f;
-                if (projectile.localAI[1] >= 30f)
+                Projectile.ai[0] = Projectile.velocity.X;
+                Projectile.ai[1] = Projectile.velocity.Y;
+                Projectile.localAI[1] += 1f;
+                if (Projectile.localAI[1] >= 30f)
                 {
-                    projectile.velocity.Y += 0.09f;
-                    projectile.localAI[1] = 30f;
+                    Projectile.velocity.Y += 0.09f;
+                    Projectile.localAI[1] = 30f;
                 }
             }
             else
             {
-                if (!Collision.SolidCollision(projectile.position, projectile.width, projectile.height))
+                if (!Collision.SolidCollision(Projectile.position, Projectile.width, Projectile.height))
                 {
-                    projectile.localAI[0] = 0f;
-                    projectile.localAI[1] = 30f;
+                    Projectile.localAI[0] = 0f;
+                    Projectile.localAI[1] = 30f;
                 }
-                projectile.damage = 0;
+                Projectile.damage = 0;
             }
-            if (projectile.velocity.Y > 16f)
+            if (Projectile.velocity.Y > 16f)
             {
-                projectile.velocity.Y = 16f;
+                Projectile.velocity.Y = 16f;
             }
-            projectile.rotation = (float)Math.Atan2((double)projectile.ai[1], (double)projectile.ai[0]) + 1.57f;
+            Projectile.rotation = (float)Math.Atan2((double)Projectile.ai[1], (double)Projectile.ai[0]) + 1.57f;
         }
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            if (projectile.localAI[0] == 0f)
+            if (Projectile.localAI[0] == 0f)
             {
-                if (projectile.wet)
+                if (Projectile.wet)
                 {
-                    projectile.position = projectile.position + oldVelocity / 2f;
+                    Projectile.position = Projectile.position + oldVelocity / 2f;
                 }
                 else
                 {
-                    projectile.position = projectile.position + oldVelocity;
+                    Projectile.position = Projectile.position + oldVelocity;
                 }
-                projectile.velocity = projectile.velocity * 0f;
-                projectile.localAI[0] = 1f;
+                Projectile.velocity = Projectile.velocity * 0f;
+                Projectile.localAI[0] = 1f;
             }
             return false;
         }

@@ -112,7 +112,7 @@ namespace SOTS.Items.Tools
 									tile.slope(0);
 									tile.halfBrick(false);
 
-									//tile.type = (ushort)(tiles[w]);
+									//tile.TileType = (ushort)(tiles[w]);
 									if (specialDigit2 > 0)
 									{
 										tile.slope((byte)specialDigit2);
@@ -130,14 +130,14 @@ namespace SOTS.Items.Tools
 											Main.tile[i, j - 1].active(false);
 										if (Main.tile[i, j - 2].type != (int)(tiles[w]))
 											Main.tile[i, j - 2].active(false);
-										if (tile.type != (int)(tiles[w]))
+										if (tile.TileType != (int)(tiles[w]))
 											tile.active(false);
 										//Main.NewText("Special3: " + specialDigits3, 150, 255, 255);
 										WorldGen.PlaceTile(k, l, (int)(tiles[w]), true, true, -1, specialDigits3 % 36);
 									}
 									else
 									{
-										if(tile.type != (int)(tiles[w]))
+										if(tile.TileType != (int)(tiles[w]))
 											tile.active(false);
 										WorldGen.PlaceTile(k, l, (int)(tiles[w]), true, true, -1, specialDigits3);
 										tile.slope(0);
@@ -169,15 +169,15 @@ namespace SOTS.Items.Tools
 				Point16 offset = tileData.Origin;
 				int correctX = pointX + offset.X;
 				int correctY = pointY + offset.Y;
-				if (tile.type == TileID.FishingCrate)
+				if (tile.TileType == TileID.FishingCrate)
 				{
 					correctX--;
 				}
-				if (tile.type == TileID.ClosedDoor)
+				if (tile.TileType == TileID.ClosedDoor)
 				{
 					correctY++;
 				}
-				if (tile.type == TileID.TallGateClosed || tile.type == TileID.TallGateOpen)
+				if (tile.TileType == TileID.TallGateClosed || tile.TileType == TileID.TallGateOpen)
 				{
 					correctY--;
 				}
@@ -188,10 +188,10 @@ namespace SOTS.Items.Tools
 					for (int i = pointX; i < distX; i++)
 					{
 						Tile checkingTile = Main.tile[i + (int)point1.X, j + (int)point1.Y];
-						double specialType = tile.type + (tile.slope() * 0.01) + (tile.halfBrick() ? 0.1 : 0); //This allows tile type to be stored as W in WWWW.XYZZZZ, slope to be stored as X in WWWW.XYZZZZ, and half brick as Y in WWWW.XYZZZZ;
+						double specialType = tile.TileType + (tile.slope() * 0.01) + (tile.halfBrick() ? 0.1 : 0); //This allows tile type to be stored as W in WWWW.XYZZZZ, slope to be stored as X in WWWW.XYZZZZ, and half brick as Y in WWWW.XYZZZZ;
 
 						specialType += style * 0.01 * 0.0001; //this allows tile styles to be stored as Z in WWWW.XYZZZZ;
-						if (i >= _structure.GetLength(0) || j >= _structure.GetLength(1) || checkingTile.type != tile.type)
+						if (i >= _structure.GetLength(0) || j >= _structure.GetLength(1) || checkingTile.type != tile.TileType)
 						{
 							Main.NewText("Points Reset", 150, 255, 255);
 							point1 = new Vector2(-1, 0);
@@ -295,12 +295,12 @@ namespace SOTS.Items.Tools
 					Tile tile = Main.tile[i + (int)point1.X, j + (int)point1.Y];
 					if(_structure[i, j] == -69) //so it only fills in blank spaces
 					{ 
-						if (gemspark.Contains<int>(tile.type) && anchor.X == 0 && anchor.Y == 0) //sets the anchor to a gemspark block if currently unset
+						if (gemspark.Contains<int>(tile.TileType) && anchor.X == 0 && anchor.Y == 0) //sets the anchor to a gemspark block if currently unset
 						{
 							anchor.X = i;
 							anchor.Y = j;
 						}
-						double specialType = tile.type + (tile.slope() * 0.01) + (tile.halfBrick() ? 0.1 : 0); //This allows tile type to be stored as W in WWWW.XYZZZZ, halfblock to be stored as X in WWWW.XYZZZZ, and slope as Y in WWWW.XYZZZZ;
+						double specialType = tile.TileType + (tile.slope() * 0.01) + (tile.halfBrick() ? 0.1 : 0); //This allows tile type to be stored as W in WWWW.XYZZZZ, halfblock to be stored as X in WWWW.XYZZZZ, and slope as Y in WWWW.XYZZZZ;
 
 						TileObjectData tileData = TileObjectData.GetTileData(tile);
 						int style = 0;
@@ -325,7 +325,7 @@ namespace SOTS.Items.Tools
 						}
 						_structure[i, j] = tiles.IndexOf(specialType);
 
-						if ((!Main.tileSolid[tile.type] || tileData != null) && tile.active())
+						if ((!Main.tileSolid[tile.TileType] || tileData != null) && tile.active())
 						{
 							FindOrigin(tile, i, j);
 						}
@@ -399,7 +399,7 @@ namespace SOTS.Items.Tools
 						if(tileData == null)
 						{
 							finalExport += "						tile.active(true);\n";
-							finalExport += "						tile.type = " + (ushort)(tiles[i]) + ";\n";
+							finalExport += "						tile.TileType = " + (ushort)(tiles[i]) + ";\n";
 						}
 						else if (tileData.Width == 1 && tileData.Height == 1)
 						{

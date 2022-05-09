@@ -9,26 +9,26 @@ namespace SOTS.Projectiles.Nature
     {	
         public override void SetDefaults()
         {
-			projectile.aiStyle = 1;
-			projectile.width = 20;
-			projectile.height = 20;
-            projectile.magic = true;
-			projectile.penetrate = 1;
-			projectile.ranged = false;
-			projectile.alpha = 0; 
-			projectile.friendly = true;
+			Projectile.aiStyle = 1;
+			Projectile.width = 20;
+			Projectile.height = 20;
+            Projectile.magic = true;
+			Projectile.penetrate = 1;
+			Projectile.ranged = false;
+			Projectile.alpha = 0; 
+			Projectile.friendly = true;
 		}
 		public override void AI()
         {
-			projectile.rotation = (float)Math.Atan2((double)projectile.velocity.Y, (double)projectile.velocity.X) - MathHelper.ToRadians(125);
-			projectile.spriteDirection = 1;
+			Projectile.rotation = (float)Math.Atan2((double)Projectile.velocity.Y, (double)Projectile.velocity.X) - MathHelper.ToRadians(125);
+			Projectile.spriteDirection = 1;
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{
-			Player player = Main.player[projectile.owner];
-			if(projectile.owner == Main.myPlayer)
+			Player player = Main.player[Projectile.owner];
+			if(Projectile.owner == Main.myPlayer)
 			{
-				int Probe = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, ModContent.ProjectileType<GrowTree>(), projectile.damage, projectile.knockBack, player.whoAmI, 1);
+				int Probe = Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<GrowTree>(), Projectile.damage, Projectile.knockBack, player.whoAmI, 1);
 				Main.projectile[Probe].rotation = (float)Math.Atan2((double)oldVelocity.Y, (double)oldVelocity.X) + MathHelper.ToRadians(90);
 				Main.projectile[Probe].spriteDirection = 1;
 				Main.projectile[Probe].frame = 3;
@@ -37,11 +37,11 @@ namespace SOTS.Projectiles.Nature
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-			Player player = Main.player[projectile.owner];
-			if(projectile.owner == Main.myPlayer)
+			Player player = Main.player[Projectile.owner];
+			if(Projectile.owner == Main.myPlayer)
 			{
-				int Probe = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, ModContent.ProjectileType<GrowTree>(), projectile.damage, projectile.knockBack, player.whoAmI, 1);
-				Main.projectile[Probe].rotation = (float)Math.Atan2((double)projectile.velocity.Y, (double)projectile.velocity.X) + MathHelper.ToRadians(90);
+				int Probe = Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<GrowTree>(), Projectile.damage, Projectile.knockBack, player.whoAmI, 1);
+				Main.projectile[Probe].rotation = (float)Math.Atan2((double)Projectile.velocity.Y, (double)Projectile.velocity.X) + MathHelper.ToRadians(90);
 				Main.projectile[Probe].spriteDirection = 1;
 				Main.projectile[Probe].frame = 3;
             }
@@ -50,7 +50,7 @@ namespace SOTS.Projectiles.Nature
         {
 			for(int i = 0; i < 15; i++)
 			{
-				int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 2);
+				int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 2);
 				Main.dust[num1].noGravity = true;
 			}
 		}

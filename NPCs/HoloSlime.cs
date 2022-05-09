@@ -56,7 +56,7 @@ namespace SOTS.NPCs
 			for(int k = 0; k < dist; k++)
 			{
 				Tile tile = Framing.GetTileSafely(i, j + k);
-				if(tile.active() && Main.tileSolid[tile.type])
+				if(tile.active() && Main.tileSolid[tile.TileType])
 				{
 					flag = true;
 					break;

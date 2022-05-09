@@ -14,37 +14,37 @@ namespace SOTS.Projectiles.Nature
 		}
         public override void SetDefaults()
         {
-			projectile.width = 72;
-			projectile.height = 64;
-            Main.projFrames[projectile.type] = 5;
-			projectile.penetrate = -1;
-			projectile.timeLeft = 60;
-			projectile.tileCollide = false;
-			projectile.hostile = false;
-			projectile.ranged = false;
-			projectile.magic = true;
-            projectile.netImportant = true;
-			projectile.alpha = 35;
+			Projectile.width = 72;
+			Projectile.height = 64;
+            Main.projFrames[Projectile.type] = 5;
+			Projectile.penetrate = -1;
+			Projectile.timeLeft = 60;
+			Projectile.tileCollide = false;
+			Projectile.hostile = false;
+			Projectile.ranged = false;
+			Projectile.magic = true;
+            Projectile.netImportant = true;
+			Projectile.alpha = 35;
 		}
 		public override void SendExtraAI(BinaryWriter writer) 
 		{
-			writer.Write(projectile.rotation);
-			writer.Write(projectile.spriteDirection);
-			writer.Write(projectile.frame);
+			writer.Write(Projectile.rotation);
+			writer.Write(Projectile.spriteDirection);
+			writer.Write(Projectile.frame);
 		}
 		public override void ReceiveExtraAI(BinaryReader reader)
 		{	
-			projectile.rotation = reader.ReadSingle();
-			projectile.spriteDirection = reader.ReadInt32();
-			projectile.frame = reader.ReadInt32();
+			Projectile.rotation = reader.ReadSingle();
+			Projectile.spriteDirection = reader.ReadInt32();
+			Projectile.frame = reader.ReadInt32();
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor) 
+		public override bool PreDraw(ref Color lightColor) 
 		{
 			return true;
 		}
 		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) 
 		{
-			Vector2 direction = new Vector2(24,0).RotatedBy(projectile.rotation - MathHelper.ToRadians(90));
+			Vector2 direction = new Vector2(24,0).RotatedBy(Projectile.rotation - MathHelper.ToRadians(90));
 			if(direction.X > 0)
 				hitDirection = 1;
 			if(direction.X < 0)
@@ -55,34 +55,34 @@ namespace SOTS.Projectiles.Nature
 		{
 			if(!loaded)
 			{
-				projectile.netUpdate = true;
+				Projectile.netUpdate = true;
 				loaded = true;
 			}
 			return true;
 		}
 		public override void AI()
         {
-			Player player = Main.player[projectile.owner];
-			projectile.alpha += 2;
-			float distance = 24 - projectile.ai[1]/3;
-			if(projectile.ai[0] == 1)
+			Player player = Main.player[Projectile.owner];
+			Projectile.alpha += 2;
+			float distance = 24 - Projectile.ai[1]/3;
+			if(Projectile.ai[0] == 1)
 			{
-				distance = 18 - projectile.ai[1]/3;
+				distance = 18 - Projectile.ai[1]/3;
 			}
-			if(projectile.ai[0] == 9)
+			if(Projectile.ai[0] == 9)
 			{
-				distance = 38 - projectile.ai[1]/3;
+				distance = 38 - Projectile.ai[1]/3;
 			}
-			Vector2 direction = new Vector2(distance,0).RotatedBy(projectile.rotation - MathHelper.ToRadians(90 - projectile.ai[1]));
-			if(projectile.timeLeft < 58)
+			Vector2 direction = new Vector2(distance,0).RotatedBy(Projectile.rotation - MathHelper.ToRadians(90 - Projectile.ai[1]));
+			if(Projectile.timeLeft < 58)
 			{
-				if(projectile.ai[0] != 10 && !projectile.friendly)
+				if(Projectile.ai[0] != 10 && !Projectile.friendly)
 				{
-					if(projectile.owner == Main.myPlayer)
+					if(Projectile.owner == Main.myPlayer)
 					{
 						
-						int Probe = Projectile.NewProjectile(projectile.Center.X + direction.X, projectile.Center.Y + direction.Y, 0, 0, ModContent.ProjectileType<GrowTree>(), projectile.damage, projectile.knockBack, player.whoAmI, projectile.ai[0] + 1, projectile.ai[1]);
-							Main.projectile[Probe].rotation = projectile.rotation - projectile.ai[1];
+						int Probe = Projectile.NewProjectile(Projectile.Center.X + direction.X, Projectile.Center.Y + direction.Y, 0, 0, ModContent.ProjectileType<GrowTree>(), Projectile.damage, Projectile.knockBack, player.whoAmI, Projectile.ai[0] + 1, Projectile.ai[1]);
+							Main.projectile[Probe].rotation = Projectile.rotation - Projectile.ai[1];
 						
 						if(Main.projectile[Probe].ai[0] != 10)
 							Main.projectile[Probe].frame = 4;
@@ -93,14 +93,14 @@ namespace SOTS.Projectiles.Nature
 						if (Main.projectile[Probe].ai[0] >= 5 && Main.projectile[Probe].ai[0] <= 9 && Main.projectile[Probe].frame == 4)
 						{
 							int type = Main.rand.Next(3);
-							if(type == 0 && projectile.frame != 1)
+							if(type == 0 && Projectile.frame != 1)
 								Main.projectile[Probe].frame = 1;
-							if(type == 1 && projectile.frame != 2)
+							if(type == 1 && Projectile.frame != 2)
 								Main.projectile[Probe].frame = 2;
 						}
 					}
 				}
-				projectile.friendly = true;
+				Projectile.friendly = true;
 			}
 				
 		}
@@ -115,7 +115,7 @@ namespace SOTS.Projectiles.Nature
         {
 			for(int i = 0; i < 15; i++)
 			{
-				int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 2);
+				int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 2);
 				Main.dust[num1].noGravity = true;
 			}
 		}

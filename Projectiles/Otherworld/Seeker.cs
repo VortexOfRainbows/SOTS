@@ -19,20 +19,20 @@ namespace SOTS.Projectiles.Otherworld
 		}
         public override void SetDefaults()
         {
-			projectile.height = 16;
-			projectile.width = 16;
-			projectile.melee = true;
-			projectile.timeLeft = 7200;
-			projectile.friendly = true;
-			projectile.hostile = false;
-			projectile.tileCollide = false;
+			Projectile.height = 16;
+			Projectile.width = 16;
+			Projectile.melee = true;
+			Projectile.timeLeft = 7200;
+			Projectile.friendly = true;
+			Projectile.hostile = false;
+			Projectile.tileCollide = false;
 		}
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
 			crit = false;
             base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
         }
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override bool PreDraw(ref Color lightColor)
         {
 			return false;
 		}
@@ -40,13 +40,13 @@ namespace SOTS.Projectiles.Otherworld
 		{
 			if (target.life <= 0)
 			{
-				SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 14, 0.6f);
-				if (projectile.owner == Main.myPlayer)
+				SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 14, 0.6f);
+				if (Projectile.owner == Main.myPlayer)
 				{
 					for (int i = 0; i < 2; i++)
 					{
 						Vector2 circular = new Vector2(3, 0).RotatedBy(MathHelper.ToRadians(Main.rand.Next(360)));
-						Projectile.NewProjectile(target.Center.X, target.Center.Y, circular.X, circular.Y, mod.ProjectileType("Seeker"), (int)(0.75f * projectile.damage) + 1, projectile.knockBack, Main.myPlayer, Main.rand.Next(360), target.whoAmI);
+						Projectile.NewProjectile(target.Center.X, target.Center.Y, circular.X, circular.Y, mod.ProjectileType("Seeker"), (int)(0.75f * Projectile.damage) + 1, Projectile.knockBack, Main.myPlayer, Main.rand.Next(360), target.whoAmI);
 					}
 				}
 			}
@@ -61,23 +61,23 @@ namespace SOTS.Projectiles.Otherworld
 		float counter = 1f;
 		public override void AI()
 		{
-			projectile.ai[0]++;
-			int num1 = Dust.NewDust(new Vector2(projectile.position.X + 4, projectile.position.Y + 4), 8, 8, mod.DustType("CopyDust4"));
+			Projectile.ai[0]++;
+			int num1 = Dust.NewDust(new Vector2(Projectile.position.X + 4, Projectile.position.Y + 4), 8, 8, mod.DustType("CopyDust4"));
 			Dust dust = Main.dust[num1];
 			dust.velocity *= 0.2f;
 			dust.noGravity = true;
 			dust.scale += 0.1f;
-			dust.color = Color.Lerp(new Color(0, 200, 220, 100), new Color(220, 200, 30, 100), new Vector2(0.5f, 0).RotatedBy(MathHelper.ToRadians(projectile.ai[0])).X + 0.5f);
+			dust.color = Color.Lerp(new Color(0, 200, 220, 100), new Color(220, 200, 30, 100), new Vector2(0.5f, 0).RotatedBy(MathHelper.ToRadians(Projectile.ai[0])).X + 0.5f);
 			dust.fadeIn = 0.1f;
 			dust.scale *= 1.6f;
-			dust.alpha = projectile.alpha;
-			int npcId = (int)projectile.ai[1];
-			if(projectile.ai[1] >= 0 && Main.npc[npcId].active == false)
+			dust.alpha = Projectile.alpha;
+			int npcId = (int)Projectile.ai[1];
+			if(Projectile.ai[1] >= 0 && Main.npc[npcId].active == false)
             {
-				projectile.ai[1] = -1;
+				Projectile.ai[1] = -1;
 				return;
 			}
-			projectile.velocity *= 0.97f;
+			Projectile.velocity *= 0.97f;
 			if (lastID == -1)
 			{
 				for (int i = 0; i < Main.npc.Length; i++)
@@ -85,7 +85,7 @@ namespace SOTS.Projectiles.Otherworld
 					NPC npc = Main.npc[i];
 					if (npc.CanBeChasedBy() && npc.whoAmI != npcId)
 					{
-						Vector2 toNPC = npc.Center - projectile.Center;
+						Vector2 toNPC = npc.Center - Projectile.Center;
 						if (toNPC.Length() < lastLength)
 						{
 							lastLength = toNPC.Length();
@@ -96,26 +96,26 @@ namespace SOTS.Projectiles.Otherworld
 				lastLength += 6;
 				if(lastLength > 1200)
 				{
-					if (projectile.alpha < 255)
+					if (Projectile.alpha < 255)
 					{
-						projectile.alpha++;
-						projectile.timeLeft -= 2;
+						Projectile.alpha++;
+						Projectile.timeLeft -= 2;
 					}
                 }
 			}
 			else 
 			{
-				if(projectile.alpha > 0)
+				if(Projectile.alpha > 0)
 				{
-					projectile.alpha--;
-					projectile.timeLeft += 2;
+					Projectile.alpha--;
+					Projectile.timeLeft += 2;
 				}
 				NPC npc = Main.npc[lastID];
 				if (npc.CanBeChasedBy() && npc.whoAmI != npcId)
 				{
-					Vector2 toNPC = npc.Center - projectile.Center;
+					Vector2 toNPC = npc.Center - Projectile.Center;
 					toNPC = toNPC.SafeNormalize(Vector2.Zero);
-					projectile.velocity += 0.1f * toNPC * counter;
+					Projectile.velocity += 0.1f * toNPC * counter;
 					if(counter < 5)
 						counter += 0.01f;
 				}
@@ -125,9 +125,9 @@ namespace SOTS.Projectiles.Otherworld
 					lastLength = 200f;
 				}
 			}
-			if(projectile.alpha >= 255)
+			if(Projectile.alpha >= 255)
             {
-				projectile.Kill();
+				Projectile.Kill();
             }
 		}	
 	}

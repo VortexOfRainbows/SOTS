@@ -14,74 +14,74 @@ namespace SOTS.Projectiles.Laser
 		}
 		public override void SetDefaults()
 		{
-			projectile.width = 96;
-			projectile.height = 96;
-			projectile.friendly = true;
-			projectile.melee = true;
-			projectile.timeLeft = 60;
-			projectile.tileCollide = false;
-			projectile.penetrate = -1;
+			Projectile.width = 96;
+			Projectile.height = 96;
+			Projectile.friendly = true;
+			Projectile.melee = true;
+			Projectile.timeLeft = 60;
+			Projectile.tileCollide = false;
+			Projectile.penetrate = -1;
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			target.immune[projectile.owner] = 0;
+			target.immune[Projectile.owner] = 0;
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
-			Texture2D texture = Main.projectileTexture[projectile.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			for (int k = 0; k < 120; k++)
 			{
 				Vector2 circularLength = new Vector2(4, 0).RotatedBy(MathHelper.ToRadians(k * 18));
-				Vector2 circularPos = new Vector2(projectile.ai[0] * 2 + circularLength.X, 0).RotatedBy(MathHelper.ToRadians(k * 3) + projectile.rotation);
+				Vector2 circularPos = new Vector2(Projectile.ai[0] * 2 + circularLength.X, 0).RotatedBy(MathHelper.ToRadians(k * 3) + Projectile.rotation);
 				Color color = Color.Black;
-				Vector2 drawPos = projectile.Center + circularPos - Main.screenPosition;
-				color = projectile.GetAlpha(color) * 0.1f;
+				Vector2 drawPos = Projectile.Center + circularPos - Main.screenPosition;
+				color = Projectile.GetAlpha(color) * 0.1f;
 				for (int j = 0; j < 5; j++)
 				{
 					float x = Main.rand.Next(-10, 11) * 0.15f;
 					float y = Main.rand.Next(-10, 11) * 0.15f;
-					Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, projectile.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, Projectile.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
 				}
 			}
 			return false;
 		}
 		public override void AI()
 		{
-			Lighting.AddLight(projectile.Center, 1f, 0.5f, 1f);
-			projectile.rotation += MathHelper.ToRadians(2);
-			projectile.alpha += 4;
-			if (projectile.timeLeft < 12)
+			Lighting.AddLight(Projectile.Center, 1f, 0.5f, 1f);
+			Projectile.rotation += MathHelper.ToRadians(2);
+			Projectile.alpha += 4;
+			if (Projectile.timeLeft < 12)
 			{
-				projectile.ai[0] -= 2;
-				if(projectile.ai[0] <= 0)
+				Projectile.ai[0] -= 2;
+				if(Projectile.ai[0] <= 0)
 				{
-					projectile.Kill();
+					Projectile.Kill();
 				}
 			}
-			else if (projectile.ai[1] == 0)
+			else if (Projectile.ai[1] == 0)
 			{
-				projectile.ai[0]++;
-				if(projectile.ai[0] >= 22)
+				Projectile.ai[0]++;
+				if(Projectile.ai[0] >= 22)
 				{
-					projectile.ai[1] = 1;
+					Projectile.ai[1] = 1;
 				}
 			}
-			if (projectile.ai[1] == 1)
+			if (Projectile.ai[1] == 1)
 			{
-				projectile.ai[0]--;
-				if (projectile.ai[0] <= 16)
+				Projectile.ai[0]--;
+				if (Projectile.ai[0] <= 16)
 				{
-					projectile.ai[1] = 0;
+					Projectile.ai[1] = 0;
 				}
 			}
-			if(projectile.timeLeft % 15 == 0)
+			if(Projectile.timeLeft % 15 == 0)
 			{
-				projectile.friendly = true;
+				Projectile.friendly = true;
 			}
 			else
 			{
-				projectile.friendly = false;
+				Projectile.friendly = false;
 			}
 		}
 	}

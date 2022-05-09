@@ -23,15 +23,15 @@ namespace SOTS.Projectiles
 		
         public override void SetDefaults()
         {
-			projectile.height = 105;
-			projectile.width = 105;
-            Main.projFrames[projectile.type] = 5;
-			projectile.penetrate = -1;
-			projectile.friendly = false;
-			projectile.timeLeft = 36;
-			projectile.tileCollide = false;
-			projectile.hostile = false;
-			projectile.alpha = 0;
+			Projectile.height = 105;
+			Projectile.width = 105;
+            Main.projFrames[Projectile.type] = 5;
+			Projectile.penetrate = -1;
+			Projectile.friendly = false;
+			Projectile.timeLeft = 36;
+			Projectile.tileCollide = false;
+			Projectile.hostile = false;
+			Projectile.alpha = 0;
 		}
 		public override bool PreAI()
 		{
@@ -39,14 +39,14 @@ namespace SOTS.Projectiles
 		}
 		public override void AI()
         {
-			projectile.rotation = projectile.ai[0];
-			projectile.knockBack = 3.5f;
-            projectile.frameCounter++;
-            if (projectile.frameCounter >= 8)
+			Projectile.rotation = Projectile.ai[0];
+			Projectile.knockBack = 3.5f;
+            Projectile.frameCounter++;
+            if (Projectile.frameCounter >= 8)
             {
-				projectile.friendly = false;
-                projectile.frameCounter = 0;
-                projectile.frame = (projectile.frame + 1) % 5;
+				Projectile.friendly = false;
+                Projectile.frameCounter = 0;
+                Projectile.frame = (Projectile.frame + 1) % 5;
             }
         }
 	}

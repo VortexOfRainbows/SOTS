@@ -41,7 +41,7 @@ namespace SOTS.Items
         public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
         {
 			rotation = this.rotation;
-			spriteBatch.Draw(Main.itemTexture[Item.type], Item.Center - Main.screenPosition, new Rectangle(0, frame * Item.height, Item.width, Item.height), lightColor, rotation, new Vector2(Item.width / 2, Item.height / 2), 1f, SpriteEffects.None, 0.0f);
+			spriteBatch.Draw(Terraria.GameContent.TextureAssets.Item[Item.type].Value, Item.Center - Main.screenPosition, new Rectangle(0, frame * Item.height, Item.width, Item.height), lightColor, rotation, new Vector2(Item.width / 2, Item.height / 2), 1f, SpriteEffects.None, 0.0f);
             return false;
         }
         float rotation = 0;

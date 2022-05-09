@@ -13,27 +13,27 @@ namespace SOTS.Projectiles.Otherworld
 		}
         public override void SetDefaults()
         {
-            projectile.width = 64;
-            projectile.height = 64;
-			projectile.timeLeft = 24;
-            projectile.penetrate = -1; 
-            projectile.friendly = true; 
-            projectile.tileCollide = true;
-			projectile.ranged = true;
-			projectile.alpha = 255;
-			projectile.usesLocalNPCImmunity = true;
-			projectile.localNPCHitCooldown = 40;
-			projectile.extraUpdates = 1;
+            Projectile.width = 64;
+            Projectile.height = 64;
+			Projectile.timeLeft = 24;
+            Projectile.penetrate = -1; 
+            Projectile.friendly = true; 
+            Projectile.tileCollide = true;
+			Projectile.ranged = true;
+			Projectile.alpha = 255;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = 40;
+			Projectile.extraUpdates = 1;
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{
-			if (projectile.velocity.X != oldVelocity.X)
+			if (Projectile.velocity.X != oldVelocity.X)
 			{
-				projectile.velocity.X = -oldVelocity.X;
+				Projectile.velocity.X = -oldVelocity.X;
 			}
-			if (projectile.velocity.Y != oldVelocity.Y)
+			if (Projectile.velocity.Y != oldVelocity.Y)
 			{
-				projectile.velocity.Y = -oldVelocity.Y;
+				Projectile.velocity.Y = -oldVelocity.Y;
 			}
 			return false;
 		}
@@ -51,14 +51,14 @@ namespace SOTS.Projectiles.Otherworld
 		{
 			for(int i = 0; i < Main.rand.Next(2) + 1; i++)
 			{
-				int num = Dust.NewDust(new Vector2(projectile.position.X - 4, projectile.position.Y - 4), projectile.width, projectile.height, mod.DustType("CopyDust4"));
+				int num = Dust.NewDust(new Vector2(Projectile.position.X - 4, Projectile.position.Y - 4), Projectile.width, Projectile.height, mod.DustType("CopyDust4"));
 				Dust dust = Main.dust[num];
-				dust.velocity = projectile.velocity * 0.3f;
-				if (projectile.ai[0] == 2)
+				dust.velocity = Projectile.velocity * 0.3f;
+				if (Projectile.ai[0] == 2)
 					dust.color = new Color(220, 60, 10, 40);
-				if (projectile.ai[0] == 1)
+				if (Projectile.ai[0] == 1)
 					dust.color = new Color(0, 200, 220, 100);
-				if (projectile.ai[0] == 0)
+				if (Projectile.ai[0] == 0)
 					dust.color = new Color(255, 10, 10, 40);
 				dust.noGravity = true;
 				dust.fadeIn = 0.1f;

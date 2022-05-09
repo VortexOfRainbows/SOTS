@@ -14,15 +14,15 @@ namespace SOTS.Projectiles.Otherworld
 		}
         public override void SetDefaults()
 		{
-			projectile.height = 24;
-			projectile.width = 24;
-			projectile.penetrate = 1;
-			projectile.friendly = true;
-			projectile.ranged = true;
-			projectile.timeLeft = 6;
-			projectile.tileCollide = false;
-			projectile.hostile = false;
-			projectile.alpha = 255;
+			Projectile.height = 24;
+			Projectile.width = 24;
+			Projectile.penetrate = 1;
+			Projectile.friendly = true;
+			Projectile.ranged = true;
+			Projectile.timeLeft = 6;
+			Projectile.tileCollide = false;
+			Projectile.hostile = false;
+			Projectile.alpha = 255;
 		}
         public override bool ShouldUpdatePosition()
         {
@@ -30,19 +30,19 @@ namespace SOTS.Projectiles.Otherworld
         }
         public override void Kill(int timeLeft)
 		{
-			int frostFlake = (int)projectile.ai[0];
-			if(frostFlake > 0 && Main.myPlayer == projectile.owner)
+			int frostFlake = (int)Projectile.ai[0];
+			if(frostFlake > 0 && Main.myPlayer == Projectile.owner)
 			{
 				float damageMult = 2;
 				if (frostFlake == 2)
 					damageMult = 6;
-				Projectile.NewProjectile(projectile.Center, projectile.velocity, ModContent.ProjectileType<FrostflakePulse>(), (int)(projectile.damage * damageMult), projectile.knockBack, Main.myPlayer, frostFlake, 0);
+				Projectile.NewProjectile(Projectile.Center, Projectile.velocity, ModContent.ProjectileType<FrostflakePulse>(), (int)(Projectile.damage * damageMult), Projectile.knockBack, Main.myPlayer, frostFlake, 0);
 			}
 			for (int h = 0; h < 20; h++)
 			{
-				int dust = Dust.NewDust(new Vector2(projectile.Center.X - 12, projectile.Center.Y - 12), 16, 16, DustID.Electric);
+				int dust = Dust.NewDust(new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 12), 16, 16, DustID.Electric);
 				Main.dust[dust].scale *= 1f;
-				Main.dust[dust].velocity += projectile.velocity * 0.1f;
+				Main.dust[dust].velocity += Projectile.velocity * 0.1f;
 				Main.dust[dust].noGravity = true;
 			}
 		}

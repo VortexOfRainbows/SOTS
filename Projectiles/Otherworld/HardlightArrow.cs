@@ -15,29 +15,29 @@ namespace SOTS.Projectiles.Otherworld
 		}
 		public override void SetDefaults()
 		{
-			projectile.CloneDefaults(1);
-			projectile.aiStyle = 1;
-			projectile.width = 14;
-			projectile.height = 32;
-			projectile.penetrate = -1;
-			projectile.timeLeft = 3000;
-			projectile.ranged = true;
-			projectile.arrow = true;
+			Projectile.CloneDefaults(1);
+			Projectile.aiStyle = 1;
+			Projectile.width = 14;
+			Projectile.height = 32;
+			Projectile.penetrate = -1;
+			Projectile.timeLeft = 3000;
+			Projectile.ranged = true;
+			Projectile.arrow = true;
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			target.immune[projectile.owner] = 0;
+			target.immune[Projectile.owner] = 0;
 			triggerStop();
 		}
 		Vector2[] trailPos = new Vector2[12];
-		public void TrailPreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public void TrailPreDraw(ref Color lightColor)
 		{
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Otherworld/HardlightArrowSmallShaft").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			Vector2 previousPosition = projectile.Center;
+			Vector2 previousPosition = Projectile.Center;
 			for (int k = 0; k < trailPos.Length; k++)
 			{
-				float scale = projectile.scale * (trailPos.Length - k) / (float)trailPos.Length;
+				float scale = Projectile.scale * (trailPos.Length - k) / (float)trailPos.Length;
 				if (trailPos[k] == Vector2.Zero)
 				{
 					break;
@@ -46,7 +46,7 @@ namespace SOTS.Projectiles.Otherworld
 				Vector2 drawPos = trailPos[k] - Main.screenPosition;
 				Vector2 currentPos = trailPos[k];
 				Vector2 betweenPositions = previousPosition - currentPos;
-				color = projectile.GetAlpha(color) * ((trailPos.Length - k) / (float)trailPos.Length) * 0.5f;
+				color = Projectile.GetAlpha(color) * ((trailPos.Length - k) / (float)trailPos.Length) * 0.5f;
 				float max = betweenPositions.Length() / (6f * scale);
 				for (int i = 0; i < max; i++)
 				{
@@ -60,7 +60,7 @@ namespace SOTS.Projectiles.Otherworld
 							x = 0;
 							y = 0;
 						}
-						if (trailPos[k] != projectile.Center)
+						if (trailPos[k] != Projectile.Center)
 							spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, betweenPositions.ToRotation() + MathHelper.ToRadians(90), drawOrigin, scale, SpriteEffects.None, 0f);
 					}
 				}
@@ -69,7 +69,7 @@ namespace SOTS.Projectiles.Otherworld
 		}
 		public void cataloguePos()
 		{
-			Vector2 current = projectile.Center;
+			Vector2 current = Projectile.Center;
 			for (int i = 0; i < trailPos.Length; i++)
 			{
 				Vector2 previousPosition = trailPos[i];
@@ -77,17 +77,17 @@ namespace SOTS.Projectiles.Otherworld
 				current = previousPosition;
 			}
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
 			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Projectiles/Otherworld/HardlightArrowShaft").Value;
 			Color color = new Color(120, 120, 120, 0);
-			Vector2 drawOrigin = new Vector2(Main.projectileTexture[projectile.type].Width * 0.5f, projectile.height * 0.5f);
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value.Width * 0.5f, Projectile.height * 0.5f);
 			if(endHow == 0)
 				for (int k = 0; k < 5; k++)
 				{
 					float x = Main.rand.Next(-10, 11) * 0.15f;
 					float y = Main.rand.Next(-10, 11) * 0.15f;
-					Main.spriteBatch.Draw(texture2, new Vector2((float)(projectile.Center.X - (int)Main.screenPosition.X) + x, (float)(projectile.Center.Y - (int)Main.screenPosition.Y) + y), null, color * (1f - (projectile.alpha / 255f)), projectile.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture2, new Vector2((float)(Projectile.Center.X - (int)Main.screenPosition.X) + x, (float)(Projectile.Center.Y - (int)Main.screenPosition.Y) + y), null, color * (1f - (Projectile.alpha / 255f)), Projectile.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
 				}
 			TrailPreDraw(spriteBatch, lightColor);
 			return endHow == 0;
@@ -95,18 +95,18 @@ namespace SOTS.Projectiles.Otherworld
 		bool runOnce = true;
 		public override bool PreAI()
 		{
-			if(projectile.ai[1] == -1)
+			if(Projectile.ai[1] == -1)
             {
-				projectile.ai[1]--;
+				Projectile.ai[1]--;
 				for (int i = 0; i < 20; i++)
 				{
-					int dust = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Electric);
+					int dust = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.Electric);
 					Main.dust[dust].scale *= 1f;
-					Main.dust[dust].velocity += projectile.velocity * 0.1f;
+					Main.dust[dust].velocity += Projectile.velocity * 0.1f;
 					Main.dust[dust].noGravity = true;
 				}
 			}
-			projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
+			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
 			if (runOnce)
 			{
 				for (int i = 0; i < trailPos.Length; i++)
@@ -114,25 +114,25 @@ namespace SOTS.Projectiles.Otherworld
 					trailPos[i] = Vector2.Zero;
 				}
 				runOnce = false;
-				projectile.velocity = projectile.velocity * 2f;
+				Projectile.velocity = Projectile.velocity * 2f;
 			}
 			if (!runOnce)
 			{
-				if (projectile.ai[0] % 3 == 0)
+				if (Projectile.ai[0] % 3 == 0)
 					cataloguePos();
 			}
 			checkPos();
-			if (projectile.timeLeft < 1000 && endHow == 0)
+			if (Projectile.timeLeft < 1000 && endHow == 0)
 			{
 				triggerStop();
 			}
-			projectile.ai[0]++;
+			Projectile.ai[0]++;
 			return false;
 		}
 		public void checkPos()
 		{
 			float iterator = 0f;
-			Vector2 current = projectile.Center;
+			Vector2 current = Projectile.Center;
 			for (int i = 0; i < trailPos.Length; i++)
 			{
 				Vector2 previousPosition = trailPos[i];
@@ -142,7 +142,7 @@ namespace SOTS.Projectiles.Otherworld
 				}
 			}
 			if (iterator >= trailPos.Length)
-				projectile.Kill();
+				Projectile.Kill();
 		}
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
         {
@@ -159,22 +159,22 @@ namespace SOTS.Projectiles.Otherworld
 		public void triggerStop()
 		{
 			endHow = 1;
-			projectile.tileCollide = false;
-			projectile.friendly = false;
-			projectile.velocity *= 0f;
-			projectile.ai[1] = -1;
-			projectile.netUpdate = true;
+			Projectile.tileCollide = false;
+			Projectile.friendly = false;
+			Projectile.velocity *= 0f;
+			Projectile.ai[1] = -1;
+			Projectile.netUpdate = true;
 		}
 		public override void SendExtraAI(BinaryWriter writer)
 		{
-			writer.Write(projectile.tileCollide);
-			writer.Write(projectile.friendly);
+			writer.Write(Projectile.tileCollide);
+			writer.Write(Projectile.friendly);
 			base.SendExtraAI(writer);
 		}
 		public override void ReceiveExtraAI(BinaryReader reader)
 		{
-			projectile.tileCollide = reader.ReadBoolean();
-			projectile.friendly = reader.ReadBoolean();
+			Projectile.tileCollide = reader.ReadBoolean();
+			Projectile.friendly = reader.ReadBoolean();
 			base.ReceiveExtraAI(reader);
 		}
 	}

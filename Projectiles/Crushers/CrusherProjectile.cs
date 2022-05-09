@@ -17,14 +17,14 @@ namespace SOTS.Projectiles.Crushers
 		}
 		public sealed override void SetDefaults()
 		{
-			projectile.width = 30;
-			projectile.height = 30;
-			projectile.penetrate = -1;
-			projectile.friendly = false;
-			projectile.timeLeft = 6004;
-			projectile.tileCollide = false;
-			projectile.hostile = false;
-			projectile.alpha = 0;
+			Projectile.width = 30;
+			Projectile.height = 30;
+			Projectile.penetrate = -1;
+			Projectile.friendly = false;
+			Projectile.timeLeft = 6004;
+			Projectile.tileCollide = false;
+			Projectile.hostile = false;
+			Projectile.alpha = 0;
 			SafeSetDefaults();
 		}
 		public virtual void SafeSetDefaults()
@@ -71,7 +71,7 @@ namespace SOTS.Projectiles.Crushers
 		bool runOnce = true; 
 		public virtual void VoidConsumption(float charge, ref int consumedAmt)
 		{
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			VoidPlayer vPlayer = VoidPlayer.ModPlayer(player);
 			Item item = player.HeldItem;
 			VoidItem vItem = Item.modItem as VoidItem;
@@ -102,7 +102,7 @@ namespace SOTS.Projectiles.Crushers
         }
 		public sealed override bool PreAI()
 		{
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			VoidPlayer vPlayer = VoidPlayer.ModPlayer(player);
 			if (runOnce)
 			{
@@ -118,21 +118,21 @@ namespace SOTS.Projectiles.Crushers
 					setsActive[i] = false;
 				for (int i = 0; i < arms.Length; i++)
                 {
-					arms[i] = projectile.Center;
+					arms[i] = Projectile.Center;
 				}
 				runOnce = false;
-				initialDamage = projectile.damage;
+				initialDamage = Projectile.damage;
 			}
-			if (projectile.owner == Main.myPlayer)
+			if (Projectile.owner == Main.myPlayer)
 			{
 				Vector2 cursorArea = Main.MouseWorld;
 				if (counter % 3 == 0)
 				{
-					projectile.netUpdate = true;
+					Projectile.netUpdate = true;
 				}
 				counter++;
-				projectile.ai[0] = cursorArea.X;
-				projectile.ai[1] = cursorArea.Y;
+				Projectile.ai[0] = cursorArea.X;
+				Projectile.ai[1] = cursorArea.Y;
 			}
 			if (!released) //not charged and not released
 			{
@@ -151,7 +151,7 @@ namespace SOTS.Projectiles.Crushers
 					VoidConsumption(chargePercentage, ref consumedVoid);
 					if (prev != consumedVoid)
 					{
-						SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 15, 1.0f + 0.1f * consumedVoid);
+						SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 15, 1.0f + 0.1f * consumedVoid);
 					}
 					int trueMaxExplosions = maxExplosions + vPlayer.BonusCrushRangeMax;
 					int trueMinExplosions = minExplosions + vPlayer.BonusCrushRangeMin;
@@ -166,18 +166,18 @@ namespace SOTS.Projectiles.Crushers
 					explosiveShotgun = (int)spreadCount + minExplosionSpread;
 					rotationTimer = chargePercentage * finalDist; //making the rotation timer proportional to the charge time completed
 					float increaseDamage = minDamage + ((maxDamage - minDamage) * chargePercentage);
-					if(ModContent.ProjectileType<SubspaceCrusher>() != projectile.type)
-						projectile.damage = (int)(initialDamage * increaseDamage);
+					if(ModContent.ProjectileType<SubspaceCrusher>() != Projectile.type)
+						Projectile.damage = (int)(initialDamage * increaseDamage);
 				}
 			}
-			Vector2 goToArea = new Vector2(projectile.ai[0], projectile.ai[1]) - player.Center;
+			Vector2 goToArea = new Vector2(Projectile.ai[0], Projectile.ai[1]) - player.Center;
 			Vector2 normalized = goToArea.SafeNormalize(new Vector2(1, 0));
-			normalized *= projectile.velocity.Length();
-			projectile.Center = player.Center + normalized;
-			projectile.velocity = normalized;
-			projectile.rotation = projectile.velocity.ToRotation();
-			player.heldProj = projectile.whoAmI;
-			return projectile.active;
+			normalized *= Projectile.velocity.Length();
+			Projectile.Center = player.Center + normalized;
+			Projectile.velocity = normalized;
+			Projectile.rotation = Projectile.velocity.ToRotation();
+			player.heldProj = Projectile.whoAmI;
+			return Projectile.active;
 		}
         public sealed override bool ShouldUpdatePosition()
         {
@@ -194,9 +194,9 @@ namespace SOTS.Projectiles.Crushers
 		int counter = 0;
 		public sealed override void AI()
 		{
-			Player player = Main.player[projectile.owner];
-			float shootToX = projectile.ai[0] - player.Center.X;
-			float shootToY = projectile.ai[1] - player.Center.Y;
+			Player player = Main.player[Projectile.owner];
+			float shootToX = Projectile.ai[0] - player.Center.X;
+			float shootToY = Projectile.ai[1] - player.Center.Y;
 			double direction = Math.Atan2((double)-shootToY, (double)-shootToX);
 			double degDirection = direction	* 180/Math.PI;
 						
@@ -204,23 +204,23 @@ namespace SOTS.Projectiles.Crushers
 			{
 				released = true;
 			}
-			if(player.channel || projectile.timeLeft > 6001 || currentCharge < minTimeBeforeRelease)
+			if(player.channel || Projectile.timeLeft > 6001 || currentCharge < minTimeBeforeRelease)
 			{
-				projectile.timeLeft = 6000;
-				projectile.alpha = 0;
+				Projectile.timeLeft = 6000;
+				Projectile.alpha = 0;
 			}
 			else
 			{
 				released = true;
 			}
-			if (projectile.hide == false)
+			if (Projectile.hide == false)
 			{
-				player.ChangeDir(projectile.direction);
-				player.heldProj = projectile.whoAmI;
-				player.itemRotation = (projectile.velocity * projectile.direction).ToRotation();
+				player.ChangeDir(Projectile.direction);
+				player.heldProj = Projectile.whoAmI;
+				player.itemRotation = (Projectile.velocity * Projectile.direction).ToRotation();
 				player.itemTime = 2;
 				player.itemAnimation = 2;
-				projectile.alpha = 0;
+				Projectile.alpha = 0;
 			}
 			for (int i = 0; i < arms.Length; i++)
 			{
@@ -258,7 +258,7 @@ namespace SOTS.Projectiles.Crushers
 					if (charge <= 0 && setsActive[j]) //collision
 					{
 						setsActive[j] = false;
-						if (projectile.owner == Main.myPlayer)
+						if (Projectile.owner == Main.myPlayer)
 						{
 							int shotGun = explosiveShotgun - 1;
 							for(int k = -shotGun; k <= shotGun; k++)
@@ -273,7 +273,7 @@ namespace SOTS.Projectiles.Crushers
 									if (charge2 > 1)
 										charge2 = 1f;
 									if (!UseCustomExplosionEffect(positionX, positionY, (float)distance, (float)rad1, charge2, i))
-										Projectile.NewProjectile(positionX, positionY, projectile.velocity.X, projectile.velocity.Y, ExplosionType(), projectile.damage, projectile.knockBack, Main.myPlayer, initialDamage, 0f);
+										Projectile.NewProjectile(positionX, positionY, Projectile.velocity.X, Projectile.velocity.Y, ExplosionType(), Projectile.damage, Projectile.knockBack, Main.myPlayer, initialDamage, 0f);
 								}
 							}
 						}
@@ -281,17 +281,17 @@ namespace SOTS.Projectiles.Crushers
 					}
 				}
 				if (!setsActive[0])
-					projectile.Kill();
+					Projectile.Kill();
 				rotationTimer -= accelerateAmount; //start to close the crushers
 			}
 		}
 		public virtual void ExplosionSound()
 		{
-			SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 14, 1.1f);
+			SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 14, 1.1f);
 		}
 		public virtual Texture2D ArmTexture(int handNum, int direction)
         {
-			return Main.projectileTexture[projectile.type];
+			return Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 		}
 		public void cataloguePos(int arm, Vector2 next)
 		{
@@ -301,15 +301,15 @@ namespace SOTS.Projectiles.Crushers
 				trail.RemoveAt(0);
 			stored[arm] = trail;
 		}
-		public sealed override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public sealed override bool PreDraw(ref Color lightColor)
 		{
 			if (runOnce)
 				return false;
-			if (projectile.type == ModContent.ProjectileType<HellbreakerCrusher>() || projectile.type == ModContent.ProjectileType<SubspaceCrusher>())
+			if (Projectile.type == ModContent.ProjectileType<HellbreakerCrusher>() || Projectile.type == ModContent.ProjectileType<SubspaceCrusher>())
 				lightColor = Color.White;
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			//VoidPlayer modPlayer = VoidPlayer.ModPlayer(player);
-			Vector2 cursorArea = new Vector2(projectile.ai[0], projectile.ai[1]);
+			Vector2 cursorArea = new Vector2(Projectile.ai[0], Projectile.ai[1]);
 			float shootToX = cursorArea.X - player.Center.X;
 			float shootToY = cursorArea.Y - player.Center.Y;
 			double direction = Math.Atan2(-shootToY, -shootToX);
@@ -317,7 +317,7 @@ namespace SOTS.Projectiles.Crushers
 			for (int i = 0; i < arms.Length; i++)
 			{
 				Vector2 pos = arms[i];
-				Texture2D texture = ArmTexture(i, projectile.direction);
+				Texture2D texture = ArmTexture(i, Projectile.direction);
 				Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
 
 				float rotation;
@@ -335,21 +335,21 @@ namespace SOTS.Projectiles.Crushers
 					deg = -charge - 5 + (float)degDirection; //subtract rotate
 				}
 				rotation = MathHelper.ToRadians(deg + (flip ? (360 - armAngle) : (180 + armAngle)));
-				if (setsActive[set] && charge > 0 && pos != projectile.Center)
+				if (setsActive[set] && charge > 0 && pos != Projectile.Center)
 				{
 					List<Vector2> trail = stored[i];
 					for (int j = 1; j < trail.Count; j++)
 					{
-						Color color = projectile.GetAlpha(lightColor) * ((float)j / trailLength) * 0.4f;
+						Color color = Projectile.GetAlpha(lightColor) * ((float)j / trailLength) * 0.4f;
 						Vector2 pos2 = trail[j];
 						spriteBatch.Draw(texture, pos2 - Main.screenPosition, new Rectangle(0, 0, texture.Width, texture.Height), color, rotation, origin, 1.05f, !flip ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 					}
-					spriteBatch.Draw(texture, player.Center + pos - Main.screenPosition, new Rectangle(0, 0, texture.Width, texture.Height), projectile.GetAlpha(lightColor), rotation, origin, 1.05f, !flip ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+					spriteBatch.Draw(texture, player.Center + pos - Main.screenPosition, new Rectangle(0, 0, texture.Width, texture.Height), Projectile.GetAlpha(lightColor), rotation, origin, 1.05f, !flip ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 				}
 			}
-			Texture2D headTexture = Main.projectileTexture[projectile.type];
+			Texture2D headTexture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Vector2 origin2 = new Vector2(headTexture.Width / 2, headTexture.Height / 2);
-			spriteBatch.Draw(headTexture, projectile.Center - Main.screenPosition, new Rectangle(0, 0, headTexture.Width, headTexture.Height), lightColor, projectile.rotation + MathHelper.ToRadians(45), origin2, 1.05f, projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+			spriteBatch.Draw(headTexture, Projectile.Center - Main.screenPosition, new Rectangle(0, 0, headTexture.Width, headTexture.Height), lightColor, Projectile.rotation + MathHelper.ToRadians(45), origin2, 1.05f, Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			return false;
         }
     }

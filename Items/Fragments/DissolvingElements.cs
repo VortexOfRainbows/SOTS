@@ -20,7 +20,7 @@ namespace SOTS.Items.Fragments
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
-			Texture2D texture = Main.itemTexture[Item.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Item[Item.type].Value;
 			Color color = new Color(100, 100, 100, 0);
 			for (int k = 0; k < 7; k++)
 			{
@@ -45,9 +45,9 @@ namespace SOTS.Items.Fragments
 				frame = 0;
 			}
 
-			Texture2D texture = Main.itemTexture[Item.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Item[Item.type].Value;
 			Color color = new Color(100, 100, 100, 0);
-			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, Item.height * 0.5f);
 			for (int k = 0; k < 7; k++)
 			{
 				float x = Main.rand.Next(-10, 11) * 0.15f;
@@ -63,7 +63,7 @@ namespace SOTS.Items.Fragments
 			Item.width = 26;
 			Item.height = 42;
 			Item.value = Item.sellPrice(0, 1, 0, 0);
-			Item.rare = 3;
+			Item.rare = ItemRarityID.Orange;
 			Item.maxStack = 999;
 			ItemID.Sets.ItemNoGravity[Item.type] = true;
 		}
@@ -104,7 +104,7 @@ namespace SOTS.Items.Fragments
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
-			Texture2D texture = Main.itemTexture[Item.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Item[Item.type].Value;
 			Color color = new Color(100, 100, 100, 0);
 			for (int k = 0; k < 7; k++)
 			{
@@ -129,9 +129,9 @@ namespace SOTS.Items.Fragments
 				frame = 0;
 			}
 
-			Texture2D texture = Main.itemTexture[Item.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Item[Item.type].Value;
 			Color color = new Color(100, 100, 100, 0);
-			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, Item.height * 0.5f);
 			for (int k = 0; k < 7; k++)
 			{
 				float x = Main.rand.Next(-10, 11) * 0.15f;
@@ -147,7 +147,7 @@ namespace SOTS.Items.Fragments
 			Item.width = 28;
 			Item.height = 42;
 			Item.value = Item.sellPrice(0, 1, 0, 0);
-			Item.rare = 3;
+			Item.rare = ItemRarityID.Orange;
 			Item.maxStack = 999;
 			ItemID.Sets.ItemNoGravity[Item.type] = true;
 		}
@@ -191,13 +191,13 @@ namespace SOTS.Items.Fragments
 			Item.width = 34;
 			Item.height = 38;
 			Item.value = Item.sellPrice(0, 1, 0, 0);
-			Item.rare = 3;
+			Item.rare = ItemRarityID.Orange;
 			Item.maxStack = 999;
 			ItemID.Sets.ItemNoGravity[Item.type] = true;
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
-			Texture2D texture = Main.itemTexture[Item.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Item[Item.type].Value;
 			Color color = new Color(100, 100, 100, 0);
 			for (int k = 0; k < 7; k++)
 			{
@@ -222,9 +222,9 @@ namespace SOTS.Items.Fragments
 				frame = 0;
 			}
 
-			Texture2D texture = Main.itemTexture[Item.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Item[Item.type].Value;
 			Color color = new Color(100, 100, 100, 0);
-			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, Item.height * 0.5f);
 			for (int k = 0; k < 7; k++)
 			{
 				float x = Main.rand.Next(-10, 11) * 0.15f;
@@ -273,7 +273,7 @@ namespace SOTS.Items.Fragments
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
-			Texture2D texture = Main.itemTexture[Item.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Item[Item.type].Value;
 			Color color = new Color(100, 100, 100, 0);
 			for (int k = 0; k < 7; k++)
 			{
@@ -298,9 +298,9 @@ namespace SOTS.Items.Fragments
 				frame = 0;
 			}
 
-			Texture2D texture = Main.itemTexture[Item.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Item[Item.type].Value;
 			Color color = new Color(100, 100, 100, 0);
-			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, Item.height * 0.5f);
 			for (int k = 0; k < 7; k++)
 			{
 				float x = Main.rand.Next(-10, 11) * 0.15f;
@@ -360,13 +360,13 @@ namespace SOTS.Items.Fragments
 			Item.width = 34;
 			Item.height = 46;
 			Item.value = Item.sellPrice(0, 1, 0, 0);
-			Item.rare = 3;
+			Item.rare = ItemRarityID.Orange;
 			Item.maxStack = 999;
 			ItemID.Sets.ItemNoGravity[Item.type] = true;
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
-			Texture2D texture = Main.itemTexture[Item.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Item[Item.type].Value;
 			Color color = VoidPlayer.OtherworldColor;
 			for (int k = 0; k < 7; k++)
 			{
@@ -390,9 +390,9 @@ namespace SOTS.Items.Fragments
 			{
 				frame = 0;
 			}
-			Texture2D texture = Main.itemTexture[Item.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Item[Item.type].Value;
 			Color color = VoidPlayer.OtherworldColor;
-			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, Item.height * 0.5f);
 			for (int k = 0; k < 7; k++)
 			{
 				float x = Main.rand.Next(-10, 11) * 0.15f;
@@ -440,7 +440,7 @@ namespace SOTS.Items.Fragments
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
-			Texture2D texture = Main.itemTexture[Item.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Item[Item.type].Value;
 			Color color = VoidPlayer.EvilColor;
 			for (int k = 0; k < 7; k++)
 			{
@@ -462,9 +462,9 @@ namespace SOTS.Items.Fragments
 			{
 				frame = 0;
 			}
-			Texture2D texture = Main.itemTexture[Item.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Item[Item.type].Value;
 			Color color = VoidPlayer.EvilColor;
-			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, Item.height * 0.5f);
 			for (int k = 0; k < 7; k++)
 			{
 				Main.spriteBatch.Draw(texture,
@@ -512,7 +512,7 @@ namespace SOTS.Items.Fragments
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
-			Texture2D texture = Main.itemTexture[Item.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Item[Item.type].Value;
 			Color color = new Color(100, 100, 100, 0);
 			for (int k = 0; k < 7; k++)
 			{
@@ -537,9 +537,9 @@ namespace SOTS.Items.Fragments
 				frame = 0;
 			}
 
-			Texture2D texture = Main.itemTexture[Item.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Item[Item.type].Value;
 			Color color = new Color(100, 100, 100, 0);
-			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, Item.height * 0.5f);
 			for (int k = 0; k < 7; k++)
 			{
 				float x = Main.rand.Next(-10, 11) * 0.15f;
@@ -587,7 +587,7 @@ namespace SOTS.Items.Fragments
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
-			Texture2D texture = Main.itemTexture[Item.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Item[Item.type].Value;
 			Color color = new Color(100, 100, 100, 0);
 			for (int k = 0; k < 7; k++)
 			{
@@ -612,9 +612,9 @@ namespace SOTS.Items.Fragments
 				frame = 0;
 			}
 
-			Texture2D texture = Main.itemTexture[Item.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Item[Item.type].Value;
 			Color color = new Color(100, 100, 100, 0);
-			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, Item.height * 0.5f);
 			for (int k = 0; k < 7; k++)
 			{
 				float x = Main.rand.Next(-10, 11) * 0.15f;

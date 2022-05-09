@@ -106,7 +106,7 @@ namespace SOTS.Items.Pyramid.AncientGold
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
 		{
 			Tile tile = Main.tile[i, j];
-			if (tile.frameX < 66)
+			if (tile.TileFrameX < 66)
 			{
 				r = 1.1f;
 				g = 0.9f;

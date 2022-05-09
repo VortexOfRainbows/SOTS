@@ -21,29 +21,29 @@ namespace SOTS.Projectiles.Celestial
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Subspace Servant");
-			Main.projPet[projectile.type] = true;
-			//Main.vanityPet[projectile.type] = true;
+			Main.projPet[Projectile.type] = true;
+			//Main.vanityPet[Projectile.type] = true;
 		}
 		public sealed override void SetDefaults()
 		{
-			projectile.width = 44;
-			projectile.height = 44;
-			projectile.tileCollide = false;
-			projectile.friendly = true;
-			projectile.penetrate = -1;
-			projectile.ignoreWater = true;
-			projectile.netImportant = true;
-			projectile.hide = true;
+			Projectile.width = 44;
+			Projectile.height = 44;
+			Projectile.tileCollide = false;
+			Projectile.friendly = true;
+			Projectile.penetrate = -1;
+			Projectile.ignoreWater = true;
+			Projectile.netImportant = true;
+			Projectile.hide = true;
 		}
 		Vector2[] trailPos = new Vector2[13];
 		bool runOnce = true;
         public override bool PreAI()
 		{
-			if (Main.myPlayer != projectile.owner)
-				projectile.timeLeft = 20;
+			if (Main.myPlayer != Projectile.owner)
+				Projectile.timeLeft = 20;
 			if (runOnce)
 			{
-				projectile.ai[1] = 80f;
+				Projectile.ai[1] = 80f;
 				for (int i = 0; i < trailPos.Length; i++)
 				{
 					trailPos[i] = Vector2.Zero;
@@ -93,7 +93,7 @@ namespace SOTS.Projectiles.Celestial
         }
         public override void AI()
 		{
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			SubspacePlayer subPlayer = SubspacePlayer.ModPlayer(player);
 			Vector2 idlePosition = player.Center;
 			Item item = player.inventory[49];
@@ -104,7 +104,7 @@ namespace SOTS.Projectiles.Celestial
 				if (Main.myPlayer == player.whoAmI)
 				{
 					cursorArea = Main.MouseWorld;
-					projectile.netUpdate = true;
+					Projectile.netUpdate = true;
 				}
 				if (trailingType == 0)
 				{
@@ -144,37 +144,37 @@ namespace SOTS.Projectiles.Celestial
 					toCursor = toCursor.SafeNormalize(Vector2.Zero) * lengthToCursor;
 					idlePosition += toCursor;
 				}
-				Vector2 toIdle = idlePosition - projectile.Center;
+				Vector2 toIdle = idlePosition - Projectile.Center;
 				float dist = toIdle.Length();
 				float speed = 3 + (float)Math.Pow(dist, 1.45) * 0.002f;
 				if (dist < speed)
 				{
 					speed = toIdle.Length();
 				}
-				projectile.velocity = toIdle.SafeNormalize(Vector2.Zero) * speed;
+				Projectile.velocity = toIdle.SafeNormalize(Vector2.Zero) * speed;
 				if (direction == 1)
 				{
-					if (projectile.ai[0] < direction)
-						projectile.ai[0] += 0.1f;
+					if (Projectile.ai[0] < direction)
+						Projectile.ai[0] += 0.1f;
 				}
 				else
 				{
-					if (projectile.ai[0] > direction)
-						projectile.ai[0] -= 0.1f;
+					if (Projectile.ai[0] > direction)
+						Projectile.ai[0] -= 0.1f;
 				}
-				oldPosition = projectile.Center + new Vector2(-5 * projectile.ai[0], 2);
-				if (projectile.ai[1] >= 24)
+				oldPosition = Projectile.Center + new Vector2(-5 * Projectile.ai[0], 2);
+				if (Projectile.ai[1] >= 24)
 				{
-					projectile.ai[1] -= 24f;
+					Projectile.ai[1] -= 24f;
 				}
-				Vector2 circular = new Vector2(2f, 0).RotatedBy(MathHelper.ToRadians(15 * projectile.ai[1]));
-				projectile.ai[1] += 0.75f;
+				Vector2 circular = new Vector2(2f, 0).RotatedBy(MathHelper.ToRadians(15 * Projectile.ai[1]));
+				Projectile.ai[1] += 0.75f;
 				if (circular.Y > 0)
 					circular.Y *= 0.5f;
-				projectile.velocity.Y += circular.Y;
-				projectile.position += projectile.velocity;
+				Projectile.velocity.Y += circular.Y;
+				Projectile.position += Projectile.velocity;
 			}
-			Lighting.AddLight(projectile.Center, new Vector3(75, 30, 75) * 1f / 255f);
+			Lighting.AddLight(Projectile.Center, new Vector3(75, 30, 75) * 1f / 255f);
 
 			#region coolStuff
 			//player.ItemCheck(player.whoAmI);
@@ -256,13 +256,13 @@ namespace SOTS.Projectiles.Celestial
 						if (!can)
 						{
 							UseTime = FullUseTime + 1;
-							frame = projectile.velocity.Length() > 2f ? 5 : 0;
+							frame = Projectile.velocity.Length() > 2f ? 5 : 0;
 							if (player.whoAmI == Main.myPlayer)
 								direction = player.direction;
 							return;
 						}
 						ItemLoader.UseItem(item, player);
-						SoundEngine.PlaySound(Item.UseSound, projectile.Center);
+						SoundEngine.PlaySound(Item.UseSound, Projectile.Center);
 					}
 					if (UseTime <= FullUseTime && (UseTime % fireRate == 0 || (UseTime == FullUseTime && fireRate > FullUseTime)))
 					{
@@ -272,28 +272,28 @@ namespace SOTS.Projectiles.Celestial
 							ModItem mItem = Item.modItem;
 							if (mItem != null)
 							{
-								Vector2 position = projectile.Center;
+								Vector2 position = Projectile.Center;
 								subPlayer.UseVanillaItemProjectile(position, item, out itemRotation, ref direction, true);
 							}
 							else
 							{
-								Vector2 position = projectile.Center;
+								Vector2 position = Projectile.Center;
 								subPlayer.UseVanillaItemProjectile(position, item, out itemRotation, ref direction);
 							}
 						}
 					}
-					//direction = projectile.direction;
-					Vector2 position2 = projectile.Center;
+					//direction = Projectile.direction;
+					Vector2 position2 = Projectile.Center;
 					if(Main.myPlayer == player.whoAmI)
 					{
 						itemLocation = subPlayer.UseVanillaItemAnimation(position2, item, UseTime, FullUseTime, ref direction, ref itemRotation);
-						subPlayer.UseVanillaItemHitbox(itemLocation, projectile.Center, projectile.velocity, item, UseTime, FullUseTime, ref direction, ref itemRotation);
+						subPlayer.UseVanillaItemHitbox(itemLocation, Projectile.Center, Projectile.velocity, item, UseTime, FullUseTime, ref direction, ref itemRotation);
 					}
 					else
 					{
 						int fakeDirection = direction;
 						itemLocation = subPlayer.UseVanillaItemAnimation(position2, item, UseTime, FullUseTime, ref fakeDirection, ref itemRotation);
-						subPlayer.UseVanillaItemHitbox(itemLocation, projectile.Center, projectile.velocity, item, UseTime, FullUseTime, ref fakeDirection, ref itemRotation);
+						subPlayer.UseVanillaItemHitbox(itemLocation, Projectile.Center, Projectile.velocity, item, UseTime, FullUseTime, ref fakeDirection, ref itemRotation);
 					}
 					subPlayer.PickFrame(sItem, UseTime, FullUseTime, direction, itemRotation, ref frame);
 					if(Item.melee || Item.type == ItemID.Toxikarp || Item.type == ItemID.SpiritFlame)
@@ -315,7 +315,7 @@ namespace SOTS.Projectiles.Celestial
 				else
 				{
 					trailingType = 0;
-					frame = projectile.velocity.Length() > 2f ? 5 : 0;
+					frame = Projectile.velocity.Length() > 2f ? 5 : 0;
 					if (player.whoAmI == Main.myPlayer)
 						direction = player.direction;
 				}
@@ -323,11 +323,11 @@ namespace SOTS.Projectiles.Celestial
 			else
 			{
 				trailingType = 0;
-				frame = projectile.velocity.Length() > 2f ? 5 : 0;
+				frame = Projectile.velocity.Length() > 2f ? 5 : 0;
 				if(player.whoAmI == Main.myPlayer)
 					direction = player.direction;
 				UseTime = -1000;
-				Texture2D texture = Main.itemTexture[Item.type];
+				Texture2D texture = Terraria.GameContent.TextureAssets.Item[Item.type].Value;
 				if (lastItem != sItem.type || itemTextureOutline == null)
 				{
 					itemTextureOutline = new Texture2D(Main.graphics.GraphicsDevice, texture.Width, texture.Height);
@@ -337,9 +337,9 @@ namespace SOTS.Projectiles.Celestial
 			}
 			#endregion
 		}
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override bool PreDraw(ref Color lightColor)
 		{
-			//Player player = Main.player[projectile.owner];
+			//Player player = Main.player[Projectile.owner];
 			//SubspacePlayer subspacePlayer = SubspacePlayer.ModPlayer(player);
 			//if (subspacePlayer.subspaceServantShader != 0)
 			//{
@@ -349,31 +349,31 @@ namespace SOTS.Projectiles.Celestial
 			//}
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Celestial/SubspaceServantBody").Value;
 			Texture2D textureOutline = Mod.Assets.Request<Texture2D>("Projectiles/Celestial/SubspaceServantBodyOutline").Value;
-			Vector2 drawPos = projectile.Center - Main.screenPosition + new Vector2(0, -4);
+			Vector2 drawPos = Projectile.Center - Main.screenPosition + new Vector2(0, -4);
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 6 / 2);
 			for (int k = 0; k < 4; k++)
 			{
 				Vector2 circular = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(90 * k));
-				spriteBatch.Draw(textureOutline, drawPos + circular, new Rectangle(0, frame * texture.Height / 6, texture.Width, texture.Height / 6), Color.White, projectile.rotation, origin, projectile.scale, direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+				spriteBatch.Draw(textureOutline, drawPos + circular, new Rectangle(0, frame * texture.Height / 6, texture.Width, texture.Height / 6), Color.White, Projectile.rotation, origin, Projectile.scale, direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 			}
 			DrawItemAnimation(spriteBatch, true);
 			DrawTail(spriteBatch, true);
 			DrawWings(spriteBatch);
 			DrawTail(spriteBatch, false);
-			spriteBatch.Draw(texture, drawPos, new Rectangle(0, frame * texture.Height / 6, texture.Width, texture.Height / 6), Color.White, projectile.rotation, origin, projectile.scale, direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+			spriteBatch.Draw(texture, drawPos, new Rectangle(0, frame * texture.Height / 6, texture.Width, texture.Height / 6), Color.White, Projectile.rotation, origin, Projectile.scale, direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 			return false;
         }
-        public override void PostDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override void PostDraw(Color lightColor)
 		{
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			if(player.active)
             {
 				//SubspacePlayer subspacePlayer = SubspacePlayer.ModPlayer(player);
 				DrawItemAnimation(spriteBatch, false);
 				Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Celestial/SubspaceServantArms").Value;
-				Vector2 drawPos = projectile.Center - Main.screenPosition + new Vector2(0, -4);
+				Vector2 drawPos = Projectile.Center - Main.screenPosition + new Vector2(0, -4);
 				Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 6 / 2);
-				spriteBatch.Draw(texture, drawPos, new Rectangle(0, frame * texture.Height / 6, texture.Width, texture.Height / 6), Color.White, projectile.rotation, origin, projectile.scale, direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+				spriteBatch.Draw(texture, drawPos, new Rectangle(0, frame * texture.Height / 6, texture.Width, texture.Height / 6), Color.White, Projectile.rotation, origin, Projectile.scale, direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 			}
 			//if (subspacePlayer.subspaceServantShader != 0)
 			//{
@@ -391,9 +391,9 @@ namespace SOTS.Projectiles.Celestial
 			Texture2D textureOutline = Mod.Assets.Request<Texture2D>("Projectiles/Celestial/SubspaceServantTailOutline").Value;
 			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Projectiles/Celestial/SubspaceServantTailScales").Value;
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
-			Vector2 center = projectile.Center;
+			Vector2 center = Projectile.Center;
 			Vector2 velo = new Vector2(0, 4f);
-			float scale = projectile.scale;
+			float scale = Projectile.scale;
 			List<Vector2> positions = new List<Vector2>();
 			List<float> rotations = new List<float>();
 			for (int i = 0; i < 9; i++)
@@ -403,7 +403,7 @@ namespace SOTS.Projectiles.Celestial
 				velo += toOldPosition * 0.333f;
 				velo = velo.SafeNormalize(Vector2.Zero) * scale * 4;
 				center += velo;
-				Vector2 drawPos = center - Main.screenPosition + new Vector2(0, -16 + projectile.height / 2);
+				Vector2 drawPos = center - Main.screenPosition + new Vector2(0, -16 + Projectile.height / 2);
 				positions.Add(drawPos);
 				rotations.Add(velo.ToRotation() - MathHelper.ToRadians(90));
 				scale -= 0.0725f;
@@ -435,9 +435,9 @@ namespace SOTS.Projectiles.Celestial
 		{
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Celestial/SubspaceServantWings").Value;
 			Texture2D textureOutline = Mod.Assets.Request<Texture2D>("Projectiles/Celestial/SubspaceServantWingsOutline").Value;
-			Vector2 drawPos = projectile.Center - Main.screenPosition + new Vector2(-8 * direction, -4);
+			Vector2 drawPos = Projectile.Center - Main.screenPosition + new Vector2(-8 * direction, -4);
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 6 / 2);
-			int frame = (int)(projectile.ai[1] / 4);
+			int frame = (int)(Projectile.ai[1] / 4);
 			if(frame < 0)
             {
 				frame = 0;
@@ -449,19 +449,19 @@ namespace SOTS.Projectiles.Celestial
 			for (int k = 0; k < 4; k++)
 			{
 				Vector2 circular = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(90 * k));
-				spriteBatch.Draw(textureOutline, drawPos + circular, new Rectangle(0, frame * texture.Height / 6, texture.Width, texture.Height / 6), Color.White, projectile.rotation, origin, projectile.scale, direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+				spriteBatch.Draw(textureOutline, drawPos + circular, new Rectangle(0, frame * texture.Height / 6, texture.Width, texture.Height / 6), Color.White, Projectile.rotation, origin, Projectile.scale, direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 			}
-			spriteBatch.Draw(texture, drawPos, new Rectangle(0, frame * texture.Height / 6, texture.Width, texture.Height / 6), Color.White, projectile.rotation, origin, projectile.scale, direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+			spriteBatch.Draw(texture, drawPos, new Rectangle(0, frame * texture.Height / 6, texture.Width, texture.Height / 6), Color.White, Projectile.rotation, origin, Projectile.scale, direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 		}
 		int lastItem = -1;
 		Texture2D itemTextureOutline;
 		public void DrawItemAnimation(SpriteBatch spriteBatch, bool outline = false)
         {
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			if (sItem != null && !sItem.IsAir)
 			{
 				Item item = sItem;
-				Texture2D texture = Main.itemTexture[Item.type];
+				Texture2D texture = Terraria.GameContent.TextureAssets.Item[Item.type].Value;
 				if(lastItem != sItem.type || itemTextureOutline == null)
 				{
 					itemTextureOutline = new Texture2D(Main.graphics.GraphicsDevice, texture.Width, texture.Height);
@@ -478,7 +478,7 @@ namespace SOTS.Projectiles.Celestial
 						{
 							float rotation = itemRotation + 0.785f * direction;
 							int width = 0;
-							Vector2 origin = new Vector2(0f, Main.itemTexture[Item.type].Height);
+							Vector2 origin = new Vector2(0f, Terraria.GameContent.TextureAssets.Item[Item.type].Value.Height);
 							var num23 = 0;
 							var num24 = 0;
 							if (sItem.type == ItemID.Toxikarp)
@@ -497,19 +497,19 @@ namespace SOTS.Projectiles.Celestial
 								num24 = (int)(8 * Math.Cos((double)rotation));
 							if (direction == -1)
 							{
-								origin = new Vector2(Main.itemTexture[Item.type].Width, Main.itemTexture[Item.type].Height);
-								width -= Main.itemTexture[Item.type].Width;
+								origin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width, Terraria.GameContent.TextureAssets.Item[Item.type].Value.Height);
+								width -= Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width;
 							}
 							location += new Vector2(num23, num24);
 							if(outline)
 								for (int i = 0; i < 4; i++)
 								{
 									Vector2 circular = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(90 * i));
-									spriteBatch.Draw(textureOutline, new Vector2((int)(location.X - Main.screenPosition.X + origin.X + width), (int)(location.Y - Main.screenPosition.Y)) + circular, new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Main.itemTexture[Item.type].Width, Main.itemTexture[Item.type].Height)),
+									spriteBatch.Draw(textureOutline, new Vector2((int)(location.X - Main.screenPosition.X + origin.X + width), (int)(location.Y - Main.screenPosition.Y)) + circular, new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width, Terraria.GameContent.TextureAssets.Item[Item.type].Value.Height)),
 										Color.White, rotation, origin, Item.scale, direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
 								}
 							else
-							spriteBatch.Draw(texture, new Vector2((int)(location.X - Main.screenPosition.X + origin.X + width), (int)(location.Y - Main.screenPosition.Y)), new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Main.itemTexture[Item.type].Width, Main.itemTexture[Item.type].Height)), 
+							spriteBatch.Draw(texture, new Vector2((int)(location.X - Main.screenPosition.X + origin.X + width), (int)(location.Y - Main.screenPosition.Y)), new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width, Terraria.GameContent.TextureAssets.Item[Item.type].Value.Height)), 
 								Color.White, rotation, origin, Item.scale, direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
 						}
 						else if (Item.type == ItemID.SpiritFlame)
@@ -539,7 +539,7 @@ namespace SOTS.Projectiles.Celestial
 						{
 							SubspacePlayer subPlayer = SubspacePlayer.ModPlayer(player);
 							Vector2 superAwesomeOffset = subPlayer.DrawPlayerItemPos(Item.type);
-							Vector2 vector10 = new Vector2((float)(Main.itemTexture[Item.type].Width / 2), superAwesomeOffset.Y);
+							Vector2 vector10 = new Vector2((float)(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width / 2), superAwesomeOffset.Y);
 							Vector2 vector11 = new Vector2(superAwesomeOffset.X, texture.Height / 2);
 							Vector2 offset = new Vector2(0, 0);
 							ItemLoader.HoldoutOffset(1, Item.type, ref offset);
@@ -550,19 +550,19 @@ namespace SOTS.Projectiles.Celestial
 							vector11.Y += offset.Y;
 							int num107 = (int)vector11.X;
 							vector10.Y = vector11.Y;
-							Vector2 origin5 = new Vector2(-num107, (Main.itemTexture[Item.type].Height / 2));
+							Vector2 origin5 = new Vector2(-num107, (Terraria.GameContent.TextureAssets.Item[Item.type].Value.Height / 2));
 							if (direction == -1)
 							{
-								origin5 = new Vector2((Main.itemTexture[Item.type].Width + num107), (float)(Main.itemTexture[Item.type].Height / 2));
+								origin5 = new Vector2((Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width + num107), (float)(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Height / 2));
 							}
 							if (outline)
 								for (int i = 0; i < 4; i++)
 								{
 									Vector2 circular = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(90 * i));
-									spriteBatch.Draw(textureOutline, circular + new Vector2((int)(location.X - Main.screenPosition.X + vector10.X), (int)(location.Y - Main.screenPosition.Y + vector10.Y)), new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Main.itemTexture[Item.type].Width, Main.itemTexture[Item.type].Height)),
+									spriteBatch.Draw(textureOutline, circular + new Vector2((int)(location.X - Main.screenPosition.X + vector10.X), (int)(location.Y - Main.screenPosition.Y + vector10.Y)), new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width, Terraria.GameContent.TextureAssets.Item[Item.type].Value.Height)),
 									Color.White, itemRotation, origin5, Item.scale, direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
 								}
-							else spriteBatch.Draw(texture, new Vector2((int)(location.X - Main.screenPosition.X + vector10.X), (int)(location.Y - Main.screenPosition.Y + vector10.Y)), new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Main.itemTexture[Item.type].Width, Main.itemTexture[Item.type].Height)), 
+							else spriteBatch.Draw(texture, new Vector2((int)(location.X - Main.screenPosition.X + vector10.X), (int)(location.Y - Main.screenPosition.Y + vector10.Y)), new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width, Terraria.GameContent.TextureAssets.Item[Item.type].Value.Height)), 
 							Color.White, itemRotation, origin5, Item.scale, direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
 						}
 					}

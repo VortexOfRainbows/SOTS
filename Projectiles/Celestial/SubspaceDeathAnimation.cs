@@ -26,15 +26,15 @@ namespace SOTS.Projectiles.Celestial
 		bool runOnce = true;
 		public override void SetDefaults()
         {
-			projectile.width = 40;
-			projectile.height = 40;
-			projectile.friendly = false;
-			projectile.timeLeft = 1200;
-			projectile.penetrate = -1;
-			projectile.tileCollide = false;
-			projectile.hostile = false;
-			projectile.alpha = 0;
-			projectile.hide = true;
+			Projectile.width = 40;
+			Projectile.height = 40;
+			Projectile.friendly = false;
+			Projectile.timeLeft = 1200;
+			Projectile.penetrate = -1;
+			Projectile.tileCollide = false;
+			Projectile.hostile = false;
+			Projectile.alpha = 0;
+			Projectile.hide = true;
 		}
         public override void DrawBehind(int index, List<int> drawCacheProjsBehindNPCsAndTiles, List<int> drawCacheProjsBehindNPCs, List<int> drawCacheProjsBehindProjectiles, List<int> drawCacheProjsOverWiresUI)
         {
@@ -42,11 +42,11 @@ namespace SOTS.Projectiles.Celestial
         }
         public override bool ShouldUpdatePosition()
         {
-            return !(runOnce || projectile.timeLeft > 1196);
+            return !(runOnce || Projectile.timeLeft > 1196);
         }
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override bool PreDraw(ref Color lightColor)
 		{
-			if (runOnce || projectile.timeLeft > 1196)
+			if (runOnce || Projectile.timeLeft > 1196)
 				return false;
 			DrawWorm(spriteBatch, lightColor);
 			return false;
@@ -58,9 +58,9 @@ namespace SOTS.Projectiles.Celestial
 			Texture2D texture2 = Mod.Assets.Request<Texture2D>("NPCs/Boss/SubspaceSerpentHeadGlow").Value;
 			Texture2D texture = Mod.Assets.Request<Texture2D>("NPCs/Boss/SubspaceSerpentHead").Value;
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 16);
-			Vector2 first = projectile.Center;
+			Vector2 first = Projectile.Center;
 			Color color = Lighting.GetColor((int)first.X / 16, (int)first.Y / 16, Color.White);
-			Rectangle frame = new Rectangle(0, projectile.frame * texture.Height / 8, texture.Width, texture.Height / 8);
+			Rectangle frame = new Rectangle(0, Projectile.frame * texture.Height / 8, texture.Width, texture.Height / 8);
 			counter++;
 			if (counter > 12)
 				counter = 0;
@@ -68,17 +68,17 @@ namespace SOTS.Projectiles.Celestial
 			{
 				for (int i = 0; i < 3; i++)
 				{
-					Vector2 toTheSide = new Vector2(2, 0).RotatedBy(projectile.rotation + MathHelper.ToRadians(i * -90));
-					spriteBatch.Draw(texture3, first - Main.screenPosition + toTheSide, frame, new Color(0, 255, 0), projectile.rotation, origin, 1f, SpriteEffects.None, 0);
+					Vector2 toTheSide = new Vector2(2, 0).RotatedBy(Projectile.rotation + MathHelper.ToRadians(i * -90));
+					spriteBatch.Draw(texture3, first - Main.screenPosition + toTheSide, frame, new Color(0, 255, 0), Projectile.rotation, origin, 1f, SpriteEffects.None, 0);
 				}
-				spriteBatch.Draw(texture, first - Main.screenPosition, frame, color, projectile.rotation, origin, 1.00f, SpriteEffects.None, 1f);
-				spriteBatch.Draw(texture2, first - Main.screenPosition, frame, Color.White, projectile.rotation, origin, 1.00f, SpriteEffects.None, 0);
+				spriteBatch.Draw(texture, first - Main.screenPosition, frame, color, Projectile.rotation, origin, 1.00f, SpriteEffects.None, 1f);
+				spriteBatch.Draw(texture2, first - Main.screenPosition, frame, Color.White, Projectile.rotation, origin, 1.00f, SpriteEffects.None, 0);
 				for (int j = 0; j < 2; j++)
 				{
 					float bonusAlphaMult = 1 - 1 * (counter / 12f);
 					float dir = j * 2 - 1;
-					Vector2 offset = new Vector2(counter * 0.8f * dir, 0).RotatedBy(projectile.rotation);
-					Main.spriteBatch.Draw(texture2, first - Main.screenPosition + offset, frame, new Color(100, 100, 100, 0) * bonusAlphaMult, projectile.rotation, origin, 1.00f, SpriteEffects.None, 0.0f);
+					Vector2 offset = new Vector2(counter * 0.8f * dir, 0).RotatedBy(Projectile.rotation);
+					Main.spriteBatch.Draw(texture2, first - Main.screenPosition + offset, frame, new Color(100, 100, 100, 0) * bonusAlphaMult, Projectile.rotation, origin, 1.00f, SpriteEffects.None, 0.0f);
 				}
 			}
 			for (int i = 0; i < segments.Count; i++)
@@ -106,17 +106,17 @@ namespace SOTS.Projectiles.Celestial
 						if(a != 1 || i == segments.Count - 1)
 						{
 							Vector2 toTheSide = new Vector2(2, 0).RotatedBy(rotation + MathHelper.ToRadians(a * 90));
-							spriteBatch.Draw(texture3, segments[i] + projectile.velocity - Main.screenPosition + toTheSide, frame, new Color(0, 255, 0), rotation, origin, 1f, SpriteEffects.None, 0);
+							spriteBatch.Draw(texture3, segments[i] + Projectile.velocity - Main.screenPosition + toTheSide, frame, new Color(0, 255, 0), rotation, origin, 1f, SpriteEffects.None, 0);
 						}
 					}
-					spriteBatch.Draw(texture, segments[i] + projectile.velocity - Main.screenPosition, frame, color, rotation, origin, 1.00f, SpriteEffects.None, 1f);
-					spriteBatch.Draw(texture2, segments[i] + projectile.velocity - Main.screenPosition, frame, Color.White, rotation, origin, 1.00f, SpriteEffects.None, 0);
+					spriteBatch.Draw(texture, segments[i] + Projectile.velocity - Main.screenPosition, frame, color, rotation, origin, 1.00f, SpriteEffects.None, 1f);
+					spriteBatch.Draw(texture2, segments[i] + Projectile.velocity - Main.screenPosition, frame, Color.White, rotation, origin, 1.00f, SpriteEffects.None, 0);
 					for (int j = 0; j < 2; j++)
 					{
 						float bonusAlphaMult = 1 - 1 * (counter / 12f);
 						float dir = j * 2 - 1;
 						Vector2 offset = new Vector2(counter * 0.8f * dir, 0).RotatedBy(rotation);
-						spriteBatch.Draw(texture2, segments[i] + projectile.velocity - Main.screenPosition + offset, frame, new Color(100, 100, 100, 0) * bonusAlphaMult, rotation, origin, 1.00f, SpriteEffects.None, 0.0f);
+						spriteBatch.Draw(texture2, segments[i] + Projectile.velocity - Main.screenPosition + offset, frame, new Color(100, 100, 100, 0) * bonusAlphaMult, rotation, origin, 1.00f, SpriteEffects.None, 0.0f);
 					}
 				}
 			}
@@ -157,10 +157,10 @@ namespace SOTS.Projectiles.Celestial
 		}
 		public void Initiate()
 		{
-			NPC master = Main.npc[(int)projectile.ai[1]];
+			NPC master = Main.npc[(int)Projectile.ai[1]];
 			if (master.active && master.type == ModContent.NPCType<SubspaceSerpentHead>())
 			{
-				projectile.frame = master.frame.Y / master.height;
+				Projectile.frame = master.frame.Y / master.height;
 				int latest = master.whoAmI;
 				for (int i = 0; i < 51; i++)
 				{
@@ -179,7 +179,7 @@ namespace SOTS.Projectiles.Celestial
 				}
 			}
 			else
-				projectile.Kill();
+				Projectile.Kill();
 		}
 		int deathCounter = 0;
 		int segmentsDead = -8;
@@ -189,15 +189,15 @@ namespace SOTS.Projectiles.Celestial
 			{
 				Initiate();
 				runOnce = false;
-				projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
+				Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
 			}
-			Vector2 first = projectile.Center;
+			Vector2 first = Projectile.Center;
 			Lighting.AddLight(first, 2.5f, 1.6f, 2.4f);
-			float firstRot = projectile.rotation;
+			float firstRot = Projectile.rotation;
 			for (int i = 0; i < segments.Count; i++)
 			{
 				Vector2 pos = segments[i];
-				/*if (projectile.timeLeft < Main.rand.Next(3) + 1)
+				/*if (Projectile.timeLeft < Main.rand.Next(3) + 1)
 				{
 					for (int k = 0; k < Main.rand.Next(3) + 1; k++)
 					{
@@ -220,14 +220,14 @@ namespace SOTS.Projectiles.Celestial
 				firstRot = segmentsRotation[i];
 				Lighting.AddLight(segments[i], 2.5f, 1.6f, 2.4f);
 			}
-			projectile.velocity *= 0.985f;
+			Projectile.velocity *= 0.985f;
 			deathCounter++;
 			if (deathCounter >= 5)
             {
 				deathCounter = 0;
 				if(segmentsDead <= segments.Count && segmentsDead >= 0)
 				{
-					Vector2 atLoc = projectile.Center;
+					Vector2 atLoc = Projectile.Center;
 					if (segmentsDead >= 1)
 					{
 						atLoc = segments[segmentsDead - 1];
@@ -268,7 +268,7 @@ namespace SOTS.Projectiles.Celestial
 						Projectile.NewProjectile(atLoc, new Vector2(0, -1), ModContent.ProjectileType<GreenLightning2>(), 0, 0, Main.myPlayer);
 						Vector2 circular = new Vector2(Main.rand.NextFloat(6f, 8f), 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)));
 						if (segmentsDead % 4 == 0)
-							Projectile.NewProjectile(atLoc, circular, ModContent.ProjectileType<PurgatoryGhost>(), 0, projectile.knockBack, Main.myPlayer, 0, Main.rand.Next(2) * 2 - 1);
+							Projectile.NewProjectile(atLoc, circular, ModContent.ProjectileType<PurgatoryGhost>(), 0, Projectile.knockBack, Main.myPlayer, 0, Main.rand.Next(2) * 2 - 1);
 						for(int j = 0; j < 2; j++)
 						{
 							if(Main.rand.NextBool(3))
@@ -282,7 +282,7 @@ namespace SOTS.Projectiles.Celestial
 					sOTSPlayer.screenShakeMultiplier += 7;
 					if (segmentsDead == segments.Count)
 					{
-						projectile.Kill();
+						Projectile.Kill();
 					}
 				}
 				segmentsDead++;

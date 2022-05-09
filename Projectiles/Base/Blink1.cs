@@ -16,15 +16,15 @@ namespace SOTS.Projectiles.Base
 		}
         public override void SetDefaults()
         {
-            projectile.width = 24;
-            projectile.height = 24; 
-            projectile.timeLeft = 6;
-            projectile.penetrate = 1; 
-            projectile.friendly = true; 
-            projectile.hostile = false; 
-            projectile.tileCollide = false;
-            projectile.ignoreWater = true;
-            projectile.alpha = 255;
+            Projectile.width = 24;
+            Projectile.height = 24; 
+            Projectile.timeLeft = 6;
+            Projectile.penetrate = 1; 
+            Projectile.friendly = true; 
+            Projectile.hostile = false; 
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
+            Projectile.alpha = 255;
 		}
         bool runOnce = true;
         bool hit = false;
@@ -34,7 +34,7 @@ namespace SOTS.Projectiles.Base
         }
         public override void AI()
         {
-            Player player = Main.player[projectile.owner];
+            Player player = Main.player[Projectile.owner];
             SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
             if (runOnce)
             {
@@ -51,9 +51,9 @@ namespace SOTS.Projectiles.Base
                 }
                 for (int i = 0; i < 320; i += 2)
                 {
-                    player.direction = projectile.velocity.X > 0 ? 1 : -1;
+                    player.direction = Projectile.velocity.X > 0 ? 1 : -1;
                     counter += 2.55f;
-                    if (Collision.SolidCollision(player.position + projectile.velocity * 2 + new Vector2(8, 8), player.width - 8, player.height - 8))
+                    if (Collision.SolidCollision(player.position + Projectile.velocity * 2 + new Vector2(8, 8), player.width - 8, player.height - 8))
                         break;
 
                     for (int n = 0; n < Main.npc.Length; n++)
@@ -61,14 +61,14 @@ namespace SOTS.Projectiles.Base
                         NPC npc = Main.npc[n];
                         if (npc.active && npc.Hitbox.Intersects(new Rectangle((int)player.position.X - 12, (int)player.position.Y - 12, player.width + 12, player.height + 12)) && !npc.friendly && !npc.dontTakeDamage && npc.immune[player.whoAmI] <= 0)
                         {
-                            if (projectile.owner == Main.myPlayer && projectile.friendly)
-                                Projectile.NewProjectile(npc.Center.X, npc.Center.Y, projectile.velocity.X, projectile.velocity.Y, mod.ProjectileType("BlinkDamage1"), SOTSPlayer.ModPlayer(player).BlinkDamage, projectile.knockBack, Main.myPlayer);
+                            if (Projectile.owner == Main.myPlayer && Projectile.friendly)
+                                Projectile.NewProjectile(npc.Center.X, npc.Center.Y, Projectile.velocity.X, Projectile.velocity.Y, mod.ProjectileType("BlinkDamage1"), SOTSPlayer.ModPlayer(player).BlinkDamage, Projectile.knockBack, Main.myPlayer);
                             npc.immune[player.whoAmI] = 1;
                             hit = true;
                             break;
                         }
                     }
-                    player.position += projectile.velocity * 2;
+                    player.position += Projectile.velocity * 2;
                     Vector2 loc = new Vector2(player.Center.X - 12 * player.direction, player.Center.Y + player.gfxOffY) - new Vector2(5);
                     int num1 = Dust.NewDust(new Vector2(loc.X, loc.Y), 2, 2, 235);
                     Main.dust[num1].noGravity = true;
@@ -85,24 +85,24 @@ namespace SOTS.Projectiles.Base
                     Main.dust[num1].scale = 2.25f;
                     Main.dust[num1].shader = GameShaders.Armor.GetSecondaryShader(player.cBack, player);
                 }
-                if(player.velocity.X > projectile.velocity.X && projectile.velocity.X < 0)
+                if(player.velocity.X > Projectile.velocity.X && Projectile.velocity.X < 0)
                 {
-                    player.velocity.X = projectile.velocity.X;
+                    player.velocity.X = Projectile.velocity.X;
                 }
-                if (player.velocity.X < projectile.velocity.X && projectile.velocity.X > 0)
+                if (player.velocity.X < Projectile.velocity.X && Projectile.velocity.X > 0)
                 {
-                    player.velocity.X = projectile.velocity.X;
+                    player.velocity.X = Projectile.velocity.X;
                 }
-                if (player.velocity.Y > projectile.velocity.Y && projectile.velocity.Y < 0)
+                if (player.velocity.Y > Projectile.velocity.Y && Projectile.velocity.Y < 0)
                 {
-                    player.velocity.Y = projectile.velocity.Y;
+                    player.velocity.Y = Projectile.velocity.Y;
                 }
-                if (player.velocity.Y < projectile.velocity.Y && projectile.velocity.Y > 0)
+                if (player.velocity.Y < Projectile.velocity.Y && Projectile.velocity.Y > 0)
                 {
-                    player.velocity.Y = projectile.velocity.Y;
+                    player.velocity.Y = Projectile.velocity.Y;
                 }
-                float addX = projectile.velocity.X * 4 * 2.0f;
-                float addY = projectile.velocity.Y * 4 * 1.4f;
+                float addX = Projectile.velocity.X * 4 * 2.0f;
+                float addY = Projectile.velocity.Y * 4 * 1.4f;
                 if (Math.Abs(player.velocity.X + addX) < 27)
                     player.velocity.X += addX;
                 if (Math.Abs(player.velocity.Y + addY) < 27)
@@ -119,7 +119,7 @@ namespace SOTS.Projectiles.Base
                 }
                 player.immuneTime = 10 + (int)(counter / 12f);
                 player.immune = true;
-                SoundEngine.PlaySound(SoundID.Item8, Main.player[projectile.owner].Center);
+                SoundEngine.PlaySound(SoundID.Item8, Main.player[Projectile.owner].Center);
                 modPlayer.BlinkedAmount += 1.25f;
             }
         }

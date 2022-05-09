@@ -17,13 +17,13 @@ namespace SOTS.Projectiles.Tide
 		}
 		public override void SetDefaults()
 		{
-			projectile.width = 34;
-			projectile.height = 34;
-			projectile.hostile = true;
-			projectile.friendly = true;
-			projectile.timeLeft = 570;
-			projectile.tileCollide = true;
-			projectile.penetrate = -1;
+			Projectile.width = 34;
+			Projectile.height = 34;
+			Projectile.hostile = true;
+			Projectile.friendly = true;
+			Projectile.timeLeft = 570;
+			Projectile.tileCollide = true;
+			Projectile.penetrate = -1;
 		}
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
@@ -47,62 +47,62 @@ namespace SOTS.Projectiles.Tide
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
 			//end = true;
-			//projectile.netUpdate = true;
+			//Projectile.netUpdate = true;
             return false;
         }
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override bool PreDraw(ref Color lightColor)
 		{
 			if (runOnce)
 				return true;
-			Texture2D texture = Main.projectileTexture[projectile.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			for (int k = 0; k < TrailPositions.Length; k++)
 			{
 				List<Vector2> trails = TrailPositions[k];
 				Color color = new Color(60, 60, 90, 0);
-				color = projectile.GetAlpha(color);
+				color = Projectile.GetAlpha(color);
 				for (int j = 0; j < trails.Count; j++)
 				{
 					Vector2 drawPos = trails[j] - Main.screenPosition;
-					if(!projectile.oldPos[k].Equals(projectile.position))
+					if(!Projectile.oldPos[k].Equals(Projectile.position))
 					{
 						for(int i = 3; i > 0; i--)
 						{
 							Vector2 random = new Vector2(Main.rand.NextFloat(-1, 1), Main.rand.NextFloat(-1, 1));
-							Main.spriteBatch.Draw(texture, drawPos + random, null, color, projectile.rotation, drawOrigin, projectile.scale * 0.20f, SpriteEffects.None, 0f);
+							Main.spriteBatch.Draw(texture, drawPos + random, null, color, Projectile.rotation, drawOrigin, Projectile.scale * 0.20f, SpriteEffects.None, 0f);
 						}
 					}
 				}
 			}
 			return false;
 		}
-        public override void PostDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override void PostDraw(Color lightColor)
 		{
-			Texture2D texture = Main.projectileTexture[projectile.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			Vector2 drawPos = projectile.Center - Main.screenPosition;
+			Vector2 drawPos = Projectile.Center - Main.screenPosition;
 			Color color = new Color(100, 100, 140, 0);
-			color = projectile.GetAlpha(color);
+			color = Projectile.GetAlpha(color);
 			for (int i = 3; i > 0; i--)
 			{
 				Vector2 random = new Vector2(Main.rand.NextFloat(-1, 1), Main.rand.NextFloat(-1, 1));
-				Main.spriteBatch.Draw(texture, drawPos + random, null, color, projectile.rotation, drawOrigin, projectile.scale * 1f, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, drawPos + random, null, color, Projectile.rotation, drawOrigin, Projectile.scale * 1f, SpriteEffects.None, 0f);
 			}
 		}
         public override void Kill(int timeLeft)
 		{
 			for (int i = 0; i < 20; i++)
 			{
-				int dust = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 221);
+				int dust = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 221);
 				Main.dust[dust].velocity *= 3f;
 				Main.dust[dust].scale *= 1f;
-				Main.dust[dust].velocity += projectile.velocity;
+				Main.dust[dust].velocity += Projectile.velocity;
 				Main.dust[dust].noGravity = true;
 			}
 		}
         public override bool? CanHitNPC(NPC target)
         {
-            return target.Hitbox.Intersects(projectile.Hitbox);
+            return target.Hitbox.Intersects(Projectile.Hitbox);
         }
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
 		{
@@ -149,15 +149,15 @@ namespace SOTS.Projectiles.Tide
 					List<Vector2> trail = TrailPositions[i];
 					Vector2 latestPos = trail[trail.Count - 1];
 					Vector2 dynamicAddition = new Vector2(8, 0).RotatedBy(MathHelper.ToRadians(i * 90 + counter * 2));
-					Vector2 toProjectile = latestPos - (projectile.Center + dynamicAddition);
-					float speed = 2.25f * projectile.velocity.Length();
+					Vector2 toProjectile = latestPos - (Projectile.Center + dynamicAddition);
+					float speed = 2.25f * Projectile.velocity.Length();
 					if (speed > toProjectile.Length())
 					{
 						speed = toProjectile.Length();
 					}
 					Vector2 additional = Vector2.Zero;
 					if (trail.Count < 10)
-						additional += projectile.velocity * 0.5f;
+						additional += Projectile.velocity * 0.5f;
 					latestPos -= toProjectile.SafeNormalize(Vector2.Zero) * speed + additional;
 					TrailPositions[i].Add(latestPos);
 				}
@@ -182,7 +182,7 @@ namespace SOTS.Projectiles.Tide
 						}
 						else
 						{
-							projectile.Kill();
+							Projectile.Kill();
                         }
 					}
 				}
@@ -215,17 +215,17 @@ namespace SOTS.Projectiles.Tide
 		public override void AI()
 		{
 			counter++;
-			Lighting.AddLight(projectile.Center, 0.25f, 0.25f, 0.75f);
+			Lighting.AddLight(Projectile.Center, 0.25f, 0.25f, 0.75f);
 			if (runOnce)
 			{
-				SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 122, 1.2f);
+				SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 122, 1.2f);
 				for (int i = 0; i < TrailPositions.Length; i++)
 				{
 					TrailPositions[i] = new List<Vector2>();
 				}
-				if (projectile.ai[1] != -1)
+				if (Projectile.ai[1] != -1)
 				{
-					NPC npc = Main.npc[(int)projectile.ai[1]];
+					NPC npc = Main.npc[(int)Projectile.ai[1]];
 					if (npc.active && npc.type == ModContent.NPCType<TidalConstruct>())
 					{
 						TidalConstruct tidalConstruct = (TidalConstruct)npc.modNPC;
@@ -234,48 +234,48 @@ namespace SOTS.Projectiles.Tide
 							Projectile tidalTrail = Main.projectile[tidalConstruct.projectiles[i]];
 							if (tidalTrail.type == ModContent.ProjectileType<TidalConstructTrail>() && tidalTrail.active)
 							{
-								TrailPositions[i].Add(tidalTrail.Center + projectile.velocity);
+								TrailPositions[i].Add(tidalTrail.Center + Projectile.velocity);
 							}
 						}
 					}
 				}
-				projectile.rotation = projectile.velocity.ToRotation();
+				Projectile.rotation = Projectile.velocity.ToRotation();
 				runOnce = false;
 			}
-			NPC npc2 = Main.npc[(int)projectile.ai[1]];
-			if (projectile.timeLeft < 30 || end || !(npc2.active && npc2.type == ModContent.NPCType<TidalConstruct>()))
+			NPC npc2 = Main.npc[(int)Projectile.ai[1]];
+			if (Projectile.timeLeft < 30 || end || !(npc2.active && npc2.type == ModContent.NPCType<TidalConstruct>()))
             {
-				projectile.timeLeft = 29;
+				Projectile.timeLeft = 29;
 				end = true;
             }
 			if(counter % 30 == 29 && !end)
             {
-				SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 15, 0.8f);
+				SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 15, 0.8f);
             }
 			MoveTrailsTowardProjectile();
-			//Vector2 varyingVelocity = new Vector2(1.5f, 0).RotatedBy(MathHelper.ToRadians(projectile.ai[0] * 2));
-			projectile.position += projectile.velocity; // + new Vector2(varyingVelocity.X, 0).RotatedBy(projectile.rotation);
-			Player target = Main.player[(int)projectile.ai[0]];
+			//Vector2 varyingVelocity = new Vector2(1.5f, 0).RotatedBy(MathHelper.ToRadians(Projectile.ai[0] * 2));
+			Projectile.position += Projectile.velocity; // + new Vector2(varyingVelocity.X, 0).RotatedBy(Projectile.rotation);
+			Player target = Main.player[(int)Projectile.ai[0]];
 			if (target.ZoneDungeon)
 			{
-				projectile.tileCollide = false;
+				Projectile.tileCollide = false;
 			}
 			else
 			{
-				projectile.tileCollide = true;
+				Projectile.tileCollide = true;
 			}
 			if (stabalizeBendRatio < 3)
 				stabalizeBendRatio += 0.0005f;
 			if(target.active && !target.dead)
             {
-				float speed = projectile.velocity.Length() + 0.001f;
-				Vector2 normalizeVelo = projectile.velocity.SafeNormalize(new Vector2(1, 0));
-				Vector2 toPlayer = target.Center - projectile.Center;
+				float speed = Projectile.velocity.Length() + 0.001f;
+				Vector2 normalizeVelo = Projectile.velocity.SafeNormalize(new Vector2(1, 0));
+				Vector2 toPlayer = target.Center - Projectile.Center;
 				toPlayer = toPlayer.SafeNormalize(new Vector2(1, 0));
 				toPlayer *= 4 * stabalizeBendRatio;
 				normalizeVelo *= 48 / stabalizeBendRatio;
-				projectile.velocity = toPlayer + normalizeVelo;
-				projectile.velocity = projectile.velocity.SafeNormalize(new Vector2(1, 0)) * speed;
+				Projectile.velocity = toPlayer + normalizeVelo;
+				Projectile.velocity = Projectile.velocity.SafeNormalize(new Vector2(1, 0)) * speed;
 			}
 		}
 	}

@@ -27,19 +27,19 @@ namespace SOTS.Projectiles.Pyramid
 		}
         public override void SetDefaults()
         {
-			projectile.height = 24;
-			projectile.width = 24;
-			projectile.friendly = false;
-			projectile.timeLeft = 510;
-			projectile.hostile = true;
-			projectile.alpha = 255;
-			projectile.penetrate = -1;
-			projectile.netImportant = true;
-			projectile.ai[0] = -1f;
-			projectile.tileCollide = false;
+			Projectile.height = 24;
+			Projectile.width = 24;
+			Projectile.friendly = false;
+			Projectile.timeLeft = 510;
+			Projectile.hostile = true;
+			Projectile.alpha = 255;
+			Projectile.penetrate = -1;
+			Projectile.netImportant = true;
+			Projectile.ai[0] = -1f;
+			Projectile.tileCollide = false;
 		}
 		Vector2 OwnerPos;
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override bool PreDraw(ref Color lightColor)
 		{
 			return false;
         }
@@ -51,13 +51,13 @@ namespace SOTS.Projectiles.Pyramid
         }
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-			projectile.velocity *= 0.0f;
+			Projectile.velocity *= 0.0f;
             return false;
         }
 		float percent = 0;
         public bool DrawLimbs(List<CurseFoam> dustList, Rectangle targetHitbox, bool genProj = false)
 		{
-			int parentID = (int)projectile.ai[0];
+			int parentID = (int)Projectile.ai[0];
 			if (parentID >= 0)
 			{
 				NPC npc = Main.npc[parentID];
@@ -105,7 +105,7 @@ namespace SOTS.Projectiles.Pyramid
 								float degrees = 90;
 								if (Main.expertMode)
 									degrees = Main.rand.NextFloat(80f, 100f);
-								Projectile.NewProjectile(finalPosition, toARM.SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.ToRadians(degrees * side)), ModContent.ProjectileType<CurseExtension>(), projectile.damage, projectile.knockBack, Main.myPlayer, 0, parentID);
+								Projectile.NewProjectile(finalPosition, toARM.SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.ToRadians(degrees * side)), ModContent.ProjectileType<CurseExtension>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, 0, parentID);
                             }
 							return false;
                         }
@@ -129,24 +129,24 @@ namespace SOTS.Projectiles.Pyramid
 		bool draggingType = false;
 		public override bool PreAI()
 		{
-			if (projectile.ai[1] != 0 && !draggingType)
+			if (Projectile.ai[1] != 0 && !draggingType)
 			{
-				projectile.timeLeft = 1090;
+				Projectile.timeLeft = 1090;
 				draggingType = true;
 			}
 			aiCounter1++; 
 			if (aiCounter1 >= 60)
 			{
-				float veloLength = projectile.velocity.Length();
+				float veloLength = Projectile.velocity.Length();
 				if(veloLength < 64f)
-					projectile.velocity *= 1.1f;
+					Projectile.velocity *= 1.1f;
 				if(aiCounter1 == 60)
 				{
-					SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 96, 1.25f, -0.2f);
+					SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 96, 1.25f, -0.2f);
 				}
 				if(aiCounter1 > 90)
                 {
-					projectile.velocity *= 0f;
+					Projectile.velocity *= 0f;
                 }
 				if (!draggingType && aiCounter1 > 90 && aiCounter1 % 20 == 0 && Main.netMode != NetmodeID.MultiplayerClient)
 				{
@@ -176,30 +176,30 @@ namespace SOTS.Projectiles.Pyramid
 				float mult = 1.0f;
 				if (aiCounter1 > 20)
 					mult = 0.30f;
-				projectile.position += (float)Math.Sin(MathHelper.ToRadians(4.5f * aiCounter1 + 90)) * projectile.velocity * mult;
+				Projectile.position += (float)Math.Sin(MathHelper.ToRadians(4.5f * aiCounter1 + 90)) * Projectile.velocity * mult;
 			}
 			else
             {
-				float veloLength = projectile.velocity.Length();
+				float veloLength = Projectile.velocity.Length();
 				int length = (int)(veloLength / 14);
 				veloLength -= length * 14;
-				Vector2 temp = projectile.velocity;
-				projectile.position += projectile.velocity.SafeNormalize(Vector2.Zero) * veloLength;
+				Vector2 temp = Projectile.velocity;
+				Projectile.position += Projectile.velocity.SafeNormalize(Vector2.Zero) * veloLength;
 				for(int i = 0; i < length; i++)
 				{
-					int x = (int)projectile.Center.X / 16;
-					int y = (int)projectile.Center.Y / 16;
+					int x = (int)Projectile.Center.X / 16;
+					int y = (int)Projectile.Center.Y / 16;
 					Tile tile = Framing.GetTileSafely(x, y);
-					if ((!WorldGen.InWorld(x, y, 20) || tile.active() && !Main.tileSolidTop[tile.type] && Main.tileSolid[tile.type] && tile.type == ModContent.TileType<TrueSandstoneTile>()) || tile.WallType == ModContent.WallType<TrueSandstoneWallWall>())
+					if ((!WorldGen.InWorld(x, y, 20) || tile.active() && !Main.tileSolidTop[tile.TileType] && Main.tileSolid[tile.TileType] && tile.TileType == ModContent.TileType<TrueSandstoneTile>()) || tile.WallType == ModContent.WallType<TrueSandstoneWallWall>())
 					{
-						projectile.velocity *= 0.0f;
+						Projectile.velocity *= 0.0f;
 					}
-					projectile.position += projectile.velocity.SafeNormalize(Vector2.Zero) * 14;
+					Projectile.position += Projectile.velocity.SafeNormalize(Vector2.Zero) * 14;
 				}
 				if(draggingType && counter % 30 == 0 && aiCounter1 > 90)
                 {
 					Vector2 projVelo = temp.SafeNormalize(Vector2.Zero);
-					//Projectile.NewProjectile(projectile.Center - projVelo * 24, projVelo * -4, ModContent.ProjectileType<CurseWave>(), projectile.damage, 0f, Main.myPlayer, (int)projectile.ai[0], 1f);
+					//Projectile.NewProjectile(Projectile.Center - projVelo * 24, projVelo * -4, ModContent.ProjectileType<CurseWave>(), Projectile.damage, 0f, Main.myPlayer, (int)Projectile.ai[0], 1f);
 				}
             }
 			return base.PreAI();
@@ -211,18 +211,18 @@ namespace SOTS.Projectiles.Pyramid
 		float toNextIterator = 0f;
 		public void RotateAI()
 		{
-			int parentID = (int)projectile.ai[0];
-			Vector2 veloToGo = new Vector2(0, 1200).RotatedBy(MathHelper.ToRadians(projectile.ai[1]));
-			projectile.ai[1] += midIterator;
+			int parentID = (int)Projectile.ai[0];
+			Vector2 veloToGo = new Vector2(0, 1200).RotatedBy(MathHelper.ToRadians(Projectile.ai[1]));
+			Projectile.ai[1] += midIterator;
 			NPC npc = Main.npc[parentID];
 			if (npc.active && npc.type == ModContent.NPCType<PharaohsCurse>() && !npc.dontTakeDamage)
 			{
-				projectile.Center = npc.Center;
-				projectile.velocity = veloToGo;
+				Projectile.Center = npc.Center;
+				Projectile.velocity = veloToGo;
 			}
 			else
 			{
-				projectile.Kill();
+				Projectile.Kill();
 			}
 			if(counter % 300 == 0 || (toNextIterator > 0 && toNextIterator <= 120))
             {
@@ -252,7 +252,7 @@ namespace SOTS.Projectiles.Pyramid
         }
         public override void AI()
 		{
-			int parentID = (int)projectile.ai[0];
+			int parentID = (int)Projectile.ai[0];
 			if(parentID >= 0)
             {
 				NPC npc = Main.npc[parentID];
@@ -261,15 +261,15 @@ namespace SOTS.Projectiles.Pyramid
 					if (Main.netMode != NetmodeID.Server)
 					{
 						OwnerPos = npc.Center;
-						Vector2 distanceToOwner = projectile.Center - OwnerPos;
+						Vector2 distanceToOwner = Projectile.Center - OwnerPos;
 						PharaohsCurse curse = npc.modNPC as PharaohsCurse;
 						DrawLimbs(curse.foamParticleList1, new Rectangle(0, 0, 0, 0));
-						PharaohsCurse.SpawnPassiveDust((Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Curse/CurseHookMask"), projectile.Center, 0.75f, curse.foamParticleList1, 0.2f, 3, 25, distanceToOwner.ToRotation() + MathHelper.ToRadians(90), draggingType ? 2.5f : 1);
+						PharaohsCurse.SpawnPassiveDust((Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Curse/CurseHookMask"), Projectile.Center, 0.75f, curse.foamParticleList1, 0.2f, 3, 25, distanceToOwner.ToRotation() + MathHelper.ToRadians(90), draggingType ? 2.5f : 1);
 					}
 				}
 				else
                 {
-					projectile.Kill();
+					Projectile.Kill();
 					OwnerPos = Vector2.Zero;
                 }
             }

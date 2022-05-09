@@ -22,7 +22,7 @@ namespace SOTS.Items.Crushers
             Item.height = 44;  
             Item.useTime = 30; 
             Item.useAnimation = 30;
-            Item.useStyle = 5;    
+            Item.useStyle = ItemUseStyleID.Shoot;    
             Item.knockBack = 8f;
             Item.value = Item.sellPrice(0, 2, 0, 0);
             Item.rare = ItemRarityID.LightRed;

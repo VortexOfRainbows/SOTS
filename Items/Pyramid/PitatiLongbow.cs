@@ -17,7 +17,7 @@ namespace SOTS.Items.Pyramid
 		public override void SetDefaults()
 		{
 			Item.damage = 18;
-			Item.ranged = true;
+			Item.DamageType = DamageClass.Ranged;
 			Item.width = 22;
 			Item.height = 62;
 			Item.useTime = 24;

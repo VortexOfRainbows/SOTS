@@ -16,48 +16,48 @@ namespace SOTS.Projectiles.Permafrost
 		}
         public override void SetDefaults()
         {
-			projectile.CloneDefaults(263);
+			Projectile.CloneDefaults(263);
             aiType = 263; 
-			projectile.height = 34;
-			projectile.width = 34;
-			projectile.penetrate = -1;
-			projectile.friendly = false;
-			projectile.timeLeft = 90;
-			projectile.tileCollide = false;
-			projectile.hostile = false;
-			projectile.magic = true;
-			projectile.alpha = 255;
+			Projectile.height = 34;
+			Projectile.width = 34;
+			Projectile.penetrate = -1;
+			Projectile.friendly = false;
+			Projectile.timeLeft = 90;
+			Projectile.tileCollide = false;
+			Projectile.hostile = false;
+			Projectile.magic = true;
+			Projectile.alpha = 255;
 		}
 		public override void AI()
 		{
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
 			Vector2 circularLocation = new Vector2(-distance, 4).RotatedBy(MathHelper.ToRadians(rotation));
 			rotation += 15;
 			distance -= 0.525f + 0.1f * modPlayer.shardSpellExtra;
 			if(distance > 1)
 			{
-				int num1 = Dust.NewDust(new Vector2(projectile.Center.X + circularLocation.X - 4, projectile.Center.Y + circularLocation.Y - 4), 4, 4, ModContent.DustType< CopyIceDust>());
+				int num1 = Dust.NewDust(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, ModContent.DustType< CopyIceDust>());
 				Main.dust[num1].noGravity = true;
 				Main.dust[num1].velocity *= 0.1f;
 
-				num1 = Dust.NewDust(new Vector2(projectile.Center.X - circularLocation.X - 4, projectile.Center.Y - circularLocation.Y - 4), 4, 4, ModContent.DustType<CopyIceDust>());
+				num1 = Dust.NewDust(new Vector2(Projectile.Center.X - circularLocation.X - 4, Projectile.Center.Y - circularLocation.Y - 4), 4, 4, ModContent.DustType<CopyIceDust>());
 				Main.dust[num1].noGravity = true;
 				Main.dust[num1].velocity *= 0.1f;
 			}
 			else
 			{
-				projectile.friendly = false;
-				if (projectile.timeLeft % 9 == 0)
+				Projectile.friendly = false;
+				if (Projectile.timeLeft % 9 == 0)
 				{
 					Bang(Main.rand.Next(-24, 25), Main.rand.Next(-24, 25));
-					projectile.friendly = true;
+					Projectile.friendly = true;
 				}
 			}
 		}
 		public void Bang(int pos1, int pos2)
 		{
-			Vector2 atLoc = new Vector2(projectile.Center.X + pos1, projectile.Center.Y + pos2);
+			Vector2 atLoc = new Vector2(Projectile.Center.X + pos1, Projectile.Center.Y + pos2);
 			SoundEngine.PlaySound(SoundID.Item, (int)atLoc.X, (int)atLoc.Y, 30, 0.9f, -0.2f);
 			for (int i = 0; i < 360; i += 5)
 			{
@@ -87,12 +87,12 @@ namespace SOTS.Projectiles.Permafrost
 		}
 		public override void ModifyDamageHitbox(ref Rectangle hitbox)
 		{
-			hitbox = new Rectangle((int)(projectile.position.X - projectile.width), (int)(projectile.position.Y - projectile.height), projectile.width * 3, projectile.height * 3);
+			hitbox = new Rectangle((int)(Projectile.position.X - Projectile.width), (int)(Projectile.position.Y - Projectile.height), Projectile.width * 3, Projectile.height * 3);
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
 			target.velocity *= 0.5f;
-            target.immune[projectile.owner] = 6;
+            target.immune[Projectile.owner] = 6;
         }
 	}
 }

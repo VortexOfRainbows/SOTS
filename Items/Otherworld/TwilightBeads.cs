@@ -50,7 +50,7 @@ namespace SOTS.Items.Otherworld
 		{
 			int currentSouls = 0;
 
-			for (int i = 0; i < Main.projectile.Length; i++)
+			for (int i = 0; i < Main.Projectile.Length; i++)
 			{
 				Projectile proj = Main.projectile[i];
 				if (ModContent.ProjectileType<SoulofRetaliation>() == proj.type && proj.active && proj.owner == player.whoAmI && proj.timeLeft > 748)

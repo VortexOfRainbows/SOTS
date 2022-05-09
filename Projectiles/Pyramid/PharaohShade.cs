@@ -13,13 +13,13 @@ namespace SOTS.Projectiles.Pyramid
     {
         public override void SetDefaults()
         {
-            projectile.hostile = false;
-            projectile.friendly = false;
-            projectile.tileCollide = false;
-            projectile.width = 0;
-            projectile.height = 0;
-            projectile.timeLeft = 3600;
-            projectile.hide = true; // Prevents projectile from being drawn normally. Use in conjunction with DrawBehind.
+            Projectile.hostile = false;
+            Projectile.friendly = false;
+            Projectile.tileCollide = false;
+            Projectile.width = 0;
+            Projectile.height = 0;
+            Projectile.timeLeft = 3600;
+            Projectile.hide = true; // Prevents projectile from being drawn normally. Use in conjunction with DrawBehind.
         }
         public override void DrawBehind(int index, List<int> drawCacheProjsBehindNPCsAndTiles, List<int> drawCacheProjsBehindNPCs, List<int> drawCacheProjsBehindProjectiles, List<int> drawCacheProjsOverWiresUI)
         {
@@ -30,36 +30,36 @@ namespace SOTS.Projectiles.Pyramid
         int counter = 0;
         public override void AI()
         {
-            //Main.NewText(projectile.timeLeft);
+            //Main.NewText(Projectile.timeLeft);
             counter++;
-            NPC master = Main.npc[(int)projectile.ai[0]];
+            NPC master = Main.npc[(int)Projectile.ai[0]];
             if (master.active && (master.type == ModContent.NPCType<PharaohsCurse>()))
             {
                 PharaohsCurse curse = master.modNPC as PharaohsCurse;
                 if(curse.enteredSecondPhase)
                 {
-                    if ((int)projectile.ai[1] != -1)
-                        projectile.timeLeft = 257;
-                    projectile.Center = master.Center;
+                    if ((int)Projectile.ai[1] != -1)
+                        Projectile.timeLeft = 257;
+                    Projectile.Center = master.Center;
                 }
                 else
                 {
-                    if (projectile.timeLeft > 257)
-                        projectile.timeLeft = 257;
+                    if (Projectile.timeLeft > 257)
+                        Projectile.timeLeft = 257;
                 }
             }
             else
             {
-                if (projectile.timeLeft > 257)
-                    projectile.timeLeft = 257;
+                if (Projectile.timeLeft > 257)
+                    Projectile.timeLeft = 257;
             }
-            if (projectile.timeLeft < 255)
+            if (Projectile.timeLeft < 255)
             {
                 if (fadeInTimer > 0)
                 {
                     fadeInTimer--;
                     if (fadeInTimer <= 0)
-                        projectile.Kill();
+                        Projectile.Kill();
                 }
             }
             else
@@ -71,10 +71,10 @@ namespace SOTS.Projectiles.Pyramid
                 if (fadeInTimer > 255)
                     fadeInTimer = 255;
             }
-            projectile.alpha = fadeInTimer;
+            Projectile.alpha = fadeInTimer;
             if (Main.netMode == NetmodeID.Server)
             {
-                projectile.netUpdate = true;
+                Projectile.netUpdate = true;
             }
         }
         private int screenWidthOld = 0;
@@ -124,9 +124,9 @@ namespace SOTS.Projectiles.Pyramid
             }
         }
         Vector2 oldPos;
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override bool PreDraw(ref Color lightColor)
         {
-            if (!projectile.active || Main.LocalPlayer.Distance(projectile.Center) > 3200)
+            if (!Projectile.active || Main.LocalPlayer.Distance(Projectile.Center) > 3200)
                 return false;
             if(oldPos == null)
             {
@@ -177,7 +177,7 @@ namespace SOTS.Projectiles.Pyramid
         }
         public void DrawPharaoh(SpriteBatch spriteBatch, Color lightColor)
         {
-            int parentID = (int)projectile.ai[0];
+            int parentID = (int)Projectile.ai[0];
             if (parentID >= 0)
             {
                 NPC npc = Main.npc[parentID];

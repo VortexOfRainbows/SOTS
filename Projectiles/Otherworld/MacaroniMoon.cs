@@ -19,13 +19,13 @@ namespace SOTS.Projectiles.Otherworld
 		}
         public override void SetDefaults()
         {
-			projectile.height = 16;
-			projectile.width = 20;
-			projectile.magic = true;
-			projectile.timeLeft = 7200;
-			projectile.friendly = false;
-			projectile.hostile = false;
-			projectile.tileCollide = false;
+			Projectile.height = 16;
+			Projectile.width = 20;
+			Projectile.magic = true;
+			Projectile.timeLeft = 7200;
+			Projectile.friendly = false;
+			Projectile.hostile = false;
+			Projectile.tileCollide = false;
 		}
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
@@ -34,17 +34,17 @@ namespace SOTS.Projectiles.Otherworld
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture = Main.projectileTexture[projectile.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Color color = new Color(100, 100, 100, 0);
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			for (int k = 0; k < 6; k++)
 			{
 				float x = Main.rand.Next(-10, 11) * 0.25f;
 				float y = Main.rand.Next(-10, 11) * 0.25f;
-				Main.spriteBatch.Draw(texture, new Vector2((float)(projectile.Center.X - (int)Main.screenPosition.X) + x, (float)(projectile.Center.Y - (int)Main.screenPosition.Y) + y), null, color * ((255 - projectile.alpha) / 255f), projectile.rotation, drawOrigin, projectile.scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, new Vector2((float)(Projectile.Center.X - (int)Main.screenPosition.X) + x, (float)(Projectile.Center.Y - (int)Main.screenPosition.Y) + y), null, color * ((255 - Projectile.alpha) / 255f), Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
 			}
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
         {
 			return false;
 		}
@@ -52,10 +52,10 @@ namespace SOTS.Projectiles.Otherworld
 		int lastNpc = -1;
 		public Vector2 FindTarget()
 		{
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			SOTSPlayer modPlayer = player.GetModPlayer<SOTSPlayer>();
 			float distanceFromTarget = 1080f;
-			Vector2 targetCenter = projectile.Center;
+			Vector2 targetCenter = Projectile.Center;
 			Vector2 cursor = Main.MouseWorld;
 			if (!foundTarget)
 			{
@@ -64,10 +64,10 @@ namespace SOTS.Projectiles.Otherworld
 					NPC npc = Main.npc[i];
 					if (npc.CanBeChasedBy() && npc.active)
 					{
-						float between = Vector2.Distance(npc.Center, projectile.Center);
-						bool closest = Vector2.Distance(projectile.Center, targetCenter) > between;
+						float between = Vector2.Distance(npc.Center, Projectile.Center);
+						bool closest = Vector2.Distance(Projectile.Center, targetCenter) > between;
 						bool inRange = between < distanceFromTarget;
-						bool lineOfSight = Collision.CanHitLine(projectile.position, projectile.width, projectile.height, npc.position, npc.width, npc.height);
+						bool lineOfSight = Collision.CanHitLine(Projectile.position, Projectile.width, Projectile.height, npc.position, npc.width, npc.height);
 
 						if (((closest || !foundTarget) && inRange) && lineOfSight)
 						{
@@ -84,7 +84,7 @@ namespace SOTS.Projectiles.Otherworld
 				NPC npc = Main.npc[lastNpc];
 				if (npc.CanBeChasedBy() && npc.active)
 				{
-					bool lineOfSight = Collision.CanHitLine(projectile.position, projectile.width, projectile.height, npc.position, npc.width, npc.height);
+					bool lineOfSight = Collision.CanHitLine(Projectile.position, Projectile.width, Projectile.height, npc.position, npc.width, npc.height);
 					targetCenter = npc.Center + npc.velocity * 2;
 				}
 				else
@@ -92,14 +92,14 @@ namespace SOTS.Projectiles.Otherworld
 					foundTarget = false;
                 }
 			}
-			if(targetCenter != projectile.Center)
+			if(targetCenter != Projectile.Center)
 				return targetCenter;
 			return cursor;	
 		}
 		float spin = 1800;
 		public override void AI()
 		{
-			projectile.velocity *= 0.96f;
+			Projectile.velocity *= 0.96f;
 			if(spin > 0)
             {
 				spin -= 3;
@@ -109,23 +109,23 @@ namespace SOTS.Projectiles.Otherworld
             {
 				spin = 0;
             }
-			if(Main.myPlayer == projectile.owner)
+			if(Main.myPlayer == Projectile.owner)
 			{
-				projectile.ai[0] = (FindTarget() - projectile.Center).ToRotation();
-				projectile.netUpdate = true;
+				Projectile.ai[0] = (FindTarget() - Projectile.Center).ToRotation();
+				Projectile.netUpdate = true;
 			}
-			projectile.rotation = projectile.ai[0] + MathHelper.ToRadians(spin);
+			Projectile.rotation = Projectile.ai[0] + MathHelper.ToRadians(spin);
 			if(spin <= 0)
 			{
-				projectile.ai[1]++;
-				if (projectile.ai[1] >= 10)
+				Projectile.ai[1]++;
+				if (Projectile.ai[1] >= 10)
 				{
-					SoundEngine.PlaySound(2, (int)(projectile.Center.X), (int)(projectile.Center.Y), 9, 0.75f);
-					if (Main.myPlayer == projectile.owner)
+					SoundEngine.PlaySound(2, (int)(Projectile.Center.X), (int)(Projectile.Center.Y), 9, 0.75f);
+					if (Main.myPlayer == Projectile.owner)
 					{
-						Projectile.NewProjectile(projectile.Center, new Vector2(4, 0).RotatedBy(projectile.rotation), mod.ProjectileType("MacaroniBeam"), projectile.damage, projectile.knockBack, projectile.owner);
+						Projectile.NewProjectile(Projectile.Center, new Vector2(4, 0).RotatedBy(Projectile.rotation), mod.ProjectileType("MacaroniBeam"), Projectile.damage, Projectile.knockBack, Projectile.owner);
 					}
-					projectile.Kill();
+					Projectile.Kill();
 				}
 			}
 		}	

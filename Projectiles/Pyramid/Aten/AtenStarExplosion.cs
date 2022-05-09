@@ -15,21 +15,21 @@ namespace SOTS.Projectiles.Pyramid.Aten
 		}
         public override void SetDefaults()
         {
-			projectile.height = 180;
-			projectile.width = 180;
-			projectile.penetrate = -1;
-			projectile.friendly = true;
-			projectile.timeLeft = 3;
-			projectile.tileCollide = false;
-			projectile.hostile = false;
-			projectile.alpha = 255;
-			projectile.melee = true;
-            projectile.localNPCHitCooldown = 10;
-            projectile.usesLocalNPCImmunity = true;
+			Projectile.height = 180;
+			Projectile.width = 180;
+			Projectile.penetrate = -1;
+			Projectile.friendly = true;
+			Projectile.timeLeft = 3;
+			Projectile.tileCollide = false;
+			Projectile.hostile = false;
+			Projectile.alpha = 255;
+			Projectile.melee = true;
+            Projectile.localNPCHitCooldown = 10;
+            Projectile.usesLocalNPCImmunity = true;
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.immune[projectile.owner] = 0;
+            target.immune[Projectile.owner] = 0;
             if (Main.rand.NextBool(5))
                 target.AddBuff(BuffID.OnFire, 300);
         }
@@ -40,8 +40,8 @@ namespace SOTS.Projectiles.Pyramid.Aten
         }
         public override void AI()
         {
-            Vector2 atLoc = projectile.Center;
-            SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 105, 0.8f, -0.15f);
+            Vector2 atLoc = Projectile.Center;
+            SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 105, 0.8f, -0.15f);
             DustHelper.DrawStar(atLoc, DustID.Fire, 4, 4.5f, 1.5f, 1.85f, 0.75f, 0.75f, true, 10, 0);
             for (int i = 0; i < 360; i += 10)
             {
@@ -69,7 +69,7 @@ namespace SOTS.Projectiles.Pyramid.Aten
                     Dust dust = Dust.NewDustDirect(new Vector2(atLoc.X + circularLocation.X - 4, atLoc.Y + circularLocation.Y - 4), 4, 4, DustID.Fire);
                     dust.noGravity = true;
                     dust.velocity *= 0.5f;
-                    dust.velocity += -ogCL * (4f + 2f * projectile.ai[0]) * mult;
+                    dust.velocity += -ogCL * (4f + 2f * Projectile.ai[0]) * mult;
                     dust.scale = 1.55f;
                 }
                 if(Main.rand.NextBool(3))
@@ -79,7 +79,7 @@ namespace SOTS.Projectiles.Pyramid.Aten
                     dust.color = colorMan;
                     dust.noGravity = true;
                     dust.velocity *= 0.5f;
-                    dust.velocity += -ogCL * (3f + 1.5f * projectile.ai[0]) * mult;
+                    dust.velocity += -ogCL * (3f + 1.5f * Projectile.ai[0]) * mult;
                     dust.fadeIn = 0.1f;
                     dust.scale *= 2.45f;
                     dust.alpha = 100;

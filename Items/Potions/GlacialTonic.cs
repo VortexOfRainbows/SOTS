@@ -34,7 +34,7 @@ namespace SOTS.Items.Potions
 		{
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Potions/GlacialTonicEffect").Value;
 			Color color = new Color(100, 100, 100, 0);
-			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, Item.height * 0.5f);
 			for (int k = 0; k < 2; k++)
 			{
 				float x = Main.rand.Next(-10, 11) * 0.15f;
@@ -49,10 +49,10 @@ namespace SOTS.Items.Potions
 			Item.width = 20;
 			Item.height = 32;
             Item.value = Item.sellPrice(0, 1, 0, 0);
-			Item.rare = 3;
+			Item.rare = ItemRarityID.Orange;
 			Item.maxStack = 30;
             Item.UseSound = SoundID.Item3;            
-            Item.useStyle = 2;        
+            Item.useStyle = ItemUseStyleID.EatFood;      
             Item.useTurn = true;
             Item.useAnimation = 16;
             Item.useTime = 16;

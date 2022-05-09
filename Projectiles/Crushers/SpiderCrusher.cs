@@ -13,8 +13,8 @@ namespace SOTS.Projectiles.Crushers
 		}
         public override void SafeSetDefaults()
         {
-			projectile.width = 24;
-			projectile.height = 24;
+			Projectile.width = 24;
+			Projectile.height = 24;
 			minExplosions = 1;
 			maxExplosions = 1;
 			arms = new Vector2[8];
@@ -36,9 +36,9 @@ namespace SOTS.Projectiles.Crushers
 			{
 				float rand = Main.rand.NextFloat(-15, 15) * chargePercent;
 				float randMult = Main.rand.NextFloat(0.8f, 1.2f);
-				Projectile.NewProjectileDirect(new Vector2(x, y), new Vector2(-(7 * randMult + 10 * chargePercent), 0).RotatedBy(rotation + MathHelper.ToRadians(rand)), ModContent.ProjectileType<WebBolt>(), projectile.damage, projectile.knockBack, projectile.owner);
+				Projectile.NewProjectileDirect(new Vector2(x, y), new Vector2(-(7 * randMult + 10 * chargePercent), 0).RotatedBy(rotation + MathHelper.ToRadians(rand)), ModContent.ProjectileType<WebBolt>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
 			}
-			Projectile.NewProjectileDirect(new Vector2(x, y) + new Vector2(-12, 0).RotatedBy(rotation), projectile.velocity, ModContent.ProjectileType<Webbing>(), projectile.damage, projectile.knockBack, projectile.owner, -1);
+			Projectile.NewProjectileDirect(new Vector2(x, y) + new Vector2(-12, 0).RotatedBy(rotation), Projectile.velocity, ModContent.ProjectileType<Webbing>(), Projectile.damage, Projectile.knockBack, Projectile.owner, -1);
 			return true;
         }
         public override int ExplosionType()

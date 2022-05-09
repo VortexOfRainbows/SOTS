@@ -14,34 +14,34 @@ namespace SOTS.Projectiles.Nature
 		}
         public override void SetDefaults()
         {
-			projectile.friendly = true;
-			projectile.height = 10;
-			projectile.width = 18;
-			projectile.penetrate = -1;
-			projectile.melee = true;
-			projectile.tileCollide = false;
-			projectile.ignoreWater = true;
-			projectile.usesIDStaticNPCImmunity = true;
-			projectile.idStaticNPCHitCooldown = 20;
-			projectile.timeLeft = 50;
-			projectile.extraUpdates = 2;
+			Projectile.friendly = true;
+			Projectile.height = 10;
+			Projectile.width = 18;
+			Projectile.penetrate = -1;
+			Projectile.melee = true;
+			Projectile.tileCollide = false;
+			Projectile.ignoreWater = true;
+			Projectile.usesIDStaticNPCImmunity = true;
+			Projectile.idStaticNPCHitCooldown = 20;
+			Projectile.timeLeft = 50;
+			Projectile.extraUpdates = 2;
 		}
 		bool runOnce = true;
 		public override void AI()
 		{
 			if(runOnce)
 			{
-				SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 17, 0.8f, 0.1f);
+				SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 17, 0.8f, 0.1f);
 				runOnce = false;
             }
-			projectile.alpha = (int)(255 * (1 - projectile.timeLeft / 50f));
+			Projectile.alpha = (int)(255 * (1 - Projectile.timeLeft / 50f));
 			if(Main.rand.NextBool(4))
 			{
-				Dust dust = Dust.NewDustDirect(projectile.Center - new Vector2(4, 4), 0, 0, 2, 0, 0, 50 + (int)(205 * (1 - Math.Sin((1 - projectile.timeLeft / 50f) * MathHelper.Pi)))); //DustID.Grass
+				Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(4, 4), 0, 0, 2, 0, 0, 50 + (int)(205 * (1 - Math.Sin((1 - Projectile.timeLeft / 50f) * MathHelper.Pi)))); //DustID.Grass
 				dust.noGravity = true;
 				dust.velocity *= 0.3f;
 			}
-			projectile.rotation = projectile.velocity.ToRotation() + MathHelper.PiOver2;
+			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{

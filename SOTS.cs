@@ -367,9 +367,9 @@ namespace SOTS
 						for(int i = 0; i < Main.maxProjectiles; i++)
                         {
 							Projectile projectile = Main.projectile[i];
-							if (projectile.active && projectile.identity == projIdentity)
+							if (Projectile.active && Projectile.identity == projIdentity)
 							{
-								projIdentity = projectile.whoAmI;
+								projIdentity = Projectile.whoAmI;
 								break;
                             }
                         }
@@ -890,8 +890,8 @@ namespace SOTS
 			Tile tile = Main.tile[x, y];
 			if (tile != null)
 			{
-				tile.frameX = (short)frameX;
-				tile.frameY = (short)frameY;
+				tile.TileFrameX = (short)frameX;
+				tile.TileFrameY = (short)frameY;
 			}
 		}
 		internal static void MergeWithFrameExplicit(int x, int y, int myType, int mergeType, out bool mergedUp, out bool mergedLeft, out bool mergedRight, out bool mergedDown, bool forceSameDown = false, bool forceSameUp = false, bool forceSameLeft = false, bool forceSameRight = false, bool resetFrame = true)

@@ -59,8 +59,8 @@ namespace SOTS.Items.Earth
 		public bool canGlow(int i, int j)
 		{
 			Tile tile = Main.tile[i, j];
-			int frameX = tile.frameX / 18;
-			int frameY = tile.frameY / 18;
+			int frameX = tile.TileFrameX / 18;
+			int frameY = tile.TileFrameY / 18;
 			if (frameX >= 1 && frameX <= 3 && (frameY == 1))
 				return true;
 			if (frameX >= 6 && frameX <= 8 && (frameY == 1 || frameY == 2 || frameY == 11))

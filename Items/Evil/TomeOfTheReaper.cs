@@ -17,7 +17,7 @@ namespace SOTS.Items.Evil
 		public override void SetDefaults()
 		{
             Item.damage = 48; 
-            Item.magic = true; 
+            Item.DamageType = DamageClass.Magic; 
             Item.width = 42;   
             Item.height = 44;   
             Item.useTime = 18;   

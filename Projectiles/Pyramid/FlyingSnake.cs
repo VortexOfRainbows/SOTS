@@ -14,19 +14,19 @@ namespace SOTS.Projectiles.Pyramid
 		}
         public override void SetDefaults()
         {
-			projectile.width = 50;
-			projectile.height = 26;
-            Main.projFrames[projectile.type] = 4;
-			projectile.penetrate = -1;
-			projectile.friendly = true;
-			projectile.timeLeft = 960;
-			projectile.tileCollide = true;
-			projectile.hostile = false;
-			projectile.minion = true;
-			projectile.alpha = 0;
-            projectile.minionSlots = 0f;
-			projectile.usesLocalNPCImmunity = true;
-			projectile.localNPCHitCooldown = 40;
+			Projectile.width = 50;
+			Projectile.height = 26;
+            Main.projFrames[Projectile.type] = 4;
+			Projectile.penetrate = -1;
+			Projectile.friendly = true;
+			Projectile.timeLeft = 960;
+			Projectile.tileCollide = true;
+			Projectile.hostile = false;
+			Projectile.minion = true;
+			Projectile.alpha = 0;
+            Projectile.minionSlots = 0f;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = 40;
 		}
 		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
 		{
@@ -36,48 +36,48 @@ namespace SOTS.Projectiles.Pyramid
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			projectile.localNPCImmunity[target.whoAmI] = projectile.localNPCHitCooldown;
-			target.immune[projectile.owner] = 0;
+			Projectile.localNPCImmunity[target.whoAmI] = Projectile.localNPCHitCooldown;
+			target.immune[Projectile.owner] = 0;
 		}
 		int counter = 0;
 		public override void SendExtraAI(BinaryWriter writer) 
 		{
-			writer.Write(projectile.rotation);
-			writer.Write(projectile.spriteDirection);
-			writer.Write(projectile.frame);
-			writer.Write(projectile.timeLeft);
+			writer.Write(Projectile.rotation);
+			writer.Write(Projectile.spriteDirection);
+			writer.Write(Projectile.frame);
+			writer.Write(Projectile.timeLeft);
 			writer.Write(counter);
 		}
 		public override void ReceiveExtraAI(BinaryReader reader)
 		{	
-			projectile.rotation = reader.ReadSingle();
-			projectile.spriteDirection = reader.ReadInt32();
-			projectile.frame = reader.ReadInt32();
-			projectile.timeLeft = reader.ReadInt32();
+			Projectile.rotation = reader.ReadSingle();
+			Projectile.spriteDirection = reader.ReadInt32();
+			Projectile.frame = reader.ReadInt32();
+			Projectile.timeLeft = reader.ReadInt32();
 			counter = reader.ReadInt32();
 		}
 		public override void AI()
         {
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			
-			projectile.tileCollide = true;
-            projectile.frameCounter++;
-			if(!projectile.active)
+			Projectile.tileCollide = true;
+            Projectile.frameCounter++;
+			if(!Projectile.active)
 			{
-				projectile.Kill();
+				Projectile.Kill();
 			}
-            if (projectile.frameCounter >= 9)
+            if (Projectile.frameCounter >= 9)
             {
-				projectile.friendly = true;
-                projectile.frameCounter = 0;
-                projectile.frame = (projectile.frame + 1) % 4;
+				Projectile.friendly = true;
+                Projectile.frameCounter = 0;
+                Projectile.frame = (Projectile.frame + 1) % 4;
             }
-			projectile.rotation = projectile.velocity.ToRotation();
-			projectile.spriteDirection = 1;
-			if(projectile.velocity.X < 0)
+			Projectile.rotation = Projectile.velocity.ToRotation();
+			Projectile.spriteDirection = 1;
+			if(Projectile.velocity.X < 0)
 			{
-				projectile.rotation = projectile.velocity.ToRotation() - MathHelper.ToRadians(180);
-				projectile.spriteDirection = -1;
+				Projectile.rotation = Projectile.velocity.ToRotation() - MathHelper.ToRadians(180);
+				Projectile.spriteDirection = -1;
 			}
 			float minDist = 480;
 			int target2 = -1;
@@ -87,7 +87,7 @@ namespace SOTS.Projectiles.Pyramid
 			float dXP = 0f;
 			float dYP = 0f;
 			float distanceP = 0;
-			float speed = 0.8f + projectile.ai[0] * 0.15f; 
+			float speed = 0.8f + Projectile.ai[0] * 0.15f; 
 			bool foundTarget = false;
 
 			// This code is required if your minion weapon has the targeting feature
@@ -97,9 +97,9 @@ namespace SOTS.Projectiles.Pyramid
 				NPC target = Main.npc[i];
 				if (target.CanBeChasedBy())
 				{
-					bool lineOfSight = Collision.CanHitLine(projectile.position, projectile.width, projectile.height, target.position, target.width, target.height);
-					dX = target.Center.X - projectile.Center.X;
-					dY = target.Center.Y - projectile.Center.Y;
+					bool lineOfSight = Collision.CanHitLine(Projectile.position, Projectile.width, Projectile.height, target.position, target.width, target.height);
+					dX = target.Center.X - Projectile.Center.X;
+					dY = target.Center.Y - Projectile.Center.Y;
 					distance = (float)Math.Sqrt((double)(dX * dX + dY * dY));
 					if (distance < 800 && lineOfSight)
 					{
@@ -112,16 +112,16 @@ namespace SOTS.Projectiles.Pyramid
 					}
 				}
 			}
-			if (projectile.friendly == true && projectile.hostile == false)
+			if (Projectile.friendly == true && Projectile.hostile == false)
 			{
 				for(int i = 0; i < Main.npc.Length; i++)
 				{
 					NPC target = Main.npc[i];
 					if(target.CanBeChasedBy() && !foundTarget)
 					{
-						bool lineOfSight = Collision.CanHitLine(projectile.Center, 4, 4, target.position, target.width, target.height);
-						dX = target.Center.X - projectile.Center.X;
-						dY = target.Center.Y - projectile.Center.Y;
+						bool lineOfSight = Collision.CanHitLine(Projectile.Center, 4, 4, target.position, target.width, target.height);
+						dX = target.Center.X - Projectile.Center.X;
+						dY = target.Center.Y - Projectile.Center.Y;
 						distance = (float) Math.Sqrt((double)(dX * dX + dY * dY));
 						if(distance < minDist && lineOfSight)
 						{
@@ -135,34 +135,34 @@ namespace SOTS.Projectiles.Pyramid
 					}
 				}
 				counter++;
-				int unique = (int)projectile.ai[0] % 3;
+				int unique = (int)Projectile.ai[0] % 3;
 
-				if(Main.myPlayer == projectile.owner)
+				if(Main.myPlayer == Projectile.owner)
 				{
 					if(counter % 2 == 0)
-						projectile.netUpdate = true;
+						Projectile.netUpdate = true;
 				}
 				Vector2 circular = new Vector2(0, -48).RotatedBy(MathHelper.ToRadians((unique * 120) + counter * 2));
 				circular.Y *= 0.5f;
 				circular.Y -= 96f;
 				Vector2 playerd = player.Center + circular;
-				float playerDistance = Vector2.Distance(player.Center, projectile.Center);
+				float playerDistance = Vector2.Distance(player.Center, Projectile.Center);
 				
 				if (playerDistance > 2100f && !foundTarget)
 				{
 					if (player.active == true)
 					{
-						projectile.position.X = player.position.X;
-						projectile.position.Y = player.position.Y;
+						Projectile.position.X = player.position.X;
+						Projectile.position.Y = player.position.Y;
 					}
 				}
 				if (!foundTarget)
 				{
-					projectile.tileCollide = false;
+					Projectile.tileCollide = false;
 				}
 				else
 				{
-					projectile.tileCollide = true;
+					Projectile.tileCollide = true;
 				}
 
 				if (target2 != -1 && playerDistance <= 1200 && distanceP <= 1200)
@@ -170,22 +170,22 @@ namespace SOTS.Projectiles.Pyramid
 					NPC toHit = Main.npc[target2];
 					if(toHit.active == true)
 					{
-						dX = toHit.Center.X - projectile.Center.X;
-						dY = toHit.Center.Y - projectile.Center.Y;
+						dX = toHit.Center.X - Projectile.Center.X;
+						dY = toHit.Center.Y - Projectile.Center.Y;
 						distance = (float)Math.Sqrt((double)(dX * dX + dY * dY));
 						speed /= distance;
-						projectile.velocity *= 0.994f;
-						projectile.velocity += new Vector2(dX * speed, dY * speed);
+						Projectile.velocity *= 0.994f;
+						Projectile.velocity += new Vector2(dX * speed, dY * speed);
 					}
 				}
 				else
 				{
-					Vector2 toPlayer = playerd - projectile.Center;
-					projectile.rotation = toPlayer.ToRotation();
+					Vector2 toPlayer = playerd - Projectile.Center;
+					Projectile.rotation = toPlayer.ToRotation();
 					if (toPlayer.X < 0)
 					{
-						projectile.rotation = toPlayer.ToRotation() - MathHelper.ToRadians(180);
-						projectile.spriteDirection = -1;
+						Projectile.rotation = toPlayer.ToRotation() - MathHelper.ToRadians(180);
+						Projectile.spriteDirection = -1;
 					}
 					float dist = toPlayer.Length();
 					toPlayer = toPlayer.SafeNormalize(Vector2.Zero);
@@ -194,19 +194,19 @@ namespace SOTS.Projectiles.Pyramid
 					{
 						speed2 = dist;
 					}
-					projectile.velocity = toPlayer * speed2;
+					Projectile.velocity = toPlayer * speed2;
 				}
 			}
         }
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{	
-			if (projectile.velocity.X != oldVelocity.X)
+			if (Projectile.velocity.X != oldVelocity.X)
 			{
-				projectile.velocity.X = -oldVelocity.X * 0.35f; 
+				Projectile.velocity.X = -oldVelocity.X * 0.35f; 
 			}
-			if (projectile.velocity.Y != oldVelocity.Y)
+			if (Projectile.velocity.Y != oldVelocity.Y)
 			{
-				projectile.velocity.Y = -oldVelocity.Y * 0.35f;
+				Projectile.velocity.Y = -oldVelocity.Y * 0.35f;
 			}
 			return false;
 		}

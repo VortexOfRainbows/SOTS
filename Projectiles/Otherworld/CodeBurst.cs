@@ -13,31 +13,31 @@ namespace SOTS.Projectiles.Otherworld
 		}
         public override void SetDefaults()
         {
-            projectile.width = 32;
-            projectile.height = 32;
-			projectile.timeLeft = 72;
-            projectile.penetrate = 1; 
-            projectile.friendly = true; 
-            projectile.tileCollide = true;
-			projectile.magic = true;
-			projectile.alpha = 255;
+            Projectile.width = 32;
+            Projectile.height = 32;
+			Projectile.timeLeft = 72;
+            Projectile.penetrate = 1; 
+            Projectile.friendly = true; 
+            Projectile.tileCollide = true;
+			Projectile.magic = true;
+			Projectile.alpha = 255;
 		}
 		public override void Kill(int timeLeft)
 		{
-			if (projectile.ai[1] == -1)
+			if (Projectile.ai[1] == -1)
             {
-				projectile.extraUpdates = 3;
-				projectile.magic = false;
+				Projectile.extraUpdates = 3;
+				Projectile.magic = false;
             }
 			for (int i = 0; i < 30; i++)
 			{
 				int type = mod.DustType("CodeDust");
-				if (projectile.ai[1] == -1)
+				if (Projectile.ai[1] == -1)
 					type = mod.DustType("CodeDust2");
-				int num = Dust.NewDust(new Vector2(projectile.position.X - 4, projectile.position.Y - 4), projectile.width, projectile.height, type);
+				int num = Dust.NewDust(new Vector2(Projectile.position.X - 4, Projectile.position.Y - 4), Projectile.width, Projectile.height, type);
 				Dust dust = Main.dust[num];
 				dust.velocity *= 1.3f;
-				dust.velocity += projectile.velocity * 0.3f;
+				dust.velocity += Projectile.velocity * 0.3f;
 				dust.noGravity = true;
 				dust.scale *= 2.75f;
 			}
@@ -55,14 +55,14 @@ namespace SOTS.Projectiles.Otherworld
 		public override void AI() //The projectile's AI/ what the projectile does
 		{
 			int type = mod.DustType("CodeDust");
-			if (projectile.ai[1] == -1)
+			if (Projectile.ai[1] == -1)
 				type = mod.DustType("CodeDust2");
 			for (int i = 0; i < Main.rand.Next(2) + 1; i++)
 			{
-				int num = Dust.NewDust(new Vector2(projectile.Center.X - 4, projectile.Center.Y - 4), 4, 4, type);
+				int num = Dust.NewDust(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4), 4, 4, type);
 				Dust dust = Main.dust[num];
 				dust.velocity *= 0.6f;
-				dust.velocity += projectile.velocity * 0.1f;
+				dust.velocity += Projectile.velocity * 0.1f;
 				dust.noGravity = true;
 				dust.scale *= 1.75f;
 			}

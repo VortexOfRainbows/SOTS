@@ -19,17 +19,17 @@ namespace SOTS.Projectiles.Chaos
 
 		public override void SetDefaults() 
 		{
-			projectile.width = 32;
-			projectile.height = 32;
-			projectile.timeLeft = 40;
-			projectile.magic = true;
-			projectile.penetrate = -1;
-			projectile.hostile = false;
-			projectile.friendly = true;
-			projectile.tileCollide = false;
-			projectile.ignoreWater = true;
-			projectile.localNPCHitCooldown = 40;
-			projectile.usesLocalNPCImmunity = true;
+			Projectile.width = 32;
+			Projectile.height = 32;
+			Projectile.timeLeft = 40;
+			Projectile.magic = true;
+			Projectile.penetrate = -1;
+			Projectile.hostile = false;
+			Projectile.friendly = true;
+			Projectile.tileCollide = false;
+			Projectile.ignoreWater = true;
+			Projectile.localNPCHitCooldown = 40;
+			Projectile.usesLocalNPCImmunity = true;
 		}
 		bool runOnce = true;
 		Color color;
@@ -48,15 +48,15 @@ namespace SOTS.Projectiles.Chaos
 		}
         public override void AI()
         {
-			projectile.alpha = (int)(255 * (1 - projectile.timeLeft / 40f));
-			projectile.ai[1] ++;
+			Projectile.alpha = (int)(255 * (1 - Projectile.timeLeft / 40f));
+			Projectile.ai[1] ++;
 		}
 		bool collided = false;
         public void SetPostitions()
         {
-			Vector2 direction = new Vector2(length * scale, 0).RotatedBy(projectile.velocity.ToRotation());
+			Vector2 direction = new Vector2(length * scale, 0).RotatedBy(Projectile.velocity.ToRotation());
 			int maxDist = 480;
-			Vector2 currentPos = projectile.Center;
+			Vector2 currentPos = Projectile.Center;
 			int k = 0;
 			while (maxDist > 0)
 			{
@@ -73,8 +73,8 @@ namespace SOTS.Projectiles.Chaos
 						if (target.CanBeChasedBy())
 						{
 							direction = new Vector2(length * scale, 0).RotatedBy(Redirect(direction.ToRotation(), currentPos, target.Center));
-							float width = projectile.width * scale;
-							float height = projectile.height * scale;
+							float width = Projectile.width * scale;
+							float height = Projectile.height * scale;
 							Rectangle projHitbox = new Rectangle((int)currentPos.X - (int)width / 2, (int)currentPos.Y - (int)height / 2, (int)width, (int)height);
 							if (target.Hitbox.Intersects(projHitbox))
 							{
@@ -100,24 +100,24 @@ namespace SOTS.Projectiles.Chaos
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-			if (projectile.owner == Main.myPlayer)
+			if (Projectile.owner == Main.myPlayer)
 			{
 				float rand = Main.rand.Next(120);
 				for (int i = 0; i < 3; i++)
                 {
 					Vector2 circular = new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(i * 120 + rand));
-					Projectile.NewProjectile(target.Center + circular.SafeNormalize(Vector2.Zero) * 0.5f * target.Size.Length(), circular * 4f, ModContent.ProjectileType<SupernovaScatter>(), (int)(projectile.damage * 1.4f), projectile.knockBack, Main.myPlayer, target.whoAmI, rand * 3 + i * 120);
+					Projectile.NewProjectile(target.Center + circular.SafeNormalize(Vector2.Zero) * 0.5f * target.Size.Length(), circular * 4f, ModContent.ProjectileType<SupernovaScatter>(), (int)(Projectile.damage * 1.4f), Projectile.knockBack, Main.myPlayer, target.whoAmI, rand * 3 + i * 120);
                 }
             }
         }
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
 		{
-			if(projectile.alpha >= 150)
+			if(Projectile.alpha >= 150)
             {
 				return false;
             }
-			float width = projectile.width * scale;
-			float height = projectile.height * scale;
+			float width = Projectile.width * scale;
+			float height = Projectile.height * scale;
 			for (int i = 0; i < posList.Count; i += 2)
 			{
 				Vector2 pos = posList[i];
@@ -134,14 +134,14 @@ namespace SOTS.Projectiles.Chaos
         {
             return false;
         }
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override bool PreDraw(ref Color lightColor)
 		{
 			if (runOnce)
 				return false;
-			Texture2D texture = Main.projectileTexture[projectile.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Vector2 origin = new Vector2(texture.Width/2, texture.Height/2);
 			float alpha = 1;
-			Vector2 lastPosition = projectile.Center;
+			Vector2 lastPosition = Projectile.Center;
 			for(int i = 0; i < posList.Count; i++)
 			{
 				Vector2 drawPos = posList[i];
@@ -151,11 +151,11 @@ namespace SOTS.Projectiles.Chaos
 				}
 				Vector2 direction = drawPos - lastPosition;
 				lastPosition = drawPos;
-				float rotation = i == 0 ? projectile.velocity.ToRotation() : direction.ToRotation();
+				float rotation = i == 0 ? Projectile.velocity.ToRotation() : direction.ToRotation();
 				for(int j = 0; j < 3; j++)
 				{
-					Vector2 sinusoid = new Vector2(0, scale * 18 * (float)Math.Sin(MathHelper.ToRadians(i * 2 + projectile.ai[1] * 2 + j * 120))).RotatedBy(rotation);
-					Color color = this.color * ((255 - projectile.alpha) / 255f) * alpha * 0.7f;
+					Vector2 sinusoid = new Vector2(0, scale * 18 * (float)Math.Sin(MathHelper.ToRadians(i * 2 + Projectile.ai[1] * 2 + j * 120))).RotatedBy(rotation);
+					Color color = this.color * ((255 - Projectile.alpha) / 255f) * alpha * 0.7f;
 					color.A = 0;
 					spriteBatch.Draw(texture, drawPos - Main.screenPosition + sinusoid, null, color, rotation, origin, new Vector2(scale * 3, scale), SpriteEffects.None, 0f);
 				}

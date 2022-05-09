@@ -17,7 +17,7 @@ namespace SOTS.Items.Tide
 		public override void SafeSetDefaults()
 		{
             Item.damage = 70;
-			Item.magic = true;
+			Item.DamageType = DamageClass.Magic;
             Item.width = 38;    
             Item.height = 38; 
             Item.useTime = 18; 

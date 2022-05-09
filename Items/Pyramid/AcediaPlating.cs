@@ -22,7 +22,7 @@ namespace SOTS.Items.Pyramid
 			Item.autoReuse = true;
 			Item.useAnimation = 15;
 			Item.useTime = 10;
-			Item.useStyle = 1;
+			Item.useStyle = ItemUseStyleID.Swing;
 			Item.rare = ItemRarityID.Cyan;
 			Item.consumable = true;
 			Item.createTile = mod.TileType("AcediaPlatingTile");
@@ -42,7 +42,7 @@ namespace SOTS.Items.Pyramid
 			//float uniquenessCounter = Main.GlobalTime * -100 + (i + j) * 5;
 			Tile tile = Main.tile[i, j];
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Pyramid/AcediaPlatingTileGlow").Value;
-			Rectangle frame = new Rectangle(tile.frameX, tile.frameY, 16, 16);
+			Rectangle frame = new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, 16);
 			Color color;
 			color = WorldGen.paintColor((int)Main.tile[i, j].color()) * (100f / 255f);
 			color.A = 0;

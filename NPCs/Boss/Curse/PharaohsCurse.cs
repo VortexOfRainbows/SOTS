@@ -171,7 +171,7 @@ namespace SOTS.NPCs.Boss.Curse
 					DrawFoam(foamParticleList4, 3);
 				List<int> slots = new List<int>();
 				List<int> npcSlots = new List<int>();
-				for (int i = 0; i < Main.projectile.Length; i++)
+				for (int i = 0; i < Main.Projectile.Length; i++)
 				{
 					Projectile proj = Main.projectile[i];
 					if (proj.type == ModContent.ProjectileType<CurseWave>() && proj.active && proj.ai[0] == npc.whoAmI)
@@ -1401,7 +1401,7 @@ namespace SOTS.NPCs.Boss.Curse
 					i += k * dirX;
 					j += k * dirY;
 					Tile tile = Framing.GetTileSafely(i, j);
-					if(tile.type == ModContent.TileType<TrueSandstoneTile>() || (tile.WallType == ModContent.WallType<TrueSandstoneWallWall>() && dirX != 0))
+					if(tile.TileType == ModContent.TileType<TrueSandstoneTile>() || (tile.WallType == ModContent.WallType<TrueSandstoneWallWall>() && dirX != 0))
                     {
 						foundTrueTiles++;
 						break;

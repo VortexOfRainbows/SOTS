@@ -23,22 +23,22 @@ namespace SOTS.Projectiles.Pyramid
 		}
         public override void SetDefaults()
         {
-			projectile.height = 2;
-			projectile.width = 2;
-			projectile.penetrate = -1;
-			projectile.friendly = true;
-			projectile.melee = true;
-			projectile.timeLeft = 90;
-			projectile.tileCollide = false;
-			projectile.hostile = false;
-			projectile.alpha = 255;
-			projectile.usesLocalNPCImmunity = true;
-			projectile.localNPCHitCooldown = 70;
+			Projectile.height = 2;
+			Projectile.width = 2;
+			Projectile.penetrate = -1;
+			Projectile.friendly = true;
+			Projectile.melee = true;
+			Projectile.timeLeft = 90;
+			Projectile.tileCollide = false;
+			Projectile.hostile = false;
+			Projectile.alpha = 255;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = 70;
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			projectile.localNPCImmunity[target.whoAmI] = projectile.localNPCHitCooldown;
-			target.immune[projectile.owner] = 0;
+			Projectile.localNPCImmunity[target.whoAmI] = Projectile.localNPCHitCooldown;
+			target.immune[Projectile.owner] = 0;
 		}
 		bool runOnce = true;
 		Vector2[] trailPos = new Vector2[10];
@@ -65,56 +65,56 @@ namespace SOTS.Projectiles.Pyramid
 				}
 				runOnce = false;
             }
-			Player player = Main.player[projectile.owner];
-			Vector2 circularLocation = new Vector2(distance + projectile.width / 2, 0).RotatedBy(MathHelper.ToRadians(rotation));
-			cataloguePos(circularLocation + projectile.Center, trailPos);
-			circularLocation = new Vector2(distance + projectile.width / 2, 0).RotatedBy(MathHelper.ToRadians(rotation + 90));
-			cataloguePos(circularLocation + projectile.Center, trailPos2);
-			circularLocation = new Vector2(distance + projectile.width / 2, 0).RotatedBy(MathHelper.ToRadians(rotation + 180));
-			cataloguePos(circularLocation + projectile.Center, trailPos3);
-			circularLocation = new Vector2(distance + projectile.width / 2, 0).RotatedBy(MathHelper.ToRadians(rotation + 270));
-			cataloguePos(circularLocation + projectile.Center, trailPos4);
-			rotation += projectile.direction * 12.5f;
-			projectile.width += 1;
-			projectile.height += 1;
-			projectile.Center -= new Vector2(0.5f, 0.5f);
-			projectile.velocity *= 0.98f;
-			if(projectile.timeLeft <= 30)
+			Player player = Main.player[Projectile.owner];
+			Vector2 circularLocation = new Vector2(distance + Projectile.width / 2, 0).RotatedBy(MathHelper.ToRadians(rotation));
+			cataloguePos(circularLocation + Projectile.Center, trailPos);
+			circularLocation = new Vector2(distance + Projectile.width / 2, 0).RotatedBy(MathHelper.ToRadians(rotation + 90));
+			cataloguePos(circularLocation + Projectile.Center, trailPos2);
+			circularLocation = new Vector2(distance + Projectile.width / 2, 0).RotatedBy(MathHelper.ToRadians(rotation + 180));
+			cataloguePos(circularLocation + Projectile.Center, trailPos3);
+			circularLocation = new Vector2(distance + Projectile.width / 2, 0).RotatedBy(MathHelper.ToRadians(rotation + 270));
+			cataloguePos(circularLocation + Projectile.Center, trailPos4);
+			rotation += Projectile.direction * 12.5f;
+			Projectile.width += 1;
+			Projectile.height += 1;
+			Projectile.Center -= new Vector2(0.5f, 0.5f);
+			Projectile.velocity *= 0.98f;
+			if(Projectile.timeLeft <= 30)
             {
-				projectile.friendly = false;
+				Projectile.friendly = false;
             }
 		}
         public override void Kill(int timeLeft)
 		{
 			base.Kill(timeLeft);
         }
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override bool PreDraw(ref Color lightColor)
 		{
-			Vector2 circularLocation = new Vector2(distance + projectile.width / 2, 0).RotatedBy(MathHelper.ToRadians(rotation)) + projectile.Center;
+			Vector2 circularLocation = new Vector2(distance + Projectile.width / 2, 0).RotatedBy(MathHelper.ToRadians(rotation)) + Projectile.Center;
 			if (runOnce)
 				return false;
 			Vector2 current = circularLocation;
 			Draw(spriteBatch, trailPos, current);
-			current = new Vector2(distance + projectile.width / 2, 0).RotatedBy(MathHelper.ToRadians(rotation + 90)) + projectile.Center;
+			current = new Vector2(distance + Projectile.width / 2, 0).RotatedBy(MathHelper.ToRadians(rotation + 90)) + Projectile.Center;
 			Draw(spriteBatch, trailPos2, current);
-			current = new Vector2(distance + projectile.width / 2, 0).RotatedBy(MathHelper.ToRadians(rotation + 180)) + projectile.Center;
+			current = new Vector2(distance + Projectile.width / 2, 0).RotatedBy(MathHelper.ToRadians(rotation + 180)) + Projectile.Center;
 			Draw(spriteBatch, trailPos3, current);
-			current = new Vector2(distance + projectile.width / 2, 0).RotatedBy(MathHelper.ToRadians(rotation + 270)) + projectile.Center;
+			current = new Vector2(distance + Projectile.width / 2, 0).RotatedBy(MathHelper.ToRadians(rotation + 270)) + Projectile.Center;
 			Draw(spriteBatch, trailPos4, current);
 			return false;
 		}
 		public void Draw(SpriteBatch spriteBatch, Vector2[] trailArray, Vector2 current)
 		{
-			Texture2D texture2 = Main.projectileTexture[projectile.type];
+			Texture2D texture2 = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Vector2 drawOrigin2 = new Vector2(texture2.Width * 0.5f, texture2.Height * 0.5f);
 			Vector2 previousPosition = current;
 			Color color = new Color(255, 100, 100, 0);
-			color *= (projectile.timeLeft - 30) / 90f;
+			color *= (Projectile.timeLeft - 30) / 90f;
 			for (int k = 0; k < trailArray.Length; k++)
 			{
-				if (k >= projectile.timeLeft / 3 - 10)
+				if (k >= Projectile.timeLeft / 3 - 10)
 					return;
-				float scale = projectile.scale * (trailArray.Length - k) / (float)trailArray.Length;
+				float scale = Projectile.scale * (trailArray.Length - k) / (float)trailArray.Length;
 				scale *= 1f;
 				if (trailArray[k] == Vector2.Zero)
 				{
@@ -137,7 +137,7 @@ namespace SOTS.Projectiles.Pyramid
 							x = 0;
 							y = 0;
 						}
-						Main.spriteBatch.Draw(texture2, drawPos + new Vector2(x, y), null, color, projectile.rotation, drawOrigin2, scale, projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+						Main.spriteBatch.Draw(texture2, drawPos + new Vector2(x, y), null, color, Projectile.rotation, drawOrigin2, scale, Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 					}
 				}
 				previousPosition = currentPos;

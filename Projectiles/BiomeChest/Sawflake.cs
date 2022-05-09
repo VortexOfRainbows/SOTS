@@ -16,15 +16,15 @@ namespace SOTS.Projectiles.BiomeChest
 		float rotation = 0;
 		public override void SendExtraAI(BinaryWriter writer)
 		{
-			writer.Write(projectile.tileCollide);
-			writer.Write(projectile.velocity.X);
-			writer.Write(projectile.velocity.Y);
+			writer.Write(Projectile.tileCollide);
+			writer.Write(Projectile.velocity.X);
+			writer.Write(Projectile.velocity.Y);
 		}
 		public override void ReceiveExtraAI(BinaryReader reader)
 		{
-			projectile.tileCollide = reader.ReadBoolean();
-			projectile.velocity.X = reader.ReadSingle();
-			projectile.velocity.Y = reader.ReadSingle();
+			Projectile.tileCollide = reader.ReadBoolean();
+			Projectile.velocity.X = reader.ReadSingle();
+			Projectile.velocity.Y = reader.ReadSingle();
 		}
 		public override void SetStaticDefaults()
 		{
@@ -32,24 +32,24 @@ namespace SOTS.Projectiles.BiomeChest
 		}
         public override void SetDefaults()
         {
-			projectile.height = 50;
-			projectile.width = 50;
-			projectile.penetrate = -1;
-			projectile.friendly = true;
-			projectile.melee = true;
-			projectile.timeLeft = 144;
-			projectile.tileCollide = true;
-			projectile.hostile = false;
-			projectile.alpha = 0;
-			projectile.usesLocalNPCImmunity = true;
-			projectile.localNPCHitCooldown = 30;
+			Projectile.height = 50;
+			Projectile.width = 50;
+			Projectile.penetrate = -1;
+			Projectile.friendly = true;
+			Projectile.melee = true;
+			Projectile.timeLeft = 144;
+			Projectile.tileCollide = true;
+			Projectile.hostile = false;
+			Projectile.alpha = 0;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = 30;
 		}
         public override bool OnTileCollide(Vector2 oldVelocity)
 		{
-			SoundEngine.PlaySound(SoundID.Dig, projectile.Center);
-			projectile.timeLeft = 89;
-			projectile.netUpdate = true;
-			projectile.tileCollide = false;
+			SoundEngine.PlaySound(SoundID.Dig, Projectile.Center);
+			Projectile.timeLeft = 89;
+			Projectile.netUpdate = true;
+			Projectile.tileCollide = false;
             return false;
         }
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
@@ -64,8 +64,8 @@ namespace SOTS.Projectiles.BiomeChest
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			projectile.localNPCImmunity[target.whoAmI] = projectile.localNPCHitCooldown;
-			target.immune[projectile.owner] = 0;
+			Projectile.localNPCImmunity[target.whoAmI] = Projectile.localNPCHitCooldown;
+			target.immune[Projectile.owner] = 0;
 			if(Main.rand.NextBool(2))
             {
 				target.AddBuff(BuffID.Frostburn, 360);
@@ -85,11 +85,11 @@ namespace SOTS.Projectiles.BiomeChest
 			Vector2 current = catalogue;
 			Vector2 velo = new Vector2(7.5f, 0);
 			velo = velo.RotatedBy(rotation);
-			velo += projectile.velocity;
-			if(projectile.velocity.Length() == 0)
+			velo += Projectile.velocity;
+			if(Projectile.velocity.Length() == 0)
             {
 				velo *= 0;
-				current = projectile.Center;
+				current = Projectile.Center;
 			}
 			for (int i = 0; i < trailPos.Length; i++)
 			{
@@ -106,20 +106,20 @@ namespace SOTS.Projectiles.BiomeChest
 			for (int i = 0; i < trailPos.Length; i++)
 			{
 				Vector2 previousPosition = trailPos[i];
-				if (previousPosition == projectile.Center)
+				if (previousPosition == Projectile.Center)
 				{
 					iterator++;
 				}
 			}
 			if (iterator >= trailPos.Length)
-				projectile.Kill();
+				Projectile.Kill();
 		}
 		Vector2 initialVelo;
 		Vector2 initialCenter;
 		int initialDirection = 0;
         public override bool PreAI()
 		{
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			if (runOnce)
 			{
 				for (int i = 0; i < trailPos.Length; i++)
@@ -127,20 +127,20 @@ namespace SOTS.Projectiles.BiomeChest
 					trailPos[i] = Vector2.Zero;
 				}
 				runOnce = false;
-				initialVelo = projectile.velocity;
-				if(projectile.velocity.X > 0)
+				initialVelo = Projectile.velocity;
+				if(Projectile.velocity.X > 0)
 					initialDirection = 1;
 				else
 					initialDirection = -1;
 				initialCenter = player.Center;
-				projectile.ai[0] = -180 * initialDirection;
+				Projectile.ai[0] = -180 * initialDirection;
 			}
-			projectile.ai[0] += 6f * initialDirection;
-			if (projectile.timeLeft >= 90)
+			Projectile.ai[0] += 6f * initialDirection;
+			if (Projectile.timeLeft >= 90)
 			{
 				Vector2 initialCenter = this.initialCenter;
 				int length = 270;
-				double rad = MathHelper.ToRadians(projectile.ai[0]);
+				double rad = MathHelper.ToRadians(Projectile.ai[0]);
 				Vector2 ovalArea = new Vector2(length, 0).RotatedBy(initialVelo.ToRotation());
 				Vector2 ovalArea2 = new Vector2(length, 0).RotatedBy((float)rad);
 				ovalArea2.Y *= 0.33f;
@@ -148,62 +148,62 @@ namespace SOTS.Projectiles.BiomeChest
 				ovalArea.X += ovalArea2.X;
 				ovalArea.Y += ovalArea2.Y;
 				Vector2 goTo = initialCenter + ovalArea;
-				float dist = (projectile.Center - goTo).Length();
-				Vector2 circular = new Vector2(-(dist > 18 ? 18 : dist), 0).RotatedBy((projectile.Center - goTo).ToRotation());
-				projectile.velocity = circular;
-				if (Main.myPlayer == projectile.owner && projectile.timeLeft % 5 == 0)
+				float dist = (Projectile.Center - goTo).Length();
+				Vector2 circular = new Vector2(-(dist > 18 ? 18 : dist), 0).RotatedBy((Projectile.Center - goTo).ToRotation());
+				Projectile.velocity = circular;
+				if (Main.myPlayer == Projectile.owner && Projectile.timeLeft % 5 == 0)
 				{
-					projectile.netUpdate = true;
+					Projectile.netUpdate = true;
 				}
 			}
-			else if(projectile.timeLeft > 30)
+			else if(Projectile.timeLeft > 30)
             {
-				float dist = (projectile.Center - player.Center).Length();
-				Vector2 circular = new Vector2(-(dist > 24 ? 24 : dist), 0).RotatedBy((projectile.Center - player.Center).ToRotation());
-				projectile.velocity = circular;
-				projectile.tileCollide = false;
-				if((projectile.Center - player.Center).Length() <= 12)
+				float dist = (Projectile.Center - player.Center).Length();
+				Vector2 circular = new Vector2(-(dist > 24 ? 24 : dist), 0).RotatedBy((Projectile.Center - player.Center).ToRotation());
+				Projectile.velocity = circular;
+				Projectile.tileCollide = false;
+				if((Projectile.Center - player.Center).Length() <= 12)
                 {
-					projectile.timeLeft = 30;
+					Projectile.timeLeft = 30;
                 }
 			}
             return base.PreAI();
         }
         public override void AI()
 		{
-			Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 0.6f / 255f, (255 - projectile.alpha) * 0.6f / 255f, (255 - projectile.alpha) * 1.8f / 255f);
-			if(projectile.timeLeft <= 30)
+			Lighting.AddLight(Projectile.Center, (255 - Projectile.alpha) * 0.6f / 255f, (255 - Projectile.alpha) * 0.6f / 255f, (255 - Projectile.alpha) * 1.8f / 255f);
+			if(Projectile.timeLeft <= 30)
             {
 				checkPos();
-				projectile.velocity *= 0f;
-				projectile.alpha = 255;
+				Projectile.velocity *= 0f;
+				Projectile.alpha = 255;
             }
-			Player player = Main.player[projectile.owner];
-			Vector2 circularLocation = new Vector2(projectile.width / 2, 0).RotatedBy(MathHelper.ToRadians(rotation));
-			cataloguePos(circularLocation + projectile.Center, trailPos, MathHelper.ToRadians(rotation));
+			Player player = Main.player[Projectile.owner];
+			Vector2 circularLocation = new Vector2(Projectile.width / 2, 0).RotatedBy(MathHelper.ToRadians(rotation));
+			cataloguePos(circularLocation + Projectile.Center, trailPos, MathHelper.ToRadians(rotation));
 
-			circularLocation = new Vector2(projectile.width / 2, 0).RotatedBy(MathHelper.ToRadians(rotation + 90));
-			cataloguePos(circularLocation + projectile.Center, trailPos2, MathHelper.ToRadians(rotation + 90));
+			circularLocation = new Vector2(Projectile.width / 2, 0).RotatedBy(MathHelper.ToRadians(rotation + 90));
+			cataloguePos(circularLocation + Projectile.Center, trailPos2, MathHelper.ToRadians(rotation + 90));
 
-			circularLocation = new Vector2(projectile.width / 2, 0).RotatedBy(MathHelper.ToRadians(rotation + 180));
-			cataloguePos(circularLocation + projectile.Center, trailPos3, MathHelper.ToRadians(rotation + 180));
+			circularLocation = new Vector2(Projectile.width / 2, 0).RotatedBy(MathHelper.ToRadians(rotation + 180));
+			cataloguePos(circularLocation + Projectile.Center, trailPos3, MathHelper.ToRadians(rotation + 180));
 
-			circularLocation = new Vector2(projectile.width / 2, 0).RotatedBy(MathHelper.ToRadians(rotation + 270));
-			cataloguePos(circularLocation + projectile.Center, trailPos4, MathHelper.ToRadians(rotation + 270));
+			circularLocation = new Vector2(Projectile.width / 2, 0).RotatedBy(MathHelper.ToRadians(rotation + 270));
+			cataloguePos(circularLocation + Projectile.Center, trailPos4, MathHelper.ToRadians(rotation + 270));
 
 			rotation += initialDirection * 11.5f;
-			projectile.rotation = rotation;
-			projectile.spriteDirection = 1;
-			if(projectile.timeLeft <= 30)
+			Projectile.rotation = rotation;
+			Projectile.spriteDirection = 1;
+			if(Projectile.timeLeft <= 30)
             {
-				projectile.friendly = false;
+				Projectile.friendly = false;
             }
 		}
         public override void Kill(int timeLeft)
 		{
 			base.Kill(timeLeft);
         }
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override bool PreDraw(ref Color lightColor)
 		{
 			if (runOnce)
 				return true;
@@ -211,13 +211,13 @@ namespace SOTS.Projectiles.BiomeChest
 			Draw(spriteBatch, trailPos2);
 			Draw(spriteBatch, trailPos3);
 			Draw(spriteBatch, trailPos4);
-			Texture2D texture2 = Main.projectileTexture[projectile.type];
-			Main.spriteBatch.Draw(texture2, projectile.Center - Main.screenPosition, null, projectile.GetAlpha(Color.White), projectile.rotation, new Vector2(texture2.Width / 2, texture2.Height / 2), projectile.scale, SpriteEffects.None, 0f);
+			Texture2D texture2 = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
+			Main.spriteBatch.Draw(texture2, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.White), Projectile.rotation, new Vector2(texture2.Width / 2, texture2.Height / 2), Projectile.scale, SpriteEffects.None, 0f);
 			return false;
 		}
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
 		{
-			if (projectile.alpha >= 150)
+			if (Projectile.alpha >= 150)
 			{
 				return false;
 			}
@@ -234,7 +234,7 @@ namespace SOTS.Projectiles.BiomeChest
 					trailArray = trailPos4;
 				for (int i = 0; i < trailArray.Length - 2; i++)
 				{
-					float scale = projectile.scale * (trailArray.Length - i) / (float)trailArray.Length;
+					float scale = Projectile.scale * (trailArray.Length - i) / (float)trailArray.Length;
 					scale *= 1f;
 					float width = 20 * scale;
 					float height = 20 * scale;
@@ -256,11 +256,11 @@ namespace SOTS.Projectiles.BiomeChest
 			}
 			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Projectiles/BiomeChest/SawflakeTrail").Value;
 			Vector2 drawOrigin2 = new Vector2(texture2.Width * 0.5f, texture2.Height * 0.5f);
-			Vector2 previousPosition = projectile.Center;
+			Vector2 previousPosition = Projectile.Center;
 			Color color = new Color(140, 140, 205, 0);
 			for (int k = 0; k < trailArray.Length; k++)
 			{
-				float scale = projectile.scale * (trailArray.Length - k) / (float)trailArray.Length;
+				float scale = Projectile.scale * (trailArray.Length - k) / (float)trailArray.Length;
 				scale *= 1f;
 				if (trailArray[k] == Vector2.Zero)
 				{
@@ -283,7 +283,7 @@ namespace SOTS.Projectiles.BiomeChest
 							x = 0;
 							y = 0;
 						}
-						Main.spriteBatch.Draw(texture2, drawPos + new Vector2(x, y), null, color, projectile.rotation, drawOrigin2, scale, projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+						Main.spriteBatch.Draw(texture2, drawPos + new Vector2(x, y), null, color, Projectile.rotation, drawOrigin2, scale, Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 					}
 				}
 				previousPosition = currentPos;

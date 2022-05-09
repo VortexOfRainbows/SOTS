@@ -14,37 +14,37 @@ namespace SOTS.Projectiles
 		}
         public override void SetDefaults()
         {
-			projectile.aiStyle = 1;
-			projectile.width = 34;
-			projectile.height = 38;
-            Main.projFrames[projectile.type] = 2;
-			projectile.penetrate = -1;
-			projectile.friendly = true;
-			projectile.timeLeft = 3600;
-			projectile.tileCollide = true;
-			projectile.hostile = false;
-			projectile.magic = true;
-			projectile.ranged = false;
-			projectile.alpha = 0;
+			Projectile.aiStyle = 1;
+			Projectile.width = 34;
+			Projectile.height = 38;
+            Main.projFrames[Projectile.type] = 2;
+			Projectile.penetrate = -1;
+			Projectile.friendly = true;
+			Projectile.timeLeft = 3600;
+			Projectile.tileCollide = true;
+			Projectile.hostile = false;
+			Projectile.magic = true;
+			Projectile.ranged = false;
+			Projectile.alpha = 0;
 		}
 		public override void SendExtraAI(BinaryWriter writer) 
 		{
-			writer.Write(projectile.rotation);
-			writer.Write(projectile.spriteDirection);
+			writer.Write(Projectile.rotation);
+			writer.Write(Projectile.spriteDirection);
 			writer.Write(damageCounter);
 			writer.Write(latch);
-			writer.Write(projectile.frame);
+			writer.Write(Projectile.frame);
 			writer.Write(enemyIndex);
 			writer.Write(diffPosX);
 			writer.Write(diffPosY);
 		}
 		public override void ReceiveExtraAI(BinaryReader reader)
 		{	
-			projectile.rotation = reader.ReadSingle();
-			projectile.spriteDirection = reader.ReadInt32();
+			Projectile.rotation = reader.ReadSingle();
+			Projectile.spriteDirection = reader.ReadInt32();
 			damageCounter = reader.ReadInt32();
 			latch = reader.ReadBoolean();
-			projectile.frame = reader.ReadInt32();
+			Projectile.frame = reader.ReadInt32();
 			enemyIndex = reader.ReadInt32();
 			diffPosX = reader.ReadSingle();
 			diffPosY = reader.ReadSingle();
@@ -56,15 +56,15 @@ namespace SOTS.Projectiles
 		float diffPosY = 0;
 		public override void AI()
         {
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			if(!latch)
 			{
-				projectile.rotation = (float)Math.Atan2((double)projectile.velocity.Y, (double)projectile.velocity.X);
-				projectile.spriteDirection = 1;
-				if(projectile.velocity.X < 0)
+				Projectile.rotation = (float)Math.Atan2((double)Projectile.velocity.Y, (double)Projectile.velocity.X);
+				Projectile.spriteDirection = 1;
+				if(Projectile.velocity.X < 0)
 				{
-					projectile.rotation = (float)Math.Atan2((double)projectile.velocity.Y, (double)projectile.velocity.X) - MathHelper.ToRadians(180);
-					projectile.spriteDirection = -1;
+					Projectile.rotation = (float)Math.Atan2((double)Projectile.velocity.Y, (double)Projectile.velocity.X) - MathHelper.ToRadians(180);
+					Projectile.spriteDirection = -1;
 				}
 			}
 			if(latch && enemyIndex != -1)
@@ -72,93 +72,93 @@ namespace SOTS.Projectiles
 				NPC target = Main.npc[enemyIndex];
 				if(target.active && !target.friendly)
 				{
-					projectile.aiStyle = 0;
-					projectile.position.X = target.Center.X - projectile.width/2 - diffPosX;
-					projectile.position.Y = target.Center.Y - projectile.height/2 - diffPosY;
+					Projectile.aiStyle = 0;
+					Projectile.position.X = target.Center.X - Projectile.width/2 - diffPosX;
+					Projectile.position.Y = target.Center.Y - Projectile.height/2 - diffPosY;
 				}
 				else
 				{
 					enemyIndex = -1;
-					projectile.aiStyle = 1;
+					Projectile.aiStyle = 1;
 					latch = true;
-					projectile.tileCollide = true;
-					projectile.friendly = false;
+					Projectile.tileCollide = true;
+					Projectile.friendly = false;
 				}
 			}
-			if(!projectile.tileCollide)
+			if(!Projectile.tileCollide)
 			{
-				projectile.velocity *= 0.9f;
+				Projectile.velocity *= 0.9f;
 			}				
-			if(!projectile.friendly && latch || damageCounter >= 310)
+			if(!Projectile.friendly && latch || damageCounter >= 310)
 			{
 				damageCounter++;
 				if(damageCounter % 11 == 0 && damageCounter < 300)
 				{
-					projectile.scale -= 0.02f;
+					Projectile.scale -= 0.02f;
 				}
 				if(damageCounter >= 300 && damageCounter < 315)
 				{
 					if(damageCounter == 301)
-						projectile.frame = 1;
-					projectile.scale += 0.035f;
-					projectile.rotation += MathHelper.ToRadians(12);
+						Projectile.frame = 1;
+					Projectile.scale += 0.035f;
+					Projectile.rotation += MathHelper.ToRadians(12);
 				}
 				if(damageCounter == 310)
 				{
-					projectile.friendly = true;
+					Projectile.friendly = true;
 					for(int i = 0; i < 360; i += 15)
 					{
 						Vector2 circularLocation = new Vector2(22, 0).RotatedBy(MathHelper.ToRadians(i));
 						
-						int num1 = Dust.NewDust(new Vector2(projectile.Center.X + circularLocation.X - 4, projectile.Center.Y + circularLocation.Y - 4), 4, 4, 231);
+						int num1 = Dust.NewDust(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, 231);
 						Main.dust[num1].noGravity = true;
 						Main.dust[num1].velocity *= 0.1f;
 					}
 				}
 				if(damageCounter >= 315)
 				{
-					projectile.rotation += MathHelper.ToRadians(12);
-					projectile.scale -= 0.047f;
-					projectile.alpha += 2;
+					Projectile.rotation += MathHelper.ToRadians(12);
+					Projectile.scale -= 0.047f;
+					Projectile.alpha += 2;
 				}
 				if(damageCounter >= 335)
 				{
-					projectile.Kill();
+					Projectile.Kill();
 				}
 			}
 		}
 		public override void ModifyDamageHitbox(ref Rectangle hitbox) 
 		{
-			hitbox = new Rectangle((int)(projectile.Center.X - 11), (int)(projectile.Center.Y- 8), 22, 16);
-			if(projectile.frame == 1)
+			hitbox = new Rectangle((int)(Projectile.Center.X - 11), (int)(Projectile.Center.Y- 8), 22, 16);
+			if(Projectile.frame == 1)
 			{
-				hitbox = new Rectangle((int)(projectile.position.X), (int)(projectile.position.Y), projectile.width, projectile.height);
+				hitbox = new Rectangle((int)(Projectile.position.X), (int)(Projectile.position.Y), Projectile.width, Projectile.height);
 			}
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-			projectile.friendly = false;
-            target.immune[projectile.owner] = 0;
-			projectile.tileCollide = false;
+			Projectile.friendly = false;
+            target.immune[Projectile.owner] = 0;
+			Projectile.tileCollide = false;
 			latch = true;
-			projectile.damage = (int)(projectile.damage * projectile.ai[1]);
-			projectile.velocity *= 0.1f;
-			projectile.aiStyle = 0;
+			Projectile.damage = (int)(Projectile.damage * Projectile.ai[1]);
+			Projectile.velocity *= 0.1f;
+			Projectile.aiStyle = 0;
 			enemyIndex = target.whoAmI;
 			if (diffPosX == 0)
-				diffPosX = target.Center.X - projectile.Center.X;
+				diffPosX = target.Center.X - Projectile.Center.X;
 			if (diffPosY == 0)
-				diffPosY = target.Center.Y - projectile.Center.Y;
+				diffPosY = target.Center.Y - Projectile.Center.Y;
 			diffPosX *= 0.9f;
 			diffPosY *= 0.9f;
 			if (target.life <= 0)
 			{
 				enemyIndex = -1;
-				projectile.aiStyle = 1;
+				Projectile.aiStyle = 1;
 				latch = false;
-				projectile.tileCollide = true;
+				Projectile.tileCollide = true;
 			}
-			projectile.netUpdate = true;
+			Projectile.netUpdate = true;
         }
 		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough) 
 		{
@@ -169,20 +169,20 @@ namespace SOTS.Projectiles
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{
-			projectile.damage = (int)(projectile.damage * projectile.ai[1]);
+			Projectile.damage = (int)(Projectile.damage * Projectile.ai[1]);
 			enemyIndex = -1;
-			projectile.aiStyle = 0;
+			Projectile.aiStyle = 0;
 			latch = true;
-			projectile.friendly = false;
-			projectile.velocity *= 0.3f;
-			projectile.tileCollide = false;
+			Projectile.friendly = false;
+			Projectile.velocity *= 0.3f;
+			Projectile.tileCollide = false;
 			return false;
 		}
 		public override void Kill(int timeLeft)
         {
 			for(int i = 0; i < 15; i++)
 			{
-				int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 2);
+				int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 2);
 				Main.dust[num1].noGravity = true;
 			}
 		}

@@ -20,7 +20,7 @@ namespace SOTS.Items.Inferno
 		public override void SafeSetDefaults()
 		{
 			Item.damage = 33;
-			Item.magic = true;
+			Item.DamageType = DamageClass.Magic;
 			Item.width = 36;
 			Item.height = 36;
 			Item.value = Item.sellPrice(gold: 10);

@@ -13,8 +13,8 @@ namespace SOTS.Projectiles.Crushers
 		}
         public override void SafeSetDefaults()
         {
-			projectile.height = 26;
-			projectile.width = 26;
+			Projectile.height = 26;
+			Projectile.width = 26;
 			maxDamage = 6;
 			chargeTime = 270;
 			minExplosions = 2;
@@ -27,14 +27,14 @@ namespace SOTS.Projectiles.Crushers
 		}
         public override void PostAI()
         {
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			for(int i = 0; i < arms.Length; i++)
             {
 				Vector2 arm = arms[i];
 				arm += player.Center;
 				if (Main.rand.NextBool(3))
 				{
-					int num1 = Dust.NewDust(new Vector2(arm.X - projectile.width / 2, arm.Y - projectile.height / 2) - new Vector2(5), projectile.width, projectile.height, 6);
+					int num1 = Dust.NewDust(new Vector2(arm.X - Projectile.width / 2, arm.Y - Projectile.height / 2) - new Vector2(5), Projectile.width, Projectile.height, 6);
 					Main.dust[num1].noGravity = true;
 					Main.dust[num1].scale *= 2.75f;
 					Main.dust[num1].velocity *= 0.35f;
@@ -42,11 +42,11 @@ namespace SOTS.Projectiles.Crushers
 			}
 			if (Main.rand.NextBool(3))
 			{
-				int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y) - new Vector2(5), projectile.width, projectile.height, 6);
+				int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, 6);
 				Main.dust[num1].noGravity = true;
 				Main.dust[num1].scale *= 2.75f;
 				Main.dust[num1].velocity *= 0.15f;
-				Main.dust[num1].velocity += projectile.velocity.SafeNormalize(Vector2.Zero) * 4;
+				Main.dust[num1].velocity += Projectile.velocity.SafeNormalize(Vector2.Zero) * 4;
 			}
 			base.PostAI();
         }

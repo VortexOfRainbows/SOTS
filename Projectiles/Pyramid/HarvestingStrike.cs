@@ -15,14 +15,14 @@ namespace SOTS.Projectiles.Pyramid
 		}
 		public override void SetDefaults()
 		{
-			projectile.width = 16;
-			projectile.height = 16;
-			projectile.timeLeft = 90;
-			projectile.penetrate = 1;
-			projectile.friendly = false;
-			projectile.tileCollide = false;
-			projectile.aiStyle = 0;
-			projectile.alpha = 255;
+			Projectile.width = 16;
+			Projectile.height = 16;
+			Projectile.timeLeft = 90;
+			Projectile.penetrate = 1;
+			Projectile.friendly = false;
+			Projectile.tileCollide = false;
+			Projectile.aiStyle = 0;
+			Projectile.alpha = 255;
 		}
         public override bool? CanHitNPC(NPC target)
 		{
@@ -31,15 +31,15 @@ namespace SOTS.Projectiles.Pyramid
 		bool hasHitEnemy = false;
 		public override bool PreAI()
 		{
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-			if (Main.myPlayer == projectile.owner && projectile.timeLeft >= 89 && !hasHitEnemy)
+			if (Main.myPlayer == Projectile.owner && Projectile.timeLeft >= 89 && !hasHitEnemy)
 				for (int i = 0; i < Main.npc.Length; i++)
 				{
 					NPC npc = Main.npc[i];
 					int amt = DebuffNPC.HarvestCost(npc);
 					if (voidPlayer.lootingSouls >= amt && !npc.immortal && !npc.friendly)
-						if (npc.active && npc.Hitbox.Intersects(projectile.Hitbox) && (npc.realLife == npc.whoAmI || npc.realLife <= 0) && !npc.dontTakeDamage)
+						if (npc.active && npc.Hitbox.Intersects(Projectile.Hitbox) && (npc.realLife == npc.whoAmI || npc.realLife <= 0) && !npc.dontTakeDamage)
 						{
 							Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, ModContent.ProjectileType<HarvestLock>(), 0, 0, player.whoAmI, npc.whoAmI);
 							DebuffNPC debuffNPC = (DebuffNPC)mod.GetGlobalNPC("DebuffNPC");

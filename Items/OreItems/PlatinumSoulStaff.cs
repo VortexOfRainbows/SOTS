@@ -19,7 +19,7 @@ namespace SOTS.Items.OreItems
 		{
 
 			Item.damage = 8;
-			Item.magic = true;
+			Item.DamageType = DamageClass.Magic;
 			Item.width = 28;
 			Item.height = 32;
 			Item.useTime = 30;

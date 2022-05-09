@@ -58,13 +58,13 @@ namespace SOTS.Items.Tools
 					for (int scanY = 20; scanY < Main.maxTilesY - 20; scanY++)
 					{
 						Tile tile = Framing.GetTileSafely(scanX, scanY);
-						if (tile.type == TileID.LihzahrdAltar)
+						if (tile.TileType == TileID.LihzahrdAltar)
 							LihzahrdAltar = true;
-						if (tile.type == ModContent.TileType<FrostArtifactTile>())
+						if (tile.TileType == ModContent.TileType<FrostArtifactTile>())
 							IceMonument = true;
-						if (tile.type == ModContent.TileType<SarcophagusTile>())
+						if (tile.TileType == ModContent.TileType<SarcophagusTile>())
 							Sarcophagus = true;
-						if (tile.type == ModContent.TileType<AvaritianGatewayTile>())
+						if (tile.TileType == ModContent.TileType<AvaritianGatewayTile>())
 						{
 							if(!NPC.AnyNPCs(ModContent.NPCType<TheAdvisorHead>()))
 							{
@@ -72,11 +72,11 @@ namespace SOTS.Items.Tools
 							}
 							GreedGateway = true;
 						}
-						if (tile.type == ModContent.TileType<AcediaGatewayTile>())
+						if (tile.TileType == ModContent.TileType<AcediaGatewayTile>())
 						{
 							SlothGateway = true;
 						}
-						if (tile.type == TileID.ShadowOrbs)
+						if (tile.TileType == TileID.ShadowOrbs)
 							ShadowOrbs++;
 					}
 				}

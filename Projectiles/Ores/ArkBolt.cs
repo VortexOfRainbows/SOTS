@@ -14,40 +14,40 @@ namespace SOTS.Projectiles.Ores
 		}
         public override void SetDefaults()
         {
-			projectile.aiStyle = 1;
-			projectile.width = 12;
-			projectile.height = 12;
-            projectile.magic = true;
-			projectile.penetrate = 1;
-			projectile.ranged = false;
-			projectile.alpha = 0; 
-			projectile.friendly = true;
+			Projectile.aiStyle = 1;
+			Projectile.width = 12;
+			Projectile.height = 12;
+            Projectile.magic = true;
+			Projectile.penetrate = 1;
+			Projectile.ranged = false;
+			Projectile.alpha = 0; 
+			Projectile.friendly = true;
 		}
 		public override void AI()
         {
-			Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 0.85f / 215f, (255 - projectile.alpha) * 0.1f / 215f, (255 - projectile.alpha) * 0.1f / 215f);
-			projectile.rotation = (float)Math.Atan2((double)projectile.velocity.Y, (double)projectile.velocity.X) - MathHelper.ToRadians(135);
-			projectile.spriteDirection = 1;
+			Lighting.AddLight(Projectile.Center, (255 - Projectile.alpha) * 0.85f / 215f, (255 - Projectile.alpha) * 0.1f / 215f, (255 - Projectile.alpha) * 0.1f / 215f);
+			Projectile.rotation = (float)Math.Atan2((double)Projectile.velocity.Y, (double)Projectile.velocity.X) - MathHelper.ToRadians(135);
+			Projectile.spriteDirection = 1;
 			
 			Vector2 curve = new Vector2(7f,0).RotatedBy(MathHelper.ToRadians(helixRot * 5f));
 			helixRot ++;
 			
-			float radianDir = (float)Math.Atan2((double)projectile.velocity.Y, (double)projectile.velocity.X);
-			Vector2 helixPos1 = projectile.Center + new Vector2(curve.X, 0).RotatedBy(radianDir + MathHelper.ToRadians(90));
+			float radianDir = (float)Math.Atan2((double)Projectile.velocity.Y, (double)Projectile.velocity.X);
+			Vector2 helixPos1 = Projectile.Center + new Vector2(curve.X, 0).RotatedBy(radianDir + MathHelper.ToRadians(90));
 			int num1 = Dust.NewDust(new Vector2(helixPos1.X - 4, helixPos1.Y - 4), 4, 4, 235);
 			Main.dust[num1].noGravity = true;
 			Main.dust[num1].velocity *= 0.2f;
 			
-			Vector2 helixPos2 = projectile.Center + new Vector2(curve.X, 0).RotatedBy(radianDir - MathHelper.ToRadians(90));
+			Vector2 helixPos2 = Projectile.Center + new Vector2(curve.X, 0).RotatedBy(radianDir - MathHelper.ToRadians(90));
 			num1 = Dust.NewDust(new Vector2(helixPos2.X - 4, helixPos2.Y - 4), 4, 4, 235);
 			Main.dust[num1].noGravity = true;
 			Main.dust[num1].velocity *= 0.2f;
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-			Player player = Main.player[projectile.owner];
-            target.immune[projectile.owner] = 10;
-			if(projectile.owner == Main.myPlayer)
+			Player player = Main.player[Projectile.owner];
+            target.immune[Projectile.owner] = 10;
+			if(Projectile.owner == Main.myPlayer)
 			{
 				int npcIndex = -1;
 				int npcIndex1 = -1;
@@ -61,8 +61,8 @@ namespace SOTS.Projectiles.Ores
 						{
 							if(npcIndex != i && npcIndex1 != i && target.whoAmI != i)
 							{
-								float disX = projectile.Center.X - npc.Center.X;
-								float disY = projectile.Center.Y - npc.Center.Y;
+								float disX = Projectile.Center.X - npc.Center.X;
+								float disY = Projectile.Center.Y - npc.Center.Y;
 								double dis = Math.Sqrt(disX * disX + disY * disY);
 								if(dis < distanceTB && j == 0)
 								{
@@ -103,14 +103,14 @@ namespace SOTS.Projectiles.Ores
 		{
 			for(int i = 0; i < 15; i++)
 			{
-				int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 235);
+				int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 235);
 				Main.dust[num1].noGravity = true;
 			}
 		}
 		public void LaunchLaser(Vector2 area)
 		{
-			Player player  = Main.player[projectile.owner];
-			int Probe = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("BrightRedLaser"), (int)(projectile.damage * 1.5f) + 1, 0, projectile.owner, area.X, area.Y);
+			Player player  = Main.player[Projectile.owner];
+			int Probe = Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, mod.ProjectileType("BrightRedLaser"), (int)(Projectile.damage * 1.5f) + 1, 0, Projectile.owner, area.X, area.Y);
 			Main.projectile[Probe].magic = true;
 			Main.projectile[Probe].minion = false;
 		}

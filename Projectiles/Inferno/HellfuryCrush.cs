@@ -19,41 +19,41 @@ namespace SOTS.Projectiles.Inferno
 		}
         public override void SetDefaults()
         {
-			projectile.height = 70;
-			projectile.width = 70;
-            Main.projFrames[projectile.type] = 5;
-			projectile.penetrate = -1;
-			projectile.melee = true;
-			projectile.friendly = true;
-			projectile.timeLeft = 24;
-			projectile.tileCollide = false;
-			projectile.hostile = false;
-			projectile.alpha = 0;
+			Projectile.height = 70;
+			Projectile.width = 70;
+            Main.projFrames[Projectile.type] = 5;
+			Projectile.penetrate = -1;
+			Projectile.melee = true;
+			Projectile.friendly = true;
+			Projectile.timeLeft = 24;
+			Projectile.tileCollide = false;
+			Projectile.hostile = false;
+			Projectile.alpha = 0;
 		}
 		public override void ModifyDamageHitbox(ref Rectangle hitbox) 
 		{
-			hitbox = new Rectangle((int)(projectile.position.X - projectile.width/2), (int)(projectile.position.Y - projectile.height/2), projectile.width * 2, projectile.height * 2);
+			hitbox = new Rectangle((int)(Projectile.position.X - Projectile.width/2), (int)(Projectile.position.Y - Projectile.height/2), Projectile.width * 2, Projectile.height * 2);
 		}
 		bool runOnce = true;
 		public override void AI()
 		{
 			if(runOnce)
 			{
-				SoundEngine.PlaySound(SoundID.Item14, (int)(projectile.Center.X), (int)(projectile.Center.Y));
+				SoundEngine.PlaySound(SoundID.Item14, (int)(Projectile.Center.X), (int)(Projectile.Center.Y));
 				runOnce = false;
             }
-			Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 1.5f / 255f, (255 - projectile.alpha) * 1.5f / 255f, (255 - projectile.alpha) * 1.5f / 255f);
-            projectile.frameCounter++;
-            if (projectile.frameCounter >= 5)
+			Lighting.AddLight(Projectile.Center, (255 - Projectile.alpha) * 1.5f / 255f, (255 - Projectile.alpha) * 1.5f / 255f, (255 - Projectile.alpha) * 1.5f / 255f);
+            Projectile.frameCounter++;
+            if (Projectile.frameCounter >= 5)
             {
-				projectile.friendly = false;
-                projectile.frameCounter = 0;
-                projectile.frame = (projectile.frame + 1) % 5;
+				Projectile.friendly = false;
+                Projectile.frameCounter = 0;
+                Projectile.frame = (Projectile.frame + 1) % 5;
             }
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.immune[projectile.owner] = 10;
+            target.immune[Projectile.owner] = 10;
 			target.AddBuff(BuffID.OnFire, 180, false);
         }
 	}

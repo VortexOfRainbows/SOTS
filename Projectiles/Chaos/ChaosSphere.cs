@@ -17,13 +17,13 @@ namespace SOTS.Projectiles.Chaos
 		}
 		public override void SetDefaults()
 		{
-			projectile.width = 64;
-			projectile.height = 64;
-			projectile.hostile = true;
-			projectile.friendly = false;
-			projectile.timeLeft = 100;
-			projectile.tileCollide = false;
-			projectile.penetrate = -1;
+			Projectile.width = 64;
+			Projectile.height = 64;
+			Projectile.hostile = true;
+			Projectile.friendly = false;
+			Projectile.timeLeft = 100;
+			Projectile.tileCollide = false;
+			Projectile.penetrate = -1;
 		}
 		float[] nextRotations = new float[3];
 		float[] nextCompressions = new float[3];
@@ -58,9 +58,9 @@ namespace SOTS.Projectiles.Chaos
 				compressions[i] = MathHelper.Lerp(prevCompressions[i], nextCompressions[i], scale);
 			}
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
-			Texture2D texture = Main.projectileTexture[projectile.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			for(int j = 0; j < 3; j++)
 			{
@@ -68,22 +68,22 @@ namespace SOTS.Projectiles.Chaos
 				for (int i = 0; i < 360; i += 6)
 				{
 					Color color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(i));
-					Vector2 center = projectile.Center;
+					Vector2 center = Projectile.Center;
 					Vector2 rotation = new Vector2(radius, 0).RotatedBy(MathHelper.ToRadians(i + Main.GameUpdateCount));
 					rotation.X *= compressions[j];
 					rotation = rotation.RotatedBy(rotations[j]);
-					Main.spriteBatch.Draw(texture, center - Main.screenPosition + rotation, null, projectile.GetAlpha(new Color(color.R, color.G, color.B, 0)), projectile.rotation, drawOrigin, 0.75f, SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture, center - Main.screenPosition + rotation, null, Projectile.GetAlpha(new Color(color.R, color.G, color.B, 0)), Projectile.rotation, drawOrigin, 0.75f, SpriteEffects.None, 0f);
 				}
 			}
 			return false;
 		}
         public override void Kill(int timeLeft)
 		{
-			SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 94, 1.3f, -0.2f);
+			SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 94, 1.3f, -0.2f);
 			for (int i = 0; i < 30; i++)
             {
-				Dust dust2 = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, ModContent.DustType<CopyDust4>(), 0, 0, 120);
-				dust2.velocity += projectile.velocity * 0.2f;
+				Dust dust2 = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>(), 0, 0, 120);
+				dust2.velocity += Projectile.velocity * 0.2f;
 				dust2.noGravity = true;
 				dust2.color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(i * 18));
 				dust2.noGravity = true;
@@ -94,8 +94,8 @@ namespace SOTS.Projectiles.Chaos
 			{
 				for(int i = 0; i < 8; i++)
 				{
-					Vector2 circular = new Vector2(1, 0).RotatedBy(projectile.rotation + MathHelper.ToRadians(45 * i));
-					Projectile.NewProjectile(projectile.Center, circular * 2.5f, ModContent.ProjectileType<ChaosCircle>(), (int)(projectile.damage * 0.9f), 0, Main.myPlayer);
+					Vector2 circular = new Vector2(1, 0).RotatedBy(Projectile.rotation + MathHelper.ToRadians(45 * i));
+					Projectile.NewProjectile(Projectile.Center, circular * 2.5f, ModContent.ProjectileType<ChaosCircle>(), (int)(Projectile.damage * 0.9f), 0, Main.myPlayer);
 				}
 			}
         }
@@ -104,13 +104,13 @@ namespace SOTS.Projectiles.Chaos
 		{
 			if (runOnce)
 			{
-				if(projectile.ai[0] > projectile.timeLeft)
-					projectile.timeLeft = (int)projectile.ai[0];
+				if(Projectile.ai[0] > Projectile.timeLeft)
+					Projectile.timeLeft = (int)Projectile.ai[0];
 				runOnce = false;
 				for (int i = 0; i < 15; i++)
 				{
-					Dust dust2 = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, ModContent.DustType<CopyDust4>(), 0, 0, 120);
-					dust2.velocity += projectile.velocity * 0.9f;
+					Dust dust2 = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>(), 0, 0, 120);
+					dust2.velocity += Projectile.velocity * 0.9f;
 					dust2.noGravity = true;
 					dust2.color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(i * 18));
 					dust2.noGravity = true;
@@ -120,17 +120,17 @@ namespace SOTS.Projectiles.Chaos
 			}
 			else
 				RingStuff();
-			Lighting.AddLight(projectile.Center, new Color(231, 95, 203).ToVector3());
-			if(projectile.velocity.Length() > 2f)
-			projectile.rotation = projectile.velocity.ToRotation();
-			if (projectile.timeLeft < 100)
-				projectile.alpha += 1;
-			projectile.velocity *= 0.96f;
+			Lighting.AddLight(Projectile.Center, new Color(231, 95, 203).ToVector3());
+			if(Projectile.velocity.Length() > 2f)
+			Projectile.rotation = Projectile.velocity.ToRotation();
+			if (Projectile.timeLeft < 100)
+				Projectile.alpha += 1;
+			Projectile.velocity *= 0.96f;
 			if(Main.rand.NextBool(3))
 			{
-				Dust dust2 = Dust.NewDustDirect(projectile.Center - new Vector2(8, 8), 8, 8, ModContent.DustType<CopyDust4>(), 0, 0, 100);
+				Dust dust2 = Dust.NewDustDirect(Projectile.Center - new Vector2(8, 8), 8, 8, ModContent.DustType<CopyDust4>(), 0, 0, 100);
 				dust2.velocity *= 0.2f;
-				dust2.velocity -= projectile.velocity * 0.3f;
+				dust2.velocity -= Projectile.velocity * 0.3f;
 				dust2.noGravity = true;
 				dust2.color = VoidPlayer.pastelRainbow;
 				dust2.noGravity = true;

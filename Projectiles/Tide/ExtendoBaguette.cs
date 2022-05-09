@@ -16,23 +16,23 @@ namespace SOTS.Projectiles.Tide
         }
         public override void SetDefaults()
         {
-            projectile.width = 18;
-            projectile.height = 18;
-            projectile.aiStyle = 20;
-            projectile.friendly = true;
-            projectile.penetrate = -1;
-            projectile.tileCollide = false;
-            projectile.ranged = true;
-            projectile.timeLeft = 20;
-            projectile.hide = true;
-            projectile.alpha = 255;
-            projectile.ownerHitCheck = true;
+            Projectile.width = 18;
+            Projectile.height = 18;
+            Projectile.aiStyle = 20;
+            Projectile.friendly = true;
+            Projectile.penetrate = -1;
+            Projectile.tileCollide = false;
+            Projectile.ranged = true;
+            Projectile.timeLeft = 20;
+            Projectile.hide = true;
+            Projectile.alpha = 255;
+            Projectile.ownerHitCheck = true;
         }
         float segmentDist = 11f;
         int length = 4;
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-            Player player = Main.player[projectile.owner];
+            Player player = Main.player[Projectile.owner];
             SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
             damage += modPlayer.baguetteLength;
             float mult = rotationDifference / MathHelper.ToRadians(20f);
@@ -50,17 +50,17 @@ namespace SOTS.Projectiles.Tide
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
             float mult = rotationDifference / MathHelper.ToRadians(20f);
-            if (projectile.hide || mult <= MathHelper.ToRadians(3) || ended)
+            if (Projectile.hide || mult <= MathHelper.ToRadians(3) || ended)
                 return false;
             for (int i = 0; i < length; i++)
             {
-                int width = projectile.width + length;
+                int width = Projectile.width + length;
                 if(i == 0 || i == length - 1)
                 {
-                    width = projectile.width;
+                    width = Projectile.width;
                 }
-                Vector2 drawPos = projectile.Center;
-                drawPos += new Vector2(i * segmentDist, 0).RotatedBy(projectile.rotation);
+                Vector2 drawPos = Projectile.Center;
+                drawPos += new Vector2(i * segmentDist, 0).RotatedBy(Projectile.rotation);
                 projHitbox = new Rectangle((int)drawPos.X - width / 2, (int)drawPos.Y - width / 2, width, width);
                 if(projHitbox.Intersects(targetHitbox))
                 {
@@ -72,9 +72,9 @@ namespace SOTS.Projectiles.Tide
         bool runOnce = true;
         public void cataloguePos()
         {
-            Vector2 current = projectile.Center;
-            current += new Vector2(length * segmentDist - 4, 0).RotatedBy(projectile.rotation);
-            float currentR = projectile.rotation;
+            Vector2 current = Projectile.Center;
+            current += new Vector2(length * segmentDist - 4, 0).RotatedBy(Projectile.rotation);
+            float currentR = Projectile.rotation;
             for (int i = 0; i < trailPos.Length; i++)
             {
                 Vector2 previousPosition = trailPos[i];
@@ -88,8 +88,8 @@ namespace SOTS.Projectiles.Tide
         public void checkPos()
         {
             float iterator = 0f;
-            Vector2 current = projectile.Center;
-            current += new Vector2(length * segmentDist - 4, 0).RotatedBy(projectile.rotation);
+            Vector2 current = Projectile.Center;
+            current += new Vector2(length * segmentDist - 4, 0).RotatedBy(Projectile.rotation);
             for (int i = 0; i < trailPos.Length; i++)
             {
                 Vector2 previousPosition = trailPos[i];
@@ -99,19 +99,19 @@ namespace SOTS.Projectiles.Tide
                 }
             }
             //if (iterator >= trailPos.Length)
-            //	projectile.Kill();
+            //	Projectile.Kill();
         }
         Vector2[] trailPos = new Vector2[20];
         float[] rotations = new float[20];
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override bool PreDraw(ref Color lightColor)
         {
-            Player player = Main.player[projectile.owner];
+            Player player = Main.player[Projectile.owner];
             SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
             Texture2D texture2 = Mod.Assets.Request<Texture2D>("Projectiles/Tide/GradientScale").Value;
-            Vector2 previousPosition = projectile.Center + new Vector2(length * segmentDist - 4, 0).RotatedBy(projectile.rotation);
+            Vector2 previousPosition = Projectile.Center + new Vector2(length * segmentDist - 4, 0).RotatedBy(Projectile.rotation);
             for (int k = 1; k < trailPos.Length; k++)
             {
-                float scale = projectile.scale * (trailPos.Length - k) / (float)trailPos.Length;
+                float scale = Projectile.scale * (trailPos.Length - k) / (float)trailPos.Length;
                 scale *= 0.75f + (0.75f * 0.225f * modPlayer.baguetteLength);
                 if (trailPos[k] == Vector2.Zero)
                 {
@@ -133,21 +133,21 @@ namespace SOTS.Projectiles.Tide
             aftertrail:
             if (ended)
                 return false;
-            Texture2D texture = Main.projectileTexture[projectile.type];
+            Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
             for (int i = 0; i < length; i++)
             {
-                Rectangle frame = new Rectangle(0, projectile.height, projectile.width, projectile.height);
+                Rectangle frame = new Rectangle(0, Projectile.height, Projectile.width, Projectile.height);
                 if(i == 0)
                 {
-                    frame = new Rectangle(0, projectile.height * 2, projectile.width, projectile.height);
+                    frame = new Rectangle(0, Projectile.height * 2, Projectile.width, Projectile.height);
                 }
                 else if(i >= length - 1)
                 {
-                    frame = new Rectangle(0, 0, projectile.width, projectile.height);
+                    frame = new Rectangle(0, 0, Projectile.width, Projectile.height);
                 }
-                Vector2 drawPos = projectile.Center;
-                drawPos += new Vector2(i * segmentDist, 0).RotatedBy(projectile.rotation);
-                spriteBatch.Draw(texture, drawPos - Main.screenPosition, frame, lightColor, projectile.rotation + MathHelper.ToRadians(player.direction != 1 ? -45 : 45), new Vector2(texture.Width / 2, projectile.height / 2), 1f, player.direction != 1 ? SpriteEffects.FlipVertically : SpriteEffects.None, 0.0f);
+                Vector2 drawPos = Projectile.Center;
+                drawPos += new Vector2(i * segmentDist, 0).RotatedBy(Projectile.rotation);
+                spriteBatch.Draw(texture, drawPos - Main.screenPosition, frame, lightColor, Projectile.rotation + MathHelper.ToRadians(player.direction != 1 ? -45 : 45), new Vector2(texture.Width / 2, Projectile.height / 2), 1f, player.direction != 1 ? SpriteEffects.FlipVertically : SpriteEffects.None, 0.0f);
             }
             return false;
         }
@@ -166,13 +166,13 @@ namespace SOTS.Projectiles.Tide
         bool ended = false;
         public override bool PreAI()
         {
-            Player player = Main.player[projectile.owner];
+            Player player = Main.player[Projectile.owner];
             SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-            if(projectile.owner == Main.myPlayer)
+            if(Projectile.owner == Main.myPlayer)
             {
                 length = 4;
                 length += modPlayer.baguetteLength;
-                projectile.netUpdate = true;
+                Projectile.netUpdate = true;
             }
             if (runOnce)
             {
@@ -183,27 +183,27 @@ namespace SOTS.Projectiles.Tide
                 }
                 runOnce = false;
             }
-            if(!projectile.hide)
+            if(!Projectile.hide)
             {
                 checkPos();
                 cataloguePos();
             }
-            if (!player.channel && Main.myPlayer == projectile.owner && projectile.timeLeft <= 20)
+            if (!player.channel && Main.myPlayer == Projectile.owner && Projectile.timeLeft <= 20)
             {
                 ended = true;
             }
-            if (!ended && projectile.timeLeft < 20)
-                projectile.timeLeft = 20;
+            if (!ended && Projectile.timeLeft < 20)
+                Projectile.timeLeft = 20;
             if (ended)
             {
-                projectile.alpha = 255;
+                Projectile.alpha = 255;
             }
             else
             {
                 Vector2 vector2_1 = player.RotatedRelativePoint(player.MountedCenter, true);
-                if (Main.myPlayer == projectile.owner)
+                if (Main.myPlayer == Projectile.owner)
                 {
-                    float num1 = projectile.velocity.Length() * projectile.scale;
+                    float num1 = Projectile.velocity.Length() * Projectile.scale;
                     Vector2 vector2_2 = vector2_1;
                     float num2 = (float)((double)Main.mouseX + Main.screenPosition.X - vector2_2.X);
                     float num3 = (float)((double)Main.mouseY + Main.screenPosition.Y - vector2_2.Y);
@@ -214,31 +214,31 @@ namespace SOTS.Projectiles.Tide
                     float num7 = num2 * num6;
                     float num8 = num3 * num6;
 
-                    if ((double)num7 != projectile.velocity.X || (double)num8 != projectile.velocity.Y)
-                        projectile.netUpdate = true;
-                    projectile.velocity.X = num7;
-                    projectile.velocity.Y = num8;
-                    projectile.velocity = projectile.velocity.RotatedBy(projectile.ai[0]);
+                    if ((double)num7 != Projectile.velocity.X || (double)num8 != Projectile.velocity.Y)
+                        Projectile.netUpdate = true;
+                    Projectile.velocity.X = num7;
+                    Projectile.velocity.Y = num8;
+                    Projectile.velocity = Projectile.velocity.RotatedBy(Projectile.ai[0]);
                 }
-                if (projectile.hide == false)
+                if (Projectile.hide == false)
                 {
-                    player.ChangeDir(projectile.direction);
-                    player.heldProj = projectile.whoAmI;
-                    player.itemRotation = (projectile.velocity * projectile.direction).ToRotation();
+                    player.ChangeDir(Projectile.direction);
+                    player.heldProj = Projectile.whoAmI;
+                    player.itemRotation = (Projectile.velocity * Projectile.direction).ToRotation();
                     if (!ended && player.itemTime < 2)
                     {
                         player.itemTime = 2;
                         player.itemAnimation = 2;
                     }
-                    projectile.alpha = 0;
+                    Projectile.alpha = 0;
                 }
-                projectile.hide = false;
-                projectile.spriteDirection = projectile.direction;
-                projectile.Center = vector2_1;
-                projectile.position += projectile.velocity;
-                previousRotation = projectile.rotation;
-                projectile.rotation = projectile.velocity.ToRotation();
-                float a = MathHelper.ToDegrees(MathHelper.WrapAngle(Math.Abs(projectile.rotation - previousRotation)));
+                Projectile.hide = false;
+                Projectile.spriteDirection = Projectile.direction;
+                Projectile.Center = vector2_1;
+                Projectile.position += Projectile.velocity;
+                previousRotation = Projectile.rotation;
+                Projectile.rotation = Projectile.velocity.ToRotation();
+                float a = MathHelper.ToDegrees(MathHelper.WrapAngle(Math.Abs(Projectile.rotation - previousRotation)));
                 a += (a > 180) ? -360 : (a < -180) ? 360 : 0;
                 if (MathHelper.ToRadians(a) > rotationDifference)
                 {

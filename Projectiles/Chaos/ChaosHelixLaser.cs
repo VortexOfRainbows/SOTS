@@ -18,14 +18,14 @@ namespace SOTS.Projectiles.Chaos
         }
         public override void SetDefaults()
         {
-            projectile.width = 20;
-            projectile.height = 20;
-            projectile.timeLeft = 80;
-            projectile.penetrate = -1;
-            projectile.friendly = false;
-            projectile.hostile = true;
-            projectile.tileCollide = false;
-            projectile.ignoreWater = true;
+            Projectile.width = 20;
+            Projectile.height = 20;
+            Projectile.timeLeft = 80;
+            Projectile.penetrate = -1;
+            Projectile.friendly = false;
+            Projectile.hostile = true;
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
         }
         List<Vector2> drawPositionList = new List<Vector2>();
         float startUpTime = 40;
@@ -35,7 +35,7 @@ namespace SOTS.Projectiles.Chaos
         public const float SeekOutOthersRange = 96f;
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
-            if(projectile.timeLeft < 80 - startUpTime && projectile.timeLeft >= 30)
+            if(Projectile.timeLeft < 80 - startUpTime && Projectile.timeLeft >= 30)
             {
                 for(int i = 0; i < drawPositionList.Count - 10; i += 3)
                 {
@@ -50,14 +50,14 @@ namespace SOTS.Projectiles.Chaos
             }
             return false;
         }
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override bool PreDraw(ref Color lightColor)
         {
             if (runOnce)
                 return false;
-            Texture2D texture = Main.projectileTexture[projectile.type];
+            Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
             Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
             Color color = new Color(140, 140, 140, 0);
-            float rotation = projectile.velocity.ToRotation();
+            float rotation = Projectile.velocity.ToRotation();
             int max = drawPositionList.Count;
             float scale = counter / startUpTime;
             float alphaMult = 1f;
@@ -68,7 +68,7 @@ namespace SOTS.Projectiles.Chaos
             }
             else
             {
-                scale = 1 - 0.3f * (1 - projectile.timeLeft / 30f);
+                scale = 1 - 0.3f * (1 - Projectile.timeLeft / 30f);
             }
             for (int i = 1; i < max; i++)
             {
@@ -86,13 +86,13 @@ namespace SOTS.Projectiles.Chaos
                     Vector2 drawPos = drawPositionList[i];
                     Color otherC = VoidPlayer.pastelAttempt(MathHelper.ToRadians(i * 3), false);
                     otherC.A = 0;
-                    float sinusoidScaleMult = 1f + 0.2f * (float)Math.Sin(MathHelper.ToRadians(projectile.ai[1] + i * 3f + Main.GameUpdateCount * -5f));
-                    Vector2 sinusoid = new Vector2(0, 24 * otherMult * (float)Math.Sin(MathHelper.ToRadians(Main.GameUpdateCount * -6.5f + i * 3f + projectile.ai[1]))).RotatedBy(rotation);
-                    spriteBatch.Draw(texture, drawPos + sinusoid - Main.screenPosition, null, otherC * ((255 - projectile.alpha) / 255f) * alphaMult * 0.6f, rotation, origin, new Vector2(3f, actualScale * 1.25f * sinusoidScaleMult) * projectile.scale, SpriteEffects.None, 0f);
-                    Vector2 sinusoid2 = new Vector2(0, 18 * otherMult * (float)Math.Sin(MathHelper.ToRadians(Main.GameUpdateCount * -2f + i * 4f + projectile.ai[1]))).RotatedBy(rotation);
-                    spriteBatch.Draw(texture, drawPos + sinusoid2 - Main.screenPosition, null, otherC * ((255 - projectile.alpha) / 255f) * alphaMult * 0.6f, rotation, origin, new Vector2(3f, actualScale * 1f * sinusoidScaleMult) * projectile.scale, SpriteEffects.None, 0f);
-                    Vector2 sinusoid3 = new Vector2(0, 12 * otherMult * (float)Math.Sin(MathHelper.ToRadians(Main.GameUpdateCount * 4f + i * 2f + projectile.ai[1]))).RotatedBy(rotation);
-                    spriteBatch.Draw(texture, drawPos + sinusoid3 - Main.screenPosition, null, otherC * ((255 - projectile.alpha) / 255f) * alphaMult * 0.6f, rotation, origin, new Vector2(3f, actualScale * 0.75f * sinusoidScaleMult) * projectile.scale, SpriteEffects.None, 0f);
+                    float sinusoidScaleMult = 1f + 0.2f * (float)Math.Sin(MathHelper.ToRadians(Projectile.ai[1] + i * 3f + Main.GameUpdateCount * -5f));
+                    Vector2 sinusoid = new Vector2(0, 24 * otherMult * (float)Math.Sin(MathHelper.ToRadians(Main.GameUpdateCount * -6.5f + i * 3f + Projectile.ai[1]))).RotatedBy(rotation);
+                    spriteBatch.Draw(texture, drawPos + sinusoid - Main.screenPosition, null, otherC * ((255 - Projectile.alpha) / 255f) * alphaMult * 0.6f, rotation, origin, new Vector2(3f, actualScale * 1.25f * sinusoidScaleMult) * Projectile.scale, SpriteEffects.None, 0f);
+                    Vector2 sinusoid2 = new Vector2(0, 18 * otherMult * (float)Math.Sin(MathHelper.ToRadians(Main.GameUpdateCount * -2f + i * 4f + Projectile.ai[1]))).RotatedBy(rotation);
+                    spriteBatch.Draw(texture, drawPos + sinusoid2 - Main.screenPosition, null, otherC * ((255 - Projectile.alpha) / 255f) * alphaMult * 0.6f, rotation, origin, new Vector2(3f, actualScale * 1f * sinusoidScaleMult) * Projectile.scale, SpriteEffects.None, 0f);
+                    Vector2 sinusoid3 = new Vector2(0, 12 * otherMult * (float)Math.Sin(MathHelper.ToRadians(Main.GameUpdateCount * 4f + i * 2f + Projectile.ai[1]))).RotatedBy(rotation);
+                    spriteBatch.Draw(texture, drawPos + sinusoid3 - Main.screenPosition, null, otherC * ((255 - Projectile.alpha) / 255f) * alphaMult * 0.6f, rotation, origin, new Vector2(3f, actualScale * 0.75f * sinusoidScaleMult) * Projectile.scale, SpriteEffects.None, 0f);
                     if (i != drawPositionList.Count - 1)
                         rotation = (drawPositionList[i + 1] - drawPos).ToRotation();
                 }
@@ -102,10 +102,10 @@ namespace SOTS.Projectiles.Chaos
         Vector2 endPosition;
         public void SetupLaser()
         {
-            float radians = (float)projectile.velocity.ToRotation();
-            int playerID = (int)projectile.ai[0];
-            Vector2 position = projectile.Center;
-            Vector2 velocity = projectile.velocity.SafeNormalize(new Vector2(0, 1)) * Speed;
+            float radians = (float)Projectile.velocity.ToRotation();
+            int playerID = (int)Projectile.ai[0];
+            Vector2 position = Projectile.Center;
+            Vector2 velocity = Projectile.velocity.SafeNormalize(new Vector2(0, 1)) * Speed;
             int counter = 0;
             if (playerID < 0)
                 return;
@@ -117,7 +117,7 @@ namespace SOTS.Projectiles.Chaos
                 velocity = new Vector2(1, 0).RotatedBy(radians) * Speed;
                 counter++;
             }
-            //projectile.velocity = velocity;
+            //Projectile.velocity = velocity;
             endPosition = position;
         }
         public override bool ShouldUpdatePosition()
@@ -128,7 +128,7 @@ namespace SOTS.Projectiles.Chaos
         {
             if (runOnce)
             {
-                projectile.ai[1] = Main.rand.NextFloat(18000);
+                Projectile.ai[1] = Main.rand.NextFloat(18000);
                 SetupLaser();
                 runOnce = false;
             }
@@ -137,15 +137,15 @@ namespace SOTS.Projectiles.Chaos
             {
                 for (int i = 0; i < 12; i++)
                 {
-                    Dust dust2 = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, ModContent.DustType<CopyDust4>(), 0, 0, 120);
-                    dust2.velocity += projectile.velocity * 0.1f;
+                    Dust dust2 = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>(), 0, 0, 120);
+                    dust2.velocity += Projectile.velocity * 0.1f;
                     dust2.noGravity = true;
                     dust2.color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(i * 18));
                     dust2.noGravity = true;
                     dust2.fadeIn = 0.2f;
                     dust2.scale *= 2.2f;
-                    dust2 = Dust.NewDustDirect(endPosition - new Vector2(projectile.width / 2, projectile.height / 2), projectile.width, projectile.height, ModContent.DustType<CopyDust4>(), 0, 0, 120);
-                    dust2.velocity += projectile.velocity * 0.1f;
+                    dust2 = Dust.NewDustDirect(endPosition - new Vector2(Projectile.width / 2, Projectile.height / 2), Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>(), 0, 0, 120);
+                    dust2.velocity += Projectile.velocity * 0.1f;
                     dust2.noGravity = true;
                     dust2.color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(i * 18));
                     dust2.noGravity = true;
@@ -153,14 +153,14 @@ namespace SOTS.Projectiles.Chaos
                     dust2.scale *= 2.2f;
                 }
                 Player player = Main.LocalPlayer;
-                if(player.Distance(projectile.Center) < 4800)
+                if(player.Distance(Projectile.Center) < 4800)
                     SoundEngine.PlaySound(SoundID.Item, (int)player.Center.X, (int)player.Center.Y, 94, 0.75f, 0.2f);
                 for (int i = 0; i < drawPositionList.Count; i += 2)
                 {
                     if (!Main.rand.NextBool(3))
                     {
                         Dust dust2 = Dust.NewDustPerfect(drawPositionList[i], ModContent.DustType<CopyDust4>(), Main.rand.NextVector2Circular(3, 3), 120);
-                        dust2.velocity += projectile.velocity * 0.1f;
+                        dust2.velocity += Projectile.velocity * 0.1f;
                         dust2.noGravity = true;
                         dust2.color = VoidPlayer.pastelAttempt(Main.rand.NextFloat(0, 6.28f));
                         dust2.noGravity = true;
@@ -169,10 +169,10 @@ namespace SOTS.Projectiles.Chaos
                     }
                 }
             }
-            float endPercent = projectile.timeLeft / 40f;
+            float endPercent = Projectile.timeLeft / 40f;
             if (endPercent > 1)
                 endPercent = 1;
-            projectile.alpha = (int)(255 - 255 * endPercent * endPercent);
+            Projectile.alpha = (int)(255 - 255 * endPercent * endPercent);
         }
     }
 }

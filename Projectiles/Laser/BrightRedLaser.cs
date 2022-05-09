@@ -21,48 +21,48 @@ namespace SOTS.Projectiles.Laser
 
 		public override void SetDefaults() 
 		{
-			projectile.width = 10;
-			projectile.height = 10;
-			projectile.timeLeft = 60;
-			projectile.penetrate = -1;
-			projectile.hostile = false;
-			projectile.friendly = true;
-			projectile.minion = true;
-			projectile.tileCollide = false;
-			projectile.ignoreWater = true;
+			Projectile.width = 10;
+			Projectile.height = 10;
+			Projectile.timeLeft = 60;
+			Projectile.penetrate = -1;
+			Projectile.hostile = false;
+			Projectile.friendly = true;
+			Projectile.minion = true;
+			Projectile.tileCollide = false;
+			Projectile.ignoreWater = true;
 		}
 		public override void AI() 
 		{
-			//projectile.Center = npc.Center;
-			if((int)projectile.localAI[0] == 0)
-				SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 12, 0.7f);
-			projectile.localAI[0] += 1f;
-			if (projectile.localAI[0] == 2f) {
-				projectile.damage = 0;
-				projectile.alpha += 75;
+			//Projectile.Center = npc.Center;
+			if((int)Projectile.localAI[0] == 0)
+				SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 12, 0.7f);
+			Projectile.localAI[0] += 1f;
+			if (Projectile.localAI[0] == 2f) {
+				Projectile.damage = 0;
+				Projectile.alpha += 75;
 			}
-			if (projectile.localAI[0] > 15f) {
-				projectile.Kill();
+			if (Projectile.localAI[0] > 15f) {
+				Projectile.Kill();
 			}
-			projectile.alpha += 10;
+			Projectile.alpha += 10;
 		}
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.immune[projectile.owner] = 3;
-			if(projectile.melee) target.immune[projectile.owner] = 0;
+            target.immune[Projectile.owner] = 3;
+			if(Projectile.melee) target.immune[Projectile.owner] = 0;
 			
-			projectile.damage--;
+			Projectile.damage--;
         }
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) 
 		{
 			float point = 0f;
-			Vector2 endPoint = new Vector2(projectile.ai[0], projectile.ai[1]);
-			Vector2 unit = endPoint - projectile.Center;
+			Vector2 endPoint = new Vector2(Projectile.ai[0], Projectile.ai[1]);
+			Vector2 unit = endPoint - Projectile.Center;
 			float length = unit.Length();
 			unit.Normalize();
 			for (float Distance = 0; Distance <= length; Distance += 6f) 
 			{
-				Vector2 position = projectile.Center + unit * Distance;	
+				Vector2 position = Projectile.Center + unit * Distance;	
 				int i = (int)(position.X / 16);
 				int j =	(int)(position.Y / 16);
 				
@@ -70,26 +70,26 @@ namespace SOTS.Projectiles.Laser
 				{
 					break;
 				}
-				if(Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), projectile.Center, position, 10f, ref point))
+				if(Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, position, 10f, ref point))
 				{
 					return true;
 				}
 			}
 			return false;
-			//return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), projectile.Center, endPoint, 8f, ref point);
+			//return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, endPoint, 8f, ref point);
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
-			Player player  = Main.player[projectile.owner];
-			Vector2 endPoint = new Vector2(projectile.ai[0], projectile.ai[1]);
-			Vector2 unit = endPoint - projectile.Center;
+			Player player  = Main.player[Projectile.owner];
+			Vector2 endPoint = new Vector2(Projectile.ai[0], Projectile.ai[1]);
+			Vector2 unit = endPoint - Projectile.Center;
 			float length = unit.Length();
 			unit.Normalize();
 			for (float Distance = 0; Distance <= length; Distance += 7f) {
 				Distance += Main.rand.Next(5);
-				Vector2 drawPos = projectile.Center + unit * Distance - Main.screenPosition;
+				Vector2 drawPos = Projectile.Center + unit * Distance - Main.screenPosition;
 				
-				Vector2 position = projectile.Center + unit * Distance;	
+				Vector2 position = Projectile.Center + unit * Distance;	
 				int i = (int)(position.X / 16);
 				int j =	(int)(position.Y / 16);
 				if(Main.tile[i, j].active() && Main.tileSolidTop[Main.tile[i, j].type] == false && Main.tileSolid[Main.tile[i, j].type] == true)
@@ -97,9 +97,9 @@ namespace SOTS.Projectiles.Laser
 					Distance -= 6f;
 					break;
 				}
-				Color alpha = new Color(255, 0, 0) * ((255 - projectile.alpha) / 255f);
-				//Color alpha = ((255 - projectile.alpha) / 255f);
-				spriteBatch.Draw(Main.projectileTexture[projectile.type], drawPos, null, alpha, Distance, new Vector2(5, 5), (0.01f * (float)Main.rand.Next(50,151)), SpriteEffects.None, 0f);
+				Color alpha = new Color(255, 0, 0) * ((255 - Projectile.alpha) / 255f);
+				//Color alpha = ((255 - Projectile.alpha) / 255f);
+				spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, drawPos, null, alpha, Distance, new Vector2(5, 5), (0.01f * (float)Main.rand.Next(50,151)), SpriteEffects.None, 0f);
 			}
 			return false;
 		}

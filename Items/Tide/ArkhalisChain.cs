@@ -80,7 +80,7 @@ namespace SOTS.Items.Tide
 			if (Main.tile[i, j].frameX < 18 && player.ConsumeItem(key))
 			{
 				SoundEngine.PlaySound(SoundID.Grab, (int)player.Center.X, (int)player.Center.Y, 0, 1.1f, -0.2f);
-				tile.frameX = 18;
+				tile.TileFrameX = 18;
 				NetMessage.SendTileSquare(-1, i, j, 2);
 			}
 			else if(Main.tile[i, j].frameX >= 18)
@@ -88,7 +88,7 @@ namespace SOTS.Items.Tide
 				SoundEngine.PlaySound(SoundID.Grab, (int)player.Center.X, (int)player.Center.Y, 0, 1.1f, -0.2f);
 				int item = Item.NewItem(i * 16, (j + 6) * 16, 16, 16, ItemID.Arkhalis, 1, false, 0, true);
 				NetMessage.SendData(MessageID.SyncItem, player.whoAmI, -1, null, item, 1f, 0.0f, 0.0f, 0, 0, 0);
-				tile.frameX = 0;
+				tile.TileFrameX = 0;
 				NetMessage.SendTileSquare(-1, i, j, 2);
 			}
 			return true;
@@ -111,7 +111,7 @@ namespace SOTS.Items.Tide
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
         {
 			Texture2D texture = Main.tileTexture[Type];
-			Texture2D textureSword = Main.itemTexture[ItemID.Arkhalis];
+			Texture2D textureSword = Terraria.GameContent.TextureAssets.Item[ItemID.Arkhalis].Value;
 			Vector2 origin = new Vector2(8, 10);
 			//float height = 16;
 			float timer = Main.GlobalTime * 40 + (i + j) * 4;

@@ -196,7 +196,7 @@ namespace SOTS.NPCs
 		}
         public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
 		{
-			hitBy(npc, Main.player[projectile.owner], projectile, null, ref damage, ref knockback, ref crit);
+			hitBy(npc, Main.player[Projectile.owner], projectile, null, ref damage, ref knockback, ref crit);
 			base.ModifyHitByProjectile(npc, projectile, ref damage, ref knockback, ref crit, ref hitDirection);
         }
 		public void hitBy(NPC npc, Player player, Projectile projectile, Item item, ref int damage, ref float knockback, ref bool crit)
@@ -467,8 +467,8 @@ namespace SOTS.NPCs
 			for (int k = 0; k <= dist; k++)
 			{
 				Tile tile = Framing.GetTileSafely(i, j + k);
-				bool correctType = tile.type == ModContent.TileType<DullPlatingTile>() || tile.type == ModContent.TileType<AvaritianPlatingTile>() || tile.type == ModContent.TileType<PortalPlatingTile>();
-				if (tile.active() && (Main.tileSolid[tile.type] || correctType) && tile.nactive())
+				bool correctType = tile.TileType == ModContent.TileType<DullPlatingTile>() || tile.TileType == ModContent.TileType<AvaritianPlatingTile>() || tile.TileType == ModContent.TileType<PortalPlatingTile>();
+				if (tile.active() && (Main.tileSolid[tile.TileType] || correctType) && tile.nactive())
 				{
 					dist = k;
 					flag = true;

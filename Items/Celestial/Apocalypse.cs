@@ -3,6 +3,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using SOTS.Void;
+using SOTS.Items.Tide;
+using Terraria.DataStructures;
+using SOTS.Projectiles.Lightning;
 
 namespace SOTS.Items.Celestial
 {
@@ -16,16 +19,16 @@ namespace SOTS.Items.Celestial
 		public override void SafeSetDefaults()
 		{
 			Item.damage = 330;
-			Item.magic = true;
+			Item.DamageType = DamageClass.Magic;
 			Item.width = 30;
 			Item.height = 30;
             Item.value = Item.sellPrice(0, 15, 0, 0);
 			Item.rare = ItemRarityID.Yellow;
 			Item.useTime = 15;
 			Item.useAnimation = 15;
-			Item.useStyle = 5;
+			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.autoReuse = true;            
-			Item.shoot = mod.ProjectileType("GreenLightning"); 
+			Item.shoot = ModContent.ProjectileType<GreenLightning>(); 
 			Item.shootSpeed = 1;
 			Item.knockBack = 5;
 			Item.UseSound = SoundID.Item92;
@@ -35,23 +38,15 @@ namespace SOTS.Items.Celestial
 		{
 			Lighting.AddLight(player.Center, 1.25f, 1.25f, 1.25f);
 		}
-		public override void AddRecipes()
+		public override void AddRecipes() => CreateRecipe(1).AddIngredient<SanguiteBar>(15).AddIngredient<GreenJellyfishStaff>(1).AddTile(TileID.MythrilAnvil).Register();
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "SanguiteBar", 15);
-			recipe.AddIngredient(null, "GreenJellyfishStaff", 1);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
-		}
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-        {
-			for(int i = 0; i < 2; i++)
+			for (int i = 0; i < 2; i++)
 			{
-				Vector2 speed = new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians(-1.0f + 2 * i));
-				Projectile.NewProjectile(position.X, position.Y, speed.X, speed.Y, type, damage, knockBack, player.whoAmI, 0, 6f);
+				Vector2 speed = velocity.RotatedBy(MathHelper.ToRadians(-1.0f + 2 * i));
+				Projectile.NewProjectile(source, position, speed, type, damage, knockback, player.whoAmI, 0, 6f);
 			}
-			return false; 
+			return false;
 		}
 		public override int GetVoid(Player player)
 		{

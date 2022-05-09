@@ -18,14 +18,14 @@ namespace SOTS.Items.Celestial
 		public override void SafeSetDefaults()
 		{
 			Item.damage = 120;
-			Item.magic = true;
+			Item.DamageType = DamageClass.Magic;
 			Item.width = 26;
 			Item.height = 32;
             Item.value = Item.sellPrice(0, 20, 0, 0);
 			Item.rare = 12;
 			Item.useTime = 20;
 			Item.useAnimation = 20;
-			Item.useStyle = 5;
+			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.autoReuse = true;            
 			Item.shoot = mod.ProjectileType("ContinuumSphere"); 
 			Item.shootSpeed = 1;
@@ -46,7 +46,7 @@ namespace SOTS.Items.Celestial
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
 			bool summon = true;
-			for (int l = 0; l < Main.projectile.Length; l++)
+			for (int l = 0; l < Main.Projectile.Length; l++)
 			{
 				Projectile proj = Main.projectile[l];
 				if(proj.active && proj.type == Item.shoot && Main.player[proj.owner] == player)

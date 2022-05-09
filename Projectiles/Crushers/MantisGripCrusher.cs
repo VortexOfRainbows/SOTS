@@ -18,8 +18,8 @@ namespace SOTS.Projectiles.Crushers
 		}
         public override void SafeSetDefaults()
         {
-			projectile.height = 22;
-			projectile.width = 22;
+			Projectile.height = 22;
+			Projectile.width = 22;
 			maxDamage = 5;
 			minDamage = -0.2f;
 			chargeTime = 240;
@@ -36,7 +36,7 @@ namespace SOTS.Projectiles.Crushers
 		}
         public override void ExplosionSound()
 		{
-			SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 92, 0.55f, 0.4f);
+			SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 92, 0.55f, 0.4f);
 			base.ExplosionSound();
 		}
         public override bool UseCustomExplosionEffect(float x, float y, float dist, float rotation, float chargePercent, int index)
@@ -50,15 +50,15 @@ namespace SOTS.Projectiles.Crushers
 				randMult *= 0.5f + 0.5f * (float)Math.Cos(rand);
 				Vector2 velo = new Vector2(-(i + index * 3.5f + chargePercent * 1.5f)* randMult, 0).RotatedBy(rotation + MathHelper.ToRadians(rand));
 				Vector2 spawnAt = new Vector2(x, y) + Main.rand.NextVector2Circular(Main.rand.NextFloat(32 + index * 8) + i * 8 + index * 2, 0).RotatedBy(MathHelper.ToRadians(randRot + 90 * i + Main.rand.NextFloat(-15, 15))) + velo.SafeNormalize(Vector2.Zero) * 12 * (i - 1);
-				Projectile.NewProjectileDirect(projectile.Center, velo, ModContent.ProjectileType<NatureBoltFriendly>(), projectile.damage, projectile.knockBack, projectile.owner, spawnAt.X, spawnAt.Y);
+				Projectile.NewProjectileDirect(Projectile.Center, velo, ModContent.ProjectileType<NatureBoltFriendly>(), Projectile.damage, Projectile.knockBack, Projectile.owner, spawnAt.X, spawnAt.Y);
 			}
 			return true;
 		}
 		public override void PostAI()
         {
-			//Player player = Main.player[projectile.owner];
-			Vector2 velo = projectile.velocity.SafeNormalize(Vector2.Zero) * 4;
-			Dust dust = Dust.NewDustDirect(new Vector2(projectile.Center.X, projectile.Center.Y) - new Vector2(4) + velo * 2, 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 100, default, 1.6f);
+			//Player player = Main.player[Projectile.owner];
+			Vector2 velo = Projectile.velocity.SafeNormalize(Vector2.Zero) * 4;
+			Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X, Projectile.Center.Y) - new Vector2(4) + velo * 2, 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 100, default, 1.6f);
 			dust.velocity *= 0.05f;
 			dust.scale = 1.25f;
 			dust.noGravity = true;

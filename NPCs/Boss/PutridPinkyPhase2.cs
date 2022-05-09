@@ -87,7 +87,7 @@ namespace SOTS.NPCs.Boss
 			bossBag = ModContent.ItemType<PinkyBag>();
 		}
 		const int alphaMin = 60;
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
         { 
 			for(int i = 0; i < Main.npc.Length; i++)
 			{
@@ -96,7 +96,7 @@ namespace SOTS.NPCs.Boss
 					Draw(Main.npc[i].Center);
 				}
 			}
-			for (int i = 0; i < Main.projectile.Length; i++)
+			for (int i = 0; i < Main.Projectile.Length; i++)
 			{
 				if (Main.projectile[i].type == ModContent.ProjectileType<RecollectHook>() && Main.projectile[i].active && (int)Main.projectile[i].ai[0] == npc.whoAmI)
 				{
@@ -176,7 +176,7 @@ namespace SOTS.NPCs.Boss
 			}
 			return true;
 		}
-        public override void PostDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override void PostDraw(Color lightColor)
 		{
 			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Boss/PutridPinkyEye");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
@@ -678,7 +678,7 @@ namespace SOTS.NPCs.Boss
 							Draw(Main.npc[i].Center, true);
 						}
 					}
-					for (int i = 0; i < Main.projectile.Length; i++)
+					for (int i = 0; i < Main.Projectile.Length; i++)
 					{
 						if (Main.projectile[i].type == mod.ProjectileType("RecollectHook") && Main.projectile[i].active && (int)Main.projectile[i].ai[0] == npc.whoAmI)
 						{

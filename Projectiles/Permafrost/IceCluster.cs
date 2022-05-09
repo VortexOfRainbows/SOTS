@@ -12,18 +12,18 @@ namespace SOTS.Projectiles.Permafrost
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Ice Cluster");
-			ProjectileID.Sets.TrailCacheLength[projectile.type] = 3;
-			ProjectileID.Sets.TrailingMode[projectile.type] = 1;
+			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 3;
+			ProjectileID.Sets.TrailingMode[Projectile.type] = 1;
 		}
         public override void SetDefaults()
         {
-			projectile.CloneDefaults(48);
+			Projectile.CloneDefaults(48);
             aiType = 48;
-			projectile.ranged = true;
-			projectile.thrown = false;
-			projectile.penetrate = 1;
-			projectile.width = 18;
-			projectile.height = 18;
+			Projectile.ranged = true;
+			Projectile.thrown = false;
+			Projectile.penetrate = 1;
+			Projectile.width = 18;
+			Projectile.height = 18;
 		}
 		bool runOnce = true;
 		bool alt = false;
@@ -32,7 +32,7 @@ namespace SOTS.Projectiles.Permafrost
         {
 			if(runOnce)
             {
-				if (projectile.ai[0] != -1)
+				if (Projectile.ai[0] != -1)
 					alt = true;
 				runOnce = false;
             }
@@ -48,8 +48,8 @@ namespace SOTS.Projectiles.Permafrost
 					{
 						Vector2 circular = new Vector2(2 + 4 * j, 0).RotatedBy(MathHelper.ToRadians(i));
 						circular.X *= 0.5f;
-						circular = circular.RotatedBy(projectile.velocity.ToRotation());
-						int snow = Dust.NewDust(projectile.Center + projectile.velocity * j + circular - new Vector2(5), 0, 0, alt ? ModContent.DustType<ModIceDust>() : ModContent.DustType<ModSnowDust>());
+						circular = circular.RotatedBy(Projectile.velocity.ToRotation());
+						int snow = Dust.NewDust(Projectile.Center + Projectile.velocity * j + circular - new Vector2(5), 0, 0, alt ? ModContent.DustType<ModIceDust>() : ModContent.DustType<ModSnowDust>());
 						Main.dust[snow].noGravity = true;
 						Main.dust[snow].velocity *= 0f;
 						Main.dust[snow].velocity += 0.6f * circular;
@@ -57,31 +57,31 @@ namespace SOTS.Projectiles.Permafrost
             }
 			if(Main.rand.NextBool(2) && (counter >= 5 || alt))
 			{
-				int snow = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y) - new Vector2(5), projectile.width, projectile.height, alt ? ModContent.DustType<ModIceDust>() : ModContent.DustType<ModSnowDust>());
+				int snow = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, alt ? ModContent.DustType<ModIceDust>() : ModContent.DustType<ModSnowDust>());
 				Main.dust[snow].noGravity = true;
 			}
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
-			Texture2D texture = alt ? Mod.Assets.Request<Texture2D>("Projectiles/Permafrost/IceClusterAlt").Value : Main.projectileTexture[projectile.type];
-			Vector2 drawOrigin = new Vector2(Main.projectileTexture[projectile.type].Width * 0.5f, projectile.height * 0.5f);
-			for (int k = 0; k < projectile.oldPos.Length; k++)
+			Texture2D texture = alt ? Mod.Assets.Request<Texture2D>("Projectiles/Permafrost/IceClusterAlt").Value : Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value.Width * 0.5f, Projectile.height * 0.5f);
+			for (int k = 0; k < Projectile.oldPos.Length; k++)
 			{
-				Vector2 drawPos = projectile.oldPos[k] - Main.screenPosition + drawOrigin;
-				Color color = projectile.GetAlpha(lightColor) * ((float)(projectile.oldPos.Length - k) / (float)projectile.oldPos.Length);
-				spriteBatch.Draw(texture, drawPos, null, color, projectile.rotation, drawOrigin, projectile.scale, SpriteEffects.None, 0f);
+				Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin;
+				Color color = Projectile.GetAlpha(lightColor) * ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
+				spriteBatch.Draw(texture, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
 			}
-			spriteBatch.Draw(texture, projectile.Center - Main.screenPosition, null, lightColor, projectile.rotation, drawOrigin, projectile.scale, SpriteEffects.None, 0f);
+			spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, null, lightColor, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
 			return false;
 		}
 		public override void Kill(int timeLeft)
         {
-			if(projectile.owner == Main.myPlayer)
+			if(Projectile.owner == Main.myPlayer)
 			{
-				Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("IcePulse"), projectile.damage, 0, projectile.owner, alt ? -1 : 0);
+				Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, mod.ProjectileType("IcePulse"), Projectile.damage, 0, Projectile.owner, alt ? -1 : 0);
 				for (int i = 0; i < 15; i++)
 				{
-					int snow = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, alt ? ModContent.DustType<ModIceDust>() : ModContent.DustType<ModSnowDust>());
+					int snow = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, alt ? ModContent.DustType<ModIceDust>() : ModContent.DustType<ModSnowDust>());
 					Main.dust[snow].noGravity = true;
 					Main.dust[snow].velocity *= 2;
 					Main.dust[snow].scale *= 1.2f;

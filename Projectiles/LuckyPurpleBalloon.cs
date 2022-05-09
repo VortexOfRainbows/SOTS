@@ -15,41 +15,41 @@ namespace SOTS.Projectiles
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Lucky Purple Balloon");
-			Main.projFrames[projectile.type] = 1;
-			Main.projPet[projectile.type] = true;
-			ProjectileID.Sets.LightPet[projectile.type] = true;
+			Main.projFrames[Projectile.type] = 1;
+			Main.projPet[Projectile.type] = true;
+			ProjectileID.Sets.LightPet[Projectile.type] = true;
 		}
         public override void SetDefaults()
         {
-            projectile.CloneDefaults(198);
+            Projectile.CloneDefaults(198);
             aiType = 198;
-			projectile.netImportant = true;
-            projectile.width = 18;
-            projectile.height = 34; 
-            projectile.timeLeft = 255;
-            projectile.penetrate = -1; 
-            projectile.friendly = true; 
-            projectile.tileCollide = false;
-            projectile.ignoreWater = true; 
-            projectile.light = 0.5f;
+			Projectile.netImportant = true;
+            Projectile.width = 18;
+            Projectile.height = 34; 
+            Projectile.timeLeft = 255;
+            Projectile.penetrate = -1; 
+            Projectile.friendly = true; 
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = true; 
+            Projectile.light = 0.5f;
 		}
         public override bool PreAI()
 		{
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			player.hornet = false; // Relic from aiType
             return true;
         }
         public override void AI()
         {
-            Player player = Main.player[projectile.owner];
+            Player player = Main.player[Projectile.owner];
             SOTSPlayer modPlayer = player.GetModPlayer<SOTSPlayer>();
-            if (player.dead || (player.ownedProjectileCounts[mod.ProjectileType("LuckyPurpleBalloon")] > 1 && projectile.alpha < 30))
+            if (player.dead || (player.ownedProjectileCounts[mod.ProjectileType("LuckyPurpleBalloon")] > 1 && Projectile.alpha < 30))
             {
                 modPlayer.PurpleBalloon = false;
             }
             if (modPlayer.PurpleBalloon)
             {
-                projectile.timeLeft = 2;
+                Projectile.timeLeft = 2;
             }
 			wait++;
 			if(wait % 100 == 0)
@@ -72,17 +72,17 @@ namespace SOTS.Projectiles
 			{
 				plusY = 2;
 			}
-			projectile.velocity *= 0.1f;
-			projectile.position.X = player.Center.X - projectile.width/2;
-			projectile.position.Y = player.Center.Y - projectile.height/2;
-			projectile.position.X -= (float)(27 * Main.player[projectile.owner].direction);
-            float gravDir = Main.player[projectile.owner].gravDir;
-            projectile.position.Y -= (40f + plusY) * gravDir;
-			projectile.position.Y += Main.player[projectile.owner].gfxOffY;
-			projectile.rotation = player.velocity.X * 0.03f;
+			Projectile.velocity *= 0.1f;
+			Projectile.position.X = player.Center.X - Projectile.width/2;
+			Projectile.position.Y = player.Center.Y - Projectile.height/2;
+			Projectile.position.X -= (float)(27 * Main.player[Projectile.owner].direction);
+            float gravDir = Main.player[Projectile.owner].gravDir;
+            Projectile.position.Y -= (40f + plusY) * gravDir;
+			Projectile.position.Y += Main.player[Projectile.owner].gfxOffY;
+			Projectile.rotation = player.velocity.X * 0.03f;
 			if(gravDir == -1)
 			{
-				projectile.rotation = MathHelper.ToRadians(180) + (player.velocity.X * -0.03f);
+				Projectile.rotation = MathHelper.ToRadians(180) + (player.velocity.X * -0.03f);
 			}
 		}
 	}

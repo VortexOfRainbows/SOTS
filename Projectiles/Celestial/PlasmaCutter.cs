@@ -13,51 +13,51 @@ namespace SOTS.Projectiles.Celestial
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Time to die");
-			ProjectileID.Sets.TrailCacheLength[projectile.type] = 12;  
-			ProjectileID.Sets.TrailingMode[projectile.type] = 0;    
+			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 12;  
+			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;    
 		}        
 		public override void SetDefaults()
         {
-            projectile.width = 52;
-            projectile.height = 50; 
-            projectile.timeLeft = 360000;
-            projectile.penetrate = -1; 
-            projectile.friendly = true; 
-            projectile.hostile = false; 
-            projectile.tileCollide = false;
-            projectile.ignoreWater = true; 
-            projectile.melee = true; 
-			projectile.alpha = 0;
-			projectile.extraUpdates = 2;
-			projectile.usesLocalNPCImmunity = true;
-			projectile.localNPCHitCooldown = 40;
+            Projectile.width = 52;
+            Projectile.height = 50; 
+            Projectile.timeLeft = 360000;
+            Projectile.penetrate = -1; 
+            Projectile.friendly = true; 
+            Projectile.hostile = false; 
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = true; 
+            Projectile.melee = true; 
+			Projectile.alpha = 0;
+			Projectile.extraUpdates = 2;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = 40;
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
 			int iFrame = (int)(28f - spinSpeed);
 			if (iFrame < 4)
 				iFrame = 4;
-			projectile.localNPCHitCooldown = 1 + iFrame * 3;
-			projectile.localNPCImmunity[target.whoAmI] = projectile.localNPCHitCooldown;
-			target.immune[projectile.owner] = 0;
+			Projectile.localNPCHitCooldown = 1 + iFrame * 3;
+			Projectile.localNPCImmunity[target.whoAmI] = Projectile.localNPCHitCooldown;
+			target.immune[Projectile.owner] = 0;
 		}
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override bool PreDraw(ref Color lightColor)
 		{
-			Player player  = Main.player[projectile.owner];
+			Player player  = Main.player[Projectile.owner];
 			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Celestial/PlasmaCutterGlow");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			for (int k = 0; k < projectile.oldPos.Length; k++) 
+			for (int k = 0; k < Projectile.oldPos.Length; k++) 
 			{
-				Vector2 drawPos = projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, projectile.gfxOffY);
-				Color color = projectile.GetAlpha(new Color(100, 155, 100, 0)) * ((float)(projectile.oldPos.Length - k) / (float)projectile.oldPos.Length);
-				float disX = player.Center.X - projectile.oldPos[k].X;
-				float disY = player.Center.Y - projectile.oldPos[k].Y;
+				Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
+				Color color = Projectile.GetAlpha(new Color(100, 155, 100, 0)) * ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
+				float disX = player.Center.X - Projectile.oldPos[k].X;
+				float disY = player.Center.Y - Projectile.oldPos[k].Y;
 				float rotation2 = (float)Math.Atan2(disY,disX) + MathHelper.ToRadians(225f);
-				spriteBatch.Draw(texture, drawPos, null, color, rotation2, drawOrigin, projectile.scale, SpriteEffects.None, 0f);
+				spriteBatch.Draw(texture, drawPos, null, color, rotation2, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
 			}
 			texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Celestial/PlasmaCutterChain");  
-            Vector2 position = projectile.Center;
-            Vector2 mountedCenter = Main.player[projectile.owner].MountedCenter;
+            Vector2 position = Projectile.Center;
+            Vector2 mountedCenter = Main.player[Projectile.owner].MountedCenter;
             Rectangle? sourceRectangle = new Microsoft.Xna.Framework.Rectangle?();
             Vector2 origin = new Vector2((float)texture.Width * 0.5f, (float)texture.Height * 0.5f);
             float num1 = (float)texture.Height;
@@ -80,7 +80,7 @@ namespace SOTS.Projectiles.Celestial
                     vector2_1.Normalize();
                     position += vector2_1 * num1;
                     vector2_4 = mountedCenter - position;
-                    Color color2 = projectile.GetAlpha(new Color(100, 100, 100, 0));
+                    Color color2 = Projectile.GetAlpha(new Color(100, 100, 100, 0));
 					for(int i = 0; i < 5; i ++)
 					{
 						float x = Main.rand.NextFloat(-1f, 1f);
@@ -91,15 +91,15 @@ namespace SOTS.Projectiles.Celestial
             }
 			return true;
 		}
-        public override void PostDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override void PostDraw(Color lightColor)
 		{
 			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Celestial/PlasmaCutterGlow");
-			Vector2 origin = new Vector2(texture.Width / 2, projectile.height / 2);
+			Vector2 origin = new Vector2(texture.Width / 2, Projectile.height / 2);
 			Color color = new Color(100, 155, 100, 0);
 			for (int i = 0; i < 360; i += 60)
 			{
 				Vector2 circular = new Vector2(Main.rand.NextFloat(-1f, 1f), Main.rand.NextFloat(-1f, 1f));
-				Main.spriteBatch.Draw(texture, projectile.Center + circular - Main.screenPosition, new Rectangle(0, projectile.height * projectile.frame, projectile.width, projectile.height), color * ((255f - projectile.alpha) / 255f), projectile.rotation, origin, projectile.scale, SpriteEffects.None, 0.0f);
+				Main.spriteBatch.Draw(texture, Projectile.Center + circular - Main.screenPosition, new Rectangle(0, Projectile.height * Projectile.frame, Projectile.width, Projectile.height), color * ((255f - Projectile.alpha) / 255f), Projectile.rotation, origin, Projectile.scale, SpriteEffects.None, 0.0f);
 			}
         }
 		float counter = 225;
@@ -111,23 +111,23 @@ namespace SOTS.Projectiles.Celestial
 			if(counter2 < 45)
 				counter2++;
 			float mult = counter2 / 45f;
-			Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 0.2f / 255f, (255 - projectile.alpha) * 1.1f / 255f, (255 - projectile.alpha) * 0.4f / 255f);
-			Player player  = Main.player[projectile.owner];
+			Lighting.AddLight(Projectile.Center, (255 - Projectile.alpha) * 0.2f / 255f, (255 - Projectile.alpha) * 1.1f / 255f, (255 - Projectile.alpha) * 0.4f / 255f);
+			Player player  = Main.player[Projectile.owner];
 			if(player.whoAmI == Main.myPlayer)
 			{
-				projectile.netUpdate = true;
+				Projectile.netUpdate = true;
 				Vector2 cursorArea = Main.MouseWorld;
 					
 				float cursorX = cursorArea.X - player.Center.X;
 				float cursorY = cursorArea.Y - player.Center.Y;
-				float disX = player.Center.X - projectile.Center.X;
-				float disY = player.Center.Y - projectile.Center.Y;
+				float disX = player.Center.X - Projectile.Center.X;
+				float disY = player.Center.Y - Projectile.Center.Y;
 				float distance = Vector2.Distance(player.Center, cursorArea);
 				if (distance < 48)
 					distance = 48;
 				if (distance > 896)
 					distance = 896;
-				projectile.rotation = (float)Math.Atan2(disY,disX) + MathHelper.ToRadians(225f);
+				Projectile.rotation = (float)Math.Atan2(disY,disX) + MathHelper.ToRadians(225f);
 				
 				double deg = counter; 
 				double rad = deg * (Math.PI / 180);
@@ -140,22 +140,22 @@ namespace SOTS.Projectiles.Celestial
 				ovalArea.Y += ovalArea2.Y;
 				if(player.channel && !ReturnTo)
 				{
-					projectile.position.X = player.Center.X + ovalArea.X - projectile.width/2;
-					projectile.position.Y = player.Center.Y + ovalArea.Y - projectile.height/2;
+					Projectile.position.X = player.Center.X + ovalArea.X - Projectile.width/2;
+					Projectile.position.Y = player.Center.Y + ovalArea.Y - Projectile.height/2;
 				}
 				else
 				{
 					ReturnTo = true;
 					Vector2 newVelocity = new Vector2(5, 0).RotatedBy(Math.Atan2(disY, disX));
-					projectile.velocity = newVelocity;
+					Projectile.velocity = newVelocity;
 					if(Math.Abs(disX) < 22f && Math.Abs(disY) < 22f)
 					{
-						projectile.Kill();
+						Projectile.Kill();
 					}
 				}
-				disX = player.Center.X - projectile.Center.X;
-				disY = player.Center.Y - projectile.Center.Y;
-				projectile.rotation = (float)Math.Atan2(disY, disX) + MathHelper.ToRadians(225f);
+				disX = player.Center.X - Projectile.Center.X;
+				disY = player.Center.Y - Projectile.Center.Y;
+				Projectile.rotation = (float)Math.Atan2(disY, disX) + MathHelper.ToRadians(225f);
 				spinSpeed = 1 + (2574f / distance);
 			}
 			counter += spinSpeed;
@@ -164,17 +164,17 @@ namespace SOTS.Projectiles.Celestial
 		int storeData2 = -1;
 		public override void PostAI()
 		{
-			if (storeData == -1 && projectile.owner == Main.myPlayer)
+			if (storeData == -1 && Projectile.owner == Main.myPlayer)
 			{
-				storeData = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, projectile.velocity.X, projectile.velocity.Y, mod.ProjectileType("PlasmaCutterTrail"), (int)(projectile.damage * 1f) + 1, projectile.knockBack * 0.5f, projectile.owner, 16, projectile.identity);
-				projectile.ai[1] = storeData;
-				projectile.netUpdate = true;
+				storeData = Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, Projectile.velocity.X, Projectile.velocity.Y, mod.ProjectileType("PlasmaCutterTrail"), (int)(Projectile.damage * 1f) + 1, Projectile.knockBack * 0.5f, Projectile.owner, 16, Projectile.identity);
+				Projectile.ai[1] = storeData;
+				Projectile.netUpdate = true;
 			}
-			if (storeData2 == -1 && projectile.owner == Main.myPlayer)
+			if (storeData2 == -1 && Projectile.owner == Main.myPlayer)
 			{
-				storeData2 = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, projectile.velocity.X, projectile.velocity.Y, mod.ProjectileType("PlasmaCutterTrail"), (int)(projectile.damage * 1f) + 1, projectile.knockBack * 0.5f, projectile.owner, -16, projectile.identity);
-				projectile.ai[0] = storeData2;
-				projectile.netUpdate = true;
+				storeData2 = Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, Projectile.velocity.X, Projectile.velocity.Y, mod.ProjectileType("PlasmaCutterTrail"), (int)(Projectile.damage * 1f) + 1, Projectile.knockBack * 0.5f, Projectile.owner, -16, Projectile.identity);
+				Projectile.ai[0] = storeData2;
+				Projectile.netUpdate = true;
 			}
 		}
         public override void SendExtraAI(BinaryWriter writer)

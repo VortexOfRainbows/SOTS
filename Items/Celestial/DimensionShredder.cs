@@ -63,9 +63,9 @@ namespace SOTS.Items.Celestial
 				for (int i = 0; i < Main.maxProjectiles; i++)
 				{
 					Projectile projectile = Main.projectile[i];
-					if (projectile.active && projectile.owner == player.whoAmI && projectile.type == ModContent.ProjectileType<DimensionalFlame>())
+					if (Projectile.active && Projectile.owner == player.whoAmI && Projectile.type == ModContent.ProjectileType<DimensionalFlame>())
 					{
-						Vector2 center = new Vector2(projectile.Center.X, projectile.Center.Y);
+						Vector2 center = new Vector2(Projectile.Center.X, Projectile.Center.Y);
 						Vector2 toCursor = Main.MouseWorld - center;
 						Vector2 toVelo = new Vector2((float)Math.Sqrt(speedX * speedX + speedY * speedY), 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-1, 1)) + toCursor.ToRotation());
 						Projectile.NewProjectile(center, toVelo, type, damage, knockBack, player.whoAmI);

@@ -211,7 +211,7 @@ namespace SOTS.NPCs.Boss.Curse
 				npc.velocity = goToPos * -length;
 			}
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
 			return false;
 		}

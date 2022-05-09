@@ -1,3 +1,4 @@
+using SOTS.Projectiles.Otherworld;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -14,7 +15,7 @@ namespace SOTS.Items.SoldStuff
 		public override void SetDefaults()
 		{
 			Item.damage = 1;
-			Item.ranged = true;
+			Item.DamageType = DamageClass.Ranged;
 			Item.width = 8;
 			Item.height = 20;
 			Item.maxStack = 999;
@@ -22,7 +23,7 @@ namespace SOTS.Items.SoldStuff
 			Item.knockBack = 2f;
 			Item.value = Item.buyPrice(0, 0, 0, 9);
 			Item.rare = ItemRarityID.Orange;
-			Item.shoot = mod.ProjectileType("BlackFlareShot"); 
+			Item.shoot = ModContent.ProjectileType<BlackFlareShot>(); 
 			Item.shootSpeed =  8f;             
 			Item.ammo = AmmoID.Flare;   
             Item.UseSound = SoundID.Item23;

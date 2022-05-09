@@ -201,7 +201,7 @@ namespace SOTS.NPCs
 				for (int w = -1; w < 2; w++)
 				{
 					Tile tile = Framing.GetTileSafely(i + k, j + w);
-					if (Main.tileSolid[tile.type] == true && tile.active() && Main.tileSolidTop[tile.type] == false)
+					if (Main.tileSolid[tile.TileType] == true && tile.active() && Main.tileSolidTop[tile.TileType] == false)
 					{
 						flag = true;
 					}

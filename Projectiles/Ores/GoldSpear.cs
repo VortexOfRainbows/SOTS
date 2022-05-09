@@ -11,10 +11,10 @@ namespace SOTS.Projectiles.Ores
 		}
         public override void SetDefaults()
         {
-            projectile.CloneDefaults(ProjectileID.TheRottedFork); //obsidian swordfish
+            Projectile.CloneDefaults(ProjectileID.TheRottedFork); //obsidian swordfish
             aiType = ProjectileID.TheRottedFork;
-            projectile.melee = true;
-			projectile.alpha = 0; 
+            Projectile.melee = true;
+			Projectile.alpha = 0; 
 		}
 	}
 }

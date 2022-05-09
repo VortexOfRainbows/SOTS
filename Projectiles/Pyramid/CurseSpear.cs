@@ -12,10 +12,10 @@ namespace SOTS.Projectiles.Pyramid
 		}
         public override void SetDefaults()
         {
-            projectile.CloneDefaults(64);
+            Projectile.CloneDefaults(64);
             aiType = 64;
-            projectile.melee = true;
-			projectile.alpha = 0; 
+            Projectile.melee = true;
+			Projectile.alpha = 0; 
 		}
         int counter = 0;
         public override void AI()
@@ -23,8 +23,8 @@ namespace SOTS.Projectiles.Pyramid
             counter++;
             if(counter == 10)
             {
-                if(Main.myPlayer == projectile.owner)
-                   Projectile.NewProjectile(projectile.Center, projectile.velocity, ModContent.ProjectileType<RubyBurst>(), projectile.damage, projectile.knockBack, projectile.owner);
+                if(Main.myPlayer == Projectile.owner)
+                   Projectile.NewProjectile(Projectile.Center, Projectile.velocity, ModContent.ProjectileType<RubyBurst>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
             }
         }
     }

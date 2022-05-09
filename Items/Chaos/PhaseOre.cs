@@ -14,7 +14,7 @@ namespace SOTS.Items.Chaos
 	{
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
-			Texture2D texture = Main.itemTexture[Item.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Item[Item.type].Value;
 			Color color = new Color(100, 100, 100, 0);
 			for (int k = 0; k < 4; k++)
 			{
@@ -26,9 +26,9 @@ namespace SOTS.Items.Chaos
 		}
 		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
 		{
-			Texture2D texture = Main.itemTexture[Item.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Item[Item.type].Value;
 			Color color = new Color(100, 100, 100, 0);
-			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, Item.height * 0.5f);
 			for (int k = 0; k < 4; k++)
 			{
 				Vector2 offset = new Vector2(3f, 0).RotatedBy(MathHelper.ToRadians(Main.GameUpdateCount * 3 + k * 90));
@@ -150,16 +150,16 @@ namespace SOTS.Items.Chaos
 			int playerN = closestPlayer(i, j, ref currentDistanceAway);
 			if (playerN == -1)
 			{
-				if (tile.frameY <= 72)
+				if (tile.TileFrameY <= 72)
 				{
-					tile.frameY += 90;
+					tile.TileFrameY += 90;
 				}
 				return;
 			}
 			float alphaScale = (float)Math.Pow(1.0f - currentDistanceAway / 196f, 0.5f);
 			if (alphaScale > 0.0)
             {
-				if(tile.frameY > 72)
+				if(tile.TileFrameY > 72)
                 {
 					for(int k = 0; k < 2; k++)
                     {
@@ -171,7 +171,7 @@ namespace SOTS.Items.Chaos
 						dust.alpha = 200;
 						dust.fadeIn = 0.1f;
 					}
-					tile.frameY -= 90;
+					tile.TileFrameY -= 90;
 				}
 				Texture2D texture = fill;
 				Texture2D texture2 = outline;
@@ -179,9 +179,9 @@ namespace SOTS.Items.Chaos
 				for (int k = 0; k < 5 * alphaScale; k++)
 				{
 					Vector2 offset = new Vector2(2.5f * offsetMult, 0).RotatedBy(MathHelper.ToRadians(Main.GameUpdateCount * 3 + k * 90 + degOff));
-					SOTSTile.DrawSlopedGlowMask(i, j, tile.type, texture2, new Color(100, 100, 100, 0) * alphaScale, k == 0 ? Vector2.Zero : offset, overrideFrame);
+					SOTSTile.DrawSlopedGlowMask(i, j, tile.TileType, texture2, new Color(100, 100, 100, 0) * alphaScale, k == 0 ? Vector2.Zero : offset, overrideFrame);
 					offset = new Vector2(1.5f * offsetMult, 0).RotatedBy(MathHelper.ToRadians(Main.GameUpdateCount * 3 + k * 90 + degOff));
-					SOTSTile.DrawSlopedGlowMask(i, j, tile.type, texture, new Color(90, 90, 90, 0) * alphaScale, k == 0 ? Vector2.Zero : offset, overrideFrame);
+					SOTSTile.DrawSlopedGlowMask(i, j, tile.TileType, texture, new Color(90, 90, 90, 0) * alphaScale, k == 0 ? Vector2.Zero : offset, overrideFrame);
 				}
 			}	
 		}

@@ -9,13 +9,13 @@ namespace SOTS.Projectiles.Base
 	{
 		public override void SetDefaults() //Do you enjoy how all my net sycning is done via projectiles?
 		{
-			projectile.alpha = 255;
-			projectile.timeLeft = 24;
-			projectile.friendly = false;
-			projectile.tileCollide = false;
-			projectile.netImportant = true;
-			projectile.width = 26;
-			projectile.height = 36;
+			Projectile.alpha = 255;
+			Projectile.timeLeft = 24;
+			Projectile.friendly = false;
+			Projectile.tileCollide = false;
+			Projectile.netImportant = true;
+			Projectile.width = 26;
+			Projectile.height = 36;
 		}
 		public override bool? CanCutTiles()
 		{
@@ -23,15 +23,15 @@ namespace SOTS.Projectiles.Base
 		}
 		public override void AI()
 		{
-			projectile.alpha = 255;
-			projectile.Kill();
+			Projectile.alpha = 255;
+			Projectile.Kill();
 		}
 		public override void Kill(int timeLeft)
 		{
-			if(projectile.ai[0] == 1)
-				SoundEngine.PlaySound(SoundLoader.customSoundType, (int)projectile.Center.X, (int)projectile.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/BlastDoorClose"), 1f, 0.0f);
+			if(Projectile.ai[0] == 1)
+				SoundEngine.PlaySound(SoundLoader.customSoundType, (int)Projectile.Center.X, (int)Projectile.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/BlastDoorClose"), 1f, 0.0f);
 			else
-				SoundEngine.PlaySound(SoundLoader.customSoundType, (int)projectile.Center.X, (int)projectile.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/BlastDoorOpen"), 1f, 0.0f);
+				SoundEngine.PlaySound(SoundLoader.customSoundType, (int)Projectile.Center.X, (int)Projectile.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Items/BlastDoorOpen"), 1f, 0.0f);
 		}
 	}
 }

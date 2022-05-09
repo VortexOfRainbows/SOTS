@@ -14,7 +14,7 @@ namespace SOTS.Items.Pyramid
 			Item.autoReuse = true;
 			Item.useAnimation = 15;
 			Item.useTime = 15;
-			Item.useStyle = 1;
+			Item.useStyle = ItemUseStyleID.Swing;
 			Item.rare = ItemRarityID.Blue;
 			Item.consumable = true;
 			Item.createTile = ModContent.TileType<PyramidChestTile>();

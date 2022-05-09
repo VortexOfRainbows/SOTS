@@ -74,7 +74,7 @@ namespace SOTS
 			if(Framing.GetTileSafely(i, j).active())
             {
 				Tile tile = Framing.GetTileSafely(i, j);
-				if(tile.type == ModContent.TileType<NaturePlatingBlastDoorTileOpen>() || tile.type == ModContent.TileType<EarthenPlatingBlastDoorTileOpen>())
+				if(tile.TileType == ModContent.TileType<NaturePlatingBlastDoorTileOpen>() || tile.TileType == ModContent.TileType<EarthenPlatingBlastDoorTileOpen>())
 					return true;
             }
 			return orig(i, j, forced);
@@ -236,7 +236,7 @@ namespace SOTS
 			if (!Main.dedServ)
 			{
 				Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
-				for (int i = 0; i < Main.projectile.Length; i++)
+				for (int i = 0; i < Main.Projectile.Length; i++)
 				{
 					Projectile proj = Main.projectile[i];
 					if (proj.active && proj.modProjectile is HoloPlatform hPlatform)
@@ -288,7 +288,7 @@ namespace SOTS
 			if (!Main.dedServ)
 			{
 				Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
-				for (int i = 0; i < Main.projectile.Length; i++)
+				for (int i = 0; i < Main.Projectile.Length; i++)
 				{
 					Projectile proj = Main.projectile[i];
 					if (proj.active && proj.modProjectile is IOrbitingProj modProj && modProj.inFront)

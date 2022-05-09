@@ -21,14 +21,14 @@ namespace SOTS.Projectiles.Tide
 		}
 		public override void SetDefaults()
         {
-            projectile.width = 18;
-            projectile.height = 18;
-			projectile.ranged = true;
-			projectile.friendly = true;
-            projectile.hostile = false; 
-			projectile.timeLeft = 60;
-			projectile.alpha = 0;
-			projectile.penetrate = 1;
+            Projectile.width = 18;
+            Projectile.height = 18;
+			Projectile.ranged = true;
+			Projectile.friendly = true;
+            Projectile.hostile = false; 
+			Projectile.timeLeft = 60;
+			Projectile.alpha = 0;
+			Projectile.penetrate = 1;
 		}
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
         {
@@ -45,91 +45,91 @@ namespace SOTS.Projectiles.Tide
 		{
 			if(runOnce)
             {
-				if (projectile.ai[0] >= 3)
+				if (Projectile.ai[0] >= 3)
 				{
-					projectile.friendly = true;
+					Projectile.friendly = true;
 				}
 				else
                 {
-					projectile.friendly = false;
+					Projectile.friendly = false;
                 }
 				runOnce = false;
-				projectile.ai[1] = Main.rand.Next(24);
-				projectile.netUpdate = true;
+				Projectile.ai[1] = Main.rand.Next(24);
+				Projectile.netUpdate = true;
             }
-			float scaleMod = projectile.ai[0];
+			float scaleMod = Projectile.ai[0];
 			if (scaleMod < 0) scaleMod = 0;
 
-			projectile.scale = 0.6f + 0.5f * scaleMod / 3f;
-			projectile.rotation += projectile.velocity.X * 0.1f;
-			if(projectile.timeLeft < 30 + projectile.ai[1] - (scaleMod / 3 * 20))
+			Projectile.scale = 0.6f + 0.5f * scaleMod / 3f;
+			Projectile.rotation += Projectile.velocity.X * 0.1f;
+			if(Projectile.timeLeft < 30 + Projectile.ai[1] - (scaleMod / 3 * 20))
             {
-				projectile.Kill();
+				Projectile.Kill();
             }
-			projectile.velocity.X *= 0.99f;
-			projectile.velocity.Y += 0.09f * projectile.scale;
+			Projectile.velocity.X *= 0.99f;
+			Projectile.velocity.Y += 0.09f * Projectile.scale;
 			return true;
 		}
 		public override void AI()
         {
 			for(int i = 0; i < 2; i++)
 			{
-				Vector2 circularPos = new Vector2(7, -7).RotatedBy(projectile.rotation) * projectile.scale;
-				int num1 = Dust.NewDust(new Vector2(projectile.Center.X, projectile.Center.Y) + circularPos - new Vector2(5), 0, 0, DustID.Fire);
+				Vector2 circularPos = new Vector2(7, -7).RotatedBy(Projectile.rotation) * Projectile.scale;
+				int num1 = Dust.NewDust(new Vector2(Projectile.Center.X, Projectile.Center.Y) + circularPos - new Vector2(5), 0, 0, DustID.Fire);
 				Main.dust[num1].noGravity = true;
 				Main.dust[num1].velocity *= 0.1f;
-				Main.dust[num1].scale = projectile.scale + 0.2f;
+				Main.dust[num1].scale = Projectile.scale + 0.2f;
 			}
 		}
 		public override void Kill(int timeLeft)
 		{
-			SoundEngine.PlaySound(SoundID.Item14, (int)projectile.Center.X, (int)projectile.Center.Y);
-			Player owner = Main.player[projectile.owner];
+			SoundEngine.PlaySound(SoundID.Item14, (int)Projectile.Center.X, (int)Projectile.Center.Y);
+			Player owner = Main.player[Projectile.owner];
             SOTSPlayer modPlayer = (SOTSPlayer)owner.GetModPlayer(mod, "SOTSPlayer");
-			int RandMod = (int)projectile.ai[0];
+			int RandMod = (int)Projectile.ai[0];
 			for (int i = 0; i < 10 + RandMod * 2; i++)
 			{
-				int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y) - new Vector2(5), projectile.width, projectile.height, DustID.Fire);
-				Main.dust[num1].velocity *= 1.8f * (0.2f + 0.7f * projectile.scale);
-				Main.dust[num1].scale = projectile.scale + 0.6f;
+				int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, DustID.Fire);
+				Main.dust[num1].velocity *= 1.8f * (0.2f + 0.7f * Projectile.scale);
+				Main.dust[num1].scale = Projectile.scale + 0.6f;
 			}
 			for (int i = 0; i < 10 + RandMod * 2; i++)
 			{
-				int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y) - new Vector2(5), projectile.width, projectile.height, 212);
-				Main.dust[num1].velocity *= 1.6f * (0.2f + 0.7f * projectile.scale);
-				Main.dust[num1].scale = projectile.scale * 0.8f + 0.5f;
+				int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, 212);
+				Main.dust[num1].velocity *= 1.6f * (0.2f + 0.7f * Projectile.scale);
+				Main.dust[num1].scale = Projectile.scale * 0.8f + 0.5f;
 			}
 			for (int i = 0; i < 5 + RandMod; i++)
 			{
-				int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y) - new Vector2(5), projectile.width, projectile.height, DustID.t_BorealWood);
-				Main.dust[num1].velocity *= 1.4f * (0.2f + 0.6f * projectile.scale);
-				Main.dust[num1].scale = projectile.scale * 0.8f + 0.5f;
+				int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, DustID.t_BorealWood);
+				Main.dust[num1].velocity *= 1.4f * (0.2f + 0.6f * Projectile.scale);
+				Main.dust[num1].scale = Projectile.scale * 0.8f + 0.5f;
 			}
-			if (projectile.owner == Main.myPlayer)
+			if (Projectile.owner == Main.myPlayer)
 			{
-				Vector2 randVelo = new Vector2(Main.rand.NextFloat(1, 3 * projectile.scale), 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)));
-				randVelo += projectile.velocity.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(-10, 3) * 0.2f;
+				Vector2 randVelo = new Vector2(Main.rand.NextFloat(1, 3 * Projectile.scale), 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)));
+				randVelo += Projectile.velocity.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(-10, 3) * 0.2f;
 				randVelo.Y -= 1.4f;
-				if (projectile.ai[0] > 0 || Main.rand.NextBool(20 - RandMod))
+				if (Projectile.ai[0] > 0 || Main.rand.NextBool(20 - RandMod))
 				{
-					Projectile.NewProjectile(projectile.Center, randVelo, projectile.type, projectile.damage, projectile.knockBack * 0.8f, projectile.owner, projectile.ai[0] - 1f);
+					Projectile.NewProjectile(Projectile.Center, randVelo, Projectile.type, Projectile.damage, Projectile.knockBack * 0.8f, Projectile.owner, Projectile.ai[0] - 1f);
 					bool triple = false;
-					if ((projectile.ai[0] > 2) || Main.rand.NextBool(40 - RandMod))
+					if ((Projectile.ai[0] > 2) || Main.rand.NextBool(40 - RandMod))
 					{
 						triple = true;
-						Projectile.NewProjectile(projectile.Center, randVelo.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-90, 90) + 240)) * Main.rand.NextFloat(0.8f, 1.2f), projectile.type, projectile.damage, projectile.knockBack * 0.6f, projectile.owner, projectile.ai[0] - 1f);
+						Projectile.NewProjectile(Projectile.Center, randVelo.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-90, 90) + 240)) * Main.rand.NextFloat(0.8f, 1.2f), Projectile.type, Projectile.damage, Projectile.knockBack * 0.6f, Projectile.owner, Projectile.ai[0] - 1f);
 					}
-					if ((projectile.ai[0] > 1 && Main.rand.NextBool(3)) || Main.rand.NextBool(30 - RandMod))
+					if ((Projectile.ai[0] > 1 && Main.rand.NextBool(3)) || Main.rand.NextBool(30 - RandMod))
 					{
 						float num = 180;
 						if (!triple)
 							num = 120;
-						Projectile.NewProjectile(projectile.Center, randVelo.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-90, 90) + num)) * Main.rand.NextFloat(0.8f, 1.2f), projectile.type, projectile.damage, projectile.knockBack * 0.7f, projectile.owner, projectile.ai[0] - 1);
+						Projectile.NewProjectile(Projectile.Center, randVelo.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-90, 90) + num)) * Main.rand.NextFloat(0.8f, 1.2f), Projectile.type, Projectile.damage, Projectile.knockBack * 0.7f, Projectile.owner, Projectile.ai[0] - 1);
 					}
 				}
 				for(int i = 0; i < Main.rand.Next(1, 4); i++)
 				{
-					Projectile.NewProjectile(projectile.Center, new Vector2(5, 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360))) * Main.rand.NextFloat(0.8f, 1.2f) + new Vector2(0, -3), ModContent.ProjectileType<CoconutShrapnel>(), projectile.damage, projectile.knockBack * 0.7f, projectile.owner);
+					Projectile.NewProjectile(Projectile.Center, new Vector2(5, 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360))) * Main.rand.NextFloat(0.8f, 1.2f) + new Vector2(0, -3), ModContent.ProjectileType<CoconutShrapnel>(), Projectile.damage, Projectile.knockBack * 0.7f, Projectile.owner);
 				}
 			}		
         }

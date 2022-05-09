@@ -27,7 +27,7 @@ namespace SOTS.Items
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
 			UpgradeFrame();
-			Texture2D texture = Main.itemTexture[Item.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Item[Item.type].Value;
 			Color color = new Color(100, 100, 100, 0);
 			Texture2D texture2 = (Texture2D)ModContent.Request<Texture2D>("SOTS/Items/ElectromagneticDeterrentGlow");
 			Main.spriteBatch.Draw(texture, position, new Rectangle(0, 30 * this.frame, 54, 30), drawColor, 0f, origin, scale, SpriteEffects.None, 0f);
@@ -40,10 +40,10 @@ namespace SOTS.Items
 		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
 		{
 			UpgradeFrame();
-			Texture2D texture = Main.itemTexture[Item.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Item[Item.type].Value;
 			Texture2D texture2 = (Texture2D)ModContent.Request<Texture2D>("SOTS/Items/ElectromagneticDeterrentGlow");
 			Color color = new Color(100, 100, 100, 0);
-			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, Item.height * 0.5f);
 			Main.spriteBatch.Draw(texture, Item.Center - Main.screenPosition, new Rectangle(0, 30 * this.frame, 54, 30), lightColor, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			for (int k = 0; k < 3; k++)
 			{

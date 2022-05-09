@@ -16,29 +16,29 @@ namespace SOTS.Projectiles.Nature
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Squirrel");
-			Main.projFrames[projectile.type] = 6;
-			ProjectileID.Sets.MinionTargettingFeature[projectile.type] = true;
+			Main.projFrames[Projectile.type] = 6;
+			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
 
-			Main.projPet[projectile.type] = true;
-			ProjectileID.Sets.MinionSacrificable[projectile.type] = true;
+			Main.projPet[Projectile.type] = true;
+			ProjectileID.Sets.MinionSacrificable[Projectile.type] = true;
 			// Don't mistake this with "if this is true, then it will automatically home". It is just for damage reduction for certain NPCs
-			ProjectileID.Sets.Homing[projectile.type] = true;
+			ProjectileID.Sets.Homing[Projectile.type] = true;
 		}
 
 		public sealed override void SetDefaults()
 		{
-			projectile.CloneDefaults(393); //pirate
+			Projectile.CloneDefaults(393); //pirate
             aiType = 393; 
-			projectile.width = 50;
-			projectile.height = 32;
-			projectile.tileCollide = true;
+			Projectile.width = 50;
+			Projectile.height = 32;
+			Projectile.tileCollide = true;
 			drawOriginOffsetY = 2;
-			projectile.friendly = true;
-			projectile.minion = true;
-			projectile.minionSlots = 1f;
-			projectile.penetrate = -1;
-			projectile.usesLocalNPCImmunity = true;
-			projectile.localNPCHitCooldown = 20;
+			Projectile.friendly = true;
+			Projectile.minion = true;
+			Projectile.minionSlots = 1f;
+			Projectile.penetrate = -1;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = 20;
 		}
 		public override bool? CanCutTiles()
 		{
@@ -50,25 +50,25 @@ namespace SOTS.Projectiles.Nature
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-			Player player = Main.player[projectile.owner];
-			projectile.localNPCImmunity[target.whoAmI] = projectile.localNPCHitCooldown;
-			target.immune[projectile.owner] = 0;
-			if (projectile.velocity.X > 0) 
+			Player player = Main.player[Projectile.owner];
+			Projectile.localNPCImmunity[target.whoAmI] = Projectile.localNPCHitCooldown;
+			target.immune[Projectile.owner] = 0;
+			if (Projectile.velocity.X > 0) 
 			{
-				projectile.velocity.X += 2.4f;
+				Projectile.velocity.X += 2.4f;
 			}
-			if(projectile.velocity.X < 0) 
+			if(Projectile.velocity.X < 0) 
 			{
-				projectile.velocity.X -= 2.4f;
+				Projectile.velocity.X -= 2.4f;
 			}
-			if(Math.Abs(projectile.velocity.X) > 20f)
+			if(Math.Abs(Projectile.velocity.X) > 20f)
 			{
-				projectile.velocity.X *= 0.5f;
+				Projectile.velocity.X *= 0.5f;
 			}
-			if(projectile.velocity.X == 0)
+			if(Projectile.velocity.X == 0)
 			{
-				projectile.velocity.X += Main.rand.Next(-5,6);
-				projectile.velocity.X *= 1.15f;
+				Projectile.velocity.X += Main.rand.Next(-5,6);
+				Projectile.velocity.X *= 1.15f;
 			}
 		}
 		int frame = 0;
@@ -76,15 +76,15 @@ namespace SOTS.Projectiles.Nature
 		int ai1 = 0;
 		public override void AI() 
 		{
-			projectile.netUpdate = true;
-			float veloX = projectile.velocity.X;
-			float veloY = projectile.velocity.Y;
+			Projectile.netUpdate = true;
+			float veloX = Projectile.velocity.X;
+			float veloY = Projectile.velocity.Y;
 			
 			if(Math.Abs(veloX) > 20f)
 			{
-				projectile.velocity.X *= 0.9f;
+				Projectile.velocity.X *= 0.9f;
 			}
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			counter++;
 			#region Active check
 			if (player.dead || !player.active) 
@@ -93,7 +93,7 @@ namespace SOTS.Projectiles.Nature
 			}
 			if (player.HasBuff(mod.BuffType("SquirrelBuff")))
 			{
-				projectile.timeLeft = 2;
+				Projectile.timeLeft = 2;
 			}
 			#endregion
 			if(Math.Abs(veloX) > 0.3f)
@@ -103,7 +103,7 @@ namespace SOTS.Projectiles.Nature
 				if (counter >= frameSpeed) {
 					counter = 0;
 					frame++;
-					if (frame >= Main.projFrames[projectile.type]) {
+					if (frame >= Main.projFrames[Projectile.type]) {
 						frame = 1;
 					}
 				}
@@ -113,11 +113,11 @@ namespace SOTS.Projectiles.Nature
 				frame = 0;
 			}
 			
-			projectile.frame = frame;
+			Projectile.frame = frame;
 		}	
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{
-			projectile.ai[0] = 0;
+			Projectile.ai[0] = 0;
 			return false;
 		}
 	}

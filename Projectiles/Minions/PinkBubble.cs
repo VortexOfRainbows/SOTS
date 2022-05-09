@@ -12,20 +12,20 @@ namespace SOTS.Projectiles.Minions
 		}
         public override void SetDefaults()
         {
-			projectile.height = 4;
-			projectile.width = 4;
-			projectile.friendly = true;
-			projectile.timeLeft = 120;
-			projectile.tileCollide = false;
-			projectile.hostile = false;
-			projectile.minion = true;
-			projectile.alpha = 255;
-			projectile.penetrate = 1;
-			projectile.extraUpdates = 2;
+			Projectile.height = 4;
+			Projectile.width = 4;
+			Projectile.friendly = true;
+			Projectile.timeLeft = 120;
+			Projectile.tileCollide = false;
+			Projectile.hostile = false;
+			Projectile.minion = true;
+			Projectile.alpha = 255;
+			Projectile.penetrate = 1;
+			Projectile.extraUpdates = 2;
 		}
 		public override void ModifyDamageHitbox(ref Rectangle hitbox)
 		{
-			hitbox = new Rectangle((int)projectile.position.X - projectile.width, (int)projectile.position.Y - projectile.height, projectile.width * 3, projectile.height * 3);
+			hitbox = new Rectangle((int)Projectile.position.X - Projectile.width, (int)Projectile.position.Y - Projectile.height, Projectile.width * 3, Projectile.height * 3);
 		}
 		public override void Kill(int timeLeft)
         {
@@ -33,13 +33,13 @@ namespace SOTS.Projectiles.Minions
 			{
 				Vector2 circularLocation = new Vector2(-6, 0).RotatedBy(MathHelper.ToRadians(i));
 				
-				int num1 = Dust.NewDust(new Vector2(projectile.Center.X + circularLocation.X - 4, projectile.Center.Y + circularLocation.Y - 4), 4, 4, mod.DustType("BigPinkDust"));
+				int num1 = Dust.NewDust(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, mod.DustType("BigPinkDust"));
 				Main.dust[num1].noGravity = true;
 				Main.dust[num1].scale = 0.75f;
 				Main.dust[num1].velocity = circularLocation * 0.45f;
 
 				circularLocation = new Vector2(-6, 0).RotatedBy(MathHelper.ToRadians(i + 10));
-				num1 = Dust.NewDust(new Vector2(projectile.Center.X + circularLocation.X - 4, projectile.Center.Y + circularLocation.Y - 4), 4, 4, 72);
+				num1 = Dust.NewDust(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, 72);
 				Main.dust[num1].noGravity = true;
 				Main.dust[num1].scale = 1.25f;
 				Main.dust[num1].velocity = circularLocation * 0.45f;
@@ -47,12 +47,12 @@ namespace SOTS.Projectiles.Minions
 		}
 		public override void AI()
 		{
-			int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, mod.DustType("BigPinkDust"));
+			int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, mod.DustType("BigPinkDust"));
 			Main.dust[num1].noGravity = true;
 			Main.dust[num1].scale = 0.75f;
 			Main.dust[num1].velocity *= 0.7f;
 
-			num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 72);
+			num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 72);
 			Main.dust[num1].noGravity = true;
 			Main.dust[num1].scale = 1.25f;
 			Main.dust[num1].velocity *= 0.7f;

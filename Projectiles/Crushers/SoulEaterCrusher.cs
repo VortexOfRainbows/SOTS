@@ -11,8 +11,8 @@ namespace SOTS.Projectiles.Crushers
 		}
 		public override void SafeSetDefaults()
         {
-			projectile.width = 24;
-			projectile.height = 24;
+			Projectile.width = 24;
+			Projectile.height = 24;
 			maxDamage = 10;
 			chargeTime = 150;
 			minExplosions = 2;

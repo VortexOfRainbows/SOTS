@@ -75,7 +75,7 @@ namespace SOTS.Items.Slime
 		public override void SafeSetDefaults()
 		{
             Item.damage = 50;  
-            Item.magic = true;  
+            Item.DamageType = DamageClass.Magic;  
             Item.width = 44;    
             Item.height = 44;   
             Item.useTime = 40;
@@ -108,7 +108,7 @@ namespace SOTS.Items.Slime
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
 			bool summon = true;
-			for (int l = 0; l < Main.projectile.Length; l++)
+			for (int l = 0; l < Main.Projectile.Length; l++)
 			{
 				Projectile proj = Main.projectile[l];
 				if (proj.active && proj.type == Item.shoot && Main.player[proj.owner] == player)

@@ -21,10 +21,10 @@ namespace SOTS.Items.Pyramid
 			Item.height = 50;
 			Item.useTime = 20;
 			Item.useAnimation = 20;
-			Item.useStyle = 5;
+			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.knockBack = 5;
 			Item.value = Item.sellPrice(0, 1, 20, 0);
-			Item.rare = 3;
+			Item.rare = ItemRarityID.Orange;
 			Item.UseSound = SoundID.Item1;
 			Item.autoReuse = true;
 			Item.shoot = mod.ProjectileType("PyramidSpear");

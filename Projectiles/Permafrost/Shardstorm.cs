@@ -15,14 +15,14 @@ namespace SOTS.Projectiles.Permafrost
 	{
 		public override void SendExtraAI(BinaryWriter writer)
 		{
-			writer.Write(projectile.tileCollide);
-			writer.Write(projectile.friendly);
+			writer.Write(Projectile.tileCollide);
+			writer.Write(Projectile.friendly);
 			writer.Write(endHow);
 		}
 		public override void ReceiveExtraAI(BinaryReader reader)
 		{
-			projectile.tileCollide = reader.ReadBoolean();
-			projectile.friendly = reader.ReadBoolean();
+			Projectile.tileCollide = reader.ReadBoolean();
+			Projectile.friendly = reader.ReadBoolean();
 			endHow = reader.ReadInt32();
 		}
 		int count = 0;
@@ -32,34 +32,34 @@ namespace SOTS.Projectiles.Permafrost
 		}
         public override void SetDefaults()
         {
-			projectile.aiStyle = 0;
-			projectile.width = 44;
-			projectile.height = 28;
-			projectile.penetrate = -1;
-			projectile.friendly = false;
-			projectile.hostile = false;
-			projectile.timeLeft = 37;
-			projectile.tileCollide = false;
-			projectile.magic = true;
-			projectile.alpha = 255;
-			projectile.usesLocalNPCImmunity = true;
-			projectile.localNPCHitCooldown = 100;
+			Projectile.aiStyle = 0;
+			Projectile.width = 44;
+			Projectile.height = 28;
+			Projectile.penetrate = -1;
+			Projectile.friendly = false;
+			Projectile.hostile = false;
+			Projectile.timeLeft = 37;
+			Projectile.tileCollide = false;
+			Projectile.magic = true;
+			Projectile.alpha = 255;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = 100;
 		}
 		public override void ModifyDamageHitbox(ref Rectangle hitbox)
 		{
 			int width = 24;
 			if (endHow == 1)
 				width = 96;
-				hitbox = new Rectangle((int)(projectile.Center.X - width), (int)(projectile.Center.Y - width), width * 2, width * 2);
+				hitbox = new Rectangle((int)(Projectile.Center.X - width), (int)(Projectile.Center.Y - width), width * 2, width * 2);
 		}
 		public override Color? GetAlpha(Color lightColor)
 		{
-			return Color.White * ((255f - projectile.alpha) / 255f);
+			return Color.White * ((255f - Projectile.alpha) / 255f);
 		}
 		public void checkPos()
 		{
 			float iterator = 0f;
-			Vector2 current = projectile.Center;
+			Vector2 current = Projectile.Center;
 			for (int i = 0; i < trailPos.Length; i++)
 			{
 				Vector2 previousPosition = trailPos[i];
@@ -69,11 +69,11 @@ namespace SOTS.Projectiles.Permafrost
 				}
 			}
 			if (iterator >= trailPos.Length)
-				projectile.Kill();
+				Projectile.Kill();
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.immune[projectile.owner] = 0; 
+            target.immune[Projectile.owner] = 0; 
 			triggerStop();
 		}
 		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
@@ -93,25 +93,25 @@ namespace SOTS.Projectiles.Permafrost
 			if (endHow != 0)
 				return;
 			endHow = 1;
-			projectile.tileCollide = false;
-			projectile.velocity *= 0f;
-			projectile.netUpdate = true;
-			projectile.ai[0] = -1;
+			Projectile.tileCollide = false;
+			Projectile.velocity *= 0f;
+			Projectile.netUpdate = true;
+			Projectile.ai[0] = -1;
 			
 		}
-		public void TrailPreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public void TrailPreDraw(ref Color lightColor)
 		{
-			if (projectile.ai[0] == 0)
+			if (Projectile.ai[0] == 0)
 				return;
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Permafrost/ShardstormTrail").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			Vector2 previousPosition = projectile.Center;
+			Vector2 previousPosition = Projectile.Center;
 			float drawAmt = 1f;
 			if (SOTS.Config.lowFidelityMode)
 				drawAmt = 0.5f;
 			for (int k = 0; k < trailPos.Length; k++)
 			{
-				float scale = projectile.scale * 1.25f * (trailPos.Length - k) / (float)trailPos.Length;
+				float scale = Projectile.scale * 1.25f * (trailPos.Length - k) / (float)trailPos.Length;
 				if (trailPos[k] == Vector2.Zero)
 				{
 					break;
@@ -134,7 +134,7 @@ namespace SOTS.Projectiles.Permafrost
 							x = 0;
 							y = 0;
 						}
-						if (trailPos[k] != projectile.Center)
+						if (trailPos[k] != Projectile.Center)
 							spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, betweenPositions.ToRotation(), drawOrigin, scale, SpriteEffects.None, 0f);
 					}
 				}
@@ -144,7 +144,7 @@ namespace SOTS.Projectiles.Permafrost
 		Vector2[] trailPos = new Vector2[10];
 		public void cataloguePos()
 		{
-			Vector2 current = projectile.Center;
+			Vector2 current = Projectile.Center;
 			for (int i = 0; i < trailPos.Length; i++)
 			{
 				Vector2 previousPosition = trailPos[i];
@@ -152,7 +152,7 @@ namespace SOTS.Projectiles.Permafrost
 				current = previousPosition;
 			}
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
 			TrailPreDraw(spriteBatch, lightColor);
 			return endHow == 0;
@@ -166,39 +166,39 @@ namespace SOTS.Projectiles.Permafrost
 				{
 					trailPos[i] = Vector2.Zero;
 				}
-				projectile.netUpdate = true;
+				Projectile.netUpdate = true;
 				runOnce = false;
 			}
-			Player player = Main.player[projectile.owner];
-			Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 0.3f / 255f, (255 - projectile.alpha) * 0.1f / 255f, (255 - projectile.alpha) * 0.9f / 255f);
-			if(projectile.ai[0] == 0)
+			Player player = Main.player[Projectile.owner];
+			Lighting.AddLight(Projectile.Center, (255 - Projectile.alpha) * 0.3f / 255f, (255 - Projectile.alpha) * 0.1f / 255f, (255 - Projectile.alpha) * 0.9f / 255f);
+			if(Projectile.ai[0] == 0)
 			{
 				count++;
 				if (count % 3 == 0) //will activate 12 times
 				{
-					Vector2 stormPos = projectile.Center - new Vector2(348, 0).RotatedBy(MathHelper.ToRadians((projectile.whoAmI + count) * 15));
+					Vector2 stormPos = Projectile.Center - new Vector2(348, 0).RotatedBy(MathHelper.ToRadians((Projectile.whoAmI + count) * 15));
 					SoundEngine.PlaySound(SoundID.Item44, (int)stormPos.X, (int)stormPos.Y);
-					if(Main.myPlayer == projectile.owner)
-						Projectile.NewProjectile(stormPos, Vector2.Zero, projectile.type, projectile.damage, projectile.knockBack, player.whoAmI, 1, (float)(MathHelper.ToRadians(180) + MathHelper.ToRadians((projectile.whoAmI + count) * 15)));
+					if(Main.myPlayer == Projectile.owner)
+						Projectile.NewProjectile(stormPos, Vector2.Zero, Projectile.type, Projectile.damage, Projectile.knockBack, player.whoAmI, 1, (float)(MathHelper.ToRadians(180) + MathHelper.ToRadians((Projectile.whoAmI + count) * 15)));
 				}
 			}
 			else
 			{
 				cataloguePos();
 				checkPos();
-				projectile.timeLeft = projectile.timeLeft < 100 ? 720 : projectile.timeLeft;
-				if (projectile.timeLeft >= 702)
+				Projectile.timeLeft = Projectile.timeLeft < 100 ? 720 : Projectile.timeLeft;
+				if (Projectile.timeLeft >= 702)
 				{
-					projectile.alpha -= 15;
-					projectile.ai[1] += MathHelper.ToRadians(10);
-					projectile.velocity = new Vector2(8, 0).RotatedBy(projectile.ai[1]);
+					Projectile.alpha -= 15;
+					Projectile.ai[1] += MathHelper.ToRadians(10);
+					Projectile.velocity = new Vector2(8, 0).RotatedBy(Projectile.ai[1]);
 				}
-				else if (projectile.ai[0] == -1)
+				else if (Projectile.ai[0] == -1)
 				{
-					Vector2 position = projectile.Center;
+					Vector2 position = Projectile.Center;
 					float veloM = 1f;
 					int num = 30;
-					if(projectile.alpha < 245)
+					if(Projectile.alpha < 245)
 					{
 						SoundEngine.PlaySound(SoundID.Item, (int)position.X, (int)position.Y, 14, 0.7f, 0.1f);
 					}
@@ -209,10 +209,10 @@ namespace SOTS.Projectiles.Permafrost
 					}
 					for (int i = 0; i < num; i++)
 					{
-						int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y) - new Vector2(5), projectile.width, projectile.height, mod.DustType("CopyDust4"));
+						int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, mod.DustType("CopyDust4"));
 						Dust dust = Main.dust[num1];
 						dust.velocity *= 2.75f * veloM;
-						dust.velocity += projectile.velocity * 0.15f * veloM;
+						dust.velocity += Projectile.velocity * 0.15f * veloM;
 						dust.noGravity = true;
 						dust.scale += 0.5f * veloM;
 						dust.color = new Color(183, 218, 249, 100);
@@ -220,29 +220,29 @@ namespace SOTS.Projectiles.Permafrost
 						dust.scale *= 1.74f;
 						dust.alpha = 100;
 					}
-					projectile.ai[0]--;
+					Projectile.ai[0]--;
 				}
-				else if(projectile.ai[0] == 1)
+				else if(Projectile.ai[0] == 1)
 				{
-					if(projectile.timeLeft <= 675)
+					if(Projectile.timeLeft <= 675)
 					{
-						projectile.tileCollide = true;
+						Projectile.tileCollide = true;
 					}
 					else if(endHow == 0)
 					{
-						projectile.timeLeft--;
-						projectile.friendly = true;
-						projectile.velocity = new Vector2(24, 0).RotatedBy(projectile.ai[1]);
+						Projectile.timeLeft--;
+						Projectile.friendly = true;
+						Projectile.velocity = new Vector2(24, 0).RotatedBy(Projectile.ai[1]);
 					}
-					projectile.alpha += 6;
+					Projectile.alpha += 6;
 				}
-				if (projectile.alpha > 255)
+				if (Projectile.alpha > 255)
 				{
-					projectile.alpha = 255;
+					Projectile.alpha = 255;
 					triggerStop();
 				}
 			}
-			projectile.rotation = projectile.ai[1];
+			Projectile.rotation = Projectile.ai[1];
 		}
 	}
 }

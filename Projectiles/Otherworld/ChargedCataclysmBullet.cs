@@ -16,37 +16,37 @@ namespace SOTS.Projectiles.Otherworld
 		}
 		public override void SetDefaults()
 		{
-			projectile.width = 14;
-			projectile.height = 14;
-			projectile.hostile = false;
-			projectile.friendly = true;
-			projectile.ranged = true;
-			projectile.timeLeft = 3600;
-			projectile.tileCollide = false;
-			projectile.penetrate = -1;
-			projectile.alpha = 120;
-			projectile.scale = 1f;
+			Projectile.width = 14;
+			Projectile.height = 14;
+			Projectile.hostile = false;
+			Projectile.friendly = true;
+			Projectile.ranged = true;
+			Projectile.timeLeft = 3600;
+			Projectile.tileCollide = false;
+			Projectile.penetrate = -1;
+			Projectile.alpha = 120;
+			Projectile.scale = 1f;
 		}
         public override bool? CanHitNPC(NPC target)
         {
 			return false;
         }
         Vector2[] trailPos = new Vector2[200];
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
 			if (runOnce)
 				return false;
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Otherworld/CataclysmTrail").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			Vector2 previousPosition = projectile.Center;
-			Color color = new Color(255, 100, 100, 0) * ((255 - projectile.alpha) / 255f);
+			Vector2 previousPosition = Projectile.Center;
+			Color color = new Color(255, 100, 100, 0) * ((255 - Projectile.alpha) / 255f);
 			for (int k = 0; k < trailPos.Length; k++)
 			{
 				if (trailPos[k] == Vector2.Zero)
 				{
 					return false;
 				}
-				float scale = projectile.scale;
+				float scale = Projectile.scale;
 				Vector2 drawPos = trailPos[k] - Main.screenPosition;
 				Vector2 currentPos = trailPos[k];
 				Vector2 betweenPositions = previousPosition - currentPos;
@@ -63,7 +63,7 @@ namespace SOTS.Projectiles.Otherworld
 							x = 0;
 							y = 0;
 						}
-						if (trailPos[k] != projectile.Center)
+						if (trailPos[k] != Projectile.Center)
 							Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, betweenPositions.ToRotation() + MathHelper.ToRadians(90), drawOrigin, scale, SpriteEffects.None, 0f);
 					}
 				}
@@ -86,8 +86,8 @@ namespace SOTS.Projectiles.Otherworld
 		{
 			if (runOnce)
 			{
-				projectile.position += projectile.velocity.SafeNormalize(Vector2.Zero) * 24;
-				SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 94, 0.6f);
+				Projectile.position += Projectile.velocity.SafeNormalize(Vector2.Zero) * 24;
+				SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 94, 0.6f);
 				for (int i = 0; i < randStorage.Length; i++)
 				{
 					randStorage[i] = Main.rand.Next(-55, 56);
@@ -96,13 +96,13 @@ namespace SOTS.Projectiles.Otherworld
 				{
 					trailPos[i] = Vector2.Zero;
 				}
-				originalVelo = projectile.velocity.SafeNormalize(Vector2.Zero) * 8f;
-				originalPos = projectile.Center;
+				originalVelo = Projectile.velocity.SafeNormalize(Vector2.Zero) * 8f;
+				originalPos = Projectile.Center;
 				runOnce = false;
 			}
 
 			Vector2 temp = originalPos;
-			addPos = projectile.Center;
+			addPos = Projectile.Center;
 			for (int i = 0; i < dist; i ++)
 			{
 				bool collided = false;
@@ -134,15 +134,15 @@ namespace SOTS.Projectiles.Otherworld
 					NPC npc = Main.npc[n];
 					if (npc.active && npc.Hitbox.Intersects(new Rectangle((int)addPos.X - 12, (int)addPos.Y - 12, 24, 24)) && !npc.friendly && !npc.dontTakeDamage)
 					{
-						if (projectile.owner == Main.myPlayer && projectile.friendly)
+						if (Projectile.owner == Main.myPlayer && Projectile.friendly)
 						{
-							Projectile proj = Main.projectile[Projectile.NewProjectile(addPos.X, addPos.Y, projectile.velocity.X, projectile.velocity.Y, ModContent.ProjectileType<CataclysmBulletDamage>(), projectile.damage, projectile.knockBack, Main.myPlayer, -1f, 5f)];
+							Projectile proj = Main.projectile[Projectile.NewProjectile(addPos.X, addPos.Y, Projectile.velocity.X, Projectile.velocity.Y, ModContent.ProjectileType<CataclysmBulletDamage>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, -1f, 5f)];
 							SOTSProjectile instance = proj.GetGlobalProjectile<SOTSProjectile>();
-							instance.affixID = projectile.GetGlobalProjectile<SOTSProjectile>().affixID;
+							instance.affixID = Projectile.GetGlobalProjectile<SOTSProjectile>().affixID;
 						}
-						if (projectile.friendly)
+						if (Projectile.friendly)
 							collided = true;
-						projectile.friendly = false;
+						Projectile.friendly = false;
 						for (int k = i + 1; k < trailPos.Length; k++)
 						{
 							trailPos[k] = Vector2.Zero;
@@ -157,12 +157,12 @@ namespace SOTS.Projectiles.Otherworld
 				}
 			}
 			originalPos = temp;
-			projectile.alpha += 4;
-			if (projectile.alpha >= 255)
-				projectile.Kill();
+			Projectile.alpha += 4;
+			if (Projectile.alpha >= 255)
+				Projectile.Kill();
 
-			projectile.scale *= 0.98f;
-			projectile.friendly = false;
+			Projectile.scale *= 0.98f;
+			Projectile.friendly = false;
 		}
 	}
 }

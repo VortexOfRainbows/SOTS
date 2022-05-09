@@ -16,17 +16,17 @@ namespace SOTS.Projectiles.Minions
 		}
         public override void SetDefaults()
         {
-            projectile.width = 30;
-            projectile.height = 40; 
-            projectile.hostile = false; 
-            projectile.friendly = false; 
-            projectile.ignoreWater = true;  
-            Main.projFrames[projectile.type] = 1;
-			projectile.timeLeft = Projectile.SentryLifeTime;
-			projectile.penetrate = -1;
-            projectile.tileCollide = false;
-			projectile.netImportant = true;
-			projectile.sentry = true;
+            Projectile.width = 30;
+            Projectile.height = 40; 
+            Projectile.hostile = false; 
+            Projectile.friendly = false; 
+            Projectile.ignoreWater = true;  
+            Main.projFrames[Projectile.type] = 1;
+			Projectile.timeLeft = Projectile.SentryLifeTime;
+			Projectile.penetrate = -1;
+            Projectile.tileCollide = false;
+			Projectile.netImportant = true;
+			Projectile.sentry = true;
 		}
 		List<FireParticle> particleList = new List<FireParticle>();
 		public void cataloguePos()
@@ -46,7 +46,7 @@ namespace SOTS.Projectiles.Minions
 		float counter = 0;
 		public override bool PreAI()
 		{
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			float mult = counter / 45f;
 			sphereRadius = 105f + (300f * (player.minionDamage + (player.allDamage - 1f))) * mult;
 			if(counter < 45)
@@ -56,15 +56,15 @@ namespace SOTS.Projectiles.Minions
 			rotational.X *= 0.25f;
 			rotational.Y *= 0.75f;
 			rotational = rotational.SafeNormalize(Vector2.Zero) * 3f;
-			particleList.Add(new FireParticle(projectile.Center - rotational * 2, rotational, Main.rand.NextFloat(-3f, 3f), Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(0.9f, 1.1f)));
+			particleList.Add(new FireParticle(Projectile.Center - rotational * 2, rotational, Main.rand.NextFloat(-3f, 3f), Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(0.9f, 1.1f)));
 			for(int i = 0; i < 360; i++)
 			{
 				Vector2 circular = new Vector2(sphereRadius, 0).RotatedBy(MathHelper.ToRadians(i));
 				rotational = new Vector2(0, -1.5f).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360f)));
 				if (Main.rand.NextBool(40))
 				{
-					int i2 = (int)(circular.X + projectile.Center.X) / 16;
-					int j2 = (int)(circular.Y + projectile.Center.Y) / 16;
+					int i2 = (int)(circular.X + Projectile.Center.X) / 16;
+					int j2 = (int)(circular.Y + Projectile.Center.Y) / 16;
 					bool disable = false;
 					if (!WorldGen.InWorld(i2, j2, 20) || Main.tile[i2, j2].active() && Main.tileSolidTop[Main.tile[i2, j2].type] == false && Main.tileSolid[Main.tile[i2, j2].type] == true)
 						disable = true;
@@ -72,9 +72,9 @@ namespace SOTS.Projectiles.Minions
 						for(int j = 0; j < Main.maxProjectiles; j++)
 						{
 							Projectile other = Main.projectile[j];
-							if(other.active && other.type == projectile.type && other.owner == projectile.owner && j != projectile.whoAmI)
+							if(other.active && other.type == Projectile.type && other.owner == Projectile.owner && j != Projectile.whoAmI)
 							{
-								Vector2 distanceBetween = projectile.Center + circular - other.Center;
+								Vector2 distanceBetween = Projectile.Center + circular - other.Center;
 								if (distanceBetween.Length() < sphereRadius)
 								{
 									disable = true;
@@ -83,22 +83,22 @@ namespace SOTS.Projectiles.Minions
 							}
 						}
 					if(!disable)
-						particleList.Add(new FireParticle(projectile.Center + circular - rotational * 2, rotational, Main.rand.NextFloat(-3f, 3f), Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(0.7f, 0.9f)));
+						particleList.Add(new FireParticle(Projectile.Center + circular - rotational * 2, rotational, Main.rand.NextFloat(-3f, 3f), Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(0.7f, 0.9f)));
 				}
 			}
 			return base.PreAI();
 		}
-		public override void PostDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override void PostDraw(Color lightColor)
 		{
 			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Celestial/SubspaceLingeringFlame");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			if(chains)
-				DrawChain((int)projectile.Center.X / 16, (int)projectile.Center.Y / 16, spriteBatch);
+				DrawChain((int)Projectile.Center.X / 16, (int)Projectile.Center.Y / 16, spriteBatch);
 			for (int i = 0; i < particleList.Count; i++)
 			{
 				Color color = new Color(75, 255, 30, 0);
 				Vector2 drawPos = particleList[i].position - Main.screenPosition;
-				color = projectile.GetAlpha(color) * (0.35f + 0.65f * particleList[i].scale);
+				color = Projectile.GetAlpha(color) * (0.35f + 0.65f * particleList[i].scale);
 				for (int j = 0; j < 2; j++)
 				{
 					float x = Main.rand.NextFloat(-2f, 2f);
@@ -125,12 +125,12 @@ namespace SOTS.Projectiles.Minions
 				}
 			}
 			maxLength++;
-			Vector2 previous = projectile.Center;
+			Vector2 previous = Projectile.Center;
 			for (int z = 0; z < maxLength; z++)
 			{
 				float dynamicMult = 0.52f + 0.48f * (float)Math.Cos(MathHelper.ToRadians(180f * z / maxLength));
 				Vector2 dynamicAddition = new Vector2(20f / maxLength * z * 0.4f + 0.5f, 0).RotatedBy(MathHelper.ToRadians(z * 24 + timer)) * dynamicMult;
-				Vector2 pos = projectile.Center;
+				Vector2 pos = Projectile.Center;
 				pos.Y -= z * 16;
 				pos += dynamicAddition;
 				Vector2 rotateTo = pos - previous;
@@ -150,8 +150,8 @@ namespace SOTS.Projectiles.Minions
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor) 
 		{
 			//SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");	
-			//spriteBatch.Draw(Mod.Assets.Request<Texture2D>("Gores/CircleAura").Value, projectile.Center - Main.screenPosition, null, new Color(0, 20, 0, 0), 0f, new Vector2(300f, 300f), sphereRadius / 300f, SpriteEffects.None, 0f);
-			//spriteBatch.Draw(Mod.Assets.Request<Texture2D>("Gores/CircleBorder").Value, projectile.Center - Main.screenPosition, null, new Color(5, 30, 5, 0), 0f, new Vector2(300f, 300f), sphereRadius / 300f, SpriteEffects.None, 0f);
+			//spriteBatch.Draw(Mod.Assets.Request<Texture2D>("Gores/CircleAura").Value, Projectile.Center - Main.screenPosition, null, new Color(0, 20, 0, 0), 0f, new Vector2(300f, 300f), sphereRadius / 300f, SpriteEffects.None, 0f);
+			//spriteBatch.Draw(Mod.Assets.Request<Texture2D>("Gores/CircleBorder").Value, Projectile.Center - Main.screenPosition, null, new Color(5, 30, 5, 0), 0f, new Vector2(300f, 300f), sphereRadius / 300f, SpriteEffects.None, 0f);
 			return true;
 		}
 		bool runOnce = true;
@@ -161,38 +161,38 @@ namespace SOTS.Projectiles.Minions
 		{
 			if (runOnce)
             {
-				ogPosition = projectile.Center;
+				ogPosition = Projectile.Center;
 				runOnce = false;
             }
-			if(!projectile.Center.Equals(ogPosition))
+			if(!Projectile.Center.Equals(ogPosition))
             {
 				chains = false;
 
 			}
-			Main.player[projectile.owner].UpdateMaxTurrets();
-			if(projectile.owner == Main.myPlayer)
-				projectile.netUpdate = true;
-			Lighting.AddLight(projectile.Center, sphereRadius / 510f, sphereRadius / 510f, sphereRadius / 510f);
-			projectile.ai[0]--;
-			if (projectile.ai[0] <= 0)
+			Main.player[Projectile.owner].UpdateMaxTurrets();
+			if(Projectile.owner == Main.myPlayer)
+				Projectile.netUpdate = true;
+			Lighting.AddLight(Projectile.Center, sphereRadius / 510f, sphereRadius / 510f, sphereRadius / 510f);
+			Projectile.ai[0]--;
+			if (Projectile.ai[0] <= 0)
 			{
 				for (int i = 0; i < Main.maxNPCs; i++)
 				{
 					NPC target = Main.npc[i];
-					if ((projectile.Center - target.Center).Length() <= sphereRadius + 4f && !target.friendly && target.active)
+					if ((Projectile.Center - target.Center).Length() <= sphereRadius + 4f && !target.friendly && target.active)
 					{
-						if (Main.myPlayer == projectile.owner)
+						if (Main.myPlayer == Projectile.owner)
 						{
-							Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, ModContent.ProjectileType<VoidspaceExplosion>(), projectile.damage, projectile.knockBack, projectile.owner);
+							Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, ModContent.ProjectileType<VoidspaceExplosion>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
 						}
 					}
 				}
-				projectile.ai[0] = 45;
+				Projectile.ai[0] = 45;
 			}
             for (int i = 0; i < Main.maxPlayers; i++)
             {
                 Player target = Main.player[i];
-				if((projectile.Center - target.Center).Length() <= sphereRadius + 4f && target.active)
+				if((Projectile.Center - target.Center).Length() <= sphereRadius + 4f && target.active)
 				{
 					target.AddBuff(mod.BuffType("AuraBoost"), 330, false);
 				}

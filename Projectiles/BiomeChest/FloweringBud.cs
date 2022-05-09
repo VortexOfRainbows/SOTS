@@ -17,25 +17,25 @@ namespace SOTS.Projectiles.BiomeChest
 		}
         public override void SetDefaults()
         {
-			projectile.width = 20;
-			projectile.height = 20;
-			projectile.penetrate = -1;
-			projectile.friendly = true;
-			projectile.timeLeft = 1500;
-			projectile.tileCollide = true;
-			projectile.hostile = false;
-			projectile.magic = true;
-			projectile.ranged = false;
-			projectile.alpha = 0;
+			Projectile.width = 20;
+			Projectile.height = 20;
+			Projectile.penetrate = -1;
+			Projectile.friendly = true;
+			Projectile.timeLeft = 1500;
+			Projectile.tileCollide = true;
+			Projectile.hostile = false;
+			Projectile.magic = true;
+			Projectile.ranged = false;
+			Projectile.alpha = 0;
 		}
 		public override void SendExtraAI(BinaryWriter writer)
 		{
-			writer.Write(projectile.scale);
-			writer.Write(projectile.rotation);
-			writer.Write(projectile.spriteDirection);
-			writer.Write(projectile.friendly);
+			writer.Write(Projectile.scale);
+			writer.Write(Projectile.rotation);
+			writer.Write(Projectile.spriteDirection);
+			writer.Write(Projectile.friendly);
 			writer.Write(latch);
-			writer.Write(projectile.frame);
+			writer.Write(Projectile.frame);
 			writer.Write(enemyIndex);
 			writer.Write(diffPosX);
 			writer.Write(diffPosY);
@@ -43,12 +43,12 @@ namespace SOTS.Projectiles.BiomeChest
 		}
 		public override void ReceiveExtraAI(BinaryReader reader)
 		{
-			projectile.scale = reader.ReadSingle();
-			projectile.rotation = reader.ReadSingle();
-			projectile.spriteDirection = reader.ReadInt32();
-			projectile.friendly = reader.ReadBoolean();
+			Projectile.scale = reader.ReadSingle();
+			Projectile.rotation = reader.ReadSingle();
+			Projectile.spriteDirection = reader.ReadInt32();
+			Projectile.friendly = reader.ReadBoolean();
 			latch = reader.ReadBoolean();
-			projectile.frame = reader.ReadInt32();
+			Projectile.frame = reader.ReadInt32();
 			enemyIndex = reader.ReadInt32();
 			diffPosX = reader.ReadSingle();
 			diffPosY = reader.ReadSingle();
@@ -62,7 +62,7 @@ namespace SOTS.Projectiles.BiomeChest
 		Vector2[] trailPos = new Vector2[10];
 		public void cataloguePos()
 		{
-			Vector2 current = projectile.Center - new Vector2(8, -8).RotatedBy(projectile.rotation);
+			Vector2 current = Projectile.Center - new Vector2(8, -8).RotatedBy(Projectile.rotation);
 			for (int i = 0; i < trailPos.Length; i++)
 			{
 				Vector2 previousPosition = trailPos[i];
@@ -89,60 +89,60 @@ namespace SOTS.Projectiles.BiomeChest
 		float saveRotation = 0;
 		public override void AI()
         {
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			if(runOnce2)
 			{
-				projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(45);
-				saveRotation = projectile.rotation;
-				projectile.spriteDirection = 1;
+				Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(45);
+				saveRotation = Projectile.rotation;
+				Projectile.spriteDirection = 1;
 			}
 			if(latch)
 			{
-				projectile.netUpdate = true;
+				Projectile.netUpdate = true;
 				if(enemyIndex != -1)
 				{
 					NPC target = Main.npc[enemyIndex];
 					if (target.active && !target.friendly && !target.immortal && !target.dontTakeDamage)
 					{
-						projectile.position.X = target.Center.X - projectile.width / 2 - diffPosX;
-						projectile.position.Y = target.Center.Y - projectile.height / 2 - diffPosY;
+						Projectile.position.X = target.Center.X - Projectile.width / 2 - diffPosX;
+						Projectile.position.Y = target.Center.Y - Projectile.height / 2 - diffPosY;
 					}
 					else
 					{
 						enemyIndex = -1;
-						projectile.timeLeft -= 3;
+						Projectile.timeLeft -= 3;
 					}
 				}
 				else
                 {
-					projectile.timeLeft -= 3;
+					Projectile.timeLeft -= 3;
                 }
 			}
-			if(!projectile.tileCollide)
+			if(!Projectile.tileCollide)
 			{
-				projectile.velocity *= 0.8f;
+				Projectile.velocity *= 0.8f;
 			}				
-			if(!projectile.friendly && latch || projectile.ai[0] > 0)
+			if(!Projectile.friendly && latch || Projectile.ai[0] > 0)
 			{
-				if (projectile.velocity.Length() <= 0.1f)
+				if (Projectile.velocity.Length() <= 0.1f)
                 {
-					if(projectile.ai[0] <= 10)
-						projectile.ai[0]++;
-					if(projectile.ai[0] > 10)
+					if(Projectile.ai[0] <= 10)
+						Projectile.ai[0]++;
+					if(Projectile.ai[0] > 10)
 					{
 						if (runOnce2)
 						{
-							projectile.ai[0] = 0;
-							projectile.ai[1] = 0;
+							Projectile.ai[0] = 0;
+							Projectile.ai[1] = 0;
 							runOnce2 = false;
-							projectile.rotation = 0;
+							Projectile.rotation = 0;
 							bloom = true;
-							projectile.scale = 0.4f;
-							projectile.netUpdate = true;
+							Projectile.scale = 0.4f;
+							Projectile.netUpdate = true;
 							for(int i = 0; i < 360; i += 15)
 							{
 								Vector2 circularLocation = new Vector2(6, 0).RotatedBy(MathHelper.ToRadians(i));
-								Dust dust = Dust.NewDustDirect(projectile.Center - new Vector2(5, 5), 0, 0, ModContent.DustType<CopyDust4>());
+								Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5, 5), 0, 0, ModContent.DustType<CopyDust4>());
 								dust.velocity *= 0.33f;
 								dust.velocity += circularLocation;
 								dust.scale *= 1.25f;
@@ -151,24 +151,24 @@ namespace SOTS.Projectiles.BiomeChest
 								dust.alpha = 50;
 								dust.noGravity = true;
 							}
-							//SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 9, 0.8f);
+							//SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 9, 0.8f);
 						}
-						if (projectile.scale < 1)
+						if (Projectile.scale < 1)
                         {
-							projectile.scale += 0.03f;
-							projectile.scale *= 1.05f;
-							projectile.rotation = saveRotation + unwind * (1 - projectile.scale);
+							Projectile.scale += 0.03f;
+							Projectile.scale *= 1.05f;
+							Projectile.rotation = saveRotation + unwind * (1 - Projectile.scale);
 						}
 						else
                         {
-							projectile.rotation = saveRotation;
-							projectile.scale = 1;
+							Projectile.rotation = saveRotation;
+							Projectile.scale = 1;
 						}
-						if (projectile.ai[1] < 120)
-							projectile.ai[1] += 4;
-						else if(projectile.ai[0] < 30)
-							projectile.ai[0] += 2;
-						Vector2 bubCir = new Vector2(300, 0).RotatedBy(MathHelper.ToRadians(projectile.ai[1] - projectile.ai[0] + 10));
+						if (Projectile.ai[1] < 120)
+							Projectile.ai[1] += 4;
+						else if(Projectile.ai[0] < 30)
+							Projectile.ai[0] += 2;
+						Vector2 bubCir = new Vector2(300, 0).RotatedBy(MathHelper.ToRadians(Projectile.ai[1] - Projectile.ai[0] + 10));
 						bubbleSize = bubCir.Y;
 					}
                 }
@@ -178,12 +178,12 @@ namespace SOTS.Projectiles.BiomeChest
 				for (int i = 0; i < Main.maxNPCs; i++)
 				{
 					NPC target = Main.npc[i];
-					if ((projectile.Center - target.Center).Length() <= bubbleSize / 2f + 4f && !target.friendly && target.active && !target.dontTakeDamage)
+					if ((Projectile.Center - target.Center).Length() <= bubbleSize / 2f + 4f && !target.friendly && target.active && !target.dontTakeDamage)
 					{
 						if(!effected[i])
 						{
-							if(Main.myPlayer == projectile.owner)
-								Projectile.NewProjectile(target.Center, Vector2.Zero, ModContent.ProjectileType<FlowerStrike>(), projectile.damage, 0, projectile.owner, target.whoAmI, projectile.whoAmI);
+							if(Main.myPlayer == Projectile.owner)
+								Projectile.NewProjectile(target.Center, Vector2.Zero, ModContent.ProjectileType<FlowerStrike>(), Projectile.damage, 0, Projectile.owner, target.whoAmI, Projectile.whoAmI);
 							effected[i] = true;
 						}
 					}
@@ -198,26 +198,26 @@ namespace SOTS.Projectiles.BiomeChest
 		float bubbleSize = 0f;
 		public override void ModifyDamageHitbox(ref Rectangle hitbox) 
 		{
-			hitbox = new Rectangle((int)(projectile.Center.X - 11), (int)(projectile.Center.Y- 8), 22, 16);
-			if(projectile.frame == 1)
+			hitbox = new Rectangle((int)(Projectile.Center.X - 11), (int)(Projectile.Center.Y- 8), 22, 16);
+			if(Projectile.frame == 1)
 			{
-				hitbox = new Rectangle((int)(projectile.position.X), (int)(projectile.position.Y), projectile.width, projectile.height);
+				hitbox = new Rectangle((int)(Projectile.position.X), (int)(Projectile.position.Y), Projectile.width, Projectile.height);
 			}
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-			Player player = Main.player[projectile.owner];
-			projectile.friendly = false;
-            target.immune[projectile.owner] = 0;
-			projectile.tileCollide = false;
+			Player player = Main.player[Projectile.owner];
+			Projectile.friendly = false;
+            target.immune[Projectile.owner] = 0;
+			Projectile.tileCollide = false;
 			latch = true;
-			projectile.velocity *= 0.1f;
+			Projectile.velocity *= 0.1f;
 			enemyIndex = target.whoAmI;
-			projectile.netUpdate = true;
+			Projectile.netUpdate = true;
 			if (diffPosX == 0)
-				diffPosX = target.Center.X - projectile.Center.X;
+				diffPosX = target.Center.X - Projectile.Center.X;
 			if (diffPosY == 0)
-				diffPosY = target.Center.Y - projectile.Center.Y;
+				diffPosY = target.Center.Y - Projectile.Center.Y;
 			diffPosX *= 0.9f;
 			diffPosY *= 0.9f;
 		}
@@ -232,10 +232,10 @@ namespace SOTS.Projectiles.BiomeChest
 		{
 			enemyIndex = -1;
 			latch = true;
-			projectile.friendly = false;
-			projectile.velocity *= 0.3f;
-			projectile.tileCollide = false;
-			projectile.netUpdate = true;
+			Projectile.friendly = false;
+			Projectile.velocity *= 0.3f;
+			Projectile.tileCollide = false;
+			Projectile.netUpdate = true;
 			return false;
 		}
 		public override void Kill(int timeLeft)
@@ -243,7 +243,7 @@ namespace SOTS.Projectiles.BiomeChest
 			for (int i = 0; i < 360; i += 10)
 			{
 				Vector2 circularLocation = new Vector2(9, 0).RotatedBy(MathHelper.ToRadians(i));
-				Dust dust = Dust.NewDustDirect(projectile.Center - new Vector2(5, 5), 0, 0, ModContent.DustType<CopyDust4>());
+				Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5, 5), 0, 0, ModContent.DustType<CopyDust4>());
 				dust.velocity *= 0.45f;
 				dust.velocity += circularLocation;
 				dust.scale *= 1.25f;
@@ -252,7 +252,7 @@ namespace SOTS.Projectiles.BiomeChest
 				dust.alpha = 50;
 				dust.noGravity = true; 
 				circularLocation = new Vector2(6, 0).RotatedBy(MathHelper.ToRadians(i));
-				dust = Dust.NewDustDirect(projectile.Center - new Vector2(5, 5), 0, 0, ModContent.DustType<CopyDust4>());
+				dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5, 5), 0, 0, ModContent.DustType<CopyDust4>());
 				dust.velocity *= 0.45f;
 				dust.velocity += circularLocation;
 				dust.scale *= 1.75f;
@@ -262,34 +262,34 @@ namespace SOTS.Projectiles.BiomeChest
 				dust.noGravity = true;
 			}
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
 			if(bloom)
 			{
-				spriteBatch.Draw(Mod.Assets.Request<Texture2D>("Gores/CircleAura").Value, projectile.Center - Main.screenPosition, null, new Color(120, 160, 140) * (50f / 255f) * (projectile.timeLeft / 1500f), 0f, new Vector2(300f, 300f), bubbleSize / 600f, SpriteEffects.None, 0f);
-				spriteBatch.Draw(Mod.Assets.Request<Texture2D>("Gores/CircleBorder").Value, projectile.Center - Main.screenPosition, null, new Color(100, 140, 120) * 0.5f * (projectile.timeLeft / 1500f), 0f, new Vector2(300f, 300f), bubbleSize / 600f, SpriteEffects.None, 0f);
+				spriteBatch.Draw(Mod.Assets.Request<Texture2D>("Gores/CircleAura").Value, Projectile.Center - Main.screenPosition, null, new Color(120, 160, 140) * (50f / 255f) * (Projectile.timeLeft / 1500f), 0f, new Vector2(300f, 300f), bubbleSize / 600f, SpriteEffects.None, 0f);
+				spriteBatch.Draw(Mod.Assets.Request<Texture2D>("Gores/CircleBorder").Value, Projectile.Center - Main.screenPosition, null, new Color(100, 140, 120) * 0.5f * (Projectile.timeLeft / 1500f), 0f, new Vector2(300f, 300f), bubbleSize / 600f, SpriteEffects.None, 0f);
 				Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/BiomeChest/TangleGrowth").Value;
 				Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-				Main.spriteBatch.Draw(texture, projectile.Center - Main.screenPosition, null, Color.White, projectile.rotation, drawOrigin, projectile.scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, null, Color.White, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
 				return false;
 			}
 			else
 			{
 				Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/BiomeChest/FloweringBud").Value;
 				Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-				Main.spriteBatch.Draw(texture, projectile.Center - Main.screenPosition, null, Color.White, projectile.rotation, drawOrigin, projectile.scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, null, Color.White, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
 				if (runOnce)
 					return false;
 				texture = Mod.Assets.Request<Texture2D>("Projectiles/BiomeChest/FloweringBudTrail").Value;
 				drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-				Vector2 previousPosition = projectile.Center - new Vector2(8, -8).RotatedBy(projectile.rotation);
+				Vector2 previousPosition = Projectile.Center - new Vector2(8, -8).RotatedBy(Projectile.rotation);
 				if (previousPosition == Vector2.Zero)
 				{
 					return false;
 				}
 				for (int k = 0; k < trailPos.Length; k++)
 				{
-					float scale = projectile.scale * (trailPos.Length - k) / (float)trailPos.Length;
+					float scale = Projectile.scale * (trailPos.Length - k) / (float)trailPos.Length;
 					scale *= 0.7f;
 					if (trailPos[k] == Vector2.Zero)
 					{
@@ -312,7 +312,7 @@ namespace SOTS.Projectiles.BiomeChest
 								x = 0;
 								y = 0;
 							}
-							if (trailPos[k] != projectile.Center)
+							if (trailPos[k] != Projectile.Center)
 								Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, betweenPositions.ToRotation() + MathHelper.ToRadians(90), drawOrigin, scale, SpriteEffects.None, 0f);
 						}
 					}

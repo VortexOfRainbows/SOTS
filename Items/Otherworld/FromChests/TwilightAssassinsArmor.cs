@@ -95,7 +95,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		{
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/FromChests/TwilightAssassinsCircletGlow").Value;
 			Color color = new Color(60, 70, 80, 0);
-			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Main.itemTexture[Item.type].Height * 0.5f);
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, Terraria.GameContent.TextureAssets.Item[Item.type].Value.Height * 0.5f);
 			for (int i = 0; i < 360; i += 30)
 			{
 				Vector2 addition = new Vector2(-Main.rand.Next(15) * 0.1f + 1.75f, 0).RotatedBy(MathHelper.ToRadians(i));
@@ -179,7 +179,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		{
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/FromChests/TwilightAssassinsChestplateGlow").Value;
 			Color color = new Color(60, 70, 80, 0);
-			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Main.itemTexture[Item.type].Height * 0.5f);
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, Terraria.GameContent.TextureAssets.Item[Item.type].Value.Height * 0.5f);
 			for (int i = 0; i < 360; i += 30)
 			{
 				Vector2 addition = new Vector2(-Main.rand.Next(15) * 0.1f + 1.75f, 0).RotatedBy(MathHelper.ToRadians(i));
@@ -232,7 +232,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		{
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/FromChests/TwilightAssassinsLeggingsGlow").Value;
 			Color color = new Color(60, 70, 80, 0);
-			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Main.itemTexture[Item.type].Height * 0.5f);
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, Terraria.GameContent.TextureAssets.Item[Item.type].Value.Height * 0.5f);
 			for (int i = 0; i < 360; i += 30)
 			{
 				Vector2 addition = new Vector2(-Main.rand.Next(15) * 0.1f + 1.75f, 0).RotatedBy(MathHelper.ToRadians(i));

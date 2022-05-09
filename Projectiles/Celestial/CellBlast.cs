@@ -13,19 +13,19 @@ namespace SOTS.Projectiles.Celestial
 {    
     public class CellBlast : ModProjectile
 	{
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
-			Texture2D texture = Main.projectileTexture[projectile.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Texture2D texture2 = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Celestial/CrossLaserIndicator");
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
 			Vector2 origin2 = new Vector2(texture2.Width / 2, texture2.Height / 2);
 			Color color = Color.Black;
 			color = new Color(100, 255, 100, 0);
-			if (projectile.ai[1] > 0)
+			if (Projectile.ai[1] > 0)
 			{
-				Vector2 velo = projectile.velocity.SafeNormalize(Vector2.Zero);
-				float scale = 1 - (projectile.ai[1] / 120f);
-				Vector2 drawPos = projectile.Center;
+				Vector2 velo = Projectile.velocity.SafeNormalize(Vector2.Zero);
+				float scale = 1 - (Projectile.ai[1] / 120f);
+				Vector2 drawPos = Projectile.Center;
 				for (int j = 0; j < 100; j++)
 				{
 					drawPos += velo * scale * (texture2.Width + 0.5f);
@@ -42,10 +42,10 @@ namespace SOTS.Projectiles.Celestial
 			{
 				Vector2 circular = new Vector2(Main.rand.NextFloat(3.5f, 5), 0).RotatedBy(MathHelper.ToRadians(i));
 				color = new Color(100, 255, 100, 0);
-				Main.spriteBatch.Draw(texture, projectile.Center + circular - Main.screenPosition, null, color * ((255f - projectile.alpha) / 255f), projectile.rotation, origin, projectile.scale, SpriteEffects.None, 0.0f);
+				Main.spriteBatch.Draw(texture, Projectile.Center + circular - Main.screenPosition, null, color * ((255f - Projectile.alpha) / 255f), Projectile.rotation, origin, Projectile.scale, SpriteEffects.None, 0.0f);
 			}
 			color = new Color(50, 122, 50);
-			Main.spriteBatch.Draw(texture, projectile.Center - Main.screenPosition, null, color, projectile.rotation, origin, projectile.scale, SpriteEffects.None, 0.0f);
+			Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, null, color, Projectile.rotation, origin, Projectile.scale, SpriteEffects.None, 0.0f);
 			return false;
 		}
 		public override void SetStaticDefaults()
@@ -54,15 +54,15 @@ namespace SOTS.Projectiles.Celestial
 		}
         public override void SetDefaults()
         {
-			projectile.width = 40;
-			projectile.height = 14;
-			projectile.friendly = false;
-			projectile.timeLeft = 75;
-			projectile.penetrate = -1;
-			projectile.tileCollide = false;
-			projectile.hostile = true;
-			projectile.alpha = 125;
-			projectile.hide = true;
+			Projectile.width = 40;
+			Projectile.height = 14;
+			Projectile.friendly = false;
+			Projectile.timeLeft = 75;
+			Projectile.penetrate = -1;
+			Projectile.tileCollide = false;
+			Projectile.hostile = true;
+			Projectile.alpha = 125;
+			Projectile.hide = true;
 		}
 		public override void DrawBehind(int index, List<int> drawCacheProjsBehindNPCsAndTiles, List<int> drawCacheProjsBehindNPCs, List<int> drawCacheProjsBehindProjectiles, List<int> drawCacheProjsOverWiresUI)
 		{
@@ -77,22 +77,22 @@ namespace SOTS.Projectiles.Celestial
 		{
 			if (runOnce)
 			{
-				projectile.ai[1] = 120;
+				Projectile.ai[1] = 120;
 				runOnce = false;
 			}
-			projectile.ai[1] *= 0.98f;
-			projectile.ai[1] -= 0.13f;
-			if (projectile.ai[1] < 0)
-				projectile.ai[1] = 0;
-			projectile.position += projectile.velocity *= 1.033f;
-			projectile.rotation = projectile.velocity.ToRotation();
+			Projectile.ai[1] *= 0.98f;
+			Projectile.ai[1] -= 0.13f;
+			if (Projectile.ai[1] < 0)
+				Projectile.ai[1] = 0;
+			Projectile.position += Projectile.velocity *= 1.033f;
+			Projectile.rotation = Projectile.velocity.ToRotation();
 		}
 		public override void Kill(int timeLeft)
 		{
-			SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 92, 0.8f);
+			SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 92, 0.8f);
 			if (Main.netMode != 1)
 			{
-				Projectile.NewProjectile(projectile.Center, projectile.velocity, ModContent.ProjectileType<BabyLaser>(), projectile.damage, 0, Main.myPlayer, projectile.ai[0]);
+				Projectile.NewProjectile(Projectile.Center, Projectile.velocity, ModContent.ProjectileType<BabyLaser>(), Projectile.damage, 0, Main.myPlayer, Projectile.ai[0]);
 			}
 		}
 		public override void OnHitPlayer(Player target, int damage, bool crit) 

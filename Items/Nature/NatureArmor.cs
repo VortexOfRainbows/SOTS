@@ -119,7 +119,7 @@ namespace SOTS.Items.Nature
 		}
 		public override void UpdateEquip(Player player)
 		{
-			for (int i = 0; i < Main.projectile.Length; i++)
+			for (int i = 0; i < Main.Projectile.Length; i++)
 			{
 				Projectile proj = Main.projectile[i];
 				if (proj.owner == player.whoAmI && proj.minion == true && proj.minionSlots > 0.01f && proj.active)

@@ -23,14 +23,14 @@ namespace SOTS.Projectiles.Pyramid
 		}
         public override void SetDefaults()
         {
-			projectile.height = 2;
-			projectile.width = 2;
-			projectile.penetrate = 1;
-			projectile.friendly = false;
-			projectile.timeLeft = 80;
-			projectile.tileCollide = false;
-			projectile.hostile = false;
-			projectile.alpha = 255;
+			Projectile.height = 2;
+			Projectile.width = 2;
+			Projectile.penetrate = 1;
+			Projectile.friendly = false;
+			Projectile.timeLeft = 80;
+			Projectile.tileCollide = false;
+			Projectile.hostile = false;
+			Projectile.alpha = 255;
 		}
 		bool runOnce = true;
 		float width = -1;
@@ -52,29 +52,29 @@ namespace SOTS.Projectiles.Pyramid
 		bool runOnce2 = true;
 		public override void AI()
 		{
-			if(projectile.timeLeft >= 32)
-				for (int j = 0; j < Main.projectile.Length; j++)
+			if(Projectile.timeLeft >= 32)
+				for (int j = 0; j < Main.Projectile.Length; j++)
 				{
 					Projectile proj = Main.projectile[j];
-					if (proj.active && proj.owner == projectile.owner && proj.type == projectile.type && proj.whoAmI != projectile.whoAmI)
+					if (proj.active && proj.owner == Projectile.owner && proj.type == Projectile.type && proj.whoAmI != Projectile.whoAmI)
 					{
-						if (proj.timeLeft <= projectile.timeLeft && proj.timeLeft >= 32)
+						if (proj.timeLeft <= Projectile.timeLeft && proj.timeLeft >= 32)
 						{
-							projectile.Kill();
+							Projectile.Kill();
 							return;
 						}
 					}
 				}
-			if ((int)projectile.ai[0] != -1)
+			if ((int)Projectile.ai[0] != -1)
 			{
-				NPC npc = Main.npc[(int)projectile.ai[0]];
+				NPC npc = Main.npc[(int)Projectile.ai[0]];
 				if (npc.lifeMax > 5 && npc.active)
 				{
-					if(runOnce2 && projectile.timeLeft < 32)
+					if(runOnce2 && Projectile.timeLeft < 32)
 					{
 						DebuffNPC debuffNPC = (DebuffNPC)mod.GetGlobalNPC("DebuffNPC");
 						debuffNPC = (DebuffNPC)debuffNPC.Instance(npc);
-						if (debuffNPC.HarvestCurse < 99 && Main.myPlayer == projectile.owner)
+						if (debuffNPC.HarvestCurse < 99 && Main.myPlayer == Projectile.owner)
 						{
 							debuffNPC.OnHitByProjectile(npc, projectile, 0, 0, false);
 						}
@@ -82,7 +82,7 @@ namespace SOTS.Projectiles.Pyramid
 						for (int i = 0; i < 360; i += 4)
 						{
 							Vector2 rotationalPos = new Vector2(7, 0).RotatedBy(MathHelper.ToRadians(i));
-							int num1 = Dust.NewDust(new Vector2(projectile.Center.X, projectile.Center.Y) - new Vector2(20, 20) - new Vector2(5), 40, 40, mod.DustType("CopyDust4"));
+							int num1 = Dust.NewDust(new Vector2(Projectile.Center.X, Projectile.Center.Y) - new Vector2(20, 20) - new Vector2(5), 40, 40, mod.DustType("CopyDust4"));
 							Dust dust = Main.dust[num1];
 							dust.noGravity = true;
 							dust.velocity *= 0.1f;
@@ -94,11 +94,11 @@ namespace SOTS.Projectiles.Pyramid
 							dust.color = VoidPlayer.soulLootingColor;
 						}
 					}
-					if(projectile.timeLeft > 40)
-						for (int j = 0; j < Main.projectile.Length; j++)
+					if(Projectile.timeLeft > 40)
+						for (int j = 0; j < Main.Projectile.Length; j++)
 						{
 							Projectile proj = Main.projectile[j];
-							if (proj.active && proj.owner == projectile.owner && proj.type == mod.ProjectileType("GhostPepper"))
+							if (proj.active && proj.owner == Projectile.owner && proj.type == mod.ProjectileType("GhostPepper"))
 							{
 								GhostPepper pepper = (GhostPepper)proj.modProjectile;
 								if (pepper.npcTargetId != npc.whoAmI)
@@ -108,12 +108,12 @@ namespace SOTS.Projectiles.Pyramid
 								proj.netUpdate = true;
 							}
 						}
-					projectile.position.X = npc.Center.X - 1;
-					projectile.position.Y = npc.Center.Y - 1;
+					Projectile.position.X = npc.Center.X - 1;
+					Projectile.position.Y = npc.Center.Y - 1;
 				}
 				else
 				{
-					projectile.Kill();
+					Projectile.Kill();
 				}
 				if (width == -1)
 				{
@@ -129,17 +129,17 @@ namespace SOTS.Projectiles.Pyramid
 				}
 				runOnce = false;
             }
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			Vector2 circularLocation = new Vector2(distance + width, 0).RotatedBy(MathHelper.ToRadians(rotation));
-			cataloguePos(circularLocation + projectile.Center, trailPos);
+			cataloguePos(circularLocation + Projectile.Center, trailPos);
 			circularLocation = new Vector2(distance + width, 0).RotatedBy(MathHelper.ToRadians(rotation + 90));
-			cataloguePos(circularLocation + projectile.Center, trailPos2);
+			cataloguePos(circularLocation + Projectile.Center, trailPos2);
 			circularLocation = new Vector2(distance + width, 0).RotatedBy(MathHelper.ToRadians(rotation + 180));
-			cataloguePos(circularLocation + projectile.Center, trailPos3);
+			cataloguePos(circularLocation + Projectile.Center, trailPos3);
 			circularLocation = new Vector2(distance + width, 0).RotatedBy(MathHelper.ToRadians(rotation + 270));
-			cataloguePos(circularLocation + projectile.Center, trailPos4);
+			cataloguePos(circularLocation + Projectile.Center, trailPos4);
 			rotation += 7;
-			if(projectile.timeLeft >= 30)
+			if(Projectile.timeLeft >= 30)
 			{
 				distance -= 30f / 55f;
 				width -= ogWidth / 55f;
@@ -154,18 +154,18 @@ namespace SOTS.Projectiles.Pyramid
 		{
 			base.Kill(timeLeft);
         }
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override bool PreDraw(ref Color lightColor)
 		{
-			Vector2 circularLocation = new Vector2(distance + width, 0).RotatedBy(MathHelper.ToRadians(rotation)) + projectile.Center;
+			Vector2 circularLocation = new Vector2(distance + width, 0).RotatedBy(MathHelper.ToRadians(rotation)) + Projectile.Center;
 			if (runOnce)
 				return false;
 			Vector2 current = circularLocation;
 			Draw(spriteBatch, trailPos, current);
-			current = new Vector2(distance + width, 0).RotatedBy(MathHelper.ToRadians(rotation + 90)) + projectile.Center;
+			current = new Vector2(distance + width, 0).RotatedBy(MathHelper.ToRadians(rotation + 90)) + Projectile.Center;
 			Draw(spriteBatch, trailPos2, current);
-			current = new Vector2(distance + width, 0).RotatedBy(MathHelper.ToRadians(rotation + 180)) + projectile.Center;
+			current = new Vector2(distance + width, 0).RotatedBy(MathHelper.ToRadians(rotation + 180)) + Projectile.Center;
 			Draw(spriteBatch, trailPos3, current);
-			current = new Vector2(distance + width, 0).RotatedBy(MathHelper.ToRadians(rotation + 270)) + projectile.Center;
+			current = new Vector2(distance + width, 0).RotatedBy(MathHelper.ToRadians(rotation + 270)) + Projectile.Center;
 			Draw(spriteBatch, trailPos4, current);
 			return false;
 		}
@@ -175,12 +175,12 @@ namespace SOTS.Projectiles.Pyramid
 			Vector2 drawOrigin2 = new Vector2(texture2.Width * 0.5f, texture2.Height * 0.5f);
 			Vector2 previousPosition = current;
 			Color color = new Color(VoidPlayer.soulLootingColor.R, VoidPlayer.soulLootingColor.G, VoidPlayer.soulLootingColor.B, 0);
-			color *= (projectile.timeLeft - 30) / 90f;
+			color *= (Projectile.timeLeft - 30) / 90f;
 			for (int k = 0; k < trailArray.Length; k++)
 			{
-				if (k >= projectile.timeLeft / 3 - 10)
+				if (k >= Projectile.timeLeft / 3 - 10)
 					return;
-				float scale = projectile.scale * (trailArray.Length - k) / (float)trailArray.Length;
+				float scale = Projectile.scale * (trailArray.Length - k) / (float)trailArray.Length;
 				scale *= 1f;
 				if (trailArray[k] == Vector2.Zero)
 				{
@@ -203,7 +203,7 @@ namespace SOTS.Projectiles.Pyramid
 							x = 0;
 							y = 0;
 						}
-						Main.spriteBatch.Draw(texture2, drawPos + new Vector2(x, y), null, color, projectile.rotation, drawOrigin2, scale, projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+						Main.spriteBatch.Draw(texture2, drawPos + new Vector2(x, y), null, color, Projectile.rotation, drawOrigin2, scale, Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 					}
 				}
 				previousPosition = currentPos;

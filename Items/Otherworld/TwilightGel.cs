@@ -44,7 +44,7 @@ namespace SOTS.Items.Otherworld
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/TwilightGelOutline").Value;
 			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Otherworld/TwilightGelFill").Value;
 			Color color = new Color(110, 110, 110, 0);
-			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, Item.height * 0.5f);
 			for (int k = 0; k < 5; k++)
 			{
 				float x = Main.rand.Next(-10, 11) * 0.03f;
@@ -61,7 +61,7 @@ namespace SOTS.Items.Otherworld
             Item.width = 20;     
             Item.height = 18;
             Item.value = Item.sellPrice(0, 0, 2, 50);
-            Item.rare = 9;
+            Item.rare = ItemRarityID.Cyan;
 		}
 	}
 }

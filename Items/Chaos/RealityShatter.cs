@@ -17,7 +17,7 @@ namespace SOTS.Items.Chaos
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Chaos/RealityShatterEffect").Value;
 			Texture2D textureBlack = Mod.Assets.Request<Texture2D>("Items/Chaos/RealityShatterBlack").Value;
 			Color color = Color.White;
-			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, Item.height * 0.5f);
 			for (int k = 0; k < 6; k++)
 			{
 				Vector2 circular = new Vector2(2 * scale, 0).RotatedBy(MathHelper.ToRadians(k * 60 + Main.GameUpdateCount * 6));
@@ -57,7 +57,7 @@ namespace SOTS.Items.Chaos
 			Item.height = 98;
 			Item.useTime = 20;
 			Item.useAnimation = 20;
-			Item.useStyle = 1;
+			Item.useStyle = ItemUseStyleID.Swing;
 			Item.knockBack = 5.5f;
 			Item.value = Item.sellPrice(0, 12, 0, 0);
 			Item.rare = ItemRarityID.Yellow;

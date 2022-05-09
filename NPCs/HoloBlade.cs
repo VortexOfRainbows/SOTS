@@ -127,7 +127,7 @@ namespace SOTS.NPCs
 				npc.rotation = npc.velocity.ToRotation() - MathHelper.ToRadians(90);
 			}
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
 			Texture2D texture = Main.npcTexture[npc.type];
 			Texture2D texture2 = Mod.Assets.Request<Texture2D>("NPCs/HoloBladeOutline").Value;

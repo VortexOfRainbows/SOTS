@@ -35,20 +35,20 @@ namespace SOTS.Projectiles.Minions
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Evil Spirit");
-			ProjectileID.Sets.MinionTargettingFeature[projectile.type] = true;
-			ProjectileID.Sets.TrailCacheLength[projectile.type] = 10;
-			ProjectileID.Sets.TrailingMode[projectile.type] = 0;
+			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
+			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 10;
+			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
 		}
         public sealed override void SetDefaults()
 		{
-			projectile.width = 34;
-			projectile.height = 34;
-			projectile.tileCollide = false;
-			projectile.friendly = false;
-			projectile.penetrate = -1;
-			projectile.usesLocalNPCImmunity = true;
-			projectile.ignoreWater = true;
-			projectile.localNPCHitCooldown = 10;
+			Projectile.width = 34;
+			Projectile.height = 34;
+			Projectile.tileCollide = false;
+			Projectile.friendly = false;
+			Projectile.penetrate = -1;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.ignoreWater = true;
+			Projectile.localNPCHitCooldown = 10;
 		}
 		List<EvilEye> eyes = new List<EvilEye>();
 		float orbitalCounter = 2;
@@ -61,42 +61,42 @@ namespace SOTS.Projectiles.Minions
 				float rangeMult = range / 36f;
 				EvilEye eye = eyes[i];
 				int direction = -1;
-				float rotation = projectile.rotation + MathHelper.ToRadians(orbitalCounter * direction);
+				float rotation = Projectile.rotation + MathHelper.ToRadians(orbitalCounter * direction);
 				if (draw)
 				{
-					eye.Draw(projectile.Center, rotation, rangeMult, eyeAlphaMult);
+					eye.Draw(Projectile.Center, rotation, rangeMult, eyeAlphaMult);
 				}
 				else
 				{
 					if (i == ring)
 					{
-						eye.Fire(projectile.Center, npcID);
+						eye.Fire(Projectile.Center, npcID);
 					}
 					else
-						eye.Update(projectile.Center, rotation, rangeMult);
+						eye.Update(Projectile.Center, rotation, rangeMult);
 				}
 			}
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
-			Texture2D texture = Main.projectileTexture[projectile.type];
-			Vector2 drawOrigin = new Vector2(Main.projectileTexture[projectile.type].Width * 0.5f, projectile.height * 0.5f);
+			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value.Width * 0.5f, Projectile.height * 0.5f);
 			Color color2 = Color.Black;
 			for (int i = 0; i < 2; i++)
 			{
-				for (int k = 0; k < projectile.oldPos.Length; k++)
+				for (int k = 0; k < Projectile.oldPos.Length; k++)
 				{
-					Vector2 drawPos = projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, projectile.gfxOffY);
-					Color color = projectile.GetAlpha(color2) * ((float)(projectile.oldPos.Length - k) / (float)projectile.oldPos.Length);
-					spriteBatch.Draw(texture, drawPos, null, color * 0.5f, projectile.rotation, drawOrigin, projectile.scale, SpriteEffects.None, 0f);
+					Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
+					Color color = Projectile.GetAlpha(color2) * ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
+					spriteBatch.Draw(texture, drawPos, null, color * 0.5f, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
 				}
 				color2 = VoidPlayer.EvilColor * 1f;
 			}
 			return false;
 		}
-        public override void PostDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override void PostDraw(Color lightColor)
 		{
-			Texture2D texture = Main.projectileTexture[projectile.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Color color = VoidPlayer.EvilColor * 1.0f;
 			if (Main.netMode != NetmodeID.Server) //pretty sure drawcode doesn't run in multiplayer anyways but may as well
@@ -105,7 +105,7 @@ namespace SOTS.Projectiles.Minions
 			{
 				float x = Main.rand.NextFloat(-2.5f, 2.5f);
 				float y = Main.rand.NextFloat(-2.5f, 2.5f);
-				Main.spriteBatch.Draw(texture, new Vector2((float)(projectile.Center.X - (int)Main.screenPosition.X) + x, (float)(projectile.Center.Y - (int)Main.screenPosition.Y) + y), null, projectile.GetAlpha(color), 0f, drawOrigin, projectile.scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, new Vector2((float)(Projectile.Center.X - (int)Main.screenPosition.X) + x, (float)(Projectile.Center.Y - (int)Main.screenPosition.Y) + y), null, Projectile.GetAlpha(color), 0f, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
 			}
 		}
         public override bool? CanCutTiles()
@@ -118,9 +118,9 @@ namespace SOTS.Projectiles.Minions
 		}
 		public void dustSound()
 		{
-			if (Main.myPlayer == projectile.owner)
+			if (Main.myPlayer == Projectile.owner)
 			{
-				Projectile.NewProjectile(projectile.Center, new Vector2(8f, 0).RotatedBy(MathHelper.ToRadians(Main.rand.Next(360))), ModContent.ProjectileType<EvilExplosion>(), projectile.damage, 0f, projectile.owner, 1, 0);
+				Projectile.NewProjectile(Projectile.Center, new Vector2(8f, 0).RotatedBy(MathHelper.ToRadians(Main.rand.Next(360))), ModContent.ProjectileType<EvilExplosion>(), Projectile.damage, 0f, Projectile.owner, 1, 0);
 			}
 		}
 		bool runOnce = true;
@@ -143,7 +143,7 @@ namespace SOTS.Projectiles.Minions
 				for (int i = 0; i < 8; i++)
 				{
 					Vector2 circular = new Vector2(range, 0).RotatedBy(MathHelper.ToRadians(i * 45f));
-					eyes.Add(new EvilEye(circular, projectile.damage / 2, true));
+					eyes.Add(new EvilEye(circular, Projectile.damage / 2, true));
 				}
 				runOnce = false;
 			}
@@ -152,7 +152,7 @@ namespace SOTS.Projectiles.Minions
 		}
         public override void AI()
 		{
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			float rotateAmt = 1;
 
@@ -163,17 +163,17 @@ namespace SOTS.Projectiles.Minions
 			}
 			if (player.HasBuff(ModContent.BuffType<EvilSpiritAid>()))
 			{
-				projectile.timeLeft = 6;
+				Projectile.timeLeft = 6;
 			}
 			#endregion
 			#region General behavior
 			bool found = false;
 			int ofTotal = 0;
 			int total = 0;
-			for (int i = 0; i < Main.projectile.Length; i++)
+			for (int i = 0; i < Main.Projectile.Length; i++)
 			{
 				Projectile proj = Main.projectile[i];
-				if (projectile.type == proj.type && proj.active && projectile.active && proj.owner == projectile.owner)
+				if (Projectile.type == proj.type && proj.active && Projectile.active && proj.owner == Projectile.owner)
 				{
 					if (proj == projectile)
 					{
@@ -185,20 +185,20 @@ namespace SOTS.Projectiles.Minions
 				}
 			}
 			if (Main.myPlayer == player.whoAmI)
-				projectile.ai[1] = ofTotal;
+				Projectile.ai[1] = ofTotal;
 			#endregion
 
 			#region Find target
 			float distanceFromTarget = 960f;
-			Vector2 targetCenter = projectile.Center;
+			Vector2 targetCenter = Projectile.Center;
 			bool foundTarget = false;
 			// This code is required if your minion weapon has the targeting feature
-			if(canAttack && targetID == -1 && projectile.ai[0] <= timeBeforeShooting)
+			if(canAttack && targetID == -1 && Projectile.ai[0] <= timeBeforeShooting)
 			{
 				if (player.HasMinionAttackTargetNPC)
 				{
 					NPC npc = Main.npc[player.MinionAttackTargetNPC];
-					//float between = Vector2.Distance(npc.Center, projectile.Center);
+					//float between = Vector2.Distance(npc.Center, Projectile.Center);
 					float between2 = Vector2.Distance(npc.Center, player.Center);
 					if (between2 < distanceFromTarget)
 					{
@@ -215,10 +215,10 @@ namespace SOTS.Projectiles.Minions
 						NPC npc = Main.npc[i];
 						if (npc.CanBeChasedBy())
 						{
-							float between = Vector2.Distance(npc.Center, projectile.Center);
+							float between = Vector2.Distance(npc.Center, Projectile.Center);
 							float between2 = Vector2.Distance(npc.Center, player.Center);
 							bool inRange = between < distanceFromTarget;
-							bool lineOfSight = Collision.CanHitLine(projectile.position, projectile.width, projectile.height, npc.position, npc.width, npc.height);
+							bool lineOfSight = Collision.CanHitLine(Projectile.position, Projectile.width, Projectile.height, npc.position, npc.width, npc.height);
 
 							bool closeThroughWall = between < 240f; //15 blocks through walls //should attack semi-reliably through walls
 							if (inRange && (lineOfSight || closeThroughWall) && between2 < distanceFromTarget)
@@ -241,7 +241,7 @@ namespace SOTS.Projectiles.Minions
 				}
 				else
                 {
-					targetCenter = projectile.Center;
+					targetCenter = Projectile.Center;
 					targetID = -1;
                 }
 			}
@@ -251,18 +251,18 @@ namespace SOTS.Projectiles.Minions
 			Vector2 idlePosition = player.Center;
 			idlePosition.Y -= 96f;
 			float speed = 4f;
-			if (foundTarget || targetID != -1 || projectile.ai[0] > timeBeforeShooting)
+			if (foundTarget || targetID != -1 || Projectile.ai[0] > timeBeforeShooting)
 			{
-				if (projectile.alpha >= 255)
+				if (Projectile.alpha >= 255)
 				{
-					projectile.Center = targetCenter;
+					Projectile.Center = targetCenter;
 				}
-				else if (projectile.alpha > 0)
+				else if (Projectile.alpha > 0)
 				{
-					speed += 16f * (projectile.alpha / 255f);
+					speed += 16f * (Projectile.alpha / 255f);
 				}
 
-				Vector2 direction = targetCenter - projectile.Center;
+				Vector2 direction = targetCenter - Projectile.Center;
 				float distance = direction.Length();
 				direction = direction.SafeNormalize(Vector2.Zero);
 				if (distance > speed)
@@ -270,55 +270,55 @@ namespace SOTS.Projectiles.Minions
 					distance = speed;
 				}
 				direction *= distance;
-				projectile.velocity = direction;
-				projectile.alpha += 8;
-				if (projectile.alpha > 255)
+				Projectile.velocity = direction;
+				Projectile.alpha += 8;
+				if (Projectile.alpha > 255)
 				{
 					int totalTime = timeBeforeShooting + maxTimeFiring();
-					projectile.alpha = 255;
+					Projectile.alpha = 255;
 					if (readyToFight)
-						projectile.ai[0]++;
-					if (projectile.ai[0] > (totalTime + 20 + slamDelay))
+						Projectile.ai[0]++;
+					if (Projectile.ai[0] > (totalTime + 20 + slamDelay))
 					{
 						targetID = -1;
 						canAttack = false;
-						projectile.ai[0] = -cooldown;
-						projectile.alpha = 0;
+						Projectile.ai[0] = -cooldown;
+						Projectile.alpha = 0;
 						readyToFight = false;
-						projectile.netUpdate = true;
+						Projectile.netUpdate = true;
 						dustSound();
 					}
 					else
 					{
-						if (projectile.ai[0] >= timeBeforeShooting && projectile.ai[0] < totalTime) //total of 30 projectiles
+						if (Projectile.ai[0] >= timeBeforeShooting && Projectile.ai[0] < totalTime) //total of 30 projectiles
 						{
-							int bonus = (int)projectile.ai[0];
+							int bonus = (int)Projectile.ai[0];
 							if (bonus > 96)
 								bonus = 96;
 							range = 32 + bonus;
-							int remaining = (int)projectile.ai[0] - timeBeforeShooting;
+							int remaining = (int)Projectile.ai[0] - timeBeforeShooting;
 							int id = remaining / delayBetweenShots;
 							if(remaining % delayBetweenShots == 0)
                             {
 								UpdateEyes(false, id % 8, targetID);
                             }
                         }
-						float rangeMult = projectile.ai[0] / (float)timeBeforeShooting * 2f;
+						float rangeMult = Projectile.ai[0] / (float)timeBeforeShooting * 2f;
 						if (rangeMult > 1)
 							rangeMult = 1;
 						float baseR = 32;
-						if(projectile.ai[0] > totalTime + 20)
+						if(Projectile.ai[0] > totalTime + 20)
                         {
-							float rangeMultS = 1 - (projectile.ai[0] - totalTime - 20) / (float)slamDelay;
+							float rangeMultS = 1 - (Projectile.ai[0] - totalTime - 20) / (float)slamDelay;
 							float additionalSinusoid = (float)Math.Sin(MathHelper.ToRadians(240 * (1 - rangeMultS)));
 							rangeMult = (float)Math.Sqrt(rangeMultS);
 							baseR = 32 * (1 + additionalSinusoid * 3f);
 							baseR *= rangeMult;
 							rotateAmt *= rangeMultS;
 						}
-						float sinusoid = (float)Math.Sin(MathHelper.ToRadians(450 * projectile.ai[0] / (totalTime + 20 + slamDelay)));
+						float sinusoid = (float)Math.Sin(MathHelper.ToRadians(450 * Projectile.ai[0] / (totalTime + 20 + slamDelay)));
 						range = baseR + 128 * rangeMult + baseR * sinusoid;
-						float mult = projectile.ai[0] / (float)timeBeforeShooting;
+						float mult = Projectile.ai[0] / (float)timeBeforeShooting;
 						if (mult > 1)
 							mult = 1;
 						rotateAmt += mult * 2f * rangeMult; //speed is at 3 degrees / frame, 
@@ -333,12 +333,12 @@ namespace SOTS.Projectiles.Minions
 				readyToFight = false;
 				if(!canAttack)
                 {
-					if (projectile.ai[0] < 0)
-						projectile.ai[0]++;
+					if (Projectile.ai[0] < 0)
+						Projectile.ai[0]++;
 					else
 						canAttack = true;
-					range = 32f * (1 + projectile.ai[0] / cooldown);
-					eyeAlphaMult = 1 + projectile.ai[0] / cooldown;
+					range = 32f * (1 + Projectile.ai[0] / cooldown);
+					eyeAlphaMult = 1 + Projectile.ai[0] / cooldown;
 
 				}
 				else
@@ -349,36 +349,36 @@ namespace SOTS.Projectiles.Minions
 					else if (range > 30)
 						range = 32;
 				}
-				if(projectile.ai[0] > 0)
+				if(Projectile.ai[0] > 0)
 				{
 					canAttack = true;
-					projectile.ai[0] -= 6f;
+					Projectile.ai[0] -= 6f;
 				}	
 				else if(canAttack)
-					projectile.ai[0] = 0;
-				projectile.alpha -= 12;
-				if (projectile.alpha < 0)
+					Projectile.ai[0] = 0;
+				Projectile.alpha -= 12;
+				if (Projectile.alpha < 0)
 				{
-					projectile.alpha = 0;
+					Projectile.alpha = 0;
 				}
-				Vector2 vectorToIdlePosition = idlePosition - projectile.Center;
+				Vector2 vectorToIdlePosition = idlePosition - Projectile.Center;
 				float distanceToIdlePosition = vectorToIdlePosition.Length();
 				if (Main.myPlayer == player.whoAmI && distanceToIdlePosition > 1400f)
 				{
-					projectile.ai[0] = 0;
-					projectile.alpha = 0;
-					projectile.position = idlePosition;
-					projectile.velocity *= 0.1f;
-					projectile.netUpdate = true;
+					Projectile.ai[0] = 0;
+					Projectile.alpha = 0;
+					Projectile.position = idlePosition;
+					Projectile.velocity *= 0.1f;
+					Projectile.netUpdate = true;
 				}
 			}
 			#endregion
 
-			Lighting.AddLight(projectile.Center, VoidPlayer.EvilColor.ToVector3());
+			Lighting.AddLight(Projectile.Center, VoidPlayer.EvilColor.ToVector3());
 			MoveAwayFromOthers();
 			if (Main.myPlayer == player.whoAmI)
 			{
-				projectile.netUpdate = true;
+				Projectile.netUpdate = true;
 			}
 			orbitalCounter += rotateAmt;
 		}

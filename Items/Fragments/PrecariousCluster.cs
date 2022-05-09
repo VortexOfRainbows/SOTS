@@ -21,7 +21,7 @@ namespace SOTS.Items.Fragments
 			Item.width = 66;
 			Item.height = 66;
             Item.value = Item.sellPrice(0, 10, 0, 0);
-			Item.rare = 3;
+			Item.rare = ItemRarityID.Orange;
 			Item.maxStack = 999;
 			ItemID.Sets.ItemNoGravity[Item.type] = true;
 		}

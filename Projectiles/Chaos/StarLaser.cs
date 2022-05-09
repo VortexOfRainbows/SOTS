@@ -13,11 +13,11 @@ namespace SOTS.Projectiles.Chaos
 	{
 		public override void SendExtraAI(BinaryWriter writer)
 		{
-			writer.Write(projectile.friendly);
+			writer.Write(Projectile.friendly);
 		}
 		public override void ReceiveExtraAI(BinaryReader reader)
 		{
-			projectile.friendly = reader.ReadBoolean();
+			Projectile.friendly = reader.ReadBoolean();
 		}
 		public override void SetStaticDefaults()
 		{
@@ -25,15 +25,15 @@ namespace SOTS.Projectiles.Chaos
 		}
 		public override void SetDefaults()
 		{
-			projectile.penetrate = -1;
-			projectile.friendly = true;
-			projectile.magic = true;
-			projectile.timeLeft = 1500;
-			projectile.width = 24;
-			projectile.height = 24;
-			projectile.extraUpdates = 4;
-			projectile.localNPCHitCooldown = 15;
-			projectile.usesLocalNPCImmunity = true;
+			Projectile.penetrate = -1;
+			Projectile.friendly = true;
+			Projectile.magic = true;
+			Projectile.timeLeft = 1500;
+			Projectile.width = 24;
+			Projectile.height = 24;
+			Projectile.extraUpdates = 4;
+			Projectile.localNPCHitCooldown = 15;
+			Projectile.usesLocalNPCImmunity = true;
 		}
 		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
 		{
@@ -50,8 +50,8 @@ namespace SOTS.Projectiles.Chaos
 				return false;
 			}
 			float scale = 0.75f;
-			float width = projectile.width * scale;
-			float height = projectile.height * scale;
+			float width = Projectile.width * scale;
+			float height = Projectile.height * scale;
 			for (int i = 0; i < trailPos.Length * 0.5f; i += 2)
 			{
 				Vector2 pos = trailPos[i];
@@ -62,31 +62,31 @@ namespace SOTS.Projectiles.Chaos
 				}
 			}
 			return false;
-			//return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), projectile.Center, endPoint, 8f, ref point);
+			//return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, endPoint, 8f, ref point);
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
 			if (runOnce)
 				return false;
-			Texture2D texture = Main.projectileTexture[projectile.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			float scale2 = 0.75f;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			Vector2 previousPosition = projectile.Center;
+			Vector2 previousPosition = Projectile.Center;
 			for (int k = 0; k < trailPos.Length; k++)
 			{
 				float sqrt = (float)Math.Sqrt((trailPos.Length - k) / (float)trailPos.Length);
-				float scale = projectile.scale * (0.6f * sqrt + 0.4f) * scale2;
+				float scale = Projectile.scale * (0.6f * sqrt + 0.4f) * scale2;
 				if (trailPos[k] == Vector2.Zero)
 				{
 					return false;
 				}
 				Vector2 currentPos = trailPos[k];
 				Vector2 betweenPositions = previousPosition - currentPos;
-				if (trailPos[k] != projectile.Center)
+				if (trailPos[k] != Projectile.Center)
 				{
 					Vector2 drawPos = trailPos[k] - Main.screenPosition;
 					Color color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(SOTSWorld.GlobalCounter * 3 + k * 2), false);
-					color = projectile.GetAlpha(color);
+					color = Projectile.GetAlpha(color);
 					color.A = 0; 
 					float max = betweenPositions.Length() / (texture.Width * 0.5f);
 					for (int i = 0; i < max; i++)
@@ -101,7 +101,7 @@ namespace SOTS.Projectiles.Chaos
 		}
 		public void cataloguePos()
 		{
-			Vector2 current = projectile.Center;
+			Vector2 current = Projectile.Center;
 			for (int i = 0; i < trailPos.Length; i++)
 			{
 				Vector2 previousPosition = trailPos[i];
@@ -116,10 +116,10 @@ namespace SOTS.Projectiles.Chaos
 		}
 		public void TriggerStop()
 		{
-			projectile.tileCollide = false;
-			projectile.velocity *= 0f;
-			projectile.friendly = false;
-			projectile.netUpdate = true;
+			Projectile.tileCollide = false;
+			Projectile.velocity *= 0f;
+			Projectile.friendly = false;
+			Projectile.netUpdate = true;
 		}
 		public Color color
         {
@@ -127,25 +127,25 @@ namespace SOTS.Projectiles.Chaos
 		}
 		public override bool PreAI()
 		{
-			projectile.ai[0]++;
-			projectile.alpha = (int)(255 - projectile.ai[0] * 30);
-			if (projectile.alpha < 0)
-				projectile.alpha = 0;
+			Projectile.ai[0]++;
+			Projectile.alpha = (int)(255 - Projectile.ai[0] * 30);
+			if (Projectile.alpha < 0)
+				Projectile.alpha = 0;
 			int trailLength = 33;
 			if (runOnce)
 			{
 				for (int i = 0; i < 8; i++)
 				{
-					Dust dust = Dust.NewDustDirect(new Vector2(projectile.Center.X - 4, projectile.Center.Y - 4), 0, 0, ModContent.DustType<CopyDust4>());
+					Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4), 0, 0, ModContent.DustType<CopyDust4>());
 					dust.color = color;
 					dust.noGravity = true;
 					dust.fadeIn = 0.1f;
 					dust.scale *= 1.4f;
 					dust.alpha = 100;
 					dust.velocity *= 1.2f;
-					dust.velocity += projectile.velocity * Main.rand.NextFloat(0, 1f) * 1.0f;
+					dust.velocity += Projectile.velocity * Main.rand.NextFloat(0, 1f) * 1.0f;
 				}
-				projectile.rotation = projectile.velocity.ToRotation();
+				Projectile.rotation = Projectile.velocity.ToRotation();
 				trailPos = new Vector2[trailLength];
 				for (int i = 0; i < trailPos.Length; i++)
 				{
@@ -153,21 +153,21 @@ namespace SOTS.Projectiles.Chaos
 				}
 				runOnce = false;
 			}
-			if (projectile.timeLeft > trailLength && !projectile.friendly)
+			if (Projectile.timeLeft > trailLength && !Projectile.friendly)
             {
-				projectile.timeLeft = trailLength;
+				Projectile.timeLeft = trailLength;
             }
-			if((projectile.timeLeft < trailLength && Main.rand.NextBool(4)) || Main.rand.NextBool(12))
+			if((Projectile.timeLeft < trailLength && Main.rand.NextBool(4)) || Main.rand.NextBool(12))
             {
-				Dust dust = Dust.NewDustDirect(new Vector2(projectile.Center.X - 4, projectile.Center.Y - 4), 0, 0, ModContent.DustType<CopyDust4>());
+				Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4), 0, 0, ModContent.DustType<CopyDust4>());
 				dust.color = color;
 				dust.noGravity = true;
 				dust.fadeIn = 0.1f;
 				dust.scale *= 1.4f;
-				dust.alpha = projectile.alpha;
+				dust.alpha = Projectile.alpha;
 				dust.velocity *= 1.3f;
 			}
-			else if (projectile.timeLeft <= trailLength && projectile.friendly)
+			else if (Projectile.timeLeft <= trailLength && Projectile.friendly)
             {
 				TriggerStop();
             }		

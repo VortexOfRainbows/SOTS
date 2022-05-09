@@ -23,31 +23,31 @@ namespace SOTS.Projectiles.Laser
 		
         public override void SetDefaults()
         {
-			projectile.CloneDefaults(263);
+			Projectile.CloneDefaults(263);
             aiType = 263; 
-			projectile.height = 24;
-			projectile.width = 24;
-			projectile.penetrate = -1;
-			projectile.friendly = true;
-			projectile.magic = true;
-			projectile.timeLeft = 2;
-			projectile.tileCollide = false;
-			projectile.hostile = false;
-			projectile.alpha = 255;
+			Projectile.height = 24;
+			Projectile.width = 24;
+			Projectile.penetrate = -1;
+			Projectile.friendly = true;
+			Projectile.magic = true;
+			Projectile.timeLeft = 2;
+			Projectile.tileCollide = false;
+			Projectile.hostile = false;
+			Projectile.alpha = 255;
 		}
 		public override void Kill(int timeLeft)
         {
-			if(projectile.ai[0] == 1)
+			if(Projectile.ai[0] == 1)
 			{
 				for(int i = 0; i < 360; i += 40)
 				{
-					Vector2 circularLocation = new Vector2(-12, 0).RotatedBy(MathHelper.ToRadians(i + projectile.ai[1]));
+					Vector2 circularLocation = new Vector2(-12, 0).RotatedBy(MathHelper.ToRadians(i + Projectile.ai[1]));
 					
-					int num1 = Dust.NewDust(new Vector2(projectile.Center.X + circularLocation.X - 4, projectile.Center.Y + circularLocation.Y - 4), 4, 4, 66);
+					int num1 = Dust.NewDust(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, 66);
 					Main.dust[num1].noGravity = true;
 					Main.dust[num1].velocity = circularLocation * 0.35f;
 					
-					float newAi = projectile.ai[1] * 2 / 13f;
+					float newAi = Projectile.ai[1] * 2 / 13f;
 					double frequency = 0.3;
 					double center = 130;
 					double width = 125;
@@ -62,9 +62,9 @@ namespace SOTS.Projectiles.Laser
 		}
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.immune[projectile.owner] = 5;
-			projectile.ai[0] = 1;
-			projectile.netUpdate = true;
+            target.immune[Projectile.owner] = 5;
+			Projectile.ai[0] = 1;
+			Projectile.netUpdate = true;
         }
 	}
 }

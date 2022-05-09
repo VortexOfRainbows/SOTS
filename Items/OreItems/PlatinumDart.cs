@@ -19,7 +19,7 @@ namespace SOTS.Items.OreItems
 			Item.damage = 15;
 			Item.useTime = 15;
 			Item.useAnimation = 15;
-			Item.ranged = true;
+			Item.DamageType = DamageClass.Ranged;
 			Item.thrown = false;
 			Item.value = Item.sellPrice(0, 0, 35, 0);
 			Item.rare = ItemRarityID.Green;

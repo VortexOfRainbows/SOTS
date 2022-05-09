@@ -164,9 +164,9 @@ namespace SOTS.NPCs.Constructs
 					else if(!runOnce)
 					{
 						Projectile projectile = Main.projectile[projectiles[j]];
-						if (projectile.type == ModContent.ProjectileType<TidalConstructTrail>() && projectile.active && (int)projectile.ai[1] == npc.whoAmI)
+						if (Projectile.type == ModContent.ProjectileType<TidalConstructTrail>() && Projectile.active && (int)Projectile.ai[1] == npc.whoAmI)
 						{
-							projectile.Center = pos;
+							Projectile.Center = pos;
 						}
 						else
 						{

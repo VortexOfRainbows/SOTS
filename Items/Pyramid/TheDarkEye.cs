@@ -453,7 +453,7 @@ namespace SOTS.Items.Pyramid
 							for (int w = -1; w < 2; w++)
 							{
 								Tile tile = Framing.GetTileSafely(i + k, j + w);
-								if(Main.tileSolid[tile.type] == true && !tile.inActive() && Main.tileSolidTop[tile.type] == false && tile.active())
+								if(Main.tileSolid[tile.TileType] == true && !tile.inActive() && Main.tileSolidTop[tile.TileType] == false && tile.active())
 								{
 									flag = false;
 								}
@@ -494,7 +494,7 @@ namespace SOTS.Items.Pyramid
 							for (int w = -1; w < 2; w++)
 							{
 								Tile tile = Framing.GetTileSafely(i + k, j + w);
-								if (Main.tileSolid[tile.type] == true && !tile.inActive() && Main.tileSolidTop[tile.type] == false && tile.active())
+								if (Main.tileSolid[tile.TileType] == true && !tile.inActive() && Main.tileSolidTop[tile.TileType] == false && tile.active())
 								{
 									flag = false;
 								}
@@ -544,26 +544,26 @@ namespace SOTS.Items.Pyramid
 	{
 		public override void SetDefaults()
 		{
-			projectile.width = 50;
-			projectile.height = 50;
-			projectile.timeLeft = 10;
-			projectile.penetrate = -1;
-			projectile.friendly = false;
-			projectile.hostile = false;
-			projectile.tileCollide = false;
-			projectile.aiStyle = -1;
-			projectile.alpha = 255;
+			Projectile.width = 50;
+			Projectile.height = 50;
+			Projectile.timeLeft = 10;
+			Projectile.penetrate = -1;
+			Projectile.friendly = false;
+			Projectile.hostile = false;
+			Projectile.tileCollide = false;
+			Projectile.aiStyle = -1;
+			Projectile.alpha = 255;
 		}
 		bool effect = false;
 		public override void AI()
 		{
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			if (!effect)
 			{
 				Vector2 velo = Vector2.Zero;
 				effect = true;
-				Vector2 finalPos = TheDarkEye.StaticDrawDetect(mod, projectile.Center, (int)projectile.ai[0], (int)projectile.ai[1], projectile.damage, (int)projectile.knockBack, ref velo, true, player);
-				SoundEngine.PlaySound(SoundID.Item8, Main.player[projectile.owner].Center);
+				Vector2 finalPos = TheDarkEye.StaticDrawDetect(mod, Projectile.Center, (int)Projectile.ai[0], (int)Projectile.ai[1], Projectile.damage, (int)Projectile.knockBack, ref velo, true, player);
+				SoundEngine.PlaySound(SoundID.Item8, Main.player[Projectile.owner].Center);
 				player.position = finalPos - new Vector2(player.width / 2, player.height / 2);
 				if(player.velocity.Y > 1)
 				{

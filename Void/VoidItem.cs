@@ -6,6 +6,7 @@ using SOTS.Items.Permafrost;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -27,7 +28,7 @@ namespace SOTS.Void
 			Item.mana = 1;
 			Item.thrown = false;
 		}
-		public sealed override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat)
+		/*public sealed override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat)
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			float realDamageBoost = voidPlayer.voidDamage;
@@ -35,26 +36,19 @@ namespace SOTS.Void
 			Item.mana = 1;
 			add += realDamageBoost - 1;
 		}
-		public override void GetWeaponKnockback(Player player, ref float knockback) 	
-		{
-			if(!Item.magic && !Item.thrown && !Item.summon && !Item.melee && !Item.ranged)
-			{
-				knockback = knockback + VoidPlayer.ModPlayer(player).voidKnockback;
-			}
-		}
 		public sealed override void GetWeaponCrit(Player player, ref int crit) 
 		{
 			crit = crit + VoidPlayer.ModPlayer(player).voidCrit;
-		}
+		}*/
 		public int VoidCost(Player player)
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			int baseCost = GetVoid(player);
 			int finalCost;
 			float voidCostMult = 1f;
-			if (!Item.summon)
+			if (!Item.CountsAsClass(DamageClass.Summon))
 			{
-				if (Item.prefix == mod.GetPrefix("Famished").Type || Item.prefix == mod.GetPrefix("Precarious").Type || Item.prefix == mod.GetPrefix("Potent").Type || Item.prefix == mod.GetPrefix("Omnipotent").Type)
+				if (Item.prefix == ModContent.PrefixType<Famished>() || Item.prefix == ModContent.PrefixType<Precarious>() || Item.prefix == ModContent.PrefixType<Potent>() || Item.prefix == ModContent.PrefixType<Omnipotent>())
 				{
 					voidCostMult = Item.GetGlobalItem<PrefixItem>().voidCostMultiplier;
 				}
@@ -73,7 +67,7 @@ namespace SOTS.Void
 		public virtual int GetVoid(Player player)
 		{
 			int cost = 1;
-			if(Item.summon)
+			if(Item.CountsAsClass(DamageClass.Summon))
             {
 				cost = VoidPlayer.minionVoidCost(VoidPlayer.voidMinion(Item.shoot));
 				if (Item.type == ModContent.ItemType<Lemegeton>())
@@ -93,16 +87,16 @@ namespace SOTS.Void
 				
 				tt.text = damageValue + " void " + damageWord;
 				
-				if(Item.melee)
+				if(Item.CountsAsClass(DamageClass.Melee))
 					tt.text = damageValue + " void + melee " + damageWord;
 				
-				if(Item.ranged)
+				if(Item.CountsAsClass(DamageClass.Ranged))
 					tt.text = damageValue + " void + ranged " + damageWord;
 			
-				if(Item.magic)
+				if(Item.CountsAsClass(DamageClass.Magic))
 					tt.text = damageValue + " void + magic " + damageWord;
 
-				if (Item.summon)
+				if (Item.CountsAsClass(DamageClass.Summon))
 					tt.text = damageValue + " void + summon " + damageWord;
 			}
 				
@@ -121,17 +115,17 @@ namespace SOTS.Void
 				} 
 			}
 			
-		}	
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) 
-		{
-			if(Item.shoot != 10)
+		}
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
+			if(type != 10)
 			{
 				return true;
 			}
 			return false;
 		}
-		public sealed override bool ConsumeAmmo(Player player) ///this is the only way i have found to make void not be consumed when ammo is not present
-		{
+        public sealed override bool CanConsumeAmmo(Player player)
+        {
 			if(Item.useAmmo != 0 && BeforeDrainMana(player))
 				DrainMana(player);
 			bool canUse = BeforeConsumeAmmo(player);
@@ -150,22 +144,22 @@ namespace SOTS.Void
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			bool canUse = BeforeUseItem(player);
-			bool cursed = player.HasBuff(BuffID.Cursed) || (player.HasBuff(BuffID.Silenced) && Item.magic);
+			bool cursed = player.HasBuff(BuffID.Cursed) || (player.HasBuff(BuffID.Silenced) && Item.CountsAsClass(DamageClass.Magic));
 			if (cursed)
 				return false;
 			int currentVoid = voidPlayer.voidMeterMax2 - voidPlayer.lootingSouls - voidPlayer.VoidMinionConsumption;
 			int finalCost = VoidCost(player);
-			if (voidPlayer.safetySwitch && voidPlayer.voidMeter < finalCost && !Item.summon && !voidPlayer.frozenVoid)
+			if (voidPlayer.safetySwitch && voidPlayer.voidMeter < finalCost && !Item.CountsAsClass(DamageClass.Summon) && !voidPlayer.frozenVoid)
 			{
 				return false;
 			}
-			if(!canUse || player.FindBuffIndex(ModContent.BuffType<VoidRecovery>()) > -1 || Item.useAnimation < 2 || (player.altFunctionUse != 2 && Item.summon && currentVoid < finalCost))
+			if(!canUse || player.FindBuffIndex(ModContent.BuffType<VoidRecovery>()) > -1 || Item.useAnimation < 2 || (player.altFunctionUse != 2 && Item.CountsAsClass(DamageClass.Summon) && currentVoid < finalCost))
 			{
 				return false;
 			}
 			OnUseEffects(player);
 			Item.mana = 0;
-			if(Item.useAmmo == 0 && BeforeDrainMana(player) && !Item.summon)
+			if(Item.useAmmo == 0 && BeforeDrainMana(player) && !Item.CountsAsClass(DamageClass.Summon))
 				DrainMana(player);
 			return true;
 		}

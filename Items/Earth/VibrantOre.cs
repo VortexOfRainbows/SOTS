@@ -106,7 +106,7 @@ namespace SOTS.Items.Earth
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
 		{
 			Tile tile = Main.tile[i, j];
-			float uniquenessCounter = Main.GlobalTime * -100 + (i + j) * 5 + tile.frameX + (i % 7 * 3) + (j % 7 * -2);
+			float uniquenessCounter = Main.GlobalTime * -100 + (i + j) * 5 + tile.TileFrameX + (i % 7 * 3) + (j % 7 * -2);
 			float alphaMult = 0.35f + 0.25f * (float)Math.Sin(MathHelper.ToRadians(uniquenessCounter));
 			r = 0.27f * alphaMult;
 			g = 0.33f * alphaMult;
@@ -120,25 +120,25 @@ namespace SOTS.Items.Earth
 			{
 				zero = Vector2.Zero;
 			}
-			Texture2D texture = Main.tileTexture[tile.type];
+			Texture2D texture = Main.tileTexture[tile.TileType];
 			Vector2 drawOffSet = Vector2.Zero;
-			if (tile.frameY == 0) //below is active
+			if (tile.TileFrameY == 0) //below is active
 				drawOffSet.Y += 2;
-			if (tile.frameY == 18) //above is active
+			if (tile.TileFrameY == 18) //above is active
 				drawOffSet.Y -= 2;
-			if (tile.frameY == 36) //right is active
+			if (tile.TileFrameY == 36) //right is active
 				drawOffSet.X += 2;
-			if (tile.frameY == 54) //left is active
+			if (tile.TileFrameY == 54) //left is active
 				drawOffSet.X -= 2;
 			Vector2 location = new Vector2(i * 16, j * 16) + drawOffSet;
 			Color color2 = Lighting.GetColor(i, j, WorldGen.paintColor(tile.color()));
-			Rectangle frame = new Rectangle(tile.frameX, tile.frameY, 16, 16);
+			Rectangle frame = new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, 16);
 			spriteBatch.Draw(texture, location + zero - Main.screenPosition, frame, color2, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
-			float uniquenessCounter = Main.GlobalTime * -100 + (i + j) * 5 + tile.frameX + (i % 7 * 3) + (j % 7 * -2);
+			float uniquenessCounter = Main.GlobalTime * -100 + (i + j) * 5 + tile.TileFrameX + (i % 7 * 3) + (j % 7 * -2);
 			float alphaMult = 0.55f + 0.45f * (float)Math.Sin(MathHelper.ToRadians(uniquenessCounter));
 			for (int k = 0; k < 2; k++)
 			{
-				SOTSTile.DrawSlopedGlowMask(i, j, tile.type, texture, new Color(100, 100, 100, 0) * alphaMult * 0.6f, drawOffSet);
+				SOTSTile.DrawSlopedGlowMask(i, j, tile.TileType, texture, new Color(100, 100, 100, 0) * alphaMult * 0.6f, drawOffSet);
 			}
 			return false;
 		}

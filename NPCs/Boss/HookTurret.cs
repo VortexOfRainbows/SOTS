@@ -64,7 +64,7 @@ namespace SOTS.NPCs.Boss
 			NPCID.Sets.TrailCacheLength[npc.type] = 4;  
 			NPCID.Sets.TrailingMode[npc.type] = 0;  
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
 			Texture2D texture = Main.npcTexture[npc.type];
 			Vector2 drawOrigin = new Vector2(Main.npcTexture[npc.type].Width * 0.5f, texture.Height * 0.5f);

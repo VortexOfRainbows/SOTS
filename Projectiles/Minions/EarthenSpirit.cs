@@ -13,38 +13,38 @@ namespace SOTS.Projectiles.Minions
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Earthen Spirit");
-			ProjectileID.Sets.MinionTargettingFeature[projectile.type] = true;
-			ProjectileID.Sets.TrailCacheLength[projectile.type] = 8;
-			ProjectileID.Sets.TrailingMode[projectile.type] = 0;
+			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
+			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 8;
+			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
 		}
 
 		public sealed override void SetDefaults()
 		{
-			projectile.width = 34;
-			projectile.height = 34;
-			projectile.tileCollide = false;
-			projectile.friendly = true;
-			//projectile.minion = true;
-			//projectile.minionSlots = 0f;
-			projectile.penetrate = -1;
-			projectile.usesLocalNPCImmunity = true;
-			projectile.ignoreWater = true;
-			projectile.localNPCHitCooldown = 10;
+			Projectile.width = 34;
+			Projectile.height = 34;
+			Projectile.tileCollide = false;
+			Projectile.friendly = true;
+			//Projectile.minion = true;
+			//Projectile.minionSlots = 0f;
+			Projectile.penetrate = -1;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.ignoreWater = true;
+			Projectile.localNPCHitCooldown = 10;
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			projectile.localNPCImmunity[target.whoAmI] = projectile.localNPCHitCooldown;
-			target.immune[projectile.owner] = 0;
+			Projectile.localNPCImmunity[target.whoAmI] = Projectile.localNPCHitCooldown;
+			target.immune[Projectile.owner] = 0;
 		}
 		public override void SendExtraAI(BinaryWriter writer)
 		{
-			writer.Write(projectile.alpha);
+			writer.Write(Projectile.alpha);
 			writer.Write(readyToFight);
 			base.SendExtraAI(writer);
 		}
 		public override void ReceiveExtraAI(BinaryReader reader)
 		{
-			projectile.alpha = reader.ReadInt32();
+			Projectile.alpha = reader.ReadInt32();
 			readyToFight = reader.ReadBoolean();
 			base.ReceiveExtraAI(reader);
 		}
@@ -58,7 +58,7 @@ namespace SOTS.Projectiles.Minions
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture = Main.projectileTexture[projectile.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Projectiles/Minions/EarthenSpiritReticle").Value;
 			Color color = new Color(100, 100, 100, 0);
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
@@ -66,34 +66,34 @@ namespace SOTS.Projectiles.Minions
 			{
 				float x = Main.rand.Next(-10, 11) * 0.25f;
 				float y = Main.rand.Next(-10, 11) * 0.25f;
-				Main.spriteBatch.Draw(texture, new Vector2((float)(projectile.Center.X - (int)Main.screenPosition.X) + x, (float)(projectile.Center.Y - (int)Main.screenPosition.Y) + y), null, color * ((255 - projectile.alpha) / 255f), 0f, drawOrigin, projectile.scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, new Vector2((float)(Projectile.Center.X - (int)Main.screenPosition.X) + x, (float)(Projectile.Center.Y - (int)Main.screenPosition.Y) + y), null, color * ((255 - Projectile.alpha) / 255f), 0f, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
 
 				x = Main.rand.Next(-10, 11) * 0.125f;
 				y = Main.rand.Next(-10, 11) * 0.125f;
-				float reticleAlpha = projectile.ai[0] / 60f;
+				float reticleAlpha = Projectile.ai[0] / 60f;
 				if(reticleAlpha > 1)
 				{
 					reticleAlpha = 1;
 				}
-				if(projectile.velocity.Length() <= 10f)
-					Main.spriteBatch.Draw(texture2, new Vector2((float)(projectile.Center.X - (int)Main.screenPosition.X) + x, (float)(projectile.Center.Y - (int)Main.screenPosition.Y) + y), null, color * reticleAlpha, MathHelper.ToRadians((projectile.ai[0] + 2) * 6f), drawOrigin, projectile.scale * reticleAlpha, SpriteEffects.None, 0f);
+				if(Projectile.velocity.Length() <= 10f)
+					Main.spriteBatch.Draw(texture2, new Vector2((float)(Projectile.Center.X - (int)Main.screenPosition.X) + x, (float)(Projectile.Center.Y - (int)Main.screenPosition.Y) + y), null, color * reticleAlpha, MathHelper.ToRadians((Projectile.ai[0] + 2) * 6f), drawOrigin, Projectile.scale * reticleAlpha, SpriteEffects.None, 0f);
 			}
 		}
 		bool readyToFight = false;
 		public void dustSound()
 		{
-			SoundEngine.PlaySound(2, (int)(projectile.Center.X), (int)(projectile.Center.Y), 14, 0.4f);
+			SoundEngine.PlaySound(2, (int)(Projectile.Center.X), (int)(Projectile.Center.Y), 14, 0.4f);
 			for (int i = 0; i < 360; i += 20)
 			{
 				Vector2 circularLocation = new Vector2(5, 0).RotatedBy(MathHelper.ToRadians(i));
 
-				int num1 = Dust.NewDust(new Vector2(projectile.Center.X + circularLocation.X - 4, projectile.Center.Y + circularLocation.Y - 4), 4, 4, 222);
+				int num1 = Dust.NewDust(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, 222);
 				Main.dust[num1].noGravity = true;
 				Main.dust[num1].scale = 1.2f;
 				Main.dust[num1].velocity = circularLocation * 0.25f + new Vector2(Main.rand.Next(-20, 21), Main.rand.Next(-20, 21)) * 0.1f;
 
 
-				num1 = Dust.NewDust(new Vector2(projectile.Center.X + circularLocation.X - 4, projectile.Center.Y + circularLocation.Y - 4), 4, 4, 222);
+				num1 = Dust.NewDust(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, 222);
 				Main.dust[num1].noGravity = true;
 				Main.dust[num1].scale = 1.5f;
 				Main.dust[num1].velocity = circularLocation * 0.45f + new Vector2(Main.rand.Next(-20, 21), Main.rand.Next(-20, 21)) * 0.2f;
@@ -101,7 +101,7 @@ namespace SOTS.Projectiles.Minions
 		}
 		public override void AI() 
 		{
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 
 			#region Active check
@@ -111,7 +111,7 @@ namespace SOTS.Projectiles.Minions
 			}
 			if (player.HasBuff(ModContent.BuffType<EarthenSpiritAid>()))
 			{
-				projectile.timeLeft = 6;
+				Projectile.timeLeft = 6;
 			}
 			#endregion
 
@@ -119,10 +119,10 @@ namespace SOTS.Projectiles.Minions
 			bool found = false;
 			int ofTotal = 0;
 			int total = 0;
-			for (int i = 0; i < Main.projectile.Length; i++)
+			for (int i = 0; i < Main.Projectile.Length; i++)
 			{
 				Projectile proj = Main.projectile[i];
-				if (projectile.type == proj.type && proj.active && projectile.active && proj.owner == projectile.owner)
+				if (Projectile.type == proj.type && proj.active && Projectile.active && proj.owner == Projectile.owner)
 				{
 					if (proj == projectile)
 					{
@@ -134,19 +134,19 @@ namespace SOTS.Projectiles.Minions
 				}
 			}
 			if (Main.myPlayer == player.whoAmI)
-				projectile.ai[1] = ofTotal;
+				Projectile.ai[1] = ofTotal;
 			#endregion
 
 			#region Find target
 			float distanceFromTarget = 1000f;
-			Vector2 targetCenter = projectile.Center;
+			Vector2 targetCenter = Projectile.Center;
 			bool foundTarget = false;
 
 			// This code is required if your minion weapon has the targeting feature
 			if (player.HasMinionAttackTargetNPC)
 			{
 				NPC npc = Main.npc[player.MinionAttackTargetNPC];
-				float between = Vector2.Distance(npc.Center, projectile.Center);
+				float between = Vector2.Distance(npc.Center, Projectile.Center);
 				float between2 = Vector2.Distance(npc.Center, player.Center);
 				if (between2 < distanceFromTarget) 
 				{
@@ -162,10 +162,10 @@ namespace SOTS.Projectiles.Minions
 					NPC npc = Main.npc[i];
 					if (npc.CanBeChasedBy()) 
 					{
-						float between = Vector2.Distance(npc.Center, projectile.Center);
+						float between = Vector2.Distance(npc.Center, Projectile.Center);
 						float between2 = Vector2.Distance(npc.Center, player.Center);
 						bool inRange = between < distanceFromTarget;
-						bool lineOfSight = Collision.CanHitLine(projectile.position, projectile.width, projectile.height, npc.position, npc.width, npc.height);
+						bool lineOfSight = Collision.CanHitLine(Projectile.position, Projectile.width, Projectile.height, npc.position, npc.width, npc.height);
 						
 						bool closeThroughWall = between < 100f; //should attack semi-reliably through walls
 						if (inRange && (lineOfSight || closeThroughWall) && between2 < distanceFromTarget)
@@ -185,10 +185,10 @@ namespace SOTS.Projectiles.Minions
 			float speed = 10f;
 			if (foundTarget)
 			{
-				if (projectile.alpha >= 255)
+				if (Projectile.alpha >= 255)
 					speed = 50f;
 
-				Vector2 direction = targetCenter - projectile.Center;
+				Vector2 direction = targetCenter - Projectile.Center;
 				float distance = direction.Length() + 0.1f;
 				if (distance > 1.1f)
 				{
@@ -198,27 +198,27 @@ namespace SOTS.Projectiles.Minions
 						distance = speed;
 					}
 					direction *= distance;
-					projectile.velocity = direction;
+					Projectile.velocity = direction;
 				}
 				else
 				{
-					projectile.velocity *= 0f;
+					Projectile.velocity *= 0f;
 				}
-				projectile.alpha += 10;
+				Projectile.alpha += 10;
 
-				if (projectile.alpha > 255)
+				if (Projectile.alpha > 255)
 				{
-					projectile.alpha = 255;	
+					Projectile.alpha = 255;	
 					if (readyToFight)
-						projectile.ai[0]++;
+						Projectile.ai[0]++;
 					int cooldown = 80;
-					if (total != 0 && (int)modPlayer.orbitalCounter % cooldown == (int)(projectile.ai[1] * (float)cooldown / total + 0.5f) % cooldown)
+					if (total != 0 && (int)modPlayer.orbitalCounter % cooldown == (int)(Projectile.ai[1] * (float)cooldown / total + 0.5f) % cooldown)
 					{
 						if (readyToFight)
 						{
-							projectile.ai[0] = 0;
-							projectile.alpha = 0;
-							projectile.friendly = true;
+							Projectile.ai[0] = 0;
+							Projectile.alpha = 0;
+							Projectile.friendly = true;
 							dustSound();
 							readyToFight = false;
 						}
@@ -230,38 +230,38 @@ namespace SOTS.Projectiles.Minions
 				}
 				else
 				{
-					projectile.friendly = false;
+					Projectile.friendly = false;
 				}
 			}
 			else
 			{
 				GoIdle();
 				readyToFight = false;
-				projectile.ai[0] = 0;
-				projectile.alpha -= 8;
-				if (projectile.alpha < 0)
+				Projectile.ai[0] = 0;
+				Projectile.alpha -= 8;
+				if (Projectile.alpha < 0)
 				{
-					projectile.alpha = 0;
+					Projectile.alpha = 0;
 				}
-				Vector2 vectorToIdlePosition = idlePosition - projectile.Center;
+				Vector2 vectorToIdlePosition = idlePosition - Projectile.Center;
 				float distanceToIdlePosition = vectorToIdlePosition.Length();
 				if (Main.myPlayer == player.whoAmI && distanceToIdlePosition > 1400f)
 				{
-					projectile.ai[0] = 0;
-					projectile.alpha = 0;
-					projectile.position = idlePosition;
-					projectile.velocity *= 0.1f;
-					projectile.netUpdate = true;
+					Projectile.ai[0] = 0;
+					Projectile.alpha = 0;
+					Projectile.position = idlePosition;
+					Projectile.velocity *= 0.1f;
+					Projectile.netUpdate = true;
 				}
 			}
 			#endregion
 
-			Lighting.AddLight(projectile.Center, 2.4f * 0.5f * ((255 - projectile.alpha) / 255f), 2.2f * 0.5f * ((255 - projectile.alpha) / 255f), 1.4f * 0.5f * ((255 - projectile.alpha) / 255f));
+			Lighting.AddLight(Projectile.Center, 2.4f * 0.5f * ((255 - Projectile.alpha) / 255f), 2.2f * 0.5f * ((255 - Projectile.alpha) / 255f), 1.4f * 0.5f * ((255 - Projectile.alpha) / 255f));
 			MoveAwayFromOthers();
 
 			if (Main.myPlayer == player.whoAmI)
 			{
-				projectile.netUpdate = true;
+				Projectile.netUpdate = true;
 			}
 		}
 	}

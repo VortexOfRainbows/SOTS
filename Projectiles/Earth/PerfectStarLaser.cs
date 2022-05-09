@@ -13,11 +13,11 @@ namespace SOTS.Projectiles.Earth
     {
         public override void SendExtraAI(BinaryWriter writer)
         {
-			writer.Write(projectile.friendly);
+			writer.Write(Projectile.friendly);
         }
         public override void ReceiveExtraAI(BinaryReader reader)
         {
-			projectile.friendly = reader.ReadBoolean();
+			Projectile.friendly = reader.ReadBoolean();
         }
         public override void SetStaticDefaults()
 		{
@@ -25,13 +25,13 @@ namespace SOTS.Projectiles.Earth
 		}
         public override void SetDefaults()
         {
-			projectile.penetrate = -1; 
-			projectile.friendly = true;
-			projectile.magic = true;
-			projectile.timeLeft = 1200;
-			projectile.width = 24;
-			projectile.height = 24;
-			projectile.extraUpdates = 2;
+			Projectile.penetrate = -1; 
+			Projectile.friendly = true;
+			Projectile.magic = true;
+			Projectile.timeLeft = 1200;
+			Projectile.width = 24;
+			Projectile.height = 24;
+			Projectile.extraUpdates = 2;
 		}
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
 		{
@@ -45,17 +45,17 @@ namespace SOTS.Projectiles.Earth
         }
         bool runOnce = true;
 		Vector2[] trailPos = new Vector2[10];
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
 			if (runOnce)
 				return false;
-			Texture2D texture = Main.projectileTexture[projectile.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			Vector2 previousPosition = projectile.Center;
+			Vector2 previousPosition = Projectile.Center;
 			for (int k = 0; k < trailPos.Length; k++)
 			{
 				float sqrt = (float)Math.Sqrt((trailPos.Length - k) / (float)trailPos.Length);
-				float scale = projectile.scale * sqrt * 1.5f;
+				float scale = Projectile.scale * sqrt * 1.5f;
 				if (trailPos[k] == Vector2.Zero)
 				{
 					return false;
@@ -63,10 +63,10 @@ namespace SOTS.Projectiles.Earth
 				Vector2 drawPos = trailPos[k] - Main.screenPosition;
 				Vector2 currentPos = trailPos[k];
 				Vector2 betweenPositions = previousPosition - currentPos;
-				if (trailPos[k] != projectile.Center)
+				if (trailPos[k] != Projectile.Center)
 				{
 					Color color = new Color(100, 100, 100, 0);
-					color = projectile.GetAlpha(color);
+					color = Projectile.GetAlpha(color);
 					float max = betweenPositions.Length() / (texture.Width * 0.2f);
 					for (int i = 0; i < max; i++)
 					{
@@ -80,7 +80,7 @@ namespace SOTS.Projectiles.Earth
 		}
 		public void cataloguePos()
 		{
-			Vector2 current = projectile.Center;
+			Vector2 current = Projectile.Center;
 			for (int i = 0; i < trailPos.Length; i++)
 			{
 				Vector2 previousPosition = trailPos[i];
@@ -95,29 +95,29 @@ namespace SOTS.Projectiles.Earth
 		}
 		public void TriggerStop()
 		{
-			projectile.tileCollide = false;
-			projectile.velocity *= 0f;
-			projectile.friendly = false;
-			projectile.netUpdate = true;
+			Projectile.tileCollide = false;
+			Projectile.velocity *= 0f;
+			Projectile.friendly = false;
+			Projectile.netUpdate = true;
 		}
 		public override bool PreAI()
 		{
-			int trailLength = (int)projectile.ai[0];
+			int trailLength = (int)Projectile.ai[0];
 			if (runOnce)
 			{
 				for (int i = 0; i < 14; i++)
 				{
-					Dust dust = Dust.NewDustDirect(new Vector2(projectile.Center.X - 4, projectile.Center.Y - 4), 0, 0, ModContent.DustType<CopyDust4>());
+					Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4), 0, 0, ModContent.DustType<CopyDust4>());
 					Color color2 = Color.Lerp(new Color(175, 218, 118, 0), new Color(74, 186, 54, 0), Main.rand.NextFloat(1));
 					dust.color = color2;
 					dust.noGravity = true;
 					dust.fadeIn = 0.1f;
 					dust.scale *= 1.3f;
-					dust.alpha = projectile.alpha;
+					dust.alpha = Projectile.alpha;
 					dust.velocity *= 0.7f;
-					dust.velocity += projectile.velocity * Main.rand.NextFloat(0, 0.6f);
+					dust.velocity += Projectile.velocity * Main.rand.NextFloat(0, 0.6f);
 				}
-				projectile.rotation = projectile.velocity.ToRotation();
+				Projectile.rotation = Projectile.velocity.ToRotation();
 				trailPos = new Vector2[trailLength];
 				for (int i = 0; i < trailPos.Length; i++)
 				{
@@ -125,22 +125,22 @@ namespace SOTS.Projectiles.Earth
 				}
 				runOnce = false;
 			}
-			if (projectile.timeLeft > trailLength && !projectile.friendly)
+			if (Projectile.timeLeft > trailLength && !Projectile.friendly)
             {
-				projectile.timeLeft = trailLength;
+				Projectile.timeLeft = trailLength;
             }
-			if(projectile.timeLeft < trailLength || Main.rand.NextBool(8))
+			if(Projectile.timeLeft < trailLength || Main.rand.NextBool(8))
             {
-				Dust dust = Dust.NewDustDirect(new Vector2(projectile.Center.X - 4, projectile.Center.Y - 4), 0, 0, ModContent.DustType<CopyDust4>());
+				Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4), 0, 0, ModContent.DustType<CopyDust4>());
 				Color color2 = Color.Lerp(new Color(175, 218, 118, 0), new Color(74, 186, 54, 0), Main.rand.NextFloat(1));
 				dust.color = color2;
 				dust.noGravity = true;
 				dust.fadeIn = 0.1f;
 				dust.scale *= 1.4f;
-				dust.alpha = projectile.alpha;
+				dust.alpha = Projectile.alpha;
 				dust.velocity *= 0.8f;
 			}
-			else if (projectile.timeLeft <= trailLength && projectile.friendly)
+			else if (Projectile.timeLeft <= trailLength && Projectile.friendly)
             {
 				TriggerStop();
             }		

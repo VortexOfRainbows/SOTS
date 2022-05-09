@@ -19,32 +19,32 @@ namespace SOTS.Projectiles.Lightning
 		}
 		public override void SetDefaults()
 		{
-			projectile.width = 12;
-			projectile.height = 12;
-			projectile.friendly = true;
-			projectile.ranged = true;
-			projectile.timeLeft = 3600;
-			projectile.tileCollide = false;
-			projectile.penetrate = -1;
-			projectile.alpha = 120;
-			projectile.scale = 1f;
-			projectile.usesLocalNPCImmunity = true;
-			projectile.localNPCHitCooldown = 40;
+			Projectile.width = 12;
+			Projectile.height = 12;
+			Projectile.friendly = true;
+			Projectile.ranged = true;
+			Projectile.timeLeft = 3600;
+			Projectile.tileCollide = false;
+			Projectile.penetrate = -1;
+			Projectile.alpha = 120;
+			Projectile.scale = 1f;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = 40;
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			projectile.localNPCImmunity[target.whoAmI] = projectile.localNPCHitCooldown;
-			target.immune[projectile.owner] = 0;
+			Projectile.localNPCImmunity[target.whoAmI] = Projectile.localNPCHitCooldown;
+			target.immune[Projectile.owner] = 0;
 		}
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
 		{
-			if (projectile.alpha >= 150)
+			if (Projectile.alpha >= 150)
 			{
 				return false;
 			}
-			float scale = projectile.scale;
-			float width = projectile.width * scale;
-			float height = projectile.height * scale;
+			float scale = Projectile.scale;
+			float width = Projectile.width * scale;
+			float height = Projectile.height * scale;
 			for (int i = 0; i < trailPos.Count; i++)
 			{
 				Vector2 pos = trailPos[i];
@@ -55,16 +55,16 @@ namespace SOTS.Projectiles.Lightning
 				}
 			}
 			return false;
-			//return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), projectile.Center, endPoint, 8f, ref point);
+			//return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, endPoint, 8f, ref point);
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
 			if (runOnce)
 				return false;
-			Texture2D texture = Main.projectileTexture[projectile.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			Vector2 previousPosition = projectile.Center;
-			Color color = new Color(140, 170, 140, 0) * ((255 - projectile.alpha) / 255f);
+			Vector2 previousPosition = Projectile.Center;
+			Color color = new Color(140, 170, 140, 0) * ((255 - Projectile.alpha) / 255f);
 			int degradePoint = 40;
 			for (int k = 0; k < trailPos.Count; k++)
 			{
@@ -72,7 +72,7 @@ namespace SOTS.Projectiles.Lightning
 				{
 					return false;
 				}
-				float scale = projectile.scale * 0.7f;
+				float scale = Projectile.scale * 0.7f;
 				if (k > trailPos.Count - degradePoint)
 				{
 					int scaleDown = k - (trailPos.Count - degradePoint);
@@ -94,7 +94,7 @@ namespace SOTS.Projectiles.Lightning
 							x = 0;
 							y = 0;
 						}
-						if (trailPos[k] != projectile.Center)
+						if (trailPos[k] != Projectile.Center)
 							Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, betweenPositions.ToRotation() + MathHelper.ToRadians(90), drawOrigin, scale, SpriteEffects.None, 0f);
 					}
 				}
@@ -113,8 +113,8 @@ namespace SOTS.Projectiles.Lightning
 		float speed = 5.5f;
 		public void runStartCalculations()
         {
-			Vector2 location = projectile.Center;
-			Vector2 originalVelo = projectile.velocity.SafeNormalize(Vector2.Zero) * speed;
+			Vector2 location = Projectile.Center;
+			Vector2 originalVelo = Projectile.velocity.SafeNormalize(Vector2.Zero) * speed;
 			bool collided = false;
 			int defaultDeviation = 65;
 			for (int i = 0; i < dist; i++)
@@ -134,14 +134,14 @@ namespace SOTS.Projectiles.Lightning
 				}
 				float scale = 1;
 				int npc = FindClosestEnemy(location, i);
-				if (npc != -1 && !collided && (i + projectile.identity) % 5 == 0 && i > projectile.identity * 7 % 33)
+				if (npc != -1 && !collided && (i + Projectile.identity) % 5 == 0 && i > Projectile.identity * 7 % 33)
 				{
 					NPC target = Main.npc[npc];
 					if (!target.friendly && target.dontTakeDamage == false && target.lifeMax > 5 && target.active && target.CanBeChasedBy() && !collided)
 					{
 						originalVelo = new Vector2(speed * scale, 0).RotatedBy(Redirect(originalVelo.ToRotation(), location, target.Center));
-						float width = projectile.width * scale;
-						float height = projectile.height * scale;
+						float width = Projectile.width * scale;
+						float height = Projectile.height * scale;
 						Rectangle projHitbox = new Rectangle((int)location.X - (int)width / 2, (int)location.Y - (int)height / 2, (int)width, (int)height);
 						if (target.Hitbox.Intersects(projHitbox))
 						{
@@ -177,7 +177,7 @@ namespace SOTS.Projectiles.Lightning
 		}
 		public int FindClosestEnemy(Vector2 pos, int currentIndex)
 		{
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			if (currentNPC != -1)
 			{
 				return currentNPC;
@@ -199,7 +199,7 @@ namespace SOTS.Projectiles.Lightning
 						distance = (float)Math.Sqrt(dX * dX + dY * dY);
 						if (distance < minDist)
 						{
-							bool lineOfSight = Collision.CanHitLine(pos - new Vector2(projectile.width / 2, projectile.height / 2), projectile.width, projectile.height, target.position, target.width, target.height);
+							bool lineOfSight = Collision.CanHitLine(pos - new Vector2(Projectile.width / 2, Projectile.height / 2), Projectile.width, Projectile.height, target.position, target.width, target.height);
 							if (lineOfSight)
 							{
 								minDist = distance;
@@ -216,13 +216,13 @@ namespace SOTS.Projectiles.Lightning
 		{
 			if (runOnce)
 			{
-				projectile.position += projectile.velocity.SafeNormalize(Vector2.Zero) * speed;
+				Projectile.position += Projectile.velocity.SafeNormalize(Vector2.Zero) * speed;
 				runStartCalculations();
 				runOnce = false;
 			}
-			projectile.alpha += 4;
-			if (projectile.alpha >= 255)
-				projectile.Kill();
+			Projectile.alpha += 4;
+			if (Projectile.alpha >= 255)
+				Projectile.Kill();
 		}
 	}
 }

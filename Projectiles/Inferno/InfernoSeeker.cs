@@ -22,16 +22,16 @@ namespace SOTS.Projectiles.Inferno
 		}
         public override void SetDefaults()
         {
-			projectile.height = 16;
-			projectile.width = 16;
-			projectile.ranged = true;
-			projectile.timeLeft = 150;
-			projectile.friendly = false;
-			projectile.hostile = false;
-			projectile.tileCollide = false;
-			projectile.extraUpdates = 1;
+			Projectile.height = 16;
+			Projectile.width = 16;
+			Projectile.ranged = true;
+			Projectile.timeLeft = 150;
+			Projectile.friendly = false;
+			Projectile.hostile = false;
+			Projectile.tileCollide = false;
+			Projectile.extraUpdates = 1;
 		}
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override bool PreDraw(ref Color lightColor)
         {
             return false;
         }
@@ -43,7 +43,7 @@ namespace SOTS.Projectiles.Inferno
 		{
 			for (int i = 0; i < 6; i++)
             {
-				int num1 = Dust.NewDust(new Vector2(projectile.Center.X - 4, projectile.Center.Y - 4), 0, 0, ModContent.DustType<CopyDust4>());
+				int num1 = Dust.NewDust(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4), 0, 0, ModContent.DustType<CopyDust4>());
 				Dust dust = Main.dust[num1];
 				dust.velocity *= 0.7f;
 				dust.noGravity = true;
@@ -51,51 +51,51 @@ namespace SOTS.Projectiles.Inferno
 				dust.color = VoidPlayer.InfernoColorAttempt(Main.rand.NextFloat(1f));
 				dust.fadeIn = 0.1f;
 				dust.scale *= 1.4f;
-				dust.alpha = projectile.alpha; 
+				dust.alpha = Projectile.alpha; 
 
-				dust = Dust.NewDustDirect(projectile.Center + new Vector2(-4, -4), 0, 0, DustID.Fire);
+				dust = Dust.NewDustDirect(Projectile.Center + new Vector2(-4, -4), 0, 0, DustID.Fire);
 				dust.noGravity = true;
 				dust.scale *= 1.1f;
 				dust.velocity *= 1.2f;
-				dust.velocity += projectile.velocity * 0.1f;
-				dust.alpha = projectile.alpha;
+				dust.velocity += Projectile.velocity * 0.1f;
+				dust.alpha = Projectile.alpha;
 			}
         }
         public override void AI()
 		{
 			if(Main.rand.NextBool(2))
 			{
-				int num1 = Dust.NewDust(new Vector2(projectile.Center.X - 4, projectile.Center.Y - 4), 0, 0, ModContent.DustType<CopyDust4>());
+				int num1 = Dust.NewDust(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4), 0, 0, ModContent.DustType<CopyDust4>());
 				Dust dust = Main.dust[num1];
 				dust.velocity *= 0.1f;
 				dust.noGravity = true;
 				dust.color = VoidPlayer.InfernoColorAttempt(Main.rand.NextFloat(1f));
 				dust.fadeIn = 0.1f;
 				dust.scale = 1.2f;
-				dust.alpha = projectile.alpha;
+				dust.alpha = Projectile.alpha;
 			}
 			else
             {
-				Dust dust = Dust.NewDustDirect(projectile.Center + new Vector2(-4, -4), 0, 0, DustID.Fire);
+				Dust dust = Dust.NewDustDirect(Projectile.Center + new Vector2(-4, -4), 0, 0, DustID.Fire);
 				dust.noGravity = true;
 				dust.scale = 1.3f;
 				dust.velocity *= 0.1f;
-				dust.velocity += projectile.velocity * 0.1f;
-				dust.alpha = projectile.alpha;
+				dust.velocity += Projectile.velocity * 0.1f;
+				dust.alpha = Projectile.alpha;
 			}
-			projectile.velocity *= 0.97f;
-			projectile.ai[0]++;
-			if (projectile.ai[0] > 30)
+			Projectile.velocity *= 0.97f;
+			Projectile.ai[0]++;
+			if (Projectile.ai[0] > 30)
 			{
-				int target = SOTSNPCs.FindTarget_Basic(projectile.Center, 320, this);
+				int target = SOTSNPCs.FindTarget_Basic(Projectile.Center, 320, this);
 				if (target >= 0)
 				{
 					NPC npc = Main.npc[target];
-					projectile.velocity = Vector2.Lerp(projectile.velocity, (npc.Center - projectile.Center).SafeNormalize(Vector2.Zero) * (projectile.velocity.Length() + 2), projectile.ai[0] * 0.0025f);
-					projectile.friendly = true;
+					Projectile.velocity = Vector2.Lerp(Projectile.velocity, (npc.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * (Projectile.velocity.Length() + 2), Projectile.ai[0] * 0.0025f);
+					Projectile.friendly = true;
 				}
 			}
-			projectile.alpha++;
+			Projectile.alpha++;
 		}	
 	}
 }

@@ -384,7 +384,7 @@ namespace SOTS.NPCs.Constructs
 		{
 			return (int)npc.ai[2] % 2 * 2 - 1;
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
 			Texture2D texture = Main.npcTexture[npc.type];
 			Vector2 drawOrigin = new Vector2(Main.npcTexture[npc.type].Width * 0.5f, npc.height * 0.5f);

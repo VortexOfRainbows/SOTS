@@ -17,7 +17,7 @@ namespace SOTS.Items.Slime
 		public override void SetDefaults()
 		{
             Item.damage = 27;  
-            Item.ranged = true;    
+            Item.DamageType = DamageClass.Ranged;    
             Item.width = 66;  
             Item.height = 22;   
             Item.useTime = 26;  

@@ -15,12 +15,12 @@ namespace SOTS.Items.Slime
 		public override void SetDefaults()
 		{
             Item.damage = 20;  
-            Item.ranged = true;    
+            Item.DamageType = DamageClass.Ranged;    
             Item.width = 60;  
             Item.height = 28;   
             Item.useTime = 24;  
             Item.useAnimation = 24;
-            Item.useStyle = 5;    
+            Item.useStyle = ItemUseStyleID.Shoot;    
             Item.noMelee = true; 
             Item.knockBack = 3;
             Item.value = Item.sellPrice(0, 1, 80, 0);

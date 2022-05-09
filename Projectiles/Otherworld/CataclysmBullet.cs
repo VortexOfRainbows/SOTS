@@ -16,23 +16,23 @@ namespace SOTS.Projectiles.Otherworld
 		}
 		public override void SetDefaults()
 		{
-			projectile.width = 14;
-			projectile.height = 14;
-			projectile.hostile = false;
-			projectile.friendly = true;
-			projectile.ranged = true;
-			projectile.timeLeft = 3600;
-			projectile.tileCollide = true;
-			projectile.penetrate = -1;
-			projectile.extraUpdates = 3;
-			projectile.scale = 0.75f;
+			Projectile.width = 14;
+			Projectile.height = 14;
+			Projectile.hostile = false;
+			Projectile.friendly = true;
+			Projectile.ranged = true;
+			Projectile.timeLeft = 3600;
+			Projectile.tileCollide = true;
+			Projectile.penetrate = -1;
+			Projectile.extraUpdates = 3;
+			Projectile.scale = 0.75f;
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
 			triggerStop();
-			Player player = Main.player[projectile.owner];
-			target.immune[projectile.owner] = 0;
-			if (projectile.owner == Main.myPlayer)
+			Player player = Main.player[Projectile.owner];
+			target.immune[Projectile.owner] = 0;
+			if (Projectile.owner == Main.myPlayer)
 			{
 				int npcIndex = -1;
 				double distanceTB = 216;
@@ -43,8 +43,8 @@ namespace SOTS.Projectiles.Otherworld
 					{
 						if (npcIndex != i && target.whoAmI != i)
 						{
-							float disX = projectile.Center.X - npc.Center.X;
-							float disY = projectile.Center.Y - npc.Center.Y;
+							float disX = Projectile.Center.X - npc.Center.X;
+							float disY = Projectile.Center.Y - npc.Center.Y;
 							double dis = Math.Sqrt(disX * disX + disY * disY);
 							if (dis < distanceTB)
 							{
@@ -59,22 +59,22 @@ namespace SOTS.Projectiles.Otherworld
 					NPC npc = Main.npc[npcIndex];
 					if (!npc.friendly && npc.lifeMax > 5 && npc.active && !npc.dontTakeDamage)
 					{
-						Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("CataclysmLightningZap"), (int)(projectile.damage * 0.2f), 0, projectile.owner, npc.whoAmI);
+						Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, mod.ProjectileType("CataclysmLightningZap"), (int)(Projectile.damage * 0.2f), 0, Projectile.owner, npc.whoAmI);
 					}
 				}
 			}
 		}
 		Vector2[] trailPos = new Vector2[10];
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
 			if (runOnce)
 				return false;
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Otherworld/CataclysmTrail").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			Vector2 previousPosition = projectile.Center;
+			Vector2 previousPosition = Projectile.Center;
 			for (int k = 0; k < trailPos.Length; k++)
 			{
-				float scale = projectile.scale * (trailPos.Length - k) / (float)trailPos.Length;
+				float scale = Projectile.scale * (trailPos.Length - k) / (float)trailPos.Length;
 				scale *= 0.9f;
 				if (trailPos[k] == Vector2.Zero)
                 {
@@ -84,7 +84,7 @@ namespace SOTS.Projectiles.Otherworld
 				Vector2 drawPos = trailPos[k] - Main.screenPosition;
 				Vector2 currentPos = trailPos[k];
 				Vector2 betweenPositions = previousPosition - currentPos;
-				color = projectile.GetAlpha(color) * ((trailPos.Length - k) / (float)trailPos.Length) * 0.5f;
+				color = Projectile.GetAlpha(color) * ((trailPos.Length - k) / (float)trailPos.Length) * 0.5f;
 				float max = betweenPositions.Length() / (texture.Width * scale);
 				for (int i = 0; i < max; i++)
 				{
@@ -98,7 +98,7 @@ namespace SOTS.Projectiles.Otherworld
 							x = 0;
 							y = 0;
                         }
-						if(trailPos[k] != projectile.Center)
+						if(trailPos[k] != Projectile.Center)
 							Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, betweenPositions.ToRotation() + MathHelper.ToRadians(90), drawOrigin, scale, SpriteEffects.None, 0f);
 					}
 				}
@@ -109,7 +109,7 @@ namespace SOTS.Projectiles.Otherworld
 			for (int j = 0; j < 4; j++)
 			{
 				Color color = new Color(255, 100, 100, 0);
-				Vector2 drawPos = projectile.Center - Main.screenPosition;
+				Vector2 drawPos = Projectile.Center - Main.screenPosition;
 				float x = Main.rand.Next(-10, 11) * 0.2f;
 				float y = Main.rand.Next(-10, 11) * 0.2f;
 				if (j < 2)
@@ -117,15 +117,15 @@ namespace SOTS.Projectiles.Otherworld
 					x = 0;
 					y = 0;
 				}
-				if (projectile.velocity != projectile.velocity * 0f)
-					Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, projectile.velocity.ToRotation() + MathHelper.ToRadians(90), drawOrigin, 1f, SpriteEffects.None, 0f);
+				if (Projectile.velocity != Projectile.velocity * 0f)
+					Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, Projectile.velocity.ToRotation() + MathHelper.ToRadians(90), drawOrigin, 1f, SpriteEffects.None, 0f);
 			}
 			return false;
 		}
 		bool runOnce = true;
 		public void cataloguePos()
         {
-			Vector2 current = projectile.Center;
+			Vector2 current = Projectile.Center;
 			for (int i = 0; i < trailPos.Length; i++)
 			{
 				Vector2 previousPosition = trailPos[i];
@@ -136,7 +136,7 @@ namespace SOTS.Projectiles.Otherworld
 		public void checkPos()
 		{
 			float iterator = 0f;
-			Vector2 current = projectile.Center;
+			Vector2 current = Projectile.Center;
 			for (int i = 0; i < trailPos.Length; i++)
 			{
 				Vector2 previousPosition = trailPos[i];
@@ -147,13 +147,13 @@ namespace SOTS.Projectiles.Otherworld
 			}
 			if(endHow == 1 && endHow != 2 && Main.rand.NextBool(3))
 			{
-				int dust = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 235);
+				int dust = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 235);
 				Main.dust[dust].scale *= 1f * (trailPos.Length - iterator) / (float)trailPos.Length;
 				Main.dust[dust].velocity *= 1f;
 				Main.dust[dust].noGravity = true;
 			}
 			if (iterator >= trailPos.Length)
-				projectile.Kill();
+				Projectile.Kill();
 		}
 		int endHow = 0;
         public override bool OnTileCollide(Vector2 oldVelocity)
@@ -167,60 +167,60 @@ namespace SOTS.Projectiles.Otherworld
 		Vector2 originalPos = Vector2.Zero;
         public override void AI()
 		{
-			if(projectile.timeLeft < 220)
+			if(Projectile.timeLeft < 220)
 			{
 				endHow = 2;
-				projectile.tileCollide = false;
-				projectile.velocity *= 0f;
+				Projectile.tileCollide = false;
+				Projectile.velocity *= 0f;
 			}
 			if(runOnce)
 			{
-				originalVelo = projectile.velocity;
+				originalVelo = Projectile.velocity;
 				for (int i = 0; i < trailPos.Length; i++)
 				{
 					trailPos[i] = Vector2.Zero;
 				}
 				runOnce = false;
-				originalPos = projectile.Center;
+				originalPos = Projectile.Center;
 			}
 			originalPos += originalVelo * 1.4f;
 			checkPos();
-			Player player = Main.player[projectile.owner];
-			Vector2 toPlayer = player.Center - projectile.Center;
+			Player player = Main.player[Projectile.owner];
+			Vector2 toPlayer = player.Center - Projectile.Center;
 			counter++;
 			counter2++;
 			if(counter >= 0)
 			{
 				counter = -3;
-				if (projectile.velocity.Length() != 0f)
+				if (Projectile.velocity.Length() != 0f)
 				{
-					Vector2 toPos = originalPos - projectile.Center;
-					projectile.velocity = new Vector2(originalVelo.Length(), 0).RotatedBy(toPos.ToRotation() + MathHelper.ToRadians(projectile.ai[1]));
-					projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
+					Vector2 toPos = originalPos - Projectile.Center;
+					Projectile.velocity = new Vector2(originalVelo.Length(), 0).RotatedBy(toPos.ToRotation() + MathHelper.ToRadians(Projectile.ai[1]));
+					Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
 				}
-				projectile.ai[1] = Main.rand.Next(-20, 21);
+				Projectile.ai[1] = Main.rand.Next(-20, 21);
 				cataloguePos();
 			}
 		}
 		public void triggerStop()
 		{
 			endHow = 1;
-			projectile.tileCollide = false;
-			projectile.friendly = false;
-			projectile.velocity *= 0f;
-			projectile.netUpdate = true;
+			Projectile.tileCollide = false;
+			Projectile.friendly = false;
+			Projectile.velocity *= 0f;
+			Projectile.netUpdate = true;
 		}
 		public override void SendExtraAI(BinaryWriter writer)
 		{
-			writer.Write(projectile.tileCollide);
-			writer.Write(projectile.friendly);
+			writer.Write(Projectile.tileCollide);
+			writer.Write(Projectile.friendly);
 			writer.Write(endHow);
 			base.SendExtraAI(writer);
 		}
 		public override void ReceiveExtraAI(BinaryReader reader)
 		{
-			projectile.tileCollide = reader.ReadBoolean();
-			projectile.friendly = reader.ReadBoolean();
+			Projectile.tileCollide = reader.ReadBoolean();
+			Projectile.friendly = reader.ReadBoolean();
 			endHow = reader.ReadInt32();
 			base.ReceiveExtraAI(reader);
 		}

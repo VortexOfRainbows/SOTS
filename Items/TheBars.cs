@@ -34,7 +34,7 @@ namespace SOTS.Items
 		{
 			num -= 2;
 			Tile tile = Main.tile[i, j];
-			int style = tile.frameX / 18;
+			int style = tile.TileFrameX / 18;
 			if (style >= 3 && style <= 7)
 			{
 				num += 4;
@@ -43,7 +43,7 @@ namespace SOTS.Items
         public override bool CreateDust(int i, int j, ref int type)
 		{
 			Tile tile = Main.tile[i, j];
-			int style = tile.frameX / 18;
+			int style = tile.TileFrameX / 18;
 			if (style == 0 || style == 11)
 			{
 				type = DustID.Silver;
@@ -102,7 +102,7 @@ namespace SOTS.Items
         public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
 		{
 			Tile tile = Main.tile[i, j];
-			int style = tile.frameX / 18;
+			int style = tile.TileFrameX / 18;
 			if(style == 10)
 			{
 				PhaseOreTile.Draw((Texture2D)ModContent.Request<Texture2D>("SOTS/Items/PhaseBarTileOutline"), (Texture2D)ModContent.Request<Texture2D>("SOTS/Items/PhaseBarTileFill"), i, j, 0.5f, true);
@@ -114,10 +114,10 @@ namespace SOTS.Items
 		{
 			Tile tile = Main.tile[i, j];
 			Tile tileAbove = Main.tile[i, j - 1];
-			int style = tile.frameX / 18;
+			int style = tile.TileFrameX / 18;
 			if (style == 1 || style == 2)
 			{
-				if (tileAbove.active() && (Main.tileSolid[tile.type] || Main.tileSolidTop[tile.type]))
+				if (tileAbove.active() && (Main.tileSolid[tile.TileType] || Main.tileSolidTop[tile.TileType]))
                 {
 					style = 2;
 				}
@@ -128,7 +128,7 @@ namespace SOTS.Items
 			}
 			if (style == 3 || style == 4)
 			{
-				if (tileAbove.active() && (Main.tileSolid[tile.type] || Main.tileSolidTop[tile.type]))
+				if (tileAbove.active() && (Main.tileSolid[tile.TileType] || Main.tileSolidTop[tile.TileType]))
 				{
 					style = 4;
 				}
@@ -139,7 +139,7 @@ namespace SOTS.Items
 			}
 			if (style == 5 || style == 6)
 			{
-				if (tileAbove.active() && (Main.tileSolid[tile.type] || Main.tileSolidTop[tile.type]))
+				if (tileAbove.active() && (Main.tileSolid[tile.TileType] || Main.tileSolidTop[tile.TileType]))
 				{
 					style = 6;
 				}
@@ -148,16 +148,16 @@ namespace SOTS.Items
 					style = 5;
 				}
 			}
-			tile.frameX = (short)(style * 18);
+			tile.TileFrameX = (short)(style * 18);
 			return true;
         }
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
 		{
 			Tile tile = Main.tile[i, j];
-			int style = tile.frameX / 18;
+			int style = tile.TileFrameX / 18;
 			float uniquenessCounter = Main.GlobalTime * -100 + (i + j) * 5;
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/TheBarsGlow").Value;
-			Rectangle frame = new Rectangle(tile.frameX, tile.frameY, 16, 16);
+			Rectangle frame = new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, 16);
 			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
 			if (Main.drawToScreen)
 			{
@@ -184,7 +184,7 @@ namespace SOTS.Items
 		public override bool Drop(int i, int j)
 		{
 			Tile tile = Main.tile[i, j];
-			int style = tile.frameX / 18;
+			int style = tile.TileFrameX / 18;
 			if (style == 0) 
 			{
 				Item.NewItem(i * 16, j * 16, 16, 16, ModContent.ItemType<AncientSteelBar>());
@@ -226,7 +226,7 @@ namespace SOTS.Items
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
 		{
 			Tile tile = Main.tile[i, j];
-			int style = tile.frameX / 18;
+			int style = tile.TileFrameX / 18;
 			if (style == 10)
 			{
 				float currentDistanceAway = 196;

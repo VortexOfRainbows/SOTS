@@ -14,34 +14,34 @@ namespace SOTS.Projectiles.Chaos
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Bizarre Adventure Fist");
-			Main.projFrames[projectile.type] = 5;
+			Main.projFrames[Projectile.type] = 5;
 		}
 		public override void SetDefaults()
 		{
-			projectile.aiStyle = 0;
-			projectile.melee = true;
-			projectile.friendly = true;
-			projectile.width = 56;
-			projectile.height = 30;
-			projectile.timeLeft = 70;
-			projectile.penetrate = 4;
-			projectile.tileCollide = false;
-			projectile.ignoreWater = true;
-			projectile.alpha = 40;
-			projectile.usesLocalNPCImmunity = true;
-			projectile.localNPCHitCooldown = 15;
-			projectile.extraUpdates = 1;
+			Projectile.aiStyle = 0;
+			Projectile.melee = true;
+			Projectile.friendly = true;
+			Projectile.width = 56;
+			Projectile.height = 30;
+			Projectile.timeLeft = 70;
+			Projectile.penetrate = 4;
+			Projectile.tileCollide = false;
+			Projectile.ignoreWater = true;
+			Projectile.alpha = 40;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = 15;
+			Projectile.extraUpdates = 1;
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			projectile.ai[0] = 200;
-			projectile.netUpdate = true;
+			Projectile.ai[0] = 200;
+			Projectile.netUpdate = true;
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
-			float alphaMult = ((255f - projectile.alpha) / 255f);
-			Texture2D texture = Main.projectileTexture[projectile.type];
-			Vector2 origin = new Vector2(texture.Width / 2, projectile.height / 2);
+			float alphaMult = ((255f - Projectile.alpha) / 255f);
+			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
+			Vector2 origin = new Vector2(texture.Width / 2, Projectile.height / 2);
 			Color color;
 			for (int i = 0; i < 360; i += 30)
 			{
@@ -49,46 +49,46 @@ namespace SOTS.Projectiles.Chaos
 				color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(i + SOTSWorld.GlobalCounter), false);
 				color.A = 0;
 				color *= 0.5f;
-				Main.spriteBatch.Draw(texture, projectile.Center + circular - Main.screenPosition, new Rectangle(0, projectile.height * projectile.frame, projectile.width, projectile.height), color * alphaMult, projectile.rotation, origin, projectile.scale, SpriteEffects.None, 0.0f);
+				Main.spriteBatch.Draw(texture, Projectile.Center + circular - Main.screenPosition, new Rectangle(0, Projectile.height * Projectile.frame, Projectile.width, Projectile.height), color * alphaMult, Projectile.rotation, origin, Projectile.scale, SpriteEffects.None, 0.0f);
 			}
 			color = new Color(220, 220, 220, 150);
-			Main.spriteBatch.Draw(texture, projectile.Center - Main.screenPosition, new Rectangle(0, projectile.height * projectile.frame, projectile.width, projectile.height), color * alphaMult, projectile.rotation, origin, projectile.scale, SpriteEffects.None, 0.0f);
+			Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, new Rectangle(0, Projectile.height * Projectile.frame, Projectile.width, Projectile.height), color * alphaMult, Projectile.rotation, origin, Projectile.scale, SpriteEffects.None, 0.0f);
 			return false;
 		}
         public override bool PreAI()
 		{
-			projectile.frameCounter++;
-			if (projectile.frameCounter >= 3)
+			Projectile.frameCounter++;
+			if (Projectile.frameCounter >= 3)
 			{
-				projectile.frameCounter = 0;
-				projectile.frame = (projectile.frame + 1) % 5;
+				Projectile.frameCounter = 0;
+				Projectile.frame = (Projectile.frame + 1) % 5;
 			}
 			return true;
         }
         public override void AI()
 		{
-			projectile.ai[0]++;
-			projectile.rotation = projectile.velocity.ToRotation();
-			projectile.alpha += 3;
-			int target2 = SOTSNPCs.FindTarget_Basic(projectile.Center, 640);
+			Projectile.ai[0]++;
+			Projectile.rotation = Projectile.velocity.ToRotation();
+			Projectile.alpha += 3;
+			int target2 = SOTSNPCs.FindTarget_Basic(Projectile.Center, 640);
 			if (target2 != -1)
 			{
 				NPC toHit = Main.npc[target2];
-				if (toHit.active && projectile.ai[0] < 200)
+				if (toHit.active && Projectile.ai[0] < 200)
 				{
-					Vector2 toNPC = toHit.Center - projectile.Center;
-					projectile.velocity = Vector2.Lerp(projectile.velocity, toNPC.SafeNormalize(Vector2.Zero) * (projectile.velocity.Length() + 3), 0.07f);
+					Vector2 toNPC = toHit.Center - Projectile.Center;
+					Projectile.velocity = Vector2.Lerp(Projectile.velocity, toNPC.SafeNormalize(Vector2.Zero) * (Projectile.velocity.Length() + 3), 0.07f);
 				}
 			}
-			if(projectile.ai[0] > 6)
+			if(Projectile.ai[0] > 6)
 			{
-				Dust dust = Dust.NewDustDirect(projectile.Center - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
+				Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
 				dust.velocity *= 0.05f;
-				dust.velocity -= 1 * projectile.velocity.SafeNormalize(Vector2.Zero);
+				dust.velocity -= 1 * Projectile.velocity.SafeNormalize(Vector2.Zero);
 				dust.scale = 1.3f;
 				dust.noGravity = true;
 				dust.fadeIn = 0.2f;
-				dust.color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(SOTSWorld.GlobalCounter * 3 + projectile.whoAmI * 10), true);
+				dust.color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(SOTSWorld.GlobalCounter * 3 + Projectile.whoAmI * 10), true);
 				dust.alpha = 100;
 			}
 		}
@@ -96,13 +96,13 @@ namespace SOTS.Projectiles.Chaos
 		{
 			for (int i = 0; i < 10; i++)
 			{
-				Dust dust = Dust.NewDustDirect(projectile.Center - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
+				Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
 				dust.velocity *= 1.2f;
-				dust.velocity += 5 * projectile.velocity.SafeNormalize(Vector2.Zero);
+				dust.velocity += 5 * Projectile.velocity.SafeNormalize(Vector2.Zero);
 				dust.scale *= 2;
 				dust.noGravity = true;
 				dust.fadeIn = 0.2f;
-				dust.color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(SOTSWorld.GlobalCounter * 3 + projectile.whoAmI * 10), true);
+				dust.color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(SOTSWorld.GlobalCounter * 3 + Projectile.whoAmI * 10), true);
 				dust.alpha = 100;
 			}
 			base.Kill(timeLeft);

@@ -50,7 +50,7 @@ namespace SOTS.Items.Permafrost
 			Item.height = 42;
 			Item.useTime = 15;
 			Item.useAnimation = 15;
-			Item.useStyle = 1;
+			Item.useStyle = ItemUseStyleID.Swing;
 			Item.knockBack = 3f;
 			Item.value = Item.sellPrice(0, 0, 80, 0);
 			Item.rare = ItemRarityID.Green;
@@ -70,7 +70,7 @@ namespace SOTS.Items.Permafrost
 			}
 			else
 			{
-				Item.useStyle = 1;
+				Item.useStyle = ItemUseStyleID.Swing;
 				Item.noMelee = false;
 				Item.noUseGraphic = false;
 			}
@@ -91,7 +91,7 @@ namespace SOTS.Items.Permafrost
 			}
 			else
 			{
-				Item.useStyle = 1;
+				Item.useStyle = ItemUseStyleID.Swing;
 				Item.noMelee = false;
 				Item.noUseGraphic = false;
 			}

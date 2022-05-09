@@ -21,9 +21,9 @@ namespace SOTS.Items.Permafrost
             Item.useTime = 20;
             Item.useAnimation = 20;
             Item.useAnimation = 20;
-            Item.useStyle = 1;
+            Item.useStyle = ItemUseStyleID.Swing;
             Item.value = 80000;
-            Item.rare = 9;
+            Item.rare = ItemRarityID.Cyan;
             Item.UseSound = SoundID.Item1;
             Item.noMelee = true;
             Item.mountType = mod.MountType("IceShield");

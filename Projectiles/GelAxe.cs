@@ -13,12 +13,12 @@ namespace SOTS.Projectiles
 		}
         public override void SetDefaults()
         {
-			projectile.CloneDefaults(3);
+			Projectile.CloneDefaults(3);
             aiType = 3;
-			projectile.penetrate = 3;
-			projectile.alpha = 25;
-			projectile.width = 32;
-			projectile.height = 20;
+			Projectile.penetrate = 3;
+			Projectile.alpha = 25;
+			Projectile.width = 32;
+			Projectile.height = 20;
 		}
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
         {
@@ -28,18 +28,18 @@ namespace SOTS.Projectiles
         }
         public override bool OnTileCollide(Vector2 oldVelocity)
 		{	
-			projectile.tileCollide = false;
-			projectile.timeLeft = 120;
-			projectile.velocity.X *= 0.3f;
-			projectile.velocity.Y *= 0.3f;
-			projectile.aiStyle = 0;
+			Projectile.tileCollide = false;
+			Projectile.timeLeft = 120;
+			Projectile.velocity.X *= 0.3f;
+			Projectile.velocity.Y *= 0.3f;
+			Projectile.aiStyle = 0;
 			return false;
 		}
         public override void Kill(int timeLeft)
 		{
 			for(int i = 0; i < 20; i ++)
 			{
-				Dust dust = Dust.NewDustDirect(projectile.position - new Vector2(5), projectile.width, projectile.height, DustID.t_Slime, 0, 0, 100, new Color(0, 0, 255, 100), 1f);
+				Dust dust = Dust.NewDustDirect(Projectile.position - new Vector2(5), Projectile.width, Projectile.height, DustID.t_Slime, 0, 0, 100, new Color(0, 0, 255, 100), 1f);
 				dust.scale *= 1.1f;
 				dust.velocity *= 1.15f;
 			}
@@ -47,10 +47,10 @@ namespace SOTS.Projectiles
         }
         public override void AI()
 		{
-			if(!projectile.tileCollide)
+			if(!Projectile.tileCollide)
 			{
-				projectile.velocity.X *= 0.9f;
-				projectile.velocity.Y *= 0.9f;
+				Projectile.velocity.X *= 0.9f;
+				Projectile.velocity.Y *= 0.9f;
 			}
 		}
 	}

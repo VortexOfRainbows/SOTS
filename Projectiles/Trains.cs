@@ -15,19 +15,19 @@ namespace SOTS.Projectiles
 		}
         public override void SetDefaults()
         {
-            projectile.width = 32;
-            projectile.height = 32; 
-            projectile.timeLeft = 120;
-            projectile.penetrate = -1; 
-            projectile.friendly = true; 
-            projectile.hostile = false; 
-            projectile.tileCollide = true;
-            projectile.ignoreWater = true; 
-            projectile.ranged = true; 
-            projectile.aiStyle = 0; 
-			projectile.alpha = 255;
-			projectile.usesLocalNPCImmunity = true;
-			projectile.localNPCHitCooldown = 15;
+            Projectile.width = 32;
+            Projectile.height = 32; 
+            Projectile.timeLeft = 120;
+            Projectile.penetrate = -1; 
+            Projectile.friendly = true; 
+            Projectile.hostile = false; 
+            Projectile.tileCollide = true;
+            Projectile.ignoreWater = true; 
+            Projectile.ranged = true; 
+            Projectile.aiStyle = 0; 
+			Projectile.alpha = 255;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = 15;
 		}
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
         {
@@ -38,7 +38,7 @@ namespace SOTS.Projectiles
         public override void ModifyDamageHitbox(ref Rectangle hitbox)
         {
 			int width = 48;
-			hitbox = new Rectangle((int)projectile.Center.X - width / 2, (int)projectile.Center.Y - width / 2, width, width);
+			hitbox = new Rectangle((int)Projectile.Center.X - width / 2, (int)Projectile.Center.Y - width / 2, width, width);
         }
         List<Vector2> segments = new List<Vector2>();
 		List<float> segmentsRotation = new List<float>();
@@ -46,13 +46,13 @@ namespace SOTS.Projectiles
 		bool runOnce = true;
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-			if(oldVelocity.Y != projectile.velocity.Y)
+			if(oldVelocity.Y != Projectile.velocity.Y)
             {
-				projectile.velocity.Y = -oldVelocity.Y;
+				Projectile.velocity.Y = -oldVelocity.Y;
 			}
-			if (oldVelocity.X != projectile.velocity.X)
+			if (oldVelocity.X != Projectile.velocity.X)
 			{
-				projectile.velocity.X = -oldVelocity.X;
+				Projectile.velocity.X = -oldVelocity.X;
 			}
 			return false;
         }
@@ -60,7 +60,7 @@ namespace SOTS.Projectiles
         {
 			if(!targetIDs.Contains(target.whoAmI))
 				targetIDs.Add(target.whoAmI);
-			projectile.netUpdate = true;
+			Projectile.netUpdate = true;
             base.OnHitNPC(target, damage, knockback, crit);
         }
         public override void DrawBehind(int index, List<int> drawCacheProjsBehindNPCsAndTiles, List<int> drawCacheProjsBehindNPCs, List<int> drawCacheProjsBehindProjectiles, List<int> drawCacheProjsOverWiresUI)
@@ -83,7 +83,7 @@ namespace SOTS.Projectiles
 			}
 			return null;
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
 			if (runOnce)
 				return false;
@@ -92,10 +92,10 @@ namespace SOTS.Projectiles
 		}
 		public void DrawWorm(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Texture2D texture = Main.projectileTexture[projectile.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 4);
 			Rectangle frame = new Rectangle(0, texture.Height / 2, texture.Width, texture.Height / 2);
-			Vector2 first = projectile.Center;
+			Vector2 first = Projectile.Center;
 			Color color;
 			for (int i = 0; i < segments.Count; i++)
 			{
@@ -108,15 +108,15 @@ namespace SOTS.Projectiles
 					Vector2 vector = default(Vector2);
 					toOther = spinningpoint60.RotatedBy(radians64, vector);
 				}
-				color = projectile.GetAlpha(Lighting.GetColor((int)segments[i].X / 16, (int)segments[i].Y / 16, Color.White));
+				color = Projectile.GetAlpha(Lighting.GetColor((int)segments[i].X / 16, (int)segments[i].Y / 16, Color.White));
 				float rotation = segmentsRotation[i];
 				int spriteDirection = toOther.X > 0f ? 1 : -1;
-				spriteBatch.Draw(texture, segments[i] + projectile.velocity - Main.screenPosition, frame, color, rotation, origin, 1.00f, spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 1f);
+				spriteBatch.Draw(texture, segments[i] + Projectile.velocity - Main.screenPosition, frame, color, rotation, origin, 1.00f, spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 1f);
 				first = segments[i];
 			}
 			frame = new Rectangle(0, 0, texture.Width, texture.Height / 2);
-			color = projectile.GetAlpha(lightColor);
-			spriteBatch.Draw(texture, projectile.Center - Main.screenPosition, frame, color, projectile.rotation, origin, 1.00f, projectile.direction == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 1f);
+			color = Projectile.GetAlpha(lightColor);
+			spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, frame, color, Projectile.rotation, origin, 1.00f, Projectile.direction == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 1f);
 		}
 		public void BodyTailMovement(ref Vector2 position, Vector2 prevPosition, ref float segmentsRotation, float segmentsRotation2, int i)
 		{
@@ -152,35 +152,35 @@ namespace SOTS.Projectiles
 		int counter = 0;
 		public override bool PreAI()
 		{
-			if (projectile.timeLeft <= 64)
-				projectile.alpha += 4;
-			else if (projectile.alpha > 0)
+			if (Projectile.timeLeft <= 64)
+				Projectile.alpha += 4;
+			else if (Projectile.alpha > 0)
             {
-				projectile.alpha -= 10;
+				Projectile.alpha -= 10;
             }
 			else
             {
-				projectile.alpha = 0;
+				Projectile.alpha = 0;
 			}
 			counter++;
 			if (counter % 3 == 0 && segments.Count < 9)
 			{
-				Vector2 center = projectile.Center;
+				Vector2 center = Projectile.Center;
 				if(segments.Count > 0)
                 {
 					center = segments[segments.Count - 1];
 				}
-				segments.Add(center - projectile.velocity);
-				segmentsRotation.Add(projectile.rotation);
+				segments.Add(center - Projectile.velocity);
+				segmentsRotation.Add(Projectile.rotation);
 				runOnce = false;
 			}
-			Vector2 first = projectile.Center;
-			float firstRot = projectile.rotation;
+			Vector2 first = Projectile.Center;
+			float firstRot = Projectile.rotation;
 			for (int i = 0; i < segments.Count; i++)
 			{
 				Vector2 pos = segments[i];
 				/*
-				if (projectile.timeLeft < Main.rand.Next(3) + 1)
+				if (Projectile.timeLeft < Main.rand.Next(3) + 1)
 				{
 					for (int k = 0; k < Main.rand.Next(3) + 1; k++)
 					{
@@ -202,11 +202,11 @@ namespace SOTS.Projectiles
 				first = pos;
 				firstRot = segmentsRotation[i];
 			}
-			projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
-			if(projectile.owner == Main.myPlayer)
+			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
+			if(Projectile.owner == Main.myPlayer)
 			{
 				SeekEnemies();
-				projectile.netUpdate = true;
+				Projectile.netUpdate = true;
             }
 			return true;
 		}
@@ -223,13 +223,13 @@ namespace SOTS.Projectiles
 				NPC target = Main.npc[i];
 				if (target.CanBeChasedBy() && !targetIDs.Contains(i))
 				{
-					dX = target.Center.X - projectile.Center.X;
-					dY = target.Center.Y - projectile.Center.Y;
+					dX = target.Center.X - Projectile.Center.X;
+					dY = target.Center.Y - Projectile.Center.Y;
 					distance = (float)Math.Sqrt((double)(dX * dX + dY * dY));
 					if (distance < minDist)
 					{
-						bool lineOfSight = Collision.CanHitLine(projectile.position, projectile.width, projectile.height, target.position, target.width, target.height);
-						if (lineOfSight || !projectile.tileCollide)
+						bool lineOfSight = Collision.CanHitLine(Projectile.position, Projectile.width, Projectile.height, target.position, target.width, target.height);
+						if (lineOfSight || !Projectile.tileCollide)
 						{
 							minDist = distance;
 							target2 = i;
@@ -242,12 +242,12 @@ namespace SOTS.Projectiles
 				NPC toHit = Main.npc[target2];
 				if (toHit.active == true)
 				{
-					dX = toHit.Center.X - projectile.Center.X;
-					dY = toHit.Center.Y - projectile.Center.Y;
+					dX = toHit.Center.X - Projectile.Center.X;
+					dY = toHit.Center.Y - Projectile.Center.Y;
 					distance = (float)Math.Sqrt((double)(dX * dX + dY * dY));
 					speed /= distance;
-					projectile.velocity *= 0.96f;
-					projectile.velocity += new Vector2(dX * speed, dY * speed);
+					Projectile.velocity *= 0.96f;
+					Projectile.velocity += new Vector2(dX * speed, dY * speed);
 				}
 			}
 		}

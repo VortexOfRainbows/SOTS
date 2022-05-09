@@ -20,13 +20,13 @@ namespace SOTS.Projectiles.Inferno
 		}
 		public override void SetDefaults()
 		{
-			projectile.width = 20;
-			projectile.height = 20;
-			projectile.hostile = true;
-			projectile.friendly = false;
-			projectile.timeLeft = 120;
-			projectile.tileCollide = false;
-			projectile.penetrate = -1;
+			Projectile.width = 20;
+			Projectile.height = 20;
+			Projectile.hostile = true;
+			Projectile.friendly = false;
+			Projectile.timeLeft = 120;
+			Projectile.tileCollide = false;
+			Projectile.penetrate = -1;
 		}
 		List<FireParticle> particleList = new List<FireParticle>();
 		public override bool PreAI()
@@ -35,9 +35,9 @@ namespace SOTS.Projectiles.Inferno
 			Vector2 rotational = new Vector2(0, -1.8f).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-30f, 30f)));
 			rotational.X *= 0.25f;
 			rotational.Y *= 0.75f;
-			rotational += projectile.velocity;
+			rotational += Projectile.velocity;
 			rotational = rotational.SafeNormalize(Vector2.Zero) * 2f;
-			particleList.Add(new FireParticle(projectile.Center - rotational * 2, rotational, Main.rand.NextFloat(-3f, 3f), Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(0.9f, 1.1f)));
+			particleList.Add(new FireParticle(Projectile.Center - rotational * 2, rotational, Main.rand.NextFloat(-3f, 3f), Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(0.9f, 1.1f)));
 			return base.PreAI();
 		}
 		public void cataloguePos()
@@ -53,16 +53,16 @@ namespace SOTS.Projectiles.Inferno
                 }
 			}
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
-			Texture2D texture = Main.projectileTexture[projectile.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			for (int i = 0; i < particleList.Count; i++)
 			{
 				Color color = VoidPlayer.Inferno1;
 				color.A = 0;
 				Vector2 drawPos = particleList[i].position - Main.screenPosition ;
-				color = projectile.GetAlpha(color) * (0.35f + 0.65f * particleList[i].scale);
+				color = Projectile.GetAlpha(color) * (0.35f + 0.65f * particleList[i].scale);
 				for (int j = 0; j < 2; j++)
 				{
 					float x = Main.rand.NextFloat(-2f, 2f);
@@ -76,7 +76,7 @@ namespace SOTS.Projectiles.Inferno
 		{
 			for (int i = 0; i < 3; i++)
 			{
-				int dust2 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, ModContent.DustType<CopyDust4>());
+				int dust2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>());
 				Dust dust = Main.dust[dust2];
 				dust.color = new Color(255, 75, 0, 0);
 				dust.noGravity = true;
@@ -96,13 +96,13 @@ namespace SOTS.Projectiles.Inferno
 		}
 		public override void AI()
 		{
-			projectile.velocity *= 0.998f;
-			if (projectile.timeLeft <= 51)
-				projectile.alpha += 5;
-			if (projectile.timeLeft <= 15)
-				projectile.hostile = false;
-			Lighting.AddLight(projectile.Center, 0.6f, 0.2f, 0.0f);
-			projectile.ai[0]++;
+			Projectile.velocity *= 0.998f;
+			if (Projectile.timeLeft <= 51)
+				Projectile.alpha += 5;
+			if (Projectile.timeLeft <= 15)
+				Projectile.hostile = false;
+			Lighting.AddLight(Projectile.Center, 0.6f, 0.2f, 0.0f);
+			Projectile.ai[0]++;
 		}
 	}
 }

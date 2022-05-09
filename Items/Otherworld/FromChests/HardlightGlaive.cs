@@ -14,7 +14,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		{
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/FromChests/HardlightGlaiveGlow").Value;
 			Color color = Color.White;
-			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, Item.height * 0.5f);
 			Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y) + 2), null, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 		}
 		public override void SetStaticDefaults()
@@ -30,7 +30,7 @@ namespace SOTS.Items.Otherworld.FromChests
 			Item.height = 54;
 			Item.useTime = 36;
 			Item.useAnimation = 36;
-			Item.useStyle = 5;
+			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.knockBack = 4.5f;
             Item.value = Item.sellPrice(0, 5, 75, 0);
 			Item.rare = ItemRarityID.LightPurple;

@@ -14,16 +14,16 @@ namespace SOTS.Projectiles
 		int rodBobberType = -1;
         public override void SetStaticDefaults()
         {
-            Main.projFrames[projectile.type] = 1;
-            Main.projPet[projectile.type] = true;
-            ProjectileID.Sets.LightPet[projectile.type] = true;
+            Main.projFrames[Projectile.type] = 1;
+            Main.projPet[Projectile.type] = true;
+            ProjectileID.Sets.LightPet[Projectile.type] = true;
         }
         public override void SetDefaults()
         {
-			projectile.CloneDefaults(ProjectileID.BobberGolden); 
-			projectile.bobber = true;
-			projectile.penetrate = -1;
-			projectile.timeLeft = 2000;
+			Projectile.CloneDefaults(ProjectileID.BobberGolden); 
+			Projectile.bobber = true;
+			Projectile.penetrate = -1;
+			Projectile.timeLeft = 2000;
         }
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
         {
@@ -32,45 +32,45 @@ namespace SOTS.Projectiles
         }
         public override void AI()
         {
-            Player player = Main.player[projectile.owner];
+            Player player = Main.player[Projectile.owner];
             base.AI();
         }
         public override bool PreAI()
         {
             if (rodBobberType == -1)
 			{
-				rodBobberType = (int)projectile.knockBack;
-				projectile.aiStyle = 61;
-				aiType = (int)projectile.knockBack;
-				projectile.timeLeft = 2000;
+				rodBobberType = (int)Projectile.knockBack;
+				Projectile.aiStyle = 61;
+				aiType = (int)Projectile.knockBack;
+				Projectile.timeLeft = 2000;
 				return false;
 			}
 			return true;
 		}
         public override bool PreDrawExtras(SpriteBatch spriteBatch)
         {
-            Player player1 = Main.player[projectile.owner];
-            Lighting.AddLight(projectile.Center, 0.3f, 0.1f, 0.24f);
+            Player player1 = Main.player[Projectile.owner];
+            Lighting.AddLight(Projectile.Center, 0.3f, 0.1f, 0.24f);
 			Player owner = null;
-            if (projectile.owner != -1)
+            if (Projectile.owner != -1)
             {
-                owner = Main.player[projectile.owner];
+                owner = Main.player[Projectile.owner];
             }
-            else if (projectile.owner == 255)
+            else if (Projectile.owner == 255)
             {
                 owner = Main.LocalPlayer;
             }
             var player = owner;
-            if (projectile.bobber && Main.player[projectile.owner].inventory[Main.player[projectile.owner].selectedItem].holdStyle > 0)
+            if (Projectile.bobber && Main.player[Projectile.owner].inventory[Main.player[Projectile.owner].selectedItem].holdStyle > 0)
             {
                 float pPosX = player.MountedCenter.X;
                 float pPosY = player.MountedCenter.Y;
-                pPosY += Main.player[projectile.owner].gfxOffY;
-                int type = Main.player[projectile.owner].inventory[Main.player[projectile.owner].selectedItem].type;
-                float gravDir = Main.player[projectile.owner].gravDir;
+                pPosY += Main.player[Projectile.owner].gfxOffY;
+                int type = Main.player[Projectile.owner].inventory[Main.player[Projectile.owner].selectedItem].type;
+                float gravDir = Main.player[Projectile.owner].gravDir;
  
-                pPosX += (float)(-20 * Main.player[projectile.owner].direction);
-                if (Main.player[projectile.owner].direction > 0)
+                pPosX += (float)(-20 * Main.player[Projectile.owner].direction);
+                if (Main.player[Projectile.owner].direction > 0)
                 {
 					pPosX -= 13f;
                 }
@@ -81,9 +81,9 @@ namespace SOTS.Projectiles
                     pPosY -= 12f;
                 }
                 Vector2 value = new Vector2(pPosX, pPosY);
-                value = Main.player[projectile.owner].RotatedRelativePoint(value + new Vector2(8f), true) - new Vector2(8f);
-                float projPosX = projectile.position.X + (float)projectile.width * 0.25f - value.X;
-                float projPosY = projectile.position.Y + (float)projectile.height * 0.5f - value.Y;
+                value = Main.player[Projectile.owner].RotatedRelativePoint(value + new Vector2(8f), true) - new Vector2(8f);
+                float projPosX = Projectile.position.X + (float)Projectile.width * 0.25f - value.X;
+                float projPosY = Projectile.position.Y + (float)Projectile.height * 0.5f - value.Y;
                 Math.Sqrt((double)(projPosX * projPosX + projPosY * projPosY));
                 float rotation2 = (float)Math.Atan2((double)projPosY, (double)projPosX) - 1.57f;
                 bool flag2 = true;
@@ -99,8 +99,8 @@ namespace SOTS.Projectiles
                     projPosY *= projPosXY;
                     value.X -= projPosX;
                     value.Y -= projPosY;
-                    projPosX = projectile.position.X + (float)projectile.width * 0.25f - value.X;
-                    projPosY = projectile.position.Y + (float)projectile.height * 0.5f - value.Y;
+                    projPosX = Projectile.position.X + (float)Projectile.width * 0.25f - value.X;
+                    projPosY = Projectile.position.Y + (float)Projectile.height * 0.5f - value.Y;
                 }
                 while (flag2)
                 {
@@ -123,12 +123,12 @@ namespace SOTS.Projectiles
                         projPosY *= num2;
                         value.X += projPosX;
                         value.Y += projPosY;
-                        projPosX = projectile.position.X + (float)projectile.width * 0.25f - value.X;
-                        projPosY = projectile.position.Y + (float)projectile.height * 0.1f - value.Y;
+                        projPosX = Projectile.position.X + (float)Projectile.width * 0.25f - value.X;
+                        projPosY = Projectile.position.Y + (float)Projectile.height * 0.1f - value.Y;
                         if (num3 > 12f)
                         {
                             float num4 = 0.3f;
-                            float num5 = Math.Abs(projectile.velocity.X) + Math.Abs(projectile.velocity.Y);
+                            float num5 = Math.Abs(Projectile.velocity.X) + Math.Abs(Projectile.velocity.Y);
                             if (num5 > 16f)
                             {
                                 num5 = 16f;
@@ -145,7 +145,7 @@ namespace SOTS.Projectiles
                             {
                                 num4 = 0f;
                             }
-                            num5 = 1f - projectile.localAI[0] / 100f;
+                            num5 = 1f - Projectile.localAI[0] / 100f;
                             num4 *= num5;
                             if (projPosY > 0f)
                             {
@@ -154,7 +154,7 @@ namespace SOTS.Projectiles
                             }
                             else
                             {
-                                num5 = Math.Abs(projectile.velocity.X) / 3f;
+                                num5 = Math.Abs(Projectile.velocity.X) / 3f;
                                 if (num5 > 1f)
                                 {
                                     num5 = 1f;

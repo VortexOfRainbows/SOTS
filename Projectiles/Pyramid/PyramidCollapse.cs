@@ -21,45 +21,45 @@ namespace SOTS.Projectiles.Pyramid
 		
         public override void SetDefaults()
         {
-			projectile.aiStyle = 1;
-			projectile.height = 16;
-			projectile.width = 16;
-			projectile.friendly = false;
-			projectile.timeLeft = 7200;
-			projectile.hostile = true;
-			projectile.alpha = 0;
-			projectile.tileCollide = false;
-            Main.projFrames[projectile.type] = 3;
-			projectile.netImportant = true;
+			Projectile.aiStyle = 1;
+			Projectile.height = 16;
+			Projectile.width = 16;
+			Projectile.friendly = false;
+			Projectile.timeLeft = 7200;
+			Projectile.hostile = true;
+			Projectile.alpha = 0;
+			Projectile.tileCollide = false;
+            Main.projFrames[Projectile.type] = 3;
+			Projectile.netImportant = true;
 		}
 		public override void AI()
 		{
-			int i = (int)(projectile.Center.X / 16);
-			int j =	(int)(projectile.Center.Y / 16);
+			int i = (int)(Projectile.Center.X / 16);
+			int j =	(int)(Projectile.Center.Y / 16);
 			if(!Main.tile[i, j].active())
 			{
 				wait++;
 			}
 			if(wait == 2)
 			{
-				projectile.tileCollide = true;
+				Projectile.tileCollide = true;
 			}
-            projectile.frameCounter++;
-            if (projectile.frameCounter == 1)
+            Projectile.frameCounter++;
+            if (Projectile.frameCounter == 1)
             {
-                projectile.frame = (projectile.frame + Main.rand.Next(3)) % 3;
+                Projectile.frame = (Projectile.frame + Main.rand.Next(3)) % 3;
             }
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{	
-			projectile.tileCollide = false;
-				if (projectile.velocity.X != oldVelocity.X)
+			Projectile.tileCollide = false;
+				if (Projectile.velocity.X != oldVelocity.X)
 				{
-					projectile.velocity.X = -oldVelocity.X * 0.1f;
+					Projectile.velocity.X = -oldVelocity.X * 0.1f;
 				}
-				if (projectile.velocity.Y != oldVelocity.Y)
+				if (Projectile.velocity.Y != oldVelocity.Y)
 				{
-					projectile.velocity.Y = -oldVelocity.Y * 0.1f;
+					Projectile.velocity.Y = -oldVelocity.Y * 0.1f;
 				}
 			return false;
 		}

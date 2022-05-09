@@ -59,11 +59,11 @@ namespace SOTS.Items.Furniture
             int x = i;
             int y = j;
             Tile tile = Main.tile[i, j];
-            if (tile.frameX % 36 != 0)
+            if (tile.TileFrameX % 36 != 0)
             {
                 x--;
             }
-            if (tile.frameY != 0)
+            if (tile.TileFrameY != 0)
             {
                 y--;
             }
@@ -96,11 +96,11 @@ namespace SOTS.Items.Furniture
             Main.mouseRightRelease = false;
             int x = i;
             int y = j;
-            if (tile.frameX % 36 != 0)
+            if (tile.TileFrameX % 36 != 0)
             {
                 x--;
             }
-            if (tile.frameY != 0)
+            if (tile.TileFrameY != 0)
             {
                 y--;
             }
@@ -185,11 +185,11 @@ namespace SOTS.Items.Furniture
             Tile tile = Main.tile[i, j];
             int x = i;
             int y = j;
-            if (tile.frameX % 36 != 0)
+            if (tile.TileFrameX % 36 != 0)
             {
                 x--;
             }
-            if (tile.frameY != 0)
+            if (tile.TileFrameY != 0)
             {
                 y--;
             }

@@ -16,55 +16,55 @@ namespace SOTS.Projectiles.Celestial
 		}
         public override void SetDefaults()
         {
-			projectile.CloneDefaults(48);
+			Projectile.CloneDefaults(48);
             aiType = 48; 
-			projectile.thrown = false;
-			projectile.magic = false;
-			projectile.melee = false;
-			projectile.ranged = true;
-			projectile.width = 14;
-			projectile.height = 14;
-			projectile.penetrate = 1;
-			projectile.timeLeft = 900;
-			projectile.alpha = 0;
+			Projectile.thrown = false;
+			Projectile.magic = false;
+			Projectile.melee = false;
+			Projectile.ranged = true;
+			Projectile.width = 14;
+			Projectile.height = 14;
+			Projectile.penetrate = 1;
+			Projectile.timeLeft = 900;
+			Projectile.alpha = 0;
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture = Main.projectileTexture[projectile.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
-			Vector2 drawPos = projectile.Center - Main.screenPosition;
+			Vector2 drawPos = Projectile.Center - Main.screenPosition;
 			Color color = new Color(100, 155, 100, 0);
 			for (int i = 0; i < 360; i += 60)
 			{
 				Vector2 circular = new Vector2(Main.rand.NextFloat(2.5f, 4f), 0).RotatedBy(MathHelper.ToRadians(i));
-				Main.spriteBatch.Draw(texture, drawPos + circular, null, color * ((255f - projectile.alpha) / 255f), projectile.rotation, drawOrigin, projectile.scale, SpriteEffects.None, 0.0f);
+				Main.spriteBatch.Draw(texture, drawPos + circular, null, color * ((255f - Projectile.alpha) / 255f), Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0.0f);
 			}
 			color = Color.White;
-			spriteBatch.Draw(texture, drawPos, null, color, projectile.rotation, drawOrigin, projectile.scale, projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+			spriteBatch.Draw(texture, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 		}
 		public override void AI()
 		{
-			if(projectile.timeLeft >= 800)
+			if(Projectile.timeLeft >= 800)
 			{
-				projectile.timeLeft = Main.rand.Next(32, 48);
+				Projectile.timeLeft = Main.rand.Next(32, 48);
 			}
 		}
 		public override void Kill(int timeLeft)
         {
-			SoundEngine.PlaySound(3, (int)projectile.Center.X, (int)projectile.Center.Y, 53, 0.625f);
+			SoundEngine.PlaySound(3, (int)Projectile.Center.X, (int)Projectile.Center.Y, 53, 0.625f);
 			for (int i = 0; i < 10; i++)
 			{
-				var num371 = Dust.NewDust(projectile.Center - new Vector2(5) - new Vector2(10, 10), 24, 24, mod.DustType("CopyDust4"), 0, 0, 100, default, 1.6f);
+				var num371 = Dust.NewDust(Projectile.Center - new Vector2(5) - new Vector2(10, 10), 24, 24, mod.DustType("CopyDust4"), 0, 0, 100, default, 1.6f);
 				Dust dust = Main.dust[num371];
-				dust.velocity += projectile.velocity * 0.1f;
+				dust.velocity += Projectile.velocity * 0.1f;
 				dust.noGravity = true;
 				dust.color = Color.Lerp(new Color(210, 255, 205, 100), new Color(30, 150, 60, 100), new Vector2(-0.5f, 0).RotatedBy(Main.rand.Next(360)).X + 0.5f);
 				dust.noGravity = true;
 				dust.fadeIn = 0.2f;
-				dust.alpha = projectile.alpha;
+				dust.alpha = Projectile.alpha;
 			}
-			SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 94, 0.55f, 0.1f);
-			if (projectile.owner == Main.myPlayer)
+			SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 94, 0.55f, 0.1f);
+			if (Projectile.owner == Main.myPlayer)
 			{
 				int amt = 1;
 				if (Main.rand.NextBool(3))
@@ -73,8 +73,8 @@ namespace SOTS.Projectiles.Celestial
 					amt++;
 				for (int i = 0; i < amt; i++)
 				{
-					Vector2 circular = -projectile.velocity.SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)));
-					Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, circular.X, circular.Y, ModContent.ProjectileType<CataclysmLightning>(), (int)(projectile.damage * 0.9f + 0.5f), 0, projectile.owner, 0);
+					Vector2 circular = -Projectile.velocity.SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)));
+					Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, circular.X, circular.Y, ModContent.ProjectileType<CataclysmLightning>(), (int)(Projectile.damage * 0.9f + 0.5f), 0, Projectile.owner, 0);
 				}
 			}
 		}

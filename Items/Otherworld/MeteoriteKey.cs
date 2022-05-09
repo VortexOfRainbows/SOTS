@@ -19,7 +19,7 @@ namespace SOTS.Items.Otherworld
 
 			//Item.useAnimation = 15;
 			//Item.useTime = 10;
-			//Item.useStyle = 1;
+			//Item.useStyle = ItemUseStyleID.Swing;
 			//Item.createTile = mod.TileType("LockedMeteoriteChest");
 			//Item.placeStyle = 1;
 		}

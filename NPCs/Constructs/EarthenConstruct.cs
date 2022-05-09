@@ -404,7 +404,7 @@ namespace SOTS.NPCs.Constructs
                 Tile tile = Framing.GetTileSafely(i, j);
                 npc.velocity.Y = -6f;
                 bool lineOfSight = Collision.CanHitLine(npc.position, npc.width, npc.height, npc.position + new Vector2(0, -128), npc.width, npc.height);
-                if (((!tile.active() || !Main.tileSolid[tile.type]) && lineOfSight) || npc.Center.Y < player.Center.Y)
+                if (((!tile.active() || !Main.tileSolid[tile.TileType]) && lineOfSight) || npc.Center.Y < player.Center.Y)
                 {
                     aiCounter = 0;
                     aiMode = 3;

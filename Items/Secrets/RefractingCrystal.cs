@@ -137,10 +137,10 @@ namespace SOTS.Items.Secrets
 			float midDay = 27000f;
 			if((time > midDay - 750 && time < midDay + 750) || counter > 0)
             {
-				if(tile.type == ModContent.TileType<StrangeKeystoneTile>())
+				if(tile.TileType == ModContent.TileType<StrangeKeystoneTile>())
                 {
-					int frameX = tile.frameX / 16;
-					int frameY = tile.frameY / 16;
+					int frameX = tile.TileFrameX / 16;
+					int frameY = tile.TileFrameY / 16;
 					if (frameX <= 2)
 					{
 						counter++;
@@ -155,7 +155,7 @@ namespace SOTS.Items.Secrets
 								tile = Framing.GetTileSafely(i2, j2);
 								if(counter >= 300)
 								{
-									if (tile.type == ModContent.TileType<StrangeKeystoneTile>())
+									if (tile.TileType == ModContent.TileType<StrangeKeystoneTile>())
 									{
 										if(h == 2 && k == 1)
 										{
@@ -167,7 +167,7 @@ namespace SOTS.Items.Secrets
 												NetMessage.SendData(MessageID.SyncItem, -1, -1, null, item, 1f, 0.0f, 0.0f, 0, 0, 0);
 											}
 										}
-										tile.frameX += 54;
+										tile.TileFrameX += 54;
 										if (Main.netMode == 2)
 										{
 											NetMessage.SendTileSquare(-1, i2, j2, 5, TileChangeType.None);
@@ -214,15 +214,15 @@ namespace SOTS.Items.Secrets
 		}
 		public override void SetDefaults()
 		{
-			projectile.timeLeft = 5;
-			projectile.penetrate = -1;
-			projectile.width = 4;
-			projectile.height = 4;
-			projectile.alpha = 255;
-			projectile.tileCollide = false;
-			projectile.ignoreWater = false;
-			projectile.friendly = false;
-			projectile.hostile = false;
+			Projectile.timeLeft = 5;
+			Projectile.penetrate = -1;
+			Projectile.width = 4;
+			Projectile.height = 4;
+			Projectile.alpha = 255;
+			Projectile.tileCollide = false;
+			Projectile.ignoreWater = false;
+			Projectile.friendly = false;
+			Projectile.hostile = false;
 		}
 		bool runOnce = true;
 		public override void AI()
@@ -234,7 +234,7 @@ namespace SOTS.Items.Secrets
 				{
 					SOTSWorld.SecretFoundMusicTimer = 720;
 				}
-				SoundEngine.PlaySound(2, projectile.Center, 14);
+				SoundEngine.PlaySound(2, Projectile.Center, 14);
 				int cc = 0;
 				for (int l = 0; l < 360; l += 3)
 				{
@@ -268,7 +268,7 @@ namespace SOTS.Items.Secrets
 					Vector2 circular = new Vector2(16, 0).RotatedBy(MathHelper.ToRadians(l));
 					for (int u = 1; u < 3; u++)
 					{
-						Dust dust = Dust.NewDustDirect(projectile.Center - new Vector2(5) + circular, 0, 0, ModContent.DustType<CopyDust4>());
+						Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5) + circular, 0, 0, ModContent.DustType<CopyDust4>());
 						dust.fadeIn = 0.2f;
 						dust.noGravity = true;
 						dust.alpha = 50;

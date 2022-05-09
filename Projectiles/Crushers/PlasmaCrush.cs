@@ -13,32 +13,32 @@ namespace SOTS.Projectiles.Crushers
 		}
         public override void SetDefaults()
         {
-			projectile.width = 32;
-			projectile.height = 32;
-			projectile.friendly = true;
-			projectile.timeLeft = 40;
-			projectile.penetrate = -1;
-			projectile.tileCollide = false;
-			projectile.melee = true;
-			projectile.alpha = 10;
-			projectile.usesIDStaticNPCImmunity = true;
-			projectile.idStaticNPCHitCooldown = 10;
+			Projectile.width = 32;
+			Projectile.height = 32;
+			Projectile.friendly = true;
+			Projectile.timeLeft = 40;
+			Projectile.penetrate = -1;
+			Projectile.tileCollide = false;
+			Projectile.melee = true;
+			Projectile.alpha = 10;
+			Projectile.usesIDStaticNPCImmunity = true;
+			Projectile.idStaticNPCHitCooldown = 10;
 		}
 		Color color = Color.White;
 		public override bool PreAI()
 		{
-			projectile.alpha += 7;
-			if (projectile.alpha > 255)
-				projectile.alpha = 255;
+			Projectile.alpha += 7;
+			if (Projectile.alpha > 255)
+				Projectile.alpha = 255;
 			if (runOnce)
 			{
-				trailPos[0] = projectile.Center;
+				trailPos[0] = Projectile.Center;
 				Projectile last = this.projectile;
 				bool found = false;
 				for (short i = 0; i < Main.maxProjectiles; i++)
 				{
 					Projectile proj = Main.projectile[i];
-					if (proj.type == projectile.type && proj.active && proj.owner == projectile.owner && proj.identity == (int)(projectile.ai[0] + 0.5f))
+					if (proj.type == Projectile.type && proj.active && proj.owner == Projectile.owner && proj.identity == (int)(Projectile.ai[0] + 0.5f))
 					{
 						found = true;
 						last = proj;
@@ -48,20 +48,20 @@ namespace SOTS.Projectiles.Crushers
 				if (found)
 					trailPos[1] = last.Center;
 				else
-					trailPos[1] = projectile.Center;
+					trailPos[1] = Projectile.Center;
 				runOnce = false;
 			}
 			return base.PreAI();
 		}
 		Vector2[] trailPos = new Vector2[2];
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
 			if (runOnce)
 				return false;
-			Texture2D texture = Main.projectileTexture[projectile.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Vector2 previousPosition = trailPos[0];
-			float scale = projectile.scale * 2.5f;
+			float scale = Projectile.scale * 2.5f;
 			Vector2 drawPos = trailPos[1] - Main.screenPosition;
 			Vector2 currentPos = trailPos[1];
 			Vector2 betweenPositions = previousPosition - currentPos;
@@ -82,7 +82,7 @@ namespace SOTS.Projectiles.Crushers
 						x = 0;
 						y = 0;
 					}
-					Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, projectile.GetAlpha(color), betweenPositions.ToRotation(), drawOrigin, scale, SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, Projectile.GetAlpha(color), betweenPositions.ToRotation(), drawOrigin, scale, SpriteEffects.None, 0f);
 				}
 			}
 			return false;

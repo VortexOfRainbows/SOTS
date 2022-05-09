@@ -18,23 +18,23 @@ namespace SOTS.Projectiles.Permafrost
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Frigid Javelin");
-			ProjectileID.Sets.TrailCacheLength[projectile.type] = 30;  
-			ProjectileID.Sets.TrailingMode[projectile.type] = 0;    
+			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 30;  
+			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;    
 		}
         public override void SetDefaults()
         {
-			projectile.magic = true;
-			projectile.friendly = true;
-			projectile.width = 38;
-			projectile.height = 38;
-			projectile.timeLeft = 7200;
-			projectile.extraUpdates = 1;
-			projectile.penetrate = -1;
-			projectile.tileCollide = false;
+			Projectile.magic = true;
+			Projectile.friendly = true;
+			Projectile.width = 38;
+			Projectile.height = 38;
+			Projectile.timeLeft = 7200;
+			Projectile.extraUpdates = 1;
+			Projectile.penetrate = -1;
+			Projectile.tileCollide = false;
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			target.immune[projectile.owner] = 3;
+			target.immune[Projectile.owner] = 3;
 			base.OnHitNPC(target, damage, knockback, crit);
 		}
 		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
@@ -46,24 +46,24 @@ namespace SOTS.Projectiles.Permafrost
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
 			if (bounceCounter >= modPlayer.frigidJavelinBoost + 1)
 			{
-				storeRot = projectile.rotation;
-				projectile.velocity *= 0;
-				projectile.tileCollide = false;
-				projectile.friendly = false;
-				projectile.extraUpdates = 2;
+				storeRot = Projectile.rotation;
+				Projectile.velocity *= 0;
+				Projectile.tileCollide = false;
+				Projectile.friendly = false;
+				Projectile.extraUpdates = 2;
 				startAnim = true;
 				for (int i = 0; i < 6; i++)
 				{
-					int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 34, 34, ModContent.DustType<CopyIceDust>());
+					int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), 34, 34, ModContent.DustType<CopyIceDust>());
 					Main.dust[num1].noGravity = true;
 					Main.dust[num1].velocity *= 3.4f;
 					Main.dust[num1].scale = 1f;
 
-					num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 34, 34, ModContent.DustType<CopyIceDust>());
+					num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), 34, 34, ModContent.DustType<CopyIceDust>());
 					Main.dust[num1].noGravity = true;
 					Main.dust[num1].velocity *= 2.2f;
 					Main.dust[num1].scale = 2f;
@@ -71,16 +71,16 @@ namespace SOTS.Projectiles.Permafrost
 			}
 			else
 			{
-				if (projectile.velocity.X != oldVelocity.X)
+				if (Projectile.velocity.X != oldVelocity.X)
 				{
-					projectile.velocity.X = -oldVelocity.X;
+					Projectile.velocity.X = -oldVelocity.X;
 				}
-				if (projectile.velocity.Y != oldVelocity.Y)
+				if (Projectile.velocity.Y != oldVelocity.Y)
 				{
-					projectile.velocity.Y = -oldVelocity.Y;
+					Projectile.velocity.Y = -oldVelocity.Y;
 				}
-				projectile.rotation = (float)Math.Atan2(projectile.velocity.Y, projectile.velocity.X) + MathHelper.ToRadians(45);
-				storeRot = projectile.rotation;
+				Projectile.rotation = (float)Math.Atan2(Projectile.velocity.Y, Projectile.velocity.X) + MathHelper.ToRadians(45);
+				storeRot = Projectile.rotation;
 			}
 			bounceCounter++;
 			return false;
@@ -89,13 +89,13 @@ namespace SOTS.Projectiles.Permafrost
 		{
 			return false;
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
-			Vector2 drawOrigin = new Vector2(Main.projectileTexture[projectile.type].Width * 0.5f, projectile.height * 0.5f);
-			for (int k = 0; k < projectile.oldPos.Length; k++) {
-				Vector2 drawPos = projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, projectile.gfxOffY);
-				Color color = projectile.GetAlpha(lightColor) * ((float)(projectile.oldPos.Length - k) / (float)projectile.oldPos.Length) * 0.5f;
-				spriteBatch.Draw(Main.projectileTexture[projectile.type], drawPos, null, color, projectile.rotation, drawOrigin, projectile.scale, SpriteEffects.None, 0f);
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value.Width * 0.5f, Projectile.height * 0.5f);
+			for (int k = 0; k < Projectile.oldPos.Length; k++) {
+				Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
+				Color color = Projectile.GetAlpha(lightColor) * ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length) * 0.5f;
+				spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
 			}
 			return true;
 		}
@@ -103,42 +103,42 @@ namespace SOTS.Projectiles.Permafrost
 		{
 			if(counter != -1)
 				counter += 3;
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
-			if (projectile.timeLeft <= 7170)
+			if (Projectile.timeLeft <= 7170)
 			{
 				if(counter != -1)
 				{
-					projectile.extraUpdates = 20;
+					Projectile.extraUpdates = 20;
 					counter = -1;
-					projectile.netUpdate = true;
-					SoundEngine.PlaySound(SoundID.Item71, (int)(projectile.Center.X), (int)(projectile.Center.Y));
+					Projectile.netUpdate = true;
+					SoundEngine.PlaySound(SoundID.Item71, (int)(Projectile.Center.X), (int)(Projectile.Center.Y));
 					return;
 				}
-				projectile.tileCollide = true;
-				projectile.position += projectile.velocity;
-				if(projectile.velocity.X != 0 || projectile.velocity.Y != 0)
+				Projectile.tileCollide = true;
+				Projectile.position += Projectile.velocity;
+				if(Projectile.velocity.X != 0 || Projectile.velocity.Y != 0)
 				{
-					int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 34, 34, ModContent.DustType<CopyIceDust>());
+					int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), 34, 34, ModContent.DustType<CopyIceDust>());
 					Main.dust[num1].noGravity = true;
 					Main.dust[num1].velocity *= 2f;
 					Main.dust[num1].scale = 1.5f;
 
-					num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 34, 34, ModContent.DustType<CopyIceDust>());
+					num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), 34, 34, ModContent.DustType<CopyIceDust>());
 					Main.dust[num1].noGravity = true;
 					Main.dust[num1].velocity *= 0.8f;
 					Main.dust[num1].scale = 2.5f;
 				}
 			}
-			if(projectile.timeLeft > 7170)
+			if(Projectile.timeLeft > 7170)
 			{
-				projectile.rotation = (float)Math.Atan2(projectile.velocity.Y, projectile.velocity.X) + MathHelper.ToRadians(45);
-				projectile.position.Y = player.Center.Y - projectile.height / 2;
-				projectile.position.X = player.Center.X - projectile.width / 2;
+				Projectile.rotation = (float)Math.Atan2(Projectile.velocity.Y, Projectile.velocity.X) + MathHelper.ToRadians(45);
+				Projectile.position.Y = player.Center.Y - Projectile.height / 2;
+				Projectile.position.X = player.Center.X - Projectile.width / 2;
 				Vector2 rotater = new Vector2(0, counter * 2).RotatedBy(MathHelper.ToRadians(6 * counter));
-				rotater = new Vector2(rotater.X, 0).RotatedBy(Math.Atan2(projectile.velocity.Y, projectile.velocity.X));
-				projectile.position.X += rotater.X;
-				projectile.position.Y += rotater.Y;
+				rotater = new Vector2(rotater.X, 0).RotatedBy(Math.Atan2(Projectile.velocity.Y, Projectile.velocity.X));
+				Projectile.position.X += rotater.X;
+				Projectile.position.Y += rotater.Y;
 			}
 			if(startAnim)
 			{
@@ -152,13 +152,13 @@ namespace SOTS.Projectiles.Permafrost
 					counter2 *= -1;
 					
 				}
-				if(projectile.timeLeft % 3 == 0)
+				if(Projectile.timeLeft % 3 == 0)
 				{
-					projectile.alpha++;
+					Projectile.alpha++;
 				}
-				projectile.rotation = storeRot + radians;
-				if (projectile.alpha > 250)
-					projectile.Kill();
+				Projectile.rotation = storeRot + radians;
+				if (Projectile.alpha > 250)
+					Projectile.Kill();
 			}
 		}
 	}

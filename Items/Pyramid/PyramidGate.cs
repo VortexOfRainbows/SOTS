@@ -28,7 +28,7 @@ namespace SOTS.Items.Pyramid
 			Item.autoReuse = true;
 			Item.useAnimation = 15;
 			Item.useTime = 10;
-			Item.useStyle = 1;
+			Item.useStyle = ItemUseStyleID.Swing;
 			Item.rare = ItemRarityID.LightRed;
 			Item.value = Item.sellPrice(0, 1, 0, 0);
 			Item.consumable = true;
@@ -71,7 +71,7 @@ namespace SOTS.Items.Pyramid
 			}
 			Tile tile = Main.tile[i, j];
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Pyramid/PyramidGateTile").Value;
-			Rectangle frame = new Rectangle(tile.frameX, tile.frameY, 16, 16);
+			Rectangle frame = new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, 16);
 			Color color = WorldGen.paintColor((int)Main.tile[i, j].color());
 			color = Lighting.GetColor(i, j, color);
 			Vector2 pos = new Vector2((i * 16 - (int)Main.screenPosition.X), (j * 16 - (int)Main.screenPosition.Y)) + zero;
@@ -99,8 +99,8 @@ namespace SOTS.Items.Pyramid
 		{
 			Player player = Main.LocalPlayer;
 			Tile tile = Main.tile[i, j];
-			int left = i - tile.frameX / 18;
-			int top = j - tile.frameY / 18;
+			int left = i - tile.TileFrameX / 18;
+			int top = j - tile.TileFrameY / 18;
 			Main.mouseRightRelease = false;
 			int key = ModContent.ItemType<PyramidKey>();
 			if (NPC.downedBoss2 && player.ConsumeItem(key))
@@ -142,34 +142,34 @@ namespace SOTS.Items.Pyramid
 		{
 			DisplayName.SetDefault("Multiplayer Code 5000");
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
 			return false;
 		}
 		public override void SetDefaults()
 		{
-			projectile.height = 16;
-			projectile.width = 16;
-			projectile.friendly = false;
-			projectile.penetrate = -1;
-			projectile.timeLeft = 5;
-			projectile.tileCollide = false;
-			projectile.hostile = false;
-			projectile.alpha = 255;
-			projectile.hide = true;
+			Projectile.height = 16;
+			Projectile.width = 16;
+			Projectile.friendly = false;
+			Projectile.penetrate = -1;
+			Projectile.timeLeft = 5;
+			Projectile.tileCollide = false;
+			Projectile.hostile = false;
+			Projectile.alpha = 255;
+			Projectile.hide = true;
 		}
         public override void AI()
         {
-			projectile.Kill();
+			Projectile.Kill();
         }
         public override void Kill(int timeLeft)
 		{
-			int i = (int)projectile.Center.X / 16;
-			int j = (int)projectile.Center.Y / 16;
+			int i = (int)Projectile.Center.X / 16;
+			int j = (int)Projectile.Center.Y / 16;
 			WorldGen.KillTile(i, j, false, false, false);
 			if (!Main.tile[i, j].active() && Main.netMode != NetmodeID.SinglePlayer)
 				NetMessage.SendData(MessageID.TileChange, -1, -1, null, 0, (float)i, (float)j, 0f, 0, 0, 0);
-			Vector2 center = projectile.Center + new Vector2(0, -16);
+			Vector2 center = Projectile.Center + new Vector2(0, -16);
 			SoundEngine.PlaySound(2, (int)center.X, (int)center.Y, 62, 1.25f, -0.5f);
 			if(Main.netMode != NetmodeID.Server)
 			{

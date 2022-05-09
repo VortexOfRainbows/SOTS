@@ -74,7 +74,7 @@ namespace SOTS.NPCs.Boss.Lux
 		public bool SecondPhase = false;
 		public bool desperation = false;
 		public float compressWings = 0;
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
 			Texture2D texture = Main.npcTexture[npc.type];
 			Vector2 drawOrigin = new Vector2(Main.npcTexture[npc.type].Width * 0.5f, npc.height * 0.5f);
@@ -277,24 +277,24 @@ namespace SOTS.NPCs.Boss.Lux
 		}
         public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
 		{
-			if (projectile.melee)
+			if (Projectile.melee)
 			{
 				damage = (int)(damage * 1.08f);
 			}
-			if (projectile.magic)
+			if (Projectile.magic)
 			{
-				if(projectile.type == ProjectileID.Blizzard)
+				if(Projectile.type == ProjectileID.Blizzard)
 				{
 					damage = (int)(damage * 0.8f);
 				}
 				else
 					damage = (int)(damage * 0.95f);
 			}
-			else if (projectile.ranged)
+			else if (Projectile.ranged)
 			{
 				damage = (int)(damage * 0.88f);
 			}
-			if(projectile.type == ProjectileID.UFOLaser)
+			if(Projectile.type == ProjectileID.UFOLaser)
 			{
 				damage = (int)(damage * 0.9f);
 			}
@@ -449,7 +449,7 @@ namespace SOTS.NPCs.Boss.Lux
 					}
 				if (attackPhase != DesperationPhase)
 				{
-					for(int i = 0; i < Main.projectile.Length; i++)
+					for(int i = 0; i < Main.Projectile.Length; i++)
                     {
 						Projectile proj = Main.projectile[i];
 						if(proj.active && proj.type == ModContent.ProjectileType<DogmaSphere>())
@@ -646,7 +646,7 @@ namespace SOTS.NPCs.Boss.Lux
 						{
 							if (SecondPhase)
 							{
-								Projectile.NewProjectile(otherLaserPosition, Vector2.Zero, ModContent.ProjectileType<DogmaSphere>(), damage, 0, Main.myPlayer, npc.target, -1); //projectile.ai[1] value of -1 to carry on weaker dogma sphere projectile
+								Projectile.NewProjectile(otherLaserPosition, Vector2.Zero, ModContent.ProjectileType<DogmaSphere>(), damage, 0, Main.myPlayer, npc.target, -1); //Projectile.ai[1] value of -1 to carry on weaker dogma sphere projectile
 								Projectile.NewProjectile(laserPos, Vector2.Zero, ModContent.ProjectileType<DogmaSphere>(), damage, 0, Main.myPlayer, npc.target, -2);
 							}
 							else
@@ -1508,7 +1508,7 @@ namespace SOTS.NPCs.Boss.Lux
 		public void Draw(SpriteBatch spriteBatch, Color overrideColor, int ID, float alphaMult = 1f, float radiusMult = 1f, float sizeMult = 1f, float baseRotation = 0f, bool front = false)
 		{
 			baseRotation += MathHelper.PiOver2;
-			Texture2D texture = Main.projectileTexture[ModContent.ProjectileType<ChaosSphere>()];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[ModContent.ProjectileType<ChaosSphere>()].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			int start = 0;
 			int end = 180;

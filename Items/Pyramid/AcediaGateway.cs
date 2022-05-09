@@ -26,7 +26,7 @@ namespace SOTS.Items.Pyramid
 			Item.autoReuse = true;
 			Item.useAnimation = 15;
 			Item.useTime = 10;
-			Item.useStyle = 1;
+			Item.useStyle = ItemUseStyleID.Swing;
 			Item.rare = ItemRarityID.Purple;
 			Item.value = Item.sellPrice(0, 1, 0, 0);
 			Item.consumable = true;
@@ -61,7 +61,7 @@ namespace SOTS.Items.Pyramid
 			//float uniquenessCounter = Main.GlobalTime * -100 + (i + j) * 5;
 			Tile tile = Main.tile[i, j];
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Pyramid/AcediaGatewayTileGlow").Value;
-			Rectangle frame = new Rectangle(tile.frameX, tile.frameY, 16, 16);
+			Rectangle frame = new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, 16);
 			Color color;
 			color = WorldGen.paintColor((int)Main.tile[i, j].color()) * (100f / 255f);
 			color.A = 0;
@@ -92,7 +92,7 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			int drop = mod.ItemType("AcediaGateway");
+			int drop = ModContent.ItemType<AcediaGateway>();
 			Item.NewItem(i * 16, j * 16, 144, 144, drop);
 		}
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)

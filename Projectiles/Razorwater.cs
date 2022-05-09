@@ -17,43 +17,43 @@ namespace SOTS.Projectiles
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Razorwater");
-			ProjectileID.Sets.TrailCacheLength[projectile.type] = 6;  
-			ProjectileID.Sets.TrailingMode[projectile.type] = 0;    
+			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 6;  
+			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;    
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
-			Vector2 drawOrigin = new Vector2(Main.projectileTexture[projectile.type].Width * 0.5f, projectile.height * 0.5f);
-			for (int k = 0; k < projectile.oldPos.Length; k++) {
-				Vector2 drawPos = projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, projectile.gfxOffY);
-				Color color = projectile.GetAlpha(lightColor) * ((float)(projectile.oldPos.Length - k) / (float)projectile.oldPos.Length);
-				spriteBatch.Draw(Main.projectileTexture[projectile.type], drawPos, null, color, projectile.rotation, drawOrigin, projectile.scale, SpriteEffects.None, 0f);
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value.Width * 0.5f, Projectile.height * 0.5f);
+			for (int k = 0; k < Projectile.oldPos.Length; k++) {
+				Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
+				Color color = Projectile.GetAlpha(lightColor) * ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
+				spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
 			}
 			return true;
 		}
         public override void SetDefaults()
         {
-			projectile.width = 62;
-			projectile.height = 62;
-			projectile.friendly = true;
-			projectile.timeLeft = 3600;
-			projectile.penetrate = -1;
-			projectile.tileCollide = false;
-			projectile.magic = false;
-			projectile.melee = true;
-			projectile.alpha = 140;
-			projectile.ai[1] = -1;
+			Projectile.width = 62;
+			Projectile.height = 62;
+			Projectile.friendly = true;
+			Projectile.timeLeft = 3600;
+			Projectile.penetrate = -1;
+			Projectile.tileCollide = false;
+			Projectile.magic = false;
+			Projectile.melee = true;
+			Projectile.alpha = 140;
+			Projectile.ai[1] = -1;
 		}
 		public override void AI()
 		{
-			projectile.rotation -= 0.37f;
-			if(projectile.ai[1] != -1)
+			Projectile.rotation -= 0.37f;
+			if(Projectile.ai[1] != -1)
 			{
-				Projectile proj = Main.projectile[(int)projectile.ai[1]];
-				if(proj.active && proj.type == mod.ProjectileType("Zeppelin") && proj.owner == projectile.owner)
+				Projectile proj = Main.projectile[(int)Projectile.ai[1]];
+				if(proj.active && proj.type == mod.ProjectileType("Zeppelin") && proj.owner == Projectile.owner)
 				{
-					projectile.position.X = proj.Center.X - projectile.width/2;
-					projectile.position.Y = proj.Center.Y - projectile.height/2;
-					projectile.timeLeft = 6;
+					Projectile.position.X = proj.Center.X - Projectile.width/2;
+					Projectile.position.Y = proj.Center.Y - Projectile.height/2;
+					Projectile.timeLeft = 6;
 				}
 			}
 		}

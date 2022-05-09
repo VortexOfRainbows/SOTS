@@ -77,7 +77,7 @@ namespace SOTS
 			NatureSlimeUnit(projectile);
 			HomingUnit(projectile);
 			counter++;
-			if (projectile.arrow || projectile.type == ModContent.ProjectileType<ChargedHardlightArrow>())
+			if (Projectile.arrow || Projectile.type == ModContent.ProjectileType<ChargedHardlightArrow>())
 				FrostFlakeUnit(projectile, frostFlake - 2);
 			AffixUnit(projectile);
 		}
@@ -176,7 +176,7 @@ namespace SOTS
 				var packet = mod.GetPacket();
 				packet.Write((byte)SOTSMessageType.SyncGlobalProj);
 				packet.Write((byte)player.whoAmI);
-				packet.Write(projectile.identity);
+				packet.Write(Projectile.identity);
 				packet.Write(frostFlake);
 				packet.Write(affixID);
 				packet.Send();
@@ -187,7 +187,7 @@ namespace SOTS
 				var packet = mod.GetPacket();
 				packet.Write((byte)SOTSMessageType.SyncGlobalProjTime);
 				packet.Write(playerWhoAmI);
-				packet.Write(projectile.whoAmI);
+				packet.Write(Projectile.whoAmI);
 				packet.Write(timeFrozen);
 				packet.Write(frozen);
 				packet.Send();
@@ -199,47 +199,47 @@ namespace SOTS
 			if(affixID < 0)
             {
 				affixID = -affixID;
-				if (Main.myPlayer == projectile.owner && Main.netMode == NetmodeID.MultiplayerClient)
-					SendClientChanges(Main.player[projectile.owner], projectile);
+				if (Main.myPlayer == Projectile.owner && Main.netMode == NetmodeID.MultiplayerClient)
+					SendClientChanges(Main.player[Projectile.owner], projectile);
 			}
 			if(affixID > 0) //not else if
             {
 				if(affixID == 1) //Ancient Steel Longbow
 				{
-					if (projectile.extraUpdates < 1)
-						projectile.extraUpdates++;
+					if (Projectile.extraUpdates < 1)
+						Projectile.extraUpdates++;
 					for (int i = 0; i < 3; i++)
 					{
-						Vector2 spawnPos = Vector2.Lerp(projectile.Center, projectile.oldPosition + projectile.Size / 2, i * 0.34f);
+						Vector2 spawnPos = Vector2.Lerp(Projectile.Center, Projectile.oldPosition + Projectile.Size / 2, i * 0.34f);
 						Dust dust = Dust.NewDustDirect(spawnPos + new Vector2(-4, -4), 0, 0, DustID.Silver, 0, 0, 0, Color.LightGray);
 						dust.noGravity = true;
 						dust.scale = 1.1f;
 						dust.velocity = Vector2.Zero;
 					}
 					if (initialVelo == Vector2.Zero)
-						initialVelo = projectile.velocity;
+						initialVelo = Projectile.velocity;
 					else
-						initialVelo -= (initialVelo - projectile.velocity) * 0.4f; //only recieve 40% of arrows usual gravity
-					if (projectile.velocity.X == initialVelo.X && projectile.velocity.Y != initialVelo.Y)
-						projectile.velocity = initialVelo;
+						initialVelo -= (initialVelo - Projectile.velocity) * 0.4f; //only recieve 40% of arrows usual gravity
+					if (Projectile.velocity.X == initialVelo.X && Projectile.velocity.Y != initialVelo.Y)
+						Projectile.velocity = initialVelo;
 				}
-				if (affixID == 2 && projectile.type != ModContent.ProjectileType<ChargedCataclysmBullet>()) //Blaspha
+				if (affixID == 2 && Projectile.type != ModContent.ProjectileType<ChargedCataclysmBullet>()) //Blaspha
 				{
 					for (int i = 0; i < 2; i++)
 					{
 						if(Main.rand.NextBool(7))
 						{
-							Vector2 spawnPos = Vector2.Lerp(projectile.Center, projectile.oldPosition + projectile.Size / 2, i * 0.5f);
+							Vector2 spawnPos = Vector2.Lerp(Projectile.Center, Projectile.oldPosition + Projectile.Size / 2, i * 0.5f);
 							Dust dust = Dust.NewDustDirect(spawnPos + new Vector2(-4, -4), 0, 0, DustID.Fire);
 							dust.noGravity = true;
 							dust.scale += 0.2f;
 							dust.scale *= 1.1f;
 							dust.velocity *= 0.5f;
-							dust.velocity += projectile.velocity * 0.1f;
+							dust.velocity += Projectile.velocity * 0.1f;
 						}
 						else if(Main.rand.NextBool(14))
 						{
-							Vector2 spawnPos = Vector2.Lerp(projectile.Center, projectile.oldPosition + projectile.Size / 2, i * 0.5f);
+							Vector2 spawnPos = Vector2.Lerp(Projectile.Center, Projectile.oldPosition + Projectile.Size / 2, i * 0.5f);
 							Dust dust = Dust.NewDustDirect(spawnPos + new Vector2(-4, -4), 0, 0, ModContent.DustType<CopyDust4>());
 							dust.velocity *= 0.1f;
 							dust.noGravity = true;
@@ -247,36 +247,36 @@ namespace SOTS
 							dust.color = VoidPlayer.InfernoColorAttempt(Main.rand.NextFloat(1f));
 							dust.fadeIn = 0.1f;
 							dust.scale *= 1.2f;
-							dust.velocity += projectile.velocity * 0.1f;
+							dust.velocity += Projectile.velocity * 0.1f;
 						}
 					}
 				}
-				if(affixID == 3 && projectile.type != ModContent.ProjectileType<ChargedCataclysmBullet>() && projectile.type != ModContent.ProjectileType<CataclysmBullet>()) //Chaos Chamber
+				if(affixID == 3 && Projectile.type != ModContent.ProjectileType<ChargedCataclysmBullet>() && Projectile.type != ModContent.ProjectileType<CataclysmBullet>()) //Chaos Chamber
 				{
 					for (int i = 0; i < 4; i++)
 					{
 						if(Main.rand.NextBool(2))
 						{
-							Vector2 spawnPos = Vector2.Lerp(projectile.Center, projectile.oldPosition + projectile.Size / 2, i * 0.25f);
+							Vector2 spawnPos = Vector2.Lerp(Projectile.Center, Projectile.oldPosition + Projectile.Size / 2, i * 0.25f);
 							Dust dust = Dust.NewDustDirect(spawnPos + new Vector2(-4, -4), 0, 0, ModContent.DustType<CopyDust4>());
 							dust.velocity *= 0.33f;
 							dust.noGravity = true;
 							dust.scale *= 0.3f;
 							dust.scale += 0.8f;
-							dust.color = VoidPlayer.pastelAttempt(MathHelper.ToRadians((projectile.whoAmI + Main.GameUpdateCount) * 12 + i * 4), true);
-							dust.alpha = (int)(projectile.alpha * 0.5f + 125);
+							dust.color = VoidPlayer.pastelAttempt(MathHelper.ToRadians((Projectile.whoAmI + Main.GameUpdateCount) * 12 + i * 4), true);
+							dust.alpha = (int)(Projectile.alpha * 0.5f + 125);
 							dust.fadeIn = 0.1f;
-							dust.velocity += projectile.velocity * 0.05f;
+							dust.velocity += Projectile.velocity * 0.05f;
 						}
 					}
 					float homingRange = (float)(180 + 64 * Math.Sqrt(counter));
 					if (homingRange > 640)
 						homingRange = 640;
-					int target = SOTSNPCs.FindTarget_Basic(projectile.Center, homingRange, this);
+					int target = SOTSNPCs.FindTarget_Basic(Projectile.Center, homingRange, this);
 					if (target >= 0)
 					{
 						NPC npc = Main.npc[target];
-						projectile.velocity = Vector2.Lerp(projectile.velocity, (npc.Center - projectile.Center).SafeNormalize(Vector2.Zero) * (projectile.velocity.Length() + 3), 0.055f);
+						Projectile.velocity = Vector2.Lerp(Projectile.velocity, (npc.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * (Projectile.velocity.Length() + 3), 0.055f);
 					}
 				}
 			}
@@ -288,17 +288,17 @@ namespace SOTS
 			else if(level <= 0)
             {
 				frostFlake += 2;
-				if (Main.myPlayer == projectile.owner && Main.netMode == NetmodeID.MultiplayerClient)
-					SendClientChanges(Main.player[projectile.owner], projectile);
+				if (Main.myPlayer == Projectile.owner && Main.netMode == NetmodeID.MultiplayerClient)
+					SendClientChanges(Main.player[Projectile.owner], projectile);
             }
-			if (projectile.type == ModContent.ProjectileType<ChargedHardlightArrow>())
+			if (Projectile.type == ModContent.ProjectileType<ChargedHardlightArrow>())
 				return;
-			spinCounter += projectile.velocity.Length() * MathHelper.ToRadians(0.75f) * projectile.direction;
+			spinCounter += Projectile.velocity.Length() * MathHelper.ToRadians(0.75f) * Projectile.direction;
 			if (level == 1)
 			{
 				if (!Main.rand.NextBool(3))
 				{
-					Dust dust = Dust.NewDustDirect(projectile.Center + new Vector2(-4, -4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, new Color(116, 125, 238));
+					Dust dust = Dust.NewDustDirect(Projectile.Center + new Vector2(-4, -4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, new Color(116, 125, 238));
 					dust.noGravity = true;
 					dust.scale = 1;
 					dust.velocity = Vector2.Zero;
@@ -309,7 +309,7 @@ namespace SOTS
 			{
 				for(int i = 0; i < 5; i++)
 				{
-					Vector2 spawnPos = Vector2.Lerp(projectile.Center, projectile.oldPosition + projectile.Size / 2, i * 0.2f);
+					Vector2 spawnPos = Vector2.Lerp(Projectile.Center, Projectile.oldPosition + Projectile.Size / 2, i * 0.2f);
 					Dust dust = Dust.NewDustDirect(spawnPos + new Vector2(-4, -4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, new Color(116, 125, 238));
 					dust.noGravity = true;
 					dust.scale = 1.2f;
@@ -321,36 +321,36 @@ namespace SOTS
             {
 				if(Main.rand.NextBool(2))
 				{
-					Dust dust = Dust.NewDustDirect(projectile.Center + new Vector2(-4, -4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, new Color(116, 125, 238));
+					Dust dust = Dust.NewDustDirect(Projectile.Center + new Vector2(-4, -4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, new Color(116, 125, 238));
 					dust.noGravity = true;
 					dust.scale = dust.scale * 0.5f + (1 + level) * 0.5f;
-					dust.velocity = (dust.velocity * 0.3f + Main.rand.NextVector2Circular(0.6f, 0.6f) + projectile.velocity * 0.5f);
+					dust.velocity = (dust.velocity * 0.3f + Main.rand.NextVector2Circular(0.6f, 0.6f) + Projectile.velocity * 0.5f);
 					dust.fadeIn = 0.1f;
 				}
 			}
 			if(initialVelo == Vector2.Zero)
-				initialVelo = projectile.velocity;
-			if(projectile.velocity.X == initialVelo.X && projectile.velocity.Y != initialVelo.Y)
-				projectile.velocity = initialVelo;
+				initialVelo = Projectile.velocity;
+			if(Projectile.velocity.X == initialVelo.X && Projectile.velocity.Y != initialVelo.Y)
+				Projectile.velocity = initialVelo;
         }
         public void HomingUnit(Projectile projectile)
 		{
-			if (hasHitYet || !projectile.active || projectile.damage <= 0 || counter > 900f || SOTSPlayer.typhonBlacklist.Contains(projectile.type))
+			if (hasHitYet || !Projectile.active || Projectile.damage <= 0 || counter > 900f || SOTSPlayer.typhonBlacklist.Contains(Projectile.type))
 				return;
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-			float distP = Vector2.Distance(player.Center, projectile.Center);
+			float distP = Vector2.Distance(player.Center, Projectile.Center);
 			if (!player.active || distP > 2000f)
 				return;
 			if (modPlayer.petAdvisor && counter >= 5 && modPlayer.typhonRange > 0)
 			{
 				if (petAdvisorID == -1)
 				{
-					//Main.NewText("Advisor Check " + projectile.whoAmI);
-					for (int i = 0; i < Main.projectile.Length; i++)
+					//Main.NewText("Advisor Check " + Projectile.whoAmI);
+					for (int i = 0; i < Main.Projectile.Length; i++)
 					{
 						Projectile proj = Main.projectile[i];
-						if (proj.active && proj.owner == projectile.owner && proj.type == ModContent.ProjectileType<AdvisorPet>())
+						if (proj.active && proj.owner == Projectile.owner && proj.type == ModContent.ProjectileType<AdvisorPet>())
 						{
 							petAdvisorID = i;
 							break;
@@ -360,7 +360,7 @@ namespace SOTS
 				else
 				{
 					Projectile proj = Main.projectile[petAdvisorID];
-					if (!(proj.active && proj.owner == projectile.owner && proj.type == ModContent.ProjectileType<AdvisorPet>()))
+					if (!(proj.active && proj.owner == Projectile.owner && proj.type == ModContent.ProjectileType<AdvisorPet>()))
 					{
 						petAdvisorID = -1;
 					}
@@ -372,23 +372,23 @@ namespace SOTS
 				{
 					float minDist = modPlayer.typhonRange * 2;
 					int target2 = -1;
-					float speed = projectile.velocity.Length();
-					bool capable = speed > 1f && (projectile.ranged || projectile.melee || projectile.magic || projectile.thrown || (!projectile.sentry && !projectile.minion)) && (projectile.modProjectile == null || projectile.modProjectile.ShouldUpdatePosition()) && (projectile.modProjectile == null || projectile.modProjectile.CanDamage());
-					if (projectile.friendly == true && projectile.hostile == false && player.heldProj != projectile.whoAmI && (capable || SOTSPlayer.typhonWhitelist.Contains(projectile.type)))
+					float speed = Projectile.velocity.Length();
+					bool capable = speed > 1f && (Projectile.ranged || Projectile.melee || Projectile.magic || Projectile.thrown || (!Projectile.sentry && !Projectile.minion)) && (Projectile.modProjectile == null || Projectile.modProjectile.ShouldUpdatePosition()) && (Projectile.modProjectile == null || Projectile.modProjectile.CanDamage());
+					if (Projectile.friendly == true && Projectile.hostile == false && player.heldProj != Projectile.whoAmI && (capable || SOTSPlayer.typhonWhitelist.Contains(Projectile.type)))
 					{
-						//Main.NewText("past Check " + projectile.whoAmI);
+						//Main.NewText("past Check " + Projectile.whoAmI);
 						for (int i = 0; i < Main.npc.Length; i++)
 						{
 							NPC target = Main.npc[i];
 							if (target.CanBeChasedBy())
 							{
-								float distance = Vector2.Distance(projectile.Center, target.Center);
+								float distance = Vector2.Distance(Projectile.Center, target.Center);
 								if (distance < minDist)
 								{
-									Rectangle increasedHitbox = new Rectangle(projectile.Hitbox.X - modPlayer.typhonRange, projectile.Hitbox.Y - modPlayer.typhonRange, projectile.width + 2 * modPlayer.typhonRange, projectile.height + 2 * modPlayer.typhonRange);
+									Rectangle increasedHitbox = new Rectangle(Projectile.Hitbox.X - modPlayer.typhonRange, Projectile.Hitbox.Y - modPlayer.typhonRange, Projectile.width + 2 * modPlayer.typhonRange, Projectile.height + 2 * modPlayer.typhonRange);
 									if (target.Hitbox.Intersects(increasedHitbox))
 									{
-										if (Collision.CanHitLine(projectile.position, projectile.width, projectile.height, target.position, target.width, target.height))
+										if (Collision.CanHitLine(Projectile.position, Projectile.width, Projectile.height, target.position, target.width, target.height))
 										{
 											minDist = distance;
 											target2 = i;
@@ -402,11 +402,11 @@ namespace SOTS
 							NPC toHit = Main.npc[target2];
 							if (toHit.active)
 							{
-								Vector2 goTo = (toHit.Center - projectile.Center).SafeNormalize(Vector2.Zero) * speed;
-								Vector2 velocity1 = projectile.velocity.SafeNormalize(Vector2.Zero);
+								Vector2 goTo = (toHit.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * speed;
+								Vector2 velocity1 = Projectile.velocity.SafeNormalize(Vector2.Zero);
 								Vector2 velocity2 = goTo.SafeNormalize(Vector2.Zero);
 								float close = (velocity1 - velocity2).Length() * 40f;
-								projectile.velocity = goTo;
+								Projectile.velocity = goTo;
 								if (petAdvisorID != -1 && effect)
 								{
 									Projectile proj = Main.projectile[petAdvisorID];
@@ -417,8 +417,8 @@ namespace SOTS
 										AdvisorPet pet = (AdvisorPet)proj.modProjectile;
 										float num = -1f * recalc;
 										pet.eyeReset = num - 1.5f;
-										pet.fireToX = projectile.Center.X;
-										pet.fireToY = projectile.Center.Y;
+										pet.fireToX = Projectile.Center.X;
+										pet.fireToY = Projectile.Center.Y;
 										pet.glow = 11.5f + 3.5f * recalc;
 										SoundEngine.PlaySound(SoundID.Item, (int)proj.Center.X, (int)proj.Center.Y, 8, 1.35f * (0.75f + 0.5f * recalc));
 									}
@@ -435,20 +435,20 @@ namespace SOTS
 		public int bloomingHookAssignment = -1;
 		public void NatureSlimeUnit(Projectile projectile)
 		{
-			Player player = Main.player[projectile.owner];
-			if (player.active && projectile.minion && projectile.active && !SOTSPlayer.symbioteBlacklist.Contains(projectile.type) && (Main.projPet[projectile.type] || VoidPlayer.isVoidMinion(projectile.type)) && projectile.damage > 0)
+			Player player = Main.player[Projectile.owner];
+			if (player.active && Projectile.minion && Projectile.active && !SOTSPlayer.symbioteBlacklist.Contains(Projectile.type) && (Main.projPet[Projectile.type] || VoidPlayer.isVoidMinion(Projectile.type)) && Projectile.damage > 0)
 			{
 				SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-				if(modPlayer.symbioteDamage > 0 && projectile.owner == Main.myPlayer)
+				if(modPlayer.symbioteDamage > 0 && Projectile.owner == Main.myPlayer)
 				{
 					if (bloomingHookAssignment == -1)
 					{
-						bloomingHookAssignment = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, ModContent.ProjectileType<BloomingHookMinion>(), modPlayer.symbioteDamage, 0.4f, Main.myPlayer, projectile.identity);
+						bloomingHookAssignment = Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<BloomingHookMinion>(), modPlayer.symbioteDamage, 0.4f, Main.myPlayer, Projectile.identity);
 					}
 					Projectile hook = Main.projectile[bloomingHookAssignment];
 					if (!hook.active || hook.type != ModContent.ProjectileType<BloomingHookMinion>())
 					{
-						bloomingHookAssignment = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, ModContent.ProjectileType<BloomingHookMinion>(), modPlayer.symbioteDamage, 0.4f, Main.myPlayer, projectile.identity);
+						bloomingHookAssignment = Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<BloomingHookMinion>(), modPlayer.symbioteDamage, 0.4f, Main.myPlayer, Projectile.identity);
 					}
 					hook.timeLeft = 6;
 				}
@@ -462,16 +462,16 @@ namespace SOTS
 			{
 				FrostBloom(projectile);
 			}
-			if (affixID == 2 && projectile.type != ModContent.ProjectileType<ChargedCataclysmBullet>())
+			if (affixID == 2 && Projectile.type != ModContent.ProjectileType<ChargedCataclysmBullet>())
 			{
-				if (Main.myPlayer == projectile.owner)
+				if (Main.myPlayer == Projectile.owner)
 				{
-					Vector2 outward = projectile.velocity.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-120, 120))) * Main.rand.NextFloat(0.4f, 0.6f);
-					if(projectile.type == ModContent.ProjectileType<CataclysmBullet>() || projectile.type == ModContent.ProjectileType<CataclysmBulletDamage>())
+					Vector2 outward = Projectile.velocity.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-120, 120))) * Main.rand.NextFloat(0.4f, 0.6f);
+					if(Projectile.type == ModContent.ProjectileType<CataclysmBullet>() || Projectile.type == ModContent.ProjectileType<CataclysmBulletDamage>())
                     {
 						outward = Main.rand.NextVector2CircularEdge(9, 9);
                     }
-					Projectile.NewProjectile(projectile.Center, outward, ModContent.ProjectileType<InfernoSeeker>(), (int)(projectile.damage * 0.5f), projectile.knockBack, Main.myPlayer, Main.rand.Next(3));
+					Projectile.NewProjectile(Projectile.Center, outward, ModContent.ProjectileType<InfernoSeeker>(), (int)(Projectile.damage * 0.5f), Projectile.knockBack, Main.myPlayer, Main.rand.Next(3));
 				}
 			}
 		}
@@ -481,12 +481,12 @@ namespace SOTS
 				FrostBloom(projectile);
 			if(affixID == 1)
 			{
-				if (Main.myPlayer == projectile.owner)
+				if (Main.myPlayer == Projectile.owner)
 				{
 					for (int i = 0; i < 3; i++)
 					{
 						float randAmt = 5 + 12 * i;
-						Projectile.NewProjectile(projectile.Center, projectile.velocity.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-randAmt, randAmt))) * Main.rand.NextFloat(0.2f, 0.3f), ModContent.ProjectileType<SteelShrapnel>(), (int)(projectile.damage), projectile.knockBack, Main.myPlayer, Main.rand.Next(3));
+						Projectile.NewProjectile(Projectile.Center, Projectile.velocity.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-randAmt, randAmt))) * Main.rand.NextFloat(0.2f, 0.3f), ModContent.ProjectileType<SteelShrapnel>(), (int)(Projectile.damage), Projectile.knockBack, Main.myPlayer, Main.rand.Next(3));
 					}
 				}
 			}
@@ -497,11 +497,11 @@ namespace SOTS
 				FrostBloom(projectile);
 			if (affixID == 1)
 			{
-				if (Main.myPlayer == projectile.owner)
+				if (Main.myPlayer == Projectile.owner)
 				{
 					for (int i = 0; i < 6; i++)
 					{
-						Projectile.NewProjectile(projectile.Center, projectile.velocity.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-180, 180f))) * Main.rand.NextFloat(0.2f, 0.3f), ModContent.ProjectileType<SteelShrapnel>(), (int)(projectile.damage), projectile.knockBack, Main.myPlayer, Main.rand.Next(3));
+						Projectile.NewProjectile(Projectile.Center, Projectile.velocity.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-180, 180f))) * Main.rand.NextFloat(0.2f, 0.3f), ModContent.ProjectileType<SteelShrapnel>(), (int)(Projectile.damage), Projectile.knockBack, Main.myPlayer, Main.rand.Next(3));
 					}
 				}
 			}
@@ -512,28 +512,28 @@ namespace SOTS
 			hasFrostBloomed = true;
 			int ffValue = frostFlake - 2;
 			frostFlake = 0;
-			Vector2 manipulateVelo = projectile.oldVelocity;
+			Vector2 manipulateVelo = Projectile.oldVelocity;
 			//TODO: add these visual effect onto the residual projectile to increase multiplayer compatability
-			if (Main.myPlayer == projectile.owner)
+			if (Main.myPlayer == Projectile.owner)
 			{
-				if (ffValue > 0 && projectile.type != ModContent.ProjectileType<ChargedHardlightArrow>())
+				if (ffValue > 0 && Projectile.type != ModContent.ProjectileType<ChargedHardlightArrow>())
 				{
 					float damageMult = 2;
 					if (ffValue == 2)
 						damageMult = 6;
-					Projectile.NewProjectile(projectile.Center, manipulateVelo, ModContent.ProjectileType<FrostflakePulse>(), (int)(projectile.damage * damageMult), projectile.knockBack, Main.myPlayer, ffValue, spinCounter);
+					Projectile.NewProjectile(Projectile.Center, manipulateVelo, ModContent.ProjectileType<FrostflakePulse>(), (int)(Projectile.damage * damageMult), Projectile.knockBack, Main.myPlayer, ffValue, spinCounter);
 				}
 				if (Main.netMode == NetmodeID.MultiplayerClient)
-					SendClientChanges(Main.player[projectile.owner], projectile);
+					SendClientChanges(Main.player[Projectile.owner], projectile);
 			}
 		}
         public override bool PreDraw(Projectile projectile, SpriteBatch spriteBatch, Color lightColor)
 		{
-			if (frostFlake == 4 && projectile.type != ModContent.ProjectileType<ChargedHardlightArrow>() && !hasFrostBloomed)
+			if (frostFlake == 4 && Projectile.type != ModContent.ProjectileType<ChargedHardlightArrow>() && !hasFrostBloomed)
 			{
 				for (int i = 0; i < 3; i++)
 				{
-					Vector2 spawnPos = Vector2.Lerp(projectile.Center + projectile.velocity.SafeNormalize(Vector2.Zero) * 8, projectile.Center + projectile.velocity.SafeNormalize(Vector2.Zero) * -120f, i * 0.3f);
+					Vector2 spawnPos = Vector2.Lerp(Projectile.Center + Projectile.velocity.SafeNormalize(Vector2.Zero) * 8, Projectile.Center + Projectile.velocity.SafeNormalize(Vector2.Zero) * -120f, i * 0.3f);
 					float percent = (1 - 0.3f * i);
 					float alphaMult = (counter - i * 7) / 14f;
 					if (alphaMult > 0.7f)
@@ -542,7 +542,7 @@ namespace SOTS
 						alphaMult = 0;
 					float dist1 = 8 * percent;
 					float dist2 = 6 * percent;
-					DrawStar(spawnPos, alphaMult, projectile.velocity.ToRotation(), spinCounter + MathHelper.ToRadians(30 * i), 6, dist1, dist2, 0.6f);
+					DrawStar(spawnPos, alphaMult, Projectile.velocity.ToRotation(), spinCounter + MathHelper.ToRadians(30 * i), 6, dist1, dist2, 0.6f);
 				}
 			}
 			/*(if (bloomingHookAssignment != -1)
@@ -558,11 +558,11 @@ namespace SOTS
         }
         public static void LaserTo(int advisorId, Projectile projectile, int extraAlpha)
 		{
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			int alpha = (int)(extraAlpha * 2.5 + 40);
 			Projectile proj = Main.projectile[advisorId];
 			Vector2 projPos = proj.Center + new Vector2(0, 8);
-			Vector2 toProjectile = projectile.Center - projPos;
+			Vector2 toProjectile = Projectile.Center - projPos;
 			Vector2 newtoProjectile = toProjectile.SafeNormalize(Vector2.Zero) * 4;
 			Vector2 currentPos = projPos;
 			Vector2 savePos = projPos;
@@ -583,14 +583,14 @@ namespace SOTS
 				dust.fadeIn = 0.2f;
 				dust.scale *= 1.25f;
 				dust.shader = GameShaders.Armor.GetShaderFromItemId(player.miscDyes[1].type);
-				toProjectile = projectile.Center - currentPos;
-				if (toProjectile.Length() < Math.Sqrt(proj.width * projectile.height) + 8 && remaining > 60)
+				toProjectile = Projectile.Center - currentPos;
+				if (toProjectile.Length() < Math.Sqrt(proj.width * Projectile.height) + 8 && remaining > 60)
 				{
 					for (int i = 0; i < 360; i += 10)
 					{
-						Vector2 currentFromProjectile = currentPos - projectile.Center;
+						Vector2 currentFromProjectile = currentPos - Projectile.Center;
 						currentFromProjectile = currentFromProjectile.RotatedBy(MathHelper.ToRadians(i));
-						currentFromProjectile += projectile.Center;
+						currentFromProjectile += Projectile.Center;
 						interator++;
 						num1 = Dust.NewDust(new Vector2(currentFromProjectile.X - 4, currentFromProjectile.Y - 4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, alpha);
 						dust = Main.dust[num1];
@@ -602,18 +602,18 @@ namespace SOTS
 						dust.shader = GameShaders.Armor.GetShaderFromItemId(player.miscDyes[1].type);
 					}
 					remaining = 20;
-					currentPos = new Vector2((float)Math.Sqrt(proj.width * projectile.height) + 8, 0).RotatedBy(projectile.velocity.ToRotation()) + projectile.Center;
+					currentPos = new Vector2((float)Math.Sqrt(proj.width * Projectile.height) + 8, 0).RotatedBy(Projectile.velocity.ToRotation()) + Projectile.Center;
 				}
 				if (remaining < 20)
 				{
-					newtoProjectile = projectile.velocity.SafeNormalize(Vector2.Zero) * 3;
+					newtoProjectile = Projectile.velocity.SafeNormalize(Vector2.Zero) * 3;
 				}
 				savePos = currentPos;
 			}
 			currentPos = savePos;
 			for (int i = 0; i < 8; i++)
 			{
-				newtoProjectile = projectile.velocity.RotatedBy(MathHelper.ToRadians(-160)).SafeNormalize(Vector2.Zero) * 3;
+				newtoProjectile = Projectile.velocity.RotatedBy(MathHelper.ToRadians(-160)).SafeNormalize(Vector2.Zero) * 3;
 				currentPos += newtoProjectile;
 				interator++;
 				int num1 = Dust.NewDust(new Vector2(currentPos.X - 4, currentPos.Y - 4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, alpha);
@@ -628,7 +628,7 @@ namespace SOTS
 			currentPos = savePos;
 			for (int i = 0; i < 8; i++)
 			{
-				newtoProjectile = projectile.velocity.RotatedBy(MathHelper.ToRadians(160)).SafeNormalize(Vector2.Zero) * 3;
+				newtoProjectile = Projectile.velocity.RotatedBy(MathHelper.ToRadians(160)).SafeNormalize(Vector2.Zero) * 3;
 				currentPos += newtoProjectile;
 				interator++;
 				int num1 = Dust.NewDust(new Vector2(currentPos.X - 4, currentPos.Y - 4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, alpha);

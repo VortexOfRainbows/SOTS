@@ -21,8 +21,8 @@ namespace SOTS.Items.Slime
 			Item.autoReuse = true;
 			Item.useAnimation = 15;
 			Item.useTime = 10;
-			Item.useStyle = 1;
-			Item.rare = 1;
+			Item.useStyle = ItemUseStyleID.Swing;
+			Item.rare = ItemRarityID.Blue;
 			Item.consumable = true;
 			Item.createTile = mod.TileType("WormwoodTile");
 		}

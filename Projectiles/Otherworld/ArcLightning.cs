@@ -19,32 +19,32 @@ namespace SOTS.Projectiles.Otherworld
 		}
 		public override void SetDefaults()
 		{
-			projectile.width = 18;
-			projectile.height = 18;
-			projectile.friendly = true;
-			projectile.ranged = true;
-			projectile.timeLeft = 3600;
-			projectile.tileCollide = false;
-			projectile.penetrate = -1;
-			projectile.alpha = 120;
-			projectile.scale = 1f;
-			projectile.usesIDStaticNPCImmunity = true;
-			projectile.idStaticNPCHitCooldown = 10;
+			Projectile.width = 18;
+			Projectile.height = 18;
+			Projectile.friendly = true;
+			Projectile.ranged = true;
+			Projectile.timeLeft = 3600;
+			Projectile.tileCollide = false;
+			Projectile.penetrate = -1;
+			Projectile.alpha = 120;
+			Projectile.scale = 1f;
+			Projectile.usesIDStaticNPCImmunity = true;
+			Projectile.idStaticNPCHitCooldown = 10;
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			projectile.localNPCImmunity[target.whoAmI] = projectile.localNPCHitCooldown;
-			target.immune[projectile.owner] = 0;
+			Projectile.localNPCImmunity[target.whoAmI] = Projectile.localNPCHitCooldown;
+			target.immune[Projectile.owner] = 0;
 		}
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
 		{
-			if (projectile.alpha >= 150)
+			if (Projectile.alpha >= 150)
 			{
 				return false;
 			}
-			float scale = projectile.scale;
-			float width = projectile.width * scale;
-			Vector2 last = projectile.Center;
+			float scale = Projectile.scale;
+			float width = Projectile.width * scale;
+			Vector2 last = Projectile.Center;
 			projHitbox = new Rectangle((int)last.X - (int)width / 2, (int)last.Y - (int)width / 2, (int)width, (int)width);
 			if (projHitbox.Intersects(targetHitbox))
 			{
@@ -70,23 +70,23 @@ namespace SOTS.Projectiles.Otherworld
 				last = pos;
 			}
 			return false;
-			//return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), projectile.Center, endPoint, 8f, ref point);
+			//return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, endPoint, 8f, ref point);
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
 			if (runOnce)
 				return false;
-			Texture2D texture = Main.projectileTexture[projectile.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			Vector2 previousPosition = projectile.Center;
-			Color color = new Color(132, 148, 180, 0) * ((255 - projectile.alpha) / 255f);
+			Vector2 previousPosition = Projectile.Center;
+			Color color = new Color(132, 148, 180, 0) * ((255 - Projectile.alpha) / 255f);
 			for (int k = 0; k < trailPos.Count; k++)
 			{
 				if (trailPos[k] == Vector2.Zero)
 				{
 					return false;
 				}
-				float scale = projectile.scale * 0.7f;
+				float scale = Projectile.scale * 0.7f;
 				scale *= 1.3f - 1.2f * (k / (float)dist);
 				Vector2 drawPos = trailPos[k] - Main.screenPosition;
 				Vector2 currentPos = trailPos[k];
@@ -95,7 +95,7 @@ namespace SOTS.Projectiles.Otherworld
 				for (int i = 0; i < max; i++)
 				{
 					drawPos = previousPosition + -betweenPositions * (i / max) - Main.screenPosition;
-					if (trailPos[k] != projectile.Center)
+					if (trailPos[k] != Projectile.Center)
 						for(int a = 0; a < 2; a++)
 							Main.spriteBatch.Draw(texture, drawPos + Main.rand.NextVector2Circular(2, 2), null, color, betweenPositions.ToRotation() + MathHelper.ToRadians(90), drawOrigin, scale, SpriteEffects.None, 0f);
 				}
@@ -113,15 +113,15 @@ namespace SOTS.Projectiles.Otherworld
 		float speed = 28f;
 		public void runStartCalculations()
         {
-			Vector2 location = projectile.Center;
-			Vector2 originalVelo = projectile.velocity.SafeNormalize(Vector2.Zero) * speed;
+			Vector2 location = Projectile.Center;
+			Vector2 originalVelo = Projectile.velocity.SafeNormalize(Vector2.Zero) * speed;
 			float defaultDeviation = 45f;
 			int startingDeviation = 0;
-			int startingPreference = projectile.direction;
-			if (projectile.ai[0] == 1)
+			int startingPreference = Projectile.direction;
+			if (Projectile.ai[0] == 1)
 			{
-				startingPreference = -projectile.direction;
-				projectile.scale = 0.5f;
+				startingPreference = -Projectile.direction;
+				Projectile.scale = 0.5f;
 				speed = 22f;
 				defaultDeviation = 70f;
 			}
@@ -163,13 +163,13 @@ namespace SOTS.Projectiles.Otherworld
 		{
 			if (runOnce)
 			{
-				projectile.position += projectile.velocity.SafeNormalize(Vector2.Zero) * speed;
+				Projectile.position += Projectile.velocity.SafeNormalize(Vector2.Zero) * speed;
 				runStartCalculations();
 				runOnce = false;
 			}
-			projectile.alpha += 4;
-			if (projectile.alpha >= 255)
-				projectile.Kill();
+			Projectile.alpha += 4;
+			if (Projectile.alpha >= 255)
+				Projectile.Kill();
 		}
 	}
 }

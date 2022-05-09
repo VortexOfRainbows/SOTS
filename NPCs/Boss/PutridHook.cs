@@ -151,11 +151,11 @@ namespace SOTS.NPCs.Boss
 		}
 		public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
 		{
-			if (projectile.active && (projectile.modProjectile == null || projectile.modProjectile.ShouldUpdatePosition()))
+			if (Projectile.active && (Projectile.modProjectile == null || Projectile.modProjectile.ShouldUpdatePosition()))
 			{
-				projectile.velocity.X *= -0.9f;
-				projectile.velocity.Y *= -0.9f;
-				projectile.netUpdate = true;
+				Projectile.velocity.X *= -0.9f;
+				Projectile.velocity.Y *= -0.9f;
+				Projectile.netUpdate = true;
 			}
 		}
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)

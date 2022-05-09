@@ -225,8 +225,8 @@ namespace SOTS.Items.Otherworld.Furniture
 		public override bool NewRightClick(int i, int j)
 		{
 			Tile tile = Main.tile[i, j];
-			int left = i - tile.frameX / 18;
-			int top = j - tile.frameY / 18;
+			int left = i - tile.TileFrameX / 18;
+			int top = j - tile.TileFrameY / 18;
 			int index = GetInstance<TransmutationAltarStorage>().Find(left, top);
 			TransmutationAltarStorage entity = (TransmutationAltarStorage)TileEntity.ByID[index];
 
@@ -285,8 +285,8 @@ namespace SOTS.Items.Otherworld.Furniture
 		{
 			cooldown--;
 			Tile tile = Main.tile[i, j];
-			int left = i - tile.frameX / 18;
-			int top = j - tile.frameY / 18;
+			int left = i - tile.TileFrameX / 18;
+			int top = j - tile.TileFrameY / 18;
 			int type = 0;
 			if (Main.tile[i, j].frameX >= 18 && Main.tile[i, j].frameX < 36 && Main.tile[i, j].frameY % 36 >= 18)
 				type = 1;
@@ -321,7 +321,7 @@ namespace SOTS.Items.Otherworld.Furniture
 			int currentItem = 0;
 			for (int l = 1; l < amountOfUniqueItems; l++)
 			{
-				texture = Main.itemTexture[entity.itemsArray[l]];
+				texture = Terraria.GameContent.TextureAssets.Item[entity.itemsArray[l].Value];
 				for (int g = 0; g < entity.itemAmountsArray[l]; g++)
 				{
 					DrawAnimation anim = Main.itemAnimations[entity.itemsArray[l]];
@@ -340,7 +340,7 @@ namespace SOTS.Items.Otherworld.Furniture
 					DrawItem(texture, pos, frameCount, ticksPerFrame, color);
 				}
 			}
-			texture = Main.itemTexture[entity.itemsArray[0]];
+			texture = Terraria.GameContent.TextureAssets.Item[entity.itemsArray[0].Value];
 			for (int g = 0; g < entity.itemAmountsArray[0]; g++)
 			{
 				DrawAnimation anim = Main.itemAnimations[entity.itemsArray[0]];
@@ -384,12 +384,12 @@ namespace SOTS.Items.Otherworld.Furniture
 		}
 		public override void SetDefaults()
 		{
-			projectile.alpha = 255;
-			projectile.timeLeft = 24;
-			projectile.friendly = false;
-			projectile.tileCollide = false;
-			projectile.width = 36;
-			projectile.height = 36;
+			Projectile.alpha = 255;
+			Projectile.timeLeft = 24;
+			Projectile.friendly = false;
+			Projectile.tileCollide = false;
+			Projectile.width = 36;
+			Projectile.height = 36;
 		}
 		public override bool? CanCutTiles()
 		{
@@ -397,22 +397,22 @@ namespace SOTS.Items.Otherworld.Furniture
 		}
 		public override void AI()
 		{
-			projectile.alpha = 255;
-			projectile.Kill();
+			Projectile.alpha = 255;
+			Projectile.Kill();
 		}
 		public override void Kill(int timeLeft)
 		{
 			Color white = Color.White;
 			white.A = 0;
 			Color color;
-			color = WorldGen.paintColor((int)Main.tile[(int)projectile.ai[0], (int)projectile.ai[1]].color());
-			if ((int)Main.tile[(int)projectile.ai[0], (int)projectile.ai[1]].color() == 0)
+			color = WorldGen.paintColor((int)Main.tile[(int)Projectile.ai[0], (int)Projectile.ai[1]].color());
+			if ((int)Main.tile[(int)Projectile.ai[0], (int)Projectile.ai[1]].color() == 0)
 				color = new Color(220, 60, 10);
 			
-			if(projectile.knockBack == 1)
+			if(Projectile.knockBack == 1)
 			{
-				SoundEngine.PlaySound(SoundID.Item4, projectile.Center);
-				Vector2 position = projectile.Center;
+				SoundEngine.PlaySound(SoundID.Item4, Projectile.Center);
+				Vector2 position = Projectile.Center;
 				for (int k = 0; k < 360; k += 3)
 				{
 					Vector2 circularLocation = new Vector2(-Main.rand.Next(10), 0).RotatedBy(MathHelper.ToRadians(k));
@@ -440,8 +440,8 @@ namespace SOTS.Items.Otherworld.Furniture
 			}
 			else
 			{
-				SoundEngine.PlaySound(SoundID.Item4, projectile.Center);
-				Vector2 position = projectile.Center;
+				SoundEngine.PlaySound(SoundID.Item4, Projectile.Center);
+				Vector2 position = Projectile.Center;
 				for (int k = 0; k < 360; k += 3)
 				{
 					Vector2 circularLocation = new Vector2(-Main.rand.Next(10), 0).RotatedBy(MathHelper.ToRadians(k));
@@ -551,7 +551,7 @@ namespace SOTS.Items.Otherworld.Furniture
 		public override bool ValidTile(int i, int j)
 		{
 			Tile tile = Main.tile[i, j];
-			return tile.active() && tile.type == (ushort)TileType<TransmutationAltarTile>() && tile.frameX == 0 && tile.frameY == 0;
+			return tile.active() && tile.TileType == (ushort)TileType<TransmutationAltarTile>() && tile.TileFrameX == 0 && tile.TileFrameY == 0;
 		}
 
 		public override int Hook_AfterPlacement(int i, int j, int type, int style, int direction)

@@ -1,6 +1,9 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Dusts;
+using SOTS.Items.Otherworld.Blocks;
 using SOTS.NPCs.Boss.Advisor;
+using SOTS.NPCs.Constructs;
 using System;
 using Terraria;
 using Terraria.DataStructures;
@@ -28,16 +31,16 @@ namespace SOTS.Items.Otherworld
 			Item.autoReuse = true;
 			Item.useAnimation = 15;
 			Item.useTime = 10;
-			Item.useStyle = 1;
-			Item.rare = 9;
+			Item.useStyle = ItemUseStyleID.Swing;
+			Item.rare = ItemRarityID.Cyan;
 			Item.value = Item.sellPrice(0, 1, 0, 0);
 			Item.consumable = true;
-			Item.createTile = mod.TileType("AvaritianGatewayTile");
+			Item.createTile = ModContent.TileType<AvaritianGatewayTile>();
 		}
 	}	
 	public class AvaritianGatewayTile : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileLighted[Type] = true;
 			Main.tileFrameImportant[Type] = true;
@@ -55,10 +58,13 @@ namespace SOTS.Items.Otherworld
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Strange Gateway");
 			AddMapEntry(new Color(55, 45, 65), name);
-			disableSmartCursor = true;
-			dustType = mod.DustType("AvaritianDust");
 		}
-		public override bool CanExplode(int i, int j)
+        public override bool CreateDust(int i, int j, ref int type)
+        {
+			type = ModContent.DustType<AvaritianDust>();
+			return base.CreateDust(i, j, ref type);
+        }
+        public override bool CanExplode(int i, int j)
 		{
 			return false;
 		}
@@ -72,18 +78,18 @@ namespace SOTS.Items.Otherworld
 		}
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			int drop = mod.ItemType("AvaritianGateway");
-			Item.NewItem(i * 16, j * 16, 144, 144, drop);
+			int drop = ModContent.ItemType<AvaritianGateway>();
+			Item.NewItem(new EntitySource_TileBreak(i, j),i * 16, j * 16, 144, 144, drop);
 		}
         public override void RandomUpdate(int i, int j)
 		{
-			if (Main.netMode != 1)
-				SpawnAdvisor(i, j, mod);
+			if (Main.netMode != NetmodeID.MultiplayerClient)
+				SpawnAdvisor(i, j);
 			base.RandomUpdate(i, j);
 		}
-		public static bool SpawnAdvisor(int i, int j, Mod mod)
+		public static bool SpawnAdvisor(int i, int j)
 		{
-			int type = Main.tile[i, j].frameX / 18 + (Main.tile[i, j].frameY / 18 * 9);
+			int type = Main.tile[i, j].TileFrameX / 18 + (Main.tile[i, j].TileFrameY / 18 * 9);
 			if (type == 58)
 			{
 				bool playerNear = false;
@@ -99,11 +105,11 @@ namespace SOTS.Items.Otherworld
 				}
 				if (!playerNear)
 				{
-					if (!NPC.AnyNPCs(mod.NPCType("TheAdvisorHead")))
+					if (!NPC.AnyNPCs(ModContent.NPCType<TheAdvisorHead>()))
 					{
 						if (Main.netMode != 1)
 						{
-							int npc = NPC.NewNPC(i * 16 + 8, j * 16 + 8 - 240, mod.NPCType("TheAdvisorHead"));
+							int npc = NPC.NewNPC(new EntitySource_TileUpdate(i, j),i * 16 + 8, j * 16 + 8 - 240, ModContent.NPCType<TheAdvisorHead>());
 							Main.npc[npc].netUpdate = true;
 						}
 						for (int k = 0; k < 4; k++)
@@ -122,13 +128,13 @@ namespace SOTS.Items.Otherworld
 								int locX = (int)(direction.X / 16f + 0.5f) + i;
 								int locY = (int)(direction.Y / 16f + (k == 2 || k == 3 ? -0.5f : 0)) + j;
 								Tile tile = Framing.GetTileSafely(locX, locY);
-								if (tile.active() && !Main.tileSolidTop[tile.type] && Main.tileSolid[tile.type] && (tile.type == (ushort)mod.TileType("AvaritianPlatingTile") || tile.type == (ushort)mod.TileType("PortalPlatingTile") || tile.type == (ushort)mod.TileType("DullPlatingTile")))
+								if (tile.HasTile && !Main.tileSolidTop[tile.TileType] && Main.tileSolid[tile.TileType] && (tile.TileType == (ushort)ModContent.TileType<AvaritianPlatingTile>() || tile.TileType == (ushort)ModContent.TileType<PortalPlatingTile>() || tile.TileType == (ushort)ModContent.TileType<DullPlatingTile>()))
 								{
 									direction = direction.SafeNormalize(Vector2.Zero) * 80f;
-									if (Main.netMode != 1)
+									if (Main.netMode != NetmodeID.MultiplayerClient)
 									{
 										Vector2 location = new Vector2(locX * 16 + 8, locY * 16 + 8);
-										int npc = NPC.NewNPC((int)location.X + (int)direction.X, (int)location.Y + (int)direction.Y, mod.NPCType("OtherworldlyConstructHead2"), 0, 0, 0, location.X, location.Y);
+										int npc = NPC.NewNPC(new EntitySource_TileUpdate(i, j), (int)location.X + (int)direction.X, (int)location.Y + (int)direction.Y, ModContent.NPCType<OtherworldlyConstructHead2>(), 0, 0, 0, location.X, location.Y);
 										Main.npc[npc].netUpdate = true;
 										TheAdvisorHead.ConstructIds[k] = npc;
 									}
@@ -142,9 +148,9 @@ namespace SOTS.Items.Otherworld
 								if (k == 2 || k == 3)
 									direction.X *= -1;
 								direction.Y += 80;
-								if (Main.netMode != 1)
+								if (Main.netMode != NetmodeID.MultiplayerClient)
 								{
-									int npc = NPC.NewNPC(i * 16 + 8 + (int)(direction.X + 0.5f), j * 16 + 8 + (int)(direction.Y + 0.5f), mod.NPCType("OtherworldlyConstructHead2"));
+									int npc = NPC.NewNPC(new EntitySource_TileUpdate(i, j), i * 16 + 8 + (int)(direction.X + 0.5f), j * 16 + 8 + (int)(direction.Y + 0.5f), ModContent.NPCType<OtherworldlyConstructHead2>());
 									Main.npc[npc].netUpdate = true;
 									TheAdvisorHead.ConstructIds[k] = npc;
 								}
@@ -158,12 +164,12 @@ namespace SOTS.Items.Otherworld
 		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
 		{
-			float uniquenessCounter = Main.GlobalTime * -100 + (i + j) * 5;
+			float uniquenessCounter = Main.GlobalTimeWrappedHourly * -100 + (i + j) * 5;
 			Tile tile = Main.tile[i, j];
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/AvaritianGatewayTileGlow").Value;
-			Rectangle frame = new Rectangle(tile.frameX, tile.frameY, 16, 16);
+			Rectangle frame = new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, 16);
 			Color color;
-			color = WorldGen.paintColor((int)Main.tile[i, j].color()) * (100f / 255f);
+			color = WorldGen.paintColor((int)Main.tile[i, j].TileColor) * (100f / 255f);
 			color.A = 0;
 			float alphaMult = 0.55f + 0.45f * (float)Math.Sin(MathHelper.ToRadians(uniquenessCounter));
 			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
@@ -180,7 +186,7 @@ namespace SOTS.Items.Otherworld
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
 		{
-			int type = Main.tile[i, j].frameX / 18 + (Main.tile[i, j].frameY / 18 * 9);
+			int type = Main.tile[i, j].TileFrameX / 18 + (Main.tile[i, j].TileFrameX / 18 * 9);
 			if (type != 67)
 				return;
 

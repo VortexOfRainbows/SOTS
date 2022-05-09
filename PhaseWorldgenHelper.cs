@@ -26,7 +26,7 @@ namespace SOTS
                 for(int j = 10; j < Main.worldSurface * 0.35f + 40; j++)
                 {
                     Tile tile = Main.tile[i, j];
-                    if(tile.active() && tile.type == ModContent.TileType<PhaseOreTile>())
+                    if(tile.active() && tile.TileType == ModContent.TileType<PhaseOreTile>())
                     {
                         tile.active(false);
                         amtDestroyed++;

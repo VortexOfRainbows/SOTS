@@ -68,7 +68,7 @@ namespace SOTS.Items.Furniture
         public override void HitWire(int i, int j)
 		{
 			Tile tile = Main.tile[i, j];
-			int top = j - tile.frameY / 18;
+			int top = j - tile.TileFrameY / 18;
 			Wiring.SkipWire(i, top);
 			Wiring.SkipWire(i, top + 1);
 			Wiring.SkipWire(i, top + 2);
@@ -78,14 +78,14 @@ namespace SOTS.Items.Furniture
 		public void UpdateDoor(int i, int j, bool client)
 		{
 			Tile tile = Main.tile[i, j];
-			int top = j - tile.frameY / 18;
+			int top = j - tile.TileFrameY / 18;
 			if (Collision.EmptyTile(i, top, true) && Collision.EmptyTile(i, top + 1, true) && Collision.EmptyTile(i, top + 2, true))
 			{
 				for (int k = 0; k < 3; k++)
 				{
 					Tile targetTile = Main.tile[i, top + k];
 					targetTile.type = (ushort)ModContent.TileType<TOpen>();
-					targetTile.frameX *= 3;
+					targettile.TileFrameX *= 3;
 				}
 				NetMessage.SendTileSquare(client ? Main.myPlayer : -1, i, top + 1, 3, TileChangeType.None);
 				Projectile.NewProjectile(new Vector2(i, top + 1) * 16, Vector2.Zero, ModContent.ProjectileType<BlastDoorProj>(), 0, 0, Main.myPlayer, 0);
@@ -164,7 +164,7 @@ namespace SOTS.Items.Furniture
 		public override void HitWire(int i, int j)
 		{
 			Tile tile = Main.tile[i, j];
-			int top = j - tile.frameY / 18;
+			int top = j - tile.TileFrameY / 18;
 			Wiring.SkipWire(i, top);
 			Wiring.SkipWire(i, top + 1);
 			Wiring.SkipWire(i, top + 2);
@@ -174,14 +174,14 @@ namespace SOTS.Items.Furniture
 		public void UpdateDoor(int i, int j, bool client)
 		{
 			Tile tile = Main.tile[i, j];
-			int top = j - tile.frameY / 18;
+			int top = j - tile.TileFrameY / 18;
 			if (Collision.EmptyTile(i, top, true) && Collision.EmptyTile(i, top + 1, true) && Collision.EmptyTile(i, top + 2, true))
 			{
 				for (int k = 0; k < 3; k++)
 				{
 					Tile targetTile = Main.tile[i, top + k];
 					targetTile.type = (ushort)ModContent.TileType<TClosed>();
-					targetTile.frameX /= 3;
+					targettile.TileFrameX /= 3;
 				}
 				NetMessage.SendTileSquare(client ? Main.myPlayer : -1, i, top + 1, 3, TileChangeType.None);
 				Projectile.NewProjectile(new Vector2(i, top + 1) * 16, Vector2.Zero, ModContent.ProjectileType<BlastDoorProj>(), 0, 0, Main.myPlayer, 1);

@@ -37,6 +37,11 @@ Low Priority Objectives:
 5. Stars in Planetarium Sky
 6. Nerf VM Incubator and Rose Bow
 
+5/8/22
+1. More porting progess. Errors down from around 40000 to around 20000!
+	1. This is not necessarily an accurate error count, since many bug fixes and recodes must happen
+2. I have also been doing minor optimizations and readability changes! :D
+
 5/7/22
 1. Started porting. I have constant headaches due to this.
 
@@ -245,7 +250,7 @@ Low Priority Objectives:
 	2. In addition, it also lessens the amount of packets that are sent in total, making it less strenuous.
 2. Reworked some logic in Void Minion and Void parameter related syncing.
 	1. This *should* make void minions function better in multiplayer, as there was a massive oversight in multiplayer void minion calculations 
-		(used projectile.owner == player.whoAmI instead of projectile.owner == Main.myPlayer)
+		(used Projectile.owner == player.whoAmI instead of Projectile.owner == Main.myPlayer)
 	2. Also less intensive, as only the owner client will calculate void minion consumption, instead of all clients
 		(now using Main.myPlayer == player.whoAmI, which makes it so only the client player runs the calculations)
 	3. Confirmed fixed! The only error case is if the spirit owner is running behind, aka has frame skip subtle or off.
@@ -1616,7 +1621,7 @@ Beta 0.19.4.3 Released
 
 5/7/21
 1. More subspace! Darkness attacks work! almost done!
-2. Work on fire projectile.
+2. Work on fire Projectile.
 3. SUBSPACE SERPENT REWORK COMPLETE?
 
 5/6/21
@@ -1722,7 +1727,7 @@ Beta 0.19.4.3 Released
 	1. Added some exponential scaling to its movement to make it move towards enemies faster, reducing laser lag.
 	2. Stays slightly farther away from enemies normally
 	3. WORKS IN MULTIPLAYER THANK GOD
-2. Fixed a handful of multiplayer issues with Putrid Pinky pet (using projectile.identity)
+2. Fixed a handful of multiplayer issues with Putrid Pinky pet (using Projectile.identity)
 3. Fixed multiplayer rotation syncing issues with Spirit Minions
 4. Photon Geyser is no longer (my) dedicated item
 5. Fixed pixel draw error with void bar

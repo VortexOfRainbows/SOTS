@@ -14,22 +14,22 @@ namespace SOTS.Projectiles.Evil
 		}
         public override void SetDefaults()
         {
-			projectile.height = 96;
-			projectile.width = 96;
-			projectile.penetrate = -1;
-			projectile.melee = true;
-			projectile.friendly = true;
-			projectile.timeLeft = 5;
-			projectile.tileCollide = false;
-			projectile.hostile = false;
-			projectile.alpha = 0;
-			projectile.hide = true;
-			projectile.usesLocalNPCImmunity = true;
-			projectile.localNPCHitCooldown = 20;
+			Projectile.height = 96;
+			Projectile.width = 96;
+			Projectile.penetrate = -1;
+			Projectile.melee = true;
+			Projectile.friendly = true;
+			Projectile.timeLeft = 5;
+			Projectile.tileCollide = false;
+			Projectile.hostile = false;
+			Projectile.alpha = 0;
+			Projectile.hide = true;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = 20;
 		}
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-			crit = projectile.ai[1] == -1;
+			crit = Projectile.ai[1] == -1;
         }
         public override bool ShouldUpdatePosition()
         {
@@ -39,8 +39,8 @@ namespace SOTS.Projectiles.Evil
         {
 			if(runOnce)
 			{
-				//SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 62, 0.4f, -0.1f);
-				float randomDirection = projectile.ai[0];
+				//SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 62, 0.4f, -0.1f);
+				float randomDirection = Projectile.ai[0];
 				for(int i = 20; i < 340; i += 10)
 				{
 					Vector2 circularLocation = new Vector2(-5, 0).RotatedBy(MathHelper.ToRadians(randomDirection + i));
@@ -50,7 +50,7 @@ namespace SOTS.Projectiles.Evil
 					{
 						type = DustID.Blood;
 					}
-					Dust dust = Dust.NewDustDirect(new Vector2(projectile.Center.X + circularLocation.X - 4, projectile.Center.Y + circularLocation.Y - 4), 4, 4, type);
+					Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, type);
 					float speedMult = 1f;
 					if (blood)
 					{
@@ -77,7 +77,7 @@ namespace SOTS.Projectiles.Evil
 						{
 							type = DustID.Blood;
 						}
-						Dust dust = Dust.NewDustDirect(new Vector2(projectile.Center.X + circularLocation.X - 4, projectile.Center.Y + circularLocation.Y - 4), 4, 4, type);
+						Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, type);
 						float speedMult = 1f;
 						if (blood)
 						{

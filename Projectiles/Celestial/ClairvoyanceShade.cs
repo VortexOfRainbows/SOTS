@@ -11,13 +11,13 @@ namespace SOTS.Projectiles.Celestial
     {
         public override void SetDefaults()
         {
-            projectile.hostile = false;
-            projectile.friendly = false;
-            projectile.tileCollide = false;
-            projectile.width = 0;
-            projectile.height = 0;
-            projectile.timeLeft = 60;
-            projectile.hide = true; // Prevents projectile from being drawn normally. Use in conjunction with DrawBehind.
+            Projectile.hostile = false;
+            Projectile.friendly = false;
+            Projectile.tileCollide = false;
+            Projectile.width = 0;
+            Projectile.height = 0;
+            Projectile.timeLeft = 60;
+            Projectile.hide = true; // Prevents projectile from being drawn normally. Use in conjunction with DrawBehind.
         }
         public override void DrawBehind(int index, List<int> drawCacheProjsBehindNPCsAndTiles, List<int> drawCacheProjsBehindNPCs, List<int> drawCacheProjsBehindProjectiles, List<int> drawCacheProjsOverWiresUI)
         {
@@ -27,34 +27,34 @@ namespace SOTS.Projectiles.Celestial
         private int fadeInTimer = 0;
         public override void AI()
         {
-            //Main.NewText(projectile.timeLeft);
-            Player player = Main.player[projectile.owner];
-            Projectile master = Main.projectile[(int)projectile.ai[0]];
+            //Main.NewText(Projectile.timeLeft);
+            Player player = Main.player[Projectile.owner];
+            Projectile master = Main.projectile[(int)Projectile.ai[0]];
             SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
             if (player.active && !player.dead)
             {
-                projectile.Center = master.Center;
+                Projectile.Center = master.Center;
             }
             if (modPlayer.FluidCurse && player.active)
             {
-                projectile.timeLeft = (int)modPlayer.FluidCurseMult;
-                Vector2 toPlayer = player.Center - projectile.Center;
+                Projectile.timeLeft = (int)modPlayer.FluidCurseMult;
+                Vector2 toPlayer = player.Center - Projectile.Center;
                 float dist = toPlayer.Length();
                 float speed = (0.4f + dist * 0.1f / (float)Math.Pow(modPlayer.FluidCurseMult, 0.5f));
                 if (speed > dist)
                     speed = dist;
-                projectile.Center += toPlayer.SafeNormalize(Vector2.Zero) * speed;
+                Projectile.Center += toPlayer.SafeNormalize(Vector2.Zero) * speed;
             }
             else
             {
-                projectile.Kill();
+                Projectile.Kill();
             }
-            int destinationAlpha = (int)(projectile.timeLeft * 255f / 60f);
-            if (projectile.alpha < destinationAlpha)
-                projectile.alpha++;
-            else if (projectile.alpha > destinationAlpha)
-                projectile.alpha--;
-            fadeInTimer = 10 + (int)(projectile.alpha * 0.98f);
+            int destinationAlpha = (int)(Projectile.timeLeft * 255f / 60f);
+            if (Projectile.alpha < destinationAlpha)
+                Projectile.alpha++;
+            else if (Projectile.alpha > destinationAlpha)
+                Projectile.alpha--;
+            fadeInTimer = 10 + (int)(Projectile.alpha * 0.98f);
             if (fadeInTimer > 255)
                 fadeInTimer = 255;
         }
@@ -104,9 +104,9 @@ namespace SOTS.Projectiles.Celestial
             }
         }
         int counter = 0;
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override bool PreDraw(ref Color lightColor)
         {
-            if (!projectile.active || Main.LocalPlayer.whoAmI != projectile.owner)
+            if (!Projectile.active || Main.LocalPlayer.whoAmI != Projectile.owner)
                 return false;
             Player drawPlayer = Main.LocalPlayer;
             if (Main.screenWidth != screenWidthOld || Main.screenHeight != screenHeightOld)

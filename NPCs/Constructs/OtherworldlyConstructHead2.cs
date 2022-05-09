@@ -180,7 +180,7 @@ namespace SOTS.NPCs.Constructs
 					int i = (int)(pos.X / 16);
 					int j = (int)(pos.Y / 16);
 					Tile tile = Framing.GetTileSafely(i, j);
-					if (tile.nactive() && Main.tileSolid[(int)tile.type])
+					if (tile.nactive() && Main.tileSolid[(int)tile.TileType])
 					{
 						foundTile = true;
 						return new Vector2(i * 16, j * 16) + new Vector2(8, 8);
@@ -206,7 +206,7 @@ namespace SOTS.NPCs.Constructs
 					int i = (int)(pos.X / 16);
 					int j = (int)(pos.Y / 16);
 					Tile tile = Framing.GetTileSafely(i, j);
-					if (tile.nactive() && Main.tileSolid[(int)tile.type])
+					if (tile.nactive() && Main.tileSolid[(int)tile.TileType])
 					{
 						foundTile = true;
 						return new Vector2(i * 16, j * 16) + new Vector2(8, 8);
@@ -353,7 +353,7 @@ namespace SOTS.NPCs.Constructs
 					npc.ai[1] = 0;
 					npc.ai[0] = -90;
 					SoundEngine.PlaySound(SoundID.Item92, npc.Center);
-					for (int i = 0; i < Main.projectile.Length; i++)
+					for (int i = 0; i < Main.Projectile.Length; i++)
 					{
 						Projectile proj = Main.projectile[i];
 						if (proj.active && proj.type == mod.ProjectileType("OtherworldlyTracer") && proj.ai[1] == npc.whoAmI)

@@ -19,35 +19,35 @@ namespace SOTS.Projectiles.Lightning
 		}
 		public override void SetDefaults()
 		{
-			projectile.width = 12;
-			projectile.height = 12;
-			projectile.friendly = false;
-			projectile.magic = true;
-			projectile.timeLeft = 3600;
-			projectile.tileCollide = false;
-			projectile.penetrate = -1;
-			projectile.alpha = 120;
-			projectile.scale = 1f;
+			Projectile.width = 12;
+			Projectile.height = 12;
+			Projectile.friendly = false;
+			Projectile.magic = true;
+			Projectile.timeLeft = 3600;
+			Projectile.tileCollide = false;
+			Projectile.penetrate = -1;
+			Projectile.alpha = 120;
+			Projectile.scale = 1f;
 		}
 		public override bool? CanHitNPC(NPC target)
 		{
 			return false;
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
 			if (runOnce)
 				return false;
-			Texture2D texture = Main.projectileTexture[projectile.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			Vector2 previousPosition = projectile.Center;
-			Color color = new Color(140, 200, 140, 0) * ((255 - projectile.alpha) / 255f);
+			Vector2 previousPosition = Projectile.Center;
+			Color color = new Color(140, 200, 140, 0) * ((255 - Projectile.alpha) / 255f);
 			for (int k = 0; k < trailPos.Length; k++)
 			{
 				if (trailPos[k] == Vector2.Zero)
 				{
 					return false;
 				}
-				float scale = projectile.scale;
+				float scale = Projectile.scale;
 				Vector2 drawPos = trailPos[k] - Main.screenPosition;
 				Vector2 currentPos = trailPos[k];
 				Vector2 betweenPositions = previousPosition - currentPos;
@@ -64,7 +64,7 @@ namespace SOTS.Projectiles.Lightning
 							x = 0;
 							y = 0;
 						}
-						if (trailPos[k] != projectile.Center)
+						if (trailPos[k] != Projectile.Center)
 							Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, betweenPositions.ToRotation() + MathHelper.ToRadians(90), drawOrigin, scale, SpriteEffects.None, 0f);
 					}
 				}
@@ -89,8 +89,8 @@ namespace SOTS.Projectiles.Lightning
 		{
 			if (runOnce)
 			{
-				projectile.position += projectile.velocity.SafeNormalize(Vector2.Zero) * 24;
-				SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 94, 0.6f, 0.2f);
+				Projectile.position += Projectile.velocity.SafeNormalize(Vector2.Zero) * 24;
+				SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 94, 0.6f, 0.2f);
 				for (int i = 0; i < randStorage.Length; i++)
 				{
 					randStorage[i] = Main.rand.Next(-75, 76);
@@ -99,13 +99,13 @@ namespace SOTS.Projectiles.Lightning
 				{
 					trailPos[i] = Vector2.Zero;
 				}
-				originalVelo = projectile.velocity.SafeNormalize(Vector2.Zero) * 8f;
-				originalPos = projectile.Center;
+				originalVelo = Projectile.velocity.SafeNormalize(Vector2.Zero) * 8f;
+				originalPos = Projectile.Center;
 				runOnce = false;
 			}
 
 			Vector2 temp = originalPos;
-			addPos = projectile.Center;
+			addPos = Projectile.Center;
 			for (int i = 0; i < dist; i++)
 			{
 				originalPos += originalVelo * 0.125f * (8f + 0.4f * extraLength);
@@ -123,12 +123,12 @@ namespace SOTS.Projectiles.Lightning
 			runOnce2 = false;
 			extraLength += 3.5f;
 			originalPos = temp;
-			projectile.alpha += 5;
-			if (projectile.alpha >= 255)
-				projectile.Kill();
+			Projectile.alpha += 5;
+			if (Projectile.alpha >= 255)
+				Projectile.Kill();
 
-			projectile.scale *= 0.98f;
-			projectile.friendly = false;
+			Projectile.scale *= 0.98f;
+			Projectile.friendly = false;
 		}
 	}
 }

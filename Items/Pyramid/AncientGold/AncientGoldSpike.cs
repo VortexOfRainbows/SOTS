@@ -20,7 +20,7 @@ namespace SOTS.Items.Pyramid.AncientGold
 			Item.autoReuse = true;
 			Item.useAnimation = 15;
 			Item.useTime = 10;
-			Item.useStyle = 1;
+			Item.useStyle = ItemUseStyleID.Swing;
 			Item.rare = ItemRarityID.LightRed;
 			Item.consumable = true;
 			Item.createTile = mod.TileType("AncientGoldSpikeTile");

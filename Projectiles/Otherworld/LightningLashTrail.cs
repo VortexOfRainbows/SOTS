@@ -13,18 +13,18 @@ namespace SOTS.Projectiles.Otherworld
 		}
         public override void SetDefaults()
         {
-			projectile.width = 32;
-			projectile.height = 32;
-			projectile.friendly = true;
-			projectile.timeLeft = 3600;
-			projectile.penetrate = -1;
-			projectile.tileCollide = false;
-			projectile.magic = true;
-			projectile.alpha = 255;
-			projectile.ai[1] = -1;
-			projectile.extraUpdates = 1;
-			projectile.usesIDStaticNPCImmunity = true;
-			projectile.idStaticNPCHitCooldown = 40;
+			Projectile.width = 32;
+			Projectile.height = 32;
+			Projectile.friendly = true;
+			Projectile.timeLeft = 3600;
+			Projectile.penetrate = -1;
+			Projectile.tileCollide = false;
+			Projectile.magic = true;
+			Projectile.alpha = 255;
+			Projectile.ai[1] = -1;
+			Projectile.extraUpdates = 1;
+			Projectile.usesIDStaticNPCImmunity = true;
+			Projectile.idStaticNPCHitCooldown = 40;
 		}
 		Color color = Color.White;
 		public override bool PreAI()
@@ -45,7 +45,7 @@ namespace SOTS.Projectiles.Otherworld
 			cataloguePos();
 		}
 		Vector2[] trailPos = new Vector2[30];
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
 			if (runOnce)
 				return true;
@@ -58,7 +58,7 @@ namespace SOTS.Projectiles.Otherworld
 			}
 			for (int k = 1; k < trailPos.Length; k++)
 			{
-				float scale = projectile.scale * (trailPos.Length - k) / (float)trailPos.Length;
+				float scale = Projectile.scale * (trailPos.Length - k) / (float)trailPos.Length;
 				scale *= 0.7f;
 				if (trailPos[k] == Vector2.Zero)
 				{
@@ -82,7 +82,7 @@ namespace SOTS.Projectiles.Otherworld
 							x = 0;
 							y = 0;
 						}
-						if (trailPos[k] != projectile.Center)
+						if (trailPos[k] != Projectile.Center)
 							Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, betweenPositions.ToRotation() + MathHelper.ToRadians(90), drawOrigin, scale, SpriteEffects.None, 0f);
 					}
 				}
@@ -93,7 +93,7 @@ namespace SOTS.Projectiles.Otherworld
 		bool runOnce = true;
 		public void cataloguePos()
 		{
-			Vector2 current = projectile.Center;
+			Vector2 current = Projectile.Center;
 			for (int i = 0; i < trailPos.Length; i++)
 			{
 				Vector2 previousPosition = trailPos[i];
@@ -104,7 +104,7 @@ namespace SOTS.Projectiles.Otherworld
 		public void checkPos()
 		{
 			float iterator = 0f;
-			Vector2 current = projectile.Center;
+			Vector2 current = Projectile.Center;
 			for (int i = 0; i < trailPos.Length; i++)
 			{
 				Vector2 previousPosition = trailPos[i];
@@ -114,16 +114,16 @@ namespace SOTS.Projectiles.Otherworld
 				}
 			}
 			//if (iterator >= trailPos.Length)
-			//	projectile.Kill();
+			//	Projectile.Kill();
 		}
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
 		{
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			float point = 0f;
-			Vector2 previousPosition = projectile.Center;
+			Vector2 previousPosition = Projectile.Center;
 			for (int k = 0; k < trailPos.Length; k++)
 			{
-				float scale = projectile.scale * (trailPos.Length - k) / (float)trailPos.Length;
+				float scale = Projectile.scale * (trailPos.Length - k) / (float)trailPos.Length;
 				scale *= 0.7f;
 				if (trailPos[k] == Vector2.Zero)
 				{
@@ -141,16 +141,16 @@ namespace SOTS.Projectiles.Otherworld
 		bool end = false;
 		public override void AI()
 		{
-			if(projectile.ai[1] != -1 && end == false)
+			if(Projectile.ai[1] != -1 && end == false)
 			{
-				Projectile proj = Main.projectile[(int)projectile.ai[1]];
-				if(proj.active && proj.type == mod.ProjectileType("LightningLash") && proj.owner == projectile.owner && (int)proj.ai[1] == projectile.whoAmI)
+				Projectile proj = Main.projectile[(int)Projectile.ai[1]];
+				if(proj.active && proj.type == mod.ProjectileType("LightningLash") && proj.owner == Projectile.owner && (int)proj.ai[1] == Projectile.whoAmI)
 				{
 					Vector2 center = proj.Center;
-					projectile.position.X = center.X - projectile.width/2;
-					projectile.position.Y = center.Y - projectile.height/2;
-					projectile.velocity = proj.velocity;
-					projectile.timeLeft = 80;
+					Projectile.position.X = center.X - Projectile.width/2;
+					Projectile.position.Y = center.Y - Projectile.height/2;
+					Projectile.velocity = proj.velocity;
+					Projectile.timeLeft = 80;
 				}
 				else
                 {

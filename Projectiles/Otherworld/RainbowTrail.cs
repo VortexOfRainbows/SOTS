@@ -20,15 +20,15 @@ namespace SOTS.Projectiles.Otherworld
 		}
         public override void SetDefaults()
         {
-			projectile.width = 54;
-			projectile.height = 54;
-			projectile.friendly = true;
-			projectile.timeLeft = 3600;
-			projectile.penetrate = -1;
-			projectile.tileCollide = false;
-			projectile.melee = true;
-			projectile.alpha = 255;
-			projectile.ai[1] = -1;
+			Projectile.width = 54;
+			Projectile.height = 54;
+			Projectile.friendly = true;
+			Projectile.timeLeft = 3600;
+			Projectile.penetrate = -1;
+			Projectile.tileCollide = false;
+			Projectile.melee = true;
+			Projectile.alpha = 255;
+			Projectile.ai[1] = -1;
 		}
 		int counter = 0;
 		Color color = Color.White;
@@ -47,20 +47,20 @@ namespace SOTS.Projectiles.Otherworld
 		}
 		public override void PostAI()
 		{
-			Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 0.7f / 255f, (255 - projectile.alpha) * 1f / 255f, (255 - projectile.alpha) * 1.45f / 255f);
+			Lighting.AddLight(Projectile.Center, (255 - Projectile.alpha) * 0.7f / 255f, (255 - Projectile.alpha) * 1f / 255f, (255 - Projectile.alpha) * 1.45f / 255f);
 			checkPos();
 			if (counter % 2 == 0)
 				cataloguePos();
 		}
 		Vector2[] trailPos = new Vector2[30];
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
 			int counter2 = counter;
 			if (runOnce)
 				return true;
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Otherworld/RainbowTrail").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			Vector2 previousPosition = projectile.Center;
+			Vector2 previousPosition = Projectile.Center;
 			for (int k = 0; k < trailPos.Length; k++)
 			{
 				counter2++;
@@ -72,7 +72,7 @@ namespace SOTS.Projectiles.Otherworld
 				double grn = Math.Sin(frequency * (double)newAi + 2.0) * width + center;
 				double blu = Math.Sin(frequency * (double)newAi + 4.0) * width + center;
 				this.color = new Color((int)red, (int)grn, (int)blu);
-				float scale = projectile.scale * (trailPos.Length - k) / (float)trailPos.Length;
+				float scale = Projectile.scale * (trailPos.Length - k) / (float)trailPos.Length;
 				scale *= 0.7f;
 				if (trailPos[k] == Vector2.Zero)
 				{
@@ -96,7 +96,7 @@ namespace SOTS.Projectiles.Otherworld
 							x = 0;
 							y = 0;
 						}
-						if (trailPos[k] != projectile.Center)
+						if (trailPos[k] != Projectile.Center)
 							Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, betweenPositions.ToRotation() + MathHelper.ToRadians(90), drawOrigin, scale, SpriteEffects.None, 0f);
 					}
 				}
@@ -109,7 +109,7 @@ namespace SOTS.Projectiles.Otherworld
 		{
 			if (end)
 			{
-				Vector2 current = projectile.Center;
+				Vector2 current = Projectile.Center;
 				for (int i = 0; i < trailPos.Length; i++)
 				{
 					Vector2 previousPosition = trailPos[i];
@@ -119,7 +119,7 @@ namespace SOTS.Projectiles.Otherworld
 			}
 			else
 			{
-				Vector2 current = projectile.Center + new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(counter * 10));
+				Vector2 current = Projectile.Center + new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(counter * 10));
 				for (int i = 0; i < trailPos.Length; i++)
 				{
 					Vector2 previousPosition = trailPos[i];
@@ -131,7 +131,7 @@ namespace SOTS.Projectiles.Otherworld
 		public void checkPos()
 		{
 			float iterator = 0f;
-			Vector2 current = projectile.Center;
+			Vector2 current = Projectile.Center;
 			for (int i = 0; i < trailPos.Length; i++)
 			{
 				Vector2 previousPosition = trailPos[i];
@@ -141,16 +141,16 @@ namespace SOTS.Projectiles.Otherworld
 				}
 			}
 			//if (iterator >= trailPos.Length)
-			//	projectile.Kill();
+			//	Projectile.Kill();
 		}
 		int endHow = 0;
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
 		{
 			float point = 0f;
-			Vector2 previousPosition = projectile.Center;
+			Vector2 previousPosition = Projectile.Center;
 			for (int k = 0; k < trailPos.Length; k++)
 			{
-				float scale = projectile.scale * (trailPos.Length - k) / (float)trailPos.Length;
+				float scale = Projectile.scale * (trailPos.Length - k) / (float)trailPos.Length;
 				scale *= 0.7f;
 				if (trailPos[k] == Vector2.Zero)
 				{
@@ -168,14 +168,14 @@ namespace SOTS.Projectiles.Otherworld
 		bool end = false;
 		public override void AI()
 		{
-			if(projectile.ai[1] != -1 && end == false)
+			if(Projectile.ai[1] != -1 && end == false)
 			{
-				Projectile proj = Main.projectile[(int)projectile.ai[1]];
-				if(proj.active && proj.type == mod.ProjectileType("Poyoyo") && proj.owner == projectile.owner)
+				Projectile proj = Main.projectile[(int)Projectile.ai[1]];
+				if(proj.active && proj.type == mod.ProjectileType("Poyoyo") && proj.owner == Projectile.owner)
 				{
-					projectile.position.X = proj.Center.X - projectile.width/2;
-					projectile.position.Y = proj.Center.Y - projectile.height/2;
-					projectile.timeLeft = 60;
+					Projectile.position.X = proj.Center.X - Projectile.width/2;
+					Projectile.position.Y = proj.Center.Y - Projectile.height/2;
+					Projectile.timeLeft = 60;
 				}
 				else
                 {

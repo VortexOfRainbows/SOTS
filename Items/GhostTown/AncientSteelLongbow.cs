@@ -17,7 +17,7 @@ namespace SOTS.Items.GhostTown
 		public override void SetDefaults()
 		{
 			Item.damage = 15;
-			Item.ranged = true;
+			Item.DamageType = DamageClass.Ranged;
 			Item.width = 30;
 			Item.height = 64;
 			Item.useTime = 44;

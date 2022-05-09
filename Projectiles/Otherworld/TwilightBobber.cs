@@ -11,41 +11,41 @@ namespace SOTS.Projectiles.Otherworld
     {
         public override void SetDefaults()
         {
-            projectile.CloneDefaults(ProjectileID.BobberGolden);
+            Projectile.CloneDefaults(ProjectileID.BobberGolden);
         }
         public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
         {
             Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Otherworld/TwilightBobberGlow");
-            Vector2 drawOrigin = new Vector2(texture.Width/2, projectile.height/2);
-            Vector2 drawPos = projectile.Center - Main.screenPosition;
+            Vector2 drawOrigin = new Vector2(texture.Width/2, Projectile.height/2);
+            Vector2 drawPos = Projectile.Center - Main.screenPosition;
             drawPos.X += 8;
             Color color = new Color(Main.DiscoR, Main.DiscoG, Main.DiscoB, 0);
-            Player player = Main.player[projectile.owner];
+            Player player = Main.player[Projectile.owner];
             SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
             if(modPlayer.rainbowGlowmasks)
                 for (int k = 0; k < 2; k++)
                 {
-                    spriteBatch.Draw(texture, drawPos, null, color, projectile.rotation, drawOrigin, projectile.scale, projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+                    spriteBatch.Draw(texture, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
                 }
             else
-                spriteBatch.Draw(texture, drawPos, null, Color.White, projectile.rotation, drawOrigin, projectile.scale, projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+                spriteBatch.Draw(texture, drawPos, null, Color.White, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
         }
         public override bool PreDrawExtras(SpriteBatch spriteBatch)      //this draws the fishing line correctly
         {
-            Lighting.AddLight(projectile.Center, 0.7f, 0.9f, 1.2f);
-            Player player = Main.player[projectile.owner];
-            if (projectile.bobber && Main.player[projectile.owner].inventory[Main.player[projectile.owner].selectedItem].holdStyle > 0)
+            Lighting.AddLight(Projectile.Center, 0.7f, 0.9f, 1.2f);
+            Player player = Main.player[Projectile.owner];
+            if (Projectile.bobber && Main.player[Projectile.owner].inventory[Main.player[Projectile.owner].selectedItem].holdStyle > 0)
             {
                 float pPosX = player.MountedCenter.X;
                 float pPosY = player.MountedCenter.Y;
-                pPosY += Main.player[projectile.owner].gfxOffY;
-                int type = Main.player[projectile.owner].inventory[Main.player[projectile.owner].selectedItem].type;
-                float gravDir = Main.player[projectile.owner].gravDir;
+                pPosY += Main.player[Projectile.owner].gfxOffY;
+                int type = Main.player[Projectile.owner].inventory[Main.player[Projectile.owner].selectedItem].type;
+                float gravDir = Main.player[Projectile.owner].gravDir;
 
                 if (type == mod.ItemType("TwilightFishingPole"))
                 {
-                    pPosX += (float)(43 * Main.player[projectile.owner].direction);
-                    if (Main.player[projectile.owner].direction < 0)
+                    pPosX += (float)(43 * Main.player[Projectile.owner].direction);
+                    if (Main.player[Projectile.owner].direction < 0)
                     {
                         pPosX -= 13f;
                     }
@@ -57,9 +57,9 @@ namespace SOTS.Projectiles.Otherworld
                     pPosY -= 12f;
                 }
                 Vector2 value = new Vector2(pPosX, pPosY);
-                value = Main.player[projectile.owner].RotatedRelativePoint(value + new Vector2(8f), true) - new Vector2(8f);
-                float projPosX = projectile.position.X + (float)projectile.width * 0.5f - value.X;
-                float projPosY = projectile.position.Y + (float)projectile.height * 0.5f - value.Y;
+                value = Main.player[Projectile.owner].RotatedRelativePoint(value + new Vector2(8f), true) - new Vector2(8f);
+                float projPosX = Projectile.position.X + (float)Projectile.width * 0.5f - value.X;
+                float projPosY = Projectile.position.Y + (float)Projectile.height * 0.5f - value.Y;
                 Math.Sqrt((double)(projPosX * projPosX + projPosY * projPosY));
                 float rotation2 = (float)Math.Atan2((double)projPosY, (double)projPosX) - 1.57f;
                 bool flag2 = true;
@@ -75,8 +75,8 @@ namespace SOTS.Projectiles.Otherworld
                     projPosY *= projPosXY;
                     value.X -= projPosX;
                     value.Y -= projPosY;
-                    projPosX = projectile.position.X + (float)projectile.width * 0.5f - value.X;
-                    projPosY = projectile.position.Y + (float)projectile.height * 0.5f - value.Y;
+                    projPosX = Projectile.position.X + (float)Projectile.width * 0.5f - value.X;
+                    projPosY = Projectile.position.Y + (float)Projectile.height * 0.5f - value.Y;
                 }
                 while (flag2)
                 {
@@ -99,12 +99,12 @@ namespace SOTS.Projectiles.Otherworld
                         projPosY *= num2;
                         value.X += projPosX;
                         value.Y += projPosY;
-                        projPosX = projectile.position.X + (float)projectile.width * 0.5f - value.X;
-                        projPosY = projectile.position.Y + (float)projectile.height * 0.1f - value.Y;
+                        projPosX = Projectile.position.X + (float)Projectile.width * 0.5f - value.X;
+                        projPosY = Projectile.position.Y + (float)Projectile.height * 0.1f - value.Y;
                         if (num3 > 12f)
                         {
                             float num4 = 0.3f;
-                            float num5 = Math.Abs(projectile.velocity.X) + Math.Abs(projectile.velocity.Y);
+                            float num5 = Math.Abs(Projectile.velocity.X) + Math.Abs(Projectile.velocity.Y);
                             if (num5 > 16f)
                             {
                                 num5 = 16f;
@@ -121,7 +121,7 @@ namespace SOTS.Projectiles.Otherworld
                             {
                                 num4 = 0f;
                             }
-                            num5 = 1f - projectile.localAI[0] / 100f;
+                            num5 = 1f - Projectile.localAI[0] / 100f;
                             num4 *= num5;
                             if (projPosY > 0f)
                             {
@@ -130,7 +130,7 @@ namespace SOTS.Projectiles.Otherworld
                             }
                             else
                             {
-                                num5 = Math.Abs(projectile.velocity.X) / 3f;
+                                num5 = Math.Abs(Projectile.velocity.X) / 3f;
                                 if (num5 > 1f)
                                 {
                                     num5 = 1f;

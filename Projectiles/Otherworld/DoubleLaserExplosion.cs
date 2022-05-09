@@ -13,17 +13,17 @@ namespace SOTS.Projectiles.Otherworld
 		}
         public override void SetDefaults()
         {
-			projectile.height = 24;
-			projectile.width = 24;
-			projectile.penetrate = -1;
-			projectile.friendly = true;
-			projectile.timeLeft = 2;
-			projectile.tileCollide = false;
-			projectile.alpha = 255;
+			Projectile.height = 24;
+			Projectile.width = 24;
+			Projectile.penetrate = -1;
+			Projectile.friendly = true;
+			Projectile.timeLeft = 2;
+			Projectile.tileCollide = false;
+			Projectile.alpha = 255;
 		}
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.immune[projectile.owner] = 5;
+            target.immune[Projectile.owner] = 5;
         }
 	}
 }

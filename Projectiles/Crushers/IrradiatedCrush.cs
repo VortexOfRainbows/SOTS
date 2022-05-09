@@ -16,16 +16,16 @@ namespace SOTS.Projectiles.Crushers
 		bool runOnce = true;
         public override void SetDefaults()
         {
-			projectile.height = 70;
-			projectile.width = 70;
-            Main.projFrames[projectile.type] = 5;
-			projectile.penetrate = -1;
-			projectile.friendly = true;
-			projectile.melee = true;
-			projectile.timeLeft = 24;
-			projectile.tileCollide = false;
-			projectile.hostile = false;
-			projectile.alpha = 0;
+			Projectile.height = 70;
+			Projectile.width = 70;
+            Main.projFrames[Projectile.type] = 5;
+			Projectile.penetrate = -1;
+			Projectile.friendly = true;
+			Projectile.melee = true;
+			Projectile.timeLeft = 24;
+			Projectile.tileCollide = false;
+			Projectile.hostile = false;
+			Projectile.alpha = 0;
 		}
 		public override bool ShouldUpdatePosition()
 		{
@@ -33,27 +33,27 @@ namespace SOTS.Projectiles.Crushers
 		}
 		public override void AI()
         {
-			Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 0.5f / 255f, (255 - projectile.alpha) * 1.5f / 255f, (255 - projectile.alpha) * 0.7f / 255f);
-			if(runOnce && projectile.owner == Main.myPlayer)
+			Lighting.AddLight(Projectile.Center, (255 - Projectile.alpha) * 0.5f / 255f, (255 - Projectile.alpha) * 1.5f / 255f, (255 - Projectile.alpha) * 0.7f / 255f);
+			if(runOnce && Projectile.owner == Main.myPlayer)
 			{
 				runOnce = false;
 				for (int i = 0; i < 2; i++)
 				{
-					Projectile proj = Projectile.NewProjectileDirect(projectile.Center, Main.rand.NextVector2Circular(3, 3), ProjectileID.SporeCloud, (int)(projectile.damage * 0.50f) + 1, 0, projectile.owner);
+					Projectile proj = Projectile.NewProjectileDirect(Projectile.Center, Main.rand.NextVector2Circular(3, 3), ProjectileID.SporeCloud, (int)(Projectile.damage * 0.50f) + 1, 0, Projectile.owner);
 					proj.timeLeft = Main.rand.Next(16, 35);
 				}
 			}
-            projectile.frameCounter++;
-            if (projectile.frameCounter >= 5)
+            Projectile.frameCounter++;
+            if (Projectile.frameCounter >= 5)
             {
-				projectile.friendly = false;
-                projectile.frameCounter = 0;
-                projectile.frame = (projectile.frame + 1) % 5;
+				Projectile.friendly = false;
+                Projectile.frameCounter = 0;
+                Projectile.frame = (Projectile.frame + 1) % 5;
             }
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.immune[projectile.owner] = 10;
+            target.immune[Projectile.owner] = 10;
         }
 	}
 }

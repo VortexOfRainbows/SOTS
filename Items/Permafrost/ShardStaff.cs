@@ -17,12 +17,12 @@ namespace SOTS.Items.Permafrost
         public override void SetDefaults()
         {
             Item.damage = 13;
-            Item.magic = true;
+            Item.DamageType = DamageClass.Magic;
             Item.width = 38;
             Item.height = 38;
             Item.useTime = 20;
             Item.useAnimation = 35;
-            Item.useStyle = 1;
+            Item.useStyle = ItemUseStyleID.Swing;
             Item.noMelee = true;
             Item.knockBack = 2.5f;
 			Item.shootSpeed = 9;

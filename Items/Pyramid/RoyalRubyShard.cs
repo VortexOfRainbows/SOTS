@@ -23,7 +23,7 @@ namespace SOTS.Items.Pyramid
 			Item.value = Item.sellPrice(0, 0, 22, 50);
 			Item.useAnimation = 15;
 			Item.useTime = 10;
-			Item.useStyle = 1;
+			Item.useStyle = ItemUseStyleID.Swing;
 			Item.rare = ItemRarityID.LightRed;
 			Item.consumable = true;
 			Item.createTile = mod.TileType("RoyalRubyShardTile");
@@ -205,22 +205,22 @@ namespace SOTS.Items.Pyramid
 			{
 				zero = Vector2.Zero;
 			}
-			Texture2D texture = Main.tileTexture[tile.type];
+			Texture2D texture = Main.tileTexture[tile.TileType];
 			Vector2 drawOffSet = Vector2.Zero;
-			if(tile.frameY == 0) //below is active
+			if(tile.TileFrameY == 0) //below is active
 				drawOffSet.Y += 2;
-			if (tile.frameY == 18) //above is active
+			if (tile.TileFrameY == 18) //above is active
 				drawOffSet.Y -= 2;
-			if (tile.frameY == 36) //right is active
+			if (tile.TileFrameY == 36) //right is active
 				drawOffSet.X += 2;
-			if (tile.frameY == 54) //left is active
+			if (tile.TileFrameY == 54) //left is active
 				drawOffSet.X -= 2;
 			Vector2 location = new Vector2(i * 16, j * 16) + drawOffSet;
 			Color color2 = Lighting.GetColor(i, j, WorldGen.paintColor(tile.color()));
 			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Pyramid/TaintedKeystoneShardTile").Value;
 			float counter = Main.GlobalTime * 160;
 			float mult = new Vector2(-1f, 0).RotatedBy(MathHelper.ToRadians(counter)).X;
-			Rectangle frame = new Rectangle(tile.frameX, tile.frameY, 16, 16);
+			Rectangle frame = new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, 16);
 			for (int k = 0; k < 6; k++)
 			{
 				Color color = new Color(255, 0, 0, 0);
@@ -257,7 +257,7 @@ namespace SOTS.Items.Pyramid
 		}
 		public static bool TileIsCapable(Tile tile)
 		{
-			return tile.active() && Main.tileSolid[tile.type] && !Main.tileSolidTop[tile.type] && tile.slope() == 0 && !tile.halfBrick() && !tile.inActive();
+			return tile.active() && Main.tileSolid[tile.TileType] && !Main.tileSolidTop[tile.TileType] && tile.slope() == 0 && !tile.halfBrick() && !tile.inActive();
 		}
 		public static bool TileIsCapable(int i, int j)
         {

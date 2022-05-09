@@ -51,9 +51,9 @@ namespace SOTS.NPCs.Constructs
 			npc.damage = 100;
 			npc.lifeMax = 6000;
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
-			for (int i = 0; i < Main.projectile.Length; i++)
+			for (int i = 0; i < Main.Projectile.Length; i++)
 			{
 				Projectile proj = Main.projectile[i];
 				if (proj.type == ModContent.ProjectileType<EvilArm>() && proj.active && (int)proj.ai[0] == npc.whoAmI)
@@ -193,7 +193,7 @@ namespace SOTS.NPCs.Constructs
 					Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/EvilConstruct/EvilConstructGore" + i), 1f);
 				for (int i = 0; i < 9; i++)
 					Gore.NewGore(npc.position, npc.velocity, Main.rand.Next(61, 64), 1f);
-				for (int i = 0; i < Main.projectile.Length; i++)
+				for (int i = 0; i < Main.Projectile.Length; i++)
 				{
 					Projectile proj = Main.projectile[i];
 					if (proj.type == ModContent.ProjectileType<EvilArm>() && proj.active && (int)proj.ai[0] == npc.whoAmI)
@@ -263,7 +263,7 @@ namespace SOTS.NPCs.Constructs
 				for(int i = 0; i < Main.maxProjectiles; i++)
                 {
 					Projectile projectile = Main.projectile[i];
-					if(projectile.identity == currentArmID)
+					if(Projectile.identity == currentArmID)
                     {
 						proj = projectile;
 						break;
@@ -305,7 +305,7 @@ namespace SOTS.NPCs.Constructs
             {
 				npc.ai[0]--;
             }
-			for (int i = 0; i < Main.projectile.Length; i++)
+			for (int i = 0; i < Main.Projectile.Length; i++)
 			{
 				Projectile proj = Main.projectile[i];
 				if (proj.type == ModContent.ProjectileType<EvilArm>() && proj.active && (int)proj.ai[0] == npc.whoAmI)
@@ -512,7 +512,7 @@ namespace SOTS.NPCs.Constructs
 			bool notUseStuck = false;
 			EvilArm trueArm = null;
 			float dist = 0;
-			for (int i = 0; i < Main.projectile.Length; i++)
+			for (int i = 0; i < Main.Projectile.Length; i++)
 			{
 				Projectile proj = Main.projectile[i];
 				if (proj.type == ModContent.ProjectileType<EvilArm>() && proj.active && (int)proj.ai[0] == npc.whoAmI)
@@ -574,35 +574,35 @@ namespace SOTS.NPCs.Constructs
         public override string Texture => "SOTS/NPCs/Constructs/EvilDrillArm";
         public override void SetDefaults()
         {
-			projectile.aiStyle = -1;
-			projectile.width = 24;
-			projectile.height = 24;
-			projectile.hostile = true;
-			projectile.friendly = false;
-			projectile.tileCollide = false;
-			projectile.ignoreWater = true;
-			projectile.netImportant = true;
-			projectile.hide = true;
-			projectile.penetrate = -1;
-			projectile.timeLeft = 120;
+			Projectile.aiStyle = -1;
+			Projectile.width = 24;
+			Projectile.height = 24;
+			Projectile.hostile = true;
+			Projectile.friendly = false;
+			Projectile.tileCollide = false;
+			Projectile.ignoreWater = true;
+			Projectile.netImportant = true;
+			Projectile.hide = true;
+			Projectile.penetrate = -1;
+			Projectile.timeLeft = 120;
         }
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
-			NPC parent = Main.npc[(int)projectile.ai[0]];
+			NPC parent = Main.npc[(int)Projectile.ai[0]];
 			if(parent.active && parent.type == ModContent.NPCType<EvilConstruct>())
             {
 				float hitboxAi = parent.ai[0];
 				if(hitboxAi > 20)
                 {
 					float point = 0;
-					return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), projectile.Center, parent.Center, 20f, ref point);
+					return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, parent.Center, 20f, ref point);
 				}
             }
             return base.Colliding(projHitbox, targetHitbox);
         }
         public override bool CanHitPlayer(Player target)
 		{
-			NPC parent = Main.npc[(int)projectile.ai[0]];
+			NPC parent = Main.npc[(int)Projectile.ai[0]];
 			if (parent.active && parent.type == ModContent.NPCType<EvilConstruct>())
 			{
 				float hitboxAi = parent.ai[0];
@@ -625,88 +625,88 @@ namespace SOTS.NPCs.Constructs
 		public bool startAnim = false;
 		public void Launch(Vector2 goTo, float speed)
 		{
-			projectile.ai[1] = 0;
+			Projectile.ai[1] = 0;
 			launch = true;
 			if (Main.netMode == NetmodeID.Server)
-				projectile.netUpdate = true;
-			Vector2 dirVector = goTo - projectile.Center;
-			projectile.velocity = dirVector.SafeNormalize(Vector2.Zero) * speed;
+				Projectile.netUpdate = true;
+			Vector2 dirVector = goTo - Projectile.Center;
+			Projectile.velocity = dirVector.SafeNormalize(Vector2.Zero) * speed;
 		}
 		public void MoveTowards(Vector2 goTo, float speed)
 		{
 			if (launch)
 				return;
-			projectile.velocity *= 0.89f;
-			Vector2 dirVector = goTo - projectile.Center;
+			Projectile.velocity *= 0.89f;
+			Vector2 dirVector = goTo - Projectile.Center;
 			float length = dirVector.Length();
 			speed += length * 0.001f;
 			if (length < speed)
 			{
-				projectile.velocity *= 0.5f;
+				Projectile.velocity *= 0.5f;
 				speed = length;
 			}
-			if(length < 24 && projectile.ai[1] <= -1)
+			if(length < 24 && Projectile.ai[1] <= -1)
 				stabbyCounter++;
-			projectile.velocity += dirVector.SafeNormalize(Vector2.Zero) * speed * 0.5f;
+			Projectile.velocity += dirVector.SafeNormalize(Vector2.Zero) * speed * 0.5f;
         }
 		public void Update(Vector2 center)
         {
-			projectile.timeLeft = 6;
+			Projectile.timeLeft = 6;
 			if (runOnce)
 				return;
-			Vector2 fromNPC = center - projectile.Center;
+			Vector2 fromNPC = center - Projectile.Center;
 			if(fromNPC.Length() < 64)
             {
 				float npcLength = 64 - fromNPC.Length();
-				projectile.Center -= fromNPC.SafeNormalize(Vector2.Zero) * npcLength;
+				Projectile.Center -= fromNPC.SafeNormalize(Vector2.Zero) * npcLength;
             }
 			if(!launch)
-				projectile.velocity *= 0.97f;
-			projectile.Center += projectile.velocity;
+				Projectile.velocity *= 0.97f;
+			Projectile.Center += Projectile.velocity;
         }
 		bool runOnce = true;
         public override bool PreAI()
         {
 			if(runOnce || launch)
             {
-				int i = (int)projectile.Center.X / 16;
-				int j = (int)projectile.Center.Y / 16;
+				int i = (int)Projectile.Center.X / 16;
+				int j = (int)Projectile.Center.Y / 16;
 				if (SOTSWorldgenHelper.TrueTileSolid(i, j))
 				{
 					if(launch)
 						startAnim = true;
 					launch = false;
 					stuck = true;
-					SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 22, 1.4f, -0.1f);
+					SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 22, 1.4f, -0.1f);
 				}
 				runOnce = false;
 				if (NetmodeID.Server == Main.netMode)
-					projectile.netUpdate = true;
+					Projectile.netUpdate = true;
 			}
 			if(launch)
             {
 				stabbyCounter++;
 				if(stabbyCounter > 90)
                 {
-					projectile.velocity *= 0.982f;
+					Projectile.velocity *= 0.982f;
 					if(stabbyCounter > 140)
 						launch = false;
                 }
 				else
-					projectile.velocity *= 0.995f;
+					Projectile.velocity *= 0.995f;
 			}
-			if(projectile.ai[1] == -2)
+			if(Projectile.ai[1] == -2)
             {
-				projectile.ai[1] = -1;
-				projectile.netUpdate = true;
+				Projectile.ai[1] = -1;
+				Projectile.netUpdate = true;
             }
             return base.PreAI();
         }
 		public void Launch()
         {
-			projectile.ai[1] = -2;
+			Projectile.ai[1] = -2;
 			stuck = false;
-			projectile.netUpdate = true;
+			Projectile.netUpdate = true;
         }
         public override void AI()
         {

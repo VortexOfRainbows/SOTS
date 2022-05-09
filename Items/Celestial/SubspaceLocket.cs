@@ -44,7 +44,7 @@ namespace SOTS.Items.Celestial
         {
             Player player = Main.LocalPlayer;
             SubspacePlayer modPlayer = SubspacePlayer.ModPlayer(player);
-            Texture2D texture = Main.itemTexture[Item.type];
+            Texture2D texture = Terraria.GameContent.TextureAssets.Item[Item.type].Value;
             if(itemTextureOutline == null)
             {
                 Color[] data = SubspaceServant.Greenify(texture, new Color(0, 255, 0));
@@ -70,7 +70,7 @@ namespace SOTS.Items.Celestial
             if(player.inventory[49] == item)
             {
                 SubspacePlayer modPlayer = SubspacePlayer.ModPlayer(player);
-                Texture2D texture = Main.itemTexture[Item.type];
+                Texture2D texture = Terraria.GameContent.TextureAssets.Item[Item.type].Value;
                 if (itemID != Item.type || itemTextureOutline == null)
                 {
                     Color[] data = SubspaceServant.Greenify(texture, new Color(0, 255, 0));
@@ -105,7 +105,7 @@ namespace SOTS.Items.Celestial
             {
                 SubspacePlayer modPlayer = SubspacePlayer.ModPlayer(drawPlayer);
                 int Probe = modPlayer.Probe;
-                for (int i = 0; i < Main.projectile.Length; i++)
+                for (int i = 0; i < Main.Projectile.Length; i++)
                 {
                     Projectile proj = Main.projectile[i];
                     SubspaceServant subServ = proj.modProjectile as SubspaceServant;
@@ -1490,19 +1490,19 @@ namespace SOTS.Items.Celestial
                     if ((double)itemAnimation < (double)maxAnimation * 0.333)
                     {
                         var num = 10f;
-                        itemLocation.X = (float)(Center.X + (Main.itemTexture[sItem.type].Width * 0.5 - num) * direction);
+                        itemLocation.X = (float)(Center.X + (Terraria.GameContent.TextureAssets.Item[sItem.type].Value.Width * 0.5 - num) * direction);
                         itemLocation.Y = Center.Y + 26f;
                     }
                     else if ((double)itemAnimation < (double)maxAnimation * 0.666)
                     {
                         var num = 8f;
-                        itemLocation.X = (float)(Center.X + (Main.itemTexture[sItem.type].Width * 0.5 - num) * direction);
+                        itemLocation.X = (float)(Center.X + (Terraria.GameContent.TextureAssets.Item[sItem.type].Value.Width * 0.5 - num) * direction);
                         itemLocation.Y = Center.Y + 24f;
                     }
                     else
                     {
                         var num = 6f;
-                        itemLocation.X = (float)(Center.X - (Main.itemTexture[sItem.type].Width * 0.5 - num) * direction);
+                        itemLocation.X = (float)(Center.X - (Terraria.GameContent.TextureAssets.Item[sItem.type].Value.Width * 0.5 - num) * direction);
                         itemLocation.Y = Center.Y + 20f;
                     }
 
@@ -1513,39 +1513,39 @@ namespace SOTS.Items.Celestial
                     if ((double)itemAnimation < (double)maxAnimation * 0.333)
                     {
                         var num = 10f;
-                        if (Main.itemTexture[sItem.type].Width > 32)
+                        if (Terraria.GameContent.TextureAssets.Item[sItem.type].Value.Width > 32)
                             num = 14f;
-                        if (Main.itemTexture[sItem.type].Width >= 52)
+                        if (Terraria.GameContent.TextureAssets.Item[sItem.type].Value.Width >= 52)
                             num = 24f;
-                        if (Main.itemTexture[sItem.type].Width >= 64)
+                        if (Terraria.GameContent.TextureAssets.Item[sItem.type].Value.Width >= 64)
                             num = 28f;
-                        if (Main.itemTexture[sItem.type].Width >= 92)
+                        if (Terraria.GameContent.TextureAssets.Item[sItem.type].Value.Width >= 92)
                             num = 38f;
                         if (sItem.type == 2330 || sItem.type == 2320 || sItem.type == 2341)
                             num += 8f;
-                        itemLocation.X = (float)(Center.X + (Main.itemTexture[sItem.type].Width * 0.5 - num) * direction);
+                        itemLocation.X = (float)(Center.X + (Terraria.GameContent.TextureAssets.Item[sItem.type].Value.Width * 0.5 - num) * direction);
                         itemLocation.Y = Center.Y + 24f;
                     }
                     else if ((double)itemAnimation < (double)maxAnimation * 0.666)
                     {
                         var num1 = 10f;
-                        if (Main.itemTexture[sItem.type].Width > 32)
+                        if (Terraria.GameContent.TextureAssets.Item[sItem.type].Value.Width > 32)
                             num1 = 18f;
-                        if (Main.itemTexture[sItem.type].Width >= 52)
+                        if (Terraria.GameContent.TextureAssets.Item[sItem.type].Value.Width >= 52)
                             num1 = 24f;
-                        if (Main.itemTexture[sItem.type].Width >= 64)
+                        if (Terraria.GameContent.TextureAssets.Item[sItem.type].Value.Width >= 64)
                             num1 = 28f;
-                        if (Main.itemTexture[sItem.type].Width >= 92)
+                        if (Terraria.GameContent.TextureAssets.Item[sItem.type].Value.Width >= 92)
                             num1 = 38f;
                         if (sItem.type == 2330 || sItem.type == 2320 || sItem.type == 2341)
                             num1 += 4f;
-                        itemLocation.X = (float)(Center.X + (Main.itemTexture[sItem.type].Width * 0.5 - num1) * direction);
+                        itemLocation.X = (float)(Center.X + (Terraria.GameContent.TextureAssets.Item[sItem.type].Value.Width * 0.5 - num1) * direction);
                         var num2 = 10f;
-                        if (Main.itemTexture[sItem.type].Height > 32)
+                        if (Terraria.GameContent.TextureAssets.Item[sItem.type].Value.Height > 32)
                             num2 = 8f;
-                        if (Main.itemTexture[sItem.type].Height > 52)
+                        if (Terraria.GameContent.TextureAssets.Item[sItem.type].Value.Height > 52)
                             num2 = 12f;
-                        if (Main.itemTexture[sItem.type].Height > 64)
+                        if (Terraria.GameContent.TextureAssets.Item[sItem.type].Value.Height > 64)
                             num2 = 14f;
                         if (sItem.type == 2330 || sItem.type == 2320 || sItem.type == 2341)
                             num2 += 4f;
@@ -1554,25 +1554,25 @@ namespace SOTS.Items.Celestial
                     else
                     {
                         var num1 = 6f;
-                        if (Main.itemTexture[sItem.type].Width > 32)
+                        if (Terraria.GameContent.TextureAssets.Item[sItem.type].Value.Width > 32)
                             num1 = 14f;
-                        if (Main.itemTexture[sItem.type].Width >= 48)
+                        if (Terraria.GameContent.TextureAssets.Item[sItem.type].Value.Width >= 48)
                             num1 = 18f;
-                        if (Main.itemTexture[sItem.type].Width >= 52)
+                        if (Terraria.GameContent.TextureAssets.Item[sItem.type].Value.Width >= 52)
                             num1 = 24f;
-                        if (Main.itemTexture[sItem.type].Width >= 64)
+                        if (Terraria.GameContent.TextureAssets.Item[sItem.type].Value.Width >= 64)
                             num1 = 28f;
-                        if (Main.itemTexture[sItem.type].Width >= 92)
+                        if (Terraria.GameContent.TextureAssets.Item[sItem.type].Value.Width >= 92)
                             num1 = 38f;
                         if (sItem.type == 2330 || sItem.type == 2320 || sItem.type == 2341)
                             num1 += 4f;
-                        itemLocation.X = (float)(Center.X - (Main.itemTexture[sItem.type].Width * 0.5 - num1) * direction);
+                        itemLocation.X = (float)(Center.X - (Terraria.GameContent.TextureAssets.Item[sItem.type].Value.Width * 0.5 - num1) * direction);
                         var num2 = 10f;
-                        if (Main.itemTexture[sItem.type].Height > 32)
+                        if (Terraria.GameContent.TextureAssets.Item[sItem.type].Value.Height > 32)
                             num2 = 10f;
-                        if (Main.itemTexture[sItem.type].Height > 52)
+                        if (Terraria.GameContent.TextureAssets.Item[sItem.type].Value.Height > 52)
                             num2 = 12f;
-                        if (Main.itemTexture[sItem.type].Height > 64)
+                        if (Terraria.GameContent.TextureAssets.Item[sItem.type].Value.Height > 64)
                             num2 = 14f;
                         if (sItem.type == 2330 || sItem.type == 2320 || sItem.type == 2341)
                             num2 += 4f;
@@ -1591,12 +1591,12 @@ namespace SOTS.Items.Celestial
                              direction * 2.0 + -1.39999997615814 * direction);
                 if ((double)itemAnimation < (double)maxAnimation * 0.5)
                 {
-                    itemLocation.X = (float)(Center.X + (Main.itemTexture[sItem.type].Width * 0.5 - 9.0 - itemRotation * 12.0 * direction) * direction);
+                    itemLocation.X = (float)(Center.X + (Terraria.GameContent.TextureAssets.Item[sItem.type].Value.Width * 0.5 - 9.0 - itemRotation * 12.0 * direction) * direction);
                     itemLocation.Y = (float)(Center.Y + 38.0 + (double)itemRotation * direction * 4.0);
                 }
                 else
                 {
-                    itemLocation.X = (float)(Center.X + (Main.itemTexture[sItem.type].Width * 0.5 - 9.0 - itemRotation * 16.0 * direction) * direction);
+                    itemLocation.X = (float)(Center.X + (Terraria.GameContent.TextureAssets.Item[sItem.type].Value.Width * 0.5 - 9.0 - itemRotation * 16.0 * direction) * direction);
                     itemLocation.Y = (float)(Center.Y + 38.0 + (double)itemRotation * direction);
                 }
             }
@@ -1610,9 +1610,9 @@ namespace SOTS.Items.Celestial
                 }
                 else
                 {
-                    itemLocation.X = (float)((Center.X +Main.itemTexture[sItem.type].Width * 0.5 - 4.0) * direction);
+                    itemLocation.X = (float)((Center.X +Terraria.GameContent.TextureAssets.Item[sItem.type].Value.Width * 0.5 - 4.0) * direction);
                     itemLocation.Y = Center.Y + 24f;
-                    var num = (float)((double)itemAnimation / (double)maxAnimation * (double)Main.itemTexture[sItem.type].Width * direction * (double)sItem.scale * 1.20000004768372) -(float)(10 * direction);
+                    var num = (float)((double)itemAnimation / (double)maxAnimation * (double)Terraria.GameContent.TextureAssets.Item[sItem.type].Value.Width * direction * (double)sItem.scale * 1.20000004768372) -(float)(10 * direction);
                     if ((double)num > -4.0 && direction == -1)
                         num = -8f;
                     if ((double)num < 4.0 && direction == 1)
@@ -1627,8 +1627,8 @@ namespace SOTS.Items.Celestial
                 if (sItem.type == ItemID.CelestialSigil)
                     num = 10;
                 itemRotation = 0.0f;
-                itemLocation.X = (float)(Center.X + ((double)Main.itemTexture[sItem.type].Width * 0.5 - 9.0 - (double)itemRotation * 14.0 * direction - 4.0 - (double)num) * direction);
-                itemLocation.Y = (float)((double)Center.Y + (double)Main.itemTexture[sItem.type].Height * 0.5 + 4.0);
+                itemLocation.X = (float)(Center.X + ((double)Terraria.GameContent.TextureAssets.Item[sItem.type].Value.Width * 0.5 - 9.0 - (double)itemRotation * 14.0 * direction - 4.0 - (double)num) * direction);
+                itemLocation.Y = (float)((double)Center.Y + (double)Terraria.GameContent.TextureAssets.Item[sItem.type].Value.Height * 0.5 + 4.0);
             }
             else if (sItem.useStyle == 5)
             {
@@ -1649,8 +1649,8 @@ namespace SOTS.Items.Celestial
                 }
                 else
                 {
-                    itemLocation.X = (float)((double)Center.X -(double)Main.itemTexture[sItem.type].Width * 0.5) - (float)(direction * 2);
-                    itemLocation.Y = Center.Y - (float)Main.itemTexture[sItem.type].Height * 0.5f;
+                    itemLocation.X = (float)((double)Center.X -(double)Terraria.GameContent.TextureAssets.Item[sItem.type].Value.Width * 0.5) - (float)(direction * 2);
+                    itemLocation.Y = Center.Y - (float)Terraria.GameContent.TextureAssets.Item[sItem.type].Value.Height * 0.5f;
                 }
             }
             return itemLocation;
@@ -1662,7 +1662,7 @@ namespace SOTS.Items.Celestial
             {
                 var flag2 = false;
                 Rectangle r = new Rectangle((int)itemLocation.X, (int)itemLocation.Y, 32, 32);
-                if (!Main.dedServ) r = new Rectangle((int)itemLocation.X, (int)itemLocation.Y, Main.itemTexture[sItem.type].Width, Main.itemTexture[sItem.type].Height);
+                if (!Main.dedServ) r = new Rectangle((int)itemLocation.X, (int)itemLocation.Y, Terraria.GameContent.TextureAssets.Item[sItem.type].Value.Width, Terraria.GameContent.TextureAssets.Item[sItem.type].Value.Height);
                 r.Width = (int)((double)r.Width * sItem.scale);
                 r.Height = (int)((double)r.Height * sItem.scale);
                 if (direction == -1)
@@ -2421,7 +2421,7 @@ namespace SOTS.Items.Celestial
         public Vector2 DrawPlayerItemPos(int itemtype)
         {
             var num = 10f;
-            var vector2 = new Vector2((float)(Main.itemTexture[itemtype].Width / 2), (float)(Main.itemTexture[itemtype].Height / 2));
+            var vector2 = new Vector2((float)(Terraria.GameContent.TextureAssets.Item[itemtype].Value.Width / 2), (float)(Terraria.GameContent.TextureAssets.Item[itemtype].Value.Height / 2));
             if (itemtype == 95)
             {
                 num = 6f;

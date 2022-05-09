@@ -194,7 +194,7 @@ namespace SOTS.NPCs.Constructs
 					npc.ai[1] = 0;
 					npc.ai[0] = -90;
 					SoundEngine.PlaySound(SoundID.Item92, npc.Center);
-					for (int i = 0; i < Main.projectile.Length; i++)
+					for (int i = 0; i < Main.Projectile.Length; i++)
 					{
 						Projectile proj = Main.projectile[i];
 						if(proj.active && proj.type == mod.ProjectileType("OtherworldlyTracer") && proj.ai[1] == npc.whoAmI)

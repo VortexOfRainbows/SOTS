@@ -16,24 +16,24 @@ namespace SOTS.Projectiles.Laser
 		
         public override void SetDefaults()
         {
-			projectile.height = 30;
-			projectile.width = 30;
-			projectile.penetrate = 24;
-			projectile.friendly = false;
-			projectile.timeLeft = 6004;
-			projectile.tileCollide = false;
-			projectile.hostile = false;
+			Projectile.height = 30;
+			Projectile.width = 30;
+			Projectile.penetrate = 24;
+			Projectile.friendly = false;
+			Projectile.timeLeft = 6004;
+			Projectile.tileCollide = false;
+			Projectile.hostile = false;
 		}
 		Vector2[] orbs = new Vector2[6]; //these should be the same size
 		Vector2[] orbsTo = new Vector2[6];
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
 			return false;
 		}
-		public override void PostDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override void PostDraw(Color lightColor)
 		{
-			Vector2 drawOrigin = new Vector2(Main.projectileTexture[projectile.type].Width * 0.5f, projectile.height * 0.5f);
-			float newAi = projectile.ai[1] * 2 / 13f;
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value.Width * 0.5f, Projectile.height * 0.5f);
+			float newAi = Projectile.ai[1] * 2 / 13f;
 			double frequency = 0.3;
 			double center = 130;
 			double width = 125;
@@ -44,15 +44,15 @@ namespace SOTS.Projectiles.Laser
 			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Laser/ContinuumSphereHighlight");
 			if(orbs.Length == 1)
 			{
-				spriteBatch.Draw(Main.projectileTexture[projectile.type], projectile.Center - Main.screenPosition, null, color, projectile.rotation, drawOrigin, projectile.scale, SpriteEffects.None, 0f);
-				spriteBatch.Draw(texture, projectile.Center - Main.screenPosition, null, new Color(255, 255, 255, 255 - projectile.alpha), projectile.rotation, drawOrigin, projectile.scale, SpriteEffects.None, 0f);
+				spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, Projectile.Center - Main.screenPosition, null, color, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
+				spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, null, new Color(255, 255, 255, 255 - Projectile.alpha), Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
 			}
 			else if(ai1 >= 9)
 			{
 				for(int i = 0; i < orbs.Length; i++)
 				{
-					spriteBatch.Draw(Main.projectileTexture[projectile.type], orbs[i] - Main.screenPosition, null, color, projectile.rotation, drawOrigin, projectile.scale * (0.75f + (0.25f * (ai2/85f))), SpriteEffects.None, 0f);
-					spriteBatch.Draw(texture, orbs[i] - Main.screenPosition, null, new Color(255, 255, 255, 255 - projectile.alpha), projectile.rotation, drawOrigin, projectile.scale * 0.75f, SpriteEffects.None, 0f);
+					spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, orbs[i] - Main.screenPosition, null, color, Projectile.rotation, drawOrigin, Projectile.scale * (0.75f + (0.25f * (ai2/85f))), SpriteEffects.None, 0f);
+					spriteBatch.Draw(texture, orbs[i] - Main.screenPosition, null, new Color(255, 255, 255, 255 - Projectile.alpha), Projectile.rotation, drawOrigin, Projectile.scale * 0.75f, SpriteEffects.None, 0f);
 				}
 			}
 		}
@@ -67,13 +67,13 @@ namespace SOTS.Projectiles.Laser
 		}
 		public override bool PreAI()
 		{
-			if (!projectile.active)
+			if (!Projectile.active)
 				return false;
 
-			Player player  = Main.player[projectile.owner];
-			if(projectile.ai[1] == 0f)
+			Player player  = Main.player[Projectile.owner];
+			if(Projectile.ai[1] == 0f)
 			{
-				projectile.ai[0] = Main.rand.Next(1020);
+				Projectile.ai[0] = Main.rand.Next(1020);
 			}
 			Vector2 cursorArea = Main.MouseWorld;
 			float shootToX = cursorArea.X - player.Center.X;
@@ -112,11 +112,11 @@ namespace SOTS.Projectiles.Laser
 			for(int i = 0; i < orbs.Length; i++)
 			{
 				Vector2 rotate = new Vector2(distance2, 0).RotatedBy(MathHelper.ToRadians(i * (360f/orbs.Length) + (ai1 * expo)));
-				orbs[i] = projectile.Center + rotate;
+				orbs[i] = Projectile.Center + rotate;
 				Vector2 distanceToP = new Vector2(shootToX, shootToY);
-				orbsTo[i] = (distanceToP * 2f) + projectile.Center + rotate;
+				orbsTo[i] = (distanceToP * 2f) + Projectile.Center + rotate;
 			}
-			projectile.ai[1] ++;
+			Projectile.ai[1] ++;
 			if(ai2 < 85)
 			{
 				ai2 += 1.0625f/3f;
@@ -143,19 +143,19 @@ namespace SOTS.Projectiles.Laser
 			{
 				double startingDirection = Math.Atan2((double)-shootToY, (double)-shootToX);
 				startingDirection *= 180 / Math.PI;
-				projectile.ai[0] = (float)startingDirection;
-				double deg = (double)projectile.ai[0];
+				Projectile.ai[0] = (float)startingDirection;
+				double deg = (double)Projectile.ai[0];
 				double rad = deg * (Math.PI / 180);
 				double dist = 32;
-				projectile.position.X = player.Center.X - (int)(Math.Cos(rad) * dist) - projectile.width / 2;
-				projectile.position.Y = player.Center.Y - (int)(Math.Sin(rad) * dist) - projectile.height / 2;
+				Projectile.position.X = player.Center.X - (int)(Math.Cos(rad) * dist) - Projectile.width / 2;
+				Projectile.position.Y = player.Center.Y - (int)(Math.Sin(rad) * dist) - Projectile.height / 2;
 
-				projectile.netUpdate = true;
-				if (player.channel || projectile.timeLeft > 6)
+				Projectile.netUpdate = true;
+				if (player.channel || Projectile.timeLeft > 6)
 				{
-					projectile.timeLeft = 6;
-					projectile.alpha = 0;
-					if (Main.myPlayer == projectile.owner && ai1 > 1)
+					Projectile.timeLeft = 6;
+					Projectile.alpha = 0;
+					if (Main.myPlayer == Projectile.owner && ai1 > 1)
 					{
 						for (int i = 0; i < orbs.Length; i++)
 						{
@@ -167,11 +167,11 @@ namespace SOTS.Projectiles.Laser
 							shootToY2 *= distance2 * 5f;
 							if (orbs.Length != 1)
 							{
-								Projectile.NewProjectile(orbs[i].X + shootToX2, orbs[i].Y + shootToY2, shootToX2, shootToY2, mod.ProjectileType("SmallCollapseLaser"), (int)(projectile.damage), 1f, projectile.owner, projectile.ai[1], ai2); //second ai slot is scale
+								Projectile.NewProjectile(orbs[i].X + shootToX2, orbs[i].Y + shootToY2, shootToX2, shootToY2, mod.ProjectileType("SmallCollapseLaser"), (int)(Projectile.damage), 1f, Projectile.owner, Projectile.ai[1], ai2); //second ai slot is scale
 							}
 							else
 							{
-								Projectile.NewProjectile(orbs[i].X + shootToX2, orbs[i].Y + shootToY2, shootToX2, shootToY2, mod.ProjectileType("CollapseLaser"), projectile.damage * 3, 1f, projectile.owner, projectile.ai[1], 0f);
+								Projectile.NewProjectile(orbs[i].X + shootToX2, orbs[i].Y + shootToY2, shootToX2, shootToY2, mod.ProjectileType("CollapseLaser"), Projectile.damage * 3, 1f, Projectile.owner, Projectile.ai[1], 0f);
 							}
 						}
 					}

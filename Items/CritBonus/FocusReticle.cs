@@ -41,7 +41,7 @@ namespace SOTS.Items.CritBonus
 			{
 				this.frame = 0;
 			}
-			Texture2D texture = Main.itemTexture[Item.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Item[Item.type].Value;
 			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/CritBonus/FocusReticle_Glow").Value;
 			Main.spriteBatch.Draw(texture, position, new Rectangle(0, 30 * this.frame, 30, 30), drawColor, 0f, origin, scale, SpriteEffects.None, 0f);
 			Main.spriteBatch.Draw(texture2, position, new Rectangle(0, 30 * this.frame, 30, 30), Color.White, 0f, origin, scale, SpriteEffects.None, 0f);
@@ -59,9 +59,9 @@ namespace SOTS.Items.CritBonus
 			{
 				frame = 0;
 			}
-			Texture2D texture = Main.itemTexture[Item.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Item[Item.type].Value;
 			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/CritBonus/FocusReticle_Glow").Value;
-			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, Item.height * 0.5f);
 			Main.spriteBatch.Draw(texture, Item.Center - Main.screenPosition, new Rectangle(0, 30 * frame, 30, 30), lightColor, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			Main.spriteBatch.Draw(texture2, Item.Center - Main.screenPosition, new Rectangle(0, 30 * frame, 30, 30), Color.White, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			return false;

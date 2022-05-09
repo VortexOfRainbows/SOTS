@@ -22,7 +22,7 @@ namespace SOTS.Items.Potions
             Item.buffType = ModContent.BuffType<Roughskin>();   
             Item.buffTime = 19000;  
             Item.UseSound = SoundID.Item3;            
-            Item.useStyle = 2;        
+            Item.useStyle = ItemUseStyleID.EatFood;      
             Item.useTurn = true;
             Item.useAnimation = 16;
             Item.useTime = 16;

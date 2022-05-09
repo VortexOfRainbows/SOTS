@@ -31,7 +31,7 @@ namespace SOTS.Items.Otherworld.Blocks
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/Blocks/HardlightBlockOutline").Value;
 			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Otherworld/Blocks/HardlightBlockFill").Value;
 			Color color = new Color(100, 100, 100, 0);
-			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, Item.height * 0.5f);
 			for (int k = 0; k < 5; k++)
 			{
 				float x = Main.rand.Next(-10, 11) * 0.03f;
@@ -364,7 +364,7 @@ namespace SOTS.Items.Otherworld.Blocks
         }
 		public static bool isHardlightBlock(Tile tile)
         {
-			return tile.active() && tile.type == ModContent.TileType<HardlightBlockTile>();
+			return tile.active() && tile.TileType == ModContent.TileType<HardlightBlockTile>();
 		}
 		public static bool isHardlightBlock(int i, int j)
 		{

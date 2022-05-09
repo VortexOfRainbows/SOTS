@@ -261,7 +261,7 @@ namespace SOTS
 					{
 						Tile tile = Framing.GetTileSafely(xCheck, ydown);
 						bool allValid = totalChecks > 100 || (SOTSWorldgenHelper.TrueTileSolid(xCheck + 1, ydown) && SOTSWorldgenHelper.TrueTileSolid(xCheck + 2, ydown) && SOTSWorldgenHelper.TrueTileSolid(xCheck - 1, ydown) && SOTSWorldgenHelper.TrueTileSolid(xCheck - 2, ydown));
-						if (tile.active() && tile.type == TileID.SnowBlock)
+						if (tile.active() && tile.TileType == TileID.SnowBlock)
 						{
 							iceY = ydown;
 							break;
@@ -332,12 +332,12 @@ namespace SOTS
 						for (int ydown = 0; ydown != -1; ydown++)
 						{
 							Tile tile = Framing.GetTileSafely(xCheck, ydown);
-							if (tile.active() && (tile.type == TileID.SnowBlock || tile.type == TileID.IceBlock))
+							if (tile.active() && (tile.TileType == TileID.SnowBlock || tile.TileType == TileID.IceBlock))
 							{
 								validLocation = true;
 								break;
 							}
-							else if (tile.active() && Main.tileSolid[tile.type])
+							else if (tile.active() && Main.tileSolid[tile.TileType])
 							{
 								break;
 							}
@@ -380,12 +380,12 @@ namespace SOTS
 						for (int ydown = 0; ydown != -1; ydown++)
 						{
 							Tile tile = Framing.GetTileSafely(xCheck, ydown);
-							if (tile.active() && (tile.type == TileID.SnowBlock || tile.type == TileID.IceBlock))
+							if (tile.active() && (tile.TileType == TileID.SnowBlock || tile.TileType == TileID.IceBlock))
 							{
 								validLocation = true;
 								break;
 							}
-							else if(tile.active() && Main.tileSolid[tile.type])
+							else if(tile.active() && Main.tileSolid[tile.TileType])
                             {
 								break;
                             }
@@ -421,9 +421,9 @@ namespace SOTS
 					for (int ydown = 0; ydown != -1; ydown++)
 					{
 						Tile tile = Framing.GetTileSafely(xCord, ydown);
-						if (tile.active() && Main.tileSolid[tile.type])
+						if (tile.active() && Main.tileSolid[tile.TileType])
 						{
-							if(tile.type == TileID.JungleGrass || tile.type == TileID.JunglePlants || tile.type == TileID.JunglePlants2 || overrideCounter > 100)
+							if(tile.TileType == TileID.JungleGrass || tile.TileType == TileID.JunglePlants || tile.TileType == TileID.JunglePlants2 || overrideCounter > 100)
                             {
 								int y = 140 + Main.rand.Next(50);
 								if(!hasDoneJungle)
@@ -432,7 +432,7 @@ namespace SOTS
 								}
 								break;
 							}
-							if (tile.type == TileID.Crimstone || tile.type == TileID.FleshGrass || tile.type == TileID.Crimsand || overrideCounter > 100)
+							if (tile.TileType == TileID.Crimstone || tile.TileType == TileID.FleshGrass || tile.TileType == TileID.Crimsand || overrideCounter > 100)
 							{
 								int y = 140 + Main.rand.Next(50);
 								if (!hasDoneEvil)
@@ -441,7 +441,7 @@ namespace SOTS
 								}
 								break;
 							}
-							if (tile.type == TileID.Ebonstone || tile.type == TileID.CorruptGrass || tile.type == TileID.Ebonsand || overrideCounter > 100)
+							if (tile.TileType == TileID.Ebonstone || tile.TileType == TileID.CorruptGrass || tile.TileType == TileID.Ebonsand || overrideCounter > 100)
 							{
 								int y = 140 + Main.rand.Next(50);
 								if (!hasDoneEvil)
@@ -498,7 +498,7 @@ namespace SOTS
 				int x = WorldGen.genRand.Next(100, Main.maxTilesX - 100);
 				int y = WorldGen.genRand.Next(top, bottom);
 				Tile tile = Main.tile[x, y];
-				bool valid = tile.type == TileID.Stone || tile.type == TileID.Dirt;
+				bool valid = tile.TileType == TileID.Stone || tile.TileType == TileID.Dirt;
 				if (valid)
 				{
 					float percent = (y - top) / range + Main.rand.NextFloat(-0.1f, 0.1f);
@@ -536,9 +536,9 @@ namespace SOTS
 			{
 				// Get a chest
 				var tile = Main.tile[chest.x, chest.y]; // the chest tile 
-				if (tile.type == ModContent.TileType<LockedStrangeChest>() || tile.type == ModContent.TileType<LockedSkywareChest>() || tile.type == ModContent.TileType<LockedMeteoriteChest>())
+				if (tile.TileType == ModContent.TileType<LockedStrangeChest>() || tile.TileType == ModContent.TileType<LockedSkywareChest>() || tile.TileType == ModContent.TileType<LockedMeteoriteChest>())
 				{
-					int type = tile.type == ModContent.TileType<LockedStrangeChest>() ? 0 : tile.type == ModContent.TileType<LockedSkywareChest>() ? 1 : 2;
+					int type = tile.TileType == ModContent.TileType<LockedStrangeChest>() ? 0 : tile.TileType == ModContent.TileType<LockedSkywareChest>() ? 1 : 2;
 					int slot = 39;
 					for (int i = 0; i < 39; i++)
 					{
@@ -699,7 +699,7 @@ namespace SOTS
 						slot++;
 					}
 				}
-				if (tile.type == ModContent.TileType<EarthenPlatingStorageTile>())
+				if (tile.TileType == ModContent.TileType<EarthenPlatingStorageTile>())
 				{
 					int slot = 0;
 					Tile tile2 = Main.tile[chest.x, chest.y + 2];
@@ -718,7 +718,7 @@ namespace SOTS
 						chest.item[slot].stack = Main.rand.Next(3) + 3; // 3 to 5
 						slot++;
 					}
-					else if (tile2.type == ModContent.TileType<EarthenPlatingTile>() && tile.frameX < 36)
+					else if (tile2.type == ModContent.TileType<EarthenPlatingTile>() && tile.TileFrameX < 36)
 					{
 						chest.item[slot].SetDefaults(ModContent.ItemType<VisionAmulet>());
 						slot++;
@@ -744,7 +744,7 @@ namespace SOTS
 						slot++;
 					}
 				}
-				if (tile.type == ModContent.TileType<RuinedChestTile>())
+				if (tile.TileType == ModContent.TileType<RuinedChestTile>())
 				{
 					int slot = 0;
 					Tile tile2 = Main.tile[chest.x, chest.y + 2];
@@ -813,7 +813,7 @@ namespace SOTS
 						slot++;
 					}
 				}
-				if (tile.type == ModContent.TileType<PyramidChestTile>())
+				if (tile.TileType == ModContent.TileType<PyramidChestTile>())
 				{
 					int slot = 39;
 					for(int i = 0; i < 39; i++)
@@ -1063,7 +1063,7 @@ namespace SOTS
 						slot++;
 					}
 				}
-				if (tile.type == TileID.Containers)
+				if (tile.TileType == TileID.Containers)
 				{
 					int slot = 39;
 					for(int i = 0; i < 39; i++)

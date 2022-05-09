@@ -29,7 +29,7 @@ namespace SOTS.Items.Potions
 		{
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Potions/BlazingTonicGlow").Value;
 			Color color = new Color(100, 100, 100, 0);
-			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, Item.height * 0.5f);
 			float x = Main.rand.Next(-10, 11) * 0.15f;
 			float y = Main.rand.Next(-10, 11) * 0.15f;
 			Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X) + x, (float)(Item.Center.Y - (int)Main.screenPosition.Y) + y + 2), null, color * (1f - (Item.alpha / 255f)), rotation, drawOrigin, scale, SpriteEffects.None, 0f);

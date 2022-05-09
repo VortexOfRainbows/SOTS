@@ -17,17 +17,17 @@ namespace SOTS.Projectiles.Otherworld
 		}
         public override void SetDefaults()
         {
-			projectile.width = 22;
-			projectile.height = 22;
-			projectile.penetrate = 1;
-			Main.projFrames[projectile.type] = 4;
-			projectile.friendly = false;
-			projectile.timeLeft = 900;
-			projectile.tileCollide = false;
-			projectile.melee = true;
-			projectile.hostile = false;
-			projectile.netImportant = true;
-			projectile.alpha = 100;
+			Projectile.width = 22;
+			Projectile.height = 22;
+			Projectile.penetrate = 1;
+			Main.projFrames[Projectile.type] = 4;
+			Projectile.friendly = false;
+			Projectile.timeLeft = 900;
+			Projectile.tileCollide = false;
+			Projectile.melee = true;
+			Projectile.hostile = false;
+			Projectile.netImportant = true;
+			Projectile.alpha = 100;
 		}
 		public override void SendExtraAI(BinaryWriter writer)
 		{
@@ -45,38 +45,38 @@ namespace SOTS.Projectiles.Otherworld
 		bool active = false;
 		public override void AI()
 		{
-			Lighting.AddLight(projectile.Center, 0.5f, 0.5f, 0.5f);
-			Player player  = Main.player[projectile.owner];
+			Lighting.AddLight(Projectile.Center, 0.5f, 0.5f, 0.5f);
+			Player player  = Main.player[Projectile.owner];
 			BeadPlayer beadPlayer = player.GetModPlayer<BeadPlayer>();
 			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
 			int maxCounter = 230;
 			if(counter < maxCounter)
 			counter += 2;
-			projectile.frameCounter++;
-			if(projectile.frameCounter >= 8)
+			Projectile.frameCounter++;
+			if(Projectile.frameCounter >= 8)
 			{
-				projectile.frameCounter = 0;
-				projectile.frame = (projectile.frame + 1) % 4;
+				Projectile.frameCounter = 0;
+				Projectile.frame = (Projectile.frame + 1) % 4;
 			}
 			if (player.dead)
 			{
-				projectile.Kill();
+				Projectile.Kill();
 				return;
 			}
-			if (beadPlayer.attackNum > 10 && counter >= maxCounter && projectile.owner == Main.myPlayer)
+			if (beadPlayer.attackNum > 10 && counter >= maxCounter && Projectile.owner == Main.myPlayer)
 			{
 				active = true;
-				projectile.netUpdate = true;
+				Projectile.netUpdate = true;
 			}
 			if(!active)
 			{
 				bool found = false; 
 				ofTotal = 0;
 				total = 0;
-				for (int i = 0; i < Main.projectile.Length; i++)
+				for (int i = 0; i < Main.Projectile.Length; i++)
 				{
 					Projectile proj = Main.projectile[i];
-					if (projectile.type == proj.type && proj.active && projectile.active && proj.owner == projectile.owner && proj.timeLeft > 748 && projectile.timeLeft > 748)
+					if (Projectile.type == proj.type && proj.active && Projectile.active && proj.owner == Projectile.owner && proj.timeLeft > 748 && Projectile.timeLeft > 748)
 					{
 						if (proj == projectile)
 						{
@@ -87,66 +87,66 @@ namespace SOTS.Projectiles.Otherworld
 						total++;
 					}
 				}
-				if (projectile.timeLeft > 720)
+				if (Projectile.timeLeft > 720)
 				{
-					projectile.timeLeft = 750;
+					Projectile.timeLeft = 750;
 				}
-				Vector2 toPlayer = player.Center - projectile.Center;
+				Vector2 toPlayer = player.Center - Projectile.Center;
 				float distance = toPlayer.Length();
 				float speed = distance * 0.1f;
 				if(distance > 2000f)
 				{
-					if(Main.myPlayer == projectile.owner)
+					if(Main.myPlayer == Projectile.owner)
 					{
-						projectile.position = player.position;
-						projectile.netUpdate = true;
+						Projectile.position = player.position;
+						Projectile.netUpdate = true;
 					}
 				}
 				Vector2 rotateCenter = new Vector2(maxCounter + 40 - counter, 0).RotatedBy(MathHelper.ToRadians(modPlayer.orbitalCounter * 1.25f + (ofTotal * 360f / total)));
 				rotateCenter += player.Center - new Vector2(0, counter/3);
-				Vector2 toRotate = rotateCenter - projectile.Center;
+				Vector2 toRotate = rotateCenter - Projectile.Center;
 				float dist2 = toRotate.Length();
 				if (dist2 > 9 + dist2 / 40f)
 				{
 					dist2 = 9 + dist2 / 40f;
 				}
-				projectile.velocity = new Vector2(-dist2, 0).RotatedBy(Math.Atan2(projectile.Center.Y - rotateCenter.Y, projectile.Center.X - rotateCenter.X));
-				if (projectile.owner == Main.myPlayer)
+				Projectile.velocity = new Vector2(-dist2, 0).RotatedBy(Math.Atan2(Projectile.Center.Y - rotateCenter.Y, Projectile.Center.X - rotateCenter.X));
+				if (Projectile.owner == Main.myPlayer)
 				{
-					projectile.ai[0] = Main.MouseWorld.X;
-					projectile.ai[1] = Main.MouseWorld.Y;
-					projectile.netUpdate = true;
+					Projectile.ai[0] = Main.MouseWorld.X;
+					Projectile.ai[1] = Main.MouseWorld.Y;
+					Projectile.netUpdate = true;
 				}
 				Vector2 rotateAdd = new Vector2(maxCounter + 40 - counter, 0).RotatedBy(MathHelper.ToRadians(modPlayer.orbitalCounter * 1.25f + (ofTotal * 360f / total)));
-				aimTo = projectile.Center - (new Vector2(projectile.ai[0], projectile.ai[1]) + rotateAdd);
+				aimTo = Projectile.Center - (new Vector2(Projectile.ai[0], Projectile.ai[1]) + rotateAdd);
 				scaleGrow += 4;
 				Vector2 cycleScale = new Vector2(0.2f, 0).RotatedBy(MathHelper.ToRadians(scaleGrow));
-				projectile.scale = 1f + cycleScale.X;
+				Projectile.scale = 1f + cycleScale.X;
 			}
-			else if (projectile.timeLeft > 720) //prelaunch effects
+			else if (Projectile.timeLeft > 720) //prelaunch effects
 			{
-				if (projectile.owner == Main.myPlayer)
+				if (Projectile.owner == Main.myPlayer)
 				{
-					projectile.netUpdate = true;
+					Projectile.netUpdate = true;
 				}
-				projectile.velocity *= 0f;
-				projectile.alpha -= 2;
-				if(projectile.timeLeft > 748)
+				Projectile.velocity *= 0f;
+				Projectile.alpha -= 2;
+				if(Projectile.timeLeft > 748)
 				{
 					SoundEngine.PlaySound(SoundID.NPCDeath39, player.Center);
-					projectile.scale = 1f;
+					Projectile.scale = 1f;
 				}
-				projectile.scale += 0.02f;
+				Projectile.scale += 0.02f;
 			}
-			if (projectile.timeLeft < 720) //launch effects
+			if (Projectile.timeLeft < 720) //launch effects
 			{
-				SoundEngine.PlaySound(2, (int)(projectile.Center.X), (int)(projectile.Center.Y), 94);
+				SoundEngine.PlaySound(2, (int)(Projectile.Center.X), (int)(Projectile.Center.Y), 94);
 				aimTo = aimTo.SafeNormalize(new Vector2(0, 1));
 				aimTo *= -12;
-				projectile.velocity = aimTo;
-				if(Main.myPlayer == projectile.owner)
-					Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, projectile.velocity.X, projectile.velocity.Y, mod.ProjectileType("DoubleLaser"), projectile.damage, 1f, player.whoAmI, modPlayer.orbitalCounter * 1.25f + (ofTotal * 360f / total));
-				projectile.Kill();
+				Projectile.velocity = aimTo;
+				if(Main.myPlayer == Projectile.owner)
+					Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, Projectile.velocity.X, Projectile.velocity.Y, mod.ProjectileType("DoubleLaser"), Projectile.damage, 1f, player.whoAmI, modPlayer.orbitalCounter * 1.25f + (ofTotal * 360f / total));
+				Projectile.Kill();
 			}
 		}
 		public override void Kill(int timeLeft)
@@ -155,7 +155,7 @@ namespace SOTS.Projectiles.Otherworld
 			{
 				for (int i = 0; i < 20; i++)
 				{
-					int dust = Dust.NewDust(projectile.position, projectile.width, projectile.height, 91, 0, 0, projectile.alpha, default, 1.25f);
+					int dust = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 91, 0, 0, Projectile.alpha, default, 1.25f);
 					Main.dust[dust].noGravity = true;
 					Main.dust[dust].velocity *= 1.5f;
 				}

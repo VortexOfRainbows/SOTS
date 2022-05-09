@@ -15,7 +15,7 @@ namespace SOTS.Items.ChestItems
 			Item.CloneDefaults(ItemID.ThrowingKnife);
 			Item.damage = 12;
 			Item.thrown = true;
-			Item.rare = 1;
+			Item.rare = ItemRarityID.Blue;
 			Item.width = 46;
 			Item.height = 36;
 			Item.maxStack = 1;

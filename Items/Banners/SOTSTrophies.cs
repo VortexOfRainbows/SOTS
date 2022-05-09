@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -9,7 +10,7 @@ namespace SOTS.Items.Banners
 {
 	public class SOTSTrophies : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileFrameImportant[Type] = true;
 			Main.tileLavaDeath[Type] = true;
@@ -18,13 +19,16 @@ namespace SOTS.Items.Banners
 			TileObjectData.newTile.StyleHorizontal = true;
 			TileObjectData.newTile.StyleWrapLimit = 36;
 			TileObjectData.addTile(Type);
-			dustType = 7;
-			disableSmartCursor = true;
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Trophy");
 			AddMapEntry(new Color(120, 85, 60), name);
 		}
-		public override void KillMultiTile(int i, int j, int frameX, int frameY)
+        public override bool CreateDust(int i, int j, ref int type)
+        {
+			type = 7;
+			return base.CreateDust(i, j, ref type);
+        }
+        public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
 			int item = 0;
 			switch (frameX / 54)
@@ -35,7 +39,7 @@ namespace SOTS.Items.Banners
 			}
 			if (item > 0)
 			{
-				Item.NewItem(i * 16, j * 16, 48, 48, item);
+				Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 48, item);
 			}
 		}
 	}

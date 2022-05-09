@@ -18,17 +18,17 @@ namespace SOTS.Projectiles.Pyramid
 		}
 		public override void SetDefaults()
 		{
-			projectile.width = 16;
-			projectile.height = 16;
-			projectile.timeLeft = 140;
-			projectile.magic = true;
-			projectile.penetrate = -1;
-			projectile.hostile = false;
-			projectile.friendly = false;
-			projectile.tileCollide = false;
-			projectile.ignoreWater = true;
-			projectile.alpha = 0;
-			projectile.hide = true;
+			Projectile.width = 16;
+			Projectile.height = 16;
+			Projectile.timeLeft = 140;
+			Projectile.magic = true;
+			Projectile.penetrate = -1;
+			Projectile.hostile = false;
+			Projectile.friendly = false;
+			Projectile.tileCollide = false;
+			Projectile.ignoreWater = true;
+			Projectile.alpha = 0;
+			Projectile.hide = true;
 		}
         public override void DrawBehind(int index, List<int> drawCacheProjsBehindNPCsAndTiles, List<int> drawCacheProjsBehindNPCs, List<int> drawCacheProjsBehindProjectiles, List<int> drawCacheProjsOverWiresUI)
         {
@@ -38,10 +38,10 @@ namespace SOTS.Projectiles.Pyramid
 		public void Laser(float scale = 1f)
 		{
 			posList = new List<Vector2>();
-			int parentID = (int)projectile.ai[1];
+			int parentID = (int)Projectile.ai[1];
 			NPC npc = Main.npc[parentID];
-			Vector2 current = projectile.Center;
-			Vector2 velo = projectile.velocity.SafeNormalize(Vector2.Zero);
+			Vector2 current = Projectile.Center;
+			Vector2 velo = Projectile.velocity.SafeNormalize(Vector2.Zero);
 			if (npc.active && npc.type == ModContent.NPCType<PharaohsCurse>())
 			{
 				int maxLength = (int)(60 * scale);
@@ -62,14 +62,14 @@ namespace SOTS.Projectiles.Pyramid
 		bool runOnce = false;
 		public override void AI()
 		{
-			projectile.rotation += MathHelper.ToRadians(8);
-			if (projectile.ai[0] == 0)
+			Projectile.rotation += MathHelper.ToRadians(8);
+			if (Projectile.ai[0] == 0)
 			{
 				bool capable = false;
 				for(int i = 0; i < Main.maxPlayers; i++)
                 {
 					Player player = Main.player[i];
-					if(Vector2.Distance(player.Center, projectile.Center) <= 416)
+					if(Vector2.Distance(player.Center, Projectile.Center) <= 416)
                     {
 						capable = true;
 						break;
@@ -77,37 +77,37 @@ namespace SOTS.Projectiles.Pyramid
                 }
 				if(!capable)
 				{
-					projectile.Kill();
+					Projectile.Kill();
 					return;
                 }
 			}
-			int parentID = (int)projectile.ai[1];
+			int parentID = (int)Projectile.ai[1];
 			NPC npc = Main.npc[parentID];
 			if (npc.active && npc.type == ModContent.NPCType<PharaohsCurse>())
 			{
-				projectile.hostile = true;
-				if (projectile.ai[0] < 40)
+				Projectile.hostile = true;
+				if (Projectile.ai[0] < 40)
 				{
-					float scale = projectile.ai[0] * 0.0075f;
+					float scale = Projectile.ai[0] * 0.0075f;
 					Laser(scale);
 				}
-				else if (projectile.ai[0] == 40)
+				else if (Projectile.ai[0] == 40)
 				{
 					if (Main.netMode != NetmodeID.Server)
 					{
-						Vector2 distanceToOwner = projectile.Center - npc.Center;
+						Vector2 distanceToOwner = Projectile.Center - npc.Center;
 						PharaohsCurse curse = npc.modNPC as PharaohsCurse;
 						for (int j = 0; j < 40; j++)
 						{
 							Vector2 rotational = new Vector2(0, -Main.rand.NextFloat(2.75f, 3.5f)).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360f)));
-							curse.foamParticleList1.Add(new CurseFoam(projectile.Center, rotational, 1.55f, true));
+							curse.foamParticleList1.Add(new CurseFoam(Projectile.Center, rotational, 1.55f, true));
 						}
 						runOnce = true;
 					}
 				}
-				else if (projectile.ai[0] > 40 && projectile.ai[0] <= 70)
+				else if (Projectile.ai[0] > 40 && Projectile.ai[0] <= 70)
 				{
-					float current = projectile.ai[0] - 40f;
+					float current = Projectile.ai[0] - 40f;
 					if (current <= 10)
 						current *= 9f;
 					else
@@ -120,27 +120,27 @@ namespace SOTS.Projectiles.Pyramid
 					float scale = 0.3f + 0.7f * scaleMod;
 					Laser(scale);
 				}
-				else if(projectile.ai[0] > 70)
+				else if(Projectile.ai[0] > 70)
                 {
-					projectile.Kill();
+					Projectile.Kill();
                 }
 				if (runOnce)
 				{
 					SoundEngine.PlaySound(2, (int)npc.Center.X, (int)npc.Center.Y, 73, 1.3f, 0.3f);
 					runOnce = false;
-					//projectile.friendly = true;
+					//Projectile.friendly = true;
 				}
 			}
 			else
             {
-				projectile.Kill();
+				Projectile.Kill();
 			}
-			projectile.ai[0]++;
+			Projectile.ai[0]++;
 		}
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
 		{
 			int counter = posList.Count;
-			if (projectile.friendly || projectile.hostile)
+			if (Projectile.friendly || Projectile.hostile)
 				for (int i = 0; i < posList.Count; i += 8)
 				{
 					counter--;
@@ -158,7 +158,7 @@ namespace SOTS.Projectiles.Pyramid
 		{
 			return false;
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
 			return false;
 		}

@@ -17,15 +17,15 @@ namespace SOTS.Projectiles.Laser
 
 		public override void SetDefaults() 
 		{
-			projectile.width = 14;
-			projectile.height = 14;
-			projectile.timeLeft = 85;
-			projectile.magic = true;
-			projectile.penetrate = -1;
-			projectile.hostile = false;
-			projectile.friendly = true;
-			projectile.tileCollide = false;
-			projectile.ignoreWater = true;
+			Projectile.width = 14;
+			Projectile.height = 14;
+			Projectile.timeLeft = 85;
+			Projectile.magic = true;
+			Projectile.penetrate = -1;
+			Projectile.hostile = false;
+			Projectile.friendly = true;
+			Projectile.tileCollide = false;
+			Projectile.ignoreWater = true;
 		}
 		bool runOnce = true;
 		Color color;
@@ -35,7 +35,7 @@ namespace SOTS.Projectiles.Laser
 		{
 			if(runOnce)
 			{
-				int type = (int)projectile.ai[0];
+				int type = (int)Projectile.ai[0];
 				switch (type)
 				{
 					case 0:
@@ -76,21 +76,21 @@ namespace SOTS.Projectiles.Laser
 		}
         public override void AI()
         {
-			projectile.alpha += 3;
-			projectile.ai[1] -= 2;
+			Projectile.alpha += 3;
+			Projectile.ai[1] -= 2;
 			UpdatePositions();
 		}
 		bool collided = false;
         public void SetPostitions()
         {
-			Vector2 direction = new Vector2(14 * scale, 0).RotatedBy(projectile.velocity.ToRotation());
+			Vector2 direction = new Vector2(14 * scale, 0).RotatedBy(Projectile.velocity.ToRotation());
 			int maxDist = 360;
-			Vector2 currentPos = projectile.Center;
+			Vector2 currentPos = Projectile.Center;
 			for (int k = 0; k < maxDist; k++)
 			{
-				Vector2 rotationalPos = new Vector2(16, 0).RotatedBy(MathHelper.ToRadians((projectile.ai[1] + k) + (int)projectile.ai[0] * 360f / 7f));
+				Vector2 rotationalPos = new Vector2(16, 0).RotatedBy(MathHelper.ToRadians((Projectile.ai[1] + k) + (int)Projectile.ai[0] * 360f / 7f));
 				posList.Add(currentPos);
-				rotations.Add(projectile.velocity.ToRotation());
+				rotations.Add(Projectile.velocity.ToRotation());
 				int i = (int)(currentPos.X / 16);
 				int j = (int)(currentPos.Y / 16);
 				if (!WorldGen.InWorld(i, j, 20) || Main.tile[i, j].active() && Main.tileSolidTop[Main.tile[i, j].type] == false && Main.tileSolid[Main.tile[i, j].type] == true)
@@ -108,8 +108,8 @@ namespace SOTS.Projectiles.Laser
 						if (!target.friendly && target.dontTakeDamage == false && target.lifeMax > 5 && target.active && target.CanBeChasedBy() && !collided)
 						{
 							direction = new Vector2(14 * scale, 0).RotatedBy(Redirect(direction.ToRotation(), currentPos, target.Center));
-							float width = projectile.width * scale;
-							float height = projectile.height * scale;
+							float width = Projectile.width * scale;
+							float height = Projectile.height * scale;
 							Rectangle projHitbox = new Rectangle((int)currentPos.X - (int)width / 2, (int)currentPos.Y - (int)height / 2, (int)width, (int)height);
 							if (target.Hitbox.Intersects(projHitbox))
 							{
@@ -125,15 +125,15 @@ namespace SOTS.Projectiles.Laser
 		public void UpdatePositions()
 		{
 			int alpha = 0;
-			Vector2 direction = new Vector2(14 * scale, 0).RotatedBy(projectile.velocity.ToRotation());
+			Vector2 direction = new Vector2(14 * scale, 0).RotatedBy(Projectile.velocity.ToRotation());
 			for (int k = 0; k < posList.Count; k++)
 			{
 				if (k > 235)
 				{
 					alpha += 2;
 				}
-				Vector2 rotationalPos = new Vector2(16, 0).RotatedBy(MathHelper.ToRadians((projectile.ai[1] + k) + (int)projectile.ai[0] * 360f / 7f));
-				Vector2 applyRotate = new Vector2(0, rotationalPos.X).RotatedBy(projectile.velocity.ToRotation());
+				Vector2 rotationalPos = new Vector2(16, 0).RotatedBy(MathHelper.ToRadians((Projectile.ai[1] + k) + (int)Projectile.ai[0] * 360f / 7f));
+				Vector2 applyRotate = new Vector2(0, rotationalPos.X).RotatedBy(Projectile.velocity.ToRotation());
 				posList2[k] = posList[k] + applyRotate;
 				if(k > 0)
 				{
@@ -142,7 +142,7 @@ namespace SOTS.Projectiles.Laser
 				}
                 else
                 {
-					rotations[k] = projectile.velocity.ToRotation();
+					rotations[k] = Projectile.velocity.ToRotation();
                 }
 				int i = (int)(posList[k].X / 16);
 				int j = (int)(posList[k].Y / 16);
@@ -195,7 +195,7 @@ namespace SOTS.Projectiles.Laser
 		int currentNPC = -1;
 		public int FindClosestEnemy(Vector2 pos)
 		{
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			if (currentNPC != -1)
 			{
 				return currentNPC;
@@ -215,7 +215,7 @@ namespace SOTS.Projectiles.Laser
 					distance = (float)Math.Sqrt((double)(dX * dX + dY * dY));
 					if (distance < minDist)
 					{
-						bool lineOfSight = Collision.CanHitLine(pos - new Vector2(projectile.width/2, projectile.height/2), projectile.width, projectile.height, target.position, target.width, target.height);
+						bool lineOfSight = Collision.CanHitLine(pos - new Vector2(Projectile.width/2, Projectile.height/2), Projectile.width, Projectile.height, target.position, target.width, target.height);
 						if (lineOfSight)
 						{
 							minDist = distance;
@@ -229,16 +229,16 @@ namespace SOTS.Projectiles.Laser
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.immune[projectile.owner] = 5;
+            target.immune[Projectile.owner] = 5;
         }
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
 		{
-			if(projectile.alpha >= 150)
+			if(Projectile.alpha >= 150)
             {
 				return false;
             }
-			float width = projectile.width * scale;
-			float height = projectile.height * scale;
+			float width = Projectile.width * scale;
+			float height = Projectile.height * scale;
 			for (int i = 0; i < posList2.Count; i++)
 			{
 				Vector2 pos = posList2[i];
@@ -249,7 +249,7 @@ namespace SOTS.Projectiles.Laser
                 }
 			}
 			return false;
-			//return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), projectile.Center, endPoint, 8f, ref point);
+			//return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, endPoint, 8f, ref point);
 		}
 		List<Vector2> posList = new List<Vector2>();
 		List<Vector2> posList2 = new List<Vector2>();
@@ -258,15 +258,15 @@ namespace SOTS.Projectiles.Laser
         {
             return false;
         }
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override bool PreDraw(ref Color lightColor)
 		{
 			if (runOnce)
 				return false;
-			Texture2D texture = Main.projectileTexture[projectile.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Projectiles/Laser/PrismOrb").Value;
 			Vector2 origin = new Vector2(texture.Width/2, texture.Height/2);
 			Vector2 origin2 = new Vector2(texture2.Width / 2, texture2.Height / 2);
-			Player player  = Main.player[projectile.owner];
+			Player player  = Main.player[Projectile.owner];
 			int alpha = 0;
 			for(int i = 0; i < posList2.Count; i++)
 			{
@@ -275,7 +275,7 @@ namespace SOTS.Projectiles.Laser
                 {
 					alpha += 2;
                 }
-				spriteBatch.Draw(i == 0 ? texture2 : texture, drawPos - Main.screenPosition, null, color * ((255 - projectile.alpha) / 255f) * ((255 - alpha) / 255f), rotations[i], i == 0 ? origin2 : origin, scale, SpriteEffects.None, 0f);
+				spriteBatch.Draw(i == 0 ? texture2 : texture, drawPos - Main.screenPosition, null, color * ((255 - Projectile.alpha) / 255f) * ((255 - alpha) / 255f), rotations[i], i == 0 ? origin2 : origin, scale, SpriteEffects.None, 0f);
 			}
 			return false;
 		}

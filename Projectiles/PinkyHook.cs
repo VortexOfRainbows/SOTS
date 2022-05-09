@@ -16,13 +16,13 @@ namespace SOTS.Projectiles
 		}
         public override void SetDefaults()
         {
-            projectile.CloneDefaults(ProjectileID.GemHookDiamond);
-			projectile.width = 20;
-			projectile.height = 20;
-			projectile.penetrate = -1;
-			projectile.timeLeft = 1000000;
-			projectile.friendly = true;
-			projectile.melee = true;
+            Projectile.CloneDefaults(ProjectileID.GemHookDiamond);
+			Projectile.width = 20;
+			Projectile.height = 20;
+			Projectile.penetrate = -1;
+			Projectile.timeLeft = 1000000;
+			Projectile.friendly = true;
+			Projectile.melee = true;
         } 
         public override bool? SingleGrappleHook(Player player)
         {
@@ -36,12 +36,12 @@ namespace SOTS.Projectiles
         {
             speed = 24f;
         }
-        public override void PostDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override void PostDraw(Color lightColor)
         {
             Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/PinkyHook_Chain");    //this where the chain of grappling hook is drawn
                                                       //change YourModName with ur mod name/ and CustomHookPr_Chain with the name of ur one
-            Vector2 position = projectile.Center;
-            Vector2 mountedCenter = Main.player[projectile.owner].MountedCenter;
+            Vector2 position = Projectile.Center;
+            Vector2 mountedCenter = Main.player[Projectile.owner].MountedCenter;
             Rectangle? sourceRectangle = new Microsoft.Xna.Framework.Rectangle?();
             Vector2 origin = new Vector2((float)texture.Width * 0.5f, (float)texture.Height * 0.5f);
             float num1 = (float)texture.Height;
@@ -65,16 +65,16 @@ namespace SOTS.Projectiles
                     position += vector2_1 * num1;
                     vector2_4 = mountedCenter - position;
                     Color color2 = Lighting.GetColor((int)position.X / 16, (int)((double)position.Y / 16.0));
-                    color2 = projectile.GetAlpha(color2);
+                    color2 = Projectile.GetAlpha(color2);
                     Main.spriteBatch.Draw(texture, position - Main.screenPosition, sourceRectangle, color2, rotation, origin, 1f, SpriteEffects.None, 0.0f);
                 }
             }
         }
 		public override void AI()
         {
-			projectile.scale = 1.2f;
-			projectile.rotation -= MathHelper.ToRadians(45);
-			projectile.spriteDirection = 1;
+			Projectile.scale = 1.2f;
+			Projectile.rotation -= MathHelper.ToRadians(45);
+			Projectile.spriteDirection = 1;
 		}
     }
 }

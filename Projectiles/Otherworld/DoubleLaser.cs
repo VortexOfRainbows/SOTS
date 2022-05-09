@@ -17,15 +17,15 @@ namespace SOTS.Projectiles.Otherworld
 
 		public override void SetDefaults() 
 		{
-			projectile.width = 16;
-			projectile.height = 20;
-			projectile.timeLeft = 120;
-			projectile.magic = true;
-			projectile.penetrate = -1;
-			projectile.hostile = false;
-			projectile.friendly = true;
-			projectile.tileCollide = false;
-			projectile.ignoreWater = true;
+			Projectile.width = 16;
+			Projectile.height = 20;
+			Projectile.timeLeft = 120;
+			Projectile.magic = true;
+			Projectile.penetrate = -1;
+			Projectile.hostile = false;
+			Projectile.friendly = true;
+			Projectile.tileCollide = false;
+			Projectile.ignoreWater = true;
 		}
 		public override bool ShouldUpdatePosition()
 		{
@@ -33,16 +33,16 @@ namespace SOTS.Projectiles.Otherworld
 		}
 		public override void AI() 
 		{
-			projectile.ai[0] += 3;
-			Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 0.8f / 255f, (255 - projectile.alpha) * 0.8f / 255f, (255 - projectile.alpha) * 0.8f / 255f);
-			projectile.alpha += 3;
-			if (projectile.alpha > 255) {
-				projectile.Kill();
+			Projectile.ai[0] += 3;
+			Lighting.AddLight(Projectile.Center, (255 - Projectile.alpha) * 0.8f / 255f, (255 - Projectile.alpha) * 0.8f / 255f, (255 - Projectile.alpha) * 0.8f / 255f);
+			Projectile.alpha += 3;
+			if (Projectile.alpha > 255) {
+				Projectile.Kill();
 			}
 		}
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.immune[projectile.owner] = 5;
+            target.immune[Projectile.owner] = 5;
         }
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) 
 		{
@@ -67,21 +67,21 @@ namespace SOTS.Projectiles.Otherworld
 			}
 			return -1;
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
 			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Otherworld/DoubleLaser");
 			Texture2D texture2 = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Otherworld/DoubleLaserEnd");
 			bool dust = false;
-			if(projectile.alpha < 5)
+			if(Projectile.alpha < 5)
 			{
 				dust = true;
 			}
-			Vector2 unit = new Vector2(projectile.velocity.X, projectile.velocity.Y);
-			Vector2 currentPos = projectile.Center;
+			Vector2 unit = new Vector2(Projectile.velocity.X, Projectile.velocity.Y);
+			Vector2 currentPos = Projectile.Center;
 			float radianDir = (float)Math.Atan2(unit.Y, unit.X);
-			lightColor = new Color(110, 110, 110, 0) * ((255 - projectile.alpha) / 255f);
+			lightColor = new Color(110, 110, 110, 0) * ((255 - Projectile.alpha) / 255f);
 			float size = 0f;
-			float rotate = projectile.ai[0];
+			float rotate = Projectile.ai[0];
 			for (int Distance = 0; Distance < 120; Distance++)
 			{
 				int npcID = isHittingEnemy(currentPos);
@@ -99,21 +99,21 @@ namespace SOTS.Projectiles.Otherworld
 				{
 					Vector2 additional = new Vector2(additionalEnd, 0f).RotatedBy(radianDir);
 					currentPos += additional;
-					for (int k = 0; k < 10f - (8f * (255 - projectile.alpha) / 255f); k++)
+					for (int k = 0; k < 10f - (8f * (255 - Projectile.alpha) / 255f); k++)
 					{
-						int dust1 = Dust.NewDust(position + new Vector2(-4, -4), 0, 0, 91, 0, 0, projectile.alpha, default, 1.25f);
+						int dust1 = Dust.NewDust(position + new Vector2(-4, -4), 0, 0, 91, 0, 0, Projectile.alpha, default, 1.25f);
 						Main.dust[dust1].noGravity = true;
 						Main.dust[dust1].velocity *= 1.5f;
-						Main.dust[dust1].alpha = projectile.alpha;
-						Main.dust[dust1].velocity += projectile.velocity / 2f;
+						Main.dust[dust1].alpha = Projectile.alpha;
+						Main.dust[dust1].velocity += Projectile.velocity / 2f;
 					}
 					if(collidingNPC)
 					{
 						NPC npc = Main.npc[npcID];
-						if(npc.immune[projectile.owner] <= 0)
+						if(npc.immune[Projectile.owner] <= 0)
 						{
-							if (projectile.owner == Main.myPlayer)
-								Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 0, 0, mod.ProjectileType("DoubleLaserExplosion"), projectile.damage, projectile.knockBack, projectile.owner);
+							if (Projectile.owner == Main.myPlayer)
+								Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 0, 0, mod.ProjectileType("DoubleLaserExplosion"), Projectile.damage, Projectile.knockBack, Projectile.owner);
 						}
 					}
 					previousDistance = Distance;
@@ -138,7 +138,7 @@ namespace SOTS.Projectiles.Otherworld
 				}
 				if(dust || Main.rand.Next(40) == 0)
 				{
-					int num1 = Dust.NewDust(new Vector2(position.X - 4, position.Y - 4), projectile.width, projectile.height, 91);
+					int num1 = Dust.NewDust(new Vector2(position.X - 4, position.Y - 4), Projectile.width, Projectile.height, 91);
 					Main.dust[num1].noGravity = true;
 					Main.dust[num1].velocity *= 1.75f;
 					Main.dust[num1].scale = 1.1f;

@@ -29,7 +29,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
 		{
 			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Otherworld/FromChests/PlatformGeneratorBase").Value;
-			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, Item.height * 0.5f);
 			Main.spriteBatch.Draw(texture2, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y) + 2), null, lightColor * (1f - (Item.alpha / 255f)), rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			return false;
 		}
@@ -53,7 +53,7 @@ namespace SOTS.Items.Otherworld.FromChests
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/FromChests/PlatformGeneratorOutline").Value;
 			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Otherworld/FromChests/PlatformGeneratorFill").Value;
 			Color color = new Color(110, 110, 110, 0);
-			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, Item.height * 0.5f);
 			for (int k = 0; k < 5; k++)
 			{
 				float x = Main.rand.Next(-10, 11) * 0.03f;

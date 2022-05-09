@@ -14,14 +14,14 @@ namespace SOTS.Projectiles.Permafrost
 		}
         public override void SetDefaults()
         {
-			projectile.penetrate = -1;
-			projectile.width = 12;
-			projectile.height = 20;
-			projectile.timeLeft = 1120;
-			projectile.friendly = false;
-			projectile.ignoreWater = false;
-			projectile.tileCollide = true;
-			projectile.hostile = true;
+			Projectile.penetrate = -1;
+			Projectile.width = 12;
+			Projectile.height = 20;
+			Projectile.timeLeft = 1120;
+			Projectile.friendly = false;
+			Projectile.ignoreWater = false;
+			Projectile.tileCollide = true;
+			Projectile.hostile = true;
 		}
 		Vector2[] trailPos = new Vector2[8];
         public override Color? GetAlpha(Color lightColor)
@@ -32,17 +32,17 @@ namespace SOTS.Projectiles.Permafrost
         {
             return false;
         }
-        public void TrailPreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public void TrailPreDraw(ref Color lightColor)
 		{
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Permafrost/PolarisTrail").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			Vector2 previousPosition = projectile.Center;
+			Vector2 previousPosition = Projectile.Center;
 			float drawAmt = 1f;
 			if (SOTS.Config.lowFidelityMode)
 				drawAmt = 0.5f;
 			for (int k = 0; k < trailPos.Length; k++)
 			{
-				float scale = projectile.scale * 0.9f * (trailPos.Length - k) / (float)trailPos.Length;
+				float scale = Projectile.scale * 0.9f * (trailPos.Length - k) / (float)trailPos.Length;
 				if (trailPos[k] == Vector2.Zero)
 				{
 					break;
@@ -65,7 +65,7 @@ namespace SOTS.Projectiles.Permafrost
 							x = 0;
 							y = 0;
 						}
-						if (trailPos[k] != projectile.Center)
+						if (trailPos[k] != Projectile.Center)
 							spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, betweenPositions.ToRotation(), drawOrigin, scale, SpriteEffects.None, 0f);
 					}
 				}
@@ -74,7 +74,7 @@ namespace SOTS.Projectiles.Permafrost
 		}
 		public void cataloguePos()
 		{
-			Vector2 current = projectile.Center;
+			Vector2 current = Projectile.Center;
 			for (int i = 0; i < trailPos.Length; i++)
 			{
 				Vector2 previousPosition = trailPos[i];
@@ -82,7 +82,7 @@ namespace SOTS.Projectiles.Permafrost
 				current = previousPosition;
 			}
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
 			TrailPreDraw(spriteBatch, lightColor);
 			return endHow == 0;
@@ -94,42 +94,42 @@ namespace SOTS.Projectiles.Permafrost
 			int dustAmtMult = 3;
 			if (SOTS.Config.lowFidelityMode)
 				dustAmtMult = 1;
-			if (projectile.ai[0] == -1)
+			if (Projectile.ai[0] == -1)
 			{
-				projectile.ai[0]--;
+				Projectile.ai[0]--;
 				for (int i = 0; i < 5 * dustAmtMult; i++)
 				{
-					int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y) - new Vector2(5), projectile.width, projectile.height, mod.DustType("CopyDust4"));
+					int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, mod.DustType("CopyDust4"));
 					Dust dust = Main.dust[num1];
 					dust.velocity *= 0.2f;
-					dust.velocity += projectile.velocity * 0.225f;
+					dust.velocity += Projectile.velocity * 0.225f;
 					dust.noGravity = true;
 					dust.scale += 0.1f;
 					dust.color = new Color(200, 250, 250, 100);
 					dust.fadeIn = 0.1f;
 					dust.scale *= 1.6f;
-					dust.alpha = projectile.alpha;
+					dust.alpha = Projectile.alpha;
 				}
 			}
-			projectile.rotation = projectile.velocity.ToRotation() - MathHelper.ToRadians(90);
+			Projectile.rotation = Projectile.velocity.ToRotation() - MathHelper.ToRadians(90);
 			if (runOnce)
 			{
 				acceleration = 0.4f;
-				projectile.position += projectile.velocity * 2;
+				Projectile.position += Projectile.velocity * 2;
 				for (int i = 0; i < 1.5 * dustAmtMult; i++)
 				{
-					int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y) - new Vector2(5), projectile.width, projectile.height, mod.DustType("CopyDust4"));
+					int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, mod.DustType("CopyDust4"));
 					Dust dust = Main.dust[num1];
 					dust.velocity *= 0.1f;
-					dust.velocity += projectile.velocity * 0.5f;
+					dust.velocity += Projectile.velocity * 0.5f;
 					dust.noGravity = true;
 					dust.scale += 0.1f;
 					dust.color = new Color(200, 250, 250, 100);
 					dust.fadeIn = 0.1f;
 					dust.scale *= 1.4f;
-					dust.alpha = projectile.alpha;
+					dust.alpha = Projectile.alpha;
 				}
-				SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 11, 1.25f);
+				SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 11, 1.25f);
 				for (int i = 0; i < trailPos.Length; i++)
 				{
 					trailPos[i] = Vector2.Zero;
@@ -141,18 +141,18 @@ namespace SOTS.Projectiles.Permafrost
 				cataloguePos();
 			}
 			checkPos();
-			if (projectile.timeLeft < 1000 && endHow == 0)
+			if (Projectile.timeLeft < 1000 && endHow == 0)
 			{
 				triggerStop();
 			}
-			projectile.position += projectile.velocity * acceleration;
+			Projectile.position += Projectile.velocity * acceleration;
 			acceleration += 0.04f;
-			return projectile.friendly;
+			return Projectile.friendly;
 		}
 		public void checkPos()
 		{
 			float iterator = 0f;
-			Vector2 current = projectile.Center;
+			Vector2 current = Projectile.Center;
 			for (int i = 0; i < trailPos.Length; i++)
 			{
 				Vector2 previousPosition = trailPos[i];
@@ -162,7 +162,7 @@ namespace SOTS.Projectiles.Permafrost
 				}
 			}
 			if (iterator >= trailPos.Length)
-				projectile.Kill();
+				Projectile.Kill();
 		}
 		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
 		{
@@ -179,23 +179,23 @@ namespace SOTS.Projectiles.Permafrost
 		public void triggerStop()
 		{
 			endHow = 1;
-			projectile.tileCollide = false;
-			projectile.friendly = false;
-			projectile.velocity *= 0f;
-			projectile.netUpdate = true;
-			projectile.ai[0] = -1;
+			Projectile.tileCollide = false;
+			Projectile.friendly = false;
+			Projectile.velocity *= 0f;
+			Projectile.netUpdate = true;
+			Projectile.ai[0] = -1;
 		}
 		public override void SendExtraAI(BinaryWriter writer)
 		{
-			writer.Write(projectile.tileCollide);
-			writer.Write(projectile.friendly);
+			writer.Write(Projectile.tileCollide);
+			writer.Write(Projectile.friendly);
 			writer.Write(endHow);
 			base.SendExtraAI(writer);
 		}
 		public override void ReceiveExtraAI(BinaryReader reader)
 		{
-			projectile.tileCollide = reader.ReadBoolean();
-			projectile.friendly = reader.ReadBoolean();
+			Projectile.tileCollide = reader.ReadBoolean();
+			Projectile.friendly = reader.ReadBoolean();
 			endHow = reader.ReadInt32();
 			base.ReceiveExtraAI(reader);
 		}

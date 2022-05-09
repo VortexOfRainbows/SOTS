@@ -493,9 +493,9 @@ namespace SOTS.NPCs.ArtificialDebuffs
         public override void OnHitByProjectile(NPC npc, Projectile projectile, int damage, float knockback, bool crit)
         {
             lastHitWasCrit = crit;
-            if (projectile.type == ProjectileType<HarvestLock>())
+            if (Projectile.type == ProjectileType<HarvestLock>())
             {
-                Player player = Main.player[projectile.owner];
+                Player player = Main.player[Projectile.owner];
                 VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
                 int amt = HarvestCost(npc);
                 if (!npc.immortal)
@@ -517,8 +517,8 @@ namespace SOTS.NPCs.ArtificialDebuffs
         bool lastHitWasCrit = false;
         public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-            Player player = Main.player[projectile.owner];
-            if (npc.HasBuff(BuffType<Shattered>()) && projectile.melee && projectile.type != ProjectileType<Projectiles.Evil.AncientSteelHalberd>())
+            Player player = Main.player[Projectile.owner];
+            if (npc.HasBuff(BuffType<Shattered>()) && Projectile.melee && Projectile.type != ProjectileType<Projectiles.Evil.AncientSteelHalberd>())
             {
                 int ignoreDefense = ((npc.defense + 1) / 2);
                 damage += ignoreDefense;
@@ -536,16 +536,16 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 else
                     damage *= 2;
             }
-            if (projectile.type == ProjectileType<CodeVolley>() || projectile.type == ProjectileType<CodeBurst>())
+            if (Projectile.type == ProjectileType<CodeVolley>() || Projectile.type == ProjectileType<CodeBurst>())
             {
-                if(projectile.type == ProjectileType<CodeVolley>())
+                if(Projectile.type == ProjectileType<CodeVolley>())
                 {
                     if (Main.rand.NextFloat(100f) < 100 * Math.Pow(0.7f, 1 + DestableCurse * 0.45f) && DestableCurse < 20)
                         DestableCurse++;
                     if (Main.myPlayer == player.whoAmI && Main.netMode == NetmodeID.MultiplayerClient)
                         SendClientChanges(player, npc);
                 }
-                if (projectile.type == ProjectileType<CodeBurst>() && projectile.ai[1] != -1)
+                if (Projectile.type == ProjectileType<CodeBurst>() && Projectile.ai[1] != -1)
                 {
                     if (Main.rand.NextFloat(100f) < 100 * Math.Pow(0.3f, 1 + DestableCurse * 0.45f) && DestableCurse < 20)
                         DestableCurse++;
@@ -553,7 +553,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
                         SendClientChanges(player, npc);
                 }
 
-                if (projectile.type == ProjectileType<CodeBurst>() && projectile.ai[1] == -1)
+                if (Projectile.type == ProjectileType<CodeBurst>() && Projectile.ai[1] == -1)
                 {
                     if (Main.rand.NextFloat(100f) < 100 * Math.Pow(0.25f, 1 + DestableCurse * 0.5f) && DestableCurse < 20)
                         DestableCurse++;
@@ -561,10 +561,10 @@ namespace SOTS.NPCs.ArtificialDebuffs
                         SendClientChanges(player, npc);
                 }
             }
-            if(projectile.type == ProjectileType<DeathSpiralProj>() || (projectile.type == ProjectileType<BloodSpark>() && crit))
+            if(Projectile.type == ProjectileType<DeathSpiralProj>() || (Projectile.type == ProjectileType<BloodSpark>() && crit))
             {
                 bool worm = npc.realLife != -1;
-                float baseChance = projectile.type == ProjectileType<BloodSpark>() ? 1.1f : 0.2f;
+                float baseChance = Projectile.type == ProjectileType<BloodSpark>() ? 1.1f : 0.2f;
                 int baseStacks = 1;
                 if (worm)
                 {
@@ -576,21 +576,21 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 if (Main.myPlayer == player.whoAmI && Main.netMode == NetmodeID.MultiplayerClient)
                     SendClientChanges(player, npc);
             }
-            if (projectile.type == ProjectileType<DestabilizingBeam>() && !hitByRay)
+            if (Projectile.type == ProjectileType<DestabilizingBeam>() && !hitByRay)
             {
                 hitByRay = true;
                 DestableCurse += 4;
                 if (Main.myPlayer == player.whoAmI && Main.netMode == NetmodeID.MultiplayerClient)
                     SendClientChanges(player, npc);
             }
-            if (nerfBeeProj.Contains(projectile.type))
+            if (nerfBeeProj.Contains(Projectile.type))
             {
                 if (nerfBeeBoss.Contains(npc.type))
                     damage = (int)(damage * 0.8f);
                 if (nerfBeeNPC.Contains(npc.type))
                     damage = (int)(damage * 0.6f);
             }
-            if(projectile.type == ProjectileType<RealityShatter>())
+            if(Projectile.type == ProjectileType<RealityShatter>())
             {
                 if (nerfRealityShatter.Contains(npc.type))
                     damage = (int)(damage * 0.3f);
@@ -735,7 +735,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
             pinkied = false;
             bool hooked = false;
             bool darkArmed = false;
-            for (int i = 0; i < Main.projectile.Length; i++)
+            for (int i = 0; i < Main.Projectile.Length; i++)
             {
                 Projectile proj = Main.projectile[i];
                 if (proj.friendly && proj.active && proj.type == ProjectileType<Projectiles.Minions.FluxSlimeBall>())
@@ -1021,7 +1021,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
             }
             if(npc.HasBuff(BuffType<Infected>()) && !npc.immortal)
             {
-                Texture2D texture = Main.projectileTexture[ProjectileType<Pathogen>()];
+                Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[ProjectileType<Pathogen>()].Value;
                 Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
                 Color color;
                 float dimensions = (float)Math.Sqrt(npc.width * npc.height);

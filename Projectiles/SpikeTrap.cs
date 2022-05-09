@@ -13,18 +13,18 @@ namespace SOTS.Projectiles
 		}
         public override void SetDefaults()
         {
-			projectile.CloneDefaults(24);
+			Projectile.CloneDefaults(24);
             aiType = 24; 
-            projectile.width = 18;
-            projectile.height = 18; 
-            projectile.timeLeft = 1275;
-            projectile.penetrate = 1; 
-            projectile.friendly = true; 
-            projectile.hostile = false; 
-            projectile.tileCollide = true;
-            projectile.ignoreWater = false; 
-            projectile.melee = true; 
-			projectile.alpha = 0;
+            Projectile.width = 18;
+            Projectile.height = 18; 
+            Projectile.timeLeft = 1275;
+            Projectile.penetrate = 1; 
+            Projectile.friendly = true; 
+            Projectile.hostile = false; 
+            Projectile.tileCollide = true;
+            Projectile.ignoreWater = false; 
+            Projectile.melee = true; 
+			Projectile.alpha = 0;
 		}
 		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
 		{
@@ -35,20 +35,20 @@ namespace SOTS.Projectiles
 		}
 		public override void AI()
         {
-			if(projectile.timeLeft % 10 == 0)
-				projectile.alpha++;
+			if(Projectile.timeLeft % 10 == 0)
+				Projectile.alpha++;
         }
 		public override void Kill(int timeLeft)
 		{
 			for(int i = 0; i < 4; i++)
-				Gore.NewGore(new Vector2(projectile.position.X, projectile.position.Y), default(Vector2), Main.rand.Next(61,64), 0.45f);	
-			SoundEngine.PlaySound(SoundID.Item, (int)(projectile.Center.X), (int)(projectile.Center.Y), 14, 0.3f);
+				Gore.NewGore(new Vector2(Projectile.position.X, Projectile.position.Y), default(Vector2), Main.rand.Next(61,64), 0.45f);	
+			SoundEngine.PlaySound(SoundID.Item, (int)(Projectile.Center.X), (int)(Projectile.Center.Y), 14, 0.3f);
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{	
-			projectile.rotation = 0;
-			projectile.velocity.X = 0;
-			projectile.velocity.Y = 0;
+			Projectile.rotation = 0;
+			Projectile.velocity.X = 0;
+			Projectile.velocity.Y = 0;
 			return false;
 		}
 	}

@@ -21,7 +21,7 @@ namespace SOTS.Items.Celestial
 			Item.rare = ItemRarityID.Yellow;
 			Item.useTime = 7;
 			Item.useAnimation = 14;
-			Item.useStyle = 1;
+			Item.useStyle = ItemUseStyleID.Swing;
 			Item.UseSound = SoundID.Item1;
 			Item.autoReuse = true;
 			Item.knockBack = 2f;

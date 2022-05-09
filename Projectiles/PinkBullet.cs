@@ -21,16 +21,16 @@ namespace SOTS.Projectiles
 		}
         public override void SetDefaults()
         {
-			projectile.height = 22;
-			projectile.width = 22;
-			projectile.friendly = false;
-			projectile.penetrate = -1;
-			projectile.timeLeft = 330;
-			projectile.tileCollide = false;
-			projectile.hostile = true;
-			projectile.magic = false;
-			projectile.ranged = false;
-			projectile.netImportant = true;
+			Projectile.height = 22;
+			Projectile.width = 22;
+			Projectile.friendly = false;
+			Projectile.penetrate = -1;
+			Projectile.timeLeft = 330;
+			Projectile.tileCollide = false;
+			Projectile.hostile = true;
+			Projectile.magic = false;
+			Projectile.ranged = false;
+			Projectile.netImportant = true;
 		}
 		public override void Kill(int timeLeft)
         {
@@ -38,7 +38,7 @@ namespace SOTS.Projectiles
 			{
 				Vector2 circularLocation = new Vector2(-8, 0).RotatedBy(MathHelper.ToRadians(i));
 				
-				int num1 = Dust.NewDust(new Vector2(projectile.Center.X + circularLocation.X - 4, projectile.Center.Y + circularLocation.Y - 4), 4, 4, 72);
+				int num1 = Dust.NewDust(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, 72);
 				Main.dust[num1].noGravity = true;
 				Main.dust[num1].velocity = circularLocation * 0.45f;
 			}
@@ -49,17 +49,17 @@ namespace SOTS.Projectiles
 			if(runOnce)
 			{
 				runOnce = false;
-				oldVelocityY = projectile.velocity.Y;	
-				oldVelocityX = projectile.velocity.X;
+				oldVelocityY = Projectile.velocity.Y;	
+				oldVelocityX = Projectile.velocity.X;
 			}
-			projectile.velocity.X += -oldVelocityX / 120f;
-			projectile.velocity.Y += -oldVelocityY / 120f;
+			Projectile.velocity.X += -oldVelocityX / 120f;
+			Projectile.velocity.Y += -oldVelocityY / 120f;
 			
-			int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), 20, 20, 72);
+			int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), 20, 20, 72);
 			Main.dust[num1].noGravity = true;
 			Main.dust[num1].velocity *= 0.1f;
 			
-			projectile.rotation += 0.1f;
+			Projectile.rotation += 0.1f;
 		}
 	}
 }

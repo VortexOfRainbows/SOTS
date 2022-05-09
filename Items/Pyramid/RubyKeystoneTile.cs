@@ -53,12 +53,12 @@ namespace SOTS.Items.Pyramid
 			}
 			Tile tile = Main.tile[i, j];
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Pyramid/RubyKeystoneTileBack").Value;
-			if (tile.frameY % 90 == 0 && tile.frameX % 90 == 0) //check for it being the top left tile
+			if (tile.TileFrameY % 90 == 0 && tile.TileFrameX % 90 == 0) //check for it being the top left tile
 			{
-				int currentFrame = tile.frameY / 90;
+				int currentFrame = tile.TileFrameY / 90;
 				Rectangle frame = new Rectangle(0, currentFrame * 80, 80, 80);
 				spriteBatch.Draw(texture, new Vector2(i * 16 - (int)Main.screenPosition.X, j * 16 - (int)Main.screenPosition.Y + 2) + zero,
-					frame, Lighting.GetColor(i, j), 0f, default(Vector2), 1.0f, tile.frameX > 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+					frame, Lighting.GetColor(i, j), 0f, default(Vector2), 1.0f, tile.TileFrameX > 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 			}
 		}
 		public void DrawGems(int i, int j, SpriteBatch spriteBatch)
@@ -72,9 +72,9 @@ namespace SOTS.Items.Pyramid
 			float counter = Main.GlobalTime * 120;
 			float mult = new Vector2(-1f, 0).RotatedBy(MathHelper.ToRadians(counter / 2f)).X;
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Pyramid/RubyKeystoneTileGlow").Value;
-			if (tile.frameY % 90 == 0 && tile.frameX % 90 == 0) //check for it being the top left tile
+			if (tile.TileFrameY % 90 == 0 && tile.TileFrameX % 90 == 0) //check for it being the top left tile
 			{
-				int currentFrame = tile.frameY / 90;
+				int currentFrame = tile.TileFrameY / 90;
 				for (int k = 0; k < 6; k++)
 				{
 					Color color = new Color(255, 0, 0, 0);
@@ -102,7 +102,7 @@ namespace SOTS.Items.Pyramid
 					Rectangle frame = new Rectangle(0, currentFrame * 80, 80, 80);
 					Vector2 rotationAround = new Vector2((2 + mult), 0).RotatedBy(MathHelper.ToRadians(60 * k + counter));
 					spriteBatch.Draw(texture, new Vector2(i * 16 - (int)Main.screenPosition.X, j * 16 - (int)Main.screenPosition.Y + 1) + zero + rotationAround,
-						frame, color, 0f, default(Vector2), 1.0f, tile.frameX > 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+						frame, color, 0f, default(Vector2), 1.0f, tile.TileFrameX > 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 				}
 			}
 		}
@@ -111,8 +111,8 @@ namespace SOTS.Items.Pyramid
 			if (Main.netMode != 1 && Main.rand.NextBool(20))
 			{
 				Tile tile = Main.tile[i, j];
-				int left = i - (tile.frameX / 18) % 5;
-				int top = j - (tile.frameY / 18) % 5;
+				int left = i - (tile.TileFrameX / 18) % 5;
+				int top = j - (tile.TileFrameY / 18) % 5;
 				for (int x = left; x < left + 5; x++)
 				{
 					for (int y = top; y < top + 5; y++)
@@ -128,8 +128,8 @@ namespace SOTS.Items.Pyramid
         public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
 		{
 			Tile tile = Main.tile[i, j];
-			int left = i - (tile.frameX / 18) % 5;
-			int top = j - (tile.frameY / 18) % 5;
+			int left = i - (tile.TileFrameX / 18) % 5;
+			int top = j - (tile.TileFrameY / 18) % 5;
 			left += 2;
 			top += 2;
 			if(Main.tile[left, top].frameY >= 360)
@@ -138,7 +138,7 @@ namespace SOTS.Items.Pyramid
 				if (Main.netMode != NetmodeID.MultiplayerClient && fail)
 				{
 					bool active = false;
-					for (int l = 0; l < Main.projectile.Length; l++)
+					for (int l = 0; l < Main.Projectile.Length; l++)
 					{
 						Projectile proj = Main.projectile[l];
 						if (proj.active && proj.type == ModContent.ProjectileType<RubyKeystoneIndicator>() && Vector2.Distance(proj.Center, new Vector2(left, top) * 16 + new Vector2(8, 8)) < 16)
@@ -184,25 +184,25 @@ namespace SOTS.Items.Pyramid
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Ruby Energy");
-			ProjectileID.Sets.TrailCacheLength[projectile.type] = 50;
-			ProjectileID.Sets.TrailingMode[projectile.type] = 0;
+			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 50;
+			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
-			Texture2D texture = Main.projectileTexture[projectile.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			for (int k = 0; k < projectile.oldPos.Length; k++)
+			for (int k = 0; k < Projectile.oldPos.Length; k++)
 			{
 				Color color = new Color(110, 110, 110, 0);
-				Vector2 drawPos = projectile.oldPos[k] - Main.screenPosition + drawOrigin;
-				color = projectile.GetAlpha(color) * ((projectile.oldPos.Length - k) / (float)projectile.oldPos.Length) * 0.5f;
+				Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin;
+				color = Projectile.GetAlpha(color) * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length) * 0.5f;
 				for (int j = 0; j < 5; j++)
 				{
 					float x = Main.rand.Next(-10, 11) * 0.1f;
 					float y = Main.rand.Next(-10, 11) * 0.1f;
-					if (!projectile.oldPos[k].Equals(projectile.position))
+					if (!Projectile.oldPos[k].Equals(Projectile.position))
 					{
-						Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, projectile.rotation, drawOrigin, (projectile.oldPos.Length - k) / (float)projectile.oldPos.Length, SpriteEffects.None, 0f);
+						Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, Projectile.rotation, drawOrigin, (Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length, SpriteEffects.None, 0f);
 					}
 				}
 			}
@@ -210,29 +210,29 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void SetDefaults()
 		{
-			projectile.height = 10;
-			projectile.width = 10;
-			projectile.friendly = false;
-			projectile.penetrate = -1;
-			projectile.timeLeft = 480;
-			projectile.tileCollide = false;
-			projectile.netImportant = true;
-			projectile.hostile = false;
-			projectile.extraUpdates = 3;
-			projectile.alpha = 255;
+			Projectile.height = 10;
+			Projectile.width = 10;
+			Projectile.friendly = false;
+			Projectile.penetrate = -1;
+			Projectile.timeLeft = 480;
+			Projectile.tileCollide = false;
+			Projectile.netImportant = true;
+			Projectile.hostile = false;
+			Projectile.extraUpdates = 3;
+			Projectile.alpha = 255;
 		}
 		public override void Kill(int timeLeft)
 		{
 			for (int i = 0; i < 20; i++)
 			{
-				int num2 = Dust.NewDust(new Vector2(projectile.position.X - projectile.width, projectile.position.Y - projectile.height) - new Vector2(5), projectile.width * 3, projectile.height * 3, mod.DustType("CopyDust4"));
+				int num2 = Dust.NewDust(new Vector2(Projectile.position.X - Projectile.width, Projectile.position.Y - Projectile.height) - new Vector2(5), Projectile.width * 3, Projectile.height * 3, mod.DustType("CopyDust4"));
 				Dust dust = Main.dust[num2];
 				dust.color = new Color(255, 10, 30, 40);
 				dust.noGravity = true;
 				dust.fadeIn = 0.1f;
 				dust.scale *= 1.75f;
-				dust.alpha = projectile.alpha;
-				dust.velocity += projectile.velocity;
+				dust.alpha = Projectile.alpha;
+				dust.velocity += Projectile.velocity;
 			}
 		}
 		public override bool ShouldUpdatePosition()
@@ -245,7 +245,7 @@ namespace SOTS.Items.Pyramid
 		public void MusicCheck()
         {
 			Player player = Main.LocalPlayer;
-			if(player.Distance(projectile.Center) <= 480)
+			if(player.Distance(Projectile.Center) <= 480)
             {
 				SOTSPlayer.pyramidBattle = true;
             }
@@ -256,10 +256,10 @@ namespace SOTS.Items.Pyramid
 			if (runOnce)
 			{
 				bool foundLeader = false;
-				for (int k = 0; k < Main.projectile.Length; k++)
+				for (int k = 0; k < Main.Projectile.Length; k++)
 				{
 					Projectile proj = Main.projectile[k];
-					if (projectile.type == proj.type && proj.active && projectile.active && Vector2.Distance(proj.Center, projectile.Center) <= 64f)
+					if (Projectile.type == proj.type && proj.active && Projectile.active && Vector2.Distance(proj.Center, Projectile.Center) <= 64f)
 					{
 						if ((int)proj.ai[0] == 1 && proj != projectile)
                         {
@@ -271,14 +271,14 @@ namespace SOTS.Items.Pyramid
 				}
 				if(!foundLeader) //if there is no leader nearby, designate leader
                 {
-					projectile.ai[0] = 1; //designating leader
+					Projectile.ai[0] = 1; //designating leader
                 }
 				runOnce = false;
             }
 			int leaderID = projID;
-			if(projID == -1 || projectile.ai[0] == 1)
+			if(projID == -1 || Projectile.ai[0] == 1)
             {
-				leaderID = projectile.whoAmI;
+				leaderID = Projectile.whoAmI;
             }
 			Projectile leader = Main.projectile[leaderID];
 			int i = (int)leader.Center.X / 16;
@@ -286,16 +286,16 @@ namespace SOTS.Items.Pyramid
 			Tile current = Framing.GetTileSafely(i, j);
 			if (!current.active() || current.type != ModContent.TileType<RubyKeystoneTile>() || current.frameY < 360 || !leader.active) //making sure the projectile can exist based on leader tile position
 			{
-				projectile.Kill();
-				projectile.active = false;
+				Projectile.Kill();
+				Projectile.active = false;
 			}
 			bool found = false;
 			int ofTotal = 0;
 			int total = 0;
-			for (int k = 0; k < Main.projectile.Length; k++)
+			for (int k = 0; k < Main.Projectile.Length; k++)
 			{
 				Projectile proj = Main.projectile[k];
-				if (projectile.type == proj.type && proj.active && projectile.active && Vector2.Distance(proj.Center, leader.Center) <= 64f) //if close to leader
+				if (Projectile.type == proj.type && proj.active && Projectile.active && Vector2.Distance(proj.Center, leader.Center) <= 64f) //if close to leader
 				{
 					if (proj == projectile)
 					{
@@ -307,7 +307,7 @@ namespace SOTS.Items.Pyramid
 						total++;
 				}
 			}
-			if (projectile.ai[0] != 1) //if not leader
+			if (Projectile.ai[0] != 1) //if not leader
 				if (Main.netMode != NetmodeID.MultiplayerClient && runOnce2)
 				{
 					int totalSpawns = total;
@@ -319,12 +319,12 @@ namespace SOTS.Items.Pyramid
 						Projectile.NewProjectile(new Vector2(i, j) * 16 + new Vector2(8, 8), Vector2.Zero, ModContent.ProjectileType<RubySpawnerFinder>(), 0, 0, Main.myPlayer);
 					}
 				}
-			projectile.timeLeft = 7200;
+			Projectile.timeLeft = 7200;
 			if (leader == projectile) //if this projectile is the leader
 			{
-				projectile.ai[0] = 1;
-				projectile.alpha = 255;
-				projectile.ai[1]++;
+				Projectile.ai[0] = 1;
+				Projectile.alpha = 255;
+				Projectile.ai[1]++;
 				if (total >= 6)
 				{
 					int range = 2;
@@ -341,29 +341,29 @@ namespace SOTS.Items.Pyramid
 
 							}
 						}
-						int item = Item.NewItem((int)projectile.position.X, (int)projectile.position.Y, projectile.width, projectile.height, ModContent.ItemType<RubyKeystone>(), 1, false, 0, true);
+						int item = Item.NewItem((int)Projectile.position.X, (int)Projectile.position.Y, Projectile.width, Projectile.height, ModContent.ItemType<RubyKeystone>(), 1, false, 0, true);
 						NetMessage.SendData(MessageID.SyncItem, -1, -1, null, item, 1f, 0.0f, 0.0f, 0, 0, 0);
 					}
-					SoundEngine.PlaySound(SoundID.Shatter, (int)projectile.Center.X, (int)projectile.Center.Y, 0, 1.10f, -0.1f);
-					projectile.Kill();
-					projectile.active = false;
+					SoundEngine.PlaySound(SoundID.Shatter, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0, 1.10f, -0.1f);
+					Projectile.Kill();
+					Projectile.active = false;
 				}
 			}
 			else
 			{
-				projectile.alpha = 0;
-				projectile.ai[0] = -1;
+				Projectile.alpha = 0;
+				Projectile.ai[0] = -1;
 				if (projID != -1 && total >= 1)
 				{
 					float rotationDist = 36f;
-					Vector2 goTo = leader.Center + new Vector2(rotationDist, 0).RotatedBy(MathHelper.ToRadians(ofTotal * (360f / total) + leader.ai[1] * 0.5f)) - projectile.Center;
+					Vector2 goTo = leader.Center + new Vector2(rotationDist, 0).RotatedBy(MathHelper.ToRadians(ofTotal * (360f / total) + leader.ai[1] * 0.5f)) - Projectile.Center;
 					float length = goTo.Length();
 					float speed = 4;
 					if (speed > length)
 					{
 						speed = length;
 					}
-					projectile.velocity = goTo.SafeNormalize(Vector2.Zero) * speed;
+					Projectile.velocity = goTo.SafeNormalize(Vector2.Zero) * speed;
 				}
 			}
 		}

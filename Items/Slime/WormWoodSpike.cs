@@ -19,7 +19,7 @@ namespace SOTS.Items.Slime
             Item.value = Item.sellPrice(0, 2, 0, 0);
             Item.rare = 4;
             Item.noMelee = true;
-            Item.useStyle = 5;
+            Item.useStyle = ItemUseStyleID.Shoot;
             Item.useAnimation = 40;
             Item.useTime = 40;
             Item.knockBack = 4.5f;

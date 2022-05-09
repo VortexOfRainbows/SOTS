@@ -17,23 +17,23 @@ namespace SOTS.Projectiles.Chaos
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Chaos Snake");
-			ProjectileID.Sets.TrailCacheLength[projectile.type] = 50;
-			ProjectileID.Sets.TrailingMode[projectile.type] = 1;
+			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 50;
+			ProjectileID.Sets.TrailingMode[Projectile.type] = 1;
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
-			Texture2D texture = Main.projectileTexture[projectile.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			Vector2 current = projectile.Center;
+			Vector2 current = Projectile.Center;
 			bool lowfidel = SOTS.Config.lowFidelityMode;
-			for (int k = 0; k < projectile.oldPos.Length; k++)
+			for (int k = 0; k < Projectile.oldPos.Length; k++)
 			{
-				Color color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(projectile.ai[0] - k), true);
+				Color color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(Projectile.ai[0] - k), true);
 				color.A = 0;
-				float yScale = (projectile.oldPos.Length - k) / (float)projectile.oldPos.Length;
-				color = projectile.GetAlpha(color) * yScale * 0.5f;
-				Vector2 drawPos = projectile.oldPos[k] - Main.screenPosition + drawOrigin;
-				Vector2 dist = projectile.oldPos[k] + drawOrigin - current;
+				float yScale = (Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length;
+				color = Projectile.GetAlpha(color) * yScale * 0.5f;
+				Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin;
+				Vector2 dist = Projectile.oldPos[k] + drawOrigin - current;
 				float stretchScale = dist.Length() / texture.Width;
 				yScale *= 0.5f + MathHelper.Clamp(0.5f * stretchScale, 0, 0.5f);
 				if(!lowfidel)
@@ -48,23 +48,23 @@ namespace SOTS.Projectiles.Chaos
 				{
 					Main.spriteBatch.Draw(texture, drawPos, null, color, dist.ToRotation(), drawOrigin, new Vector2(stretchScale, yScale), SpriteEffects.None, 0f);
 				}
-				current = projectile.oldPos[k] + drawOrigin;
+				current = Projectile.oldPos[k] + drawOrigin;
 			}
 			return false;
 		}
 		public override void SetDefaults()
         {
-			projectile.height = 24;
-			projectile.width = 24;
-			projectile.friendly = true;
-			projectile.penetrate = -1;
-			projectile.timeLeft = 1500;
-			projectile.tileCollide = true;
-			projectile.hostile = false;
-			projectile.ranged = true;
-			projectile.extraUpdates = 1;
-			projectile.usesLocalNPCImmunity = true;
-			projectile.localNPCHitCooldown = 80;
+			Projectile.height = 24;
+			Projectile.width = 24;
+			Projectile.friendly = true;
+			Projectile.penetrate = -1;
+			Projectile.timeLeft = 1500;
+			Projectile.tileCollide = true;
+			Projectile.hostile = false;
+			Projectile.ranged = true;
+			Projectile.extraUpdates = 1;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = 80;
 		}
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
@@ -72,17 +72,17 @@ namespace SOTS.Projectiles.Chaos
 			if(bounceCount > 5)
 			{
 				end = true;
-				projectile.velocity *= 0;
+				Projectile.velocity *= 0;
 			}
 			else
 			{
-				if (projectile.velocity.X != oldVelocity.X)
+				if (Projectile.velocity.X != oldVelocity.X)
 				{
-					projectile.velocity.X = -oldVelocity.X;
+					Projectile.velocity.X = -oldVelocity.X;
 				}
-				if (projectile.velocity.Y != oldVelocity.Y)
+				if (Projectile.velocity.Y != oldVelocity.Y)
 				{
-					projectile.velocity.Y = -oldVelocity.Y;
+					Projectile.velocity.Y = -oldVelocity.Y;
 				}
 			}
 			return false;
@@ -91,9 +91,9 @@ namespace SOTS.Projectiles.Chaos
 		{
 			for(int i = 0; i <10; i++)
 			{
-				int num2 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, ModContent.DustType<CopyDust4>());
+				int num2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>());
 				Dust dust = Main.dust[num2];
-				dust.color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(projectile.ai[0]), true);
+				dust.color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(Projectile.ai[0]), true);
 				dust.noGravity = true;
 				dust.fadeIn = 0.1f;
 				dust.scale *= 2f;
@@ -110,61 +110,61 @@ namespace SOTS.Projectiles.Chaos
 		{
 			if (end)
 			{
-				projectile.velocity *= 0;
-				if (projectile.friendly)
+				Projectile.velocity *= 0;
+				if (Projectile.friendly)
 				{
-					projectile.friendly = false;
-					projectile.netUpdate = true;
+					Projectile.friendly = false;
+					Projectile.netUpdate = true;
 				}
-				if (projectile.timeLeft > 60)
-					projectile.timeLeft = 60;
+				if (Projectile.timeLeft > 60)
+					Projectile.timeLeft = 60;
 			}
-			if (projectile.timeLeft < 60 && !end)
+			if (Projectile.timeLeft < 60 && !end)
 				end = true;
 			if (runOnce)
 			{
 				for (int i = 0; i < 10; i++)
 				{
-					int num2 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, ModContent.DustType<CopyDust4>());
+					int num2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>());
 					Dust dust = Main.dust[num2];
-					dust.color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(projectile.ai[0]), true);
+					dust.color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(Projectile.ai[0]), true);
 					dust.noGravity = true;
 					dust.fadeIn = 0.1f;
 					dust.scale *= 2f;
-					dust.velocity += projectile.velocity * 0.5f;
+					dust.velocity += Projectile.velocity * 0.5f;
 				}
 				runOnce = false;
 			}
 			if((end && !Main.rand.NextBool(3)) || Main.rand.NextBool(10))
             {
-				Dust dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, ModContent.DustType<CopyDust4>());
-				dust.color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(projectile.ai[0]), true);
+				Dust dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>());
+				dust.color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(Projectile.ai[0]), true);
 				dust.noGravity = true;
 				dust.fadeIn = 0.1f;
 				dust.scale *= 2f;
-				int alpha = 255 - (int)(255 * (projectile.timeLeft / 60f));
+				int alpha = 255 - (int)(255 * (Projectile.timeLeft / 60f));
 				dust.alpha = (int)MathHelper.Clamp(alpha, 0, 255);
 				return;
 			}
 			if (!end)
 			{
-				int target2 = SOTSNPCs.FindTarget_Basic(projectile.Center, 900, this, true);
+				int target2 = SOTSNPCs.FindTarget_Basic(Projectile.Center, 900, this, true);
 				if (target2 != -1)
 				{
 					NPC toHit = Main.npc[target2];
 					if (toHit.active)
 					{
-						Vector2 toNPC = toHit.Center - projectile.Center;
-						projectile.velocity = Vector2.Lerp(projectile.velocity, toNPC.SafeNormalize(Vector2.Zero) * (projectile.velocity.Length() + 5), 0.11f);
+						Vector2 toNPC = toHit.Center - Projectile.Center;
+						Projectile.velocity = Vector2.Lerp(Projectile.velocity, toNPC.SafeNormalize(Vector2.Zero) * (Projectile.velocity.Length() + 5), 0.11f);
 					}
 				}
 			}
-			projectile.ai[0]++;
+			Projectile.ai[0]++;
 			if(!end)
 			{
-				projectile.velocity += new Vector2(0, (float)Math.Sin(MathHelper.ToRadians(projectile.ai[0] * 12)) * 0.4f).RotatedBy(projectile.velocity.ToRotation());
-				if (projectile.velocity.Length() < 11)
-					projectile.velocity = projectile.velocity.SafeNormalize(Vector2.Zero) * 11f;
+				Projectile.velocity += new Vector2(0, (float)Math.Sin(MathHelper.ToRadians(Projectile.ai[0] * 12)) * 0.4f).RotatedBy(Projectile.velocity.ToRotation());
+				if (Projectile.velocity.Length() < 11)
+					Projectile.velocity = Projectile.velocity.SafeNormalize(Vector2.Zero) * 11f;
 			}
 		}
 	}

@@ -12,22 +12,22 @@ namespace SOTS.Projectiles.Minions
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Penguin Copter");
-			Main.projFrames[projectile.type] = 4;
-			ProjectileID.Sets.MinionTargettingFeature[projectile.type] = true;
-			Main.projPet[projectile.type] = true;
-			ProjectileID.Sets.MinionSacrificable[projectile.type] = true;
-			ProjectileID.Sets.Homing[projectile.type] = true;
+			Main.projFrames[Projectile.type] = 4;
+			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
+			Main.projPet[Projectile.type] = true;
+			ProjectileID.Sets.MinionSacrificable[Projectile.type] = true;
+			ProjectileID.Sets.Homing[Projectile.type] = true;
 		}
 
 		public sealed override void SetDefaults()
 		{
-			projectile.width = 72;
-			projectile.height = 50;
-			projectile.tileCollide = false;
-			projectile.friendly = true;
-			projectile.minion = true;
-			projectile.minionSlots = 1f;
-			projectile.penetrate = -1;
+			Projectile.width = 72;
+			Projectile.height = 50;
+			Projectile.tileCollide = false;
+			Projectile.friendly = true;
+			Projectile.minion = true;
+			Projectile.minionSlots = 1f;
+			Projectile.penetrate = -1;
 		}
 		Vector2 direction2;
 		public override bool? CanCutTiles()
@@ -40,7 +40,7 @@ namespace SOTS.Projectiles.Minions
 		}
 		public override void AI()
 		{
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 
 			#region Active check
 			// This is the "active check", makes sure the minion is alive while the player is alive, and despawns if not
@@ -50,7 +50,7 @@ namespace SOTS.Projectiles.Minions
 			}
 			if (player.HasBuff(ModContent.BuffType<AerialAssistance>()))
 			{
-				projectile.timeLeft = 2;
+				Projectile.timeLeft = 2;
 			}
 			#endregion
 
@@ -62,11 +62,11 @@ namespace SOTS.Projectiles.Minions
 			{
 				// Fix overlap with other minions
 				Projectile other = Main.projectile[i];
-				if (i != projectile.whoAmI && other.active && other.owner == projectile.owner && projectile.type == other.type)
+				if (i != Projectile.whoAmI && other.active && other.owner == Projectile.owner && Projectile.type == other.type)
 				{
 					count++;
 				}
-				if(i == projectile.whoAmI)
+				if(i == Projectile.whoAmI)
 				{
 					break;
 				}
@@ -75,13 +75,13 @@ namespace SOTS.Projectiles.Minions
 			idlePosition.X += minionPositionOffsetX; 
 
 			// Teleport to player if distance is too big
-			Vector2 vectorToIdlePosition = idlePosition - projectile.Center;
+			Vector2 vectorToIdlePosition = idlePosition - Projectile.Center;
 			float distanceToIdlePosition = vectorToIdlePosition.Length();
 			if (Main.myPlayer == player.whoAmI && distanceToIdlePosition > 1800f)
 			{
-				projectile.position = idlePosition;
-				projectile.velocity *= 0.1f;
-				projectile.netUpdate = true;
+				Projectile.position = idlePosition;
+				Projectile.velocity *= 0.1f;
+				Projectile.netUpdate = true;
 			}
 
 			// If your minion is flying, you want to do this independently of any conditions
@@ -90,13 +90,13 @@ namespace SOTS.Projectiles.Minions
 			{
 				// Fix overlap with other minions
 				Projectile other = Main.projectile[i];
-				if (i != projectile.whoAmI && other.active && other.owner == projectile.owner && Math.Abs(projectile.position.X - other.position.X) + Math.Abs(projectile.position.Y - other.position.Y) < projectile.width && other.type == projectile.type)
+				if (i != Projectile.whoAmI && other.active && other.owner == Projectile.owner && Math.Abs(Projectile.position.X - other.position.X) + Math.Abs(Projectile.position.Y - other.position.Y) < Projectile.width && other.type == Projectile.type)
 				{
-					if (projectile.position.X < other.position.X) projectile.velocity.X -= overlapVelocity;
-					else projectile.velocity.X += overlapVelocity;
+					if (Projectile.position.X < other.position.X) Projectile.velocity.X -= overlapVelocity;
+					else Projectile.velocity.X += overlapVelocity;
 
-					if (projectile.position.Y < other.position.Y) projectile.velocity.Y -= overlapVelocity;
-					else projectile.velocity.Y += overlapVelocity;
+					if (Projectile.position.Y < other.position.Y) Projectile.velocity.Y -= overlapVelocity;
+					else Projectile.velocity.Y += overlapVelocity;
 				}
 			}
 			#endregion
@@ -104,14 +104,14 @@ namespace SOTS.Projectiles.Minions
 			#region Find target
 			// Starting search distance
 			float distanceFromTarget = 800f;
-			Vector2 targetCenter = projectile.Center;
+			Vector2 targetCenter = Projectile.Center;
 			bool foundTarget = false;
 
 			if (player.HasMinionAttackTargetNPC)
 			{
 				NPC npc = Main.npc[player.MinionAttackTargetNPC];
-				float between = Vector2.Distance(npc.Center, projectile.Center);
-				bool lineOfSight = Collision.CanHitLine(projectile.position, projectile.width, projectile.height, npc.position, npc.width, npc.height);
+				float between = Vector2.Distance(npc.Center, Projectile.Center);
+				bool lineOfSight = Collision.CanHitLine(Projectile.position, Projectile.width, Projectile.height, npc.position, npc.width, npc.height);
 				bool closeThroughWall = between < 60f;
 
 				if (between < 1200f && (lineOfSight || closeThroughWall))
@@ -128,10 +128,10 @@ namespace SOTS.Projectiles.Minions
 					NPC npc = Main.npc[i];
 					if (npc.CanBeChasedBy() && npc.active)
 					{
-						float between = Vector2.Distance(npc.Center, projectile.Center);
-						bool closest = Vector2.Distance(projectile.Center, targetCenter) > between;
+						float between = Vector2.Distance(npc.Center, Projectile.Center);
+						bool closest = Vector2.Distance(Projectile.Center, targetCenter) > between;
 						bool inRange = between < distanceFromTarget;
-						bool lineOfSight = Collision.CanHitLine(projectile.position, projectile.width, projectile.height, npc.position, npc.width, npc.height);
+						bool lineOfSight = Collision.CanHitLine(Projectile.position, Projectile.width, Projectile.height, npc.position, npc.width, npc.height);
 						// Additional check for this specific minion behavior, otherwise it will stop attacking once it dashed through an enemy while flying though tiles afterwards
 						// The number depends on various parameters seen in the movement code below. Test different ones out until it works alright
 						bool closeThroughWall = between < 60f;
@@ -155,52 +155,52 @@ namespace SOTS.Projectiles.Minions
 
 			if (foundTarget)
 			{
-				projectile.ai[0]++;
-				projectile.ai[1]++;
+				Projectile.ai[0]++;
+				Projectile.ai[1]++;
 				// Minion has a target: attack (here, fly towards the enemy)
 				if (distanceFromTarget > 375f)
 				{
-					Vector2 direction = targetCenter - projectile.Center;
+					Vector2 direction = targetCenter - Projectile.Center;
 					// The immediate range around the target (so it doesn't latch onto it when close)
 					direction.Normalize();
 					direction *= speed;
-					projectile.velocity = (projectile.velocity * (inertia - 1) + direction) / inertia;
+					Projectile.velocity = (Projectile.velocity * (inertia - 1) + direction) / inertia;
 					direction2 = direction;
 				}
 				else if (distanceFromTarget < 100f)
 				{
 					speed = 24f;
-					Vector2 direction = projectile.Center - targetCenter;
+					Vector2 direction = Projectile.Center - targetCenter;
 					// If it is too close, move away
 					direction.Normalize();
 					direction *= speed;
-					projectile.velocity = (projectile.velocity * (inertia - 1) + direction) / inertia;
+					Projectile.velocity = (Projectile.velocity * (inertia - 1) + direction) / inertia;
 					direction2 = direction;
 				}
 				else
 				{
-					Vector2 direction = targetCenter - projectile.Center;
+					Vector2 direction = targetCenter - Projectile.Center;
 					int firerate = 36;
-					projectile.velocity = (projectile.velocity * (inertia - 1)) / inertia;
-					if (projectile.ai[0] >= firerate)
+					Projectile.velocity = (Projectile.velocity * (inertia - 1)) / inertia;
+					if (Projectile.ai[0] >= firerate)
 					{
-						projectile.ai[0] = 0;
+						Projectile.ai[0] = 0;
 						float shootspeed = Main.rand.Next(4,9);
 						
 						direction = direction.RotatedByRandom(MathHelper.ToRadians(36));
 						direction.Normalize();
-						Vector2 offset = direction * projectile.width/2;
+						Vector2 offset = direction * Projectile.width/2;
 						direction *= shootspeed;
 						Vector2 projVelo = direction;
 						direction2 = direction;
-						if (projectile.owner == Main.myPlayer)
+						if (Projectile.owner == Main.myPlayer)
 						{
-							Projectile.NewProjectile(projectile.Center + offset, projVelo, mod.ProjectileType("PenguinMissile"), projectile.damage, projectile.knockBack, projectile.owner);
-							projectile.netUpdate = true;
+							Projectile.NewProjectile(Projectile.Center + offset, projVelo, mod.ProjectileType("PenguinMissile"), Projectile.damage, Projectile.knockBack, Projectile.owner);
+							Projectile.netUpdate = true;
 						}
 					}
 				}
-				direction2 = targetCenter - projectile.Center;
+				direction2 = targetCenter - Projectile.Center;
 				rotationDirection = direction2.ToRotation();
 			}
 			else
@@ -222,13 +222,13 @@ namespace SOTS.Projectiles.Minions
 				{
 					vectorToIdlePosition.Normalize();
 					vectorToIdlePosition *= speed;
-					projectile.velocity = (projectile.velocity * (inertia - 1) + vectorToIdlePosition) / inertia;
+					Projectile.velocity = (Projectile.velocity * (inertia - 1) + vectorToIdlePosition) / inertia;
 				}
-				else if (projectile.velocity == Vector2.Zero)
+				else if (Projectile.velocity == Vector2.Zero)
 				{
 					// If there is a case where it's not moving at all, give it a little "poke"
-					projectile.velocity.X = -0.15f;
-					projectile.velocity.Y = -0.05f;
+					Projectile.velocity.X = -0.15f;
+					Projectile.velocity.Y = -0.05f;
 				}
 			}
 			#endregion
@@ -237,44 +237,44 @@ namespace SOTS.Projectiles.Minions
 			// So it will lean slightly towards the direction it's moving
 			if(!foundTarget)
 			{
-				float num1 = projectile.velocity.X;
-				if(projectile.velocity.X > 20)
+				float num1 = Projectile.velocity.X;
+				if(Projectile.velocity.X > 20)
 				{
 					num1 = 20;
 				}
-				if (projectile.velocity.X < -20)
+				if (Projectile.velocity.X < -20)
 				{
 					num1 = 20;
 				}
-				projectile.rotation = num1 * 0.05f;
-				projectile.spriteDirection = projectile.velocity.X < 0 ? 1 : -1;
+				Projectile.rotation = num1 * 0.05f;
+				Projectile.spriteDirection = Projectile.velocity.X < 0 ? 1 : -1;
 			}
 			else
 			{
-				projectile.spriteDirection = -1;
-				if(targetCenter.X < projectile.Center.X)
+				Projectile.spriteDirection = -1;
+				if(targetCenter.X < Projectile.Center.X)
 				{
 					rotationDirection -= MathHelper.ToRadians(180);
-					projectile.spriteDirection = 1;
+					Projectile.spriteDirection = 1;
 				}
-				projectile.rotation = rotationDirection;
+				Projectile.rotation = rotationDirection;
 			}
 
 			// This is a simple "loop through all frames from top to bottom" animation
 			int frameSpeed = 6;
-			projectile.frameCounter++;
-			if (projectile.frameCounter >= frameSpeed)
+			Projectile.frameCounter++;
+			if (Projectile.frameCounter >= frameSpeed)
 			{
-				projectile.frameCounter = 0;
-				projectile.frame++;
-				if (projectile.frame >= Main.projFrames[projectile.type])
+				Projectile.frameCounter = 0;
+				Projectile.frame++;
+				if (Projectile.frame >= Main.projFrames[Projectile.type])
 				{
-					projectile.frame = 0;
+					Projectile.frame = 0;
 				}
 			}
 
 			// Some visuals here
-			Lighting.AddLight(projectile.Center, Color.White.ToVector3() * 0.7f);
+			Lighting.AddLight(Projectile.Center, Color.White.ToVector3() * 0.7f);
 			#endregion
 		}
 	}

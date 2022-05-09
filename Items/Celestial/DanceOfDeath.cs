@@ -16,12 +16,12 @@ namespace SOTS.Items.Celestial
 		public override void SetDefaults()
 		{
             Item.damage = 110; 
-            Item.magic = true; 
+            Item.DamageType = DamageClass.Magic; 
             Item.width = 42;   
             Item.height = 44;   
             Item.useTime = 30;   
             Item.useAnimation = 30;
-            Item.useStyle = 5;    
+            Item.useStyle = ItemUseStyleID.Shoot;    
             Item.noMelee = true;  
             Item.knockBack = 6.5f;
             Item.value = Item.sellPrice(0, 15, 0, 0);

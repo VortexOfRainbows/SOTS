@@ -12,25 +12,25 @@ namespace SOTS.Projectiles.Crushers
 		}
         public override void SetDefaults()
         {
-			projectile.CloneDefaults(410);
+			Projectile.CloneDefaults(410);
 			aiType = 410; 
-			projectile.melee = true;
-			projectile.penetrate = -1;
-			projectile.timeLeft = 255;
-			projectile.usesLocalNPCImmunity = true;
-			projectile.localNPCHitCooldown = 255;
+			Projectile.melee = true;
+			Projectile.penetrate = -1;
+			Projectile.timeLeft = 255;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = 255;
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			projectile.localNPCImmunity[target.whoAmI] = projectile.localNPCHitCooldown;
-			target.immune[projectile.owner] = 0;
+			Projectile.localNPCImmunity[target.whoAmI] = Projectile.localNPCHitCooldown;
+			target.immune[Projectile.owner] = 0;
 		}
 		public override void AI()
 		{
-			int alpha = 260 - (int)Math.Pow(projectile.timeLeft, 1.5f);
+			int alpha = 260 - (int)Math.Pow(Projectile.timeLeft, 1.5f);
 			if (alpha < 0)
 				alpha = 0;
-			projectile.alpha = alpha;
+			Projectile.alpha = alpha;
 		}
 	}
 }

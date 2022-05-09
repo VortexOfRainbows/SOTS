@@ -17,37 +17,37 @@ namespace SOTS.Projectiles.Inferno
 		}
         public override void SetDefaults()
         {
-			projectile.height = 32;
-			projectile.width = 32;
-			projectile.penetrate = -1;
-			projectile.friendly = true;
-			projectile.timeLeft = 6004;
-			projectile.tileCollide = false;
-			projectile.hostile = false;
-			projectile.localNPCHitCooldown = 10;
-			projectile.usesLocalNPCImmunity = true;
+			Projectile.height = 32;
+			Projectile.width = 32;
+			Projectile.penetrate = -1;
+			Projectile.friendly = true;
+			Projectile.timeLeft = 6004;
+			Projectile.tileCollide = false;
+			Projectile.hostile = false;
+			Projectile.localNPCHitCooldown = 10;
+			Projectile.usesLocalNPCImmunity = true;
 		}
         public override void ModifyDamageHitbox(ref Rectangle hitbox)
 		{
-			int timeLeft = projectile.timeLeft - 2;
+			int timeLeft = Projectile.timeLeft - 2;
 			if (timeLeft < 0)
 				timeLeft = 0;
 			float timeBeforeEnd = (float)Math.Sqrt(timeLeft / 50f);
 			if (timeBeforeEnd > 1)
 				timeBeforeEnd = 1;
-			int width = (int)(48 * projectile.scale * timeBeforeEnd);
-			hitbox = new Rectangle((int)projectile.Center.X - width / 2, (int)projectile.Center.Y - width / 2, width, width);
+			int width = (int)(48 * Projectile.scale * timeBeforeEnd);
+			hitbox = new Rectangle((int)Projectile.Center.X - width / 2, (int)Projectile.Center.Y - width / 2, width, width);
         }
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override bool PreDraw(ref Color lightColor)
 		{
-			int timeLeft = projectile.timeLeft - 2;
+			int timeLeft = Projectile.timeLeft - 2;
 			if (timeLeft < 0)
 				timeLeft = 0;
 			float timeBeforeEnd = (float)Math.Sqrt(timeLeft / 50f);
 			if (timeBeforeEnd > 1)
 				timeBeforeEnd = 1;
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Effects/Masks/Extra_49").Value;
-			float sin = (float)Math.Sin(MathHelper.ToRadians(120 - projectile.timeLeft));
+			float sin = (float)Math.Sin(MathHelper.ToRadians(120 - Projectile.timeLeft));
 			sin = 0.8f + sin * 0.3f;
 			Color color = VoidPlayer.InfernoColorAttempt(0.3f + 0.3f * (float)Math.Sin(MathHelper.ToRadians(counter)));
 			color.A = 0;
@@ -59,20 +59,20 @@ namespace SOTS.Projectiles.Inferno
 			SOTS.GodrayShader.Parameters["rotation"].SetValue(MathHelper.ToRadians(counter));
 			SOTS.GodrayShader.Parameters["opacity2"].SetValue(1f * sin);
 			SOTS.GodrayShader.CurrentTechnique.Passes[0].Apply();
-			Main.spriteBatch.Draw(texture, projectile.Center - Main.screenPosition, null, Color.White, 0f, new Vector2(texture.Width / 2, texture.Height / 2), projectile.scale * sin * timeBeforeEnd, SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, null, Color.White, 0f, new Vector2(texture.Width / 2, texture.Height / 2), Projectile.scale * sin * timeBeforeEnd, SpriteEffects.None, 0f);
 			Main.spriteBatch.End();
 			Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix); 
 			color = VoidPlayer.Inferno1 * 1.1f;
 			color.A = 0;
-			spriteBatch.Draw(texture, projectile.Center - Main.screenPosition, null, color, projectile.rotation, new Vector2(texture.Width / 2, texture.Height / 2), projectile.scale / 2f * sin * timeBeforeEnd, SpriteEffects.None, 0f);
+			spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, null, color, Projectile.rotation, new Vector2(texture.Width / 2, texture.Height / 2), Projectile.scale / 2f * sin * timeBeforeEnd, SpriteEffects.None, 0f);
 			color = VoidPlayer.Inferno2 * 1.1f;
 			color.A = 0;
-			spriteBatch.Draw(texture, projectile.Center - Main.screenPosition, null, color, projectile.rotation, new Vector2(texture.Width / 2, texture.Height / 2), projectile.scale / 2f * sin * timeBeforeEnd, SpriteEffects.None, 0f);
+			spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, null, color, Projectile.rotation, new Vector2(texture.Width / 2, texture.Height / 2), Projectile.scale / 2f * sin * timeBeforeEnd, SpriteEffects.None, 0f);
 			return false;
 		}
 		public override bool ShouldUpdatePosition() 
 		{
-			return projectile.ai[0] < 0;
+			return Projectile.ai[0] < 0;
 		}
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
@@ -89,11 +89,11 @@ namespace SOTS.Projectiles.Inferno
 		float veloScale = 0;
         public override void Kill(int timeLeft)
 		{
-			SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 62, 0.9f, -0.5f);
+			SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 62, 0.9f, -0.5f);
 			for (int i = 30; i > 0; i--)
 			{
 				Vector2 circular = new Vector2(48, 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)));
-				int dust2 = Dust.NewDust(projectile.Center - new Vector2(12, 12), 16, 16, ModContent.DustType<CopyDust4>());
+				int dust2 = Dust.NewDust(Projectile.Center - new Vector2(12, 12), 16, 16, ModContent.DustType<CopyDust4>());
 				Dust dust = Main.dust[dust2];
 				dust.color = VoidPlayer.InfernoColorAttempt(Main.rand.NextFloat(0.5f));
 				dust.noGravity = true;
@@ -107,31 +107,31 @@ namespace SOTS.Projectiles.Inferno
 		{
 			if(runOnce)
             {
-				veloScale = projectile.velocity.Length();
+				veloScale = Projectile.velocity.Length();
 				ogVelo = veloScale;
-				projectile.scale = 0.1f;
+				Projectile.scale = 0.1f;
 				runOnce = false;
             }
 			counter++;
-			if (!projectile.active)
+			if (!Projectile.active)
 				return false;
-			Player player  = Main.player[projectile.owner];
+			Player player  = Main.player[Projectile.owner];
 			if (!player.channel)
 				ended = true;
-			if ((!ended || projectile.timeLeft > 120 || projectile.scale < 0.9f) && projectile.ai[0] >= 0)
+			if ((!ended || Projectile.timeLeft > 120 || Projectile.scale < 0.9f) && Projectile.ai[0] >= 0)
 			{
-				if (Main.myPlayer == projectile.owner)
+				if (Main.myPlayer == Projectile.owner)
 				{
 					Vector2 toCursor = Main.MouseWorld - player.MountedCenter;
-					projectile.velocity = toCursor.SafeNormalize(Vector2.Zero) * veloScale;
-					projectile.netUpdate = true;
+					Projectile.velocity = toCursor.SafeNormalize(Vector2.Zero) * veloScale;
+					Projectile.netUpdate = true;
 				}
-				projectile.Center = player.MountedCenter + projectile.velocity;
-				projectile.timeLeft = 120;
-				projectile.ai[1]++;
-				if(projectile.ai[1] > projectile.ai[0] && totalCharges < 80)
+				Projectile.Center = player.MountedCenter + Projectile.velocity;
+				Projectile.timeLeft = 120;
+				Projectile.ai[1]++;
+				if(Projectile.ai[1] > Projectile.ai[0] && totalCharges < 80)
 				{
-					SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 15, 1f, -0.1f);
+					SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 15, 1f, -0.1f);
 					if (Main.myPlayer == player.whoAmI)
 					{
 						Item item = player.HeldItem;
@@ -139,33 +139,33 @@ namespace SOTS.Projectiles.Inferno
 						if(vItem != null)
 							vItem.DrainMana(player);
 					}
-					projectile.ai[1] -= projectile.ai[0];
+					Projectile.ai[1] -= Projectile.ai[0];
 					totalCharges++;
 				}
 			}
 			else
 			{
-				projectile.localNPCHitCooldown = 5;
-				if (projectile.ai[0] >= 0)
+				Projectile.localNPCHitCooldown = 5;
+				if (Projectile.ai[0] >= 0)
 				{
-					SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 92, 0.9f, -0.4f);
-					projectile.velocity = projectile.velocity.SafeNormalize(Vector2.Zero) * (10 + (float)Math.Sqrt(totalCharges * 1.3f + 1f));
-					projectile.ai[0] = -1;
+					SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 92, 0.9f, -0.4f);
+					Projectile.velocity = Projectile.velocity.SafeNormalize(Vector2.Zero) * (10 + (float)Math.Sqrt(totalCharges * 1.3f + 1f));
+					Projectile.ai[0] = -1;
 				}
 				else
-					projectile.velocity *= 0.965f;
+					Projectile.velocity *= 0.965f;
             }
 			float destinationScale = (float)Math.Pow(totalCharges, 0.3f) + (totalCharges - 1) * 0.03f;
-			if (projectile.timeLeft < 20)
+			if (Projectile.timeLeft < 20)
             {
-				projectile.scale = MathHelper.Lerp(destinationScale, 0, 1 - projectile.timeLeft / 20f);
+				Projectile.scale = MathHelper.Lerp(destinationScale, 0, 1 - Projectile.timeLeft / 20f);
             }
 			else
             {
-				projectile.scale = MathHelper.Lerp(projectile.scale, destinationScale, 0.1f);
+				Projectile.scale = MathHelper.Lerp(Projectile.scale, destinationScale, 0.1f);
 				veloScale = MathHelper.Lerp(veloScale, ogVelo * (1 + (destinationScale - 1) * 0.5f), 0.1f);
 			}
-			if (projectile.ai[0] >= 0)
+			if (Projectile.ai[0] >= 0)
 			{
 				float chance = 20 - destinationScale;
 				if (chance <= 3)
@@ -175,7 +175,7 @@ namespace SOTS.Projectiles.Inferno
 					if (Main.rand.NextBool((int)chance))
 					{
 						Vector2 circular = new Vector2(48 * destinationScale, 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)));
-						int dust2 = Dust.NewDust(projectile.Center - new Vector2(12, 12) + circular, 16, 16, ModContent.DustType<CopyDust4>());
+						int dust2 = Dust.NewDust(Projectile.Center - new Vector2(12, 12) + circular, 16, 16, ModContent.DustType<CopyDust4>());
 						Dust dust = Main.dust[dust2];
 						dust.color = VoidPlayer.InfernoColorAttempt(Main.rand.NextFloat(0.7f));
 						dust.noGravity = true;
@@ -196,13 +196,13 @@ namespace SOTS.Projectiles.Inferno
 					if (Main.rand.NextBool((int)chance))
 					{
 						Vector2 circular = new Vector2(12 * destinationScale, 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)));
-						int dust2 = Dust.NewDust(projectile.Center - new Vector2(4, 4) + circular, 0, 0, ModContent.DustType<CopyDust4>());
+						int dust2 = Dust.NewDust(Projectile.Center - new Vector2(4, 4) + circular, 0, 0, ModContent.DustType<CopyDust4>());
 						Dust dust = Main.dust[dust2];
 						dust.color = VoidPlayer.InfernoColorAttempt(Main.rand.NextFloat(0.7f));
 						dust.noGravity = true;
 						dust.fadeIn = 0.1f;
 						dust.scale *= 0.8f + (float)Math.Sqrt(destinationScale);
-						dust.velocity = dust.velocity * 0.1f + projectile.velocity * -0.5f;
+						dust.velocity = dust.velocity * 0.1f + Projectile.velocity * -0.5f;
 						dust.alpha = 125;
 					}
 				}

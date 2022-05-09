@@ -15,28 +15,28 @@ namespace SOTS.Projectiles.Nature
 		}
         public override void SetDefaults()
         {
-			projectile.aiStyle = 1;
-			projectile.width = 30;
-			projectile.height = 30;
-            projectile.magic = true;
-			projectile.penetrate = 1;
-			projectile.ranged = false;
-			projectile.alpha = 0; 
-			projectile.friendly = true;
+			Projectile.aiStyle = 1;
+			Projectile.width = 30;
+			Projectile.height = 30;
+            Projectile.magic = true;
+			Projectile.penetrate = 1;
+			Projectile.ranged = false;
+			Projectile.alpha = 0; 
+			Projectile.friendly = true;
 		}
 		public override void AI()
         {
-			projectile.rotation = MathHelper.ToRadians(Main.rand.Next(360));
-			projectile.spriteDirection = 1;
+			Projectile.rotation = MathHelper.ToRadians(Main.rand.Next(360));
+			Projectile.spriteDirection = 1;
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{
-			Player player = Main.player[projectile.owner];
-			if(projectile.owner == Main.myPlayer)
+			Player player = Main.player[Projectile.owner];
+			if(Projectile.owner == Main.myPlayer)
 			{
 				for (int i = -2; i <= 2; i++)
 				{
-					int Probe = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, ModContent.ProjectileType<GrowTree>(), projectile.damage, projectile.knockBack, player.whoAmI, 1, MathHelper.ToRadians(i * 4.4f));
+					int Probe = Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<GrowTree>(), Projectile.damage, Projectile.knockBack, player.whoAmI, 1, MathHelper.ToRadians(i * 4.4f));
 					Main.projectile[Probe].rotation = oldVelocity.ToRotation() + MathHelper.ToRadians(90 - i * 8f);
 					Main.projectile[Probe].spriteDirection = 1;
 					Main.projectile[Probe].frame = 3;
@@ -46,13 +46,13 @@ namespace SOTS.Projectiles.Nature
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-			Player player = Main.player[projectile.owner];
-			if(projectile.owner == Main.myPlayer)
+			Player player = Main.player[Projectile.owner];
+			if(Projectile.owner == Main.myPlayer)
 			{
 				for (int i = -2; i <= 2; i++)
 				{
-					int Probe = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, ModContent.ProjectileType<GrowTree>(), projectile.damage, projectile.knockBack, player.whoAmI, 1, MathHelper.ToRadians(i * 4.4f));
-					Main.projectile[Probe].rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(90 - i * 8f);
+					int Probe = Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<GrowTree>(), Projectile.damage, Projectile.knockBack, player.whoAmI, 1, MathHelper.ToRadians(i * 4.4f));
+					Main.projectile[Probe].rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(90 - i * 8f);
 					Main.projectile[Probe].spriteDirection = 1;
 					Main.projectile[Probe].frame = 3;
 				}
@@ -62,7 +62,7 @@ namespace SOTS.Projectiles.Nature
         {
 			for(int i = 0; i < 24; i++)
 			{
-				int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 2);
+				int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 2);
 				Main.dust[num1].noGravity = true;
 			}
 		}

@@ -10,15 +10,15 @@ namespace SOTS.Projectiles.Pyramid
 		}
 		public override void SetDefaults() 
 		{
-			projectile.width = 22;
-			projectile.height = 42;
-			projectile.aiStyle = 20;
-			projectile.friendly = true;
-			projectile.penetrate = -1;
-			projectile.tileCollide = false;
-			projectile.hide = true;
-			projectile.ownerHitCheck = true;
-			projectile.melee = true;
+			Projectile.width = 22;
+			Projectile.height = 42;
+			Projectile.aiStyle = 20;
+			Projectile.friendly = true;
+			Projectile.penetrate = -1;
+			Projectile.tileCollide = false;
+			Projectile.hide = true;
+			Projectile.ownerHitCheck = true;
+			Projectile.melee = true;
 		}
 	}
 }

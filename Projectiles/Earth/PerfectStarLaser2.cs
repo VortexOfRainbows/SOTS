@@ -13,11 +13,11 @@ namespace SOTS.Projectiles.Earth
     {
         public override void SendExtraAI(BinaryWriter writer)
         {
-			writer.Write(projectile.friendly);
+			writer.Write(Projectile.friendly);
         }
         public override void ReceiveExtraAI(BinaryReader reader)
         {
-			projectile.friendly = reader.ReadBoolean();
+			Projectile.friendly = reader.ReadBoolean();
         }
         public override void SetStaticDefaults()
 		{
@@ -25,15 +25,15 @@ namespace SOTS.Projectiles.Earth
 		}
         public override void SetDefaults()
         {
-			projectile.penetrate = -1; 
-			projectile.friendly = true;
-			projectile.magic = true;
-			projectile.timeLeft = 1500;
-			projectile.width = 24;
-			projectile.height = 24;
-			projectile.extraUpdates = 4;
-			projectile.localNPCHitCooldown = 15;
-			projectile.usesLocalNPCImmunity = true;
+			Projectile.penetrate = -1; 
+			Projectile.friendly = true;
+			Projectile.magic = true;
+			Projectile.timeLeft = 1500;
+			Projectile.width = 24;
+			Projectile.height = 24;
+			Projectile.extraUpdates = 4;
+			Projectile.localNPCHitCooldown = 15;
+			Projectile.usesLocalNPCImmunity = true;
 		}
 		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
 		{
@@ -45,8 +45,8 @@ namespace SOTS.Projectiles.Earth
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
 			pierceCount++;
-			int maxPierce = -10 * (int)projectile.ai[1];
-			if(pierceCount > maxPierce && projectile.ai[1] != -3)
+			int maxPierce = -10 * (int)Projectile.ai[1];
+			if(pierceCount > maxPierce && Projectile.ai[1] != -3)
 				TriggerStop();
 		}
 		bool runOnce = true;
@@ -58,14 +58,14 @@ namespace SOTS.Projectiles.Earth
 				return false;
 			}
 			float scale = 0.5f;
-			if (projectile.ai[1] == -3)
+			if (Projectile.ai[1] == -3)
 				scale = 1.5f;
-			if (projectile.ai[1] == -2)
+			if (Projectile.ai[1] == -2)
 				scale = 1f;
-			if (projectile.ai[1] == -1)
+			if (Projectile.ai[1] == -1)
 				scale = 0.5f;
-			float width = projectile.width * scale;
-			float height = projectile.height * scale;
+			float width = Projectile.width * scale;
+			float height = Projectile.height * scale;
 			for (int i = 0; i < trailPos.Length * 0.5f; i += 3)
 			{
 				Vector2 pos = trailPos[i];
@@ -76,39 +76,39 @@ namespace SOTS.Projectiles.Earth
 				}
 			}
 			return false;
-			//return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), projectile.Center, endPoint, 8f, ref point);
+			//return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, endPoint, 8f, ref point);
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
 			if (runOnce)
 				return false;
-			Texture2D texture = Main.projectileTexture[projectile.type];
-			if(projectile.ai[1] != -2)
-				texture = Main.projectileTexture[ModContent.ProjectileType<PerfectStarLaser>()];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
+			if(Projectile.ai[1] != -2)
+				texture = Terraria.GameContent.TextureAssets.Projectile[ModContent.ProjectileType<PerfectStarLaser>()].Value;
 			float scale2 = 0.5f;
-			if(projectile.ai[1] == -3)
+			if(Projectile.ai[1] == -3)
 				scale2 = 1.5f;
-			if (projectile.ai[1] == -2)
+			if (Projectile.ai[1] == -2)
 				scale2 = 1f;
-			if (projectile.ai[1] == -1)
+			if (Projectile.ai[1] == -1)
 				scale2 = 0.5f;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			Vector2 previousPosition = projectile.Center;
+			Vector2 previousPosition = Projectile.Center;
 			for (int k = 0; k < trailPos.Length; k++)
 			{
 				float sqrt = (float)Math.Sqrt((trailPos.Length - k) / (float)trailPos.Length);
-				float scale = projectile.scale * (0.6f * sqrt + 0.4f) * scale2;
+				float scale = Projectile.scale * (0.6f * sqrt + 0.4f) * scale2;
 				if (trailPos[k] == Vector2.Zero)
 				{
 					return false;
 				}
 				Vector2 currentPos = trailPos[k];
 				Vector2 betweenPositions = previousPosition - currentPos;
-				if (trailPos[k] != projectile.Center)
+				if (trailPos[k] != Projectile.Center)
 				{
 					Vector2 drawPos = trailPos[k] - Main.screenPosition;
 					Color color = new Color(100, 100, 100, 0);
-					color = projectile.GetAlpha(color);
+					color = Projectile.GetAlpha(color);
 					float max = betweenPositions.Length() / (texture.Width * 0.2f);
 					for (int i = 0; i < max; i++)
 					{
@@ -122,7 +122,7 @@ namespace SOTS.Projectiles.Earth
 		}
 		public void cataloguePos()
 		{
-			Vector2 current = projectile.Center;
+			Vector2 current = Projectile.Center;
 			for (int i = 0; i < trailPos.Length; i++)
 			{
 				Vector2 previousPosition = trailPos[i];
@@ -137,29 +137,29 @@ namespace SOTS.Projectiles.Earth
 		}
 		public void TriggerStop()
 		{
-			projectile.tileCollide = false;
-			projectile.velocity *= 0f;
-			projectile.friendly = false;
-			projectile.netUpdate = true;
+			Projectile.tileCollide = false;
+			Projectile.velocity *= 0f;
+			Projectile.friendly = false;
+			Projectile.netUpdate = true;
 		}
 		public override bool PreAI()
 		{
-			int trailLength = (int)projectile.ai[0];
+			int trailLength = (int)Projectile.ai[0];
 			if (runOnce)
 			{
-				for (int i = 0; i < 10 + 10 * -projectile.ai[1]; i++)
+				for (int i = 0; i < 10 + 10 * -Projectile.ai[1]; i++)
 				{
-					Dust dust = Dust.NewDustDirect(new Vector2(projectile.Center.X - 4, projectile.Center.Y - 4), 0, 0, ModContent.DustType<CopyDust4>());
+					Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4), 0, 0, ModContent.DustType<CopyDust4>());
 					Color color2 = Color.Lerp(new Color(175, 218, 118, 0), new Color(74, 186, 54, 0), Main.rand.NextFloat(1));
 					dust.color = color2;
 					dust.noGravity = true;
 					dust.fadeIn = 0.1f;
 					dust.scale *= 1.5f;
-					dust.alpha = projectile.alpha;
-					dust.velocity *= 1.5f * (-0.4f * projectile.ai[1]);
-					dust.velocity += projectile.velocity * Main.rand.NextFloat(0, 1f) * 1.2f * (-0.4f * projectile.ai[1]); ;
+					dust.alpha = Projectile.alpha;
+					dust.velocity *= 1.5f * (-0.4f * Projectile.ai[1]);
+					dust.velocity += Projectile.velocity * Main.rand.NextFloat(0, 1f) * 1.2f * (-0.4f * Projectile.ai[1]); ;
 				}
-				projectile.rotation = projectile.velocity.ToRotation();
+				Projectile.rotation = Projectile.velocity.ToRotation();
 				trailPos = new Vector2[trailLength];
 				for (int i = 0; i < trailPos.Length; i++)
 				{
@@ -167,22 +167,22 @@ namespace SOTS.Projectiles.Earth
 				}
 				runOnce = false;
 			}
-			if (projectile.timeLeft > trailLength && !projectile.friendly)
+			if (Projectile.timeLeft > trailLength && !Projectile.friendly)
             {
-				projectile.timeLeft = trailLength;
+				Projectile.timeLeft = trailLength;
             }
-			if(projectile.timeLeft < trailLength || Main.rand.NextBool((int)(8 + 2 * projectile.ai[1])))
+			if(Projectile.timeLeft < trailLength || Main.rand.NextBool((int)(8 + 2 * Projectile.ai[1])))
             {
-				Dust dust = Dust.NewDustDirect(new Vector2(projectile.Center.X - 4, projectile.Center.Y - 4), 0, 0, ModContent.DustType<CopyDust4>());
+				Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4), 0, 0, ModContent.DustType<CopyDust4>());
 				Color color2 = Color.Lerp(new Color(175, 218, 118, 0), new Color(74, 186, 54, 0), Main.rand.NextFloat(1));
 				dust.color = color2;
 				dust.noGravity = true;
 				dust.fadeIn = 0.1f;
-				dust.scale *= 1.0f - 0.2f * projectile.ai[1];
-				dust.alpha = projectile.alpha;
-				dust.velocity *= 0.8f * (-0.4f * projectile.ai[1]);
+				dust.scale *= 1.0f - 0.2f * Projectile.ai[1];
+				dust.alpha = Projectile.alpha;
+				dust.velocity *= 0.8f * (-0.4f * Projectile.ai[1]);
 			}
-			else if (projectile.timeLeft <= trailLength && projectile.friendly)
+			else if (Projectile.timeLeft <= trailLength && Projectile.friendly)
             {
 				TriggerStop();
             }		

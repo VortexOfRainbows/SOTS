@@ -18,12 +18,12 @@ namespace SOTS.Items.Otherworld.FromChests
 		public override void SafeSetDefaults()
 		{
             Item.damage = 37;  
-            Item.ranged = true; 
+            Item.DamageType = DamageClass.Ranged; 
             Item.width = 56;    
             Item.height = 52;  
             Item.useTime = 10;
             Item.useAnimation = 10;
-            Item.useStyle = 1;   
+            Item.useStyle = ItemUseStyleID.Swing;   
             Item.autoReuse = true; 
             Item.knockBack = 3f;
 			Item.value = Item.sellPrice(0, 5, 0, 0);

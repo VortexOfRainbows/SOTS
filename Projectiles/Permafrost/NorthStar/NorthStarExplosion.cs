@@ -17,21 +17,21 @@ namespace SOTS.Projectiles.Permafrost.NorthStar
 		}
         public override void SetDefaults()
         {
-			projectile.height = 180;
-			projectile.width = 180;
-			projectile.penetrate = -1;
-			projectile.friendly = true;
-			projectile.timeLeft = 3;
-			projectile.tileCollide = false;
-			projectile.hostile = false;
-			projectile.alpha = 255;
-			projectile.melee = true;
-            projectile.localNPCHitCooldown = 10;
-            projectile.usesLocalNPCImmunity = true;
+			Projectile.height = 180;
+			Projectile.width = 180;
+			Projectile.penetrate = -1;
+			Projectile.friendly = true;
+			Projectile.timeLeft = 3;
+			Projectile.tileCollide = false;
+			Projectile.hostile = false;
+			Projectile.alpha = 255;
+			Projectile.melee = true;
+            Projectile.localNPCHitCooldown = 10;
+            Projectile.usesLocalNPCImmunity = true;
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.immune[projectile.owner] = 0;
+            target.immune[Projectile.owner] = 0;
             target.AddBuff(BuffID.Frostburn, 300);
         }
         bool runOnce = true;
@@ -41,8 +41,8 @@ namespace SOTS.Projectiles.Permafrost.NorthStar
         }
         public override void AI()
         {
-            Vector2 atLoc = projectile.Center;
-            SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 105, 0.8f, -0.15f);
+            Vector2 atLoc = Projectile.Center;
+            SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 105, 0.8f, -0.15f);
             DrawStar(atLoc, ModContent.DustType<CopyDust4>(), 4, 6f, 1f, 1.0f, 0.5f, 0.5f, true, 15, 0);
             for (int i = 0; i < 360; i += 6)
             {
@@ -72,7 +72,7 @@ namespace SOTS.Projectiles.Permafrost.NorthStar
                     dust.color = colorMan;
                     dust.noGravity = true;
                     dust.velocity *= 0.5f;
-                    dust.velocity += -ogCL * (4f + 2f * projectile.ai[0]) * mult;
+                    dust.velocity += -ogCL * (4f + 2f * Projectile.ai[0]) * mult;
                     dust.fadeIn = 0.1f;
                     dust.scale *= 1.5f;
                     dust.alpha = 180;

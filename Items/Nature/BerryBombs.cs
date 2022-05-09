@@ -21,7 +21,7 @@ namespace SOTS.Items.Nature
 			Item.damage = 4;
 			Item.useTime = 23;
 			Item.useAnimation = 23;
-			Item.ranged = true;
+			Item.DamageType = DamageClass.Ranged;
 			Item.thrown = false;
 			Item.value = Item.sellPrice(0, 0, 20, 0);
 			Item.rare = ItemRarityID.Blue;

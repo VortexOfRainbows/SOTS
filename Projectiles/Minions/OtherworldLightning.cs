@@ -15,36 +15,36 @@ namespace SOTS.Projectiles.Minions
 		}
 		public override void SetDefaults()
 		{
-			projectile.width = 12;
-			projectile.height = 12;
-			projectile.friendly = true;
-			//projectile.magic = true;
-			projectile.timeLeft = 3600;
-			projectile.tileCollide = false;
-			projectile.penetrate = -1;
-			projectile.alpha = 125;
-			projectile.scale = 1f;
+			Projectile.width = 12;
+			Projectile.height = 12;
+			Projectile.friendly = true;
+			//Projectile.magic = true;
+			Projectile.timeLeft = 3600;
+			Projectile.tileCollide = false;
+			Projectile.penetrate = -1;
+			Projectile.alpha = 125;
+			Projectile.scale = 1f;
 		}
 		public override bool? CanHitNPC(NPC target)
 		{
 			return false;
 		}
 		Vector2[] trailPos = new Vector2[250];
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
 			if (runOnce)
 				return false;
-			Texture2D texture = Main.projectileTexture[projectile.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			Vector2 previousPosition = projectile.Center;
-			Color color = VoidPlayer.OtherworldColor * ((255 - projectile.alpha) / 205f);
+			Vector2 previousPosition = Projectile.Center;
+			Color color = VoidPlayer.OtherworldColor * ((255 - Projectile.alpha) / 205f);
 			for (int k = 0; k < trailPos.Length; k++)
 			{
 				if (trailPos[k] == Vector2.Zero)
 				{
 					return false;
 				}
-				float scale = projectile.scale * 1.3f;
+				float scale = Projectile.scale * 1.3f;
 				Vector2 drawPos = trailPos[k] - Main.screenPosition;
 				Vector2 currentPos = trailPos[k];
 				Vector2 betweenPositions = previousPosition - currentPos;
@@ -61,7 +61,7 @@ namespace SOTS.Projectiles.Minions
 							x = 0;
 							y = 0;
 						}
-						if (trailPos[k] != projectile.Center)
+						if (trailPos[k] != Projectile.Center)
 							Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, betweenPositions.ToRotation() + MathHelper.ToRadians(90), drawOrigin, scale, SpriteEffects.None, 0f);
 					}
 				}
@@ -83,8 +83,8 @@ namespace SOTS.Projectiles.Minions
 		{
 			if (runOnce)
 			{
-				projectile.position += projectile.velocity.SafeNormalize(Vector2.Zero) * 24;
-				SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 94, 0.6f);
+				Projectile.position += Projectile.velocity.SafeNormalize(Vector2.Zero) * 24;
+				SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 94, 0.6f);
 				for (int i = 0; i < randStorage.Length; i++)
 				{
 					randStorage[i] = Main.rand.Next(-65, 66);
@@ -93,15 +93,15 @@ namespace SOTS.Projectiles.Minions
 				{
 					trailPos[i] = Vector2.Zero;
 				}
-				originalVelo = projectile.velocity.SafeNormalize(Vector2.Zero) * 8f;
-				originalPos = projectile.Center;
+				originalVelo = Projectile.velocity.SafeNormalize(Vector2.Zero) * 8f;
+				originalPos = Projectile.Center;
 				runOnce = false;
 				for(int i = 0; i < 20; i++)
 				{
-					int dust3 = Dust.NewDust(projectile.Center - new Vector2(12, 12) - new Vector2(5), 24, 24, ModContent.DustType<CopyDust4>());
+					int dust3 = Dust.NewDust(Projectile.Center - new Vector2(12, 12) - new Vector2(5), 24, 24, ModContent.DustType<CopyDust4>());
 					Dust dust4 = Main.dust[dust3];
 					dust4.velocity *= 0.55f;
-					dust4.velocity += projectile.velocity.SafeNormalize(Vector2.Zero) * -2f;
+					dust4.velocity += Projectile.velocity.SafeNormalize(Vector2.Zero) * -2f;
 					dust4.color = VoidPlayer.OtherworldColor;
 					dust4.noGravity = true;
 					dust4.fadeIn = 0.1f;
@@ -110,7 +110,7 @@ namespace SOTS.Projectiles.Minions
 			}
 
 			Vector2 temp = originalPos;
-			addPos = projectile.Center;
+			addPos = Projectile.Center;
 			for (int i = 0; i < dist; i++)
 			{
 				bool collided = false;
@@ -128,12 +128,12 @@ namespace SOTS.Projectiles.Minions
 					int hitboxWidth = 12;
 					if (npc.active && npc.Hitbox.Intersects(new Rectangle((int)addPos.X - hitboxWidth, (int)addPos.Y - hitboxWidth, hitboxWidth * 2, hitboxWidth * 2)) && !npc.friendly && !npc.dontTakeDamage)
 					{
-						Vector2 velo = projectile.velocity.SafeNormalize(Vector2.Zero);
-						if (projectile.owner == Main.myPlayer && projectile.friendly)
+						Vector2 velo = Projectile.velocity.SafeNormalize(Vector2.Zero);
+						if (Projectile.owner == Main.myPlayer && Projectile.friendly)
 						{
-							Projectile.NewProjectile(addPos.X + velo.X * 28, addPos.Y + velo.Y * 28, velo.X * 0.1f, velo.Y * 0.1f, ModContent.ProjectileType<ThunderRing>(), projectile.damage, projectile.knockBack, Main.myPlayer);
+							Projectile.NewProjectile(addPos.X + velo.X * 28, addPos.Y + velo.Y * 28, velo.X * 0.1f, velo.Y * 0.1f, ModContent.ProjectileType<ThunderRing>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
 						}
-						if (projectile.friendly)
+						if (Projectile.friendly)
 							collided = true;
 						for (int k = i + 1; k < trailPos.Length; k++)
 						{
@@ -149,12 +149,12 @@ namespace SOTS.Projectiles.Minions
 				}
 			}
 			originalPos = temp;
-			projectile.alpha += 5;
-			if (projectile.alpha >= 255)
-				projectile.Kill();
+			Projectile.alpha += 5;
+			if (Projectile.alpha >= 255)
+				Projectile.Kill();
 
-			projectile.scale *= 0.98f;
-			projectile.friendly = false;
+			Projectile.scale *= 0.98f;
+			Projectile.friendly = false;
 		}
 	}
 }

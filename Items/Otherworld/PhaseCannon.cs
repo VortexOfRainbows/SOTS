@@ -18,12 +18,12 @@ namespace SOTS.Items.Otherworld
 		public override void SetDefaults()
 		{
             Item.damage = 27; 
-            Item.ranged = true;  
+            Item.DamageType = DamageClass.Ranged;  
             Item.width = 52;   
             Item.height = 26; 
             Item.useTime = 90; 
             Item.useAnimation = 90;
-            Item.useStyle = 5;    
+            Item.useStyle = ItemUseStyleID.Shoot;    
             Item.noMelee = true;
             Item.knockBack = 4f;
             Item.value = Item.sellPrice(0, 3, 25, 0);
@@ -48,7 +48,7 @@ namespace SOTS.Items.Otherworld
 		{
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/PhaseCannonGlow").Value;
 			Color color = Color.White;
-			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, Item.height * 0.5f);
 			Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y) + 2), null, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 		}
 		public override void HoldItem(Player player)

@@ -15,12 +15,12 @@ namespace SOTS.Items.Permafrost
 		public override void SetDefaults()
 		{
             Item.damage = 30;
-            Item.ranged = true;
+            Item.DamageType = DamageClass.Ranged;
             Item.width = 64;
             Item.height = 24;
             Item.useTime = 26; 
             Item.useAnimation = 26;
-            Item.useStyle = 5;    
+            Item.useStyle = ItemUseStyleID.Shoot;    
             Item.noMelee = true;
 			Item.knockBack = 1f;  
             Item.value = Item.sellPrice(0, 8, 0, 0);

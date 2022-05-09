@@ -20,10 +20,10 @@ namespace SOTS.Items.Tide
 			Item.height = 58;
 			Item.useTime = 29;
 			Item.useAnimation = 29;
-			Item.useStyle = 5;
+			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.knockBack = 7f;
 			Item.value = Item.sellPrice(0, 1, 0, 0);
-			Item.rare = 3;
+			Item.rare = ItemRarityID.Orange;
 			Item.UseSound = SoundID.Item1;
 			Item.autoReuse = false;
 			Item.shoot = mod.ProjectileType("Riptide");

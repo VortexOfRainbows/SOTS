@@ -16,7 +16,7 @@ namespace SOTS.Items.ChestItems
         public override void SetDefaults()
         {
             Item.damage = 135;
-            Item.ranged = true;
+            Item.DamageType = DamageClass.Ranged;
             Item.width = 68;
             Item.height = 24;
             Item.useTime = 21;

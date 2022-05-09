@@ -15,28 +15,28 @@ namespace SOTS.Projectiles.Permafrost
 		}
         public override void SetDefaults()
 		{
-			projectile.width = 36;
-			projectile.height = 22;
-			projectile.penetrate = -1;
-			projectile.friendly = false;
-			projectile.timeLeft = 300;
-			projectile.tileCollide = false;
-			projectile.melee = false;
-			projectile.hostile = false;
-			projectile.netImportant = true;
-			projectile.ignoreWater = true;
-			projectile.scale = 0.9f;
+			Projectile.width = 36;
+			Projectile.height = 22;
+			Projectile.penetrate = -1;
+			Projectile.friendly = false;
+			Projectile.timeLeft = 300;
+			Projectile.tileCollide = false;
+			Projectile.melee = false;
+			Projectile.hostile = false;
+			Projectile.netImportant = true;
+			Projectile.ignoreWater = true;
+			Projectile.scale = 0.9f;
 		}
 		public override void SendExtraAI(BinaryWriter writer)
 		{
-			writer.Write(projectile.rotation);
-			writer.Write(projectile.spriteDirection);
+			writer.Write(Projectile.rotation);
+			writer.Write(Projectile.spriteDirection);
 			writer.Write(ofTotalId);
 		}
 		public override void ReceiveExtraAI(BinaryReader reader)
 		{
-			projectile.rotation = reader.ReadSingle();
-			projectile.spriteDirection = reader.ReadInt32();
+			Projectile.rotation = reader.ReadSingle();
+			Projectile.spriteDirection = reader.ReadInt32();
 			ofTotalId = reader.ReadInt32();
 		}
 		bool returnH = false;
@@ -46,25 +46,25 @@ namespace SOTS.Projectiles.Permafrost
 		Vector2 offset = Vector2.Zero;
 		public override void AI()
 		{
-			Player player  = Main.player[projectile.owner];
+			Player player  = Main.player[Projectile.owner];
 			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
 			if(counter > 5)
             {
-				if((projectile.ai[0] < 0) && !returnH)
+				if((Projectile.ai[0] < 0) && !returnH)
                 {
 					if(player.itemAnimation <= 0 && !player.channel)
 					{
-						projectile.ai[0]++;
+						Projectile.ai[0]++;
 					}
 					else
                     {
-						projectile.ai[0] = -2;
+						Projectile.ai[0] = -2;
                     }
                 }
 				else
 				{
-					projectile.ai[0]--;
-					if (projectile.ai[0] <= 0)
+					Projectile.ai[0]--;
+					if (Projectile.ai[0] <= 0)
 						returnH = true;
 				}
 			}
@@ -72,10 +72,10 @@ namespace SOTS.Projectiles.Permafrost
 			bool found = false;
 			int ofTotal = 0;
 			int total = 0;
-			for (int i = 0; i < Main.projectile.Length; i++)
+			for (int i = 0; i < Main.Projectile.Length; i++)
 			{
 				Projectile proj = Main.projectile[i];
-				if (projectile.type == proj.type && proj.active && projectile.active && proj.owner == projectile.owner && Math.Abs(proj.ai[0] - projectile.ai[0]) <= 1)
+				if (Projectile.type == proj.type && proj.active && Projectile.active && proj.owner == Projectile.owner && Math.Abs(proj.ai[0] - Projectile.ai[0]) <= 1)
 				{
 					if (proj == projectile)
 					{
@@ -89,29 +89,29 @@ namespace SOTS.Projectiles.Permafrost
 			if (Main.myPlayer == player.whoAmI)
 			{
 				ofTotalId = ofTotal;
-				projectile.netUpdate = true;
+				Projectile.netUpdate = true;
             }
 			Vector2 toLocation = player.Center;
-			projectile.velocity *= 0.05f;
-			toLocation.Y += Main.player[projectile.owner].gfxOffY;
+			Projectile.velocity *= 0.05f;
+			toLocation.Y += Main.player[Projectile.owner].gfxOffY;
 			float rotation = modPlayer.orbitalCounter * 1.5f + (float)ofTotalId / total * 360f;
 			Vector2 circular = new Vector2(40, 0).RotatedBy(MathHelper.ToRadians(rotation));
 			circular.Y *= 1.1f;
 			Vector2 goTo = toLocation + circular;
-			goTo -= projectile.Center;
+			goTo -= Projectile.Center;
 			float dist = 7.5f + goTo.Length() * 0.1f;
 			if (returnH)
 			{
 				goTo -= circular;
 				if(goTo.Length() <= 12)
                 {
-					projectile.Kill();
+					Projectile.Kill();
                 }
 			}
 			Vector2 newGoTo = goTo.SafeNormalize(Vector2.Zero);
 			if (dist > goTo.Length())
 				dist = goTo.Length();
-			projectile.velocity = newGoTo * dist;
+			Projectile.velocity = newGoTo * dist;
 			if (!returnH)
 			{
 				if(counter >= 6)
@@ -119,57 +119,57 @@ namespace SOTS.Projectiles.Permafrost
 					shootingDelay--;
 					if (shootingDelay <= 0)
 					{
-						shootingDelay = (int)projectile.ai[1];
+						shootingDelay = (int)Projectile.ai[1];
 						FireBullet();
-						if (projectile.ai[1] < 16)
-							projectile.ai[1] += 1.5f;
-						if (projectile.ai[1] > 16)
+						if (Projectile.ai[1] < 16)
+							Projectile.ai[1] += 1.5f;
+						if (Projectile.ai[1] > 16)
 						{
-							projectile.ai[1] = 16;
+							Projectile.ai[1] = 16;
                         }
 					}
 				}
-				projectile.timeLeft = 11;
+				Projectile.timeLeft = 11;
 			}
-			if(projectile.timeLeft < 11)
+			if(Projectile.timeLeft < 11)
             {
-				projectile.alpha += 25;
+				Projectile.alpha += 25;
             }
-			if (projectile.owner == Main.myPlayer)
+			if (Projectile.owner == Main.myPlayer)
 			{
-				Vector2 center = new Vector2(projectile.Center.X, projectile.Center.Y + 4);
+				Vector2 center = new Vector2(Projectile.Center.X, Projectile.Center.Y + 4);
 				Vector2 playerCursor = Main.MouseWorld;
-				projectile.rotation = (center - playerCursor).ToRotation();
-				projectile.netUpdate = true;
-				if ((playerCursor - projectile.Center).X > 0)
+				Projectile.rotation = (center - playerCursor).ToRotation();
+				Projectile.netUpdate = true;
+				if ((playerCursor - Projectile.Center).X > 0)
 				{
-					projectile.rotation -= MathHelper.Pi;
-					projectile.spriteDirection = -1;
+					Projectile.rotation -= MathHelper.Pi;
+					Projectile.spriteDirection = -1;
 				}
 				else
 				{
-					projectile.spriteDirection = 1;
+					Projectile.spriteDirection = 1;
 				}
 			}
 			offset *= 0.8f;
 		}
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override bool PreDraw(ref Color lightColor)
 		{
-			Texture2D texture = Main.projectileTexture[projectile.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
-			spriteBatch.Draw(texture, projectile.Center + offset - Main.screenPosition, null, projectile.GetAlpha(lightColor), projectile.rotation, origin, projectile.scale, projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0.0f);
+			spriteBatch.Draw(texture, Projectile.Center + offset - Main.screenPosition, null, Projectile.GetAlpha(lightColor), Projectile.rotation, origin, Projectile.scale, Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0.0f);
 			return false;
         }
         public void FireBullet()
 		{
-			if (projectile.owner == Main.myPlayer)
+			if (Projectile.owner == Main.myPlayer)
 			{
-				Vector2 center = new Vector2(projectile.Center.X, projectile.Center.Y + 5);
+				Vector2 center = new Vector2(Projectile.Center.X, Projectile.Center.Y + 5);
 				Vector2 playerCursor = Main.MouseWorld;
 				Vector2 rotateArea = new Vector2(6, 0).RotatedBy((playerCursor - center).ToRotation());
-				Projectile.NewProjectile(center, rotateArea, ModContent.ProjectileType<FriendlyPolarBullet>(), (int)(projectile.damage * 0.25f), projectile.knockBack, Main.myPlayer);
+				Projectile.NewProjectile(center, rotateArea, ModContent.ProjectileType<FriendlyPolarBullet>(), (int)(Projectile.damage * 0.25f), Projectile.knockBack, Main.myPlayer);
 			}
-			offset = new Vector2(8 * projectile.spriteDirection, 0).RotatedBy(projectile.rotation);
+			offset = new Vector2(8 * Projectile.spriteDirection, 0).RotatedBy(Projectile.rotation);
 		}
 	}
 }

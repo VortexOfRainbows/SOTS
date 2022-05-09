@@ -16,7 +16,7 @@ namespace SOTS.Items.OreItems
 		public override void SafeSetDefaults()
 		{
 			Item.damage = 34;
-			Item.magic = true;
+			Item.DamageType = DamageClass.Magic;
 			Item.width = 36;
 			Item.height = 36;
 			Item.useTime = 30;

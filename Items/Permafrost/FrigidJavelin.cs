@@ -16,12 +16,12 @@ namespace SOTS.Items.Permafrost
 		public override void SafeSetDefaults()
 		{
             Item.damage = 42;  
-            Item.magic = true;  
+            Item.DamageType = DamageClass.Magic;  
             Item.width = 38;    
             Item.height = 38;
 			Item.useAnimation = 44;
 			Item.useTime = 44;
-			Item.useStyle = 5;    
+			Item.useStyle = ItemUseStyleID.Shoot;    
             Item.knockBack = 5.25f;
             Item.value = Item.sellPrice(0, 0, 80, 0);
             Item.rare = ItemRarityID.Green;

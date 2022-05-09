@@ -11,35 +11,35 @@ namespace SOTS.Projectiles.Otherworld
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Phase Bolt");
-			ProjectileID.Sets.TrailCacheLength[projectile.type] = 7;
-			ProjectileID.Sets.TrailingMode[projectile.type] = 1;
+			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 7;
+			ProjectileID.Sets.TrailingMode[Projectile.type] = 1;
 		}
 		public override void SetDefaults()
 		{
-			projectile.width = 34;
-			projectile.height = 22;
-			projectile.hostile = true;
-			projectile.friendly = false;
-			projectile.timeLeft = 720;
-			projectile.tileCollide = true;
-			projectile.penetrate = -1;
+			Projectile.width = 34;
+			Projectile.height = 22;
+			Projectile.hostile = true;
+			Projectile.friendly = false;
+			Projectile.timeLeft = 720;
+			Projectile.tileCollide = true;
+			Projectile.penetrate = -1;
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Otherworld/OtherworldlyBolt").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			for (int k = 0; k < projectile.oldPos.Length; k++)
+			for (int k = 0; k < Projectile.oldPos.Length; k++)
 			{
 				Color color = new Color(110, 110, 110, 0);
-				Vector2 drawPos = projectile.oldPos[k] - Main.screenPosition + drawOrigin;
-				color = projectile.GetAlpha(color) * ((projectile.oldPos.Length - k) / (float)projectile.oldPos.Length) * 0.5f;
+				Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin;
+				color = Projectile.GetAlpha(color) * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length) * 0.5f;
 				for (int j = 0; j < 5; j++)
 				{
 					float x = Main.rand.Next(-10, 11) * 0.1f;
 					float y = Main.rand.Next(-10, 11) * 0.1f;
-					if(!projectile.oldPos[k].Equals(projectile.position))
+					if(!Projectile.oldPos[k].Equals(Projectile.position))
 					{
-						Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, projectile.rotation, drawOrigin, projectile.scale * (projectile.oldPos.Length - k) / (float)projectile.oldPos.Length, SpriteEffects.None, 0f);
+						Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, Projectile.rotation, drawOrigin, Projectile.scale * (Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length, SpriteEffects.None, 0f);
 					}
 				}
 			}
@@ -49,10 +49,10 @@ namespace SOTS.Projectiles.Otherworld
 		{
 			for (int i = 0; i < 20; i++)
 			{
-				int dust = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 242);
+				int dust = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 242);
 				Main.dust[dust].velocity *= 2f;
 				Main.dust[dust].scale *= 4f;
-				Main.dust[dust].velocity += projectile.velocity;
+				Main.dust[dust].velocity += Projectile.velocity;
 				Main.dust[dust].noGravity = true;
 			}
 		}
@@ -63,15 +63,15 @@ namespace SOTS.Projectiles.Otherworld
 		}
 		public override void AI()
 		{
-			projectile.ai[0]++;
-			Lighting.AddLight(projectile.Center, 0.75f, 0.25f, 0.75f);
+			Projectile.ai[0]++;
+			Lighting.AddLight(Projectile.Center, 0.75f, 0.25f, 0.75f);
 			if(runOnce)
 			{
-				projectile.rotation = projectile.velocity.ToRotation();
+				Projectile.rotation = Projectile.velocity.ToRotation();
 				runOnce = false;
 			}
-			Vector2 varyingVelocity = new Vector2(2.5f, 0).RotatedBy(MathHelper.ToRadians(projectile.ai[0] * 2));
-			projectile.position += projectile.velocity + new Vector2(varyingVelocity.X, 0).RotatedBy(projectile.rotation);
+			Vector2 varyingVelocity = new Vector2(2.5f, 0).RotatedBy(MathHelper.ToRadians(Projectile.ai[0] * 2));
+			Projectile.position += Projectile.velocity + new Vector2(varyingVelocity.X, 0).RotatedBy(Projectile.rotation);
 		}
 	}
 }

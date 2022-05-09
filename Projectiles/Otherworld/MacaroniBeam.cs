@@ -12,17 +12,17 @@ namespace SOTS.Projectiles.Otherworld
 		}
 		public override void SetDefaults()
         {
-			projectile.width = 16;
-			projectile.height = 16;
-			projectile.penetrate = 1;
-			projectile.friendly = true;
-			projectile.timeLeft = 900;
-			projectile.tileCollide = false;
-			projectile.magic = true;
-			projectile.hostile = false;
-			projectile.netImportant = true;
-			projectile.alpha = 255;
-			projectile.extraUpdates = 899;
+			Projectile.width = 16;
+			Projectile.height = 16;
+			Projectile.penetrate = 1;
+			Projectile.friendly = true;
+			Projectile.timeLeft = 900;
+			Projectile.tileCollide = false;
+			Projectile.magic = true;
+			Projectile.hostile = false;
+			Projectile.netImportant = true;
+			Projectile.alpha = 255;
+			Projectile.extraUpdates = 899;
 		}
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
         {
@@ -35,20 +35,20 @@ namespace SOTS.Projectiles.Otherworld
 		int counter = 0;
 		public override void AI()
 		{
-			Player player  = Main.player[projectile.owner];
+			Player player  = Main.player[Projectile.owner];
 			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
 			if (player.dead)
 			{
-				projectile.Kill();
+				Projectile.Kill();
 			}
 			if (runOnce)
 			{
-				ogPos = projectile.Center;
+				ogPos = Projectile.Center;
 				for (int i = 0; i < 12; i++)
 				{
-					var num372 = Dust.NewDust(projectile.Center - new Vector2(5) - new Vector2(10, 10), 24, 24, mod.DustType("CopyDust4"), 0, 0, 100, default, 1.6f);
+					var num372 = Dust.NewDust(Projectile.Center - new Vector2(5) - new Vector2(10, 10), 24, 24, mod.DustType("CopyDust4"), 0, 0, 100, default, 1.6f);
 					Dust dust2 = Main.dust[num372];
-					dust2.velocity += projectile.velocity * 0.5f;
+					dust2.velocity += Projectile.velocity * 0.5f;
 					dust2.noGravity = true;
 					dust2.color = Color.Lerp(new Color(255, 240, 50, 100), new Color(235, 240, 50, 100), new Vector2(-0.5f, 0).RotatedBy(MathHelper.ToRadians(counter * 3)).X + 0.5f);
 					dust2.noGravity = true;
@@ -56,14 +56,14 @@ namespace SOTS.Projectiles.Otherworld
 					dust2.scale *= 1.4f;
 				}
 				runOnce = false;
-				projectile.netUpdate = true;
+				Projectile.netUpdate = true;
 				return;
 			}
 			counter++;
 			Vector2 rotational = new Vector2(8, 0).RotatedBy(MathHelper.ToRadians(counter * 4));
-			var num371 = Dust.NewDust(projectile.Center - new Vector2(5), 0, 0, mod.DustType("CopyDust4"), 0, 0, 100, default, 1.6f);
+			var num371 = Dust.NewDust(Projectile.Center - new Vector2(5), 0, 0, mod.DustType("CopyDust4"), 0, 0, 100, default, 1.6f);
 			Dust dust = Main.dust[num371];
-			dust.position += new Vector2(0, rotational.X).RotatedBy(projectile.velocity.ToRotation());
+			dust.position += new Vector2(0, rotational.X).RotatedBy(Projectile.velocity.ToRotation());
 			dust.velocity *= 0.05f;
 			dust.noGravity = true;
 			dust.color = Color.Lerp(new Color(255, 240, 50, 100), new Color(235, 240, 50, 100), new Vector2(-0.5f, 0).RotatedBy(MathHelper.ToRadians(counter * 3)).X + 0.5f);
@@ -72,16 +72,16 @@ namespace SOTS.Projectiles.Otherworld
 			dust.scale *= 1.0f;
 			if(counter > 5)
             {
-				projectile.tileCollide = true;
+				Projectile.tileCollide = true;
             }
 		}
         public override void Kill(int timeLeft)
 		{
 			for(int i = 0; i < 20; i++)
 			{
-				var num371 = Dust.NewDust(projectile.Center - new Vector2(5) - new Vector2(10, 10), 24, 24, mod.DustType("CopyDust4"), 0, 0, 100, default, 1.6f);
+				var num371 = Dust.NewDust(Projectile.Center - new Vector2(5) - new Vector2(10, 10), 24, 24, mod.DustType("CopyDust4"), 0, 0, 100, default, 1.6f);
 				Dust dust = Main.dust[num371];
-				dust.velocity += projectile.velocity * 0.3f;
+				dust.velocity += Projectile.velocity * 0.3f;
 				dust.noGravity = true;
 				dust.color = Color.Lerp(new Color(255, 240, 50, 100), new Color(235, 240, 50, 100), new Vector2(-0.5f, 0).RotatedBy(MathHelper.ToRadians(counter * 3)).X + 0.5f);
 				dust.noGravity = true;
@@ -90,7 +90,7 @@ namespace SOTS.Projectiles.Otherworld
 		}
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			int heal = 2;
 			if (Main.rand.Next(6) == 0) heal = 3;
 			if (player.whoAmI == Main.myPlayer)

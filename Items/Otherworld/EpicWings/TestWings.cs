@@ -64,7 +64,7 @@ namespace SOTS.Items.Otherworld.EpicWings
 		}
 		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
 		{
-			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, Item.height * 0.5f);
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/EpicWings/TestWings").Value;
 			Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y) + 2), null, lightColor * (1f - (Item.alpha / 255f)), rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Otherworld/EpicWings/TestWingsEffect").Value;
@@ -242,7 +242,7 @@ namespace SOTS.Items.Otherworld.EpicWings
 			Tile tile4 = Framing.GetTileSafely(i2, j2);
 			Tile tile5 = Framing.GetTileSafely(i3, j);
 			Tile tile6 = Framing.GetTileSafely(i3, j2);
-			return (tile2 == tile && tile.active() && !tile.inActive() && (Main.tileSolid[tile.type] || Main.tileTable[tile.type])) || (tile3 == tile4 && tile4.active() && !tile4.inActive() && (Main.tileSolid[tile4.type] || Main.tileTable[tile4.type])) || (tile5 == tile6 && tile6.active() && !tile6.inActive() && (Main.tileSolid[tile6.type] || Main.tileTable[tile6.type]));
+			return (tile2 == tile && tile.active() && !tile.inActive() && (Main.tileSolid[tile.TileType] || Main.tileTable[tile.TileType])) || (tile3 == tile4 && tile4.active() && !tile4.inActive() && (Main.tileSolid[tile4.type] || Main.tileTable[tile4.type])) || (tile5 == tile6 && tile6.active() && !tile6.inActive() && (Main.tileSolid[tile6.type] || Main.tileTable[tile6.type]));
 		}
 		int dustIter = 0;
 		int[] dustID = new int[180];

@@ -23,56 +23,56 @@ namespace SOTS.Projectiles.Lightning
 		
         public override void SetDefaults()
         {
-			projectile.CloneDefaults(263);
+			Projectile.CloneDefaults(263);
             aiType = 263; 
-			projectile.height = 43;
-			projectile.width = 43;
-			projectile.penetrate = 24;
-			projectile.friendly = true;
-			projectile.timeLeft = 60;
-			projectile.tileCollide = true;
-			projectile.magic = true;
-			projectile.hostile = false;
+			Projectile.height = 43;
+			Projectile.width = 43;
+			Projectile.penetrate = 24;
+			Projectile.friendly = true;
+			Projectile.timeLeft = 60;
+			Projectile.tileCollide = true;
+			Projectile.magic = true;
+			Projectile.hostile = false;
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{
-			if (projectile.velocity.X != oldVelocity.X)
+			if (Projectile.velocity.X != oldVelocity.X)
 			{
-				projectile.velocity.X = -oldVelocity.X;
+				Projectile.velocity.X = -oldVelocity.X;
 			}
-			if (projectile.velocity.Y != oldVelocity.Y)
+			if (Projectile.velocity.Y != oldVelocity.Y)
 			{
-				projectile.velocity.Y = -oldVelocity.Y;
+				Projectile.velocity.Y = -oldVelocity.Y;
 			}
 			return false;
 		}
 		public override void AI()
 		{
-			Vector2 circularLocation = new Vector2(projectile.velocity.X -distance, projectile.velocity.Y).RotatedBy(MathHelper.ToRadians(rotation));
+			Vector2 circularLocation = new Vector2(Projectile.velocity.X -distance, Projectile.velocity.Y).RotatedBy(MathHelper.ToRadians(rotation));
 			rotation += 15;
 			distance -= 0.5f;
-			projectile.scale *= 0.98f;
-			projectile.alpha++;
+			Projectile.scale *= 0.98f;
+			Projectile.alpha++;
 			
-			Player player  = Main.player[projectile.owner];
+			Player player  = Main.player[Projectile.owner];
 			
-			int num1 = Dust.NewDust(new Vector2(projectile.Center.X + circularLocation.X - 4, projectile.Center.Y + circularLocation.Y - 4), 4, 4, 107);
+			int num1 = Dust.NewDust(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, 107);
 			Main.dust[num1].noGravity = true;
 			Main.dust[num1].velocity *= 0.1f;
 		}
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.immune[projectile.owner] = 15;
+            target.immune[Projectile.owner] = 15;
         }
 		public override void Kill(int timeLeft)
 		{
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
 		
 			Vector2 cursorArea = Main.MouseWorld;
 		
-			float shootToX = cursorArea.X - projectile.Center.X;
-			float shootToY = cursorArea.Y - projectile.Center.Y;
+			float shootToX = cursorArea.X - Projectile.Center.X;
+			float shootToY = cursorArea.Y - Projectile.Center.Y;
 			float distance = (float)System.Math.Sqrt((double)(shootToX * shootToX + shootToY * shootToY));
 
 			distance = 6.25f / distance;
@@ -80,10 +80,10 @@ namespace SOTS.Projectiles.Lightning
 			shootToX *= distance * 5;
 			shootToY *= distance * 5;
 	   
-			SoundEngine.PlaySound(SoundID.Item94, (int)(projectile.Center.X), (int)(projectile.Center.Y));
+			SoundEngine.PlaySound(SoundID.Item94, (int)(Projectile.Center.X), (int)(Projectile.Center.Y));
 				
-			if(projectile.owner == Main.myPlayer)
-				Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, shootToX, shootToY, mod.ProjectileType("GreenLightning"), projectile.damage, projectile.knockBack, Main.myPlayer, 0, 5f);
+			if(Projectile.owner == Main.myPlayer)
+				Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, shootToX, shootToY, mod.ProjectileType("GreenLightning"), Projectile.damage, Projectile.knockBack, Main.myPlayer, 0, 5f);
 		}
 	}
 }

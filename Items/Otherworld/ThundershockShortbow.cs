@@ -13,7 +13,7 @@ namespace SOTS.Items.Otherworld
 		{
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/ThundershockShortbowGlow").Value;
 			Color color = Color.White;
-			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, Item.height * 0.5f);
 			Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y) + 2), null, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 		}
 		public override void SetStaticDefaults()
@@ -24,7 +24,7 @@ namespace SOTS.Items.Otherworld
 		public override void SetDefaults()
 		{
 			Item.damage = 30;
-			Item.ranged = true;
+			Item.DamageType = DamageClass.Ranged;
 			Item.width = 30;
 			Item.height = 62;
 			Item.useTime = 30;

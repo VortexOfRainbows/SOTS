@@ -17,14 +17,14 @@ namespace SOTS.Projectiles.Chaos
 
 		public override void SetDefaults() 
 		{
-			projectile.width = 8;
-			projectile.height = 8;
-			projectile.timeLeft = 140;
-			projectile.penetrate = -1;
-			projectile.hostile = true;
-			projectile.friendly = false;
-			projectile.tileCollide = false;
-			projectile.ignoreWater = true;
+			Projectile.width = 8;
+			Projectile.height = 8;
+			Projectile.timeLeft = 140;
+			Projectile.penetrate = -1;
+			Projectile.hostile = true;
+			Projectile.friendly = false;
+			Projectile.tileCollide = false;
+			Projectile.ignoreWater = true;
 		}
 		float counter = 0;
         public override bool ShouldUpdatePosition()
@@ -40,49 +40,49 @@ namespace SOTS.Projectiles.Chaos
 		{
 			if(runOnce)
             {
-				ogVelo = projectile.velocity;
+				ogVelo = Projectile.velocity;
 				runOnce = false;
             }
-			float angleToTraverse = projectile.ai[0];
+			float angleToTraverse = Projectile.ai[0];
 			if(counter < windUpLength)
 			{
-				scaleMult = projectile.ai[1] + 1;
+				scaleMult = Projectile.ai[1] + 1;
 			}
 			else
             {
-				float timeLeftMult = (projectile.timeLeft - 2) / 51f;
+				float timeLeftMult = (Projectile.timeLeft - 2) / 51f;
 				if (timeLeftMult < 0)
 					timeLeftMult = 0;
-				projectile.scale = (float)Math.Sqrt(timeLeftMult) * 0.5f + 0.5f * timeLeftMult;
+				Projectile.scale = (float)Math.Sqrt(timeLeftMult) * 0.5f + 0.5f * timeLeftMult;
             }
 			counter++;
 			float lerp = counter / windUpAngle;
 			if (lerp > 1f)
 				lerp = 1;
 			float angle = angleToTraverse * (float)Math.Pow(1 - lerp, 1.5f) * 0.8f + 0.2f * (1 - lerp);
-			projectile.velocity = ogVelo.RotatedBy(MathHelper.ToRadians(angle));
-			if(counter == windUpLength + 1)// && projectile.knockBack == -1)
+			Projectile.velocity = ogVelo.RotatedBy(MathHelper.ToRadians(angle));
+			if(counter == windUpLength + 1)// && Projectile.knockBack == -1)
 			{
-				//SoundEngine.PlaySound(SoundLoader.customSoundType, (int)projectile.Center.X, (int)projectile.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Enemies/LuxBeann"), 1.6f, -0.1f);
-				SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 94, 1.1f, 0.1f);
+				//SoundEngine.PlaySound(SoundLoader.customSoundType, (int)Projectile.Center.X, (int)Projectile.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Enemies/LuxBeann"), 1.6f, -0.1f);
+				SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 94, 1.1f, 0.1f);
 			}
 			if (counter > windUpLength)
 			{
-				Vector2 position = projectile.Center;
+				Vector2 position = Projectile.Center;
 				for (float i = 40; i <= maxDistance; i += 8)
 				{
 					if (Main.rand.NextBool(1000) || (counter == windUpLength + 1 && Main.rand.NextBool(4)))
 					{
-						position = projectile.Center + projectile.velocity.SafeNormalize(Vector2.Zero) * i;
+						position = Projectile.Center + Projectile.velocity.SafeNormalize(Vector2.Zero) * i;
 						int dust2 = Dust.NewDust(position - new Vector2(12, 12), 16, 16, ModContent.DustType<Dusts.CopyDust4>());
 						Dust dust = Main.dust[dust2];
 						dust.velocity *= 2f;
-						dust.velocity += projectile.velocity * 0.2f;
+						dust.velocity += Projectile.velocity * 0.2f;
 						dust.color = VoidPlayer.pastelAttempt(Main.rand.NextFloat(6.28f), true);
 						dust.noGravity = true;
 						dust.alpha = 90;
 						dust.fadeIn = 0.1f;
-						dust.scale *= 2.5f * projectile.scale;
+						dust.scale *= 2.5f * Projectile.scale;
 					}
 				}
 			}
@@ -90,30 +90,30 @@ namespace SOTS.Projectiles.Chaos
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) 
 		{
 			float point = 0f;
-			Vector2 finalPoint = projectile.Center + projectile.velocity.SafeNormalize(Vector2.Zero) * maxDistance;
+			Vector2 finalPoint = Projectile.Center + Projectile.velocity.SafeNormalize(Vector2.Zero) * maxDistance;
 			if(counter > windUpLength && counter < 110)
 			{
-				if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), projectile.Center, finalPoint, 24f * scaleMult * projectile.scale, ref point))
+				if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, finalPoint, 24f * scaleMult * Projectile.scale, ref point))
 				{
 					return true;
 				}
 			}
 			return false;
-			//return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), projectile.Center, endPoint, 8f, ref point);
+			//return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, endPoint, 8f, ref point);
 		}
 		public const float maxDistance = 3200;
 		public override bool PreDraw(SpriteBatch spriteBatch, Color color)
 		{
 			if (runOnce)
 				return false;
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			float alphaScale = 0.5f;
 			float lerp = counter / windUpLength * 0.5f;
 			float scalingFactor = 0.5f;
 			if (lerp > 0.5f)
 			{
 				scalingFactor = 1.2f;
-				alphaScale = 0.2f + 0.8f * (float)Math.Sqrt(projectile.scale);
+				alphaScale = 0.2f + 0.8f * (float)Math.Sqrt(Projectile.scale);
 				lerp = 1f;
 			}
 			else
@@ -127,11 +127,11 @@ namespace SOTS.Projectiles.Chaos
 				alphaScale = 0.1f + 0.4f * (1 - otherMult);
 				scalingFactor += 0.2f * otherMult;
 			}
-			Texture2D texture = Main.projectileTexture[projectile.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
 			float length = texture.Width * 0.5f * scalingFactor;
-			Vector2 unit = projectile.velocity.SafeNormalize(Vector2.Zero);
-			Vector2 position = projectile.Center;
+			Vector2 unit = Projectile.velocity.SafeNormalize(Vector2.Zero);
+			Vector2 position = Projectile.Center;
 			float maxLength = maxDistance / length * lerp;
 			for (float i = 0; i <= maxLength; i++)
 			{
@@ -149,11 +149,11 @@ namespace SOTS.Projectiles.Chaos
 						{
 							mult = 1 - (i - maxLength + 40) / 40f;
 						}
-						sinusoid = 1.0f + (0.5f + 0.5f * (float)Math.Sin(MathHelper.ToRadians(i * 16 + VoidPlayer.soulColorCounter * 4f))) * projectile.scale;
+						sinusoid = 1.0f + (0.5f + 0.5f * (float)Math.Sin(MathHelper.ToRadians(i * 16 + VoidPlayer.soulColorCounter * 4f))) * Projectile.scale;
 					}
-					float scale = projectile.scale * scalingFactor * scaleMult * sinusoid;
+					float scale = Projectile.scale * scalingFactor * scaleMult * sinusoid;
 					Vector2 drawPos = position - Main.screenPosition;
-					spriteBatch.Draw(texture, drawPos, null, color * alphaScale * mult, projectile.velocity.ToRotation(), origin, new Vector2(scalingFactor, scale), SpriteEffects.None, 0f);
+					spriteBatch.Draw(texture, drawPos, null, color * alphaScale * mult, Projectile.velocity.ToRotation(), origin, new Vector2(scalingFactor, scale), SpriteEffects.None, 0f);
 				}
 				position += unit * length;
 			}

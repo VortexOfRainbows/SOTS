@@ -17,33 +17,26 @@ namespace SOTS.Items.Celestial
 			Item.damage = 0;
 			Item.width = 34;
 			Item.height = 38;
-			Item.useStyle = 1;
+			Item.useStyle = ItemUseStyleID.Swing;
 			Item.value = 0;
 			Item.rare = ItemRarityID.Yellow;
 			Item.useTime = 30;
 			Item.useAnimation = 30;
 			Item.UseSound = SoundID.Item1;
 			Item.autoReuse = false;            
-			Item.shoot = mod.ProjectileType("CatalystBomb"); 
+			Item.shoot = ModContent.ProjectileType<Projectiles.Celestial.CatalystBomb>(); 
             Item.shootSpeed = 12f;
 			Item.consumable = true;
 			Item.maxStack = 30;
 			Item.noUseGraphic = true;
 		}
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
 			damage = 0;
-            return true;
         }
         public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.Bomb, 5);
-			recipe.AddIngredient(ItemID.Ectoplasm, 1);
-			recipe.AddIngredient(ItemID.SoulofNight, 1);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ItemID.Bomb, 5).AddIngredient(ItemID.Ectoplasm, 1).AddIngredient(ItemID.SoulofNight, 1).AddTile(TileID.MythrilAnvil).Register();
 		}
 	}
 }

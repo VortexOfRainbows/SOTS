@@ -15,30 +15,30 @@ namespace SOTS.Projectiles.Ores
 		}
         public override void SetDefaults()
         {
-			projectile.width = 22;
-			projectile.height = 22;
-			projectile.penetrate = 2;
-			projectile.ranged = true;
-			projectile.alpha = 0; 
-			projectile.friendly = true;
-			projectile.tileCollide = true;
-			projectile.timeLeft = 9000;
+			Projectile.width = 22;
+			Projectile.height = 22;
+			Projectile.penetrate = 2;
+			Projectile.ranged = true;
+			Projectile.alpha = 0; 
+			Projectile.friendly = true;
+			Projectile.tileCollide = true;
+			Projectile.timeLeft = 9000;
 		}
 		public override void SendExtraAI(BinaryWriter writer) 
 		{
-			writer.Write(projectile.alpha);
+			writer.Write(Projectile.alpha);
 			//writer.Write(damageCounter);
 			writer.Write(latch);
-			writer.Write(projectile.friendly);
+			writer.Write(Projectile.friendly);
 			writer.Write(diffPosX);
 			writer.Write(diffPosY);
 		}
 		public override void ReceiveExtraAI(BinaryReader reader)
 		{	
-			projectile.alpha = reader.ReadInt32();
+			Projectile.alpha = reader.ReadInt32();
 			//damageCounter = reader.ReadInt32();
 			latch = reader.ReadBoolean();
-			projectile.friendly = reader.ReadBoolean();
+			Projectile.friendly = reader.ReadBoolean();
 			diffPosX = reader.ReadSingle();
 			diffPosY = reader.ReadSingle();
 		}
@@ -55,35 +55,35 @@ namespace SOTS.Projectiles.Ores
 			if(runOnce)
             {
 				runOnce = false;
-				projectile.ai[1] = -1;
+				Projectile.ai[1] = -1;
             }
-			Player player = Main.player[projectile.owner];
-			projectile.rotation = (float)Math.Atan2((double)projectile.velocity.Y, (double)projectile.velocity.X) + MathHelper.ToRadians(45);
-			projectile.spriteDirection = 1;
+			Player player = Main.player[Projectile.owner];
+			Projectile.rotation = (float)Math.Atan2((double)Projectile.velocity.Y, (double)Projectile.velocity.X) + MathHelper.ToRadians(45);
+			Projectile.spriteDirection = 1;
 			
-			if(latch && (int)projectile.ai[1] != -1 && projectile.owner == Main.myPlayer)
+			if(latch && (int)Projectile.ai[1] != -1 && Projectile.owner == Main.myPlayer)
 			{
-				NPC target = Main.npc[(int)projectile.ai[1]];
-				projectile.alpha += projectile.timeLeft % 10 == 0 ? 1 : 0;
-				if (projectile.alpha >= 200)
+				NPC target = Main.npc[(int)Projectile.ai[1]];
+				Projectile.alpha += Projectile.timeLeft % 10 == 0 ? 1 : 0;
+				if (Projectile.alpha >= 200)
 				{
-					projectile.Kill();
+					Projectile.Kill();
 				}
 				if(target.active && !target.friendly)
 				{
-					projectile.position.X = target.Center.X - projectile.width/2 - diffPosX;
-					projectile.position.Y = target.Center.Y - projectile.height/2 - diffPosY;
+					Projectile.position.X = target.Center.X - Projectile.width/2 - diffPosX;
+					Projectile.position.Y = target.Center.Y - Projectile.height/2 - diffPosY;
 				}
 				else
 				{
-					projectile.Kill();
+					Projectile.Kill();
 				}
 			}
-			if(projectile.ai[1] == -1)
+			if(Projectile.ai[1] == -1)
             {
-				projectile.velocity.Y += 0.09f;
-				if (projectile.velocity.Y > 30)
-					projectile.velocity.Y = 30;
+				Projectile.velocity.Y += 0.09f;
+				if (Projectile.velocity.Y > 30)
+					Projectile.velocity.Y = 30;
             }
 		}
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
@@ -94,36 +94,36 @@ namespace SOTS.Projectiles.Ores
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-			Player player = Main.player[projectile.owner];
-			projectile.friendly = false;
-            target.immune[projectile.owner] = 0;
-			projectile.tileCollide = false;
+			Player player = Main.player[Projectile.owner];
+			Projectile.friendly = false;
+            target.immune[Projectile.owner] = 0;
+			Projectile.tileCollide = false;
 			latch = true;
 			
 			if(diffPosX == 0)
-				diffPosX = target.Center.X - projectile.Center.X;
+				diffPosX = target.Center.X - Projectile.Center.X;
 				
 			if(diffPosY == 0)
-				diffPosY = target.Center.Y - projectile.Center.Y;
+				diffPosY = target.Center.Y - Projectile.Center.Y;
 
-			projectile.ai[1] = target.whoAmI;
+			Projectile.ai[1] = target.whoAmI;
 			diffPosX *= 0.9f;
 			diffPosY *= 0.9f;
 			if (target.life <= 0)
 			{
-				projectile.Kill();
+				Projectile.Kill();
 			}
-			projectile.netUpdate = true;
+			Projectile.netUpdate = true;
 		}
 		public override void Kill(int timeLeft)
         {
 			if(timeLeft > 1)
-				SoundEngine.PlaySound(SoundID.Dig, projectile.Center);
+				SoundEngine.PlaySound(SoundID.Dig, Projectile.Center);
 			for(int i = 0; i < 18; i++)
 			{
-				int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Platinum);
+				int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.Platinum);
 				Main.dust[num1].noGravity = true;
-				Main.dust[num1].velocity += projectile.velocity * 0.2f;
+				Main.dust[num1].velocity += Projectile.velocity * 0.2f;
 				Main.dust[num1].scale = 1.25f;
 			}
 		}

@@ -15,12 +15,12 @@ namespace SOTS.Items.Pyramid
 		public override void SetDefaults()
 		{
             Item.damage = 16;
-            Item.magic = true; 
+            Item.DamageType = DamageClass.Magic; 
             Item.width = 34;    
             Item.height = 34; 
             Item.useTime = 23; 
             Item.useAnimation = 23;
-            Item.useStyle = 5;    
+            Item.useStyle = ItemUseStyleID.Shoot;    
             Item.knockBack = 6.5f;
             Item.value = Item.sellPrice(0, 1, 20, 0);
             Item.rare = ItemRarityID.Orange;

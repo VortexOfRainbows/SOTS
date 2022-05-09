@@ -350,13 +350,13 @@ namespace SOTS.Void
 		{
 			VoidMinions = new List<int>();
 			List<int> whoAmI = new List<int>();
-			for (int i = 0; i < Main.projectile.Length; i++)
+			for (int i = 0; i < Main.Projectile.Length; i++)
 			{
 				Projectile projectile = Main.projectile[i];
-				if (projectile.owner == player.whoAmI && projectile.active && isVoidMinion(projectile))
+				if (Projectile.owner == player.whoAmI && Projectile.active && isVoidMinion(projectile))
 				{
 					VoidMinions.Add(voidMinion(projectile));
-					whoAmI.Add(projectile.whoAmI);
+					whoAmI.Add(Projectile.whoAmI);
 				}
 			}
 			int total = 0;
@@ -372,13 +372,13 @@ namespace SOTS.Void
 				{
 					int type = VoidMinions[i];
 					Projectile projectile = Main.projectile[whoAmI[i]];
-					if (projectile.owner == player.whoAmI)
+					if (Projectile.owner == player.whoAmI)
 					{
-						projectile.active = false;
-						projectile.Kill();
+						Projectile.active = false;
+						Projectile.Kill();
 					}
 					total -= minionVoidCost(type);
-					if (projectile.owner == player.whoAmI)
+					if (Projectile.owner == player.whoAmI)
 						VoidMinions.RemoveAt(i);
 					flag = true;
 				}
@@ -443,7 +443,7 @@ namespace SOTS.Void
         }
 		public static int voidMinion(Projectile projectile)
         {
-			return voidMinion(projectile.type);
+			return voidMinion(Projectile.type);
 		}
 		public static bool isVoidMinion(int type)
 		{

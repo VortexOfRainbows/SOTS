@@ -19,7 +19,7 @@ namespace SOTS.Projectiles.Laser
 		{
 			return false;
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
 			if (completedLoads > 0)
 			{
@@ -37,24 +37,24 @@ namespace SOTS.Projectiles.Laser
 		}
 		public override void SetDefaults() 
 		{
-			projectile.width = 16;
-			projectile.height = 16;
-			projectile.timeLeft = 24;
-			projectile.penetrate = -1;
-			projectile.hostile = false;
-			projectile.friendly = true;
-			projectile.magic = true;
-			projectile.tileCollide = false;
-			projectile.ignoreWater = true;
-			projectile.alpha = 255;
-			projectile.extraUpdates = 2;
+			Projectile.width = 16;
+			Projectile.height = 16;
+			Projectile.timeLeft = 24;
+			Projectile.penetrate = -1;
+			Projectile.hostile = false;
+			Projectile.friendly = true;
+			Projectile.magic = true;
+			Projectile.tileCollide = false;
+			Projectile.ignoreWater = true;
+			Projectile.alpha = 255;
+			Projectile.extraUpdates = 2;
 		}
 		public override bool PreAI() 
 		{
 			if(initialDirection.X == 0 && initialDirection.Y == 0)
 			{
-				initialDirection = projectile.velocity;
-				projectile.velocity *= 0f;
+				initialDirection = Projectile.velocity;
+				Projectile.velocity *= 0f;
 				if (completedLoads == 0)
 					LaserDraw(null); //this will initiate the hitboxes without requiring the projectile to be drawn. This stops some lag, and also makes hitboxes spawn regardless of lag
 			}
@@ -63,22 +63,22 @@ namespace SOTS.Projectiles.Laser
 		int counter = -2;
 		public override void AI() 
 		{
-			Player player = Main.player[projectile.owner];
-			//projectile.Center = npc.Center;
-			projectile.ai[0]++;
+			Player player = Main.player[Projectile.owner];
+			//Projectile.Center = npc.Center;
+			Projectile.ai[0]++;
 			if(completedLoads > 0)
 			{
-				projectile.alpha = 0;
+				Projectile.alpha = 0;
 				if (counter >= 1)
 				{
-					projectile.alpha = 230 + (counter * 1);
+					Projectile.alpha = 230 + (counter * 1);
 				}
 				counter++;
 			}
-			if (projectile.alpha > 255)
+			if (Projectile.alpha > 255)
 			{
-				projectile.active = false;
-				projectile.Kill();
+				Projectile.active = false;
+				Projectile.Kill();
 			}
 		}
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) 
@@ -91,7 +91,7 @@ namespace SOTS.Projectiles.Laser
 		int currentNPC = -1;
 		public int FindClosestEnemy(Vector2 pos)
 		{
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			if(currentNPC != -1)
 			{
 				return currentNPC;
@@ -122,7 +122,7 @@ namespace SOTS.Projectiles.Laser
 		bool currentPointRange = false;
 		public bool FindClosestPoint(Vector2 pos, Vector2 pos2)
 		{
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			if(currentPointRange)
 			{
 				return true;
@@ -165,10 +165,10 @@ namespace SOTS.Projectiles.Laser
 				float dX = npc.Center.X - drawpos.X;
 				float dY = npc.Center.Y - drawpos.Y;
 				float distance = (float) Math.Sqrt((double)(dX * dX + dY * dY));
-				if(distance < 24 && projectile.friendly)
+				if(distance < 24 && Projectile.friendly)
 				{
-					if(projectile.owner == Main.myPlayer)
-					Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 0, 0, mod.ProjectileType("ContinuumExplosion"), projectile.damage, projectile.knockBack, Main.myPlayer, 0f, projectile.ai[0]);
+					if(Projectile.owner == Main.myPlayer)
+					Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 0, 0, mod.ProjectileType("ContinuumExplosion"), Projectile.damage, Projectile.knockBack, Main.myPlayer, 0f, Projectile.ai[0]);
 					currentNPC = -1;
 					posListX.Add(npc.Center.X);
 					posListY.Add(npc.Center.Y);
@@ -181,7 +181,7 @@ namespace SOTS.Projectiles.Laser
 				float dX = destination.X - drawpos.X;
 				float dY = destination.Y - drawpos.Y;
 				float distance = (float) Math.Sqrt((double)(dX * dX + dY * dY));
-				if(distance < 24 && projectile.friendly)
+				if(distance < 24 && Projectile.friendly)
 				{
 					currentPointRange = false;
 					return true;
@@ -196,7 +196,7 @@ namespace SOTS.Projectiles.Laser
 		int completedLoads = 0;
 		public void LaserDraw(SpriteBatch spriteBatch)
 		{
-			float newAi = projectile.ai[0] * 2 / 13f;
+			float newAi = Projectile.ai[0] * 2 / 13f;
 			double frequency = 0.3; //set up constants for the color spectrum variables
 			double center = 130;
 			double width = 125;
@@ -205,13 +205,13 @@ namespace SOTS.Projectiles.Laser
 			float radianDir = (float)Math.Atan2(initialDirection.Y, initialDirection.X);
 			Color color = new Color(100, 100, 100); //initialize a color variable, this white color won't be used, but the variable will
 			Color white = new Color(255, 255, 255); //initialize white color
-			if(projectile.alpha > 200)
+			if(Projectile.alpha > 200)
 			{
-				white *= ((255 - projectile.alpha) / 255f); //make the white color scale with alpha, but not as much as the other colors, this is to make sure it looks like Last Prism
+				white *= ((255 - Projectile.alpha) / 255f); //make the white color scale with alpha, but not as much as the other colors, this is to make sure it looks like Last Prism
 			}
 			
-			Vector2 drawPos = projectile.Center;
-			int helixRot = (int)projectile.ai[0];
+			Vector2 drawPos = Projectile.Center;
+			int helixRot = (int)Projectile.ai[0];
 			float unitDis = 5f; //initiate a distance constant, this determines the "speed" at which the laser moves and bends
 			int k = 0;
 			int i = 10;
@@ -285,18 +285,18 @@ namespace SOTS.Projectiles.Laser
 					double grn = Math.Sin(frequency * (double)newAi + 2.0) * width + center;
 					double blu = Math.Sin(frequency * (double)newAi + 4.0) * width + center;
 					color = new Color((int)red, (int)grn, (int)blu);
-					color *= ((255 - projectile.alpha) / 255f);
+					color *= ((255 - Projectile.alpha) / 255f);
 					Vector2 helixPos1 = drawPos + new Vector2(curve.X, 0).RotatedBy(radianDir + MathHelper.ToRadians(90));
 					Vector2 helixPos2 = drawPos + new Vector2(curve.X, 0).RotatedBy(radianDir - MathHelper.ToRadians(90));
 
 					if(forceTerminate % 4 == 0)
-						Lighting.AddLight(drawPos, new Vector3((int)red, (int)grn, (int)blu) * (255 - projectile.alpha) / 20000f); //adds game light at the area
+						Lighting.AddLight(drawPos, new Vector3((int)red, (int)grn, (int)blu) * (255 - Projectile.alpha) / 20000f); //adds game light at the area
 
-					spriteBatch.Draw(Main.projectileTexture[projectile.type], helixPos1 - Main.screenPosition, null, color, radianDir, new Vector2(14, 7), 0.5f, SpriteEffects.None, 0f);
-					spriteBatch.Draw(Main.projectileTexture[projectile.type], helixPos2 - Main.screenPosition, null, color, radianDir, new Vector2(14, 7), 0.5f, SpriteEffects.None, 0f);
+					spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, helixPos1 - Main.screenPosition, null, color, radianDir, new Vector2(14, 7), 0.5f, SpriteEffects.None, 0f);
+					spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, helixPos2 - Main.screenPosition, null, color, radianDir, new Vector2(14, 7), 0.5f, SpriteEffects.None, 0f);
 					spriteBatch.Draw(texture, helixPos2 - Main.screenPosition, null, white, radianDir, new Vector2(14, 7), 0.5f, SpriteEffects.None, 0f);
 					spriteBatch.Draw(texture, helixPos1 - Main.screenPosition, null, white, radianDir, new Vector2(14, 7), 0.5f, SpriteEffects.None, 0f);
-					spriteBatch.Draw(Main.projectileTexture[projectile.type], drawPos - Main.screenPosition, null, color, radianDir, new Vector2(14, 7), 1f, SpriteEffects.None, 0f);
+					spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, drawPos - Main.screenPosition, null, color, radianDir, new Vector2(14, 7), 1f, SpriteEffects.None, 0f);
 					spriteBatch.Draw(texture, drawPos - Main.screenPosition, null, white, radianDir, new Vector2(14, 7), 1f, SpriteEffects.None, 0f);
 				}
 			}
@@ -307,7 +307,7 @@ namespace SOTS.Projectiles.Laser
 			{
 				if(completedLoads > 0 && spriteBatch != null)
 				{
-					spriteBatch.Draw(Main.projectileTexture[mod.ProjectileType("ContinuumSphere")], drawPos - Main.screenPosition, null, color, radianDir, new Vector2(15,15), 1f, SpriteEffects.None, 0f);
+					spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[mod.ProjectileType("ContinuumSphere")].Value, drawPos - Main.screenPosition, null, color, radianDir, new Vector2(15,15), 1f, SpriteEffects.None, 0f);
 					spriteBatch.Draw(texture2, drawPos - Main.screenPosition, null, white, radianDir, new Vector2(15,15), 1f, SpriteEffects.None, 0f);
 				}
 			}
@@ -315,7 +315,7 @@ namespace SOTS.Projectiles.Laser
 			//return false;
 			
 			/* //This is collision checking code, for blocks
-			Vector2 position = projectile.Center + unit * Distance;	
+			Vector2 position = Projectile.Center + unit * Distance;	
 			int i = (int)(position.X / 16);
 			int j =	(int)(position.Y / 16);
 			if(Main.tile[i, j].active() && Main.tileSolidTop[Main.tile[i, j].type] == false && Main.tileSolid[Main.tile[i, j].type] == true)

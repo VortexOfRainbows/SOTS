@@ -13,44 +13,44 @@ namespace SOTS.Projectiles.Lightning
 		}
         public override void SetDefaults()
         {
-			projectile.CloneDefaults(263);
+			Projectile.CloneDefaults(263);
             aiType = 263; 
-			projectile.height = 58;
-			projectile.width = 58;
-			projectile.penetrate = 24;
-			projectile.friendly = true;
-			projectile.timeLeft = 150;
-			projectile.tileCollide = false;
-			projectile.hostile = false;
-			projectile.magic = true;
+			Projectile.height = 58;
+			Projectile.width = 58;
+			Projectile.penetrate = 24;
+			Projectile.friendly = true;
+			Projectile.timeLeft = 150;
+			Projectile.tileCollide = false;
+			Projectile.hostile = false;
+			Projectile.magic = true;
 		}
 		public override void AI()
 		{
-			projectile.alpha++;
+			Projectile.alpha++;
 			for(int i = 0; i < 360; i += 15)
 			{
 				Vector2 circularLocation = new Vector2(-28, 0).RotatedBy(MathHelper.ToRadians(i));
 			
-				int num1 = Dust.NewDust(new Vector2(projectile.Center.X + circularLocation.X - 4, projectile.Center.Y + circularLocation.Y - 4), 4, 4, 56);
+				int num1 = Dust.NewDust(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, 56);
 				Main.dust[num1].noGravity = true;
 				Main.dust[num1].velocity *= 0.1f;
-				Main.dust[num1].alpha = projectile.alpha;
+				Main.dust[num1].alpha = Projectile.alpha;
 			}
 		}
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.immune[projectile.owner] = 15;
+            target.immune[Projectile.owner] = 15;
         }
 		public override void Kill(int timeLeft)
 		{
-			Player player = Main.player[projectile.owner];
-			SoundEngine.PlaySound(SoundID.Item94, (int)(projectile.Center.X), (int)(projectile.Center.Y));
-			if(projectile.owner == Main.myPlayer)
+			Player player = Main.player[Projectile.owner];
+			SoundEngine.PlaySound(SoundID.Item94, (int)(Projectile.Center.X), (int)(Projectile.Center.Y));
+			if(Projectile.owner == Main.myPlayer)
 			{
 				for(int i = 0; i < 8; i++)
                 {
 					Vector2 circularVelocity = new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(i * 45));
-					Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, circularVelocity.X, circularVelocity.Y, mod.ProjectileType("BlueLightning"), projectile.damage, projectile.knockBack, Main.myPlayer, 0f, 0f);
+					Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, circularVelocity.X, circularVelocity.Y, mod.ProjectileType("BlueLightning"), Projectile.damage, Projectile.knockBack, Main.myPlayer, 0f, 0f);
 				}
 			}
 		}

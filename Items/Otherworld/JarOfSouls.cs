@@ -36,7 +36,7 @@ namespace SOTS.Items.Otherworld
 		{
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/JarOfSoulsEffect").Value;
 			Color color = new Color(110, 110, 110, 0);
-			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, Item.height * 0.5f);
 			for (int k = 0; k < 6; k++)
 			{
 				float x = Main.rand.Next(-10, 11) * 0.1f;
@@ -57,7 +57,7 @@ namespace SOTS.Items.Otherworld
 			Item.width = 40;
 			Item.height = 58;
 			Item.value = Item.sellPrice(0, 1, 0, 0);
-			Item.rare = 1;
+			Item.rare = ItemRarityID.Blue;
 			Item.maxStack = 99;
 			Item.consumable = true;
 		}

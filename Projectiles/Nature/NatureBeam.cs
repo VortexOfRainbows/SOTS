@@ -15,16 +15,16 @@ namespace SOTS.Projectiles.Nature
 		}
 		public override void SetDefaults()
         {
-			projectile.width = 16;
-			projectile.height = 16;
-			projectile.penetrate = -1;
-			projectile.friendly = true;
-			projectile.timeLeft = 32;
-			projectile.tileCollide = false;
-			projectile.hostile = false;
-			projectile.netImportant = true;
-			projectile.alpha = 0;
-			projectile.extraUpdates = 0;
+			Projectile.width = 16;
+			Projectile.height = 16;
+			Projectile.penetrate = -1;
+			Projectile.friendly = true;
+			Projectile.timeLeft = 32;
+			Projectile.tileCollide = false;
+			Projectile.hostile = false;
+			Projectile.netImportant = true;
+			Projectile.alpha = 0;
+			Projectile.extraUpdates = 0;
 		}
         public override bool ShouldUpdatePosition()
         {
@@ -44,22 +44,22 @@ namespace SOTS.Projectiles.Nature
 		List<Vector2> drawPoints = new List<Vector2>();
 		public override bool PreAI()
 		{
-			Player player  = Main.player[projectile.owner];
+			Player player  = Main.player[Projectile.owner];
 			if (runOnce)
 			{
 				counter = Main.rand.Next(60);
-				ogPos = projectile.Center;
+				ogPos = Projectile.Center;
 				for (int i = 0; i < 15; i++)
 				{
-					Dust dust2 = Dust.NewDustDirect(projectile.Center - new Vector2(5) - new Vector2(10, 10), 24, 24, mod.DustType("CopyDust4"), 0, 0, 100, default, 1.6f);
-					dust2.velocity += projectile.velocity * 0.5f;
+					Dust dust2 = Dust.NewDustDirect(Projectile.Center - new Vector2(5) - new Vector2(10, 10), 24, 24, mod.DustType("CopyDust4"), 0, 0, 100, default, 1.6f);
+					dust2.velocity += Projectile.velocity * 0.5f;
 					dust2.noGravity = true;
 					dust2.color = VoidPlayer.natureColor;
 					dust2.noGravity = true;
 					dust2.fadeIn = 0.2f;
 					dust2.scale *= 1.4f;
 				}
-				Vector2 center = projectile.Center;
+				Vector2 center = Projectile.Center;
 				hasHit = true;
 				float scale = 0.1f;
 				for (int j = 0; j < 300; j++)
@@ -70,14 +70,14 @@ namespace SOTS.Projectiles.Nature
 					for (int i = -1; i < 2; i += 2)
 					{
 						Vector2 rotational = new Vector2((8 + i * 4) * i * scale, 0).RotatedBy(MathHelper.ToRadians(counter * 6));
-						drawPoints.Add(center + new Vector2(0, rotational.X).RotatedBy(projectile.velocity.ToRotation()));
+						drawPoints.Add(center + new Vector2(0, rotational.X).RotatedBy(Projectile.velocity.ToRotation()));
 						for(int k = 0; k < Main.npc.Length; k++)
 						{
 							NPC target = Main.npc[k];
 							if (!target.friendly && target.dontTakeDamage == false && target.lifeMax > 5 && target.active && target.CanBeChasedBy())
 							{
-								float width = projectile.width * projectile.scale;
-								float height = projectile.height * projectile.scale;
+								float width = Projectile.width * Projectile.scale;
+								float height = Projectile.height * Projectile.scale;
 								Rectangle projHitbox = new Rectangle((int)center.X - (int)width / 2, (int)center.Y - (int)height / 2, (int)width, (int)height);
 								if (target.Hitbox.Intersects(projHitbox))
 								{
@@ -88,8 +88,8 @@ namespace SOTS.Projectiles.Nature
 							}
 						}
 					}
-					center += projectile.velocity.SafeNormalize(new Vector2(1, 0)) * 14 * scale * scaleMod;
-					projectile.Center = center;
+					center += Projectile.velocity.SafeNormalize(new Vector2(1, 0)) * 14 * scale * scaleMod;
+					Projectile.Center = center;
 				}
 				runOnce = false;
 			}
@@ -99,15 +99,15 @@ namespace SOTS.Projectiles.Nature
 				{
 					Vector2 center = drawPoints[j];
 					Dust dust = Dust.NewDustDirect(center - new Vector2(5), 0, 0, mod.DustType("CopyDust4"), 0, 0, 100, default, 1.6f);
-					dust.velocity += projectile.velocity * 0.3f;
+					dust.velocity += Projectile.velocity * 0.3f;
 					dust.noGravity = true;
 					dust.color = VoidPlayer.natureColor;
 					dust.noGravity = true;
 					dust.fadeIn = 0.2f;
-					dust.alpha = projectile.alpha;
+					dust.alpha = Projectile.alpha;
 				}
 			}
-			projectile.alpha += 8;
+			Projectile.alpha += 8;
 			return true;
 		}
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
@@ -118,24 +118,24 @@ namespace SOTS.Projectiles.Nature
 		{
 			for (int i = 0; i < 8; i++)
 			{
-				Dust dust = Dust.NewDustDirect(projectile.Center - new Vector2(5) - new Vector2(10, 10), 24, 24, mod.DustType("CopyDust4"), 0, 0, 100, default, 1.6f);
-				dust.velocity += projectile.velocity * 0.3f;
+				Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5) - new Vector2(10, 10), 24, 24, mod.DustType("CopyDust4"), 0, 0, 100, default, 1.6f);
+				dust.velocity += Projectile.velocity * 0.3f;
 				dust.noGravity = true;
 				dust.color = VoidPlayer.natureColor;
 				dust.noGravity = true;
 				dust.fadeIn = 0.2f;
 			}
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
 			if (runOnce)
 				return false;
-			Texture2D texture = Main.projectileTexture[projectile.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			float scale = 0.1f;
 			int alpha = 0;
-			float rotation = projectile.velocity.ToRotation();
+			float rotation = Projectile.velocity.ToRotation();
 			Color color = new Color(VoidPlayer.natureColor.R, VoidPlayer.natureColor.G, VoidPlayer.natureColor.B, 0);
 			for (int i = 0; i < drawPoints.Count; i += 2)
 			{
@@ -147,9 +147,9 @@ namespace SOTS.Projectiles.Nature
 					Vector2 drawPos2 = drawPoints[i + 2];
 					rotation = (drawPos - drawPos2).ToRotation();
 				}
-				spriteBatch.Draw(texture, drawPos - Main.screenPosition, null, color * ((255 - projectile.alpha) / 255f) * ((255 - alpha) / 255f), rotation, origin, scale * scaleMod, SpriteEffects.None, 0f);
+				spriteBatch.Draw(texture, drawPos - Main.screenPosition, null, color * ((255 - Projectile.alpha) / 255f) * ((255 - alpha) / 255f), rotation, origin, scale * scaleMod, SpriteEffects.None, 0f);
 			}
-			rotation = projectile.velocity.ToRotation();
+			rotation = Projectile.velocity.ToRotation();
 			scale = 0.1f;
 			for (int i = 1; i < drawPoints.Count; i += 2)
 			{
@@ -161,13 +161,13 @@ namespace SOTS.Projectiles.Nature
 					Vector2 drawPos2 = drawPoints[i + 2];
 					rotation = (drawPos - drawPos2).ToRotation();
 				}
-				spriteBatch.Draw(texture, drawPos - Main.screenPosition, null, color * ((255 - projectile.alpha) / 255f) * ((255 - alpha) / 255f), rotation, origin, scale * scaleMod, SpriteEffects.None, 0f);
+				spriteBatch.Draw(texture, drawPos - Main.screenPosition, null, color * ((255 - Projectile.alpha) / 255f) * ((255 - alpha) / 255f), rotation, origin, scale * scaleMod, SpriteEffects.None, 0f);
 			}
 			return false;
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			target.immune[player.whoAmI] = 0;
 			int heal = 1;
 			if (Main.rand.NextBool(5)) heal = 2;

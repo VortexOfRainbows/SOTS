@@ -16,19 +16,19 @@ namespace SOTS.Projectiles.Otherworld
 		}
         public override void SetDefaults()
         {
-			projectile.width = 32;
-			projectile.height = 32;
-			projectile.friendly = true;
-			projectile.timeLeft = 3600;
-			projectile.penetrate = -1;
-			projectile.tileCollide = false;
-			projectile.melee = true;
-			projectile.alpha = 255;
-			projectile.ai[1] = -1;
-			projectile.usesIDStaticNPCImmunity = true;
-			projectile.idStaticNPCHitCooldown = 10;
-			projectile.hide = true;
-			projectile.ownerHitCheck = true;
+			Projectile.width = 32;
+			Projectile.height = 32;
+			Projectile.friendly = true;
+			Projectile.timeLeft = 3600;
+			Projectile.penetrate = -1;
+			Projectile.tileCollide = false;
+			Projectile.melee = true;
+			Projectile.alpha = 255;
+			Projectile.ai[1] = -1;
+			Projectile.usesIDStaticNPCImmunity = true;
+			Projectile.idStaticNPCHitCooldown = 10;
+			Projectile.hide = true;
+			Projectile.ownerHitCheck = true;
 		}
 		public override void DrawBehind(int index, List<int> drawCacheProjsBehindNPCsAndTiles, List<int> drawCacheProjsBehindNPCs, List<int> drawCacheProjsBehindProjectiles, List<int> drawCacheProjsOverWiresUI)
         {
@@ -36,7 +36,7 @@ namespace SOTS.Projectiles.Otherworld
         }
 		public override bool PreAI()
 		{
-			projectile.hide = projectile.ai[0] < 0;
+			Projectile.hide = Projectile.ai[0] < 0;
 			if (runOnce)
 			{
 				for (int i = 0; i < trailPos.Length; i++)
@@ -54,7 +54,7 @@ namespace SOTS.Projectiles.Otherworld
 		}
 		Vector2[] trailPos = new Vector2[22];
 		Vector2 toOwner = Vector2.Zero;
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
 			Draw(spriteBatch, lightColor);
 			return true;
@@ -62,11 +62,11 @@ namespace SOTS.Projectiles.Otherworld
 
 		public void Draw(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			if (runOnce)
 				return;
-			Texture2D texture = Main.projectileTexture[projectile.type];
-			bool black = projectile.ai[0] < 0;
+			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
+			bool black = Projectile.ai[0] < 0;
 			if (black)
 			{
 				texture = Mod.Assets.Request<Texture2D>("Projectiles/Otherworld/DigitalTrailBlack").Value;
@@ -81,7 +81,7 @@ namespace SOTS.Projectiles.Otherworld
 			int availableTrails2 = 0;
 			for (int k = 1; k < trailPos.Length; k++)
 			{
-				if (trailPos[k] != projectile.Center)
+				if (trailPos[k] != Projectile.Center)
 					availableTrails2++;
 				availableTrails++;
 				if (trailPos[k] == Vector2.Zero)
@@ -92,7 +92,7 @@ namespace SOTS.Projectiles.Otherworld
 			for (int k = 1; k < trailPos.Length; k++)
 			{
 				float mult = 0.1f + (0.25f + 0.65f * availableTrails2 / trailPos.Length) * (float)Math.Sin(MathHelper.ToRadians(180 * ((availableTrails - k) / ((float)availableTrails))));
-				float scale = projectile.scale * mult;
+				float scale = Projectile.scale * mult;
 				if (black)
 					scale *= 3f;
 				else
@@ -108,7 +108,7 @@ namespace SOTS.Projectiles.Otherworld
 				if (black)
 					length = 2.5f;
 				float max = betweenPositions.Length() / (length * scale);
-				if (trailPos[k] != projectile.Center)
+				if (trailPos[k] != Projectile.Center)
 					for (int i = 0; i < max; i++)
 					{
 						Color color = Color.Black * mult;
@@ -134,7 +134,7 @@ namespace SOTS.Projectiles.Otherworld
 		bool runOnce = true;
 		public void cataloguePos()
 		{
-			Vector2 current = projectile.Center;
+			Vector2 current = Projectile.Center;
 			for (int i = 0; i < trailPos.Length; i++)
 			{
 				Vector2 previousPosition = trailPos[i];
@@ -145,7 +145,7 @@ namespace SOTS.Projectiles.Otherworld
 		public void checkPos()
 		{
 			float iterator = 0f;
-			Vector2 current = projectile.Center;
+			Vector2 current = Projectile.Center;
 			for (int i = 0; i < trailPos.Length; i++)
 			{
 				Vector2 previousPosition = trailPos[i];
@@ -156,16 +156,16 @@ namespace SOTS.Projectiles.Otherworld
 			}
 			if(iterator >= trailPos.Length)
             {
-				projectile.Kill();
+				Projectile.Kill();
             }
 		}
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
 		{
 			float point = 0f;
-			Vector2 previousPosition = projectile.Center;
+			Vector2 previousPosition = Projectile.Center;
 			for (int k = 0; k < trailPos.Length; k++)
 			{
-				float scale = projectile.scale * (trailPos.Length - k) / (float)trailPos.Length;
+				float scale = Projectile.scale * (trailPos.Length - k) / (float)trailPos.Length;
 				scale *= 1.25f;
 				if (trailPos[k] == Vector2.Zero)
 				{
@@ -184,28 +184,28 @@ namespace SOTS.Projectiles.Otherworld
 		float counter = 0;
 		public override void AI()
 		{
-			if (projectile.ai[1] != -1 && end == false)
+			if (Projectile.ai[1] != -1 && end == false)
 			{
 				Projectile parent = null;
 				for (short i = 0; i < Main.maxProjectiles; i++)
 				{
 					Projectile proj = Main.projectile[i];
-					if (proj.active && proj.owner == projectile.owner && proj.identity == (int)projectile.ai[1])
+					if (proj.active && proj.owner == Projectile.owner && proj.identity == (int)Projectile.ai[1])
 					{
 						parent = proj;
 						break;
 					}
 				}
 				Projectile owner = parent;
-				if(owner != null && owner.active && owner.type == ModContent.ProjectileType<DigitalSlash>() && owner.owner == projectile.owner && ((int)owner.localAI[1] == projectile.whoAmI || (int)owner.localAI[0] == projectile.whoAmI))
+				if(owner != null && owner.active && owner.type == ModContent.ProjectileType<DigitalSlash>() && owner.owner == Projectile.owner && ((int)owner.localAI[1] == Projectile.whoAmI || (int)owner.localAI[0] == Projectile.whoAmI))
 				{
 					Vector2 center = owner.Center;
-					projectile.Center = center;
-					projectile.velocity = owner.velocity;
-					projectile.rotation = owner.rotation;
-					//float circular = new Vector2(0, 5).RotatedBy(MathHelper.ToRadians(counter * 12.5f * projectile.ai[0])).X;
-					projectile.Center += new Vector2(projectile.ai[0] * 6 + 24, 0).RotatedBy(projectile.rotation);
-					projectile.timeLeft = 120;
+					Projectile.Center = center;
+					Projectile.velocity = owner.velocity;
+					Projectile.rotation = owner.rotation;
+					//float circular = new Vector2(0, 5).RotatedBy(MathHelper.ToRadians(counter * 12.5f * Projectile.ai[0])).X;
+					Projectile.Center += new Vector2(Projectile.ai[0] * 6 + 24, 0).RotatedBy(Projectile.rotation);
+					Projectile.timeLeft = 120;
 				}
 				else
                 {

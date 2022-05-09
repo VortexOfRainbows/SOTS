@@ -18,7 +18,7 @@ namespace SOTS.Items.Permafrost
             Item.DamageType = DamageClass.Melee; 
             Item.useTime = 22;  
             Item.useAnimation = 22;   
-            Item.useStyle = 5;
+            Item.useStyle = ItemUseStyleID.Shoot;
             Item.channel = true;
             Item.knockBack = 3.5f;
             Item.value = Item.sellPrice(0, 7, 0, 0);

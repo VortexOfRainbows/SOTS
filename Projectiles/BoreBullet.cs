@@ -10,37 +10,37 @@ namespace SOTS.Projectiles
 	{
 		public override void SetStaticDefaults()
 		{
-			ProjectileID.Sets.TrailCacheLength[projectile.type] = 10;
-			ProjectileID.Sets.TrailingMode[projectile.type] = 0;
+			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 10;
+			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
 			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/BoreBulletTrail");
 			Vector2 drawOrigin = new Vector2(texture.Width/2, texture.Height/2);
-			Vector2 lastPosition = projectile.Center;
-			for (int k = 0; k < projectile.oldPos.Length; k++)
+			Vector2 lastPosition = Projectile.Center;
+			for (int k = 0; k < Projectile.oldPos.Length; k++)
 			{
-				float scale = 1f - 0.5f *(k / (float)projectile.oldPos.Length);
-				Vector2 drawPos = projectile.oldPos[k] + new Vector2(projectile.width/2, projectile.height/2);
-				Color color = projectile.GetAlpha(lightColor) * ((float)(projectile.oldPos.Length - k) / (float)projectile.oldPos.Length);
+				float scale = 1f - 0.5f *(k / (float)Projectile.oldPos.Length);
+				Vector2 drawPos = Projectile.oldPos[k] + new Vector2(Projectile.width/2, Projectile.height/2);
+				Color color = Projectile.GetAlpha(lightColor) * ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
 				color.A = 190;
 				float lengthTowards = Vector2.Distance(lastPosition, drawPos) / texture.Height / scale;
-				spriteBatch.Draw(texture, drawPos - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), null, color * scale * 0.8f, projectile.rotation, drawOrigin, new Vector2(1, lengthTowards) * scale, projectile.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+				spriteBatch.Draw(texture, drawPos - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), null, color * scale * 0.8f, Projectile.rotation, drawOrigin, new Vector2(1, lengthTowards) * scale, Projectile.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 				lastPosition = drawPos;
 			}
 			return true;
 		}
 		public override void SetDefaults()
         {
-			projectile.CloneDefaults(ProjectileID.Bullet);
-			projectile.light *= 0.5f;
-			projectile.aiStyle = -1;
-			projectile.penetrate = 6;
-			projectile.width = 10;
-			projectile.height = 24;
-			projectile.alpha = 255;
-			projectile.usesLocalNPCImmunity = true;
-			projectile.localNPCHitCooldown = 240;
+			Projectile.CloneDefaults(ProjectileID.Bullet);
+			Projectile.light *= 0.5f;
+			Projectile.aiStyle = -1;
+			Projectile.penetrate = 6;
+			Projectile.width = 10;
+			Projectile.height = 24;
+			Projectile.alpha = 255;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = 240;
 		}
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
         {
@@ -50,8 +50,8 @@ namespace SOTS.Projectiles
         }
         public override void OnHitNPC(NPC n, int damage, float knockback, bool crit)
 		{
-			projectile.ai[0] = -2;
-			projectile.netUpdate = true;
+			Projectile.ai[0] = -2;
+			Projectile.netUpdate = true;
 		}
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
@@ -69,61 +69,61 @@ namespace SOTS.Projectiles
 		{
 			for(int i = 0; i < 20; i++)
 			{
-				Dust dust = Dust.NewDustDirect(new Vector2(projectile.Center.X - 4, projectile.Center.Y - 4), 4, 4, DustID.Stone);
+				Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4), 4, 4, DustID.Stone);
 				dust.noGravity = true;
 				dust.velocity *= 0.9f;
-				dust.velocity += projectile.oldVelocity.SafeNormalize(Vector2.Zero) * 0.4f;
+				dust.velocity += Projectile.oldVelocity.SafeNormalize(Vector2.Zero) * 0.4f;
 				dust.scale *= 1.4f;
 			}
 			base.Kill(timeLeft);
         }
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-			if (projectile.penetrate > 2)
-				projectile.penetrate--;
+			if (Projectile.penetrate > 2)
+				Projectile.penetrate--;
 			else
 			{
-				projectile.Kill();
+				Projectile.Kill();
 				return true;
             }
-			projectile.ai[0] = -1;
-			projectile.netUpdate = true;
-			projectile.velocity = oldVelocity;
+			Projectile.ai[0] = -1;
+			Projectile.netUpdate = true;
+			Projectile.velocity = oldVelocity;
             return false;
         }
         bool runOnce = true;
         public override void AI()
 		{
-			projectile.spriteDirection = projectile.direction;
-			projectile.rotation = projectile.velocity.ToRotation() + 1.57f;
-			if (projectile.alpha > 0)
-				projectile.alpha -= 20;
+			Projectile.spriteDirection = Projectile.direction;
+			Projectile.rotation = Projectile.velocity.ToRotation() + 1.57f;
+			if (Projectile.alpha > 0)
+				Projectile.alpha -= 20;
 			else
-				projectile.alpha = 0;
-			if(runOnce || projectile.ai[0] < 0)
+				Projectile.alpha = 0;
+			if(runOnce || Projectile.ai[0] < 0)
             {
 				if(!runOnce)
                 {
-					if (projectile.ai[0] == -2)
-						projectile.ai[0] = 15;
+					if (Projectile.ai[0] == -2)
+						Projectile.ai[0] = 15;
 					else
-						projectile.ai[0] = 30;
-					SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 22, 0.75f, 0.1f);
+						Projectile.ai[0] = 30;
+					SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 22, 0.75f, 0.1f);
 				}
-				projectile.velocity *= 0.04f;
+				Projectile.velocity *= 0.04f;
 				runOnce = false;
             }
-			if (projectile.ai[0] > 0)
+			if (Projectile.ai[0] > 0)
 			{
-				projectile.tileCollide = false;
-				projectile.ai[0]--;
-				projectile.velocity *= 0.5f;
+				Projectile.tileCollide = false;
+				Projectile.ai[0]--;
+				Projectile.velocity *= 0.5f;
 				for (int i = -1; i <= 1; i += 2)
 				{
-					Vector2 circular = new Vector2(2 * i, 0).RotatedBy(MathHelper.ToRadians(projectile.ai[0] * 12));
+					Vector2 circular = new Vector2(2 * i, 0).RotatedBy(MathHelper.ToRadians(Projectile.ai[0] * 12));
 					circular.Y *= 0.5f;
-					circular = circular.RotatedBy(projectile.rotation);
-					Dust dust = Dust.NewDustDirect(new Vector2(projectile.Center.X - 4, projectile.Center.Y - 4), 4, 4, DustID.Stone);
+					circular = circular.RotatedBy(Projectile.rotation);
+					Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4), 4, 4, DustID.Stone);
 					dust.noGravity = true;
 					dust.velocity *= 0.1f;
 					dust.velocity += circular;
@@ -131,9 +131,9 @@ namespace SOTS.Projectiles
 				}
 			}
 			else
-				projectile.tileCollide = true;
-			Vector2 normalizedVelocity = projectile.velocity.SafeNormalize(Vector2.Zero);
-			projectile.velocity += normalizedVelocity * 0.4f;
+				Projectile.tileCollide = true;
+			Vector2 normalizedVelocity = Projectile.velocity.SafeNormalize(Vector2.Zero);
+			Projectile.velocity += normalizedVelocity * 0.4f;
 			//amogus :)
 		}
 	}

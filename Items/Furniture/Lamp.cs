@@ -31,8 +31,8 @@ namespace SOTS.Items.Furniture
         public override void HitWire(int i, int j)
         {
             Tile tile = Main.tile[i, j];
-            int topY = j - tile.frameY / 18 % 3;
-            short frameAdjustment = (short)(tile.frameX > 0 ? -18 : 18);
+            int topY = j - tile.TileFrameY / 18 % 3;
+            short frameAdjustment = (short)(tile.TileFrameX > 0 ? -18 : 18);
             Main.tile[i, topY].frameX += frameAdjustment;
             Main.tile[i, topY + 1].frameX += frameAdjustment;
             Main.tile[i, topY + 2].frameX += frameAdjustment;

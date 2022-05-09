@@ -142,8 +142,8 @@ namespace SOTS.Items.Furniture
             Tile tile = Main.tile[Player.tileTargetX, Player.tileTargetY];
             int left = Player.tileTargetX;
             int top = Player.tileTargetY;
-            left -= tile.frameX % 54 / 18;
-            if (tile.frameY % 36 != 0)
+            left -= tile.TileFrameX % 54 / 18;
+            if (tile.TileFrameY % 36 != 0)
             {
                 top--;
             }
@@ -183,8 +183,8 @@ namespace SOTS.Items.Furniture
             Tile tile = Main.tile[Player.tileTargetX, Player.tileTargetY];
             int left = Player.tileTargetX;
             int top = Player.tileTargetY;
-            left -= tile.frameX % 54 / 18;
-            if (tile.frameY % 36 != 0)
+            left -= tile.TileFrameX % 54 / 18;
+            if (tile.TileFrameY % 36 != 0)
             {
                 top--;
             }

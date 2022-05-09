@@ -18,7 +18,7 @@ namespace SOTS.Items.Earth
 		public override void SafeSetDefaults()
 		{
             Item.damage = 15;
-            Item.ranged = true;
+            Item.DamageType = DamageClass.Ranged;
             Item.width = 30;
             Item.height = 22;
             Item.useTime = 5; 

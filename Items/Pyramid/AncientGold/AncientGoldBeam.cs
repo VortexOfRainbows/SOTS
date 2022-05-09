@@ -21,7 +21,7 @@ namespace SOTS.Items.Pyramid.AncientGold
 			Item.autoReuse = true;
 			Item.useAnimation = 15;
 			Item.useTime = 7;
-			Item.useStyle = 1;
+			Item.useStyle = ItemUseStyleID.Swing;
 			Item.rare = 5;
 			Item.consumable = true;
 			Item.createWall = mod.WallType("AncientGoldBeamWall");
@@ -66,7 +66,7 @@ namespace SOTS.Items.Pyramid.AncientGold
 			Item.autoReuse = true;
 			Item.useAnimation = 15;
 			Item.useTime = 7;
-			Item.useStyle = 1;
+			Item.useStyle = ItemUseStyleID.Swing;
 			Item.rare = 5;
 			Item.consumable = true;
 			Item.createWall = mod.WallType("AncientGoldBrickWallTile");

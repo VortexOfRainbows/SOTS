@@ -1299,7 +1299,7 @@ namespace SOTS
 							}
 						}
 					}
-					if (CritNightmare && (projectile != null || (projectile.type != ModContent.ProjectileType<EvilGrowth>() && projectile.type != ModContent.ProjectileType<EvilStrike>())))
+					if (CritNightmare && (projectile != null || (Projectile.type != ModContent.ProjectileType<EvilGrowth>() && Projectile.type != ModContent.ProjectileType<EvilStrike>())))
 					{
 						if (nightmareArmCD <= 0)
 						{
@@ -1351,36 +1351,36 @@ namespace SOTS
 			for(int i = 0; i < 1000; i++)
             {
 				Projectile projectile = Main.projectile[i];
-				if(projectile.type == ModContent.ProjectileType<Projectiles.Celestial.SubspaceEye>() && projectile.active)
+				if(Projectile.type == ModContent.ProjectileType<Projectiles.Celestial.SubspaceEye>() && Projectile.active)
                 {
 					seenSubspace = true;
-					int current = projectile.alpha;
+					int current = Projectile.alpha;
 					current -= 50;
 					if (current < 0)
 						current = 0;
 					float percent = (float)current / 205f;
-					if((int)projectile.ai[1] == -1)
+					if((int)Projectile.ai[1] == -1)
 					{
 						percent *= 0.5f;
-						Vector2 toSubEye = projectile.Center - Player.Center;
+						Vector2 toSubEye = Projectile.Center - Player.Center;
 						if (toSubEye.Length() < 4000f)
-							Main.screenPosition.X = (Main.screenPosition.X * (1f - percent)) + ((projectile.Center.X - (screenDimensions.X / 2)) * percent);
+							Main.screenPosition.X = (Main.screenPosition.X * (1f - percent)) + ((Projectile.Center.X - (screenDimensions.X / 2)) * percent);
 					}
 					else
 					{
-						Vector2 toSubEye = projectile.Center - Player.Center;
+						Vector2 toSubEye = Projectile.Center - Player.Center;
 						if (toSubEye.Length() < 4000f)
-							Main.screenPosition = (Main.screenPosition * (1f - percent)) + ((new Vector2(projectile.Center.X, projectile.Center.Y) - (screenDimensions / 2)) * percent);
+							Main.screenPosition = (Main.screenPosition * (1f - percent)) + ((new Vector2(Projectile.Center.X, Projectile.Center.Y) - (screenDimensions / 2)) * percent);
 					}
 					break;
                 }
 				if(!seenSubspace)
 				{
-					if (projectile.type == ModContent.ProjectileType<Projectiles.Celestial.FluidFollower>() && projectile.active && projectile.owner == Main.myPlayer)
+					if (Projectile.type == ModContent.ProjectileType<Projectiles.Celestial.FluidFollower>() && Projectile.active && Projectile.owner == Main.myPlayer)
 					{
-						Vector2 toSubEye = projectile.Center - Player.Center;
+						Vector2 toSubEye = Projectile.Center - Player.Center;
 						if (toSubEye.Length() < 4000f)
-							Main.screenPosition = new Vector2(projectile.Center.X, projectile.Center.Y) - (screenDimensions / 2);
+							Main.screenPosition = new Vector2(Projectile.Center.X, Projectile.Center.Y) - (screenDimensions / 2);
 					}
 				}
             }

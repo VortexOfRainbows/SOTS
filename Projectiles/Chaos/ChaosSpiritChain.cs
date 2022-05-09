@@ -15,13 +15,13 @@ namespace SOTS.Projectiles.Chaos
 	{
 		private float aiCounter
 		{
-			get => projectile.ai[0];
-			set => projectile.ai[0] = value;
+			get => Projectile.ai[0];
+			set => Projectile.ai[0] = value;
 		}
 		private float aiCounter2
 		{
-			get => projectile.ai[1];
-			set => projectile.ai[1] = value;
+			get => Projectile.ai[1];
+			set => Projectile.ai[1] = value;
 		}
 		public override void SetStaticDefaults()
 		{
@@ -29,15 +29,15 @@ namespace SOTS.Projectiles.Chaos
 		}
 		public sealed override void SetDefaults()
 		{
-			projectile.width = 38;
-			projectile.height = 38;
-			projectile.tileCollide = false;
-			projectile.hostile = false;
-			projectile.friendly = false;
-			projectile.penetrate = -1;
-			projectile.timeLeft = 1200;
-			projectile.netImportant = true;
-			projectile.hide = true;
+			Projectile.width = 38;
+			Projectile.height = 38;
+			Projectile.tileCollide = false;
+			Projectile.hostile = false;
+			Projectile.friendly = false;
+			Projectile.penetrate = -1;
+			Projectile.timeLeft = 1200;
+			Projectile.netImportant = true;
+			Projectile.hide = true;
 		}
         public override void DrawBehind(int index, List<int> drawCacheProjsBehindNPCsAndTiles, List<int> drawCacheProjsBehindNPCs, List<int> drawCacheProjsBehindProjectiles, List<int> drawCacheProjsOverWiresUI)
         {
@@ -45,17 +45,17 @@ namespace SOTS.Projectiles.Chaos
 		}
         public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture = Main.projectileTexture[projectile.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			if (center != Vector2.Zero)
 			{
-				Vector2 ToOwner = projectile.Center - center;
+				Vector2 ToOwner = Projectile.Center - center;
 				float dist = ToOwner.Length();
 				int max = 12;
 				for(int i = 0; i < max; i++)
 				{
 					float mult = (float)i / max;
-					Vector2 drawPos = Vector2.Lerp(projectile.Center, center, mult) - Main.screenPosition;
+					Vector2 drawPos = Vector2.Lerp(Projectile.Center, center, mult) - Main.screenPosition;
 					float droop = (float)Math.Sin(MathHelper.ToRadians(210 * (float)i / max));
 					drawPos.Y += droop * (64 - dist * 0.1f);
 					for (int k = 0; k < 6; k++)
@@ -63,7 +63,7 @@ namespace SOTS.Projectiles.Chaos
 						Color color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(k * 60)) * 0.5f * ((float)i / max);
 						color.A = 0;
 						Vector2 circular = new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(k * 60 + Main.GameUpdateCount));
-						Main.spriteBatch.Draw(texture, drawPos + circular, null, color, 0, drawOrigin, projectile.scale, SpriteEffects.None, 0f);
+						Main.spriteBatch.Draw(texture, drawPos + circular, null, color, 0, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
 					}
 				}
 			}
@@ -82,35 +82,35 @@ namespace SOTS.Projectiles.Chaos
 				}
 				else
 				{
-					projectile.Kill();
+					Projectile.Kill();
 					return;
 				}
 			}
 			else
             {
-				projectile.Kill();
+				Projectile.Kill();
 				return;
 			}
 			if (runOnce)
 			{
-				SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 96, 1.4f, -0.4f);
+				SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 96, 1.4f, -0.4f);
 				runOnce = false;
 			}
 			aiCounter2++;
 			if(aiCounter2 > 20)
             {
-				projectile.velocity *= 0.6f;
+				Projectile.velocity *= 0.6f;
             }
-			if(projectile.velocity.Length() < 1f)
+			if(Projectile.velocity.Length() < 1f)
             {
-				projectile.velocity *= 0;
+				Projectile.velocity *= 0;
             }
 			else if(aiCounter < 30)
 			{
 				for (float i = 0; i < 1; i += 0.5f)
 				{
-					Dust dust2 = Dust.NewDustPerfect(projectile.Center, ModContent.DustType<Dusts.CopyDust4>(), Main.rand.NextVector2Circular(2f, 2f));
-					dust2.velocity += projectile.velocity * 0.4f;
+					Dust dust2 = Dust.NewDustPerfect(Projectile.Center, ModContent.DustType<Dusts.CopyDust4>(), Main.rand.NextVector2Circular(2f, 2f));
+					dust2.velocity += Projectile.velocity * 0.4f;
 					dust2.noGravity = true;
 					dust2.color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(Main.rand.NextFloat(360)), true);
 					dust2.noGravity = true;

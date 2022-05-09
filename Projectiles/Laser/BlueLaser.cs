@@ -22,22 +22,22 @@ namespace SOTS.Projectiles.Laser
 		}
         public override void SetDefaults()
         {
-            projectile.width = 10;
-            projectile.height = 10;
-            projectile.friendly = true;     //this defines if the projectile is frendly
-            projectile.penetrate = -1;  //this defines the projectile penetration, -1 = infinity
-            projectile.tileCollide = false;   //this defines if the tile can colide with walls
-            projectile.magic = true;
-            projectile.hide = true;
+            Projectile.width = 10;
+            Projectile.height = 10;
+            Projectile.friendly = true;     //this defines if the projectile is frendly
+            Projectile.penetrate = -1;  //this defines the projectile penetration, -1 = infinity
+            Projectile.tileCollide = false;   //this defines if the tile can colide with walls
+            Projectile.magic = true;
+            Projectile.hide = true;
         }
 
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override bool PreDraw(ref Color lightColor)
         {
             if (_charge == 100)
             {
-                Vector2 unit = _targetPos - Main.player[projectile.owner].Center;
+                Vector2 unit = _targetPos - Main.player[Projectile.owner].Center;
                 unit.Normalize();
-                DrawLaser(spriteBatch, Main.projectileTexture[projectile.type], Main.player[projectile.owner].Center, unit, 5, projectile.damage, -1.57f, 1, 1000, Color.Red, 45);
+                DrawLaser(spriteBatch, Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, Main.player[Projectile.owner].Center, unit, 5, Projectile.damage, -1.57f, 1, 1000, Color.Red, 45);
             }
             return false;
 
@@ -80,8 +80,8 @@ namespace SOTS.Projectiles.Laser
         {
             if (_charge == 100)
             {
-                Player p = Main.player[projectile.owner];
-                Vector2 unit = (Main.player[projectile.owner].Center - _targetPos);
+                Player p = Main.player[Projectile.owner];
+                Vector2 unit = (Main.player[Projectile.owner].Center - _targetPos);
                 unit.Normalize();
                 float point = 0f;
                 if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), p.Center - 45f * unit, p.Center - unit * _moveDist, 22, ref point))
@@ -97,7 +97,7 @@ namespace SOTS.Projectiles.Laser
         /// </summary>
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.immune[projectile.owner] = 4;
+            target.immune[Projectile.owner] = 4;
         }
 
         /// <summary>
@@ -107,22 +107,22 @@ namespace SOTS.Projectiles.Laser
         {
 
             Vector2 mousePos = Main.MouseWorld;
-            Player player = Main.player[projectile.owner];
+            Player player = Main.player[Projectile.owner];
 			
             #region Set projectile position
-            if (projectile.owner == Main.myPlayer) // Multiplayer support
+            if (Projectile.owner == Main.myPlayer) // Multiplayer support
             {
                 Vector2 diff = mousePos - player.Center;
                 diff.Normalize();
-                projectile.position = player.Center + diff * _moveDist;
-                projectile.timeLeft = 2;
-                int dir = projectile.position.X > player.position.X ? 1 : -1;
+                Projectile.position = player.Center + diff * _moveDist;
+                Projectile.timeLeft = 2;
+                int dir = Projectile.position.X > player.position.X ? 1 : -1;
                 player.ChangeDir(dir);
-                player.heldProj = projectile.whoAmI;
+                player.heldProj = Projectile.whoAmI;
                 player.itemTime = 2;
                 player.itemAnimation = 2;
                 player.itemRotation = (float)Math.Atan2(diff.Y * dir, diff.X * dir);
-                projectile.soundDelay--;
+                Projectile.soundDelay--;
 
 
                 #endregion
@@ -133,14 +133,14 @@ namespace SOTS.Projectiles.Laser
             // Kill the projectile if the player stops channeling
             if (!player.channel)
             {
-                projectile.Kill();
+                Projectile.Kill();
             }
             else
             {
 
                 if (Main.time % 10 < 1 && !player.CheckMana(player.inventory[player.selectedItem].mana, true))
                 {
-                    projectile.Kill();
+                    Projectile.Kill();
                 }
                 if (_charge < 100)
                 {
@@ -167,10 +167,10 @@ namespace SOTS.Projectiles.Laser
                     _moveDist -= 5f;
                     break;
                 }
-                if (projectile.soundDelay <= 0)//this is the proper sound delay for this type of weapon
+                if (Projectile.soundDelay <= 0)//this is the proper sound delay for this type of weapon
                 {
-                    SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 15);    //this is the sound when the weapon is used   cheange 15 for diferent sound
-                    projectile.soundDelay = 40;    //this is the proper sound delay for this type of weapon
+                    SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 15);    //this is the sound when the weapon is used   cheange 15 for diferent sound
+                    Projectile.soundDelay = 40;    //this is the proper sound delay for this type of weapon
                 }
             }
             _targetPos = player.Center + unit * _moveDist;
@@ -178,7 +178,7 @@ namespace SOTS.Projectiles.Laser
             //dust
             for (int i = 0; i < 15; ++i)
             {
-                float num1 = projectile.velocity.ToRotation() + (Main.rand.Next(2) == 1 ? -1.0f : 1.0f) * 1.57f;
+                float num1 = Projectile.velocity.ToRotation() + (Main.rand.Next(2) == 1 ? -1.0f : 1.0f) * 1.57f;
                 float num2 = (float)(Main.rand.NextDouble() * 0.8f + 1.0f);
                 Vector2 dustVel = new Vector2((float)Math.Cos(num1) * num2, (float)Math.Sin(num1) * num2);
             }

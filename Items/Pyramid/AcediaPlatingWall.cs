@@ -22,8 +22,8 @@ namespace SOTS.Items.Pyramid
 			Item.autoReuse = true;
 			Item.useAnimation = 15;
 			Item.useTime = 7;
-			Item.useStyle = 1;
-			Item.rare = 9;
+			Item.useStyle = ItemUseStyleID.Swing;
+			Item.rare = ItemRarityID.Cyan;
 			Item.consumable = true;
 			Item.createWall = ModContent.WallType<UnsafeAcediaWallWall>();
 		}

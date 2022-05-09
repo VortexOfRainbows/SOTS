@@ -73,15 +73,15 @@ namespace SOTS.Items.Earth
 			Tile tile = Main.tile[i, j];
 			int left = i;
 			int top = j;
-			if (tile.frameX % 36 != 0)
+			if (tile.TileFrameX % 36 != 0)
 			{
 				left--;
 			}
-			if (tile.frameY % 36 != 0)
+			if (tile.TileFrameY % 36 != 0)
 			{
 				top--;
 			}
-			float uniquenessCounter = Main.GlobalTime * -100 + (left + top) * 5 + tile.frameX + (left % 7 * 3) + (top % 7 * -2);
+			float uniquenessCounter = Main.GlobalTime * -100 + (left + top) * 5 + tile.TileFrameX + (left % 7 * 3) + (top % 7 * -2);
 			float alphaMult = 0.45f + 0.35f * (float)Math.Sin(MathHelper.ToRadians(uniquenessCounter));
 			r = 0.27f * alphaMult;
 			g = 0.33f * alphaMult;
@@ -92,11 +92,11 @@ namespace SOTS.Items.Earth
 			Tile tile = Main.tile[i, j];
 			int left = i;
 			int top = j;
-			if (tile.frameX % 36 != 0)
+			if (tile.TileFrameX % 36 != 0)
 			{
 				left--;
 			}
-			if (tile.frameY % 36 != 0)
+			if (tile.TileFrameY % 36 != 0)
 			{
 				top--;
 			}
@@ -105,42 +105,42 @@ namespace SOTS.Items.Earth
 			{
 				zero = Vector2.Zero;
 			}
-			Texture2D texture = Main.tileTexture[tile.type];
+			Texture2D texture = Main.tileTexture[tile.TileType];
 			Vector2 drawOffSet = Vector2.Zero;
-			if (tile.frameY < 36) //pointing up
+			if (tile.TileFrameY < 36) //pointing up
 				drawOffSet.Y += 2;
-			else if (tile.frameY < 72) //pointing left
+			else if (tile.TileFrameY < 72) //pointing left
 				drawOffSet.X += 2;
-			else if (tile.frameY < 108) //pointing down
+			else if (tile.TileFrameY < 108) //pointing down
 				drawOffSet.Y -= 2;
 			else   //pointing right
 				drawOffSet.X -= 2;
 			Vector2 location = new Vector2(i * 16, j * 16);
 			Color color2 = Lighting.GetColor(i, j, WorldGen.paintColor(tile.color()));
-			Rectangle frame = new Rectangle(tile.frameX, tile.frameY, 16, 16);
+			Rectangle frame = new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, 16);
 			spriteBatch.Draw(texture, location + drawOffSet + zero - Main.screenPosition, frame, color2, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
 			if(i != left && j != top)
 			{
-				float uniquenessCounter = Main.GlobalTime * -100 + (left + top) * 5 + tile.frameX + (left % 7 * 3) + (top % 7 * -2);
+				float uniquenessCounter = Main.GlobalTime * -100 + (left + top) * 5 + tile.TileFrameX + (left % 7 * 3) + (top % 7 * -2);
 				float alphaMult = 0.55f + 0.45f * (float)Math.Sin(MathHelper.ToRadians(uniquenessCounter));
 				for(int x = 0; x < 4; x++)
 				{
 					Vector2 offset = new Vector2(16, 16); 
-					frame = new Rectangle(tile.frameX - 18, tile.frameY - 18, 16, 16);
+					frame = new Rectangle(tile.TileFrameX - 18, tile.TileFrameY - 18, 16, 16);
 					if (x == 1)
 					{
 						offset = new Vector2(16, 0);
-						frame = new Rectangle(tile.frameX - 18, tile.frameY, 16, 16);
+						frame = new Rectangle(tile.TileFrameX - 18, tile.TileFrameY, 16, 16);
 					}
 					if (x == 2)
                     {
 						offset = new Vector2(0, 16);
-						frame = new Rectangle(tile.frameX, tile.frameY - 18, 16, 16);
+						frame = new Rectangle(tile.TileFrameX, tile.TileFrameY - 18, 16, 16);
 					}
 					if (x == 3)
 					{
 						offset = new Vector2(0, 0);
-						frame = new Rectangle(tile.frameX, tile.frameY, 16, 16);
+						frame = new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, 16);
 					}
 					for (int k = 0; k < 2; k++)
 					{
@@ -160,11 +160,11 @@ namespace SOTS.Items.Earth
 			Tile tile = Main.tile[i, j];
 			int left = i;
 			int top = j;
-			if (tile.frameX % 36 != 0)
+			if (tile.TileFrameX % 36 != 0)
 			{
 				left--;
 			}
-			if (tile.frameY % 36 != 0)
+			if (tile.TileFrameY % 36 != 0)
 			{
 				top--;
 			}

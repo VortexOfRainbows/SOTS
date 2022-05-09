@@ -130,7 +130,7 @@ namespace SOTS.NPCs.Constructs
 					int x = (int)reticlePos.X / 16;
 					int y = (int)reticlePos.Y / 16;
 					Tile tile = Framing.GetTileSafely(x, y);
-					if(!tile.active() || !Main.tileSolid[tile.type])
+					if(!tile.active() || !Main.tileSolid[tile.TileType])
 					{
 						break;
 					}
@@ -303,7 +303,7 @@ namespace SOTS.NPCs.Constructs
 			dust.scale *= 2f;
 			dust.alpha = npc.alpha;
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
 			Texture2D texture = Main.npcTexture[npc.type];
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);

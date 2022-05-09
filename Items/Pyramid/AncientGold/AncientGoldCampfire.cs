@@ -88,7 +88,7 @@ namespace SOTS.Items.Pyramid.AncientGold
 			int animate = k * 36;
 			Main.spriteBatch.Draw(texture,
 				new Vector2(i * 16 - (int)Main.screenPosition.X, j * 16 - (int)Main.screenPosition.Y) + zero,
-				new Rectangle(tile.frameX, tile.frameY + animate, 16, 16),
+				new Rectangle(tile.TileFrameX, tile.TileFrameY + animate, 16, 16),
 				Lighting.GetColor(i, j), 0f, default(Vector2), 1f, effects, 0f);
 			return false; 
 		}

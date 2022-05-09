@@ -20,13 +20,13 @@ namespace SOTS.Projectiles
 		}
 		public sealed override void SetDefaults()
 		{
-			projectile.width = 32;
-			projectile.height = 32;
-			projectile.tileCollide = false;
-			projectile.friendly = false;
-			projectile.penetrate = -1;
-			projectile.timeLeft = 300;
-			projectile.netImportant = true;
+			Projectile.width = 32;
+			Projectile.height = 32;
+			Projectile.tileCollide = false;
+			Projectile.friendly = false;
+			Projectile.penetrate = -1;
+			Projectile.timeLeft = 300;
+			Projectile.netImportant = true;
 		}
 		public List<CurseFoam> particleList = new List<CurseFoam>();
 		public void ResetFoamLists()
@@ -71,10 +71,10 @@ namespace SOTS.Projectiles
 		{
 			if(itemType > 0)
 			{
-				Player player = Main.player[projectile.owner];
+				Player player = Main.player[Projectile.owner];
 				Item item = player.HeldItem;
 				Color color = Item.GetAlpha(drawColor);
-				Texture2D texture = Main.itemTexture[itemType];
+				Texture2D texture = Terraria.GameContent.TextureAssets.Item[itemType].Value;
 				Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / frameCount / 2);
 				Rectangle rectangleFrame = new Rectangle(0, texture.Height / frameCount * frame, texture.Width, texture.Height / frameCount);
 
@@ -86,7 +86,7 @@ namespace SOTS.Projectiles
 				SOTS.VisionShader.Parameters["uImageSize0"].SetValue(new Vector2(texture.Width, texture.Height));
 				SOTS.VisionShader.Parameters["uSourceRect"].SetValue(new Vector4(0, texture.Height / frameCount * frame, texture.Width, texture.Height / frameCount));
 				SOTS.VisionShader.CurrentTechnique.Passes[0].Apply();
-				Main.spriteBatch.Draw(texture, projectile.Center - Main.screenPosition, rectangleFrame, color, projectile.rotation, drawOrigin, projectile.scale, projectile.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, rectangleFrame, color, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 				Main.spriteBatch.End();
 				Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 			}
@@ -118,7 +118,7 @@ namespace SOTS.Projectiles
 				if (data[i].A >= 255 && Main.rand.NextBool(rate) && Math.Abs(length - percent) <= 0.03f)
 				{
 					Vector2 offset = -new Vector2(width / 2, height / 2) + new Vector2(localX, localY);
-					offset.X *= projectile.spriteDirection;
+					offset.X *= Projectile.spriteDirection;
 					position = offset.RotatedBy(rotation);
 					Vector2 velocity = offset.SafeNormalize(Vector2.Zero).RotatedBy(rotation) * 0.4f;
 					particleList.Add(new CurseFoam(position, velocity, 1.7f, true));
@@ -133,15 +133,15 @@ namespace SOTS.Projectiles
 			color2.A = 0;
 			for (int i = 0; i < particleList.Count; i++)
 			{
-				Vector2 drawPos = projectile.Center + particleList[i].position - Main.screenPosition;
-				Color color = projectile.GetAlpha(color2) * (0.35f + 0.65f * particleList[i].scale);
+				Vector2 drawPos = Projectile.Center + particleList[i].position - Main.screenPosition;
+				Color color = Projectile.GetAlpha(color2) * (0.35f + 0.65f * particleList[i].scale);
 				Main.spriteBatch.Draw(texture, drawPos, new Rectangle(0, 0, texture.Width, texture.Height / 3), color, particleList[i].rotation, drawOrigin, particleList[i].scale * 0.9f, SpriteEffects.None, 0f);
 			}
 			return false;
 		}
 		public Color GetColor()
 		{
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			SOTSPlayer modPlayer = player.GetModPlayer<SOTSPlayer>();
 			Color DestinationColor = Color.DarkGray;
 			int uniqueGem = modPlayer.UniqueVisionNumber % 8;
@@ -180,21 +180,21 @@ namespace SOTS.Projectiles
 		int frame = 0;
 		public void FindPosition()
 		{
-			Player player = Main.player[projectile.owner];
-			if (Main.myPlayer != projectile.owner)
-				projectile.timeLeft = 20;
+			Player player = Main.player[Projectile.owner];
+			if (Main.myPlayer != Projectile.owner)
+				Projectile.timeLeft = 20;
 			Vector2 idlePosition = player.Center;
 			idlePosition.X -= player.direction * 16f;
-			projectile.spriteDirection = player.direction;
-			projectile.ai[0]++;
-			float sin = (float)Math.Sin(MathHelper.ToRadians(projectile.ai[0] * 1.75f)) * 4;
+			Projectile.spriteDirection = player.direction;
+			Projectile.ai[0]++;
+			float sin = (float)Math.Sin(MathHelper.ToRadians(Projectile.ai[0] * 1.75f)) * 4;
 			idlePosition.Y += sin - 4;
-			projectile.Center = idlePosition;
-			projectile.rotation = (projectile.oldPosition.X - projectile.position.X) * -0.05f;
+			Projectile.Center = idlePosition;
+			Projectile.rotation = (Projectile.oldPosition.X - Projectile.position.X) * -0.05f;
 		}
 		public override void AI()
 		{
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			Item item = player.HeldItem;
 			FindPosition();
 			catalogueParticles();
@@ -212,18 +212,18 @@ namespace SOTS.Projectiles
 				}
 				if(Item.useStyle == ItemUseStyleID.Swing || Item.staff[Item.type] || Item.type == ModContent.ItemType<DigitalDaito>())
                 {
-					projectile.rotation += MathHelper.ToRadians(150) * projectile.spriteDirection;
+					Projectile.rotation += MathHelper.ToRadians(150) * Projectile.spriteDirection;
                 }
 				else if(Item.useStyle == ItemUseStyleID.Shoot)
                 {
 					if(Item.height > Item.width) //bow type?
 					{
-						projectile.spriteDirection *= -1;
-						projectile.rotation += MathHelper.ToRadians(15) * projectile.spriteDirection;
+						Projectile.spriteDirection *= -1;
+						Projectile.rotation += MathHelper.ToRadians(15) * Projectile.spriteDirection;
 					}
 					else if(Item.width >= Item.height) //gun type?
 					{
-						projectile.rotation += MathHelper.ToRadians(105) * projectile.spriteDirection;
+						Projectile.rotation += MathHelper.ToRadians(105) * Projectile.spriteDirection;
 					}
                 }
 				itemType = Item.type;
@@ -264,14 +264,14 @@ namespace SOTS.Projectiles
 				{
 					if (Main.netMode != NetmodeID.Server)
 					{
-						SpawnDust(Main.itemTexture[itemType], 7, itemAlpha, projectile.rotation);
+						SpawnDust(Terraria.GameContent.TextureAssets.Item[itemType].Value, 7, itemAlpha, Projectile.rotation);
 					}
 					itemAlpha += 0.03f;
 				}
 				if (itemAlpha > 2)
 					itemAlpha = 2;
 			}
-			Lighting.AddLight(projectile.Center, GetColor().ToVector3() * 0.3f);
+			Lighting.AddLight(Projectile.Center, GetColor().ToVector3() * 0.3f);
 		}
 	}
 }

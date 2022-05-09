@@ -33,7 +33,7 @@ namespace SOTS.Items.Otherworld.Furniture
 		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
 		{
 			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Otherworld/Furniture/PotGeneratorBase").Value;
-			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, Item.height * 0.5f);
 			Main.spriteBatch.Draw(texture2, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y) + 2), null, lightColor * (1f - (Item.alpha / 255f)), rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			return false;
 		}
@@ -57,7 +57,7 @@ namespace SOTS.Items.Otherworld.Furniture
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/Furniture/PotGeneratorMiniOutline").Value;
 			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Otherworld/Furniture/PotGeneratorMiniFill").Value;
 			Color color = new Color(110, 110, 110, 0);
-			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, Item.height * 0.5f);
 			for (int k = 0; k < 5; k++)
 			{
 				float x = Main.rand.Next(-10, 11) * 0.03f;
@@ -95,7 +95,7 @@ namespace SOTS.Items.Otherworld.Furniture
 			float uniquenessCounter = Main.GlobalTime * -100 + (i + j) * 5;
 			Tile tile = Main.tile[i, j];
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/Furniture/PotGeneratorTileGlow").Value;
-			Rectangle frame = new Rectangle(tile.frameX, tile.frameY, 16, 16);
+			Rectangle frame = new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, 16);
 			Color color;
 			color = WorldGen.paintColor((int)Main.tile[i, j].color()) * (100f / 255f);
 			color.A = 0;
@@ -168,8 +168,8 @@ namespace SOTS.Items.Otherworld.Furniture
 			Main.mouseRightRelease = true;
 			Player player = Main.LocalPlayer;
 			Tile tile = Main.tile[i, j];
-			int left = i - tile.frameX / 18;
-			int top = j - tile.frameY / 18;
+			int left = i - tile.TileFrameX / 18;
+			int top = j - tile.TileFrameY / 18;
 
 			int index = GetInstance<PotTimer>().Find(left, top);
 			if (index == -1)
@@ -200,8 +200,8 @@ namespace SOTS.Items.Otherworld.Furniture
         public override void NearbyEffects(int i, int j, bool closer)
 		{
 			Tile tile = Framing.GetTileSafely(i, j);
-			int left = i - tile.frameX / 18;
-			int top = j - tile.frameY / 18;
+			int left = i - tile.TileFrameX / 18;
+			int top = j - tile.TileFrameY / 18;
 			closer = true;
 			int index = GetInstance<PotTimer>().Find(left, top);
 			if (index == -1)
@@ -223,8 +223,8 @@ namespace SOTS.Items.Otherworld.Furniture
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
 		{
 			Tile tile = Main.tile[i, j];
-			int left = i - tile.frameX / 18;
-			int top = j - tile.frameY / 18;
+			int left = i - tile.TileFrameX / 18;
+			int top = j - tile.TileFrameY / 18;
 			int index = GetInstance<PotTimer>().Find(left, top);
 			if (index == -1)
 			{
@@ -375,7 +375,7 @@ namespace SOTS.Items.Otherworld.Furniture
 		public override bool ValidTile(int i, int j)
 		{
 			Tile tile = Main.tile[i, j];
-			return tile.active() && tile.type == (ushort)ModContent.TileType<PotGeneratorTile>() && tile.frameX == 0 && tile.frameY == 0;
+			return tile.active() && tile.TileType == (ushort)ModContent.TileType<PotGeneratorTile>() && tile.TileFrameX == 0 && tile.TileFrameY == 0;
 		}
 
 		public override int Hook_AfterPlacement(int i, int j, int type, int style, int direction)
@@ -394,13 +394,13 @@ namespace SOTS.Items.Otherworld.Furniture
 	{
 		public override void SetDefaults() //Do you enjoy how all my net sycning is done via projectiles?
 		{
-			projectile.alpha = 255;
-			projectile.timeLeft = 24;
-			projectile.friendly = false;
-			projectile.tileCollide = false;
-			projectile.netImportant = true;
-			projectile.width = 26;
-			projectile.height = 36;
+			Projectile.alpha = 255;
+			Projectile.timeLeft = 24;
+			Projectile.friendly = false;
+			Projectile.tileCollide = false;
+			Projectile.netImportant = true;
+			Projectile.width = 26;
+			Projectile.height = 36;
 		}
 		public override bool? CanCutTiles()
 		{
@@ -408,26 +408,26 @@ namespace SOTS.Items.Otherworld.Furniture
 		}
 		public override void AI()
 		{
-			projectile.alpha = 255;
-			projectile.Kill();
+			Projectile.alpha = 255;
+			Projectile.Kill();
 		}
 		public override void Kill(int timeLeft)
 		{
-			int i = (int)projectile.Center.X / 16;
+			int i = (int)Projectile.Center.X / 16;
 			i--;
-			int j = (int)projectile.Center.Y / 16;
+			int j = (int)Projectile.Center.Y / 16;
 			Color white = Color.White;
 			white.A = 0;
 			Color color;
 			color = WorldGen.paintColor((int)Main.tile[i, j + 1].color());
 			color.A = 0;
-			if (projectile.ai[0] == 0)
+			if (Projectile.ai[0] == 0)
 			{
-				WorldGen.PlaceTile(i, j, TileType<SkyPots>(), false, false, -1, (int)projectile.ai[1]);
+				WorldGen.PlaceTile(i, j, TileType<SkyPots>(), false, false, -1, (int)Projectile.ai[1]);
 				if(Main.netMode != NetmodeID.MultiplayerClient)
 					NetMessage.SendTileSquare(Main.myPlayer, i, j, 3);
-				SoundEngine.PlaySound(SoundID.Item4, projectile.Center);
-				Vector2 position = projectile.Center;
+				SoundEngine.PlaySound(SoundID.Item4, Projectile.Center);
+				Vector2 position = Projectile.Center;
 				for (int k = 0; k < 360; k += 15)
 				{
 					Vector2 circularLocation = new Vector2(-4, 0).RotatedBy(MathHelper.ToRadians(k));
@@ -441,9 +441,9 @@ namespace SOTS.Items.Otherworld.Furniture
 					Main.dust[num1].velocity = circularLocation;
 				}
 			}
-			if (projectile.ai[0] == 1)
+			if (Projectile.ai[0] == 1)
 			{
-				Vector2 position = projectile.Center;
+				Vector2 position = Projectile.Center;
 				for (int k = 0; k < 360; k += 15)
 				{
 					Vector2 circularLocation = new Vector2(-24, 0).RotatedBy(MathHelper.ToRadians(k));

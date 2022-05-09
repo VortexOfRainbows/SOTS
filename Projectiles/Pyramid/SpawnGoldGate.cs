@@ -17,13 +17,13 @@ namespace SOTS.Projectiles.Pyramid
 		}
 		public override void SetDefaults()
 		{
-			projectile.alpha = 255;
-			projectile.timeLeft = 24;
-			projectile.friendly = false;
-			projectile.tileCollide = false;
-			projectile.netImportant = true;
-			projectile.width = 16;
-			projectile.height = 16;
+			Projectile.alpha = 255;
+			Projectile.timeLeft = 24;
+			Projectile.friendly = false;
+			Projectile.tileCollide = false;
+			Projectile.netImportant = true;
+			Projectile.width = 16;
+			Projectile.height = 16;
 		}
 		public override bool? CanCutTiles()
 		{
@@ -31,12 +31,12 @@ namespace SOTS.Projectiles.Pyramid
 		}
 		public override void AI()
 		{
-			projectile.alpha = 255;
-			projectile.Kill();
+			Projectile.alpha = 255;
+			Projectile.Kill();
 		}
 		public override void Kill(int timeLeft)
 		{
-			Vector2 position = projectile.Center + new Vector2(16, 0);
+			Vector2 position = Projectile.Center + new Vector2(16, 0);
 			for (int k = 0; k < 360; k += 5)
 			{
 				Vector2 circularLocation = new Vector2(-4, 0).RotatedBy(MathHelper.ToRadians(k));
@@ -52,12 +52,12 @@ namespace SOTS.Projectiles.Pyramid
 			}
 			if (Main.netMode == 1)
 				return;
-			int i = (int)projectile.Center.X / 16 + 1;
-			int j = (int)projectile.Center.Y / 16;
+			int i = (int)Projectile.Center.X / 16 + 1;
+			int j = (int)Projectile.Center.Y / 16;
 			int top = j - 2;
 			int left = i - 1;
 			bool valid = true;
-			SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 4, 1.25f, 0.3f);
+			SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 4, 1.25f, 0.3f);
 			for (int x = left; x < left + 2; x++)
 			{
 				for (int y = top; y < top + 5; y++)
@@ -78,7 +78,7 @@ namespace SOTS.Projectiles.Pyramid
 				{
 					for (int y = top; y < top + 5; y++)
 					{
-						if (projectile.ai[0] != -1 && placed)
+						if (Projectile.ai[0] != -1 && placed)
 							Main.tile[x, y].frameX += 36;
 						NetMessage.SendTileSquare(-1, x, y, 2);
 					}

@@ -29,27 +29,27 @@ namespace SOTS.Projectiles.Celestial
 		
         public override void SetDefaults()
         {
-			projectile.width = 26;
-			projectile.height = 32;
-			projectile.melee = true;
-			projectile.penetrate = -1;
-			projectile.friendly = false;
-            //Main.projFrames[projectile.type] = 1;
-			projectile.timeLeft = 10000;
-			projectile.tileCollide = false;
-			projectile.hostile = false;
+			Projectile.width = 26;
+			Projectile.height = 32;
+			Projectile.melee = true;
+			Projectile.penetrate = -1;
+			Projectile.friendly = false;
+            //Main.projFrames[Projectile.type] = 1;
+			Projectile.timeLeft = 10000;
+			Projectile.tileCollide = false;
+			Projectile.hostile = false;
 		}
 		public override void AI()
 		{
-			Player player  = Main.player[projectile.owner];
+			Player player  = Main.player[Projectile.owner];
 			Vector2 cursorArea;
 			
 			if(player.active && !player.dead)
 			{
-				projectile.timeLeft = 6;
+				Projectile.timeLeft = 6;
 			}
-			float disPX = player.Center.X - projectile.Center.X;
-			float disPY = player.Center.Y - projectile.Center.Y;
+			float disPX = player.Center.X - Projectile.Center.X;
+			float disPY = player.Center.Y - Projectile.Center.Y;
 			float disP = (float)Math.Sqrt(disPX * disPX + disPY * disPY);
 			
 			float disEX;
@@ -64,8 +64,8 @@ namespace SOTS.Projectiles.Celestial
 					NPC target = Main.npc[j];
 					if(!target.friendly && target.dontTakeDamage == false && target.active)
 					{
-						disEX = target.Center.X - projectile.Center.X;
-						disEY = target.Center.Y - projectile.Center.Y;
+						disEX = target.Center.X - Projectile.Center.X;
+						disEY = target.Center.Y - Projectile.Center.Y;
 						float disEC = (float) Math.Sqrt((double)(disEX * disEX + disEY * disEY));
 						if(disEC < minDist)
 						{
@@ -97,22 +97,22 @@ namespace SOTS.Projectiles.Celestial
 			cursorArea.X = (float)Main.mouseX + Main.screenPosition.X;
 			if(player.channel && channel)
 			{
-				float goToCursorX = cursorArea.X - projectile.Center.X;
-				float goToCursorY = cursorArea.Y - projectile.Center.Y;
+				float goToCursorX = cursorArea.X - Projectile.Center.X;
+				float goToCursorY = cursorArea.Y - Projectile.Center.Y;
 				startingDirection = Math.Atan2((double)goToCursorY, (double)goToCursorX);
-				projectile.rotation = (float)startingDirection + MathHelper.ToRadians(45f);
+				Projectile.rotation = (float)startingDirection + MathHelper.ToRadians(45f);
 				startingDirection *= 180/Math.PI;
 				lockOnTarget = -1;
-				projectile.ai[1] = 100;
+				Projectile.ai[1] = 100;
 			}
 			else
 			{
-				projectile.ai[1] = 10;
+				Projectile.ai[1] = 10;
 				channel = false;
 			}
 			Vector2 directionArea = new Vector2(2555, 0).RotatedBy(MathHelper.ToRadians((float)startingDirection));
-			directionArea.X = projectile.Center.X + directionArea.X;
-			directionArea.Y = projectile.Center.Y + directionArea.Y;
+			directionArea.X = Projectile.Center.X + directionArea.X;
+			directionArea.Y = Projectile.Center.Y + directionArea.Y;
 			
 			if(lockOnTarget == 1 || lockOnTarget == 3)
 			{
@@ -121,12 +121,12 @@ namespace SOTS.Projectiles.Celestial
 				{
 					if(lockOnTarget == 1)
 					{
-						xTargetDif = target.Center.X - projectile.Center.X;
-						yTargetDif = target.Center.Y - projectile.Center.Y;
+						xTargetDif = target.Center.X - Projectile.Center.X;
+						yTargetDif = target.Center.Y - Projectile.Center.Y;
 						lockOnTarget = 3;
 					}
-					projectile.position.X = target.Center.X - xTargetDif - projectile.width/2;
-					projectile.position.Y = target.Center.Y - yTargetDif - projectile.width/2;
+					Projectile.position.X = target.Center.X - xTargetDif - Projectile.width/2;
+					Projectile.position.Y = target.Center.Y - yTargetDif - Projectile.width/2;
 				}
 				else
 				{
@@ -137,12 +137,12 @@ namespace SOTS.Projectiles.Celestial
 			{
 				if(lockOnTarget == 2)
 				{
-					xTargetDif = player.Center.X - projectile.Center.X;
-					yTargetDif = player.Center.Y - projectile.Center.Y;
+					xTargetDif = player.Center.X - Projectile.Center.X;
+					yTargetDif = player.Center.Y - Projectile.Center.Y;
 					lockOnTarget = 4;
 				}
-				projectile.position.X = player.Center.X - xTargetDif - projectile.width/2;
-				projectile.position.Y = player.Center.Y - yTargetDif - projectile.width/2;
+				Projectile.position.X = player.Center.X - xTargetDif - Projectile.width/2;
+				Projectile.position.Y = player.Center.Y - yTargetDif - Projectile.width/2;
 			}
 			
 			
@@ -154,12 +154,12 @@ namespace SOTS.Projectiles.Celestial
 		}
 		public void LaunchLaser(Vector2 area)
 		{
-			Player player  = Main.player[projectile.owner];
-			int Probe = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("RedLaser"), projectile.damage, 0, projectile.owner);
+			Player player  = Main.player[Projectile.owner];
+			int Probe = Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, mod.ProjectileType("RedLaser"), Projectile.damage, 0, Projectile.owner);
 			Main.projectile[Probe].ai[0] = area.X;
 			Main.projectile[Probe].ai[1] = area.Y;
 			VoidPlayer.ModPlayer(player).voidMeter--;
-			projectile.Kill();
+			Projectile.Kill();
 		}
 		public override void PostDraw(Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch, Color lightColor)
         {
@@ -167,10 +167,10 @@ namespace SOTS.Projectiles.Celestial
 			//Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/PinkyHook_Chain");    //this where the chain of grappling hook is drawn
 													  //change YourModName with ur mod name/ and CustomHookPr_Chain with the name of ur one
 			Vector2 directionArea = new Vector2(2555, 0).RotatedBy(MathHelper.ToRadians((float)startingDirection));
-			directionArea.X = projectile.Center.X + directionArea.X;
-			directionArea.Y = projectile.Center.Y + directionArea.Y;
+			directionArea.X = Projectile.Center.X + directionArea.X;
+			directionArea.Y = Projectile.Center.Y + directionArea.Y;
 			Vector2 mountedCenter = directionArea;
-			Vector2 position = projectile.Center;
+			Vector2 position = Projectile.Center;
 			Microsoft.Xna.Framework.Rectangle? sourceRectangle = new Microsoft.Xna.Framework.Rectangle?();
 			Vector2 origin = new Vector2((float)texture.Width * 0.5f, (float)texture.Height * 0.5f);
 			float num1 = (float)texture.Height;
@@ -209,43 +209,43 @@ namespace SOTS.Projectiles.Celestial
 
 		public override void SetDefaults() 
 		{
-			projectile.width = 8;
-			projectile.height = 8;
-			projectile.timeLeft = 60;
-			projectile.penetrate = -1;
-			projectile.hostile = false;
-			projectile.friendly = true;
-			projectile.magic = false; //both damage types just in case i wanna repurpose it
-			projectile.melee = true;
-			projectile.tileCollide = false;
-			projectile.ignoreWater = true;
+			Projectile.width = 8;
+			Projectile.height = 8;
+			Projectile.timeLeft = 60;
+			Projectile.penetrate = -1;
+			Projectile.hostile = false;
+			Projectile.friendly = true;
+			Projectile.magic = false; //both damage types just in case i wanna repurpose it
+			Projectile.melee = true;
+			Projectile.tileCollide = false;
+			Projectile.ignoreWater = true;
 		}
 		public override void AI() 
 		{
-			//projectile.Center = npc.Center;
-			projectile.alpha += 20;
-			projectile.localAI[0] += 1f;
-			if (projectile.localAI[0] > 3f) {
-				projectile.damage = 0;
+			//Projectile.Center = npc.Center;
+			Projectile.alpha += 20;
+			Projectile.localAI[0] += 1f;
+			if (Projectile.localAI[0] > 3f) {
+				Projectile.damage = 0;
 			}
-			if (projectile.localAI[0] > 12f) {
-				projectile.Kill();
+			if (Projectile.localAI[0] > 12f) {
+				Projectile.Kill();
 			}
 		}
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.immune[projectile.owner] = 4;
+            target.immune[Projectile.owner] = 4;
         }
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) 
 		{
 			float point = 0f;
-			Vector2 endPoint = new Vector2(projectile.ai[0], projectile.ai[1]);
-			Vector2 unit = endPoint - projectile.Center;
+			Vector2 endPoint = new Vector2(Projectile.ai[0], Projectile.ai[1]);
+			Vector2 unit = endPoint - Projectile.Center;
 			float length = unit.Length();
 			unit.Normalize();
 			for (float Distance = 0; Distance <= length; Distance += 6f) 
 			{
-				Vector2 position = projectile.Center + unit * Distance;	
+				Vector2 position = Projectile.Center + unit * Distance;	
 				int i = (int)(position.X / 16);
 				int j =	(int)(position.Y / 16);
 				
@@ -253,26 +253,26 @@ namespace SOTS.Projectiles.Celestial
 				{
 					break;
 				}
-				if(Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), projectile.Center, position, 8f, ref point))
+				if(Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, position, 8f, ref point))
 				{
 					return true;
 				}
 			}
 			return false;
-			//return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), projectile.Center, endPoint, 8f, ref point);
+			//return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, endPoint, 8f, ref point);
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
-			Player player  = Main.player[projectile.owner];
-			Vector2 endPoint = new Vector2(projectile.ai[0], projectile.ai[1]);
-			Vector2 unit = endPoint - projectile.Center;
+			Player player  = Main.player[Projectile.owner];
+			Vector2 endPoint = new Vector2(Projectile.ai[0], Projectile.ai[1]);
+			Vector2 unit = endPoint - Projectile.Center;
 			float length = unit.Length();
 			unit.Normalize();
 			for (float Distance = 0; Distance <= length; Distance += 5f) {
 				Distance += Main.rand.Next(4);
-				Vector2 drawPos = projectile.Center + unit * Distance - Main.screenPosition;
+				Vector2 drawPos = Projectile.Center + unit * Distance - Main.screenPosition;
 				
-				Vector2 position = projectile.Center + unit * Distance;	
+				Vector2 position = Projectile.Center + unit * Distance;	
 				int i = (int)(position.X / 16);
 				int j =	(int)(position.Y / 16);
 				if(Main.tile[i, j].active() && Main.tileSolidTop[Main.tile[i, j].type] == false && Main.tileSolid[Main.tile[i, j].type] == true)
@@ -280,9 +280,9 @@ namespace SOTS.Projectiles.Celestial
 					Distance -= 6f;
 					break;
 				}
-				Color alpha = new Color(200, 20, 65) * ((255 - projectile.alpha) / 255f);
-				//Color alpha = ((255 - projectile.alpha) / 255f);
-				spriteBatch.Draw(Main.projectileTexture[projectile.type], drawPos, null, alpha, Distance, new Vector2(2, 2), 1f, SpriteEffects.None, 0f);
+				Color alpha = new Color(200, 20, 65) * ((255 - Projectile.alpha) / 255f);
+				//Color alpha = ((255 - Projectile.alpha) / 255f);
+				spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, drawPos, null, alpha, Distance, new Vector2(2, 2), 1f, SpriteEffects.None, 0f);
 			}
 			return false;
 		}

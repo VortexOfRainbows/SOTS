@@ -12,7 +12,7 @@ namespace SOTS.Prim.Trails
 		public AtenPrimTrail(Projectile projectile)
 		{
 			Entity = projectile;
-			EntityType = projectile.type;
+			EntityType = Projectile.type;
 			DrawType = PrimTrailManager.DrawProjectile;
 			Color = new Color(255, 230, 138);
 			Width = 20;

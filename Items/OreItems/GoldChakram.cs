@@ -16,7 +16,7 @@ namespace SOTS.Items.OreItems
 		{
 
 			Item.damage = 18;
-			Item.ranged = true;
+			Item.DamageType = DamageClass.Ranged;
 			Item.width = 30;
 			Item.height = 34;
 			Item.useTime = 36;

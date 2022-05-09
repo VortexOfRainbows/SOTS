@@ -21,10 +21,10 @@ namespace SOTS.Items.Inferno
 			Item.height = 34;
 			Item.useTime = 21;
 			Item.useAnimation = 21;
-			Item.useStyle = 1;
+			Item.useStyle = ItemUseStyleID.Swing;
 			Item.knockBack = 4.5f;
             Item.value = Item.sellPrice(0, 2, 75, 0);
-			Item.rare = 3;
+			Item.rare = ItemRarityID.Orange;
 			Item.UseSound = SoundID.Item1;
 			Item.autoReuse = false;            
 			Item.shoot = mod.ProjectileType("ObsidianStar"); 

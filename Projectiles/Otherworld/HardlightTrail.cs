@@ -9,22 +9,22 @@ namespace SOTS.Projectiles.Otherworld
     {
         public override void SetDefaults()
         {
-			projectile.width = 32;
-			projectile.height = 32;
-			projectile.friendly = true;
-			projectile.timeLeft = 3600;
-			projectile.penetrate = -1;
-			projectile.tileCollide = false;
-			projectile.melee = true;
-			projectile.alpha = 255;
-			projectile.ai[1] = -1;
-			projectile.usesLocalNPCImmunity = true;
-			projectile.localNPCHitCooldown = 10;
+			Projectile.width = 32;
+			Projectile.height = 32;
+			Projectile.friendly = true;
+			Projectile.timeLeft = 3600;
+			Projectile.penetrate = -1;
+			Projectile.tileCollide = false;
+			Projectile.melee = true;
+			Projectile.alpha = 255;
+			Projectile.ai[1] = -1;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = 10;
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			projectile.localNPCImmunity[target.whoAmI] = projectile.localNPCHitCooldown;
-			target.immune[projectile.owner] = 0;
+			Projectile.localNPCImmunity[target.whoAmI] = Projectile.localNPCHitCooldown;
+			target.immune[Projectile.owner] = 0;
 		}
 		Color color = Color.White;
 		public override bool PreAI()
@@ -41,12 +41,12 @@ namespace SOTS.Projectiles.Otherworld
 		}
 		public override void PostAI()
 		{
-			Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 0.7f / 255f, (255 - projectile.alpha) * 1f / 255f, (255 - projectile.alpha) * 1.45f / 255f);
+			Lighting.AddLight(Projectile.Center, (255 - Projectile.alpha) * 0.7f / 255f, (255 - Projectile.alpha) * 1f / 255f, (255 - Projectile.alpha) * 1.45f / 255f);
 			checkPos();
 			cataloguePos();
 		}
 		Vector2[] trailPos = new Vector2[30];
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
 			if (runOnce)
 				return true;
@@ -59,7 +59,7 @@ namespace SOTS.Projectiles.Otherworld
 			}
 			for (int k = 1; k < trailPos.Length; k++)
 			{
-				float scale = projectile.scale * (trailPos.Length - k) / (float)trailPos.Length;
+				float scale = Projectile.scale * (trailPos.Length - k) / (float)trailPos.Length;
 				scale *= 0.7f;
 				if (trailPos[k] == Vector2.Zero)
 				{
@@ -83,7 +83,7 @@ namespace SOTS.Projectiles.Otherworld
 							x = 0;
 							y = 0;
 						}
-						if (trailPos[k] != projectile.Center)
+						if (trailPos[k] != Projectile.Center)
 							Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, betweenPositions.ToRotation() + MathHelper.ToRadians(90), drawOrigin, scale, SpriteEffects.None, 0f);
 					}
 				}
@@ -94,8 +94,8 @@ namespace SOTS.Projectiles.Otherworld
 		bool runOnce = true;
 		public void cataloguePos()
 		{
-			Player player = Main.player[projectile.owner];
-			Vector2 current = projectile.Center;
+			Player player = Main.player[Projectile.owner];
+			Vector2 current = Projectile.Center;
 			for (int i = 0; i < trailPos.Length; i++)
 			{
 				Vector2 previousPosition = trailPos[i];
@@ -106,7 +106,7 @@ namespace SOTS.Projectiles.Otherworld
 		public void checkPos()
 		{
 			float iterator = 0f;
-			Vector2 current = projectile.Center;
+			Vector2 current = Projectile.Center;
 			for (int i = 0; i < trailPos.Length; i++)
 			{
 				Vector2 previousPosition = trailPos[i];
@@ -116,15 +116,15 @@ namespace SOTS.Projectiles.Otherworld
 				}
 			}
 			//if (iterator >= trailPos.Length)
-			//	projectile.Kill();
+			//	Projectile.Kill();
 		}
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
 		{
 			float point = 0f;
-			Vector2 previousPosition = projectile.Center;
+			Vector2 previousPosition = Projectile.Center;
 			for (int k = 0; k < trailPos.Length; k++)
 			{
-				float scale = projectile.scale * (trailPos.Length - k) / (float)trailPos.Length;
+				float scale = Projectile.scale * (trailPos.Length - k) / (float)trailPos.Length;
 				scale *= 0.7f;
 				if (trailPos[k] == Vector2.Zero)
 				{
@@ -142,16 +142,16 @@ namespace SOTS.Projectiles.Otherworld
 		bool end = false;
 		public override void AI()
 		{
-			if(projectile.ai[1] != -1 && end == false)
+			if(Projectile.ai[1] != -1 && end == false)
 			{
-				Projectile proj = Main.projectile[(int)projectile.ai[1]];
-				if(proj.active && proj.type == mod.ProjectileType("HardlightGlaive") && proj.owner == projectile.owner && (int)proj.ai[1] == projectile.whoAmI)
+				Projectile proj = Main.projectile[(int)Projectile.ai[1]];
+				if(proj.active && proj.type == mod.ProjectileType("HardlightGlaive") && proj.owner == Projectile.owner && (int)proj.ai[1] == Projectile.whoAmI)
 				{
 					Vector2 center = proj.Center - new Vector2(12, 0).RotatedBy(proj.velocity.ToRotation());
-					projectile.position.X = center.X - projectile.width/2;
-					projectile.position.Y = center.Y - projectile.height/2;
-					projectile.velocity = proj.velocity;
-					projectile.timeLeft = 80;
+					Projectile.position.X = center.X - Projectile.width/2;
+					Projectile.position.Y = center.Y - Projectile.height/2;
+					Projectile.velocity = proj.velocity;
+					Projectile.timeLeft = 80;
 				}
 				else
                 {

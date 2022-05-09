@@ -22,7 +22,7 @@ namespace SOTS.Items.Celestial
 			Item.useTime = 26;
 			Item.useAnimation = 26;
 			Item.knockBack = 1.4f;
-			Item.ranged = true;
+			Item.DamageType = DamageClass.Ranged;
 			Item.value = Item.sellPrice(0, 15, 0, 0);
 			Item.rare = ItemRarityID.Yellow;
 			Item.width = 26;

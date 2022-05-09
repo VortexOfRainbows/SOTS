@@ -14,19 +14,19 @@ namespace SOTS.Projectiles.Permafrost
 		}
         public override void SetDefaults()
         {
-			projectile.width = 42;
-			projectile.height = 46;
-			projectile.penetrate = -1;
-			Main.projFrames[projectile.type] = 11;
-			projectile.friendly = false;
-			projectile.timeLeft = 16;
-			projectile.tileCollide = false;
-			projectile.hostile = false;
-			projectile.alpha = 0;
+			Projectile.width = 42;
+			Projectile.height = 46;
+			Projectile.penetrate = -1;
+			Main.projFrames[Projectile.type] = 11;
+			Projectile.friendly = false;
+			Projectile.timeLeft = 16;
+			Projectile.tileCollide = false;
+			Projectile.hostile = false;
+			Projectile.alpha = 0;
 		}
 		public void Bang(float pos1, float pos2)
 		{
-			Vector2 atLoc = new Vector2(projectile.Center.X + pos1, projectile.Center.Y + pos2);
+			Vector2 atLoc = new Vector2(Projectile.Center.X + pos1, Projectile.Center.Y + pos2);
 			SoundEngine.PlaySound(2, (int)(atLoc.X), (int)(atLoc.Y), 30, 0.3f);
 			for (int i = 0; i < 360; i += 5)
 			{
@@ -63,28 +63,28 @@ namespace SOTS.Projectiles.Permafrost
 		}
 		public override bool PreAI()
 		{
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
 			modPlayer.brokenFrigidSword = 3;
-			player.heldProj = projectile.whoAmI;
+			player.heldProj = Projectile.whoAmI;
 
-			projectile.position = player.Center + new Vector2(22 * player.direction, -26) - new Vector2(21, 23);
-			projectile.spriteDirection = player.direction;
-			if (projectile.frame != (int)projectile.ai[0])
+			Projectile.position = player.Center + new Vector2(22 * player.direction, -26) - new Vector2(21, 23);
+			Projectile.spriteDirection = player.direction;
+			if (Projectile.frame != (int)Projectile.ai[0])
 			{
-				projectile.frame = (int)projectile.ai[0];
-				if (projectile.frame == 10)
+				Projectile.frame = (int)Projectile.ai[0];
+				if (Projectile.frame == 10)
 				{
-					projectile.Kill();
+					Projectile.Kill();
 					return false;
 				}
-				Bang(2f * projectile.frame * player.direction, -2f * projectile.frame);
+				Bang(2f * Projectile.frame * player.direction, -2f * Projectile.frame);
 				return true;
 			}
-			if (projectile.ai[0] == 0)
+			if (Projectile.ai[0] == 0)
 			{
 				Bang(0, 0);
-				projectile.Kill();
+				Projectile.Kill();
 			}
 			return false;
 		}

@@ -102,7 +102,7 @@ namespace SOTS.Items.Furniture.Nature
 		{
 			Vector3 color = SOTSTile.NaturePlatingLight * 2.5f;
 			Tile tile = Main.tile[i, j];
-			if (tile.frameX < 66)
+			if (tile.TileFrameX < 66)
 			{
 				r = color.X;
 				g = color.Y;

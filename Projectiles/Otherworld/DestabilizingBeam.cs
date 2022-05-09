@@ -17,14 +17,14 @@ namespace SOTS.Projectiles.Otherworld
 
 		public override void SetDefaults() 
 		{
-			projectile.width = 6;
-			projectile.height = 6;
-			projectile.timeLeft = 120;
-			projectile.penetrate = -1;
-			projectile.hostile = false;
-			projectile.friendly = true;
-			projectile.tileCollide = false;
-			projectile.ignoreWater = true;
+			Projectile.width = 6;
+			Projectile.height = 6;
+			Projectile.timeLeft = 120;
+			Projectile.penetrate = -1;
+			Projectile.hostile = false;
+			Projectile.friendly = true;
+			Projectile.tileCollide = false;
+			Projectile.ignoreWater = true;
 		}
 		public override bool ShouldUpdatePosition()
 		{
@@ -32,32 +32,32 @@ namespace SOTS.Projectiles.Otherworld
 		}
 		public override void AI() 
 		{
-			Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 0.8f / 255f, (255 - projectile.alpha) * 0.8f / 255f, (255 - projectile.alpha) * 0.8f / 255f);
-			//projectile.Center = npc.Center;
-			projectile.alpha += 5;
-			if (projectile.alpha > 255) {
-				projectile.Kill();
+			Lighting.AddLight(Projectile.Center, (255 - Projectile.alpha) * 0.8f / 255f, (255 - Projectile.alpha) * 0.8f / 255f, (255 - Projectile.alpha) * 0.8f / 255f);
+			//Projectile.Center = npc.Center;
+			Projectile.alpha += 5;
+			if (Projectile.alpha > 255) {
+				Projectile.Kill();
 			}
-			if(projectile.alpha > 40)
+			if(Projectile.alpha > 40)
             {
-				projectile.friendly = false;
+				Projectile.friendly = false;
             }
 		}
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.immune[projectile.owner] = 10;
+            target.immune[Projectile.owner] = 10;
         }
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
 		{
-			if(!projectile.friendly)
+			if(!Projectile.friendly)
             {
 				return false;
             }
-			Vector2 unit = new Vector2(projectile.velocity.X, projectile.velocity.Y);
-			Vector2 currentPos = projectile.Center;
+			Vector2 unit = new Vector2(Projectile.velocity.X, Projectile.velocity.Y);
+			Vector2 currentPos = Projectile.Center;
 			float radianDir = (float)Math.Atan2(unit.Y, unit.X);
 			float size = 0.3f;
-			float rotate = projectile.ai[0];
+			float rotate = Projectile.ai[0];
 			for (int Distance = 0; Distance < 120; Distance++)
 			{
 				Vector2 drawPos = currentPos - Main.screenPosition;
@@ -85,20 +85,20 @@ namespace SOTS.Projectiles.Otherworld
 			return false;
 		}
 		int previousDistance = 120;
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
 			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Otherworld/DestabilizingBeam");
 			bool dust = false;
-			if(projectile.alpha < 10)
+			if(Projectile.alpha < 10)
 			{
 				dust = true;
 			}
-			Vector2 unit = new Vector2(projectile.velocity.X, projectile.velocity.Y);
-			Vector2 currentPos = projectile.Center;
+			Vector2 unit = new Vector2(Projectile.velocity.X, Projectile.velocity.Y);
+			Vector2 currentPos = Projectile.Center;
 			float radianDir = (float)Math.Atan2(unit.Y, unit.X);
-			lightColor = new Color(110, 110, 110, 0) * ((255 - projectile.alpha) / 255f);
+			lightColor = new Color(110, 110, 110, 0) * ((255 - Projectile.alpha) / 255f);
 			float size = 0.3f;
-			float rotate = projectile.ai[0];
+			float rotate = Projectile.ai[0];
 			for (int Distance = 0; Distance < 120; Distance++)
 			{
 				Vector2 drawPos = currentPos - Main.screenPosition;
@@ -117,11 +117,11 @@ namespace SOTS.Projectiles.Otherworld
 					Vector2 velo = new Vector2(0, Main.rand.Next(-7, 8) * size).RotatedBy(laserVelo.ToRotation());
 					for (int k = 0; k < 2; k++)
 					{
-						int dust1 = Dust.NewDust(position + velo + new Vector2(-4, -4), 0, 0, DustID.Electric, 0, 0, projectile.alpha, default, 1.25f);
+						int dust1 = Dust.NewDust(position + velo + new Vector2(-4, -4), 0, 0, DustID.Electric, 0, 0, Projectile.alpha, default, 1.25f);
 						Main.dust[dust1].noGravity = true;
 						Main.dust[dust1].velocity *= 1.5f;
-						Main.dust[dust1].alpha = projectile.alpha;
-						Main.dust[dust1].velocity += projectile.velocity / 4f;
+						Main.dust[dust1].alpha = Projectile.alpha;
+						Main.dust[dust1].velocity += Projectile.velocity / 4f;
 					}
 					previousDistance = Distance;
 					Distance = 119;
@@ -134,11 +134,11 @@ namespace SOTS.Projectiles.Otherworld
 				for (int s = 0; s < 7; s++)
 				{
 					Vector2 rotateVector2 = new Vector2(0, Main.rand.Next(-10, 11) * 0.3f).RotatedBy(laserVelo.ToRotation());
-					spriteBatch.Draw(texture, drawPos + rotateVector2 + (projectile.velocity.SafeNormalize(Vector2.Zero)), null, lightColor, (float)Math.Atan2(unit.Y, unit.X), new Vector2(texture.Width * 0.5f, texture.Height * 0.5f), size, SpriteEffects.None, 0f);
+					spriteBatch.Draw(texture, drawPos + rotateVector2 + (Projectile.velocity.SafeNormalize(Vector2.Zero)), null, lightColor, (float)Math.Atan2(unit.Y, unit.X), new Vector2(texture.Width * 0.5f, texture.Height * 0.5f), size, SpriteEffects.None, 0f);
 				}
 				if(dust || Main.rand.Next(250) == 0)
 				{
-					int num1 = Dust.NewDust(new Vector2(position.X - 4, position.Y - 4), projectile.width, projectile.height, mod.DustType("CodeDust2"));
+					int num1 = Dust.NewDust(new Vector2(position.X - 4, position.Y - 4), Projectile.width, Projectile.height, mod.DustType("CodeDust2"));
 					Main.dust[num1].velocity *= 1.75f;
 					Main.dust[num1].scale *= 2.75f;
 				}

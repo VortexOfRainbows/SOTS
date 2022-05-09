@@ -14,29 +14,29 @@ namespace SOTS.Projectiles.Otherworld
 		}
         public override void SetDefaults()
 		{
-			projectile.height = 24;
-			projectile.width = 24;
-			projectile.penetrate = 1;
-			projectile.friendly = true;
-			projectile.ranged = true;
-			projectile.timeLeft = 6;
-			projectile.tileCollide = false;
-			projectile.hostile = false;
-			projectile.alpha = 255;
-			projectile.usesLocalNPCImmunity = true;
-			projectile.localNPCHitCooldown = 24;
+			Projectile.height = 24;
+			Projectile.width = 24;
+			Projectile.penetrate = 1;
+			Projectile.friendly = true;
+			Projectile.ranged = true;
+			Projectile.timeLeft = 6;
+			Projectile.tileCollide = false;
+			Projectile.hostile = false;
+			Projectile.alpha = 255;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = 24;
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			Player player = Main.player[projectile.owner];
-			projectile.localNPCImmunity[target.whoAmI] = projectile.localNPCHitCooldown;
-			target.immune[projectile.owner] = 0;
-			//Main.NewText(projectile.whoAmI + " " + projectile.penetrate + " " + projectile.timeLeft);
-			if(projectile.ai[1] <= 0)
+			Player player = Main.player[Projectile.owner];
+			Projectile.localNPCImmunity[target.whoAmI] = Projectile.localNPCHitCooldown;
+			target.immune[Projectile.owner] = 0;
+			//Main.NewText(Projectile.whoAmI + " " + Projectile.penetrate + " " + Projectile.timeLeft);
+			if(Projectile.ai[1] <= 0)
             {
 				return;
             }
-			if (projectile.owner == Main.myPlayer)
+			if (Projectile.owner == Main.myPlayer)
 			{
 				int npcIndex = -1;
 				double distanceTB = 336;
@@ -45,10 +45,10 @@ namespace SOTS.Projectiles.Otherworld
 					NPC npc = Main.npc[i];
 					if (!npc.friendly && npc.lifeMax > 5 && npc.active && !npc.dontTakeDamage)
 					{
-						if (npcIndex != i && target.whoAmI != i && npc.whoAmI != (int)projectile.ai[0])
+						if (npcIndex != i && target.whoAmI != i && npc.whoAmI != (int)Projectile.ai[0])
 						{
-							float disX = projectile.Center.X - npc.Center.X;
-							float disY = projectile.Center.Y - npc.Center.Y;
+							float disX = Projectile.Center.X - npc.Center.X;
+							float disY = Projectile.Center.Y - npc.Center.Y;
 							double dis = Math.Sqrt(disX * disX + disY * disY);
 							if (dis < distanceTB)
 							{
@@ -63,7 +63,7 @@ namespace SOTS.Projectiles.Otherworld
 					NPC npc = Main.npc[npcIndex];
 					if (!npc.friendly && npc.lifeMax > 5 && npc.active && !npc.dontTakeDamage)
 					{
-						Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, mod.ProjectileType("CataclysmLightningZap"), (int)(projectile.damage * 0.33f) + 1, target.whoAmI, projectile.owner, npc.whoAmI, projectile.ai[1]);
+						Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, mod.ProjectileType("CataclysmLightningZap"), (int)(Projectile.damage * 0.33f) + 1, target.whoAmI, Projectile.owner, npc.whoAmI, Projectile.ai[1]);
 					}
 				}
 			}
@@ -76,9 +76,9 @@ namespace SOTS.Projectiles.Otherworld
 		{
 			for (int h = 0; h < 20; h++)
 			{
-				int dust = Dust.NewDust(new Vector2(projectile.Center.X - 12, projectile.Center.Y - 12), 16, 16, 235);
+				int dust = Dust.NewDust(new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 12), 16, 16, 235);
 				Main.dust[dust].scale *= 1f;
-				Main.dust[dust].velocity += projectile.velocity * 0.01f;
+				Main.dust[dust].velocity += Projectile.velocity * 0.01f;
 				Main.dust[dust].noGravity = true;
 			}
 		}

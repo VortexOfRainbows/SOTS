@@ -18,17 +18,17 @@ namespace SOTS.Projectiles
 		}
         public override void SetDefaults()
 		{
-			projectile.width = 26;
-			projectile.height = 8;
-			projectile.friendly = true;
-			projectile.timeLeft = 120;
-			projectile.tileCollide = true;
-			projectile.hostile = false;
-			projectile.alpha = 0;
-			projectile.penetrate = -1;
-			projectile.hide = true;
-			projectile.ignoreWater = true;
-			projectile.extraUpdates = 1;
+			Projectile.width = 26;
+			Projectile.height = 8;
+			Projectile.friendly = true;
+			Projectile.timeLeft = 120;
+			Projectile.tileCollide = true;
+			Projectile.hostile = false;
+			Projectile.alpha = 0;
+			Projectile.penetrate = -1;
+			Projectile.hide = true;
+			Projectile.ignoreWater = true;
+			Projectile.extraUpdates = 1;
 		}
 		public int targetID = -1;
 		public bool hasHit = false;
@@ -56,20 +56,20 @@ namespace SOTS.Projectiles
         {
 			targetID = target.whoAmI;
 			hasHit = true;
-			projectile.netUpdate = true;
+			Projectile.netUpdate = true;
 			if (target.life <= 0)
             {
 				targetID = -1;
             }
-			projectile.knockBack = 0;
+			Projectile.knockBack = 0;
 		}
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override bool PreDraw(ref Color lightColor)
 		{
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			float scale = 0.825f;
 			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/DoomChain");
-			Vector2 position = projectile.Center;
-			Vector2 mountedCenter = Main.player[projectile.owner].MountedCenter;
+			Vector2 position = Projectile.Center;
+			Vector2 mountedCenter = Main.player[Projectile.owner].MountedCenter;
 			Rectangle? sourceRectangle = new Microsoft.Xna.Framework.Rectangle?();
 			Vector2 origin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			float num1 = texture.Height * scale;
@@ -93,11 +93,11 @@ namespace SOTS.Projectiles
 					position += vector2_1 * num1;
 					vector2_4 = mountedCenter - position;
 					Color color2 = Lighting.GetColor((int)position.X / 16, (int)((double)position.Y / 16.0));
-					color2 = projectile.GetAlpha(color2);
+					color2 = Projectile.GetAlpha(color2);
 					Main.spriteBatch.Draw(texture, position - Main.screenPosition, sourceRectangle, color2, rotation, origin, scale, SpriteEffects.None, 0.0f);
 				}
 			}
-			Main.spriteBatch.Draw(Main.projectileTexture[projectile.type], projectile.Center - Main.screenPosition, null, Lighting.GetColor((int)projectile.Center.X / 16, (int)(projectile.Center.Y / 16)), projectile.rotation + MathHelper.ToRadians(180), new Vector2(projectile.width/2, projectile.height/2), 1.15f, projectile.spriteDirection != 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0.0f);
+			Main.spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, Projectile.Center - Main.screenPosition, null, Lighting.GetColor((int)Projectile.Center.X / 16, (int)(Projectile.Center.Y / 16)), Projectile.rotation + MathHelper.ToRadians(180), new Vector2(Projectile.width/2, Projectile.height/2), 1.15f, Projectile.spriteDirection != 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0.0f);
 			return false;
         }
         public override void DrawBehind(int index, List<int> drawCacheProjsBehindNPCsAndTiles, List<int> drawCacheProjsBehindNPCs, List<int> drawCacheProjsBehindProjectiles, List<int> drawCacheProjsOverWiresUI)
@@ -117,34 +117,34 @@ namespace SOTS.Projectiles
 		{
 			if (runOnce)
 			{
-				if (Main.myPlayer == projectile.owner)
-					projectile.netUpdate = true;
+				if (Main.myPlayer == Projectile.owner)
+					Projectile.netUpdate = true;
 				runOnce = false;
             }
-			Projectile owner = Main.projectile[(int)projectile.ai[0]];
-			Player player = Main.player[projectile.owner];
+			Projectile owner = Main.projectile[(int)Projectile.ai[0]];
+			Player player = Main.player[Projectile.owner];
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			aiCounter++;
 			speedMult = 1 + 0.005f * aiCounter;
-			projectile.ai[1] += 0.4f;
-			projectile.rotation = (player.Center - projectile.Center).ToRotation();
-			projectile.spriteDirection = (player.Center - projectile.Center).X > 0 ? 1 : -1;
-			projectile.tileCollide = !goBack;
-			if(projectile.spriteDirection == -1)
+			Projectile.ai[1] += 0.4f;
+			Projectile.rotation = (player.Center - Projectile.Center).ToRotation();
+			Projectile.spriteDirection = (player.Center - Projectile.Center).X > 0 ? 1 : -1;
+			Projectile.tileCollide = !goBack;
+			if(Projectile.spriteDirection == -1)
             {
-				projectile.rotation -= MathHelper.ToRadians(180);
+				Projectile.rotation -= MathHelper.ToRadians(180);
             }
 			if(aiCounter > 5)
             {
-				if((player.Center - projectile.Center).Length() < 16)
+				if((player.Center - Projectile.Center).Length() < 16)
                 {
-					projectile.Kill();
+					Projectile.Kill();
                 }
 			}
-			if(!Main.mouseRight && Main.myPlayer == projectile.owner)
+			if(!Main.mouseRight && Main.myPlayer == Projectile.owner)
 			{
 				letGo = true;
-				projectile.netUpdate = true;
+				Projectile.netUpdate = true;
 			}
 			if (aiCounter > 45 || letGo)
             {
@@ -154,7 +154,7 @@ namespace SOTS.Projectiles
 			{
 				Vector2 ownerToPlayer = owner.Center - player.Center;
 				Vector2 toPos = Vector2.Zero;
-				toPos = new Vector2((12 + (projectile.Center - player.Center).Length()) * speedMult, 0).RotatedBy(ownerToPlayer.ToRotation());
+				toPos = new Vector2((12 + (Projectile.Center - player.Center).Length()) * speedMult, 0).RotatedBy(ownerToPlayer.ToRotation());
 				toPos += player.Center;
 				if(goBack)
                 {
@@ -163,7 +163,7 @@ namespace SOTS.Projectiles
 				if (targetID != -1)
 				{
 					NPC target = Main.npc[targetID];
-					if(target.active && !target.friendly && (owner.Center - projectile.Center).Length() < 800 && (owner.Center - player.Center).Length() < 1600 && !letGo)
+					if(target.active && !target.friendly && (owner.Center - Projectile.Center).Length() < 800 && (owner.Center - player.Center).Length() < 1600 && !letGo)
 					{
 						Vector2 rotationArea = new Vector2(1, 0).RotatedBy((owner.Center - target.Center).ToRotation());
 						float Xmult = rotationArea.X;
@@ -194,7 +194,7 @@ namespace SOTS.Projectiles
 
 				if(toPos != Vector2.Zero)
 				{
-					Vector2 goToPos = toPos - projectile.Center;
+					Vector2 goToPos = toPos - Projectile.Center;
 					float dist = goToPos.Length();
 					float speed = 12f + owner.velocity.Length() * 0.4f;
 					if (speed > dist)
@@ -202,21 +202,21 @@ namespace SOTS.Projectiles
 						speed = dist;
 					}
 					if (!instant)
-						projectile.velocity *= 0.855f;
+						Projectile.velocity *= 0.855f;
 					if (instant)
-						projectile.velocity *= 0.1f;
-					projectile.velocity += goToPos.SafeNormalize(Vector2.Zero) * speed * (instant ? 1 : 0.1f) * speedMult;
-					projectile.timeLeft = 2;
+						Projectile.velocity *= 0.1f;
+					Projectile.velocity += goToPos.SafeNormalize(Vector2.Zero) * speed * (instant ? 1 : 0.1f) * speedMult;
+					Projectile.timeLeft = 2;
 				}
-				//projectile.velocity += owner.velocity;
-				projectile.timeLeft = 2;
+				//Projectile.velocity += owner.velocity;
+				Projectile.timeLeft = 2;
 			}
 			else
             {
-				projectile.Kill();
+				Projectile.Kill();
 			}
-			if (Main.myPlayer == projectile.owner)
-				projectile.netUpdate = true;
+			if (Main.myPlayer == Projectile.owner)
+				Projectile.netUpdate = true;
 		}
 	}
 }

@@ -11,41 +11,41 @@ namespace SOTS.Projectiles.Pyramid
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Cursed Singularity");
-			Main.projFrames[projectile.type] = 11;
+			Main.projFrames[Projectile.type] = 11;
 		}
         public override void SetDefaults()
 		{
-			projectile.width = 40;
-			projectile.height = 44;
-			projectile.penetrate = 1;
-			projectile.friendly = true;
-			projectile.timeLeft = 960;
-			projectile.tileCollide = true;
-			projectile.hostile = false;
-			projectile.alpha = 0;
-			projectile.ranged = true;
+			Projectile.width = 40;
+			Projectile.height = 44;
+			Projectile.penetrate = 1;
+			Projectile.friendly = true;
+			Projectile.timeLeft = 960;
+			Projectile.tileCollide = true;
+			Projectile.hostile = false;
+			Projectile.alpha = 0;
+			Projectile.ranged = true;
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
-			Texture2D texture = Main.projectileTexture[projectile.type];
-			Vector2 origin = new Vector2(texture.Width / 2, projectile.height / 2);
+			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
+			Vector2 origin = new Vector2(texture.Width / 2, Projectile.height / 2);
 			Color color = Color.Black;
 			for (int i = 0; i < 360; i += 30)
 			{
 				Vector2 circular = new Vector2(Main.rand.NextFloat(3.5f, 5), 0).RotatedBy(MathHelper.ToRadians(i));
 				color = new Color(150, 100, 200, 0);
-				Main.spriteBatch.Draw(texture, projectile.Center + circular - Main.screenPosition, new Rectangle(0, projectile.height * projectile.frame, projectile.width, projectile.height), color * ((255f - projectile.alpha) / 255f), projectile.rotation, origin, projectile.scale, SpriteEffects.None, 0.0f);
+				Main.spriteBatch.Draw(texture, Projectile.Center + circular - Main.screenPosition, new Rectangle(0, Projectile.height * Projectile.frame, Projectile.width, Projectile.height), color * ((255f - Projectile.alpha) / 255f), Projectile.rotation, origin, Projectile.scale, SpriteEffects.None, 0.0f);
 			}
 			color = new Color(48 + 100, 0 + 100, 108 + 100);
-			Main.spriteBatch.Draw(texture, projectile.Center - Main.screenPosition, new Rectangle(0, projectile.height * projectile.frame, projectile.width, projectile.height), color, projectile.rotation, origin, projectile.scale, SpriteEffects.None, 0.0f);
+			Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, new Rectangle(0, Projectile.height * Projectile.frame, Projectile.width, Projectile.height), color, Projectile.rotation, origin, Projectile.scale, SpriteEffects.None, 0.0f);
 			return false;
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			Player owner = Main.player[projectile.owner];
-			if(projectile.owner == Main.myPlayer)
+			Player owner = Main.player[Projectile.owner];
+			if(Projectile.owner == Main.myPlayer)
 			{
-				Projectile.NewProjectile(projectile.Center, projectile.velocity, ModContent.ProjectileType<DarkLight>(), projectile.damage, projectile.knockBack, projectile.owner, Main.rand.NextFloat(1000));
+				Projectile.NewProjectile(Projectile.Center, Projectile.velocity, ModContent.ProjectileType<DarkLight>(), Projectile.damage, Projectile.knockBack, Projectile.owner, Main.rand.NextFloat(1000));
 			}
 		}
 		int counter = 0;
@@ -54,7 +54,7 @@ namespace SOTS.Projectiles.Pyramid
 			counter++;
 			if (Main.rand.NextBool(3) && counter > 12)
 			{
-				int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y) - new Vector2(5), projectile.width, projectile.height, mod.DustType("CopyDust4"));
+				int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, mod.DustType("CopyDust4"));
 				Dust dust = Main.dust[num1];
 				dust.velocity *= 0.7f;
 				dust.noGravity = true;
@@ -63,16 +63,16 @@ namespace SOTS.Projectiles.Pyramid
 				dust.scale = 1.5f;
 				dust.alpha = 40;
 			}			
-			if(projectile.timeLeft % 6 == 0)
+			if(Projectile.timeLeft % 6 == 0)
 			{
-				projectile.alpha++;
+				Projectile.alpha++;
 			}
-            projectile.frameCounter++;
-            if (projectile.frameCounter >= 5)
+            Projectile.frameCounter++;
+            if (Projectile.frameCounter >= 5)
             {
-				projectile.friendly = true;
-                projectile.frameCounter = 0;
-                projectile.frame = (projectile.frame + 1) % 11;
+				Projectile.friendly = true;
+                Projectile.frameCounter = 0;
+                Projectile.frame = (Projectile.frame + 1) % 11;
             }
 			
 			float minDist = 560;
@@ -81,19 +81,19 @@ namespace SOTS.Projectiles.Pyramid
 			float dY = 0f;
 			float distance = 0;
 			float speed = 1.25f;
-			if(projectile.friendly == true && projectile.hostile == false)
+			if(Projectile.friendly == true && Projectile.hostile == false)
 			{
 				for(int i = 0; i < Main.npc.Length; i++)
 				{
 					NPC target = Main.npc[i];
 					if(!target.friendly && target.dontTakeDamage == false && target.lifeMax > 5 && target.CanBeChasedBy())
 					{
-						dX = target.Center.X - projectile.Center.X;
-						dY = target.Center.Y - projectile.Center.Y;
+						dX = target.Center.X - Projectile.Center.X;
+						dY = target.Center.Y - Projectile.Center.Y;
 						distance = (float) Math.Sqrt((double)(dX * dX + dY * dY));
 						if(distance < minDist)
 						{
-							bool lineOfSight = Collision.CanHitLine(projectile.position, projectile.width, projectile.height, target.position, target.width, target.height);
+							bool lineOfSight = Collision.CanHitLine(Projectile.position, Projectile.width, Projectile.height, target.position, target.width, target.height);
 							if(lineOfSight)
 							{
 								minDist = distance;
@@ -108,12 +108,12 @@ namespace SOTS.Projectiles.Pyramid
 					NPC toHit = Main.npc[target2];
 					if(toHit.active == true)
 					{
-						dX = toHit.Center.X - projectile.Center.X;
-						dY = toHit.Center.Y - projectile.Center.Y;
+						dX = toHit.Center.X - Projectile.Center.X;
+						dY = toHit.Center.Y - Projectile.Center.Y;
 						distance = (float)Math.Sqrt((double)(dX * dX + dY * dY));
 						speed /= distance;
-						projectile.velocity *= 0.95f;
-						projectile.velocity += new Vector2(dX * speed, dY * speed);
+						Projectile.velocity *= 0.95f;
+						Projectile.velocity += new Vector2(dX * speed, dY * speed);
 					}
 				}
 			}
@@ -122,9 +122,9 @@ namespace SOTS.Projectiles.Pyramid
 		{
 			for(int i = 0; i < 30; i++)
 			{
-				int num1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y) - new Vector2(5), projectile.width, projectile.height, mod.DustType("CopyDust4"));
+				int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, mod.DustType("CopyDust4"));
 				Dust dust = Main.dust[num1];
-				dust.velocity += 0.15f * projectile.velocity;
+				dust.velocity += 0.15f * Projectile.velocity;
 				dust.noGravity = true;
 				dust.color = new Color(150, 100, 200, 0);
 				dust.fadeIn = 0.1f;
@@ -134,13 +134,13 @@ namespace SOTS.Projectiles.Pyramid
 		}
         public override bool OnTileCollide(Vector2 oldVelocity)
 		{	
-			if (projectile.velocity.X != oldVelocity.X)
+			if (Projectile.velocity.X != oldVelocity.X)
 			{
-				projectile.velocity.X = -oldVelocity.X;
+				Projectile.velocity.X = -oldVelocity.X;
 			}
-			if (projectile.velocity.Y != oldVelocity.Y)
+			if (Projectile.velocity.Y != oldVelocity.Y)
 			{
-				projectile.velocity.Y = -oldVelocity.Y;
+				Projectile.velocity.Y = -oldVelocity.Y;
 			}
 			return false;
 		}

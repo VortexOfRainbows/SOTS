@@ -223,7 +223,7 @@ namespace SOTS
         {
 			for(int i = 0; i < unsafeWallItem.Length; i++)
 			{
-				Texture2D texture = Main.itemTexture[unsafeWallItem[i]];
+				Texture2D texture = Terraria.GameContent.TextureAssets.Item[unsafeWallItem[i].Value];
 				Texture2D textureOutline;
 				textureOutline = new Texture2D(Main.graphics.GraphicsDevice, texture.Width, texture.Height);
 				textureOutline.SetData(0, null, SubspaceServant.Greenify(texture, new Color(255, 0, 0)), 0, texture.Width * texture.Height);
@@ -377,7 +377,7 @@ namespace SOTS
 					int type = 0;
 					if (Main.tile[x + i, y + j].frameX >= 18 && Main.tile[x + i, y + j].frameX < 36 && Main.tile[x + i, y + j].frameY % 36 >= 18)
 						type = 1;
-					if (tile.type == mod.TileType("TransmutationAltarTile") && type == 1)
+					if (tile.TileType == mod.TileType("TransmutationAltarTile") && type == 1)
 					{
 						Vector2 newBetween = new Vector2(i * 16, j * 16);
 						if (newBetween.Length() < between.Length())
@@ -404,7 +404,7 @@ namespace SOTS
 					int type = 0;
 					if (Main.tile[x + i, y + j].frameX >= 18 && Main.tile[x + i, y + j].frameX < 36 && Main.tile[x + i, y + j].frameY % 36 >= 18)
 						type = 1;
-					if (tile.type == mod.TileType("TransmutationAltarTile") && type == 1)
+					if (tile.TileType == mod.TileType("TransmutationAltarTile") && type == 1)
 					{
 						Vector2 newBetween = new Vector2(i * 16, j * 16);
 						if (newBetween.Length() < between.Length())
@@ -426,8 +426,8 @@ namespace SOTS
 				if(tile != null)
 				{
 					Point16 ij = FindTATileIJ(player);
-					int left = ij.X - tile.frameX / 18;
-					int top = ij.Y - tile.frameY / 18;
+					int left = ij.X - tile.TileFrameX / 18;
+					int top = ij.Y - tile.TileFrameY / 18;
 					int index = GetInstance<TransmutationAltarStorage>().Find(left, top);
 					if (index == -1)
 					{
@@ -438,7 +438,7 @@ namespace SOTS
 
 
 					Projectile projectile = Main.projectile[Projectile.NewProjectile(player.Center, Vector2.Zero, mod.ProjectileType("DataTransferProj"), 0, 0, Main.myPlayer, index, 0)];
-					DataTransferProj proj = (DataTransferProj)projectile.modProjectile;
+					DataTransferProj proj = (DataTransferProj)Projectile.modProjectile;
 					proj.itemsArray[0] = item2.type;
 					proj.itemAmountsArray[0] = item2.stack;
 					int amountOfUniqueItems = 0;
@@ -455,7 +455,7 @@ namespace SOTS
 					{
 						int itemType = recipe.requiredItem[i].type;
 						int itemStack = recipe.requiredItem[i].stack;
-						int itemFrames = Main.itemTexture[itemType].Height / recipe.requiredItem[i].height;
+						int itemFrames = Terraria.GameContent.TextureAssets.Item[itemType].Value.Height / recipe.requiredItem[i].height;
 						proj.itemsArray[i + 1] = itemType;
 						proj.itemAmountsArray[i + 1] = itemStack;
 					}
@@ -464,7 +464,7 @@ namespace SOTS
 						proj.itemsArray[i + 1] = 0;
 						proj.itemAmountsArray[i + 1] = 0;
 					}
-					projectile.netUpdate = true;
+					Projectile.netUpdate = true;
 					//Main.NewText("I am Netmode: " + Main.netMode);
 				}
 			}
@@ -550,13 +550,13 @@ namespace SOTS
 		}
 		public override void SetDefaults()
 		{
-			projectile.alpha = 255;
-			projectile.timeLeft = 24;
-			projectile.friendly = false;
-			projectile.tileCollide = false;
-			projectile.width = 36;
-			projectile.height = 36;
-			//projectile.extraUpdates = 4;
+			Projectile.alpha = 255;
+			Projectile.timeLeft = 24;
+			Projectile.friendly = false;
+			Projectile.tileCollide = false;
+			Projectile.width = 36;
+			Projectile.height = 36;
+			//Projectile.extraUpdates = 4;
 		}
 		public override bool? CanCutTiles()
 		{
@@ -564,17 +564,17 @@ namespace SOTS
 		}
         public override bool PreAI()
         {
-			if(projectile.owner == Main.myPlayer)
+			if(Projectile.owner == Main.myPlayer)
             {
-				projectile.netUpdate = true;
+				Projectile.netUpdate = true;
             }
 			return true;
         }
         public override void AI()
 		{
-			projectile.alpha = 255;
-			if(projectile.timeLeft < 22)
-				projectile.Kill();
+			Projectile.alpha = 255;
+			if(Projectile.timeLeft < 22)
+				Projectile.Kill();
 		}
 		public bool checkArraySame(int[] arr1, int[] arr2)
         {
@@ -595,7 +595,7 @@ namespace SOTS
         }
 		public override void Kill(int timeLeft)
 		{
-			TransmutationAltarStorage entity = (TransmutationAltarStorage)TileEntity.ByID[(int)projectile.ai[0]];
+			TransmutationAltarStorage entity = (TransmutationAltarStorage)TileEntity.ByID[(int)Projectile.ai[0]];
 			if(Main.netMode != 1)
             {
 				if (!checkArraySame(entity.itemAmountsArray, itemAmountsArray) || !checkArraySame(entity.itemsArray, itemsArray))
@@ -661,15 +661,15 @@ namespace SOTS
 						{
 							float rotation = drawPlayer.itemRotation + 0.785f * (float)drawPlayer.direction;
 							int width = 0;
-							Vector2 origin = new Vector2(0f, (float)Main.itemTexture[Item.type].Height);
+							Vector2 origin = new Vector2(0f, (float)Terraria.GameContent.TextureAssets.Item[Item.type].Value.Height);
 
 							if (drawPlayer.gravDir == -1f)
 							{
 								if (drawPlayer.direction == -1)
 								{
 									rotation += 1.57f;
-									origin = new Vector2((float)Main.itemTexture[Item.type].Width, 0f);
-									width -= Main.itemTexture[Item.type].Width;
+									origin = new Vector2((float)Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width, 0f);
+									width -= Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width;
 								}
 								else
 								{
@@ -679,16 +679,16 @@ namespace SOTS
 							}
 							else if (drawPlayer.direction == -1)
 							{
-								origin = new Vector2((float)Main.itemTexture[Item.type].Width, (float)Main.itemTexture[Item.type].Height);
-								width -= Main.itemTexture[Item.type].Width;
+								origin = new Vector2((float)Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width, (float)Terraria.GameContent.TextureAssets.Item[Item.type].Value.Height);
+								width -= Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width;
 							}
 
-							DrawData value = new DrawData(texture, new Vector2((float)((int)(location.X - Main.screenPosition.X + origin.X + (float)width)), (float)((int)(location.Y - Main.screenPosition.Y))), new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Main.itemTexture[Item.type].Width, Main.itemTexture[Item.type].Height)), Color.White, rotation, origin, Item.scale, drawInfo.spriteEffects, 0);
+							DrawData value = new DrawData(texture, new Vector2((float)((int)(location.X - Main.screenPosition.X + origin.X + (float)width)), (float)((int)(location.Y - Main.screenPosition.Y))), new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width, Terraria.GameContent.TextureAssets.Item[Item.type].Value.Height)), Color.White, rotation, origin, Item.scale, drawInfo.spriteEffects, 0);
 							Main.playerDrawData.Add(value);
 						}
 						else
 						{
-							Vector2 vector10 = new Vector2((float)(Main.itemTexture[Item.type].Width / 2), (float)(Main.itemTexture[Item.type].Height / 2));
+							Vector2 vector10 = new Vector2((float)(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width / 2), (float)(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Height / 2));
 
 							//Vector2 vector11 = this.DrawPlayerItemPos(drawPlayer.gravDir, Item.type);
 							Vector2 vector11 = new Vector2(10, texture.Height / 2);
@@ -699,13 +699,13 @@ namespace SOTS
 							vector11.Y += Item.GetGlobalItem<ItemUseGlow>().glowOffsetY * drawPlayer.gravDir;
 							int num107 = (int)vector11.X;
 							vector10.Y = vector11.Y;
-							Vector2 origin5 = new Vector2((float)(-(float)num107), (float)(Main.itemTexture[Item.type].Height / 2));
+							Vector2 origin5 = new Vector2((float)(-(float)num107), (float)(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Height / 2));
 							if (drawPlayer.direction == -1)
 							{
-								origin5 = new Vector2((float)(Main.itemTexture[Item.type].Width + num107), (float)(Main.itemTexture[Item.type].Height / 2));
+								origin5 = new Vector2((float)(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width + num107), (float)(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Height / 2));
 							}
 
-							//value = new DrawData(Main.itemTexture[Item.type], new Vector2((float)((int)(value2.X - Main.screenPosition.X + vector10.X)), (float)((int)(value2.Y - Main.screenPosition.Y + vector10.Y))), new Microsoft.Xna.Framework.Rectangle?(new Microsoft.Xna.Framework.Rectangle(0, 0, Main.itemTexture[Item.type].Width, Main.itemTexture[Item.type].Height)), Item.GetAlpha(color37), drawPlayer.itemRotation, origin5, Item.scale, effect, 0);
+							//value = new DrawData(Terraria.GameContent.TextureAssets.Item[Item.type].Value, new Vector2((float)((int)(value2.X - Main.screenPosition.X + vector10.X)), (float)((int)(value2.Y - Main.screenPosition.Y + vector10.Y))), new Microsoft.Xna.Framework.Rectangle?(new Microsoft.Xna.Framework.Rectangle(0, 0, Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width, Terraria.GameContent.TextureAssets.Item[Item.type].Value.Height)), Item.GetAlpha(color37), drawPlayer.itemRotation, origin5, Item.scale, effect, 0);
 							//Main.playerDrawData.Add(value);
 
 							Color color = new Color(Main.DiscoR, Main.DiscoG, Main.DiscoB, 0);
@@ -723,15 +723,15 @@ namespace SOTS
 									Vector2 circular = new Vector2(3, 0).RotatedBy(MathHelper.ToRadians(k * 60 + Main.GameUpdateCount * 6));
 									color = VoidPlayer.pastelAttempt(MathHelper.ToRadians(k * 60)) * 0.33f;
 									color.A = 0;
-									DrawData value2 = new DrawData(texture, position + circular, new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Main.itemTexture[Item.type].Width, Main.itemTexture[Item.type].Height)), color, drawPlayer.itemRotation, origin5, Item.scale, drawInfo.spriteEffects, 0);
+									DrawData value2 = new DrawData(texture, position + circular, new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width, Terraria.GameContent.TextureAssets.Item[Item.type].Value.Height)), color, drawPlayer.itemRotation, origin5, Item.scale, drawInfo.spriteEffects, 0);
 									Main.playerDrawData.Add(value2);
 								}
-								DrawData value = new DrawData(Mod.Assets.Request<Texture2D>("Items/Chaos/SupernovaStorm").Value, position, new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Main.itemTexture[Item.type].Width, Main.itemTexture[Item.type].Height)), Lighting.GetColor((int)location.X / 16, (int)location.Y / 16), drawPlayer.itemRotation, origin5, Item.scale, drawInfo.spriteEffects, 0);
+								DrawData value = new DrawData(Mod.Assets.Request<Texture2D>("Items/Chaos/SupernovaStorm").Value, position, new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width, Terraria.GameContent.TextureAssets.Item[Item.type].Value.Height)), Lighting.GetColor((int)location.X / 16, (int)location.Y / 16), drawPlayer.itemRotation, origin5, Item.scale, drawInfo.spriteEffects, 0);
 								Main.playerDrawData.Add(value);
 							}
 							for (int i = 0; i < recurse; i++)
 							{
-								DrawData value = new DrawData(texture, position, new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Main.itemTexture[Item.type].Width, Main.itemTexture[Item.type].Height)), rainbow ? color : Color.White, drawPlayer.itemRotation, origin5, Item.scale, drawInfo.spriteEffects, 0);
+								DrawData value = new DrawData(texture, position, new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width, Terraria.GameContent.TextureAssets.Item[Item.type].Value.Height)), rainbow ? color : Color.White, drawPlayer.itemRotation, origin5, Item.scale, drawInfo.spriteEffects, 0);
 								Main.playerDrawData.Add(value);
 							}
 						}

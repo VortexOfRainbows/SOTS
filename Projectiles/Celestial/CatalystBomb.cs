@@ -15,34 +15,34 @@ namespace SOTS.Projectiles.Celestial
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Catalyst Bomb");
-			Main.projFrames[projectile.type] = 2;
+			Main.projFrames[Projectile.type] = 2;
 		}
         public override void SetDefaults()
         {
-			projectile.aiStyle = 0;
-			projectile.height = 34;
-			projectile.width = 38;
-			projectile.penetrate = -1;
-			projectile.friendly = true;
-			projectile.hostile = false;
-			projectile.timeLeft = 480;
-			projectile.tileCollide = false;
-			projectile.alpha = 255;
+			Projectile.aiStyle = 0;
+			Projectile.height = 34;
+			Projectile.width = 38;
+			Projectile.penetrate = -1;
+			Projectile.friendly = true;
+			Projectile.hostile = false;
+			Projectile.timeLeft = 480;
+			Projectile.tileCollide = false;
+			Projectile.alpha = 255;
 		}
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override bool PreDraw(ref Color lightColor)
         {
-			Texture2D texture = Main.projectileTexture[projectile.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Vector2 origin = new Vector2(texture.Width * 0.5f, texture.Height * 0.25f);
 			for(int i = 1; i >= 0; i--)
             {
 				int direction = i * 2 - 1;
 				Rectangle frame = new Rectangle(0, (int)(texture.Height * 0.5f * i), texture.Width, texture.Height / 2);
-				Vector2 offset = new Vector2(0, direction * 0.4f * (48 - projectile.ai[1])).RotatedBy(projectile.rotation);
-				spriteBatch.Draw(texture, projectile.Center + offset - Main.screenPosition, frame, lightColor, projectile.rotation, origin, projectile.scale, SpriteEffects.None, 0f);
+				Vector2 offset = new Vector2(0, direction * 0.4f * (48 - Projectile.ai[1])).RotatedBy(Projectile.rotation);
+				spriteBatch.Draw(texture, Projectile.Center + offset - Main.screenPosition, frame, lightColor, Projectile.rotation, origin, Projectile.scale, SpriteEffects.None, 0f);
             }
             return false;
 		}
-		public override void PostDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override void PostDraw(Color lightColor)
 		{
 			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Celestial/SubspaceLingeringFlame");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
@@ -50,7 +50,7 @@ namespace SOTS.Projectiles.Celestial
 			{
 				Color color = new Color(75, 255, 30, 0);
 				Vector2 drawPos = particleList[i].position - Main.screenPosition;
-				color = projectile.GetAlpha(color) * (0.35f + 0.65f * particleList[i].scale);
+				color = Projectile.GetAlpha(color) * (0.35f + 0.65f * particleList[i].scale);
 				for (int j = 0; j < 2; j++)
 				{
 					float x = Main.rand.NextFloat(-2f, 2f);
@@ -61,14 +61,14 @@ namespace SOTS.Projectiles.Celestial
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.immune[projectile.owner] = 5;
+            target.immune[Projectile.owner] = 5;
         }
 		public void Detonate(float explosionRadius)
 		{
-			int minTileX = (int)(projectile.Center.X / 16f - (float)explosionRadius);
-			int maxTileX = (int)(projectile.Center.X / 16f + (float)explosionRadius);
-			int minTileY = (int)(projectile.Center.Y / 16f - (float)explosionRadius);
-			int maxTileY = (int)(projectile.Center.Y / 16f + (float)explosionRadius);
+			int minTileX = (int)(Projectile.Center.X / 16f - (float)explosionRadius);
+			int maxTileX = (int)(Projectile.Center.X / 16f + (float)explosionRadius);
+			int minTileY = (int)(Projectile.Center.Y / 16f - (float)explosionRadius);
+			int maxTileY = (int)(Projectile.Center.Y / 16f + (float)explosionRadius);
 			if (minTileX < 0)
 			{
 				minTileX = 0;
@@ -89,8 +89,8 @@ namespace SOTS.Projectiles.Celestial
 			{
 				for (int j = minTileY; j <= maxTileY; j++)
 				{
-					float diffX = Math.Abs((float)i - projectile.Center.X / 16f);
-					float diffY = Math.Abs((float)j - projectile.Center.Y / 16f);
+					float diffX = Math.Abs((float)i - Projectile.Center.X / 16f);
+					float diffY = Math.Abs((float)j - Projectile.Center.Y / 16f);
 					double distanceToTile = Math.Sqrt((double)(diffX * diffX + diffY * diffY));
 					if (distanceToTile < (double)explosionRadius)
 					{
@@ -125,8 +125,8 @@ namespace SOTS.Projectiles.Celestial
 		}
 		public override void Kill(int timeLeft)
         {
-			Player player = Main.player[projectile.owner];
-			if(projectile.ai[0] == 0)
+			Player player = Main.player[Projectile.owner];
+			if(Projectile.ai[0] == 0)
 			{
 				for (int i = 0; i < particleList.Count; i++)
 				{
@@ -144,7 +144,7 @@ namespace SOTS.Projectiles.Celestial
 					{
 						Vector2 circularLocation = new Vector2(-10, 0).RotatedBy(MathHelper.ToRadians(i));
 						circularLocation.Y *= 1.25f;
-						Dust dust = Dust.NewDustDirect(new Vector2(projectile.Center.X - 4, projectile.Center.Y - 4), 4, 4, ModContent.DustType<CopyDust4>());
+						Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4), 4, 4, ModContent.DustType<CopyDust4>());
 						dust.noGravity = true;
 						dust.velocity *= 0.5f;
 						dust.velocity += circularLocation;
@@ -154,10 +154,10 @@ namespace SOTS.Projectiles.Celestial
 					}
 				}
 				for (int i = 0; i < 24; i++)
-					Gore.NewGore(projectile.position + new Vector2(Main.rand.NextFloat(12, 36), 0).RotatedBy(MathHelper.ToRadians(i * 15)), default(Vector2), Main.rand.Next(61, 64), 1.25f);
+					Gore.NewGore(Projectile.position + new Vector2(Main.rand.NextFloat(12, 36), 0).RotatedBy(MathHelper.ToRadians(i * 15)), default(Vector2), Main.rand.Next(61, 64), 1.25f);
 				if (player.ZoneUnderworldHeight)
 				{
-					SoundEngine.PlaySound(SoundID.Item119, (int)projectile.Center.X, (int)projectile.Center.Y);
+					SoundEngine.PlaySound(SoundID.Item119, (int)Projectile.Center.X, (int)Projectile.Center.Y);
 					if (!NPC.AnyNPCs(mod.NPCType("SubspaceSerpentHead")))
 					{
 						NPC.SpawnOnPlayer(player.whoAmI, mod.NPCType("SubspaceSerpentHead"));
@@ -166,27 +166,27 @@ namespace SOTS.Projectiles.Celestial
 							NPC npc = Main.npc[king];
 							if (npc.type == mod.NPCType("SubspaceSerpentHead"))
 							{
-								npc.position.X = projectile.Center.X - npc.width / 2;
-								npc.position.Y = projectile.Center.Y - npc.height / 2;
+								npc.position.X = Projectile.Center.X - npc.width / 2;
+								npc.position.Y = Projectile.Center.Y - npc.height / 2;
 							}
 						}
 					}
 				}
 				else
 				{
-					SoundEngine.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 14, 1.0f);
+					SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 14, 1.0f);
 				}
 			}
 		}
 		public override void SendExtraAI(BinaryWriter writer) 
 		{
-			writer.Write(projectile.rotation);
-			writer.Write(projectile.timeLeft);
+			writer.Write(Projectile.rotation);
+			writer.Write(Projectile.timeLeft);
 		}
 		public override void ReceiveExtraAI(BinaryReader reader)
 		{	
-			projectile.rotation = reader.ReadSingle();
-			projectile.timeLeft = reader.ReadInt32();
+			Projectile.rotation = reader.ReadSingle();
+			Projectile.timeLeft = reader.ReadInt32();
 		}
 		List<FireParticle> particleList = new List<FireParticle>();
 		bool runOnce = true;
@@ -212,36 +212,36 @@ namespace SOTS.Projectiles.Celestial
 			if(runOnce)
 			{
 				runOnce = false;
-				projectile.ai[1] = 48f;
-				if (projectile.velocity.X < 0)
-					projectile.direction = -1;
-				projectile.direction = 1;
+				Projectile.ai[1] = 48f;
+				if (Projectile.velocity.X < 0)
+					Projectile.direction = -1;
+				Projectile.direction = 1;
 			}
-			projectile.netUpdate = true;
-			Player player = Main.player[projectile.owner];
-			Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 0.1f / 255f, (255 - projectile.alpha) * 0.9f / 255f, (255 - projectile.alpha) * 0.3f / 255f);
-			if(projectile.ai[0] == 0)
+			Projectile.netUpdate = true;
+			Player player = Main.player[Projectile.owner];
+			Lighting.AddLight(Projectile.Center, (255 - Projectile.alpha) * 0.1f / 255f, (255 - Projectile.alpha) * 0.9f / 255f, (255 - Projectile.alpha) * 0.3f / 255f);
+			if(Projectile.ai[0] == 0)
 			{
 				cataloguePos();
 				bool flag = false;
-				projectile.alpha = 0;
+				Projectile.alpha = 0;
 				rotation *= 0.98f;
 				rotation -= 5.5f;
 				if(rotation < 300)
                 {
-					projectile.ai[1] *= 0.99f;
-					projectile.ai[1] -= 0.1f;
-					if (projectile.ai[1] < 0)
-						projectile.ai[1] = 0;
-					if(projectile.ai[1] < 24)
+					Projectile.ai[1] *= 0.99f;
+					Projectile.ai[1] -= 0.1f;
+					if (Projectile.ai[1] < 0)
+						Projectile.ai[1] = 0;
+					if(Projectile.ai[1] < 24)
 					flag = true;
 				}
 				if (rotation < 0)
 				{
 					rotation = 0;
 				}
-				projectile.rotation = MathHelper.ToRadians(rotation * projectile.direction);
-				projectile.velocity *= 0.96f;
+				Projectile.rotation = MathHelper.ToRadians(rotation * Projectile.direction);
+				Projectile.velocity *= 0.96f;
 				if(flag)
 				{
 					dist += 0.9f;
@@ -251,13 +251,13 @@ namespace SOTS.Projectiles.Celestial
 						Vector2 rotational = new Vector2(0, -1.5f).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360f)));
 						if (Main.rand.NextBool(40))
 						{
-							particleList.Add(new FireParticle(projectile.Center + circular - rotational * 2, rotational, Main.rand.NextFloat(-3f, 3f), Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(0.7f, 0.9f)));
+							particleList.Add(new FireParticle(Projectile.Center + circular - rotational * 2, rotational, Main.rand.NextFloat(-3f, 3f), Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(0.7f, 0.9f)));
 						}
 					}
 					int num = count;
 					if (num > 30)
 						num = 30;
-					if(projectile.timeLeft % (20 - (int)(num * 0.5f)) == 0)
+					if(Projectile.timeLeft % (20 - (int)(num * 0.5f)) == 0)
 					{
 						Detonate(dist / 16f);
 						for (int i = 0; i < 360; i += 6)
@@ -266,7 +266,7 @@ namespace SOTS.Projectiles.Celestial
 							{
 								Vector2 circularLocation = new Vector2(-12, 0).RotatedBy(MathHelper.ToRadians(i));
 								circularLocation.Y *= 0.5f;
-								Dust dust = Dust.NewDustDirect(new Vector2(projectile.Center.X - 4, projectile.Center.Y - 4), 4, 4, ModContent.DustType<CopyDust4>());
+								Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4), 4, 4, ModContent.DustType<CopyDust4>());
 								dust.noGravity = true;
 								dust.velocity *= 0.5f;
 								dust.velocity += circularLocation * 0.35f;
@@ -276,14 +276,14 @@ namespace SOTS.Projectiles.Celestial
 							}
 						}
 						count++;
-						SoundEngine.PlaySound(SoundID.NPCKilled, (int)projectile.Center.X, (int)projectile.Center.Y, 39, 0.95f, -0.4f);
-						if (Main.myPlayer == projectile.owner)
+						SoundEngine.PlaySound(SoundID.NPCKilled, (int)Projectile.Center.X, (int)Projectile.Center.Y, 39, 0.95f, -0.4f);
+						if (Main.myPlayer == Projectile.owner)
 						{
 							Vector2 circular = new Vector2(Main.rand.NextFloat(6f, 8f), 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)));
 							if (Main.rand.NextBool(3) && player.ZoneUnderworldHeight)
-								Projectile.NewProjectile(projectile.Center, circular, ModContent.ProjectileType<PurgatoryGhost>(), 0, projectile.knockBack, projectile.owner, 0, Main.rand.Next(2) * 2 - 1);
+								Projectile.NewProjectile(Projectile.Center, circular, ModContent.ProjectileType<PurgatoryGhost>(), 0, Projectile.knockBack, Projectile.owner, 0, Main.rand.Next(2) * 2 - 1);
 							Vector2 perturbedSpeed = (circular.SafeNormalize(Vector2.Zero) * 2f * Main.rand.NextFloat(0.5f, 1.5f)).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360f)));
-							Projectile.NewProjectile(projectile.Center, perturbedSpeed, ModContent.ProjectileType<PurgatoryLightning>(), 0, 1f, Main.myPlayer, Main.rand.Next(2));
+							Projectile.NewProjectile(Projectile.Center, perturbedSpeed, ModContent.ProjectileType<PurgatoryLightning>(), 0, 1f, Main.myPlayer, Main.rand.Next(2));
 						}
 					}
 				}

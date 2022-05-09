@@ -25,7 +25,7 @@ namespace SOTS.Items.Furniture
         public override void HitWire(int i, int j)
         {
             Tile tile = Main.tile[i, j];
-            short frameAdjustment = (short)(tile.frameX > 0 ? -18 : 18);
+            short frameAdjustment = (short)(tile.TileFrameX > 0 ? -18 : 18);
             Main.tile[i, j].frameX += frameAdjustment;
             Wiring.SkipWire(i, j);
             NetMessage.SendTileSquare(-1, i, j, 1, TileChangeType.None);

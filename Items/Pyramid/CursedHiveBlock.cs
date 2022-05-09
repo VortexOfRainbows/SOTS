@@ -22,7 +22,7 @@ namespace SOTS.Items.Pyramid
 			Item.autoReuse = true;
 			Item.useAnimation = 15;
 			Item.useTime = 10;
-			Item.useStyle = 1;
+			Item.useStyle = ItemUseStyleID.Swing;
 			Item.rare = 5;
 			Item.consumable = true;
 			Item.createTile = mod.TileType("CursedHiveSafe");
@@ -113,26 +113,26 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void SetDefaults()
 		{
-			projectile.alpha = 255;
-			projectile.timeLeft = 24;
-			projectile.friendly = false;
-			projectile.tileCollide = false;
-			projectile.width = 40;
-			projectile.height = 40;
+			Projectile.alpha = 255;
+			Projectile.timeLeft = 24;
+			Projectile.friendly = false;
+			Projectile.tileCollide = false;
+			Projectile.width = 40;
+			Projectile.height = 40;
 		}
 		public override void AI()
 		{
-			projectile.alpha = 255;
-			projectile.Kill();
+			Projectile.alpha = 255;
+			Projectile.Kill();
 		}
 		public override void Kill(int timeLeft)
 		{
-			if(projectile.ai[0] == -1)
+			if(Projectile.ai[0] == -1)
 			{
 				if (!NPC.AnyNPCs(mod.NPCType("PharaohsCurse")))
 					if (Main.netMode != 1)
 					{
-						int npc1 = NPC.NewNPC((int)projectile.position.X + projectile.width / 2, (int)projectile.position.Y + projectile.height, ModContent.NPCType<PharaohsCurse>());
+						int npc1 = NPC.NewNPC((int)Projectile.position.X + Projectile.width / 2, (int)Projectile.position.Y + Projectile.height, ModContent.NPCType<PharaohsCurse>());
 						Main.npc[npc1].netUpdate = true;
 					}
 			}
@@ -140,13 +140,13 @@ namespace SOTS.Items.Pyramid
             {
 				if (Main.netMode != 1)
 				{
-					int npc1 = NPC.NewNPC((int)projectile.position.X + projectile.width / 2, (int)projectile.position.Y + projectile.height, mod.NPCType("WallMimic"));
+					int npc1 = NPC.NewNPC((int)Projectile.position.X + Projectile.width / 2, (int)Projectile.position.Y + Projectile.height, mod.NPCType("WallMimic"));
 					Main.npc[npc1].netUpdate = true;
 					Main.npc[npc1].ai[2] = 900;
 				}
-				SoundEngine.PlaySound(SoundID.Item14, (int)(projectile.Center.X), (int)(projectile.Center.Y));
-				int x2 = (int)(projectile.Center.X / 16f);
-				int y2 = (int)(projectile.Center.Y / 16f);
+				SoundEngine.PlaySound(SoundID.Item14, (int)(Projectile.Center.X), (int)(Projectile.Center.Y));
+				int x2 = (int)(Projectile.Center.X / 16f);
+				int y2 = (int)(Projectile.Center.Y / 16f);
 				for (int i = x2 - 1; i <= x2 + 1; i++)
 				{
 					for (int j = y2 - 1; j <= y2 + 1; j++)

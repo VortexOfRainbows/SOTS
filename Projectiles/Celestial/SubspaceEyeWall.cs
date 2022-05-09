@@ -15,13 +15,13 @@ namespace SOTS.Projectiles.Celestial
     {
         public override void SetDefaults()
         {
-            projectile.hostile = false;
-            projectile.friendly = false;
-            projectile.tileCollide = false;
-            projectile.width = 0;
-            projectile.height = 0;
-            projectile.timeLeft = 1200;
-            projectile.hide = true; // Prevents projectile from being drawn normally. Use in conjunction with DrawBehind.
+            Projectile.hostile = false;
+            Projectile.friendly = false;
+            Projectile.tileCollide = false;
+            Projectile.width = 0;
+            Projectile.height = 0;
+            Projectile.timeLeft = 1200;
+            Projectile.hide = true; // Prevents projectile from being drawn normally. Use in conjunction with DrawBehind.
         }
         public override void DrawBehind(int index, List<int> drawCacheProjsBehindNPCsAndTiles, List<int> drawCacheProjsBehindNPCs, List<int> drawCacheProjsBehindProjectiles, List<int> drawCacheProjsOverWiresUI)
         {
@@ -31,32 +31,32 @@ namespace SOTS.Projectiles.Celestial
         bool runOnce = true;
         public override void AI()
         {
-            //Main.NewText(projectile.timeLeft);
+            //Main.NewText(Projectile.timeLeft);
             if(runOnce)
             {
-                if(projectile.knockBack == 1)
-                   projectile.timeLeft = 1400;
+                if(Projectile.knockBack == 1)
+                   Projectile.timeLeft = 1400;
                 runOnce = false;
             }
-            NPC master = Main.npc[(int)projectile.ai[0]];
-            if (master.active && (master.type == ModContent.NPCType<NPCs.Boss.SubspaceEye>() || master.type == ModContent.NPCType<NPCs.Boss.SubspaceSerpentHead>()) && (master.ai[3] != -1 || Math.Abs(projectile.ai[1]) <= 1))
+            NPC master = Main.npc[(int)Projectile.ai[0]];
+            if (master.active && (master.type == ModContent.NPCType<NPCs.Boss.SubspaceEye>() || master.type == ModContent.NPCType<NPCs.Boss.SubspaceSerpentHead>()) && (master.ai[3] != -1 || Math.Abs(Projectile.ai[1]) <= 1))
             {
-                if (Math.Abs(projectile.ai[1]) > 1)
-                    projectile.timeLeft = 257;
-                projectile.Center = master.Center;
+                if (Math.Abs(Projectile.ai[1]) > 1)
+                    Projectile.timeLeft = 257;
+                Projectile.Center = master.Center;
             }
             else
             {
-                if (projectile.timeLeft > 257)
-                    projectile.timeLeft = 257;
+                if (Projectile.timeLeft > 257)
+                    Projectile.timeLeft = 257;
             }
-            if (projectile.timeLeft < 255)
+            if (Projectile.timeLeft < 255)
             {
                 if (fadeInTimer > 0)
                 {
                     fadeInTimer -= 20;
                     if (fadeInTimer <= 0)
-                        projectile.Kill();
+                        Projectile.Kill();
                 }
             }
             else
@@ -64,16 +64,16 @@ namespace SOTS.Projectiles.Celestial
                 if (fadeInTimer < 255)
                 {
                     fadeInTimer++;
-                    if (Math.Abs(projectile.ai[1]) > 1)
+                    if (Math.Abs(Projectile.ai[1]) > 1)
                         fadeInTimer++;
                 }
                 if (fadeInTimer > 255)
                     fadeInTimer = 255;
             }
-            projectile.alpha = fadeInTimer;
+            Projectile.alpha = fadeInTimer;
             if (Main.netMode != 1)
             {
-                projectile.netUpdate = true;
+                Projectile.netUpdate = true;
             }
         }
         private int screenHeightOld = 0;
@@ -118,9 +118,9 @@ namespace SOTS.Projectiles.Celestial
             }
         }
         bool runOnce2 = true;
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override bool PreDraw(ref Color lightColor)
         {
-            if (!projectile.active)
+            if (!Projectile.active)
                 return false;
             Player drawPlayer = Main.LocalPlayer;
             if (Main.screenHeight != screenHeightOld)
@@ -140,23 +140,23 @@ namespace SOTS.Projectiles.Celestial
             if(runOnce2)
                 lightsUpdate(false);
             runOnce2 = false;
-            NPC master = Main.npc[(int)projectile.ai[0]];
+            NPC master = Main.npc[(int)Projectile.ai[0]];
             if (master.active && (master.type == ModContent.NPCType<NPCs.Boss.SubspaceEye>() || master.type == ModContent.NPCType<NPCs.Boss.SubspaceSerpentHead>()) && master.ai[3] != -1)
             {
-                projectile.Center = master.Center;
+                Projectile.Center = master.Center;
             }
             Texture2D TheShadow = new Texture2D(Main.graphics.GraphicsDevice, width, height);
             TheShadow.SetData(0, null, defaultdataColors, 0, width * height);
-            float offset = projectile.ai[1];
-            if (projectile.ai[1] > 0 && Math.Abs(projectile.ai[1]) < 1000)
+            float offset = Projectile.ai[1];
+            if (Projectile.ai[1] > 0 && Math.Abs(Projectile.ai[1]) < 1000)
             {
                 offset -= Main.screenWidth + 800;
             }
-            if(projectile.ai[1] < 0 && Math.Abs(projectile.ai[1]) >= 1000)
+            if(Projectile.ai[1] < 0 && Math.Abs(Projectile.ai[1]) >= 1000)
             {
                 offset -= Main.screenWidth + 800;
             }
-            spriteBatch.Draw(TheShadow, new Vector2(projectile.Center.X + projectile.ai[1] + offset - Main.screenPosition.X, 0), null, new Color(fadeInTimer, fadeInTimer, fadeInTimer, fadeInTimer), 0, new Vector2(0, 0), scale, SpriteEffects.None, .2f);
+            spriteBatch.Draw(TheShadow, new Vector2(Projectile.Center.X + Projectile.ai[1] + offset - Main.screenPosition.X, 0), null, new Color(fadeInTimer, fadeInTimer, fadeInTimer, fadeInTimer), 0, new Vector2(0, 0), scale, SpriteEffects.None, .2f);
             screenHeightOld = Main.screenHeight;
             return false;
         }

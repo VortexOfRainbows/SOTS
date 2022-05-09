@@ -14,14 +14,14 @@ namespace SOTS.Projectiles
 		}
         public override void SetDefaults()
         {
-			projectile.aiStyle = 2;
-			projectile.thrown = true;
-			projectile.friendly = true;
-			projectile.width = 46;
-			projectile.height = 36;
-			projectile.timeLeft = 6000;
-			projectile.penetrate = -1;
-			projectile.tileCollide = true;
+			Projectile.aiStyle = 2;
+			Projectile.thrown = true;
+			Projectile.friendly = true;
+			Projectile.width = 46;
+			Projectile.height = 36;
+			Projectile.timeLeft = 6000;
+			Projectile.penetrate = -1;
+			Projectile.tileCollide = true;
 		}
 		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
 		{
@@ -32,23 +32,23 @@ namespace SOTS.Projectiles
 		}
 		public override void AI()
 		{
-			projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
-			projectile.alpha = 0;		
+			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
+			Projectile.alpha = 0;		
 			float minDist = 500;
 			int target2 = -1;
 			float dX = 0f;
 			float dY = 0f;
 			float distance = 0;
 			float speed = 0.4f;
-			if(projectile.friendly == true && projectile.hostile == false)
+			if(Projectile.friendly == true && Projectile.hostile == false)
 			{
 				for(int i = 0; i < Main.npc.Length; i++)
 				{
 					NPC target = Main.npc[i];
 					if(!target.friendly && target.dontTakeDamage == false && target.lifeMax > 5 && target.CanBeChasedBy())
 					{
-						dX = target.Center.X - projectile.Center.X;
-						dY = target.Center.Y - projectile.Center.Y;
+						dX = target.Center.X - Projectile.Center.X;
+						dY = target.Center.Y - Projectile.Center.Y;
 						distance = (float) Math.Sqrt((double)(dX * dX + dY * dY));
 						if(distance < minDist)
 						{
@@ -61,30 +61,30 @@ namespace SOTS.Projectiles
 				{
 					NPC toHit = Main.npc[target2];
 					if(toHit.active == true)
-					{						dX = toHit.Center.X - projectile.Center.X;
-						dY = toHit.Center.Y - projectile.Center.Y;
+					{						dX = toHit.Center.X - Projectile.Center.X;
+						dY = toHit.Center.Y - Projectile.Center.Y;
 						distance = (float)Math.Sqrt((double)(dX * dX + dY * dY));
 						speed /= distance;
 				   
-						projectile.velocity += new Vector2(dX * speed, dY * speed);
+						Projectile.velocity += new Vector2(dX * speed, dY * speed);
 					}
 				}
 			}
 		}
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-			projectile.timeLeft -= 1000;
+			Projectile.timeLeft -= 1000;
         }
 		public override void Kill(int timeLeft)
 		{
 			for(int i = 0; i < 3; i++)
 			{
-				int goreIndex = Gore.NewGore(new Vector2(projectile.position.X, projectile.position.Y), default(Vector2), Main.rand.Next(61,64), 1f);	
+				int goreIndex = Gore.NewGore(new Vector2(Projectile.position.X, Projectile.position.Y), default(Vector2), Main.rand.Next(61,64), 1f);	
 				Main.gore[goreIndex].scale = 0.65f;
 				Main.gore[goreIndex].velocity.Y *= 0.25f;
 				Main.gore[goreIndex].velocity.X *= 0.25f;
 			}
-            SoundEngine.PlaySound(2, (int)(projectile.Center.X), (int)(projectile.Center.Y), 14, 0.4f);
+            SoundEngine.PlaySound(2, (int)(Projectile.Center.X), (int)(Projectile.Center.Y), 14, 0.4f);
 		}
 	}
 }

@@ -13,37 +13,37 @@ namespace SOTS.Projectiles.Lightning
 		}
 		public override void SetDefaults()
 		{
-			projectile.width = 12;
-			projectile.height = 12;
-			projectile.friendly = true;
-			projectile.magic = true;
-			projectile.timeLeft = 3600;
-			projectile.tileCollide = false;
-			projectile.penetrate = -1;
-			projectile.alpha = 120;
-			projectile.scale = 1f;
+			Projectile.width = 12;
+			Projectile.height = 12;
+			Projectile.friendly = true;
+			Projectile.magic = true;
+			Projectile.timeLeft = 3600;
+			Projectile.tileCollide = false;
+			Projectile.penetrate = -1;
+			Projectile.alpha = 120;
+			Projectile.scale = 1f;
 		}
 		public override bool? CanHitNPC(NPC target)
 		{
 			return false;
 		}
 		Vector2[] trailPos = new Vector2[200];
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
 			if (runOnce || !hit)
 				return false;
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Lightning/GreenLightning").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			Vector2 previousPosition = projectile.Center;
+			Vector2 previousPosition = Projectile.Center;
 			Color color = new Color(140, 200, 140, 0);
-			color = color * ((255 - projectile.alpha) / 255f);
+			color = color * ((255 - Projectile.alpha) / 255f);
 			for (int k = 0; k < trailPos.Length; k++)
 			{
 				if (trailPos[k] == Vector2.Zero)
 				{
 					return false;
 				}
-				float scale = projectile.scale;
+				float scale = Projectile.scale;
 				Vector2 drawPos = trailPos[k] - Main.screenPosition;
 				Vector2 currentPos = trailPos[k];
 				Vector2 betweenPositions = previousPosition - currentPos;
@@ -60,7 +60,7 @@ namespace SOTS.Projectiles.Lightning
 							x = 0;
 							y = 0;
 						}
-						if (trailPos[k] != projectile.Center)
+						if (trailPos[k] != Projectile.Center)
 							Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, betweenPositions.ToRotation() + MathHelper.ToRadians(90), drawOrigin, scale, SpriteEffects.None, 0f);
 					}
 				}
@@ -83,11 +83,11 @@ namespace SOTS.Projectiles.Lightning
 		bool hit = false;
 		public override void AI()
 		{
-			NPC target = Main.npc[(int)projectile.ai[0]];
+			NPC target = Main.npc[(int)Projectile.ai[0]];
 			if (runOnce)
 			{
-				projectile.velocity = target.Center - projectile.Center;
-				SoundEngine.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 94, 0.6f);
+				Projectile.velocity = target.Center - Projectile.Center;
+				SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 94, 0.6f);
 				for (int i = 0; i < randStorage.Length; i++)
 				{
 					randStorage[i] = Main.rand.Next(-35, 36);
@@ -97,13 +97,13 @@ namespace SOTS.Projectiles.Lightning
 					trailPos[i] = Vector2.Zero;
 				}
 				nextPos = target.Center;
-				originalVelo = projectile.velocity.SafeNormalize(Vector2.Zero) * 8f;
-				originalPos = projectile.Center;
+				originalVelo = Projectile.velocity.SafeNormalize(Vector2.Zero) * 8f;
+				originalPos = Projectile.Center;
 				runOnce = false;
 			}
 
 			Vector2 temp = originalPos;
-			addPos = projectile.Center;
+			addPos = Projectile.Center;
 			for (int i = 0; i < dist; i++)
 			{
 				bool collided = false;
@@ -120,14 +120,14 @@ namespace SOTS.Projectiles.Lightning
 				NPC npc = target;
 				if (npc.active && npc.Hitbox.Intersects(new Rectangle((int)addPos.X - 12, (int)addPos.Y - 12, 24, 24)) && !npc.friendly)
 				{
-					if (projectile.owner == Main.myPlayer && projectile.friendly)
-						Projectile.NewProjectile(addPos.X, addPos.Y, projectile.velocity.X, projectile.velocity.Y, mod.ProjectileType("GreenExplosion"), projectile.damage, 3f, Main.myPlayer, (int)projectile.knockBack, projectile.ai[1] - 1);
-					if(projectile.friendly)
+					if (Projectile.owner == Main.myPlayer && Projectile.friendly)
+						Projectile.NewProjectile(addPos.X, addPos.Y, Projectile.velocity.X, Projectile.velocity.Y, mod.ProjectileType("GreenExplosion"), Projectile.damage, 3f, Main.myPlayer, (int)Projectile.knockBack, Projectile.ai[1] - 1);
+					if(Projectile.friendly)
                     {
 						hit = true;
 						collided = true;
 					}
-					projectile.friendly = false;
+					Projectile.friendly = false;
 					for (int k = i + 1; k < trailPos.Length; k++)
 					{
 						trailPos[k] = Vector2.Zero;
@@ -140,13 +140,13 @@ namespace SOTS.Projectiles.Lightning
 				}
 			}
 			originalPos = temp;
-			projectile.alpha += 4;
-			if (projectile.alpha >= 255)
-				projectile.Kill();
+			Projectile.alpha += 4;
+			if (Projectile.alpha >= 255)
+				Projectile.Kill();
 			counter++;
-			projectile.scale *= 0.98f;
+			Projectile.scale *= 0.98f;
 			if(counter >= 2)
-				projectile.friendly = false;
+				Projectile.friendly = false;
 		}
 	}
 }

@@ -24,7 +24,7 @@ namespace SOTS.Items.Otherworld.FromChests
             Item.height = 58;  
             Item.useTime = 24;
             Item.useAnimation = 24;
-            Item.useStyle = 1;   
+            Item.useStyle = ItemUseStyleID.Swing;   
             Item.autoReuse = true; 
             Item.knockBack = 3f;
 			Item.value = Item.sellPrice(0, 5, 0, 0);
@@ -42,7 +42,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		{
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/FromChests/HardlightScytheGlow").Value;
 			Color color = Color.White;
-			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, Item.height * 0.5f);
 			Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y) + 2), null, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 		}
 		public override void MeleeEffects(Player player, Rectangle hitbox)

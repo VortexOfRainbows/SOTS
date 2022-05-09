@@ -24,7 +24,7 @@ namespace SOTS.Items
 			Item.height = 30;
 			Item.useTime = 14;
 			Item.useAnimation = 14;
-			Item.useStyle = 5;
+			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.knockBack = 7.5f;
             Item.value = Item.sellPrice(0, 1, 0, 0);
 			Item.rare = ItemRarityID.Green;

@@ -34,9 +34,9 @@ namespace SOTS.Items.Furniture
         public override void HitWire(int i, int j)
         {
             Tile tile = Main.tile[i, j];
-            int x = i - (tile.frameX % 36) / 18;
-            int y = j - tile.frameY / 18;
-            if (tile.frameX >= 36)
+            int x = i - (tile.TileFrameX % 36) / 18;
+            int y = j - tile.TileFrameY / 18;
+            if (tile.TileFrameX >= 36)
             {
                 Main.tile[x, y].frameX += -36;
                 Main.tile[x + 1, y].frameX += -36;

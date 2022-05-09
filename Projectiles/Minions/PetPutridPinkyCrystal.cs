@@ -15,9 +15,9 @@ namespace SOTS.Projectiles.Minions
         public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Pinky Pet");
-			Main.projFrames[projectile.type] = 1;
-			Main.projPet[projectile.type] = true;
-			ProjectileID.Sets.LightPet[projectile.type] = false;
+			Main.projFrames[Projectile.type] = 1;
+			Main.projPet[Projectile.type] = true;
+			ProjectileID.Sets.LightPet[Projectile.type] = false;
 		}
 		public override void SendExtraAI(BinaryWriter writer)
 		{
@@ -33,15 +33,15 @@ namespace SOTS.Projectiles.Minions
 		}
 		public override void SetDefaults()
         {
-			projectile.netImportant = true;
-            projectile.width = 26;
-            projectile.height = 46; 
-            projectile.timeLeft = 20000;
-            projectile.penetrate = -1; 
-            projectile.friendly = true; 
-            projectile.tileCollide = false;
-            projectile.ignoreWater = true;
-			projectile.alpha = 70;
+			Projectile.netImportant = true;
+            Projectile.width = 26;
+            Projectile.height = 46; 
+            Projectile.timeLeft = 20000;
+            Projectile.penetrate = -1; 
+            Projectile.friendly = true; 
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
+			Projectile.alpha = 70;
 		}
 		private int shader = 0;
 		public float fireToX = 0;
@@ -49,16 +49,16 @@ namespace SOTS.Projectiles.Minions
 		public float eyeReset = 2.5f;
 		public override bool PreAI()
 		{
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			player.hornet = false; // Relic from aiType
-			if (Main.myPlayer != projectile.owner)
-				projectile.timeLeft = 20;
-			for(int i = 0; i < Main.projectile.Length; i++)
+			if (Main.myPlayer != Projectile.owner)
+				Projectile.timeLeft = 20;
+			for(int i = 0; i < Main.Projectile.Length; i++)
             {
 				Projectile proj = Main.projectile[i];
-				if(proj.type == projectile.type && proj.owner == projectile.owner && proj.active && proj.whoAmI != projectile.whoAmI)
+				if(proj.type == Projectile.type && proj.owner == Projectile.owner && proj.active && proj.whoAmI != Projectile.whoAmI)
                 {
-					projectile.Kill();
+					Projectile.Kill();
                 }
 			}
 			shader = player.cPet;
@@ -66,9 +66,9 @@ namespace SOTS.Projectiles.Minions
         }
 		bool runOnce = true;
 		int[] hooks = new int[6];
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override bool PreDraw(ref Color lightColor)
 		{
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			if (shader != 0)
 			{
 				Main.spriteBatch.End();
@@ -79,23 +79,23 @@ namespace SOTS.Projectiles.Minions
         }
         public override void AI()
 		{
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-			if((modPlayer.petPinky + 1) != projectile.damage)
+			if((modPlayer.petPinky + 1) != Projectile.damage)
             {
-				projectile.Kill();
+				Projectile.Kill();
             }
 			if (runOnce)
             {
 				runOnce = false;
 				for(int i = 0; i < hooks.Length; i++)
                 {
-					if(Main.myPlayer == projectile.owner)
-						hooks[i] = Projectile.NewProjectile(projectile.Center, Vector2.Zero, ModContent.ProjectileType<FluxSlimeBall>(), projectile.damage, projectile.knockBack, Main.myPlayer, projectile.identity, i * 60);
+					if(Main.myPlayer == Projectile.owner)
+						hooks[i] = Projectile.NewProjectile(Projectile.Center, Vector2.Zero, ModContent.ProjectileType<FluxSlimeBall>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, Projectile.identity, i * 60);
                 }
             }
 			bool hasHooked = false;
-			if(Main.myPlayer == projectile.owner && projectile.damage > 0)
+			if(Main.myPlayer == Projectile.owner && Projectile.damage > 0)
             {
 				#region Find target
 				float distanceFromTarget = 400f;
@@ -106,7 +106,7 @@ namespace SOTS.Projectiles.Minions
 				{
 					Projectile hook = Main.projectile[hooks[i]];
 					FluxSlimeBall slimeBall = hook.modProjectile as FluxSlimeBall;
-					if (hook.ai[0] == (int)projectile.whoAmI && hook.active && hook.type == ModContent.ProjectileType<FluxSlimeBall>())
+					if (hook.ai[0] == (int)Projectile.whoAmI && hook.active && hook.type == ModContent.ProjectileType<FluxSlimeBall>())
 					{
 						if (slimeBall != null)
 						{
@@ -120,7 +120,7 @@ namespace SOTS.Projectiles.Minions
 				{
 					Projectile hook = Main.projectile[hooks[i]];
 					FluxSlimeBall slimeBall = hook.modProjectile as FluxSlimeBall;
-					if ((int)hook.ai[0] == projectile.whoAmI && hook.active && hook.type == ModContent.ProjectileType<FluxSlimeBall>() && (hook.Center - projectile.Center).Length() < 48)
+					if ((int)hook.ai[0] == Projectile.whoAmI && hook.active && hook.type == ModContent.ProjectileType<FluxSlimeBall>() && (hook.Center - Projectile.Center).Length() < 48)
 					{
 						if (slimeBall != null)
 						{
@@ -150,7 +150,7 @@ namespace SOTS.Projectiles.Minions
 					}
 					if(!hook.active || hook.type != ModContent.ProjectileType<FluxSlimeBall>())
 					{
-						hooks[i] = Projectile.NewProjectile(projectile.Center, Vector2.Zero, ModContent.ProjectileType<FluxSlimeBall>(), projectile.damage, projectile.knockBack, projectile.owner, projectile.whoAmI, i * 60);
+						hooks[i] = Projectile.NewProjectile(Projectile.Center, Vector2.Zero, ModContent.ProjectileType<FluxSlimeBall>(), Projectile.damage, Projectile.knockBack, Projectile.owner, Projectile.whoAmI, i * 60);
 					}
 				}
 				if(decidedHook != -1)
@@ -168,21 +168,21 @@ namespace SOTS.Projectiles.Minions
 				}
 				#endregion
 			}
-			if(projectile.owner == Main.myPlayer)
+			if(Projectile.owner == Main.myPlayer)
 			{
-				Vector2 toLocation = projectile.Center;
-				projectile.velocity *= 0.1f;
-				projectile.ai[0] += 1 * player.direction;
+				Vector2 toLocation = Projectile.Center;
+				Projectile.velocity *= 0.1f;
+				Projectile.ai[0] += 1 * player.direction;
 				toLocation.X = player.Center.X;
-				toLocation.Y = player.Center.Y - 120 + Main.player[projectile.owner].gfxOffY;
-				Vector2 circular = new Vector2(48, 0).RotatedBy(MathHelper.ToRadians(projectile.ai[0]));
+				toLocation.Y = player.Center.Y - 120 + Main.player[Projectile.owner].gfxOffY;
+				Vector2 circular = new Vector2(48, 0).RotatedBy(MathHelper.ToRadians(Projectile.ai[0]));
 				circular.Y *= 0.3f;
 				Vector2 goTo = toLocation + circular;
 				Vector2 hookPositionAverage = Vector2.Zero;
 				for (int i = 0; i < hooks.Length; i++)
 				{
 					Projectile hook = Main.projectile[hooks[i]];
-					if ((int)hook.ai[0] == projectile.whoAmI && hook.active && hook.type == ModContent.ProjectileType<FluxSlimeBall>())
+					if ((int)hook.ai[0] == Projectile.whoAmI && hook.active && hook.type == ModContent.ProjectileType<FluxSlimeBall>())
 					{
 						hookPositionAverage += hook.Center;
 					}
@@ -196,27 +196,27 @@ namespace SOTS.Projectiles.Minions
 				}
 				goTo += hookPositionAverage;
 				goTo /= 7f;
-				goTo -= projectile.Center;
+				goTo -= Projectile.Center;
 				Vector2 newGoTo = goTo.SafeNormalize(Vector2.Zero);
 				float dist = 9f + goTo.Length() * 0.02f;
 				if (dist > goTo.Length())
 					dist = goTo.Length();
-				projectile.velocity = newGoTo * dist;
-				projectile.netUpdate = true;
+				Projectile.velocity = newGoTo * dist;
+				Projectile.netUpdate = true;
 			}
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
 			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Minions/PetPutridPinkyEye");
 			Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
-			Vector2 drawPos = projectile.Center - Main.screenPosition;
-			float shootToX = fireToX - projectile.Center.X;
-			float shootToY = fireToY - projectile.Center.Y;
+			Vector2 drawPos = Projectile.Center - Main.screenPosition;
+			float shootToX = fireToX - Projectile.Center.X;
+			float shootToY = fireToY - Projectile.Center.Y;
 			Vector2 shootTo = new Vector2(shootToX, shootToY).SafeNormalize(Vector2.Zero);
 			drawPos += shootTo * 2;
-			spriteBatch.Draw(texture, drawPos, null, drawColor, projectile.rotation, drawOrigin, projectile.scale, SpriteEffects.None, 0f);
+			spriteBatch.Draw(texture, drawPos, null, drawColor, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
 
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			if (shader != 0)
 			{
 				Main.spriteBatch.End();

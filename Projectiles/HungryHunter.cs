@@ -17,38 +17,38 @@ namespace SOTS.Projectiles
 		}
         public override void SetDefaults()
 		{
-			projectile.width = 28;
-			projectile.height = 30;
-			projectile.penetrate = -1;
-			projectile.timeLeft = 3000;
-			projectile.friendly = true;
-			projectile.aiStyle = 15;
-			projectile.melee = true;
-			projectile.usesLocalNPCImmunity = true;
-			projectile.localNPCHitCooldown = 15;
+			Projectile.width = 28;
+			Projectile.height = 30;
+			Projectile.penetrate = -1;
+			Projectile.timeLeft = 3000;
+			Projectile.friendly = true;
+			Projectile.aiStyle = 15;
+			Projectile.melee = true;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = 15;
 		}
 		public override void SendExtraAI(BinaryWriter writer) 
 		{
-			writer.Write(projectile.rotation);
-			writer.Write(projectile.spriteDirection);
+			writer.Write(Projectile.rotation);
+			writer.Write(Projectile.spriteDirection);
 			//writer.Write(damageCounter);
 			writer.Write(latch);
 			writer.Write(enemyIndex);
 		}
 		public override void ReceiveExtraAI(BinaryReader reader)
 		{	
-			projectile.rotation = reader.ReadSingle();
-			projectile.spriteDirection = reader.ReadInt32();
+			Projectile.rotation = reader.ReadSingle();
+			Projectile.spriteDirection = reader.ReadInt32();
 			//damageCounter = reader.ReadInt32();
 			latch = reader.ReadBoolean();
 			enemyIndex = reader.ReadInt32();
 		}
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Hungry_Chain");    //this where the chain of grappling hook is drawn
                                                       //change YourModName with ur mod name/ and CustomHookPr_Chain with the name of ur one
-            Vector2 position = projectile.Center;
-            Vector2 mountedCenter = Main.player[projectile.owner].MountedCenter;
+            Vector2 position = Projectile.Center;
+            Vector2 mountedCenter = Main.player[Projectile.owner].MountedCenter;
             Microsoft.Xna.Framework.Rectangle? sourceRectangle = new Microsoft.Xna.Framework.Rectangle?();
             Vector2 origin = new Vector2((float)texture.Width * 0.5f, (float)texture.Height * 0.5f);
             float num1 = (float)texture.Height;
@@ -72,7 +72,7 @@ namespace SOTS.Projectiles
                     position += vector2_1 * num1;
                     vector2_4 = mountedCenter - position;
                     Microsoft.Xna.Framework.Color color2 = Lighting.GetColor((int)position.X / 16, (int)((double)position.Y / 16.0));
-                    color2 = projectile.GetAlpha(color2);
+                    color2 = Projectile.GetAlpha(color2);
                     Main.spriteBatch.Draw(texture, position - Main.screenPosition, sourceRectangle, color2, rotation, origin, 1f, SpriteEffects.None, 0.0f);
                 }
             }
@@ -80,15 +80,15 @@ namespace SOTS.Projectiles
         }
 		public override void AI()
 		{
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			if(latch && player.channel && enemyIndex != -1)
 			{
-				projectile.netUpdate = true;
+				Projectile.netUpdate = true;
 				NPC target = Main.npc[enemyIndex];
 				if(target.active && !target.friendly)
 				{
-					projectile.position.X = target.Center.X - projectile.width/2;
-					projectile.position.Y = target.Center.Y - projectile.height/2;
+					Projectile.position.X = target.Center.X - Projectile.width/2;
+					Projectile.position.Y = target.Center.Y - Projectile.height/2;
 				}
 				else
 				{
@@ -98,16 +98,16 @@ namespace SOTS.Projectiles
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			projectile.localNPCImmunity[target.whoAmI] = projectile.localNPCHitCooldown;
-			target.immune[projectile.owner] = 0;
-			Player player = Main.player[projectile.owner];
+			Projectile.localNPCImmunity[target.whoAmI] = Projectile.localNPCHitCooldown;
+			target.immune[Projectile.owner] = 0;
+			Player player = Main.player[Projectile.owner];
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");	
-			projectile.timeLeft = 3000;
-			projectile.friendly = true;
+			Projectile.timeLeft = 3000;
+			Projectile.friendly = true;
 			latch = true;
 			if(player.whoAmI == Main.myPlayer)
-			Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, mod.ProjectileType("HealProj"), 2, 0, projectile.owner, 1, 5);
+			Projectile.NewProjectile(target.Center.X, target.Center.Y, 0, 0, mod.ProjectileType("HealProj"), 2, 0, Projectile.owner, 1, 5);
 			enemyIndex = target.whoAmI;
 			if(target.life <= 0)
 			{

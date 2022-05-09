@@ -18,7 +18,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		{
 			Item.noMelee = true;
 			Item.damage = 23;  
-            Item.ranged = true;    
+            Item.DamageType = DamageClass.Ranged;    
             Item.width = 44;  
             Item.height = 26;   
             Item.useTime = 10;  

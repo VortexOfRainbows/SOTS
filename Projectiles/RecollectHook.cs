@@ -16,14 +16,14 @@ namespace SOTS.Projectiles
 		}
         public override void SetDefaults()
         {
-			projectile.width = 20;
-			projectile.height = 20;
-			projectile.penetrate = -1;
-			projectile.timeLeft = 7200;
-			projectile.friendly = false;
-            projectile.tileCollide = false;
-            projectile.ignoreWater = true;
-            projectile.alpha = 255;
+			Projectile.width = 20;
+			Projectile.height = 20;
+			Projectile.penetrate = -1;
+			Projectile.timeLeft = 7200;
+			Projectile.friendly = false;
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
+            Projectile.alpha = 255;
         } 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
@@ -35,36 +35,36 @@ namespace SOTS.Projectiles
         {
             if(playOnce)
             {
-                SoundEngine.PlaySound(SoundID.Item99, projectile.Center);
+                SoundEngine.PlaySound(SoundID.Item99, Projectile.Center);
                 playOnce = false;
             }
-            if (projectile.ai[0] == -1)
-                projectile.Kill();
-            NPC owner = Main.npc[(int)projectile.ai[0]];
+            if (Projectile.ai[0] == -1)
+                Projectile.Kill();
+            NPC owner = Main.npc[(int)Projectile.ai[0]];
             if (!owner.active || owner.type != ModContent.NPCType<PutridPinkyPhase2>())
             {
-                projectile.ai[0] = -1;
-                projectile.Kill();
+                Projectile.ai[0] = -1;
+                Projectile.Kill();
             }
             if (hookId == -1)
             {
-                NPC hook = Main.npc[(int)projectile.ai[1]];
+                NPC hook = Main.npc[(int)Projectile.ai[1]];
                 if (hook.type == mod.NPCType("HookTurret") && hook.active && (int)hook.localAI[0] == owner.whoAmI)
                 {
-                    Vector2 toHook = hook.Center - projectile.Center;
+                    Vector2 toHook = hook.Center - Projectile.Center;
                     toHook = toHook.SafeNormalize(Vector2.Zero);
-                    projectile.velocity = projectile.velocity.Length() * toHook;
-                    if (projectile.Hitbox.Intersects(hook.Hitbox))
+                    Projectile.velocity = Projectile.velocity.Length() * toHook;
+                    if (Projectile.Hitbox.Intersects(hook.Hitbox))
                     {
                         SoundEngine.PlaySound(SoundID.NPCHit1, hook.Center);
-                        projectile.velocity *= 0.05f;
-                        projectile.Center = hook.Center;
+                        Projectile.velocity *= 0.05f;
+                        Projectile.Center = hook.Center;
                         hookId = hook.whoAmI;
                     }
                 }
                 else
                 {
-                    projectile.Kill();
+                    Projectile.Kill();
                 }
             }
             else
@@ -72,14 +72,14 @@ namespace SOTS.Projectiles
                 NPC hook = Main.npc[hookId];
                 if (hook.type == mod.NPCType("HookTurret") && hook.active && (int)hook.localAI[0] == owner.whoAmI)
                 {
-                    hook.Center = projectile.Center;
+                    hook.Center = Projectile.Center;
                 }
                 else
                 {
-                    projectile.Kill();
+                    Projectile.Kill();
                 }
                 float rotationDist = owner.ai[3];
-                Vector2 toOwner = owner.Center - projectile.Center;
+                Vector2 toOwner = owner.Center - Projectile.Center;
                 if (toOwner.Length() < rotationDist)
                 {
                     if (hook.type == mod.NPCType("HookTurret") && hook.active && (int)hook.localAI[0] == owner.whoAmI)
@@ -104,16 +104,16 @@ namespace SOTS.Projectiles
                         hook.netUpdate = true;
                         SoundEngine.PlaySound(SoundID.NPCHit, (int)hook.Center.X, (int)hook.Center.Y, 1, 1.2f);
                     }
-                    projectile.Kill();
+                    Projectile.Kill();
                 }
                 else
                 {
                     toOwner = toOwner.SafeNormalize(Vector2.Zero);
-                    projectile.velocity = projectile.velocity.Length() * toOwner;
+                    Projectile.velocity = Projectile.velocity.Length() * toOwner;
                 }
             }
-            if (projectile.velocity.Length() < 17)
-                projectile.velocity *= 1.1f;
+            if (Projectile.velocity.Length() < 17)
+                Projectile.velocity *= 1.1f;
             return true;
 		}
     }

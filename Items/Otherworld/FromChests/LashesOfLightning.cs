@@ -20,7 +20,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		public override void SetDefaults()
 		{
             Item.damage = 26;  
-            Item.magic = true; 
+            Item.DamageType = DamageClass.Magic; 
             Item.width = 30;    
             Item.height = 46;  
             Item.useTime = 8;
@@ -45,7 +45,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		{
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/FromChests/LashesOfLightningGlow").Value;
 			Color color = Color.White;
-			Vector2 drawOrigin = new Vector2(Main.itemTexture[Item.type].Width * 0.5f, Item.height * 0.5f);
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, Item.height * 0.5f);
 			Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y) + 2), null, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 		}
 		public override void MeleeEffects(Player player, Rectangle hitbox)

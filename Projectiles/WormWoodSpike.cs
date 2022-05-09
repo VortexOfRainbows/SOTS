@@ -16,36 +16,36 @@ namespace SOTS.Projectiles
 		}
 		public override void SendExtraAI(BinaryWriter writer) 
 		{
-			writer.Write(projectile.rotation);
-			writer.Write(projectile.spriteDirection);
+			writer.Write(Projectile.rotation);
+			writer.Write(Projectile.spriteDirection);
 			//writer.Write(damageCounter);
 			writer.Write(latch);
 			writer.Write(enemyIndex);
 		}
 		public override void ReceiveExtraAI(BinaryReader reader)
 		{	
-			projectile.rotation = reader.ReadSingle();
-			projectile.spriteDirection = reader.ReadInt32();
+			Projectile.rotation = reader.ReadSingle();
+			Projectile.spriteDirection = reader.ReadInt32();
 			//damageCounter = reader.ReadInt32();
 			latch = reader.ReadBoolean();
 			enemyIndex = reader.ReadInt32();
 		}
         public override void SetDefaults()
 		{
-			projectile.width = 28;
-			projectile.height = 32;
-			projectile.penetrate = -1;
-			projectile.timeLeft = 3000;
-			projectile.friendly = true;
-			projectile.aiStyle = 15;
-			projectile.melee = true;
+			Projectile.width = 28;
+			Projectile.height = 32;
+			Projectile.penetrate = -1;
+			Projectile.timeLeft = 3000;
+			Projectile.friendly = true;
+			Projectile.aiStyle = 15;
+			Projectile.melee = true;
         }
         public override bool PreDraw(Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch, Color lightColor)
         {
             Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/WormWoodVine");    //this where the chain of grappling hook is drawn
                                                       //change YourModName with ur mod name/ and CustomHookPr_Chain with the name of ur one
-            Vector2 position = projectile.Center;
-            Vector2 mountedCenter = Main.player[projectile.owner].MountedCenter;
+            Vector2 position = Projectile.Center;
+            Vector2 mountedCenter = Main.player[Projectile.owner].MountedCenter;
             Microsoft.Xna.Framework.Rectangle? sourceRectangle = new Microsoft.Xna.Framework.Rectangle?();
             Vector2 origin = new Vector2((float)texture.Width * 0.5f, (float)texture.Height * 0.5f);
             float num1 = (float)texture.Height;
@@ -69,7 +69,7 @@ namespace SOTS.Projectiles
                     position += vector2_1 * num1;
                     vector2_4 = mountedCenter - position;
                     Microsoft.Xna.Framework.Color color2 = Lighting.GetColor((int)position.X / 16, (int)((double)position.Y / 16.0));
-                    color2 = projectile.GetAlpha(color2);
+                    color2 = Projectile.GetAlpha(color2);
                     Main.spriteBatch.Draw(texture, position - Main.screenPosition, sourceRectangle, color2, rotation, origin, 1f, SpriteEffects.None, 0.0f);
                 }
             }
@@ -77,15 +77,15 @@ namespace SOTS.Projectiles
         }
 		public override void AI()
 		{
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			if(latch && player.channel && enemyIndex != -1)
 			{
-				projectile.netUpdate = true;
+				Projectile.netUpdate = true;
 				NPC target = Main.npc[enemyIndex];
 				if(target.active && !target.friendly)
 				{
-					target.position.X = projectile.Center.X - target.width/2;
-					target.position.Y = projectile.Center.Y - target.height/2;
+					target.position.X = Projectile.Center.X - target.width/2;
+					target.position.Y = Projectile.Center.Y - target.height/2;
 				}
 				else
 				{
@@ -95,11 +95,11 @@ namespace SOTS.Projectiles
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");	
-            target.immune[projectile.owner] = 15;
-			projectile.timeLeft = 3000;
-			projectile.friendly = true;
+            target.immune[Projectile.owner] = 15;
+			Projectile.timeLeft = 3000;
+			Projectile.friendly = true;
 			latch = true;
 			if(target.lifeMax > 10 && !target.boss && target.CanBeChasedBy())
 			{

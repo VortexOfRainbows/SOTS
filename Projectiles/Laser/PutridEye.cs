@@ -13,13 +13,13 @@ namespace SOTS.Projectiles.Laser
 	{
 		private float dist
 		{
-			get => projectile.ai[0];
-			set => projectile.ai[0] = value;
+			get => Projectile.ai[0];
+			set => Projectile.ai[0] = value;
 		}
 		private float speed
 		{
-			get => projectile.ai[1];
-			set => projectile.ai[1] = value;
+			get => Projectile.ai[1];
+			set => Projectile.ai[1] = value;
 		}
 		public override void SetStaticDefaults()
 		{
@@ -28,35 +28,35 @@ namespace SOTS.Projectiles.Laser
 		
         public override void SetDefaults()
         {
-			projectile.height = 44;
-			projectile.width = 44;
-			projectile.friendly = false;
-			projectile.timeLeft = 6004;
-			projectile.tileCollide = false;
-			projectile.hostile = false;
+			Projectile.height = 44;
+			Projectile.width = 44;
+			Projectile.friendly = false;
+			Projectile.timeLeft = 6004;
+			Projectile.tileCollide = false;
+			Projectile.hostile = false;
 		}
 		public override bool PreAI()
         {
-			if(projectile.active)
+			if(Projectile.active)
 				return true;
 			return false;
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
 			return false;
 		}
-		public override void PostDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override void PostDraw(Color lightColor)
 		{
-			Player player = Main.player[projectile.owner];
-			double direction = (player.Center - projectile.Center).ToRotation();
+			Player player = Main.player[Projectile.owner];
+			double direction = (player.Center - Projectile.Center).ToRotation();
 			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Laser/PutridPupil");
 			Texture2D texture2 = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Laser/PutridEye");
 			Vector2 drawOrigin = new Vector2(texture2.Width / 2, texture2.Height / 2);
 			Vector2 drawOrigin2 = new Vector2(texture.Width / 2, texture.Height / 2);
-			spriteBatch.Draw(texture2, projectile.Center - Main.screenPosition, null, lightColor, (float)direction + MathHelper.ToRadians(225), drawOrigin, projectile.scale, SpriteEffects.None, 0f);
+			spriteBatch.Draw(texture2, Projectile.Center - Main.screenPosition, null, lightColor, (float)direction + MathHelper.ToRadians(225), drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
 			float dist2 = dist > 16 ? 16 : dist;
 			dist2 = dist2 <= 2 ? dist2 * ((12 + dist2)/14f) : dist2;
-			spriteBatch.Draw(texture, projectile.Center - new Vector2(dist2, 0).RotatedBy(direction) - Main.screenPosition, null, lightColor, (float)direction, drawOrigin2, 1.1f - (dist2/14f * 0.18f), SpriteEffects.None, 0f);
+			spriteBatch.Draw(texture, Projectile.Center - new Vector2(dist2, 0).RotatedBy(direction) - Main.screenPosition, null, lightColor, (float)direction, drawOrigin2, 1.1f - (dist2/14f * 0.18f), SpriteEffects.None, 0f);
 			if (dist >= 2)
 			{
 				DrawCircle(true, 6 + dist, 60, 1);
@@ -72,18 +72,18 @@ namespace SOTS.Projectiles.Laser
 		}
 		public void DrawCircle(bool spriteBatch, float size, float dist, float colorMod = 1)
 		{
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Laser/PutridEyeDecor");
 			Vector2 drawOrigin2 = new Vector2(texture.Width / 2, texture.Height / 2);
 			Color lightColor = new Color(100, 100, 100, 0);
-			double direction = (player.Center - projectile.Center).ToRotation();
+			double direction = (player.Center - Projectile.Center).ToRotation();
 			for (int i = 0; i < 360; i += 5)
 			{
 				Vector2 circularLocation = new Vector2(size, 0).RotatedBy(MathHelper.ToRadians(i));
 				circularLocation.X *= 0.6f;
 				circularLocation = circularLocation.RotatedBy(direction);
 				Vector2 circularVelo = circularLocation;
-				circularLocation += projectile.Center - new Vector2(dist, 0).RotatedBy(direction);
+				circularLocation += Projectile.Center - new Vector2(dist, 0).RotatedBy(direction);
 				if(spriteBatch)
 					Main.spriteBatch.Draw(texture, circularLocation - Main.screenPosition, null, lightColor * colorMod, MathHelper.ToRadians(i), drawOrigin2, 0.4f, SpriteEffects.None, 0f);
 				else
@@ -107,17 +107,17 @@ namespace SOTS.Projectiles.Laser
 		int counter = 0;
 		public override void AI()
 		{
-			Player player  = Main.player[projectile.owner];
-			if (projectile.hide == false)
+			Player player  = Main.player[Projectile.owner];
+			if (Projectile.hide == false)
 			{
-				if (projectile.Center.X < player.Center.X)
-					projectile.direction = -1;
+				if (Projectile.Center.X < player.Center.X)
+					Projectile.direction = -1;
 				else
-					projectile.direction = 1;
-				Main.player[projectile.owner].heldProj = projectile.whoAmI;
-				projectile.alpha = 0;
-                player.ChangeDir(projectile.direction);
-                player.itemRotation = MathHelper.WrapAngle(projectile.rotation + MathHelper.ToRadians(projectile.direction == -1 ? 0 : -180));
+					Projectile.direction = 1;
+				Main.player[Projectile.owner].heldProj = Projectile.whoAmI;
+				Projectile.alpha = 0;
+                player.ChangeDir(Projectile.direction);
+                player.itemRotation = MathHelper.WrapAngle(Projectile.rotation + MathHelper.ToRadians(Projectile.direction == -1 ? 0 : -180));
 				player.itemTime = 2;
 				player.itemAnimation = 2;
 			}
@@ -138,46 +138,46 @@ namespace SOTS.Projectiles.Laser
 				dist = 20;
 			}
 			double startingDirection = Math.Atan2((double)-shootToY, (double)-shootToX);
-			double direction = (player.Center - projectile.Center).ToRotation();
-			projectile.rotation = (float)direction;
+			double direction = (player.Center - Projectile.Center).ToRotation();
+			Projectile.rotation = (float)direction;
 			if (Main.myPlayer == player.whoAmI)
 			{
 				startingDirection *= 180 / Math.PI;
 				double deg = startingDirection;
 				double rad = deg * (Math.PI / 180);
 				double dist2 = 20;
-				projectile.position.X = player.Center.X - (int)(Math.Cos(rad) * dist2) - projectile.width / 2;
-				projectile.position.Y = player.Center.Y - (int)(Math.Sin(rad) * dist2) - projectile.height / 2;
-				if (player.channel || projectile.timeLeft > 6)
+				Projectile.position.X = player.Center.X - (int)(Math.Cos(rad) * dist2) - Projectile.width / 2;
+				Projectile.position.Y = player.Center.Y - (int)(Math.Sin(rad) * dist2) - Projectile.height / 2;
+				if (player.channel || Projectile.timeLeft > 6)
 				{
-					projectile.timeLeft = 6;
-					projectile.alpha = 0;
+					Projectile.timeLeft = 6;
+					Projectile.alpha = 0;
 				}
-				projectile.netUpdate = true;
+				Projectile.netUpdate = true;
 			}
 			if(dist >= 20)
 			{
 				DrawCircle(false, 6 + dist, 60, 1);
 				DrawCircle(false, dist, 120, 1);
 				DrawCircle(false, -6 + dist, 180, 1);
-				if (Main.myPlayer == projectile.owner)
+				if (Main.myPlayer == Projectile.owner)
 				{
-					Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 0, ModContent.ProjectileType<FriendlyPinkLaser>(), projectile.damage, 1f, projectile.owner, projectile.Center.X + shootToX * 60, projectile.Center.Y + shootToY * 60);
+					Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<FriendlyPinkLaser>(), Projectile.damage, 1f, Projectile.owner, Projectile.Center.X + shootToX * 60, Projectile.Center.Y + shootToY * 60);
 					Item item = player.HeldItem;
 					VoidItem vItem = Item.modItem as VoidItem;
 					if (vItem != null)
 						vItem.DrainMana(player);
 				}
 				dist = -10;
-				Lighting.AddLight(projectile.Center, (255 - projectile.alpha) * 0.8f / 255f, (255 - projectile.alpha) * 0.8f / 255f, (255 - projectile.alpha) * 0.8f / 255f);
-				SoundEngine.PlaySound(SoundID.Item94, (int)(projectile.Center.X), (int)(projectile.Center.Y));
+				Lighting.AddLight(Projectile.Center, (255 - Projectile.alpha) * 0.8f / 255f, (255 - Projectile.alpha) * 0.8f / 255f, (255 - Projectile.alpha) * 0.8f / 255f);
+				SoundEngine.PlaySound(SoundID.Item94, (int)(Projectile.Center.X), (int)(Projectile.Center.Y));
 			}
 			if(dist >= 2.8f && dist <= 3.2f)
-				SoundEngine.PlaySound(SoundID.Item15, (int)(projectile.Center.X), (int)(projectile.Center.Y));
+				SoundEngine.PlaySound(SoundID.Item15, (int)(Projectile.Center.X), (int)(Projectile.Center.Y));
 			if (dist >= 8.8f && dist <= 9.2f)
-				SoundEngine.PlaySound(SoundID.Item15, (int)(projectile.Center.X), (int)(projectile.Center.Y));
+				SoundEngine.PlaySound(SoundID.Item15, (int)(Projectile.Center.X), (int)(Projectile.Center.Y));
 			if (dist >= 14.8f && dist <= 15.2f)
-				SoundEngine.PlaySound(SoundID.Item15, (int)(projectile.Center.X), (int)(projectile.Center.Y));
+				SoundEngine.PlaySound(SoundID.Item15, (int)(Projectile.Center.X), (int)(Projectile.Center.Y));
 		}
 	}
 }
