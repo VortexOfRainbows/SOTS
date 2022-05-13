@@ -26,13 +26,7 @@ namespace SOTS.Items
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<MarbleDefender>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<ArcaneAqueduct>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<TinyPlanet>(), 1);
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient<MarbleDefender>(1).AddIngredient<ArcaneAqueduct>(1).AddIngredient<TinyPlanet>(1).AddTile(TileID.TinkerersWorkbench).Register();
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
@@ -40,7 +34,7 @@ namespace SOTS.Items
 			modPlayer.PushBack = true;
 			if(Main.myPlayer == player.whoAmI && !hideVisual)
 			{
-				int damage = (int)(Item.damage * (1f + (player.magicDamage - 1f) + (player.allDamage - 1f)));
+				int damage = SOTSPlayer.ApplyDamageClassModWithGeneric(player, DamageClass.Magic, Item.damage);s
 				modPlayer.tPlanetDamage += damage;
 				modPlayer.tPlanetNum += 2;
 				modPlayer.aqueductDamage += damage;

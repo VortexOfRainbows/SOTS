@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -32,7 +33,7 @@ namespace SOTS.Items
 			writer.Write(runOnce);
 			writer.Write(frame);
 		}
-        public override void NetRecieve(BinaryReader reader)
+        public override void NetReceive(BinaryReader reader)
         {
 			runOnce = reader.ReadBoolean();
 			frame = reader.ReadInt32();

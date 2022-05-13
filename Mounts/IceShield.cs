@@ -6,56 +6,56 @@ using Terraria.ModLoader;
 
 namespace SOTS.Mounts
 {
-	public class IceShield : ModMountData
+	public class IceShield : ModMount
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{	
-			mountData.spawnDust = 229;
-			mountData.buff = mod.BuffType("IceShield");
-			mountData.heightBoost = 2;
-			mountData.fallDamage = 0.5f;
-			mountData.runSpeed = 14f;
-			mountData.dashSpeed = 14f;
-			mountData.flightTimeMax = 999999999;
-			mountData.fatigueMax = 999999999;
-			mountData.jumpHeight = 40;
-			mountData.acceleration = 0.19f;
-			mountData.jumpSpeed = 6f;
-			mountData.totalFrames = 4;
-			mountData.usesHover = true;
-			int[] array = new int[mountData.totalFrames];
+			MountData.spawnDust = 229;
+			MountData.buff = ModContent.BuffType<Buffs.IceShield>();
+			MountData.heightBoost = 2;
+			MountData.fallDamage = 0.5f;
+			MountData.runSpeed = 14f;
+			MountData.dashSpeed = 14f;
+			MountData.flightTimeMax = 999999999;
+			MountData.fatigueMax = 999999999;
+			MountData.jumpHeight = 40;
+			MountData.acceleration = 0.19f;
+			MountData.jumpSpeed = 6f;
+			MountData.totalFrames = 4;
+			MountData.usesHover = true;
+			int[] array = new int[MountData.totalFrames];
 			for (int l = 0; l < array.Length; l++)
 			{
 				array[l] = 4;
 			}
-			mountData.playerYOffsets = array;
-			mountData.xOffset = 0;
-			mountData.bodyFrame = 0;
-			mountData.yOffset = 0;
-			mountData.playerHeadOffset = 0;
-			mountData.standingFrameCount = 4;
-			mountData.standingFrameDelay = 6;
-			mountData.standingFrameStart = 0;
-			mountData.runningFrameCount = 4;
-			mountData.runningFrameDelay = 25;
-			mountData.runningFrameStart = 0;
-			mountData.flyingFrameCount = 4;
-			mountData.flyingFrameDelay = 6;
-			mountData.flyingFrameStart = 0;
-			mountData.inAirFrameCount = 4;
-			mountData.inAirFrameDelay = 6;
-			mountData.inAirFrameStart = 0;
-			mountData.idleFrameCount = 4;
-			mountData.idleFrameDelay = 6;
-			mountData.idleFrameStart = 0;
-			mountData.idleFrameLoop = true;
-			mountData.swimFrameCount = mountData.inAirFrameCount;
-			mountData.swimFrameDelay = mountData.inAirFrameDelay;
-			mountData.swimFrameStart = mountData.inAirFrameStart;
+			MountData.playerYOffsets = array;
+			MountData.xOffset = 0;
+			MountData.bodyFrame = 0;
+			MountData.yOffset = 0;
+			MountData.playerHeadOffset = 0;
+			MountData.standingFrameCount = 4;
+			MountData.standingFrameDelay = 6;
+			MountData.standingFrameStart = 0;
+			MountData.runningFrameCount = 4;
+			MountData.runningFrameDelay = 25;
+			MountData.runningFrameStart = 0;
+			MountData.flyingFrameCount = 4;
+			MountData.flyingFrameDelay = 6;
+			MountData.flyingFrameStart = 0;
+			MountData.inAirFrameCount = 4;
+			MountData.inAirFrameDelay = 6;
+			MountData.inAirFrameStart = 0;
+			MountData.idleFrameCount = 4;
+			MountData.idleFrameDelay = 6;
+			MountData.idleFrameStart = 0;
+			MountData.idleFrameLoop = true;
+			MountData.swimFrameCount = MountData.inAirFrameCount;
+			MountData.swimFrameDelay = MountData.inAirFrameDelay;
+			MountData.swimFrameStart = MountData.inAirFrameStart;
 			if (Main.netMode != 2)
 			{
-				mountData.textureWidth = mountData.backTexture.Width;
-				mountData.textureHeight = mountData.backTexture.Height;
+				MountData.textureWidth = MountData.backTexture.Width();
+				MountData.textureHeight = MountData.backTexture.Height();
 			}
 		}
 		public override void UpdateEffects(Player player)

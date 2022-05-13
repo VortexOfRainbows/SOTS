@@ -26,19 +26,12 @@ namespace SOTS.Items
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.WaterBolt, 1);
-			recipe.AddIngredient(ItemID.AquaScepter, 1);
-			recipe.AddIngredient(ItemID.MarbleBlock, 25);
-			recipe.AddIngredient(ModContent.ItemType<FragmentOfTide>(), 4);
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ItemID.WaterBolt, 1).AddIngredient(ItemID.AquaScepter, 1).AddIngredient(ItemID.MarbleBlock, 25).AddIngredient<FragmentOfTide>(4).AddTile(TileID.TinkerersWorkbench).Register();
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-			modPlayer.aqueductDamage += (int)(Item.damage * (1f + (player.magicDamage - 1f) + (player.allDamage - 1f)));
+			modPlayer.aqueductDamage += SOTSPlayer.ApplyDamageClassModWithGeneric(player, DamageClass.Magic, Item.damage);
 			modPlayer.aqueductNum += 2;
 		}
 	}

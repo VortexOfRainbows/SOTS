@@ -36,11 +36,10 @@ namespace SOTS.Items
 			Item.channel = true;
 			Item.noMelee = true;
 		}
-        public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat)
-		{
+        public override void ModifyWeaponDamage(Player player, ref StatModifier damage)
+        {
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-			flat += modPlayer.baguetteLength;
-            base.ModifyWeaponDamage(player, ref add, ref mult, ref flat);
+			damage.Base += modPlayer.baguetteLength;
         }
         public override void HoldItem(Player player)
 		{
@@ -60,11 +59,6 @@ namespace SOTS.Items
                 }
             }
 			return num < 1;
-		}
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-		{
-			Projectile.NewProjectile(position.X, position.Y, speedX, speedY, type, damage, knockBack, player.whoAmI);
-			return false; 
 		}
     }
 }

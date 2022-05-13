@@ -14,6 +14,11 @@ Known Bugs/Issues:
 	1. Make sure to better sync or correct time freeze (sync other freeze related variables).
 
 !!! ~ ALL OBJECTIVES POSTPONED UNTIL COMPLETED WITH 1.4 PORTING ~ !!!
+Major Milestones TO REACH (Will be removed when completed)
+1. Make Mod Loadable in 1.4
+2. Make sure Biome Spawning Works
+3. Make sure Subspace Locket works with new stuff (and possible optimizations + readability)
+4. Make sure VM Incubator works (and server fixes)
 
 Big Objectives:
 1. Starmap and Digital Daito Obtaining
@@ -28,6 +33,7 @@ Update Objectives:
 3. Lesser Elemental Polarizer (grants some stats and inverses the effects of Dissolving Nature, Earth, Aurora, Otherworld, up to certain point)
 4. Elemental Polarizer (grants some stats and inverses the effects of ALL dissolving elements, up to a certain point)
 5. Blazing Quiver (Dissolving Inferno + Molten Quiver)
+6. Chthonic Reforge
 
 Low Priority Objectives:
 1. Archaelogist NPC

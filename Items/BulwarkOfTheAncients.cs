@@ -28,14 +28,7 @@ namespace SOTS.Items
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<OlympianAegis>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<ChiseledBarrier>(), 1);
-			recipe.AddIngredient(ItemID.AnkhShield, 1);
-			recipe.AddIngredient(ModContent.ItemType<TerminalCluster>(), 1);
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient<OlympianAegis>(1).AddIngredient<ChiseledBarrier>(1).AddIngredient(ItemID.AnkhShield, 1).AddIngredient<TerminalCluster>(1).AddTile(TileID.TinkerersWorkbench).Register();
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
@@ -61,15 +54,12 @@ namespace SOTS.Items
 			voidPlayer.bonusVoidGain += 2f;
 			player.lifeRegen += 1;
 			player.endurance += 0.05f;
-			player.meleeCrit += 4;
-			player.rangedCrit += 4;
-			player.magicCrit += 4;
-			player.thrownCrit += 4;
+			player.GetCritChance(DamageClass.Generic) += 4;
 
 			//Surrounds you with 4 orbital projectiles
 			if(Main.myPlayer == player.whoAmI && !hideVisual)
 			{
-				int damage = (int)(Item.damage * (1f + (player.magicDamage - 1f) + (player.allDamage - 1f)));
+				int damage = SOTSPlayer.ApplyDamageClassModWithGeneric(player, DamageClass.Magic, Item.damage);
 				modPlayer.tPlanetDamage += damage;
 				modPlayer.tPlanetNum += 2;
 				modPlayer.aqueductDamage += damage;

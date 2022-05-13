@@ -11,36 +11,36 @@ using Terraria.ID;
 
 namespace SOTS.Mounts
 {
-	public class SpiritSurfer : ModMountData
+	public class SpiritSurfer : ModMount
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{	
-			mountData.spawnDust = ModContent.DustType<LostSoulDust>();
-			mountData.buff = ModContent.BuffType<Buffs.SpiritSurfer>();
-			mountData.heightBoost = 0;
-			mountData.runSpeed = 16f;
-			mountData.dashSpeed = 16f;
-			mountData.flightTimeMax = 999999999;
-			mountData.fatigueMax = 999999999;
-			mountData.jumpHeight = 40;
-			mountData.acceleration = 0.19f;
-			mountData.jumpSpeed = 6f;
-			mountData.totalFrames = 1;
-			mountData.usesHover = true;
-			int[] array = new int[mountData.totalFrames];
+			MountData.spawnDust = ModContent.DustType<LostSoulDust>();
+			MountData.buff = ModContent.BuffType<Buffs.SpiritSurfer>();
+			MountData.heightBoost = 0;
+			MountData.runSpeed = 16f;
+			MountData.dashSpeed = 16f;
+			MountData.flightTimeMax = 999999999;
+			MountData.fatigueMax = 999999999;
+			MountData.jumpHeight = 40;
+			MountData.acceleration = 0.19f;
+			MountData.jumpSpeed = 6f;
+			MountData.totalFrames = 1;
+			MountData.usesHover = true;
+			int[] array = new int[MountData.totalFrames];
 			for (int l = 0; l < array.Length; l++)
 			{
 				array[l] = 2;
 			}
-			mountData.playerYOffsets = array;
-			mountData.xOffset = 0;
-			mountData.bodyFrame = 6;
-			mountData.yOffset = 6;
-			mountData.playerHeadOffset = 0;
+			MountData.playerYOffsets = array;
+			MountData.xOffset = 0;
+			MountData.bodyFrame = 6;
+			MountData.yOffset = 6;
+			MountData.playerHeadOffset = 0;
 			if (Main.netMode != NetmodeID.Server)
 			{
-				mountData.textureWidth = mountData.backTexture.Width;
-				mountData.textureHeight = mountData.backTexture.Height;
+				MountData.textureWidth = MountData.backTexture.Width();
+				MountData.textureHeight = MountData.backTexture.Height();
 			}
 		}
 		float variation = 0; 
