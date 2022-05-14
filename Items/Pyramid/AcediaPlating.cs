@@ -39,12 +39,12 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
 		{
-			//float uniquenessCounter = Main.GlobalTime * -100 + (i + j) * 5;
+			//float uniquenessCounter = Main.GlobalTimeWrappedHourly * -100 + (i + j) * 5;
 			Tile tile = Main.tile[i, j];
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Pyramid/AcediaPlatingTileGlow").Value;
 			Rectangle frame = new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, 16);
 			Color color;
-			color = WorldGen.paintColor((int)Main.tile[i, j].color()) * (100f / 255f);
+			color = WorldGen.paintColor((int)Main.tile[i, j].TileColor) * (100f / 255f);
 			color.A = 0;
 			float alphaMult = 0.1f; // + 0.45f * (float)Math.Sin(MathHelper.ToRadians(uniquenessCounter));
 			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
@@ -68,11 +68,11 @@ namespace SOTS.Items.Pyramid
 			Main.tileLighted[Type] = true;
 			drop = mod.ItemType("AcediaPlating");
 			AddMapEntry(new Color(44, 12, 62));
-			mineResist = 2f;
-			minPick = 250;
+			MineResist = 2f;
+			MinPick = 250;
 			soundType = 21;
 			soundStyle = 2;
-			dustType = mod.DustType("AcedianDust");
+			DustType = mod.DustType("AcedianDust");
 			TileID.Sets.GemsparkFramingTypes[Type] = Type;
 		}
 		public override bool CanExplode(int i, int j)

@@ -21,14 +21,14 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override void SetDefaults()
 		{
-			npc.aiStyle = 10;
-            npc.lifeMax = 450; 
-            npc.damage = 50; 
-            npc.defense = 0;   
-            npc.knockBackResist = 0f;
-            npc.width = 58;
-            npc.height = 58;
-			Main.npcFrameCount[npc.type] = 1;   
+			NPC.aiStyle =10;
+            NPC.lifeMax = 450; 
+            NPC.damage = 50; 
+            NPC.defense = 0;   
+            NPC.knockBackResist = 0f;
+            NPC.width = 58;
+            NPC.height = 58;
+			Main.npcFrameCount[NPC.type] = 1;   
             npc.value = 32500;
             npc.npcSlots = 4f;
             npc.boss = false;
@@ -42,8 +42,8 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
 		{
-			npc.damage = 70;
-			npc.lifeMax = 750;
+			NPC.damage = 70;
+			NPC.lifeMax = 750;
 		}
 		public override void SendExtraAI(BinaryWriter writer)
 		{
@@ -69,8 +69,8 @@ namespace SOTS.NPCs.Constructs
 			dmg = reader.ReadInt32();
 			owner = reader.ReadInt32();
 			npc.scale = reader.ReadSingle();
-			npc.width = reader.ReadInt32();
-			npc.height = reader.ReadInt32();
+			NPC.width = reader.ReadInt32();
+			NPC.height = reader.ReadInt32();
 			reticlePos.X = reader.ReadSingle();
 			reticlePos.Y = reader.ReadSingle();
 			npc.alpha = reader.ReadInt32();
@@ -100,8 +100,8 @@ namespace SOTS.NPCs.Constructs
 			if (npc.ai[1] > 0 && saveData == -1)
 			{
 				npc.scale = 5f / (npc.ai[1] + 6);
-				npc.width = (int)(npc.width * npc.scale);
-				npc.height = (int)(npc.height * npc.scale);
+				NPC.width = (int)(npc.width * npc.scale);
+				NPC.height = (int)(npc.height * npc.scale);
 				saveData = npc.ai[1] *= 20;
 				owner = (int)npc.ai[2];
 				if(Main.netMode != NetmodeID.MultiplayerClient)
@@ -123,7 +123,7 @@ namespace SOTS.NPCs.Constructs
 			{
 				npc.dontTakeDamage = true;
 				dmg = npc.damage;
-				npc.damage = 0;
+				NPC.damage = 0;
 				for(int i = 0; i < 10; i++)
 				{
 					reticlePos = player.Center + new Vector2(Main.rand.Next(-256, 257), Main.rand.Next(-256, 257));
@@ -142,7 +142,7 @@ namespace SOTS.NPCs.Constructs
 			}
 			else if (dmg != -1 && npc.alpha < 200)
 			{
-				npc.damage = dmg;
+				NPC.damage = dmg;
 				dmg = -1;
 				npc.dontTakeDamage = false;
 			}
@@ -182,7 +182,7 @@ namespace SOTS.NPCs.Constructs
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			if (phase == 3)
 			{
-				npc.aiStyle = -1;
+				NPC.aiStyle =-1;
 				if (owner != -1)
 				{
 					npc.ai[0] = Main.npc[owner].ai[0];
@@ -271,7 +271,7 @@ namespace SOTS.NPCs.Constructs
 				{
 					npc.netUpdate = true;
 				}
-				npc.aiStyle = -1;
+				NPC.aiStyle =-1;
 				npc.ai[0] = 0;
 				npc.ai[1] = 0;
 				phase = 3;
@@ -291,7 +291,7 @@ namespace SOTS.NPCs.Constructs
 					npc.netUpdate = true;
 				}
 				phase = 1;
-				npc.aiStyle = -1;
+				NPC.aiStyle =-1;
 				npc.velocity.Y -= 0.014f;
 				npc.dontTakeDamage = true;
 			}
@@ -305,7 +305,7 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override bool PreDraw(ref Color lightColor)
 		{
-			Texture2D texture = Main.npcTexture[npc.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			for (int k = 0; k < npc.oldPos.Length; k++) {
 				Vector2 drawPos = npc.oldPos[k] - Main.screenPosition + new Vector2(npc.width/2, npc.height/2);
@@ -331,14 +331,14 @@ namespace SOTS.NPCs.Constructs
 				if(phase == 1)
 				{
 					phase = 2;
-					npc.lifeMax = (int)(InitiateHealth * (Main.expertMode ? ExpertHealthMult : 1));
+					NPC.lifeMax = (int)(InitiateHealth * (Main.expertMode ? ExpertHealthMult : 1));
 					npc.life = (int)(InitiateHealth * (Main.expertMode ? ExpertHealthMult : 1));
 				}
 			}
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture = Main.npcTexture[npc.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
 			Texture2D texture2 = Mod.Assets.Request<Texture2D>("NPCs/Constructs/EarthenReticle").Value;
 			Color color = new Color(100, 100, 100, 0);
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);

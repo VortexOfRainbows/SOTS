@@ -26,20 +26,16 @@ namespace SOTS.Items.Pyramid.AncientGold
 			Item.rare = ItemRarityID.LightRed;
 			Item.value = 0;
 			Item.consumable = true;
-			Item.createTile = mod.TileType("AncientGoldCampfireTile");
+			Item.createTile = ModContent.TileType<AncientGoldCampfireTile>();
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<RoyalGoldBrick>(), 10);
-			recipe.AddIngredient(ModContent.ItemType<AncientGoldTorch>(), 5);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient<RoyalGoldBrick>(10).AddIngredient<AncientGoldTorch>(5).Register();
 		}
 	}	
 	public class AncientGoldCampfireTile : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileLighted[Type] = true;
 			Main.tileFrameImportant[Type] = true;
@@ -52,10 +48,10 @@ namespace SOTS.Items.Pyramid.AncientGold
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Eternal Fireplace");
 			AddMapEntry(new Color(255, 220, 100), name);
-			disableSmartCursor = true;
-			dustType = DustID.GoldCoin;
-			adjTiles = new int[] { TileID.Furnaces };
-			animationFrameHeight = 36;
+			TileID.Sets.DisableSmartCursor[Type] = true;
+			DustType = DustID.GoldCoin;
+			AdjTiles = new int[] { TileID.Furnaces };
+			AnimationFrameHeight = 36;
 		}
         public override void NearbyEffects(int i, int j, bool closer)
         {
@@ -70,15 +66,7 @@ namespace SOTS.Items.Pyramid.AncientGold
 			// Flips the sprite
 			SpriteEffects effects = SpriteEffects.None;
 			Tile tile = Main.tile[i, j];
-			Texture2D texture;
-			if (Main.canDrawColorTile(i, j))
-			{
-				texture = Main.tileAltTexture[Type, (int)tile.color()];
-			}
-			else
-			{
-				texture = Main.tileTexture[Type];
-			}
+			Texture2D texture = SOTSTile.GetTileDrawTexture(i, j);
 			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
 			if (Main.drawToScreen)
 			{
@@ -114,8 +102,8 @@ namespace SOTS.Items.Pyramid.AncientGold
 		{
 			ulong randSeed = Main.TileFrameSeed ^ (ulong)((long)j << 32 | (long)((ulong)i));
 			Color color = new Color(100, 80, 80, 0);
-			int frameX = Main.tile[i, j].frameX / 18;
-			int frameY = Main.tile[i, j].frameY / 18;
+			int frameX = Main.tile[i, j].TileFrameX / 18;
+			int frameY = Main.tile[i, j].TileFrameY / 18;
 			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
 			if (Main.drawToScreen)
 			{
@@ -138,7 +126,7 @@ namespace SOTS.Items.Pyramid.AncientGold
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
 		{
-			if (Main.tile[i, j].frameX < 18 || Main.tile[i, j].frameX > 35 || Main.tile[i, j].frameY % 36 < 18)
+			if (Main.tile[i, j].TileFrameX < 18 || Main.tile[i, j].TileFrameX > 35 || Main.tile[i, j].TileFrameY % 36 < 18)
 				return;
 
 			r = 1.3f;

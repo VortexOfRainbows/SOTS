@@ -65,7 +65,7 @@ namespace SOTS.Items.Pyramid
 			name.SetDefault("Strange Pillar");
 			AddMapEntry(new Color(220, 180, 25), name);
 			disableSmartCursor = true;
-			dustType = DustID.GoldCoin;
+			DustType = DustID.GoldCoin;
 		}
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
 		{
@@ -75,7 +75,7 @@ namespace SOTS.Items.Pyramid
 			/* 
 			// Flips the sprite
 			SpriteEffects effects = SpriteEffects.None;
-			Texture2D texture = Main.tileTexture[Type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Item[Type].Value;
 			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
 			if (Main.drawToScreen)
 			{
@@ -96,7 +96,7 @@ namespace SOTS.Items.Pyramid
 				zero = Vector2.Zero;
 			}
 			Tile tile = Main.tile[i, j];
-			float counter = Main.GlobalTime * 120;
+			float counter = Main.GlobalTimeWrappedHourly * 120;
 			float mult = new Vector2(-1f, 0).RotatedBy(MathHelper.ToRadians(counter / 2f)).X;
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Pyramid/AncientGoldGateGems").Value;
 			if (tile.TileFrameY % 90 == 0 && tile.TileFrameX % 36 == 0) //check for it being the top left tile
@@ -154,14 +154,14 @@ namespace SOTS.Items.Pyramid
 			Tile tile = Main.tile[i, j];
 			if (tile.TileFrameY < 270)
 			{
-				player.showItemIcon2 = ModContent.ItemType<RubyKeystone>();
+				player.cursorItemIconID = ModContent.ItemType<RubyKeystone>();
 				player.noThrow = 2;
-				player.showItemIcon = true;
+				player.cursorItemIconEnabled = true;
 			}
 			else
 			{
-				player.showItemIcon2 = 0;
-				player.showItemIcon = false;
+				player.cursorItemIconID = 0;
+				player.cursorItemIconEnabled = false;
 			}
 		}
 		public override void MouseOverFar(int i, int j)
@@ -171,16 +171,16 @@ namespace SOTS.Items.Pyramid
 			MouseOver(i, j);
 			if (tile.TileFrameY < 270)
 			{
-				if (player.showItemIconText == "")
+				if (player.cursorItemIconText == "")
 				{
-					player.showItemIcon = false;
-					player.showItemIcon2 = 0;
+					player.cursorItemIconEnabled = false;
+					player.cursorItemIconID = 0;
 				}
 			}
 			else
 			{
-				player.showItemIcon2 = 0;
-				player.showItemIcon = false;
+				player.cursorItemIconID = 0;
+				player.cursorItemIconEnabled = false;
 			}
 		}
         public override bool NewRightClick(int i, int j)
@@ -212,7 +212,7 @@ namespace SOTS.Items.Pyramid
 			}
 			Vector2 Center = new Vector2(left * 16 + 8, top * 16 + 8);
 			bool active = false;
-			for (int l = 0; l < Main.Projectile.Length; l++)
+			for (int l = 0; l < Main.projectile.Length; l++)
             {
 				Projectile proj = Main.projectile[l];
 				if(proj.active && proj.type == ModContent.ProjectileType<AncientGoldGateGems>() && Vector2.Distance(proj.Center, Center) < 16)
@@ -313,7 +313,7 @@ namespace SOTS.Items.Pyramid
 				int i = (int)Projectile.Center.X / 16;
 				int j = (int)Projectile.Center.Y / 16;
 				WorldGen.KillTile(i, j, false, false, false);
-				if (!Main.tile[i, j].active() && Main.netMode != NetmodeID.SinglePlayer)
+				if (!Main.tile[i, j].HasTile && Main.netMode != NetmodeID.SinglePlayer)
 					NetMessage.SendData(MessageID.TileChange, -1, -1, null, 0, (float)i, (float)j, 0f, 0, 0, 0);
 				Vector2 center = Projectile.Center + new Vector2(16, 40);
 				SoundEngine.PlaySound(2, (int)center.X, (int)center.Y, 14, 1.25f, -0.25f);
@@ -366,7 +366,7 @@ namespace SOTS.Items.Pyramid
 		}
 		public void DrawGems(int i, int j, SpriteBatch spriteBatch)
 		{
-			float counter = Main.GlobalTime * 120;
+			float counter = Main.GlobalTimeWrappedHourly * 120;
 			float mult = new Vector2(-1f, 0).RotatedBy(MathHelper.ToRadians(counter / 2f)).X;
 			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			float fadeOutMult = Projectile.ai[1] / 720f;

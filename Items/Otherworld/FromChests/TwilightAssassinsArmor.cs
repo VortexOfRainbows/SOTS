@@ -119,7 +119,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<StarlightAlloy>(), 12);
 			recipe.AddIngredient(ModContent.ItemType<HardlightAlloy>(), 12);
 			recipe.AddIngredient(ModContent.ItemType<DissolvingAether>(), 1);
@@ -188,7 +188,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ItemID.HellstoneBar, 12);
 			recipe.AddIngredient(ModContent.ItemType<HardlightAlloy>(), 20);
 			recipe.AddIngredient(ModContent.ItemType<DissolvingAether>(), 1);
@@ -250,7 +250,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<OtherworldlyAlloy>(), 12);
 			recipe.AddIngredient(ModContent.ItemType<HardlightAlloy>(), 16);
 			recipe.AddIngredient(ModContent.ItemType<DissolvingAether>(), 1);

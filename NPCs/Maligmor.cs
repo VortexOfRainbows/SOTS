@@ -19,13 +19,13 @@ namespace SOTS.NPCs
 		}
 		public override void SetDefaults()
 		{
-            npc.lifeMax = 200;   
-            npc.damage = 40; 
-            npc.defense = 10;  
-            npc.knockBackResist = 0f;
-            npc.width = 56;
-            npc.height = 52;
-			Main.npcFrameCount[npc.type] = 1;  
+            NPC.lifeMax = 200;   
+            NPC.damage = 40; 
+            NPC.defense = 10;  
+            NPC.knockBackResist = 0f;
+            NPC.width = 56;
+            NPC.height = 52;
+			Main.npcFrameCount[NPC.type] = 1;  
             npc.value = 1000;
             npc.npcSlots = 1f;
             npc.lavaImmune = true;
@@ -35,18 +35,18 @@ namespace SOTS.NPCs
             npc.HitSound = SoundID.NPCHit19;
 			npc.DeathSound = SoundID.NPCDeath1;
 			npc.netAlways = true;
-			banner = npc.type;
-			bannerItem = ItemType<MaligmorBanner>();
+			Banner = NPC.type;
+			BannerItem = ItemType<MaligmorBanner>();
 		}
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
-			npc.lifeMax = 360;
-			npc.damage = 70;
+			NPC.lifeMax = 360;
+			NPC.damage = 70;
             base.ScaleExpertStats(numPlayers, bossLifeScale);
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture = Main.npcTexture[npc.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Vector2 drawPos = npc.Center - Main.screenPosition;
 			spriteBatch.Draw(texture, drawPos, npc.frame, drawColor, npc.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
@@ -152,7 +152,7 @@ namespace SOTS.NPCs
 								}
 							for (int k = 0; k < 54; k++)
 							{
-								Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, mod.DustType("CurseDust"), 0, 0, 0, default, 1.0f);
+								Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, ModContent.DustType<CurseDust>(), 0, 0, 0, default, 1.0f);
 								dust.scale *= 1.3f;
 								dust.velocity *= 1.4f;
 								dust.noGravity = true;
@@ -177,7 +177,7 @@ namespace SOTS.NPCs
 			}
 			for (int i = 0; i < 1 + Main.rand.Next(2); i++)
 			{
-				int num1 = Dust.NewDust(npc.position, npc.width - 4, 12, mod.DustType("CurseDust"));
+				int num1 = Dust.NewDust(npc.position, npc.width - 4, 12, ModContent.DustType<CurseDust>());
 				Main.dust[num1].noGravity = true;
 				Main.dust[num1].velocity.X = npc.velocity.X;
 				Main.dust[num1].velocity.Y = -2 + i * 1.0f;
@@ -193,10 +193,10 @@ namespace SOTS.NPCs
 			if (npc.frameCounter >= 5f) 
 			{
 				npc.frameCounter -= 5f;
-				npc.frame.Y += frameHeight;
-				if(npc.frame.Y >= 4 * frameHeight)
+				NPC.frame.Y += frameHeight;
+				if(NPC.frame.Y >= 4 * frameHeight)
 				{
-					npc.frame.Y = 0;
+					NPC.frame.Y = 0;
 				}
 			}
 			*/
@@ -217,7 +217,7 @@ namespace SOTS.NPCs
 				int num = 0;
 				while (num < damage / npc.lifeMax * 50.0)
 				{
-					Dust.NewDust(npc.position, npc.width, npc.height, mod.DustType("CurseDust"), (float)(2 * hitDirection), -2f, 0, default, 1.5f);
+					Dust.NewDust(npc.position, npc.width, npc.height, ModContent.DustType<CurseDust>(), (float)(2 * hitDirection), -2f, 0, default, 1.5f);
 					num++;
 				}
 			}
@@ -255,7 +255,7 @@ namespace SOTS.NPCs
 				}
 				for (int k = 0; k < 50; k++)
 				{
-					Dust.NewDust(npc.position, npc.width, npc.height, mod.DustType("CurseDust"), (float)(2 * hitDirection), -2f, 0, default, 1.5f);
+					Dust.NewDust(npc.position, npc.width, npc.height, ModContent.DustType<CurseDust>(), (float)(2 * hitDirection), -2f, 0, default, 1.5f);
 				}
 			}		
 		}

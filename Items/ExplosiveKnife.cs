@@ -32,7 +32,7 @@ namespace SOTS.Items
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ItemID.ThrowingKnife, 15);
 			recipe.AddIngredient(ItemID.Grenade, 15);
 			recipe.AddIngredient(ModContent.ItemType<AncientSteelBar>(), 1);

@@ -29,7 +29,7 @@ namespace SOTS.Items.CritBonus
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<SnakeEyes>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<ChaosBadge>(), 1);
 			recipe.AddIngredient(ItemID.EyeoftheGolem, 1);

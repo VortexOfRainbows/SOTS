@@ -16,12 +16,12 @@ namespace SOTS.NPCs.Boss.Polaris
 		}
         public override void SetDefaults()
         {
-            npc.width = 38;
-            npc.height = 48;
-            npc.damage = 40;
-            npc.defense = 20;
-            npc.lifeMax = 20000;  
-            npc.knockBackResist = 0.0f;
+            NPC.width = 38;
+            NPC.height = 48;
+            NPC.damage = 40;
+            NPC.defense = 20;
+            NPC.lifeMax = 20000;  
+            NPC.knockBackResist = 0.0f;
             npc.noTileCollide = true;
             npc.netAlways = true;
             npc.noGravity = true;
@@ -37,7 +37,7 @@ namespace SOTS.NPCs.Boss.Polaris
         }
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
-            npc.damage = (int)(npc.damage * 0.75f);
+            NPC.damage = (int)(npc.damage * 0.75f);
         }
         public override bool PreAI()
         {
@@ -87,7 +87,7 @@ namespace SOTS.NPCs.Boss.Polaris
         Vector2 velocity = Vector2.Zero;
         public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
         {
-            Texture2D texture = Main.npcTexture[npc.type];
+            Texture2D texture = Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
             Vector2 origin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
             Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition, null, Color.White, npc.rotation, origin, npc.scale, npc.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : 0, 0);
             return false;

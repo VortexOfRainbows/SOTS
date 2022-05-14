@@ -36,6 +36,13 @@ namespace SOTS.NPCs
 {
     public class SOTSNPCs : GlobalNPC
 	{
+		/// <summary>
+		/// Gets the damage of a NPC prior Expert, Master, Journey modifiers
+		/// </summary>
+		public static int GetBaseDamage(NPC npc)
+        {
+			return (int)(npc.damage / (Main.GameModeInfo.EnemyDamageMultiplier * npc.strengthMultiplier));
+        }
 		public static int FindTarget_Basic(Vector2 center, float minDistance = 2000f, object attacker = null, bool needsLOS = false)
 		{
 			return FindTarget_Basic(center, out float _, minDistance, attacker, needsLOS);
@@ -214,7 +221,7 @@ namespace SOTS.NPCs
 					//crit = true;
 					for (int i = 0; i < 60; i++)
 					{
-						Vector2 rotate = new Vector2(npc.width / 2 + 4, 0).RotatedBy(MathHelper.ToRadians(Main.GlobalTime * 120 + npc.whoAmI * 7 + 120 * i));
+						Vector2 rotate = new Vector2(npc.width / 2 + 4, 0).RotatedBy(MathHelper.ToRadians(Main.GlobalTimeWrappedHourly * 120 + npc.whoAmI * 7 + 120 * i));
 						int num1 = Dust.NewDust(new Vector2(npc.Center.X + rotate.X - 4, npc.Center.Y + rotate.Y - 4), 0, 0, 235);
 						Main.dust[num1].noGravity = true;
 						Main.dust[num1].scale *= 2f;

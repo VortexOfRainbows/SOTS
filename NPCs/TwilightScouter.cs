@@ -29,17 +29,17 @@ namespace SOTS.NPCs
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Twilight Scouter");
-			Main.npcFrameCount[npc.type] = 3;
+			Main.npcFrameCount[NPC.type] = 3;
 		}
 		public override void SetDefaults()
 		{
-            npc.aiStyle = 0; 
-            npc.lifeMax = 75;   
-            npc.damage = 34; 
-            npc.defense = 14;  
-            npc.knockBackResist = 0.66f;
-            npc.width = 56;
-            npc.height = 36;
+            NPC.aiStyle =0; 
+            NPC.lifeMax = 75;   
+            NPC.damage = 34; 
+            NPC.defense = 14;  
+            NPC.knockBackResist = 0.66f;
+            NPC.width = 56;
+            NPC.height = 36;
             npc.value = Item.buyPrice(0, 0, 12, 50);
             npc.npcSlots = 1f;
 			npc.HitSound = SoundID.NPCHit4;
@@ -50,15 +50,15 @@ namespace SOTS.NPCs
 			npc.noTileCollide = true;
 			npc.buffImmune[BuffID.OnFire] = true;
 			npc.buffImmune[BuffID.Frostburn] = true;
-			banner = npc.type;
-			bannerItem = ItemType<TwilightScouterBanner>();
+			Banner = NPC.type;
+			BannerItem = ItemType<TwilightScouterBanner>();
 		}
         public override void FindFrame(int frameHeight)
         {
 			npc.frameCounter++;
 			if(npc.frameCounter >= 4)
             {
-				npc.frame.Y = (npc.frame.Y + frameHeight) % (3 * frameHeight);
+				NPC.frame.Y = (NPC.frame.Y + frameHeight) % (3 * frameHeight);
 				npc.frameCounter = 0;
 				Vector2 from = npc.Center + new Vector2(-30, 0).RotatedBy(npc.rotation);
 				Dust dust = Dust.NewDustDirect(from - new Vector2(5), 0, 0, DustID.Electric, 0, 0, npc.alpha);
@@ -71,7 +71,7 @@ namespace SOTS.NPCs
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
         {
-			Texture2D texture = Main.npcTexture[npc.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
 			Texture2D texture2 = GetTexture("SOTS/NPCs/TwilightScouterGlow");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height / 6);
 			float dir = npc.rotation;

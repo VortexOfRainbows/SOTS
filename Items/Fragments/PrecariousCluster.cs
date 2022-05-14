@@ -27,7 +27,7 @@ namespace SOTS.Items.Fragments
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(null, "DissolvingAether", 1);
 			recipe.AddIngredient(null, "DissolvingEarth", 1);
 			recipe.AddIngredient(null, "DissolvingAurora", 1);
@@ -41,7 +41,7 @@ namespace SOTS.Items.Fragments
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Fragments/PrecariousClusterSymbols").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.25f * 0.5f);
 			position += new Vector2(33 * scale, 33 * scale);
-			float counter = Main.GlobalTime * 160;
+			float counter = Main.GlobalTimeWrappedHourly * 160;
 			int bonus = (int)(counter / 360f);
 			float mult = new Vector2(-11f, 0).RotatedBy(MathHelper.ToRadians(counter)).X;
 			for (int i = 0; i < 3; i++)
@@ -70,7 +70,7 @@ namespace SOTS.Items.Fragments
 		{
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Fragments/PrecariousClusterSymbols").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.25f * 0.5f);
-			float counter = Main.GlobalTime * 160;
+			float counter = Main.GlobalTimeWrappedHourly * 160;
 			int bonus = (int)(counter / 360f);
 			float mult = new Vector2(-11f, 0).RotatedBy(MathHelper.ToRadians(counter)).X;
 			for (int i = 0; i < 3; i++)
@@ -146,7 +146,7 @@ namespace SOTS.Items.Fragments
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<DissolvingBrilliance>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<DissolvingNether>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<DissolvingUmbra>(), 1);
@@ -160,7 +160,7 @@ namespace SOTS.Items.Fragments
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Fragments/TerminalClusterSymbols").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.25f * 0.5f);
 			position += new Vector2(33 * scale, 33 * scale);
-			float counter = Main.GlobalTime * 160;
+			float counter = Main.GlobalTimeWrappedHourly * 160;
 			int bonus = (int)(counter / 360f);
 			float mult = -12f * (float)Math.Cos(MathHelper.ToRadians(counter));
 			int frameNum = 0;
@@ -190,7 +190,7 @@ namespace SOTS.Items.Fragments
 		{
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Fragments/TerminalClusterSymbols").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.25f * 0.5f);
-			float counter = Main.GlobalTime * 160;
+			float counter = Main.GlobalTimeWrappedHourly * 160;
 			int bonus = (int)(counter / 360f);
 			float mult = -18f * (float)Math.Cos(MathHelper.ToRadians(counter));
 			int frameNum;

@@ -17,13 +17,13 @@ namespace SOTS.Items.Pyramid.PyramidWalls
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<PyramidSlab>(), 1);
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.SetResult(this, 4);
 			recipe.AddRecipe();
 			
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<PyramidWall>(), 4);
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.SetResult(ModContent.ItemType<PyramidSlab>(), 1);
@@ -52,7 +52,7 @@ namespace SOTS.Items.Pyramid.PyramidWalls
 		{
 			Main.wallHouse[Type] = true;
 			Main.wallLargeFrames[Type] = (byte)1;
-			dustType = 32;
+			DustType = 32;
 			drop = ModContent.ItemType<PyramidWall>();
 			AddMapEntry(new Color(89, 81, 38));
 		}
@@ -68,7 +68,7 @@ namespace SOTS.Items.Pyramid.PyramidWalls
 		{
 			Main.wallLargeFrames[Type] = (byte)1;
 			Main.wallHouse[Type] = false;
-			dustType = 32;
+			DustType = 32;
 			drop = ModContent.ItemType<PyramidWall>();
 			AddMapEntry(new Color(89, 81, 38));
 		}

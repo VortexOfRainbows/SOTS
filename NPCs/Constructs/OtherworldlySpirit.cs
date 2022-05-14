@@ -34,14 +34,14 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override void SetDefaults()
 		{
-			npc.aiStyle = 10;
-            npc.lifeMax = 1500; 
-            npc.damage = 80; 
-            npc.defense = 0;   
-            npc.knockBackResist = 0f;
-            npc.width = 58;
-            npc.height = 58;
-			Main.npcFrameCount[npc.type] = 1;   
+			NPC.aiStyle =10;
+            NPC.lifeMax = 1500; 
+            NPC.damage = 80; 
+            NPC.defense = 0;   
+            NPC.knockBackResist = 0f;
+            NPC.width = 58;
+            NPC.height = 58;
+			Main.npcFrameCount[NPC.type] = 1;   
             npc.value = 35075;
             npc.npcSlots = 4f;
             npc.boss = false;
@@ -124,7 +124,7 @@ namespace SOTS.NPCs.Constructs
 				}
 				if(collectorId != -1)
 				{
-					npc.aiStyle = -1;
+					NPC.aiStyle =-1;
 					npc.ai[0] = 0;
 					npc.ai[1] = 0;
 					phase = 3;
@@ -149,7 +149,7 @@ namespace SOTS.NPCs.Constructs
 					npc.netUpdate = true;
 				}
 				phase = 1;
-				npc.aiStyle = -1;
+				NPC.aiStyle =-1;
 				npc.velocity.Y -= 0.03f;
 				npc.dontTakeDamage = true;
 			}
@@ -163,7 +163,7 @@ namespace SOTS.NPCs.Constructs
 		public override bool PreDraw(ref Color lightColor)
 		{
 			Texture2D texture = Mod.Assets.Request<Texture2D>("NPCs/Constructs/OtherworldlySpiritOld").Value;
-			Vector2 drawOrigin = new Vector2(Main.npcTexture[npc.type].Width * 0.5f, npc.height * 0.5f);
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Npc[npc.type].Value.Width * 0.5f, npc.height * 0.5f);
 			for (int k = 0; k < npc.oldPos.Length; k++) {
 				Vector2 drawPos = npc.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, npc.gfxOffY);
 				Color color = npc.GetAlpha(lightColor) * ((float)(npc.oldPos.Length - k) / (float)npc.oldPos.Length);
@@ -188,18 +188,18 @@ namespace SOTS.NPCs.Constructs
 				if(phase == 1 && npc.localAI[1] != -1)
 				{
 					phase = 2;
-					npc.lifeMax = (int)(InitiateHealth * (Main.expertMode ? ExpertHealthMult : 1));
+					NPC.lifeMax = (int)(InitiateHealth * (Main.expertMode ? ExpertHealthMult : 1));
 					npc.life = (int)(InitiateHealth * (Main.expertMode ? ExpertHealthMult : 1));
 				}
 			}
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture = Main.npcTexture[npc.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
 			Color color = new Color(167, 45, 225, 0);
 			Color color2 = new Color(64, 178, 172, 0);
 			color = Color.Lerp(color, color2, 1 - (npc.life/(float)npc.lifeMax) * (phase == 3 ? 0 : 1));
-			Vector2 drawOrigin = new Vector2(Main.npcTexture[npc.type].Width * 0.5f, npc.height * 0.5f);
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Npc[npc.type].Value.Width * 0.5f, npc.height * 0.5f);
 			for (int k = 0; k < 7; k++)
 			{
 				float x = Main.rand.Next(-10, 11) * 0.45f * npc.scale;

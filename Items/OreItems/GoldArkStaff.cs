@@ -37,7 +37,7 @@ namespace SOTS.Items.OreItems
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ItemID.GoldBar, 15);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this);

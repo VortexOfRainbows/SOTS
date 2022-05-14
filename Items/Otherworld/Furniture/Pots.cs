@@ -29,16 +29,16 @@ namespace SOTS.Items.Otherworld.Furniture
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Pot");
             AddMapEntry(new Color(66, 77, 93), name);
-            dustType = DustType<AvaritianDust>();
+            DustType = DustType<AvaritianDust>();
         }
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
-            float uniquenessCounter = Main.GlobalTime * -100 + (i + j) * 5;
+            float uniquenessCounter = Main.GlobalTimeWrappedHourly * -100 + (i + j) * 5;
             Tile tile = Main.tile[i, j];
             Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/Furniture/SkyPotsGlow").Value;
             Rectangle frame = new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, 16);
             Color color;
-            color = WorldGen.paintColor((int)Main.tile[i, j].color()) * (100f / 255f);
+            color = WorldGen.paintColor((int)Main.tile[i, j].TileColor) * (100f / 255f);
             color.A = 0;
             float alphaMult = 0.55f + 0.45f * (float)Math.Sin(MathHelper.ToRadians(uniquenessCounter));
             Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);

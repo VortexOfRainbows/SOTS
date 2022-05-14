@@ -18,7 +18,7 @@ namespace SOTS.Items.Furniture.Earthen
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<EarthenPlating>(), 15);
 			recipe.AddIngredient(ItemID.Bone, 4);
 			recipe.AddIngredient(ItemID.Book, 1);

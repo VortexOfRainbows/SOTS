@@ -59,11 +59,11 @@ namespace SOTS.Items.Otherworld.Furniture
 				int chestI = Chest.FindChest(left, top);
 				Chest chest = Main.chest[chestI];
 				int cFrame = chest.frame;
-				float uniquenessCounter = Main.GlobalTime * -100 + (i + j) * 5;
+				float uniquenessCounter = Main.GlobalTimeWrappedHourly * -100 + (i + j) * 5;
 				Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/Furniture/LockedStrangeChestGlow").Value;
 				Rectangle frame = new Rectangle(tile.TileFrameX, 38 * cFrame + tile.TileFrameY, 16, 16);
 				Color color;
-				color = WorldGen.paintColor((int)Main.tile[i, j].color()) * (100f / 255f);
+				color = WorldGen.paintColor((int)Main.tile[i, j].TileColor) * (100f / 255f);
 				color.A = 0;
 				float alphaMult = 0.55f + 0.45f * (float)Math.Sin(MathHelper.ToRadians(uniquenessCounter));
 				Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
@@ -108,23 +108,23 @@ namespace SOTS.Items.Otherworld.Furniture
 			name = CreateMapEntryName(Name + "_Locked"); // With multiple map entries, you need unique translation keys.
 			name.SetDefault("Locked Planetarium Chest");
 			AddMapEntry(new Color(200, 200, 200), name, MapChestName);
-			dustType = DustType<AvaritianDust>();
+			DustType = DustType<AvaritianDust>();
 			disableSmartCursor = true;
-			adjTiles = new int[] { TileID.Containers };
+			AdjTiles = new int[] { TileID.Containers };
 			chest = "Planetarium Chest";
 			chestDrop = ItemType<StrangeChest>();
 		}
 		public override ushort GetMapOption(int i, int j)
 		{
-			if (Main.tile[i, j].frameX < 36)
+			if (Main.tile[i, j].TileFrameX < 36)
 				return 0;
 			return 1;
 		}
 		public override bool HasSmartInteract() => true;
-		public override bool IsLockedChest(int i, int j) => Main.tile[i, j].frameX / 36 == 1;
-		public override bool UnlockChest(int i, int j, ref short frameXAdjustment, ref int dustType, ref bool manual)
+		public override bool IsLockedChest(int i, int j) => Main.tile[i, j].TileFrameX / 36 == 1;
+		public override bool UnlockChest(int i, int j, ref short frameXAdjustment, ref int DustType, ref bool manual)
 		{
-			dustType = this.dustType;
+			DustType = this.DustType;
 			return true;
 		}
 		public string MapChestName(string name, int i, int j)
@@ -265,33 +265,33 @@ namespace SOTS.Items.Otherworld.Furniture
 				top--;
 			}
 			int chest = Chest.FindChest(left, top);
-			player.showItemIcon2 = -1;
+			player.cursorItemIconID = -1;
 			if (chest < 0)
 			{
-				player.showItemIconText = Language.GetTextValue("LegacyChestType.0");
+				player.cursorItemIconText = Language.GetTextValue("LegacyChestType.0");
 			}
 			else
 			{
-				player.showItemIconText = Main.chest[chest].name.Length > 0 ? Main.chest[chest].name : "Strange Chest";
-				if (player.showItemIconText == "Strange Chest")
+				player.cursorItemIconText = Main.chest[chest].name.Length > 0 ? Main.chest[chest].name : "Strange Chest";
+				if (player.cursorItemIconText == "Strange Chest")
 				{
-					player.showItemIcon2 = ItemType<StrangeChest>();
+					player.cursorItemIconID = ItemType<StrangeChest>();
 					if (Main.tile[left, top].frameX / 36 == 1)
-						player.showItemIcon2 = ItemType<StrangeKey>();
-					player.showItemIconText = "";
+						player.cursorItemIconID = ItemType<StrangeKey>();
+					player.cursorItemIconText = "";
 				}
 			}
 			player.noThrow = 2;
-			player.showItemIcon = true;
+			player.cursorItemIconEnabled = true;
 		}
 		public override void MouseOverFar(int i, int j)
 		{
 			MouseOver(i, j);
 			Player player = Main.LocalPlayer;
-			if (player.showItemIconText == "")
+			if (player.cursorItemIconText == "")
 			{
-				player.showItemIcon = false;
-				player.showItemIcon2 = 0;
+				player.cursorItemIconEnabled = false;
+				player.cursorItemIconID = 0;
 			}
 		}
 	}

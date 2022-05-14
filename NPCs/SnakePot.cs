@@ -15,17 +15,17 @@ namespace SOTS.NPCs
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Snake Pot");
-			Main.npcFrameCount[npc.type] = 1;
+			Main.npcFrameCount[NPC.type] = 1;
 		}
 		public override void SetDefaults()
 		{
-            npc.aiStyle = 0;
-            npc.lifeMax = 60;
-            npc.damage = 30; 
-            npc.defense = 20; 
-            npc.knockBackResist = 0.06f;
-            npc.width = 28;
-            npc.height = 42;
+            NPC.aiStyle =0;
+            NPC.lifeMax = 60;
+            NPC.damage = 30; 
+            NPC.defense = 20; 
+            NPC.knockBackResist = 0.06f;
+            NPC.width = 28;
+            NPC.height = 42;
             npc.value = 500;
             npc.boss = false;
             npc.lavaImmune = false;
@@ -34,8 +34,8 @@ namespace SOTS.NPCs
             npc.netUpdate = true;
             npc.HitSound = SoundID.NPCHit4;
             npc.DeathSound = null;
-			banner = npc.type;
-			bannerItem = ItemType<SnakePotBanner>();
+			Banner = NPC.type;
+			BannerItem = ItemType<SnakePotBanner>();
 		}
 		public override void HitEffect(int hitDirection, double damage)
 		{
@@ -111,14 +111,14 @@ namespace SOTS.NPCs
 		}
 		public override void SetDefaults()
 		{
-			npc.aiStyle = 3;
-			npc.lifeMax = 40;  
-			npc.damage = 35; 
-			npc.defense = 4;  
-			npc.knockBackResist = 0.5f;
-			npc.width = 32;
-			npc.height = 32;
-			Main.npcFrameCount[npc.type] = 5;  
+			NPC.aiStyle =3;
+			NPC.lifeMax = 40;  
+			NPC.damage = 35; 
+			NPC.defense = 4;  
+			NPC.knockBackResist = 0.5f;
+			NPC.width = 32;
+			NPC.height = 32;
+			Main.npcFrameCount[NPC.type] = 5;  
 			npc.value = 60;
 			npc.npcSlots = .2f;
 			npc.boss = false;
@@ -130,13 +130,13 @@ namespace SOTS.NPCs
 			npc.dontTakeDamage = true;
 			npc.HitSound = SoundID.NPCHit1;
 			npc.DeathSound = SoundID.NPCDeath16;
-			banner = npc.type;
-			bannerItem = ItemType<SnakeBanner>();
+			Banner = NPC.type;
+			BannerItem = ItemType<SnakeBanner>();
 			npc.scale = 0.9f;
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture = Main.npcTexture[npc.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height / 10);
 			Vector2 drawPos = npc.Center - Main.screenPosition + new Vector2(0, npc.gfxOffY + 2);
 			spriteBatch.Draw(texture, drawPos, npc.frame, drawColor, npc.rotation, drawOrigin, npc.scale * randMod, npc.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
@@ -187,10 +187,10 @@ namespace SOTS.NPCs
 			if (npc.frameCounter > 5f) 
 			{
 				npc.frameCounter = 0;
-				npc.frame.Y += frameHeight;
-				if(npc.frame.Y >= frameHeight * 5)
+				NPC.frame.Y += frameHeight;
+				if(NPC.frame.Y >= frameHeight * 5)
 				{
-					npc.frame.Y = 0;
+					NPC.frame.Y = 0;
 				}
 			}
 		}
@@ -208,12 +208,12 @@ namespace SOTS.NPCs
 			if(runOnce && randMod != 1)
             {
 				runOnce = false;
-				npc.lifeMax = (int)(randMod * npc.lifeMax + 0.5f);
+				NPC.lifeMax = (int)(randMod * npc.lifeMax + 0.5f);
 				npc.life = npc.lifeMax;
 				npc.scale *= 0.55f + 0.45f * randMod;
 				Vector2 temp = npc.Center;
-				npc.width = (int)(npc.width * npc.scale);
-				npc.height = (int)(npc.height * npc.scale);
+				NPC.width = (int)(npc.width * npc.scale);
+				NPC.height = (int)(npc.height * npc.scale);
 				npc.Center = temp;
 			}
 			npc.spriteDirection = npc.direction;

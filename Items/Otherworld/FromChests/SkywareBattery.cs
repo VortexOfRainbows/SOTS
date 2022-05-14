@@ -64,7 +64,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<PlatinumBattery>(), 1);
 			recipe.AddIngredient(ItemID.ArmorPolish, 1);
 			recipe.AddIngredient(ModContent.ItemType<StarlightAlloy>(), 8);
@@ -72,7 +72,7 @@ namespace SOTS.Items.Otherworld.FromChests
 			recipe.SetResult(this);
 			recipe.AddRecipe();
 
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<GoldBattery>(), 1);
 			recipe.AddIngredient(ItemID.ArmorPolish, 1);
 			recipe.AddIngredient(ModContent.ItemType<StarlightAlloy>(), 8);

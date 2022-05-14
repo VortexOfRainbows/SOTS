@@ -21,15 +21,15 @@ namespace SOTS.NPCs.TreasureSlimes
 		public override void SetDefaults()
 		{
 			base.SetDefaults();
-			npc.lifeMax = 75;
-			npc.damage = 15;
-			npc.defense = 8;
-			npc.knockBackResist = 0.6f;
+			NPC.lifeMax = 75;
+			NPC.damage = 15;
+			NPC.defense = 8;
+			NPC.knockBackResist = 0.6f;
 			npc.value = Item.buyPrice(0, 0, 80, 0);
 			npc.Size = new Vector2(32, 40);
 			npc.npcSlots = 1f;
-			banner = npc.type;
-			bannerItem = ItemType<TreasureSlimeBanner>();
+			Banner = NPC.type;
+			BannerItem = ItemType<TreasureSlimeBanner>();
 			LootAmt = 3;
 			gelColor = new Color(154, 155, 156, 100);
 			items = new List<TreasureSlimeItem>()

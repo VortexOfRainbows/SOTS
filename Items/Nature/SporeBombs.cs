@@ -47,7 +47,7 @@ namespace SOTS.Items.Nature
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<FragmentOfNature>(), 6);
 			recipe.AddIngredient(ModContent.ItemType<BerryBombs>(), 1);
 			recipe.AddIngredient(ItemID.JungleSpores, 12);

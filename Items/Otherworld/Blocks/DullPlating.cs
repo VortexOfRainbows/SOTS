@@ -18,17 +18,17 @@ namespace SOTS.Items.Otherworld.Blocks
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<DullPlatingWall>(), 4);
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.SetResult(this, 1);
 			recipe.AddRecipe();
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<AvaritianPlating>(), 1);
 			recipe.AddTile(ModContent.TileType<HardlightFabricatorTile>());
 			recipe.SetResult(this, 1);
 			recipe.AddRecipe();
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<TwilightGel>(), 5);
 			recipe.AddIngredient(ModContent.ItemType<TwilightShard>(), 1);
 			recipe.AddTile(ModContent.TileType<HardlightFabricatorTile>());
@@ -47,11 +47,11 @@ namespace SOTS.Items.Otherworld.Blocks
 			Main.tileLighted[Type] = true;
 			drop = ModContent.ItemType<DullPlating>();
 			AddMapEntry(new Color(30, 30, 30));
-			mineResist = 2f;
-			minPick = 60;
+			MineResist = 2f;
+			MinPick = 60;
 			soundType = 21;
 			soundStyle = 2;
-			dustType = ModContent.DustType<AvaritianDust>();
+			DustType = ModContent.DustType<AvaritianDust>();
 		}
 		public override bool CanExplode(int i, int j)
 		{

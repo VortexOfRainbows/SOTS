@@ -19,12 +19,12 @@ namespace SOTS.NPCs.Constructs
 		}
         public override void SetDefaults()
         {
-            npc.lifeMax = 225;      
-            npc.damage = 16;   
-            npc.defense = 12;   
-            npc.knockBackResist = 0f;
-            npc.width = 58; 
-            npc.height = 58; 
+            NPC.lifeMax = 225;      
+            NPC.damage = 16;   
+            NPC.defense = 12;   
+            NPC.knockBackResist = 0f;
+            NPC.width = 58; 
+            NPC.height = 58; 
             npc.lavaImmune = true;
             npc.noGravity = true;         
             npc.noTileCollide = true;
@@ -33,7 +33,7 @@ namespace SOTS.NPCs.Constructs
             npc.value = 5050;
             npc.npcSlots = 3f;
             npc.behindTiles = true;
-			npc.aiStyle = -1;
+			NPC.aiStyle =-1;
             npc.rarity = 5;
         }
         public void DoSound()
@@ -56,7 +56,7 @@ namespace SOTS.NPCs.Constructs
             {
                 for (int j = minTilePosY; j < maxTilePosY; ++j)
                 {
-                    if (Main.tile[i, j] != null && (Main.tile[i, j].nactive() && (Main.tileSolid[(int)Main.tile[i, j].type] || Main.tileSolidTop[(int)Main.tile[i, j].type] && (int)Main.tile[i, j].frameY == 0) || (int)Main.tile[i, j].liquid > 64))
+                    if (Main.tile[i, j] != null && (Main.tile[i, j].nactive() && (Main.tileSolid[(int)Main.tile[i, j ].TileType] || Main.tileSolidTop[(int)Main.tile[i, j ].TileType] && (int)Main.tile[i, j].TileFrameY == 0) || (int)Main.tile[i, j].liquid > 64))
                     {
                         Vector2 vector2;
                         vector2.X = (float)(i * 16);
@@ -115,7 +115,7 @@ namespace SOTS.NPCs.Constructs
             {
                 for (int j = minTilePosY; j < maxTilePosY; ++j)
                 {
-                    if (Main.tile[i, j] != null && (Main.tile[i, j].nactive() && (Main.tileSolid[(int)Main.tile[i, j].type] || Main.tileSolidTop[(int)Main.tile[i, j].type] && (int)Main.tile[i, j].frameY == 0) || (int)Main.tile[i, j].liquid > 64))
+                    if (Main.tile[i, j] != null && (Main.tile[i, j].nactive() && (Main.tileSolid[(int)Main.tile[i, j ].TileType] || Main.tileSolidTop[(int)Main.tile[i, j ].TileType] && (int)Main.tile[i, j].TileFrameY == 0) || (int)Main.tile[i, j].liquid > 64))
                     {
                         Vector2 vector2;
                         vector2.X = (float)(i * 16);

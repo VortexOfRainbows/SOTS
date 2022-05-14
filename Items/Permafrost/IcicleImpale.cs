@@ -57,7 +57,7 @@ namespace SOTS.Items.Permafrost
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(null, "HypericeClusterCannon", 1);
 			recipe.AddIngredient(ModContent.ItemType<HelicopterParts>(), 1);
 			recipe.AddIngredient(null, "DissolvingAurora", 1);

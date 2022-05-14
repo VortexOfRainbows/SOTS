@@ -26,7 +26,7 @@ namespace SOTS.Items.Celestial
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<SanguiteBar>(), 15);
 			recipe.AddIngredient(ModContent.ItemType<WormWoodParasite>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<VoidenBracelet>(), 1);

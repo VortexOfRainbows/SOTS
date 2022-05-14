@@ -14,7 +14,7 @@ namespace SOTS.Items.GhostTown
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = false;
 			Main.tileBlendAll[Type] = true;
-			dustType = 122; //boreal wood
+			DustType = 122; //boreal wood
 			drop = ModContent.ItemType<CharredWood>();
 			AddMapEntry(new Color(105, 82, 61));
 		}
@@ -39,7 +39,7 @@ namespace SOTS.Items.GhostTown
 		public override void SetDefaults()
 		{
 			Main.wallHouse[Type] = true;
-			dustType = 122;
+			DustType = 122;
 			drop = ModContent.ItemType<CharredWoodWall>();
 			AddMapEntry(new Color(67, 49, 34));
 		}

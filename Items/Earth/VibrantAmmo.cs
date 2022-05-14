@@ -30,7 +30,7 @@ namespace SOTS.Items.Earth
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<VibrantBar>(), 1);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this, 200);
@@ -62,7 +62,7 @@ namespace SOTS.Items.Earth
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<VibrantBar>(), 1);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this, 200);

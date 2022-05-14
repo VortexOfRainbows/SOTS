@@ -36,7 +36,7 @@ namespace SOTS.Items.Otherworld.Furniture
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ItemType<PrecariousCluster>(), 1);
 			recipe.AddIngredient(ItemType<TwilightShard>(), 20);
 			recipe.AddIngredient(ItemType<OtherworldlyAlloy>(), 20);
@@ -48,85 +48,85 @@ namespace SOTS.Items.Otherworld.Furniture
 		}
 		public static void AddTransmutationRecipes(Mod mod) //called in SOTS
         {
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ItemID.TinBar, 1);
 			recipe.AddTile(TileType<TransmutationAltarTile>());
 			recipe.SetResult(ItemID.CopperBar, 1);
 			recipe.AddRecipe();
 
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(ItemID.CopperBar, 1);
 			recipe.AddTile(TileType<TransmutationAltarTile>());
 			recipe.SetResult(ItemID.TinBar, 1);
 			recipe.AddRecipe();
 
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(ItemID.IronBar, 1);
 			recipe.AddTile(TileType<TransmutationAltarTile>());
 			recipe.SetResult(ItemID.LeadBar, 1);
 			recipe.AddRecipe();
 
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(ItemID.LeadBar, 1);
 			recipe.AddTile(TileType<TransmutationAltarTile>());
 			recipe.SetResult(ItemID.IronBar, 1);
 			recipe.AddRecipe();
 
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(ItemID.SilverBar, 1);
 			recipe.AddTile(TileType<TransmutationAltarTile>());
 			recipe.SetResult(ItemID.TungstenBar, 1);
 			recipe.AddRecipe();
 
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(ItemID.TungstenBar, 1);
 			recipe.AddTile(TileType<TransmutationAltarTile>());
 			recipe.SetResult(ItemID.SilverBar, 1);
 			recipe.AddRecipe();
 
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(ItemID.GoldBar, 1);
 			recipe.AddTile(TileType<TransmutationAltarTile>());
 			recipe.SetResult(ItemID.PlatinumBar, 1);
 			recipe.AddRecipe();
 
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(ItemID.PlatinumBar, 1);
 			recipe.AddTile(TileType<TransmutationAltarTile>());
 			recipe.SetResult(ItemID.GoldBar, 1);
 			recipe.AddRecipe();
 
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(ItemID.CopperOre, 3);
 			recipe.AddTile(TileType<TransmutationAltarTile>());
 			recipe.SetResult(ItemID.IronOre, 1);
 			recipe.AddRecipe();
 
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(ItemID.IronOre, 3);
 			recipe.AddTile(TileType<TransmutationAltarTile>());
 			recipe.SetResult(ItemID.SilverOre, 1);
 			recipe.AddRecipe();
 
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(ItemID.SilverOre, 3);
 			recipe.AddTile(TileType<TransmutationAltarTile>());
 			recipe.SetResult(ItemID.GoldOre, 1);
 			recipe.AddRecipe();
 
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(ItemID.TinOre, 3);
 			recipe.AddTile(TileType<TransmutationAltarTile>());
 			recipe.SetResult(ItemID.LeadOre, 1);
 			recipe.AddRecipe();
 
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(ItemID.LeadOre, 3);
 			recipe.AddTile(TileType<TransmutationAltarTile>());
 			recipe.SetResult(ItemID.TungstenOre, 1);
 			recipe.AddRecipe();
 
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(ItemID.TungstenOre, 3);
 			recipe.AddTile(TileType<TransmutationAltarTile>());
 			recipe.SetResult(ItemID.PlatinumOre, 1);
@@ -140,12 +140,12 @@ namespace SOTS.Items.Otherworld.Furniture
 		}
 		public static void AddDirectExchangeRecipe(Mod mod, int item1, int item2)
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(item1, 1);
 			recipe.AddTile(TileType<TransmutationAltarTile>());
 			recipe.SetResult(item2, 1);
 			recipe.AddRecipe(); 
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(item2, 1);
 			recipe.AddTile(TileType<TransmutationAltarTile>());
 			recipe.SetResult(item1, 1);
@@ -168,8 +168,8 @@ namespace SOTS.Items.Otherworld.Furniture
 			name.SetDefault("Transmutation Altar");
 			AddMapEntry(new Color(125, 55, 55), name);
 			disableSmartCursor = true;
-			dustType = DustType<AvaritianDust>();
-			adjTiles = new int[] { TileID.DemonAltar };
+			DustType = DustType<AvaritianDust>();
+			AdjTiles = new int[] { TileID.DemonAltar };
 		}
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
@@ -179,7 +179,7 @@ namespace SOTS.Items.Otherworld.Furniture
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
 		{
-			if (Main.tile[i, j].frameX < 18 || Main.tile[i, j].frameX > 35 || Main.tile[i, j].frameY % 36 < 18)
+			if (Main.tile[i, j].TileFrameX < 18 || Main.tile[i, j].TileFrameX > 35 || Main.tile[i, j].TileFrameY % 36 < 18)
 				return;
 
 			r = 1.0f;
@@ -189,7 +189,7 @@ namespace SOTS.Items.Otherworld.Furniture
 		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref Color drawColor, ref int nextSpecialDrawIndex)
 		{
 			int type = 0;
-			if (Main.tile[i, j].frameX >= 18 && Main.tile[i, j].frameX < 36 && Main.tile[i, j].frameY % 36 >= 18)
+			if (Main.tile[i, j].TileFrameX >= 18 && Main.tile[i, j].TileFrameX < 36 && Main.tile[i, j].TileFrameY % 36 >= 18)
 				type = 1;
 			Tile t = Main.tile[i, j];
 			if (type == 1) // t.frameX % 54 == 0
@@ -206,19 +206,19 @@ namespace SOTS.Items.Otherworld.Furniture
 		public override void MouseOver(int i, int j)
 		{
 			Player player = Main.LocalPlayer;
-			player.showItemIcon2 = ModContent.ItemType<UndoArrow>();
-			//player.showItemIconText = "";
+			player.cursorItemIconID = ModContent.ItemType<UndoArrow>();
+			//player.cursorItemIconText = "";
 			player.noThrow = 2;
-			player.showItemIcon = true;
+			player.cursorItemIconEnabled = true;
 		}
 		public override void MouseOverFar(int i, int j)
 		{
 			MouseOver(i, j);
 			Player player = Main.LocalPlayer;
-			if (player.showItemIconText == "")
+			if (player.cursorItemIconText == "")
 			{
-				player.showItemIcon = false;
-				player.showItemIcon2 = 0;
+				player.cursorItemIconEnabled = false;
+				player.cursorItemIconID = 0;
 			}
 		}
 		float cooldown = 0f;
@@ -230,7 +230,7 @@ namespace SOTS.Items.Otherworld.Furniture
 			int index = GetInstance<TransmutationAltarStorage>().Find(left, top);
 			TransmutationAltarStorage entity = (TransmutationAltarStorage)TileEntity.ByID[index];
 
-			Vector2 dynamicAddition = new Vector2(3, 0).RotatedBy(MathHelper.ToRadians(Main.GlobalTime * 40));
+			Vector2 dynamicAddition = new Vector2(3, 0).RotatedBy(MathHelper.ToRadians(Main.GlobalTimeWrappedHourly * 40));
 			int amountOfUniqueItems = 1;
 			int totalItems = 0;
 			for (int l = 1; l < entity.itemsArray.Length; l++)
@@ -288,7 +288,7 @@ namespace SOTS.Items.Otherworld.Furniture
 			int left = i - tile.TileFrameX / 18;
 			int top = j - tile.TileFrameY / 18;
 			int type = 0;
-			if (Main.tile[i, j].frameX >= 18 && Main.tile[i, j].frameX < 36 && Main.tile[i, j].frameY % 36 >= 18)
+			if (Main.tile[i, j].TileFrameX >= 18 && Main.tile[i, j].TileFrameX < 36 && Main.tile[i, j].TileFrameY % 36 >= 18)
 				type = 1;
 			int index = GetInstance<TransmutationAltarStorage>().Find(left, top);
 			if (index == -1 || type != 1)
@@ -297,14 +297,14 @@ namespace SOTS.Items.Otherworld.Furniture
 			}
 			TransmutationAltarStorage entity = (TransmutationAltarStorage)TileEntity.ByID[index];
 			Color color;
-			color = WorldGen.paintColor((int)Main.tile[i, j].color()) * (100f / 255f);
+			color = WorldGen.paintColor((int)Main.tile[i, j].TileColor) * (100f / 255f);
 			color.A = 0;
 			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
 			if (Main.drawToScreen)
 			{
 				zero = Vector2.Zero;
 			}
-			Vector2 dynamicAddition = new Vector2(3, 0).RotatedBy(MathHelper.ToRadians(Main.GlobalTime * 40));
+			Vector2 dynamicAddition = new Vector2(3, 0).RotatedBy(MathHelper.ToRadians(Main.GlobalTimeWrappedHourly * 40));
 			int amountOfUniqueItems = 1;
 			int totalItems = 0;
 			for (int l = 1; l < entity.itemsArray.Length; l++)
@@ -316,7 +316,7 @@ namespace SOTS.Items.Otherworld.Furniture
 				}
 			}
 			Texture2D texture;
-			float counter = Main.GlobalTime * (40f / (1 + 0.1f * (totalItems +  entity.itemAmountsArray[0])));
+			float counter = Main.GlobalTimeWrappedHourly * (40f / (1 + 0.1f * (totalItems +  entity.itemAmountsArray[0])));
 			//int[] alpha255Items = new int[] {mod.ItemType("DissolvingAether"), mod.ItemType("DissolvingNature") , mod.ItemType("DissolvingAurora") , mod.ItemType("DissolvingEarth"), mod.ItemType("PrecariousCluster") };
 			int currentItem = 0;
 			for (int l = 1; l < amountOfUniqueItems; l++)
@@ -405,8 +405,8 @@ namespace SOTS.Items.Otherworld.Furniture
 			Color white = Color.White;
 			white.A = 0;
 			Color color;
-			color = WorldGen.paintColor((int)Main.tile[(int)Projectile.ai[0], (int)Projectile.ai[1]].color());
-			if ((int)Main.tile[(int)Projectile.ai[0], (int)Projectile.ai[1]].color() == 0)
+			color = WorldGen.paintColor((int)Main.tile[(int)Projectile.ai[0], (int)Projectile.ai[1]].TileColor);
+			if ((int)Main.tile[(int)Projectile.ai[0], (int)Projectile.ai[1]].TileColor == 0)
 				color = new Color(220, 60, 10);
 			
 			if(Projectile.knockBack == 1)

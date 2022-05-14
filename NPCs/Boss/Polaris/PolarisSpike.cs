@@ -27,13 +27,13 @@ namespace SOTS.NPCs.Boss.Polaris
 		}
 		public override void SetDefaults()
 		{
-			npc.aiStyle = 0;
-            npc.lifeMax = 1000;   
-            npc.damage = 60; 
-            npc.defense = 0;  
-            npc.knockBackResist = 0f;
-            npc.width = 54;
-            npc.height = 54;
+			NPC.aiStyle =0;
+            NPC.lifeMax = 1000;   
+            NPC.damage = 60; 
+            NPC.defense = 0;  
+            NPC.knockBackResist = 0f;
+            NPC.width = 54;
+            NPC.height = 54;
             npc.value = 0;
             npc.npcSlots = 1f;
             npc.lavaImmune = true;
@@ -47,7 +47,7 @@ namespace SOTS.NPCs.Boss.Polaris
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture = Main.npcTexture[npc.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition, null, Color.White * ((255 - npc.alpha) / 255f), npc.rotation, drawOrigin, npc.scale, npc.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 			return false;
@@ -58,8 +58,8 @@ namespace SOTS.NPCs.Boss.Polaris
         }
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
 		{
-			npc.lifeMax = 1000;
-			npc.damage = (int)(npc.damage * 0.75f);
+			NPC.lifeMax = 1000;
+			NPC.damage = (int)(npc.damage * 0.75f);
 		}
 		bool runOnce = true;
 		public override void AI()

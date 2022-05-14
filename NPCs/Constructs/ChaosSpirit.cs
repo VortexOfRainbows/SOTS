@@ -159,20 +159,20 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override void SetStaticDefaults()
 		{
-			Main.npcFrameCount[npc.type] = 1;
+			Main.npcFrameCount[NPC.type] = 1;
 			DisplayName.SetDefault("Chaos Spirit");
 			NPCID.Sets.TrailCacheLength[npc.type] = 5;  
 			NPCID.Sets.TrailingMode[npc.type] = 0;
 		}
 		public override void SetDefaults()
 		{
-			npc.aiStyle = 0;
-            npc.lifeMax = 3000; 
-            npc.damage = 100; 
-            npc.defense = 0;   
-            npc.knockBackResist = 0f;
-            npc.width = 70;
-            npc.height = 70;
+			NPC.aiStyle =0;
+            NPC.lifeMax = 3000; 
+            NPC.damage = 100; 
+            NPC.defense = 0;   
+            NPC.knockBackResist = 0f;
+            NPC.width = 70;
+            NPC.height = 70;
             npc.value = Item.buyPrice(0, 0, 0, 0);
             npc.npcSlots = 10f;
             npc.boss = false;
@@ -191,8 +191,8 @@ namespace SOTS.NPCs.Constructs
         }
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
 		{
-			npc.damage = 150;
-			npc.lifeMax = 4000;
+			NPC.damage = 150;
+			NPC.lifeMax = 4000;
 		}
         public override bool PreAI()
 		{
@@ -270,8 +270,8 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override bool PreDraw(ref Color lightColor)
 		{
-			Texture2D texture = Main.npcTexture[npc.type];
-			Vector2 drawOrigin = new Vector2(Main.npcTexture[npc.type].Width * 0.5f, npc.height * 0.5f);
+			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Npc[npc.type].Value.Width * 0.5f, npc.height * 0.5f);
 			for (int k = 0; k < npc.oldPos.Length; k++) {
 				Vector2 drawPos = npc.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, npc.gfxOffY);
 				Color color = VoidPlayer.pastelRainbow * ((float)(npc.oldPos.Length - k) / (float)npc.oldPos.Length);
@@ -304,8 +304,8 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture = Main.npcTexture[npc.type];
-			Vector2 drawOrigin = new Vector2(Main.npcTexture[npc.type].Width * 0.5f, npc.height * 0.5f);
+			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Npc[npc.type].Value.Width * 0.5f, npc.height * 0.5f);
 			for (int k = 0; k < 7; k++)
 			{
 				Color color = new Color(100, 100, 100, 0);

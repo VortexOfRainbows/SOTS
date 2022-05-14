@@ -15,11 +15,27 @@ using SOTS.Items.Permafrost;
 using SOTS.Items.Otherworld.Furniture;
 using SOTS.Items.Otherworld.Blocks;
 using SOTS.Items.Earth;
+using Terraria.GameContent;
 
 namespace SOTS
 {
     public class SOTSTile : GlobalTile
     {
+        /// <summary>
+        /// Gets the texture of a tile and applies paint to it. Adapted from Vanilla code.
+        /// </summary>
+        public static Texture2D GetTileDrawTexture(int tileX, int tileY)
+        {
+            Tile tile = Main.tile[tileX, tileY];
+            Texture2D result = TextureAssets.Tile[tile.TileType].Value;
+            int tileStyle = 0;
+            Texture2D texture2D = Main.instance.TilePaintSystem.TryGetTileAndRequestIfNotReady(tile.TileType, tileStyle, tile.TileColor);
+            if (texture2D != null)
+            {
+                result = texture2D;
+            }
+            return result;
+        }
         public static Color NaturePlatingColor = new Color(119, 141, 138);
         public static Color EarthenPlatingColor = new Color(112, 90, 86);
         public static Vector3 NaturePlatingLight = new Vector3(0.275f, 0.4f, 0.215f);
@@ -57,25 +73,25 @@ namespace SOTS
                     x -= 1;
                     y -= 1;
                 }
-                if (!Main.tile[i + x, j + y].active() && !Main.tile[i + x + 1, j + y].active() && !Main.tile[i + x + 1, j + y + 1].active() && !Main.tile[i + x, j + y + 1].active())
+                if (!Main.tile[i + x, j + y].HasTile&& !Main.tile[i + x + 1, j + y].HasTile&& !Main.tile[i + x + 1, j + y + 1].HasTile&& !Main.tile[i + x, j + y + 1].HasTile)
                 {
                     bool success = WorldGen.PlaceTile(i + x, j + y, TileType<VibrantCrystalLargeTile>(), true, false, -1, 0);
                     if (success)
                     {
                         int rand = WorldGen.genRand.Next(8);
-                        Main.tile[i + x, j + y].frameX = (short)(rand * 36);
-                        Main.tile[i + x + 1, j + y].frameX = (short)(rand * 36 + 18);
-                        Main.tile[i + x, j + y + 1].frameX = (short)(rand * 36);
-                        Main.tile[i + x + 1, j + y + 1].frameX = (short)(rand * 36 + 18);
+                        Main.tile[i + x, j + y].TileFrameX = (short)(rand * 36);
+                        Main.tile[i + x + 1, j + y].TileFrameX = (short)(rand * 36 + 18);
+                        Main.tile[i + x, j + y + 1].TileFrameX = (short)(rand * 36);
+                        Main.tile[i + x + 1, j + y + 1].TileFrameX = (short)(rand * 36 + 18);
                         NetMessage.SendTileSquare(-1, i + x, j + y, 3, TileChangeType.None);
                         return true;
                     }
                 }
             }
-            else if (!Main.tile[i + x, j + y].active())
+            else if (!Main.tile[i + x, j + y].HasTile)
             {
                 WorldGen.PlaceTile(i + x, j + y, shardType, true, false, -1, 0);
-                Main.tile[i + x, j + y].frameX = (short)(WorldGen.genRand.Next(18) * 18);
+                Main.tile[i + x, j + y].TileFrameX = (short)(WorldGen.genRand.Next(18) * 18);
                 NetMessage.SendTileSquare(-1, i + x, j + y, 1, TileChangeType.None);
                 return true;
             }
@@ -84,7 +100,7 @@ namespace SOTS
         public override void RandomUpdate(int i, int j, int type)
         {
             Tile tile = Main.tile[i, j];
-            if(tile.slope() != 0 || tile.halfBrick())
+            if(tile.Slope != 0 || tile.IsHalfBlock)
             {
                 return;
             }
@@ -130,14 +146,14 @@ namespace SOTS
                             x -= 1;
                             y -= 1;
                         }
-                        if(!Main.tile[i + x, j + y].active() && !Main.tile[i + x + 1, j + y].active() && !Main.tile[i + x + 1, j + y + 1].active() && !Main.tile[i + x, j + y + 1].active())
+                        if(!Main.tile[i + x, j + y].HasTile && !Main.tile[i + x + 1, j + y].HasTile && !Main.tile[i + x + 1, j + y + 1].HasTile&& !Main.tile[i + x, j + y + 1].HasTile)
                         {
                             float amt = 0;
                             for (var l = i - nearbyRadius; l <= i + nearbyRadius; l++)
                             {
                                 for (var m = j - nearbyRadius; m <= j + nearbyRadius; m++)
                                 {
-                                    if (Main.tile[l, m].active() && Main.tile[l, m].type == TileType<VibrantCrystalLargeTile>())
+                                    if (Main.tile[l, m].HasTile && Main.tile[l, m].TileType == TileType<VibrantCrystalLargeTile>())
                                     {
                                         amt += 0.3f;
                                     }
@@ -149,10 +165,10 @@ namespace SOTS
                                 if (success)
                                 {
                                     int rand = WorldGen.genRand.Next(8);
-                                    Main.tile[i + x, j + y].frameX = (short)(rand * 36);
-                                    Main.tile[i + x + 1, j + y].frameX = (short)(rand * 36 + 18);
-                                    Main.tile[i + x, j + y + 1].frameX = (short)(rand * 36);
-                                    Main.tile[i + x + 1, j + y + 1].frameX = (short)(rand * 36 + 18);
+                                    Main.tile[i + x, j + y].TileFrameX = (short)(rand * 36);
+                                    Main.tile[i + x + 1, j + y].TileFrameX = (short)(rand * 36 + 18);
+                                    Main.tile[i + x, j + y + 1].TileFrameX = (short)(rand * 36);
+                                    Main.tile[i + x + 1, j + y + 1].TileFrameX = (short)(rand * 36 + 18);
                                     NetMessage.SendTileSquare(-1, i + x, j + y, 3, TileChangeType.None);
                                     return;
                                 }
@@ -181,14 +197,14 @@ namespace SOTS
                             y = -1;
                             break;
                     }
-                    if (!Main.tile[i + x, j + y].active())
+                    if (!Main.tile[i + x, j + y].HasTile)
                     {
                         int amt = 0;
                         for (var l = i - nearbyRadius; l <= i + nearbyRadius; l++)
                         {
                             for (var m = j - nearbyRadius; m <= j + nearbyRadius; m++)
                             {
-                                if (Main.tile[l, m].active() && Main.tile[l, m].type == shardType)
+                                if (Main.tile[l, m].HasTile&& Main.tile[l, m].TileType == shardType)
                                 {
                                     amt++;
                                 }
@@ -198,7 +214,7 @@ namespace SOTS
                         if (amt < 2)
                         {
                             WorldGen.PlaceTile(i + x, j + y, shardType, true, false, -1, 0);
-                            Main.tile[i + x, j + y].frameX = (short)(WorldGen.genRand.Next(18) * 18);
+                            Main.tile[i + x, j + y].TileFrameX = (short)(WorldGen.genRand.Next(18) * 18);
                             NetMessage.SendTileSquare(-1, i + x, j + y, 1, TileChangeType.None);
                         }
                     }
@@ -236,40 +252,40 @@ namespace SOTS
         }
         public bool IsValidTileAbove(int i, int j, int type)
         {
-            if (Main.tile[i, j - 1].type == (ushort)TileType<AvaritianGatewayTile>() || Main.tile[i, j - 1].type == (ushort)TileType<AcediaGatewayTile>())
+            if (Main.tile[i, j - 1].TileType == (ushort)TileType<AvaritianGatewayTile>() || Main.tile[i, j - 1].TileType == (ushort)TileType<AcediaGatewayTile>())
             {
-                int frame = Main.tile[i, j - 1].frameX / 18 + (Main.tile[i, j - 1].frameY / 18 * 9);
-                if (frame >= 65 && frame <= 69)
+                int TileFrame = Main.tile[i, j - 1].TileFrameX / 18 + (Main.tile[i, j - 1].TileFrameY / 18 * 9);
+                if (TileFrame >= 65 && TileFrame <= 69)
                     return false;
             }
-            if (Main.tile[i, j - 1].type == (ushort)TileType<BigCrystalTile>())
+            if (Main.tile[i, j - 1].TileType == (ushort)TileType<BigCrystalTile>())
             {
-                int frameX = Main.tile[i, j - 1].frameX / 18;
-                int frameY = Main.tile[i, j - 1].frameY / 18;
-                if (frameY == 13 && frameX >= 2 && frameX <= 11)
+                int TileFrameX = Main.tile[i, j - 1].TileFrameX / 18;
+                int TileFrameY = Main.tile[i, j - 1].TileFrameY / 18;
+                if (TileFrameY == 13 && TileFrameX >= 2 && TileFrameX <= 11)
                     return false;
             }
-            if (Main.tile[i, j - 1].type == (ushort)TileType<PotGeneratorTile>() && !SOTSWorld.downedAdvisor)
+            if (Main.tile[i, j - 1].TileType == (ushort)TileType<PotGeneratorTile>() && !SOTSWorld.downedAdvisor)
             {
                 return false;
             }
-            if (Main.tile[i, j - 1].type == (ushort)TileType<SarcophagusTile>() || Main.tile[i, j - 1].type == (ushort)TileType<RubyKeystoneTile>())
+            if (Main.tile[i, j - 1].TileType == (ushort)TileType<SarcophagusTile>() || Main.tile[i, j - 1].TileType == (ushort)TileType<RubyKeystoneTile>())
             {
                 return false;
             }
-            if (Main.tile[i, j - 1].type == (ushort)TileType<AncientGoldGateTile>() && Main.tile[i, j - 1].frameY < 360)
+            if (Main.tile[i, j - 1].TileType == (ushort)TileType<AncientGoldGateTile>() && Main.tile[i, j - 1].TileFrameY < 360)
             {
                 return false;
             }
-            if (Main.tile[i, j + 1].type == (ushort)TileType<ArkhalisChainTile>() && Main.tile[i, j + 1].frameX >= 18)
+            if (Main.tile[i, j + 1].TileType == (ushort)TileType<ArkhalisChainTile>() && Main.tile[i, j + 1].TileFrameX >= 18)
             {
                 return false;
             }
-            if (Main.tile[i - 1, j].type == (ushort)TileType<PyramidGateTile>() || Main.tile[i + 1, j].type == (ushort)TileType<PyramidGateTile>())
+            if (Main.tile[i - 1, j].TileType == (ushort)TileType<PyramidGateTile>() || Main.tile[i + 1, j].TileType == (ushort)TileType<PyramidGateTile>())
             {
                 return false;
             }
-            if (Main.tile[i, j - 1].type == (ushort)TileType<FrostArtifactTile>() && !SOTSWorld.downedAmalgamation)
+            if (Main.tile[i, j - 1].TileType == (ushort)TileType<FrostArtifactTile>() && !SOTSWorld.downedAmalgamation)
             {
                 return false;
             }
@@ -283,45 +299,45 @@ namespace SOTS
         {
             Tile tile = Framing.GetTileSafely(i, j);
             if (tile.WallType == WallType<NatureWallWall>() && tile.TileType != TileType<DissolvingNatureTile>())
-                DissolvingNatureTile.DrawEffects(i, j, spriteBatch, mod, true);
+                DissolvingNatureTile.DrawEffects(i, j, Mod, true);
             if (tile.WallType == WallType<EarthWallWall>() && tile.TileType != TileType<DissolvingEarthTile>())
-                DissolvingEarthTile.DrawEffects(i, j, spriteBatch, mod, true);
+                DissolvingEarthTile.DrawEffects(i, j, spriteBatch, Mod, true);
             if (tile.WallType == WallType<AuroraWallWall>() && tile.TileType != TileType<DissolvingAuroraTile>())
-                DissolvingAuroraTile.DrawEffects(i, j, spriteBatch, mod, true);
+                DissolvingAuroraTile.DrawEffects(i, j, spriteBatch, Mod, true);
             if (tile.WallType == WallType<AetherWallWall>() && tile.TileType != TileType<DissolvingAetherTile>())
-                DissolvingAetherTile.DrawEffects(i, j, spriteBatch, mod, true);
+                DissolvingAetherTile.DrawEffects(i, j, spriteBatch, Mod, true);
             if (tile.WallType == WallType<DelugeWallWall>() && tile.TileType != TileType<DissolvingDelugeTile>())
-                DissolvingDelugeTile.DrawEffects(i, j, spriteBatch, mod, true);
+                DissolvingDelugeTile.DrawEffects(i, j, spriteBatch, Mod, true);
             if (tile.WallType == WallType<UmbraWallWall>() && tile.TileType != TileType<DissolvingUmbraTile>())
-                DissolvingUmbraTile.DrawEffects(i, j, spriteBatch, mod, true);
+                DissolvingUmbraTile.DrawEffects(i, j, spriteBatch, Mod, true);
             if (tile.WallType == WallType<NetherWallWall>() && tile.TileType != TileType<DissolvingNetherTile>())
-                DissolvingNetherTile.DrawEffects(i, j, spriteBatch, mod, true);
-            if ((!Main.tile[i - 1, j].active() || !Main.tileSolid[Main.tile[i - 1, j].type]) && (!Main.tile[i, j - 1].active() || !Main.tileSolid[Main.tile[i, j - 1].type]))
+                DissolvingNetherTile.DrawEffects(i, j, spriteBatch, Mod, true);
+            if ((!Main.tile[i - 1, j].HasTile|| !Main.tileSolid[Main.tile[i - 1, j].TileType]) && (!Main.tile[i, j - 1].HasTile|| !Main.tileSolid[Main.tile[i, j - 1].TileType]))
             {
                 if (tile.WallType == WallType<BrillianceWallWall>() || tile.TileType == (ushort)TileType<DissolvingBrillianceTile>())
-                    DissolvingBrillianceTile.DrawEffects(i, j, spriteBatch, mod, true);
+                    DissolvingBrillianceTile.DrawEffects(i, j, spriteBatch, Mod, true);
             }
-            if (Main.tile[i, j + 1].active() && (Main.tile[i, j + 1].type == TileType<DissolvingBrillianceTile>() || Main.tile[i, j + 1].WallType == WallType<BrillianceWallWall>()) && Main.tileSolid[type])
-                DissolvingBrillianceTile.DrawEffects(i, j + 1, spriteBatch, mod, true);
-            if (Main.tile[i + 1, j].active() && (Main.tile[i + 1, j].type == TileType<DissolvingBrillianceTile>() || Main.tile[i + 1, j].WallType == WallType<BrillianceWallWall>()) && Main.tileSolid[type])
-                DissolvingBrillianceTile.DrawEffects(i + 1, j, spriteBatch, mod, true);
+            if (Main.tile[i, j + 1].HasTile&& (Main.tile[i, j + 1].TileType == TileType<DissolvingBrillianceTile>() || Main.tile[i, j + 1].WallType == WallType<BrillianceWallWall>()) && Main.tileSolid[type])
+                DissolvingBrillianceTile.DrawEffects(i, j + 1, spriteBatch, Mod, true);
+            if (Main.tile[i + 1, j].HasTile&& (Main.tile[i + 1, j].TileType == TileType<DissolvingBrillianceTile>() || Main.tile[i + 1, j].WallType == WallType<BrillianceWallWall>()) && Main.tileSolid[type])
+                DissolvingBrillianceTile.DrawEffects(i + 1, j, spriteBatch, Mod, true);
             return base.PreDraw(i, j, type, spriteBatch);
         }
         public override void PostDraw(int i, int j, int type, SpriteBatch spriteBatch)
         {
-            if (Main.tile[i - 1, j].active() && Main.tile[i - 1, j].type == TileType<HardlightBlockTile>() && type != TileType<HardlightBlockTile>() && Main.tileSolid[type])
+            if (Main.tile[i - 1, j].HasTile&& Main.tile[i - 1, j].TileType == TileType<HardlightBlockTile>() && type != TileType<HardlightBlockTile>() && Main.tileSolid[type])
                 HardlightBlockTile.Draw(i - 1, j, spriteBatch);
             base.PostDraw(i, j, type, spriteBatch);
         }
-        public static void DrawSlopedGlowMask(int i, int j, int type, Texture2D texture, Color drawColor, Vector2 positionOffset, bool overrideFrame = false)
+        public static void DrawSlopedGlowMask(int i, int j, int type, Texture2D texture, Color drawColor, Vector2 positionOffset, bool overrideTileFrame = false)
         {
             Tile tile = Main.tile[i, j];
-            int frameX = tile.TileFrameX;
-            int frameY = tile.TileFrameY;
-            if (overrideFrame)
+            int TileFrameX = tile.TileFrameX;
+            int TileFrameY = tile.TileFrameY;
+            if (overrideTileFrame)
             {
-                frameX = 0;
-                frameY = 0;
+                TileFrameX = 0;
+                TileFrameY = 0;
             }
             int width = 16;
             int height = 16;
@@ -333,18 +349,18 @@ namespace SOTS
             }
             Vector2 offsets = -Main.screenPosition + zero + positionOffset;
             Vector2 drawCoordinates = location + offsets;
-            if ((tile.slope() == 0 && !tile.halfBrick()) || (Main.tileSolid[tile.TileType] && Main.tileSolidTop[tile.TileType])) //second one should be for platforms
+            if ((tile.Slope == 0 && !tile.IsHalfBlock) || (Main.tileSolid[tile.TileType] && Main.tileSolidTop[tile.TileType])) //second one should be for platforms
             {
-                Main.spriteBatch.Draw(texture, drawCoordinates, new Rectangle(frameX, frameY, width, height), drawColor, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+                Main.spriteBatch.Draw(texture, drawCoordinates, new Rectangle(TileFrameX, TileFrameY, width, height), drawColor, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
             }
-            else if (tile.halfBrick())
+            else if (tile.IsHalfBlock)
             {
-                Main.spriteBatch.Draw(texture, new Vector2(drawCoordinates.X, drawCoordinates.Y + 8), new Rectangle(frameX, frameY, width, 8), drawColor, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+                Main.spriteBatch.Draw(texture, new Vector2(drawCoordinates.X, drawCoordinates.Y + 8), new Rectangle(TileFrameX, TileFrameY, width, 8), drawColor, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
             }
             else
             {
-                byte b = tile.slope();
-                Rectangle frame;
+                byte b = (byte)tile.Slope;
+                Rectangle TileFrame;
                 Vector2 drawPos;
                 if (b == 1 || b == 2)
                 {
@@ -362,13 +378,13 @@ namespace SOTS
                             length = a * 2;
                             height2 = 14 - length;
                         }
-                        frame = new Rectangle(frameX + length, frameY, 2, height2);
+                        TileFrame = new Rectangle(TileFrameX + length, TileFrameY, 2, height2);
                         drawPos = new Vector2(i * 16 + length, j * 16 + a * 2) + offsets;
-                        Main.spriteBatch.Draw(texture, drawPos, frame, drawColor, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0.0f);
+                        Main.spriteBatch.Draw(texture, drawPos, TileFrame, drawColor, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0.0f);
                     }
-                    frame = new Rectangle(frameX, frameY + 14, 16, 2);
+                    TileFrame = new Rectangle(TileFrameX, TileFrameY + 14, 16, 2);
                     drawPos = new Vector2(i * 16, j * 16 + 14) + offsets;
-                    Main.spriteBatch.Draw(texture, drawPos, frame, drawColor, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0.0f);
+                    Main.spriteBatch.Draw(texture, drawPos, TileFrame, drawColor, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0.0f);
                 }
                 else
                 {
@@ -386,13 +402,13 @@ namespace SOTS
                             length = 16 - a * 2 - 2;
                             height2 = 16 - a * 2;
                         }
-                        frame = new Rectangle(frameX + length, frameY + 16 - height2, 2, height2);
+                        TileFrame = new Rectangle(TileFrameX + length, TileFrameY + 16 - height2, 2, height2);
                         drawPos = new Vector2(i * 16 + length, j * 16) + offsets;
-                        Main.spriteBatch.Draw(texture, drawPos, frame, drawColor, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0.0f);
+                        Main.spriteBatch.Draw(texture, drawPos, TileFrame, drawColor, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0.0f);
                     }
                     drawPos = new Vector2(i * 16, j * 16) + offsets;
-                    frame = new Rectangle(frameX, frameY, 16, 2);
-                    Main.spriteBatch.Draw(texture, drawPos, frame, drawColor, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0.0f);
+                    TileFrame = new Rectangle(TileFrameX, TileFrameY, 16, 2);
+                    Main.spriteBatch.Draw(texture, drawPos, TileFrame, drawColor, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0.0f);
                 }
             }
         }

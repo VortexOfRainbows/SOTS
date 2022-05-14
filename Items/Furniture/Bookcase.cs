@@ -20,7 +20,7 @@ namespace SOTS.Items.Furniture
             t.Height = 4;
             t.CoordinateHeights = new int[] { 16, 16, 16, 16 };
             t.Origin = new Point16(1, 3);
-            adjTiles = new int[] { TileID.Bookcases };
+            AdjTiles = new int[] { TileID.Bookcases };
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {

@@ -35,7 +35,7 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ItemID.PhoenixBlaster, 1);
 			recipe.AddIngredient(null, "RoyalMagnum", 1);
 			recipe.AddIngredient(null, "CursedMatter", 4);

@@ -155,7 +155,7 @@ namespace SOTS.Items
 		{
 			Tile tile = Main.tile[i, j];
 			int style = tile.TileFrameX / 18;
-			float uniquenessCounter = Main.GlobalTime * -100 + (i + j) * 5;
+			float uniquenessCounter = Main.GlobalTimeWrappedHourly * -100 + (i + j) * 5;
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/TheBarsGlow").Value;
 			Rectangle frame = new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, 16);
 			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
@@ -167,7 +167,7 @@ namespace SOTS.Items
 			if (style == 1 || style == 2)
 			{
 				Color color;
-				color = WorldGen.paintColor((int)Main.tile[i, j].color()) * (100f / 255f);
+				color = WorldGen.paintColor((int)Main.tile[i, j].TileColor) * (100f / 255f);
 				color.A = 0;
 				float alphaMult = 0.55f + 0.45f * (float)Math.Sin(MathHelper.ToRadians(uniquenessCounter));
 				for (int k = 0; k < 4; k++)

@@ -35,7 +35,7 @@ namespace SOTS.Items.Permafrost
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<AbsoluteBar>(), 10);
 			recipe.AddIngredient(ModContent.ItemType<ShardStaff>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<StormSpell>(), 1);

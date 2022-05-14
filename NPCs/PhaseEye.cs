@@ -38,14 +38,14 @@ namespace SOTS.NPCs
 		}
 		public override void SetDefaults()
 		{
-            npc.aiStyle = 0; 
-            npc.lifeMax = 50;   
-            npc.damage = 50; 
-            npc.defense = 0;  
-            npc.knockBackResist = 0f;
-            npc.width = 36;
-            npc.height = 36;
-			Main.npcFrameCount[npc.type] = 1;  
+            NPC.aiStyle =0; 
+            NPC.lifeMax = 50;   
+            NPC.damage = 50; 
+            NPC.defense = 0;  
+            NPC.knockBackResist = 0f;
+            NPC.width = 36;
+            NPC.height = 36;
+			Main.npcFrameCount[NPC.type] = 1;  
             npc.value = 0;
             npc.npcSlots = 2.5f;
             npc.HitSound = SoundID.NPCHit53;
@@ -55,8 +55,8 @@ namespace SOTS.NPCs
 			npc.noGravity = true;
 			npc.buffImmune[BuffID.OnFire] = true;
 			npc.buffImmune[BuffID.Frostburn] = true;
-			//banner = npc.type;
-			//bannerItem = ItemType<SittingMushroomBanner>();
+			//Banner = NPC.type;
+			//BannerItem = ItemType<SittingMushroomBanner>();
 		}
         public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
         {

@@ -28,12 +28,12 @@ namespace SOTS.Items.Pyramid.AncientGold
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<PyramidBrick>(), 1);
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.SetResult(this, 4);
 			recipe.AddRecipe();
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(this, 4);
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.SetResult(ModContent.ItemType<PyramidBrick>(), 1);
@@ -45,7 +45,7 @@ namespace SOTS.Items.Pyramid.AncientGold
 		public override void SetDefaults()
 		{
 			Main.wallHouse[Type] = true;
-			dustType = DustID.GoldCoin;
+			DustType = DustID.GoldCoin;
 			drop = mod.ItemType("AncientGoldBeam");
 			AddMapEntry(new Color(170, 144, 18));
 		}
@@ -73,12 +73,12 @@ namespace SOTS.Items.Pyramid.AncientGold
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<PyramidBrick>(), 1);
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.SetResult(this, 4);
 			recipe.AddRecipe();
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(this, 4);
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.SetResult(ModContent.ItemType<PyramidBrick>(), 1);
@@ -90,7 +90,7 @@ namespace SOTS.Items.Pyramid.AncientGold
 		public override void SetDefaults()
 		{
 			Main.wallHouse[Type] = true;
-			dustType = DustID.GoldCoin;
+			DustType = DustID.GoldCoin;
 			drop = mod.ItemType("AncientGoldBrickWall");
 			AddMapEntry(new Color(150, 130, 15));
 		}

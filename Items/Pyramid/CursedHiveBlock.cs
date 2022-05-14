@@ -41,15 +41,15 @@ namespace SOTS.Items.Pyramid
 			Main.tileLighted[Type] = true;
 			drop = mod.ItemType("CursedHiveBlock");
 			AddMapEntry(new Color(135, 120, 158));
-			mineResist = 0.5f;
+			MineResist = 0.5f;
 			soundType = SoundID.Tink;
 			soundStyle = 2;
-			//dustType = mod.DustType("CurseDust"); //too much light
-			dustType = 32;
+			//DustType = ModContent.DustType<CurseDust>(); //too much light
+			DustType = 32;
 		}
 		public override bool CanExplode(int i, int j)
 		{
-			if (Main.tile[i, j].type == mod.TileType("CursedHive"))
+			if (Main.tile[i, j ].TileType == mod.TileType("CursedHive"))
 			{
 				return true;
 			}
@@ -74,11 +74,11 @@ namespace SOTS.Items.Pyramid
 			Main.tileLighted[Type] = true;
 			drop = mod.ItemType("CursedHiveBlock");
 			AddMapEntry(new Color(135, 120, 158));
-			mineResist = 0.5f;
+			MineResist = 0.5f;
 			soundType = SoundID.Tink;
 			soundStyle = 2;
-			//dustType = mod.DustType("CurseDust"); //too much light
-			dustType = 32;
+			//DustType = ModContent.DustType<CurseDust>(); //too much light
+			DustType = 32;
 		}
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
 		{
@@ -91,7 +91,7 @@ namespace SOTS.Items.Pyramid
 		}
 		public override bool CanExplode(int i, int j)
 		{
-			if (Main.tile[i, j].type == mod.TileType("CursedHive"))
+			if (Main.tile[i, j ].TileType == mod.TileType("CursedHive"))
 			{
 				return true;
 			}
@@ -152,25 +152,25 @@ namespace SOTS.Items.Pyramid
 					for (int j = y2 - 1; j <= y2 + 1; j++)
 					{
 						bool canKillTile = true;
-						if (Main.tile[i, j] != null && Main.tile[i, j].active())
+						if (Main.tile[i, j] != null && Main.tile[i, j].HasTile)
 						{
 							canKillTile = true;
-							if (Main.tileDungeon[(int)Main.tile[i, j].type] || Main.tile[i, j].type == 88 || Main.tile[i, j].type == 21 || Main.tile[i, j].type == 26 || Main.tile[i, j].type == 107 || Main.tile[i, j].type == 108 || Main.tile[i, j].type == 111 || Main.tile[i, j].type == 226 || Main.tile[i, j].type == 237 || Main.tile[i, j].type == 221 || Main.tile[i, j].type == 222 || Main.tile[i, j].type == 223 || Main.tile[i, j].type == 211 || Main.tile[i, j].type == 404)
+							if (Main.tileDungeon[(int)Main.tile[i, j ].TileType] || Main.tile[i, j ].TileType == 88 || Main.tile[i, j ].TileType == 21 || Main.tile[i, j ].TileType == 26 || Main.tile[i, j ].TileType == 107 || Main.tile[i, j ].TileType == 108 || Main.tile[i, j ].TileType == 111 || Main.tile[i, j ].TileType == 226 || Main.tile[i, j ].TileType == 237 || Main.tile[i, j ].TileType == 221 || Main.tile[i, j ].TileType == 222 || Main.tile[i, j ].TileType == 223 || Main.tile[i, j ].TileType == 211 || Main.tile[i, j ].TileType == 404)
 							{
 								canKillTile = false;
 							}
-							if (!Main.hardMode && Main.tile[i, j].type == 58)
+							if (!Main.hardMode && Main.tile[i, j ].TileType == 58)
 							{
 								canKillTile = false;
 							}
-							if (!TileLoader.CanExplode(i, j) && (Main.tile[i, j].type != (ushort)mod.TileType("PyramidSlabTile")))
+							if (!TileLoader.CanExplode(i, j) && (Main.tile[i, j ].TileType != (ushort)mod.TileType("PyramidSlabTile")))
 							{
 								canKillTile = false;
 							}
 							if (canKillTile)
 							{
-								WorldGen.KillTile(i, j, false, false, Main.tile[i, j].type == (ushort)mod.TileType("CursedHive"));
-								if (!Main.tile[i, j].active() && Main.netMode != 0)
+								WorldGen.KillTile(i, j, false, false, Main.tile[i, j ].TileType == (ushort)mod.TileType("CursedHive"));
+								if (!Main.tile[i, j].HasTile && Main.netMode != 0)
 								{
 									NetMessage.SendData(17, -1, -1, null, 0, (float)i, (float)j, 0f, 0, 0, 0);
 								}

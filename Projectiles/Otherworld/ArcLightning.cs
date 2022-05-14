@@ -131,7 +131,7 @@ namespace SOTS.Projectiles.Otherworld
 				trailPos.Add(location + originalVelo.RotatedBy(MathHelper.ToRadians(45 * startingPreference + Main.rand.NextFloat(-defaultDeviation, defaultDeviation) * startingDeviation)) * 1.5f);
 				int u = (int)location.X / 16;
 				int j = (int)location.Y / 16;
-				if (!WorldGen.InWorld(u, j, 20) || Main.tile[u, j].active() && Main.tileSolidTop[Main.tile[u, j].type] == false && Main.tileSolid[Main.tile[u, j].type] == true)
+				if (!WorldGen.InWorld(u, j, 20) || Main.tile[u, j].HasTile && Main.tileSolidTop[Main.tile[u, j].type] == false && Main.tileSolid[Main.tile[u, j].type] == true)
 				{
 					for(int l = 0; l < 20; l++)
 					{

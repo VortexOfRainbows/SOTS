@@ -17,12 +17,12 @@ namespace SOTS.Items.Fragments
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<NaturePlating>(), 1);
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.SetResult(this, 4);
 			recipe.AddRecipe();
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(this, 4);
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.SetResult(ModContent.ItemType<NaturePlating>(), 1);
@@ -34,7 +34,7 @@ namespace SOTS.Items.Fragments
 		public override void SetDefaults()
 		{
 			Main.wallHouse[Type] = true;
-			dustType = DustID.Tungsten;
+			DustType = DustID.Tungsten;
 			drop = ModContent.ItemType<NaturePlatingWall>();
 			AddMapEntry(Color.Lerp(SOTSTile.NaturePlatingColor, Color.Black, 0.2f));
 		}
@@ -51,12 +51,12 @@ namespace SOTS.Items.Fragments
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<NaturePlating>(), 1);
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.SetResult(this, 4);
 			recipe.AddRecipe();
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(this, 4);
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.SetResult(ModContent.ItemType<NaturePlating>(), 1);
@@ -68,7 +68,7 @@ namespace SOTS.Items.Fragments
 		public override void SetDefaults()
 		{
 			Main.wallHouse[Type] = true;
-			dustType = DustID.Tungsten;
+			DustType = DustID.Tungsten;
 			drop = ModContent.ItemType<NaturePlatingPanelWall>();
 			AddMapEntry(Color.Lerp(SOTSTile.NaturePlatingColor, Color.Black, 0.3f));
 		}
@@ -85,12 +85,12 @@ namespace SOTS.Items.Fragments
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<EarthenPlating>(), 1);
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.SetResult(this, 4);
 			recipe.AddRecipe();
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(this, 4);
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.SetResult(ModContent.ItemType<EarthenPlating>(), 1);
@@ -102,7 +102,7 @@ namespace SOTS.Items.Fragments
 		public override void SetDefaults()
 		{
 			Main.wallHouse[Type] = true;
-			dustType = DustID.Iron;
+			DustType = DustID.Iron;
 			drop = ModContent.ItemType<EarthenPlatingWall>();
 			AddMapEntry(Color.Lerp(SOTSTile.EarthenPlatingColor, Color.Black, 0.2f));
 		}
@@ -119,12 +119,12 @@ namespace SOTS.Items.Fragments
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<EarthenPlating>(), 1);
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.SetResult(this, 4);
 			recipe.AddRecipe();
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(this, 4);
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.SetResult(ModContent.ItemType<EarthenPlating>(), 1);
@@ -136,7 +136,7 @@ namespace SOTS.Items.Fragments
 		public override void SetDefaults()
 		{
 			Main.wallHouse[Type] = true;
-			dustType = DustID.Iron;
+			DustType = DustID.Iron;
 			drop = ModContent.ItemType<EarthenPlatingPanelWall>();
 			AddMapEntry(Color.Lerp(SOTSTile.EarthenPlatingColor, Color.Black, 0.3f));
 		}
@@ -153,12 +153,12 @@ namespace SOTS.Items.Fragments
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<EarthenPlating>(), 1);
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.SetResult(this, 4);
 			recipe.AddRecipe();
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(this, 4);
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.SetResult(ModContent.ItemType<EarthenPlating>(), 1);
@@ -170,7 +170,7 @@ namespace SOTS.Items.Fragments
 		public override void SetDefaults()
 		{
 			Main.wallHouse[Type] = true;
-			dustType = DustID.Iron;
+			DustType = DustID.Iron;
 			drop = ModContent.ItemType<EarthenPlatingBeam>();
 			AddMapEntry(SOTSTile.EarthenPlatingColor);
 		}

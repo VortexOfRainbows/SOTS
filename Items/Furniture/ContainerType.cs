@@ -43,13 +43,13 @@ namespace SOTS.Items.Furniture
             TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
             TileObjectData.addTile(Type);
             AddMapEntires();
-            dustType = DustType;
+            DustType = DustType;
             disableSmartCursor = true;
-            adjTiles = new int[] { TileID.Containers };
+            AdjTiles = new int[] { TileID.Containers };
             chest = ChestName;
             chestDrop = ChestDrop;
         }
-        public override ushort GetMapOption(int i, int j) => (ushort)(Main.tile[i, j].frameX / 36);
+        public override ushort GetMapOption(int i, int j) => (ushort)(Main.tile[i, j].TileFrameX / 36);
         public override bool HasSmartInteract() => true;
         public override bool IsLockedChest(int i, int j) => false;
         protected string MapChestName(string name, int i, int j)
@@ -194,31 +194,31 @@ namespace SOTS.Items.Furniture
                 y--;
             }
             int chest = Chest.FindChest(x, y);
-            player.showItemIcon2 = -1;
+            player.cursorItemIconID = -1;
             if (chest < 0)
             {
-                player.showItemIconText = Language.GetTextValue("LegacyChestType.0");
+                player.cursorItemIconText = Language.GetTextValue("LegacyChestType.0");
             }
             else
             {
-                player.showItemIconText = Main.chest[chest].name.Length > 0 ? Main.chest[chest].name : ChestName;
-                if (player.showItemIconText == ChestName)
+                player.cursorItemIconText = Main.chest[chest].name.Length > 0 ? Main.chest[chest].name : ChestName;
+                if (player.cursorItemIconText == ChestName)
                 {
-                    player.showItemIcon2 = ShowHoverItem(player, i, j, x, y);
-                    player.showItemIconText = "";
+                    player.cursorItemIconID = ShowHoverItem(player, i, j, x, y);
+                    player.cursorItemIconText = "";
                 }
             }
             player.noThrow = 2;
-            player.showItemIcon = true;
+            player.cursorItemIconEnabled = true;
         }
         public override void MouseOverFar(int i, int j)
         {
             MouseOver(i, j);
             Player player = Main.LocalPlayer;
-            if (player.showItemIconText == "")
+            if (player.cursorItemIconText == "")
             {
-                player.showItemIcon = false;
-                player.showItemIcon2 = 0;
+                player.cursorItemIconEnabled = false;
+                player.cursorItemIconID = 0;
             }
         }
     }

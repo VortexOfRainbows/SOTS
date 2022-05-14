@@ -56,8 +56,8 @@ namespace SOTS.Items.Pyramid
 			AddMapEntry(new Color(185, 20, 40), name);
 			TileObjectData.addTile(Type);
 			soundType = SoundID.Grass;
-			mineResist = 0.5f;
-			dustType = DustID.Grass;
+			MineResist = 0.5f;
+			DustType = DustID.Grass;
 
 		}
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)

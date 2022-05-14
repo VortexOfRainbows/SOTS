@@ -47,14 +47,14 @@ namespace SOTS.Items.Secrets
     {
         public override void SetDefaults()
         {
-		    mineResist = 0.01f;
-		    minPick = 0;
+		    MineResist = 0.01f;
+		    MinPick = 0;
 		    Main.tileSolid[Type] = false;
             Main.tileFrameImportant[Type] = true;
             Main.tileLavaDeath[Type] = false;
             TileObjectData.newTile.CopyFrom(TileObjectData.Style3x4);
             TileObjectData.addTile(Type);
-            dustType = 32;
+            DustType = 32;
             ModTranslation name = CreateMapEntryName();
 		    name.SetDefault("Strange Keystone");		
 		    AddMapEntry(new Color(90, 80, 45), name);
@@ -74,7 +74,7 @@ namespace SOTS.Items.Secrets
 		{
 			return true;
 		}
-    	public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height)
+    	public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY)
 		{
 			offsetY = 2;
         }

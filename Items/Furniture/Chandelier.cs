@@ -49,8 +49,8 @@ namespace SOTS.Items.Furniture
         }
         public override void HitWire(int i, int j)
         {
-            int x = i - Main.tile[i, j].frameX / 18 % 3;
-            int y = j - Main.tile[i, j].frameY / 18 % 3;
+            int x = i - Main.tile[i, j].TileFrameX / 18 % 3;
+            int y = j - Main.tile[i, j].TileFrameY / 18 % 3;
             for (int m = x; m < x + 3; m++)
             {
                 for (int n = y; n < y + 3; n++)
@@ -59,7 +59,7 @@ namespace SOTS.Items.Furniture
                     {
                         Main.tile[m, n] = new Tile();
                     }
-                    if (Main.tile[m, n].active() && Main.tile[m, n].type == Type)
+                    if (Main.tile[m, n].HasTile && Main.tile[m, n].type == Type)
                     {
                         if (Main.tile[m, n].frameX < 54)
                         {

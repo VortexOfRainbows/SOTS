@@ -19,15 +19,15 @@ namespace SOTS.NPCs.Boss
 		}
 		public override void SetDefaults()
 		{
-            npc.aiStyle = 14; 
-			npc.lifeMax = 1200;
-            npc.damage = 70; 
-            npc.defense = 60;  
-            npc.knockBackResist = 0f;
-            npc.width = 72;
-            npc.height = 118;
+            NPC.aiStyle =14; 
+			NPC.lifeMax = 1200;
+            NPC.damage = 70; 
+            NPC.defense = 60;  
+            NPC.knockBackResist = 0f;
+            NPC.width = 72;
+            NPC.height = 118;
             animationType = NPCID.CaveBat;
-            Main.npcFrameCount[npc.type] = 5;
+            Main.npcFrameCount[NPC.type] = 5;
             npc.npcSlots = 1f;
             npc.boss = false;
             npc.lavaImmune = true;
@@ -40,7 +40,7 @@ namespace SOTS.NPCs.Boss
 		}
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
-            npc.damage = (int)(npc.damage * 0.75f);  
+            NPC.damage = (int)(npc.damage * 0.75f);  
         }
 		public void GenerateDust()
 		{

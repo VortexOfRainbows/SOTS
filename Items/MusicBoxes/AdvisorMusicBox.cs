@@ -33,7 +33,7 @@ namespace SOTS.Items.MusicBoxes
 		}
 		/*public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(null, "AdvisorTrophy", 1);
 			recipe.AddIngredient(ItemID.MusicBox);
 			recipe.AddTile(TileID.HeavyWorkBench);
@@ -65,15 +65,15 @@ namespace SOTS.Items.MusicBoxes
 		{
 			Player player = Main.LocalPlayer;
 			player.noThrow = 2;
-			player.showItemIcon = true;
-			player.showItemIcon2 = mod.ItemType("AdvisorMusicBox");
+			player.cursorItemIconEnabled = true;
+			player.cursorItemIconID = mod.ItemType("AdvisorMusicBox");
 		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
 		{
 			ulong randSeed = Main.TileFrameSeed ^ (ulong)((long)j << 32 | (long)((ulong)i));
 			Color color = new Color(80, 80, 80, 0);
-			int frameX = Main.tile[i, j].frameX / 18;
-			int frameY = Main.tile[i, j].frameY / 18;
+			int frameX = Main.tile[i, j].TileFrameX / 18;
+			int frameY = Main.tile[i, j].TileFrameY / 18;
 			if (frameX >= 2)
 			{
 				Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);

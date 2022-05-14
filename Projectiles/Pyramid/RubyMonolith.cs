@@ -37,7 +37,7 @@ namespace SOTS.Projectiles.Pyramid
 			Texture2D texture4 = Mod.Assets.Request<Texture2D>("Projectiles/Pyramid/RubyMonolithGlow").Value;
 			Rectangle frame = new Rectangle(0, Projectile.height * Projectile.frame, Projectile.width, Projectile.height);
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.25f);
-			float counter = Main.GlobalTime * 160;
+			float counter = Main.GlobalTimeWrappedHourly * 160;
 			float mult = new Vector2(-1f, 0).RotatedBy(MathHelper.ToRadians(counter)).X;
 			for (int i = 0; i < 6; i++)
 			{

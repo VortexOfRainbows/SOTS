@@ -18,7 +18,7 @@ namespace SOTS.Items.Furniture.Nature
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<NaturePlating>(), 4);
 			recipe.AddIngredient(ItemID.Torch, 4);
 			recipe.AddIngredient(ItemID.Chain, 1);

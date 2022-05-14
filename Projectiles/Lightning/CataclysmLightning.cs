@@ -123,7 +123,7 @@ namespace SOTS.Projectiles.Lightning
 				trailPos.Add(location + originalVelo.RotatedBy(MathHelper.ToRadians(Main.rand.Next(-defaultDeviation, defaultDeviation + 1))) * 1.5f);
 				int u = (int)location.X / 16;
 				int j = (int)location.Y / 16;
-				if (!WorldGen.InWorld(u, j, 20) || Main.tile[u, j].active() && Main.tileSolidTop[Main.tile[u, j].type] == false && Main.tileSolid[Main.tile[u, j].type] == true)
+				if (!WorldGen.InWorld(u, j, 20) || Main.tile[u, j].HasTile && Main.tileSolidTop[Main.tile[u, j].type] == false && Main.tileSolid[Main.tile[u, j].type] == true)
 				{
 					int dust = Dust.NewDust(new Vector2(location.X - 16, location.Y - 16), 24, 24, 107);
 					Main.dust[dust].scale *= 1f;

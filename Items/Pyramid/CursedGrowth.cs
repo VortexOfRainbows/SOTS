@@ -50,12 +50,12 @@ namespace SOTS.Items.Pyramid
 			name.SetDefault("Cursed Growth");
 			AddMapEntry(new Color(78, 55, 108), name);
 			disableSmartCursor = true;
-			dustType = DustID.GoldCoin;
-			animationFrameHeight = 36;
-			dustType = ModContent.DustType<CurseDust3>();
+			DustType = DustID.GoldCoin;
+			AnimationFrameHeight = 36;
+			DustType = ModContent.DustType<CurseDust3>();
 			soundType = SoundID.NPCHit;
 			soundStyle = 1;
-			mineResist = 0.1f;
+			MineResist = 0.1f;
 		}
         public override void NumDust(int i, int j, bool fail, ref int num)
         {

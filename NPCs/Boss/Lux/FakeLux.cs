@@ -25,14 +25,14 @@ namespace SOTS.NPCs.Boss.Lux
 		}
 		public override void SetDefaults()
 		{
-            npc.aiStyle = 0; 
-            npc.lifeMax = 10000;   
-            npc.damage = 80; 
-            npc.defense = 10;  
-            npc.knockBackResist = 0f;
-            npc.width = 70;
-            npc.height = 70;
-			Main.npcFrameCount[npc.type] = 1;  
+            NPC.aiStyle =0; 
+            NPC.lifeMax = 10000;   
+            NPC.damage = 80; 
+            NPC.defense = 10;  
+            NPC.knockBackResist = 0f;
+            NPC.width = 70;
+            NPC.height = 70;
+			Main.npcFrameCount[NPC.type] = 1;  
             npc.value = 0;
             npc.npcSlots = 1f;
 			npc.dontCountMe = true;
@@ -53,8 +53,8 @@ namespace SOTS.NPCs.Boss.Lux
         }
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
 		{
-			npc.lifeMax = 20000;
-			npc.damage = 140;
+			NPC.lifeMax = 20000;
+			NPC.damage = 140;
 		}
 		bool runOnce = true;
 		float rotationCounter = 0;
@@ -295,8 +295,8 @@ namespace SOTS.NPCs.Boss.Lux
 		}
         public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture = Main.npcTexture[npc.type];
-			Vector2 drawOrigin = new Vector2(Main.npcTexture[npc.type].Width * 0.5f, npc.height * 0.5f);
+			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Npc[npc.type].Value.Width * 0.5f, npc.height * 0.5f);
 			ChaosSpirit.DrawWings(MathHelper.Lerp(wingHeight, 40, wingHeightLerp), npc.ai[2], npc.rotation, npc.Center, npc.GetAlpha(illusionColor()));
 			if (!runOnce)
 				DrawRings(spriteBatch, false);

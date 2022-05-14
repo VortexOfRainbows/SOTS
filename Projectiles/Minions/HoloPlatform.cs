@@ -198,7 +198,7 @@ namespace SOTS.Projectiles.Minions
         }
 		public void UpdatePartnerPos()
 		{
-			for (int i = 0; i < Main.Projectile.Length; i++)
+			for (int i = 0; i < Main.projectile.Length; i++)
 			{
 				Projectile partner = Main.projectile[i];
 				if (partner.type == Projectile.type && partner.ai[0] == Projectile.ai[0] && partner.ai[1] == -Projectile.ai[1] && partner.owner == Projectile.owner)
@@ -279,7 +279,7 @@ namespace SOTS.Projectiles.Minions
 			}
 			if(SentryID == -1)
             {
-				for (int i = 0; i < Main.Projectile.Length; i++)
+				for (int i = 0; i < Main.projectile.Length; i++)
 				{
 					Projectile sentry = Main.projectile[i];
 					if (sentry.active && sentry.owner == Projectile.owner && sentry.sentry == true && sentry.timeLeft >= Projectile.SentryLifeTime - 6 && sentry.Center.X < Projectile.position.X + Projectile.width && sentry.Center.X > Projectile.position.X && sentry.whoAmI != Projectile.whoAmI && sentry.type != Projectile.type)
@@ -294,7 +294,7 @@ namespace SOTS.Projectiles.Minions
 			else
 			{
 				bool isPartners = false;
-				for (int i = 0; i < Main.Projectile.Length; i++)
+				for (int i = 0; i < Main.projectile.Length; i++)
 				{
 					Projectile partner = Main.projectile[i];
 					if (partner.type == Projectile.type && partner.ai[0] == Projectile.ai[0] && partner.ai[1] == -Projectile.ai[1] && partner.owner == Projectile.owner)

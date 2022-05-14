@@ -104,7 +104,7 @@ namespace SOTS.Items.Otherworld
 		{
 			int currentBlades = 0;
 
-			for (int i = 0; i < Main.Projectile.Length; i++)
+			for (int i = 0; i < Main.projectile.Length; i++)
 			{
 				Projectile proj = Main.projectile[i];
 				if (ModContent.ProjectileType<TwilightBlade>() == proj.type && proj.active && proj.owner == player.whoAmI && proj.timeLeft > 748)

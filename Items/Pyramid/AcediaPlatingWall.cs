@@ -29,7 +29,7 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(null, "AcediaPlating", 1);
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.SetResult(this, 4);
@@ -42,7 +42,7 @@ namespace SOTS.Items.Pyramid
 		{
 			Main.wallLargeFrames[Type] = (byte)2;
 			Main.wallHouse[Type] = true;
-			dustType = mod.DustType("AcedianDust");
+			DustType = mod.DustType("AcedianDust");
 			drop = mod.ItemType("AcediaPlatingWall");
 			AddMapEntry(new Color(180, 64, 170));
 		}
@@ -53,7 +53,7 @@ namespace SOTS.Items.Pyramid
 		{
 			Main.wallLargeFrames[Type] = (byte)2;
 			Main.wallHouse[Type] = false;
-			dustType = mod.DustType("AcedianDust");
+			DustType = mod.DustType("AcedianDust");
 			drop = mod.ItemType("AcediaPlatingWall");
 			AddMapEntry(new Color(180, 64, 170));
 		}

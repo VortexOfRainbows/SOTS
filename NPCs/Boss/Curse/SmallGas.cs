@@ -22,14 +22,14 @@ namespace SOTS.NPCs.Boss.Curse
 		}
 		public override void SetDefaults()
 		{
-            npc.aiStyle = 0; 
-            npc.lifeMax = 150;   
-            npc.damage = 45; 
-            npc.defense = 10;  
-            npc.knockBackResist = 0.5f;
-            npc.width = 45;
-            npc.height = 45;
-			Main.npcFrameCount[npc.type] = 1;  
+            NPC.aiStyle =0; 
+            NPC.lifeMax = 150;   
+            NPC.damage = 45; 
+            NPC.defense = 10;  
+            NPC.knockBackResist = 0.5f;
+            NPC.width = 45;
+            NPC.height = 45;
+			Main.npcFrameCount[NPC.type] = 1;  
             npc.value = 0;
             npc.npcSlots = 1f;
 			npc.dontCountMe = true;
@@ -89,7 +89,7 @@ namespace SOTS.NPCs.Boss.Curse
 								curse.foamParticleList1.Add(new CurseFoam(npc.Center, rotational, 1.55f, true));
 							}
 						}
-						PharaohsCurse.SpawnPassiveDust(Main.npcTexture[npc.type], npc.Center, 1.0f * npc.scale, foamParticleList1, 1, 0, 40, npc.rotation);
+						PharaohsCurse.SpawnPassiveDust(Terraria.GameContent.TextureAssets.Npc[npc.type].Value, npc.Center, 1.0f * npc.scale, foamParticleList1, 1, 0, 40, npc.rotation);
 						PharaohsCurse.SpawnPassiveDust(GetTexture("SOTS/NPCs/Boss/Curse/SmallGasFill"), npc.Center + new Vector2(0, 10), 1.0f * npc.scale, foamParticleList1, 1, 0, 100, npc.rotation);
 					}
 				}
@@ -237,7 +237,7 @@ namespace SOTS.NPCs.Boss.Curse
 				int num = 0;
 				while ((double)num < damage / (double)npc.lifeMax * 60.0)
 				{
-					Dust.NewDust(npc.position, npc.width, npc.height, mod.DustType("CurseDust"), (float)(2 * hitDirection), -2f);
+					Dust.NewDust(npc.position, npc.width, npc.height, ModContent.DustType<CurseDust>(), (float)(2 * hitDirection), -2f);
 					num++;
 				}
 			}
@@ -245,7 +245,7 @@ namespace SOTS.NPCs.Boss.Curse
 			{
 				for (int k = 0; k < 50; k++)
 				{
-					Dust.NewDust(npc.position, npc.width, npc.height, mod.DustType("CurseDust"), (float)(2 * hitDirection), -2f);
+					Dust.NewDust(npc.position, npc.width, npc.height, ModContent.DustType<CurseDust>(), (float)(2 * hitDirection), -2f);
 				}
 			}
 		}

@@ -72,7 +72,7 @@ namespace SOTS.Items.Otherworld.Furniture
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<AvaritianPlating>(), 10);
 			recipe.SetResult(this);
 			recipe.AddRecipe();
@@ -93,8 +93,8 @@ namespace SOTS.Items.Otherworld.Furniture
 			name.SetDefault("Hardlight Fabricator");
 			AddMapEntry(new Color(55, 55, 55), name);
 			disableSmartCursor = true;
-			dustType = ModContent.DustType<AvaritianDust>();
-			adjTiles = new int[] { TileID.WorkBenches };
+			DustType = ModContent.DustType<AvaritianDust>();
+			AdjTiles = new int[] { TileID.WorkBenches };
 		}
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
@@ -103,7 +103,7 @@ namespace SOTS.Items.Otherworld.Furniture
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
 		{
-			if (Main.tile[i, j].frameX < 18 || Main.tile[i, j].frameX > 35 || Main.tile[i, j].frameY % 36 < 18)
+			if (Main.tile[i, j].TileFrameX < 18 || Main.tile[i, j].TileFrameX > 35 || Main.tile[i, j].TileFrameY % 36 < 18)
 				return;
 
 			r = 0.25f;
@@ -112,12 +112,12 @@ namespace SOTS.Items.Otherworld.Furniture
 		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
 		{
-			float uniquenessCounter = Main.GlobalTime * -100 + (i + j) * 5;
+			float uniquenessCounter = Main.GlobalTimeWrappedHourly * -100 + (i + j) * 5;
 			Tile tile = Main.tile[i, j];
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/Furniture/HardlightFabricatorTileGlow").Value;
 			Rectangle frame = new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, 16);
 			Color color;
-			color = WorldGen.paintColor((int)Main.tile[i, j].color()) * (100f / 255f);
+			color = WorldGen.paintColor((int)Main.tile[i, j].TileColor) * (100f / 255f);
 			color.A = 0;
 			float alphaMult = 0.55f + 0.45f * (float)Math.Sin(MathHelper.ToRadians(uniquenessCounter));
 			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
@@ -135,50 +135,50 @@ namespace SOTS.Items.Otherworld.Furniture
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
 		{
 			int type = 0;
-			if (Main.tile[i, j].frameX >= 18 && Main.tile[i, j].frameX < 36 && Main.tile[i, j].frameY % 36 >= 18)
+			if (Main.tile[i, j].TileFrameX >= 18 && Main.tile[i, j].TileFrameX < 36 && Main.tile[i, j].TileFrameY % 36 >= 18)
 				type = 1;
-			if (Main.tile[i, j].frameX < 18 && Main.tile[i, j].frameY % 36 >= 18)
+			if (Main.tile[i, j].TileFrameX < 18 && Main.tile[i, j].TileFrameY % 36 >= 18)
 				type = 2;
-			if(Main.tile[i, j].frameX >= 36 && Main.tile[i, j].frameY % 36 >= 18)
+			if(Main.tile[i, j].TileFrameX >= 36 && Main.tile[i, j].TileFrameY % 36 >= 18)
 				type = 3;
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/Furniture/HardlightGearBorder").Value;
 			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Otherworld/Furniture/HardlightGearFill").Value;
 			Color color;
-			color = WorldGen.paintColor((int)Main.tile[i, j].color()) * (100f / 255f);
+			color = WorldGen.paintColor((int)Main.tile[i, j].TileColor) * (100f / 255f);
 			color.A = 0;
 			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
 			if (Main.drawToScreen)
 			{
 				zero = Vector2.Zero;
 			}
-			Vector2 dynamicAddition = new Vector2(3, 0).RotatedBy(MathHelper.ToRadians(Main.GlobalTime * 40));
+			Vector2 dynamicAddition = new Vector2(3, 0).RotatedBy(MathHelper.ToRadians(Main.GlobalTimeWrappedHourly * 40));
 			if(type == 1)
 				for (int k = 0; k < 5; k++)
 				{
 					Vector2 pos = new Vector2((float)(i * 16 - (int)Main.screenPosition.X) + 8, (float)(j * 16 - (int)Main.screenPosition.Y) + 8) + zero;
 					pos.Y -= 20 + dynamicAddition.Y;
 					if(k == 0)
-						Main.spriteBatch.Draw(texture2, pos, null, color * 0.5f, Main.GlobalTime * (i % 2 == 0 ? 1 : -1), new Vector2(13, 13), 0.8f, SpriteEffects.None, 0f);
+						Main.spriteBatch.Draw(texture2, pos, null, color * 0.5f, Main.GlobalTimeWrappedHourly * (i % 2 == 0 ? 1 : -1), new Vector2(13, 13), 0.8f, SpriteEffects.None, 0f);
 
-					Main.spriteBatch.Draw(texture, pos, null, color, Main.GlobalTime * (i % 2 == 0 ? 1 : -1), new Vector2(13, 13), 0.8f, SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture, pos, null, color, Main.GlobalTimeWrappedHourly * (i % 2 == 0 ? 1 : -1), new Vector2(13, 13), 0.8f, SpriteEffects.None, 0f);
 				}
 			if(type == 2)
 				for (int k = 0; k < 5; k++)
 				{
 					Vector2 pos = new Vector2((float)(i * 16 - (int)Main.screenPosition.X) + 8, (float)(j * 16 - (int)Main.screenPosition.Y) + 8) + zero;
 					if (k == 0)
-						Main.spriteBatch.Draw(texture2, pos, null, color * 0.5f, Main.GlobalTime, new Vector2(13, 13), 0.5f, SpriteEffects.None, 0f);
+						Main.spriteBatch.Draw(texture2, pos, null, color * 0.5f, Main.GlobalTimeWrappedHourly, new Vector2(13, 13), 0.5f, SpriteEffects.None, 0f);
 
-					Main.spriteBatch.Draw(texture, pos, null, color, Main.GlobalTime, new Vector2(13, 13), 0.5f, SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture, pos, null, color, Main.GlobalTimeWrappedHourly, new Vector2(13, 13), 0.5f, SpriteEffects.None, 0f);
 				}
 			if(type == 3)
 				for (int k = 0; k < 5; k++)
 				{
 					Vector2 pos = new Vector2((float)(i * 16 - (int)Main.screenPosition.X) + 8, (float)(j * 16 - (int)Main.screenPosition.Y) + 8) + zero;
 					if (k == 0)
-						Main.spriteBatch.Draw(texture2, pos, null, color * 0.5f, -Main.GlobalTime, new Vector2(13, 13), 0.5f, SpriteEffects.None, 0f);
+						Main.spriteBatch.Draw(texture2, pos, null, color * 0.5f, -Main.GlobalTimeWrappedHourly, new Vector2(13, 13), 0.5f, SpriteEffects.None, 0f);
 
-					Main.spriteBatch.Draw(texture, pos, null, color, -Main.GlobalTime, new Vector2(13, 13), 0.5f, SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture, pos, null, color, -Main.GlobalTimeWrappedHourly, new Vector2(13, 13), 0.5f, SpriteEffects.None, 0f);
 				}
 			return true;
 		}

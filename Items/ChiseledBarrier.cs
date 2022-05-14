@@ -34,7 +34,7 @@ namespace SOTS.Items
 			modPlayer.PushBack = true;
 			if(Main.myPlayer == player.whoAmI && !hideVisual)
 			{
-				int damage = SOTSPlayer.ApplyDamageClassModWithGeneric(player, DamageClass.Magic, Item.damage);s
+				int damage = SOTSPlayer.ApplyDamageClassModWithGeneric(player, DamageClass.Magic, Item.damage);
 				modPlayer.tPlanetDamage += damage;
 				modPlayer.tPlanetNum += 2;
 				modPlayer.aqueductDamage += damage;

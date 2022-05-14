@@ -16,7 +16,7 @@ namespace SOTS.Items.Otherworld.Blocks
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<DullPlating>(), 1);
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.SetResult(this, 4);
@@ -33,7 +33,7 @@ namespace SOTS.Items.Otherworld.Blocks
 		public override void SetDefaults()
 		{
 			Main.wallHouse[Type] = true;
-			dustType = ModContent.DustType<AvaritianDust>();
+			DustType = ModContent.DustType<AvaritianDust>();
 			drop = ModContent.ItemType<DullPlatingWall>();
 			AddMapEntry(new Color(44, 44, 44));
 		}
@@ -43,7 +43,7 @@ namespace SOTS.Items.Otherworld.Blocks
 		public override void SetDefaults()
 		{
 			Main.wallHouse[Type] = false;
-			dustType = ModContent.DustType<AvaritianDust>();
+			DustType = ModContent.DustType<AvaritianDust>();
 			drop = ModContent.ItemType<DullPlatingWall>();
 			AddMapEntry(new Color(44, 44, 44));
 		}

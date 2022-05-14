@@ -735,7 +735,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
             pinkied = false;
             bool hooked = false;
             bool darkArmed = false;
-            for (int i = 0; i < Main.Projectile.Length; i++)
+            for (int i = 0; i < Main.projectile.Length; i++)
             {
                 Projectile proj = Main.projectile[i];
                 if (proj.friendly && proj.active && proj.type == ProjectileType<Projectiles.Minions.FluxSlimeBall>())
@@ -1029,7 +1029,7 @@ namespace SOTS.NPCs.ArtificialDebuffs
                 for (int k = 0; k < max; k++)
                 {
                     float total = 3600f / max;
-                    float counter = (float)(Main.GlobalTime * 60);
+                    float counter = (float)(Main.GlobalTimeWrappedHourly * 60);
                     float length = dimensions;
                     Vector2 lengthMod = new Vector2(length / 24f, 0).RotatedBy(MathHelper.ToRadians(counter * 5));
                     Vector2 circularLength = new Vector2(length / 16f + lengthMod.X, 0).RotatedBy(MathHelper.ToRadians(k * total + counter * 2));

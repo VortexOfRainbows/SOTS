@@ -32,7 +32,7 @@ namespace SOTS.Items.Pyramid.AncientGold
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<RoyalGoldBrick>(), 6);
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.SetResult(this);
@@ -71,9 +71,9 @@ namespace SOTS.Items.Pyramid.AncientGold
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Ancient Gold Door");
 			AddMapEntry(new Color(220, 180, 25), name);
-			dustType = DustID.GoldCoin;
+			DustType = DustID.GoldCoin;
 			disableSmartCursor = true;
-			adjTiles = new int[] { TileID.ClosedDoor };
+			AdjTiles = new int[] { TileID.ClosedDoor };
 			openDoorID = mod.TileType("AncientGoldDoorOpen");
 		}
 		public override bool HasSmartInteract()
@@ -92,8 +92,8 @@ namespace SOTS.Items.Pyramid.AncientGold
 		{
 			Player player = Main.LocalPlayer;
 			player.noThrow = 2;
-			player.showItemIcon = true;
-			player.showItemIcon2 = ModContent.ItemType<AncientGoldDoor>();
+			player.cursorItemIconEnabled = true;
+			player.cursorItemIconID = ModContent.ItemType<AncientGoldDoor>();
 		}
 	}
 	public class AncientGoldDoorOpen : ModTile
@@ -149,9 +149,9 @@ namespace SOTS.Items.Pyramid.AncientGold
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Ancient Gold Door");
 			AddMapEntry(new Color(220, 180, 25), name);
-			dustType = DustID.GoldCoin;
+			DustType = DustID.GoldCoin;
 			disableSmartCursor = true;
-			adjTiles = new int[] { TileID.OpenDoor };
+			AdjTiles = new int[] { TileID.OpenDoor };
 			closeDoorID = mod.TileType("AncientGoldDoorClosed");
 		}
 		public override bool HasSmartInteract()
@@ -170,8 +170,8 @@ namespace SOTS.Items.Pyramid.AncientGold
 		{
 			Player player = Main.LocalPlayer;
 			player.noThrow = 2;
-			player.showItemIcon = true;
-			player.showItemIcon2 = ModContent.ItemType<AncientGoldDoor>();
+			player.cursorItemIconEnabled = true;
+			player.cursorItemIconID = ModContent.ItemType<AncientGoldDoor>();
 		}
 	}
 }

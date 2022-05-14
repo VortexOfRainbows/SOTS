@@ -204,7 +204,7 @@ namespace SOTS.Projectiles.Inferno
 			if (Main.myPlayer == player.whoAmI)
 			{
 				bool found = false;
-				for (int i = 0; i < Main.Projectile.Length; i++)
+				for (int i = 0; i < Main.projectile.Length; i++)
 				{
 					Projectile proj = Main.projectile[i];
 					if ((proj.type == Projectile.type || proj.modProjectile as WispMinion != null) && proj.active && Projectile.active && proj.owner == Projectile.owner)

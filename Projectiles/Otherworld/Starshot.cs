@@ -95,7 +95,7 @@ namespace SOTS.Projectiles.Otherworld
                     int i = (int)drawPos.X / 16;
                     int j = (int)drawPos.Y / 16;
                     spriteBatch.Draw(texture, drawPos - Main.screenPosition, null, color, rotation + MathHelper.ToRadians(90), new Vector2(texture.Width / 2, texture.Height / 2), Projectile.scale, SpriteEffects.None, 0f);
-                    if (!WorldGen.InWorld(i, j, 20) || Main.tile[i, j].active() && Main.tileSolidTop[Main.tile[i, j].type] == false && Main.tileSolid[Main.tile[i, j].type] == true)
+                    if (!WorldGen.InWorld(i, j, 20) || Main.tile[i, j].HasTile && Main.tileSolidTop[Main.tile[i, j ].TileType] == false && Main.tileSolid[Main.tile[i, j ].TileType] == true)
                     {
                         break;
                     }

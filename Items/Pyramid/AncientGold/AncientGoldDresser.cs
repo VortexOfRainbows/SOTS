@@ -29,7 +29,7 @@ namespace SOTS.Items.Pyramid.AncientGold
         }
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
+            Recipe recipe = new Recipe(mod);
             recipe.AddIngredient(ModContent.ItemType<RoyalGoldBrick>(), 16);
             recipe.AddTile(TileID.Sawmill);
             recipe.SetResult(this);
@@ -61,9 +61,9 @@ namespace SOTS.Items.Pyramid.AncientGold
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Ancient Gold Dresser");
             AddMapEntry(new Color(220, 180, 25), name);
-            dustType = DustID.GoldCoin;
+            DustType = DustID.GoldCoin;
             disableSmartCursor = true;
-            adjTiles = new int[] { TileID.Dressers };
+            AdjTiles = new int[] { TileID.Dressers };
             dresser = "Ancient Gold Dresser";
             dresserDrop = mod.ItemType("AncientGoldDresser");
         }
@@ -171,33 +171,33 @@ namespace SOTS.Items.Pyramid.AncientGold
                 top--;
             }
             int chestIndex = Chest.FindChest(left, top);
-            player.showItemIcon2 = -1;
+            player.cursorItemIconID = -1;
             if (chestIndex < 0)
             {
-                player.showItemIconText = Language.GetTextValue("LegacyDresserType.0");
+                player.cursorItemIconText = Language.GetTextValue("LegacyDresserType.0");
             }
             else
             {
                 if (Main.chest[chestIndex].name != "")
                 {
-                    player.showItemIconText = Main.chest[chestIndex].name;
+                    player.cursorItemIconText = Main.chest[chestIndex].name;
                 }
                 else
                 {
-                    player.showItemIconText = chest;
+                    player.cursorItemIconText = chest;
                 }
-                if (player.showItemIconText == chest)
+                if (player.cursorItemIconText == chest)
                 {
-                    player.showItemIcon2 = mod.ItemType("AncientGoldDresser");
-                    player.showItemIconText = "";
+                    player.cursorItemIconID = mod.ItemType("AncientGoldDresser");
+                    player.cursorItemIconText = "";
                 }
             }
             player.noThrow = 2;
-            player.showItemIcon = true;
-            if (player.showItemIconText == "")
+            player.cursorItemIconEnabled = true;
+            if (player.cursorItemIconText == "")
             {
-                player.showItemIcon = false;
-                player.showItemIcon2 = 0;
+                player.cursorItemIconEnabled = false;
+                player.cursorItemIconID = 0;
             }
         }
         public override void MouseOver(int i, int j)
@@ -212,32 +212,32 @@ namespace SOTS.Items.Pyramid.AncientGold
                 top--;
             }
             int num138 = Chest.FindChest(left, top);
-            player.showItemIcon2 = -1;
+            player.cursorItemIconID = -1;
             if (num138 < 0)
             {
-                player.showItemIconText = Language.GetTextValue("LegacyDresserType.0");
+                player.cursorItemIconText = Language.GetTextValue("LegacyDresserType.0");
             }
             else
             {
                 if (Main.chest[num138].name != "")
                 {
-                    player.showItemIconText = Main.chest[num138].name;
+                    player.cursorItemIconText = Main.chest[num138].name;
                 }
                 else
                 {
-                    player.showItemIconText = chest;
+                    player.cursorItemIconText = chest;
                 }
-                if (player.showItemIconText == chest)
+                if (player.cursorItemIconText == chest)
                 {
-                    player.showItemIcon2 = mod.ItemType("AncientGoldDresser");
-                    player.showItemIconText = "";
+                    player.cursorItemIconID = mod.ItemType("AncientGoldDresser");
+                    player.cursorItemIconText = "";
                 }
             }
             player.noThrow = 2;
-            player.showItemIcon = true;
+            player.cursorItemIconEnabled = true;
             if (Main.tile[Player.tileTargetX, Player.tileTargetY].frameY > 0)
             {
-                player.showItemIcon2 = ItemID.FamiliarShirt;
+                player.cursorItemIconID = ItemID.FamiliarShirt;
             }
         }
         public override void NumDust(int i, int j, bool fail, ref int num)

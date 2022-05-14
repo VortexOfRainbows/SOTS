@@ -30,19 +30,19 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ItemID.SandstoneBrick, 1);
 			recipe.AddTile(TileID.Autohammer);
 			recipe.SetResult(this, 1);
 			recipe.AddRecipe();
 			
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(ItemID.SandstoneBrick, 1);
 			recipe.AddTile(TileID.LunarCraftingStation);
 			recipe.SetResult(this, 1);
 			recipe.AddRecipe();
 			
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(this, 1);
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.SetResult(ItemID.SandstoneBrick, 1);
@@ -62,11 +62,11 @@ namespace SOTS.Items.Pyramid
 			Main.tileLighted[Type] = true;
 			drop = ModContent.ItemType<PyramidBrick>();
 			AddMapEntry(new Color(203, 191, 112));
-			mineResist = 1.0f;
-			minPick = 0;
+			MineResist = 1.0f;
+			MinPick = 0;
 			soundType = SoundID.Tink;
 			soundStyle = 2;
-			dustType = 32;
+			DustType = 32;
 		}
 	}
 }

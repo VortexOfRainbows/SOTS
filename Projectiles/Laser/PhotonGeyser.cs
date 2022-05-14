@@ -30,7 +30,7 @@ namespace SOTS.Projectiles.Laser
         {
             Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Laser/PhotonGeyser_Glow").Value;
             Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-            float counter = Main.GlobalTime * 160;
+            float counter = Main.GlobalTimeWrappedHourly * 160;
             //int bonus = (int)(counter / 360f);
             for (int i = 0; i < 6; i++)
             {

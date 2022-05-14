@@ -126,7 +126,7 @@ namespace SOTS.Items.Tools
 								{
 									if ((int)tiles[w] == TileID.ClosedDoor)
 									{
-										if (Main.tile[i, j - 1].type != (int)(tiles[w]))
+										if (Main.tile[i, j - 1].TileType != (int)(tiles[w]))
 											Main.tile[i, j - 1].active(false);
 										if (Main.tile[i, j - 2].type != (int)(tiles[w]))
 											Main.tile[i, j - 2].active(false);
@@ -188,7 +188,7 @@ namespace SOTS.Items.Tools
 					for (int i = pointX; i < distX; i++)
 					{
 						Tile checkingTile = Main.tile[i + (int)point1.X, j + (int)point1.Y];
-						double specialType = tile.TileType + (tile.slope() * 0.01) + (tile.halfBrick() ? 0.1 : 0); //This allows tile type to be stored as W in WWWW.XYZZZZ, slope to be stored as X in WWWW.XYZZZZ, and half brick as Y in WWWW.XYZZZZ;
+						double specialType = tile.TileType + (tile.Slope * 0.01) + (tile.TileType ? 0.1 : 0); //This allows tile type to be stored as W in WWWW.XYZZZZ, slope to be stored as X in WWWW.XYZZZZ, and half brick as Y in WWWW.XYZZZZ;
 
 						specialType += style * 0.01 * 0.0001; //this allows tile styles to be stored as Z in WWWW.XYZZZZ;
 						if (i >= _structure.GetLength(0) || j >= _structure.GetLength(1) || checkingTile.type != tile.TileType)
@@ -300,7 +300,7 @@ namespace SOTS.Items.Tools
 							anchor.X = i;
 							anchor.Y = j;
 						}
-						double specialType = tile.TileType + (tile.slope() * 0.01) + (tile.halfBrick() ? 0.1 : 0); //This allows tile type to be stored as W in WWWW.XYZZZZ, halfblock to be stored as X in WWWW.XYZZZZ, and slope as Y in WWWW.XYZZZZ;
+						double specialType = tile.TileType + (tile.Slope * 0.01) + (tile.TileType ? 0.1 : 0); //This allows tile type to be stored as W in WWWW.XYZZZZ, halfblock to be stored as X in WWWW.XYZZZZ, and slope as Y in WWWW.XYZZZZ;
 
 						TileObjectData tileData = TileObjectData.GetTileData(tile);
 						int style = 0;

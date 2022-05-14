@@ -43,7 +43,7 @@ namespace SOTS.Items.Celestial
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(null, "SanguiteBar", 15);
 			recipe.AddIngredient(ItemID.ChainGun, 1);
 			recipe.AddTile(TileID.MythrilAnvil);

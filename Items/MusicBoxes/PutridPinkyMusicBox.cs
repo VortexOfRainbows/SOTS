@@ -33,7 +33,7 @@ namespace SOTS.Items.MusicBoxes
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<PutridPinkyTrophy>(), 1);
 			recipe.AddIngredient(ItemID.MusicBox);
 			recipe.AddTile(TileID.HeavyWorkBench);
@@ -71,8 +71,8 @@ namespace SOTS.Items.MusicBoxes
 		{
 			Player player = Main.LocalPlayer;
 			player.noThrow = 2;
-			player.showItemIcon = true;
-			player.showItemIcon2 = ModContent.ItemType<PutridPinkyMusicBox>();
+			player.cursorItemIconEnabled = true;
+			player.cursorItemIconID = ModContent.ItemType<PutridPinkyMusicBox>();
 		}
 	}
 }

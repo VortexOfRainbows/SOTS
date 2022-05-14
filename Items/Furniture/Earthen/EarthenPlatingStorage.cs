@@ -26,7 +26,7 @@ namespace SOTS.Items.Furniture.Earthen
         }
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
+            Recipe recipe = new Recipe(mod);
             recipe.AddIngredient(ModContent.ItemType<EarthenPlating>(), 20);
             recipe.AddTile(TileID.Anvils);
             recipe.SetResult(this, 1);
@@ -54,11 +54,11 @@ namespace SOTS.Items.Furniture.Earthen
         }
         public override ushort GetMapOption(int i, int j)
         {
-            if (Main.tile[i, j].frameX < 36)
+            if (Main.tile[i, j].TileFrameX < 36)
                 return 0;
             return 1;
         }
-        public override bool IsLockedChest(int i, int j) => Main.tile[i, j].frameX / 36 == 1;
+        public override bool IsLockedChest(int i, int j) => Main.tile[i, j].TileFrameX / 36 == 1;
         protected override bool ManageLockedChest(Player player, int i, int j, int x, int y)
         {
             int key = ModContent.ItemType<OldKey>();
@@ -103,9 +103,9 @@ namespace SOTS.Items.Furniture.Earthen
 
             }
         }
-        public override bool UnlockChest(int i, int j, ref short frameXAdjustment, ref int dustType, ref bool manual)
+        public override bool UnlockChest(int i, int j, ref short frameXAdjustment, ref int DustType, ref bool manual)
         {
-            dustType = DustType;
+            DustType = DustType;
             return true;
         }
     }

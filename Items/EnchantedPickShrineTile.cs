@@ -1,5 +1,7 @@
 using Microsoft.Xna.Framework;
+using SOTS.Items.Tools;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -7,10 +9,11 @@ namespace SOTS.Items
 {
 	public class EnchantedPickShrineTile : ModTile
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
-		    mineResist = 0.01f;
-		    minPick = 0;
+		    MineResist = 0.01f;
+		    MinPick = 0;
+            DustType = 32;
             Main.tileNoFail[Type] = true;
             Main.tileSolid[Type] = false;
             Main.tileFrameImportant[Type] = true;
@@ -19,7 +22,6 @@ namespace SOTS.Items
             TileObjectData.newTile.StyleHorizontal = true;
             TileObjectData.newTile.StyleWrapLimit = 36;
             TileObjectData.addTile(Type);
-            dustType = 32;
             ModTranslation name = CreateMapEntryName();
 		    name.SetDefault("Pickaxe Shrine");		
 		    AddMapEntry(new Color(170, 150, 85), name);
@@ -30,16 +32,16 @@ namespace SOTS.Items
         {
              if(frameX == 0)
              {
-                Item.NewItem(i * 16, j * 16, 48, 48, mod.ItemType("EnchantedPickaxe"));
+                Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 48, ModContent.ItemType<EnchantedPickaxe>());
              }
         }
 	    public override bool CanExplode(int i, int j)
 		{
 			return true;
 		}
-    	public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height)
-		{
-			offsetY = 2;
+        public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY)
+        {
+            offsetY = 2;
         }
     }
 }

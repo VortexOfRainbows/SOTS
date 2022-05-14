@@ -19,14 +19,14 @@ namespace SOTS.Items.Furniture.Goopwood
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<Wormwood>(), 4);
 			recipe.AddIngredient(ItemID.PinkTorch, 1);
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.SetResult(this);
 			recipe.AddRecipe();
 			
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<Wormwood>(), 1);
 			recipe.AddIngredient(ItemID.PinkGel, 1);
 			recipe.SetResult(ItemID.PinkTorch, 5);

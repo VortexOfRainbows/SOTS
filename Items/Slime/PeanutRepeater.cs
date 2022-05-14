@@ -47,7 +47,7 @@ namespace SOTS.Items.Slime
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<DissolvingNature>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<CorrosiveGel>(), 20);
 			recipe.AddIngredient(ModContent.ItemType<Wormwood>(), 20);

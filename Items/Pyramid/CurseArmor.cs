@@ -49,7 +49,7 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<CursedMatter>(), 12);
 			recipe.AddRecipeGroup("SOTS:GemRobes", 1);
 			recipe.AddIngredient(ModContent.ItemType<RubyKeystone>(), 1);
@@ -101,7 +101,7 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<CursedMatter>(), 8);
 			recipe.AddIngredient(ModContent.ItemType<RoyalRubyShard>(), 20);
 			recipe.SetResult(this);

@@ -41,27 +41,27 @@ namespace SOTS.Items.Otherworld.Furniture
 			name = CreateMapEntryName(Name + "_Locked"); // With multiple map entries, you need unique translation keys.
 			name.SetDefault("Locked Skyware Chest");
 			AddMapEntry(new Color(233, 207, 94), name, MapChestName);
-			dustType = 116;
+			DustType = 116;
 			disableSmartCursor = true;
-			adjTiles = new int[] { TileID.Containers };
+			AdjTiles = new int[] { TileID.Containers };
 			chest = "Skyware Chest";
 			chestDrop = ItemID.SkywareChest;
 		}
 
 		public override ushort GetMapOption(int i, int j)
 		{
-			if (Main.tile[i, j].frameX < 36)
+			if (Main.tile[i, j].TileFrameX < 36)
 				return 0;
 			return 1;
 		}
 
 		public override bool HasSmartInteract() => true;
 
-		public override bool IsLockedChest(int i, int j) => Main.tile[i, j].frameX / 36 == 1;
+		public override bool IsLockedChest(int i, int j) => Main.tile[i, j].TileFrameX / 36 == 1;
 
-		public override bool UnlockChest(int i, int j, ref short frameXAdjustment, ref int dustType, ref bool manual)
+		public override bool UnlockChest(int i, int j, ref short frameXAdjustment, ref int DustType, ref bool manual)
 		{
-			dustType = this.dustType;
+			DustType = this.DustType;
 			return true;
 		}
 
@@ -207,34 +207,34 @@ namespace SOTS.Items.Otherworld.Furniture
 				top--;
 			}
 			int chest = Chest.FindChest(left, top);
-			player.showItemIcon2 = -1;
+			player.cursorItemIconID = -1;
 			if (chest < 0)
 			{
-				player.showItemIconText = Language.GetTextValue("LegacyChestType.0");
+				player.cursorItemIconText = Language.GetTextValue("LegacyChestType.0");
 			}
 			else
 			{
-				player.showItemIconText = Main.chest[chest].name.Length > 0 ? Main.chest[chest].name : "Skyware Chest";
-				if (player.showItemIconText == "Skyware Chest")
+				player.cursorItemIconText = Main.chest[chest].name.Length > 0 ? Main.chest[chest].name : "Skyware Chest";
+				if (player.cursorItemIconText == "Skyware Chest")
 				{
-					player.showItemIcon2 = ItemID.SkywareChest;
+					player.cursorItemIconID = ItemID.SkywareChest;
 					if (Main.tile[left, top].frameX / 36 == 1)
-						player.showItemIcon2 = ItemType<SkywareKey>();
-					player.showItemIconText = "";
+						player.cursorItemIconID = ItemType<SkywareKey>();
+					player.cursorItemIconText = "";
 				}
 			}
 			player.noThrow = 2;
-			player.showItemIcon = true;
+			player.cursorItemIconEnabled = true;
 		}
 
 		public override void MouseOverFar(int i, int j)
 		{
 			MouseOver(i, j);
 			Player player = Main.LocalPlayer;
-			if (player.showItemIconText == "")
+			if (player.cursorItemIconText == "")
 			{
-				player.showItemIcon = false;
-				player.showItemIcon2 = 0;
+				player.cursorItemIconEnabled = false;
+				player.cursorItemIconID = 0;
 			}
 		}
 	}

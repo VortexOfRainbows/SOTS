@@ -170,7 +170,7 @@ namespace SOTS.Projectiles.Pyramid
 			Projectile.velocity *= 0.94f;
 			if(mode != 2)
 			{
-				for (int i = 0; i < Main.Projectile.Length; i++)
+				for (int i = 0; i < Main.projectile.Length; i++)
 				{
 					Projectile proj = Main.projectile[i];
 					if (proj.type == mod.ProjectileType("SoulofLooting") && proj.active && (int)proj.ai[0] == Projectile.owner)

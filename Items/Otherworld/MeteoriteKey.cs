@@ -25,13 +25,13 @@ namespace SOTS.Items.Otherworld
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<SkywareKey>(), 1);
 			recipe.AddTile(mod.TileType("TransmutationAltarTile"));
 			recipe.SetResult(this, 1);
 			recipe.AddRecipe();
 
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<StrangeKey>(), 1);
 			recipe.AddTile(mod.TileType("TransmutationAltarTile"));
 			recipe.SetResult(this, 1);

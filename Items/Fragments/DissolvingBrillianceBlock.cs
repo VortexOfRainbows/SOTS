@@ -22,7 +22,7 @@ namespace SOTS.Items.Fragments
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<DissolvingBrilliance>(), 1);
 			recipe.SetResult(this, 20);
 			recipe.AddRecipe();
@@ -38,7 +38,7 @@ namespace SOTS.Items.Fragments
 			Main.tileLighted[Type] = true;
 			drop = ModContent.ItemType<DissolvingBrillianceBlock>();
 			AddMapEntry(color);
-			mineResist = 0.2f;
+			MineResist = 0.2f;
 			TileID.Sets.GemsparkFramingTypes[Type] = Type;
 		}
         public override void NumDust(int i, int j, bool fail, ref int num)
@@ -74,7 +74,7 @@ namespace SOTS.Items.Fragments
 			{
 				zero = Vector2.Zero;
 			}
-			float timer = (i + j) * 20 + Main.GlobalTime * 100;
+			float timer = (i + j) * 20 + Main.GlobalTimeWrappedHourly * 100;
 			float sinusoid = 0.5f + 0.5f * (float)Math.Sin(MathHelper.ToRadians(timer * 1.2f));
 			for (int side = 0; side < 8; side++)
 			{
@@ -129,10 +129,10 @@ namespace SOTS.Items.Fragments
 					{
 						Vector2 location = new Vector2(i * 16 + 8, j * 16 + 8);
 						//color = DissolvingBrillianceTile.color;
-						//if(Main.tile[i, j].color() != 0)
-						color = WorldGen.paintColor((int)Main.tile[i, j].color());
-						if (wall && Main.tile[i, j].wallColor() != 0)
-							color = WorldGen.paintColor((int)Main.tile[i, j].wallColor());
+						//if(Main.tile[i, j].TileColor != 0)
+						color = WorldGen.paintColor((int)Main.tile[i, j].TileColor);
+						if (wall && Main.tile[i, j].WallColor != 0)
+							color = WorldGen.paintColor((int)Main.tile[i, j].WallColor);
 						color = new Color(color.R, color.G, color.B, 0);
 						Vector2 circular = new Vector2(0, -20).RotatedBy(MathHelper.ToRadians(side * 45 + (k - 2) * 11.25f));
 						circular *= sinusoid;
@@ -146,19 +146,19 @@ namespace SOTS.Items.Fragments
 					}
 				}
 			}
-			if (Main.tileSolid[Main.tile[i, j].type] && !Main.tileSolidTop[Main.tile[i, j].type])
+			if (Main.tileSolid[Main.tile[i, j ].TileType] && !Main.tileSolidTop[Main.tile[i, j ].TileType])
 			{
 				//color = DissolvingBrillianceTile.color;
-				//if (Main.tile[i, j].color() != 0)
-				color = WorldGen.paintColor((int)Main.tile[i, j].color());
-				if (wall && Main.tile[i, j].wallColor() != 0)
-					color = WorldGen.paintColor((int)Main.tile[i, j].wallColor());
+				//if (Main.tile[i, j].TileColor != 0)
+				color = WorldGen.paintColor((int)Main.tile[i, j].TileColor);
+				if (wall && Main.tile[i, j].WallColor != 0)
+					color = WorldGen.paintColor((int)Main.tile[i, j].WallColor);
 				color = new Color(color.R, color.G, color.B, 0);
-				for (int l = 0; l < 7 - (Main.tile[i, j].inActive() ? 1 : 0); l++)
+				for (int l = 0; l < 7 - (Main.tile[i, j].IsActuated ? 1 : 0); l++)
 				{
 					float x = Main.rand.Next(-16, 17) * 0.1f;
 					float y = Main.rand.Next(-16, 17) * 0.1f;
-					if (Main.tile[i, j].inActive() && l < 4)
+					if (Main.tile[i, j].IsActuated && l < 4)
 					{
 						x = 0;
 						y = 0;
@@ -167,16 +167,16 @@ namespace SOTS.Items.Fragments
 					bool canDown = true;
 					bool canLeft = true;
 					bool canRight = true;
-					if (Main.tile[i, j - 1].active() && Main.tileSolid[Main.tile[i, j - 1].type])
+					if (Main.tile[i, j - 1].HasTile && Main.tileSolid[Main.tile[i, j - 1].TileType])
 						canUp = false;
 
-					if (Main.tile[i, j + 1].active() && Main.tileSolid[Main.tile[i, j + 1].type])
+					if (Main.tile[i, j + 1].HasTile && Main.tileSolid[Main.tile[i, j + 1].TileType])
 						canDown = false;
 
-					if (Main.tile[i + 1, j].active() && Main.tileSolid[Main.tile[i + 1, j].type])
+					if (Main.tile[i + 1, j].HasTile && Main.tileSolid[Main.tile[i + 1, j].TileType])
 						canRight = false;
 
-					if (Main.tile[i - 1, j].active() && Main.tileSolid[Main.tile[i - 1, j].type])
+					if (Main.tile[i - 1, j].HasTile && Main.tileSolid[Main.tile[i + 1, j].TileType])
 						canLeft = false;
 
 					if (!canUp && !canDown)
@@ -203,7 +203,7 @@ namespace SOTS.Items.Fragments
 						if (!canLeft)
 							x = Math.Abs(x);
 					}
-					Main.spriteBatch.Draw(textureBlock, new Vector2((float)(i * 16 - (int)Main.screenPosition.X) + x, (float)(j * 16 - (int)Main.screenPosition.Y) + y - 2) + zero, new Rectangle(0, 20 * (Main.tile[i, j].halfBrick() ? 1 : Main.tile[i, j].slope() > 0 ? Main.tile[i, j].slope() + 1 : 0), 16, 20), color, 0f, default, 1f, SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(textureBlock, new Vector2((float)(i * 16 - (int)Main.screenPosition.X) + x, (float)(j * 16 - (int)Main.screenPosition.Y) + y - 2) + zero, new Rectangle(0, 20 * (Main.tile[i, j].IsHalfBlock ? 1 : Main.tile[i, j].slope() > 0 ? Main.tile[i, j].slope() + 1 : 0), 16, 20), color, 0f, default, 1f, SpriteEffects.None, 0f);
 				}
 			}
 		}

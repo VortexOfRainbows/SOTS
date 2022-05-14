@@ -29,7 +29,7 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<SoulResidue>(), 32);
 			recipe.AddIngredient(ItemID.Emerald, 1);
 			recipe.AddRecipeGroup("SOTS:GoldBar", 8);

@@ -32,7 +32,7 @@ namespace SOTS.Items.Pyramid
         }
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<CursedMatter>(), 8);
 			recipe.AddIngredient(ItemID.Ruby, 1);
 			recipe.AddTile(TileID.Anvils);

@@ -54,7 +54,7 @@ namespace SOTS.Items.Otherworld.Blocks
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<TwilightGel>(), 2);
 			recipe.AddTile(ModContent.TileType<HardlightFabricatorTile>());
 			recipe.SetResult(this, 1);
@@ -73,11 +73,11 @@ namespace SOTS.Items.Otherworld.Blocks
 			Main.tileLighted[Type] = true;
 			drop = ModContent.ItemType<HardlightBlock>();
 			//AddMapEntry(new Color(0, 0, 0, 0));
-			mineResist = 1.0f;
-			minPick = 0;
+			MineResist = 1.0f;
+			MinPick = 0;
 			soundType = 3;
 			soundStyle = 53;
-			dustType = DustID.Electric;
+			DustType = DustID.Electric;
 		}
         public override bool KillSound(int i, int j)
 		{
@@ -91,7 +91,7 @@ namespace SOTS.Items.Otherworld.Blocks
 		}
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
 		{
-			if (!Main.tile[i + 1, j].active() || Main.tile[i + 1, j].type == Type || !Main.tileSolid[Main.tile[i + 1, j].type])
+			if (!Main.tile[i + 1, j].HasTile || Main.tile[i + 1, j].TileType == Type || !Main.tileSolid[Main.tile[i + 1, j].TileType])
 				Draw(i, j, spriteBatch);
 			return false;
 		}
@@ -142,7 +142,7 @@ namespace SOTS.Items.Otherworld.Blocks
             {
 				alphaScale *= 0.45f;
             }
-			Texture2D omega = Main.tileTexture[ModContent.TileType<HardlightBlockTile>()];
+			Texture2D omega = Terraria.GameContent.TextureAssets.Item[ModContent.TileType<HardlightBlockTile>()].Value;
 			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
 			if (Main.drawToScreen)
 			{
@@ -153,7 +153,7 @@ namespace SOTS.Items.Otherworld.Blocks
 			bool blockBelow = isHardlightBlock(i, j + 1);
 			for (int k = 0; k < 3 + 3 * alphaScale; k++)
 			{
-				Color color = WorldGen.paintColor(Main.tile[i, j].color()) * (160f * alphaScale / 255f);
+				Color color = WorldGen.paintColor(Main.tile[i, j].TileColor) * (160f * alphaScale / 255f);
 				color.A = 0;
 				if (k == 0) //sets up the middle part
 				{

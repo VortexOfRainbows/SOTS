@@ -46,7 +46,7 @@ namespace SOTS.Items.Crushers
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<Hellbreaker>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<WormWoodCollapse>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<CrabClaw>(), 1);

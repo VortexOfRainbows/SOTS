@@ -17,14 +17,14 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override void SetDefaults()
 		{
-			npc.aiStyle = 0;
-			npc.lifeMax = 300;  
-			npc.damage = 40; 
-			npc.defense = 14;  
-			npc.knockBackResist = 0.1f;
-			npc.width = 72;
-			npc.height = 74;
-			Main.npcFrameCount[npc.type] = 1;  
+			NPC.aiStyle =0;
+			NPC.lifeMax = 300;  
+			NPC.damage = 40; 
+			NPC.defense = 14;  
+			NPC.knockBackResist = 0.1f;
+			NPC.width = 72;
+			NPC.height = 74;
+			Main.npcFrameCount[NPC.type] = 1;  
 			npc.value = 9550;
 			npc.npcSlots = 4f;
 			npc.lavaImmune = true;
@@ -53,7 +53,7 @@ namespace SOTS.NPCs.Constructs
 				{
 					float x = Main.rand.Next(-10, 11) * 0.1f;
 					float y = Main.rand.Next(-10, 11) * 0.1f;
-					Main.spriteBatch.Draw(texture, new Vector2((float)(npc.Center.X - (int)Main.screenPosition.X) + x, (float)(npc.Center.Y - (int)Main.screenPosition.Y) + y + 2), new Rectangle(0, npc.frame.Y, npc.width, npc.height), color * ((255 - npc.alpha) / 255f), npc.rotation, drawOrigin, npc.scale, npc.spriteDirection == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture, new Vector2((float)(npc.Center.X - (int)Main.screenPosition.X) + x, (float)(npc.Center.Y - (int)Main.screenPosition.Y) + y + 2), new Rectangle(0, NPC.frame.Y, npc.width, npc.height), color * ((255 - npc.alpha) / 255f), npc.rotation, drawOrigin, npc.scale, npc.spriteDirection == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 				}
 		}
 		public override void HitEffect(int hitDirection, double damage)
@@ -172,7 +172,7 @@ namespace SOTS.NPCs.Constructs
 						{
 							int i = (int)locX / 16;
 							int j = (int)locY / 16;
-							if (Main.tileSolid[Main.tile[i, j].type] && Main.tile[i, j].active() && !Main.tileSolidTop[Main.tile[i, j].type])
+							if (Main.tileSolid[Main.tile[i, j ].TileType] && Main.tile[i, j].HasTile && !Main.tileSolidTop[Main.tile[i, j ].TileType])
 							{
 								locX = playerLoc.X + Main.rand.Next(-200, 201);
 								locY = playerLoc.Y + Main.rand.Next(-200, 201);
@@ -194,7 +194,7 @@ namespace SOTS.NPCs.Constructs
 					npc.ai[1] = 0;
 					npc.ai[0] = -90;
 					SoundEngine.PlaySound(SoundID.Item92, npc.Center);
-					for (int i = 0; i < Main.Projectile.Length; i++)
+					for (int i = 0; i < Main.projectile.Length; i++)
 					{
 						Projectile proj = Main.projectile[i];
 						if(proj.active && proj.type == mod.ProjectileType("OtherworldlyTracer") && proj.ai[1] == npc.whoAmI)

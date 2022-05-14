@@ -79,7 +79,7 @@ namespace SOTS.Items.CritBonus
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<FocusCrystal>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<EyeOfChaos>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<SanguiteBar>(), 10);
@@ -118,7 +118,7 @@ namespace SOTS.Items.CritBonus
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<CursedIcosahedron>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<SoulCharm>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<PhaseBar>(), 10);

@@ -53,12 +53,12 @@ namespace SOTS.Items.Earth
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Large Vibrant Shard");
 			AddMapEntry(new Color(156, 209, 46), name);
-			dustType = ModContent.DustType<VibrantDust>();
+			DustType = ModContent.DustType<VibrantDust>();
 			disableSmartCursor = true;
 			soundType = SoundID.Item;
 			soundStyle = 27;
-			minPick = 40;
-			mineResist = 0.1f;
+			MinPick = 40;
+			MineResist = 0.1f;
 		}
 		public override void NumDust(int i, int j, bool fail, ref int num)
 		{
@@ -81,7 +81,7 @@ namespace SOTS.Items.Earth
 			{
 				top--;
 			}
-			float uniquenessCounter = Main.GlobalTime * -100 + (left + top) * 5 + tile.TileFrameX + (left % 7 * 3) + (top % 7 * -2);
+			float uniquenessCounter = Main.GlobalTimeWrappedHourly * -100 + (left + top) * 5 + tile.TileFrameX + (left % 7 * 3) + (top % 7 * -2);
 			float alphaMult = 0.45f + 0.35f * (float)Math.Sin(MathHelper.ToRadians(uniquenessCounter));
 			r = 0.27f * alphaMult;
 			g = 0.33f * alphaMult;
@@ -105,7 +105,7 @@ namespace SOTS.Items.Earth
 			{
 				zero = Vector2.Zero;
 			}
-			Texture2D texture = Main.tileTexture[tile.TileType];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Item[tile.TileType].Value;
 			Vector2 drawOffSet = Vector2.Zero;
 			if (tile.TileFrameY < 36) //pointing up
 				drawOffSet.Y += 2;
@@ -121,7 +121,7 @@ namespace SOTS.Items.Earth
 			spriteBatch.Draw(texture, location + drawOffSet + zero - Main.screenPosition, frame, color2, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
 			if(i != left && j != top)
 			{
-				float uniquenessCounter = Main.GlobalTime * -100 + (left + top) * 5 + tile.TileFrameX + (left % 7 * 3) + (top % 7 * -2);
+				float uniquenessCounter = Main.GlobalTimeWrappedHourly * -100 + (left + top) * 5 + tile.TileFrameX + (left % 7 * 3) + (top % 7 * -2);
 				float alphaMult = 0.55f + 0.45f * (float)Math.Sin(MathHelper.ToRadians(uniquenessCounter));
 				for(int x = 0; x < 4; x++)
 				{

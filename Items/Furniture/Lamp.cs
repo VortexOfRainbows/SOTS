@@ -50,7 +50,7 @@ namespace SOTS.Items.Furniture
         }
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {
-            if (Main.tile[i, j].frameX == 0)
+            if (Main.tile[i, j].TileFrameX == 0)
             {
                 var v = LightClr;
                 r = v.X;

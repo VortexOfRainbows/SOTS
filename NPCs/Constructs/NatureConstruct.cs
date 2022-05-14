@@ -35,14 +35,14 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override void SetDefaults()
 		{
-			npc.aiStyle = 0;
-			npc.lifeMax = 125;  
-			npc.damage = 20; 
-			npc.defense = 6;  
-			npc.knockBackResist = 0.1f;
-			npc.width = 120;
-			npc.height = 70;
-			Main.npcFrameCount[npc.type] = 3;  
+			NPC.aiStyle =0;
+			NPC.lifeMax = 125;  
+			NPC.damage = 20; 
+			NPC.defense = 6;  
+			NPC.knockBackResist = 0.1f;
+			NPC.width = 120;
+			NPC.height = 70;
+			Main.npcFrameCount[NPC.type] = 3;  
 			npc.value = 3330;
 			npc.npcSlots = 3f;
 			npc.boss = false;
@@ -61,9 +61,9 @@ namespace SOTS.NPCs.Constructs
 			Texture2D texture2 = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Constructs/NatureConstructHeadGlow");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Vector2 drawPos = npc.Center - Main.screenPosition + new Vector2(0f, npc.gfxOffY);
-			if(npc.frame.Y == 70) //frame 2
+			if(NPC.frame.Y == 70) //frame 2
 				drawPos.Y -= 4;
-			if(npc.frame.Y == 140) //frame 3
+			if(NPC.frame.Y == 140) //frame 3
 				drawPos.Y -= 2;
 			bool flip = false;
 			Vector2 toPlayer = player.Center - npc.Center;
@@ -103,15 +103,15 @@ namespace SOTS.NPCs.Constructs
 			else if (speed <= 0.1f)
             {
 				speed = 0;
-				npc.frame.Y = 0;
+				NPC.frame.Y = 0;
             }
 			npc.frameCounter += speed;
 			if (npc.frameCounter > 10f) 
 			{
-				npc.frame.Y = (npc.frame.Y + frameHeight);
-				if(npc.frame.Y >= frameHeight * 3)
+				NPC.frame.Y = (NPC.frame.Y + frameHeight);
+				if(NPC.frame.Y >= frameHeight * 3)
 				{
-					npc.frame.Y = 0;
+					NPC.frame.Y = 0;
 				}
 				npc.frameCounter = 0;
 			}
@@ -184,7 +184,7 @@ namespace SOTS.NPCs.Constructs
 			}
 			if(npc.velocity.X == 0 && npc.velocity.Y == 0)
 			{
-				npc.aiStyle = 3;
+				NPC.aiStyle =3;
 				aiType = 73;
 				initiateSpeed = -1;
 			}

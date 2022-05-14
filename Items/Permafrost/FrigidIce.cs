@@ -18,9 +18,9 @@ namespace SOTS.Items.Permafrost
 			Main.tileShine[Type] = 1000;
 			Main.tileShine2[Type] = true;
 			Main.tileValue[Type] = 420; //above gold
-			minPick = 45; //requires silver to mine
-			mineResist = 0.5f;
-			dustType = ModContent.DustType<ModIceDust>();
+			MinPick = 45; //requires silver to mine
+			MineResist = 0.5f;
+			DustType = ModContent.DustType<ModIceDust>();
 			drop = ModContent.ItemType<FrigidIce>();
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Frigid Ore");
@@ -63,9 +63,9 @@ namespace SOTS.Items.Permafrost
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = false;
-			minPick = 45; //requires silver to mine
-			mineResist = 0.5f;
-			dustType = ModContent.DustType<ModIceDust>();
+			MinPick = 45; //requires silver to mine
+			MineResist = 0.5f;
+			DustType = ModContent.DustType<ModIceDust>();
 			drop = ModContent.ItemType<FrigidIce>();
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Frigid Ore");
@@ -105,7 +105,7 @@ namespace SOTS.Items.Permafrost
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = false;
 			Main.tileBlendAll[Type] = true;
-			dustType = ModContent.DustType<ModIceDust>();
+			DustType = ModContent.DustType<ModIceDust>();
 			drop = ModContent.ItemType<FrigidBrick>();
 			AddMapEntry(new Color(96, 111, 215));
 			soundType = SoundLoader.customSoundType;
@@ -122,7 +122,7 @@ namespace SOTS.Items.Permafrost
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<FrigidIce>(), 1);
 			recipe.AddIngredient(ItemID.IceBlock, 1);
 			recipe.AddTile(TileID.IceMachine);
@@ -135,7 +135,7 @@ namespace SOTS.Items.Permafrost
 		public override void SetDefaults()
 		{
 			Main.wallHouse[Type] = true;
-			dustType = 122;
+			DustType = 122;
 			drop = ModContent.ItemType<FrigidBrickWall>();
 			AddMapEntry(new Color(74, 85, 160));
 		}
@@ -157,13 +157,13 @@ namespace SOTS.Items.Permafrost
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<FrigidBrick>(), 1);
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.SetResult(this, 4);
 			recipe.AddRecipe();
 
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(this, 4);
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.SetResult(ModContent.ItemType<FrigidBrick>(), 1);

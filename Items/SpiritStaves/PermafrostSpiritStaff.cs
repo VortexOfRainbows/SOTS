@@ -43,7 +43,7 @@ namespace SOTS.Items.SpiritStaves
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<Fragments.DissolvingAurora>(), 1);
 			recipe.AddRecipeGroup("SOTS:SilverBar", 12);
 			recipe.AddIngredient(ModContent.ItemType<FrigidBar>(), 8);

@@ -55,7 +55,7 @@ namespace SOTS.Items.Chaos
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<PhaseBar>(), 24);
 			recipe.AddIngredient(ModContent.ItemType<PerfectStar>(), 1);
 			recipe.AddIngredient(ItemID.LaserMachinegun, 1);

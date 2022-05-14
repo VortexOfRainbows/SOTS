@@ -37,9 +37,9 @@ namespace SOTS.Items.Pyramid
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Pyramid Chest");
 			AddMapEntry(new Color(194,138,138), name, MapChestName);
-			dustType = 7;
+			DustType = 7;
 			disableSmartCursor = true;
-			adjTiles = new int[] { TileID.Containers };
+			AdjTiles = new int[] { TileID.Containers };
 			chest = "Pyramid Chest";
 			chestDrop = mod.ItemType("PyramidChest");
 		}
@@ -173,32 +173,32 @@ namespace SOTS.Items.Pyramid
 				top--;
 			}
 			int chest = Chest.FindChest(left, top);
-			player.showItemIcon2 = -1;
+			player.cursorItemIconID = -1;
 			if (chest < 0)
 			{
-				player.showItemIconText = Language.GetTextValue("LegacyChestType.0");
+				player.cursorItemIconText = Language.GetTextValue("LegacyChestType.0");
 			}
 			else
 			{
-				player.showItemIconText = Main.chest[chest].name.Length > 0 ? Main.chest[chest].name : "Pyramid Chest";
-				if (player.showItemIconText == "Pyramid Chest")
+				player.cursorItemIconText = Main.chest[chest].name.Length > 0 ? Main.chest[chest].name : "Pyramid Chest";
+				if (player.cursorItemIconText == "Pyramid Chest")
 				{
-					player.showItemIcon2 = mod.ItemType("PyramidChest");
-					player.showItemIconText = "";
+					player.cursorItemIconID = mod.ItemType("PyramidChest");
+					player.cursorItemIconText = "";
 				}
 			}
 			player.noThrow = 2;
-			player.showItemIcon = true;
+			player.cursorItemIconEnabled = true;
 		}
 
 		public override void MouseOverFar(int i, int j)
 		{
 			MouseOver(i, j);
 			Player player = Main.LocalPlayer;
-			if (player.showItemIconText == "")
+			if (player.cursorItemIconText == "")
 			{
-				player.showItemIcon = false;
-				player.showItemIcon2 = 0;
+				player.cursorItemIconEnabled = false;
+				player.cursorItemIconID = 0;
 			}
 		}
 	}

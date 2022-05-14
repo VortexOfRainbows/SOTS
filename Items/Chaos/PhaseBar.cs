@@ -52,7 +52,7 @@ namespace SOTS.Items.Chaos
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<PhaseOre>(), 30);
 			recipe.AddIngredient(ItemID.CrystalShard, 5);
 			recipe.AddIngredient(ModContent.ItemType<FragmentOfChaos>(), 1);

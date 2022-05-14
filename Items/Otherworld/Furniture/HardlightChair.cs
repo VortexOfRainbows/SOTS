@@ -67,7 +67,7 @@ namespace SOTS.Items.Otherworld.Furniture
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<AvaritianPlating>(), 4);
 			recipe.AddTile(ModContent.TileType<HardlightFabricatorTile>());
 			recipe.SetResult(this, 1);
@@ -78,14 +78,14 @@ namespace SOTS.Items.Otherworld.Furniture
 	{
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
 		{
-			if (Main.tile[i, j].frameY % 36 < 18) //make it only draw if correct frame to prevent extra iterations
+			if (Main.tile[i, j].TileFrameY % 36 < 18) //make it only draw if correct frame to prevent extra iterations
 				return;
-			float uniquenessCounter = Main.GlobalTime * -100 + (i + j) * 5;
+			float uniquenessCounter = Main.GlobalTimeWrappedHourly * -100 + (i + j) * 5;
 			Tile tile = Main.tile[i, j];
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/Furniture/HardlightChairTileGlow").Value;
 			Rectangle frame = new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, 16);
 			Color color;
-			color = WorldGen.paintColor((int)Main.tile[i, j].color()) * (100f / 255f);
+			color = WorldGen.paintColor((int)Main.tile[i, j].TileColor) * (100f / 255f);
 			color.A = 0;
 			float alphaMult = 0.55f + 0.45f * (float)Math.Sin(MathHelper.ToRadians(uniquenessCounter));
 			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
@@ -117,8 +117,8 @@ namespace SOTS.Items.Otherworld.Furniture
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsChair);
 			AddMapEntry(new Color(55, 55, 55));
 			disableSmartCursor = true;
-			dustType = ModContent.DustType<AvaritianDust>();
-			adjTiles = new int[] { TileID.Chairs };
+			DustType = ModContent.DustType<AvaritianDust>();
+			AdjTiles = new int[] { TileID.Chairs };
 		}
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
@@ -127,23 +127,23 @@ namespace SOTS.Items.Otherworld.Furniture
 		}
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
 		{
-			if (Main.tile[i, j].frameY < 18)
+			if (Main.tile[i, j].TileFrameY < 18)
 				return true;
 			SpriteEffects spriteEffects = SpriteEffects.None;
-			if (Main.tile[i, j].frameX < 18)
+			if (Main.tile[i, j].TileFrameX < 18)
 				spriteEffects = SpriteEffects.FlipHorizontally;
 
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/Furniture/HardlightChairOutline").Value;
 			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Otherworld/Furniture/HardlightChairFill").Value;
 			Color color;
-			color = WorldGen.paintColor((int)Main.tile[i, j].color()) * (100f / 255f);
+			color = WorldGen.paintColor((int)Main.tile[i, j].TileColor) * (100f / 255f);
 			color.A = 0;
 			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
 			if (Main.drawToScreen)
 			{
 				zero = Vector2.Zero;
 			}
-			Vector2 dynamicAddition = new Vector2(3f, 0).RotatedBy(MathHelper.ToRadians(Main.GlobalTime * 40));
+			Vector2 dynamicAddition = new Vector2(3f, 0).RotatedBy(MathHelper.ToRadians(Main.GlobalTimeWrappedHourly * 40));
 			for (int k = 0; k < 5; k++)
 			{
 				Vector2 pos = new Vector2((float)(i * 16 - (int)Main.screenPosition.X) + 8, (float)(j * 16 - (int)Main.screenPosition.Y) + 8) + zero;

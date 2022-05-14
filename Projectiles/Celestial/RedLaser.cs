@@ -249,7 +249,7 @@ namespace SOTS.Projectiles.Celestial
 				int i = (int)(position.X / 16);
 				int j =	(int)(position.Y / 16);
 				
-				if(Main.tile[i, j].active() && Main.tileSolidTop[Main.tile[i, j].type] == false && Main.tileSolid[Main.tile[i, j].type] == true)
+				if(Main.tile[i, j].HasTile && Main.tileSolidTop[Main.tile[i, j ].TileType] == false && Main.tileSolid[Main.tile[i, j ].TileType] == true)
 				{
 					break;
 				}
@@ -275,7 +275,7 @@ namespace SOTS.Projectiles.Celestial
 				Vector2 position = Projectile.Center + unit * Distance;	
 				int i = (int)(position.X / 16);
 				int j =	(int)(position.Y / 16);
-				if(Main.tile[i, j].active() && Main.tileSolidTop[Main.tile[i, j].type] == false && Main.tileSolid[Main.tile[i, j].type] == true)
+				if(Main.tile[i, j].HasTile && Main.tileSolidTop[Main.tile[i, j ].TileType] == false && Main.tileSolid[Main.tile[i, j ].TileType] == true)
 				{
 					Distance -= 6f;
 					break;

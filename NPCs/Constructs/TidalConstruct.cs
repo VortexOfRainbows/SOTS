@@ -38,14 +38,14 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override void SetDefaults()
 		{
-			npc.aiStyle = 0;
-			npc.lifeMax = 750;
-			npc.damage = 40;
-			npc.defense = 16;
-			npc.knockBackResist = 0f;
-			npc.width = 68;
-			npc.height = 62;
-			Main.npcFrameCount[npc.type] = 12;
+			NPC.aiStyle =0;
+			NPC.lifeMax = 750;
+			NPC.damage = 40;
+			NPC.defense = 16;
+			NPC.knockBackResist = 0f;
+			NPC.width = 68;
+			NPC.height = 62;
+			Main.npcFrameCount[NPC.type] = 12;
 			npc.value = 12550;
 			npc.npcSlots = 6f;
 			npc.lavaImmune = true;
@@ -59,8 +59,8 @@ namespace SOTS.NPCs.Constructs
 		}
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
-			npc.damage = 60;
-			npc.lifeMax = 1250;
+			NPC.damage = 60;
+			NPC.lifeMax = 1250;
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
@@ -212,10 +212,10 @@ namespace SOTS.NPCs.Constructs
 			if (npc.frameCounter >= 7.5f)
 			{
 				npc.frameCounter -= 7.5f;
-				npc.frame.Y += frame;
-				if (npc.frame.Y >= 12 * frame)
+				NPC.frame.Y += frame;
+				if (NPC.frame.Y >= 12 * frame)
 				{
-					npc.frame.Y = 0;
+					NPC.frame.Y = 0;
 				}
 			}
 		}

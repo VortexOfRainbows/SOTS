@@ -135,7 +135,7 @@ namespace SOTS.Projectiles.Otherworld
 			int ofTotal = 0;
 			int total = 0;
 			int projID = -1;
-			for (int i = 0; i < Main.Projectile.Length; i++)
+			for (int i = 0; i < Main.projectile.Length; i++)
 			{
 				Projectile proj = Main.projectile[i];
 				if (Projectile.type == proj.type && proj.active && Projectile.active && proj.owner == Projectile.owner && proj.ai[0] == Projectile.ai[0])

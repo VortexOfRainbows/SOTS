@@ -23,19 +23,11 @@ namespace SOTS.Items
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			player.meleeCrit += 6;
-			player.rangedCrit += 6;
-			player.magicCrit += 6;
-			player.thrownCrit += 6;
+			player.GetCritChance(DamageClass.Generic) += 6;
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<ShieldofDesecar>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<ShieldofStekpla>(), 1);
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient<ShieldofDesecar>(1).AddIngredient<ShieldofStekpla>(1).AddTile(TileID.TinkerersWorkbench).Register();
 		}
 	}
 }

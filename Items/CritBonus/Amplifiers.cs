@@ -29,7 +29,7 @@ namespace SOTS.Items.CritBonus
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ItemID.Amber, 5);
 			recipe.AddIngredient(ModContent.ItemType<FragmentOfOtherworld>(), 4);
 			recipe.AddTile(TileID.Anvils);
@@ -66,7 +66,7 @@ namespace SOTS.Items.CritBonus
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ItemID.Vertebrae, 5);
 			recipe.AddIngredient(ModContent.ItemType<AncientSteelBar>(), 8);
 			recipe.AddIngredient(ModContent.ItemType<FragmentOfEvil>(), 4);
@@ -104,7 +104,7 @@ namespace SOTS.Items.CritBonus
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ItemID.RottenChunk, 5);
 			recipe.AddIngredient(ModContent.ItemType<AncientSteelBar>(), 8);
 			recipe.AddIngredient(ModContent.ItemType<FragmentOfEvil>(), 4);
@@ -145,14 +145,14 @@ namespace SOTS.Items.CritBonus
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<PutridCoin>(), 1);
 			recipe.AddIngredient(ItemID.MedicatedBandage, 1);
 			recipe.AddTile(TileID.TinkerersWorkbench);
 			recipe.SetResult(this);
 			recipe.AddRecipe();
 
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<BloodstainedCoin>(), 1);
 			recipe.AddIngredient(ItemID.MedicatedBandage, 1);
 			recipe.AddTile(TileID.TinkerersWorkbench);
@@ -189,7 +189,7 @@ namespace SOTS.Items.CritBonus
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<PolishedCoin>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<OtherworldlyAmplifier>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<DissolvingNether>(), 1);

@@ -29,14 +29,14 @@ namespace SOTS
 		public static bool CanExplodeTile(int i, int j)
 		{
 			bool canKillTile = true;
-			if (Main.tile[i, j] != null && Main.tile[i, j].active())
+			if (Main.tile[i, j] != null && Main.tile[i, j].HasTile)
 			{
 				canKillTile = true;
-				if (Main.tileDungeon[(int)Main.tile[i, j].type] || Main.tile[i, j].type == 88 || Main.tile[i, j].type == 21 || Main.tile[i, j].type == 26 || Main.tile[i, j].type == 107 || Main.tile[i, j].type == 108 || Main.tile[i, j].type == 111 || Main.tile[i, j].type == 226 || Main.tile[i, j].type == 237 || Main.tile[i, j].type == 221 || Main.tile[i, j].type == 222 || Main.tile[i, j].type == 223 || Main.tile[i, j].type == 211 || Main.tile[i, j].type == 404)
+				if (Main.tileDungeon[(int)Main.tile[i, j ].TileType] || Main.tile[i, j ].TileType == 88 || Main.tile[i, j ].TileType == 21 || Main.tile[i, j ].TileType == 26 || Main.tile[i, j ].TileType == 107 || Main.tile[i, j ].TileType == 108 || Main.tile[i, j ].TileType == 111 || Main.tile[i, j ].TileType == 226 || Main.tile[i, j ].TileType == 237 || Main.tile[i, j ].TileType == 221 || Main.tile[i, j ].TileType == 222 || Main.tile[i, j ].TileType == 223 || Main.tile[i, j ].TileType == 211 || Main.tile[i, j ].TileType == 404)
 				{
 					canKillTile = false;
 				}
-				if (!Main.hardMode && Main.tile[i, j].type == 58)
+				if (!Main.hardMode && Main.tile[i, j ].TileType == 58)
 				{
 					canKillTile = false;
 				}
@@ -49,11 +49,11 @@ namespace SOTS
 		}
 		public static bool TrueTileSolid(int i, int j)
 		{
-			return (!WorldGen.InWorld(i, j, 20) || Main.tile[i, j].active() && Main.tileSolidTop[Main.tile[i, j].type] == false && Main.tileSolid[Main.tile[i, j].type] == true && Main.tile[i, j].nactive());
+			return (!WorldGen.InWorld(i, j, 20) || Main.tile[i, j].HasTile && Main.tileSolidTop[Main.tile[i, j ].TileType] == false && Main.tileSolid[Main.tile[i, j ].TileType] == true && Main.tile[i, j].nactive());
 		}
 		public static bool TileTopCapable(int i, int j)
 		{
-			return (!WorldGen.InWorld(i, j, 20) || Main.tile[i, j].active() && (Main.tileSolidTop[Main.tile[i, j].type] || Main.tileSolid[Main.tile[i, j].type]) && Main.tile[i, j].nactive());
+			return (!WorldGen.InWorld(i, j, 20) || Main.tile[i, j].HasTile && (Main.tileSolidTop[Main.tile[i, j ].TileType] || Main.tileSolid[Main.tile[i, j ].TileType]) && Main.tile[i, j].nactive());
 		}
 		public static void GenerateAcediaRoom(int x, int y, Mod mod, int direction = 1)
 		{
@@ -8099,9 +8099,9 @@ namespace SOTS
 						}
 						else
 						{
-							if (Main.tile[k, l].type == ModContent.TileType<VibrantOreTile>() && Main.tile[k, l].active() && Main.tile[k, l].slope() == 0 && !Main.tile[k, l].halfBrick())
+							if (Main.tile[k, l].type == ModContent.TileType<VibrantOreTile>() && Main.tile[k, l].HasTile && Main.tile[k, l].slope() == 0 && !Main.tile[k, l].IsHalfBlock)
 							{
-								bool oneSideIsClear = !Main.tile[k - 1, l].active() || !Main.tile[k + 1, l].active() || !Main.tile[k, l + 1].active() || !Main.tile[k, l - 1].active();
+								bool oneSideIsClear = !Main.tile[k - 1, l].HasTile || !Main.tile[k + 1, l].HasTile || !Main.tile[k, l + 1].HasTile || !Main.tile[k, l - 1].HasTile;
 								if (oneSideIsClear)
 									for (int i = 0; i < 3; i++)
 										if (SOTSTile.GenerateVibrantCrystal(k, l)) break;
@@ -8126,26 +8126,26 @@ namespace SOTS
 			{
 				for (int j = startY; j <= endY; j++)
 				{
-					if ((whitelist == Main.tile[i,j].type) || (whitelist == -1 && Main.tile[i, j].type != 48 && Main.tile[i, j].type != 137 &&
-						Main.tile[i, j].type != 232 && Main.tile[i, j].type != 191 &&
-						Main.tile[i, j].type != 151 && Main.tile[i, j].type != 274))
+					if ((whitelist == Main.tile[i,j].type) || (whitelist == -1 && Main.tile[i, j ].TileType != 48 && Main.tile[i, j ].TileType != 137 &&
+						Main.tile[i, j ].TileType != 232 && Main.tile[i, j ].TileType != 191 &&
+						Main.tile[i, j ].TileType != 151 && Main.tile[i, j ].TileType != 274))
 					{
-						if (!Main.tile[i, j - 1].active())
+						if (!Main.tile[i, j - 1].HasTile)
 						{
 							if (WorldGen.SolidTile(i, j) &&
-								TileID.Sets.CanBeClearedDuringGeneration[Main.tile[i, j].type])
+								TileID.Sets.CanBeClearedDuringGeneration[Main.tile[i, j ].TileType])
 							{
-								if (!Main.tile[i - 1, j].halfBrick() &&
-									!Main.tile[i + 1, j].halfBrick() &&
+								if (!Main.tile[i - 1, j].IsHalfBlock &&
+									!Main.tile[i + 1, j].IsHalfBlock &&
 									Main.tile[i - 1, j].slope() == 0 &&
 									Main.tile[i + 1, j].slope() == 0)
 								{
 									if (WorldGen.SolidTile(i, j + 1))
 									{
 										if (!WorldGen.SolidTile(i - 1, j) &&
-											!Main.tile[i - 1, j + 1].halfBrick() &&
+											!Main.tile[i - 1, j + 1].IsHalfBlock &&
 											WorldGen.SolidTile(i - 1, j + 1) && WorldGen.SolidTile(i + 1, j) &&
-											!Main.tile[i + 1, j - 1].active())
+											!Main.tile[i + 1, j - 1].HasTile)
 										{
 											if (WorldGen.genRand.Next(2) == 0)
 											{
@@ -8157,9 +8157,9 @@ namespace SOTS
 											}
 										}
 										else if (!WorldGen.SolidTile(i + 1, j) &&
-												 !Main.tile[i + 1, j + 1].halfBrick() &&
+												 !Main.tile[i + 1, j + 1].IsHalfBlock &&
 												 WorldGen.SolidTile(i + 1, j + 1) && WorldGen.SolidTile(i - 1, j) &&
-												 !Main.tile[i - 1, j - 1].active())
+												 !Main.tile[i - 1, j - 1].HasTile)
 										{
 											if (WorldGen.genRand.Next(2) == 0)
 											{
@@ -8172,8 +8172,8 @@ namespace SOTS
 										}
 										else if (WorldGen.SolidTile(i + 1, j + 1) &&
 												 WorldGen.SolidTile(i - 1, j + 1) &&
-												 !Main.tile[i + 1, j].active() &&
-												 !Main.tile[i - 1, j].active())
+												 !Main.tile[i + 1, j].HasTile &&
+												 !Main.tile[i - 1, j].HasTile)
 										{
 											WorldGen.PoundTile(i, j);
 										}
@@ -8181,22 +8181,22 @@ namespace SOTS
 										if (WorldGen.SolidTile(i, j))
 										{
 											if (WorldGen.SolidTile(i - 1, j) && WorldGen.SolidTile(i + 1, j + 2) &&
-												!Main.tile[i + 1, j].active() &&
-												!Main.tile[i + 1, j + 1].active() &&
-												!Main.tile[i - 1, j - 1].active())
+												!Main.tile[i + 1, j].HasTile &&
+												!Main.tile[i + 1, j + 1].HasTile &&
+												!Main.tile[i - 1, j - 1].HasTile)
 											{
 												DespawnTile(i, j);
 											}
 											else if (WorldGen.SolidTile(i + 1, j) &&
 													 WorldGen.SolidTile(i - 1, j + 2) &&
-													 !Main.tile[i - 1, j].active() &&
-													 !Main.tile[i - 1, j + 1].active() &&
-													 !Main.tile[i + 1, j - 1].active())
+													 !Main.tile[i - 1, j].HasTile &&
+													 !Main.tile[i - 1, j + 1].HasTile &&
+													 !Main.tile[i + 1, j - 1].HasTile)
 											{
 												DespawnTile(i, j);
 											}
-											else if (!Main.tile[i - 1, j + 1].active() &&
-													 !Main.tile[i - 1, j].active() &&
+											else if (!Main.tile[i - 1, j + 1].HasTile &&
+													 !Main.tile[i - 1, j].HasTile &&
 													 WorldGen.SolidTile(i + 1, j) && WorldGen.SolidTile(i, j + 2))
 											{
 												if (WorldGen.genRand.Next(5) == 0)
@@ -8212,8 +8212,8 @@ namespace SOTS
 													WorldGen.SlopeTile(i, j, 2);
 												}
 											}
-											else if (!Main.tile[i + 1, j + 1].active() &&
-													 !Main.tile[i + 1, j].active() &&
+											else if (!Main.tile[i + 1, j + 1].HasTile &&
+													 !Main.tile[i + 1, j].HasTile &&
 													 WorldGen.SolidTile(i - 1, j) && WorldGen.SolidTile(i, j + 2))
 											{
 												if (WorldGen.genRand.Next(5) == 0)
@@ -8232,23 +8232,23 @@ namespace SOTS
 										}
 									}
 
-									if (WorldGen.SolidTile(i, j) && !Main.tile[i - 1, j].active() &&
-										!Main.tile[i + 1, j].active())
+									if (WorldGen.SolidTile(i, j) && !Main.tile[i - 1, j].HasTile &&
+										!Main.tile[i + 1, j].HasTile)
 									{
 										DespawnTile(i, j);
 									}
 								}
 							}
-							else if (!Main.tile[i, j].active() && Main.tile[i, j + 1].type != 151 &&
-									 Main.tile[i, j + 1].type != 274)
+							else if (!Main.tile[i, j].HasTile && Main.tile[i, j + 1].TileType != 151 &&
+									 Main.tile[i, j + 1].TileType != 274)
 							{
-								if (Main.tile[i + 1, j].type != 190 &&
-									Main.tile[i + 1, j].type != 48 &&
-									Main.tile[i + 1, j].type != 232 && WorldGen.SolidTile(i - 1, j + 1) &&
-									WorldGen.SolidTile(i + 1, j) && !Main.tile[i - 1, j].active() &&
-									!Main.tile[i + 1, j - 1].active())
+								if (Main.tile[i + 1, j].TileType != 190 &&
+									Main.tile[i + 1, j].TileType != 48 &&
+									Main.tile[i + 1, j].TileType != 232 && WorldGen.SolidTile(i - 1, j + 1) &&
+									WorldGen.SolidTile(i + 1, j) && !Main.tile[i - 1, j].HasTile &&
+									!Main.tile[i + 1, j - 1].HasTile)
 								{
-									WorldGen.PlaceTile(i, j, Main.tile[i, j + 1].type, false, false, -1, 0);
+									WorldGen.PlaceTile(i, j, Main.tile[i, j + 1].TileType, false, false, -1, 0);
 									if (WorldGen.genRand.Next(2) == 0)
 									{
 										WorldGen.SlopeTile(i, j, 2);
@@ -8259,13 +8259,13 @@ namespace SOTS
 									}
 								}
 
-								if (Main.tile[i - 1, j].type != 190 &&
-									Main.tile[i - 1, j].type != 48 &&
-									Main.tile[i - 1, j].type != 232 && WorldGen.SolidTile(i + 1, j + 1) &&
-									WorldGen.SolidTile(i - 1, j) && !Main.tile[i + 1, j].active() &&
-									!Main.tile[i - 1, j - 1].active())
+								if (Main.tile[i + 1, j].TileType != 190 &&
+									Main.tile[i + 1, j].TileType != 48 &&
+									Main.tile[i + 1, j].TileType != 232 && WorldGen.SolidTile(i + 1, j + 1) &&
+									WorldGen.SolidTile(i - 1, j) && !Main.tile[i + 1, j].HasTile &&
+									!Main.tile[i - 1, j - 1].HasTile)
 								{
-									WorldGen.PlaceTile(i, j, Main.tile[i, j + 1].type, false, false, -1, 0);
+									WorldGen.PlaceTile(i, j, Main.tile[i, j + 1].TileType, false, false, -1, 0);
 									if (WorldGen.genRand.Next(2) == 0)
 									{
 										WorldGen.SlopeTile(i, j, 1);
@@ -8277,9 +8277,9 @@ namespace SOTS
 								}
 							}
 						}
-						else if (!Main.tile[i, j + 1].active() && WorldGen.genRand.Next(2) == 0 &&
-								 WorldGen.SolidTile(i, j) && !Main.tile[i - 1, j].halfBrick() &&
-								 !Main.tile[i + 1, j].halfBrick() &&
+						else if (!Main.tile[i, j + 1].HasTile && WorldGen.genRand.Next(2) == 0 &&
+								 WorldGen.SolidTile(i, j) && !Main.tile[i - 1, j].IsHalfBlock &&
+								 !Main.tile[i + 1, j].IsHalfBlock &&
 								 Main.tile[i - 1, j].slope() == 0 &&
 								 Main.tile[i + 1, j].slope() == 0 && WorldGen.SolidTile(i, j - 1))
 						{
@@ -8295,7 +8295,7 @@ namespace SOTS
 							}
 						}
 
-						if (TileID.Sets.Conversion.Sand[Main.tile[i, j].type])
+						if (TileID.Sets.Conversion.Sand[Main.tile[i, j ].TileType])
 						{
 							Tile.SmoothSlope(i, j, false);
 						}
@@ -8306,24 +8306,24 @@ namespace SOTS
 			{
 				for (int j = startY; j <= endY; j++)
 				{
-					bool canRun = WorldGen.genRand.Next(2) == 0 && !Main.tile[i, j - 1].active() && WorldGen.SolidTile(i, j);
-					if (canRun && ((whitelist == Main.tile[i, j].type) || 
-						(whitelist == -1 && Main.tile[i, j].type != 137 && 
-						Main.tile[i, j].type != 48 &&
-						Main.tile[i, j].type != 232 && Main.tile[i, j].type != 191 &&
-						Main.tile[i, j].type != 151 && Main.tile[i, j].type != 274 &&
-						Main.tile[i, j].type != 75 && Main.tile[i, j].type != 76 &&
-						Main.tile[i - 1, j].type != 137 &&
-						Main.tile[i + 1, j].type != 137)))
+					bool canRun = WorldGen.genRand.Next(2) == 0 && !Main.tile[i, j - 1].HasTile && WorldGen.SolidTile(i, j);
+					if (canRun && ((whitelist == Main.tile[i, j ].TileType) || 
+						(whitelist == -1 && Main.tile[i, j ].TileType != 137 && 
+						Main.tile[i, j ].TileType != 48 &&
+						Main.tile[i, j ].TileType != 232 && Main.tile[i, j ].TileType != 191 &&
+						Main.tile[i, j ].TileType != 151 && Main.tile[i, j ].TileType != 274 &&
+						Main.tile[i, j ].TileType != 75 && Main.tile[i, j ].TileType != 76 &&
+						Main.tile[i + 1, j].TileType != 137 &&
+						Main.tile[i + 1, j].TileType != 137)))
 					{
 						if (WorldGen.SolidTile(i, j + 1) && WorldGen.SolidTile(i + 1, j) &&
-							!Main.tile[i - 1, j].active())
+							!Main.tile[i - 1, j].HasTile)
 						{
 							WorldGen.SlopeTile(i, j, 2);
 						}
 
 						if (WorldGen.SolidTile(i, j + 1) && WorldGen.SolidTile(i - 1, j) &&
-							!Main.tile[i + 1, j].active())
+							!Main.tile[i + 1, j].HasTile)
 						{
 							WorldGen.SlopeTile(i, j, 1);
 						}

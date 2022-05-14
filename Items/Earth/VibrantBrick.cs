@@ -27,7 +27,7 @@ namespace SOTS.Items.Earth
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<VibrantOre>(), 1);
 			recipe.AddIngredient(ItemID.StoneBlock, 1);
 			recipe.AddTile(TileID.Furnaces);
@@ -51,10 +51,10 @@ namespace SOTS.Items.Earth
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Vibrant Brick");
 			AddMapEntry(new Color(181, 220, 97), name);
-			mineResist = 1.0f;
+			MineResist = 1.0f;
 			soundType = SoundID.Tink;
 			soundStyle = 2;
-			dustType = ModContent.DustType<VibrantDust>();
+			DustType = ModContent.DustType<VibrantDust>();
 		}
 		public bool canGlow(int i, int j)
 		{

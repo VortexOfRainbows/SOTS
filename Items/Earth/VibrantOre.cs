@@ -49,11 +49,11 @@ namespace SOTS.Items.Earth
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Vibrant Ore");
 			AddMapEntry(new Color(123, 166, 36), name);
-			mineResist = 1.0f;
-			minPick = 40; //no copper/tin pickaxe!
+			MineResist = 1.0f;
+			MinPick = 40; //no copper/tin pickaxe!
 			soundType = SoundID.Tink;
 			soundStyle = 2;
-			dustType = ModContent.DustType<VibrantDust>();
+			DustType = ModContent.DustType<VibrantDust>();
 		}
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
 		{
@@ -84,7 +84,7 @@ namespace SOTS.Items.Earth
 			AddMapEntry(new Color(156, 209, 46), name);
 			soundType = SoundID.Item;
 			soundStyle = 27;
-			dustType = ModContent.DustType<VibrantDust>();
+			DustType = ModContent.DustType<VibrantDust>();
 		}
         public override bool Drop(int i, int j)
         {
@@ -106,7 +106,7 @@ namespace SOTS.Items.Earth
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
 		{
 			Tile tile = Main.tile[i, j];
-			float uniquenessCounter = Main.GlobalTime * -100 + (i + j) * 5 + tile.TileFrameX + (i % 7 * 3) + (j % 7 * -2);
+			float uniquenessCounter = Main.GlobalTimeWrappedHourly * -100 + (i + j) * 5 + tile.TileFrameX + (i % 7 * 3) + (j % 7 * -2);
 			float alphaMult = 0.35f + 0.25f * (float)Math.Sin(MathHelper.ToRadians(uniquenessCounter));
 			r = 0.27f * alphaMult;
 			g = 0.33f * alphaMult;
@@ -120,7 +120,7 @@ namespace SOTS.Items.Earth
 			{
 				zero = Vector2.Zero;
 			}
-			Texture2D texture = Main.tileTexture[tile.TileType];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Item[tile.TileType].Value;
 			Vector2 drawOffSet = Vector2.Zero;
 			if (tile.TileFrameY == 0) //below is active
 				drawOffSet.Y += 2;
@@ -134,7 +134,7 @@ namespace SOTS.Items.Earth
 			Color color2 = Lighting.GetColor(i, j, WorldGen.paintColor(tile.color()));
 			Rectangle frame = new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, 16);
 			spriteBatch.Draw(texture, location + zero - Main.screenPosition, frame, color2, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
-			float uniquenessCounter = Main.GlobalTime * -100 + (i + j) * 5 + tile.TileFrameX + (i % 7 * 3) + (j % 7 * -2);
+			float uniquenessCounter = Main.GlobalTimeWrappedHourly * -100 + (i + j) * 5 + tile.TileFrameX + (i % 7 * 3) + (j % 7 * -2);
 			float alphaMult = 0.55f + 0.45f * (float)Math.Sin(MathHelper.ToRadians(uniquenessCounter));
 			for (int k = 0; k < 2; k++)
 			{
@@ -151,19 +151,19 @@ namespace SOTS.Items.Earth
 			bool flag = true;
 			if (RoyalRubyShardTile.TileIsCapable(i, j + 1)) //checks if below tile is active
 			{
-				Main.tile[i, j].frameY = 0;
+				Main.tile[i, j].TileFrameY = 0;
 			}
 			else if (RoyalRubyShardTile.TileIsCapable(i - 1, j)) //checks if left tile is active
 			{
-				Main.tile[i, j].frameY = 54;
+				Main.tile[i, j].TileFrameY = 54;
 			}
 			else if (RoyalRubyShardTile.TileIsCapable(i + 1, j)) //checks if right tile is active
 			{
-				Main.tile[i, j].frameY = 36;
+				Main.tile[i, j].TileFrameY = 36;
 			}
 			else if (RoyalRubyShardTile.TileIsCapable(i, j - 1)) //checks if above tile is active
 			{
-				Main.tile[i, j].frameY = 18;
+				Main.tile[i, j].TileFrameY = 18;
 			}
 			else
 			{
@@ -171,7 +171,7 @@ namespace SOTS.Items.Earth
 			}
 			if (flag && randomize)
 			{
-				Main.tile[i, j].frameX = (short)(WorldGen.genRand.Next(18) * 18);
+				Main.tile[i, j].TileFrameX = (short)(WorldGen.genRand.Next(18) * 18);
 				WorldGen.SquareTileFrame(i, j, true);
 				NetMessage.SendTileSquare(-1, i, j, 2, TileChangeType.None);
 				//NetMessage.SendData(17, -1, -1, null, 1, i, j, Type);
@@ -203,7 +203,7 @@ namespace SOTS.Items.Earth
 		public override void SetDefaults()
 		{
 			Main.wallHouse[Type] = false;
-			dustType = ModContent.DustType<VibrantDust>();
+			DustType = ModContent.DustType<VibrantDust>();
 			AddMapEntry(new Color(67, 91, 19));
 		}
 	}

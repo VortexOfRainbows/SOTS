@@ -20,7 +20,7 @@ namespace SOTS
 			int startAt = 2;
 			if (SOTS.Config.lowFidelityMode)
 				startAt = 1;
-			for (int i = 0; i < Main.Projectile.Length; i++)
+			for (int i = 0; i < Main.projectile.Length; i++)
 			{
 				Projectile proj = Main.projectile[i];
 				bool validType = proj.type == ModContent.ProjectileType<GasBlast>() || proj.type == ModContent.ProjectileType<Projectiles.Minions.CursedBlade>();

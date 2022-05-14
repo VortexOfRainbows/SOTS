@@ -22,15 +22,15 @@ namespace SOTS.NPCs.TreasureSlimes
 		public override void SetDefaults()
 		{
 			base.SetDefaults();
-			npc.lifeMax = 900;
-			npc.damage = 80;
-			npc.defense = 30;
-			npc.knockBackResist = 0.1f;
+			NPC.lifeMax = 900;
+			NPC.damage = 80;
+			NPC.defense = 30;
+			NPC.knockBackResist = 0.1f;
 			npc.value = Item.buyPrice(0, 10, 0, 0);
 			npc.Size = new Vector2(32, 44);
 			npc.npcSlots = 1f;
-			banner = npc.type;
-			bannerItem = ItemType<HallowTreasureSlimeBanner>();
+			Banner = NPC.type;
+			BannerItem = ItemType<HallowTreasureSlimeBanner>();
 			npc.lavaImmune = true;
 			LootAmt = 3;
 			Color c = VoidPlayer.ChaosPink;
@@ -76,8 +76,8 @@ namespace SOTS.NPCs.TreasureSlimes
 		}
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
-			npc.lifeMax = 1500;
-			npc.damage = 140;
+			NPC.lifeMax = 1500;
+			NPC.damage = 140;
         }
         public override void AdditionalLoot()
 		{

@@ -21,7 +21,7 @@ namespace SOTS.Items.Permafrost
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(null, "DissolvingAurora", 1);
 			recipe.AddIngredient(ItemID.FrostCore, 1);
 			recipe.AddIngredient(ItemID.SoulofSight, 3);

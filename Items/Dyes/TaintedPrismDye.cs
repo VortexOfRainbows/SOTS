@@ -30,7 +30,7 @@ namespace SOTS.Items.Dyes
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Dyes/TaintedPrismDyeGlow").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			position += drawOrigin * scale;
-			float counter = Main.GlobalTime * 160;
+			float counter = Main.GlobalTimeWrappedHourly * 160;
 			float mult = new Vector2(-1f, 0).RotatedBy(MathHelper.ToRadians(counter)).X;
 			for (int i = 0; i < 6; i++)
 			{
@@ -67,7 +67,7 @@ namespace SOTS.Items.Dyes
 		{
 			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Dyes/TaintedPrismDyeGlow").Value;
 			Vector2 drawOrigin = new Vector2(texture2.Width * 0.5f, texture2.Height * 0.5f);
-			float counter = Main.GlobalTime * 160;
+			float counter = Main.GlobalTimeWrappedHourly * 160;
 			float mult = new Vector2(-2.5f, 0).RotatedBy(MathHelper.ToRadians(counter)).X;
 			for (int i = 0; i < 6; i++)
 			{
@@ -102,7 +102,7 @@ namespace SOTS.Items.Dyes
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<TaintedKeystoneShard>(), 1);
 			recipe.AddIngredient(ItemID.BottledWater, 1);
 			recipe.AddTile(TileID.DyeVat);

@@ -20,7 +20,7 @@ namespace SOTS.Items.Permafrost
 			TileObjectData.newTile.StyleHorizontal = true;
 			TileObjectData.newTile.StyleWrapLimit = 36;
 			TileObjectData.addTile(Type);
-			dustType = DustID.Ice; 
+			DustType = DustID.Ice; 
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Frost Artifact");		
 			AddMapEntry(new Color(135, 150, 170), name);
@@ -29,7 +29,7 @@ namespace SOTS.Items.Permafrost
 		}
 		public override void NearbyEffects(int i, int j, bool closer) 
 		{
-			if(closer && Main.tile[i, j + 1].type == ModContent.TileType<FrostArtifactTile>() && Main.tile[i - 1, j + 1].type == ModContent.TileType<FrostArtifactTile>() && Main.tile[i + 1, j + 1].type == ModContent.TileType<FrostArtifactTile>())
+			if(closer && Main.tile[i, j + 1].TileType == ModContent.TileType<FrostArtifactTile>() && Main.tile[i - 1, j + 1].type == ModContent.TileType<FrostArtifactTile>() && Main.tile[i + 1, j + 1].type == ModContent.TileType<FrostArtifactTile>())
 			{
 				int xlocation = i * 16 + 8;
 				int ylocation = j * 16 + 8;
@@ -81,7 +81,7 @@ namespace SOTS.Items.Permafrost
 				}
 			}
 		}  
-		public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height)
+		public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY)
 		{
 			offsetY = 0;
 		}
@@ -91,19 +91,19 @@ namespace SOTS.Items.Permafrost
 			Tile tile = Main.tile[i, j];
 			int left = i;
 			int top = j;
-			player.showItemIcon2 = ModContent.ItemType<FrostedKey>();
-			//player.showItemIconText = "";
+			player.cursorItemIconID = ModContent.ItemType<FrostedKey>();
+			//player.cursorItemIconText = "";
 			player.noThrow = 2;
-			player.showItemIcon = true;
+			player.cursorItemIconEnabled = true;
 		}
 		public override void MouseOverFar(int i, int j)
 		{
 			MouseOver(i, j);
 			Player player = Main.LocalPlayer;
-			if (player.showItemIconText == "")
+			if (player.cursorItemIconText == "")
 			{
-				player.showItemIcon = false;
-				player.showItemIcon2 = 0;
+				player.cursorItemIconEnabled = false;
+				player.cursorItemIconID = 0;
 			}
 		}
 	}

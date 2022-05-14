@@ -35,7 +35,7 @@ namespace SOTS.Items.Potions
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ItemID.BottledWater, 1);
 			recipe.AddIngredient(ModContent.ItemType<PhantomFish>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<SoulResidue>(), 1);

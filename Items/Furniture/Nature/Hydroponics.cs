@@ -26,7 +26,7 @@ namespace SOTS.Items.Furniture.Nature
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<DissolvingNature>(), 1);
 			recipe.AddIngredient(ItemID.HerbBag, 1);
 			recipe.AddIngredient(ItemID.DirtBlock, 40);
@@ -34,7 +34,7 @@ namespace SOTS.Items.Furniture.Nature
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this, 1);
 			recipe.AddRecipe();
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<DissolvingNature>(), 1);
 			recipe.AddRecipeGroup("SOTS:AlchSeeds", 20);
 			recipe.AddIngredient(ItemID.DirtBlock, 40);
@@ -67,7 +67,7 @@ namespace SOTS.Items.Furniture.Nature
 			TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop, 6, 0);
 			TileObjectData.newTile.Origin = new Point16(3, 5);
 			TileObjectData.addTile(Type);
-			dustType = DustID.Tungsten;
+			DustType = DustID.Tungsten;
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Hydroponics");		
 			AddMapEntry(SOTSTile.NaturePlatingColor, name);
@@ -125,7 +125,7 @@ namespace SOTS.Items.Furniture.Nature
 		}
         public override bool CreateDust(int i, int j, ref int type)
         {
-			type = Main.rand.NextBool(3) ? DustID.Dirt : dustType;
+			type = Main.rand.NextBool(3) ? DustID.Dirt : DustType;
 			return true;
         }
         public override void NumDust(int i, int j, bool fail, ref int num)
@@ -182,36 +182,36 @@ namespace SOTS.Items.Furniture.Nature
 			if(tile.TileFrameY == 72)
 			{
 				int type = -1;
-				int dustType = 3;
+				int DustType = 3;
 				switch (tile.TileFrameX / 18 - 1)
                 {
 					case 0:
 						type = ItemID.Daybloom;
-						dustType = 3;
+						DustType = 3;
 						break;
 					case 1:
 						type = ItemID.Moonglow;
-						dustType = 3;
+						DustType = 3;
 						break;
 					case 2:
 						type = ItemID.Blinkroot;
-						dustType = 7;
+						DustType = 7;
 						break;
 					case 3:
 						type = ItemID.Deathweed;
-						dustType = 17;
+						DustType = 17;
 						break;
 					case 4:
 						type = ItemID.Waterleaf;
-						dustType = 3;
+						DustType = 3;
 						break;
 					case 5:
 						type = ItemID.Fireblossom;
-						dustType = 6;
+						DustType = 6;
 						break;
 					case 6:
 						type = ItemID.Shiverthorn;
-						dustType = 224;
+						DustType = 224;
 						break;
 				}
 				if (type == -1)
@@ -223,7 +223,7 @@ namespace SOTS.Items.Furniture.Nature
 				SoundEngine.PlaySound(SoundID.Grass, i * 16, j * 16, 1, 1f, 0f);
 				for(int a = 0; a < 10; a++)
                 {
-					Dust.NewDust(new Vector2(i * 16, j * 16), 16, 16, dustType);
+					Dust.NewDust(new Vector2(i * 16, j * 16), 16, 16, DustType);
                 }
 				return true;
 			}
@@ -290,7 +290,7 @@ namespace SOTS.Items.Furniture.Nature
 			if (topLeft) //check for it being the top left tile
 			{
 				//int highlightCapable = -1;
-				Texture2D texture = Main.tileTexture[Type];
+				Texture2D texture = Terraria.GameContent.TextureAssets.Item[Type].Value;
 				Texture2D textureGlow = (Texture2D)ModContent.Request<Texture2D>("SOTS/Items/Furniture/Nature/HydroponicsGlow");
 				for (int layer = 0; layer < 2; layer ++)
 				{
@@ -311,7 +311,7 @@ namespace SOTS.Items.Furniture.Nature
 							{
 								if(Main.canDrawColorTile(i + x, j + y))
                                 {
-									spriteBatch.Draw(Main.tileAltTexture[Type, Main.tile[i + x, j + y].color()], drawPosition, frame, lightColor, 0f, default(Vector2), 1.0f, SpriteEffects.None, 0f);
+									spriteBatch.Draw(Main.tileAltTexture[Type, Main.tile[i + x, j + y].TileColor], drawPosition, frame, lightColor, 0f, default(Vector2), 1.0f, SpriteEffects.None, 0f);
 								}
 								else
 									spriteBatch.Draw(texture, drawPosition, frame, lightColor, 0f, default(Vector2), 1.0f, SpriteEffects.None, 0f);
@@ -330,7 +330,7 @@ namespace SOTS.Items.Furniture.Nature
 										int type = growtile.TileFrameX / 18 - 1;
 										if (!Main.tileSetsLoaded[81 + growthStage])
 											Main.instance.LoadTiles(81 + growthStage);
-										Texture2D texture2 = Main.tileTexture[81 + growthStage];
+										Texture2D texture2 = Terraria.GameContent.TextureAssets.Item[81 + growthStage].Value;
 										int direction = ((i + x) % 2 * 2 - 1);
 										drawPosition.Y -= 6;
 										if (type == 1)
@@ -500,18 +500,18 @@ namespace SOTS.Items.Furniture.Nature
 		public override void MouseOver(int i, int j)
 		{
 			Player player = Main.LocalPlayer;
-			player.showItemIcon2 = ModContent.ItemType<NatureHydroponics>();
+			player.cursorItemIconID = ModContent.ItemType<NatureHydroponics>();
 			player.noThrow = 2;
-			player.showItemIcon = true;
+			player.cursorItemIconEnabled = true;
 		}
 		public override void MouseOverFar(int i, int j)
 		{
 			MouseOver(i, j);
 			Player player = Main.LocalPlayer;
-			if (player.showItemIconText == "")
+			if (player.cursorItemIconText == "")
 			{
-				player.showItemIcon = false;
-				player.showItemIcon2 = 0;
+				player.cursorItemIconEnabled = false;
+				player.cursorItemIconID = 0;
 			}
 		}
 	}

@@ -29,7 +29,7 @@ namespace SOTS.Items.Potions
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ItemID.BottledWater, 1);
 			recipe.AddIngredient(null, "FragmentOfPermafrost", 1);
 			recipe.AddIngredient(ItemID.Shiverthorn, 1);

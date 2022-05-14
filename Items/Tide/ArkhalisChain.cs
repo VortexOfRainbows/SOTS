@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
 using System;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
@@ -30,7 +31,7 @@ namespace SOTS.Items.Tide
 	}	
 	public class ArkhalisChainTile : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileLighted[Type] = true;
 			Main.tileFrameImportant[Type] = true;
@@ -45,48 +46,48 @@ namespace SOTS.Items.Tide
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Lost Chain");
 			AddMapEntry(new Color(127, 127, 127), name);
-			disableSmartCursor = true;
-			drop = ModContent.ItemType<ArkhalisChain>();
-			dustType = ModContent.DustType<AvaritianDust>();
+			TileID.Sets.DisableSmartCursor[Type] = true;
+			ItemDrop = ModContent.ItemType<ArkhalisChain>();
+			DustType = ModContent.DustType<AvaritianDust>();
 		}
 		public override void MouseOver(int i, int j)
 		{
 			Player player = Main.LocalPlayer;
-			if (Main.tile[i, j].frameX >= 18)
+			if (Main.tile[i, j].TileFrameX >= 18)
 			{
-				player.showItemIcon2 = ItemID.Arkhalis;
+				player.cursorItemIconID = ItemID.Arkhalis;
 				player.noThrow = 2;
-				player.showItemIcon = true;
+				player.cursorItemIconEnabled = true;
 			}
 			else
-				player.showItemIcon = false;
+				player.cursorItemIconEnabled = false;
 		}
 		public override void MouseOverFar(int i, int j)
 		{
 			Player player = Main.LocalPlayer;
 			MouseOver(i, j);
-			if (player.showItemIconText == "")
+			if (player.cursorItemIconText == "")
 			{
-				player.showItemIcon = false;
-				player.showItemIcon2 = 0;
+				player.cursorItemIconEnabled = false;
+				player.cursorItemIconID = 0;
 			}
 		}
-		public override bool NewRightClick(int i, int j)
-		{
+        public override bool RightClick(int i, int j)
+        {
 			Player player = Main.LocalPlayer;
 			Tile tile = Main.tile[i, j];
 			Main.mouseRightRelease = false;
 			int key = ItemID.Arkhalis;
-			if (Main.tile[i, j].frameX < 18 && player.ConsumeItem(key))
+			if (Main.tile[i, j].TileFrameX < 18 && player.ConsumeItem(key))
 			{
 				SoundEngine.PlaySound(SoundID.Grab, (int)player.Center.X, (int)player.Center.Y, 0, 1.1f, -0.2f);
 				tile.TileFrameX = 18;
 				NetMessage.SendTileSquare(-1, i, j, 2);
 			}
-			else if(Main.tile[i, j].frameX >= 18)
+			else if(Main.tile[i, j].TileFrameX >= 18)
 			{
 				SoundEngine.PlaySound(SoundID.Grab, (int)player.Center.X, (int)player.Center.Y, 0, 1.1f, -0.2f);
-				int item = Item.NewItem(i * 16, (j + 6) * 16, 16, 16, ItemID.Arkhalis, 1, false, 0, true);
+				int item = Item.NewItem(new EntitySource_TileInteraction(player, i, j), i * 16, (j + 6) * 16, 16, 16, ItemID.Arkhalis, 1, false, 0, true);
 				NetMessage.SendData(MessageID.SyncItem, player.whoAmI, -1, null, item, 1f, 0.0f, 0.0f, 0, 0, 0);
 				tile.TileFrameX = 0;
 				NetMessage.SendTileSquare(-1, i, j, 2);
@@ -95,12 +96,12 @@ namespace SOTS.Items.Tide
 		}
 		public override bool CanKillTile(int i, int j, ref bool blockDamaged)
         {
-            return Main.tile[i, j].frameX < 18;
+            return Main.tile[i, j].TileFrameX < 18;
         }
         public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
         {
-			if(Main.tile[i, j].frameX >= 18 && !fail && !effectOnly)
-				Item.NewItem(i * 16, (j + 6) * 16, 16, 16, ItemID.Arkhalis, 1);
+			if(Main.tile[i, j].TileFrameX >= 18 && !fail && !effectOnly)
+				Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, (j + 6) * 16, 16, 16, ItemID.Arkhalis, 1);
 		}
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
 		{
@@ -110,11 +111,11 @@ namespace SOTS.Items.Tide
 		}
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
         {
-			Texture2D texture = Main.tileTexture[Type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Item[Type].Value;
 			Texture2D textureSword = Terraria.GameContent.TextureAssets.Item[ItemID.Arkhalis].Value;
 			Vector2 origin = new Vector2(8, 10);
 			//float height = 16;
-			float timer = Main.GlobalTime * 40 + (i + j) * 4;
+			float timer = Main.GlobalTimeWrappedHourly * 40 + (i + j) * 4;
 			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
 			if (Main.drawToScreen)
 			{
@@ -122,12 +123,12 @@ namespace SOTS.Items.Tide
 			}
 			bool wave = true;
 			int maxLength = 6;
-			if(Main.tile[i, j].frameX < 18)
+			if(Main.tile[i, j].TileFrameX < 18)
 			{
 				for (int j2 = 1; j2 < maxLength; j2++)
 				{
 					Tile tile2 = Framing.GetTileSafely(i, j + j2);
-					if ((tile2.active() && Main.tileSolid[tile2.type] && !Main.tileSolidTop[tile2.type]) || !WorldGen.InWorld(i, j + j2, 27))
+					if ((tile2.HasTile && Main.tileSolid[tile2.TileType] && !Main.tileSolidTop[tile2.TileType]) || !WorldGen.InWorld(i, j + j2, 27))
 					{
 						wave = false;
 						maxLength = j2 + 1;
@@ -148,7 +149,7 @@ namespace SOTS.Items.Tide
 				}
 				Vector2 speed = new Vector2(0, z * 16).RotatedBy(MathHelper.ToRadians(sin * 2.4f * (float)Math.Pow(z - 1, 0.4)));
 				pos += speed;
-				Color color = WorldGen.paintColor(Main.tile[i, j].color());
+				Color color = WorldGen.paintColor(Main.tile[i, j].TileColor);
 				color = Lighting.GetColor((int)pos.X / 16, (int)pos.Y / 16, color);
 				Vector2 rotateTo = pos - previous;
 				//float lengthTo = rotateTo.Length();
@@ -159,7 +160,7 @@ namespace SOTS.Items.Tide
 					origin = new Vector2(10, 10);
 					Rectangle frame = new Rectangle(0, 36, 20, 20);
 					Main.spriteBatch.Draw(texture, previous + zero - Main.screenPosition, frame, color, rotateTo.ToRotation() - MathHelper.ToRadians(90), origin, 1f, SpriteEffects.None, 0f);
-					if(Main.tile[i,j].frameX >= 18)
+					if(Main.tile[i,j].TileFrameX >= 18)
 					{
 						Main.spriteBatch.Draw(textureSword, previous + zero + speed.SafeNormalize(Vector2.Zero) * 14f - Main.screenPosition, null, Lighting.GetColor((int)pos.X / 16, (int)pos.Y / 16, Color.White), rotateTo.ToRotation() + MathHelper.ToRadians(45), textureSword.Size() / 2, 1.1f, SpriteEffects.None, 0f);
 					}

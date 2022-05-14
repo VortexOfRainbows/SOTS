@@ -76,8 +76,8 @@ namespace SOTS.NPCs.Boss.Lux
 		public float compressWings = 0;
 		public override bool PreDraw(ref Color lightColor)
 		{
-			Texture2D texture = Main.npcTexture[npc.type];
-			Vector2 drawOrigin = new Vector2(Main.npcTexture[npc.type].Width * 0.5f, npc.height * 0.5f);
+			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Npc[npc.type].Value.Width * 0.5f, npc.height * 0.5f);
 			for (int k = 0; k < npc.oldPos.Length; k++)
 			{
 				Vector2 drawPos = npc.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, npc.gfxOffY);
@@ -111,8 +111,8 @@ namespace SOTS.NPCs.Boss.Lux
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture = Main.npcTexture[npc.type];
-			Vector2 drawOrigin = new Vector2(Main.npcTexture[npc.type].Width * 0.5f, npc.height * 0.5f);
+			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Npc[npc.type].Value.Width * 0.5f, npc.height * 0.5f);
 			for (int k = 0; k < 7; k++)
 			{
 				Color color = new Color(100, 100, 100, 0);
@@ -247,20 +247,20 @@ namespace SOTS.NPCs.Boss.Lux
         }
 		public override void SetStaticDefaults()
 		{
-			Main.npcFrameCount[npc.type] = 1;
+			Main.npcFrameCount[NPC.type] = 1;
 			DisplayName.SetDefault("Lux");
 			NPCID.Sets.TrailCacheLength[npc.type] = 10;  
 			NPCID.Sets.TrailingMode[npc.type] = 0;
 		}
 		public override void SetDefaults()
 		{
-			npc.aiStyle = -1;
-            npc.lifeMax = 60000; 
-            npc.damage = 100; 
-            npc.defense = 54;   
-            npc.knockBackResist = 0f;
-            npc.width = 70;
-            npc.height = 70;
+			NPC.aiStyle =-1;
+            NPC.lifeMax = 60000; 
+            NPC.damage = 100; 
+            NPC.defense = 54;   
+            NPC.knockBackResist = 0f;
+            NPC.width = 70;
+            NPC.height = 70;
             npc.value = Item.buyPrice(0, 20, 0, 0);
             npc.npcSlots = 10f;
             npc.boss = true;
@@ -356,8 +356,8 @@ namespace SOTS.NPCs.Boss.Lux
         }
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
 		{
-			npc.lifeMax = (int)(npc.lifeMax * bossLifeScale * 0.75f); //90000 hp
-			npc.damage = (int)(npc.damage * 0.75f); //150 damage
+			NPC.lifeMax = (int)(npc.lifeMax * bossLifeScale * 0.75f); //90000 hp
+			NPC.damage = (int)(npc.damage * 0.75f); //150 damage
 		}
 		bool runOnce = true;
 		public bool TargettingUnit()
@@ -449,7 +449,7 @@ namespace SOTS.NPCs.Boss.Lux
 					}
 				if (attackPhase != DesperationPhase)
 				{
-					for(int i = 0; i < Main.Projectile.Length; i++)
+					for(int i = 0; i < Main.projectile.Length; i++)
                     {
 						Projectile proj = Main.projectile[i];
 						if(proj.active && proj.type == ModContent.ProjectileType<DogmaSphere>())
@@ -461,7 +461,7 @@ namespace SOTS.NPCs.Boss.Lux
                 }
 				npc.dontTakeDamage = true;
 				npc.life = 1;
-				npc.lifeMax = 1;
+				NPC.lifeMax = 1;
 				attackTimer1++;
 				float lerp = attackTimer1 / 150f;
 				for (int i = 0; i < 4; i++)
@@ -1299,7 +1299,7 @@ namespace SOTS.NPCs.Boss.Lux
 					desperation = true;
 					npc.dontTakeDamage = true;
 					npc.life = 1;
-					npc.lifeMax = 1;
+					NPC.lifeMax = 1;
 				}
 				if (Main.netMode != NetmodeID.Server)
 				{

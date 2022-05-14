@@ -22,25 +22,25 @@ namespace SOTS.Items.Fishing
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(this, 1);
 			recipe.AddTile(TileID.CookingPots);
 			recipe.SetResult(ItemID.CookedFish, 1);
 			recipe.AddRecipe();
 			
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(this, 1);
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.SetResult(ItemID.Sashimi, 1);
 			recipe.AddRecipe();
 			
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(this, 1);
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.SetResult(ModContent.ItemType<Snakeskin>(), 4);
 			recipe.AddRecipe();
 			
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(ItemID.BottledWater, 1);
 			recipe.AddIngredient(this, 1);
 			recipe.AddIngredient(ModContent.ItemType<SoulResidue>(), 1);

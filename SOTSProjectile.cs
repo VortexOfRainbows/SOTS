@@ -347,7 +347,7 @@ namespace SOTS
 				if (petAdvisorID == -1)
 				{
 					//Main.NewText("Advisor Check " + Projectile.whoAmI);
-					for (int i = 0; i < Main.Projectile.Length; i++)
+					for (int i = 0; i < Main.projectile.Length; i++)
 					{
 						Projectile proj = Main.projectile[i];
 						if (proj.active && proj.owner == Projectile.owner && proj.type == ModContent.ProjectileType<AdvisorPet>())

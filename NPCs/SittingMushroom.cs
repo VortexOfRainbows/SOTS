@@ -16,21 +16,21 @@ namespace SOTS.NPCs
 		}
 		public override void SetDefaults()
 		{
-            npc.aiStyle = 0; 
-            npc.lifeMax = 40;   
-            npc.damage = 20; 
-            npc.defense = 6;  
-            npc.knockBackResist = 0.1f;
-            npc.width = 30;
-            npc.height = 30;
-			Main.npcFrameCount[npc.type] = 8;  
+            NPC.aiStyle =0; 
+            NPC.lifeMax = 40;   
+            NPC.damage = 20; 
+            NPC.defense = 6;  
+            NPC.knockBackResist = 0.1f;
+            NPC.width = 30;
+            NPC.height = 30;
+			Main.npcFrameCount[NPC.type] = 8;  
             npc.value = 125;
             npc.npcSlots = 1f;
             npc.HitSound = SoundID.NPCHit1;
             npc.DeathSound = SoundID.NPCDeath16;
             npc.netAlways = true;
-			banner = npc.type;
-			bannerItem = ItemType<SittingMushroomBanner>();
+			Banner = NPC.type;
+			BannerItem = ItemType<SittingMushroomBanner>();
 		}
 		public override void AI()
 		{
@@ -86,10 +86,10 @@ namespace SOTS.NPCs
 			if (npc.frameCounter >= frameSpeed) 
 			{
 				npc.frameCounter -= frameSpeed;
-				npc.frame.Y += frame;
-				if(npc.frame.Y >= 8 * frame)
+				NPC.frame.Y += frame;
+				if(NPC.frame.Y >= 8 * frame)
 				{
-					npc.frame.Y = 0;
+					NPC.frame.Y = 0;
 				}
 			}
 		}

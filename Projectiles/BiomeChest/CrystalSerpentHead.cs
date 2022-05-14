@@ -160,7 +160,7 @@ namespace SOTS.Projectiles.BiomeChest
             SOTSPlayer modPlayer = (SOTSPlayer)player.GetModPlayer(mod, "SOTSPlayer");
             int ownedCounter = 1;
             int targetLength = 2;
-            for (int i = 0; i < Main.Projectile.Length; i++)
+            for (int i = 0; i < Main.projectile.Length; i++)
             {
                 Projectile proj = Main.projectile[i];
                 if (proj.active && proj.owner == player.whoAmI)

@@ -24,15 +24,15 @@ namespace SOTS.NPCs.TreasureSlimes
 		public override void SetDefaults()
 		{
 			base.SetDefaults();
-			npc.lifeMax = 220;
-			npc.damage = 45; //hits harder than corruption, and has more health, but has 4 less defense
-			npc.defense = 8;
-			npc.knockBackResist = 0.05f;
+			NPC.lifeMax = 220;
+			NPC.damage = 45; //hits harder than corruption, and has more health, but has 4 less defense
+			NPC.defense = 8;
+			NPC.knockBackResist = 0.05f;
 			npc.value = Item.buyPrice(0, 4, 50, 0);
 			npc.Size = new Vector2(32, 36);
 			npc.npcSlots = 1f;
-			banner = npc.type;
-			bannerItem = ItemType<CrimsonTreasureSlimeBanner>();
+			Banner = NPC.type;
+			BannerItem = ItemType<CrimsonTreasureSlimeBanner>();
 			LootAmt = 3;
 			gelColor = new Color(145, 33, 30, 100);
 			items = new List<TreasureSlimeItem>()

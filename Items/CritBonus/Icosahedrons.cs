@@ -32,7 +32,7 @@ namespace SOTS.Items.CritBonus
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<DissolvingAurora>(), 1);
 			recipe.AddIngredient(ItemID.FrostCore, 1);
 			recipe.AddIngredient(ModContent.ItemType<AbsoluteBar>(), 6);
@@ -67,7 +67,7 @@ namespace SOTS.Items.CritBonus
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<BorealisIcosahedron>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<HellfireIcosahedron>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<DissolvingUmbra>(), 1);
@@ -103,7 +103,7 @@ namespace SOTS.Items.CritBonus
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ItemID.HellstoneBar, 6);
 			recipe.AddIngredient(ModContent.ItemType<FragmentOfInferno>(), 6);
 			recipe.AddTile(TileID.Anvils);

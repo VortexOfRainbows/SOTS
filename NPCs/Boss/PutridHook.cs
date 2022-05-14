@@ -60,13 +60,13 @@ namespace SOTS.NPCs.Boss
 		}
 		public override void SetDefaults()
 		{
-            npc.aiStyle = -1; 
-            npc.lifeMax = 225;   
-            npc.damage = 40; 
-            npc.defense = 8;  
-            npc.knockBackResist = 0f;
-            npc.width = 34;
-            npc.height = 34;
+            NPC.aiStyle =-1; 
+            NPC.lifeMax = 225;   
+            NPC.damage = 40; 
+            NPC.defense = 8;  
+            NPC.knockBackResist = 0f;
+            NPC.width = 34;
+            NPC.height = 34;
             npc.value = 0;
             npc.npcSlots = 1f;
             npc.lavaImmune = true;
@@ -118,7 +118,7 @@ namespace SOTS.NPCs.Boss
 					spriteBatch.Draw(texture, drawPos + circular, FrameSize, drawColor, npc.rotation + circular.ToRotation() - MathHelper.ToRadians(90), new Vector2(texture.Width/2, 3.5f), npc.scale, SpriteEffects.None, 0f);
 				}
 			}
-			texture = Main.npcTexture[npc.type];
+			texture = Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
 			drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			spriteBatch.Draw(texture, drawPos, null, drawColor, npc.rotation, drawOrigin, npc.scale, SpriteEffects.None, 0f);
 			return false;
@@ -170,8 +170,8 @@ namespace SOTS.NPCs.Boss
         }
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
-			npc.lifeMax = (int)(600 * bossLifeScale * 0.75f);
-			npc.damage = 60;  
+			NPC.lifeMax = (int)(600 * bossLifeScale * 0.75f);
+			NPC.damage = 60;  
         }
 		public override void NPCLoot()
 		{
@@ -262,7 +262,7 @@ namespace SOTS.NPCs.Boss
 			npc.dontTakeDamage = false;
 			if(totalHook <= 4)
 			{
-				npc.defense = 9999;
+				NPC.defense = 9999;
 				if(counter % (totalHook * totalHook) == 0)
                 {
 					npc.life++;
@@ -270,16 +270,16 @@ namespace SOTS.NPCs.Boss
 			}
 			else
             {
-				npc.defense = 8;
+				NPC.defense = 8;
             }
 			if(npc.alpha > 70)
 			{
 				npc.dontTakeDamage = true;
-				npc.damage = 0;
+				NPC.damage = 0;
 			}
 			else
 			{
-				npc.damage = storeDamage;
+				NPC.damage = storeDamage;
 			}
 		}
         public override void HitEffect(int hitDirection, double damage)

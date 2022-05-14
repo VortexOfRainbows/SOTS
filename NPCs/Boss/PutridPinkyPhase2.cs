@@ -65,14 +65,14 @@ namespace SOTS.NPCs.Boss
 		}
 		public override void SetDefaults()
 		{
-            npc.aiStyle = -1;   
-			npc.lifeMax = 5500;
-            npc.damage = 40; 
-            npc.defense = 0;   
-            npc.knockBackResist = 0f;
-            npc.width = 50;
-            npc.height = 120;
-            Main.npcFrameCount[npc.type] = 1;   
+            NPC.aiStyle =-1;   
+			NPC.lifeMax = 5500;
+            NPC.damage = 40; 
+            NPC.defense = 0;   
+            NPC.knockBackResist = 0f;
+            NPC.width = 50;
+            NPC.height = 120;
+            Main.npcFrameCount[NPC.type] = 1;   
             npc.value = 150000;
             npc.npcSlots = 10f;
             npc.boss = true;
@@ -96,7 +96,7 @@ namespace SOTS.NPCs.Boss
 					Draw(Main.npc[i].Center);
 				}
 			}
-			for (int i = 0; i < Main.Projectile.Length; i++)
+			for (int i = 0; i < Main.projectile.Length; i++)
 			{
 				if (Main.projectile[i].type == ModContent.ProjectileType<RecollectHook>() && Main.projectile[i].active && (int)Main.projectile[i].ai[0] == npc.whoAmI)
 				{
@@ -165,8 +165,8 @@ namespace SOTS.NPCs.Boss
 		}
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
-            npc.lifeMax = (int)(npc.lifeMax * bossLifeScale * 0.7f) + 1;  
-            npc.damage = (int)(npc.damage * 0.8f);  
+            NPC.lifeMax = (int)(npc.lifeMax * bossLifeScale * 0.7f) + 1;  
+            NPC.damage = (int)(npc.damage * 0.8f);  
         }
 		public override bool PreAI()
 		{
@@ -282,7 +282,7 @@ namespace SOTS.NPCs.Boss
 					attackTimer = 1200;
 					exponentialMod = 12;
 					storeDamage = npc.damage;
-					npc.damage = 0;
+					NPC.damage = 0;
 				}
 			}
 			if(attackPhase == 2)
@@ -344,7 +344,7 @@ namespace SOTS.NPCs.Boss
 				if (rotationDistance == 0 && attackTimer > 0)
 				{
 					SoundEngine.PlaySound(SoundID.Item, (int)npc.Center.X, (int)npc.Center.Y, 14, 1.3f);
-					npc.damage = storeDamage;
+					NPC.damage = storeDamage;
 					rotationSpeed = 7f * rotateDir;
 					attackTimer = -1;
 					rotationDistance = 1;
@@ -678,7 +678,7 @@ namespace SOTS.NPCs.Boss
 							Draw(Main.npc[i].Center, true);
 						}
 					}
-					for (int i = 0; i < Main.Projectile.Length; i++)
+					for (int i = 0; i < Main.projectile.Length; i++)
 					{
 						if (Main.projectile[i].type == mod.ProjectileType("RecollectHook") && Main.projectile[i].active && (int)Main.projectile[i].ai[0] == npc.whoAmI)
 						{

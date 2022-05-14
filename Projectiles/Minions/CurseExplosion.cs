@@ -34,7 +34,7 @@ namespace SOTS.Projectiles.Minions
 			for (int i = 0; i < 360; i += 30)
 			{
 				Vector2 circularLocation = new Vector2(16, 0).RotatedBy(MathHelper.ToRadians(i));
-				int num1 = Dust.NewDust(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, mod.DustType("CurseDust"));
+				int num1 = Dust.NewDust(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, ModContent.DustType<CurseDust>());
 				Main.dust[num1].noGravity = true;
 				Main.dust[num1].velocity *= 0.1f;
 				Main.dust[num1].scale = 1f;

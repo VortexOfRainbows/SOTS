@@ -90,7 +90,7 @@ namespace SOTS.Items.Otherworld.EpicWings
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<TwilightGyroscope>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<DissolvingAether>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<StarlightAlloy>(), 20);
@@ -99,7 +99,7 @@ namespace SOTS.Items.Otherworld.EpicWings
 			recipe.SetResult(this);
 			recipe.AddRecipe();
 
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<TwilightGyroscope>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<DissolvingAether>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<StarlightAlloy>(), 20);
@@ -242,7 +242,7 @@ namespace SOTS.Items.Otherworld.EpicWings
 			Tile tile4 = Framing.GetTileSafely(i2, j2);
 			Tile tile5 = Framing.GetTileSafely(i3, j);
 			Tile tile6 = Framing.GetTileSafely(i3, j2);
-			return (tile2 == tile && tile.active() && !tile.inActive() && (Main.tileSolid[tile.TileType] || Main.tileTable[tile.TileType])) || (tile3 == tile4 && tile4.active() && !tile4.inActive() && (Main.tileSolid[tile4.type] || Main.tileTable[tile4.type])) || (tile5 == tile6 && tile6.active() && !tile6.inActive() && (Main.tileSolid[tile6.type] || Main.tileTable[tile6.type]));
+			return (tile2 == tile && tile.active() && !tile.IsActuated && (Main.tileSolid[tile.TileType] || Main.tileTable[tile.TileType])) || (tile3 == tile4 && tile4.active() && !tile4.IsActuated && (Main.tileSolid[tile4.type] || Main.tileTable[tile4.type])) || (tile5 == tile6 && tile6.active() && !tile6.IsActuated && (Main.tileSolid[tile6.type] || Main.tileTable[tile6.type]));
 		}
 		int dustIter = 0;
 		int[] dustID = new int[180];

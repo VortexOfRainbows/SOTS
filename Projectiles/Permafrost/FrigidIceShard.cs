@@ -68,10 +68,10 @@ namespace SOTS.Projectiles.Permafrost
 			Vector2 velocity = Projectile.velocity.SafeNormalize(Vector2.Zero) * 8;
 			int i = (int)(Projectile.Center.X + velocity.X) / 16;
 			int j = (int)(Projectile.Center.Y + velocity.Y) / 16;
-			if (Main.tile[i, j].active() && Main.tile[i,j].type == ModContent.TileType<FrigidIceTile>())
+			if (Main.tile[i, j].HasTile && Main.tile[i,j].type == ModContent.TileType<FrigidIceTile>())
 			{
 				WorldGen.KillTile(i, j, false, false, false);
-				if (!Main.tile[i, j].active() && Main.netMode != NetmodeID.SinglePlayer)
+				if (!Main.tile[i, j].HasTile && Main.netMode != NetmodeID.SinglePlayer)
 				{
 					NetMessage.SendData(MessageID.TileChange, -1, -1, null, 0, (float)i, (float)j, 0f, 0, 0, 0);
 				}

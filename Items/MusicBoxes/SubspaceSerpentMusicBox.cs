@@ -23,16 +23,16 @@ namespace SOTS.Items.MusicBoxes
 			Item.useTime = 10;
 			Item.autoReuse = true;
 			Item.consumable = true;
-			Item.createTile = mod.TileType("SubspaceSerpentMusicBoxTile");
+			Item.createTile = ModContent.TileType<SubspaceSerpentMusicBoxTile>();
 			Item.width = 24;
 			Item.height = 24;
 			Item.rare = ItemRarityID.LightRed;
-			Item.value = 100000;
+			Item.value = Item.sellPrice(0, 2, 0, 0);
 			Item.accessory = true;
 		}
 		/*public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(null, "SubspaceSerpentTrophy", 1);
 			recipe.AddIngredient(ItemID.MusicBox);
 			recipe.AddTile(TileID.HeavyWorkBench);
@@ -46,7 +46,7 @@ namespace SOTS.Items.MusicBoxes
 		{
 			return false;
 		}
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileFrameImportant[Type] = true;
 			Main.tileObsidianKill[Type] = true;
@@ -55,21 +55,21 @@ namespace SOTS.Items.MusicBoxes
 			TileObjectData.newTile.LavaDeath = false;
 			TileObjectData.newTile.DrawYOffset = 2;
 			TileObjectData.addTile(Type);
-			disableSmartCursor = true;
+			TileID.Sets.DisableSmartCursor[Type] = true;
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Music Box");
 			AddMapEntry(new Color(191, 142, 111), name);
 		}
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 16, 48, mod.ItemType("SubspaceSerpentMusicBox"));
+			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 48, ModContent.ItemType<SubspaceSerpentMusicBox>());
 		}
 		public override void MouseOver(int i, int j)
 		{
 			Player player = Main.LocalPlayer;
 			player.noThrow = 2;
-			player.showItemIcon = true;
-			player.showItemIcon2 = mod.ItemType("SubspaceSerpentMusicBox");
+			player.cursorItemIconEnabled = true;
+			player.cursorItemIconID = ModContent.ItemType<SubspaceSerpentMusicBox>();
 		}
 	}
 }

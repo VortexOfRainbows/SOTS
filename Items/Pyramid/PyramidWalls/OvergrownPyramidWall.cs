@@ -21,13 +21,13 @@ namespace SOTS.Items.Pyramid.PyramidWalls
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<OvergrownPyramidBlock>(), 1);
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.SetResult(this, 4);
 			recipe.AddRecipe();
 
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(this, 4);
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.SetResult(ModContent.ItemType<OvergrownPyramidBlock>(), 1);
@@ -55,7 +55,7 @@ namespace SOTS.Items.Pyramid.PyramidWalls
 		public override void SetDefaults()
 		{
 			Main.wallHouse[Type] = true;
-			dustType = DustID.Grass;
+			DustType = DustID.Grass;
 			drop = ModContent.ItemType<OvergrownPyramidWall>();
 			AddMapEntry(new Color(18, 82, 36));
 		}
@@ -70,7 +70,7 @@ namespace SOTS.Items.Pyramid.PyramidWalls
 		public override void SetDefaults()
 		{
 			Main.wallHouse[Type] = false;
-			dustType = DustID.Grass;
+			DustType = DustID.Grass;
 			drop = ModContent.ItemType<OvergrownPyramidWall>();
 			AddMapEntry(new Color(18, 82, 36));
 		}

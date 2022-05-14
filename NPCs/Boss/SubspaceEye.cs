@@ -11,17 +11,17 @@ namespace SOTS.NPCs.Boss
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Subspace Gaze");
-            Main.npcFrameCount[npc.type] = 1;
+            Main.npcFrameCount[NPC.type] = 1;
         }
 		public override void SetDefaults()
 		{
-            npc.aiStyle = 0; 
-            npc.lifeMax = 40000;   
-            npc.damage = 0; 
-            npc.defense = 30;  
-            npc.knockBackResist = 0f;
-            npc.width = 68;
-            npc.height = 60;
+            NPC.aiStyle =0; 
+            NPC.lifeMax = 40000;   
+            NPC.damage = 0; 
+            NPC.defense = 30;  
+            NPC.knockBackResist = 0f;
+            NPC.width = 68;
+            NPC.height = 60;
             npc.value = 0;
             npc.npcSlots = 1f;
             npc.lavaImmune = true;

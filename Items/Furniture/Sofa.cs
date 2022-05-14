@@ -18,7 +18,7 @@ namespace SOTS.Items.Furniture
             TileObjectData.newTile.CoordinateHeights = new int[] { 16, 18 };
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsChair);
             disableSmartCursor = true;
-            adjTiles = new int[] { TileID.Chairs };
+            AdjTiles = new int[] { TileID.Chairs };
         }
         public override void NumDust(int i, int j, bool fail, ref int num)
         {

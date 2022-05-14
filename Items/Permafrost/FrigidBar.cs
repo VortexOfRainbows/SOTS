@@ -25,7 +25,7 @@ namespace SOTS.Items.Permafrost
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<FrigidIce>(), 10);
 			recipe.AddIngredient(ModContent.ItemType<AncientSteelBar>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<FragmentOfPermafrost>(), 1);

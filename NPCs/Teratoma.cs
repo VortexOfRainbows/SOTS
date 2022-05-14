@@ -33,30 +33,30 @@ namespace SOTS.NPCs
         }
         public override void SetDefaults()
 		{
-			npc.aiStyle = 3;
-			npc.width = 40;
-			npc.height = 48;
-			npc.lifeMax = 160;
-			npc.damage = 34;
+			NPC.aiStyle =3;
+			NPC.width = 40;
+			NPC.height = 48;
+			NPC.lifeMax = 160;
+			NPC.damage = 34;
 			npc.value = 600;
 			npc.scale = 1.0f;
-			npc.defense = 20;
-			npc.knockBackResist = 0.1f;
+			NPC.defense = 20;
+			NPC.knockBackResist = 0.1f;
 			npc.HitSound = SoundID.NPCHit19;
 			npc.DeathSound = SoundID.NPCDeath1;
-			Main.npcFrameCount[npc.type] = 7;
+			Main.npcFrameCount[NPC.type] = 7;
 			npc.noTileCollide = false;
-			banner = npc.type;
-			bannerItem = ItemType<TeratomaBanner>();
+			Banner = NPC.type;
+			BannerItem = ItemType<TeratomaBanner>();
 		}
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
-			npc.lifeMax = 240;
+			NPC.lifeMax = 240;
             base.ScaleExpertStats(numPlayers, bossLifeScale);
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture = Main.npcTexture[npc.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
 			Texture2D texture2 = GetTexture("SOTS/NPCs/TeratomaEyes");
 			Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 14);
 			Vector2 drawPos = npc.Center - Main.screenPosition + new Vector2(0, npc.gfxOffY - 4);
@@ -89,19 +89,19 @@ namespace SOTS.NPCs
 						spriteBatch.Draw(texture2, drawPos + new Vector2(xOffset, i - (mushHeight - 12 * (1f - percent))), cutoutFrame, Color.White, npc.rotation, drawOrigin, npc.scale, npc.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 					}
 				}
-				Rectangle frame = new Rectangle(0, npc.frame.Y + height - mushHeightSprite, texture.Width, mushHeight);
+				Rectangle frame = new Rectangle(0, NPC.frame.Y + height - mushHeightSprite, texture.Width, mushHeight);
 				spriteBatch.Draw(texture, drawPos + new Vector2(0, height - mushHeight), frame, drawColor, npc.rotation, drawOrigin, npc.scale, npc.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 				spriteBatch.Draw(texture2, drawPos + new Vector2(0, height - mushHeight), frame, Color.White, npc.rotation, drawOrigin, npc.scale, npc.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 				/*if(mushHeight >= 2)
 				{
 					mushHeight = 2;
-					frame = new Rectangle(0, npc.frame.Y + npc.height - mushHeight, npc.width, mushHeight);
+					frame = new Rectangle(0, NPC.frame.Y + npc.height - mushHeight, npc.width, mushHeight);
 					spriteBatch.Draw(texture, drawPos + new Vector2(0, 46 - mushHeight), frame, drawColor, npc.rotation, drawOrigin, npc.scale, npc.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 				}*/
 			}
 			else
 			{
-				Rectangle frame = new Rectangle(0, npc.frame.Y + 1, texture.Width, height - 1);
+				Rectangle frame = new Rectangle(0, NPC.frame.Y + 1, texture.Width, height - 1);
 				spriteBatch.Draw(texture, drawPos, frame, drawColor, npc.rotation, drawOrigin, npc.scale, npc.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 				spriteBatch.Draw(texture2, drawPos, frame, Color.White, npc.rotation, drawOrigin, npc.scale, npc.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
@@ -118,7 +118,7 @@ namespace SOTS.NPCs
 			float scale = 1.0f + 0.6f * percent;
 			for (int i = 0; i < amt; i++)
 			{
-				int num1 = Dust.NewDust(new Vector2(npc.position.X + 8, npc.position.Y + npc.height - 16), npc.width - 16, 28, mod.DustType("CurseDust"), 0, 0, 0, default, scale);
+				int num1 = Dust.NewDust(new Vector2(npc.position.X + 8, npc.position.Y + npc.height - 16), npc.width - 16, 28, ModContent.DustType<CurseDust>(), 0, 0, 0, default, scale);
 				Main.dust[num1].noGravity = true;
 				float dusDisX = Main.dust[num1].position.X - npc.Center.X;
 				float dusDisY = Main.dust[num1].position.Y - npc.Center.Y;
@@ -142,7 +142,7 @@ namespace SOTS.NPCs
 				if (regenTimer >= 153)
                 {
 					regenTimer = -30;
-					npc.frame.Y = 6 * 62;
+					NPC.frame.Y = 6 * 62;
 					npc.velocity.Y -= 7.2f;
 					mushForm = false;
                 }
@@ -171,11 +171,11 @@ namespace SOTS.NPCs
 		{
 			if (mushForm)
 			{
-				npc.frame.Y = 6 * frameHeight;
+				NPC.frame.Y = 6 * frameHeight;
 			}
 			else if (npc.velocity.Y != 0)
 			{
-				npc.frame.Y = 0;
+				NPC.frame.Y = 0;
 			}
 			else
 			{
@@ -183,10 +183,10 @@ namespace SOTS.NPCs
 				if (npc.frameCounter >= 6f)
 				{
 					npc.frameCounter -= 6f;
-					npc.frame.Y += frameHeight;
-					if (npc.frame.Y >= 6 * frameHeight)
+					NPC.frame.Y += frameHeight;
+					if (NPC.frame.Y >= 6 * frameHeight)
 					{
-						npc.frame.Y = 1 * frameHeight;
+						NPC.frame.Y = 1 * frameHeight;
 					}
 				}
 			}

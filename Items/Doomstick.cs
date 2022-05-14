@@ -3,6 +3,8 @@ using SOTS.Buffs;
 using SOTS.Items.Fragments;
 using SOTS.Projectiles;
 using Terraria;
+using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -49,19 +51,19 @@ namespace SOTS.Items
             SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
             modPlayer.doomDrops = true;
         }
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             if(player.altFunctionUse == 2)
             {
-                Vector2 perturbedSpeed = new Vector2(speedX, speedY).SafeNormalize(Vector2.Zero);
+                Vector2 perturbedSpeed = velocity.SafeNormalize(Vector2.Zero);
                 perturbedSpeed *= 24f;
-                speedX = perturbedSpeed.X;
-                speedY = perturbedSpeed.Y;
+                velocity.X = perturbedSpeed.X;
+                velocity.Y = perturbedSpeed.Y;
                 damage = (int)(damage * 2f);
                 if(player.ownedProjectileCounts[ModContent.ProjectileType<DoomstickHoldOut>()] < 1)
                 {
-                    int proj = Projectile.NewProjectile(position.X, position.Y, speedX, speedY, ModContent.ProjectileType<DoomstickHoldOut>(), damage, knockBack, player.whoAmI);
-                    Projectile.NewProjectile(position.X, position.Y, speedX, speedY, ModContent.ProjectileType<Doomhook>(), damage, knockBack, player.whoAmI, proj);
+                    int proj = Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<DoomstickHoldOut>(), damage, knockback, player.whoAmI);
+                    Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<Doomhook>(), damage, knockback, player.whoAmI, proj);
                 }
                 return false;
             }
@@ -69,8 +71,8 @@ namespace SOTS.Items
             int amt = 4;
             for(int i = 0; i < amt; i++)
             {
-                Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(20));
-                Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X * (0.825f + (.1f * i)), perturbedSpeed.Y * (0.825f + (.1f * i)), type, damage, knockBack, player.whoAmI);
+                Vector2 perturbedSpeed = velocity.RotatedByRandom(MathHelper.ToRadians(20));
+                Projectile.NewProjectile(source, position.X, position.Y, perturbedSpeed.X * (0.825f + (.1f * i)), perturbedSpeed.Y * (0.825f + (.1f * i)), type, damage, knockback, player.whoAmI);
             }
             return false;
         }
@@ -88,20 +90,13 @@ namespace SOTS.Items
             }
             return player.ownedProjectileCounts[ModContent.ProjectileType<DoomstickHoldOut>()] < 1;
         }
-        public override bool ConsumeAmmo(Player player)
+        public override bool CanConsumeAmmo(Player player)
         {
             return player.altFunctionUse != 2;
         }
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.Boomstick, 1);
-            recipe.AddIngredient(ModContent.ItemType<FragmentOfInferno>(), 4);
-            recipe.AddIngredient(ItemID.SoulofFright, 20);
-            recipe.AddIngredient(ItemID.IllegalGunParts, 1);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe(1).AddIngredient(ItemID.Boomstick, 1).AddIngredient<FragmentOfInferno>(4).AddIngredient(ItemID.SoulofFlight, 20).AddIngredient(ItemID.IllegalGunParts, 1).AddTile(TileID.MythrilAnvil).Register();
         }
     }
 }

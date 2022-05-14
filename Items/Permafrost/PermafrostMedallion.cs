@@ -24,7 +24,7 @@ namespace SOTS.Items.Permafrost
 		int[] Probes = { -1, -1, -1, -1, -1, -1, -1, -1 };
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(null, "AbsoluteBar", 7);
 			recipe.SetResult(this);
 			recipe.AddTile(TileID.MythrilAnvil);

@@ -70,7 +70,7 @@ namespace SOTS.Projectiles.Otherworld
 				Vector2 position = currentPos;
 				int i = (int)(position.X / 16);
 				int j = (int)(position.Y / 16);
-				if (!WorldGen.InWorld(i, j, 20) || (Main.tile[i, j].active() && Main.tileSolidTop[Main.tile[i, j].type] == false && Main.tileSolid[Main.tile[i, j].type] == true && Distance < maxDist - 1))
+				if (!WorldGen.InWorld(i, j, 20) || (Main.tile[i, j].HasTile && Main.tileSolidTop[Main.tile[i, j ].TileType] == false && Main.tileSolid[Main.tile[i, j ].TileType] == true && Distance < maxDist - 1))
 				{
 					Vector2 additional = new Vector2(additionalEnd, 0f).RotatedBy(radianDir);
 					currentPos += additional;
@@ -83,7 +83,7 @@ namespace SOTS.Projectiles.Otherworld
 				Vector2 laserVelo = new Vector2((14.25f + additionalEnd) * (0.1f + size), 0f).RotatedBy(radianDir) + rotateVector;
 				currentPos.X += laserVelo.X;
 				currentPos.Y += laserVelo.Y;
-				if (Main.tile[i, j].active() && Main.tileSolidTop[Main.tile[i, j].type] == false && Main.tileSolid[Main.tile[i, j].type] == true)
+				if (Main.tile[i, j].HasTile && Main.tileSolidTop[Main.tile[i, j ].TileType] == false && Main.tileSolid[Main.tile[i, j ].TileType] == true)
 				{
 					break;
 				}
@@ -122,7 +122,7 @@ namespace SOTS.Projectiles.Otherworld
 				Vector2 position = currentPos;
 				int i = (int)(position.X / 16);
 				int j = (int)(position.Y / 16);
-				if (!WorldGen.InWorld(i, j, 20) || (Main.tile[i, j].active() && Main.tileSolidTop[Main.tile[i, j].type] == false && Main.tileSolid[Main.tile[i, j].type] == true && Distance < maxDist - 1))
+				if (!WorldGen.InWorld(i, j, 20) || (Main.tile[i, j].HasTile && Main.tileSolidTop[Main.tile[i, j ].TileType] == false && Main.tileSolid[Main.tile[i, j ].TileType] == true && Distance < maxDist - 1))
 				{
 					Vector2 additional = new Vector2(additionalEnd, 0f).RotatedBy(radianDir);
 					currentPos += additional;

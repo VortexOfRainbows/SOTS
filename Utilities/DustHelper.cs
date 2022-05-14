@@ -13,7 +13,7 @@ namespace SOTS.Utilities
 {
 	public static class DustHelper
 	{
-		public static void DrawStar(Vector2 position, int dustType, float pointAmount = 5, float mainSize = 1, float dustDensity = 1, float dustSize = 1f, float pointDepthMult = 1f, float pointDepthMultOffset = 0.5f, bool noGravity = false, float randomAmount = 0, float rotationAmount = -1)
+		public static void DrawStar(Vector2 position, int DustType, float pointAmount = 5, float mainSize = 1, float dustDensity = 1, float dustSize = 1f, float pointDepthMult = 1f, float pointDepthMultOffset = 0.5f, bool noGravity = false, float randomAmount = 0, float rotationAmount = -1)
 		{
 			float rot;
 			if (rotationAmount < 0) { rot = Main.rand.NextFloat(0, (float)Math.PI * 2); } else { rot = rotationAmount; }
@@ -27,11 +27,11 @@ namespace SOTS.Utilities
 				float x = (float)Math.Cos(k + rand);
 				float y = (float)Math.Sin(k + rand);
 				float mult = ((Math.Abs(((k * (pointAmount / 2)) % (float)Math.PI) - (float)Math.PI / 2)) * pointDepthMult) + pointDepthMultOffset;//triangle wave function
-				Dust.NewDustPerfect(position, dustType, new Vector2(x, y).RotatedBy(rot) * mult * mainSize, 0, default, dustSize).noGravity = noGravity;
+				Dust.NewDustPerfect(position, DustType, new Vector2(x, y).RotatedBy(rot) * mult * mainSize, 0, default, dustSize).noGravity = noGravity;
 			}
 		}
 
-		public static void DrawStar2(Vector2 position, int dustType, float pointAmount = 5, float mainSize = 1, float dustDensity = 1, float dustSize = 1f, float pointDepthMult = 1f, float pointDepthMultOffset = 0.5f, bool noGravity = false, float randomAmount = 0, float rotationAmount = -1, Color? color = null)
+		public static void DrawStar2(Vector2 position, int DustType, float pointAmount = 5, float mainSize = 1, float dustDensity = 1, float dustSize = 1f, float pointDepthMult = 1f, float pointDepthMultOffset = 0.5f, bool noGravity = false, float randomAmount = 0, float rotationAmount = -1, Color? color = null)
 		{
 			float rot;
 			if (rotationAmount < 0) { rot = Main.rand.NextFloat(0, (float)Math.PI * 2); } else { rot = rotationAmount; }
@@ -46,11 +46,11 @@ namespace SOTS.Utilities
 				float y = (float)Math.Sin(k + rand);
 				float mult = ((Math.Abs(((k * (pointAmount / 2)) % (float)Math.PI) - (float)Math.PI / 2)) * pointDepthMult) + pointDepthMultOffset;//triangle wave function
 
-				Dust.NewDustPerfect(position, dustType, new Vector2(x, y).RotatedBy(rot) * mult * mainSize, 0, color ?? default, dustSize).noGravity = noGravity;
+				Dust.NewDustPerfect(position, DustType, new Vector2(x, y).RotatedBy(rot) * mult * mainSize, 0, color ?? default, dustSize).noGravity = noGravity;
 			}
 		}
 
-		public static void DrawCircle(Vector2 position, int dustType, float mainSize = 1, float RatioX = 1, float RatioY = 1, float dustDensity = 1, float dustSize = 1f, float randomAmount = 0, float rotationAmount = 0, bool nogravity = false)
+		public static void DrawCircle(Vector2 position, int DustType, float mainSize = 1, float RatioX = 1, float RatioY = 1, float dustDensity = 1, float dustSize = 1f, float randomAmount = 0, float rotationAmount = 0, bool nogravity = false)
 		{
 			float rot;
 			if (rotationAmount < 0) { rot = Main.rand.NextFloat(0, (float)Math.PI * 2); } else { rot = rotationAmount; }
@@ -63,17 +63,17 @@ namespace SOTS.Utilities
 
 				float x = (float)Math.Cos(k + rand) * RatioX;
 				float y = (float)Math.Sin(k + rand) * RatioY;
-                if (dustType == 222 || dustType == 130 || nogravity)
+                if (DustType == 222 || DustType == 130 || nogravity)
                 {
-                    Dust.NewDustPerfect(position, dustType, new Vector2(x, y).RotatedBy(rot) * mainSize, 0, default, dustSize).noGravity = true;
+                    Dust.NewDustPerfect(position, DustType, new Vector2(x, y).RotatedBy(rot) * mainSize, 0, default, dustSize).noGravity = true;
                 }
                 else
                 {
-                    Dust.NewDustPerfect(position, dustType, new Vector2(x, y).RotatedBy(rot) * mainSize, 0, default, dustSize);
+                    Dust.NewDustPerfect(position, DustType, new Vector2(x, y).RotatedBy(rot) * mainSize, 0, default, dustSize);
                 }
 			}
 		}
-		public static void DrawTriangle(Vector2 position, int dustType, float size, float dustDensity = 1f, float dustSize = 2f, float rotationAmount = -1, bool noGravity = true)
+		public static void DrawTriangle(Vector2 position, int DustType, float size, float dustDensity = 1f, float dustSize = 2f, float rotationAmount = -1, bool noGravity = true)
 		{
             float rot;
 			if (rotationAmount < 0) { rot = Main.rand.NextFloat(0, (float)Math.PI * 2); } else { rot = rotationAmount; }
@@ -88,15 +88,15 @@ namespace SOTS.Utilities
 				Vector2 offsetVect = new Vector2(x, y);
 				offsetVect = offsetVect.RotatedBy(2.093333f);
 				offsetVect *= ((k % 2.093333f) / 2.093333f) * 2f;
-				Dust.NewDustPerfect(position, dustType, (new Vector2(x, y) + offsetVect).RotatedBy(rot) * size, 0, default, dustSize).noGravity = noGravity;
+				Dust.NewDustPerfect(position, DustType, (new Vector2(x, y) + offsetVect).RotatedBy(rot) * size, 0, default, dustSize).noGravity = noGravity;
 				//not the cleanest, but im tired of trying, ive legit been at this for 2 hours. Maybe im missing something really obvious, but hardcode a fucking hoy
 				offsetVect = new Vector2(x, y);
 				offsetVect = offsetVect.RotatedBy(-1.046667);
 				offsetVect *= ((k % 2.093333f) / 2.093333f);
-				Dust.NewDustPerfect(position, dustType, (new Vector2(x, y) + offsetVect).RotatedBy(rot) * size, 0, default, dustSize).noGravity = noGravity;
+				Dust.NewDustPerfect(position, DustType, (new Vector2(x, y) + offsetVect).RotatedBy(rot) * size, 0, default, dustSize).noGravity = noGravity;
 			}
 		}
-		public static void DrawDiamond(Vector2 position, int dustType, float size, float dustDensity = 1f, float dustSize = 2f, float rotationAmount = -1, bool noGravity = true)
+		public static void DrawDiamond(Vector2 position, int DustType, float size, float dustDensity = 1f, float dustSize = 2f, float rotationAmount = -1, bool noGravity = true)
 		{
 			float rot;
 			if (rotationAmount < 0) { rot = Main.rand.NextFloat(0, (float)Math.PI * 2); } else { rot = rotationAmount; }
@@ -111,16 +111,16 @@ namespace SOTS.Utilities
 				Vector2 offsetVect = new Vector2(x, y);
 				offsetVect = offsetVect.RotatedBy(1.57f);
 				offsetVect *= ((k % 1.57f) / 1.57f);
-				Dust.NewDustPerfect(position, dustType, (new Vector2(x, y) + offsetVect).RotatedBy(rot) * size, 0, default, dustSize).noGravity = noGravity;
+				Dust.NewDustPerfect(position, DustType, (new Vector2(x, y) + offsetVect).RotatedBy(rot) * size, 0, default, dustSize).noGravity = noGravity;
 				//not the cleanest, but im tired of trying, ive legit been at this for 2 hours. Maybe im missing something really obvious, but hardcode a fucking hoy
 				offsetVect = new Vector2(x, y);
 				offsetVect = offsetVect.RotatedBy(-1.57f);
 				offsetVect *= ((k % 1.57f) / 1.57f);
-				Dust.NewDustPerfect(position, dustType, (new Vector2(x, y) + offsetVect).RotatedBy(rot) * size, 0, default, dustSize).noGravity = noGravity;
+				Dust.NewDustPerfect(position, DustType, (new Vector2(x, y) + offsetVect).RotatedBy(rot) * size, 0, default, dustSize).noGravity = noGravity;
 			}
 		}
 
-		public static void DrawDustImage(Vector2 position, int dustType, float size, string imagePath, float dustSize = 1f, bool noGravity = true, float rot = 0.34f)
+		public static void DrawDustImage(Vector2 position, int DustType, float size, string imagePath, float dustSize = 1f, bool noGravity = true, float rot = 0.34f)
 		{
 			if (Main.netMode != NetmodeID.Server) {
 				float rotation = Main.rand.NextFloat(0 - rot, rot);
@@ -135,7 +135,7 @@ namespace SOTS.Utilities
 							double dustY = (j - (glyphTexture.Height / 2));
 							dustX *= size;
 							dustY *= size;
-							Dust.NewDustPerfect(position, dustType, new Vector2((float)dustX, (float)dustY).RotatedBy(rotation)).noGravity = noGravity;
+							Dust.NewDustPerfect(position, DustType, new Vector2((float)dustX, (float)dustY).RotatedBy(rotation)).noGravity = noGravity;
 						}
 					}
 				}

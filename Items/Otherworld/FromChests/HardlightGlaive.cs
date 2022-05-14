@@ -47,7 +47,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(null, "CursedImpale", 1);
 			recipe.AddIngredient(null, "ImperialPike", 1);
 			recipe.AddIngredient(null, "GoldGlaive", 1);

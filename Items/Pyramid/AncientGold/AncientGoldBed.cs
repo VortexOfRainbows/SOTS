@@ -30,7 +30,7 @@ namespace SOTS.Items.Pyramid.AncientGold
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<RoyalGoldBrick>(), 15);
 			recipe.AddIngredient(ItemID.Silk, 5);
 			recipe.AddTile(TileID.Sawmill);
@@ -52,12 +52,12 @@ namespace SOTS.Items.Pyramid.AncientGold
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Ancient Gold Bed");
 			AddMapEntry(new Color(220, 180, 25), name);
-			dustType = DustID.GoldCoin;
+			DustType = DustID.GoldCoin;
 			disableSmartCursor = true;
-			adjTiles = new int[]{ TileID.Beds };
+			AdjTiles = new int[]{ TileID.Beds };
 			bed = true;
 		}
-		public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height)
+		public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY)
 		{
 			//offsetY = -2;
 		}
@@ -97,8 +97,8 @@ namespace SOTS.Items.Pyramid.AncientGold
 		{
 			Player player = Main.LocalPlayer;
 			player.noThrow = 2;
-			player.showItemIcon = true;
-			player.showItemIcon2 = mod.ItemType("AncientGoldBed");
+			player.cursorItemIconEnabled = true;
+			player.cursorItemIconID = mod.ItemType("AncientGoldBed");
 		}
 	}
 }

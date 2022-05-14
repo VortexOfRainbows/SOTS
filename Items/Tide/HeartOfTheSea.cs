@@ -32,7 +32,7 @@ namespace SOTS.Items.Tide
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ItemID.LifeCrystal, 1);
 			recipe.AddIngredient(ModContent.ItemType<DissolvingDeluge>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<RipplePotion>(), 8);

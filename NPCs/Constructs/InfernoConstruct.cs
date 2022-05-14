@@ -43,14 +43,14 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override void SetDefaults()
 		{
-			npc.aiStyle = 0;
-			npc.lifeMax = 5000;  
-			npc.damage = 70; 
-			npc.defense = 26;  
-			npc.knockBackResist = 0f;
-			npc.width = 98;
-			npc.height = 78;
-			Main.npcFrameCount[npc.type] = 1;
+			NPC.aiStyle =0;
+			NPC.lifeMax = 5000;  
+			NPC.damage = 70; 
+			NPC.defense = 26;  
+			NPC.knockBackResist = 0f;
+			NPC.width = 98;
+			NPC.height = 78;
+			Main.npcFrameCount[NPC.type] = 1;
 			npc.value = Item.buyPrice(0, 10, 0, 0);
 			npc.npcSlots = 4f;
 			npc.lavaImmune = true;
@@ -64,8 +64,8 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
 		{
-			npc.damage = 120;
-			npc.lifeMax = 7500;
+			NPC.damage = 120;
+			NPC.lifeMax = 7500;
 		}
 		List<InfernoProbe> probes = new List<InfernoProbe>();
 		List<FireParticle> particleList = new List<FireParticle>();
@@ -124,7 +124,7 @@ namespace SOTS.NPCs.Constructs
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
 			Vector2 origin = new Vector2(npc.width / 2, npc.height / 2);
-			Texture2D texture = Main.npcTexture[npc.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
 			dir = (float)Math.Atan2(aimTo.Y - npc.Center.Y, aimTo.X - npc.Center.X);
 			bool flip = false;
 			if (Math.Abs(MathHelper.WrapAngle(dir)) <= MathHelper.ToRadians(90))

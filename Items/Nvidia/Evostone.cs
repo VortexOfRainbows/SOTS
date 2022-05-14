@@ -13,7 +13,7 @@ namespace SOTS.Items.Nvidia
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = false;
 			Main.tileBlendAll[Type] = true;
-			dustType = 37; //obsidian
+			DustType = 37; //obsidian
 			drop = ModContent.ItemType<Evostone>();
 			AddMapEntry(new Color(31, 39, 57));
 			soundType = SoundID.Tink;
@@ -46,7 +46,7 @@ namespace SOTS.Items.Nvidia
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = false;
 			Main.tileBlendAll[Type] = true;
-			dustType = 37; //obsidian
+			DustType = 37; //obsidian
 			drop = ModContent.ItemType<EvostoneBrick>();
 			AddMapEntry(new Color(46, 63, 77));
 			soundType = SoundID.Tink;
@@ -68,7 +68,7 @@ namespace SOTS.Items.Nvidia
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<Evostone>(), 2);
 			recipe.AddTile(TileID.Hellforge);
 			recipe.SetResult(this, 1);
@@ -80,7 +80,7 @@ namespace SOTS.Items.Nvidia
 		public override void SetDefaults()
 		{
 			Main.wallHouse[Type] = true;
-			dustType = 37;
+			DustType = 37;
 			drop = ModContent.ItemType<EvostoneBrickWall>();
 			AddMapEntry(new Color(25, 38, 49));
 			soundType = SoundID.Tink;
@@ -103,12 +103,12 @@ namespace SOTS.Items.Nvidia
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<EvostoneBrick>(), 1);
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.SetResult(this, 4);
 			recipe.AddRecipe();
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(this, 4);
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.SetResult(ModContent.ItemType<EvostoneBrick>(), 1);
@@ -123,7 +123,7 @@ namespace SOTS.Items.Nvidia
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = false;
 			Main.tileBlendAll[Type] = true;
-			dustType = 37; //obsidian
+			DustType = 37; //obsidian
 			drop = ModContent.ItemType<DarkShingles>();
 			AddMapEntry(new Color(82, 56, 103));
 			soundType = SoundID.Tink;
@@ -144,7 +144,7 @@ namespace SOTS.Items.Nvidia
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<EvostoneBrick>(), 2);
 			recipe.AddTile(TileID.Hellforge);
 			recipe.SetResult(this, 1);

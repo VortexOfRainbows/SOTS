@@ -54,16 +54,16 @@ namespace SOTS.Items.Pyramid
 			name.SetDefault("Strange Gateway");
 			AddMapEntry(new Color(44, 12, 62), name);
 			disableSmartCursor = true;
-			dustType = mod.DustType("AcedianDust");
+			DustType = mod.DustType("AcedianDust");
 		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
 		{
-			//float uniquenessCounter = Main.GlobalTime * -100 + (i + j) * 5;
+			//float uniquenessCounter = Main.GlobalTimeWrappedHourly * -100 + (i + j) * 5;
 			Tile tile = Main.tile[i, j];
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Pyramid/AcediaGatewayTileGlow").Value;
 			Rectangle frame = new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, 16);
 			Color color;
-			color = WorldGen.paintColor((int)Main.tile[i, j].color()) * (100f / 255f);
+			color = WorldGen.paintColor((int)Main.tile[i, j].TileColor) * (100f / 255f);
 			color.A = 0;
 			float alphaMult = 0.1f; // + 0.45f * (float)Math.Sin(MathHelper.ToRadians(uniquenessCounter));
 			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
@@ -97,7 +97,7 @@ namespace SOTS.Items.Pyramid
 		}
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
 		{
-			int type = Main.tile[i, j].frameX / 18 + (Main.tile[i, j].frameY / 18 * 9);
+			int type = Main.tile[i, j].TileFrameX / 18 + (Main.tile[i, j].TileFrameY / 18 * 9);
 			if (type != 67)
 				return;
 

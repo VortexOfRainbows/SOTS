@@ -32,7 +32,7 @@ namespace SOTS.Items.Pyramid.AncientGold
         }
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
+            Recipe recipe = new Recipe(mod);
             recipe.AddIngredient(ModContent.ItemType<RoyalGoldBrick>(), 5);
             recipe.AddIngredient(ItemID.Silk, 2);
             recipe.AddTile(TileID.Sawmill);
@@ -60,7 +60,7 @@ namespace SOTS.Items.Pyramid.AncientGold
             name.SetDefault("Ancient Gold Sofa");
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsChair);
             AddMapEntry(new Color(220, 180, 25), name);
-            dustType = DustID.GoldCoin;
+            DustType = DustID.GoldCoin;
         }
         public override void NumDust(int i, int j, bool fail, ref int num)
         {

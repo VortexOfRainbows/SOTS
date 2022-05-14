@@ -36,21 +36,21 @@ namespace SOTS.NPCs
 		public override void SetDefaults()
 		{
 			//npc.CloneDefaults(NPCID.BlackSlime);
-			npc.aiStyle = -1;
-            npc.lifeMax = 30;  
-            npc.damage = 30; 
-            npc.defense = 8;  
-            npc.knockBackResist = 0.5f;
-            npc.width = 18;
-            npc.height = 18;
-			Main.npcFrameCount[npc.type] = 1;  
+			NPC.aiStyle =-1;
+            NPC.lifeMax = 30;  
+            NPC.damage = 30; 
+            NPC.defense = 8;  
+            NPC.knockBackResist = 0.5f;
+            NPC.width = 18;
+            NPC.height = 18;
+			Main.npcFrameCount[NPC.type] = 1;  
             npc.value = 0;
             npc.npcSlots = 0f;
 			npc.noGravity = true;
 			npc.alpha = 70;
             npc.HitSound = SoundID.NPCHit1;
             npc.DeathSound = SoundID.NPCDeath1;
-			//banner = npc.type;
+			//Banner = NPC.type;
 		}
 		float counter2 = 0;
 		float randMult = 1f;
@@ -114,7 +114,7 @@ namespace SOTS.NPCs
 					spriteBatch.Draw(texture, drawPos + circular, FrameSize, npc.GetAlpha(drawColor), circular.ToRotation() - MathHelper.ToRadians(90), new Vector2(texture.Width / 2, 3.5f), npc.scale * 0.8f, SpriteEffects.None, 0f);
 				}
 			}
-			texture = Main.npcTexture[npc.type];
+			texture = Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
 			drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			spriteBatch.Draw(texture, drawPos, null, npc.GetAlpha(drawColor), npc.rotation, drawOrigin, npc.scale, SpriteEffects.None, 0f);
 			return false;

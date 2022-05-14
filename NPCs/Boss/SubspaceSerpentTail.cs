@@ -15,16 +15,16 @@ namespace SOTS.NPCs.Boss
         }
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
-            npc.lifeMax = (int)(npc.lifeMax * bossLifeScale * 0.75f);  //boss life scale in expertmode
+            NPC.lifeMax = (int)(npc.lifeMax * bossLifeScale * 0.75f);  //boss life scale in expertmode
         }
         public override void SetDefaults()
         {
-            npc.width = 48;             
-            npc.height = 36;         
-            npc.damage = 40;
-            npc.defense = 50;
-            npc.lifeMax = 130000;
-            npc.knockBackResist = 0.0f;
+            NPC.width = 48;             
+            NPC.height = 36;         
+            NPC.damage = 40;
+            NPC.defense = 50;
+            NPC.lifeMax = 130000;
+            NPC.knockBackResist = 0.0f;
             npc.noTileCollide = true;
             npc.netAlways = true;
             npc.noGravity = true;
@@ -37,7 +37,7 @@ namespace SOTS.NPCs.Boss
             {
                 npc.buffImmune[i] = true;
             }
-            Main.npcFrameCount[npc.type] = 8;
+            Main.npcFrameCount[NPC.type] = 8;
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
@@ -48,7 +48,7 @@ namespace SOTS.NPCs.Boss
             NPC parent = Main.npc[(int)npc.ai[1]];
             int frameHeight2 = 36;
             int targetFrame = parent.frame.Y / frameHeight2;
-            int currentFrame = npc.frame.Y / frameHeight;
+            int currentFrame = NPC.frame.Y / frameHeight;
             if (currentFrame != targetFrame)
             {
                 npc.frameCounter++;
@@ -66,7 +66,7 @@ namespace SOTS.NPCs.Boss
             npc.dontTakeDamage = parent.dontTakeDamage;
             if (currentFrame > 7)
                 currentFrame = 0;
-            npc.frame.Y = currentFrame * frameHeight;
+            NPC.frame.Y = currentFrame * frameHeight;
 
         }
         public override bool CheckActive()
@@ -157,7 +157,7 @@ namespace SOTS.NPCs.Boss
                 }
             }
             DrawTrail();
-            texture = Main.npcTexture[npc.type];
+            texture = Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
             origin = new Vector2(texture.Width * 0.5f, npc.height * 0.5f);
             Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition, npc.frame, lightColor * ((255f - npc.alpha) / 255f), npc.rotation, origin, npc.scale, SpriteEffects.None, 0);
             texture = Mod.Assets.Request<Texture2D>("NPCs/Boss/SubspaceSerpentTailGlow").Value;

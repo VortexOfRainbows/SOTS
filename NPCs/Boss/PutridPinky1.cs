@@ -16,15 +16,15 @@ namespace SOTS.NPCs.Boss
 		}
 		public override void SetDefaults()
 		{
-            npc.aiStyle = 1; 
-            npc.lifeMax = 300;   
-            npc.damage = 30; 
-            npc.defense = 0;   
-            npc.knockBackResist = 0f;
-            npc.width = 62;
-            npc.height = 42;
+            NPC.aiStyle =1; 
+            NPC.lifeMax = 300;   
+            NPC.damage = 30; 
+            NPC.defense = 0;   
+            NPC.knockBackResist = 0f;
+            NPC.width = 62;
+            NPC.height = 42;
             animationType = NPCID.BlueSlime;  
-            Main.npcFrameCount[npc.type] = 2; 
+            Main.npcFrameCount[NPC.type] = 2; 
             npc.value = 0;
             npc.npcSlots = 1f;
             npc.boss = false;
@@ -57,7 +57,7 @@ namespace SOTS.NPCs.Boss
 			shootToY *= distance;
 			Color color = drawColor;
 			drawPos.X += shootToX;
-			drawPos.Y += shootToY + 6 + (npc.frame.Y > 0 ? -2 : 0);
+			drawPos.Y += shootToY + 6 + (NPC.frame.Y > 0 ? -2 : 0);
 			drawPos.X += ((float)npc.lifeMax - npc.life) / (float)npc.lifeMax * (float)Main.rand.NextFloat(-1, 1);
 			drawPos.Y += ((float)npc.lifeMax - npc.life) / (float)npc.lifeMax * (float)Main.rand.NextFloat(-1, 1);
 			spriteBatch.Draw(texture2, npc.Center - Main.screenPosition + new Vector2(0, 4), npc.frame, color, npc.rotation, drawOrigin2, npc.scale, SpriteEffects.None, 0f);

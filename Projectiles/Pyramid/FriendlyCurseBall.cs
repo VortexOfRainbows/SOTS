@@ -51,7 +51,7 @@ namespace SOTS.Projectiles.Pyramid
 					Projectile.Kill();
 				}
 			}
-			int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), 18, 18, mod.DustType("CurseDust"));
+			int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), 18, 18, ModContent.DustType<CurseDust>());
 			Main.dust[num1].noGravity = true;
 			Main.dust[num1].alpha = Projectile.alpha;
 		}

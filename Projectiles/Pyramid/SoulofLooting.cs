@@ -53,7 +53,7 @@ namespace SOTS.Projectiles.Pyramid
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			int pepperID = -1;
 			int count = 0;
-			for(int i = 0; i < Main.Projectile.Length; i++)
+			for(int i = 0; i < Main.projectile.Length; i++)
             {
 				Projectile proj = Main.projectile[i];
 				if(proj.type == ModContent.ProjectileType<GhostPepper>() && proj.active && proj.owner == owner)

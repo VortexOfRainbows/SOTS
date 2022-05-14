@@ -37,7 +37,7 @@ namespace SOTS.Projectiles.Chaos
             Vector2 drawPos;
             Color color;
             int i = 0;
-            float counter = 160 + Main.GlobalTime;
+            float counter = 160 + Main.GlobalTimeWrappedHourly;
             float scale = Projectile.scale * 1f - 0.5f * compression;
             int offsetDegrees = 35;
             int amt = 4 - (int)(Projectile.ai[1] + 9) / 10;

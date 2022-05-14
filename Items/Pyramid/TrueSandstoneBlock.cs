@@ -41,11 +41,11 @@ namespace SOTS.Items.Pyramid
 			Main.tileLighted[Type] = true;
 			drop = ModContent.ItemType<TrueSandstoneBlock>();
 			AddMapEntry(new Color(210, 160, 95));
-			mineResist = 5.0f;
-			minPick = 250;
+			MineResist = 5.0f;
+			MinPick = 250;
 			soundType = SoundID.Tink;
 			soundStyle = 2;
-			dustType = 32;
+			DustType = 32;
 		}
 		public override bool CanExplode(int i, int j)
 		{

@@ -28,7 +28,7 @@ namespace SOTS.Items.Flails
         }
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
+            Recipe recipe = new Recipe(mod);
             recipe.AddIngredient(ModContent.ItemType<VibrantBar>(), 8);
             recipe.SetResult(this);
             recipe.AddTile(TileID.Anvils);

@@ -68,7 +68,7 @@ namespace SOTS.Items.Permafrost
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(null, "DissolvingAurora", 1);
 			recipe.AddIngredient(ItemID.FrozenTurtleShell, 1);
 			recipe.AddIngredient(null, "PermafrostMedallion", 1);

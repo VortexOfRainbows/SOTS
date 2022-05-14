@@ -39,13 +39,13 @@ namespace SOTS.NPCs.Phase
 		}
 		public override void SetDefaults()
 		{
-            npc.aiStyle = -1; 
-            npc.lifeMax = 650;   
-            npc.damage = 64; 
-            npc.defense = 42;  
-            npc.knockBackResist = 0f; //take no knockback
-            npc.width = 62;
-            npc.height = 54;
+            NPC.aiStyle =-1; 
+            NPC.lifeMax = 650;   
+            NPC.damage = 64; 
+            NPC.defense = 42;  
+            NPC.knockBackResist = 0f; //take no knockback
+            NPC.width = 62;
+            NPC.height = 54;
             npc.value = Item.buyPrice(0, 0, 40, 0);
             npc.npcSlots = 1.5f;
 			npc.HitSound = SoundID.NPCHit4;
@@ -54,8 +54,8 @@ namespace SOTS.NPCs.Phase
 			npc.netAlways = true;
 			npc.noGravity = true;
 			npc.noTileCollide = true;
-			banner = npc.type;
-			bannerItem = ItemType<PhaseSpeederBanner>();
+			Banner = NPC.type;
+			BannerItem = ItemType<PhaseSpeederBanner>();
 			SetupDebuffImmunities();
 		}
 		public void SetupDebuffImmunities()
@@ -70,7 +70,7 @@ namespace SOTS.NPCs.Phase
         public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
         {
 			TrailPreDraw(spriteBatch);
-			Texture2D texture = Main.npcTexture[npc.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
 			//Texture2D texture2 = GetTexture("SOTS/NPCs/Phase/PhaseSpeederGlow");
 			Texture2D texture3 = GetTexture("SOTS/NPCs/Phase/PhaseSpeederPink");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height / 2);

@@ -38,7 +38,7 @@ namespace SOTS.Items.ChestItems
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(null, "DissolvingAurora", 1);
 			recipe.AddIngredient(ItemID.PlatinumBar, 20);
 			recipe.AddTile(TileID.Anvils);

@@ -46,31 +46,31 @@ namespace SOTS.NPCs
 		}
 		public override void SetDefaults()
 		{
-            npc.aiStyle = 0; 
-            npc.lifeMax = 150;   
-            npc.damage = 80; 
-            npc.defense = 20;  
-            npc.knockBackResist = 0f;
-            npc.width = 40;
-            npc.height = 40;
-			Main.npcFrameCount[npc.type] = 4;  
+            NPC.aiStyle =0; 
+            NPC.lifeMax = 150;   
+            NPC.damage = 80; 
+            NPC.defense = 20;  
+            NPC.knockBackResist = 0f;
+            NPC.width = 40;
+            NPC.height = 40;
+			Main.npcFrameCount[NPC.type] = 4;  
             npc.value = 1500;
             npc.npcSlots = 1f;
             npc.HitSound = SoundID.NPCHit7;
             npc.DeathSound = SoundID.NPCDeath14;
             npc.netAlways = true;
 			npc.noGravity = true;
-			banner = npc.type;
-			bannerItem = ItemType<WallMimicBanner>();
+			Banner = NPC.type;
+			BannerItem = ItemType<WallMimicBanner>();
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture = Main.npcTexture[npc.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, 25);
 			Vector2 drawPos = npc.Center - Main.screenPosition;
-			spriteBatch.Draw(texture, drawPos, new Rectangle(0, npc.frame.Y, 50, 50), drawColor, npc.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
+			spriteBatch.Draw(texture, drawPos, new Rectangle(0, NPC.frame.Y, 50, 50), drawColor, npc.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
 			texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/WallMimicGlow");
-			spriteBatch.Draw(texture, drawPos, new Rectangle(0, npc.frame.Y, 50, 50), Color.White, npc.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
+			spriteBatch.Draw(texture, drawPos, new Rectangle(0, NPC.frame.Y, 50, 50), Color.White, npc.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
 			return false;
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
@@ -109,7 +109,7 @@ namespace SOTS.NPCs
 			for(int k = 0; k < 4; k++)
             {
 				Vector2 from = new Vector2(24, 0).RotatedBy(Math.PI / 2 * k);
-				Dust dust = Dust.NewDustDirect(npc.Center - new Vector2(5) + from, 0, 0, mod.DustType("CurseDust"));
+				Dust dust = Dust.NewDustDirect(npc.Center - new Vector2(5) + from, 0, 0, ModContent.DustType<CurseDust>());
 				dust.noGravity = true;
 				dust.scale = 0.9f + Main.rand.NextFloat(-0.1f, 0.1f);
 				dust.velocity *= 0.45f;
@@ -187,7 +187,7 @@ namespace SOTS.NPCs
 					for(int i = 0; i < 360; i += 20)
 					{
 						Vector2 circularRotation = new Vector2(-48, 0).RotatedBy(MathHelper.ToRadians(i));
-						int num1 = Dust.NewDust(new Vector2(npc.Center.X - 6 + circularRotation.X, npc.Center.Y - 6 + circularRotation.Y), 0, 0, mod.DustType("CurseDust"));
+						int num1 = Dust.NewDust(new Vector2(npc.Center.X - 6 + circularRotation.X, npc.Center.Y - 6 + circularRotation.Y), 0, 0, ModContent.DustType<CurseDust>());
 						Main.dust[num1].velocity = -circularRotation * 0.2f;
 						Main.dust[num1].noGravity = true;
 					}
@@ -283,10 +283,10 @@ namespace SOTS.NPCs
 			if (npc.frameCounter >= frameSpeed) 
 			{
 				npc.frameCounter -= frameSpeed;
-				npc.frame.Y += frame;
-				if(npc.frame.Y >= 4 * frame)
+				NPC.frame.Y += frame;
+				if(NPC.frame.Y >= 4 * frame)
 				{
-					npc.frame.Y = 0;
+					NPC.frame.Y = 0;
 				}
 			}
 		}

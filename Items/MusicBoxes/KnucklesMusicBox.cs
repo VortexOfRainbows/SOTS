@@ -37,7 +37,7 @@ namespace SOTS.Items.MusicBoxes
 
 		public static Color ColorSwap(Color firstColor, Color secondColor, float seconds)
 		{
-			float colorMePurple = (float)((Math.Sin((double)((float)Math.PI * 2f / seconds) * (double)Main.GlobalTime) + 1.0) * 0.5);
+			float colorMePurple = (float)((Math.Sin((double)((float)Math.PI * 2f / seconds) * (double)Main.GlobalTimeWrappedHourly) + 1.0) * 0.5);
 			return Color.Lerp(firstColor, secondColor, colorMePurple);
 		}
 
@@ -76,8 +76,8 @@ namespace SOTS.Items.MusicBoxes
 		{
 			Player player = Main.LocalPlayer;
 			player.noThrow = 2;
-			player.showItemIcon = true;
-			player.showItemIcon2 = mod.ItemType("KnucklesMusicBox");
+			player.cursorItemIconEnabled = true;
+			player.cursorItemIconID = mod.ItemType("KnucklesMusicBox");
 		}
 	}
 }

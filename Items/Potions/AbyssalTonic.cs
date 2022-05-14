@@ -115,7 +115,7 @@ namespace SOTS.Items.Potions
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(null, "DissolvingDeluge", 1);
 			recipe.SetResult(this, 1);
 			recipe.AddRecipe();

@@ -35,14 +35,14 @@ namespace SOTS.Items.Nature
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<NatureSpell>(), 1);
 			recipe.AddIngredient(ItemID.CrimtaneBar, 8);
 			recipe.AddIngredient(ModContent.ItemType<FragmentOfNature>(), 6);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this);
 			recipe.AddRecipe();
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<NatureSpell>(), 1);
 			recipe.AddIngredient(ItemID.DemoniteBar, 8);
 			recipe.AddIngredient(ModContent.ItemType<FragmentOfNature>(), 6);

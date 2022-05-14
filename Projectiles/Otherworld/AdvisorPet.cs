@@ -62,7 +62,7 @@ namespace SOTS.Projectiles.Otherworld
 				if (eyeReset > 2.5f)
 					eyeReset = 2.5f;
 			}
-			for(int i = 0; i < Main.Projectile.Length; i++)
+			for(int i = 0; i < Main.projectile.Length; i++)
             {
 				Projectile proj = Main.projectile[i];
 				if(proj.type == Projectile.type && proj.owner == Projectile.owner && proj.active && proj.whoAmI != Projectile.whoAmI)

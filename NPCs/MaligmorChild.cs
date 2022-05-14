@@ -29,11 +29,11 @@ namespace SOTS.NPCs
 		}
 		public override void SendExtraAI(BinaryWriter writer)
 		{
-			writer.Write(npc.frame.Y);
+			writer.Write(NPC.frame.Y);
 		}
 		public override void ReceiveExtraAI(BinaryReader reader)
 		{
-			npc.frame.Y = reader.ReadInt32();
+			NPC.frame.Y = reader.ReadInt32();
 		}
 		public override void SetStaticDefaults()
 		{
@@ -41,20 +41,20 @@ namespace SOTS.NPCs
 		}
 		public override void SetDefaults()
 		{
-            npc.lifeMax = 40;  
-            npc.damage = 24; 
-            npc.defense = 4;  
-            npc.knockBackResist = 0.6f;
-            npc.width = 16;
-            npc.height = 16;
-			Main.npcFrameCount[npc.type] = 3;  
+            NPC.lifeMax = 40;  
+            NPC.damage = 24; 
+            NPC.defense = 4;  
+            NPC.knockBackResist = 0.6f;
+            NPC.width = 16;
+            NPC.height = 16;
+			Main.npcFrameCount[NPC.type] = 3;  
             npc.value = 0;
             npc.npcSlots = 0f;
 			npc.noGravity = true;
 			npc.alpha = 0;
 			npc.HitSound = SoundID.NPCHit19;
 			npc.DeathSound = SoundID.NPCDeath1;
-			//banner = npc.type;
+			//Banner = NPC.type;
 		}
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
@@ -62,12 +62,12 @@ namespace SOTS.NPCs
         }
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
-			npc.lifeMax = 60;
+			NPC.lifeMax = 60;
             base.ScaleExpertStats(numPlayers, bossLifeScale);
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture = Main.npcTexture[npc.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height / 3 * 0.5f);
 			Vector2 drawPos = npc.Center - Main.screenPosition;
 			spriteBatch.Draw(texture, drawPos, npc.frame, drawColor, npc.rotation, drawOrigin, npc.scale, SpriteEffects.None, 0f);
@@ -81,7 +81,7 @@ namespace SOTS.NPCs
 		{
 			if(runOnce && Main.netMode != 1)
             {
-				npc.frame.Y = Main.rand.Next(3) * 26;
+				NPC.frame.Y = Main.rand.Next(3) * 26;
 				npc.netUpdate = true;
 			}
 			npc.TargetClosest(true);
@@ -117,7 +117,7 @@ namespace SOTS.NPCs
 				{
 					for (int k = 0; k < 20; k++)
 					{
-						Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, mod.DustType("CurseDust"), 0, 0, 0, default, 1.0f);
+						Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, ModContent.DustType<CurseDust>(), 0, 0, 0, default, 1.0f);
 						dust.scale *= 1.2f;
 						dust.velocity *= 0.6f;
 						dust.velocity += npc.velocity * 1.5f;
@@ -145,7 +145,7 @@ namespace SOTS.NPCs
 				int num = 0;
 				while (num < damage / npc.lifeMax * 30.0)
 				{
-					Dust.NewDust(npc.position, npc.width, npc.height, mod.DustType("CurseDust"), (float)(2 * hitDirection), -2f, 0, default, 1.2f);
+					Dust.NewDust(npc.position, npc.width, npc.height, ModContent.DustType<CurseDust>(), (float)(2 * hitDirection), -2f, 0, default, 1.2f);
 					num++;
 				}
 			}
@@ -153,7 +153,7 @@ namespace SOTS.NPCs
 			{
 				for (int k = 0; k < 30; k++)
 				{
-					Dust.NewDust(npc.position, npc.width, npc.height, mod.DustType("CurseDust"), (float)(2 * hitDirection), -2f, 0, default, 1.2f);
+					Dust.NewDust(npc.position, npc.width, npc.height, ModContent.DustType<CurseDust>(), (float)(2 * hitDirection), -2f, 0, default, 1.2f);
 				}
 			}
 		}

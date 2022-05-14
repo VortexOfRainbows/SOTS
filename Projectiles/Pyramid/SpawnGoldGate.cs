@@ -66,7 +66,7 @@ namespace SOTS.Projectiles.Pyramid
 						WorldGen.KillTile(x, y, false, false, false);
 					else
 						valid = false;
-					if (!Main.tile[x, y].active() && Main.netMode != NetmodeID.SinglePlayer)
+					if (!Main.tile[x, y].HasTile && Main.netMode != NetmodeID.SinglePlayer)
 						NetMessage.SendData(MessageID.TileChange, -1, -1, null, 0, x, y, 0f, 0, 0, 0);
 				}
 			}

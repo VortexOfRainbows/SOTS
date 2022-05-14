@@ -19,22 +19,22 @@ namespace SOTS.NPCs
 		public override void SetDefaults()
 		{
 			//npc.CloneDefaults(NPCID.BlackSlime);
-			npc.aiStyle = 1;
-            npc.lifeMax = 30;  
-            npc.damage = 12; 
-            npc.defense = 3;  
-            npc.knockBackResist = 1f;
-            npc.width = 38;
-            npc.height = 38;
+			NPC.aiStyle =1;
+            NPC.lifeMax = 30;  
+            NPC.damage = 12; 
+            NPC.defense = 3;  
+            NPC.knockBackResist = 1f;
+            NPC.width = 38;
+            NPC.height = 38;
             animationType = NPCID.BlueSlime;
-			Main.npcFrameCount[npc.type] = 2;  
+			Main.npcFrameCount[NPC.type] = 2;  
             npc.value = 100;
             npc.npcSlots = .4f;
 			npc.alpha = 75;
             npc.HitSound = SoundID.NPCHit1;
             npc.DeathSound = SoundID.NPCDeath1;
-			banner = npc.type;
-			bannerItem = ItemType<NatureSlimeBanner>();
+			Banner = NPC.type;
+			BannerItem = ItemType<NatureSlimeBanner>();
 		}
 		public override bool PreAI()
 		{
@@ -43,8 +43,8 @@ namespace SOTS.NPCs
 			{
 				initiateSize = -1;
 				npc.scale = 1.1f; //why??
-				npc.width = (int)(npc.width * npc.scale);
-				npc.height = (int)(npc.height * npc.scale);
+				NPC.width = (int)(npc.width * npc.scale);
+				NPC.height = (int)(npc.height * npc.scale);
 			}
 			return true;
 		}

@@ -18,14 +18,14 @@ namespace SOTS.NPCs
 		}
 		public override void SetDefaults()
 		{
-            npc.aiStyle = 0; 
-            npc.lifeMax = 185;   
-            npc.damage = 45; 
-            npc.defense = 20;  
-            npc.knockBackResist = 0f;
-            npc.width = 48;
-            npc.height = 56;
-			Main.npcFrameCount[npc.type] = 4;  
+            NPC.aiStyle =0; 
+            NPC.lifeMax = 185;   
+            NPC.damage = 45; 
+            NPC.defense = 20;  
+            NPC.knockBackResist = 0f;
+            NPC.width = 48;
+            NPC.height = 56;
+			Main.npcFrameCount[NPC.type] = 4;  
             npc.value = 4450;
             npc.npcSlots = 0.6f;
             npc.lavaImmune = true;
@@ -35,17 +35,17 @@ namespace SOTS.NPCs
             npc.DeathSound = SoundID.NPCDeath6;
             npc.netAlways = true;
             npc.netUpdate = true;
-			banner = npc.type;
-			bannerItem = ItemType<FlamingGhastBanner>();
+			Banner = NPC.type;
+			BannerItem = ItemType<FlamingGhastBanner>();
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture = Main.npcTexture[npc.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height / 8);
 			Vector2 drawPos = npc.Center - Main.screenPosition;
-			spriteBatch.Draw(texture, drawPos, new Rectangle(0, npc.frame.Y, 48, 56), drawColor, npc.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
+			spriteBatch.Draw(texture, drawPos, new Rectangle(0, NPC.frame.Y, 48, 56), drawColor, npc.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
 			texture = GetTexture("SOTS/NPCs/FlamingGhastGlow");
-			spriteBatch.Draw(texture, drawPos, new Rectangle(0, npc.frame.Y, 48, 56), Color.White, npc.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
+			spriteBatch.Draw(texture, drawPos, new Rectangle(0, NPC.frame.Y, 48, 56), Color.White, npc.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
 			return false;
 		}
 		public override void AI()
@@ -67,7 +67,7 @@ namespace SOTS.NPCs
 			npc.velocity.Y += 0.02f * (float)Math.Sin(MathHelper.ToRadians(ai1 * 6));
 			for(int i = 0; i < 2; i++)
 			{
-				int num1 = Dust.NewDust(npc.position, npc.width - 4, 24, mod.DustType("CurseDust"));
+				int num1 = Dust.NewDust(npc.position, npc.width - 4, 24, ModContent.DustType<CurseDust>());
 				Main.dust[num1].noGravity = true;
 				Main.dust[num1].velocity.X = npc.velocity.X;
 				Main.dust[num1].velocity.Y = -3 + i * 1.5f;
@@ -110,19 +110,19 @@ namespace SOTS.NPCs
 			if (npc.frameCounter >= 5f) 
 			{
 				npc.frameCounter -= 5f;
-				npc.frame.Y += frameHeight;
-				if(npc.frame.Y >= 4 * frameHeight)
+				NPC.frame.Y += frameHeight;
+				if(NPC.frame.Y >= 4 * frameHeight)
 				{
-					npc.frame.Y = 0;
+					NPC.frame.Y = 0;
 				}
 			}
 		}
 		public override void NPCLoot()
 		{
-			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  mod.ItemType("CursedMatter"), Main.rand.Next(2) + 2);	
+			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  ModContent.ItemType<CursedMatter>(), Main.rand.Next(2) + 2);	
 			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height,  ItemID.CursedFlame, Main.rand.Next(4) + 2);
 			if (Main.rand.NextBool(10))
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("CursedCaviar"), 1);
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<CursedCaviar>(), 1);
 		}
 		public override void HitEffect(int hitDirection, double damage)
         {
@@ -131,7 +131,7 @@ namespace SOTS.NPCs
 				int num = 0;
 				while (num < damage / npc.lifeMax * 50.0)
 				{
-					Dust.NewDust(npc.position, npc.width, npc.height, mod.DustType("CurseDust"), (float)(2 * hitDirection), -2f);
+					Dust.NewDust(npc.position, npc.width, npc.height, ModContent.DustType<CurseDust>(), (float)(2 * hitDirection), -2f);
 					num++;
 				}
 			}
@@ -139,7 +139,7 @@ namespace SOTS.NPCs
 			{
 				for (int k = 0; k < 30; k++)
 				{
-					Dust.NewDust(npc.position, npc.width, npc.height, mod.DustType("CurseDust"), (float)(2 * hitDirection), -2f);
+					Dust.NewDust(npc.position, npc.width, npc.height, ModContent.DustType<CurseDust>(), (float)(2 * hitDirection), -2f);
 				}
 			}		
 		}

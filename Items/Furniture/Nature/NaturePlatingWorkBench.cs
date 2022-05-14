@@ -23,7 +23,7 @@ namespace SOTS.Items.Furniture.Nature
         }
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
+            Recipe recipe = new Recipe(mod);
             recipe.AddIngredient(ModContent.ItemType<NaturePlating>(), 10);
             recipe.AddTile(TileID.Anvils);
             recipe.SetResult(this, 1);
@@ -40,7 +40,7 @@ namespace SOTS.Items.Furniture.Nature
         {
             Main.tileLighted[Type] = true;
             base.SetDefaults(t);
-            adjTiles = new int[] { TileID.WorkBenches, TileID.Anvils };
+            AdjTiles = new int[] { TileID.WorkBenches, TileID.Anvils };
         }
 
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)

@@ -33,14 +33,14 @@ namespace SOTS.NPCs.Boss
 		}
 		public override void SetDefaults()
 		{
-            npc.lifeMax = 1;   
-            npc.damage = 80;   
-            npc.defense = 0;     
-            npc.knockBackResist = 0f;
-            npc.width = 14;
-            npc.height = 26;
+            NPC.lifeMax = 1;   
+            NPC.damage = 80;   
+            NPC.defense = 0;     
+            NPC.knockBackResist = 0f;
+            NPC.width = 14;
+            NPC.height = 26;
             animationType = NPCID.CaveBat;
-            Main.npcFrameCount[npc.type] = 5;
+            Main.npcFrameCount[NPC.type] = 5;
             npc.value = 0;
             npc.npcSlots = 1f;
             npc.boss = false;

@@ -54,14 +54,14 @@ namespace SOTS.NPCs
 		}
 		public override void SetDefaults()
 		{
-            npc.aiStyle = 0; 
-            npc.lifeMax = 350;   
-            npc.damage = 40; 
-            npc.defense = 10;  
-            npc.knockBackResist = 0f;
-            npc.width = 50;
-            npc.height = 52;
-			Main.npcFrameCount[npc.type] = 4;  
+            NPC.aiStyle =0; 
+            NPC.lifeMax = 350;   
+            NPC.damage = 40; 
+            NPC.defense = 10;  
+            NPC.knockBackResist = 0f;
+            NPC.width = 50;
+            NPC.height = 52;
+			Main.npcFrameCount[NPC.type] = 4;  
             npc.value = 10000;
             npc.npcSlots = 5f;
             npc.lavaImmune = true;
@@ -72,8 +72,8 @@ namespace SOTS.NPCs
             npc.DeathSound = SoundID.NPCDeath6;
             npc.netAlways = true;
 			npc.buffImmune[BuffID.Frostburn] = true;
-			banner = npc.type;
-			bannerItem = ItemType<TwilightDevilBanner>();
+			Banner = NPC.type;
+			BannerItem = ItemType<TwilightDevilBanner>();
 		}
 		private int initiateHardmode = 0;
 		public override bool PreAI()
@@ -81,7 +81,7 @@ namespace SOTS.NPCs
 			if(Main.hardMode && initiateHardmode == 0)
 			{
 				initiateHardmode = 1;
-				npc.damage = (int)(npc.damage * 1.25f);
+				NPC.damage = (int)(npc.damage * 1.25f);
 			}
 			if (npc.ai[0] == 0 && tracerPosX == 0 && tracerPosY == 0)
 			{
@@ -143,7 +143,7 @@ namespace SOTS.NPCs
 				if (storeDamage == 0)
 				{
 					storeDamage = npc.damage;
-					npc.damage = 0;
+					NPC.damage = 0;
 				}
 				createDust(16, 1, 2, false);
 				npc.alpha += 2;
@@ -162,7 +162,7 @@ namespace SOTS.NPCs
 			{
 				if (storeDamage != 0)
 				{
-					npc.damage = storeDamage;
+					NPC.damage = storeDamage;
 					storeDamage = 0;
 				}
 				createDust(64, -1, 2, false);
@@ -217,10 +217,10 @@ namespace SOTS.NPCs
 			if (npc.frameCounter >= 8f) 
 			{
 				npc.frameCounter -= 8f;
-				npc.frame.Y += frame;
-				if(npc.frame.Y >= 4 * frame)
+				NPC.frame.Y += frame;
+				if(NPC.frame.Y >= 4 * frame)
 				{
-					npc.frame.Y = 0;
+					NPC.frame.Y = 0;
 				}
 			}
 		}
@@ -274,12 +274,12 @@ namespace SOTS.NPCs
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture = Main.npcTexture[npc.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height / 8);
 			Vector2 drawPos = npc.Center - Main.screenPosition;
-			spriteBatch.Draw(texture, drawPos, new Rectangle(0, npc.frame.Y, npc.width, npc.height), npc.GetAlpha(drawColor), npc.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
+			spriteBatch.Draw(texture, drawPos, new Rectangle(0, NPC.frame.Y, npc.width, npc.height), npc.GetAlpha(drawColor), npc.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
 			texture = GetTexture("SOTS/NPCs/TwilightDevilGlow");
-			spriteBatch.Draw(texture, drawPos, new Rectangle(0, npc.frame.Y, npc.width, npc.height), npc.GetAlpha(Color.White), npc.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
+			spriteBatch.Draw(texture, drawPos, new Rectangle(0, NPC.frame.Y, npc.width, npc.height), npc.GetAlpha(Color.White), npc.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
 			return false;
 		}
 	}

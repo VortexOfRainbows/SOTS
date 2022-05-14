@@ -29,7 +29,7 @@ namespace SOTS.Items.Earth
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ItemID.MarbleBlock, 50);
 			recipe.AddIngredient(ModContent.ItemType<FragmentOfEarth>(), 4);
 			recipe.AddTile(TileID.Anvils);

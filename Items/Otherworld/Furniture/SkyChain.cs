@@ -30,7 +30,7 @@ namespace SOTS.Items.Otherworld.Furniture
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<AvaritianPlating>(), 4);
 			recipe.AddIngredient(ModContent.ItemType<TwilightGel>(), 4);
 			recipe.AddTile(ModContent.TileType<HardlightFabricatorTile>());
@@ -55,7 +55,7 @@ namespace SOTS.Items.Otherworld.Furniture
 			AddMapEntry(new Color(255, 255, 255), name);
 			disableSmartCursor = true;
 			drop = ModContent.ItemType<SkyChain>();
-			dustType = ModContent.DustType<AvaritianDust>();
+			DustType = ModContent.DustType<AvaritianDust>();
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
 		{
@@ -68,12 +68,12 @@ namespace SOTS.Items.Otherworld.Furniture
 		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
 		{
-			float uniquenessCounter = Main.GlobalTime * -100 + (i + j) * 5;
+			float uniquenessCounter = Main.GlobalTimeWrappedHourly * -100 + (i + j) * 5;
 			Tile tile = Main.tile[i, j];
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/Furniture/SkyChainTileGlow").Value;
 			Rectangle frame = new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, 16);
 			Color color;
-			color = WorldGen.paintColor((int)Main.tile[i, j].color()) * (100f / 255f);
+			color = WorldGen.paintColor((int)Main.tile[i, j].TileColor) * (100f / 255f);
 			color.A = 0;
 			float alphaMult = 0.55f + 0.45f * (float)Math.Sin(MathHelper.ToRadians(uniquenessCounter));
 			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
@@ -94,9 +94,9 @@ namespace SOTS.Items.Otherworld.Furniture
 			Texture2D textureF = Mod.Assets.Request<Texture2D>("Items/Otherworld/Furniture/SkyChainHelixFill").Value;
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
 			float height = 16;
-			float timer = Main.GlobalTime * -100 + (i + j) * 5;
+			float timer = Main.GlobalTimeWrappedHourly * -100 + (i + j) * 5;
 			Color color;
-			color = WorldGen.paintColor((int)Main.tile[i, j].color()) * (100f / 255f);
+			color = WorldGen.paintColor((int)Main.tile[i, j].TileColor) * (100f / 255f);
 			color.A = 0;
 			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
 			if (Main.drawToScreen)

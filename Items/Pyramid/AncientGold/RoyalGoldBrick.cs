@@ -39,11 +39,11 @@ namespace SOTS.Items.Pyramid.AncientGold
 			Main.tileLighted[Type] = true;
 			drop = ModContent.ItemType<RoyalGoldBrick>();
 			AddMapEntry(new Color(180, 150, 20));
-			mineResist = 1.0f;
-			minPick = 0;
+			MineResist = 1.0f;
+			MinPick = 0;
 			soundType = SoundID.Tink;
 			soundStyle = 2;
-			dustType = DustID.GoldCoin;
+			DustType = DustID.GoldCoin;
 			TileID.Sets.GemsparkFramingTypes[Type] = Type;
 		}
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)

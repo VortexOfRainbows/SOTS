@@ -45,7 +45,7 @@ namespace SOTS.Items.SpiritStaves
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<Fragments.DissolvingDeluge>(), 1);
 			recipe.AddRecipeGroup(RecipeGroupID.IronBar, 10);
 			recipe.AddIngredient(ItemID.SoulofMight, 5);

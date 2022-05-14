@@ -82,14 +82,14 @@ namespace SOTS.Items.Chaos
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<Items.Secrets.PhotonGeyser>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<PhaseBar>(), 24);
 			recipe.AddIngredient(ModContent.ItemType<DissolvingBrilliance>(), 1);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.SetResult(this);
 			recipe.AddRecipe();
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(ItemID.RainbowRod, 1);
 			recipe.AddIngredient(ModContent.ItemType<PhaseBar>(), 48);
 			recipe.AddIngredient(ModContent.ItemType<TerminalCluster>(), 1);

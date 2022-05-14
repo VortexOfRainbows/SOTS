@@ -17,12 +17,12 @@ namespace SOTS.Items.Slime
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<Wormwood>(), 1);
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.SetResult(this, 4);
 			recipe.AddRecipe();
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(this, 4);
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.SetResult(ModContent.ItemType<Wormwood>(), 1);
@@ -34,7 +34,7 @@ namespace SOTS.Items.Slime
 		public override void SetDefaults()
 		{
 			Main.wallHouse[Type] = true;
-			dustType = 7;
+			DustType = 7;
 			drop = ModContent.ItemType<GoopwoodWall>();
 			AddMapEntry(new Color(120, 54, 16));
 		}

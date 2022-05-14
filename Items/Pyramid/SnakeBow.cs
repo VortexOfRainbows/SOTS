@@ -38,7 +38,7 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(null, "Snakeskin", 18);
 			recipe.AddIngredient(ItemID.Leather, 4);
 			recipe.AddIngredient(ItemID.WoodenBow, 1);

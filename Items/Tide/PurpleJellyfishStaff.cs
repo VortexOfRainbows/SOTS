@@ -46,7 +46,7 @@ namespace SOTS.Items.Tide
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<PinkJellyfishStaff>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<BlueJellyfishStaff>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<DissolvingAether>(), 1);

@@ -42,7 +42,7 @@ namespace SOTS.Items.SpiritStaves
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<Fragments.DissolvingEarth>(), 1);
 			recipe.AddIngredient(ItemID.MeteoriteBar, 20);
 			recipe.AddTile(TileID.Anvils);

@@ -15,9 +15,9 @@ namespace SOTS.Items.Permafrost
 			Main.tileMergeDirt[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = false;
-			minPick = 100;
-			mineResist = 2.0f;
-			dustType = ModContent.DustType<ModIceDust>();
+			MinPick = 100;
+			MineResist = 2.0f;
+			DustType = ModContent.DustType<ModIceDust>();
 			drop = ModContent.ItemType<HardIceBrick>();
 			AddMapEntry(new Color(148, 179, 240));
 			soundType = SoundID.Tink;
@@ -42,7 +42,7 @@ namespace SOTS.Items.Permafrost
 		{
 			Main.wallHouse[Type] = false;
 			AddMapEntry(new Color(80, 35, 180));
-			dustType = ModContent.DustType<ModIceDust>();
+			DustType = ModContent.DustType<ModIceDust>();
 			drop = ModContent.ItemType<HardIceBrickWall>();
 		}
         public override void KillWall(int i, int j, ref bool fail)

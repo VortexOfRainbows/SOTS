@@ -33,7 +33,7 @@ namespace SOTS.Projectiles.Laser
             Vector2 drawPos;
             Color color;
             int i = 0;
-            float counter = 160 + Main.GlobalTime;
+            float counter = 160 + Main.GlobalTimeWrappedHourly;
             float scale = Projectile.scale * 0.75f - 0.25f * compression;
             for (int d = -3; d < 4; d++)
             {
@@ -76,7 +76,7 @@ namespace SOTS.Projectiles.Laser
                     int k = (int)drawPos.X / 16;
                     int j = (int)drawPos.Y / 16;
                     spriteBatch.Draw(texture, drawPos - Main.screenPosition + dynamicAddition, null, color, rotation, new Vector2(texture.Width / 2, texture.Height / 2), scale, SpriteEffects.None, 0f);
-                    if (!WorldGen.InWorld(k, j, 20) || Main.tile[k, j].active() && Main.tileSolidTop[Main.tile[k, j].type] == false && Main.tileSolid[Main.tile[k, j].type] == true)
+                    if (!WorldGen.InWorld(k, j, 20) || Main.tile[k, j].HasTile && Main.tileSolidTop[Main.tile[k, j].type] == false && Main.tileSolid[Main.tile[k, j].type] == true)
                     {
                         break;
                     }

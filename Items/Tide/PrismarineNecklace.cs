@@ -33,7 +33,7 @@ namespace SOTS.Items.Tide
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<HeartOfTheSea>(), 1);
 			recipe.AddIngredient(ItemID.SharkToothNecklace, 1);
 			recipe.AddTile(TileID.TinkerersWorkbench);

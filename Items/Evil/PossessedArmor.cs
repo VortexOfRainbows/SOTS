@@ -47,7 +47,7 @@ namespace SOTS.Items.Evil
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<VibrantHelmet>(), 1);
 			recipe.AddIngredient(ItemID.SoulofNight, 15);
 			recipe.AddIngredient(ModContent.ItemType<FragmentOfEvil>(), 4);
@@ -83,7 +83,7 @@ namespace SOTS.Items.Evil
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<VibrantLeggings>(), 1);
 			recipe.AddIngredient(ItemID.SoulofNight, 15);
 			recipe.AddIngredient(ModContent.ItemType<FragmentOfEvil>(), 4);
@@ -121,7 +121,7 @@ namespace SOTS.Items.Evil
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<VibrantChestplate>(), 1);
 			recipe.AddIngredient(ItemID.SoulofNight, 15);
 			recipe.AddIngredient(ModContent.ItemType<FragmentOfEvil>(), 4);

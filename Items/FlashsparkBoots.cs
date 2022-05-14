@@ -28,7 +28,7 @@ namespace SOTS.Items
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 		    recipe.AddIngredient(ItemID.FrostsparkBoots, 1);
 			recipe.AddIngredient(ItemID.LavaWaders, 1);
 			recipe.AddIngredient(ModContent.ItemType<AbsoluteBar>(), 12);

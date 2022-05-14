@@ -29,8 +29,8 @@ namespace SOTS.Items.Furniture
         {
             Player localPlayer = Main.LocalPlayer;
             localPlayer.noThrow = 2;
-            localPlayer.showItemIcon = true;
-            localPlayer.showItemIcon2 = ModContent.ItemType<TDrop>();
+            localplayer.cursorItemIconEnabled = true;
+            localplayer.cursorItemIconID = ModContent.ItemType<TDrop>();
         }
         public override bool NewRightClick(int x, int y)
         {

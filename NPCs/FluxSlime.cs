@@ -18,22 +18,22 @@ namespace SOTS.NPCs
 		public override void SetDefaults()
 		{
 			//npc.CloneDefaults(NPCID.BlackSlime);
-			npc.aiStyle = 1;
-            npc.lifeMax = 100;  
-            npc.damage = 24; 
-            npc.defense = 10;  
-            npc.knockBackResist = 1f;
-            npc.width = 36;
-            npc.height = 28;
+			NPC.aiStyle =1;
+            NPC.lifeMax = 100;  
+            NPC.damage = 24; 
+            NPC.defense = 10;  
+            NPC.knockBackResist = 1f;
+            NPC.width = 36;
+            NPC.height = 28;
             animationType = NPCID.BlueSlime;
-			Main.npcFrameCount[npc.type] = 2;  
+			Main.npcFrameCount[NPC.type] = 2;  
             npc.value = 1800;
             npc.npcSlots = .5f;
 			npc.alpha = 70;
             npc.HitSound = SoundID.NPCHit1;
             npc.DeathSound = SoundID.NPCDeath1;
-			banner = npc.type;
-			bannerItem = ItemType<FluxSlimeBanner>();
+			Banner = NPC.type;
+			BannerItem = ItemType<FluxSlimeBanner>();
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
@@ -56,7 +56,7 @@ namespace SOTS.NPCs
                     {
 						direction = 0;
                     }
-					if(npc.frame.Y == 0)
+					if(NPC.frame.Y == 0)
 					{
 						if(i == 0 || i == 6)
 							circular.Y -= 2 * npc.scale;
@@ -109,8 +109,8 @@ namespace SOTS.NPCs
 				npc.Center = npc.position;
 				initiateSize = -1;
 				npc.scale = 1.25f;
-				npc.width = (int)(npc.width * npc.scale);
-				npc.height = (int)(npc.height * npc.scale);
+				NPC.width = (int)(npc.width * npc.scale);
+				NPC.height = (int)(npc.height * npc.scale);
 				npc.position = npc.Center;
 			}
 			return true;

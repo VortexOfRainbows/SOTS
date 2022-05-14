@@ -52,17 +52,17 @@ namespace SOTS.NPCs.Boss.Curse
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Pharaoh's Curse");
-			Main.npcFrameCount[npc.type] = 1;
+			Main.npcFrameCount[NPC.type] = 1;
 		}
 		public override void SetDefaults()
 		{
-			npc.aiStyle = 0;
-			npc.lifeMax = 4000;
-			npc.damage = 45;
-			npc.defense = 13;
-			npc.knockBackResist = 0f;
-			npc.width = 42;
-			npc.height = 54;
+			NPC.aiStyle =0;
+			NPC.lifeMax = 4000;
+			NPC.damage = 45;
+			NPC.defense = 13;
+			NPC.knockBackResist = 0f;
+			NPC.width = 42;
+			NPC.height = 54;
 			npc.npcSlots = 20f;
 			npc.value = Item.buyPrice(0, 7, 0, 0);
 			npc.boss = true;
@@ -96,7 +96,7 @@ namespace SOTS.NPCs.Boss.Curse
 				int num = 0;
 				while ((double)num < damage / (double)npc.lifeMax * 60.0)
 				{
-					Dust.NewDust(npc.position, npc.width, npc.height, mod.DustType("CurseDust"), (float)(2 * hitDirection), -2f);
+					Dust.NewDust(npc.position, npc.width, npc.height, ModContent.DustType<CurseDust>(), (float)(2 * hitDirection), -2f);
 					num++;
 				}
 			}
@@ -106,7 +106,7 @@ namespace SOTS.NPCs.Boss.Curse
 				{
 					enteredSecondPhase = true;
 					int temp = npc.lifeMax;
-					npc.lifeMax = (int)(temp * 1.0f);
+					NPC.lifeMax = (int)(temp * 1.0f);
 					npc.life = npc.lifeMax;
 					npc.netUpdate = true;
 				}
@@ -114,10 +114,10 @@ namespace SOTS.NPCs.Boss.Curse
 				{
 					for (int k = 0; k < 240; k++)
 					{
-						Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, mod.DustType("CurseDust"), (float)(2 * hitDirection), -2f);
+						Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, ModContent.DustType<CurseDust>(), (float)(2 * hitDirection), -2f);
 						dust.velocity = new Vector2(Main.rand.NextFloat(4), 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360))) + new Vector2(0, -2);
 						dust.scale *= Main.rand.NextFloat(2) + 1;
-						dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, mod.DustType("CurseDust"), (float)(2 * hitDirection), -2f);
+						dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, ModContent.DustType<CurseDust>(), (float)(2 * hitDirection), -2f);
 						dust.velocity = new Vector2(Main.rand.NextFloat(4), 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)));
 						dust.scale *= Main.rand.NextFloat(2) + 1;
 						dust.noGravity = true;
@@ -126,7 +126,7 @@ namespace SOTS.NPCs.Boss.Curse
 				else
                 {
 					TransitionPhase(7);
-					npc.lifeMax = 666;
+					NPC.lifeMax = 666;
 					npc.life = 666;
 				}
 			}
@@ -145,13 +145,13 @@ namespace SOTS.NPCs.Boss.Curse
 			}
 			else
 			{
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("CursedMatter"), Main.rand.Next(12, 25));
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<CursedMatter>(), Main.rand.Next(12, 25));
 			}
 		}
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
 		{
-			npc.lifeMax = (int)(npc.lifeMax * bossLifeScale * 0.625f);
-			npc.damage = (int)(npc.damage * 0.75f);
+			NPC.lifeMax = (int)(npc.lifeMax * bossLifeScale * 0.625f);
+			NPC.damage = (int)(npc.damage * 0.75f);
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
@@ -171,7 +171,7 @@ namespace SOTS.NPCs.Boss.Curse
 					DrawFoam(foamParticleList4, 3);
 				List<int> slots = new List<int>();
 				List<int> npcSlots = new List<int>();
-				for (int i = 0; i < Main.Projectile.Length; i++)
+				for (int i = 0; i < Main.projectile.Length; i++)
 				{
 					Projectile proj = Main.projectile[i];
 					if (proj.type == ModContent.ProjectileType<CurseWave>() && proj.active && proj.ai[0] == npc.whoAmI)
@@ -240,7 +240,7 @@ namespace SOTS.NPCs.Boss.Curse
 				//DrawLimbs(spriteBatch, false, 1);
 			}
 			Vector2 drawPos3 = npc.Center - Main.screenPosition;
-			Texture2D texture = Main.npcTexture[npc.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
 			if (!enteredSecondPhase || (ai1 < 1 && ai2 < 90))
 			{
 				Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);

@@ -73,7 +73,7 @@ namespace SOTS.Projectiles.Otherworld
 				bool found = false; 
 				ofTotal = 0;
 				total = 0;
-				for (int i = 0; i < Main.Projectile.Length; i++)
+				for (int i = 0; i < Main.projectile.Length; i++)
 				{
 					Projectile proj = Main.projectile[i];
 					if (Projectile.type == proj.type && proj.active && Projectile.active && proj.owner == Projectile.owner && proj.timeLeft > 748 && Projectile.timeLeft > 748)

@@ -49,7 +49,7 @@ namespace SOTS.Items.Nature
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<Wormwood>(), 20);
 			recipe.AddIngredient(ModContent.ItemType<FragmentOfNature>(), 5);
 			recipe.SetResult(this);
@@ -84,7 +84,7 @@ namespace SOTS.Items.Nature
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<Wormwood>(), 16);
 			recipe.AddIngredient(ModContent.ItemType<FragmentOfNature>(), 4);
 			recipe.SetResult(this);
@@ -119,7 +119,7 @@ namespace SOTS.Items.Nature
 		}
 		public override void UpdateEquip(Player player)
 		{
-			for (int i = 0; i < Main.Projectile.Length; i++)
+			for (int i = 0; i < Main.projectile.Length; i++)
 			{
 				Projectile proj = Main.projectile[i];
 				if (proj.owner == player.whoAmI && proj.minion == true && proj.minionSlots > 0.01f && proj.active)
@@ -130,7 +130,7 @@ namespace SOTS.Items.Nature
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<Wormwood>(), 22);
 			recipe.AddIngredient(ModContent.ItemType<FragmentOfNature>(), 6);
 			recipe.SetResult(this);

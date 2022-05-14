@@ -39,7 +39,7 @@ namespace SOTS.Items.Nature
         }
         public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<Scatterseed>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<Snakeskin>(), 12);
 			recipe.AddIngredient(ModContent.ItemType<DissolvingNature>(), 1);
@@ -49,7 +49,7 @@ namespace SOTS.Items.Nature
 			recipe.SetResult(this);
 			recipe.AddRecipe();
 			
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<Scatterseed>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<Snakeskin>(), 12);
 			recipe.AddIngredient(ModContent.ItemType<DissolvingNature>(), 1);

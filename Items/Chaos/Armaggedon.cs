@@ -49,7 +49,7 @@ namespace SOTS.Items.Chaos
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<JeweledGauntlet>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<PhaseBar>(), 20);
 			recipe.AddTile(TileID.MythrilAnvil);

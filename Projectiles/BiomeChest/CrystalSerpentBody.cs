@@ -41,7 +41,7 @@ namespace SOTS.Projectiles.BiomeChest
         {
             Player player = Main.player[Projectile.owner];
             int ownedCounter = 0;
-            for (int i = 0; i < Main.Projectile.Length; i++)
+            for (int i = 0; i < Main.projectile.Length; i++)
             {
                 Projectile proj = Main.projectile[i];
                 if (proj.active && proj.owner == player.whoAmI)

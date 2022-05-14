@@ -39,7 +39,7 @@ namespace SOTS.Items.Evil
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<PrismarineNecklace>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<WitchHeart>(), 1);
 			recipe.AddTile(TileID.TinkerersWorkbench);

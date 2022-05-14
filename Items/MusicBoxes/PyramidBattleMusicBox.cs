@@ -35,7 +35,7 @@ namespace SOTS.Items.MusicBoxes
 		
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<RubyKeystone>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<RoyalRubyShard>(), 10);
 			recipe.AddIngredient(ModContent.ItemType<CursedMatter>(), 5);
@@ -74,8 +74,8 @@ namespace SOTS.Items.MusicBoxes
 		{
 			Player player = Main.LocalPlayer;
 			player.noThrow = 2;
-			player.showItemIcon = true;
-			player.showItemIcon2 = ModContent.ItemType<PyramidBattleMusicBox>();
+			player.cursorItemIconEnabled = true;
+			player.cursorItemIconID = ModContent.ItemType<PyramidBattleMusicBox>();
 		}
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
 		{
@@ -108,7 +108,7 @@ namespace SOTS.Items.MusicBoxes
 				zero = Vector2.Zero;
 			}
 			Tile tile = Main.tile[i, j];
-			float counter = Main.GlobalTime * 120;
+			float counter = Main.GlobalTimeWrappedHourly * 120;
 			float mult = new Vector2(-1f, 0).RotatedBy(MathHelper.ToRadians(counter / 2f)).X;
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/MusicBoxes/PyramidBattleMusicBoxTileGlow").Value;
 			if (tile.TileFrameY % 36 == 0 && tile.TileFrameX % 36 == 0) //check for it being the top left tile

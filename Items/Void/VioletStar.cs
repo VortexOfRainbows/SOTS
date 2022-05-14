@@ -42,7 +42,7 @@ namespace SOTS.Items.Void
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<DissolvingEarth>(), 1);
 			recipe.AddIngredient(ItemID.ManaCrystal, 1);
 			recipe.AddIngredient(ModContent.ItemType<FragmentOfEvil>(), 5);

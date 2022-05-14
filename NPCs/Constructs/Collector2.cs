@@ -29,14 +29,14 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override void SetDefaults()
 		{
-			npc.aiStyle = 0; 
-			npc.lifeMax = 800;  
-			npc.damage = 0; 
-			npc.defense = 0;  
-			npc.knockBackResist = 0.1f;
-			npc.width = 86;
-			npc.height = 64;
-			Main.npcFrameCount[npc.type] = 1;  
+			NPC.aiStyle =0; 
+			NPC.lifeMax = 800;  
+			NPC.damage = 0; 
+			NPC.defense = 0;  
+			NPC.knockBackResist = 0.1f;
+			NPC.width = 86;
+			NPC.height = 64;
+			Main.npcFrameCount[NPC.type] = 1;  
 			npc.value = 0;
 			npc.npcSlots = 3f;
 			npc.noGravity = true;
@@ -54,7 +54,7 @@ namespace SOTS.NPCs.Constructs
 			DrawLightning(spriteBatch, drawColor, 1);
 			DrawLightning(spriteBatch, drawColor, 2);
 			DrawLightning(spriteBatch, drawColor, 3);
-			Texture2D texture = Main.npcTexture[npc.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
 			Texture2D textureDrill = Mod.Assets.Request<Texture2D>("NPCs/Constructs/Collector2Drill").Value;
 			Texture2D textureSpirit = Mod.Assets.Request<Texture2D>("NPCs/Constructs/Collector2Spirit").Value;
 			Vector2 drawOrigin = new Vector2(textureDrill.Width * 0.5f, textureDrill.Height * 0.5f);

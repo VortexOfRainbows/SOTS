@@ -31,7 +31,7 @@ namespace SOTS.Items.Pyramid
 			Texture2D texture = Terraria.GameContent.TextureAssets.Item[Item.type].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			position += drawOrigin * scale;
-			float counter = Main.GlobalTime * 160;
+			float counter = Main.GlobalTimeWrappedHourly * 160;
 			float mult = new Vector2(-1f, 0).RotatedBy(MathHelper.ToRadians(counter)).X;
 			for (int i = 0; i < 6; i++)
 			{
@@ -67,7 +67,7 @@ namespace SOTS.Items.Pyramid
 		{
 			Texture2D texture = Terraria.GameContent.TextureAssets.Item[Item.type].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			float counter = Main.GlobalTime * 160;
+			float counter = Main.GlobalTimeWrappedHourly * 160;
 			float mult = new Vector2(-2.5f, 0).RotatedBy(MathHelper.ToRadians(counter)).X;
 			for (int i = 0; i < 6; i++)
 			{
@@ -101,7 +101,7 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<TaintedKeystoneShard>(), 100);
 			recipe.AddTile(TileID.DemonAltar);
 			recipe.SetResult(this, 1);

@@ -62,7 +62,7 @@ namespace SOTS.Items.Furniture
                 TileID.Sets.HasOutlines[Type] = true;
                 AddMapEntry(MapColor, CreateMapEntryName(GetType().Name));
                 disableSmartCursor = true;
-                adjTiles = new int[] { TileID.OpenDoor };
+                AdjTiles = new int[] { TileID.OpenDoor };
                 closeDoorID = ModContent.TileType<TClosed>();
             }
             public override void NumDust(int i, int j, bool fail, ref int num)
@@ -81,8 +81,8 @@ namespace SOTS.Items.Furniture
             {
                 Player player = Main.LocalPlayer;
                 player.noThrow = 2;
-                player.showItemIcon = true;
-                player.showItemIcon2 = ModContent.ItemType<TDrop>();
+                player.cursorItemIconEnabled = true;
+                player.cursorItemIconID = ModContent.ItemType<TDrop>();
             }
         }
         public override void SetDefaults()
@@ -115,7 +115,7 @@ namespace SOTS.Items.Furniture
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
             AddMapEntry(MapColor, CreateMapEntryName(GetType().Name));
             disableSmartCursor = true;
-            adjTiles = new int[] { TileID.ClosedDoor };
+            AdjTiles = new int[] { TileID.ClosedDoor };
             openDoorID = ModContent.TileType<TOpen>();
         }
         public override bool HasSmartInteract()
@@ -134,8 +134,8 @@ namespace SOTS.Items.Furniture
         {
             Player player = Main.LocalPlayer;
             player.noThrow = 2;
-            player.showItemIcon = true;
-            player.showItemIcon2 = ModContent.ItemType<TDrop>();
+            player.cursorItemIconEnabled = true;
+            player.cursorItemIconID = ModContent.ItemType<TDrop>();
         }
     }
 }

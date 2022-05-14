@@ -28,15 +28,15 @@ namespace SOTS.NPCs
 		public override void SetDefaults()
 		{
 			//npc.CloneDefaults(NPCID.BlackSlime);
-			npc.aiStyle = 1;
-            npc.lifeMax = 50;  
-            npc.damage = 22; 
-            npc.defense = 10;  
-            npc.knockBackResist = 1.25f;
-            npc.width = 36;
-            npc.height = 32;
+			NPC.aiStyle =1;
+            NPC.lifeMax = 50;  
+            NPC.damage = 22; 
+            NPC.defense = 10;  
+            NPC.knockBackResist = 1.25f;
+            NPC.width = 36;
+            NPC.height = 32;
             animationType = NPCID.BlueSlime;
-			Main.npcFrameCount[npc.type] = 2;  
+			Main.npcFrameCount[NPC.type] = 2;  
             npc.value = 200;
             npc.npcSlots = 1.25f;
             npc.lavaImmune = true;
@@ -47,8 +47,8 @@ namespace SOTS.NPCs
 			npc.buffImmune[BuffID.OnFire] = true;
 			npc.buffImmune[BuffID.Frostburn] = true;
 			//npc.DeathSound = SoundID.NPCDeath14;
-			banner = npc.type;
-			bannerItem = ItemType<HoloSlimeBanner>();
+			Banner = NPC.type;
+			BannerItem = ItemType<HoloSlimeBanner>();
 		}
 		public bool AirBelow(int i, int j, int dist)
 		{
@@ -243,9 +243,9 @@ namespace SOTS.NPCs
 				float y = Main.rand.Next(-10, 11) * 0.075f;
 
 				if (k == 0)
-					Main.spriteBatch.Draw(texture2, new Vector2((float)(npc.Center.X - (int)Main.screenPosition.X), (float)(npc.Center.Y - (int)Main.screenPosition.Y) + 2), new Rectangle(0, npc.frame.Y, npc.width, npc.height), color * ((255 - npc.alpha) / 255f) * 0.5f, 0f, drawOrigin2, npc.scale, SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(texture2, new Vector2((float)(npc.Center.X - (int)Main.screenPosition.X), (float)(npc.Center.Y - (int)Main.screenPosition.Y) + 2), new Rectangle(0, NPC.frame.Y, npc.width, npc.height), color * ((255 - npc.alpha) / 255f) * 0.5f, 0f, drawOrigin2, npc.scale, SpriteEffects.None, 0f);
 
-				Main.spriteBatch.Draw(texture, new Vector2((float)(npc.Center.X - (int)Main.screenPosition.X) + x, (float)(npc.Center.Y - (int)Main.screenPosition.Y) + y + 2), new Rectangle(0, npc.frame.Y, npc.width, npc.height), color * ((255 - npc.alpha) / 255f), 0f, drawOrigin, npc.scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, new Vector2((float)(npc.Center.X - (int)Main.screenPosition.X) + x, (float)(npc.Center.Y - (int)Main.screenPosition.Y) + y + 2), new Rectangle(0, NPC.frame.Y, npc.width, npc.height), color * ((255 - npc.alpha) / 255f), 0f, drawOrigin, npc.scale, SpriteEffects.None, 0f);
 			}
 			base.PostDraw(spriteBatch, drawColor);
 		}

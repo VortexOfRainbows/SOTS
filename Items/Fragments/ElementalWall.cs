@@ -24,11 +24,11 @@ namespace SOTS.Items.Fragments
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<DissolvingNatureBlock>(), 1);
 			recipe.SetResult(this, 4);
 			recipe.AddRecipe();
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(this, 4);
 			recipe.SetResult(ModContent.ItemType<DissolvingNatureBlock>(), 1);
 			recipe.AddRecipe();
@@ -66,11 +66,11 @@ namespace SOTS.Items.Fragments
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<DissolvingEarthBlock>(), 1);
 			recipe.SetResult(this, 4);
 			recipe.AddRecipe();
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(this, 4);
 			recipe.SetResult(ModContent.ItemType<DissolvingEarthBlock>(), 1);
 			recipe.AddRecipe();
@@ -108,11 +108,11 @@ namespace SOTS.Items.Fragments
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<DissolvingDelugeBlock>(), 1);
 			recipe.SetResult(this, 4);
 			recipe.AddRecipe();
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(this, 4);
 			recipe.SetResult(ModContent.ItemType<DissolvingDelugeBlock>(), 1);
 			recipe.AddRecipe();
@@ -150,11 +150,11 @@ namespace SOTS.Items.Fragments
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<DissolvingAetherBlock>(), 1);
 			recipe.SetResult(this, 4);
 			recipe.AddRecipe();
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(this, 4);
 			recipe.SetResult(ModContent.ItemType<DissolvingAetherBlock>(), 1);
 			recipe.AddRecipe();
@@ -192,11 +192,11 @@ namespace SOTS.Items.Fragments
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<DissolvingAuroraBlock>(), 1);
 			recipe.SetResult(this, 4);
 			recipe.AddRecipe();
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(this, 4);
 			recipe.SetResult(ModContent.ItemType<DissolvingAuroraBlock>(), 1);
 			recipe.AddRecipe();
@@ -258,11 +258,11 @@ namespace SOTS.Items.Fragments
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<DissolvingUmbraBlock>(), 1);
 			recipe.SetResult(this, 4);
 			recipe.AddRecipe();
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(this, 4);
 			recipe.SetResult(ModContent.ItemType<DissolvingUmbraBlock>(), 1);
 			recipe.AddRecipe();
@@ -300,11 +300,11 @@ namespace SOTS.Items.Fragments
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<DissolvingNetherBlock>(), 1);
 			recipe.SetResult(this, 4);
 			recipe.AddRecipe();
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(this, 4);
 			recipe.SetResult(ModContent.ItemType<DissolvingNetherBlock>(), 1);
 			recipe.AddRecipe();
@@ -318,11 +318,11 @@ namespace SOTS.Items.Fragments
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<DissolvingBrillianceBlock>(), 1);
 			recipe.SetResult(this, 4);
 			recipe.AddRecipe();
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(this, 4);
 			recipe.SetResult(ModContent.ItemType<DissolvingBrillianceBlock>(), 1);
 			recipe.AddRecipe();

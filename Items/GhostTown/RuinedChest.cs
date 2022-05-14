@@ -51,18 +51,18 @@ namespace SOTS.Items.GhostTown
 			name = CreateMapEntryName(Name + "_Locked"); // With multiple map entries, you need unique translation keys.
 			name.SetDefault("Locked Ruined Chest");
 			AddMapEntry(new Color(180, 130, 100), name, MapChestName);
-			dustType = 122; //boreal wood
+			DustType = 122; //boreal wood
 			disableSmartCursor = true;
-			adjTiles = new int[] { TileID.Containers };
+			AdjTiles = new int[] { TileID.Containers };
 			chest = "Ruined Chest";
 			chestDrop = ModContent.ItemType<RuinedChest>();
 		}
-		public override ushort GetMapOption(int i, int j) => (ushort)(Main.tile[i, j].frameX / 36);
+		public override ushort GetMapOption(int i, int j) => (ushort)(Main.tile[i, j].TileFrameX / 36);
 		public override bool HasSmartInteract() => true;
-		public override bool IsLockedChest(int i, int j) => Main.tile[i, j].frameX / 36 == 1;
-		public override bool UnlockChest(int i, int j, ref short frameXAdjustment, ref int dustType, ref bool manual)
+		public override bool IsLockedChest(int i, int j) => Main.tile[i, j].TileFrameX / 36 == 1;
+		public override bool UnlockChest(int i, int j, ref short frameXAdjustment, ref int DustType, ref bool manual)
 		{
-			dustType = 1;
+			DustType = 1;
 			return true;
 		}
 		public string MapChestName(string name, int i, int j)
@@ -203,33 +203,33 @@ namespace SOTS.Items.GhostTown
 				top--;
 			}
 			int chest = Chest.FindChest(left, top);
-			player.showItemIcon2 = -1;
+			player.cursorItemIconID = -1;
 			if (chest < 0)
 			{
-				player.showItemIconText = Language.GetTextValue("LegacyChestType.0");
+				player.cursorItemIconText = Language.GetTextValue("LegacyChestType.0");
 			}
 			else
 			{
-				player.showItemIconText = Main.chest[chest].name.Length > 0 ? Main.chest[chest].name : "Ruined Chest";
-				if (player.showItemIconText == "Ruined Chest")
+				player.cursorItemIconText = Main.chest[chest].name.Length > 0 ? Main.chest[chest].name : "Ruined Chest";
+				if (player.cursorItemIconText == "Ruined Chest")
 				{
-					player.showItemIcon2 = chestDrop;
+					player.cursorItemIconID = chestDrop;
 					if (Main.tile[left, top].frameX / 36 == 1)
-						player.showItemIcon2 = ModContent.ItemType<OldKey>();
-					player.showItemIconText = "";
+						player.cursorItemIconID = ModContent.ItemType<OldKey>();
+					player.cursorItemIconText = "";
 				}
 			}
 			player.noThrow = 2;
-			player.showItemIcon = true;
+			player.cursorItemIconEnabled = true;
 		}
 		public override void MouseOverFar(int i, int j)
 		{
 			MouseOver(i, j);
 			Player player = Main.LocalPlayer;
-			if (player.showItemIconText == "")
+			if (player.cursorItemIconText == "")
 			{
-				player.showItemIcon = false;
-				player.showItemIcon2 = 0;
+				player.cursorItemIconEnabled = false;
+				player.cursorItemIconID = 0;
 			}
 		}
 	}

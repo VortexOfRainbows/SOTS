@@ -30,7 +30,7 @@ namespace SOTS.Items.CritBonus
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<Snakeskin>(), 10);
 			recipe.AddIngredient(ModContent.ItemType<FragmentOfEarth>(), 4);
 			recipe.AddTile(TileID.Anvils);

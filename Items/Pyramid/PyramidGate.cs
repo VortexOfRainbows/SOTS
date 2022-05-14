@@ -60,7 +60,7 @@ namespace SOTS.Items.Pyramid
 			name.SetDefault("Pyramid Gate");
 			AddMapEntry(new Color(220, 180, 25), name);
 			disableSmartCursor = true;
-			dustType = DustID.GoldCoin;
+			DustType = DustID.GoldCoin;
 		}
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
 		{
@@ -72,7 +72,7 @@ namespace SOTS.Items.Pyramid
 			Tile tile = Main.tile[i, j];
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Pyramid/PyramidGateTile").Value;
 			Rectangle frame = new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, 16);
-			Color color = WorldGen.paintColor((int)Main.tile[i, j].color());
+			Color color = WorldGen.paintColor((int)Main.tile[i, j].TileColor);
 			color = Lighting.GetColor(i, j, color);
 			Vector2 pos = new Vector2((i * 16 - (int)Main.screenPosition.X), (j * 16 - (int)Main.screenPosition.Y)) + zero;
 			Main.spriteBatch.Draw(texture, pos, frame, color, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
@@ -81,18 +81,18 @@ namespace SOTS.Items.Pyramid
 		public override void MouseOver(int i, int j)
 		{
 			Player player = Main.LocalPlayer;
-			player.showItemIcon2 = ModContent.ItemType<PyramidKey>();
+			player.cursorItemIconID = ModContent.ItemType<PyramidKey>();
 			player.noThrow = 2;
-			player.showItemIcon = true;
+			player.cursorItemIconEnabled = true;
 		}
 		public override void MouseOverFar(int i, int j)
 		{
 			Player player = Main.LocalPlayer;
 			MouseOver(i, j);
-			if (player.showItemIconText == "")
+			if (player.cursorItemIconText == "")
 			{
-				player.showItemIcon = false;
-				player.showItemIcon2 = 0;
+				player.cursorItemIconEnabled = false;
+				player.cursorItemIconID = 0;
 			}
 		}
         public override bool NewRightClick(int i, int j)
@@ -167,7 +167,7 @@ namespace SOTS.Items.Pyramid
 			int i = (int)Projectile.Center.X / 16;
 			int j = (int)Projectile.Center.Y / 16;
 			WorldGen.KillTile(i, j, false, false, false);
-			if (!Main.tile[i, j].active() && Main.netMode != NetmodeID.SinglePlayer)
+			if (!Main.tile[i, j].HasTile && Main.netMode != NetmodeID.SinglePlayer)
 				NetMessage.SendData(MessageID.TileChange, -1, -1, null, 0, (float)i, (float)j, 0f, 0, 0, 0);
 			Vector2 center = Projectile.Center + new Vector2(0, -16);
 			SoundEngine.PlaySound(2, (int)center.X, (int)center.Y, 62, 1.25f, -0.5f);

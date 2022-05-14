@@ -30,8 +30,9 @@ Update Objectives:
 	1. Subspace Treads
 2. Pulverizer (Upgrade to Bone Clapper)
 	1. 4 arms, 2 normal and 2 laser cannon
-3. Lesser Elemental Polarizer (grants some stats and inverses the effects of Dissolving Nature, Earth, Aurora, Otherworld, up to certain point)
-4. Elemental Polarizer (grants some stats and inverses the effects of ALL dissolving elements, up to a certain point)
+3. Worldly Polarizer (grants some stats and inverses the effects of Dissolving Nature, Earth, Tide, up to certain point)
+	1. Thermal Polarizer (grants some stats and inverses the effects of Dissolving Permafrost, Inferno, up to a certain point)
+	2. Exotic Polarizer (grants some stats and inverses the effects of Dissolving Brilliance, Evil, Otherworld, up to a certain point)
 5. Blazing Quiver (Dissolving Inferno + Molten Quiver)
 6. Chthonic Reforge
 
@@ -42,6 +43,10 @@ Low Priority Objectives:
 4. Fix Planetarium sky island spawning in tandum
 5. Stars in Planetarium Sky
 6. Nerf VM Incubator and Rose Bow
+
+5/13/22
+1. More Portings. Errors to around 17900. Will start going slower now that port changes are more complicated.
+2. 
 
 5/8/22
 1. More porting progess. Errors down from around 40000 to around 20000!

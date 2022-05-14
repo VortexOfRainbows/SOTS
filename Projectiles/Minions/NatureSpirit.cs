@@ -54,7 +54,7 @@ namespace SOTS.Projectiles.Minions
 			bool found = false;
 			int ofTotal = 0;
 			int total = 0;
-			for (int i = 0; i < Main.Projectile.Length; i++)
+			for (int i = 0; i < Main.projectile.Length; i++)
 			{
 				Projectile proj = Main.projectile[i];
 				if (Projectile.type == proj.type && proj.active && Projectile.active && proj.owner == Projectile.owner)

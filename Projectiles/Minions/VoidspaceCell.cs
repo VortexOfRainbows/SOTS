@@ -66,7 +66,7 @@ namespace SOTS.Projectiles.Minions
 					int i2 = (int)(circular.X + Projectile.Center.X) / 16;
 					int j2 = (int)(circular.Y + Projectile.Center.Y) / 16;
 					bool disable = false;
-					if (!WorldGen.InWorld(i2, j2, 20) || Main.tile[i2, j2].active() && Main.tileSolidTop[Main.tile[i2, j2].type] == false && Main.tileSolid[Main.tile[i2, j2].type] == true)
+					if (!WorldGen.InWorld(i2, j2, 20) || Main.tile[i2, j2].HasTile && Main.tileSolidTop[Main.tile[i2, j2].type] == false && Main.tileSolid[Main.tile[i2, j2].type] == true)
 						disable = true;
 					if(!disable)
 						for(int j = 0; j < Main.maxProjectiles; j++)
@@ -113,7 +113,7 @@ namespace SOTS.Projectiles.Minions
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
 			Color color = new Color(255, 255, 255) * 0.5f;
 			float height = 16;
-			float timer = Main.GlobalTime * 40;
+			float timer = Main.GlobalTimeWrappedHourly * 40;
 			int maxLength = 20;
 			for (int j2 = 1; j2 < maxLength; j2++)
 			{

@@ -17,7 +17,7 @@ namespace SOTS.Items.Furniture.Earthen
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<EarthenPlating>(), 20);
 			recipe.AddIngredient(ItemID.Glass, 6);
 			recipe.AddTile(TileID.Anvils);

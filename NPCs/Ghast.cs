@@ -20,13 +20,13 @@ namespace SOTS.NPCs
 		}
 		public override void SetDefaults()
 		{
-            npc.lifeMax = 80;   
-            npc.damage = 30; 
-            npc.defense = 10;  
-            npc.knockBackResist = 0f;
-            npc.width = 34;
-            npc.height = 38;
-			Main.npcFrameCount[npc.type] = 4;  
+            NPC.lifeMax = 80;   
+            NPC.damage = 30; 
+            NPC.defense = 10;  
+            NPC.knockBackResist = 0f;
+            NPC.width = 34;
+            NPC.height = 38;
+			Main.npcFrameCount[NPC.type] = 4;  
             npc.value = 1000;
             npc.npcSlots = 0.6f;
             npc.lavaImmune = true;
@@ -36,17 +36,17 @@ namespace SOTS.NPCs
             npc.HitSound = SoundID.NPCHit54;
             npc.DeathSound = SoundID.NPCDeath6;
             npc.netAlways = true;
-			banner = npc.type;
-			bannerItem = ItemType<GhastBanner>();
+			Banner = NPC.type;
+			BannerItem = ItemType<GhastBanner>();
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture = Main.npcTexture[npc.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height / 8);
 			Vector2 drawPos = npc.Center - Main.screenPosition;
-			spriteBatch.Draw(texture, drawPos, new Rectangle(0, npc.frame.Y, npc.width, npc.height), npc.GetAlpha(drawColor), npc.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
+			spriteBatch.Draw(texture, drawPos, new Rectangle(0, NPC.frame.Y, npc.width, npc.height), npc.GetAlpha(drawColor), npc.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
 			texture = GetTexture("SOTS/NPCs/GhastGlow");
-			spriteBatch.Draw(texture, drawPos, new Rectangle(0, npc.frame.Y, npc.width, npc.height), Color.White, npc.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
+			spriteBatch.Draw(texture, drawPos, new Rectangle(0, NPC.frame.Y, npc.width, npc.height), Color.White, npc.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
 			return false;
 		}
 		public override void AI()
@@ -126,10 +126,10 @@ namespace SOTS.NPCs
 			if (npc.frameCounter >= 5f) 
 			{
 				npc.frameCounter -= 5f;
-				npc.frame.Y += frameHeight;
-				if(npc.frame.Y >= 4 * frameHeight)
+				NPC.frame.Y += frameHeight;
+				if(NPC.frame.Y >= 4 * frameHeight)
 				{
-					npc.frame.Y = 0;
+					NPC.frame.Y = 0;
 				}
 			}
 		}

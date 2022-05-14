@@ -31,7 +31,7 @@ namespace SOTS.Items.Pyramid.AncientGold
         }
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
+            Recipe recipe = new Recipe(mod);
             recipe.AddIngredient(ModContent.ItemType<RoyalGoldBrick>(), 4);
             recipe.AddIngredient(ModContent.ItemType<AncientGoldTorch>(), 1);
             recipe.AddTile(TileID.WorkBenches);
@@ -55,21 +55,21 @@ namespace SOTS.Items.Pyramid.AncientGold
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Ancient Gold Candle");
             AddMapEntry(new Color(255, 220, 100), name);
-            dustType = DustID.GoldCoin;
+            DustType = DustID.GoldCoin;
             disableSmartCursor = true;
-            adjTiles = new int[] { TileID.Torches };
+            AdjTiles = new int[] { TileID.Torches };
             drop = ModContent.ItemType<AncientGoldCandle>();
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
         }
         public override void HitWire(int i, int j)
         {
-            if (Main.tile[i, j].frameX >= 18)
+            if (Main.tile[i, j].TileFrameX >= 18)
             {
-                Main.tile[i, j].frameX -= 18;
+                Main.tile[i, j].TileFrameX -= 18;
             }
             else
             {
-                Main.tile[i, j].frameX += 18;
+                Main.tile[i, j].TileFrameX += 18;
             }
             NetMessage.SendTileSquare(-1, i, j, 1);
         }
@@ -85,8 +85,8 @@ namespace SOTS.Items.Pyramid.AncientGold
         {
             Player player = Main.LocalPlayer;
             player.noThrow = 2;
-            player.showItemIcon = true;
-            player.showItemIcon2 = ModContent.ItemType<AncientGoldCandle>();
+            player.cursorItemIconEnabled = true;
+            player.cursorItemIconID = ModContent.ItemType<AncientGoldCandle>();
         }
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {
@@ -102,8 +102,8 @@ namespace SOTS.Items.Pyramid.AncientGold
         {
             ulong randSeed = Main.TileFrameSeed ^ (ulong)((long)j << 32 | (long)((ulong)i));
             Color color = new Color(110, 90, 90, 0);
-            int frameX = Main.tile[i, j].frameX;
-            int frameY = Main.tile[i, j].frameY;
+            int frameX = Main.tile[i, j].TileFrameX;
+            int frameY = Main.tile[i, j].TileFrameY;
             int width = 20;
             int offsetY = 2;
             int height = 20;

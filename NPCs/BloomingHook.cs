@@ -34,21 +34,21 @@ namespace SOTS.NPCs
 		public override void SetDefaults()
 		{
 			//npc.CloneDefaults(NPCID.BlackSlime);
-			npc.aiStyle = -1;
-            npc.lifeMax = 6;  
-            npc.damage = 10; 
-            npc.defense = 0;  
-            npc.knockBackResist = 0.5f;
-            npc.width = 38;
-            npc.height = 38;
-			Main.npcFrameCount[npc.type] = 14;  
+			NPC.aiStyle =-1;
+            NPC.lifeMax = 6;  
+            NPC.damage = 10; 
+            NPC.defense = 0;  
+            NPC.knockBackResist = 0.5f;
+            NPC.width = 38;
+            NPC.height = 38;
+			Main.npcFrameCount[NPC.type] = 14;  
             npc.value = 0;
             npc.npcSlots = 0f;
 			npc.noGravity = true;
 			npc.alpha = 75;
             npc.HitSound = SoundID.NPCHit1;
             npc.DeathSound = SoundID.NPCDeath1;
-			//banner = npc.type;
+			//Banner = NPC.type;
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{

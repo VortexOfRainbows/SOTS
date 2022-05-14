@@ -31,7 +31,7 @@ namespace SOTS.Items.Pyramid.AncientGold
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
+            Recipe recipe = new Recipe(mod);
             recipe.AddIngredient(ModContent.ItemType<RoyalGoldBrick>(), 5);
             recipe.AddIngredient(ModContent.ItemType<AncientGoldTorch>(), 3);
             recipe.AddTile(TileID.WorkBenches);
@@ -54,14 +54,14 @@ namespace SOTS.Items.Pyramid.AncientGold
             name.SetDefault("Ancient Gold Candelabra");
             AddMapEntry(new Color(255, 220, 100), name);
             disableSmartCursor = true;
-            dustType = DustID.GoldCoin;
+            DustType = DustID.GoldCoin;
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
-            adjTiles = new int[] { TileID.Candelabras };
+            AdjTiles = new int[] { TileID.Candelabras };
         }
         public override void HitWire(int i, int j)
         {
-            int left = i - (Main.tile[i, j].frameX / 18) % 2;
-            int top = j - (Main.tile[i, j].frameY / 18) % 2;
+            int left = i - (Main.tile[i, j].TileFrameX / 18) % 2;
+            int top = j - (Main.tile[i, j].TileFrameY / 18) % 2;
             for (int x = left; x < left + 2; x++)
             {
                 for (int y = top; y < top + 2; y++)
@@ -110,8 +110,8 @@ namespace SOTS.Items.Pyramid.AncientGold
         {
             ulong randSeed = Main.TileFrameSeed ^ (ulong)((long)j << 32 | (long)((ulong)i));
             Color color = new Color(110, 90, 90, 0);
-            int frameX = Main.tile[i, j].frameX;
-            int frameY = Main.tile[i, j].frameY;
+            int frameX = Main.tile[i, j].TileFrameX;
+            int frameY = Main.tile[i, j].TileFrameY;
             int width = 20;
             int offsetY = 2;
             int height = 20;

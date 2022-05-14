@@ -24,7 +24,7 @@ namespace SOTS.Items.Celestial
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<SanguiteBar>(), 15);
 			recipe.AddIngredient(ModContent.ItemType<Fragments.PrecariousCluster>(), 1);
 			recipe.AddTile(TileID.MythrilAnvil);

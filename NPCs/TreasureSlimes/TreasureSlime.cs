@@ -135,7 +135,7 @@ namespace SOTS.NPCs.TreasureSlimes
 			npc.alpha = 50;
 			npc.color = temp;
 			npc.rarity = 1;
-			Main.npcFrameCount[npc.type] = 2;
+			Main.npcFrameCount[NPC.type] = 2;
 		}
 		public float runAwayCounter = 0;
 		public float runAwayDelay = 0;
@@ -295,7 +295,7 @@ namespace SOTS.NPCs.TreasureSlimes
 		}
 		public void DrawSlime(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture = Main.npcTexture[npc.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
 			spriteBatch.Draw(texture, npc.Center - Main.screenPosition + new Vector2(0, npc.gfxOffY), npc.frame, npc.GetAlpha(drawColor), npc.rotation, new Vector2(texture.Width / 2, npc.height / 2), npc.scale, SpriteEffects.None, 0f);
 		}
         public override float SpawnChance(NPCSpawnInfo spawnInfo)

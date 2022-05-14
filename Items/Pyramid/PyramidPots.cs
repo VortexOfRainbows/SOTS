@@ -31,7 +31,7 @@ namespace SOTS.Items.Pyramid
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Pot");
             AddMapEntry(new Color(150, 130, 20), name);
-            dustType = 32;
+            DustType = 32;
         }
         public override void NumDust(int i, int j, bool fail, ref int num)
         {

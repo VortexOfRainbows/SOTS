@@ -16,7 +16,7 @@ namespace SOTS.Items.Furniture
             TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
             TileObjectData.newTile.CoordinateHeights = new int[] { 16, 18 };
             disableSmartCursor = true;
-            adjTiles = new int[] { TileID.Sinks };
+            AdjTiles = new int[] { TileID.Sinks };
         }
         public override void NumDust(int i, int j, bool fail, ref int num)
         {

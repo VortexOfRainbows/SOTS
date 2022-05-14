@@ -45,7 +45,7 @@ namespace SOTS.Items.Crushers
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<CorrosiveGel>(), 20);
 			recipe.AddIngredient(ModContent.ItemType<Wormwood>(), 32);
 			recipe.AddTile(TileID.Anvils);

@@ -32,7 +32,7 @@ namespace SOTS.Items.Inferno
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ItemID.MeteoriteBar, 12);
 			recipe.AddIngredient(ItemID.Obsidian, 36);
 			recipe.AddIngredient(null, "FragmentOfInferno", 3);

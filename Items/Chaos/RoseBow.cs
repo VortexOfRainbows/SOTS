@@ -54,7 +54,7 @@ namespace SOTS.Items.Chaos
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<TerminalCluster>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<PrecariousCluster>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<GlazeBow>(), 1);

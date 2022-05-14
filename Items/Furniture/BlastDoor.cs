@@ -51,9 +51,9 @@ namespace SOTS.Items.Furniture
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
 			name.SetDefault(GetName());
 			AddMapEntry(new Color(191, 142, 111), name);
-			dustType = -1;
+			DustType = -1;
 			disableSmartCursor = true;
-			adjTiles = new int[] { TileID.ClosedDoor };
+			AdjTiles = new int[] { TileID.ClosedDoor };
 			SafeSetDefaults();
 		}
 		public virtual void SafeSetDefaults()
@@ -103,8 +103,8 @@ namespace SOTS.Items.Furniture
 		{
 			Player player = Main.LocalPlayer;
 			player.noThrow = 2;
-			player.showItemIcon = true;
-			player.showItemIcon2 = ModContent.ItemType<TDrop>();
+			player.cursorItemIconEnabled = true;
+			player.cursorItemIconID = ModContent.ItemType<TDrop>();
 		}
 	}
 	public abstract class BlastDoorOpen<TDrop, TClosed> : ModTile where TDrop : ModItem where TClosed : ModTile
@@ -144,9 +144,9 @@ namespace SOTS.Items.Furniture
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
 			name.SetDefault(GetName());
 			AddMapEntry(new Color(191, 142, 111), name);
-			dustType = -1;
+			DustType = -1;
 			disableSmartCursor = true;
-			adjTiles = new int[] { TileID.OpenDoor };
+			AdjTiles = new int[] { TileID.OpenDoor };
 			TileID.Sets.DrawsWalls[Type] = true;
 			TileID.Sets.HousingWalls[Type] = true;
 			closeDoorID = ModContent.TileType<TClosed>();
@@ -199,8 +199,8 @@ namespace SOTS.Items.Furniture
 		{
 			Player player = Main.LocalPlayer;
 			player.noThrow = 2;
-			player.showItemIcon = true;
-			player.showItemIcon2 = ModContent.ItemType<TDrop>();
+			player.cursorItemIconEnabled = true;
+			player.cursorItemIconID = ModContent.ItemType<TDrop>();
 		}
 	}
 }

@@ -25,11 +25,11 @@ namespace SOTS.Items.Furniture.Nature
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<NaturePlating>());
 			recipe.SetResult(this, 2);
 			recipe.AddRecipe();
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(this, 2);
 			recipe.SetResult(ModContent.ItemType<NaturePlating>(), 1);
 			recipe.AddRecipe();
@@ -65,9 +65,9 @@ namespace SOTS.Items.Furniture.Nature
 			TileObjectData.addTile(19);
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
 			AddMapEntry(SOTSTile.NaturePlatingColor);
-			dustType = DustID.Tungsten;
+			DustType = DustID.Tungsten;
 			drop = ModContent.ItemType<NaturePlatingPlatform>();
-			adjTiles = new int[]{ TileID.Platforms };
+			AdjTiles = new int[]{ TileID.Platforms };
 			TileID.Sets.Platforms[Type] = true;
 		}
 		public override void PostSetDefaults()

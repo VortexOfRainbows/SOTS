@@ -52,7 +52,7 @@ namespace SOTS.Items.Pyramid.AncientGold
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ItemID.Torch, 3);
 			recipe.AddIngredient(ItemType<RoyalGoldBrick>());
 			recipe.SetResult(this, 3);
@@ -89,10 +89,10 @@ namespace SOTS.Items.Pyramid.AncientGold
 			name.SetDefault("Ancient Gold Torch");
 			AddMapEntry(new Color(255, 220, 100), name);
 			disableSmartCursor = true;
-			dustType = DustID.GoldCoin;
+			DustType = DustID.GoldCoin;
 			drop = ItemType<AncientGoldTorch>();
 			disableSmartCursor = true;
-			adjTiles = new int[] { TileID.Torches };
+			AdjTiles = new int[] { TileID.Torches };
 			torch = true;
 		}
         public override bool CanPlace(int i, int j)
@@ -115,16 +115,16 @@ namespace SOTS.Items.Pyramid.AncientGold
 		}
 		/*public override void HitWire(int i, int j)
 		{
-			if (Main.tile[i, j].frameX >= 66)
+			if (Main.tile[i, j].TileFrameX >= 66)
 			{
-				Main.tile[i, j].frameX -= 66;
+				Main.tile[i, j].TileFrameX -= 66;
 			}
 			else
 			{
-				Main.tile[i, j].frameX += 66;
+				Main.tile[i, j].TileFrameX += 66;
 			}
 		}*/
-		public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height)
+		public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY)
 		{
 			offsetY = 0;
 			if (WorldGen.SolidTile(i, j - 1))
@@ -140,8 +140,8 @@ namespace SOTS.Items.Pyramid.AncientGold
 		{
 			ulong randSeed = Main.TileFrameSeed ^ (ulong)((long)j << 32 | (long)(uint)i);
 			Color color = new Color(110, 90, 90, 0);
-			int frameX = Main.tile[i, j].frameX;
-			int frameY = Main.tile[i, j].frameY;
+			int frameX = Main.tile[i, j].TileFrameX;
+			int frameY = Main.tile[i, j].TileFrameY;
 			int width = 20;
 			int offsetY = 2;
 			int height = 20;

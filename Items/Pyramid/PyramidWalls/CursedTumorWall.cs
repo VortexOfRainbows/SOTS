@@ -18,13 +18,13 @@ namespace SOTS.Items.Pyramid.PyramidWalls
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<CursedTumor>(), 1);
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.SetResult(this, 4);
 			recipe.AddRecipe();
 
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(this, 4);
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.SetResult(ModContent.ItemType<CursedTumor>(), 1);
@@ -52,7 +52,7 @@ namespace SOTS.Items.Pyramid.PyramidWalls
 		public override void SetDefaults()
 		{
 			Main.wallHouse[Type] = true;
-			dustType = ModContent.DustType<CurseDust3>();
+			DustType = ModContent.DustType<CurseDust3>();
 			drop = ModContent.ItemType<CursedTumorWall>();
 			soundType = SoundID.NPCHit;
 			soundStyle = 1;
@@ -69,7 +69,7 @@ namespace SOTS.Items.Pyramid.PyramidWalls
         public override void SetDefaults()
 		{
 			Main.wallHouse[Type] = false;
-			dustType = ModContent.DustType<CurseDust3>();
+			DustType = ModContent.DustType<CurseDust3>();
 			drop = ModContent.ItemType<CursedTumorWall>();
 			soundType = SoundID.NPCHit;
 			soundStyle = 1;

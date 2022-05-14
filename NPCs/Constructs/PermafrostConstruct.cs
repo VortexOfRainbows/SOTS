@@ -21,14 +21,14 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override void SetDefaults()
 		{
-			npc.aiStyle = 26; //unicorn AI
-			npc.lifeMax = 275;  
-			npc.damage = 25; 
-			npc.defense = 10;  
-			npc.knockBackResist = 0.1f;
-			npc.width = 90;
-			npc.height = 90;
-			Main.npcFrameCount[npc.type] = 1;  
+			NPC.aiStyle =26; //unicorn AI
+			NPC.lifeMax = 275;  
+			NPC.damage = 25; 
+			NPC.defense = 10;  
+			NPC.knockBackResist = 0.1f;
+			NPC.width = 90;
+			NPC.height = 90;
+			Main.npcFrameCount[NPC.type] = 1;  
 			npc.value = Item.buyPrice(0, 1, 0, 0);
 			npc.npcSlots = 3f;
 			npc.boss = false;
@@ -47,7 +47,7 @@ namespace SOTS.NPCs.Constructs
 			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Constructs/PermafrostConstructHead");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Vector2 drawPos = npc.Center - Main.screenPosition + new Vector2(0f, npc.gfxOffY);
-			Texture2D texture2 = Main.npcTexture[npc.type];
+			Texture2D texture2 = Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
 			Vector2 drawOrigin2 = new Vector2(texture2.Width * 0.5f, texture2.Height * 0.5f);
 			Color color = new Color(100, 100, 100, 0);
 			for (int k = 0; k < 7; k++)
@@ -112,7 +112,7 @@ namespace SOTS.NPCs.Constructs
 			if((Math.Abs(distToPlayerX) < 320 && npc.alpha <= 10) || ai1 > 0)
 			{
 				npc.noGravity = true;
-				npc.aiStyle = 0;
+				NPC.aiStyle =0;
 				ai1++;
 				if (ai1 < 20)
 				{
@@ -122,7 +122,7 @@ namespace SOTS.NPCs.Constructs
 				if (ai1 > 60)
 				{
 					npc.noGravity = false;
-					npc.aiStyle = 26;
+					NPC.aiStyle =26;
 					ai1 = 0;
 					npc.alpha = 255;
 					int damage = npc.damage / 2;

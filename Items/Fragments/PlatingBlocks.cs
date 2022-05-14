@@ -27,10 +27,10 @@ namespace SOTS.Items.Fragments
 		public virtual void SafeSetDefaults()
 		{
 			AddMapEntry(new Color(165, 179, 198));
-			mineResist = 1.5f;
+			MineResist = 1.5f;
 			soundType = SoundID.Tink;
 			soundStyle = 2;
-			dustType = DustID.Silver;
+			DustType = DustID.Silver;
 		}
 		public virtual bool canGlow(int i, int j)
 		{
@@ -58,9 +58,9 @@ namespace SOTS.Items.Fragments
 		{
 			Tile tile = Main.tile[i, j];
 			Color color;
-			color = WorldGen.paintColor((int)Main.tile[i, j].color()) * (100f / 255f);
+			color = WorldGen.paintColor((int)Main.tile[i, j].TileColor) * (100f / 255f);
 			color.A = 0;
-			float uniquenessCounter = Main.GlobalTime * -100 + (i + j) * 5;
+			float uniquenessCounter = Main.GlobalTimeWrappedHourly * -100 + (i + j) * 5;
 			float alphaMult = 0.55f + 0.45f * (float)Math.Sin(MathHelper.ToRadians(uniquenessCounter));
 			for (int k = 0; k < 3; k++)
 			{
@@ -84,7 +84,7 @@ namespace SOTS.Items.Fragments
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<FragmentOfNature>(), 1);
 			recipe.AddRecipeGroup("SOTS:PHMOre", 1);
 			recipe.AddTile(TileID.HeavyWorkBench);
@@ -99,10 +99,10 @@ namespace SOTS.Items.Fragments
 		{
 			drop = ModContent.ItemType<NaturePlating>();
 			AddMapEntry(SOTSTile.NaturePlatingColor);
-			mineResist = 1.5f;
+			MineResist = 1.5f;
 			soundType = SoundID.Tink;
 			soundStyle = 2;
-			dustType = DustID.Tungsten;
+			DustType = DustID.Tungsten;
 		}
 		public override bool canGlow(int i, int j)
 		{
@@ -148,7 +148,7 @@ namespace SOTS.Items.Fragments
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<FragmentOfEarth>(), 1);
 			recipe.AddRecipeGroup("SOTS:PHMOre", 1);
 			recipe.AddTile(TileID.HeavyWorkBench);
@@ -163,10 +163,10 @@ namespace SOTS.Items.Fragments
 		{
 			drop = ModContent.ItemType<EarthenPlating>();
 			AddMapEntry(SOTSTile.EarthenPlatingColor);
-			mineResist = 1.5f;
+			MineResist = 1.5f;
 			soundType = SoundID.Tink;
 			soundStyle = 2;
-			dustType = DustID.Iron;
+			DustType = DustID.Iron;
 		}
 		public override bool canGlow(int i, int j)
 		{
@@ -214,7 +214,7 @@ namespace SOTS.Items.Fragments
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<FragmentOfPermafrost>(), 1);
 			recipe.AddRecipeGroup("SOTS:PHMOre", 1);
 			recipe.AddTile(TileID.HeavyWorkBench);
@@ -229,10 +229,10 @@ namespace SOTS.Items.Fragments
 		{
 			drop = ModContent.ItemType<PermafrostPlating>();
 			AddMapEntry(new Color(165, 179, 198));
-			mineResist = 1.5f;
+			MineResist = 1.5f;
 			soundType = SoundID.Tink;
 			soundStyle = 2;
-			dustType = DustID.Silver;
+			DustType = DustID.Silver;
 		}
 		public override bool canGlow(int i, int j)
 		{
@@ -284,7 +284,7 @@ namespace SOTS.Items.Fragments
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<FragmentOfTide>(), 1);
 			recipe.AddRecipeGroup("SOTS:PHMOre", 1);
 			recipe.AddTile(TileID.HeavyWorkBench);
@@ -299,10 +299,10 @@ namespace SOTS.Items.Fragments
 		{
 			drop = ModContent.ItemType<TidePlating>();
 			AddMapEntry(new Color(35, 37, 52));
-			mineResist = 1.5f;
+			MineResist = 1.5f;
 			soundType = SoundID.Tink;
 			soundStyle = 2;
-			dustType = DustID.Lead; //demonite
+			DustType = DustID.Lead; //demonite
 		}
 		public override bool canGlow(int i, int j)
 		{
@@ -352,7 +352,7 @@ namespace SOTS.Items.Fragments
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<FragmentOfEvil>(), 1);
 			recipe.AddRecipeGroup("SOTS:PHMOre", 1);
 			recipe.AddTile(TileID.HeavyWorkBench);
@@ -367,10 +367,10 @@ namespace SOTS.Items.Fragments
 		{
 			drop = ModContent.ItemType<EvilPlating>();
 			AddMapEntry(new Color(98, 47, 126));
-			mineResist = 1.5f;
+			MineResist = 1.5f;
 			soundType = SoundID.Tink;
 			soundStyle = 2;
-			dustType = 14; //demonite
+			DustType = 14; //demonite
 		}
 		public override bool canGlow(int i, int j)
 		{
@@ -418,7 +418,7 @@ namespace SOTS.Items.Fragments
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<FragmentOfChaos>(), 1);
 			recipe.AddRecipeGroup("SOTS:PHMOre", 1);
 			recipe.AddTile(TileID.HeavyWorkBench);
@@ -433,10 +433,10 @@ namespace SOTS.Items.Fragments
 		{
 			drop = ModContent.ItemType<ChaosPlating>();
 			AddMapEntry(new Color(82, 85, 123));
-			mineResist = 1.5f;
+			MineResist = 1.5f;
 			soundType = SoundID.Tink;
 			soundStyle = 2;
-			dustType = DustID.Platinum;
+			DustType = DustID.Platinum;
 		}
 		public override bool canGlow(int i, int j)
 		{
@@ -489,7 +489,7 @@ namespace SOTS.Items.Fragments
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<FragmentOfInferno>(), 1);
 			recipe.AddRecipeGroup("SOTS:PHMOre", 1);
 			recipe.AddTile(TileID.HeavyWorkBench);
@@ -504,14 +504,14 @@ namespace SOTS.Items.Fragments
 		{
 			drop = ModContent.ItemType<InfernoPlating>();
 			AddMapEntry(new Color(73, 35, 59));
-			mineResist = 1.5f;
+			MineResist = 1.5f;
 			soundType = SoundID.Tink;
 			soundStyle = 2;
-			dustType = DustID.Iron;
+			DustType = DustID.Iron;
 		}
         public override bool CreateDust(int i, int j, ref int type)
 		{
-			type = dustType;
+			type = DustType;
 			if (Main.rand.NextBool(3))
 				type = DustID.Fire;
 			return true;
@@ -566,7 +566,7 @@ namespace SOTS.Items.Fragments
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<NaturePlating>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<EarthenPlating>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<PermafrostPlating>(), 1);
@@ -587,14 +587,14 @@ namespace SOTS.Items.Fragments
 		{
 			drop = ModContent.ItemType<UltimatePlating>();
 			AddMapEntry(new Color(82, 85, 123));
-			mineResist = 1.5f;
+			MineResist = 1.5f;
 			soundType = SoundID.Tink;
 			soundStyle = 2;
-			dustType = 146; //Titanium
+			DustType = 146; //Titanium
 		}
 		public override bool CreateDust(int i, int j, ref int type)
 		{
-			type = dustType;
+			type = DustType;
 			if (Main.rand.NextBool(3))
 				type = 63; //white torch
 			return true;

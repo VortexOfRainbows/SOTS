@@ -26,13 +26,13 @@ namespace SOTS.Items.Furniture
         {
             Tile tile = Main.tile[i, j];
             short frameAdjustment = (short)(tile.TileFrameX > 0 ? -18 : 18);
-            Main.tile[i, j].frameX += frameAdjustment;
+            Main.tile[i, j].TileFrameX += frameAdjustment;
             Wiring.SkipWire(i, j);
             NetMessage.SendTileSquare(-1, i, j, 1, TileChangeType.None);
         }
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {
-            if (Main.tile[i, j].frameX == 0)
+            if (Main.tile[i, j].TileFrameX == 0)
             {
                 var light = LightClr;
                 r = light.X;
@@ -44,13 +44,13 @@ namespace SOTS.Items.Furniture
         {
             Player localPlayer = Main.LocalPlayer;
             localPlayer.noThrow = 2;
-            localPlayer.showItemIcon = true;
-            localPlayer.showItemIcon2 = ModContent.ItemType<TDrop>();
+            localplayer.cursorItemIconEnabled = true;
+            localplayer.cursorItemIconID = ModContent.ItemType<TDrop>();
         }
         public override bool NewRightClick(int i, int j)
         {
             WorldGen.KillTile(i, j);
-            if (!Main.tile[i, j].active() && Main.netMode != NetmodeID.SinglePlayer)
+            if (!Main.tile[i, j].HasTile && Main.netMode != NetmodeID.SinglePlayer)
             {
                 NetMessage.SendData(MessageID.TileChange, -1, -1, null, 0, i, j);
             }

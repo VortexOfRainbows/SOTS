@@ -83,7 +83,7 @@ namespace SOTS.Items.Otherworld
 				if(SOTSWorld.downedCurse && Main.rand.Next(3) != 0 && typeAmt[1] < Main.rand.Next(5, 15))
 				{
 					int rand = Main.rand.Next(5) + 3;
-					player.QuickSpawnItem(mod.ItemType("CursedMatter"), rand);
+					player.QuickSpawnItem(ModContent.ItemType<CursedMatter>(), rand);
 					drops += rand;
 					typeAmt[1] += rand;
 				}

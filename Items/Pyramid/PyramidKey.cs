@@ -18,7 +18,7 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddRecipeGroup("SOTS:EvilMaterial", 20);
 			recipe.AddRecipeGroup("SOTS:GoldBar", 10);
 			recipe.SetResult(this);

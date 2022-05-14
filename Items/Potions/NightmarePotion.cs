@@ -33,7 +33,7 @@ namespace SOTS.Items.Potions
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ItemID.BottledWater, 1);
 			recipe.AddIngredient(ModContent.ItemType<FragmentOfEvil>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<TinyPlanetFish>(), 1);

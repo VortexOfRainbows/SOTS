@@ -86,10 +86,10 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
 			TileObjectData.addTile(Type);
 			AddMapEntry(new Color(156, 137, 78));
 			disableSmartCursor = true;
-			dustType = 32;
+			DustType = 32;
 			soundType = SoundID.Dig;
 			soundStyle = 0;
-			mineResist = 0.1f;
+			MineResist = 0.1f;
 		}
         public override void NumDust(int i, int j, bool fail, ref int num)
         {
@@ -116,10 +116,10 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
 			TileObjectData.addTile(Type);
 			AddMapEntry(new Color(78, 55, 108));
 			disableSmartCursor = true;
-			dustType = ModContent.DustType<CurseDust3>();
+			DustType = ModContent.DustType<CurseDust3>();
 			soundType = SoundID.NPCHit;
 			soundStyle = 1;
-			mineResist = 0.1f;
+			MineResist = 0.1f;
 		}
 		public override void NumDust(int i, int j, bool fail, ref int num)
 		{
@@ -146,10 +146,10 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
 			TileObjectData.addTile(Type);
 			AddMapEntry(new Color(156, 137, 78));
 			disableSmartCursor = true;
-			dustType = 32;
+			DustType = 32;
 			soundType = SoundID.Dig;
 			soundStyle = 0;
-			mineResist = 0.1f;
+			MineResist = 0.1f;
 		}
 		public override void NumDust(int i, int j, bool fail, ref int num)
 		{
@@ -176,10 +176,10 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
 			TileObjectData.addTile(Type);
 			AddMapEntry(new Color(78, 55, 108));
 			disableSmartCursor = true;
-			dustType = ModContent.DustType<CurseDust3>();
+			DustType = ModContent.DustType<CurseDust3>();
 			soundType = SoundID.NPCHit;
 			soundStyle = 1;
-			mineResist = 0.1f;
+			MineResist = 0.1f;
 		}
 		public override void NumDust(int i, int j, bool fail, ref int num)
 		{
@@ -205,10 +205,10 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
 			TileObjectData.addTile(Type);
 			AddMapEntry(new Color(78, 55, 108));
 			disableSmartCursor = true;
-			dustType = ModContent.DustType<CurseDust3>();
+			DustType = ModContent.DustType<CurseDust3>();
 			soundType = SoundID.NPCHit;
 			soundStyle = 1;
-			mineResist = 0.1f;
+			MineResist = 0.1f;
 		}
 		public override void NumDust(int i, int j, bool fail, ref int num)
 		{
@@ -234,10 +234,10 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
 			TileObjectData.addTile(Type);
 			AddMapEntry(new Color(156, 137, 78));
 			disableSmartCursor = true;
-			dustType = 32;
+			DustType = 32;
 			soundType = SoundID.Dig;
 			soundStyle = 0;
-			mineResist = 0.1f;
+			MineResist = 0.1f;
 		}
 		public override void NumDust(int i, int j, bool fail, ref int num)
 		{
@@ -262,7 +262,7 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
 			drawOffSet.Y += 2;
 			Vector2 location = new Vector2(i * 16, j * 16) + drawOffSet;
 			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Pyramid/AltPyramidBlocks/PyramidAmbientTile3x2CurseGlow").Value;
-			float counter = Main.GlobalTime * 160;
+			float counter = Main.GlobalTimeWrappedHourly * 160;
 			float mult = new Vector2(-1f, 0).RotatedBy(MathHelper.ToRadians(counter)).X;
 			Rectangle frame = new Rectangle(tile.TileFrameX / 18 * 16, tile.TileFrameY / 18 * 16, 48, 32);
 			for (int k = 0; k < 6; k++)
@@ -297,7 +297,7 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
 		{
 			Tile tile = Main.tile[i, j];
-			Texture2D texture = Main.tileTexture[tile.TileType];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Item[tile.TileType].Value;
 			Color color2 = Lighting.GetColor(i, j, WorldGen.paintColor(tile.color()));
 			Vector2 drawOffSet = Vector2.Zero;
 			drawOffSet.Y += 2;
@@ -328,10 +328,10 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
 			TileObjectData.addTile(Type);
 			AddMapEntry(new Color(78, 55, 108));
 			disableSmartCursor = true;
-			dustType = ModContent.DustType<CurseDust3>();
+			DustType = ModContent.DustType<CurseDust3>();
 			soundType = SoundID.NPCHit;
 			soundStyle = 1;
-			mineResist = 0.1f;
+			MineResist = 0.1f;
 		}
 		public override void NumDust(int i, int j, bool fail, ref int num)
 		{

@@ -17,12 +17,12 @@ namespace SOTS.Items.Pyramid.PyramidWalls
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<PyramidBrick>(), 1);
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.SetResult(this, 4);
 			recipe.AddRecipe();
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(this, 4);
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.SetResult(ModContent.ItemType<PyramidBrick>(), 1);
@@ -50,7 +50,7 @@ namespace SOTS.Items.Pyramid.PyramidWalls
 		public override void SetDefaults()
 		{
 			Main.wallHouse[Type] = true;
-			dustType = 32;
+			DustType = 32;
 			drop = ModContent.ItemType<PyramidBrickWall>();
 			AddMapEntry(new Color(75, 69, 27));
 		}
@@ -65,7 +65,7 @@ namespace SOTS.Items.Pyramid.PyramidWalls
 		public override void SetDefaults()
 		{
 			Main.wallHouse[Type] = false;
-			dustType = 32;
+			DustType = 32;
 			drop = ModContent.ItemType<PyramidBrickWall>();
 			AddMapEntry(new Color(75, 69, 27));
 		}

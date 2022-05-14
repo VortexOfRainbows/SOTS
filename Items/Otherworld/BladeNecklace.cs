@@ -73,7 +73,7 @@ namespace SOTS.Items.Otherworld
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<BladeGenerator>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<TwilightBeads>(), 1);
 			recipe.AddTile(TileID.TinkerersWorkbench);

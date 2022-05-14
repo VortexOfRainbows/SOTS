@@ -27,14 +27,14 @@ namespace SOTS.NPCs
 		}
 		public override void SetDefaults()
 		{
-            npc.aiStyle = 0; 
-            npc.lifeMax = 40;   
-            npc.damage = 45; 
-            npc.defense = 20;  
-            npc.knockBackResist = 0.5f;
-            npc.width = 30;
-            npc.height = 54;
-			Main.npcFrameCount[npc.type] = 1;  
+            NPC.aiStyle =0; 
+            NPC.lifeMax = 40;   
+            NPC.damage = 45; 
+            NPC.defense = 20;  
+            NPC.knockBackResist = 0.5f;
+            NPC.width = 30;
+            NPC.height = 54;
+			Main.npcFrameCount[NPC.type] = 1;  
             npc.value = 200;
             npc.npcSlots = 2f;
             npc.HitSound = SoundID.NPCHit53;
@@ -45,8 +45,8 @@ namespace SOTS.NPCs
 			npc.buffImmune[BuffID.Frostburn] = true;
 			npc.noTileCollide = true;
 			npc.noGravity = true;
-			banner = npc.type;
-			bannerItem = ItemType<HoloSwordBanner>();
+			Banner = NPC.type;
+			BannerItem = ItemType<HoloSwordBanner>();
 		}
 		Vector2 consistentAcceleration = new Vector2(0, 0);
 		Vector2 savePos = new Vector2(0, 0);
@@ -129,10 +129,10 @@ namespace SOTS.NPCs
 		}
 		public override bool PreDraw(ref Color lightColor)
 		{
-			Texture2D texture = Main.npcTexture[npc.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
 			Texture2D texture2 = Mod.Assets.Request<Texture2D>("NPCs/HoloBladeOutline").Value;
 			Texture2D texture4 = Mod.Assets.Request<Texture2D>("NPCs/HoloBladeFill").Value;
-			Vector2 drawOrigin = new Vector2(Main.npcTexture[npc.type].Width * 0.5f, npc.height * 0.5f);
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Npc[npc.type].Value.Width * 0.5f, npc.height * 0.5f);
 			Color color = new Color(110, 110, 110, 0);
 			if (drawTrail)
 				for (int i = 0; i < npc.oldPos.Length; i++)

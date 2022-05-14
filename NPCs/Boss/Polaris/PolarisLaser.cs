@@ -14,12 +14,12 @@ namespace SOTS.NPCs.Boss.Polaris
 		}
 		public override void SetDefaults()
 		{
-            npc.lifeMax = 500;
-			npc.damage = 40;
-			npc.defense = 0;  
-            npc.knockBackResist = 0f;
-            npc.width = 52;
-            npc.height = 52;
+            NPC.lifeMax = 500;
+			NPC.damage = 40;
+			NPC.defense = 0;  
+            NPC.knockBackResist = 0f;
+            NPC.width = 52;
+            NPC.height = 52;
             npc.value = 0;
             npc.npcSlots = 1f;
             npc.lavaImmune = true;
@@ -38,8 +38,8 @@ namespace SOTS.NPCs.Boss.Polaris
         }
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
 		{
-			npc.lifeMax = (int)(npc.lifeMax * 0.75f * bossLifeScale);
-			npc.damage = (int)(npc.damage * 0.75f);
+			NPC.lifeMax = (int)(npc.lifeMax * 0.75f * bossLifeScale);
+			NPC.damage = (int)(npc.damage * 0.75f);
 		}
 		public override void AI()
 		{	

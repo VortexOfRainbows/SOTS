@@ -604,7 +604,7 @@ namespace SOTS
 					entity.itemsArray = itemsArray;
 					entity.netUpdate = true;
 
-					Vector2 dynamicAddition = new Vector2(3, 0).RotatedBy(MathHelper.ToRadians(Main.GlobalTime * 40));
+					Vector2 dynamicAddition = new Vector2(3, 0).RotatedBy(MathHelper.ToRadians(Main.GlobalTimeWrappedHourly * 40));
 					int amountOfUniqueItems = 1;
 					int totalItems = 0;
 					for (int l = 1; l < entity.itemsArray.Length; l++)

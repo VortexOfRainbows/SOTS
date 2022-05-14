@@ -18,7 +18,7 @@ namespace SOTS.Items.Furniture.Nature
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<NaturePlating>(), 15);
 			recipe.AddIngredient(ItemID.Bone, 4);
 			recipe.AddIngredient(ItemID.Book, 1);

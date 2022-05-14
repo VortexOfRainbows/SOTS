@@ -25,15 +25,15 @@ namespace SOTS.NPCs.TreasureSlimes
 		public override void SetDefaults()
 		{
 			base.SetDefaults();
-			npc.lifeMax = 325;
-			npc.damage = 50; //hits as hard and has way more health than shadow, but with less defense and less kb resist
-			npc.defense = 0;
-			npc.knockBackResist = 0.15f;
+			NPC.lifeMax = 325;
+			NPC.damage = 50; //hits as hard and has way more health than shadow, but with less defense and less kb resist
+			NPC.defense = 0;
+			NPC.knockBackResist = 0.15f;
 			npc.value = Item.buyPrice(0, 4, 80, 0);
 			npc.Size = new Vector2(32, 40);
 			npc.npcSlots = 1f;
-			banner = npc.type;
-			bannerItem = ItemType<JungleTreasureSlimeBanner>();
+			Banner = NPC.type;
+			BannerItem = ItemType<JungleTreasureSlimeBanner>();
 			LootAmt = 4;
 			gelColor = new Color(123, 173, 75, 100);
 			items = new List<TreasureSlimeItem>()

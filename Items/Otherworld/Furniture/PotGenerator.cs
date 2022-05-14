@@ -79,7 +79,7 @@ namespace SOTS.Items.Otherworld.Furniture
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ItemType<DissolvingAether>(), 1);
 			recipe.AddIngredient(ItemType<TwilightShard>(), 5);
 			recipe.AddIngredient(ItemType<TwilightGel>(), 30);
@@ -92,12 +92,12 @@ namespace SOTS.Items.Otherworld.Furniture
 	{
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
 		{
-			float uniquenessCounter = Main.GlobalTime * -100 + (i + j) * 5;
+			float uniquenessCounter = Main.GlobalTimeWrappedHourly * -100 + (i + j) * 5;
 			Tile tile = Main.tile[i, j];
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/Furniture/PotGeneratorTileGlow").Value;
 			Rectangle frame = new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, 16);
 			Color color;
-			color = WorldGen.paintColor((int)Main.tile[i, j].color()) * (100f / 255f);
+			color = WorldGen.paintColor((int)Main.tile[i, j].TileColor) * (100f / 255f);
 			color.A = 0;
 			float alphaMult = 0.55f + 0.45f * (float)Math.Sin(MathHelper.ToRadians(uniquenessCounter));
 			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
@@ -133,7 +133,7 @@ namespace SOTS.Items.Otherworld.Furniture
 			name.SetDefault("Pot Generator");
 			AddMapEntry(new Color(180, 245, 240), name);
 			disableSmartCursor = true;
-			dustType = DustType<AvaritianDust>();
+			DustType = DustType<AvaritianDust>();
 		}
         public override bool CanKillTile(int i, int j, ref bool blockDamaged)
         {
@@ -148,19 +148,19 @@ namespace SOTS.Items.Otherworld.Furniture
 		public override void MouseOver(int i, int j)
 		{
 			Player player = Main.LocalPlayer;
-			player.showItemIcon2 = ItemType<PotGenerator>();
-			//player.showItemIconText = "";
+			player.cursorItemIconID = ItemType<PotGenerator>();
+			//player.cursorItemIconText = "";
 			player.noThrow = 2;
-			player.showItemIcon = true;
+			player.cursorItemIconEnabled = true;
 		}
 		public override void MouseOverFar(int i, int j)
 		{
 			MouseOver(i, j);
 			Player player = Main.LocalPlayer;
-			if (player.showItemIconText == "")
+			if (player.cursorItemIconText == "")
 			{
-				player.showItemIcon = false;
-				player.showItemIcon2 = 0;
+				player.cursorItemIconEnabled = false;
+				player.cursorItemIconID = 0;
 			}
 		}
 		public override bool NewRightClick(int i, int j)
@@ -179,7 +179,7 @@ namespace SOTS.Items.Otherworld.Furniture
 			PotTimer entity = (PotTimer)TileEntity.ByID[index];
 			int seconds = entity.timer / 60;
 			int secondsLeft = 60 - seconds;
-			if (Main.tile[i, j - 1].type == Type)
+			if (Main.tile[i, j - 1].TileType == Type)
 			{
 				Main.NewText("Status: N/A");
 			}
@@ -213,7 +213,7 @@ namespace SOTS.Items.Otherworld.Furniture
         }
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
 		{
-			if (Main.tile[i, j].frameX < 18 || Main.tile[i, j].frameX > 35 || Main.tile[i, j].frameY % 36 < 18)
+			if (Main.tile[i, j].TileFrameX < 18 || Main.tile[i, j].TileFrameX > 35 || Main.tile[i, j].TileFrameY % 36 < 18)
 				return;
 
 			r = 1.2f;
@@ -235,12 +235,12 @@ namespace SOTS.Items.Otherworld.Furniture
 			ofMax += 0.1f;
 			if (entity.timer < 0) ofMax = 0;
 			int style = entity.style % 9;
-			if (Main.tile[i, j].frameX >= 18)
+			if (Main.tile[i, j].TileFrameX >= 18)
 				return true;
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/Furniture/SkyPotsGlowOutline").Value;
 			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Otherworld/Furniture/SkyPotsGlowFill").Value;
 			Color color;
-			color = WorldGen.paintColor((int)Main.tile[i, j].color()) * (100f / 255f);
+			color = WorldGen.paintColor((int)Main.tile[i, j].TileColor) * (100f / 255f);
 			color.A = 0;
 			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
 			if (Main.drawToScreen)
@@ -271,7 +271,7 @@ namespace SOTS.Items.Otherworld.Furniture
 			int whereX = Position.X;
 			int whereY = Position.Y - 1;
 			int amt = 1;
-			bool tilesAbove = !WorldGen.InWorld(whereX, whereY, 20)|| Main.tile[whereX, whereY].active() || Main.tile[whereX + 1, whereY].active() || Main.tile[whereX, whereY - 1].active() || Main.tile[whereX + 1, whereY - 1].active();
+			bool tilesAbove = !WorldGen.InWorld(whereX, whereY, 20)|| Main.tile[whereX, whereY].HasTile || Main.tile[whereX + 1, whereY].HasTile || Main.tile[whereX, whereY - 1].HasTile || Main.tile[whereX + 1, whereY - 1].HasTile;
 			if (tilesAbove && timer != -2)
 			{
 				timer = -2;
@@ -282,7 +282,7 @@ namespace SOTS.Items.Otherworld.Furniture
             {
 				for (int i = 0; i < 3600; i++)
 				{
-					if (WorldGen.InWorld(whereX, Position.Y + i, 10) && Main.tile[whereX, Position.Y + i].active() && Main.tile[whereX + 1, Position.Y + i].active() && Main.tile[whereX, Position.Y + i].type == TileType<PotGeneratorTile>() && Main.tile[whereX + 1, Position.Y + i].type == TileType<PotGeneratorTile>())
+					if (WorldGen.InWorld(whereX, Position.Y + i, 10) && Main.tile[whereX, Position.Y + i].HasTile && Main.tile[whereX + 1, Position.Y + i].HasTile && Main.tile[whereX, Position.Y + i].type == TileType<PotGeneratorTile>() && Main.tile[whereX + 1, Position.Y + i].type == TileType<PotGeneratorTile>())
 					{
 						amt++;
 					}
@@ -327,7 +327,7 @@ namespace SOTS.Items.Otherworld.Furniture
 						Projectile.NewProjectile(position, Vector2.Zero, ProjectileType<PotProjectile>(), 0, 0, Main.myPlayer, 0, style);
 						netUpdate = true;
 					}
-					if (timer == -2 && !Main.tile[whereX, whereY].active() && !Main.tile[whereX + 1, whereY].active() && !Main.tile[whereX, whereY - 1].active() && !Main.tile[whereX + 1, whereY - 1].active())
+					if (timer == -2 && !Main.tile[whereX, whereY].HasTile && !Main.tile[whereX + 1, whereY].HasTile && !Main.tile[whereX, whereY - 1].HasTile && !Main.tile[whereX + 1, whereY - 1].HasTile)
 					{
 						timer = 0;
 						style = Main.rand.Next(9);
@@ -419,7 +419,7 @@ namespace SOTS.Items.Otherworld.Furniture
 			Color white = Color.White;
 			white.A = 0;
 			Color color;
-			color = WorldGen.paintColor((int)Main.tile[i, j + 1].color());
+			color = WorldGen.paintColor((int)Main.tile[i, j + 1].TileColor);
 			color.A = 0;
 			if (Projectile.ai[0] == 0)
 			{

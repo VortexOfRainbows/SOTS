@@ -66,8 +66,8 @@ namespace SOTS.NPCs.Boss
 		}
 		public override bool PreDraw(ref Color lightColor)
 		{
-			Texture2D texture = Main.npcTexture[npc.type];
-			Vector2 drawOrigin = new Vector2(Main.npcTexture[npc.type].Width * 0.5f, texture.Height * 0.5f);
+			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Npc[npc.type].Value.Width * 0.5f, texture.Height * 0.5f);
 			for (int k = 0; k < npc.oldPos.Length; k++) {
 				Vector2 drawPos = npc.oldPos[k] - Main.screenPosition + drawOrigin;
 				Color color = npc.GetAlpha(lightColor) * ((float)(npc.oldPos.Length - k) / (float)npc.oldPos.Length);
@@ -78,13 +78,13 @@ namespace SOTS.NPCs.Boss
 		}	
 		public override void SetDefaults()
 		{
-            npc.aiStyle = -1; 
-            npc.lifeMax = 250;   
-            npc.damage = 40; 
-            npc.defense = 0;  
-            npc.knockBackResist = 0f;
-            npc.width = 34;
-            npc.height = 34;
+            NPC.aiStyle =-1; 
+            NPC.lifeMax = 250;   
+            NPC.damage = 40; 
+            NPC.defense = 0;  
+            NPC.knockBackResist = 0f;
+            NPC.width = 34;
+            NPC.height = 34;
             npc.value = 0;
             npc.npcSlots = 1f;
             npc.lavaImmune = true;
@@ -103,7 +103,7 @@ namespace SOTS.NPCs.Boss
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Vector2 drawPos = npc.Center - Main.screenPosition;
 
-			texture = Main.npcTexture[npc.type];
+			texture = Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
 			drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			spriteBatch.Draw(texture, drawPos, null, drawColor, npc.rotation, drawOrigin, npc.scale, SpriteEffects.None, 0f);
 			float shootToX = aimToX - npc.Center.X;
@@ -125,7 +125,7 @@ namespace SOTS.NPCs.Boss
 		}
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
-            npc.damage = (int)(npc.damage * 0.8f);  
+            NPC.damage = (int)(npc.damage * 0.8f);  
         }
 		public override void AI()
 		{

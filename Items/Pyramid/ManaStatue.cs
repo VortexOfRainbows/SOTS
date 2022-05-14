@@ -24,8 +24,8 @@ namespace SOTS.Items.Pyramid
             soundType = 21;
             soundStyle = 2;
             TileObjectData.addTile(Type);
-			mineResist = 2.5f;
-			dustType = 15;
+			MineResist = 2.5f;
+			DustType = 15;
         }
         public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
         {
@@ -39,7 +39,7 @@ namespace SOTS.Items.Pyramid
                 }
                 Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Items/Pyramid/ManaStatueDraw");
                 Vector2 location = new Vector2(i * 16, j * 16) + new Vector2(-4, -4);
-                Color color = Lighting.GetColor(i, j, WorldGen.paintColor(Main.tile[i, j].color()));
+                Color color = Lighting.GetColor(i, j, WorldGen.paintColor(Main.tile[i, j].TileColor));
                 spriteBatch.Draw(texture, location + zero - Main.screenPosition, null, color, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
             }
             return false;

@@ -56,7 +56,7 @@ namespace SOTS.Items.Otherworld.Blocks
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<HardlightBlock>(), 1);
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.SetResult(this, 4);
@@ -67,7 +67,7 @@ namespace SOTS.Items.Otherworld.Blocks
 	{
 		public void DrawWallGlow(int i, int j, SpriteBatch spriteBatch)
 		{
-			float uniquenessCounter = Main.GlobalTime * 6f;
+			float uniquenessCounter = Main.GlobalTimeWrappedHourly * 6f;
 			float offsetY = 2 * ((int)uniquenessCounter % 4);
 			offsetY -= 6;
 			Tile tile = Main.tile[i, j];
@@ -130,7 +130,7 @@ namespace SOTS.Items.Otherworld.Blocks
 		{
 			Main.wallHouse[Type] = true;
 			Main.wallLight[Type] = true;
-			dustType = DustID.Electric;
+			DustType = DustID.Electric;
 			drop = ModContent.ItemType<HologlassWall>();
 			AddMapEntry(new Color(25, 120, 170));
 		}

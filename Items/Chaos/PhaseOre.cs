@@ -63,11 +63,11 @@ namespace SOTS.Items.Chaos
 			Main.tileLighted[Type] = true;
 			drop = ModContent.ItemType<PhaseOre>();
 			//AddMapEntry(VoidPlayer.ChaosPink);
-			mineResist = 3f;
-			minPick = 180; //adamantite/chlorophyte level
+			MineResist = 3f;
+			MinPick = 180; //adamantite/chlorophyte level
 			soundType = 3;
 			soundStyle = 53;
-			dustType = ModContent.DustType<CopyDust4>(); //DustID.PinkFlame
+			DustType = ModContent.DustType<CopyDust4>(); //DustID.PinkFlame
 		}
 		public override bool KillSound(int i, int j)
 		{

@@ -23,8 +23,8 @@ namespace SOTS.Items.Pyramid
 			AddMapEntry(new Color(175, 0, 0), name);
             soundType = 21;
             soundStyle = 2;
-			mineResist = 2.5f;
-			dustType = 12;
+			MineResist = 2.5f;
+			DustType = 12;
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {

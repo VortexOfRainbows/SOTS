@@ -48,11 +48,11 @@ namespace SOTS.Items.Earth
 			name.SetDefault("Giant Crystal");
 			AddMapEntry(new Color(237, 255, 193), name);
 			disableSmartCursor = true;
-			minPick = 250;
-			dustType = ModContent.DustType<VibrantDust>();
+			MinPick = 250;
+			DustType = ModContent.DustType<VibrantDust>();
 			soundType = SoundID.Item;
 			soundStyle = 27;
-			mineResist = 0.1f;
+			MineResist = 0.1f;
 		}
         public override bool CanExplode(int i, int j)
         {

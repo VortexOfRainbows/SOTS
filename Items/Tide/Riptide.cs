@@ -58,21 +58,21 @@ namespace SOTS.Items.Tide
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ItemID.Trident, 1);
 			recipe.AddIngredient(ModContent.ItemType<Fragments.FragmentOfTide>(), 10);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this, 1);
 			recipe.AddRecipe();
 
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(ItemID.Spear, 1);
 			recipe.AddIngredient(ItemID.GoldBar, 8);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(ItemID.Trident, 1);
 			recipe.AddRecipe();
 
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(ItemID.Spear, 1);
 			recipe.AddIngredient(ItemID.PlatinumBar, 8);
 			recipe.AddTile(TileID.Anvils);

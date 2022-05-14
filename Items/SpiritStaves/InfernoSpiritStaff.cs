@@ -45,7 +45,7 @@ namespace SOTS.Items.SpiritStaves
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<Fragments.DissolvingNether>(), 1);
 			recipe.AddIngredient(ItemID.HellstoneBar, 10);
 			recipe.AddIngredient(ItemID.SoulofFright, 5);

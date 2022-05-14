@@ -31,7 +31,7 @@ namespace SOTS.Items.Pyramid.AncientGold
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<RoyalGoldBrick>(), 4);
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.SetResult(this);
@@ -57,9 +57,9 @@ namespace SOTS.Items.Pyramid.AncientGold
 			TileObjectData.addTile(Type);
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsChair);
 			AddMapEntry(new Color(220, 180, 25));
-			dustType = DustID.GoldCoin;
+			DustType = DustID.GoldCoin;
 			disableSmartCursor = true;
-			adjTiles = new int[] { TileID.Chairs };
+			AdjTiles = new int[] { TileID.Chairs };
 		}
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{

@@ -37,7 +37,7 @@ namespace SOTS.Items.Permafrost
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ItemID.FrostHelmet, 1);
 			recipe.AddIngredient(ModContent.ItemType<AbsoluteBar>(), 16);
 			recipe.SetResult(this);

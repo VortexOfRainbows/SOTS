@@ -46,7 +46,7 @@ namespace SOTS.Items.Pyramid
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Pyramid/TaintedKeystone").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			position += drawOrigin * scale;
-			float counter = Main.GlobalTime * 160;
+			float counter = Main.GlobalTimeWrappedHourly * 160;
 			float mult = new Vector2(-1f, 0).RotatedBy(MathHelper.ToRadians(counter)).X;
 			for (int i = 0; i < 6; i++)
 			{
@@ -83,7 +83,7 @@ namespace SOTS.Items.Pyramid
 		{
 			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Pyramid/TaintedKeystone").Value;
 			Vector2 drawOrigin = new Vector2(texture2.Width * 0.5f, texture2.Height * 0.5f);
-			float counter = Main.GlobalTime * 160;
+			float counter = Main.GlobalTimeWrappedHourly * 160;
 			float mult = new Vector2(-4f, 0).RotatedBy(MathHelper.ToRadians(counter)).X;
 			for (int i = 0; i < 6; i++)
 			{

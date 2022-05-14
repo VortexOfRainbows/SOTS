@@ -17,12 +17,12 @@ namespace SOTS.NPCs.Constructs
 		}
         public override void SetDefaults()
         {
-            npc.width = 36;           
-            npc.height = 40;        
-            npc.damage = 16;
-            npc.defense = 12;
-            npc.lifeMax = 20000;  
-            npc.knockBackResist = 0.0f;
+            NPC.width = 36;           
+            NPC.height = 40;        
+            NPC.damage = 16;
+            NPC.defense = 12;
+            NPC.lifeMax = 20000;  
+            NPC.knockBackResist = 0.0f;
             npc.behindTiles = true;
             npc.noTileCollide = true;
             npc.noGravity = true;
@@ -39,8 +39,8 @@ namespace SOTS.NPCs.Constructs
         public override void ReceiveExtraAI(BinaryReader reader)
         {
             npc.scale = reader.ReadSingle();
-            npc.width = reader.ReadInt32();
-            npc.height = reader.ReadInt32();
+            NPC.width = reader.ReadInt32();
+            NPC.height = reader.ReadInt32();
         }
         public override void HitEffect(int hitDirection, double damage)
         {
@@ -89,8 +89,8 @@ namespace SOTS.NPCs.Constructs
             if (npc.ai[2] >= 0)
             {
                 npc.scale = 5f / (npc.ai[2] + 6);
-                npc.width = (int)(npc.width * npc.scale);
-                npc.height = (int)(npc.height * npc.scale);
+                NPC.width = (int)(npc.width * npc.scale);
+                NPC.height = (int)(npc.height * npc.scale);
                 npc.ai[2] = -npc.ai[2];
                 if(Main.netMode != NetmodeID.MultiplayerClient)
                 {

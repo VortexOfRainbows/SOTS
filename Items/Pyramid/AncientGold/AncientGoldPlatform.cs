@@ -30,11 +30,11 @@ namespace SOTS.Items.Pyramid.AncientGold
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<RoyalGoldBrick>(), 1);
 			recipe.SetResult(this, 2);
 			recipe.AddRecipe();
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(this, 2);
 			recipe.SetResult(ModContent.ItemType<RoyalGoldBrick>(), 1);
 			recipe.AddRecipe();
@@ -61,9 +61,9 @@ namespace SOTS.Items.Pyramid.AncientGold
 			TileObjectData.addTile(19);
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
 			AddMapEntry(new Color(220, 180, 25));
-			dustType = DustID.GoldCoin;
+			DustType = DustID.GoldCoin;
 			drop = ModContent.ItemType<AncientGoldPlatform>();
-			adjTiles = new int[]{ TileID.Platforms };
+			AdjTiles = new int[]{ TileID.Platforms };
 			TileID.Sets.Platforms[Type] = true;
 		}
 		public override void PostSetDefaults()

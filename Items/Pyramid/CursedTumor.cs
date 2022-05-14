@@ -41,16 +41,16 @@ namespace SOTS.Items.Pyramid
 			Main.tileLighted[Type] = true;
 			drop = ModContent.ItemType<CursedTumor>();
 			AddMapEntry(new Color(105, 75, 146));
-			mineResist = 1.5f;
+			MineResist = 1.5f;
 			soundType = SoundID.NPCHit;
 			soundStyle = 1;
-			dustType = ModContent.DustType<CurseDust3>();
+			DustType = ModContent.DustType<CurseDust3>();
 		}
-        public override void WalkDust(ref int dustType, ref bool makeDust, ref Color color)
+        public override void WalkDust(ref int DustType, ref bool makeDust, ref Color color)
         {
-			dustType = this.dustType;
+			DustType = this.DustType;
 			makeDust = true;
-            base.WalkDust(ref dustType, ref makeDust, ref color);
+            base.WalkDust(ref DustType, ref makeDust, ref color);
         }
         public override bool HasWalkDust()
         {

@@ -16,13 +16,13 @@ namespace SOTS.NPCs
 		}
 		public override void SetDefaults()
 		{
-            npc.aiStyle = 14;  
-            npc.lifeMax = 69696969;
-            npc.damage = 4200;
-            npc.defense = 420;
-            npc.knockBackResist = 0f;
-            npc.width = 156;
-            npc.height = 102;
+            NPC.aiStyle =14;  
+            NPC.lifeMax = 69696969;
+            NPC.damage = 4200;
+            NPC.defense = 420;
+            NPC.knockBackResist = 0f;
+            NPC.width = 156;
+            NPC.height = 102;
             npc.value = 420;
             npc.npcSlots = 1f;
             npc.boss = true;
@@ -37,8 +37,8 @@ namespace SOTS.NPCs
 		}
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
-			npc.lifeMax = 420420420;
-			npc.damage = 6969;
+			NPC.lifeMax = 420420420;
+			NPC.damage = 6969;
             base.ScaleExpertStats(numPlayers, bossLifeScale);
         }
         public override void AI()

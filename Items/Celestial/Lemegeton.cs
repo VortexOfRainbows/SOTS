@@ -46,7 +46,7 @@ namespace SOTS.Items.Celestial
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<SanguiteBar>(), 10);
 			recipe.AddIngredient(ModContent.ItemType<BookOfVirtues>(), 1);
 			recipe.AddTile(TileID.MythrilAnvil);

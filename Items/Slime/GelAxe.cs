@@ -31,7 +31,7 @@ namespace SOTS.Items.Slime
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ItemID.Gel, 20);
 			recipe.AddIngredient(ItemID.IronBar, 1);
 			recipe.AddTile(TileID.Solidifier);

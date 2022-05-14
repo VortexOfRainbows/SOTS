@@ -33,11 +33,11 @@ namespace SOTS.Items.Secrets
 			Main.tileLighted[Type] = true;
 			drop = ModContent.ItemType<RefractingCrystal>();
 			AddMapEntry(new Color(120, 90, 90));
-			mineResist = 15.5f;
-			minPick = 9999;
+			MineResist = 15.5f;
+			MinPick = 9999;
 			soundType = SoundID.Tink;
 			soundStyle = 2;
-			dustType = 32;
+			DustType = 32;
 		}
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
 		{
@@ -130,7 +130,7 @@ namespace SOTS.Items.Secrets
 			int ofTotal = 0;
 			int total = 0;
 			int projID = -1;
-			for (int i = 0; i < Main.Projectile.Length; i++)
+			for (int i = 0; i < Main.projectile.Length; i++)
 			{
 				Projectile proj = Main.projectile[i];
 				if (Projectile.type == proj.type && proj.active && Projectile.active && proj.owner == Projectile.owner)
@@ -205,7 +205,7 @@ namespace SOTS.Items.Secrets
 									dust.velocity += Projectile.velocity;
 								}
 								WorldGen.KillTile(i + x, j + y, false, false, false);
-								if (!Main.tile[i, j].active() && Main.netMode != NetmodeID.SinglePlayer)
+								if (!Main.tile[i, j].HasTile && Main.netMode != NetmodeID.SinglePlayer)
 									NetMessage.SendData(MessageID.TileChange, -1, -1, null, 0, (float)i, (float)j, 0f, 0, 0, 0);
 							}
 						}

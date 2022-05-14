@@ -46,7 +46,7 @@ namespace SOTS.Items.Crushers
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ItemID.CrimtaneBar, 12);
 			recipe.AddIngredient(ModContent.ItemType<FragmentOfEvil>(), 2);
 			recipe.AddTile(TileID.Anvils);

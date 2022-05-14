@@ -31,7 +31,7 @@ namespace SOTS.Items.Permafrost
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ItemID.FrostBreastplate, 1);
 			recipe.AddIngredient(null, "AbsoluteBar", 24);
 			recipe.SetResult(this);

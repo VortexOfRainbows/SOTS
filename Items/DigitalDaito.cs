@@ -40,22 +40,15 @@ namespace SOTS.Items
             Item.noMelee = true;
 		}
 		int i = 0;
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
 			i++;
-			Projectile.NewProjectile(position, new Vector2(speedX, speedY), type, damage, knockBack, player.whoAmI, i % 2 * 2 -1, Main.rand.NextFloat(0.875f, 1.125f));
+			Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, i % 2 * 2 -1, Main.rand.NextFloat(0.875f, 1.125f));
 			return false;
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.Arkhalis, 1);
-			recipe.AddIngredient(ModContent.ItemType<HardlightAlloy>(), 30);
-			recipe.AddIngredient(ModContent.ItemType<PrecariousCluster>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<TaintedKeystone>(), 1);
-			recipe.AddTile(ModContent.TileType<HardlightFabricatorTile>());
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddIngredient(ItemID.Arkhalis, 1).AddIngredient<HardlightAlloy>(30).AddIngredient<PrecariousCluster>(1).AddIngredient<TaintedKeystone>(1).AddTile<HardlightFabricatorTile>().Register();
 		}
 		/*public override int GetVoid(Player player)
 		{

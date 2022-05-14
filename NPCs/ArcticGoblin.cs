@@ -20,12 +20,12 @@ namespace SOTS.NPCs
 		{
 			npc.CloneDefaults(NPCID.GoblinPeon);
 			aiType = NPCID.GoblinScout;
-			npc.lifeMax = 100;
-			npc.damage = 24;
+			NPC.lifeMax = 100;
+			NPC.damage = 24;
 			animationType = NPCID.GoblinPeon;
-			Main.npcFrameCount[npc.type] = 16;
-			banner = npc.type;
-			bannerItem = ItemType<ArcticGoblinBanner>();
+			Main.npcFrameCount[NPC.type] = 16;
+			Banner = NPC.type;
+			BannerItem = ItemType<ArcticGoblinBanner>();
 		}
 		public override void AI()
 		{

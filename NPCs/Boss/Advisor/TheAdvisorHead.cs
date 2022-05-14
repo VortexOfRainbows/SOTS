@@ -84,14 +84,14 @@ namespace SOTS.NPCs.Boss.Advisor
 		public const float ExpertLifeScale = 0.64002f;
 		public override void SetDefaults()
         {
-            npc.aiStyle = 0;
-            npc.lifeMax = NormalModeHP;
-            npc.damage = 54;
-            npc.defense = 24;
-            npc.knockBackResist = 0f;
-            npc.width = 78;
-            npc.height = 98;
-            Main.npcFrameCount[npc.type] = 2;
+            NPC.aiStyle =0;
+            NPC.lifeMax = NormalModeHP;
+            NPC.damage = 54;
+            NPC.defense = 24;
+            NPC.knockBackResist = 0f;
+            NPC.width = 78;
+            NPC.height = 98;
+            Main.npcFrameCount[NPC.type] = 2;
             npc.value = 150000;
             npc.npcSlots = 15f;
             npc.boss = false;
@@ -111,8 +111,8 @@ namespace SOTS.NPCs.Boss.Advisor
 		}
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
 		{
-			npc.lifeMax = (int)(npc.lifeMax * bossLifeScale * ExpertLifeScale); //16000
-			npc.damage = (int)(npc.damage * 0.8f); //86
+			NPC.lifeMax = (int)(npc.lifeMax * bossLifeScale * ExpertLifeScale); //16000
+			NPC.damage = (int)(npc.damage * 0.8f); //86
 		}
 		public static int[] ConstructIds = { -1, -1, -1, -1 };
 		bool dormant = true;
@@ -130,7 +130,7 @@ namespace SOTS.NPCs.Boss.Advisor
 			if(npc.frameCounter >= 4)
             {
 				npc.frameCounter = 0;
-				npc.frame.Y = (npc.frame.Y + frameHeight) % (frameHeight * 2);
+				NPC.frame.Y = (NPC.frame.Y + frameHeight) % (frameHeight * 2);
 				highlightFrame = (highlightFrame + 1) % 10;
             }
             base.FindFrame(frameHeight);
@@ -138,7 +138,7 @@ namespace SOTS.NPCs.Boss.Advisor
         public void DrawGlow(SpriteBatch spriteBatch, Color lightColor)
 		{
 			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Advisor/TheAdvisorHead_Spirit");
-			Vector2 drawOrigin = new Vector2(Main.npcTexture[npc.type].Width * 0.5f, npc.height * 0.5f);
+			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Npc[npc.type].Value.Width * 0.5f, npc.height * 0.5f);
 			Vector2 drawPos = npc.Center - Main.screenPosition;
 			Color color = new Color(100, 100, 100, 0);
 			if (attackPhase2 == 0)
@@ -474,7 +474,7 @@ namespace SOTS.NPCs.Boss.Advisor
 							int i2 = (int)(worldPos.X / 16);
 							int j2 = (int)(worldPos.Y / 16);
 
-							if (Main.tile[i2, j2].active() && !Main.tile[i2, j2].inActive() && Main.tileSolid[Main.tile[i2, j2].type] || Main.tileSolidTop[Main.tile[i2, j2].type])
+							if (Main.tile[i2, j2].HasTile && !Main.tile[i2, j2].IsActuated && Main.tileSolid[Main.tile[i2, j2].type] || Main.tileSolidTop[Main.tile[i2, j2].type])
 							{
 
 							}
@@ -521,7 +521,7 @@ namespace SOTS.NPCs.Boss.Advisor
 				if (bossHPScale > 1000.0)
 					bossHPScale = 1000f;
 				int trueLife = (int)(NormalModeHP * bossHPScale * ExpertLifeScale * Main.expertLife);
-				npc.lifeMax = trueLife;
+				NPC.lifeMax = trueLife;
 				npc.life = trueLife;
 				attackPhase1 = -1;
 				attackPhase2 = -1;
@@ -720,7 +720,7 @@ namespace SOTS.NPCs.Boss.Advisor
 								Vector2 worldPos = hookPos[i] + npc.Center;
 								int i2 = (int)(worldPos.X / 16);
 								int j2 = (int)(worldPos.Y / 16);
-								if (Main.tile[i2, j2].active() && !Main.tile[i2, j2].inActive() && Main.tileSolid[Main.tile[i2, j2].type] || Main.tileSolidTop[Main.tile[i2, j2].type]) ;
+								if (Main.tile[i2, j2].HasTile && !Main.tile[i2, j2].IsActuated && Main.tileSolid[Main.tile[i2, j2].type] || Main.tileSolidTop[Main.tile[i2, j2].type]) ;
 								else
 								{
 									Vector2 downStrike = new Vector2(0, 8).RotatedBy(MathHelper.ToRadians(extraDeg));
@@ -806,7 +806,7 @@ namespace SOTS.NPCs.Boss.Advisor
 							{
 								int i = (int)locX / 16;
 								int j = (int)locY / 16;
-								if (Main.tileSolid[Main.tile[i, j].type] && Main.tile[i, j].active() && !Main.tileSolidTop[Main.tile[i, j].type])
+								if (Main.tileSolid[Main.tile[i, j ].TileType] && Main.tile[i, j].HasTile && !Main.tileSolidTop[Main.tile[i, j ].TileType])
 								{
 									locX = player.Center.X + Main.rand.Next(-200, 201);
 									locY = player.Center.Y + Main.rand.Next(-200, 201);
@@ -830,7 +830,7 @@ namespace SOTS.NPCs.Boss.Advisor
 						attackPhase1 = -2;
 						glow = false;
 						SoundEngine.PlaySound(SoundID.Item92, npc.Center);
-						for (int i = 0; i < Main.Projectile.Length; i++)
+						for (int i = 0; i < Main.projectile.Length; i++)
 						{
 							Projectile proj = Main.projectile[i];
 							if (proj.active && proj.type == mod.ProjectileType("OtherworldlyTracer") && proj.ai[1] == npc.whoAmI)
@@ -924,7 +924,7 @@ namespace SOTS.NPCs.Boss.Advisor
 			float distance = (npc.Center - toLocation).Length();
 			int i = (int)(npc.Center.X / 16);
 			int j = (int)(npc.Center.Y / 16);
-			if (Main.tile[i, j].active() && Main.tileSolidTop[Main.tile[i, j].type] == false && Main.tileSolid[Main.tile[i, j].type] == true)
+			if (Main.tile[i, j].HasTile && Main.tileSolidTop[Main.tile[i, j ].TileType] == false && Main.tileSolid[Main.tile[i, j ].TileType] == true)
             {
 				if (speed < 4f)
 					speed = 4f;

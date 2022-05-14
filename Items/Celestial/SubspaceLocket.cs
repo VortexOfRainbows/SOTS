@@ -105,7 +105,7 @@ namespace SOTS.Items.Celestial
             {
                 SubspacePlayer modPlayer = SubspacePlayer.ModPlayer(drawPlayer);
                 int Probe = modPlayer.Probe;
-                for (int i = 0; i < Main.Projectile.Length; i++)
+                for (int i = 0; i < Main.projectile.Length; i++)
                 {
                     Projectile proj = Main.projectile[i];
                     SubspaceServant subServ = proj.modProjectile as SubspaceServant;

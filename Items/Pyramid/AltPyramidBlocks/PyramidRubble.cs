@@ -42,10 +42,10 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
 			Main.tileLighted[Type] = true;
 			drop = ModContent.ItemType<PyramidRubble>();
 			AddMapEntry(Color.Lerp(new Color(181, 164, 88), Color.Black, 0.15f));
-			mineResist = 1.5f;
-			minPick = 0;
+			MineResist = 1.5f;
+			MinPick = 0;
 			soundType = SoundID.Tink;
-			dustType = 32;
+			DustType = 32;
 		}
         public override bool KillSound(int i, int j)
 		{
@@ -90,11 +90,11 @@ namespace SOTS.Items.Pyramid.AltPyramidBlocks
 			Main.tileLighted[Type] = true;
 			drop = ModContent.ItemType<RuinedPyramidBrick>();
 			AddMapEntry(Color.Lerp(new Color(181, 164, 88), Color.Black, 0.08f));
-			mineResist = 2.0f;
-			minPick = 110;
+			MineResist = 2.0f;
+			MinPick = 110;
 			soundType = SoundID.Tink;
 			soundStyle = 2;
-			dustType = 32;
+			DustType = 32;
 		}
 		public override bool CanExplode(int i, int j)
 		{

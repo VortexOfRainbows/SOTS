@@ -24,7 +24,7 @@ namespace SOTS.Items.OreItems
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ItemID.PlatinumBar, 10);
 			recipe.AddIngredient(ModContent.ItemType<FragmentOfEvil>(), 1);
 			recipe.AddTile(TileID.Anvils);

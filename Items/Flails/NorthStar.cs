@@ -27,7 +27,7 @@ namespace SOTS.Items.Flails
         }
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
+            Recipe recipe = new Recipe(mod);
             recipe.AddIngredient(ModContent.ItemType<AbsoluteBar>(), 12);
             recipe.AddIngredient(ModContent.ItemType<Aten>(), 1);
             recipe.AddIngredient(ModContent.ItemType<Shattershine>(), 1);

@@ -34,7 +34,7 @@ namespace SOTS.Items.CritBonus
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ItemID.Wood, 20);
 			recipe.AddIngredient(ModContent.ItemType<FragmentOfNature>(), 4);
 			recipe.AddIngredient(ItemID.SkyBlueFlower, 1);
@@ -70,7 +70,7 @@ namespace SOTS.Items.CritBonus
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<Chocolate>(), 4);
 			recipe.AddIngredient(ModContent.ItemType<FragmentOfTide>(), 4);
 			recipe.AddTile(TileID.MythrilAnvil);
@@ -106,7 +106,7 @@ namespace SOTS.Items.CritBonus
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<CloverCharm>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<VoidCharm>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<Starbelt>(), 1);

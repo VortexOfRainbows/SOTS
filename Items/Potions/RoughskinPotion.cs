@@ -30,7 +30,7 @@ namespace SOTS.Items.Potions
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ItemID.BottledWater, 1);
 			recipe.AddIngredient(ModContent.ItemType<Fragments.FragmentOfEarth>(), 1);
 			recipe.AddIngredient(null, "Snakeskin", 8);
@@ -39,7 +39,7 @@ namespace SOTS.Items.Potions
 			recipe.SetResult(this, 1);
 			recipe.AddRecipe();
 			
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(ItemID.BottledWater, 1);
 			recipe.AddIngredient(ModContent.ItemType<Fragments.FragmentOfEarth>(), 1);
 			recipe.AddIngredient(null, "SeaSnake", 1);

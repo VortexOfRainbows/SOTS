@@ -46,7 +46,7 @@ namespace SOTS.Items.SpiritStaves
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<Fragments.DissolvingAether>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<Fragments.FragmentOfOtherworld>(), 30);
 			recipe.AddIngredient(ModContent.ItemType<HardlightAlloy>(), 10);

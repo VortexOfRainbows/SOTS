@@ -243,7 +243,7 @@ namespace SOTS.Projectiles.Otherworld
 				}
 				int i = (int)drawPos.X / 16;
 				int j = (int)drawPos.Y / 16;
-				if (!WorldGen.InWorld(i, j, 20) || Main.tile[i, j].active() && Main.tileSolidTop[Main.tile[i, j].type] == false && Main.tileSolid[Main.tile[i, j].type] == true)
+				if (!WorldGen.InWorld(i, j, 20) || Main.tile[i, j].HasTile && Main.tileSolidTop[Main.tile[i, j ].TileType] == false && Main.tileSolid[Main.tile[i, j ].TileType] == true)
 				{
 					if (Projectile.owner == Main.myPlayer && completedLoads == 0)
 					{

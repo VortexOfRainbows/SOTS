@@ -33,7 +33,7 @@ namespace SOTS.Projectiles.Pyramid
 			Projectile.alpha -= Projectile.alpha > 0 ? 1 : 0;
 			Projectile.rotation += Main.rand.Next(-3,4);
 			Projectile.alpha = Projectile.timeLeft <= 255 ? 200 - Projectile.timeLeft : Projectile.alpha;
-			int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), 18, 18, mod.DustType("CurseDust"));
+			int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), 18, 18, ModContent.DustType<CurseDust>());
 			Main.dust[num1].noGravity = true;
 			Main.dust[num1].alpha = Projectile.alpha;
 		}

@@ -42,7 +42,7 @@ namespace SOTS.Items.Permafrost
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(null, "AbsoluteBar", 16);
 			recipe.AddIngredient(null, "CryoCannon", 1);
 			recipe.AddIngredient(ItemID.SnowballCannon, 1);

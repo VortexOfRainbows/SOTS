@@ -45,7 +45,7 @@ namespace SOTS.Items.SpiritStaves
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<Fragments.DissolvingUmbra>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<Pyramid.CursedBlade>(), 1);
 			recipe.AddIngredient(ItemID.SpectreBar, 10);

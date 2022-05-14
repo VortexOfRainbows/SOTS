@@ -37,7 +37,7 @@ namespace SOTS.Items.Furniture.Earthen
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ItemID.Torch, 3);
 			recipe.AddIngredient(ModContent.ItemType<EarthenPlating>());
 			recipe.SetResult(this, 3);
@@ -88,10 +88,10 @@ namespace SOTS.Items.Furniture.Earthen
 			name.SetDefault("Earthen Plating Torch");
 			AddMapEntry(new Color(SOTSTile.EarthenPlatingLight), name);
 			disableSmartCursor = true;
-			dustType = DustID.GoldCoin;
+			DustType = DustID.GoldCoin;
 			drop = ModContent.ItemType<EarthenPlatingTorch>();
 			disableSmartCursor = true;
-			adjTiles = new int[] { TileID.Torches };
+			AdjTiles = new int[] { TileID.Torches };
 			torch = true;
 		}
         public override bool CanPlace(int i, int j)
@@ -112,8 +112,8 @@ namespace SOTS.Items.Furniture.Earthen
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
 		{
 			Color color = new Color(100, 100, 100, 0);
-			int frameX = Main.tile[i, j].frameX;
-			int frameY = Main.tile[i, j].frameY;
+			int frameX = Main.tile[i, j].TileFrameX;
+			int frameY = Main.tile[i, j].TileFrameY;
 			int width = 20;
 			int height = 20;
 			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);

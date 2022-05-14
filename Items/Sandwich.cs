@@ -32,7 +32,7 @@ namespace SOTS.Items
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(null, "Baguette", 1);
 			recipe.AddIngredient(null, "RoyalJelly", 1);
 			recipe.AddIngredient(null, "PeanutButter", 1);

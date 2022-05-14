@@ -81,7 +81,7 @@ namespace SOTS.Items.Otherworld.Furniture
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<DissolvingAether>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<TwilightShard>(), 3);
 			recipe.AddIngredient(ModContent.ItemType<TwilightGel>(), 20);
@@ -109,7 +109,7 @@ namespace SOTS.Items.Otherworld.Furniture
 			name.SetDefault("Digital Display");
 			AddMapEntry(new Color(255, 255, 255), name);
 			disableSmartCursor = true;
-			dustType = ModContent.DustType<AvaritianDust>();
+			DustType = ModContent.DustType<AvaritianDust>();
 		}
         public override bool HasSmartInteract()
         {
@@ -123,19 +123,19 @@ namespace SOTS.Items.Otherworld.Furniture
 		public override void MouseOver(int i, int j)
 		{
 			Player player = Main.LocalPlayer;
-			player.showItemIcon2 = ModContent.ItemType<DigitalDisplay>();
-			//player.showItemIconText = "";
+			player.cursorItemIconID = ModContent.ItemType<DigitalDisplay>();
+			//player.cursorItemIconText = "";
 			player.noThrow = 2;
-			player.showItemIcon = true;
+			player.cursorItemIconEnabled = true;
 		}
 		public override void MouseOverFar(int i, int j)
 		{
 			MouseOver(i, j);
 			Player player = Main.LocalPlayer;
-			if (player.showItemIconText == "")
+			if (player.cursorItemIconText == "")
 			{
-				player.showItemIcon = false;
-				player.showItemIcon2 = 0;
+				player.cursorItemIconEnabled = false;
+				player.cursorItemIconID = 0;
 			}
 		}
 		public override void RightClick(int i, int j)
@@ -147,7 +147,7 @@ namespace SOTS.Items.Otherworld.Furniture
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
 		{
-			if (Main.tile[i, j].frameX < 18 || Main.tile[i, j].frameX > 35 || Main.tile[i, j].frameY % 36 < 18)
+			if (Main.tile[i, j].TileFrameX < 18 || Main.tile[i, j].TileFrameX > 35 || Main.tile[i, j].TileFrameY % 36 < 18)
 				return;
 
 			r = 1.2f;
@@ -156,21 +156,21 @@ namespace SOTS.Items.Otherworld.Furniture
 		}
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
 		{
-			int style = Main.tile[i, j].frameY / 36;
+			int style = Main.tile[i, j].TileFrameY / 36;
 			style++;
-			if (Main.tile[i, j].frameX < 18 || Main.tile[i, j].frameX > 35 || Main.tile[i, j].frameY % 36 < 18)
+			if (Main.tile[i, j].TileFrameX < 18 || Main.tile[i, j].TileFrameX > 35 || Main.tile[i, j].TileFrameY % 36 < 18)
 				return true;
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Otherworld/Furniture/Display" + style).Value;
 			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Otherworld/Furniture/DisplayBackground").Value;
 			Color color;
-			color = WorldGen.paintColor((int)Main.tile[i, j].color()) * (100f / 255f);
+			color = WorldGen.paintColor((int)Main.tile[i, j].TileColor) * (100f / 255f);
 			color.A = 0;
 			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
 			if (Main.drawToScreen)
 			{
 				zero = Vector2.Zero;
 			}
-			Vector2 dynamicAddition = new Vector2(5, 0).RotatedBy(MathHelper.ToRadians(Main.GlobalTime * 40));
+			Vector2 dynamicAddition = new Vector2(5, 0).RotatedBy(MathHelper.ToRadians(Main.GlobalTimeWrappedHourly * 40));
 			for (int k = 0; k < 5; k++)
 			{
 				Vector2 pos = new Vector2((float)(i * 16 - (int)Main.screenPosition.X) + 8, (float)(j * 16 - (int)Main.screenPosition.Y) + 8) + zero;

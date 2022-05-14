@@ -19,11 +19,11 @@ namespace SOTS.Items.Furniture.Goopwood
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<Wormwood>(), 1); 
 			recipe.SetResult(this, 2);
 			recipe.AddRecipe();
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(this, 2);
 			recipe.SetResult(ModContent.ItemType<Wormwood>(), 1);
 			recipe.AddRecipe();
@@ -50,9 +50,9 @@ namespace SOTS.Items.Furniture.Goopwood
 			TileObjectData.addTile(19);
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
 			AddMapEntry(new Color(140, 70, 20));
-			dustType = 7;
+			DustType = 7;
 			drop = ModContent.ItemType<GoopwoodPlatform>();
-			adjTiles = new int[]{ TileID.Platforms };
+			AdjTiles = new int[]{ TileID.Platforms };
 			TileID.Sets.Platforms[Type] = true;
 		}
 		public override void PostSetDefaults()

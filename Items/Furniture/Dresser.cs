@@ -38,7 +38,7 @@ namespace SOTS.Items.Furniture
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
             AddMapEntry(MapColor, CreateMapEntryName(GetType().Name));
             disableSmartCursor = true;
-            adjTiles = new int[] { TileID.Dressers };
+            AdjTiles = new int[] { TileID.Dressers };
             dresser = DresserName;
             dresserDrop = DresserDrop;
         }
@@ -148,33 +148,33 @@ namespace SOTS.Items.Furniture
                 top--;
             }
             int chestIndex = Chest.FindChest(left, top);
-            player.showItemIcon2 = -1;
+            player.cursorItemIconID = -1;
             if (chestIndex < 0)
             {
-                player.showItemIconText = Language.GetTextValue("LegacyDresserType.0");
+                player.cursorItemIconText = Language.GetTextValue("LegacyDresserType.0");
             }
             else
             {
                 if (Main.chest[chestIndex].name != "")
                 {
-                    player.showItemIconText = Main.chest[chestIndex].name;
+                    player.cursorItemIconText = Main.chest[chestIndex].name;
                 }
                 else
                 {
-                    player.showItemIconText = DresserName;
+                    player.cursorItemIconText = DresserName;
                 }
-                if (player.showItemIconText == DresserName)
+                if (player.cursorItemIconText == DresserName)
                 {
-                    player.showItemIcon2 = DresserDrop;
-                    player.showItemIconText = "";
+                    player.cursorItemIconID = DresserDrop;
+                    player.cursorItemIconText = "";
                 }
             }
             player.noThrow = 2;
-            player.showItemIcon = true;
-            if (player.showItemIconText == "")
+            player.cursorItemIconEnabled = true;
+            if (player.cursorItemIconText == "")
             {
-                player.showItemIcon = false;
-                player.showItemIcon2 = 0;
+                player.cursorItemIconEnabled = false;
+                player.cursorItemIconID = 0;
             }
         }
         public override void MouseOver(int i, int j)
@@ -189,32 +189,32 @@ namespace SOTS.Items.Furniture
                 top--;
             }
             int num138 = Chest.FindChest(left, top);
-            player.showItemIcon2 = -1;
+            player.cursorItemIconID = -1;
             if (num138 < 0)
             {
-                player.showItemIconText = Language.GetTextValue("LegacyDresserType.0");
+                player.cursorItemIconText = Language.GetTextValue("LegacyDresserType.0");
             }
             else
             {
                 if (Main.chest[num138].name != "")
                 {
-                    player.showItemIconText = Main.chest[num138].name;
+                    player.cursorItemIconText = Main.chest[num138].name;
                 }
                 else
                 {
-                    player.showItemIconText = DresserName;
+                    player.cursorItemIconText = DresserName;
                 }
-                if (player.showItemIconText == DresserName)
+                if (player.cursorItemIconText == DresserName)
                 {
-                    player.showItemIcon2 = DresserDrop;
-                    player.showItemIconText = "";
+                    player.cursorItemIconID = DresserDrop;
+                    player.cursorItemIconText = "";
                 }
             }
             player.noThrow = 2;
-            player.showItemIcon = true;
+            player.cursorItemIconEnabled = true;
             if (Main.tile[Player.tileTargetX, Player.tileTargetY].frameY > 0)
             {
-                player.showItemIcon2 = ItemID.FamiliarShirt;
+                player.cursorItemIconID = ItemID.FamiliarShirt;
             }
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY)

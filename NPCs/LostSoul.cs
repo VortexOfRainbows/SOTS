@@ -17,14 +17,14 @@ namespace SOTS.NPCs
 		}
 		public override void SetDefaults()
 		{
-            npc.aiStyle = 44;
-            npc.lifeMax = 55;
-            npc.damage = 40; 
-            npc.defense = 3; 
-            npc.knockBackResist = 0.8f;
-            npc.width = 28;
-            npc.height = 40;
-			Main.npcFrameCount[npc.type] = 6;  
+            NPC.aiStyle =44;
+            NPC.lifeMax = 55;
+            NPC.damage = 40; 
+            NPC.defense = 3; 
+            NPC.knockBackResist = 0.8f;
+            NPC.width = 28;
+            NPC.height = 40;
+			Main.npcFrameCount[NPC.type] = 6;  
             npc.value = 550;
             npc.boss = false;
             npc.lavaImmune = false;
@@ -34,8 +34,8 @@ namespace SOTS.NPCs
             npc.HitSound = SoundID.NPCHit54;
             npc.DeathSound = SoundID.NPCDeath6;
             npc.DeathSound = null;
-			banner = npc.type;
-			bannerItem = ItemType<LostSoulBanner>();
+			Banner = NPC.type;
+			BannerItem = ItemType<LostSoulBanner>();
 		}
 		public override void AI()
 		{
@@ -73,10 +73,10 @@ namespace SOTS.NPCs
 				if (ai1 >= 5f) 
 				{
 					ai1 -= 5f;
-					npc.frame.Y += frame;
-					if(npc.frame.Y >= 6 * frame)
+					NPC.frame.Y += frame;
+					if(NPC.frame.Y >= 6 * frame)
 					{
-						npc.frame.Y = 0;
+						NPC.frame.Y = 0;
 					}
 				}
 				

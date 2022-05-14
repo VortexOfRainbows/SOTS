@@ -31,7 +31,7 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<SoulResidue>(), 25);
 			recipe.AddIngredient(ModContent.ItemType<EmeraldBracelet>(), 1);
 			recipe.AddIngredient(ItemID.BandofRegeneration, 1);

@@ -28,7 +28,7 @@ namespace SOTS.Items.Slime
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddRecipeGroup(RecipeGroupID.Wood, 2);
 			recipe.AddIngredient(ItemID.Gel, 5);
 			recipe.AddTile(TileID.Solidifier);
@@ -47,7 +47,7 @@ namespace SOTS.Items.Slime
 			Main.tileLighted[Type] = true;
 			drop = mod.ItemType("Wormwood");
 			AddMapEntry(new Color(140, 70, 20));
-			dustType = 7; //dynasty wood dust
+			DustType = 7; //dynasty wood dust
 		}
 	}
 }

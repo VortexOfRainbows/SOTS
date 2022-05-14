@@ -14,7 +14,7 @@ namespace SOTS.NPCs.Constructs
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
 			Vector2 origin = new Vector2(npc.width / 2, npc.height / 2);
-			Texture2D texture = Main.npcTexture[npc.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
 			for(int i = 0; i < 8; i++)
 			{
 				Vector2 circular = new Vector2(6, 0).RotatedBy(MathHelper.ToRadians(i * 45 - SOTSWorld.GlobalCounter));
@@ -32,13 +32,13 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override void SetDefaults()
 		{
-            npc.aiStyle = -1;  
-            npc.lifeMax = 1000;
-            npc.damage = 0;
-            npc.defense = 30;
-            npc.knockBackResist = 0.95f;
-            npc.width = 70;
-            npc.height = 70;
+            NPC.aiStyle =-1;  
+            NPC.lifeMax = 1000;
+            NPC.damage = 0;
+            NPC.defense = 30;
+            NPC.knockBackResist = 0.95f;
+            NPC.width = 70;
+            NPC.height = 70;
             npc.value = 0;
             npc.npcSlots = 1f;
             npc.boss = false;
@@ -71,8 +71,8 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
-			npc.lifeMax = 1200;
-			npc.damage = 0;
+			NPC.lifeMax = 1200;
+			NPC.damage = 0;
         }
         public override bool PreAI()
 		{

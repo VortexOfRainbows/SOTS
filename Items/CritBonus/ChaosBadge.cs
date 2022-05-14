@@ -29,14 +29,14 @@ namespace SOTS.Items.CritBonus
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ItemID.CobaltBar, 10);
 			recipe.AddIngredient(ModContent.ItemType<FragmentOfChaos>(), 4);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this);
 			recipe.AddRecipe();
 			
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(ItemID.PalladiumBar, 10);
 			recipe.AddIngredient(ModContent.ItemType<FragmentOfChaos>(), 4);
 			recipe.AddTile(TileID.Anvils);

@@ -38,7 +38,7 @@ namespace SOTS.Items.Slime
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<VialofAcid>(), 1);
 			recipe.AddIngredient(ItemID.PinkGel, 2);
 			recipe.AddTile(TileID.Solidifier);

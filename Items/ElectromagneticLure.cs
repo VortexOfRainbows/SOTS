@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using SOTS.Projectiles;
 using SOTS.Buffs;
+using Terraria.Audio;
 
 namespace SOTS.Items
 {
@@ -33,13 +34,7 @@ namespace SOTS.Items
 		}
         public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddRecipeGroup("SOTS:DissolvingElement", 1);
-			recipe.AddRecipeGroup("SOTS:ElementalFragment", 20);
-			recipe.AddRecipeGroup("SOTS:ElementalPlating", 20);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1).AddRecipeGroup("SOTS:DissolvingElement", 1).AddRecipeGroup("SOTS:ElementalFragment", 20).AddRecipeGroup("SOTS:ElementalPlating", 20).AddTile(TileID.Anvils).Register();
 		}
 		public List<int> CapableNPCS(Player player)
 		{
@@ -81,7 +76,7 @@ namespace SOTS.Items
 			{
 				capable.Add(ModContent.NPCType<InfernoConstruct>());
 			}
-			if (player.ZoneHoly && player.ZoneOverworldHeight && Main.hardMode)
+			if (player.ZoneHallow && player.ZoneOverworldHeight && Main.hardMode)
 			{
 				capable.Add(ModContent.NPCType<ChaosConstruct>());
 			}
@@ -95,7 +90,7 @@ namespace SOTS.Items
 		}
 		public override bool CanUseItem(Player player)
 		{
-			if(player.HasBuff(ModContent.BuffType<IntimidatingPresence>())
+			if(player.HasBuff(ModContent.BuffType<IntimidatingPresence>()))
             {
 				return false;
             }
@@ -111,10 +106,10 @@ namespace SOTS.Items
             }
 			return true;
 		}
-		public override bool UseItem(Player player)
-		{
+        public override bool? UseItem(Player player)
+        {
 			if(Main.myPlayer == player.whoAmI)
-				Projectile.NewProjectile(player.Center + new Vector2(0, -32), new Vector2(0, -4), ModContent.ProjectileType<ConstructFinder>(), 0, 0, Main.myPlayer);
+				Projectile.NewProjectile(player.GetSource_ItemUse(Item), player.Center + new Vector2(0, -32), new Vector2(0, -4), ModContent.ProjectileType<ConstructFinder>(), 0, 0, Main.myPlayer);
 			int type = GetNPCType(CapableNPCS(player));
 			if (type == -1)
 				return false;

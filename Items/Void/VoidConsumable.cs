@@ -262,7 +262,7 @@ namespace SOTS.Items.Void
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(null, "Curgeon", 1);
 			recipe.AddTile(TileID.CookingPots);
 			recipe.SetResult(this, 2);

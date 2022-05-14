@@ -44,7 +44,7 @@ namespace SOTS.Items.Crushers
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ItemID.SpiderFang, 18);
 			recipe.AddIngredient(ModContent.ItemType<DissolvingEarth>(), 1);
 			recipe.AddTile(TileID.Anvils);

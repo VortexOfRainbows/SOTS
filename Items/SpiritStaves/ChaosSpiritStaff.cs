@@ -43,7 +43,7 @@ namespace SOTS.Items.SpiritStaves
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<Fragments.DissolvingBrilliance>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<Chaos.PhaseBar>(), 10);
 			recipe.AddIngredient(ItemID.SoulofLight, 5);

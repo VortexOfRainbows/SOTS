@@ -37,7 +37,7 @@ namespace SOTS.Items.Pyramid
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Pyramid/TaintedKeystoneShard").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			position += drawOrigin * scale;
-			float counter = Main.GlobalTime * 160;
+			float counter = Main.GlobalTimeWrappedHourly * 160;
 			float mult = new Vector2(-1f, 0).RotatedBy(MathHelper.ToRadians(counter)).X;
 			for (int i = 0; i < 6; i++)
 			{
@@ -74,7 +74,7 @@ namespace SOTS.Items.Pyramid
 		{
 			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Pyramid/TaintedKeystoneShard").Value;
 			Vector2 drawOrigin = new Vector2(texture2.Width * 0.5f, texture2.Height * 0.5f);
-			float counter = Main.GlobalTime * 160;
+			float counter = Main.GlobalTimeWrappedHourly * 160;
 			float mult = new Vector2(-2.5f, 0).RotatedBy(MathHelper.ToRadians(counter)).X;
 			for (int i = 0; i < 6; i++)
 			{
@@ -109,48 +109,48 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(this, 1);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(ItemID.Ruby, 1);
 			recipe.AddRecipe();
 
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(this, 3);
 			recipe.AddIngredient(ModContent.ItemType<Fragments.FragmentOfNature>(), 1);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(ItemID.Emerald, 3);
 			recipe.AddRecipe();
 
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(this, 3);
 			recipe.AddIngredient(ModContent.ItemType<Fragments.FragmentOfEarth>(), 1);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(ItemID.Topaz, 3);
 			recipe.AddRecipe();
 
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(this, 3);
 			recipe.AddIngredient(ModContent.ItemType<Fragments.FragmentOfPermafrost>(), 1);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(ItemID.Diamond, 3);
 			recipe.AddRecipe();
 
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(this, 3);
 			recipe.AddIngredient(ModContent.ItemType<Fragments.FragmentOfOtherworld>(), 1);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(ItemID.Amethyst, 3);
 			recipe.AddRecipe();
 
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(this, 3);
 			recipe.AddIngredient(ModContent.ItemType<Fragments.FragmentOfTide>(), 1);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(ItemID.Sapphire, 3);
 			recipe.AddRecipe();
 
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(this, 3);
 			recipe.AddIngredient(ModContent.ItemType<Fragments.FragmentOfInferno>(), 1);
 			recipe.AddTile(TileID.Anvils);
@@ -172,7 +172,7 @@ namespace SOTS.Items.Pyramid
 			AddMapEntry(new Color(211, 69, 74), name);
 			soundType = 2;
 			soundStyle = 27;
-			dustType = 12;
+			DustType = 12;
 		}
         public override bool CanExplode(int i, int j)
 		{
@@ -205,7 +205,7 @@ namespace SOTS.Items.Pyramid
 			{
 				zero = Vector2.Zero;
 			}
-			Texture2D texture = Main.tileTexture[tile.TileType];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Item[tile.TileType].Value;
 			Vector2 drawOffSet = Vector2.Zero;
 			if(tile.TileFrameY == 0) //below is active
 				drawOffSet.Y += 2;
@@ -218,7 +218,7 @@ namespace SOTS.Items.Pyramid
 			Vector2 location = new Vector2(i * 16, j * 16) + drawOffSet;
 			Color color2 = Lighting.GetColor(i, j, WorldGen.paintColor(tile.color()));
 			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Pyramid/TaintedKeystoneShardTile").Value;
-			float counter = Main.GlobalTime * 160;
+			float counter = Main.GlobalTimeWrappedHourly * 160;
 			float mult = new Vector2(-1f, 0).RotatedBy(MathHelper.ToRadians(counter)).X;
 			Rectangle frame = new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, 16);
 			for (int k = 0; k < 6; k++)
@@ -257,7 +257,7 @@ namespace SOTS.Items.Pyramid
 		}
 		public static bool TileIsCapable(Tile tile)
 		{
-			return tile.active() && Main.tileSolid[tile.TileType] && !Main.tileSolidTop[tile.TileType] && tile.slope() == 0 && !tile.halfBrick() && !tile.inActive();
+			return tile.active() && Main.tileSolid[tile.TileType] && !Main.tileSolidTop[tile.TileType] && tile.Slope == 0 && !tile.TileType && !tile.IsActuated;
 		}
 		public static bool TileIsCapable(int i, int j)
         {
@@ -273,19 +273,19 @@ namespace SOTS.Items.Pyramid
 			bool flag = true;
 			if (TileIsCapable(i, j + 1)) //checks if below tile is active
 			{
-				Main.tile[i, j].frameY = 0;
+				Main.tile[i, j].TileFrameY = 0;
 			}
 			else if (TileIsCapable(i - 1, j)) //checks if left tile is active
 			{
-				Main.tile[i, j].frameY = 54;
+				Main.tile[i, j].TileFrameY = 54;
 			}
 			else if (TileIsCapable(i + 1, j)) //checks if right tile is active
 			{
-				Main.tile[i, j].frameY = 36;
+				Main.tile[i, j].TileFrameY = 36;
 			}
 			else if (TileIsCapable(i, j - 1)) //checks if above tile is active
 			{
-				Main.tile[i, j].frameY = 18;
+				Main.tile[i, j].TileFrameY = 18;
 			}
 			else
             {
@@ -293,7 +293,7 @@ namespace SOTS.Items.Pyramid
 			}
 			if(flag && randomize)
 			{
-				Main.tile[i, j].frameX = (short)(WorldGen.genRand.Next(18) * 18);
+				Main.tile[i, j].TileFrameX = (short)(WorldGen.genRand.Next(18) * 18);
 				WorldGen.SquareTileFrame(i, j, true);
 				NetMessage.SendTileSquare(-1, i, j, 2, TileChangeType.None);
 				//NetMessage.SendData(17, -1, -1, null, 1, i, j, Type);

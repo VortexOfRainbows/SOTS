@@ -30,7 +30,7 @@ namespace SOTS.Items.Pyramid.AncientGold
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<RoyalGoldBrick>(), 10);
 			recipe.SetResult(this);
 			recipe.AddRecipe();
@@ -52,9 +52,9 @@ namespace SOTS.Items.Pyramid.AncientGold
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Ancient Gold Work Bench");
 			AddMapEntry(new Color(220, 180, 25), name);
-			dustType = DustID.GoldCoin;
+			DustType = DustID.GoldCoin;
 			disableSmartCursor = true;
-			adjTiles = new int[]{ TileID.WorkBenches };
+			AdjTiles = new int[]{ TileID.WorkBenches };
 		}
 		public override void NumDust(int i, int j, bool fail, ref int num)
 		{

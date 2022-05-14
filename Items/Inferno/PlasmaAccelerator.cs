@@ -48,7 +48,7 @@ namespace SOTS.Items.Inferno
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<Sharanga>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<DissolvingAether>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<DissolvingNether>(), 1);

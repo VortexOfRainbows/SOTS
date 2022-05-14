@@ -24,7 +24,7 @@ namespace SOTS.NPCs.Phase
         Vector2 directVelo;
         public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
         {
-            Texture2D texture = Main.npcTexture[npc.type];
+            Texture2D texture = Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
             Texture2D textureP = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Phase/PhaseAssaulterHeadPink");
             Vector2 origin = new Vector2(texture.Width * 0.5f, npc.height * 0.5f);
             for (int i = 0; i < 4; i++)
@@ -32,19 +32,19 @@ namespace SOTS.NPCs.Phase
                 Vector2 circular = new Vector2(2, 0).RotatedBy(npc.rotation + i * MathHelper.PiOver2);
                 Main.spriteBatch.Draw(textureP, npc.Center - Main.screenPosition + new Vector2(0, npc.gfxOffY) + circular, npc.frame, new Color(100, 100, 100, 0) * (0.1f + 0.9f * ((255 - npc.alpha) / 255f)), npc.rotation, origin, npc.scale, SpriteEffects.None, 0f);
             }
-            texture = Main.npcTexture[npc.type];
+            texture = Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
             Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition, npc.frame, npc.GetAlpha(Color.White), npc.rotation, origin, npc.scale, SpriteEffects.None, 0);
             return false;
         }
         public override void SetDefaults()
         {
-            npc.knockBackResist = 0f;
-            npc.aiStyle = 0;
-            npc.lifeMax = 9500;
-            npc.damage = 100;
-            npc.defense = 30;
-            npc.width = 54;
-            npc.height = 56;
+            NPC.knockBackResist = 0f;
+            NPC.aiStyle =0;
+            NPC.lifeMax = 9500;
+            NPC.damage = 100;
+            NPC.defense = 30;
+            NPC.width = 54;
+            NPC.height = 56;
             npc.lavaImmune = true;
             npc.noGravity = true;
             npc.noTileCollide = true;
@@ -53,13 +53,13 @@ namespace SOTS.NPCs.Phase
             npc.value = Item.buyPrice(0, 3, 20, 0);
             npc.npcSlots = 3f;
             npc.netAlways = true;
-            banner = npc.type;
-            bannerItem = ModContent.ItemType<PhaseAssaulterBanner>();
+            Banner = NPC.type;
+            BannerItem = ModContent.ItemType<PhaseAssaulterBanner>();
             SetupDebuffImmunities();
         }
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
-            npc.lifeMax = 15000;
+            NPC.lifeMax = 15000;
         }
         public void SetupDebuffImmunities()
         {
@@ -282,7 +282,7 @@ namespace SOTS.NPCs.Phase
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
         {
-            Texture2D texture = Main.npcTexture[npc.type];
+            Texture2D texture = Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
             Texture2D textureG = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Phase/PhaseAssaulterBodyGlow");
             Texture2D textureP = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Phase/PhaseAssaulterBodyPink");
             Vector2 origin = new Vector2(texture.Width * 0.5f, npc.height * 0.5f);
@@ -291,18 +291,18 @@ namespace SOTS.NPCs.Phase
                 Vector2 circular = new Vector2(2, 0).RotatedBy(npc.rotation + i * MathHelper.PiOver2);
                 Main.spriteBatch.Draw(textureP, npc.Center - Main.screenPosition + new Vector2(0, npc.gfxOffY) + circular, npc.frame, new Color(100, 100, 100, 0) * (0.1f + 0.9f * ((255 - npc.alpha) / 255f)), npc.rotation, origin, npc.scale, SpriteEffects.None, 0f);
             }
-            texture = Main.npcTexture[npc.type];
+            texture = Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
             Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition, npc.frame, npc.GetAlpha(Color.White), npc.rotation, origin, npc.scale, SpriteEffects.None, 0);
             return false;
         }
         public override void SetDefaults()
         {
-            npc.knockBackResist = 0.0f;
-            npc.width = 46;
-            npc.height = 42;
-            npc.damage = 80;
-            npc.defense = 200;
-            npc.lifeMax = 6969;
+            NPC.knockBackResist = 0.0f;
+            NPC.width = 46;
+            NPC.height = 42;
+            NPC.damage = 80;
+            NPC.defense = 200;
+            NPC.lifeMax = 6969;
             npc.noTileCollide = true;
             npc.netAlways = true;
             npc.noGravity = true;
@@ -311,7 +311,7 @@ namespace SOTS.NPCs.Phase
             npc.HitSound = SoundID.NPCHit4;
             npc.DeathSound = SoundID.NPCDeath14;
             banner = ModContent.NPCType<PhaseAssaulterHead>();
-            bannerItem = ModContent.ItemType<PhaseAssaulterBanner>();
+            BannerItem = ModContent.ItemType<PhaseAssaulterBanner>();
             SetupDebuffImmunities();
         }
         public void SetupDebuffImmunities()
@@ -436,7 +436,7 @@ namespace SOTS.NPCs.Phase
         public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
         {
             TrailPreDraw(spriteBatch);
-            Texture2D texture = Main.npcTexture[npc.type];
+            Texture2D texture = Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
             Texture2D textureP = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Phase/PhaseAssaulterTailPink");
             Vector2 origin = new Vector2(texture.Width * 0.5f, npc.height * 0.5f);
             for (int i = 0; i < 4; i++)
@@ -444,18 +444,18 @@ namespace SOTS.NPCs.Phase
                 Vector2 circular = new Vector2(2, 0).RotatedBy(npc.rotation + i * MathHelper.PiOver2);
                 Main.spriteBatch.Draw(textureP, npc.Center - Main.screenPosition + new Vector2(0, npc.gfxOffY) + circular, npc.frame, new Color(100, 100, 100, 0) * (0.1f + 0.9f * ((255 - npc.alpha) / 255f)), npc.rotation, origin, npc.scale, SpriteEffects.None, 0f);
             }
-            texture = Main.npcTexture[npc.type];
+            texture = Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
             Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition, npc.frame, npc.GetAlpha(Color.White), npc.rotation, origin, npc.scale, SpriteEffects.None, 0);
             return false;
         }
         public override void SetDefaults()
         {
-            npc.knockBackResist = 0.0f;
-            npc.width = 46;
-            npc.height = 32;
-            npc.damage = 60;
-            npc.defense = 24;
-            npc.lifeMax = 130000;
+            NPC.knockBackResist = 0.0f;
+            NPC.width = 46;
+            NPC.height = 32;
+            NPC.damage = 60;
+            NPC.defense = 24;
+            NPC.lifeMax = 130000;
             npc.noTileCollide = true;
             npc.netAlways = true;
             npc.noGravity = true;
@@ -464,7 +464,7 @@ namespace SOTS.NPCs.Phase
             npc.HitSound = SoundID.NPCHit4;
             npc.DeathSound = SoundID.NPCDeath14;
             banner = ModContent.NPCType<PhaseAssaulterHead>();
-            bannerItem = ModContent.ItemType<PhaseAssaulterBanner>();
+            BannerItem = ModContent.ItemType<PhaseAssaulterBanner>();
             SetupDebuffImmunities();
         }
         public void SetupDebuffImmunities()

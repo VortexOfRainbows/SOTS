@@ -36,7 +36,7 @@ namespace SOTS.Projectiles.Pyramid
 		{
 			int i = (int)(Projectile.Center.X / 16);
 			int j =	(int)(Projectile.Center.Y / 16);
-			if(!Main.tile[i, j].active())
+			if(!Main.tile[i, j].HasTile)
 			{
 				wait++;
 			}

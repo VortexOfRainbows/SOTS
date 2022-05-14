@@ -45,7 +45,7 @@ namespace SOTS.Items
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<PlatformGenerator>(), 1);
 			recipe.AddIngredient(ItemID.PaladinsShield, 1);
 			recipe.AddIngredient(ItemID.PygmyNecklace, 1);

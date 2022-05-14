@@ -19,11 +19,11 @@ namespace SOTS.Items.Pyramid
 			Main.tileLighted[Type] = true;
 			drop = ModContent.ItemType<PyramidSlab>();
 			AddMapEntry(new Color(181, 164, 88));
-			mineResist = 3.5f;
-			minPick = 110;
+			MineResist = 3.5f;
+			MinPick = 110;
             soundType = SoundID.Tink;
             soundStyle = 2;
-			dustType = 32;
+			DustType = 32;
 		}
 		public override bool CanExplode(int i, int j)
 		{

@@ -53,7 +53,7 @@ namespace SOTS.Projectiles.Minions
 			player.hornet = false; // Relic from aiType
 			if (Main.myPlayer != Projectile.owner)
 				Projectile.timeLeft = 20;
-			for(int i = 0; i < Main.Projectile.Length; i++)
+			for(int i = 0; i < Main.projectile.Length; i++)
             {
 				Projectile proj = Main.projectile[i];
 				if(proj.type == Projectile.type && proj.owner == Projectile.owner && proj.active && proj.whoAmI != Projectile.whoAmI)

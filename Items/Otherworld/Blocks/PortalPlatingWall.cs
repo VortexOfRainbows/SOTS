@@ -24,7 +24,7 @@ namespace SOTS.Items.Otherworld.Blocks
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<AvaritianPlating>(), 1);
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.SetResult(this, 4);
@@ -35,7 +35,7 @@ namespace SOTS.Items.Otherworld.Blocks
 	{
 		public static void DrawWallGlow(int wallType, int i, int j, SpriteBatch spriteBatch)
 		{
-			float uniquenessCounter = Main.GlobalTime * -100 + (i + j) * 5;
+			float uniquenessCounter = Main.GlobalTimeWrappedHourly * -100 + (i + j) * 5;
 			Tile tile = Main.tile[i, j];
 			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Items/Otherworld/Blocks/AvaritianPlatingWallWallGlow");
 			int xLength = 32;
@@ -75,7 +75,7 @@ namespace SOTS.Items.Otherworld.Blocks
 		public override void SetDefaults()
 		{
 			Main.wallHouse[Type] = true;
-			dustType = ModContent.DustType<AvaritianDust>();
+			DustType = ModContent.DustType<AvaritianDust>();
 			drop = ModContent.ItemType<PortalPlatingWall>();
 			AddMapEntry(new Color(0, 130, 215));
 		}
@@ -90,7 +90,7 @@ namespace SOTS.Items.Otherworld.Blocks
 		public override void SetDefaults()
 		{
 			Main.wallHouse[Type] = false;
-			dustType = ModContent.DustType<AvaritianDust>();
+			DustType = ModContent.DustType<AvaritianDust>();
 			drop = ModContent.ItemType<PortalPlatingWall>();
 			AddMapEntry(new Color(0, 130, 215));
 		}

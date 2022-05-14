@@ -33,7 +33,7 @@ namespace SOTS.Items.Furniture
             TileObjectData.addAlternate(1);
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsChair);
             disableSmartCursor = true;
-            adjTiles = new int[] { TileID.Beds };
+            AdjTiles = new int[] { TileID.Beds };
             bed = true;
         }
         public override bool HasSmartInteract()
@@ -68,8 +68,8 @@ namespace SOTS.Items.Furniture
         {
             Player player = Main.LocalPlayer;
             player.noThrow = 2;
-            player.showItemIcon = true;
-            player.showItemIcon2 = ItemType;
+            player.cursorItemIconEnabled = true;
+            player.cursorItemIconID = ItemType;
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {

@@ -269,7 +269,7 @@ namespace SOTS.Projectiles.Permafrost
             Projectile.rotation = (float)(Math.Atan2((double)Projectile.velocity.Y, (double)Projectile.velocity.X) + MathHelper.ToRadians(Projectile.direction == 1 ? 72.5f : 107.5f));
             return false;
         }
-        public void DustStar(Vector2 position, int dustType, float pointAmount = 5, float mainSize = 1, float dustDensity = 1, float pointDepthMult = 1f, float pointDepthMultOffset = 0.5f, float randomAmount = 0, float rotation = 0, float spin = 0, float scaleMult = 1f)
+        public void DustStar(Vector2 position, int DustType, float pointAmount = 5, float mainSize = 1, float dustDensity = 1, float pointDepthMult = 1f, float pointDepthMultOffset = 0.5f, float randomAmount = 0, float rotation = 0, float spin = 0, float scaleMult = 1f)
         {
             Player player = Main.player[Projectile.owner];
             float density = 1 / dustDensity * 0.1f;
@@ -284,7 +284,7 @@ namespace SOTS.Projectiles.Permafrost
                 Vector2 velocity = new Vector2(x, y).RotatedBy(spin) * mult * mainSize;
                 velocity.X *= 0.6f;
                 velocity = velocity.RotatedBy(rotation);
-                Dust dust = Dust.NewDustDirect(position - new Vector2(4, 4), 0, 0, dustType, 0, 0, 0, new Color(116, 125, 238));
+                Dust dust = Dust.NewDustDirect(position - new Vector2(4, 4), 0, 0, DustType, 0, 0, 0, new Color(116, 125, 238));
                 dust.noGravity = true;
                 dust.scale = (dust.scale * 0.5f + 1) * scaleMult;
                 dust.velocity = dust.velocity * 0.1f + velocity + player.velocity * 0.95f;

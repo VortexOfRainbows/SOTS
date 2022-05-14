@@ -41,23 +41,23 @@ namespace SOTS.Items.Otherworld.Furniture
 			name = CreateMapEntryName(Name + "_Locked"); // With multiple map entries, you need unique translation keys.
 			name.SetDefault("Locked Meteorite Chest");
 			AddMapEntry(new Color(174, 129, 92), name, MapChestName);
-			dustType = -1; //regular meteor chest doesn't make dust for some reason
+			DustType = -1; //regular meteor chest doesn't make dust for some reason
 			disableSmartCursor = true;
-			adjTiles = new int[] { TileID.Containers };
+			AdjTiles = new int[] { TileID.Containers };
 			chest = "Meteorite Chest";
 			chestDrop = ItemID.MeteoriteChest;
 		}
 		public override ushort GetMapOption(int i, int j)
 		{
-			if (Main.tile[i, j].frameX < 36)
+			if (Main.tile[i, j].TileFrameX < 36)
 				return 0;
 			return 1;
 		}
 		public override bool HasSmartInteract() => true;
-		public override bool IsLockedChest(int i, int j) => Main.tile[i, j].frameX / 36 == 1;
-		public override bool UnlockChest(int i, int j, ref short frameXAdjustment, ref int dustType, ref bool manual)
+		public override bool IsLockedChest(int i, int j) => Main.tile[i, j].TileFrameX / 36 == 1;
+		public override bool UnlockChest(int i, int j, ref short frameXAdjustment, ref int DustType, ref bool manual)
 		{
-			dustType = 1;
+			DustType = 1;
 			return true;
 		}
 		public string MapChestName(string name, int i, int j)
@@ -198,33 +198,33 @@ namespace SOTS.Items.Otherworld.Furniture
 				top--;
 			}
 			int chest = Chest.FindChest(left, top);
-			player.showItemIcon2 = -1;
+			player.cursorItemIconID = -1;
 			if (chest < 0)
 			{
-				player.showItemIconText = Language.GetTextValue("LegacyChestType.0");
+				player.cursorItemIconText = Language.GetTextValue("LegacyChestType.0");
 			}
 			else
 			{
-				player.showItemIconText = Main.chest[chest].name.Length > 0 ? Main.chest[chest].name : "Meteorite Chest";
-				if (player.showItemIconText == "Meteorite Chest")
+				player.cursorItemIconText = Main.chest[chest].name.Length > 0 ? Main.chest[chest].name : "Meteorite Chest";
+				if (player.cursorItemIconText == "Meteorite Chest")
 				{
-					player.showItemIcon2 = ItemID.MeteoriteChest;
+					player.cursorItemIconID = ItemID.MeteoriteChest;
 					if (Main.tile[left, top].frameX / 36 == 1)
-						player.showItemIcon2 = ItemType<MeteoriteKey>();
-					player.showItemIconText = "";
+						player.cursorItemIconID = ItemType<MeteoriteKey>();
+					player.cursorItemIconText = "";
 				}
 			}
 			player.noThrow = 2;
-			player.showItemIcon = true;
+			player.cursorItemIconEnabled = true;
 		}
 		public override void MouseOverFar(int i, int j)
 		{
 			MouseOver(i, j);
 			Player player = Main.LocalPlayer;
-			if (player.showItemIconText == "")
+			if (player.cursorItemIconText == "")
 			{
-				player.showItemIcon = false;
-				player.showItemIcon2 = 0;
+				player.cursorItemIconEnabled = false;
+				player.cursorItemIconID = 0;
 			}
 		}
 	}

@@ -37,7 +37,7 @@ namespace SOTS.Items.Crushers
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ItemID.ChlorophyteBar, 16);
 			recipe.AddIngredient(ItemID.SoulofNight, 6);
 			recipe.AddIngredient(ModContent.ItemType<FragmentOfEvil>(), 6);

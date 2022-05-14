@@ -46,7 +46,7 @@ namespace SOTS.Items.Permafrost
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<DissolvingAurora>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<AbsoluteBar>(), 12);
 			recipe.AddIngredient(ModContent.ItemType<HelicopterParts>(), 2);

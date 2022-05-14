@@ -34,7 +34,7 @@ namespace SOTS.Items.MusicBoxes
 		
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(null, "PyramidSlab", 10);
 			recipe.AddIngredient(null, "CursedHiveBlock", 10);
 			recipe.AddIngredient(null, "SoulResidue", 10);
@@ -74,8 +74,8 @@ namespace SOTS.Items.MusicBoxes
 		{
 			Player player = Main.LocalPlayer;
 			player.noThrow = 2;
-			player.showItemIcon = true;
-			player.showItemIcon2 = mod.ItemType("AncientPyramidMusicBox");
+			player.cursorItemIconEnabled = true;
+			player.cursorItemIconID = mod.ItemType("AncientPyramidMusicBox");
 		}
 	}
 }

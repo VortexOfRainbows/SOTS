@@ -45,7 +45,7 @@ namespace SOTS.Items.GhostTown
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<AncientSteelBar>(), 16);
 			recipe.AddRecipeGroup(RecipeGroupID.Wood, 20);
 			recipe.AddTile(TileID.Anvils);

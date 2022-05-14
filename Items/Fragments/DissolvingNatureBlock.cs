@@ -29,22 +29,19 @@ namespace SOTS.Items.Fragments
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<DissolvingNature>(), 1);
-			recipe.SetResult(this, 20);
-			recipe.AddRecipe();
+			CreateRecipe(20).AddIngredient<DissolvingNature>(1).Register();
 		}
 	}
 	public class DissolvingNatureTile : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileSolid[Type] = true;
 			Main.tileShine2[Type] = true;
 			Main.tileLighted[Type] = true;
-			drop = ModContent.ItemType<DissolvingNatureBlock>();
+			ItemDrop = ModContent.ItemType<DissolvingNatureBlock>();
 			AddMapEntry(new Color(177, 238, 181));
-			mineResist = 0.2f;
+			MineResist = 0.2f;
 			TileID.Sets.GemsparkFramingTypes[Type] = Type;
 		}
 		public override void NumDust(int i, int j, bool fail, ref int num)
@@ -70,10 +67,10 @@ namespace SOTS.Items.Fragments
 			g *= 0.3f;
 			b *= 0.3f;
 		}
-		public static void DrawEffects(int i, int j, SpriteBatch spriteBatch, Mod mod, bool wall = false)
+		public static void DrawEffects(int i, int j, Mod mod, bool wall = false)
         {
-			Texture2D texture = Mod.Assets.Request<Texture2D>("Assets/SpiritBlocks/NatureParticle").Value;
-			Texture2D textureBlock = Mod.Assets.Request<Texture2D>("Assets/SpiritBlocks/NatureBlockOutline").Value;
+			Texture2D texture = mod.Assets.Request<Texture2D>("Assets/SpiritBlocks/NatureParticle").Value;
+			Texture2D textureBlock = mod.Assets.Request<Texture2D>("Assets/SpiritBlocks/NatureBlockOutline").Value;
 			Color color;
 			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
 			if (Main.drawToScreen)
@@ -83,12 +80,12 @@ namespace SOTS.Items.Fragments
 			for (int k = 0; k < 16; k += 2)
 			{
 				Vector2 location = new Vector2(i * 16, j * 16);
-				color = WorldGen.paintColor((int)Main.tile[i, j].color());
+				color = WorldGen.paintColor((int)Main.tile[i, j].TileColor);
 				if (wall)
-					color = WorldGen.paintColor((int)Main.tile[i, j].wallColor());
+					color = WorldGen.paintColor((int)Main.tile[i, j].WallColor);
 				color = new Color(color.R, color.G, color.B, 0);
 				int seed = k + j + (i * j);
-				int uniqueParticleFrame = i - seed + (int)(Main.GlobalTime * 5); //serves as a type of randomizer for the particles
+				int uniqueParticleFrame = i - seed + (int)(Main.GlobalTimeWrappedHourly * 5); //serves as a type of randomizer for the particles
 				if (i % 2 == 0)
 					uniqueParticleFrame += 3;
 				if (i % 3 == 0)
@@ -109,19 +106,19 @@ namespace SOTS.Items.Fragments
 				{
 					location.Y += (uniqueParticleFrame * 2) - 16;
 				}
-				if (Main.tile[i, j].halfBrick())
+				if (Main.tile[i, j].IsHalfBlock)
 					location.Y += 8;
 
-				if (Main.tile[i, j].slope() == 1)
+				if ((int)Main.tile[i, j].Slope == 1)
 					location.Y += k;
 
-				if (Main.tile[i, j].slope() == 2)
+				if ((int)Main.tile[i, j].Slope == 2)
 					location.Y += 15 - k;
 
 				location.X += k;
 				Vector2 drawPos = location - Main.screenPosition;
 
-				if (!Main.tile[i, j - 1].active() || !Main.tileSolid[Main.tile[i, j - 1].type] && uniqueParticleFrame < 7 && uniqueParticleFrame != 0)
+				if (!Main.tile[i, j - 1].HasTile || !Main.tileSolid[Main.tile[i, j - 1].TileType] && uniqueParticleFrame < 7 && uniqueParticleFrame != 0)
 				{
 					color *= (float)(uniqueParticleFrame / 7f);
 					for (int l = 0; l < 7; l++)
@@ -133,17 +130,17 @@ namespace SOTS.Items.Fragments
 					//spriteBatch.Draw(texture, drawPos, null, color, 0, new Vector2(0,0), 1, SpriteEffects.None, 0f);
 				}
 			}
-			if (Main.tileSolid[Main.tile[i, j].type] && !Main.tileSolidTop[Main.tile[i, j].type])
+			if (Main.tileSolid[Main.tile[i, j ].TileType] && !Main.tileSolidTop[Main.tile[i, j ].TileType])
 			{
-				color = WorldGen.paintColor((int)Main.tile[i, j].color());
+				color = WorldGen.paintColor((int)Main.tile[i, j].TileColor);
 				if (wall)
-					color = WorldGen.paintColor((int)Main.tile[i, j].wallColor());
+					color = WorldGen.paintColor((int)Main.tile[i, j].WallColor);
 				color = new Color(color.R, color.G, color.B, 0);
-				for (int l = 0; l < 7 - (Main.tile[i, j].inActive() ? 1 : 0); l++)
+				for (int l = 0; l < 7 - (Main.tile[i, j].IsActuated ? 1 : 0); l++)
 				{
 					float x = Main.rand.Next(-16, 17) * 0.1f;
 					float y = Main.rand.Next(-16, 17) * 0.1f;
-					if (Main.tile[i, j].inActive() && l < 4)
+					if (Main.tile[i, j].IsActuated && l < 4)
 					{
 						x = 0;
 						y = 0;
@@ -152,16 +149,16 @@ namespace SOTS.Items.Fragments
 					bool canDown = true;
 					bool canLeft = true;
 					bool canRight = true;
-					if (Main.tile[i, j - 1].active() && Main.tileSolid[Main.tile[i, j - 1].type])
+					if (Main.tile[i, j - 1].HasTile && Main.tileSolid[Main.tile[i, j - 1].TileType])
 						canUp = false;
 
-					if (Main.tile[i, j + 1].active() && Main.tileSolid[Main.tile[i, j + 1].type])
+					if (Main.tile[i, j + 1].HasTile && Main.tileSolid[Main.tile[i, j + 1].TileType])
 						canDown = false;
 
-					if (Main.tile[i + 1, j].active() && Main.tileSolid[Main.tile[i + 1, j].type])
+					if (Main.tile[i + 1, j].HasTile && Main.tileSolid[Main.tile[i + 1, j].TileType])
 						canRight = false;
 
-					if (Main.tile[i - 1, j].active() && Main.tileSolid[Main.tile[i - 1, j].type])
+					if (Main.tile[i - 1, j].HasTile && Main.tileSolid[Main.tile[i + 1, j].TileType])
 						canLeft = false;
 
 					if (!canUp && !canDown)
@@ -189,13 +186,13 @@ namespace SOTS.Items.Fragments
 							x = Math.Abs(x);
 					}
 					Main.spriteBatch.Draw(textureBlock, new Vector2((float)(i * 16 - (int)Main.screenPosition.X) + x, (float)(j * 16 - (int)Main.screenPosition.Y) + y - 2) + zero,
-					new Rectangle(0, 20 * (Main.tile[i, j].halfBrick() ? 1 : Main.tile[i, j].slope() > 0 ? Main.tile[i, j].slope() + 1 : 0), 16, 20), color, 0f, default, 1f, SpriteEffects.None, 0f);
+					new Rectangle(0, 20 * (Main.tile[i, j].IsHalfBlock ? 1 : (int)Main.tile[i, j].Slope > 0 ? (int)Main.tile[i, j].Slope + 1 : 0), 16, 20), color, 0f, default, 1f, SpriteEffects.None, 0f);
 				}
 			}
 		}
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
 		{
-			DrawEffects(i, j, spriteBatch, mod);
+			DrawEffects(i, j, Mod);
 			return true;
 		}
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)

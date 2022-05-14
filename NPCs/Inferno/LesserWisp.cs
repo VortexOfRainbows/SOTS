@@ -25,14 +25,14 @@ namespace SOTS.NPCs.Inferno
 		}
 		public override void SetDefaults()
 		{
-            npc.aiStyle = 0; 
-            npc.lifeMax = 35;   
-            npc.damage = 35; 
-            npc.defense = 16;  
-            npc.knockBackResist = 0.5f;
-            npc.width = 26;
-            npc.height = 32;
-			Main.npcFrameCount[npc.type] = 1;  
+            NPC.aiStyle =0; 
+            NPC.lifeMax = 35;   
+            NPC.damage = 35; 
+            NPC.defense = 16;  
+            NPC.knockBackResist = 0.5f;
+            NPC.width = 26;
+            NPC.height = 32;
+			Main.npcFrameCount[NPC.type] = 1;  
             npc.value = 50;
             npc.npcSlots = 0.25f;
             npc.HitSound = SoundID.NPCHit30;
@@ -46,8 +46,8 @@ namespace SOTS.NPCs.Inferno
 			npc.noGravity = true;
 			npc.ai[0] = 0;
 			npc.ai[2] = 1;
-			banner = npc.type;
-			bannerItem = ItemType<LesserWispBanner>();
+			Banner = NPC.type;
+			BannerItem = ItemType<LesserWispBanner>();
 		}
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
@@ -103,7 +103,7 @@ namespace SOTS.NPCs.Inferno
 				Vector2 circular = new Vector2(Main.rand.NextFloat(0, 3), 0).RotatedBy(Math.PI / 6 * k);
 				Main.spriteBatch.Draw(texture, drawPos + circular, null, color * 0.9f, npc.rotation, drawOrigin, npc.scale, SpriteEffects.None, 0f);
 			}
-			texture = sans ? GetTexture("SOTS/NPCs/Inferno/SansWisp") : Main.npcTexture[npc.type];
+			texture = sans ? GetTexture("SOTS/NPCs/Inferno/SansWisp") : Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
 			Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition, null, sans ? Color.White : new Color(180, 180, 180), npc.rotation, drawOrigin, npc.scale * 0.9f, SpriteEffects.None, 0f);
 			return false;
 		}

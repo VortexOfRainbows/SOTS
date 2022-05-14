@@ -90,7 +90,7 @@ namespace SOTS.Items.Earth
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<VibrantBar>(), 4);
 			recipe.SetResult(this);
 			recipe.AddTile(TileID.Anvils);

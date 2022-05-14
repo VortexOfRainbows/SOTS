@@ -142,7 +142,7 @@ namespace SOTS.Items.Tools
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddRecipeGroup("IronBar", 5);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this);

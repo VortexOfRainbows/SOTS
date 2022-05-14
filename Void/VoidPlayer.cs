@@ -350,7 +350,7 @@ namespace SOTS.Void
 		{
 			VoidMinions = new List<int>();
 			List<int> whoAmI = new List<int>();
-			for (int i = 0; i < Main.Projectile.Length; i++)
+			for (int i = 0; i < Main.projectile.Length; i++)
 			{
 				Projectile projectile = Main.projectile[i];
 				if (Projectile.owner == player.whoAmI && Projectile.active && isVoidMinion(projectile))

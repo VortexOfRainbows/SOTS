@@ -46,14 +46,14 @@ namespace SOTS.NPCs
 		}
 		public override void SetDefaults()
 		{
-            npc.aiStyle = 0; 
-            npc.lifeMax = 100;   
-            npc.damage = 42; 
-            npc.defense = 24;  
-            npc.knockBackResist = 0f;
-            npc.width = 36;
-            npc.height = 46;
-			Main.npcFrameCount[npc.type] = 1;  
+            NPC.aiStyle =0; 
+            NPC.lifeMax = 100;   
+            NPC.damage = 42; 
+            NPC.defense = 24;  
+            NPC.knockBackResist = 0f;
+            NPC.width = 36;
+            NPC.height = 46;
+			Main.npcFrameCount[NPC.type] = 1;  
             npc.value = 275;
             npc.npcSlots = 2.5f;
             npc.HitSound = SoundID.NPCHit53;
@@ -62,8 +62,8 @@ namespace SOTS.NPCs
 			npc.netAlways = true;
 			npc.buffImmune[BuffID.OnFire] = true;
 			npc.buffImmune[BuffID.Frostburn] = true;
-			banner = npc.type;
-			bannerItem = ItemType<HoloEyeBanner>();
+			Banner = NPC.type;
+			BannerItem = ItemType<HoloEyeBanner>();
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{

@@ -93,7 +93,7 @@ namespace SOTS.Projectiles.Laser
 				rotations.Add(Projectile.velocity.ToRotation());
 				int i = (int)(currentPos.X / 16);
 				int j = (int)(currentPos.Y / 16);
-				if (!WorldGen.InWorld(i, j, 20) || Main.tile[i, j].active() && Main.tileSolidTop[Main.tile[i, j].type] == false && Main.tileSolid[Main.tile[i, j].type] == true)
+				if (!WorldGen.InWorld(i, j, 20) || Main.tile[i, j].HasTile && Main.tileSolidTop[Main.tile[i, j ].TileType] == false && Main.tileSolid[Main.tile[i, j ].TileType] == true)
 				{
 					k = maxDist;
 					break;
@@ -146,7 +146,7 @@ namespace SOTS.Projectiles.Laser
                 }
 				int i = (int)(posList[k].X / 16);
 				int j = (int)(posList[k].Y / 16);
-				if (!WorldGen.InWorld(i, j, 20) || Main.tile[i, j].active() && Main.tileSolidTop[Main.tile[i, j].type] == false && Main.tileSolid[Main.tile[i, j].type] == true)
+				if (!WorldGen.InWorld(i, j, 20) || Main.tile[i, j].HasTile && Main.tileSolidTop[Main.tile[i, j ].TileType] == false && Main.tileSolid[Main.tile[i, j ].TileType] == true)
 				{
 					Dust dust = Dust.NewDustDirect(posList2[k] - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
 					dust.fadeIn = 0.2f;

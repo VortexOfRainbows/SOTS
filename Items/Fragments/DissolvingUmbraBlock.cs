@@ -21,7 +21,7 @@ namespace SOTS.Items.Fragments
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<DissolvingUmbra>(), 1);
 			recipe.SetResult(this, 20);
 			recipe.AddRecipe();
@@ -36,7 +36,7 @@ namespace SOTS.Items.Fragments
 			Main.tileLighted[Type] = true;
 			drop = ModContent.ItemType<DissolvingUmbraBlock>();
 			AddMapEntry(new Color(251, 32, 0));
-			mineResist = 0.2f;
+			MineResist = 0.2f;
 			TileID.Sets.GemsparkFramingTypes[Type] = Type;
 		}
 		public override void NumDust(int i, int j, bool fail, ref int num)
@@ -68,9 +68,9 @@ namespace SOTS.Items.Fragments
 			Texture2D textureBlock = Mod.Assets.Request<Texture2D>("Assets/SpiritBlocks/UmbraBlockOutline").Value;
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
 			float height = 8;
-			float timer = Main.GlobalTime * -90 + (i + j) * 10;
+			float timer = Main.GlobalTimeWrappedHourly * -90 + (i + j) * 10;
 			Color color;
-			color = WorldGen.paintColor((int)Main.tile[i, j].color()) * (100f / 255f);
+			color = WorldGen.paintColor((int)Main.tile[i, j].TileColor) * (100f / 255f);
 			color.A = 0;
 			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
 			if (Main.drawToScreen)
@@ -78,7 +78,7 @@ namespace SOTS.Items.Fragments
 				zero = Vector2.Zero;
 			}
 			Vector2 offset = new Vector2(0, 0);
-			if(Main.tile[i, j].topSlope() || Main.tile[i, j].halfBrick())
+			if(Main.tile[i, j].topSlope() || Main.tile[i, j].IsHalfBlock)
 			{
 				offset += new Vector2(0, 8);
 			}
@@ -121,17 +121,17 @@ namespace SOTS.Items.Fragments
 					previous = pos;
 				}
 			}
-			if (Main.tileSolid[Main.tile[i, j].type] && !Main.tileSolidTop[Main.tile[i, j].type])
+			if (Main.tileSolid[Main.tile[i, j ].TileType] && !Main.tileSolidTop[Main.tile[i, j ].TileType])
 			{
-				color = WorldGen.paintColor((int)Main.tile[i, j].color());
+				color = WorldGen.paintColor((int)Main.tile[i, j].TileColor);
 				if (wall)
-					color = WorldGen.paintColor((int)Main.tile[i, j].wallColor());
+					color = WorldGen.paintColor((int)Main.tile[i, j].WallColor);
 				color = new Color(color.R, color.G, color.B, 0);
-				for (int l = 0; l < 7 - (Main.tile[i, j].inActive() ? 1 : 0); l++)
+				for (int l = 0; l < 7 - (Main.tile[i, j].IsActuated ? 1 : 0); l++)
 				{
 					float x = Main.rand.Next(-16, 17) * 0.1f;
 					float y = Main.rand.Next(-16, 17) * 0.1f;
-					if (Main.tile[i, j].inActive() && l < 4)
+					if (Main.tile[i, j].IsActuated && l < 4)
 					{
 						x = 0;
 						y = 0;
@@ -140,16 +140,16 @@ namespace SOTS.Items.Fragments
 					bool canDown = true;
 					bool canLeft = true;
 					bool canRight = true;
-					if (Main.tile[i, j - 1].active() && Main.tileSolid[Main.tile[i, j - 1].type])
+					if (Main.tile[i, j - 1].HasTile && Main.tileSolid[Main.tile[i, j - 1].TileType])
 						canUp = false;
 
-					if (Main.tile[i, j + 1].active() && Main.tileSolid[Main.tile[i, j + 1].type])
+					if (Main.tile[i, j + 1].HasTile && Main.tileSolid[Main.tile[i, j + 1].TileType])
 						canDown = false;
 
-					if (Main.tile[i + 1, j].active() && Main.tileSolid[Main.tile[i + 1, j].type])
+					if (Main.tile[i + 1, j].HasTile && Main.tileSolid[Main.tile[i + 1, j].TileType])
 						canRight = false;
 
-					if (Main.tile[i - 1, j].active() && Main.tileSolid[Main.tile[i - 1, j].type])
+					if (Main.tile[i - 1, j].HasTile && Main.tileSolid[Main.tile[i + 1, j].TileType])
 						canLeft = false;
 
 					if (!canUp && !canDown)
@@ -177,7 +177,7 @@ namespace SOTS.Items.Fragments
 							x = Math.Abs(x);
 					}
 					Main.spriteBatch.Draw(textureBlock, new Vector2((float)(i * 16 - (int)Main.screenPosition.X) + x, (float)(j * 16 - (int)Main.screenPosition.Y) + y - 2) + zero,
-					new Rectangle(0, 20 * (Main.tile[i, j].halfBrick() ? 1 : Main.tile[i, j].slope() > 0 ? Main.tile[i, j].slope() + 1 : 0), 16, 20), color, 0f, default, 1f, SpriteEffects.None, 0f);
+					new Rectangle(0, 20 * (Main.tile[i, j].IsHalfBlock ? 1 : Main.tile[i, j].slope() > 0 ? Main.tile[i, j].slope() + 1 : 0), 16, 20), color, 0f, default, 1f, SpriteEffects.None, 0f);
 				}
 			}
 		}

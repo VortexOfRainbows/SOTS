@@ -16,23 +16,23 @@ namespace SOTS.NPCs
 		public override void SetDefaults()
 		{
 			npc.CloneDefaults(NPCID.Slimer);
-            npc.aiStyle = 44;
-            npc.lifeMax = 20;
-            npc.damage = 8; 
-            npc.defense = 0; 
-            npc.knockBackResist = 0.45f;
-            npc.width = 92;
-            npc.height = 48;
+            NPC.aiStyle =44;
+            NPC.lifeMax = 20;
+            NPC.damage = 8; 
+            NPC.defense = 0; 
+            NPC.knockBackResist = 0.45f;
+            NPC.width = 92;
+            NPC.height = 48;
             animationType = NPCID.Slimer;  
-			Main.npcFrameCount[npc.type] = 4;  
+			Main.npcFrameCount[NPC.type] = 4;  
             npc.value = 15;
             npc.npcSlots = 0.85f;
             npc.noGravity = true;
 			npc.alpha = 90;
             npc.HitSound = SoundID.NPCHit1;
             npc.DeathSound = SoundID.NPCDeath1;
-			banner = npc.type;
-			bannerItem = ItemType<BlueSlimerBanner>();
+			Banner = NPC.type;
+			BannerItem = ItemType<BlueSlimerBanner>();
 		}
 		public override void HitEffect(int hitDirection, double damage)
 		{

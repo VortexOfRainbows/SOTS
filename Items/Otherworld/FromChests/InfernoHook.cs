@@ -26,7 +26,7 @@ namespace SOTS.Items.Otherworld.FromChests
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(null, "WormWoodHook", 1);
 			recipe.AddIngredient(null, "FragmentOfInferno", 2);
 			recipe.AddIngredient(null, "OtherworldlyAlloy", 10);

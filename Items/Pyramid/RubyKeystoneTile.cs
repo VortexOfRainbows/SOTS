@@ -34,7 +34,7 @@ namespace SOTS.Items.Pyramid
 			name.SetDefault("Strange Keystone");
 			AddMapEntry(new Color(115, 0, 0), name);
 			disableSmartCursor = true;
-			dustType = ModContent.DustType<CurseDust3>();
+			DustType = ModContent.DustType<CurseDust3>();
 			soundType = SoundID.NPCHit;
 			soundStyle = 1;
 		}
@@ -69,7 +69,7 @@ namespace SOTS.Items.Pyramid
 				zero = Vector2.Zero;
 			}
 			Tile tile = Main.tile[i, j];
-			float counter = Main.GlobalTime * 120;
+			float counter = Main.GlobalTimeWrappedHourly * 120;
 			float mult = new Vector2(-1f, 0).RotatedBy(MathHelper.ToRadians(counter / 2f)).X;
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Pyramid/RubyKeystoneTileGlow").Value;
 			if (tile.TileFrameY % 90 == 0 && tile.TileFrameX % 90 == 0) //check for it being the top left tile
@@ -138,7 +138,7 @@ namespace SOTS.Items.Pyramid
 				if (Main.netMode != NetmodeID.MultiplayerClient && fail)
 				{
 					bool active = false;
-					for (int l = 0; l < Main.Projectile.Length; l++)
+					for (int l = 0; l < Main.projectile.Length; l++)
 					{
 						Projectile proj = Main.projectile[l];
 						if (proj.active && proj.type == ModContent.ProjectileType<RubyKeystoneIndicator>() && Vector2.Distance(proj.Center, new Vector2(left, top) * 16 + new Vector2(8, 8)) < 16)
@@ -171,8 +171,8 @@ namespace SOTS.Items.Pyramid
 		}
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
 		{
-			int type = Main.tile[i, j].frameX / 18 + (Main.tile[i, j].frameY % 90 / 18 * 5);
-			if (type != 12 || Main.tile[i, j].frameY < 90)
+			int type = Main.tile[i, j].TileFrameX / 18 + (Main.tile[i, j].TileFrameY % 90 / 18 * 5);
+			if (type != 12 || Main.tile[i, j].TileFrameY < 90)
 				return;
 			r = 1.1f;
 			g = 0.1f;
@@ -256,7 +256,7 @@ namespace SOTS.Items.Pyramid
 			if (runOnce)
 			{
 				bool foundLeader = false;
-				for (int k = 0; k < Main.Projectile.Length; k++)
+				for (int k = 0; k < Main.projectile.Length; k++)
 				{
 					Projectile proj = Main.projectile[k];
 					if (Projectile.type == proj.type && proj.active && Projectile.active && Vector2.Distance(proj.Center, Projectile.Center) <= 64f)
@@ -292,7 +292,7 @@ namespace SOTS.Items.Pyramid
 			bool found = false;
 			int ofTotal = 0;
 			int total = 0;
-			for (int k = 0; k < Main.Projectile.Length; k++)
+			for (int k = 0; k < Main.projectile.Length; k++)
 			{
 				Projectile proj = Main.projectile[k];
 				if (Projectile.type == proj.type && proj.active && Projectile.active && Vector2.Distance(proj.Center, leader.Center) <= 64f) //if close to leader

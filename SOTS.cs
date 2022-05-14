@@ -465,47 +465,47 @@ namespace SOTS
 		{
 			TransmutationAltar.AddTransmutationRecipes(this);
 
-			ModRecipe recipe = new ModRecipe(this);
+			Recipe recipe = new Recipe(this);
 			recipe.AddIngredient(ModContent.ItemType<Wormwood>(), 30);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(ItemID.SlimeStaff, 1);
 			recipe.AddRecipe();
 			
 			/*just in case temple gets cucked
-			recipe = new ModRecipe(this);
+			recipe = new Recipe(this);
 			recipe.AddIngredient(ItemID.TempleKey, 2);
 			recipe.AddIngredient(ItemID.LihzahrdPowerCell, 1); //power cell
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.SetResult(ItemID.LihzahrdAltar, 1); //altar
 			recipe.AddRecipe();
 			
-			recipe = new ModRecipe(this);
+			recipe = new Recipe(this);
 			recipe.AddIngredient(ItemID.TempleKey, 1);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.SetResult(ItemID.LihzahrdPowerCell, 2); //power cell
 			recipe.AddRecipe();
 			
-			recipe = new ModRecipe(this);
+			recipe = new Recipe(this);
 			recipe.AddIngredient(ItemID.LihzahrdBrick, 30); //lizahrd brick
 			recipe.AddIngredient(ItemID.FallenStar, 5); //lizahrd brick
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.SetResult(ItemID.LihzahrdPowerCell, 1);
 			recipe.AddRecipe();
 			
-			recipe = new ModRecipe(this);
+			recipe = new Recipe(this);
 			recipe.AddIngredient(ItemID.TempleKey, 1);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.SetResult(ItemID.LihzahrdBrick, 75);
 			recipe.AddRecipe(); */
 
-			recipe = new ModRecipe(this);
+			recipe = new Recipe(this);
 			recipe.AddIngredient(ModContent.ItemType<FragmentOfNature>(), 25);
 			recipe.AddIngredient(ItemID.HermesBoots, 1);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(ItemID.FlowerBoots, 1);
 			recipe.AddRecipe();
 
-			recipe = new ModRecipe(this);
+			recipe = new Recipe(this);
 			recipe.AddIngredient(ModContent.ItemType<FragmentOfTide>(), 10);
 			recipe.AddIngredient(ItemID.WaterWalkingPotion, 5);
 			recipe.AddIngredient(ItemID.HermesBoots, 1);

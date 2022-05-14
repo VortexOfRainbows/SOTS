@@ -39,7 +39,7 @@ namespace SOTS.Items.Nature
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<BiomassBlast>(), 1);
 			recipe.AddIngredient(ModContent.ItemType <CursedMatter>(), 3);
 			recipe.AddIngredient(ItemID.OrichalcumBar, 12);
@@ -50,7 +50,7 @@ namespace SOTS.Items.Nature
 			recipe.SetResult(this);
 			recipe.AddRecipe();
 			
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<BiomassBlast>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<CursedMatter>(), 3);
 			recipe.AddIngredient(ItemID.MythrilBar, 12);

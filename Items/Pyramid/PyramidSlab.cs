@@ -20,17 +20,17 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ItemID.SandstoneSlab, 2);
 			recipe.AddTile(TileID.Autohammer);
 			recipe.SetResult(this, 1);
 			recipe.AddRecipe();
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(ItemID.SandstoneSlab, 2);
 			recipe.AddTile(TileID.LunarCraftingStation);
 			recipe.SetResult(this, 1);
 			recipe.AddRecipe();
-			recipe = new ModRecipe(mod);
+			recipe = new Recipe(mod);
 			recipe.AddIngredient(this, 1);
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.SetResult(ItemID.SandstoneSlab, 2);

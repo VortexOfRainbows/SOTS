@@ -16,12 +16,12 @@ namespace SOTS.NPCs.Boss
         }
         public override void SetDefaults()
         {
-            npc.width = 48;
-            npc.height = 34;
-            npc.damage = 70;
-            npc.defense = 100;
-            npc.lifeMax = 130000;
-            npc.knockBackResist = 0.0f;
+            NPC.width = 48;
+            NPC.height = 34;
+            NPC.damage = 70;
+            NPC.defense = 100;
+            NPC.lifeMax = 130000;
+            NPC.knockBackResist = 0.0f;
             npc.noTileCollide = true;
             npc.netAlways = true;
             npc.noGravity = true;
@@ -34,7 +34,7 @@ namespace SOTS.NPCs.Boss
             {
                 npc.buffImmune[i] = true;
             }
-            Main.npcFrameCount[npc.type] = 8;
+            Main.npcFrameCount[NPC.type] = 8;
         }
         float currentDPS = -1;
         private float DPSregenRate = 0.1f;
@@ -62,7 +62,7 @@ namespace SOTS.NPCs.Boss
         }
         public override void ReceiveExtraAI(BinaryReader reader)
         {
-            npc.knockBackResist = reader.ReadSingle();
+            NPC.knockBackResist = reader.ReadSingle();
         }
         public override void FindFrame(int frameHeight)
         {
@@ -75,7 +75,7 @@ namespace SOTS.NPCs.Boss
             npc.alpha = parent.alpha;
             npc.dontTakeDamage = parent.dontTakeDamage;
             int targetFrame = parent.frame.Y / frameHeight2;
-            int currentFrame = npc.frame.Y / frameHeight;
+            int currentFrame = NPC.frame.Y / frameHeight;
             if (currentFrame != targetFrame)
             {
                 npc.frameCounter++;
@@ -91,7 +91,7 @@ namespace SOTS.NPCs.Boss
             }
             if (currentFrame > 7)
                 currentFrame = 0;
-            npc.frame.Y = currentFrame * frameHeight;
+            NPC.frame.Y = currentFrame * frameHeight;
 
         }
         public override bool PreAI()
@@ -151,7 +151,7 @@ namespace SOTS.NPCs.Boss
                     Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition + toTheSide, npc.frame, color * ((255f - npc.alpha) / 255f) * ((255f - npc.alpha) / 255f), npc.rotation, origin, 1f, SpriteEffects.None, 0);
                 }
             }
-            texture = Main.npcTexture[npc.type];
+            texture = Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
             Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition, npc.frame, drawColor * ((255f - npc.alpha) / 255f), npc.rotation, origin, npc.scale, SpriteEffects.None, 0);
             return false;
         }
@@ -178,7 +178,7 @@ namespace SOTS.NPCs.Boss
         }
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
-            npc.lifeMax = (int)(npc.lifeMax * bossLifeScale * 0.75f);  //boss life scale in expertmode
+            NPC.lifeMax = (int)(npc.lifeMax * bossLifeScale * 0.75f);  //boss life scale in expertmode
             DPSregenRate += 0.15f * numPlayers;
             base.ScaleExpertStats(numPlayers, bossLifeScale);
         }

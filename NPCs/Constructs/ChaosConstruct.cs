@@ -24,14 +24,14 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override void SetDefaults()
 		{
-			npc.aiStyle = 0;
-			npc.lifeMax = 3000;  
-			npc.damage = 60; 
-			npc.defense = 30;  
-			npc.knockBackResist = 0f;
-			npc.width = 102;
-			npc.height = 100;
-			Main.npcFrameCount[npc.type] = 1;
+			NPC.aiStyle =0;
+			NPC.lifeMax = 3000;  
+			NPC.damage = 60; 
+			NPC.defense = 30;  
+			NPC.knockBackResist = 0f;
+			NPC.width = 102;
+			NPC.height = 100;
+			Main.npcFrameCount[NPC.type] = 1;
 			npc.value = Item.buyPrice(0, 4, 50, 0);
 			npc.npcSlots = 4f;
 			npc.lavaImmune = true;
@@ -45,13 +45,13 @@ namespace SOTS.NPCs.Constructs
 		}
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
 		{
-			npc.damage = 100;
-			npc.lifeMax = 5250;
+			NPC.damage = 100;
+			NPC.lifeMax = 5250;
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
 			Vector2 origin = new Vector2(npc.width / 2, npc.height / 2);
-			Texture2D texture = Main.npcTexture[npc.type];
+			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[npc.type].Value;
 			DrawWings();
 			Main.spriteBatch.Draw(texture, npc.Center - Main.screenPosition + new Vector2(0, npc.gfxOffY), null, drawColor, dir, origin, npc.scale, SpriteEffects.None, 0f);
 			Main.spriteBatch.Draw((Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Constructs/ChaosConstructGlow"), npc.Center - Main.screenPosition + new Vector2(0, npc.gfxOffY), null, Color.White, dir, origin, npc.scale, SpriteEffects.None, 0f);

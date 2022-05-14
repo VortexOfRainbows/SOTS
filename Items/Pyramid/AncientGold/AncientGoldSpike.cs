@@ -39,11 +39,11 @@ namespace SOTS.Items.Pyramid.AncientGold
 			Main.tileLighted[Type] = true;
 			drop = ModContent.ItemType<AncientGoldSpike>();
 			AddMapEntry(new Color(150, 130, 20));
-			mineResist = 2.0f;
-			minPick = 0;
+			MineResist = 2.0f;
+			MinPick = 0;
 			soundType = SoundID.Tink;
 			soundStyle = 2;
-			dustType = DustID.GoldCoin;
+			DustType = DustID.GoldCoin;
         }
         public override bool Dangersense(int i, int j, Player player)
         {
@@ -72,13 +72,13 @@ namespace SOTS.Items.Pyramid.AncientGold
             {
                 for (var j = num3; j < num4; ++j)
                 {
-                    if (Main.tile[i, j] != null && Main.tile[i, j].slope() == (byte)0 && !Main.tile[i, j].inActive() && Main.tile[i, j].active() && Main.tile[i, j].type == ModContent.TileType<AncientGoldSpikeTile>())
+                    if (Main.tile[i, j] != null && Main.tile[i, j].slope() == (byte)0 && !Main.tile[i, j].IsActuated && Main.tile[i, j].HasTile && Main.tile[i, j ].TileType == ModContent.TileType<AncientGoldSpikeTile>())
                     {
                         Vector2 vector2_2;
                         vector2_2.X = (float)(i * 16);
                         vector2_2.Y = (float)(j * 16);
                         var num6 = 16;
-                        if (Main.tile[i, j].halfBrick())
+                        if (Main.tile[i, j].IsHalfBlock)
                         {
                             vector2_2.Y += 8f;
                             num6 -= 8;

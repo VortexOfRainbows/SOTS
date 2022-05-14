@@ -26,7 +26,7 @@ namespace SOTS.Items.ChestItems
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<TinyPlanetFish>(), 1);
 			recipe.AddIngredient(ItemID.StoneBlock, 100);
 			recipe.AddTile(TileID.TinkerersWorkbench);

@@ -27,7 +27,7 @@ namespace SOTS.Items.Furniture
             TileObjectData.addAlternate(1);
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsChair);
             disableSmartCursor = true;
-            adjTiles = new int[] { TileID.Chairs };
+            AdjTiles = new int[] { TileID.Chairs };
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {

@@ -36,7 +36,7 @@ namespace SOTS.Items.Evil
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ItemID.DemonScythe, 1);
 			recipe.AddIngredient(ItemID.SoulofFright, 10);
 			recipe.AddIngredient(ModContent.ItemType<DissolvingUmbra>(), 1);

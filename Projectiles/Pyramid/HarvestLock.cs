@@ -53,7 +53,7 @@ namespace SOTS.Projectiles.Pyramid
 		public override void AI()
 		{
 			if(Projectile.timeLeft >= 32)
-				for (int j = 0; j < Main.Projectile.Length; j++)
+				for (int j = 0; j < Main.projectile.Length; j++)
 				{
 					Projectile proj = Main.projectile[j];
 					if (proj.active && proj.owner == Projectile.owner && proj.type == Projectile.type && proj.whoAmI != Projectile.whoAmI)
@@ -95,7 +95,7 @@ namespace SOTS.Projectiles.Pyramid
 						}
 					}
 					if(Projectile.timeLeft > 40)
-						for (int j = 0; j < Main.Projectile.Length; j++)
+						for (int j = 0; j < Main.projectile.Length; j++)
 						{
 							Projectile proj = Main.projectile[j];
 							if (proj.active && proj.owner == Projectile.owner && proj.type == mod.ProjectileType("GhostPepper"))

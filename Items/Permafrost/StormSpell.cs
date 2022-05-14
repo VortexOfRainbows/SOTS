@@ -35,7 +35,7 @@ namespace SOTS.Items.Permafrost
         }
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = new Recipe(mod);
 			recipe.AddIngredient(ItemID.Diamond, 1);
 			recipe.AddIngredient(ModContent.ItemType<FrigidBar>(), 8);
 			recipe.AddTile(TileID.Anvils);

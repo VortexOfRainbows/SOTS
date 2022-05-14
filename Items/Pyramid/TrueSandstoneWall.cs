@@ -33,7 +33,7 @@ namespace SOTS.Items.Pyramid
 		public override void SetDefaults()
 		{
 			Main.wallHouse[Type] = false;
-			dustType = 32;
+			DustType = 32;
 			drop = mod.ItemType("TrueSandstoneWall");
 			AddMapEntry(new Color(155, 110, 55));
 		}

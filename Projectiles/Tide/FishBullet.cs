@@ -89,7 +89,7 @@ namespace SOTS.Projectiles.Tide
 				{
 					Main.instance.LoadNPC(npc);
 				}
-				texture = Main.npcTexture[npc];
+				texture = Terraria.GameContent.TextureAssets.Npc[npc].Value;
 				frames = Main.npcFrameCount[npc];
 			}
 			float scale = 1.1f;

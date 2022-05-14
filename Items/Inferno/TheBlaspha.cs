@@ -48,7 +48,7 @@ namespace SOTS.Items.Inferno
         }
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
+            Recipe recipe = new Recipe(mod);
             recipe.AddIngredient(ItemID.SniperRifle, 1);
             recipe.AddIngredient(ItemID.TacticalShotgun, 1);
             recipe.AddIngredient(ModContent.ItemType<Doomstick>(), 1);
